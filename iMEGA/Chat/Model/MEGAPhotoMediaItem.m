@@ -56,7 +56,7 @@
     if (self.image) {
         self.cachedImageView.image = self.image;
 
-        if (self.node.name.mnz_isMultimediaPathExtension) {
+        if (self.node.name.mnz_isVideoPathExtension) {
             UIImageView *playImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"playButton"]];
             playImageView.center = _cachedImageView.center;
             [self.cachedImageView addSubview:playImageView];
@@ -136,6 +136,14 @@
         } else {
             height = maxSide;
             width = height * (self.image.size.width / self.image.size.height);
+        }
+    } else if (self.node.width > 0 && self.node.height > 0) {
+        if (self.node.width > self.node.height) {
+            width = maxSide;
+            height = width * ((CGFloat) self.node.height / self.node.width);
+        } else {
+            height = maxSide;
+            width = height * ((CGFloat) self.node.width / self.node.height);
         }
     } else {
         width = height = maxSide;

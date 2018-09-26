@@ -108,7 +108,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(internetConnectionChanged) name:kReachabilityChangedNotification object:nil];
     
     [[MEGASdkManager sharedMEGASdk] addMEGAGlobalDelegate:self];
-    [[MEGASdkManager sharedMEGASdk] retryPendingConnections];
+    [[MEGAReachabilityManager sharedManager] retryPendingConnections];
     
     if (self.searchController && !self.tableView.tableHeaderView) {
         self.tableView.tableHeaderView = self.searchController.searchBar;
@@ -785,6 +785,10 @@
 #pragma mark - UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (self.searchController.isActive) {
+        self.searchController.active = NO;
+        [self searchBarCancelButtonClicked:self.searchController.searchBar];
+    }
     
     MEGANode *node = [self nodeAtIndexPath:indexPath];
     

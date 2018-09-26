@@ -13,28 +13,6 @@ static NSString* const B = @"[B]";
 
 @implementation NSString (MNZCategory)
 
-- (BOOL)mnz_isImageUTI {
-    BOOL isImageUTI = NO;
-    CFStringRef fileUTI = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, (__bridge CFStringRef _Nonnull)(self.pathExtension.lowercaseString), NULL);
-    if (UTTypeConformsTo(fileUTI, kUTTypeImage)) {
-        isImageUTI = YES;
-    }
-    if (fileUTI) CFRelease(fileUTI);
-    
-    return isImageUTI;
-}
-
-- (BOOL)mnz_isAudiovisualContentUTI {
-    BOOL isAudiovisualContentUTI = NO;
-    CFStringRef fileUTI = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, (__bridge CFStringRef _Nonnull)(self.pathExtension.lowercaseString), NULL);
-    if (UTTypeConformsTo(fileUTI, kUTTypeAudiovisualContent)) {
-        isAudiovisualContentUTI = YES;
-    }
-    if (fileUTI) CFRelease(fileUTI);
-    
-    return isAudiovisualContentUTI;
-}
-
 - (BOOL)mnz_isImagePathExtension {
     NSSet *imagesExtensionsSet = [[NSSet alloc] initWithObjects:@"gif", @"jpg", @"tif", @"jpeg", @"bmp", @"png", @"nef", @"heic", nil];
     
@@ -42,15 +20,36 @@ static NSString* const B = @"[B]";
 }
 
 - (BOOL)mnz_isVideoPathExtension {
-    NSSet *videosExtensionsSet = [[NSSet alloc] initWithObjects:@"mp4", @"mov", @"m4v", @"3gp", nil];
+    NSArray<NSString *> *supportedExtensions = @[@"3g2",
+                                                 @"3gp",
+                                                 @"avi",
+                                                 @"m4v",
+                                                 @"mov",
+                                                 @"mp4",
+                                                 @"mqv",
+                                                 @"qt"];
     
-    return [videosExtensionsSet containsObject:self.pathExtension.lowercaseString];
+    return [supportedExtensions containsObject:self.pathExtension.lowercaseString];
+}
+
+- (BOOL)mnz_isAudioPathExtension {
+    NSArray<NSString *> *supportedExtensions = @[@"aac",
+                                                 @"ac3",
+                                                 @"aif",
+                                                 @"aiff",
+                                                 @"au",
+                                                 @"caf",
+                                                 @"eac3",
+                                                 @"flac",
+                                                 @"m4a",
+                                                 @"mp3",
+                                                 @"wav"];
+    
+    return [supportedExtensions containsObject:self.pathExtension.lowercaseString];
 }
 
 - (BOOL)mnz_isMultimediaPathExtension {
-    NSSet *multimediaExtensionsSet = [[NSSet alloc] initWithObjects:@"mp4", @"mov", @"3gp", @"wav", @"m4v", @"m4a", @"mp3", nil];
-    
-    return [multimediaExtensionsSet containsObject:self.pathExtension.lowercaseString];
+    return self.mnz_isVideoPathExtension || self.mnz_isAudioPathExtension;
 }
 
 #pragma mark - appData
@@ -342,7 +341,7 @@ static NSString* const B = @"[B]";
     }
 }
 
-- (NSString*)SHA256 {
+- (NSString *)SHA256 {
     unsigned int outputLength = CC_SHA256_DIGEST_LENGTH;
     unsigned char output[outputLength];
     
@@ -357,10 +356,14 @@ static NSString* const B = @"[B]";
     return hash;
 }
 
-#pragma mark - Emoji utils
+- (BOOL)mnz_isDecimalNumber {
+    NSCharacterSet *decimalDigitInvertedCharacterSet = [[NSCharacterSet decimalDigitCharacterSet] invertedSet];
+    NSRange range = [self rangeOfCharacterFromSet:decimalDigitInvertedCharacterSet];
+    
+    return (range.location == NSNotFound);
+}
 
-- (BOOL)mnz_containsEmoji
-{
+- (BOOL)mnz_containsEmoji {
     __block BOOL containsEmoji = NO;
     
     [self enumerateSubstringsInRange:NSMakeRange(0,
@@ -672,6 +675,59 @@ static NSString* const B = @"[B]";
     NSString *base64FromBase64URLEncoding = [base64URLEncondingString stringByPaddingToLength:paddedLength withString:@"=" startingAtIndex:0];
     
     return base64FromBase64URLEncoding;
+}
+
+#pragma mark - File names and extensions
+
++ (NSString *)mnz_fileNameWithDate:(NSDate *)date {
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    dateFormatter.dateFormat = @"yyyy'-'MM'-'dd' 'HH'.'mm'.'ss";
+    dateFormatter.locale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"];
+    
+    return [dateFormatter stringFromDate:date];
+}
+
+- (NSString *)mnz_fileNameWithLowercaseExtension {
+    NSString *fileName;
+    NSString *extension;
+    
+    NSMutableArray<NSString *> *fileNameComponents = [[self componentsSeparatedByString:@"."] mutableCopy];
+    if (fileNameComponents.count > 1) {
+        extension = fileNameComponents.lastObject.lowercaseString;
+        [fileNameComponents replaceObjectAtIndex:(fileNameComponents.count - 1) withObject:extension];
+    }
+    fileName = [fileNameComponents componentsJoinedByString:@"."];
+    
+    return fileName;
+}
+
+- (NSString *)mnz_lastExtensionInLowercase {
+    NSString *extension;
+    NSMutableArray<NSString *> *fileNameComponents = [[self.lastPathComponent componentsSeparatedByString:@"."] mutableCopy];
+    if (fileNameComponents.count > 1) {
+        extension = fileNameComponents.lastObject.lowercaseString;
+    }
+    
+    return extension;
+}
+
+- (NSString *)mnz_sequentialFileNameInParentNode:(MEGANode *)parentNode {
+    NSString *nameWithoutExtension = self.stringByDeletingPathExtension;
+    NSString *extension = self.pathExtension;
+    int index = 0;
+    int listSize = 0;
+    
+    do {
+        if (index != 0) {
+            nameWithoutExtension = [self.stringByDeletingPathExtension stringByAppendingString:[NSString stringWithFormat:@"_%d", index]];
+        }
+        
+        MEGANodeList *nameNodeList = [[MEGASdkManager sharedMEGASdk] nodeListSearchForNode:parentNode searchString:[nameWithoutExtension stringByAppendingPathExtension:extension]];
+        listSize = nameNodeList.size.intValue;
+        index++;
+    } while (listSize != 0);
+    
+    return [nameWithoutExtension stringByAppendingPathExtension:extension];
 }
 
 @end

@@ -19,7 +19,7 @@
         view.backgroundColor = UIColor.clearColor;
         self.selectedBackgroundView = view;
         
-        self.pendingView.backgroundColor = UIColor.mnz_redFF4D52;
+        self.pendingView.backgroundColor = UIColor.mnz_redMain;
         
         self.lineView.backgroundColor = UIColor.mnz_grayCCCCCC;
     }

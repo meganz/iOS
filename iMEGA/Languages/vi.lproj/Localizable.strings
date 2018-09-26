@@ -111,15 +111,15 @@
 /*  */
 "pleaseStrengthenYourPassword"="Xin tạo một mật khẩu phức tạp hơn.";
 /* Label displayed during checking the strength of the password introduced. Represents Very Weak security */
-"veryWeak"="Rất yếu";
+"veryWeak"="Quá Yếu";
 /*  */
 "weak"="Yếu";
 /*  */
 "passwordVeryWeakOrWeak"="Mật khẩu này khá dễ đoán. Hãy thử tạo một mật khẩu dài hơn. Bao gồm chữ thường & chữ in hoa. Thêm các ký tự đặc biệt. Đừng dùng tên hay những từ thông dụng.";
 /* Label displayed during checking the strength of the password introduced. Represents Medium security */
-"medium"="Trung bình";
+"medium"="Trung Bình";
 /*  */
-"passwordMedium"="Mật khẩu của bạn đủ tốt để tiến hành, nhưng khuyên bạn nên làm mật khẩu nó khó hơn trong thời gian tới.";
+"passwordMedium"="Mật khẩu của bạn đủ tốt để tiến hành, nhưng khuyên bạn nên làm mật khẩu khó hơn trong tương lai.";
 /*  */
 "good"="Được";
 /*  */
@@ -141,7 +141,7 @@
 /* Error text shown when the users tries to create an account with an email already in use */
 "emailAlreadyRegistered"="Email này đã được đăng ký.";
 /* Title shown just after doing some action that requires confirming the action by an email */
-"awaitingEmailConfirmation"="Đang chờ việc xác thực email.";
+"awaitingEmailConfirmation"="Đang chờ việc xác nhận email.";
 /* Text shown on the confirm account view to remind the user what to do */
 "confirmText"="Xin nhập mật khẩu để xác thực tài khoản";
 /* Button title that triggers the confirm account action */
@@ -298,8 +298,10 @@
 "newFolderMessage"="Đặt tên cho thư mục";
 /* Title button for the create folder alert.  */
 "createFolderButton"="Tạo";
-/* message when trying to create a folder that already exists */
-"folderAlreadyExists"="Thư mục đã tồn tại";
+/* A tooltip message which is shown when a folder name is duplicated during renaming or creation. */
+"There is already a folder with the same name"="Đã có một thư mục với cái tên này rồi";
+/* A tooltip message which shows when a file name is duplicated during renaming. */
+"There is already a file with the same name"="Đã có một tệp tin với cái tên này rồi";
 /* Option given on the `Add` section to allow the user upload something from another cloud storage provider. The three dots implies that an action occurs after tapping on it. */
 "uploadFrom"="Chuyển nhập từ...";
 /* Message shown when the user selects a file from another cloud storage provider that's already uploaded. "[A] = {name of the original file} already uploaded with name [B] = {name of the file in MEGA}" */
@@ -345,11 +347,11 @@
 /* Message shown when some links to files and/or folders are being generated */
 "generatingLinks"="Đang tạo đường liên kết...";
 /* Message shown when the link has been copied to the pasteboard */
-"linkCopied"="Đã được lưu vào bộ ghi nhớ";
+"linkCopied"="Liên kết đã được ghi vào bộ nhớ";
 /* Message shown when some links have been copied to the pasteboard */
 "linksCopied"="Các đường liên kết đã được sao chép";
 /* Text of the button after the links were copied to the clipboard */
-"copiedToTheClipboard"="Đã sao chép vào bộ ghi nhớ";
+"copiedToTheClipboard"="Đã lưu vào bộ ghi nhớ";
 /* A title for the Copyright Warning dialog. */
 "copyrightWarning"="Cảnh báo bản quyền";
 /* A title for the Copyright Warning dialog. Designed to make the user feel as though this is not targeting them, but is a warning for everybody who uses our service. */
@@ -656,8 +658,6 @@
 "about"="Thông Tin";
 /* Title of one of the Settings sections where you can set up the 'Language' of the app */
 "language"="Ngôn Ngữ";
-/* On each translation this should be the target language. So, if it's English, English then. If it's Spanish = "Español", if it's German "Deustch" */
-"applicationLanguage"="English (Anh)";
 /* Title of one of the Settings sections where you can 'Send Feedback' to MEGA */
 "sendFeedbackLabel"="Gửi Phản Hồi";
 /* Message body of the email that appears when the users tap on "Send feedback" */
@@ -682,6 +682,8 @@
 "onlyWhenChargingLabel"="Chỉ được tải lúc sạc pin";
 /* Footer text to explain the Camera Uploads functionality */
 "cameraUploads_footer"="Nếu Camera Uploads được bật, các hình ảnh mới chụp hoặc các video mới quay sẽ được tải và lưu lên Ổ Mây MEGA của bạn.";
+/* App means “Application” */
+"App version"="Phiên bản ứng dụng";
 /* Title of the label where the SDK version is shown */
 "sdkVersion"="Phiên bản MEGA SDK";
 /* Title of the label where the MEGAchat SDK version is shown */
@@ -693,7 +695,7 @@
 /* Section title where you can change your MEGA's password */
 "changePasswordLabel"="Đổi mật khẩu";
 /* Advising the user to keep the user's master key safe. */
-"exportMasterKeyFooter"="Xuất ra Mã Phục Hồi và giữ mã ở một nơi an toàn và dễ nhớ sẽ giúp bạn tránh việc mất dữ liệu khi thay đổi mật khẩu.";
+"exportMasterKeyFooter"="Xuất ra Mã Phục Hồi và giữ mã ở một nơi an toàn và dễ nhớ sẽ giúp bạn tránh việc mất dữ liệu khi quên mật khẩu.";
 /* Question button to present a view where it's explained what is the Recovery Key */
 "whyDoINeedARecoveryKey"="Tại sao tôi cần phải lưu giữ Mã Khóa Phục Hồi?";
 /* Detailed explanation of how the master encryption key (now renamed "Recovery Key") works, and why it is important to remember your password. */
@@ -701,7 +703,7 @@
 /*  */
 "masterKey_thirdParagraph"="Các kẻ tấn công không thể nào truy cập vào tài khoản của bạn chỉ với mã-khóa không thôi. Thủ tục đặt lại mật khẩu yêu cầu bạn phải có mã-khóa master và quyền truy cập vào email của bạn.";
 /* Message of the dialog displayed when copy the user's Recovery Key to the clipboard to be saved or exported. */
-"recoveryKeyCopiedToClipboard"="Mã Khóa Phục Hồi đã được lưu vào bộ ghi nhớ";
+"recoveryKeyCopiedToClipboard"="Mã Khóa Phục Hồi đã được lưu vào bộ ghi nhớ. Xin lưu giữ mã ở nơi an toàn.";
 /* Alert title shown when you have exported your MEGA Recovery Key */
 "masterKeyExported"="Đã xuất Mã Phục Hồi";
 /* Alert message shown to explain that the Recovery Key was saved on your device. Also that you can access it through iTunes. And ends with and security advise. */
@@ -748,6 +750,8 @@
 "cancellationLinkHasExpired"="Yêu cầu hủy bỏ này đã hết hạn.";
 /* Text shown in the last alert dialog to confirm the cancellation of an account */
 "enterYourPasswordToConfirmThatYouWanToClose"="Đây là bước cuối cùng để hoàn tất việc hủy bỏ tài khoản. Bạn sẽ mất hoàn toàn tất cả dữ liệu bạn đã lưu trên ổ mây. Để tiến hành, xin nhập mật khẩu ở dưới đây.";
+/* During account cancellation (deletion) */
+"accountCanceledSuccessfully"="Tài khoản của bạn đã bị hủy bỏ thành công.";
 /* Account closure, password check dialog when user click on closure email. */
 "closeAccount"="Đóng tài khoản";
 /* Title for the action that allows to remove a file or folder */
@@ -836,11 +840,11 @@
 /* Error message when a use wants to validate the same email twice */
 "emailAddressChangeAlreadyRequested"="Bạn đã yêu cầu gửi một đường liên kết xác thực cho địa chỉ email này rồi.";
 /* Text shown just after tap to change an email account to remenber the user what to do to complete the change email proccess */
-"emailIsChanging_description"="Xin truy cập hộp thư email của bạn, tìm thư và nhấp vào đường liên kết (link) để xác minh địa chỉ email.";
+"emailIsChanging_description"="Xin truy cập hộp thư email của bạn, tìm thư và click vào đường liên kết để xác minh địa chỉ email.";
 /* Text shown on the confirm email view to remind the user what to do */
 "verifyYourEmailAddress_description"="Xin nhập mật khẩu để xác thực đây là email của bạn";
 /* The [X] will be replaced with the e-mail address. */
-"congratulationsNewEmailAddress"="Chúc mừng, địa chỉ email mới cho tài khoản MEGA này của bạn giờ là: [X]";
+"congratulationsNewEmailAddress"="Việc thay đổi đã hoàn tất, địa chỉ email của tài khoản bây giờ là: [X]";
 /* Button text to close other login sessions except the current session in use. This will log out other devices which have an active login session. */
 "closeOtherSessions"="Đóng các phiên khác lại";
 /* Message shown when you click on 'Close other session' to block other login sessions except the current session in use. This message is shown when this has been done. */
@@ -926,7 +930,7 @@
 /* Message shown on the achievements dialog for achieved achievements, %1 is replaced with e.g. 20 GB */
 "registrationBonusExplanation"="Bạn nhận được %1 thêm cho không gian lưu trữ từ việc đăng ký tạo tài khoản.";
 /* achievement type */
-"referralBonuses"="Thưởng từ mời bạn bè";
+"referralBonuses"="Thưởng từ việc gửi giới thiệu";
 /*  */
 "installMEGASync"="Cài MEGAsync";
 /* Message shown on the achievements dialog for achieved achievements, %1 and %2 are replaced with e.g. 20 GB */
@@ -1014,7 +1018,7 @@
 /* Text shown on the upgrade account page above the current PRO plan subscription */
 "currentPlan"="Gói Hiện Tại:";
 /* Button on the Pro page to request a custom Pro plan because their storage usage is more than the regular plans. */
-"requestAPlan"="Đăng ký gói dịch vụ";
+"requestAPlan"="Yêu cầu gói cước đặt biệt";
 /* Asks the user to request a custom Pro plan from customer support because their storage usage is more than the regular plans. */
 "thereAreNoPlansSuitableForYourCurrentUsage"="Hiện không có gói thuê bao nào phù hợp cho nhu cầu sử dụng của bạn. Xin [A]liên lạc nhón hỗ trợ[/A] để yêu cầu một gói dịch vụ tùy chỉnh.";
 /* Header shown to help on the purchasin process */
@@ -1102,7 +1106,7 @@
 /* Button label. Allows to add contacts in current chat conversation. */
 "addParticipant"="Mời thêm người vào trò chuyện...";
 /* Menu item to add participants to a chat */
-"addParticipants"="Thêm người tham gia";
+"addParticipants"="Thêm thành viên";
 /* Title that refers to the status of the chat (Either Online or Offline) */
 "status"="Trạng thái";
 /* Title used in settings that enables the generation of link previews in the chat */
@@ -1190,7 +1194,7 @@
 /* Alert text that explains what means confirming the action 'Leave' */
 "youWillNoLongerHaveAccessToThisConversation"="Bạn không còn quyền hạn truy cập cuộc trò chuyện này";
 /* A button label. The button allows the user to leave the conversation. */
-"leaveChat"="Rời khỏi Cuộc Trò Chuyện";
+"leaveChat"="Rời Khỏi Cuộc Chat";
 /* Button title that allows the user to leave a group chat. */
 "leaveGroup"="Rời Nhóm Chat";
 /* Label to describe the section where you can see the participants of a group chat */
@@ -1206,7 +1210,7 @@
 /* Title show above the name of the persons with whom you're chatting */
 "chattingWith"="Đang chat với";
 /* Full text: MEGA protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: Confidentiality - Only the author and intended recipients are able to decipher and read the content. Authenticity - There is an assurance that the message received was authored by the stated sender, and its content has not been tampered with during transport or on the server. */
-"chatIntroductionMessage"="MEGA bảo vệ các cuộc trò chuyện của bạn nghiêm ngặt với công nghệ bảo mật đầu-cuối cung cấp sự đảm bảo an toàn cần thiết:";
+"chatIntroductionMessage"="MEGA bảo vệ các cuộc trò chuyện nghiêm ngặt với công nghệ bảo mật đầu-cuối (người dùng kiểm soát) cung cấp sự đảm bảo an toàn cần thiết:";
 /* Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit. */
 "confidentialityExplanation"="[S]Đảo Bảo Bí Mật.[/S] Chỉ có tác giả hay người sở hữu và người được giao quyền sử dụng mới có thể giải mã và đọc nội dung.";
 /* Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit. */
@@ -1301,6 +1305,8 @@
 "connecting"="Đang kết nối...";
 /* Inform user that there were unsupported assets in the share extension */
 "shareExtensionUnsupportedAssets"="Một số tệp tin không thể chia sẻ lên được MEGA";
+/* Message shown to the user when the share extension is about to be killed by iOS due to a memory issue */
+"The resources are limited when sharing items. Try uploading these files from MEGA app."="The resources are limited when sharing items. Try uploading these files from MEGA app.";
 /* Notification message shown when a transfer failed. Keep colon. */
 "Transfer failed:"="Truyền tải thất bại:";
 /* MEGAError */
@@ -1335,7 +1341,7 @@
 /* Label to show that an error related with the decryption process of a node occurs during a SDK operation. */
 "Invalid key/Decryption error"="Khóa không hợp lệ/Lỗi giải mã";
 /* Label to show that an error related with a bad session ID occurs during a SDK operation. */
-"Bad session ID"="Chứng thực phiên hoạt động không tốt";
+"Bad session ID"="Bad session ID";
 /* Label to show that an error related with a blocked account occurs during a SDK operation. */
 "Blocked"="Bị chặn";
 /* Label to show that an error related with an over quota occurs during a SDK operation. */
@@ -1355,7 +1361,7 @@
 /* Text shown in an alert when the user is about to change the language of the app */
 "languageRestartAlert"="Ứng dụng MEGA cần phải được khởi động lại để áp dụng ngôn ngữ mới";
 /* Text shown in a notification to make it easy for the user to restart the app after the language is changed */
-"languageRestartNotification"="Ngôn ngữ đã được chỉnh. Chạm để khởi động lại.";
+"languageRestartNotification"="Ngôn ngữ đã thay đổi. Chạm để khởi động lại.";
 /* The following strings are only for the App Store description, they're not used on the app (The only exception is the one with 'autorenewableDescription' key) On the 'generalDescriptionParagraph6' we must delete 'Desktop - https://mega.nz/' because the app can be rejected because of that. */
 /* Paragraph 1 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
 "generalDescriptionParagraph1"="MEGA là một dịch vụ lưu trữ điện toán đám mây đuợc bảo mật toàn quyền từ phía người sử dụng thông qua trình duyệt web hiện hành. Không giống như các hãng khác, dữ liệu của bạn được mã hóa tuyệt đối, không ai mở được ngay cả MEGA và chỉ có thiết bị bạn sử dụng mới giải mã được.";
@@ -1368,7 +1374,7 @@
 /* Paragraph 4 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
 "generalDescriptionParagraph4"="MEGA cũng cấp cho mỗi thành viên 50 GB không gian để lưu trữ hoàn toàn miễn phí, kèm thêm nhiều cách ưu đãi để mở rộng hạn mức cùng với hạng tài khoản trả phí:";
 /* Paragraph 5 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
-"generalDescriptionParagraph5"="Gói cước PRO LITE: €4.99 (US$4.99) mỗi tháng hay €49.99 (US$49.99) mỗi năm cung cấp cho bạn 200 GB không gian lưu trữ và 1 TB cho băng thông truyền tải mỗi tháng.\nGói cước PRO I: €9.99 (US$9.99) mỗi tháng hay €99.99 (US$99.99) mỗi năm cung cấp cho bạn 1 TB không gian lưu trữ và 2 TB cho băng thông truyền tải mỗi tháng.\nGói cước PRO II: €19.99 (US$19.99) mỗi tháng hay €199.99 (US$199.99) mỗi năm cung cấp cho bạn 4 TB không gian lưu trữ và 8 TB cho băng thông truyền tải mỗi tháng.\nGói cước PRO III: €29.99 (US$29.99) mỗi tháng hay €299.99 (US$299.99) mỗi năm cung cấp cho bạn 8 TB không gian lưu trữ và 16 TB cho băng thông truyền tải mỗi tháng.";
+"generalDescriptionParagraph5"="Gói cước PRO LITE: €4.99 (US$4.99) mỗi tháng hay €49.99 (US$49.99) mỗi năm cung cấp 200 GB không gian lưu trữ và 1 TB cho băng thông truyền tải mỗi tháng.\nGói cước PRO I: €9.99 (US$9.99) mỗi tháng hay €99.99 (US$99.99) mỗi năm cung cấp 1 TB không gian lưu trữ và 2 TB cho băng thông truyền tải mỗi tháng.\nGói cước PRO II: €19.99 (US$19.99) mỗi tháng hay €199.99 (US$199.99) mỗi năm cung cấp 4 TB không gian lưu trữ và 8 TB cho băng thông truyền tải mỗi tháng.\nGói cước PRO III: €29.99 (US$29.99) mỗi tháng hay €299.99 (US$299.99) mỗi năm cung cấp 8 TB không gian lưu trữ và 16 TB cho băng thông truyền tải mỗi tháng.";
 /* Between paragraph 5 and 6 we have to put the string with the 'autorenewableDescription' key */
 /* Paragraph 6 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
 "generalDescriptionParagraph6"="Để biết thêm thông tin, xin truy cập website của chúng tôi: https://mega.nz/\nĐiều Khoản Sử Dụng Dịch Vụ: https://mega.nz/terms\nChính Sách Quyền Riêng Tư: https://mega.nz/privacy";
@@ -1393,13 +1399,13 @@
 /* Button title to see the available bonus */
 "getBonus"="Nhận thêm Thưởng";
 /* Text shown under the title 'Video quality' that explains what it means */
-"qualityOfVideosUploadedToAChat"="Quality of videos uploaded to a chat";
+"qualityOfVideosUploadedToAChat"="Chất lượng hình ảnh của video khi đăng tải lên chat";
 /* Label used near to the option selected to encode the videos uploaded to a chat (Low, Medium, Original) */
-"videoQuality"="Video quality";
+"videoQuality"="Chất lượng video";
 /* Property associated with something smaller than the usual or average size, number, value, or amount. For example: option to encode a video with low quality. */
-"low"="Low";
+"low"="Thấp";
 /* Option to upload videos with the same resolution and same framerate than the original one, but converting them to MP4. */
-"high"="High";
+"high"="Cao";
 /* Property associated with the first one made and not a copy. For example: Get the original video, without encoding.  */
 "original"="Giữ nguyên gốc";
 /* Label for the status of a transfer when is being preparing - (String as short as possible). */
@@ -1561,10 +1567,38 @@
 /* Confirmation message for user to confirm it will unarchive an archived chat. */
 "unarchiveChatMessage"="Có chắc muốn chuyển cuộc trò chuyện ra khỏi thư viện bảo lưu hay không?";
 /* The title of the dialog to unarchive an archived chat. */
-"unarchiveChat"="Rời Cuộc Chat Khỏi Bảo Lưu";
+"unarchiveChat"="Chuyển Cuộc Chat Khỏi Bảo Lưu";
 /* Title of button to archive chats. */
 "archiveChat"="Bảo Lưu Cuộc Chat";
 /* Title of flag of archived chats. */
 "archived"="Bảo lưu";
 /* Title of empty state view for archived chats. */
-"noArchivedChats"="Không có cuộc chat nào được bảo lưu";
+"noArchivedChats"="Không có Cuộc Chat nào";
+/* A title for the Two-Factor Authentication section on the My Account - Security page. */
+"twoFactorAuthentication"="Xác Minh 2-Bước";
+/* Button title to start the setup of a feature. For example 'Begin Setup' for Two-Factor Authentication */
+"beginSetup"="Bắt Đầu Cài Đặt";
+/* A message on the Verify Login page telling the user to enter their 2FA code. */
+"pleaseEnterTheSixDigitCode"="Xin nhập một đoạn mã dài 6 chữ số lấy từ app Lập Xác Thực.";
+/* Title of the dialog displayed to start setup the Two-Factor Authentication */
+"whyYouDoNeedTwoFactorAuthentication"="Tại sao cần sử dụng chức năng Xác Thực 2-Bước?";
+/* Description for the ‘Two-Factor Authentication’ in the security settings section. */
+"whatIsTwoFactorAuthentication"="Chức năng Xác Minh 2-Bước là một lớp bảo mật thứ nhì cho tài khoản.";
+/* Description text of the dialog displayed to start setup the Two-Factor Authentication */
+"whyYouDoNeedTwoFactorAuthenticationDescription"="Chức năng Xác Minh 2-Bước là một lớp bảo mật thứ nhì cho tài khoản. Nghĩa là trong trường hợp có người biết mật khẩu để lén vào tài khoản sẽ không thể vào được, và buộc phải nhập thêm đoạn mã 6 chữ số mà chỉ chủ sở hữu tài khoản mới có.";
+/* Alert text shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device */
+"youNeedATwoFactorAuthenticationApp"="Cần phải có cài app lập xác thực cho thiết bị này";
+/* A title on the mobile web client page showing that 2FA has been enabled successfully. */
+"twoFactorAuthenticationEnabled"="Xác Minh 2-Bước được Bật";
+/* A message on the dialog shown after 2FA was successfully enabled. */
+"twoFactorAuthenticationEnabledDescription"="Vào những lần đăng nhập tiếp theo, hệ thống sẽ yêu cầu nhập một đoạn mã dài 6 chữ số lấy từ app lập xác thực.";
+/* A warning message on the Backup Recovery Key dialog to tell the user to backup their Recovery Key to their local computer. */
+"pleaseSaveYourRecoveryKey"="Xin lưu lại Mã Khoá Phục Hồi ở nơi an toàn";
+/* An informational message on the Backup Recovery Key dialog. */
+"twoFactorAuthenticationEnabledWarning"="MEGA sẽ không thể giúp phục hồi tài khoản nếu chủ tài khoản để mất Mã Khoá Phục Hồi, và có chức năng XM2B được bật.";
+/* A message on a dialog to say that 2FA has been successfully disabled. */
+"twoFactorAuthenticationDisabled"="Xác Minh 2-Bước Đã Tắt";
+/* A message on the setup two-factor authentication page on the mobile web client. */
+"scanOrCopyTheSeed"="Quét hay sao chép đoạn chủng tử nằm dưới đây vào app Lập Xác Thực muốn sử dụng. Cũng nên lưu lại mã này ở nơi an toàn trong trường hợp mất điện thoại.";
+/* A button to help them restore their account if they have lost their 2FA device. */
+"lostYourAuthenticatorDevice"="Thiết bị có cài app Lập Xác Thực đã bị mất?";

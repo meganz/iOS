@@ -7,6 +7,7 @@
 #import "MEGASdkManager.h"
 #import "MEGANode+MNZCategory.h"
 #import "MEGANodeList+MNZCategory.h"
+#import "MEGAReachabilityManager.h"
 #import "UIImageView+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 #import "Helper.h"
@@ -60,7 +61,7 @@
     if (!self.presentedViewController) {
         [[MEGASdkManager sharedMEGASdk] addMEGADelegate:self];
     }
-    [[MEGASdkManager sharedMEGASdk] retryPendingConnections];
+    [[MEGAReachabilityManager sharedManager] retryPendingConnections];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -231,7 +232,7 @@
         [self removeAction:nil];
     }];
     removeAction.image = [UIImage imageNamed:@"delete"];
-    removeAction.backgroundColor = UIColor.mnz_redF0373A;
+    removeAction.backgroundColor = UIColor.mnz_redMain;
     [rightActions addObject:removeAction];
     
     if (indexPath.section != 0) {
@@ -472,7 +473,7 @@
         NSMutableArray *rightButtons = [NSMutableArray new];
         self.selectedNodesArray = [NSMutableArray arrayWithObject:node];
 
-        MGSwipeButton *deleteButton = [MGSwipeButton buttonWithTitle:@"" icon:[UIImage imageNamed:@"delete"] backgroundColor:UIColor.mnz_redF0373A padding:25 callback:^BOOL(MGSwipeTableCell *sender) {
+        MGSwipeButton *deleteButton = [MGSwipeButton buttonWithTitle:@"" icon:[UIImage imageNamed:@"delete"] backgroundColor:UIColor.mnz_redMain padding:25 callback:^BOOL(MGSwipeTableCell *sender) {
             [self removeAction:nil];
             return YES;
         }];

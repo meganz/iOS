@@ -46,6 +46,8 @@ const CGFloat kGroupChatCellLabelHeight = 35.0f;
 const CGFloat k1on1CellLabelHeight = 28.0f;
 const CGFloat kAvatarImageDiameter = 24.0f;
 
+const NSUInteger kMaxMessagesToLoad = 256;
+
 @interface MessagesViewController () <JSQMessagesViewAccessoryButtonDelegate, JSQMessagesComposerTextViewPasteDelegate, MEGAChatDelegate, MEGAChatRequestDelegate, MEGARequestDelegate>
 
 @property (nonatomic, strong) MEGAOpenMessageHeaderView *openMessageHeaderView;
@@ -90,7 +92,7 @@ const CGFloat kAvatarImageDiameter = 24.0f;
 @property (nonatomic) UIColor *lastChatRoomStateColor;
 @property (nonatomic) UIImage *peerAvatar;
 
-@property (nonatomic) NSUInteger unreadMessages;
+@property (nonatomic) NSInteger unreadMessages;
 
 @property (nonatomic) CGFloat lastBottomInset;
 @property (nonatomic) CGFloat lastVerticalOffset;
@@ -113,7 +115,7 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     [super viewDidLoad];
     
     _messages = [[NSMutableArray alloc] init];
-    self.unreadMessages = ABS(self.chatRoom.unreadCount);
+    self.unreadMessages = self.chatRoom.unreadCount;
     
     if ([[MEGASdkManager sharedMEGAChatSdk] openChatRoom:self.chatRoom.chatId delegate:self]) {
         MEGALogDebug(@"Chat room opened: %@", self.chatRoom);
@@ -255,6 +257,7 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     [super viewWillAppear:animated];
     
     [[MEGASdkManager sharedMEGAChatSdk] addChatDelegate:self];
+    [[MEGAReachabilityManager sharedManager] retryPendingConnections];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(internetConnectionChanged) name:kReachabilityChangedNotification object:nil];
     
@@ -331,8 +334,8 @@ const CGFloat kAvatarImageDiameter = 24.0f;
 
 - (void)loadMessages {
     NSUInteger messagesToLoad = 32;
-    if (self.isFirstLoad && self.unreadMessages > 32) {
-        messagesToLoad = self.unreadMessages;
+    if (self.isFirstLoad && (self.unreadMessages > 32 || self.unreadMessages < 0)) {
+        messagesToLoad = ABS(self.unreadMessages);
     }
     NSInteger loadMessage = [[MEGASdkManager sharedMEGAChatSdk] loadMessagesForChat:self.chatRoom.chatId count:messagesToLoad];
     switch (loadMessage) {
@@ -441,7 +444,8 @@ const CGFloat kAvatarImageDiameter = 24.0f;
             _audioCallBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"audioCall"] style:UIBarButtonItemStyleDone target:self action:@selector(startAudioVideoCall:)];
             self.videoCallBarButtonItem.tag = 1;
             self.navigationItem.rightBarButtonItems = @[self.videoCallBarButtonItem, self.audioCallBarButtonItem];
-            self.audioCallBarButtonItem.enabled = self.videoCallBarButtonItem.enabled = ((self.chatRoom.ownPrivilege >= MEGAChatRoomPrivilegeStandard) && [MEGAReachabilityManager isReachable]);
+            MEGAChatConnection chatConnection = [[MEGASdkManager sharedMEGAChatSdk] chatConnectionState:self.chatRoom.chatId];
+            self.audioCallBarButtonItem.enabled = self.videoCallBarButtonItem.enabled = ((self.chatRoom.ownPrivilege >= MEGAChatRoomPrivilegeStandard) && (chatConnection == MEGAChatConnectionOnline));
         }
     }
 }
@@ -691,7 +695,7 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     NSString *confidentialityString = [confidentialityExplanationString mnz_stringBetweenString:@"[S]" andString:@"[/S]"];
     confidentialityExplanationString = [confidentialityExplanationString stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"[S]%@[/S]", confidentialityString] withString:@""];
     
-    NSMutableAttributedString *confidentialityAttributedString = [[NSMutableAttributedString alloc] initWithString:confidentialityString attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:15.0f], NSForegroundColorAttributeName:[UIColor mnz_redF0373A]}];
+    NSMutableAttributedString *confidentialityAttributedString = [[NSMutableAttributedString alloc] initWithString:confidentialityString attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:15.0f], NSForegroundColorAttributeName:UIColor.mnz_redMain}];
     NSMutableAttributedString *confidentialityExplanationAttributedString = [[NSMutableAttributedString alloc] initWithString:confidentialityExplanationString attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:15.0f], NSForegroundColorAttributeName:[UIColor mnz_gray777777]}];
     [confidentialityAttributedString appendAttributedString:confidentialityExplanationAttributedString];
     self.openMessageHeaderView.confidentialityLabel.attributedText = confidentialityAttributedString;
@@ -700,7 +704,7 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     NSString *authenticityString = [authenticityExplanationString mnz_stringBetweenString:@"[S]" andString:@"[/S]"];
     authenticityExplanationString = [authenticityExplanationString stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"[S]%@[/S]", authenticityString] withString:@""];
 
-    NSMutableAttributedString *authenticityAttributedString = [[NSMutableAttributedString alloc] initWithString:authenticityString attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:15.0f], NSForegroundColorAttributeName:[UIColor mnz_redF0373A]}];
+    NSMutableAttributedString *authenticityAttributedString = [[NSMutableAttributedString alloc] initWithString:authenticityString attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:15.0f], NSForegroundColorAttributeName:UIColor.mnz_redMain}];
     NSMutableAttributedString *authenticityExplanationAttributedString = [[NSMutableAttributedString alloc] initWithString:authenticityExplanationString attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:15.0f], NSForegroundColorAttributeName:[UIColor mnz_gray777777]}];
     [authenticityAttributedString appendAttributedString:authenticityExplanationAttributedString];
     self.openMessageHeaderView.authenticityLabel.attributedText = authenticityAttributedString;
@@ -742,7 +746,7 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     if (sourceType == UIImagePickerControllerSourceTypeCamera) {
         MEGAImagePickerController *imagePickerController = [[MEGAImagePickerController alloc] initToShareThroughChatWithSourceType:sourceType filePathCompletion:^(NSString *filePath, UIImagePickerControllerSourceType sourceType) {
             MEGANode *parentNode = [[MEGASdkManager sharedMEGASdk] nodeForPath:@"/My chat files"];
-            if (filePath.mnz_imagePathExtension) {
+            if (filePath.mnz_isImagePathExtension) {
                 [self startUploadAndAttachWithPath:filePath parentNode:parentNode appData:nil];
             }
             if (filePath.mnz_isVideoPathExtension) {
@@ -910,15 +914,6 @@ const CGFloat kAvatarImageDiameter = 24.0f;
 - (void)jumpToBottomPressed:(UITapGestureRecognizer *)recognizer {
     [self scrollToBottomAnimated:YES];
     [self hideJumpToBottom];
-}
-
-- (void)hideUnreadMessagesLabelIfNeeded {
-    NSIndexPath *lastIndexPath = [NSIndexPath indexPathForItem:(self.messages.count - 1) inSection:0];
-    if (self.unreadMessages && [[self.collectionView indexPathsForVisibleItems] containsObject:lastIndexPath]) {
-        NSIndexPath *indexPathForCellWithUnreadMessagesLabel = [self indexPathForCellWithUnreadMessagesLabel];
-        self.unreadMessages = 0;
-        [self.collectionView reloadItemsAtIndexPaths:@[indexPathForCellWithUnreadMessagesLabel]];
-    }
 }
 
 - (void)setTypingIndicator {
@@ -1232,8 +1227,18 @@ const CGFloat kAvatarImageDiameter = 24.0f;
 }
 
 - (void)shareSelectedMessages:(UIBarButtonItem *)sender {
-    UIActivityViewController *activityViewController = [Helper activityViewControllerForChatMessages:self.selectedMessages sender:sender];
-    [self presentViewController:activityViewController animated:YES completion:nil];
+    [SVProgressHUD show];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        UIActivityViewController *activityViewController = [Helper activityViewControllerForChatMessages:self.selectedMessages sender:sender];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [SVProgressHUD dismiss];
+            if (activityViewController) {
+                [self presentViewController:activityViewController animated:YES completion:nil];
+            } else {
+                [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"linkUnavailable", nil)];
+            }
+        });
+    });
 }
 
 #pragma mark - JSQMessagesViewController method overrides
@@ -1396,7 +1401,7 @@ const CGFloat kAvatarImageDiameter = 24.0f;
             selectOptionAlertController.popoverPresentationController.sourceView = self.inputToolbar.contentView;
             
             [self presentViewController:selectOptionAlertController animated:YES completion:nil];
-            selectOptionAlertController.view.tintColor = [UIColor mnz_redF0373A];
+            selectOptionAlertController.view.tintColor = UIColor.mnz_redMain;
 
             break;
         }
@@ -1774,7 +1779,7 @@ const CGFloat kAvatarImageDiameter = 24.0f;
                 if (action == @selector(delete:)) {
                     if (message.isDeletable) return YES;
                 }
-                //TODO: View profile / Start new chat
+                //TODO: Send Message
             } else {
                 if (action == @selector(addContact:message:)) return YES;
             }
@@ -2200,10 +2205,12 @@ const CGFloat kAvatarImageDiameter = 24.0f;
     
         if (!self.areAllMessagesSeen && message.userHandle != [[MEGASdkManager sharedMEGAChatSdk] myUserHandle]) {
             if ([[MEGASdkManager sharedMEGAChatSdk] lastChatMessageSeenForChat:self.chatRoom.chatId].messageId != message.messageId) {
-                if ([[MEGASdkManager sharedMEGAChatSdk] setMessageSeenForChat:self.chatRoom.chatId messageId:message.messageId]) {
-                    self.areAllMessagesSeen = YES;
-                } else {
-                    MEGALogError(@"setMessageSeenForChat failed: The chatid is invalid or the message is older than last-seen-by-us message.");
+                if (!self.isFirstLoad || self.unreadMessages >= 0) {
+                    if ([[MEGASdkManager sharedMEGAChatSdk] setMessageSeenForChat:self.chatRoom.chatId messageId:message.messageId]) {
+                        self.areAllMessagesSeen = YES;
+                    } else {
+                        MEGALogError(@"setMessageSeenForChat failed: The chatid is invalid or the message is older than last-seen-by-us message.");
+                    }
                 }
             } else {
                 self.areAllMessagesSeen = YES;
@@ -2211,25 +2218,43 @@ const CGFloat kAvatarImageDiameter = 24.0f;
         }
     } else {
         if (self.isFirstLoad) {
-            self.isFirstLoad = NO;
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [self.collectionView reloadData];
-            });
-            dispatch_async(dispatch_get_main_queue(), ^{
-                NSInteger numberOfItemsInSection = [self.collectionView numberOfItemsInSection:0];
-                NSInteger item = numberOfItemsInSection - (self.unreadMessages + 1);
-                if (item < 0) {
-                    item = 0;
+            if (self.unreadMessages < 0 && self.unreadMessages > -kMaxMessagesToLoad) {
+                if (self.chatRoom.unreadCount < 0) {
+                    self.unreadMessages += self.chatRoom.unreadCount;
+                } else {
+                    self.unreadMessages = self.chatRoom.unreadCount;
                 }
-                NSIndexPath *lastUnreadIndexPath = [NSIndexPath indexPathForItem:item inSection:0];
-                if (numberOfItemsInSection) {
-                    [self.collectionView scrollToItemAtIndexPath:lastUnreadIndexPath atScrollPosition:UICollectionViewScrollPositionTop animated:NO];
+                [self loadMessages];
+            } else {
+                self.isFirstLoad = NO;
+                MEGAChatMessage *lastMessage = self.messages.lastObject;
+                if ([[MEGASdkManager sharedMEGAChatSdk] setMessageSeenForChat:self.chatRoom.chatId messageId:lastMessage.messageId]) {
+                    self.areAllMessagesSeen = YES;
+                } else {
+                    MEGALogError(@"setMessageSeenForChat failed: The chatid is invalid or the message is older than last-seen-by-us message.");
                 }
-                
-                if (self.unreadMessages) {
-                    [self showOrHideJumpToBottom];
+                if (self.unreadMessages < 0) {
+                    self.unreadMessages = 0;
                 }
-            });
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [self.collectionView reloadData];
+                });
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    NSInteger numberOfItemsInSection = [self.collectionView numberOfItemsInSection:0];
+                    NSInteger item = numberOfItemsInSection - (self.unreadMessages + 1);
+                    if (item < 0) {
+                        item = 0;
+                    }
+                    NSIndexPath *lastUnreadIndexPath = [NSIndexPath indexPathForItem:item inSection:0];
+                    if (numberOfItemsInSection) {
+                        [self.collectionView scrollToItemAtIndexPath:lastUnreadIndexPath atScrollPosition:UICollectionViewScrollPositionTop animated:NO];
+                    }
+                    
+                    if (self.unreadMessages) {
+                        [self showOrHideJumpToBottom];
+                    }
+                });
+            }
         } else {
             // TODO: improve load earlier messages
             CGFloat oldContentOffsetFromBottomY = self.collectionView.contentSize.height - self.collectionView.contentOffset.y;
@@ -2444,6 +2469,7 @@ const CGFloat kAvatarImageDiameter = 24.0f;
 - (void)onChatConnectionStateUpdate:(MEGAChatSdk *)api chatId:(uint64_t)chatId newState:(int)newState {
     if (chatId == self.chatRoom.chatId) {
         [self customNavigationBarLabel];
+        [self rightBarButtonItems];
     }
 }
 

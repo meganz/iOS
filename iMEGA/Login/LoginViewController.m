@@ -4,13 +4,16 @@
 #import "SVProgressHUD.h"
 
 #import "Helper.h"
+#import "MEGAMultiFactorAuthCheckRequestDelegate.h"
 #import "MEGANavigationController.h"
+#import "MEGALoginRequestDelegate.h"
 #import "MEGALogger.h"
 #import "MEGAReachabilityManager.h"
-#import "MEGALoginRequestDelegate.h"
+#import "MEGASdkManager.h"
 #import "NSString+MNZCategory.h"
 
 #import "CreateAccountViewController.h"
+#import "TwoFactorAuthenticationViewController.h"
 #import "PasswordView.h"
 
 @interface LoginViewController () <UITextFieldDelegate, MEGARequestDelegate>
@@ -25,9 +28,6 @@
 
 @property (weak, nonatomic) IBOutlet UIButton *createAccountButton;
 @property (weak, nonatomic) IBOutlet UIButton *forgotPasswordButton;
-
-@property (nonatomic) NSString *email;
-@property (nonatomic) NSString *password;
 
 @end
 
@@ -44,7 +44,9 @@
     
     UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(logoTappedFiveTimes:)];
     tapGestureRecognizer.numberOfTapsRequired = 5;
-    self.logoImageView.gestureRecognizers = @[tapGestureRecognizer];
+    UILongPressGestureRecognizer *longPressGestureRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(logoPressedFiveSeconds:)];
+    longPressGestureRecognizer.minimumPressDuration = 5.0f;
+    self.logoImageView.gestureRecognizers = @[tapGestureRecognizer, longPressGestureRecognizer];
     
     [self.emailTextField setPlaceholder:AMLocalizedString(@"emailPlaceholder", @"Email")];
     self.passwordView.passwordTextField.delegate = self;
@@ -65,7 +67,18 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
+    [self.navigationController setNavigationBarHidden:YES animated:YES];
+    
     [self.navigationItem setTitle:AMLocalizedString(@"login", nil)];
+    
+    if (self.emailString) {
+        self.emailTextField.text = self.emailString;
+        self.emailString = nil;
+        
+        [self.passwordView.passwordTextField becomeFirstResponder];
+    } else {
+        self.emailTextField.placeholder = AMLocalizedString(@"emailPlaceholder", @"Hint text to suggest that the user has to write his email");
+    }
     
     [[MEGALogger sharedLogger] enableChatlogs];
 }
@@ -98,15 +111,18 @@
     
     if ([self validateForm]) {
         if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-            self.email = self.emailTextField.text;
-            self.password = self.passwordView.passwordTextField.text;
-            
-            NSOperationQueue *operationQueue = [NSOperationQueue new];
-            
-            NSInvocationOperation *operation = [[NSInvocationOperation alloc] initWithTarget:self
-                                                                                    selector:@selector(generateKeys)
-                                                                                      object:nil];
-            [operationQueue addOperation:operation];
+            MEGALoginRequestDelegate *loginRequestDelegate = [[MEGALoginRequestDelegate alloc] init];
+            loginRequestDelegate.errorCompletion = ^(MEGAError *error) {
+                if (error.type == MEGAErrorTypeApiEMFARequired) {
+                    TwoFactorAuthenticationViewController *twoFactorAuthenticationVC = [[UIStoryboard storyboardWithName:@"TwoFactorAuthentication" bundle:nil] instantiateViewControllerWithIdentifier:@"TwoFactorAuthenticationViewControllerID"];
+                    twoFactorAuthenticationVC.twoFAMode = TwoFactorAuthenticationLogin;
+                    twoFactorAuthenticationVC.email = self.emailTextField.text;
+                    twoFactorAuthenticationVC.password = self.passwordView.passwordTextField.text;
+                    
+                    [self.navigationController pushViewController:twoFactorAuthenticationVC animated:YES];
+                }
+            };
+            [[MEGASdkManager sharedMEGASdk] loginWithEmail:self.emailTextField.text password:self.passwordView.passwordTextField.text delegate:loginRequestDelegate];
         }
     }
 }
@@ -123,12 +139,10 @@
     }
 }
 
-- (void)generateKeys {
-    NSString *privateKey = [[MEGASdkManager sharedMEGASdk] base64pwkeyForPassword:self.password];
-    NSString *publicKey  = [[MEGASdkManager sharedMEGASdk] hashForBase64pwkey:privateKey email:self.email];
-    
-    MEGALoginRequestDelegate *loginRequestDelegate = [[MEGALoginRequestDelegate alloc] init];
-    [[MEGASdkManager sharedMEGASdk] fastLoginWithEmail:self.email stringHash:publicKey base64pwKey:privateKey delegate:loginRequestDelegate];
+- (void)logoPressedFiveSeconds:(UITapGestureRecognizer *)sender {
+    if (sender.state == UIGestureRecognizerStateBegan) {
+        [Helper changeApiURL];
+    }
 }
 
 - (BOOL)validateForm {
@@ -212,7 +226,7 @@
         shoulBeLoginButtonGray = [self isEmptyAnyTextFieldForTag:textField.tag];
     }
     
-    self.loginButton.backgroundColor = shoulBeLoginButtonGray ? UIColor.mnz_grayEEEEEE : UIColor.mnz_redFF4D52;
+    self.loginButton.backgroundColor = shoulBeLoginButtonGray ? UIColor.mnz_grayEEEEEE : UIColor.mnz_redMain;
     
     return YES;
 }

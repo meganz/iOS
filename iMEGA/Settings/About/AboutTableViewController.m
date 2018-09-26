@@ -30,17 +30,19 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self.versionLabel setText:AMLocalizedString(@"version", nil)];
+    self.versionLabel.text = AMLocalizedString(@"App version", @"App means “Application”");
     [self.versionNumberLabel setText:[[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"]];
-    UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(logoTappedFiveTimes:)];
+    UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(appVersionTappedFiveTimes:)];
     tapGestureRecognizer.numberOfTapsRequired = 5;
-    self.versionCell.gestureRecognizers = @[tapGestureRecognizer];
+    UILongPressGestureRecognizer *longPressGestureRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(appVersionPressedFiveSeconds:)];
+    longPressGestureRecognizer.minimumPressDuration = 5.0f;
+    self.versionCell.gestureRecognizers = @[tapGestureRecognizer, longPressGestureRecognizer];
     
     self.sdkVersionLabel.text = AMLocalizedString(@"sdkVersion", @"Title of the label where the SDK version is shown");
-    self.sdkVersionSHALabel.text = @"df9a6947";
+    self.sdkVersionSHALabel.text = @"734f8c86";
     
     self.megachatSdkVersionLabel.text = AMLocalizedString(@"megachatSdkVersion", @"Title of the label where the MEGAchat SDK version is shown");
-    self.megachatSdkSHALabel.text = @"903f3d3b";
+    self.megachatSdkSHALabel.text = @"b81e8314";
     
     [self.acknowledgementsLabel setText:AMLocalizedString(@"acknowledgements", nil)];
 }
@@ -58,9 +60,15 @@
 
 #pragma mark - Private
 
-- (void)logoTappedFiveTimes:(UITapGestureRecognizer *)sender {
+- (void)appVersionTappedFiveTimes:(UITapGestureRecognizer *)sender {
     if (sender.state == UIGestureRecognizerStateEnded) {
         [Helper enableOrDisableLog];
+    }
+}
+
+- (void)appVersionPressedFiveSeconds:(UITapGestureRecognizer *)sender {
+    if (sender.state == UIGestureRecognizerStateBegan) {
+        [Helper changeApiURL];
     }
 }
 

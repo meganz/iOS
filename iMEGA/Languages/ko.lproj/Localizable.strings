@@ -139,7 +139,7 @@
 /* Error text shown when you don't have selected the checkbox to agree with the Terms of Service */
 "termsCheckboxUnselected"="MEGA에 계정을 등록하려면 이용 약관에 동의해야합니다.";
 /* Error text shown when the users tries to create an account with an email already in use */
-"emailAlreadyRegistered"="이 이메일 주소는 이미 MEGA에 등록되어있는 계정입니다.";
+"emailAlreadyRegistered"="이 이메일 주소는 이미 MEGA에 가입되어 있습니다.";
 /* Title shown just after doing some action that requires confirming the action by an email */
 "awaitingEmailConfirmation"="이메일 확인 기다리는 중";
 /* Text shown on the confirm account view to remind the user what to do */
@@ -298,8 +298,10 @@
 "newFolderMessage"="새 폴더의 이름";
 /* Title button for the create folder alert.  */
 "createFolderButton"="생성";
-/* message when trying to create a folder that already exists */
-"folderAlreadyExists"="폴더가 이미 존재합니다";
+/* A tooltip message which is shown when a folder name is duplicated during renaming or creation. */
+"There is already a folder with the same name"="이미 같은 이름을 가진 폴더가 존재합니다.";
+/* A tooltip message which shows when a file name is duplicated during renaming. */
+"There is already a file with the same name"="이미 같은 이름을 가진 파일이 존재합니다.";
 /* Option given on the `Add` section to allow the user upload something from another cloud storage provider. The three dots implies that an action occurs after tapping on it. */
 "uploadFrom"="다음에서 들여오기...";
 /* Message shown when the user selects a file from another cloud storage provider that's already uploaded. "[A] = {name of the original file} already uploaded with name [B] = {name of the file in MEGA}" */
@@ -656,8 +658,6 @@
 "about"="대하여";
 /* Title of one of the Settings sections where you can set up the 'Language' of the app */
 "language"="언어";
-/* On each translation this should be the target language. So, if it's English, English then. If it's Spanish = "Español", if it's German "Deustch" */
-"applicationLanguage"="어플리케이션 언어";
 /* Title of one of the Settings sections where you can 'Send Feedback' to MEGA */
 "sendFeedbackLabel"="피드백 보내기";
 /* Message body of the email that appears when the users tap on "Send feedback" */
@@ -682,6 +682,8 @@
 "onlyWhenChargingLabel"="충전중일 때만";
 /* Footer text to explain the Camera Uploads functionality */
 "cameraUploads_footer"="활성화하면 새 사진과 동영상이 업로드됩니다.";
+/* App means “Application” */
+"App version"="앱 버전";
 /* Title of the label where the SDK version is shown */
 "sdkVersion"="MEGA SDK 버전";
 /* Title of the label where the MEGAchat SDK version is shown */
@@ -701,7 +703,7 @@
 /*  */
 "masterKey_thirdParagraph"="외부 공격자가 당신의 키만으로 계정에 접근할 수는 없습니다. 비밀번호 재설정은 당신의 이메일에 대한 접근과 키 모두를 요구합니다.";
 /* Message of the dialog displayed when copy the user's Recovery Key to the clipboard to be saved or exported. */
-"recoveryKeyCopiedToClipboard"="복구 키가 클립보드로 복사되었습니다";
+"recoveryKeyCopiedToClipboard"="복구 키가 클립보드로 복사되었습니다. 안전한 곳에 보관하세요.";
 /* Alert title shown when you have exported your MEGA Recovery Key */
 "masterKeyExported"="복구 키 내보내짐";
 /* Alert message shown to explain that the Recovery Key was saved on your device. Also that you can access it through iTunes. And ends with and security advise. */
@@ -748,6 +750,8 @@
 "cancellationLinkHasExpired"="취소 링크가 만료되었습니다.";
 /* Text shown in the last alert dialog to confirm the cancellation of an account */
 "enterYourPasswordToConfirmThatYouWanToClose"="계정을 취소하는 마지막 단계입니다. 클라우드에 저장된 모든 데이터를 잃게 됩니다. 아래에 비밀번호를 입력하세요.";
+/* During account cancellation (deletion) */
+"accountCanceledSuccessfully"="계정이 성공적으로 취소되었습니다.";
 /* Account closure, password check dialog when user click on closure email. */
 "closeAccount"="계정 닫기";
 /* Title for the action that allows to remove a file or folder */
@@ -1301,6 +1305,8 @@
 "connecting"="연결중...";
 /* Inform user that there were unsupported assets in the share extension */
 "shareExtensionUnsupportedAssets"="일부 항목이 MEGA로 공유될 수 없습니다.";
+/* Message shown to the user when the share extension is about to be killed by iOS due to a memory issue */
+"The resources are limited when sharing items. Try uploading these files from MEGA app."="The resources are limited when sharing items. Try uploading these files from MEGA app.";
 /* Notification message shown when a transfer failed. Keep colon. */
 "Transfer failed:"="전송 실패:";
 /* MEGAError */
@@ -1368,7 +1374,7 @@
 /* Paragraph 4 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
 "generalDescriptionParagraph4"="MEGA는 모든 가입 회원에게 넉넉한 50 GB의 무료 저장소를 보너스 도전 과제와 함께 제공하며, 더 높은 제한을 가진 유료 요금제를 제공합니다:";
 /* Paragraph 5 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
-"generalDescriptionParagraph5"="PRO LITE 구독권: 매월 €4.99 (US$4.99) 또는 매년 €49.99 (US$49.99)에 200 GB의 저장 공간과 1 TB의 대역폭을 매달 드립니다.\nPRO I 구독권: 매월 €9.99 (US$9.99) 또는 매년 €99.99 (US$99.99)에 1 TB의 저장 공간과 2 TB의 대역폭을 매달 드립니다.\nPRO II 구독권: 매월 €19.99 (US$19.99) 또는 매년 €199.99 (US$199.99)에 4 TB의 저장 공간과 8 TB의 대역폭을 매달 드립니다.\nPRO III 구독권: 매월 €29.99 (US$29.99) 또는 매년 €299.99 (US$299.99)에 8 TB의 저장 공간과 16 TB의 대역폭을 매달 드립니다.";
+"generalDescriptionParagraph5"="PRO LITE 구독권: 매달 €4.99 (US$4.99) 또는 매해 €49.99 (US$49.99)에 200 GB의 저장 공간과 매달 1 TB의 전송 할당량을 드립니다.\nPRO I 구독권: 매달 €9.99 (US$9.99) 또는 매해 €99.99 (US$99.99)에 1 TB의 저장 공간과 매달 2 TB의 전송 할당량을 드립니다.\nPRO II 구독권: 매달 €19.99 (US$19.99) 또는 매해 €199.99 (US$199.99)에 4 TB의 저장 공간과 매달 8 TB의 전송 할당량을 드립니다.\nPRO III 구독권: 매달 €29.99 (US$29.99) 또는 매해 €299.99 (US$299.99)에 8 TB의 저장 공간과 매달 16 TB의 전송 할당량을 드립니다.";
 /* Between paragraph 5 and 6 we have to put the string with the 'autorenewableDescription' key */
 /* Paragraph 6 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
 "generalDescriptionParagraph6"="자세한 정보는, 우리의 웹사이트를 확인하세요: https://mega.nz/\n이용 약관: https://mega.nz/terms\n개인정보 처리방침: https://mega.nz/privacy";
@@ -1393,13 +1399,13 @@
 /* Button title to see the available bonus */
 "getBonus"="보너스 얻기";
 /* Text shown under the title 'Video quality' that explains what it means */
-"qualityOfVideosUploadedToAChat"="Quality of videos uploaded to a chat";
+"qualityOfVideosUploadedToAChat"="대화에 업로드된 동영상의 품질";
 /* Label used near to the option selected to encode the videos uploaded to a chat (Low, Medium, Original) */
-"videoQuality"="Video quality";
+"videoQuality"="동영상 품질";
 /* Property associated with something smaller than the usual or average size, number, value, or amount. For example: option to encode a video with low quality. */
-"low"="Low";
+"low"="낮음";
 /* Option to upload videos with the same resolution and same framerate than the original one, but converting them to MP4. */
-"high"="High";
+"high"="높음";
 /* Property associated with the first one made and not a copy. For example: Get the original video, without encoding.  */
 "original"="원본";
 /* Label for the status of a transfer when is being preparing - (String as short as possible). */
@@ -1568,3 +1574,31 @@
 "archived"="보관됨";
 /* Title of empty state view for archived chats. */
 "noArchivedChats"="보관된 대화 없음";
+/* A title for the Two-Factor Authentication section on the My Account - Security page. */
+"twoFactorAuthentication"="2단계 인증";
+/* Button title to start the setup of a feature. For example 'Begin Setup' for Two-Factor Authentication */
+"beginSetup"="설정 시작";
+/* A message on the Verify Login page telling the user to enter their 2FA code. */
+"pleaseEnterTheSixDigitCode"="인증기 앱에서 생성된 6자리 코드를 입력하세요.";
+/* Title of the dialog displayed to start setup the Two-Factor Authentication */
+"whyYouDoNeedTwoFactorAuthentication"="왜 2단계 인증이 필요한가요?";
+/* Description for the ‘Two-Factor Authentication’ in the security settings section. */
+"whatIsTwoFactorAuthentication"="2단계 인증은 당신의 계정을 위한 보안의 두번째 층입니다.";
+/* Description text of the dialog displayed to start setup the Two-Factor Authentication */
+"whyYouDoNeedTwoFactorAuthenticationDescription"="2단계 인증은 당신의 계정을 위한 보안의 두번째 층입니다. 당신만이 접근할 수 있는 6자리 코드가 없으면, 당신의 비밀번호를 알고 있을지라도 접근할 수 없습니다.";
+/* Alert text shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device */
+"youNeedATwoFactorAuthenticationApp"="이 기기에 2단계 인증 앱이 필요합니다";
+/* A title on the mobile web client page showing that 2FA has been enabled successfully. */
+"twoFactorAuthenticationEnabled"="2단계 인증 활성화됨";
+/* A message on the dialog shown after 2FA was successfully enabled. */
+"twoFactorAuthenticationEnabledDescription"="다음번에 로그인할 때 당신의 인증 앱에 의해 제공된 6자리 코드를 입력하라고 요구될 것입니다.";
+/* A warning message on the Backup Recovery Key dialog to tell the user to backup their Recovery Key to their local computer. */
+"pleaseSaveYourRecoveryKey"="복구 키를 안전한 곳에 저장하세요";
+/* An informational message on the Backup Recovery Key dialog. */
+"twoFactorAuthenticationEnabledWarning"="2단계 인증을 활성화한 후 접근을 잃고 복구 키를 백업하지 않았다면, MEGA는 다시 접근하도록 도와드릴 수 없습니다.";
+/* A message on a dialog to say that 2FA has been successfully disabled. */
+"twoFactorAuthenticationDisabled"="2단계 인증 비활성화됨";
+/* A message on the setup two-factor authentication page on the mobile web client. */
+"scanOrCopyTheSeed"="시드를 인증기 앱에서 스캔하거나 복사하세요. 휴대전화를 잃어버렸을 경우를 대비하여 이 시드를 안전한 곳에 백업하세요.";
+/* A button to help them restore their account if they have lost their 2FA device. */
+"lostYourAuthenticatorDevice"="인증기 장치를 잃어버렸나요?";
