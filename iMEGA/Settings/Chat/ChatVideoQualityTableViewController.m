@@ -16,6 +16,8 @@
 
 @implementation ChatVideoQualityTableViewController
 
+#pragma mark - Lifecycle
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -55,12 +57,6 @@
     
     SelectableTableViewCell *cell = [self.tableView cellForRowAtIndexPath:self.currentChatVideoQualityIndexPath];
     cell.redCheckmarkImageView.hidden = NO;
-}
-
-#pragma mark - UITableViewDataSource
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 4;
 }
 
 #pragma mark - UITableViewDelegate

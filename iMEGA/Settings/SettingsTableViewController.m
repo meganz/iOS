@@ -125,33 +125,6 @@
     [Helper presentSafariViewControllerWithURL:[NSURL URLWithString:urlString]];
 }
 
-#pragma mark - UITableViewDataSource
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 6;
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    NSInteger numberOfRows = 0;
-    switch (section) {
-        case 0: //Camera Uploads, Chat
-        case 1:
-        case 2: //Advanced
-        case 3:
-            numberOfRows = 2;
-            break;
-
-        case 4: //Help
-            numberOfRows = 1;
-            break;
-
-        case 5: //Privacy Policy, Terms of Service, GDPR
-            numberOfRows = 3;
-            break;
-    }
-    return numberOfRows;
-}
-
 #pragma mark - UITableViewDelegate
 
 
