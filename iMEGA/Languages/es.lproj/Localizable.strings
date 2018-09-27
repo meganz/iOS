@@ -720,20 +720,6 @@
 "dontUseHttp"="No usar HTTP";
 /* Footer text that explains when disabling the HTTP protocol for transfers may be useful */
 "transfersSectionFooter"="Activa esta opción solo si tus transferencias no se inician. En circunstancias normales HTTP es suficiente ya que todas las transferencias ya viajan encriptadas.";
-/* Title header that refers to where you enable the options 'Save images in gallery' and 'Save videos in gallery' inside 'Settings' -> 'Advanced' section" */
-"imageAndVideoDownloadsHeader"="Descargas de imágenes y vídeos";
-/* Title header that refers to where do you enable the options 'Save media in gallery -> 'Advanced' section. String as short as possible */
-"photosTakenAndVideoRecordedFromWithinTheAppHeader"="Archivos multimedia creados desde la aplicación";
-/* Section title where you can enable the option 'Save images in gallery' */
-"saveImagesInGallery"="Guardar imágenes en la galería";
-/* Section title where you can enable the option 'Save videos in gallery' */
-"saveVideosInGallery"="Guardar vídeos en la galería";
-/* Section title where you can enable the option 'Save media in gallery' */
-"saveMediaInGallery"="Guarda archivos multimedia en la galería";
-/* Footer text that explain what happen if the options 'Save videos in gallery’ and 'Save images in gallery’ are enabled */
-"imageAndVideoDownloadsFooter"="Guardar las imágenes y los vídeos compatibles con iOS en la galería del dispositivo (Nota: las imágenes y los vídeos no serán guardados en Sin conexión).";
-/* Footer text that explain what happen if the options 'Save media in gallery’ is enabled */
-"photosTakenAndVideoRecordedFromWithinTheAppFooter"="Activa esta opción para guardar en la galería las fotos y los videos creados desde la aplicación";
 /* Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped */
 "currentlyUsing"="Actualmente en uso %s";
 /* In 'My account', when user want to delete/remove/cancel account will click button named 'Cancel your account' */

@@ -9,14 +9,6 @@
 #import "MEGASdkManager.h"
 #import "MEGAReachabilityManager.h"
 
-#import "AboutTableViewController.h"
-#import "AdvancedTableViewController.h"
-#import "CameraUploadsTableViewController.h"
-#import "HelpTableViewController.h"
-#import "LanguageTableViewController.h"
-#import "PasscodeTableViewController.h"
-#import "SecurityOptionsTableViewController.h"
-
 @interface SettingsTableViewController () <UITableViewDataSource, UITableViewDelegate>
 
 @property (strong, nonatomic) NSDictionary *languagesDictionary;
@@ -31,6 +23,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *passcodeDetailLabel;
 @property (weak, nonatomic) IBOutlet UILabel *securityOptionsLabel;
 
+@property (weak, nonatomic) IBOutlet UILabel *fileManagementLabel;
 @property (weak, nonatomic) IBOutlet UILabel *advancedLabel;
 
 @property (weak, nonatomic) IBOutlet UILabel *aboutLabel;
@@ -115,6 +108,7 @@
     self.passcodeDetailLabel.text = ([LTHPasscodeViewController doesPasscodeExist] ? AMLocalizedString(@"on", nil) : AMLocalizedString(@"off", nil));
     self.securityOptionsLabel.text = AMLocalizedString(@"securityOptions", @"Title of the Settings section where you can configure security details of your MEGA account");
     
+    self.fileManagementLabel.text = AMLocalizedString(@"File Management", @"A section header which contains the file management settings. These settings allow users to remove duplicate files etc.");
     self.advancedLabel.text = AMLocalizedString(@"advanced", @"Title of one of the Settings sections where you can configure 'Advanced' options");
     
     self.aboutLabel.text = AMLocalizedString(@"about", @"Title of one of the Settings sections where you can see things 'About' the app");
@@ -142,15 +136,15 @@
     switch (section) {
         case 0: //Camera Uploads, Chat
         case 1:
+        case 2: //Advanced
         case 3:
             numberOfRows = 2;
             break;
-            
-        case 2: //Advanced
+
         case 4: //Help
             numberOfRows = 1;
             break;
-            
+
         case 5: //Privacy Policy, Terms of Service, GDPR
             numberOfRows = 3;
             break;
@@ -160,60 +154,16 @@
 
 #pragma mark - UITableViewDelegate
 
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 44.0;
-}
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    
     switch (indexPath.section) {
-        case 0: { //Camera Uploads, Chat
-            if (indexPath.row == 0) {
-                CameraUploadsTableViewController *cameraUploadsTVC = [[UIStoryboard storyboardWithName:@"Settings" bundle:nil] instantiateViewControllerWithIdentifier:@"CameraUploadsSettingsID"];
-                [self.navigationController pushViewController:cameraUploadsTVC animated:YES];
-            }
+        case 0: //Camera Uploads, Chat
+        case 1: //Pascode, Security Options
+        case 2: //File management - Advanced
+        case 3: //About, Language
+        case 4: //Help
             break;
-        }
-        
-        case 1: { //Pascode, Security Options
-            if (indexPath.row == 0) {
-                PasscodeTableViewController *passcodeTVC = [[UIStoryboard storyboardWithName:@"Settings" bundle:nil] instantiateViewControllerWithIdentifier:@"PasscodeTableViewControllerID"];
-                [self.navigationController pushViewController:passcodeTVC animated:YES];
-                break;
-            } else if (indexPath.row == 1) {
-                SecurityOptionsTableViewController *securityOptionsTVC = [[UIStoryboard storyboardWithName:@"Settings" bundle:nil] instantiateViewControllerWithIdentifier:@"SecurityOptionsTableViewControllerID"];
-                [self.navigationController pushViewController:securityOptionsTVC animated:YES];
-                break;
-            }
-        }
             
-        case 2: { //Advanced
-            AdvancedTableViewController *advancedTVC = [[UIStoryboard storyboardWithName:@"Settings" bundle:nil] instantiateViewControllerWithIdentifier:@"AdvancedTableViewControllerID"];
-            [self.navigationController pushViewController:advancedTVC animated:YES];
-            break;
-        }
-         
-        case 3: { //About, Language
-            if (indexPath.row == 0) {
-                AboutTableViewController *aboutTVC = [[UIStoryboard storyboardWithName:@"Settings" bundle:nil] instantiateViewControllerWithIdentifier:@"AboutTableViewControllerID"];
-                [self.navigationController pushViewController:aboutTVC animated:YES];
-                break;
-            } else if (indexPath.row == 1) {
-                LanguageTableViewController *languageTVC = [[UIStoryboard storyboardWithName:@"Settings" bundle:nil] instantiateViewControllerWithIdentifier:@"LanguageTableViewControllerID"];
-                [self.navigationController pushViewController:languageTVC animated:YES];
-                break;
-            }
-        }
-            
-        case 4: { //Help
-            if (indexPath.row == 0) {
-                HelpTableViewController *helpTVC = [[UIStoryboard storyboardWithName:@"Settings" bundle:nil] instantiateViewControllerWithIdentifier:@"HelpTableViewControllerID"];
-                [self.navigationController pushViewController:helpTVC animated:YES];
-                break;
-            }
-            break;
-        }
-         
         case 5: { //Privacy Policy, Terms of Service
             if ([MEGAReachabilityManager isReachableHUDIfNot]) {
                 if (indexPath.row == 0) {
