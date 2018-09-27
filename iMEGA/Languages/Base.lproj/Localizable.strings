@@ -847,6 +847,8 @@
 "help"="Help";
 /* Title of the section to access MEGA's help centre */
 "helpCentreLabel"="Help centre";
+/* Section title that links you to the webpage that let you join and test the beta versions */
+"Join Beta"="Join Beta";
 /* Title to rate the app */
 "rateUsLabel"="Rate us";
 /* Title of the Transfers section */
