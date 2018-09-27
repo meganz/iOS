@@ -684,6 +684,8 @@
 "sdkVersion"="MEGA SDK version";
 /* Title of the label where the MEGAchat SDK version is shown */
 "megachatSdkVersion"="MEGAchat SDK version";
+/* Link to the public code of the app */
+"View source code"="View source code";
 /* Title for the section "Acknowledgements" of the app */
 "acknowledgements"="Acknowledgements";
 /* Title for the MEGA Recovery Key */
