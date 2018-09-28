@@ -77,6 +77,8 @@
         self.tableView.tableHeaderView = self.searchController.searchBar;
     }
     
+    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+    
     [self reloadUI];
 }
 
