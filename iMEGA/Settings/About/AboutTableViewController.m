@@ -20,8 +20,6 @@
 
 @property (weak, nonatomic) IBOutlet UITableViewCell *versionCell;
 
-@property (weak, nonatomic) IBOutlet UIView *debugView;
-
 @end
 
 @implementation AboutTableViewController
