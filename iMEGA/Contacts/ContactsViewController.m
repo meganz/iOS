@@ -99,6 +99,8 @@
     
     self.panOnTable = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(shouldDismissSearchController)];
     self.panOnTable.delegate = self;
+    
+    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -968,20 +970,15 @@
         if (indexPath.row == 0) {
             cell.nameLabel.text = AMLocalizedString(@"inviteContact", @"Text shown when the user tries to make a call and the receiver is not a contact");
             cell.avatarImageView.image = [UIImage imageNamed:@"inviteToChat"];
-            if (self.users.size.intValue == 0) {
-                cell.lineView.hidden = YES;
-            }
         } else {
             cell.nameLabel.text = AMLocalizedString(@"groupChat", @"Label title for a group chat");
             cell.avatarImageView.image = [UIImage imageNamed:@"createGroup"];
-            cell.lineView.hidden = YES;
         }
         return cell;
     } else if (self.contactsMode == ContactsModeChatNamingGroup && indexPath.section == 0) {
         ContactTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"NamingGroupTableViewCellID" forIndexPath:indexPath];
         cell.permissionsImageView.hidden = YES;
-        cell.groupNameTextField.placeholder = AMLocalizedString(@"enterGroupName", @"Placeholder to hint the user to write a name for the group chat.");
-        cell.lineView.hidden = YES;
+        cell.groupNameTextField.placeholder = AMLocalizedString(@"enterGroupName", @"Placeholder to hint the user to write a name for the group chat.");        
         cell.avatarImageView.image = [UIImage imageNamed:@"addGroupAvatar"];
         [cell.groupNameTextField becomeFirstResponder];
         return cell;
