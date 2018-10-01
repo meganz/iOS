@@ -93,4 +93,50 @@
     return permissionsAlertController;
 }
 
++ (BOOL)shouldAskForAudioPermissions {
+    if ([AVCaptureDevice respondsToSelector:@selector(requestAccessForMediaType:completionHandler:)]) {
+        return [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeAudio] == AVAuthorizationStatusNotDetermined;
+    }
+    return NO;
+}
+
++ (BOOL)shouldAskForVideoPermissions {
+    if ([AVCaptureDevice respondsToSelector:@selector(requestAccessForMediaType:completionHandler:)]) {
+        return [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeVideo] == AVAuthorizationStatusNotDetermined;
+    }
+    return NO;
+}
+
++ (BOOL)shouldAskForPhotosPermissions {
+    return [PHPhotoLibrary authorizationStatus] == PHAuthorizationStatusNotDetermined;
+}
+
++ (BOOL)shouldAskForNotificationsPermissions {
+    __block BOOL shouldAskForNotificationsPermissions = NO;
+    if (@available(iOS 10.0, *)) {
+        dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
+        [UNUserNotificationCenter.currentNotificationCenter getNotificationSettingsWithCompletionHandler:^(UNNotificationSettings * _Nonnull settings) {
+            if (settings.authorizationStatus == UNAuthorizationStatusNotDetermined) {
+                shouldAskForNotificationsPermissions = YES;
+            }
+            dispatch_semaphore_signal(semaphore);
+        }];
+        double delayInSeconds = 10.0;
+        dispatch_time_t waitTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+        dispatch_semaphore_wait(semaphore, waitTime);
+    } else {
+        shouldAskForNotificationsPermissions = !UIApplication.sharedApplication.isRegisteredForRemoteNotifications;
+    }
+    return shouldAskForNotificationsPermissions;
+}
+
++ (BOOL)shouldSetupPermissions {
+    BOOL shouldAskForAudioPermissions = [self shouldAskForAudioPermissions];
+    BOOL shouldAskForVideoPermissions = [self shouldAskForVideoPermissions];
+    BOOL shouldAskForPhotosPermissions = [self shouldAskForPhotosPermissions];
+    BOOL shouldAskForNotificationsPermissions = [self shouldAskForNotificationsPermissions];
+    
+    return shouldAskForAudioPermissions || shouldAskForVideoPermissions || shouldAskForPhotosPermissions || shouldAskForNotificationsPermissions;
+}
+
 @end

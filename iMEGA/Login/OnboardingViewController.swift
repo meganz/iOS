@@ -69,7 +69,6 @@ class OnboardingViewController: UIViewController, UIScrollViewDelegate {
         switch type {
         case .onboarding:
             pageControl.currentPageIndicatorTintColor = UIColor.mnz_redMain()
-            pageControl.numberOfPages = 4
             pageControl.addTarget(self, action: #selector(pageControlValueChanged), for: .valueChanged)
             
             primaryButton.setTitle("createAccount".localized(withComment: "Button title which triggers the action to create a MEGA account"), for: .normal)
@@ -103,7 +102,6 @@ class OnboardingViewController: UIViewController, UIScrollViewDelegate {
             scrollView.isUserInteractionEnabled = false;
             
             pageControl.currentPageIndicatorTintColor = UIColor.mnz_green00BFA5()
-            pageControl.numberOfPages = 3
             pageControl.isUserInteractionEnabled = false;
 
             primaryButton.setTitle("Enable Access".localized(withComment: "Button which triggers a request for a specific permission, that have been explained to the user beforehand"), for: .normal)
@@ -112,24 +110,31 @@ class OnboardingViewController: UIViewController, UIScrollViewDelegate {
             secondaryButton.setTitle("notNow".localized(), for: .normal)
             secondaryButton.setTitleColor(UIColor.mnz_green899B9C(), for: .normal)
             
-            contentView.addSubview({
-                let view = OnboardingInfoView(type: .photosPermission)
-                view.configureForAutoLayout()
-                return view
-                }())
-            contentView.addSubview({
-                let view = OnboardingInfoView(type: .microphoneAndCameraPermissions)
-                view.configureForAutoLayout()
-                return view
-                }())
-            contentView.addSubview({
-                let view = OnboardingInfoView(type: .notificationsPermission)
-                view.configureForAutoLayout()
-                return view
-                }())
+            if DevicePermissionsHelper.shouldAskForPhotosPermissions() {
+                contentView.addSubview({
+                    let view = OnboardingInfoView(type: .photosPermission)
+                    view.configureForAutoLayout()
+                    return view
+                    }())
+            }
+            if DevicePermissionsHelper.shouldAskForAudioPermissions() || DevicePermissionsHelper.shouldAskForVideoPermissions() {
+                contentView.addSubview({
+                    let view = OnboardingInfoView(type: .microphoneAndCameraPermissions)
+                    view.configureForAutoLayout()
+                    return view
+                    }())
+            }
+            if DevicePermissionsHelper.shouldAskForNotificationsPermissions() {
+                contentView.addSubview({
+                    let view = OnboardingInfoView(type: .notificationsPermission)
+                    view.configureForAutoLayout()
+                    return view
+                    }())
+            }
         }
         
         scrollView.delegate = self
+        pageControl.numberOfPages = contentView.subviews.count
         primaryButton.addTarget(self, action: #selector(primaryButtonTapped), for: .touchUpInside)
         secondaryButton.addTarget(self, action: #selector(secondaryButtonTapped), for: .touchUpInside)
     }
@@ -203,6 +208,17 @@ class OnboardingViewController: UIViewController, UIScrollViewDelegate {
         pageControl.currentPage = page
     }
     
+    private func nextPageOrDismiss() {
+        let nextPage = self.pageControl.currentPage + 1
+        if nextPage < self.pageControl.numberOfPages {
+            self.scrollTo(page: nextPage)
+        } else {
+            self.dismiss(animated: true) {
+                self.completion?()
+            }
+        }
+    }
+    
     
     
     // MARK: UIScrollViewDelegate
@@ -227,31 +243,27 @@ class OnboardingViewController: UIViewController, UIScrollViewDelegate {
             present(createAccountNC, animated: true, completion: nil)
 
         case .permissions:
-            switch pageControl.currentPage {
-            case 0:
+            let currentView: OnboardingInfoView = contentView.subviews[pageControl.currentPage] as! OnboardingInfoView
+            switch currentView.type {
+            case .photosPermission:
                 DevicePermissionsHelper.photosPermission { (_) in
-                    self.scrollTo(page: 1)
+                    self.nextPageOrDismiss()
                 }
                 
-            case 1:
+            case .microphoneAndCameraPermissions:
                 DevicePermissionsHelper.audioPermission { (_) in
-                    DevicePermissionsHelper.videoPermission(completionHandler: { (_) in
-                        self.scrollTo(page: 2)
-                    })
-                }
-                
-            case 2:
-                DevicePermissionsHelper.notificationsPermission { (_) in
-                    self.dismiss(animated: true) {
-                        self.completion?()
+                    DevicePermissionsHelper.videoPermission { (_) in
+                        self.nextPageOrDismiss()
                     }
                 }
                 
-            default:
-                dismiss(animated: true) {
-                    self.completion?()
+            case .notificationsPermission:
+                DevicePermissionsHelper.notificationsPermission { (_) in
+                    self.nextPageOrDismiss()
                 }
-
+                
+            default:
+                nextPageOrDismiss()
             }
         }
     }
@@ -263,24 +275,7 @@ class OnboardingViewController: UIViewController, UIScrollViewDelegate {
             present(createAccountNC, animated: true, completion: nil)
 
         case .permissions:
-            switch pageControl.currentPage {
-            case 0:
-                scrollTo(page: 1)
-                
-            case 1:
-                scrollTo(page: 2)
-
-            case 2:
-                dismiss(animated: true) {
-                    self.completion?()
-                }
-
-            default:
-                dismiss(animated: true) {
-                    self.completion?()
-                }
-                
-            }
+            nextPageOrDismiss()
         }
     }
     
