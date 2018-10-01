@@ -1644,3 +1644,5 @@
 "We would like to send you notifications so you receive new messages on your device instantly."="We willen u notificaties sturen zodat u nieuwe berichten direct op uw apparaat kunt ontvangen.";
 /* Button which triggers a request for a specific permission, that have been explained to the user beforehand */
 "Enable Access"="Toegang inschakelen";
+/* Confirmation dialog for the button that logs the user out of all sessions except the current one. */
+"Do you want to close all other sessions? This will log you out on all other active sessions except the current one."="Wilt u alle andere sessies sluiten? Dit logt u uit op alle andere actieve sessies behalve de huidige sessie.";
