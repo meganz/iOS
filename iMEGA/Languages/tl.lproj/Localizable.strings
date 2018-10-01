@@ -1002,7 +1002,7 @@
 /* Label for any 'Limited' button, link, text, title, etc. - (String as short as possible). */
 "limited"="Limitado";
 /* A message shown at registration time when users have to select their plan. The FREE 50 GB plan is subject to the achievements program. */
-"subjectToYourParticipationInOurAchievementsProgram"="Subject to your participation in our achievements program.";
+"subjectToYourParticipationInOurAchievementsProgram"="Subject sa iyong partisipasyon sa aming achievements program.";
 /* Price asociated with the MEGA PRO account level you can subscribe */
 "productPricePerMonth"="%@ kada buwan";
 /* Header that help you with the upgrading process explaining that you have to choose one of the plans below  to continue */
@@ -1258,7 +1258,7 @@
 /* Title shown when you almost had used your available transfer quota. */
 "depletedTransferQuota_title"="Depleted na ang transfer quota";
 /* Description shown when you almost had used your available transfer quota. */
-"depletedTransferQuota_message"="Your queued download exceeds the current transfer quota available for your account and may therefore be interrupted.";
+"depletedTransferQuota_message"="Ang iyong queued download ay lagpas sa kasalukuyang transfer quota na available sa iyong account at maaaring maputol.";
 /* Button title to see the available pro plans in MEGA */
 "seePlans"="Tingnan ang plano";
 /* Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible). */
@@ -1625,7 +1625,7 @@
 /* Title shown in a page of the on boarding screens explaining that the user can backup the photos automatically */
 "Your Photos in the Cloud"="Your Photos in the Cloud";
 /* Description shown in a page of the onboarding screens explaining the camera uploads feature */
-"Camera Uploads is an essential feature for any mobile device and we got you covered. Create your account now."="Camera Uploads is an essential feature for any mobile device and we got you covered. Create your account now.";
+"Camera Uploads is an essential feature for any mobile device and we have got you covered. Create your account now."="Camera Uploads is an essential feature for any mobile device and we have got you covered. Create your account now.";
 /* Button which triggers the initial setup */
 "Setup MEGA"="Setup MEGA";
 /* Detailed explanation of why the user should give some permissions to MEGA */
@@ -1633,11 +1633,11 @@
 /* Title label that explains that the user is going to be asked for the photos permission */
 "Allow Access to Photos"="Allow Access to Photos";
 /* Detailed explanation of why the user should give permission to access to the photos */
-"To share photos and videos allow MEGA to access your photos"="To share photos and videos allow MEGA to access your photos";
+"To share photos and videos, allow MEGA to access your photos"="To share photos and videos, allow MEGA to access your photos";
 /* Title label that explains that the user is going to be asked for the microphone and camera permission */
 "Enable Microphone and Camera"="Enable Microphone and Camera";
 /* Detailed explanation of why the user should give permission to access to the camera and the microphone */
-"To make encrypted voice and video calls allow MEGA access to your Camera and Microphone"="To make encrypted voice and video calls allow MEGA access to your Camera and Microphone";
+"To make encrypted voice and video calls, allow MEGA access to your Camera and Microphone"="To make encrypted voice and video calls, allow MEGA access to your Camera and Microphone";
 /* Title label that explains that the user is going to be asked for the notifications permission */
 "Enable Notifications"="Paganahin ang Notifications";
 /* Detailed explanation of why the user should give permission to deliver notifications */
