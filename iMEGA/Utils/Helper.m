@@ -1208,14 +1208,7 @@ static BOOL pointToStaging;
     
     [Helper deleteUserData];
     [Helper deleteMasterKey];
-    
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    UIViewController *viewController = [storyboard instantiateViewControllerWithIdentifier:@"initialViewControllerID"];
-    UIWindow *window = [[[UIApplication sharedApplication] delegate] window];
-    [UIView transitionWithView:window duration:0.5 options:(UIViewAnimationOptionTransitionCrossDissolve | UIViewAnimationOptionAllowAnimatedContent) animations:^{
-        [window setRootViewController:viewController];
-    } completion:nil];
-        
+            
     [Helper resetCameraUploadsSettings];
     [Helper resetUserData];
     

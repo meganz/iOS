@@ -13,6 +13,8 @@
 #import "SAMKeychain.h"
 #import "SVProgressHUD.h"
 
+#import "MEGA-Swift.h"
+
 #import "CameraUploads.h"
 #import "Helper.h"
 #import "DevicePermissionsHelper.h"
@@ -48,6 +50,7 @@
 #import "CreateAccountViewController.h"
 #import "CustomModalAlertViewController.h"
 #import "DisplayMode.h"
+#import "InitialLaunchViewController.h"
 #import "LaunchViewController.h"
 #import "LoginViewController.h"
 #import "MainTabBarController.h"
@@ -74,7 +77,7 @@
 
 #define kFirstRun @"FirstRun"
 
-@interface AppDelegate () <PKPushRegistryDelegate, UIApplicationDelegate, UNUserNotificationCenterDelegate, LTHPasscodeViewControllerDelegate, MEGAApplicationDelegate, MEGAChatDelegate, MEGAChatRequestDelegate, MEGAGlobalDelegate, MEGAPurchasePricingDelegate, MEGARequestDelegate, MEGATransferDelegate> {
+@interface AppDelegate () <PKPushRegistryDelegate, UIApplicationDelegate, UNUserNotificationCenterDelegate, LTHPasscodeViewControllerDelegate, InitialLaunchViewControllerDelegate, MEGAApplicationDelegate, MEGAChatDelegate, MEGAChatRequestDelegate, MEGAGlobalDelegate, MEGAPurchasePricingDelegate, MEGARequestDelegate, MEGATransferDelegate> {
     BOOL isAccountFirstLogin;
     BOOL isFetchNodesDone;
     
@@ -135,6 +138,8 @@
     [MEGASdk setLogLevel:MEGALogLevelFatal];
 #endif
     
+    self.window = [[UIWindow alloc] initWithFrame:UIScreen.mainScreen.bounds];
+
     [self migrateLocalCachesLocation];
     
     if ([launchOptions objectForKey:@"UIApplicationLaunchOptionsRemoteNotificationKey"]) {
@@ -275,7 +280,6 @@
         
         [self registerForVoIPNotifications];
         [self registerForNotifications];
-        [self requestCameraAndMicPermissions];
         
         isAccountFirstLogin = NO;
         
@@ -349,6 +353,8 @@
             }];
             createAccountRequestDelegate.resumeCreateAccount = YES;
             [[MEGASdkManager sharedMEGASdk] resumeCreateAccountWithSessionId:sessionId delegate:createAccountRequestDelegate];
+        } else {
+            self.window.rootViewController = [OnboardingViewController new];
         }
     }
     
@@ -378,6 +384,7 @@
     
     MEGALogDebug(@"Application did finish launching with options %@", launchOptions);
     
+    [self.window makeKeyAndVisible];
     return YES;
 }
 
@@ -489,8 +496,8 @@
     }
 }
 
-- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
-    MEGALogDebug(@"Application open URL %@, source application %@", url, sourceApplication);
+- (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options {
+    MEGALogDebug(@"Application open URL %@", url);
     
     self.link = url;
     [self manageLink:url];
@@ -1267,7 +1274,6 @@
     if (isAccountFirstLogin) {
         [self registerForVoIPNotifications];
         [self registerForNotifications];
-        [self requestCameraAndMicPermissions];
     }
     
     [self openTabBasedOnNotificationMegatype];
@@ -1275,6 +1281,22 @@
     if (self.presentInviteContactVCLater) {
         [self presentInviteContactCustomAlertViewController];
     }
+}
+
+- (void)showOnboarding {
+    OnboardingViewController *onboardingVC = [OnboardingViewController new];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        UIView *overlayView = [[UIScreen mainScreen] snapshotViewAfterScreenUpdates:NO];
+        [onboardingVC.view addSubview:overlayView];
+        self.window.rootViewController = onboardingVC;
+        
+        [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
+            overlayView.alpha = 0;
+        } completion:^(BOOL finished) {
+            [overlayView removeFromSuperview];
+            [SVProgressHUD dismiss];
+        }];
+    });
 }
 
 - (void)openTabBasedOnNotificationMegatype {
@@ -1329,11 +1351,6 @@
                                                                              settingsForTypes:UIUserNotificationTypeAlert | UIUserNotificationTypeBadge |
                                                                              UIUserNotificationTypeSound categories:nil]];
     }
-}
-
-- (void)requestCameraAndMicPermissions {
-    [DevicePermissionsHelper audioPermissionWithCompletionHandler:nil];
-    [DevicePermissionsHelper videoPermissionWithCompletionHandler:nil];
 }
 
 - (void)notificationsSettings {
@@ -1835,6 +1852,12 @@ void uncaughtExceptionHandler(NSException *exception) {
     }
 }
 
+#pragma mark - InitialLaunchViewControllerDelegate
+
+- (void)setupFinished {
+    [self showMainTabBar];
+}
+
 #pragma mark - MEGAPurchasePricingDelegate
 
 - (void)pricingsReady {
@@ -2024,6 +2047,7 @@ void uncaughtExceptionHandler(NSException *exception) {
             case MEGAErrorTypeApiEArgs: {
                 if ([request type] == MEGARequestTypeLogin) {
                     [Helper logout];
+                    [self showOnboarding];
                 } else if ([request type] == MEGARequestTypeQuerySignUpLink) {
                     [self showLinkNotValid];
                 }
@@ -2060,6 +2084,7 @@ void uncaughtExceptionHandler(NSException *exception) {
                 if (self.urlType == URLTypeCancelAccountLink) {
                     self.urlType = URLTypeDefault;
                     [Helper logout];
+                    [self showOnboarding];
                     
                     UIAlertController *accountCanceledSuccessfullyAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"accountCanceledSuccessfully", @"During account cancellation (deletion)") message:nil preferredStyle:UIAlertControllerStyleAlert];
                     [accountCanceledSuccessfullyAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", @"Button title to accept something") style:UIAlertActionStyleCancel handler:nil]];
@@ -2074,6 +2099,7 @@ void uncaughtExceptionHandler(NSException *exception) {
                         [self.API_ESIDAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
                         [UIApplication.mnz_visibleViewController presentViewController:self.API_ESIDAlertController animated:YES completion:nil];
                         [Helper logout];
+                        [self showOnboarding];
                     }
                 }
                 break;
@@ -2197,8 +2223,11 @@ void uncaughtExceptionHandler(NSException *exception) {
                     [[[NSUserDefaults alloc] initWithSuiteName:@"group.mega.ios"] setBool:YES forKey:@"IsChatEnabled"];
                 }
             }
-            [self showMainTabBar];
-
+            
+            if (!isAccountFirstLogin) {
+                [self showMainTabBar];
+            }
+            
             NSUserDefaults *sharedUserDefaults = [[NSUserDefaults alloc] initWithSuiteName:@"group.mega.ios"];
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
                 if (![sharedUserDefaults boolForKey:@"treeCompleted"]) {
@@ -2311,7 +2340,8 @@ void uncaughtExceptionHandler(NSException *exception) {
             
         case MEGARequestTypeLogout: {            
             [Helper logout];
-            [SVProgressHUD dismiss];
+            [self showOnboarding];
+            
             [[MEGASdkManager sharedMEGASdk] mnz_setAccountDetails:nil];
             
             if (self.messageForSuspendedAccount) {

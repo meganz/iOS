@@ -18,6 +18,8 @@
 
 @interface LoginViewController () <UITextFieldDelegate, MEGARequestDelegate>
 
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *cancelBarButtonItem;
+
 @property (weak, nonatomic) IBOutlet UIImageView *logoImageView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *logoTopLayoutConstraint;
 
@@ -48,6 +50,8 @@
     longPressGestureRecognizer.minimumPressDuration = 5.0f;
     self.logoImageView.gestureRecognizers = @[tapGestureRecognizer, longPressGestureRecognizer];
     
+    self.cancelBarButtonItem.title = AMLocalizedString(@"cancel", @"Button title to cancel something");
+    
     [self.emailTextField setPlaceholder:AMLocalizedString(@"emailPlaceholder", @"Email")];
     self.passwordView.passwordTextField.delegate = self;
     self.passwordView.passwordTextField.tag = 1;
@@ -66,8 +70,6 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    
-    [self.navigationController setNavigationBarHidden:YES animated:YES];
     
     [self.navigationItem setTitle:AMLocalizedString(@"login", nil)];
     
@@ -129,6 +131,11 @@
 
 - (IBAction)forgotPasswordTouchUpInside:(UIButton *)sender {
     [Helper presentSafariViewControllerWithURL:[NSURL URLWithString:@"https://mega.nz/recovery"]];
+}
+
+- (IBAction)cancel:(UIBarButtonItem *)sender {
+    [self.view endEditing:YES];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark - Private

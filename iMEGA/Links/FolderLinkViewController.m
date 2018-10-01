@@ -4,6 +4,8 @@
 #import "SAMKeychain.h"
 #import "UIScrollView+EmptyDataSet.h"
 
+#import "MEGA-Swift.h"
+
 #import "DisplayMode.h"
 #import "Helper.h"
 #import "MEGANode+MNZCategory.h"
@@ -17,7 +19,6 @@
 
 #import "BrowserViewController.h"
 #import "CustomActionViewController.h"
-#import "LoginViewController.h"
 #import "MainTabBarController.h"
 #import "MEGANavigationController.h"
 #import "MEGAPhotoBrowserViewController.h"
@@ -516,8 +517,7 @@
         }
         [Helper setSelectedOptionOnLink:4]; //Download folder or nodes from link
         
-        LoginViewController *loginVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"LoginViewControllerID"];
-        [self.navigationController pushViewController:loginVC animated:YES];
+        [self.navigationController pushViewController:[OnboardingViewController new] animated:YES];
     }
     
     //TODO: Make a logout in sharedMEGASdkFolder after download the link or the selected nodes.
@@ -551,8 +551,7 @@
         }
         [Helper setSelectedOptionOnLink:3]; //Import folder or nodes from link
         
-        LoginViewController *loginVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"LoginViewControllerID"];
-        [self.navigationController pushViewController:loginVC animated:YES];
+        [self.navigationController pushViewController:[OnboardingViewController new] animated:YES];
     }
     
     return;

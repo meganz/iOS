@@ -1,7 +1,6 @@
 
 #import "ProductDetailViewController.h"
 
-#import "CameraUploadsPopUpViewController.h"
 #import "ProductDetailTableViewCell.h"
 
 #import "MEGANavigationController.h"
