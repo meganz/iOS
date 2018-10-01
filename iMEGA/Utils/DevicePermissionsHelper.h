@@ -10,4 +10,10 @@
 + (UIAlertController*)audioPermisionAlertController;
 + (UIAlertController*)videoPermisionAlertController;
 
++ (BOOL)shouldAskForAudioPermissions;
++ (BOOL)shouldAskForVideoPermissions;
++ (BOOL)shouldAskForPhotosPermissions;
++ (BOOL)shouldAskForNotificationsPermissions;
++ (BOOL)shouldSetupPermissions;
+
 @end

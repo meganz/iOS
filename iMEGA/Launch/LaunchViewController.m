@@ -1,9 +1,11 @@
 
 #import "LaunchViewController.h"
 
+#import "MEGASdkManager.h"
+
 #import "UIColor+MNZCategory.h"
 
-@interface LaunchViewController ()
+@interface LaunchViewController () <MEGARequestDelegate>
 
 @end
 
@@ -23,6 +25,8 @@
     self.circularShapeLayer.strokeColor = UIColor.mnz_redMain.CGColor;
     self.circularShapeLayer.fillColor = UIColor.clearColor.CGColor;
     self.circularShapeLayer.lineWidth = 2.0f;
+    
+    [[MEGASdkManager sharedMEGASdk] addMEGARequestDelegate:self];
 }
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations {
@@ -35,6 +39,18 @@
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
     return UIStatusBarStyleLightContent;
+}
+
+#pragma mark - MEGARequestDelegate
+
+- (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
+    if (error.type) {
+        return;
+    }
+    
+    if (request.type == MEGARequestTypeFetchNodes) {
+        [self.delegate setupFinished];
+    }
 }
 
 @end

@@ -13,6 +13,7 @@ enum OnboardingInfoViewType {
 
 class OnboardingInfoView: UIView {
     
+    let type:OnboardingInfoViewType
     private let imageView: UIImageView = {
         let view = UIImageView.newAutoLayout()
         view.contentMode = .scaleAspectFit
@@ -42,6 +43,7 @@ class OnboardingInfoView: UIView {
     // MARK: Lifecycle
     
     public init(type: OnboardingInfoViewType) {
+        self.type = type
         super.init(frame: CGRect.zero)
         
         switch type {
