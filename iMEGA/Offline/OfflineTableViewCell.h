@@ -7,8 +7,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *infoLabel;
 
-@property (weak, nonatomic) IBOutlet UIView *lineView;
-
 @property (strong, nonatomic) NSString *itemNameString;
 
 @end
