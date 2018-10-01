@@ -1644,3 +1644,5 @@
 "We would like to send you notifications so you receive new messages on your device instantly."="我们将向您发送通知，以便您立即在设备上收到新消息。";
 /* Button which triggers a request for a specific permission, that have been explained to the user beforehand */
 "Enable Access"="开启访问";
+/* Confirmation dialog for the button that logs the user out of all sessions except the current one. */
+"Do you want to close all other sessions? This will log you out on all other active sessions except the current one."="是否关闭所有其他会话？这会将您注销到除当前会话之外的所有其他活动会话。";

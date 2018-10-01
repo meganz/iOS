@@ -1644,3 +1644,5 @@
 "We would like to send you notifications so you receive new messages on your device instantly."="당신이 메시지를 당신의 기기에서 즉시 받을 수 있도록 알림을 보내고자 합니다.";
 /* Button which triggers a request for a specific permission, that have been explained to the user beforehand */
 "Enable Access"="접근 허용";
+/* Confirmation dialog for the button that logs the user out of all sessions except the current one. */
+"Do you want to close all other sessions? This will log you out on all other active sessions except the current one."="다른 모든 세션을 닫고 싶으신가요? 이것은 현재 세션을 제외한 모든 활성 세션에서 당신을 로그아웃 시킵니다.";

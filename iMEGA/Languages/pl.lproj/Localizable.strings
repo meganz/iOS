@@ -1644,3 +1644,5 @@
 "We would like to send you notifications so you receive new messages on your device instantly."="Chcemy wysyłać Ci powiadomienia, aby natychmiast otrzymywać nowe wiadomości na Twoim urządzeniu.";
 /* Button which triggers a request for a specific permission, that have been explained to the user beforehand */
 "Enable Access"="Włącz dostęp";
+/* Confirmation dialog for the button that logs the user out of all sessions except the current one. */
+"Do you want to close all other sessions? This will log you out on all other active sessions except the current one."="Czy chcesz zamknąć wszystkie inne sesje? Spowoduje to wylogowanie wszystkich innych aktywnych sesji oprócz bieżącego.";

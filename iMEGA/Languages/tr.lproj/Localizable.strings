@@ -1644,3 +1644,5 @@
 "We would like to send you notifications so you receive new messages on your device instantly."="Yeni mesajları anında alabilmeniz için size bildirim göndermek istiyoruz.";
 /* Button which triggers a request for a specific permission, that have been explained to the user beforehand */
 "Enable Access"="Erişimi Etkinleştir";
+/* Confirmation dialog for the button that logs the user out of all sessions except the current one. */
+"Do you want to close all other sessions? This will log you out on all other active sessions except the current one."="Diğer tüm oturumları kapatmak istiyor musunuz? Bu, geçerli oturumunuz hariç diğer tüm aktif oturumlarınızı kapatacaktır.";
