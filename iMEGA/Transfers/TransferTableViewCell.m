@@ -23,7 +23,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *speedLabel;
 @property (weak, nonatomic) IBOutlet UIButton *cancelButton;
 @property (weak, nonatomic) IBOutlet UIButton *pauseButton;
-@property (weak, nonatomic) IBOutlet UIView *lineView;
 
 @property (assign, nonatomic) BOOL isPaused;
 @property (strong, nonatomic) MEGATransfer *transfer;
@@ -43,8 +42,6 @@
         view.backgroundColor = UIColor.clearColor;
         view.userInteractionEnabled = NO;
         self.selectedBackgroundView = view;
-        
-        self.lineView.backgroundColor = UIColor.mnz_grayCCCCCC;
     }
 }
 
@@ -55,8 +52,6 @@
         UIView *view = [[UIView alloc] init];
         view.backgroundColor = UIColor.clearColor;
         self.selectedBackgroundView = view;
-        
-        self.lineView.backgroundColor = UIColor.mnz_grayCCCCCC;
     }
 }
 
