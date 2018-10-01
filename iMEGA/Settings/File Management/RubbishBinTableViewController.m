@@ -91,7 +91,9 @@
 - (IBAction)scheduleRubbishBinClearingSwitchTouchUpInside:(UIButton *)sender {
     if (self.rubbishBinCleaningSchedulerSwitch.isOn) {
         if ([[MEGASdkManager sharedMEGASdk] mnz_isProAccount]) {
-            [[MEGASdkManager sharedMEGASdk] setRubbishBinAutopurgePeriodInDays:0 delegate:self];
+            if ([MEGAReachabilityManager isReachableHUDIfNot]) {
+                [[MEGASdkManager sharedMEGASdk] setRubbishBinAutopurgePeriodInDays:0 delegate:self];
+            }
         } else {
             CustomModalAlertViewController *customModalAlertVC = [[CustomModalAlertViewController alloc] init];
             customModalAlertVC.modalPresentationStyle = UIModalPresentationOverCurrentContext;
@@ -119,8 +121,10 @@
             [UIApplication.mnz_visibleViewController presentViewController:customModalAlertVC animated:YES completion:nil];
         }
     } else {
-        NSInteger days = [[MEGASdkManager sharedMEGASdk] mnz_isProAccount] ? 90 : 14;
-        [[MEGASdkManager sharedMEGASdk] setRubbishBinAutopurgePeriodInDays:days delegate:self];
+        if ([MEGAReachabilityManager isReachableHUDIfNot]) {
+            NSInteger days = [[MEGASdkManager sharedMEGASdk] mnz_isProAccount] ? 90 : 14;
+            [[MEGASdkManager sharedMEGASdk] setRubbishBinAutopurgePeriodInDays:days delegate:self];
+        }
     }
 }
 
@@ -163,38 +167,40 @@
             
         case 1: { //Remove files older than
             if (indexPath.row == 1) {
-                UIAlertController *scheduleRubbishBinClearingAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"Remove files older than", @"A rubbish bin scheduler setting which allows removing old files from the rubbish bin automatically. E.g. Remove files older than 15 days.") message:nil preferredStyle:UIAlertControllerStyleAlert];
-                [scheduleRubbishBinClearingAlertController addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
-                    textField.keyboardType = UIKeyboardTypeNumberPad;
-                    textField.placeholder = AMLocalizedString(@"Days", @"Label for any ‘Days’ button, link, text, title, etc. - (String as short as possible).");
-                    [textField addTarget:self action:@selector(scheduleRubbishBinClearingTextFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
-                }];
-                
-                [scheduleRubbishBinClearingAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:nil]];
-                UIAlertAction *doneAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"done", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-                    NSString *days = scheduleRubbishBinClearingAlertController.textFields.firstObject.text;
-                    if ([[MEGASdkManager sharedMEGASdk] mnz_isProAccount]) {
-                        if (days.integerValue > 365) {
-                            days = @"365";
-                        }
-                    } else {
-                        if (days.integerValue > 30) {
-                            days = @"30";
-                        }
-                    }
+                if ([MEGAReachabilityManager isReachableHUDIfNot]) {
+                    UIAlertController *scheduleRubbishBinClearingAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"Remove files older than", @"A rubbish bin scheduler setting which allows removing old files from the rubbish bin automatically. E.g. Remove files older than 15 days.") message:nil preferredStyle:UIAlertControllerStyleAlert];
+                    [scheduleRubbishBinClearingAlertController addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+                        textField.keyboardType = UIKeyboardTypeNumberPad;
+                        textField.placeholder = AMLocalizedString(@"Days", @"Label for any ‘Days’ button, link, text, title, etc. - (String as short as possible).");
+                        [textField addTarget:self action:@selector(scheduleRubbishBinClearingTextFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
+                    }];
                     
-                    if (days.integerValue < 7) {
-                        days = @"7";
-                    }
+                    [scheduleRubbishBinClearingAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:nil]];
+                    UIAlertAction *doneAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"done", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                        NSString *days = scheduleRubbishBinClearingAlertController.textFields.firstObject.text;
+                        if ([[MEGASdkManager sharedMEGASdk] mnz_isProAccount]) {
+                            if (days.integerValue > 365) {
+                                days = @"365";
+                            }
+                        } else {
+                            if (days.integerValue > 30) {
+                                days = @"30";
+                            }
+                        }
+                        
+                        if (days.integerValue < 7) {
+                            days = @"7";
+                        }
+                        
+                        if (self.rubbishBinAutopurgePeriod != days.integerValue) {
+                            [[MEGASdkManager sharedMEGASdk] setRubbishBinAutopurgePeriodInDays:days.integerValue delegate:self];
+                        }
+                    }];
+                    doneAction.enabled = NO;
+                    [scheduleRubbishBinClearingAlertController addAction:doneAction];
                     
-                    if (self.rubbishBinAutopurgePeriod != days.integerValue) {
-                        [[MEGASdkManager sharedMEGASdk] setRubbishBinAutopurgePeriodInDays:days.integerValue delegate:self];
-                    }
-                }];
-                doneAction.enabled = NO;
-                [scheduleRubbishBinClearingAlertController addAction:doneAction];
-                
-                [self presentViewController:scheduleRubbishBinClearingAlertController animated:YES completion:nil];
+                    [self presentViewController:scheduleRubbishBinClearingAlertController animated:YES completion:nil];
+                }
             }
         }
             
@@ -208,10 +214,15 @@
 #pragma mark - MEGARequestDelegate
 
 - (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
-    if (error.type) {
-        return;
-    } else {
-        if ((request.type == MEGARequestTypeGetAttrUser || request.type == MEGARequestTypeSetAttrUser) && (request.paramType == MEGAUserAttributeRubbishTime)) {
+    if ((request.type == MEGARequestTypeGetAttrUser || request.type == MEGARequestTypeSetAttrUser) && (request.paramType == MEGAUserAttributeRubbishTime)) {
+        if (error) {
+            if (error.type == MEGAErrorTypeApiENoent) {
+                self.rubbishBinAutopurgePeriod = [[MEGASdkManager sharedMEGASdk] mnz_isProAccount] ? 90 : 30;
+                self.removeFilesOlderThanDetailLabel.text = [NSString stringWithFormat:@"%ld", (long)self.rubbishBinAutopurgePeriod];
+            } else {
+                return;
+            }
+        } else {
             // Zero means that the rubbish-bin cleaning scheduler is disabled (only if the account is PRO). Any negative value means that the configured value is invalid.
             if (request.number.integerValue < 0) {
                 return;
@@ -224,9 +235,8 @@
                 self.rubbishBinCleaningSchedulerSwitch.on = YES;
             }
             self.removeFilesOlderThanDetailLabel.text = [NSString stringWithFormat:@"%ld", (long)self.rubbishBinAutopurgePeriod];
-            
-            [self.tableView reloadData];
         }
+        [self.tableView reloadData];
     }
 }
 
