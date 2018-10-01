@@ -47,6 +47,15 @@
     }
 }
 
+- (void)setHighlighted:(BOOL)highlighted animated:(BOOL)animated {
+    [super setHighlighted:highlighted animated:animated];
+    if (highlighted) {
+        UIView *view = [[UIView alloc] init];
+        view.backgroundColor = UIColor.clearColor;
+        self.selectedBackgroundView = view;
+    }
+}
+
 - (void)configureCellForNode:(MEGANode *)node delegate:(id<MGSwipeTableCellDelegate>)delegate api:(MEGASdk *)api {
     self.node = node;
     self.nodeHandle = node.handle;
