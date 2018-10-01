@@ -6,6 +6,8 @@
 #import "SAMKeychain.h"
 #import "SVProgressHUD.h"
 
+#import "MEGA-Swift.h"
+
 #import "Helper.h"
 #import "MEGANode.h"
 #import "MEGAMoveRequestDelegate.h"
@@ -19,7 +21,6 @@
 #import "UIApplication+MNZCategory.h"
 
 #import "BrowserViewController.h"
-#import "LoginViewController.h"
 #import "MainTabBarController.h"
 #import "MEGAAVViewController.h"
 #import "MEGANavigationController.h"
@@ -335,11 +336,11 @@
                 [Helper setSelectedOptionOnLink:2]; //Download file from link
             }
             
-            LoginViewController *loginVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"LoginViewControllerID"];
+            OnboardingViewController *onboardingVC = [OnboardingViewController new];
             if (viewController.navigationController) {
-                [viewController.navigationController pushViewController:loginVC animated:YES];
+                [viewController.navigationController pushViewController:onboardingVC animated:YES];
             } else {
-                MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:loginVC];
+                MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:onboardingVC];
                 [navigationController addCancelButton];
                 [viewController presentViewController:navigationController animated:YES completion:nil];
             }
@@ -367,11 +368,11 @@
                 [Helper setSelectedOptionOnLink:1]; //Import file from link
             }
             
-            LoginViewController *loginVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"LoginViewControllerID"];
+            OnboardingViewController *onboardingVC = [OnboardingViewController new];
             if (viewController.navigationController) {
-                [viewController.navigationController pushViewController:loginVC animated:YES];
+                [viewController.navigationController pushViewController:onboardingVC animated:YES];
             } else {
-                MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:loginVC];
+                MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:onboardingVC];
                 [navigationController addCancelButton];
                 [viewController presentViewController:navigationController animated:YES completion:nil];
             }
