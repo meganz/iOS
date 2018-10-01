@@ -93,6 +93,7 @@
     title.text = action.title;
     UIImageView *imageView = [cell viewWithTag:100];
     imageView.image = [UIImage imageNamed:action.iconName];
+    imageView.tintColor = [UIColor mnz_redMain];
     
     if (indexPath.row == self.actions.count-1) {
         UIView *separatorView = [cell viewWithTag:101];
@@ -304,7 +305,7 @@
 }
 
 - (MegaActionNode *)actionRename {
-    return [[MegaActionNode alloc] initWithTitle:AMLocalizedString(@"rename", @"Title for the action that allows you to rename a file or folder") iconName: @"rename_node" andActionType:MegaNodeActionTypeRename];
+    return [[MegaActionNode alloc] initWithTitle:AMLocalizedString(@"rename", @"Title for the action that allows you to rename a file or folder") iconName: @"renameGroup" andActionType:MegaNodeActionTypeRename];
 }
 
 - (MegaActionNode *)actionCopy {
