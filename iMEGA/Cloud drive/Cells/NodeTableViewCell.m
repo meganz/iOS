@@ -17,13 +17,17 @@
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated {
     [super setEditing:editing animated:animated];
     
+    BOOL editSingleRow = self.subviews.count == 3; // leading or trailing UITableViewCellEditControl doesn't appear
+    
     if (editing) {
         self.moreButton.hidden = YES;
-        self.selectionStyle = UITableViewCellSelectionStyleDefault;
-        [UIView animateWithDuration:0.3 animations:^{
-            self.separatorInset = UIEdgeInsetsMake(0, 102, 0, 0);
-            [self layoutIfNeeded];
-        }];
+        if (!editSingleRow) {
+            self.selectionStyle = UITableViewCellSelectionStyleDefault;
+            [UIView animateWithDuration:0.3 animations:^{
+                self.separatorInset = UIEdgeInsetsMake(0, 102, 0, 0);
+                [self layoutIfNeeded];
+            }];
+        }
     } else {
         self.selectionStyle = UITableViewCellSelectionStyleNone;
         [UIView animateWithDuration:0.3 animations:^{
