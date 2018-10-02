@@ -6,15 +6,18 @@
 #import "MEGAStore.h"
 #import "MEGASdkManager.h"
 #import "MEGANode+MNZCategory.h"
+#import "MEGANodeList+MNZCategory.h"
+#import "MEGAReachabilityManager.h"
 #import "UIImageView+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 #import "Helper.h"
 #import "NodeTableViewCell.h"
+
 #import "CustomActionViewController.h"
+#import "MEGAPhotoBrowserViewController.h"
 
 @interface NodeVersionsViewController () <UITableViewDelegate, UITableViewDataSource, MGSwipeTableCellDelegate, CustomActionViewControllerDelegate, MEGADelegate> {
     BOOL allNodesSelected;
-    BOOL isSwipeEditing;
 }
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *selectAllBarButtonItem;
@@ -58,7 +61,7 @@
     if (!self.presentedViewController) {
         [[MEGASdkManager sharedMEGASdk] addMEGADelegate:self];
     }
-    [[MEGASdkManager sharedMEGASdk] retryPendingConnections];
+    [[MEGAReachabilityManager sharedManager] retryPendingConnections];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -143,7 +146,11 @@
     
     } else {
         if (node.name.mnz_isImagePathExtension || node.name.mnz_isVideoPathExtension) {
-            [node mnz_openImageInNavigationController:self.navigationController withNodes:self.node.mnz_versions folderLink:NO displayMode:DisplayModeNodeVersions];
+            NSMutableArray<MEGANode *> *mediaNodesArray = [[[MEGASdkManager sharedMEGASdk] versionsForNode:self.node] mnz_mediaNodesMutableArrayFromNodeList];
+            
+            MEGAPhotoBrowserViewController *photoBrowserVC = [MEGAPhotoBrowserViewController photoBrowserWithMediaNodes:mediaNodesArray api:[MEGASdkManager sharedMEGASdk] displayMode:DisplayModeNodeVersions presentingNode:node preferredIndex:0];
+            
+            [self.navigationController presentViewController:photoBrowserVC animated:YES completion:nil];
         } else {
             [node mnz_openNodeInNavigationController:self.navigationController folderLink:NO];
         }
@@ -201,7 +208,6 @@
 #pragma clang diagnostic ignored "-Wunguarded-availability"
 
 - (UISwipeActionsConfiguration *)tableView:(UITableView *)tableView leadingSwipeActionsConfigurationForRowAtIndexPath:(NSIndexPath *)indexPath {
-    isSwipeEditing = YES;
     MEGANode *node = [self nodeForIndexPath:indexPath];
     
     UIContextualAction *downloadAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:nil handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
@@ -218,7 +224,6 @@
     if ([[MEGASdkManager sharedMEGASdk] accessLevelForNode:self.node] < MEGAShareTypeAccessFull) {
         return [UISwipeActionsConfiguration configurationWithActions:@[]];
     }
-    isSwipeEditing = YES;
     self.selectedNodesArray = [NSMutableArray arrayWithObject:[self nodeForIndexPath:indexPath]];
     
     NSMutableArray *rightActions = [NSMutableArray new];
@@ -227,7 +232,7 @@
         [self removeAction:nil];
     }];
     removeAction.image = [UIImage imageNamed:@"delete"];
-    removeAction.backgroundColor = UIColor.mnz_redF0373A;
+    removeAction.backgroundColor = UIColor.mnz_redMain;
     [rightActions addObject:removeAction];
     
     if (indexPath.section != 0) {
@@ -265,16 +270,13 @@
     
     [self.tableView setEditing:editing animated:animated];
     
-    if (!isSwipeEditing) {
-        [self updateNavigationBarTitle];
-    }
+    [self updateNavigationBarTitle];
+    
     if (editing) {
-        if (!isSwipeEditing) {
-            self.editBarButtonItem.title = AMLocalizedString(@"cancel", @"Button title to cancel something");
-            self.navigationItem.rightBarButtonItems = @[self.editBarButtonItem];
-            self.navigationItem.leftBarButtonItems = @[self.selectAllBarButtonItem];
-            [self.navigationController setToolbarHidden:NO animated:YES];
-        }
+        self.editBarButtonItem.title = AMLocalizedString(@"cancel", @"Button title to cancel something");
+        self.navigationItem.rightBarButtonItems = @[self.editBarButtonItem];
+        self.navigationItem.leftBarButtonItems = @[self.selectAllBarButtonItem];
+        [self.navigationController setToolbarHidden:NO animated:YES];
     } else {
         self.editBarButtonItem.title = AMLocalizedString(@"edit", @"Caption of a button to edit the files that are selected");
 
@@ -290,9 +292,7 @@
         self.selectedNodesArray = [NSMutableArray new];
 
         [self setToolbarActionsEnabled:NO];
-    }
-    
-    isSwipeEditing = NO;
+    }        
 }
 
 - (void)setToolbarActionsEnabled:(BOOL)boolValue {
@@ -417,10 +417,9 @@
     
     if ([[UIDevice currentDevice] iPadDevice]) {
         actionController.modalPresentationStyle = UIModalPresentationPopover;
-        UIPopoverPresentationController *popController = [actionController popoverPresentationController];
-        popController.delegate = actionController;
-        popController.sourceView = sender;
-        popController.sourceRect = CGRectMake(0, 0, sender.frame.size.width/2, sender.frame.size.height/2);
+        actionController.popoverPresentationController.delegate = actionController;
+        actionController.popoverPresentationController.sourceView = sender;
+        actionController.popoverPresentationController.sourceRect = CGRectMake(0, 0, sender.frame.size.width/2, sender.frame.size.height/2);
     } else {
         actionController.modalPresentationStyle = UIModalPresentationOverFullScreen;
     }
@@ -428,9 +427,9 @@
     [self presentViewController:actionController animated:YES completion:nil];
 }
 
-#pragma mark - Swipe Delegate
+#pragma mark - MGSwipeTableCellDelegate
 
-- (BOOL)swipeTableCell:(MGSwipeTableCell *)cell canSwipe:(MGSwipeDirection)direction {
+- (BOOL)swipeTableCell:(MGSwipeTableCell *)cell canSwipe:(MGSwipeDirection)direction fromPoint:(CGPoint)point {
     MEGAShareType accessType = [[MEGASdkManager sharedMEGASdk] accessLevelForNode:self.node];
     if (direction == MGSwipeDirectionRightToLeft && accessType < MEGAShareTypeAccessFull) {
         return NO;
@@ -474,7 +473,7 @@
         NSMutableArray *rightButtons = [NSMutableArray new];
         self.selectedNodesArray = [NSMutableArray arrayWithObject:node];
 
-        MGSwipeButton *deleteButton = [MGSwipeButton buttonWithTitle:@"" icon:[UIImage imageNamed:@"delete"] backgroundColor:UIColor.mnz_redF0373A padding:25 callback:^BOOL(MGSwipeTableCell *sender) {
+        MGSwipeButton *deleteButton = [MGSwipeButton buttonWithTitle:@"" icon:[UIImage imageNamed:@"delete"] backgroundColor:UIColor.mnz_redMain padding:25 callback:^BOOL(MGSwipeTableCell *sender) {
             [self removeAction:nil];
             return YES;
         }];

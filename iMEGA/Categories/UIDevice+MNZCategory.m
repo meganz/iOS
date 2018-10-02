@@ -57,6 +57,10 @@ static const NSUInteger MAX_BUFFER_32MB = 33554432; // 32 MB
                               @"iPhone10,4":@"iPhone 8",          //iPhone 8
                               @"iPhone10,5":@"iPhone 8 Plus",     //iPhone 8 Plus
                               @"iPhone10,6":@"iPhone X",          //iPhone X
+                              @"iPhone11,2":@"iPhone XS",         //iPhone XS
+                              @"iPhone11,4":@"iPhone XS Max",     //iPhone XS Max
+                              @"iPhone11,6":@"iPhone XS Max",     //iPhone XS Max
+                              @"iPhone11,8":@"iPhone XR",         //iPhone XR
                               @"iPad1,1":@"iPad",                 //iPad (Original/1st Gen) (Wi-Fi/3G/GPS)
                               @"iPad2,1":@"iPad",                 //iPad 2 (Wi-Fi Only)
                               @"iPad2,2":@"iPad",                 //iPad 2 (Wi-Fi/GSM/GPS)
@@ -70,6 +74,8 @@ static const NSUInteger MAX_BUFFER_32MB = 33554432; // 32 MB
                               @"iPad3,6":@"iPad",                 //iPad (4th Generation) (Wi-Fi/Verizon & Sprint/GPS)
                               @"iPad6,11":@"iPad",                //iPad (5th Generation) (Wi-Fi)
                               @"iPad6,12":@"iPad",                //iPad (5th Generation) (Cellular)
+                              @"iPad7,5":@"iPad",                 //iPad (6th Generation) (Wi-Fi)
+                              @"iPad7,6":@"iPad",                 //iPad (6th Generation) (Cellular)
                               @"iPad4,1":@"iPad Air",             //iPad Air (5th Generation) (Wi-Fi)
                               @"iPad4,2":@"iPad Air",             //iPad Air (5th Generation) (Cellular)
                               @"iPad4,3":@"iPad Air",             //iPad Air (5th Generation) (Wi-Fi/TD-LTE - China)
@@ -234,21 +240,21 @@ static const NSUInteger MAX_BUFFER_32MB = 33554432; // 32 MB
     return deviceName;
 }
 
-- (CGFloat)mnz_widthForChatBubble {
-    const CGFloat kMaxBubbleWidth = 566.0f;
+- (CGFloat)mnz_maxSideForChatBubbleWithMedia:(BOOL)media {
+    const CGFloat kMaxBubbleSide = media ? 340.0f : 566.0f;
     CGFloat screenWidth = [[UIScreen mainScreen] bounds].size.width;
     CGFloat screenHeight = [[UIScreen mainScreen] bounds].size.height;
-    CGFloat displaySize;
+    CGFloat maxSide;
     if ([self iPhoneDevice] && screenWidth > screenHeight) {
-        displaySize = screenHeight;
+        maxSide = screenHeight;
     } else {
-        displaySize = screenWidth;
+        maxSide = screenWidth;
     }
-    displaySize -= 92.0f;
-    if (displaySize > kMaxBubbleWidth) {
-        displaySize = kMaxBubbleWidth;
+    maxSide -= media ? 140.0f : 104.0f;
+    if (maxSide > kMaxBubbleSide) {
+        maxSide = kMaxBubbleSide;
     }
-    return displaySize;
+    return maxSide;
 }
 
 @end

@@ -17,9 +17,9 @@
 	<key>CFBundlePackageType</key>
 	<string>XPC!</string>
 	<key>CFBundleShortVersionString</key>
-	<string>4.0.2</string>
+	<string>4.2</string>
 	<key>CFBundleVersion</key>
-	<string>115</string>
+	<string>122</string>
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSAllowsArbitraryLoads</key>
@@ -38,7 +38,8 @@
                     ANY $attachment.registeredTypeIdentifiers UTI-CONFORMS-TO "public.movie" ||
                     ANY $attachment.registeredTypeIdentifiers UTI-CONFORMS-TO "public.file-url" ||
                     ANY $attachment.registeredTypeIdentifiers UTI-CONFORMS-TO "public.url" ||
-                    ANY $attachment.registeredTypeIdentifiers UTI-CONFORMS-TO "public.vcard")
+                    ANY $attachment.registeredTypeIdentifiers UTI-CONFORMS-TO "public.vcard" ||
+                    ANY $attachment.registeredTypeIdentifiers UTI-CONFORMS-TO "public.plain-text")
           .@count &gt;= 1)
 .@count &gt; 0</string>
 		</dict>

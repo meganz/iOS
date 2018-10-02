@@ -16,6 +16,7 @@
 @property (weak, nonatomic) IBOutlet UIView *inviteYourFriendsView;
 @property (weak, nonatomic) IBOutlet UILabel *inviteYourFriendsTitleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *inviteYourFriendsSubtitleLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *disclosureIndicatorImageView;
 
 @property (weak, nonatomic) IBOutlet UILabel *unlockedBonusesLabel;
 @property (weak, nonatomic) IBOutlet UILabel *unlockedStorageQuotaLabel;
@@ -50,6 +51,7 @@
     
     UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(inviteYourFriendsTapped)];
     self.inviteYourFriendsView.gestureRecognizers = @[tapGestureRecognizer];
+    self.disclosureIndicatorImageView.image = self.disclosureIndicatorImageView.image.imageFlippedForRightToLeftLayoutDirection;
     
     self.unlockedBonusesLabel.text = AMLocalizedString(@"unlockedBonuses", @"Header of block with achievements bonuses.");
     self.storageQuotaLabel.text = AMLocalizedString(@"storageQuota", @"A header/title of a section which contains information about used/available storage space on a user's cloud drive.");
@@ -176,6 +178,7 @@
         cell.titleLabel.text = AMLocalizedString(@"referralBonuses", @"achievement type");
         
         cell.disclosureIndicatorImageView.hidden = NO;
+        cell.disclosureIndicatorImageView.image = cell.disclosureIndicatorImageView.image.imageFlippedForRightToLeftLayoutDirection;
         
         [self setStorageAndTransferQuotaRewardsForCell:cell forIndex:-1];
     } else {
@@ -207,7 +210,7 @@
         
         NSDate *awardExpirationdDate = [self.achievementsDetails awardExpirationAtIndex:index.unsignedIntegerValue];
         cell.subtitleLabel.text = (awardExpirationdDate.daysUntil == 0) ? AMLocalizedString(@"expired", @"Label to show that an error related with expiration occurs during a SDK operation.") : [AMLocalizedString(@"xDaysLeft", @"") stringByReplacingOccurrencesOfString:@"%1" withString:[NSString stringWithFormat:@"%lu", awardExpirationdDate.daysUntil]];
-        cell.subtitleLabel.textColor = (awardExpirationdDate.daysUntil <= 15) ? [UIColor mnz_redF0373A] : [UIColor mnz_gray666666];
+        cell.subtitleLabel.textColor = (awardExpirationdDate.daysUntil <= 15) ? UIColor.mnz_redMain : [UIColor mnz_gray666666];
     }
     
     return cell;

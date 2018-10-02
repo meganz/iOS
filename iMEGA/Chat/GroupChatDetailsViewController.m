@@ -14,6 +14,7 @@
 #import "MEGANavigationController.h"
 #import "MEGASdkManager.h"
 #import "MEGAGlobalDelegate.h"
+#import "MEGAArchiveChatRequestDelegate.h"
 
 @interface GroupChatDetailsViewController () <MEGAChatRequestDelegate, MEGAChatRoomDelegate, MEGAGlobalDelegate>
 
@@ -45,6 +46,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.backBarButtonItem.image = self.backBarButtonItem.image.imageFlippedForRightToLeftLayoutDirection;
     self.navigationItem.leftBarButtonItem = self.backBarButtonItem;
     self.navigationItem.title = AMLocalizedString(@"info", @"A button label. The button allows the user to get more info of the current context");
     
@@ -131,21 +133,30 @@
     [self presentViewController:clearChatHistoryAlertController animated:YES completion:nil];
 }
 
+- (void)showArchiveChatAlertAtIndexPath:(NSIndexPath *)indexPath {
+    NSString *title = self.chatRoom.isArchived ? AMLocalizedString(@"unarchiveChatMessage", @"Confirmation message for user to confirm it will unarchive an archived chat.") : AMLocalizedString(@"archiveChatMessage", @"Confirmation message on archive chat dialog for user to confirm.");
+    UIAlertController *archiveAlertController = [UIAlertController alertControllerWithTitle:title message:nil preferredStyle:UIAlertControllerStyleAlert];
+    [archiveAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
+    
+    [archiveAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", @"Button title to accept something") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        MEGAArchiveChatRequestDelegate *archiveChatRequesDelegate = [[MEGAArchiveChatRequestDelegate alloc] initWithCompletion:^(MEGAChatRoom *chatRoom) {
+            self.chatRoom = chatRoom;
+            [self.tableView reloadData];
+        }];
+        [[MEGASdkManager sharedMEGAChatSdk] archiveChat:self.chatRoom.chatId archive:!self.chatRoom.isArchived delegate:archiveChatRequesDelegate];
+    }]];
+    
+    [self presentViewController:archiveAlertController animated:YES completion:nil];
+}
+
 - (void)showLeaveChatAlertAtIndexPath:(NSIndexPath *)indexPath {
-    UIAlertController *leaveAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"youWillNoLongerHaveAccessToThisConversation", @"Alert text that explains what means confirming the action 'Leave'") message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    UIAlertController *leaveAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"youWillNoLongerHaveAccessToThisConversation", @"Alert text that explains what means confirming the action 'Leave'") message:nil preferredStyle:UIAlertControllerStyleAlert];
     [leaveAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
     
     [leaveAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"leave", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         [[MEGASdkManager sharedMEGAChatSdk] leaveChat:self.chatRoom.chatId];
     }]];
     
-    if ([[UIDevice currentDevice] iPadDevice]) {
-        leaveAlertController.modalPresentationStyle = UIModalPresentationPopover;
-        UIPopoverPresentationController *popoverPresentationController = [leaveAlertController popoverPresentationController];
-        CGRect deleteRect = [self.tableView rectForRowAtIndexPath:indexPath];
-        popoverPresentationController.sourceRect = deleteRect;
-        popoverPresentationController.sourceView = self.tableView;
-    }
     [self presentViewController:leaveAlertController animated:YES completion:nil];
 }
 
@@ -197,36 +208,27 @@
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    NSInteger numberOfSections = 0;
-    
-    switch (self.chatRoom.ownPrivilege) {
-        case MEGAChatRoomPrivilegeUnknown:
-        case MEGAChatRoomPrivilegeRm:
-        case MEGAChatRoomPrivilegeRo:
-        case MEGAChatRoomPrivilegeStandard:
-        case MEGAChatRoomPrivilegeModerator:
-            numberOfSections = 2;
-            break;
-    }
-    
-    return numberOfSections;
+    return 2;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     NSInteger numberOfRows = 0;
     if (section == 0) {
         switch (self.chatRoom.ownPrivilege) {
-            case MEGAChatRoomPrivilegeUnknown:
             case MEGAChatRoomPrivilegeRm:
+                numberOfRows = 1;
+                break;
+                
+            case MEGAChatRoomPrivilegeUnknown:
             case MEGAChatRoomPrivilegeRo:
             case MEGAChatRoomPrivilegeStandard:
                 //TODO: When possible, re-add the row "Notifications".
-                numberOfRows = 1;
+                numberOfRows = 2;
                 break;
                 
             case MEGAChatRoomPrivilegeModerator:
                 //TODO: When possible, re-add the rows "Notifications" and "Change Group Avatar".
-                numberOfRows = 3;
+                numberOfRows = 4;
                 break;
         }
     } else if (section == 1) {
@@ -243,45 +245,62 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     GroupChatDetailsViewTableViewCell *cell;
     if (indexPath.section == 0) {
+        cell = [self.tableView dequeueReusableCellWithIdentifier:@"GroupChatDetailsLeaveGroupTypeID" forIndexPath:indexPath];
         switch (self.chatRoom.ownPrivilege) {
-            case MEGAChatRoomPrivilegeUnknown:
+                
             case MEGAChatRoomPrivilegeRm:
+                cell.leftImageView.image = self.chatRoom.isArchived ? [UIImage imageNamed:@"unArchiveChat"] : [UIImage imageNamed:@"archiveChat_gray"];
+                cell.nameLabel.text = self.chatRoom.isArchived ? AMLocalizedString(@"unarchiveChat", @"The title of the dialog to unarchive an archived chat.") : AMLocalizedString(@"archiveChat", @"Title of button to archive chats.");
+                cell.nameLabel.textColor = self.chatRoom.isArchived ? UIColor.mnz_redMain : UIColor.mnz_black333333;
+                cell.lineView.hidden = YES;
+                break;
+                
+            case MEGAChatRoomPrivilegeUnknown:
             case MEGAChatRoomPrivilegeRo:
             case MEGAChatRoomPrivilegeStandard: {
-                cell = [self.tableView dequeueReusableCellWithIdentifier:@"GroupChatDetailsLeaveGroupTypeID" forIndexPath:indexPath];
-                cell.nameLabel.text = AMLocalizedString(@"leaveGroup", @"Button title that allows the user to leave a group chat.");
-                cell.nameLabel.textColor = UIColor.mnz_redF0373A;
-                cell.lineView.hidden = YES;
+                switch (indexPath.row) {
+                    case 0: {
+                        cell.leftImageView.image = self.chatRoom.isArchived ? [UIImage imageNamed:@"unArchiveChat"] : [UIImage imageNamed:@"archiveChat_gray"];
+                        cell.nameLabel.text = self.chatRoom.isArchived ? AMLocalizedString(@"unarchiveChat", @"The title of the dialog to unarchive an archived chat.") : AMLocalizedString(@"archiveChat", @"Title of button to archive chats.");
+                        cell.nameLabel.textColor = self.chatRoom.isArchived ? UIColor.mnz_redMain : UIColor.mnz_black333333;
+                        break;
+                    }
+                    case 1: {
+                        cell.leftImageView.image = [UIImage imageNamed:@"leaveGroup"];
+                        cell.nameLabel.text = AMLocalizedString(@"leaveGroup", @"Button title that allows the user to leave a group chat.");
+                        cell.nameLabel.textColor = UIColor.mnz_redMain;
+                        cell.lineView.hidden = YES;
+                        break;
+                    }
+                }
                 break;
             }
                 
             case MEGAChatRoomPrivilegeModerator: {
                 switch (indexPath.row) {
                     case 0: {
-                        cell = [self.tableView dequeueReusableCellWithIdentifier:@"GroupChatDetailsLeaveGroupTypeID" forIndexPath:indexPath];
-                        if (indexPath.row == 0) {
-                            cell.leftImageView.image = [UIImage imageNamed:@"renameGroup"];
-                            cell.nameLabel.text = AMLocalizedString(@"renameGroup", @"The title of a menu button which allows users to rename a group chat.");
-                        } else if (indexPath.row == 2) {
-                            cell.nameLabel.text = AMLocalizedString(@"changeGroupAvatar", @"Title of the action that allows you to change the avatar of a group chat.");
-                        }
+                        cell.leftImageView.image = [UIImage imageNamed:@"renameGroup"];
+                        cell.nameLabel.text = AMLocalizedString(@"renameGroup", @"The title of a menu button which allows users to rename a group chat.");
                         break;
                     }
                         
                     case 1:
-                    case 2: {
-                        cell = [self.tableView dequeueReusableCellWithIdentifier:@"GroupChatDetailsLeaveGroupTypeID" forIndexPath:indexPath];
-                        if (indexPath.row == 1) {
-                            cell.leftImageView.image = [UIImage imageNamed:@"clearChatHistory"];
-                            cell.nameLabel.text = AMLocalizedString(@"clearChatHistory", @"A button title to delete the history of a chat.");
-                        } else if (indexPath.row == 2) {
-                            cell.leftImageView.image = [UIImage imageNamed:@"leaveGroup"];
-                            cell.nameLabel.text = AMLocalizedString(@"leaveGroup", @"Button title that allows the user to leave a group chat.");
-                            cell.nameLabel.textColor = UIColor.mnz_redF0373A;
-                            cell.lineView.hidden = YES;
-                        }
+                        cell.leftImageView.image = [UIImage imageNamed:@"clearChatHistory"];
+                        cell.nameLabel.text = AMLocalizedString(@"clearChatHistory", @"A button title to delete the history of a chat.");
                         break;
-                    }
+                        
+                    case 2:
+                        cell.leftImageView.image = self.chatRoom.isArchived ? [UIImage imageNamed:@"unArchiveChat"] : [UIImage imageNamed:@"archiveChat_gray"];
+                        cell.nameLabel.text = self.chatRoom.isArchived ? AMLocalizedString(@"unarchiveChat", @"The title of the dialog to unarchive an archived chat.") : AMLocalizedString(@"archiveChat", @"Title of button to archive chats.");
+                        cell.nameLabel.textColor = self.chatRoom.isArchived ? UIColor.mnz_redMain : UIColor.mnz_black333333;
+                        break;
+                        
+                    case 3:
+                        cell.leftImageView.image = [UIImage imageNamed:@"leaveGroup"];
+                        cell.nameLabel.text = AMLocalizedString(@"leaveGroup", @"Button title that allows the user to leave a group chat.");
+                        cell.nameLabel.textColor = UIColor.mnz_redMain;
+                        cell.lineView.hidden = YES;
+                        break;
                 }
                 break;
             }
@@ -332,7 +351,7 @@
                 break;
                 
             case MEGAChatRoomPrivilegeRm:
-                permissionsImage = [UIImage imageNamed:@"cancelIcon"];
+                permissionsImage = nil;
                 break;
                 
             case MEGAChatRoomPrivilegeRo:
@@ -427,12 +446,12 @@
                     case MEGAChatRoomPrivilegeUnknown:
                     case MEGAChatRoomPrivilegeRm:
                     case MEGAChatRoomPrivilegeRo:
-                    case MEGAChatRoomPrivilegeStandard: {
-                        [self showLeaveChatAlertAtIndexPath:indexPath];
+                    case MEGAChatRoomPrivilegeStandard: { //Archive chat
+                        [self showArchiveChatAlertAtIndexPath:indexPath];
                         break;
                     }
                         
-                    case MEGAChatRoomPrivilegeModerator: {
+                    case MEGAChatRoomPrivilegeModerator: { //Rename chat
                         if ([MEGAReachabilityManager isReachableHUDIfNot]) {
                             UIAlertController *renameGroupAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"renameGroup", @"The title of a menu button which allows users to rename a group chat.") message:AMLocalizedString(@"renameNodeMessage", @"Hint text to suggest that the user have to write the new name for the file or folder") preferredStyle:UIAlertControllerStyleAlert];
                             
@@ -462,13 +481,28 @@
                 break;
             }
                 
-            case 1: //Clear Chat History
-                [self showClearChatHistoryAlert];
+            case 1: {
+                switch (self.chatRoom.ownPrivilege) { //Leave chat
+                    case MEGAChatRoomPrivilegeUnknown:
+                    case MEGAChatRoomPrivilegeRm:
+                    case MEGAChatRoomPrivilegeRo:
+                    case MEGAChatRoomPrivilegeStandard: {
+                        [self showLeaveChatAlertAtIndexPath:indexPath];
+                        break;
+                    }
+                        
+                    case MEGAChatRoomPrivilegeModerator: //Clear Chat History
+                        [self showClearChatHistoryAlert];
+                        break;
+                }
+            case 2: //Archive chat
+                [self showArchiveChatAlertAtIndexPath:indexPath];
                 break;
                 
-            case 2: //Leave chat
+            case 3: //Leave chat
                 [self showLeaveChatAlertAtIndexPath:indexPath];
                 break;
+            }
         }
     } else if (indexPath.section == 1) {
         if ((indexPath.row == 0) && (self.chatRoom.ownPrivilege == MEGAChatRoomPrivilegeModerator)) {
@@ -484,7 +518,7 @@
 
             UIAlertController *permissionsAlertController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
             UIAlertAction *cancelAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil];
-            [cancelAlertAction mnz_setTitleTextColor:[UIColor mnz_redF0373A]];
+            [cancelAlertAction mnz_setTitleTextColor:UIColor.mnz_redMain];
             [permissionsAlertController addAction:cancelAlertAction];
             
             if (self.chatRoom.ownPrivilege == MEGAChatRoomPrivilegeModerator) {

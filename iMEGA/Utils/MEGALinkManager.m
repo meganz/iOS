@@ -21,11 +21,13 @@
 #import "MasterKeyViewController.h"
 #import "MEGAContactLinkQueryRequestDelegate.h"
 #import "MEGAGetPublicNodeRequestDelegate.h"
+#import "MEGAGenericRequestDelegate.h"
 #import "MEGAInviteContactRequestDelegate.h"
 #import "MEGANavigationController.h"
 #import "MEGANode+MNZCategory.h"
 #import "MEGANodeList+MNZCategory.h"
 #import "MEGAPasswordLinkRequestDelegate.h"
+#import "MEGAPhotoBrowserViewController.h"
 #import "MEGAQuerySignupLinkRequestDelegate.h"
 #import "MEGAQueryRecoveryLinkRequestDelegate.h"
 #import "MEGASdkManager.h"
@@ -259,8 +261,12 @@ static NSString *nodeToPresentBase64Handle;
         case MEGANodeTypeFile: {
             if (node.name.mnz_isImagePathExtension || node.name.mnz_isVideoPathExtension) {
                 MEGANode *parentNode = [[MEGASdkManager sharedMEGASdk] nodeForHandle:node.parentHandle];
-                NSArray *childNodes = [[[MEGASdkManager sharedMEGASdk] childrenForParent:parentNode] mnz_nodesArrayFromNodeList];
-                [node mnz_openImageInNavigationController:navigationController withNodes:childNodes folderLink:NO displayMode:DisplayModeCloudDrive];
+                MEGANodeList *nodeList = [[MEGASdkManager sharedMEGASdk] childrenForParent:parentNode];
+                NSMutableArray<MEGANode *> *mediaNodesArray = [nodeList mnz_mediaNodesMutableArrayFromNodeList];
+                
+                MEGAPhotoBrowserViewController *photoBrowserVC = [MEGAPhotoBrowserViewController photoBrowserWithMediaNodes:mediaNodesArray api:[MEGASdkManager sharedMEGASdk] displayMode:DisplayModeCloudDrive presentingNode:node preferredIndex:0];
+                
+                [navigationController presentViewController:photoBrowserVC animated:YES completion:nil];
             } else {
                 [node mnz_openNodeInNavigationController:navigationController folderLink:NO];
             }
@@ -306,15 +312,27 @@ static NSString *nodeToPresentBase64Handle;
             [MEGALinkManager resetLinkAndURLType];
             break;
             
-        case URLTypeConfirmationLink: {
-            MEGAQuerySignupLinkRequestDelegate *querySignupLinkRequestDelegate = [[MEGAQuerySignupLinkRequestDelegate alloc] initWithCompletion:nil urlType:URLTypeConfirmationLink];
-            [[MEGASdkManager sharedMEGASdk] querySignupLink:url.mnz_MEGAURL delegate:querySignupLinkRequestDelegate];
-            break;
-        }
-            
+        case URLTypeConfirmationLink:
         case URLTypeNewSignUpLink: {
-            MEGAQuerySignupLinkRequestDelegate *querySignupLinkRequestDelegate = [[MEGAQuerySignupLinkRequestDelegate alloc] initWithCompletion:nil urlType:URLTypeNewSignUpLink];
-            [[MEGASdkManager sharedMEGASdk] querySignupLink:url.mnz_MEGAURL delegate:querySignupLinkRequestDelegate];
+            if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
+                UIAlertController *alreadyLoggedInAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"alreadyLoggedInAlertTitle", @"Warning title shown when you try to confirm an account but you are logged in with another one") message:AMLocalizedString(@"alreadyLoggedInAlertMessage", @"Warning message shown when you try to confirm an account but you are logged in with another one") preferredStyle:UIAlertControllerStyleAlert];
+                [alreadyLoggedInAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+                    [MEGALinkManager resetLinkAndURLType];
+                }]];
+                
+                [alreadyLoggedInAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", @"Button title to accept something") style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
+                    MEGAGenericRequestDelegate *logoutRequestDelegate = [[MEGAGenericRequestDelegate alloc] initWithRequestCompletion:^(MEGARequest *request) {
+                        MEGAQuerySignupLinkRequestDelegate *querySignupLinkRequestDelegate = [[MEGAQuerySignupLinkRequestDelegate alloc] initWithCompletion:nil urlType:[MEGALinkManager urlType]];
+                        [[MEGASdkManager sharedMEGASdk] querySignupLink:url.mnz_MEGAURL delegate:querySignupLinkRequestDelegate];
+                    } errorCompletion:nil];
+                    [[MEGASdkManager sharedMEGASdk] logoutWithDelegate:logoutRequestDelegate];
+                }]];
+                
+                [UIApplication.mnz_visibleViewController presentViewController:alreadyLoggedInAlertController animated:YES completion:nil];
+            } else {
+                MEGAQuerySignupLinkRequestDelegate *querySignupLinkRequestDelegate = [[MEGAQuerySignupLinkRequestDelegate alloc] initWithCompletion:nil urlType:[MEGALinkManager urlType]];
+                [[MEGASdkManager sharedMEGASdk] querySignupLink:url.mnz_MEGAURL delegate:querySignupLinkRequestDelegate];
+            }
             break;
         }
             
@@ -327,9 +345,14 @@ static NSString *nodeToPresentBase64Handle;
             break;
             
         case URLTypeChangeEmailLink: {
-            if ([Helper hasSession_alertIfNot]) {
+            if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
                 MEGAQueryRecoveryLinkRequestDelegate *queryRecoveryLinkRequestDelegate = [[MEGAQueryRecoveryLinkRequestDelegate alloc] initWithRequestCompletion:nil urlType:URLTypeChangeEmailLink];
                 [[MEGASdkManager sharedMEGASdk] queryChangeEmailLink:url.mnz_MEGAURL delegate:queryRecoveryLinkRequestDelegate];
+            } else {
+                UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"needToBeLoggedInToCompleteYourEmailChange", @"Error message when a user attempts to change their email without an active login session.") message:nil preferredStyle:UIAlertControllerStyleAlert];
+                [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
+                
+                [UIApplication.mnz_visibleViewController presentViewController:alertController animated:YES completion:nil];
             }
             break;
         }
@@ -464,7 +487,15 @@ static NSString *nodeToPresentBase64Handle;
         } else {
             MEGANode *node = request.publicNode;
             if (node.name.mnz_isImagePathExtension || node.name.mnz_isVideoPathExtension) {
-                MEGAPhotoBrowserViewController *photoBrowserVC = [node mnz_photoBrowserWithNodes:@[node] folderLink:NO displayMode:DisplayModeFileLink enableMoveToRubbishBin:NO];
+                NSString *previewsDirectory = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"previewsV3"];
+                if (![[NSFileManager defaultManager] fileExistsAtPath:previewsDirectory]) {
+                    NSError *nserror;
+                    if (![[NSFileManager defaultManager] createDirectoryAtPath:previewsDirectory withIntermediateDirectories:NO attributes:nil error:&nserror]) {
+                        MEGALogError(@"Create directory at path failed with error: %@", nserror);
+                    }
+                }
+                
+                MEGAPhotoBrowserViewController *photoBrowserVC = [MEGAPhotoBrowserViewController photoBrowserWithMediaNodes:@[node].mutableCopy api:[MEGASdkManager sharedMEGASdkFolder] displayMode:DisplayModeFileLink presentingNode:node preferredIndex:0];
                 photoBrowserVC.publicLink = fileLinkURLString;
                 
                 [UIApplication.mnz_visibleViewController presentViewController:photoBrowserVC animated:YES completion:nil];

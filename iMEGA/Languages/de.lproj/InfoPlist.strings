@@ -3,16 +3,16 @@
 /* Camera usage description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
 "NSCameraUsageDescription"="MEGA benutzt die Kamera für Foto- und Videoaufnahmen sowie für Live-Konversationen.";
 /* Photo library usage description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
-"NSPhotoLibraryUsageDescription"="Für Kamera-Uploads oder spezifische Medienuploads benötigt MEGA Zugriff auf Ihre Fotos und Videos.";
+"NSPhotoLibraryUsageDescription"="MEGA greift auf Fotos und Videos zu, wenn Sie sie in Ihren Cloudspeicher kopieren (dies schließt Chats ein) und wenn Sie Kamera-Uploads aktivieren.";
 /* Contacts Usage Description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
 "NSContactsUsageDescription"="MEGA greift auf Ihre Kontakte zu, wenn Sie sie zum Speichern/Export auswählen.";
 /* Write-only access to the user’s photo library description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
-"NSPhotoLibraryAddUsageDescription"="MEGA requires access to your photo library to add photos and videos to your device gallery";
+"NSPhotoLibraryAddUsageDescription"="MEGA benötigt Zugriff auf Ihre Fotos, um Fotos und Videos hinzufügen zu können.";
 /* Face ID usage description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
-"NSFaceIDUsageDescription"="MEGA accesses Face ID to allow you to easily unlock the app’s passcode when you enable this option.";
+"NSFaceIDUsageDescription"="MEGA nutzt optional Face ID, um Ihre App bequem zu entsperren.";
 /* Label for any 'Search' button, link, etc. - (String as short as possible). */
 "quickActionSearchString"="Suche";
 /*  */
-"quickActionUploadString"="Upload";
+"quickActionUploadString"="Hochladen";
 /* Title of the Offline section */
 "quickActionOfflineString"="Offline";

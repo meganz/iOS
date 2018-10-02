@@ -6,11 +6,11 @@
 
 #import "NSString+MNZCategory.h"
 
+#import "Helper.h"
 #import "MEGALoginRequestDelegate.h"
 #import "MEGASendSignupLinkRequestDelegate.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGASdkManager.h"
-
 
 @interface CheckEmailAndFollowTheLinkViewController () <MEGAGlobalDelegate>
 
@@ -89,10 +89,7 @@
     [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:nil]];
     [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         [[MEGASdkManager sharedMEGASdk] logout];
-        [SAMKeychain deletePasswordForService:@"MEGA" account:@"sessionId"];
-        [SAMKeychain deletePasswordForService:@"MEGA" account:@"email"];
-        [SAMKeychain deletePasswordForService:@"MEGA" account:@"name"];
-        [SAMKeychain deletePasswordForService:@"MEGA" account:@"base64pwkey"];
+        [Helper clearEphemeralSession];
         [self dismissViewControllerAnimated:YES completion:nil];
     }]];
     [self presentViewController:alertController animated:YES completion:nil];

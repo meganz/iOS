@@ -68,7 +68,7 @@
 }
 
 - (CGSize)mediaViewDisplaySize {
-    return CGSizeMake([[UIDevice currentDevice] mnz_widthForChatBubble], 48.0f);
+    return CGSizeMake([[UIDevice currentDevice] mnz_maxSideForChatBubbleWithMedia:NO], 48.0f);
 }
 
 - (NSUInteger)mediaHash {

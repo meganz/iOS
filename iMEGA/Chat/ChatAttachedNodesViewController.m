@@ -3,20 +3,20 @@
 
 #import "SVProgressHUD.h"
 
+#import "BrowserViewController.h"
+#import "DisplayMode.h"
 #import "Helper.h"
 #import "MEGAChatMessage+MNZCategory.h"
 #import "MEGANavigationController.h"
 #import "MEGANode+MNZCategory.h"
 #import "MEGANodeList+MNZCategory.h"
+#import "MEGAPhotoBrowserViewController.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGASdkManager.h"
+#import "NodeTableViewCell.h"
 #import "NSString+MNZCategory.h"
 #import "MEGAGetThumbnailRequestDelegate.h"
 #import "UIImageView+MNZCategory.h"
-
-#import "BrowserViewController.h"
-#import "DisplayMode.h"
-#import "NodeTableViewCell.h"
 
 @interface ChatAttachedNodesViewController ()
 
@@ -47,7 +47,7 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(internetConnectionChanged) name:kReachabilityChangedNotification object:nil];
     
-    [[MEGASdkManager sharedMEGASdk] retryPendingConnections];
+    [[MEGAReachabilityManager sharedManager] retryPendingConnections];
     
     [self reloadUI];
 }
@@ -72,9 +72,9 @@
     self.navigationItem.rightBarButtonItems = @[self.editBarButtonItem];
     
     self.downloadBarButtonItem.title = AMLocalizedString(@"saveForOffline", @"List option shown on the details of a file or folder");
-    [self.downloadBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:17.0f], NSForegroundColorAttributeName:[UIColor mnz_redF0373A]} forState:UIControlStateNormal];
+    [self.downloadBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:17.0f], NSForegroundColorAttributeName:UIColor.mnz_redMain} forState:UIControlStateNormal];
     self.importBarButtonItem.title = AMLocalizedString(@"import", @"Button title that triggers the importing link action");
-    [self.importBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIMediumWithSize:17.0f], NSForegroundColorAttributeName:[UIColor mnz_redF0373A]} forState:UIControlStateNormal];
+    [self.importBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIMediumWithSize:17.0f], NSForegroundColorAttributeName:UIColor.mnz_redMain} forState:UIControlStateNormal];
     UIBarButtonItem *flexibleItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
     
     NSString *myUserHandleString = [NSString stringWithFormat:@"%llu", [[MEGASdkManager sharedMEGAChatSdk] myUserHandle]];
@@ -261,8 +261,6 @@
     cell.nameLabel.text = currentNode.name;
     cell.infoLabel.text = [Helper sizeAndDateForNode:currentNode api:[MEGASdkManager sharedMEGASdk]];
     
-    //TODO: Show red checkmark if the file is Saved for Offline?
-    
     if (self.tableView.isEditing) {
         NSUInteger selectedNodesCount = self.selectedNodesMutableArray.count;
         for (NSUInteger i = 0; i < selectedNodesCount; i++) {
@@ -295,10 +293,10 @@
 #pragma mark - UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    MEGANode *nodeSelected = [self.message.nodeList nodeAtIndex:indexPath.row];
+    MEGANode *node = [self.message.nodeList nodeAtIndex:indexPath.row];
     
     if (tableView.isEditing) {
-        [self.selectedNodesMutableArray addObject:nodeSelected];
+        [self.selectedNodesMutableArray addObject:node];
         
         [self updatePromptTitle];
         
@@ -307,10 +305,14 @@
         
         return;
     } else {
-        if (nodeSelected.name.mnz_isImagePathExtension || nodeSelected.name.mnz_isVideoPathExtension) {
-            [nodeSelected mnz_openImageInNavigationController:self.navigationController withNodes:self.nodesLoadedInChatroom folderLink:NO displayMode:DisplayModeSharedItem enableMoveToRubbishBin:NO];
+        if (node.name.mnz_isImagePathExtension || node.name.mnz_isVideoPathExtension) {
+            NSMutableArray<MEGANode *> *mediaNodesArray = [self.message.nodeList mnz_mediaNodesMutableArrayFromNodeList];
+            
+            MEGAPhotoBrowserViewController *photoBrowserVC = [MEGAPhotoBrowserViewController photoBrowserWithMediaNodes:mediaNodesArray api:[MEGASdkManager sharedMEGASdk] displayMode:DisplayModeSharedItem presentingNode:node preferredIndex:0];
+            
+            [self.navigationController presentViewController:photoBrowserVC animated:YES completion:nil];
         } else {
-            [nodeSelected mnz_openNodeInNavigationController:self.navigationController folderLink:NO];
+            [node mnz_openNodeInNavigationController:self.navigationController folderLink:NO];
         }
     }
     

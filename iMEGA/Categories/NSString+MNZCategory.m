@@ -13,44 +13,69 @@ static NSString* const B = @"[B]";
 
 @implementation NSString (MNZCategory)
 
-- (BOOL)mnz_isImageUTI {
-    BOOL isImageUTI = NO;
-    CFStringRef fileUTI = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, (__bridge CFStringRef _Nonnull)(self.pathExtension.lowercaseString), NULL);
-    if (UTTypeConformsTo(fileUTI, kUTTypeImage)) {
-        isImageUTI = YES;
-    }
-    if (fileUTI) CFRelease(fileUTI);
-    
-    return isImageUTI;
-}
-
-- (BOOL)mnz_isAudiovisualContentUTI {
-    BOOL isAudiovisualContentUTI = NO;
-    CFStringRef fileUTI = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, (__bridge CFStringRef _Nonnull)(self.pathExtension.lowercaseString), NULL);
-    if (UTTypeConformsTo(fileUTI, kUTTypeAudiovisualContent)) {
-        isAudiovisualContentUTI = YES;
-    }
-    if (fileUTI) CFRelease(fileUTI);
-    
-    return isAudiovisualContentUTI;
-}
-
 - (BOOL)mnz_isImagePathExtension {
-    NSSet *imagesExtensionsSet = [[NSSet alloc] initWithObjects:@"gif", @"jpg", @"tif", @"jpeg", @"bmp", @"png", @"nef", @"heic", nil];
+    NSArray<NSString *> *supportedExtensions = @[@"bmp",
+                                                 @"cr2",
+                                                 @"crw",
+                                                 @"cur",
+                                                 @"dng",
+                                                 @"gif",
+                                                 @"heic",
+                                                 @"ico",
+                                                 @"j2c",
+                                                 @"jp2",
+                                                 @"jpf",
+                                                 @"jpeg",
+                                                 @"jpg",
+                                                 @"nef",
+                                                 @"orf",
+                                                 @"pbm",
+                                                 @"pgm",
+                                                 @"png",
+                                                 @"pnm",
+                                                 @"ppm",
+                                                 @"psd",
+                                                 @"raf",
+                                                 @"rw2",
+                                                 @"rwl",
+                                                 @"tga",
+                                                 @"tif",
+                                                 @"tiff"];
     
-    return [imagesExtensionsSet containsObject:self.pathExtension.lowercaseString];
+    return [supportedExtensions containsObject:self.pathExtension.lowercaseString];
 }
 
 - (BOOL)mnz_isVideoPathExtension {
-    NSSet *videosExtensionsSet = [[NSSet alloc] initWithObjects:@"mp4", @"mov", @"m4v", @"3gp", nil];
+    NSArray<NSString *> *supportedExtensions = @[@"3g2",
+                                                 @"3gp",
+                                                 @"avi",
+                                                 @"m4v",
+                                                 @"mov",
+                                                 @"mp4",
+                                                 @"mqv",
+                                                 @"qt"];
     
-    return [videosExtensionsSet containsObject:self.pathExtension.lowercaseString];
+    return [supportedExtensions containsObject:self.pathExtension.lowercaseString];
+}
+
+- (BOOL)mnz_isAudioPathExtension {
+    NSArray<NSString *> *supportedExtensions = @[@"aac",
+                                                 @"ac3",
+                                                 @"aif",
+                                                 @"aiff",
+                                                 @"au",
+                                                 @"caf",
+                                                 @"eac3",
+                                                 @"flac",
+                                                 @"m4a",
+                                                 @"mp3",
+                                                 @"wav"];
+    
+    return [supportedExtensions containsObject:self.pathExtension.lowercaseString];
 }
 
 - (BOOL)mnz_isMultimediaPathExtension {
-    NSSet *multimediaExtensionsSet = [[NSSet alloc] initWithObjects:@"mp4", @"mov", @"3gp", @"wav", @"m4v", @"m4a", @"mp3", nil];
-    
-    return [multimediaExtensionsSet containsObject:self.pathExtension.lowercaseString];
+    return self.mnz_isVideoPathExtension || self.mnz_isAudioPathExtension;
 }
 
 #pragma mark - appData
@@ -342,7 +367,7 @@ static NSString* const B = @"[B]";
     }
 }
 
-- (NSString*)SHA256 {
+- (NSString *)SHA256 {
     unsigned int outputLength = CC_SHA256_DIGEST_LENGTH;
     unsigned char output[outputLength];
     
@@ -357,10 +382,14 @@ static NSString* const B = @"[B]";
     return hash;
 }
 
-#pragma mark - Emoji utils
+- (BOOL)mnz_isDecimalNumber {
+    NSCharacterSet *decimalDigitInvertedCharacterSet = [[NSCharacterSet decimalDigitCharacterSet] invertedSet];
+    NSRange range = [self rangeOfCharacterFromSet:decimalDigitInvertedCharacterSet];
+    
+    return (range.location == NSNotFound);
+}
 
-- (BOOL)mnz_containsEmoji
-{
+- (BOOL)mnz_containsEmoji {
     __block BOOL containsEmoji = NO;
     
     [self enumerateSubstringsInRange:NSMakeRange(0,
@@ -612,21 +641,38 @@ static NSString* const B = @"[B]";
 
 - (NSString *)mnz_coordinatesOfPhotoOrVideo {
     if (self.mnz_isImagePathExtension) {
-        NSData *data = [NSData dataWithContentsOfURL:[NSURL fileURLWithPath:[NSHomeDirectory() stringByAppendingPathComponent:self]]];
-        CGImageSourceRef imageData = CGImageSourceCreateWithData((CFDataRef)data, NULL);
-        if (imageData) {
-            NSDictionary *metadata = (__bridge NSDictionary *)CGImageSourceCopyPropertiesAtIndex(imageData, 0, NULL);
-            
-            CFRelease(imageData);
-            
-            NSDictionary *exifDictionary = [metadata objectForKey:(NSString *)kCGImagePropertyGPSDictionary];
-            if (exifDictionary) {
-                NSNumber *latitude = [exifDictionary objectForKey:@"Latitude"];
-                NSNumber *longitude = [exifDictionary objectForKey:@"Longitude"];
-                if (latitude && longitude) {
-                    return [NSString stringWithFormat:@"%@&%@", latitude, longitude];
+        NSURL *fileURL;
+        if ([self containsString:@"/tmp/"]) {
+            fileURL = [NSURL fileURLWithPath:self];
+        } else {
+            fileURL = [NSURL fileURLWithPath:[NSHomeDirectory() stringByAppendingPathComponent:self]];
+        }
+        
+        if ([[NSFileManager defaultManager] fileExistsAtPath:fileURL.path]) {
+            NSData *data = [NSData dataWithContentsOfURL:fileURL];
+            if (data) {
+                CGImageSourceRef imageData = CGImageSourceCreateWithData((CFDataRef)data, NULL);
+                if (imageData) {
+                    NSDictionary *metadata = (__bridge NSDictionary *)CGImageSourceCopyPropertiesAtIndex(imageData, 0, NULL);
+                    
+                    CFRelease(imageData);
+                    
+                    NSDictionary *exifDictionary = [metadata objectForKey:(NSString *)kCGImagePropertyGPSDictionary];
+                    if (exifDictionary) {
+                        NSNumber *latitude = [exifDictionary objectForKey:@"Latitude"];
+                        NSNumber *longitude = [exifDictionary objectForKey:@"Longitude"];
+                        if (latitude && longitude) {
+                            return [NSString stringWithFormat:@"%@&%@", latitude, longitude];
+                        }
+                    }
+                } else {
+                    MEGALogError(@"Create image source with data returns nil");
                 }
+            } else {
+                MEGALogError(@"The data object could not be created");
             }
+        } else {
+            MEGALogError(@"The file does not exist or its existence could not be determined. File path %@", fileURL);
         }
     }
     
@@ -655,6 +701,59 @@ static NSString* const B = @"[B]";
     NSString *base64FromBase64URLEncoding = [base64URLEncondingString stringByPaddingToLength:paddedLength withString:@"=" startingAtIndex:0];
     
     return base64FromBase64URLEncoding;
+}
+
+#pragma mark - File names and extensions
+
++ (NSString *)mnz_fileNameWithDate:(NSDate *)date {
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    dateFormatter.dateFormat = @"yyyy'-'MM'-'dd' 'HH'.'mm'.'ss";
+    dateFormatter.locale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"];
+    
+    return [dateFormatter stringFromDate:date];
+}
+
+- (NSString *)mnz_fileNameWithLowercaseExtension {
+    NSString *fileName;
+    NSString *extension;
+    
+    NSMutableArray<NSString *> *fileNameComponents = [[self componentsSeparatedByString:@"."] mutableCopy];
+    if (fileNameComponents.count > 1) {
+        extension = fileNameComponents.lastObject.lowercaseString;
+        [fileNameComponents replaceObjectAtIndex:(fileNameComponents.count - 1) withObject:extension];
+    }
+    fileName = [fileNameComponents componentsJoinedByString:@"."];
+    
+    return fileName;
+}
+
+- (NSString *)mnz_lastExtensionInLowercase {
+    NSString *extension;
+    NSMutableArray<NSString *> *fileNameComponents = [[self.lastPathComponent componentsSeparatedByString:@"."] mutableCopy];
+    if (fileNameComponents.count > 1) {
+        extension = fileNameComponents.lastObject.lowercaseString;
+    }
+    
+    return extension;
+}
+
+- (NSString *)mnz_sequentialFileNameInParentNode:(MEGANode *)parentNode {
+    NSString *nameWithoutExtension = self.stringByDeletingPathExtension;
+    NSString *extension = self.pathExtension;
+    int index = 0;
+    int listSize = 0;
+    
+    do {
+        if (index != 0) {
+            nameWithoutExtension = [self.stringByDeletingPathExtension stringByAppendingString:[NSString stringWithFormat:@"_%d", index]];
+        }
+        
+        MEGANodeList *nameNodeList = [[MEGASdkManager sharedMEGASdk] nodeListSearchForNode:parentNode searchString:[nameWithoutExtension stringByAppendingPathExtension:extension]];
+        listSize = nameNodeList.size.intValue;
+        index++;
+    } while (listSize != 0);
+    
+    return [nameWithoutExtension stringByAppendingPathExtension:extension];
 }
 
 @end

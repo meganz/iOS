@@ -9,26 +9,14 @@
 @implementation UIImageView (MNZCategory)
 
 - (void)mnz_setImageForUserHandle:(uint64_t)userHandle {
-    self.layer.cornerRadius = self.frame.size.width / 2;
-    self.layer.masksToBounds = YES;
-    
-    self.image = [UIImage mnz_imageForUserHandle:userHandle size:self.frame.size delegate:self];
+    [self mnz_setImageForUserHandle:userHandle name:@"?"];
 }
 
-- (void)mnz_setImageForChatSharedContactHandle:(uint64_t)userHandle initial:(NSString*)initial {
+- (void)mnz_setImageForUserHandle:(uint64_t)userHandle name:(NSString *)name {
     self.layer.cornerRadius = self.frame.size.width / 2;
     self.layer.masksToBounds = YES;
     
-    NSString *base64Handle = [MEGASdk base64HandleForUserHandle:userHandle];
-    NSString *avatarFilePath = [[Helper pathForSharedSandboxCacheDirectory:@"thumbnailsV3"] stringByAppendingPathComponent:base64Handle];
-    if ([[NSFileManager defaultManager] fileExistsAtPath:avatarFilePath]) {
-       self.image = [UIImage imageWithContentsOfFile:avatarFilePath];
-    } else {
-        NSString *colorString = [MEGASdk avatarColorForBase64UserHandle:base64Handle];
-        self.image = [UIImage imageForName:initial size:self.frame.size backgroundColor:[UIColor colorFromHexString:colorString] textColor:[UIColor whiteColor] font:[UIFont mnz_SFUIRegularWithSize:self.layer.cornerRadius]];
-        
-        [[MEGASdkManager sharedMEGASdk] getAvatarUserWithEmailOrHandle:base64Handle destinationFilePath:avatarFilePath delegate:self];
-    }
+    self.image = [UIImage mnz_imageForUserHandle:userHandle name:name size:self.frame.size delegate:self];
 }
 
 - (void)mnz_setThumbnailByNode:(MEGANode *)node {

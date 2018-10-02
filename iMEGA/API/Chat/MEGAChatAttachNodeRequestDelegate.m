@@ -3,7 +3,7 @@
 
 @interface MEGAChatAttachNodeRequestDelegate ()
 
-@property (nonatomic, copy) void (^completion)(MEGAChatError *error);
+@property (nonatomic, copy) void (^completion)(MEGAChatRequest *request, MEGAChatError *error);
 
 @end
 
@@ -11,7 +11,7 @@
 
 #pragma mark - Initialization
 
-- (instancetype)initWithCompletion:(void (^)(MEGAChatError *error))completion {
+- (instancetype)initWithCompletion:(void (^)(MEGAChatRequest *request, MEGAChatError *error))completion {
     self = [super init];
     if (self) {
         _completion = completion;
@@ -30,7 +30,7 @@
     [super onChatRequestFinish:api request:request error:error];
     
     if (self.completion) {
-        self.completion(error);
+        self.completion(request, error);
     }
 }
 

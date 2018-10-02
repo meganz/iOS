@@ -1,6 +1,8 @@
 
 #import "MEGANodeList+MNZCategory.h"
 
+#import "NSString+MNZCategory.h"
+
 @implementation MEGANodeList (MNZCategory)
 
 - (NSArray *)mnz_numberOfFilesAndFolders {
@@ -31,6 +33,20 @@
     return folderAlreadyExists;
 }
 
+- (BOOL)mnz_existsFileWithName:(NSString *)name {
+    BOOL fileAlreadyExists = NO;
+    for (NSUInteger i = 0; i < self.size.unsignedIntegerValue; i++) {
+        MEGANode *node = [self nodeAtIndex:i];
+        if (node.isFile && [node.name isEqualToString:name]) {
+            fileAlreadyExists = YES;
+            break;
+        }
+    }
+    
+    return fileAlreadyExists;
+    
+}
+
 - (NSArray *)mnz_nodesArrayFromNodeList {
     NSUInteger nodeListCount = self.size.unsignedIntegerValue;
     NSMutableArray *nodesMutableArray = [[NSMutableArray alloc] initWithCapacity:nodeListCount];
@@ -40,6 +56,19 @@
     }
     
     return nodesMutableArray;
+}
+
+- (NSMutableArray *)mnz_mediaNodesMutableArrayFromNodeList {
+    NSUInteger nodeListCount = self.size.unsignedIntegerValue;
+    NSMutableArray *mediaNodesMutableArray = [[NSMutableArray alloc] initWithCapacity:nodeListCount];
+    for (NSUInteger i = 0; i < nodeListCount; i++) {
+        MEGANode *node = [self nodeAtIndex:i];
+        if (node.name.mnz_isImagePathExtension || node.name.mnz_isVideoPathExtension) {
+            [mediaNodesMutableArray addObject:node];
+        }
+    }
+    
+    return mediaNodesMutableArray;
 }
 
 @end
