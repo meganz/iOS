@@ -33,15 +33,26 @@
 
 - (IBAction)tapToggleSecureTextEntry:(id)sender {
     self.passwordTextField.secureTextEntry = !self.passwordTextField.secureTextEntry;
+    [self configureRightImage];
+    //This code fix the position of the text field cursor not locating properly when toggle secure text entry
+    NSString *tmpString = self.passwordTextField.text;
+    self.passwordTextField.text = @" ";
+    self.passwordTextField.text = tmpString;
+}
+
+- (void)configureRightImage {
     if (self.passwordTextField.secureTextEntry) {
         [self.rightImageView setImage:[UIImage imageNamed:@"showHidePassword"] forState:UIControlStateNormal];
     } else {
         [self.rightImageView setImage:[UIImage imageNamed:@"showHidePassword_active"] forState:UIControlStateNormal];
     }
-    //This code fix the position of the text field cursor not locating properly when toggle secure text entry
-    NSString *tmpString = self.passwordTextField.text;
-    self.passwordTextField.text = @" ";
-    self.passwordTextField.text = tmpString;
+}
+
+#pragma mark - Public
+
+- (void)configureSecureTextEntry {
+    [self configureRightImage];
+    self.rightImageView.hidden = YES;
 }
 
 #pragma mark - UITextFieldDelegate
@@ -52,6 +63,7 @@
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField {
+    self.passwordTextField.secureTextEntry = YES;
     self.rightImageView.hidden = YES;
 }
 

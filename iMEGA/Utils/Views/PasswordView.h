@@ -22,4 +22,6 @@
 
 @property (assign, nonatomic) IBOutlet id<PasswordViewDelegate> delegate;
 
+- (void)configureSecureTextEntry;
+
 @end

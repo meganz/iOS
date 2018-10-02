@@ -263,7 +263,8 @@
 
 - (void)textFieldDidEndEditing:(UITextField *)textField {
     if (textField.tag == 1) {
-        self.passwordView.rightImageView.hidden = YES;
+        self.passwordView.passwordTextField.secureTextEntry = YES;
+        [self.passwordView configureSecureTextEntry];
     }
 }
 
