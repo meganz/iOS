@@ -126,14 +126,14 @@
         [enableOrDisableFileVersioningAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"no", nil) style:UIAlertActionStyleCancel handler:nil]];
         [enableOrDisableFileVersioningAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"yes", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-                [[MEGASdkManager sharedMEGASdk] setFileVersionsOption:NO delegate:self];
+                [[MEGASdkManager sharedMEGASdk] setFileVersionsOption:YES delegate:self];
             }
         }]];
         
         [self presentViewController:enableOrDisableFileVersioningAlertController animated:YES completion:nil];
     } else {
         if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-            [[MEGASdkManager sharedMEGASdk] setFileVersionsOption:YES delegate:self];
+            [[MEGASdkManager sharedMEGASdk] setFileVersionsOption:NO delegate:self];
         }
     }
 }
@@ -291,24 +291,19 @@
 
 - (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
     if ((request.type == MEGARequestTypeGetAttrUser) && (request.paramType == MEGAUserAttributeDisableVersions)) {
-        if (error.type) {
-            if (error.type == MEGAErrorTypeApiENoent) {
-                //If the option has never been set, the error code will be MEGAErrorTypeApiENoent.
-                self.fileVersioningEnabled = NO;
-            }
-        } else {
-            self.fileVersioningEnabled = request.flag;
-            self.fileVersioningSwitch.on = self.isFileVersioningEnabled;
+        if (!error.type || error.type == MEGAErrorTypeApiENoent) {
+            self.fileVersioningSwitch.on = self.fileVersioningEnabled = !request.flag;
             
             [self.tableView reloadData];
         }
     }
     
     if ((request.type == MEGARequestTypeSetAttrUser) && (request.paramType == MEGAUserAttributeDisableVersions)) {
-        self.fileVersioningEnabled = [request.text isEqualToString:@"1"];
-        self.fileVersioningSwitch.on = self.isFileVersioningEnabled;
-        
-        [self.tableView reloadData];
+        if (!error.type) {
+            self.fileVersioningSwitch.on = self.fileVersioningEnabled = ![request.text isEqualToString:@"1"];
+            
+            [self.tableView reloadData];
+        }
     }
 }
 
