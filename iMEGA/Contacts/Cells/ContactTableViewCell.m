@@ -3,23 +3,20 @@
 @implementation ContactTableViewCell
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
+    UIColor *color = self.onlineStatusView.backgroundColor;
     [super setSelected:selected animated:animated];
     
-    if (selected) {
-        UIView *view = [[UIView alloc] init];
-        view.backgroundColor = UIColor.clearColor;
-        view.userInteractionEnabled = NO;
-        self.selectedBackgroundView = view;
+    if (selected){
+        self.onlineStatusView.backgroundColor = color;
     }
 }
 
-- (void)setHighlighted:(BOOL)highlighted animated:(BOOL)animated {
+-(void)setHighlighted:(BOOL)highlighted animated:(BOOL)animated{
+    UIColor *color = self.onlineStatusView.backgroundColor;
     [super setHighlighted:highlighted animated:animated];
     
-    if (highlighted) {
-        UIView *view = [[UIView alloc] init];
-        view.backgroundColor = UIColor.clearColor;
-        self.selectedBackgroundView = view;
+    if (highlighted){
+        self.onlineStatusView.backgroundColor = color;
     }
 }
 
