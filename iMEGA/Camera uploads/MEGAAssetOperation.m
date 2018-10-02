@@ -16,20 +16,20 @@
 
 @property (nonatomic, strong) PHAsset *phasset;
 @property (nonatomic, strong) MEGANode *parentNode;
-@property (nonatomic, assign) BOOL automatically;
+@property (nonatomic, assign, getter=isCameraUploads) BOOL cameraUploads;
 @property (nonatomic, copy) NSString *uploadsDirectory; // Local directory
 
 @end
 
 @implementation MEGAAssetOperation
 
-- (instancetype)initWithPHAsset:(PHAsset *)asset parentNode:(MEGANode *)parentNode automatically:(BOOL)automatically {
+- (instancetype)initWithPHAsset:(PHAsset *)asset parentNode:(MEGANode *)parentNode cameraUploads:(BOOL)cameraUploads {
     if (self = [super init]) {
         _phasset = asset;
         _parentNode = parentNode;
         executing = NO;
         finished = NO;
-        _automatically = automatically;
+        _cameraUploads = cameraUploads;
     }
     return self;
 }
@@ -47,9 +47,9 @@
 }
 
 - (void)start {
-    self.uploadsDirectory = [[NSFileManager defaultManager] uploadsDirectory];
+    self.uploadsDirectory = [NSFileManager defaultManager].uploadsDirectory;
     
-    if (self.automatically) {
+    if (self.isCameraUploads) {
         if (![CameraUploads syncManager].isCameraUploadsEnabled) {
             [[CameraUploads syncManager] resetOperationQueue];
             return;
@@ -89,12 +89,12 @@
         return;
     }
     
-    MEGAProcessAsset *processAsset = [[MEGAProcessAsset alloc] initWithAsset:self.phasset parentNode:self.parentNode filePath:^(NSString *filePath) {
+    MEGAProcessAsset *processAsset = [[MEGAProcessAsset alloc] initWithAsset:self.phasset parentNode:self.parentNode cameraUploads:self.isCameraUploads filePath:^(NSString *filePath) {
         NSString *name = filePath.lastPathComponent;
-        NSString *newName = [self newNameForName:name];
+        NSString *newName = [name mnz_sequentialFileNameInParentNode:self.parentNode];
         
         NSString *appData = [NSString new];
-        if (self.automatically) {
+        if (self.isCameraUploads) {
             appData = [appData mnz_appDataToSaveCameraUploadsCount:[[[CameraUploads syncManager] assetsOperationQueue] operationCount]];
         }
         
@@ -116,7 +116,7 @@
         if ([[[MEGASdkManager sharedMEGASdk] parentNodeForNode:node] handle] == self.parentNode.handle) {
             MEGALogDebug(@"The asset exists in MEGA in the parent folder");
             [self completeOperation];
-            if ([[[CameraUploads syncManager] assetsOperationQueue] operationCount] == 1 && self.automatically) {
+            if ([[[CameraUploads syncManager] assetsOperationQueue] operationCount] == 1 && self.isCameraUploads) {
                 [[CameraUploads syncManager] resetOperationQueue];
             }
         } else {
@@ -130,25 +130,6 @@
 
 #pragma mark - Private
 
-- (NSString *)newNameForName:(NSString *)name {
-    NSString *nameWithoutExtension = [name stringByDeletingPathExtension];
-    NSString *extension = [name pathExtension];
-    int index = 0;
-    int listSize = 0;
-    
-    do {
-        if (index != 0) {
-            nameWithoutExtension = [[name stringByDeletingPathExtension] stringByAppendingString:[NSString stringWithFormat:@"_%d", index]];
-        }
-        
-        MEGANodeList *nameNodeList = [[MEGASdkManager sharedMEGASdk] nodeListSearchForNode:self.parentNode searchString:[nameWithoutExtension stringByAppendingPathExtension:extension]];
-        listSize = [nameNodeList.size intValue];
-        index++;
-    } while (listSize != 0);
-    
-    return [nameWithoutExtension stringByAppendingPathExtension:extension];
-}
-
 - (void)completeOperation {
     [self willChangeValueForKey:@"isFinished"];
     [self willChangeValueForKey:@"isExecuting"];
@@ -156,7 +137,7 @@
     executing = NO;
     finished = YES;
     
-    if (self.automatically) {
+    if (self.isCameraUploads) {
         if (self.phasset) {
             if (self.phasset.mediaType == PHAssetMediaTypeImage) {
                 [[NSUserDefaults standardUserDefaults] setObject:self.phasset.creationDate forKey:kLastUploadPhotoDate];
@@ -185,7 +166,7 @@
 
 - (void)manageError:(NSError *)error {
     if ([error.domain isEqualToString:MEGAProcessAssetErrorDomain]) {
-        if (error.code == - 2 && self.automatically) {
+        if (error.code == - 2 && self.isCameraUploads) {
             [self disableCameraUploadsWithError:error];
         }
     } else {
@@ -207,14 +188,14 @@
                 break;
                 
             case 640: {
-                if (self.automatically) {
+                if (self.isCameraUploads) {
                     [self disableCameraUploadsWithError:error];
                 }
                 break;
             }
                 
             default: {
-                if (self.automatically) {
+                if (self.isCameraUploads) {
                     [self disableCameraUploadsWithError:error];
                 }
                 break;
@@ -239,7 +220,7 @@
             break;
     }
     
-    if (![[[CameraUploads syncManager] assetsOperationQueue] operationCount] && self.automatically) {
+    if (![[[CameraUploads syncManager] assetsOperationQueue] operationCount] && self.isCameraUploads) {
         [[CameraUploads syncManager] resetOperationQueue];
     }
 }
@@ -255,12 +236,12 @@
 - (void)onTransferFinish:(MEGASdk *)api transfer:(MEGATransfer *)transfer error:(MEGAError *)error {
     if ([error type]) {
         if ([error type] == MEGAErrorTypeApiEIncomplete) {
-            if (self.automatically) {
+            if (self.isCameraUploads) {
                 [self start];
             } else {
                 [self completeOperation];
             }
-        } else if (self.automatically) {
+        } else if (self.isCameraUploads) {
             [[CameraUploads syncManager] resetOperationQueue];
         }
         return;
@@ -270,7 +251,7 @@
         [self completeOperation];
     }
     
-    if (![[[CameraUploads syncManager] assetsOperationQueue] operationCount] && self.automatically) {
+    if (![[[CameraUploads syncManager] assetsOperationQueue] operationCount] && self.isCameraUploads) {
         [[CameraUploads syncManager] resetOperationQueue];
     }
 }

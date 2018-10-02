@@ -1,9 +1,9 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-#import "MEGASdk.h"
-
 #import "MEGAIndexer.h"
+#import "MEGAChatMessage.h"
+#import "MEGASdk.h"
 
 #define kIsEraseAllLocalDataEnabled @"IsEraseAllLocalDataEnabled"
 
@@ -60,17 +60,21 @@ typedef NS_OPTIONS(NSUInteger, NodesAre) {
 
 + (NSString *)pathForSharedSandboxCacheDirectory:(NSString *)directory;
 
-#pragma mark - Utils downloaded and downloading nodes
+#pragma mark - Utils for transfers
 
 + (NSMutableDictionary *)downloadingNodes;
 
 + (BOOL)isFreeSpaceEnoughToDownloadNode:(MEGANode *)node isFolderLink:(BOOL)isFolderLink;
 + (void)downloadNode:(MEGANode *)node folderPath:(NSString *)folderPath isFolderLink:(BOOL)isFolderLink shouldOverwrite:(BOOL)overwrite;
 
++ (void)startPendingUploadTransferIfNeeded;
+
 #pragma mark - Utils
 
 + (unsigned long long)sizeOfFolderAtPath:(NSString *)path;
 + (uint64_t)freeDiskSpace;
+
++ (void)changeApiURL;
 
 #pragma mark - Utils for nodes
 
@@ -82,11 +86,9 @@ typedef NS_OPTIONS(NSUInteger, NodesAre) {
 + (NSString *)dateWithISO8601FormatOfRawTime:(time_t)rawtime;
 + (NSString *)filesAndFoldersInFolderNode:(MEGANode *)node api:(MEGASdk *)api;
 
-+ (UIActivityViewController *)activityViewControllerForNodes:(NSArray *)nodesArray button:(UIBarButtonItem *)shareBarButtonItem;
++ (void)importNode:(MEGANode *)node toShareWithCompletion:(void (^)(MEGANode *node))completion;
++ (UIActivityViewController *)activityViewControllerForChatMessages:(NSArray<MEGAChatMessage *> *)messages sender:(id)sender;
 + (UIActivityViewController *)activityViewControllerForNodes:(NSArray *)nodesArray sender:(id)sender;
-+ (NSUInteger)totalOperations;
-+ (void)setCopyToPasteboard:(BOOL)boolValue;
-+ (BOOL)copyToPasteboard;
 
 + (void)setIndexer:(MEGAIndexer* )megaIndexer;
 
@@ -109,9 +111,6 @@ typedef NS_OPTIONS(NSUInteger, NodesAre) {
 + (UISearchController *)customSearchControllerWithSearchResultsUpdaterDelegate:(id<UISearchResultsUpdating>)searchResultsUpdaterDelegate searchBarDelegate:(id<UISearchBarDelegate>)searchBarDelegate;
 
 + (void)presentSafariViewControllerWithURL:(NSURL *)url;
-
-+ (void)configureRedNavigationAppearance;
-+ (void)configureWhiteNavigationAppearance;
     
 + (void)showExportMasterKeyInView:(UIViewController *)viewController completion:(void (^ __nullable)(void))completion;
 + (void)showMasterKeyCopiedAlert;
@@ -123,6 +122,7 @@ typedef NS_OPTIONS(NSUInteger, NodesAre) {
 + (void)logout;
 + (void)logoutFromConfirmAccount;
 + (void)logoutAfterPasswordReminder;
++ (void)clearEphemeralSession;
 + (void)clearSession;
 + (void)deletePasscode;
 

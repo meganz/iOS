@@ -28,26 +28,6 @@
 
 @implementation MEGANode (MNZCategory)
 
-- (void)mnz_openImageInNavigationController:(UINavigationController *)navigationController withNodes:(NSArray<MEGANode *> *)nodesArray folderLink:(BOOL)isFolderLink displayMode:(DisplayMode)displayMode {
-    [self mnz_openImageInNavigationController:navigationController withNodes:nodesArray folderLink:isFolderLink displayMode:displayMode enableMoveToRubbishBin:YES];
-}
-
-- (void)mnz_openImageInNavigationController:(UINavigationController *)navigationController withNodes:(NSArray<MEGANode *> *)nodesArray folderLink:(BOOL)isFolderLink displayMode:(DisplayMode)displayMode enableMoveToRubbishBin:(BOOL)enableMoveToRubbishBin {
-    MEGAPhotoBrowserViewController *photoBrowserVC = [self mnz_photoBrowserWithNodes:nodesArray folderLink:isFolderLink displayMode:displayMode enableMoveToRubbishBin:enableMoveToRubbishBin];
-    [navigationController presentViewController:photoBrowserVC animated:YES completion:nil];
-}
-
-- (MEGAPhotoBrowserViewController *)mnz_photoBrowserWithNodes:(NSArray<MEGANode *> *)nodesArray folderLink:(BOOL)isFolderLink displayMode:(DisplayMode)displayMode enableMoveToRubbishBin:(BOOL)enableMoveToRubbishBin {
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MEGAPhotoBrowserViewController" bundle:nil];
-    MEGAPhotoBrowserViewController *photoBrowserVC = [storyboard instantiateViewControllerWithIdentifier:@"MEGAPhotoBrowserViewControllerID"];
-    photoBrowserVC.api = isFolderLink ? [MEGASdkManager sharedMEGASdkFolder] : [MEGASdkManager sharedMEGASdk];
-    photoBrowserVC.node = self;
-    photoBrowserVC.nodesArray = nodesArray;
-    photoBrowserVC.displayMode = displayMode;
-    
-    return photoBrowserVC;
-}
-
 - (void)mnz_openNodeInNavigationController:(UINavigationController *)navigationController folderLink:(BOOL)isFolderLink {
     UIViewController *viewController = [self mnz_viewControllerForNodeInFolderLink:isFolderLink];
     if (viewController) {
@@ -108,11 +88,8 @@
             
             return previewController;
         }
-    } else if (self.name.mnz_isAudiovisualContentUTI && [api httpServerStart:YES port:4443]) {
-        NSURL *path = [api httpServerGetLocalLink:self];
-        AVURLAsset *asset = [AVURLAsset assetWithURL:path];
-        
-        if (asset.playable) {
+    } else if (self.name.mnz_isMultimediaPathExtension && [api httpServerStart:YES port:4443]) {
+        if (self.mnz_isPlayable) {
             MEGAAVViewController *megaAVViewController = [[MEGAAVViewController alloc] initWithNode:self folderLink:isFolderLink];
             return megaAVViewController;
         } else {
@@ -121,23 +98,15 @@
             return alertController;
         }
     } else {
-        if ([[[api downloadTransfers] size] integerValue] > 0) {
-            UIAlertController *documentOpeningAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"documentOpening_alertTitle", @"Alert title shown when you try to open a Cloud Drive document and is not posible because there's some active download") message:AMLocalizedString(@"documentOpening_alertMessage", @"Alert message shown when you try to open a Cloud Drive document and is not posible because there's some active download") preferredStyle:UIAlertControllerStyleAlert];
-            
-            [documentOpeningAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
-            
-            return documentOpeningAlertController;
-        } else {
-            if ([Helper isFreeSpaceEnoughToDownloadNode:self isFolderLink:isFolderLink]) {
-                MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"previewDocumentNavigationID"];
-                PreviewDocumentViewController *previewController = navigationController.viewControllers.firstObject;
-                previewController.node = self;
-                previewController.api = api;
-                previewController.isLink = isFolderLink;
-                return navigationController;
-            }
-            return nil;
+        if ([Helper isFreeSpaceEnoughToDownloadNode:self isFolderLink:isFolderLink]) {
+            MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"previewDocumentNavigationID"];
+            PreviewDocumentViewController *previewController = navigationController.viewControllers.firstObject;
+            previewController.node = self;
+            previewController.api = api;
+            previewController.isLink = isFolderLink;
+            return navigationController;
         }
+        return nil;
     }
 }
 
@@ -169,13 +138,18 @@
 #pragma mark - Actions
 
 - (BOOL)mnz_downloadNodeOverwriting:(BOOL)overwrite {
-    MOOfflineNode *offlineNodeExist = [[MEGAStore shareInstance] offlineNodeWithNode:self api:[MEGASdkManager sharedMEGASdk]];
+    return [self mnz_downloadNodeOverwriting:overwrite api:[MEGASdkManager sharedMEGASdk]];
+}
+
+- (BOOL)mnz_downloadNodeOverwriting:(BOOL)overwrite api:(MEGASdk *)api {
+    MOOfflineNode *offlineNodeExist = [[MEGAStore shareInstance] offlineNodeWithNode:self api:api];
     if (offlineNodeExist) {
         return YES;
     } else {
         if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-            if ([Helper isFreeSpaceEnoughToDownloadNode:self isFolderLink:NO]) {
-                [Helper downloadNode:self folderPath:[Helper relativePathForOffline] isFolderLink:NO shouldOverwrite:overwrite];
+            BOOL isFolderLink = api != [MEGASdkManager sharedMEGASdk];
+            if ([Helper isFreeSpaceEnoughToDownloadNode:self isFolderLink:isFolderLink]) {
+                [Helper downloadNode:self folderPath:[Helper relativePathForOffline] isFolderLink:isFolderLink shouldOverwrite:overwrite];
                 return YES;
             } else {
                 return NO;
@@ -205,8 +179,24 @@
         UIAlertAction *renameAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"rename", @"Title for the action that allows you to rename a file or folder") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
             if ([MEGAReachabilityManager isReachableHUDIfNot]) {
                 UITextField *alertViewTextField = renameAlertController.textFields.firstObject;
-                MEGARenameRequestDelegate *delegate = [[MEGARenameRequestDelegate alloc] initWithCompletion:completion];
-                [[MEGASdkManager sharedMEGASdk] renameNode:self newName:alertViewTextField.text delegate:delegate];
+                MEGANode *parentNode = [[MEGASdkManager sharedMEGASdk] nodeForHandle:self.parentHandle];
+                MEGANodeList *childrenNodeList = [[MEGASdkManager sharedMEGASdk] nodeListSearchForNode:parentNode searchString:alertViewTextField.text];
+                
+                if (self.isFolder) {
+                    if ([childrenNodeList mnz_existsFolderWithName:alertViewTextField.text]) {
+                        [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"There is already a folder with the same name", @"A tooltip message which is shown when a folder name is duplicated during renaming or creation.")];
+                    } else {
+                        MEGARenameRequestDelegate *delegate = [[MEGARenameRequestDelegate alloc] initWithCompletion:completion];
+                        [[MEGASdkManager sharedMEGASdk] renameNode:self newName:alertViewTextField.text delegate:delegate];
+                    }
+                } else {
+                    if ([childrenNodeList mnz_existsFileWithName:alertViewTextField.text]) {
+                        [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"There is already a file with the same name", @"A tooltip message which shows when a file name is duplicated during renaming.")];
+                    } else {
+                        MEGARenameRequestDelegate *delegate = [[MEGARenameRequestDelegate alloc] initWithCompletion:completion];
+                        [[MEGASdkManager sharedMEGASdk] renameNode:self newName:alertViewTextField.text delegate:delegate];
+                    }
+                }
             }
         }];
         renameAlertAction.enabled = NO;
@@ -299,7 +289,16 @@
     
     MEGAShareRequestDelegate *shareRequestDelegate = [[MEGAShareRequestDelegate alloc] initToChangePermissionsWithNumberOfRequests:outSharesForNodeMutableArray.count completion:nil];
     for (MEGAShare *share in outSharesForNodeMutableArray) {
-        [[MEGASdkManager sharedMEGASdk] shareNode:self withEmail:share.user level:MEGAShareTypeAccessUnkown delegate:shareRequestDelegate];
+        [[MEGASdkManager sharedMEGASdk] shareNode:self withEmail:share.user level:MEGAShareTypeAccessUnknown delegate:shareRequestDelegate];
+    }
+}
+
+- (void)mnz_restore {
+    if ([MEGAReachabilityManager isReachableHUDIfNot]) {
+        MEGANode *restoreNode = [[MEGASdkManager sharedMEGASdk] nodeForHandle:self.restoreHandle];
+        MEGAMoveRequestDelegate *moveRequestDelegate = [[MEGAMoveRequestDelegate alloc] initWithFiles:(self.isFile ? 1 : 0) folders:(self.isFolder ? 1 : 0) completion:nil];
+        moveRequestDelegate.restore = YES;
+        [[MEGASdkManager sharedMEGASdk] moveNode:self newParent:restoreNode delegate:moveRequestDelegate];
     }
 }
 
@@ -333,7 +332,13 @@
             }
             
             LoginViewController *loginVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"LoginViewControllerID"];
-            [viewController.navigationController pushViewController:loginVC animated:YES];
+            if (viewController.navigationController) {
+                [viewController.navigationController pushViewController:loginVC animated:YES];
+            } else {
+                MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:loginVC];
+                [navigationController addCancelButton];
+                [viewController presentViewController:navigationController animated:YES completion:nil];
+            }
         }
     }
 }
@@ -359,7 +364,13 @@
             }
             
             LoginViewController *loginVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"LoginViewControllerID"];
-            [viewController.navigationController pushViewController:loginVC animated:YES];
+            if (viewController.navigationController) {
+                [viewController.navigationController pushViewController:loginVC animated:YES];
+            } else {
+                MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:loginVC];
+                [navigationController addCancelButton];
+                [viewController presentViewController:navigationController animated:YES completion:nil];
+            }
         }
     }
 }
@@ -573,6 +584,71 @@
     return fileType;
 }
 
+- (BOOL)mnz_isRestorable {
+    MEGANode *restoreNode = [[MEGASdkManager sharedMEGASdk] nodeForHandle:self.restoreHandle];
+    if (restoreNode && ![[MEGASdkManager sharedMEGASdk] isNodeInRubbish:restoreNode] && [[MEGASdkManager sharedMEGASdk] isNodeInRubbish:self]) {
+        return YES;
+    } else {
+        return NO;
+    }
+}
+
+- (BOOL)mnz_isPlayable {
+    BOOL supportedShortFormat = NO;
+    BOOL supportedVideoCodecId = NO;
+    
+    // When media information is not available, try to play the node
+    if (self.shortFormat == -1 && self.videoCodecId == -1) {
+        return YES;
+    }
+    
+    NSArray<NSNumber *> *shortFormats = @[@(1),
+                                          @(2),
+                                          @(3),
+                                          @(4),
+                                          @(5),
+                                          @(13),
+                                          @(27),
+                                          @(44),
+                                          @(49),
+                                          @(50),
+                                          @(51),
+                                          @(52)];
+    
+    NSArray<NSNumber *> *videoCodecIds = @[@(15),
+                                           @(37),
+                                           @(144),
+                                           @(215),
+                                           @(224),
+                                           @(266),
+                                           @(346),
+                                           @(348),
+                                           @(393),
+                                           @(405),
+                                           @(523),
+                                           @(532),
+                                           @(551),
+                                           @(630),
+                                           @(703),
+                                           @(740),
+                                           @(802),
+                                           @(887),
+                                           @(957),
+                                           @(961),
+                                           @(973),
+                                           @(1108),
+                                           @(1114),
+                                           @(1119),
+                                           @(1129),
+                                           @(1132),
+                                           @(1177)];
+    
+    supportedShortFormat = [shortFormats containsObject:@(self.shortFormat)];
+    supportedVideoCodecId = [videoCodecIds containsObject:@(self.videoCodecId)];
+    
+    return supportedShortFormat || supportedVideoCodecId;
+}
+
 #pragma mark - Versions
 
 - (NSInteger)mnz_numberOfVersions {
@@ -661,7 +737,7 @@
             } else {
                 enableRightButton = YES;
             }
-            sender.textColor = containsInvalidChars ? UIColor.mnz_redD90007 : UIColor.darkTextColor;
+            sender.textColor = containsInvalidChars ? UIColor.mnz_redMain : UIColor.darkTextColor;
         }
         
         rightButtonAction.enabled = enableRightButton;

@@ -41,6 +41,7 @@
     changePasswordVC.link = link;
     
     MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:changePasswordVC];
+    [navigationController addCancelButton];
     
     UIViewController *visibleViewController = UIApplication.mnz_visibleViewController;
     if ([visibleViewController isKindOfClass:UIAlertController.class]) {

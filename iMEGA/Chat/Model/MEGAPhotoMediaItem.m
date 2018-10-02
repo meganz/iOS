@@ -12,55 +12,51 @@
 
 @interface MEGAPhotoMediaItem ()
 
-@property (strong, nonatomic) UIImageView *cachedImageView;
-@property (strong, nonatomic) UIView *activityIndicator;
+@property (nonatomic) MEGANode *node;
+@property (nonatomic) NSString *previewFilePath;
+
+@property (nonatomic) UIImageView *cachedImageView;
+@property (nonatomic) UIView *activityIndicator;
 
 @end
 
 @implementation MEGAPhotoMediaItem
 
+#pragma mark - Initialization
+
 - (instancetype)initWithMEGANode:(MEGANode *)node {
-    self = [super init];
-    if (self) {
+    if (self = [super init]) {
         _node = node;
         
-        CGSize size = [self mediaViewDisplaySize];
-        _cachedImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, size.width, size.height)];
-        _cachedImageView.contentMode = UIViewContentModeScaleAspectFill;
-        _cachedImageView.clipsToBounds = YES;
-        _cachedImageView.layer.cornerRadius = 5;
-        
-        if (@available(iOS 11.0, *)) {
-            self.cachedImageView.accessibilityIgnoresInvertColors = YES;
+        if (_node.hasPreview) {
+            _previewFilePath = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES).firstObject stringByAppendingPathComponent:@"previewsV3"] stringByAppendingPathComponent:node.base64Handle];
+            
+            if ([[NSFileManager defaultManager] fileExistsAtPath:_previewFilePath]) {
+                self.image = [UIImage imageWithContentsOfFile:_previewFilePath];
+            }
         }
     }
-    
     return self;
 }
 
 - (void)clearCachedMediaViews {
     [super clearCachedMediaViews];
-    _cachedImageView = nil;
-}
-
-- (void)setNode:(MEGANode *)node {
-    _node = [node copy];
-    _cachedImageView = nil;
+    self.cachedImageView = nil;
 }
 
 - (void)setAppliesMediaViewMaskAsOutgoing:(BOOL)appliesMediaViewMaskAsOutgoing {
     [super setAppliesMediaViewMaskAsOutgoing:appliesMediaViewMaskAsOutgoing];
-    _cachedImageView = nil;
+    self.cachedImageView = nil;
 }
 
 #pragma mark - Private
 
 - (void)configureCachedImageViewWithImagePath:(NSString *)imagePath {
-    UIImage *image = [UIImage imageWithContentsOfFile:imagePath];
-    if (image) {
-        self.cachedImageView.image = image;
-        
-        if (self.node.name.mnz_isMultimediaPathExtension) {
+    self.image = [UIImage imageWithContentsOfFile:imagePath];
+    if (self.image) {
+        self.cachedImageView.image = self.image;
+
+        if (self.node.name.mnz_isVideoPathExtension) {
             UIImageView *playImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"playButton"]];
             playImageView.center = _cachedImageView.center;
             [self.cachedImageView addSubview:playImageView];
@@ -95,22 +91,34 @@
 #pragma mark - JSQMessageMediaData protocol
 
 - (UIView *)mediaView {
-    if (self.node.hasPreview) {
-        NSString *previewFilePath = [[[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"previewsV3"] stringByAppendingPathComponent:self.node.base64Handle];
+    if (self.cachedImageView) {
+        return self.cachedImageView;
+    }
+    
+    CGSize size = [self mediaViewDisplaySize];
+    self.cachedImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, size.width, size.height)];
+    self.cachedImageView.contentMode = UIViewContentModeScaleAspectFill;
+    self.cachedImageView.clipsToBounds = YES;
+    self.cachedImageView.layer.cornerRadius = 4.0f;
+    self.cachedImageView.layer.borderColor = UIColor.mnz_black000000_01.CGColor;
+    self.cachedImageView.layer.borderWidth = 1.0f;
+    
+    if (@available(iOS 11.0, *)) {
+        self.cachedImageView.accessibilityIgnoresInvertColors = YES;
+    }
+    
+    if (self.image) {
+        [self configureCachedImageViewWithImagePath:self.previewFilePath];
+    } else if (self.previewFilePath) {
+        self.activityIndicator = [JSQMessagesMediaPlaceholderView viewWithActivityIndicator];
+        self.activityIndicator.frame = self.cachedImageView.frame;
+        [self.cachedImageView addSubview:self.activityIndicator];
+        MEGAGetPreviewRequestDelegate *getPreviewRequestDelegate = [[MEGAGetPreviewRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
+            [self configureCachedImageViewWithImagePath:request.file];
+            [self.activityIndicator removeFromSuperview];
+        }];
         
-        if ([[NSFileManager defaultManager] fileExistsAtPath:previewFilePath]) {
-            [self configureCachedImageViewWithImagePath:previewFilePath];
-        } else {
-            self.activityIndicator = [JSQMessagesMediaPlaceholderView viewWithActivityIndicator];
-            self.activityIndicator.frame = self.cachedImageView.frame;
-            [self.cachedImageView addSubview:self.activityIndicator];
-            MEGAGetPreviewRequestDelegate *getPreviewRequestDelegate = [[MEGAGetPreviewRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
-                [self configureCachedImageViewWithImagePath:request.file];
-                [self.activityIndicator removeFromSuperview];
-            }];
-            
-            [[MEGASdkManager sharedMEGASdk] getPreviewNode:self.node destinationFilePath:previewFilePath delegate:getPreviewRequestDelegate];
-        }
+        [[MEGASdkManager sharedMEGASdk] getPreviewNode:self.node destinationFilePath:self.previewFilePath delegate:getPreviewRequestDelegate];
     } else {
         [self.cachedImageView mnz_setImageForExtension:self.node.name.pathExtension];
     }
@@ -119,8 +127,29 @@
 }
 
 - (CGSize)mediaViewDisplaySize {
-    CGFloat displaySize = [[UIDevice currentDevice] mnz_widthForChatBubble];
-    return CGSizeMake(displaySize, displaySize);
+    CGFloat width, height;
+    CGFloat maxSide = [[UIDevice currentDevice] mnz_maxSideForChatBubbleWithMedia:YES];
+    if (self.image) {
+        if (self.image.size.width > self.image.size.height) {
+            width = maxSide;
+            height = width * (self.image.size.height / self.image.size.width);
+        } else {
+            height = maxSide;
+            width = height * (self.image.size.width / self.image.size.height);
+        }
+    } else if (self.node.width > 0 && self.node.height > 0) {
+        if (self.node.width > self.node.height) {
+            width = maxSide;
+            height = width * ((CGFloat) self.node.height / self.node.width);
+        } else {
+            height = maxSide;
+            width = height * ((CGFloat) self.node.width / self.node.height);
+        }
+    } else {
+        width = height = maxSide;
+    }
+    
+    return CGSizeMake(width, height);
 }
 
 - (UIView *)mediaPlaceholderView {

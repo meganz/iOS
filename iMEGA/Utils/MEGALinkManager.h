@@ -2,7 +2,6 @@
 #import <Foundation/Foundation.h>
 
 #import "LinkOption.h"
-#import "ConfirmAccountViewController.h"
 #import "URLType.h"
 
 @interface MEGALinkManager : NSObject

@@ -8,6 +8,7 @@
 #import "MEGANode+MNZCategory.h"
 #import "MEGARemoveContactRequestDelegate.h"
 #import "MEGAChatCreateChatGroupRequestDelegate.h"
+#import "MEGAArchiveChatRequestDelegate.h"
 
 #import "BrowserViewController.h"
 #import "CloudDriveViewController.h"
@@ -40,6 +41,7 @@
 
 @property (nonatomic, strong) MEGAUser *user;
 @property (nonatomic, strong) MEGANodeList *incomingNodeListForUser;
+@property (nonatomic, strong) MEGAChatRoom *chatRoom;
 
 @end
 
@@ -50,11 +52,13 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.backBarButtonItem.image = self.backBarButtonItem.image.imageFlippedForRightToLeftLayoutDirection;
     self.navigationItem.leftBarButtonItem = self.backBarButtonItem;
     self.navigationItem.title = AMLocalizedString(@"contactInfo", @"title of the contact properties screen");
     
     self.user = [[MEGASdkManager sharedMEGASdk] contactForEmail:self.userEmail];
     [self.avatarImageView mnz_setImageForUserHandle:self.user.handle];
+    self.chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:self.chatId];
     
     //TODO: Show the blue check if the Contact is verified
     
@@ -95,6 +99,22 @@
     [clearChatHistoryAlertController addAction:continueAction];
     
     [self presentViewController:clearChatHistoryAlertController animated:YES completion:nil];
+}
+
+- (void)showArchiveChatAlertAtIndexPath {
+    NSString *title = self.chatRoom.isArchived ? AMLocalizedString(@"unarchiveChatMessage", @"Confirmation message for user to confirm it will unarchive an archived chat.") : AMLocalizedString(@"archiveChatMessage", @"Confirmation message on archive chat dialog for user to confirm.");
+    UIAlertController *leaveAlertController = [UIAlertController alertControllerWithTitle:title message:nil preferredStyle:UIAlertControllerStyleAlert];
+    [leaveAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
+    
+    [leaveAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", @"Button title to accept something") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        MEGAArchiveChatRequestDelegate *archiveChatRequesDelegate = [[MEGAArchiveChatRequestDelegate alloc] initWithCompletion:^(MEGAChatRoom *chatRoom) {
+            self.chatRoom = chatRoom;
+            [self.tableView reloadData];
+        }];
+        [[MEGASdkManager sharedMEGAChatSdk] archiveChat:self.chatRoom.chatId archive:!self.chatRoom.isArchived delegate:archiveChatRequesDelegate];
+    }]];
+    
+    [self presentViewController:leaveAlertController animated:YES completion:nil];
 }
 
 - (void)showRemoveContactAlert {
@@ -184,14 +204,14 @@
     NSInteger numberOfRows = 0;
     if (section == 0) {
         if (self.contactDetailsMode == ContactDetailsModeDefault) {
-            //TODO: When possible, re-add the rows "Notifications" and "Verify Credentials".
+            //TODO: When possible, re-add the rows "Chat Notifications", "Set Nickname" and "Verify Credentials".
             numberOfRows = 2;
         } else if (self.contactDetailsMode == ContactDetailsModeFromChat) {
-            //TODO: When possible, re-add the rows "Notifications", "Close Chat" and "Verify Credentials".
+            //TODO: When possible, re-add the rows "Chat Notifications", "Set Nickname" and "Verify Credentials".
             if (self.user.visibility == MEGAUserVisibilityHidden) {
-                numberOfRows = 1;
-            } else {
                 numberOfRows = 2;
+            } else {
+                numberOfRows = 3;
             }
             
         }
@@ -218,7 +238,7 @@
                     cell.avatarImageView.image = [UIImage imageNamed:@"delete"];
                     cell.nameLabel.text = AMLocalizedString(@"removeUserTitle", @"Alert title shown when you want to remove one or more contacts");
                     cell.nameLabel.font = [UIFont mnz_SFUIRegularWithSize:15.0f];
-                    cell.nameLabel.textColor = [UIColor mnz_redF0373A];
+                    cell.nameLabel.textColor = UIColor.mnz_redMain;
                     cell.lineView.hidden = YES;
                     break;
             }
@@ -227,12 +247,21 @@
                 case 0: //Clear Chat History
                     cell.avatarImageView.image = [UIImage imageNamed:@"clearChatHistory"];
                     cell.nameLabel.text = AMLocalizedString(@"clearChatHistory", @"A button title to delete the history of a chat.");
+                    cell.nameLabel.enabled = self.user.visibility == MEGAUserVisibilityVisible;
+                    cell.userInteractionEnabled = self.user.visibility == MEGAUserVisibilityVisible;
                     break;
                     
-                case 1: //Remove Contact
+                case 1: //Archive chat
+                    cell.avatarImageView.image = self.chatRoom.isArchived ? [UIImage imageNamed:@"unArchiveChat"] : [UIImage imageNamed:@"archiveChat_gray"];
+                    cell.nameLabel.text = self.chatRoom.isArchived ? AMLocalizedString(@"unarchiveChat", @"The title of the dialog to unarchive an archived chat.") : AMLocalizedString(@"archiveChat", @"Title of button to archive chats.");
+                    cell.nameLabel.textColor = self.chatRoom.isArchived ? UIColor.mnz_redMain : UIColor.mnz_black333333;
+                    cell.lineView.hidden = [self.tableView numberOfRowsInSection:0] == 2;
+                    break;
+                    
+                case 2: //Remove Contact
                     cell.avatarImageView.image = [UIImage imageNamed:@"delete"];
                     cell.nameLabel.text = AMLocalizedString(@"removeUserTitle", @"Alert title shown when you want to remove one or more contacts");
-                    cell.nameLabel.textColor = [UIColor mnz_redF0373A];
+                    cell.nameLabel.textColor = UIColor.mnz_redMain;
                     cell.lineView.hidden = YES;
                     break;
             }
@@ -354,7 +383,11 @@
                     [self showClearChatHistoryAlert];
                     break;
                     
-                case 1: //Remove Contact
+                case 1: //Archive chat
+                    [self showArchiveChatAlertAtIndexPath];
+                    break;
+                    
+                case 2: //Remove Contact
                     [self showRemoveContactAlert];
                     break;
             }

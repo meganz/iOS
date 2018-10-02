@@ -31,6 +31,7 @@
     
     switch (_megaAccountType) {
         case MEGAAccountTypeLite:
+            self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:242.0/255.0 green:156.0/255.0 blue:0 alpha:1.0];
             [_crestImageView setImage:[UIImage imageNamed:@"white_crest_LITE"]];
             [_headerView setBackgroundColor:[UIColor mnz_orangeFFA500]];
             [self setTitle:@"LITE"];
@@ -38,20 +39,23 @@
             break;
             
         case MEGAAccountTypeProI:
+            self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:213.0/255.0 green:48.0/255.0 blue:54.0/255.0 alpha:1.0];
             [_crestImageView setImage:[UIImage imageNamed:@"white_crest_PROI"]];
-            [_headerView setBackgroundColor:[UIColor mnz_redE13339]];
+            [_headerView setBackgroundColor:UIColor.mnz_redProI];
             [self setTitle:@"PRO I"];
             break;
             
         case MEGAAccountTypeProII:
+            self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:208.0/255.0 green:23.0/255.0 blue:29.0/255.0 alpha:1.0];
             [_crestImageView setImage:[UIImage imageNamed:@"white_crest_PROII"]];
-            [_headerView setBackgroundColor:[UIColor mnz_redDC191F]];
+            [_headerView setBackgroundColor:UIColor.mnz_redProII];
             [self setTitle:@"PRO II"];
             break;
             
         case MEGAAccountTypeProIII:
+            self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:205.0/255.0 green:0 blue:6.0/255.0 alpha:1.0];
             [_crestImageView setImage:[UIImage imageNamed:@"white_crest_PROIII"]];
-            [_headerView setBackgroundColor:[UIColor mnz_redD90007]];
+            [_headerView setBackgroundColor:UIColor.mnz_redProIII];
             [self setTitle:@"PRO III"];
             break;
             
@@ -85,6 +89,8 @@
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     
+    self.navigationController.navigationBar.barTintColor = UIColor.mnz_redMain;
+    
     [[MEGAPurchase sharedInstance] setDelegate:nil];
 }
 
@@ -116,6 +122,7 @@
     } else {
         cell.periodLabel.text = AMLocalizedString(@"yearly", nil);
         cell.priceLabel.text = _priceYearlyString;
+        cell.underLineView.hidden = YES;
     }
     return cell;
 }

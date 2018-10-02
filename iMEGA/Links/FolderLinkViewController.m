@@ -4,19 +4,21 @@
 #import "SAMKeychain.h"
 #import "UIScrollView+EmptyDataSet.h"
 
+#import "DisplayMode.h"
 #import "Helper.h"
 #import "MEGANavigationController.h"
 #import "MEGANode+MNZCategory.h"
 #import "MEGANodeList+MNZCategory.h"
+#import "MEGAPhotoBrowserViewController.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGASdkManager.h"
+
 #import "NSString+MNZCategory.h"
 #import "MEGALinkManager.h"
 #import "UIImageView+MNZCategory.h"
 
 #import "BrowserViewController.h"
 #import "CustomActionViewController.h"
-#import "DisplayMode.h"
 #import "NodeTableViewCell.h"
 #import "MainTabBarController.h"
 #import "LoginViewController.h"
@@ -324,12 +326,12 @@
                     FolderLinkViewController *folderLinkVC = [storyboard instantiateViewControllerWithIdentifier:@"FolderLinkViewControllerID"];
                     [folderLinkVC setParentNode:node];
                     [folderLinkVC setIsFolderRootNode:NO];
+                    [folderLinkVC setFolderLinkString:self.folderLinkString];
                     [self.navigationController pushViewController:folderLinkVC animated:NO];
 
                 } else {
                     if (node.name.mnz_isImagePathExtension || node.name.mnz_isVideoPathExtension) {
-                        NSArray *nodesArray = [self.nodeList mnz_nodesArrayFromNodeList];
-                        [node mnz_openImageInNavigationController:self.navigationController withNodes:nodesArray folderLink:YES displayMode:DisplayModeSharedItem];
+                        [self presentMediaNode:node];
                     } else {
                         [node mnz_openNodeInNavigationController:self.navigationController folderLink:YES];
                     }
@@ -346,6 +348,16 @@
         UIAlertAction *okAction = decryptionAlertController.actions.lastObject;
         okAction.enabled = decryptionTextField.text.length > 0;
     }
+}
+
+- (void)presentMediaNode:(MEGANode *)node {
+    MEGANode *parentNode = [[MEGASdkManager sharedMEGASdkFolder] nodeForHandle:node.parentHandle];
+    MEGANodeList *nodeList = [[MEGASdkManager sharedMEGASdkFolder] childrenForParent:parentNode];
+    NSMutableArray<MEGANode *> *mediaNodesArray = [nodeList mnz_mediaNodesMutableArrayFromNodeList];
+    
+    MEGAPhotoBrowserViewController *photoBrowserVC = [MEGAPhotoBrowserViewController photoBrowserWithMediaNodes:mediaNodesArray api:[MEGASdkManager sharedMEGASdkFolder] displayMode:DisplayModeSharedItem presentingNode:node preferredIndex:0];
+    
+    [self.navigationController presentViewController:photoBrowserVC animated:YES completion:nil];
 }
 
 #pragma mark - IBActions
@@ -374,9 +386,8 @@
     
     if ([[UIDevice currentDevice] iPadDevice]) {
         actionController.modalPresentationStyle = UIModalPresentationPopover;
-        UIPopoverPresentationController *popController = [actionController popoverPresentationController];
-        popController.delegate = actionController;
-        popController.barButtonItem = sender;
+        actionController.popoverPresentationController.delegate = actionController;
+        actionController.popoverPresentationController.barButtonItem = sender;
     } else {
         actionController.modalPresentationStyle = UIModalPresentationOverFullScreen;
     }
@@ -454,10 +465,9 @@
     
     if ([[UIDevice currentDevice] iPadDevice]) {
         actionController.modalPresentationStyle = UIModalPresentationPopover;
-        UIPopoverPresentationController *popController = [actionController popoverPresentationController];
-        popController.delegate = actionController;
-        popController.sourceView = sender;
-        popController.sourceRect = CGRectMake(0, 0, sender.frame.size.width/2, sender.frame.size.height/2);
+        actionController.popoverPresentationController.delegate = actionController;
+        actionController.popoverPresentationController.sourceView = sender;
+        actionController.popoverPresentationController.sourceRect = CGRectMake(0, 0, sender.frame.size.width/2, sender.frame.size.height/2);
     } else {
         actionController.modalPresentationStyle = UIModalPresentationOverFullScreen;
     }
@@ -547,7 +557,7 @@
 - (void)openNode:(MEGANode *)node {
     if ([MEGAReachabilityManager isReachableHUDIfNot]) {
         if (node.name.mnz_isImagePathExtension || node.name.mnz_isVideoPathExtension) {
-            [node mnz_openImageInNavigationController:self.navigationController withNodes:@[node] folderLink:YES displayMode:2];
+            [self presentMediaNode:node];
         } else {
             [node mnz_openNodeInNavigationController:self.navigationController folderLink:YES];
         }
@@ -642,14 +652,14 @@
             FolderLinkViewController *folderLinkVC = [storyboard instantiateViewControllerWithIdentifier:@"FolderLinkViewControllerID"];
             [folderLinkVC setParentNode:node];
             [folderLinkVC setIsFolderRootNode:NO];
+            [folderLinkVC setFolderLinkString:self.folderLinkString];
             [self.navigationController pushViewController:folderLinkVC animated:YES];
             break;
         }
 
         case MEGANodeTypeFile: {
             if (node.name.mnz_isImagePathExtension || node.name.mnz_isVideoPathExtension) {
-                NSArray *nodesArray = [self.nodeList mnz_nodesArrayFromNodeList];
-                [node mnz_openImageInNavigationController:self.navigationController withNodes:nodesArray folderLink:YES displayMode:DisplayModeSharedItem];
+                [self presentMediaNode:node];
             } else {
                 [node mnz_openNodeInNavigationController:self.navigationController folderLink:YES];
             }

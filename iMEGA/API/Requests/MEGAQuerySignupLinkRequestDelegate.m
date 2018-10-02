@@ -8,6 +8,7 @@
 #import "MEGANavigationController.h"
 #import "MEGAGenericRequestDelegate.h"
 #import "MEGALinkManager.h"
+#import "MEGALoginRequestDelegate.h"
 #import "MEGASdkManager.h"
 #import "UIApplication+MNZCategory.h"
 
@@ -36,9 +37,33 @@
 
 #pragma mark - Private
 
-- (void)manageQuerySignupLinkRequest {
+- (void)manageQuerySignupLinkRequest:(MEGARequest *)request {
     if (self.urlType == URLTypeConfirmationLink) {
-        [MEGALinkManager presentConfirmViewWithURLType:URLTypeConfirmationLink link:[MEGALinkManager linkURL].absoluteString email:self.email];
+        if (request.flag) {
+            if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionId"]) {
+                MEGALoginRequestDelegate *loginRequestDelegate = [[MEGALoginRequestDelegate alloc] init];
+                loginRequestDelegate.confirmAccountInOtherClient = YES;
+                NSString *base64pwkey = [SAMKeychain passwordForService:@"MEGA" account:@"base64pwkey"];
+                NSString *stringHash = [[MEGASdkManager sharedMEGASdk] hashForBase64pwkey:base64pwkey email:request.email];
+                [[MEGASdkManager sharedMEGASdk] fastLoginWithEmail:request.email stringHash:stringHash base64pwKey:base64pwkey delegate:loginRequestDelegate];
+            } else {
+                UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"accountAlreadyConfirmed", @"Message shown when the user clicks on a confirm account link that has already been used") message:nil preferredStyle:UIAlertControllerStyleAlert];
+                [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+                    
+                    UIViewController *rootViewController = [UIApplication sharedApplication].keyWindow.rootViewController;
+                    MEGANavigationController *navigationController = (MEGANavigationController *)rootViewController;
+                    if ([navigationController.topViewController isKindOfClass:LoginViewController.class]) {
+                        LoginViewController *loginVC = (LoginViewController *)navigationController.topViewController;
+                        loginVC.emailString = request.email;
+                        [loginVC viewWillAppear:NO];
+                    }
+                }]];
+                
+                [UIApplication.mnz_visibleViewController presentViewController:alertController animated:YES completion:nil];
+            }
+        } else {
+            [MEGALinkManager presentConfirmViewWithURLType:URLTypeConfirmationLink link:[MEGALinkManager linkURL].absoluteString email:self.email];
+        }
     } else if (self.urlType == URLTypeNewSignUpLink && [MEGALinkManager emailOfNewSignUpLink])  {
         UIViewController *rootViewController = [UIApplication sharedApplication].keyWindow.rootViewController;
         if ([rootViewController isKindOfClass:[MEGANavigationController class]]) {
@@ -98,21 +123,7 @@
         [MEGALinkManager setLinkURL:[NSURL URLWithString:request.link]];
         [MEGALinkManager setEmailOfNewSignUpLink:request.email];
         
-        if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
-            UIAlertController *alreadyLoggedInAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"alreadyLoggedInAlertTitle", @"Warning title shown when you try to confirm an account but you are logged in with another one") message:AMLocalizedString(@"alreadyLoggedInAlertMessage", @"Warning message shown when you try to confirm an account but you are logged in with another one") preferredStyle:UIAlertControllerStyleAlert];
-            [alreadyLoggedInAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
-            [alreadyLoggedInAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", @"Button title to accept something") style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
-                
-                MEGAGenericRequestDelegate *logoutRequestDelegate = [[MEGAGenericRequestDelegate alloc] initWithRequestCompletion:^(MEGARequest *request) {
-                    [self manageQuerySignupLinkRequest];
-                } errorCompletion:nil];
-                [[MEGASdkManager sharedMEGASdk] logoutWithDelegate:logoutRequestDelegate];
-            }]];
-            
-            [UIApplication.mnz_visibleViewController presentViewController:alreadyLoggedInAlertController animated:YES completion:nil];
-        } else {
-            [self manageQuerySignupLinkRequest];
-        }
+        [self manageQuerySignupLinkRequest:request];
     }
 }
 

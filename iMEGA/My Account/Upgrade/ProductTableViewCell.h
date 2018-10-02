@@ -11,6 +11,8 @@
 @property (weak, nonatomic) IBOutlet UIView *productNameView;
 @property (weak, nonatomic) IBOutlet UILabel *productNameLabel;
 
+@property (weak, nonatomic) IBOutlet UIImageView *disclosureIndicatorImageView;
+
 @property (weak, nonatomic) IBOutlet UIView *underLineView;
 
 @end

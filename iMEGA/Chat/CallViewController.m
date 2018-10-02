@@ -43,13 +43,14 @@
 
 @property (strong, nonatomic) AVAudioPlayer *player;
 
+@property NSUUID *currentCallUUID;
+
 @end
 
 @implementation CallViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
     
     self.enableDisableVideoButton.selected = self.videoCall;
     self.enableDisableSpeaker.selected = self.videoCall;
@@ -93,6 +94,7 @@
                 if (@available(iOS 10.0, *)) {
                     NSUUID *uuid = [[NSUUID alloc] init];
                     self.call.uuid = uuid;
+                    self.currentCallUUID = uuid;
                     [self.megaCallManager addCall:self.call];
                     
                     uint64_t peerHandle = [self.chatRoom peerHandleAtIndex:0];
@@ -369,6 +371,15 @@
     
     if (self.call.callId == call.callId) {
         self.call = call;
+    } else if (self.call.chatId == call.chatId) {
+        MEGALogInfo(@"Two calls at same time in same chat.");
+        if (@available(iOS 10.0, *)) {
+            //Put the same UUID to the call that is going to replace the current one
+            call.uuid = self.currentCallUUID;
+            [self.megaCallManager addCall:call];
+        }
+        
+        self.call = call;
     } else {
         return;
     }
@@ -443,6 +454,12 @@
             break;
             
         case MEGAChatCallStatusDestroyed: {
+            if (call.termCode == MEGAChatCallTermCodeDestroyByCallCollision) {
+                MEGALogInfo(@"Two calls at same time in same chat. Outgoing call associated with the lower user handle has ended.");
+                [self.player stop];
+                return;
+            }
+            
             self.incomingCallView.userInteractionEnabled = NO;
             
             [self.timer invalidate];

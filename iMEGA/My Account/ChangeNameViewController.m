@@ -129,7 +129,7 @@
             break;
         }
     }
-    self.saveButton.backgroundColor = shouldSaveButtonColorBeDisabled ? [UIColor mnz_grayCCCCCC] : [UIColor mnz_redFF4C52];
+    self.saveButton.backgroundColor = shouldSaveButtonColorBeDisabled ? [UIColor mnz_grayCCCCCC] : UIColor.mnz_redMain;
     
     return YES;
 }
@@ -154,7 +154,7 @@
             break;
         }
     }
-    self.saveButton.backgroundColor = shouldSaveButtonColorBeDisabled ? [UIColor mnz_grayCCCCCC] : [UIColor mnz_redFF4C52];
+    self.saveButton.backgroundColor = shouldSaveButtonColorBeDisabled ? [UIColor mnz_grayCCCCCC] : UIColor.mnz_redMain;
     
     return YES;
 }

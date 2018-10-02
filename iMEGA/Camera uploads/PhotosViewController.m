@@ -24,14 +24,13 @@
 
 @interface PhotosViewController () <UICollectionViewDelegateFlowLayout, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAPhotoBrowserDelegate> {
     BOOL allNodesSelected;
-
-    NSUInteger remainingOperations;
 }
 
 @property (nonatomic) id<UIViewControllerPreviewing> previewingContext;
 
 @property (nonatomic, strong) MEGANode *parentNode;
 @property (nonatomic, strong) MEGANodeList *nodeList;
+@property (nonatomic, strong) NSMutableArray<MEGANode *> *mediaNodesArray;
 @property (nonatomic, strong) NSMutableArray *photosByMonthYearArray;
 
 @property (nonatomic) CGSize cellSize;
@@ -58,8 +57,7 @@
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *selectAllBarButtonItem;
 
 @property (nonatomic) MEGACameraUploadsState currentState;
-@property (nonatomic) NSUInteger totalPhotosUploading;
-@property (nonatomic) NSUInteger currentPhotosUploaded;
+@property (nonatomic) NSUInteger maxPendingFiles;
 
 @property (nonatomic) NSIndexPath *browsingIndexPath;
 
@@ -94,7 +92,7 @@
     
     [self setEditing:NO animated:NO];
     
-    [[MEGASdkManager sharedMEGASdk] retryPendingConnections];
+    [[MEGAReachabilityManager sharedManager] retryPendingConnections];
     [[MEGASdkManager sharedMEGASdk] addMEGARequestDelegate:self];
     [[MEGASdkManager sharedMEGASdk] addMEGATransferDelegate:self];
     [[MEGASdkManager sharedMEGASdk] addMEGAGlobalDelegate:self];
@@ -236,7 +234,9 @@
     df.timeStyle = NSDateFormatterNoStyle;
     df.locale = [NSLocale currentLocale];
     df.dateFormat = @"LLLL yyyy";
-        
+    
+    self.mediaNodesArray = [[NSMutableArray alloc] initWithCapacity:self.nodeList.size.unsignedIntegerValue];
+    
     for (NSInteger i = 0; i < [self.nodeList.size integerValue]; i++) {
         MEGANode *node = [self.nodeList nodeAtIndex:i];
         
@@ -255,6 +255,8 @@
         } else {
             [photosArray addObject:node];
         }
+        
+        [self.mediaNodesArray addObject:node];
     }
     
     [self.photosCollectionView reloadData];
@@ -292,26 +294,25 @@
 }
 
 - (void)updateProgressWithKnownCameraUploadInProgress:(BOOL)knownCameraUploadInProgress {
-    if ([CameraUploads syncManager].assetsOperationQueue.operationCount > 0) {
-        if ([CameraUploads syncManager].assetsOperationQueue.operationCount > self.totalPhotosUploading) {
-            self.totalPhotosUploading = [CameraUploads syncManager].assetsOperationQueue.operationCount;
+    NSUInteger pendingFiles = [CameraUploads syncManager].assetsOperationQueue.operationCount;
+    if (pendingFiles) {
+        if (pendingFiles > self.maxPendingFiles) {
+            self.maxPendingFiles = pendingFiles;
         }
-        self.currentPhotosUploaded = self.totalPhotosUploading - [CameraUploads syncManager].assetsOperationQueue.operationCount;
-        self.photosUploadedProgressView.progress = (float)((float)self.currentPhotosUploaded/(float)self.totalPhotosUploading);
+        
+        float uploadedFiles = self.maxPendingFiles - pendingFiles;
+        self.photosUploadedProgressView.progress = (float) (uploadedFiles / (float) self.maxPendingFiles);
         
         NSString *progressText;
-        if (self.totalPhotosUploading == 1) {
-            progressText = AMLocalizedString(@"cameraUploadsUploadingFile", @"Singular, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 1 file.");
+        if (pendingFiles == 1) {
+            progressText = AMLocalizedString(@"cameraUploadsPendingFile", @"Message shown while uploading files. Singular.");
         } else {
-            progressText = AMLocalizedString(@"cameraUploadsUploadingFiles", @"Plural, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 3 files.");
+            progressText = [NSString stringWithFormat:AMLocalizedString(@"cameraUploadsPendingFiles", @"Message shown while uploading files. Plural."), pendingFiles];
         }
-        progressText = [progressText stringByReplacingOccurrencesOfString:@"%1$d" withString:[NSString stringWithFormat:@"%lu", (unsigned long)self.currentPhotosUploaded]];
-        progressText = [progressText stringByReplacingOccurrencesOfString:@"%2$d" withString:[NSString stringWithFormat:@"%lu", (unsigned long)self.totalPhotosUploading]];
         
         self.photosUploadedLabel.text = progressText;
     } else {
-        self.totalPhotosUploading = 0;
-        self.currentPhotosUploaded = 0;
+        self.maxPendingFiles = 0;
     }
     [self updateCurrentStateWithKnownCameraUploadInProgress:knownCameraUploadInProgress];
 }
@@ -449,7 +450,7 @@
 }
 
 - (IBAction)shareAction:(UIBarButtonItem *)sender {
-    UIActivityViewController *activityVC = [Helper activityViewControllerForNodes:self.selectedItemsDictionary.allValues button:self.shareBarButtonItem];
+    UIActivityViewController *activityVC = [Helper activityViewControllerForNodes:self.selectedItemsDictionary.allValues sender:self.shareBarButtonItem];
     [self presentViewController:activityVC animated:YES completion:nil];
 }
 
@@ -480,7 +481,6 @@
     [moveToTheRubbishBinAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:nil]];
     
     [moveToTheRubbishBinAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-        remainingOperations = self.selectedItemsDictionary.count;
         NSUInteger count = self.selectedItemsDictionary.count;
         NSArray *selectedItemsArray = [self.selectedItemsDictionary allValues];
         MEGANode *rubbishBinNode = [[MEGASdkManager sharedMEGASdk] rubbishNode];
@@ -539,10 +539,10 @@
     
     cell.nodeHandle = [node handle];
     
-    cell.thumbnailSelectionOverlayView.layer.borderColor = [[UIColor mnz_redFF333A] CGColor];
+    cell.thumbnailSelectionOverlayView.layer.borderColor = [UIColor.mnz_redMain CGColor];
     cell.thumbnailSelectionOverlayView.hidden = [self.selectedItemsDictionary objectForKey:[NSNumber numberWithLongLong:node.handle]] == nil;
 
-    if (node.name.mnz_videoPathExtension && node.duration > -1) {
+    if (node.name.mnz_isVideoPathExtension && node.duration > -1) {
         cell.thumbnailVideoDurationLabel.text = [NSString mnz_stringFromTimeInterval:node.duration];
     }
     
@@ -594,31 +594,8 @@
 #pragma mark - UICollectionViewDelegate
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    NSInteger index = 0;
-    for (NSInteger i = 0; i < indexPath.section; i++) {
-        NSDictionary *dict = [self.photosByMonthYearArray objectAtIndex:i];
-        NSString *key = [[dict allKeys] objectAtIndex:0];
-        NSArray *array = [dict objectForKey:key];
-        index += array.count;
-    }
-    
-    NSInteger videosCount = 0;
-    NSInteger count = index + indexPath.row;
-    for (NSInteger i = 0; i < count; i++) {
-        MEGANode *n = [self.nodeList nodeAtIndex:i];
-        if (n.isFile && n.name.mnz_videoPathExtension) {
-            videosCount++;
-        }
-        
-        if (!n.name.mnz_isImagePathExtension && !n.name.mnz_isVideoPathExtension) {
-            count++;
-        }
-    }
-    
-    index += indexPath.row - videosCount;
-    
     NSDictionary *dict = [self.photosByMonthYearArray objectAtIndex:indexPath.section];
-    NSString *key = [dict.allKeys objectAtIndex:0];
+    NSString *key = dict.allKeys.firstObject;
     NSArray *array = [dict objectForKey:key];
     MEGANode *node = [array objectAtIndex:indexPath.row];
     
@@ -626,15 +603,11 @@
         UICollectionViewCell *cell = [self collectionView:collectionView cellForItemAtIndexPath:indexPath];
         CGRect cellFrame = [collectionView convertRect:cell.frame toView:nil];
         
-        MEGAPhotoBrowserViewController *photoBrowserViewController = [[UIStoryboard storyboardWithName:@"MEGAPhotoBrowserViewController" bundle:nil] instantiateViewControllerWithIdentifier:@"MEGAPhotoBrowserViewControllerID"];
-        photoBrowserViewController.api = [MEGASdkManager sharedMEGASdk];
-        photoBrowserViewController.node = node;
-        photoBrowserViewController.nodesArray = [self.nodeList mnz_nodesArrayFromNodeList];
-        photoBrowserViewController.originFrame = cellFrame;
-        photoBrowserViewController.delegate = self;
-        photoBrowserViewController.displayMode = DisplayModeCloudDrive;
-
-        [self presentViewController:photoBrowserViewController animated:YES completion:nil];
+        MEGAPhotoBrowserViewController *photoBrowserVC = [MEGAPhotoBrowserViewController photoBrowserWithMediaNodes:self.mediaNodesArray api:[MEGASdkManager sharedMEGASdk] displayMode:DisplayModeCloudDrive presentingNode:node preferredIndex:0];
+        photoBrowserVC.originFrame = cellFrame;
+        photoBrowserVC.delegate = self;
+        
+        [self presentViewController:photoBrowserVC animated:YES completion:nil];
     } else {
         if ([self.selectedItemsDictionary objectForKey:[NSNumber numberWithLongLong:node.handle]]) {
             [self.selectedItemsDictionary removeObjectForKey:[NSNumber numberWithLongLong:node.handle]];
@@ -748,11 +721,13 @@
     NSDictionary *monthPhotosDictionary = [self.photosByMonthYearArray objectAtIndex:indexPath.section];
     NSString *monthKey = [monthPhotosDictionary.allKeys objectAtIndex:0];
     NSArray *monthPhotosArray = [monthPhotosDictionary objectForKey:monthKey];
-    MEGANode *nodeSelected = [monthPhotosArray objectAtIndex:indexPath.row];
-    if (nodeSelected.name.mnz_isImagePathExtension || nodeSelected.name.mnz_isVideoPathExtension) {
-        return [nodeSelected mnz_photoBrowserWithNodes:[self.nodeList mnz_nodesArrayFromNodeList] folderLink:NO displayMode:DisplayModeCloudDrive enableMoveToRubbishBin:YES];
+    MEGANode *node = [monthPhotosArray objectAtIndex:indexPath.row];
+    if (node.name.mnz_isImagePathExtension || node.name.mnz_isVideoPathExtension) {
+        MEGAPhotoBrowserViewController *photoBrowserVC = [MEGAPhotoBrowserViewController photoBrowserWithMediaNodes:self.mediaNodesArray api:[MEGASdkManager sharedMEGASdk] displayMode:DisplayModeCloudDrive presentingNode:node preferredIndex:0];
+        
+        return photoBrowserVC;
     } else {
-        return [nodeSelected mnz_viewControllerForNodeInFolderLink:NO];
+        return [node mnz_viewControllerForNodeInFolderLink:NO];
     }
     
     return nil;

@@ -12,7 +12,9 @@
 @property (nonatomic) NSString *detail;
 @property (nonatomic) NSString *boldInDetail;
 @property (nonatomic) NSString *action;
+@property (nonatomic) UIColor *actionColor;
 @property (nonatomic) NSString *dismiss;
+@property (nonatomic) UIColor *dismissColor;
 @property (nonatomic) NSString *bonus;
 
 @end

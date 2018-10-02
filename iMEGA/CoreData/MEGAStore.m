@@ -36,7 +36,7 @@ static MEGAStore *_megaStore = nil;
 
 - (void)configureMEGAStore {
     _managedObjectModel = [NSManagedObjectModel mergedModelFromBundles:nil];
-    NSURL *storeURL = [[self applicationSupportDirectory] URLByAppendingPathComponent:@"MEGACD.sqlite"];
+    NSURL *storeURL = [self storeURL];
     
     NSError *error = nil;
     _persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:_managedObjectModel];
@@ -44,7 +44,7 @@ static MEGAStore *_megaStore = nil;
                               NSInferMappingModelAutomaticallyOption : @YES };
     
     if (![_persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:options error:&error]) {
-        MEGALogError(@"Unresolved error %@, %@", error, [error userInfo]);
+        MEGALogError(@"Unresolved error %@, %@", error, error.userInfo);
         abort();
     }
     
@@ -54,8 +54,29 @@ static MEGAStore *_megaStore = nil;
     }
 }
 
-- (NSURL *)applicationSupportDirectory {
-    return [[NSFileManager defaultManager] URLForDirectory:NSApplicationSupportDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:YES error:nil];
+- (NSURL *)storeURL {
+    NSString *dbName = @"MEGACD.sqlite";
+    NSError *error;
+    NSFileManager *fileManager = NSFileManager.defaultManager;
+    NSURL *groupSupportURL = [[fileManager containerURLForSecurityApplicationGroupIdentifier:@"group.mega.ios"] URLByAppendingPathComponent:@"GroupSupport"];
+    if (![fileManager fileExistsAtPath:groupSupportURL.path]) {
+        if (![fileManager createDirectoryAtURL:groupSupportURL withIntermediateDirectories:NO attributes:nil error:&error]) {
+            MEGALogError(@"Error creating GroupSupport directory in the shared sandbox: %@", error);
+            abort();
+        }
+    }
+    
+    NSURL *applicationSupportDirectoryURL = [fileManager URLForDirectory:NSApplicationSupportDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:NO error:nil];
+    NSURL *oldStoreURL = [applicationSupportDirectoryURL URLByAppendingPathComponent:dbName];
+    NSURL *newStoreURL = [groupSupportURL URLByAppendingPathComponent:dbName];
+
+    if ([fileManager fileExistsAtPath:oldStoreURL.path]) {
+        if (![fileManager moveItemAtURL:oldStoreURL toURL:newStoreURL error:&error]) {
+            MEGALogError(@"Error moving MEGACD.sqlite to the GroupSupport directory in the shared sandbox: %@", error);
+        }
+    }
+    
+    return newStoreURL;
 }
 
 - (void)saveContext {
@@ -191,6 +212,26 @@ static MEGAStore *_megaStore = nil;
     }
 }
 
+- (void)updateUserWithEmail:(NSString *)email firstname:(NSString *)firstname {
+    MOUser *moUser = [[MEGAStore shareInstance] fetchUserWithEmail:email];
+    
+    if (moUser) {
+        moUser.firstname = firstname;
+        MEGALogDebug(@"Save context - update firstname: %@", firstname);
+        [self saveContext];
+    }
+}
+
+- (void)updateUserWithEmail:(NSString *)email lastname:(NSString *)lastname {
+    MOUser *moUser = [[MEGAStore shareInstance] fetchUserWithEmail:email];
+
+    if (moUser) {
+        moUser.lastname = lastname;
+        MEGALogDebug(@"Save context - update lastname: %@", lastname);
+        [self saveContext];
+    }
+}
+
 - (MOUser *)fetchUserWithUserHandle:(uint64_t)userHandle {
     NSEntityDescription *entityDescription = [NSEntityDescription entityForName:@"User" inManagedObjectContext:self.managedObjectContext];
     
@@ -198,6 +239,21 @@ static MEGAStore *_megaStore = nil;
     [request setEntity:entityDescription];
     
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"base64userHandle == %@", [MEGASdk base64HandleForUserHandle:userHandle]];
+    [request setPredicate:predicate];
+    
+    NSError *error;
+    NSArray *array = [self.managedObjectContext executeFetchRequest:request error:&error];
+    
+    return [array firstObject];
+}
+
+- (MOUser *)fetchUserWithEmail:(NSString *)email {
+    NSEntityDescription *entityDescription = [NSEntityDescription entityForName:@"User" inManagedObjectContext:self.managedObjectContext];
+    
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    [request setEntity:entityDescription];
+    
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"email == %@", email];
     [request setPredicate:predicate];
     
     NSError *error;
@@ -287,6 +343,55 @@ static MEGAStore *_megaStore = nil;
     NSArray *array = [self.managedObjectContext executeFetchRequest:request error:&error];
     
     return array.firstObject;
+}
+
+#pragma mark - MOUploadTransfer entity
+
+- (void)insertUploadTransferWithLocalIdentifier:(NSString *)localIdentifier parentNodeHandle:(uint64_t)parentNodeHandle {
+    MOUploadTransfer *mOUploadTransfer = [NSEntityDescription insertNewObjectForEntityForName:@"MOUploadTransfer" inManagedObjectContext:self.managedObjectContext];
+    mOUploadTransfer.localIdentifier = localIdentifier;
+    mOUploadTransfer.parentNodeHandle = [NSNumber numberWithUnsignedLongLong:parentNodeHandle];
+    
+    MEGALogDebug(@"Save context - insert MOUploadTransfer with local identifier %@", localIdentifier);
+    
+    [self saveContext];
+}
+
+- (void)deleteUploadTransfer:(MOUploadTransfer *)uploadTransfer {
+    [self.managedObjectContext deleteObject:uploadTransfer];
+    
+    MEGALogDebug(@"Save context - remove MOUploadTransfer with local identifier %@", uploadTransfer.localIdentifier);
+    
+    [self saveContext];
+}
+
+- (NSArray<MOUploadTransfer *> *)fetchUploadTransfers {
+    NSFetchRequest *request = [MOUploadTransfer fetchRequest];
+    
+    NSError *error;
+    
+    return [self.managedObjectContext executeFetchRequest:request error:&error];
+}
+
+- (MOUploadTransfer *)fetchTransferUpdateWithLocalIdentifier:(NSString *)localIdentifier {
+    NSFetchRequest *request = [MOUploadTransfer fetchRequest];
+    
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"localIdentifier == %@", localIdentifier];
+    request.predicate = predicate;
+    
+    NSError *error;
+    NSArray *array = [self.managedObjectContext executeFetchRequest:request error:&error];
+    
+    return array.firstObject;
+}
+
+- (void)removeAllUploadTransfers {
+    NSArray<MOUploadTransfer *> *uploadTransfers = [self fetchUploadTransfers];
+    for (MOUploadTransfer *uploadTransfer in uploadTransfers) {
+        [self.managedObjectContext deleteObject:uploadTransfer];
+    }
+    
+    [self saveContext];
 }
 
 @end

@@ -23,5 +23,6 @@ typedef NS_ENUM(NSInteger, MEGAChatMessageWarningDialog) {
 @property (copy, nonatomic) NSNumber *nodeSize;
 
 - (BOOL)containsMEGALink;
+- (BOOL)shouldShowForwardAccessory;
 
 @end

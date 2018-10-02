@@ -71,7 +71,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(internetConnectionChanged) name:kReachabilityChangedNotification object:nil];
     
     [[MEGASdkManager sharedMEGASdk] addMEGADelegate:self];
-    [[MEGASdkManager sharedMEGASdk] retryPendingConnections];
+    [[MEGAReachabilityManager sharedManager] retryPendingConnections];
     
     if (self.searchController && !self.tableView.tableHeaderView) {
         self.tableView.tableHeaderView = self.searchController.searchBar;
@@ -157,10 +157,19 @@
             break;
         }
             
-        case BrowserActionOpenIn:
+        case BrowserActionOpenIn: {
+            [self setupDefaultElements];
+            
+            self.toolBarSaveInMegaBarButtonItem.title = AMLocalizedString(@"upload", nil);
+            [self.toolBarSaveInMegaBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIMediumWithSize:17.0f]} forState:UIControlStateNormal];
+            [self setToolbarItems:@[self.toolBarNewFolderBarButtonItem, flexibleItem, self.toolBarSaveInMegaBarButtonItem]];
+            break;
+        }
+            
         case BrowserActionShareExtension: {
             [self setupDefaultElements];
             
+            self.navigationItem.rightBarButtonItem = nil;
             self.toolBarSaveInMegaBarButtonItem.title = AMLocalizedString(@"upload", nil);
             [self.toolBarSaveInMegaBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIMediumWithSize:17.0f]} forState:UIControlStateNormal];
             [self setToolbarItems:@[self.toolBarNewFolderBarButtonItem, flexibleItem, self.toolBarSaveInMegaBarButtonItem]];
@@ -180,6 +189,8 @@
             if (self.isParentBrowser) {
                 self.selectedNodesMutableDictionary = [[NSMutableDictionary alloc] init];
             }
+            
+            [self.tableView setEditing:YES];
             break;
         }
             
@@ -311,14 +322,13 @@
 - (void)updatePromptTitle {
     if (self.browserAction == BrowserActionSendFromCloudDrive) {
         NSString *promptString;
-        NSUInteger selectedNodesCount = self.selectedNodesMutableDictionary.count;
-        if (selectedNodesCount == 0) {
+        if (self.selectedNodesMutableDictionary.count == 0) {
             promptString = AMLocalizedString(@"selectFiles", @"Text of the button for user to select files in MEGA.");
         } else {
-            promptString = (selectedNodesCount <= 1) ? [NSString stringWithFormat:AMLocalizedString(@"oneItemSelected", @"Title shown on the Camera Uploads section when the edit mode is enabled and you have selected one photo"), selectedNodesCount] : [NSString stringWithFormat:AMLocalizedString(@"itemsSelected", @"Title shown on the Camera Uploads section when the edit mode is enabled and you have selected more than one photo"), selectedNodesCount];
+            promptString = (self.selectedNodesMutableDictionary.count == 1) ? [NSString stringWithFormat:AMLocalizedString(@"oneItemSelected", @"Title shown on the Camera Uploads section when the edit mode is enabled and you have selected one photo"), self.selectedNodesMutableDictionary.count] : [NSString stringWithFormat:AMLocalizedString(@"itemsSelected", @"Title shown on the Camera Uploads section when the edit mode is enabled and you have selected more than one photo"), self.selectedNodesMutableDictionary.count];
         }
         self.navigationItem.prompt = promptString;
-    } else if (self.browserAction != BrowserActionDocumentProvider) {
+    } else if (self.browserAction != BrowserActionDocumentProvider && self.browserAction != BrowserActionShareExtension) {
         self.navigationItem.prompt = AMLocalizedString(@"selectDestination", @"Title shown on the navigation bar to explain that you have to choose a destination for the files and/or folders in case you copy, move, import or do some action with them.");
     }
 }
@@ -392,10 +402,6 @@
     cell.nameLabel.enabled = boolValue;
     cell.infoLabel.enabled = boolValue;
     boolValue ? (cell.thumbnailImageView.alpha = 1.0) : (cell.thumbnailImageView.alpha = 0.5);
-}
-
-- (void)setNodeTableViewCell:(NodeTableViewCell *)cell selected:(BOOL)boolValue {
-    cell.checkImageView.hidden = boolValue ? NO : YES;
 }
 
 - (void)pushBrowserWithParentNode:(MEGANode *)parentNode {
@@ -501,7 +507,7 @@
             UITextField *textField = [[newFolderAlertController textFields] firstObject];
             MEGANodeList *childrenNodeList = [[MEGASdkManager sharedMEGASdk] nodeListSearchForNode:self.parentNode searchString:textField.text];
             if ([childrenNodeList mnz_existsFolderWithName:textField.text]) {
-                [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"folderAlreadyExists", @"message when trying to create a folder that already exists")];
+                [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"There is already a folder with the same name", @"A tooltip message which is shown when a folder name is duplicated during renaming or creation.")];
             } else {
                 MEGACreateFolderRequestDelegate *createFolderRequestDelegate = [[MEGACreateFolderRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
                     MEGANode *newFolderNode = [[MEGASdkManager sharedMEGASdk] nodeForHandle:request.nodeHandle];
@@ -528,8 +534,6 @@
                 MEGALogError(@"Remove item at path failed with error: %@", error);
             }
         }
-    } else if (self.browserAction == BrowserActionShareExtension) {
-        [self.browserViewControllerDelegate uploadToParentNode:nil];
     }
     
     [self dismiss];
@@ -547,7 +551,8 @@
                 [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:[localFilePath stringByReplacingOccurrencesOfString:[NSHomeDirectory() stringByAppendingString:@"/"] withString:@""] parent:self.parentNode appData:appData isSourceTemporary:YES];
             } else {
                 MEGALogError(@"Move item at path failed with error: %@", error);
-                [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"fileTooBigMessage_open", @"Message shown when there are errors trying to copy or move locally a file before being uploaded to MEGA")];
+                NSString *status = [NSString stringWithFormat:@"Move item failed with error %@", error];
+                [SVProgressHUD showErrorWithStatus:status];
             }
             
             [self dismiss];
@@ -603,11 +608,7 @@
     MEGAShareType shareType = [[MEGASdkManager sharedMEGASdk] accessLevelForNode:node];
     
     if (self.browserAction == BrowserActionSendFromCloudDrive) {
-        if (node.isFolder) {
-            [self setNodeTableViewCell:cell selected:NO];
-        } else {
-            ([self.selectedNodesMutableDictionary objectForKey:node.base64Handle] != nil) ? [self setNodeTableViewCell:cell selected:YES] : [self setNodeTableViewCell:cell selected:NO];
-        }
+        [self.selectedNodesMutableDictionary objectForKey:node.base64Handle] ? [self.tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone] : [self.tableView deselectRowAtIndexPath:indexPath animated:NO];
     } else if (self.browserAction == BrowserActionDocumentProvider) {
         //TODO: Document Provider
     } else {
@@ -647,6 +648,15 @@
     return cell;
 }
 
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (self.browserAction == BrowserActionSendFromCloudDrive) {
+        MEGANode *node = [self nodeAtIndexPath:indexPath];
+        return node.isFile;
+    } else {
+        return YES;
+    }
+}
+
 #pragma mark - UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -657,17 +667,9 @@
     } else {
         switch (self.browserAction) {
             case BrowserActionSendFromCloudDrive: {
-                NodeTableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
-                if (cell.checkImageView.hidden) {
-                    [self.selectedNodesMutableDictionary setObject:selectedNode forKey:selectedNode.base64Handle];
-                    [self setNodeTableViewCell:cell selected:YES];
-                } else {
-                    [self.selectedNodesMutableDictionary removeObjectForKey:selectedNode.base64Handle];
-                    [self setNodeTableViewCell:cell selected:NO];
-                }
-                
+                [self.selectedNodesMutableDictionary setObject:selectedNode forKey:selectedNode.base64Handle];
                 [self updatePromptTitle];
-                break;
+                return;
             }
                 
             case BrowserActionDocumentProvider: {
@@ -684,6 +686,25 @@
     }
     
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
+
+- (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
+    if (self.browserAction == BrowserActionSendFromCloudDrive) {
+        MEGANode *deselectedNode = [self nodeAtIndexPath:indexPath];
+        if ([self.selectedNodesMutableDictionary objectForKey:deselectedNode.base64Handle]) {
+            [self.selectedNodesMutableDictionary removeObjectForKey:deselectedNode.base64Handle];
+            [self updatePromptTitle];
+        }
+    }
+}
+
+- (BOOL)tableView:(UITableView *)tableView shouldIndentWhileEditingRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (self.browserAction == BrowserActionSendFromCloudDrive) {
+        MEGANode *node = [self nodeAtIndexPath:indexPath];
+        return node.isFile;
+    } else {
+        return YES;
+    }
 }
 
 #pragma mark - UISearchBarDelegate

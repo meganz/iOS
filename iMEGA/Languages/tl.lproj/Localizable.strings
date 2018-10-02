@@ -55,7 +55,7 @@
 /* Alert message shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOutFromAnotherLocation"="Ikaw ay nag-log out sa device na ito sa ibang lokasyon";
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
-"sslUnverified_alertTitle"="Ang SSL key ng Server ay hindi ma-verify. Ikaw ay maaaring apektado ng isang man-in-the-middle attack.";
+"sslUnverified_alertTitle"="Hindi maka-connect ng securely sa SSL. Maaaring ikaw ay nasa pampublikong WIFI na may karagdagang requirements.";
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
 "theContentIsNotAvailableForThisAccount"="The content you are trying to access is not available for this account. Try to login with same account as in the mobile web client.";
 /* Message shown when the app is waiting for the server to complete a request due to an API lock (error -3). */
@@ -65,9 +65,11 @@
 /* Message shown when the app is waiting for the server to complete a request due to connectivity issue. */
 "unableToReachMega"="Unable to reach MEGA. Please check your connectivity or try again later.";
 /* Message shown when the app is waiting for the server to complete a request due to a rate limit (error -4). */
-"tooManyRequest"="Too many requests. Please wait.";
+"tooManyRequest"="Madaming requests. Hintayin muna.";
 /* Alert title shown when you need to log in to continue with the action you want to do */
 "pleaseLogInToYourAccount"="Mag-log-in sa inyong account.";
+/* Error message when a user attempts to change their email without an active login session. */
+"needToBeLoggedInToCompleteYourEmailChange"="Kailangang naka-log in ka upang mabuo ang pagpapalit mo ng email. Mag log-in muli kasama ang iyong kasalukuyang email at i-click muli ang iyong confirmation link.";
 /* Title shown on the app's start animation to explain what MEGA offers you (1/4) */
 "megaSpace"="MEGA SPACE";
 /* Title shown on the app's start animation to explain what MEGA offers you (2/4) */
@@ -150,6 +152,8 @@
 "alreadyLoggedInAlertTitle"="Ikaw ay nakalogged in sa ibang account";
 /* Warning message shown when you try to confirm an account but you are logged in with another one */
 "alreadyLoggedInAlertMessage"="Kung ikaw ay papayag, ang inyong kasalukuyang account ay ila-log out at lahat ng Offline data ay mapapahi. Gusto mo pa bang magpatuloy?";
+/* Error shown when the user tries to change his mail to one that is already used */
+"emailAlreadyInUse"="Error. Ginagamit na ang email address na ito.";
 /* Title shown inside an alert if you don't have enough space on your device to download something */
 "nodeTooBig"="Kailangang magbawas upang mabakante ang inyong device.";
 /* Title for the file link view */
@@ -264,10 +268,6 @@
 "Completing..."="Tinatapos…";
 /* Label for the state of a transfer when is being retrying - (String as short as possible). */
 "Retrying..."="Sinusubukan…";
-/* Alert title shown when you try to open a Cloud Drive document and is not posible because there's some active download */
-"documentOpening_alertTitle"="Mayroong pending downloads";
-/* Alert message shown when you try to open a Cloud Drive document and is not posible because there's some active download */
-"documentOpening_alertMessage"="Subukang muli o itigil na";
 /* Section title of the 'Sort by' */
 "sortTitle"="I-sort batay sa";
 /* Button title to 'Save' the selected option */
@@ -294,8 +294,10 @@
 "newFolderMessage"="Pangalan ng bagong folder";
 /* Title button for the create folder alert.  */
 "createFolderButton"="Gumawa";
-/* message when trying to create a folder that already exists */
-"folderAlreadyExists"="meron na ganitong folder";
+/* A tooltip message which is shown when a folder name is duplicated during renaming or creation. */
+"There is already a folder with the same name"="There is already a folder with the same name";
+/* A tooltip message which shows when a file name is duplicated during renaming. */
+"There is already a file with the same name"="There is already a file with the same name";
 /* Option given on the `Add` section to allow the user upload something from another cloud storage provider. The three dots implies that an action occurs after tapping on it. */
 "uploadFrom"="I-upload galing sa ...";
 /* Message shown when the user selects a file from another cloud storage provider that's already uploaded. "[A] = {name of the original file} already uploaded with name [B] = {name of the file in MEGA}" */
@@ -345,7 +347,7 @@
 /* Message shown when some links have been copied to the pasteboard */
 "linksCopied"="Kinopya ang mga link";
 /* Text of the button after the links were copied to the clipboard */
-"copiedToTheClipboard"="Copied to the clipboard";
+"copiedToTheClipboard"="Kinopya sa clipboard";
 /* A title for the Copyright Warning dialog. */
 "copyrightWarning"="Babala sa copyright";
 /* A title for the Copyright Warning dialog. Designed to make the user feel as though this is not targeting them, but is a warning for everybody who uses our service. */
@@ -357,7 +359,7 @@
 /* button caption text that the user clicks when he agrees */
 "agree"="Pumayag";
 /* button caption text that the user clicks when he disagrees */
-"disagree"="Disagree";
+"disagree"="Tumanggi";
 /* This is button text on the Get Link dialog. This lets the user get a public file/folder link without the decryption key e.g. https://mega.nz/#!Qo12lSpT. */
 "linkWithoutKey"="Link kahit walang key";
 /* This is button text on the Get Link dialog. This lets the user get a public file/folder link with the decryption key e.g. https://mega.nz/#!Qo12lSpT!3uv6GhJhAWWH46fcMN2KGRtxc_QSLthcwvAdaA_TjCE. */
@@ -378,6 +380,10 @@
 "copyKey"="Copy key";
 /* Title shown under the action that allows you to open a file in another app */
 "openIn"="Buksan sa...";
+/* */
+"uploadToMega"="I-upload sa MEGA";
+/* Footer shown in the Share Extension telling that a file can be renamed if tapped */
+"tapFileToRename"="I-tap ang file para ma-rename";
 /* */
 "sendToContact"="Magpadala ng contact";
 /* Toast text upon sending a single file to chat */
@@ -503,17 +509,17 @@
 /* Button title that skips the current action */
 "skipButton"="Mag-skip";
 /* Text shown to explain what means 'Enable Camera Uploads'. The 'Cloud Drive' is the MEGA section, so please keep consistency */
-"automaticallyBackupYourPhotos"="Automatically backup your photos to the Cloud Drive";
+"automaticallyBackupYourPhotos"="Agad na i-backup ang inyong photos sa Cloud Drive";
 /* Button title that enables the functionality 'Camera Uploads', which uploads all the photos in your device to MEGA */
 "enableCameraUploadsButton"="Gamitin ang Camera Uploads";
 /* Success message shown when Camera Uploads has been enabled */
 "cameraUploadsEnabled"="Pinagana ang Camera Uploads";
 /* Message shown when the camera uploads have been completed */
 "cameraUploadsComplete"="Camera uploads complete";
-/* Singular, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 1 file. */
-"cameraUploadsUploadingFile"="Uploading %1$d of %2$d file";
-/* Plural, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 3 files. */
-"cameraUploadsUploadingFiles"="Uploading %1$d of %2$d files";
+/* Message shown while uploading files. Singular. */
+"cameraUploadsPendingFile"="Upload in progress, 1 file ang pending";
+/* Message shown while uploading files. Plural. */
+"cameraUploadsPendingFiles"="Upload in progress, %lu files na pending";
 /* Singular, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 1 file. */
 "indexOfTotalFile"="%1$d of %2$d file";
 /* Plural, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 3 files. */
@@ -648,8 +654,6 @@
 "about"="Tungkol dito";
 /* Title of one of the Settings sections where you can set up the 'Language' of the app */
 "language"="Lenggwahe";
-/* On each translation this should be the target language. So, if it's English, English then. If it's Spanish = "Español", if it's German "Deustch" */
-"applicationLanguage"="Application language";
 /* Title of one of the Settings sections where you can 'Send Feedback' to MEGA */
 "sendFeedbackLabel"="Magbigay ng Tugon";
 /* Message body of the email that appears when the users tap on "Send feedback" */
@@ -674,6 +678,8 @@
 "onlyWhenChargingLabel"="Kapag nag-chacharge lamang";
 /* Footer text to explain the Camera Uploads functionality */
 "cameraUploads_footer"="Kapag pinagana, mga bagong photos ang mai-uupload.";
+/* App means “Application” */
+"App version"="App version";
 /* Title of the label where the SDK version is shown */
 "sdkVersion"="MEGA SDK version";
 /* Title of the label where the MEGAchat SDK version is shown */
@@ -693,7 +699,7 @@
 /*  */
 "masterKey_thirdParagraph"="Hindi maaaring makuha ng isang external attacker ang inyong account gamit lamang ang isang key. Ang pagbabago ng passoword ay nangangailangan ng key at access sa inyong email.";
 /* Message of the dialog displayed when copy the user's Recovery Key to the clipboard to be saved or exported. */
-"recoveryKeyCopiedToClipboard"="Kinopya na ang Recovery Key sa clipboard";
+"recoveryKeyCopiedToClipboard"="Ang Recovery Key ay nakopya na sa clipboard. Ilagay ito sa ligtas na lugar.";
 /* Alert title shown when you have exported your MEGA Recovery Key */
 "masterKeyExported"="Na-export na ang Recovery Key";
 /* Alert message shown to explain that the Recovery Key was saved on your device. Also that you can access it through iTunes. And ends with and security advise. */
@@ -707,7 +713,7 @@
 /* "Title header that refers to where do you do the action 'Empty Rubbish Bin' inside 'Settings' -> 'Advanced' section" */
 "onMEGA"="Sa MEGA";
 /* Button text on the Rubbish Bin page. This button will empty all files and folders currently stored in the rubbish bin. */
-"emptyRubbishBin"="Linisin ang basurahan";
+"emptyRubbishBin"="Clear Rubbish Bin";
 /* Alert title shown when you tap 'Empty Rubbish Bin' */
 "emptyRubbishBinAlertTitle"="Lahat ng items sa basurahan ay papahiin";
 /* Text next to a switch that allows disabling the HTTP protocol for transfers */
@@ -723,7 +729,7 @@
 /* Section title where you can enable the option 'Save videos in gallery' */
 "saveVideosInGallery"="Itabi ang videos sa gallery";
 /* Section title where you can enable the option 'Save media in gallery' */
-"saveMediaInGallery"="Save media in gallery";
+"saveMediaInGallery"="I-save ang media sa gallery";
 /* Footer text that explain what happen if the options 'Save videos in gallery’ and 'Save images in gallery’ are enabled */
 "imageAndVideoDownloadsFooter"="Itabi ang iOS compatible na mga imahe at videos sa inyong sa gallery ng inyong device (Paalala: ang mga imahe at videos ay hindi maitatabi Offline)";
 /* Footer text that explain what happen if the options 'Save media in gallery’ is enabled */
@@ -740,6 +746,8 @@
 "cancellationLinkHasExpired"="Ang cancellation link ay nag-expire na";
 /* Text shown in the last alert dialog to confirm the cancellation of an account */
 "enterYourPasswordToConfirmThatYouWanToClose"="Ito ang huling hakbang upang i-cancel ang inyong account. Mawawala lahat ng iyong data na nakalagay sa cloud. Ilagay ang inyong password sa ibaba.";
+/* During account cancellation (deletion) */
+"accountCanceledSuccessfully"="Ang inyong account ay matagumpay na nabura.";
 /* Account closure, password check dialog when user click on closure email. */
 "closeAccount"="Isarado ang account";
 /* Title for the action that allows to remove a file or folder */
@@ -900,11 +908,11 @@
 /*  */
 "howItWorks"="Paano ito gumagana";
 /*  */
-"howItWorksMain"="Your friend needs to register for a free account on MEGA and [S]install at least one MEGA client application[/S] (either the sync client or one of our mobile apps)";
+"howItWorksMain"="Ang iyong kaibigan ay kinakailangang magrehistro ng libreng account sa MEGA at [S]mag-install ng kahit isang MEGA client application [/S] (kahit sa aming sync client o isa sa aming mobile apps)";
 /*  */
-"howItWorksSecondary"="You can notify your friend through any method. You will earn the quota if you have entered your friend’s email here prior to them registering with that address.";
+"howItWorksSecondary"="Pupwede mong i-notify ang iyong mga kaibigan sa ganitong method. Makakakuha ka ng quota kapag inilagay mo ang email ng iyong kaibigan bago pa sila mag-register sa ganitong address.";
 /* A message which is shown once someone has invited a friend as part of the achievements program. */
-"howItWorksTertiary"="You will not receive credit for inviting someone who has used MEGA previously and you will not be notified about such a rejection.";
+"howItWorksTertiary"="Hindi ka makakareceive ng credit sa pag-iimbita sa isang tao na gumamit ng MEGA dati at hindi ka bibigyan ng ulat tungkol sa ganitong rejection.";
 /* Header of block with achievements bonuses. */
 "unlockedBonuses"="Buksan ang bonuses:";
 /* A header/title of a section which contains information about used/available storage space on a user's cloud drive. */
@@ -930,7 +938,7 @@
 /*  */
 "xDaysLeft"="%1 na araw na lang";
 /* %1 will be replaced by a numeric value and %2 will be 'days' or 'months', for example (Expires in [S]10[/S] days) */
-"bonusExpiresIn"="(Bonus expires in [S]%1[/S] %2)";
+"bonusExpiresIn"="(Mag-eexpire ang bonus sa loob ng [S]%1[/S] %2)";
 /* Used to display the number of months a plan was purchased for e.g. 3 months, 6 months. */
 "months"="buwan";
 /*  */
@@ -982,11 +990,11 @@
 /*  */
 "chooseYourAccountType"="Pumili ng account type";
 /* Text shown under the button 'Skip' to explain that you can upgrade your account later in the section 'My Account'. */
-"youCanUpgradeLaterInMyAccount"="You can upgrade later in My Account";
+"youCanUpgradeLaterInMyAccount"="Maaaring mag-upgrade sa susunod sa My Account";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
-"cloudDriveIsAlmostFull"="[S]Cloud Drive is almost full.[/S] [A]Upgrade now[/A] to a PRO account and get [S]up to 4 TB (4096 GB)[/S] of cloud storage space.";
+"cloudDriveIsAlmostFull"="[S]Mapupuno na ang iyong Cloud Drive.[/S] [A]Mag-upgrade na[/A] sa PRO account at makakuha ng [S]hanggang 4 na TB (4096 GB)[/S] ng cloud storage space.";
 /* A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text. */
-"cloudDriveIsFull"="[S]Your account is full.[/S] [A]Upgrade now[/A] to a PRO account and get [S]up to 4 TB (4096 GB)[/S] of cloud storage space.";
+"cloudDriveIsFull"="[S]Ang iyong account ay puno na.[/S] [A]Mag-upgrade na[/A] sa PRO account at makakuha [S]ng hanggang 4 TB (4096 GB)[/S] ng cloud storage space.";
 /* Storage related with the MEGA PRO account level you can subscribe */
 "productSpace"="Lagayan";
 /* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
@@ -996,7 +1004,7 @@
 /* A message shown at registration time when users have to select their plan. The FREE 50 GB plan is subject to the achievements program. */
 "subjectToYourParticipationInOurAchievementsProgram"="Subject to your participation in our achievements program.";
 /* Price asociated with the MEGA PRO account level you can subscribe */
-"productPricePerMonth"="%@ per month";
+"productPricePerMonth"="%@ kada buwan";
 /* Header that help you with the upgrading process explaining that you have to choose one of the plans below  to continue */
 "choosePlan"="Pumili ng plano sa ibaba:";
 /* Text that explains that you have to select the plan you want and/or need after creating an account */
@@ -1080,21 +1088,21 @@
 /* The title for my message in a chat. The message was sent from yourself. */
 "me"="Ako";
 /* A log message in a chat conversation to tell the reader that a participant [A] was removed from the group chat by the moderator [B]. Please keep [A] and [B], they will be replaced by the participant and the moderator names at runtime. For example: Alice was removed from the group chat by Frank. */
-"wasRemovedFromTheGroupChatBy"="[A] was removed from the group chat by [B].";
+"wasRemovedFromTheGroupChatBy"="Si [A] ay tinanggal sa group chat ni [B].";
 /* A log message in the chat conversation to tell the reader that a participant [A] left the group chat. For example: Alice left the group chat. */
 "leftTheGroupChat"="Umalis si [A] sa group chat.";
 /* A log message in a chat conversation to tell the reader that a participant [A] was added to the chat by a moderator [B]. Please keep the [A] and [B] placeholders, they will be replaced by the participant and the moderator names at runtime. For example: Alice joined the group chat by invitation from Frank. */
-"joinedTheGroupChatByInvitationFrom"="[A] joined the group chat by invitation from [B].";
+"joinedTheGroupChatByInvitationFrom"="[A] sumali sa group chat sa imbitasyon ni [B].";
 /* A log message in the chat conversation to tell the reader that a participant [A] cleared the history of the chat. For example, Alice cleared the chat history. */
 "clearedTheChatHistory"="Binura ni [A] ang chat history.";
 /* A log message in a chat to display that a participant's permission was changed and by whom. This message begins with the user's name who receive the permission change [A]. [B] will be replaced with the permission name (such as Moderator or Read-only) and [C] will be replaced with the person who did it. Please keep the [A], [B] and [C] placeholders, they will be replaced at runtime. For example: Alice Jones was changed to Moderator by John Smith. */
-"wasChangedToBy"="[A] was changed to [B] by [C].";
+"wasChangedToBy"="[A] ay binago ni [B] sa pamamagitan ni [C].";
 /* A log message in the chat conversation to tell the reader that a participant [A] changed group chat name to [B]. Please keep the [A] and '[B]' placeholders, they will be replaced at runtime. For example: Alice changed group chat name to 'MEGA'. */
-"changedGroupChatNameTo"="[A] changed group chat name to ‘[B]’.";
+"changedGroupChatNameTo"="Binago ni [A] ang group chat name sa ‘[B]’.";
 /* Button label. Allows to add contacts in current chat conversation. */
 "addParticipant"="Magdagdag ng kasali...";
 /* Menu item to add participants to a chat */
-"addParticipants"="Add participants";
+"addParticipants"="Magdagdag ng participants";
 /* Title that refers to the status of the chat (Either Online or Offline) */
 "status"="Status";
 /* Title used in settings that enables the generation of link previews in the chat */
@@ -1180,7 +1188,7 @@
 /* A button label. The button allows the user to close the conversation. */
 "close"="Isara";
 /* Alert text that explains what means confirming the action 'Leave' */
-"youWillNoLongerHaveAccessToThisConversation"="You will no longer have access to this conversation";
+"youWillNoLongerHaveAccessToThisConversation"="Ikaw ay hindi na makaka-access sa conversation na ito";
 /* A button label. The button allows the user to leave the conversation. */
 "leaveChat"="Iwan ang chat";
 /* Button title that allows the user to leave a group chat. */
@@ -1220,7 +1228,7 @@
 /* Button which allows to delete message in chat conversation. */
 "deleteMessage"="Burahin ang mensahe";
 /*  */
-"fromCloudDrive"="From Cloud drive";
+"fromCloudDrive"="From Cloud Drive";
 /*  */
 "fromDevice"="From device";
 /* referring to a contact in the contact list of the user */
@@ -1277,18 +1285,10 @@
 "attachedFile"="Nakalakip: %s";
 /* A summary message when a user has attached many files at once into the chat. Please keep %s as it will be replaced at runtime with the number of files. */
 "attachedXFiles"="Mga nakalakip na %s files.";
-/* A summary message when a user sent the information of one contact through the chat. */
-"sharedContact"="Shared this contact:";
-/* A summary message when a user sent the information of some contacts at once through the chat. */
-"sharedContacts"="Shared these contacts:";
-/* A summary message when a user has attached one file into the chat. */
-"uploadedFile"="Uploaded this file:";
-/* A summary message when a user has attached many files at once into the chat. */
-"uploadedFiles"="Uploaded these files:";
 /* Label in a button that allows to jump to the latest item */
-"jumpToLatest"="Jump to latest";
+"jumpToLatest"="Tumalon sa latest";
 /* Label in a button that allows to jump to the latest message */
-"newMessages"="New messages";
+"newMessages"="Bagong message";
 /* Label in chat rooms that indicates how many messages are unread. Singular and as short as possible. */
 "unreadMessage"="%lu unread message";
 /* Label in chat rooms that indicates how many messages are unread. Plural and as short as possible. */
@@ -1298,9 +1298,11 @@
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
 "openMEGAAndSignInToContinue"="Buksan ang MEGA at mag-sign in upang magpatuloy";
 /* Label in login screen to inform about the chat initialization proccess */
-"connecting"="Connecting…";
+"connecting"="Kumokonekta...";
 /* Inform user that there were unsupported assets in the share extension */
 "shareExtensionUnsupportedAssets"="May ilang items na hindi pwedeng ibahagi sa MEGA";
+/* Message shown to the user when the share extension is about to be killed by iOS due to a memory issue */
+"Limited system resources are available when sharing items. Try uploading these files from within the MEGA app."="Limited system resources are available when sharing items. Try uploading these files from within the MEGA app.";
 /* Notification message shown when a transfer failed. Keep colon. */
 "Transfer failed:"="Naudlot ang paglilipat:";
 /* MEGAError */
@@ -1358,13 +1360,15 @@
 "languageRestartNotification"="Language changed. Tap to restart.";
 /* The following strings are only for the App Store description, they're not used on the app (The only exception is the one with 'autorenewableDescription' key) On the 'generalDescriptionParagraph6' we must delete 'Desktop - https://mega.nz/' because the app can be rejected because of that. */
 /* Paragraph 1 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
-"generalDescriptionParagraph1"="MEGA is a secure cloud storage service that gives you 50 GB free storage space. Unlike other cloud storage providers, your data is encrypted and decrypted by your client devices only and never by us.";
+"generalDescriptionParagraph1"="MEGA provides user-controlled encrypted cloud storage through standard web browsers, together with dedicated apps for mobile devices. Unlike other cloud storage providers, your data is encrypted and decrypted by your client devices only and never by us.";
 /* Paragraph 2 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
 "generalDescriptionParagraph2"="Upload your files from your smartphone or tablet, then search, store, download, stream, view, share, rename or delete your files any time, from any device, anywhere. Share folders with your contacts and see their updates in real time.";
 /* Paragraph 3 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
 "generalDescriptionParagraph3"="The encryption process means we cannot access or reset your password so you MUST remember it (unless you have your Recovery Key backed up) or you will lose access to your stored files.";
+/* Paragraph between 3rd and 4th of the general description of MEGA shown on the iOS App Store, part of Android string 17769 */
+"generalDescriptionVideoChat"="End-to-end user-encrypted MEGA video chat allows for total privacy, and has been available through the browser since 2016. It has been extended to our mobile app, with chat history accessible across multiple devices. Users can also easily add files to a chat from their MEGA Cloud Drive.";
 /* Paragraph 4 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
-"generalDescriptionParagraph4"="Inside the app you can upgrade your storage space and transfer quota with a monthly or yearly subscription.";
+"generalDescriptionParagraph4"="MEGA offers a generous 50 GB free storage for all registered users with bonus achievements, and offers paid plans with much higher limits:";
 /* Paragraph 5 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
 "generalDescriptionParagraph5"="PRO LITE subscription: €4.99 (US$4.99) per month or €49.99 (US$49.99) per year gives you 200 GB of storage space and 1 TB of transfer quota per month.\nPRO I subscription: €9.99 (US$9.99) per month or €99.99 (US$99.99) per year gives you 1 TB of storage space and 2 TB of transfer quota per month.\nPRO II subscription: €19.99 (US$19.99) per month or €199.99 (US$199.99) per year gives you 4 TB of storage space and 8 TB of transfer quota per month.\nPRO III subscription: €29.99 (US$29.99) per month or €299.99 (US$299.99) per year gives you 8 TB of storage space and 16 TB of transfer quota per month.";
 /* Between paragraph 5 and 6 we have to put the string with the 'autorenewableDescription' key */
@@ -1390,6 +1394,18 @@
 "missedAudioCallsAndMissedVideoCalls"="[A] missed audio calls  and [B] missed video calls";
 /* Button title to see the available bonus */
 "getBonus"="Get Bonus";
+/* Text shown under the title 'Video quality' that explains what it means */
+"qualityOfVideosUploadedToAChat"="Quality ng videos na na-upload sa chat";
+/* Label used near to the option selected to encode the videos uploaded to a chat (Low, Medium, Original) */
+"videoQuality"="Quality ng video";
+/* Property associated with something smaller than the usual or average size, number, value, or amount. For example: option to encode a video with low quality. */
+"low"="Low";
+/* Option to upload videos with the same resolution and same framerate than the original one, but converting them to MP4. */
+"high"="High";
+/* Property associated with the first one made and not a copy. For example: Get the original video, without encoding.  */
+"original"="Original";
+/* Label for the status of a transfer when is being preparing - (String as short as possible). */
+"preparing..."="Inihahanda…";
 /* QR Code label, used in Settings as title. String as short as possible */
 "qrCode"="QR Code";
 /* Label for the setting that allow users to automatically add contacts when they scan his/her QR code. String as short as possible. */
@@ -1399,7 +1415,7 @@
 /* Action to reset the current valid QR code of the user */
 "resetQrCode"="Reset QR Code";
 /* Footer that explains what would happen if the user resets his/her QR code */
-"resetQrCodeFooter"="Previous QR codes will no longer be valid.";
+"resetQrCodeFooter"="Ang datihang QR codes ay hindi na valid.";
 /* Title for view that displays the QR code of the user. String as short as possible. */
 "myCode"="My Code";
 /* Segmented control title for view that allows the user to scan QR codes. String as short as possible. */
@@ -1419,7 +1435,7 @@
 /* Title of section to display number of all historical versions of files. */
 "versions"="Versions";
 /* Title label of a node property. */
-"location"="Location";
+"location"="Lokasyon";
 /* label for the total file size of multiple files and/or folders (no need to put the colon punctuation in the translation)*/
 "totalSize"="Kabuuang laki";
 /* Refers to the type of a file or folder. */
@@ -1443,9 +1459,9 @@
 /* Label of the option menu. When clicking this button, the app shows the info of the folder */
 "folderInfo"="Info tungkol sa folder";
 /* Question to ensure user wants to delete file version. */
-"deleteVersion"="Do you want to delete this version?";
+"deleteVersion"="Gusto mo bang tanggalin ang version na ito?";
 /* Message to notify user the file version will be permanently removed */
-"permanentlyRemoved"="It will be permanently removed";
+"permanentlyRemoved"="Ito ay tatanggalin na ng tuluyan";
 /*  */
 "delete"="Burahin";
 /* A button label which reverts a certain version of a file to be the current version of the selected file. */
@@ -1457,7 +1473,7 @@
 /* Title of section to display information of the current version of a file. */
 "currentVersion"="Current Version";
 /* A button label which opens a dialog to display the full version history of the selected file. */
-"previousVersions"="Previous Versions";
+"previousVersions"="Naunang Versions";
 /* Title of section to display information of all current versions of files. */
 "currentVersions"="Current Versions";
 /* Used as a title in the "Password reminder" dialog, that pop ups to ensure that the user had exported his recovery key OR still remembers his password. */
@@ -1491,7 +1507,7 @@
 /* Button title to allow the user ignore something */
 "ignore"="Talikuran";
 /* Button title to allow the user open the default browser */
-"openBrowser"="Open browser";
+"openBrowser"="Buksan ang browser";
 /* A label for the Restart button to relaunch MEGAsync. */
 "restart"="Restart";
 /* Title to alert user the possibility of resume playing the video or start from the beginning */
@@ -1503,7 +1519,7 @@
 /* Title to preview document */
 "previewContent"="Preview Content";
 /* Title of the notification for a missed call */
-"missedCall"="Missed call";
+"missedCall"="Lumipas na tawag";
 /* When an outgoing call of user A with user B had been rejected by user B */
 "callWasRejected"="Call was rejected";
 /* When an active call of user A with user B had cancelled */
@@ -1536,3 +1552,95 @@
 "fileNotSupported"="File not supported";
 /* Alert message shown when users try to stream an unsupported audio/video file */
 "message_fileNotSupported"="You can save it for Offline and open it in a compatible app.";
+/* Item of a menu to forward a message chat to another chatroom */
+"forward"="Forward";
+/* Success message shown after forwarding messages to other chats */
+"messagesSent"="Naipadala na ang mga mensahe";
+/* Title of archived chats button */
+"archivedChats"="Na-archived na chats";
+/* Confirmation message on archive chat dialog for user to confirm. */
+"archiveChatMessage"="Sigurado ka bang i-aarchive ang conversation?";
+/* Confirmation message for user to confirm it will unarchive an archived chat. */
+"unarchiveChatMessage"="Gusto mo bang i-unarchive ang conversation?";
+/* The title of the dialog to unarchive an archived chat. */
+"unarchiveChat"="Unarchive Chat";
+/* Title of button to archive chats. */
+"archiveChat"="I-archive ang Chat";
+/* Title of flag of archived chats. */
+"archived"="Archived";
+/* Title of empty state view for archived chats. */
+"noArchivedChats"="Walang Archived Chats";
+/* A title for the Two-Factor Authentication section on the My Account - Security page. */
+"twoFactorAuthentication"="Two-Factor Authentication";
+/* Button title to start the setup of a feature. For example 'Begin Setup' for Two-Factor Authentication */
+"beginSetup"="Begin Setup";
+/* A message on the Verify Login page telling the user to enter their 2FA code. */
+"pleaseEnterTheSixDigitCode"="Please enter the 6-digit code generated by your Authentication app.";
+/* Title of the dialog displayed to start setup the Two-Factor Authentication */
+"whyYouDoNeedTwoFactorAuthentication"="Why do you need Two-Factor Authentication?";
+/* Description for the ‘Two-Factor Authentication’ in the security settings section. */
+"whatIsTwoFactorAuthentication"="Two-Factor Authentication is a second layer of security for your account.";
+/* Description text of the dialog displayed to start setup the Two-Factor Authentication */
+"whyYouDoNeedTwoFactorAuthenticationDescription"="Two-Factor Authentication is a second layer of security for your account. Which means that even if someone knows your password they cannot access it, without also having access to the six digit code only you have access to.";
+/* Alert text shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device */
+"youNeedATwoFactorAuthenticationApp"="You need a two factor authentication app on this device";
+/* A title on the mobile web client page showing that 2FA has been enabled successfully. */
+"twoFactorAuthenticationEnabled"="Two-Factor Authentication Enabled";
+/* A message on the dialog shown after 2FA was successfully enabled. */
+"twoFactorAuthenticationEnabledDescription"="Next time you login to your account you will be asked to enter a 6-digit code provided by your authentication app.";
+/* A warning message on the Backup Recovery Key dialog to tell the user to backup their Recovery Key to their local computer. */
+"pleaseSaveYourRecoveryKey"="Please save your Recovery Key in a safe location";
+/* An informational message on the Backup Recovery Key dialog. */
+"twoFactorAuthenticationEnabledWarning"="If you lose access to your account after enabling 2FA and you have not backed up your Recovery Key, MEGA cannot help you gain access to it again.";
+/* A message on a dialog to say that 2FA has been successfully disabled. */
+"twoFactorAuthenticationDisabled"="Two-Factor Authentication Disabled";
+/* A message on the setup two-factor authentication page on the mobile web client. */
+"scanOrCopyTheSeed"="Scan or copy the seed to your Authenticator App. Be sure to backup this seed to a safe place in case you lose your phone.";
+/* A button to help them restore their account if they have lost their 2FA device. */
+"lostYourAuthenticatorDevice"="Lost your Authenticator device?";
+/* Settings section title where you can enable the option to 'Save Images in Library' */
+"Save Images in Library"="Save Images in Library";
+/* Settings section title where you can enable the option to 'Save Videos in Library' */
+"Save Videos in Library"="Save Videos in Library";
+/* Footer text shown under the settings for download options 'Save Images/Videos in Library' */
+"Images and/or videos downloaded will be stored in the device’s media library instead of the Offline section."="Images and/or videos downloaded will be stored in the device’s media library instead of the Offline section.";
+/* Setting associated with the 'Camera' of the device */
+"Camera"="Camera";
+/* Settings section title where you can enable the option to 'Save in Library' the images or videos taken from your camera in the MEGA app */
+"Save in Library"="Save in Library";
+/* Footer text shown under the Camera setting to explain the option 'Save in Library' */
+"Save a copy of the images and videos taken from the MEGA app in your device’s media library."="Save a copy of the images and videos taken from the MEGA app in your device’s media library.";
+/* Title shown in a page of the on boarding screens explaining that the user keeps the encryption keys */
+"You hold the keys"="You hold the keys";
+/* Description shown in a page of the onboarding screens explaining the encryption paradigm */
+"Security is why we exist, your files are safe with us behind a well oiled encryption machine where only you can access your files."="Security is why we exist, your files are safe with us behind a well oiled encryption machine where only you can access your files.";
+/* Title shown in a page of the on boarding screens explaining that the chat is encrypted */
+"Encrypted chat"="Encrypted chat";
+/* Description shown in a page of the onboarding screens explaining the chat feature */
+"Fully encrypted chat with voice and video calls, group messaging and file sharing integration with your Cloud Drive."="Fully encrypted chat with voice and video calls, group messaging and file sharing integration with your Cloud Drive.";
+/* Title shown in a page of the on boarding screens explaining that the user can add contacts to chat and colaborate */
+"Create your Network"="Create your Network";
+/* Description shown in a page of the onboarding screens explaining contacts */
+"Add contacts, create a network, colaborate, make voice and video calls without ever leaving MEGA"="Add contacts, create a network, colaborate, make voice and video calls without ever leaving MEGA";
+/* Title shown in a page of the on boarding screens explaining that the user can backup the photos automatically */
+"Your Photos in the Cloud"="Your Photos in the Cloud";
+/* Description shown in a page of the onboarding screens explaining the camera uploads feature */
+"Camera Uploads is an essential feature for any mobile device and we got you covered. Create your account now."="Camera Uploads is an essential feature for any mobile device and we got you covered. Create your account now.";
+/* Button which triggers the initial setup */
+"Setup MEGA"="Setup MEGA";
+/* Detailed explanation of why the user should give some permissions to MEGA */
+"To fully take advantage of your MEGA account we need to ask you some permissions."="To fully take advantage of your MEGA account we need to ask you some permissions.";
+/* Title label that explains that the user is going to be asked for the photos permission */
+"Allow Access to Photos"="Allow Access to Photos";
+/* Detailed explanation of why the user should give permission to access to the photos */
+"To share photos and videos allow MEGA to access your photos"="To share photos and videos allow MEGA to access your photos";
+/* Title label that explains that the user is going to be asked for the microphone and camera permission */
+"Enable Microphone and Camera"="Enable Microphone and Camera";
+/* Detailed explanation of why the user should give permission to access to the camera and the microphone */
+"To make encrypted voice and video calls allow MEGA access to your Camera and Microphone"="To make encrypted voice and video calls allow MEGA access to your Camera and Microphone";
+/* Title label that explains that the user is going to be asked for the notifications permission */
+"Enable Notifications"="Paganahin ang Notifications";
+/* Detailed explanation of why the user should give permission to deliver notifications */
+"We would like to send you notifications so you receive new messages on your device instantly."="We would like to send you notifications so you receive new messages on your device instantly.";
+/* Button which triggers a request for a specific permission, that have been explained to the user beforehand */
+"Enable Access"="Enable Access";

@@ -64,7 +64,7 @@
         self.nodeFilePath = [nodeFolderPath stringByAppendingPathComponent:self.node.name];
         
         if ([[NSFileManager defaultManager] createDirectoryAtPath:nodeFolderPath withIntermediateDirectories:YES attributes:nil error:&error]) {
-            [self.api startDownloadNode:self.node localPath:self.nodeFilePath delegate:self];
+            [self.api startDownloadTopPriorityWithNode:self.node localPath:self.nodeFilePath appData:nil delegate:self];
         } else {
             MEGALogError(@"Create directory at path failed with error: %@", error);
         }
@@ -118,12 +118,9 @@
         [self.imageView mnz_setImageForExtension:[self.filesPathsArray objectAtIndex:self.nodeFileIndex].pathExtension];
     }
     
-    if (@available(iOS 11.0, *)) {
-        self.navigationController.navigationBar.barTintColor = [UIColor colorFromHexString:@"FCFCFC"];
-        self.navigationController.navigationBar.titleTextAttributes = @{NSFontAttributeName:[UIFont mnz_SFUISemiBoldWithSize:17.0f], NSForegroundColorAttributeName:[UIColor mnz_black333333]};
-    } else {
-        [Helper configureWhiteNavigationAppearance];
-    }
+    self.navigationController.navigationBar.barTintColor = [UIColor colorFromHexString:@"FCFCFC"];
+    self.navigationController.navigationBar.tintColor = UIColor.mnz_redMain;
+    self.navigationController.navigationBar.titleTextAttributes = @{NSFontAttributeName:[UIFont mnz_SFUISemiBoldWithSize:17.0f], NSForegroundColorAttributeName:[UIColor mnz_black333333]};
 }
 
 - (void)loadPreview {
@@ -178,7 +175,7 @@
 - (IBAction)doneTapped:(id)sender {
     [[UINavigationBar appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUISemiBoldWithSize:17.0f], NSForegroundColorAttributeName:[UIColor whiteColor]}];
     [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
-    [[UINavigationBar appearance] setBarTintColor:[UIColor mnz_redF0373A]];
+    [[UINavigationBar appearance] setBarTintColor:UIColor.mnz_redMain];
     [[UILabel appearanceWhenContainedInInstancesOfClasses:@[[UINavigationBar class]]] setTextColor:[UIColor whiteColor]];
     [[UIBarButtonItem appearanceWhenContainedInInstancesOfClasses:@[[UINavigationBar class]]] setTintColor:[UIColor whiteColor]];
     [self dismissViewControllerAnimated:YES completion:nil];
@@ -202,13 +199,13 @@
     CustomActionViewController *actionController = [[CustomActionViewController alloc] init];
     actionController.node = self.node;
     actionController.actionDelegate = self;
+    actionController.actionSender = sender;
     actionController.displayMode = self.isLink ? DisplayModeFileLink : DisplayModeCloudDrive;
     
     if ([[UIDevice currentDevice] iPadDevice]) {
         actionController.modalPresentationStyle = UIModalPresentationPopover;
-        UIPopoverPresentationController *popController = [actionController popoverPresentationController];
-        popController.delegate = actionController;
-        popController.barButtonItem = sender;
+        actionController.popoverPresentationController.delegate = actionController;
+        actionController.popoverPresentationController.barButtonItem = sender;
     } else {
         actionController.modalPresentationStyle = UIModalPresentationOverFullScreen;
     }
@@ -323,27 +320,25 @@
         }
             
         case MegaNodeActionTypeCopy:
+        case MegaNodeActionTypeMove:
+        case MegaNodeActionTypeImport:
             if ([MEGAReachabilityManager isReachableHUDIfNot]) {
                 MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"BrowserNavigationControllerID"];
                 [self presentViewController:navigationController animated:YES completion:nil];
                 
                 BrowserViewController *browserVC = navigationController.viewControllers.firstObject;
                 browserVC.selectedNodesArray = @[node];
-                [browserVC setBrowserAction:BrowserActionCopy];
+                BrowserAction browserAction;
+                if (action == MegaNodeActionTypeCopy) {
+                    browserAction = BrowserActionCopy;
+                } else if (action == BrowserActionMove) {
+                    browserAction = BrowserActionMove;
+                } else {
+                    browserAction = BrowserActionImport;
+                }
+                [browserVC setBrowserAction:browserAction];
             }
             break;
-            
-        case MegaNodeActionTypeMove: {
-            MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"BrowserNavigationControllerID"];
-            [self presentViewController:navigationController animated:YES completion:nil];
-            
-            BrowserViewController *browserVC = navigationController.viewControllers.firstObject;
-            browserVC.selectedNodesArray = @[node];
-            if ([self.api accessLevelForNode:node] == MEGAShareTypeAccessOwner) {
-                [browserVC setBrowserAction:BrowserActionMove];
-            }
-            break;
-        }
             
         case MegaNodeActionTypeRename: {
             [node mnz_renameNodeInViewController:self completion:^(MEGARequest *request) {
