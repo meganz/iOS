@@ -1037,6 +1037,10 @@
                     [self.tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
                 }
             }
+            
+            UIView *view = [[UIView alloc] init];
+            view.backgroundColor = UIColor.clearColor;
+            cell.selectedBackgroundView = view;
         }
         
         if (@available(iOS 11.0, *)) {
