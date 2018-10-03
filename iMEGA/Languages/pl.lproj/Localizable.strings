@@ -268,10 +268,6 @@
 "Completing..."="Zakańczanie...";
 /* Label for the state of a transfer when is being retrying - (String as short as possible). */
 "Retrying..."="Ponawiam próbę...";
-/* Alert title shown when you try to open a Cloud Drive document and is not posible because there's some active download */
-"documentOpening_alertTitle"="Brak oczekujących pobrań";
-/* Alert message shown when you try to open a Cloud Drive document and is not posible because there's some active download */
-"documentOpening_alertMessage"="Spróbuj ponownie lub anuluj";
 /* Section title of the 'Sort by' */
 "sortTitle"="SORTUJ";
 /* Button title to 'Save' the selected option */
@@ -1306,7 +1302,7 @@
 /* Inform user that there were unsupported assets in the share extension */
 "shareExtensionUnsupportedAssets"="Niektóre elementy nie mogą być udostępnione na MEGA";
 /* Message shown to the user when the share extension is about to be killed by iOS due to a memory issue */
-"The resources are limited when sharing items. Try uploading these files from MEGA app."="The resources are limited when sharing items. Try uploading these files from MEGA app.";
+"Limited system resources are available when sharing items. Try uploading these files from within the MEGA app."="Podczas udostępniania elementów dostępne są ograniczone zasoby systemowe. Spróbuj przesłać te pliki z poziomu aplikacji MEGA.";
 /* Notification message shown when a transfer failed. Keep colon. */
 "Transfer failed:"="Operacja nie powiodła się:";
 /* MEGAError */
@@ -1602,3 +1598,51 @@
 "scanOrCopyTheSeed"="Zeskanuj lub skopiuj kod do aplikacji do uwierzytelniania. Pamiętaj, aby wykonać kopię zapasową tego materiału w bezpieczne miejsce na wypadek zgubienia telefonu.";
 /* A button to help them restore their account if they have lost their 2FA device. */
 "lostYourAuthenticatorDevice"="Zgubiłeś swoje urządzenie?";
+/* Settings section title where you can enable the option to 'Save Images in Library' */
+"Save Images in Library"="Zapisz obrazy w bibliotece";
+/* Settings section title where you can enable the option to 'Save Videos in Library' */
+"Save Videos in Library"="Zapisz wideo w bibliotece";
+/* Footer text shown under the settings for download options 'Save Images/Videos in Library' */
+"Images and/or videos downloaded will be stored in the device’s media library instead of the Offline section."="Zdjęcia i / lub pobrane filmy będą przechowywane w bibliotece multimediów urządzenia zamiast w sekcji Offline.";
+/* Setting associated with the 'Camera' of the device */
+"Camera"="Aparat";
+/* Settings section title where you can enable the option to 'Save in Library' the images or videos taken from your camera in the MEGA app */
+"Save in Library"="Zapisz w bibliotece";
+/* Footer text shown under the Camera setting to explain the option 'Save in Library' */
+"Save a copy of the images and videos taken from the MEGA app in your device’s media library."="Zapisz kopię zdjęć i filmów pobranych z aplikacji MEGA w bibliotece multimediów urządzenia.";
+/* Title shown in a page of the on boarding screens explaining that the user keeps the encryption keys */
+"You hold the keys"="Ty przechowujesz klucze";
+/* Description shown in a page of the onboarding screens explaining the encryption paradigm */
+"Security is why we exist, your files are safe with us behind a well oiled encryption machine where only you can access your files."="Bezpieczeństwo, dlatego istniejemy, twoje pliki są bezpieczne u nas za dobrze naoliwioną maszyną szyfrującą, gdzie tylko ty masz dostęp do twoich plików.";
+/* Title shown in a page of the on boarding screens explaining that the chat is encrypted */
+"Encrypted chat"="Zaszyfrowany czat";
+/* Description shown in a page of the onboarding screens explaining the chat feature */
+"Fully encrypted chat with voice and video calls, group messaging and file sharing integration with your Cloud Drive."="W pełni zaszyfrowany czat z połączeniami głosowymi i wideo, przesyłanie wiadomości grupowych i integracja udostępniania plików z dyskiem Cloud Drive.";
+/* Title shown in a page of the on boarding screens explaining that the user can add contacts to chat and colaborate */
+"Create your Network"="Stwórz swoją sieć";
+/* Description shown in a page of the onboarding screens explaining contacts */
+"Add contacts, create a network, colaborate, make voice and video calls without ever leaving MEGA"="Dodawaj kontakty, twórz sieć, współpracuj, nawiązywaj połączenia głosowe i wideo bez opuszczania MEGA";
+/* Title shown in a page of the on boarding screens explaining that the user can backup the photos automatically */
+"Your Photos in the Cloud"="Twoje zdjęcia w chmurze";
+/* Description shown in a page of the onboarding screens explaining the camera uploads feature */
+"Camera Uploads is an essential feature for any mobile device and we have got you covered. Create your account now."="Przesyłanie z kamer to podstawowa funkcja każdego urządzenia mobilnego, a my jesteśmy objęci. Utwórz teraz swoje konto.";
+/* Button which triggers the initial setup */
+"Setup MEGA"="Skonfiguruj MEGA";
+/* Detailed explanation of why the user should give some permissions to MEGA */
+"To fully take advantage of your MEGA account we need to ask you some permissions."="Aby w pełni wykorzystać swoje konto MEGA, musimy poprosić Cię o kilka uprawnień.";
+/* Title label that explains that the user is going to be asked for the photos permission */
+"Allow Access to Photos"="Zezwalaj na dostęp do zdjęć";
+/* Detailed explanation of why the user should give permission to access to the photos */
+"To share photos and videos, allow MEGA to access your photos"="Aby udostępniać zdjęcia i filmy, zezwól MEGA na dostęp do zdjęć";
+/* Title label that explains that the user is going to be asked for the microphone and camera permission */
+"Enable Microphone and Camera"="Włącz mikrofon i kamerę";
+/* Detailed explanation of why the user should give permission to access to the camera and the microphone */
+"To make encrypted voice and video calls, allow MEGA access to your Camera and Microphone"="Aby szyfrować rozmowy głosowe i wideo, zezwól MEGA na dostęp do kamery i mikrofonu";
+/* Title label that explains that the user is going to be asked for the notifications permission */
+"Enable Notifications"="Odblokuj powiadomienia";
+/* Detailed explanation of why the user should give permission to deliver notifications */
+"We would like to send you notifications so you receive new messages on your device instantly."="Chcemy wysyłać Ci powiadomienia, aby natychmiast otrzymywać nowe wiadomości na Twoim urządzeniu.";
+/* Button which triggers a request for a specific permission, that have been explained to the user beforehand */
+"Enable Access"="Włącz dostęp";
+/* Confirmation dialog for the button that logs the user out of all sessions except the current one. */
+"Do you want to close all other sessions? This will log you out on all other active sessions except the current one."="Czy chcesz zamknąć wszystkie inne sesje? Spowoduje to wylogowanie wszystkich innych aktywnych sesji oprócz bieżącego.";

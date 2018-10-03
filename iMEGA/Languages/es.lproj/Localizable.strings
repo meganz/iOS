@@ -268,10 +268,6 @@
 "Completing..."="Completando...";
 /* Label for the state of a transfer when is being retrying - (String as short as possible). */
 "Retrying..."="Reintentando...";
-/* Alert title shown when you try to open a Cloud Drive document and is not posible because there's some active download */
-"documentOpening_alertTitle"="Hay descargas pendientes";
-/* Alert message shown when you try to open a Cloud Drive document and is not posible because there's some active download */
-"documentOpening_alertMessage"="Inténtalo más tarde o cancela las descargas.";
 /* Section title of the 'Sort by' */
 "sortTitle"="Ordenar por";
 /* Button title to 'Save' the selected option */
@@ -717,7 +713,7 @@
 /* "Title header that refers to where do you do the action 'Empty Rubbish Bin' inside 'Settings' -> 'Advanced' section" */
 "onMEGA"="En MEGA";
 /* Button text on the Rubbish Bin page. This button will empty all files and folders currently stored in the rubbish bin. */
-"emptyRubbishBin"="Vaciar la Papelera";
+"emptyRubbishBin"="Vaciar Papelera";
 /* Alert title shown when you tap 'Empty Rubbish Bin' */
 "emptyRubbishBinAlertTitle"="Todos los elementos de la Papelera se eliminarán.";
 /* Text next to a switch that allows disabling the HTTP protocol for transfers */
@@ -1306,7 +1302,7 @@
 /* Inform user that there were unsupported assets in the share extension */
 "shareExtensionUnsupportedAssets"="No se han podido compartir algunos elementos con MEGA";
 /* Message shown to the user when the share extension is about to be killed by iOS due to a memory issue */
-"The resources are limited when sharing items. Try uploading these files from MEGA app."="The resources are limited when sharing items. Try uploading these files from MEGA app.";
+"Limited system resources are available when sharing items. Try uploading these files from within the MEGA app."="Los recursos del sistema disponibles al compartir elementos son limitados. Intenta subir estos archivos desde la aplicación de MEGA.";
 /* Notification message shown when a transfer failed. Keep colon. */
 "Transfer failed:"="Error en la transferencia:";
 /* MEGAError */
@@ -1602,3 +1598,51 @@
 "scanOrCopyTheSeed"="Escanea o copia la clave en tu aplicación de autenticación. Asegúrate de guardarla en un lugar seguro en caso de que pierdas tu dispositivo.";
 /* A button to help them restore their account if they have lost their 2FA device. */
 "lostYourAuthenticatorDevice"="¿Has perdido tu dispositivo de autenticación?";
+/* Settings section title where you can enable the option to 'Save Images in Library' */
+"Save Images in Library"="Guardar imágenes en la galería";
+/* Settings section title where you can enable the option to 'Save Videos in Library' */
+"Save Videos in Library"="Guardar vídeos en la galería";
+/* Footer text shown under the settings for download options 'Save Images/Videos in Library' */
+"Images and/or videos downloaded will be stored in the device’s media library instead of the Offline section."="Las imágenes y/o los videos descargados se almacenarán en la galería del dispositivo en lugar de la sección Sin conexión.";
+/* Setting associated with the 'Camera' of the device */
+"Camera"="Cámara";
+/* Settings section title where you can enable the option to 'Save in Library' the images or videos taken from your camera in the MEGA app */
+"Save in Library"="Guardar en la galería";
+/* Footer text shown under the Camera setting to explain the option 'Save in Library' */
+"Save a copy of the images and videos taken from the MEGA app in your device’s media library."="Guarda una copia de las imágenes y de los videos capturados desde la aplicación de MEGA en la galería del dispositivo.";
+/* Title shown in a page of the on boarding screens explaining that the user keeps the encryption keys */
+"You hold the keys"="Tú tienes las claves";
+/* Description shown in a page of the onboarding screens explaining the encryption paradigm */
+"Security is why we exist, your files are safe with us behind a well oiled encryption machine where only you can access your files."="La seguridad es la razón por la que existimos. Tus archivos están seguros con nosotros gracias a una máquina de cifrado bien engrasada que permite que solo tú puedas acceder a tus archivos.";
+/* Title shown in a page of the on boarding screens explaining that the chat is encrypted */
+"Encrypted chat"="Chat cifrado";
+/* Description shown in a page of the onboarding screens explaining the chat feature */
+"Fully encrypted chat with voice and video calls, group messaging and file sharing integration with your Cloud Drive."="Chat totalmente cifrado con llamadas y videollamadas, chat de grupo y capacidad de compartir archivos con tu Cloud Drive.";
+/* Title shown in a page of the on boarding screens explaining that the user can add contacts to chat and colaborate */
+"Create your Network"="Crea tu propia red";
+/* Description shown in a page of the onboarding screens explaining contacts */
+"Add contacts, create a network, colaborate, make voice and video calls without ever leaving MEGA"="Añade contactos, crea tu propia red, colabora, haz llamadas y videollamadas sin salir de MEGA";
+/* Title shown in a page of the on boarding screens explaining that the user can backup the photos automatically */
+"Your Photos in the Cloud"="Tus fotos en la nube";
+/* Description shown in a page of the onboarding screens explaining the camera uploads feature */
+"Camera Uploads is an essential feature for any mobile device and we have got you covered. Create your account now."="La función Subidas de la cámara es esencial para cualquier dispositivo móvil y nosotros la tenemos. Crea tu cuenta ahora.";
+/* Button which triggers the initial setup */
+"Setup MEGA"="Configurar MEGA";
+/* Detailed explanation of why the user should give some permissions to MEGA */
+"To fully take advantage of your MEGA account we need to ask you some permissions."="Para aprovechar al máximo tu cuenta MEGA, debemos pedirte algunos permisos.";
+/* Title label that explains that the user is going to be asked for the photos permission */
+"Allow Access to Photos"="Permitir el acceso a Fotos";
+/* Detailed explanation of why the user should give permission to access to the photos */
+"To share photos and videos, allow MEGA to access your photos"="Para compartir fotos y videos, permite que MEGA acceda a tus fotos";
+/* Title label that explains that the user is going to be asked for the microphone and camera permission */
+"Enable Microphone and Camera"="Activar el micrófono y la cámara";
+/* Detailed explanation of why the user should give permission to access to the camera and the microphone */
+"To make encrypted voice and video calls, allow MEGA access to your Camera and Microphone"="Para hacer llamadas y videollamadas cifradas, permite que MEGA acceda a la cámara y al micrófono";
+/* Title label that explains that the user is going to be asked for the notifications permission */
+"Enable Notifications"="Activar Notificaciones";
+/* Detailed explanation of why the user should give permission to deliver notifications */
+"We would like to send you notifications so you receive new messages on your device instantly."="Nos gustaría enviarte notificaciones para que recibas nuevos mensajes al instante en tu dispositivo.";
+/* Button which triggers a request for a specific permission, that have been explained to the user beforehand */
+"Enable Access"="Habilitar acceso";
+/* Confirmation dialog for the button that logs the user out of all sessions except the current one. */
+"Do you want to close all other sessions? This will log you out on all other active sessions except the current one."="¿Quieres cerrar las demás sesiones? Te desconectarás de todas sesiones activas excepto la actual.";

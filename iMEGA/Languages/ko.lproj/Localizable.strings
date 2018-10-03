@@ -268,10 +268,6 @@
 "Completing..."="완료중...";
 /* Label for the state of a transfer when is being retrying - (String as short as possible). */
 "Retrying..."="재시도중...";
-/* Alert title shown when you try to open a Cloud Drive document and is not posible because there's some active download */
-"documentOpening_alertTitle"="대기중인 다운로드가 있습니다";
-/* Alert message shown when you try to open a Cloud Drive document and is not posible because there's some active download */
-"documentOpening_alertMessage"="다시 시도하거나 취소하세요";
 /* Section title of the 'Sort by' */
 "sortTitle"="정렬 기준";
 /* Button title to 'Save' the selected option */
@@ -1306,7 +1302,7 @@
 /* Inform user that there were unsupported assets in the share extension */
 "shareExtensionUnsupportedAssets"="일부 항목이 MEGA로 공유될 수 없습니다.";
 /* Message shown to the user when the share extension is about to be killed by iOS due to a memory issue */
-"The resources are limited when sharing items. Try uploading these files from MEGA app."="The resources are limited when sharing items. Try uploading these files from MEGA app.";
+"Limited system resources are available when sharing items. Try uploading these files from within the MEGA app."="항목을 공유할 때에는 시스템 자원이 제한적으로 이용가능합니다. MEGA 앱에서 파일들을 업로드하도록 시도해보세요.";
 /* Notification message shown when a transfer failed. Keep colon. */
 "Transfer failed:"="전송 실패:";
 /* MEGAError */
@@ -1602,3 +1598,51 @@
 "scanOrCopyTheSeed"="시드를 인증기 앱에서 스캔하거나 복사하세요. 휴대전화를 잃어버렸을 경우를 대비하여 이 시드를 안전한 곳에 백업하세요.";
 /* A button to help them restore their account if they have lost their 2FA device. */
 "lostYourAuthenticatorDevice"="인증기 장치를 잃어버렸나요?";
+/* Settings section title where you can enable the option to 'Save Images in Library' */
+"Save Images in Library"="라이브러리에 이미지 저장";
+/* Settings section title where you can enable the option to 'Save Videos in Library' */
+"Save Videos in Library"="라이브러리에 동영상 저장";
+/* Footer text shown under the settings for download options 'Save Images/Videos in Library' */
+"Images and/or videos downloaded will be stored in the device’s media library instead of the Offline section."="다운로드한 이미지와 동영상은 오프라인 영역 대신 기기의 미디어 라이브러리에 저장됩니다.";
+/* Setting associated with the 'Camera' of the device */
+"Camera"="카메라";
+/* Settings section title where you can enable the option to 'Save in Library' the images or videos taken from your camera in the MEGA app */
+"Save in Library"="라이브러리에 저장";
+/* Footer text shown under the Camera setting to explain the option 'Save in Library' */
+"Save a copy of the images and videos taken from the MEGA app in your device’s media library."="MEGA 앱에서 촬영한 이미지 또는 동영상의 사본을 기기의 미디어 라이브러리에 저장합니다.";
+/* Title shown in a page of the on boarding screens explaining that the user keeps the encryption keys */
+"You hold the keys"="당신이 열쇠를 갖습니다";
+/* Description shown in a page of the onboarding screens explaining the encryption paradigm */
+"Security is why we exist, your files are safe with us behind a well oiled encryption machine where only you can access your files."="보안은 우리가 존재하는 이유이며, 우리 뒤의 당신만이 파일에 접근할 수 있도록 잘 기름쳐진 암호화 기계와 함께 당신의 파일은 안전합니다.";
+/* Title shown in a page of the on boarding screens explaining that the chat is encrypted */
+"Encrypted chat"="암호화된 대화";
+/* Description shown in a page of the onboarding screens explaining the chat feature */
+"Fully encrypted chat with voice and video calls, group messaging and file sharing integration with your Cloud Drive."="완전히 암호화된 대화와 음성과 영상 통화, 그룹 대화 그리고 클라우드 드라이브와 통합된 파일 공유";
+/* Title shown in a page of the on boarding screens explaining that the user can add contacts to chat and colaborate */
+"Create your Network"="네트워크 생성";
+/* Description shown in a page of the onboarding screens explaining contacts */
+"Add contacts, create a network, colaborate, make voice and video calls without ever leaving MEGA"="MEGA를 떠나지 않고 연락처를 추가하고, 네트워크를 형성하고, 협업하고, 음성과 영상 통화를 하세요";
+/* Title shown in a page of the on boarding screens explaining that the user can backup the photos automatically */
+"Your Photos in the Cloud"="클라우드 속 당신의 사진";
+/* Description shown in a page of the onboarding screens explaining the camera uploads feature */
+"Camera Uploads is an essential feature for any mobile device and we have got you covered. Create your account now."="카메라 업로드는 어떠한 모바일 기기에서 필수 기능이며 우리가 당신을 위해 준비했습니다. 지금 계정을 만드세요.";
+/* Button which triggers the initial setup */
+"Setup MEGA"="MEGA 설정";
+/* Detailed explanation of why the user should give some permissions to MEGA */
+"To fully take advantage of your MEGA account we need to ask you some permissions."="당신의 MEGA 계정의 완전한 이용을 위해 우리가 당신에게 몇 가지 권한을 요청합니다.";
+/* Title label that explains that the user is going to be asked for the photos permission */
+"Allow Access to Photos"="사진에 대한 접근";
+/* Detailed explanation of why the user should give permission to access to the photos */
+"To share photos and videos, allow MEGA to access your photos"="사진과 동영상을 공유하려면, MEGA가 당신의 사진에 접근할 수 있도록 허용해주세요";
+/* Title label that explains that the user is going to be asked for the microphone and camera permission */
+"Enable Microphone and Camera"="마이크와 카메라 활성화";
+/* Detailed explanation of why the user should give permission to access to the camera and the microphone */
+"To make encrypted voice and video calls, allow MEGA access to your Camera and Microphone"="암호화된 음성과 영상 통화를 하려면, MEGA가 당신의 카메라와 마이크에 접근할 수 있도록 해주세요";
+/* Title label that explains that the user is going to be asked for the notifications permission */
+"Enable Notifications"="알림 활성화";
+/* Detailed explanation of why the user should give permission to deliver notifications */
+"We would like to send you notifications so you receive new messages on your device instantly."="당신이 메시지를 당신의 기기에서 즉시 받을 수 있도록 알림을 보내고자 합니다.";
+/* Button which triggers a request for a specific permission, that have been explained to the user beforehand */
+"Enable Access"="접근 허용";
+/* Confirmation dialog for the button that logs the user out of all sessions except the current one. */
+"Do you want to close all other sessions? This will log you out on all other active sessions except the current one."="다른 모든 세션을 닫고 싶으신가요? 이것은 현재 세션을 제외한 모든 활성 세션에서 당신을 로그아웃 시킵니다.";

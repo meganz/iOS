@@ -268,10 +268,6 @@
 "Completing..."="Finendo...";
 /* Label for the state of a transfer when is being retrying - (String as short as possible). */
 "Retrying..."="Riprovando...";
-/* Alert title shown when you try to open a Cloud Drive document and is not posible because there's some active download */
-"documentOpening_alertTitle"="Ci sono downloads in sospeso";
-/* Alert message shown when you try to open a Cloud Drive document and is not posible because there's some active download */
-"documentOpening_alertMessage"="Prova dopo o annulla";
 /* Section title of the 'Sort by' */
 "sortTitle"="Ordina per";
 /* Button title to 'Save' the selected option */
@@ -717,7 +713,7 @@
 /* "Title header that refers to where do you do the action 'Empty Rubbish Bin' inside 'Settings' -> 'Advanced' section" */
 "onMEGA"="Su MEGA";
 /* Button text on the Rubbish Bin page. This button will empty all files and folders currently stored in the rubbish bin. */
-"emptyRubbishBin"="Svuota cestino";
+"emptyRubbishBin"="Svuota Cestino";
 /* Alert title shown when you tap 'Empty Rubbish Bin' */
 "emptyRubbishBinAlertTitle"="Tutti gli elementi nel cestino verranno cancellati";
 /* Text next to a switch that allows disabling the HTTP protocol for transfers */
@@ -1000,7 +996,7 @@
 /* A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text. */
 "cloudDriveIsFull"="[S]Il tuo account è pieno.[/S] [A]Aggiorna ora[/A] ad un account PRO ora e ottieni [S]fino a 4TB (4096 GB)[/S] di spazio cloud.";
 /* Storage related with the MEGA PRO account level you can subscribe */
-"productSpace"="di spazio d'archiviazione";
+"productSpace"="Archivio";
 /* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
 "transferQuota"="Quota di trasferimento";
 /* Label for any 'Limited' button, link, text, title, etc. - (String as short as possible). */
@@ -1306,7 +1302,7 @@
 /* Inform user that there were unsupported assets in the share extension */
 "shareExtensionUnsupportedAssets"="Alcuni oggetti potrebbero non essere condivisi con MEGA";
 /* Message shown to the user when the share extension is about to be killed by iOS due to a memory issue */
-"The resources are limited when sharing items. Try uploading these files from MEGA app."="The resources are limited when sharing items. Try uploading these files from MEGA app.";
+"Limited system resources are available when sharing items. Try uploading these files from within the MEGA app."="Risorse di sistema limitate disponibili quando condividi elementi. Prova a caricare questi file tramite l'app di MEGA.";
 /* Notification message shown when a transfer failed. Keep colon. */
 "Transfer failed:"="Trasferimento fallito:";
 /* MEGAError */
@@ -1602,3 +1598,51 @@
 "scanOrCopyTheSeed"="Scansiona o copia il seed della tua app di autenticazione. Sii sicuro di copiare questo seed in una posizione sicura nel caso in cui tu perda il tuo telefono.";
 /* A button to help them restore their account if they have lost their 2FA device. */
 "lostYourAuthenticatorDevice"="Hai perso il tuo dispositivo autenticatore?";
+/* Settings section title where you can enable the option to 'Save Images in Library' */
+"Save Images in Library"="Salva immagini nella Galleria";
+/* Settings section title where you can enable the option to 'Save Videos in Library' */
+"Save Videos in Library"="Salva video nella Galleria";
+/* Footer text shown under the settings for download options 'Save Images/Videos in Library' */
+"Images and/or videos downloaded will be stored in the device’s media library instead of the Offline section."="Le immagini e/o i video scaricati saranno archiviati nella Galleria del dispositivo invece della sezione Offline.";
+/* Setting associated with the 'Camera' of the device */
+"Camera"="Fotocamera";
+/* Settings section title where you can enable the option to 'Save in Library' the images or videos taken from your camera in the MEGA app */
+"Save in Library"="Salva nella Galleria";
+/* Footer text shown under the Camera setting to explain the option 'Save in Library' */
+"Save a copy of the images and videos taken from the MEGA app in your device’s media library."="Salva una copia delle immagini e dei video fatti dall'app di MEGA nella Galleria del tuo dispositivo.";
+/* Title shown in a page of the on boarding screens explaining that the user keeps the encryption keys */
+"You hold the keys"="Tu hai le chiavi";
+/* Description shown in a page of the onboarding screens explaining the encryption paradigm */
+"Security is why we exist, your files are safe with us behind a well oiled encryption machine where only you can access your files."="La sicurezza è il motivo per cui esistiamo, i tuoi file sono al sicuro con noi dietro ad una macchina di criptazione ben oliata dove solo tu puoi accedere ad i tuoi file.";
+/* Title shown in a page of the on boarding screens explaining that the chat is encrypted */
+"Encrypted chat"="Chat criptata";
+/* Description shown in a page of the onboarding screens explaining the chat feature */
+"Fully encrypted chat with voice and video calls, group messaging and file sharing integration with your Cloud Drive."="Chat interamente criptate con chiamate audio e video, messaggi di gruppo e condivisione di file integrata al tuo Cloud Drive.";
+/* Title shown in a page of the on boarding screens explaining that the user can add contacts to chat and colaborate */
+"Create your Network"="Crea il tuo Network";
+/* Description shown in a page of the onboarding screens explaining contacts */
+"Add contacts, create a network, colaborate, make voice and video calls without ever leaving MEGA"="Aggiungi contatti, crea un network, collabora, effettua chiamate audio e video senza mai lasciare MEGA";
+/* Title shown in a page of the on boarding screens explaining that the user can backup the photos automatically */
+"Your Photos in the Cloud"="Le tue foto nel Cloud";
+/* Description shown in a page of the onboarding screens explaining the camera uploads feature */
+"Camera Uploads is an essential feature for any mobile device and we have got you covered. Create your account now."="I caricamenti dalla fotocamera sono una feature essenziale per qualsiasi dispositivo mobile e possiamo farlo per te. Crea il tuo account adesso.";
+/* Button which triggers the initial setup */
+"Setup MEGA"="Imposta MEGA";
+/* Detailed explanation of why the user should give some permissions to MEGA */
+"To fully take advantage of your MEGA account we need to ask you some permissions."="Per avere un totale beneficio del tuo account MEGA abbiamo bisogno di chiederti alcuni permessi.";
+/* Title label that explains that the user is going to be asked for the photos permission */
+"Allow Access to Photos"="Permetti l'accesso alle foto";
+/* Detailed explanation of why the user should give permission to access to the photos */
+"To share photos and videos, allow MEGA to access your photos"="Per condividere le foto e i video, permetti a MEGA di accedere alle tue foto";
+/* Title label that explains that the user is going to be asked for the microphone and camera permission */
+"Enable Microphone and Camera"="Attiva microfono e fotocamera";
+/* Detailed explanation of why the user should give permission to access to the camera and the microphone */
+"To make encrypted voice and video calls, allow MEGA access to your Camera and Microphone"="Per fare chiamate audio e video criptate, permetti a MEGA l'accesso al tuo microfono ed alla tua fotocamera";
+/* Title label that explains that the user is going to be asked for the notifications permission */
+"Enable Notifications"="Attiva le notifiche";
+/* Detailed explanation of why the user should give permission to deliver notifications */
+"We would like to send you notifications so you receive new messages on your device instantly."="Vorremmo inviarti notifiche affinché tu possa ricevere messaggi sul tuo dispositivo immediatamente.";
+/* Button which triggers a request for a specific permission, that have been explained to the user beforehand */
+"Enable Access"="Attiva accesso";
+/* Confirmation dialog for the button that logs the user out of all sessions except the current one. */
+"Do you want to close all other sessions? This will log you out on all other active sessions except the current one."="Vuoi chiudere tutte le altre sessioni? Questo ti farà uscire da tutte le altre sessioni attive, fatta eccezione per quella corrente.";

@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
-        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -362,7 +360,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Scan or copy the seed to your Authenticator App. Be sure to backup this seed to a safe place in case you lose your phone." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="l4U-lC-Vjz">
-                                <rect key="frame" x="23.5" y="36" width="329.5" height="50.5"/>
+                                <rect key="frame" x="20" y="36" width="335" height="50.5"/>
                                 <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="14"/>
                                 <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
@@ -510,17 +508,17 @@ opqr stuv wxyz</string>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <switch opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="lIM-cp-2SU">
-                                                    <rect key="frame" x="311" y="9" width="51" height="31"/>
+                                                    <rect key="frame" x="310" y="6.5" width="51" height="31"/>
                                                     <color key="onTintColor" red="0.95294117647058818" green="0.047058823529411764" blue="0.078431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 </switch>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Two-Factor Authentication" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mtr-bw-zaP">
-                                                    <rect key="frame" x="15" y="14" width="288" height="20"/>
+                                                    <rect key="frame" x="16" y="12" width="213" height="20"/>
                                                     <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="17"/>
                                                     <color key="textColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7xh-1u-QJI">
-                                                    <rect key="frame" x="311" y="9" width="49" height="31"/>
+                                                    <rect key="frame" x="310" y="6.5" width="49" height="31"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <connections>
                                                         <action selector="twoFactorAuthenticationTouchUpInside:" destination="ugG-Up-HZS" eventType="touchUpInside" id="kDN-mR-Z7S"/>
@@ -532,12 +530,12 @@ opqr stuv wxyz</string>
                                                 <constraint firstItem="7xh-1u-QJI" firstAttribute="height" secondItem="lIM-cp-2SU" secondAttribute="height" id="5sl-4P-h6M"/>
                                                 <constraint firstItem="Mtr-bw-zaP" firstAttribute="trailing" secondItem="X0d-Zv-xxR" secondAttribute="trailingMargin" id="GZw-gg-e3F"/>
                                                 <constraint firstItem="lIM-cp-2SU" firstAttribute="trailing" secondItem="X0d-Zv-xxR" secondAttribute="trailingMargin" id="Pb5-ae-bV9"/>
-                                                <constraint firstItem="Mtr-bw-zaP" firstAttribute="top" secondItem="X0d-Zv-xxR" secondAttribute="topMargin" constant="3" id="XXG-IX-tnF"/>
-                                                <constraint firstItem="lIM-cp-2SU" firstAttribute="leading" secondItem="Mtr-bw-zaP" secondAttribute="trailing" constant="8" id="Xmz-ct-Aps"/>
-                                                <constraint firstAttribute="trailing" secondItem="lIM-cp-2SU" secondAttribute="trailing" constant="15" id="Ze5-HS-eP5"/>
-                                                <constraint firstItem="Mtr-bw-zaP" firstAttribute="leading" secondItem="X0d-Zv-xxR" secondAttribute="leading" constant="15" id="a99-Xt-4cK"/>
-                                                <constraint firstItem="lIM-cp-2SU" firstAttribute="top" secondItem="X0d-Zv-xxR" secondAttribute="topMargin" constant="-2" id="jbG-Vo-Cf1"/>
+                                                <constraint firstItem="lIM-cp-2SU" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Mtr-bw-zaP" secondAttribute="trailing" constant="8" id="Xmz-ct-Aps"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="lIM-cp-2SU" secondAttribute="trailing" id="Ze5-HS-eP5"/>
+                                                <constraint firstItem="Mtr-bw-zaP" firstAttribute="leading" secondItem="X0d-Zv-xxR" secondAttribute="leadingMargin" id="a99-Xt-4cK"/>
+                                                <constraint firstItem="Mtr-bw-zaP" firstAttribute="centerY" secondItem="X0d-Zv-xxR" secondAttribute="centerY" id="lAO-e6-RhF"/>
                                                 <constraint firstItem="7xh-1u-QJI" firstAttribute="centerX" secondItem="lIM-cp-2SU" secondAttribute="centerX" id="oyq-YK-svB"/>
+                                                <constraint firstItem="lIM-cp-2SU" firstAttribute="centerY" secondItem="X0d-Zv-xxR" secondAttribute="centerY" id="rEa-tK-2RL"/>
                                                 <constraint firstItem="7xh-1u-QJI" firstAttribute="centerY" secondItem="lIM-cp-2SU" secondAttribute="centerY" id="xlJ-1f-ZsW"/>
                                                 <constraint firstItem="7xh-1u-QJI" firstAttribute="width" secondItem="lIM-cp-2SU" secondAttribute="width" id="zrD-9n-Gty"/>
                                             </constraints>
@@ -598,20 +596,20 @@ opqr stuv wxyz</string>
                                     <constraint firstAttribute="height" relation="lessThanOrEqual" priority="750" constant="32" id="ViH-vX-REF"/>
                                 </constraints>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Two-Factor Authentication Enabled" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4g7-EC-3dP">
-                                <rect key="frame" x="52" y="224" width="272" height="19.5"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Two-Factor Authentication Enabled" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4g7-EC-3dP">
+                                <rect key="frame" x="51.5" y="224" width="272" height="19.5"/>
                                 <fontDescription key="fontDescription" name="SFUIText-Medium" family="SF UI Text" pointSize="16"/>
                                 <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Next time you login to your account you will be asked to enter a 6-digit code provided by your authentication app." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="XRi-Uo-bUM">
-                                <rect key="frame" x="26" y="259.5" width="324" height="50.5"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Next time you login to your account you will be asked to enter a 6-digit code provided by your authentication app." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="XRi-Uo-bUM">
+                                <rect key="frame" x="25.5" y="259.5" width="324" height="50.5"/>
                                 <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="14"/>
                                 <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="e4P-aS-ggI">
-                                <rect key="frame" x="26" y="326" width="324" height="67"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="e4P-aS-ggI">
+                                <rect key="frame" x="25.5" y="326" width="324" height="67"/>
                                 <string key="text">If you lose access to your account after enabling 2FA and you have not backed up your Recovery Key, MEGA can’t help you gain access to it again.
 Back up your recovery key.</string>
                                 <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="14"/>
@@ -619,7 +617,7 @@ Back up your recovery key.</string>
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Qmf-eY-doL">
-                                <rect key="frame" x="26.5" y="409" width="324" height="60"/>
+                                <rect key="frame" x="25.5" y="409" width="324" height="60"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="text" translatesAutoresizingMaskIntoConstraints="NO" id="zEZ-8l-5mn">
                                         <rect key="frame" x="10" y="10" width="40" height="40"/>

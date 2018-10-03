@@ -268,10 +268,6 @@
 "Completing..."="完了中...";
 /* Label for the state of a transfer when is being retrying - (String as short as possible). */
 "Retrying..."="再試行中...";
-/* Alert title shown when you try to open a Cloud Drive document and is not posible because there's some active download */
-"documentOpening_alertTitle"="待機中ダウンロードあり";
-/* Alert message shown when you try to open a Cloud Drive document and is not posible because there's some active download */
-"documentOpening_alertMessage"="再度トライするか、キャンセルして下さい。";
 /* Section title of the 'Sort by' */
 "sortTitle"="ソートする";
 /* Button title to 'Save' the selected option */
@@ -717,7 +713,7 @@
 /* "Title header that refers to where do you do the action 'Empty Rubbish Bin' inside 'Settings' -> 'Advanced' section" */
 "onMEGA"="MEGAに";
 /* Button text on the Rubbish Bin page. This button will empty all files and folders currently stored in the rubbish bin. */
-"emptyRubbishBin"="ゴミ箱をクリア";
+"emptyRubbishBin"="ごみ箱をクリア";
 /* Alert title shown when you tap 'Empty Rubbish Bin' */
 "emptyRubbishBinAlertTitle"="ごみ箱の項目はすべて削除されます";
 /* Text next to a switch that allows disabling the HTTP protocol for transfers */
@@ -1306,7 +1302,7 @@
 /* Inform user that there were unsupported assets in the share extension */
 "shareExtensionUnsupportedAssets"="一部のアイテムはMEGAと共有できませんでした";
 /* Message shown to the user when the share extension is about to be killed by iOS due to a memory issue */
-"The resources are limited when sharing items. Try uploading these files from MEGA app."="The resources are limited when sharing items. Try uploading these files from MEGA app.";
+"Limited system resources are available when sharing items. Try uploading these files from within the MEGA app."="項目の共有時に利用できるシステムリソースは限られています。これらのファイルをMEGAアプリ内からアップロードしてみてください。";
 /* Notification message shown when a transfer failed. Keep colon. */
 "Transfer failed:"="転送できず:";
 /* MEGAError */
@@ -1602,3 +1598,51 @@
 "scanOrCopyTheSeed"="シードをオーセンティケータアプリにスキャンまたはコピーします。携帯電話を失くした場合に備えて、このシードを安全な場所にバックアップしてください。";
 /* A button to help them restore their account if they have lost their 2FA device. */
 "lostYourAuthenticatorDevice"="オーセンティケータ端末を紛失しましたか？　";
+/* Settings section title where you can enable the option to 'Save Images in Library' */
+"Save Images in Library"="ライブラリに画像を保存";
+/* Settings section title where you can enable the option to 'Save Videos in Library' */
+"Save Videos in Library"="ライブラリに動画を保存";
+/* Footer text shown under the settings for download options 'Save Images/Videos in Library' */
+"Images and/or videos downloaded will be stored in the device’s media library instead of the Offline section."="ダウンロードした画像や動画は、オフラインセクションではなく、端末のメディアライブラリに保存されます。";
+/* Setting associated with the 'Camera' of the device */
+"Camera"="カメラ";
+/* Settings section title where you can enable the option to 'Save in Library' the images or videos taken from your camera in the MEGA app */
+"Save in Library"="ライブラリに保存";
+/* Footer text shown under the Camera setting to explain the option 'Save in Library' */
+"Save a copy of the images and videos taken from the MEGA app in your device’s media library."="MEGAアプリから取得した画像と動画のコピーをあなたの端末のメディアライブラリに保存します。";
+/* Title shown in a page of the on boarding screens explaining that the user keeps the encryption keys */
+"You hold the keys"="あなたがキーを持っています";
+/* Description shown in a page of the onboarding screens explaining the encryption paradigm */
+"Security is why we exist, your files are safe with us behind a well oiled encryption machine where only you can access your files."="セキュリティこそが私たちの存在理由です。あなたのファイルは、非常に効果的な暗号化マシンの裏側にあり、安全です。そこで、あなたのファイルにアクセスできるのは、あなただけです。";
+/* Title shown in a page of the on boarding screens explaining that the chat is encrypted */
+"Encrypted chat"="暗号化されたチャット";
+/* Description shown in a page of the onboarding screens explaining the chat feature */
+"Fully encrypted chat with voice and video calls, group messaging and file sharing integration with your Cloud Drive."="音声＆ビデオ通話、グループメッセージング、クラウドドライブとのファイル共有統合による完全に暗号化されたチャット";
+/* Title shown in a page of the on boarding screens explaining that the user can add contacts to chat and colaborate */
+"Create your Network"="ネットワークの作成";
+/* Description shown in a page of the onboarding screens explaining contacts */
+"Add contacts, create a network, colaborate, make voice and video calls without ever leaving MEGA"="連絡先の追加、ネットワークの作成、コラボレーション、MEGAを離れずに音声通話とビデオ通話を行う";
+/* Title shown in a page of the on boarding screens explaining that the user can backup the photos automatically */
+"Your Photos in the Cloud"="クラウド内のあなたの写真";
+/* Description shown in a page of the onboarding screens explaining the camera uploads feature */
+"Camera Uploads is an essential feature for any mobile device and we have got you covered. Create your account now."="カメラアップロードは、あらゆるモバイル端末にとって不可欠な機能で、あなたにもご利用いただけます。今すぐアカウントを作成してください。";
+/* Button which triggers the initial setup */
+"Setup MEGA"="MEGAをセットアップ";
+/* Detailed explanation of why the user should give some permissions to MEGA */
+"To fully take advantage of your MEGA account we need to ask you some permissions."="MEGAアカウントを十分にご活用いただくために、あなたに一部の権限をお尋ねする必要がございます。";
+/* Title label that explains that the user is going to be asked for the photos permission */
+"Allow Access to Photos"="写真へのアクセスを許可する";
+/* Detailed explanation of why the user should give permission to access to the photos */
+"To share photos and videos, allow MEGA to access your photos"="写真や動画を共有するには、MEGAがあなたの写真へアクセスするのを許可してください";
+/* Title label that explains that the user is going to be asked for the microphone and camera permission */
+"Enable Microphone and Camera"="マイクとカメラを有効にする";
+/* Detailed explanation of why the user should give permission to access to the camera and the microphone */
+"To make encrypted voice and video calls, allow MEGA access to your Camera and Microphone"="暗号化された音声およびビデオ通話を行うには、MEGAがあなたのカメラとマイクへアクセスするのを許可してください";
+/* Title label that explains that the user is going to be asked for the notifications permission */
+"Enable Notifications"="通知設定";
+/* Detailed explanation of why the user should give permission to deliver notifications */
+"We would like to send you notifications so you receive new messages on your device instantly."="あなたに通知を送信し、新しいメッセージを瞬時に端末で受信いただけるようにしたいと思います。";
+/* Button which triggers a request for a specific permission, that have been explained to the user beforehand */
+"Enable Access"="アクセスを有効にする";
+/* Confirmation dialog for the button that logs the user out of all sessions except the current one. */
+"Do you want to close all other sessions? This will log you out on all other active sessions except the current one."="他のセッションをすべて終了しますか？　これにより、現在のセッション以外のすべてのアクティブなセッションでログアウトされます。";
