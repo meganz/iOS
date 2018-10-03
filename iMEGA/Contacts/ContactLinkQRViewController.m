@@ -172,7 +172,7 @@
             } else {
                 sender.selectedSegmentIndex = 0;
                 [self valueChangedAtSegmentedControl:sender];
-                [self presentViewController:[DevicePermissionsHelper videoPermisionAlertController] animated:YES completion:nil];
+                [DevicePermissionsHelper warnAboutAudioAndVideoPermissions];
             }
             
             break;

@@ -280,6 +280,8 @@
 		7720C5D3206AB2EB00F995D1 /* SF-UI-Text-Semibold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5B6429DB2020A5E6000E0DCB /* SF-UI-Text-Semibold.otf */; };
 		77264F242147D60600DC6BCB /* MEGACopyRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B2E91911F1F98F4003C6920 /* MEGACopyRequestDelegate.m */; };
 		773DF39C20EF6902004C3418 /* MEGACopyRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B2E91911F1F98F4003C6920 /* MEGACopyRequestDelegate.m */; };
+		774089682164AAF000B93D3E /* CustomModalAlertViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A819B33E1EAFA7E2004592F9 /* CustomModalAlertViewController.m */; };
+		774089692164AB1300B93D3E /* CustomModalAlertViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A819B33E1EAFA7E2004592F9 /* CustomModalAlertViewController.m */; };
 		7747B2D8208625B50011814E /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 7747B2D6208623660011814E /* Reachability.m */; };
 		7747B2D9208625B50011814E /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 7747B2D6208623660011814E /* Reachability.m */; };
 		7747B2DA208625B60011814E /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 7747B2D6208623660011814E /* Reachability.m */; };
@@ -311,6 +313,9 @@
 		77B3227C20A343A40037FA89 /* CopyrightWarningViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 946B2D181F46E5B9009ED32C /* CopyrightWarningViewController.m */; };
 		77B3227F20A436D60037FA89 /* NSURL+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 77B3227E20A436D60037FA89 /* NSURL+MNZCategory.m */; };
 		77B3AE0F215D0588008E889A /* InitialLaunchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 77B3AE0E215D0588008E889A /* InitialLaunchViewController.m */; };
+		77B3AE202163BD1B008E889A /* DevicePermissionsHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 830EF9A320062F3800FAA947 /* DevicePermissionsHelper.m */; };
+		77B3AE212163BD2B008E889A /* DevicePermissionsHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 830EF9A320062F3800FAA947 /* DevicePermissionsHelper.m */; };
+		77B3AE232163BDB8008E889A /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 77B3AE222163BDB8008E889A /* UserNotifications.framework */; };
 		77C544FF2028542D00A9ACD6 /* MEGAPhotoBrowserAnimator.m in Sources */ = {isa = PBXBuildFile; fileRef = 77C544FE2028542D00A9ACD6 /* MEGAPhotoBrowserAnimator.m */; };
 		77CAAAE0202C58E4004B16ED /* MEGAPhotoBrowserPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 77CAAADF202C58E4004B16ED /* MEGAPhotoBrowserPickerViewController.m */; };
 		77CAAAE3202C72F8004B16ED /* MEGAPhotoBrowserPickerCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 77CAAAE2202C72F8004B16ED /* MEGAPhotoBrowserPickerCollectionViewCell.m */; };
@@ -1231,6 +1236,7 @@
 		77B3227E20A436D60037FA89 /* NSURL+MNZCategory.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSURL+MNZCategory.m"; sourceTree = "<group>"; };
 		77B3AE0D215D0588008E889A /* InitialLaunchViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = InitialLaunchViewController.h; sourceTree = "<group>"; };
 		77B3AE0E215D0588008E889A /* InitialLaunchViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = InitialLaunchViewController.m; sourceTree = "<group>"; };
+		77B3AE222163BDB8008E889A /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
 		77C544FD2028542D00A9ACD6 /* MEGAPhotoBrowserAnimator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MEGAPhotoBrowserAnimator.h; sourceTree = "<group>"; };
 		77C544FE2028542D00A9ACD6 /* MEGAPhotoBrowserAnimator.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MEGAPhotoBrowserAnimator.m; sourceTree = "<group>"; };
 		77CAAADE202C58E4004B16ED /* MEGAPhotoBrowserPickerViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MEGAPhotoBrowserPickerViewController.h; sourceTree = "<group>"; };
@@ -1641,6 +1647,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				77B3AE232163BDB8008E889A /* UserNotifications.framework in Frameworks */,
 				7714901520F7592100769BD4 /* Contacts.framework in Frameworks */,
 				5B5974E4202859400011E819 /* SafariServices.framework in Frameworks */,
 				A82A38D6200D332400883533 /* libmediainfo.a in Frameworks */,
@@ -2256,6 +2263,7 @@
 		418851EE1A66826800FDBA15 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				77B3AE222163BDB8008E889A /* UserNotifications.framework */,
 				7714901420F7592000769BD4 /* Contacts.framework */,
 				777E9228203EB0E100266229 /* CoreImage.framework */,
 				5B5974E2202858050011E819 /* SafariServices.framework */,
@@ -4094,6 +4102,7 @@
 				945605471EDD67520094EF0F /* MEGASdkManager.m in Sources */,
 				9432292C1EDD8542007DB542 /* CameraUploadsTableViewController.m in Sources */,
 				945605521EDD7E020094EF0F /* GetLinkActivity.m in Sources */,
+				77B3AE212163BD2B008E889A /* DevicePermissionsHelper.m in Sources */,
 				945605441EDD66CE0094EF0F /* UIColor+MNZCategory.m in Sources */,
 				5BFA34711FAC5BFB005BFC4E /* MEGARemoveRequestDelegate.m in Sources */,
 				94624CFF1F50518900D52504 /* MEGABaseRequestDelegate.m in Sources */,
@@ -4106,6 +4115,7 @@
 				943229371EDD88B1007DB542 /* SaveToCameraRollActivity.m in Sources */,
 				832F19EF2091BD980067679E /* MOMediaDestination+CoreDataClass.m in Sources */,
 				834AD6092024697600D2527F /* MGSwipeTableCell.m in Sources */,
+				774089692164AB1300B93D3E /* CustomModalAlertViewController.m in Sources */,
 				77B3227B20A343A30037FA89 /* CopyrightWarningViewController.m in Sources */,
 				945605401EDD65400094EF0F /* BrowserViewController.m in Sources */,
 				9456053E1EDD54F10094EF0F /* SAMKeychainQuery.m in Sources */,
@@ -4159,6 +4169,7 @@
 				77892E9D20E5012C0020A533 /* ChatRoomCell.m in Sources */,
 				94892C911EFBEA2300AEAC25 /* SAMKeychainQuery.m in Sources */,
 				A824A91C2039F50B00D777D2 /* SDAVAssetExportSession.m in Sources */,
+				774089682164AAF000B93D3E /* CustomModalAlertViewController.m in Sources */,
 				7747B2DB208625B70011814E /* Reachability.m in Sources */,
 				8361359221074C5D002FA3CC /* MOUploadTransfer+CoreDataClass.m in Sources */,
 				A81F2C6A1F334FB2008600A5 /* MEGAProcessAsset.m in Sources */,
@@ -4193,6 +4204,7 @@
 				94892C981EFBF03800AEAC25 /* SVProgressHUD.m in Sources */,
 				5B2E78CD1FA0C3310096C9BE /* MEGACreateFolderRequestDelegate.m in Sources */,
 				941135581F01005D00D33428 /* CameraUploads.m in Sources */,
+				77B3AE202163BD1B008E889A /* DevicePermissionsHelper.m in Sources */,
 				941135501F00FFAB00D33428 /* BrowserViewController.m in Sources */,
 				94892CA11EFBF20800AEAC25 /* UIFont+MNZCategory.m in Sources */,
 				8361359521074C5D002FA3CC /* MOUploadTransfer+CoreDataProperties.m in Sources */,

@@ -4,6 +4,7 @@
 
 #import "SVProgressHUD.h"
 
+#import "DevicePermissionsHelper.h"
 #import "MEGAReachabilityManager.h"
 #import "UIDevice+MNZCategory.h"
 
@@ -76,43 +77,19 @@
 }
 
 - (IBAction)enableTouchUpInside:(UIButton *)sender {
-    [PHPhotoLibrary requestAuthorization:^(PHAuthorizationStatus status) {
-        switch (status) {
-            case PHAuthorizationStatusNotDetermined:
-                break;
-                
-            case PHAuthorizationStatusAuthorized: {
-                MEGALogInfo(@"Enable Camera Uploads");
-                [[CameraUploads syncManager] setIsCameraUploadsEnabled:YES];
-                [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:[CameraUploads syncManager].isCameraUploadsEnabled] forKey:kIsCameraUploadsEnabled];
-                
-                [self dismissViewControllerAnimated:YES completion:^{
-                    [SVProgressHUD showImage:[UIImage imageNamed:@"hudCameraUploads"] status:AMLocalizedString(@"cameraUploadsEnabled", nil)];
-                }];
-                break;
-            }
-                
-            case PHAuthorizationStatusRestricted:
-                break;
-                
-            case PHAuthorizationStatusDenied:{
-                [self dismissViewControllerAnimated:YES completion:nil];
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    UIAlertController *permissionsAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"attention", @"Alert title to attract attention") message:AMLocalizedString(@"photoLibraryPermissions", @"Alert message to explain that the MEGA app needs permission to access your device photos") preferredStyle:UIAlertControllerStyleAlert];
-                    
-                    [permissionsAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
-                    
-                    [permissionsAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-                        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
-                    }]];
-                    
-                    [self presentViewController:permissionsAlertController animated:YES completion:nil];
-
-                });
-                break;
-            }
-            default:
-                break;
+    [DevicePermissionsHelper photosPermissionWithCompletionHandler:^(BOOL granted) {
+        if (granted) {
+            MEGALogInfo(@"Enable Camera Uploads");
+            [[CameraUploads syncManager] setIsCameraUploadsEnabled:YES];
+            [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:[CameraUploads syncManager].isCameraUploadsEnabled] forKey:kIsCameraUploadsEnabled];
+            
+            [self dismissViewControllerAnimated:YES completion:^{
+                [SVProgressHUD showImage:[UIImage imageNamed:@"hudCameraUploads"] status:AMLocalizedString(@"cameraUploadsEnabled", nil)];
+            }];
+        } else {
+            [self dismissViewControllerAnimated:YES completion:^{
+                [DevicePermissionsHelper warnAboutPhotosPermission];
+            }];
         }
     }];
 }

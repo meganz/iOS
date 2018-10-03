@@ -1,3 +1,4 @@
+
 #import <Foundation/Foundation.h>
 
 @interface DevicePermissionsHelper : NSObject
@@ -7,8 +8,9 @@
 + (void)photosPermissionWithCompletionHandler:(void (^)(BOOL granted))handler;
 + (void)notificationsPermissionWithCompletionHandler:(void (^)(BOOL granted))handler;
 
-+ (UIAlertController*)audioPermisionAlertController;
-+ (UIAlertController*)videoPermisionAlertController;
++ (void)warnAboutPhotosPermission;
++ (void)warnAboutAudioAndVideoPermissions;
++ (void)warnAboutNotificationsPermission;
 
 + (BOOL)shouldAskForAudioPermissions;
 + (BOOL)shouldAskForVideoPermissions;

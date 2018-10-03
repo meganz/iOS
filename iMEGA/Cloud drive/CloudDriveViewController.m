@@ -1,3 +1,4 @@
+
 #import "CloudDriveViewController.h"
 
 #import <AVFoundation/AVCaptureDevice.h>
@@ -13,6 +14,7 @@
 #import "UIApplication+MNZCategory.h"
 #import "UIImageView+MNZCategory.h"
 
+#import "DevicePermissionsHelper.h"
 #import "Helper.h"
 #import "MEGACreateFolderRequestDelegate.h"
 #import "MEGAMoveRequestDelegate.h"
@@ -950,11 +952,13 @@
         MEGAImagePickerController *imagePickerController = [[MEGAImagePickerController alloc] initToUploadWithParentNode:self.parentNode sourceType:sourceType];
         [self presentViewController:imagePickerController animated:YES completion:nil];
     } else {
-        [PHPhotoLibrary requestAuthorization:^(PHAuthorizationStatus status) {
-            dispatch_async(dispatch_get_main_queue(), ^{
+        [DevicePermissionsHelper photosPermissionWithCompletionHandler:^(BOOL granted) {
+            if (granted) {
                 MEGAAssetsPickerController *pickerViewController = [[MEGAAssetsPickerController alloc] initToUploadToCloudDriveWithParentNode:self.parentNode];
                 [self presentViewController:pickerViewController animated:YES completion:nil];
-            });
+            } else {
+                [DevicePermissionsHelper warnAboutPhotosPermission];
+            }
         }];
     }
 }
@@ -1123,50 +1127,21 @@
     [uploadAlertController addAction:fromPhotosAlertAction];
     
     UIAlertAction *captureAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"capturePhotoVideo", @"Menu option from the `Add` section that allows the user to capture a video or a photo and upload it directly to MEGA.") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-        if ([AVCaptureDevice respondsToSelector:@selector(requestAccessForMediaType:completionHandler:)]) {
-            [AVCaptureDevice requestAccessForMediaType:AVMediaTypeVideo completionHandler:^(BOOL permissionGranted) {
-                if (permissionGranted) {
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        [PHPhotoLibrary requestAuthorization:^(PHAuthorizationStatus status) {
-                            switch (status) {
-                                case PHAuthorizationStatusAuthorized: {
-                                    dispatch_async(dispatch_get_main_queue(), ^{
-                                        [self showImagePickerForSourceType:UIImagePickerControllerSourceTypeCamera];
-                                    });
-                                    break;
-                                }
-                                
-                                case PHAuthorizationStatusNotDetermined:
-                                case PHAuthorizationStatusRestricted:
-                                case PHAuthorizationStatusDenied:{
-                                    dispatch_async(dispatch_get_main_queue(), ^{
-                                        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"isSaveMediaCapturedToGalleryEnabled"];
-                                        [[NSUserDefaults standardUserDefaults] synchronize];
-                                        [self showImagePickerForSourceType:UIImagePickerControllerSourceTypeCamera];
-                                    });
-                                    break;
-                                }
-                                
-                                default:
-                                    break;
-                            }
-                        }];
-                    });
-                } else {
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        UIAlertController *permissionsAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"attention", @"Alert title to attract attention") message:AMLocalizedString(@"cameraPermissions", @"Alert message to remember that MEGA app needs permission to use the Camera to take a photo or video and it doesn't have it") preferredStyle:UIAlertControllerStyleAlert];
-                        
-                        [permissionsAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
-                        
-                        [permissionsAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-                            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
-                        }]];
-                        
-                        [self presentViewController:permissionsAlertController animated:YES completion:nil];
-                    });
-                }
-            }];
-        }
+        [DevicePermissionsHelper videoPermissionWithCompletionHandler:^(BOOL granted) {
+            if (granted) {
+                [DevicePermissionsHelper photosPermissionWithCompletionHandler:^(BOOL granted) {
+                    if (granted) {
+                        [self showImagePickerForSourceType:UIImagePickerControllerSourceTypeCamera];
+                    } else {
+                        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"isSaveMediaCapturedToGalleryEnabled"];
+                        [[NSUserDefaults standardUserDefaults] synchronize];
+                        [self showImagePickerForSourceType:UIImagePickerControllerSourceTypeCamera];
+                    }
+                }];
+            } else {
+                [DevicePermissionsHelper warnAboutAudioAndVideoPermissions];
+            }
+        }];
     }];
     [captureAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
     [uploadAlertController addAction:captureAlertAction];
