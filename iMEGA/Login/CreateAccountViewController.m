@@ -13,7 +13,7 @@
 #import "PasswordStrengthIndicatorView.h"
 #import "PasswordView.h"
 
-@interface CreateAccountViewController () <UINavigationControllerDelegate, UITextFieldDelegate, MEGARequestDelegate>
+@interface CreateAccountViewController () <UINavigationControllerDelegate, UITextFieldDelegate, MEGARequestDelegate, UIGestureRecognizerDelegate>
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *cancelBarButtonItem;
 
@@ -40,6 +40,8 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *passwordViewHeightConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *retypePasswordViewHeightConstraint;
 
+@property (strong, nonatomic) UITapGestureRecognizer *tapGesture;
+
 @end
 
 @implementation CreateAccountViewController
@@ -51,9 +53,10 @@
     
     self.passwordStrengthIndicatorViewHeightLayoutConstraint.constant = 0;
     
-    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideKeyboard)];
-    tapGesture.cancelsTouchesInView = NO;
-    [self.scrollView addGestureRecognizer:tapGesture];
+    self.tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideKeyboard)];
+    self.tapGesture.cancelsTouchesInView = NO;
+    self.tapGesture.delegate = self;
+    [self.scrollView addGestureRecognizer:self.tapGesture];
     
     self.cancelBarButtonItem.title = AMLocalizedString(@"cancel", @"Button title to cancel something");
     
@@ -354,11 +357,13 @@
     self.activePasswordView = nil;
     switch (textField.tag) {
         case 3:
-            self.passwordView.rightImageView.hidden = YES;
+            self.passwordView.passwordTextField.secureTextEntry = YES;
+            [self.passwordView configureSecureTextEntry];
             break;
             
         case 4:
-            self.retypePasswordView.rightImageView.hidden = YES;
+            self.retypePasswordView.passwordTextField.secureTextEntry = YES;
+            [self.retypePasswordView configureSecureTextEntry];
             break;
             
         default:
@@ -450,6 +455,13 @@
             break;
     }
     
+    return YES;
+}
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
+    if ((touch.view == self.passwordView.rightImageView || touch.view == self.retypePasswordView.rightImageView) && (gestureRecognizer == self.tapGesture)) {
+        return NO;
+    }
     return YES;
 }
 

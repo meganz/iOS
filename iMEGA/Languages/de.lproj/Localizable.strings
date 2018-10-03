@@ -1611,7 +1611,7 @@
 /* Title shown in a page of the on boarding screens explaining that the user can backup the photos automatically */
 "Your Photos in the Cloud"="Your Photos in the Cloud";
 /* Description shown in a page of the onboarding screens explaining the camera uploads feature */
-"Camera Uploads is an essential feature for any mobile device and we got you covered. Create your account now."="Camera Uploads is an essential feature for any mobile device and we got you covered. Create your account now.";
+"Camera Uploads is an essential feature for any mobile device and we have got you covered. Create your account now."="Camera Uploads is an essential feature for any mobile device and we have got you covered. Create your account now.";
 /* Button which triggers the initial setup */
 "Setup MEGA"="Setup MEGA";
 /* Detailed explanation of why the user should give some permissions to MEGA */
@@ -1619,14 +1619,16 @@
 /* Title label that explains that the user is going to be asked for the photos permission */
 "Allow Access to Photos"="Allow Access to Photos";
 /* Detailed explanation of why the user should give permission to access to the photos */
-"To share photos and videos allow MEGA to access your photos"="To share photos and videos allow MEGA to access your photos";
+"To share photos and videos, allow MEGA to access your photos"="To share photos and videos, allow MEGA to access your photos";
 /* Title label that explains that the user is going to be asked for the microphone and camera permission */
 "Enable Microphone and Camera"="Enable Microphone and Camera";
 /* Detailed explanation of why the user should give permission to access to the camera and the microphone */
-"To make encrypted voice and video calls allow MEGA access to your Camera and Microphone"="To make encrypted voice and video calls allow MEGA access to your Camera and Microphone";
+"To make encrypted voice and video calls, allow MEGA access to your Camera and Microphone"="To make encrypted voice and video calls, allow MEGA access to your Camera and Microphone";
 /* Title label that explains that the user is going to be asked for the notifications permission */
 "Enable Notifications"="Benachrichtigungen";
 /* Detailed explanation of why the user should give permission to deliver notifications */
 "We would like to send you notifications so you receive new messages on your device instantly."="We would like to send you notifications so you receive new messages on your device instantly.";
 /* Button which triggers a request for a specific permission, that have been explained to the user beforehand */
 "Enable Access"="Enable Access";
+/* Confirmation dialog for the button that logs the user out of all sessions except the current one. */
+"Do you want to close all other sessions? This will log you out on all other active sessions except the current one."="Alle anderen Sitzungen schließen? Sie werden überall außer auf diesem Gerät ausgeloggt.";
