@@ -277,14 +277,14 @@
                             if (granted) {
                                 [self presentRingingCall:api call:[api chatCallForCallId:call.callId]];
                             } else {
-                                [self presentViewController:[DevicePermissionsHelper videoPermisionAlertController] animated:YES completion:nil];
+                                [DevicePermissionsHelper warnAboutAudioAndVideoPermissions];
                             }
                         }];
                     } else {
                         [self presentRingingCall:api call:[api chatCallForCallId:call.callId]];
                     }
                 } else {
-                    [self presentViewController:[DevicePermissionsHelper audioPermisionAlertController] animated:YES completion:nil];
+                    [DevicePermissionsHelper warnAboutAudioAndVideoPermissions];
                 }
             }];
             break;

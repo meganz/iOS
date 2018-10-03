@@ -465,14 +465,14 @@ const NSUInteger kMaxMessagesToLoad = 256;
                     if (granted) {
                         [self openCallViewWithVideo:sender.tag];
                     } else {
-                        [self presentViewController:[DevicePermissionsHelper videoPermisionAlertController] animated:YES completion:nil];
+                        [DevicePermissionsHelper warnAboutAudioAndVideoPermissions];
                     }
                 }];
             } else {
                 [self openCallViewWithVideo:sender.tag];
             }
         } else {
-            [self presentViewController:[DevicePermissionsHelper audioPermisionAlertController] animated:YES completion:nil];
+            [DevicePermissionsHelper warnAboutAudioAndVideoPermissions];
         }
     }];
 }
@@ -1326,49 +1326,21 @@ const NSUInteger kMaxMessagesToLoad = 256;
     switch (sender.tag) {
         case MEGAChatAccessoryButtonCamera: {
             self.inputToolbar.hidden = YES;
-            if ([AVCaptureDevice respondsToSelector:@selector(requestAccessForMediaType:completionHandler:)]) {
-                [AVCaptureDevice requestAccessForMediaType:AVMediaTypeVideo completionHandler:^(BOOL permissionGranted) {
-                    if (permissionGranted) {
-                        dispatch_async(dispatch_get_main_queue(), ^{
-                            [PHPhotoLibrary requestAuthorization:^(PHAuthorizationStatus status) {
-                                switch (status) {
-                                    case PHAuthorizationStatusAuthorized: {
-                                        dispatch_async(dispatch_get_main_queue(), ^{
-                                            [self showImagePickerForSourceType:UIImagePickerControllerSourceTypeCamera];
-                                        });
-                                        break;
-                                    }
-                                    
-                                    case PHAuthorizationStatusNotDetermined:
-                                    case PHAuthorizationStatusRestricted:
-                                    case PHAuthorizationStatusDenied:{
-                                        dispatch_async(dispatch_get_main_queue(), ^{
-                                            [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"isSaveMediaCapturedToGalleryEnabled"];
-                                            [[NSUserDefaults standardUserDefaults] synchronize];
-                                            [self showImagePickerForSourceType:UIImagePickerControllerSourceTypeCamera];
-                                        });
-                                        break;
-                                    }
-                                    
-                                    default:
-                                        break;
-                                }
-                            }];
-                        });
-                    } else {
-                        dispatch_async(dispatch_get_main_queue(), ^{
-                            UIAlertController *permissionsAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"attention", @"Alert title to attract attention") message:AMLocalizedString(@"cameraPermissions", @"Alert message to remember that MEGA app needs permission to use the Camera to take a photo or video and it doesn't have it") preferredStyle:UIAlertControllerStyleAlert];
-                            [permissionsAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
-                            
-                            [permissionsAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-                                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
-                            }]];
-                            
-                            [self presentViewController:permissionsAlertController animated:YES completion:nil];
-                        });
-                    }
-                }];
-            }
+            [DevicePermissionsHelper videoPermissionWithCompletionHandler:^(BOOL granted) {
+                if (granted) {
+                    [DevicePermissionsHelper photosPermissionWithCompletionHandler:^(BOOL granted) {
+                        if (granted) {
+                            [self showImagePickerForSourceType:UIImagePickerControllerSourceTypeCamera];
+                        } else {
+                            [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"isSaveMediaCapturedToGalleryEnabled"];
+                            [[NSUserDefaults standardUserDefaults] synchronize];
+                            [self showImagePickerForSourceType:UIImagePickerControllerSourceTypeCamera];
+                        }
+                    }];
+                } else {
+                    [DevicePermissionsHelper warnAboutPhotosPermission];
+                }
+            }];
             
             break;
         }

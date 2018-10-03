@@ -25,8 +25,18 @@
     self.circularShapeLayer.strokeColor = UIColor.mnz_redMain.CGColor;
     self.circularShapeLayer.fillColor = UIColor.clearColor.CGColor;
     self.circularShapeLayer.lineWidth = 2.0f;
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
     
     [[MEGASdkManager sharedMEGASdk] addMEGARequestDelegate:self];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    
+    [[MEGASdkManager sharedMEGASdk] removeMEGARequestDelegate:self];
 }
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations {

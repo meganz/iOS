@@ -359,8 +359,8 @@
     }
     
     if ([CameraUploads syncManager].isCameraUploadsEnabled) {
-        [PHPhotoLibrary requestAuthorization:^(PHAuthorizationStatus status) {
-            if (status == PHAuthorizationStatusDenied) {
+        [DevicePermissionsHelper photosPermissionWithCompletionHandler:^(BOOL granted) {
+            if (!granted) {
                 MEGALogInfo(@"Disable Camera Uploads");
                 [[CameraUploads syncManager] setIsCameraUploadsEnabled:NO];
             }
@@ -582,14 +582,14 @@
                                             if (granted) {
                                                 [self performCall];
                                             } else {
-                                                [UIApplication.mnz_visibleViewController presentViewController:[DevicePermissionsHelper videoPermisionAlertController] animated:YES completion:nil];
+                                                [DevicePermissionsHelper warnAboutAudioAndVideoPermissions];
                                             }
                                         }];
                                     } else {
                                         [self performCall];
                                     }
                                 } else {
-                                    [UIApplication.mnz_visibleViewController presentViewController:[DevicePermissionsHelper audioPermisionAlertController] animated:YES completion:nil];
+                                    [DevicePermissionsHelper warnAboutAudioAndVideoPermissions];
                                 }
                             }];
                         }
@@ -1334,35 +1334,14 @@
 }
 
 - (void)registerForNotifications {
-    if (@available(iOS 10.0, *)) {
-        UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
-        center.delegate = self;
-        [center requestAuthorizationWithOptions:(UNAuthorizationOptionBadge | UNAuthorizationOptionSound | UNAuthorizationOptionAlert)
-                              completionHandler:^(BOOL granted, NSError * _Nullable error) {
-                                  if (!error) {
-                                      MEGALogInfo(@"Request notifications authorization succeeded");
-                                  }
-                                  if (granted) {
-                                      [self notificationsSettings];
-                                  }
-                              }];
-    } else {
-        [[UIApplication sharedApplication] registerUserNotificationSettings:[UIUserNotificationSettings
-                                                                             settingsForTypes:UIUserNotificationTypeAlert | UIUserNotificationTypeBadge |
-                                                                             UIUserNotificationTypeSound categories:nil]];
-    }
-}
-
-- (void)notificationsSettings {
-    UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
-    [center getNotificationSettingsWithCompletionHandler:^(UNNotificationSettings *settings) {
-        MEGALogInfo(@"Notifications settings %@", settings);
-        if (settings.authorizationStatus == UNAuthorizationStatusAuthorized) {
-            dispatch_async(dispatch_get_main_queue(), ^(void) {
+    UNUserNotificationCenter.currentNotificationCenter.delegate = self;
+    if (![DevicePermissionsHelper shouldAskForNotificationsPermissions]) {
+        [DevicePermissionsHelper notificationsPermissionWithCompletionHandler:^(BOOL granted) {
+            if (granted) {
                 [[UIApplication sharedApplication] registerForRemoteNotifications];
-            });
-        }
-    }];
+            }
+        }];
+    }
 }
 
 - (void)presentNode {
