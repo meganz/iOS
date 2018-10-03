@@ -178,7 +178,7 @@
     if (self.pendingAssets > self.unsupportedAssets) {
         [[NSProcessInfo processInfo] performExpiringActivityWithReason:@"Share Extension activity in progress" usingBlock:^(BOOL expired) {
             if (expired) {
-                [[MEGASdkManager sharedMEGAChatSdk] saveCurrentState];
+                [self saveStateAndLogout];
                 dispatch_semaphore_signal(self.semaphore);
                 [self.extensionContext cancelRequestWithError:[NSError errorWithDomain:@"Share Extension suspended" code:-1 userInfo:nil]];
             } else {
@@ -225,7 +225,7 @@
 - (void)didReceiveMemoryWarning {
     MEGALogError(@"Share extension received memory warning");
     if (!self.presentedViewController) {
-        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"shareExtensionUnsupportedAssets", nil) message:AMLocalizedString(@"The resources are limited when sharing items. Try uploading these files from MEGA app.", @"Message shown to the user when the share extension is about to be killed by iOS due to a memory issue") preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"shareExtensionUnsupportedAssets", nil) message:AMLocalizedString(@"Limited system resources are available when sharing items. Try uploading these files from within the MEGA app.", @"Message shown to the user when the share extension is about to be killed by iOS due to a memory issue") preferredStyle:UIAlertControllerStyleAlert];
         [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
             [self dismissWithCompletionHandler:^{
                 [self.extensionContext cancelRequestWithError:[NSError errorWithDomain:@"Memory warning" code:-1 userInfo:nil]];
@@ -303,10 +303,18 @@
                 MEGALogError(@"Init Karere with session failed");
                 [[MEGASdkManager sharedMEGAChatSdk] logout];
             }
+        } else {
+            [[MEGAReachabilityManager sharedManager] reconnect];
         }
     } else {
         [[MEGALogger sharedLogger] enableSDKlogs];
     }
+}
+
+- (void)saveStateAndLogout {
+    [[MEGASdkManager sharedMEGAChatSdk] saveCurrentState];
+    [[MEGASdkManager sharedMEGASdk] localLogout];
+    [[MEGASdkManager sharedMEGAChatSdk] localLogout];
 }
 
 - (void)requireLogin {
@@ -448,6 +456,7 @@
                          self.view.transform = CGAffineTransformMakeTranslation(0, self.view.frame.size.height);
                      }
                      completion:^(BOOL finished) {
+                         [self saveStateAndLogout];
                          if (completion) {
                              completion();
                          }

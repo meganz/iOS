@@ -56,7 +56,7 @@
                 MEGAShareList *shareList = [[MEGASdkManager sharedMEGASdk] outSharesForNode:node];
                 for (NSUInteger i = 0; i < shareList.size.unsignedIntegerValue; i++) {
                     MEGAShare *share = [shareList shareAtIndex:i];
-                    [[MEGASdkManager sharedMEGASdk] shareNode:node withEmail:share.user level:MEGAShareTypeAccessUnkown delegate:shareRequestDelegate];
+                    [[MEGASdkManager sharedMEGASdk] shareNode:node withEmail:share.user level:MEGAShareTypeAccessUnknown delegate:shareRequestDelegate];
                 }
             }
         }
