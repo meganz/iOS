@@ -720,20 +720,6 @@
 "dontUseHttp"="Nie używaj HTTP";
 /* Footer text that explains when disabling the HTTP protocol for transfers may be useful */
 "transfersSectionFooter"="Zaznacz tą opcję tylko w przypadku problemów z transferem plików. W normalnej sytuacji HTTP jest wystarczający ponieważ wszystkie pliki są szyfrowane.";
-/* Title header that refers to where you enable the options 'Save images in gallery' and 'Save videos in gallery' inside 'Settings' -> 'Advanced' section" */
-"imageAndVideoDownloadsHeader"="Pobieranie zdjęć i filmów";
-/* Title header that refers to where do you enable the options 'Save media in gallery -> 'Advanced' section. String as short as possible */
-"photosTakenAndVideoRecordedFromWithinTheAppHeader"="Media przechwycone z poziomu aplikacji";
-/* Section title where you can enable the option 'Save images in gallery' */
-"saveImagesInGallery"="Zapisz zdjęcia w galerii";
-/* Section title where you can enable the option 'Save videos in gallery' */
-"saveVideosInGallery"="Zapisz filmy w galerii";
-/* Section title where you can enable the option 'Save media in gallery' */
-"saveMediaInGallery"="Zapisz multimedia w galerii";
-/* Footer text that explain what happen if the options 'Save videos in gallery’ and 'Save images in gallery’ are enabled */
-"imageAndVideoDownloadsFooter"="Zapisz zdjęcia i filmy kompatybilne z IOS na urządzenie (Pamiętaj: zdjęcia i filmy nie będą dostępne Offline).";
-/* Footer text that explain what happen if the options 'Save media in gallery’ is enabled */
-"photosTakenAndVideoRecordedFromWithinTheAppFooter"="Włącz tę opcję, aby zapisywać zrobione zdjęcia i filmy nagrane z poziomu aplikacji w galerii";
 /* Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped */
 "currentlyUsing"="Obecnie używane %s";
 /* In 'My account', when user want to delete/remove/cancel account will click button named 'Cancel your account' */
