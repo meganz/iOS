@@ -10,7 +10,6 @@
 #import "NSString+MNZCategory.h"
 
 #import "ChatStatusTableViewController.h"
-#import "ChatVideoQualityTableViewController.h"
 #import "ChatVideoUploadQuality.h"
 
 @interface ChatSettingsTableViewController () <DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGARequestDelegate, MEGAChatDelegate, MEGAChatRequestDelegate>
@@ -247,13 +246,8 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {    
     if ([indexPath isEqual:[NSIndexPath indexPathForRow:0 inSection:1]] && !self.isInvalidStatus) {
-        ChatStatusTableViewController *chatStatusTVC = [[UIStoryboard storyboardWithName:@"Settings" bundle:nil] instantiateViewControllerWithIdentifier:@"ChatStatusTableViewControllerID"];
+        ChatStatusTableViewController *chatStatusTVC = [[UIStoryboard storyboardWithName:@"ChatSettings" bundle:nil] instantiateViewControllerWithIdentifier:@"ChatStatusTableViewControllerID"];
         [self.navigationController pushViewController:chatStatusTVC animated:YES];
-    }
-    
-    if ([indexPath isEqual:[NSIndexPath indexPathForRow:0 inSection:3]]) {
-        ChatVideoQualityTableViewController *chatVideoQualityVC = [[UIStoryboard storyboardWithName:@"Settings" bundle:nil] instantiateViewControllerWithIdentifier:@"ChatVideoQualityTableViewControllerID"];
-        [self.navigationController pushViewController:chatVideoQualityVC animated:YES];
     }
 }
 

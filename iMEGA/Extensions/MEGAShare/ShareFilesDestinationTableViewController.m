@@ -205,6 +205,7 @@
     if (self.activeTextField && self.activeTextField.isFirstResponder) {
         [self.activeTextField resignFirstResponder];
     }
+    [[MEGASdkManager sharedMEGAChatSdk] removeChatDelegate:self];
     [self.shareViewController dismissWithCompletionHandler:^{
         [self.extensionContext cancelRequestWithError:[NSError errorWithDomain:@"Cancel tapped" code:-1 userInfo:nil]];
     }];

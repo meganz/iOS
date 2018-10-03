@@ -33,7 +33,7 @@
 /* Alert message to remember that MEGA app needs permission to use the Microphone to make calls and record videos and it doesn't have it */
 "microphonePermissions"="请在您的设置中授予MEGA应用访问您的麦克风的权限";
 /* Alert message to explain that the MEGA app needs permission to access your device photos */
-"photoLibraryPermissions"="请在设置中允许MEGA App 访问您的照片库。";
+"photoLibraryPermissions"="请在设置中允许MEGA应用程序访问您的照片库";
 /* Alert message shown when the user tries to download an empty folder  */
 "emptyFolderMessage"="您不能下载空的文件夹。";
 /* Message shown when the user clicks on a confirm account link that has already been used  */
@@ -51,7 +51,7 @@
 /* Alert title shown when you have written a decryption key not valid */
 "decryptionKeyNotValid"="无效的密钥";
 /* Alert title shown when your account has been closed through another client or the web by killing all your sessions */
-"loggedOut_alertTitle"="已登出";
+"loggedOut_alertTitle"="已注销";
 /* Alert message shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOutFromAnotherLocation"="您已从其他位置登出该设备";
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
@@ -153,7 +153,7 @@
 /* Warning message shown when you try to confirm an account but you are logged in with another one */
 "alreadyLoggedInAlertMessage"="如果您同意，当前的账户将被登出并且所有离线数据将被删除。是否要继续？";
 /* Error shown when the user tries to change his mail to one that is already used */
-"emailAlreadyInUse"="发生错误，此电子信箱已被使用。";
+"emailAlreadyInUse"="错误。此邮箱已被使用。";
 /* Title shown inside an alert if you don't have enough space on your device to download something */
 "nodeTooBig"="您的设备内存不足";
 /* Title for the file link view */
@@ -327,9 +327,9 @@
 /* Error message shown when a user tries to download a folder with the name Inbox on the main directory of the offline section */
 "folderInboxError"="这个收件夹标签仅供Apple使用";
 /* Title shown under the action that allows you to save an image to your camera roll */
-"saveImage"="储存图片";
+"saveImage"="保存照片";
 /* Title shown under the action that allows you to save several images to your camera roll */
-"saveImages"="储存图片";
+"saveImages"="保存照片";
 /* Title shown under the action that allows you to get a link to file or folder */
 "getLink"="取得链接";
 /* Title shown under the action that allows you to get several links to files and/or folders */
@@ -351,7 +351,7 @@
 /* A title for the Copyright Warning dialog. */
 "copyrightWarning"="智慧财产权警告";
 /* A title for the Copyright Warning dialog. Designed to make the user feel as though this is not targeting them, but is a warning for everybody who uses our service. */
-"copyrightWarningToAll"="致所有使用者之著作权警告";
+"copyrightWarningToAll"="致所有使用者的著作权警告";
 /* String already exists: 367, but we need to split paragraphs. */
 "copyrightMessagePart1"="MEGA尊重他人之著作权，且要求MEGA的云端服务使用者遵守著作权法。";
 /* String already exists: 367, but we need to split paragraphs */
@@ -513,7 +513,7 @@
 /* Button title that enables the functionality 'Camera Uploads', which uploads all the photos in your device to MEGA */
 "enableCameraUploadsButton"="允许从相机上传";
 /* Success message shown when Camera Uploads has been enabled */
-"cameraUploadsEnabled"="已开启相机上传";
+"cameraUploadsEnabled"="已启用相机上传";
 /* Message shown when the camera uploads have been completed */
 "cameraUploadsComplete"="从相机上传成功";
 /* Message shown while uploading files. Singular. */
@@ -673,7 +673,7 @@
 /* Header to explain that 'Upload videos', 'Use cellular connection' and 'Only when charging' are options of the Camera Uploads */
 "options"="选择";
 /* Option title to enable upload videos with Camera Uploads */
-"uploadVideosLabel"="上传影片";
+"uploadVideosLabel"="上传视频";
 /* Option title to enable Camera Uploads only when the device is charging */
 "onlyWhenChargingLabel"="只在充电状态下";
 /* Footer text to explain the Camera Uploads functionality */
@@ -687,17 +687,17 @@
 /* Title for the section "Acknowledgements" of the app */
 "acknowledgements"="感谢";
 /* Title for the MEGA Recovery Key */
-"masterKey"="还原金钥";
+"masterKey"="恢复密钥";
 /* Section title where you can change your MEGA's password */
 "changePasswordLabel"="变更密码";
 /* Advising the user to keep the user's master key safe. */
-"exportMasterKeyFooter"="汇出还原金钥并将其保存于安全的位置，使您于设置新密码时不会有资料遗失。";
+"exportMasterKeyFooter"="导出恢复密钥并将其保存在安全位置，使您可以设置新密码并不会丢失数据信息。";
 /* Question button to present a view where it's explained what is the Recovery Key */
 "whyDoINeedARecoveryKey"="为什么我会需要还原金钥？";
 /* Detailed explanation of how the master encryption key (now renamed "Recovery Key") works, and why it is important to remember your password. */
 "masterKey_firstParagraph"="您的资料只有在经过一连串的解密操作后才能读取，此操作属于严谨加密方式，需使用您的主加密密钥（还原金钥）才能解密，我们已使用您的密码加密储存该金钥。也就是说，如果您遗失了您的密码，还原金钥将无法再被解密汇出，您也无法再解密您的资料。";
 /*  */
-"masterKey_thirdParagraph"="外来攻击者如持有您的金钥仍将无法获取您的资料。密码重置将会需要金钥以及需可存取您的电子邮件。";
+"masterKey_thirdParagraph"="外来攻击者如持有您的密钥仍将无法获取您的资料。密码重置将会需要密钥以及需可存取您的电子邮件。";
 /* Message of the dialog displayed when copy the user's Recovery Key to the clipboard to be saved or exported. */
 "recoveryKeyCopiedToClipboard"="恢复秘钥已复制到剪贴板。请妥善保管。";
 /* Alert title shown when you have exported your MEGA Recovery Key */
@@ -721,19 +721,19 @@
 /* Footer text that explains when disabling the HTTP protocol for transfers may be useful */
 "transfersSectionFooter"="若传输不能正常启动，请尝试启用这个选项。所有传输都已被加密，所以一般情况下HTTP已经足够安全。";
 /* Title header that refers to where you enable the options 'Save images in gallery' and 'Save videos in gallery' inside 'Settings' -> 'Advanced' section" */
-"imageAndVideoDownloadsHeader"="图片与影片下载";
+"imageAndVideoDownloadsHeader"="照片与视频下载";
 /* Title header that refers to where do you enable the options 'Save media in gallery -> 'Advanced' section. String as short as possible */
 "photosTakenAndVideoRecordedFromWithinTheAppHeader"="从应用程序中获取的媒体";
 /* Section title where you can enable the option 'Save images in gallery' */
-"saveImagesInGallery"="将图片存入图库";
+"saveImagesInGallery"="保存照片至相册";
 /* Section title where you can enable the option 'Save videos in gallery' */
-"saveVideosInGallery"="将影片存入图库";
+"saveVideosInGallery"="保存视频至相册";
 /* Section title where you can enable the option 'Save media in gallery' */
-"saveMediaInGallery"="保存媒体至图库";
+"saveMediaInGallery"="保存媒体至相册";
 /* Footer text that explain what happen if the options 'Save videos in gallery’ and 'Save images in gallery’ are enabled */
-"imageAndVideoDownloadsFooter"="于您设备上之图库中储存iOS兼容的图片和影片（注：图片和影片将不会被存于离线模式中）。";
+"imageAndVideoDownloadsFooter"="保存iOS兼容照片与视频至您的本地相册（注意：照片与视频将不会被存于离线模式）。";
 /* Footer text that explain what happen if the options 'Save media in gallery’ is enabled */
-"photosTakenAndVideoRecordedFromWithinTheAppFooter"="启用此选项可以将已有的照片和录制的视频保存至图库";
+"photosTakenAndVideoRecordedFromWithinTheAppFooter"="启用此选项可将已有照片与视频保存至相册";
 /* Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped */
 "currentlyUsing"="目前已使用%s";
 /* In 'My account', when user want to delete/remove/cancel account will click button named 'Cancel your account' */
@@ -745,7 +745,7 @@
 /* During account cancellation (deletion) */
 "cancellationLinkHasExpired"="注销链接已失效。";
 /* Text shown in the last alert dialog to confirm the cancellation of an account */
-"enterYourPasswordToConfirmThatYouWanToClose"="这是删除账户的最后步骤。您将永久遗失储存在云端空间中的所有资料。请于下方输入您的密码。";
+"enterYourPasswordToConfirmThatYouWanToClose"="这是删除您账户的最后一步。您将永久失去储存在云端空间中的所有资料。请在下方输入您的密码。";
 /* During account cancellation (deletion) */
 "accountCanceledSuccessfully"="您的账号已被成功取消。";
 /* Account closure, password check dialog when user click on closure email. */
@@ -803,9 +803,9 @@
 /* A message shown to explain that the user has to input (type or paste) their recovery key to continue with the reset password process. */
 "pleaseEnterYourRecoveryKey"="请输入您的还原金钥";
 /* Label for any 'Recovery Key' button, link, text, title, etc. Preserve uppercase - (String as short as possible). The Recovery Key is the new name for the account 'Master Key', and can unlock (recover) the account if the user forgets their password. */
-"recoveryKey"="还原金钥";
+"recoveryKey"="恢复密钥";
 /* An alert title where the user provided the incorrect Recovery Key. */
-"invalidRecoveryKey"="回复还原金钥";
+"invalidRecoveryKey"="恢复密钥无效";
 /* Text of the alert after opening the recovery link to reset pass being logged. */
 "youRecoveryKeyIsGoingTo"="还原金钥将被用于重设您的密码。请输入您的新密码。";
 /*  */
@@ -842,9 +842,9 @@
 /* The [X] will be replaced with the e-mail address. */
 "congratulationsNewEmailAddress"="恭喜您完成更换，您于此MEGA账户的新电子邮件地址为：[X]";
 /* Button text to close other login sessions except the current session in use. This will log out other devices which have an active login session. */
-"closeOtherSessions"="从其他设备中登出账户";
+"closeOtherSessions"="关闭其他会话";
 /* Message shown when you click on 'Close other session' to block other login sessions except the current session in use. This message is shown when this has been done. */
-"sessionsClosed"="已关闭之其他登入";
+"sessionsClosed"="会话已关闭";
 /* Section title where you can change the app's passcode */
 "changePasscodeLabel"="更改验证码";
 /* Title to describe a simple (four digit) passcode */
@@ -914,7 +914,7 @@
 /* A message which is shown once someone has invited a friend as part of the achievements program. */
 "howItWorksTertiary"="若您邀请的是曾使用过MEGA的用户，则无法得到奖励，且您将不会收到相关通知。";
 /* Header of block with achievements bonuses. */
-"unlockedBonuses"="待解任务与奖励挑战：";
+"unlockedBonuses"="未解锁奖励：";
 /* A header/title of a section which contains information about used/available storage space on a user's cloud drive. */
 "storageQuota"="空间使用量";
 /* The header/title of a block/section which contains information about the user's used/available transfer allowance for their account. */
@@ -946,7 +946,7 @@
 /* Label to show that an error related with expiration occurs during a SDK operation. */
 "expired"="过期";
 /* Title of the button which logs out from your account. */
-"logoutLabel"="登出";
+"logoutLabel"="注销";
 /* String shown when you are logging out of your account. */
 "loggingOut"="正在登出";
 /* Button to remove avatar. Try to keep the text short (as in English) */
@@ -1076,7 +1076,7 @@
 /* Title show when the chat is disabled */
 "chatIsDisabled"="聊天功能已停用";
 /* Text button shown when the chat is disabled and if tapped the chat will be enabled */
-"enable"="激活";
+"enable"="启用";
 /* Text button shown when an option is enabled, to allow to disable it. String as sort as possible. */
 "disable"="停用";
 /* Conversations section */
@@ -1355,7 +1355,7 @@
 /* Label to show that an error related with an unknown error occurs during a SDK operation. */
 "Unknown error"="未知的错误";
 /* Text shown in an alert when the user is about to change the language of the app */
-"languageRestartAlert"="更改语言后，您将需要重启Mega";
+"languageRestartAlert"="更改语言设置后, 您需要重新启动MEGA";
 /* Text shown in a notification to make it easy for the user to restart the app after the language is changed */
 "languageRestartNotification"="语言设置完成。点击重新启动。";
 /* The following strings are only for the App Store description, they're not used on the app (The only exception is the one with 'autorenewableDescription' key) On the 'generalDescriptionParagraph6' we must delete 'Desktop - https://mega.nz/' because the app can be rejected because of that. */
@@ -1415,7 +1415,7 @@
 /* Action to reset the current valid QR code of the user */
 "resetQrCode"="重置二维码";
 /* Footer that explains what would happen if the user resets his/her QR code */
-"resetQrCodeFooter"="之前的二维码将不再有效。";
+"resetQrCodeFooter"="之前的二维码将失效。";
 /* Title for view that displays the QR code of the user. String as short as possible. */
 "myCode"="我的二维码";
 /* Segmented control title for view that allows the user to scan QR codes. String as short as possible. */
@@ -1487,7 +1487,7 @@
 /* Label for test password button and titles */
 "testPassword"="密码测试";
 /* Label for recovery key button */
-"backupRecoveryKey"="备份还原秘钥";
+"backupRecoveryKey"="备份恢复密钥";
 /* Used as a message in the 'Password reminder' dialog as a tip on why confirming the password and/or exporting the recovery key is important and vital for the user to not lose any data. */
 "testPasswordText"="请在下方测试您所记得的密码。如果您忘记密码，您将无法再访问您储存在 MEGA 的数据。[A]了解更多[/A]";
 /* Title text for the account confirmation. */
@@ -1581,13 +1581,13 @@
 /* Description for the ‘Two-Factor Authentication’ in the security settings section. */
 "whatIsTwoFactorAuthentication"="双重验证是您账户的第二层安全保护。";
 /* Description text of the dialog displayed to start setup the Two-Factor Authentication */
-"whyYouDoNeedTwoFactorAuthenticationDescription"="双重验证是您账户的第二层安全保护。即使他人得知您的密码，没有六位数验证码也无权对其访问，因此只有您拥有访问权限。";
+"whyYouDoNeedTwoFactorAuthenticationDescription"="双重验证是您账户的第二层安全保护。即使他人得知您的密码，无6位验证码也无权对其访问，因此只有您拥有访问权限。";
 /* Alert text shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device */
 "youNeedATwoFactorAuthenticationApp"="您需要在此设备上安装双重验证应用程序";
 /* A title on the mobile web client page showing that 2FA has been enabled successfully. */
 "twoFactorAuthenticationEnabled"="双重验证已启用";
 /* A message on the dialog shown after 2FA was successfully enabled. */
-"twoFactorAuthenticationEnabledDescription"="在您下次登录账户时，系统会要求您输入由验证程序提供的6位数验证码。";
+"twoFactorAuthenticationEnabledDescription"="在您下次登录账户时，系统会要求您输入由验证程序提供的6位验证码。";
 /* A warning message on the Backup Recovery Key dialog to tell the user to backup their Recovery Key to their local computer. */
 "pleaseSaveYourRecoveryKey"="请将您的恢复秘钥保存在安全位置";
 /* An informational message on the Backup Recovery Key dialog. */
@@ -1599,48 +1599,50 @@
 /* A button to help them restore their account if they have lost their 2FA device. */
 "lostYourAuthenticatorDevice"="丢失了您的验证设备？";
 /* Settings section title where you can enable the option to 'Save Images in Library' */
-"Save Images in Library"="Save Images in Library";
+"Save Images in Library"="保存照片至资料库";
 /* Settings section title where you can enable the option to 'Save Videos in Library' */
-"Save Videos in Library"="Save Videos in Library";
+"Save Videos in Library"="保存视频至资料库";
 /* Footer text shown under the settings for download options 'Save Images/Videos in Library' */
-"Images and/or videos downloaded will be stored in the device’s media library instead of the Offline section."="Images and/or videos downloaded will be stored in the device’s media library instead of the Offline section.";
+"Images and/or videos downloaded will be stored in the device’s media library instead of the Offline section."="已下载的照片与/或视频将储存在您设备的媒体资料库中，而非离线部分。";
 /* Setting associated with the 'Camera' of the device */
-"Camera"="Camera";
+"Camera"="相机";
 /* Settings section title where you can enable the option to 'Save in Library' the images or videos taken from your camera in the MEGA app */
-"Save in Library"="Save in Library";
+"Save in Library"="保存至资料库";
 /* Footer text shown under the Camera setting to explain the option 'Save in Library' */
-"Save a copy of the images and videos taken from the MEGA app in your device’s media library."="Save a copy of the images and videos taken from the MEGA app in your device’s media library.";
+"Save a copy of the images and videos taken from the MEGA app in your device’s media library."="将MEGA应用程序中拍摄的照片与视频的副本保存在您设备的媒体资料库中。";
 /* Title shown in a page of the on boarding screens explaining that the user keeps the encryption keys */
-"You hold the keys"="You hold the keys";
+"You hold the keys"="您持有这把密钥";
 /* Description shown in a page of the onboarding screens explaining the encryption paradigm */
-"Security is why we exist, your files are safe with us behind a well oiled encryption machine where only you can access your files."="Security is why we exist, your files are safe with us behind a well oiled encryption machine where only you can access your files.";
+"Security is why we exist, your files are safe with us behind a well oiled encryption machine where only you can access your files."="安全即是我们存在的意义。您的文件会在我们的加密机器下受到安全保护，并且只有您可以访问您的文件。";
 /* Title shown in a page of the on boarding screens explaining that the chat is encrypted */
-"Encrypted chat"="Encrypted chat";
+"Encrypted chat"="已加密聊天";
 /* Description shown in a page of the onboarding screens explaining the chat feature */
-"Fully encrypted chat with voice and video calls, group messaging and file sharing integration with your Cloud Drive."="Fully encrypted chat with voice and video calls, group messaging and file sharing integration with your Cloud Drive.";
+"Fully encrypted chat with voice and video calls, group messaging and file sharing integration with your Cloud Drive."="使用您的云盘即可享有完全加密的语音与视频通话、群发信息以及文件共享整合。";
 /* Title shown in a page of the on boarding screens explaining that the user can add contacts to chat and colaborate */
-"Create your Network"="Create your Network";
+"Create your Network"="创建您的网络";
 /* Description shown in a page of the onboarding screens explaining contacts */
-"Add contacts, create a network, colaborate, make voice and video calls without ever leaving MEGA"="Add contacts, create a network, colaborate, make voice and video calls without ever leaving MEGA";
+"Add contacts, create a network, colaborate, make voice and video calls without ever leaving MEGA"="无需离开MEGA即可添加联系人、创建网络、协同合作以及进行语音与视频通话";
 /* Title shown in a page of the on boarding screens explaining that the user can backup the photos automatically */
-"Your Photos in the Cloud"="Your Photos in the Cloud";
+"Your Photos in the Cloud"="云备份您的照片";
 /* Description shown in a page of the onboarding screens explaining the camera uploads feature */
-"Camera Uploads is an essential feature for any mobile device and we got you covered. Create your account now."="Camera Uploads is an essential feature for any mobile device and we got you covered. Create your account now.";
+"Camera Uploads is an essential feature for any mobile device and we have got you covered. Create your account now."="相机上传是任何移动设备的基本功能，我们已为您开启。 立即创建您的帐户。";
 /* Button which triggers the initial setup */
-"Setup MEGA"="Setup MEGA";
+"Setup MEGA"="安装MEGA";
 /* Detailed explanation of why the user should give some permissions to MEGA */
-"To fully take advantage of your MEGA account we need to ask you some permissions."="To fully take advantage of your MEGA account we need to ask you some permissions.";
+"To fully take advantage of your MEGA account we need to ask you some permissions."="要充分利用您的MEGA帐户，我们需要得到您的允许。";
 /* Title label that explains that the user is going to be asked for the photos permission */
-"Allow Access to Photos"="Allow Access to Photos";
+"Allow Access to Photos"="允许访问照片";
 /* Detailed explanation of why the user should give permission to access to the photos */
-"To share photos and videos allow MEGA to access your photos"="To share photos and videos allow MEGA to access your photos";
+"To share photos and videos, allow MEGA to access your photos"="要分享照片与视频，请允许MEGA访问您的照片";
 /* Title label that explains that the user is going to be asked for the microphone and camera permission */
-"Enable Microphone and Camera"="Enable Microphone and Camera";
+"Enable Microphone and Camera"="启用麦克风和相机";
 /* Detailed explanation of why the user should give permission to access to the camera and the microphone */
-"To make encrypted voice and video calls allow MEGA access to your Camera and Microphone"="To make encrypted voice and video calls allow MEGA access to your Camera and Microphone";
+"To make encrypted voice and video calls, allow MEGA access to your Camera and Microphone"="要进行加密语音与视频通话，请允许MEGA访问您的相机和麦克风";
 /* Title label that explains that the user is going to be asked for the notifications permission */
 "Enable Notifications"="激活提醒通知";
 /* Detailed explanation of why the user should give permission to deliver notifications */
-"We would like to send you notifications so you receive new messages on your device instantly."="We would like to send you notifications so you receive new messages on your device instantly.";
+"We would like to send you notifications so you receive new messages on your device instantly."="我们将向您发送通知，以便您立即在设备上收到新消息。";
 /* Button which triggers a request for a specific permission, that have been explained to the user beforehand */
-"Enable Access"="Enable Access";
+"Enable Access"="开启访问";
+/* Confirmation dialog for the button that logs the user out of all sessions except the current one. */
+"Do you want to close all other sessions? This will log you out on all other active sessions except the current one."="是否关闭所有其他会话？这会将您注销到除当前会话之外的所有其他活动会话。";
