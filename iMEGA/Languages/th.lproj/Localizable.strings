@@ -1288,7 +1288,7 @@
 /* Inform user that there were unsupported assets in the share extension */
 "shareExtensionUnsupportedAssets"="ไม่สามารถแชร์บางรายการกับ MEGA";
 /* Message shown to the user when the share extension is about to be killed by iOS due to a memory issue */
-"Limited system resources are available when sharing items. Try uploading these files from within the MEGA app."="Limited system resources are available when sharing items. Try uploading these files from within the MEGA app.";
+"Limited system resources are available when sharing items. Try uploading these files from within the MEGA app."="ระบบทรัพยากรที่ใช้ได้มีอยู่อย่างจำกัดเมื่อแชร์รายการ ให้พยายามอัปโหลดไฟล์เหล่านี้จากแอป MEGA";
 /* Notification message shown when a transfer failed. Keep colon. */
 "Transfer failed:"="ถ่ายโอนไม่สำเร็จ:";
 /* MEGAError */
@@ -1585,48 +1585,50 @@
 /* A button to help them restore their account if they have lost their 2FA device. */
 "lostYourAuthenticatorDevice"="อุปกรณ์ตัวรับรองความถูกต้องของคุณสูญหายหรือไม่";
 /* Settings section title where you can enable the option to 'Save Images in Library' */
-"Save Images in Library"="Save Images in Library";
+"Save Images in Library"="บันทึกรูปภาพในไลบรารี";
 /* Settings section title where you can enable the option to 'Save Videos in Library' */
-"Save Videos in Library"="Save Videos in Library";
+"Save Videos in Library"="บันทึกวิดีโอในไลบรารี";
 /* Footer text shown under the settings for download options 'Save Images/Videos in Library' */
-"Images and/or videos downloaded will be stored in the device’s media library instead of the Offline section."="Images and/or videos downloaded will be stored in the device’s media library instead of the Offline section.";
+"Images and/or videos downloaded will be stored in the device’s media library instead of the Offline section."="รูปภาพและ/หรือวิดีโอที่ดาวน์โหลดจะถูกเก็บไว้ในไลบรารีสื่อของอุปกรณ์แทนที่จะเป็นส่วนออฟไลน์";
 /* Setting associated with the 'Camera' of the device */
-"Camera"="Camera";
+"Camera"="กล้อง";
 /* Settings section title where you can enable the option to 'Save in Library' the images or videos taken from your camera in the MEGA app */
-"Save in Library"="Save in Library";
+"Save in Library"="บันทึกในไลบรารี";
 /* Footer text shown under the Camera setting to explain the option 'Save in Library' */
-"Save a copy of the images and videos taken from the MEGA app in your device’s media library."="Save a copy of the images and videos taken from the MEGA app in your device’s media library.";
+"Save a copy of the images and videos taken from the MEGA app in your device’s media library."="บันทึกสำเนาของรูปภาพและวิดีโอที่ถ่ายจากแอป MEGA ในไลบรารีสื่อของอุปกรณ์";
 /* Title shown in a page of the on boarding screens explaining that the user keeps the encryption keys */
-"You hold the keys"="You hold the keys";
+"You hold the keys"="คุณคือผู้ถือกุญแจ";
 /* Description shown in a page of the onboarding screens explaining the encryption paradigm */
-"Security is why we exist, your files are safe with us behind a well oiled encryption machine where only you can access your files."="Security is why we exist, your files are safe with us behind a well oiled encryption machine where only you can access your files.";
+"Security is why we exist, your files are safe with us behind a well oiled encryption machine where only you can access your files."="ความปลอดภัยคือเหตุผลหลักที่เราดำเนินการอยู่ ไฟล์ของคุณจะมีความปลอดภัยมากยิ่งขึ้น เพราะใช้เครื่องมือเข้ารหัสที่ป้องกันไฟล์ของคุณ ซึ่งมีเพียงคุณเท่านั้นที่สามารถเข้าถึงไฟล์ได้";
 /* Title shown in a page of the on boarding screens explaining that the chat is encrypted */
-"Encrypted chat"="Encrypted chat";
+"Encrypted chat"="เข้ารหัสแชท";
 /* Description shown in a page of the onboarding screens explaining the chat feature */
-"Fully encrypted chat with voice and video calls, group messaging and file sharing integration with your Cloud Drive."="Fully encrypted chat with voice and video calls, group messaging and file sharing integration with your Cloud Drive.";
+"Fully encrypted chat with voice and video calls, group messaging and file sharing integration with your Cloud Drive."="แชทที่มีการเข้ารหัสอย่างเต็มที่ไม่ว่าจะเป็นการโทรด้วยเสียงและวิดีโอ การส่งข้อความแบบกลุ่มและบูรณาการไฟล์ร่วมกันกับคลาวด์ไดรฟ์ของคุณ";
 /* Title shown in a page of the on boarding screens explaining that the user can add contacts to chat and colaborate */
-"Create your Network"="Create your Network";
+"Create your Network"="สร้างเครือข่ายของคุณ";
 /* Description shown in a page of the onboarding screens explaining contacts */
-"Add contacts, create a network, colaborate, make voice and video calls without ever leaving MEGA"="Add contacts, create a network, colaborate, make voice and video calls without ever leaving MEGA";
+"Add contacts, create a network, colaborate, make voice and video calls without ever leaving MEGA"="เพิ่มผู้ติดต่อ สร้างเครือข่าย การทำงานร่วมกัน โทรออกด้วยเสียงและวิดีโอได้โดยไม่ต้องออกจากแอป MEGA";
 /* Title shown in a page of the on boarding screens explaining that the user can backup the photos automatically */
-"Your Photos in the Cloud"="Your Photos in the Cloud";
+"Your Photos in the Cloud"="รูปถ่ายของคุณในคลาวด์";
 /* Description shown in a page of the onboarding screens explaining the camera uploads feature */
-"Camera Uploads is an essential feature for any mobile device and we got you covered. Create your account now."="Camera Uploads is an essential feature for any mobile device and we got you covered. Create your account now.";
+"Camera Uploads is an essential feature for any mobile device and we have got you covered. Create your account now."="การอัปโหลดจากกล้อง เป็นฟีเจอร์สำคัญสำหรับโทรศัพท์มือถือทุกเครื่องและเราได้ให้ความสำคัญกับคุณ สร้างบัญชีของคุณเลย";
 /* Button which triggers the initial setup */
-"Setup MEGA"="Setup MEGA";
+"Setup MEGA"="ตั้งค่า MEGA";
 /* Detailed explanation of why the user should give some permissions to MEGA */
-"To fully take advantage of your MEGA account we need to ask you some permissions."="To fully take advantage of your MEGA account we need to ask you some permissions.";
+"To fully take advantage of your MEGA account we need to ask you some permissions."="เพื่อใช้ประโยชน์จากบัญชี MEGA ของคุณอย่างเต็มที่ เราจำเป็นต้องขอสิทธิ์บางอย่างแก่คุณ";
 /* Title label that explains that the user is going to be asked for the photos permission */
-"Allow Access to Photos"="Allow Access to Photos";
+"Allow Access to Photos"="อนุญาตให้เข้าถึงรูปถ่าย";
 /* Detailed explanation of why the user should give permission to access to the photos */
-"To share photos and videos allow MEGA to access your photos"="To share photos and videos allow MEGA to access your photos";
+"To share photos and videos, allow MEGA to access your photos"="หากต้องการแชร์รูปถ่ายและวิดีโอ ต้องอนุญาตให้ MEGA เข้าถึงรูปถ่ายของคุณ";
 /* Title label that explains that the user is going to be asked for the microphone and camera permission */
-"Enable Microphone and Camera"="Enable Microphone and Camera";
+"Enable Microphone and Camera"="เปิดใช้งานไมโครโฟนและกล้องถ่ายรูป";
 /* Detailed explanation of why the user should give permission to access to the camera and the microphone */
-"To make encrypted voice and video calls allow MEGA access to your Camera and Microphone"="To make encrypted voice and video calls allow MEGA access to your Camera and Microphone";
+"To make encrypted voice and video calls, allow MEGA access to your Camera and Microphone"="หากต้องการแชทด้วยเสียงและวิดีโอคอลแบบเข้ารหัส ต้องอนุญาตให้ MEGA เข้าถึงกล้องและไมโครโฟนของคุณ";
 /* Title label that explains that the user is going to be asked for the notifications permission */
 "Enable Notifications"="เปิดใช้การแจ้งเตือน";
 /* Detailed explanation of why the user should give permission to deliver notifications */
-"We would like to send you notifications so you receive new messages on your device instantly."="We would like to send you notifications so you receive new messages on your device instantly.";
+"We would like to send you notifications so you receive new messages on your device instantly."="เราต้องการส่งการแจ้งเตือนเพื่อให้คุณได้รับข้อความใหม่บนอุปกรณ์ของคุณทันที";
 /* Button which triggers a request for a specific permission, that have been explained to the user beforehand */
-"Enable Access"="Enable Access";
+"Enable Access"="อนุญาต";
+/* Confirmation dialog for the button that logs the user out of all sessions except the current one. */
+"Do you want to close all other sessions? This will log you out on all other active sessions except the current one."="คุณต้องการปิดเซสชันอื่นทั้งหมดหรือไม่ การดำเนินการนี้จะนำคุณออกจากเซสชันที่มีการใช้งานอื่น ๆ ทั้งหมดยกเว้นในปัจจุบัน";
