@@ -326,6 +326,10 @@
                 [self.tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
             }
         }
+
+        UIView *view = [[UIView alloc] init];
+        view.backgroundColor = UIColor.clearColor;
+        cell.selectedBackgroundView = view;
     }
     
     if (@available(iOS 11.0, *)) {
@@ -1489,6 +1493,12 @@
         [UIView animateWithDuration:0.33f animations:^ {
             [self.toolbar setAlpha:1.0];
         }];
+        
+        for (NodeTableViewCell *cell in [self.tableView visibleCells]) {
+            UIView *view = [[UIView alloc] init];
+            view.backgroundColor = UIColor.clearColor;
+            cell.selectedBackgroundView = view;
+        }
     } else {
         self.editBarButtonItem.title = AMLocalizedString(@"edit", @"Caption of a button to edit the files that are selected");
         [self setNavigationBarButtonItems];
@@ -1503,6 +1513,10 @@
                 [self.toolbar removeFromSuperview];
             }
         }];
+        
+        for (NodeTableViewCell *cell in [self.tableView visibleCells]) {
+            cell.selectedBackgroundView = nil;
+        }
     }
     
     if (!self.selectedNodesArray) {

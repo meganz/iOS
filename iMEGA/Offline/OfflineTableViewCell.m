@@ -5,39 +5,20 @@
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated {
     [super setEditing:editing animated:animated];
     
+    BOOL editSingleRow = self.subviews.count == 3; // leading or trailing UITableViewCellEditControl doesn't appear
+    
     if (editing) {
-        self.selectionStyle = UITableViewCellSelectionStyleDefault;
-        [UIView animateWithDuration:0.3 animations:^{
-            self.separatorInset = UIEdgeInsetsMake(0, 100, 0, 0);
-            [self layoutIfNeeded];
-        }];
+        if (!editSingleRow) {
+            [UIView animateWithDuration:0.3 animations:^{
+                self.separatorInset = UIEdgeInsetsMake(0, 100, 0, 0);
+                [self layoutIfNeeded];
+            }];
+        }
     } else {
-        self.selectionStyle = UITableViewCellSelectionStyleNone;
         [UIView animateWithDuration:0.3 animations:^{
             self.separatorInset = UIEdgeInsetsMake(0, 60, 0, 0);
             [self layoutIfNeeded];
         }];
-    }
-}
-
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
-    [super setSelected:selected animated:animated];
-    
-    if (selected) {
-        UIView *view = [[UIView alloc] init];
-        view.backgroundColor = UIColor.clearColor;
-        view.userInteractionEnabled = NO;
-        self.selectedBackgroundView = view;
-    }
-}
-
-
-- (void)setHighlighted:(BOOL)highlighted animated:(BOOL)animated {
-    [super setHighlighted:highlighted animated:animated];
-    if (highlighted) {
-        UIView *view = [[UIView alloc] init];
-        view.backgroundColor = UIColor.clearColor;
-        self.selectedBackgroundView = view;
     }
 }
 
