@@ -720,20 +720,6 @@
 "dontUseHttp"="Huwag gumamit ng HTTP";
 /* Footer text that explains when disabling the HTTP protocol for transfers may be useful */
 "transfersSectionFooter"="Paganahin ang option na ito kung hindi magsimula ang paglilipat. Kadalasan, sapat na ang HTTP sapagkat ang paglilipat dito ay encrypted na.";
-/* Title header that refers to where you enable the options 'Save images in gallery' and 'Save videos in gallery' inside 'Settings' -> 'Advanced' section" */
-"imageAndVideoDownloadsHeader"="Dinownload na imahe at video";
-/* Title header that refers to where do you enable the options 'Save media in gallery -> 'Advanced' section. String as short as possible */
-"photosTakenAndVideoRecordedFromWithinTheAppHeader"="Media captured from within the app";
-/* Section title where you can enable the option 'Save images in gallery' */
-"saveImagesInGallery"="Itabi ang mga imahe sa gallery";
-/* Section title where you can enable the option 'Save videos in gallery' */
-"saveVideosInGallery"="Itabi ang videos sa gallery";
-/* Section title where you can enable the option 'Save media in gallery' */
-"saveMediaInGallery"="I-save ang media sa gallery";
-/* Footer text that explain what happen if the options 'Save videos in gallery’ and 'Save images in gallery’ are enabled */
-"imageAndVideoDownloadsFooter"="Itabi ang iOS compatible na mga imahe at videos sa inyong sa gallery ng inyong device (Paalala: ang mga imahe at videos ay hindi maitatabi Offline)";
-/* Footer text that explain what happen if the options 'Save media in gallery’ is enabled */
-"photosTakenAndVideoRecordedFromWithinTheAppFooter"="Enable this option to save photos taken and videos recorded from within the app in the gallery";
 /* Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped */
 "currentlyUsing"="Gumagamit ngayon ng %s";
 /* In 'My account', when user want to delete/remove/cancel account will click button named 'Cancel your account' */
