@@ -5,10 +5,7 @@
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
-        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
-        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -260,10 +257,10 @@
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="OEw-WR-Lm7" firstAttribute="height" secondItem="lqj-pM-q0p" secondAttribute="height" id="51W-bD-gK2"/>
                             <constraint firstItem="OEw-WR-Lm7" firstAttribute="top" secondItem="WDN-Of-Gfv" secondAttribute="top" id="Bxm-9P-9fd"/>
                             <constraint firstItem="OEw-WR-Lm7" firstAttribute="leading" secondItem="WDN-Of-Gfv" secondAttribute="leading" id="cHf-GK-XiU"/>
-                            <constraint firstItem="OEw-WR-Lm7" firstAttribute="width" secondItem="lqj-pM-q0p" secondAttribute="width" id="pvL-gt-KFt"/>
+                            <constraint firstItem="OEw-WR-Lm7" firstAttribute="trailing" secondItem="WDN-Of-Gfv" secondAttribute="trailing" id="kH0-jQ-WtE"/>
+                            <constraint firstAttribute="bottom" secondItem="OEw-WR-Lm7" secondAttribute="bottom" id="mwA-QN-YBH"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="WDN-Of-Gfv"/>
                     </view>
@@ -623,14 +620,14 @@
                             <nil key="highlightedColor"/>
                         </label>
                         <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="B1T-Tc-GGb">
-                            <rect key="frame" x="0.0" y="0.0" width="240" height="1"/>
+                            <rect key="frame" x="0.0" y="0.0" width="240" height="0.66666666666666663"/>
                             <color key="backgroundColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="0.5" id="z21-y5-Ktz"/>
                             </constraints>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UqK-NB-zSQ">
-                            <rect key="frame" x="0.0" y="22" width="240" height="1"/>
+                            <rect key="frame" x="0.0" y="22.666666666666668" width="240" height="0.33333333333333215"/>
                             <color key="backgroundColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="0.5" id="OAM-7X-d2k"/>
@@ -1970,13 +1967,11 @@
                     </connections>
                 </barButtonItem>
                 <barButtonItem title="Save for Offline" style="plain" id="mXR-cQ-N6z" userLabel="Download Bar Button Item">
-                    <color key="tintColor" red="0.85098040100000005" green="0.0" blue="0.027450980619999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <connections>
                         <action selector="downloadAction:" destination="7lh-MZ-fv2" id="VrJ-TU-0ju"/>
                     </connections>
                 </barButtonItem>
                 <barButtonItem title="Import" style="plain" id="3lC-3c-xlc" userLabel="Import Bar Button Item">
-                    <color key="tintColor" red="0.85098040100000005" green="0.0" blue="0.027450980619999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <connections>
                         <action selector="importAction:" destination="7lh-MZ-fv2" id="86a-YR-FpZ"/>
                     </connections>

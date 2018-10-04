@@ -117,6 +117,8 @@
     
     [[MEGASdkManager sharedMEGAChatSdk] addChatDelegate:self];
     [[MEGASdkManager sharedMEGAChatSdk] addChatCallDelegate:self];
+    [[MEGAReachabilityManager sharedManager] retryPendingConnections];
+    
     [self.tableView reloadData];
 }
 
@@ -294,7 +296,7 @@
 
 - (void)emptyDataSet:(UIScrollView *)scrollView didTapButton:(UIButton *)button {
     if (![[NSUserDefaults standardUserDefaults] boolForKey:@"IsChatEnabled"]) {
-        ChatSettingsTableViewController *chatSettingsTVC = [[UIStoryboard storyboardWithName:@"Settings" bundle:nil] instantiateViewControllerWithIdentifier:@"ChatSettingsTableViewControllerID"];
+        ChatSettingsTableViewController *chatSettingsTVC = [[UIStoryboard storyboardWithName:@"ChatSettings" bundle:nil] instantiateViewControllerWithIdentifier:@"ChatSettingsTableViewControllerID"];
         [self.navigationController pushViewController:chatSettingsTVC animated:YES];
     } else {
         [self addTapped:(UIBarButtonItem *)button];

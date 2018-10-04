@@ -7,6 +7,7 @@
 #import "MEGASdkManager.h"
 #import "MEGANode+MNZCategory.h"
 #import "MEGANodeList+MNZCategory.h"
+#import "MEGAReachabilityManager.h"
 #import "UIImageView+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 #import "Helper.h"
@@ -60,7 +61,7 @@
     if (!self.presentedViewController) {
         [[MEGASdkManager sharedMEGASdk] addMEGADelegate:self];
     }
-    [[MEGASdkManager sharedMEGASdk] retryPendingConnections];
+    [[MEGAReachabilityManager sharedManager] retryPendingConnections];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {

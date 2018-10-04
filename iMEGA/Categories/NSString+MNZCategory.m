@@ -13,44 +13,69 @@ static NSString* const B = @"[B]";
 
 @implementation NSString (MNZCategory)
 
-- (BOOL)mnz_isImageUTI {
-    BOOL isImageUTI = NO;
-    CFStringRef fileUTI = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, (__bridge CFStringRef _Nonnull)(self.pathExtension.lowercaseString), NULL);
-    if (UTTypeConformsTo(fileUTI, kUTTypeImage)) {
-        isImageUTI = YES;
-    }
-    if (fileUTI) CFRelease(fileUTI);
-    
-    return isImageUTI;
-}
-
-- (BOOL)mnz_isAudiovisualContentUTI {
-    BOOL isAudiovisualContentUTI = NO;
-    CFStringRef fileUTI = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, (__bridge CFStringRef _Nonnull)(self.pathExtension.lowercaseString), NULL);
-    if (UTTypeConformsTo(fileUTI, kUTTypeAudiovisualContent)) {
-        isAudiovisualContentUTI = YES;
-    }
-    if (fileUTI) CFRelease(fileUTI);
-    
-    return isAudiovisualContentUTI;
-}
-
 - (BOOL)mnz_isImagePathExtension {
-    NSSet *imagesExtensionsSet = [[NSSet alloc] initWithObjects:@"gif", @"jpg", @"tif", @"jpeg", @"bmp", @"png", @"nef", @"heic", nil];
+    NSArray<NSString *> *supportedExtensions = @[@"bmp",
+                                                 @"cr2",
+                                                 @"crw",
+                                                 @"cur",
+                                                 @"dng",
+                                                 @"gif",
+                                                 @"heic",
+                                                 @"ico",
+                                                 @"j2c",
+                                                 @"jp2",
+                                                 @"jpf",
+                                                 @"jpeg",
+                                                 @"jpg",
+                                                 @"nef",
+                                                 @"orf",
+                                                 @"pbm",
+                                                 @"pgm",
+                                                 @"png",
+                                                 @"pnm",
+                                                 @"ppm",
+                                                 @"psd",
+                                                 @"raf",
+                                                 @"rw2",
+                                                 @"rwl",
+                                                 @"tga",
+                                                 @"tif",
+                                                 @"tiff"];
     
-    return [imagesExtensionsSet containsObject:self.pathExtension.lowercaseString];
+    return [supportedExtensions containsObject:self.pathExtension.lowercaseString];
 }
 
 - (BOOL)mnz_isVideoPathExtension {
-    NSSet *videosExtensionsSet = [[NSSet alloc] initWithObjects:@"mp4", @"mov", @"m4v", @"3gp", nil];
+    NSArray<NSString *> *supportedExtensions = @[@"3g2",
+                                                 @"3gp",
+                                                 @"avi",
+                                                 @"m4v",
+                                                 @"mov",
+                                                 @"mp4",
+                                                 @"mqv",
+                                                 @"qt"];
     
-    return [videosExtensionsSet containsObject:self.pathExtension.lowercaseString];
+    return [supportedExtensions containsObject:self.pathExtension.lowercaseString];
+}
+
+- (BOOL)mnz_isAudioPathExtension {
+    NSArray<NSString *> *supportedExtensions = @[@"aac",
+                                                 @"ac3",
+                                                 @"aif",
+                                                 @"aiff",
+                                                 @"au",
+                                                 @"caf",
+                                                 @"eac3",
+                                                 @"flac",
+                                                 @"m4a",
+                                                 @"mp3",
+                                                 @"wav"];
+    
+    return [supportedExtensions containsObject:self.pathExtension.lowercaseString];
 }
 
 - (BOOL)mnz_isMultimediaPathExtension {
-    NSSet *multimediaExtensionsSet = [[NSSet alloc] initWithObjects:@"mp4", @"mov", @"3gp", @"wav", @"m4v", @"m4a", @"mp3", nil];
-    
-    return [multimediaExtensionsSet containsObject:self.pathExtension.lowercaseString];
+    return self.mnz_isVideoPathExtension || self.mnz_isAudioPathExtension;
 }
 
 #pragma mark - appData

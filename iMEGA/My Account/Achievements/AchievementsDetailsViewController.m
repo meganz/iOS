@@ -78,7 +78,7 @@
     
     self.navigationItem.title = navigationTitle;
     
-    self.achievementImageView.image = achievementImage;
+    self.achievementImageView.image = achievementImage.imageFlippedForRightToLeftLayoutDirection;
     
     [self setBonusExpireInLabelText];
     

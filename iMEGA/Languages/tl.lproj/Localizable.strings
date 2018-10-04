@@ -268,10 +268,6 @@
 "Completing..."="Tinatapos…";
 /* Label for the state of a transfer when is being retrying - (String as short as possible). */
 "Retrying..."="Sinusubukan…";
-/* Alert title shown when you try to open a Cloud Drive document and is not posible because there's some active download */
-"documentOpening_alertTitle"="Mayroong pending downloads";
-/* Alert message shown when you try to open a Cloud Drive document and is not posible because there's some active download */
-"documentOpening_alertMessage"="Subukang muli o itigil na";
 /* Section title of the 'Sort by' */
 "sortTitle"="I-sort batay sa";
 /* Button title to 'Save' the selected option */
@@ -717,27 +713,13 @@
 /* "Title header that refers to where do you do the action 'Empty Rubbish Bin' inside 'Settings' -> 'Advanced' section" */
 "onMEGA"="Sa MEGA";
 /* Button text on the Rubbish Bin page. This button will empty all files and folders currently stored in the rubbish bin. */
-"emptyRubbishBin"="Linisin ang basurahan";
+"emptyRubbishBin"="Clear Rubbish Bin";
 /* Alert title shown when you tap 'Empty Rubbish Bin' */
 "emptyRubbishBinAlertTitle"="Lahat ng items sa basurahan ay papahiin";
 /* Text next to a switch that allows disabling the HTTP protocol for transfers */
 "dontUseHttp"="Huwag gumamit ng HTTP";
 /* Footer text that explains when disabling the HTTP protocol for transfers may be useful */
 "transfersSectionFooter"="Paganahin ang option na ito kung hindi magsimula ang paglilipat. Kadalasan, sapat na ang HTTP sapagkat ang paglilipat dito ay encrypted na.";
-/* Title header that refers to where you enable the options 'Save images in gallery' and 'Save videos in gallery' inside 'Settings' -> 'Advanced' section" */
-"imageAndVideoDownloadsHeader"="Dinownload na imahe at video";
-/* Title header that refers to where do you enable the options 'Save media in gallery -> 'Advanced' section. String as short as possible */
-"photosTakenAndVideoRecordedFromWithinTheAppHeader"="Media captured from within the app";
-/* Section title where you can enable the option 'Save images in gallery' */
-"saveImagesInGallery"="Itabi ang mga imahe sa gallery";
-/* Section title where you can enable the option 'Save videos in gallery' */
-"saveVideosInGallery"="Itabi ang videos sa gallery";
-/* Section title where you can enable the option 'Save media in gallery' */
-"saveMediaInGallery"="I-save ang media sa gallery";
-/* Footer text that explain what happen if the options 'Save videos in gallery’ and 'Save images in gallery’ are enabled */
-"imageAndVideoDownloadsFooter"="Itabi ang iOS compatible na mga imahe at videos sa inyong sa gallery ng inyong device (Paalala: ang mga imahe at videos ay hindi maitatabi Offline)";
-/* Footer text that explain what happen if the options 'Save media in gallery’ is enabled */
-"photosTakenAndVideoRecordedFromWithinTheAppFooter"="Enable this option to save photos taken and videos recorded from within the app in the gallery";
 /* Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped */
 "currentlyUsing"="Gumagamit ngayon ng %s";
 /* In 'My account', when user want to delete/remove/cancel account will click button named 'Cancel your account' */
@@ -942,7 +924,7 @@
 /*  */
 "xDaysLeft"="%1 na araw na lang";
 /* %1 will be replaced by a numeric value and %2 will be 'days' or 'months', for example (Expires in [S]10[/S] days) */
-"bonusExpiresIn"="(Bonus expires in [S]%1[/S] %2)";
+"bonusExpiresIn"="(Mag-eexpire ang bonus sa loob ng [S]%1[/S] %2)";
 /* Used to display the number of months a plan was purchased for e.g. 3 months, 6 months. */
 "months"="buwan";
 /*  */
@@ -996,7 +978,7 @@
 /* Text shown under the button 'Skip' to explain that you can upgrade your account later in the section 'My Account'. */
 "youCanUpgradeLaterInMyAccount"="Maaaring mag-upgrade sa susunod sa My Account";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
-"cloudDriveIsAlmostFull"="[S]Cloud Drive is almost full.[/S] [A]Upgrade now[/A] to a PRO account and get [S]up to 4 TB (4096 GB)[/S] of cloud storage space.";
+"cloudDriveIsAlmostFull"="[S]Mapupuno na ang iyong Cloud Drive.[/S] [A]Mag-upgrade na[/A] sa PRO account at makakuha ng [S]hanggang 4 na TB (4096 GB)[/S] ng cloud storage space.";
 /* A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text. */
 "cloudDriveIsFull"="[S]Ang iyong account ay puno na.[/S] [A]Mag-upgrade na[/A] sa PRO account at makakuha [S]ng hanggang 4 TB (4096 GB)[/S] ng cloud storage space.";
 /* Storage related with the MEGA PRO account level you can subscribe */
@@ -1006,7 +988,7 @@
 /* Label for any 'Limited' button, link, text, title, etc. - (String as short as possible). */
 "limited"="Limitado";
 /* A message shown at registration time when users have to select their plan. The FREE 50 GB plan is subject to the achievements program. */
-"subjectToYourParticipationInOurAchievementsProgram"="Subject to your participation in our achievements program.";
+"subjectToYourParticipationInOurAchievementsProgram"="Subject sa iyong partisipasyon sa aming achievements program.";
 /* Price asociated with the MEGA PRO account level you can subscribe */
 "productPricePerMonth"="%@ kada buwan";
 /* Header that help you with the upgrading process explaining that you have to choose one of the plans below  to continue */
@@ -1262,7 +1244,7 @@
 /* Title shown when you almost had used your available transfer quota. */
 "depletedTransferQuota_title"="Depleted na ang transfer quota";
 /* Description shown when you almost had used your available transfer quota. */
-"depletedTransferQuota_message"="Your queued download exceeds the current transfer quota available for your account and may therefore be interrupted.";
+"depletedTransferQuota_message"="Ang iyong queued download ay lagpas sa kasalukuyang transfer quota na available sa iyong account at maaaring maputol.";
 /* Button title to see the available pro plans in MEGA */
 "seePlans"="Tingnan ang plano";
 /* Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible). */
@@ -1305,6 +1287,8 @@
 "connecting"="Kumokonekta...";
 /* Inform user that there were unsupported assets in the share extension */
 "shareExtensionUnsupportedAssets"="May ilang items na hindi pwedeng ibahagi sa MEGA";
+/* Message shown to the user when the share extension is about to be killed by iOS due to a memory issue */
+"Limited system resources are available when sharing items. Try uploading these files from within the MEGA app."="Limited system resources are available when sharing items. Try uploading these files from within the MEGA app.";
 /* Notification message shown when a transfer failed. Keep colon. */
 "Transfer failed:"="Naudlot ang paglilipat:";
 /* MEGAError */
@@ -1600,3 +1584,51 @@
 "scanOrCopyTheSeed"="Scan or copy the seed to your Authenticator App. Be sure to backup this seed to a safe place in case you lose your phone.";
 /* A button to help them restore their account if they have lost their 2FA device. */
 "lostYourAuthenticatorDevice"="Lost your Authenticator device?";
+/* Settings section title where you can enable the option to 'Save Images in Library' */
+"Save Images in Library"="Save Images in Library";
+/* Settings section title where you can enable the option to 'Save Videos in Library' */
+"Save Videos in Library"="Save Videos in Library";
+/* Footer text shown under the settings for download options 'Save Images/Videos in Library' */
+"Images and/or videos downloaded will be stored in the device’s media library instead of the Offline section."="Images and/or videos downloaded will be stored in the device’s media library instead of the Offline section.";
+/* Setting associated with the 'Camera' of the device */
+"Camera"="Camera";
+/* Settings section title where you can enable the option to 'Save in Library' the images or videos taken from your camera in the MEGA app */
+"Save in Library"="Save in Library";
+/* Footer text shown under the Camera setting to explain the option 'Save in Library' */
+"Save a copy of the images and videos taken from the MEGA app in your device’s media library."="Save a copy of the images and videos taken from the MEGA app in your device’s media library.";
+/* Title shown in a page of the on boarding screens explaining that the user keeps the encryption keys */
+"You hold the keys"="You hold the keys";
+/* Description shown in a page of the onboarding screens explaining the encryption paradigm */
+"Security is why we exist, your files are safe with us behind a well oiled encryption machine where only you can access your files."="Security is why we exist, your files are safe with us behind a well oiled encryption machine where only you can access your files.";
+/* Title shown in a page of the on boarding screens explaining that the chat is encrypted */
+"Encrypted chat"="Encrypted chat";
+/* Description shown in a page of the onboarding screens explaining the chat feature */
+"Fully encrypted chat with voice and video calls, group messaging and file sharing integration with your Cloud Drive."="Fully encrypted chat with voice and video calls, group messaging and file sharing integration with your Cloud Drive.";
+/* Title shown in a page of the on boarding screens explaining that the user can add contacts to chat and colaborate */
+"Create your Network"="Create your Network";
+/* Description shown in a page of the onboarding screens explaining contacts */
+"Add contacts, create a network, colaborate, make voice and video calls without ever leaving MEGA"="Add contacts, create a network, colaborate, make voice and video calls without ever leaving MEGA";
+/* Title shown in a page of the on boarding screens explaining that the user can backup the photos automatically */
+"Your Photos in the Cloud"="Your Photos in the Cloud";
+/* Description shown in a page of the onboarding screens explaining the camera uploads feature */
+"Camera Uploads is an essential feature for any mobile device and we have got you covered. Create your account now."="Camera Uploads is an essential feature for any mobile device and we have got you covered. Create your account now.";
+/* Button which triggers the initial setup */
+"Setup MEGA"="Setup MEGA";
+/* Detailed explanation of why the user should give some permissions to MEGA */
+"To fully take advantage of your MEGA account we need to ask you some permissions."="To fully take advantage of your MEGA account we need to ask you some permissions.";
+/* Title label that explains that the user is going to be asked for the photos permission */
+"Allow Access to Photos"="Allow Access to Photos";
+/* Detailed explanation of why the user should give permission to access to the photos */
+"To share photos and videos, allow MEGA to access your photos"="To share photos and videos, allow MEGA to access your photos";
+/* Title label that explains that the user is going to be asked for the microphone and camera permission */
+"Enable Microphone and Camera"="Enable Microphone and Camera";
+/* Detailed explanation of why the user should give permission to access to the camera and the microphone */
+"To make encrypted voice and video calls, allow MEGA access to your Camera and Microphone"="To make encrypted voice and video calls, allow MEGA access to your Camera and Microphone";
+/* Title label that explains that the user is going to be asked for the notifications permission */
+"Enable Notifications"="Paganahin ang Notifications";
+/* Detailed explanation of why the user should give permission to deliver notifications */
+"We would like to send you notifications so you receive new messages on your device instantly."="We would like to send you notifications so you receive new messages on your device instantly.";
+/* Button which triggers a request for a specific permission, that have been explained to the user beforehand */
+"Enable Access"="Enable Access";
+/* Confirmation dialog for the button that logs the user out of all sessions except the current one. */
+"Do you want to close all other sessions? This will log you out on all other active sessions except the current one."="Do you want to close all other sessions? This will log you out on all other active sessions except the current one.";

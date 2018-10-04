@@ -56,7 +56,7 @@
     if (self.image) {
         self.cachedImageView.image = self.image;
 
-        if (self.node.name.mnz_isMultimediaPathExtension) {
+        if (self.node.name.mnz_isVideoPathExtension) {
             UIImageView *playImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"playButton"]];
             playImageView.center = _cachedImageView.center;
             [self.cachedImageView addSubview:playImageView];

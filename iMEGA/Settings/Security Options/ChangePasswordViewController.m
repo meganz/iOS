@@ -125,7 +125,7 @@
     [super viewWillAppear:animated];
     
     [[MEGASdkManager sharedMEGASdk] addMEGAGlobalDelegate:self];
-    [[MEGASdkManager sharedMEGASdk] retryPendingConnections];
+    [[MEGAReachabilityManager sharedManager] retryPendingConnections];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(emailHasChanged) name:@"emailHasChanged" object:nil];
 }
@@ -465,15 +465,18 @@
 - (void)textFieldDidEndEditing:(UITextField *)textField {
     switch (textField.tag) {
         case 3:
-            self.currentPasswordView.rightImageView.hidden = YES;
+            self.currentPasswordView.passwordTextField.secureTextEntry = YES;
+            [self.currentPasswordView configureSecureTextEntry];
             break;
             
         case 4:
-            self.theNewPasswordView.rightImageView.hidden = YES;
+            self.theNewPasswordView.passwordTextField.secureTextEntry = YES;
+            [self.theNewPasswordView configureSecureTextEntry];
             break;
             
         case 5:
-            self.confirmPasswordView.rightImageView.hidden = YES;
+            self.confirmPasswordView.passwordTextField.secureTextEntry = YES;
+            [self.confirmPasswordView configureSecureTextEntry];
             break;
             
         default:

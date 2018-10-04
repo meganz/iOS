@@ -31,7 +31,10 @@
 - (void)updateUserWithUserHandle:(uint64_t)userHandle firstname:(NSString *)firstname;
 - (void)updateUserWithUserHandle:(uint64_t)userHandle lastname:(NSString *)lastname;
 - (void)updateUserWithUserHandle:(uint64_t)userHandle email:(NSString *)email;
+- (void)updateUserWithEmail:(NSString *)email firstname:(NSString *)firstname;
+- (void)updateUserWithEmail:(NSString *)email lastname:(NSString *)lastname;
 - (MOUser *)fetchUserWithUserHandle:(uint64_t)userHandle;
+- (MOUser *)fetchUserWithEmail:(NSString *)email;
 
 #pragma mark - MOChatDraft entity
 
