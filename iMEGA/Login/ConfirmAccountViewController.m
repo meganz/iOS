@@ -163,7 +163,8 @@
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField {
-    self.passwordView.rightImageView.hidden = YES;
+    self.passwordView.passwordTextField.secureTextEntry = YES;
+    [self.passwordView configureSecureTextEntry];
 }
 
 #pragma mark - MEGARequestDelegate
