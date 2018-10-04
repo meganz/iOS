@@ -212,6 +212,26 @@ static MEGAStore *_megaStore = nil;
     }
 }
 
+- (void)updateUserWithEmail:(NSString *)email firstname:(NSString *)firstname {
+    MOUser *moUser = [[MEGAStore shareInstance] fetchUserWithEmail:email];
+    
+    if (moUser) {
+        moUser.firstname = firstname;
+        MEGALogDebug(@"Save context - update firstname: %@", firstname);
+        [self saveContext];
+    }
+}
+
+- (void)updateUserWithEmail:(NSString *)email lastname:(NSString *)lastname {
+    MOUser *moUser = [[MEGAStore shareInstance] fetchUserWithEmail:email];
+
+    if (moUser) {
+        moUser.lastname = lastname;
+        MEGALogDebug(@"Save context - update lastname: %@", lastname);
+        [self saveContext];
+    }
+}
+
 - (MOUser *)fetchUserWithUserHandle:(uint64_t)userHandle {
     NSEntityDescription *entityDescription = [NSEntityDescription entityForName:@"User" inManagedObjectContext:self.managedObjectContext];
     
@@ -219,6 +239,21 @@ static MEGAStore *_megaStore = nil;
     [request setEntity:entityDescription];
     
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"base64userHandle == %@", [MEGASdk base64HandleForUserHandle:userHandle]];
+    [request setPredicate:predicate];
+    
+    NSError *error;
+    NSArray *array = [self.managedObjectContext executeFetchRequest:request error:&error];
+    
+    return [array firstObject];
+}
+
+- (MOUser *)fetchUserWithEmail:(NSString *)email {
+    NSEntityDescription *entityDescription = [NSEntityDescription entityForName:@"User" inManagedObjectContext:self.managedObjectContext];
+    
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    [request setEntity:entityDescription];
+    
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"email == %@", email];
     [request setPredicate:predicate];
     
     NSError *error;

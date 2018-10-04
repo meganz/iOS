@@ -16,10 +16,9 @@
 @property (weak, nonatomic) IBOutlet UILabel *megachatSdkVersionLabel;
 @property (weak, nonatomic) IBOutlet UILabel *megachatSdkSHALabel;
 @property (weak, nonatomic) IBOutlet UILabel *acknowledgementsLabel;
+@property (weak, nonatomic) IBOutlet UILabel *viewSourceCodeLabel;
 
 @property (weak, nonatomic) IBOutlet UITableViewCell *versionCell;
-
-@property (weak, nonatomic) IBOutlet UIView *debugView;
 
 @end
 
@@ -39,10 +38,12 @@
     self.versionCell.gestureRecognizers = @[tapGestureRecognizer, longPressGestureRecognizer];
     
     self.sdkVersionLabel.text = AMLocalizedString(@"sdkVersion", @"Title of the label where the SDK version is shown");
-    self.sdkVersionSHALabel.text = @"df9a6947";
+    self.sdkVersionSHALabel.text = @"d902e1a5";
     
     self.megachatSdkVersionLabel.text = AMLocalizedString(@"megachatSdkVersion", @"Title of the label where the MEGAchat SDK version is shown");
-    self.megachatSdkSHALabel.text = @"903f3d3b";
+    self.megachatSdkSHALabel.text = @"b81e8314";
+    
+    self.viewSourceCodeLabel.text = AMLocalizedString(@"View source code", @"Link to the public code of the ap");
     
     [self.acknowledgementsLabel setText:AMLocalizedString(@"acknowledgements", nil)];
 }
@@ -72,44 +73,19 @@
     }
 }
 
-- (void)acknowledgements {
-    if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-        [Helper presentSafariViewControllerWithURL:[NSURL URLWithString:@"https://github.com/meganz/iOS3/blob/master/CREDITS.md"]];
-    }
-}
-
-#pragma mark - UITableViewDataSource
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 2;
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    NSInteger numberOfRows = 0;
-    switch (section) {
-        case 0:
-            numberOfRows = 3;
-            break;
-            
-        case 1:
-            numberOfRows = 1;
-            break;
-    }
-    return numberOfRows;
-}
-
 #pragma mark - UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-
     switch (indexPath.section) {
         case 0: {
             break;
         }
             
         case 1: {
-            if ([indexPath row] == 0) {
-                [self acknowledgements];
+            if (indexPath.row == 0) { //View source code
+                [Helper presentSafariViewControllerWithURL:[NSURL URLWithString:@"https://github.com/meganz/iOS"]];
+            } else if (indexPath.row == 1) { //Acknowledgements
+                [Helper presentSafariViewControllerWithURL:[NSURL URLWithString:@"https://github.com/meganz/iOS3/blob/master/CREDITS.md"]];
             }
             break;
         }

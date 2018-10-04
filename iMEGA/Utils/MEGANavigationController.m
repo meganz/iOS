@@ -16,6 +16,24 @@
 }
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations {
+    /* iOS 9 may crash when calling supportedInterfaceOrientations on UIAlertController.class
+     * When we'd stop supporting iOS 9, the following if-else statement can be safely removed
+     * @see http://www.openradar.me/22385765
+     */
+    if (@available(iOS 10.0, *)) {} else {
+        if (self.topViewController.presentedViewController && [self.topViewController.presentedViewController isKindOfClass:UIAlertController.class]) {
+            if ([self.topViewController respondsToSelector:@selector(supportedInterfaceOrientations)]) {
+                return [self.topViewController supportedInterfaceOrientations];
+            } else {
+                if (UIDevice.currentDevice.iPhone4X || UIDevice.currentDevice.iPhone5X) {
+                    return UIInterfaceOrientationMaskPortrait | UIInterfaceOrientationMaskPortraitUpsideDown;
+                } else {
+                    return UIInterfaceOrientationMaskAll;
+                }
+            }
+        }
+    }
+    
     if (self.topViewController.presentedViewController) {
         if ([self.topViewController.presentedViewController respondsToSelector:@selector(supportedInterfaceOrientations)]) {
             return [self.topViewController.presentedViewController supportedInterfaceOrientations];
@@ -25,7 +43,8 @@
             return [self.topViewController supportedInterfaceOrientations];
         }
     }
-    if ([[UIDevice currentDevice] iPhone4X] || [[UIDevice currentDevice] iPhone5X]) {
+    
+    if (UIDevice.currentDevice.iPhone4X || UIDevice.currentDevice.iPhone5X) {
         return UIInterfaceOrientationMaskPortrait | UIInterfaceOrientationMaskPortraitUpsideDown;
     } else {
         return UIInterfaceOrientationMaskAll;

@@ -13,6 +13,7 @@
 #import "MEGAGetFolderInfoRequestDelegate.h"
 #import "MEGANavigationController.h"
 #import "MEGANode+MNZCategory.h"
+#import "MEGAReachabilityManager.h"
 #import "MEGASdkManager.h"
 #import "NodePropertyTableViewCell.h"
 #import "NodeTappablePropertyTableViewCell.h"
@@ -63,7 +64,7 @@
     self.closeBarButtonItem.title = AMLocalizedString(@"close", @"A button label. The button allows the user to close the conversation.");
     
     [[MEGASdkManager sharedMEGASdk] addMEGAGlobalDelegate:self];
-    [[MEGASdkManager sharedMEGASdk] retryPendingConnections];
+    [[MEGAReachabilityManager sharedManager] retryPendingConnections];
 }
 
 - (void)viewWillAppear:(BOOL)animated {

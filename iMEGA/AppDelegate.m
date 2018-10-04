@@ -16,7 +16,7 @@
 #import "CameraUploads.h"
 #import "Helper.h"
 #import "DevicePermissionsHelper.h"
-#import "MEGASdk+MNZCategory.h"
+#import "MEGAApplication.h"
 #import "MEGAIndexer.h"
 #import "MEGALogger.h"
 #import "MEGANavigationController.h"
@@ -24,6 +24,8 @@
 #import "MEGANodeList+MNZCategory.h"
 #import "MEGAPurchase.h"
 #import "MEGAReachabilityManager.h"
+#import "MEGASdkManager.h"
+#import "MEGASdk+MNZCategory.h"
 #import "MEGAStore.h"
 #import "MEGATransfer+MNZCategory.h"
 #import "NSFileManager+MNZCategory.h"
@@ -73,7 +75,7 @@
 
 #define kFirstRun @"FirstRun"
 
-@interface AppDelegate () <UNUserNotificationCenterDelegate, LTHPasscodeViewControllerDelegate, PKPushRegistryDelegate, MEGAPurchasePricingDelegate> {
+@interface AppDelegate () <PKPushRegistryDelegate, UIApplicationDelegate, UNUserNotificationCenterDelegate, LTHPasscodeViewControllerDelegate, MEGAApplicationDelegate, MEGAChatDelegate, MEGAChatRequestDelegate, MEGAGlobalDelegate, MEGAPurchasePricingDelegate, MEGARequestDelegate, MEGATransferDelegate> {
     BOOL isAccountFirstLogin;
     BOOL isFetchNodesDone;
     
@@ -116,6 +118,10 @@
 
 @property (nonatomic, strong) UIAlertController *sslKeyPinningController;
 
+@property (nonatomic) NSMutableDictionary *backgroundTaskMutableDictionary;
+
+@property (nonatomic, getter=wasAppSuspended) BOOL appSuspended;
+
 @end
 
 @implementation AppDelegate
@@ -154,6 +160,11 @@
     NSString *userAgent = [NSString stringWithFormat:@"%@/%@", kUserAgent, [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"]];
     [MEGASdkManager setUserAgent:userAgent];
     
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"pointToStaging"]) {        
+        [[MEGASdkManager sharedMEGASdk] changeApiUrl:@"https://staging.api.mega.co.nz/" disablepkp:NO];
+        [[MEGASdkManager sharedMEGASdkFolder] changeApiUrl:@"https://staging.api.mega.co.nz/" disablepkp:NO];
+    }
+    
     [[MEGASdkManager sharedMEGASdk] addMEGARequestDelegate:self];
     [[MEGASdkManager sharedMEGASdk] addMEGATransferDelegate:self];
     [[MEGASdkManager sharedMEGASdkFolder] addMEGATransferDelegate:self];
@@ -165,6 +176,8 @@
     [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"presentPasscodeLater"];
     
     [self languageCompatibility];
+    
+    self.backgroundTaskMutableDictionary = [[NSMutableDictionary alloc] init];
     
     [SAMKeychain setAccessibilityType:kSecAttrAccessibleAfterFirstUnlock];
     // Delete username and password if exists - V1
@@ -385,7 +398,12 @@
 
     BOOL pendingTasks = [[[[MEGASdkManager sharedMEGASdk] transfers] size] integerValue] > 0 || [[[[MEGASdkManager sharedMEGASdkFolder] transfers] size] integerValue] > 0 || [[[CameraUploads syncManager] assetsOperationQueue] operationCount] > 0;
     if (pendingTasks) {
-        [self startBackgroundTask];
+        [self beginBackgroundTaskWithName:@"PendingTasks"];
+    }
+    
+    if (self.backgroundTaskMutableDictionary.count == 0) {
+        self.appSuspended = YES;
+        MEGALogDebug(@"App suspended property = YES.");
     }
     
     if (self.privacyView == nil) {
@@ -404,7 +422,15 @@
 - (void)applicationWillEnterForeground:(UIApplication *)application {
     MEGALogDebug(@"Application will enter foreground");
     
-    [[MEGAReachabilityManager sharedManager] reconnectIfIPHasChanged];
+    if (self.wasAppSuspended) {
+        //If the app has been suspended, we assume that the sockets have been closed, so we have to reconnect.
+        [[MEGAReachabilityManager sharedManager] reconnect];
+    } else {
+        [[MEGAReachabilityManager sharedManager] retryOrReconnect];
+    }
+    self.appSuspended = NO;
+    MEGALogDebug(@"App suspended property = NO.");
+    
     [[MEGASdkManager sharedMEGAChatSdk] setBackgroundStatus:NO];
     
     if ([[MEGASdkManager sharedMEGASdk] isLoggedIn]) {
@@ -413,8 +439,10 @@
             [[CameraUploads syncManager] setIsCameraUploadsEnabled:YES];
         }
         
-        MEGAShowPasswordReminderRequestDelegate *showPasswordReminderDelegate = [[MEGAShowPasswordReminderRequestDelegate alloc] initToLogout:NO];
-        [[MEGASdkManager sharedMEGASdk] shouldShowPasswordReminderDialogAtLogout:NO delegate:showPasswordReminderDelegate];
+        if (isFetchNodesDone) {
+            MEGAShowPasswordReminderRequestDelegate *showPasswordReminderDelegate = [[MEGAShowPasswordReminderRequestDelegate alloc] initToLogout:NO];
+            [[MEGASdkManager sharedMEGASdk] shouldShowPasswordReminderDialogAtLogout:NO delegate:showPasswordReminderDelegate];
+        }
     }
     
     [self.privacyView removeFromSuperview];
@@ -426,9 +454,6 @@
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
     MEGALogDebug(@"Application did become active");
-    
-    [[MEGASdkManager sharedMEGASdk] retryPendingConnections];
-    [[MEGASdkManager sharedMEGASdkFolder] retryPendingConnections];
     
     if (self.isSignalActivityRequired) {
         [[MEGASdkManager sharedMEGAChatSdk] signalPresenceActivity];
@@ -668,12 +693,25 @@
     [SVProgressHUD setErrorImage:[UIImage imageNamed:@"hudError"]];
 }
 
-- (void)startBackgroundTask {
-    MEGALogDebug(@"Start background task");
-    bgTask = [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:^{
-        [[UIApplication sharedApplication] endBackgroundTask:bgTask];
-        bgTask = UIBackgroundTaskInvalid;
+- (void)beginBackgroundTaskWithName:(NSString *)name {
+    MEGALogDebug(@"Begin background task with name: %@", name);
+    
+    UIBackgroundTaskIdentifier backgroundTaskIdentifier = [[UIApplication sharedApplication] beginBackgroundTaskWithName:name expirationHandler:^{
+        NSArray *allKeysArray = [self.backgroundTaskMutableDictionary allKeysForObject:name];
+        for (NSUInteger i = 0; i < allKeysArray.count; i++) {
+            NSNumber *expiringBackgroundTaskIdentifierNumber = [allKeysArray objectAtIndex:i];
+            [[UIApplication sharedApplication] endBackgroundTask:expiringBackgroundTaskIdentifierNumber.unsignedIntegerValue];
+            
+            [self.backgroundTaskMutableDictionary removeObjectForKey:expiringBackgroundTaskIdentifierNumber];
+            if (self.backgroundTaskMutableDictionary.count == 0) {
+                self.appSuspended = YES;
+                MEGALogDebug(@"App suspended property = YES.");
+            }
+        }
+        MEGALogDebug(@"Ended all background tasks with name: %@", name);
     }];
+    
+    [self.backgroundTaskMutableDictionary setObject:name forKey:[NSNumber numberWithUnsignedInteger:backgroundTaskIdentifier]];
 }
 
 - (void)showCameraUploadsPopUp {
@@ -1783,7 +1821,10 @@ void uncaughtExceptionHandler(NSException *exception) {
 
 - (void)pushRegistry:(PKPushRegistry *)registry didReceiveIncomingPushWithPayload:(PKPushPayload *)payload forType:(NSString *)type {
     MEGALogDebug(@"Did receive incoming push with payload: %@", [payload dictionaryPayload]);
-    [self startBackgroundTask];
+    
+    if ([[UIApplication sharedApplication] applicationState] == UIApplicationStateBackground) {
+        [self beginBackgroundTaskWithName:@"VoIP"];
+    }
 }
 
 #pragma mark - UNUserNotificationCenterDelegate
@@ -2359,6 +2400,25 @@ void uncaughtExceptionHandler(NSException *exception) {
                     
                     if (request.paramType == MEGAUserAttributeLastname) {
                         [[MEGAStore shareInstance] insertUserWithUserHandle:user.handle firstname:nil lastname:request.text email:user.email];
+                    }
+                }
+            } else {
+                MOUser *moUser = [[MEGAStore shareInstance] fetchUserWithEmail:request.email];
+                if (moUser) {
+                    if (request.paramType == MEGAUserAttributeFirstname && ![request.text isEqualToString:moUser.firstname]) {
+                        [[MEGAStore shareInstance] updateUserWithEmail:request.email firstname:request.text];
+                    }
+                    
+                    if (request.paramType == MEGAUserAttributeLastname && ![request.text isEqualToString:moUser.lastname]) {
+                        [[MEGAStore shareInstance] updateUserWithEmail:request.email lastname:request.text];
+                    }
+                } else {
+                    if (request.paramType == MEGAUserAttributeFirstname) {
+                        [[MEGAStore shareInstance] insertUserWithUserHandle:~(uint64_t)0 firstname:request.text lastname:nil email:request.email];
+                    }
+                    
+                    if (request.paramType == MEGAUserAttributeLastname) {
+                        [[MEGAStore shareInstance] insertUserWithUserHandle:~(uint64_t)0 firstname:nil lastname:request.text email:request.email];
                     }
                 }
             }

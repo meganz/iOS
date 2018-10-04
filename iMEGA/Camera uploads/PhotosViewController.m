@@ -92,7 +92,7 @@
     
     [self setEditing:NO animated:NO];
     
-    [[MEGASdkManager sharedMEGASdk] retryPendingConnections];
+    [[MEGAReachabilityManager sharedManager] retryPendingConnections];
     [[MEGASdkManager sharedMEGASdk] addMEGARequestDelegate:self];
     [[MEGASdkManager sharedMEGASdk] addMEGATransferDelegate:self];
     [[MEGASdkManager sharedMEGASdk] addMEGAGlobalDelegate:self];
@@ -542,7 +542,7 @@
     cell.thumbnailSelectionOverlayView.layer.borderColor = [UIColor.mnz_redMain CGColor];
     cell.thumbnailSelectionOverlayView.hidden = [self.selectedItemsDictionary objectForKey:[NSNumber numberWithLongLong:node.handle]] == nil;
 
-    if (node.name.mnz_videoPathExtension && node.duration > -1) {
+    if (node.name.mnz_isVideoPathExtension && node.duration > -1) {
         cell.thumbnailVideoDurationLabel.text = [NSString mnz_stringFromTimeInterval:node.duration];
     }
     
