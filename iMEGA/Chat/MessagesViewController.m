@@ -65,8 +65,8 @@ const NSUInteger kMaxMessagesToLoad = 256;
 @property (nonatomic, assign) BOOL isFirstLoad;
 
 @property (nonatomic, strong) NSTimer *sendTypingTimer;
-@property (strong, nonatomic) NSMutableArray<NSString *> *whoIsTypingMutableArray;
-@property (strong, nonatomic) NSMutableDictionary<NSString *, NSTimer *> *whoIsTypingTimersMutableDictionary;
+@property (strong, nonatomic) NSMutableArray<NSNumber *> *whoIsTypingMutableArray;
+@property (strong, nonatomic) NSMutableDictionary<NSNumber *, NSTimer *> *whoIsTypingTimersMutableDictionary;
 
 @property (nonatomic, strong) UIBarButtonItem *unreadBarButtonItem;
 @property (nonatomic, strong) UILabel *unreadLabel;
@@ -737,7 +737,7 @@ const NSUInteger kMaxMessagesToLoad = 256;
 }
 
 - (void)userTypingTimerFireMethod:(NSTimer *)timer {
-    [self removeEmailFromTypingIndicator:timer.userInfo];
+    [self removeUserHandleFromTypingIndicator:timer.userInfo];
 }
 
 - (void)doNothing {}
@@ -950,10 +950,10 @@ const NSUInteger kMaxMessagesToLoad = 256;
             break;
             
         case 1: {
-            NSString *firstUserEmail = [self.whoIsTypingMutableArray objectAtIndex:0];
-            NSString *firstUserName =  [self peerFirstNameForEmail:firstUserEmail];
+            NSNumber *firstUserHandle = [self.whoIsTypingMutableArray objectAtIndex:0];
+            NSString *firstUserName =  [self.chatRoom peerFirstnameByHandle:firstUserHandle.unsignedLongLongValue];
             
-            self.footerView.typingLabel.text = [NSString stringWithFormat:AMLocalizedString(@"isTyping", @"A typing indicator in the chat. Please leave the %@ which will be automatically replaced with the user's name at runtime."), (firstUserName.length ? firstUserName : firstUserEmail)];
+            self.footerView.typingLabel.text = [NSString stringWithFormat:AMLocalizedString(@"isTyping", @"A typing indicator in the chat. Please leave the %@ which will be automatically replaced with the user's name at runtime."), (firstUserName.length ? firstUserName : [self.chatRoom peerEmailByHandle:firstUserHandle.unsignedLongLongValue])];
             break;
         }
             
@@ -973,20 +973,15 @@ const NSUInteger kMaxMessagesToLoad = 256;
     }
 }
 
-- (NSString *)peerFirstNameForEmail:(NSString *)email {
-    uint64_t userHandle = [[MEGASdkManager sharedMEGAChatSdk] userHandleByEmail:email];
-    return [self.chatRoom peerFirstnameByHandle:userHandle];
-}
-
 - (NSString *)twoOrMoreUsersAreTypingString {
-    NSString *firstUserEmail = [self.whoIsTypingMutableArray objectAtIndex:0];
-    NSString *secondUserEmail = [self.whoIsTypingMutableArray objectAtIndex:1];
+    NSNumber *firstUserHandle = [self.whoIsTypingMutableArray objectAtIndex:0];
+    NSNumber *secondUserHandle = [self.whoIsTypingMutableArray objectAtIndex:1];
     
-    NSString *firstUserFirstName = [self peerFirstNameForEmail:firstUserEmail];
-    NSString *whoIsTypingString = firstUserFirstName.length ? firstUserFirstName : firstUserEmail;
+    NSString *firstUserFirstName = [self.chatRoom peerFirstnameByHandle:firstUserHandle.unsignedLongLongValue];
+    NSString *whoIsTypingString = firstUserFirstName.length ? firstUserFirstName : [self.chatRoom peerEmailByHandle:firstUserHandle.unsignedLongLongValue];
     
-    NSString *secondUserFirstName = [self peerFirstNameForEmail:secondUserEmail];
-    whoIsTypingString = [whoIsTypingString stringByAppendingString:[NSString stringWithFormat:@", %@", (secondUserFirstName.length ? secondUserFirstName : secondUserEmail)]];
+    NSString *secondUserFirstName = [self.chatRoom peerFirstnameByHandle:secondUserHandle.unsignedLongLongValue];
+    whoIsTypingString = [whoIsTypingString stringByAppendingString:[NSString stringWithFormat:@", %@", (secondUserFirstName.length ? secondUserFirstName : [self.chatRoom peerEmailByHandle:firstUserHandle.unsignedLongLongValue])]];
     
     NSString *twoOrMoreUsersAreTypingString;
     if (self.whoIsTypingMutableArray.count == 2) {
@@ -998,9 +993,9 @@ const NSUInteger kMaxMessagesToLoad = 256;
     return [twoOrMoreUsersAreTypingString stringByReplacingOccurrencesOfString:@"%1$s" withString:whoIsTypingString];
 }
 
-- (void)removeEmailFromTypingIndicator:(NSString *)email {
-    [self.whoIsTypingMutableArray removeObject:email];
-    [self.whoIsTypingTimersMutableDictionary removeObjectForKey:email];
+- (void)removeUserHandleFromTypingIndicator:(NSNumber *)userHandle {
+    [self.whoIsTypingMutableArray removeObject:userHandle];
+    [self.whoIsTypingTimersMutableDictionary removeObjectForKey:userHandle];
     
     [self setTypingIndicator];
 }
@@ -2433,9 +2428,9 @@ const NSUInteger kMaxMessagesToLoad = 256;
             
         case MEGAChatRoomChangeTypeUserTyping: {
             if (chat.userTypingHandle != api.myUserHandle) {
-                NSString *userTypingEmail = [chat peerEmailByHandle:chat.userTypingHandle];
-                if (![self.whoIsTypingMutableArray containsObject:userTypingEmail]) {
-                    [self.whoIsTypingMutableArray addObject:userTypingEmail];
+                NSNumber *userTypingHandle = [NSNumber numberWithUnsignedLongLong:chat.userTypingHandle];
+                if (![self.whoIsTypingMutableArray containsObject:userTypingHandle]) {
+                    [self.whoIsTypingMutableArray addObject:userTypingHandle];
                 }
                 
                 [self setTypingIndicator];
@@ -2445,12 +2440,12 @@ const NSUInteger kMaxMessagesToLoad = 256;
                     [self scrollToBottomAnimated:YES];
                 }
                 
-                NSTimer *userTypingTimer = [self.whoIsTypingTimersMutableDictionary objectForKey:userTypingEmail];
+                NSTimer *userTypingTimer = [self.whoIsTypingTimersMutableDictionary objectForKey:userTypingHandle];
                 if (userTypingTimer) {
                     [userTypingTimer invalidate];
                 }
-                userTypingTimer = [NSTimer scheduledTimerWithTimeInterval:5.0 target:self selector:@selector(userTypingTimerFireMethod:) userInfo:userTypingEmail repeats:NO];
-                [self.whoIsTypingTimersMutableDictionary setObject:userTypingTimer forKey:userTypingEmail];
+                userTypingTimer = [NSTimer scheduledTimerWithTimeInterval:5.0 target:self selector:@selector(userTypingTimerFireMethod:) userInfo:userTypingHandle repeats:NO];
+                [self.whoIsTypingTimersMutableDictionary setObject:userTypingTimer forKey:userTypingHandle];
             }
             
             break;
@@ -2463,7 +2458,7 @@ const NSUInteger kMaxMessagesToLoad = 256;
             
         case MEGAChatRoomChangeTypeUserStopTyping: {
             if (chat.userTypingHandle != api.myUserHandle) {
-                [self removeEmailFromTypingIndicator:[chat peerEmailByHandle:chat.userTypingHandle]];
+                [self removeUserHandleFromTypingIndicator:[NSNumber numberWithUnsignedLongLong:chat.userTypingHandle]];
             }
             break;
         }
