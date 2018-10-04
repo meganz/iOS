@@ -178,7 +178,7 @@
     if (self.pendingAssets > self.unsupportedAssets) {
         [[NSProcessInfo processInfo] performExpiringActivityWithReason:@"Share Extension activity in progress" usingBlock:^(BOOL expired) {
             if (expired) {
-                [[MEGASdkManager sharedMEGAChatSdk] saveCurrentState];
+                [self saveStateAndLogout];
                 dispatch_semaphore_signal(self.semaphore);
                 [self.extensionContext cancelRequestWithError:[NSError errorWithDomain:@"Share Extension suspended" code:-1 userInfo:nil]];
             } else {
@@ -303,10 +303,18 @@
                 MEGALogError(@"Init Karere with session failed");
                 [[MEGASdkManager sharedMEGAChatSdk] logout];
             }
+        } else {
+            [[MEGAReachabilityManager sharedManager] reconnect];
         }
     } else {
         [[MEGALogger sharedLogger] enableSDKlogs];
     }
+}
+
+- (void)saveStateAndLogout {
+    [[MEGASdkManager sharedMEGAChatSdk] saveCurrentState];
+    [[MEGASdkManager sharedMEGASdk] localLogout];
+    [[MEGASdkManager sharedMEGAChatSdk] localLogout];
 }
 
 - (void)requireLogin {
@@ -448,6 +456,7 @@
                          self.view.transform = CGAffineTransformMakeTranslation(0, self.view.frame.size.height);
                      }
                      completion:^(BOOL finished) {
+                         [self saveStateAndLogout];
                          if (completion) {
                              completion();
                          }

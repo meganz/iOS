@@ -18,13 +18,7 @@
 #import "TwoFactorAuthenticationViewController.h"
 #import "TwoFactorAuthentication.h"
 
-@interface AdvancedTableViewController () <MEGAGlobalDelegate, MEGARequestDelegate> {
-    NSByteCountFormatter *byteCountFormatter;
-}
-
-@property (weak, nonatomic) IBOutlet UILabel *clearOfflineFilesLabel;
-@property (weak, nonatomic) IBOutlet UILabel *clearCacheLabel;
-@property (weak, nonatomic) IBOutlet UILabel *emptyRubbishBinLabel;
+@interface AdvancedTableViewController () <MEGARequestDelegate>
 
 @property (weak, nonatomic) IBOutlet UILabel *savePhotosLabel;
 @property (weak, nonatomic) IBOutlet UILabel *saveVideosLabel;
@@ -37,12 +31,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *dontUseHttpLabel;
 @property (weak, nonatomic) IBOutlet UISwitch *useHttpsOnlySwitch;
 
-// Photos taken and videos recorded from within the app
 @property (weak, nonatomic) IBOutlet UILabel *saveMediaInGalleryLabel;
 @property (weak, nonatomic) IBOutlet UISwitch *saveMediaInGallerySwitch;
-
-@property (nonatomic, copy) NSString *offlineSizeString;
-@property (nonatomic, copy) NSString *cacheSizeString;
 
 @property (getter=isTwoFactorAuthenticationEnabled) BOOL twoFactorAuthenticationEnabled;
 
@@ -55,15 +45,7 @@
     
     [self.navigationItem setTitle:AMLocalizedString(@"advanced", nil)];
     
-    byteCountFormatter = [[NSByteCountFormatter alloc] init];
-    [byteCountFormatter setCountStyle:NSByteCountFormatterCountStyleMemory];
-    
-    [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"AdvancedCell"];
-    
-    self.cancelAccountLabel.text = AMLocalizedString(@"cancelYourAccount", @"In 'My account', when user want to delete/remove/cancel account will click button named 'Cancel your account'");
-    
-    _offlineSizeString = @"...";
-    _cacheSizeString = @"...";
+     self.cancelAccountLabel.text = AMLocalizedString(@"cancelYourAccount", @"In 'My account', when user want to delete/remove/cancel account will click button named 'Cancel your account'");
     
     [self checkAuthorizationStatus];
     
@@ -76,13 +58,10 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    [self.clearOfflineFilesLabel setText:AMLocalizedString(@"clearOfflineFiles", @"Section title where you can 'Clear Offline files' of your MEGA app")];
-    [self.clearCacheLabel setText:AMLocalizedString(@"clearCache", @"Section title where you can 'Clear Cache' of your MEGA app")];
-    [self.emptyRubbishBinLabel setText:AMLocalizedString(@"emptyRubbishBin", @"Section title where you can 'Empty Rubbish Bin' of your MEGA account")];
     [self.dontUseHttpLabel setText:AMLocalizedString(@"dontUseHttp", @"Text next to a switch that allows disabling the HTTP protocol for transfers")];
-    [self.savePhotosLabel setText:AMLocalizedString(@"saveImagesInGallery", @"Section title where you can enable the option 'Save images in gallery'")];
-    [self.saveVideosLabel setText:AMLocalizedString(@"saveVideosInGallery", @"Section title where you can enable the option 'Save videos in gallery'")];
-    [self.saveMediaInGalleryLabel setText:AMLocalizedString(@"saveMediaInGallery", @"Section title where you can enable the option 'Save media in gallery'")];
+    self.savePhotosLabel.text = AMLocalizedString(@"Save Images in Library", @"Settings section title where you can enable the option to 'Save Images in Library'");
+    self.saveVideosLabel.text = AMLocalizedString(@"Save Videos in Library", @"Settings section title where you can enable the option to 'Save Videos in Library'");
+    self.saveMediaInGalleryLabel.text = AMLocalizedString(@"Save in Library", @"Settings section title where you can enable the option to 'Save in Library' the images or videos taken from your camera in the MEGA app");
     
     BOOL useHttpsOnly = [[[NSUserDefaults alloc] initWithSuiteName:@"group.mega.ios"] boolForKey:@"useHttpsOnly"];
     [self.useHttpsOnlySwitch setOn:useHttpsOnly];
@@ -96,36 +75,7 @@
     BOOL isSaveMediaCapturedToGalleryEnabled = [[NSUserDefaults standardUserDefaults] boolForKey:@"isSaveMediaCapturedToGalleryEnabled"];
     [self.saveMediaInGallerySwitch setOn:isSaveMediaCapturedToGalleryEnabled];
     
-    [[MEGASdkManager sharedMEGASdk] addMEGAGlobalDelegate:self];
-    
-    [self reloadUI];
-}
-
-- (void)viewWillDisappear:(BOOL)animated {
-    [super viewWillDisappear:animated];
-    
-    [[MEGASdkManager sharedMEGASdk] removeMEGAGlobalDelegate:self];
-}
-
-- (void)reloadUI {
-    dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
-        unsigned long long offlineSize = [Helper sizeOfFolderAtPath:[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0]];
-        self.offlineSizeString = [byteCountFormatter stringFromByteCount:offlineSize];
-        self.offlineSizeString = [self formatStringFromByteCountFormatter:self.offlineSizeString];
-        
-        unsigned long long thumbnailsSize = [Helper sizeOfFolderAtPath:[Helper pathForSharedSandboxCacheDirectory:@"thumbnailsV3"]];
-        unsigned long long previewsSize = [Helper sizeOfFolderAtPath:[[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"previewsV3"]];
-        unsigned long long temporaryDirectory = [Helper sizeOfFolderAtPath:NSTemporaryDirectory()];
-        unsigned long long cacheSize = thumbnailsSize + previewsSize + temporaryDirectory;
-        
-        self.cacheSizeString = [byteCountFormatter stringFromByteCount:cacheSize];
-        self.cacheSizeString = [self formatStringFromByteCountFormatter:self.cacheSizeString];
-        
-        dispatch_async(dispatch_get_main_queue(), ^(void){
-            [self.tableView reloadData];
-        });
-    });
-    
+    [self.tableView reloadData];
 }
 
 #pragma mark - Private
@@ -152,25 +102,6 @@
         default:
             break;
     }
-}
-
-- (void)deleteFolderContentsInPath:(NSString *)folderPath {
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-    NSArray *fileArray = [fileManager contentsOfDirectoryAtPath:folderPath error:nil];
-    NSError *error = nil;
-    for (NSString *filename in fileArray)  {
-        if (![fileManager removeItemAtPath:[folderPath stringByAppendingPathComponent:filename] error:&error] ) {
-            MEGALogError(@"Remove item at path failed with error: %@", error);
-        }
-    }
-}
-
-- (NSString *)formatStringFromByteCountFormatter:(NSString *)stringFromByteCount {
-    NSArray *componentsSeparatedByStringArray = [stringFromByteCount componentsSeparatedByString:@" "];
-    NSString *countString = [NSString mnz_stringWithoutUnitOfComponents:componentsSeparatedByStringArray];
-    NSString *unitString = [NSString mnz_stringWithoutCountOfComponents:componentsSeparatedByStringArray];
-    
-    return [NSString stringWithFormat:@"%@ %@", countString, unitString];
 }
 
 - (void)processStarted {
@@ -203,102 +134,52 @@
 - (IBAction)mediaInGallerySwitchChanged:(UISwitch *)sender {
     [DevicePermissionsHelper photosPermissionWithCompletionHandler:^(BOOL granted) {
         if (granted) {
-            [[NSUserDefaults standardUserDefaults] setBool:sender.on forKey:@"isSaveMediaCapturedToGalleryEnabled"];
+            [[NSUserDefaults standardUserDefaults] setBool:self.saveMediaInGallerySwitch.isOn forKey:@"isSaveMediaCapturedToGalleryEnabled"];
             [[NSUserDefaults standardUserDefaults] synchronize];
-        } else {
-            if (self.saveMediaInGallerySwitch.isOn) {
-                [DevicePermissionsHelper warnAboutPhotosPermission];
-                [self.saveMediaInGallerySwitch setOn:NO animated:YES];
-            } else {
-                [[NSUserDefaults standardUserDefaults] setBool:sender.on forKey:@"isSaveMediaCapturedToGalleryEnabled"];
-                [[NSUserDefaults standardUserDefaults] synchronize];
-            }
         }
     }];
 }
 
 #pragma mark - UITableViewDataSource
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 7;
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    NSInteger numberOfRows = 1;
-    if (section == 4) {
-        numberOfRows = 2;
-    }
-    return numberOfRows;
-}
-
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     NSString *titleHeader;
     switch (section) {
-        case 0: //On your device
-            titleHeader = AMLocalizedString(@"onYourDevice", @"Title header that refers to where do you do the actions 'Clear Offlines files' and 'Clear cache' inside 'Settings' -> 'Advanced' section");
-            break;
-            
-        case 2: //On MEGA
-            titleHeader = AMLocalizedString(@"onMEGA", @"Title header that refers to where do you do the action 'Empty Rubbish Bin' inside 'Settings' -> 'Advanced' section");
-            break;
-            
-        case 3: //TRANSFERS
+        case 0: //Transfers
             titleHeader = AMLocalizedString(@"transfers", @"Title of the Transfers section");
             break;
             
-        case 4: //Downloads
-            titleHeader = AMLocalizedString(@"imageAndVideoDownloadsHeader", @"Title header that refers to where do you enable the options 'Save images in gallery' and 'Save videos in gallery' inside 'Settings' -> 'Advanced' section");
+        case 1: //Downloads Options
+            titleHeader = AMLocalizedString(@"Download options", @"Title of the dialog displayed the first time that a user want to download a image. Asks if wants to export image files to the photo album after download in future and informs that user can change this option afterwards - (String as short as possible).");
             break;
             
-        case 5: //Photos taken and video recorded from within the app
-            titleHeader = AMLocalizedString(@"photosTakenAndVideoRecordedFromWithinTheAppHeader", @"Title header that refers to where do you enable the options 'Save media in gallery -> 'Advanced' section");
+        case 2: //Camera
+            titleHeader = AMLocalizedString(@"Camera", @"Setting associated with the 'Camera' of the device");
             break;
     }
+    
     return titleHeader;
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section {
     NSString *titleFooter;
     switch (section) {
-        case 0: { //Offline
-            NSString *currentlyUsingString = AMLocalizedString(@"currentlyUsing", @"Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped");
-            currentlyUsingString = [currentlyUsingString stringByReplacingOccurrencesOfString:@"%s" withString:self.offlineSizeString];
-            titleFooter = currentlyUsingString;
-            break;
-        }
-            
-        case 1: { //Cache
-            NSString *currentlyUsingString = AMLocalizedString(@"currentlyUsing", @"Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped");
-            currentlyUsingString = [currentlyUsingString stringByReplacingOccurrencesOfString:@"%s" withString:self.cacheSizeString];
-            titleFooter = currentlyUsingString;
-            break;
-        }
-            
-        case 2: { //Rubbish Bin
-            NSNumber *rubbishBinSizeNumber = [[MEGASdkManager sharedMEGASdk] sizeForNode:[[MEGASdkManager sharedMEGASdk] rubbishNode]];
-            NSString *stringFromByteCount = [byteCountFormatter stringFromByteCount:rubbishBinSizeNumber.unsignedLongLongValue];
-            stringFromByteCount = [self formatStringFromByteCountFormatter:stringFromByteCount];
-            NSString *currentlyUsingString = AMLocalizedString(@"currentlyUsing", @"Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped");
-            currentlyUsingString = [currentlyUsingString stringByReplacingOccurrencesOfString:@"%s" withString:stringFromByteCount];
-            titleFooter = currentlyUsingString;
-            break;
-        }
-            
-        case 3: { //TRANSFERS
+        case 0: { //Transfers
             titleFooter = AMLocalizedString(@"transfersSectionFooter", @"Footer text that explains when disabling the HTTP protocol for transfers may be useful");
             break;
         }
             
-        case 4: { //Image and videos downloads
-            titleFooter = AMLocalizedString(@"imageAndVideoDownloadsFooter", @"Footer text that explain what happen if the options 'Save videos in gallery’ and 'Save images in gallery’ are enabled");
+        case 1: { //Download options
+            titleFooter = AMLocalizedString(@"Images and/or videos downloaded will be stored in the device’s media library instead of the Offline section.", @"Footer text shown under the settings for download options 'Save Images/Videos in Library'");
             break;
         }
             
-        case 5: { //Photos taken and video recorded from within the app
-            titleFooter = AMLocalizedString(@"photosTakenAndVideoRecordedFromWithinTheAppFooter", @"Footer text that explain what happen if the options 'Save media in gallery’ is enabled");
+        case 2: { //Camera
+            titleFooter = AMLocalizedString(@"Save a copy of the images and videos taken from the MEGA app in your device’s media library.", @"Footer text shown under the Camera setting to explain the option 'Save in Library'");
             break;
         }
     }
+    
     return titleFooter;
 }
 
@@ -306,55 +187,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     switch (indexPath.section) {
-        case 0: { //Offline
-            NSString *offlinePathString = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-            [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
-            [SVProgressHUD show];
-            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
-                [self deleteFolderContentsInPath:offlinePathString];
-                dispatch_async(dispatch_get_main_queue(), ^(void){
-                    [SVProgressHUD dismiss];
-                    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
-                    [[MEGAStore shareInstance] removeAllOfflineNodes];
-                    [self reloadUI];
-                });
-            });
-            break;
-        }
-            
-        case 1: { //Cache
-            NSString *thumbnailsPathString = [Helper pathForSharedSandboxCacheDirectory:@"thumbnailsV3"];
-            NSString *previewsPathString = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"previewsV3"];
-            
-            [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
-            [SVProgressHUD show];
-            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
-                [self deleteFolderContentsInPath:thumbnailsPathString];
-                [self deleteFolderContentsInPath:previewsPathString];
-                [self deleteFolderContentsInPath:NSTemporaryDirectory()];
-                dispatch_async(dispatch_get_main_queue(), ^(void){
-                    [SVProgressHUD dismiss];
-                    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
-                    [self reloadUI];
-                });
-            });
-            
-            break;
-        }
-            
-        case 2: { //Rubbish Bin
-            if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-                UIAlertController *emptyRubbishBinAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"emptyRubbishBinAlertTitle", nil) message:nil preferredStyle:UIAlertControllerStyleAlert];
-                [emptyRubbishBinAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:nil]];
-                [emptyRubbishBinAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-                    [[MEGASdkManager sharedMEGASdk] cleanRubbishBin];
-                }]];
-                [self presentViewController:emptyRubbishBinAlertController animated:YES completion:nil];
-            }
-            break;
-        }
-            
-        case 6: { //Cancel account
+        case 3: { //Cancel account
             if ([MEGAReachabilityManager isReachableHUDIfNot]) {
                 UIAlertController *cancelAccountAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"youWillLooseAllData", @"Message that is shown when the user click on 'Cancel your account' to confirm that he's aware that his data will be deleted.") message:nil preferredStyle:UIAlertControllerStyleAlert];
                 [cancelAccountAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:nil]];
@@ -398,12 +231,6 @@
         default:
             break;
     }
-}
-
-#pragma mark - MEGAGlobalDelegate
-
-- (void)onNodesUpdate:(MEGASdk *)api nodeList:(MEGANodeList *)nodeList {
-    [self.tableView reloadData];
 }
 
 @end

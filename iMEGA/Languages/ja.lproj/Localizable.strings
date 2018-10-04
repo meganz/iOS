@@ -720,20 +720,6 @@
 "dontUseHttp"="HTTPを使用しない";
 /* Footer text that explains when disabling the HTTP protocol for transfers may be useful */
 "transfersSectionFooter"="転送が開始されない場合にのみ、このオプションを有効にします。通常の状況では、転送はすべてすでに暗号化されているため、HTTPで問題ありません。";
-/* Title header that refers to where you enable the options 'Save images in gallery' and 'Save videos in gallery' inside 'Settings' -> 'Advanced' section" */
-"imageAndVideoDownloadsHeader"="イメージとビデオダウンロード";
-/* Title header that refers to where do you enable the options 'Save media in gallery -> 'Advanced' section. String as short as possible */
-"photosTakenAndVideoRecordedFromWithinTheAppHeader"="アプリ内でキャプチャされたメディア";
-/* Section title where you can enable the option 'Save images in gallery' */
-"saveImagesInGallery"="ギャラリーに画像を保存する";
-/* Section title where you can enable the option 'Save videos in gallery' */
-"saveVideosInGallery"="ギャラリーに動画を保存する";
-/* Section title where you can enable the option 'Save media in gallery' */
-"saveMediaInGallery"="ギャラリーにメディアを保存";
-/* Footer text that explain what happen if the options 'Save videos in gallery’ and 'Save images in gallery’ are enabled */
-"imageAndVideoDownloadsFooter"="iOS対応の画像と動画をあなたの端末のギャラリーに保存します（注意：画像と動画はオフラインで保存されません）。";
-/* Footer text that explain what happen if the options 'Save media in gallery’ is enabled */
-"photosTakenAndVideoRecordedFromWithinTheAppFooter"="このオプションを有効にすると、アプリ内で撮影した写真や動画をギャラリーに保存できます";
 /* Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped */
 "currentlyUsing"="利用している領域 %s";
 /* In 'My account', when user want to delete/remove/cancel account will click button named 'Cancel your account' */
@@ -1644,3 +1630,5 @@
 "We would like to send you notifications so you receive new messages on your device instantly."="あなたに通知を送信し、新しいメッセージを瞬時に端末で受信いただけるようにしたいと思います。";
 /* Button which triggers a request for a specific permission, that have been explained to the user beforehand */
 "Enable Access"="アクセスを有効にする";
+/* Confirmation dialog for the button that logs the user out of all sessions except the current one. */
+"Do you want to close all other sessions? This will log you out on all other active sessions except the current one."="他のセッションをすべて終了しますか？　これにより、現在のセッション以外のすべてのアクティブなセッションでログアウトされます。";
