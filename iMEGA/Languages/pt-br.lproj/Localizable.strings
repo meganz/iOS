@@ -720,20 +720,6 @@
 "dontUseHttp"="Não usar HTTP";
 /* Footer text that explains when disabling the HTTP protocol for transfers may be useful */
 "transfersSectionFooter"="Ative essa opção somente se a sua transferência não começar. Em circunstâncias normais, HTTP é suficiente, pois todas as transferências já estão criptografadas.";
-/* Title header that refers to where you enable the options 'Save images in gallery' and 'Save videos in gallery' inside 'Settings' -> 'Advanced' section" */
-"imageAndVideoDownloadsHeader"="Downloads de imagens e vídeos";
-/* Title header that refers to where do you enable the options 'Save media in gallery -> 'Advanced' section. String as short as possible */
-"photosTakenAndVideoRecordedFromWithinTheAppHeader"="Arquivos multimídia criados no aplicativo";
-/* Section title where you can enable the option 'Save images in gallery' */
-"saveImagesInGallery"="Salvar imagens na galeria";
-/* Section title where you can enable the option 'Save videos in gallery' */
-"saveVideosInGallery"="Salvar vídeos na galeria";
-/* Section title where you can enable the option 'Save media in gallery' */
-"saveMediaInGallery"="Salvar arquivos multimídia na galeria";
-/* Footer text that explain what happen if the options 'Save videos in gallery’ and 'Save images in gallery’ are enabled */
-"imageAndVideoDownloadsFooter"="Salvar imagens e vídeos compatíveis com iOS na galeria do seu dispositivo (aviso: as imagens e os vídeos não serão salvos em Offline).";
-/* Footer text that explain what happen if the options 'Save media in gallery’ is enabled */
-"photosTakenAndVideoRecordedFromWithinTheAppFooter"="Ative esta opção para salvar na galeria as fotos e os vídeos criados no aplicativo";
 /* Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped */
 "currentlyUsing"="Atualmente usando %s";
 /* In 'My account', when user want to delete/remove/cancel account will click button named 'Cancel your account' */
@@ -1625,7 +1611,7 @@
 /* Title shown in a page of the on boarding screens explaining that the user can backup the photos automatically */
 "Your Photos in the Cloud"="Your Photos in the Cloud";
 /* Description shown in a page of the onboarding screens explaining the camera uploads feature */
-"Camera Uploads is an essential feature for any mobile device and we got you covered. Create your account now."="Camera Uploads is an essential feature for any mobile device and we got you covered. Create your account now.";
+"Camera Uploads is an essential feature for any mobile device and we have got you covered. Create your account now."="Camera Uploads is an essential feature for any mobile device and we have got you covered. Create your account now.";
 /* Button which triggers the initial setup */
 "Setup MEGA"="Setup MEGA";
 /* Detailed explanation of why the user should give some permissions to MEGA */
@@ -1633,14 +1619,16 @@
 /* Title label that explains that the user is going to be asked for the photos permission */
 "Allow Access to Photos"="Allow Access to Photos";
 /* Detailed explanation of why the user should give permission to access to the photos */
-"To share photos and videos allow MEGA to access your photos"="To share photos and videos allow MEGA to access your photos";
+"To share photos and videos, allow MEGA to access your photos"="To share photos and videos, allow MEGA to access your photos";
 /* Title label that explains that the user is going to be asked for the microphone and camera permission */
 "Enable Microphone and Camera"="Enable Microphone and Camera";
 /* Detailed explanation of why the user should give permission to access to the camera and the microphone */
-"To make encrypted voice and video calls allow MEGA access to your Camera and Microphone"="To make encrypted voice and video calls allow MEGA access to your Camera and Microphone";
+"To make encrypted voice and video calls, allow MEGA access to your Camera and Microphone"="To make encrypted voice and video calls, allow MEGA access to your Camera and Microphone";
 /* Title label that explains that the user is going to be asked for the notifications permission */
 "Enable Notifications"="Notificações";
 /* Detailed explanation of why the user should give permission to deliver notifications */
 "We would like to send you notifications so you receive new messages on your device instantly."="We would like to send you notifications so you receive new messages on your device instantly.";
 /* Button which triggers a request for a specific permission, that have been explained to the user beforehand */
 "Enable Access"="Enable Access";
+/* Confirmation dialog for the button that logs the user out of all sessions except the current one. */
+"Do you want to close all other sessions? This will log you out on all other active sessions except the current one."="Você quer fechar todas as outras sessões? Essa ação fará logout de todas as outras sessões ativas, exceto a atual.";
