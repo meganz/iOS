@@ -15,6 +15,7 @@
 #import "MEGARenameRequestDelegate.h"
 #import "MEGAShareRequestDelegate.h"
 #import "MEGAStore.h"
+#import "NSFileManager+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 #import "UIApplication+MNZCategory.h"
 
@@ -158,6 +159,20 @@
         } else {
             return NO;
         }
+    }
+}
+
+- (void)mnz_saveToPhotosWithApi:(MEGASdk *)api;  {
+    NSString *temporaryPath = [[NSTemporaryDirectory() stringByAppendingPathComponent:self.base64Handle] stringByAppendingPathComponent:self.name];
+    NSString *temporaryFingerprint = [[MEGASdkManager sharedMEGASdk] fingerprintForFilePath:temporaryPath];
+    if ([temporaryFingerprint isEqualToString:[[MEGASdkManager sharedMEGASdk] fingerprintForNode:self]]) {
+        [self mnz_copyToGalleryFromTemporaryPath:temporaryPath];
+    } else if ([MEGAReachabilityManager isReachableHUDIfNot]) {
+        NSString *downloadsDirectory = [[NSFileManager defaultManager] downloadsDirectory];
+        downloadsDirectory = [downloadsDirectory stringByReplacingOccurrencesOfString:[NSHomeDirectory() stringByAppendingString:@"/"] withString:@""];
+        NSString *offlineNameString = [[MEGASdkManager sharedMEGASdkFolder] escapeFsIncompatible:self.name];
+        NSString *localPath = [downloadsDirectory stringByAppendingPathComponent:offlineNameString];
+        [api startDownloadNode:[api authorizeNode:self] localPath:localPath appData:[[NSString new] mnz_appDataToSaveInPhotosApp]];
     }
 }
 

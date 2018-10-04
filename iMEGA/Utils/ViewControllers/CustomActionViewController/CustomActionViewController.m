@@ -188,6 +188,9 @@
     
     if (self.displayMode == DisplayModeFolderLink) {
         [actions addObject:[self actionImport]];
+        if (self.node.isFile && (self.node.name.mnz_imagePathExtension || (self.node.name.mnz_videoPathExtension && self.node.mnz_isPlayable))) {
+            [actions addObject:[self actionSaveToPhotos]];
+        }
         [actions addObject:[self actionDownload]];
         if (self.node.isFile) {
             [actions addObject:[self actionOpen]];
@@ -197,17 +200,26 @@
         }
     } else if (self.displayMode == DisplayModeFileLink) {
         [actions addObject:[self actionImport]];
+        if (self.node.name.mnz_imagePathExtension || (self.node.name.mnz_videoPathExtension && self.node.mnz_isPlayable)) {
+            [actions addObject:[self actionSaveToPhotos]];
+        }
         [actions addObject:[self actionDownload]];
         [actions addObject:[self actionShare]];
     } else {
         switch (accessType) {
             case MEGAShareTypeAccessUnknown:
                 [actions addObject:[self actionImport]];
+                if (self.node.isFile && (self.node.name.mnz_imagePathExtension || (self.node.name.mnz_videoPathExtension && self.node.mnz_isPlayable))) {
+                    [actions addObject:[self actionSaveToPhotos]];
+                }
                 [actions addObject:[self actionDownload]];
                 break;
                 
             case MEGAShareTypeAccessRead:
             case MEGAShareTypeAccessReadWrite: {
+                if (self.node.isFile && (self.node.name.mnz_imagePathExtension || (self.node.name.mnz_videoPathExtension && self.node.mnz_isPlayable))) {
+                    [actions addObject:[self actionSaveToPhotos]];
+                }
                 [actions addObject:[self actionDownload]];
                 if (self.displayMode != DisplayModeNodeVersions) {
                     if (self.displayMode != DisplayModeNodeInfo) {
@@ -222,6 +234,9 @@
             }
                 
             case MEGAShareTypeAccessFull:
+                if (self.node.isFile && (self.node.name.mnz_imagePathExtension || (self.node.name.mnz_videoPathExtension && self.node.mnz_isPlayable))) {
+                    [actions addObject:[self actionSaveToPhotos]];
+                }
                 [actions addObject:[self actionDownload]];
                 if (self.displayMode == DisplayModeNodeVersions) {
                     [actions addObject:[self actionRevertVersion]];
@@ -243,6 +258,9 @@
                 if (self.displayMode == DisplayModeCloudDrive || self.displayMode == DisplayModeRubbishBin || self.displayMode == DisplayModeNodeInfo) {
                     if (self.displayMode != DisplayModeRubbishBin) {
                         [actions addObject:[self actionShare]];
+                        if (self.node.isFile && (self.node.name.mnz_imagePathExtension || (self.node.name.mnz_videoPathExtension && self.node.mnz_isPlayable))) {
+                            [actions addObject:[self actionSaveToPhotos]];
+                        }
                         [actions addObject:[self actionDownload]];
                     }
                     if (self.displayMode != DisplayModeNodeInfo) {
@@ -260,11 +278,17 @@
                         [actions addObject:[self actionRemove]];
                     }
                 } else if (self.displayMode == DisplayModeNodeVersions) {
+                    if (self.node.isFile && (self.node.name.mnz_imagePathExtension || (self.node.name.mnz_videoPathExtension && self.node.mnz_isPlayable))) {
+                        [actions addObject:[self actionSaveToPhotos]];
+                    }
                     [actions addObject:[self actionDownload]];
                     [actions addObject:[self actionRevertVersion]];
                     [actions addObject:[self actionRemove]];
                 } else {
                     [actions addObject:[self actionShare]];
+                    if (self.node.isFile && (self.node.name.mnz_imagePathExtension || (self.node.name.mnz_videoPathExtension && self.node.mnz_isPlayable))) {
+                        [actions addObject:[self actionSaveToPhotos]];
+                    }
                     [actions addObject:[self actionDownload]];
                     [actions addObject:[self actionFileInfo]];
                     [actions addObject:[self actionCopy]];
@@ -358,6 +382,10 @@
 
 - (MegaActionNode *)actionRestoreNode {
     return [[MegaActionNode alloc] initWithTitle:AMLocalizedString(@"restore", nil) iconName: @"restore" andActionType:MegaNodeActionTypeRestore];
+}
+
+- (MegaActionNode *)actionSaveToPhotos {
+    return [[MegaActionNode alloc] initWithTitle:AMLocalizedString(@"Save to Photos", nil) iconName: @"saveToPhotos" andActionType:MegaNodeActionTypeSaveToPhotos];
 }
 
 #pragma mark - IBActions
