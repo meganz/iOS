@@ -720,20 +720,6 @@
 "dontUseHttp"="Kein HTTP nutzen";
 /* Footer text that explains when disabling the HTTP protocol for transfers may be useful */
 "transfersSectionFooter"="Aktivieren Sie diese Option ausschließlich bei Übertragungsproblemen. Normalerweise ist HTTP ausreichend, da alle Daten bereits verschlüsselt sind.";
-/* Title header that refers to where you enable the options 'Save images in gallery' and 'Save videos in gallery' inside 'Settings' -> 'Advanced' section" */
-"imageAndVideoDownloadsHeader"="Foto- und Videodownloads";
-/* Title header that refers to where do you enable the options 'Save media in gallery -> 'Advanced' section. String as short as possible */
-"photosTakenAndVideoRecordedFromWithinTheAppHeader"="Aufgenommene Fotos und Videos";
-/* Section title where you can enable the option 'Save images in gallery' */
-"saveImagesInGallery"="Bilder in Galerie speichern";
-/* Section title where you can enable the option 'Save videos in gallery' */
-"saveVideosInGallery"="Videos in Galerie speichern";
-/* Section title where you can enable the option 'Save media in gallery' */
-"saveMediaInGallery"="Fotos und Videos lokal speichern";
-/* Footer text that explain what happen if the options 'Save videos in gallery’ and 'Save images in gallery’ are enabled */
-"imageAndVideoDownloadsFooter"="Speichern Sie kompatible Bilder und Videos in Ihrer Mediathek (Bilder und Videos werden nicht im Offline-Bereich gespeichert).";
-/* Footer text that explain what happen if the options 'Save media in gallery’ is enabled */
-"photosTakenAndVideoRecordedFromWithinTheAppFooter"="Aktivieren Sie diese Einstellung, um mit der App aufgenommene Fotos und Videos auch lokal auf Ihrem Gerät zu speichern";
 /* Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped */
 "currentlyUsing"="%s belegt";
 /* In 'My account', when user want to delete/remove/cancel account will click button named 'Cancel your account' */
@@ -1644,3 +1630,5 @@
 "We would like to send you notifications so you receive new messages on your device instantly."="We would like to send you notifications so you receive new messages on your device instantly.";
 /* Button which triggers a request for a specific permission, that have been explained to the user beforehand */
 "Enable Access"="Enable Access";
+/* Confirmation dialog for the button that logs the user out of all sessions except the current one. */
+"Do you want to close all other sessions? This will log you out on all other active sessions except the current one."="Alle anderen Sitzungen schließen? Sie werden überall außer auf diesem Gerät ausgeloggt.";
