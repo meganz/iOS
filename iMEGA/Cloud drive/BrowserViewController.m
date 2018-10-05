@@ -647,6 +647,12 @@
         cell.thumbnailPlayImageView.accessibilityIgnoresInvertColors = YES;
     }
     
+    if (tableView.isEditing) {
+        UIView *view = [[UIView alloc] init];
+        view.backgroundColor = UIColor.clearColor;
+        cell.selectedBackgroundView = view;
+    }
+    
     return cell;
 }
 

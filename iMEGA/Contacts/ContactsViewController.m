@@ -550,6 +550,11 @@
             self.navigationController.topViewController.toolbarItems = self.toolbar.items;
             [self.navigationController setToolbarHidden:NO animated:animated];
         }
+        for (ContactTableViewCell *cell in [self.tableView visibleCells]) {
+            UIView *view = [[UIView alloc] init];
+            view.backgroundColor = UIColor.clearColor;
+            cell.selectedBackgroundView = view;
+        }
     } else {
         self.editBarButtonItem.title = AMLocalizedString(@"edit", @"Caption of a button to edit the files that are selected");
         self.selectedUsersArray = nil;
@@ -566,6 +571,10 @@
         } else {
             self.navigationController.topViewController.toolbarItems = @[];
             [self.navigationController setToolbarHidden:YES animated:animated];
+        }
+        
+        for (ContactTableViewCell *cell in [self.tableView visibleCells]) {
+            cell.selectedBackgroundView = nil;
         }
     }
     
@@ -1041,6 +1050,7 @@
             UIView *view = [[UIView alloc] init];
             view.backgroundColor = UIColor.clearColor;
             cell.selectedBackgroundView = view;
+            cell.separatorInset = UIEdgeInsetsMake(0, 97, 0, 0);
         }
         
         if (@available(iOS 11.0, *)) {
