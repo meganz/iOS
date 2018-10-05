@@ -77,6 +77,8 @@
         self.tableView.tableHeaderView = self.searchController.searchBar;
     }
     
+    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+    
     [self reloadUI];
 }
 
@@ -643,6 +645,12 @@
     if (@available(iOS 11.0, *)) {
         cell.thumbnailImageView.accessibilityIgnoresInvertColors = YES;
         cell.thumbnailPlayImageView.accessibilityIgnoresInvertColors = YES;
+    }
+    
+    if (tableView.isEditing) {
+        UIView *view = [[UIView alloc] init];
+        view.backgroundColor = UIColor.clearColor;
+        cell.selectedBackgroundView = view;
     }
     
     return cell;
