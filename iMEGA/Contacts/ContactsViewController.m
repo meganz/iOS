@@ -99,6 +99,8 @@
     
     self.panOnTable = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(shouldDismissSearchController)];
     self.panOnTable.delegate = self;
+    
+    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -548,6 +550,11 @@
             self.navigationController.topViewController.toolbarItems = self.toolbar.items;
             [self.navigationController setToolbarHidden:NO animated:animated];
         }
+        for (ContactTableViewCell *cell in [self.tableView visibleCells]) {
+            UIView *view = [[UIView alloc] init];
+            view.backgroundColor = UIColor.clearColor;
+            cell.selectedBackgroundView = view;
+        }
     } else {
         self.editBarButtonItem.title = AMLocalizedString(@"edit", @"Caption of a button to edit the files that are selected");
         self.selectedUsersArray = nil;
@@ -564,6 +571,10 @@
         } else {
             self.navigationController.topViewController.toolbarItems = @[];
             [self.navigationController setToolbarHidden:YES animated:animated];
+        }
+        
+        for (ContactTableViewCell *cell in [self.tableView visibleCells]) {
+            cell.selectedBackgroundView = nil;
         }
     }
     
@@ -968,20 +979,15 @@
         if (indexPath.row == 0) {
             cell.nameLabel.text = AMLocalizedString(@"inviteContact", @"Text shown when the user tries to make a call and the receiver is not a contact");
             cell.avatarImageView.image = [UIImage imageNamed:@"inviteToChat"];
-            if (self.users.size.intValue == 0) {
-                cell.lineView.hidden = YES;
-            }
         } else {
             cell.nameLabel.text = AMLocalizedString(@"groupChat", @"Label title for a group chat");
             cell.avatarImageView.image = [UIImage imageNamed:@"createGroup"];
-            cell.lineView.hidden = YES;
         }
         return cell;
     } else if (self.contactsMode == ContactsModeChatNamingGroup && indexPath.section == 0) {
         ContactTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"NamingGroupTableViewCellID" forIndexPath:indexPath];
         cell.permissionsImageView.hidden = YES;
-        cell.groupNameTextField.placeholder = AMLocalizedString(@"enterGroupName", @"Placeholder to hint the user to write a name for the group chat.");
-        cell.lineView.hidden = YES;
+        cell.groupNameTextField.placeholder = AMLocalizedString(@"enterGroupName", @"Placeholder to hint the user to write a name for the group chat.");        
         cell.avatarImageView.image = [UIImage imageNamed:@"addGroupAvatar"];
         [cell.groupNameTextField becomeFirstResponder];
         return cell;
@@ -1040,6 +1046,11 @@
                     [self.tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
                 }
             }
+            
+            UIView *view = [[UIView alloc] init];
+            view.backgroundColor = UIColor.clearColor;
+            cell.selectedBackgroundView = view;
+            cell.separatorInset = UIEdgeInsetsMake(0, 97, 0, 0);
         }
         
         if (@available(iOS 11.0, *)) {

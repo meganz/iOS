@@ -32,10 +32,6 @@
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *backBarButtonItem;
 
-@property (nonatomic) UIView *emptyHeaderView;
-@property (nonatomic) UIView *actionsSectionEmptyFooterView;
-@property (nonatomic) UIView *sharedFoldersEmptyFooterView;
-
 @property (weak, nonatomic) IBOutlet UIView *participantsHeaderView;
 @property (weak, nonatomic) IBOutlet UILabel *participantsHeaderViewLabel;
 
@@ -64,10 +60,6 @@
     
     self.nameLabel.text = self.userName;
     self.emailLabel.text = self.userEmail;
-    
-    self.emptyHeaderView = [NSBundle.mainBundle loadNibNamed:@"EmptyHeaderView" owner:self options:nil].firstObject;
-    self.actionsSectionEmptyFooterView = [NSBundle.mainBundle loadNibNamed:@"EmptyFooterView" owner:self options:nil].firstObject;
-    self.sharedFoldersEmptyFooterView = [NSBundle.mainBundle loadNibNamed:@"EmptyFooterView" owner:self options:nil].firstObject;
 
     self.incomingNodeListForUser = [[MEGASdkManager sharedMEGASdk] inSharesForUser:self.user];
     
@@ -239,7 +231,6 @@
                     cell.nameLabel.text = AMLocalizedString(@"removeUserTitle", @"Alert title shown when you want to remove one or more contacts");
                     cell.nameLabel.font = [UIFont mnz_SFUIRegularWithSize:15.0f];
                     cell.nameLabel.textColor = UIColor.mnz_redMain;
-                    cell.lineView.hidden = YES;
                     break;
             }
         } else if (self.contactDetailsMode == ContactDetailsModeFromChat) {
@@ -255,14 +246,12 @@
                     cell.avatarImageView.image = self.chatRoom.isArchived ? [UIImage imageNamed:@"unArchiveChat"] : [UIImage imageNamed:@"archiveChat_gray"];
                     cell.nameLabel.text = self.chatRoom.isArchived ? AMLocalizedString(@"unarchiveChat", @"The title of the dialog to unarchive an archived chat.") : AMLocalizedString(@"archiveChat", @"Title of button to archive chats.");
                     cell.nameLabel.textColor = self.chatRoom.isArchived ? UIColor.mnz_redMain : UIColor.mnz_black333333;
-                    cell.lineView.hidden = [self.tableView numberOfRowsInSection:0] == 2;
                     break;
                     
                 case 2: //Remove Contact
                     cell.avatarImageView.image = [UIImage imageNamed:@"delete"];
                     cell.nameLabel.text = AMLocalizedString(@"removeUserTitle", @"Alert title shown when you want to remove one or more contacts");
                     cell.nameLabel.textColor = UIColor.mnz_redMain;
-                    cell.lineView.hidden = YES;
                     break;
             }
             cell.nameLabel.font = [UIFont mnz_SFUIRegularWithSize:15.0f];
@@ -275,10 +264,6 @@
         cell.shareLabel.text = [Helper filesAndFoldersInFolderNode:node api:[MEGASdkManager sharedMEGASdk]];
         MEGAShareType shareType = [[MEGASdkManager sharedMEGASdk] accessLevelForNode:node];
         cell.permissionsImageView.image = [Helper permissionsButtonImageForShareType:shareType];
-        
-        if ((self.incomingNodeListForUser.size.integerValue - 1) == indexPath.row) {
-            cell.lineView.hidden = YES;
-        }
     }
     
     if (@available(iOS 11.0, *)) {
@@ -289,25 +274,9 @@
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    if (section == 0) {
-        return self.emptyHeaderView;
-    }
-    
     if (section == 1) {
         self.participantsHeaderViewLabel.text = [AMLocalizedString(@"sharedFolders", @"Title of the incoming shared folders of a user.") uppercaseString];
         return self.participantsHeaderView;
-    }
-    
-    return nil;
-}
-
-- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
-    if (section == 0) {
-        return self.actionsSectionEmptyFooterView;
-    }
-    
-    if (section == 1) {
-        return self.sharedFoldersEmptyFooterView;
     }
     
     return nil;
