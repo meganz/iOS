@@ -458,21 +458,21 @@ const NSUInteger kMaxMessagesToLoad = 256;
 }
 
 - (void)startAudioVideoCall:(UIBarButtonItem *)sender {
-    [DevicePermissionsHelper audioPermissionWithCompletionHandler:^(BOOL granted) {
+    [DevicePermissionsHelper audioPermissionModal:YES withCompletionHandler:^(BOOL granted) {
         if (granted) {
             if (sender.tag) {
                 [DevicePermissionsHelper videoPermissionWithCompletionHandler:^(BOOL granted) {
                     if (granted) {
                         [self openCallViewWithVideo:sender.tag];
                     } else {
-                        [DevicePermissionsHelper warnAboutAudioAndVideoPermissions];
+                        [DevicePermissionsHelper alertVideoPermissionWithCompletionHandler:nil];
                     }
                 }];
             } else {
                 [self openCallViewWithVideo:sender.tag];
             }
         } else {
-            [DevicePermissionsHelper warnAboutAudioAndVideoPermissions];
+            [DevicePermissionsHelper alertAudioPermission];
         }
     }];
 }
@@ -1073,6 +1073,15 @@ const NSUInteger kMaxMessagesToLoad = 256;
     
     dispatch_async(dispatch_get_main_queue(), ^{
         [self finishSendingMessageAnimated:YES];
+        
+        if (![NSUserDefaults.standardUserDefaults boolForKey:@"notificationsPermissionModalShown"]) {
+            if ([DevicePermissionsHelper shouldAskForNotificationsPermissions]) {
+                [DevicePermissionsHelper modalNotificationsPermission];
+            }
+            
+            [NSUserDefaults.standardUserDefaults setBool:YES forKey:@"notificationsPermissionModalShown"];
+            [NSUserDefaults.standardUserDefaults synchronize];
+        }
     });
     
     [[MEGASdkManager sharedMEGAChatSdk] sendStopTypingNotificationForChat:self.chatRoom.chatId];
@@ -1338,7 +1347,7 @@ const NSUInteger kMaxMessagesToLoad = 256;
                         }
                     }];
                 } else {
-                    [DevicePermissionsHelper warnAboutPhotosPermission];
+                    [DevicePermissionsHelper alertVideoPermissionWithCompletionHandler:nil];
                 }
             }];
             

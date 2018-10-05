@@ -88,7 +88,7 @@
             }];
         } else {
             [self dismissViewControllerAnimated:YES completion:^{
-                [DevicePermissionsHelper warnAboutPhotosPermission];
+                [DevicePermissionsHelper alertPhotosPermission];
             }];
         }
     }];

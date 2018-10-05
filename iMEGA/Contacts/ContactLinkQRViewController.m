@@ -172,7 +172,7 @@
             } else {
                 sender.selectedSegmentIndex = 0;
                 [self valueChangedAtSegmentedControl:sender];
-                [DevicePermissionsHelper warnAboutAudioAndVideoPermissions];
+                [DevicePermissionsHelper alertVideoPermissionWithCompletionHandler:nil];
             }
             
             break;
