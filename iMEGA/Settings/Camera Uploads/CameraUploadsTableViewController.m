@@ -103,7 +103,7 @@
                 [self.onlyWhenChargingSwitch setOn:isCameraUploadsEnabled animated:YES];
             }
         } else {
-            [DevicePermissionsHelper warnAboutPhotosPermission];
+            [DevicePermissionsHelper alertPhotosPermission];
             
             MEGALogInfo(@"Disable Camera Uploads");
             [[CameraUploads syncManager] setIsCameraUploadsEnabled:NO];

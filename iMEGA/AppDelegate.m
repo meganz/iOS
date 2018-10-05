@@ -575,21 +575,21 @@
                         MEGAChatConnection chatConnection = [[MEGASdkManager sharedMEGAChatSdk] chatConnectionState:self.chatRoom.chatId];
                         MEGALogDebug(@"Chat %@ connection state: %ld", [MEGASdk base64HandleForUserHandle:self.chatRoom.chatId], (long)chatConnection);
                         if (chatConnection == MEGAChatConnectionOnline) {
-                            [DevicePermissionsHelper audioPermissionWithCompletionHandler:^(BOOL granted) {
+                            [DevicePermissionsHelper audioPermissionModal:YES withCompletionHandler:^(BOOL granted) {
                                 if (granted) {
                                     if (self.videoCall) {
                                         [DevicePermissionsHelper videoPermissionWithCompletionHandler:^(BOOL granted) {
                                             if (granted) {
                                                 [self performCall];
                                             } else {
-                                                [DevicePermissionsHelper warnAboutAudioAndVideoPermissions];
+                                                [DevicePermissionsHelper alertVideoPermissionWithCompletionHandler:nil];
                                             }
                                         }];
                                     } else {
                                         [self performCall];
                                     }
                                 } else {
-                                    [DevicePermissionsHelper warnAboutAudioAndVideoPermissions];
+                                    [DevicePermissionsHelper alertAudioPermission];
                                 }
                             }];
                         }

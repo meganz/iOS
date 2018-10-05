@@ -3,14 +3,16 @@
 
 @interface DevicePermissionsHelper : NSObject
 
-+ (void)audioPermissionWithCompletionHandler:(void (^)(BOOL granted))handler;
++ (void)audioPermissionModal:(BOOL)modal withCompletionHandler:(void (^)(BOOL granted))handler;
 + (void)videoPermissionWithCompletionHandler:(void (^)(BOOL granted))handler;
 + (void)photosPermissionWithCompletionHandler:(void (^)(BOOL granted))handler;
 + (void)notificationsPermissionWithCompletionHandler:(void (^)(BOOL granted))handler;
 
-+ (void)warnAboutPhotosPermission;
-+ (void)warnAboutAudioAndVideoPermissions;
-+ (void)warnAboutNotificationsPermission;
++ (void)alertAudioPermission;
++ (void)alertVideoPermissionWithCompletionHandler:(void (^)(void))handler;
++ (void)alertPhotosPermission;
+
++ (void)modalNotificationsPermission;
 
 + (BOOL)shouldAskForAudioPermissions;
 + (BOOL)shouldAskForVideoPermissions;

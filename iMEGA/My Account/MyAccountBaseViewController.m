@@ -115,7 +115,7 @@
             if (granted) {
                 [self showImagePickerForSourceType:UIImagePickerControllerSourceTypePhotoLibrary];
             } else {
-                [DevicePermissionsHelper warnAboutPhotosPermission];
+                [DevicePermissionsHelper alertPhotosPermission];
             }
         }];
     }];
@@ -134,7 +134,7 @@
                     }
                 }];
             } else {
-                [DevicePermissionsHelper warnAboutAudioAndVideoPermissions];
+                [DevicePermissionsHelper alertVideoPermissionWithCompletionHandler:nil];
             }
         }];
     }];

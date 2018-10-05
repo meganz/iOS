@@ -957,7 +957,7 @@
                 MEGAAssetsPickerController *pickerViewController = [[MEGAAssetsPickerController alloc] initToUploadToCloudDriveWithParentNode:self.parentNode];
                 [self presentViewController:pickerViewController animated:YES completion:nil];
             } else {
-                [DevicePermissionsHelper warnAboutPhotosPermission];
+                [DevicePermissionsHelper alertPhotosPermission];
             }
         }];
     }
@@ -1139,7 +1139,7 @@
                     }
                 }];
             } else {
-                [DevicePermissionsHelper warnAboutAudioAndVideoPermissions];
+                [DevicePermissionsHelper alertVideoPermissionWithCompletionHandler:nil];
             }
         }];
     }];

@@ -5,6 +5,7 @@
 #import "UIImage+GKContact.h"
 #import "UIScrollView+EmptyDataSet.h"
 
+#import "DevicePermissionsHelper.h"
 #import "Helper.h"
 #import "MEGANavigationController.h"
 #import "MEGAReachabilityManager.h"
@@ -119,6 +120,22 @@
     [[MEGAReachabilityManager sharedManager] retryPendingConnections];
     
     [self.tableView reloadData];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
+    NSInteger unreadChats = [MEGASdkManager sharedMEGAChatSdk] != nil ? [MEGASdkManager sharedMEGAChatSdk].unreadChats : 0;
+    if (unreadChats > 0) {
+        if (![NSUserDefaults.standardUserDefaults boolForKey:@"notificationsPermissionModalShown"]) {
+            if ([DevicePermissionsHelper shouldAskForNotificationsPermissions]) {
+                [DevicePermissionsHelper modalNotificationsPermission];
+            }
+            
+            [NSUserDefaults.standardUserDefaults setBool:YES forKey:@"notificationsPermissionModalShown"];
+            [NSUserDefaults.standardUserDefaults synchronize];
+        }
+    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated {

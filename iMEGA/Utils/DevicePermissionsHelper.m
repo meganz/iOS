@@ -11,6 +11,16 @@
 
 @implementation DevicePermissionsHelper
 
+#pragma mark - Permissions requests
+
++ (void)audioPermissionModal:(BOOL)modal withCompletionHandler:(void (^)(BOOL granted))handler {
+    if (modal && [self shouldAskForAudioPermissions]) {
+        [self modalAudioPermissionWithCompletionHandler:handler];
+    } else {
+        [self audioPermissionWithCompletionHandler:handler];
+    }
+}
+
 + (void)audioPermissionWithCompletionHandler:(void (^)(BOOL granted))handler {
     if ([AVCaptureDevice respondsToSelector:@selector(requestAccessForMediaType:completionHandler:)]) {
         [AVCaptureDevice requestAccessForMediaType:AVMediaTypeAudio completionHandler:^(BOOL permissionGranted) {
@@ -45,7 +55,7 @@
     }];
 }
 
-+ (void)notificationsPermissionWithCompletionHandler:(void (^)(BOOL))handler {
++ (void)notificationsPermissionWithCompletionHandler:(void (^)(BOOL granted))handler {
     if (@available(iOS 10.0, *)) {
         [UNUserNotificationCenter.currentNotificationCenter requestAuthorizationWithOptions:(UNAuthorizationOptionBadge | UNAuthorizationOptionSound | UNAuthorizationOptionAlert) completionHandler:^(BOOL granted, NSError * _Nullable error) {
             if (handler) {
@@ -62,20 +72,43 @@
     }
 }
 
-+ (void)warnAboutPhotosPermission {
-    CustomModalAlertViewController *permissionsModal = [self permissionsModal];
-    
-    permissionsModal.image = [UIImage imageNamed:@"photosPermission"];
-    permissionsModal.viewTitle = AMLocalizedString(@"Allow Access to Photos", @"Title label that explains that the user is going to be asked for the photos permission");
-    permissionsModal.detail = AMLocalizedString(@"To share photos and videos, allow MEGA to access your photos", @"Detailed explanation of why the user should give permission to access to the photos");
-    permissionsModal.action = AMLocalizedString(@"Enable Access", @"Button which triggers a request for a specific permission, that have been explained to the user beforehand");
-    permissionsModal.dismiss = AMLocalizedString(@"notNow", nil);
-    
-    [UIApplication.mnz_visibleViewController presentViewController:permissionsModal animated:YES completion:nil];
+
+
+#pragma mark - Alerts
+
++ (void)alertAudioPermission {
+    [self alertPermissionWithMessage:AMLocalizedString(@"microphonePermissions", @"Alert message to remember that MEGA app needs permission to use the Microphone to make calls and record videos and it doesn't have it") completionHandler:nil];
 }
 
-+ (void)warnAboutAudioAndVideoPermissions {
++ (void)alertVideoPermissionWithCompletionHandler:(void (^)(void))handler {
+    [self alertPermissionWithMessage:AMLocalizedString(@"cameraPermissions", @"Alert message to remember that MEGA app needs permission to use the Camera to take a photo or video and it doesn't have it") completionHandler:handler];
+}
+
++ (void)alertPhotosPermission {
+    [self alertPermissionWithMessage:AMLocalizedString(@"photoLibraryPermissions", @"Alert message to explain that the MEGA app needs permission to access your device photos") completionHandler:nil];
+}
+
++ (void)alertPermissionWithMessage:(NSString *)message completionHandler:(void (^)(void))handler {
+    UIAlertController *permissionsAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"attention", @"Alert title to attract attention") message:AMLocalizedString(@"photoLibraryPermissions", @"Alert message to explain that the MEGA app needs permission to access your device photos") preferredStyle:UIAlertControllerStyleAlert];
+    
+    [permissionsAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
+    [permissionsAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", @"Button title to accept something") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        if (handler) {
+            handler();
+        }
+        [UIApplication.sharedApplication openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
+    }]];
+    
+    [UIApplication.mnz_visibleViewController presentViewController:permissionsAlertController animated:YES completion:nil];
+}
+
+
+
+#pragma mark - Modals
+
++ (void)modalAudioPermissionWithCompletionHandler:(void (^)(BOOL granted))handler {
     CustomModalAlertViewController *permissionsModal = [self permissionsModal];
+    __weak CustomModalAlertViewController *weakPermissionsModal = permissionsModal;
     
     permissionsModal.image = [UIImage imageNamed:@"groupChat"];
     permissionsModal.viewTitle = AMLocalizedString(@"Enable Microphone and Camera", @"Title label that explains that the user is going to be asked for the microphone and camera permission");
@@ -83,11 +116,18 @@
     permissionsModal.action = AMLocalizedString(@"Enable Access", @"Button which triggers a request for a specific permission, that have been explained to the user beforehand");
     permissionsModal.dismiss = AMLocalizedString(@"notNow", nil);
     
+    permissionsModal.completion = ^{
+        [weakPermissionsModal dismissViewControllerAnimated:YES completion:^{
+            [self audioPermissionWithCompletionHandler:handler];
+        }];
+    };
+    
     [UIApplication.mnz_visibleViewController presentViewController:permissionsModal animated:YES completion:nil];
 }
 
-+ (void)warnAboutNotificationsPermission {
++ (void)modalNotificationsPermission {
     CustomModalAlertViewController *permissionsModal = [self permissionsModal];
+    __weak CustomModalAlertViewController *weakPermissionsModal = permissionsModal;
     
     permissionsModal.image = [UIImage imageNamed:@"privacy_warning_ico"];
     permissionsModal.viewTitle = AMLocalizedString(@"Enable Notifications", @"Title label that explains that the user is going to be asked for the notifications permission");
@@ -95,21 +135,28 @@
     permissionsModal.action = AMLocalizedString(@"Enable Access", @"Button which triggers a request for a specific permission, that have been explained to the user beforehand");
     permissionsModal.dismiss = AMLocalizedString(@"notNow", nil);
     
+    permissionsModal.completion = ^{
+        [self notificationsPermissionWithCompletionHandler:^(BOOL granted) {
+            [weakPermissionsModal dismissViewControllerAnimated:YES completion:nil];
+        }];
+    };
+    
     [UIApplication.mnz_visibleViewController presentViewController:permissionsModal animated:YES completion:nil];
 }
 
 + (CustomModalAlertViewController *)permissionsModal {
     CustomModalAlertViewController *permissionsModal = [[CustomModalAlertViewController alloc] init];
-    __weak CustomModalAlertViewController *weakPermissionsModal = permissionsModal;
+    
     permissionsModal.modalPresentationStyle = UIModalPresentationOverCurrentContext;
     permissionsModal.actionColor = UIColor.mnz_green00BFA5;
     permissionsModal.dismissColor = UIColor.mnz_green899B9C;
-    permissionsModal.completion = ^{
-        [UIApplication.sharedApplication openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
-        [weakPermissionsModal dismissViewControllerAnimated:YES completion:nil];
-    };
+    
     return permissionsModal;
 }
+
+
+
+#pragma mark - Permissions status
 
 + (BOOL)shouldAskForAudioPermissions {
     if ([AVCaptureDevice respondsToSelector:@selector(requestAccessForMediaType:completionHandler:)]) {

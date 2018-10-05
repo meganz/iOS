@@ -270,21 +270,21 @@
             
         case MEGAChatCallStatusRingIn: {
             [self.missedCallsDictionary setObject:call forKey:@(call.chatId)];
-            [DevicePermissionsHelper audioPermissionWithCompletionHandler:^(BOOL granted) {
+            [DevicePermissionsHelper audioPermissionModal:YES withCompletionHandler:^(BOOL granted) {
                 if (granted) {
                     if (call.hasRemoteVideo) {
                         [DevicePermissionsHelper videoPermissionWithCompletionHandler:^(BOOL granted) {
                             if (granted) {
                                 [self presentRingingCall:api call:[api chatCallForCallId:call.callId]];
                             } else {
-                                [DevicePermissionsHelper warnAboutAudioAndVideoPermissions];
+                                [DevicePermissionsHelper alertVideoPermissionWithCompletionHandler:nil];
                             }
                         }];
                     } else {
                         [self presentRingingCall:api call:[api chatCallForCallId:call.callId]];
                     }
                 } else {
-                    [DevicePermissionsHelper warnAboutAudioAndVideoPermissions];
+                    [DevicePermissionsHelper alertAudioPermission];
                 }
             }];
             break;
