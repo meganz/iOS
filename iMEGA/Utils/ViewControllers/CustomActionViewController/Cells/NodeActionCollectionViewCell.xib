@@ -44,10 +44,10 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <view tag="101" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GTQ-Cr-NGe">
-                        <rect key="frame" x="60" y="59" width="299" height="1"/>
+                        <rect key="frame" x="60" y="59.5" width="299" height="0.5"/>
                         <color key="backgroundColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="1" id="WWs-oX-opM"/>
+                            <constraint firstAttribute="height" constant="0.5" id="WWs-oX-opM"/>
                         </constraints>
                     </view>
                 </subviews>
