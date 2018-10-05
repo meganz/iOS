@@ -562,7 +562,7 @@ static BOOL pointToStaging;
                 NSString *appData = nil;
                 if ((node.name.mnz_isImagePathExtension && [[NSUserDefaults standardUserDefaults] boolForKey:@"IsSavePhotoToGalleryEnabled"]) || (node.name.mnz_isVideoPathExtension && [[NSUserDefaults standardUserDefaults] boolForKey:@"IsSaveVideoToGalleryEnabled"])) {
                     NSString *downloadsDirectory = [[NSFileManager defaultManager] downloadsDirectory];
-                    downloadsDirectory = [downloadsDirectory stringByReplacingOccurrencesOfString:[NSHomeDirectory() stringByAppendingString:@"/"] withString:@""];
+                    downloadsDirectory = downloadsDirectory.mnz_relativeLocalPath;
                     relativeFilePath = [downloadsDirectory stringByAppendingPathComponent:offlineNameString];
                     
                     appData = [[NSString new] mnz_appDataToSaveInPhotosApp];
@@ -633,9 +633,9 @@ static BOOL pointToStaging;
             if (![[NSFileManager defaultManager] moveItemAtPath:absoluteFilePath toPath:newFilePath error:&error]) {
                 MEGALogError(@"Move item at path failed with error: %@", error);
             }
-            [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:[newFilePath stringByReplacingOccurrencesOfString:[NSHomeDirectory() stringByAppendingString:@"/"] withString:@""] parent:parentNode appData:appData isSourceTemporary:YES];
+            [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:newFilePath.mnz_relativeLocalPath parent:parentNode appData:appData isSourceTemporary:YES];
         } else {
-            [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:[filePath stringByReplacingOccurrencesOfString:[NSHomeDirectory() stringByAppendingString:@"/"] withString:@""] parent:parentNode appData:appData isSourceTemporary:YES];
+            [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:filePath.mnz_relativeLocalPath parent:parentNode appData:appData isSourceTemporary:YES];
         }
         [[MEGAStore shareInstance] deleteUploadTransfer:uploadTransfer];
     } node:^(MEGANode *node) {
@@ -647,7 +647,7 @@ static BOOL pointToStaging;
         [[MEGAStore shareInstance] deleteUploadTransfer:uploadTransfer];
         [Helper startPendingUploadTransferIfNeeded];
     } error:^(NSError *error) {
-        [SVProgressHUD showImage:[UIImage imageNamed:@"hudError"] status:[NSString stringWithFormat:@"%@ %@", AMLocalizedString(@"Transfer failed:", nil), asset.localIdentifier]];
+        [SVProgressHUD showImage:[UIImage imageNamed:@"hudError"] status:[NSString stringWithFormat:@"%@ %@ \r %@", AMLocalizedString(@"Transfer failed:", nil), asset.localIdentifier, error.localizedDescription]];
         [[MEGAStore shareInstance] deleteUploadTransfer:uploadTransfer];
         [Helper startPendingUploadTransferIfNeeded];
     }];
