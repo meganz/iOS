@@ -77,6 +77,8 @@
         self.tableView.tableHeaderView = self.searchController.searchBar;
     }
     
+    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+    
     [self reloadUI];
 }
 
@@ -548,7 +550,7 @@
                 [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"uploadStarted_Message", @"Message shown when uploading a file from the Open In Browser")];
                 
                 NSString *appData = [[NSString new] mnz_appDataToSaveCoordinates:localFilePath.mnz_coordinatesOfPhotoOrVideo];
-                [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:[localFilePath stringByReplacingOccurrencesOfString:[NSHomeDirectory() stringByAppendingString:@"/"] withString:@""] parent:self.parentNode appData:appData isSourceTemporary:YES];
+                [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:localFilePath.mnz_relativeLocalPath parent:self.parentNode appData:appData isSourceTemporary:YES];
             } else {
                 MEGALogError(@"Move item at path failed with error: %@", error);
                 NSString *status = [NSString stringWithFormat:@"Move item failed with error %@", error];
@@ -643,6 +645,12 @@
     if (@available(iOS 11.0, *)) {
         cell.thumbnailImageView.accessibilityIgnoresInvertColors = YES;
         cell.thumbnailPlayImageView.accessibilityIgnoresInvertColors = YES;
+    }
+    
+    if (tableView.isEditing) {
+        UIView *view = [[UIView alloc] init];
+        view.backgroundColor = UIColor.clearColor;
+        cell.selectedBackgroundView = view;
     }
     
     return cell;

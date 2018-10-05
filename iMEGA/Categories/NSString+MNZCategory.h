@@ -49,6 +49,8 @@ typedef NS_ENUM(NSInteger, MEGAChatMessageEndCallReason);
 - (NSString *)mnz_coordinatesOfPhotoOrVideo;
 + (NSString *)mnz_base64FromBase64URLEncoding:(NSString *)base64URLEncondingString;
 
+- (NSString *)mnz_relativeLocalPath;
+
 #pragma mark - File names and extensions
 
 + (NSString *)mnz_fileNameWithDate:(NSDate *)date;

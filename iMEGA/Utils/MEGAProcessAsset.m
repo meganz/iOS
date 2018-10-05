@@ -10,6 +10,8 @@
 #import "SDAVAssetExportSession.h"
 #import "UIApplication+MNZCategory.h"
 
+#import "NSString+MNZCategory.h"
+
 static void *ProcessAssetProgressContext = &ProcessAssetProgressContext;
 
 static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
@@ -312,11 +314,11 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
                                  }
                              } else {
                                  if (self.filePath) {
-                                     filePath = [filePath stringByReplacingOccurrencesOfString:[NSHomeDirectory() stringByAppendingString:@"/"] withString:@""];
+                                     filePath = filePath.mnz_relativeLocalPath;
                                      self.filePath(filePath);
                                  }
                                  if (self.filePaths) {
-                                     filePath = [filePath stringByReplacingOccurrencesOfString:[NSHomeDirectory() stringByAppendingString:@"/"] withString:@""];
+                                     filePath = filePath.mnz_relativeLocalPath;
                                      [self.filePathsArray addObject:filePath];
                                      dispatch_semaphore_signal(self.semaphore);
                                  }
@@ -426,7 +428,7 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
                     MEGALogDebug(@"[PA] Export session finished");
                     self.currentProgress += CMTimeGetSeconds(self.avAsset.duration);
                     if (self.filePath) {
-                        filePath = [encoder.outputURL.path stringByReplacingOccurrencesOfString:[NSHomeDirectory() stringByAppendingString:@"/"] withString:@""];
+                        filePath = encoder.outputURL.path.mnz_relativeLocalPath;
                         self.filePath(filePath);
                     }
                 }
@@ -449,7 +451,7 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
         } else {
             self.currentProgress += CMTimeGetSeconds(self.avAsset.duration);
             if (self.filePath) {
-                filePath = [avassetUrl.path stringByReplacingOccurrencesOfString:[NSHomeDirectory() stringByAppendingString:@"/"] withString:@""];
+                filePath = avassetUrl.path.mnz_relativeLocalPath;
                 self.filePath(filePath);
             }
         }
@@ -575,11 +577,11 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
                         MEGALogError(@"[PA] Set attributes failed with error: %@", error);
                     }
                     if (self.filePath) {
-                        filePath = [filePath stringByReplacingOccurrencesOfString:[NSHomeDirectory() stringByAppendingString:@"/"] withString:@""];
+                        filePath = filePath.mnz_relativeLocalPath;
                         self.filePath(filePath);
                     }
                     if (self.filePaths) {
-                        filePath = [filePath stringByReplacingOccurrencesOfString:[NSHomeDirectory() stringByAppendingString:@"/"] withString:@""];
+                        filePath = filePath.mnz_relativeLocalPath;
                         [self.filePathsArray addObject:filePath];
                         dispatch_semaphore_signal(self.semaphore);
                     }
@@ -785,11 +787,11 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
                 }
             } else {
                 if (self.filePath) {
-                    filePath = [encoder.outputURL.path stringByReplacingOccurrencesOfString:[NSHomeDirectory() stringByAppendingString:@"/"] withString:@""];
+                    filePath = encoder.outputURL.path.mnz_relativeLocalPath;
                     self.filePath(filePath);
                 }
                 if (self.filePaths) {
-                    filePath = [encoder.outputURL.path stringByReplacingOccurrencesOfString:[NSHomeDirectory() stringByAppendingString:@"/"] withString:@""];
+                    filePath = encoder.outputURL.path.mnz_relativeLocalPath;
                     [self.filePathsArray addObject:filePath];
                     dispatch_semaphore_signal(self.semaphore);
                 }

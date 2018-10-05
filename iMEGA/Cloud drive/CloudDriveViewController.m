@@ -141,6 +141,8 @@
     self.nodesIndexPathMutableDictionary = [[NSMutableDictionary alloc] init];
     
     [self.view addGestureRecognizer:[[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPress:)]];
+    
+    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -326,6 +328,10 @@
                 [self.tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
             }
         }
+
+        UIView *view = [[UIView alloc] init];
+        view.backgroundColor = UIColor.clearColor;
+        cell.selectedBackgroundView = view;
     }
     
     if (@available(iOS 11.0, *)) {
@@ -713,14 +719,13 @@
 #pragma mark - UILongPressGestureRecognizer
 
 - (void)longPress:(UILongPressGestureRecognizer *)longPressGestureRecognizer {
+    CGPoint touchPoint = [longPressGestureRecognizer locationInView:self.tableView];
+    NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:touchPoint];
+    if (!indexPath || ![self.tableView numberOfRowsInSection:indexPath.section]) {
+        return;
+    }
+    
     if (longPressGestureRecognizer.state == UIGestureRecognizerStateBegan) {
-        CGPoint touchPoint = [longPressGestureRecognizer locationInView:self.tableView];
-        NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:touchPoint];
-        
-        if (!indexPath || ![self.tableView numberOfRowsInSection:indexPath.section]) {
-            return;
-        }
-        
         if (self.tableView.isEditing) {
             // Only stop editing if long pressed over a cell that is the only one selected or when selected none
             if (self.selectedNodesArray.count == 0) {
@@ -738,6 +743,10 @@
             [self tableView:self.tableView didSelectRowAtIndexPath:indexPath];
             [self.tableView selectRowAtIndexPath:indexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
         }
+    }
+    
+    if (longPressGestureRecognizer.state == UIGestureRecognizerStateEnded) {
+        [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
     }
 }
 
@@ -1462,6 +1471,12 @@
         [UIView animateWithDuration:0.33f animations:^ {
             [self.toolbar setAlpha:1.0];
         }];
+        
+        for (NodeTableViewCell *cell in [self.tableView visibleCells]) {
+            UIView *view = [[UIView alloc] init];
+            view.backgroundColor = UIColor.clearColor;
+            cell.selectedBackgroundView = view;
+        }
     } else {
         self.editBarButtonItem.title = AMLocalizedString(@"edit", @"Caption of a button to edit the files that are selected");
         [self setNavigationBarButtonItems];
@@ -1476,6 +1491,10 @@
                 [self.toolbar removeFromSuperview];
             }
         }];
+        
+        for (NodeTableViewCell *cell in [self.tableView visibleCells]) {
+            cell.selectedBackgroundView = nil;
+        }
     }
     
     if (!self.selectedNodesArray) {
@@ -1706,7 +1725,7 @@
             [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"uploadStarted_Message", nil)];
             
             NSString *appData = [[NSString new] mnz_appDataToSaveCoordinates:localFilePath.mnz_coordinatesOfPhotoOrVideo];
-            [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:[localFilePath stringByReplacingOccurrencesOfString:[NSHomeDirectory() stringByAppendingString:@"/"] withString:@""] parent:self.parentNode appData:appData isSourceTemporary:YES];
+            [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:localFilePath.mnz_relativeLocalPath parent:self.parentNode appData:appData isSourceTemporary:YES];
         } else {
             if ([node parentHandle] == [self.parentNode handle]) {
                 NSError *error = nil;

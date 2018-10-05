@@ -4,6 +4,7 @@
 #import "SVProgressHUD.h"
 
 #import "Helper.h"
+#import "MEGAGetAttrUserRequestDelegate.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGALogger.h"
 #import "MEGASdkManager.h"
@@ -66,6 +67,12 @@
     }
     
     self.richPreviewsSwitch.on = [NSUserDefaults.standardUserDefaults boolForKey:@"richLinks"];
+    
+    MEGAGetAttrUserRequestDelegate *delegate = [[MEGAGetAttrUserRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
+        [NSUserDefaults.standardUserDefaults setBool:request.flag forKey:@"richLinks"];
+        self.richPreviewsSwitch.on = request.flag;
+    }];
+    [[MEGASdkManager sharedMEGASdk] isRichPreviewsEnabledWithDelegate:delegate];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
