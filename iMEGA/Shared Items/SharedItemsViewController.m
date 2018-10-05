@@ -45,8 +45,6 @@
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *shareFolderBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *removeShareBarButtonItem;
 
-@property (nonatomic) NSIndexPath *indexPath;
-
 @property (nonatomic, strong) MEGAShareList *incomingShareList;
 @property (nonatomic, strong) NSMutableArray *incomingNodesMutableArray;
 
@@ -975,14 +973,14 @@
 #pragma mark - UILongPressGestureRecognizer
 
 - (void)longPress:(UILongPressGestureRecognizer *)longPressGestureRecognizer {
-    if (longPressGestureRecognizer.state == UIGestureRecognizerStateBegan) {
-        CGPoint touchPoint = [longPressGestureRecognizer locationInView:self.tableView];
-        NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:touchPoint];
-        
-        if (!indexPath || ![self.tableView numberOfRowsInSection:indexPath.section]) {
-            return;
-        }
-        
+    CGPoint touchPoint = [longPressGestureRecognizer locationInView:self.tableView];
+    NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:touchPoint];
+    
+    if (!indexPath || ![self.tableView numberOfRowsInSection:indexPath.section]) {
+        return;
+    }
+    
+    if (longPressGestureRecognizer.state == UIGestureRecognizerStateBegan) {        
         if (self.isEditing) {
             // Only stop editing if long pressed over a cell that is the only one selected or when selected none
             if (self.selectedNodesMutableArray.count == 0) {
@@ -1001,6 +999,10 @@
             [self toolbarItemsForSharedItems];
             [self.tableView selectRowAtIndexPath:indexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
         }
+    }
+    
+    if (longPressGestureRecognizer.state == UIGestureRecognizerStateEnded) {
+        [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
     }
 }
 
