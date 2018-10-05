@@ -215,12 +215,10 @@
 
 - (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
     if ((request.type == MEGARequestTypeGetAttrUser || request.type == MEGARequestTypeSetAttrUser) && (request.paramType == MEGAUserAttributeRubbishTime)) {
-        if (error) {
+        if (error.type) {
             if (error.type == MEGAErrorTypeApiENoent) {
-                self.rubbishBinAutopurgePeriod = [[MEGASdkManager sharedMEGASdk] mnz_isProAccount] ? 90 : 30;
+                self.rubbishBinAutopurgePeriod = [[MEGASdkManager sharedMEGASdk] mnz_isProAccount] ? 90 : 14;
                 self.removeFilesOlderThanDetailLabel.text = [NSString stringWithFormat:@"%ld", (long)self.rubbishBinAutopurgePeriod];
-            } else {
-                return;
             }
         } else {
             // Zero means that the rubbish-bin cleaning scheduler is disabled (only if the account is PRO). Any negative value means that the configured value is invalid.
