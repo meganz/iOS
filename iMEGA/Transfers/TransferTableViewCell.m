@@ -23,7 +23,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *speedLabel;
 @property (weak, nonatomic) IBOutlet UIButton *cancelButton;
 @property (weak, nonatomic) IBOutlet UIButton *pauseButton;
-@property (weak, nonatomic) IBOutlet UIView *lineView;
 
 @property (assign, nonatomic) BOOL isPaused;
 @property (strong, nonatomic) MEGATransfer *transfer;
@@ -34,31 +33,6 @@
 @implementation TransferTableViewCell
 
 #pragma mark - Public
-
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
-    [super setSelected:selected animated:animated];
-    
-    if (selected) {
-        UIView *view = [[UIView alloc] init];
-        view.backgroundColor = UIColor.clearColor;
-        view.userInteractionEnabled = NO;
-        self.selectedBackgroundView = view;
-        
-        self.lineView.backgroundColor = UIColor.mnz_grayCCCCCC;
-    }
-}
-
-- (void)setHighlighted:(BOOL)highlighted animated:(BOOL)animated {
-    [super setHighlighted:highlighted animated:animated];
-    
-    if (highlighted) {
-        UIView *view = [[UIView alloc] init];
-        view.backgroundColor = UIColor.clearColor;
-        self.selectedBackgroundView = view;
-        
-        self.lineView.backgroundColor = UIColor.mnz_grayCCCCCC;
-    }
-}
 
 - (void)configureCellForTransfer:(MEGATransfer *)transfer delegate:(id<TransferTableViewCellDelegate>)delegate {
     self.delegate = delegate;
