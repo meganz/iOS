@@ -49,7 +49,7 @@ static MEGAStore *_megaStore = nil;
     }
     
     if (_persistentStoreCoordinator != nil) {
-        _managedObjectContext = [[NSManagedObjectContext alloc] init];
+        _managedObjectContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSMainQueueConcurrencyType];
         [_managedObjectContext setPersistentStoreCoordinator:_persistentStoreCoordinator];
     }
 }
