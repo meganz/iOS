@@ -658,6 +658,7 @@
 		A8F6E8941F9E770C0087859C /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9432291D1EDD83FF007DB542 /* MobileCoreServices.framework */; };
 		B6054B602166D20800D34A0F /* MOAssetUploadStatus+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = B6054B5E2166D20700D34A0F /* MOAssetUploadStatus+CoreDataClass.m */; };
 		B6054B612166D20800D34A0F /* MOAssetUploadStatus+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = B6054B5F2166D20700D34A0F /* MOAssetUploadStatus+CoreDataProperties.m */; };
+		B6D9D7E9216AB0C700D7B08A /* AssetManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B6D9D7E8216AB0C700D7B08A /* AssetManager.m */; };
 		E803CB641D5336F100F81A36 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = E803CB661D5336F100F81A36 /* InfoPlist.strings */; };
 		E80C76101DEDF32A00CA4D68 /* GroupChatDetailsViewTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E80C760F1DEDF32A00CA4D68 /* GroupChatDetailsViewTableViewCell.m */; };
 		E81616731A8397B5002EFDD7 /* FolderLinkViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E81616721A8397B5002EFDD7 /* FolderLinkViewController.m */; };
@@ -1503,6 +1504,8 @@
 		B6054B5D2166D20700D34A0F /* MOAssetUploadStatus+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MOAssetUploadStatus+CoreDataProperties.h"; sourceTree = "<group>"; };
 		B6054B5E2166D20700D34A0F /* MOAssetUploadStatus+CoreDataClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MOAssetUploadStatus+CoreDataClass.m"; sourceTree = "<group>"; };
 		B6054B5F2166D20700D34A0F /* MOAssetUploadStatus+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MOAssetUploadStatus+CoreDataProperties.m"; sourceTree = "<group>"; };
+		B6D9D7E7216AB0C700D7B08A /* AssetManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AssetManager.h; sourceTree = "<group>"; };
+		B6D9D7E8216AB0C700D7B08A /* AssetManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AssetManager.m; sourceTree = "<group>"; };
 		E803CB651D5336F100F81A36 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		E803CB681D53374A00F81A36 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		E80C760E1DEDF32A00CA4D68 /* GroupChatDetailsViewTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GroupChatDetailsViewTableViewCell.h; path = Chat/GroupChatDetailsViewTableViewCell.h; sourceTree = "<group>"; };
@@ -2321,6 +2324,8 @@
 				412EB2651C6E52AA001EA6D6 /* MEGAAssetOperation.m */,
 				411E712D1D461E1D00DD7EF8 /* MEGACollectionViewFlowLayout.h */,
 				411E712E1D461E1D00DD7EF8 /* MEGACollectionViewFlowLayout.m */,
+				B6D9D7E7216AB0C700D7B08A /* AssetManager.h */,
+				B6D9D7E8216AB0C700D7B08A /* AssetManager.m */,
 			);
 			path = "Camera uploads";
 			sourceTree = "<group>";
@@ -3934,6 +3939,7 @@
 				417B5AAE1DEC792400A193D5 /* MOUser+CoreDataProperties.m in Sources */,
 				A824A9192039ECD700D777D2 /* SDAVAssetExportSession.m in Sources */,
 				41E250141D79E9D400499A6C /* SAMKeychainQuery.m in Sources */,
+				B6D9D7E9216AB0C700D7B08A /* AssetManager.m in Sources */,
 				41E150041DB7CB1400383645 /* UIImageView+MNZCategory.m in Sources */,
 				94E62E1A1F3C5252003A8DEF /* LanguageTableViewController.m in Sources */,
 				5B7B4CA31EE5AC1200DA6A8D /* MEGAShareRequestDelegate.m in Sources */,
