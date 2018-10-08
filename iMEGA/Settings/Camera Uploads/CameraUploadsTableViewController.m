@@ -89,15 +89,13 @@
     [DevicePermissionsHelper photosPermissionWithCompletionHandler:^(BOOL granted) {
         if (granted) {
             BOOL isCameraUploadsEnabled = ![CameraUploads syncManager].isCameraUploadsEnabled;
+            [[CameraUploads syncManager] setIsCameraUploadsEnabled:isCameraUploadsEnabled];
+            [NSUserDefaults.standardUserDefaults setObject:@(isCameraUploadsEnabled) forKey:kIsCameraUploadsEnabled];
+            
             if (isCameraUploadsEnabled) {
                 MEGALogInfo(@"Enable Camera Uploads");
-                [[CameraUploads syncManager] setIsCameraUploadsEnabled:YES];
-                [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:isCameraUploadsEnabled] forKey:kIsCameraUploadsEnabled];
             } else {
                 MEGALogInfo(@"Disable Camera Uploads");
-                [[CameraUploads syncManager] setIsCameraUploadsEnabled:NO];
-                [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:isCameraUploadsEnabled] forKey:kIsCameraUploadsEnabled];
-                
                 [self.uploadVideosSwitch setOn:isCameraUploadsEnabled animated:YES];
                 [self.useCellularConnectionSwitch setOn:isCameraUploadsEnabled animated:YES];
                 [self.onlyWhenChargingSwitch setOn:isCameraUploadsEnabled animated:YES];
@@ -135,7 +133,7 @@
     
     [self.uploadVideosSwitch setOn:[[CameraUploads syncManager] isUploadVideosEnabled] animated:YES];
     
-    [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:[CameraUploads syncManager].isUploadVideosEnabled] forKey:kIsUploadVideosEnabled];
+    [NSUserDefaults.standardUserDefaults setObject:@([CameraUploads syncManager].isUploadVideosEnabled) forKey:kIsUploadVideosEnabled];
 }
 
 - (IBAction)useCellularConnectionSwitchValueChanged:(UISwitch *)sender {
@@ -151,7 +149,7 @@
     }
     [self.useCellularConnectionSwitch setOn:[[CameraUploads syncManager] isUseCellularConnectionEnabled] animated:YES];
     
-    [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:[CameraUploads syncManager].isUseCellularConnectionEnabled] forKey:kIsUseCellularConnectionEnabled];
+    [NSUserDefaults.standardUserDefaults setObject:@([CameraUploads syncManager].isUseCellularConnectionEnabled) forKey:kIsUseCellularConnectionEnabled];
 }
 
 - (IBAction)onlyWhenChargindSwitchValueChanged:(UISwitch *)sender {
@@ -166,7 +164,7 @@
     }
     [self.onlyWhenChargingSwitch setOn:[[CameraUploads syncManager] isOnlyWhenChargingEnabled] animated:YES];
     
-    [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:[CameraUploads syncManager].isOnlyWhenChargingEnabled] forKey:kIsOnlyWhenChargingEnabled];
+    [NSUserDefaults.standardUserDefaults setObject:@([CameraUploads syncManager].isOnlyWhenChargingEnabled) forKey:kIsOnlyWhenChargingEnabled];
 }
 
 #pragma mark - UITableViewDataSource
