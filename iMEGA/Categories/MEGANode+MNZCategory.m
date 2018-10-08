@@ -15,6 +15,7 @@
 #import "MEGARenameRequestDelegate.h"
 #import "MEGAShareRequestDelegate.h"
 #import "MEGAStore.h"
+#import "NSFileManager+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 #import "UIApplication+MNZCategory.h"
 
@@ -133,7 +134,7 @@
     [[MEGASdkManager sharedMEGASdk] createPreview:tmpImagePath destinatioPath:previewFilePath];
     [[MEGASdkManager sharedMEGASdk] setPreviewNode:self sourceFilePath:previewFilePath];
     
-    [[NSFileManager defaultManager] removeItemAtPath:tmpImagePath error:nil];
+    [NSFileManager.defaultManager mnz_removeItemAtPath:tmpImagePath];
 }
 
 #pragma mark - Actions
@@ -761,7 +762,7 @@
             [assetCreationRequest addResourceWithType:PHAssetResourceTypePhoto fileURL:imageURL options:nil];
             
         } completionHandler:^(BOOL success, NSError * _Nullable nserror) {
-            [[NSFileManager defaultManager] removeItemAtPath:path error:nil];
+            [NSFileManager.defaultManager mnz_removeItemAtPath:path];
             if (nserror) {
                 MEGALogError(@"Add asset to camera roll: %@ (Domain: %@ - Code:%ld)", nserror.localizedDescription, nserror.domain, nserror.code);
             }
@@ -773,7 +774,7 @@
     if (error) {
         MEGALogError(@"Save video to Camera roll: %@ (Domain: %@ - Code:%ld)", error.localizedDescription, error.domain, error.code);
     } else {
-        [[NSFileManager defaultManager] removeItemAtPath:videoPath error:nil];
+        [NSFileManager.defaultManager mnz_removeItemAtPath:videoPath];
     }
 }
 

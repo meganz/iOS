@@ -16,6 +16,7 @@
 #import "MEGASdkManager.h"
 #import "MEGAShareRequestDelegate.h"
 #import "MEGAUser+MNZCategory.h"
+#import "NSFileManager+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 #import "UIAlertAction+MNZCategory.h"
 #import "UIImageView+MNZCategory.h"
@@ -458,12 +459,7 @@
     if ([user hasChangedType:MEGAUserChangeTypeAvatar]) {
         NSString *userBase64Handle = [MEGASdk base64HandleForUserHandle:user.handle];
         NSString *avatarFilePath = [[Helper pathForSharedSandboxCacheDirectory:@"thumbnailsV3"] stringByAppendingPathComponent:userBase64Handle];
-        BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:avatarFilePath];
-        if (fileExists) {
-            NSError *error = nil;
-            [[NSFileManager defaultManager] removeItemAtPath:avatarFilePath error:&error];
-            MEGALogError(@"Remove item at path failed with error: %@", error);
-        }
+        [NSFileManager.defaultManager mnz_removeItemAtPath:avatarFilePath];
         userHasChanged = YES;
     } else if ([user hasChangedType:MEGAUserChangeTypeFirstname] || [user hasChangedType:MEGAUserChangeTypeLastname] || [user hasChangedType:MEGAUserChangeTypeEmail]) {
         userHasChanged = YES;
