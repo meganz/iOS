@@ -378,6 +378,7 @@
 		8394CFB8211B1AFD00A1634A /* GroupCallCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8394CFB7211B1AFD00A1634A /* GroupCallCollectionViewCell.m */; };
 		83B841672051905E00E5AC69 /* MEGAGetThumbnailRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A820DA3B1F0E5BDC00F1F832 /* MEGAGetThumbnailRequestDelegate.m */; };
 		83B841682051913C00E5AC69 /* MEGAGetThumbnailRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A820DA3B1F0E5BDC00F1F832 /* MEGAGetThumbnailRequestDelegate.m */; };
+		83BC4F1D216B72E800000D30 /* MEGAGroupCallPeer.m in Sources */ = {isa = PBXBuildFile; fileRef = 83BC4F1C216B72E800000D30 /* MEGAGroupCallPeer.m */; };
 		83D64E2D20178A0400E24155 /* PasswordReminder.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 83D64E2C20178A0400E24155 /* PasswordReminder.storyboard */; };
 		9411354F1F00FD1500D33428 /* Cloud.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 415226691A692ECC00EC7BB6 /* Cloud.storyboard */; };
 		941135501F00FFAB00D33428 /* BrowserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41AB8EC01A7103B300E40A39 /* BrowserViewController.m */; };
@@ -1327,6 +1328,8 @@
 		8394CFA4211AE5B700A1634A /* CallType.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CallType.h; sourceTree = "<group>"; };
 		8394CFB6211B1AFD00A1634A /* GroupCallCollectionViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GroupCallCollectionViewCell.h; sourceTree = "<group>"; };
 		8394CFB7211B1AFD00A1634A /* GroupCallCollectionViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GroupCallCollectionViewCell.m; sourceTree = "<group>"; };
+		83BC4F1B216B72E800000D30 /* MEGAGroupCallPeer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MEGAGroupCallPeer.h; path = Chat/Model/MEGAGroupCallPeer.h; sourceTree = "<group>"; };
+		83BC4F1C216B72E800000D30 /* MEGAGroupCallPeer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = MEGAGroupCallPeer.m; path = Chat/Model/MEGAGroupCallPeer.m; sourceTree = "<group>"; };
 		83D64E2C20178A0400E24155 /* PasswordReminder.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = PasswordReminder.storyboard; sourceTree = "<group>"; };
 		9419B6BE1F20D1D700FEBE31 /* MEGAIndexer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MEGAIndexer.h; path = Spotlight/MEGAIndexer.h; sourceTree = "<group>"; };
 		9419B6BF1F20D1D700FEBE31 /* MEGAIndexer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MEGAIndexer.m; path = Spotlight/MEGAIndexer.m; sourceTree = "<group>"; };
@@ -2669,6 +2672,8 @@
 				A89629771FACEAF800F02F7A /* MEGAProviderDelegate.m */,
 				8394CFA1211AE24100A1634A /* GroupCallViewController.h */,
 				8394CFA2211AE24100A1634A /* GroupCallViewController.m */,
+				83BC4F1B216B72E800000D30 /* MEGAGroupCallPeer.h */,
+				83BC4F1C216B72E800000D30 /* MEGAGroupCallPeer.m */,
 			);
 			name = Chat;
 			sourceTree = "<group>";
@@ -4023,6 +4028,7 @@
 				41D21E5F1D01AEC3002E6296 /* CTAssetPlayButton.m in Sources */,
 				8394CFB8211B1AFD00A1634A /* GroupCallCollectionViewCell.m in Sources */,
 				A89629781FACEAF800F02F7A /* MEGAProviderDelegate.m in Sources */,
+				83BC4F1D216B72E800000D30 /* MEGAGroupCallPeer.m in Sources */,
 				5B14A41520D10043005F8146 /* MEGAMultiFactorAuthCheckRequestDelegate.m in Sources */,
 				83681578202AFBC000CA8EFC /* CustomActionViewController.m in Sources */,
 				4172794B1DB663FA001AC818 /* JSQMessagesBubbleImage.m in Sources */,

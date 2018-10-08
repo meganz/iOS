@@ -2,14 +2,17 @@
 #import <UIKit/UIKit.h>
 #import "MEGARemoteImageView.h"
 
+@class MEGARemoteImageView, MEGAGroupCallPeer;
+
 @interface GroupCallCollectionViewCell : UICollectionViewCell
 
 @property (weak, nonatomic) IBOutlet UIImageView *avatarImageView;
 @property (weak, nonatomic) IBOutlet UIImageView *userMutedImageView;
 @property (weak, nonatomic) IBOutlet UIView *lowQualityView;
 
-@property (strong, nonatomic) MEGARemoteImageView *videoImageView;
+@property (strong, nonatomic) IBOutlet MEGARemoteImageView *videoImageView;
 
-@property (assign, nonatomic) uint64_t peerId;
+- (void)configureCellForPeer:(MEGAGroupCallPeer *)peer inChat:(uint64_t)chatId;
+- (void)networkQualityChangedForPeer:(MEGAGroupCallPeer *)peer reducedLayout:(BOOL)reduced;
 
 @end
