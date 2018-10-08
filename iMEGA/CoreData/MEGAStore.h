@@ -9,6 +9,11 @@
 
 @interface MEGAStore : NSObject
 
+#pragma mark - Properties
+
+@property (strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
+@property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
+
 #pragma mark - Singleton Lifecycle
 
 + (MEGAStore *)shareInstance;
