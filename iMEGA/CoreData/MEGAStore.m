@@ -6,8 +6,6 @@
 @interface MEGAStore ()
 
 @property (strong, nonatomic) NSManagedObjectModel *managedObjectModel;
-@property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
-@property (strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
 
 @end
 
