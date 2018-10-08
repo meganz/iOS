@@ -8,7 +8,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (instancetype)shared;
 
-- (void)startScanningWithCompletion:(void (^)(NSArray<MOAssetUploadRecord *> *))completion;
+- (void)startScanningWithCompletion:(void (^)(void))completion;
 
 @end
 

@@ -90,7 +90,7 @@ NSString * const uploadStatusDone = @"Done";
 }
 
 - (MOAssetUploadRecord *)createUploadStatusFromAsset:(PHAsset *)asset {
-    MOAssetUploadRecord *record = [NSEntityDescription insertNewObjectForEntityForName:@"AssetUploadStatus" inManagedObjectContext:self.privateQueueContext];
+    MOAssetUploadRecord *record = [NSEntityDescription insertNewObjectForEntityForName:@"AssetUploadRecord" inManagedObjectContext:self.privateQueueContext];
     record.localIdentifier = asset.localIdentifier;
     record.status = uploadStatusNotStarted;
     return record;

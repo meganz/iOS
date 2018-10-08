@@ -38,7 +38,7 @@
 
 #pragma mark - camera scanning
 
-- (void)startScanningWithCompletion:(void (^)(NSArray<MOAssetUploadRecord *> *))completion {
+- (void)startScanningWithCompletion:(void (^)(void))completion {
     [self.operationQueue addOperationWithBlock:^{
         PHFetchOptions *fetchOptions = [[PHFetchOptions alloc] init];
         fetchOptions.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"creationDate" ascending:YES]];
@@ -53,24 +53,24 @@
         if (records.count == 0) {
             [self.assetUploadRecordManager saveAssetFetchResult:self.fetchResult error:nil];
         } else {
-            NSArray<PHAsset *> *newAssets = [self findNewAssetsFromFetchResult:self.fetchResult uploadRecords:records];
+            NSArray<PHAsset *> *newAssets = [self findNewAssetsByComparingFetchResult:self.fetchResult uploadRecords:records];
             [self.assetUploadRecordManager saveAssets:newAssets error:nil];
         }
         
-        completion(records);
+        completion();
     }];
     
     [[PHPhotoLibrary sharedPhotoLibrary] registerChangeObserver:self];
 }
 
-- (NSArray<PHAsset *> *)findNewAssetsFromFetchResult:(PHFetchResult<PHAsset *> *)result uploadRecords:(NSArray<MOAssetUploadRecord *> *)records {
+- (NSArray<PHAsset *> *)findNewAssetsByComparingFetchResult:(PHFetchResult<PHAsset *> *)result uploadRecords:(NSArray<MOAssetUploadRecord *> *)records {
     if (result.count == 0) {
         return @[];
     }
     
     NSMutableArray<NSString *> *scannedLocalIds = [NSMutableArray arrayWithCapacity:records.count];
-    for (NSString *localId in records) {
-        [scannedLocalIds addObject:localId];
+    for (MOAssetUploadRecord *record in records) {
+        [scannedLocalIds addObject:record.localIdentifier];
     }
     NSComparator localIdComparator = ^(NSString *s1, NSString *s2) {
         return [s1 compare:s2];
@@ -81,7 +81,7 @@
     NSMutableArray<PHAsset *> *newAssets = [NSMutableArray array];
     for (PHAsset *asset in result) {
         NSUInteger matchingIndex = [sortedLocalIds indexOfObject:asset.localIdentifier inSortedRange:NSMakeRange(0, sortedLocalIds.count) options:NSBinarySearchingFirstEqual usingComparator:localIdComparator];
-        if (matchingIndex != NSNotFound) {
+        if (matchingIndex == NSNotFound) {
             [newAssets addObject:asset];
         }
     }
