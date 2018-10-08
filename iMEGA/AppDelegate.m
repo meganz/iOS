@@ -720,26 +720,6 @@
     [self.backgroundTaskMutableDictionary setObject:name forKey:[NSNumber numberWithUnsignedInteger:backgroundTaskIdentifier]];
 }
 
-- (void)showCameraUploadsPopUp {
-    MEGANavigationController *cameraUploadsNavigationController =[[UIStoryboard storyboardWithName:@"Photos" bundle:nil] instantiateViewControllerWithIdentifier:@"CameraUploadsPopUpNavigationControllerID"];
-    
-    [UIApplication.mnz_visibleViewController presentViewController:cameraUploadsNavigationController animated:YES completion:^{
-        isAccountFirstLogin = NO;
-        if (self.urlType == URLTypeConfirmationLink) {
-            if ([MEGAPurchase sharedInstance].products.count > 0) {
-                [self showChooseAccountType];
-            } else {
-                [[MEGAPurchase sharedInstance] setPricingsDelegate:self];
-                self.chooseAccountTypeLater = YES;
-            }
-        }
-     
-        if ([Helper selectedOptionOnLink] != 0) {
-            [self processSelectedOptionOnLink];
-        }
-    }];
-}
-
 - (void)showOffline {
     self.mainTBC.selectedIndex = MYACCOUNT;
     MEGANavigationController *navigationController = [self.mainTBC.childViewControllers objectAtIndex:MYACCOUNT];
@@ -1259,7 +1239,19 @@
             }
             
             if (isAccountFirstLogin) {
-                [self showCameraUploadsPopUp];
+                isAccountFirstLogin = NO;
+                if (self.urlType == URLTypeConfirmationLink) {
+                    if ([MEGAPurchase sharedInstance].products.count > 0) {
+                        [self showChooseAccountType];
+                    } else {
+                        [[MEGAPurchase sharedInstance] setPricingsDelegate:self];
+                        self.chooseAccountTypeLater = YES;
+                    }
+                }
+                
+                if ([Helper selectedOptionOnLink] != 0) {
+                    [self processSelectedOptionOnLink];
+                }
             }
             
             if (self.link != nil) {
@@ -1702,18 +1694,11 @@ void uncaughtExceptionHandler(NSException *exception) {
     NSDictionary *cameraUploadsSettings = [[NSDictionary alloc] initWithContentsOfFile:v2PspPath];
     
     if ([cameraUploadsSettings objectForKey:@"syncEnabled"]) {
-        [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:YES] forKey:kIsCameraUploadsEnabled];
-        
-        if ([cameraUploadsSettings objectForKey:@"cellEnabled"]) {
-            [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:YES] forKey:kIsUseCellularConnectionEnabled];
-        } else {
-            [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:NO] forKey:kIsUseCellularConnectionEnabled];
-        }
-        if ([cameraUploadsSettings objectForKey:@"videoEnabled"]) {
-            [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:YES] forKey:kIsUploadVideosEnabled];
-        } else {
-            [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:NO] forKey:kIsUploadVideosEnabled];
-        }
+        [NSUserDefaults.standardUserDefaults setObject:@1 forKey:kIsCameraUploadsEnabled];
+        BOOL cellEnabled = [cameraUploadsSettings objectForKey:@"cellEnabled"];
+        [NSUserDefaults.standardUserDefaults setObject:@(cellEnabled) forKey:kIsUseCellularConnectionEnabled];
+        BOOL videoEnabled = [cameraUploadsSettings objectForKey:@"videoEnabled"];
+        [NSUserDefaults.standardUserDefaults setObject:@(videoEnabled) forKey:kIsUploadVideosEnabled];
         
         [[NSFileManager defaultManager] removeItemAtPath:v2PspPath error:nil];
     }

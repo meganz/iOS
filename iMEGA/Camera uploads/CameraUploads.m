@@ -142,10 +142,10 @@ static CameraUploads *instance = nil;
         self.isOnlyWhenChargingEnabled = NO;
         self.shouldCameraUploadsBeDelayed = NO;
         
-        [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:_isCameraUploadsEnabled] forKey:kIsCameraUploadsEnabled];
-        [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:self.isUploadVideosEnabled] forKey:kIsUploadVideosEnabled];
-        [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:self.isUseCellularConnectionEnabled] forKey:kIsUseCellularConnectionEnabled];
-        [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:self.isOnlyWhenChargingEnabled] forKey:kIsOnlyWhenChargingEnabled];
+        [NSUserDefaults.standardUserDefaults setObject:@(self.isCameraUploadsEnabled) forKey:kIsCameraUploadsEnabled];
+        [NSUserDefaults.standardUserDefaults setObject:@(self.isUploadVideosEnabled) forKey:kIsUploadVideosEnabled];
+        [NSUserDefaults.standardUserDefaults setObject:@(self.isUseCellularConnectionEnabled) forKey:kIsUseCellularConnectionEnabled];
+        [NSUserDefaults.standardUserDefaults setObject:@(self.isOnlyWhenChargingEnabled) forKey:kIsOnlyWhenChargingEnabled];
         
         [[NSUserDefaults standardUserDefaults] synchronize];
         

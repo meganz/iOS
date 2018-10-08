@@ -1376,6 +1376,8 @@ static BOOL pointToStaging;
     
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"TransfersPaused"];
     
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:kIsCameraUploadsEnabled];
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:kIsUploadVideosEnabled];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"IsSavePhotoToGalleryEnabled"];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"IsSaveVideoToGalleryEnabled"];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"ChatVideoQuality"];

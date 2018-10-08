@@ -15,12 +15,6 @@
 @interface CameraUploadsPopUpViewController ()
 
 @property (weak, nonatomic) IBOutlet UILabel *topLabel;
-@property (weak, nonatomic) IBOutlet UIImageView *imageView;
-
-@property (weak, nonatomic) IBOutlet UILabel *uploadVideosLabel;
-@property (weak, nonatomic) IBOutlet UISwitch *uploadVideosSwitch;
-@property (weak, nonatomic) IBOutlet UILabel *useCellularConnectionLabel;
-@property (weak, nonatomic) IBOutlet UISwitch *useCellularConnectionSwitch;
 
 @property (weak, nonatomic) IBOutlet UIButton *skipButton;
 @property (weak, nonatomic) IBOutlet UIButton *enableButton;
@@ -31,29 +25,13 @@
 
 #pragma mark - Lifecycle
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    
-    if (![MEGAReachabilityManager hasCellularConnection]) {
-        [_useCellularConnectionLabel setHidden:YES];
-        [_useCellularConnectionSwitch setHidden:YES];
-    }
-}
-
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
+    self.navigationItem.title = AMLocalizedString(@"enableCameraUploadsButton", @"Button title that enables the functionality 'Camera Uploads', which uploads all the photos in your device to MEGA");
     self.topLabel.text = AMLocalizedString(@"automaticallyBackupYourPhotos", @"Text shown to explain what means 'Enable Camera Uploads'.");
-    
-    self.navigationItem.title = AMLocalizedString(@"cameraUploadsLabel", @"Title of one of the Settings sections where you can set up the 'Camera Uploads' options");
-    self.imageView.image = [UIImage imageNamed:@"cameraUploadsPopUp"];
-    
-    [_uploadVideosLabel setText:AMLocalizedString(@"uploadVideosLabel", @"Upload videos")];
-    self.useCellularConnectionLabel.text = AMLocalizedString(@"useMobileData", @"Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature.");
-    
-    [_skipButton setTitle:AMLocalizedString(@"skipButton", @"Skip") forState:UIControlStateNormal];
-    
     [self.enableButton setTitle:AMLocalizedString(@"enable", @"Text button shown when the chat is disabled and if tapped the chat will be enabled") forState:UIControlStateNormal];
+    [self.skipButton setTitle:AMLocalizedString(@"notNow", nil) forState:UIControlStateNormal];
 }
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations {
@@ -62,26 +40,19 @@
 
 #pragma mark - IBActions
 
-- (IBAction)uploadVideosValueChanged:(UISwitch *)sender {
-    [CameraUploads syncManager].isUploadVideosEnabled = ![CameraUploads syncManager].isUploadVideosEnabled;
-    [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:[CameraUploads syncManager].isUploadVideosEnabled] forKey:kIsUploadVideosEnabled];
-}
-
-- (IBAction)useCellularConnectionValueChanged:(UISwitch *)sender {
-    [CameraUploads syncManager].isUseCellularConnectionEnabled = ![CameraUploads syncManager].isUseCellularConnectionEnabled;
-    [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:[CameraUploads syncManager].isUseCellularConnectionEnabled] forKey:kIsUseCellularConnectionEnabled];
-}
-
 - (IBAction)skipTouchUpInside:(UIButton *)sender {
+    [NSUserDefaults.standardUserDefaults setObject:@0 forKey:kIsCameraUploadsEnabled];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (IBAction)enableTouchUpInside:(UIButton *)sender {
     [DevicePermissionsHelper photosPermissionWithCompletionHandler:^(BOOL granted) {
+        [NSUserDefaults.standardUserDefaults setObject:@(granted) forKey:kIsCameraUploadsEnabled];
         if (granted) {
             MEGALogInfo(@"Enable Camera Uploads");
-            [[CameraUploads syncManager] setIsCameraUploadsEnabled:YES];
-            [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:[CameraUploads syncManager].isCameraUploadsEnabled] forKey:kIsCameraUploadsEnabled];
+            [CameraUploads syncManager].isCameraUploadsEnabled = YES;
+            [CameraUploads syncManager].isUploadVideosEnabled = YES;
+            [NSUserDefaults.standardUserDefaults setObject:@1 forKey:kIsUploadVideosEnabled];
             
             [self dismissViewControllerAnimated:YES completion:^{
                 [SVProgressHUD showImage:[UIImage imageNamed:@"hudCameraUploads"] status:AMLocalizedString(@"cameraUploadsEnabled", nil)];
