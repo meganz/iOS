@@ -2,7 +2,7 @@
 //  MOAssetUploadStatus+CoreDataClass.m
 //  
 //
-//  Created by Simon Wang on 5/10/18.
+//  Created by Simon Wang on 9/10/18.
 //
 //
 

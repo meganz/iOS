@@ -6,8 +6,9 @@
 //  Copyright © 2018 MEGA. All rights reserved.
 //
 
-#import "AssetUploadStatusCoreDataManager.h"
+#import "AssetUploadRecordCoreDataManager.h"
 #import "MEGAStore.h"
+@import Photos;
 
 NSString * const uploadStatusNotStarted = @"NotStarted";
 NSString * const uploadStatusDownloading = @"Downloading";
@@ -16,13 +17,13 @@ NSString * const uploadStatusUploading = @"Uploading";
 NSString * const uploadStatusFailed = @"Failed";
 NSString * const uploadStatusDone = @"Done";
 
-@interface AssetUploadStatusCoreDataManager ()
+@interface AssetUploadRecordCoreDataManager ()
 
 @property (strong, nonatomic) NSManagedObjectContext *privateQueueContext;
 
 @end
 
-@implementation AssetUploadStatusCoreDataManager
+@implementation AssetUploadRecordCoreDataManager
 
 - (instancetype)init {
     self = [super init];
@@ -36,18 +37,18 @@ NSString * const uploadStatusDone = @"Done";
 
 #pragma mark - asset upload status core data managing methods
 
-- (NSArray<MOAssetUploadStatus *> *)fetchAllAssetsUploadStatus:(NSError * _Nullable __autoreleasing * _Nullable)error {
-    __block NSArray<MOAssetUploadStatus *> *statuses = @[];
+- (NSArray<MOAssetUploadRecord *> *)fetchAllAssetUploadRecords:(NSError * _Nullable __autoreleasing * _Nullable)error {
+    __block NSArray<MOAssetUploadRecord *> *records = @[];
     __block NSError *coreDataError = nil;
     [self.privateQueueContext performBlockAndWait:^{
-        statuses = [self.privateQueueContext executeFetchRequest:MOAssetUploadStatus.fetchRequest error:&coreDataError];
+        records = [self.privateQueueContext executeFetchRequest:MOAssetUploadRecord.fetchRequest error:&coreDataError];
     }];
     
     if (error != NULL) {
         *error = coreDataError;
     }
     
-    return statuses;
+    return records;
 }
 
 - (BOOL)saveAssetFetchResult:(PHFetchResult<PHAsset *> *)result error:(NSError * _Nullable __autoreleasing * _Nullable)error {
@@ -88,11 +89,11 @@ NSString * const uploadStatusDone = @"Done";
     return coreDataError == nil;
 }
 
-- (MOAssetUploadStatus *)createUploadStatusFromAsset:(PHAsset *)asset {
-    MOAssetUploadStatus *status = [NSEntityDescription insertNewObjectForEntityForName:@"AssetUploadStatus" inManagedObjectContext:self.privateQueueContext];
-    status.localIdentifier = asset.localIdentifier;
-    status.statusCode = uploadStatusNotStarted;
-    return status;
+- (MOAssetUploadRecord *)createUploadStatusFromAsset:(PHAsset *)asset {
+    MOAssetUploadRecord *record = [NSEntityDescription insertNewObjectForEntityForName:@"AssetUploadStatus" inManagedObjectContext:self.privateQueueContext];
+    record.localIdentifier = asset.localIdentifier;
+    record.status = uploadStatusNotStarted;
+    return record;
 }
 
 @end
