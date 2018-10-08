@@ -2,7 +2,7 @@
 //  MOAssetUploadStatus+CoreDataProperties.m
 //  
 //
-//  Created by Simon Wang on 5/10/18.
+//  Created by Simon Wang on 9/10/18.
 //
 //
 
@@ -11,10 +11,10 @@
 @implementation MOAssetUploadStatus (CoreDataProperties)
 
 + (NSFetchRequest<MOAssetUploadStatus *> *)fetchRequest {
-	return [NSFetchRequest fetchRequestWithEntityName:@"AssetUploadStatus"];
+	return [NSFetchRequest fetchRequestWithEntityName:@"AssetUploadRecord"];
 }
 
 @dynamic localIdentifier;
-@dynamic statusCode;
+@dynamic status;
 
 @end

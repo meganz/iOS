@@ -1,12 +1,12 @@
 
 #import "AssetManager.h"
-#import "AssetUploadStatusCoreDataManager.h"
+#import "AssetUploadRecordCoreDataManager.h"
 @import Photos;
 
 @interface AssetManager () <PHPhotoLibraryChangeObserver>
 
 @property (strong, nonatomic) NSOperationQueue *operationQueue;
-@property (strong, nonatomic) AssetUploadStatusCoreDataManager *assetUploadStatusManager;
+@property (strong, nonatomic) AssetUploadRecordCoreDataManager *assetUploadRecordManager;
 @property (strong, nonatomic) PHFetchResult<PHAsset *> *fetchResult;
 
 @end
@@ -27,7 +27,7 @@
     self = [super init];
     if (self) {
         _operationQueue = [[NSOperationQueue alloc] init];
-        _assetUploadStatusManager = [[AssetUploadStatusCoreDataManager alloc] init];
+        _assetUploadRecordManager = [[AssetUploadRecordCoreDataManager alloc] init];
     }
     return self;
 }
@@ -38,7 +38,7 @@
 
 #pragma mark - camera scanning
 
-- (void)startScanningWithCompletion:(void (^)(NSArray<MOAssetUploadStatus *> *))completion {
+- (void)startScanningWithCompletion:(void (^)(NSArray<MOAssetUploadRecord *> *))completion {
     [self.operationQueue addOperationWithBlock:^{
         PHFetchOptions *fetchOptions = [[PHFetchOptions alloc] init];
         fetchOptions.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"creationDate" ascending:YES]];
@@ -49,27 +49,27 @@
         }
         
         NSError *error = nil;
-        NSArray<MOAssetUploadStatus *> *statues = [self.assetUploadStatusManager fetchAllAssetsUploadStatus:&error];
-        if (statues.count == 0) {
-            [self.assetUploadStatusManager saveAssetFetchResult:self.fetchResult error:nil];
+        NSArray<MOAssetUploadRecord *> *records = [self.assetUploadRecordManager fetchAllAssetUploadRecords:&error];
+        if (records.count == 0) {
+            [self.assetUploadRecordManager saveAssetFetchResult:self.fetchResult error:nil];
         } else {
-            NSArray<PHAsset *> *newAssets = [self findNewAssetsFromFetchResult:self.fetchResult scannedUploadStatuses:statues];
-            [self.assetUploadStatusManager saveAssets:newAssets error:nil];
+            NSArray<PHAsset *> *newAssets = [self findNewAssetsFromFetchResult:self.fetchResult uploadRecords:records];
+            [self.assetUploadRecordManager saveAssets:newAssets error:nil];
         }
         
-        completion(statues);
+        completion(records);
     }];
     
     [[PHPhotoLibrary sharedPhotoLibrary] registerChangeObserver:self];
 }
 
-- (NSArray<PHAsset *> *)findNewAssetsFromFetchResult:(PHFetchResult<PHAsset *> *)result scannedUploadStatuses:(NSArray<MOAssetUploadStatus *> *)statuses {
+- (NSArray<PHAsset *> *)findNewAssetsFromFetchResult:(PHFetchResult<PHAsset *> *)result uploadRecords:(NSArray<MOAssetUploadRecord *> *)records {
     if (result.count == 0) {
         return @[];
     }
     
-    NSMutableArray<NSString *> *scannedLocalIds = [NSMutableArray arrayWithCapacity:statuses.count];
-    for (NSString *localId in statuses) {
+    NSMutableArray<NSString *> *scannedLocalIds = [NSMutableArray arrayWithCapacity:records.count];
+    for (NSString *localId in records) {
         [scannedLocalIds addObject:localId];
     }
     NSComparator localIdComparator = ^(NSString *s1, NSString *s2) {
@@ -95,7 +95,7 @@
     PHFetchResultChangeDetails *changes = [changeInstance changeDetailsForFetchResult:self.fetchResult];
     self.fetchResult = changes.fetchResultAfterChanges;
     NSArray<PHAsset *> *newAssets = [changes insertedObjects];
-    [self.assetUploadStatusManager saveAssets:newAssets error:nil];
+    [self.assetUploadRecordManager saveAssets:newAssets error:nil];
 }
 
 @end

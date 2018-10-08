@@ -2,7 +2,7 @@
 //  MOAssetUploadStatus+CoreDataProperties.h
 //  
 //
-//  Created by Simon Wang on 5/10/18.
+//  Created by Simon Wang on 9/10/18.
 //
 //
 
@@ -16,7 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (NSFetchRequest<MOAssetUploadStatus *> *)fetchRequest;
 
 @property (nullable, nonatomic, copy) NSString *localIdentifier;
-@property (nullable, nonatomic, copy) NSString *statusCode;
+@property (nullable, nonatomic, copy) NSString *status;
 
 @end
 

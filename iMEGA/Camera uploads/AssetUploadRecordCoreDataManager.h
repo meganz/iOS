@@ -1,5 +1,5 @@
 //
-//  AssetUploadStatusCoreDataManager.h
+//  AssetUploadRecordCoreDataManager.h
 //  MEGA
 //
 //  Created by Simon Wang on 8/10/18.
@@ -7,8 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "MOAssetUploadStatus+CoreDataClass.h"
-@import Photos;
+#import "MOAssetUploadRecord+CoreDataClass.h"
 
 extern NSString * const uploadStatusNotStarted;
 extern NSString * const uploadStatusDownloading;
@@ -19,11 +18,13 @@ extern NSString * const uploadStatusDone;
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface AssetUploadStatusCoreDataManager : NSObject
+@class PHAsset, PHFetchResult;
 
-- (NSArray<MOAssetUploadStatus *> *)fetchAllAssetsUploadStatus:(NSError * _Nullable __autoreleasing * _Nullable)error;
+@interface AssetUploadRecordCoreDataManager : NSObject
 
-- (BOOL)saveAssetFetchResult:(PHFetchResult<PHAsset *> *)result error:(NSError * _Nullable __autoreleasing * _Nullable)error;
+- (NSArray<MOAssetUploadRecord *> *)fetchAllAssetUploadRecords:(NSError * _Nullable __autoreleasing * _Nullable)error;
+
+- (BOOL)saveAssetFetchResult:(PHFetchResult *)result error:(NSError * _Nullable __autoreleasing * _Nullable)error;
 
 - (BOOL)saveAssets:(NSArray<PHAsset *> *)assets error:(NSError * _Nullable __autoreleasing * _Nullable)error;
 
