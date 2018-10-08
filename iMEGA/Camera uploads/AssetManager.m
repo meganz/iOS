@@ -3,10 +3,11 @@
 #import "AssetUploadStatusCoreDataManager.h"
 @import Photos;
 
-@interface AssetManager ()
+@interface AssetManager () <PHPhotoLibraryChangeObserver>
 
 @property (strong, nonatomic) NSOperationQueue *operationQueue;
 @property (strong, nonatomic) AssetUploadStatusCoreDataManager *assetUploadStatusManager;
+@property (strong, nonatomic) PHFetchResult<PHAsset *> *fetchResult;
 
 @end
 
@@ -31,6 +32,10 @@
     return self;
 }
 
+- (void)dealloc {
+    [[PHPhotoLibrary sharedPhotoLibrary] unregisterChangeObserver:self];
+}
+
 #pragma mark - camera scanning
 
 - (void)startScanningWithCompletion:(void (^)(NSArray<MOAssetUploadStatus *> *))completion {
@@ -38,22 +43,24 @@
         PHFetchOptions *fetchOptions = [[PHFetchOptions alloc] init];
         fetchOptions.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"creationDate" ascending:YES]];
         fetchOptions.includeAssetSourceTypes = PHAssetSourceTypeUserLibrary | PHAssetSourceTypeCloudShared | PHAssetSourceTypeiTunesSynced;
-        PHFetchResult<PHAsset *> *fetchResult = [PHAsset fetchAssetsWithMediaType:PHAssetMediaTypeImage options:fetchOptions];
-        if (fetchResult.count == 0) {
+        self.fetchResult = [PHAsset fetchAssetsWithMediaType:PHAssetMediaTypeImage options:fetchOptions];
+        if (self.fetchResult.count == 0) {
             return;
         }
         
         NSError *error = nil;
         NSArray<MOAssetUploadStatus *> *statues = [self.assetUploadStatusManager fetchAllAssetsUploadStatus:&error];
         if (statues.count == 0) {
-            [self.assetUploadStatusManager saveAssetFetchResult:fetchResult error:nil];
+            [self.assetUploadStatusManager saveAssetFetchResult:self.fetchResult error:nil];
         } else {
-            NSArray<PHAsset *> *newAssets = [self findNewAssetsFromFetchResult:fetchResult scannedUploadStatuses:statues];
+            NSArray<PHAsset *> *newAssets = [self findNewAssetsFromFetchResult:self.fetchResult scannedUploadStatuses:statues];
             [self.assetUploadStatusManager saveAssets:newAssets error:nil];
         }
         
         completion(statues);
     }];
+    
+    [[PHPhotoLibrary sharedPhotoLibrary] registerChangeObserver:self];
 }
 
 - (NSArray<PHAsset *> *)findNewAssetsFromFetchResult:(PHFetchResult<PHAsset *> *)result scannedUploadStatuses:(NSArray<MOAssetUploadStatus *> *)statuses {
@@ -80,6 +87,15 @@
     }
     
     return [newAssets copy];
+}
+
+#pragma mark - PHPhotoLibraryChangeObserver
+
+- (void)photoLibraryDidChange:(PHChange *)changeInstance {
+    PHFetchResultChangeDetails *changes = [changeInstance changeDetailsForFetchResult:self.fetchResult];
+    self.fetchResult = changes.fetchResultAfterChanges;
+    NSArray<PHAsset *> *newAssets = [changes insertedObjects];
+    [self.assetUploadStatusManager saveAssets:newAssets error:nil];
 }
 
 @end

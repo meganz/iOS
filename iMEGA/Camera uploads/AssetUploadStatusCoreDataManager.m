@@ -71,7 +71,7 @@ NSString * const uploadStatusDone = @"Done";
 
 - (BOOL)saveAssets:(NSArray<PHAsset *> *)assets error:(NSError * _Nullable __autoreleasing * _Nullable)error {
     __block NSError *coreDataError = nil;
-    if (assets.count != 0) {
+    if (assets.count > 0) {
         [self.privateQueueContext performBlockAndWait:^{
             for (PHAsset *asset in assets) {
                 [self createUploadStatusFromAsset:asset];
@@ -94,7 +94,5 @@ NSString * const uploadStatusDone = @"Done";
     status.statusCode = uploadStatusNotStarted;
     return status;
 }
-
-
 
 @end
