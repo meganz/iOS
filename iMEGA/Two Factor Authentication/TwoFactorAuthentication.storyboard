@@ -500,15 +500,18 @@ opqr stuv wxyz</string>
                         <sections>
                             <tableViewSection headerTitle="" footerTitle="Two-factor authentication is a second layer of security for your account. " id="Gc6-hj-Zsa">
                                 <cells>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="44" id="xVd-Fy-72f" userLabel="Save photos to gallery Table View Cell">
+                                    <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" rowHeight="44" id="xVd-Fy-72f" userLabel="Save photos to gallery Table View Cell">
                                         <rect key="frame" x="0.0" y="35" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="xVd-Fy-72f" id="X0d-Zv-xxR">
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" tableViewCell="xVd-Fy-72f" id="X0d-Zv-xxR">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <switch opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="lIM-cp-2SU">
                                                     <rect key="frame" x="310" y="6.5" width="51" height="31"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="49" id="7Mx-Ny-izo"/>
+                                                    </constraints>
                                                     <color key="onTintColor" red="0.95294117647058818" green="0.047058823529411764" blue="0.078431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 </switch>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Two-Factor Authentication" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mtr-bw-zaP">
@@ -526,9 +529,7 @@ opqr stuv wxyz</string>
                                                 </button>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="Mtr-bw-zaP" firstAttribute="leading" secondItem="X0d-Zv-xxR" secondAttribute="leadingMargin" constant="15" id="5gP-eV-XTe"/>
                                                 <constraint firstItem="7xh-1u-QJI" firstAttribute="height" secondItem="lIM-cp-2SU" secondAttribute="height" id="5sl-4P-h6M"/>
-                                                <constraint firstItem="Mtr-bw-zaP" firstAttribute="trailing" secondItem="X0d-Zv-xxR" secondAttribute="trailingMargin" id="GZw-gg-e3F"/>
                                                 <constraint firstItem="lIM-cp-2SU" firstAttribute="trailing" secondItem="X0d-Zv-xxR" secondAttribute="trailingMargin" id="Pb5-ae-bV9"/>
                                                 <constraint firstItem="lIM-cp-2SU" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Mtr-bw-zaP" secondAttribute="trailing" constant="8" id="Xmz-ct-Aps"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="lIM-cp-2SU" secondAttribute="trailing" id="Ze5-HS-eP5"/>
@@ -541,8 +542,6 @@ opqr stuv wxyz</string>
                                             </constraints>
                                             <variation key="default">
                                                 <mask key="constraints">
-                                                    <exclude reference="5gP-eV-XTe"/>
-                                                    <exclude reference="GZw-gg-e3F"/>
                                                     <exclude reference="Pb5-ae-bV9"/>
                                                 </mask>
                                             </variation>
