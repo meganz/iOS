@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14315.18" systemVersion="18A391" minimumToolsVersion="Xcode 4.3" sourceLanguage="Objective-C" userDefinedModelVersionIdentifier="">
     <entity name="AssetUploadRecord" representedClassName="MOAssetUploadRecord" syncable="YES">
+        <attribute name="creationDate" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="localIdentifier" attributeType="String" syncable="YES"/>
         <attribute name="status" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
@@ -30,7 +31,7 @@
         <attribute name="lastname" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <elements>
-        <element name="AssetUploadRecord" positionX="90" positionY="-81" width="128" height="75"/>
+        <element name="AssetUploadRecord" positionX="90" positionY="-81" width="128" height="90"/>
         <element name="ChatDraft" positionX="-63" positionY="15" width="128" height="73"/>
         <element name="MediaDestination" positionX="99" positionY="-72" width="128" height="90"/>
         <element name="MOUploadTransfer" positionX="99" positionY="-72" width="128" height="75"/>
