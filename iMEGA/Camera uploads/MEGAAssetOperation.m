@@ -241,7 +241,7 @@
             } else {
                 [self completeOperation];
             }
-        } else if (self.isCameraUploads) {
+        } else if (self.isCameraUploads && api.isLoggedIn) {
             [[CameraUploads syncManager] resetOperationQueue];
         }
         return;
