@@ -474,7 +474,7 @@
     }
     
     if ([[[[MEGASdkManager sharedMEGASdk] downloadTransfers] size] integerValue] == 0) {
-        [NSFileManager.defaultManager mnz_removeFolderContentsRecursivelyAtPath:[Helper pathForOffline] forItemsContaining:@".mega"];
+        [NSFileManager.defaultManager mnz_removeFolderContentsRecursivelyAtPath:[Helper pathForOffline] forItemsExtension:@"mega"];
         [NSFileManager.defaultManager mnz_removeItemAtPath:[NSFileManager.defaultManager downloadsDirectory]];
     }
     if ([[[[MEGASdkManager sharedMEGASdk] uploadTransfers] size] integerValue] == 0) {
@@ -1689,7 +1689,7 @@ void uncaughtExceptionHandler(NSException *exception) {
 
 - (void)removeOldStateCache {
     NSString *libraryDirectory = [NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-    [NSFileManager.defaultManager mnz_removeFolderContentsAtPath:libraryDirectory forItemsContaining:@".db"];
+    [NSFileManager.defaultManager mnz_removeFolderContentsRecursivelyAtPath:libraryDirectory forItemsExtension:@"db"];
 }
 
 - (void)languageCompatibility {

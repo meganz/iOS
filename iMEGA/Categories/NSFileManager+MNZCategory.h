@@ -13,6 +13,7 @@
 - (void)mnz_removeItemAtPath:(NSString *)path;
 - (void)mnz_removeFolderContentsAtPath:(NSString *)folderPath;
 - (void)mnz_removeFolderContentsAtPath:(NSString *)folderPath forItemsContaining:(NSString *)filesContaining;
-- (void)mnz_removeFolderContentsRecursivelyAtPath:(NSString *)folderPath forItemsContaining:(NSString *)filesContaining;
+- (void)mnz_removeFolderContentsRecursivelyAtPath:(NSString *)folderPath forItemsContaining:(NSString *)itemsContaining;
+- (void)mnz_removeFolderContentsRecursivelyAtPath:(NSString *)folderPath forItemsExtension:(NSString *)itemsExtension;
 
 @end

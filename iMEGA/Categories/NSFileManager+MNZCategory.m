@@ -34,6 +34,7 @@
 - (void)mnz_removeItemAtPath:(NSString *)path {
     if (path == nil) {
         MEGALogError(@"The path to remove the item is nil.");
+        return;
     }
     
     NSError *error = nil;
@@ -78,6 +79,20 @@
             [NSFileManager.defaultManager mnz_removeFolderContentsRecursivelyAtPath:[folderPath stringByAppendingPathComponent:itemName] forItemsContaining:itemsContaining];
         } else {
             if ([itemName.lowercaseString containsString:itemsContaining]) {
+                [NSFileManager.defaultManager mnz_removeItemAtPath:[folderPath stringByAppendingPathComponent:itemName]];
+            }
+        }
+    }
+}
+
+- (void)mnz_removeFolderContentsRecursivelyAtPath:(NSString *)folderPath forItemsExtension:(NSString *)itemsExtension {
+    NSArray *directoryContentsArray = [NSFileManager.defaultManager contentsOfDirectoryAtPath:folderPath error:nil];
+    for (NSString *itemName in directoryContentsArray) {
+        NSDictionary *attributesDictionary = [NSFileManager.defaultManager attributesOfItemAtPath:[folderPath stringByAppendingPathComponent:itemName] error:nil];
+        if ([attributesDictionary objectForKey:NSFileType] == NSFileTypeDirectory) {
+            [NSFileManager.defaultManager mnz_removeFolderContentsRecursivelyAtPath:[folderPath stringByAppendingPathComponent:itemName] forItemsExtension:itemsExtension];
+        } else {
+            if ([itemName.pathExtension.lowercaseString isEqualToString:itemsExtension]) {
                 [NSFileManager.defaultManager mnz_removeItemAtPath:[folderPath stringByAppendingPathComponent:itemName]];
             }
         }
