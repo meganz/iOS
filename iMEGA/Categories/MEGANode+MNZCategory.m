@@ -163,18 +163,42 @@
 }
 
 - (void)mnz_saveToPhotosWithApi:(MEGASdk *)api {
-    [SVProgressHUD showInfoWithStatus:AMLocalizedString(@"Saving to Photos...", @"Text shown when starting the process to save a photo or video to Photos app")];
-    NSString *temporaryPath = [[NSTemporaryDirectory() stringByAppendingPathComponent:self.base64Handle] stringByAppendingPathComponent:self.name];
-    NSString *temporaryFingerprint = [[MEGASdkManager sharedMEGASdk] fingerprintForFilePath:temporaryPath];
-    if ([temporaryFingerprint isEqualToString:[[MEGASdkManager sharedMEGASdk] fingerprintForNode:self]]) {
-        [self mnz_copyToGalleryFromTemporaryPath:temporaryPath];
-    } else if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-        NSString *downloadsDirectory = [[NSFileManager defaultManager] downloadsDirectory];
-        downloadsDirectory = downloadsDirectory.mnz_relativeLocalPath;
-        NSString *offlineNameString = [[MEGASdkManager sharedMEGASdkFolder] escapeFsIncompatible:self.name];
-        NSString *localPath = [downloadsDirectory stringByAppendingPathComponent:offlineNameString];
-        [api startDownloadNode:[api authorizeNode:self] localPath:localPath appData:[[NSString new] mnz_appDataToSaveInPhotosApp]];
-    }
+    [PHPhotoLibrary requestAuthorization:^(PHAuthorizationStatus status) {
+        switch (status) {
+            case PHAuthorizationStatusAuthorized: {
+                [SVProgressHUD showInfoWithStatus:AMLocalizedString(@"Saving to Photos...", @"Text shown when starting the process to save a photo or video to Photos app")];
+                NSString *temporaryPath = [[NSTemporaryDirectory() stringByAppendingPathComponent:self.base64Handle] stringByAppendingPathComponent:self.name];
+                NSString *temporaryFingerprint = [[MEGASdkManager sharedMEGASdk] fingerprintForFilePath:temporaryPath];
+                if ([temporaryFingerprint isEqualToString:self.fingerprint]) {
+                    [self mnz_copyToGalleryFromTemporaryPath:temporaryPath];
+                } else if ([MEGAReachabilityManager isReachableHUDIfNot]) {
+                    NSString *downloadsDirectory = [[NSFileManager defaultManager] downloadsDirectory];
+                    downloadsDirectory = downloadsDirectory.mnz_relativeLocalPath;
+                    NSString *offlineNameString = [[MEGASdkManager sharedMEGASdkFolder] escapeFsIncompatible:self.name];
+                    NSString *localPath = [downloadsDirectory stringByAppendingPathComponent:offlineNameString];
+                    [api startDownloadNode:[api authorizeNode:self] localPath:localPath appData:[[NSString new] mnz_appDataToSaveInPhotosApp]];
+                }
+                break;
+            }
+                
+            case PHAuthorizationStatusRestricted:
+            case PHAuthorizationStatusDenied: {
+                UIAlertController *permissionsAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"attention", @"Alert title to attract attention") message:AMLocalizedString(@"photoLibraryPermissions", @"Alert message to explain that the MEGA app needs permission to access your device photos") preferredStyle:UIAlertControllerStyleAlert];
+                
+                [permissionsAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
+                
+                [permissionsAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+                    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
+                }]];
+                
+                [UIApplication.mnz_visibleViewController presentViewController:permissionsAlertController animated:YES completion:nil];
+                break;
+            }
+                
+            default:
+                break;
+        }
+    }];
 }
 
 - (void)mnz_renameNodeInViewController:(UIViewController *)viewController {
