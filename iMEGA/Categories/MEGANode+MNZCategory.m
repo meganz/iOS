@@ -789,8 +789,13 @@
 }
 
 - (void)mnz_copyToGalleryFromTemporaryPath:(NSString *)path {
-    if (self.name.mnz_isVideoPathExtension && UIVideoAtPathIsCompatibleWithSavedPhotosAlbum(path)) {
-        UISaveVideoAtPathToSavedPhotosAlbum(path, self, @selector(video:didFinishSavingWithError:contextInfo:), nil);
+    if (self.name.mnz_isVideoPathExtension) {
+        if (UIVideoAtPathIsCompatibleWithSavedPhotosAlbum(path)) {
+            UISaveVideoAtPathToSavedPhotosAlbum(path, self, @selector(video:didFinishSavingWithError:contextInfo:), nil);
+        } else {
+            [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"Could not save", @"Text shown when an error occurs when trying to save a photo or video to Photos app")];
+            MEGALogError(@"The video can be saved to the Camera Roll album");
+        }
     }
     
     if (self.name.mnz_isImagePathExtension) {
