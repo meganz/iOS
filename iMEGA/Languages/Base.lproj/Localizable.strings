@@ -1672,3 +1672,11 @@
 "To disable Rubbish-Bin Cleaning Scheduler or set a longer retention period you need to subscribe to a PRO plan"="To disable Rubbish-Bin Cleaning Scheduler or set a longer retention period you need to subscribe to a PRO plan";
 /* Confirmation dialog for the button that logs the user out of all sessions except the current one. */
 "Do you want to close all other sessions? This will log you out on all other active sessions except the current one."="Do you want to close all other sessions? This will log you out on all other active sessions except the current one.";
+/* A button label which allows the users save images/videos in the Photos app. */
+"Save to Photos"="Save to Photos";
+/* Text shown when starting the process to save a photo or video to Photos app */
+"Saving to Photos..."="Saving to Photos...";
+/* Text shown when a photo or video is saved to Photos app */
+"Saved to Photos"="Saved to Photos";
+/* Text shown when an error occurs when trying to save a photo or video to Photos app */
+"Could not save"="Could not save";

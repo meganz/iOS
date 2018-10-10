@@ -385,7 +385,7 @@
 }
 
 - (MegaActionNode *)actionSaveToPhotos {
-    return [[MegaActionNode alloc] initWithTitle:AMLocalizedString(@"Save to Photos", nil) iconName: @"saveToPhotos" andActionType:MegaNodeActionTypeSaveToPhotos];
+    return [[MegaActionNode alloc] initWithTitle:AMLocalizedString(@"Save to Photos", @"A button label which allows the users save images/videos in the Photos app") iconName: @"saveToPhotos" andActionType:MegaNodeActionTypeSaveToPhotos];
 }
 
 #pragma mark - IBActions

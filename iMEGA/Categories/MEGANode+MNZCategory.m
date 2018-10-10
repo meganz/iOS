@@ -170,7 +170,7 @@
         [self mnz_copyToGalleryFromTemporaryPath:temporaryPath];
     } else if ([MEGAReachabilityManager isReachableHUDIfNot]) {
         NSString *downloadsDirectory = [[NSFileManager defaultManager] downloadsDirectory];
-        downloadsDirectory = [downloadsDirectory stringByReplacingOccurrencesOfString:[NSHomeDirectory() stringByAppendingString:@"/"] withString:@""];
+        downloadsDirectory = downloadsDirectory.mnz_relativeLocalPath;
         NSString *offlineNameString = [[MEGASdkManager sharedMEGASdkFolder] escapeFsIncompatible:self.name];
         NSString *localPath = [downloadsDirectory stringByAppendingPathComponent:offlineNameString];
         [api startDownloadNode:[api authorizeNode:self] localPath:localPath appData:[[NSString new] mnz_appDataToSaveInPhotosApp]];

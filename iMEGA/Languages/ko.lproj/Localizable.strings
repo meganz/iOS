@@ -1555,7 +1555,7 @@
 /* Confirmation message for user to confirm it will unarchive an archived chat. */
 "unarchiveChatMessage"="이 보관된 대화를 삭제하시겠습니까?";
 /* The title of the dialog to unarchive an archived chat. */
-"unarchiveChat"="보관된 대화 삭제";
+"unarchiveChat"="대화 보관 해제";
 /* Title of button to archive chats. */
 "archiveChat"="대화 보관";
 /* Title of flag of archived chats. */
@@ -1605,7 +1605,7 @@
 /* Title shown in a page of the on boarding screens explaining that the user keeps the encryption keys */
 "You hold the keys"="당신이 열쇠를 갖습니다";
 /* Description shown in a page of the onboarding screens explaining the encryption paradigm */
-"Security is why we exist, your files are safe with us behind a well oiled encryption machine where only you can access your files."="보안은 우리가 존재하는 이유이며, 우리 뒤의 당신만이 파일에 접근할 수 있도록 잘 기름쳐진 암호화 기계와 함께 당신의 파일은 안전합니다.";
+"Security is why we exist, your files are safe with us behind a well oiled encryption machine where only you can access your files."="보안은 우리의 존재 이유이며, 당신의 파일들은 당신만이 접근 할수 있도록 우리 서버에 마치 잘 관리된 암호화 기계 뒤에 있는 것처럼 매우 안전합니다.";
 /* Title shown in a page of the on boarding screens explaining that the chat is encrypted */
 "Encrypted chat"="암호화된 대화";
 /* Description shown in a page of the onboarding screens explaining the chat feature */
@@ -1617,19 +1617,19 @@
 /* Title shown in a page of the on boarding screens explaining that the user can backup the photos automatically */
 "Your Photos in the Cloud"="클라우드 속 당신의 사진";
 /* Description shown in a page of the onboarding screens explaining the camera uploads feature */
-"Camera Uploads is an essential feature for any mobile device and we have got you covered. Create your account now."="카메라 업로드는 어떠한 모바일 기기에서 필수 기능이며 우리가 당신을 위해 준비했습니다. 지금 계정을 만드세요.";
+"Camera Uploads is an essential feature for any mobile device and we have got you covered. Create your account now."="카메라 업로드는 어떠한 모바일 기기에서든 필요한 기능이며 우리는 이 기능이 준비되어 있습니다. 지금 계정을 만드세요.";
 /* Button which triggers the initial setup */
 "Setup MEGA"="MEGA 설정";
 /* Detailed explanation of why the user should give some permissions to MEGA */
-"To fully take advantage of your MEGA account we need to ask you some permissions."="당신의 MEGA 계정의 완전한 이용을 위해 우리가 당신에게 몇 가지 권한을 요청합니다.";
+"To fully take advantage of your MEGA account we need to ask you some permissions."="당신의 MEGA 계정의 원활한 이용을 위해, 우리는 몇 가지 권한 허용이 필요합니다.";
 /* Title label that explains that the user is going to be asked for the photos permission */
-"Allow Access to Photos"="사진에 대한 접근";
+"Allow Access to Photos"="사진첩에 대한 접근 허용";
 /* Detailed explanation of why the user should give permission to access to the photos */
 "To share photos and videos, allow MEGA to access your photos"="사진과 동영상을 공유하려면, MEGA가 당신의 사진에 접근할 수 있도록 허용해주세요";
 /* Title label that explains that the user is going to be asked for the microphone and camera permission */
 "Enable Microphone and Camera"="마이크와 카메라 활성화";
 /* Detailed explanation of why the user should give permission to access to the camera and the microphone */
-"To make encrypted voice and video calls, allow MEGA access to your Camera and Microphone"="암호화된 음성과 영상 통화를 하려면, MEGA가 당신의 카메라와 마이크에 접근할 수 있도록 해주세요";
+"To make encrypted voice and video calls, allow MEGA access to your Camera and Microphone"="암호화된 음성과 영상 통화를 하려면, MEGA가 당신의 카메라와 마이크에 접근할 수 있도록 허용해주세요";
 /* Title label that explains that the user is going to be asked for the notifications permission */
 "Enable Notifications"="알림 활성화";
 /* Detailed explanation of why the user should give permission to deliver notifications */

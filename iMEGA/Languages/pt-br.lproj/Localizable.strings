@@ -982,7 +982,7 @@
 /*  */
 "chooseYourAccountType"="Escolha o seu tipo de conta";
 /* Text shown under the button 'Skip' to explain that you can upgrade your account later in the section 'My Account'. */
-"youCanUpgradeLaterInMyAccount"="Você pode atualizar mais tarde em Minha conta";
+"youCanUpgradeLaterInMyAccount"="Você pode fazer upgrade mais tarde em Minha conta";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
 "cloudDriveIsAlmostFull"="A sua [S]Nuvem de arquivos está quase cheia.[/S] [A]Faça o upgrade[/A] para uma conta PRO e obtenha [S]até 4TB (4096 GB)[/S] de espaço de armazenamento em nuvem.";
 /* A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text. */
