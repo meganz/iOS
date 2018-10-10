@@ -152,6 +152,7 @@
 }
 
 - (void)reconnect {
+    MEGALogDebug(@"Reconnecting...");
     [[MEGASdkManager sharedMEGASdk] reconnect];
     [[MEGASdkManager sharedMEGASdkFolder] reconnect];
     [[MEGASdkManager sharedMEGAChatSdk] reconnect];
