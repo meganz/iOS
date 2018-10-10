@@ -1168,17 +1168,10 @@
                     [SVProgressHUD showErrorWithStatus:@"Invalid user"];
                     return;
                 }
-                if (self.searchController.isActive) {
-                    [self.searchController dismissViewControllerAnimated:YES completion:^{
-                        [self dismissViewControllerAnimated:YES completion:^{
-                            self.userSelected(@[user], nil);
-                        }];
-                    }];
-                } else {
-                    [self dismissViewControllerAnimated:YES completion:^{
-                        self.userSelected(@[user], nil);
-                    }];
-                }
+                self.searchController.active = NO;
+                [self dismissViewControllerAnimated:YES completion:^{
+                    self.userSelected(@[user], nil);
+                }];
             }
             break;
         }
