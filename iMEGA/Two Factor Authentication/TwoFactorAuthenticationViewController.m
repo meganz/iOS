@@ -39,7 +39,7 @@
     self.invalidCodeLabel.text = AMLocalizedString(@"invalidCode", @"Error text shown when the user scans a QR that is not valid. String as short as possible.");
     
     [self.lostYourAuthenticatorDeviceButton setTitle:AMLocalizedString(@"lostYourAuthenticatorDevice", @"A button to help them restore their account if they have lost their 2FA device.") forState:UIControlStateNormal];
-    if (self.twoFAMode == TwoFactorAuthenticationLogin) {
+    if (self.twoFAMode != TwoFactorAuthenticationEnable) {
         self.lostYourAuthenticatorDeviceButton.hidden = self.lostYourAuthenticatorDeviceImage.hidden = NO;
         self.lostYourAuthenticatorDeviceButton.enabled = YES;
     }

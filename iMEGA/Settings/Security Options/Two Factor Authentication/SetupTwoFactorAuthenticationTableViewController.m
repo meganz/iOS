@@ -105,6 +105,7 @@
             
             EnablingTwoFactorAuthenticationViewController *enablingTwoFactorAuthenticationTVC = [[UIStoryboard storyboardWithName:@"TwoFactorAuthentication" bundle:nil] instantiateViewControllerWithIdentifier:@"EnablingTwoFactorAuthenticationViewControllerID"];
             enablingTwoFactorAuthenticationTVC.seed = request.text; //Returns the Base32 secret code needed to configure multi-factor authentication.
+            enablingTwoFactorAuthenticationTVC.hidesBottomBarWhenPushed = YES;
             
             [self.navigationController pushViewController:enablingTwoFactorAuthenticationTVC animated:YES];
             break;
