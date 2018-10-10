@@ -65,7 +65,10 @@
             }
         }];
     } else {
+        #pragma clang diagnostic push
+        #pragma clang diagnostic ignored "-Wdeprecated-declarations"
         [[UIApplication sharedApplication] registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeAlert | UIUserNotificationTypeBadge | UIUserNotificationTypeSound categories:nil]];
+        #pragma clang diagnostic pop
         if (handler) {
             handler(NO);
         }
@@ -96,7 +99,7 @@
         if (handler) {
             handler();
         }
-        [UIApplication.sharedApplication openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
+        [UIApplication.sharedApplication openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString] options:@{} completionHandler:nil];
     }]];
     
     [UIApplication.mnz_visibleViewController presentViewController:permissionsAlertController animated:YES completion:nil];
