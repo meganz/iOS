@@ -161,6 +161,7 @@
         }
     }
 }
+
 - (void)mnz_saveToPhotosWithApi:(MEGASdk *)api {
     [SVProgressHUD showInfoWithStatus:AMLocalizedString(@"Saving to Photos...", @"Text shown when starting the process to save a photo or video to Photos app")];
     NSString *temporaryPath = [[NSTemporaryDirectory() stringByAppendingPathComponent:self.base64Handle] stringByAppendingPathComponent:self.name];

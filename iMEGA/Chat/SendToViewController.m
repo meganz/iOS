@@ -558,6 +558,9 @@
                 }
             }
             
+            UIView *view = [[UIView alloc] init];
+            view.backgroundColor = UIColor.clearColor;
+            cell.selectedBackgroundView = view;
             return cell;
         } else if ([itemAtIndex isKindOfClass:MEGAUser.class]) {
             ContactTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"contactCell" forIndexPath:indexPath];
@@ -581,6 +584,9 @@
                 }
             }
             
+            UIView *view = [[UIView alloc] init];
+            view.backgroundColor = UIColor.clearColor;
+            cell.selectedBackgroundView = view;
             return cell;
         }
     }

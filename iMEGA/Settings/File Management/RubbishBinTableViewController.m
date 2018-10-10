@@ -97,7 +97,7 @@
         } else {
             CustomModalAlertViewController *customModalAlertVC = [[CustomModalAlertViewController alloc] init];
             customModalAlertVC.modalPresentationStyle = UIModalPresentationOverCurrentContext;
-            customModalAlertVC.image = [UIImage imageNamed:@""];
+            customModalAlertVC.image = [UIImage imageNamed:@"retention_illustration"];
             customModalAlertVC.viewTitle = AMLocalizedString(@"Rubbish-Bin Cleaning Scheduler", @"");
             customModalAlertVC.detail = AMLocalizedString(@"To disable Rubbish-Bin Cleaning Scheduler or set a longer retention period you need to subscribe to a PRO plan", @"Description shown when you try to disable the feature Rubbish-Bin Cleaning Scheduler and you are a free user");
             customModalAlertVC.action = AMLocalizedString(@"seePlans", @"Button title to see the available pro plans in MEGA");
@@ -215,12 +215,10 @@
 
 - (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
     if ((request.type == MEGARequestTypeGetAttrUser || request.type == MEGARequestTypeSetAttrUser) && (request.paramType == MEGAUserAttributeRubbishTime)) {
-        if (error) {
+        if (error.type) {
             if (error.type == MEGAErrorTypeApiENoent) {
-                self.rubbishBinAutopurgePeriod = [[MEGASdkManager sharedMEGASdk] mnz_isProAccount] ? 90 : 30;
+                self.rubbishBinAutopurgePeriod = [[MEGASdkManager sharedMEGASdk] mnz_isProAccount] ? 90 : 14;
                 self.removeFilesOlderThanDetailLabel.text = [NSString stringWithFormat:@"%ld", (long)self.rubbishBinAutopurgePeriod];
-            } else {
-                return;
             }
         } else {
             // Zero means that the rubbish-bin cleaning scheduler is disabled (only if the account is PRO). Any negative value means that the configured value is invalid.

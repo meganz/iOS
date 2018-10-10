@@ -111,7 +111,7 @@
 /*  */
 "pleaseStrengthenYourPassword"="Veuillez renforcer votre mot de passe.";
 /* Label displayed during checking the strength of the password introduced. Represents Very Weak security */
-"veryWeak"="Très faible";
+"veryWeak"="Très vulnérable";
 /*  */
 "weak"="Faible";
 /*  */
@@ -684,6 +684,8 @@
 "sdkVersion"="Version de la trousse SDK MEGA";
 /* Title of the label where the MEGAchat SDK version is shown */
 "megachatSdkVersion"="Version de la trousse SDK de MEGAchat";
+/* Link to the public code of the app */
+"View source code"="Voir le code source";
 /* Title for the section "Acknowledgements" of the app */
 "acknowledgements"="Mentions";
 /* Title for the MEGA Recovery Key */
@@ -720,8 +722,10 @@
 "dontUseHttp"="Ne pas utiliser HTTP";
 /* Footer text that explains when disabling the HTTP protocol for transfers may be useful */
 "transfersSectionFooter"="N’activez cette option que si vos transferts ne démarrent pas. Dans des conditions normales, le protocole HTTP est adéquat, car tous les transferts sont déjà chiffrés.";
+/* Title of the dialog displayed the first time that a user want to download a image. Asks if wants to export image files to the photo album after download in future and informs that user can change this option afterwards - (String as short as possible). */
+"Download options"="Options de téléchargement";
 /* Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped */
-"currentlyUsing"="Utilise actuellement %s";
+"currentlyUsing"="%s utilisés actuellement";
 /* In 'My account', when user want to delete/remove/cancel account will click button named 'Cancel your account' */
 "cancelYourAccount"="Annuler votre compte";
 /* Message that is shown when the user click on 'Cancel your account' to confirm that he's aware that his data will be deleted. */
@@ -843,6 +847,8 @@
 "help"="Aide";
 /* Title of the section to access MEGA's help centre */
 "helpCentreLabel"="Centre d'assistance";
+/* Section title that links you to the webpage that let you join and test the beta versions */
+"Join Beta"="Join Beta";
 /* Title to rate the app */
 "rateUsLabel"="Évaluez-nous";
 /* Title of the Transfers section */
@@ -1630,5 +1636,37 @@
 "We would like to send you notifications so you receive new messages on your device instantly."="Nous vous enverrons des notifications afin que vous receviez instantanément sur votre appareil les nouveaux messages.";
 /* Button which triggers a request for a specific permission, that have been explained to the user beforehand */
 "Enable Access"="Autoriser l’accès";
+/* A section header which contains the file management settings. These settings allow users to remove duplicate files etc. */
+"File Management"="Gestion des fichiers";
+/* Title of the option to enable or disable file versioning on Settings section */
+"File versioning"="Versionnage des fichiers";
+/* Subtitle of the option to enable or disable file versioning on Settings section */
+"Enable or disable file versioning for your entire account.[Br]You may still receive file versions from shared folders if your contacts have this enabled."="Activer ou désactiver le versionnage des fichiers pour votre compte entier.\nVous pourriez encore recevoir des versions de fichiers provenant de dossiers partagés si vos contacts ont activé cette option.";
+/* A confirmation message when the user chooses to disable file versioning. */
+"When file versioning is disabled, the current version will be replaced with the new version once a file is updated (and your changes to the file will no longer be recorded). Are you sure you want to disable file versioning?"="Quand le versionnage des fichiers est désactivé, la version actuelle est remplacée par la nouvelle version lorsque le fichier est mis à jour (et vos changements apportés au fichier ne sont plus enregistrés). Souhaitez-vous vraiment désactiver le versionnage des fichiers ?";
+/* Settings preference title to show file versions info of the account */
+"File versions"="Versions de fichiers";
+/* A title message in the user’s account settings for showing the storage used for file versions. */
+"Total size taken up by file versions:"="Taille totale occupée par les versions de fichier :";
+/* The title of the section about deleting file versions in the settings. */
+"Delete all older versions of my files"="Supprimer toutes les anciennes versions de mes fichiers";
+/* Text of a button which deletes all historical versions of files in the users entire account. */
+"Delete old versions"="Supprimer les anciennes versions";
+/* A warning note about deleting all file versions in the settings section. */
+"All current files will remain. Only historic versions of your files will be deleted."="Tous les fichiers actuels seront conservés. Seules les versions archivées de vos fichiers seront supprimées.";
+/* Text of the dialog to delete all the file versions of the account */
+"You are about to delete the version histories of all files. Any file version shared to you from a contact will need to be deleted by them.[Br][Br]Please note that the current files will not be deleted."="Vous êtes sur le point de supprimer les historiques de version de tous les fichiers. Tout fichier partagé avec vous par un contact devra être supprimé par ce contact.\n\nVeuillez noter que les fichiers actuels ne seront pas supprimés.";
+/*  */
+"Rubbish-Bin Cleaning Scheduler"="Rubbish-Bin Cleaning Scheduler";
+/* A rubbish bin scheduler setting which allows removing old files from the rubbish bin automatically. E.g. Remove files older than 15 days. */
+"Remove files older than"="Supprimer les fichiers de plus de";
+/* Label for any ‘Days’ button, link, text, title, etc. - (String as short as possible). */
+"Days"="jours";
+/* New server-side rubbish-bin cleaning scheduler description (for Free users) */
+"The Rubbish Bin is cleaned for you automatically. The minimum period is 7 days and your maximum period is 30 days."="La corbeille est vidée pour vous automatiquement. La période minimale est de 7 jours et votre période maximale est de 30 jours.";
+/* New server-side rubbish-bin cleaning scheduler description (for PRO users) */
+"The Rubbish Bin can be cleaned for you automatically. The minimum period is 7 days."="La corbeille peut être vidée pour vous automatiquement. La période minimale est de 7 jours.";
+/* Description shown when you try to disable the feature Rubbish-Bin Cleaning Scheduler and you are a free user */
+"To disable Rubbish-Bin Cleaning Scheduler or set a longer retention period you need to subscribe to a PRO plan"="To disable Rubbish-Bin Cleaning Scheduler or set a longer retention period you need to subscribe to a PRO plan";
 /* Confirmation dialog for the button that logs the user out of all sessions except the current one. */
 "Do you want to close all other sessions? This will log you out on all other active sessions except the current one."="Souhaitez-vous fermer toutes les autres sessions ? Cela vous déconnectera de toutes les autres sessions, sauf la session actuelle.";
