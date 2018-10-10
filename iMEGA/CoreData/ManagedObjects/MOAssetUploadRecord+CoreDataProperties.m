@@ -9,5 +9,6 @@
 
 @dynamic localIdentifier;
 @dynamic status;
+@dynamic creationDate;
 
 @end
