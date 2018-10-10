@@ -1,12 +1,15 @@
 
+#import "UIImage+MNZCategory.h"
+
 #import "Helper.h"
 #import "MEGAStore.h"
 
 #import "UIImage+GKContact.h"
-#import "UIImage+MNZCategory.h"
 #import "UIColor+MNZCategory.h"
 
 @implementation UIImage (MNZCategory)
+
+#pragma mark - Video calls
 
 + (UIImage *)mnz_convertBitmapRGBA8ToUIImage:(unsigned char *)buffer
                                withWidth:(NSInteger)width
@@ -91,6 +94,8 @@
     
     return image;
 }
+
+#pragma mark - Avatars
 
 + (UIImage *)mnz_imageForUserHandle:(uint64_t)userHandle size:(CGSize)size delegate:(id<MEGARequestDelegate>)delegate {
     return [self mnz_imageForUserHandle:userHandle name:@"?" size:size delegate:delegate];
@@ -293,6 +298,8 @@
     return qrImage;
 }
 
+#pragma mark - Chat
+
 + (UIImage *)mnz_imageByEndCallReason:(MEGAChatMessageEndCallReason)endCallReason userHandle:(uint64_t)userHandle {
     UIImage *endCallReasonImage;
     
@@ -331,6 +338,18 @@
     }
     
     return endCallReasonImage;
+}
+
+#pragma mark - Utils
+
++ (UIImage *)mnz_imageNamed:(NSString *)name scaledToSize:(CGSize)newSize {
+    UIImage *image = [UIImage imageNamed:name];
+    
+    UIGraphicsBeginImageContextWithOptions(newSize, NO, 0.0);
+    [image drawInRect:CGRectMake(0, 0, newSize.width, newSize.height)];
+    UIImage *scaledImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return scaledImage;
 }
 
 @end
