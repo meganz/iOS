@@ -241,7 +241,7 @@
 }
 
 - (IBAction)openMegaTouchUpInside:(id)sender {
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"mega://#loginrequired"]];
+    [UIApplication.sharedApplication openURL:[NSURL URLWithString:@"mega://#loginrequired"] options:@{} completionHandler:nil];
 }
 
 - (void)loginToMEGA {
@@ -361,26 +361,44 @@
 - (void)didSelectNode:(MEGANode *)node {
     NSString *destinationPath = [self appGroupContainerURL];
     NSString *fileName = node.name;
-    NSString *documentFilePath = [destinationPath stringByAppendingPathComponent:fileName];
+    NSString *documentFilePath = [destinationPath stringByAppendingPathComponent:[node.base64Handle stringByAppendingPathComponent:fileName]];
     
-    BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:documentFilePath];
+    BOOL shouldOpenLocalFile = NO;
+    BOOL fileExists = [NSFileManager.defaultManager fileExistsAtPath:documentFilePath];
     if (fileExists) {
-        // Because MEGA does not support file versioning yet, if the fingerprints are not equal we keep the cloud
-        // version of the file deleting the local copy. If the file exists locally and the fingerprints are
-        // the same, the local version may be used safely.
-        // With file versioning, we may add the local copy to the array of versions before deleting it.
         NSString *localFingerprint = [[MEGASdkManager sharedMEGASdk] fingerprintForFilePath:documentFilePath];
         if ([localFingerprint isEqualToString:[[MEGASdkManager sharedMEGASdk] fingerprintForNode:node]]) {
-            [self documentReadyAtPath:documentFilePath withBase64Handle:node.base64Handle];
+            shouldOpenLocalFile = YES;
         } else {
-            [[NSFileManager defaultManager] removeItemAtPath:documentFilePath error:nil];
-            if ([Helper isFreeSpaceEnoughToDownloadNode:node isFolderLink:NO]) {
-                [[MEGASdkManager sharedMEGASdk] startDownloadNode:node localPath:documentFilePath delegate:self];
+            NSDictionary *fileAttributes = [NSFileManager.defaultManager attributesOfItemAtPath:documentFilePath error:nil];
+            if (fileAttributes) {
+                NSDate *localDate = [fileAttributes objectForKey:NSFileModificationDate];
+                NSDate *remoteDate = node.modificationTime;
+                if ([localDate compare:remoteDate] != NSOrderedAscending) {
+                    shouldOpenLocalFile = YES;
+                }
             }
         }
+    }
+    
+    if (shouldOpenLocalFile) {
+        [self documentReadyAtPath:documentFilePath withBase64Handle:node.base64Handle];
     } else {
+        if (fileExists) {
+            if (![NSFileManager.defaultManager removeItemAtPath:documentFilePath error:nil]) {
+                MEGALogError(@"Error removing older local file");
+            }
+        }
         if ([Helper isFreeSpaceEnoughToDownloadNode:node isFolderLink:NO]) {
+            NSString *destinationFolder = [[self appGroupContainerURL] stringByAppendingPathComponent:node.base64Handle];
+            if (![NSFileManager.defaultManager fileExistsAtPath:destinationFolder]) {
+                if (![NSFileManager.defaultManager createDirectoryAtPath:destinationFolder withIntermediateDirectories:YES attributes:nil error:nil]) {
+                    MEGALogError(@"Error creating destination folder");
+                }
+            }
             [[MEGASdkManager sharedMEGASdk] startDownloadNode:node localPath:documentFilePath delegate:self];
+        } else {
+            [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"fileTooBigMessage_open", @"Error message shown when you try to open something bigger than the free space in your device")];
         }
     }
 }

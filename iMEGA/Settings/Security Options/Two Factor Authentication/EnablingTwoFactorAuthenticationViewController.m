@@ -42,7 +42,14 @@
     
     self.navigationItem.title = AMLocalizedString(@"twoFactorAuthentication", @"");
     
-    self.firstSectionLabel.text = AMLocalizedString(@"scanOrCopyTheSeed", @"A message on the setup two-factor authentication page on the mobile web client.");
+    NSTextAttachment *imageTextAttachment = [[NSTextAttachment alloc] init];
+    imageTextAttachment.image = [UIImage imageNamed:@"littleQuestionMark_Black"];
+    imageTextAttachment.bounds = CGRectMake(0, 0, 12.0f, 12.0f);
+    NSMutableAttributedString *mutableAttributedString = [[NSMutableAttributedString alloc] initWithString:[AMLocalizedString(@"scanOrCopyTheSeed", @"A message on the setup two-factor authentication page on the mobile web client.") stringByAppendingString:@" "]];
+    [mutableAttributedString appendAttributedString:[NSAttributedString attributedStringWithAttachment:imageTextAttachment]];
+    self.firstSectionLabel.attributedText = mutableAttributedString;
+    self.firstSectionLabel.userInteractionEnabled = YES;
+    self.firstSectionLabel.gestureRecognizers = @[[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(firstSectionLabelTapped:)]];
     
     NSString *qrString = [NSString stringWithFormat:@"otpauth://totp/MEGA:%@?secret=%@&issuer=MEGA", [[MEGASdkManager sharedMEGASdk] myEmail], self.seed];
     self.seedQrImageView.image = [UIImage mnz_qrImageWithDotsFromString:qrString withSize:self.seedQrImageView.frame.size color:UIColor.blackColor];
@@ -88,8 +95,8 @@
     return seedSplitInGroupsOfFourCharacters;
 }
 
-- (void)youNeedATwoFactorAuthenticationApp {
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"youNeedATwoFactorAuthenticationApp", @"Alert text shown when enabling the two factor authentication when you don't have a two factor authentication app installed on the device") message:nil preferredStyle:UIAlertControllerStyleAlert];
+- (void)youNeedATwoFactorAuthenticationAppAlertWithTitle:(NSString *)title {
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:title message:nil preferredStyle:UIAlertControllerStyleAlert];
     [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
     [alertController addAction:[UIAlertAction actionWithTitle:@"App Store" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         NSURL *url = [NSURL URLWithString:@"itms-apps://itunes.apple.com/search"];
@@ -103,6 +110,12 @@
     [UIApplication.mnz_visibleViewController presentViewController:alertController animated:YES completion:nil];
 }
 
+- (void)firstSectionLabelTapped:(UITapGestureRecognizer *)sender {
+    if (sender.state == UIGestureRecognizerStateEnded) {
+        [self youNeedATwoFactorAuthenticationAppAlertWithTitle:AMLocalizedString(@"You need an authenticator app to enable 2FA on MEGA. You can download and install the Google Authenticaor, Duo Mobile, Authy or Microsoft Authenticator app for your phone or tablet.", @"Alert text shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device and tap on the question mark")];
+    }
+}
+
 #pragma mark - IBActions
 
 - (IBAction)openInTouchUpInside:(UIButton *)sender {
@@ -113,7 +126,7 @@
                 MEGALogInfo(@"URL opened on authenticator app");
             } else {
                 MEGALogInfo(@"URL NOT opened");
-                [self youNeedATwoFactorAuthenticationApp];
+                [self youNeedATwoFactorAuthenticationAppAlertWithTitle:AMLocalizedString(@"youNeedATwoFactorAuthenticationApp", @"Alert text shown when enabling the two factor authentication when you don't have a two factor authentication app installed on the device")];
             }
         }];
     } else {
@@ -121,7 +134,7 @@
             MEGALogInfo(@"URL opened on authenticator app");
         } else {
             MEGALogInfo(@"URL NOT opened");
-            [self youNeedATwoFactorAuthenticationApp];
+            [self youNeedATwoFactorAuthenticationAppAlertWithTitle:AMLocalizedString(@"youNeedATwoFactorAuthenticationApp", @"Alert text shown when enabling the two factor authentication when you don't have a two factor authentication app installed on the device")];
         }
     }
 }
@@ -129,6 +142,7 @@
 - (IBAction)nextTouchUpInside:(UIButton *)sender {
     TwoFactorAuthenticationViewController *twoFactorAuthenticationVC = [[UIStoryboard storyboardWithName:@"TwoFactorAuthentication" bundle:nil] instantiateViewControllerWithIdentifier:@"TwoFactorAuthenticationViewControllerID"];
     twoFactorAuthenticationVC.twoFAMode = TwoFactorAuthenticationEnable;
+    twoFactorAuthenticationVC.hidesBottomBarWhenPushed = YES;
     
     [self.navigationController pushViewController:twoFactorAuthenticationVC animated:YES];
 }

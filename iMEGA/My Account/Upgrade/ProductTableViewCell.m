@@ -6,11 +6,6 @@
     [super setSelected:selected animated:animated];
     
     if (selected) {
-        UIView *view = [[UIView alloc] init];
-        view.backgroundColor = UIColor.clearColor;
-        view.userInteractionEnabled = NO;
-        self.selectedBackgroundView = view;
-        
         self.productNameView.backgroundColor = self.productPriceLabel.textColor;
     }
 }
@@ -19,10 +14,6 @@
     [super setHighlighted:highlighted animated:animated];
     
     if (highlighted) {
-        UIView *view = [[UIView alloc] init];
-        view.backgroundColor = UIColor.clearColor;
-        self.selectedBackgroundView = view;
-        
         self.upperLineView.backgroundColor = UIColor.mnz_grayCCCCCC;
         self.productNameView.backgroundColor = self.productPriceLabel.textColor;
         self.underLineView.backgroundColor = UIColor.mnz_grayCCCCCC;

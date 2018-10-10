@@ -26,10 +26,6 @@
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *backBarButtonItem;
 
-@property (nonatomic) UIView *emptyHeaderView;
-@property (nonatomic) UIView *actionsSectionEmptyFooterView;
-@property (nonatomic) UIView *sharedFoldersEmptyFooterView;
-
 @property (weak, nonatomic) IBOutlet UIView *participantsHeaderView;
 @property (weak, nonatomic) IBOutlet UILabel *participantsHeaderViewLabel;
 
@@ -51,10 +47,6 @@
     self.navigationItem.title = AMLocalizedString(@"info", @"A button label. The button allows the user to get more info of the current context");
     
     self.nameLabel.text = self.chatRoom.title;
-    
-    self.emptyHeaderView = [NSBundle.mainBundle loadNibNamed:@"EmptyHeaderView" owner:self options:nil].firstObject;
-    self.actionsSectionEmptyFooterView = [NSBundle.mainBundle loadNibNamed:@"EmptyFooterView" owner:self options:nil].firstObject;
-    self.sharedFoldersEmptyFooterView = [NSBundle.mainBundle loadNibNamed:@"EmptyFooterView" owner:self options:nil].firstObject;
     
     CGSize avatarSize = self.avatarImageView.frame.size;
     UIImage *avatarImage = [UIImage imageForName:self.chatRoom.title.uppercaseString size:avatarSize backgroundColor:[UIColor mnz_gray999999] textColor:[UIColor whiteColor] font:[UIFont mnz_SFUIRegularWithSize:(avatarSize.width/2.0f)]];
@@ -251,8 +243,7 @@
             case MEGAChatRoomPrivilegeRm:
                 cell.leftImageView.image = self.chatRoom.isArchived ? [UIImage imageNamed:@"unArchiveChat"] : [UIImage imageNamed:@"archiveChat_gray"];
                 cell.nameLabel.text = self.chatRoom.isArchived ? AMLocalizedString(@"unarchiveChat", @"The title of the dialog to unarchive an archived chat.") : AMLocalizedString(@"archiveChat", @"Title of button to archive chats.");
-                cell.nameLabel.textColor = self.chatRoom.isArchived ? UIColor.mnz_redMain : UIColor.mnz_black333333;
-                cell.lineView.hidden = YES;
+                cell.nameLabel.textColor = self.chatRoom.isArchived ? UIColor.mnz_redMain : UIColor.mnz_black333333;                
                 break;
                 
             case MEGAChatRoomPrivilegeUnknown:
@@ -269,7 +260,6 @@
                         cell.leftImageView.image = [UIImage imageNamed:@"leaveGroup"];
                         cell.nameLabel.text = AMLocalizedString(@"leaveGroup", @"Button title that allows the user to leave a group chat.");
                         cell.nameLabel.textColor = UIColor.mnz_redMain;
-                        cell.lineView.hidden = YES;
                         break;
                     }
                 }
@@ -299,7 +289,6 @@
                         cell.leftImageView.image = [UIImage imageNamed:@"leaveGroup"];
                         cell.nameLabel.text = AMLocalizedString(@"leaveGroup", @"Button title that allows the user to leave a group chat.");
                         cell.nameLabel.textColor = UIColor.mnz_redMain;
-                        cell.lineView.hidden = YES;
                         break;
                 }
                 break;
@@ -367,35 +356,15 @@
                 break;
         }
         cell.rightImageView.image = permissionsImage;
-        
-        if ((self.participantsMutableArray.count - 1) == index) {
-            cell.lineView.hidden = YES;
-        }
     }
     
     return cell;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    if (section == 0) {
-        return self.emptyHeaderView;
-    }
-    
     if (section == 1) {
         self.participantsHeaderViewLabel.text = [AMLocalizedString(@"participants", @"Label to describe the section where you can see the participants of a group chat") uppercaseString];
         return self.participantsHeaderView;
-    }
-    
-    return nil;
-}
-
-- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
-    if (section == 0) {
-        return self.actionsSectionEmptyFooterView;
-    }
-    
-    if (section == 1) {
-        return self.sharedFoldersEmptyFooterView;
     }
     
     return nil;

@@ -684,6 +684,8 @@
 "sdkVersion"="Versi MEGA SDK";
 /* Title of the label where the MEGAchat SDK version is shown */
 "megachatSdkVersion"="Versi MEGAchat SDK";
+/* Link to the public code of the app */
+"View source code"="Lihat source code";
 /* Title for the section "Acknowledgements" of the app */
 "acknowledgements"="Pengakuan";
 /* Title for the MEGA Recovery Key */
@@ -720,6 +722,8 @@
 "dontUseHttp"="Jangan gunakan HTTP";
 /* Footer text that explains when disabling the HTTP protocol for transfers may be useful */
 "transfersSectionFooter"="Aktifkan pilihan ini jika transfer anda tidak dimulai. Dalam keadaan normal, HTTP cukup memuaskan karena seluruh transfer telah di-enkripsi.";
+/* Title of the dialog displayed the first time that a user want to download a image. Asks if wants to export image files to the photo album after download in future and informs that user can change this option afterwards - (String as short as possible). */
+"Download options"="Opsi download";
 /* Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped */
 "currentlyUsing"="Sekarang memakai %s";
 /* In 'My account', when user want to delete/remove/cancel account will click button named 'Cancel your account' */
@@ -843,6 +847,8 @@
 "help"="Bantuan";
 /* Title of the section to access MEGA's help centre */
 "helpCentreLabel"="Pusat Bantuan";
+/* Section title that links you to the webpage that let you join and test the beta versions */
+"Join Beta"="Join Beta";
 /* Title to rate the app */
 "rateUsLabel"="Rate kami";
 /* Title of the Transfers section */
@@ -1630,5 +1636,37 @@
 "We would like to send you notifications so you receive new messages on your device instantly."="We would like to send you notifications so you receive new messages on your device instantly.";
 /* Button which triggers a request for a specific permission, that have been explained to the user beforehand */
 "Enable Access"="Enable Access";
+/* A section header which contains the file management settings. These settings allow users to remove duplicate files etc. */
+"File Management"="Pengelolaan File";
+/* Title of the option to enable or disable file versioning on Settings section */
+"File versioning"="File versioning";
+/* Subtitle of the option to enable or disable file versioning on Settings section */
+"Enable or disable file versioning for your entire account.[Br]You may still receive file versions from shared folders if your contacts have this enabled."="Enable or disable file versioning for your entire account.\nYou may still receive file versions from shared folders if your contacts have this enabled.";
+/* A confirmation message when the user chooses to disable file versioning. */
+"When file versioning is disabled, the current version will be replaced with the new version once a file is updated (and your changes to the file will no longer be recorded). Are you sure you want to disable file versioning?"="Ketika versi file dinonaktifkan, versi saat ini akan diganti dengan versi baru setelah file diperbarui (dan perubahan anda pada file tidak akan dicatat lagi). Yakin ingin menonaktifkan versi file?";
+/* Settings preference title to show file versions info of the account */
+"File versions"="File versions";
+/* A title message in the user’s account settings for showing the storage used for file versions. */
+"Total size taken up by file versions:"="Ukuran total diambil oleh versi file:";
+/* The title of the section about deleting file versions in the settings. */
+"Delete all older versions of my files"="Hapus semua versi lama dari file saya";
+/* Text of a button which deletes all historical versions of files in the users entire account. */
+"Delete old versions"="Hapus semua";
+/* A warning note about deleting all file versions in the settings section. */
+"All current files will remain. Only historic versions of your files will be deleted."="Ini akan menghapus secara permanen semua versi file Anda sendiri. Setiap versi file yang dibagikan kepada Anda dari kontak harus dihapus oleh mereka.";
+/* Text of the dialog to delete all the file versions of the account */
+"You are about to delete the version histories of all files. Any file version shared to you from a contact will need to be deleted by them.[Br][Br]Please note that the current files will not be deleted."="You are about to delete the version histories of all files. Any file version shared to you from a contact will need to be deleted by them.\n\nPlease note that the current files will not be deleted.";
+/*  */
+"Rubbish-Bin Cleaning Scheduler"="Rubbish-Bin Cleaning Scheduler";
+/* A rubbish bin scheduler setting which allows removing old files from the rubbish bin automatically. E.g. Remove files older than 15 days. */
+"Remove files older than"="Hapus file lebih lama dari";
+/* Label for any ‘Days’ button, link, text, title, etc. - (String as short as possible). */
+"Days"="Hari";
+/* New server-side rubbish-bin cleaning scheduler description (for Free users) */
+"The Rubbish Bin is cleaned for you automatically. The minimum period is 7 days and your maximum period is 30 days."="Sampah dibersihkan untuk Anda secara otomatis. Jangka waktu minimum adalah 7 hari dan periode maksimum Anda adalah 30 hari.";
+/* New server-side rubbish-bin cleaning scheduler description (for PRO users) */
+"The Rubbish Bin can be cleaned for you automatically. The minimum period is 7 days."="Sampah dapat dibersihkan untuk Anda secara otomatis. Jangka waktu minimum adalah 7 hari.";
+/* Description shown when you try to disable the feature Rubbish-Bin Cleaning Scheduler and you are a free user */
+"To disable Rubbish-Bin Cleaning Scheduler or set a longer retention period you need to subscribe to a PRO plan"="To disable Rubbish-Bin Cleaning Scheduler or set a longer retention period you need to subscribe to a PRO plan";
 /* Confirmation dialog for the button that logs the user out of all sessions except the current one. */
 "Do you want to close all other sessions? This will log you out on all other active sessions except the current one."="Apakah Anda ingin menutup semua sesi lainnya? Ini akan mengeluarkan Anda di semua sesi aktif lainnya kecuali sesi saat ini.";
