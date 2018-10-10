@@ -421,7 +421,7 @@
 - (void)applicationWillEnterForeground:(UIApplication *)application {
     MEGALogDebug(@"Application will enter foreground");
     
-    if (self.wasAppSuspended) {
+    if (self.wasAppSuspended && [MEGASdkManager sharedMEGAChatSdk].numCalls == 0) {
         //If the app has been suspended, we assume that the sockets have been closed, so we have to reconnect.
         [[MEGAReachabilityManager sharedManager] reconnect];
     } else {
