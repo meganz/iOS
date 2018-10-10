@@ -169,7 +169,7 @@
                 [SVProgressHUD showInfoWithStatus:AMLocalizedString(@"Saving to Photos...", @"Text shown when starting the process to save a photo or video to Photos app")];
                 NSString *temporaryPath = [[NSTemporaryDirectory() stringByAppendingPathComponent:self.base64Handle] stringByAppendingPathComponent:self.name];
                 NSString *temporaryFingerprint = [[MEGASdkManager sharedMEGASdk] fingerprintForFilePath:temporaryPath];
-                if ([temporaryFingerprint isEqualToString:self.fingerprint]) {
+                if ([temporaryFingerprint isEqualToString:[api fingerprintForNode:self]]) {
                     [self mnz_copyToGalleryFromTemporaryPath:temporaryPath];
                 } else if ([MEGAReachabilityManager isReachableHUDIfNot]) {
                     NSString *downloadsDirectory = [[NSFileManager defaultManager] downloadsDirectory];
@@ -188,7 +188,7 @@
                 [permissionsAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
                 
                 [permissionsAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-                    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
+                    [UIApplication.sharedApplication openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString] options:@{} completionHandler:nil];
                 }]];
                 
                 [UIApplication.mnz_visibleViewController presentViewController:permissionsAlertController animated:YES completion:nil];

@@ -12,7 +12,7 @@
 @interface SaveToCameraRollActivity ()
 
 @property (nonatomic, strong) MEGANode *node;
-@property (nonatomic,) MEGASdk *api;
+@property (nonatomic) MEGASdk *api;
 
 @end
 
