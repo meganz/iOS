@@ -9,6 +9,7 @@
 #import "PreviewDocumentViewController.h"
 #import "Helper.h"
 #import "MEGAReachabilityManager.h"
+#import "NSFileManager+MNZCategory.h"
 #import "OfflineTableViewCell.h"
 #import "OpenInActivity.h"
 #import "SortByTableViewController.h"
