@@ -11,6 +11,9 @@
 + (NSURL *)linkURL;
 + (void)setLinkURL:(NSURL *)link;
 
++ (NSURL *)linkEncryptedURL;
++ (void)setLinkEncryptedURL:(NSURL *)linkEncrypted;
+
 + (URLType)urlType;
 + (void)setUrlType:(URLType)urlType;
 

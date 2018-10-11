@@ -35,6 +35,7 @@
 #import "UnavailableLinkView.h"
 
 static NSURL *linkURL;
+static NSURL *linkEncryptedURL;
 static URLType urlType;
 
 static NSString *emailOfNewSignUpLink;
@@ -54,6 +55,14 @@ static NSString *nodeToPresentBase64Handle;
 
 + (void)setLinkURL:(NSURL *)link {
     linkURL = link;
+}
+
++ (NSURL *)linkEncryptedURL {
+    return linkEncryptedURL;
+}
+
++ (void)setLinkEncryptedURL:(NSURL *)linkEncrypted {
+    linkEncryptedURL = linkEncrypted;
 }
 
 + (URLType)urlType {
@@ -308,6 +317,7 @@ static NSString *nodeToPresentBase64Handle;
             break;
             
         case URLTypeEncryptedLink:
+            [MEGALinkManager setLinkEncryptedURL:MEGALinkManager.linkURL];
             [MEGALinkManager showEncryptedLinkAlert:url.mnz_MEGAURL];
             [MEGALinkManager resetLinkAndURLType];
             break;
@@ -457,6 +467,7 @@ static NSString *nodeToPresentBase64Handle;
 + (void)showEncryptedLinkAlert:(NSString *)encryptedLinkURLString {
     MEGAPasswordLinkRequestDelegate *delegate = [[MEGAPasswordLinkRequestDelegate alloc] initForDecryptionWithCompletion:^(MEGARequest *request) {
         NSString *url = [NSString stringWithFormat:@"mega://%@", [[request.text componentsSeparatedByString:@"/"] lastObject]];
+        [MEGALinkManager setLinkURL:[NSURL URLWithString:url]];
         [MEGALinkManager processLinkURL:[NSURL URLWithString:url]];
     } onError:^(MEGARequest *request) {
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"decryptionKeyNotValid", nil) message:nil preferredStyle:UIAlertControllerStyleAlert];
@@ -474,7 +485,10 @@ static NSString *nodeToPresentBase64Handle;
     [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         [[MEGASdkManager sharedMEGASdk] decryptPasswordProtectedLink:encryptedLinkURLString password:alertController.textFields.firstObject.text delegate:delegate];
     }]];
-    [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:nil]];
+    [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+        [MEGALinkManager resetLinkAndURLType];
+        [MEGALinkManager setLinkEncryptedURL:nil];
+    }]];
     
     [UIApplication.mnz_visibleViewController presentViewController:alertController animated:YES completion:nil];
 }
@@ -497,6 +511,7 @@ static NSString *nodeToPresentBase64Handle;
                 
                 MEGAPhotoBrowserViewController *photoBrowserVC = [MEGAPhotoBrowserViewController photoBrowserWithMediaNodes:@[node].mutableCopy api:[MEGASdkManager sharedMEGASdkFolder] displayMode:DisplayModeFileLink presentingNode:node preferredIndex:0];
                 photoBrowserVC.publicLink = fileLinkURLString;
+                photoBrowserVC.encryptedLink = MEGALinkManager.linkEncryptedURL.absoluteString;
                 
                 [UIApplication.mnz_visibleViewController presentViewController:photoBrowserVC animated:YES completion:nil];
             } else {
@@ -515,7 +530,8 @@ static NSString *nodeToPresentBase64Handle;
 + (void)presentFileLinkViewForLink:(NSString *)link request:(MEGARequest *)request error:(MEGAError *)error {
     MEGANavigationController *fileLinkNavigationController = [[UIStoryboard storyboardWithName:@"Links" bundle:nil] instantiateViewControllerWithIdentifier:@"FileLinkNavigationControllerID"];
     FileLinkViewController *fileLinkVC = fileLinkNavigationController.viewControllers.firstObject;
-    fileLinkVC.fileLinkString = link;
+    fileLinkVC.publicLinkString = link;
+    fileLinkVC.linkEncryptedString = MEGALinkManager.linkEncryptedURL.absoluteString;
     fileLinkVC.request = request;
     fileLinkVC.error = error;
     
@@ -528,7 +544,8 @@ static NSString *nodeToPresentBase64Handle;
     FolderLinkViewController *folderlinkVC = folderNavigationController.viewControllers.firstObject;
     
     folderlinkVC.isFolderRootNode = YES;
-    folderlinkVC.folderLinkString = [MEGALinkManager linkURL].mnz_MEGAURL;
+    folderlinkVC.publicLinkString = MEGALinkManager.linkURL.mnz_MEGAURL;
+    folderlinkVC.linkEncryptedString = MEGALinkManager.linkEncryptedURL.absoluteString;
     
     [UIApplication.mnz_visibleViewController presentViewController:folderNavigationController animated:YES completion:nil];
 }
