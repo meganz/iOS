@@ -1,12 +1,6 @@
-//
-//  AssetUploadOperation.h
-//  MEGA
-//
-//  Created by Simon Wang on 10/10/18.
-//  Copyright © 2018 MEGA. All rights reserved.
-//
 
 #import <UIKit/UIKit.h>
+#import "MEGAOperation.h"
 
 NS_ASSUME_NONNULL_BEGIN
 

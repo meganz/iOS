@@ -5,5 +5,6 @@
 
 - (NSString *)downloadsDirectory;
 - (NSString *)uploadsDirectory;
+- (NSURL *)cameraUploadURL;
 
 @end
