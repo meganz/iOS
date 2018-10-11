@@ -162,6 +162,45 @@
     }
 }
 
+- (void)mnz_saveToPhotosWithApi:(MEGASdk *)api {
+    [PHPhotoLibrary requestAuthorization:^(PHAuthorizationStatus status) {
+        switch (status) {
+            case PHAuthorizationStatusAuthorized: {
+                [SVProgressHUD showInfoWithStatus:AMLocalizedString(@"Saving to Photos…", @"Text shown when starting the process to save a photo or video to Photos app")];
+                NSString *temporaryPath = [[NSTemporaryDirectory() stringByAppendingPathComponent:self.base64Handle] stringByAppendingPathComponent:self.name];
+                NSString *temporaryFingerprint = [[MEGASdkManager sharedMEGASdk] fingerprintForFilePath:temporaryPath];
+                if ([temporaryFingerprint isEqualToString:[api fingerprintForNode:self]]) {
+                    [self mnz_copyToGalleryFromTemporaryPath:temporaryPath];
+                } else if ([MEGAReachabilityManager isReachableHUDIfNot]) {
+                    NSString *downloadsDirectory = [[NSFileManager defaultManager] downloadsDirectory];
+                    downloadsDirectory = downloadsDirectory.mnz_relativeLocalPath;
+                    NSString *offlineNameString = [[MEGASdkManager sharedMEGASdkFolder] escapeFsIncompatible:self.name];
+                    NSString *localPath = [downloadsDirectory stringByAppendingPathComponent:offlineNameString];
+                    [api startDownloadNode:[api authorizeNode:self] localPath:localPath appData:[[NSString new] mnz_appDataToSaveInPhotosApp]];
+                }
+                break;
+            }
+                
+            case PHAuthorizationStatusRestricted:
+            case PHAuthorizationStatusDenied: {
+                UIAlertController *permissionsAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"attention", @"Alert title to attract attention") message:AMLocalizedString(@"photoLibraryPermissions", @"Alert message to explain that the MEGA app needs permission to access your device photos") preferredStyle:UIAlertControllerStyleAlert];
+                
+                [permissionsAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
+                
+                [permissionsAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+                    [UIApplication.sharedApplication openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString] options:@{} completionHandler:nil];
+                }]];
+                
+                [UIApplication.mnz_visibleViewController presentViewController:permissionsAlertController animated:YES completion:nil];
+                break;
+            }
+                
+            default:
+                break;
+        }
+    }];
+}
+
 - (void)mnz_renameNodeInViewController:(UIViewController *)viewController {
     [self mnz_renameNodeInViewController:viewController completion:nil];
 }
@@ -750,8 +789,13 @@
 }
 
 - (void)mnz_copyToGalleryFromTemporaryPath:(NSString *)path {
-    if (self.name.mnz_isVideoPathExtension && UIVideoAtPathIsCompatibleWithSavedPhotosAlbum(path)) {
-        UISaveVideoAtPathToSavedPhotosAlbum(path, self, @selector(video:didFinishSavingWithError:contextInfo:), nil);
+    if (self.name.mnz_isVideoPathExtension) {
+        if (UIVideoAtPathIsCompatibleWithSavedPhotosAlbum(path)) {
+            UISaveVideoAtPathToSavedPhotosAlbum(path, self, @selector(video:didFinishSavingWithError:contextInfo:), nil);
+        } else {
+            [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"Could not save", @"Text shown when an error occurs when trying to save a photo or video to Photos app")];
+            MEGALogError(@"The video can be saved to the Camera Roll album");
+        }
     }
     
     if (self.name.mnz_isImagePathExtension) {
@@ -764,7 +808,10 @@
         } completionHandler:^(BOOL success, NSError * _Nullable nserror) {
             [NSFileManager.defaultManager mnz_removeItemAtPath:path];
             if (nserror) {
+                [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"Could not save", @"Text shown when an error occurs when trying to save a photo or video to Photos app")];
                 MEGALogError(@"Add asset to camera roll: %@ (Domain: %@ - Code:%ld)", nserror.localizedDescription, nserror.domain, nserror.code);
+            } else {
+                [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"Saved to Photos", @"Text shown when a photo or video is saved to Photos app")];
             }
         }];
     }
@@ -772,8 +819,10 @@
 
 - (void)video:(NSString *)videoPath didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo {
     if (error) {
+        [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"Could not save", @"Text shown when an error occurs when trying to save a photo or video to Photos app")];
         MEGALogError(@"Save video to Camera roll: %@ (Domain: %@ - Code:%ld)", error.localizedDescription, error.domain, error.code);
     } else {
+        [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"Saved to Photos", @"Text shown when a photo or video is saved to Photos app")];
         [NSFileManager.defaultManager mnz_removeItemAtPath:videoPath];
     }
 }
