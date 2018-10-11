@@ -18,6 +18,7 @@
 - (void)mnz_removeSharing;
 - (void)mnz_copyToGalleryFromTemporaryPath:(NSString *)path;
 - (void)mnz_restore;
+- (void)mnz_saveToPhotosWithApi:(MEGASdk *)api;
 
 #pragma mark - File links
 
