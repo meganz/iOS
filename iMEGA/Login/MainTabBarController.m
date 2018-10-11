@@ -270,7 +270,7 @@
             
         case MEGAChatCallStatusRingIn: {
             [self.missedCallsDictionary setObject:call forKey:@(call.chatId)];
-            [DevicePermissionsHelper audioPermissionModal:YES withCompletionHandler:^(BOOL granted) {
+            [DevicePermissionsHelper audioPermissionModal:YES forIncomingCall:YES withCompletionHandler:^(BOOL granted) {
                 if (granted) {
                     if (call.hasRemoteVideo) {
                         [DevicePermissionsHelper videoPermissionWithCompletionHandler:^(BOOL granted) {

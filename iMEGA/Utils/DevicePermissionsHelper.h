@@ -3,7 +3,7 @@
 
 @interface DevicePermissionsHelper : NSObject
 
-+ (void)audioPermissionModal:(BOOL)modal withCompletionHandler:(void (^)(BOOL granted))handler;
++ (void)audioPermissionModal:(BOOL)modal forIncomingCall:(BOOL)incomingCall withCompletionHandler:(void (^)(BOOL granted))handler;
 + (void)videoPermissionWithCompletionHandler:(void (^)(BOOL granted))handler;
 + (void)photosPermissionWithCompletionHandler:(void (^)(BOOL granted))handler;
 + (void)notificationsPermissionWithCompletionHandler:(void (^)(BOOL granted))handler;
