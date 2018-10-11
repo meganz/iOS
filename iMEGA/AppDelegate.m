@@ -421,7 +421,7 @@
 - (void)applicationWillEnterForeground:(UIApplication *)application {
     MEGALogDebug(@"Application will enter foreground");
     
-    if (self.wasAppSuspended) {
+    if (self.wasAppSuspended && [MEGASdkManager sharedMEGAChatSdk].numCalls == 0) {
         //If the app has been suspended, we assume that the sockets have been closed, so we have to reconnect.
         [[MEGAReachabilityManager sharedManager] reconnect];
     } else {
@@ -474,18 +474,11 @@
     }
     
     if ([[[[MEGASdkManager sharedMEGASdk] downloadTransfers] size] integerValue] == 0) {
-        [self removeUnfinishedTransfersOnFolder:[Helper pathForOffline]];
-        
-        NSError *error = nil;
-        if (![[NSFileManager defaultManager] removeItemAtPath:[[NSFileManager defaultManager] downloadsDirectory] error:&error]) {
-            MEGALogError(@"Remove item at path failed with error: %@", error);
-        }
+        [NSFileManager.defaultManager mnz_removeFolderContentsRecursivelyAtPath:[Helper pathForOffline] forItemsExtension:@"mega"];
+        [NSFileManager.defaultManager mnz_removeItemAtPath:[NSFileManager.defaultManager downloadsDirectory]];
     }
     if ([[[[MEGASdkManager sharedMEGASdk] uploadTransfers] size] integerValue] == 0) {
-        NSError *error = nil;
-        if (![[NSFileManager defaultManager] removeItemAtPath:[[NSFileManager defaultManager] uploadsDirectory] error:&error]) {
-            MEGALogError(@"Remove item at path failed with error: %@", error);
-        }
+        [NSFileManager.defaultManager mnz_removeItemAtPath:[NSFileManager.defaultManager uploadsDirectory]];
     }
 }
 
@@ -642,10 +635,10 @@
 #pragma mark - Private
 
 - (void)setupAppearance {
-    [UINavigationBar appearance].titleTextAttributes = @{NSFontAttributeName:[UIFont mnz_SFUISemiBoldWithSize:17.0f], NSForegroundColorAttributeName:UIColor.whiteColor};
+    [UINavigationBar appearanceWhenContainedInInstancesOfClasses:@[MEGANavigationController.class]].titleTextAttributes = @{NSFontAttributeName:[UIFont mnz_SFUISemiBoldWithSize:17.0f], NSForegroundColorAttributeName:UIColor.whiteColor};
     [UINavigationBar appearanceWhenContainedInInstancesOfClasses:@[MEGANavigationController.class]].barStyle = UIBarStyleBlack;
     [UINavigationBar appearanceWhenContainedInInstancesOfClasses:@[MEGANavigationController.class]].barTintColor = UIColor.mnz_redMain;
-    [UINavigationBar appearance].tintColor = UIColor.whiteColor;
+    [UINavigationBar appearanceWhenContainedInInstancesOfClasses:@[MEGANavigationController.class]].tintColor = UIColor.whiteColor;
     [UINavigationBar appearance].translucent = NO;
 
     //QLPreviewDocument
@@ -1055,23 +1048,6 @@
     self.quickActionType = nil;
     
     return quickActionManaged;
-}
-
-- (void)removeUnfinishedTransfersOnFolder:(NSString *)directory {
-    NSArray *directoryContents = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:directory error:nil];
-    for (NSString *item in directoryContents) {
-        NSDictionary *attributesDictionary = [[NSFileManager defaultManager] attributesOfItemAtPath:[directory stringByAppendingPathComponent:item] error:nil];
-        if ([attributesDictionary objectForKey:NSFileType] == NSFileTypeDirectory) {
-            [self removeUnfinishedTransfersOnFolder:[directory stringByAppendingPathComponent:item]];
-        } else {
-            if ([item.pathExtension.lowercaseString isEqualToString:@"mega"]) {
-                NSError *error = nil;
-                if (![[NSFileManager defaultManager] removeItemAtPath:[directory stringByAppendingPathComponent:item] error:&error]) {
-                    MEGALogError(@"Remove item at path failed with error: %@", error);
-                }
-            }
-        }
-    }
 }
 
 - (void)startTimerAPI_EAGAIN {
@@ -1499,11 +1475,7 @@
     for (NSString *filename in applicationSupportContent) {
         if ([filename containsString:@"megaclient"] || [filename containsString:@"karere"]) {
             NSString *destinationPath = [groupSupportPath stringByAppendingPathComponent:filename];
-            if ([fileManager fileExistsAtPath:destinationPath]) {
-                if (![fileManager removeItemAtPath:destinationPath error:&error]) {
-                    MEGALogError(@"Remove item at path failed with error: %@", error);
-                }
-            }
+            [NSFileManager.defaultManager mnz_removeItemAtPath:destinationPath];
             if (![fileManager copyItemAtPath:[applicationSupportDirectoryString stringByAppendingPathComponent:filename] toPath:destinationPath error:&error]) {
                 MEGALogError(@"Copy item at path failed with error: %@", error);
             }
@@ -1658,9 +1630,7 @@ void uncaughtExceptionHandler(NSException *exception) {
         
         if ([base64Filename isEqualToString:@"AAAAAAAA"]) {
             if (attributePath.mnz_isImagePathExtension) {
-                if ([[NSFileManager defaultManager] fileExistsAtPath:attributePath]) {
-                    [[NSFileManager defaultManager] removeItemAtPath:attributePath error:nil];
-                }
+                [NSFileManager.defaultManager mnz_removeItemAtPath:attributePath];
             } else {
                 NSString *newAttributePath = [v3Path stringByAppendingPathComponent:attributeFilename];
                 [[NSFileManager defaultManager] moveItemAtPath:attributePath toPath:newAttributePath error:nil];
@@ -1675,24 +1645,18 @@ void uncaughtExceptionHandler(NSException *exception) {
     directoryContent = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:v2Path error:nil];
     
     if ([directoryContent count] == 0) {
-        if ([[NSFileManager defaultManager] fileExistsAtPath:v2Path]) {
-            [[NSFileManager defaultManager] removeItemAtPath:v2Path error:nil];
-        }
+        [NSFileManager.defaultManager mnz_removeItemAtPath:v2Path];
     }
 }
 
 - (void)cameraUploadsSettingsCompatibility {
     // PhotoSync old location of completed uploads
     NSString *oldCompleted = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject stringByAppendingPathComponent:@"PhotoSync/completed.plist"];
-    if ([[NSFileManager defaultManager] fileExistsAtPath:oldCompleted]) {
-        [[NSFileManager defaultManager] removeItemAtPath:oldCompleted error:nil];
-    }
+    [NSFileManager.defaultManager mnz_removeItemAtPath:oldCompleted];
     
     // PhotoSync v2 location of completed uploads
     NSString *v2Completed = [NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES).firstObject stringByAppendingPathComponent:@"PhotoSync/com.plist"];
-    if ([[NSFileManager defaultManager] fileExistsAtPath:v2Completed]) {
-        [[NSFileManager defaultManager] removeItemAtPath:v2Completed error:nil];
-    }
+    [NSFileManager.defaultManager mnz_removeItemAtPath:v2Completed];
     
     // PhotoSync settings
     NSString *oldPspPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject stringByAppendingPathComponent:@"PhotoSync/psp.plist"];
@@ -1719,22 +1683,13 @@ void uncaughtExceptionHandler(NSException *exception) {
             [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:NO] forKey:kIsUploadVideosEnabled];
         }
         
-        [[NSFileManager defaultManager] removeItemAtPath:v2PspPath error:nil];
+        [NSFileManager.defaultManager mnz_removeItemAtPath:v2PspPath];
     }
 }
 
 - (void)removeOldStateCache {
     NSString *libraryDirectory = [NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-    NSArray *directoryContent = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:libraryDirectory error:nil];
-    
-    for (NSString *item in directoryContent) {
-        if([item.pathExtension isEqualToString:@"db"]) {
-            NSString *stateCachePath = [libraryDirectory stringByAppendingPathComponent:item];
-            if ([[NSFileManager defaultManager] fileExistsAtPath:stateCachePath]) {
-                [[NSFileManager defaultManager] removeItemAtPath:stateCachePath error:nil];
-            }
-        }
-    }
+    [NSFileManager.defaultManager mnz_removeFolderContentsRecursivelyAtPath:libraryDirectory forItemsExtension:@"db"];
 }
 
 - (void)languageCompatibility {
@@ -1868,9 +1823,7 @@ void uncaughtExceptionHandler(NSException *exception) {
                     if ([user hasChangedType:MEGAUserChangeTypeAvatar]) { //If you have changed your avatar, remove the old and request the new one
                         NSString *userBase64Handle = [MEGASdk base64HandleForUserHandle:user.handle];
                         NSString *avatarFilePath = [[Helper pathForSharedSandboxCacheDirectory:@"thumbnailsV3"] stringByAppendingPathComponent:userBase64Handle];
-                        if ([[NSFileManager defaultManager] fileExistsAtPath:avatarFilePath]) {
-                            [[NSFileManager defaultManager] removeItemAtPath:avatarFilePath error:nil];
-                        }
+                        [NSFileManager.defaultManager mnz_removeItemAtPath:avatarFilePath];
                         [[MEGASdkManager sharedMEGASdk] getAvatarUser:user destinationFilePath:avatarFilePath];
                     }
                     
@@ -1891,9 +1844,7 @@ void uncaughtExceptionHandler(NSException *exception) {
                     if ([user hasChangedType:MEGAUserChangeTypeAvatar]) {
                         NSString *userBase64Handle = [MEGASdk base64HandleForUserHandle:user.handle];
                         NSString *avatarFilePath = [[Helper pathForSharedSandboxCacheDirectory:@"thumbnailsV3"] stringByAppendingPathComponent:userBase64Handle];
-                        if ([[NSFileManager defaultManager] fileExistsAtPath:avatarFilePath]) {
-                            [[NSFileManager defaultManager] removeItemAtPath:avatarFilePath error:nil];
-                        }
+                        [NSFileManager.defaultManager mnz_removeItemAtPath:avatarFilePath];
                         [[MEGASdkManager sharedMEGASdk] getAvatarUser:user destinationFilePath:avatarFilePath];
                     }
                     if ([user hasChangedType:MEGAUserChangeTypeFirstname]) {
@@ -2089,10 +2040,7 @@ void uncaughtExceptionHandler(NSException *exception) {
                 if ([request type] == MEGARequestTypeSetAttrFile) {
                     MEGANode *node = [api nodeForHandle:request.nodeHandle];
                     NSString *thumbnailFilePath = [Helper pathForNode:node inSharedSandboxCacheDirectory:@"thumbnailsV3"];
-                    BOOL thumbnailExists = [[NSFileManager defaultManager] fileExistsAtPath:thumbnailFilePath];
-                    if (thumbnailExists) {
-                        [[NSFileManager defaultManager] removeItemAtPath:thumbnailFilePath error:nil];
-                    }
+                    [NSFileManager.defaultManager mnz_removeItemAtPath:thumbnailFilePath];
                 }
                 
                 break;

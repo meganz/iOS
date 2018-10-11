@@ -11,6 +11,7 @@
 #import "MEGANavigationController.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGARequestDelegate.h"
+#import "NSFileManager+MNZCategory.h"
 
 #import "BrowserViewController.h"
 
@@ -320,14 +321,7 @@
     NSDate *extensionDate = [self newestMegaclientModificationDateForDirectoryAtUrl:applicationSupportDirectoryURL];
     
     if ([incomingDate compare:extensionDate] == NSOrderedDescending) {
-        NSArray *applicationSupportContent = [fileManager contentsOfDirectoryAtPath:applicationSupportDirectoryURL.path error:&error];
-        for (NSString *filename in applicationSupportContent) {
-            if ([filename containsString:@"megaclient"]) {
-                if(![fileManager removeItemAtPath:[applicationSupportDirectoryURL.path stringByAppendingPathComponent:filename] error:&error]) {
-                    MEGALogError(@"Remove item at path failed with error: %@", error);
-                }
-            }
-        }
+        [NSFileManager.defaultManager mnz_removeFolderContentsAtPath:applicationSupportDirectoryURL.path forItemsContaining:@"megaclient"];
         
         NSArray *groupSupportPathContent = [fileManager contentsOfDirectoryAtPath:groupSupportURL.path error:&error];
         for (NSString *filename in groupSupportPathContent) {
@@ -384,11 +378,7 @@
     if (shouldOpenLocalFile) {
         [self documentReadyAtPath:documentFilePath withBase64Handle:node.base64Handle];
     } else {
-        if (fileExists) {
-            if (![NSFileManager.defaultManager removeItemAtPath:documentFilePath error:nil]) {
-                MEGALogError(@"Error removing older local file");
-            }
-        }
+        [NSFileManager.defaultManager mnz_removeItemAtPath:documentFilePath];
         if ([Helper isFreeSpaceEnoughToDownloadNode:node isFolderLink:NO]) {
             NSString *destinationFolder = [[self appGroupContainerURL] stringByAppendingPathComponent:node.base64Handle];
             if (![NSFileManager.defaultManager fileExistsAtPath:destinationFolder]) {
