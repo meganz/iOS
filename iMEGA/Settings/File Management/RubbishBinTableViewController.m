@@ -58,17 +58,6 @@
 
 #pragma mark - Private
 
-- (void)deleteFolderContentsInPath:(NSString *)folderPath {
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-    NSArray *fileArray = [fileManager contentsOfDirectoryAtPath:folderPath error:nil];
-    NSError *error = nil;
-    for (NSString *filename in fileArray)  {
-        if (![fileManager removeItemAtPath:[folderPath stringByAppendingPathComponent:filename] error:&error] ) {
-            MEGALogError(@"Remove item at path failed with error: %@", error);
-        }
-    }
-}
-
 - (NSString *)formatStringFromByteCountFormatter:(NSString *)stringFromByteCount {
     NSArray *componentsSeparatedByStringArray = [stringFromByteCount componentsSeparatedByString:@" "];
     NSString *countString = [NSString mnz_stringWithoutUnitOfComponents:componentsSeparatedByStringArray];
