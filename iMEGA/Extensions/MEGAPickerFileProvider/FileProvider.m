@@ -8,6 +8,7 @@
 #import "MEGASdk.h"
 #import "MEGASdkManager.h"
 #import "MEGATransferDelegate.h"
+#import "NSFileManager+MNZCategory.h"
 
 #define kAppKey @"EVtjzb7R"
 #define kUserAgent @"MEGAiOS"
@@ -132,14 +133,7 @@
     NSDate *extensionDate = [self newestMegaclientModificationDateForDirectoryAtUrl:applicationSupportDirectoryURL];
     
     if ([incomingDate compare:extensionDate] == NSOrderedDescending) {
-        NSArray *applicationSupportContent = [fileManager contentsOfDirectoryAtPath:applicationSupportDirectoryURL.path error:&error];
-        for (NSString *filename in applicationSupportContent) {
-            if ([filename containsString:@"megaclient"]) {
-                if(![fileManager removeItemAtPath:[applicationSupportDirectoryURL.path stringByAppendingPathComponent:filename] error:&error]) {
-                    MEGALogError(@"Remove item at path failed with error: %@", error);
-                }
-            }
-        }
+        [NSFileManager.defaultManager mnz_removeFolderContentsAtPath:applicationSupportDirectoryURL.path forItemsContaining:@"megaclient"];
         
         NSArray *groupSupportPathContent = [fileManager contentsOfDirectoryAtPath:groupSupportURL.path error:&error];
         for (NSString *filename in groupSupportPathContent) {
