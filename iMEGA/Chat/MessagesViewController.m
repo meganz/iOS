@@ -458,7 +458,7 @@ const NSUInteger kMaxMessagesToLoad = 256;
 }
 
 - (void)startAudioVideoCall:(UIBarButtonItem *)sender {
-    [DevicePermissionsHelper audioPermissionModal:YES withCompletionHandler:^(BOOL granted) {
+    [DevicePermissionsHelper audioPermissionModal:YES forIncomingCall:NO withCompletionHandler:^(BOOL granted) {
         if (granted) {
             if (sender.tag) {
                 [DevicePermissionsHelper videoPermissionWithCompletionHandler:^(BOOL granted) {

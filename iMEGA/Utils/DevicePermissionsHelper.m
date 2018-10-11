@@ -13,9 +13,9 @@
 
 #pragma mark - Permissions requests
 
-+ (void)audioPermissionModal:(BOOL)modal withCompletionHandler:(void (^)(BOOL granted))handler {
++ (void)audioPermissionModal:(BOOL)modal forIncomingCall:(BOOL)incomingCall withCompletionHandler:(void (^)(BOOL granted))handler {
     if (modal && [self shouldAskForAudioPermissions]) {
-        [self modalAudioPermissionWithCompletionHandler:handler];
+        [self modalAudioPermissionForIncomingCall:incomingCall withCompletionHandler:handler];
     } else {
         [self audioPermissionWithCompletionHandler:handler];
     }
@@ -109,12 +109,12 @@
 
 #pragma mark - Modals
 
-+ (void)modalAudioPermissionWithCompletionHandler:(void (^)(BOOL granted))handler {
++ (void)modalAudioPermissionForIncomingCall:(BOOL)incomingCall withCompletionHandler:(void (^)(BOOL granted))handler {
     CustomModalAlertViewController *permissionsModal = [self permissionsModal];
     __weak CustomModalAlertViewController *weakPermissionsModal = permissionsModal;
     
     permissionsModal.image = [UIImage imageNamed:@"groupChat"];
-    permissionsModal.viewTitle = AMLocalizedString(@"Enable Microphone and Camera", @"Title label that explains that the user is going to be asked for the microphone and camera permission");
+    permissionsModal.viewTitle = incomingCall ? AMLocalizedString(@"Incoming call", nil) : AMLocalizedString(@"Enable Microphone and Camera", @"Title label that explains that the user is going to be asked for the microphone and camera permission");
     permissionsModal.detail = AMLocalizedString(@"To make encrypted voice and video calls, allow MEGA access to your Camera and Microphone", @"Detailed explanation of why the user should give permission to access to the camera and the microphone");
     permissionsModal.action = AMLocalizedString(@"Enable Access", @"Button which triggers a request for a specific permission, that have been explained to the user beforehand");
     permissionsModal.dismiss = AMLocalizedString(@"notNow", nil);

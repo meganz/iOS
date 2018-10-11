@@ -251,7 +251,7 @@ class OnboardingViewController: UIViewController, UIScrollViewDelegate {
                 }
                 
             case .microphoneAndCameraPermissions:
-                DevicePermissionsHelper.audioPermissionModal(false) { (_) in
+                DevicePermissionsHelper.audioPermissionModal(false, forIncomingCall: false) { (_) in
                     DevicePermissionsHelper.videoPermission { (_) in
                         self.nextPageOrDismiss()
                     }
