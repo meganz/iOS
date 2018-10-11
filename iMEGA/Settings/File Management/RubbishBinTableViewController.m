@@ -48,7 +48,7 @@
     NSString *stringFromByteCount = [self.byteCountFormatter stringFromByteCount:rubbishBinSizeNumber.unsignedLongLongValue];
     self.clearRubbishBinDetailLabel.text = [self formatStringFromByteCountFormatter:stringFromByteCount];
     
-    self.rubbishBinCleaningSchedulerLabel.text = AMLocalizedString(@"Rubbish-Bin Cleaning Scheduler", nil);
+    self.rubbishBinCleaningSchedulerLabel.text = [AMLocalizedString(@"Rubbish-Bin Cleaning Scheduler:", @"Title for the Rubbish-Bin Cleaning Scheduler feature") stringByReplacingOccurrencesOfString:@":" withString:@""];
     [self.rubbishBinCleaningSchedulerSwitch setOn:[[MEGASdkManager sharedMEGASdk] serverSideRubbishBinAutopurgeEnabled]];
     
     self.removeFilesOlderThanLabel.text = AMLocalizedString(@"Remove files older than", @"A rubbish bin scheduler setting which allows removing old files from the rubbish bin automatically. E.g. Remove files older than 15 days.");
@@ -98,7 +98,7 @@
             CustomModalAlertViewController *customModalAlertVC = [[CustomModalAlertViewController alloc] init];
             customModalAlertVC.modalPresentationStyle = UIModalPresentationOverCurrentContext;
             customModalAlertVC.image = [UIImage imageNamed:@"retention_illustration"];
-            customModalAlertVC.viewTitle = AMLocalizedString(@"Rubbish-Bin Cleaning Scheduler", @"");
+            customModalAlertVC.viewTitle = [AMLocalizedString(@"Rubbish-Bin Cleaning Scheduler:", @"Title for the Rubbish-Bin Cleaning Scheduler feature") stringByReplacingOccurrencesOfString:@":" withString:@""];
             customModalAlertVC.detail = AMLocalizedString(@"To disable Rubbish-Bin Cleaning Scheduler or set a longer retention period you need to subscribe to a PRO plan", @"Description shown when you try to disable the feature Rubbish-Bin Cleaning Scheduler and you are a free user");
             customModalAlertVC.action = AMLocalizedString(@"seePlans", @"Button title to see the available pro plans in MEGA");
             customModalAlertVC.actionColor = [UIColor mnz_green00BFA5];
