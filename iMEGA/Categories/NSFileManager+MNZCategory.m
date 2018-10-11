@@ -27,4 +27,21 @@
     return uploadsDirectory;
 }
 
+- (NSURL *)cameraUploadURL {
+    NSURL *uploadURL = nil;
+    NSURL *supportURL = [[self URLsForDirectory:NSApplicationSupportDirectory inDomains:NSUserDomainMask] firstObject];
+    if (supportURL) {
+        NSString *bundleId = [[NSBundle mainBundle] bundleIdentifier];
+        uploadURL = [[supportURL URLByAppendingPathComponent:bundleId isDirectory:YES] URLByAppendingPathComponent:@"CameraUploads" isDirectory:YES];
+        NSError *error = nil;
+        if (![self createDirectoryAtURL:uploadURL withIntermediateDirectories:YES attributes:nil error:&error]) {
+            MEGALogError(@"Create directory at url failed with error: %@", uploadURL);
+            return nil;
+        }
+    }
+    
+    return uploadURL;
+}
+
+
 @end
