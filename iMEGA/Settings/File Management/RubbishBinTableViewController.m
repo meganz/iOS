@@ -99,7 +99,7 @@
             customModalAlertVC.modalPresentationStyle = UIModalPresentationOverCurrentContext;
             customModalAlertVC.image = [UIImage imageNamed:@"retention_illustration"];
             customModalAlertVC.viewTitle = [AMLocalizedString(@"Rubbish-Bin Cleaning Scheduler:", @"Title for the Rubbish-Bin Cleaning Scheduler feature") stringByReplacingOccurrencesOfString:@":" withString:@""];
-            customModalAlertVC.detail = AMLocalizedString(@"To disable Rubbish-Bin Cleaning Scheduler or set a longer retention period you need to subscribe to a PRO plan", @"Description shown when you try to disable the feature Rubbish-Bin Cleaning Scheduler and you are a free user");
+            customModalAlertVC.detail = AMLocalizedString(@"To disable the Rubbish-Bin Cleaning Scheduler or set a longer retention period, you need to subscribe to a PRO plan.", @"Description shown when you try to disable the feature Rubbish-Bin Cleaning Scheduler and you are a free user");
             customModalAlertVC.action = AMLocalizedString(@"seePlans", @"Button title to see the available pro plans in MEGA");
             customModalAlertVC.actionColor = [UIColor mnz_green00BFA5];
             customModalAlertVC.dismiss = AMLocalizedString(@"notNow", @"Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers.");
