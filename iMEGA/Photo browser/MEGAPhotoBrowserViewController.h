@@ -30,5 +30,6 @@ typedef NS_ENUM(NSUInteger, MEGAPhotoMode) {
 @property (nonatomic, weak) id<MEGAPhotoBrowserDelegate> delegate;
 @property (nonatomic) DisplayMode displayMode;
 @property (nonatomic) NSString *publicLink;
+@property (nonatomic) NSString *encryptedLink;
 
 @end

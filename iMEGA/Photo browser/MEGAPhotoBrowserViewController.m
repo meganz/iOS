@@ -857,7 +857,8 @@
             
             switch (self.displayMode) {
                 case DisplayModeFileLink: {
-                    activityVC = [[UIActivityViewController alloc] initWithActivityItems:@[self.publicLink] applicationActivities:nil];
+                    NSString *link = self.encryptedLink ? self.encryptedLink : self.publicLink;
+                    activityVC = [[UIActivityViewController alloc] initWithActivityItems:@[link] applicationActivities:nil];
                     [activityVC setExcludedActivityTypes:@[UIActivityTypePrint, UIActivityTypeAssignToContact, UIActivityTypeSaveToCameraRoll, UIActivityTypeAddToReadingList, UIActivityTypeAirDrop]];
                     [activityVC.popoverPresentationController setBarButtonItem:sender];
                     

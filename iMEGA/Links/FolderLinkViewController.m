@@ -15,6 +15,7 @@
 
 #import "NSString+MNZCategory.h"
 #import "MEGALinkManager.h"
+#import "UIApplication+MNZCategory.h"
 #import "UIImageView+MNZCategory.h"
 
 #import "BrowserViewController.h"
@@ -110,7 +111,7 @@
 
     if (self.isFolderRootNode) {
         [MEGASdkManager sharedMEGASdkFolder];
-        [[MEGASdkManager sharedMEGASdkFolder] loginToFolderLink:self.folderLinkString delegate:self];
+        [[MEGASdkManager sharedMEGASdkFolder] loginToFolderLink:self.publicLinkString delegate:self];
 
         self.navigationItem.leftBarButtonItem = self.closeBarButtonItem;
         
@@ -282,9 +283,9 @@
         NSString *linkString;
         NSString *key = decryptionAlertController.textFields.firstObject.text;
         if ([[key substringToIndex:1] isEqualToString:@"!"]) {
-            linkString = self.folderLinkString;
+            linkString = self.publicLinkString;
         } else {
-            linkString = [self.folderLinkString stringByAppendingString:@"!"];
+            linkString = [self.publicLinkString stringByAppendingString:@"!"];
         }
         linkString = [linkString stringByAppendingString:key];
         
@@ -326,7 +327,7 @@
                     FolderLinkViewController *folderLinkVC = [storyboard instantiateViewControllerWithIdentifier:@"FolderLinkViewControllerID"];
                     [folderLinkVC setParentNode:node];
                     [folderLinkVC setIsFolderRootNode:NO];
-                    [folderLinkVC setFolderLinkString:self.folderLinkString];
+                    folderLinkVC.publicLinkString = self.publicLinkString;
                     [self.navigationController pushViewController:folderLinkVC animated:NO];
 
                 } else {
@@ -652,7 +653,7 @@
             FolderLinkViewController *folderLinkVC = [storyboard instantiateViewControllerWithIdentifier:@"FolderLinkViewControllerID"];
             [folderLinkVC setParentNode:node];
             [folderLinkVC setIsFolderRootNode:NO];
-            [folderLinkVC setFolderLinkString:self.folderLinkString];
+            folderLinkVC.publicLinkString = self.publicLinkString;
             [self.navigationController pushViewController:folderLinkVC animated:YES];
             break;
         }
@@ -898,7 +899,7 @@
             isFetchNodesDone = YES;
             [self reloadUI];
             
-            NSArray *componentsArray = [self.folderLinkString componentsSeparatedByString:@"!"];
+            NSArray *componentsArray = [self.publicLinkString componentsSeparatedByString:@"!"];
             if (componentsArray.count == 4) {
                 [self navigateToNodeWithBase64Handle:componentsArray.lastObject];
             }
@@ -956,7 +957,8 @@
         }
             
         case MegaNodeActionTypeShare: {
-            UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWithActivityItems:@[self.folderLinkString] applicationActivities:nil];
+            NSString *link = self.linkEncryptedString ? self.linkEncryptedString : self.publicLinkString;
+            UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWithActivityItems:@[link] applicationActivities:nil];
             activityVC.popoverPresentationController.barButtonItem = sender;
             [self presentViewController:activityVC animated:YES completion:nil];
             break;
