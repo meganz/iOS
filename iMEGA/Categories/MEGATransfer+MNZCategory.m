@@ -8,6 +8,7 @@
 #import "MEGANode+MNZCategory.h"
 #import "MEGASdkManager.h"
 #import "MEGAReachabilityManager.h"
+#import "NSFileManager+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 
 @implementation MEGATransfer (MNZCategory)
@@ -43,7 +44,7 @@
     [[MEGASdkManager sharedMEGASdk] createPreview:imageFilePath destinatioPath:previewFilePath];
     
     if (self.fileName.mnz_isVideoPathExtension) {
-        [[NSFileManager defaultManager] removeItemAtPath:imageFilePath error:nil];
+        [NSFileManager.defaultManager mnz_removeItemAtPath:imageFilePath];
     }
 }
 
@@ -66,8 +67,8 @@
                 
             case MEGATransferStateCancelled:
             case MEGATransferStateFailed: {
-                [[NSFileManager defaultManager] removeItemAtPath:thumbnailPath error:nil];
-                [[NSFileManager defaultManager] removeItemAtPath:previewPath error:nil];
+                [NSFileManager.defaultManager mnz_removeItemAtPath:thumbnailPath];
+                [NSFileManager.defaultManager mnz_removeItemAtPath:previewPath];
                 break;
             }
                 

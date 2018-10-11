@@ -684,6 +684,8 @@
 "sdkVersion"="MEGA SDK wersja";
 /* Title of the label where the MEGAchat SDK version is shown */
 "megachatSdkVersion"="Wesja MEGAchat SDK";
+/* Link to the public code of the app */
+"View source code"="Zobacz kod źródłowy";
 /* Title for the section "Acknowledgements" of the app */
 "acknowledgements"="Podziękowania";
 /* Title for the MEGA Recovery Key */
@@ -720,6 +722,8 @@
 "dontUseHttp"="Nie używaj HTTP";
 /* Footer text that explains when disabling the HTTP protocol for transfers may be useful */
 "transfersSectionFooter"="Zaznacz tą opcję tylko w przypadku problemów z transferem plików. W normalnej sytuacji HTTP jest wystarczający ponieważ wszystkie pliki są szyfrowane.";
+/* Title of the dialog displayed the first time that a user want to download a image. Asks if wants to export image files to the photo album after download in future and informs that user can change this option afterwards - (String as short as possible). */
+"Download options"="Opcje pobierania";
 /* Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped */
 "currentlyUsing"="Obecnie używane %s";
 /* In 'My account', when user want to delete/remove/cancel account will click button named 'Cancel your account' */
@@ -843,6 +847,8 @@
 "help"="Pomoc";
 /* Title of the section to access MEGA's help centre */
 "helpCentreLabel"="Centrum pomocy";
+/* Section title that links you to the webpage that let you join and test the beta versions */
+"Join Beta"="Dołącz do Bety";
 /* Title to rate the app */
 "rateUsLabel"="Oceń nas";
 /* Title of the Transfers section */
@@ -1570,6 +1576,8 @@
 "whyYouDoNeedTwoFactorAuthenticationDescription"="Uwierzytelnianie dwuetapowe to druga warstwa zabezpieczeń Twojego konta. Co oznacza, że nawet jeśli ktoś zna twoje hasło, nie może uzyskać do niego dostępu, nie mając dostępu do sześciocyfrowego kodu, do którego masz dostęp.";
 /* Alert text shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device */
 "youNeedATwoFactorAuthenticationApp"="Potrzebujesz aplikacji uwierzytelniania dwustopniowego na tym urządzeniu";
+/* Alert text shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device and tap on the question mark */
+"You need an authenticator app to enable 2FA on MEGA. You can download and install the Google Authenticator, Duo Mobile, Authy or Microsoft Authenticator app for your phone or tablet."="You need an authenticator app to enable 2FA on MEGA. You can download and install the Google Authenticator, Duo Mobile, Authy or Microsoft Authenticator app for your phone or tablet.";
 /* A title on the mobile web client page showing that 2FA has been enabled successfully. */
 "twoFactorAuthenticationEnabled"="Uwierzytelnianie dwuetapowe włączone";
 /* A message on the dialog shown after 2FA was successfully enabled. */
@@ -1630,5 +1638,45 @@
 "We would like to send you notifications so you receive new messages on your device instantly."="Chcemy wysyłać Ci powiadomienia, aby natychmiast otrzymywać nowe wiadomości na Twoim urządzeniu.";
 /* Button which triggers a request for a specific permission, that have been explained to the user beforehand */
 "Enable Access"="Włącz dostęp";
+/* A section header which contains the file management settings. These settings allow users to remove duplicate files etc. */
+"File Management"="Zarządzanie plikami";
+/* Title of the option to enable or disable file versioning on Settings section */
+"File versioning"="Wersjonowanie plików";
+/* Subtitle of the option to enable or disable file versioning on Settings section */
+"Enable or disable file versioning for your entire account.[Br]You may still receive file versions from shared folders if your contacts have this enabled."="Włącz lub wyłącz wersjonowanie plików dla całego konta. \nNadal możesz odbierać wersje plików z folderów współdzielonych, jeśli są one włączone.";
+/* A confirmation message when the user chooses to disable file versioning. */
+"When file versioning is disabled, the current version will be replaced with the new version once a file is updated (and your changes to the file will no longer be recorded). Are you sure you want to disable file versioning?"="Kiedy wersjonowanie jest zablokowane, aktualna wersja pliku zostanie zastąpiona nową wersją (zmiany nie będą rejestrowane). Czy chcesz wyłączyć wersjonowanie?";
+/* Settings preference title to show file versions info of the account */
+"File versions"="Wersje plików";
+/* A title message in the user’s account settings for showing the storage used for file versions. */
+"Total size taken up by file versions:"="Całkowita powierzchnia zajęta przez pliki:";
+/* The title of the section about deleting file versions in the settings. */
+"Delete all older versions of my files"="Usuń wszystkie starsze wersje moich plików";
+/* Text of a button which deletes all historical versions of files in the users entire account. */
+"Delete old versions"="Usuń stare wersje";
+/* A warning note about deleting all file versions in the settings section. */
+"All current files will remain. Only historic versions of your files will be deleted."="Wszystkie bieżące pliki pozostaną. Tylko historyczne wersje twoich plików zostaną usunięte.";
+/* Text of the dialog to delete all the file versions of the account */
+"You are about to delete the version histories of all files. Any file version shared to you from a contact will need to be deleted by them.[Br][Br]Please note that the current files will not be deleted."="Zamierzasz usunąć historie wersji wszystkich plików. Każda wersja pliku udostępniona Ci z kontaktu będzie musiała zostać usunięta przez użytkownika.\n\n Należy pamiętać, że bieżące pliki nie zostaną usunięte.";
+/* Title for the Rubbish-Bin Cleaning Scheduler feature */
+"Rubbish-Bin Cleaning Scheduler:"="Ustawienia opróżniania kosza:";
+/* A rubbish bin scheduler setting which allows removing old files from the rubbish bin automatically. E.g. Remove files older than 15 days. */
+"Remove files older than"="Usuń pliki starsze niż";
+/* Label for any ‘Days’ button, link, text, title, etc. - (String as short as possible). */
+"Days"="Dni";
+/* New server-side rubbish-bin cleaning scheduler description (for Free users) */
+"The Rubbish Bin is cleaned for you automatically. The minimum period is 7 days and your maximum period is 30 days."="Kosz jest opróżniany autoatycznie. Minimalny okres pomiędzy którym następuje oczyszczenie kosza to między 7 a 30 dni.";
+/* New server-side rubbish-bin cleaning scheduler description (for PRO users) */
+"The Rubbish Bin can be cleaned for you automatically. The minimum period is 7 days."="Kosz może być opróżniany automatycznie. Minimalny okres to 8 dni.";
+/* Description shown when you try to disable the feature Rubbish-Bin Cleaning Scheduler and you are a free user */
+"To disable the Rubbish-Bin Cleaning Scheduler or set a longer retention period, you need to subscribe to a PRO plan."="Aby wyłączyć harmonogram czyszczenia śmieci lub ustawić dłuższy okres przechowywania, musisz subskrybować plan PRO.";
 /* Confirmation dialog for the button that logs the user out of all sessions except the current one. */
 "Do you want to close all other sessions? This will log you out on all other active sessions except the current one."="Czy chcesz zamknąć wszystkie inne sesje? Spowoduje to wylogowanie wszystkich innych aktywnych sesji oprócz bieżącego.";
+/* A button label which allows the users save images/videos in the Photos app. */
+"Save to Photos"="Zapisz w Zdjęciach";
+/* Text shown when starting the process to save a photo or video to Photos app */
+"Saving to Photos…"="Saving to Photos…";
+/* Text shown when a photo or video is saved to Photos app */
+"Saved to Photos"="Saved to Photos";
+/* Text shown when an error occurs when trying to save a photo or video to Photos app */
+"Could not save"="Could not save";
