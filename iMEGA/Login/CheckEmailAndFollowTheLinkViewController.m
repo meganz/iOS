@@ -16,15 +16,15 @@
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *mailImageTopLayoutConstraint;
 @property (weak, nonatomic) IBOutlet UIImageView *mailImageView;
-
-@property (weak, nonatomic) IBOutlet UILabel *awaitingEmailConfirmation;
+@property (weak, nonatomic) IBOutlet UILabel *awaitingEmailConfirmationLabel;
+@property (weak, nonatomic) IBOutlet UILabel *checkYourEmailLabel;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *checkYourEmailBottomLayoutConstraint;
+@property (weak, nonatomic) IBOutlet UILabel *emailLabel;
 @property (weak, nonatomic) IBOutlet UITextField *emailTextField;
+@property (weak, nonatomic) IBOutlet UILabel *misspelledLabel;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *resendButtonTopLayoutConstraint;
 @property (weak, nonatomic) IBOutlet UIButton *resendButton;
 @property (weak, nonatomic) IBOutlet UIButton *cancelButton;
-@property (weak, nonatomic) IBOutlet UILabel *checkYourEmailLabel;
-@property (weak, nonatomic) IBOutlet UILabel *misspelledLabel;
 
 @property (nonatomic, copy) NSString *email;
 @property (nonatomic, copy) NSString *name;
@@ -37,22 +37,26 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    if ([[UIDevice currentDevice] iPhone4X]) {
-        self.mailImageTopLayoutConstraint.constant = 24.f;
-        self.checkYourEmailBottomLayoutConstraint.constant = 59.f;
+    if (UIDevice.currentDevice.iPhone4X) {
+        self.mailImageTopLayoutConstraint.constant = 24.0f;
+        self.checkYourEmailBottomLayoutConstraint.constant = 6.0f;
         self.resendButtonTopLayoutConstraint.constant = 20.0f;
-    } else if ([[UIDevice currentDevice] iPhone5X]) {
-        self.mailImageTopLayoutConstraint.constant = 24.f;
+    } else if (UIDevice.currentDevice.iPhone5X) {
+        self.mailImageTopLayoutConstraint.constant = 24.0f;
     }
 
-    self.awaitingEmailConfirmation.text = AMLocalizedString(@"awaitingEmailConfirmation", @"Title shown just after doing some action that requires confirming the action by an email");
-    [_emailTextField setPlaceholder:AMLocalizedString(@"emailPlaceholder", nil)];
+    self.awaitingEmailConfirmationLabel.text = AMLocalizedString(@"awaitingEmailConfirmation", @"Title shown just after doing some action that requires confirming the action by an email");
+    self.checkYourEmailLabel.text = AMLocalizedString(@"accountNotConfirmed", @"Text shown just after creating an account to remenber the user what to do to complete the account creation proccess");
+    self.emailLabel.text = AMLocalizedString(@"emailPlaceholder", nil);
+    self.misspelledLabel.text = AMLocalizedString(@"misspelledEmailAddress", @"A hint shown at the bottom of the Send Signup Link dialog to tell users they can edit the provided email.");
+    [self.resendButton setTitle:AMLocalizedString(@"resend", @"A button to resend the email confirmation.") forState:UIControlStateNormal];
+    [self.cancelButton setTitle:AMLocalizedString(@"cancel", nil) forState:UIControlStateNormal];
     
-    _email = [SAMKeychain passwordForService:@"MEGA" account:@"email"];
-    _name = [SAMKeychain passwordForService:@"MEGA" account:@"name"];
-    _base64pwkey = [SAMKeychain passwordForService:@"MEGA" account:@"base64pwkey"];
+    self.email = [SAMKeychain passwordForService:@"MEGA" account:@"email"];
+    self.name = [SAMKeychain passwordForService:@"MEGA" account:@"name"];
+    self.base64pwkey = [SAMKeychain passwordForService:@"MEGA" account:@"base64pwkey"];
     
-    _emailTextField.text = self.email;
+    self.emailTextField.text = self.email;
     
     self.resendButton.layer.borderColor = [UIColor mnz_gray999999].CGColor;
     
@@ -63,22 +67,31 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    self.checkYourEmailLabel.text = AMLocalizedString(@"accountNotConfirmed", @"Text shown just after creating an account to remenber the user what to do to complete the account creation proccess");
-    self.misspelledLabel.text = AMLocalizedString(@"misspelledEmailAddress", @"A hint shown at the bottom of the Send Signup Link dialog to tell users they can edit the provided email.");
-    [self.resendButton setTitle:AMLocalizedString(@"resend", @"A button to resend the email confirmation.") forState:UIControlStateNormal];
-    [self.cancelButton setTitle:AMLocalizedString(@"cancel", nil) forState:UIControlStateNormal];
     [[MEGASdkManager sharedMEGASdk] addMEGAGlobalDelegate:self];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
+    
     [[MEGASdkManager sharedMEGASdk] removeMEGAGlobalDelegate:self];
 }
 
 #pragma mark - Private
 
--(void)dismissKeyboard {
+- (void)dismissKeyboard {
     [self.emailTextField resignFirstResponder];
+}
+
+- (void)setErrorState:(BOOL)error {
+    if (error) {
+        self.emailLabel.text = AMLocalizedString(@"emailInvalidFormat", @"Message shown when the user writes an invalid format in the email field");
+        self.emailLabel.textColor = UIColor.mnz_redError;
+        self.emailTextField.textColor = UIColor.mnz_redError;
+    } else {
+        self.emailLabel.text = AMLocalizedString(@"emailPlaceholder", nil);
+        self.emailLabel.textColor = UIColor.mnz_gray999999;
+        self.emailTextField.textColor = UIColor.blackColor;
+    }
 }
 
 #pragma mark - IBActions
@@ -97,13 +110,13 @@
 
 - (IBAction)resendTouchUpInside:(UIButton *)sender {
     if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-        if ([self.emailTextField.text mnz_isValidEmail]) {
+        BOOL validEmail = [self.emailTextField.text mnz_isValidEmail];
+        if (validEmail) {
             [self.emailTextField resignFirstResponder];
             MEGASendSignupLinkRequestDelegate *sendSignupLinkRequestDelegate = [[MEGASendSignupLinkRequestDelegate alloc] init];
             [[MEGASdkManager sharedMEGASdk] fastSendSignupLinkWithEmail:self.emailTextField.text base64pwkey:self.base64pwkey name:self.name delegate:sendSignupLinkRequestDelegate];
-        } else {
-            [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"emailInvalidFormat", @"Message shown when the user writes an invalid format in the email field")];
         }
+        [self setErrorState:!validEmail];
     }
 }
 
