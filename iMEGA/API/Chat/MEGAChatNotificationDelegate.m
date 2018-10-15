@@ -87,6 +87,11 @@
                             content.body = body;
                             content.sound = [UNNotificationSound defaultSound];
                         }
+                        
+                        if ([UIApplication sharedApplication].applicationState != UIApplicationStateBackground) {
+                            content.sound = nil;
+                        }
+                        
                         content.categoryIdentifier = @"nz.mega.chat.message";
                         UNTimeIntervalNotificationTrigger *trigger = [UNTimeIntervalNotificationTrigger triggerWithTimeInterval:1 repeats:NO];
                         NSString *identifier = [NSString stringWithFormat:@"%@%@", [MEGASdk base64HandleForUserHandle:chatRoom.chatId], [MEGASdk base64HandleForUserHandle:message.messageId]];
