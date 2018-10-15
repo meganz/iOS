@@ -1246,13 +1246,47 @@ const NSUInteger kMaxMessagesToLoad = 256;
 #pragma mark - JSQMessagesViewController method overrides
 
 - (void)didPressSendButton:(UIButton *)button
-           withMessageText:(NSString *)text
+           withMessageText:(NSString *)messageText
                   senderId:(NSString *)senderId
          senderDisplayName:(NSString *)senderDisplayName
                       date:(NSDate *)date {
     
-    if (text.mnz_isEmpty) {
+    if (messageText.mnz_isEmpty) {
         return;
+    }
+    
+    // Emoji replacement:
+    NSString *text = messageText;
+    NSDictionary<NSString *, NSString *> *emojiDict = @{@":\\)"  : @"🙂", // :)
+                                                        @":-\\)" : @"🙂", // :-)
+                                                        @":d"    : @"😀",
+                                                        @":-d"   : @"😀",
+                                                        @";\\)"  : @"😉", // ;)
+                                                        @";-\\)" : @"😉", // ;-)
+                                                        @";p"    : @"😜",
+                                                        @";-p"   : @"😜",
+                                                        @":p"    : @"😛",
+                                                        @":-p"   : @"😛",
+                                                        @":\\("  : @"🙁", // :(
+                                                        @":\\\\" : @"😕", // colon+backslash
+                                                        @":/"    : @"😕",
+                                                        @":\\|"  : @"😐", // :|
+                                                        @"d:"    : @"😧",
+                                                        @":o"    : @"😮"};
+    for (NSString *key in emojiDict.allKeys) {
+        NSString *replacement = [emojiDict objectForKey:key];
+        NSString *pattern = [NSString stringWithFormat:@"(?>\\s+|^)(%@)(?>\\s+|$)", key];
+        NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:pattern options:(NSRegularExpressionAnchorsMatchLines | NSRegularExpressionCaseInsensitive) error:nil];
+        NSUInteger padding = 0;
+        NSArray<NSTextCheckingResult *> *matches = [regex matchesInString:text options:0 range:NSMakeRange(0, text.length)];
+        for (NSTextCheckingResult *result in matches) {
+            if (result.numberOfRanges > 1) {
+                NSRange range = [result rangeAtIndex:1];
+                range.location -= padding;
+                padding += range.length - replacement.length;
+                text = [text stringByReplacingCharactersInRange:range withString:replacement];
+            }
+        }
     }
     
     MEGAChatMessage *message = [self sendMessage:text];
