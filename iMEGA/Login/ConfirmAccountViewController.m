@@ -200,6 +200,9 @@
                 [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"emailAlreadyInUse", @"Error shown when the user tries to change his mail to one that is already used")];
                 break;
             }
+                
+            case MEGAErrorTypeApiESid:
+                break;
 
             default:
                 [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"%@ (%ld)", error.name, (long)error.type]];
