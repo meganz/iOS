@@ -848,7 +848,7 @@
 /* Title of the section to access MEGA's help centre */
 "helpCentreLabel"="Центр помощи";
 /* Section title that links you to the webpage that let you join and test the beta versions */
-"Join Beta"="Join Beta";
+"Join Beta"="Присоединиться к бете";
 /* Title to rate the app */
 "rateUsLabel"="Оценить нас";
 /* Title of the Transfers section */
@@ -984,9 +984,9 @@
 /* Text shown under the button 'Skip' to explain that you can upgrade your account later in the section 'My Account'. */
 "youCanUpgradeLaterInMyAccount"="Учётную запись можно улучшить позже в разделе «Моя учётная запись»";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
-"cloudDriveIsAlmostFull"="[S]Облачный диск почти заполнен.[/S] [A]Улучшите его сейчас[/A] до PRO и получите [S]до 4 ТБ (4096 ГБ)[/S] места в облаке.";
+"cloudDriveIsAlmostFull"="[S]Облачный диск почти заполнен.[/S] [A]Улучшите аккаунт сейчас[/A] до PRO и получите [S]до 8 ТБ (8192 ГБ)[/S] места в облаке.";
 /* A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text. */
-"cloudDriveIsFull"="[S]Ваш аккаунт переполнен.[/S] [A]Улучшите учётную запись[/A] и получите [S]до 4 ТБ (4096 ГБ)[/S] свободного места в облаке.";
+"cloudDriveIsFull"="[S]Ваш аккаунт заполнен.[/S] [A]Улучшите его сейчас[/A] до PRO и получите [S]до 8 ТБ (8192 ГБ)[/S] свободного места в облаке.";
 /* Storage related with the MEGA PRO account level you can subscribe */
 "productSpace"="свободного места";
 /* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
@@ -1577,7 +1577,7 @@
 /* Alert text shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device */
 "youNeedATwoFactorAuthenticationApp"="Нужно приложение для двухфакторной аутентификации";
 /* Alert text shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device and tap on the question mark */
-"You need an authenticator app to enable 2FA on MEGA. You can download and install the Google Authenticator, Duo Mobile, Authy or Microsoft Authenticator app for your phone or tablet."="You need an authenticator app to enable 2FA on MEGA. You can download and install the Google Authenticator, Duo Mobile, Authy or Microsoft Authenticator app for your phone or tablet.";
+"You need an authenticator app to enable 2FA on MEGA. You can download and install the Google Authenticator, Duo Mobile, Authy or Microsoft Authenticator app for your phone or tablet."="Вам нужно приложение-аутентификатор, чтобы включить 2FA в MEGA. Вы можете загрузить и установить приложение Google Authenticator, Duo Mobile, Authy или Microsoft Authenticator на свой телефон или планшет.";
 /* A title on the mobile web client page showing that 2FA has been enabled successfully. */
 "twoFactorAuthenticationEnabled"="Двухфакторная аутентификация включена.";
 /* A message on the dialog shown after 2FA was successfully enabled. */
@@ -1669,14 +1669,14 @@
 /* New server-side rubbish-bin cleaning scheduler description (for PRO users) */
 "The Rubbish Bin can be cleaned for you automatically. The minimum period is 7 days."="Корзина может очищаться автоматически. Минимальный срок — 7 дней.";
 /* Description shown when you try to disable the feature Rubbish-Bin Cleaning Scheduler and you are a free user */
-"To disable the Rubbish-Bin Cleaning Scheduler or set a longer retention period, you need to subscribe to a PRO plan."="To disable the Rubbish-Bin Cleaning Scheduler or set a longer retention period, you need to subscribe to a PRO plan.";
+"To disable the Rubbish-Bin Cleaning Scheduler or set a longer retention period, you need to subscribe to a PRO plan."="Чтобы отключить очистку корзины по расписанию или установить более длительный период хранения, нужно подписаться на план PRO.";
 /* Confirmation dialog for the button that logs the user out of all sessions except the current one. */
 "Do you want to close all other sessions? This will log you out on all other active sessions except the current one."="Закрыть другие сеансы? Будет выполнен выход из системы для всех активных сеансов кроме этого.";
 /* A button label which allows the users save images/videos in the Photos app. */
-"Save to Photos"="Save to Photos";
+"Save to Photos"="Сохранять в фото";
 /* Text shown when starting the process to save a photo or video to Photos app */
-"Saving to Photos…"="Saving to Photos…";
+"Saving to Photos…"="Сохранение в фото…";
 /* Text shown when a photo or video is saved to Photos app */
-"Saved to Photos"="Saved to Photos";
+"Saved to Photos"="Сохранено в фото";
 /* Text shown when an error occurs when trying to save a photo or video to Photos app */
-"Could not save"="Could not save";
+"Could not save Item"="Элемент не сохранён";
