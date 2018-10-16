@@ -611,7 +611,7 @@
                 MEGAActivityItemProvider *activityItemProvider = [[MEGAActivityItemProvider alloc] initWithPlaceholderString:node.name node:node];
                 NSMutableArray *activitiesMutableArray = [[NSMutableArray alloc] init];
                 if (node.name.mnz_isImagePathExtension) {
-                    SaveToCameraRollActivity *saveToCameraRollActivity = [[SaveToCameraRollActivity alloc] initWithNode:node];
+                    SaveToCameraRollActivity *saveToCameraRollActivity = [[SaveToCameraRollActivity alloc] initWithNode:node api:self.api];
                     [activitiesMutableArray addObject:saveToCameraRollActivity];
                 }
                 activityViewController = [[UIActivityViewController alloc] initWithActivityItems:@[activityItemProvider] applicationActivities:activitiesMutableArray];
@@ -948,6 +948,10 @@
             
         case MegaNodeActionTypeRemove:
             [node mnz_removeInViewController:self];
+            break;
+            
+        case MegaNodeActionTypeSaveToPhotos:
+            [node mnz_saveToPhotosWithApi:self.api];
             break;
             
         default:
