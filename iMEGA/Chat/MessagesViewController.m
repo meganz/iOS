@@ -54,7 +54,7 @@ const NSUInteger kMaxMessagesToLoad = 256;
 @property (nonatomic, strong) MEGAOpenMessageHeaderView *openMessageHeaderView;
 @property (nonatomic, strong) MEGAMessagesTypingIndicatorFoorterView *footerView;
 
-@property (nonatomic, strong) NSMutableArray *messages;
+@property (nonatomic, strong) NSMutableArray <MEGAChatMessage *> *messages;
 
 @property (strong, nonatomic) JSQMessagesBubbleImage *outgoingBubbleImageData;
 @property (strong, nonatomic) JSQMessagesBubbleImage *incomingBubbleImageData;
@@ -237,6 +237,11 @@ const NSUInteger kMaxMessagesToLoad = 256;
                                                  name:UIApplicationWillEnterForegroundNotification
                                                object:nil];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(didBecomeActive)
+                                                 name:UIApplicationDidBecomeActiveNotification
+                                               object:nil];
+    
     if (@available(iOS 10.0, *)) {
         [[UNUserNotificationCenter currentNotificationCenter] removeDeliveredNotificationsWithIdentifiers:@[[MEGASdk base64HandleForUserHandle:self.chatRoom.chatId]]];
         [[UNUserNotificationCenter currentNotificationCenter] removePendingNotificationRequestsWithIdentifiers:@[[MEGASdk base64HandleForUserHandle:self.chatRoom.chatId]]];
@@ -291,6 +296,10 @@ const NSUInteger kMaxMessagesToLoad = 256;
         offset.y = self.lastVerticalOffset;
         self.collectionView.contentOffset = offset;
     }
+}
+
+- (void)didBecomeActive {
+    [[MEGASdkManager sharedMEGAChatSdk] setMessageSeenForChat:self.chatRoom.chatId messageId:self.messages.lastObject.messageId];
 }
 
 - (void)willResignActive {
@@ -2188,7 +2197,9 @@ const NSUInteger kMaxMessagesToLoad = 256;
                 }
             });
             
-            [[MEGASdkManager sharedMEGAChatSdk] setMessageSeenForChat:self.chatRoom.chatId messageId:message.messageId];
+            if ([UIApplication sharedApplication].applicationState == UIApplicationStateActive) {
+                [[MEGASdkManager sharedMEGAChatSdk] setMessageSeenForChat:self.chatRoom.chatId messageId:message.messageId];
+            }
             
             [self loadNodesFromMessage:message atTheBeginning:YES];
             break;
