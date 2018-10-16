@@ -485,7 +485,7 @@ const NSUInteger kMaxMessagesToLoad = 256;
     UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, -44, self.view.frame.size.width, 44)];
     button.hidden = YES;
     button.backgroundColor = [UIColor colorWithRed:0 green:0.75 blue:0.65 alpha:1];
-    [button setTitle:@"There is an active group call. Tap to join." forState:UIControlStateNormal];
+    [button setTitle:AMLocalizedString(@"There is an active group call. Tap to join.", @"Message shown in a chat room when there is na active group call") forState:UIControlStateNormal];
     [button setTitleColor:UIColor.whiteColor forState:UIControlStateNormal];
     button.titleLabel.font = [UIFont mnz_SFUIMediumWithSize:12];
     [button addTarget:self action:@selector(joinActiveCall:) forControlEvents:UIControlEventTouchUpInside];
@@ -508,11 +508,11 @@ const NSUInteger kMaxMessagesToLoad = 256;
 
 - (void)updateDuration {
     NSTimeInterval interval = ([NSDate date].timeIntervalSince1970 - self.baseDate.timeIntervalSince1970 + self.initDuration);
-    [self.activeCallButton setTitle:[NSString stringWithFormat:@"Touch to return to call %@", [NSString mnz_stringFromTimeInterval:interval]] forState:UIControlStateNormal];
+    [self.activeCallButton setTitle:[NSString stringWithFormat:AMLocalizedString(@"Touch to return to call %@", @"Message shown in a chat room for a group call in progress displaying the duration of the call"), [NSString mnz_stringFromTimeInterval:interval]] forState:UIControlStateNormal];
 }
 
 - (void)showActiveCallButton {
-    [self.activeCallButton setTitle:@"There is an active group call. Tap to join." forState:UIControlStateNormal];
+    [self.activeCallButton setTitle:AMLocalizedString(@"There is an active group call. Tap to join.", @"Message shown in a chat room when there is na active group call") forState:UIControlStateNormal];
     if (self.activeCallButton.hidden) {
         self.activeCallButton.hidden = NO;
         [UIView animateWithDuration:.5f animations:^ {

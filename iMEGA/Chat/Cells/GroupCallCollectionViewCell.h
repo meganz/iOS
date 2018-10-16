@@ -6,13 +6,14 @@
 
 @interface GroupCallCollectionViewCell : UICollectionViewCell
 
-@property (weak, nonatomic) IBOutlet UIImageView *avatarImageView;
-@property (weak, nonatomic) IBOutlet UIImageView *userMutedImageView;
-@property (weak, nonatomic) IBOutlet UIView *lowQualityView;
-
-@property (strong, nonatomic) IBOutlet MEGARemoteImageView *videoImageView;
-
 - (void)configureCellForPeer:(MEGAGroupCallPeer *)peer inChat:(uint64_t)chatId;
-- (void)networkQualityChangedForPeer:(MEGAGroupCallPeer *)peer reducedLayout:(BOOL)reduced;
+- (void)networkQualityChangedForPeer:(MEGAGroupCallPeer *)peer;
+- (void)configureUserAudio:(BOOL)audio;
+- (void)removeLocalVideoInChat:(uint64_t)chatId;
+- (void)addLocalVideoInChat:(uint64_t)chatId;
+- (void)removeRemoteVideoForPeer:(MEGAGroupCallPeer *)peer inChat:(uint64_t)chatId;
+- (void)addRemoteVideoForPeer:(MEGAGroupCallPeer *)peer inChat:(uint64_t)chatId;
+- (void)showUserOnFocus;
+- (void)hideUserOnFocus;
 
 @end

@@ -16,10 +16,4 @@
     return self;
 }
 
-- (void)updateWithSession:(MEGAChatSession *)session {
-    self.video = session.hasVideo;
-    self.audio = session.hasAudio;
-    self.networkQuality = session.networkQuality;
-}
-
 @end
