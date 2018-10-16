@@ -39,8 +39,6 @@ static NSMutableArray *nodesFromLinkMutableArray;
 
 static MEGAIndexer *indexer;
 
-static BOOL pointToStaging;
-
 @implementation Helper
 
 #pragma mark - Languages

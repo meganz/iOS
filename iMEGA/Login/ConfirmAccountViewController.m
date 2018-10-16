@@ -173,6 +173,7 @@
         [self lockUI:NO];
         
         switch ([error type]) {
+            case MEGAErrorTypeApiEKey:
             case MEGAErrorTypeApiENoent: { //MEGARequestTypeConfirmAccount, MEGARequestTypeConfirmChangeEmailLink, MEGARequestTypeConfirmCancelLink
                 [self showErrorInPasswordView:YES];
                 break;
