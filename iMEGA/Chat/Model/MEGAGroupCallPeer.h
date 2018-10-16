@@ -14,8 +14,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (instancetype)initWithSession:(MEGAChatSession *)session;
 
-- (void)updateWithSession:(MEGAChatSession *)session;
-
 @end
 
 NS_ASSUME_NONNULL_END
