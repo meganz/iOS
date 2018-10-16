@@ -68,6 +68,8 @@
 #import "MEGALoginRequestDelegate.h"
 #import "MEGAPasswordLinkRequestDelegate.h"
 #import "MEGAShowPasswordReminderRequestDelegate.h"
+#import "CameraUploadManager.h"
+#import "TransferSessionManager.h"
 
 #define kUserAgent @"MEGAiOS"
 #define kAppKey @"EVtjzb7R"
@@ -378,6 +380,8 @@
     
     MEGALogDebug(@"Application did finish launching with options %@", launchOptions);
     
+    [[CameraUploadManager shared] startUploading];
+    
     return YES;
 }
 
@@ -636,6 +640,16 @@
     if (application.applicationState == UIApplicationStateInactive) {
         _megatype = [[userInfo objectForKey:@"megatype"] unsignedIntegerValue];
         [self openTabBasedOnNotificationMegatype];
+    }
+}
+
+- (void)application:(UIApplication *)application handleEventsForBackgroundURLSession:(NSString *)identifier completionHandler:(void (^)(void))completionHandler {
+    if ([identifier isEqualToString:photoTransferSessionId]) {
+        [TransferSessionManager shared].photoSessionCompletion = completionHandler;
+        [[TransferSessionManager shared] restorePhotoSessionIfNeeded];
+    } else if ([identifier isEqualToString:videoTransferSessionId]) {
+        [TransferSessionManager shared].videoSessionCompletion = completionHandler;
+        [[TransferSessionManager shared] restoreVideoSessionIfNeeded];
     }
 }
 

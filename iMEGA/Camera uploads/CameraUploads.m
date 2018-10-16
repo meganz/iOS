@@ -76,7 +76,7 @@ static CameraUploads *instance = nil;
 
 - (void)setIsCameraUploadsEnabled:(BOOL)isCameraUploadsEnabled {
     _isCameraUploadsEnabled = isCameraUploadsEnabled;
-    
+    return;
     if (isCameraUploadsEnabled) {
         if (self.shouldCameraUploadsBeDelayed) {
             return;

@@ -656,9 +656,12 @@
 		B68C42C5216D9D47003C5A50 /* MOAssetUploadRecord+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = B68C42C2216D9D47003C5A50 /* MOAssetUploadRecord+CoreDataProperties.m */; };
 		B68C42C8216DA9CF003C5A50 /* MEGAOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = B68C42C6216DA9CE003C5A50 /* MEGAOperation.m */; };
 		B68C42CB216DAA85003C5A50 /* AssetUploadOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = B68C42CA216DAA85003C5A50 /* AssetUploadOperation.m */; };
-		B68C42CE216EF2DC003C5A50 /* PHAsset+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = B68C42CD216EF2DC003C5A50 /* PHAsset+MNZCategory.m */; };
 		B6D9D7E9216AB0C700D7B08A /* AssetManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B6D9D7E8216AB0C700D7B08A /* AssetManager.m */; };
 		B6D9D7EF216AE5D000D7B08A /* AssetUploadRecordCoreDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B6D9D7EE216AE5D000D7B08A /* AssetUploadRecordCoreDataManager.m */; };
+		B6E19B2921743BD600882F74 /* CameraUploadManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B6E19B2821743BD600882F74 /* CameraUploadManager.m */; };
+		B6E19B2F21756F0800882F74 /* TransferSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B6E19B2E21756F0800882F74 /* TransferSessionManager.m */; };
+		B6E19B322175716600882F74 /* TransferSessionDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B6E19B312175716600882F74 /* TransferSessionDelegate.m */; };
+		B6E19B352175852E00882F74 /* AssetUploadFile.m in Sources */ = {isa = PBXBuildFile; fileRef = B6E19B342175852E00882F74 /* AssetUploadFile.m */; };
 		E803CB641D5336F100F81A36 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = E803CB661D5336F100F81A36 /* InfoPlist.strings */; };
 		E80C76101DEDF32A00CA4D68 /* GroupChatDetailsViewTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E80C760F1DEDF32A00CA4D68 /* GroupChatDetailsViewTableViewCell.m */; };
 		E81616731A8397B5002EFDD7 /* FolderLinkViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E81616721A8397B5002EFDD7 /* FolderLinkViewController.m */; };
@@ -1502,12 +1505,18 @@
 		B68C42C7216DA9CE003C5A50 /* MEGAOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEGAOperation.h; sourceTree = "<group>"; };
 		B68C42C9216DAA85003C5A50 /* AssetUploadOperation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AssetUploadOperation.h; sourceTree = "<group>"; };
 		B68C42CA216DAA85003C5A50 /* AssetUploadOperation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AssetUploadOperation.m; sourceTree = "<group>"; };
-		B68C42CC216EF2DC003C5A50 /* PHAsset+MNZCategory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PHAsset+MNZCategory.h"; sourceTree = "<group>"; };
-		B68C42CD216EF2DC003C5A50 /* PHAsset+MNZCategory.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "PHAsset+MNZCategory.m"; sourceTree = "<group>"; };
 		B6D9D7E7216AB0C700D7B08A /* AssetManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AssetManager.h; sourceTree = "<group>"; };
 		B6D9D7E8216AB0C700D7B08A /* AssetManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AssetManager.m; sourceTree = "<group>"; };
 		B6D9D7ED216AE5D000D7B08A /* AssetUploadRecordCoreDataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AssetUploadRecordCoreDataManager.h; sourceTree = "<group>"; };
 		B6D9D7EE216AE5D000D7B08A /* AssetUploadRecordCoreDataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AssetUploadRecordCoreDataManager.m; sourceTree = "<group>"; };
+		B6E19B2721743BD600882F74 /* CameraUploadManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CameraUploadManager.h; sourceTree = "<group>"; };
+		B6E19B2821743BD600882F74 /* CameraUploadManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CameraUploadManager.m; sourceTree = "<group>"; };
+		B6E19B2D21756F0800882F74 /* TransferSessionManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TransferSessionManager.h; sourceTree = "<group>"; };
+		B6E19B2E21756F0800882F74 /* TransferSessionManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TransferSessionManager.m; sourceTree = "<group>"; };
+		B6E19B302175716600882F74 /* TransferSessionDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransferSessionDelegate.h; sourceTree = "<group>"; };
+		B6E19B312175716600882F74 /* TransferSessionDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TransferSessionDelegate.m; sourceTree = "<group>"; };
+		B6E19B332175852E00882F74 /* AssetUploadFile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AssetUploadFile.h; sourceTree = "<group>"; };
+		B6E19B342175852E00882F74 /* AssetUploadFile.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AssetUploadFile.m; sourceTree = "<group>"; };
 		E803CB651D5336F100F81A36 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		E803CB681D53374A00F81A36 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		E80C760E1DEDF32A00CA4D68 /* GroupChatDetailsViewTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GroupChatDetailsViewTableViewCell.h; path = Chat/GroupChatDetailsViewTableViewCell.h; sourceTree = "<group>"; };
@@ -2330,10 +2339,18 @@
 				B6D9D7E8216AB0C700D7B08A /* AssetManager.m */,
 				B6D9D7ED216AE5D000D7B08A /* AssetUploadRecordCoreDataManager.h */,
 				B6D9D7EE216AE5D000D7B08A /* AssetUploadRecordCoreDataManager.m */,
+				B6E19B332175852E00882F74 /* AssetUploadFile.h */,
+				B6E19B342175852E00882F74 /* AssetUploadFile.m */,
 				B68C42C7216DA9CE003C5A50 /* MEGAOperation.h */,
 				B68C42C6216DA9CE003C5A50 /* MEGAOperation.m */,
 				B68C42C9216DAA85003C5A50 /* AssetUploadOperation.h */,
 				B68C42CA216DAA85003C5A50 /* AssetUploadOperation.m */,
+				B6E19B2721743BD600882F74 /* CameraUploadManager.h */,
+				B6E19B2821743BD600882F74 /* CameraUploadManager.m */,
+				B6E19B2D21756F0800882F74 /* TransferSessionManager.h */,
+				B6E19B2E21756F0800882F74 /* TransferSessionManager.m */,
+				B6E19B302175716600882F74 /* TransferSessionDelegate.h */,
+				B6E19B312175716600882F74 /* TransferSessionDelegate.m */,
 			);
 			path = "Camera uploads";
 			sourceTree = "<group>";
@@ -2468,8 +2485,6 @@
 				77F43DD82034637300AE4F42 /* UICollectionView+MNZCategory.m */,
 				77B3227D20A436D60037FA89 /* NSURL+MNZCategory.h */,
 				77B3227E20A436D60037FA89 /* NSURL+MNZCategory.m */,
-				B68C42CC216EF2DC003C5A50 /* PHAsset+MNZCategory.h */,
-				B68C42CD216EF2DC003C5A50 /* PHAsset+MNZCategory.m */,
 			);
 			path = Categories;
 			sourceTree = "<group>";
@@ -3901,6 +3916,7 @@
 				5B20F4A21EFA9629007E0A34 /* ChatAttachedNodesViewController.m in Sources */,
 				837A88BF20B42290007B55D1 /* CloudDriveViewController.m in Sources */,
 				A8AA4F7D1ED433CA00E7BA23 /* MEGABaseRequestDelegate.m in Sources */,
+				B6E19B352175852E00882F74 /* AssetUploadFile.m in Sources */,
 				41D21DF21D01AE89002E6296 /* NSLayoutConstraint+PureLayout.m in Sources */,
 				A810CF3020C157BC00A6C6C5 /* FLAnimatedImageView.m in Sources */,
 				E8F791801BC5754A00C58676 /* OpenInActivity.m in Sources */,
@@ -3937,6 +3953,7 @@
 				41D21E651D01AEC3002E6296 /* CTAssetsGridViewCell.m in Sources */,
 				5B50DE0720AC1BDD00F2CB09 /* EnablingTwoFactorAuthenticationViewController.m in Sources */,
 				4172793F1DB663FA001AC818 /* JSQMessagesToolbarButtonFactory.m in Sources */,
+				B6E19B2921743BD600882F74 /* CameraUploadManager.m in Sources */,
 				949086881FD5482E002B12BD /* NSAttributedString+MNZCategory.m in Sources */,
 				137361901A6664C300B740E8 /* main.m in Sources */,
 				417B5AAE1DEC792400A193D5 /* MOUser+CoreDataProperties.m in Sources */,
@@ -4032,7 +4049,6 @@
 				4172795A1DB663FA001AC818 /* JSQMessagesMediaPlaceholderView.m in Sources */,
 				415E690A1DABCDF90043B75F /* ChatRoomsViewController.m in Sources */,
 				4152268F1A692ECC00EC7BB6 /* NodeTableViewCell.m in Sources */,
-				B68C42CE216EF2DC003C5A50 /* PHAsset+MNZCategory.m in Sources */,
 				E8D5BF691BF35DC400955550 /* SharedItemsViewController.m in Sources */,
 				835223B1205957DD00A47438 /* ItemCollectionViewCell.m in Sources */,
 				94624CFB1F50484200D52504 /* MEGAExportRequestDelegate.m in Sources */,
@@ -4041,10 +4057,12 @@
 				5B5A983C212EF29500FDBC79 /* RubbishBinTableViewController.m in Sources */,
 				5B22F97D1F8374C500D2B156 /* VENToken.m in Sources */,
 				E8B415061DE3237F00B9D206 /* GroupChatDetailsViewController.m in Sources */,
+				B6E19B322175716600882F74 /* TransferSessionDelegate.m in Sources */,
 				5B2E918D1F1F454C003C6920 /* MEGAStartUploadTransferDelegate.m in Sources */,
 				41D21E671D01AEC3002E6296 /* CTAssetsGridViewFooter.m in Sources */,
 				417840A01AC328A600713F3C /* ChangePasswordViewController.m in Sources */,
 				E85044C61A6D84620064B675 /* FileLinkViewController.m in Sources */,
+				B6E19B2F21756F0800882F74 /* TransferSessionManager.m in Sources */,
 				A85D93BC2045751E0066F45B /* ChatVideoQualityTableViewController.m in Sources */,
 				E80C76101DEDF32A00CA4D68 /* GroupChatDetailsViewTableViewCell.m in Sources */,
 				5B39DAA21EF916D900BC2319 /* ChatAttachedContactsViewController.m in Sources */,
