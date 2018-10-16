@@ -1510,13 +1510,14 @@ void uncaughtExceptionHandler(NSException *exception) {
                 
             case MEGAErrorTypeApiESid: {                                
                 if ([MEGALinkManager urlType] == URLTypeCancelAccountLink) {
-                    [MEGALinkManager resetLinkAndURLType];
                     [Helper logout];
                     
                     UIAlertController *accountCanceledSuccessfullyAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"accountCanceledSuccessfully", @"During account cancellation (deletion)") message:nil preferredStyle:UIAlertControllerStyleAlert];
                     [accountCanceledSuccessfullyAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", @"Button title to accept something") style:UIAlertActionStyleCancel handler:nil]];
                     
-                    [UIApplication.mnz_visibleViewController presentViewController:accountCanceledSuccessfullyAlertController animated:YES completion:nil];
+                    [UIApplication.mnz_visibleViewController presentViewController:accountCanceledSuccessfullyAlertController animated:YES completion:^{
+                        [MEGALinkManager resetLinkAndURLType];
+                    }];
                     return;
                 }
                 
