@@ -167,7 +167,7 @@
                         <action selector="selectAllAction:" destination="cPA-hf-QcT" id="vAK-mC-SnE"/>
                     </connections>
                 </barButtonItem>
-                <barButtonItem image="sortBy" width="22" id="JRb-pO-nXf" userLabel="Sort by Bar Button Item">
+                <barButtonItem width="22" id="JRb-pO-nXf" userLabel="Sort by Bar Button Item">
                     <connections>
                         <action selector="sortByTapped:" destination="cPA-hf-QcT" id="u93-tb-JVN"/>
                     </connections>
@@ -209,7 +209,6 @@
         <image name="remove" width="32" height="32"/>
         <image name="selectAll" width="22" height="22"/>
         <image name="shareGray" width="32" height="32"/>
-        <image name="sortBy" width="22" height="22"/>
         <image name="video_list" width="22" height="22"/>
     </resources>
 </document>
