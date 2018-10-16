@@ -45,8 +45,6 @@
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *shareFolderBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *removeShareBarButtonItem;
 
-@property (nonatomic) NSIndexPath *indexPath;
-
 @property (nonatomic, strong) MEGAShareList *incomingShareList;
 @property (nonatomic, strong) NSMutableArray *incomingNodesMutableArray;
 
@@ -100,6 +98,8 @@
     self.tableView.tableHeaderView = self.searchController.searchBar;
     self.searchController.hidesNavigationBarDuringPresentation = NO;
     [self.tableView setContentOffset:CGPointMake(0, CGRectGetHeight(self.searchController.searchBar.frame))];
+    
+    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -409,6 +409,12 @@
         [UIView animateWithDuration:0.33f animations:^ {
             [self.toolbar setAlpha:1.0];
         }];
+        
+        for (SharedItemsTableViewCell *cell in [self.tableView visibleCells]) {
+            UIView *view = [[UIView alloc] init];
+            view.backgroundColor = UIColor.clearColor;
+            cell.selectedBackgroundView = view;
+        }
     } else {
         self.editBarButtonItem.title = AMLocalizedString(@"edit", @"Caption of a button to edit the files that are selected");
         allNodesSelected = NO;
@@ -423,6 +429,10 @@
                 [self.toolbar removeFromSuperview];
             }
         }];
+        
+        for (SharedItemsTableViewCell *cell in [self.tableView visibleCells]) {
+            cell.selectedBackgroundView = nil;
+        }
     }
     
     if (!self.selectedNodesMutableArray) {
@@ -767,6 +777,10 @@
                 [self.tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
             }
         }
+        
+        UIView *view = [[UIView alloc] init];
+        view.backgroundColor = UIColor.clearColor;
+        cell.selectedBackgroundView = view;
     }
     
     if (@available(iOS 11.0, *)) {
@@ -959,14 +973,14 @@
 #pragma mark - UILongPressGestureRecognizer
 
 - (void)longPress:(UILongPressGestureRecognizer *)longPressGestureRecognizer {
-    if (longPressGestureRecognizer.state == UIGestureRecognizerStateBegan) {
-        CGPoint touchPoint = [longPressGestureRecognizer locationInView:self.tableView];
-        NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:touchPoint];
-        
-        if (!indexPath || ![self.tableView numberOfRowsInSection:indexPath.section]) {
-            return;
-        }
-        
+    CGPoint touchPoint = [longPressGestureRecognizer locationInView:self.tableView];
+    NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:touchPoint];
+    
+    if (!indexPath || ![self.tableView numberOfRowsInSection:indexPath.section]) {
+        return;
+    }
+    
+    if (longPressGestureRecognizer.state == UIGestureRecognizerStateBegan) {        
         if (self.isEditing) {
             // Only stop editing if long pressed over a cell that is the only one selected or when selected none
             if (self.selectedNodesMutableArray.count == 0) {
@@ -985,6 +999,10 @@
             [self toolbarItemsForSharedItems];
             [self.tableView selectRowAtIndexPath:indexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
         }
+    }
+    
+    if (longPressGestureRecognizer.state == UIGestureRecognizerStateEnded) {
+        [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
     }
 }
 

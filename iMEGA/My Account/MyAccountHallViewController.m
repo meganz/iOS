@@ -78,6 +78,8 @@
     [[MEGASdkManager sharedMEGASdk] contactLinkCreateRenew:NO delegate:delegate];
 
     [[MEGAPurchase sharedInstance] setPricingsDelegate:self];
+    
+    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
 }
 
 - (void)viewWillAppear:(BOOL)animated {

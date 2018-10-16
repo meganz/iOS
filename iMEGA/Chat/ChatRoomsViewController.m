@@ -71,6 +71,8 @@
                                                          value:-2
                                                         toDate:[NSDate date]
                                                        options:0];
+    
+    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
