@@ -37,6 +37,23 @@ NSString * const uploadStatusDone = @"Done";
 
 #pragma mark - asset upload status core data managing methods
 
+- (NSArray<MOAssetUploadRecord *> *)fetchNonUploadedRecordsWithLimit:(NSInteger)fetchLimit error:(NSError *__autoreleasing  _Nullable *)error {
+    __block NSArray<MOAssetUploadRecord *> *records = @[];
+    __block NSError *coreDataError = nil;
+    [self.privateQueueContext performBlockAndWait:^{
+        NSFetchRequest *request = MOAssetUploadRecord.fetchRequest;
+        request.fetchLimit = fetchLimit;
+        request.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"creationDate" ascending:NO]];
+        records = [self.privateQueueContext executeFetchRequest:request error:&coreDataError];
+    }];
+    
+    if (error != NULL) {
+        *error = coreDataError;
+    }
+    
+    return records;
+}
+
 - (NSArray<MOAssetUploadRecord *> *)fetchAllAssetUploadRecords:(NSError * _Nullable __autoreleasing * _Nullable)error {
     __block NSArray<MOAssetUploadRecord *> *records = @[];
     __block NSError *coreDataError = nil;

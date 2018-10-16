@@ -4,7 +4,12 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+@class PHAsset;
+
 @interface AssetUploadOperation : MEGAOperation
+
+- (instancetype)initWithAsset:(PHAsset *)asset;
+- (instancetype)initWithLocalIdentifier:(NSString *)localIdentifier;
 
 @end
 
