@@ -58,6 +58,7 @@
 #import "MyAccountHallViewController.h"
 #import "SettingsTableViewController.h"
 #import "SharedItemsViewController.h"
+#import "TwoFactorAuthenticationViewController.h"
 #import "UnavailableLinkView.h"
 #import "UpgradeTableViewController.h"
 
@@ -2009,13 +2010,14 @@ void uncaughtExceptionHandler(NSException *exception) {
                 
             case MEGAErrorTypeApiESid: {                                
                 if (self.urlType == URLTypeCancelAccountLink) {
-                    self.urlType = URLTypeDefault;
                     [Helper logout];
                     
                     UIAlertController *accountCanceledSuccessfullyAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"accountCanceledSuccessfully", @"During account cancellation (deletion)") message:nil preferredStyle:UIAlertControllerStyleAlert];
                     [accountCanceledSuccessfullyAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", @"Button title to accept something") style:UIAlertActionStyleCancel handler:nil]];
                     
-                    [UIApplication.mnz_visibleViewController presentViewController:accountCanceledSuccessfullyAlertController animated:YES completion:nil];
+                    [UIApplication.mnz_visibleViewController presentViewController:accountCanceledSuccessfullyAlertController animated:YES completion:^{
+                        self.urlType = URLTypeDefault;
+                    }];
                     return;
                 }
                 
@@ -2227,6 +2229,18 @@ void uncaughtExceptionHandler(NSException *exception) {
             } else if (self.urlType == URLTypeCancelAccountLink) {
                 [self presentConfirmViewControllerType:ConfirmTypeCancelAccount link:request.link email:request.email];
             } else if (self.urlType == URLTypeRecoverLink) {
+                if ([UIApplication.sharedApplication.keyWindow.rootViewController isKindOfClass:MEGANavigationController.class]) {
+                    MEGANavigationController *navigationController = (MEGANavigationController *)UIApplication.sharedApplication.keyWindow.rootViewController;
+                    if ([navigationController.topViewController isKindOfClass:TwoFactorAuthenticationViewController.class]) {
+                        [navigationController popViewControllerAnimated:NO];
+                        
+                        if ([navigationController.topViewController isKindOfClass:LoginViewController.class]) {
+                            LoginViewController *loginVC = (LoginViewController *)navigationController.topViewController;
+                            [loginVC cleanPasswordTextField];
+                        }
+                    }
+                }
+                
                 if (request.flag) {
                     UIAlertController *masterKeyLoggedInAlertController;
                     if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
