@@ -3,8 +3,11 @@
 
 #import <UserNotifications/UserNotifications.h>
 
+#import "Helper.h"
 #import "MessagesViewController.h"
+#import "MEGAGetThumbnailRequestDelegate.h"
 #import "MEGAStore.h"
+#import "NSString+MNZCategory.h"
 #import "UIApplication+MNZCategory.h"
 
 @implementation MEGAChatNotificationDelegate
@@ -52,16 +55,22 @@
                         MEGAChatRoom *chatRoom = [api chatRoomForChatId:chatId];
                         UNMutableNotificationContent *content = [UNMutableNotificationContent new];
                         
+                        content.categoryIdentifier = @"nz.mega.chat.message";
+                        UNTimeIntervalNotificationTrigger *trigger = [UNTimeIntervalNotificationTrigger triggerWithTimeInterval:1 repeats:NO];
+                        NSString *identifier = [NSString stringWithFormat:@"%@%@", [MEGASdk base64HandleForUserHandle:chatRoom.chatId], [MEGASdk base64HandleForUserHandle:message.messageId]];
+                        
                         content.userInfo = @{@"chatId" : @(chatId)};
                         content.title = chatRoom.title;
                         if (chatRoom.isGroup) {
                             MOUser *user = [[MEGAStore shareInstance] fetchUserWithUserHandle:message.userHandle];
                             content.subtitle = user.fullName;
                         }
+                        
                         NSString *body;
+                        BOOL waitForThumbnail = NO;
                         if (message.type == MEGAChatMessageTypeContact) {
                             if(message.usersCount == 1) {
-                                body = [message userNameAtIndex:0];
+                                body = [NSString stringWithFormat:@"👤 %@", [message userNameAtIndex:0]];
                             } else {
                                 body = [message userNameAtIndex:0];
                                 for (NSUInteger i = 1; i < message.usersCount; i++) {
@@ -73,34 +82,68 @@
                             if(nodeList) {
                                 if (nodeList.size.integerValue == 1) {
                                     MEGANode *node = [nodeList nodeAtIndex:0];
-                                    body = node.name;
+                                    
+                                    if (node.hasThumbnail) {
+                                        if (node.name.mnz_isVideoPathExtension) {
+                                            body = [NSString stringWithFormat:@"📹 %@", node.name];
+                                        } else if (node.name.mnz_isImagePathExtension) {
+                                            body = [NSString stringWithFormat:@"📷 %@", node.name];
+                                        } else {
+                                            body = [NSString stringWithFormat:@"📄 %@", node.name];
+                                        }
+                                        
+                                        waitForThumbnail = YES;
+                                        NSString *thumbnailFilePath = [Helper pathForNode:node inSharedSandboxCacheDirectory:@"thumbnailsV3"];
+                                        MEGAGetThumbnailRequestDelegate *getThumbnailRequestDelegate = [[MEGAGetThumbnailRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
+                                            NSError *error;
+                                            if (![[NSFileManager defaultManager] createSymbolicLinkAtPath:[request.file stringByAppendingPathExtension:@"jpg"] withDestinationPath:request.file error:&error]) {
+                                                MEGALogError(@"Create symbolic link at path failed %@", error);
+                                            }
+                                            NSURL *fileURL = [NSURL fileURLWithPath:[request.file stringByAppendingPathExtension:@"jpg"]];
+                                            UNNotificationAttachment *notificationAttachment = [UNNotificationAttachment attachmentWithIdentifier:node.base64Handle URL:fileURL options:nil error:&error];
+                                            
+                                            content.body = body;
+                                            content.sound = ([UIApplication sharedApplication].applicationState != UIApplicationStateActive) ? [UNNotificationSound defaultSound] : nil;
+                                            
+                                            if (!error) {
+                                                content.attachments = @[notificationAttachment];
+                                            }
+                                            UNNotificationRequest *notificationRequest = [UNNotificationRequest requestWithIdentifier:identifier content:content trigger:trigger];
+                                            [center addNotificationRequest:notificationRequest withCompletionHandler:^(NSError * _Nullable error) {
+                                                if (error) {
+                                                    MEGALogError(@"Add NotificationRequest failed with error: %@", error);
+                                                }
+                                            }];
+                                        }];
+                                        [[MEGASdkManager sharedMEGASdk] getThumbnailNode:node destinationFilePath:thumbnailFilePath delegate:getThumbnailRequestDelegate];
+                                    } else {
+                                        body = [NSString stringWithFormat:@"📄 %@", node.name];
+                                    }
                                 }
                             }
                         } else {
                             body = message.content;
                         }
-                        
-                        if (message.isEdited) {
-                            content.body = [NSString stringWithFormat:@"%@ %@", message.content, AMLocalizedString(@"edited", nil)];
-                            content.sound = nil;
-                        } else {
-                            content.body = body;
-                            content.sound = [UNNotificationSound defaultSound];
-                        }
-                        
-                        if ([UIApplication sharedApplication].applicationState != UIApplicationStateBackground) {
-                            content.sound = nil;
-                        }
-                        
-                        content.categoryIdentifier = @"nz.mega.chat.message";
-                        UNTimeIntervalNotificationTrigger *trigger = [UNTimeIntervalNotificationTrigger triggerWithTimeInterval:1 repeats:NO];
-                        NSString *identifier = [NSString stringWithFormat:@"%@%@", [MEGASdk base64HandleForUserHandle:chatRoom.chatId], [MEGASdk base64HandleForUserHandle:message.messageId]];
-                        UNNotificationRequest *request = [UNNotificationRequest requestWithIdentifier:identifier content:content trigger:trigger];
-                        [center addNotificationRequest:request withCompletionHandler:^(NSError * _Nullable error) {
-                            if (error) {
-                                MEGALogError(@"Add NotificationRequest failed with error: %@", error);
+                                                
+                        if (!waitForThumbnail) {
+                            if (message.isEdited) {
+                                content.body = [NSString stringWithFormat:@"%@ %@", message.content, AMLocalizedString(@"edited", nil)];
+                                content.sound = nil;
+                            } else {
+                                content.body = body;
+                                content.sound = [UNNotificationSound defaultSound];
                             }
-                        }];
+                            
+                            if ([UIApplication sharedApplication].applicationState == UIApplicationStateActive) {
+                                content.sound = nil;
+                            }
+                            UNNotificationRequest *request = [UNNotificationRequest requestWithIdentifier:identifier content:content trigger:trigger];
+                            [center addNotificationRequest:request withCompletionHandler:^(NSError * _Nullable error) {
+                                if (error) {
+                                    MEGALogError(@"Add NotificationRequest failed with error: %@", error);
+                                }
+                            }];
+                        }
                     }
                     
                 } else if (message.type == MEGAChatMessageTypeTruncate) {
