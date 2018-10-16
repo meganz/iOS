@@ -55,7 +55,7 @@ const NSUInteger kMaxMessagesToLoad = 256;
 @property (nonatomic, strong) MEGAOpenMessageHeaderView *openMessageHeaderView;
 @property (nonatomic, strong) MEGAMessagesTypingIndicatorFoorterView *footerView;
 
-@property (nonatomic, strong) NSMutableArray *messages;
+@property (nonatomic, strong) NSMutableArray <MEGAChatMessage *> *messages;
 
 @property (strong, nonatomic) JSQMessagesBubbleImage *outgoingBubbleImageData;
 @property (strong, nonatomic) JSQMessagesBubbleImage *incomingBubbleImageData;
@@ -243,6 +243,11 @@ const NSUInteger kMaxMessagesToLoad = 256;
                                                  name:UIApplicationWillEnterForegroundNotification
                                                object:nil];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(didBecomeActive)
+                                                 name:UIApplicationDidBecomeActiveNotification
+                                               object:nil];
+    
     if (@available(iOS 10.0, *)) {
         [[UNUserNotificationCenter currentNotificationCenter] removeDeliveredNotificationsWithIdentifiers:@[[MEGASdk base64HandleForUserHandle:self.chatRoom.chatId]]];
         [[UNUserNotificationCenter currentNotificationCenter] removePendingNotificationRequestsWithIdentifiers:@[[MEGASdk base64HandleForUserHandle:self.chatRoom.chatId]]];
@@ -313,6 +318,10 @@ const NSUInteger kMaxMessagesToLoad = 256;
         offset.y = self.lastVerticalOffset;
         self.collectionView.contentOffset = offset;
     }
+}
+
+- (void)didBecomeActive {
+    [[MEGASdkManager sharedMEGAChatSdk] setMessageSeenForChat:self.chatRoom.chatId messageId:self.messages.lastObject.messageId];
 }
 
 - (void)willResignActive {
@@ -1349,13 +1358,47 @@ const NSUInteger kMaxMessagesToLoad = 256;
 #pragma mark - JSQMessagesViewController method overrides
 
 - (void)didPressSendButton:(UIButton *)button
-           withMessageText:(NSString *)text
+           withMessageText:(NSString *)messageText
                   senderId:(NSString *)senderId
          senderDisplayName:(NSString *)senderDisplayName
                       date:(NSDate *)date {
     
-    if (text.mnz_isEmpty) {
+    if (messageText.mnz_isEmpty) {
         return;
+    }
+    
+    // Emoji replacement:
+    NSString *text = messageText;
+    NSDictionary<NSString *, NSString *> *emojiDict = @{@":\\)"  : @"🙂", // :)
+                                                        @":-\\)" : @"🙂", // :-)
+                                                        @":d"    : @"😀",
+                                                        @":-d"   : @"😀",
+                                                        @";\\)"  : @"😉", // ;)
+                                                        @";-\\)" : @"😉", // ;-)
+                                                        @";p"    : @"😜",
+                                                        @";-p"   : @"😜",
+                                                        @":p"    : @"😛",
+                                                        @":-p"   : @"😛",
+                                                        @":\\("  : @"🙁", // :(
+                                                        @":\\\\" : @"😕", // colon+backslash
+                                                        @":/"    : @"😕",
+                                                        @":\\|"  : @"😐", // :|
+                                                        @"d:"    : @"😧",
+                                                        @":o"    : @"😮"};
+    for (NSString *key in emojiDict.allKeys) {
+        NSString *replacement = [emojiDict objectForKey:key];
+        NSString *pattern = [NSString stringWithFormat:@"(?>\\s+|^)(%@)(?>\\s+|$)", key];
+        NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:pattern options:(NSRegularExpressionAnchorsMatchLines | NSRegularExpressionCaseInsensitive) error:nil];
+        NSUInteger padding = 0;
+        NSArray<NSTextCheckingResult *> *matches = [regex matchesInString:text options:0 range:NSMakeRange(0, text.length)];
+        for (NSTextCheckingResult *result in matches) {
+            if (result.numberOfRanges > 1) {
+                NSRange range = [result rangeAtIndex:1];
+                range.location -= padding;
+                padding += range.length - replacement.length;
+                text = [text stringByReplacingCharactersInRange:range withString:replacement];
+            }
+        }
     }
     
     MEGAChatMessage *message = [self sendMessage:text];
@@ -2261,7 +2304,9 @@ const NSUInteger kMaxMessagesToLoad = 256;
                 }
             });
             
-            [[MEGASdkManager sharedMEGAChatSdk] setMessageSeenForChat:self.chatRoom.chatId messageId:message.messageId];
+            if ([UIApplication sharedApplication].applicationState == UIApplicationStateActive) {
+                [[MEGASdkManager sharedMEGAChatSdk] setMessageSeenForChat:self.chatRoom.chatId messageId:message.messageId];
+            }
             
             [self loadNodesFromMessage:message atTheBeginning:YES];
             break;

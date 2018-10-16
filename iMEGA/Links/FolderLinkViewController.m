@@ -966,6 +966,10 @@
             break;
         }
             
+        case MegaNodeActionTypeSaveToPhotos:
+            [node mnz_saveToPhotosWithApi:[MEGASdkManager sharedMEGASdkFolder]];
+            break;
+            
         default:
             break;
     }
