@@ -731,62 +731,11 @@
                                 <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DU4-vX-4QG">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DU4-vX-4QG" customClass="InputView">
                                 <rect key="frame" x="0.0" y="352" width="375" height="60"/>
-                                <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5Yp-Hh-QqA" userLabel="Top Line View">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="1"/>
-                                        <color key="backgroundColor" red="0.74901960779999999" green="0.74901960779999999" blue="0.74901960779999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="1" id="Ovy-GS-wr8"/>
-                                        </constraints>
-                                    </view>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="email" translatesAutoresizingMaskIntoConstraints="NO" id="bwK-rQ-HRv">
-                                        <rect key="frame" x="17" y="18" width="24" height="24"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="24" id="Bsk-zA-sPw"/>
-                                            <constraint firstAttribute="height" constant="24" id="HPB-Jt-eeT"/>
-                                        </constraints>
-                                    </imageView>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="24C-4c-48h">
-                                        <rect key="frame" x="58" y="29.5" width="300" height="20"/>
-                                        <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="16"/>
-                                        <textInputTraits key="textInputTraits" autocorrectionType="no" keyboardType="emailAddress" returnKeyType="done"/>
-                                        <connections>
-                                            <outlet property="delegate" destination="lG1-F0-uSF" id="cX0-I5-avB"/>
-                                        </connections>
-                                    </textField>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="n1y-iJ-S4P" userLabel="Bottom Line View">
-                                        <rect key="frame" x="0.0" y="59" width="375" height="1"/>
-                                        <color key="backgroundColor" red="0.74901960779999999" green="0.74901960779999999" blue="0.74901960779999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="1" id="kXc-6H-0d1"/>
-                                        </constraints>
-                                    </view>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Email" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MSj-HN-uKV">
-                                        <rect key="frame" x="58" y="12" width="31" height="14.5"/>
-                                        <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="12"/>
-                                        <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstItem="24C-4c-48h" firstAttribute="top" secondItem="MSj-HN-uKV" secondAttribute="bottom" constant="3" id="06Q-s0-Exu"/>
                                     <constraint firstAttribute="height" constant="60" id="1oY-wE-TFl"/>
-                                    <constraint firstItem="MSj-HN-uKV" firstAttribute="leading" secondItem="bwK-rQ-HRv" secondAttribute="trailing" constant="17" id="4g1-pm-gGX"/>
-                                    <constraint firstAttribute="bottom" secondItem="n1y-iJ-S4P" secondAttribute="bottom" id="53L-qh-CZT"/>
-                                    <constraint firstItem="5Yp-Hh-QqA" firstAttribute="leading" secondItem="DU4-vX-4QG" secondAttribute="leading" id="Kj3-84-lxb"/>
-                                    <constraint firstItem="24C-4c-48h" firstAttribute="leading" secondItem="bwK-rQ-HRv" secondAttribute="trailing" constant="17" id="P2K-M1-wkg"/>
-                                    <constraint firstAttribute="trailing" secondItem="n1y-iJ-S4P" secondAttribute="trailing" id="Y98-43-zNC"/>
-                                    <constraint firstItem="n1y-iJ-S4P" firstAttribute="leading" secondItem="DU4-vX-4QG" secondAttribute="leading" id="iBg-Nl-KVb"/>
-                                    <constraint firstItem="bwK-rQ-HRv" firstAttribute="leading" secondItem="DU4-vX-4QG" secondAttribute="leading" constant="17" id="qaU-rg-bAe"/>
-                                    <constraint firstItem="5Yp-Hh-QqA" firstAttribute="top" secondItem="DU4-vX-4QG" secondAttribute="top" id="rNa-vH-72r"/>
-                                    <constraint firstAttribute="trailing" secondItem="24C-4c-48h" secondAttribute="trailing" constant="17" id="rwB-gh-yy3"/>
-                                    <constraint firstItem="bwK-rQ-HRv" firstAttribute="centerY" secondItem="DU4-vX-4QG" secondAttribute="centerY" id="vQh-nB-88e"/>
-                                    <constraint firstAttribute="trailing" secondItem="5Yp-Hh-QqA" secondAttribute="trailing" id="xf3-d9-fYe"/>
-                                    <constraint firstItem="MSj-HN-uKV" firstAttribute="top" secondItem="5Yp-Hh-QqA" secondAttribute="bottom" constant="11" id="zdw-ig-MOY"/>
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="If you have misspelled your email address, correct it and click 'Resend'." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ey0-Yn-d6F">
@@ -861,8 +810,7 @@
                         <outlet property="cancelButton" destination="gCw-HK-PQg" id="SNP-Ty-rUK"/>
                         <outlet property="checkYourEmailBottomLayoutConstraint" destination="ZPp-lV-rBj" id="jeA-gt-cfE"/>
                         <outlet property="checkYourEmailLabel" destination="JVh-eC-WKS" id="KGW-SL-XDa"/>
-                        <outlet property="emailLabel" destination="MSj-HN-uKV" id="3eN-aU-oEB"/>
-                        <outlet property="emailTextField" destination="24C-4c-48h" id="709-f5-m6o"/>
+                        <outlet property="emailInputView" destination="DU4-vX-4QG" id="6GX-e6-PbO"/>
                         <outlet property="mailImageTopLayoutConstraint" destination="bxJ-vS-dMg" id="NOF-aa-yDn"/>
                         <outlet property="mailImageView" destination="3py-Mg-p80" id="dcO-Ww-kYv"/>
                         <outlet property="misspelledLabel" destination="ey0-Yn-d6F" id="5FI-a3-rIt"/>
@@ -921,6 +869,6 @@
         <image name="forgotPasswordQuestionMark" width="12" height="12"/>
         <image name="mailBig" width="124" height="96"/>
         <image name="megaThePrivacyCompanyLogo" width="170" height="54"/>
-        <image name="name" width="32" height="32"/>
+        <image name="name" width="24" height="24"/>
     </resources>
 </document>
