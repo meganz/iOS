@@ -1753,10 +1753,7 @@
             [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:localFilePath.mnz_relativeLocalPath parent:self.parentNode appData:appData isSourceTemporary:YES];
         } else {
             if ([node parentHandle] == [self.parentNode handle]) {
-                NSError *error = nil;
-                if (![[NSFileManager defaultManager] removeItemAtPath:localFilePath error:&error]) {
-                    MEGALogError(@"Remove item at path failed with error: %@", error);
-                }
+                [NSFileManager.defaultManager mnz_removeItemAtPath:localFilePath];
                 
                 NSString *alertMessage = AMLocalizedString(@"fileExistAlertController_Message", nil);
                 
@@ -2013,6 +2010,10 @@
             
         case MegaNodeActionTypeRestore:
             [node mnz_restore];
+            break;
+            
+        case MegaNodeActionTypeSaveToPhotos:
+            [node mnz_saveToPhotosWithApi:[MEGASdkManager sharedMEGASdk]];
             break;
             
         default:

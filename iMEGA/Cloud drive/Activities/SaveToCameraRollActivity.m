@@ -9,19 +9,21 @@
 #import "NSFileManager+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 
-@interface SaveToCameraRollActivity () <MEGATransferDelegate>
+@interface SaveToCameraRollActivity ()
 
 @property (nonatomic, strong) MEGANode *node;
+@property (nonatomic) MEGASdk *api;
 
 @end
 
 @implementation SaveToCameraRollActivity
 
 
-- (instancetype)initWithNode:(MEGANode *)node {
+- (instancetype)initWithNode:(MEGANode *)node api:(MEGASdk *)api {
     self = [super init];
     if (self) {
         _node = node;
+        _api = api;
     }
     return self;
 }
@@ -43,27 +45,11 @@
 }
 
 - (void)performActivity {
-    NSString *temporaryPath = [[NSTemporaryDirectory() stringByAppendingPathComponent:self.node.base64Handle] stringByAppendingPathComponent:self.node.name];
-    NSString *temporaryFingerprint = [[MEGASdkManager sharedMEGASdk] fingerprintForFilePath:temporaryPath];
-    if ([temporaryFingerprint isEqualToString:[[MEGASdkManager sharedMEGASdk] fingerprintForNode:self.node]]) {
-        [self.node mnz_copyToGalleryFromTemporaryPath:temporaryPath];
-    } else if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-        NSString *downloadsDirectory = [[NSFileManager defaultManager] downloadsDirectory];
-        downloadsDirectory = downloadsDirectory.mnz_relativeLocalPath;
-        NSString *offlineNameString = [[MEGASdkManager sharedMEGASdkFolder] escapeFsIncompatible:self.node.name];
-        NSString *localPath = [downloadsDirectory stringByAppendingPathComponent:offlineNameString];
-        [[MEGASdkManager sharedMEGASdk] startDownloadNode:self.node localPath:localPath appData:[[NSString new] mnz_appDataToSaveInPhotosApp] delegate:self];
-    }
+    [self.node mnz_saveToPhotosWithApi:self.api];
 }
 
 + (UIActivityCategory)activityCategory {
     return UIActivityCategoryAction;
-}
-
-#pragma mark - MEGATransferDelegate
-
-- (void)onTransferStart:(MEGASdk *)api transfer:(MEGATransfer *)transfer {
-    [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:NSLocalizedString(@"downloadStarted", @"Message shown when a download starts")];
 }
 
 @end

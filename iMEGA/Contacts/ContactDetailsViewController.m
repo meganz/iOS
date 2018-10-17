@@ -53,8 +53,12 @@
     self.navigationItem.title = AMLocalizedString(@"contactInfo", @"title of the contact properties screen");
     
     self.user = [[MEGASdkManager sharedMEGASdk] contactForEmail:self.userEmail];
-    [self.avatarImageView mnz_setImageForUserHandle:self.user.handle];
-    self.chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:self.chatId];
+    if (self.chatId) {
+        self.chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:self.chatId];
+        [self.avatarImageView mnz_setImageForUserHandle:[self.chatRoom peerHandleAtIndex:0] name:self.chatRoom.title];
+    } else {
+        [self.avatarImageView mnz_setImageForUserHandle:self.user.handle];
+    }
     
     //TODO: Show the blue check if the Contact is verified
     
