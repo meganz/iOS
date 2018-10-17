@@ -16,6 +16,7 @@
 #import "MEGASdkManager.h"
 #import "MEGAShareRequestDelegate.h"
 #import "MEGAUser+MNZCategory.h"
+#import "NSFileManager+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 #import "UIAlertAction+MNZCategory.h"
 #import "UIImageView+MNZCategory.h"
@@ -458,12 +459,7 @@
     if ([user hasChangedType:MEGAUserChangeTypeAvatar]) {
         NSString *userBase64Handle = [MEGASdk base64HandleForUserHandle:user.handle];
         NSString *avatarFilePath = [[Helper pathForSharedSandboxCacheDirectory:@"thumbnailsV3"] stringByAppendingPathComponent:userBase64Handle];
-        BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:avatarFilePath];
-        if (fileExists) {
-            NSError *error = nil;
-            [[NSFileManager defaultManager] removeItemAtPath:avatarFilePath error:&error];
-            MEGALogError(@"Remove item at path failed with error: %@", error);
-        }
+        [NSFileManager.defaultManager mnz_removeItemAtPath:avatarFilePath];
         userHasChanged = YES;
     } else if ([user hasChangedType:MEGAUserChangeTypeFirstname] || [user hasChangedType:MEGAUserChangeTypeLastname] || [user hasChangedType:MEGAUserChangeTypeEmail]) {
         userHasChanged = YES;
@@ -610,7 +606,7 @@
 
 - (void)startGroup {
     if (self.searchController.isActive) {
-        [self.searchController dismissViewControllerAnimated:YES completion:nil];
+        self.searchController.active = NO;
     }
     ContactsViewController *contactsVC = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactsViewControllerID"];
     contactsVC.contactsMode = ContactsModeChatCreateGroup;
@@ -729,6 +725,9 @@
 }
 
 - (IBAction)addContact:(UIView *)sender {
+    if (self.searchController.isActive) {
+        self.searchController.active = NO;
+    }
     UIAlertController *addContactAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"inviteContact", @"Text shown when the user tries to make a call and the receiver is not a contact") message:nil preferredStyle:UIAlertControllerStyleActionSheet];
     [addContactAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
     
@@ -1168,17 +1167,10 @@
                     [SVProgressHUD showErrorWithStatus:@"Invalid user"];
                     return;
                 }
-                if (self.searchController.isActive) {
-                    [self.searchController dismissViewControllerAnimated:YES completion:^{
-                        [self dismissViewControllerAnimated:YES completion:^{
-                            self.userSelected(@[user], nil);
-                        }];
-                    }];
-                } else {
-                    [self dismissViewControllerAnimated:YES completion:^{
-                        self.userSelected(@[user], nil);
-                    }];
-                }
+                self.searchController.active = NO;
+                [self dismissViewControllerAnimated:YES completion:^{
+                    self.userSelected(@[user], nil);
+                }];
             }
             break;
         }

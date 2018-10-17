@@ -530,12 +530,7 @@
     if (self.browserAction == BrowserActionOpenIn) {
         NSError *error = nil;
         NSString *inboxDirectory = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"Inbox"];
-        for (NSString *file in [[NSFileManager defaultManager] contentsOfDirectoryAtPath:inboxDirectory error:&error]) {
-            error = nil;
-            if ([[NSFileManager defaultManager] removeItemAtPath:[inboxDirectory stringByAppendingPathComponent:file] error:&error]) {
-                MEGALogError(@"Remove item at path failed with error: %@", error);
-            }
-        }
+        [NSFileManager.defaultManager mnz_removeFolderContentsAtPath:inboxDirectory];
     }
     
     [self dismiss];

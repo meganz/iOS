@@ -684,6 +684,8 @@
 "sdkVersion"="Версия MEGA SDK";
 /* Title of the label where the MEGAchat SDK version is shown */
 "megachatSdkVersion"="Версия MEGAchat SDK";
+/* Link to the public code of the app */
+"View source code"="Исходный код";
 /* Title for the section "Acknowledgements" of the app */
 "acknowledgements"="Благодарности";
 /* Title for the MEGA Recovery Key */
@@ -720,6 +722,8 @@
 "dontUseHttp"="Не использовать HTTP";
 /* Footer text that explains when disabling the HTTP protocol for transfers may be useful */
 "transfersSectionFooter"="Включите эту опцию, только если передача не начинается. Обычно HTTP достаточно, так как все передачи уже зашифрованы.";
+/* Title of the dialog displayed the first time that a user want to download a image. Asks if wants to export image files to the photo album after download in future and informs that user can change this option afterwards - (String as short as possible). */
+"Download options"="Опции скачивания";
 /* Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped */
 "currentlyUsing"="Сейчас занимает %s";
 /* In 'My account', when user want to delete/remove/cancel account will click button named 'Cancel your account' */
@@ -843,6 +847,8 @@
 "help"="Помощь";
 /* Title of the section to access MEGA's help centre */
 "helpCentreLabel"="Центр помощи";
+/* Section title that links you to the webpage that let you join and test the beta versions */
+"Join Beta"="Присоединиться к бете";
 /* Title to rate the app */
 "rateUsLabel"="Оценить нас";
 /* Title of the Transfers section */
@@ -978,9 +984,9 @@
 /* Text shown under the button 'Skip' to explain that you can upgrade your account later in the section 'My Account'. */
 "youCanUpgradeLaterInMyAccount"="Учётную запись можно улучшить позже в разделе «Моя учётная запись»";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
-"cloudDriveIsAlmostFull"="[S]Облачный диск почти заполнен.[/S] [A]Улучшите его сейчас[/A] до PRO и получите [S]до 4 ТБ (4096 ГБ)[/S] места в облаке.";
+"cloudDriveIsAlmostFull"="[S]Облачный диск почти заполнен.[/S] [A]Улучшите аккаунт сейчас[/A] до PRO и получите [S]до 8 ТБ (8192 ГБ)[/S] места в облаке.";
 /* A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text. */
-"cloudDriveIsFull"="[S]Ваш аккаунт переполнен.[/S] [A]Улучшите учётную запись[/A] и получите [S]до 4 ТБ (4096 ГБ)[/S] свободного места в облаке.";
+"cloudDriveIsFull"="[S]Ваш аккаунт заполнен.[/S] [A]Улучшите его сейчас[/A] до PRO и получите [S]до 8 ТБ (8192 ГБ)[/S] свободного места в облаке.";
 /* Storage related with the MEGA PRO account level you can subscribe */
 "productSpace"="свободного места";
 /* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
@@ -1288,7 +1294,7 @@
 /* Inform user that there were unsupported assets in the share extension */
 "shareExtensionUnsupportedAssets"="Некоторыми элементами нельзя поделиться в MEGA";
 /* Message shown to the user when the share extension is about to be killed by iOS due to a memory issue */
-"Limited system resources are available when sharing items. Try uploading these files from within the MEGA app."="Limited system resources are available when sharing items. Try uploading these files from within the MEGA app.";
+"Limited system resources are available when sharing items. Try uploading these files from within the MEGA app."="При совместном использовании элементов системные ресурсы ограничены. Попробуйте загрузить эти файлы из приложения MEGA.";
 /* Notification message shown when a transfer failed. Keep colon. */
 "Transfer failed:"="Пересылка не удалось";
 /* MEGAError */
@@ -1570,6 +1576,8 @@
 "whyYouDoNeedTwoFactorAuthenticationDescription"="Двухфакторная аутентификация — второй слой безопасности вашего аккаунта. Это значит, что даже если кто-то знает ваш пароль, он не сможет получить к нему доступ без шестизначного кода, который есть только у вас.";
 /* Alert text shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device */
 "youNeedATwoFactorAuthenticationApp"="Нужно приложение для двухфакторной аутентификации";
+/* Alert text shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device and tap on the question mark */
+"You need an authenticator app to enable 2FA on MEGA. You can download and install the Google Authenticator, Duo Mobile, Authy or Microsoft Authenticator app for your phone or tablet."="Вам нужно приложение-аутентификатор, чтобы включить 2FA в MEGA. Вы можете загрузить и установить приложение Google Authenticator, Duo Mobile, Authy или Microsoft Authenticator на свой телефон или планшет.";
 /* A title on the mobile web client page showing that 2FA has been enabled successfully. */
 "twoFactorAuthenticationEnabled"="Двухфакторная аутентификация включена.";
 /* A message on the dialog shown after 2FA was successfully enabled. */
@@ -1585,50 +1593,90 @@
 /* A button to help them restore their account if they have lost their 2FA device. */
 "lostYourAuthenticatorDevice"="Потеряли аутентификационное устройство?";
 /* Settings section title where you can enable the option to 'Save Images in Library' */
-"Save Images in Library"="Save Images in Library";
+"Save Images in Library"="Сохранять изображения в библиотеке";
 /* Settings section title where you can enable the option to 'Save Videos in Library' */
-"Save Videos in Library"="Save Videos in Library";
+"Save Videos in Library"="Сохранять видео в библиотеке";
 /* Footer text shown under the settings for download options 'Save Images/Videos in Library' */
-"Images and/or videos downloaded will be stored in the device’s media library instead of the Offline section."="Images and/or videos downloaded will be stored in the device’s media library instead of the Offline section.";
+"Images and/or videos downloaded will be stored in the device’s media library instead of the Offline section."="Загруженные изображения и/или видео будут сохранены в медиабиблиотеке устройства, а не в локальном разделе.";
 /* Setting associated with the 'Camera' of the device */
-"Camera"="Camera";
+"Camera"="Камера";
 /* Settings section title where you can enable the option to 'Save in Library' the images or videos taken from your camera in the MEGA app */
-"Save in Library"="Save in Library";
+"Save in Library"="Сохранять в библиотеке";
 /* Footer text shown under the Camera setting to explain the option 'Save in Library' */
-"Save a copy of the images and videos taken from the MEGA app in your device’s media library."="Save a copy of the images and videos taken from the MEGA app in your device’s media library.";
+"Save a copy of the images and videos taken from the MEGA app in your device’s media library."="Сохраните копию изображений и видео из приложения MEGA в медиабиблиотеке вашего устройства.";
 /* Title shown in a page of the on boarding screens explaining that the user keeps the encryption keys */
-"You hold the keys"="You hold the keys";
+"You hold the keys"="Ключи хранятся у вас";
 /* Description shown in a page of the onboarding screens explaining the encryption paradigm */
-"Security is why we exist, your files are safe with us behind a well oiled encryption machine where only you can access your files."="Security is why we exist, your files are safe with us behind a well oiled encryption machine where only you can access your files.";
+"Security is why we exist, your files are safe with us behind a well oiled encryption machine where only you can access your files."="Безопасность — это то, для чего существуем. Ваши файлы в безопасности за нашей хорошо смазанной шифровальной машиной, где только вы можете получить доступ к ним.";
 /* Title shown in a page of the on boarding screens explaining that the chat is encrypted */
-"Encrypted chat"="Encrypted chat";
+"Encrypted chat"="Зашифрованный чат";
 /* Description shown in a page of the onboarding screens explaining the chat feature */
-"Fully encrypted chat with voice and video calls, group messaging and file sharing integration with your Cloud Drive."="Fully encrypted chat with voice and video calls, group messaging and file sharing integration with your Cloud Drive.";
+"Fully encrypted chat with voice and video calls, group messaging and file sharing integration with your Cloud Drive."="Полностью зашифрованный чат с голосовыми и видеозвонками, групповой обмен сообщениями и интеграция файлов с вашим облачным диском.";
 /* Title shown in a page of the on boarding screens explaining that the user can add contacts to chat and colaborate */
-"Create your Network"="Create your Network";
+"Create your Network"="Создайте свою сеть";
 /* Description shown in a page of the onboarding screens explaining contacts */
-"Add contacts, create a network, colaborate, make voice and video calls without ever leaving MEGA"="Add contacts, create a network, colaborate, make voice and video calls without ever leaving MEGA";
+"Add contacts, create a network, colaborate, make voice and video calls without ever leaving MEGA"="Добавление контактов, создание сети, совместное использование, голосовые и видеозвонки без выхода из MEGA";
 /* Title shown in a page of the on boarding screens explaining that the user can backup the photos automatically */
-"Your Photos in the Cloud"="Your Photos in the Cloud";
+"Your Photos in the Cloud"="Ваши фотографии в облаке";
 /* Description shown in a page of the onboarding screens explaining the camera uploads feature */
-"Camera Uploads is an essential feature for any mobile device and we have got you covered. Create your account now."="Camera Uploads is an essential feature for any mobile device and we have got you covered. Create your account now.";
+"Camera Uploads is an essential feature for any mobile device and we have got you covered. Create your account now."="Загрузка из камеры — важная функция для любого мобильного устройства, и мы о ней позаботились. Зарегистрируйтесь сейчас.";
 /* Button which triggers the initial setup */
-"Setup MEGA"="Setup MEGA";
+"Setup MEGA"="Настроить MEGA";
 /* Detailed explanation of why the user should give some permissions to MEGA */
-"To fully take advantage of your MEGA account we need to ask you some permissions."="To fully take advantage of your MEGA account we need to ask you some permissions.";
+"To fully take advantage of your MEGA account we need to ask you some permissions."="Чтобы обеспечить ваш аккаунт всеми преимуществами MEGA, мы должны попросить о некоторых разрешениях.";
 /* Title label that explains that the user is going to be asked for the photos permission */
-"Allow Access to Photos"="Allow Access to Photos";
+"Allow Access to Photos"="Разрешить доступ к фотографиям";
 /* Detailed explanation of why the user should give permission to access to the photos */
-"To share photos and videos, allow MEGA to access your photos"="To share photos and videos, allow MEGA to access your photos";
+"To share photos and videos, allow MEGA to access your photos"="Чтобы обмениваться фотографиями и видео, откройте MEGA доступ к фотографиям";
 /* Title label that explains that the user is going to be asked for the microphone and camera permission */
-"Enable Microphone and Camera"="Enable Microphone and Camera";
+"Enable Microphone and Camera"="Включить микрофон и камеру";
 /* Detailed explanation of why the user should give permission to access to the camera and the microphone */
-"To make encrypted voice and video calls, allow MEGA access to your Camera and Microphone"="To make encrypted voice and video calls, allow MEGA access to your Camera and Microphone";
+"To make encrypted voice and video calls, allow MEGA access to your Camera and Microphone"="Чтобы делать зашифрованные голосовые и видеозвонки, откройте MEGA доступ к камере и микрофону";
 /* Title label that explains that the user is going to be asked for the notifications permission */
 "Enable Notifications"="Включить Уведомления";
 /* Detailed explanation of why the user should give permission to deliver notifications */
-"We would like to send you notifications so you receive new messages on your device instantly."="We would like to send you notifications so you receive new messages on your device instantly.";
+"We would like to send you notifications so you receive new messages on your device instantly."="Мы хотели бы отправлять вам уведомления, чтобы вы немедленно получали новые сообщения на своем устройстве.";
 /* Button which triggers a request for a specific permission, that have been explained to the user beforehand */
-"Enable Access"="Enable Access";
+"Enable Access"="Включить доступ";
+/* A section header which contains the file management settings. These settings allow users to remove duplicate files etc. */
+"File Management"="Управление файлами";
+/* Title of the option to enable or disable file versioning on Settings section */
+"File versioning"="Версии файлов";
+/* Subtitle of the option to enable or disable file versioning on Settings section */
+"Enable or disable file versioning for your entire account.[Br]You may still receive file versions from shared folders if your contacts have this enabled."="Включите или отключите управление версиями файлов для всего аккаунта.\nВы всё равно можете получать версии файлов из общих папок, если ваши контакты включили эту функцию.";
+/* A confirmation message when the user chooses to disable file versioning. */
+"When file versioning is disabled, the current version will be replaced with the new version once a file is updated (and your changes to the file will no longer be recorded). Are you sure you want to disable file versioning?"="Когда версии файлов отключены, текущая версия будет заменяться новой при каждом обновлении (и ваши изменения в файле больше не будут записываться). Действительно отключить версии файлов?";
+/* Settings preference title to show file versions info of the account */
+"File versions"="Версии файлов";
+/* A title message in the user’s account settings for showing the storage used for file versions. */
+"Total size taken up by file versions:"="Общий объём, занимаемый версиями файлов:";
+/* The title of the section about deleting file versions in the settings. */
+"Delete all older versions of my files"="Удалить все старые версии моих файлов";
+/* Text of a button which deletes all historical versions of files in the users entire account. */
+"Delete old versions"="Удалить старые версии";
+/* A warning note about deleting all file versions in the settings section. */
+"All current files will remain. Only historic versions of your files will be deleted."="Все текущие файлы останутся. Только прошлые версии файлов будут удалены.";
+/* Text of the dialog to delete all the file versions of the account */
+"You are about to delete the version histories of all files. Any file version shared to you from a contact will need to be deleted by them.[Br][Br]Please note that the current files will not be deleted."="Вы собираетесь удалить истории версий всех файлов. Любая версия файла, доступная вам от контакта, должна быть удалена им.\n\nОбратите внимание, что текущие файлы не будут удалены.";
+/* Title for the Rubbish-Bin Cleaning Scheduler feature */
+"Rubbish-Bin Cleaning Scheduler:"="Планировщик очистки Корзины:";
+/* A rubbish bin scheduler setting which allows removing old files from the rubbish bin automatically. E.g. Remove files older than 15 days. */
+"Remove files older than"="Удалять файлы старше";
+/* Label for any ‘Days’ button, link, text, title, etc. - (String as short as possible). */
+"Days"="Дни";
+/* New server-side rubbish-bin cleaning scheduler description (for Free users) */
+"The Rubbish Bin is cleaned for you automatically. The minimum period is 7 days and your maximum period is 30 days."="Корзина очищается автоматически. Минимальный срок составляет 7 дней, максимальный — 30 дней.";
+/* New server-side rubbish-bin cleaning scheduler description (for PRO users) */
+"The Rubbish Bin can be cleaned for you automatically. The minimum period is 7 days."="Корзина может очищаться автоматически. Минимальный срок — 7 дней.";
+/* Description shown when you try to disable the feature Rubbish-Bin Cleaning Scheduler and you are a free user */
+"To disable the Rubbish-Bin Cleaning Scheduler or set a longer retention period, you need to subscribe to a PRO plan."="Чтобы отключить очистку корзины по расписанию или установить более длительный период хранения, нужно подписаться на план PRO.";
 /* Confirmation dialog for the button that logs the user out of all sessions except the current one. */
 "Do you want to close all other sessions? This will log you out on all other active sessions except the current one."="Закрыть другие сеансы? Будет выполнен выход из системы для всех активных сеансов кроме этого.";
+/* A button label which allows the users save images/videos in the Photos app. */
+"Save to Photos"="Сохранять в фото";
+/* Text shown when starting the process to save a photo or video to Photos app */
+"Saving to Photos…"="Сохранение в фото…";
+/* Text shown when a photo or video is saved to Photos app */
+"Saved to Photos"="Сохранено в фото";
+/* Text shown when an error occurs when trying to save a photo or video to Photos app */
+"Could not save Item"="Элемент не сохранён";

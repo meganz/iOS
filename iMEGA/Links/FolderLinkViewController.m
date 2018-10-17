@@ -900,6 +900,10 @@
             }
             
             isFetchNodesDone = YES;
+            
+            [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithUnsignedLongLong:request.nodeHandle] forKey:@"kLastPublicHandleAccessed"];
+            [[NSUserDefaults standardUserDefaults] setDouble:[NSDate date].timeIntervalSince1970 forKey:@"kLastPublicTimestampAccessed"];
+            
             [self reloadUI];
             
             NSArray *componentsArray = [self.folderLinkString componentsSeparatedByString:@"!"];
@@ -965,6 +969,10 @@
             [self presentViewController:activityVC animated:YES completion:nil];
             break;
         }
+            
+        case MegaNodeActionTypeSaveToPhotos:
+            [node mnz_saveToPhotosWithApi:[MEGASdkManager sharedMEGASdkFolder]];
+            break;
             
         default:
             break;

@@ -2885,11 +2885,12 @@
                                                 </constraints>
                                             </view>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RAz-Uy-dd3">
-                                                <rect key="frame" x="333" y="259" width="22" height="22"/>
+                                                <rect key="frame" x="311" y="255" width="44" height="44"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="height" constant="22" id="HVd-GF-OXd"/>
-                                                    <constraint firstAttribute="width" constant="22" id="qGa-Rz-fn1"/>
+                                                    <constraint firstAttribute="height" constant="44" id="HVd-GF-OXd"/>
+                                                    <constraint firstAttribute="width" constant="44" id="qGa-Rz-fn1"/>
                                                 </constraints>
+                                                <inset key="contentEdgeInsets" minX="11" minY="11" maxX="11" maxY="11"/>
                                                 <state key="normal" image="inviteFriendsButton"/>
                                                 <connections>
                                                     <action selector="addContactsTouchUpInside:" destination="UY5-oE-Ial" eventType="touchUpInside" id="xkx-UW-3i0"/>
@@ -2977,7 +2978,7 @@
                                             <constraint firstItem="Olb-6D-4IT" firstAttribute="top" secondItem="mCl-4V-VxM" secondAttribute="top" id="d4W-O7-vfR"/>
                                             <constraint firstAttribute="bottom" secondItem="XRR-8w-kqO" secondAttribute="bottom" constant="169" id="geP-dI-e6L"/>
                                             <constraint firstItem="XRR-8w-kqO" firstAttribute="centerX" secondItem="mCl-4V-VxM" secondAttribute="centerX" id="hn5-Xt-gOp"/>
-                                            <constraint firstItem="RAz-Uy-dd3" firstAttribute="top" secondItem="CZz-Ae-Zuh" secondAttribute="top" constant="4" id="vzV-v4-Bam"/>
+                                            <constraint firstItem="RAz-Uy-dd3" firstAttribute="top" secondItem="CZz-Ae-Zuh" secondAttribute="top" id="vzV-v4-Bam"/>
                                             <constraint firstItem="17o-kw-1S4" firstAttribute="leading" secondItem="mCl-4V-VxM" secondAttribute="leading" id="xmT-i8-QtQ"/>
                                             <constraint firstItem="17o-kw-1S4" firstAttribute="top" secondItem="QVj-x8-tYa" secondAttribute="bottom" id="zXr-XJ-xNe"/>
                                         </constraints>
