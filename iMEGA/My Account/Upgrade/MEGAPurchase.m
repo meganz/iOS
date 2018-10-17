@@ -1,5 +1,7 @@
 
 #import "MEGAPurchase.h"
+
+#import "DTConstants.h"
 #import "SVProgressHUD.h"
 #import "UIApplication+MNZCategory.h"
 
@@ -117,7 +119,14 @@
                 
             case SKPaymentTransactionStatePurchased:
                 MEGALogDebug(@"[StoreKit] Date: %@\nIdentifier: %@\n\t-Original Date: %@\n\t-Original Identifier: %@", transaction.transactionDate, transaction.transactionIdentifier, transaction.originalTransaction.transactionDate, transaction.originalTransaction.transactionIdentifier);
-                [[MEGASdkManager sharedMEGASdk] submitPurchase:MEGAPaymentMethodItunes receipt:[receiptData base64EncodedStringWithOptions:0] delegate:self];
+                
+                NSTimeInterval lastPublicTimestampAccessed = [[NSUserDefaults standardUserDefaults] doubleForKey:@"kLastPublicTimestampAccessed"];
+                if ([NSDate date].timeIntervalSince1970 - lastPublicTimestampAccessed <= SECONDS_IN_DAY) {
+                    uint64_t lastPublicHandleAccessed = [[[NSUserDefaults standardUserDefaults] objectForKey:@"kLastPublicHandleAccessed"] unsignedLongLongValue];
+                    [[MEGASdkManager sharedMEGASdk] submitPurchase:MEGAPaymentMethodItunes receipt:[receiptData base64EncodedStringWithOptions:0] lastPublicHandle:lastPublicHandleAccessed delegate:self];
+                } else {
+                    [[MEGASdkManager sharedMEGASdk] submitPurchase:MEGAPaymentMethodItunes receipt:[receiptData base64EncodedStringWithOptions:0] delegate:self];
+                }
                 
                 [_delegate successfulPurchase:self restored:NO];
                 
