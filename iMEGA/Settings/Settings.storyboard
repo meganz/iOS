@@ -787,7 +787,7 @@
                                                             <constraint firstAttribute="width" constant="28" id="RfQ-Ra-dNS"/>
                                                         </constraints>
                                                     </imageView>
-                                                    <textField hidden="YES" opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Current Password" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="I30-Sl-69j">
+                                                    <textField hidden="YES" opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Current Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="I30-Sl-69j">
                                                         <rect key="frame" x="43" y="11.5" width="302" height="21"/>
                                                         <color key="textColor" red="0.46666666666666667" green="0.46666666666666667" blue="0.46666666666666667" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="17"/>
@@ -835,7 +835,7 @@
                                                             <constraint firstAttribute="width" constant="32" id="wZX-fm-3Hv"/>
                                                         </constraints>
                                                     </imageView>
-                                                    <textField hidden="YES" opaque="NO" clipsSubviews="YES" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="New Password" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="Ryf-7d-GGn">
+                                                    <textField hidden="YES" opaque="NO" clipsSubviews="YES" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="New Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Ryf-7d-GGn">
                                                         <rect key="frame" x="47" y="6" width="298" height="30"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="30" id="AHL-5m-bh8"/>
@@ -893,7 +893,7 @@
                                                             <constraint firstAttribute="height" constant="32" id="TXR-3z-paU"/>
                                                         </constraints>
                                                     </imageView>
-                                                    <textField hidden="YES" opaque="NO" clipsSubviews="YES" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Confirm Password" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="bX8-QE-I91">
+                                                    <textField hidden="YES" opaque="NO" clipsSubviews="YES" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Confirm Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="bX8-QE-I91">
                                                         <rect key="frame" x="47" y="6" width="298" height="30"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="30" id="opE-ii-KYc"/>
