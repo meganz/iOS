@@ -28,9 +28,10 @@
     if (error) {
         MEGALogError(@"error happened when to upload asset: %@", error);
         NSLog(@"%@", error);
-        // TODO: add proper error handling, maybe a callback to UI to show error information to users
-    } else {
-        
+    }
+    
+    if (self.completion) {
+        self.completion([self.mutableData copy], error);
     }
 }
 
