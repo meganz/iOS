@@ -23,6 +23,7 @@
     if (self) {
         _asset = asset;
         _cameraUploadNode = node;
+        _uploadFile = [[AssetUploadFile alloc] init];
     }
     
     return self;
@@ -62,23 +63,24 @@
 }
 
 - (void)processImageData:(NSData *)imageData {
-    MEGANode *existingNode = [self existingNodeForData:imageData modificationDate:self.asset.modificationDate];
+    self.uploadFile.originalFingerprint = [[MEGASdkManager sharedMEGASdk] fingerprintForData:imageData modificationTime:self.asset.modificationDate];
+    MEGANode *existingNode = [[MEGASdkManager sharedMEGASdk] nodeForFingerprint:self.uploadFile.originalFingerprint parent:self.cameraUploadNode];
     if (existingNode) {
         [self processExistingNode:existingNode];
         return;
     }
     
     NSData *JPEGData = UIImageJPEGRepresentation([UIImage imageWithData:imageData], 1.0);
-    existingNode = [self existingNodeForData:JPEGData modificationDate:self.asset.modificationDate];
+    self.uploadFile.fingerprint = [[MEGASdkManager sharedMEGASdk] fingerprintForData:JPEGData modificationTime:self.asset.modificationDate];
+    existingNode = [[MEGASdkManager sharedMEGASdk] nodeForFingerprint:self.uploadFile.fingerprint parent:self.cameraUploadNode];
     if (existingNode) {
         [self processExistingNode:existingNode];
         return;
     }
     
-    NSString *fileName = [[NSString mnz_fileNameWithDate:self.asset.creationDate] stringByAppendingPathExtension:@"jpg"];
-    NSURL *fileURL = [[[NSFileManager defaultManager] cameraUploadURL] URLByAppendingPathComponent:fileName];
-    self.uploadFile = [[AssetUploadFile alloc] initWithName:fileName URL:fileURL];
-    if ([JPEGData writeToURL:fileURL atomically:YES]) {
+    self.uploadFile.fileName = [[NSString mnz_fileNameWithDate:self.asset.creationDate] stringByAppendingPathExtension:@"jpg"];
+    self.uploadFile.fileURL = [[[NSFileManager defaultManager] cameraUploadURL] URLByAppendingPathComponent:self.uploadFile.fileName];
+    if ([JPEGData writeToURL:self.uploadFile.fileURL atomically:YES]) {
         [self processUploadFile];
     } else {
         // TODO: make the job as failed or not started
@@ -108,11 +110,6 @@
     [self finishOperation];
 }
 
-- (MEGANode *)existingNodeForData:(NSData *)data modificationDate:(NSDate *)date {
-    NSString *fingerprint = [[MEGASdkManager sharedMEGASdk] fingerprintForData:data modificationTime:date];
-    return [[MEGASdkManager sharedMEGASdk] nodeForFingerprint:fingerprint parent:self.cameraUploadNode];
-}
-
 #pragma mark - MEGARequestDelegate
 
 - (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
@@ -121,9 +118,18 @@
         // TODO: update local record status
         [self finishOperation];
     } else {
-        self.uploadFile.uploadURLString = [self.mediaUploader uploadURLString];
-        MEGALogDebug(@"upload url string: %@", self.uploadFile.uploadURLString);
-        [self startUploading];
+        switch (request.type) {
+            case MEGARequestTypeGetBackgroundUploadURL:
+                self.uploadFile.uploadURLString = [self.mediaUploader uploadURLString];
+                MEGALogDebug(@"upload url string: %@", self.uploadFile.uploadURLString);
+                [self startUploading];
+                break;
+            case MEGARequestTypeCompleteBackgroundUpload:
+                MEGALogDebug(@"complete background upload finishes");
+                break;
+            default:
+                break;
+        }
     }
 }
 
@@ -142,20 +148,18 @@
             MEGALogDebug(@"error when to upload photo: %@", error);
             [self finishOperation];
         } else {
-            
+            [self completeUploadWithToken:token];
         }
     }];
     
     // TODO: save information to upload task to use when the task gets restored from background
     [uploadTask resume];
+}
+
+- (void)completeUploadWithToken:(NSData *)token {
+    // TODO: figure out the new name to avoid same names
     
-    
-    
-//    [[[TransferSessionManager shared].photoSession uploadTaskWithRequest:request fromFile:self.uploadFile.encryptedURL completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-//        MEGALogDebug(@"data: %@, response: %@, error: %@", data, response, error);
-//    }] resume];
-//
-    [self finishOperation];
+    [self.mediaUploader completeBackgroundUploadWithFileName:self.uploadFile.fileName parentNode:self.cameraUploadNode fingerprint:self.uploadFile.fingerprint originalFingerprint:self.uploadFile.originalFingerprint uploadToken:token];
 }
 
 @end

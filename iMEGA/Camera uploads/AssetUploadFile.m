@@ -10,15 +10,6 @@
 
 @implementation AssetUploadFile
 
-- (instancetype)initWithName:(NSString *)name URL:(NSURL *)url {
-    self = [super init];
-    if (self) {
-        _name = name;
-        _fileURL = url;
-    }
-    return self;
-}
-
 - (NSURL *)encryptedURL {
     return [self.fileURL URLByAppendingPathExtension:@"encrypted"];
 }

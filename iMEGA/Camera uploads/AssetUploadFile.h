@@ -12,14 +12,17 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface AssetUploadFile : NSObject
 
-@property (strong, nonatomic) NSString *name;
+@property (strong, nonatomic) NSString *fileName;
+
+@property (strong, nonatomic) NSString *fingerprint;
+@property (strong, nonatomic) NSString *originalFingerprint;
+
 @property (strong, nonatomic) NSURL *fileURL;
 @property (nonatomic, readonly) NSURL *encryptedURL;
-@property (strong, nonatomic, nullable) NSString *uploadURLStringSuffix;
-@property (strong, nonatomic, nullable) NSString *uploadURLString;
-@property (nonatomic, readonly, nullable) NSURL *uploadURL;
 
-- (instancetype)initWithName:(NSString *)name URL:(NSURL *)url;
+@property (strong, nonatomic) NSString *uploadURLStringSuffix;
+@property (strong, nonatomic) NSString *uploadURLString;
+@property (nonatomic, readonly) NSURL *uploadURL;
 
 @end
 
