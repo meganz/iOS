@@ -660,8 +660,9 @@
 		B6D9D7EF216AE5D000D7B08A /* AssetUploadRecordCoreDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B6D9D7EE216AE5D000D7B08A /* AssetUploadRecordCoreDataManager.m */; };
 		B6E19B2921743BD600882F74 /* CameraUploadManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B6E19B2821743BD600882F74 /* CameraUploadManager.m */; };
 		B6E19B2F21756F0800882F74 /* TransferSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B6E19B2E21756F0800882F74 /* TransferSessionManager.m */; };
-		B6E19B322175716600882F74 /* TransferSessionDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B6E19B312175716600882F74 /* TransferSessionDelegate.m */; };
+		B6E19B322175716600882F74 /* TransferSessionTaskDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B6E19B312175716600882F74 /* TransferSessionTaskDelegate.m */; };
 		B6E19B352175852E00882F74 /* AssetUploadFile.m in Sources */ = {isa = PBXBuildFile; fileRef = B6E19B342175852E00882F74 /* AssetUploadFile.m */; };
+		B6E19B3A2178424600882F74 /* TransferSessionDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B6E19B392178424600882F74 /* TransferSessionDelegate.m */; };
 		E803CB641D5336F100F81A36 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = E803CB661D5336F100F81A36 /* InfoPlist.strings */; };
 		E80C76101DEDF32A00CA4D68 /* GroupChatDetailsViewTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E80C760F1DEDF32A00CA4D68 /* GroupChatDetailsViewTableViewCell.m */; };
 		E81616731A8397B5002EFDD7 /* FolderLinkViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E81616721A8397B5002EFDD7 /* FolderLinkViewController.m */; };
@@ -1513,10 +1514,12 @@
 		B6E19B2821743BD600882F74 /* CameraUploadManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CameraUploadManager.m; sourceTree = "<group>"; };
 		B6E19B2D21756F0800882F74 /* TransferSessionManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TransferSessionManager.h; sourceTree = "<group>"; };
 		B6E19B2E21756F0800882F74 /* TransferSessionManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TransferSessionManager.m; sourceTree = "<group>"; };
-		B6E19B302175716600882F74 /* TransferSessionDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransferSessionDelegate.h; sourceTree = "<group>"; };
-		B6E19B312175716600882F74 /* TransferSessionDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TransferSessionDelegate.m; sourceTree = "<group>"; };
+		B6E19B302175716600882F74 /* TransferSessionTaskDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransferSessionTaskDelegate.h; sourceTree = "<group>"; };
+		B6E19B312175716600882F74 /* TransferSessionTaskDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TransferSessionTaskDelegate.m; sourceTree = "<group>"; };
 		B6E19B332175852E00882F74 /* AssetUploadFile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AssetUploadFile.h; sourceTree = "<group>"; };
 		B6E19B342175852E00882F74 /* AssetUploadFile.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AssetUploadFile.m; sourceTree = "<group>"; };
+		B6E19B382178424600882F74 /* TransferSessionDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TransferSessionDelegate.h; sourceTree = "<group>"; };
+		B6E19B392178424600882F74 /* TransferSessionDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TransferSessionDelegate.m; sourceTree = "<group>"; };
 		E803CB651D5336F100F81A36 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		E803CB681D53374A00F81A36 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		E80C760E1DEDF32A00CA4D68 /* GroupChatDetailsViewTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GroupChatDetailsViewTableViewCell.h; path = Chat/GroupChatDetailsViewTableViewCell.h; sourceTree = "<group>"; };
@@ -2349,8 +2352,10 @@
 				B6E19B2821743BD600882F74 /* CameraUploadManager.m */,
 				B6E19B2D21756F0800882F74 /* TransferSessionManager.h */,
 				B6E19B2E21756F0800882F74 /* TransferSessionManager.m */,
-				B6E19B302175716600882F74 /* TransferSessionDelegate.h */,
-				B6E19B312175716600882F74 /* TransferSessionDelegate.m */,
+				B6E19B382178424600882F74 /* TransferSessionDelegate.h */,
+				B6E19B392178424600882F74 /* TransferSessionDelegate.m */,
+				B6E19B302175716600882F74 /* TransferSessionTaskDelegate.h */,
+				B6E19B312175716600882F74 /* TransferSessionTaskDelegate.m */,
 			);
 			path = "Camera uploads";
 			sourceTree = "<group>";
@@ -4009,6 +4014,7 @@
 				832E102F202CB8AE00BDD30F /* NodeInfoViewController.m in Sources */,
 				417279431DB663FA001AC818 /* JSQMessagesCollectionViewFlowLayout.m in Sources */,
 				A841E63C20CAB460005E1D1B /* MEGAMessageCallEndedView.m in Sources */,
+				B6E19B3A2178424600882F74 /* TransferSessionDelegate.m in Sources */,
 				4172794A1DB663FA001AC818 /* JSQMessagesAvatarImage.m in Sources */,
 				417279461DB663FA001AC818 /* JSQAudioMediaItem.m in Sources */,
 				9462A1841FDFFD8B00008F32 /* MEGAToolbarContentView.m in Sources */,
@@ -4057,7 +4063,7 @@
 				5B5A983C212EF29500FDBC79 /* RubbishBinTableViewController.m in Sources */,
 				5B22F97D1F8374C500D2B156 /* VENToken.m in Sources */,
 				E8B415061DE3237F00B9D206 /* GroupChatDetailsViewController.m in Sources */,
-				B6E19B322175716600882F74 /* TransferSessionDelegate.m in Sources */,
+				B6E19B322175716600882F74 /* TransferSessionTaskDelegate.m in Sources */,
 				5B2E918D1F1F454C003C6920 /* MEGAStartUploadTransferDelegate.m in Sources */,
 				41D21E671D01AEC3002E6296 /* CTAssetsGridViewFooter.m in Sources */,
 				417840A01AC328A600713F3C /* ChangePasswordViewController.m in Sources */,

@@ -6,6 +6,8 @@ extern NSString * const videoTransferSessionId;
 
 NS_ASSUME_NONNULL_BEGIN
 
+typedef void (^UploadCompletionHandler)(NSData  * _Nullable token, NSError * _Nullable error);
+
 @interface TransferSessionManager : NSObject
 
 + (instancetype)shared;
@@ -15,9 +17,11 @@ NS_ASSUME_NONNULL_BEGIN
 @property (copy, nonatomic) void (^photoSessionCompletion)(void);
 @property (copy, nonatomic) void (^videoSessionCompletion)(void);
 
-- (void)didFinishEventsForBackgroundURLSession:(NSURLSession *)session;
 - (void)restorePhotoSessionIfNeeded;
 - (void)restoreVideoSessionIfNeeded;
+
+- (NSURLSessionUploadTask *)photoUploadTaskWithURL:(NSURL *)requestURL fromFile:(NSURL *)fileURL completion:(UploadCompletionHandler)completion;
+- (NSURLSessionUploadTask *)videoUploadTaskWithURL:(NSURL *)requestURL fromFile:(NSURL *)fileURL completion:(UploadCompletionHandler)completion;
 
 @end
 

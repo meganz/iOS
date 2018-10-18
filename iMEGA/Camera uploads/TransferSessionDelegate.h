@@ -3,13 +3,11 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@class TransferSessionManager;
+@class TransferSessionTaskDelegate;
 
-@interface TransferSessionDelegate : NSObject <NSURLSessionDataDelegate>
+@interface TransferSessionDelegate : NSObject <NSURLSessionDelegate, NSURLSessionTaskDelegate, NSURLSessionDataDelegate>
 
-@property (weak, nullable, nonatomic) TransferSessionManager *manager;
-
-- (instancetype)initWithManager:(TransferSessionManager *)manager;
+- (void)addDelegate:(TransferSessionTaskDelegate *)delegate forTask:(NSURLSessionTask *)task;
 
 @end
 

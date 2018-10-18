@@ -1,45 +1,78 @@
 
 #import "TransferSessionDelegate.h"
-#import "TransferSessionManager.h"
+#import "TransferSessionTaskDelegate.h"
+
+@interface TransferSessionDelegate ()
+
+@property (strong, nonatomic) NSMutableDictionary<NSNumber *, TransferSessionTaskDelegate *> *taskDelegateDict;
+
+@end
 
 @implementation TransferSessionDelegate
 
-- (instancetype)initWithManager:(TransferSessionManager *)manager {
+- (instancetype)init {
     self = [super init];
     if (self) {
-        _manager = manager;
+        _taskDelegateDict = [NSMutableDictionary dictionary];
     }
-    
     return self;
 }
 
+#pragma mark - session tasks
+
+- (TransferSessionTaskDelegate *)delegateForTask:(NSURLSessionTask *)task {
+    return self.taskDelegateDict[@(task.taskIdentifier)];
+}
+
+- (void)removeDelegateForTask:(NSURLSessionTask *)task {
+    [self.taskDelegateDict removeObjectForKey:@(task.taskIdentifier)];
+}
+
+- (void)addDelegate:(TransferSessionTaskDelegate *)delegate forTask:(NSURLSessionTask *)task {
+    self.taskDelegateDict[@(task.taskIdentifier)] = delegate;
+}
+
 #pragma mark - session level delegate
+
 - (void)URLSession:(NSURLSession *)session didBecomeInvalidWithError:(NSError *)error {
-    MEGALogDebug(@"SessionDelegat - session didBecomeInvalidWithError: %@", error);
+    MEGALogDebug(@"Session - session error: %@", error);
 }
 
 - (void)URLSessionDidFinishEventsForBackgroundURLSession:(NSURLSession *)session {
-    MEGALogDebug(@"SessionDelegat - URLSessionDidFinishEventsForBackgroundURLSession: %@", session);
-    
-    [self.manager didFinishEventsForBackgroundURLSession:session];
+    MEGALogDebug(@"Session - finish background URL session: %@", session);
+    //    [self.manager didFinishEventsForBackgroundURLSession:session];
+}
+
+- (void)URLSession:(NSURLSession *)session didReceiveChallenge:(NSURLAuthenticationChallenge *)challenge completionHandler:(void (^)(NSURLSessionAuthChallengeDisposition, NSURLCredential * _Nullable))completionHandler {
+    MEGALogDebug(@"Session - didReceiveChallenge, protectionSpace: %@", challenge.protectionSpace);
+    if (challenge.protectionSpace.authenticationMethod == NSURLAuthenticationMethodServerTrust) {
+        // TODO: implement authentication validation, like public key
+        SecTrustRef trust = challenge.protectionSpace.serverTrust;
+        completionHandler(NSURLSessionAuthChallengeUseCredential, [NSURLCredential credentialForTrust:trust]);
+    } else {
+        completionHandler(NSURLSessionAuthChallengePerformDefaultHandling, nil);
+    }
 }
 
 #pragma mark - task level delegate
+
 - (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didCompleteWithError:(NSError *)error {
-    MEGALogDebug(@"SessionDelegat - task: %@, url: %@, didCompleteWithError: %@", task, task.originalRequest.URL, error);
-//    NSURLComponents *components = [NSURLComponents componentsWithURL:task.originalRequest.URL resolvingAgainstBaseURL:YES];
-//    NSString *fileName = components.queryItems.firstObject.value;
-//    if (fileName) {
-//        NSString *uploadFolder = [[NSFileManager defaultManager] uploadsDirectory];
-//        NSString *filePath = [NSString stringWithFormat:@"%@/%@", uploadFolder, fileName];
-//        [[NSFileManager defaultManager] removeItemAtPath:filePath error:nil];
-//        NSLog(@"SessionDelegat - removed file: %@", filePath);
-//    }
+    MEGALogDebug(@"Session - task: %@, request: %@, didCompleteWithError: %@", task, task.originalRequest, error);
+    [[self delegateForTask:task] URLSession:session task:task didCompleteWithError:error];
+    [self removeDelegateForTask:task];
+}
+
+// TODO: remove the didSendBodyData which is only for debugging purpose
+- (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didSendBodyData:(int64_t)bytesSent totalBytesSent:(int64_t)totalBytesSent totalBytesExpectedToSend:(int64_t)totalBytesExpectedToSend {
+    MEGALogDebug(@"Session - task: body data, bytes sent: %lld, total Sent: %lld, total Bytes: %lld", bytesSent, totalBytesSent, totalBytesExpectedToSend);
+    [[self delegateForTask:task] URLSession:session task:task didSendBodyData:bytesSent totalBytesSent:totalBytesSent totalBytesExpectedToSend:totalBytesExpectedToSend];
 }
 
 #pragma mark - data level delegate
+
 - (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask didReceiveData:(NSData *)data {
-    MEGALogDebug(@"SessionDelegat - dataTask: %@, didReceiveData: %@", dataTask, data);
+    MEGALogDebug(@"Session - dataTask: %@, didReceiveData: %@", dataTask, data);
+    [[self delegateForTask:dataTask] URLSession:session dataTask:dataTask didReceiveData:data];
 }
 
 @end
