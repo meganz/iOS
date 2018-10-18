@@ -12,23 +12,25 @@
 @property (strong, nonatomic) PHAsset *asset;
 @property (strong, nonatomic) AssetUploadFile *uploadFile;
 @property (strong, nonatomic) MEGABackgroundMediaUpload *mediaUploader;
+@property (strong, nonatomic) MEGANode *cameraUploadNode;
 
 @end
 
 @implementation AssetUploadOperation
 
-- (instancetype)initWithAsset:(PHAsset *)asset {
+- (instancetype)initWithAsset:(PHAsset *)asset cameraUploadNode:(MEGANode *)node {
     self = [super init];
     if (self) {
         _asset = asset;
+        _cameraUploadNode = node;
     }
     
     return self;
 }
 
-- (instancetype)initWithLocalIdentifier:(NSString *)localIdentifier {
+- (instancetype)initWithLocalIdentifier:(NSString *)localIdentifier cameraUploadNode:(MEGANode *)node {
     PHAsset *asset = [[PHAsset fetchAssetsWithLocalIdentifiers:@[localIdentifier] options:nil] firstObject];
-    return [self initWithAsset:asset];
+    return [self initWithAsset:asset cameraUploadNode:node];
 }
 
 - (void)start {
@@ -60,7 +62,19 @@
 }
 
 - (void)processImageData:(NSData *)imageData {
+    MEGANode *existingNode = [self existingNodeForData:imageData modificationDate:self.asset.modificationDate];
+    if (existingNode) {
+        [self processExistingNode:existingNode];
+        return;
+    }
+    
     NSData *JPEGData = UIImageJPEGRepresentation([UIImage imageWithData:imageData], 1.0);
+    existingNode = [self existingNodeForData:JPEGData modificationDate:self.asset.modificationDate];
+    if (existingNode) {
+        [self processExistingNode:existingNode];
+        return;
+    }
+    
     NSString *fileName = [[NSString mnz_fileNameWithDate:self.asset.creationDate] stringByAppendingPathExtension:@"jpg"];
     NSURL *fileURL = [[[NSFileManager defaultManager] cameraUploadURL] URLByAppendingPathComponent:fileName];
     self.uploadFile = [[AssetUploadFile alloc] initWithName:fileName URL:fileURL];
@@ -83,6 +97,20 @@
         MEGALogError(@"file encryption failed for asset: %@", self.asset);
         [self finishOperation];
     }
+}
+
+- (void)processExistingNode:(MEGANode *)node {
+    if (node.parentHandle != self.cameraUploadNode.handle) {
+        [[MEGASdkManager sharedMEGASdk] copyNode:node newParent:self.cameraUploadNode];
+    }
+    
+    // TODO: mark the status of the asset record
+    [self finishOperation];
+}
+
+- (MEGANode *)existingNodeForData:(NSData *)data modificationDate:(NSDate *)date {
+    NSString *fingerprint = [[MEGASdkManager sharedMEGASdk] fingerprintForData:data modificationTime:date];
+    return [[MEGASdkManager sharedMEGASdk] nodeForFingerprint:fingerprint parent:self.cameraUploadNode];
 }
 
 #pragma mark - MEGARequestDelegate
@@ -108,11 +136,25 @@
         return;
     }
     
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:self.uploadFile.uploadURL];
-    request.HTTPMethod = @"POST";
-    NSURLSessionUploadTask *uploadTask = [[TransferSessionManager shared].photoSession uploadTaskWithRequest:request fromFile:self.uploadFile.encryptedURL];
+    NSURLSessionUploadTask *uploadTask = [[TransferSessionManager shared] photoUploadTaskWithURL:self.uploadFile.uploadURL fromFile:self.uploadFile.encryptedURL completion:^(NSData * _Nullable token, NSError * _Nullable error) {
+        if (error) {
+            // TODO: error handling and status update
+            MEGALogDebug(@"error when to upload photo: %@", error);
+            [self finishOperation];
+        } else {
+            
+        }
+    }];
+    
+    // TODO: save information to upload task to use when the task gets restored from background
     [uploadTask resume];
     
+    
+    
+//    [[[TransferSessionManager shared].photoSession uploadTaskWithRequest:request fromFile:self.uploadFile.encryptedURL completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+//        MEGALogDebug(@"data: %@, response: %@, error: %@", data, response, error);
+//    }] resume];
+//
     [self finishOperation];
 }
 

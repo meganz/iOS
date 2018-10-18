@@ -161,10 +161,13 @@
     NSString *userAgent = [NSString stringWithFormat:@"%@/%@", kUserAgent, [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"]];
     [MEGASdkManager setUserAgent:userAgent];
     
-    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"pointToStaging"]) {        
-        [[MEGASdkManager sharedMEGASdk] changeApiUrl:@"https://staging.api.mega.co.nz/" disablepkp:NO];
-        [[MEGASdkManager sharedMEGASdkFolder] changeApiUrl:@"https://staging.api.mega.co.nz/" disablepkp:NO];
-    }
+//    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"pointToStaging"]) {
+//        [[MEGASdkManager sharedMEGASdk] changeApiUrl:@"https://api-sandbox3.developers.mega.co.nz/" disablepkp:NO];
+//        [[MEGASdkManager sharedMEGASdkFolder] changeApiUrl:@"https://api-sandbox3.developers.mega.co.nz/" disablepkp:NO];
+//    }
+    
+    [[MEGASdkManager sharedMEGASdk] changeApiUrl:@"https://api-sandbox3.developers.mega.co.nz/" disablepkp:NO];
+    [[MEGASdkManager sharedMEGASdkFolder] changeApiUrl:@"https://api-sandbox3.developers.mega.co.nz/" disablepkp:NO];
     
     [[MEGASdkManager sharedMEGASdk] addMEGARequestDelegate:self];
     [[MEGASdkManager sharedMEGASdk] addMEGATransferDelegate:self];
@@ -379,8 +382,6 @@
     }
     
     MEGALogDebug(@"Application did finish launching with options %@", launchOptions);
-    
-    [[CameraUploadManager shared] startUploading];
     
     return YES;
 }
@@ -1930,6 +1931,7 @@ void uncaughtExceptionHandler(NSException *exception) {
     if (!nodeList) {
         MEGATransferList *transferList = [api uploadTransfers];
         if (transferList.size.integerValue == 0) {
+            [[CameraUploadManager shared] startUploading];
             if ([CameraUploads syncManager].isCameraUploadsEnabled) {
                 MEGALogInfo(@"Enable Camera Uploads");
                 [[CameraUploads syncManager] setIsCameraUploadsEnabled:YES];
