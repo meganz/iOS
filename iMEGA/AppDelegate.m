@@ -64,6 +64,7 @@
 
 #import "MEGAChatCreateChatGroupRequestDelegate.h"
 #import "MEGAChatNotificationDelegate.h"
+#import "MEGALocalNotificationManager.h"
 #import "MEGACreateAccountRequestDelegate.h"
 #import "MEGAGetAttrUserRequestDelegate.h"
 #import "MEGAInviteContactRequestDelegate.h"
@@ -1770,8 +1771,28 @@ void uncaughtExceptionHandler(NSException *exception) {
 - (void)pushRegistry:(PKPushRegistry *)registry didReceiveIncomingPushWithPayload:(PKPushPayload *)payload forType:(NSString *)type {
     MEGALogDebug(@"Did receive incoming push with payload: %@", [payload dictionaryPayload]);
     
-    if ([[UIApplication sharedApplication] applicationState] == UIApplicationStateBackground) {
+    // Call
+    if ([[UIApplication sharedApplication] applicationState] == UIApplicationStateBackground && [[[payload dictionaryPayload] objectForKey:@"megatype"] integerValue] == 4) {
         [self beginBackgroundTaskWithName:@"VoIP"];
+    }
+    
+    // Message
+    if ([[[payload dictionaryPayload] objectForKey:@"megatype"] integerValue] == 2) {
+        NSString *chatIdB64 = [[[payload dictionaryPayload] objectForKey:@"megadata"] objectForKey:@"chatid"];
+        NSString *msgIdB64 = [[[payload dictionaryPayload] objectForKey:@"megadata"] objectForKey:@"msgid"];
+        if (chatIdB64 && msgIdB64) {
+            uint64_t chatId = [MEGASdk handleForBase64UserHandle:chatIdB64];
+            uint64_t msgId = [MEGASdk handleForBase64UserHandle:msgIdB64];
+            MEGAChatMessage *message = [[MEGASdkManager sharedMEGAChatSdk] messageForChat:chatId messageId:msgId];
+            MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:chatId];
+                                    
+            if (chatRoom && message && [UIApplication sharedApplication].applicationState != UIApplicationStateActive) {
+                MEGALocalNotificationManager *localNotificationManager = [[MEGALocalNotificationManager alloc] initWithChatRoom:chatRoom message:message silent:NO];
+                [localNotificationManager proccessNotification];
+            } else {
+                [[MEGAStore shareInstance] insertMessage:msgId chatId:chatId];
+            }
+        }
     }
 }
 
