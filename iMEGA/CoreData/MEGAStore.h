@@ -6,6 +6,7 @@
 #import "MOChatDraft+CoreDataProperties.h"
 #import "MOMediaDestination+CoreDataProperties.h"
 #import "MOUploadTransfer+CoreDataProperties.h"
+#import "MOMessage+CoreDataProperties.h"
 
 @interface MEGAStore : NSObject
 
@@ -54,5 +55,11 @@
 - (NSArray<MOUploadTransfer *> *)fetchUploadTransfers;
 - (MOUploadTransfer *)fetchTransferUpdateWithLocalIdentifier:(NSString *)localIdentifier;
 - (void)removeAllUploadTransfers;
+
+#pragma mark - MOMessage entity
+
+- (void)insertMessage:(uint64_t)messageId chatId:(uint64_t)chatId;
+- (void)deleteMessage:(MOMessage *)message;
+- (MOMessage *)fetchMessageWithChatId:(uint64_t)chatId messageId:(uint64_t)messageId;
 
 @end
