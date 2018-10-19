@@ -1184,7 +1184,7 @@ static MEGAIndexer *indexer;
 }
 
 + (void)presentSafariViewControllerWithURL:(NSURL *)url {
-    if (self) {
+    if (url) {
         if (!([url.scheme.lowercaseString isEqualToString:@"http"] || [url.scheme.lowercaseString isEqualToString:@"https"])) {
             MEGALogInfo(@"To use SFSafariViewController the URL must use the http or https scheme: \n%@", url.absoluteString);
             [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"linkNotValid", @"Message shown when the user clicks on an link that is not valid")];
