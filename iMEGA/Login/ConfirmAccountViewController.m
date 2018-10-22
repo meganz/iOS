@@ -4,6 +4,7 @@
 #import "SVProgressHUD.h"
 
 #import "Helper.h"
+#import "InputView.h"
 #import "MEGALoginRequestDelegate.h"
 #import "MEGAReachabilityManager.h"
 #import "PasswordView.h"
@@ -11,21 +12,18 @@
 
 @interface ConfirmAccountViewController () <UITextFieldDelegate, MEGARequestDelegate>
 
-@property (weak, nonatomic) IBOutlet UIImageView *logoImageView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *logoTopLayoutConstraint;
+@property (weak, nonatomic) IBOutlet UIImageView *logoImageView;
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *confirmTextTopLayoutConstraint;
 @property (weak, nonatomic) IBOutlet UILabel *confirmTextLabel;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *confirmTextBottomLayoutConstraint;
 
-@property (weak, nonatomic) IBOutlet UITextField *emailTextField;
+@property (weak, nonatomic) IBOutlet InputView *emailInputView;
 @property (weak, nonatomic) IBOutlet PasswordView *passwordView;
 
 @property (weak, nonatomic) IBOutlet UIButton *confirmAccountButton;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *confirmAccountButtonTopLayoutConstraint;
 @property (weak, nonatomic) IBOutlet UIButton *cancelButton;
-
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *passwordViewHeightConstraint;
 
 @end
 
@@ -36,38 +34,48 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    if ([[UIDevice currentDevice] iPhone4X]) {
-        self.logoTopLayoutConstraint.constant = 24.f;
-        self.confirmTextTopLayoutConstraint.constant = 24.f;
-        self.confirmTextBottomLayoutConstraint.constant = 55.f;
-        self.confirmAccountButtonTopLayoutConstraint.constant = 70.f;
-    } else if ([[UIDevice currentDevice] iPhone5X]) {
+    if (UIDevice.currentDevice.iPhone4X) {
+        self.logoTopLayoutConstraint.constant = 12.f;
+        self.confirmTextTopLayoutConstraint.constant = 6.f;
+        self.confirmTextBottomLayoutConstraint.constant = 6.f;
+    } else if (UIDevice.currentDevice.iPhone5X) {
         self.logoTopLayoutConstraint.constant = 24.f;
     }
     
-    if (self.confirmType == ConfirmTypeAccount) {
-        self.confirmTextLabel.text = AMLocalizedString(@"confirmText", @"Text shown on the confirm account view to remind the user what to do");
-        [self.confirmAccountButton setTitle:AMLocalizedString(@"confirmAccountButton", @"Button title that triggers the confirm account action") forState:UIControlStateNormal];
-    } else if (self.confirmType == ConfirmTypeEmail) {
-        self.confirmTextLabel.text = AMLocalizedString(@"verifyYourEmailAddress_description", @"Text shown on the confirm email view to remind the user what to do");
-        [self.confirmAccountButton setTitle:AMLocalizedString(@"confirmEmail", @"Button text for the user to confirm their change of email address.") forState:UIControlStateNormal];
-    } else if (self.confirmType == ConfirmTypeCancelAccount) {
-        self.confirmTextLabel.text = AMLocalizedString(@"enterYourPasswordToConfirmThatYouWanToClose", @"Account closure, message shown when you click on the link in the email to confirm the closure of your account");
-        [self.confirmAccountButton setTitle:AMLocalizedString(@"closeAccount", @"Account closure, password check dialog when user click on closure email.") forState:UIControlStateNormal];
+    switch (self.confirmType) {
+        case ConfirmTypeAccount:
+            self.confirmTextLabel.text = AMLocalizedString(@"confirmText", @"Text shown on the confirm account view to remind the user what to do");
+            [self.confirmAccountButton setTitle:AMLocalizedString(@"Confirm account", @"Label for any ‘Confirm account’ button, link, text, title, etc. - (String as short as possible).") forState:UIControlStateNormal];
+            
+            break;
+        
+        case ConfirmTypeEmail:
+            self.confirmTextLabel.text = AMLocalizedString(@"verifyYourEmailAddress_description", @"Text shown on the confirm email view to remind the user what to do");
+            [self.confirmAccountButton setTitle:AMLocalizedString(@"confirmEmail", @"Button text for the user to confirm their change of email address.") forState:UIControlStateNormal];
+            
+            break;
+        
+        case ConfirmTypeCancelAccount:
+            self.confirmTextLabel.text = AMLocalizedString(@"enterYourPasswordToConfirmThatYouWanToClose", @"Account closure, message shown when you click on the link in the email to confirm the closure of your account");
+            [self.confirmAccountButton setTitle:AMLocalizedString(@"closeAccount", @"Account closure, password check dialog when user click on closure email.") forState:UIControlStateNormal];
+            
+            break;
     }
     
     [self.cancelButton setTitle:AMLocalizedString(@"cancel", nil) forState:UIControlStateNormal];
     
-    [self.emailTextField setPlaceholder:AMLocalizedString(@"emailPlaceholder", @"Email")];
-    self.passwordView.passwordTextField.delegate = self;
-    self.passwordView.passwordTextField.textColor = UIColor.mnz_black333333;
-    self.passwordView.passwordTextField.font = [UIFont mnz_SFUIRegularWithSize:17];
+    self.emailInputView.iconImageView.image = [UIImage imageNamed:@"mail"];
+    self.emailInputView.topLabel.text = AMLocalizedString(@"emailPlaceholder", @"Hint text to suggest that the user has to write his email");
+    self.emailInputView.inputTextField.text = self.emailString;
+    self.emailInputView.inputTextField.enabled = NO;
     
-    [self.emailTextField setText:_emailString];
+    self.passwordView.leftImageView.image = [UIImage imageNamed:@"icon-link-only"];
+    self.passwordView.topLabel.text = AMLocalizedString(@"passwordPlaceholder", @"Hint text to suggest that the user has to write his password");
+    self.passwordView.passwordTextField.delegate = self;
 }
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations {
-    if ([[UIDevice currentDevice] iPhoneDevice]) {
+    if (UIDevice.currentDevice.iPhoneDevice) {
         return UIInterfaceOrientationMaskPortrait | UIInterfaceOrientationMaskPortraitUpsideDown;
     }
     
@@ -76,17 +84,26 @@
 
 #pragma mark - IBActions
 
-- (IBAction)confirmTouchUpInside:(id)sender {
+- (IBAction)confirmTouchUpInside:(UIButton *)sender {
     if ([MEGAReachabilityManager isReachableHUDIfNot]) {
         if ([self validateForm]) {
             [SVProgressHUD show];
             [self lockUI:YES];
-            if (self.confirmType == ConfirmTypeAccount) {
-                [[MEGASdkManager sharedMEGASdk] confirmAccountWithLink:self.confirmationLinkString password:self.passwordView.passwordTextField.text delegate:self];
-            } else if (self.confirmType == ConfirmTypeEmail) {
-                [[MEGASdkManager sharedMEGASdk] confirmChangeEmailWithLink:self.confirmationLinkString password:self.passwordView.passwordTextField.text delegate:self];
-            } else if (self.confirmType == ConfirmTypeCancelAccount) {
-                [[MEGASdkManager sharedMEGASdk] confirmCancelAccountWithLink:self.confirmationLinkString password:self.passwordView.passwordTextField.text delegate:self];
+            switch (self.confirmType) {
+                case ConfirmTypeAccount:
+                    [[MEGASdkManager sharedMEGASdk] confirmAccountWithLink:self.confirmationLinkString password:self.passwordView.passwordTextField.text delegate:self];
+                    
+                    break;
+                    
+                case ConfirmTypeEmail:
+                    [[MEGASdkManager sharedMEGASdk] confirmChangeEmailWithLink:self.confirmationLinkString password:self.passwordView.passwordTextField.text delegate:self];
+                    
+                    break;
+                    
+                case ConfirmTypeCancelAccount:
+                    [[MEGASdkManager sharedMEGASdk] confirmCancelAccountWithLink:self.confirmationLinkString password:self.passwordView.passwordTextField.text delegate:self];
+                    
+                    break;
             }
         }
     }
@@ -116,25 +133,21 @@
 #pragma mark - Private
 
 - (BOOL)validateForm {
-    if (self.passwordView.passwordTextField.text.length == 0) {
-        [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"passwordInvalidFormat", @"Enter a valid password")];
-        [self.passwordView.passwordTextField becomeFirstResponder];
-        return NO;
+    BOOL validPassword = self.passwordView.passwordTextField.text.length > 0;
+    
+    if (validPassword) {
+        [self.passwordView setErrorState:NO];
+    } else {
+        [self.passwordView setErrorState:YES withText:AMLocalizedString(@"passwordInvalidFormat", @"Enter a valid password")];
     }
-    return YES;
+    
+    return validPassword;
 }
 
 - (void)lockUI:(BOOL)boolValue {
     self.passwordView.passwordTextField.enabled = !boolValue;
     self.confirmAccountButton.enabled = !boolValue;
     self.cancelButton.enabled = !boolValue;
-}
-
-- (void)showErrorInPasswordView:(BOOL)showError {
-    self.passwordViewHeightConstraint.constant = showError ? 83.f : 44.f;
-    self.passwordView.wrongPasswordView.hidden = !showError;
-    
-    self.confirmAccountButtonTopLayoutConstraint.constant += (showError ? -39.f : 39.f);
 }
 
 #pragma mark - UIResponder
@@ -147,18 +160,16 @@
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     [self.passwordView.passwordTextField resignFirstResponder];
+    [self confirmTouchUpInside:self.confirmAccountButton];
     return YES;
 }
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
-    if (!self.passwordView.wrongPasswordView.hidden) {
-        [self showErrorInPasswordView:NO];
-    }
-    
-    self.passwordView.rightImageView.hidden = NO;
+    self.passwordView.toggleSecureButton.hidden = NO;
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField {
+    [self validateForm];
     self.passwordView.passwordTextField.secureTextEntry = YES;
     [self.passwordView configureSecureTextEntry];
 }
@@ -174,12 +185,11 @@
         
         switch ([error type]) {
             case MEGAErrorTypeApiENoent: { //MEGARequestTypeConfirmAccount, MEGARequestTypeConfirmChangeEmailLink, MEGARequestTypeConfirmCancelLink
-                [self showErrorInPasswordView:YES];
+                [self.passwordView setErrorState:YES];
                 break;
             }
                 
             case MEGAErrorTypeApiEAccess: {
-                
                 UIAlertController *alreadyLoggedInAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"alreadyLoggedInAlertTitle", @"Warning title shown when you try to confirm an account but you are logged in with another one") message:AMLocalizedString(@"alreadyLoggedInAlertMessage", @"Warning message shown when you try to confirm an account but you are logged in with another one") preferredStyle:UIAlertControllerStyleAlert];
                 
                 [alreadyLoggedInAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
@@ -197,13 +207,17 @@
             }
                 
             case MEGAErrorTypeApiEExist: {
-                [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"emailAlreadyInUse", @"Error shown when the user tries to change his mail to one that is already used")];
+                [self.emailInputView setErrorState:YES withText:AMLocalizedString(@"emailAlreadyInUse", @"Error shown when the user tries to change his mail to one that is already used")];
                 break;
             }
                 
             case MEGAErrorTypeApiESid:
                 break;
-
+                
+            case MEGAErrorTypeApiEKey:
+                [self.passwordView setErrorState:YES];
+                break;
+                
             default:
                 [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"%@ (%ld)", error.name, (long)error.type]];
                 break;
@@ -213,7 +227,6 @@
     }
     
     switch ([request type]) {
-            
         case MEGARequestTypeConfirmAccount: {
             if ([MEGASdkManager sharedMEGAChatSdk] == nil) {
                 [MEGASdkManager createSharedMEGAChatSdk];
@@ -225,9 +238,9 @@
                 [[MEGASdkManager sharedMEGAChatSdk] logout];
             }
             
-            if (![api isLoggedIn] || [api isLoggedIn] <= 1) {
+            if ([api isLoggedIn] <= 1) {
                 MEGALoginRequestDelegate *loginRequestDelegate = [[MEGALoginRequestDelegate alloc] init];
-                [api loginWithEmail:[self.emailTextField text] password:[self.passwordView.passwordTextField text] delegate:loginRequestDelegate];
+                [api loginWithEmail:self.emailInputView.inputTextField.text password:self.passwordView.passwordTextField.text delegate:loginRequestDelegate];
 
                 [Helper clearEphemeralSession];
             }

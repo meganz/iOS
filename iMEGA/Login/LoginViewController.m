@@ -4,6 +4,7 @@
 #import "SVProgressHUD.h"
 
 #import "Helper.h"
+#import "InputView.h"
 #import "MEGAMultiFactorAuthCheckRequestDelegate.h"
 #import "MEGANavigationController.h"
 #import "MEGALoginRequestDelegate.h"
@@ -21,7 +22,7 @@
 @property (weak, nonatomic) IBOutlet UIImageView *logoImageView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *logoTopLayoutConstraint;
 
-@property (weak, nonatomic) IBOutlet UITextField *emailTextField;
+@property (weak, nonatomic) IBOutlet InputView *emailInputView;
 @property (weak, nonatomic) IBOutlet PasswordView *passwordView;
 
 @property (weak, nonatomic) IBOutlet UIButton *loginButton;
@@ -38,7 +39,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    if (([[UIDevice currentDevice] iPhone4X])) {
+    if (UIDevice.currentDevice.iPhone4X) {
         self.logoTopLayoutConstraint.constant = 24.f;
     }
     
@@ -48,15 +49,19 @@
     longPressGestureRecognizer.minimumPressDuration = 5.0f;
     self.logoImageView.gestureRecognizers = @[tapGestureRecognizer, longPressGestureRecognizer];
     
-    [self.emailTextField setPlaceholder:AMLocalizedString(@"emailPlaceholder", @"Email")];
+    self.emailInputView.iconImageView.image = [UIImage imageNamed:@"mail"];
+    self.emailInputView.topLabel.text = AMLocalizedString(@"emailPlaceholder", @"Hint text to suggest that the user has to write his email");
+    self.emailInputView.inputTextField.delegate = self;
+    self.emailInputView.inputTextField.tag = 0;
+    
+    self.passwordView.leftImageView.image = [UIImage imageNamed:@"icon-link-only"];
+    self.passwordView.topLabel.text = AMLocalizedString(@"passwordPlaceholder", @"Hint text to suggest that the user has to write his password");
     self.passwordView.passwordTextField.delegate = self;
     self.passwordView.passwordTextField.tag = 1;
-    self.passwordView.passwordTextField.textColor = UIColor.mnz_black333333;
-    self.passwordView.passwordTextField.font = [UIFont mnz_SFUIRegularWithSize:17];
-
-    [self.loginButton setTitle:AMLocalizedString(@"login", @"Login") forState:UIControlStateNormal];
-    self.loginButton.backgroundColor = UIColor.mnz_grayEEEEEE;
     
+    [self.loginButton setTitle:AMLocalizedString(@"login", @"Login") forState:UIControlStateNormal];
+    [self loginEnabled:NO];
+
     [self.createAccountButton setTitle:AMLocalizedString(@"createAccount", nil) forState:UIControlStateNormal];
     NSString *forgotPasswordString = AMLocalizedString(@"forgotPassword", @"An option to reset the password.");
     forgotPasswordString = [forgotPasswordString stringByReplacingOccurrencesOfString:@"?" withString:@""];
@@ -72,19 +77,17 @@
     [self.navigationItem setTitle:AMLocalizedString(@"login", nil)];
     
     if (self.emailString) {
-        self.emailTextField.text = self.emailString;
+        self.emailInputView.inputTextField.text = self.emailString;
         self.emailString = nil;
         
         [self.passwordView.passwordTextField becomeFirstResponder];
-    } else {
-        self.emailTextField.placeholder = AMLocalizedString(@"emailPlaceholder", @"Hint text to suggest that the user has to write his email");
     }
     
     [[MEGALogger sharedLogger] enableChatlogs];
 }
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations {
-    if ([[UIDevice currentDevice] iPhoneDevice]) {
+    if (UIDevice.currentDevice.iPhoneDevice) {
         return UIInterfaceOrientationMaskPortrait | UIInterfaceOrientationMaskPortraitUpsideDown;
     }
     
@@ -106,7 +109,7 @@
         }
     }
     
-    [self.emailTextField resignFirstResponder];
+    [self.emailInputView.inputTextField resignFirstResponder];
     [self.passwordView.passwordTextField resignFirstResponder];
     
     if ([self validateForm]) {
@@ -116,13 +119,13 @@
                 if (error.type == MEGAErrorTypeApiEMFARequired) {
                     TwoFactorAuthenticationViewController *twoFactorAuthenticationVC = [[UIStoryboard storyboardWithName:@"TwoFactorAuthentication" bundle:nil] instantiateViewControllerWithIdentifier:@"TwoFactorAuthenticationViewControllerID"];
                     twoFactorAuthenticationVC.twoFAMode = TwoFactorAuthenticationLogin;
-                    twoFactorAuthenticationVC.email = self.emailTextField.text;
+                    twoFactorAuthenticationVC.email = self.emailInputView.inputTextField.text;
                     twoFactorAuthenticationVC.password = self.passwordView.passwordTextField.text;
                     
                     [self.navigationController pushViewController:twoFactorAuthenticationVC animated:YES];
                 }
             };
-            [[MEGASdkManager sharedMEGASdk] loginWithEmail:self.emailTextField.text password:self.passwordView.passwordTextField.text delegate:loginRequestDelegate];
+            [[MEGASdkManager sharedMEGASdk] loginWithEmail:self.emailInputView.inputTextField.text password:self.passwordView.passwordTextField.text delegate:loginRequestDelegate];
         }
     }
 }
@@ -146,45 +149,33 @@
 }
 
 - (BOOL)validateForm {
-    if (!self.emailTextField.text.mnz_isValidEmail) {
-        [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"emailInvalidFormat", @"Enter a valid email")];
-        [self.emailTextField becomeFirstResponder];
-        return NO;
-    } else if (![self validatePassword:self.passwordView.passwordTextField.text]) {
-        [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"passwordInvalidFormat", @"Enter a valid password")];
-        [self.passwordView.passwordTextField becomeFirstResponder];
-        return NO;
-    }
-    return YES;
+    return [self validateEmail] && [self validatePassword];
 }
 
-- (BOOL)validatePassword:(NSString *)password {
-    if (password.length == 0) {
-        return NO;
+- (BOOL)validateEmail {
+    BOOL validEmail = self.emailInputView.inputTextField.text.mnz_isValidEmail;
+    
+    if (validEmail) {
+        [self.emailInputView setErrorState:NO withText:AMLocalizedString(@"emailPlaceholder", @"Hint text to suggest that the user has to write his email")];
     } else {
-        return YES;
-    }
-}
-
-- (BOOL)isEmptyAnyTextFieldForTag:(NSInteger )tag {
-    BOOL isAnyTextFieldEmpty = NO;
-    switch (tag) {
-        case 0: {
-            if ([self.passwordView.passwordTextField.text isEqualToString:@""]) {
-                isAnyTextFieldEmpty = YES;
-            }
-            break;
-        }
-            
-        case 1: {
-            if ([self.emailTextField.text isEqualToString:@""]) {
-                isAnyTextFieldEmpty = YES;
-            }
-            break;
-        }
+        [self.emailInputView setErrorState:YES withText:AMLocalizedString(@"emailInvalidFormat", @"Enter a valid email")];
+        [self.emailInputView.inputTextField becomeFirstResponder];
     }
     
-    return isAnyTextFieldEmpty;
+    return validEmail;
+}
+
+- (BOOL)validatePassword {
+    BOOL validPassword = self.passwordView.passwordTextField.text.length > 0;
+    
+    if (validPassword) {
+        [self.passwordView setErrorState:NO];
+    } else {
+        [self.passwordView setErrorState:YES withText:AMLocalizedString(@"passwordInvalidFormat", @"Enter a valid password")];
+        [self.passwordView.passwordTextField becomeFirstResponder];
+    }
+
+    return validPassword;
 }
 
 - (NSString *)timeFormatted:(NSUInteger)totalSeconds {
@@ -201,6 +192,11 @@
 
 - (void)cleanPasswordTextField {
     self.passwordView.passwordTextField.text = nil;
+}
+
+- (void)loginEnabled:(BOOL)enabled {
+    self.loginButton.enabled = enabled;
+    self.loginButton.alpha = enabled ? 1.0f : 0.5f;
 }
 
 #pragma mark - UIResponder
@@ -222,21 +218,26 @@
 #pragma mark - UITextFieldDelegate
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
-    NSString *text = [textField.text stringByReplacingCharactersInRange:range withString:string];
-    BOOL shoulBeLoginButtonGray = NO;
-    if ([text isEqualToString:@""] || (!self.emailTextField.text.mnz_isValidEmail)) {
-        shoulBeLoginButtonGray = YES;
-    } else {
-        shoulBeLoginButtonGray = [self isEmptyAnyTextFieldForTag:textField.tag];
+    switch (textField.tag) {
+        case 0:
+            [self loginEnabled:[textField.text stringByReplacingCharactersInRange:range withString:string].mnz_isValidEmail && self.passwordView.passwordTextField.text.length > 0];
+            
+            break;
+            
+        case 1:
+            [self loginEnabled:self.emailInputView.inputTextField.text.mnz_isValidEmail && [textField.text stringByReplacingCharactersInRange:range withString:string].length > 0];
+            
+            break;
+            
+        default:
+            break;
     }
-    
-    self.loginButton.backgroundColor = shoulBeLoginButtonGray ? UIColor.mnz_grayEEEEEE : UIColor.mnz_redMain;
     
     return YES;
 }
 
 - (BOOL)textFieldShouldClear:(UITextField *)textField {
-    self.loginButton.backgroundColor = UIColor.mnz_grayEEEEEE;
+    [self loginEnabled:NO];
     
     return YES;
 }
@@ -249,7 +250,9 @@
             
         case 1:
             [self.passwordView.passwordTextField resignFirstResponder];
-            [self tapLogin:self.loginButton];
+            if (self.loginButton.isEnabled) {
+                [self tapLogin:self.loginButton];
+            }
             break;
             
         default:
@@ -261,14 +264,26 @@
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
     if (textField.tag == 1) {
-        self.passwordView.rightImageView.hidden = NO;
+        self.passwordView.toggleSecureButton.hidden = NO;
     }
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField {
-    if (textField.tag == 1) {
-        self.passwordView.passwordTextField.secureTextEntry = YES;
-        [self.passwordView configureSecureTextEntry];
+    switch (textField.tag) {
+        case 0:
+            [self validateEmail];
+            
+            break;
+            
+        case 1:
+            self.passwordView.passwordTextField.secureTextEntry = YES;
+            [self.passwordView configureSecureTextEntry];
+            [self validatePassword];
+            
+            break;
+            
+        default:
+            break;
     }
 }
 

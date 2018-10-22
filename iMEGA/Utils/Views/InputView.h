@@ -10,6 +10,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet UILabel *topLabel;
 @property (weak, nonatomic) IBOutlet UITextField *inputTextField;
 
+- (void)setErrorState:(BOOL)error withText:(NSString *)text;
+
 @end
 
 NS_ASSUME_NONNULL_END

@@ -144,8 +144,8 @@
 "awaitingEmailConfirmation"="Ожидание подтверждения по электронной почте.";
 /* Text shown on the confirm account view to remind the user what to do */
 "confirmText"="Пожалуйста, введите пароль, чтобы подтвердить свою учётную запись";
-/* Button title that triggers the confirm account action */
-"confirmAccountButton"="Подтверждение учётной записи";
+/* Label for any ‘Confirm account’ button, link, text, title, etc. - (String as short as possible). */
+"Confirm account"="Подтверждение учётной записи";
 /* Error text shown when you introduce a wrong password on the confirmation proccess */
 "passwordWrong"="Неверный пароль";
 /* Warning title shown when you try to confirm an account but you are logged in with another one */
