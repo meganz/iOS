@@ -1,13 +1,13 @@
 /* Microphone usage description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
-"NSMicrophoneUsageDescription"="O MEGA acessa o microfone quando você gravar um vídeo ou fizer uma chamada usando o aplicativo.";
+"NSMicrophoneUsageDescription"="O MEGA acessa o microfone quando você grava um vídeo ou faz uma chamada usando o aplicativo.";
 /* Camera usage description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
-"NSCameraUsageDescription"="O MEGA acessa a sua câmera quando você gravar um vídeo, tirar uma foto ou fizer uma chamada usando o aplicativo.";
+"NSCameraUsageDescription"="O MEGA acessa a sua câmera quando você grava um vídeo, tira uma foto ou faz uma chamada usando o aplicativo.";
 /* Photo library usage description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
 "NSPhotoLibraryUsageDescription"="O MEGA acessa as suas fotos e/ou vídeos quando você seleciona alguns deles para fazer upload, ou quando você ativar os Uploads da câmera.";
 /* Contacts Usage Description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
 "NSContactsUsageDescription"="O MEGA acessa os seus contatos quando você os seleciona para salvar ou exportar.";
 /* Write-only access to the user’s photo library description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
-"NSPhotoLibraryAddUsageDescription"="O MEGA requer acesso à sua biblioteca de fotos para adicionar fotos e vídeos à sua galeria do seu dispositivo";
+"NSPhotoLibraryAddUsageDescription"="O MEGA necessita acessar a sua biblioteca multimídia para adicionar fotos e vídeos à galeria do seu dispositivo";
 /* Face ID usage description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
 "NSFaceIDUsageDescription"="O MEGA acessa o Face ID para permitir desbloquear facilmente o passcode do aplicativo caso você ative esta opção.";
 /* Label for any 'Search' button, link, etc. - (String as short as possible). */
