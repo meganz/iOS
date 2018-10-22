@@ -361,7 +361,7 @@
     BOOL fileExists = [NSFileManager.defaultManager fileExistsAtPath:documentFilePath];
     if (fileExists) {
         NSString *localFingerprint = [[MEGASdkManager sharedMEGASdk] fingerprintForFilePath:documentFilePath];
-        if ([localFingerprint isEqualToString:[[MEGASdkManager sharedMEGASdk] fingerprintForNode:node]]) {
+        if ([localFingerprint isEqualToString:node.fingerprint]) {
             shouldOpenLocalFile = YES;
         } else {
             NSDictionary *fileAttributes = [NSFileManager.defaultManager attributesOfItemAtPath:documentFilePath error:nil];
