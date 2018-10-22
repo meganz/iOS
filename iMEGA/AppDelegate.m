@@ -381,8 +381,10 @@
     
     MEGALogDebug(@"Application did finish launching with options %@", launchOptions);
     
-    UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
-    [center removeAllDeliveredNotifications];
+    if (application.applicationState == UIApplicationStateActive) {
+        UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
+        [center removeAllDeliveredNotifications];
+    }
     
     return YES;
 }
