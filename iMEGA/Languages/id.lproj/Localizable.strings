@@ -144,8 +144,8 @@
 "awaitingEmailConfirmation"="Menunggu konfirmasi email.";
 /* Text shown on the confirm account view to remind the user what to do */
 "confirmText"="Harap masukan password anda untuk mengkonfirmasi akun anda";
-/* Button title that triggers the confirm account action */
-"confirmAccountButton"="Konfirm akun anda.";
+/* Label for any ‘Confirm account’ button, link, text, title, etc. - (String as short as possible). */
+"Confirm account"="Konfirm akun anda.";
 /* Error text shown when you introduce a wrong password on the confirmation proccess */
 "passwordWrong"="Password salah";
 /* Warning title shown when you try to confirm an account but you are logged in with another one */
