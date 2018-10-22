@@ -806,7 +806,7 @@
 /* Headline for parking an account (basically restarting from scratch) */
 "parkAccount"="계정 보류";
 /* Label text of a checkbox to ensure that the user is aware that the data of his current account will be lost when proceeding unless they remember their password or have their master encryption key (now renamed "Recovery Key") */
-"startingFreshAccount"="나는 새로운, 빈 계정을 시작하고 내가 비밀번호를 다시 떠올리거나 내보낸 복구 키의 위치를 찾아낼 때 까지 현재 계정의 모든 데이터를 잃어버린다는 것을 알고 있습니다.";
+"startingFreshAccount"="나는 비어있는 새로운 계정을 시작하고, 내가 비밀번호를 다시 떠올리거나 저장된 복구 키의 위치를 찾아내지 못한다면 현재 계정의 모든 데이터를 잃어버린다는 것을 알고 있습니다.";
 /* Caption of the button to proceed */
 "startNewAccount"="새 계정을 시작";
 /*  */

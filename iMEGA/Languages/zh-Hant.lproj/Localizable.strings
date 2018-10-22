@@ -37,7 +37,7 @@
 /* Alert message shown when the user tries to download an empty folder  */
 "emptyFolderMessage"="您不能下載空的資料夾。";
 /* Message shown when the user clicks on a confirm account link that has already been used  */
-"accountAlreadyConfirmed"="帳號已可使用。請登入。";
+"accountAlreadyConfirmed"="您的帳戶已通過認證。請登入帳戶以開始使用。";
 /* Message shown when the user clicks on an link that is not valid */
 "linkNotValid"="無效的連結";
 /* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
