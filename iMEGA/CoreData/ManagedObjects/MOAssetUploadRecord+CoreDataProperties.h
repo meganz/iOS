@@ -10,7 +10,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nullable, nonatomic, copy) NSString *localIdentifier;
 @property (nullable, nonatomic, copy) NSString *status;
-@property (nullable, nonatomic, copy) NSDate *creationDate;
+@property (nullable, nonatomic, copy) NSDate *modificationDate;
 
 @end
 

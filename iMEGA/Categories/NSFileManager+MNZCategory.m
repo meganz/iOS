@@ -38,6 +38,8 @@
             MEGALogError(@"Create directory at url failed with error: %@", uploadURL);
             return nil;
         }
+        
+        // TODO: exclude the path from iCloud backup/sync
     }
     
     return uploadURL;

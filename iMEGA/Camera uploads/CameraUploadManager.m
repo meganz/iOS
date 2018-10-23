@@ -1,7 +1,7 @@
 
 #import "CameraUploadManager.h"
 #import "AssetUploadRecordCoreDataManager.h"
-#import "AssetManager.h"
+#import "AssetScanner.h"
 #import "AssetUploadOperation.h"
 #import "Helper.h"
 #import "MEGASdkManager.h"
@@ -9,12 +9,14 @@
 @import Photos;
 
 static NSString * const cameraUplodFolderName = @"Camera Uploads";
+static const NSInteger concurrentPhotoUploadCount = 100;
 
 @interface CameraUploadManager ()
 
 @property (strong, nonatomic) NSOperationQueue *operationQueue;
 @property (strong, nonatomic) AssetUploadRecordCoreDataManager *assetUploadRecordManager;
 @property (strong, nonatomic) MEGANode *cameraUploadNode;
+@property (strong, nonatomic) AssetScanner *scanner;
 
 @end
 
@@ -35,6 +37,8 @@ static NSString * const cameraUplodFolderName = @"Camera Uploads";
     if (self) {
         _operationQueue = [[NSOperationQueue alloc] init];
         _assetUploadRecordManager = [[AssetUploadRecordCoreDataManager alloc] init];
+        _scanner = [[AssetScanner alloc] init];
+        [[MEGASdkManager sharedMEGASdk] ensureMediaInfo];
     }
     return self;
 }
@@ -57,14 +61,33 @@ static NSString * const cameraUplodFolderName = @"Camera Uploads";
 - (void)uploadIfPossible {
     [PHPhotoLibrary requestAuthorization:^(PHAuthorizationStatus status) {
         if (status == PHAuthorizationStatusAuthorized) {
-            [[AssetManager shared] startScanningWithCompletion:^{
-                NSArray *records = [self.assetUploadRecordManager fetchNonUploadedRecordsWithLimit:1 error:nil];
-                for (MOAssetUploadRecord *record in records) {
-                    [self.operationQueue addOperation:[[AssetUploadOperation alloc] initWithLocalIdentifier:record.localIdentifier cameraUploadNode:self.cameraUploadNode]];
-                }
+            [self.scanner startScanningWithCompletion:^{
+                [self uploadNextPhotoBatch];
             }];
         }
     }];
+}
+
+- (void)uploadNextPhotoBatch {
+    [self uploadNextPhotosWithNumber:concurrentPhotoUploadCount];
+}
+
+- (void)uploadNextVideoBatch {
+}
+
+- (void)uploadNextPhoto {
+    [self uploadNextPhotosWithNumber:1];
+}
+
+- (void)uploadNextAvailableVideo {
+    
+}
+
+- (void)uploadNextPhotosWithNumber:(NSInteger)number {
+    NSArray *records = [self.assetUploadRecordManager fetchNonUploadedRecordsWithLimit:number error:nil];
+    for (MOAssetUploadRecord *record in records) {
+        [self.operationQueue addOperation:[[AssetUploadOperation alloc] initWithLocalIdentifier:record.localIdentifier cameraUploadNode:self.cameraUploadNode]];
+    }
 }
 
 #pragma mark - handle camera upload node

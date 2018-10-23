@@ -645,6 +645,7 @@
 }
 
 - (void)application:(UIApplication *)application handleEventsForBackgroundURLSession:(NSString *)identifier completionHandler:(void (^)(void))completionHandler {
+    MEGALogDebug(@"application handle events for background session: %@", identifier);
     if ([identifier isEqualToString:photoTransferSessionId]) {
         [TransferSessionManager shared].photoSessionCompletion = completionHandler;
         [[TransferSessionManager shared] restorePhotoSessionIfNeeded];
