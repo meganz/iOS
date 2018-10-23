@@ -97,6 +97,7 @@
 
 - (void)configureUI {
     self.title = AMLocalizedString(@"testPassword", @"Label for test password button");
+    self.passwordView.leftImageView.image = [UIImage imageNamed:@"icon-key-only"];
     if (self.isLoggingOut) {
         self.closeBarButton.title = AMLocalizedString(@"logoutLabel", @"Title of the button which logs out from your account.");
         self.descriptionLabel.text = AMLocalizedString(@"testPasswordLogoutText", @"Text that described that you are about to logout remenbering why the user should remenber the password and/or test it");
@@ -128,10 +129,7 @@
 }
 
 - (void)passwordTestFailed {
-    self.passwordViewHeightConstraint.constant = 101;
-    self.passwordView.wrongPasswordView.hidden = NO;
-
-    self.passwordView.passwordTextField.textColor = UIColor.mnz_redMain;
+    [self.passwordView setErrorState:YES];
     
     [self.backupKeyButton setTitleColor:UIColor.whiteColor forState:UIControlStateNormal];
     self.backupKeyButton.backgroundColor = UIColor.mnz_redMain;
@@ -159,11 +157,8 @@
 }
 
 - (void)resetUI {
-    self.passwordView.passwordTextField.textColor = UIColor.mnz_gray666666;
+    [self.passwordView setErrorState:NO];
     
-    self.passwordViewHeightConstraint.constant = 62;
-    self.passwordView.wrongPasswordView.hidden = YES;
-        
     if (self.isLoggingOut) {
         self.confirmButton.layer.borderWidth = 0.0f;
         self.confirmButton.layer.borderColor = nil;
