@@ -107,12 +107,6 @@
 
 #pragma mark - Private
 
-- (IBAction)cancel:(UIBarButtonItem *)sender {
-    [self hideKeyboard];
-    
-    [self dismissViewControllerAnimated:YES completion:nil];
-}
-
 - (BOOL)validateForm {
     if (![self validateFirstName]) {
         [self.firstNameInputView.inputTextField becomeFirstResponder];
@@ -264,6 +258,12 @@
 }
 
 #pragma mark - IBActions
+
+- (IBAction)cancel:(UIBarButtonItem *)sender {
+    [self hideKeyboard];
+    
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
 
 - (IBAction)termsCheckboxTouchUpInside:(id)sender {
     self.termsCheckboxButton.selected = !self.termsCheckboxButton.selected;
