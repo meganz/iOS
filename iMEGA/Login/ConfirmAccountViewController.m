@@ -38,7 +38,7 @@
         self.logoTopLayoutConstraint.constant = 12.f;
         self.confirmTextTopLayoutConstraint.constant = 6.f;
         self.confirmTextBottomLayoutConstraint.constant = 6.f;
-    } else if (UIDevice.currentDevice.iPhone5X) {
+    } else if (UIDevice.currentDevice.iPhone5X || (UIDevice.currentDevice.iPadDevice && UIInterfaceOrientationIsLandscape(UIApplication.sharedApplication.statusBarOrientation))) {
         self.logoTopLayoutConstraint.constant = 24.f;
     }
     
