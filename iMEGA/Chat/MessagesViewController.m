@@ -518,7 +518,7 @@ const NSUInteger kMaxMessagesToLoad = 256;
     }
     contactsVC.participantsMutableDictionary = [self.participantsMutableDictionary copy];
     
-    contactsVC.userSelected = ^void(NSArray *users, NSString *groupName) {
+    contactsVC.userSelected = ^void(NSArray *users) {
         if (addParticipant) {
             for (NSInteger i = 0; i < users.count; i++) {
                 if (self.shouldStopInvitingContacts) {

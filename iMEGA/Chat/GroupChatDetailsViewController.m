@@ -177,7 +177,7 @@
     }
     contactsVC.participantsMutableDictionary = participantsMutableDictionary.copy;
     
-    contactsVC.userSelected = ^void(NSArray *users, NSString *groupName) {
+    contactsVC.userSelected = ^void(NSArray *users) {
         for (NSInteger i = 0; i < users.count; i++) {
             MEGAUser *user = [users objectAtIndex:i];
             [[MEGASdkManager sharedMEGAChatSdk] inviteToChat:self.chatRoom.chatId user:user.handle privilege:MEGAChatRoomPrivilegeStandard delegate:self];
