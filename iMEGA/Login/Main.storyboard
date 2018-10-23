@@ -230,7 +230,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="p9V-22-W3Y" userLabel="Content View">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="727"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="725"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hkb-3j-jnC" customClass="InputView">
                                                 <rect key="frame" x="0.0" y="36" width="375" height="60"/>
@@ -250,7 +250,7 @@
                                                 </variation>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Klv-H8-jVM" customClass="InputView">
-                                                <rect key="frame" x="0.0" y="96" width="375" height="60"/>
+                                                <rect key="frame" x="0.0" y="95" width="375" height="60"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="622" id="97K-m9-c61"/>
                                                     <constraint firstAttribute="height" constant="60" id="dCM-J2-5q9"/>
@@ -267,7 +267,7 @@
                                                 </variation>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="L2c-lr-kWP" customClass="InputView">
-                                                <rect key="frame" x="0.0" y="176" width="375" height="60"/>
+                                                <rect key="frame" x="0.0" y="175" width="375" height="60"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="60" id="fSd-0C-ZkJ"/>
                                                     <constraint firstAttribute="width" constant="622" id="iTS-DL-CRQ"/>
@@ -284,7 +284,7 @@
                                                 </variation>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7hM-BK-Re1" customClass="PasswordView">
-                                                <rect key="frame" x="0.0" y="256" width="375" height="60"/>
+                                                <rect key="frame" x="0.0" y="255" width="375" height="60"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="60" id="9wx-cY-cpE"/>
                                                     <constraint firstAttribute="width" constant="622" id="M7U-cF-mi7"/>
@@ -301,14 +301,14 @@
                                                 </variation>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ELz-jx-ahD" customClass="PasswordStrengthIndicatorView">
-                                                <rect key="frame" x="58" y="316" width="300" height="112"/>
+                                                <rect key="frame" x="58" y="315" width="300" height="112"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="112" id="MGj-Ev-51Y"/>
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WFG-hb-soU" userLabel="Confirm Password View" customClass="PasswordView">
-                                                <rect key="frame" x="0.0" y="428" width="375" height="60"/>
+                                                <rect key="frame" x="0.0" y="426" width="375" height="60"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="622" id="S45-T1-hjU"/>
@@ -326,7 +326,7 @@
                                                 </variation>
                                             </view>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="l5v-Oj-XXr" userLabel="Checkbox">
-                                                <rect key="frame" x="20" y="535" width="22" height="22"/>
+                                                <rect key="frame" x="20" y="533" width="22" height="22"/>
                                                 <accessibility key="accessibilityConfiguration" hint="You agree MEGA Term of Services"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="22" id="EAj-3p-sHn"/>
@@ -341,7 +341,7 @@
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fqq-un-Bih">
-                                                <rect key="frame" x="60" y="535.5" width="224" height="21"/>
+                                                <rect key="frame" x="60" y="533.5" width="224" height="21"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="21" id="zn0-Q3-HDE"/>
                                                 </constraints>
@@ -354,7 +354,7 @@
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bak-ZA-1ZU">
-                                                <rect key="frame" x="43.5" y="642" width="288" height="50"/>
+                                                <rect key="frame" x="43.5" y="640" width="288" height="50"/>
                                                 <color key="backgroundColor" red="0.95294117649999999" green="0.047058823530000002" blue="0.078431372550000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="50" id="QY2-jL-B7y"/>
@@ -386,7 +386,7 @@
                                             <constraint firstItem="L2c-lr-kWP" firstAttribute="top" secondItem="Klv-H8-jVM" secondAttribute="bottom" constant="20" id="IlE-RH-gdA"/>
                                             <constraint firstItem="7hM-BK-Re1" firstAttribute="leading" secondItem="p9V-22-W3Y" secondAttribute="leading" id="N5A-Uo-Dbz"/>
                                             <constraint firstItem="l5v-Oj-XXr" firstAttribute="leading" secondItem="WFG-hb-soU" secondAttribute="leading" constant="20" id="OsC-UN-Fmv"/>
-                                            <constraint firstItem="WFG-hb-soU" firstAttribute="top" secondItem="ELz-jx-ahD" secondAttribute="bottom" id="P7D-18-JVD"/>
+                                            <constraint firstItem="WFG-hb-soU" firstAttribute="top" secondItem="ELz-jx-ahD" secondAttribute="bottom" constant="-1" id="P7D-18-JVD"/>
                                             <constraint firstItem="7hM-BK-Re1" firstAttribute="top" secondItem="L2c-lr-kWP" secondAttribute="bottom" constant="20" id="Sau-LI-J2H"/>
                                             <constraint firstItem="bak-ZA-1ZU" firstAttribute="centerX" secondItem="p9V-22-W3Y" secondAttribute="centerX" id="UXW-Ke-T70"/>
                                             <constraint firstItem="fqq-un-Bih" firstAttribute="leading" secondItem="l5v-Oj-XXr" secondAttribute="trailing" constant="18" id="VLD-5V-dGN"/>
@@ -397,7 +397,7 @@
                                             <constraint firstItem="L2c-lr-kWP" firstAttribute="centerX" secondItem="p9V-22-W3Y" secondAttribute="centerX" id="hFM-uF-B3H"/>
                                             <constraint firstItem="7hM-BK-Re1" firstAttribute="centerX" secondItem="p9V-22-W3Y" secondAttribute="centerX" id="lSL-iX-QRI"/>
                                             <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="fqq-un-Bih" secondAttribute="trailing" constant="17" id="nwa-gY-7Fx"/>
-                                            <constraint firstItem="Klv-H8-jVM" firstAttribute="top" secondItem="hkb-3j-jnC" secondAttribute="bottom" id="xP0-Pu-FRc"/>
+                                            <constraint firstItem="Klv-H8-jVM" firstAttribute="top" secondItem="hkb-3j-jnC" secondAttribute="bottom" constant="-1" id="xP0-Pu-FRc"/>
                                             <constraint firstItem="L2c-lr-kWP" firstAttribute="leading" secondItem="p9V-22-W3Y" secondAttribute="leading" id="xbF-Xu-dXe"/>
                                             <constraint firstItem="Klv-H8-jVM" firstAttribute="leading" secondItem="p9V-22-W3Y" secondAttribute="leading" id="y7o-Cq-aHq"/>
                                             <constraint firstItem="hkb-3j-jnC" firstAttribute="leading" secondItem="p9V-22-W3Y" secondAttribute="leading" id="zOj-PL-j3v"/>
