@@ -1680,3 +1680,15 @@
 "Saved to Photos"="Saved to Photos";
 /* Text shown when an error occurs when trying to save a photo or video to Photos app */
 "Could not save Item"="Could not save Item";
+/* Label title for open a chat link */
+"Open Chat Link"="Open Chat Link";
+/* Label in a cell where you can enable the 'Encrypted Key Rotation' */
+"Encrypted Key Rotation"="Encrypted Key Rotation";
+/* Label in a cell where you can get the chat link */
+"Get Chat Link"="Get Chat Link";
+/* Footer text to explain what means 'Encrypted Key Rotation' */
+"Key rotation is slightly more secure, but does not allow you to create a link to the chat and new participants will not see past messages."="Key rotation is slightly more secure, but does not allow you to create a link to the chat and new participants will not see past messages.";
+/* Alert message to advice the users that to generate a chat link they need enter a group name for the chat */
+"Before you can generate a link for this room, you need to enter a group name"="Before you can generate a link for this room, you need to enter a group name";
+/* */
+"Chat Link"="Chat Link";
