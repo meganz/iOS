@@ -2,6 +2,7 @@
 #import "TransferSessionManager.h"
 #import "TransferSessionDelegate.h"
 #import "TransferSessionTaskDelegate.h"
+#import "CameraUploadManager.h"
 
 NSString * const photoTransferSessionId = @"nz.mega.photoTransfer";
 NSString * const videoTransferSessionId = @"nz.mega.videoTransfer";
@@ -80,13 +81,10 @@ NSString * const videoTransferSessionId = @"nz.mega.videoTransfer";
 
 
 - (NSURLSession *)createBackgroundSessionWithIdentifier:(NSString *)identifier {
-//    NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration backgroundSessionConfigurationWithIdentifier:identifier];
-//    configuration.discretionary = YES;
-//    configuration.sessionSendsLaunchEvents = YES;
-////    configuration.HTTPAdditionalHeaders = @{ @"Content-Type" : @"application/octet-stream" };
-//    return [NSURLSession sessionWithConfiguration:configuration delegate:self.sessionDelegate delegateQueue:nil];
-    
-    return [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration] delegate:self.sessionDelegate delegateQueue:nil];
+    NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration backgroundSessionConfigurationWithIdentifier:identifier];
+    configuration.discretionary = YES;
+    configuration.sessionSendsLaunchEvents = YES;
+    return [NSURLSession sessionWithConfiguration:configuration delegate:self.sessionDelegate delegateQueue:nil];
 }
 
 #pragma mark - task creation
@@ -111,6 +109,35 @@ NSString * const videoTransferSessionId = @"nz.mega.videoTransfer";
 - (void)addDelegateForTask:(NSURLSessionTask *)task completion:(UploadCompletionHandler)completion {
     TransferSessionTaskDelegate *delegate = [[TransferSessionTaskDelegate alloc] initWithCompletionHandler:completion];
     [self.sessionDelegate addDelegate:delegate forTask:task];
+}
+
+#pragma mark - session finishes
+
+- (void)didFinishEventsForBackgroundURLSession:(NSURLSession *)session {
+    if ([session.configuration.identifier isEqualToString:photoTransferSessionId]) {
+        [self didFinishPhotoSessionEvents];
+    } else if ([session.configuration.identifier isEqualToString:videoTransferSessionId]) {
+        [self didFinishVideoSessionEvents];
+    }
+}
+
+- (void)didFinishPhotoSessionEvents {
+    [[CameraUploadManager shared] uploadNextPhotoBatch];
+    
+    [NSOperationQueue.mainQueue addOperationWithBlock:^{
+        if (self.photoSessionCompletion) {
+            self.photoSessionCompletion();
+        }
+    }];
+}
+
+- (void)didFinishVideoSessionEvents {
+    
+    [NSOperationQueue.mainQueue addOperationWithBlock:^{
+        if (self.videoSessionCompletion) {
+            self.videoSessionCompletion();
+        }
+    }];
 }
 
 @end

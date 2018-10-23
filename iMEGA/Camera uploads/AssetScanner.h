@@ -4,9 +4,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface AssetManager : NSObject
-
-+ (instancetype)shared;
+@interface AssetScanner : NSObject
 
 - (void)startScanningWithCompletion:(void (^)(void))completion;
 

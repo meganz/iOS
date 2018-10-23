@@ -10,7 +10,6 @@
 #import "MOAssetUploadRecord+CoreDataClass.h"
 
 extern NSString * const uploadStatusNotStarted;
-extern NSString * const uploadStatusDownloading;
 extern NSString * const uploadStatusProcessing;
 extern NSString * const uploadStatusUploading;
 extern NSString * const uploadStatusFailed;
@@ -22,6 +21,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface AssetUploadRecordCoreDataManager : NSObject
 
++ (instancetype)shared;
+
 - (NSArray<MOAssetUploadRecord *> *)fetchNonUploadedRecordsWithLimit:(NSInteger)fetchLimit error:(NSError * _Nullable __autoreleasing * _Nullable)error;
 
 - (NSArray<MOAssetUploadRecord *> *)fetchAllAssetUploadRecords:(NSError * _Nullable __autoreleasing * _Nullable)error;
@@ -29,6 +30,10 @@ NS_ASSUME_NONNULL_BEGIN
 - (BOOL)saveAssetFetchResult:(PHFetchResult *)result error:(NSError * _Nullable __autoreleasing * _Nullable)error;
 
 - (BOOL)saveAssets:(NSArray<PHAsset *> *)assets error:(NSError * _Nullable __autoreleasing * _Nullable)error;
+
+- (BOOL)updateStatus:(NSString *)status forLocalIdentifier:(NSString *)identifier error:(NSError * _Nullable __autoreleasing * _Nullable)error;
+
+- (BOOL)deleteRecordsByLocalIdentifiers:(NSArray<NSString *> *)identifiers error:(NSError * _Nullable __autoreleasing * _Nullable)error;
 
 @end
 

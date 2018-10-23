@@ -1,33 +1,21 @@
 
-#import "AssetManager.h"
+#import "AssetScanner.h"
 #import "AssetUploadRecordCoreDataManager.h"
 @import Photos;
 
-@interface AssetManager () <PHPhotoLibraryChangeObserver>
+@interface AssetScanner () <PHPhotoLibraryChangeObserver>
 
 @property (strong, nonatomic) NSOperationQueue *operationQueue;
-@property (strong, nonatomic) AssetUploadRecordCoreDataManager *assetUploadRecordManager;
 @property (strong, nonatomic) PHFetchResult<PHAsset *> *fetchResult;
 
 @end
 
-@implementation AssetManager
-
-+ (instancetype)shared {
-    static id sharedInstance = nil;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        sharedInstance = [[self alloc] init];
-    });
-    
-    return sharedInstance;
-}
+@implementation AssetScanner
 
 - (instancetype)init {
     self = [super init];
     if (self) {
         _operationQueue = [[NSOperationQueue alloc] init];
-        _assetUploadRecordManager = [[AssetUploadRecordCoreDataManager alloc] init];
     }
     return self;
 }
@@ -41,7 +29,6 @@
 - (void)startScanningWithCompletion:(void (^)(void))completion {
     [self.operationQueue addOperationWithBlock:^{
         PHFetchOptions *fetchOptions = [[PHFetchOptions alloc] init];
-        fetchOptions.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"creationDate" ascending:YES]];
         fetchOptions.includeAssetSourceTypes = PHAssetSourceTypeUserLibrary | PHAssetSourceTypeCloudShared | PHAssetSourceTypeiTunesSynced;
         self.fetchResult = [PHAsset fetchAssetsWithMediaType:PHAssetMediaTypeImage options:fetchOptions];
         if (self.fetchResult.count == 0) {
@@ -49,12 +36,12 @@
         }
         
         NSError *error = nil;
-        NSArray<MOAssetUploadRecord *> *records = [self.assetUploadRecordManager fetchAllAssetUploadRecords:&error];
+        NSArray<MOAssetUploadRecord *> *records = [[AssetUploadRecordCoreDataManager shared] fetchAllAssetUploadRecords:&error];
         if (records.count == 0) {
-            [self.assetUploadRecordManager saveAssetFetchResult:self.fetchResult error:nil];
+            [[AssetUploadRecordCoreDataManager shared] saveAssetFetchResult:self.fetchResult error:nil];
         } else {
             NSArray<PHAsset *> *newAssets = [self findNewAssetsByComparingFetchResult:self.fetchResult uploadRecords:records];
-            [self.assetUploadRecordManager saveAssets:newAssets error:nil];
+            [[AssetUploadRecordCoreDataManager shared] saveAssets:newAssets error:nil];
         }
         
         completion();
@@ -95,7 +82,7 @@
     PHFetchResultChangeDetails *changes = [changeInstance changeDetailsForFetchResult:self.fetchResult];
     self.fetchResult = changes.fetchResultAfterChanges;
     NSArray<PHAsset *> *newAssets = [changes insertedObjects];
-    [self.assetUploadRecordManager saveAssets:newAssets error:nil];
+    [[AssetUploadRecordCoreDataManager shared] saveAssets:newAssets error:nil];
 }
 
 @end

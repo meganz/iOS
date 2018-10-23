@@ -1,10 +1,10 @@
 
 #import <Foundation/Foundation.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 extern NSString * const photoTransferSessionId;
 extern NSString * const videoTransferSessionId;
-
-NS_ASSUME_NONNULL_BEGIN
 
 typedef void (^UploadCompletionHandler)(NSData  * _Nullable token, NSError * _Nullable error);
 
@@ -22,6 +22,8 @@ typedef void (^UploadCompletionHandler)(NSData  * _Nullable token, NSError * _Nu
 
 - (NSURLSessionUploadTask *)photoUploadTaskWithURL:(NSURL *)requestURL fromFile:(NSURL *)fileURL completion:(UploadCompletionHandler)completion;
 - (NSURLSessionUploadTask *)videoUploadTaskWithURL:(NSURL *)requestURL fromFile:(NSURL *)fileURL completion:(UploadCompletionHandler)completion;
+
+- (void)didFinishEventsForBackgroundURLSession:(NSURLSession *)session;
 
 @end
 

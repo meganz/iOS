@@ -1,18 +1,21 @@
 
 #import "TransferSessionDelegate.h"
 #import "TransferSessionTaskDelegate.h"
+#import "TransferSessionManager.h"
 
 @interface TransferSessionDelegate ()
 
 @property (strong, nonatomic) NSMutableDictionary<NSNumber *, TransferSessionTaskDelegate *> *taskDelegateDict;
+@property (weak, nonatomic) TransferSessionManager *manager;
 
 @end
 
 @implementation TransferSessionDelegate
 
-- (instancetype)init {
+- (instancetype)initWithSessionManager:(TransferSessionManager *)manager {
     self = [super init];
     if (self) {
+        _manager = manager;
         _taskDelegateDict = [NSMutableDictionary dictionary];
     }
     return self;
@@ -40,7 +43,7 @@
 
 - (void)URLSessionDidFinishEventsForBackgroundURLSession:(NSURLSession *)session {
     MEGALogDebug(@"Session - finish background URL session: %@", session);
-    //    [self.manager didFinishEventsForBackgroundURLSession:session];
+    [self.manager didFinishEventsForBackgroundURLSession:session];
 }
 
 - (void)URLSession:(NSURLSession *)session didReceiveChallenge:(NSURLAuthenticationChallenge *)challenge completionHandler:(void (^)(NSURLSessionAuthChallengeDisposition, NSURLCredential * _Nullable))completionHandler {

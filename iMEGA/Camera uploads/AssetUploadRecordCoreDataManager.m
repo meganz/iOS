@@ -11,7 +11,6 @@
 @import Photos;
 
 NSString * const uploadStatusNotStarted = @"NotStarted";
-NSString * const uploadStatusDownloading = @"Downloading";
 NSString * const uploadStatusProcessing = @"Processing";
 NSString * const uploadStatusUploading = @"Uploading";
 NSString * const uploadStatusFailed = @"Failed";
@@ -25,6 +24,16 @@ NSString * const uploadStatusDone = @"Done";
 
 @implementation AssetUploadRecordCoreDataManager
 
++ (instancetype)shared {
+    static id sharedInstance = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        sharedInstance = [[self alloc] init];
+    });
+    
+    return sharedInstance;
+}
+
 - (instancetype)init {
     self = [super init];
     if (self) {
@@ -35,7 +44,7 @@ NSString * const uploadStatusDone = @"Done";
     return self;
 }
 
-#pragma mark - asset upload status core data managing methods
+#pragma mark - fetch assets
 
 - (NSArray<MOAssetUploadRecord *> *)fetchNonUploadedRecordsWithLimit:(NSInteger)fetchLimit error:(NSError *__autoreleasing  _Nullable *)error {
     __block NSArray<MOAssetUploadRecord *> *records = @[];
@@ -43,7 +52,7 @@ NSString * const uploadStatusDone = @"Done";
     [self.privateQueueContext performBlockAndWait:^{
         NSFetchRequest *request = MOAssetUploadRecord.fetchRequest;
         request.fetchLimit = fetchLimit;
-        request.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"creationDate" ascending:NO]];
+        request.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"modificationDate" ascending:NO]];
         records = [self.privateQueueContext executeFetchRequest:request error:&coreDataError];
     }];
     
@@ -67,6 +76,8 @@ NSString * const uploadStatusDone = @"Done";
     
     return records;
 }
+
+#pragma mark - save assets
 
 - (BOOL)saveAssetFetchResult:(PHFetchResult<PHAsset *> *)result error:(NSError * _Nullable __autoreleasing * _Nullable)error {
     __block NSError *coreDataError = nil;
@@ -106,11 +117,55 @@ NSString * const uploadStatusDone = @"Done";
     return coreDataError == nil;
 }
 
+#pragma mark - update records
+
+- (BOOL)updateStatus:(NSString *)status forLocalIdentifier:(NSString *)identifier error:(NSError * _Nullable __autoreleasing * _Nullable)error {
+    __block NSError *coreDataError = nil;
+    [self.privateQueueContext performBlockAndWait:^{
+        NSFetchRequest *request = MOAssetUploadRecord.fetchRequest;
+        request.predicate = [NSPredicate predicateWithFormat:@"localIdentifier == %@", identifier];
+        MOAssetUploadRecord *record = [[self.privateQueueContext executeFetchRequest:request error:&coreDataError] firstObject];
+        if (record) {
+            record.status = status;
+            [self.privateQueueContext save:&coreDataError];
+        }
+    }];
+    
+    if (error != NULL) {
+        *error = coreDataError;
+    }
+    
+    return coreDataError == nil;
+}
+
+#pragma mark - delete records
+
+- (BOOL)deleteRecordsByLocalIdentifiers:(NSArray<NSString *> *)identifiers error:(NSError * _Nullable __autoreleasing * _Nullable)error {
+    __block NSError *coreDataError = nil;
+    if (identifiers.count > 0) {
+        [self.privateQueueContext performBlockAndWait:^{
+            NSFetchRequest *request = MOAssetUploadRecord.fetchRequest;
+            request.predicate = [NSPredicate predicateWithFormat:@"localIdentifier IN %@", identifiers];
+            NSBatchDeleteRequest *deleteRequest = [[NSBatchDeleteRequest alloc] initWithFetchRequest:request];
+            [self.privateQueueContext executeRequest:deleteRequest error:&coreDataError];
+            
+        }];
+    }
+    
+    if (error != NULL) {
+        *error = coreDataError;
+    }
+    
+    return coreDataError == nil;
+}
+
+#pragma mark - helper methods
+
 - (MOAssetUploadRecord *)createUploadStatusFromAsset:(PHAsset *)asset {
     MOAssetUploadRecord *record = [NSEntityDescription insertNewObjectForEntityForName:@"AssetUploadRecord" inManagedObjectContext:self.privateQueueContext];
     record.localIdentifier = asset.localIdentifier;
     record.status = uploadStatusNotStarted;
-    record.creationDate = asset.creationDate;
+    record.modificationDate = asset.modificationDate;
     return record;
 }
 
