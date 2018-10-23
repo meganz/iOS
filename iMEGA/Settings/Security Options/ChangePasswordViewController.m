@@ -453,7 +453,7 @@
         switch (error.type) {
             case MEGAErrorTypeApiEArgs: {
                 if (request.type == MEGARequestTypeChangePassword) {
-                    [self.theNewPasswordView setErrorState:YES withText:AMLocalizedString(@"passwordInvalidFormat", @"Enter a valid password")];
+                    [self.theNewPasswordView setErrorState:YES withText:AMLocalizedString(@"passwordInvalidFormat", @"Message shown when the user enters a wrong password")];
                     [self.theNewPasswordView.passwordTextField becomeFirstResponder];
                 }
                 break;
@@ -494,6 +494,13 @@
                 }
                 break;
             }
+                
+            case MEGAErrorTypeApiEAccess:
+                if (request.type == MEGARequestTypeGetChangeEmailLink) {
+                    [self.theNewEmailInputView setErrorState:YES withText:AMLocalizedString(@"emailAlreadyInUse", @"Error shown when the user tries to change his mail to one that is already used")];
+                    [self.theNewEmailInputView.inputTextField becomeFirstResponder];
+                }
+                break;
                 
             default:
                 break;
