@@ -1468,6 +1468,22 @@
     [selectAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
     [moreMinimizedAlertController addAction:selectAlertAction];
     
+    if (self.displayMode == DisplayModeRubbishBin) {
+        UIAlertAction *clearRubbishBinAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"emptyRubbishBin", @"Section title where you can 'Empty Rubbish Bin' of your MEGA account") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            if ([MEGAReachabilityManager isReachableHUDIfNot]) {
+                UIAlertController *clearRubbishBinAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"emptyRubbishBinAlertTitle", @"Alert title shown when you tap 'Empty Rubbish Bin'") message:nil preferredStyle:UIAlertControllerStyleAlert];
+                [clearRubbishBinAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:nil]];
+                [clearRubbishBinAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                    [[MEGASdkManager sharedMEGASdk] cleanRubbishBin];
+                }]];
+                
+                [UIApplication.mnz_visibleViewController presentViewController:clearRubbishBinAlertController animated:YES completion:nil];
+            }
+        }];
+        [clearRubbishBinAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
+        [moreMinimizedAlertController addAction:clearRubbishBinAlertAction];
+    }
+    
     if ([[UIDevice currentDevice] iPadDevice]) {
         moreMinimizedAlertController.modalPresentationStyle = UIModalPresentationPopover;
         moreMinimizedAlertController.popoverPresentationController.barButtonItem = self.moreMinimizedBarButtonItem;

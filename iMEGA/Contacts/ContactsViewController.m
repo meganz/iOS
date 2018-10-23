@@ -606,7 +606,7 @@
 
 - (void)startGroup {
     if (self.searchController.isActive) {
-        [self.searchController dismissViewControllerAnimated:YES completion:nil];
+        self.searchController.active = NO;
     }
     ContactsViewController *contactsVC = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactsViewControllerID"];
     contactsVC.contactsMode = ContactsModeChatCreateGroup;
@@ -725,6 +725,9 @@
 }
 
 - (IBAction)addContact:(UIView *)sender {
+    if (self.searchController.isActive) {
+        self.searchController.active = NO;
+    }
     UIAlertController *addContactAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"inviteContact", @"Text shown when the user tries to make a call and the receiver is not a contact") message:nil preferredStyle:UIAlertControllerStyleActionSheet];
     [addContactAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
     

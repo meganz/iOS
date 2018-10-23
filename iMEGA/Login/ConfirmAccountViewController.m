@@ -184,6 +184,7 @@
         [self lockUI:NO];
         
         switch ([error type]) {
+            case MEGAErrorTypeApiEKey:
             case MEGAErrorTypeApiENoent: { //MEGARequestTypeConfirmAccount, MEGARequestTypeConfirmChangeEmailLink, MEGARequestTypeConfirmCancelLink
                 [self.passwordView setErrorState:YES];
                 break;
@@ -212,10 +213,6 @@
             }
                 
             case MEGAErrorTypeApiESid:
-                break;
-                
-            case MEGAErrorTypeApiEKey:
-                [self.passwordView setErrorState:YES];
                 break;
                 
             default:

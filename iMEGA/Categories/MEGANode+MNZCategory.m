@@ -166,7 +166,7 @@
     [PHPhotoLibrary requestAuthorization:^(PHAuthorizationStatus status) {
         switch (status) {
             case PHAuthorizationStatusAuthorized: {
-                [SVProgressHUD showInfoWithStatus:AMLocalizedString(@"Saving to Photos…", @"Text shown when starting the process to save a photo or video to Photos app")];
+                [SVProgressHUD showImage:[UIImage imageNamed:@"saveToPhotos"] status:AMLocalizedString(@"Saving to Photos…", @"Text shown when starting the process to save a photo or video to Photos app")];
                 NSString *temporaryPath = [[NSTemporaryDirectory() stringByAppendingPathComponent:self.base64Handle] stringByAppendingPathComponent:self.name];
                 NSString *temporaryFingerprint = [[MEGASdkManager sharedMEGASdk] fingerprintForFilePath:temporaryPath];
                 if ([temporaryFingerprint isEqualToString:[api fingerprintForNode:self]]) {
@@ -793,7 +793,7 @@
         if (UIVideoAtPathIsCompatibleWithSavedPhotosAlbum(path)) {
             UISaveVideoAtPathToSavedPhotosAlbum(path, self, @selector(video:didFinishSavingWithError:contextInfo:), nil);
         } else {
-            [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"Could not save", @"Text shown when an error occurs when trying to save a photo or video to Photos app")];
+            [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"Could not save Item", @"Text shown when an error occurs when trying to save a photo or video to Photos app")];
             MEGALogError(@"The video can be saved to the Camera Roll album");
         }
     }
@@ -808,10 +808,10 @@
         } completionHandler:^(BOOL success, NSError * _Nullable nserror) {
             [NSFileManager.defaultManager mnz_removeItemAtPath:path];
             if (nserror) {
-                [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"Could not save", @"Text shown when an error occurs when trying to save a photo or video to Photos app")];
+                [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"Could not save Item", @"Text shown when an error occurs when trying to save a photo or video to Photos app")];
                 MEGALogError(@"Add asset to camera roll: %@ (Domain: %@ - Code:%ld)", nserror.localizedDescription, nserror.domain, nserror.code);
             } else {
-                [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"Saved to Photos", @"Text shown when a photo or video is saved to Photos app")];
+                [SVProgressHUD showImage:[UIImage imageNamed:@"saveToPhotos"] status:AMLocalizedString(@"Saved to Photos", @"Text shown when a photo or video is saved to Photos app")];
             }
         }];
     }
@@ -819,10 +819,10 @@
 
 - (void)video:(NSString *)videoPath didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo {
     if (error) {
-        [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"Could not save", @"Text shown when an error occurs when trying to save a photo or video to Photos app")];
+        [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"Could not save Item", @"Text shown when an error occurs when trying to save a photo or video to Photos app")];
         MEGALogError(@"Save video to Camera roll: %@ (Domain: %@ - Code:%ld)", error.localizedDescription, error.domain, error.code);
     } else {
-        [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"Saved to Photos", @"Text shown when a photo or video is saved to Photos app")];
+        [SVProgressHUD showImage:[UIImage imageNamed:@"saveToPhotos"] status:AMLocalizedString(@"Saved to Photos", @"Text shown when a photo or video is saved to Photos app")];
         [NSFileManager.defaultManager mnz_removeItemAtPath:videoPath];
     }
 }

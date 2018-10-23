@@ -211,6 +211,7 @@
                 self.error = error;
                 [self processRequestResult];
             }];
+            delegate.savePublicHandle = YES;
             
             [SVProgressHUD show];
             [[MEGASdkManager sharedMEGASdk] publicNodeForMegaFileLink:linkString delegate:delegate];
