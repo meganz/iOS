@@ -6,6 +6,7 @@
 #import "MOChatDraft+CoreDataProperties.h"
 #import "MOMediaDestination+CoreDataProperties.h"
 #import "MOUploadTransfer+CoreDataProperties.h"
+#import "MOFolderLayout+CoreDataProperties.h"
 
 @interface MEGAStore : NSObject
 
@@ -54,5 +55,10 @@
 - (NSArray<MOUploadTransfer *> *)fetchUploadTransfers;
 - (MOUploadTransfer *)fetchTransferUpdateWithLocalIdentifier:(NSString *)localIdentifier;
 - (void)removeAllUploadTransfers;
+
+#pragma mark - MOFolderLayout entity
+
+- (void)insertFolderLayoutWithHandle:(uint64_t)handle layout:(NSInteger)layout;
+- (MOFolderLayout *)fetchFolderLayoutWithHandle:(uint64_t)handle;
 
 @end

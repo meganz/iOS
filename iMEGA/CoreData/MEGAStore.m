@@ -394,4 +394,36 @@ static MEGAStore *_megaStore = nil;
     [self saveContext];
 }
 
+#pragma mark - MOFolderLayout entity
+
+- (void)insertFolderLayoutWithHandle:(uint64_t)handle layout:(NSInteger)layout {
+    MOFolderLayout *folderLayout = [self fetchFolderLayoutWithHandle:handle];
+    
+    if (folderLayout) {
+        folderLayout.value = [NSNumber numberWithInteger:layout];
+        
+        MEGALogDebug(@"Save context - update MOFolderLayout for folder %llu", handle);
+    } else {
+        MOFolderLayout *moFolderLayout = [NSEntityDescription insertNewObjectForEntityForName:@"MOFolderLayout" inManagedObjectContext:self.managedObjectContext];
+        moFolderLayout.handle = [NSNumber numberWithUnsignedLongLong:handle];
+        moFolderLayout.value = [NSNumber numberWithInteger:layout];
+        
+        MEGALogDebug(@"Save context - insert MOFolderLayout for folder %llu", handle);
+    }
+    
+    [self saveContext];
+}
+
+- (MOFolderLayout *)fetchFolderLayoutWithHandle:(uint64_t)handle {
+    NSFetchRequest *request = [MOFolderLayout fetchRequest];
+    
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"handle == %@", [NSNumber numberWithUnsignedLongLong:handle]];
+    request.predicate = predicate;
+    
+    NSError *error;
+    NSArray *array = [self.managedObjectContext executeFetchRequest:request error:&error];
+    
+    return array.firstObject;
+}
+
 @end
