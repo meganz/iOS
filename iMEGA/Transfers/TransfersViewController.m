@@ -262,17 +262,21 @@
     [self.transfers addObjectsFromArray:activeTransfers];
     [self.transfers addObjectsFromArray:inactiveTransfers];
     
-    [self.tableView reloadData];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.tableView reloadData];
+    });
 }
 
 - (void)getQueuedUploadTransfers {
-    NSArray *uploadTransfers = [[MEGAStore shareInstance] fetchUploadTransfers];
-    self.uploadTransfersQueued = [NSMutableArray new];
-    
-    for (MOUploadTransfer *uploadTransfer in uploadTransfers) {
-        QueuedTransferItem *transferItem = [[QueuedTransferItem alloc] initWithAsset:[PHAsset fetchAssetsWithLocalIdentifiers:@[uploadTransfer.localIdentifier] options:nil].firstObject andUploadTransfer:uploadTransfer];
-        [self.uploadTransfersQueued addObject:transferItem];
-    }
+    dispatch_async(dispatch_get_main_queue(), ^{
+        NSArray *uploadTransfers = [[MEGAStore shareInstance] fetchUploadTransfers];
+        self.uploadTransfersQueued = [NSMutableArray new];
+        
+        for (MOUploadTransfer *uploadTransfer in uploadTransfers) {
+            QueuedTransferItem *transferItem = [[QueuedTransferItem alloc] initWithAsset:[PHAsset fetchAssetsWithLocalIdentifiers:@[uploadTransfer.localIdentifier] options:nil].firstObject andUploadTransfer:uploadTransfer];
+            [self.uploadTransfersQueued addObject:transferItem];
+        }
+    });
 }
 
 - (void)cleanTransfersList {
@@ -406,7 +410,10 @@
                 break;
             }
         }
-        [self.tableView reloadData];
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.tableView reloadData];
+        });
     }]];
     
     [self presentViewController:cancelTransfersAlert animated:YES completion:nil];
@@ -488,7 +495,9 @@
             areTransfersPaused = request.flag;
             if (areTransfersPaused) {
                 [self cleanTransfersList];
-                [self.tableView reloadData];
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [self.tableView reloadData];
+                });
             } else {
                 [self reloadView];
             }
