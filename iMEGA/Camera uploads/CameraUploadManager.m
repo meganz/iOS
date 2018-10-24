@@ -86,6 +86,7 @@ static const NSInteger concurrentPhotoUploadCount = 100;
 - (void)uploadNextPhotosWithNumber:(NSInteger)number {
     NSArray *records = [self.assetUploadRecordManager fetchNonUploadedRecordsWithLimit:number error:nil];
     for (MOAssetUploadRecord *record in records) {
+        [AssetUploadRecordCoreDataManager.shared updateStatus:uploadStatusQueuedUp forRecord:record error:nil];
         [self.operationQueue addOperation:[[AssetUploadOperation alloc] initWithLocalIdentifier:record.localIdentifier cameraUploadNode:self.cameraUploadNode]];
     }
 }
