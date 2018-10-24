@@ -211,6 +211,7 @@
                         <outlet property="forgotPasswordButton" destination="UnQ-C2-8bb" id="sfk-E1-nda"/>
                         <outlet property="loginButton" destination="EcF-LZ-UjW" id="K0I-E4-okS"/>
                         <outlet property="logoImageView" destination="aOs-mq-CX2" id="hkL-Ws-BWG"/>
+                        <outlet property="logoTopLayoutConstraint" destination="paH-Di-Hqp" id="Fni-WO-alw"/>
                         <outlet property="passwordView" destination="NEs-0T-7bT" id="Jbi-h7-AA5"/>
                     </connections>
                 </viewController>

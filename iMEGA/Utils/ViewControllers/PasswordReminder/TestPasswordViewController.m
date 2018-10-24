@@ -8,7 +8,7 @@
 
 #import "PasswordView.h"
 
-@interface TestPasswordViewController () <PasswordViewDelegate>
+@interface TestPasswordViewController () <UITextFieldDelegate, PasswordViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UILabel *descriptionLabel;
 @property (weak, nonatomic) IBOutlet UIButton *confirmButton;
@@ -98,6 +98,8 @@
 - (void)configureUI {
     self.title = AMLocalizedString(@"testPassword", @"Label for test password button");
     self.passwordView.leftImageView.image = [UIImage imageNamed:@"icon-key-only"];
+    self.passwordView.topLabel.text = AMLocalizedString(@"passwordPlaceholder", @"Hint text to suggest that the user has to write his password");
+    self.passwordView.passwordTextField.delegate = self;
     if (self.isLoggingOut) {
         self.closeBarButton.title = AMLocalizedString(@"logoutLabel", @"Title of the button which logs out from your account.");
         self.descriptionLabel.text = AMLocalizedString(@"testPasswordLogoutText", @"Text that described that you are about to logout remenbering why the user should remenber the password and/or test it");
@@ -185,6 +187,13 @@
     if (UIInterfaceOrientationIsLandscape([UIApplication sharedApplication].statusBarOrientation) && (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)) {
         self.descriptionLabelHeightConstraint.constant = self.descriptionLabelHeight;
     }
+}
+
+#pragma mark - UITextFieldDelegate
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    [textField resignFirstResponder];
+    return YES;
 }
 
 #pragma mark - PasswordViewDelegate

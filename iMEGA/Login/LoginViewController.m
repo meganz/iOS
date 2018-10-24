@@ -40,7 +40,7 @@
     [super viewDidLoad];
     
     if (UIDevice.currentDevice.iPhone4X) {
-        self.logoTopLayoutConstraint.constant = 24.f;
+        self.logoTopLayoutConstraint.constant = 12.f;
     }
     
     UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(logoTappedFiveTimes:)];
