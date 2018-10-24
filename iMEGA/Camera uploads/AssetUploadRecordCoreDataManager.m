@@ -11,6 +11,7 @@
 @import Photos;
 
 NSString * const uploadStatusNotStarted = @"NotStarted";
+NSString * const uploadStatusQueuedUp = @"QueuedUp";
 NSString * const uploadStatusProcessing = @"Processing";
 NSString * const uploadStatusUploading = @"Uploading";
 NSString * const uploadStatusFailed = @"Failed";
@@ -44,6 +45,19 @@ NSString * const uploadStatusDone = @"Done";
     return self;
 }
 
+- (BOOL)saveChanges:(NSError *__autoreleasing  _Nullable *)error {
+    NSError *coreDataError = nil;
+    if (self.privateQueueContext.hasChanges) {
+        [self.privateQueueContext save:&coreDataError];
+    }
+    
+    if (error != NULL) {
+        *error = coreDataError;
+    }
+    
+    return coreDataError == nil;
+}
+
 #pragma mark - fetch assets
 
 - (NSArray<MOAssetUploadRecord *> *)fetchNonUploadedRecordsWithLimit:(NSInteger)fetchLimit error:(NSError *__autoreleasing  _Nullable *)error {
@@ -53,6 +67,7 @@ NSString * const uploadStatusDone = @"Done";
         NSFetchRequest *request = MOAssetUploadRecord.fetchRequest;
         request.fetchLimit = fetchLimit;
         request.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"modificationDate" ascending:NO]];
+        request.predicate = [NSPredicate predicateWithFormat:@"status IN %@", @[uploadStatusNotStarted, uploadStatusFailed]];
         records = [self.privateQueueContext executeFetchRequest:request error:&coreDataError];
     }];
     
@@ -125,10 +140,28 @@ NSString * const uploadStatusDone = @"Done";
         NSFetchRequest *request = MOAssetUploadRecord.fetchRequest;
         request.predicate = [NSPredicate predicateWithFormat:@"localIdentifier == %@", identifier];
         MOAssetUploadRecord *record = [[self.privateQueueContext executeFetchRequest:request error:&coreDataError] firstObject];
-        if (record) {
+        if (record && ![record.status isEqualToString:status]) {
             record.status = status;
             [self.privateQueueContext save:&coreDataError];
         }
+    }];
+    
+    if (error != NULL) {
+        *error = coreDataError;
+    }
+    
+    return coreDataError == nil;
+}
+
+- (BOOL)updateStatus:(NSString *)status forRecord:(MOAssetUploadRecord *)record error:(NSError *__autoreleasing  _Nullable *)error {
+    if ([record.status isEqualToString:status]) {
+        return YES;
+    }
+    
+    __block NSError *coreDataError = nil;
+    [self.privateQueueContext performBlockAndWait:^{
+        record.status = status;
+        [self.privateQueueContext save:&coreDataError];
     }];
     
     if (error != NULL) {

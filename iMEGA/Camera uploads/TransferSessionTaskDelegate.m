@@ -30,18 +30,10 @@
         NSLog(@"%@", error);
     }
     
-    MEGALogDebug(@"session task description: %@", task.description);
+    MEGALogDebug(@"session task description: %@", task.taskDescription);
     
     if (self.completion) {
         self.completion([self.mutableData copy], error);
-    }
-}
-
-// TODO: remove the didSendBodyData which is only for debugging purpose
-- (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didSendBodyData:(int64_t)bytesSent totalBytesSent:(int64_t)totalBytesSent totalBytesExpectedToSend:(int64_t)totalBytesExpectedToSend {
-    MEGALogDebug(@"session task delegate - task: body data, bytes sent: %lld, total Sent: %lld, total Bytes: %lld", bytesSent, totalBytesSent, totalBytesExpectedToSend);
-    if (totalBytesExpectedToSend == totalBytesSent) {
-        MEGALogDebug(@"Session - all data sent");
     }
 }
 

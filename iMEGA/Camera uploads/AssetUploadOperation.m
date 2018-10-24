@@ -96,7 +96,7 @@ static NSString * const cameraUploadBackgroundTaskName = @"mega.nz.cameraUpload"
         [self finishOperationWithStatus:uploadStatusFailed];
         return;
     }
-    
+    self.uploadFile.directoryURL = assetURL;
     self.uploadFile.fileName = [[NSString mnz_fileNameWithDate:self.asset.creationDate] stringByAppendingPathExtension:@"jpg"];
     if ([JPEGData writeToURL:self.uploadFile.fileURL atomically:YES]) {
         self.uploadFile.fileSize = [JPEGData length];
@@ -168,7 +168,7 @@ static NSString * const cameraUploadBackgroundTaskName = @"mega.nz.cameraUpload"
         }
     }];
     
-    uploadTask.taskDescription = [NSString stringWithFormat:@"%@-$@", self.asset.localIdentifier, self.uploadFile.fileURL];
+    uploadTask.taskDescription = [NSString stringWithFormat:@"%@,%@", self.asset.localIdentifier, self.uploadFile.fileURL];
     // TODO: save information to upload task to use when the task gets restored from background
     [uploadTask resume];
 }
