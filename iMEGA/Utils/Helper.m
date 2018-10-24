@@ -435,14 +435,15 @@ static BOOL pointToStaging;
 }
 
 + (NSString *)pathForSharedSandboxCacheDirectory:(NSString *)directory {
+    return [[self urlForSharedSandboxCacheDirectory:directory] path];
+}
+
++ (NSURL *)urlForSharedSandboxCacheDirectory:(NSString *)directory {
     NSString *cacheDirectory = @"Library/Cache/";
-    NSString *targetDirectory = [cacheDirectory stringByAppendingString:directory];
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-    NSString *destinationPath = [[[fileManager containerURLForSecurityApplicationGroupIdentifier:@"group.mega.ios"] URLByAppendingPathComponent:targetDirectory] path];
-    if (![fileManager fileExistsAtPath:destinationPath]) {
-        [fileManager createDirectoryAtPath:destinationPath withIntermediateDirectories:YES attributes:nil error:nil];
-    }
-    return destinationPath;
+    NSURL *containerURL = [[NSFileManager defaultManager] containerURLForSecurityApplicationGroupIdentifier:@"group.mega.ios"];
+    NSURL *destinationURL = [[containerURL URLByAppendingPathComponent:cacheDirectory isDirectory:YES] URLByAppendingPathComponent:directory isDirectory:YES];
+    [[NSFileManager defaultManager] createDirectoryAtURL:destinationURL withIntermediateDirectories:YES attributes:nil error:nil];
+    return destinationURL;
 }
 
 #pragma mark - Utils for links when you are not logged

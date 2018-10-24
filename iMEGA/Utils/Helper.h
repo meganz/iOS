@@ -59,6 +59,7 @@ typedef NS_OPTIONS(NSUInteger, NodesAre) {
 + (NSString *)pathForNode:(MEGANode *)node inSharedSandboxCacheDirectory:(NSString *)directory;
 
 + (NSString *)pathForSharedSandboxCacheDirectory:(NSString *)directory;
++ (NSURL *)urlForSharedSandboxCacheDirectory:(NSString *)directory;
 
 #pragma mark - Utils for links when you are not logged
 

@@ -10,7 +10,8 @@ NSString * const videoTransferSessionId = @"nz.mega.videoTransfer";
 @interface TransferSessionManager () <NSURLSessionDataDelegate>
 
 @property (strong, nonatomic) dispatch_queue_t serialQueue;
-@property (strong, nonatomic) TransferSessionDelegate *sessionDelegate;
+@property (strong, nonatomic) TransferSessionDelegate *photoSessionDelegate;
+@property (strong, nonatomic) TransferSessionDelegate *videoSessionDelegate;
 
 @end
 
@@ -30,7 +31,8 @@ NSString * const videoTransferSessionId = @"nz.mega.videoTransfer";
     self = [super init];
     if (self) {
         _serialQueue = dispatch_queue_create("nz.mega.sessionManager.serialQueue", DISPATCH_QUEUE_SERIAL);
-        _sessionDelegate = [[TransferSessionDelegate alloc] initWithSessionManager:self];
+        _photoSessionDelegate = [[TransferSessionDelegate alloc] initWithSessionManager:self];
+        _videoSessionDelegate = [[TransferSessionDelegate alloc] initWithSessionManager:self];
     }
     return self;
 }
@@ -74,7 +76,7 @@ NSString * const videoTransferSessionId = @"nz.mega.videoTransfer";
 - (void)restoreTaskDelegatesForSession:(NSURLSession *)session {
     [session getTasksWithCompletionHandler:^(NSArray<NSURLSessionDataTask *> * _Nonnull dataTasks, NSArray<NSURLSessionUploadTask *> * _Nonnull uploadTasks, NSArray<NSURLSessionDownloadTask *> * _Nonnull downloadTasks) {
         for (NSURLSessionUploadTask *task in uploadTasks) {
-            [self addDelegateForTask:task completion:nil];
+            [self addDelegateForTask:task inSession:session completion:nil];
         }
     }];
 }
@@ -84,7 +86,14 @@ NSString * const videoTransferSessionId = @"nz.mega.videoTransfer";
     NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration backgroundSessionConfigurationWithIdentifier:identifier];
     configuration.discretionary = YES;
     configuration.sessionSendsLaunchEvents = YES;
-    return [NSURLSession sessionWithConfiguration:configuration delegate:self.sessionDelegate delegateQueue:nil];
+    NSURLSession *session;
+    if ([identifier isEqualToString:photoTransferSessionId]) {
+        session = [NSURLSession sessionWithConfiguration:configuration delegate:self.photoSessionDelegate delegateQueue:nil];
+    } else if ([identifier isEqualToString:videoTransferSessionId]) {
+        session = [NSURLSession sessionWithConfiguration:configuration delegate:self.videoSessionDelegate delegateQueue:nil];
+    }
+    
+    return session;
 }
 
 #pragma mark - task creation
@@ -101,14 +110,15 @@ NSString * const videoTransferSessionId = @"nz.mega.videoTransfer";
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:requestURL];
     request.HTTPMethod = @"POST";
     NSURLSessionUploadTask *task = [session uploadTaskWithRequest:request fromFile:fileURL];
-    [self addDelegateForTask:task completion:completion];
+    
+    [self addDelegateForTask:task inSession:session completion:completion];
     
     return task;
 }
 
-- (void)addDelegateForTask:(NSURLSessionTask *)task completion:(UploadCompletionHandler)completion {
+- (void)addDelegateForTask:(NSURLSessionTask *)task inSession:(NSURLSession *)session completion:(UploadCompletionHandler)completion {
     TransferSessionTaskDelegate *delegate = [[TransferSessionTaskDelegate alloc] initWithCompletionHandler:completion];
-    [self.sessionDelegate addDelegate:delegate forTask:task];
+    [(TransferSessionDelegate *)session.delegate addDelegate:delegate forTask:task];
 }
 
 #pragma mark - session finishes
