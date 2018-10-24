@@ -45,7 +45,7 @@ NSString * const uploadStatusDone = @"Done";
     return self;
 }
 
-- (BOOL)saveChanges:(NSError *__autoreleasing  _Nullable *)error {
+- (BOOL)saveChangesIfNeeded:(NSError *__autoreleasing  _Nullable *)error {
     NSError *coreDataError = nil;
     if (self.privateQueueContext.hasChanges) {
         [self.privateQueueContext save:&coreDataError];
@@ -59,6 +59,22 @@ NSString * const uploadStatusDone = @"Done";
 }
 
 #pragma mark - fetch assets
+
+- (MOAssetUploadRecord *)fetchAssetUploadRecordByLocalIdentifier:(NSString *)identifier error:(NSError *__autoreleasing  _Nullable *)error {
+    __block MOAssetUploadRecord *record = nil;
+    __block NSError *coreDataError = nil;
+    [self.privateQueueContext performBlockAndWait:^{
+        NSFetchRequest *request = MOAssetUploadRecord.fetchRequest;
+        request.predicate = [NSPredicate predicateWithFormat:@"localIdentifier == %@", identifier];
+        record = [[self.privateQueueContext executeFetchRequest:request error:&coreDataError] firstObject];
+    }];
+    
+    if (error != NULL) {
+        *error = coreDataError;
+    }
+    
+    return record;
+}
 
 - (NSArray<MOAssetUploadRecord *> *)fetchNonUploadedRecordsWithLimit:(NSInteger)fetchLimit error:(NSError *__autoreleasing  _Nullable *)error {
     __block NSArray<MOAssetUploadRecord *> *records = @[];
