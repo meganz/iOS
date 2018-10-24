@@ -5,7 +5,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @class MEGABackgroundMediaUpload;
 
-@interface AssetUploadInfo : NSObject
+@interface AssetUploadInfo : NSObject <NSCoding>
 
 @property (strong, nonatomic) NSString *fileName;
 @property (nonatomic) NSUInteger fileSize;

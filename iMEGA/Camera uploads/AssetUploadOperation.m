@@ -10,7 +10,9 @@
 #import "AssetUploadCoordinator.h"
 @import Photos;
 
-static NSString * const cameraUploadBackgroundTaskName = @"mega.nz.cameraUpload";
+static NSString * const cameraUploadBackgroundTaskName = @"nz.mega.cameraUpload";
+static NSString * const archiveUploadInfoBackgroundTaskName = @"nz.mega.archiveCameraAssetUploadInfo";
+
 
 @interface AssetUploadOperation () <MEGARequestDelegate>
 
@@ -165,9 +167,30 @@ static NSString * const cameraUploadBackgroundTaskName = @"mega.nz.cameraUpload"
         }
     }];
     
-    uploadTask.taskDescription = [NSString stringWithFormat:@"%@,%@", self.asset.localIdentifier, self.uploadInfo.fileURL];
+    uploadTask.taskDescription = self.asset.localIdentifier;
     // TODO: save information to upload task to use when the task gets restored from background
     [uploadTask resume];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(saveUploadInfoDataForBackgroundTransfer) name:UIApplicationDidEnterBackgroundNotification object:nil];
+}
+
+#pragma mark - archive upload info
+
+- (void)saveUploadInfoDataForBackgroundTransfer {
+    NSURL *archivedURL = [self.uploadInfo.directoryURL URLByAppendingPathComponent:self.asset.localIdentifier isDirectory:NO];
+    BOOL isDirectory;
+    if ([NSFileManager.defaultManager fileExistsAtPath:archivedURL.path isDirectory:&isDirectory] && !isDirectory) {
+        return;
+    }
+    
+    __block UIBackgroundTaskIdentifier backgroundArchiveTaskId = [UIApplication.sharedApplication beginBackgroundTaskWithName:archiveUploadInfoBackgroundTaskName expirationHandler:^{
+        [UIApplication.sharedApplication endBackgroundTask:backgroundArchiveTaskId];
+        backgroundArchiveTaskId = UIBackgroundTaskInvalid;
+    }];
+    
+    [NSKeyedArchiver archiveRootObject:self.uploadInfo toFile:archivedURL.path];
+    [UIApplication.sharedApplication endBackgroundTask:backgroundArchiveTaskId];
+    backgroundArchiveTaskId = UIBackgroundTaskInvalid;
 }
 
 #pragma mark - finish operation
