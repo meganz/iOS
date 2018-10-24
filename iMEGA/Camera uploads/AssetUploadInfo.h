@@ -1,16 +1,11 @@
-//
-//  AssetUploadFile.h
-//  MEGA
-//
-//  Created by Simon Wang on 16/10/18.
-//  Copyright © 2018 MEGA. All rights reserved.
-//
 
 #import <Foundation/Foundation.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface AssetUploadFile : NSObject
+@class MEGABackgroundMediaUpload;
+
+@interface AssetUploadInfo : NSObject
 
 @property (strong, nonatomic) NSString *fileName;
 @property (nonatomic) NSUInteger fileSize;
@@ -27,6 +22,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) NSString *uploadURLStringSuffix;
 @property (strong, nonatomic) NSString *uploadURLString;
 @property (nonatomic, readonly) NSURL *uploadURL;
+
+@property (strong, nonatomic) MEGABackgroundMediaUpload *mediaUpload;
+@property (nonatomic) uint64_t parentHandle;
 
 @end
 

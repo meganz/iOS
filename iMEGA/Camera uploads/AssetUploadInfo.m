@@ -1,14 +1,7 @@
-//
-//  AssetUploadFile.m
-//  MEGA
-//
-//  Created by Simon Wang on 16/10/18.
-//  Copyright © 2018 MEGA. All rights reserved.
-//
 
-#import "AssetUploadFile.h"
+#import "AssetUploadInfo.h"
 
-@implementation AssetUploadFile
+@implementation AssetUploadInfo
 
 - (NSURL *)fileURL {
     return [self.directoryURL URLByAppendingPathComponent:self.fileName];
