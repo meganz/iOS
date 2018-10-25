@@ -2175,7 +2175,10 @@ const NSUInteger kMaxMessagesToLoad = 256;
         case MEGAChatMessageTypeAttachment:
         case MEGAChatMessageTypeContact:
         case MEGAChatMessageTypeCallEnded:
-        case MEGAChatMessageTypeContainsMeta: {
+        case MEGAChatMessageTypeContainsMeta:
+        case MEGAChatMessageTypePublicHandleCreate:
+        case MEGAChatMessageTypePublicHandleDelete:
+        case MEGAChatMessageTypeSetPrivateMode: {
             [self.messages addObject:message];
             [self finishReceivingMessage];
             
@@ -2234,7 +2237,10 @@ const NSUInteger kMaxMessagesToLoad = 256;
             case MEGAChatMessageTypeAttachment:
             case MEGAChatMessageTypeContact:
             case MEGAChatMessageTypeCallEnded:
-            case MEGAChatMessageTypeContainsMeta: {
+            case MEGAChatMessageTypeContainsMeta:
+            case MEGAChatMessageTypePublicHandleCreate:
+            case MEGAChatMessageTypePublicHandleDelete:
+            case MEGAChatMessageTypeSetPrivateMode: {
                 if (!message.isDeleted) {
                     [self.messages insertObject:message atIndex:0];
                 }
