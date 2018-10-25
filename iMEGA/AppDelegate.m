@@ -136,6 +136,8 @@
     [MEGASdk setLogLevel:MEGALogLevelFatal];
 #endif
     
+    [MEGASdk setLogToConsole:YES];
+    
     [self migrateLocalCachesLocation];
     
     if ([launchOptions objectForKey:@"UIApplicationLaunchOptionsRemoteNotificationKey"]) {

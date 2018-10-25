@@ -95,6 +95,8 @@
 #else
     [MEGASdk setLogLevel:MEGALogLevelFatal];
 #endif
+        
+    [MEGASdk setLogToConsole:YES];
     
     // Add observers to get notified when the extension goes to background and comes back to foreground:
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(willResignActive)
