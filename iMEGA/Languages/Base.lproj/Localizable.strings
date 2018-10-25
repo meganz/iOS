@@ -1680,8 +1680,6 @@
 "Saved to Photos"="Saved to Photos";
 /* Text shown when an error occurs when trying to save a photo or video to Photos app */
 "Could not save Item"="Could not save Item";
-/* Label title for open a chat link */
-"Open Chat Link"="Open Chat Link";
 /* Label in a cell where you can enable the 'Encrypted Key Rotation' */
 "Encrypted Key Rotation"="Encrypted Key Rotation";
 /* Title shown in a cell to allow the users enable the 'Encrypted Key Rotation' */

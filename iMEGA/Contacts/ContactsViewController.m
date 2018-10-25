@@ -978,7 +978,7 @@
     if ([MEGAReachabilityManager isReachable]) {
         if (self.contactsMode == ContactsModeChatStartConversation && section == 0) {
             if (self.visibleUsersArray.count > 0) {
-                return 3;
+                return 2;
             } else {
                 return 1;
             }
@@ -1016,12 +1016,9 @@
         if (indexPath.row == 0) {
             cell.nameLabel.text = AMLocalizedString(@"inviteContact", @"Text shown when the user tries to make a call and the receiver is not a contact");
             cell.avatarImageView.image = [UIImage imageNamed:@"inviteToChat"];
-        } else if (indexPath.row == 1) {
+        } else {
             cell.nameLabel.text = AMLocalizedString(@"groupChat", @"Label title for a group chat");
             cell.avatarImageView.image = [UIImage imageNamed:@"createGroup"];
-        } else {
-            cell.nameLabel.text = AMLocalizedString(@"Open Chat Link", @"Label title for open a chat link");
-            cell.avatarImageView.image = [UIImage imageNamed:@"chatLink"];
         }
         return cell;
     } else {
@@ -1201,10 +1198,8 @@
             if (indexPath.section == 0) {
                 if (indexPath.row == 0) {
                     [self addContact:[self.tableView cellForRowAtIndexPath:indexPath]];
-                } else if (indexPath.row == 1) {
-                    [self startGroup];
                 } else {
-                    // TODO: Open Chat Link
+                    [self startGroup];
                 }
             } else {
                 MEGAUser *user = [self userAtIndexPath:indexPath];
