@@ -282,6 +282,43 @@ static const void *nodeSizeTagKey = &nodeSizeTagKey;
                 break;
             }
                 
+            case MEGAChatMessageTypePublicHandleCreate: {
+                NSString *publicHandleCreated = [NSString stringWithFormat:@"%@ created a public link for the chat.", fullNameReceiveAction];
+                text = publicHandleCreated;
+                
+                NSMutableAttributedString *mutableAttributedString = [[NSMutableAttributedString alloc] initWithString:publicHandleCreated attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:fontSize], NSForegroundColorAttributeName:[UIColor mnz_black333333]}];
+                [mutableAttributedString addAttribute:NSFontAttributeName value:[UIFont mnz_SFUIMediumWithSize:fontSize] range:[publicHandleCreated rangeOfString:fullNameReceiveAction]];
+                
+                self.attributedText = mutableAttributedString;
+                break;
+            }
+                
+            case MEGAChatMessageTypePublicHandleDelete: {
+                NSString *publicHandleRemoved = [NSString stringWithFormat:@"%@ removed a public link for the chat.", fullNameReceiveAction];
+                text = publicHandleRemoved;
+                
+                NSMutableAttributedString *mutableAttributedString = [[NSMutableAttributedString alloc] initWithString:publicHandleRemoved attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:fontSize], NSForegroundColorAttributeName:[UIColor mnz_black333333]}];
+                [mutableAttributedString addAttribute:NSFontAttributeName value:[UIFont mnz_SFUIMediumWithSize:fontSize] range:[publicHandleRemoved rangeOfString:fullNameReceiveAction]];
+                
+                self.attributedText = mutableAttributedString;
+                break;
+            }
+                
+            case MEGAChatMessageTypeSetPrivateMode: {
+                NSString *setPrivateMode = [NSString stringWithFormat:@"%@ enable Encryption Key Rotation.\n\n", fullNameReceiveAction];
+                NSString *keyRotationExplanation = @"Key rotation is slightly more secure, but does not allow you to share a link to the chat and new participants will not see past messages.";
+                text = [NSString stringWithFormat:@"%@%@", setPrivateMode, keyRotationExplanation];
+                
+                NSMutableAttributedString *mutableAttributedString = [[NSMutableAttributedString alloc] initWithString:text attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:fontSize], NSForegroundColorAttributeName:[UIColor mnz_black333333]}];
+                [mutableAttributedString addAttribute:NSFontAttributeName value:[UIFont mnz_SFUIMediumWithSize:fontSize] range:[text rangeOfString:fullNameReceiveAction]];
+                [mutableAttributedString addAttribute:NSFontAttributeName value:[UIFont mnz_SFUIMediumWithSize:fontSize] range:[text rangeOfString:@"Encryption Key Rotation"]];
+                [mutableAttributedString addAttribute:NSFontAttributeName value:[UIFont mnz_SFUIMediumWithSize:fontSize-2] range:[text rangeOfString:keyRotationExplanation]];
+                [mutableAttributedString addAttribute:NSForegroundColorAttributeName value:[UIColor mnz_gray999999] range:[text rangeOfString:keyRotationExplanation]];
+                
+                self.attributedText = mutableAttributedString;
+                break;
+            }
+                
             default:
                 text = @"default";
                 break;

@@ -586,6 +586,27 @@
             break;
         }
             
+        case MEGAChatMessageTypePublicHandleCreate: {
+            NSString *senderString = [self actionAuthorNameInChatListItem:item];
+            NSString *publicHandleCreated = [NSString stringWithFormat:@"%@ created a public link for the chat.", senderString];
+            cell.chatLastMessage.text = publicHandleCreated;
+            break;
+        }
+            
+        case MEGAChatMessageTypePublicHandleDelete: {
+            NSString *senderString = [self actionAuthorNameInChatListItem:item];
+            NSString *publicHandleRemoved = [NSString stringWithFormat:@"%@ removed a public link for the chat.", senderString];
+            cell.chatLastMessage.text = publicHandleRemoved;
+            break;
+        }
+            
+        case MEGAChatMessageTypeSetPrivateMode: {
+            NSString *senderString = [self actionAuthorNameInChatListItem:item];
+            NSString *setPrivateMode = [NSString stringWithFormat:@"%@ enable Encryption Key Rotation.", senderString];
+            cell.chatLastMessage.text = setPrivateMode;
+            break;
+        }
+            
         default: {
             NSString *senderString;
             if (item.group && item.lastMessageSender != [[MEGASdkManager sharedMEGAChatSdk] myUserHandle]) {
@@ -790,6 +811,10 @@
     MEGAChatListItem *chatListItem = [self chatListItemAtIndexPath:indexPath];
     
     MEGALogInfo(@"%@", chatListItem);
+    
+    if (chatListItem.isPublicChat || !chatListItem.isGroup) {
+        cell.privateChatImageView.hidden = YES;
+    }
     
     cell.chatTitle.text = chatListItem.title;
     [self updateCell:cell forChatListItem:chatListItem];
