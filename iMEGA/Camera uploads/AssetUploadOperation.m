@@ -33,6 +33,7 @@ static NSString * const archiveUploadInfoBackgroundTaskName = @"nz.mega.archiveC
         _asset = asset;
         _cameraUploadNode = node;
         _uploadInfo = [[AssetUploadInfo alloc] init];
+        _uploadInfo.parentHandle = node.handle;
         _coordinator = [[AssetUploadCoordinator alloc] init];
     }
     
@@ -159,16 +160,16 @@ static NSString * const archiveUploadInfoBackgroundTaskName = @"nz.mega.archiveC
     } else {
         self.uploadInfo.uploadURLString = [self.uploadInfo.mediaUpload uploadURLString];
         if (self.uploadInfo.uploadURL) {
-            [self startUploading];
+            [self uploadFileToServer];
         } else {
             [self finishOperationWithStatus:uploadStatusFailed shouldUploadNextAsset:YES];
         }
     }
 }
 
-#pragma mark - transfer tasks
+#pragma mark - upload task
 
-- (void)startUploading {
+- (void)uploadFileToServer {
     MEGALogDebug(@"uploading file to server for asset: %@ to server: %@", self.asset, self.uploadInfo.uploadURL);
     
     NSURLSessionUploadTask *uploadTask = [[TransferSessionManager shared] photoUploadTaskWithURL:self.uploadInfo.uploadURL fromFile:self.uploadInfo.encryptedURL completion:^(NSData * _Nullable token, NSError * _Nullable error) {
@@ -218,6 +219,8 @@ static NSString * const archiveUploadInfoBackgroundTaskName = @"nz.mega.archiveC
     
     [[AssetUploadRecordCoreDataManager shared] updateStatus:status forLocalIdentifier:self.asset.localIdentifier error:nil];
     
+    [self finishOperation];
+    
     if (self.uploadTaskIdentifier != UIBackgroundTaskInvalid) {
         [UIApplication.sharedApplication endBackgroundTask:self.uploadTaskIdentifier];
         self.uploadTaskIdentifier = UIBackgroundTaskInvalid;
@@ -226,8 +229,6 @@ static NSString * const archiveUploadInfoBackgroundTaskName = @"nz.mega.archiveC
     if (uploadNextAsset) {
         [[CameraUploadManager shared] uploadNextPhoto];
     }
-    
-    [self finishOperation];
 }
 
 @end
