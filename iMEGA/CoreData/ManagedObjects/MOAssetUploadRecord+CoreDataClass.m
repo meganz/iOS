@@ -3,4 +3,8 @@
 
 @implementation MOAssetUploadRecord
 
+- (NSString *)description {
+    return [NSString stringWithFormat:@"%@, %@", self.localIdentifier, self.status];
+}
+
 @end

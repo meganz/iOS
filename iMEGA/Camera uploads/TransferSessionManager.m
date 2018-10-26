@@ -30,7 +30,7 @@ NSString * const videoTransferSessionId = @"nz.mega.videoTransfer";
 - (instancetype)init {
     self = [super init];
     if (self) {
-        _serialQueue = dispatch_queue_create("nz.mega.sessionManager.serialQueue", DISPATCH_QUEUE_SERIAL);
+        _serialQueue = dispatch_queue_create("nz.mega.sessionManager.cameraUploadSessionSerialQueue", DISPATCH_QUEUE_SERIAL);
         _photoSessionDelegate = [[TransferSessionDelegate alloc] initWithSessionManager:self];
         _videoSessionDelegate = [[TransferSessionDelegate alloc] initWithSessionManager:self];
     }
