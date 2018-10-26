@@ -36,13 +36,8 @@
 #pragma mark - task level delegate
 
 - (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didCompleteWithError:(NSError *)error {
-    MEGALogDebug(@"session task delegate - task: %@, request: %@, didCompleteWithError: %@", task, task.originalRequest, error);
-    if (error) {
-        MEGALogError(@"error happened when to upload asset: %@", error);
-        NSLog(@"%@", error);
-    }
+    MEGALogDebug(@"Session %@ task %@ did complete with error: %@", session.configuration.identifier, task.originalRequest, error);
     
-    MEGALogDebug(@"session task description: %@", task.taskDescription);
     NSData *transferToken = [self.mutableData copy];
     
     if (self.completion) {
@@ -60,7 +55,7 @@
 #pragma mark - data level delegate
 
 - (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask didReceiveData:(NSData *)data {
-    MEGALogDebug(@"session task delegate - dataTask: %@, didReceiveData: %@", dataTask, data);
+    MEGALogDebug(@"Session %@ task %@ did receive data with size: %lu", session.configuration.identifier, dataTask.originalRequest, data.length);
     [self.mutableData appendData:data];
 }
 
@@ -85,7 +80,8 @@
     if ([NSFileManager.defaultManager fileExistsAtPath:archivedURL.path isDirectory:&isDirectory] && !isDirectory) {
         AssetUploadInfo *uploadInfo = [NSKeyedUnarchiver unarchiveObjectWithFile:archivedURL.path];
         if (uploadInfo) {
-            __block UIBackgroundTaskIdentifier backgroundUploadCompletionTask = [UIApplication.sharedApplication beginBackgroundTaskWithExpirationHandler:^{
+            MEGALogDebug(@"resumed upload info from serialized data for asset: %@", uploadInfo)
+            __block UIBackgroundTaskIdentifier backgroundUploadCompletionTask = [UIApplication.sharedApplication beginBackgroundTaskWithName:@"completeUploadTaskBackgroundTask" expirationHandler:^{
                 [UIApplication.sharedApplication endBackgroundTask:backgroundUploadCompletionTask];
                 backgroundUploadCompletionTask = UIBackgroundTaskInvalid;
             }];
@@ -119,6 +115,7 @@
     [AssetUploadRecordCoreDataManager.shared updateStatus:status forLocalIdentifier:localIdentifier error:nil];
     NSURL *uploadDirectory = [self uploadDirectoryURLForAssetLocalIdentifier:localIdentifier];
     [NSFileManager.defaultManager removeItemAtURL:uploadDirectory error:nil];
+    MEGALogDebug(@"session task %@ finished with status: %@", task.taskDescription, status);
 }
 
 @end

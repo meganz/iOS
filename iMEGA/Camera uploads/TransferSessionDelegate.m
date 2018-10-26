@@ -38,16 +38,16 @@
 #pragma mark - session level delegate
 
 - (void)URLSession:(NSURLSession *)session didBecomeInvalidWithError:(NSError *)error {
-    MEGALogDebug(@"Session - session error: %@", error);
+    MEGALogDebug(@"Session %@ did become invalid with error: %@", session.configuration.identifier, error);
 }
 
 - (void)URLSessionDidFinishEventsForBackgroundURLSession:(NSURLSession *)session {
-    MEGALogDebug(@"Session - finish background URL session: %@", session);
+    MEGALogDebug(@"Session %@ did finish events for background URL Session", session.configuration.identifier);
     [self.manager didFinishEventsForBackgroundURLSession:session];
 }
 
 - (void)URLSession:(NSURLSession *)session didReceiveChallenge:(NSURLAuthenticationChallenge *)challenge completionHandler:(void (^)(NSURLSessionAuthChallengeDisposition, NSURLCredential * _Nullable))completionHandler {
-    MEGALogDebug(@"Session - didReceiveChallenge, protectionSpace: %@", challenge.protectionSpace);
+    MEGALogDebug(@"Session %@ did receive challenge for protection space: %@", session.configuration.identifier, challenge.protectionSpace);
     if (challenge.protectionSpace.authenticationMethod == NSURLAuthenticationMethodServerTrust) {
         // TODO: implement authentication validation, like public key
         SecTrustRef trust = challenge.protectionSpace.serverTrust;
@@ -60,7 +60,6 @@
 #pragma mark - task level delegate
 
 - (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didCompleteWithError:(NSError *)error {
-    MEGALogDebug(@"Session - task: %@, request: %@, didCompleteWithError: %@", task, task.originalRequest, error);
     [[self delegateForTask:task] URLSession:session task:task didCompleteWithError:error];
     [self removeDelegateForTask:task];
 }
@@ -68,7 +67,6 @@
 #pragma mark - data level delegate
 
 - (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask didReceiveData:(NSData *)data {
-    MEGALogDebug(@"Session - dataTask: %@, didReceiveData: %@", dataTask, data);
     [[self delegateForTask:dataTask] URLSession:session dataTask:dataTask didReceiveData:data];
 }
 
