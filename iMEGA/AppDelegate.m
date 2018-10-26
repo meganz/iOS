@@ -70,6 +70,7 @@
 #import "MEGAShowPasswordReminderRequestDelegate.h"
 #import "CameraUploadManager.h"
 #import "TransferSessionManager.h"
+#import "AssetUploadRecordCoreDataManager.h"
 
 #define kUserAgent @"MEGAiOS"
 #define kAppKey @"EVtjzb7R"
@@ -127,8 +128,17 @@
 
 @implementation AppDelegate
 
+- (BOOL)application:(UIApplication *)application willFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    NSLog(@"Application will finish launching with options: %@", launchOptions);
+#ifdef DEBUG
+    NSArray<MOAssetUploadRecord *> *localRecords = [AssetUploadRecordCoreDataManager.shared fetchAllAssetUploadRecords:nil];
+    localRecords = [localRecords sortedArrayUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"status" ascending:YES]]];
+    NSLog(@"%@", localRecords);
+#endif
+    return YES;
+}
 
-- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {    
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     NSSetUncaughtExceptionHandler(&uncaughtExceptionHandler);
 #ifdef DEBUG
     [MEGASdk setLogLevel:MEGALogLevelMax];

@@ -36,7 +36,7 @@
 #pragma mark - task level delegate
 
 - (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didCompleteWithError:(NSError *)error {
-    MEGALogDebug(@"Session %@ task %@ did complete with error: %@", session.configuration.identifier, task.originalRequest, error);
+    MEGALogDebug(@"Camera Upload - Session %@ task %@ did complete with error: %@", session.configuration.identifier, task.originalRequest, error);
     
     NSData *transferToken = [self.mutableData copy];
     
@@ -55,7 +55,7 @@
 #pragma mark - data level delegate
 
 - (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask didReceiveData:(NSData *)data {
-    MEGALogDebug(@"Session %@ task %@ did receive data with size: %lu", session.configuration.identifier, dataTask.originalRequest, data.length);
+    MEGALogDebug(@"Camera Upload - Session %@ task %@ did receive data with size: %lu", session.configuration.identifier, dataTask.originalRequest, data.length);
     [self.mutableData appendData:data];
 }
 
@@ -80,7 +80,7 @@
     if ([NSFileManager.defaultManager fileExistsAtPath:archivedURL.path isDirectory:&isDirectory] && !isDirectory) {
         AssetUploadInfo *uploadInfo = [NSKeyedUnarchiver unarchiveObjectWithFile:archivedURL.path];
         if (uploadInfo) {
-            MEGALogDebug(@"resumed upload info from serialized data for asset: %@", uploadInfo)
+            MEGALogDebug(@"Camera Upload - Resumed upload info from serialized data for asset: %@", uploadInfo)
             __block UIBackgroundTaskIdentifier backgroundUploadCompletionTask = [UIApplication.sharedApplication beginBackgroundTaskWithName:@"completeUploadTaskBackgroundTask" expirationHandler:^{
                 [UIApplication.sharedApplication endBackgroundTask:backgroundUploadCompletionTask];
                 backgroundUploadCompletionTask = UIBackgroundTaskInvalid;
@@ -91,17 +91,17 @@
                 [UIApplication.sharedApplication endBackgroundTask:backgroundUploadCompletionTask];
                 backgroundUploadCompletionTask = UIBackgroundTaskInvalid;
             } failure:^(MEGAError * _Nonnull error) {
-                MEGALogError(@"error when to put node for asset: %@", task.taskDescription);
+                MEGALogError(@"Camera Upload - Error when to put node for asset: %@", task.taskDescription);
                 [self finishTask:task withStatus:uploadStatusFailed];
                 [UIApplication.sharedApplication endBackgroundTask:backgroundUploadCompletionTask];
                 backgroundUploadCompletionTask = UIBackgroundTaskInvalid;
             }];
         } else {
-            MEGALogError(@"error when to unarchive upload info for asset: %@", task.taskDescription);
+            MEGALogError(@"Camera Upload - Error when to unarchive upload info for asset: %@", task.taskDescription);
             [self finishTask:task withStatus:uploadStatusFailed];
         }
     } else {
-        MEGALogError(@"session task completes without any handler: %@", task.taskDescription);
+        MEGALogError(@"Camera Upload - Session task completes without any handler: %@", task.taskDescription);
         [self finishTask:task withStatus:uploadStatusFailed];
     }
 }
@@ -115,7 +115,7 @@
     [AssetUploadRecordCoreDataManager.shared updateStatus:status forLocalIdentifier:localIdentifier error:nil];
     NSURL *uploadDirectory = [self uploadDirectoryURLForAssetLocalIdentifier:localIdentifier];
     [NSFileManager.defaultManager removeItemAtURL:uploadDirectory error:nil];
-    MEGALogDebug(@"session task %@ finished with status: %@", task.taskDescription, status);
+    MEGALogDebug(@"Camera Upload - Session task %@ finished with status: %@", task.taskDescription, status);
 }
 
 @end

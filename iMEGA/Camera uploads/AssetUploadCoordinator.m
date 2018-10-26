@@ -45,12 +45,12 @@
     NSURL *cachedThumbnailURL = [[Helper urlForSharedSandboxCacheDirectory:@"thumbnailsV3"] URLByAppendingPathComponent:node.base64Handle isDirectory:NO];
     if ([[NSFileManager defaultManager] moveItemAtURL:self.uploadInfo.thumbnailURL toURL:cachedThumbnailURL error:nil]) {
         [[MEGASdkManager sharedMEGASdk] setThumbnailNode:node sourceFilePath:cachedThumbnailURL.path delegate:[[MEGAGetThumbnailRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
-            MEGALogDebug(@"Upload thumbnail success for node: %llu", node.handle);
+            MEGALogDebug(@"Camera Upload - Upload thumbnail success for node: %llu", node.handle);
             [UIApplication.sharedApplication endBackgroundTask:thumbnailUploadTaskId];
             thumbnailUploadTaskId = UIBackgroundTaskInvalid;
         }]];
     } else {
-        MEGALogDebug(@"move thumbnail to cache failed for node: %llu", node.handle);
+        MEGALogDebug(@"Camera Upload - Vove thumbnail to cache failed for node: %llu", node.handle);
         [UIApplication.sharedApplication endBackgroundTask:thumbnailUploadTaskId];
         thumbnailUploadTaskId = UIBackgroundTaskInvalid;
     }
@@ -69,12 +69,12 @@
     NSURL *cachedPreviewURL = [[[[[NSFileManager defaultManager] URLsForDirectory:NSCachesDirectory inDomains:NSUserDomainMask] firstObject] URLByAppendingPathComponent:@"previewsV3" isDirectory:YES] URLByAppendingPathComponent:node.base64Handle isDirectory:NO];
     if([[NSFileManager defaultManager] moveItemAtURL:self.uploadInfo.previewURL toURL:cachedPreviewURL error:nil]) {
         [[MEGASdkManager sharedMEGASdk] setPreviewNode:node sourceFilePath:cachedPreviewURL.path delegate:[[MEGAGetPreviewRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
-            MEGALogDebug(@"Upload preview success for node: %llu", node.handle);
+            MEGALogDebug(@"Camera Upload - Upload preview success for node: %llu", node.handle);
             [UIApplication.sharedApplication endBackgroundTask:previewUploadTaskId];
             previewUploadTaskId = UIBackgroundTaskInvalid;
         }]];
     } else {
-        MEGALogDebug(@"move preview to cache failed for node: %llu", node.handle);
+        MEGALogDebug(@"Camera Upload - Move preview to cache failed for node: %llu", node.handle);
         [UIApplication.sharedApplication endBackgroundTask:previewUploadTaskId];
         previewUploadTaskId = UIBackgroundTaskInvalid;
     }
@@ -84,7 +84,7 @@
 
 - (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
     if (error.type) {
-        MEGALogError(@"Complete upload failed with error type: %ld", error.type);
+        MEGALogError(@"Camera Upload - Complete upload failed with error type: %ld", error.type);
         self.uploadFailure(error);
     } else {
         MEGANode *node = [MEGASdkManager.sharedMEGASdk nodeForHandle:request.nodeHandle];

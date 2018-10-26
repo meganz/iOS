@@ -83,7 +83,7 @@ NSString * const uploadStatusDone = @"Done";
         NSFetchRequest *request = MOAssetUploadRecord.fetchRequest;
         request.fetchLimit = fetchLimit;
         request.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"modificationDate" ascending:NO]];
-        request.predicate = [NSPredicate predicateWithFormat:@"status IN %@", @[uploadStatusNotStarted, uploadStatusFailed]];
+        request.predicate = [NSPredicate predicateWithFormat:@"status IN %@", @[uploadStatusNotStarted, uploadStatusFailed, uploadStatusProcessing]];
         records = [self.privateQueueContext executeFetchRequest:request error:&coreDataError];
     }];
     
