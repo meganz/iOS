@@ -133,7 +133,7 @@
 #ifdef DEBUG
     NSArray<MOAssetUploadRecord *> *localRecords = [AssetUploadRecordCoreDataManager.shared fetchAllAssetUploadRecords:nil];
     localRecords = [localRecords sortedArrayUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"status" ascending:YES]]];
-    NSLog(@"%@", localRecords);
+    NSLog(@"local records count: %lu, list: %@", localRecords.count, localRecords);
 #endif
     return YES;
 }

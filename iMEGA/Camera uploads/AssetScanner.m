@@ -28,6 +28,8 @@
 
 - (void)startScanningWithCompletion:(void (^)(void))completion {
     [self.operationQueue addOperationWithBlock:^{
+        MEGALogDebug(@"Camera Upload - Start local album scanning at: %@", [NSDateFormatter localizedStringFromDate:[NSDate date] dateStyle:NSDateFormatterShortStyle timeStyle:NSDateFormatterFullStyle]);
+        
         PHFetchOptions *fetchOptions = [[PHFetchOptions alloc] init];
         fetchOptions.includeAssetSourceTypes = PHAssetSourceTypeUserLibrary | PHAssetSourceTypeCloudShared | PHAssetSourceTypeiTunesSynced;
         self.fetchResult = [PHAsset fetchAssetsWithMediaType:PHAssetMediaTypeImage options:fetchOptions];
@@ -43,6 +45,8 @@
             NSArray<PHAsset *> *newAssets = [self findNewAssetsByComparingFetchResult:self.fetchResult uploadRecords:records];
             [[AssetUploadRecordCoreDataManager shared] saveAssets:newAssets error:nil];
         }
+        
+        MEGALogDebug(@"Camera Upload - Finish local album scanning at: %@", [NSDateFormatter localizedStringFromDate:[NSDate date] dateStyle:NSDateFormatterShortStyle timeStyle:NSDateFormatterFullStyle]);
         
         completion();
     }];
