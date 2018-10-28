@@ -9,7 +9,7 @@
 @import Photos;
 
 static NSString * const cameraUplodFolderName = @"Camera Uploads";
-static const NSInteger concurrentPhotoUploadCount = 100;
+static const NSInteger concurrentPhotoUploadCount = 10;
 
 @interface CameraUploadManager ()
 
@@ -38,7 +38,10 @@ static const NSInteger concurrentPhotoUploadCount = 100;
         _operationQueue = [[NSOperationQueue alloc] init];
         _assetUploadRecordManager = [[AssetUploadRecordCoreDataManager alloc] init];
         _scanner = [[AssetScanner alloc] init];
-        [[MEGASdkManager sharedMEGASdk] ensureMediaInfo];
+        
+        [_operationQueue addOperationWithBlock:^{
+            [[MEGASdkManager sharedMEGASdk] ensureMediaInfo];
+        }];
     }
     return self;
 }
@@ -46,16 +49,18 @@ static const NSInteger concurrentPhotoUploadCount = 100;
 #pragma mark - scan and upload
 
 - (void)startUploading {
-    if (self.cameraUploadNode) {
-        [self uploadIfPossible];
-    } else {
-        [[MEGASdkManager sharedMEGASdk] createFolderWithName:cameraUplodFolderName parent:[[MEGASdkManager sharedMEGASdk] rootNode]
-                                                    delegate:[[MEGACreateFolderRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
-            self->_cameraUploadNode = [[MEGASdkManager sharedMEGASdk] nodeForHandle:request.nodeHandle];
-            [self saveCameraUploadHandle:request.nodeHandle];
+    [self.operationQueue addOperationWithBlock:^{
+        if (self.cameraUploadNode) {
             [self uploadIfPossible];
-        }]];
-    }
+        } else {
+            [[MEGASdkManager sharedMEGASdk] createFolderWithName:cameraUplodFolderName parent:[[MEGASdkManager sharedMEGASdk] rootNode]
+                                                        delegate:[[MEGACreateFolderRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
+                self->_cameraUploadNode = [[MEGASdkManager sharedMEGASdk] nodeForHandle:request.nodeHandle];
+                [self saveCameraUploadHandle:request.nodeHandle];
+                [self uploadIfPossible];
+            }]];
+        }
+    }];
 }
 
 - (void)uploadIfPossible {
