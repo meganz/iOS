@@ -59,4 +59,13 @@ typedef NS_ENUM(NSInteger, MEGAChatMessageEndCallReason);
 - (NSString *)mnz_lastExtensionInLowercase;
 - (NSString *)mnz_sequentialFileNameInParentNode:(MEGANode *)parentNode;
 
+/**
+ Remove invalid file characters from a string. So we can use the new string safely as a folder name or file name
+ 
+ For now, we remove characters ":", "/", "\\"
+
+ @return a new string without invalid characters
+ */
+- (NSString *)stringByRemovingInvalidFileCharacters;
+
 @end

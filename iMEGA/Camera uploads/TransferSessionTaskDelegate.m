@@ -4,6 +4,7 @@
 #import "NSFileManager+MNZCategory.h"
 #import "AssetUploadCoordinator.h"
 #import "AssetUploadRecordCoreDataManager.h"
+#import "NSString+MNZCategory.h"
 
 @interface TransferSessionTaskDelegate ()
 
@@ -67,11 +68,11 @@
         return nil;
     }
     
-    return [[self uploadDirectoryURLForAssetLocalIdentifier:localIdentifier] URLByAppendingPathComponent:localIdentifier isDirectory:NO];
+    return [[self uploadDirectoryURLForAssetLocalIdentifier:localIdentifier] URLByAppendingPathComponent:localIdentifier.stringByRemovingInvalidFileCharacters isDirectory:NO];
 }
 
 - (NSURL *)uploadDirectoryURLForAssetLocalIdentifier:(NSString *)identifier {
-    return [NSFileManager.defaultManager.cameraUploadURL URLByAppendingPathComponent:identifier isDirectory:YES];
+    return [NSFileManager.defaultManager.cameraUploadURL URLByAppendingPathComponent:identifier.stringByRemovingInvalidFileCharacters isDirectory:YES];
 }
 
 - (void)handleBackgroundCompletedTask:(NSURLSessionTask *)task withToken:(NSData *)token {

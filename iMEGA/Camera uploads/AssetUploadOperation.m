@@ -114,12 +114,12 @@ static NSString * const archiveUploadInfoBackgroundTaskName = @"nz.mega.archiveC
         return;
     }
 
-    NSURL *assetURL = [[[NSFileManager defaultManager] cameraUploadURL] URLByAppendingPathComponent:self.asset.localIdentifier isDirectory:YES];
-    if(![[NSFileManager defaultManager] createDirectoryAtURL:assetURL withIntermediateDirectories:YES attributes:nil error:nil]) {
+    NSURL *assetDirectoryURL = [[[NSFileManager defaultManager] cameraUploadURL] URLByAppendingPathComponent:self.asset.localIdentifier.stringByRemovingInvalidFileCharacters isDirectory:YES];
+    if(![[NSFileManager defaultManager] createDirectoryAtURL:assetDirectoryURL withIntermediateDirectories:YES attributes:nil error:nil]) {
         [self finishOperationWithStatus:uploadStatusFailed shouldUploadNextAsset:YES];
         return;
     }
-    self.uploadInfo.directoryURL = assetURL;
+    self.uploadInfo.directoryURL = assetDirectoryURL;
     self.uploadInfo.fileName = [[NSString mnz_fileNameWithDate:self.asset.creationDate] stringByAppendingPathExtension:@"jpg"];
     if ([JPEGData writeToURL:self.uploadInfo.fileURL atomically:YES]) {
         self.uploadInfo.fileSize = [JPEGData length];
@@ -178,20 +178,11 @@ static NSString * const archiveUploadInfoBackgroundTaskName = @"nz.mega.archiveC
             MEGALogError(@"Camera Upload - Error when to upload asset %@ %@", self.asset, error);
             [self finishOperationWithStatus:uploadStatusFailed shouldUploadNextAsset:YES];
         } else {
-//            [self.coordinator completeUploadWithInfo:self.uploadInfo uploadToken:token success:^(MEGANode * _Nonnull node) {
-//                [self finishOperationWithStatus:uploadStatusDone shouldUploadNextAsset:YES];
-//            } failure:^(MEGAError * _Nonnull error) {
-//                [self finishOperationWithStatus:uploadStatusFailed shouldUploadNextAsset:YES];
-//            }];
-            
-            [self archiveUploadInfoDataForBackgroundTransfer];
-            
-            NSURL *archivedURL = [self.uploadInfo.directoryURL URLByAppendingPathComponent:self.asset.localIdentifier isDirectory:NO];
-            BOOL isDirectory = false;
-            if ([NSFileManager.defaultManager fileExistsAtPath:archivedURL.path isDirectory:&isDirectory] && !isDirectory) {
-                AssetUploadInfo *uploadInfo = [NSKeyedUnarchiver unarchiveObjectWithFile:archivedURL.path];
-                NSLog(@"%@", uploadInfo);
-            }
+            [self.coordinator completeUploadWithInfo:self.uploadInfo uploadToken:token success:^(MEGANode * _Nonnull node) {
+                [self finishOperationWithStatus:uploadStatusDone shouldUploadNextAsset:YES];
+            } failure:^(MEGAError * _Nonnull error) {
+                [self finishOperationWithStatus:uploadStatusFailed shouldUploadNextAsset:YES];
+            }];
         }
     }];
     
@@ -204,7 +195,7 @@ static NSString * const archiveUploadInfoBackgroundTaskName = @"nz.mega.archiveC
 #pragma mark - archive upload info
 
 - (void)archiveUploadInfoDataForBackgroundTransfer {
-    NSURL *archivedURL = [self.uploadInfo.directoryURL URLByAppendingPathComponent:self.asset.localIdentifier isDirectory:NO];
+    NSURL *archivedURL = [self.uploadInfo.directoryURL URLByAppendingPathComponent:self.asset.localIdentifier.stringByRemovingInvalidFileCharacters isDirectory:NO];
     BOOL isDirectory;
     if ([NSFileManager.defaultManager fileExistsAtPath:archivedURL.path isDirectory:&isDirectory] && !isDirectory) {
         return;
