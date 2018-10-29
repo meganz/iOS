@@ -51,13 +51,20 @@
     
     self.emailInputView.iconImageView.image = [UIImage imageNamed:@"mail"];
     self.emailInputView.topLabel.text = AMLocalizedString(@"emailPlaceholder", @"Hint text to suggest that the user has to write his email");
+    self.emailInputView.inputTextField.returnKeyType = UIReturnKeyNext;
     self.emailInputView.inputTextField.delegate = self;
     self.emailInputView.inputTextField.tag = 0;
+    if (@available(iOS 11.0, *)) {
+        self.emailInputView.inputTextField.textContentType = UITextContentTypeUsername;
+    }
     
     self.passwordView.leftImageView.image = [UIImage imageNamed:@"icon-link-only"];
     self.passwordView.topLabel.text = AMLocalizedString(@"passwordPlaceholder", @"Hint text to suggest that the user has to write his password");
     self.passwordView.passwordTextField.delegate = self;
     self.passwordView.passwordTextField.tag = 1;
+    if (@available(iOS 11.0, *)) {
+        self.passwordView.passwordTextField.textContentType = UITextContentTypePassword;
+    }
     
     [self.loginButton setTitle:AMLocalizedString(@"login", @"Login") forState:UIControlStateNormal];
     [self loginEnabled:NO];
@@ -149,7 +156,19 @@
 }
 
 - (BOOL)validateForm {
-    return [self validateEmail] && [self validatePassword];
+    if (![self validateEmail]) {
+        [self.emailInputView.inputTextField becomeFirstResponder];
+        
+        return NO;
+    }
+    
+    if (![self validatePassword]) {
+        [self.passwordView.passwordTextField becomeFirstResponder];
+        
+        return NO;
+    }
+    
+    return YES;
 }
 
 - (BOOL)validateEmail {
@@ -159,7 +178,6 @@
         [self.emailInputView setErrorState:NO withText:AMLocalizedString(@"emailPlaceholder", @"Hint text to suggest that the user has to write his email")];
     } else {
         [self.emailInputView setErrorState:YES withText:AMLocalizedString(@"emailInvalidFormat", @"Enter a valid email")];
-        [self.emailInputView.inputTextField becomeFirstResponder];
     }
     
     return validEmail;
@@ -172,7 +190,6 @@
         [self.passwordView setErrorState:NO];
     } else {
         [self.passwordView setErrorState:YES withText:AMLocalizedString(@"passwordInvalidFormat", @"Enter a valid password")];
-        [self.passwordView.passwordTextField becomeFirstResponder];
     }
 
     return validPassword;
@@ -217,15 +234,42 @@
 
 #pragma mark - UITextFieldDelegate
 
+- (void)textFieldDidBeginEditing:(UITextField *)textField {
+    if (textField.tag == 1) {
+        self.passwordView.toggleSecureButton.hidden = NO;
+    }
+}
+
+- (void)textFieldDidEndEditing:(UITextField *)textField {
+    switch (textField.tag) {
+        case 0:
+            [self validateEmail];
+            
+            break;
+            
+        case 1:
+            self.passwordView.passwordTextField.secureTextEntry = YES;
+            [self.passwordView configureSecureTextEntry];
+            [self validatePassword];
+            
+            break;
+            
+        default:
+            break;
+    }
+}
+
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
     switch (textField.tag) {
         case 0:
             [self loginEnabled:[textField.text stringByReplacingCharactersInRange:range withString:string].mnz_isValidEmail && self.passwordView.passwordTextField.text.length > 0];
+            [self.emailInputView setErrorState:NO withText:AMLocalizedString(@"emailPlaceholder", @"Hint text to suggest that the user has to write his email")];
             
             break;
             
         case 1:
             [self loginEnabled:self.emailInputView.inputTextField.text.mnz_isValidEmail && [textField.text stringByReplacingCharactersInRange:range withString:string].length > 0];
+            [self.passwordView setErrorState:NO];
             
             break;
             
@@ -260,31 +304,6 @@
     }
     
     return YES;
-}
-
-- (void)textFieldDidBeginEditing:(UITextField *)textField {
-    if (textField.tag == 1) {
-        self.passwordView.toggleSecureButton.hidden = NO;
-    }
-}
-
-- (void)textFieldDidEndEditing:(UITextField *)textField {
-    switch (textField.tag) {
-        case 0:
-            [self validateEmail];
-            
-            break;
-            
-        case 1:
-            self.passwordView.passwordTextField.secureTextEntry = YES;
-            [self.passwordView configureSecureTextEntry];
-            [self validatePassword];
-            
-            break;
-            
-        default:
-            break;
-    }
 }
 
 @end

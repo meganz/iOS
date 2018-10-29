@@ -926,7 +926,6 @@
                                                     <constraint firstItem="Ugg-UB-5iL" firstAttribute="centerX" secondItem="psY-WB-fF0" secondAttribute="centerX" id="Hnl-NY-bcA"/>
                                                     <constraint firstItem="waj-me-qhZ" firstAttribute="centerX" secondItem="psY-WB-fF0" secondAttribute="centerX" id="KBT-VF-PVd"/>
                                                     <constraint firstItem="MsE-72-wGO" firstAttribute="leading" secondItem="psY-WB-fF0" secondAttribute="leading" id="OyV-np-9Nm"/>
-                                                    <constraint firstAttribute="trailing" secondItem="Ugg-UB-5iL" secondAttribute="trailing" constant="43.5" id="Vz3-wf-DTF"/>
                                                     <constraint firstAttribute="bottom" secondItem="Ugg-UB-5iL" secondAttribute="bottom" id="WJn-LB-oeH"/>
                                                     <constraint firstItem="CyI-OA-zNf" firstAttribute="centerX" secondItem="psY-WB-fF0" secondAttribute="centerX" id="YL1-C6-DQ6"/>
                                                     <constraint firstItem="9QC-Ia-E7h" firstAttribute="leading" secondItem="psY-WB-fF0" secondAttribute="leading" id="lFS-F6-oA0"/>
@@ -940,6 +939,16 @@
                                                     <constraint firstItem="CGS-gI-Zky" firstAttribute="centerX" secondItem="psY-WB-fF0" secondAttribute="centerX" id="zyH-X9-oYh"/>
                                                     <constraint firstItem="MsE-72-wGO" firstAttribute="centerX" secondItem="psY-WB-fF0" secondAttribute="centerX" id="zzo-R9-uHH"/>
                                                 </constraints>
+                                                <variation key="widthClass=regular">
+                                                    <mask key="constraints">
+                                                        <exclude reference="HXD-8R-9MV"/>
+                                                        <exclude reference="xGx-Vo-pfz"/>
+                                                        <exclude reference="lFS-F6-oA0"/>
+                                                        <exclude reference="8zl-LF-qZ7"/>
+                                                        <exclude reference="6Dv-kg-5vG"/>
+                                                        <exclude reference="OyV-np-9Nm"/>
+                                                    </mask>
+                                                </variation>
                                             </view>
                                         </subviews>
                                         <constraints>

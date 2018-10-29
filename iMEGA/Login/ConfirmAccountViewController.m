@@ -68,10 +68,16 @@
     self.emailInputView.topLabel.text = AMLocalizedString(@"emailPlaceholder", @"Hint text to suggest that the user has to write his email");
     self.emailInputView.inputTextField.text = self.emailString;
     self.emailInputView.inputTextField.enabled = NO;
+    if (@available(iOS 11.0, *)) {
+        self.emailInputView.inputTextField.textContentType = UITextContentTypeUsername;
+    }
     
     self.passwordView.leftImageView.image = [UIImage imageNamed:@"icon-link-only"];
     self.passwordView.topLabel.text = AMLocalizedString(@"passwordPlaceholder", @"Hint text to suggest that the user has to write his password");
     self.passwordView.passwordTextField.delegate = self;
+    if (@available(iOS 11.0, *)) {
+        self.passwordView.passwordTextField.textContentType = UITextContentTypePassword;
+    }
 }
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations {
@@ -158,12 +164,6 @@
 
 #pragma mark - UITextFieldDelegate
 
-- (BOOL)textFieldShouldReturn:(UITextField *)textField {
-    [self.passwordView.passwordTextField resignFirstResponder];
-    [self confirmTouchUpInside:self.confirmAccountButton];
-    return YES;
-}
-
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
     self.passwordView.toggleSecureButton.hidden = NO;
 }
@@ -172,6 +172,18 @@
     [self validateForm];
     self.passwordView.passwordTextField.secureTextEntry = YES;
     [self.passwordView configureSecureTextEntry];
+}
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+    [self.passwordView setErrorState:NO];
+    
+    return YES;
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    [self.passwordView.passwordTextField resignFirstResponder];
+    [self confirmTouchUpInside:self.confirmAccountButton];
+    return YES;
 }
 
 #pragma mark - MEGARequestDelegate
