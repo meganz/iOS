@@ -71,6 +71,8 @@
                                                          value:-2
                                                         toDate:[NSDate date]
                                                        options:0];
+    
+    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -291,7 +293,7 @@
 
 - (void)emptyDataSet:(UIScrollView *)scrollView didTapButton:(UIButton *)button {
     if (![[NSUserDefaults standardUserDefaults] boolForKey:@"IsChatEnabled"]) {
-        ChatSettingsTableViewController *chatSettingsTVC = [[UIStoryboard storyboardWithName:@"Settings" bundle:nil] instantiateViewControllerWithIdentifier:@"ChatSettingsTableViewControllerID"];
+        ChatSettingsTableViewController *chatSettingsTVC = [[UIStoryboard storyboardWithName:@"ChatSettings" bundle:nil] instantiateViewControllerWithIdentifier:@"ChatSettingsTableViewControllerID"];
         [self.navigationController pushViewController:chatSettingsTVC animated:YES];
     } else {
         [self addTapped:(UIBarButtonItem *)button];

@@ -199,6 +199,10 @@
     return [dateFormatter stringFromDate:date];
 }
 
+- (void)cleanPasswordTextField {
+    self.passwordView.passwordTextField.text = nil;
+}
+
 #pragma mark - UIResponder
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
@@ -263,7 +267,8 @@
 
 - (void)textFieldDidEndEditing:(UITextField *)textField {
     if (textField.tag == 1) {
-        self.passwordView.rightImageView.hidden = YES;
+        self.passwordView.passwordTextField.secureTextEntry = YES;
+        [self.passwordView configureSecureTextEntry];
     }
 }
 

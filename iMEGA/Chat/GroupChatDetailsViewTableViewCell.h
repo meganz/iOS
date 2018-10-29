@@ -10,6 +10,4 @@
 
 @property (weak, nonatomic) IBOutlet UISwitch *notificationsSwitch;
 
-@property (weak, nonatomic) IBOutlet UIView *lineView;
-
 @end

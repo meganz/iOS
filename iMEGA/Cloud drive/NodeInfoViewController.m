@@ -503,6 +503,10 @@
             [node mnz_removeSharing];
             break;
             
+        case MegaNodeActionTypeSaveToPhotos:
+            [node mnz_saveToPhotosWithApi:[MEGASdkManager sharedMEGASdk]];
+            break;
+            
         default:
             break;
     }

@@ -703,6 +703,10 @@ static NSString* const B = @"[B]";
     return base64FromBase64URLEncoding;
 }
 
+- (NSString *)mnz_relativeLocalPath {
+    return [self stringByReplacingOccurrencesOfString:[NSHomeDirectory() stringByAppendingString:@"/"] withString:@""];
+}
+
 #pragma mark - File names and extensions
 
 + (NSString *)mnz_fileNameWithDate:(NSDate *)date {

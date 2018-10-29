@@ -97,7 +97,7 @@
                                     <constraint firstAttribute="height" constant="17" id="T0F-77-5MD"/>
                                 </constraints>
                             </imageView>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Email" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="sOe-JK-Yli" userLabel="Email Text Field">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="sOe-JK-Yli" userLabel="Email Text Field">
                                 <rect key="frame" x="59" y="235" width="299" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="948" id="EOw-gu-EVF">
@@ -279,7 +279,7 @@
                                                     <constraint firstAttribute="width" constant="32" id="VIB-dl-Wnp"/>
                                                 </constraints>
                                             </imageView>
-                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Name" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="bVu-yv-OMn">
+                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="bVu-yv-OMn">
                                                 <rect key="frame" x="59" y="51" width="299" height="20"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="580" id="ffC-ug-dVu"/>
@@ -309,7 +309,7 @@
                                                     <constraint firstAttribute="height" constant="1" id="T7P-Qt-dJb"/>
                                                 </constraints>
                                             </view>
-                                            <textField opaque="NO" clipsSubviews="YES" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Lastname" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="mBh-Ff-kxx">
+                                            <textField opaque="NO" clipsSubviews="YES" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Lastname" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="mBh-Ff-kxx">
                                                 <rect key="frame" x="59" y="95" width="299" height="20"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="20" id="yTp-yg-bVw"/>
@@ -335,7 +335,7 @@
                                                     <constraint firstAttribute="height" constant="32" id="qLg-HO-ESr"/>
                                                 </constraints>
                                             </imageView>
-                                            <textField opaque="NO" clipsSubviews="YES" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Email" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="ZUP-K7-qha">
+                                            <textField opaque="NO" clipsSubviews="YES" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ZUP-K7-qha">
                                                 <rect key="frame" x="59" y="151" width="299" height="20"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="20" id="epk-1c-1d7"/>

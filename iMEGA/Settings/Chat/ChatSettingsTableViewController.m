@@ -4,13 +4,13 @@
 #import "SVProgressHUD.h"
 
 #import "Helper.h"
+#import "MEGAGetAttrUserRequestDelegate.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGALogger.h"
 #import "MEGASdkManager.h"
 #import "NSString+MNZCategory.h"
 
 #import "ChatStatusTableViewController.h"
-#import "ChatVideoQualityTableViewController.h"
 #import "ChatVideoUploadQuality.h"
 
 @interface ChatSettingsTableViewController () <DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGARequestDelegate, MEGAChatDelegate, MEGAChatRequestDelegate>
@@ -67,6 +67,12 @@
     }
     
     self.richPreviewsSwitch.on = [NSUserDefaults.standardUserDefaults boolForKey:@"richLinks"];
+    
+    MEGAGetAttrUserRequestDelegate *delegate = [[MEGAGetAttrUserRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
+        [NSUserDefaults.standardUserDefaults setBool:request.flag forKey:@"richLinks"];
+        self.richPreviewsSwitch.on = request.flag;
+    }];
+    [[MEGASdkManager sharedMEGASdk] isRichPreviewsEnabledWithDelegate:delegate];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -247,13 +253,8 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {    
     if ([indexPath isEqual:[NSIndexPath indexPathForRow:0 inSection:1]] && !self.isInvalidStatus) {
-        ChatStatusTableViewController *chatStatusTVC = [[UIStoryboard storyboardWithName:@"Settings" bundle:nil] instantiateViewControllerWithIdentifier:@"ChatStatusTableViewControllerID"];
+        ChatStatusTableViewController *chatStatusTVC = [[UIStoryboard storyboardWithName:@"ChatSettings" bundle:nil] instantiateViewControllerWithIdentifier:@"ChatStatusTableViewControllerID"];
         [self.navigationController pushViewController:chatStatusTVC animated:YES];
-    }
-    
-    if ([indexPath isEqual:[NSIndexPath indexPathForRow:0 inSection:3]]) {
-        ChatVideoQualityTableViewController *chatVideoQualityVC = [[UIStoryboard storyboardWithName:@"Settings" bundle:nil] instantiateViewControllerWithIdentifier:@"ChatVideoQualityTableViewControllerID"];
-        [self.navigationController pushViewController:chatVideoQualityVC animated:YES];
     }
 }
 
