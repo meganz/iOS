@@ -812,8 +812,10 @@
     
     MEGALogInfo(@"%@", chatListItem);
     
-    if (chatListItem.isPublicChat || !chatListItem.isGroup) {
+    if (chatListItem.isPublicChat || !chatListItem.isGroup) {
         cell.privateChatImageView.hidden = YES;
+    } else {
+        cell.privateChatImageView.hidden = NO;
     }
     
     cell.chatTitle.text = chatListItem.title;
