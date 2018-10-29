@@ -1,7 +1,5 @@
 #import "MEGASdkManager.h"
 
-#import "AppDelegate.h"
-
 @implementation MEGASdkManager
 
 static NSString *_appKey = nil;
@@ -43,16 +41,16 @@ MEGAChatSdk *_MEGAChatSdk = nil;
 
 + (void)createSharedMEGAChatSdk {
     _MEGAChatSdk = [[MEGAChatSdk alloc] init:_megaSDK];
-    [_MEGAChatSdk addChatDelegate:(AppDelegate *)[[UIApplication sharedApplication] delegate]];
-    [_MEGAChatSdk addChatRequestDelegate:(AppDelegate *)[[UIApplication sharedApplication] delegate]];
+    [_MEGAChatSdk addChatDelegate:(id<MEGAChatDelegate>)[[UIApplication sharedApplication] delegate]];
+    [_MEGAChatSdk addChatRequestDelegate:(id<MEGAChatRequestDelegate>)[[UIApplication sharedApplication] delegate]];
     MEGALogDebug(@"_MEGAChatSdk created: %@", _MEGAChatSdk);
     [MEGASdk setLogToConsole:NO];
     [MEGAChatSdk setLogToConsole:YES];
 }
 
 + (void)destroySharedMEGAChatSdk {
-    [_MEGAChatSdk removeChatDelegate:(AppDelegate *)[[UIApplication sharedApplication] delegate]];
-    [_MEGAChatSdk removeChatRequestDelegate:(AppDelegate *)[[UIApplication sharedApplication] delegate]];
+    [_MEGAChatSdk removeChatDelegate:(id<MEGAChatDelegate>)[[UIApplication sharedApplication] delegate]];
+    [_MEGAChatSdk removeChatRequestDelegate:(id<MEGAChatRequestDelegate>)[[UIApplication sharedApplication] delegate]];
     _MEGAChatSdk = nil;
     MEGALogDebug(@"_MEGAChatSdk destroyed: %@", _MEGAChatSdk);
     [MEGAChatSdk setLogToConsole:NO];
