@@ -75,7 +75,7 @@ NSString * const uploadStatusDone = @"Done";
     [self.privateQueueContext performBlockAndWait:^{
         NSFetchRequest *request = MOAssetUploadRecord.fetchRequest;
         request.fetchLimit = fetchLimit;
-        request.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"modificationDate" ascending:NO]];
+        request.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"creationDate" ascending:NO]];
         request.predicate = [NSPredicate predicateWithFormat:@"status IN %@", @[uploadStatusNotStarted, uploadStatusFailed]];
         records = [self.privateQueueContext executeFetchRequest:request error:&coreDataError];
     }];
@@ -207,7 +207,7 @@ NSString * const uploadStatusDone = @"Done";
     MOAssetUploadRecord *record = [NSEntityDescription insertNewObjectForEntityForName:@"AssetUploadRecord" inManagedObjectContext:self.privateQueueContext];
     record.localIdentifier = asset.localIdentifier;
     record.status = uploadStatusNotStarted;
-    record.modificationDate = asset.modificationDate;
+    record.creationDate = asset.creationDate;
     return record;
 }
 
