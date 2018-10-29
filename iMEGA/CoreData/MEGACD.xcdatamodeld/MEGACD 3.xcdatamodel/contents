@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14315.18" systemVersion="18A391" minimumToolsVersion="Xcode 4.3" sourceLanguage="Objective-C" userDefinedModelVersionIdentifier="">
     <entity name="AssetUploadRecord" representedClassName="MOAssetUploadRecord" syncable="YES">
+        <attribute name="creationDate" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="localIdentifier" attributeType="String" syncable="YES"/>
-        <attribute name="modificationDate" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="status" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <entity name="ChatDraft" representedClassName="MOChatDraft" syncable="YES">

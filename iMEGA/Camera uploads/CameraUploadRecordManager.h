@@ -2,14 +2,14 @@
 #import <Foundation/Foundation.h>
 #import "MOAssetUploadRecord+CoreDataClass.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 extern NSString * const uploadStatusNotStarted;
 extern NSString * const uploadStatusQueuedUp;
 extern NSString * const uploadStatusProcessing;
 extern NSString * const uploadStatusUploading;
 extern NSString * const uploadStatusFailed;
 extern NSString * const uploadStatusDone;
-
-NS_ASSUME_NONNULL_BEGIN
 
 @class PHAsset, PHFetchResult;
 

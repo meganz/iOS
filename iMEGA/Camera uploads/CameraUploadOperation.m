@@ -133,7 +133,7 @@ static NSString * const archiveUploadInfoBackgroundTaskName = @"nz.mega.archiveC
 }
 
 - (void)processImageData:(NSData *)imageData {
-    self.uploadInfo.originalFingerprint = [[MEGASdkManager sharedMEGASdk] fingerprintForData:imageData modificationTime:self.asset.modificationDate];
+    self.uploadInfo.originalFingerprint = [[MEGASdkManager sharedMEGASdk] fingerprintForData:imageData modificationTime:self.asset.creationDate];
     MEGANode *existingNode = [[MEGASdkManager sharedMEGASdk] nodeForFingerprint:self.uploadInfo.originalFingerprint parent:self.cameraUploadNode];
     if (existingNode) {
         [self processExistingNode:existingNode];
@@ -141,7 +141,7 @@ static NSString * const archiveUploadInfoBackgroundTaskName = @"nz.mega.archiveC
     }
     
     NSData *JPEGData = UIImageJPEGRepresentation([UIImage imageWithData:imageData], 1.0);
-    self.uploadInfo.fingerprint = [[MEGASdkManager sharedMEGASdk] fingerprintForData:JPEGData modificationTime:self.asset.modificationDate];
+    self.uploadInfo.fingerprint = [[MEGASdkManager sharedMEGASdk] fingerprintForData:JPEGData modificationTime:self.asset.creationDate];
     existingNode = [[MEGASdkManager sharedMEGASdk] nodeForFingerprint:self.uploadInfo.fingerprint parent:self.cameraUploadNode];
     if (existingNode) {
         [self processExistingNode:existingNode];
@@ -228,7 +228,7 @@ static NSString * const archiveUploadInfoBackgroundTaskName = @"nz.mega.archiveC
 #pragma mark - archive upload info
 
 - (void)archiveUploadInfoDataForBackgroundTransfer {
-    MEGALogDebug(@"Camera Upload - archive upload info for asset: %@", self.asset);
+    MEGALogDebug(@"Camera Upload - start archiving upload info for asset: %@", self.asset);
     
     NSURL *archivedURL = [self.uploadInfo.directoryURL URLByAppendingPathComponent:self.asset.localIdentifier.stringByRemovingInvalidFileCharacters isDirectory:NO];
     BOOL isDirectory;
@@ -244,6 +244,7 @@ static NSString * const archiveUploadInfoBackgroundTaskName = @"nz.mega.archiveC
     [NSKeyedArchiver archiveRootObject:self.uploadInfo toFile:archivedURL.path];
     [UIApplication.sharedApplication endBackgroundTask:backgroundArchiveTaskId];
     backgroundArchiveTaskId = UIBackgroundTaskInvalid;
+    MEGALogDebug(@"Camera Upload - finish archiving upload info for asset: %@", self.asset);
 }
 
 #pragma mark - finish operation
