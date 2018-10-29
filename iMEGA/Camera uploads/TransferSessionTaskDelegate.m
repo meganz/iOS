@@ -2,15 +2,15 @@
 #import "TransferSessionTaskDelegate.h"
 #import "TransferSessionManager.h"
 #import "NSFileManager+MNZCategory.h"
-#import "AssetUploadCoordinator.h"
-#import "AssetUploadRecordCoreDataManager.h"
+#import "CameraUploadCoordinator.h"
+#import "CameraUploadRecordManager.h"
 #import "NSString+MNZCategory.h"
 
 @interface TransferSessionTaskDelegate ()
 
 @property (strong, nonatomic) NSMutableData *mutableData;
 @property (copy, nonatomic) UploadCompletionHandler completion;
-@property (strong, nonatomic) AssetUploadCoordinator *uploadCoordinator;
+@property (strong, nonatomic) CameraUploadCoordinator *uploadCoordinator;
 
 @end
 
@@ -26,9 +26,9 @@
     return self;
 }
 
-- (AssetUploadCoordinator *)uploadCoordinator {
+- (CameraUploadCoordinator *)uploadCoordinator {
     if (_uploadCoordinator == nil) {
-        _uploadCoordinator = [[AssetUploadCoordinator alloc] init];
+        _uploadCoordinator = [[CameraUploadCoordinator alloc] init];
     }
     
     return _uploadCoordinator;
@@ -113,7 +113,7 @@
         return;
     }
     
-    [AssetUploadRecordCoreDataManager.shared updateStatus:status forLocalIdentifier:localIdentifier error:nil];
+    [CameraUploadRecordManager.shared updateStatus:status forLocalIdentifier:localIdentifier error:nil];
     NSURL *uploadDirectory = [self uploadDirectoryURLForAssetLocalIdentifier:localIdentifier];
     [NSFileManager.defaultManager removeItemAtURL:uploadDirectory error:nil];
     MEGALogDebug(@"Camera Upload - Session task %@ finished with status: %@", task.taskDescription, status);

@@ -4,7 +4,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface AssetScanner : NSObject
+@interface CameraScanner : NSObject
 
 - (void)startScanningWithCompletion:(void (^)(void))completion;
 

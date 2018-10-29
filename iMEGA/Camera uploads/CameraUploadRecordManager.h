@@ -1,10 +1,3 @@
-//
-//  AssetUploadRecordCoreDataManager.h
-//  MEGA
-//
-//  Created by Simon Wang on 8/10/18.
-//  Copyright © 2018 MEGA. All rights reserved.
-//
 
 #import <Foundation/Foundation.h>
 #import "MOAssetUploadRecord+CoreDataClass.h"
@@ -20,7 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @class PHAsset, PHFetchResult;
 
-@interface AssetUploadRecordCoreDataManager : NSObject
+@interface CameraUploadRecordManager : NSObject
 
 + (instancetype)shared;
 

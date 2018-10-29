@@ -70,7 +70,7 @@
 #import "MEGAShowPasswordReminderRequestDelegate.h"
 #import "CameraUploadManager.h"
 #import "TransferSessionManager.h"
-#import "AssetUploadRecordCoreDataManager.h"
+#import "CameraUploadRecordManager.h"
 
 #define kUserAgent @"MEGAiOS"
 #define kAppKey @"EVtjzb7R"
@@ -131,7 +131,7 @@
 - (BOOL)application:(UIApplication *)application willFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     NSLog(@"Application will finish launching with options: %@", launchOptions);
 #ifdef DEBUG
-    NSArray<MOAssetUploadRecord *> *localRecords = [AssetUploadRecordCoreDataManager.shared fetchAllAssetUploadRecords:nil];
+    NSArray<MOAssetUploadRecord *> *localRecords = [CameraUploadRecordManager.shared fetchAllAssetUploadRecords:nil];
     localRecords = [localRecords sortedArrayUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"status" ascending:YES]]];
     NSLog(@"local records count: %lu, list: %@", localRecords.count, localRecords);
 #endif
