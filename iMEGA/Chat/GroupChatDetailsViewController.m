@@ -514,7 +514,7 @@
                             link = request.text;
                         }
                     }];
-                    [[MEGASdkManager sharedMEGAChatSdk] exportChatLink:self.chatRoom.chatId delegate:delegate];
+                    [[MEGASdkManager sharedMEGAChatSdk] createChatLink:self.chatRoom.chatId delegate:delegate];
                 }
             }];
             [[MEGASdkManager sharedMEGAChatSdk] queryChatLink:self.chatRoom.chatId delegate:delegate];
@@ -578,7 +578,7 @@
                         }];
                     }
                 }];
-                [[MEGASdkManager sharedMEGAChatSdk] closeChatLink:self.chatRoom.chatId delegate:delegate];
+                [[MEGASdkManager sharedMEGAChatSdk] setPublicChatToPrivate:self.chatRoom.chatId delegate:delegate];
             };
             
             [self presentViewController:customModalAlertVC animated:YES completion:nil];
