@@ -79,8 +79,6 @@
     } else {
         self.emailTextField.placeholder = AMLocalizedString(@"emailPlaceholder", @"Hint text to suggest that the user has to write his email");
     }
-    
-    [[MEGALogger sharedLogger] enableChatlogs];
 }
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations {

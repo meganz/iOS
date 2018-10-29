@@ -40,7 +40,7 @@
 - (UIViewController *)mnz_viewControllerForNodeInFolderLink:(BOOL)isFolderLink {
     MEGASdk *api = isFolderLink ? [MEGASdkManager sharedMEGASdkFolder] : [MEGASdkManager sharedMEGASdk];
     
-    MOOfflineNode *offlineNodeExist = [[MEGAStore shareInstance] offlineNodeWithNode:self api:api];
+    MOOfflineNode *offlineNodeExist = [[MEGAStore shareInstance] offlineNodeWithNode:self];
     
     NSString *previewDocumentPath = nil;
     if (offlineNodeExist) {
@@ -144,7 +144,7 @@
 }
 
 - (BOOL)mnz_downloadNodeOverwriting:(BOOL)overwrite api:(MEGASdk *)api {
-    MOOfflineNode *offlineNodeExist = [[MEGAStore shareInstance] offlineNodeWithNode:self api:api];
+    MOOfflineNode *offlineNodeExist = [[MEGAStore shareInstance] offlineNodeWithNode:self];
     if (offlineNodeExist) {
         return YES;
     } else {
@@ -169,7 +169,7 @@
                 [SVProgressHUD showImage:[UIImage imageNamed:@"saveToPhotos"] status:AMLocalizedString(@"Saving to Photos…", @"Text shown when starting the process to save a photo or video to Photos app")];
                 NSString *temporaryPath = [[NSTemporaryDirectory() stringByAppendingPathComponent:self.base64Handle] stringByAppendingPathComponent:self.name];
                 NSString *temporaryFingerprint = [[MEGASdkManager sharedMEGASdk] fingerprintForFilePath:temporaryPath];
-                if ([temporaryFingerprint isEqualToString:[api fingerprintForNode:self]]) {
+                if ([temporaryFingerprint isEqualToString:self.fingerprint]) {
                     [self mnz_copyToGalleryFromTemporaryPath:temporaryPath];
                 } else if ([MEGAReachabilityManager isReachableHUDIfNot]) {
                     NSString *downloadsDirectory = [[NSFileManager defaultManager] downloadsDirectory];

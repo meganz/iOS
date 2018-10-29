@@ -1581,7 +1581,7 @@
 /* A title on the mobile web client page showing that 2FA has been enabled successfully. */
 "twoFactorAuthenticationEnabled"="2단계 인증 활성화됨";
 /* A message on the dialog shown after 2FA was successfully enabled. */
-"twoFactorAuthenticationEnabledDescription"="다음번에 로그인할 때 당신의 인증 앱에 의해 제공된 6자리 코드를 입력하라고 요구될 것입니다.";
+"twoFactorAuthenticationEnabledDescription"="다음번 로그인 때 당신의 인증기 앱에서 생성된 6자리 코드를 요구합니다.";
 /* A warning message on the Backup Recovery Key dialog to tell the user to backup their Recovery Key to their local computer. */
 "pleaseSaveYourRecoveryKey"="복구 키를 안전한 곳에 저장하세요";
 /* An informational message on the Backup Recovery Key dialog. */
@@ -1627,7 +1627,7 @@
 /* Title label that explains that the user is going to be asked for the photos permission */
 "Allow Access to Photos"="사진첩에 대한 접근 허용";
 /* Detailed explanation of why the user should give permission to access to the photos */
-"To share photos and videos, allow MEGA to access your photos"="사진과 동영상을 공유하려면, MEGA가 당신의 사진에 접근할 수 있도록 허용해주세요";
+"To share photos and videos, allow MEGA to access your library."="사진과 동영상을 공유하려면, MEGA가 당신의 사진에 접근할 수 있도록 허용해주세요";
 /* Title label that explains that the user is going to be asked for the microphone and camera permission */
 "Enable Microphone and Camera"="마이크와 카메라 활성화";
 /* Detailed explanation of why the user should give permission to access to the camera and the microphone */
@@ -1637,7 +1637,7 @@
 /* Detailed explanation of why the user should give permission to deliver notifications */
 "We would like to send you notifications so you receive new messages on your device instantly."="당신이 메시지를 당신의 기기에서 즉시 받을 수 있도록 알림을 보내고자 합니다.";
 /* Button which triggers a request for a specific permission, that have been explained to the user beforehand */
-"Enable Access"="접근 허용";
+"Allow Access"="접근 허용";
 /* A section header which contains the file management settings. These settings allow users to remove duplicate files etc. */
 "File Management"="파일 관리";
 /* Title of the option to enable or disable file versioning on Settings section */
