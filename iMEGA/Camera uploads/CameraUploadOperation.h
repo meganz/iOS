@@ -6,7 +6,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @class PHAsset;
 
-@interface AssetUploadOperation : MEGAOperation
+@interface CameraUploadOperation : MEGAOperation
 
 - (instancetype)initWithAsset:(PHAsset *)asset cameraUploadNode:(MEGANode *)node;
 - (instancetype)initWithLocalIdentifier:(NSString *)localIdentifier cameraUploadNode:(MEGANode *)node;

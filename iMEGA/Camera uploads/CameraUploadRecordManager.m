@@ -1,12 +1,5 @@
-//
-//  AssetUploadStatusCoreDataManager.m
-//  MEGA
-//
-//  Created by Simon Wang on 8/10/18.
-//  Copyright © 2018 MEGA. All rights reserved.
-//
 
-#import "AssetUploadRecordCoreDataManager.h"
+#import "CameraUploadRecordManager.h"
 #import "MEGAStore.h"
 @import Photos;
 
@@ -17,13 +10,13 @@ NSString * const uploadStatusUploading = @"Uploading";
 NSString * const uploadStatusFailed = @"Failed";
 NSString * const uploadStatusDone = @"Done";
 
-@interface AssetUploadRecordCoreDataManager ()
+@interface CameraUploadRecordManager ()
 
 @property (strong, nonatomic) NSManagedObjectContext *privateQueueContext;
 
 @end
 
-@implementation AssetUploadRecordCoreDataManager
+@implementation CameraUploadRecordManager
 
 + (instancetype)shared {
     static id sharedInstance = nil;
@@ -83,7 +76,7 @@ NSString * const uploadStatusDone = @"Done";
         NSFetchRequest *request = MOAssetUploadRecord.fetchRequest;
         request.fetchLimit = fetchLimit;
         request.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"modificationDate" ascending:NO]];
-        request.predicate = [NSPredicate predicateWithFormat:@"status IN %@", @[uploadStatusNotStarted, uploadStatusFailed, uploadStatusProcessing]];
+        request.predicate = [NSPredicate predicateWithFormat:@"status IN %@", @[uploadStatusNotStarted, uploadStatusFailed]];
         records = [self.privateQueueContext executeFetchRequest:request error:&coreDataError];
     }];
     

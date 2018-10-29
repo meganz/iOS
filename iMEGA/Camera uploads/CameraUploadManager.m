@@ -1,8 +1,8 @@
 
 #import "CameraUploadManager.h"
-#import "AssetUploadRecordCoreDataManager.h"
-#import "AssetScanner.h"
-#import "AssetUploadOperation.h"
+#import "CameraUploadRecordManager.h"
+#import "CameraScanner.h"
+#import "CameraUploadOperation.h"
 #import "Helper.h"
 #import "MEGASdkManager.h"
 #import "MEGACreateFolderRequestDelegate.h"
@@ -14,9 +14,9 @@ static const NSInteger concurrentPhotoUploadCount = 10;
 @interface CameraUploadManager ()
 
 @property (strong, nonatomic) NSOperationQueue *operationQueue;
-@property (strong, nonatomic) AssetUploadRecordCoreDataManager *assetUploadRecordManager;
+@property (strong, nonatomic) CameraUploadRecordManager *assetUploadRecordManager;
 @property (strong, nonatomic) MEGANode *cameraUploadNode;
-@property (strong, nonatomic) AssetScanner *scanner;
+@property (strong, nonatomic) CameraScanner *scanner;
 
 @end
 
@@ -36,8 +36,8 @@ static const NSInteger concurrentPhotoUploadCount = 10;
     self = [super init];
     if (self) {
         _operationQueue = [[NSOperationQueue alloc] init];
-        _assetUploadRecordManager = [[AssetUploadRecordCoreDataManager alloc] init];
-        _scanner = [[AssetScanner alloc] init];
+        _assetUploadRecordManager = [[CameraUploadRecordManager alloc] init];
+        _scanner = [[CameraScanner alloc] init];
         
         [_operationQueue addOperationWithBlock:^{
             [[MEGASdkManager sharedMEGASdk] ensureMediaInfo];
@@ -91,8 +91,8 @@ static const NSInteger concurrentPhotoUploadCount = 10;
 - (void)uploadNextPhotosWithNumber:(NSInteger)number {
     NSArray *records = [self.assetUploadRecordManager fetchNonUploadedRecordsWithLimit:number error:nil];
     for (MOAssetUploadRecord *record in records) {
-        [AssetUploadRecordCoreDataManager.shared updateStatus:uploadStatusQueuedUp forRecord:record error:nil];
-        [self.operationQueue addOperation:[[AssetUploadOperation alloc] initWithLocalIdentifier:record.localIdentifier cameraUploadNode:self.cameraUploadNode]];
+        [CameraUploadRecordManager.shared updateStatus:uploadStatusQueuedUp forRecord:record error:nil];
+        [self.operationQueue addOperation:[[CameraUploadOperation alloc] initWithLocalIdentifier:record.localIdentifier cameraUploadNode:self.cameraUploadNode]];
     }
 }
 

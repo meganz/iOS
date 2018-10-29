@@ -652,18 +652,19 @@
 		A8F6E8911F9E75D00087859C /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8F6E8901F9E75C20087859C /* VideoToolbox.framework */; };
 		A8F6E8931F9E75DD0087859C /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8F6E8921F9E75D50087859C /* GLKit.framework */; };
 		A8F6E8941F9E770C0087859C /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9432291D1EDD83FF007DB542 /* MobileCoreServices.framework */; };
+		B686F45921866BB4009C0DAA /* CameraUploadRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B686F45821866BB4009C0DAA /* CameraUploadRequestDelegate.m */; };
 		B68C42C4216D9D47003C5A50 /* MOAssetUploadRecord+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = B68C42C1216D9D47003C5A50 /* MOAssetUploadRecord+CoreDataClass.m */; };
 		B68C42C5216D9D47003C5A50 /* MOAssetUploadRecord+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = B68C42C2216D9D47003C5A50 /* MOAssetUploadRecord+CoreDataProperties.m */; };
 		B68C42C8216DA9CF003C5A50 /* MEGAOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = B68C42C6216DA9CE003C5A50 /* MEGAOperation.m */; };
-		B68C42CB216DAA85003C5A50 /* AssetUploadOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = B68C42CA216DAA85003C5A50 /* AssetUploadOperation.m */; };
-		B6D9D7E9216AB0C700D7B08A /* AssetScanner.m in Sources */ = {isa = PBXBuildFile; fileRef = B6D9D7E8216AB0C700D7B08A /* AssetScanner.m */; };
-		B6D9D7EF216AE5D000D7B08A /* AssetUploadRecordCoreDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B6D9D7EE216AE5D000D7B08A /* AssetUploadRecordCoreDataManager.m */; };
+		B68C42CB216DAA85003C5A50 /* CameraUploadOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = B68C42CA216DAA85003C5A50 /* CameraUploadOperation.m */; };
+		B6D9D7E9216AB0C700D7B08A /* CameraScanner.m in Sources */ = {isa = PBXBuildFile; fileRef = B6D9D7E8216AB0C700D7B08A /* CameraScanner.m */; };
+		B6D9D7EF216AE5D000D7B08A /* CameraUploadRecordManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B6D9D7EE216AE5D000D7B08A /* CameraUploadRecordManager.m */; };
 		B6E19B2921743BD600882F74 /* CameraUploadManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B6E19B2821743BD600882F74 /* CameraUploadManager.m */; };
 		B6E19B2F21756F0800882F74 /* TransferSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B6E19B2E21756F0800882F74 /* TransferSessionManager.m */; };
 		B6E19B322175716600882F74 /* TransferSessionTaskDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B6E19B312175716600882F74 /* TransferSessionTaskDelegate.m */; };
 		B6E19B352175852E00882F74 /* AssetUploadInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = B6E19B342175852E00882F74 /* AssetUploadInfo.m */; };
 		B6E19B3A2178424600882F74 /* TransferSessionDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B6E19B392178424600882F74 /* TransferSessionDelegate.m */; };
-		B6E19B3D2180126500882F74 /* AssetUploadCoordinator.m in Sources */ = {isa = PBXBuildFile; fileRef = B6E19B3C2180126500882F74 /* AssetUploadCoordinator.m */; };
+		B6E19B3D2180126500882F74 /* CameraUploadCoordinator.m in Sources */ = {isa = PBXBuildFile; fileRef = B6E19B3C2180126500882F74 /* CameraUploadCoordinator.m */; };
 		E803CB641D5336F100F81A36 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = E803CB661D5336F100F81A36 /* InfoPlist.strings */; };
 		E80C76101DEDF32A00CA4D68 /* GroupChatDetailsViewTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E80C760F1DEDF32A00CA4D68 /* GroupChatDetailsViewTableViewCell.m */; };
 		E81616731A8397B5002EFDD7 /* FolderLinkViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E81616721A8397B5002EFDD7 /* FolderLinkViewController.m */; };
@@ -1499,18 +1500,20 @@
 		A8F6E88E1F9E75B60087859C /* libwebsockets.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libwebsockets.a; path = iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib/libwebsockets.a; sourceTree = "<group>"; };
 		A8F6E8901F9E75C20087859C /* VideoToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VideoToolbox.framework; path = System/Library/Frameworks/VideoToolbox.framework; sourceTree = SDKROOT; };
 		A8F6E8921F9E75D50087859C /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
+		B686F45721866BB4009C0DAA /* CameraUploadRequestDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CameraUploadRequestDelegate.h; sourceTree = "<group>"; };
+		B686F45821866BB4009C0DAA /* CameraUploadRequestDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CameraUploadRequestDelegate.m; sourceTree = "<group>"; };
 		B68C42C0216D9D47003C5A50 /* MOAssetUploadRecord+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MOAssetUploadRecord+CoreDataProperties.h"; sourceTree = "<group>"; };
 		B68C42C1216D9D47003C5A50 /* MOAssetUploadRecord+CoreDataClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MOAssetUploadRecord+CoreDataClass.m"; sourceTree = "<group>"; };
 		B68C42C2216D9D47003C5A50 /* MOAssetUploadRecord+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MOAssetUploadRecord+CoreDataProperties.m"; sourceTree = "<group>"; };
 		B68C42C3216D9D47003C5A50 /* MOAssetUploadRecord+CoreDataClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MOAssetUploadRecord+CoreDataClass.h"; sourceTree = "<group>"; };
 		B68C42C6216DA9CE003C5A50 /* MEGAOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEGAOperation.m; sourceTree = "<group>"; };
 		B68C42C7216DA9CE003C5A50 /* MEGAOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEGAOperation.h; sourceTree = "<group>"; };
-		B68C42C9216DAA85003C5A50 /* AssetUploadOperation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AssetUploadOperation.h; sourceTree = "<group>"; };
-		B68C42CA216DAA85003C5A50 /* AssetUploadOperation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AssetUploadOperation.m; sourceTree = "<group>"; };
-		B6D9D7E7216AB0C700D7B08A /* AssetScanner.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AssetScanner.h; sourceTree = "<group>"; };
-		B6D9D7E8216AB0C700D7B08A /* AssetScanner.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AssetScanner.m; sourceTree = "<group>"; };
-		B6D9D7ED216AE5D000D7B08A /* AssetUploadRecordCoreDataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AssetUploadRecordCoreDataManager.h; sourceTree = "<group>"; };
-		B6D9D7EE216AE5D000D7B08A /* AssetUploadRecordCoreDataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AssetUploadRecordCoreDataManager.m; sourceTree = "<group>"; };
+		B68C42C9216DAA85003C5A50 /* CameraUploadOperation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CameraUploadOperation.h; sourceTree = "<group>"; };
+		B68C42CA216DAA85003C5A50 /* CameraUploadOperation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CameraUploadOperation.m; sourceTree = "<group>"; };
+		B6D9D7E7216AB0C700D7B08A /* CameraScanner.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CameraScanner.h; sourceTree = "<group>"; };
+		B6D9D7E8216AB0C700D7B08A /* CameraScanner.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CameraScanner.m; sourceTree = "<group>"; };
+		B6D9D7ED216AE5D000D7B08A /* CameraUploadRecordManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CameraUploadRecordManager.h; sourceTree = "<group>"; };
+		B6D9D7EE216AE5D000D7B08A /* CameraUploadRecordManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CameraUploadRecordManager.m; sourceTree = "<group>"; };
 		B6E19B2721743BD600882F74 /* CameraUploadManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CameraUploadManager.h; sourceTree = "<group>"; };
 		B6E19B2821743BD600882F74 /* CameraUploadManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CameraUploadManager.m; sourceTree = "<group>"; };
 		B6E19B2D21756F0800882F74 /* TransferSessionManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TransferSessionManager.h; sourceTree = "<group>"; };
@@ -1521,8 +1524,8 @@
 		B6E19B342175852E00882F74 /* AssetUploadInfo.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AssetUploadInfo.m; sourceTree = "<group>"; };
 		B6E19B382178424600882F74 /* TransferSessionDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TransferSessionDelegate.h; sourceTree = "<group>"; };
 		B6E19B392178424600882F74 /* TransferSessionDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TransferSessionDelegate.m; sourceTree = "<group>"; };
-		B6E19B3B2180126500882F74 /* AssetUploadCoordinator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AssetUploadCoordinator.h; sourceTree = "<group>"; };
-		B6E19B3C2180126500882F74 /* AssetUploadCoordinator.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AssetUploadCoordinator.m; sourceTree = "<group>"; };
+		B6E19B3B2180126500882F74 /* CameraUploadCoordinator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CameraUploadCoordinator.h; sourceTree = "<group>"; };
+		B6E19B3C2180126500882F74 /* CameraUploadCoordinator.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CameraUploadCoordinator.m; sourceTree = "<group>"; };
 		E803CB651D5336F100F81A36 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		E803CB681D53374A00F81A36 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		E80C760E1DEDF32A00CA4D68 /* GroupChatDetailsViewTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GroupChatDetailsViewTableViewCell.h; path = Chat/GroupChatDetailsViewTableViewCell.h; sourceTree = "<group>"; };
@@ -2341,20 +2344,22 @@
 				412EB2651C6E52AA001EA6D6 /* MEGAAssetOperation.m */,
 				411E712D1D461E1D00DD7EF8 /* MEGACollectionViewFlowLayout.h */,
 				411E712E1D461E1D00DD7EF8 /* MEGACollectionViewFlowLayout.m */,
-				B6E19B2721743BD600882F74 /* CameraUploadManager.h */,
-				B6E19B2821743BD600882F74 /* CameraUploadManager.m */,
-				B6D9D7E7216AB0C700D7B08A /* AssetScanner.h */,
-				B6D9D7E8216AB0C700D7B08A /* AssetScanner.m */,
-				B6D9D7ED216AE5D000D7B08A /* AssetUploadRecordCoreDataManager.h */,
-				B6D9D7EE216AE5D000D7B08A /* AssetUploadRecordCoreDataManager.m */,
-				B6E19B332175852E00882F74 /* AssetUploadInfo.h */,
-				B6E19B342175852E00882F74 /* AssetUploadInfo.m */,
 				B68C42C7216DA9CE003C5A50 /* MEGAOperation.h */,
 				B68C42C6216DA9CE003C5A50 /* MEGAOperation.m */,
-				B68C42C9216DAA85003C5A50 /* AssetUploadOperation.h */,
-				B68C42CA216DAA85003C5A50 /* AssetUploadOperation.m */,
-				B6E19B3B2180126500882F74 /* AssetUploadCoordinator.h */,
-				B6E19B3C2180126500882F74 /* AssetUploadCoordinator.m */,
+				B6E19B2721743BD600882F74 /* CameraUploadManager.h */,
+				B6E19B2821743BD600882F74 /* CameraUploadManager.m */,
+				B6D9D7E7216AB0C700D7B08A /* CameraScanner.h */,
+				B6D9D7E8216AB0C700D7B08A /* CameraScanner.m */,
+				B6D9D7ED216AE5D000D7B08A /* CameraUploadRecordManager.h */,
+				B6D9D7EE216AE5D000D7B08A /* CameraUploadRecordManager.m */,
+				B6E19B332175852E00882F74 /* AssetUploadInfo.h */,
+				B6E19B342175852E00882F74 /* AssetUploadInfo.m */,
+				B68C42C9216DAA85003C5A50 /* CameraUploadOperation.h */,
+				B68C42CA216DAA85003C5A50 /* CameraUploadOperation.m */,
+				B686F45721866BB4009C0DAA /* CameraUploadRequestDelegate.h */,
+				B686F45821866BB4009C0DAA /* CameraUploadRequestDelegate.m */,
+				B6E19B3B2180126500882F74 /* CameraUploadCoordinator.h */,
+				B6E19B3C2180126500882F74 /* CameraUploadCoordinator.m */,
 				B6E19B2D21756F0800882F74 /* TransferSessionManager.h */,
 				B6E19B2E21756F0800882F74 /* TransferSessionManager.m */,
 				B6E19B382178424600882F74 /* TransferSessionDelegate.h */,
@@ -3871,7 +3876,7 @@
 				A819B33F1EAFA7E2004592F9 /* CustomModalAlertViewController.m in Sources */,
 				A8F6C5F91FAB4295001E274D /* MEGAChatEnableDisableVideoRequestDelegate.m in Sources */,
 				7754ED9920B47A2400FF8B7B /* MEGALoginToFolderLinkRequestDelegate.m in Sources */,
-				B6E19B3D2180126500882F74 /* AssetUploadCoordinator.m in Sources */,
+				B6E19B3D2180126500882F74 /* CameraUploadCoordinator.m in Sources */,
 				4131997C1BD7BD5D002CD6EA /* DTTimePeriodGroup.m in Sources */,
 				830EF9A420062F3800FAA947 /* DevicePermissionsHelper.m in Sources */,
 				831FBEA220EF697200AC1B91 /* MEGAArchiveChatRequestDelegate.m in Sources */,
@@ -3908,7 +3913,7 @@
 				E8D4B8911A69429200A3B2E2 /* ConfirmAccountViewController.m in Sources */,
 				835223AD20568BB200A47438 /* MEGAGetFolderInfoRequestDelegate.m in Sources */,
 				5B5737D61EFBE6410027ECCD /* MEGANode+MNZCategory.m in Sources */,
-				B6D9D7EF216AE5D000D7B08A /* AssetUploadRecordCoreDataManager.m in Sources */,
+				B6D9D7EF216AE5D000D7B08A /* CameraUploadRecordManager.m in Sources */,
 				41FC83B11AA853CC008FA551 /* SettingsTableViewController.m in Sources */,
 				41D21E6A1D01AEC3002E6296 /* CTAssetsPageView.m in Sources */,
 				41A6029A1A8A5D11001AE538 /* CameraUploads.m in Sources */,
@@ -3946,7 +3951,7 @@
 				5B323F231F5834E100C5F557 /* ReferralBonusesTableViewController.m in Sources */,
 				41EAAE471D06B49400622FAF /* NSDateFormatter+CTAssetsPickerController.m in Sources */,
 				4182B4EF1BF4ADD400E6FFB8 /* ContactRequestsTableViewCell.m in Sources */,
-				B68C42CB216DAA85003C5A50 /* AssetUploadOperation.m in Sources */,
+				B68C42CB216DAA85003C5A50 /* CameraUploadOperation.m in Sources */,
 				41840EEA1E811CD600D8308D /* MEGAApplication.m in Sources */,
 				4147C2D11B4EE8A400A37044 /* MEGACD.xcdatamodeld in Sources */,
 				E8F791821BC5754A00C58676 /* ShareFolderActivity.m in Sources */,
@@ -3961,6 +3966,7 @@
 				83747B1F20ADD16D00BC1AED /* MEGAQLPreviewController.m in Sources */,
 				946B2D161F46E235009ED32C /* GetLinkTableViewController.m in Sources */,
 				41AC33A41A926B55005118AF /* PhotoCollectionViewCell.m in Sources */,
+				B686F45921866BB4009C0DAA /* CameraUploadRequestDelegate.m in Sources */,
 				41D21E651D01AEC3002E6296 /* CTAssetsGridViewCell.m in Sources */,
 				5B50DE0720AC1BDD00F2CB09 /* EnablingTwoFactorAuthenticationViewController.m in Sources */,
 				4172793F1DB663FA001AC818 /* JSQMessagesToolbarButtonFactory.m in Sources */,
@@ -3970,7 +3976,7 @@
 				417B5AAE1DEC792400A193D5 /* MOUser+CoreDataProperties.m in Sources */,
 				A824A9192039ECD700D777D2 /* SDAVAssetExportSession.m in Sources */,
 				41E250141D79E9D400499A6C /* SAMKeychainQuery.m in Sources */,
-				B6D9D7E9216AB0C700D7B08A /* AssetScanner.m in Sources */,
+				B6D9D7E9216AB0C700D7B08A /* CameraScanner.m in Sources */,
 				41E150041DB7CB1400383645 /* UIImageView+MNZCategory.m in Sources */,
 				94E62E1A1F3C5252003A8DEF /* LanguageTableViewController.m in Sources */,
 				5B7B4CA31EE5AC1200DA6A8D /* MEGAShareRequestDelegate.m in Sources */,

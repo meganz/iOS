@@ -1,16 +1,16 @@
 
-#import "AssetScanner.h"
-#import "AssetUploadRecordCoreDataManager.h"
+#import "CameraScanner.h"
+#import "CameraUploadRecordManager.h"
 @import Photos;
 
-@interface AssetScanner () <PHPhotoLibraryChangeObserver>
+@interface CameraScanner () <PHPhotoLibraryChangeObserver>
 
 @property (strong, nonatomic) NSOperationQueue *operationQueue;
 @property (strong, nonatomic) PHFetchResult<PHAsset *> *fetchResult;
 
 @end
 
-@implementation AssetScanner
+@implementation CameraScanner
 
 - (instancetype)init {
     self = [super init];
@@ -38,12 +38,12 @@
         }
         
         NSError *error = nil;
-        NSArray<MOAssetUploadRecord *> *records = [[AssetUploadRecordCoreDataManager shared] fetchAllAssetUploadRecords:&error];
+        NSArray<MOAssetUploadRecord *> *records = [[CameraUploadRecordManager shared] fetchAllAssetUploadRecords:&error];
         if (records.count == 0) {
-            [[AssetUploadRecordCoreDataManager shared] saveAssetFetchResult:self.fetchResult error:nil];
+            [[CameraUploadRecordManager shared] saveAssetFetchResult:self.fetchResult error:nil];
         } else {
             NSArray<PHAsset *> *newAssets = [self findNewAssetsByComparingFetchResult:self.fetchResult uploadRecords:records];
-            [[AssetUploadRecordCoreDataManager shared] saveAssets:newAssets error:nil];
+            [[CameraUploadRecordManager shared] saveAssets:newAssets error:nil];
         }
         
         MEGALogDebug(@"Camera Upload - Finish local album scanning at: %@", [NSDateFormatter localizedStringFromDate:[NSDate date] dateStyle:NSDateFormatterShortStyle timeStyle:NSDateFormatterFullStyle]);
@@ -86,7 +86,7 @@
     PHFetchResultChangeDetails *changes = [changeInstance changeDetailsForFetchResult:self.fetchResult];
     self.fetchResult = changes.fetchResultAfterChanges;
     NSArray<PHAsset *> *newAssets = [changes insertedObjects];
-    [[AssetUploadRecordCoreDataManager shared] saveAssets:newAssets error:nil];
+    [[CameraUploadRecordManager shared] saveAssets:newAssets error:nil];
 }
 
 @end
