@@ -77,8 +77,8 @@
     numberFormatter.maximumFractionDigits = 0;
     
     NSString *stringFromByteCount;
-    NSRange firstPartRange = NSMakeRange(0, 0);
-    NSRange secondPartRange  = NSMakeRange(0, 0);
+    NSRange firstPartRange;
+    NSRange secondPartRange;
     
     stringFromByteCount = [self.byteCountFormatter stringFromByteCount:quota];
 
