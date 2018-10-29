@@ -906,7 +906,7 @@
                             [self.navigationController pushViewController:messagesVC animated:YES];
                         }
                     }];
-                    [[MEGASdkManager sharedMEGAChatSdk] exportChatLink:chatRoom.chatId delegate:delegate];
+                    [[MEGASdkManager sharedMEGAChatSdk] createChatLink:chatRoom.chatId delegate:delegate];
                 }
             }];
             [[MEGASdkManager sharedMEGAChatSdk] createPublicChatWithPeers:peerList title:groupName delegate:createChatGroupRequestDelegate];
