@@ -919,7 +919,7 @@
             
             break;
             
-        case URLTypeChatLink:
+        case URLTypeOpenChatSectionLink:
             self.mainTBC.selectedIndex = CHAT;
 
             break;
@@ -933,6 +933,12 @@
 
             break;
         }
+            
+        case URLTypePublicChatLink:
+            [url mnz_showLinkView];
+            self.link = nil;
+            
+            break;
             
         case URLTypeHandleLink:
             self.nodeToPresentBase64Handle = [[url mnz_afterSlashesString] substringFromIndex:1];
@@ -2526,7 +2532,7 @@ void uncaughtExceptionHandler(NSException *exception) {
                     [UIApplication.mnz_visibleViewController presentViewController:navigationController animated:YES completion:nil];
                 } else {
                     // Redirect to my account if the products are not available
-                    [self.mainTBC setSelectedIndex:4];
+                    [self.mainTBC setSelectedIndex:MYACCOUNT];
                 }
             }];
         };

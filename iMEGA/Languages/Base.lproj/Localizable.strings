@@ -1694,3 +1694,5 @@
 "Chat Link"="Chat Link";
 /* Message shown when there is an active chat link that can be deleted */
 "Delete Chat Link"="Delete Chat Link";
+/* Button text in public chat previews that allows the user to join the chat */
+"Join"="Join";

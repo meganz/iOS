@@ -13,10 +13,15 @@
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
         
     if (error.type) {
-        if (request.type != MEGAChatRequestTypeChatLinkHandle && error.type != MEGAErrorTypeApiENoent) {
-            [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
-            [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"%@ %@", request.requestString, error.name]];
+        if (request.type == MEGAChatRequestTypeChatLinkHandle && error.type == MEGAErrorTypeApiENoent) {
+            return;
         }
+        if (request.type == MEGAChatRequestTypeLoadPreview && error.type == MEGAErrorTypeApiEExist) {
+            return;
+        }
+
+        [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
+        [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"%@ %@", request.requestString, error.name]];
     }
 }
 

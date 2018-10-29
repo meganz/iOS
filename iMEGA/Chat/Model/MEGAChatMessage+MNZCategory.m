@@ -7,6 +7,7 @@
 #import "MEGAAttachmentMediaItem.h"
 #import "MEGACallEndedMediaItem.h"
 #import "MEGADialogMediaItem.h"
+#import "MEGAChatGenericRequestDelegate.h"
 #import "MEGAFetchNodesRequestDelegate.h"
 #import "MEGAGetPublicNodeRequestDelegate.h"
 #import "MEGALoginToFolderLinkRequestDelegate.h"
@@ -23,8 +24,8 @@ static const void *attributedTextTagKey = &attributedTextTagKey;
 static const void *warningDialogTagKey = &warningDialogTagKey;
 static const void *MEGALinkTagKey = &MEGALinkTagKey;
 static const void *nodeTagKey = &nodeTagKey;
-static const void *nodeDetailsTagKey = &nodeDetailsTagKey;
-static const void *nodeSizeTagKey = &nodeSizeTagKey;
+static const void *richStringTagKey = &richStringTagKey;
+static const void *richNumberTagKey = &richNumberTagKey;
 
 @implementation MEGAChatMessage (MNZCategory)
 
@@ -43,7 +44,7 @@ static const void *nodeSizeTagKey = &nodeSizeTagKey;
 - (BOOL)isMediaMessage {
     BOOL mediaMessage = NO;
     
-    if (!self.isDeleted && (self.type == MEGAChatMessageTypeContact || self.type == MEGAChatMessageTypeAttachment || (self.warningDialog > MEGAChatMessageWarningDialogNone) || (self.type == MEGAChatMessageTypeContainsMeta && [self containsMetaAnyValue]) || self.node || self.type == MEGAChatMessageTypeCallEnded)) {
+    if (!self.isDeleted && (self.type == MEGAChatMessageTypeContact || self.type == MEGAChatMessageTypeAttachment || (self.warningDialog > MEGAChatMessageWarningDialogNone) || (self.type == MEGAChatMessageTypeContainsMeta && [self containsMetaAnyValue]) || self.richNumber || self.type == MEGAChatMessageTypeCallEnded)) {
         mediaMessage = YES;
     }
     
@@ -80,28 +81,51 @@ static const void *nodeSizeTagKey = &nodeSizeTagKey;
     NSDataDetector* linkDetector = [NSDataDetector dataDetectorWithTypes:NSTextCheckingTypeLink error:nil];
     for (NSTextCheckingResult *match in [linkDetector matchesInString:self.content options:0 range:NSMakeRange(0, self.content.length)]) {
         URLType type = [match.URL mnz_type];
-        if (type == URLTypeFileLink || type == URLTypeFolderLink) {
+        if (type == URLTypeFileLink || type == URLTypeFolderLink || type == URLTypePublicChatLink) {
             self.MEGALink = match.URL;
-            if (type == URLTypeFileLink) {
-                MEGAGetPublicNodeRequestDelegate *delegate = [[MEGAGetPublicNodeRequestDelegate alloc] initWithCompletion:^(MEGARequest *request, MEGAError *error) {
-                    self.nodeSize = request.publicNode.size;
-                    self.node = request.publicNode;
-                }];
-                [[MEGASdkManager sharedMEGASdk] publicNodeForMegaFileLink:[self.MEGALink mnz_MEGAURL] delegate:delegate];
-            } else if (type == URLTypeFolderLink) {
-                MEGALoginToFolderLinkRequestDelegate *loginDelegate = [[MEGALoginToFolderLinkRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
-                    MEGAFetchNodesRequestDelegate *fetchNodesDelegate = [[MEGAFetchNodesRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
-                        if (!request.flag) {
-                            MEGANode *node = [MEGASdkManager sharedMEGASdkFolder].rootNode;
-                            self.nodeDetails = [Helper filesAndFoldersInFolderNode:node api:[MEGASdkManager sharedMEGASdkFolder]];
-                            self.nodeSize = [[MEGASdkManager sharedMEGASdkFolder] sizeForNode:node];
-                            self.node = node;
-                            [[MEGASdkManager sharedMEGASdkFolder] logout];
+            switch (type) {
+                case URLTypeFileLink: {
+                    MEGAGetPublicNodeRequestDelegate *delegate = [[MEGAGetPublicNodeRequestDelegate alloc] initWithCompletion:^(MEGARequest *request, MEGAError *error) {
+                        self.richNumber = request.publicNode.size;
+                        self.node = request.publicNode;
+                    }];
+                    [[MEGASdkManager sharedMEGASdk] publicNodeForMegaFileLink:[self.MEGALink mnz_MEGAURL] delegate:delegate];
+                    
+                    break;
+                }
+                    
+                case URLTypeFolderLink: {
+                    MEGALoginToFolderLinkRequestDelegate *loginDelegate = [[MEGALoginToFolderLinkRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
+                        MEGAFetchNodesRequestDelegate *fetchNodesDelegate = [[MEGAFetchNodesRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
+                            if (!request.flag) {
+                                MEGANode *node = [MEGASdkManager sharedMEGASdkFolder].rootNode;
+                                self.richString = [Helper filesAndFoldersInFolderNode:node api:[MEGASdkManager sharedMEGASdkFolder]];
+                                self.richNumber = [[MEGASdkManager sharedMEGASdkFolder] sizeForNode:node];
+                                self.node = node;
+                                [[MEGASdkManager sharedMEGASdkFolder] logout];
+                            }
+                        }];
+                        [[MEGASdkManager sharedMEGASdkFolder] fetchNodesWithDelegate:fetchNodesDelegate];
+                    }];
+                    [[MEGASdkManager sharedMEGASdkFolder] loginToFolderLink:[self.MEGALink mnz_MEGAURL] delegate:loginDelegate];
+                    
+                    break;
+                }
+                    
+                case URLTypePublicChatLink: {
+                    MEGAChatGenericRequestDelegate *delegate = [[MEGAChatGenericRequestDelegate alloc] initWithCompletion:^(MEGAChatRequest * _Nonnull request, MEGAChatError * _Nonnull error) {
+                        if (error.type == MEGAErrorTypeApiOk || error.type == MEGAErrorTypeApiEExist) {
+                            self.richString = request.text;
+                            self.richNumber = @(request.number);
                         }
                     }];
-                    [[MEGASdkManager sharedMEGASdkFolder] fetchNodesWithDelegate:fetchNodesDelegate];
-                }];
-                [[MEGASdkManager sharedMEGASdkFolder] loginToFolderLink:[self.MEGALink mnz_MEGAURL] delegate:loginDelegate];
+                    [[MEGASdkManager sharedMEGAChatSdk] checkChatLink:self.MEGALink delegate:delegate];
+                    
+                    break;
+                }
+                    
+                default:
+                    break;
             }
 
             return YES;
@@ -376,7 +400,7 @@ static const void *nodeSizeTagKey = &nodeSizeTagKey;
         case MEGAChatMessageTypeNormal: {
             if (self.warningDialog > MEGAChatMessageWarningDialogNone) {
                 media = [[MEGADialogMediaItem alloc] initWithMEGAChatMessage:self];
-            } else if (self.node) {
+            } else if (self.richNumber) {
                 media = [[MEGARichPreviewMediaItem alloc] initWithMEGAChatMessage:self];
             }
             
@@ -401,7 +425,7 @@ static const void *nodeSizeTagKey = &nodeSizeTagKey;
 #pragma mark - NSObject
 
 - (NSUInteger)hash {
-    NSUInteger contentHash = self.type == MEGAChatMessageTypeAttachment ? [self.nodeList nodeAtIndex:0].handle : self.content.hash ^ self.node.hash;
+    NSUInteger contentHash = self.type == MEGAChatMessageTypeAttachment ? [self.nodeList nodeAtIndex:0].handle : self.content.hash ^ self.richNumber.hash;
     NSUInteger metaHash = self.type == MEGAChatMessageTypeContainsMeta ? self.containsMeta.type : MEGAChatContainsMetaTypeInvalid;
     return self.senderId.hash ^ self.date.hash ^ contentHash ^ self.warningDialog ^ metaHash ^ self.localPreview;
 }
@@ -452,20 +476,20 @@ static const void *nodeSizeTagKey = &nodeSizeTagKey;
     objc_setAssociatedObject(self, &nodeTagKey, node, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
-- (NSString *)nodeDetails {
-    return objc_getAssociatedObject(self, nodeDetailsTagKey);
+- (NSString *)richString {
+    return objc_getAssociatedObject(self, richStringTagKey);
 }
 
-- (void)setNodeDetails:(NSString *)nodeDetails {
-    objc_setAssociatedObject(self, &nodeDetailsTagKey, nodeDetails, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+- (void)setRichString:(NSString *)richString {
+    objc_setAssociatedObject(self, &richStringTagKey, richString, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
-- (NSNumber *)nodeSize {
-    return objc_getAssociatedObject(self, nodeSizeTagKey);
+- (NSNumber *)richNumber {
+    return objc_getAssociatedObject(self, richNumberTagKey);
 }
 
-- (void)setNodeSize:(NSNumber *)nodeSize {
-    objc_setAssociatedObject(self, &nodeSizeTagKey, nodeSize, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+- (void)setRichNumber:(NSNumber *)richNumber {
+    objc_setAssociatedObject(self, &richNumberTagKey, richNumber, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 @end

@@ -10,6 +10,7 @@
 #import "Helper.h"
 #import "DevicePermissionsHelper.h"
 #import "DisplayMode.h"
+#import "MEGAChatGenericRequestDelegate.h"
 #import "MEGAChatMessage+MNZCategory.h"
 #import "MEGACreateFolderRequestDelegate.h"
 #import "MEGACopyRequestDelegate.h"
@@ -105,6 +106,8 @@ const NSUInteger kMaxMessagesToLoad = 256;
 
 @property (nonatomic) BOOL selectingMessages;
 @property (nonatomic) NSMutableArray<MEGAChatMessage *> *selectedMessages;
+
+@property (nonatomic, getter=shouldShowJoinView) BOOL showJoinView;
 
 @end
 
@@ -263,6 +266,8 @@ const NSUInteger kMaxMessagesToLoad = 256;
     // Selection:
     self.selectingMessages = NO;
     self.selectedMessages = [[NSMutableArray<MEGAChatMessage *> alloc] init];
+    
+    [self.inputToolbar.contentView.joinButton setTitle:AMLocalizedString(@"Join", @"Button text in public chat previews that allows the user to join the chat") forState:UIControlStateNormal];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -341,7 +346,7 @@ const NSUInteger kMaxMessagesToLoad = 256;
     }
     [self.observedDialogMessages removeAllObjects];
     for (MEGAChatMessage *message in self.observedNodeMessages) {
-        [message removeObserver:self forKeyPath:@"node"];
+        [message removeObserver:self forKeyPath:@"richNumber"];
     }
     [self.observedNodeMessages removeAllObjects];
 }
@@ -382,7 +387,8 @@ const NSUInteger kMaxMessagesToLoad = 256;
         
         self.navigationItem.leftBarButtonItems = @[];
     } else {
-        self.inputToolbar.hidden = self.chatRoom.ownPrivilege <= MEGAChatRoomPrivilegeRo;
+        self.inputToolbar.hidden = self.chatRoom.ownPrivilege <= MEGAChatRoomPrivilegeRo && !self.shouldShowJoinView;
+        [self updateJoinView];
 
         NSString *chatRoomTitle = self.chatRoom.title ? self.chatRoom.title : @"";
         NSString *chatRoomState;
@@ -402,7 +408,9 @@ const NSUInteger kMaxMessagesToLoad = 256;
                     
                 case MEGAChatConnectionOnline:
                     if (self.chatRoom.isGroup) {
-                        if (self.chatRoom.ownPrivilege <= MEGAChatRoomPrivilegeRo) {
+                        if (self.shouldShowJoinView) {
+                            chatRoomState = [NSString stringWithFormat:@"%ld %@", self.chatRoom.peerCount, AMLocalizedString(@"participants", @"Label to describe the section where you can see the participants of a group chat")];
+                        } else if (self.chatRoom.ownPrivilege <= MEGAChatRoomPrivilegeRo) {
                             chatRoomState = AMLocalizedString(@"readOnly", @"Permissions given to the user you share your folder with");
                         }
                     } else {
@@ -1026,6 +1034,17 @@ const NSUInteger kMaxMessagesToLoad = 256;
     [self jsq_setCollectionViewInsetsTopValue:0.0f bottomValue:self.lastBottomInset];
 }
 
+- (BOOL)shouldShowJoinView {
+    return self.chatRoom.isPublicChat && (self.chatRoom.isPreview || (!self.chatRoom.isActive && self.publicHandle));
+}
+
+- (void)updateJoinView {
+    BOOL hidden = !self.shouldShowJoinView;
+    [self.inputToolbar mnz_setJoinViewHidden:hidden];
+    self.previewersView.hidden = hidden;
+    self.previewersLabel.text = [NSString stringWithFormat:@"%ld", self.chatRoom.previewersCount];
+}
+
 #pragma mark - Gesture recognizer
 
 - (void)hideInputToolbar {
@@ -1457,6 +1476,17 @@ const NSUInteger kMaxMessagesToLoad = 256;
     [self updateToolbarPlaceHolder];
 }
 
+- (void)didPressJoinButton:(UIButton *)sender {
+    MEGAChatGenericRequestDelegate *delegate = [[MEGAChatGenericRequestDelegate alloc] initWithCompletion:^(MEGAChatRequest * _Nonnull request, MEGAChatError * _Nonnull error) {
+        [self updateJoinView];
+    }];
+    if (!self.chatRoom.isPreview && !self.chatRoom.isActive) {
+        [[MEGASdkManager sharedMEGAChatSdk] autorejoinPublicChat:self.chatRoom.chatId publicHandle:self.publicHandle delegate:delegate];
+    } else {
+        [[MEGASdkManager sharedMEGAChatSdk] autojoinPublicChat:self.chatRoom.chatId delegate:delegate];
+    }
+}
+
 - (void)scrollToBottomAnimated:(BOOL)animated {
     [super scrollToBottomAnimated:animated];
     [self hideJumpToBottom];
@@ -1627,7 +1657,7 @@ const NSUInteger kMaxMessagesToLoad = 256;
     if (message.containsMEGALink) {
         if (![self.observedNodeMessages containsObject:message]) {
             [self.observedNodeMessages addObject:message];
-            [message addObserver:self forKeyPath:@"node" options:NSKeyValueObservingOptionNew context:nil];
+            [message addObserver:self forKeyPath:@"richNumber" options:NSKeyValueObservingOptionNew context:nil];
         }
     }
     
@@ -2045,7 +2075,7 @@ const NSUInteger kMaxMessagesToLoad = 256;
             }
         } else if (message.type == MEGAChatMessageTypeContainsMeta) {
             [Helper presentSafariViewControllerWithURL:[NSURL URLWithString:message.containsMeta.richPreview.url]];
-        } else if (message.node) {
+        } else if (message.richNumber) {
             [message.MEGALink mnz_showLinkView];
         }
     }
@@ -2497,6 +2527,10 @@ const NSUInteger kMaxMessagesToLoad = 256;
             
         case MEGAChatRoomChangeTypeArchive:
             [self customNavigationBarLabel];
+            break;
+            
+        case MEGAChatRoomChangeTypeUpdatePreviewers:
+            [self updateJoinView];
             break;
             
         default:

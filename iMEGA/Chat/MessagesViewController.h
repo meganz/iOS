@@ -5,6 +5,8 @@
 @interface MessagesViewController : JSQMessagesViewController <MEGAChatRoomDelegate>
 
 @property (nonatomic, strong) MEGAChatRoom *chatRoom;
+@property (nonatomic) uint64_t publicHandle;
+
 - (void)updateUnreadLabel;
 
 @end
