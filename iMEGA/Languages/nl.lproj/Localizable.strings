@@ -846,7 +846,7 @@
 /* Menu item */
 "help"="Help";
 /* Title of the section to access MEGA's help centre */
-"helpCentreLabel"="Helpdesk";
+"helpCentreLabel"="Help Centrum";
 /* Section title that links you to the webpage that let you join and test the beta versions */
 "Join Beta"="Meedoen aan Beta";
 /* Title to rate the app */
@@ -1581,7 +1581,7 @@
 /* A title on the mobile web client page showing that 2FA has been enabled successfully. */
 "twoFactorAuthenticationEnabled"="Twee-Stap Authenticatie Ingeschakeld";
 /* A message on the dialog shown after 2FA was successfully enabled. */
-"twoFactorAuthenticationEnabledDescription"="Volgende keer dat u inlogt op uw account wordt u gevraagd een 6-cijferige code gegeven door uw authenticatie applicatie in te voeren.";
+"twoFactorAuthenticationEnabledDescription"="De volgende keer wanneer u inlogt in uw account wordt u gevraagd een 6-cijferige code in te voeren die voorzien is door uw Authenticatie applicatie,";
 /* A warning message on the Backup Recovery Key dialog to tell the user to backup their Recovery Key to their local computer. */
 "pleaseSaveYourRecoveryKey"="Sla uw Herstelsleutel op op een veilige locatie";
 /* An informational message on the Backup Recovery Key dialog. */
@@ -1589,7 +1589,7 @@
 /* A message on a dialog to say that 2FA has been successfully disabled. */
 "twoFactorAuthenticationDisabled"="Twee-Stap Authenticatie Uitgeschakeld";
 /* A message on the setup two-factor authentication page on the mobile web client. */
-"scanOrCopyTheSeed"="Scan or copy the seed to your Authenticator App. Be sure to backup this seed to a safe place in case you lose your phone.";
+"scanOrCopyTheSeed"="Scan or copy the seed to your Authenticator App. Be sure to backup this seed to a safe place in case you lose your device.";
 /* A button to help them restore their account if they have lost their 2FA device. */
 "lostYourAuthenticatorDevice"="Bent u uw Authenticatie apparaat verloren?";
 /* Settings section title where you can enable the option to 'Save Images in Library' */
@@ -1627,7 +1627,7 @@
 /* Title label that explains that the user is going to be asked for the photos permission */
 "Allow Access to Photos"="Verleen Toegang tot Foto's";
 /* Detailed explanation of why the user should give permission to access to the photos */
-"To share photos and videos, allow MEGA to access your photos"="Om foto's en video's te delen, verleen MEGA toegang tot uw foto's";
+"To share photos and videos, allow MEGA to access your library."="Om foto's en video's te delen, verleen MEGA toegang tot uw foto's";
 /* Title label that explains that the user is going to be asked for the microphone and camera permission */
 "Enable Microphone and Camera"="Microfoon en Camera inschakelen";
 /* Detailed explanation of why the user should give permission to access to the camera and the microphone */
@@ -1637,7 +1637,7 @@
 /* Detailed explanation of why the user should give permission to deliver notifications */
 "We would like to send you notifications so you receive new messages on your device instantly."="We willen u notificaties sturen zodat u nieuwe berichten direct op uw apparaat kunt ontvangen.";
 /* Button which triggers a request for a specific permission, that have been explained to the user beforehand */
-"Enable Access"="Toegang inschakelen";
+"Allow Access"="Toegang inschakelen";
 /* A section header which contains the file management settings. These settings allow users to remove duplicate files etc. */
 "File Management"="Bestandsmanagement";
 /* Title of the option to enable or disable file versioning on Settings section */
