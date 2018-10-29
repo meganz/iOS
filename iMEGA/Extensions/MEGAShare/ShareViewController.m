@@ -18,6 +18,7 @@
 #import "MEGASdk.h"
 #import "MEGASdkManager.h"
 #import "MEGATransferDelegate.h"
+#import "NSFileManager+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 #import "ShareAttachment.h"
 #import "ShareFilesDestinationTableViewController.h"
@@ -484,9 +485,7 @@
         NSArray *applicationSupportContent = [fileManager contentsOfDirectoryAtPath:applicationSupportDirectoryURL.path error:&error];
         for (NSString *filename in applicationSupportContent) {
             if ([filename containsString:@"megaclient"] || [filename containsString:@"karere"]) {
-                if(![fileManager removeItemAtPath:[applicationSupportDirectoryURL.path stringByAppendingPathComponent:filename] error:&error]) {
-                    MEGALogError(@"Remove item at path failed with error: %@", error);
-                }
+                [fileManager mnz_removeItemAtPath:[applicationSupportDirectoryURL.path stringByAppendingPathComponent:filename]];
             }
         }
         
@@ -797,11 +796,7 @@ void uncaughtExceptionHandler(NSException *exception) {
         NSString *tempPath = [storagePath stringByAppendingPathComponent:name];
         NSError *error = nil;
         
-        if ([[NSFileManager defaultManager] fileExistsAtPath:tempPath]) {
-            if (![[NSFileManager defaultManager] removeItemAtPath:tempPath error:&error]) {
-                MEGALogError(@"Remove item failed:\n- At path: %@\n- With error: %@", tempPath, error);
-            }
-        }
+        [NSFileManager.defaultManager mnz_removeItemAtPath:tempPath];
         
         BOOL success = NO;
         if (sourceMovable) {
@@ -864,7 +859,7 @@ void uncaughtExceptionHandler(NSException *exception) {
                 [[MEGASdkManager sharedMEGASdk] copyNode:remoteNode newParent:parentNode newName:localPath.lastPathComponent delegate:self];
             }
         }
-        [[NSFileManager defaultManager] removeItemAtPath:localPath error:nil];
+        [NSFileManager.defaultManager mnz_removeItemAtPath:localPath];
     } else {
         // The file is not in MEGA.
         NSString *appData = [[NSString new] mnz_appDataToSaveCoordinates:localPath.mnz_coordinatesOfPhotoOrVideo];

@@ -2,6 +2,6 @@
 
 @interface SaveToCameraRollActivity : UIActivity
 
-- (instancetype)initWithNode:(MEGANode *)node;
+- (instancetype)initWithNode:(MEGANode *)node api:(MEGASdk *)api;
 
 @end

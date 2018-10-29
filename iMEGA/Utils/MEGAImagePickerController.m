@@ -137,7 +137,7 @@
 
 - (void)actionForImagePath:(NSString *)imagePath {
     if (self.toUploadSomething) {
-        self.filePath = [imagePath stringByReplacingOccurrencesOfString:[NSHomeDirectory() stringByAppendingString:@"/"] withString:@""];
+        self.filePath = imagePath.mnz_relativeLocalPath;
         [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:self.filePath parent:self.parentNode appData:nil isSourceTemporary:YES];
         [self dismissViewControllerAnimated:YES completion:nil];
     } else if (self.toChangeAvatar) {
@@ -146,7 +146,7 @@
         [self dismissViewControllerAnimated:YES completion:nil];
     } else if (self.toShareThroughChat) {
         [[MEGASdkManager sharedMEGASdk] createPreview:imagePath destinatioPath:imagePath];
-        self.filePath = [imagePath stringByReplacingOccurrencesOfString:[NSHomeDirectory() stringByAppendingString:@"/"] withString:@""];
+        self.filePath = imagePath.mnz_relativeLocalPath;
         [self prepareUploadDestination];
     }
 }
@@ -219,8 +219,8 @@
         NSString *videoName = [[NSString mnz_fileNameWithDate:modificationDate] stringByAppendingPathExtension:@"mov"];
         NSString *localFilePath = [[[NSFileManager defaultManager] uploadsDirectory] stringByAppendingPathComponent:videoName];
         NSError *error = nil;
-        self.filePath = [localFilePath stringByReplacingOccurrencesOfString:[NSHomeDirectory() stringByAppendingString:@"/"] withString:@""];
         
+        self.filePath = localFilePath.mnz_relativeLocalPath;
         if ([[NSFileManager defaultManager] moveItemAtPath:videoUrl.path toPath:localFilePath error:&error]) {
             if (![[NSUserDefaults standardUserDefaults] objectForKey:@"isSaveMediaCapturedToGalleryEnabled"]) {
                 [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"isSaveMediaCapturedToGalleryEnabled"];

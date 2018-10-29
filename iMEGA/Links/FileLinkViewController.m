@@ -211,6 +211,7 @@
                 self.error = error;
                 [self processRequestResult];
             }];
+            delegate.savePublicHandle = YES;
             
             [SVProgressHUD show];
             [[MEGASdkManager sharedMEGASdk] publicNodeForMegaFileLink:linkString delegate:delegate];
@@ -340,6 +341,10 @@
             [self presentViewController:activityVC animated:YES completion:nil];
             break;
         }
+            
+        case MegaNodeActionTypeSaveToPhotos:
+            [node mnz_saveToPhotosWithApi:[MEGASdkManager sharedMEGASdk]];
+            break;
             
         default:
             break;

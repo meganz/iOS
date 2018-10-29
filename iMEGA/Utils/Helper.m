@@ -39,8 +39,6 @@ static NSMutableArray *nodesFromLinkMutableArray;
 
 static MEGAIndexer *indexer;
 
-static BOOL pointToStaging;
-
 @implementation Helper
 
 #pragma mark - Languages
@@ -538,7 +536,7 @@ static BOOL pointToStaging;
     if (node.type == MEGANodeTypeFile) {
         if (![[NSFileManager defaultManager] fileExistsAtPath:[NSHomeDirectory() stringByAppendingPathComponent:relativeFilePath]] || overwrite) {
             if (overwrite) { //For node versions
-                [[NSFileManager defaultManager] removeItemAtPath:[NSHomeDirectory() stringByAppendingPathComponent:relativeFilePath] error:nil];
+                [NSFileManager.defaultManager mnz_removeItemAtPath:[NSHomeDirectory() stringByAppendingPathComponent:relativeFilePath]];
                 MOOfflineNode *offlineNode = [[MEGAStore shareInstance] fetchOfflineNodeWithPath:offlineNameString];
                 if (offlineNode) {
                     [[MEGAStore shareInstance] removeOfflineNode:offlineNode];
@@ -562,7 +560,7 @@ static BOOL pointToStaging;
                 NSString *appData = nil;
                 if ((node.name.mnz_isImagePathExtension && [[NSUserDefaults standardUserDefaults] boolForKey:@"IsSavePhotoToGalleryEnabled"]) || (node.name.mnz_isVideoPathExtension && [[NSUserDefaults standardUserDefaults] boolForKey:@"IsSaveVideoToGalleryEnabled"])) {
                     NSString *downloadsDirectory = [[NSFileManager defaultManager] downloadsDirectory];
-                    downloadsDirectory = [downloadsDirectory stringByReplacingOccurrencesOfString:[NSHomeDirectory() stringByAppendingString:@"/"] withString:@""];
+                    downloadsDirectory = downloadsDirectory.mnz_relativeLocalPath;
                     relativeFilePath = [downloadsDirectory stringByAppendingPathComponent:offlineNameString];
                     
                     appData = [[NSString new] mnz_appDataToSaveInPhotosApp];
@@ -633,9 +631,9 @@ static BOOL pointToStaging;
             if (![[NSFileManager defaultManager] moveItemAtPath:absoluteFilePath toPath:newFilePath error:&error]) {
                 MEGALogError(@"Move item at path failed with error: %@", error);
             }
-            [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:[newFilePath stringByReplacingOccurrencesOfString:[NSHomeDirectory() stringByAppendingString:@"/"] withString:@""] parent:parentNode appData:appData isSourceTemporary:YES];
+            [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:newFilePath.mnz_relativeLocalPath parent:parentNode appData:appData isSourceTemporary:YES];
         } else {
-            [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:[filePath stringByReplacingOccurrencesOfString:[NSHomeDirectory() stringByAppendingString:@"/"] withString:@""] parent:parentNode appData:appData isSourceTemporary:YES];
+            [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:filePath.mnz_relativeLocalPath parent:parentNode appData:appData isSourceTemporary:YES];
         }
         [[MEGAStore shareInstance] deleteUploadTransfer:uploadTransfer];
     } node:^(MEGANode *node) {
@@ -647,7 +645,7 @@ static BOOL pointToStaging;
         [[MEGAStore shareInstance] deleteUploadTransfer:uploadTransfer];
         [Helper startPendingUploadTransferIfNeeded];
     } error:^(NSError *error) {
-        [SVProgressHUD showImage:[UIImage imageNamed:@"hudError"] status:[NSString stringWithFormat:@"%@ %@", AMLocalizedString(@"Transfer failed:", nil), asset.localIdentifier]];
+        [SVProgressHUD showImage:[UIImage imageNamed:@"hudError"] status:[NSString stringWithFormat:@"%@ %@ \r %@", AMLocalizedString(@"Transfer failed:", nil), asset.localIdentifier, error.localizedDescription]];
         [[MEGAStore shareInstance] deleteUploadTransfer:uploadTransfer];
         [Helper startPendingUploadTransferIfNeeded];
     }];
@@ -1186,6 +1184,18 @@ static BOOL pointToStaging;
 }
 
 + (void)presentSafariViewControllerWithURL:(NSURL *)url {
+    if (url) {
+        if (!([url.scheme.lowercaseString isEqualToString:@"http"] || [url.scheme.lowercaseString isEqualToString:@"https"])) {
+            MEGALogInfo(@"To use SFSafariViewController the URL must use the http or https scheme: \n%@", url.absoluteString);
+            [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"linkNotValid", @"Message shown when the user clicks on an link that is not valid")];
+            return;
+        }
+    } else {
+        MEGALogInfo(@"URL string was malformed or nil: \n%@", url.absoluteString);
+        [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"linkNotValid", @"Message shown when the user clicks on an link that is not valid")];
+        return;
+    }
+    
     if ([MEGAReachabilityManager isReachableHUDIfNot]) {
         SFSafariViewController *safariViewController = [[SFSafariViewController alloc] initWithURL:url];
         if (@available(iOS 10.0, *)) {
@@ -1289,68 +1299,38 @@ static BOOL pointToStaging;
 
 + (void)deleteUserData {
     // Delete app's directories: Library/Cache/thumbs - Library/Cache/previews - Documents - tmp
-    NSError *error;
     
     NSString *thumbsDirectory = [Helper pathForSharedSandboxCacheDirectory:@"thumbnailsV3"];
-    if ([[NSFileManager defaultManager] fileExistsAtPath:thumbsDirectory]) {
-        if (![[NSFileManager defaultManager] removeItemAtPath:thumbsDirectory error:&error]) {
-            MEGALogError(@"Remove item at path failed with error: %@", error);
-        }
-    }
+    [NSFileManager.defaultManager mnz_removeItemAtPath:thumbsDirectory];
     
     NSString *previewsDirectory = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"previewsV3"];
-    if ([[NSFileManager defaultManager] fileExistsAtPath:previewsDirectory]) {
-        if (![[NSFileManager defaultManager] removeItemAtPath:previewsDirectory error:&error]) {
-            MEGALogError(@"Remove item at path failed with error: %@", error);
-        }
-    }
+    [NSFileManager.defaultManager mnz_removeItemAtPath:previewsDirectory];
     
     // Remove "Inbox" folder return an error. "Inbox" is reserved by Apple
     NSString *offlineDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-    for (NSString *file in [[NSFileManager defaultManager] contentsOfDirectoryAtPath:offlineDirectory error:&error]) {
-        if (![[NSFileManager defaultManager] removeItemAtPath:[offlineDirectory stringByAppendingPathComponent:file] error:&error]) {
-            MEGALogError(@"Remove item at path failed with error: %@", error);
-        }
-    }
+    [NSFileManager.defaultManager mnz_removeFolderContentsAtPath:offlineDirectory];
     
-    for (NSString *file in [[NSFileManager defaultManager] contentsOfDirectoryAtPath:NSTemporaryDirectory() error:&error]) {
-        if (![[NSFileManager defaultManager] removeItemAtPath:[NSTemporaryDirectory() stringByAppendingPathComponent:file] error:&error]) {
-            MEGALogError(@"Remove item at path failed with error: %@", error);
-        }
-    }
+    [NSFileManager.defaultManager mnz_removeFolderContentsAtPath:NSTemporaryDirectory()];
     
     // Delete v2 thumbnails & previews directory
     NSString *thumbs2Directory = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"thumbs"];
-    if ([[NSFileManager defaultManager] fileExistsAtPath:thumbs2Directory]) {
-        if (![[NSFileManager defaultManager] removeItemAtPath:thumbs2Directory error:&error]) {
-            MEGALogError(@"Remove item at path failed with error: %@", error);
-        }
-    }
+    [NSFileManager.defaultManager mnz_removeItemAtPath:thumbs2Directory];
     
     NSString *previews2Directory = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"previews"];
-    if ([[NSFileManager defaultManager] fileExistsAtPath:previews2Directory]) {
-        if (![[NSFileManager defaultManager] removeItemAtPath:previews2Directory error:&error]) {
-            MEGALogError(@"Remove item at path failed with error: %@", error);
-        }
-    }
+    [NSFileManager.defaultManager mnz_removeItemAtPath:previews2Directory];
     
     // Delete application support directory content
     NSString *applicationSupportDirectory = [NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-    for (NSString *file in [[NSFileManager defaultManager] contentsOfDirectoryAtPath:applicationSupportDirectory error:&error]) {
+    for (NSString *file in [[NSFileManager defaultManager] contentsOfDirectoryAtPath:applicationSupportDirectory error:nil]) {
         if ([file containsString:@"MEGACD"] || [file containsString:@"spotlightTree"] || [file containsString:@"Uploads"] || [file containsString:@"Downloads"]) {
-            if (![[NSFileManager defaultManager] removeItemAtPath:[applicationSupportDirectory stringByAppendingPathComponent:file] error:&error]) {
-                MEGALogError(@"Remove item at path failed with error: %@", error);
-            }
+            [NSFileManager.defaultManager mnz_removeItemAtPath:[applicationSupportDirectory stringByAppendingPathComponent:file]];
         }
     }
     
     // Delete files saved by extensions
     NSString *extensionGroup = [[NSFileManager defaultManager] containerURLForSecurityApplicationGroupIdentifier:@"group.mega.ios"].path;
-    for (NSString *file in [[NSFileManager defaultManager] contentsOfDirectoryAtPath:extensionGroup error:&error]) {
-        if (![[NSFileManager defaultManager] removeItemAtPath:[extensionGroup stringByAppendingPathComponent:file] error:&error]) {
-            MEGALogError(@"Remove item at path failed with error: %@", error);
-        }
-    }
+    [NSFileManager.defaultManager mnz_removeFolderContentsAtPath:extensionGroup];
+    
     [[MEGAStore shareInstance] configureMEGAStore];
     
     // Delete Spotlight index
@@ -1364,16 +1344,9 @@ static BOOL pointToStaging;
 }
 
 + (void)deleteMasterKey {
-    NSError *error;
-    
     NSString *documentsDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
     NSString *masterKeyFilePath = [documentsDirectory stringByAppendingPathComponent:@"RecoveryKey.txt"];
-    
-    if ([[NSFileManager defaultManager] fileExistsAtPath:[documentsDirectory stringByAppendingPathComponent:@"RecoveryKey.txt"]]) {
-        if (![[NSFileManager defaultManager] removeItemAtPath:masterKeyFilePath error:&error]) {
-            MEGALogError(@"Remove item at path failed with error: %@", error);
-        }
-    }
+    [[NSFileManager defaultManager] mnz_removeItemAtPath:masterKeyFilePath];
 }
 
 + (void)resetUserData {

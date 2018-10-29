@@ -17,37 +17,24 @@
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated {
     [super setEditing:editing animated:animated];
     
+    BOOL editSingleRow = self.subviews.count == 3; // leading or trailing UITableViewCellEditControl doesn't appear
+    
     if (editing) {
         self.moreButton.hidden = YES;
+        if (!editSingleRow) {
+            [UIView animateWithDuration:0.3 animations:^{
+                self.separatorInset = UIEdgeInsetsMake(0, 102, 0, 0);
+                [self layoutIfNeeded];
+            }];
+        }
     } else {
+        [UIView animateWithDuration:0.3 animations:^{
+            self.separatorInset = UIEdgeInsetsMake(0, 62, 0, 0);
+            [self layoutIfNeeded];
+        }];
         if ([[Helper downloadingNodes] objectForKey:self.node.base64Handle] == nil) {
             self.moreButton.hidden = NO;
         }
-    }
-}
-
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
-    [super setSelected:selected animated:animated];
-    
-    if (selected) {
-        UIView *view = [[UIView alloc] init];
-        view.backgroundColor = UIColor.clearColor;
-        view.userInteractionEnabled = NO;
-        self.selectedBackgroundView = view;
-
-        self.lineView.backgroundColor = UIColor.mnz_grayCCCCCC;
-    }
-}
-
-- (void)setHighlighted:(BOOL)highlighted animated:(BOOL)animated {
-    [super setHighlighted:highlighted animated:animated];
-
-    if (highlighted) {
-        UIView *view = [[UIView alloc] init];
-        view.backgroundColor = UIColor.clearColor;
-        self.selectedBackgroundView = view;
-
-        self.lineView.backgroundColor = UIColor.mnz_grayCCCCCC;
     }
 }
 

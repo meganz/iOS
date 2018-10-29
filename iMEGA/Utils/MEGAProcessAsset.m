@@ -10,6 +10,8 @@
 #import "SDAVAssetExportSession.h"
 #import "UIApplication+MNZCategory.h"
 
+#import "NSString+MNZCategory.h"
+
 static void *ProcessAssetProgressContext = &ProcessAssetProgressContext;
 
 static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
@@ -267,7 +269,7 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
                  NSURL *avassetUrl = [(AVURLAsset *)avAsset URL];
                  NSDictionary *fileAtributes = [[NSFileManager defaultManager] attributesOfItemAtPath:avassetUrl.path error:nil];
                  __block NSString *filePath = [self filePathAsCreationDateWithInfo:info asset:asset];
-                 [self deleteLocalFileIfExists:filePath];
+                 [NSFileManager.defaultManager mnz_removeItemAtPath:filePath];
                  long long fileSize = [[fileAtributes objectForKey:NSFileSize] longLongValue];
                  
                  if ([self hasFreeSpaceOnDiskForWriteFile:fileSize]) {
@@ -307,16 +309,14 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
                                      [self.nodesArray addObject:node];
                                      dispatch_semaphore_signal(self.semaphore);
                                  }
-                                 if (![[NSFileManager defaultManager] removeItemAtPath:filePath error:&error]) {
-                                     MEGALogError(@"[PA] Remove item at path failed with error: %@", error)
-                                 }
+                                 [NSFileManager.defaultManager mnz_removeItemAtPath:filePath];
                              } else {
                                  if (self.filePath) {
-                                     filePath = [filePath stringByReplacingOccurrencesOfString:[NSHomeDirectory() stringByAppendingString:@"/"] withString:@""];
+                                     filePath = filePath.mnz_relativeLocalPath;
                                      self.filePath(filePath);
                                  }
                                  if (self.filePaths) {
-                                     filePath = [filePath stringByReplacingOccurrencesOfString:[NSHomeDirectory() stringByAppendingString:@"/"] withString:@""];
+                                     filePath = filePath.mnz_relativeLocalPath;
                                      [self.filePathsArray addObject:filePath];
                                      dispatch_semaphore_signal(self.semaphore);
                                  }
@@ -338,7 +338,7 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
                  float realDuration = [self realDurationForAVAsset:avAsset];
                  self.totalDuration = self.totalDuration - asset.duration + realDuration;
                  NSString *filePath = [self filePathAsCreationDateWithInfo:info asset:asset];
-                 [self deleteLocalFileIfExists:filePath];
+                 [NSFileManager.defaultManager mnz_removeItemAtPath:filePath];
                  NSNumber *videoQualityNumber = [[NSUserDefaults standardUserDefaults] objectForKey:@"ChatVideoQuality"];
                  ChatVideoUploadQuality videoQuality;
                  if (videoQualityNumber) {
@@ -390,7 +390,7 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
     NSURL *avassetUrl = [(AVURLAsset *)self.avAsset URL];
     __block NSString *filePath = [[avassetUrl.path stringByDeletingPathExtension] stringByAppendingPathExtension:@"mp4"];
     NSDictionary *fileAtributes = [[NSFileManager defaultManager] attributesOfItemAtPath:avassetUrl.path error:nil];
-    [self deleteLocalFileIfExists:filePath];
+    [NSFileManager.defaultManager mnz_removeItemAtPath:filePath];
     long long fileSize = [[fileAtributes objectForKey:NSFileSize] longLongValue];
     
     if ([self hasFreeSpaceOnDiskForWriteFile:fileSize]) {
@@ -426,7 +426,7 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
                     MEGALogDebug(@"[PA] Export session finished");
                     self.currentProgress += CMTimeGetSeconds(self.avAsset.duration);
                     if (self.filePath) {
-                        filePath = [encoder.outputURL.path stringByReplacingOccurrencesOfString:[NSHomeDirectory() stringByAppendingString:@"/"] withString:@""];
+                        filePath = encoder.outputURL.path.mnz_relativeLocalPath;
                         self.filePath(filePath);
                     }
                 }
@@ -449,7 +449,7 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
         } else {
             self.currentProgress += CMTimeGetSeconds(self.avAsset.duration);
             if (self.filePath) {
-                filePath = [avassetUrl.path stringByReplacingOccurrencesOfString:[NSHomeDirectory() stringByAppendingString:@"/"] withString:@""];
+                filePath = avassetUrl.path.mnz_relativeLocalPath;
                 self.filePath(filePath);
             }
         }
@@ -457,16 +457,6 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
 }
 
 #pragma mark - Private
-
-- (void)deleteLocalFileIfExists:(NSString *)filePath {
-    BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:filePath];
-    if (fileExists) {
-        NSError *error;
-        if (![[NSFileManager defaultManager] removeItemAtPath:filePath error:&error]) {
-            MEGALogError(@"[PA] Remove item at path failed with error: %@", error);
-        }
-    }
-}
 
 - (BOOL)hasFreeSpaceOnDiskForWriteFile:(long long)fileSize {
     uint64_t freeSpace = 0;
@@ -565,7 +555,7 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
             }
         } else {
             NSString *filePath = [self filePathAsCreationDateWithInfo:info asset:asset];
-            [self deleteLocalFileIfExists:filePath];
+            [NSFileManager.defaultManager mnz_removeItemAtPath:filePath];
             long long imageSize = imageData.length;
             if ([self hasFreeSpaceOnDiskForWriteFile:imageSize]) {
                 NSError *error;
@@ -575,11 +565,11 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
                         MEGALogError(@"[PA] Set attributes failed with error: %@", error);
                     }
                     if (self.filePath) {
-                        filePath = [filePath stringByReplacingOccurrencesOfString:[NSHomeDirectory() stringByAppendingString:@"/"] withString:@""];
+                        filePath = filePath.mnz_relativeLocalPath;
                         self.filePath(filePath);
                     }
                     if (self.filePaths) {
-                        filePath = [filePath stringByReplacingOccurrencesOfString:[NSHomeDirectory() stringByAppendingString:@"/"] withString:@""];
+                        filePath = filePath.mnz_relativeLocalPath;
                         [self.filePathsArray addObject:filePath];
                         dispatch_semaphore_signal(self.semaphore);
                     }
@@ -687,7 +677,7 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
 
 - (void)exportSessionCancelledOrFailed {
     for (NSString *filePath in self.filePathsArray) {
-        [self deleteLocalFileIfExists:filePath];
+        [NSFileManager.defaultManager mnz_removeItemAtPath:filePath];
     }
     [self.filePathsArray removeAllObjects];
     [self.nodesArray removeAllObjects];
@@ -701,7 +691,7 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
         filePath = [filePath stringByDeletingPathExtension];
         filePath = [filePath stringByAppendingPathExtension:@"mp4"];
     }
-    [self deleteLocalFileIfExists:filePath];
+    [NSFileManager.defaultManager mnz_removeItemAtPath:filePath];
     
     AVAssetTrack *videoTrack = [[avAsset tracksWithMediaType:AVMediaTypeVideo] objectAtIndex:0];
     
@@ -780,16 +770,14 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
                     [self.nodesArray addObject:node];
                     dispatch_semaphore_signal(self.semaphore);
                 }
-                if (![[NSFileManager defaultManager] removeItemAtPath:filePath error:&error]) {
-                    MEGALogError(@"[PA] Remove item at path failed with error: %@", error)
-                }
+                [NSFileManager.defaultManager mnz_removeItemAtPath:filePath];
             } else {
                 if (self.filePath) {
-                    filePath = [encoder.outputURL.path stringByReplacingOccurrencesOfString:[NSHomeDirectory() stringByAppendingString:@"/"] withString:@""];
+                    filePath = encoder.outputURL.path.mnz_relativeLocalPath;
                     self.filePath(filePath);
                 }
                 if (self.filePaths) {
-                    filePath = [encoder.outputURL.path stringByReplacingOccurrencesOfString:[NSHomeDirectory() stringByAppendingString:@"/"] withString:@""];
+                    filePath = encoder.outputURL.path.mnz_relativeLocalPath;
                     [self.filePathsArray addObject:filePath];
                     dispatch_semaphore_signal(self.semaphore);
                 }

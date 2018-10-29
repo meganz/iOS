@@ -159,7 +159,8 @@
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField {
-    self.passwordView.rightImageView.hidden = YES;
+    self.passwordView.passwordTextField.secureTextEntry = YES;
+    [self.passwordView configureSecureTextEntry];
 }
 
 #pragma mark - MEGARequestDelegate
@@ -172,6 +173,7 @@
         [self lockUI:NO];
         
         switch ([error type]) {
+            case MEGAErrorTypeApiEKey:
             case MEGAErrorTypeApiENoent: { //MEGARequestTypeConfirmAccount, MEGARequestTypeConfirmChangeEmailLink, MEGARequestTypeConfirmCancelLink
                 [self showErrorInPasswordView:YES];
                 break;
@@ -199,6 +201,9 @@
                 [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"emailAlreadyInUse", @"Error shown when the user tries to change his mail to one that is already used")];
                 break;
             }
+                
+            case MEGAErrorTypeApiESid:
+                break;
 
             default:
                 [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"%@ (%ld)", error.name, (long)error.type]];
