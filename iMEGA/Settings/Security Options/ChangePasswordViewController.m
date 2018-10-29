@@ -13,7 +13,7 @@
 #import "PasswordView.h"
 #import "TwoFactorAuthenticationViewController.h"
 
-@interface ChangePasswordViewController () <MEGARequestDelegate, UITextFieldDelegate, MEGAGlobalDelegate>
+@interface ChangePasswordViewController () <UITextFieldDelegate, UIGestureRecognizerDelegate, MEGARequestDelegate, MEGAGlobalDelegate>
 
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *cancelBarButtonItem;
 
@@ -28,6 +28,8 @@
 @property (weak, nonatomic) IBOutlet PasswordView *confirmPasswordView;
 
 @property (weak, nonatomic) IBOutlet UIButton *confirmButton;
+
+@property (strong, nonatomic) UITapGestureRecognizer *tapGesture;
 
 @end
 
@@ -46,13 +48,20 @@
             
             self.theNewPasswordView.leftImageView.image = [UIImage imageNamed:@"icon-key-only"];
             self.theNewPasswordView.topLabel.text = AMLocalizedString(@"newPassword", @"Placeholder text to explain that the new password should be written on this text field.");
+            self.theNewPasswordView.passwordTextField.returnKeyType = UIReturnKeyNext;
             self.theNewPasswordView.passwordTextField.delegate = self;
             self.theNewPasswordView.passwordTextField.tag = 4;
+            if (@available(iOS 12.0, *)) {
+                self.theNewPasswordView.passwordTextField.textContentType = UITextContentTypeNewPassword;
+            }
             
             self.confirmPasswordView.leftImageView.image = [UIImage imageNamed:@"icon-link-w-key"];
             self.confirmPasswordView.topLabel.text = AMLocalizedString(@"confirmPassword", @"Placeholder text to explain that the new password should be re-written on this text field.");
             self.confirmPasswordView.passwordTextField.delegate = self;
             self.confirmPasswordView.passwordTextField.tag = 5;
+            if (@available(iOS 12.0, *)) {
+                self.confirmPasswordView.passwordTextField.textContentType = UITextContentTypeNewPassword;
+            }
             
             [self.confirmButton setTitle:AMLocalizedString(@"changePasswordLabel", @"Section title where you can change your MEGA's password") forState:UIControlStateNormal];
             
@@ -72,6 +81,7 @@
             
             self.theNewEmailInputView.iconImageView.image = [UIImage imageNamed:@"email"];
             self.theNewEmailInputView.topLabel.text = AMLocalizedString(@"newEmail", @"Placeholder text to explain that the new email should be written on this text field.");
+            self.theNewEmailInputView.inputTextField.returnKeyType = UIReturnKeyNext;
             self.theNewEmailInputView.inputTextField.delegate = self;
             self.theNewEmailInputView.inputTextField.tag = 1;
 
@@ -96,16 +106,26 @@
             self.currentEmailInputView.topLabel.text = AMLocalizedString(@"emailPlaceholder", @"Hint text to suggest that the user has to write his email");
             self.currentEmailInputView.inputTextField.text = self.email;
             self.currentEmailInputView.inputTextField.userInteractionEnabled = NO;
+            if (@available(iOS 11.0, *)) {
+                self.currentEmailInputView.inputTextField.textContentType = UITextContentTypeUsername;
+            }
             
             self.theNewPasswordView.leftImageView.image = [UIImage imageNamed:@"icon-key-only"];
             self.theNewPasswordView.topLabel.text = AMLocalizedString(@"newPassword", @"Placeholder text to explain that the new password should be written on this text field.");
+            self.theNewPasswordView.passwordTextField.returnKeyType = UIReturnKeyNext;
             self.theNewPasswordView.passwordTextField.delegate = self;
             self.theNewPasswordView.passwordTextField.tag = 4;
+            if (@available(iOS 12.0, *)) {
+                self.theNewPasswordView.passwordTextField.textContentType = UITextContentTypeNewPassword;
+            }
             
             self.confirmPasswordView.leftImageView.image = [UIImage imageNamed:@"icon-link-w-key"];
             self.confirmPasswordView.topLabel.text = AMLocalizedString(@"confirmPassword", @"Placeholder text to explain that the new password should be re-written on this text field.");
             self.confirmPasswordView.passwordTextField.delegate = self;
             self.confirmPasswordView.passwordTextField.tag = 5;
+            if (@available(iOS 12.0, *)) {
+                self.confirmPasswordView.passwordTextField.textContentType = UITextContentTypeNewPassword;
+            }
             
             NSString *buttonTitle = (self.changeType == ChangeTypeResetPassword) ? AMLocalizedString(@"changePasswordLabel", @"Section title where you can change your MEGA's password") : AMLocalizedString(@"startNewAccount", @"Caption of the button to proceed");
             [self.confirmButton setTitle:buttonTitle forState:UIControlStateNormal];
@@ -116,6 +136,11 @@
     }
     
     [self confirmButtonEnabled:NO];
+    
+    self.tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideKeyboard)];
+    self.tapGesture.cancelsTouchesInView = NO;
+    self.tapGesture.delegate = self;
+    [self.view addGestureRecognizer:self.tapGesture];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -243,6 +268,10 @@
     self.confirmButton.alpha = enabled ? 1.0f : 0.5f;
 }
 
+- (void)hideKeyboard {
+    [self.view endEditing:YES];
+}
+
 #pragma mark - IBActions
 
 - (IBAction)cancelAction:(UIBarButtonItem *)sender {
@@ -361,18 +390,26 @@
     switch (textField.tag) {
         case 1:
             confirmButtonEnabled = text.mnz_isValidEmail && [text isEqualToString:self.confirmEmailInputView.inputTextField.text] && ![text isEqualToString:self.currentEmailInputView.inputTextField.text];
+            [self.theNewEmailInputView setErrorState:NO withText:AMLocalizedString(@"newEmail", @"Placeholder text to explain that the new email should be written on this text field.")];
+            
             break;
             
         case 2:
             confirmButtonEnabled = self.theNewEmailInputView.inputTextField.text.mnz_isValidEmail && [self.theNewEmailInputView.inputTextField.text isEqualToString:text] && ![self.theNewEmailInputView.inputTextField.text isEqualToString:self.currentEmailInputView.inputTextField.text];
+            [self.confirmEmailInputView setErrorState:NO withText:AMLocalizedString(@"confirmNewEmail", @"Placeholder text to explain that the new email should be re-written on this text field.")];
+            
             break;
             
         case 4:
             confirmButtonEnabled = !text.mnz_isEmpty && [[MEGASdkManager sharedMEGASdk] passwordStrength:text] > PasswordStrengthVeryWeak && [text isEqualToString:self.confirmPasswordView.passwordTextField.text];
+            [self.theNewPasswordView setErrorState:NO withText:AMLocalizedString(@"passwordPlaceholder", @"Hint text to suggest that the user has to write his password")];
+            
             break;
             
         case 5:
             confirmButtonEnabled = !self.theNewPasswordView.passwordTextField.text.mnz_isEmpty && [[MEGASdkManager sharedMEGASdk] passwordStrength:self.theNewPasswordView.passwordTextField.text] > PasswordStrengthVeryWeak && [self.theNewPasswordView.passwordTextField.text isEqualToString:text];
+            [self.confirmPasswordView setErrorState:NO withText:AMLocalizedString(@"confirmPassword", @"Hint text where the user have to re-write the new password to confirm it")];
+            
             break;
             
         default:
@@ -427,6 +464,15 @@
             break;
     }
     
+    return YES;
+}
+
+#pragma mark - UIGestureRecognizerDelegate
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
+    if ((touch.view == self.currentPasswordView.toggleSecureButton || touch.view == self.theNewPasswordView.toggleSecureButton || touch.view == self.confirmPasswordView.toggleSecureButton) && (gestureRecognizer == self.tapGesture)) {
+        return NO;
+    }
     return YES;
 }
 

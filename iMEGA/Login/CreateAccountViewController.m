@@ -14,7 +14,7 @@
 #import "PasswordStrengthIndicatorView.h"
 #import "PasswordView.h"
 
-@interface CreateAccountViewController () <UINavigationControllerDelegate, UITextFieldDelegate, MEGARequestDelegate, UIGestureRecognizerDelegate>
+@interface CreateAccountViewController () <UINavigationControllerDelegate, UITextFieldDelegate, UIGestureRecognizerDelegate>
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *cancelBarButtonItem;
 
@@ -58,30 +58,43 @@
     
     self.firstNameInputView.iconImageView.image = [UIImage imageNamed:@"name"];
     self.firstNameInputView.topLabel.text = AMLocalizedString(@"firstName", @"Hint text for the first name (Placeholder)");
+    self.firstNameInputView.inputTextField.returnKeyType = UIReturnKeyNext;
     self.firstNameInputView.inputTextField.delegate = self;
     self.firstNameInputView.inputTextField.tag = 0;
     
     self.lastNameInputView.topLabel.text = AMLocalizedString(@"lastName", @"Hint text for the last name (Placeholder)");
+    self.lastNameInputView.inputTextField.returnKeyType = UIReturnKeyNext;
     self.lastNameInputView.inputTextField.delegate = self;
     self.lastNameInputView.inputTextField.tag = 1;
     
     self.emailInputView.iconImageView.image = [UIImage imageNamed:@"mail"];
     self.emailInputView.topLabel.text = AMLocalizedString(@"emailPlaceholder", @"Hint text to suggest that the user has to write his email");
+    self.emailInputView.inputTextField.returnKeyType = UIReturnKeyNext;
     self.emailInputView.inputTextField.delegate = self;
     self.emailInputView.inputTextField.tag = 2;
     if (self.emailString) {
         self.emailInputView.inputTextField.text = self.emailString;
     }
+    if (@available(iOS 11.0, *)) {
+        self.emailInputView.inputTextField.textContentType = UITextContentTypeUsername;
+    }
     
     self.passwordView.leftImageView.image = [UIImage imageNamed:@"icon-key-only"];
     self.passwordView.topLabel.text = AMLocalizedString(@"passwordPlaceholder", @"Hint text to suggest that the user has to write his password");
+    self.passwordView.passwordTextField.returnKeyType = UIReturnKeyNext;
     self.passwordView.passwordTextField.delegate = self;
     self.passwordView.passwordTextField.tag = 3;
-
+    if (@available(iOS 12.0, *)) {
+        self.passwordView.passwordTextField.textContentType = UITextContentTypeNewPassword;
+    }
+    
     self.retypePasswordView.leftImageView.image = [UIImage imageNamed:@"icon-link-w-key"];
     self.retypePasswordView.topLabel.text = AMLocalizedString(@"confirmPassword", @"Hint text where the user have to re-write the new password to confirm it");
     self.retypePasswordView.passwordTextField.delegate = self;
     self.retypePasswordView.passwordTextField.tag = 4;
+    if (@available(iOS 12.0, *)) {
+        self.retypePasswordView.passwordTextField.textContentType = UITextContentTypeNewPassword;
+    }
     
     [self setTermsOfServiceAttributedTitle];
     
@@ -361,22 +374,27 @@
     switch (textField.tag) {
         case 0:
             createAccountEnabled = !text.mnz_isEmpty && !self.lastNameInputView.inputTextField.text.mnz_isEmpty && self.emailInputView.inputTextField.text.mnz_isValidEmail && !self.passwordView.passwordTextField.text.mnz_isEmpty && [self.passwordView.passwordTextField.text isEqualToString:self.retypePasswordView.passwordTextField.text] && [[MEGASdkManager sharedMEGASdk] passwordStrength:self.passwordView.passwordTextField.text] > PasswordStrengthVeryWeak && self.termsCheckboxButton.selected;
+            [self.firstNameInputView setErrorState:NO withText:AMLocalizedString(@"firstName", @"Hint text for the first name (Placeholder)")];
             break;
             
         case 1:
             createAccountEnabled = !self.firstNameInputView.inputTextField.text.mnz_isEmpty && !text.mnz_isEmpty && self.emailInputView.inputTextField.text.mnz_isValidEmail && !self.passwordView.passwordTextField.text.mnz_isEmpty && [self.passwordView.passwordTextField.text isEqualToString:self.retypePasswordView.passwordTextField.text] && [[MEGASdkManager sharedMEGASdk] passwordStrength:self.passwordView.passwordTextField.text] > PasswordStrengthVeryWeak && self.termsCheckboxButton.selected;
+            [self.lastNameInputView setErrorState:NO withText:AMLocalizedString(@"lastName", @"Hint text for the last name (Placeholder)")];
             break;
             
         case 2:
             createAccountEnabled = !self.firstNameInputView.inputTextField.text.mnz_isEmpty && !self.lastNameInputView.inputTextField.text.mnz_isEmpty && text.mnz_isValidEmail && !self.passwordView.passwordTextField.text.mnz_isEmpty && [self.passwordView.passwordTextField.text isEqualToString:self.retypePasswordView.passwordTextField.text] && [[MEGASdkManager sharedMEGASdk] passwordStrength:self.passwordView.passwordTextField.text] > PasswordStrengthVeryWeak && self.termsCheckboxButton.selected;
+            [self.emailInputView setErrorState:NO withText:AMLocalizedString(@"emailPlaceholder", @"Hint text to suggest that the user has to write his email")];
             break;
             
         case 3:
             createAccountEnabled = !self.firstNameInputView.inputTextField.text.mnz_isEmpty && !self.lastNameInputView.inputTextField.text.mnz_isEmpty && self.emailInputView.inputTextField.text.mnz_isValidEmail && !text.mnz_isEmpty && [text isEqualToString:self.retypePasswordView.passwordTextField.text] && [[MEGASdkManager sharedMEGASdk] passwordStrength:text] > PasswordStrengthVeryWeak && self.termsCheckboxButton.selected;
+            [self.passwordView setErrorState:NO withText:AMLocalizedString(@"passwordPlaceholder", @"Hint text to suggest that the user has to write his password")];
             break;
             
         case 4:
             createAccountEnabled = !self.firstNameInputView.inputTextField.text.mnz_isEmpty && !self.lastNameInputView.inputTextField.text.mnz_isEmpty && self.emailInputView.inputTextField.text.mnz_isValidEmail && !self.passwordView.passwordTextField.text.mnz_isEmpty && [self.passwordView.passwordTextField.text isEqualToString:text] && [[MEGASdkManager sharedMEGASdk] passwordStrength:self.passwordView.passwordTextField.text] > PasswordStrengthVeryWeak && self.termsCheckboxButton.selected;
+            [self.retypePasswordView setErrorState:NO withText:AMLocalizedString(@"confirmPassword", @"Hint text where the user have to re-write the new password to confirm it")];
             break;
             
         default:
@@ -428,6 +446,8 @@
     
     return YES;
 }
+
+#pragma mark - UIGestureRecognizerDelegate
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
     if ((touch.view == self.passwordView.toggleSecureButton || touch.view == self.retypePasswordView.toggleSecureButton) && (gestureRecognizer == self.tapGesture)) {
