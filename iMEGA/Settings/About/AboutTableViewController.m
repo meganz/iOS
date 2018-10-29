@@ -38,10 +38,10 @@
     self.versionCell.gestureRecognizers = @[tapGestureRecognizer, longPressGestureRecognizer];
     
     self.sdkVersionLabel.text = AMLocalizedString(@"sdkVersion", @"Title of the label where the SDK version is shown");
-    self.sdkVersionSHALabel.text = @"d902e1a5";
+    self.sdkVersionSHALabel.text = @"9e45eddc";
     
     self.megachatSdkVersionLabel.text = AMLocalizedString(@"megachatSdkVersion", @"Title of the label where the MEGAchat SDK version is shown");
-    self.megachatSdkSHALabel.text = @"b81e8314";
+    self.megachatSdkSHALabel.text = @"9a357a7a";
     
     self.viewSourceCodeLabel.text = AMLocalizedString(@"View source code", @"Link to the public code of the ap");
     

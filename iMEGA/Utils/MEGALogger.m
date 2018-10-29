@@ -71,14 +71,4 @@ static MEGALogger *_megaLogger = nil;
     [NSFileManager.defaultManager mnz_removeItemAtPath:logFilePath];
 }
 
-- (void)enableSDKlogs {
-    [MEGAChatSdk setLogToConsole:NO];
-    [MEGASdk setLogToConsole:YES];
-}
-
-- (void)enableChatlogs {
-    [MEGASdk setLogToConsole:NO];
-    [MEGAChatSdk setLogToConsole:YES];
-}
-
 @end

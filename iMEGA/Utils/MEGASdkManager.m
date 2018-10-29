@@ -46,6 +46,8 @@ MEGAChatSdk *_MEGAChatSdk = nil;
     [_MEGAChatSdk addChatDelegate:(AppDelegate *)[[UIApplication sharedApplication] delegate]];
     [_MEGAChatSdk addChatRequestDelegate:(AppDelegate *)[[UIApplication sharedApplication] delegate]];
     MEGALogDebug(@"_MEGAChatSdk created: %@", _MEGAChatSdk);
+    [MEGASdk setLogToConsole:NO];
+    [MEGAChatSdk setLogToConsole:YES];
 }
 
 + (void)destroySharedMEGAChatSdk {
@@ -53,6 +55,8 @@ MEGAChatSdk *_MEGAChatSdk = nil;
     [_MEGAChatSdk removeChatRequestDelegate:(AppDelegate *)[[UIApplication sharedApplication] delegate]];
     _MEGAChatSdk = nil;
     MEGALogDebug(@"_MEGAChatSdk destroyed: %@", _MEGAChatSdk);
+    [MEGAChatSdk setLogToConsole:NO];
+    [MEGASdk setLogToConsole:YES];
 }
 
 + (MEGASdk *)sharedMEGASdkFolder {
