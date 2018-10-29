@@ -6,6 +6,8 @@
 #import "CustomModalAlertViewController.h"
 #import "FileLinkViewController.h"
 #import "FolderLinkViewController.h"
+#import "MainTabBarController.h"
+#import "MEGAChatGenericRequestDelegate.h"
 #import "MEGAContactLinkQueryRequestDelegate.h"
 #import "MEGAGetPublicNodeRequestDelegate.h"
 #import "MEGAInviteContactRequestDelegate.h"
@@ -13,6 +15,7 @@
 #import "MEGANode+MNZCategory.h"
 #import "MEGAPhotoBrowserViewController.h"
 #import "MEGASdkManager.h"
+#import "MessagesViewController.h"
 #import "NSString+MNZCategory.h"
 #import "UIApplication+MNZCategory.h"
 #import "UIImage+GKContact.h"
@@ -86,12 +89,16 @@
         return URLTypeContactLink;
     }
     
-    if (afterSlashesString.length >= 8 && [[afterSlashesString substringToIndex:8] isEqualToString:@"#fm/chat"]) {
-        return URLTypeChatLink;
+    if ((afterSlashesString.length >= 8 && [[afterSlashesString substringToIndex:8] isEqualToString:@"#fm/chat"]) || (afterSlashesString.length >= 7 && [[afterSlashesString substringToIndex:7] isEqualToString:@"fm/chat"])) {
+        return URLTypeOpenChatSectionLink;
     }
     
     if (afterSlashesString.length >= 14 && [[afterSlashesString substringToIndex:14] isEqualToString:@"#loginrequired"]) {
         return URLTypeLoginRequiredLink;
+    }
+    
+    if (afterSlashesString.length >= 2 && [[afterSlashesString substringToIndex:2] isEqualToString:@"c/"]) {
+        return URLTypePublicChatLink;
     }
     
     if (afterSlashesString.length >= 1 && [afterSlashesString hasPrefix:@"#"]) {
@@ -149,6 +156,10 @@
             
         case URLTypeContactLink:
             [self handleContactLink];
+            break;
+            
+        case URLTypePublicChatLink:
+            [self handleChatLink];
             break;
             
         default:
@@ -288,6 +299,26 @@
     }
     
     [[UIApplication mnz_visibleViewController] presentViewController:inviteOrDismissModal animated:YES completion:nil];
+}
+
+- (void)handleChatLink {
+    MEGAChatGenericRequestDelegate *delegate = [[MEGAChatGenericRequestDelegate alloc] initWithCompletion:^(MEGAChatRequest * _Nonnull request, MEGAChatError * _Nonnull error) {
+        if (error.type == MEGAErrorTypeApiOk || error.type == MEGAErrorTypeApiEExist) {
+            UIViewController *rootViewController = [UIApplication sharedApplication].keyWindow.rootViewController;
+            if ([rootViewController isKindOfClass:MainTabBarController.class]) {
+                MainTabBarController *mainTBC = (MainTabBarController *)rootViewController;
+                mainTBC.selectedIndex = CHAT;
+            }
+            
+            MessagesViewController *messagesVC = [[MessagesViewController alloc] init];
+            messagesVC.chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:request.chatHandle];
+            messagesVC.publicHandle = request.userHandle;
+            MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:messagesVC];
+            [UIApplication.mnz_visibleViewController presentViewController:navigationController animated:YES completion:nil];
+        }
+    }];
+    
+    [[MEGASdkManager sharedMEGAChatSdk] openChatPreview:self delegate:delegate];
 }
 
 @end
