@@ -4,12 +4,12 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-extern NSString * const uploadStatusNotStarted;
-extern NSString * const uploadStatusQueuedUp;
-extern NSString * const uploadStatusProcessing;
-extern NSString * const uploadStatusUploading;
-extern NSString * const uploadStatusFailed;
-extern NSString * const uploadStatusDone;
+extern NSString * const UploadStatusNotStarted;
+extern NSString * const UploadStatusQueuedUp;
+extern NSString * const UploadStatusProcessing;
+extern NSString * const UploadStatusUploading;
+extern NSString * const UploadStatusFailed;
+extern NSString * const UploadStatusDone;
 
 @class PHAsset, PHFetchResult;
 

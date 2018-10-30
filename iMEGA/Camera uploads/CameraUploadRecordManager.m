@@ -3,12 +3,12 @@
 #import "MEGAStore.h"
 @import Photos;
 
-NSString * const uploadStatusNotStarted = @"NotStarted";
-NSString * const uploadStatusQueuedUp = @"QueuedUp";
-NSString * const uploadStatusProcessing = @"Processing";
-NSString * const uploadStatusUploading = @"Uploading";
-NSString * const uploadStatusFailed = @"Failed";
-NSString * const uploadStatusDone = @"Done";
+NSString * const UploadStatusNotStarted = @"NotStarted";
+NSString * const UploadStatusQueuedUp = @"QueuedUp";
+NSString * const UploadStatusProcessing = @"Processing";
+NSString * const UploadStatusUploading = @"Uploading";
+NSString * const UploadStatusFailed = @"Failed";
+NSString * const UploadStatusDone = @"Done";
 
 @interface CameraUploadRecordManager ()
 
@@ -76,7 +76,7 @@ NSString * const uploadStatusDone = @"Done";
         NSFetchRequest *request = MOAssetUploadRecord.fetchRequest;
         request.fetchLimit = fetchLimit;
         request.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"creationDate" ascending:NO]];
-        request.predicate = [NSPredicate predicateWithFormat:@"status IN %@", @[uploadStatusNotStarted, uploadStatusFailed]];
+        request.predicate = [NSPredicate predicateWithFormat:@"status IN %@", @[UploadStatusNotStarted, UploadStatusFailed]];
         records = [self.privateQueueContext executeFetchRequest:request error:&coreDataError];
     }];
     
@@ -206,7 +206,7 @@ NSString * const uploadStatusDone = @"Done";
 - (MOAssetUploadRecord *)createUploadStatusFromAsset:(PHAsset *)asset {
     MOAssetUploadRecord *record = [NSEntityDescription insertNewObjectForEntityForName:@"AssetUploadRecord" inManagedObjectContext:self.privateQueueContext];
     record.localIdentifier = asset.localIdentifier;
-    record.status = uploadStatusNotStarted;
+    record.status = UploadStatusNotStarted;
     record.creationDate = asset.creationDate;
     return record;
 }
