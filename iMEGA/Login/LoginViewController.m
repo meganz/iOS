@@ -184,7 +184,7 @@
 }
 
 - (BOOL)validatePassword {
-    BOOL validPassword = self.passwordView.passwordTextField.text.length > 0;
+    BOOL validPassword = !self.passwordView.passwordTextField.text.mnz_isEmpty;
     
     if (validPassword) {
         [self.passwordView setErrorState:NO];
@@ -262,13 +262,13 @@
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
     switch (textField.tag) {
         case 0:
-            [self loginEnabled:[textField.text stringByReplacingCharactersInRange:range withString:string].mnz_isValidEmail && self.passwordView.passwordTextField.text.length > 0];
+            [self loginEnabled:[textField.text stringByReplacingCharactersInRange:range withString:string].mnz_isValidEmail && !self.passwordView.passwordTextField.text.mnz_isEmpty];
             [self.emailInputView setErrorState:NO withText:AMLocalizedString(@"emailPlaceholder", @"Hint text to suggest that the user has to write his email")];
             
             break;
             
         case 1:
-            [self loginEnabled:self.emailInputView.inputTextField.text.mnz_isValidEmail && [textField.text stringByReplacingCharactersInRange:range withString:string].length > 0];
+            [self loginEnabled:self.emailInputView.inputTextField.text.mnz_isValidEmail && ![textField.text stringByReplacingCharactersInRange:range withString:string].mnz_isEmpty];
             [self.passwordView setErrorState:NO];
             
             break;
