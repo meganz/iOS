@@ -49,8 +49,6 @@
     longPressGestureRecognizer.minimumPressDuration = 5.0f;
     self.logoImageView.gestureRecognizers = @[tapGestureRecognizer, longPressGestureRecognizer];
     
-    self.emailInputView.iconImageView.image = [UIImage imageNamed:@"mail"];
-    self.emailInputView.topLabel.text = AMLocalizedString(@"emailPlaceholder", @"Hint text to suggest that the user has to write his email");
     self.emailInputView.inputTextField.returnKeyType = UIReturnKeyNext;
     self.emailInputView.inputTextField.delegate = self;
     self.emailInputView.inputTextField.tag = 0;
@@ -58,8 +56,6 @@
         self.emailInputView.inputTextField.textContentType = UITextContentTypeUsername;
     }
     
-    self.passwordView.leftImageView.image = [UIImage imageNamed:@"icon-link-only"];
-    self.passwordView.topLabel.text = AMLocalizedString(@"passwordPlaceholder", @"Hint text to suggest that the user has to write his password");
     self.passwordView.passwordTextField.delegate = self;
     self.passwordView.passwordTextField.tag = 1;
     if (@available(iOS 11.0, *)) {

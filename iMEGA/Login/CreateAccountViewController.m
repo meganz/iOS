@@ -56,19 +56,14 @@
     
     self.cancelBarButtonItem.title = AMLocalizedString(@"cancel", @"Button title to cancel something");
     
-    self.firstNameInputView.iconImageView.image = [UIImage imageNamed:@"name"];
-    self.firstNameInputView.topLabel.text = AMLocalizedString(@"firstName", @"Hint text for the first name (Placeholder)");
     self.firstNameInputView.inputTextField.returnKeyType = UIReturnKeyNext;
     self.firstNameInputView.inputTextField.delegate = self;
     self.firstNameInputView.inputTextField.tag = 0;
     
-    self.lastNameInputView.topLabel.text = AMLocalizedString(@"lastName", @"Hint text for the last name (Placeholder)");
     self.lastNameInputView.inputTextField.returnKeyType = UIReturnKeyNext;
     self.lastNameInputView.inputTextField.delegate = self;
     self.lastNameInputView.inputTextField.tag = 1;
     
-    self.emailInputView.iconImageView.image = [UIImage imageNamed:@"mail"];
-    self.emailInputView.topLabel.text = AMLocalizedString(@"emailPlaceholder", @"Hint text to suggest that the user has to write his email");
     self.emailInputView.inputTextField.returnKeyType = UIReturnKeyNext;
     self.emailInputView.inputTextField.delegate = self;
     self.emailInputView.inputTextField.tag = 2;
@@ -79,8 +74,6 @@
         self.emailInputView.inputTextField.textContentType = UITextContentTypeUsername;
     }
     
-    self.passwordView.leftImageView.image = [UIImage imageNamed:@"icon-key-only"];
-    self.passwordView.topLabel.text = AMLocalizedString(@"passwordPlaceholder", @"Hint text to suggest that the user has to write his password");
     self.passwordView.passwordTextField.returnKeyType = UIReturnKeyNext;
     self.passwordView.passwordTextField.delegate = self;
     self.passwordView.passwordTextField.tag = 3;
@@ -88,8 +81,6 @@
         self.passwordView.passwordTextField.textContentType = UITextContentTypeNewPassword;
     }
     
-    self.retypePasswordView.leftImageView.image = [UIImage imageNamed:@"icon-link-w-key"];
-    self.retypePasswordView.topLabel.text = AMLocalizedString(@"confirmPassword", @"Hint text where the user have to re-write the new password to confirm it");
     self.retypePasswordView.passwordTextField.delegate = self;
     self.retypePasswordView.passwordTextField.tag = 4;
     if (@available(iOS 12.0, *)) {

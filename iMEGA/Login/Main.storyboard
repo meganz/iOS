@@ -93,6 +93,10 @@
                                     <constraint firstAttribute="height" constant="60" id="MtR-IB-gf8"/>
                                     <constraint firstAttribute="width" constant="622" id="d9g-rL-JsO"/>
                                 </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="image" keyPath="iconImage" value="mail"/>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="topLabelTextKey" value="emailPlaceholder"/>
+                                </userDefinedRuntimeAttributes>
                                 <variation key="default">
                                     <mask key="constraints">
                                         <exclude reference="d9g-rL-JsO"/>
@@ -110,6 +114,10 @@
                                     <constraint firstAttribute="width" constant="622" id="0XG-yA-VDl"/>
                                     <constraint firstAttribute="height" constant="60" id="qSP-AI-czH"/>
                                 </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="image" keyPath="leftImage" value="icon-link-only"/>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="topLabelTextKey" value="passwordPlaceholder"/>
+                                </userDefinedRuntimeAttributes>
                                 <variation key="default">
                                     <mask key="constraints">
                                         <exclude reference="0XG-yA-VDl"/>
@@ -239,6 +247,10 @@
                                                     <constraint firstAttribute="width" constant="622" id="dDv-CO-NCl"/>
                                                     <constraint firstAttribute="height" constant="60" id="g5p-kQ-xXz"/>
                                                 </constraints>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="image" keyPath="iconImage" value="name"/>
+                                                    <userDefinedRuntimeAttribute type="string" keyPath="topLabelTextKey" value="firstName"/>
+                                                </userDefinedRuntimeAttributes>
                                                 <variation key="default">
                                                     <mask key="constraints">
                                                         <exclude reference="dDv-CO-NCl"/>
@@ -256,6 +268,9 @@
                                                     <constraint firstAttribute="width" constant="622" id="97K-m9-c61"/>
                                                     <constraint firstAttribute="height" constant="60" id="dCM-J2-5q9"/>
                                                 </constraints>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="string" keyPath="topLabelTextKey" value="lastName"/>
+                                                </userDefinedRuntimeAttributes>
                                                 <variation key="default">
                                                     <mask key="constraints">
                                                         <exclude reference="97K-m9-c61"/>
@@ -273,6 +288,10 @@
                                                     <constraint firstAttribute="height" constant="60" id="fSd-0C-ZkJ"/>
                                                     <constraint firstAttribute="width" constant="622" id="iTS-DL-CRQ"/>
                                                 </constraints>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="image" keyPath="iconImage" value="mail"/>
+                                                    <userDefinedRuntimeAttribute type="string" keyPath="topLabelTextKey" value="emailPlaceholder"/>
+                                                </userDefinedRuntimeAttributes>
                                                 <variation key="default">
                                                     <mask key="constraints">
                                                         <exclude reference="iTS-DL-CRQ"/>
@@ -290,6 +309,10 @@
                                                     <constraint firstAttribute="height" constant="60" id="9wx-cY-cpE"/>
                                                     <constraint firstAttribute="width" constant="622" id="M7U-cF-mi7"/>
                                                 </constraints>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="image" keyPath="leftImage" value="icon-key-only"/>
+                                                    <userDefinedRuntimeAttribute type="string" keyPath="topLabelTextKey" value="passwordPlaceholder"/>
+                                                </userDefinedRuntimeAttributes>
                                                 <variation key="default">
                                                     <mask key="constraints">
                                                         <exclude reference="M7U-cF-mi7"/>
@@ -315,6 +338,10 @@
                                                     <constraint firstAttribute="width" constant="622" id="S45-T1-hjU"/>
                                                     <constraint firstAttribute="height" constant="60" id="wnC-Gt-RZH"/>
                                                 </constraints>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="image" keyPath="leftImage" value="icon-link-w-key"/>
+                                                    <userDefinedRuntimeAttribute type="string" keyPath="topLabelTextKey" value="confirmPassword"/>
+                                                </userDefinedRuntimeAttributes>
                                                 <variation key="default">
                                                     <mask key="constraints">
                                                         <exclude reference="S45-T1-hjU"/>
@@ -491,6 +518,10 @@
                                     <constraint firstAttribute="height" constant="60" id="LGY-Ue-UDP"/>
                                     <constraint firstAttribute="width" constant="622" id="rom-nM-9vD"/>
                                 </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="image" keyPath="iconImage" value="mail"/>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="topLabelTextKey" value="emailPlaceholder"/>
+                                </userDefinedRuntimeAttributes>
                                 <variation key="default">
                                     <mask key="constraints">
                                         <exclude reference="rom-nM-9vD"/>
@@ -508,6 +539,10 @@
                                     <constraint firstAttribute="height" constant="60" id="Imr-dc-ziE"/>
                                     <constraint firstAttribute="width" constant="622" id="eXM-ON-4d5"/>
                                 </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="image" keyPath="leftImage" value="icon-link-only"/>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="topLabelTextKey" value="passwordPlaceholder"/>
+                                </userDefinedRuntimeAttributes>
                                 <variation key="default">
                                     <mask key="constraints">
                                         <exclude reference="eXM-ON-4d5"/>
@@ -626,6 +661,10 @@
                                     <constraint firstAttribute="height" constant="60" id="1oY-wE-TFl"/>
                                     <constraint firstAttribute="width" constant="622" id="sRi-dv-ouv"/>
                                 </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="image" keyPath="iconImage" value="mail"/>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="topLabelTextKey" value="emailPlaceholder"/>
+                                </userDefinedRuntimeAttributes>
                                 <variation key="default">
                                     <mask key="constraints">
                                         <exclude reference="sRi-dv-ouv"/>
@@ -770,7 +809,12 @@
         <image name="checkBox" width="20" height="20"/>
         <image name="checkBoxSelected" width="20" height="20"/>
         <image name="forgotPasswordQuestionMark" width="12" height="12"/>
+        <image name="icon-key-only" width="24" height="24"/>
+        <image name="icon-link-only" width="24" height="24"/>
+        <image name="icon-link-w-key" width="24" height="24"/>
+        <image name="mail" width="24" height="24"/>
         <image name="mailBig" width="124" height="96"/>
         <image name="megaThePrivacyCompanyLogo" width="170" height="54"/>
+        <image name="name" width="24" height="24"/>
     </resources>
 </document>

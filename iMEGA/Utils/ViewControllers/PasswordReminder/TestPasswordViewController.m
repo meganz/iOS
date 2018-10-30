@@ -97,8 +97,6 @@
 
 - (void)configureUI {
     self.title = AMLocalizedString(@"testPassword", @"Label for test password button");
-    self.passwordView.leftImageView.image = [UIImage imageNamed:@"icon-key-only"];
-    self.passwordView.topLabel.text = AMLocalizedString(@"passwordPlaceholder", @"Hint text to suggest that the user has to write his password");
     self.passwordView.passwordTextField.delegate = self;
     if (self.isLoggingOut) {
         self.closeBarButton.title = AMLocalizedString(@"logoutLabel", @"Title of the button which logs out from your account.");
