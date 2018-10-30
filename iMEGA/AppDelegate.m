@@ -129,7 +129,7 @@
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application willFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    NSLog(@"Application will finish launching with options: %@", launchOptions);
+    NSLog(@"[App Lifecycle] Application will finish launching with options: %@", launchOptions);
 #ifdef DEBUG
     NSArray<MOAssetUploadRecord *> *localRecords = [CameraUploadRecordManager.shared fetchAllAssetUploadRecords:nil];
     localRecords = [localRecords sortedArrayUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"status" ascending:YES]]];
@@ -391,21 +391,17 @@
         }
     }
     
-    MEGALogDebug(@"Application did finish launching with options %@", launchOptions);
+    MEGALogDebug(@"[App Lifecycle] Application did finish launching with options %@", launchOptions);
     
     return YES;
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {
-    // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
-    // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
-    MEGALogDebug(@"Application will resign active");
+    MEGALogDebug(@"[App Lifecycle] Application will resign active");
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
-    // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
-    // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
-    MEGALogDebug(@"Application did enter background");
+    MEGALogDebug(@"[App Lifecycle] Application did enter background");
     
     [[MEGASdkManager sharedMEGAChatSdk] setBackgroundStatus:YES];
     [[MEGASdkManager sharedMEGAChatSdk] saveCurrentState];
@@ -434,7 +430,7 @@
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
-    MEGALogDebug(@"Application will enter foreground");
+    MEGALogDebug(@"[App Lifecycle] Application will enter foreground");
     
     if (self.wasAppSuspended) {
         //If the app has been suspended, we assume that the sockets have been closed, so we have to reconnect.
@@ -466,8 +462,7 @@
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
-    // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-    MEGALogDebug(@"Application did become active");
+    MEGALogDebug(@"[App Lifecycle] Application did become active");
     
     if (self.isSignalActivityRequired) {
         [[MEGASdkManager sharedMEGAChatSdk] signalPresenceActivity];
@@ -479,8 +474,7 @@
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {
-    // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
-    MEGALogDebug(@"Application will terminate");
+    MEGALogDebug(@"[App Lifecycle] Application will terminate");
     
     [[SKPaymentQueue defaultQueue] removeTransactionObserver:[MEGAPurchase sharedInstance]];
     
@@ -505,7 +499,7 @@
 }
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
-    MEGALogDebug(@"Application open URL %@, source application %@", url, sourceApplication);
+    MEGALogDebug(@"[App Lifecycle] Application open URL %@, source application %@", url, sourceApplication);
     
     self.link = url;
     [self manageLink:url];
@@ -514,13 +508,13 @@
 }
 
 - (void)application:(UIApplication *)application didRegisterUserNotificationSettings:(UIUserNotificationSettings *)notificationSettings {
-    MEGALogDebug(@"Application did register user notification settings");
+    MEGALogDebug(@"[App Lifecycle] Application did register user notification settings");
     [application registerForRemoteNotifications];
 }
 
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
     if([deviceToken length] == 0) {
-        MEGALogError(@"Application did register for remote notifications with device token length 0");
+        MEGALogError(@"[App Lifecycle] Application did register for remote notifications with device token length 0");
         return;
     }
     
@@ -534,16 +528,16 @@
     }
     
     NSString *deviceTokenString = [NSString stringWithString:hexString];
-    MEGALogDebug(@"Application did register for remote notifications with device token %@", deviceTokenString);
+    MEGALogDebug(@"[App Lifecycle] Application did register for remote notifications with device token %@", deviceTokenString);
     [[MEGASdkManager sharedMEGASdk] registeriOSdeviceToken:deviceTokenString];
 }
 
 - (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
-    MEGALogError(@"Application did fail to register for remote notifications with error %@", error);
+    MEGALogError(@"[App Lifecycle] Application did fail to register for remote notifications with error %@", error);
 }
 
 - (BOOL)application:(UIApplication *)application continueUserActivity:(NSUserActivity *)userActivity restorationHandler:(void (^)(NSArray *restorableObjects))restorationHandler {
-    MEGALogDebug(@"Application continue user activity %@", userActivity.activityType);
+    MEGALogDebug(@"[App Lifecycle] Application continue user activity %@", userActivity.activityType);
     
     if ([MEGAReachabilityManager isReachable]) {
         if ([userActivity.activityType isEqualToString:CSSearchableItemActionType]) {
@@ -632,7 +626,7 @@
 }
 
 - (void)application:(UIApplication *)application performActionForShortcutItem:(UIApplicationShortcutItem *)shortcutItem completionHandler:(void (^)(BOOL succeeded))completionHandler {
-    MEGALogDebug(@"Application perform action for shortcut item");
+    MEGALogDebug(@"[App Lifecycle] Application perform action for shortcut item");
     
     if (isFetchNodesDone) {
         completionHandler([self manageQuickActionType:shortcutItem.type]);
@@ -640,13 +634,13 @@
 }
 
 - (void)applicationDidReceiveMemoryWarning:(UIApplication *)application {
-    MEGALogWarning(@"Application did receive memory warning");
+    MEGALogWarning(@"[App Lifecycle] Application did receive memory warning");
     
     [self.indexer stopIndexing];
 }
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
-    MEGALogDebug(@"Application did receive remote notification");
+    MEGALogDebug(@"[App Lifecycle] Application did receive remote notification");
     
     if (application.applicationState == UIApplicationStateInactive) {
         _megatype = [[userInfo objectForKey:@"megatype"] unsignedIntegerValue];
@@ -655,7 +649,7 @@
 }
 
 - (void)application:(UIApplication *)application handleEventsForBackgroundURLSession:(NSString *)identifier completionHandler:(void (^)(void))completionHandler {
-    MEGALogDebug(@"application handle events for background session: %@", identifier);
+    MEGALogDebug(@"[App Lifecycle] application handle events for background session: %@", identifier);
     if ([identifier isEqualToString:photoTransferSessionId]) {
         [TransferSessionManager shared].photoSessionCompletion = completionHandler;
         [[TransferSessionManager shared] restorePhotoSessionIfNeeded];

@@ -47,15 +47,15 @@
     if ([[NSFileManager defaultManager] moveItemAtURL:uploadInfo.thumbnailURL toURL:cachedThumbnailURL error:nil]) {
         [MEGASdkManager.sharedMEGASdk setThumbnailNode:node sourceFilePath:cachedThumbnailURL.path delegate:[[CameraUploadRequestDelegate alloc] initWithCompletion:^(MEGARequest * _Nonnull request, MEGAError * _Nonnull error) {
             if (error.type) {
-                MEGALogError(@"Camera Upload - Upload thumbnail failed for local identifier: %@, node: %llu, error: %ld", uploadInfo.localIdentifier, node.handle, error.type);
+                MEGALogError(@"[Camera Upload] Upload thumbnail failed for local identifier: %@, node: %llu, error: %ld", uploadInfo.localIdentifier, node.handle, error.type);
             } else {
-                MEGALogDebug(@"Camera Upload - Upload thumbnail success for local identifier: %@, node: %llu", uploadInfo.localIdentifier, node.handle);
+                MEGALogDebug(@"[Camera Upload] Upload thumbnail success for local identifier: %@, node: %llu", uploadInfo.localIdentifier, node.handle);
                 [UIApplication.sharedApplication endBackgroundTask:thumbnailUploadTaskId];
                 thumbnailUploadTaskId = UIBackgroundTaskInvalid;
             }
         }]];
     } else {
-        MEGALogDebug(@"Camera Upload - Vove thumbnail to cache failed for node: %llu", node.handle);
+        MEGALogDebug(@"[Camera Upload] Vove thumbnail to cache failed for node: %llu", node.handle);
         [UIApplication.sharedApplication endBackgroundTask:thumbnailUploadTaskId];
         thumbnailUploadTaskId = UIBackgroundTaskInvalid;
     }
@@ -75,15 +75,15 @@
     if([[NSFileManager defaultManager] moveItemAtURL:uploadInfo.previewURL toURL:cachedPreviewURL error:nil]) {
         [MEGASdkManager.sharedMEGASdk setThumbnailNode:node sourceFilePath:cachedPreviewURL.path delegate:[[CameraUploadRequestDelegate alloc] initWithCompletion:^(MEGARequest * _Nonnull request, MEGAError * _Nonnull error) {
             if (error.type) {
-                MEGALogError(@"Camera Upload - Upload preview failed for node: %llu, error: %ld", node.handle, error.type);
+                MEGALogError(@"[Camera Upload] Upload preview failed for node: %llu, error: %ld", node.handle, error.type);
             } else {
-                MEGALogDebug(@"Camera Upload - Upload preview success for node: %llu", node.handle);
+                MEGALogDebug(@"[Camera Upload] Upload preview success for node: %llu", node.handle);
                 [UIApplication.sharedApplication endBackgroundTask:previewUploadTaskId];
                 previewUploadTaskId = UIBackgroundTaskInvalid;
             }
         }]];
     } else {
-        MEGALogDebug(@"Camera Upload - Move preview to cache failed for node: %llu", node.handle);
+        MEGALogDebug(@"[Camera Upload] Move preview to cache failed for node: %llu", node.handle);
         [UIApplication.sharedApplication endBackgroundTask:previewUploadTaskId];
         previewUploadTaskId = UIBackgroundTaskInvalid;
     }
