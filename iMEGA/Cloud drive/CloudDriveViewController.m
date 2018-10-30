@@ -1804,7 +1804,8 @@
 #pragma mark - UITextFieldDelegate
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
-    return !CGColorEqualToColor(textField.textColor.CGColor, UIColor.mnz_redMain.CGColor);
+    BOOL containsInvalidChars = [textField.text rangeOfCharacterFromSet:[NSCharacterSet characterSetWithCharactersInString:@"|*/:<>?\"\\"]].length;
+    return (textField.text.length > 0 && !containsInvalidChars);
 }
 
 #pragma mark - MEGARequestDelegate
