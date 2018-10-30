@@ -7,6 +7,7 @@
 #import "InputView.h"
 #import "MEGALoginRequestDelegate.h"
 #import "MEGAReachabilityManager.h"
+#import "NSString+MNZCategory.h"
 #import "PasswordView.h"
 #import "UIApplication+MNZCategory.h"
 
@@ -139,7 +140,7 @@
 #pragma mark - Private
 
 - (BOOL)validateForm {
-    BOOL validPassword = self.passwordView.passwordTextField.text.length > 0;
+    BOOL validPassword = !self.passwordView.passwordTextField.text.mnz_isEmpty;
     
     if (validPassword) {
         [self.passwordView setErrorState:NO];
