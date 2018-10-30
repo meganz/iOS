@@ -45,7 +45,7 @@
         self.completion(transferToken, error);
     } else {
         if (error) {
-            [self finishUploadWithTask:task status:uploadStatusFailed];
+            [self finishUploadWithTask:task status:UploadStatusFailed];
             return;
         }
         
@@ -88,22 +88,22 @@
             }];
             
             [self.uploadCoordinator completeUploadWithInfo:uploadInfo uploadToken:token success:^(MEGANode * _Nonnull node) {
-                [self finishUploadWithTask:task status:uploadStatusDone];
+                [self finishUploadWithTask:task status:UploadStatusDone];
                 [UIApplication.sharedApplication endBackgroundTask:backgroundUploadCompletionTask];
                 backgroundUploadCompletionTask = UIBackgroundTaskInvalid;
             } failure:^(MEGAError * _Nonnull error) {
                 MEGALogError(@"[Camera Upload] Error when to put node for asset: %@", task.taskDescription);
-                [self finishUploadWithTask:task status:uploadStatusFailed];
+                [self finishUploadWithTask:task status:UploadStatusFailed];
                 [UIApplication.sharedApplication endBackgroundTask:backgroundUploadCompletionTask];
                 backgroundUploadCompletionTask = UIBackgroundTaskInvalid;
             }];
         } else {
             MEGALogError(@"[Camera Upload] Error when to unarchive upload info for asset: %@", task.taskDescription);
-            [self finishUploadWithTask:task status:uploadStatusFailed];
+            [self finishUploadWithTask:task status:UploadStatusFailed];
         }
     } else {
         MEGALogError(@"[Camera Upload] Session task completes without any handler: %@", task.taskDescription);
-        [self finishUploadWithTask:task status:uploadStatusFailed];
+        [self finishUploadWithTask:task status:UploadStatusFailed];
     }
 }
 
