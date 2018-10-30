@@ -785,6 +785,10 @@
                                                             <constraint firstAttribute="width" constant="622" id="JuE-Y5-Dbr"/>
                                                             <constraint firstAttribute="height" constant="60" id="qBk-9w-iBX"/>
                                                         </constraints>
+                                                        <userDefinedRuntimeAttributes>
+                                                            <userDefinedRuntimeAttribute type="string" keyPath="topLabelTextKey" value="emailPlaceholder"/>
+                                                            <userDefinedRuntimeAttribute type="image" keyPath="iconImage" value="mail"/>
+                                                        </userDefinedRuntimeAttributes>
                                                         <variation key="default">
                                                             <mask key="constraints">
                                                                 <exclude reference="JuE-Y5-Dbr"/>
@@ -820,6 +824,10 @@
                                                             <constraint firstAttribute="height" constant="60" id="3yA-8U-fQJ"/>
                                                             <constraint firstAttribute="width" constant="622" id="DJA-db-maf"/>
                                                         </constraints>
+                                                        <userDefinedRuntimeAttributes>
+                                                            <userDefinedRuntimeAttribute type="image" keyPath="iconImage" value="email"/>
+                                                            <userDefinedRuntimeAttribute type="string" keyPath="topLabelTextKey" value="newEmail"/>
+                                                        </userDefinedRuntimeAttributes>
                                                         <variation key="default">
                                                             <mask key="constraints">
                                                                 <exclude reference="DJA-db-maf"/>
@@ -838,6 +846,10 @@
                                                             <constraint firstAttribute="height" constant="60" id="eYM-tk-Nkp"/>
                                                             <constraint firstAttribute="width" constant="622" id="oqO-X6-XnJ"/>
                                                         </constraints>
+                                                        <userDefinedRuntimeAttributes>
+                                                            <userDefinedRuntimeAttribute type="image" keyPath="leftImage" value="icon-key-only"/>
+                                                            <userDefinedRuntimeAttribute type="string" keyPath="topLabelTextKey" value="newPassword"/>
+                                                        </userDefinedRuntimeAttributes>
                                                         <variation key="default">
                                                             <mask key="constraints">
                                                                 <exclude reference="oqO-X6-XnJ"/>
@@ -862,6 +874,10 @@
                                                             <constraint firstAttribute="width" constant="622" id="6zb-V5-OUr"/>
                                                             <constraint firstAttribute="height" constant="60" id="DH5-Z9-oUC"/>
                                                         </constraints>
+                                                        <userDefinedRuntimeAttributes>
+                                                            <userDefinedRuntimeAttribute type="image" keyPath="iconImage" value="emailConfirm"/>
+                                                            <userDefinedRuntimeAttribute type="string" keyPath="topLabelTextKey" value="confirmNewEmail"/>
+                                                        </userDefinedRuntimeAttributes>
                                                         <variation key="default">
                                                             <mask key="constraints">
                                                                 <exclude reference="6zb-V5-OUr"/>
@@ -880,6 +896,10 @@
                                                             <constraint firstAttribute="height" constant="60" id="Ycs-Pk-eE7"/>
                                                             <constraint firstAttribute="width" constant="622" id="ylS-oR-NFM"/>
                                                         </constraints>
+                                                        <userDefinedRuntimeAttributes>
+                                                            <userDefinedRuntimeAttribute type="string" keyPath="topLabelTextKey" value="confirmPassword"/>
+                                                            <userDefinedRuntimeAttribute type="image" keyPath="leftImage" value="icon-link-w-key"/>
+                                                        </userDefinedRuntimeAttributes>
                                                         <variation key="default">
                                                             <mask key="constraints">
                                                                 <exclude reference="ylS-oR-NFM"/>
@@ -2356,6 +2376,11 @@ You may still receive file versions from shared folders if your contacts have th
         </scene>
     </scenes>
     <resources>
+        <image name="email" width="32" height="32"/>
+        <image name="emailConfirm" width="32" height="32"/>
+        <image name="icon-key-only" width="24" height="24"/>
+        <image name="icon-link-w-key" width="24" height="24"/>
+        <image name="mail" width="24" height="24"/>
         <image name="padlockMasterKey" width="160" height="225"/>
         <image name="settingsIcon" width="26" height="26"/>
     </resources>

@@ -46,8 +46,6 @@
         case ChangeTypePassword:
             self.navigationItem.title = AMLocalizedString(@"changePasswordLabel", @"Section title where you can change your MEGA's password");
             
-            self.theNewPasswordView.leftImageView.image = [UIImage imageNamed:@"icon-key-only"];
-            self.theNewPasswordView.topLabel.text = AMLocalizedString(@"newPassword", @"Placeholder text to explain that the new password should be written on this text field.");
             self.theNewPasswordView.passwordTextField.returnKeyType = UIReturnKeyNext;
             self.theNewPasswordView.passwordTextField.delegate = self;
             self.theNewPasswordView.passwordTextField.tag = 4;
@@ -55,8 +53,6 @@
                 self.theNewPasswordView.passwordTextField.textContentType = UITextContentTypeNewPassword;
             }
             
-            self.confirmPasswordView.leftImageView.image = [UIImage imageNamed:@"icon-link-w-key"];
-            self.confirmPasswordView.topLabel.text = AMLocalizedString(@"confirmPassword", @"Placeholder text to explain that the new password should be re-written on this text field.");
             self.confirmPasswordView.passwordTextField.delegate = self;
             self.confirmPasswordView.passwordTextField.tag = 5;
             if (@available(iOS 12.0, *)) {
@@ -74,19 +70,13 @@
             self.theNewPasswordView.hidden = self.confirmPasswordView.hidden = YES;
             self.currentEmailInputView.hidden = self.theNewEmailInputView.hidden = self.confirmEmailInputView.hidden = NO;
             
-            self.currentEmailInputView.iconImageView.image = [UIImage imageNamed:@"emailExisting"];
-            self.currentEmailInputView.topLabel.text = AMLocalizedString(@"emailPlaceholder", @"Hint text to suggest that the user has to write his email");
             self.currentEmailInputView.inputTextField.text = [MEGASdkManager sharedMEGASdk].myEmail;
             self.currentEmailInputView.inputTextField.userInteractionEnabled = NO;
             
-            self.theNewEmailInputView.iconImageView.image = [UIImage imageNamed:@"email"];
-            self.theNewEmailInputView.topLabel.text = AMLocalizedString(@"newEmail", @"Placeholder text to explain that the new email should be written on this text field.");
             self.theNewEmailInputView.inputTextField.returnKeyType = UIReturnKeyNext;
             self.theNewEmailInputView.inputTextField.delegate = self;
             self.theNewEmailInputView.inputTextField.tag = 1;
 
-            self.confirmEmailInputView.iconImageView.image = [UIImage imageNamed:@"emailConfirm"];
-            self.confirmEmailInputView.topLabel.text = AMLocalizedString(@"confirmNewEmail", @"Placeholder text to explain that the new email should be re-written on this text field.");
             self.confirmEmailInputView.inputTextField.delegate = self;
             self.confirmEmailInputView.inputTextField.tag = 2;
             
@@ -102,16 +92,12 @@
             self.navigationItem.title = (self.changeType == ChangeTypeResetPassword) ? AMLocalizedString(@"passwordReset", @"Headline of the password reset recovery procedure") : AMLocalizedString(@"parkAccount", @"Headline for parking an account (basically restarting from scratch)");
             self.currentEmailInputView.hidden = NO;
             
-            self.currentEmailInputView.iconImageView.image = [UIImage imageNamed:@"mail"];
-            self.currentEmailInputView.topLabel.text = AMLocalizedString(@"emailPlaceholder", @"Hint text to suggest that the user has to write his email");
             self.currentEmailInputView.inputTextField.text = self.email;
             self.currentEmailInputView.inputTextField.userInteractionEnabled = NO;
             if (@available(iOS 11.0, *)) {
                 self.currentEmailInputView.inputTextField.textContentType = UITextContentTypeUsername;
             }
             
-            self.theNewPasswordView.leftImageView.image = [UIImage imageNamed:@"icon-key-only"];
-            self.theNewPasswordView.topLabel.text = AMLocalizedString(@"newPassword", @"Placeholder text to explain that the new password should be written on this text field.");
             self.theNewPasswordView.passwordTextField.returnKeyType = UIReturnKeyNext;
             self.theNewPasswordView.passwordTextField.delegate = self;
             self.theNewPasswordView.passwordTextField.tag = 4;
@@ -119,8 +105,6 @@
                 self.theNewPasswordView.passwordTextField.textContentType = UITextContentTypeNewPassword;
             }
             
-            self.confirmPasswordView.leftImageView.image = [UIImage imageNamed:@"icon-link-w-key"];
-            self.confirmPasswordView.topLabel.text = AMLocalizedString(@"confirmPassword", @"Placeholder text to explain that the new password should be re-written on this text field.");
             self.confirmPasswordView.passwordTextField.delegate = self;
             self.confirmPasswordView.passwordTextField.tag = 5;
             if (@available(iOS 12.0, *)) {

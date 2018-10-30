@@ -65,16 +65,12 @@
     
     [self.cancelButton setTitle:AMLocalizedString(@"cancel", nil) forState:UIControlStateNormal];
     
-    self.emailInputView.iconImageView.image = [UIImage imageNamed:@"mail"];
-    self.emailInputView.topLabel.text = AMLocalizedString(@"emailPlaceholder", @"Hint text to suggest that the user has to write his email");
     self.emailInputView.inputTextField.text = self.emailString;
     self.emailInputView.inputTextField.enabled = NO;
     if (@available(iOS 11.0, *)) {
         self.emailInputView.inputTextField.textContentType = UITextContentTypeUsername;
     }
     
-    self.passwordView.leftImageView.image = [UIImage imageNamed:@"icon-link-only"];
-    self.passwordView.topLabel.text = AMLocalizedString(@"passwordPlaceholder", @"Hint text to suggest that the user has to write his password");
     self.passwordView.passwordTextField.delegate = self;
     if (@available(iOS 11.0, *)) {
         self.passwordView.passwordTextField.textContentType = UITextContentTypePassword;

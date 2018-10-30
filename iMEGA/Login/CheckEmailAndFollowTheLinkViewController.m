@@ -51,8 +51,6 @@
 
     self.awaitingEmailConfirmationLabel.text = AMLocalizedString(@"awaitingEmailConfirmation", @"Title shown just after doing some action that requires confirming the action by an email");
     self.checkYourEmailLabel.text = AMLocalizedString(@"accountNotConfirmed", @"Text shown just after creating an account to remenber the user what to do to complete the account creation proccess");
-    self.emailInputView.iconImageView.image = [UIImage imageNamed:@"mail"];
-    self.emailInputView.topLabel.text = AMLocalizedString(@"emailPlaceholder", nil);
     self.emailInputView.inputTextField.text = self.email;
     self.misspelledLabel.text = AMLocalizedString(@"misspelledEmailAddress", @"A hint shown at the bottom of the Send Signup Link dialog to tell users they can edit the provided email.");
     [self.resendButton setTitle:AMLocalizedString(@"resend", @"A button to resend the email confirmation.") forState:UIControlStateNormal];
