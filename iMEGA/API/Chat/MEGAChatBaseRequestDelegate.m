@@ -16,7 +16,7 @@
         if (request.type == MEGAChatRequestTypeChatLinkHandle && error.type == MEGAErrorTypeApiENoent) {
             return;
         }
-        if (request.type == MEGAChatRequestTypeLoadPreview && error.type == MEGAErrorTypeApiEExist) {
+        if (request.type == MEGAChatRequestTypeLoadPreview && (error.type == MEGAErrorTypeApiEExist || error.type == MEGAErrorTypeApiENoent)) {
             return;
         }
 
