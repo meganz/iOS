@@ -203,7 +203,7 @@
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 7;
+    return 8;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -234,6 +234,10 @@
             break;
             
         case 6:
+            numberOfRows = self.chatRoom.isPublicChat ? 1 : 0;
+            break;
+            
+        case 7:
             numberOfRows = self.participantsMutableArray.count;
             
             if (self.chatRoom.ownPrivilege == MEGAChatRoomPrivilegeModerator) {
@@ -251,7 +255,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     GroupChatDetailsViewTableViewCell *cell;
     
-    if (indexPath.section != 6) {
+    if (indexPath.section != 7 && indexPath.section != 6) {
         cell = [self.tableView dequeueReusableCellWithIdentifier:@"GroupChatDetailsLeaveGroupTypeID" forIndexPath:indexPath];
     }
     
@@ -288,7 +292,14 @@
             cell.nameLabel.text = AMLocalizedString(@"Enable Encrypted Key Rotation", @"Title show in a cell where the users can enable the 'Encrypted Key Rotation'");
             break;
             
-        case 6: {
+        case 6:
+            cell = [self.tableView dequeueReusableCellWithIdentifier:@"GroupChatDetailsObserversTypeID" forIndexPath:indexPath];
+            cell.leftImageView.image = [UIImage imageNamed:@"chatObservers"];
+            cell.emailLabel.text = @"Observers";
+            cell.rightLabel.text = [NSString stringWithFormat:@"%tu", self.chatRoom.previewersCount];
+            break;
+            
+        case 7: {
             if ((indexPath.row == 0) && (self.chatRoom.ownPrivilege == MEGAChatRoomPrivilegeModerator)) {
                 cell = [self.tableView dequeueReusableCellWithIdentifier:@"GroupChatDetailsParticipantEmailTypeID" forIndexPath:indexPath];
                 cell.leftImageView.image = [UIImage imageNamed:@"inviteToChat"];
@@ -361,7 +372,7 @@
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    if (section == 6) {
+    if (section == 7) {
         self.participantsHeaderViewLabel.text = [AMLocalizedString(@"participants", @"Label to describe the section where you can see the participants of a group chat") uppercaseString];
         return self.participantsHeaderView;
     }
@@ -369,7 +380,10 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    if (section == 6) return 24.0f;
+    if (section == 7) return 24.0f;
+    
+    if (section == 6 && !self.chatRoom.isPublicChat) return 0.0f;
+    
     if (self.chatRoom.ownPrivilege == MEGAChatRoomPrivilegeRm) {
         if (section == 3) {
             return 20.0f;
@@ -387,7 +401,7 @@
     } else {
         if (section == 3) {
             return 20.0f;
-        } else if (section == 5) {
+        } else if (section == 6) {
             return 10.0f;
         } else {
             return 0.0f;
@@ -396,7 +410,10 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
-    if (section == 6) return 20.0f;
+    if (section == 7) return 20.0f;
+    
+    if (section == 6 && !self.chatRoom.isPublicChat) return 0.0f;
+    
     if (self.chatRoom.ownPrivilege == MEGAChatRoomPrivilegeRm) {
         if (section == 3) {
             return 18.0f;
@@ -418,7 +435,7 @@
     } else {
         if (section == 3) {
             return 10.0f;
-        } else if (section == 5) {
+        } else if (section == 6) {
             return 20.0f;
         } else {
             return 0.0f;
@@ -464,6 +481,10 @@
             break;
             
         case 6:
+            heightForRow = (self.chatRoom.isPublicChat) ? 60.0f : 0.0f;
+            break;
+            
+        case 7:
             heightForRow = 60.0f;
             break;
             
@@ -585,7 +606,7 @@
             break;
         }
             
-        case 6:
+        case 7:
             if ((indexPath.row == 0) && (self.chatRoom.ownPrivilege == MEGAChatRoomPrivilegeModerator)) {
                 [self addParticipant];
                 [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
@@ -705,6 +726,10 @@
             break;
             
         case MEGAChatRoomChangeTypeUserStopTyping:
+            break;
+            
+        case MEGAChatRoomChangeTypeUpdatePreviewers:
+            [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:6]] withRowAnimation:UITableViewRowAnimationAutomatic];
             break;
             
         default:
