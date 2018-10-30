@@ -1962,11 +1962,13 @@ void uncaughtExceptionHandler(NSException *exception) {
         [Helper startPendingUploadTransferIfNeeded];
 
     } else {
-        NSArray<MEGANode *> *nodesToIndex = [nodeList mnz_nodesArrayFromNodeList];
-        MEGALogDebug(@"Spotlight indexing %lu nodes updated", nodesToIndex.count);
-        for (MEGANode *node in nodesToIndex) {
-            [self.indexer index:node];
-        }
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+            NSArray<MEGANode *> *nodesToIndex = [nodeList mnz_nodesArrayFromNodeList];
+            MEGALogDebug(@"Spotlight indexing %lu nodes updated", nodesToIndex.count);
+            for (MEGANode *node in nodesToIndex) {
+                [self.indexer index:node];
+            }
+        });
     }
 }
 
