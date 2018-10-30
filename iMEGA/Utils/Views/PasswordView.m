@@ -21,20 +21,23 @@
     return self;
 }
 
-- (void)customInit {
-    self.customView = [[[NSBundle mainBundle] loadNibNamed:@"PasswordView" owner:self options:nil] firstObject];
-    [self addSubview:self.customView];
-    self.customView.frame = self.bounds;
-    self.passwordTextField.delegate = self;
+- (void)prepareForInterfaceBuilder {
+    [super prepareForInterfaceBuilder];
+    [self customInit];
+    [self.customView prepareForInterfaceBuilder];
+    // Trigger the setters:
+    self.leftImage = self.leftImage;
+    self.topLabelTextKey = self.topLabelTextKey;
 }
 
-- (IBAction)tapToggleSecureTextEntry:(id)sender {
-    self.passwordTextField.secureTextEntry = !self.passwordTextField.secureTextEntry;
-    [self configureToggleSecureButton];
-    //This code fix the position of the text field cursor not locating properly when toggle secure text entry
-    NSString *tmpString = self.passwordTextField.text;
-    self.passwordTextField.text = @" ";
-    self.passwordTextField.text = tmpString;
+#pragma mark - Private
+
+- (void)customInit {
+    self.customView = [[NSBundle bundleForClass:self.class] loadNibNamed:@"PasswordView" owner:self options:nil].firstObject;
+    [self addSubview:self.customView];
+    self.customView.frame = self.bounds;
+    self.customView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    self.passwordTextField.delegate = self;
 }
 
 - (void)configureToggleSecureButton {
@@ -78,6 +81,33 @@
 - (void)textFieldDidEndEditing:(UITextField *)textField {
     self.passwordTextField.secureTextEntry = YES;
     self.toggleSecureButton.hidden = YES;
+}
+
+#pragma mark - IBActions
+
+- (IBAction)tapToggleSecureTextEntry:(id)sender {
+    self.passwordTextField.secureTextEntry = !self.passwordTextField.secureTextEntry;
+    [self configureToggleSecureButton];
+    //This code fix the position of the text field cursor not locating properly when toggle secure text entry
+    NSString *tmpString = self.passwordTextField.text;
+    self.passwordTextField.text = @" ";
+    self.passwordTextField.text = tmpString;
+}
+
+#pragma mark - IBInspectables
+
+- (void)setLeftImage:(UIImage *)leftImage {
+    _leftImage = leftImage;
+    self.leftImageView.image = self.leftImage;
+}
+
+- (void)setTopLabelTextKey:(NSString *)topLabelTextKey {
+    _topLabelTextKey = topLabelTextKey;
+#ifdef TARGET_INTERFACE_BUILDER
+    self.topLabel.text = [[NSBundle bundleForClass:self.class] localizedStringForKey:self.topLabelTextKey value:nil table:nil];
+#else
+    self.topLabel.text = AMLocalizedString(self.topLabelTextKey, nil);
+#endif
 }
 
 @end

@@ -25,12 +25,22 @@
     return self;
 }
 
+- (void)prepareForInterfaceBuilder {
+    [super prepareForInterfaceBuilder];
+    [self customInit];
+    [self.customView prepareForInterfaceBuilder];
+    // Trigger the setters:
+    self.iconImage = self.iconImage;
+    self.topLabelTextKey = self.topLabelTextKey;
+}
+
 #pragma mark - Private
 
 - (void)customInit {
-    self.customView = [NSBundle.mainBundle loadNibNamed:@"InputView" owner:self options:nil].firstObject;
+    self.customView = [[NSBundle bundleForClass:self.class] loadNibNamed:@"InputView" owner:self options:nil].firstObject;
     [self addSubview:self.customView];
     self.customView.frame = self.bounds;
+    self.customView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 }
 
 #pragma mark - Public
@@ -44,6 +54,22 @@
         self.topLabel.textColor = UIColor.mnz_gray999999;
         self.inputTextField.textColor = UIColor.blackColor;
     }
+}
+
+#pragma mark - IBInspectables
+
+- (void)setIconImage:(UIImage *)iconImage {
+    _iconImage = iconImage;
+    self.iconImageView.image = self.iconImage;
+}
+
+- (void)setTopLabelTextKey:(NSString *)topLabelTextKey {
+    _topLabelTextKey = topLabelTextKey;
+#ifdef TARGET_INTERFACE_BUILDER
+    self.topLabel.text = [[NSBundle bundleForClass:self.class] localizedStringForKey:self.topLabelTextKey value:nil table:nil];
+#else
+    self.topLabel.text = AMLocalizedString(self.topLabelTextKey, nil);
+#endif
 }
 
 @end

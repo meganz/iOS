@@ -9,9 +9,13 @@
 
 @end
 
+IB_DESIGNABLE
 @interface PasswordView : UIView <UITextFieldDelegate>
 
 @property (nonatomic) UIView *customView;
+@property (nonatomic) IBInspectable UIImage *leftImage;
+@property (nonatomic) IBInspectable NSString *topLabelTextKey;
+
 @property (weak, nonatomic) IBOutlet UIImageView *leftImageView;
 @property (weak, nonatomic) IBOutlet UILabel *topLabel;
 @property (weak, nonatomic) IBOutlet UITextField *passwordTextField;
