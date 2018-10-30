@@ -46,6 +46,10 @@ static NSString * const archiveUploadInfoBackgroundTaskName = @"nz.mega.archiveC
     return [self initWithAsset:asset cameraUploadNode:node];
 }
 
+- (void)dealloc {
+    MEGALogDebug(@"operation gets deallocated");
+}
+
 #pragma mark - properties
 
 - (AssetUploadInfo *)uploadInfo {
@@ -168,6 +172,11 @@ static NSString * const archiveUploadInfoBackgroundTaskName = @"nz.mega.archiveC
     NSString *urlSuffix;
     if ([self.uploadInfo.mediaUpload encryptFileAtPath:self.uploadInfo.fileURL.path startPosition:0 length:self.uploadInfo.fileSize outputFilePath:self.uploadInfo.encryptedURL.path urlSuffix:&urlSuffix]) {
         MEGALogDebug(@"Camera Upload - Upload file encrypted with url suffix: %@", urlSuffix);
+        
+        [self.attributesDataSDK createThumbnail:self.uploadInfo.fileURL.path destinatioPath:self.uploadInfo.thumbnailURL.path];
+        [self.attributesDataSDK createPreview:self.uploadInfo.fileURL.path destinatioPath:self.uploadInfo.previewURL.path];
+        self.attributesDataSDK = nil;
+        
         self.uploadInfo.uploadURLStringSuffix = urlSuffix;
         [[MEGASdkManager sharedMEGASdk] requestBackgroundUploadURLWithFileSize:self.uploadInfo.fileSize mediaUpload:self.uploadInfo.mediaUpload delegate:[[CameraUploadRequestDelegate alloc] initWithCompletion:^(MEGARequest * _Nonnull request, MEGAError * _Nonnull error) {
             if (error.type) {
@@ -182,9 +191,6 @@ static NSString * const archiveUploadInfoBackgroundTaskName = @"nz.mega.archiveC
                 }
             }
         }]];
-        
-        [self.attributesDataSDK createThumbnail:self.uploadInfo.fileURL.path destinatioPath:self.uploadInfo.thumbnailURL.path];
-        [self.attributesDataSDK createPreview:self.uploadInfo.fileURL.path destinatioPath:self.uploadInfo.previewURL.path];
     } else {
         MEGALogError(@"Camera Upload - File encryption failed for asset: %@", self.asset);
         [self finishOperationWithStatus:uploadStatusFailed shouldUploadNextAsset:YES];
