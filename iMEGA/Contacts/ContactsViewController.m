@@ -1400,12 +1400,14 @@
 - (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView {
     NSString *text = @"";
     if ([MEGAReachabilityManager isReachable]) {
-        if (self.searchController.isActive ) {
-            if (self.searchController.searchBar.text.length > 0) {
-                text = AMLocalizedString(@"noResults", @"Title shown when you make a search and there is 'No Results'");
+        if (self.contactsMode != ContactsModeChatNamingGroup) {
+            if (self.searchController.isActive ) {
+                if (self.searchController.searchBar.text.length > 0) {
+                    text = AMLocalizedString(@"noResults", @"Title shown when you make a search and there is 'No Results'");
+                }
+            } else {
+                text = AMLocalizedString(@"contactsEmptyState_title", @"Title shown when the Contacts section is empty, when you have not added any contact.");
             }
-        } else {
-            text = AMLocalizedString(@"contactsEmptyState_title", @"Title shown when the Contacts section is empty, when you have not added any contact.");
         }
     } else {
         text = AMLocalizedString(@"noInternetConnection",  @"No Internet Connection");
@@ -1416,6 +1418,9 @@
 
 - (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView {
     if ([MEGAReachabilityManager isReachable]) {
+        if (self.contactsMode == ContactsModeChatNamingGroup) {
+            return nil;
+        }
         if (self.searchController.isActive) {
             if (self.searchController.searchBar.text.length > 0) {
                 return [UIImage imageNamed:@"searchEmptyState"];
