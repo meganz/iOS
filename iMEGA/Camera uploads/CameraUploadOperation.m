@@ -104,9 +104,10 @@ static NSString * const archiveUploadInfoBackgroundTaskName = @"nz.mega.archiveC
     self.uploadTaskIdentifier = [UIApplication.sharedApplication beginBackgroundTaskWithName:cameraUploadBackgroundTaskName expirationHandler:^{
         MOAssetUploadRecord *record = [CameraUploadRecordManager.shared fetchAssetUploadRecordByLocalIdentifier:self.asset.localIdentifier error:nil];
         MEGALogDebug(@"Camera Upload - upload operation background task expired with asset: %@", self.asset);
-        if ([record.status isEqualToString:uploadStatusProcessing]) {
+        if ([record.status isEqualToString:uploadStatusUploading]) {
             [self finishOperation];
         } else {
+            [self cancel];
             [self finishOperationWithStatus:uploadStatusFailed shouldUploadNextAsset:NO];
         }
         
@@ -228,6 +229,7 @@ static NSString * const archiveUploadInfoBackgroundTaskName = @"nz.mega.archiveC
     uploadTask.taskDescription = self.asset.localIdentifier;
     [uploadTask resume];
     
+    [CameraUploadRecordManager.shared updateStatus:uploadStatusUploading forLocalIdentifier:self.asset.localIdentifier error:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(archiveUploadInfoDataForBackgroundTransfer) name:UIApplicationDidEnterBackgroundNotification object:nil];
 }
 

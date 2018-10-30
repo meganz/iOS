@@ -20,9 +20,11 @@
 
 
 - (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
-    if (self.completion) {
-        self.completion(request, error);
-    }
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        if (self.completion) {
+            self.completion(request, error);
+        }
+    });
 }
 
 @end
