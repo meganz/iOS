@@ -846,7 +846,7 @@
 /* Menu item */
 "help"="Aiuto";
 /* Title of the section to access MEGA's help centre */
-"helpCentreLabel"="Servizio Clienti";
+"helpCentreLabel"="Assistenza";
 /* Section title that links you to the webpage that let you join and test the beta versions */
 "Join Beta"="Entra nella beta";
 /* Title to rate the app */
@@ -1581,7 +1581,7 @@
 /* A title on the mobile web client page showing that 2FA has been enabled successfully. */
 "twoFactorAuthenticationEnabled"="Autenticazione a due fattori attivata";
 /* A message on the dialog shown after 2FA was successfully enabled. */
-"twoFactorAuthenticationEnabledDescription"="La prossima volta che effettuerai l'accesso al tuo account ti verrà chiesto di inserire il codice a 6 cifre fornito dalla tua app di autenticazione.";
+"twoFactorAuthenticationEnabledDescription"="La prossima volta che effettuerai l'accesso al tuo account ti verrà chiesto di inserire il codice di 6 cifre che ti è stato fornito dalla app di autenticazione.";
 /* A warning message on the Backup Recovery Key dialog to tell the user to backup their Recovery Key to their local computer. */
 "pleaseSaveYourRecoveryKey"="Per favore, salva la tua Chiave di Recupero in una posizione sicura";
 /* An informational message on the Backup Recovery Key dialog. */
@@ -1589,7 +1589,7 @@
 /* A message on a dialog to say that 2FA has been successfully disabled. */
 "twoFactorAuthenticationDisabled"="Autenticazione a due fattori disabilitata";
 /* A message on the setup two-factor authentication page on the mobile web client. */
-"scanOrCopyTheSeed"="Scansiona o copia il seed della tua app di autenticazione. Sii sicuro di copiare questo seed in una posizione sicura nel caso in cui tu perda il tuo telefono.";
+"scanOrCopyTheSeed"="Scansiona o copia il seed della tua app di autenticazione. Sii sicuro di copiare questo seed in una posizione sicura nel caso in cui tu perda il tuo dispositivo.";
 /* A button to help them restore their account if they have lost their 2FA device. */
 "lostYourAuthenticatorDevice"="Hai perso il tuo dispositivo autenticatore?";
 /* Settings section title where you can enable the option to 'Save Images in Library' */
@@ -1627,7 +1627,7 @@
 /* Title label that explains that the user is going to be asked for the photos permission */
 "Allow Access to Photos"="Permetti l'accesso alle foto";
 /* Detailed explanation of why the user should give permission to access to the photos */
-"To share photos and videos, allow MEGA to access your photos"="Per condividere le foto e i video, permetti a MEGA di accedere alle tue foto";
+"To share photos and videos, allow MEGA to access your library."="Per condividere le foto e i video, permetti a MEGA di accedere alle tua galleria.";
 /* Title label that explains that the user is going to be asked for the microphone and camera permission */
 "Enable Microphone and Camera"="Attiva microfono e fotocamera";
 /* Detailed explanation of why the user should give permission to access to the camera and the microphone */
@@ -1637,7 +1637,7 @@
 /* Detailed explanation of why the user should give permission to deliver notifications */
 "We would like to send you notifications so you receive new messages on your device instantly."="Vorremmo inviarti notifiche affinché tu possa ricevere messaggi sul tuo dispositivo immediatamente.";
 /* Button which triggers a request for a specific permission, that have been explained to the user beforehand */
-"Enable Access"="Attiva accesso";
+"Allow Access"="Attiva accesso";
 /* A section header which contains the file management settings. These settings allow users to remove duplicate files etc. */
 "File Management"="Gestione file";
 /* Title of the option to enable or disable file versioning on Settings section */
