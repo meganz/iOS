@@ -34,6 +34,7 @@
 
 @property (weak, nonatomic) IBOutlet UIButton *createAccountButton;
 
+@property (weak, nonatomic) InputView *activeInputView;
 @property (weak, nonatomic) PasswordView *activePasswordView;
 
 @property (strong, nonatomic) UITapGestureRecognizer *tapGesture;
@@ -98,6 +99,13 @@
     [super viewWillAppear:animated];
     
     [self.navigationController.navigationBar.topItem setTitle:AMLocalizedString(@"createAccount", nil)];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardDidShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
 }
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations {
@@ -239,8 +247,9 @@
 
     CGRect viewFrame = self.view.frame;
     viewFrame.size.height -= keyboardSize.height;
-    if (!CGRectContainsPoint(viewFrame, self.activePasswordView.frame.origin)) {
-        [self.scrollView scrollRectToVisible:self.activePasswordView.frame animated:YES];
+    CGRect activeTextFieldFrame = self.activeInputView ? self.activeInputView.frame : self.activePasswordView.frame;
+    if (!CGRectContainsPoint(viewFrame, activeTextFieldFrame.origin)) {
+        [self.scrollView scrollRectToVisible:activeTextFieldFrame animated:YES];
     }
 }
 
@@ -313,6 +322,18 @@
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
     switch (textField.tag) {
+        case 0:
+            self.activeInputView = self.firstNameInputView;
+            break;
+            
+        case 1:
+            self.activeInputView = self.lastNameInputView;
+            break;
+            
+        case 2:
+            self.activeInputView = self.emailInputView;
+            break;
+            
         case 3:
             self.activePasswordView = self.passwordView;
             self.passwordView.toggleSecureButton.hidden = NO;
@@ -329,7 +350,9 @@
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField {
+    self.activeInputView = nil;
     self.activePasswordView = nil;
+    
     switch (textField.tag) {
         case 0:
             [self validateFirstName];
