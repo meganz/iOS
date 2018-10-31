@@ -764,8 +764,7 @@
 }
 
 - (void)renameAlertTextFieldDidChange:(UITextField *)sender {
-    
-    UIAlertController *renameAlertController = (UIAlertController*)UIApplication.mnz_visibleViewController;
+    UIAlertController *renameAlertController = (UIAlertController *)UIApplication.mnz_visibleViewController;
     if (renameAlertController) {
         UITextField *textField = renameAlertController.textFields.firstObject;
         UIAlertAction *rightButtonAction = renameAlertController.actions.lastObject;
@@ -786,6 +785,16 @@
         
         rightButtonAction.enabled = enableRightButton;
     }
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    UIAlertController *renameAlertController = (UIAlertController *)UIApplication.mnz_visibleViewController;    
+    if (renameAlertController) {
+        UIAlertAction *rightButtonAction = renameAlertController.actions.lastObject;
+        return rightButtonAction.enabled;
+    }
+    
+    return YES;
 }
 
 - (void)mnz_copyToGalleryFromTemporaryPath:(NSString *)path {
