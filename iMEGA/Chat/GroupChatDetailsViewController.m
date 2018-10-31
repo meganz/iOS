@@ -16,7 +16,7 @@
 #import "MEGAGlobalDelegate.h"
 #import "MEGAArchiveChatRequestDelegate.h"
 
-@interface GroupChatDetailsViewController () <MEGAChatRequestDelegate, MEGAChatRoomDelegate, MEGAGlobalDelegate>
+@interface GroupChatDetailsViewController () <MEGAChatRequestDelegate, MEGAChatRoomDelegate, MEGAChatDelegate, MEGAGlobalDelegate>
 
 @property (weak, nonatomic) IBOutlet UIImageView *avatarImageView;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
@@ -30,6 +30,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *participantsHeaderViewLabel;
 
 @property (strong, nonatomic) NSMutableArray *participantsMutableArray;
+@property (nonatomic) NSMutableDictionary<NSString *, NSIndexPath *> *indexPathsMutableDictionary;
 
 @property (nonatomic, assign) BOOL openChatRoom;
 
@@ -64,6 +65,7 @@
         self.openChatRoom = YES;
     }
     [[MEGASdkManager sharedMEGASdk] addMEGAGlobalDelegate:self];
+    [[MEGASdkManager sharedMEGAChatSdk] addChatDelegate:self];
     
     [self setParticipants];
 }
@@ -76,6 +78,7 @@
         [[MEGASdkManager sharedMEGAChatSdk] removeChatRoomDelegate:self.chatRoom.chatId delegate:self];
     }
     [[MEGASdkManager sharedMEGASdk] removeMEGAGlobalDelegate:self];
+    [[MEGASdkManager sharedMEGAChatSdk] removeChatDelegate:self];
 }
 
 - (BOOL)hidesBottomBarWhenPushed {
@@ -95,6 +98,8 @@
     
     uint64_t myHandle = [[MEGASdkManager sharedMEGAChatSdk] myUserHandle];
     [self.participantsMutableArray addObject:[NSNumber numberWithUnsignedLongLong:myHandle]];
+    
+    self.indexPathsMutableDictionary = [[NSMutableDictionary alloc] initWithCapacity:self.participantsMutableArray.count];
 }
 
 - (void)alertTextFieldDidChange:(UITextField *)sender {
@@ -308,6 +313,10 @@
         NSInteger index = (self.chatRoom.ownPrivilege == MEGAChatRoomPrivilegeModerator) ? (indexPath.row - 1) : indexPath.row;
         
         uint64_t handle = [[self.participantsMutableArray objectAtIndex:index] unsignedLongLongValue];
+        NSString *base64Handle = [MEGASdk base64HandleForUserHandle:handle];
+        
+        [self.indexPathsMutableDictionary setObject:indexPath forKey:base64Handle];
+        
         NSString *peerFullname;
         NSString *peerEmail;
         MEGAChatRoomPrivilege privilege;
@@ -594,6 +603,23 @@
             
         default:
             break;
+    }
+}
+
+#pragma mark - MEGAChatDelegate
+
+- (void)onChatOnlineStatusUpdate:(MEGAChatSdk *)api userHandle:(uint64_t)userHandle status:(MEGAChatStatus)onlineStatus inProgress:(BOOL)inProgress {
+    if (inProgress) {
+        return;
+    }
+    
+    if (userHandle != api.myUserHandle) {
+        NSString *base64Handle = [MEGASdk base64HandleForUserHandle:userHandle];
+        NSIndexPath *indexPath = [self.indexPathsMutableDictionary objectForKey:base64Handle];
+        if ([self.tableView.indexPathsForVisibleRows containsObject:indexPath]) {
+            GroupChatDetailsViewTableViewCell *cell = (GroupChatDetailsViewTableViewCell *)[self.tableView cellForRowAtIndexPath:indexPath];
+            cell.onlineStatusView.backgroundColor = [UIColor mnz_colorForStatusChange:onlineStatus];
+        }
     }
 }
 
