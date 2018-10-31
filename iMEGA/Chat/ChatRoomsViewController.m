@@ -409,9 +409,9 @@
         }
         
         if (unreadCount > 0) {
-            cell.unreadCount.text = [NSString stringWithFormat:@"%ld", unreadCount];
+            cell.unreadCount.text = [NSString stringWithFormat:@"%td", unreadCount];
         } else {
-            cell.unreadCount.text = [NSString stringWithFormat:@"%ld+", -unreadCount];
+            cell.unreadCount.text = [NSString stringWithFormat:@"%td+", -unreadCount];
         }
     } else {
         cell.chatTitle.font = [UIFont mnz_SFUIMediumWithSize:15.0f];
@@ -450,7 +450,7 @@
                 lastMessageString = [attachedFileString stringByReplacingOccurrencesOfString:@"%s" withString:lastMessageString];
             } else {
                 lastMessageString = AMLocalizedString(@"attachedXFiles", @"A summary message when a user has attached many files at once into the chat. Please keep %s as it will be replaced at runtime with the number of files.");
-                lastMessageString = [lastMessageString stringByReplacingOccurrencesOfString:@"%s" withString:[NSString stringWithFormat:@"%lu", componentsArray.count]];
+                lastMessageString = [lastMessageString stringByReplacingOccurrencesOfString:@"%s" withString:[NSString stringWithFormat:@"%tu", componentsArray.count]];
             }
             cell.chatLastMessage.text = senderString ? [NSString stringWithFormat:@"%@: %@",senderString, lastMessageString] : lastMessageString;
             break;
@@ -468,7 +468,7 @@
                 lastMessageString = [sentContactString stringByReplacingOccurrencesOfString:@"%s" withString:lastMessageString];
             } else {
                 lastMessageString = AMLocalizedString(@"sentXContacts", @"A summary message when a user sent the information of %s number of contacts at once. Please keep %s as it will be replaced at runtime with the number of contacts sent.");
-                lastMessageString = [lastMessageString stringByReplacingOccurrencesOfString:@"%s" withString:[NSString stringWithFormat:@"%lu", componentsArray.count]];
+                lastMessageString = [lastMessageString stringByReplacingOccurrencesOfString:@"%s" withString:[NSString stringWithFormat:@"%tu", componentsArray.count]];
             }
             cell.chatLastMessage.text = senderString ? [NSString stringWithFormat:@"%@: %@",senderString, lastMessageString] : lastMessageString;
             break;
