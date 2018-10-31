@@ -85,8 +85,6 @@
         
         [self.passwordView.passwordTextField becomeFirstResponder];
     }
-    
-    [[MEGALogger sharedLogger] enableChatlogs];
 }
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations {

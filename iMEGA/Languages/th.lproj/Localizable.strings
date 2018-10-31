@@ -846,7 +846,7 @@
 /* Menu item */
 "help"="ช่วยเหลือ";
 /* Title of the section to access MEGA's help centre */
-"helpCentreLabel"="ศูนย์ช่วยเหลือ";
+"helpCentreLabel"="ศูนย์ความช่วยเหลือ";
 /* Section title that links you to the webpage that let you join and test the beta versions */
 "Join Beta"="เข้าร่วมเบต้า";
 /* Title to rate the app */
@@ -924,9 +924,9 @@
 /* Message shown on the achievements dialog for achieved achievements, %1 and %2 are replaced with e.g. 20 GB */
 "installMEGASyncCompletedExplanation"="คุณได้รับพื้นที่จัดเก็บ %1 และโควต้าการถ่ายโอน %2 สำหรับการติดตั้ง MEGAsync";
 /*  */
-"installOurMobileApp"="ติดตั้งแอปบนอุปกรณ์เคลื่อนที่ของเรา";
+"installOurMobileApp"="ติดตั้งแอปของเราบนมือถือ";
 /* Message shown on the achievements dialog for achieved achievements, %1 and %2 are replaced with e.g. 20 GB */
-"installOurMobileAppCompletedExplanation"="คุณได้รับพื้นที่จัดเก็บ %1 และโควต้าการถ่ายโอน %2 สำหรับการติดตั้งแอปมือถือของเรา";
+"installOurMobileAppCompletedExplanation"="คุณได้รับพื้นที่จัดเก็บ %1 และโควต้าการถ่ายโอน %2 สำหรับการติดตั้งแอปของเราบนมือถือ";
 /*  */
 "xDaysLeft"="เหลืออีก %1 วัน";
 /* %1 will be replaced by a numeric value and %2 will be 'days' or 'months', for example (Expires in [S]10[/S] days) */
@@ -1589,7 +1589,7 @@
 /* A message on a dialog to say that 2FA has been successfully disabled. */
 "twoFactorAuthenticationDisabled"="ปิดใช้งานการรับรองความถูกต้องด้วยสองปัจจัยแล้ว";
 /* A message on the setup two-factor authentication page on the mobile web client. */
-"scanOrCopyTheSeed"="สแกนหรือคัดลอกรหัสไปยังแอปตัวรับรองความถูกต้องของคุณ อย่าลืมสำรองรหัสนี้ไว้ในที่ปลอดภัยในกรณีที่คุณทำโทรศัพท์หาย";
+"scanOrCopyTheSeed"="สแกนหรือคัดลอกรหัสไปยังแอปตัวรับรองความถูกต้องของคุณ อย่าลืมสำรองรหัสนี้ไว้ในที่ปลอดภัยในกรณีที่คุณทำอุปกรณ์หาย";
 /* A button to help them restore their account if they have lost their 2FA device. */
 "lostYourAuthenticatorDevice"="อุปกรณ์ตัวรับรองความถูกต้องของคุณสูญหายหรือไม่";
 /* Settings section title where you can enable the option to 'Save Images in Library' */
@@ -1627,7 +1627,7 @@
 /* Title label that explains that the user is going to be asked for the photos permission */
 "Allow Access to Photos"="อนุญาตให้เข้าถึงรูปถ่าย";
 /* Detailed explanation of why the user should give permission to access to the photos */
-"To share photos and videos, allow MEGA to access your photos"="หากต้องการแชร์รูปถ่ายและวิดีโอ ต้องอนุญาตให้ MEGA เข้าถึงรูปถ่ายของคุณ";
+"To share photos and videos, allow MEGA to access your library."="หากต้องการแชร์รูปถ่ายและวิดีโอ ต้องอนุญาตให้ MEGA เข้าถึงไลบรารีของคุณ";
 /* Title label that explains that the user is going to be asked for the microphone and camera permission */
 "Enable Microphone and Camera"="เปิดใช้งานไมโครโฟนและกล้องถ่ายรูป";
 /* Detailed explanation of why the user should give permission to access to the camera and the microphone */
@@ -1637,7 +1637,7 @@
 /* Detailed explanation of why the user should give permission to deliver notifications */
 "We would like to send you notifications so you receive new messages on your device instantly."="เราต้องการส่งการแจ้งเตือนเพื่อให้คุณได้รับข้อความใหม่บนอุปกรณ์ของคุณทันที";
 /* Button which triggers a request for a specific permission, that have been explained to the user beforehand */
-"Enable Access"="อนุญาต";
+"Allow Access"="อนุญาตให้เข้าถึง";
 /* A section header which contains the file management settings. These settings allow users to remove duplicate files etc. */
 "File Management"="การจัดการไฟล์";
 /* Title of the option to enable or disable file versioning on Settings section */

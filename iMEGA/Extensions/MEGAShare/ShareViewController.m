@@ -297,7 +297,6 @@
         if (![MEGASdkManager sharedMEGAChatSdk]) {
             [MEGASdkManager createSharedMEGAChatSdk];
         }
-        [[MEGALogger sharedLogger] enableChatlogs];
         
         MEGAChatInit chatInit = [[MEGASdkManager sharedMEGAChatSdk] initState];
         if (chatInit == MEGAChatInitNotDone) {
@@ -309,8 +308,6 @@
         } else {
             [[MEGAReachabilityManager sharedManager] reconnect];
         }
-    } else {
-        [[MEGALogger sharedLogger] enableSDKlogs];
     }
 }
 

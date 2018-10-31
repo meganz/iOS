@@ -1567,7 +1567,7 @@
 /* Button title to start the setup of a feature. For example 'Begin Setup' for Two-Factor Authentication */
 "beginSetup"="セットアップを開始";
 /* A message on the Verify Login page telling the user to enter their 2FA code. */
-"pleaseEnterTheSixDigitCode"="オーセンティケータアプリで生成された6桁のコードを入力してください。";
+"pleaseEnterTheSixDigitCode"="オーセンティケータアプリで生成された6桁のコードをご入力ください。";
 /* Title of the dialog displayed to start setup the Two-Factor Authentication */
 "whyYouDoNeedTwoFactorAuthentication"="なぜ二要素認証が必要ですか？　";
 /* Description for the ‘Two-Factor Authentication’ in the security settings section. */
@@ -1581,7 +1581,7 @@
 /* A title on the mobile web client page showing that 2FA has been enabled successfully. */
 "twoFactorAuthenticationEnabled"="二要素認証が有効になりました";
 /* A message on the dialog shown after 2FA was successfully enabled. */
-"twoFactorAuthenticationEnabledDescription"="次回アカウントにログインすると、認証アプリで提供される6桁のコードを入力するよう求められます。";
+"twoFactorAuthenticationEnabledDescription"="次回アカウントにログインすると、オーセンティケータアプリで提供される6桁のコードを入力するよう求められます。";
 /* A warning message on the Backup Recovery Key dialog to tell the user to backup their Recovery Key to their local computer. */
 "pleaseSaveYourRecoveryKey"="回復キーは安全な場所に保存しておいてください";
 /* An informational message on the Backup Recovery Key dialog. */
@@ -1589,7 +1589,7 @@
 /* A message on a dialog to say that 2FA has been successfully disabled. */
 "twoFactorAuthenticationDisabled"="二要素認証が無効になりました";
 /* A message on the setup two-factor authentication page on the mobile web client. */
-"scanOrCopyTheSeed"="シードをオーセンティケータアプリにスキャンまたはコピーします。携帯電話を失くした場合に備えて、このシードを安全な場所にバックアップしてください。";
+"scanOrCopyTheSeed"="シードをオーセンティケータアプリにスキャンまたはコピーします。端末を失くした場合に備えて、このシードを安全な場所に確実にバックアップしてください。";
 /* A button to help them restore their account if they have lost their 2FA device. */
 "lostYourAuthenticatorDevice"="オーセンティケータ端末を紛失しましたか？　";
 /* Settings section title where you can enable the option to 'Save Images in Library' */
@@ -1627,7 +1627,7 @@
 /* Title label that explains that the user is going to be asked for the photos permission */
 "Allow Access to Photos"="写真へのアクセスを許可する";
 /* Detailed explanation of why the user should give permission to access to the photos */
-"To share photos and videos, allow MEGA to access your photos"="写真や動画を共有するには、MEGAがあなたの写真へアクセスするのを許可してください";
+"To share photos and videos, allow MEGA to access your library."="写真や動画を共有するには、MEGAがあなたのライブラリへアクセスするのを許可してください";
 /* Title label that explains that the user is going to be asked for the microphone and camera permission */
 "Enable Microphone and Camera"="マイクとカメラを有効にする";
 /* Detailed explanation of why the user should give permission to access to the camera and the microphone */
@@ -1637,7 +1637,7 @@
 /* Detailed explanation of why the user should give permission to deliver notifications */
 "We would like to send you notifications so you receive new messages on your device instantly."="あなたに通知を送信し、新しいメッセージを瞬時に端末で受信いただけるようにしたいと思います。";
 /* Button which triggers a request for a specific permission, that have been explained to the user beforehand */
-"Enable Access"="アクセスを有効にする";
+"Allow Access"="アクセスを許可";
 /* A section header which contains the file management settings. These settings allow users to remove duplicate files etc. */
 "File Management"="ファイル管理";
 /* Title of the option to enable or disable file versioning on Settings section */

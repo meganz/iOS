@@ -1240,7 +1240,7 @@
 /* */
 "never"="Nunca";
 /* After several times (right now set to 3) that the user may had decided to click \"Not now\" (for when being asked if he/she wants a URL preview to be generated for a link, posted in a chat room), we change the \"Not now\" button to \"Never\". If the user clicks it, we ask for one final time - to ensure he wants to not be asked for this anymore and tell him that he can do that in Settings. */
-"richPreviewsConfirmation"="La vista previa de las URL enrequecidas se desactivará de forma permanente. Puede volver a activarla desde Ajustes. ¿Quieres continuar?";
+"richPreviewsConfirmation"="La vista previa de las URL enriquecidas se desactivará de forma permanente. Puedes volver a activarla desde Ajustes. ¿Quieres continuar?";
 /* Once a preview is generated for a message which contains URLs, the user can remove it. Same button is also shown during loading of the preview - and would cancel the loading (text of the button is the same in both cases). */
 "removePreview"="Eliminar vista previa";
 /* */
@@ -1581,7 +1581,7 @@
 /* A title on the mobile web client page showing that 2FA has been enabled successfully. */
 "twoFactorAuthenticationEnabled"="Autenticación de dos factores activada";
 /* A message on the dialog shown after 2FA was successfully enabled. */
-"twoFactorAuthenticationEnabledDescription"="La próxima vez que inicies sesión en tu cuenta, tendrás que introducir un código de 6 dígitos proporcionado por tu aplicación de autenticación.";
+"twoFactorAuthenticationEnabledDescription"="La próxima vez que inicies sesión en su cuenta, tendrás que introducir un código de 6 dígitos proporcionado por tu aplicación de autenticación.";
 /* A warning message on the Backup Recovery Key dialog to tell the user to backup their Recovery Key to their local computer. */
 "pleaseSaveYourRecoveryKey"="Guarda tu Clave de recuperación en un lugar seguro";
 /* An informational message on the Backup Recovery Key dialog. */
@@ -1627,7 +1627,7 @@
 /* Title label that explains that the user is going to be asked for the photos permission */
 "Allow Access to Photos"="Permitir el acceso a Fotos";
 /* Detailed explanation of why the user should give permission to access to the photos */
-"To share photos and videos, allow MEGA to access your photos"="Para compartir fotos y videos, permite que MEGA acceda a tus fotos";
+"To share photos and videos, allow MEGA to access your library."="Para compartir fotos y videos, permite que MEGA acceda a la galería.";
 /* Title label that explains that the user is going to be asked for the microphone and camera permission */
 "Enable Microphone and Camera"="Activar el micrófono y la cámara";
 /* Detailed explanation of why the user should give permission to access to the camera and the microphone */
@@ -1637,7 +1637,7 @@
 /* Detailed explanation of why the user should give permission to deliver notifications */
 "We would like to send you notifications so you receive new messages on your device instantly."="Nos gustaría enviarte notificaciones para que recibas nuevos mensajes al instante en tu dispositivo.";
 /* Button which triggers a request for a specific permission, that have been explained to the user beforehand */
-"Enable Access"="Habilitar acceso";
+"Allow Access"="Permitir acceso";
 /* A section header which contains the file management settings. These settings allow users to remove duplicate files etc. */
 "File Management"="Gestión de archivos";
 /* Title of the option to enable or disable file versioning on Settings section */

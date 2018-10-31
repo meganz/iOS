@@ -298,8 +298,6 @@
                 [[MEGASdkManager sharedMEGAChatSdk] addChatDelegate:self];
             }
             
-            [[MEGALogger sharedLogger] enableChatlogs];
-            
             MEGAChatInit chatInit = [[MEGASdkManager sharedMEGAChatSdk] initKarereWithSid:sessionV3];
             if (chatInit == MEGAChatInitError) {
                 MEGALogError(@"Init Karere with session failed");
@@ -309,8 +307,6 @@
                 [[MEGASdkManager sharedMEGAChatSdk] logout];
                 [UIApplication.mnz_visibleViewController presentViewController:alertController animated:YES completion:nil];
             }
-        } else {
-            [[MEGALogger sharedLogger] enableSDKlogs];
         }
         
         MEGALoginRequestDelegate *loginRequestDelegate = [[MEGALoginRequestDelegate alloc] init];
@@ -2438,9 +2434,6 @@ void uncaughtExceptionHandler(NSException *exception) {
     }
     
     if (request.type == MEGAChatRequestTypeLogout) {
-        if ([[NSUserDefaults standardUserDefaults] boolForKey:@"logging"]) {
-            [[MEGALogger sharedLogger] enableSDKlogs];
-        }
         [MEGASdkManager destroySharedMEGAChatSdk];
         
         [self.mainTBC setBadgeValueForChats];
@@ -2603,7 +2596,7 @@ void uncaughtExceptionHandler(NSException *exception) {
             return;
         }
         
-        MOOfflineNode *offlineNodeExist = [[MEGAStore shareInstance] offlineNodeWithNode:node api:[MEGASdkManager sharedMEGASdk]];
+        MOOfflineNode *offlineNodeExist = [[MEGAStore shareInstance] offlineNodeWithNode:node];
         if (!offlineNodeExist) {
             NSRange replaceRange = [transfer.path rangeOfString:@"Documents/"];
             if (replaceRange.location != NSNotFound) {
