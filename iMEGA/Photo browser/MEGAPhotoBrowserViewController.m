@@ -182,7 +182,7 @@
     self.scrollView.contentSize = CGSizeMake(self.scrollView.frame.size.width * self.mediaNodes.count, self.scrollView.frame.size.height);
     
     if (self.currentIndex >= self.mediaNodes.count) {
-        MEGALogError(@"MEGAPhotoBrowserViewController tried to show the node at index %lu, with %lu items in the array of nodes", self.currentIndex, self.mediaNodes.count);
+        MEGALogError(@"MEGAPhotoBrowserViewController tried to show the node at index %tu, with %tu items in the array of nodes", self.currentIndex, self.mediaNodes.count);
         if (self.mediaNodes.count > 0) {
             self.currentIndex = self.mediaNodes.count - 1;
         } else {
