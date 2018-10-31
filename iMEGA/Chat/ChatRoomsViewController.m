@@ -211,7 +211,7 @@
         }
     }
     
-    NSDictionary *attributes = @{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:14.0f], NSForegroundColorAttributeName:[UIColor mnz_gray777777]};
+    NSDictionary *attributes = @{NSFontAttributeName:[UIFont preferredFontForTextStyle:UIFontTextStyleFootnote], NSForegroundColorAttributeName:[UIColor mnz_gray777777]};
     
     return [[NSAttributedString alloc] initWithString:text attributes:attributes];
 }
@@ -396,11 +396,11 @@
 - (void)updateCell:(ChatRoomCell *)cell forUnreadCountChange:(NSInteger)unreadCount {
     if (unreadCount != 0) {
         if (cell.unreadView.hidden) {
-            cell.chatTitle.font = [UIFont mnz_SFUIMediumWithSize:15.0f];
+            cell.chatTitle.font = [UIFont preferredFontForTextStyle:UIFontTextStyleSubheadline weight:UIFontWeightMedium];
             cell.chatTitle.textColor = [UIColor mnz_black333333];
-            cell.chatLastMessage.font = [UIFont mnz_SFUIMediumWithSize:12.0f];
+            cell.chatLastMessage.font = [UIFont preferredFontForTextStyle:UIFontTextStyleCaption1 weight:UIFontWeightMedium];
             cell.chatLastMessage.textColor = [UIColor mnz_black333333];
-            cell.chatLastTime.font = [UIFont mnz_SFUIMediumWithSize:10.0f];
+            cell.chatLastTime.font = [UIFont preferredFontForTextStyle:UIFontTextStyleCaption2 weight:UIFontWeightMedium];
             cell.chatLastTime.textColor = [UIColor mnz_black333333];
             
             cell.unreadView.hidden = NO;
@@ -413,11 +413,11 @@
             cell.unreadCount.text = [NSString stringWithFormat:@"%ld+", -unreadCount];
         }
     } else {
-        cell.chatTitle.font = [UIFont mnz_SFUIMediumWithSize:15.0f];
+        cell.chatTitle.font = [UIFont preferredFontForTextStyle:UIFontTextStyleSubheadline weight:UIFontWeightMedium];
         cell.chatTitle.textColor = UIColor.mnz_black333333;
-        cell.chatLastMessage.font = [UIFont mnz_SFUIRegularWithSize:12.0f];
+        cell.chatLastMessage.font = [UIFont preferredFontForTextStyle:UIFontTextStyleCaption1];
         cell.chatLastMessage.textColor = [UIColor mnz_gray666666];
-        cell.chatLastTime.font = [UIFont mnz_SFUIRegularWithSize:10.0f];
+        cell.chatLastTime.font = [UIFont preferredFontForTextStyle:UIFontTextStyleCaption2];
         cell.chatLastTime.textColor = [UIColor mnz_gray666666];
         
         cell.unreadView.hidden = YES;
@@ -769,15 +769,6 @@
     cell.unreadView.hidden = NO;
     cell.unreadView.backgroundColor = UIColor.mnz_gray777777;
     cell.unreadView.layer.cornerRadius = 4;
-    NSArray *constraints = cell.unreadView.constraints;
-    for (NSLayoutConstraint *constraint in constraints) {
-        if (constraint.firstAttribute == NSLayoutAttributeHeight) {
-            constraint.constant = 20;
-        }
-        if (constraint.firstAttribute == NSLayoutAttributeWidth) {
-            constraint.constant = 14;
-        }
-    }
     cell.unreadCount.text = AMLocalizedString(@"archived", @"Title of flag of archived chats.").uppercaseString;
 
     return cell;
@@ -890,18 +881,6 @@
         }
     } else {
         return [self numberOfChatRooms];
-    }
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (self.isArchivedChatsRowVisible) {
-        if (indexPath.section == 0) {
-            return 44;
-        } else {
-            return 60;
-        }
-    } else {
-        return 60;
     }
 }
 
