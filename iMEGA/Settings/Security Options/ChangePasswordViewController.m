@@ -119,8 +119,6 @@
             break;
     }
     
-    [self confirmButtonEnabled:NO];
-    
     self.tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideKeyboard)];
     self.tapGesture.cancelsTouchesInView = NO;
     self.tapGesture.delegate = self;
@@ -145,6 +143,7 @@
 #pragma mark - Private
 
 - (BOOL)validateForm {
+    BOOL valid = YES;
     switch (self.changeType) {
         case ChangeTypePassword:
         case ChangeTypeResetPassword:
@@ -152,13 +151,15 @@
             if (![self validateNewPassword]) {
                 [self.theNewPasswordView.passwordTextField becomeFirstResponder];
                 
-                return NO;
+                valid = NO;
             }
             
             if (![self validateConfirmPassword]) {
-                [self.confirmPasswordView.passwordTextField becomeFirstResponder];
+                if (valid) {
+                    [self.confirmPasswordView.passwordTextField becomeFirstResponder];
+                }
                 
-                return NO;
+                valid = NO;
             }
             
             break;
@@ -167,19 +168,21 @@
             if (![self validateEmail]) {
                 [self.theNewEmailInputView.inputTextField becomeFirstResponder];
                 
-                return NO;
+                valid = NO;
             }
             
             if (![self validateConfirmEmail]) {
-                [self.confirmEmailInputView.inputTextField becomeFirstResponder];
+                if (valid) {
+                    [self.confirmEmailInputView.inputTextField becomeFirstResponder];
+                }
                 
-                return NO;
+                valid = NO;
             }
             
             break;
     }
     
-    return YES;
+    return valid;
 }
 
 - (BOOL)validateNewPassword {
@@ -247,11 +250,6 @@
     self.view = awaitingEmailConfirmationView;
 }
 
-- (void)confirmButtonEnabled:(BOOL)enabled {
-    self.confirmButton.enabled = enabled;
-    self.confirmButton.alpha = enabled ? 1.0f : 0.5f;
-}
-
 - (void)hideKeyboard {
     [self.view endEditing:YES];
 }
@@ -274,7 +272,6 @@
                         
                         [self.navigationController pushViewController:twoFactorAuthenticationVC animated:YES];
                     } else {
-                        [self confirmButtonEnabled:NO];
                         [[MEGASdkManager sharedMEGASdk] changePassword:nil newPassword:self.theNewPasswordView.passwordTextField.text delegate:self];
                     }
                     
@@ -290,7 +287,6 @@
                         
                         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(processStarted) name:@"processStarted" object:nil];
                     } else {
-                        [self confirmButtonEnabled:NO];
                         [[MEGASdkManager sharedMEGASdk] changeEmail:self.theNewEmailInputView.inputTextField.text delegate:self];
                     }
                     
@@ -314,8 +310,6 @@
             }
 
         }
-    } else {
-        [self confirmButtonEnabled:YES];
     }
 }
 
@@ -369,29 +363,24 @@
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
     NSString *text = [textField.text stringByReplacingCharactersInRange:range withString:string];
-    BOOL confirmButtonEnabled = NO;
     
     switch (textField.tag) {
         case 1:
-            confirmButtonEnabled = text.mnz_isValidEmail && [text isEqualToString:self.confirmEmailInputView.inputTextField.text] && ![text isEqualToString:self.currentEmailInputView.inputTextField.text];
             [self.theNewEmailInputView setErrorState:NO withText:AMLocalizedString(@"newEmail", @"Placeholder text to explain that the new email should be written on this text field.")];
             
             break;
             
         case 2:
-            confirmButtonEnabled = self.theNewEmailInputView.inputTextField.text.mnz_isValidEmail && [self.theNewEmailInputView.inputTextField.text isEqualToString:text] && ![self.theNewEmailInputView.inputTextField.text isEqualToString:self.currentEmailInputView.inputTextField.text];
             [self.confirmEmailInputView setErrorState:NO withText:AMLocalizedString(@"confirmNewEmail", @"Placeholder text to explain that the new email should be re-written on this text field.")];
             
             break;
             
         case 4:
-            confirmButtonEnabled = !text.mnz_isEmpty && [[MEGASdkManager sharedMEGASdk] passwordStrength:text] > PasswordStrengthVeryWeak && [text isEqualToString:self.confirmPasswordView.passwordTextField.text];
             [self.theNewPasswordView setErrorState:NO withText:AMLocalizedString(@"passwordPlaceholder", @"Hint text to suggest that the user has to write his password")];
             
             break;
             
         case 5:
-            confirmButtonEnabled = !self.theNewPasswordView.passwordTextField.text.mnz_isEmpty && [[MEGASdkManager sharedMEGASdk] passwordStrength:self.theNewPasswordView.passwordTextField.text] > PasswordStrengthVeryWeak && [self.theNewPasswordView.passwordTextField.text isEqualToString:text];
             [self.confirmPasswordView setErrorState:NO withText:AMLocalizedString(@"confirmPassword", @"Hint text where the user have to re-write the new password to confirm it")];
             
             break;
@@ -399,8 +388,6 @@
         default:
             break;
     }
-    
-    [self confirmButtonEnabled:confirmButtonEnabled];
     
     if (self.changeType == ChangeTypePassword || self.changeType == ChangeTypeResetPassword || self.changeType == ChangeTypeParkAccount) {
         if (textField.tag == 4) {
@@ -478,7 +465,6 @@
 
 - (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
     if (error.type) {
-        [self confirmButtonEnabled:YES];
         
         switch (error.type) {
             case MEGAErrorTypeApiEArgs: {

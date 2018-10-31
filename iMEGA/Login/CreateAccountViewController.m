@@ -90,7 +90,6 @@
     [self setTermsOfServiceAttributedTitle];
     
     [self.createAccountButton setTitle:AMLocalizedString(@"createAccount", @"Button title which triggers the action to create a MEGA account") forState:UIControlStateNormal];
-    [self createAccountEnabled:NO];
     
     [self registerForKeyboardNotifications];
 }
@@ -112,43 +111,52 @@
 #pragma mark - Private
 
 - (BOOL)validateForm {
+    BOOL valid = YES;
     if (![self validateFirstName]) {
         [self.firstNameInputView.inputTextField becomeFirstResponder];
         
-        return NO;
+        valid = NO;
     }
     
     if (![self validateLastName]) {
-        [self.lastNameInputView.inputTextField becomeFirstResponder];
+        if (valid) {
+            [self.lastNameInputView.inputTextField becomeFirstResponder];
+        }
         
-        return NO;
+        valid = NO;
     }
     
     if (![self validateEmail]) {
-        [self.emailInputView.inputTextField becomeFirstResponder];
+        if (valid) {
+            [self.emailInputView.inputTextField becomeFirstResponder];
+        }
         
-        return NO;
+        valid = NO;
     }
     
     if (![self validatePassword]) {
-        [self.passwordView.passwordTextField becomeFirstResponder];
+        if (valid) {
+            [self.passwordView.passwordTextField becomeFirstResponder];
+        }
         
-        return NO;
+        valid = NO;
     }
     
     if (![self validateRetypePassword]) {
-        [self.retypePasswordView.passwordTextField becomeFirstResponder];
+        if (valid) {
+            [self.retypePasswordView.passwordTextField becomeFirstResponder];
+        }
 
-        return NO;
+        valid = NO;
     }
     
     if (!self.termsCheckboxButton.isSelected) {
         [SVProgressHUD showImage:[UIImage imageNamed:@"hudWarning"] status:AMLocalizedString(@"termsCheckboxUnselected", @"Error text shown when you don't have selected the checkbox to agree with the Terms of Service")];
         
-        return NO;
+        valid = NO;
     }
     
-    return YES;
+    return valid;
 }
 
 - (BOOL)validateFirstName {
@@ -256,11 +264,6 @@
     [self.termsOfServiceButton setAttributedTitle:termsOfServiceMutableAttributedString forState:UIControlStateNormal];
 }
 
-- (void)createAccountEnabled:(BOOL)enabled {
-    self.createAccountButton.enabled = enabled;
-    self.createAccountButton.alpha = enabled ? 1.0f : 0.5f;
-}
-
 #pragma mark - IBActions
 
 - (IBAction)cancel:(UIBarButtonItem *)sender {
@@ -273,7 +276,6 @@
     self.termsCheckboxButton.selected = !self.termsCheckboxButton.selected;
     
     BOOL validForm = !self.firstNameInputView.inputTextField.text.mnz_isEmpty && !self.lastNameInputView.inputTextField.text.mnz_isEmpty && self.emailInputView.inputTextField.text.mnz_isValidEmail && !self.passwordView.passwordTextField.text.mnz_isEmpty && [self.passwordView.passwordTextField.text isEqualToString:self.retypePasswordView.passwordTextField.text] && [[MEGASdkManager sharedMEGASdk] passwordStrength:self.passwordView.passwordTextField.text] > PasswordStrengthVeryWeak && self.termsCheckboxButton.selected;
-    [self createAccountEnabled:validForm];
     
     [self hideKeyboard];
 }
@@ -297,12 +299,10 @@
                 } else {
                     [self.emailInputView setErrorState:YES withText:AMLocalizedString(@"emailAlreadyInUse", @"Error shown when the user tries to change his mail to one that is already used")];
                     [self.emailInputView.inputTextField becomeFirstResponder];
-                    [self createAccountEnabled:YES];
                 }
             }];
             createAccountRequestDelegate.resumeCreateAccount = NO;
-            [[MEGASdkManager sharedMEGASdk] createAccountWithEmail:self.emailInputView.inputTextField.text password:self.passwordView.passwordTextField.text firstname:self.firstNameInputView.inputTextField.text lastname:self.lastNameInputView.inputTextField.text delegate:createAccountRequestDelegate];
-            [self createAccountEnabled:NO];
+            [[MEGASdkManager sharedMEGASdk] createAccountWithEmail:self.emailInputView.inputTextField.text password:self.passwordView.passwordTextField.text firstname:self.firstNameInputView.inputTextField.text lastname:self.lastNameInputView.inputTextField.text delegate:createAccountRequestDelegate];            
         }
     }
 }
@@ -391,8 +391,6 @@
         default:
             break;
     }
-    
-    [self createAccountEnabled:createAccountEnabled];
     
     if (textField.tag == 3) {
         if (text.length == 0) {

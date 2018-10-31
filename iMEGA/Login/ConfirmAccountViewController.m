@@ -142,6 +142,7 @@
         [self.passwordView setErrorState:NO];
     } else {
         [self.passwordView setErrorState:YES withText:AMLocalizedString(@"passwordInvalidFormat", @"Enter a valid password")];
+        [self.passwordView.passwordTextField becomeFirstResponder];
     }
     
     return validPassword;
@@ -149,7 +150,6 @@
 
 - (void)lockUI:(BOOL)boolValue {
     self.passwordView.passwordTextField.enabled = !boolValue;
-    self.confirmAccountButton.enabled = !boolValue;
     self.cancelButton.enabled = !boolValue;
 }
 
@@ -196,6 +196,7 @@
             case MEGAErrorTypeApiEKey:
             case MEGAErrorTypeApiENoent: { //MEGARequestTypeConfirmAccount, MEGARequestTypeConfirmChangeEmailLink, MEGARequestTypeConfirmCancelLink
                 [self.passwordView setErrorState:YES];
+                [self.passwordView.passwordTextField becomeFirstResponder];
                 break;
             }
                 
