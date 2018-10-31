@@ -43,7 +43,7 @@
 #import "SharedItemsViewController.h"
 #import "UpgradeTableViewController.h"
 
-@interface CloudDriveViewController () <UINavigationControllerDelegate, UIDocumentPickerDelegate, UIDocumentMenuDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGADelegate, MEGARequestDelegate, MGSwipeTableCellDelegate, CustomActionViewControllerDelegate, NodeInfoViewControllerDelegate, UITableViewDelegate, UITableViewDataSource> {
+@interface CloudDriveViewController () <UINavigationControllerDelegate, UIDocumentPickerDelegate, UIDocumentMenuDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGADelegate, MEGARequestDelegate, MGSwipeTableCellDelegate, CustomActionViewControllerDelegate, NodeInfoViewControllerDelegate, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate> {
     BOOL allNodesSelected;
     
     MEGAShareType lowShareType; //Control the actions allowed for node/nodes selected
@@ -265,7 +265,7 @@
         }
         
         if (node.type == MEGANodeTypeFile) {
-            MOOfflineNode *offlineNode = [[MEGAStore shareInstance] offlineNodeWithNode:node api:[MEGASdkManager sharedMEGASdk]];
+            MOOfflineNode *offlineNode = [[MEGAStore shareInstance] offlineNodeWithNode:node];
             
             if (offlineNode) {
                 isDownloaded = YES;
@@ -1401,6 +1401,7 @@
         [newFolderAlertController addTextFieldWithConfigurationHandler:^(UITextField *textField) {
             textField.placeholder = AMLocalizedString(@"newFolderMessage", @"Hint text shown on the create folder alert.");
             [textField addTarget:self action:@selector(newFolderAlertTextFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
+            textField.delegate = self;
         }];
         
         [newFolderAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
@@ -1467,6 +1468,22 @@
     }];
     [selectAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
     [moreMinimizedAlertController addAction:selectAlertAction];
+    
+    if (self.displayMode == DisplayModeRubbishBin) {
+        UIAlertAction *clearRubbishBinAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"emptyRubbishBin", @"Section title where you can 'Empty Rubbish Bin' of your MEGA account") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            if ([MEGAReachabilityManager isReachableHUDIfNot]) {
+                UIAlertController *clearRubbishBinAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"emptyRubbishBinAlertTitle", @"Alert title shown when you tap 'Empty Rubbish Bin'") message:nil preferredStyle:UIAlertControllerStyleAlert];
+                [clearRubbishBinAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:nil]];
+                [clearRubbishBinAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                    [[MEGASdkManager sharedMEGASdk] cleanRubbishBin];
+                }]];
+                
+                [UIApplication.mnz_visibleViewController presentViewController:clearRubbishBinAlertController animated:YES completion:nil];
+            }
+        }];
+        [clearRubbishBinAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
+        [moreMinimizedAlertController addAction:clearRubbishBinAlertAction];
+    }
     
     if ([[UIDevice currentDevice] iPadDevice]) {
         moreMinimizedAlertController.modalPresentationStyle = UIModalPresentationPopover;
@@ -1782,6 +1799,13 @@
 - (void)documentMenu:(UIDocumentMenuViewController *)documentMenu didPickDocumentPicker:(UIDocumentPickerViewController *)documentPicker {
     documentPicker.delegate = self;
     [self presentViewController:documentPicker animated:YES completion:nil];
+}
+
+#pragma mark - UITextFieldDelegate
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    BOOL containsInvalidChars = [textField.text rangeOfCharacterFromSet:[NSCharacterSet characterSetWithCharactersInString:@"|*/:<>?\"\\"]].length;
+    return (textField.text.length > 0 && !containsInvalidChars);
 }
 
 #pragma mark - MEGARequestDelegate

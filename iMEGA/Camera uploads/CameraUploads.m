@@ -173,7 +173,7 @@ static CameraUploads *instance = nil;
         assetsFetchResult = [PHAsset fetchAssetsWithMediaType:PHAssetMediaTypeImage options:fetchOptions];
     }
     
-    MEGALogInfo(@"Retrieved assets %ld", assetsFetchResult.count);
+    MEGALogInfo(@"Retrieved assets %tu", assetsFetchResult.count);
     
     [assetsFetchResult enumerateObjectsUsingBlock:^(PHAsset *asset, NSUInteger index, BOOL *stop) {
         if (asset.mediaType == PHAssetMediaTypeVideo && self.isUploadVideosEnabled && ([asset.creationDate timeIntervalSince1970] > [self.lastUploadVideoDate timeIntervalSince1970])) {
@@ -185,7 +185,7 @@ static CameraUploads *instance = nil;
         }
     }];
     
-    MEGALogInfo(@"Assets in the operation queue %ld", _assetsOperationQueue.operationCount);
+    MEGALogInfo(@"Assets in the operation queue %tu", _assetsOperationQueue.operationCount);
 }
 
 #pragma mark - MEGATransferDelegate

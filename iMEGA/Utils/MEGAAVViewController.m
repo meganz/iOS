@@ -195,11 +195,7 @@ static const NSUInteger MIN_SECOND = 10; // Save only where the users were playi
     NSString *fingerprint;
 
     if (self.node) {
-        if (self.folderLink) {
-            fingerprint = [[MEGASdkManager sharedMEGASdkFolder] fingerprintForNode:self.node];
-        } else {
-            fingerprint = [[MEGASdkManager sharedMEGASdk] fingerprintForNode:self.node];
-        }
+        fingerprint = self.node.fingerprint;
     } else {
         fingerprint = [NSString stringWithFormat:@"%@", [[MEGASdkManager sharedMEGASdk] fingerprintForFilePath:self.fileUrl.path]];
     }
