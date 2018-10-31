@@ -48,7 +48,7 @@
         self.downloadingArrowImageView.hidden = self.cancelButton.hidden = self.downloadProgressView.hidden = NO;
         self.moreButton.hidden = YES;
     } else {
-        isDownloaded = (node.isFile && [[MEGAStore shareInstance] offlineNodeWithNode:node api:api]);
+        isDownloaded = (node.isFile && [[MEGAStore shareInstance] offlineNodeWithNode:node]);
         
         self.downloadingArrowImageView.hidden =  self.cancelButton.hidden = self.downloadProgressView.hidden = YES;
         self.moreButton.hidden = NO;

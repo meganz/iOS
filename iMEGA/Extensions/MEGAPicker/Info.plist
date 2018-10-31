@@ -17,9 +17,9 @@
 	<key>CFBundlePackageType</key>
 	<string>XPC!</string>
 	<key>CFBundleShortVersionString</key>
-	<string>4.2.1</string>
+	<string>4.2.2</string>
 	<key>CFBundleVersion</key>
-	<string>123</string>
+	<string>125</string>
 	<key>NSExtension</key>
 	<dict>
 		<key>NSExtensionAttributes</key>
@@ -27,7 +27,7 @@
 			<key>UIDocumentPickerModes</key>
 			<array>
 				<string>UIDocumentPickerModeImport</string>
-                <string>UIDocumentPickerModeOpen</string>
+				<string>UIDocumentPickerModeOpen</string>
 			</array>
 			<key>UIDocumentPickerSupportedFileTypes</key>
 			<array>
