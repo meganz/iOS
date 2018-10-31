@@ -63,7 +63,6 @@
     }
     
     [self.loginButton setTitle:AMLocalizedString(@"login", @"Login") forState:UIControlStateNormal];
-    [self loginEnabled:NO];
 
     [self.createAccountButton setTitle:AMLocalizedString(@"createAccount", nil) forState:UIControlStateNormal];
     NSString *forgotPasswordString = AMLocalizedString(@"forgotPassword", @"An option to reset the password.");
@@ -150,19 +149,22 @@
 }
 
 - (BOOL)validateForm {
+    BOOL valid = YES;
     if (![self validateEmail]) {
         [self.emailInputView.inputTextField becomeFirstResponder];
         
-        return NO;
+        valid = NO;
     }
     
     if (![self validatePassword]) {
-        [self.passwordView.passwordTextField becomeFirstResponder];
+        if (valid) {
+            [self.passwordView.passwordTextField becomeFirstResponder];
+        }
         
-        return NO;
+        valid = NO;
     }
     
-    return YES;
+    return valid;
 }
 
 - (BOOL)validateEmail {
@@ -203,11 +205,6 @@
 
 - (void)cleanPasswordTextField {
     self.passwordView.passwordTextField.text = nil;
-}
-
-- (void)loginEnabled:(BOOL)enabled {
-    self.loginButton.enabled = enabled;
-    self.loginButton.alpha = enabled ? 1.0f : 0.5f;
 }
 
 #pragma mark - UIResponder
@@ -256,15 +253,11 @@
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
     switch (textField.tag) {
         case 0:
-            [self loginEnabled:[textField.text stringByReplacingCharactersInRange:range withString:string].mnz_isValidEmail && !self.passwordView.passwordTextField.text.mnz_isEmpty];
             [self.emailInputView setErrorState:NO withText:AMLocalizedString(@"emailPlaceholder", @"Hint text to suggest that the user has to write his email")];
-            
             break;
             
         case 1:
-            [self loginEnabled:self.emailInputView.inputTextField.text.mnz_isValidEmail && ![textField.text stringByReplacingCharactersInRange:range withString:string].mnz_isEmpty];
             [self.passwordView setErrorState:NO];
-            
             break;
             
         default:
@@ -275,8 +268,6 @@
 }
 
 - (BOOL)textFieldShouldClear:(UITextField *)textField {
-    [self loginEnabled:NO];
-    
     return YES;
 }
 
@@ -288,9 +279,7 @@
             
         case 1:
             [self.passwordView.passwordTextField resignFirstResponder];
-            if (self.loginButton.isEnabled) {
-                [self tapLogin:self.loginButton];
-            }
+            [self tapLogin:self.loginButton];            
             break;
             
         default:
