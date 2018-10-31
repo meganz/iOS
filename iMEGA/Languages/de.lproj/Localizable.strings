@@ -846,7 +846,7 @@
 /* Menu item */
 "help"="Hilfe";
 /* Title of the section to access MEGA's help centre */
-"helpCentreLabel"="Onlinehilfe";
+"helpCentreLabel"="Hilfe";
 /* Section title that links you to the webpage that let you join and test the beta versions */
 "Join Beta"="Join Beta";
 /* Title to rate the app */
@@ -1627,7 +1627,7 @@
 /* Title label that explains that the user is going to be asked for the photos permission */
 "Allow Access to Photos"="Allow Access to Photos";
 /* Detailed explanation of why the user should give permission to access to the photos */
-"To share photos and videos, allow MEGA to access your photos"="To share photos and videos, allow MEGA to access your photos";
+"To share photos and videos, allow MEGA to access your library."="To share photos and videos, allow MEGA to access your library.";
 /* Title label that explains that the user is going to be asked for the microphone and camera permission */
 "Enable Microphone and Camera"="Enable Microphone and Camera";
 /* Detailed explanation of why the user should give permission to access to the camera and the microphone */
@@ -1637,7 +1637,7 @@
 /* Detailed explanation of why the user should give permission to deliver notifications */
 "We would like to send you notifications so you receive new messages on your device instantly."="We would like to send you notifications so you receive new messages on your device instantly.";
 /* Button which triggers a request for a specific permission, that have been explained to the user beforehand */
-"Enable Access"="Enable Access";
+"Allow Access"="Allow Access";
 /* A section header which contains the file management settings. These settings allow users to remove duplicate files etc. */
 "File Management"="Dateiverwaltung";
 /* Title of the option to enable or disable file versioning on Settings section */

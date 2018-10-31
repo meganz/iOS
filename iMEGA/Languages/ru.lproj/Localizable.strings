@@ -1581,7 +1581,7 @@
 /* A title on the mobile web client page showing that 2FA has been enabled successfully. */
 "twoFactorAuthenticationEnabled"="Двухфакторная аутентификация включена.";
 /* A message on the dialog shown after 2FA was successfully enabled. */
-"twoFactorAuthenticationEnabledDescription"="При следующем входе в аккаунт система запросит 6-значный код из приложения аутентификации.";
+"twoFactorAuthenticationEnabledDescription"="При следующем входе в аккаунт система запросит 6-значный код из приложения-аутентификатора.";
 /* A warning message on the Backup Recovery Key dialog to tell the user to backup their Recovery Key to their local computer. */
 "pleaseSaveYourRecoveryKey"="Пожалуйста, сохраните ключ восстановления в безопасном месте";
 /* An informational message on the Backup Recovery Key dialog. */
@@ -1589,7 +1589,7 @@
 /* A message on a dialog to say that 2FA has been successfully disabled. */
 "twoFactorAuthenticationDisabled"="Двухфакторная аутентификация отключена";
 /* A message on the setup two-factor authentication page on the mobile web client. */
-"scanOrCopyTheSeed"="Сканируйте или скопируйте seed-ключ в приложение-аутентификатор. Сохраните seed-ключ в безопасном месте на случай потери телефона.";
+"scanOrCopyTheSeed"="Сканируйте или скопируйте seed-ключ в приложение-аутентификатор. Сохраните seed-ключ в безопасном месте на случай потери устройства.";
 /* A button to help them restore their account if they have lost their 2FA device. */
 "lostYourAuthenticatorDevice"="Потеряли аутентификационное устройство?";
 /* Settings section title where you can enable the option to 'Save Images in Library' */
@@ -1627,7 +1627,7 @@
 /* Title label that explains that the user is going to be asked for the photos permission */
 "Allow Access to Photos"="Разрешить доступ к фотографиям";
 /* Detailed explanation of why the user should give permission to access to the photos */
-"To share photos and videos, allow MEGA to access your photos"="Чтобы обмениваться фотографиями и видео, откройте MEGA доступ к фотографиям";
+"To share photos and videos, allow MEGA to access your library."="Чтобы обмениваться фотографиями и видео, откройте MEGA доступ к библиотеке.";
 /* Title label that explains that the user is going to be asked for the microphone and camera permission */
 "Enable Microphone and Camera"="Включить микрофон и камеру";
 /* Detailed explanation of why the user should give permission to access to the camera and the microphone */
@@ -1637,7 +1637,7 @@
 /* Detailed explanation of why the user should give permission to deliver notifications */
 "We would like to send you notifications so you receive new messages on your device instantly."="Мы хотели бы отправлять вам уведомления, чтобы вы немедленно получали новые сообщения на своем устройстве.";
 /* Button which triggers a request for a specific permission, that have been explained to the user beforehand */
-"Enable Access"="Включить доступ";
+"Allow Access"="Открыть доступ";
 /* A section header which contains the file management settings. These settings allow users to remove duplicate files etc. */
 "File Management"="Управление файлами";
 /* Title of the option to enable or disable file versioning on Settings section */

@@ -139,7 +139,7 @@
 /* Error text shown when you don't have selected the checkbox to agree with the Terms of Service */
 "termsCheckboxUnselected"="Você precisa aceitar os termos de serviço para criar uma conta no MEGA.";
 /* Error text shown when the users tries to create an account with an email already in use */
-"emailAlreadyRegistered"="Este endereço de email já está cadastrado no MEGA.";
+"emailAlreadyRegistered"="Já existe uma conta no MEGA com esse email.";
 /* Title shown just after doing some action that requires confirming the action by an email */
 "awaitingEmailConfirmation"="Aguardando email de confirmação.";
 /* Text shown on the confirm account view to remind the user what to do */
@@ -1360,7 +1360,7 @@
 /* Paragraph between 3rd and 4th of the general description of MEGA shown on the iOS App Store, part of Android string 17769 */
 "generalDescriptionVideoChat"="O chat de vídeo criptografado de ponta a ponta pelo usuário garante uma privacidade total, e está disponível no navegador desde 2016. Atualmente foi ampliado para o nosso aplicativo móvel, e o histórico do chat é acessível em vários dispositivos. Os usuários também podem facilmente adicionar arquivos da sua Nuvem de arquivos no MEGA em um chat.";
 /* Paragraph 4 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
-"generalDescriptionParagraph4"="O MEGA oferece um generoso armazenamento gratuito de 50 GB para todos os usuários registrados com bônus de conquistas, e oferece planos pagos com limites muito mais altos:";
+"generalDescriptionParagraph4"="O MEGA oferece um generoso armazenamento gratuito de 50 GB para todos os usuários cadastrados com bônus de conquistas, e oferece planos pagos com limites muito mais altos:";
 /* Paragraph 5 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
 "generalDescriptionParagraph5"="Assinatura PRO LITE: 4,99€ (US$4,99) por mês ou 49,99€ (US$49,99) por ano - oferece 200 GB de espaço de armazenamento e 1 TB de cota de transferência por mês. \nAssinatura PRO I: 9,99€ (US$9,99) por mês ou 99,99€ (US$99,99) por ano - oferece 1 TB de espaço de armazenamento e 2 TB de cota de transferência por mês. \nAssinatura PRO II: 19,99€ (US$19,99) por mês ou 199,99€ (US$199,99) por ano - oferece 4 TB de espaço de armazenamento e 8 TB de cota de transferência por mês. \nAssinatura PRO III: 29,99 (US$29,99) por mês ou 299,99€ (US$299,99) por ano - oferece 8 TB de espaço de armazenamento e 16 TB de cota de transferência por mês.";
 /* Between paragraph 5 and 6 we have to put the string with the 'autorenewableDescription' key */
@@ -1627,7 +1627,7 @@
 /* Title label that explains that the user is going to be asked for the photos permission */
 "Allow Access to Photos"="Permitir acesso ao Fotos";
 /* Detailed explanation of why the user should give permission to access to the photos */
-"To share photos and videos, allow MEGA to access your photos"="Para compartilhar fotos e vídeos, permita que o MEGA acesse as suas fotos";
+"To share photos and videos, allow MEGA to access your library."="Para compartilhar fotos e vídeos, permita que o MEGA acesse as suas fotos";
 /* Title label that explains that the user is going to be asked for the microphone and camera permission */
 "Enable Microphone and Camera"="Ativar microfone e câmera";
 /* Detailed explanation of why the user should give permission to access to the camera and the microphone */
@@ -1637,7 +1637,7 @@
 /* Detailed explanation of why the user should give permission to deliver notifications */
 "We would like to send you notifications so you receive new messages on your device instantly."="Gostaríamos de enviar notificações para você receber imediatamente as novas mensagens no seu dispositivo.";
 /* Button which triggers a request for a specific permission, that have been explained to the user beforehand */
-"Enable Access"="Permitir acesso";
+"Allow Access"="Permitir acesso";
 /* A section header which contains the file management settings. These settings allow users to remove duplicate files etc. */
 "File Management"="Gerenciamento de arquivos";
 /* Title of the option to enable or disable file versioning on Settings section */
