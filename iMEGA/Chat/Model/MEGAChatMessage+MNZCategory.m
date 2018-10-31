@@ -366,7 +366,7 @@ static const void *nodeSizeTagKey = &nodeSizeTagKey;
 #pragma mark - NSObject
 
 - (NSUInteger)hash {
-    NSUInteger contentHash = self.type == MEGAChatMessageTypeAttachment ? [self.nodeList nodeAtIndex:0].handle : self.content.hash ^ self.node.hash;
+    NSUInteger contentHash = self.type == MEGAChatMessageTypeAttachment ? (NSUInteger)[self.nodeList nodeAtIndex:0].handle : self.content.hash ^ self.node.hash;
     NSUInteger metaHash = self.type == MEGAChatMessageTypeContainsMeta ? self.containsMeta.type : MEGAChatContainsMetaTypeInvalid;
     return self.senderId.hash ^ self.date.hash ^ contentHash ^ self.warningDialog ^ metaHash ^ self.localPreview;
 }

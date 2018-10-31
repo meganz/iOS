@@ -82,7 +82,7 @@
 #pragma mark - NSObject
 
 - (NSUInteger)hash {
-    return super.hash ^ self.message.userHandle;
+    return super.hash ^ (NSUInteger)self.message.userHandle;
 }
 
 - (NSString *)description {
