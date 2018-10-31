@@ -15,6 +15,8 @@
 
 @interface ChangePasswordViewController () <UITextFieldDelegate, UIGestureRecognizerDelegate, MEGARequestDelegate, MEGAGlobalDelegate>
 
+@property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
+
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *cancelBarButtonItem;
 
 @property (weak, nonatomic) IBOutlet InputView *currentEmailInputView;
@@ -26,6 +28,9 @@
 @property (weak, nonatomic) IBOutlet PasswordStrengthIndicatorView *passwordStrengthIndicatorView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *passwordStrengthIndicatorViewHeightLayoutConstraint;
 @property (weak, nonatomic) IBOutlet PasswordView *confirmPasswordView;
+
+@property (weak, nonatomic) InputView *activeInputView;
+@property (weak, nonatomic) PasswordView *activePasswordView;
 
 @property (weak, nonatomic) IBOutlet UIButton *confirmButton;
 
@@ -123,6 +128,8 @@
     self.tapGesture.cancelsTouchesInView = NO;
     self.tapGesture.delegate = self;
     [self.view addGestureRecognizer:self.tapGesture];
+    
+    [self registerForKeyboardNotifications];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -138,6 +145,9 @@
     [super viewWillDisappear:animated];
     
     [[MEGASdkManager sharedMEGASdk] removeMEGAGlobalDelegate:self];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardDidShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
 }
 
 #pragma mark - Private
@@ -254,6 +264,34 @@
     [self.view endEditing:YES];
 }
 
+- (void)registerForKeyboardNotifications {
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWasShown:) name:UIKeyboardDidShowNotification object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillBeHidden:) name:UIKeyboardWillHideNotification object:nil];
+    
+}
+
+- (void)keyboardWasShown:(NSNotification*)aNotification {
+    NSDictionary *info = aNotification.userInfo;
+    CGSize keyboardSize = [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
+    
+    UIEdgeInsets contentInsets = UIEdgeInsetsMake(0.0, 0.0, keyboardSize.height, 0.0);
+    self.scrollView.contentInset = contentInsets;
+    self.scrollView.scrollIndicatorInsets = contentInsets;
+    
+    CGRect viewFrame = self.view.frame;
+    viewFrame.size.height -= keyboardSize.height;
+    CGRect activeTextFieldFrame = self.activeInputView ? self.activeInputView.frame : self.activePasswordView.frame;
+    if (!CGRectContainsPoint(viewFrame, activeTextFieldFrame.origin)) {
+        [self.scrollView scrollRectToVisible:activeTextFieldFrame animated:YES];
+    }
+}
+
+- (void)keyboardWillBeHidden:(NSNotification *)aNotification {
+    self.scrollView.contentInset = UIEdgeInsetsZero;
+    self.scrollView.scrollIndicatorInsets = UIEdgeInsetsZero;
+}
+
 #pragma mark - IBActions
 
 - (IBAction)cancelAction:(UIBarButtonItem *)sender {
@@ -317,15 +355,26 @@
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
     switch (textField.tag) {
+        case 1:
+            self.activeInputView = self.theNewEmailInputView;
+            break;
+            
+        case 2:
+            self.activeInputView = self.confirmEmailInputView;
+            break;
+            
         case 3:
+            self.activePasswordView = self.currentPasswordView;
             self.currentPasswordView.toggleSecureButton.hidden = NO;
             break;
             
         case 4:
+            self.activePasswordView = self.theNewPasswordView;
             self.theNewPasswordView.toggleSecureButton.hidden = NO;
             break;
             
         case 5:
+            self.activePasswordView = self.confirmPasswordView;
             self.confirmPasswordView.toggleSecureButton.hidden = NO;
             break;
             
@@ -335,6 +384,9 @@
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField {
+    self.activeInputView = nil;
+    self.activePasswordView = nil;
+    
     switch (textField.tag) {
         case 1:
             [self validateEmail];
