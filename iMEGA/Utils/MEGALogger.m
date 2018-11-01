@@ -17,7 +17,9 @@ static MEGALogger *_megaLogger = nil;
 
 - (void)startLogging {
     NSString *logFilePath = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"MEGAiOS.log"];
-    [self startLoggingToFile:logFilePath];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+        [self startLoggingToFile:logFilePath];
+    });
 }
 
 - (void)startLoggingToFile:(NSString *)logFilePath {
@@ -68,9 +70,11 @@ static MEGALogger *_megaLogger = nil;
 }
 
 - (void)stopLoggingToFile:(NSString *)logFilePath {
-    if ([[NSFileManager defaultManager] fileExistsAtPath:logFilePath]) {
-        [[NSFileManager defaultManager] removeItemAtPath:logFilePath error:nil];
-    }
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        if ([[NSFileManager defaultManager] fileExistsAtPath:logFilePath]) {
+            [[NSFileManager defaultManager] removeItemAtPath:logFilePath error:nil];
+        }
+    });
 }
 
 - (void)enableSDKlogs {
