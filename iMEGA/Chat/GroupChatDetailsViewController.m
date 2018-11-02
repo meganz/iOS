@@ -5,6 +5,7 @@
 #import "MEGAReachabilityManager.h"
 #import "UIAlertAction+MNZCategory.h"
 #import "UIImageView+MNZCategory.h"
+#import "UITextField+MNZCategory.h"
 
 #import "ChatRoomsViewController.h"
 #import "ContactsViewController.h"
@@ -102,10 +103,9 @@
     self.indexPathsMutableDictionary = [[NSMutableDictionary alloc] initWithCapacity:self.participantsMutableArray.count];
 }
 
-- (void)alertTextFieldDidChange:(UITextField *)sender {
+- (void)alertTextFieldDidChange:(UITextField *)textField {
     UIAlertController *alertController = (UIAlertController *)self.presentedViewController;
     if (alertController) {
-        UITextField *textField = alertController.textFields.firstObject;
         UIAlertAction *rightButtonAction = alertController.actions.lastObject;
         BOOL enableRightButton = NO;
         if ((textField.text.length > 0) && ![textField.text isEqualToString:self.chatRoom.title] && ![[textField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] isEqualToString:@""] && ([textField.text lengthOfBytesUsingEncoding:NSUTF8StringEncoding] < 31)) {
@@ -436,6 +436,9 @@
                             [renameGroupAlertController addTextFieldWithConfigurationHandler:^(UITextField *textField) {
                                 textField.text = self.chatRoom.title;
                                 [textField addTarget:self action:@selector(alertTextFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
+                                textField.shouldReturnCompletion = ^BOOL(UITextField *textField) {
+                                    return ((textField.text.length > 0) && ![textField.text isEqualToString:self.chatRoom.title] && ![[textField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] isEqualToString:@""] && ([textField.text lengthOfBytesUsingEncoding:NSUTF8StringEncoding] < 31));
+                                };
                             }];
                             
                             UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil];
