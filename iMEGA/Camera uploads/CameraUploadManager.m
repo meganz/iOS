@@ -8,8 +8,10 @@
 #import "MEGACreateFolderRequestDelegate.h"
 @import Photos;
 
-static NSString * const cameraUplodFolderName = @"Camera Uploads";
-static const NSInteger concurrentPhotoUploadCount = 10;
+static NSString * const CameraUplodFolderName = @"Camera Uploads";
+static const NSInteger ConcurrentPhotoUploadCount = 10;
+static const NSInteger MaxConcurrentOperationCountInBackground = 5;
+static const NSInteger MaxConcurrentOperationCountInMemoryWarning = 2;
 
 @interface CameraUploadManager ()
 
@@ -35,15 +37,32 @@ static const NSInteger concurrentPhotoUploadCount = 10;
 - (instancetype)init {
     self = [super init];
     if (self) {
-        _operationQueue = [[NSOperationQueue alloc] init];
         _assetUploadRecordManager = [[CameraUploadRecordManager alloc] init];
         _scanner = [[CameraScanner alloc] init];
-        
+        [self initializeOperationQueue];
         [_operationQueue addOperationWithBlock:^{
             [[MEGASdkManager sharedMEGASdk] ensureMediaInfo];
         }];
+        
+        [self registerNotifications];
     }
     return self;
+}
+
+- (void)initializeOperationQueue {
+    _operationQueue = [[NSOperationQueue alloc] init];
+
+    if (UIApplication.sharedApplication.applicationState == UIApplicationStateActive) {
+        _operationQueue.maxConcurrentOperationCount = NSOperationQueueDefaultMaxConcurrentOperationCount;
+    } else {
+        _operationQueue.maxConcurrentOperationCount = MaxConcurrentOperationCountInBackground;
+    }
+}
+
+- (void)registerNotifications {
+    [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(applicationDidEnterBackground) name:UIApplicationDidEnterBackgroundNotification object:nil];
+    [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(applicationDidBecomeActive) name:UIApplicationDidBecomeActiveNotification object:nil];
+    [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(applicationDidReceiveMemoryWarning) name:UIApplicationDidReceiveMemoryWarningNotification object:nil];
 }
 
 #pragma mark - scan and upload
@@ -53,7 +72,7 @@ static const NSInteger concurrentPhotoUploadCount = 10;
         if (self.cameraUploadNode) {
             [self uploadIfPossible];
         } else {
-            [[MEGASdkManager sharedMEGASdk] createFolderWithName:cameraUplodFolderName parent:[[MEGASdkManager sharedMEGASdk] rootNode]
+            [[MEGASdkManager sharedMEGASdk] createFolderWithName:CameraUplodFolderName parent:[[MEGASdkManager sharedMEGASdk] rootNode]
                                                         delegate:[[MEGACreateFolderRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
                 self->_cameraUploadNode = [[MEGASdkManager sharedMEGASdk] nodeForHandle:request.nodeHandle];
                 [self saveCameraUploadHandle:request.nodeHandle];
@@ -74,7 +93,7 @@ static const NSInteger concurrentPhotoUploadCount = 10;
 }
 
 - (void)uploadNextPhotoBatch {
-    [self uploadNextPhotosWithNumber:concurrentPhotoUploadCount];
+    [self uploadNextPhotosWithNumber:ConcurrentPhotoUploadCount];
 }
 
 - (void)uploadNextVideoBatch {
@@ -94,6 +113,20 @@ static const NSInteger concurrentPhotoUploadCount = 10;
         [CameraUploadRecordManager.shared updateStatus:UploadStatusQueuedUp forRecord:record error:nil];
         [self.operationQueue addOperation:[[CameraUploadOperation alloc] initWithLocalIdentifier:record.localIdentifier cameraUploadNode:self.cameraUploadNode]];
     }
+}
+
+#pragma mark - handle app lifecycle
+
+- (void)applicationDidEnterBackground {
+    self.operationQueue.maxConcurrentOperationCount = MaxConcurrentOperationCountInBackground;
+}
+
+- (void)applicationDidBecomeActive {
+    self.operationQueue.maxConcurrentOperationCount = NSOperationQueueDefaultMaxConcurrentOperationCount;
+}
+
+- (void)applicationDidReceiveMemoryWarning {
+    self.operationQueue.maxConcurrentOperationCount = MaxConcurrentOperationCountInMemoryWarning;
 }
 
 #pragma mark - handle camera upload node
@@ -140,7 +173,7 @@ static const NSInteger concurrentPhotoUploadCount = 10;
     
     for (NSInteger i = 0; i < nodeListSize; i++) {
         MEGANode *node = [nodeList nodeAtIndex:i];
-        if ([cameraUplodFolderName isEqualToString:node.name] && node.isFolder) {
+        if ([CameraUplodFolderName isEqualToString:node.name] && node.isFolder) {
             return node;
         }
     }
