@@ -188,15 +188,15 @@
 
 - (void)setBadgeValueForIncomingContactRequests {
     MEGAContactRequestList *incomingContactsLists = [[MEGASdkManager sharedMEGASdk] incomingContactRequests];
-    long incomingContacts = incomingContactsLists.size.longLongValue;
-    NSString *badgeValue = incomingContacts ? [NSString stringWithFormat:@"%ld", incomingContacts] : nil;
+    int incomingContacts = incomingContactsLists.size.intValue;
+    NSString *badgeValue = incomingContacts ? [NSString stringWithFormat:@"%d", incomingContacts] : nil;
     [self setBadgeValue:badgeValue tabPosition:MYACCOUNT];
 }
 
 - (void)setBadgeValueForChats {
     NSInteger unreadChats = ([MEGASdkManager sharedMEGAChatSdk] != nil) ? [[MEGASdkManager sharedMEGAChatSdk] unreadChats] : 0;
     
-    NSString *badgeValue = unreadChats ? [NSString stringWithFormat:@"%ld", unreadChats] : nil;
+    NSString *badgeValue = unreadChats ? [NSString stringWithFormat:@"%td", unreadChats] : nil;
     [self setBadgeValue:badgeValue tabPosition:CHAT];
     
     [UIApplication sharedApplication].applicationIconBadgeNumber = unreadChats;

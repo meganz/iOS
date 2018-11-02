@@ -37,7 +37,7 @@
 /* Alert message shown when the user tries to download an empty folder  */
 "emptyFolderMessage"="Hindi ka pupwedeng mag-download ng bakanteng folder";
 /* Message shown when the user clicks on a confirm account link that has already been used  */
-"accountAlreadyConfirmed"="Ang inyong account ay aktibo na. Mag-log in na.";
+"accountAlreadyConfirmed"="Ang account mo ay activated na. Mag-log in na.";
 /* Message shown when the user clicks on an link that is not valid */
 "linkNotValid"="Maling link";
 /* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
@@ -144,8 +144,8 @@
 "awaitingEmailConfirmation"="Hinihintay ang kumpirmasyon sa email";
 /* Text shown on the confirm account view to remind the user what to do */
 "confirmText"="Ilagay ang inyong password para makumpirma ang inyong account";
-/* Button title that triggers the confirm account action */
-"confirmAccountButton"="I-confirm inyong account";
+/* Label for any ‘Confirm account’ button, link, text, title, etc. - (String as short as possible). */
+"Confirm account"="I-confirm inyong account";
 /* Error text shown when you introduce a wrong password on the confirmation proccess */
 "passwordWrong"="Maling password";
 /* Warning title shown when you try to confirm an account but you are logged in with another one */
@@ -223,7 +223,7 @@
 /* Button title to allow the user postpone an action */
 "later"="Later";
 /* Title of one of the filters in 'Contacts requests' section. If 'Received' is selected, it will only show the requests which have been recieved. */
-"received"="Received";
+"received"="Natanggap";
 /* Title of one of the filters in 'Contacts requests' section. If 'Sent' is selected, it will only show the requests which have been sent out. */
 "sent"="Naipadala";
 /* Success message shown when you acepted a contact request */
@@ -235,7 +235,7 @@
 /* Title shown when there's no pending contact requests */
 "noRequestPending"="Walang pending na request";
 /* Title shown when the transfers are paused */
-"transfersEmptyState_titlePaused"="Itigil muna ang Paglilipat";
+"transfersEmptyState_titlePaused"="Paused na Transfers";
 /* Title shown when the there is not any transfer and they are not paused */
 "transfersEmptyState_titleAll"="Walang Transfer";
 /* Title shown when the there is not any transfer, and the filter "Download" option is selected */
@@ -377,7 +377,7 @@
 /* Title for a button to copy the link to the clipboard */
 "copyLink"="Kopyahin ang link";
 /* Title for a button that copies the key of the link to the clipboard */
-"copyKey"="Copy key";
+"copyKey"="I-copy ang key";
 /* Title shown under the action that allows you to open a file in another app */
 "openIn"="Buksan sa...";
 /* */
@@ -515,7 +515,7 @@
 /* Success message shown when Camera Uploads has been enabled */
 "cameraUploadsEnabled"="Pinagana ang Camera Uploads";
 /* Message shown when the camera uploads have been completed */
-"cameraUploadsComplete"="Camera uploads complete";
+"cameraUploadsComplete"="Tapos na ang Camera uploads";
 /* Message shown while uploading files. Singular. */
 "cameraUploadsPendingFile"="Upload in progress, 1 file ang pending";
 /* Message shown while uploading files. Plural. */
@@ -846,9 +846,9 @@
 /* Menu item */
 "help"="Ayuda";
 /* Title of the section to access MEGA's help centre */
-"helpCentreLabel"="Tulong";
+"helpCentreLabel"="Help Centre";
 /* Section title that links you to the webpage that let you join and test the beta versions */
-"Join Beta"="Join Beta";
+"Join Beta"="Sumama sa Beta";
 /* Title to rate the app */
 "rateUsLabel"="I-rate kami";
 /* Title of the Transfers section */
@@ -876,19 +876,19 @@
 /* Title of My Account section. There you can see your account details */
 "myAccount"="Aking Account";
 /* Button title that shows the different MEGA PRO plans to which you can upgrade. (String as short as possible) */
-"buyPRO"="Buy PRO";
+"buyPRO"="Bumili ng PRO";
 /* Caption of a button to upgrade the account to Pro status */
 "upgrade"="I-upgrade";
 /* Title show on the hall of My Account section that describes a place where you can view, edit and upgrade your account and profile */
-"viewAndEditProfile"="View and edit profile";
+"viewAndEditProfile"="I-view at i-edit ang profile";
 /* Label for any 'Profile' button, link, text, title, etc. - (String as short as possible). */
 "profile"="Profile";
 /* Title of the Achievements section */
 "achievementsTitle"="Mga Achievements";
 /* Title of the Used storage section */
-"usedStorage"="Used storage";
+"usedStorage"="Used na storage";
 /* Subtitle show on My Account view under the 'Achievements' title to give more details of the section that will appear if tapped 2/2 */
-"inviteFriendsAndGetRewards"="Invite friends and get bonuses";
+"inviteFriendsAndGetRewards"="Imbitahan ang mga kaibigan at makakuha ng bonuses";
 /* Indicating text for when "you invite your friends" */
 "inviteYourFriends"="I-invite ang kaibigan mo";
 /* title of the introduction for the achievements screen */
@@ -1208,9 +1208,9 @@
 /* A typing indicator in the chat. Please leave the %@ which will be automatically replaced with the user's name at runtime. */
 "isTyping"="Nagtatype si %@  ...";
 /* Plural, a hint that appears when two users are typing in a group chat at the same time. The parameter will be the concatenation of both user names. The tags and placeholders shouldn't be translated or modified. */
-"twoUsersAreTyping"="%1$s [A]are typing…[/A]";
+"twoUsersAreTyping"="Sina %1$s [A]ay mga nagtata-type…[/A]";
 /* text that appear when there are more than 2 people writing at that time in a chat. For example User1, user2 and more are typing... The parameter will be the concatenation of the first two user names. The tags and placeholders shouldn't be translated or modified. */
-"moreThanTwoUsersAreTyping"="%1$s [A]and more are typing…[/A]";
+"moreThanTwoUsersAreTyping"="Sina %1$s [A]at iba ay mga nagta-type…[/A]";
 /* This is shown in the typing area in chat, as a placeholder before the user starts typing anything in the field. The format is: Write a message to Contact Name... Write a message to "Chat room topic"... Write a message to Contact Name1, Contact Name2, Contact Name3 */
 "writeAMessage"="Write a message to %s…";
 /* Information if there are no history messages in current chat conversation */
@@ -1352,9 +1352,9 @@
 "languageRestartNotification"="Language changed. Tap to restart.";
 /* The following strings are only for the App Store description, they're not used on the app (The only exception is the one with 'autorenewableDescription' key) On the 'generalDescriptionParagraph6' we must delete 'Desktop - https://mega.nz/' because the app can be rejected because of that. */
 /* Paragraph 1 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
-"generalDescriptionParagraph1"="MEGA provides user-controlled encrypted cloud storage through standard web browsers, together with dedicated apps for mobile devices. Unlike other cloud storage providers, your data is encrypted and decrypted by your client devices only and never by us.";
+"generalDescriptionParagraph1"="Nagbibigay ang MEGA ng user-controlled encrypted cloud storage sa pamamagitan ng standard web browser, kasama ang dedicated apps para sa mobile devices. Di gaya ng ibang cloud storage providers, ang  iyong data ay encrypted at decrypted ng devices na hawak mo at hindi namin.";
 /* Paragraph 2 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
-"generalDescriptionParagraph2"="Upload your files from your smartphone or tablet, then search, store, download, stream, view, share, rename or delete your files any time, from any device, anywhere. Share folders with your contacts and see their updates in real time.";
+"generalDescriptionParagraph2"="I-upload ang inyong files galing sa inyong smartphone o tablet, at mag-search, mag-store, mag-download, i-view, i-share, i-rename o burahin ang iyong files kahit kailan, sa kahit anong device, kahit saan. Ibahagi ang folders sa inyong contacts at makita ang updates ng real time.";
 /* Paragraph 3 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
 "generalDescriptionParagraph3"="Ang encryption process ay nangangahulugan na hindi namin na-aaccess o na-rereset ang iyong password kaya't KINAKAILANGAN mo itong tandaan (unless na mayroon kang Recovery Key na naka-back up) o mawawalan ka ng access sa iyong stored files.";
 /* Paragraph between 3rd and 4th of the general description of MEGA shown on the iOS App Store, part of Android string 17769 */
@@ -1367,7 +1367,7 @@
 /* Paragraph 6 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
 "generalDescriptionParagraph6"="For more info, please check our website: https://mega.nz/\nTerms of Service: https://mega.nz/terms\nPrivacy Policy: https://mega.nz/privacy";
 /* Label shown when you receive an incoming call, before start the call. */
-"calling..."="Calling…";
+"calling..."="Tumatawag...";
 /* Notification text body shown when you have missed one audio call */
 "missedAudioCall"="Missed audio call";
 /* Notification text body shown when you have missed several audio calls. [A] = {number of missed audio calls} */
@@ -1501,7 +1501,7 @@
 /* Button title to allow the user open the default browser */
 "openBrowser"="Buksan ang browser";
 /* A label for the Restart button to relaunch MEGAsync. */
-"restart"="Restart";
+"restart"="I-restart";
 /* Title to alert user the possibility of resume playing the video or start from the beginning */
 "resumePlayback"="Resume playback?";
 /* Message to show the user info (name and time) about the resume of the video */
@@ -1513,35 +1513,35 @@
 /* Title of the notification for a missed call */
 "missedCall"="Lumipas na tawag";
 /* When an outgoing call of user A with user B had been rejected by user B */
-"callWasRejected"="Call was rejected";
+"callWasRejected"="Na-reject ang tawag";
 /* When an active call of user A with user B had cancelled */
-"callWasCancelled"="Call was cancelled";
+"callWasCancelled"="Nakansela ang tawag";
 /* When an active call of user A with user B had not answered */
-"callWasNotAnswered"="Call was not answered";
+"callWasNotAnswered"="Hindi nasagot ang tawag";
 /* When an active call of user A with user B had failed */
-"callFailed"="Call failed";
+"callFailed"="Nabigo ang pagtawag";
 /* When an active call of user A with user B had ended */
-"callEnded"="Call ended.";
+"callEnded"="Nagtapos ang pagtawag";
 /* Displayed after a call had ended, where %@ is the duration of the call (1h, 10seconds, etc) */
 "duration"="Duration: %@";
 /* */
 "xSeconds"="%d seconds";
 /* */
-"1Second"="1 second";
+"1Second"="1 segundo";
 /* */
-"1Hour"="1 hour";
+"1Hour"="1 oras";
 /* */
-"xHours"="%d hours";
+"xHours"="%d na oras";
 /* */
-"1Hour1Minute"="1 hour, 1 minute";
+"1Hour1Minute"="1 oras, 1 minuto";
 /* */
-"1HourxMinutes"="1 hour, %d minutes";
+"1HourxMinutes"="1 oras, %d minutes";
 /* */
-"xHours1Minute"="%d hours, 1 minute";
+"xHours1Minute"="%d na oras, 1 minuto";
 /* */
-"xHoursxMinutes"="%1$d hours, %2$d minutes";
+"xHoursxMinutes"="%1$d na oras, %2$d na minuto";
 /* Alert title shown when users try to stream an unsupported audio/video file */
-"fileNotSupported"="File not supported";
+"fileNotSupported"="Hindi suportado ang file";
 /* Alert message shown when users try to stream an unsupported audio/video file */
 "message_fileNotSupported"="You can save it for Offline and open it in a compatible app.";
 /* Item of a menu to forward a message chat to another chatroom */
@@ -1567,7 +1567,7 @@
 /* Button title to start the setup of a feature. For example 'Begin Setup' for Two-Factor Authentication */
 "beginSetup"="Begin Setup";
 /* A message on the Verify Login page telling the user to enter their 2FA code. */
-"pleaseEnterTheSixDigitCode"="Please enter the 6-digit code generated by your Authentication app.";
+"pleaseEnterTheSixDigitCode"="Please enter the 6-digit code generated by your Authenticator App.";
 /* Title of the dialog displayed to start setup the Two-Factor Authentication */
 "whyYouDoNeedTwoFactorAuthentication"="Why do you need Two-Factor Authentication?";
 /* Description for the ‘Two-Factor Authentication’ in the security settings section. */
@@ -1581,63 +1581,63 @@
 /* A title on the mobile web client page showing that 2FA has been enabled successfully. */
 "twoFactorAuthenticationEnabled"="Two-Factor Authentication Enabled";
 /* A message on the dialog shown after 2FA was successfully enabled. */
-"twoFactorAuthenticationEnabledDescription"="Next time you login to your account you will be asked to enter a 6-digit code provided by your authentication app.";
+"twoFactorAuthenticationEnabledDescription"="Next time you login to your account you will be asked to enter a 6-digit code provided by your Authenticator App.";
 /* A warning message on the Backup Recovery Key dialog to tell the user to backup their Recovery Key to their local computer. */
-"pleaseSaveYourRecoveryKey"="Please save your Recovery Key in a safe location";
+"pleaseSaveYourRecoveryKey"="Ilagay ang iyong Recovery Key sa isang safe location";
 /* An informational message on the Backup Recovery Key dialog. */
 "twoFactorAuthenticationEnabledWarning"="If you lose access to your account after enabling 2FA and you have not backed up your Recovery Key, MEGA cannot help you gain access to it again.";
 /* A message on a dialog to say that 2FA has been successfully disabled. */
 "twoFactorAuthenticationDisabled"="Two-Factor Authentication Disabled";
 /* A message on the setup two-factor authentication page on the mobile web client. */
-"scanOrCopyTheSeed"="Scan or copy the seed to your Authenticator App. Be sure to backup this seed to a safe place in case you lose your phone.";
+"scanOrCopyTheSeed"="Scan or copy the seed to your Authenticator App. Be sure to backup this seed to a safe place in case you lose your device.";
 /* A button to help them restore their account if they have lost their 2FA device. */
-"lostYourAuthenticatorDevice"="Lost your Authenticator device?";
+"lostYourAuthenticatorDevice"="Nawala ang iyong Authenticator device?";
 /* Settings section title where you can enable the option to 'Save Images in Library' */
-"Save Images in Library"="Save Images in Library";
+"Save Images in Library"="Mag-save ng Images sa Library";
 /* Settings section title where you can enable the option to 'Save Videos in Library' */
-"Save Videos in Library"="Save Videos in Library";
+"Save Videos in Library"="Mag-save ng Videos sa Library";
 /* Footer text shown under the settings for download options 'Save Images/Videos in Library' */
 "Images and/or videos downloaded will be stored in the device’s media library instead of the Offline section."="Images and/or videos downloaded will be stored in the device’s media library instead of the Offline section.";
 /* Setting associated with the 'Camera' of the device */
 "Camera"="Camera";
 /* Settings section title where you can enable the option to 'Save in Library' the images or videos taken from your camera in the MEGA app */
-"Save in Library"="Save in Library";
+"Save in Library"="I-save sa Library";
 /* Footer text shown under the Camera setting to explain the option 'Save in Library' */
-"Save a copy of the images and videos taken from the MEGA app in your device’s media library."="Save a copy of the images and videos taken from the MEGA app in your device’s media library.";
+"Save a copy of the images and videos taken from the MEGA app in your device’s media library."="Magtabi ng copy ng images at videos na nakuha sa MEGA app ng inyong media library sa device mo";
 /* Title shown in a page of the on boarding screens explaining that the user keeps the encryption keys */
-"You hold the keys"="You hold the keys";
+"You hold the keys"="Hawak mo ang susi";
 /* Description shown in a page of the onboarding screens explaining the encryption paradigm */
-"Security is why we exist, your files are safe with us behind a well oiled encryption machine where only you can access your files."="Security is why we exist, your files are safe with us behind a well oiled encryption machine where only you can access your files.";
+"Security is why we exist, your files are safe with us behind a well oiled encryption machine where only you can access your files."="Nanatili kami dahil sa seguridad para mapangalagaan ang inyong mga files sa likod ng isang bantay saradong pader na ikaw lamang maka-aaccess.";
 /* Title shown in a page of the on boarding screens explaining that the chat is encrypted */
-"Encrypted chat"="Encrypted chat";
+"Encrypted chat"="Encrypted na chat";
 /* Description shown in a page of the onboarding screens explaining the chat feature */
-"Fully encrypted chat with voice and video calls, group messaging and file sharing integration with your Cloud Drive."="Fully encrypted chat with voice and video calls, group messaging and file sharing integration with your Cloud Drive.";
+"Fully encrypted chat with voice and video calls, group messaging and file sharing integration with your Cloud Drive."="Fully encrypted na chat na may voice at video calls, group messaging at file sharing integration sa iyong Cloud Drive.";
 /* Title shown in a page of the on boarding screens explaining that the user can add contacts to chat and colaborate */
-"Create your Network"="Create your Network";
+"Create your Network"="Gumawa ng sariling Network";
 /* Description shown in a page of the onboarding screens explaining contacts */
-"Add contacts, create a network, colaborate, make voice and video calls without ever leaving MEGA"="Add contacts, create a network, colaborate, make voice and video calls without ever leaving MEGA";
+"Add contacts, create a network, colaborate, make voice and video calls without ever leaving MEGA"="Magdagdag ng contacts, gumawa ng network, mag-collaborate, gumawa ng voice at video calls ng hindi umaalis sa MEGA";
 /* Title shown in a page of the on boarding screens explaining that the user can backup the photos automatically */
-"Your Photos in the Cloud"="Your Photos in the Cloud";
+"Your Photos in the Cloud"="Ang iyong Photos sa Cloud";
 /* Description shown in a page of the onboarding screens explaining the camera uploads feature */
-"Camera Uploads is an essential feature for any mobile device and we have got you covered. Create your account now."="Camera Uploads is an essential feature for any mobile device and we have got you covered. Create your account now.";
+"Camera Uploads is an essential feature for any mobile device and we have got you covered. Create your account now."="Ang Camera Uploads ay isang essential feature ng kahit anong mobile device at covered ka namin. Gumawa ka ng sariling account ngayon.";
 /* Button which triggers the initial setup */
-"Setup MEGA"="Setup MEGA";
+"Setup MEGA"="I-setup ang MEGA";
 /* Detailed explanation of why the user should give some permissions to MEGA */
-"To fully take advantage of your MEGA account we need to ask you some permissions."="To fully take advantage of your MEGA account we need to ask you some permissions.";
+"To fully take advantage of your MEGA account we need to ask you some permissions."="Para magkaroon ng buong advantage sa iyong MEGA account kailangan naming hingin ang inyong permiso";
 /* Title label that explains that the user is going to be asked for the photos permission */
-"Allow Access to Photos"="Allow Access to Photos";
+"Allow Access to Photos"="Bigyan ng Access sa Photos";
 /* Detailed explanation of why the user should give permission to access to the photos */
-"To share photos and videos, allow MEGA to access your photos"="To share photos and videos, allow MEGA to access your photos";
+"To share photos and videos, allow MEGA to access your library."="Para makapagbahagi ng photos at videos, bigyan ng access ang MEGA sa iyong photos";
 /* Title label that explains that the user is going to be asked for the microphone and camera permission */
-"Enable Microphone and Camera"="Enable Microphone and Camera";
+"Enable Microphone and Camera"="I-enable ang Microphone at Camera";
 /* Detailed explanation of why the user should give permission to access to the camera and the microphone */
-"To make encrypted voice and video calls, allow MEGA access to your Camera and Microphone"="To make encrypted voice and video calls, allow MEGA access to your Camera and Microphone";
+"To make encrypted voice and video calls, allow MEGA access to your Camera and Microphone"="Para makagawa ng encrypted voice at video calls, bigyan ng access ang MEGA sa iyong Camera at Microphone";
 /* Title label that explains that the user is going to be asked for the notifications permission */
 "Enable Notifications"="Paganahin ang Notifications";
 /* Detailed explanation of why the user should give permission to deliver notifications */
-"We would like to send you notifications so you receive new messages on your device instantly."="We would like to send you notifications so you receive new messages on your device instantly.";
+"We would like to send you notifications so you receive new messages on your device instantly."="Gusto naming magpadala ng notifications para mareceive ang bagong messages sa iyong device kaagad.";
 /* Button which triggers a request for a specific permission, that have been explained to the user beforehand */
-"Enable Access"="Enable Access";
+"Allow Access"="I-enable ang Access";
 /* A section header which contains the file management settings. These settings allow users to remove duplicate files etc. */
 "File Management"="File Management";
 /* Title of the option to enable or disable file versioning on Settings section */
@@ -1673,10 +1673,10 @@
 /* Confirmation dialog for the button that logs the user out of all sessions except the current one. */
 "Do you want to close all other sessions? This will log you out on all other active sessions except the current one."="Do you want to close all other sessions? This will log you out on all other active sessions except the current one.";
 /* A button label which allows the users save images/videos in the Photos app. */
-"Save to Photos"="Save to Photos";
+"Save to Photos"="I-save sa Photos";
 /* Text shown when starting the process to save a photo or video to Photos app */
-"Saving to Photos…"="Saving to Photos…";
+"Saving to Photos…"="Saving sa Photos..";
 /* Text shown when a photo or video is saved to Photos app */
-"Saved to Photos"="Saved to Photos";
+"Saved to Photos"="Na-isaved na sa Photos";
 /* Text shown when an error occurs when trying to save a photo or video to Photos app */
-"Could not save"="Could not save";
+"Could not save Item"="Hindi ma-save ang item";

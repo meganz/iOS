@@ -108,6 +108,9 @@
         // http(s)://(www.)mega(.co).nz/<afterSlashesString>
         NSArray<NSString *> *components = [self.absoluteString componentsSeparatedByString:@"/"];
         afterSlashesString = @"";
+        if (components.count < 3 || (![components[2] hasSuffix:@"mega.nz"] && ![components[2] isEqualToString:@"mega.co.nz"])) {
+            return afterSlashesString;
+        }
         for (NSUInteger i = 3; i < components.count; i++) {
             afterSlashesString = [NSString stringWithFormat:@"%@%@/", afterSlashesString, [components objectAtIndex:i]];
         }

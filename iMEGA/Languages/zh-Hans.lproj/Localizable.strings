@@ -37,7 +37,7 @@
 /* Alert message shown when the user tries to download an empty folder  */
 "emptyFolderMessage"="您不能下载空的文件夹。";
 /* Message shown when the user clicks on a confirm account link that has already been used  */
-"accountAlreadyConfirmed"="账号已可使用。请登入。";
+"accountAlreadyConfirmed"="您的账号已被激活。请登录。";
 /* Message shown when the user clicks on an link that is not valid */
 "linkNotValid"="无效的链接";
 /* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
@@ -144,8 +144,8 @@
 "awaitingEmailConfirmation"="正在等待确认电子信箱。";
 /* Text shown on the confirm account view to remind the user what to do */
 "confirmText"="请输入您的密码来确认账户";
-/* Button title that triggers the confirm account action */
-"confirmAccountButton"="确认您的账号";
+/* Label for any ‘Confirm account’ button, link, text, title, etc. - (String as short as possible). */
+"Confirm account"="确认您的账号";
 /* Error text shown when you introduce a wrong password on the confirmation proccess */
 "passwordWrong"="错误密码";
 /* Warning title shown when you try to confirm an account but you are logged in with another one */
@@ -397,7 +397,7 @@
 /* Message shown when there is an active link that can be removed or disabled */
 "removeLink"="删除链接";
 /* Message shown when there are some active links that can be removed or disabled */
-"removeLinks"="删除共享链接";
+"removeLinks"="删除链接";
 /* Message shown when the link to a file or folder has been removed */
 "linkRemoved"="链接已删除";
 /* Message shown when the links to files and/or folders have been removed */
@@ -984,9 +984,9 @@
 /* Text shown under the button 'Skip' to explain that you can upgrade your account later in the section 'My Account'. */
 "youCanUpgradeLaterInMyAccount"="您稍后可在\"我的帐户\"中进行升级";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
-"cloudDriveIsAlmostFull"="[S]云盘快要满了。 [/S] [A]立即付费升级[/A]为PRO专业级帐户，并获得[S]最高4TB (4096 GB) [/S]的云端储存空间。";
+"cloudDriveIsAlmostFull"="[S]您的云盘几乎已满。[/S] [A]立即升级[/A]至PRO帐户，可获得[S]最高8TB (8192GB)[/S]的云储存空间。";
 /* A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text. */
-"cloudDriveIsFull"="[S]您的帐号空间已满。 [/S] [A]立即升级[/A]为PRO专业版帐户，并可获得[S]最高4TB (4096 GB)[/S] 的云端储存空间。";
+"cloudDriveIsFull"="[S]您的帐户空间已满。[/S] [A]立即升级[/A]至PRO帐户，可获得[S]最高8TB (8192GB)[/S]的云储存空间。";
 /* Storage related with the MEGA PRO account level you can subscribe */
 "productSpace"="储存空间";
 /* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
@@ -1577,11 +1577,11 @@
 /* Alert text shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device */
 "youNeedATwoFactorAuthenticationApp"="您需要在此设备上安装双重验证应用程序";
 /* Alert text shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device and tap on the question mark */
-"You need an authenticator app to enable 2FA on MEGA. You can download and install the Google Authenticator, Duo Mobile, Authy or Microsoft Authenticator app for your phone or tablet."="You need an authenticator app to enable 2FA on MEGA. You can download and install the Google Authenticator, Duo Mobile, Authy or Microsoft Authenticator app for your phone or tablet.";
+"You need an authenticator app to enable 2FA on MEGA. You can download and install the Google Authenticator, Duo Mobile, Authy or Microsoft Authenticator app for your phone or tablet."="您需要一个验证应用程序才能在MEGA上启用双重验证。 您可以为您的手机或平板电脑下载并安装Google验证，Duo Mobile，Authy或Microsoft验证程序。";
 /* A title on the mobile web client page showing that 2FA has been enabled successfully. */
 "twoFactorAuthenticationEnabled"="双重验证已启用";
 /* A message on the dialog shown after 2FA was successfully enabled. */
-"twoFactorAuthenticationEnabledDescription"="在您下次登录账户时，系统会要求您输入由验证程序提供的6位验证码。";
+"twoFactorAuthenticationEnabledDescription"="您在下次登录账户时，系统会要求您输入验证程序提供的6位验证码。";
 /* A warning message on the Backup Recovery Key dialog to tell the user to backup their Recovery Key to their local computer. */
 "pleaseSaveYourRecoveryKey"="请将您的恢复秘钥保存在安全位置";
 /* An informational message on the Backup Recovery Key dialog. */
@@ -1627,7 +1627,7 @@
 /* Title label that explains that the user is going to be asked for the photos permission */
 "Allow Access to Photos"="允许访问照片";
 /* Detailed explanation of why the user should give permission to access to the photos */
-"To share photos and videos, allow MEGA to access your photos"="要分享照片与视频，请允许MEGA访问您的照片";
+"To share photos and videos, allow MEGA to access your library."="要分享照片与视频，请允许MEGA访问您的照片";
 /* Title label that explains that the user is going to be asked for the microphone and camera permission */
 "Enable Microphone and Camera"="启用麦克风和相机";
 /* Detailed explanation of why the user should give permission to access to the camera and the microphone */
@@ -1637,7 +1637,7 @@
 /* Detailed explanation of why the user should give permission to deliver notifications */
 "We would like to send you notifications so you receive new messages on your device instantly."="我们将向您发送通知，以便您立即在设备上收到新消息。";
 /* Button which triggers a request for a specific permission, that have been explained to the user beforehand */
-"Enable Access"="开启访问";
+"Allow Access"="开启访问";
 /* A section header which contains the file management settings. These settings allow users to remove duplicate files etc. */
 "File Management"="文件管理";
 /* Title of the option to enable or disable file versioning on Settings section */
@@ -1675,8 +1675,8 @@
 /* A button label which allows the users save images/videos in the Photos app. */
 "Save to Photos"="保存至照片";
 /* Text shown when starting the process to save a photo or video to Photos app */
-"Saving to Photos…"="Saving to Photos…";
+"Saving to Photos…"="正在保存至照片……";
 /* Text shown when a photo or video is saved to Photos app */
-"Saved to Photos"="Saved to Photos";
+"Saved to Photos"="已保存至照片";
 /* Text shown when an error occurs when trying to save a photo or video to Photos app */
-"Could not save"="Could not save";
+"Could not save Item"="无法保存该项目";

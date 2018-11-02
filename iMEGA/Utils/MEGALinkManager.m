@@ -521,6 +521,7 @@ static NSString *nodeToPresentBase64Handle;
         
         [SVProgressHUD dismiss];
     }];
+    delegate.savePublicHandle = YES;
     
     [SVProgressHUD show];
     [[MEGASdkManager sharedMEGASdk] publicNodeForMegaFileLink:fileLinkURLString delegate:delegate];
