@@ -144,8 +144,8 @@
 "awaitingEmailConfirmation"="Ein Bestätigungslink ist Ihnen per E-Mail zugegangen.";
 /* Text shown on the confirm account view to remind the user what to do */
 "confirmText"="Zur Aktivierung Ihres Accounts geben Sie bitte Ihr Passwort ein";
-/* Button title that triggers the confirm account action */
-"confirmAccountButton"="Bitte bestätigen Sie Ihr Konto";
+/* Label for any ‘Confirm account’ button, link, text, title, etc. - (String as short as possible). */
+"Confirm account"="Bitte bestätigen Sie Ihr Konto";
 /* Error text shown when you introduce a wrong password on the confirmation proccess */
 "passwordWrong"="Falsches Passwort";
 /* Warning title shown when you try to confirm an account but you are logged in with another one */

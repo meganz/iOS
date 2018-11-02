@@ -144,8 +144,8 @@
 "awaitingEmailConfirmation"="Aguardando email de confirmação.";
 /* Text shown on the confirm account view to remind the user what to do */
 "confirmText"="Por favor, digite sua senha para confirmar sua conta";
-/* Button title that triggers the confirm account action */
-"confirmAccountButton"="Confirme a sua conta";
+/* Label for any ‘Confirm account’ button, link, text, title, etc. - (String as short as possible). */
+"Confirm account"="Confirme a sua conta";
 /* Error text shown when you introduce a wrong password on the confirmation proccess */
 "passwordWrong"="Senha incorreta";
 /* Warning title shown when you try to confirm an account but you are logged in with another one */
