@@ -2,7 +2,6 @@
 
 #import <CoreSpotlight/CoreSpotlight.h>
 #import "LTHPasscodeViewController.h"
-#import <SafariServices/SafariServices.h>
 #import "SAMKeychain.h"
 #import "SVProgressHUD.h"
 
@@ -18,7 +17,6 @@
 #import "MEGANodeList+MNZCategory.h"
 #import "MEGAProcessAsset.h"
 #import "MEGALogger.h"
-#import "MEGAReachabilityManager.h"
 #import "MEGASdkManager.h"
 #import "MEGAStore.h"
 #import "MEGAUser+MNZCategory.h"
@@ -1151,31 +1149,6 @@ static MEGAIndexer *indexer;
     searchTextField.tintColor = UIColor.mnz_green00BFA5;
     
     return searchController;
-}
-
-+ (void)presentSafariViewControllerWithURL:(NSURL *)url {
-    if (url) {
-        if (!([url.scheme.lowercaseString isEqualToString:@"http"] || [url.scheme.lowercaseString isEqualToString:@"https"])) {
-            MEGALogInfo(@"To use SFSafariViewController the URL must use the http or https scheme: \n%@", url.absoluteString);
-            [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"linkNotValid", @"Message shown when the user clicks on an link that is not valid")];
-            return;
-        }
-    } else {
-        MEGALogInfo(@"URL string was malformed or nil: \n%@", url.absoluteString);
-        [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"linkNotValid", @"Message shown when the user clicks on an link that is not valid")];
-        return;
-    }
-    
-    if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-        SFSafariViewController *safariViewController = [[SFSafariViewController alloc] initWithURL:url];
-        if (@available(iOS 10.0, *)) {
-            safariViewController.preferredControlTintColor = UIColor.mnz_redMain;
-        } else {
-            safariViewController.view.tintColor = UIColor.mnz_redMain;
-        }
-        
-        [UIApplication.mnz_visibleViewController presentViewController:safariViewController animated:YES completion:nil];
-    }
 }
 
 #pragma mark - Manage session

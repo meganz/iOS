@@ -297,7 +297,7 @@ static NSString *nodeToPresentBase64Handle;
     [MEGALinkManager setUrlType:url.mnz_type];
     switch ([MEGALinkManager urlType]) {
         case URLTypeDefault:
-            [Helper presentSafariViewControllerWithURL:[MEGALinkManager linkURL]];
+            [[MEGALinkManager linkURL] mnz_presentSafariViewController];
             [MEGALinkManager resetLinkAndURLType];
             break;
             

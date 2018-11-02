@@ -5,9 +5,9 @@
 #import "SVProgressHUD.h"
 
 #import "CameraUploads.h"
-#import "Helper.h"
 #import "MEGASdkManager.h"
 #import "MEGAReachabilityManager.h"
+#import "NSURL+MNZCategory.h"
 
 @interface SettingsTableViewController () <UITableViewDataSource, UITableViewDelegate>
 
@@ -122,11 +122,10 @@
 }
 
 - (void)showURL:(NSString *)urlString {
-    [Helper presentSafariViewControllerWithURL:[NSURL URLWithString:urlString]];
+    [[NSURL URLWithString:urlString] mnz_presentSafariViewController];
 }
 
 #pragma mark - UITableViewDelegate
-
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     switch (indexPath.section) {

@@ -11,6 +11,7 @@
 #import "MEGALogger.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGASdkManager.h"
+#import "NSURL+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 
 #import "CreateAccountViewController.h"
@@ -136,7 +137,7 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
 }
 
 - (IBAction)forgotPasswordTouchUpInside:(UIButton *)sender {
-    [Helper presentSafariViewControllerWithURL:[NSURL URLWithString:@"https://mega.nz/recovery"]];
+    [[NSURL URLWithString:@"https://mega.nz/recovery"] mnz_presentSafariViewController];
 }
 
 #pragma mark - Private

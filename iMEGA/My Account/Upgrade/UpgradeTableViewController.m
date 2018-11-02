@@ -6,8 +6,8 @@
 
 #import "MEGASdk+MNZCategory.h"
 #import "NSString+MNZCategory.h"
+#import "NSURL+MNZCategory.h"
 
-#import "Helper.h"
 #import "MEGAPurchase.h"
 #import "MEGASdkManager.h"
 #import "MEGAReachabilityManager.h"
@@ -349,7 +349,7 @@
 }
 
 - (void)showURL:(NSString *)urlString {
-    [Helper presentSafariViewControllerWithURL:[NSURL URLWithString:urlString]];
+    [[NSURL URLWithString:urlString] mnz_presentSafariViewController];
 }
 
 - (NSString *)storageAndUnitsByProduct:(SKProduct *)product {

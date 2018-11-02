@@ -1,7 +1,39 @@
 
 #import "NSURL+MNZCategory.h"
 
+#import <SafariServices/SafariServices.h>
+
+#import "SVProgressHUD.h"
+
+#import "MEGAReachabilityManager.h"
+#import "UIApplication+MNZCategory.h"
+
 @implementation NSURL (MNZCategory)
+
+- (void)mnz_presentSafariViewController {
+    if (self) {
+        if (!([self.scheme.lowercaseString isEqualToString:@"http"] || [self.scheme.lowercaseString isEqualToString:@"https"])) {
+            MEGALogInfo(@"To use SFSafariViewController the URL must use the http or https scheme: \n%@", self.absoluteString);
+            [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"linkNotValid", @"Message shown when the user clicks on an link that is not valid")];
+            return;
+        }
+    } else {
+        MEGALogInfo(@"URL string was malformed or nil: \n%@", self.absoluteString);
+        [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"linkNotValid", @"Message shown when the user clicks on an link that is not valid")];
+        return;
+    }
+    
+    if ([MEGAReachabilityManager isReachableHUDIfNot]) {
+        SFSafariViewController *safariViewController = [[SFSafariViewController alloc] initWithURL:self];
+        if (@available(iOS 10.0, *)) {
+            safariViewController.preferredControlTintColor = UIColor.mnz_redMain;
+        } else {
+            safariViewController.view.tintColor = UIColor.mnz_redMain;
+        }
+        
+        [UIApplication.mnz_visibleViewController presentViewController:safariViewController animated:YES completion:nil];
+    }
+}
 
 - (URLType)mnz_type {
     URLType type = URLTypeDefault;
