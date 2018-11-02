@@ -130,11 +130,9 @@
 
 - (BOOL)application:(UIApplication *)application willFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     NSLog(@"[App Lifecycle] Application will finish launching with options: %@", launchOptions);
-#ifdef DEBUG
-    NSArray<MOAssetUploadRecord *> *localRecords = [CameraUploadRecordManager.shared fetchAllAssetUploadRecords:nil];
-    localRecords = [localRecords sortedArrayUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"status" ascending:YES]]];
-    NSLog(@"local records count: %lu, list: %@", localRecords.count, localRecords);
-#endif
+//    NSArray<MOAssetUploadRecord *> *localRecords = [CameraUploadRecordManager.shared fetchAllAssetUploadRecords:nil];
+//    localRecords = [localRecords sortedArrayUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"status" ascending:YES]]];
+//    NSLog(@"local records count: %lu, list: %@", localRecords.count, localRecords);
     return YES;
 }
 

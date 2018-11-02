@@ -232,10 +232,19 @@ static NSString * const archiveUploadInfoBackgroundTaskName = @"nz.mega.archiveC
     [uploadTask resume];
     
     [CameraUploadRecordManager.shared updateStatus:UploadStatusUploading forLocalIdentifier:self.asset.localIdentifier error:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(archiveUploadInfoDataForBackgroundTransfer) name:UIApplicationDidEnterBackgroundNotification object:nil];
+    
+    [self archiveUploadInfoDataIfNeeded];
 }
 
 #pragma mark - archive upload info
+
+- (void)archiveUploadInfoDataIfNeeded {
+    if (UIApplication.sharedApplication.applicationState == UIApplicationStateActive) {
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(archiveUploadInfoDataForBackgroundTransfer) name:UIApplicationDidEnterBackgroundNotification object:nil];
+    } else {
+        [self archiveUploadInfoDataForBackgroundTransfer];
+    }
+}
 
 - (void)archiveUploadInfoDataForBackgroundTransfer {
     MEGALogDebug(@"[Camera Upload] start archiving upload info for asset: %@", self.asset.localIdentifier);
