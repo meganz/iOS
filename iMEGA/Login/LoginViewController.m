@@ -17,6 +17,11 @@
 #import "TwoFactorAuthenticationViewController.h"
 #import "PasswordView.h"
 
+typedef NS_ENUM(NSInteger, TextFieldTag) {
+    EmailTextFieldTag = 0,
+    PasswordTextFieldTag
+};
+
 @interface LoginViewController () <UITextFieldDelegate, MEGARequestDelegate>
 
 @property (weak, nonatomic) IBOutlet UIImageView *logoImageView;
@@ -51,13 +56,13 @@
     
     self.emailInputView.inputTextField.returnKeyType = UIReturnKeyNext;
     self.emailInputView.inputTextField.delegate = self;
-    self.emailInputView.inputTextField.tag = 0;
+    self.emailInputView.inputTextField.tag = EmailTextFieldTag;
     if (@available(iOS 11.0, *)) {
         self.emailInputView.inputTextField.textContentType = UITextContentTypeUsername;
     }
     
     self.passwordView.passwordTextField.delegate = self;
-    self.passwordView.passwordTextField.tag = 1;
+    self.passwordView.passwordTextField.tag = PasswordTextFieldTag;
     if (@available(iOS 11.0, *)) {
         self.passwordView.passwordTextField.textContentType = UITextContentTypePassword;
     }
@@ -226,19 +231,19 @@
 #pragma mark - UITextFieldDelegate
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
-    if (textField.tag == 1) {
+    if (textField.tag == PasswordTextFieldTag) {
         self.passwordView.toggleSecureButton.hidden = NO;
     }
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField {
     switch (textField.tag) {
-        case 0:
+        case EmailTextFieldTag:
             [self validateEmail];
             
             break;
             
-        case 1:
+        case PasswordTextFieldTag:
             self.passwordView.passwordTextField.secureTextEntry = YES;
             [self.passwordView configureSecureTextEntry];
             [self validatePassword];
@@ -252,11 +257,11 @@
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
     switch (textField.tag) {
-        case 0:
+        case EmailTextFieldTag:
             [self.emailInputView setErrorState:NO withText:AMLocalizedString(@"emailPlaceholder", @"Hint text to suggest that the user has to write his email")];
             break;
             
-        case 1:
+        case PasswordTextFieldTag:
             [self.passwordView setErrorState:NO];
             break;
             
@@ -273,11 +278,11 @@
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     switch (textField.tag) {
-        case 0:
+        case EmailTextFieldTag:
             [self.passwordView.passwordTextField becomeFirstResponder];
             break;
             
-        case 1:
+        case PasswordTextFieldTag:
             [self.passwordView.passwordTextField resignFirstResponder];
             [self tapLogin:self.loginButton];            
             break;

@@ -13,6 +13,15 @@
 #import "PasswordView.h"
 #import "TwoFactorAuthenticationViewController.h"
 
+typedef NS_ENUM(NSUInteger, TextFieldTag) {
+    CurrentEmailTextFieldTag = 0,
+    NewEmailTextFieldTag,
+    ConfirmEmailTextFieldTag,
+    CurrentPasswordTextFieldTag,
+    NewPasswordTextFieldTag,
+    ConfirmPasswordTextFieldTag
+};
+
 @interface ChangePasswordViewController () <UITextFieldDelegate, UIGestureRecognizerDelegate, MEGARequestDelegate, MEGAGlobalDelegate>
 
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
@@ -53,13 +62,13 @@
             
             self.theNewPasswordView.passwordTextField.returnKeyType = UIReturnKeyNext;
             self.theNewPasswordView.passwordTextField.delegate = self;
-            self.theNewPasswordView.passwordTextField.tag = 4;
+            self.theNewPasswordView.passwordTextField.tag = NewPasswordTextFieldTag;
             if (@available(iOS 12.0, *)) {
                 self.theNewPasswordView.passwordTextField.textContentType = UITextContentTypeNewPassword;
             }
             
             self.confirmPasswordView.passwordTextField.delegate = self;
-            self.confirmPasswordView.passwordTextField.tag = 5;
+            self.confirmPasswordView.passwordTextField.tag = ConfirmPasswordTextFieldTag;
             if (@available(iOS 12.0, *)) {
                 self.confirmPasswordView.passwordTextField.textContentType = UITextContentTypeNewPassword;
             }
@@ -80,10 +89,10 @@
             
             self.theNewEmailInputView.inputTextField.returnKeyType = UIReturnKeyNext;
             self.theNewEmailInputView.inputTextField.delegate = self;
-            self.theNewEmailInputView.inputTextField.tag = 1;
+            self.theNewEmailInputView.inputTextField.tag = NewEmailTextFieldTag;
 
             self.confirmEmailInputView.inputTextField.delegate = self;
-            self.confirmEmailInputView.inputTextField.tag = 2;
+            self.confirmEmailInputView.inputTextField.tag = ConfirmEmailTextFieldTag;
             
             [self.confirmButton setTitle:AMLocalizedString(@"changeEmail", @"The title of the alert dialog to change the email associated to an account.") forState:UIControlStateNormal];
             
@@ -105,13 +114,13 @@
             
             self.theNewPasswordView.passwordTextField.returnKeyType = UIReturnKeyNext;
             self.theNewPasswordView.passwordTextField.delegate = self;
-            self.theNewPasswordView.passwordTextField.tag = 4;
+            self.theNewPasswordView.passwordTextField.tag = NewPasswordTextFieldTag;
             if (@available(iOS 12.0, *)) {
                 self.theNewPasswordView.passwordTextField.textContentType = UITextContentTypeNewPassword;
             }
             
             self.confirmPasswordView.passwordTextField.delegate = self;
-            self.confirmPasswordView.passwordTextField.tag = 5;
+            self.confirmPasswordView.passwordTextField.tag = ConfirmPasswordTextFieldTag;
             if (@available(iOS 12.0, *)) {
                 self.confirmPasswordView.passwordTextField.textContentType = UITextContentTypeNewPassword;
             }
@@ -355,25 +364,25 @@
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
     switch (textField.tag) {
-        case 1:
+        case NewEmailTextFieldTag:
             self.activeInputView = self.theNewEmailInputView;
             break;
             
-        case 2:
+        case ConfirmEmailTextFieldTag:
             self.activeInputView = self.confirmEmailInputView;
             break;
             
-        case 3:
+        case CurrentPasswordTextFieldTag:
             self.activePasswordView = self.currentPasswordView;
             self.currentPasswordView.toggleSecureButton.hidden = NO;
             break;
             
-        case 4:
+        case NewPasswordTextFieldTag:
             self.activePasswordView = self.theNewPasswordView;
             self.theNewPasswordView.toggleSecureButton.hidden = NO;
             break;
             
-        case 5:
+        case ConfirmPasswordTextFieldTag:
             self.activePasswordView = self.confirmPasswordView;
             self.confirmPasswordView.toggleSecureButton.hidden = NO;
             break;
@@ -388,21 +397,21 @@
     self.activePasswordView = nil;
     
     switch (textField.tag) {
-        case 1:
+        case NewEmailTextFieldTag:
             [self validateEmail];
             break;
             
-        case 2:
+        case ConfirmEmailTextFieldTag:
             [self validateConfirmEmail];
             break;
             
-        case 4:
+        case NewPasswordTextFieldTag:
             self.theNewPasswordView.passwordTextField.secureTextEntry = YES;
             [self.theNewPasswordView configureSecureTextEntry];
             [self validateNewPassword];
             break;
             
-        case 5:
+        case ConfirmPasswordTextFieldTag:
             self.confirmPasswordView.passwordTextField.secureTextEntry = YES;
             [self.confirmPasswordView configureSecureTextEntry];
             [self validateConfirmPassword];
@@ -442,7 +451,7 @@
     }
     
     if (self.changeType == ChangeTypePassword || self.changeType == ChangeTypeResetPassword || self.changeType == ChangeTypeParkAccount) {
-        if (textField.tag == 4) {
+        if (textField.tag == NewPasswordTextFieldTag) {
             if (text.length == 0) {
                 self.passwordStrengthIndicatorView.customView.hidden = YES;
                 self.passwordStrengthIndicatorViewHeightLayoutConstraint.constant = 0;
@@ -459,27 +468,27 @@
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     switch (textField.tag) {
-        case 0:
+        case CurrentEmailTextFieldTag:
             [self.theNewEmailInputView.inputTextField becomeFirstResponder];
             break;
             
-        case 1:
+        case NewEmailTextFieldTag:
             [self.confirmEmailInputView.inputTextField becomeFirstResponder];
             break;
             
-        case 2:
+        case ConfirmEmailTextFieldTag:
             [self.confirmEmailInputView.inputTextField resignFirstResponder];
             break;
             
-        case 3:
+        case CurrentPasswordTextFieldTag:
             [self.theNewPasswordView.passwordTextField becomeFirstResponder];
             break;
             
-        case 4:
+        case NewPasswordTextFieldTag:
             [self.confirmPasswordView.passwordTextField becomeFirstResponder];
             break;
             
-        case 5:
+        case ConfirmPasswordTextFieldTag:
             [self.confirmPasswordView.passwordTextField resignFirstResponder];
             break;
             

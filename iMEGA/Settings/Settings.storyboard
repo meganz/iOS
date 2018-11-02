@@ -971,6 +971,7 @@
                                                 </variation>
                                             </view>
                                         </subviews>
+                                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstItem="psY-WB-fF0" firstAttribute="leading" secondItem="cAv-zt-lSj" secondAttribute="leading" id="0dc-KU-GY8"/>
                                             <constraint firstAttribute="trailing" secondItem="psY-WB-fF0" secondAttribute="trailing" id="KeB-hZ-fAn"/>
