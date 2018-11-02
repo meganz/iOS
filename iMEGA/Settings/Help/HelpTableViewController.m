@@ -3,12 +3,12 @@
 
 #import <MessageUI/MFMailComposeViewController.h>
 
-#import "Helper.h"
 #import "SVProgressHUD.h"
 
 #import "MEGAReachabilityManager.h"
 #import "MEGASdkManager.h"
 #import "MEGASDK+MNZCategory.h"
+#import "NSURL+MNZCategory.h"
 
 @interface HelpTableViewController () <MFMailComposeViewControllerDelegate>
 
@@ -58,7 +58,7 @@
                 break;
                 
             case 2: //Join Beta
-                [Helper presentSafariViewControllerWithURL:[NSURL URLWithString:@"https://testflight.apple.com/join/4x1P5Tnx"]];
+                [[NSURL URLWithString:@"https://testflight.apple.com/join/4x1P5Tnx"] mnz_presentSafariViewController];
                 break;
                 
             case 3: //Rate us
@@ -117,7 +117,7 @@
 }
 
 - (void)openHelpCentre {
-    [Helper presentSafariViewControllerWithURL:[NSURL URLWithString:@"https://mega.nz/help/client/ios/"]];
+    [[NSURL URLWithString:@"https://mega.nz/help/client/ios/"] mnz_presentSafariViewController];
 }
 
 - (void)rateApp {
