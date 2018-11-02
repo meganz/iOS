@@ -13,7 +13,7 @@
 #import "NodeTableViewCell.h"
 #import "NSString+MNZCategory.h"
 #import "UIImageView+MNZCategory.h"
-#import "UnavailableLinkView.h"
+#import "UITextField+MNZCategory.h"
 
 #import "BrowserViewController.h"
 #import "CustomActionViewController.h"
@@ -22,6 +22,7 @@
 #import "MEGANavigationController.h"
 #import "MEGAPhotoBrowserViewController.h"
 #import "MyAccountHallViewController.h"
+#import "UnavailableLinkView.h"
 
 @interface FolderLinkViewController () <UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, UISearchResultsUpdating, UISearchDisplayDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAGlobalDelegate, MEGARequestDelegate, CustomActionViewControllerDelegate> {
     
@@ -268,6 +269,9 @@
     [decryptionAlertController addTextFieldWithConfigurationHandler:^(UITextField *textField) {
         textField.placeholder = AMLocalizedString(@"decryptionKey", nil);
         [textField addTarget:self action:@selector(decryptionTextFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
+        textField.shouldReturnCompletion = ^BOOL(UITextField *textField) {
+            return !textField.text.mnz_isEmpty;
+        };
     }];
     
     [decryptionAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
@@ -339,12 +343,11 @@
     }
 }
 
-- (void)decryptionTextFieldDidChange:(UITextField *)sender {
-    if (self.presentedViewController) {
-        UIAlertController *decryptionAlertController = (UIAlertController *)self.presentedViewController;
-        UITextField *decryptionTextField = decryptionAlertController.textFields.firstObject;
+- (void)decryptionTextFieldDidChange:(UITextField *)textField {
+    UIAlertController *decryptionAlertController = (UIAlertController *)self.presentedViewController;
+    if (decryptionAlertController) {
         UIAlertAction *okAction = decryptionAlertController.actions.lastObject;
-        okAction.enabled = decryptionTextField.text.length > 0;
+        okAction.enabled = !textField.text.mnz_isEmpty;
     }
 }
 

@@ -33,6 +33,8 @@ typedef NS_ENUM(NSInteger, MEGAChatMessageEndCallReason);
 
 - (BOOL)mnz_isEmpty;
 
+- (BOOL)mnz_containsInvalidChars;
+
 - (NSString *)mnz_removeWebclientFormatters;
 
 + (NSString *)mnz_stringFromTimeInterval:(NSTimeInterval)interval;
