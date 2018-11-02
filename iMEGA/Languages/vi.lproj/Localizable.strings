@@ -144,8 +144,8 @@
 "awaitingEmailConfirmation"="Đang chờ việc xác nhận email.";
 /* Text shown on the confirm account view to remind the user what to do */
 "confirmText"="Xin nhập mật khẩu để xác thực tài khoản";
-/* Button title that triggers the confirm account action */
-"confirmAccountButton"="Xác nhận tài khoản";
+/* Label for any ‘Confirm account’ button, link, text, title, etc. - (String as short as possible). */
+"Confirm account"="Xác nhận tài khoản";
 /* Error text shown when you introduce a wrong password on the confirmation proccess */
 "passwordWrong"="Sai mật khẩu";
 /* Warning title shown when you try to confirm an account but you are logged in with another one */
