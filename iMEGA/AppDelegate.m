@@ -109,6 +109,8 @@
     [MEGASdk setLogLevel:MEGALogLevelFatal];
 #endif
     
+    [MEGASdk setLogToConsole:YES];
+    
     [self migrateLocalCachesLocation];
     
     if ([launchOptions objectForKey:@"UIApplicationLaunchOptionsRemoteNotificationKey"]) {
@@ -269,8 +271,6 @@
                 [[MEGASdkManager sharedMEGAChatSdk] addChatDelegate:self];
             }
             
-            [[MEGALogger sharedLogger] enableChatlogs];
-            
             MEGAChatInit chatInit = [[MEGASdkManager sharedMEGAChatSdk] initKarereWithSid:sessionV3];
             if (chatInit == MEGAChatInitError) {
                 MEGALogError(@"Init Karere with session failed");
@@ -280,8 +280,6 @@
                 [[MEGASdkManager sharedMEGAChatSdk] logout];
                 [UIApplication.mnz_visibleViewController presentViewController:alertController animated:YES completion:nil];
             }
-        } else {
-            [[MEGALogger sharedLogger] enableSDKlogs];
         }
         
         MEGALoginRequestDelegate *loginRequestDelegate = [[MEGALoginRequestDelegate alloc] init];
@@ -1416,7 +1414,7 @@ void uncaughtExceptionHandler(NSException *exception) {
 
     } else {
         NSArray<MEGANode *> *nodesToIndex = [nodeList mnz_nodesArrayFromNodeList];
-        MEGALogDebug(@"Spotlight indexing %lu nodes updated", nodesToIndex.count);
+        MEGALogDebug(@"Spotlight indexing %tu nodes updated", nodesToIndex.count);
         for (MEGANode *node in nodesToIndex) {
             [self.indexer index:node];
         }
@@ -1805,26 +1803,23 @@ void uncaughtExceptionHandler(NSException *exception) {
 
 - (void)onChatRequestFinish:(MEGAChatSdk *)api request:(MEGAChatRequest *)request error:(MEGAChatError *)error {
     if ([error type] != MEGAChatErrorTypeOk) {
-        MEGALogError(@"onChatRequestFinish error type: %ld request type: %ld", error.type, request.type);
+        MEGALogError(@"onChatRequestFinish error type: %td request type: %td", error.type, request.type);
         return;
     }
     
     if (request.type == MEGAChatRequestTypeLogout) {
-        if ([[NSUserDefaults standardUserDefaults] boolForKey:@"logging"]) {
-            [[MEGALogger sharedLogger] enableSDKlogs];
-        }
         [MEGASdkManager destroySharedMEGAChatSdk];
         
         [self.mainTBC setBadgeValueForChats];
     }
     
-    MEGALogInfo(@"onChatRequestFinish request type: %ld", request.type);
+    MEGALogInfo(@"onChatRequestFinish request type: %td", request.type);
 }
 
 #pragma mark - MEGAChatDelegate
 
 - (void)onChatInitStateUpdate:(MEGAChatSdk *)api newState:(MEGAChatInit)newState {
-    MEGALogInfo(@"onChatInitStateUpdate new state: %ld", newState);
+    MEGALogInfo(@"onChatInitStateUpdate new state: %td", newState);
     if (newState == MEGAChatInitError) {
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"error", nil) message:@"Chat disabled (Init error). Enable chat in More -> Settings -> Chat" preferredStyle:UIAlertControllerStyleAlert];
         [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
@@ -1975,7 +1970,7 @@ void uncaughtExceptionHandler(NSException *exception) {
             return;
         }
         
-        MOOfflineNode *offlineNodeExist = [[MEGAStore shareInstance] offlineNodeWithNode:node api:[MEGASdkManager sharedMEGASdk]];
+        MOOfflineNode *offlineNodeExist = [[MEGAStore shareInstance] offlineNodeWithNode:node];
         if (!offlineNodeExist) {
             NSRange replaceRange = [transfer.path rangeOfString:@"Documents/"];
             if (replaceRange.location != NSNotFound) {

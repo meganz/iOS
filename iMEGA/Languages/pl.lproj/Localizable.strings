@@ -37,7 +37,7 @@
 /* Alert message shown when the user tries to download an empty folder  */
 "emptyFolderMessage"="Nie można pobrać pustego katalogu";
 /* Message shown when the user clicks on a confirm account link that has already been used  */
-"accountAlreadyConfirmed"="Twoje konto jest już aktywne. Zaloguj się.";
+"accountAlreadyConfirmed"="Twoje konto zostało aktywowane. Proszę się zalogować.";
 /* Message shown when the user clicks on an link that is not valid */
 "linkNotValid"="Nieprawidłowy link";
 /* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
@@ -144,8 +144,8 @@
 "awaitingEmailConfirmation"="Oczekiwanie na potwierdzenie adresu email.";
 /* Text shown on the confirm account view to remind the user what to do */
 "confirmText"="Wprowadź hasło, w celu potwierdzenia konta";
-/* Button title that triggers the confirm account action */
-"confirmAccountButton"="Potwierdź swoje konto";
+/* Label for any ‘Confirm account’ button, link, text, title, etc. - (String as short as possible). */
+"Confirm account"="Potwierdź swoje konto";
 /* Error text shown when you introduce a wrong password on the confirmation proccess */
 "passwordWrong"="Błędne hasło";
 /* Warning title shown when you try to confirm an account but you are logged in with another one */
@@ -984,9 +984,9 @@
 /* Text shown under the button 'Skip' to explain that you can upgrade your account later in the section 'My Account'. */
 "youCanUpgradeLaterInMyAccount"="Możesz zmienić rodzaj konto w ustawieniach";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
-"cloudDriveIsAlmostFull"="[S]Twoje konto jest prawie pełne.[/S] [A]Zmień konto[/A] na PRO i otrzymaj [S]do 4 TB (4096 GB)[/S] miejsca dostępnego na pliki.";
+"cloudDriveIsAlmostFull"="[S]Cloud Drive jest prawie pełny.[/S] [A]Zaktualizuj teraz [/A] do konta PRO i uzyskaj [S]do 8 TB (8192 GB)[/S] przestrzeni dyskowej w chmurze.";
 /* A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text. */
-"cloudDriveIsFull"="[S]Twoje konto jest pełne.[/S] [A]Zmień konto[/A] na PRO i otrzymaj [S]do 4 TB (4096 GB)[/S] miejsca dostępnego na pliki.";
+"cloudDriveIsFull"="[S]Twoje konto jest pełne.[/S] [A]Zaktualizuj teraz[/A] do konta PRO i uzyskaj[S] do 8 TB (8192 GB)[/S] miejsca w chmurze.";
 /* Storage related with the MEGA PRO account level you can subscribe */
 "productSpace"="Pojemności";
 /* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
@@ -1577,11 +1577,11 @@
 /* Alert text shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device */
 "youNeedATwoFactorAuthenticationApp"="Potrzebujesz aplikacji uwierzytelniania dwustopniowego na tym urządzeniu";
 /* Alert text shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device and tap on the question mark */
-"You need an authenticator app to enable 2FA on MEGA. You can download and install the Google Authenticator, Duo Mobile, Authy or Microsoft Authenticator app for your phone or tablet."="You need an authenticator app to enable 2FA on MEGA. You can download and install the Google Authenticator, Duo Mobile, Authy or Microsoft Authenticator app for your phone or tablet.";
+"You need an authenticator app to enable 2FA on MEGA. You can download and install the Google Authenticator, Duo Mobile, Authy or Microsoft Authenticator app for your phone or tablet."="Potrzebujesz aplikacji uwierzytelniającej, by włączyć 2FA na MEGA. Możesz pobrać i zainstalować aplikację Google Authenticator, Duo Mobile, Authy lub Microsoft Authenticator na swój telefon lub tablet.";
 /* A title on the mobile web client page showing that 2FA has been enabled successfully. */
 "twoFactorAuthenticationEnabled"="Uwierzytelnianie dwuetapowe włączone";
 /* A message on the dialog shown after 2FA was successfully enabled. */
-"twoFactorAuthenticationEnabledDescription"="Gdy następnym razem zalogujesz się na swoje konto, zostaniesz poproszony o podanie 6-cyfrowego kodu dostarczonego przez Twoją aplikację do uwierzytelniania.";
+"twoFactorAuthenticationEnabledDescription"="Gdy następnym razem zalogujesz się na swoje konto, zostaniesz poproszony o wprowadzenie 6-cyfrowego kodu podanego przez aplikację do uwierzytelniania.";
 /* A warning message on the Backup Recovery Key dialog to tell the user to backup their Recovery Key to their local computer. */
 "pleaseSaveYourRecoveryKey"="Zapisz klucz zapasowy w bezpiecznej lokalizacji";
 /* An informational message on the Backup Recovery Key dialog. */
@@ -1627,7 +1627,7 @@
 /* Title label that explains that the user is going to be asked for the photos permission */
 "Allow Access to Photos"="Zezwalaj na dostęp do zdjęć";
 /* Detailed explanation of why the user should give permission to access to the photos */
-"To share photos and videos, allow MEGA to access your photos"="Aby udostępniać zdjęcia i filmy, zezwól MEGA na dostęp do zdjęć";
+"To share photos and videos, allow MEGA to access your library."="Aby udostępniać zdjęcia i filmy, zezwól MEGA na dostęp do zdjęć";
 /* Title label that explains that the user is going to be asked for the microphone and camera permission */
 "Enable Microphone and Camera"="Włącz mikrofon i kamerę";
 /* Detailed explanation of why the user should give permission to access to the camera and the microphone */
@@ -1637,7 +1637,7 @@
 /* Detailed explanation of why the user should give permission to deliver notifications */
 "We would like to send you notifications so you receive new messages on your device instantly."="Chcemy wysyłać Ci powiadomienia, aby natychmiast otrzymywać nowe wiadomości na Twoim urządzeniu.";
 /* Button which triggers a request for a specific permission, that have been explained to the user beforehand */
-"Enable Access"="Włącz dostęp";
+"Allow Access"="Włącz dostęp";
 /* A section header which contains the file management settings. These settings allow users to remove duplicate files etc. */
 "File Management"="Zarządzanie plikami";
 /* Title of the option to enable or disable file versioning on Settings section */
@@ -1675,8 +1675,8 @@
 /* A button label which allows the users save images/videos in the Photos app. */
 "Save to Photos"="Zapisz w Zdjęciach";
 /* Text shown when starting the process to save a photo or video to Photos app */
-"Saving to Photos…"="Saving to Photos…";
+"Saving to Photos…"="Zapisywanie do zdjęć...";
 /* Text shown when a photo or video is saved to Photos app */
-"Saved to Photos"="Saved to Photos";
+"Saved to Photos"="Zapisano w Zdjęciach";
 /* Text shown when an error occurs when trying to save a photo or video to Photos app */
-"Could not save"="Could not save";
+"Could not save Item"="Nie można zapisać elementu";

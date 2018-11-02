@@ -83,10 +83,11 @@
             case MEGAErrorTypeApiEExpired: {
                 if (self.errorCompletion) {
                     self.errorCompletion(error);
+                    return;
                 } else {
                     message = [NSString stringWithFormat:@"%@ %@", request.requestString, error.name];
+                    break;
                 }
-                return;
             }
                 
             case MEGAErrorTypeApiEFailed:

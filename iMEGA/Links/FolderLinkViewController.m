@@ -500,11 +500,11 @@
             [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:AMLocalizedString(@"downloadStarted", nil)];
             
             if (self.selectedNodesArray.count != 0) {
-                for (MEGANode *node in _selectedNodesArray) {
+                for (MEGANode *node in self.selectedNodesArray) {
                     [Helper downloadNode:node folderPath:[Helper relativePathForOffline] isFolderLink:YES shouldOverwrite:NO];
                 }
             } else {
-                [Helper downloadNode:_parentNode folderPath:[Helper relativePathForOffline] isFolderLink:YES shouldOverwrite:NO];
+                [Helper downloadNode:self.parentNode folderPath:[Helper relativePathForOffline] isFolderLink:YES shouldOverwrite:NO];
             }
         }];
     } else {
@@ -897,6 +897,10 @@
             }
             
             isFetchNodesDone = YES;
+            
+            [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithUnsignedLongLong:request.nodeHandle] forKey:@"kLastPublicHandleAccessed"];
+            [[NSUserDefaults standardUserDefaults] setDouble:[NSDate date].timeIntervalSince1970 forKey:@"kLastPublicTimestampAccessed"];
+            
             [self reloadUI];
             
             NSArray *componentsArray = [self.publicLinkString componentsSeparatedByString:@"!"];
