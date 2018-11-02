@@ -14,6 +14,14 @@
 #import "PasswordStrengthIndicatorView.h"
 #import "PasswordView.h"
 
+typedef NS_ENUM(NSInteger, TextFieldTag) {
+    FirstNameTextFieldTag = 0,
+    LastNameTextFieldTag,
+    EmailTextFieldTag,
+    PasswordTextFieldTag,
+    RetypeTextFieldTag
+};
+
 @interface CreateAccountViewController () <UINavigationControllerDelegate, UITextFieldDelegate, UIGestureRecognizerDelegate>
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *cancelBarButtonItem;
@@ -59,15 +67,15 @@
     
     self.firstNameInputView.inputTextField.returnKeyType = UIReturnKeyNext;
     self.firstNameInputView.inputTextField.delegate = self;
-    self.firstNameInputView.inputTextField.tag = 0;
+    self.firstNameInputView.inputTextField.tag = FirstNameTextFieldTag;
     
     self.lastNameInputView.inputTextField.returnKeyType = UIReturnKeyNext;
     self.lastNameInputView.inputTextField.delegate = self;
-    self.lastNameInputView.inputTextField.tag = 1;
+    self.lastNameInputView.inputTextField.tag = LastNameTextFieldTag;
     
     self.emailInputView.inputTextField.returnKeyType = UIReturnKeyNext;
     self.emailInputView.inputTextField.delegate = self;
-    self.emailInputView.inputTextField.tag = 2;
+    self.emailInputView.inputTextField.tag = EmailTextFieldTag;
     if (self.emailString) {
         self.emailInputView.inputTextField.text = self.emailString;
     }
@@ -77,13 +85,13 @@
     
     self.passwordView.passwordTextField.returnKeyType = UIReturnKeyNext;
     self.passwordView.passwordTextField.delegate = self;
-    self.passwordView.passwordTextField.tag = 3;
+    self.passwordView.passwordTextField.tag = PasswordTextFieldTag;
     if (@available(iOS 12.0, *)) {
         self.passwordView.passwordTextField.textContentType = UITextContentTypeNewPassword;
     }
     
     self.retypePasswordView.passwordTextField.delegate = self;
-    self.retypePasswordView.passwordTextField.tag = 4;
+    self.retypePasswordView.passwordTextField.tag = RetypeTextFieldTag;
     if (@available(iOS 12.0, *)) {
         self.retypePasswordView.passwordTextField.textContentType = UITextContentTypeNewPassword;
     }
@@ -322,29 +330,26 @@
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
     switch (textField.tag) {
-        case 0:
+        case FirstNameTextFieldTag:
             self.activeInputView = self.firstNameInputView;
             break;
             
-        case 1:
+        case LastNameTextFieldTag:
             self.activeInputView = self.lastNameInputView;
             break;
             
-        case 2:
+        case EmailTextFieldTag:
             self.activeInputView = self.emailInputView;
             break;
             
-        case 3:
+        case PasswordTextFieldTag:
             self.activePasswordView = self.passwordView;
             self.passwordView.toggleSecureButton.hidden = NO;
             break;
             
-        case 4:
+        case RetypeTextFieldTag:
             self.activePasswordView = self.retypePasswordView;
             self.retypePasswordView.toggleSecureButton.hidden = NO;
-            break;
-            
-        default:
             break;
     }
 }
@@ -354,31 +359,28 @@
     self.activePasswordView = nil;
     
     switch (textField.tag) {
-        case 0:
+        case FirstNameTextFieldTag:
             [self validateFirstName];
             break;
             
-        case 1:
+        case LastNameTextFieldTag:
             [self validateLastName];
             break;
             
-        case 2:
+        case EmailTextFieldTag:
             [self validateEmail];
             break;
             
-        case 3:
+        case PasswordTextFieldTag:
             self.passwordView.passwordTextField.secureTextEntry = YES;
             [self.passwordView configureSecureTextEntry];
             [self validatePassword];
             break;
             
-        case 4:
+        case RetypeTextFieldTag:
             self.retypePasswordView.passwordTextField.secureTextEntry = YES;
             [self.retypePasswordView configureSecureTextEntry];
             [self validateRetypePassword];
-            break;
-            
-        default:
             break;
     }
 }
@@ -388,27 +390,27 @@
     BOOL createAccountEnabled = NO;
     
     switch (textField.tag) {
-        case 0:
+        case FirstNameTextFieldTag:
             createAccountEnabled = !text.mnz_isEmpty && !self.lastNameInputView.inputTextField.text.mnz_isEmpty && self.emailInputView.inputTextField.text.mnz_isValidEmail && !self.passwordView.passwordTextField.text.mnz_isEmpty && [self.passwordView.passwordTextField.text isEqualToString:self.retypePasswordView.passwordTextField.text] && [[MEGASdkManager sharedMEGASdk] passwordStrength:self.passwordView.passwordTextField.text] > PasswordStrengthVeryWeak && self.termsCheckboxButton.selected;
             [self.firstNameInputView setErrorState:NO withText:AMLocalizedString(@"firstName", @"Hint text for the first name (Placeholder)")];
             break;
             
-        case 1:
+        case LastNameTextFieldTag:
             createAccountEnabled = !self.firstNameInputView.inputTextField.text.mnz_isEmpty && !text.mnz_isEmpty && self.emailInputView.inputTextField.text.mnz_isValidEmail && !self.passwordView.passwordTextField.text.mnz_isEmpty && [self.passwordView.passwordTextField.text isEqualToString:self.retypePasswordView.passwordTextField.text] && [[MEGASdkManager sharedMEGASdk] passwordStrength:self.passwordView.passwordTextField.text] > PasswordStrengthVeryWeak && self.termsCheckboxButton.selected;
             [self.lastNameInputView setErrorState:NO withText:AMLocalizedString(@"lastName", @"Hint text for the last name (Placeholder)")];
             break;
             
-        case 2:
+        case EmailTextFieldTag:
             createAccountEnabled = !self.firstNameInputView.inputTextField.text.mnz_isEmpty && !self.lastNameInputView.inputTextField.text.mnz_isEmpty && text.mnz_isValidEmail && !self.passwordView.passwordTextField.text.mnz_isEmpty && [self.passwordView.passwordTextField.text isEqualToString:self.retypePasswordView.passwordTextField.text] && [[MEGASdkManager sharedMEGASdk] passwordStrength:self.passwordView.passwordTextField.text] > PasswordStrengthVeryWeak && self.termsCheckboxButton.selected;
             [self.emailInputView setErrorState:NO withText:AMLocalizedString(@"emailPlaceholder", @"Hint text to suggest that the user has to write his email")];
             break;
             
-        case 3:
+        case PasswordTextFieldTag:
             createAccountEnabled = !self.firstNameInputView.inputTextField.text.mnz_isEmpty && !self.lastNameInputView.inputTextField.text.mnz_isEmpty && self.emailInputView.inputTextField.text.mnz_isValidEmail && !text.mnz_isEmpty && [text isEqualToString:self.retypePasswordView.passwordTextField.text] && [[MEGASdkManager sharedMEGASdk] passwordStrength:text] > PasswordStrengthVeryWeak && self.termsCheckboxButton.selected;
             [self.passwordView setErrorState:NO withText:AMLocalizedString(@"passwordPlaceholder", @"Hint text to suggest that the user has to write his password")];
             break;
             
-        case 4:
+        case RetypeTextFieldTag:
             createAccountEnabled = !self.firstNameInputView.inputTextField.text.mnz_isEmpty && !self.lastNameInputView.inputTextField.text.mnz_isEmpty && self.emailInputView.inputTextField.text.mnz_isValidEmail && !self.passwordView.passwordTextField.text.mnz_isEmpty && [self.passwordView.passwordTextField.text isEqualToString:text] && [[MEGASdkManager sharedMEGASdk] passwordStrength:self.passwordView.passwordTextField.text] > PasswordStrengthVeryWeak && self.termsCheckboxButton.selected;
             [self.retypePasswordView setErrorState:NO withText:AMLocalizedString(@"confirmPassword", @"Hint text where the user have to re-write the new password to confirm it")];
             break;
@@ -417,7 +419,7 @@
             break;
     }
     
-    if (textField.tag == 3) {
+    if (textField.tag == PasswordTextFieldTag) {
         if (text.length == 0) {
             self.passwordStrengthIndicatorView.customView.hidden = YES;
             self.passwordStrengthIndicatorViewHeightLayoutConstraint.constant = 0;
