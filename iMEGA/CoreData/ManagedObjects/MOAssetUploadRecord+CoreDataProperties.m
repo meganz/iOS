@@ -10,5 +10,6 @@
 @dynamic localIdentifier;
 @dynamic status;
 @dynamic creationDate;
+@dynamic mediaType;
 
 @end
