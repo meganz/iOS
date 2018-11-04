@@ -108,7 +108,7 @@ static const NSInteger MaxConcurrentOperationCountInMemoryWarning = 2;
 }
 
 - (void)uploadNextPhotosWithNumber:(NSInteger)number {
-    NSArray *records = [self.assetUploadRecordManager fetchNonUploadedRecordsWithLimit:number error:nil];
+    NSArray *records = [self.assetUploadRecordManager fetchNonUploadedRecordsWithLimit:number mediaType:PHAssetMediaTypeImage error:nil];
     for (MOAssetUploadRecord *record in records) {
         [CameraUploadRecordManager.shared updateStatus:UploadStatusQueuedUp forRecord:record error:nil];
         [self.operationQueue addOperation:[[CameraUploadOperation alloc] initWithLocalIdentifier:record.localIdentifier cameraUploadNode:self.cameraUploadNode]];

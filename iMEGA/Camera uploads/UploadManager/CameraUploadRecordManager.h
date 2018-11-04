@@ -1,6 +1,7 @@
 
 #import <Foundation/Foundation.h>
 #import "MOAssetUploadRecord+CoreDataClass.h"
+@import Photos;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -20,7 +21,7 @@ extern NSString * const UploadStatusDone;
 - (BOOL)saveChangesIfNeeded:(NSError * _Nullable __autoreleasing * _Nullable)error;
 
 - (nullable MOAssetUploadRecord *)fetchAssetUploadRecordByLocalIdentifier:(NSString *)identifier error:(NSError * _Nullable __autoreleasing * _Nullable)error;
-- (NSArray<MOAssetUploadRecord *> *)fetchNonUploadedRecordsWithLimit:(NSInteger)fetchLimit error:(NSError * _Nullable __autoreleasing * _Nullable)error;
+- (NSArray<MOAssetUploadRecord *> *)fetchNonUploadedRecordsWithLimit:(NSInteger)fetchLimit mediaType:(PHAssetMediaType)mediaType error:(NSError * _Nullable __autoreleasing * _Nullable)error;
 - (NSArray<MOAssetUploadRecord *> *)fetchAllAssetUploadRecords:(NSError * _Nullable __autoreleasing * _Nullable)error;
 
 

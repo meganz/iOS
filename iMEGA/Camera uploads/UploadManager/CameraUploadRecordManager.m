@@ -1,7 +1,6 @@
 
 #import "CameraUploadRecordManager.h"
 #import "MEGAStore.h"
-@import Photos;
 
 NSString * const UploadStatusNotStarted = @"NotStarted";
 NSString * const UploadStatusQueuedUp = @"QueuedUp";
@@ -69,14 +68,14 @@ NSString * const UploadStatusDone = @"Done";
     return record;
 }
 
-- (NSArray<MOAssetUploadRecord *> *)fetchNonUploadedRecordsWithLimit:(NSInteger)fetchLimit error:(NSError *__autoreleasing  _Nullable *)error {
+- (NSArray<MOAssetUploadRecord *> *)fetchNonUploadedRecordsWithLimit:(NSInteger)fetchLimit mediaType:(PHAssetMediaType)mediaType error:(NSError *__autoreleasing  _Nullable *)error {
     __block NSArray<MOAssetUploadRecord *> *records = @[];
     __block NSError *coreDataError = nil;
     [self.privateQueueContext performBlockAndWait:^{
         NSFetchRequest *request = MOAssetUploadRecord.fetchRequest;
         request.fetchLimit = fetchLimit;
         request.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"creationDate" ascending:NO]];
-        request.predicate = [NSPredicate predicateWithFormat:@"status IN %@", @[UploadStatusNotStarted, UploadStatusFailed]];
+        request.predicate = [NSPredicate predicateWithFormat:@"(status IN %@) AND (mediaType == %@)", @[UploadStatusNotStarted, UploadStatusFailed], @(mediaType)];
         records = [self.privateQueueContext executeFetchRequest:request error:&coreDataError];
     }];
     
@@ -208,6 +207,7 @@ NSString * const UploadStatusDone = @"Done";
     record.localIdentifier = asset.localIdentifier;
     record.status = UploadStatusNotStarted;
     record.creationDate = asset.creationDate;
+    record.mediaType = @(asset.mediaType);
     return record;
 }
 
