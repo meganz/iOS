@@ -102,7 +102,7 @@
 "emailInvalidFormat"="Digite um email válido";
 /* Add contacts and share dialog error message when user try to add wrong email address */
 "theEmailAddressFormatIsInvalid"="O formato do email é inválido";
-/* Message shown when the user enters a wrong password  */
+/* Message shown when the user enters a wrong password */
 "passwordInvalidFormat"="Digite uma senha válida";
 /* Hint text to suggest that the user has to write his email */
 "emailPlaceholder"="Email";
@@ -130,10 +130,8 @@
 "passwordStrong"="Esta senha vai resistir aos ataques de força-bruta mais sofisticados. Por favor, certifique-se de que você vai lembrar dela.";
 /*  */
 "agreeWithTheMEGATermsOfService"="Eu concordo com os <a href='terms'>Termos de serviço</a> do MEGA";
-/* Error text shown when you have not entered a correct name  */
+/* Error text shown when you have not entered a correct name */
 "nameInvalidFormat"="Digite um nome válido";
-/*  */
-"invalidFirstNameAndLastName"="Nome e/ou sobrenome inválido.";
 /* Error text shown when you have not written the same password */
 "passwordsDoNotMatch"="As senhas não coincidem";
 /* Error text shown when you don't have selected the checkbox to agree with the Terms of Service */
@@ -145,7 +143,7 @@
 /* Text shown on the confirm account view to remind the user what to do */
 "confirmText"="Por favor, digite sua senha para confirmar sua conta";
 /* Label for any ‘Confirm account’ button, link, text, title, etc. - (String as short as possible). */
-"Confirm account"="Confirme a sua conta";
+"Confirm account"="Confirmar conta";
 /* Error text shown when you introduce a wrong password on the confirmation proccess */
 "passwordWrong"="Senha incorreta";
 /* Warning title shown when you try to confirm an account but you are logged in with another one */

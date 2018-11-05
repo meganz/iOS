@@ -102,7 +102,7 @@
 "emailInvalidFormat"="請輸入有效的郵箱地址";
 /* Add contacts and share dialog error message when user try to add wrong email address */
 "theEmailAddressFormatIsInvalid"="email格式無效";
-/* Message shown when the user enters a wrong password  */
+/* Message shown when the user enters a wrong password */
 "passwordInvalidFormat"="請輸入有效的密碼";
 /* Hint text to suggest that the user has to write his email */
 "emailPlaceholder"="郵箱地址";
@@ -130,10 +130,8 @@
 "passwordStrong"="這個密碼將可承受最典型的暴力破解攻擊。請確保您會好好記牢。";
 /*  */
 "agreeWithTheMEGATermsOfService"="我同意MEGA的<a href='terms'>服務條款</a>";
-/* Error text shown when you have not entered a correct name  */
+/* Error text shown when you have not entered a correct name */
 "nameInvalidFormat"="請輸入有效的名字";
-/*  */
-"invalidFirstNameAndLastName"="無效的名或姓。";
 /* Error text shown when you have not written the same password */
 "passwordsDoNotMatch"="密碼不匹配";
 /* Error text shown when you don't have selected the checkbox to agree with the Terms of Service */
@@ -145,7 +143,7 @@
 /* Text shown on the confirm account view to remind the user what to do */
 "confirmText"="請輸入您的密碼來確認賬戶";
 /* Label for any ‘Confirm account’ button, link, text, title, etc. - (String as short as possible). */
-"Confirm account"="確認您的帳號";
+"Confirm account"="確認帳戶";
 /* Error text shown when you introduce a wrong password on the confirmation proccess */
 "passwordWrong"="錯誤密碼";
 /* Warning title shown when you try to confirm an account but you are logged in with another one */
@@ -846,7 +844,7 @@
 /* Menu item */
 "help"="支援";
 /* Title of the section to access MEGA's help centre */
-"helpCentreLabel"="協助中心";
+"helpCentreLabel"="幫助中心";
 /* Section title that links you to the webpage that let you join and test the beta versions */
 "Join Beta"="Join Beta";
 /* Title to rate the app */
