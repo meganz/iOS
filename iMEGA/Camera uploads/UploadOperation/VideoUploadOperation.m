@@ -1,13 +1,28 @@
-//
-//  VideoUploadOperation.m
-//  MEGA
-//
-//  Created by Simon Wang on 5/11/18.
-//  Copyright © 2018 MEGA. All rights reserved.
-//
 
 #import "VideoUploadOperation.h"
 
 @implementation VideoUploadOperation
+
+#pragma mark - operation lifecycle
+
+- (void)start {
+    [super start];
+}
+
+- (void)dealloc {
+    MEGALogDebug(@"video upload operation gets deallocated");
+}
+
+#pragma mark - property
+
+- (NSString *)cameraUploadBackgroundTaskName {
+    return @"nz.mega.cameraUpload.video";
+}
+
+- (NSString *)description {
+    return [NSString stringWithFormat:@"Video upload operation %@", self.uploadInfo.asset.localIdentifier];
+}
+
+#pragma mark - data processing
 
 @end

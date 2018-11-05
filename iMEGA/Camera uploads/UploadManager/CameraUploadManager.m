@@ -7,7 +7,6 @@
 #import "MEGASdkManager.h"
 #import "MEGACreateFolderRequestDelegate.h"
 #import "UploadOperationFactory.h"
-@import Photos;
 
 static NSString * const CameraUplodFolderName = @"Camera Uploads";
 static const NSInteger ConcurrentPhotoUploadCount = 10;
@@ -94,22 +93,15 @@ static const NSInteger MaxConcurrentOperationCountInMemoryWarning = 2;
 }
 
 - (void)uploadNextPhotoBatch {
-    [self uploadNextPhotosWithNumber:ConcurrentPhotoUploadCount];
+    [self uploadNextAssetsWithNumber:ConcurrentPhotoUploadCount mediaType:PHAssetMediaTypeImage];
 }
 
-- (void)uploadNextVideoBatch {
+- (void)uploadNextForAsset:(PHAsset *)asset {
+    [self uploadNextAssetsWithNumber:1 mediaType:asset.mediaType];
 }
 
-- (void)uploadNextPhoto {
-    [self uploadNextPhotosWithNumber:1];
-}
-
-- (void)uploadNextAvailableVideo {
-    
-}
-
-- (void)uploadNextPhotosWithNumber:(NSInteger)number {
-    NSArray *records = [self.assetUploadRecordManager fetchNonUploadedRecordsWithLimit:number mediaType:PHAssetMediaTypeImage error:nil];
+- (void)uploadNextAssetsWithNumber:(NSInteger)number mediaType:(PHAssetMediaType)mediaType {
+    NSArray *records = [self.assetUploadRecordManager fetchNonUploadedRecordsWithLimit:number mediaType:mediaType error:nil];
     for (MOAssetUploadRecord *record in records) {
         [CameraUploadRecordManager.shared updateStatus:UploadStatusQueuedUp forRecord:record error:nil];
         CameraUploadOperation *operation = [UploadOperationFactory operationWithLocalIdentifier:record.localIdentifier parentNode:self.cameraUploadNode];

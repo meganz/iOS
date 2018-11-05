@@ -7,20 +7,10 @@
 #import "AssetUploadInfo.h"
 #import "CameraUploadRecordManager.h"
 #import "CameraUploadManager.h"
-#import "CameraUploadCoordinator.h"
 #import "CameraUploadRequestDelegate.h"
 @import Photos;
 
-static NSString * const cameraUploadBackgroundTaskName = @"nz.mega.cameraUpload";
-static NSString * const archiveUploadInfoBackgroundTaskName = @"nz.mega.archiveCameraAssetUploadInfo";
-
-
 @interface CameraUploadOperation ()
-
-@property (strong, nonatomic) AssetUploadInfo *uploadInfo;
-@property (nonatomic) UIBackgroundTaskIdentifier uploadTaskIdentifier;
-@property (strong, nonatomic) CameraUploadCoordinator *uploadCoordinator;
-@property (strong, nonatomic) MEGASdk *attributesDataSDK;
 
 @end
 
@@ -37,11 +27,11 @@ static NSString * const archiveUploadInfoBackgroundTaskName = @"nz.mega.archiveC
     return self;
 }
 
-- (void)dealloc {
-    MEGALogDebug(@"operation gets deallocated");
-}
-
 #pragma mark - properties
+
+- (NSString *)cameraUploadBackgroundTaskName {
+    return @"nz.mega.cameraUpload";
+}
 
 - (CameraUploadCoordinator *)uploadCoordinator {
     if (_uploadCoordinator == nil) {
@@ -70,25 +60,23 @@ static NSString * const archiveUploadInfoBackgroundTaskName = @"nz.mega.archiveC
     if (self.uploadInfo.asset == nil) {
         [[CameraUploadRecordManager shared] deleteRecordsByLocalIdentifiers:@[self.uploadInfo.asset.localIdentifier] error:nil];
         [self finishOperation];
-        MEGALogDebug(@"[Camera Upload] Upload operation finishes with empty asset");
+        MEGALogDebug(@"[Camera Upload] %@ finishes with empty asset", self);
         return;
     }
 
     [self beginBackgroundTask];
     
-    MEGALogDebug(@"[Camera Upload] Upload operation starts for asset: %@", self.uploadInfo.asset.localIdentifier);
+    MEGALogDebug(@"[Camera Upload] %@ starts processing", self);
     [[CameraUploadRecordManager shared] updateStatus:UploadStatusProcessing forLocalIdentifier:self.uploadInfo.asset.localIdentifier error:nil];
-    
-    [self requestImageData];
 }
 
 - (void)beginBackgroundTask {
-    self.uploadTaskIdentifier = [UIApplication.sharedApplication beginBackgroundTaskWithName:cameraUploadBackgroundTaskName expirationHandler:^{
+    self.uploadTaskIdentifier = [UIApplication.sharedApplication beginBackgroundTaskWithName:self.cameraUploadBackgroundTaskName expirationHandler:^{
         MOAssetUploadRecord *record = [CameraUploadRecordManager.shared fetchAssetUploadRecordByLocalIdentifier:self.uploadInfo.asset.localIdentifier error:nil];
-        MEGALogDebug(@"[Camera Upload] upload operation background task expired with asset: %@", self.uploadInfo.asset.localIdentifier);
+        MEGALogDebug(@"[Camera Upload] %@ background task expired", self);
         if ([record.status isEqualToString:UploadStatusUploading]) {
             [self finishOperation];
-            MEGALogDebug(@"[Camera Upload] upload operation finishes while asset: %@ is uploading", self.uploadInfo.asset.localIdentifier);
+            MEGALogDebug(@"[Camera Upload] %@ finishes while uploading", self);
         } else {
             [self cancel];
             [self finishOperationWithStatus:UploadStatusFailed shouldUploadNextAsset:NO];
@@ -101,92 +89,8 @@ static NSString * const archiveUploadInfoBackgroundTaskName = @"nz.mega.archiveC
 
 #pragma mark - data processing
 
-- (void)requestImageData {
-    PHImageRequestOptions *options = [[PHImageRequestOptions alloc] init];
-    options.networkAccessAllowed = YES;
-    options.version = PHImageRequestOptionsVersionCurrent;
-    options.synchronous = YES;
-    [[PHImageManager defaultManager] requestImageDataForAsset:self.uploadInfo.asset options:options resultHandler:^(NSData * _Nullable imageData, NSString * _Nullable dataUTI, UIImageOrientation orientation, NSDictionary * _Nullable info) {
-        if (self.isCancelled) {
-            [self finishOperationWithStatus:UploadStatusFailed shouldUploadNextAsset:YES];
-            return;
-        }
-        
-        if (imageData) {
-            [self processImageData:imageData];
-        } else {
-            [self finishOperationWithStatus:UploadStatusFailed shouldUploadNextAsset:YES];
-        }
-    }];
-}
-
-- (void)processImageData:(NSData *)imageData {
-    self.uploadInfo.originalFingerprint = [[MEGASdkManager sharedMEGASdk] fingerprintForData:imageData modificationTime:self.uploadInfo.asset.creationDate];
-    MEGANode *existingNode = [[MEGASdkManager sharedMEGASdk] nodeForFingerprint:self.uploadInfo.originalFingerprint parent:self.uploadInfo.parentNode];
-    if (existingNode) {
-        [self processExistingNode:existingNode];
-        return;
-    }
-    
-    NSData *JPEGData = UIImageJPEGRepresentation([UIImage imageWithData:imageData], 1.0);
-    self.uploadInfo.fingerprint = [[MEGASdkManager sharedMEGASdk] fingerprintForData:JPEGData modificationTime:self.uploadInfo.asset.creationDate];
-    existingNode = [[MEGASdkManager sharedMEGASdk] nodeForFingerprint:self.uploadInfo.fingerprint parent:self.uploadInfo.parentNode];
-    if (existingNode) {
-        [self processExistingNode:existingNode];
-        return;
-    }
-
-    NSURL *assetDirectoryURL = [[[NSFileManager defaultManager] cameraUploadURL] URLByAppendingPathComponent:self.uploadInfo.asset.localIdentifier.stringByRemovingInvalidFileCharacters isDirectory:YES];
-    if(![[NSFileManager defaultManager] createDirectoryAtURL:assetDirectoryURL withIntermediateDirectories:YES attributes:nil error:nil]) {
-        [self finishOperationWithStatus:UploadStatusFailed shouldUploadNextAsset:YES];
-        return;
-    }
-    self.uploadInfo.directoryURL = assetDirectoryURL;
-    self.uploadInfo.fileName = [[NSString mnz_fileNameWithDate:self.uploadInfo.asset.creationDate] stringByAppendingPathExtension:@"jpg"];
-    if ([JPEGData writeToURL:self.uploadInfo.fileURL atomically:YES]) {
-        self.uploadInfo.fileSize = [JPEGData length];
-        [self encryptUploadFile];
-    } else {
-        [self finishOperationWithStatus:UploadStatusFailed shouldUploadNextAsset:YES];
-    }
-}
-
-- (void)encryptUploadFile {
-    self.uploadInfo.mediaUpload = [[MEGASdkManager sharedMEGASdk] backgroundMediaUpload];
-    NSString *urlSuffix;
-    if ([self.uploadInfo.mediaUpload encryptFileAtPath:self.uploadInfo.fileURL.path startPosition:0 length:self.uploadInfo.fileSize outputFilePath:self.uploadInfo.encryptedURL.path urlSuffix:&urlSuffix]) {
-        MEGALogDebug(@"[Camera Upload] Upload file encrypted with url suffix: %@", urlSuffix);
-        
-        [self createThumbnailAndPreviewFiles];
-        
-        self.uploadInfo.uploadURLStringSuffix = urlSuffix;
-        [[MEGASdkManager sharedMEGASdk] requestBackgroundUploadURLWithFileSize:self.uploadInfo.fileSize mediaUpload:self.uploadInfo.mediaUpload delegate:[[CameraUploadRequestDelegate alloc] initWithCompletion:^(MEGARequest * _Nonnull request, MEGAError * _Nonnull error) {
-            if (error.type) {
-                MEGALogError(@"[Camera Upload] Upload requests upload url failed with error type: %ld", error.type);
-                [self finishOperationWithStatus:UploadStatusFailed shouldUploadNextAsset:YES];
-            } else {
-                self.uploadInfo.uploadURLString = [self.uploadInfo.mediaUpload uploadURLString];
-                if (self.uploadInfo.uploadURL) {
-                    [self uploadFileToServer];
-                } else {
-                    [self finishOperationWithStatus:UploadStatusFailed shouldUploadNextAsset:YES];
-                }
-            }
-        }]];
-    } else {
-        MEGALogError(@"[Camera Upload] File encryption failed for asset: %@", self.uploadInfo.asset.localIdentifier);
-        [self finishOperationWithStatus:UploadStatusFailed shouldUploadNextAsset:YES];
-    }
-}
-
-- (void)createThumbnailAndPreviewFiles {
-    [self.attributesDataSDK createThumbnail:self.uploadInfo.fileURL.path destinatioPath:self.uploadInfo.thumbnailURL.path];
-    [self.attributesDataSDK createPreview:self.uploadInfo.fileURL.path destinatioPath:self.uploadInfo.previewURL.path];
-    self.attributesDataSDK = nil;
-}
-
 - (void)processExistingNode:(MEGANode *)node {
-    MEGALogDebug(@"[Camera Upload] Process existing node: %llu", node.handle);
+    MEGALogDebug(@"[Camera Upload] %@ processes existing node", self);
     
     if (node.parentHandle != self.uploadInfo.parentNode.handle) {
         [[MEGASdkManager sharedMEGASdk] copyNode:node newParent:self.uploadInfo.parentNode];
@@ -198,11 +102,11 @@ static NSString * const archiveUploadInfoBackgroundTaskName = @"nz.mega.archiveC
 #pragma mark - upload task
 
 - (void)uploadFileToServer {
-    MEGALogDebug(@"[Camera Upload] Uploading file to server for asset: %@ to server: %@", self.uploadInfo.asset.localIdentifier, self.uploadInfo.uploadURL);
+    MEGALogDebug(@"[Camera Upload] %@ starts uploading file to server: %@", self, self.uploadInfo.uploadURL);
     
     NSURLSessionUploadTask *uploadTask = [[TransferSessionManager shared] photoUploadTaskWithURL:self.uploadInfo.uploadURL fromFile:self.uploadInfo.encryptedURL completion:^(NSData * _Nullable token, NSError * _Nullable error) {
         if (error) {
-            MEGALogError(@"[Camera Upload] Error when to upload asset %@ %@", self.uploadInfo.asset.localIdentifier, error);
+            MEGALogError(@"[Camera Upload] %@ got error when to upload: %@", self, error);
             [self finishOperationWithStatus:UploadStatusFailed shouldUploadNextAsset:YES];
         } else {
             [self.uploadCoordinator completeUploadWithInfo:self.uploadInfo uploadToken:token success:^(MEGANode * _Nonnull node) {
@@ -232,7 +136,7 @@ static NSString * const archiveUploadInfoBackgroundTaskName = @"nz.mega.archiveC
 }
 
 - (void)archiveUploadInfoDataForBackgroundTransfer {
-    MEGALogDebug(@"[Camera Upload] start archiving upload info for asset: %@", self.uploadInfo.asset.localIdentifier);
+    MEGALogDebug(@"[Camera Upload] %@ start archiving upload info", self);
     
     NSURL *archivedURL = [self.uploadInfo.directoryURL URLByAppendingPathComponent:self.uploadInfo.asset.localIdentifier.stringByRemovingInvalidFileCharacters isDirectory:NO];
     BOOL isDirectory;
@@ -240,7 +144,7 @@ static NSString * const archiveUploadInfoBackgroundTaskName = @"nz.mega.archiveC
         return;
     }
     
-    __block UIBackgroundTaskIdentifier backgroundArchiveTaskId = [UIApplication.sharedApplication beginBackgroundTaskWithName:archiveUploadInfoBackgroundTaskName expirationHandler:^{
+    __block UIBackgroundTaskIdentifier backgroundArchiveTaskId = [UIApplication.sharedApplication beginBackgroundTaskWithExpirationHandler:^{
         [UIApplication.sharedApplication endBackgroundTask:backgroundArchiveTaskId];
         backgroundArchiveTaskId = UIBackgroundTaskInvalid;
     }];
@@ -248,13 +152,13 @@ static NSString * const archiveUploadInfoBackgroundTaskName = @"nz.mega.archiveC
     [NSKeyedArchiver archiveRootObject:self.uploadInfo toFile:archivedURL.path];
     [UIApplication.sharedApplication endBackgroundTask:backgroundArchiveTaskId];
     backgroundArchiveTaskId = UIBackgroundTaskInvalid;
-    MEGALogDebug(@"[Camera Upload] finish archiving upload info for asset: %@", self.uploadInfo.asset.localIdentifier);
+    MEGALogDebug(@"[Camera Upload] %@ finish archiving upload info", self);
 }
 
 #pragma mark - finish operation
 
 - (void)finishOperationWithStatus:(NSString *)status shouldUploadNextAsset:(BOOL)uploadNextAsset {
-    MEGALogDebug(@"[Camera Upload] Upload operation finishes for asset: %@, with status: %@", self.uploadInfo.asset.localIdentifier, status);
+    MEGALogDebug(@"[Camera Upload] %@ finishes with status: %@", self, status);
     
     [[NSFileManager defaultManager] removeItemAtURL:self.uploadInfo.directoryURL error:nil];
     
@@ -268,7 +172,7 @@ static NSString * const archiveUploadInfoBackgroundTaskName = @"nz.mega.archiveC
     }
     
     if (uploadNextAsset) {
-        [[CameraUploadManager shared] uploadNextPhoto];
+        [[CameraUploadManager shared] uploadNextForAsset:self.uploadInfo.asset];
     }
 }
 

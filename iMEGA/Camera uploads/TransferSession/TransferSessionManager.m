@@ -132,7 +132,7 @@ NSString * const videoTransferSessionId = @"nz.mega.videoTransfer";
 }
 
 - (void)didFinishPhotoSessionEvents {
-    [[CameraUploadManager shared] uploadNextPhotoBatch];
+//    [[CameraUploadManager shared] uploadNextPhotoBatch];
     
     [NSOperationQueue.mainQueue addOperationWithBlock:^{
         if (self.photoSessionCompletion) {
