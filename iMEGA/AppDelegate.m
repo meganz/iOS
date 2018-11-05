@@ -1562,7 +1562,16 @@ void uncaughtExceptionHandler(NSException *exception) {
         self.mainTBC.selectedIndex = CHAT;
         MEGANavigationController *navigationController = [[self.mainTBC viewControllers] objectAtIndex:CHAT];
         ChatRoomsViewController *chatRoomsVC = navigationController.viewControllers.firstObject;
-        [chatRoomsVC openChatRoomWithID:chatNumber.unsignedLongLongValue];
+        
+        if ([MEGASdkManager sharedMEGAChatSdk].numCalls == 0) {
+            if (self.window.rootViewController.presentedViewController) {
+                [self.window.rootViewController dismissViewControllerAnimated:YES completion:^{
+                    [chatRoomsVC openChatRoomWithID:chatNumber.unsignedLongLongValue];
+                }];
+            } else {
+                [chatRoomsVC openChatRoomWithID:chatNumber.unsignedLongLongValue];
+            }
+        }
     }
 }
 
