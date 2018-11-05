@@ -102,7 +102,7 @@
 "emailInvalidFormat"="ادخل يريد إليكتروني صالح";
 /* Add contacts and share dialog error message when user try to add wrong email address */
 "theEmailAddressFormatIsInvalid"="صيغة البريد الاليكنروني غير صالحة";
-/* Message shown when the user enters a wrong password  */
+/* Message shown when the user enters a wrong password */
 "passwordInvalidFormat"="أدخل كلمة السر الصحيحة";
 /* Hint text to suggest that the user has to write his email */
 "emailPlaceholder"="البريد الإلكتروني";
@@ -130,10 +130,8 @@
 "passwordStrong"="كلمة السر هذه تستطيع تحمل الهجمات القوية وأكثرها تطورا. يرجى التأكد من أنك سوف تتذكرها.";
 /*  */
 "agreeWithTheMEGATermsOfService"="أنا أتفق مع MEGA <a href='terms'>شروط الخدمة</a>";
-/* Error text shown when you have not entered a correct name  */
+/* Error text shown when you have not entered a correct name */
 "nameInvalidFormat"="ادخل اسم صالح";
-/*  */
-"invalidFirstNameAndLastName"="الاسم الأول و / أو اسم العائلة غير صالح .";
 /* Error text shown when you have not written the same password */
 "passwordsDoNotMatch"="كلمات السر غير متطابقة";
 /* Error text shown when you don't have selected the checkbox to agree with the Terms of Service */
@@ -145,7 +143,7 @@
 /* Text shown on the confirm account view to remind the user what to do */
 "confirmText"="يرجى إدخال كلمة السر لتأكيد حسابك";
 /* Label for any ‘Confirm account’ button, link, text, title, etc. - (String as short as possible). */
-"Confirm account"="تأكيد حسابك";
+"Confirm account"="أكّد الحساب";
 /* Error text shown when you introduce a wrong password on the confirmation proccess */
 "passwordWrong"="كلمة مرور خاطئة";
 /* Warning title shown when you try to confirm an account but you are logged in with another one */

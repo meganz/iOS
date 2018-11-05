@@ -102,7 +102,7 @@
 "emailInvalidFormat"="Vul een correct email adres in";
 /* Add contacts and share dialog error message when user try to add wrong email address */
 "theEmailAddressFormatIsInvalid"="Het e-mailadres is ongeldig";
-/* Message shown when the user enters a wrong password  */
+/* Message shown when the user enters a wrong password */
 "passwordInvalidFormat"="Correct wachtwoord vereist";
 /* Hint text to suggest that the user has to write his email */
 "emailPlaceholder"="Email";
@@ -130,10 +130,8 @@
 "passwordStrong"="Dit wachtwoord zal de meest geavanceerde brute-force aanvallen weerstaan. Zorg ervoor dat u deze goed onthoudt.";
 /*  */
 "agreeWithTheMEGATermsOfService"="Ik ga akkoord met de MEGA <a href='terms'>Algemene Voorwaarden</a>";
-/* Error text shown when you have not entered a correct name  */
+/* Error text shown when you have not entered a correct name */
 "nameInvalidFormat"="Vul uw naam in";
-/*  */
-"invalidFirstNameAndLastName"="Ongeldige voor- en/of achternaam.";
 /* Error text shown when you have not written the same password */
 "passwordsDoNotMatch"="Wachtwoorden komen niet overeen";
 /* Error text shown when you don't have selected the checkbox to agree with the Terms of Service */
@@ -145,7 +143,7 @@
 /* Text shown on the confirm account view to remind the user what to do */
 "confirmText"="Vul aub uw wachtwoord in om uw account te bevestigen";
 /* Label for any ‘Confirm account’ button, link, text, title, etc. - (String as short as possible). */
-"Confirm account"="Bevestig uw account";
+"Confirm account"="Bevestig account";
 /* Error text shown when you introduce a wrong password on the confirmation proccess */
 "passwordWrong"="Verkeerd wachtwoord";
 /* Warning title shown when you try to confirm an account but you are logged in with another one */
@@ -1567,7 +1565,7 @@
 /* Button title to start the setup of a feature. For example 'Begin Setup' for Two-Factor Authentication */
 "beginSetup"="Begin Instellingen";
 /* A message on the Verify Login page telling the user to enter their 2FA code. */
-"pleaseEnterTheSixDigitCode"="Voer de 6-cijferige code gegenereerd door uw Authenticatie applicatie in.";
+"pleaseEnterTheSixDigitCode"="Voer de 6-cijferige code gegenereerd door uw Authenticatie Applicatie in.";
 /* Title of the dialog displayed to start setup the Two-Factor Authentication */
 "whyYouDoNeedTwoFactorAuthentication"="Waarom heeft u Twee-Stap Authenticatie nodig?";
 /* Description for the ‘Two-Factor Authentication’ in the security settings section. */
@@ -1581,7 +1579,7 @@
 /* A title on the mobile web client page showing that 2FA has been enabled successfully. */
 "twoFactorAuthenticationEnabled"="Twee-Stap Authenticatie Ingeschakeld";
 /* A message on the dialog shown after 2FA was successfully enabled. */
-"twoFactorAuthenticationEnabledDescription"="De volgende keer wanneer u inlogt in uw account wordt u gevraagd een 6-cijferige code in te voeren die voorzien is door uw Authenticatie applicatie,";
+"twoFactorAuthenticationEnabledDescription"="De volgende keer dat u inlogt in uw account wordt u gevraagd een 6-cijferige code in te voeren die gegeven is door uw Authenticatie Applicatie.";
 /* A warning message on the Backup Recovery Key dialog to tell the user to backup their Recovery Key to their local computer. */
 "pleaseSaveYourRecoveryKey"="Sla uw Herstelsleutel op op een veilige locatie";
 /* An informational message on the Backup Recovery Key dialog. */
@@ -1627,7 +1625,7 @@
 /* Title label that explains that the user is going to be asked for the photos permission */
 "Allow Access to Photos"="Verleen Toegang tot Foto's";
 /* Detailed explanation of why the user should give permission to access to the photos */
-"To share photos and videos, allow MEGA to access your library."="Om foto's en video's te delen, verleen MEGA toegang tot uw foto's";
+"To share photos and videos, allow MEGA to access your library."="Om foto's en video's te delen, geef MEGA toegang tot uw bibliotheek.";
 /* Title label that explains that the user is going to be asked for the microphone and camera permission */
 "Enable Microphone and Camera"="Microfoon en Camera inschakelen";
 /* Detailed explanation of why the user should give permission to access to the camera and the microphone */
@@ -1637,7 +1635,7 @@
 /* Detailed explanation of why the user should give permission to deliver notifications */
 "We would like to send you notifications so you receive new messages on your device instantly."="We willen u notificaties sturen zodat u nieuwe berichten direct op uw apparaat kunt ontvangen.";
 /* Button which triggers a request for a specific permission, that have been explained to the user beforehand */
-"Allow Access"="Toegang inschakelen";
+"Allow Access"="Toegang Accepteren";
 /* A section header which contains the file management settings. These settings allow users to remove duplicate files etc. */
 "File Management"="Bestandsmanagement";
 /* Title of the option to enable or disable file versioning on Settings section */

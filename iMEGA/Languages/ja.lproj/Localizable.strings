@@ -102,7 +102,7 @@
 "emailInvalidFormat"="正しいメールを入力して下さい";
 /* Add contacts and share dialog error message when user try to add wrong email address */
 "theEmailAddressFormatIsInvalid"="メールアドレスのフォーマットが正しくありません。";
-/* Message shown when the user enters a wrong password  */
+/* Message shown when the user enters a wrong password */
 "passwordInvalidFormat"="有効パスワードを入力して下さい";
 /* Hint text to suggest that the user has to write his email */
 "emailPlaceholder"="メール";
@@ -130,10 +130,8 @@
 "passwordStrong"="このパスワードは大抵の攻撃に対抗できるでしょう。絶対に忘れないようにして下さい。";
 /*  */
 "agreeWithTheMEGATermsOfService"="私は、MEGAの <a href='terms'>サービス規約</a>に同意します。";
-/* Error text shown when you have not entered a correct name  */
+/* Error text shown when you have not entered a correct name */
 "nameInvalidFormat"="正しい名前を入力して下さい";
-/*  */
-"invalidFirstNameAndLastName"="名前が無効です。";
 /* Error text shown when you have not written the same password */
 "passwordsDoNotMatch"="パスワードが合いません。";
 /* Error text shown when you don't have selected the checkbox to agree with the Terms of Service */
