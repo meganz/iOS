@@ -97,6 +97,10 @@
     return [UIColor mnz_redF30C14];
 }
 
++ (UIColor *)mnz_redError {
+    return [UIColor mnz_redD90007];
+}
+
 + (UIColor *)mnz_redProI {
     return [UIColor mnz_redE13339];
 }

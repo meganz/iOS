@@ -290,6 +290,8 @@
 		7754ED9C20B47F1000FF8B7B /* MEGAFetchNodesRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7754ED9B20B47F1000FF8B7B /* MEGAFetchNodesRequestDelegate.m */; };
 		775652D7203AD2FC009E7EC8 /* ContactLinkQRViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 775652D6203AD2FC009E7EC8 /* ContactLinkQRViewController.m */; };
 		775D9C0B20EA0D49001BF1E8 /* ShareAttachment.m in Sources */ = {isa = PBXBuildFile; fileRef = 775D9C0A20EA0D49001BF1E8 /* ShareAttachment.m */; };
+		777615AF2175D87D00A7796D /* InputView.m in Sources */ = {isa = PBXBuildFile; fileRef = 777615AE2175D87D00A7796D /* InputView.m */; };
+		777615B12175D88C00A7796D /* InputView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 777615B02175D88C00A7796D /* InputView.xib */; };
 		777E9229203EB0E200266229 /* CoreImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 777E9228203EB0E100266229 /* CoreImage.framework */; };
 		777E922D203EE14B00266229 /* QRSettingsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 777E922C203EE14B00266229 /* QRSettingsTableViewController.m */; };
 		77892E9B20E4FFBA0020A533 /* Chat.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 41EABF161DA7C5250087271C /* Chat.storyboard */; };
@@ -1213,6 +1215,9 @@
 		775652D6203AD2FC009E7EC8 /* ContactLinkQRViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ContactLinkQRViewController.m; sourceTree = "<group>"; };
 		775D9C0920EA0D49001BF1E8 /* ShareAttachment.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShareAttachment.h; sourceTree = "<group>"; };
 		775D9C0A20EA0D49001BF1E8 /* ShareAttachment.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ShareAttachment.m; sourceTree = "<group>"; };
+		777615AD2175D87D00A7796D /* InputView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = InputView.h; sourceTree = "<group>"; };
+		777615AE2175D87D00A7796D /* InputView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = InputView.m; sourceTree = "<group>"; };
+		777615B02175D88C00A7796D /* InputView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InputView.xib; sourceTree = "<group>"; };
 		777E9228203EB0E100266229 /* CoreImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreImage.framework; path = System/Library/Frameworks/CoreImage.framework; sourceTree = SDKROOT; };
 		777E922B203EE14B00266229 /* QRSettingsTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QRSettingsTableViewController.h; sourceTree = "<group>"; };
 		777E922C203EE14B00266229 /* QRSettingsTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QRSettingsTableViewController.m; sourceTree = "<group>"; };
@@ -2813,6 +2818,9 @@
 				836AEDE32018AD1F00868FC7 /* PasswordView.h */,
 				836AEDE42018AD1F00868FC7 /* PasswordView.m */,
 				836AEDE12018AD0C00868FC7 /* PasswordView.xib */,
+				777615AD2175D87D00A7796D /* InputView.h */,
+				777615AE2175D87D00A7796D /* InputView.m */,
+				777615B02175D88C00A7796D /* InputView.xib */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -3591,6 +3599,7 @@
 				E8D36F791AD677C6006D4D40 /* Transfers.storyboard in Resources */,
 				A82E5BF41F3470B5003C149C /* Spotlight_file.png in Resources */,
 				832E102B202B0A3900BDD30F /* NodeActionHeaderCollectionReusableView.xib in Resources */,
+				777615B12175D88C00A7796D /* InputView.xib in Resources */,
 				4152268B1A692ECC00EC7BB6 /* Cloud.storyboard in Resources */,
 				83681579202AFBC000CA8EFC /* CustomActionViewController.xib in Resources */,
 				41EABF171DA7C5250087271C /* Chat.storyboard in Resources */,
@@ -4010,6 +4019,7 @@
 				83681578202AFBC000CA8EFC /* CustomActionViewController.m in Sources */,
 				4172794B1DB663FA001AC818 /* JSQMessagesBubbleImage.m in Sources */,
 				41CD14701DB150F600E545BC /* MessagesViewController.m in Sources */,
+				777615AF2175D87D00A7796D /* InputView.m in Sources */,
 				A8F6C5F31FAB3FD3001E274D /* MEGAChatEnableDisableAudioRequestDelegate.m in Sources */,
 				413199771BD7BD5D002CD6EA /* DTConstants.m in Sources */,
 				832E1032202D8E6900BDD30F /* NodePropertyTableViewCell.m in Sources */,
