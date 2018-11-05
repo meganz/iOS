@@ -25,6 +25,11 @@
     [self didChangeValueForKey:@"isFinished"];
 }
 
+- (void)cancelOperation {
+    [self cancel];
+    [self finishOperation];
+}
+
 - (BOOL)isExecuting {
     return executing;
 }

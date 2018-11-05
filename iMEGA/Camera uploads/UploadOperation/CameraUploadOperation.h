@@ -1,15 +1,15 @@
 
 #import <UIKit/UIKit.h>
 #import "MEGAOperation.h"
+#import "AssetUploadInfo.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@class PHAsset;
-
 @interface CameraUploadOperation : MEGAOperation
 
-- (instancetype)initWithAsset:(PHAsset *)asset cameraUploadNode:(MEGANode *)node;
-- (instancetype)initWithLocalIdentifier:(NSString *)localIdentifier cameraUploadNode:(MEGANode *)node;
+- (instancetype)initWithUploadInfo:(AssetUploadInfo *)uploadInfo;
+
+- (void)finishOperationWithStatus:(NSString *)status shouldUploadNextAsset:(BOOL)uploadNextAsset;
 
 @end
 

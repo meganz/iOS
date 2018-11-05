@@ -24,7 +24,7 @@
     
     if(![MEGASdkManager.sharedMEGASdk completeBackgroundMediaUpload:info.mediaUpload
                                                            fileName:info.fileName
-                                                         parentNode:[MEGASdkManager.sharedMEGASdk nodeForHandle:info.parentHandle]
+                                                         parentNode:info.parentNode
                                                         fingerprint:info.fingerprint
                                                 originalFingerprint:info.originalFingerprint
                                                               token:token
@@ -47,9 +47,9 @@
     if ([[NSFileManager defaultManager] moveItemAtURL:uploadInfo.thumbnailURL toURL:cachedThumbnailURL error:nil]) {
         [MEGASdkManager.sharedMEGASdk setThumbnailNode:node sourceFilePath:cachedThumbnailURL.path delegate:[[CameraUploadRequestDelegate alloc] initWithCompletion:^(MEGARequest * _Nonnull request, MEGAError * _Nonnull error) {
             if (error.type) {
-                MEGALogError(@"[Camera Upload] Upload thumbnail failed for local identifier: %@, node: %llu, error: %ld", uploadInfo.localIdentifier, node.handle, error.type);
+                MEGALogError(@"[Camera Upload] Upload thumbnail failed for local identifier: %@, node: %llu, error: %ld", uploadInfo.asset.localIdentifier, node.handle, error.type);
             } else {
-                MEGALogDebug(@"[Camera Upload] Upload thumbnail success for local identifier: %@, node: %llu", uploadInfo.localIdentifier, node.handle);
+                MEGALogDebug(@"[Camera Upload] Upload thumbnail success for local identifier: %@, node: %llu", uploadInfo.asset.localIdentifier, node.handle);
                 [UIApplication.sharedApplication endBackgroundTask:thumbnailUploadTaskId];
                 thumbnailUploadTaskId = UIBackgroundTaskInvalid;
             }
