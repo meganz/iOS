@@ -23,12 +23,11 @@
                     MEGALogDebug(@"The chat room %@ is opened, ignore notification", [MEGASdk base64HandleForHandle:chatId]);
                     return;
                 }
-            } else {
-                MEGAChatRoom *chatRoom = [api chatRoomForChatId:chatId];
-                if (chatRoom && message) {
-                    MEGALocalNotificationManager *localNotificationManager = [[MEGALocalNotificationManager alloc] initWithChatRoom:chatRoom message:message silent:YES];
-                    [localNotificationManager proccessNotification];
-                }
+            }
+            MEGAChatRoom *chatRoom = [api chatRoomForChatId:chatId];
+            if (chatRoom && message) {
+                MEGALocalNotificationManager *localNotificationManager = [[MEGALocalNotificationManager alloc] initWithChatRoom:chatRoom message:message silent:YES];
+                [localNotificationManager proccessNotification];
             }
         } else {
             MOMessage *mMessage = [[MEGAStore shareInstance] fetchMessageWithChatId:chatId messageId:message.messageId];

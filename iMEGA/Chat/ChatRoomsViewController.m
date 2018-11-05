@@ -304,6 +304,15 @@
 
 - (void)openChatRoomWithID:(uint64_t)chatID {
     NSArray *viewControllers = self.navigationController.viewControllers;
+    if (viewControllers.count == 2) {
+        UIViewController *currentVC = self.navigationController.viewControllers.lastObject;
+        if ([currentVC isKindOfClass:MessagesViewController.class]) {
+            MessagesViewController *currentMessagesVC = (MessagesViewController *)currentVC;
+            if (currentMessagesVC.chatRoom.chatId == chatID) {
+                return;
+            }
+        }
+    }
     if (viewControllers.count > 1) {
         [self.navigationController popToRootViewControllerAnimated:NO];
     }
