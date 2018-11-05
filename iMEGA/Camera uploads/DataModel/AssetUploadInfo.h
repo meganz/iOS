@@ -1,13 +1,13 @@
 
 #import <Foundation/Foundation.h>
+#import "MEGASdkManager.h"
+@import Photos;
 
 NS_ASSUME_NONNULL_BEGIN
 
-@class MEGABackgroundMediaUpload;
-
 @interface AssetUploadInfo : NSObject <NSCoding>
 
-@property (strong, nonatomic) NSString *localIdentifier;
+@property (strong, nonatomic) PHAsset *asset;
 @property (strong, nonatomic) NSString *fileName;
 @property (nonatomic) NSUInteger fileSize;
 
@@ -25,7 +25,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, readonly) NSURL *uploadURL;
 
 @property (strong, nonatomic) MEGABackgroundMediaUpload *mediaUpload;
-@property (nonatomic) uint64_t parentHandle;
+@property (strong, nonatomic) MEGANode *parentNode;
+
+- (instancetype)initWithAsset:(PHAsset *)asset parentNode:(MEGANode *)parentNode;
 
 @end
 

@@ -14,6 +14,12 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (void)finishOperation;
 
+
+/**
+ Cancel the operation and make the state to finished
+ */
+- (void)cancelOperation;
+
 @end
 
 NS_ASSUME_NONNULL_END
