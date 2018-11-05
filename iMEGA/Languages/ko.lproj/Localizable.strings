@@ -144,8 +144,8 @@
 "awaitingEmailConfirmation"="이메일 확인 기다리는 중";
 /* Text shown on the confirm account view to remind the user what to do */
 "confirmText"="계정을 확인하려면 비밀번호를 입력하세요";
-/* Button title that triggers the confirm account action */
-"confirmAccountButton"="당신의 계정을 확인하세요";
+/* Label for any ‘Confirm account’ button, link, text, title, etc. - (String as short as possible). */
+"Confirm account"="당신의 계정을 확인하세요";
 /* Error text shown when you introduce a wrong password on the confirmation proccess */
 "passwordWrong"="잘못된 비밀번호";
 /* Warning title shown when you try to confirm an account but you are logged in with another one */
