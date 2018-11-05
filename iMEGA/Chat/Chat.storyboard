@@ -763,7 +763,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3ui-lT-2Za" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2545" y="-238"/>
+            <point key="canvasLocation" x="2545" y="-384"/>
         </scene>
         <!--Chat Attached Contacts View Controller-->
         <scene sceneID="CPH-wX-UXf">
