@@ -6,6 +6,7 @@
 #import <PureLayout/PureLayout.h>
 #import "SVProgressHUD.h"
 #import "UIImage+GKContact.h"
+#import "NSDate+DateTools.h"
 
 #import "Helper.h"
 #import "DevicePermissionsHelper.h"
@@ -107,6 +108,11 @@ const NSUInteger kMaxMessagesToLoad = 256;
 @property (nonatomic) BOOL selectingMessages;
 @property (nonatomic) NSMutableArray<MEGAChatMessage *> *selectedMessages;
 
+@property UIView *navigationView;
+@property UILabel *navigationTitleLabel;
+@property UILabel *navigationSubtitleLabel;
+@property UIView *navigationStatusView;
+
 @end
 
 @implementation MessagesViewController
@@ -117,7 +123,6 @@ const NSUInteger kMaxMessagesToLoad = 256;
     [super viewDidLoad];
     
     _messages = [[NSMutableArray alloc] init];
-    self.unreadMessages = self.chatRoom.unreadCount;
     
     if ([[MEGASdkManager sharedMEGAChatSdk] openChatRoom:self.chatRoom.chatId delegate:self]) {
         MEGALogDebug(@"Chat room opened: %@", self.chatRoom);
@@ -132,86 +137,14 @@ const NSUInteger kMaxMessagesToLoad = 256;
         MEGALogError(@"The delegate is NULL or the chatroom is not found");
     }
     
-    self.inputToolbar.contentView.textView.jsq_pasteDelegate = self;
-    
-    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideInputToolbar)];
-    tapGesture.cancelsTouchesInView = NO;
-    [self.collectionView addGestureRecognizer:tapGesture];
-    
-    [self customiseCollectionViewLayout];
-    
-    [self.collectionView registerNib:[MEGAOpenMessageHeaderView nib] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:[MEGAOpenMessageHeaderView headerReuseIdentifier]];
-    
-    [self.collectionView registerNib:[MEGAMessagesTypingIndicatorFoorterView nib] forSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:[MEGAMessagesTypingIndicatorFoorterView footerReuseIdentifier]];
-    
-     //Set up message accessory button delegate and configuration
-    self.collectionView.accessoryDelegate = self;
-    
-    self.showLoadEarlierMessagesHeader = YES;
-    
-     //Register custom menu actions for cells.
-    [JSQMessagesCollectionViewCell registerMenuAction:@selector(edit:message:)];
-    [JSQMessagesCollectionViewCell registerMenuAction:@selector(forward:message:)];
-    [JSQMessagesCollectionViewCell registerMenuAction:@selector(import:message:)];
-    [JSQMessagesCollectionViewCell registerMenuAction:@selector(download:message:)];
-    [JSQMessagesCollectionViewCell registerMenuAction:@selector(addContact:message:)];
-    [JSQMessagesCollectionViewCell registerMenuAction:@selector(revoke:message:indexPath:)];
-    [JSQMessagesCollectionViewCell registerMenuAction:@selector(removeRichPreview:message:indexPath:)];
-
+    [self setupCollectionView];
     [self setupMenuController:[UIMenuController sharedMenuController]];
-    
-     //Allow cells to be deleted
-    [JSQMessagesCollectionViewCell registerMenuAction:@selector(delete:)];
-    
-    JSQMessagesBubbleImageFactory *bubbleFactory = [[JSQMessagesBubbleImageFactory alloc] initWithBubbleImage:[UIImage imageNamed:@"bubble_tailless"] capInsets:UIEdgeInsetsZero layoutDirection:[UIApplication sharedApplication].userInterfaceLayoutDirection];
-    
-    self.outgoingBubbleImageData = [bubbleFactory outgoingMessagesBubbleImageWithColor:[UIColor mnz_green00BFA5]];
-    self.incomingBubbleImageData = [bubbleFactory incomingMessagesBubbleImageWithColor:[UIColor mnz_grayE2EAEA]];
-
-    self.collectionView.backgroundColor = [UIColor whiteColor];
-    
     [self customToolbarContentView];
     
+    self.showLoadEarlierMessagesHeader = YES;
     self.areAllMessagesSeen = NO;
-    
-    UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(popViewController)];
-    
-    _unreadLabel = [[UILabel alloc] initWithFrame:CGRectMake(25, 6, 30, 30)];
-    self.unreadLabel.font = [UIFont mnz_SFUIMediumWithSize:12.0f];
-    self.unreadLabel.textColor = [UIColor whiteColor];
-    self.unreadLabel.userInteractionEnabled = YES;
-    
-    self.navigationItem.hidesBackButton = YES;
-    self.navigationItem.leftBarButtonItem = nil;
-
-    if (self.presentingViewController && self.parentViewController) {
-        _unreadBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.unreadLabel];
-        UIBarButtonItem *chatBackBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:AMLocalizedString(@"chat", @"Chat section header") style:UIBarButtonItemStylePlain target:self action:@selector(dismissChatRoom)];
-        
-        self.leftBarButtonItems = @[chatBackBarButtonItem, self.unreadBarButtonItem];
-    } else {
-        //TODO: leftItemsSupplementBackButton
-        UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 66, 44)];
-        UIImage *image = [[UIImage imageNamed:@"backArrow"] imageFlippedForRightToLeftLayoutDirection];
-        UIImageView *imageView = [[UIImageView alloc] initWithImage:[image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]];
-        imageView.frame = CGRectMake(0, 10, 22, 22);
-        [view addGestureRecognizer:singleTap];
-        [view addSubview:imageView];
-        [view addSubview:self.unreadLabel];
-        [imageView configureForAutoLayout];
-        [imageView autoPinEdgesToSuperviewMarginsExcludingEdge:ALEdgeTrailing];
-        [imageView autoPinEdge:ALEdgeTrailing toEdge:ALEdgeLeading ofView:self.unreadLabel];
-        [self.unreadLabel configureForAutoLayout];
-        [self.unreadLabel autoPinEdgesToSuperviewMarginsExcludingEdge:ALEdgeLeading];
-        
-        self.leftBarButtonItems = @[[[UIBarButtonItem alloc] initWithCustomView:view]];
-    }
-    self.navigationItem.leftBarButtonItems = self.leftBarButtonItems;
-
     self.stopInvitingContacts = NO;
-    
-    self.navigationController.interactivePopGestureRecognizer.delegate = nil;
-    
+    self.unreadMessages = self.chatRoom.unreadCount;
     self.attachmentMessages = [[NSMutableArray<MEGAChatMessage *> alloc] init];
 
     // Avatar images
@@ -250,8 +183,7 @@ const NSUInteger kMaxMessagesToLoad = 256;
     }
     
     // Tap gesture for Jump to bottom view:
-    UITapGestureRecognizer *jumpButtonTap = [[UITapGestureRecognizer alloc] initWithTarget:self
-                                                                                    action:@selector(jumpToBottomPressed:)];
+    UITapGestureRecognizer *jumpButtonTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(jumpToBottomPressed:)];
     [self.jumpToBottomView addGestureRecognizer:jumpButtonTap];
     
     _whoIsTypingMutableArray = [[NSMutableArray alloc] init];
@@ -264,6 +196,8 @@ const NSUInteger kMaxMessagesToLoad = 256;
     // Selection:
     self.selectingMessages = NO;
     self.selectedMessages = [[NSMutableArray<MEGAChatMessage *> alloc] init];
+    
+    [self configureNavigationBar];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -274,8 +208,6 @@ const NSUInteger kMaxMessagesToLoad = 256;
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(internetConnectionChanged) name:kReachabilityChangedNotification object:nil];
     
-    [self customNavigationBarLabel];
-    [self rightBarButtonItems];
     [self updateUnreadLabel];
     [self customForwardingToolbar];
     
@@ -347,7 +279,95 @@ const NSUInteger kMaxMessagesToLoad = 256;
     [self.observedNodeMessages removeAllObjects];
 }
 
+- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
+    [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
+    
+    [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
+        [self instantiateNavigationTitle];
+        [self customNavigationBarLabel];
+    } completion:nil];
+}
+
 #pragma mark - Private
+
+- (void)configureNavigationBar {
+    self.navigationController.interactivePopGestureRecognizer.delegate = nil;
+
+    self.navigationItem.hidesBackButton = YES;
+    self.navigationItem.leftBarButtonItem = nil;
+    
+    [self createLeftBarButtonItems];
+    [self createRightBarButtonItems];
+    [self initNavigationTitleViews];
+    [self instantiateNavigationTitle];
+    [self customNavigationBarLabel];
+}
+
+- (void)initNavigationTitleViews {
+    self.navigationTitleLabel = [[UILabel alloc] init];
+    self.navigationTitleLabel.font = [UIFont mnz_SFUIRegularWithSize:14];
+    self.navigationTitleLabel.textColor = UIColor.whiteColor;
+    
+    self.navigationStatusView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 10, 10)];
+    [[self.navigationStatusView.widthAnchor constraintEqualToConstant:10] setActive:YES];
+    [[self.navigationStatusView.heightAnchor constraintEqualToConstant:10] setActive:YES];
+    self.navigationStatusView.layer.cornerRadius = 5;
+    self.navigationStatusView.layer.borderColor = UIColor.whiteColor.CGColor;
+    self.navigationStatusView.layer.borderWidth = 1;
+    self.navigationStatusView.backgroundColor = UIColor.mnz_green00BFA5;
+    
+    self.navigationSubtitleLabel = [[UILabel alloc] init];
+    self.navigationSubtitleLabel.font = [UIFont mnz_SFUIRegularWithSize:12];
+    self.navigationSubtitleLabel.textColor = UIColor.mnz_grayE3E3E3;
+}
+
+- (void)instantiateNavigationTitle {
+    float leftBarButtonsWidth = 25; //25 is by the leading margin
+    for (UIBarButtonItem *barButton in self.leftBarButtonItems) {
+        leftBarButtonsWidth += barButton.customView.frame.size.width;
+    }
+    
+    self.navigationView = [[UIView alloc] initWithFrame:CGRectMake(0, 4, self.navigationController.navigationBar.bounds.size.width - leftBarButtonsWidth - 50 * (self.navigationItem.rightBarButtonItems.count), 36)];
+    self.navigationView.clipsToBounds = YES;
+    self.navigationView.userInteractionEnabled = YES;
+    [self.navigationItem setTitleView:self.navigationView];
+    
+    [[self.navigationView.widthAnchor constraintEqualToConstant:self.navigationItem.titleView.bounds.size.width] setActive:YES];
+    [[self.navigationView.heightAnchor constraintEqualToConstant:self.navigationItem.titleView.bounds.size.height] setActive:YES];
+    
+    UIStackView *mainStackView = [[UIStackView alloc] init];
+    mainStackView.distribution = UIStackViewDistributionEqualSpacing;
+    mainStackView.alignment = UIStackViewAlignmentLeading;
+    mainStackView.translatesAutoresizingMaskIntoConstraints = false;
+    mainStackView.spacing = 4;
+    
+    UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
+    if (UIInterfaceOrientationIsPortrait(orientation)) {
+        UIStackView *titleView = [[UIStackView alloc] init];
+        titleView.axis = UILayoutConstraintAxisHorizontal;
+        titleView.distribution = UIStackViewDistributionEqualSpacing;
+        titleView.alignment = UIStackViewAlignmentCenter;
+        titleView.spacing = 8;
+        [titleView addArrangedSubview:self.navigationTitleLabel];
+        [titleView addArrangedSubview:self.navigationStatusView];
+        titleView.translatesAutoresizingMaskIntoConstraints = false;
+        
+        mainStackView.axis = UILayoutConstraintAxisVertical;
+        [mainStackView addArrangedSubview:titleView];
+        [mainStackView addArrangedSubview:self.navigationSubtitleLabel];
+    } else {
+        mainStackView.axis = UILayoutConstraintAxisHorizontal;
+        mainStackView.alignment = UIStackViewAlignmentCenter;
+        mainStackView.spacing = 8;
+        [mainStackView addArrangedSubview:self.navigationTitleLabel];
+        [mainStackView addArrangedSubview:self.navigationStatusView];
+        [mainStackView addArrangedSubview:self.navigationSubtitleLabel];
+    }
+    
+    [self.navigationView addSubview:mainStackView];
+    [[mainStackView.widthAnchor constraintLessThanOrEqualToAnchor:self.navigationView.widthAnchor multiplier:1] setActive:YES];
+    [[mainStackView.heightAnchor constraintEqualToAnchor:self.navigationView.heightAnchor multiplier:1] setActive:YES];
+}
 
 - (void)loadMessages {
     NSUInteger messagesToLoad = 32;
@@ -379,14 +399,14 @@ const NSUInteger kMaxMessagesToLoad = 256;
 }
 
 - (void)customNavigationBarLabel {
-    UILabel *label = [[UILabel alloc] init];
     
     if (self.selectingMessages) {
         self.inputToolbar.hidden = YES;
 
-        label = [Helper customNavigationBarLabelWithTitle:[NSString stringWithFormat:AMLocalizedString(@"xSelected", nil), self.selectedMessages.count] subtitle:@""];
+        UILabel *label = [Helper customNavigationBarLabelWithTitle:[NSString stringWithFormat:AMLocalizedString(@"xSelected", nil), self.selectedMessages.count] subtitle:@""];
         
         self.navigationItem.leftBarButtonItems = @[];
+        [self.navigationItem setTitleView:label];
     } else {
         self.inputToolbar.hidden = self.chatRoom.ownPrivilege <= MEGAChatRoomPrivilegeRo;
 
@@ -394,62 +414,71 @@ const NSUInteger kMaxMessagesToLoad = 256;
         NSString *chatRoomState;
         
         if (self.chatRoom.archived) {
+            self.navigationStatusView.hidden = YES;
             chatRoomState = AMLocalizedString(@"archived", @"Title of flag of archived chats.");
         } else {
-            MEGAChatConnection connectionState = [[MEGASdkManager sharedMEGAChatSdk] chatConnectionState:self.chatRoom.chatId];
-            switch (connectionState) {
-                case MEGAChatConnectionOffline:
-                case MEGAChatConnectionInProgress:
-                case MEGAChatConnectionLogging:
-                    chatRoomState = AMLocalizedString(@"connecting", nil);
-                    self.lastChatRoomStateColor = [UIColor mnz_colorForStatusChange:MEGAChatStatusOffline];
-                    
-                    break;
-                    
-                case MEGAChatConnectionOnline:
-                    if (self.chatRoom.isGroup) {
-                        if (self.chatRoom.ownPrivilege <= MEGAChatRoomPrivilegeRo) {
-                            chatRoomState = AMLocalizedString(@"readOnly", @"Permissions given to the user you share your folder with");
-                        }
-                    } else {
-                        if (self.chatRoom.ownPrivilege <= MEGAChatRoomPrivilegeRo) {
-                            chatRoomState = AMLocalizedString(@"readOnly", @"Permissions given to the user you share your folder with");
-                        } else {
-                            chatRoomState = [NSString chatStatusString:[[MEGASdkManager sharedMEGAChatSdk] userOnlineStatus:[self.chatRoom peerHandleAtIndex:0]]];
-                            self.lastChatRoomStateColor = [UIColor mnz_colorForStatusChange:[[MEGASdkManager sharedMEGAChatSdk] userOnlineStatus:[self.chatRoom peerHandleAtIndex:0]]];
-                        }
-                    }
-                    
-                    break;
+            if (self.chatRoom.isGroup) {
+                chatRoomState = [self participantsNames];
+                self.navigationStatusView.hidden = YES;
+            } else {
+                self.navigationStatusView.hidden = NO;
+                if ([[[MEGASdkManager sharedMEGAChatSdk] presenceConfig] isLastGreenVisible]) {
+                    [[MEGASdkManager sharedMEGAChatSdk] requestLastGreen:[self.chatRoom peerHandleAtIndex:0]];
+                }
+                self.navigationStatusView.backgroundColor = [UIColor mnz_colorForStatusChange:[[MEGASdkManager sharedMEGAChatSdk] userOnlineStatus:[self.chatRoom peerHandleAtIndex:0]]];
+                chatRoomState = [NSString chatStatusString:[[MEGASdkManager sharedMEGAChatSdk] userOnlineStatus:[self.chatRoom peerHandleAtIndex:0]]];
             }
         }
         
-        if (chatRoomState) {
-            label = [Helper customNavigationBarLabelWithTitle:chatRoomTitle subtitle:chatRoomState];
-            self.lastChatRoomStateString = chatRoomState;
-        } else {
-            label = [Helper customNavigationBarLabelWithTitle:chatRoomTitle subtitle:@""];
-        }
-        
-        label.userInteractionEnabled = YES;
-        label.superview.userInteractionEnabled = YES;
+        self.lastChatRoomStateString = chatRoomState;
+
+        self.navigationTitleLabel.text = chatRoomTitle;
+        self.navigationSubtitleLabel.text = chatRoomState;
         
         UITapGestureRecognizer *titleTapRecognizer =
         [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(chatRoomTitleDidTap)];
-        label.gestureRecognizers = @[titleTapRecognizer];
+        self.navigationView.gestureRecognizers = @[titleTapRecognizer];
         
         self.navigationItem.leftBarButtonItems = self.leftBarButtonItems;
     }
     
-    label.adjustsFontSizeToFitWidth = YES;
-    label.minimumScaleFactor = 0.8f;
-    label.frame = CGRectMake(0, 0, self.navigationItem.titleView.bounds.size.width, 44);
-    
-    [self.navigationItem setTitleView:label];
     [self updateCollectionViewInsets];
 }
 
-- (void)rightBarButtonItems {
+- (void)createLeftBarButtonItems {
+    UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(popViewController)];
+    
+    self.unreadLabel = [[UILabel alloc] initWithFrame:CGRectMake(25, 6, 30, 30)];
+    self.unreadLabel.font = [UIFont mnz_SFUIMediumWithSize:12.0f];
+    self.unreadLabel.textColor = [UIColor whiteColor];
+    self.unreadLabel.userInteractionEnabled = YES;
+    
+    if (self.presentingViewController && self.parentViewController) {
+        self.unreadBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.unreadLabel];
+        UIBarButtonItem *chatBackBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:AMLocalizedString(@"chat", @"Chat section header") style:UIBarButtonItemStylePlain target:self action:@selector(dismissChatRoom)];
+        
+        self.leftBarButtonItems = @[chatBackBarButtonItem, self.unreadBarButtonItem];
+    } else {
+        //TODO: leftItemsSupplementBackButton
+        UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 66, 44)];
+        UIImage *image = [[UIImage imageNamed:@"backArrow"] imageFlippedForRightToLeftLayoutDirection];
+        UIImageView *imageView = [[UIImageView alloc] initWithImage:[image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]];
+        imageView.frame = CGRectMake(0, 10, 22, 22);
+        [view addGestureRecognizer:singleTap];
+        [view addSubview:imageView];
+        [view addSubview:self.unreadLabel];
+        [imageView configureForAutoLayout];
+        [imageView autoPinEdgesToSuperviewMarginsExcludingEdge:ALEdgeTrailing];
+        [imageView autoPinEdge:ALEdgeTrailing toEdge:ALEdgeLeading ofView:self.unreadLabel];
+        [self.unreadLabel configureForAutoLayout];
+        [self.unreadLabel autoPinEdgesToSuperviewMarginsExcludingEdge:ALEdgeLeading];
+        
+        self.leftBarButtonItems = @[[[UIBarButtonItem alloc] initWithCustomView:view]];
+    }
+    self.navigationItem.leftBarButtonItems = self.leftBarButtonItems;
+}
+
+- (void)createRightBarButtonItems {
     if (self.selectingMessages) {
         UIBarButtonItem *cancelBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:AMLocalizedString(@"cancel", nil) style:UIBarButtonItemStyleDone target:self action:@selector(cancelSelecting:)];
         self.navigationItem.rightBarButtonItems = @[cancelBarButtonItem];
@@ -555,6 +584,34 @@ const NSUInteger kMaxMessagesToLoad = 256;
     self.unreadLabel.text = unreadChatsString;
 }
 
+- (void)setupCollectionView {
+    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideInputToolbar)];
+    tapGesture.cancelsTouchesInView = NO;
+    [self.collectionView addGestureRecognizer:tapGesture];
+    
+    [self customiseCollectionViewLayout];
+    
+    [self.collectionView registerNib:[MEGAOpenMessageHeaderView nib] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:[MEGAOpenMessageHeaderView headerReuseIdentifier]];
+    [self.collectionView registerNib:[MEGAMessagesTypingIndicatorFoorterView nib] forSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:[MEGAMessagesTypingIndicatorFoorterView footerReuseIdentifier]];
+    
+    self.collectionView.accessoryDelegate = self;
+    self.collectionView.backgroundColor = [UIColor whiteColor];
+    
+    //Register custom menu actions for cells.
+    [JSQMessagesCollectionViewCell registerMenuAction:@selector(edit:message:)];
+    [JSQMessagesCollectionViewCell registerMenuAction:@selector(forward:message:)];
+    [JSQMessagesCollectionViewCell registerMenuAction:@selector(import:message:)];
+    [JSQMessagesCollectionViewCell registerMenuAction:@selector(download:message:)];
+    [JSQMessagesCollectionViewCell registerMenuAction:@selector(addContact:message:)];
+    [JSQMessagesCollectionViewCell registerMenuAction:@selector(revoke:message:indexPath:)];
+    [JSQMessagesCollectionViewCell registerMenuAction:@selector(removeRichPreview:message:indexPath:)];
+    [JSQMessagesCollectionViewCell registerMenuAction:@selector(delete:)];
+    
+    JSQMessagesBubbleImageFactory *bubbleFactory = [[JSQMessagesBubbleImageFactory alloc] initWithBubbleImage:[UIImage imageNamed:@"bubble_tailless"] capInsets:UIEdgeInsetsZero layoutDirection:[UIApplication sharedApplication].userInterfaceLayoutDirection];
+    self.outgoingBubbleImageData = [bubbleFactory outgoingMessagesBubbleImageWithColor:[UIColor mnz_green00BFA5]];
+    self.incomingBubbleImageData = [bubbleFactory incomingMessagesBubbleImageWithColor:[UIColor mnz_grayE2EAEA]];
+}
+
 - (void)customiseCollectionViewLayout {
     self.collectionView.collectionViewLayout.messageBubbleFont = [UIFont mnz_SFUIRegularWithSize:15.0f];
     self.collectionView.collectionViewLayout.messageBubbleTextViewFrameInsets = UIEdgeInsetsMake(0.0f, 0.0f, 0.0f, 0.0f);
@@ -570,6 +627,7 @@ const NSUInteger kMaxMessagesToLoad = 256;
 }
 
 - (void)customToolbarContentView {
+    self.inputToolbar.contentView.textView.jsq_pasteDelegate = self;
     self.inputToolbar.contentView.textView.placeHolderTextColor = [UIColor mnz_grayCCCCCC];
     self.inputToolbar.contentView.textView.font = [UIFont mnz_SFUIRegularWithSize:15.0f];
     self.inputToolbar.contentView.textView.textColor = [UIColor mnz_black333333];
@@ -677,11 +735,7 @@ const NSUInteger kMaxMessagesToLoad = 256;
     }
 }
 
-- (void)setChatOpenMessageForIndexPath:(NSIndexPath *)indexPath {
-    if (self.openMessageHeaderView == nil) {
-        self.openMessageHeaderView = [self.collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"MEGAOpenMessageHeaderViewID" forIndexPath:indexPath];
-    }
-    
+- (NSString *)participantsNames {
     NSString *participantsNames = @"";
     for (NSUInteger i = 0; i < self.chatRoom.peerCount; i++) {
         NSString *peerName;
@@ -705,9 +759,18 @@ const NSUInteger kMaxMessagesToLoad = 256;
             participantsNames = [participantsNames stringByAppendingString:[NSString stringWithFormat:@"%@, ", peerName]];
         }
     }
+    return participantsNames;
+}
+
+- (void)setChatOpenMessageForIndexPath:(NSIndexPath *)indexPath {
+    if (self.openMessageHeaderView == nil) {
+        self.openMessageHeaderView = [self.collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"MEGAOpenMessageHeaderViewID" forIndexPath:indexPath];
+    }
+    
+    
     
     self.openMessageHeaderView.chattingWithLabel.text = AMLocalizedString(@"chattingWith", @"Title show above the name of the persons with whom you're chatting");
-    self.openMessageHeaderView.conversationWithLabel.text = participantsNames;
+    self.openMessageHeaderView.conversationWithLabel.text = [self participantsNames];
     self.openMessageHeaderView.onlineStatusLabel.text = self.lastChatRoomStateString;
     self.openMessageHeaderView.onlineStatusView.backgroundColor = self.lastChatRoomStateColor;
     self.openMessageHeaderView.conversationWithAvatar.image = self.chatRoom.isGroup ? nil : self.peerAvatar;
@@ -1157,10 +1220,11 @@ const NSUInteger kMaxMessagesToLoad = 256;
     self.selectingMessages = NO;
     [self.selectedMessages removeAllObjects];
     [self.collectionView reloadItemsAtIndexPaths:self.collectionView.indexPathsForVisibleItems];
-    [self rightBarButtonItems];
+    [self createRightBarButtonItems];
     
     [self.navigationController setToolbarHidden:YES animated:YES];
     
+    [self instantiateNavigationTitle];
     [self customNavigationBarLabel];
 }
 
@@ -1897,7 +1961,7 @@ const NSUInteger kMaxMessagesToLoad = 256;
     self.selectingMessages = YES;
     [self.selectedMessages addObject:message];
     [self.collectionView reloadItemsAtIndexPaths:self.collectionView.indexPathsForVisibleItems];
-    [self rightBarButtonItems];
+    [self createRightBarButtonItems];
     
     if (self.inputToolbar.contentView.textView.isFirstResponder) {
         [self.inputToolbar.contentView.textView resignFirstResponder];
@@ -2522,12 +2586,27 @@ const NSUInteger kMaxMessagesToLoad = 256;
 - (void)onChatConnectionStateUpdate:(MEGAChatSdk *)api chatId:(uint64_t)chatId newState:(int)newState {
     if (chatId == self.chatRoom.chatId) {
         [self customNavigationBarLabel];
-        [self rightBarButtonItems];
+        [self createRightBarButtonItems];
         
         if (self.loadMessagesLater && newState == MEGAChatConnectionOnline) {
             self.loadMessagesLater = NO;
             self.isFirstLoad = YES;
             [self loadMessages];
+        }
+    }
+}
+
+- (void)onChatPresenceLastGreen:(MEGAChatSdk *)api userHandle:(uint64_t)userHandle lastGreen:(NSInteger)lastGreen {
+    if (self.chatRoom.isGroup) {
+        return;
+    } else {
+        if ([self.chatRoom peerHandleAtIndex:0] == userHandle) {
+            MEGAChatStatus chatStatus = [[MEGASdkManager sharedMEGAChatSdk] userOnlineStatus:[self.chatRoom peerHandleAtIndex:0]];
+            if (chatStatus == 1 || chatStatus == 2) {
+                MEGALogDebug(@"CHAT LAST SEEN minutes: %td for handle: %lld", lastGreen, userHandle);
+                NSDate *dateLastSeen = [NSDate dateWithTimeIntervalSinceNow:lastGreen*60];
+                self.navigationSubtitleLabel.text = [NSString stringWithFormat:@"Last seen %@", dateLastSeen.timeAgoSinceNow];
+            }
         }
     }
 }
