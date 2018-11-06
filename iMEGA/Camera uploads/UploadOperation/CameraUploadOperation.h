@@ -22,7 +22,9 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)finishOperationWithStatus:(NSString *)status shouldUploadNextAsset:(BOOL)uploadNextAsset;
 - (void)archiveUploadInfoDataIfNeeded;
 - (void)uploadFileToServer;
-- (void)processExistingNode:(MEGANode *)node;
+- (void)copyToParentNodeIfNeededForMatchingNode:(MEGANode *)node;
+- (void)copyToParentNodeIfNeededForMatchingNodeList:(MEGANodeList *)nodeList;
+- (nullable NSURL *)URLForAssetFolder;
 
 @end
 

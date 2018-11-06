@@ -41,16 +41,18 @@
     options.networkAccessAllowed = YES;
     options.version = PHImageRequestOptionsVersionCurrent;
     options.synchronous = YES;
+    
+    __weak __typeof__(self) weakSelf = self;
     [[PHImageManager defaultManager] requestImageDataForAsset:self.uploadInfo.asset options:options resultHandler:^(NSData * _Nullable imageData, NSString * _Nullable dataUTI, UIImageOrientation orientation, NSDictionary * _Nullable info) {
-        if (self.isCancelled) {
-            [self finishOperationWithStatus:UploadStatusFailed shouldUploadNextAsset:YES];
+        if (weakSelf.isCancelled) {
+            [weakSelf finishOperationWithStatus:UploadStatusFailed shouldUploadNextAsset:YES];
             return;
         }
         
         if (imageData) {
-            [self processImageData:imageData];
+            [weakSelf processImageData:imageData];
         } else {
-            [self finishOperationWithStatus:UploadStatusFailed shouldUploadNextAsset:YES];
+            [weakSelf finishOperationWithStatus:UploadStatusFailed shouldUploadNextAsset:YES];
         }
     }];
 }
@@ -58,43 +60,40 @@
 - (void)processImageData:(NSData *)imageData {
     MEGALogDebug(@"[Camera Upload] %@ starts processing image data", self);
     self.uploadInfo.originalFingerprint = [[MEGASdkManager sharedMEGASdk] fingerprintForData:imageData modificationTime:self.uploadInfo.asset.creationDate];
-    MEGANode *existingNode = [[MEGASdkManager sharedMEGASdk] nodeForFingerprint:self.uploadInfo.originalFingerprint parent:self.uploadInfo.parentNode];
-    if (existingNode) {
-        [self processExistingNode:existingNode];
+    MEGANodeList *matchingNodeList = [[MEGASdkManager sharedMEGASdk] nodesForOriginalFingerprint:self.uploadInfo.originalFingerprint];
+    if (matchingNodeList.size.integerValue > 0) {
+        [self copyToParentNodeIfNeededForMatchingNodeList:matchingNodeList];
+        [self finishOperationWithStatus:UploadStatusDone shouldUploadNextAsset:YES];
         return;
     }
     
     NSData *JPEGData = UIImageJPEGRepresentation([UIImage imageWithData:imageData], 1.0);
     self.uploadInfo.fingerprint = [[MEGASdkManager sharedMEGASdk] fingerprintForData:JPEGData modificationTime:self.uploadInfo.asset.creationDate];
-    existingNode = [[MEGASdkManager sharedMEGASdk] nodeForFingerprint:self.uploadInfo.fingerprint parent:self.uploadInfo.parentNode];
-    if (existingNode) {
-        [self processExistingNode:existingNode];
+    MEGANode *matchingNode = [[MEGASdkManager sharedMEGASdk] nodeForFingerprint:self.uploadInfo.fingerprint parent:self.uploadInfo.parentNode];
+    if (matchingNode) {
+        [self copyToParentNodeIfNeededForMatchingNode:matchingNode];
+        [self finishOperationWithStatus:UploadStatusDone shouldUploadNextAsset:YES];
         return;
     }
     
-    NSURL *assetDirectoryURL = [[[NSFileManager defaultManager] cameraUploadURL] URLByAppendingPathComponent:self.uploadInfo.asset.localIdentifier.stringByRemovingInvalidFileCharacters isDirectory:YES];
-    if(![[NSFileManager defaultManager] createDirectoryAtURL:assetDirectoryURL withIntermediateDirectories:YES attributes:nil error:nil]) {
-        [self finishOperationWithStatus:UploadStatusFailed shouldUploadNextAsset:YES];
-        return;
-    }
-    self.uploadInfo.directoryURL = assetDirectoryURL;
+    self.uploadInfo.directoryURL = [self URLForAssetFolder];
     self.uploadInfo.fileName = [[NSString mnz_fileNameWithDate:self.uploadInfo.asset.creationDate] stringByAppendingPathExtension:@"jpg"];
+    
+    // TODO: delete local file first? how this relates to the abort recovery
     if ([JPEGData writeToURL:self.uploadInfo.fileURL atomically:YES]) {
         self.uploadInfo.fileSize = [JPEGData length];
-        [self encryptFile];
+        [self createThumbnailAndPreviewFiles];
+        [self encryptsFile];
     } else {
         [self finishOperationWithStatus:UploadStatusFailed shouldUploadNextAsset:YES];
     }
 }
 
-- (void)encryptFile {
+- (void)encryptsFile {
     self.uploadInfo.mediaUpload = [[MEGASdkManager sharedMEGASdk] backgroundMediaUpload];
     NSString *urlSuffix;
     if ([self.uploadInfo.mediaUpload encryptFileAtPath:self.uploadInfo.fileURL.path startPosition:0 length:self.uploadInfo.fileSize outputFilePath:self.uploadInfo.encryptedURL.path urlSuffix:&urlSuffix]) {
         MEGALogDebug(@"[Camera Upload] %@ got file encrypted with url suffix: %@", self, urlSuffix);
-        
-        [self createThumbnailAndPreviewFiles];
-        
         self.uploadInfo.uploadURLStringSuffix = urlSuffix;
         [[MEGASdkManager sharedMEGASdk] requestBackgroundUploadURLWithFileSize:self.uploadInfo.fileSize mediaUpload:self.uploadInfo.mediaUpload delegate:[[CameraUploadRequestDelegate alloc] initWithCompletion:^(MEGARequest * _Nonnull request, MEGAError * _Nonnull error) {
             if (error.type) {
