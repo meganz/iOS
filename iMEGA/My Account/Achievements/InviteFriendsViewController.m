@@ -153,16 +153,26 @@
 
 - (void)contactPicker:(CNContactPickerViewController *)picker didSelectContactProperties:(NSArray<CNContactProperty*> *)contactProperties {
     if (contactProperties.count != 0) {
+        BOOL error = NO;
         for (CNContactProperty *contactProperty in contactProperties) {
-            [self.tokens addObject:contactProperty.value];
+            NSString *email = contactProperty.value;
+            if (email.mnz_isValidEmail) {
+                [self.tokens addObject:email];
+            } else {
+                error = YES;
+                self.inviteButtonUpperLabel.text = [NSString stringWithFormat:@"%@ %@", AMLocalizedString(@"theEmailAddressFormatIsInvalid", @"Add contacts and share dialog error message when user try to add wrong email address"), email];
+                self.inviteButtonUpperLabel.textColor = UIColor.mnz_redMain;
+            }
         }
         
         [self.tokenField reloadData];
         self.tokenFieldHeightLayoutConstraint.constant = self.tokenField.frame.size.height;
         
-        self.inviteButton.backgroundColor = UIColor.mnz_redMain;
+        self.inviteButton.backgroundColor = self.tokens.count == 0 ? UIColor.mnz_grayCCCCCC : UIColor.mnz_redMain;
         
-        [self cleanErrors];
+        if (!error) {
+            [self cleanErrors];
+        }
     }
 }
 

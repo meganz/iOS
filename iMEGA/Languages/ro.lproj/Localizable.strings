@@ -102,7 +102,7 @@
 "emailInvalidFormat"="Introdu un e-mail valid";
 /* Add contacts and share dialog error message when user try to add wrong email address */
 "theEmailAddressFormatIsInvalid"="Formatul adresei de e-mail este nevalid";
-/* Message shown when the user enters a wrong password  */
+/* Message shown when the user enters a wrong password */
 "passwordInvalidFormat"="Introdu o parolă validă";
 /* Hint text to suggest that the user has to write his email */
 "emailPlaceholder"="E-mail";
@@ -130,10 +130,8 @@
 "passwordStrong"="Această parolă va rezista în faţa celor mai sofisticate atacuri de tip „brute-force”.  Te rugăm să te asiguri că o vei reţine.";
 /*  */
 "agreeWithTheMEGATermsOfService"="Sunt de acord cu <a href='terms'>Termenii de utilizare a serviciului</a> MEGA";
-/* Error text shown when you have not entered a correct name  */
+/* Error text shown when you have not entered a correct name */
 "nameInvalidFormat"="Introdu un nume valid";
-/*  */
-"invalidFirstNameAndLastName"="Prenume şi/sau nume nevalide.";
 /* Error text shown when you have not written the same password */
 "passwordsDoNotMatch"="Parolele nu se potrivesc";
 /* Error text shown when you don't have selected the checkbox to agree with the Terms of Service */
@@ -144,8 +142,8 @@
 "awaitingEmailConfirmation"="Se aşteaptă confirmarea e-mailului.";
 /* Text shown on the confirm account view to remind the user what to do */
 "confirmText"="Te rugăm să introduci parola pentru a confirma contul";
-/* Button title that triggers the confirm account action */
-"confirmAccountButton"="Confirmă contul";
+/* Label for any ‘Confirm account’ button, link, text, title, etc. - (String as short as possible). */
+"Confirm account"="Confirmă contul";
 /* Error text shown when you introduce a wrong password on the confirmation proccess */
 "passwordWrong"="Parolă greşită";
 /* Warning title shown when you try to confirm an account but you are logged in with another one */

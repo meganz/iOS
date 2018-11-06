@@ -1394,7 +1394,12 @@
     NSUInteger usersCount = contactProperties.count;
     MEGAInviteContactRequestDelegate *inviteContactRequestDelegate = [[MEGAInviteContactRequestDelegate alloc] initWithNumberOfRequests:usersCount];
     for (CNContactProperty *contactProperty in contactProperties) {
-        [[MEGASdkManager sharedMEGASdk] inviteContactWithEmail:contactProperty.value message:@"" action:MEGAInviteActionAdd delegate:inviteContactRequestDelegate];
+        NSString *email = contactProperty.value;
+        if (email.mnz_isValidEmail) {
+            [[MEGASdkManager sharedMEGASdk] inviteContactWithEmail:contactProperty.value message:@"" action:MEGAInviteActionAdd delegate:inviteContactRequestDelegate];
+        } else {
+            [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"%@ %@", AMLocalizedString(@"theEmailAddressFormatIsInvalid", @"Add contacts and share dialog error message when user try to add wrong email address"), email]];
+        }
     }
 }
 
