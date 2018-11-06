@@ -129,13 +129,13 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kReachabilityChangedNotification object:nil];
     
     [[MEGASdkManager sharedMEGAChatSdk] removeChatDelegate:self];
-    
-    [self.chatListItemArray removeAllObjects];
-    [self.chatIdIndexPathDictionary removeAllObjects];
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
+    
+    [self.chatListItemArray removeAllObjects];
+    [self.chatIdIndexPathDictionary removeAllObjects];
     [self.tableView reloadData];
 }
 
