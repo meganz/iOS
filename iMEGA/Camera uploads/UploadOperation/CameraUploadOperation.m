@@ -89,14 +89,35 @@
 
 #pragma mark - data processing
 
-- (void)processExistingNode:(MEGANode *)node {
-    MEGALogDebug(@"[Camera Upload] %@ processes existing node", self);
+- (void)copyToParentNodeIfNeededForMatchingNode:(MEGANode *)node {
+    if (node == nil) {
+        return;
+    }
     
     if (node.parentHandle != self.uploadInfo.parentNode.handle) {
         [[MEGASdkManager sharedMEGASdk] copyNode:node newParent:self.uploadInfo.parentNode];
     }
+}
+
+- (void)copyToParentNodeIfNeededForMatchingNodeList:(MEGANodeList *)nodeList {
+    if (nodeList.size.integerValue == 0) {
+        return;
+    }
     
-    [self finishOperationWithStatus:UploadStatusDone shouldUploadNextAsset:YES];
+    for (NSInteger i = 0; i < nodeList.size.integerValue; i++) {
+        MEGANode *node = [nodeList nodeAtIndex:i];
+        if (node.parentHandle == self.uploadInfo.parentNode.handle) {
+            return;
+        }
+    }
+    
+    [MEGASdkManager.sharedMEGASdk copyNode:[nodeList nodeAtIndex:0] newParent:self.uploadInfo.parentNode];
+}
+
+- (NSURL *)URLForAssetFolder {
+    NSURL *assetDirectoryURL = [[[NSFileManager defaultManager] cameraUploadURL] URLByAppendingPathComponent:self.uploadInfo.asset.localIdentifier.stringByRemovingInvalidFileCharacters isDirectory:YES];
+    [[NSFileManager defaultManager] createDirectoryAtURL:assetDirectoryURL withIntermediateDirectories:YES attributes:nil error:nil];
+    return assetDirectoryURL;
 }
 
 #pragma mark - upload task

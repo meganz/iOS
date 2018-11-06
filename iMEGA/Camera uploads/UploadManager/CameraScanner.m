@@ -32,7 +32,8 @@
         
         PHFetchOptions *fetchOptions = [[PHFetchOptions alloc] init];
         fetchOptions.includeAssetSourceTypes = PHAssetSourceTypeUserLibrary | PHAssetSourceTypeCloudShared | PHAssetSourceTypeiTunesSynced;
-        self.fetchResult = [PHAsset fetchAssetsWithMediaType:PHAssetMediaTypeImage options:fetchOptions];
+        fetchOptions.predicate = [NSPredicate predicateWithFormat:@"mediaType IN %@", @[@(PHAssetMediaTypeImage), @(PHAssetMediaTypeVideo)]];
+        self.fetchResult = [PHAsset fetchAssetsWithOptions:fetchOptions];
         if (self.fetchResult.count == 0) {
             return;
         }

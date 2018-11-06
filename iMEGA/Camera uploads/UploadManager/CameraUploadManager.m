@@ -10,12 +10,16 @@
 
 static NSString * const CameraUplodFolderName = @"Camera Uploads";
 static const NSInteger ConcurrentPhotoUploadCount = 10;
-static const NSInteger MaxConcurrentOperationCountInBackground = 5;
-static const NSInteger MaxConcurrentOperationCountInMemoryWarning = 2;
+static const NSInteger MaxConcurrentPhotoOperationCountInBackground = 5;
+static const NSInteger MaxConcurrentPhotoOperationCountInMemoryWarning = 2;
+
+static const NSInteger ConcurrentVideoUploadCount = 1;
+static const NSInteger MaxConcurrentVideoOperationCount = 1;
 
 @interface CameraUploadManager ()
 
-@property (strong, nonatomic) NSOperationQueue *operationQueue;
+@property (strong, nonatomic) NSOperationQueue *photoUploadOerationQueue;
+@property (strong, nonatomic) NSOperationQueue *videoUploadOerationQueue;
 @property (strong, nonatomic) CameraUploadRecordManager *assetUploadRecordManager;
 @property (strong, nonatomic) MEGANode *cameraUploadNode;
 @property (strong, nonatomic) CameraScanner *scanner;
@@ -39,24 +43,27 @@ static const NSInteger MaxConcurrentOperationCountInMemoryWarning = 2;
     if (self) {
         _assetUploadRecordManager = [[CameraUploadRecordManager alloc] init];
         _scanner = [[CameraScanner alloc] init];
-        [self initializeOperationQueue];
-        [_operationQueue addOperationWithBlock:^{
-            [[MEGASdkManager sharedMEGASdk] ensureMediaInfo];
-        }];
-        
+        [self initializeUploadOperationQueues];
         [self registerNotifications];
+        
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            [[MEGASdkManager sharedMEGASdk] ensureMediaInfo];
+        });
     }
     return self;
 }
 
-- (void)initializeOperationQueue {
-    _operationQueue = [[NSOperationQueue alloc] init];
-
+- (void)initializeUploadOperationQueues {
+    _photoUploadOerationQueue = [[NSOperationQueue alloc] init];
+    
     if (UIApplication.sharedApplication.applicationState == UIApplicationStateActive) {
-        _operationQueue.maxConcurrentOperationCount = NSOperationQueueDefaultMaxConcurrentOperationCount;
+        _photoUploadOerationQueue.maxConcurrentOperationCount = NSOperationQueueDefaultMaxConcurrentOperationCount;
     } else {
-        _operationQueue.maxConcurrentOperationCount = MaxConcurrentOperationCountInBackground;
+        _photoUploadOerationQueue.maxConcurrentOperationCount = MaxConcurrentPhotoOperationCountInBackground;
     }
+    
+    _videoUploadOerationQueue = [[NSOperationQueue alloc] init];
+    _videoUploadOerationQueue.maxConcurrentOperationCount = MaxConcurrentVideoOperationCount;
 }
 
 - (void)registerNotifications {
@@ -68,7 +75,7 @@ static const NSInteger MaxConcurrentOperationCountInMemoryWarning = 2;
 #pragma mark - scan and upload
 
 - (void)startUploading {
-    [self.operationQueue addOperationWithBlock:^{
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         if (self.cameraUploadNode) {
             [self uploadIfPossible];
         } else {
@@ -79,21 +86,18 @@ static const NSInteger MaxConcurrentOperationCountInMemoryWarning = 2;
                 [self uploadIfPossible];
             }]];
         }
-    }];
+    });
 }
 
 - (void)uploadIfPossible {
     [PHPhotoLibrary requestAuthorization:^(PHAuthorizationStatus status) {
         if (status == PHAuthorizationStatusAuthorized) {
             [self.scanner startScanningWithCompletion:^{
-                [self uploadNextPhotoBatch];
+                [self uploadNextAssetsWithNumber:ConcurrentPhotoUploadCount mediaType:PHAssetMediaTypeImage];
+                [self uploadNextAssetsWithNumber:ConcurrentVideoUploadCount mediaType:PHAssetMediaTypeVideo];
             }];
         }
     }];
-}
-
-- (void)uploadNextPhotoBatch {
-    [self uploadNextAssetsWithNumber:ConcurrentPhotoUploadCount mediaType:PHAssetMediaTypeImage];
 }
 
 - (void)uploadNextForAsset:(PHAsset *)asset {
@@ -106,7 +110,11 @@ static const NSInteger MaxConcurrentOperationCountInMemoryWarning = 2;
         [CameraUploadRecordManager.shared updateStatus:UploadStatusQueuedUp forRecord:record error:nil];
         CameraUploadOperation *operation = [UploadOperationFactory operationWithLocalIdentifier:record.localIdentifier parentNode:self.cameraUploadNode];
         if (operation) {
-            [self.operationQueue addOperation:operation];
+            if (mediaType == PHAssetMediaTypeImage) {
+                [self.photoUploadOerationQueue addOperation:operation];
+            } else {
+                [self.videoUploadOerationQueue addOperation:operation];
+            }
         } else {
             [CameraUploadRecordManager.shared deleteRecordsByLocalIdentifiers:@[record.localIdentifier] error:nil];
         }
@@ -116,15 +124,15 @@ static const NSInteger MaxConcurrentOperationCountInMemoryWarning = 2;
 #pragma mark - handle app lifecycle
 
 - (void)applicationDidEnterBackground {
-    self.operationQueue.maxConcurrentOperationCount = MaxConcurrentOperationCountInBackground;
+    self.photoUploadOerationQueue.maxConcurrentOperationCount = MaxConcurrentPhotoOperationCountInBackground;
 }
 
 - (void)applicationDidBecomeActive {
-    self.operationQueue.maxConcurrentOperationCount = NSOperationQueueDefaultMaxConcurrentOperationCount;
+    self.photoUploadOerationQueue.maxConcurrentOperationCount = NSOperationQueueDefaultMaxConcurrentOperationCount;
 }
 
 - (void)applicationDidReceiveMemoryWarning {
-    self.operationQueue.maxConcurrentOperationCount = MaxConcurrentOperationCountInMemoryWarning;
+    self.photoUploadOerationQueue.maxConcurrentOperationCount = MaxConcurrentPhotoOperationCountInMemoryWarning;
 }
 
 #pragma mark - handle camera upload node
