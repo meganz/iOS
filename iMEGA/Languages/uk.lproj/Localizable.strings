@@ -102,7 +102,7 @@
 "emailInvalidFormat"="Введіть дійсну адресу е-пошти";
 /* Add contacts and share dialog error message when user try to add wrong email address */
 "theEmailAddressFormatIsInvalid"="Невірний формат електронної адреси";
-/* Message shown when the user enters a wrong password  */
+/* Message shown when the user enters a wrong password */
 "passwordInvalidFormat"="Введіть правильний пароль";
 /* Hint text to suggest that the user has to write his email */
 "emailPlaceholder"="Е-пошта";
@@ -130,10 +130,8 @@
 "passwordStrong"="Цей пароль зможе протистояти найбільш типовим атакам підбору паролів. Будь ласка, переконайтеся, що ви будете пам'ятати його.";
 /*  */
 "agreeWithTheMEGATermsOfService"="Я погоджуюсь з <a href='terms'>Умовами користування</a> MEGA";
-/* Error text shown when you have not entered a correct name  */
+/* Error text shown when you have not entered a correct name */
 "nameInvalidFormat"="Введіть дійсне ім'я";
-/*  */
-"invalidFirstNameAndLastName"="Неправильне ім'я та/або прізвище.";
 /* Error text shown when you have not written the same password */
 "passwordsDoNotMatch"="Паролі не співпадають";
 /* Error text shown when you don't have selected the checkbox to agree with the Terms of Service */
@@ -144,8 +142,8 @@
 "awaitingEmailConfirmation"="Очікування підтвердження е-пошти.";
 /* Text shown on the confirm account view to remind the user what to do */
 "confirmText"="Будь ласка, введіть пароль, щоб підтвердити обліковий запис";
-/* Button title that triggers the confirm account action */
-"confirmAccountButton"="Підтвердження облікового запису";
+/* Label for any ‘Confirm account’ button, link, text, title, etc. - (String as short as possible). */
+"Confirm account"="Підтвердити акаунт";
 /* Error text shown when you introduce a wrong password on the confirmation proccess */
 "passwordWrong"="Невірний пароль";
 /* Warning title shown when you try to confirm an account but you are logged in with another one */

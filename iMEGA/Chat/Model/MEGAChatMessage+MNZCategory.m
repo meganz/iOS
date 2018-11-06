@@ -353,7 +353,7 @@ static const void *richNumberTagKey = &richNumberTagKey;
         text = @"MEGAChatMessageTypeAttachment";
     } else if (self.type == MEGAChatMessageTypeRevokeAttachment) {
         text = @"MEGAChatMessageTypeRevokeAttachment";
-    } if (self.type == MEGAChatMessageTypeContainsMeta && self.containsMeta.type == MEGAChatContainsMetaTypeInvalid) {
+    } else if (self.type == MEGAChatMessageTypeContainsMeta && self.containsMeta.type == MEGAChatContainsMetaTypeInvalid) {
         text = @"Message contains invalid meta";
     } else {
         UIColor *textColor = self.userHandle == myHandle ? [UIColor whiteColor] : [UIColor mnz_black333333];
