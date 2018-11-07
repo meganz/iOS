@@ -65,21 +65,21 @@
             if ([session.asset isMemberOfClass:[AVURLAsset class]]) {
                 AVURLAsset *urlAsset = (AVURLAsset *)session.asset;
                 NSError *error;
-                [NSFileManager.defaultManager copyItemAtURL:urlAsset.URL toURL:self.uploadInfo.fileURL error:&error];
+                [NSFileManager.defaultManager copyItemAtURL:urlAsset.URL toURL:self.uploadInfo.originalURL error:&error];
                 if (error) {
                     MEGALogError(@"[Camera Upload] %@ gets error when to copy original asset file %@", self, error);
                     [self finishOperationWithStatus:UploadStatusFailed shouldUploadNextAsset:YES];
                     return;
                 }
                 
-                [NSFileManager.defaultManager setAttributes:@{NSFileModificationDate : self.uploadInfo.asset.creationDate} ofItemAtPath:self.uploadInfo.fileURL.path error:&error];
+                [NSFileManager.defaultManager setAttributes:@{NSFileModificationDate : self.uploadInfo.asset.creationDate} ofItemAtPath:self.uploadInfo.originalURL.path error:&error];
                 if (error) {
                     MEGALogError(@"[Camera Upload] %@ gets error when to rewrite the file creation date %@", self, error);
                     [self finishOperationWithStatus:UploadStatusFailed shouldUploadNextAsset:YES];
                     return;
                 }
                 
-                self.uploadInfo.originalFingerprint = [MEGASdkManager.sharedMEGASdk fingerprintForFilePath:self.uploadInfo.fileURL.path];
+                self.uploadInfo.originalFingerprint = [MEGASdkManager.sharedMEGASdk fingerprintForFilePath:self.uploadInfo.originalURL.path];
                 MEGANodeList *matchingNodeList = [MEGASdkManager.sharedMEGASdk nodesForOriginalFingerprint:self.uploadInfo.originalFingerprint];
                 if (matchingNodeList.size.integerValue > 0) {
                     [self copyToParentNodeIfNeededForMatchingNodeList:matchingNodeList];
@@ -177,12 +177,6 @@
         MEGALogError(@"[Camera Upload] %@ encrypts file failed", self);
         [self finishOperationWithStatus:UploadStatusFailed shouldUploadNextAsset:YES];
     }
-}
-
-- (void)createThumbnailAndPreviewFiles {
-    [self.attributesDataSDK createThumbnail:self.uploadInfo.fileURL.path destinatioPath:self.uploadInfo.thumbnailURL.path];
-    [self.attributesDataSDK createPreview:self.uploadInfo.fileURL.path destinatioPath:self.uploadInfo.previewURL.path];
-    self.attributesDataSDK = nil;
 }
 
 @end

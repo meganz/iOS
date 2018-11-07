@@ -19,6 +19,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, readonly) NSURL *previewURL;
 @property (nonatomic, readonly) NSURL *thumbnailURL;
 @property (nonatomic, readonly) NSURL *encryptedURL;
+@property (nonatomic, readonly) NSURL *originalURL;
 
 @property (strong, nonatomic) NSString *uploadURLStringSuffix;
 @property (strong, nonatomic) NSString *uploadURLString;
