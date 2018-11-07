@@ -29,6 +29,7 @@
 #import "NSString+MNZCategory.h"
 #import "NSURL+MNZCategory.h"
 #import "UIImage+MNZCategory.h"
+#import "UIApplication+MNZCategory.h"
 
 #import "BrowserViewController.h"
 #import "CallViewController.h"
@@ -49,7 +50,7 @@ const CGFloat kAvatarImageDiameter = 24.0f;
 
 const NSUInteger kMaxMessagesToLoad = 256;
 
-@interface MessagesViewController () <JSQMessagesViewAccessoryButtonDelegate, JSQMessagesComposerTextViewPasteDelegate, MEGAChatDelegate, MEGAChatRequestDelegate, MEGARequestDelegate>
+@interface MessagesViewController () <MEGAPhotoBrowserDelegate, JSQMessagesViewAccessoryButtonDelegate, JSQMessagesComposerTextViewPasteDelegate, MEGAChatDelegate, MEGAChatRequestDelegate, MEGARequestDelegate>
 
 @property (nonatomic, strong) MEGAOpenMessageHeaderView *openMessageHeaderView;
 @property (nonatomic, strong) MEGAMessagesTypingIndicatorFoorterView *footerView;
@@ -298,6 +299,8 @@ const NSUInteger kMaxMessagesToLoad = 256;
             }
         }
     }];
+    
+    [self setLastMessageAsSeen];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -315,10 +318,16 @@ const NSUInteger kMaxMessagesToLoad = 256;
         offset.y = self.lastVerticalOffset;
         self.collectionView.contentOffset = offset;
     }
+    self.unreadMessages = self.chatRoom.unreadCount;
+    
 }
 
 - (void)didBecomeActive {
-    [[MEGASdkManager sharedMEGAChatSdk] setMessageSeenForChat:self.chatRoom.chatId messageId:self.messages.lastObject.messageId];
+    if (UIApplication.mnz_visibleViewController == self) {
+        [self setLastMessageAsSeen];
+    }
+    self.unreadMessages = self.chatRoom.unreadCount;
+    [self.collectionView reloadData];
 }
 
 - (void)willResignActive {
@@ -1043,6 +1052,15 @@ const NSUInteger kMaxMessagesToLoad = 256;
 
 - (void)updateCollectionViewInsets {
     [self jsq_setCollectionViewInsetsTopValue:0.0f bottomValue:self.lastBottomInset];
+}
+
+- (void)setLastMessageAsSeen {
+    if (self.messages.count > 0) {
+        MEGAChatMessage *lastMessage = self.messages.lastObject;
+        if (lastMessage.userHandle != [[MEGASdkManager sharedMEGAChatSdk] myUserHandle] && [[MEGASdkManager sharedMEGAChatSdk] lastChatMessageSeenForChat:self.chatRoom.chatId].messageId != lastMessage.messageId) {
+            [[MEGASdkManager sharedMEGAChatSdk] setMessageSeenForChat:self.chatRoom.chatId messageId:lastMessage.messageId];
+        }
+    }
 }
 
 #pragma mark - Gesture recognizer
@@ -2035,6 +2053,7 @@ const NSUInteger kMaxMessagesToLoad = 256;
                     }
                     
                     MEGAPhotoBrowserViewController *photoBrowserVC = [MEGAPhotoBrowserViewController photoBrowserWithMediaNodes:mediaNodesArray api:[MEGASdkManager sharedMEGASdk] displayMode:DisplayModeSharedItem presentingNode:nil preferredIndex:[reverseArray indexOfObject:message]];
+                    photoBrowserVC.delegate = self;
                     
                     [self.navigationController presentViewController:photoBrowserVC animated:YES completion:nil];
                 } else {
@@ -2177,6 +2196,12 @@ const NSUInteger kMaxMessagesToLoad = 256;
     [[MEGAStore shareInstance] insertOrUpdateChatDraftWithChatId:self.chatRoom.chatId text:self.inputToolbar.contentView.textView.text];
 }
 
+#pragma mark - MEGAPhotoBrowserDelegate
+
+- (void)photoBrowser:(MEGAPhotoBrowserViewController *)photoBrowser willDismissWithNode:(MEGANode *)node {
+    [self setLastMessageAsSeen];
+}
+
 #pragma mark - MEGAChatRoomDelegate
 
 - (void)onMessageReceived:(MEGAChatSdk *)api message:(MEGAChatMessage *)message {
@@ -2195,10 +2220,19 @@ const NSUInteger kMaxMessagesToLoad = 256;
         case MEGAChatMessageTypeContact:
         case MEGAChatMessageTypeCallEnded:
         case MEGAChatMessageTypeContainsMeta: {
+            NSUInteger unreads;
+            if ([UIApplication sharedApplication].applicationState == UIApplicationStateActive && UIApplication.mnz_visibleViewController == self) {
+                [[MEGASdkManager sharedMEGAChatSdk] setMessageSeenForChat:self.chatRoom.chatId messageId:message.messageId];
+                unreads = [message.senderId isEqualToString:self.senderId] ? 0 : self.unreadMessages + 1;
+            } else {
+                self.chatRoom = [api chatRoomForChatId:self.chatRoom.chatId];
+                self.unreadMessages = self.chatRoom.unreadCount;
+                unreads = [message.senderId isEqualToString:self.senderId] ? 0 : self.unreadMessages;
+            }
+            
             [self.messages addObject:message];
             [self finishReceivingMessage];
             
-            NSUInteger unreads = [message.senderId isEqualToString:self.senderId] ? 0 : self.unreadMessages + 1;
             [self updateUnreadMessagesLabel:unreads];
             
             dispatch_async(dispatch_get_main_queue(), ^{
@@ -2215,10 +2249,6 @@ const NSUInteger kMaxMessagesToLoad = 256;
                     [self scrollToBottomAnimated:YES];
                 }
             });
-            
-            if ([UIApplication sharedApplication].applicationState == UIApplicationStateActive) {
-                [[MEGASdkManager sharedMEGAChatSdk] setMessageSeenForChat:self.chatRoom.chatId messageId:message.messageId];
-            }
             
             [self loadNodesFromMessage:message atTheBeginning:YES];
             break;
