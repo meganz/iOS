@@ -528,7 +528,6 @@
 
 - (IBAction)cancel:(UIBarButtonItem *)sender {
     if (self.browserAction == BrowserActionOpenIn) {
-        NSError *error = nil;
         NSString *inboxDirectory = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"Inbox"];
         [NSFileManager.defaultManager mnz_removeFolderContentsAtPath:inboxDirectory];
     }

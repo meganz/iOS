@@ -91,7 +91,7 @@
                     totalSize += [[[self.message.nodeList nodeAtIndex:i] size] unsignedIntegerValue];
                 }
                 size = [NSByteCountFormatter stringFromByteCount:totalSize  countStyle:NSByteCountFormatterCountStyleMemory];
-                UIImage *avatar = [UIImage imageForName:[NSString stringWithFormat:@"%lu", totalNodes] size:contactView.avatarImage.frame.size backgroundColor:[UIColor mnz_gray999999] textColor:[UIColor whiteColor] font:[UIFont mnz_SFUIRegularWithSize:(contactView.avatarImage.frame.size.width/2.0f)]];
+                UIImage *avatar = [UIImage imageForName:[NSString stringWithFormat:@"%tu", totalNodes] size:contactView.avatarImage.frame.size backgroundColor:[UIColor mnz_gray999999] textColor:[UIColor whiteColor] font:[UIFont mnz_SFUIRegularWithSize:(contactView.avatarImage.frame.size.width/2.0f)]];
                 contactView.avatarImage.image = avatar;
             }
             contactView.titleLabel.text = filename;
@@ -190,7 +190,7 @@
 #pragma mark - NSObject
 
 - (NSUInteger)hash {
-    return super.hash ^ self.message.userHandle;
+    return super.hash ^ (NSUInteger)self.message.userHandle;
 }
 
 - (NSString *)description {

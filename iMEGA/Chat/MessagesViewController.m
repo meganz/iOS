@@ -64,6 +64,7 @@ const NSUInteger kMaxMessagesToLoad = 256;
 
 @property (nonatomic, assign) BOOL areAllMessagesSeen;
 @property (nonatomic, assign) BOOL isFirstLoad;
+@property (nonatomic) BOOL loadMessagesLater;
 
 @property (nonatomic, strong) NSTimer *sendTypingTimer;
 @property (strong, nonatomic) NSMutableArray<NSNumber *> *whoIsTypingMutableArray;
@@ -378,16 +379,21 @@ const NSUInteger kMaxMessagesToLoad = 256;
     }
     NSInteger loadMessage = [[MEGASdkManager sharedMEGAChatSdk] loadMessagesForChat:self.chatRoom.chatId count:messagesToLoad];
     switch (loadMessage) {
+        case -1:
+            MEGALogDebug(@"loadMessagesForChat: history has to be fetched from server, but we are not logged in yet");
+            self.loadMessagesLater = YES;
+            break;
+            
         case 0:
-            MEGALogDebug(@"There's no more history available");
+            MEGALogDebug(@"loadMessagesForChat: there's no more history available (not even in the server)");
             break;
             
         case 1:
-            MEGALogDebug(@"Messages will be fetched locally");
+            MEGALogDebug(@"loadMessagesForChat: messages will be fetched locally");
             break;
             
         case 2:
-            MEGALogDebug(@"Messages will be requested to the server");
+            MEGALogDebug(@"loadMessagesForChat: messages will be requested to the server");
             break;
             
         default:
@@ -648,7 +654,7 @@ const NSUInteger kMaxMessagesToLoad = 256;
 
 - (void)updateUnreadLabel {
     NSInteger unreadChats = [[MEGASdkManager sharedMEGAChatSdk] unreadChats];
-    NSString *unreadChatsString = unreadChats ? [NSString stringWithFormat:@"(%ld)", unreadChats] : nil;
+    NSString *unreadChatsString = unreadChats ? [NSString stringWithFormat:@"(%td)", unreadChats] : nil;
     self.unreadLabel.text = unreadChatsString;
 }
 
@@ -1640,7 +1646,7 @@ const NSUInteger kMaxMessagesToLoad = 256;
             return nil;
         }
     }
-    NSNumber *avatarKey = [NSNumber numberWithUnsignedLong:message.userHandle];
+    NSNumber *avatarKey = @(message.userHandle);
     UIImage *avatar = [self.avatarImages objectForKey:avatarKey];
     if (!avatar) {
         avatar = [UIImage mnz_imageForUserHandle:message.userHandle size:CGSizeMake(kAvatarImageDiameter, kAvatarImageDiameter) delegate:nil];
@@ -2382,10 +2388,10 @@ const NSUInteger kMaxMessagesToLoad = 256;
             } else {
                 self.isFirstLoad = NO;
                 MEGAChatMessage *lastMessage = self.messages.lastObject;
-                if ([[MEGASdkManager sharedMEGAChatSdk] setMessageSeenForChat:self.chatRoom.chatId messageId:lastMessage.messageId]) {
+                if (lastMessage && [[MEGASdkManager sharedMEGAChatSdk] setMessageSeenForChat:self.chatRoom.chatId messageId:lastMessage.messageId]) {
                     self.areAllMessagesSeen = YES;
                 } else {
-                    MEGALogError(@"setMessageSeenForChat failed: The chatid is invalid or the message is older than last-seen-by-us message.");
+                    MEGALogError(@"setMessageSeenForChat failed: There is no message, the chatid is invalid or the message is older than last-seen-by-us message.");
                 }
                 if (self.unreadMessages < 0) {
                     self.unreadMessages = 0;
@@ -2624,6 +2630,12 @@ const NSUInteger kMaxMessagesToLoad = 256;
     if (chatId == self.chatRoom.chatId) {
         [self customNavigationBarLabel];
         [self rightBarButtonItems];
+        
+        if (self.loadMessagesLater && newState == MEGAChatConnectionOnline) {
+            self.loadMessagesLater = NO;
+            self.isFirstLoad = YES;
+            [self loadMessages];
+        }
     }
 }
 
