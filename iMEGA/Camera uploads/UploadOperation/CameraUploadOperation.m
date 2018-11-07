@@ -120,6 +120,12 @@
     return assetDirectoryURL;
 }
 
+- (void)createThumbnailAndPreviewFiles {
+    [self.attributesDataSDK createThumbnail:self.uploadInfo.fileURL.path destinatioPath:self.uploadInfo.thumbnailURL.path];
+    [self.attributesDataSDK createPreview:self.uploadInfo.fileURL.path destinatioPath:self.uploadInfo.previewURL.path];
+    self.attributesDataSDK = nil;
+}
+
 #pragma mark - upload task
 
 - (void)uploadFileToServer {

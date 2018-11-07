@@ -24,6 +24,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)uploadFileToServer;
 - (void)copyToParentNodeIfNeededForMatchingNode:(MEGANode *)node;
 - (void)copyToParentNodeIfNeededForMatchingNodeList:(MEGANodeList *)nodeList;
+- (void)createThumbnailAndPreviewFiles;
 - (nullable NSURL *)URLForAssetFolder;
 
 @end
