@@ -304,17 +304,20 @@
 
 - (void)openChatRoomWithID:(uint64_t)chatID {
     NSArray *viewControllers = self.navigationController.viewControllers;
-    if (viewControllers.count == 2) {
-        UIViewController *currentVC = self.navigationController.viewControllers.lastObject;
+    if (viewControllers.count > 1) {
+        UIViewController *currentVC = self.navigationController.viewControllers[1];
         if ([currentVC isKindOfClass:MessagesViewController.class]) {
             MessagesViewController *currentMessagesVC = (MessagesViewController *)currentVC;
             if (currentMessagesVC.chatRoom.chatId == chatID) {
+                if (viewControllers.count != 2) {
+                    [self.navigationController popToViewController:currentMessagesVC animated:YES];
+                }
                 return;
+            } else {
+                [[MEGASdkManager sharedMEGAChatSdk] closeChatRoom:currentMessagesVC.chatRoom.chatId delegate:currentMessagesVC];
+                [self.navigationController popToRootViewControllerAnimated:NO];
             }
         }
-    }
-    if (viewControllers.count > 1) {
-        [self.navigationController popToRootViewControllerAnimated:NO];
     }
     
     MessagesViewController *messagesVC = [[MessagesViewController alloc] init];
