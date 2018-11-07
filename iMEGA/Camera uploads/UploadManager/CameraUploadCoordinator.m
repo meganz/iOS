@@ -38,6 +38,11 @@
         return;
     }
     
+    if (![NSFileManager.defaultManager fileExistsAtPath:uploadInfo.thumbnailURL.path]) {
+        MEGALogError(@"[Camera Upload] No thumbnail file found for asset: %@", uploadInfo.asset.localIdentifier);
+        return;
+    }
+    
     __block UIBackgroundTaskIdentifier thumbnailUploadTaskId = [UIApplication.sharedApplication beginBackgroundTaskWithName:@"thumbnailUploadBackgroundTask" expirationHandler:^{
         [UIApplication.sharedApplication endBackgroundTask:thumbnailUploadTaskId];
         thumbnailUploadTaskId = UIBackgroundTaskInvalid;
@@ -63,6 +68,11 @@
 
 - (void)uploadPreviewForNode:(MEGANode *)node uploadInfo:(AssetUploadInfo *)uploadInfo {
     if (node == nil) {
+        return;
+    }
+    
+    if (![NSFileManager.defaultManager fileExistsAtPath:uploadInfo.previewURL.path]) {
+        MEGALogError(@"[Camera Upload] No preview file found for asset: %@", uploadInfo.asset.localIdentifier);
         return;
     }
     

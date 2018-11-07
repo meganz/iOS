@@ -46,7 +46,7 @@
     __weak __typeof__(self) weakSelf = self;
     [PHImageManager.defaultManager requestExportSessionForVideo:self.uploadInfo.asset options:options exportPreset:AVAssetExportPresetHighestQuality resultHandler:^(AVAssetExportSession * _Nullable exportSession, NSDictionary * _Nullable info) {
         if (exportSession) {
-            [weakSelf processVideoExportSession:exportSession];
+            [weakSelf processRequestedVideoExportSession:exportSession];
         } else {
             MEGALogError(@"[Camera Upload] %@ error when to request export session %@", weakSelf, info);
             [weakSelf finishOperationWithStatus:UploadStatusFailed shouldUploadNextAsset:YES];
@@ -54,7 +54,7 @@
     }];
 }
 
-- (void)processVideoExportSession:(AVAssetExportSession *)session {
+- (void)processRequestedVideoExportSession:(AVAssetExportSession *)session {
     // TODO: the format should be configurate, between HEVC and H.264
     session.outputFileType = AVFileTypeMPEG4;
     [AVAssetExportSession determineCompatibilityOfExportPreset:session.presetName withAsset:session.asset outputFileType:session.outputFileType completionHandler:^(BOOL compatible) {
