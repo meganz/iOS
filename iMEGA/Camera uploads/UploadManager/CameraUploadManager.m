@@ -20,7 +20,6 @@ static const NSInteger MaxConcurrentVideoOperationCount = 1;
 
 @property (strong, nonatomic) NSOperationQueue *photoUploadOerationQueue;
 @property (strong, nonatomic) NSOperationQueue *videoUploadOerationQueue;
-@property (strong, nonatomic) CameraUploadRecordManager *assetUploadRecordManager;
 @property (strong, nonatomic) MEGANode *cameraUploadNode;
 @property (strong, nonatomic) CameraScanner *scanner;
 
@@ -41,7 +40,6 @@ static const NSInteger MaxConcurrentVideoOperationCount = 1;
 - (instancetype)init {
     self = [super init];
     if (self) {
-        _assetUploadRecordManager = [[CameraUploadRecordManager alloc] init];
         _scanner = [[CameraScanner alloc] init];
         [self initializeUploadOperationQueues];
         [self registerNotifications];
@@ -93,7 +91,10 @@ static const NSInteger MaxConcurrentVideoOperationCount = 1;
     [PHPhotoLibrary requestAuthorization:^(PHAuthorizationStatus status) {
         if (status == PHAuthorizationStatusAuthorized) {
             [self.scanner startScanningWithCompletion:^{
-                [self uploadNextAssetsWithNumber:ConcurrentPhotoUploadCount mediaType:PHAssetMediaTypeImage];
+//                [self uploadNextAssetsWithNumber:ConcurrentPhotoUploadCount mediaType:PHAssetMediaTypeImage];
+//                NSArray *videoRecords = [CameraUploadRecordManager.shared fetchNonUploadedRecordsWithLimit:100 mediaType:PHAssetMediaTypeVideo error:nil];
+//                MEGALogDebug(@"video recors status: %@", videoRecords);
+                
                 [self uploadNextAssetsWithNumber:ConcurrentVideoUploadCount mediaType:PHAssetMediaTypeVideo];
             }];
         }
@@ -105,7 +106,7 @@ static const NSInteger MaxConcurrentVideoOperationCount = 1;
 }
 
 - (void)uploadNextAssetsWithNumber:(NSInteger)number mediaType:(PHAssetMediaType)mediaType {
-    NSArray *records = [self.assetUploadRecordManager fetchNonUploadedRecordsWithLimit:number mediaType:mediaType error:nil];
+    NSArray *records = [CameraUploadRecordManager.shared fetchNonUploadedRecordsWithLimit:number mediaType:mediaType error:nil];
     for (MOAssetUploadRecord *record in records) {
         [CameraUploadRecordManager.shared updateStatus:UploadStatusQueuedUp forRecord:record error:nil];
         CameraUploadOperation *operation = [UploadOperationFactory operationWithLocalIdentifier:record.localIdentifier parentNode:self.cameraUploadNode];
