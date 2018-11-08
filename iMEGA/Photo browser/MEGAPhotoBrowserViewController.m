@@ -195,7 +195,9 @@
     self.scrollView.contentOffset = CGPointMake(self.currentIndex * (self.view.frame.size.width + self.gapBetweenPages), 0);
     [self reloadTitle];
     [self airplayDisplayCurrentImage];
-    [self.delegate photoBrowser:self didPresentNode:[self.mediaNodes objectAtIndex:self.currentIndex]];
+    if ([self.delegate respondsToSelector:@selector(photoBrowser:didPresentNode:)]) {
+        [self.delegate photoBrowser:self didPresentNode:[self.mediaNodes objectAtIndex:self.currentIndex]];
+    }
 }
 
 - (void)reloadTitle {
@@ -265,7 +267,9 @@
             [self resetZooms];
             [self reloadTitle];
             [self airplayDisplayCurrentImage];
-            [self.delegate photoBrowser:self didPresentNode:[self.mediaNodes objectAtIndex:self.currentIndex]];
+            if ([self.delegate respondsToSelector:@selector(photoBrowser:didPresentNode:)]) {
+                [self.delegate photoBrowser:self didPresentNode:[self.mediaNodes objectAtIndex:self.currentIndex]];
+            }
         }
     }
 }
@@ -551,7 +555,9 @@
     [self toggleTransparentInterfaceForDismissal:YES];
 
     [self dismissViewControllerAnimated:YES completion:^{
-        [self.delegate photoBrowser:self willDismissWithNode:node];
+        if ([self.delegate respondsToSelector:@selector(photoBrowser:willDismissWithNode:)]) {
+            [self.delegate photoBrowser:self willDismissWithNode:node];
+        }
     }];
 }
 
@@ -664,7 +670,9 @@
         case UIGestureRecognizerStateCancelled: {
             if (ABS(verticalIncrement) > 50.0f) {
                 [self dismissViewControllerAnimated:YES completion:^{
-                    [self.delegate photoBrowser:self willDismissWithNode:node];
+                    if ([self.delegate respondsToSelector:@selector(photoBrowser:willDismissWithNode:)]) {
+                        [self.delegate photoBrowser:self willDismissWithNode:node];
+                    }
                 }];
             } else {
                 [UIView animateWithDuration:0.3 animations:^{
@@ -966,8 +974,10 @@
     [self toggleTransparentInterfaceForDismissal:YES];
 
     [self dismissViewControllerAnimated:YES completion:^{
-        [self.delegate photoBrowser:self willDismissWithNode:node];
-        UIViewController *visibleViewController = UIApplication.mnz_visibleViewController;
+        if ([self.delegate respondsToSelector:@selector(photoBrowser:willDismissWithNode:)]) {
+            [self.delegate photoBrowser:self willDismissWithNode:node];
+        }
+        UIViewController *visibleViewController = UIApplication.mnz_presentingViewController;
         if ([visibleViewController isKindOfClass:MainTabBarController.class]) {
             NSArray *parentTreeArray = node.mnz_parentTreeArray;
 
