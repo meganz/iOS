@@ -118,7 +118,7 @@
         }
         
         if (node.type == MEGANodeTypeFile) {
-            MOOfflineNode *offlineNode = [[MEGAStore shareInstance] offlineNodeWithNode:node api:[MEGASdkManager sharedMEGASdk]];
+            MOOfflineNode *offlineNode = [[MEGAStore shareInstance] offlineNodeWithNode:node];
             
             if (offlineNode) {
                 isDownloaded = YES;
