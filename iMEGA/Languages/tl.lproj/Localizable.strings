@@ -102,7 +102,7 @@
 "emailInvalidFormat"="Maglagay ng valid email";
 /* Add contacts and share dialog error message when user try to add wrong email address */
 "theEmailAddressFormatIsInvalid"="Mayroon yatang di-mawaring email";
-/* Message shown when the user enters a wrong password  */
+/* Message shown when the user enters a wrong password */
 "passwordInvalidFormat"="Maglagay ng valid password";
 /* Hint text to suggest that the user has to write his email */
 "emailPlaceholder"="Email";
@@ -130,10 +130,8 @@
 "passwordStrong"="Ang password na ito ay matatagalan ang mas matiniding atake ng mga hackers. Siguraduhin lamang na matatandaan mo ito.";
 /*  */
 "agreeWithTheMEGATermsOfService"="Pumapayag ako sa <a href='terms'>Terms of Service</a> ng MEGA";
-/* Error text shown when you have not entered a correct name  */
+/* Error text shown when you have not entered a correct name */
 "nameInvalidFormat"="Maglagay ng valid na pangalan";
-/*  */
-"invalidFirstNameAndLastName"="Maling pangalan o apelyedo";
 /* Error text shown when you have not written the same password */
 "passwordsDoNotMatch"="Di tugma ang password";
 /* Error text shown when you don't have selected the checkbox to agree with the Terms of Service */
@@ -145,7 +143,7 @@
 /* Text shown on the confirm account view to remind the user what to do */
 "confirmText"="Ilagay ang inyong password para makumpirma ang inyong account";
 /* Label for any ‘Confirm account’ button, link, text, title, etc. - (String as short as possible). */
-"Confirm account"="I-confirm inyong account";
+"Confirm account"="Kumpirmahin ang account";
 /* Error text shown when you introduce a wrong password on the confirmation proccess */
 "passwordWrong"="Maling password";
 /* Warning title shown when you try to confirm an account but you are logged in with another one */
