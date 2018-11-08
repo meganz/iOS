@@ -1,7 +1,7 @@
 /* Button title to cancel something */
 "cancel"="Annuler";
 /* Button title to accept something */
-"ok"="D’accord";
+"ok"="Valider";
 /* */
 "yes"="Oui";
 /* */
@@ -102,7 +102,7 @@
 "emailInvalidFormat"="Saisir une adresse courriel valide";
 /* Add contacts and share dialog error message when user try to add wrong email address */
 "theEmailAddressFormatIsInvalid"="Le format de l'adresse courriel est invalide";
-/* Message shown when the user enters a wrong password  */
+/* Message shown when the user enters a wrong password */
 "passwordInvalidFormat"="Saisir un mot de passe valide";
 /* Hint text to suggest that the user has to write his email */
 "emailPlaceholder"="Adresse courriel";
@@ -130,10 +130,8 @@
 "passwordStrong"="Ce mot de passe résistera à la plupart des attaques par force brute typiques. Veuillez vous assurer de vous en souvenir.";
 /*  */
 "agreeWithTheMEGATermsOfService"="J'accepte les <a href='terms'>conditions générales d'utilisation</a> de MEGA";
-/* Error text shown when you have not entered a correct name  */
+/* Error text shown when you have not entered a correct name */
 "nameInvalidFormat"="Saisir un nom valide";
-/*  */
-"invalidFirstNameAndLastName"="Prénom ou nom de famille invalide.";
 /* Error text shown when you have not written the same password */
 "passwordsDoNotMatch"="Les mots de passes ne correspondent pas";
 /* Error text shown when you don't have selected the checkbox to agree with the Terms of Service */
@@ -144,8 +142,8 @@
 "awaitingEmailConfirmation"="En attente de la confirmation par courriel.";
 /* Text shown on the confirm account view to remind the user what to do */
 "confirmText"="Veuillez saisir votre mot de passe pour confirmer votre compte";
-/* Button title that triggers the confirm account action */
-"confirmAccountButton"="Confirmer votre compte";
+/* Label for any ‘Confirm account’ button, link, text, title, etc. - (String as short as possible). */
+"Confirm account"="Confirmer le compte";
 /* Error text shown when you introduce a wrong password on the confirmation proccess */
 "passwordWrong"="Mot de passe erroné";
 /* Warning title shown when you try to confirm an account but you are logged in with another one */
@@ -1589,7 +1587,7 @@
 /* A message on a dialog to say that 2FA has been successfully disabled. */
 "twoFactorAuthenticationDisabled"="L’authentification à deux facteurs est désactivée";
 /* A message on the setup two-factor authentication page on the mobile web client. */
-"scanOrCopyTheSeed"="Lisez ou copiez la graine vers votre appli d’authentification. Assurez-vous de sauvegarder cette graine en lieu sûr au cas où vous perdriez votre téléphone.";
+"scanOrCopyTheSeed"="Balayez ou copiez la graine vers votre appli d’authentification. Assurez-vous de sauvegarder cette graine en lieu sûr, au cas où vous perdriez votre appareil.";
 /* A button to help them restore their account if they have lost their 2FA device. */
 "lostYourAuthenticatorDevice"="Avez-vous perdu votre appareil d’authentification ?";
 /* Settings section title where you can enable the option to 'Save Images in Library' */
@@ -1627,7 +1625,7 @@
 /* Title label that explains that the user is going to be asked for the photos permission */
 "Allow Access to Photos"="Autoriser l’accès à Photos";
 /* Detailed explanation of why the user should give permission to access to the photos */
-"To share photos and videos, allow MEGA to access your photos"="Pour partager des photos et des vidéos, autorisez MEGA à accéder à vos photos et vidéos.";
+"To share photos and videos, allow MEGA to access your library."="Pour partager des photos et des vidéos, autorisez MEGA à accéder à votre médiathèque.";
 /* Title label that explains that the user is going to be asked for the microphone and camera permission */
 "Enable Microphone and Camera"="Activer le microphone et l’appareil photo";
 /* Detailed explanation of why the user should give permission to access to the camera and the microphone */
@@ -1637,7 +1635,7 @@
 /* Detailed explanation of why the user should give permission to deliver notifications */
 "We would like to send you notifications so you receive new messages on your device instantly."="Nous vous enverrons des notifications afin que vous receviez instantanément sur votre appareil les nouveaux messages.";
 /* Button which triggers a request for a specific permission, that have been explained to the user beforehand */
-"Enable Access"="Autoriser l’accès";
+"Allow Access"="Autoriser l’accès";
 /* A section header which contains the file management settings. These settings allow users to remove duplicate files etc. */
 "File Management"="Gestion des fichiers";
 /* Title of the option to enable or disable file versioning on Settings section */

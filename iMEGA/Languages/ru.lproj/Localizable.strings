@@ -102,7 +102,7 @@
 "emailInvalidFormat"="Введите правильный email";
 /* Add contacts and share dialog error message when user try to add wrong email address */
 "theEmailAddressFormatIsInvalid"="Похоже, что email некорректен";
-/* Message shown when the user enters a wrong password  */
+/* Message shown when the user enters a wrong password */
 "passwordInvalidFormat"="Введите правильный пароль";
 /* Hint text to suggest that the user has to write his email */
 "emailPlaceholder"="Email";
@@ -130,10 +130,8 @@
 "passwordStrong"="Этот пароль не поддастся самым самым мощным атакам с применением полного перебора. Убедитесь, что запомнили его.";
 /*  */
 "agreeWithTheMEGATermsOfService"="Я согласен с <a href='terms'>Условиями предоставления услуг</a> MEGA";
-/* Error text shown when you have not entered a correct name  */
+/* Error text shown when you have not entered a correct name */
 "nameInvalidFormat"="Введите правильное имя";
-/*  */
-"invalidFirstNameAndLastName"="Неверное имя и/или фамилия.";
 /* Error text shown when you have not written the same password */
 "passwordsDoNotMatch"="Пароли не совпадают";
 /* Error text shown when you don't have selected the checkbox to agree with the Terms of Service */
@@ -144,8 +142,8 @@
 "awaitingEmailConfirmation"="Ожидание подтверждения по электронной почте.";
 /* Text shown on the confirm account view to remind the user what to do */
 "confirmText"="Пожалуйста, введите пароль, чтобы подтвердить свою учётную запись";
-/* Button title that triggers the confirm account action */
-"confirmAccountButton"="Подтверждение учётной записи";
+/* Label for any ‘Confirm account’ button, link, text, title, etc. - (String as short as possible). */
+"Confirm account"="Подтвердить уч. запись";
 /* Error text shown when you introduce a wrong password on the confirmation proccess */
 "passwordWrong"="Неверный пароль";
 /* Warning title shown when you try to confirm an account but you are logged in with another one */
@@ -1581,7 +1579,7 @@
 /* A title on the mobile web client page showing that 2FA has been enabled successfully. */
 "twoFactorAuthenticationEnabled"="Двухфакторная аутентификация включена.";
 /* A message on the dialog shown after 2FA was successfully enabled. */
-"twoFactorAuthenticationEnabledDescription"="При следующем входе в аккаунт система запросит 6-значный код из приложения аутентификации.";
+"twoFactorAuthenticationEnabledDescription"="При следующем входе в аккаунт система запросит 6-значный код из приложения-аутентификатора.";
 /* A warning message on the Backup Recovery Key dialog to tell the user to backup their Recovery Key to their local computer. */
 "pleaseSaveYourRecoveryKey"="Пожалуйста, сохраните ключ восстановления в безопасном месте";
 /* An informational message on the Backup Recovery Key dialog. */
@@ -1589,7 +1587,7 @@
 /* A message on a dialog to say that 2FA has been successfully disabled. */
 "twoFactorAuthenticationDisabled"="Двухфакторная аутентификация отключена";
 /* A message on the setup two-factor authentication page on the mobile web client. */
-"scanOrCopyTheSeed"="Сканируйте или скопируйте seed-ключ в приложение-аутентификатор. Сохраните seed-ключ в безопасном месте на случай потери телефона.";
+"scanOrCopyTheSeed"="Сканируйте или скопируйте seed-ключ в приложение-аутентификатор. Сохраните seed-ключ в безопасном месте на случай потери устройства.";
 /* A button to help them restore their account if they have lost their 2FA device. */
 "lostYourAuthenticatorDevice"="Потеряли аутентификационное устройство?";
 /* Settings section title where you can enable the option to 'Save Images in Library' */
@@ -1627,7 +1625,7 @@
 /* Title label that explains that the user is going to be asked for the photos permission */
 "Allow Access to Photos"="Разрешить доступ к фотографиям";
 /* Detailed explanation of why the user should give permission to access to the photos */
-"To share photos and videos, allow MEGA to access your photos"="Чтобы обмениваться фотографиями и видео, откройте MEGA доступ к фотографиям";
+"To share photos and videos, allow MEGA to access your library."="Чтобы обмениваться фотографиями и видео, откройте MEGA доступ к библиотеке.";
 /* Title label that explains that the user is going to be asked for the microphone and camera permission */
 "Enable Microphone and Camera"="Включить микрофон и камеру";
 /* Detailed explanation of why the user should give permission to access to the camera and the microphone */
@@ -1637,7 +1635,7 @@
 /* Detailed explanation of why the user should give permission to deliver notifications */
 "We would like to send you notifications so you receive new messages on your device instantly."="Мы хотели бы отправлять вам уведомления, чтобы вы немедленно получали новые сообщения на своем устройстве.";
 /* Button which triggers a request for a specific permission, that have been explained to the user beforehand */
-"Enable Access"="Включить доступ";
+"Allow Access"="Открыть доступ";
 /* A section header which contains the file management settings. These settings allow users to remove duplicate files etc. */
 "File Management"="Управление файлами";
 /* Title of the option to enable or disable file versioning on Settings section */

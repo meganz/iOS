@@ -95,6 +95,8 @@
 #else
     [MEGASdk setLogLevel:MEGALogLevelFatal];
 #endif
+        
+    [MEGASdk setLogToConsole:YES];
     
     // Add observers to get notified when the extension goes to background and comes back to foreground:
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(willResignActive)
@@ -295,7 +297,6 @@
         if (![MEGASdkManager sharedMEGAChatSdk]) {
             [MEGASdkManager createSharedMEGAChatSdk];
         }
-        [[MEGALogger sharedLogger] enableChatlogs];
         
         MEGAChatInit chatInit = [[MEGASdkManager sharedMEGAChatSdk] initState];
         if (chatInit == MEGAChatInitNotDone) {
@@ -307,8 +308,6 @@
         } else {
             [[MEGAReachabilityManager sharedManager] reconnect];
         }
-    } else {
-        [[MEGALogger sharedLogger] enableSDKlogs];
     }
 }
 
