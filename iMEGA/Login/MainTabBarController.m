@@ -165,8 +165,6 @@
     
     NSString *badgeValue = unreadChats ? [NSString stringWithFormat:@"%td", unreadChats] : nil;
     [self setBadgeValue:badgeValue tabPosition:CHAT];
-    
-    [UIApplication sharedApplication].applicationIconBadgeNumber = unreadChats;
 }
 
 - (void)setBadgeValue:(NSString *)badgeValue tabPosition:(NSInteger)tabPosition {
