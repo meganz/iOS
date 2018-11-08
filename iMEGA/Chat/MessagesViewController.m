@@ -326,8 +326,6 @@ const NSUInteger kMaxMessagesToLoad = 256;
     if (UIApplication.mnz_visibleViewController == self) {
         [self setLastMessageAsSeen];
     }
-    self.unreadMessages = self.chatRoom.unreadCount;
-    [self.collectionView reloadData];
 }
 
 - (void)willResignActive {
