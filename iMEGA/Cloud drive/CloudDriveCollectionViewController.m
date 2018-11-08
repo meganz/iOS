@@ -54,13 +54,18 @@
     NodeCollectionViewCell *cell = [self.collectionView dequeueReusableCellWithReuseIdentifier:@"NodeCollectionID" forIndexPath:indexPath];
     [cell configureCellForNode:node];
     
-    BOOL selected = NO;
-    for (MEGANode *n in self.cloudDrive.selectedNodesArray) {
-        if (n.handle == node.handle) {
-            selected = YES;
+    if (self.collectionView.allowsMultipleSelection) {
+        cell.selectImageView.hidden = NO;
+        BOOL selected = NO;
+        for (MEGANode *n in self.cloudDrive.selectedNodesArray) {
+            if (n.handle == node.handle) {
+                selected = YES;
+            }
         }
+        [cell selectCell:selected];
+    } else {
+        cell.selectImageView.hidden = YES;
     }
-    [cell selectCell:selected];
     
     return cell;
 }
