@@ -102,7 +102,7 @@
 "emailInvalidFormat"="올바른 이메일을 입력하세요";
 /* Add contacts and share dialog error message when user try to add wrong email address */
 "theEmailAddressFormatIsInvalid"="이메일 주소 형식이 올바르지 않습니다";
-/* Message shown when the user enters a wrong password  */
+/* Message shown when the user enters a wrong password */
 "passwordInvalidFormat"="올바른 비밀번호를 입력하세요";
 /* Hint text to suggest that the user has to write his email */
 "emailPlaceholder"="이메일";
@@ -130,10 +130,8 @@
 "passwordStrong"="이 비밀번호는 대부분의 정교한 무한 대입 공격을 버틸 것입니다. 확실히 기억해두세요.";
 /*  */
 "agreeWithTheMEGATermsOfService"="MEGA의 <a href='terms'>이용약관</a>에 동의합니다";
-/* Error text shown when you have not entered a correct name  */
+/* Error text shown when you have not entered a correct name */
 "nameInvalidFormat"="올바른 이름을 입력하세요";
-/*  */
-"invalidFirstNameAndLastName"="이름 또는 성이 잘못 되었습니다.";
 /* Error text shown when you have not written the same password */
 "passwordsDoNotMatch"="비밀번호가 일치하지 않습니다";
 /* Error text shown when you don't have selected the checkbox to agree with the Terms of Service */
@@ -145,7 +143,7 @@
 /* Text shown on the confirm account view to remind the user what to do */
 "confirmText"="계정을 확인하려면 비밀번호를 입력하세요";
 /* Label for any ‘Confirm account’ button, link, text, title, etc. - (String as short as possible). */
-"Confirm account"="당신의 계정을 확인하세요";
+"Confirm account"="계정 확인";
 /* Error text shown when you introduce a wrong password on the confirmation proccess */
 "passwordWrong"="잘못된 비밀번호";
 /* Warning title shown when you try to confirm an account but you are logged in with another one */

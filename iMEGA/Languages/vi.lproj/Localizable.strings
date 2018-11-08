@@ -102,7 +102,7 @@
 "emailInvalidFormat"="Nhập một email hợp lệ";
 /* Add contacts and share dialog error message when user try to add wrong email address */
 "theEmailAddressFormatIsInvalid"="Email bạn vừa điền không đúng kiểu";
-/* Message shown when the user enters a wrong password  */
+/* Message shown when the user enters a wrong password */
 "passwordInvalidFormat"="Xin nhập một mật khẩu hợp lệ";
 /* Hint text to suggest that the user has to write his email */
 "emailPlaceholder"="Email";
@@ -130,10 +130,8 @@
 "passwordStrong"="Mật khẩu này chịu được tốt việc tấn công thử dò mật khẩu (brute-force) tinh vi. Hãy chắc rằng bạn ghi nhớ được mật khẩu này.";
 /*  */
 "agreeWithTheMEGATermsOfService"="Tôi đồng ý với <a href='terms'>Điều Khoản Dịch Vụ</a> của MEGA";
-/* Error text shown when you have not entered a correct name  */
+/* Error text shown when you have not entered a correct name */
 "nameInvalidFormat"="Xin nhập một tên hợp lệ";
-/*  */
-"invalidFirstNameAndLastName"="Tên và/hoặc Họ không phù hợp.";
 /* Error text shown when you have not written the same password */
 "passwordsDoNotMatch"="Hai mật khẩu này không trùng khớp";
 /* Error text shown when you don't have selected the checkbox to agree with the Terms of Service */

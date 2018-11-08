@@ -102,7 +102,7 @@
 "emailInvalidFormat"="Introdu un e-mail valid";
 /* Add contacts and share dialog error message when user try to add wrong email address */
 "theEmailAddressFormatIsInvalid"="Formatul adresei de e-mail este nevalid";
-/* Message shown when the user enters a wrong password  */
+/* Message shown when the user enters a wrong password */
 "passwordInvalidFormat"="Introdu o parolă validă";
 /* Hint text to suggest that the user has to write his email */
 "emailPlaceholder"="E-mail";
@@ -130,10 +130,8 @@
 "passwordStrong"="Această parolă va rezista în faţa celor mai sofisticate atacuri de tip „brute-force”.  Te rugăm să te asiguri că o vei reţine.";
 /*  */
 "agreeWithTheMEGATermsOfService"="Sunt de acord cu <a href='terms'>Termenii de utilizare a serviciului</a> MEGA";
-/* Error text shown when you have not entered a correct name  */
+/* Error text shown when you have not entered a correct name */
 "nameInvalidFormat"="Introdu un nume valid";
-/*  */
-"invalidFirstNameAndLastName"="Prenume şi/sau nume nevalide.";
 /* Error text shown when you have not written the same password */
 "passwordsDoNotMatch"="Parolele nu se potrivesc";
 /* Error text shown when you don't have selected the checkbox to agree with the Terms of Service */
