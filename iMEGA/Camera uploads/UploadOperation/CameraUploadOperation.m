@@ -164,22 +164,8 @@
 
 - (void)archiveUploadInfoDataForBackgroundTransfer {
     MEGALogDebug(@"[Camera Upload] %@ start archiving upload info", self);
-    
     NSURL *archivedURL = [self.uploadInfo.directoryURL URLByAppendingPathComponent:self.uploadInfo.asset.localIdentifier.stringByRemovingInvalidFileCharacters isDirectory:NO];
-    BOOL isDirectory;
-    if ([NSFileManager.defaultManager fileExistsAtPath:archivedURL.path isDirectory:&isDirectory] && !isDirectory) {
-        return;
-    }
-    
-    __block UIBackgroundTaskIdentifier backgroundArchiveTaskId = [UIApplication.sharedApplication beginBackgroundTaskWithExpirationHandler:^{
-        [UIApplication.sharedApplication endBackgroundTask:backgroundArchiveTaskId];
-        backgroundArchiveTaskId = UIBackgroundTaskInvalid;
-    }];
-    
     [NSKeyedArchiver archiveRootObject:self.uploadInfo toFile:archivedURL.path];
-    [UIApplication.sharedApplication endBackgroundTask:backgroundArchiveTaskId];
-    backgroundArchiveTaskId = UIBackgroundTaskInvalid;
-    MEGALogDebug(@"[Camera Upload] %@ finish archiving upload info", self);
 }
 
 #pragma mark - finish operation

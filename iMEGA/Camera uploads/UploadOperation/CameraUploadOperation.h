@@ -20,7 +20,6 @@ NS_ASSUME_NONNULL_BEGIN
 - (instancetype)initWithUploadInfo:(AssetUploadInfo *)uploadInfo;
 
 - (void)finishOperationWithStatus:(NSString *)status shouldUploadNextAsset:(BOOL)uploadNextAsset;
-- (void)archiveUploadInfoDataIfNeeded;
 - (void)uploadFileToServer;
 - (void)copyToParentNodeIfNeededForMatchingNode:(MEGANode *)node;
 - (void)copyToParentNodeIfNeededForMatchingNodeList:(MEGANodeList *)nodeList;
