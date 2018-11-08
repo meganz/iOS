@@ -78,8 +78,8 @@
                     message = [NSString stringWithFormat:AMLocalizedString(@"filesFolderRemovedToRubbishBinMessage", @"Success message shown when {1+} files and 1 folder have been removed from MEGA"), self.numberOfFiles];
                 } else {
                     message = AMLocalizedString(@"filesFoldersRemovedToRubbishBinMessage", @"Success message shown when [A] = {1+} files and [B] = {1+} folders have been removed from MEGA");
-                    NSString *filesString = [NSString stringWithFormat:@"%lu", self.numberOfFiles];
-                    NSString *foldersString = [NSString stringWithFormat:@"%lu", self.numberOfFolders];
+                    NSString *filesString = [NSString stringWithFormat:@"%tu", self.numberOfFiles];
+                    NSString *foldersString = [NSString stringWithFormat:@"%tu", self.numberOfFolders];
                     message = [message stringByReplacingOccurrencesOfString:@"[A]" withString:filesString];
                     message = [message stringByReplacingOccurrencesOfString:@"[B]" withString:foldersString];
                 }

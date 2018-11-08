@@ -12,7 +12,4 @@
 - (void)stopLogging;
 - (void)stopLoggingToFile:(NSString *)file;
 
-- (void)enableSDKlogs;
-- (void)enableChatlogs;
-
 @end

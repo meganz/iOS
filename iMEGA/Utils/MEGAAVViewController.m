@@ -111,7 +111,7 @@ static const NSUInteger MIN_SECOND = 10; // Save only where the users were playi
     [self stopStreaming];
     
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"presentPasscodeLater"] && [LTHPasscodeViewController doesPasscodeExist]) {
-        [[LTHPasscodeViewController sharedUser] showLockScreenOver:UIApplication.mnz_visibleViewController.view
+        [[LTHPasscodeViewController sharedUser] showLockScreenOver:UIApplication.mnz_presentingViewController.view
                                                      withAnimation:YES
                                                         withLogout:NO
                                                     andLogoutTitle:nil];
@@ -195,11 +195,7 @@ static const NSUInteger MIN_SECOND = 10; // Save only where the users were playi
     NSString *fingerprint;
 
     if (self.node) {
-        if (self.folderLink) {
-            fingerprint = [[MEGASdkManager sharedMEGASdkFolder] fingerprintForNode:self.node];
-        } else {
-            fingerprint = [[MEGASdkManager sharedMEGASdk] fingerprintForNode:self.node];
-        }
+        fingerprint = self.node.fingerprint;
     } else {
         fingerprint = [NSString stringWithFormat:@"%@", [[MEGASdkManager sharedMEGASdk] fingerprintForFilePath:self.fileUrl.path]];
     }

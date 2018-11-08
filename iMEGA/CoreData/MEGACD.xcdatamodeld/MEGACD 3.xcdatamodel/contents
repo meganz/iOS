@@ -13,6 +13,10 @@
         <attribute name="handle" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="value" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
     </entity>
+    <entity name="MOMessage" representedClassName="MOMessage" syncable="YES">
+        <attribute name="chatId" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="messageId" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
+    </entity>
     <entity name="MOUploadTransfer" representedClassName="MOUploadTransfer" syncable="YES">
         <attribute name="localIdentifier" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="parentNodeHandle" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
@@ -36,5 +40,6 @@
         <element name="OfflineNode" positionX="-117" positionY="-171" width="128" height="105"/>
         <element name="User" positionX="331" positionY="-198" width="128" height="105"/>
         <element name="MOFolderLayout" positionX="90" positionY="-81" width="128" height="75"/>
+        <element name="MOMessage" positionX="90" positionY="-81" width="128" height="75"/>
     </elements>
 </model>

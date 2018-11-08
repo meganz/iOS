@@ -159,7 +159,7 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
                     NSString *message = message = AMLocalizedString(@"shareExtensionUnsupportedAssets", @"Inform user that there were unsupported assets in the share extension.");
                     UIAlertController  *videoExportFailedController = [UIAlertController alertControllerWithTitle:nil message:message preferredStyle:UIAlertControllerStyleAlert];
                     [videoExportFailedController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleDestructive handler:nil]];
-                    [[UIApplication mnz_visibleViewController] presentViewController:videoExportFailedController animated:YES completion:nil];
+                    [UIApplication.mnz_presentingViewController presentViewController:videoExportFailedController animated:YES completion:nil];
                 }
             }];
         });
@@ -441,8 +441,8 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
                     [self.alertController dismissViewControllerAnimated:YES completion:nil];
                 });
             }];
-            if (UIApplication.mnz_visibleViewController != self.alertController) {
-                [[UIApplication mnz_visibleViewController].presentingViewController presentViewController:self.alertController animated:YES completion:^{
+            if (UIApplication.mnz_presentingViewController != self.alertController) {
+                [UIApplication.mnz_presentingViewController.presentingViewController presentViewController:self.alertController animated:YES completion:^{
                     [self addProgressViewToAlertController];
                 }];
             }
@@ -799,8 +799,8 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
     
     
     dispatch_async(dispatch_get_main_queue(), ^(void) {
-        if (UIApplication.mnz_visibleViewController != self.alertController) {
-            [[UIApplication mnz_visibleViewController] presentViewController:self.alertController animated:YES completion:^{
+        if (UIApplication.mnz_presentingViewController != self.alertController) {
+            [UIApplication.mnz_presentingViewController presentViewController:self.alertController animated:YES completion:^{
                 [self addProgressViewToAlertController];
             }];
         }
