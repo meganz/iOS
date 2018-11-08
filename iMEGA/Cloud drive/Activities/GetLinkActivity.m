@@ -58,7 +58,7 @@
 
 - (void)performActivity {
     if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-        [CopyrightWarningViewController presentGetLinkViewControllerForNodes:self.nodes inViewController:UIApplication.mnz_visibleViewController];
+        [CopyrightWarningViewController presentGetLinkViewControllerForNodes:self.nodes inViewController:UIApplication.mnz_presentingViewController];
     }
 }
 
