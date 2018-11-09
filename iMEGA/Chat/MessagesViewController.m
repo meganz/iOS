@@ -298,8 +298,10 @@ const NSUInteger kMaxMessagesToLoad = 256;
     
     [self createLeftBarButtonItems];
     [self createRightBarButtonItems];
-    [self initNavigationTitleViews];
-    [self instantiateNavigationTitle];
+    if (@available(iOS 11.0, *)) {
+        [self initNavigationTitleViews];
+        [self instantiateNavigationTitle];
+    }
     [self customNavigationBarLabel];
 }
 
@@ -430,15 +432,31 @@ const NSUInteger kMaxMessagesToLoad = 256;
             }
         }
         
+        UITapGestureRecognizer *titleTapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(chatRoomTitleDidTap)];
+        
+        if (@available(iOS 11.0, *)) {
+            self.navigationTitleLabel.text = chatRoomTitle;
+            self.navigationSubtitleLabel.text = chatRoomState;
+            self.navigationView.gestureRecognizers = @[titleTapRecognizer];
+        } else {
+            UILabel *label = [UILabel new];
+            if (chatRoomState && !self.chatRoom.isGroup) {
+                label = [Helper customNavigationBarLabelWithTitle:chatRoomTitle subtitle:chatRoomState];
+            } else {
+                label = [Helper customNavigationBarLabelWithTitle:chatRoomTitle subtitle:@""];
+            }
+            
+            label.userInteractionEnabled = YES;
+            label.superview.userInteractionEnabled = YES;
+            label.gestureRecognizers = @[titleTapRecognizer];
+            label.adjustsFontSizeToFitWidth = YES;
+            label.minimumScaleFactor = 0.8f;
+            label.frame = CGRectMake(0, 0, self.navigationItem.titleView.bounds.size.width, 44);
+            
+            [self.navigationItem setTitleView:label];
+        }
+        
         self.lastChatRoomStateString = chatRoomState;
-
-        self.navigationTitleLabel.text = chatRoomTitle;
-        self.navigationSubtitleLabel.text = chatRoomState;
-        
-        UITapGestureRecognizer *titleTapRecognizer =
-        [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(chatRoomTitleDidTap)];
-        self.navigationView.gestureRecognizers = @[titleTapRecognizer];
-        
         self.navigationItem.leftBarButtonItems = self.leftBarButtonItems;
     }
     
@@ -464,6 +482,7 @@ const NSUInteger kMaxMessagesToLoad = 256;
         UIImage *image = [[UIImage imageNamed:@"backArrow"] imageFlippedForRightToLeftLayoutDirection];
         UIImageView *imageView = [[UIImageView alloc] initWithImage:[image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]];
         imageView.frame = CGRectMake(0, 10, 22, 22);
+        imageView.contentMode = UIViewContentModeScaleAspectFit;
         [view addGestureRecognizer:singleTap];
         [view addSubview:imageView];
         [view addSubview:self.unreadLabel];
