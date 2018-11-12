@@ -103,23 +103,26 @@
     MEGANode *matchingNode = [MEGASdkManager.sharedMEGASdk nodeForFingerprint:fingerprint];
     if (matchingNode == nil) {
         MEGANodeList *nodeList = [MEGASdkManager.sharedMEGASdk nodesForOriginalFingerprint:fingerprint];
-        MEGANode *matchingInParent;
-        for (NSInteger i = 0; i < nodeList.size.integerValue; i++) {
-            MEGANode *node = [nodeList nodeAtIndex:i];
-            if (node.parentHandle == self.uploadInfo.parentNode.handle) {
-                matchingInParent = node;
-                break;
+        if (nodeList.size.integerValue > 0) {
+            matchingNode = [self firstNodeInNodeList:nodeList hasParentNode:self.uploadInfo.parentNode];
+            if (matchingNode == nil) {
+                matchingNode = [nodeList nodeAtIndex:0];
             }
         }
-        
-        if (matchingInParent == nil) {
-            matchingInParent = [nodeList nodeAtIndex:0];
-        }
-        
-        matchingNode = matchingInParent;
     }
     
     return matchingNode;
+}
+
+- (MEGANode *)firstNodeInNodeList:(MEGANodeList *)nodeList hasParentNode:(MEGANode *)parent {
+    for (NSInteger i = 0; i < nodeList.size.integerValue; i++) {
+        MEGANode *node = [nodeList nodeAtIndex:i];
+        if (node.parentHandle == parent.handle) {
+            return node;
+        }
+    }
+    
+    return nil;
 }
 
 - (NSURL *)URLForAssetFolder {
