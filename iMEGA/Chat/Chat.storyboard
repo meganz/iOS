@@ -99,7 +99,7 @@
                                                                             <rect key="frame" x="0.0" y="-17.666666666666671" width="8" height="50"/>
                                                                             <subviews>
                                                                                 <label userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="U" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="RGB-uG-ZWn">
-                                                                                    <rect key="frame" x="4" y="4" width="0.0" height="42"/>
+                                                                                    <rect key="frame" x="4" y="18.333333333333336" width="0.0" height="13.333333333333336"/>
                                                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleCaption2"/>
                                                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -108,10 +108,10 @@
                                                                             </subviews>
                                                                             <color key="backgroundColor" red="0.95294117647058818" green="0.047058823529411764" blue="0.078431372549019607" alpha="1" colorSpace="calibratedRGB"/>
                                                                             <constraints>
-                                                                                <constraint firstItem="RGB-uG-ZWn" firstAttribute="top" secondItem="bKm-zc-lgI" secondAttribute="top" constant="4" id="I2f-Yf-dOd"/>
-                                                                                <constraint firstAttribute="bottom" secondItem="RGB-uG-ZWn" secondAttribute="bottom" constant="4" id="TQg-u9-KfM"/>
+                                                                                <constraint firstItem="RGB-uG-ZWn" firstAttribute="centerY" secondItem="bKm-zc-lgI" secondAttribute="centerY" id="Exf-iU-dwO"/>
                                                                                 <constraint firstAttribute="trailing" secondItem="RGB-uG-ZWn" secondAttribute="trailing" constant="4" id="XPO-df-Lyy"/>
                                                                                 <constraint firstItem="RGB-uG-ZWn" firstAttribute="leading" secondItem="bKm-zc-lgI" secondAttribute="leading" constant="4" id="Y00-rq-MQ0"/>
+                                                                                <constraint firstItem="RGB-uG-ZWn" firstAttribute="top" relation="greaterThanOrEqual" secondItem="bKm-zc-lgI" secondAttribute="top" constant="0.5" id="lfG-l8-EdG"/>
                                                                             </constraints>
                                                                             <userDefinedRuntimeAttributes>
                                                                                 <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
