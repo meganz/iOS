@@ -30,7 +30,7 @@
 }
 
 - (NSString *)description {
-    return [NSString stringWithFormat:@"Video upload operation %@", self.uploadInfo.asset.localIdentifier];
+    return [NSString stringWithFormat:@"Video operation %@ %@", self.uploadInfo.asset.localIdentifier, self.uploadInfo.fileName];
 }
 
 #pragma mark - data processing
@@ -64,28 +64,18 @@
         if (compatible) {
             if ([session.asset isMemberOfClass:[AVURLAsset class]]) {
                 AVURLAsset *urlAsset = (AVURLAsset *)session.asset;
-                NSError *error;
-                [NSFileManager.defaultManager copyItemAtURL:urlAsset.URL toURL:self.uploadInfo.originalURL error:&error];
-                if (error) {
-                    MEGALogError(@"[Camera Upload] %@ gets error when to copy original asset file %@", self, error);
-                    [self finishOperationWithStatus:UploadStatusFailed shouldUploadNextAsset:YES];
-                    return;
-                }
                 
-                [NSFileManager.defaultManager setAttributes:@{NSFileModificationDate : self.uploadInfo.asset.creationDate} ofItemAtPath:self.uploadInfo.originalURL.path error:&error];
-                if (error) {
-                    MEGALogError(@"[Camera Upload] %@ gets error when to rewrite the file creation date %@", self, error);
-                    [self finishOperationWithStatus:UploadStatusFailed shouldUploadNextAsset:YES];
-                    return;
-                }
+                MEGALogDebug("[Camera Upload] %@ phasset creation time %@, phasset modification time %@, file creation time %@, file modification time %@, url content mtime: %@", self, self.uploadInfo.asset.creationDate, self.uploadInfo.asset.modificationDate, [NSFileManager.defaultManager attributesOfItemAtPath:urlAsset.URL.path error:nil].fileCreationDate, [NSFileManager.defaultManager attributesOfItemAtPath:urlAsset.URL.path error:nil].fileModificationDate, [urlAsset.URL resourceValuesForKeys:@[NSURLContentModificationDateKey] error:nil][NSURLContentModificationDateKey]);
                 
-                self.uploadInfo.originalFingerprint = [MEGASdkManager.sharedMEGASdk fingerprintForFilePath:self.uploadInfo.originalURL.path];
-                MEGANodeList *matchingNodeList = [MEGASdkManager.sharedMEGASdk nodesForOriginalFingerprint:self.uploadInfo.originalFingerprint];
-                if (matchingNodeList.size.integerValue > 0) {
-                    [self copyToParentNodeIfNeededForMatchingNodeList:matchingNodeList];
+                self.uploadInfo.originalFingerprint = [MEGASdkManager.sharedMEGASdk fingerprintForFilePath:urlAsset.URL.path modificationTime:self.uploadInfo.asset.creationDate];
+                MEGANode *matchingNode = [self nodeForOriginalFingerprint:self.uploadInfo.originalFingerprint];
+                if (matchingNode) {
+                    MEGALogDebug(@"[Camera Upload] %@ finds existing node by original fingerprint", self);
+                    [self copyToParentNodeIfNeededForMatchingNode:matchingNode];
                     [self finishOperationWithStatus:UploadStatusDone shouldUploadNextAsset:YES];
                     return;
                 } else {
+                    MEGALogDebug(@"[Camera Upload] %@ original file size: %lld M", self, [NSFileManager.defaultManager attributesOfItemAtPath:urlAsset.URL.path error:nil].fileSize / 1024 / 1024);
                     [self compressVideoByExportSession:session];
                 }
             } else {
@@ -98,7 +88,8 @@
 }
 
 - (void)compressVideoByExportSession:(AVAssetExportSession *)session {
-    MEGALogError(@"[Camera Upload] %@ starts compressing video data", self);
+    MEGALogDebug(@"[Camera Upload] %@ starts compressing video data with original dimensions: %@", self, NSStringFromCGSize([self dimensionsForAVAsset:session.asset]));
+    
     session.outputURL = self.uploadInfo.fileURL;
     session.canPerformMultiplePassesOverSourceMediaData = YES;
     session.shouldOptimizeForNetworkUse = YES;
@@ -131,9 +122,10 @@
         return;
     }
     
-    self.uploadInfo.fingerprint = [MEGASdkManager.sharedMEGASdk fingerprintForFilePath:self.uploadInfo.fileURL.path];
+    self.uploadInfo.fingerprint = [MEGASdkManager.sharedMEGASdk fingerprintForFilePath:self.uploadInfo.fileURL.path modificationTime:self.uploadInfo.asset.creationDate];
     MEGANode *existingNode = [MEGASdkManager.sharedMEGASdk nodeForFingerprint:self.uploadInfo.fingerprint parent:self.uploadInfo.parentNode];
     if (existingNode) {
+        MEGALogDebug(@"[Camera Upload] %@ finds existing node by fingerprint", self);
         [self copyToParentNodeIfNeededForMatchingNode:existingNode];
         [self finishOperationWithStatus:UploadStatusDone shouldUploadNextAsset:YES];
         return;
@@ -145,15 +137,16 @@
 
 - (void)encryptsFile {
     NSError *error;
-    NSNumber *fileSize = [NSFileManager.defaultManager attributesOfItemAtPath:self.uploadInfo.fileURL.path error:&error][NSFileSize];
+     self.uploadInfo.fileSize = [NSFileManager.defaultManager attributesOfItemAtPath:self.uploadInfo.fileURL.path error:&error].fileSize;
     if (error) {
         MEGALogDebug(@"[Camera Upload] %@ got error when to get compressed file attributes %@", self, error)
         [self finishOperationWithStatus:UploadStatusFailed shouldUploadNextAsset:YES];
         return;
     }
-
-    self.uploadInfo.fileSize = [fileSize unsignedIntegerValue];
+    
     self.uploadInfo.mediaUpload = [MEGASdkManager.sharedMEGASdk backgroundMediaUpload];
+    
+    MEGALogDebug(@"[Camera Upload] %@ starts encryption with file size %@", self, @(self.uploadInfo.fileSize));
     
     NSString *urlSuffix;
     if ([self.uploadInfo.mediaUpload encryptFileAtPath:self.uploadInfo.fileURL.path startPosition:0 length:self.uploadInfo.fileSize outputFilePath:self.uploadInfo.encryptedURL.path urlSuffix:&urlSuffix]) {
@@ -177,6 +170,14 @@
         MEGALogError(@"[Camera Upload] %@ encrypts file failed", self);
         [self finishOperationWithStatus:UploadStatusFailed shouldUploadNextAsset:YES];
     }
+}
+
+#pragma mark - util methods
+
+- (CGSize)dimensionsForAVAsset:(AVAsset *)asset {
+    AVAssetTrack *videoTrack = [[asset tracksWithMediaType:AVMediaTypeVideo] firstObject];
+    CGSize size = CGSizeApplyAffineTransform(videoTrack.naturalSize, videoTrack.preferredTransform);
+    return CGSizeMake(fabs(size.width), fabs(size.height));
 }
 
 @end

@@ -30,7 +30,7 @@
 }
 
 - (NSString *)description {
-    return [NSString stringWithFormat:@"Photo upload operation %@", self.uploadInfo.asset.localIdentifier];
+    return [NSString stringWithFormat:@"Photo operation %@ %@", self.uploadInfo.asset.localIdentifier, self.uploadInfo.fileName];
 }
 
 #pragma mark - data processing
@@ -60,16 +60,16 @@
 - (void)processImageData:(NSData *)imageData {
     MEGALogDebug(@"[Camera Upload] %@ starts processing image data", self);
     self.uploadInfo.originalFingerprint = [[MEGASdkManager sharedMEGASdk] fingerprintForData:imageData modificationTime:self.uploadInfo.asset.creationDate];
-    MEGANodeList *matchingNodeList = [[MEGASdkManager sharedMEGASdk] nodesForOriginalFingerprint:self.uploadInfo.originalFingerprint];
-    if (matchingNodeList.size.integerValue > 0) {
-        [self copyToParentNodeIfNeededForMatchingNodeList:matchingNodeList];
+    MEGANode *matchingNode = [self nodeForOriginalFingerprint:self.uploadInfo.originalFingerprint];
+    if (matchingNode) {
+        [self copyToParentNodeIfNeededForMatchingNode:matchingNode];
         [self finishOperationWithStatus:UploadStatusDone shouldUploadNextAsset:YES];
         return;
     }
     
     NSData *JPEGData = UIImageJPEGRepresentation([UIImage imageWithData:imageData], 1.0);
     self.uploadInfo.fingerprint = [[MEGASdkManager sharedMEGASdk] fingerprintForData:JPEGData modificationTime:self.uploadInfo.asset.creationDate];
-    MEGANode *matchingNode = [[MEGASdkManager sharedMEGASdk] nodeForFingerprint:self.uploadInfo.fingerprint parent:self.uploadInfo.parentNode];
+    matchingNode = [[MEGASdkManager sharedMEGASdk] nodeForFingerprint:self.uploadInfo.fingerprint parent:self.uploadInfo.parentNode];
     if (matchingNode) {
         [self copyToParentNodeIfNeededForMatchingNode:matchingNode];
         [self finishOperationWithStatus:UploadStatusDone shouldUploadNextAsset:YES];

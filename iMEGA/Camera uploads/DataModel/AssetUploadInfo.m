@@ -36,10 +36,6 @@
     return [self.fileURL URLByAppendingPathExtension:@"thumbnail"];
 }
 
-- (NSURL *)originalURL {
-    return [self.fileURL URLByAppendingPathExtension:@"original"];
-}
-
 #pragma mark - NSCoding protocol
 
 - (void)encodeWithCoder:(nonnull NSCoder *)aCoder {

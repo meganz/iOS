@@ -38,6 +38,8 @@
         thumbnailUploadTaskId = UIBackgroundTaskInvalid;
     }];
     
+    MEGALogDebug(@"[Camera Upload] start uploading thumbnail for asset %@ %@", self.uploadInfo.asset.localIdentifier, self.uploadInfo.fileName);
+    
     NSURL *cachedThumbnailURL = [[Helper urlForSharedSandboxCacheDirectory:@"thumbnailsV3"] URLByAppendingPathComponent:self.node.base64Handle isDirectory:NO];
     
     if ([[NSFileManager defaultManager] moveItemAtURL:self.uploadInfo.thumbnailURL toURL:cachedThumbnailURL error:nil]) {

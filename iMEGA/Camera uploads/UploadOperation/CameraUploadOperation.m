@@ -99,19 +99,27 @@
     }
 }
 
-- (void)copyToParentNodeIfNeededForMatchingNodeList:(MEGANodeList *)nodeList {
-    if (nodeList.size.integerValue == 0) {
-        return;
-    }
-    
-    for (NSInteger i = 0; i < nodeList.size.integerValue; i++) {
-        MEGANode *node = [nodeList nodeAtIndex:i];
-        if (node.parentHandle == self.uploadInfo.parentNode.handle) {
-            return;
+- (MEGANode *)nodeForOriginalFingerprint:(NSString *)fingerprint {
+    MEGANode *matchingNode = [MEGASdkManager.sharedMEGASdk nodeForFingerprint:fingerprint];
+    if (matchingNode == nil) {
+        MEGANodeList *nodeList = [MEGASdkManager.sharedMEGASdk nodesForOriginalFingerprint:fingerprint];
+        MEGANode *matchingInParent;
+        for (NSInteger i = 0; i < nodeList.size.integerValue; i++) {
+            MEGANode *node = [nodeList nodeAtIndex:i];
+            if (node.parentHandle == self.uploadInfo.parentNode.handle) {
+                matchingInParent = node;
+                break;
+            }
         }
+        
+        if (matchingInParent == nil) {
+            matchingInParent = [nodeList nodeAtIndex:0];
+        }
+        
+        matchingNode = matchingInParent;
     }
     
-    [MEGASdkManager.sharedMEGASdk copyNode:[nodeList nodeAtIndex:0] newParent:self.uploadInfo.parentNode];
+    return matchingNode;
 }
 
 - (NSURL *)URLForAssetFolder {
