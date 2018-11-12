@@ -139,9 +139,6 @@ static const void *nodeSizeTagKey = &nodeSizeTagKey;
     
     UIFont *textFontRegular = [UIFont preferredFontForTextStyle:UIFontTextStyleSubheadline];
     UIFont *textFontMedium = [[UIFont preferredFontForTextStyle:UIFontTextStyleSubheadline] fontWithWeight:UIFontWeightMedium];
-    if (@available(iOS 11.0, *)) {
-        textFontMedium = [[UIFontMetrics metricsForTextStyle:UIFontTextStyleSubheadline] scaledFontForFont:textFontMedium];
-    }
 
     if (self.isDeleted) {
         text = AMLocalizedString(@"thisMessageHasBeenDeleted", @"A log message in a chat to indicate that the message has been deleted by the user.");

@@ -394,29 +394,14 @@
 }
 
 - (void)updateCell:(ChatRoomCell *)cell forUnreadCountChange:(NSInteger)unreadCount {
-    UIFont *chatTitleFont = [[UIFont preferredFontForTextStyle:UIFontTextStyleSubheadline] fontWithWeight:UIFontWeightMedium];
-    if (@available(iOS 11.0, *)) {
-        cell.chatTitle.font = [[UIFontMetrics metricsForTextStyle:UIFontTextStyleSubheadline] scaledFontForFont:chatTitleFont];
-    } else {
-        cell.chatTitle.font = chatTitleFont;
-    }
+    cell.chatTitle.font = [[UIFont preferredFontForTextStyle:UIFontTextStyleSubheadline] fontWithWeight:UIFontWeightMedium];
     cell.chatTitle.textColor = [UIColor mnz_black333333];
     
     if (unreadCount != 0) {
-        UIFont *lastMessageFont = [[UIFont preferredFontForTextStyle:UIFontTextStyleCaption1] fontWithWeight:UIFontWeightMedium];
-        if (@available(iOS 11.0, *)) {
-            cell.chatLastMessage.font = [[UIFontMetrics metricsForTextStyle:UIFontTextStyleCaption1] scaledFontForFont:lastMessageFont];
-        } else {
-            cell.chatLastMessage.font = lastMessageFont;
-        }
+        cell.chatLastMessage.font = [[UIFont preferredFontForTextStyle:UIFontTextStyleCaption1] fontWithWeight:UIFontWeightMedium];
         cell.chatLastMessage.textColor = [UIColor mnz_black333333];
-        
-        UIFont *lastTimeFont = [[UIFont preferredFontForTextStyle:UIFontTextStyleCaption2] fontWithWeight:UIFontWeightMedium];
-        if (@available(iOS 11.0, *)) {
-            cell.chatLastTime.font = [[UIFontMetrics metricsForTextStyle:UIFontTextStyleCaption2] scaledFontForFont:lastTimeFont];
-        } else {
-            cell.chatLastTime.font = lastTimeFont;
-        }
+
+        cell.chatLastTime.font = [[UIFont preferredFontForTextStyle:UIFontTextStyleCaption2] fontWithWeight:UIFontWeightMedium];
         cell.chatLastTime.textColor = [UIColor mnz_black333333];
         
         cell.unreadView.hidden = NO;
