@@ -46,6 +46,10 @@
     [self.manager didFinishEventsForBackgroundURLSession:session];
 }
 
+- (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didSendBodyData:(int64_t)bytesSent totalBytesSent:(int64_t)totalBytesSent totalBytesExpectedToSend:(int64_t)totalBytesExpectedToSend {
+    MEGALogDebug(@"[Camera Upload] Session %@ did send body data: %lld, total: %lld", session.configuration.identifier, totalBytesSent, totalBytesExpectedToSend);
+}
+
 - (void)URLSession:(NSURLSession *)session didReceiveChallenge:(NSURLAuthenticationChallenge *)challenge completionHandler:(void (^)(NSURLSessionAuthChallengeDisposition, NSURLCredential * _Nullable))completionHandler {
     MEGALogDebug(@"[Camera Upload] Session %@ did receive challenge for protection space: %@", session.configuration.identifier, challenge.protectionSpace);
     if (challenge.protectionSpace.authenticationMethod == NSURLAuthenticationMethodServerTrust) {

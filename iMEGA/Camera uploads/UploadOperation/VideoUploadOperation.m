@@ -30,7 +30,7 @@
 }
 
 - (NSString *)description {
-    return [NSString stringWithFormat:@"Video operation %@ %@", self.uploadInfo.asset.localIdentifier, self.uploadInfo.fileName];
+    return [NSString stringWithFormat:@"Video operation %@ %@", self.uploadInfo.asset.localIdentifier, self.uploadInfo.asset.creationDate];
 }
 
 #pragma mark - data processing
