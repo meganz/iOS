@@ -173,7 +173,7 @@
 }
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations {
-    return UIInterfaceOrientationMaskAll;
+    return UIInterfaceOrientationMaskPortrait;
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
@@ -413,7 +413,7 @@
                         } else {
                             [cell addLocalVideoInChat:self.chatRoom.chatId];
                         }
-                     
+                        [[UIDevice currentDevice] setProximityMonitoringEnabled:sender.selected];
                         sender.selected = !sender.selected;
                         self.loudSpeakerEnabled = !sender.selected;
                     }
