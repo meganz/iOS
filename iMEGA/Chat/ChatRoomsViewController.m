@@ -768,6 +768,7 @@
     cell.unreadView.backgroundColor = UIColor.mnz_gray777777;
     cell.unreadView.layer.cornerRadius = 4;
     cell.unreadCount.text = AMLocalizedString(@"archived", @"Title of flag of archived chats.").uppercaseString;
+    cell.unreadCountLabelHorizontalMarginConstraint.constant = 7;
 
     return cell;
 }
