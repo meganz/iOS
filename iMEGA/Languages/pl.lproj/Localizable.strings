@@ -1590,17 +1590,17 @@
 "scanOrCopyTheSeed"="Zeskanuj lub skopiuj materiał siewny do aplikacji Authenticator. Pamiętaj, aby wykonać kopię zapasową tego materiału siewnego w bezpieczne miejsce na wypadek utraty urządzenia.";
 /* A button to help them restore their account if they have lost their 2FA device. */
 "lostYourAuthenticatorDevice"="Zgubiłeś swoje urządzenie?";
-/* Settings section title where you can enable the option to 'Save Images in Library' */
-"Save Images in Library"="Zapisz obrazy w bibliotece";
-/* Settings section title where you can enable the option to 'Save Videos in Library' */
-"Save Videos in Library"="Zapisz wideo w bibliotece";
+/* Settings section title where you can enable the option to 'Save Images in Photos' */
+"Save Images in Photos"="Zapisz obrazy w zdjęciach";
+/* Settings section title where you can enable the option to 'Save Videos in Photos' */
+"Save Videos in Photos"="Zapisz wideo w zdjęciach";
 /* Footer text shown under the settings for download options 'Save Images/Videos in Library' */
 "Images and/or videos downloaded will be stored in the device’s media library instead of the Offline section."="Zdjęcia i / lub pobrane filmy będą przechowywane w bibliotece multimediów urządzenia zamiast w sekcji Offline.";
 /* Setting associated with the 'Camera' of the device */
 "Camera"="Aparat";
-/* Settings section title where you can enable the option to 'Save in Library' the images or videos taken from your camera in the MEGA app */
-"Save in Library"="Zapisz w bibliotece";
-/* Footer text shown under the Camera setting to explain the option 'Save in Library' */
+/* Settings section title where you can enable the option to 'Save in Photos' the images or videos taken from your camera in the MEGA app */
+"Save in Photos"="Zapisz w zdjęciach";
+/* Footer text shown under the Camera setting to explain the option 'Save in Photos' */
 "Save a copy of the images and videos taken from the MEGA app in your device’s media library."="Zapisz kopię zdjęć i filmów pobranych z aplikacji MEGA w bibliotece multimediów urządzenia.";
 /* Title shown in a page of the on boarding screens explaining that the user keeps the encryption keys */
 "You hold the keys"="Ty przechowujesz klucze";
@@ -1625,7 +1625,7 @@
 /* Title label that explains that the user is going to be asked for the photos permission */
 "Allow Access to Photos"="Zezwalaj na dostęp do zdjęć";
 /* Detailed explanation of why the user should give permission to access to the photos */
-"To share photos and videos, allow MEGA to access your library."="Aby udostępniać zdjęcia i filmy, zezwól MEGA na dostęp do Twojej biblioteki.";
+"Please give the MEGA App permission to access Photos to share photos and videos."="Zezwól MEGA na dostęp do Zdjęć, aby udostępniać zdjęcia i filmy.";
 /* Title label that explains that the user is going to be asked for the microphone and camera permission */
 "Enable Microphone and Camera"="Włącz mikrofon i kamerę";
 /* Detailed explanation of why the user should give permission to access to the camera and the microphone */

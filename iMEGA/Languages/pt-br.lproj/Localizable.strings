@@ -1590,17 +1590,17 @@
 "scanOrCopyTheSeed"="Escaneie ou copie a chave para o seu aplicativo de autenticação. Certifique-se de salvar esta chave em um lugar seguro, caso você perca o seu dispositivo.";
 /* A button to help them restore their account if they have lost their 2FA device. */
 "lostYourAuthenticatorDevice"="Você perdeu o seu dispositivo de autenticação?";
-/* Settings section title where you can enable the option to 'Save Images in Library' */
-"Save Images in Library"="Salvar imagens no Fotos";
-/* Settings section title where you can enable the option to 'Save Videos in Library' */
-"Save Videos in Library"="Salvar vídeos no Fotos";
+/* Settings section title where you can enable the option to 'Save Images in Photos' */
+"Save Images in Photos"="Salvar imagens no Fotos";
+/* Settings section title where you can enable the option to 'Save Videos in Photos' */
+"Save Videos in Photos"="Salvar vídeos no Fotos";
 /* Footer text shown under the settings for download options 'Save Images/Videos in Library' */
 "Images and/or videos downloaded will be stored in the device’s media library instead of the Offline section."="Imagens e/ou vídeos baixados serão armazenados na biblioteca multimídia do seu dispositivo, em vez da seção Offline.";
 /* Setting associated with the 'Camera' of the device */
 "Camera"="Câmera";
-/* Settings section title where you can enable the option to 'Save in Library' the images or videos taken from your camera in the MEGA app */
-"Save in Library"="Salvar no Fotos";
-/* Footer text shown under the Camera setting to explain the option 'Save in Library' */
+/* Settings section title where you can enable the option to 'Save in Photos' the images or videos taken from your camera in the MEGA app */
+"Save in Photos"="Salvar no Fotos";
+/* Footer text shown under the Camera setting to explain the option 'Save in Photos' */
 "Save a copy of the images and videos taken from the MEGA app in your device’s media library."="Salve uma cópia das fotos tiradas e dos vídeos gravados com o aplicativo do MEGA na biblioteca multimídia do seu dispositivo.";
 /* Title shown in a page of the on boarding screens explaining that the user keeps the encryption keys */
 "You hold the keys"="Você tem a chave";
@@ -1625,7 +1625,7 @@
 /* Title label that explains that the user is going to be asked for the photos permission */
 "Allow Access to Photos"="Permitir acesso ao Fotos";
 /* Detailed explanation of why the user should give permission to access to the photos */
-"To share photos and videos, allow MEGA to access your library."="Para compartilhar fotos e vídeos, permita que o MEGA acesse as suas fotos";
+"Please give the MEGA App permission to access Photos to share photos and videos."="Permita ao aplicativo do MEGA acessar o Fotos para poder compartilhar fotos e vídeos.";
 /* Title label that explains that the user is going to be asked for the microphone and camera permission */
 "Enable Microphone and Camera"="Ativar microfone e câmera";
 /* Detailed explanation of why the user should give permission to access to the camera and the microphone */
@@ -1669,7 +1669,7 @@
 /* Description shown when you try to disable the feature Rubbish-Bin Cleaning Scheduler and you are a free user */
 "To disable the Rubbish-Bin Cleaning Scheduler or set a longer retention period, you need to subscribe to a PRO plan."="Para desativar o Planejador de limpeza da lixeira ou definir um período de retenção mais longo, você precisa assinar um plano PRO.";
 /* Confirmation dialog for the button that logs the user out of all sessions except the current one. */
-"Do you want to close all other sessions? This will log you out on all other active sessions except the current one."="Você quer fechar as demais sessões? Essa ação fará logout de todas as outras sessões ativas, exceto a atual.";
+"Do you want to close all other sessions? This will log you out on all other active sessions except the current one."="Você quer fechar as demais sessões? Essa ação faráo  logout de todas as outras sessões ativas, exceto a atual.";
 /* A button label which allows the users save images/videos in the Photos app. */
 "Save to Photos"="Salvar no Fotos";
 /* Text shown when starting the process to save a photo or video to Photos app */

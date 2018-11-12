@@ -675,7 +675,7 @@
 /* Option title to enable Camera Uploads only when the device is charging */
 "onlyWhenChargingLabel"="เมื่อชาร์จเท่านั้น";
 /* Footer text to explain the Camera Uploads functionality */
-"cameraUploads_footer"="เมื่อเปิดใช้งาน รูปถ่ายและวิดีโอใหม่จะถูกอัปโหลด";
+"cameraUploads_footer"="เมื่อเปิดใช้รูปภาพและวิดีโอใหม่จะมีการอัปโหลด";
 /* App means “Application” */
 "App version"="เวอร์ชันแอป";
 /* Title of the label where the SDK version is shown */
@@ -1590,17 +1590,17 @@
 "scanOrCopyTheSeed"="สแกนหรือคัดลอกรหัสไปยังแอปตัวรับรองความถูกต้องของคุณ อย่าลืมสำรองรหัสนี้ไว้ในที่ปลอดภัยในกรณีที่คุณทำอุปกรณ์หาย";
 /* A button to help them restore their account if they have lost their 2FA device. */
 "lostYourAuthenticatorDevice"="อุปกรณ์ตัวรับรองความถูกต้องของคุณสูญหายหรือไม่";
-/* Settings section title where you can enable the option to 'Save Images in Library' */
-"Save Images in Library"="บันทึกรูปภาพในไลบรารี";
-/* Settings section title where you can enable the option to 'Save Videos in Library' */
-"Save Videos in Library"="บันทึกวิดีโอในไลบรารี";
+/* Settings section title where you can enable the option to 'Save Images in Photos' */
+"Save Images in Photos"="บันทึกภาพในรูปภาพ";
+/* Settings section title where you can enable the option to 'Save Videos in Photos' */
+"Save Videos in Photos"="บันทึกวิดีโอในรูปภาพ";
 /* Footer text shown under the settings for download options 'Save Images/Videos in Library' */
 "Images and/or videos downloaded will be stored in the device’s media library instead of the Offline section."="รูปภาพและ/หรือวิดีโอที่ดาวน์โหลดจะถูกเก็บไว้ในไลบรารีสื่อของอุปกรณ์แทนที่จะเป็นส่วนออฟไลน์";
 /* Setting associated with the 'Camera' of the device */
 "Camera"="กล้อง";
-/* Settings section title where you can enable the option to 'Save in Library' the images or videos taken from your camera in the MEGA app */
-"Save in Library"="บันทึกในไลบรารี";
-/* Footer text shown under the Camera setting to explain the option 'Save in Library' */
+/* Settings section title where you can enable the option to 'Save in Photos' the images or videos taken from your camera in the MEGA app */
+"Save in Photos"="บันทึกในรูปภาพ";
+/* Footer text shown under the Camera setting to explain the option 'Save in Photos' */
 "Save a copy of the images and videos taken from the MEGA app in your device’s media library."="บันทึกสำเนาของรูปภาพและวิดีโอที่ถ่ายจากแอป MEGA ในไลบรารีสื่อของอุปกรณ์";
 /* Title shown in a page of the on boarding screens explaining that the user keeps the encryption keys */
 "You hold the keys"="คุณคือผู้ถือกุญแจ";
@@ -1625,7 +1625,7 @@
 /* Title label that explains that the user is going to be asked for the photos permission */
 "Allow Access to Photos"="อนุญาตให้เข้าถึงรูปถ่าย";
 /* Detailed explanation of why the user should give permission to access to the photos */
-"To share photos and videos, allow MEGA to access your library."="หากต้องการแชร์รูปถ่ายและวิดีโอ ต้องอนุญาตให้ MEGA เข้าถึงไลบรารีของคุณ";
+"Please give the MEGA App permission to access Photos to share photos and videos."="กรุณาให้สิทธิ์แอป MEGA ในการเข้าถึงรูปภาพเพื่อแชร์รูปภาพและวิดีโอ";
 /* Title label that explains that the user is going to be asked for the microphone and camera permission */
 "Enable Microphone and Camera"="เปิดใช้งานไมโครโฟนและกล้องถ่ายรูป";
 /* Detailed explanation of why the user should give permission to access to the camera and the microphone */
@@ -1673,8 +1673,8 @@
 /* A button label which allows the users save images/videos in the Photos app. */
 "Save to Photos"="บันทึกลงในรูปถ่าย";
 /* Text shown when starting the process to save a photo or video to Photos app */
-"Saving to Photos…"="กำลังบันทึกไปยังรูปถ่าย...";
+"Saving to Photos…"="กำลังบันทึกไปยังรูปภาพ...";
 /* Text shown when a photo or video is saved to Photos app */
-"Saved to Photos"="บันทึกไปยังรูปถ่ายแล้ว";
+"Saved to Photos"="บันทึกไปยังรูปภาพแล้ว";
 /* Text shown when an error occurs when trying to save a photo or video to Photos app */
 "Could not save Item"="ไม่สามารถบันทึกรายการได้";
