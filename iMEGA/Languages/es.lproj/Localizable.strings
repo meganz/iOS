@@ -1096,7 +1096,7 @@
 /* Title that refers to the status of the chat (Either Online or Offline) */
 "status"="Estado";
 /* Title used in settings that enables the generation of link previews in the chat */
-"richUrlPreviews"="Vista previa del enlace enriquecido";
+"richUrlPreviews"="Vista previa del enlace";
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
 "richPreviewsFooter"="Mejora tu experiencia con MEGAchat. El contenido del enlace se recuperará sin cifrado punto a punto.";
 /* Section title of a button where you can enable mobile data for voice and video calls. */
@@ -1230,7 +1230,7 @@
 /* Button label for sending file attachments through the chat to another user. */
 "sendFiles"="Enviar archivos";
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
-"enableRichUrlPreviews"="Activa la vista previa del enlace enriquecido";
+"enableRichUrlPreviews"="Activar la vista previa del enlace";
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
 "alwaysAllow"="Permitir siempre";
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
@@ -1238,7 +1238,7 @@
 /* */
 "never"="Nunca";
 /* After several times (right now set to 3) that the user may had decided to click \"Not now\" (for when being asked if he/she wants a URL preview to be generated for a link, posted in a chat room), we change the \"Not now\" button to \"Never\". If the user clicks it, we ask for one final time - to ensure he wants to not be asked for this anymore and tell him that he can do that in Settings. */
-"richPreviewsConfirmation"="La vista previa de los enlaces enriquecidos se desactivará de forma permanente. Puedes volver a activarla desde Ajustes. ¿Quieres continuar?";
+"richPreviewsConfirmation"="La vista previa de los enlaces se desactivará de forma permanente. Puedes volver a activarla desde Ajustes. ¿Quieres continuar?";
 /* Once a preview is generated for a message which contains URLs, the user can remove it. Same button is also shown during loading of the preview - and would cancel the loading (text of the button is the same in both cases). */
 "removePreview"="Eliminar vista previa";
 /* */
@@ -1590,17 +1590,17 @@
 "scanOrCopyTheSeed"="Escanea o copia la clave en tu aplicación de autenticación. Asegúrate de guardarla en un lugar seguro en caso de que pierdas tu dispositivo.";
 /* A button to help them restore their account if they have lost their 2FA device. */
 "lostYourAuthenticatorDevice"="¿Has perdido tu dispositivo de autenticación?";
-/* Settings section title where you can enable the option to 'Save Images in Library' */
-"Save Images in Library"="Guardar imágenes en la galería";
-/* Settings section title where you can enable the option to 'Save Videos in Library' */
-"Save Videos in Library"="Guardar vídeos en la galería";
+/* Settings section title where you can enable the option to 'Save Images in Photos' */
+"Save Images in Photos"="Guardar imágenes en Fotos";
+/* Settings section title where you can enable the option to 'Save Videos in Photos' */
+"Save Videos in Photos"="Guardar vídeos en Fotos";
 /* Footer text shown under the settings for download options 'Save Images/Videos in Library' */
 "Images and/or videos downloaded will be stored in the device’s media library instead of the Offline section."="Las imágenes y/o los videos descargados se almacenarán en la galería del dispositivo en lugar de la sección Sin conexión.";
 /* Setting associated with the 'Camera' of the device */
 "Camera"="Cámara";
-/* Settings section title where you can enable the option to 'Save in Library' the images or videos taken from your camera in the MEGA app */
-"Save in Library"="Guardar en la galería";
-/* Footer text shown under the Camera setting to explain the option 'Save in Library' */
+/* Settings section title where you can enable the option to 'Save in Photos' the images or videos taken from your camera in the MEGA app */
+"Save in Photos"="Guardar en Fotos";
+/* Footer text shown under the Camera setting to explain the option 'Save in Photos' */
 "Save a copy of the images and videos taken from the MEGA app in your device’s media library."="Guarda una copia de las imágenes y de los videos capturados desde la aplicación de MEGA en la galería del dispositivo.";
 /* Title shown in a page of the on boarding screens explaining that the user keeps the encryption keys */
 "You hold the keys"="Tú tienes las claves";
@@ -1625,7 +1625,7 @@
 /* Title label that explains that the user is going to be asked for the photos permission */
 "Allow Access to Photos"="Permitir el acceso a Fotos";
 /* Detailed explanation of why the user should give permission to access to the photos */
-"To share photos and videos, allow MEGA to access your library."="Para compartir fotos y videos, permite que MEGA acceda a la galería.";
+"Please give the MEGA App permission to access Photos to share photos and videos."="Permite a MEGA que acceda a Fotos para compartir fotos y vídeos.";
 /* Title label that explains that the user is going to be asked for the microphone and camera permission */
 "Enable Microphone and Camera"="Activar el micrófono y la cámara";
 /* Detailed explanation of why the user should give permission to access to the camera and the microphone */
