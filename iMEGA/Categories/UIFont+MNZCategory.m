@@ -83,10 +83,8 @@
     return [UIFont fontWithDescriptor:[self.fontDescriptor fontDescriptorWithSymbolicTraits:UIFontDescriptorTraitItalic] size:0];
 }
 
-+ (UIFont *)preferredFontForTextStyle:(UIFontTextStyle)style weight:(UIFontWeight)weight {
-    UIFontDescriptor *descriptor = [UIFontDescriptor preferredFontDescriptorWithTextStyle:style];
-    descriptor = [descriptor fontDescriptorByAddingAttributes:@{UIFontDescriptorTraitsAttribute: @{UIFontWeightTrait: @(weight)}}];
-    return [UIFont fontWithDescriptor:descriptor size:0];
+- (UIFont *)fontWithWeight:(UIFontWeight)weight {
+    return [UIFont systemFontOfSize:self.pointSize weight:weight];
 }
 
 @end

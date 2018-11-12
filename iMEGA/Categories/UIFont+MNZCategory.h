@@ -12,22 +12,22 @@
 + (UIFont *)mnz_defaultFontForPureEmojiStringWithEmojis:(NSUInteger)emojiCount;
 
 
-/**
- Returns a matching font by the given text style and weight
 
- @param style UIFontTextStyle type
- @param weight UIFontWeight type
- @return a new font matching the given style and weight
+/**
+ Returns a system font object that is the same size as the receiver but which has the specified weight instead.
+
+ @param weight UIFontWeight
+ @return a system font of the specified weight
  */
-+ (UIFont *)preferredFontForTextStyle:(UIFontTextStyle)style weight:(UIFontWeight)weight;
+- (UIFont *)fontWithWeight:(UIFontWeight)weight;
 
 /**
- @return a bold font based on the current font
+ @return Returns a font object that is the same as the receiver but which has bold style.
  */
 - (UIFont *)bold;
 
 /**
- @return an italic font based on the current font
+ @return Returns a font object that is the same as the receiver but which has italic style.
  */
 - (UIFont *)italic;
 
