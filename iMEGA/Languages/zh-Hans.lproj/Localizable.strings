@@ -1590,17 +1590,17 @@
 "scanOrCopyTheSeed"="您可以将种子扫描或复制到您的验证程序中。 以防您的手机丢失，请确保种子已备份至安全位置。";
 /* A button to help them restore their account if they have lost their 2FA device. */
 "lostYourAuthenticatorDevice"="丢失了您的验证设备？";
-/* Settings section title where you can enable the option to 'Save Images in Library' */
-"Save Images in Library"="保存照片至资料库";
-/* Settings section title where you can enable the option to 'Save Videos in Library' */
-"Save Videos in Library"="保存视频至资料库";
+/* Settings section title where you can enable the option to 'Save Images in Photos' */
+"Save Images in Photos"="保存图片至照片";
+/* Settings section title where you can enable the option to 'Save Videos in Photos' */
+"Save Videos in Photos"="保存视频至照片";
 /* Footer text shown under the settings for download options 'Save Images/Videos in Library' */
 "Images and/or videos downloaded will be stored in the device’s media library instead of the Offline section."="已下载的照片与/或视频将储存在您设备的媒体资料库中，而非离线部分。";
 /* Setting associated with the 'Camera' of the device */
 "Camera"="相机";
-/* Settings section title where you can enable the option to 'Save in Library' the images or videos taken from your camera in the MEGA app */
-"Save in Library"="保存至资料库";
-/* Footer text shown under the Camera setting to explain the option 'Save in Library' */
+/* Settings section title where you can enable the option to 'Save in Photos' the images or videos taken from your camera in the MEGA app */
+"Save in Photos"="保存至照片";
+/* Footer text shown under the Camera setting to explain the option 'Save in Photos' */
 "Save a copy of the images and videos taken from the MEGA app in your device’s media library."="将MEGA应用程序中拍摄的照片与视频的副本保存在您设备的媒体资料库中。";
 /* Title shown in a page of the on boarding screens explaining that the user keeps the encryption keys */
 "You hold the keys"="您持有这把密钥";
@@ -1625,7 +1625,7 @@
 /* Title label that explains that the user is going to be asked for the photos permission */
 "Allow Access to Photos"="允许访问照片";
 /* Detailed explanation of why the user should give permission to access to the photos */
-"To share photos and videos, allow MEGA to access your library."="要分享照片与视频，请允许MEGA访问您的资料库。";
+"Please give the MEGA App permission to access Photos to share photos and videos."="请允许MEGA应用程序访问您的照片，此操作用于共享照片与视频。";
 /* Title label that explains that the user is going to be asked for the microphone and camera permission */
 "Enable Microphone and Camera"="启用麦克风和相机";
 /* Detailed explanation of why the user should give permission to access to the camera and the microphone */
