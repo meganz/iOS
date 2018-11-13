@@ -33,11 +33,11 @@
     }
     
     self.backgroundTaskId = [UIApplication.sharedApplication beginBackgroundTaskWithName:@"thumbnailUploadBackgroundTask" expirationHandler:^{
-        MEGALogDebug(@"[Camera Upload] background task expired in uploading thumbnail for asset: %@", self.uploadInfo.asset.localIdentifier);
+        MEGALogDebug(@"[Camera Upload] Background task expired in uploading thumbnail for asset: %@", self.uploadInfo.asset.localIdentifier);
         [self finishOperation];
     }];
     
-    MEGALogDebug(@"[Camera Upload] start uploading thumbnail for asset %@ %@", self.uploadInfo.asset.localIdentifier, self.uploadInfo.fileName);
+    MEGALogDebug(@"[Camera Upload] Start uploading thumbnail for asset %@ %@", self.uploadInfo.asset.localIdentifier, self.uploadInfo.fileName);
     
     NSError *error;
     NSURL *cachedThumbnailURL = [[Helper urlForSharedSandboxCacheDirectory:@"thumbnailsV3"] URLByAppendingPathComponent:self.node.base64Handle isDirectory:NO];
@@ -58,7 +58,7 @@
             [self finishOperation];
         }]];
     } else {
-        MEGALogDebug(@"[Camera Upload] moves thumbnail to cache failed for asset %@ error %@", self.uploadInfo.asset.localIdentifier, error);
+        MEGALogDebug(@"[Camera Upload] Move thumbnail to cache failed for asset %@ error %@", self.uploadInfo.asset.localIdentifier, error);
         [self finishOperation];
     }
 }
