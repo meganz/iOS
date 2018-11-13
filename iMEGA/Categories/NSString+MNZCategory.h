@@ -16,6 +16,7 @@ typedef NS_ENUM(NSInteger, MEGAChatMessageEndCallReason);
 - (NSString *)mnz_appDataToSaveInPhotosApp;
 - (NSString *)mnz_appDataToAttachToChatID:(uint64_t)chatId;
 - (NSString *)mnz_appDataToSaveCoordinates:(NSString *)coordinates;
+- (NSString *)mnz_appDataToLocalIdentifier:(NSString *)localIdentifier;
 
 #pragma mark - Utils
 
