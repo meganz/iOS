@@ -370,10 +370,10 @@
         } else {
             if (isFolderLink) {
                 [[Helper nodesFromLinkMutableArray] addObject:self];
-                [Helper setSelectedOptionOnLink:4]; //Download folder or nodes from link
+                [Helper setSelectedOptionOnLink:AfterLoginActionDownloadFolderLink];
             } else {
                 [Helper setLinkNode:self];
-                [Helper setSelectedOptionOnLink:2]; //Download file from link
+                [Helper setSelectedOptionOnLink:AfterLoginActionDownloadFileLink];
             }
             
             LoginViewController *loginVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"LoginViewControllerID"];
@@ -402,10 +402,10 @@
         } else {
             if (isFolderLink) {
                 [[Helper nodesFromLinkMutableArray] addObject:self];
-                [Helper setSelectedOptionOnLink:3]; //Import folder or nodes from link
+                [Helper setSelectedOptionOnLink:AfterLoginActionImportFolderLink];
             } else {
                 [Helper setLinkNode:self];
-                [Helper setSelectedOptionOnLink:1]; //Import file from link
+                [Helper setSelectedOptionOnLink:AfterLoginActionImportFileLink];
             }
             
             LoginViewController *loginVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"LoginViewControllerID"];
