@@ -14,6 +14,7 @@
 #import "MEGANavigationController.h"
 #import "MEGANode+MNZCategory.h"
 #import "MEGAPhotoBrowserViewController.h"
+#import "MEGAReachabilityManager.h"
 #import "MEGASdkManager.h"
 #import "MessagesViewController.h"
 #import "NSString+MNZCategory.h"
@@ -305,37 +306,43 @@
 }
 
 - (void)handleChatLink {
-    MEGAChatGenericRequestDelegate *delegate = [[MEGAChatGenericRequestDelegate alloc] initWithCompletion:^(MEGAChatRequest * _Nonnull request, MEGAChatError * _Nonnull error) {
-        if (error.type == MEGAErrorTypeApiOk || error.type == MEGAErrorTypeApiEExist) {
-            UIViewController *rootViewController = [UIApplication sharedApplication].keyWindow.rootViewController;
-            if ([rootViewController isKindOfClass:MainTabBarController.class]) {
-                MainTabBarController *mainTBC = (MainTabBarController *)rootViewController;
-                mainTBC.selectedIndex = CHAT;
+    if ([MEGAReachabilityManager isReachableHUDIfNot]) {
+        [SVProgressHUD show];
+        
+        MEGAChatGenericRequestDelegate *delegate = [[MEGAChatGenericRequestDelegate alloc] initWithCompletion:^(MEGAChatRequest * _Nonnull request, MEGAChatError * _Nonnull error) {
+            if (error.type == MEGAErrorTypeApiOk || error.type == MEGAErrorTypeApiEExist) {
+                UIViewController *rootViewController = [UIApplication sharedApplication].keyWindow.rootViewController;
+                if ([rootViewController isKindOfClass:MainTabBarController.class]) {
+                    MainTabBarController *mainTBC = (MainTabBarController *)rootViewController;
+                    mainTBC.selectedIndex = CHAT;
+                }
+                
+                MessagesViewController *messagesVC = [[MessagesViewController alloc] init];
+                messagesVC.chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:request.chatHandle];
+                messagesVC.publicHandle = request.userHandle;
+                messagesVC.publicChatLink = self;
+                MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:messagesVC];
+                [UIApplication.mnz_visibleViewController presentViewController:navigationController animated:YES completion:nil];
+                [SVProgressHUD dismiss];
             }
-            
-            MessagesViewController *messagesVC = [[MessagesViewController alloc] init];
-            messagesVC.chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:request.chatHandle];
-            messagesVC.publicHandle = request.userHandle;
-            messagesVC.publicChatLink = self;
-            MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:messagesVC];
-            [UIApplication.mnz_visibleViewController presentViewController:navigationController animated:YES completion:nil];
+        }];
+        
+        if (![MEGASdkManager sharedMEGAChatSdk]) {
+            [MEGASdkManager createSharedMEGAChatSdk];
         }
-    }];
-    
-    if (![MEGASdkManager sharedMEGAChatSdk]) {
-        [MEGASdkManager createSharedMEGAChatSdk];
-    }
-    MEGAChatInit chatInit = [[MEGASdkManager sharedMEGAChatSdk] initState];
-    if (chatInit == MEGAChatInitNotDone) {
-        chatInit = [[MEGASdkManager sharedMEGAChatSdk] initAnonymous];
-        if (chatInit == MEGAChatInitError) {
-            MEGALogError(@"Init Karere anonymous failed");
-            [[MEGASdkManager sharedMEGAChatSdk] logout];
-            return;
+        MEGAChatInit chatInit = [[MEGASdkManager sharedMEGAChatSdk] initState];
+        if (chatInit == MEGAChatInitNotDone) {
+            chatInit = [[MEGASdkManager sharedMEGAChatSdk] initAnonymous];
+            if (chatInit == MEGAChatInitError) {
+                MEGALogError(@"Init Karere anonymous failed");
+                [[MEGASdkManager sharedMEGAChatSdk] logout];
+                [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"Error (%td) initializing the chat", chatInit]];
+                return;
+            }
         }
+        
+        [[MEGASdkManager sharedMEGAChatSdk] openChatPreview:self delegate:delegate];
     }
-    
-    [[MEGASdkManager sharedMEGAChatSdk] openChatPreview:self delegate:delegate];
 }
 
 @end
