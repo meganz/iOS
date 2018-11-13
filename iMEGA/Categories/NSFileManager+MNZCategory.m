@@ -45,5 +45,15 @@
     return uploadURL;
 }
 
+- (void)removeItemIfExistsAtURL:(NSURL *)URL {
+    if ([self fileExistsAtPath:URL.path]) {
+        NSError *removeFileError;
+        [self removeItemAtURL:URL error:&removeFileError];
+        if (removeFileError) {
+            MEGALogDebug(@"Error when to remove existing file %@, error detail: %@", URL, removeFileError);
+        }
+    }
+}
+
 
 @end

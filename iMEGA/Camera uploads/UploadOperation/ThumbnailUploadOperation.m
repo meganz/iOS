@@ -2,6 +2,7 @@
 #import "ThumbnailUploadOperation.h"
 #import "Helper.h"
 #import "CameraUploadRequestDelegate.h"
+#import "NSFileManager+MNZCategory.h"
 
 @interface ThumbnailUploadOperation ()
 
@@ -47,9 +48,7 @@
         return;
     }
     
-    if ([NSFileManager.defaultManager fileExistsAtPath:cachedThumbnailURL.path]) {
-        [NSFileManager.defaultManager removeItemAtURL:cachedThumbnailURL error:nil];
-    }
+    [NSFileManager.defaultManager removeItemIfExistsAtURL:cachedThumbnailURL];
     
     if ([[NSFileManager defaultManager] moveItemAtURL:self.uploadInfo.thumbnailURL toURL:cachedThumbnailURL error:&error]) {
         [MEGASdkManager.sharedMEGASdk setThumbnailNode:self.node sourceFilePath:cachedThumbnailURL.path delegate:[[CameraUploadRequestDelegate alloc] initWithCompletion:^(MEGARequest * _Nonnull request, MEGAError * _Nonnull error) {
