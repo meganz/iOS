@@ -1994,7 +1994,12 @@ const NSUInteger kMaxMessagesToLoad = 256;
     NSMutableArray *nodesArray = [[NSMutableArray alloc] init];
     for (NSUInteger i = 0; i < message.nodeList.size.unsignedIntegerValue; i++) {
         MEGANode *node = [message.nodeList nodeAtIndex:i];
-        [nodesArray addObject:node];
+        if (self.chatRoom.isPreview) {
+            node = [[MEGASdkManager sharedMEGASdk] authorizeChatNode:node cauth:self.chatRoom.authorizationToken];
+        }
+        if (node) {
+            [nodesArray addObject:node];
+        }
     }
     MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"BrowserNavigationControllerID"];
     [self presentViewController:navigationController animated:YES completion:nil];
@@ -2004,11 +2009,20 @@ const NSUInteger kMaxMessagesToLoad = 256;
 }
 
 - (void)download:(id)sender message:(MEGAChatMessage *)message {
+    BOOL downloading = NO;
     for (NSUInteger i = 0; i < message.nodeList.size.unsignedIntegerValue; i++) {
         MEGANode *node = [message.nodeList nodeAtIndex:i];
-        [Helper downloadNode:node folderPath:[Helper relativePathForOffline] isFolderLink:NO shouldOverwrite:NO];
+        if (self.chatRoom.isPreview) {
+            node = [[MEGASdkManager sharedMEGASdk] authorizeChatNode:node cauth:self.chatRoom.authorizationToken];
+        }
+        if (node) {
+            [Helper downloadNode:node folderPath:[Helper relativePathForOffline] isFolderLink:NO shouldOverwrite:NO];
+            downloading = YES;
+        }
     }
-    [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:AMLocalizedString(@"downloadStarted", @"Message shown when a download starts")];
+    if (downloading) {
+        [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:AMLocalizedString(@"downloadStarted", @"Message shown when a download starts")];
+    }
 }
 
 - (void)addContact:(id)sender message:(MEGAChatMessage *)message {
@@ -2095,11 +2109,23 @@ const NSUInteger kMaxMessagesToLoad = 256;
         if (message.type == MEGAChatMessageTypeAttachment) {
             if (message.nodeList.size.unsignedIntegerValue == 1) {
                 MEGANode *node = [message.nodeList nodeAtIndex:0];
+                if (self.chatRoom.isPreview) {
+                    node = [[MEGASdkManager sharedMEGASdk] authorizeChatNode:node cauth:self.chatRoom.authorizationToken];
+                }
+                if (!node) {
+                    return;
+                }
                 if (node.name.mnz_isImagePathExtension || node.name.mnz_isVideoPathExtension) {
                     NSArray<MEGAChatMessage *> *reverseArray = [[self.attachmentMessages reverseObjectEnumerator] allObjects];
                     NSMutableArray<MEGANode *> *mediaNodesArray = [[NSMutableArray<MEGANode *> alloc] initWithCapacity:reverseArray.count];
                     for (MEGAChatMessage *attachmentMessage in reverseArray) {
-                        [mediaNodesArray addObject:[attachmentMessage.nodeList nodeAtIndex:0]];
+                        MEGANode *tempNode = [attachmentMessage.nodeList nodeAtIndex:0];
+                        if (self.chatRoom.isPreview) {
+                            tempNode = [[MEGASdkManager sharedMEGASdk] authorizeChatNode:tempNode cauth:self.chatRoom.authorizationToken];
+                        }
+                        if (tempNode) {
+                            [mediaNodesArray addObject:tempNode];
+                        }
                     }
                     
                     MEGAPhotoBrowserViewController *photoBrowserVC = [MEGAPhotoBrowserViewController photoBrowserWithMediaNodes:mediaNodesArray api:[MEGASdkManager sharedMEGASdk] displayMode:DisplayModeSharedItem presentingNode:nil preferredIndex:[reverseArray indexOfObject:message]];
