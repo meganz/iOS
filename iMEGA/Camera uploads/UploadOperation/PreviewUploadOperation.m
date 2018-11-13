@@ -7,6 +7,7 @@
 
 @property (strong, nonatomic) MEGANode *node;
 @property (strong, nonatomic) AssetUploadInfo *uploadInfo;
+@property (nonatomic) UIBackgroundTaskIdentifier backgroundTaskId;
 
 @end
 
@@ -31,18 +32,22 @@
         return;
     }
     
-    __block UIBackgroundTaskIdentifier previewUploadTaskId = [UIApplication.sharedApplication beginBackgroundTaskWithName:@"previewUploadBackgroundTask" expirationHandler:^{
-        MEGALogDebug(@"[Camera Upload] background task expired in uploading preview for asset: %@", self.uploadInfo.asset.localIdentifier);
+    self.backgroundTaskId = [UIApplication.sharedApplication beginBackgroundTaskWithName:@"previewUploadBackgroundTask" expirationHandler:^{
+        MEGALogDebug(@"[Camera Upload] Background task expired in uploading preview for asset: %@", self.uploadInfo.asset.localIdentifier);
         [self finishOperation];
-        [UIApplication.sharedApplication endBackgroundTask:previewUploadTaskId];
-        previewUploadTaskId = UIBackgroundTaskInvalid;
     }];
     
-    MEGALogDebug(@"[Camera Upload] start uploading preview for asset %@ %@", self.uploadInfo.asset.localIdentifier, self.uploadInfo.fileName);
+    MEGALogDebug(@"[Camera Upload] Start uploading preview for asset %@ %@", self.uploadInfo.asset.localIdentifier, self.uploadInfo.fileName);
     
-    NSURL *cachedPreviewURL = [[[[[NSFileManager defaultManager] URLsForDirectory:NSCachesDirectory inDomains:NSUserDomainMask] firstObject] URLByAppendingPathComponent:@"previewsV3" isDirectory:YES] URLByAppendingPathComponent:self.node.base64Handle isDirectory:NO];
+    NSError *error;
+    NSURL *cachedPreviewURL = [[[[NSFileManager.defaultManager URLsForDirectory:NSCachesDirectory inDomains:NSUserDomainMask] firstObject] URLByAppendingPathComponent:@"previewsV3" isDirectory:YES] URLByAppendingPathComponent:self.node.base64Handle isDirectory:NO];
+    if(![NSFileManager.defaultManager createDirectoryAtURL:cachedPreviewURL withIntermediateDirectories:YES attributes:nil error:&error]) {
+        MEGALogDebug(@"[Camera Upload] Create preview directory error %@", error);
+        [self finishOperation];
+        return;
+    }
     
-    if([[NSFileManager defaultManager] moveItemAtURL:self.uploadInfo.previewURL toURL:cachedPreviewURL error:nil]) {
+    if([[NSFileManager defaultManager] moveItemAtURL:self.uploadInfo.previewURL toURL:cachedPreviewURL error:&error]) {
         [MEGASdkManager.sharedMEGASdk setPreviewNode:self.node sourceFilePath:cachedPreviewURL.path delegate:[[CameraUploadRequestDelegate alloc] initWithCompletion:^(MEGARequest * _Nonnull request, MEGAError * _Nonnull error) {
             if (error.type) {
                 MEGALogError(@"[Camera Upload] Upload preview failed for node: %llu, error: %ld", self.node.handle, error.type);
@@ -51,15 +56,17 @@
             }
             
             [self finishOperation];
-            [UIApplication.sharedApplication endBackgroundTask:previewUploadTaskId];
-            previewUploadTaskId = UIBackgroundTaskInvalid;
         }]];
     } else {
-        MEGALogDebug(@"[Camera Upload] Move preview to cache failed for asset %@", self.uploadInfo.asset.localIdentifier);
+        MEGALogDebug(@"[Camera Upload] Move preview to cache failed for asset %@ error %@", self.uploadInfo.asset.localIdentifier, error);
         [self finishOperation];
-        [UIApplication.sharedApplication endBackgroundTask:previewUploadTaskId];
-        previewUploadTaskId = UIBackgroundTaskInvalid;
     }
+}
+
+- (void)finishOperation {
+    [super finishOperation];
+    [UIApplication.sharedApplication endBackgroundTask:self.backgroundTaskId];
+    self.backgroundTaskId = UIBackgroundTaskInvalid;
 }
 
 @end

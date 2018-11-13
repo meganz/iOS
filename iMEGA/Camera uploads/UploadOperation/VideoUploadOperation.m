@@ -75,7 +75,7 @@
                     [self finishOperationWithStatus:UploadStatusDone shouldUploadNextAsset:YES];
                     return;
                 } else {
-                    MEGALogDebug(@"[Camera Upload] %@ original file size: %lld M", self, [NSFileManager.defaultManager attributesOfItemAtPath:urlAsset.URL.path error:nil].fileSize / 1024 / 1024);
+                    MEGALogDebug(@"[Camera Upload] %@ original file size: %.2f M", self, [NSFileManager.defaultManager attributesOfItemAtPath:urlAsset.URL.path error:nil].fileSize / 1024.0f / 1024.0f);
                     [self compressVideoByExportSession:session];
                 }
             } else {
@@ -88,6 +88,8 @@
 }
 
 - (void)compressVideoByExportSession:(AVAssetExportSession *)session {
+    MEGALogDebug(@"[Camera Upload] video estimate duration: %.2f, max duration: %.2f, estimate size: %.2f M", CMTimeGetSeconds(session.asset.duration), CMTimeGetSeconds(session.maxDuration), session.estimatedOutputFileLength / 1024.0f / 1024.0f)
+    
     MEGALogDebug(@"[Camera Upload] %@ starts compressing video data with original dimensions: %@", self, NSStringFromCGSize([self dimensionsForAVAsset:session.asset]));
     
     session.outputURL = self.uploadInfo.fileURL;
@@ -146,7 +148,7 @@
     
     self.uploadInfo.mediaUpload = [MEGASdkManager.sharedMEGASdk backgroundMediaUpload];
     
-    MEGALogDebug(@"[Camera Upload] %@ starts encryption with file size %@", self, @(self.uploadInfo.fileSize));
+    MEGALogDebug(@"[Camera Upload] %@ starts encryption with file size %.2f M", self, self.uploadInfo.fileSize / 1024.0f / 1024.0f);
     
     NSString *urlSuffix;
     if ([self.uploadInfo.mediaUpload encryptFileAtPath:self.uploadInfo.fileURL.path startPosition:0 length:self.uploadInfo.fileSize outputFilePath:self.uploadInfo.encryptedURL.path urlSuffix:&urlSuffix]) {
