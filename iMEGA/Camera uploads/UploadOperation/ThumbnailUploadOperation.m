@@ -47,6 +47,10 @@
         return;
     }
     
+    if ([NSFileManager.defaultManager fileExistsAtPath:cachedThumbnailURL.path]) {
+        [NSFileManager.defaultManager removeItemAtURL:cachedThumbnailURL error:nil];
+    }
+    
     if ([[NSFileManager defaultManager] moveItemAtURL:self.uploadInfo.thumbnailURL toURL:cachedThumbnailURL error:&error]) {
         [MEGASdkManager.sharedMEGASdk setThumbnailNode:self.node sourceFilePath:cachedThumbnailURL.path delegate:[[CameraUploadRequestDelegate alloc] initWithCompletion:^(MEGARequest * _Nonnull request, MEGAError * _Nonnull error) {
             if (error.type) {
