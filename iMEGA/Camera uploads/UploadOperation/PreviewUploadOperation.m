@@ -2,6 +2,7 @@
 #import "PreviewUploadOperation.h"
 #import "Helper.h"
 #import "CameraUploadRequestDelegate.h"
+#import "NSFileManager+MNZCategory.h"
 
 @interface PreviewUploadOperation ()
 
@@ -47,9 +48,7 @@
         return;
     }
     
-    if ([NSFileManager.defaultManager fileExistsAtPath:cachedPreviewURL.path]) {
-        [NSFileManager.defaultManager removeItemAtURL:cachedPreviewURL error:nil];
-    }
+    [NSFileManager.defaultManager removeItemIfExistsAtURL:cachedPreviewURL];
     
     if([[NSFileManager defaultManager] moveItemAtURL:self.uploadInfo.previewURL toURL:cachedPreviewURL error:&error]) {
         [MEGASdkManager.sharedMEGASdk setPreviewNode:self.node sourceFilePath:cachedPreviewURL.path delegate:[[CameraUploadRequestDelegate alloc] initWithCompletion:^(MEGARequest * _Nonnull request, MEGAError * _Nonnull error) {
