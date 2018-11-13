@@ -190,7 +190,8 @@ const NSUInteger kMaxMessagesToLoad = 256;
 
     if (self.presentingViewController && self.parentViewController) {
         _unreadBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.unreadLabel];
-        UIBarButtonItem *chatBackBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:AMLocalizedString(@"chat", @"Chat section header") style:UIBarButtonItemStylePlain target:self action:@selector(dismissChatRoom)];
+        NSString *closeText = [MEGASdkManager sharedMEGAChatSdk].initState == MEGAChatInitAnonymous ? AMLocalizedString(@"close", @"A button label. The button allows the user to close the conversation.") : AMLocalizedString(@"chat", @"Chat section header");
+        UIBarButtonItem *chatBackBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:closeText style:UIBarButtonItemStylePlain target:self action:@selector(dismissChatRoom)];
         
         self.leftBarButtonItems = @[chatBackBarButtonItem, self.unreadBarButtonItem];
     } else {
@@ -364,6 +365,7 @@ const NSUInteger kMaxMessagesToLoad = 256;
 }
 
 - (void)dismissChatRoom {
+    self.inputToolbar.hidden = YES;
     [self dismissViewControllerAnimated:YES completion:^{
         if ([[MEGASdkManager sharedMEGAChatSdk] initState] == MEGAChatInitAnonymous) {
             MEGAChatGenericRequestDelegate *delegate = [[MEGAChatGenericRequestDelegate alloc] initWithCompletion:^(MEGAChatRequest * _Nonnull request, MEGAChatError * _Nonnull error) {
