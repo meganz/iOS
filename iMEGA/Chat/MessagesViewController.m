@@ -1758,7 +1758,7 @@ const NSUInteger kMaxMessagesToLoad = 256;
     } else {
         cell.avatarImageView.hidden = NO;
         cell.selectionImageView.hidden = YES;
-        if (message.shouldShowForwardAccessory) {
+        if (message.shouldShowForwardAccessory && [MEGASdkManager sharedMEGAChatSdk].initState != MEGAChatInitAnonymous) {
             [cell.accessoryButton setImage:[UIImage imageNamed:@"forward"] forState:UIControlStateNormal];
             cell.accessoryButton.hidden = NO;
         }
@@ -1826,6 +1826,7 @@ const NSUInteger kMaxMessagesToLoad = 256;
 
 - (BOOL)collectionView:(UICollectionView *)collectionView canPerformAction:(SEL)action forItemAtIndexPath:(NSIndexPath *)indexPath withSender:(id)sender {
     if (self.selectingMessages) return NO;
+    if ([MEGASdkManager sharedMEGAChatSdk].initState == MEGAChatInitAnonymous && action != @selector(copy:)) return NO;
     
     MEGAChatMessage *message = [self.messages objectAtIndex:indexPath.item];
     switch (message.type) {
