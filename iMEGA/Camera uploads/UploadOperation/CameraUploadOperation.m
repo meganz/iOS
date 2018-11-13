@@ -127,6 +127,11 @@
 
 - (NSURL *)URLForAssetFolder {
     NSURL *assetDirectoryURL = [[[NSFileManager defaultManager] cameraUploadURL] URLByAppendingPathComponent:self.uploadInfo.asset.localIdentifier.stringByRemovingInvalidFileCharacters isDirectory:YES];
+    
+    if ([NSFileManager.defaultManager fileExistsAtPath:assetDirectoryURL.path]) {
+        [NSFileManager.defaultManager removeItemAtURL:assetDirectoryURL error:nil];
+    }
+    
     [[NSFileManager defaultManager] createDirectoryAtURL:assetDirectoryURL withIntermediateDirectories:YES attributes:nil error:nil];
     return assetDirectoryURL;
 }

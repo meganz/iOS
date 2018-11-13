@@ -47,6 +47,10 @@
         return;
     }
     
+    if ([NSFileManager.defaultManager fileExistsAtPath:cachedPreviewURL.path]) {
+        [NSFileManager.defaultManager removeItemAtURL:cachedPreviewURL error:nil];
+    }
+    
     if([[NSFileManager defaultManager] moveItemAtURL:self.uploadInfo.previewURL toURL:cachedPreviewURL error:&error]) {
         [MEGASdkManager.sharedMEGASdk setPreviewNode:self.node sourceFilePath:cachedPreviewURL.path delegate:[[CameraUploadRequestDelegate alloc] initWithCompletion:^(MEGARequest * _Nonnull request, MEGAError * _Nonnull error) {
             if (error.type) {
