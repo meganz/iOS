@@ -364,7 +364,14 @@ const NSUInteger kMaxMessagesToLoad = 256;
 }
 
 - (void)dismissChatRoom {
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [self dismissViewControllerAnimated:YES completion:^{
+        if ([[MEGASdkManager sharedMEGAChatSdk] initState] == MEGAChatInitAnonymous) {
+            MEGAChatGenericRequestDelegate *delegate = [[MEGAChatGenericRequestDelegate alloc] initWithCompletion:^(MEGAChatRequest * _Nonnull request, MEGAChatError * _Nonnull error) {
+                [MEGASdkManager destroySharedMEGAChatSdk];
+            }];
+            [[MEGASdkManager sharedMEGAChatSdk] logoutWithDelegate:delegate];
+        }
+    }];
 }
 
 - (void)dealloc {
@@ -441,7 +448,7 @@ const NSUInteger kMaxMessagesToLoad = 256;
                 case MEGAChatConnectionOnline:
                     if (self.chatRoom.isGroup) {
                         if (self.shouldShowJoinView) {
-                            chatRoomState = [NSString stringWithFormat:@"%ld %@", self.chatRoom.peerCount, AMLocalizedString(@"participants", @"Label to describe the section where you can see the participants of a group chat")];
+                            chatRoomState = [NSString stringWithFormat:@"%tu %@", self.chatRoom.peerCount, AMLocalizedString(@"participants", @"Label to describe the section where you can see the participants of a group chat")];
                         } else if (self.chatRoom.ownPrivilege <= MEGAChatRoomPrivilegeRo) {
                             chatRoomState = AMLocalizedString(@"readOnly", @"Permissions given to the user you share your folder with");
                         }
@@ -569,7 +576,7 @@ const NSUInteger kMaxMessagesToLoad = 256;
             }
         } else {
             MEGAChatMessage *message = [[MEGASdkManager sharedMEGAChatSdk] attachContactsToChat:self.chatRoom.chatId contacts:users];
-            message.chatRoom = self.chatRoom;
+            message.chatId = self.chatRoom.chatId;
             [self.messages addObject:message];
             [self.collectionView insertItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:self.messages.count-1 inSection:0]]];
             [self updateUnreadMessagesLabel:0];
@@ -1074,7 +1081,7 @@ const NSUInteger kMaxMessagesToLoad = 256;
     BOOL hidden = !self.shouldShowJoinView;
     [self.inputToolbar mnz_setJoinViewHidden:hidden];
     self.previewersView.hidden = hidden;
-    self.previewersLabel.text = [NSString stringWithFormat:@"%ld", self.chatRoom.previewersCount];
+    self.previewersLabel.text = [NSString stringWithFormat:@"%tu", self.chatRoom.previewersCount];
 }
 
 - (void)setLastMessageAsSeen {
@@ -1116,7 +1123,7 @@ const NSUInteger kMaxMessagesToLoad = 256;
         } else {
             uint64_t messageId = (self.editMessage.status == MEGAChatMessageStatusSending) ? self.editMessage.temporalId : self.editMessage.messageId;
             message = [[MEGASdkManager sharedMEGAChatSdk] editMessageForChat:self.chatRoom.chatId messageId:messageId message:text];
-            message.chatRoom = self.chatRoom;
+            message.chatId = self.chatRoom.chatId;
             NSUInteger index = [self.messages indexOfObject:self.editMessage];
             if (index != NSNotFound) {
                 [self.messages replaceObjectAtIndex:index withObject:message];
@@ -1127,7 +1134,7 @@ const NSUInteger kMaxMessagesToLoad = 256;
         self.editMessage = nil;
     } else {
         message = [[MEGASdkManager sharedMEGAChatSdk] sendMessageToChat:self.chatRoom.chatId message:text];
-        message.chatRoom = self.chatRoom;
+        message.chatId = self.chatRoom.chatId;
         [self.messages addObject:message];
         [self.collectionView insertItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:self.messages.count-1 inSection:0]]];
         [self updateUnreadMessagesLabel:0];
@@ -1260,7 +1267,7 @@ const NSUInteger kMaxMessagesToLoad = 256;
                 if (filteredArray.count) {
                     MEGALogWarning(@"Forwarded message was already added to the array, probably onMessageUpdate received before now.");
                 } else {
-                    message.chatRoom = self.chatRoom;
+                    message.chatId = self.chatRoom.chatId;
                     [self.messages addObject:message];
                     [self finishReceivingMessage];
                     
@@ -1518,13 +1525,19 @@ const NSUInteger kMaxMessagesToLoad = 256;
 }
 
 - (void)didPressJoinButton:(UIButton *)sender {
-    MEGAChatGenericRequestDelegate *delegate = [[MEGAChatGenericRequestDelegate alloc] initWithCompletion:^(MEGAChatRequest * _Nonnull request, MEGAChatError * _Nonnull error) {
-        [self updateJoinView];
-    }];
-    if (!self.chatRoom.isPreview && !self.chatRoom.isActive) {
-        [[MEGASdkManager sharedMEGAChatSdk] autorejoinPublicChat:self.chatRoom.chatId publicHandle:self.publicHandle delegate:delegate];
+    if ([[MEGASdkManager sharedMEGAChatSdk] initState] == MEGAChatInitAnonymous) {
+        [Helper setChatLink:self.publicChatLink];
+        [Helper setSelectedOptionOnLink:AfterLoginActionJoinChatLink];
+        [self dismissChatRoom];
     } else {
-        [[MEGASdkManager sharedMEGAChatSdk] autojoinPublicChat:self.chatRoom.chatId delegate:delegate];
+        MEGAChatGenericRequestDelegate *delegate = [[MEGAChatGenericRequestDelegate alloc] initWithCompletion:^(MEGAChatRequest * _Nonnull request, MEGAChatError * _Nonnull error) {
+            [self updateJoinView];
+        }];
+        if (!self.chatRoom.isPreview && !self.chatRoom.isActive) {
+            [[MEGASdkManager sharedMEGAChatSdk] autorejoinPublicChat:self.chatRoom.chatId publicHandle:self.publicHandle delegate:delegate];
+        } else {
+            [[MEGASdkManager sharedMEGAChatSdk] autojoinPublicChat:self.chatRoom.chatId delegate:delegate];
+        }
     }
 }
 
@@ -1943,7 +1956,7 @@ const NSUInteger kMaxMessagesToLoad = 256;
     
     if (action == @selector(delete:)) {
         MEGAChatMessage *deleteMessage = [[MEGASdkManager sharedMEGAChatSdk] deleteMessageForChat:self.chatRoom.chatId messageId:message.messageId];
-        deleteMessage.chatRoom = self.chatRoom;
+        deleteMessage.chatId = self.chatRoom.chatId;
         [self.messages replaceObjectAtIndex:indexPath.item withObject:deleteMessage];
     }
     
@@ -2240,7 +2253,7 @@ const NSUInteger kMaxMessagesToLoad = 256;
 
 - (void)onMessageReceived:(MEGAChatSdk *)api message:(MEGAChatMessage *)message {
     MEGALogInfo(@"onMessageReceived %@", message);
-    message.chatRoom = self.chatRoom;
+    message.chatId= self.chatRoom.chatId;
     
     switch (message.type) {
         case MEGAChatMessageTypeInvalid:
@@ -2306,7 +2319,7 @@ const NSUInteger kMaxMessagesToLoad = 256;
     MEGALogInfo(@"onMessageLoaded %@", message);
     
     if (message) {
-        message.chatRoom = self.chatRoom;
+        message.chatId = self.chatRoom.chatId;
         
         switch (message.type) {
             case MEGAChatMessageTypeInvalid:
@@ -2405,7 +2418,7 @@ const NSUInteger kMaxMessagesToLoad = 256;
 - (void)onMessageUpdate:(MEGAChatSdk *)api message:(MEGAChatMessage *)message {
     MEGALogInfo(@"onMessageUpdate %@", message);
     
-    message.chatRoom = self.chatRoom;
+    message.chatId = self.chatRoom.chatId;
     if ([message hasChangedForType:MEGAChatMessageChangeTypeStatus]) {
         switch (message.status) {
             case MEGAChatMessageStatusUnknown:
@@ -2435,7 +2448,7 @@ const NSUInteger kMaxMessagesToLoad = 256;
                     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:0];
                     [self.collectionView reloadItemsAtIndexPaths:@[indexPath]];
                 } else {
-                    message.chatRoom = self.chatRoom;
+                    message.chatId = self.chatRoom.chatId;
                     [self.messages addObject:message];
                     [self finishReceivingMessage];
                     
@@ -2525,12 +2538,11 @@ const NSUInteger kMaxMessagesToLoad = 256;
             [self customNavigationBarLabel];
             [self updateToolbarPlaceHolder];
             
-            [self.collectionView performBatchUpdates:^{
+            dispatch_async(dispatch_get_main_queue(), ^{
                 [self.collectionView.collectionViewLayout invalidateLayoutWithContext:[JSQMessagesCollectionViewFlowLayoutInvalidationContext context]];
-                [self.collectionView reloadItemsAtIndexPaths:[self.collectionView indexPathsForVisibleItems]];
-            } completion:^(BOOL finished) {
+                [self.collectionView reloadData];
                 [self scrollToBottomAnimated:YES];
-            }];
+            });
             
             break;
         }

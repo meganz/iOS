@@ -1240,6 +1240,7 @@
 		77D9A56D202355F800B48470 /* MEGAPhotoBrowserViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = MEGAPhotoBrowserViewController.storyboard; sourceTree = "<group>"; };
 		77D9A56F2023814800B48470 /* MEGAStartDownloadTransferDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MEGAStartDownloadTransferDelegate.h; sourceTree = "<group>"; };
 		77D9A5702023814800B48470 /* MEGAStartDownloadTransferDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MEGAStartDownloadTransferDelegate.m; sourceTree = "<group>"; };
+		77E0016D2189A1860010BBA9 /* AfterLoginAction.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AfterLoginAction.h; sourceTree = "<group>"; };
 		77F1DBDA2056A9DF005D5F0E /* MEGAContactLinkCreateRequestDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MEGAContactLinkCreateRequestDelegate.h; path = API/Requests/MEGAContactLinkCreateRequestDelegate.h; sourceTree = "<group>"; };
 		77F1DBDB2056A9DF005D5F0E /* MEGAContactLinkCreateRequestDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = MEGAContactLinkCreateRequestDelegate.m; path = API/Requests/MEGAContactLinkCreateRequestDelegate.m; sourceTree = "<group>"; };
 		77F1DBDD2056AA13005D5F0E /* MEGAContactLinkQueryRequestDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MEGAContactLinkQueryRequestDelegate.h; path = API/Requests/MEGAContactLinkQueryRequestDelegate.h; sourceTree = "<group>"; };
@@ -2756,6 +2757,7 @@
 				773DF39B20EE14C1004C3418 /* ShareAttachmentType.h */,
 				5B72A14B20D3A69C007FE4FD /* URLType.h */,
 				836A987C20F8C8DA00EC719B /* ChatRoomsType.h */,
+				77E0016D2189A1860010BBA9 /* AfterLoginAction.h */,
 			);
 			path = Headers;
 			sourceTree = "<group>";

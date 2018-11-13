@@ -316,10 +316,24 @@
             MessagesViewController *messagesVC = [[MessagesViewController alloc] init];
             messagesVC.chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:request.chatHandle];
             messagesVC.publicHandle = request.userHandle;
+            messagesVC.publicChatLink = self;
             MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:messagesVC];
             [UIApplication.mnz_visibleViewController presentViewController:navigationController animated:YES completion:nil];
         }
     }];
+    
+    if (![MEGASdkManager sharedMEGAChatSdk]) {
+        [MEGASdkManager createSharedMEGAChatSdk];
+    }
+    MEGAChatInit chatInit = [[MEGASdkManager sharedMEGAChatSdk] initState];
+    if (chatInit == MEGAChatInitNotDone) {
+        chatInit = [[MEGASdkManager sharedMEGAChatSdk] initAnonymous];
+        if (chatInit == MEGAChatInitError) {
+            MEGALogError(@"Init Karere anonymous failed");
+            [[MEGASdkManager sharedMEGAChatSdk] logout];
+            return;
+        }
+    }
     
     [[MEGASdkManager sharedMEGAChatSdk] openChatPreview:self delegate:delegate];
 }

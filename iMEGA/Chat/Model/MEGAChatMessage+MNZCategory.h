@@ -14,7 +14,7 @@ typedef NS_ENUM(NSInteger, MEGAChatMessageWarningDialog) {
 
 @interface MEGAChatMessage (MNZCategory) <JSQMessageData>
 
-@property (copy, nonatomic) MEGAChatRoom *chatRoom;
+@property (nonatomic) uint64_t chatId;
 @property (copy, nonatomic) NSAttributedString *attributedText;
 @property (nonatomic) MEGAChatMessageWarningDialog warningDialog;
 @property (copy, nonatomic) NSURL *MEGALink;

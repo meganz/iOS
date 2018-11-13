@@ -19,7 +19,7 @@
 #import "NSString+MNZCategory.h"
 #import "NSURL+MNZCategory.h"
 
-static const void *chatRoomTagKey = &chatRoomTagKey;
+static const void *chatIdTagKey = &chatIdTagKey;
 static const void *attributedTextTagKey = &attributedTextTagKey;
 static const void *warningDialogTagKey = &warningDialogTagKey;
 static const void *MEGALinkTagKey = &MEGALinkTagKey;
@@ -166,45 +166,8 @@ static const void *richNumberTagKey = &richNumberTagKey;
     if (self.isDeleted) {
         text = AMLocalizedString(@"thisMessageHasBeenDeleted", @"A log message in a chat to indicate that the message has been deleted by the user.");
     } else if (self.isManagementMessage) {
-        
-        NSString *fullNameDidAction = @"";
-        
-        if (myHandle == self.userHandle) {
-            fullNameDidAction = [[MEGASdkManager sharedMEGAChatSdk] myFullname];
-        } else {
-            fullNameDidAction = [self.chatRoom peerFullnameByHandle:self.userHandle];
-            if (fullNameDidAction.length == 0) {
-                MOUser *moUser = [[MEGAStore shareInstance] fetchUserWithUserHandle:self.userHandle];
-                if (moUser) {
-                    fullNameDidAction = moUser.fullName;
-                } else {
-                    fullNameDidAction = @"";
-                }
-            }
-        }
-        
-        NSString *fullNameReceiveAction = @"";
-        
-        uint64_t tempHandle;
-        if (self.type == MEGAChatMessageTypeAlterParticipants || self.type == MEGAChatMessageTypePrivilegeChange) {
-            tempHandle = self.userHandleOfAction;
-        } else {
-            tempHandle = self.userHandle;
-        }
-        
-        if (tempHandle == myHandle) {
-            fullNameReceiveAction = [[MEGASdkManager sharedMEGAChatSdk] myFullname];
-        } else {
-            fullNameReceiveAction = [self.chatRoom peerFullnameByHandle:tempHandle];
-            if (fullNameReceiveAction.length == 0) {
-                MOUser *moUser = [[MEGAStore shareInstance] fetchUserWithUserHandle:tempHandle];
-                if (moUser) {
-                    fullNameReceiveAction = moUser.fullName;
-                } else {
-                    fullNameReceiveAction = @"";
-                }
-            }
-        }
+        NSString *fullNameDidAction = [self fullNameDidAction];
+        NSString *fullNameReceiveAction = [self fullNameReceiveAction];
         
         switch (self.type) {
             case MEGAChatMessageTypeAlterParticipants:
@@ -424,6 +387,48 @@ static const void *richNumberTagKey = &richNumberTagKey;
     return self.hash;
 }
 
+- (NSString *)fullNameDidAction {
+    NSString *fullNameDidAction;
+    
+    if ([MEGASdkManager sharedMEGAChatSdk].myUserHandle == self.userHandle) {
+        fullNameDidAction = [MEGASdkManager sharedMEGAChatSdk].myFullname;
+    } else {
+        fullNameDidAction = [self fullNameByHandle:self.userHandle];
+    }
+    
+    return fullNameDidAction;
+}
+
+- (NSString *)fullNameReceiveAction {
+    NSString *fullNameReceiveAction;
+    uint64_t tempHandle;
+    
+    if (self.type == MEGAChatMessageTypeAlterParticipants || self.type == MEGAChatMessageTypePrivilegeChange) {
+        tempHandle = self.userHandleOfAction;
+    } else {
+        tempHandle = self.userHandle;
+    }
+    
+    if ([MEGASdkManager sharedMEGAChatSdk].myUserHandle == tempHandle) {
+        fullNameReceiveAction = [MEGASdkManager sharedMEGAChatSdk].myFullname;
+    } else {
+        fullNameReceiveAction = [self fullNameByHandle:tempHandle];
+    }
+    
+    return fullNameReceiveAction;
+}
+
+- (NSString *)fullNameByHandle:(uint64_t)handle {
+    NSString *fullName = @"";
+    
+    MOUser *moUser = [[MEGAStore shareInstance] fetchUserWithUserHandle:handle];
+    if (moUser) {
+        fullName = moUser.fullName;
+    }
+    
+    return fullName;
+}
+
 #pragma mark - NSObject
 
 - (NSUInteger)hash {
@@ -438,12 +443,12 @@ static const void *richNumberTagKey = &richNumberTagKey;
 
 #pragma mark - Properties
 
-- (MEGAChatRoom *)chatRoom {
-    return objc_getAssociatedObject(self, chatRoomTagKey);
+- (uint64_t)chatId {
+    return ((NSNumber *)objc_getAssociatedObject(self, chatIdTagKey)).unsignedLongLongValue;
 }
 
-- (void)setChatRoom:(MEGAChatRoom *)chatRoom {
-    objc_setAssociatedObject(self, &chatRoomTagKey, chatRoom, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+- (void)setChatId:(uint64_t)chatId {
+    objc_setAssociatedObject(self, &chatIdTagKey, @(chatId), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 - (NSAttributedString *)attributedText {
@@ -459,7 +464,7 @@ static const void *richNumberTagKey = &richNumberTagKey;
 }
 
 - (void)setWarningDialog:(MEGAChatMessageWarningDialog)warningDialog {
-    objc_setAssociatedObject(self, &warningDialogTagKey, [NSNumber numberWithInteger:warningDialog], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    objc_setAssociatedObject(self, &warningDialogTagKey, @(warningDialog), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 - (NSURL *)MEGALink {

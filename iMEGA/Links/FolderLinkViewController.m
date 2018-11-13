@@ -361,7 +361,7 @@
 
 - (IBAction)cancelAction:(UIBarButtonItem *)sender {
     [Helper setLinkNode:nil];
-    [Helper setSelectedOptionOnLink:0];
+    [Helper setSelectedOptionOnLink:AfterLoginActionNone];
     
     [[MEGASdkManager sharedMEGASdkFolder] logout];
     
@@ -513,7 +513,7 @@
         } else {
             [[Helper nodesFromLinkMutableArray] addObject:_parentNode];
         }
-        [Helper setSelectedOptionOnLink:4]; //Download folder or nodes from link
+        [Helper setSelectedOptionOnLink:AfterLoginActionDownloadFolderLink];
         
         LoginViewController *loginVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"LoginViewControllerID"];
         [self.navigationController pushViewController:loginVC animated:YES];
@@ -548,7 +548,7 @@
             }
             [[Helper nodesFromLinkMutableArray] addObject:self.parentNode];
         }
-        [Helper setSelectedOptionOnLink:3]; //Import folder or nodes from link
+        [Helper setSelectedOptionOnLink:AfterLoginActionImportFolderLink];
         
         LoginViewController *loginVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"LoginViewControllerID"];
         [self.navigationController pushViewController:loginVC animated:YES];

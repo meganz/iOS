@@ -1,8 +1,9 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-#import "MEGAIndexer.h"
+#import "AfterLoginAction.h"
 #import "MEGAChatMessage.h"
+#import "MEGAIndexer.h"
 #import "MEGASdk.h"
 
 #define kIsEraseAllLocalDataEnabled @"IsEraseAllLocalDataEnabled"
@@ -65,9 +66,11 @@ typedef NS_OPTIONS(NSUInteger, NodesAre) {
 + (MEGANode *)linkNode;
 + (void)setLinkNode:(MEGANode *)node;
 + (NSMutableArray *)nodesFromLinkMutableArray;
++ (NSURL *)chatLink;
++ (void)setChatLink:(NSURL *)chatLink;
 
-+ (NSInteger)selectedOptionOnLink;
-+ (void)setSelectedOptionOnLink:(NSInteger)option;
++ (AfterLoginAction)selectedOptionOnLink;
++ (void)setSelectedOptionOnLink:(AfterLoginAction)option;
 
 #pragma mark - Utils for transfers
 

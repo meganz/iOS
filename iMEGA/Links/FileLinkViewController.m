@@ -269,7 +269,7 @@
 - (IBAction)cancelTouchUpInside:(UIBarButtonItem *)sender {
     
     [Helper setLinkNode:nil];
-    [Helper setSelectedOptionOnLink:0];
+    [Helper setSelectedOptionOnLink:AfterLoginActionNone];
     
     [SVProgressHUD dismiss];
     

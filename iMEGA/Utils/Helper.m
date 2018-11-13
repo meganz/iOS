@@ -34,8 +34,9 @@
 #import "SendToChatActivity.h"
 
 static MEGANode *linkNode;
-static NSInteger linkNodeOption;
 static NSMutableArray *nodesFromLinkMutableArray;
+static NSURL *chatLink;
+static AfterLoginAction linkOption;
 
 static MEGAIndexer *indexer;
 
@@ -461,12 +462,20 @@ static MEGAIndexer *indexer;
     return nodesFromLinkMutableArray;
 }
 
-+ (NSInteger)selectedOptionOnLink {
-    return linkNodeOption;
++ (NSURL *)chatLink {
+    return chatLink;
 }
 
-+ (void)setSelectedOptionOnLink:(NSInteger)option {
-    linkNodeOption = option;
++ (void)setChatLink:(NSURL *)pChatLink {
+    chatLink = pChatLink;
+}
+
++ (AfterLoginAction)selectedOptionOnLink {
+    return linkOption;
+}
+
++ (void)setSelectedOptionOnLink:(AfterLoginAction)option {
+    linkOption = option;
 }
 
 #pragma mark - Utils for transfers

@@ -64,10 +64,11 @@
 
 #import "MEGAChatCreateChatGroupRequestDelegate.h"
 #import "MEGAChatNotificationDelegate.h"
-#import "MEGALocalNotificationManager.h"
+#import "MEGAChatGenericRequestDelegate.h"
 #import "MEGACreateAccountRequestDelegate.h"
 #import "MEGAGetAttrUserRequestDelegate.h"
 #import "MEGAInviteContactRequestDelegate.h"
+#import "MEGALocalNotificationManager.h"
 #import "MEGALoginRequestDelegate.h"
 #import "MEGAPasswordLinkRequestDelegate.h"
 #import "MEGAShowPasswordReminderRequestDelegate.h"
@@ -729,9 +730,7 @@
             }
         }
      
-        if ([Helper selectedOptionOnLink] != 0) {
-            [self processSelectedOptionOnLink];
-        }
+        [self processSelectedOptionOnLink];
     }];
 }
 
@@ -744,7 +743,10 @@
 
 - (void)processSelectedOptionOnLink {
     switch ([Helper selectedOptionOnLink]) {
-        case 1: { //Import file from link
+        case AfterLoginActionNone:
+            break;
+            
+        case AfterLoginActionImportFileLink: {
             MEGANode *node = [Helper linkNode];
             MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"BrowserNavigationControllerID"];
             [UIApplication.mnz_presentingViewController presentViewController:navigationController animated:YES completion:nil];
@@ -755,7 +757,7 @@
             break;
         }
             
-        case 2: { //Download file from link
+        case AfterLoginActionDownloadFileLink: {
             MEGANode *node = [Helper linkNode];
             if (![Helper isFreeSpaceEnoughToDownloadNode:node isFolderLink:NO]) {
                 return;
@@ -766,7 +768,7 @@
             break;
         }
             
-        case 3: { //Import folder or nodes from link
+        case AfterLoginActionImportFolderLink: {
             MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"BrowserNavigationControllerID"];
             BrowserViewController *browserVC = navigationController.viewControllers.firstObject;
             [browserVC setBrowserAction:BrowserActionImportFromFolderLink];
@@ -775,7 +777,7 @@
             break;
         }
             
-        case 4: { //Download folder or nodes from link
+        case AfterLoginActionDownloadFolderLink: {
             for (MEGANode *node in [Helper nodesFromLinkMutableArray]) {
                 if (![Helper isFreeSpaceEnoughToDownloadNode:node isFolderLink:YES]) {
                     return;
@@ -789,13 +791,28 @@
             break;
         }
             
-        default:
+        case AfterLoginActionJoinChatLink: {
+            MEGAChatGenericRequestDelegate *openChatPreviewDelegate = [[MEGAChatGenericRequestDelegate alloc] initWithCompletion:^(MEGAChatRequest * _Nonnull request, MEGAChatError * _Nonnull error) {
+                if (!error.type) {
+                    MEGAChatGenericRequestDelegate *autojoinPublicChatDelegate = [[MEGAChatGenericRequestDelegate alloc] initWithCompletion:^(MEGAChatRequest * _Nonnull request, MEGAChatError * _Nonnull error) {
+                        if (!error.type) {
+                            self.mainTBC.selectedIndex = CHAT;
+                            [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"done", nil)];
+                        }
+                    }];
+                    [[MEGASdkManager sharedMEGAChatSdk] autojoinPublicChat:request.chatHandle delegate:autojoinPublicChatDelegate];
+                }
+            }];
+            [[MEGASdkManager sharedMEGAChatSdk] openChatPreview:[Helper chatLink] delegate:openChatPreviewDelegate];
+
             break;
+        }
     }
     
     [Helper setLinkNode:nil];
+    [Helper setChatLink:nil];
     [[Helper nodesFromLinkMutableArray] removeAllObjects];
-    [Helper setSelectedOptionOnLink:0];
+    [Helper setSelectedOptionOnLink:AfterLoginActionNone];
 }
 
 - (void)manageLink:(NSURL *)url {
@@ -2411,11 +2428,11 @@ void uncaughtExceptionHandler(NSException *exception) {
                     }
                 } else {
                     if (request.paramType == MEGAUserAttributeFirstname) {
-                        [[MEGAStore shareInstance] insertUserWithUserHandle:~(uint64_t)0 firstname:request.text lastname:nil email:request.email];
+                        [[MEGAStore shareInstance] insertUserWithUserHandle:[MEGASdk handleForBase64UserHandle:request.email] firstname:request.text lastname:nil email:request.email];
                     }
                     
                     if (request.paramType == MEGAUserAttributeLastname) {
-                        [[MEGAStore shareInstance] insertUserWithUserHandle:~(uint64_t)0 firstname:nil lastname:request.text email:request.email];
+                        [[MEGAStore shareInstance] insertUserWithUserHandle:[MEGASdk handleForBase64UserHandle:request.email] firstname:nil lastname:request.text email:request.email];
                     }
                 }
             }
