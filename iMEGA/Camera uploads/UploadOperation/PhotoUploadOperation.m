@@ -8,6 +8,7 @@
 #import "CameraUploadRecordManager.h"
 #import "CameraUploadManager.h"
 #import "CameraUploadRequestDelegate.h"
+#import "CameraUploadFileNameRecordManager.h"
 
 @implementation PhotoUploadOperation
 
@@ -77,9 +78,9 @@
     }
     
     self.uploadInfo.directoryURL = [self URLForAssetFolder];
-    self.uploadInfo.fileName = [[NSString mnz_fileNameWithDate:self.uploadInfo.asset.creationDate] stringByAppendingPathExtension:@"jpg"];
+    NSString *proposedFileName = [[NSString mnz_fileNameWithDate:self.uploadInfo.asset.creationDate] stringByAppendingPathExtension:@"jpg"];
+    self.uploadInfo.fileName = [CameraUploadFileNameRecordManager.shared localUniqueFileNameForAssetLocalIdentifier:self.uploadInfo.asset.localIdentifier proposedFileName:proposedFileName];
     
-    // TODO: delete local file first? how this relates to the abort recovery
     if ([JPEGData writeToURL:self.uploadInfo.fileURL atomically:YES]) {
         self.uploadInfo.fileSize = [JPEGData length];
         [self createThumbnailAndPreviewFiles];
