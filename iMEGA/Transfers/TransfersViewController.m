@@ -567,7 +567,12 @@
                 [self.tableView endUpdates];
             }
         } else {
-            [self reloadView];
+            [self.tableView beginUpdates];
+            NSInteger newTransferIndex = [self numberOfActiveTransfers];
+            [self.transfers insertObject:transfer atIndex:newTransferIndex];
+            NSIndexPath *newIndexPath = [NSIndexPath indexPathForRow:newTransferIndex inSection:0];
+            [self.tableView insertRowsAtIndexPaths:@[newIndexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+            [self.tableView endUpdates];
         }
     } else if (transfer.type == MEGATransferTypeDownload) {
         NSIndexPath *indexPath = [self indexPathForTransfer:transfer];
@@ -580,6 +585,7 @@
     if (indexPath) {
         TransferTableViewCell *cell = (TransferTableViewCell *)[self.tableView cellForRowAtIndexPath:indexPath];
         if (transfer.state == MEGATransferStateActive) {
+            [cell reloadThumbnailImage];
             [cell updatePercentAndSpeedLabelsForTransfer:transfer];
         } else if (transfer.state == MEGATransferStateCompleting) {
             [cell configureCellWithTransferState:transfer.state];

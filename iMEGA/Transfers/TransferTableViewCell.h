@@ -18,6 +18,7 @@
 - (void)configureCellForQueuedTransfer:(MOUploadTransfer *)uploadTransfer delegate:(id<TransferTableViewCellDelegate>)delegate;
 
 - (void)configureCellWithTransferState:(MEGATransferState)transferState;
+- (void)reloadThumbnailImage;
 - (void)updatePercentAndSpeedLabelsForTransfer:(MEGATransfer *)transfer;
 
 @end

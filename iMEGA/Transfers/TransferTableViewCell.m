@@ -15,6 +15,7 @@
 @interface TransferTableViewCell ()
 
 @property (weak, nonatomic) IBOutlet UIImageView *iconImageView;
+@property (nonatomic, getter=isThumbnailSet) BOOL thumbnailSet;
 
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *arrowImageView;
@@ -57,15 +58,23 @@
             } else {
                 [self.iconImageView mnz_imageForNode:node];
             }
+            self.thumbnailSet = YES;
             break;
         }
             
         case MEGATransferTypeUpload: {
             if (transfer.fileName.mnz_isImagePathExtension || transfer.fileName.mnz_isVideoPathExtension) {
                 NSString *transferThumbnailAbsolutePath = [[[NSHomeDirectory() stringByAppendingPathComponent:transfer.path] stringByDeletingPathExtension] stringByAppendingString:@"_thumbnail"];
-                self.iconImageView.image = [UIImage imageWithContentsOfFile:transferThumbnailAbsolutePath];
+                if ([[NSFileManager defaultManager] fileExistsAtPath:transferThumbnailAbsolutePath]) {
+                    self.iconImageView.image = [UIImage imageWithContentsOfFile:transferThumbnailAbsolutePath];
+                    self.thumbnailSet = YES;
+                } else {
+                    [self.iconImageView mnz_setImageForExtension:transfer.fileName.pathExtension];
+                    self.thumbnailSet = NO;
+                }
             } else {
                 [self.iconImageView mnz_setImageForExtension:transfer.fileName.pathExtension];
+                self.thumbnailSet = YES;
             }
             break;
         }
@@ -116,6 +125,13 @@
     }];
     
     [self queuedStateLayout];
+}
+
+- (void)reloadThumbnailImage {
+    if (!self.isThumbnailSet) {
+        NSString *transferThumbnailAbsolutePath = [[[NSHomeDirectory() stringByAppendingPathComponent:self.transfer.path] stringByDeletingPathExtension] stringByAppendingString:@"_thumbnail"];
+        self.iconImageView.image = [UIImage imageWithContentsOfFile:transferThumbnailAbsolutePath];
+    }
 }
 
 - (void)updatePercentAndSpeedLabelsForTransfer:(MEGATransfer *)transfer {
