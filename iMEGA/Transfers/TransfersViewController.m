@@ -53,17 +53,9 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(internetConnectionChanged) name:kReachabilityChangedNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleCoreDataChangeNotification:) name:NSManagedObjectContextObjectsDidChangeNotification object:nil];
-    
     self.navigationItem.title = AMLocalizedString(@"transfers", @"Transfers");
     
     [self setNavigationBarButtonItemsEnabled:[MEGAReachabilityManager isReachable]];
-    
-    [[MEGASdkManager sharedMEGASdk] addMEGATransferDelegate:self];
-    [[MEGASdkManager sharedMEGASdkFolder] addMEGATransferDelegate:self];
-    [[MEGAReachabilityManager sharedManager] retryPendingConnections];
-    [[MEGASdkManager sharedMEGASdkFolder] retryPendingConnections];
     
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"TransfersPaused"]) {
         self.transfersPaused = YES;
@@ -76,6 +68,14 @@
     if (!self.areTransfersPaused) {
         [self reloadView];
     }
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(internetConnectionChanged) name:kReachabilityChangedNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleCoreDataChangeNotification:) name:NSManagedObjectContextObjectsDidChangeNotification object:nil];
+
+    [[MEGASdkManager sharedMEGASdk] addMEGATransferDelegate:self];
+    [[MEGASdkManager sharedMEGASdkFolder] addMEGATransferDelegate:self];
+    [[MEGAReachabilityManager sharedManager] retryPendingConnections];
+    [[MEGASdkManager sharedMEGASdkFolder] retryPendingConnections];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -331,8 +331,8 @@
     NSIndexPath *indexPath = [self indexPathForUploadTransferQueuedWithLocalIdentifier:localIdentifier];
     if (indexPath) {
         [self.tableView beginUpdates];
-        [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
         [self.uploadTransfersQueued removeObjectAtIndex:indexPath.row];
+        [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
         [self.tableView endUpdates];
     }
 }
@@ -341,8 +341,8 @@
     NSIndexPath *indexPath = [self indexPathForTransfer:transfer];
     if (indexPath) {
         [self.tableView beginUpdates];
-        [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
         [self.transfers removeObjectAtIndex:indexPath.row];
+        [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
         [self.tableView endUpdates];
     }
 }
@@ -561,9 +561,9 @@
                 [cell reconfigureCellWithTransfer:transfer];
                 
                 NSIndexPath *newIndexPath = [NSIndexPath indexPathForRow:newTransferIndex inSection:0];
-                [self.tableView moveRowAtIndexPath:oldIndexPath toIndexPath:newIndexPath];
                 [self.uploadTransfersQueued removeObjectAtIndex:oldIndexPath.row];
                 [[MEGAStore shareInstance] deleteUploadTransferWithLocalIdentifier:localIdentifier];
+                [self.tableView moveRowAtIndexPath:oldIndexPath toIndexPath:newIndexPath];
                 [self.tableView endUpdates];
             }
         } else {
@@ -623,9 +623,9 @@
         [SVProgressHUD showImage:[UIImage imageNamed:@"hudMinus"] status:AMLocalizedString(@"transferCancelled", nil)];
 
         [self.tableView beginUpdates];
-        [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
         [self.uploadTransfersQueued removeObjectAtIndex:indexPath.row];
         [[MEGAStore shareInstance] deleteUploadTransferWithLocalIdentifier:localIdentifier];
+        [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
         [self.tableView endUpdates];
     }
 }
