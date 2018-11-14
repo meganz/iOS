@@ -3,12 +3,11 @@
 #import "CameraUploadRequestDelegate.h"
 #import "ThumbnailUploadOperation.h"
 #import "PreviewUploadOperation.h"
+#import "NSString+MNZCategory.h"
 
 @implementation CameraUploadCoordinator
 
 - (void)completeUploadWithInfo:(AssetUploadInfo *)info uploadToken:(NSData *)token success:(void (^)(MEGANode *node))success failure:(void (^)(MEGAError * error))failure {
-    // TODO: figure out the new name to avoid same names
-    
     CameraUploadRequestDelegate *delegate = [[CameraUploadRequestDelegate alloc] initWithCompletion:^(MEGARequest * _Nonnull request, MEGAError * _Nonnull error) {
         if (error.type) {
             failure(error);
@@ -29,9 +28,10 @@
         }
     }];
     
+    NSString *serverUniqueFileName = [info.fileName mnz_sequentialFileNameInParentNode:info.parentNode];
     
     if(![MEGASdkManager.sharedMEGASdk completeBackgroundMediaUpload:info.mediaUpload
-                                                           fileName:info.fileName
+                                                           fileName:serverUniqueFileName
                                                          parentNode:info.parentNode
                                                         fingerprint:info.fingerprint
                                                 originalFingerprint:info.originalFingerprint

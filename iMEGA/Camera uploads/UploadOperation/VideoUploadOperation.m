@@ -8,6 +8,7 @@
 #import "CameraUploadRecordManager.h"
 #import "CameraUploadManager.h"
 #import "CameraUploadRequestDelegate.h"
+#import "CameraUploadFileNameRecordManager.h"
 
 @implementation VideoUploadOperation
 
@@ -58,14 +59,11 @@
     // TODO: the format should be configurate, between HEVC and H.264
     session.outputFileType = AVFileTypeMPEG4;
     [AVAssetExportSession determineCompatibilityOfExportPreset:session.presetName withAsset:session.asset outputFileType:session.outputFileType completionHandler:^(BOOL compatible) {
-        self.uploadInfo.directoryURL = [self URLForAssetFolder];
-        self.uploadInfo.fileName = [[NSString mnz_fileNameWithDate:self.uploadInfo.asset.creationDate] stringByAppendingPathExtension:@"mp4"];
-        
         if (compatible) {
             if ([session.asset isMemberOfClass:[AVURLAsset class]]) {
                 AVURLAsset *urlAsset = (AVURLAsset *)session.asset;
                 
-                MEGALogDebug("[Camera Upload] %@ phasset creation time %@, phasset modification time %@, file creation time %@, file modification time %@, url content mtime: %@", self, self.uploadInfo.asset.creationDate, self.uploadInfo.asset.modificationDate, [NSFileManager.defaultManager attributesOfItemAtPath:urlAsset.URL.path error:nil].fileCreationDate, [NSFileManager.defaultManager attributesOfItemAtPath:urlAsset.URL.path error:nil].fileModificationDate, [urlAsset.URL resourceValuesForKeys:@[NSURLContentModificationDateKey] error:nil][NSURLContentModificationDateKey]);
+                MEGALogDebug("[Camera Upload] %@ phasset creation time %@, phasset modification time %@, file creation time %@, file modification time %@", self, self.uploadInfo.asset.creationDate, self.uploadInfo.asset.modificationDate, [NSFileManager.defaultManager attributesOfItemAtPath:urlAsset.URL.path error:nil].fileCreationDate, [NSFileManager.defaultManager attributesOfItemAtPath:urlAsset.URL.path error:nil].fileModificationDate);
                 
                 self.uploadInfo.originalFingerprint = [MEGASdkManager.sharedMEGASdk fingerprintForFilePath:urlAsset.URL.path modificationTime:self.uploadInfo.asset.creationDate];
                 MEGANode *matchingNode = [self nodeForOriginalFingerprint:self.uploadInfo.originalFingerprint];
@@ -91,6 +89,10 @@
     MEGALogDebug(@"[Camera Upload] video estimate duration: %.2f, max duration: %.2f, estimate size: %.2f M", CMTimeGetSeconds(session.asset.duration), CMTimeGetSeconds(session.maxDuration), session.estimatedOutputFileLength / 1024.0f / 1024.0f)
     
     MEGALogDebug(@"[Camera Upload] %@ starts compressing video data with original dimensions: %@", self, NSStringFromCGSize([self dimensionsForAVAsset:session.asset]));
+    
+    self.uploadInfo.directoryURL = [self URLForAssetFolder];
+    NSString *proposedFileName = [[NSString mnz_fileNameWithDate:self.uploadInfo.asset.creationDate] stringByAppendingPathExtension:@"mp4"];
+    self.uploadInfo.fileName = [CameraUploadFileNameRecordManager.shared localUniqueFileNameForAssetLocalIdentifier:self.uploadInfo.asset.localIdentifier proposedFileName:proposedFileName];
     
     session.outputURL = self.uploadInfo.fileURL;
     session.canPerformMultiplePassesOverSourceMediaData = YES;
