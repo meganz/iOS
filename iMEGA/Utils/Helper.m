@@ -642,11 +642,15 @@ static MEGAIndexer *indexer;
         } else {
             [[MEGASdkManager sharedMEGASdk] copyNode:node newParent:parentNode];
         }
-        [[MEGAStore shareInstance] deleteUploadTransfer:uploadTransfer];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [[MEGAStore shareInstance] deleteUploadTransfer:uploadTransfer];
+        });
         [Helper startPendingUploadTransferIfNeeded];
     } error:^(NSError *error) {
         [SVProgressHUD showImage:[UIImage imageNamed:@"hudError"] status:[NSString stringWithFormat:@"%@ %@ \r %@", AMLocalizedString(@"Transfer failed:", nil), asset.localIdentifier, error.localizedDescription]];
-        [[MEGAStore shareInstance] deleteUploadTransfer:uploadTransfer];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [[MEGAStore shareInstance] deleteUploadTransfer:uploadTransfer];
+        });
         [Helper startPendingUploadTransferIfNeeded];
     }];
     [processAsset prepare];
