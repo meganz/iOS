@@ -426,6 +426,38 @@ static MEGAStore *_megaStore = nil;
     return array.firstObject;
 }
 
+#pragma mark - MOOfflineFolderLayout entity
+
+- (void)insertOfflineFolderLayoutWithPOath:(NSString *)path layout:(NSInteger)layout {
+    MOOfflineFolderLayout *offlineFolderLayout = [self fetchOfflineFolderLayoutWithPath:path];
+    
+    if (offlineFolderLayout) {
+        offlineFolderLayout.value = [NSNumber numberWithInteger:layout];
+        
+        MEGALogDebug(@"Save context - update MOOfflineFolderLayout for folder path %@", path);
+    } else {
+        MOOfflineFolderLayout *moOfflineFolderLayout = [NSEntityDescription insertNewObjectForEntityForName:@"MOOfflineFolderLayout" inManagedObjectContext:self.managedObjectContext];
+        moOfflineFolderLayout.localPath = path;
+        moOfflineFolderLayout.value = [NSNumber numberWithInteger:layout];
+        
+        MEGALogDebug(@"Save context - insert MOOfflineFolderLayout for folder  path %@", path);
+    }
+    
+    [self saveContext];
+}
+
+- (MOOfflineFolderLayout *)fetchOfflineFolderLayoutWithPath:(NSString *)path {
+    NSFetchRequest *request = [MOOfflineFolderLayout fetchRequest];
+    
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"localPath == %@", path];
+    request.predicate = predicate;
+    
+    NSError *error;
+    NSArray *array = [self.managedObjectContext executeFetchRequest:request error:&error];
+    
+    return array.firstObject;
+}
+
 #pragma mark - MOMessage entity
 
 - (void)insertMessage:(uint64_t)messageId chatId:(uint64_t)chatId {

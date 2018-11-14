@@ -312,16 +312,19 @@
 
 - (UIViewController *)previewingContext:(id<UIViewControllerPreviewing>)previewingContext viewControllerForLocation:(CGPoint)location {
     
-    CGPoint cellPoint;
+    if (self.cdTableView.tableView.isEditing || self.cdCollectionView.collectionView.allowsMultipleSelection) {
+        return nil;
+    }
+    
     NSIndexPath *indexPath;
     if (self.layoutView == CloudDriveLayoutViewTable) {
-        cellPoint = [self.view convertPoint:location toView:self.cdTableView.tableView];
+        CGPoint cellPoint = [self.view convertPoint:location toView:self.cdTableView.tableView];
         indexPath = [self.cdTableView.tableView indexPathForRowAtPoint:cellPoint];
         if (!indexPath || ![self.cdTableView.tableView numberOfRowsInSection:indexPath.section]) {
             return nil;
         }
     } else {
-        cellPoint = [self.view convertPoint:location toView:self.cdCollectionView.collectionView];
+        CGPoint cellPoint = [self.view convertPoint:location toView:self.cdCollectionView.collectionView];
         indexPath = [self.cdCollectionView.collectionView indexPathForItemAtPoint:cellPoint];
         if (!indexPath || ![self.cdCollectionView.collectionView numberOfItemsInSection:indexPath.section]) {
             return nil;
@@ -330,10 +333,6 @@
     
     MEGANode *node = self.searchController.isActive ? [self.searchNodesArray objectAtIndex:indexPath.row] : [self.nodes nodeAtIndex:indexPath.row];
     previewingContext.sourceRect = [self.cdTableView.tableView convertRect:[self.cdTableView.tableView cellForRowAtIndexPath:indexPath].frame toView:self.view];
-    
-    if (self.cdTableView.tableView.isEditing || self.cdCollectionView.collectionView.allowsMultipleSelection) {
-        return nil;
-    }
     
     switch (node.type) {
         case MEGANodeTypeFolder: {
@@ -1327,6 +1326,13 @@
     UIAlertController *moreMinimizedAlertController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
     [moreMinimizedAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
     
+    NSString *changeViewTitle = self.layoutView == CloudDriveLayoutViewTable ? AMLocalizedString(@"Thumbnail view", @"Text shown for swithing from list view to thumbnail view.") : AMLocalizedString(@"List view", @"Text shown for swithing from thumbnail view to list view.");
+    UIAlertAction *changeViewAlertAction = [UIAlertAction actionWithTitle:changeViewTitle style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        [self changeLayoutView];
+    }];
+    [changeViewAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
+    [moreMinimizedAlertController addAction:changeViewAlertAction];
+    
     UIAlertAction *sortByAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"sortTitle", @"Section title of the 'Sort by'") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         [self presentSortByViewController];
     }];
@@ -1610,13 +1616,13 @@
 }
 
 - (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar {
-    if (self.displayMode == CloudDriveLayoutViewCollection) {
+    if (self.layoutView == CloudDriveLayoutViewCollection) {
         [self.cdCollectionView setCollectionTopConstraintValue:0];
     }
 }
 
 - (void)searchBarTextDidEndEditing:(UISearchBar *)searchBar {
-    if (self.displayMode == CloudDriveLayoutViewCollection) {
+    if (self.layoutView == CloudDriveLayoutViewCollection) {
         [self.cdCollectionView setCollectionTopConstraintValue:50];
     }
 }
