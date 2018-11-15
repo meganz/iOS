@@ -16,6 +16,12 @@
 
 #import "TransferTableViewCell.h"
 
+typedef NS_ENUM(NSInteger, SegmentIndex) {
+    AllSegmentIndex = 0,
+    DownloadsSegmentIndex = 1,
+    UploadsSegmentIndex = 2,
+};
+
 @interface TransfersViewController () <UITableViewDelegate, UITableViewDataSource, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGARequestDelegate, MEGATransferDelegate, TransferTableViewCellDelegate>
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *pauseBarButtonItem;
@@ -141,12 +147,12 @@
     NSInteger numberOfSections = 0;
     switch (self.transfersSegmentedControl.selectedSegmentIndex) {
         case UISegmentedControlNoSegment:
-        case 0: //All
-        case 2: //Uploads
+        case AllSegmentIndex:
+        case UploadsSegmentIndex:
             numberOfSections = 2;
             break;
             
-        case 1: //Downloads
+        case DownloadsSegmentIndex:
             numberOfSections = 1;
             break;
     }
@@ -166,15 +172,15 @@
         
         switch (self.transfersSegmentedControl.selectedSegmentIndex) {
             case UISegmentedControlNoSegment:
-            case 0:
+            case AllSegmentIndex:
                 [self getAllTransfers];
                 break;
                 
-            case 1:
+            case DownloadsSegmentIndex:
                 [self getDownloadTransfers];
                 break;
                 
-            case 2:
+            case UploadsSegmentIndex:
                 [self getUploadTransfers];
                 break;
         }
@@ -408,20 +414,17 @@
     NSString *transfersTypeString;
     switch (self.transfersSegmentedControl.selectedSegmentIndex) {
         case UISegmentedControlNoSegment:
-        case 0: { //All
+        case AllSegmentIndex:
             transfersTypeString = AMLocalizedString(@"allInUppercaseTransfers", @"ALL transfers");
             break;
-        }
             
-        case 1: { //Downloads
+        case DownloadsSegmentIndex:
             transfersTypeString = AMLocalizedString(@"downloadInUppercaseTransfers", @"DOWNLOAD transfers");
             break;
-        }
             
-        case 2: { //Uploads
+        case UploadsSegmentIndex:
             transfersTypeString = AMLocalizedString(@"uploadInUppercaseTransfers", @"UPLOAD transfers");
             break;
-        }
     }
     
     UIAlertController *cancelTransfersAlert = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"cancelTransfersTitle", @"Cancel transfers") message:[NSString stringWithFormat:AMLocalizedString(@"cancelTransfersText", @"Do you want to cancel %@?"), transfersTypeString] preferredStyle:UIAlertControllerStyleAlert];
@@ -430,21 +433,19 @@
     [cancelTransfersAlert addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         switch (self.transfersSegmentedControl.selectedSegmentIndex) {
             case UISegmentedControlNoSegment:
-            case 0: { //All
+            case AllSegmentIndex: {
                 [self cancelTransfersForDirection:0];
                 [self cancelTransfersForDirection:1];
                 break;
             }
                 
-            case 1: { //Downloads
+            case DownloadsSegmentIndex:
                 [self cancelTransfersForDirection:0];
                 break;
-            }
                 
-            case 2: { //Uploads
+            case UploadsSegmentIndex:
                 [self cancelTransfersForDirection:1];
                 break;
-            }
         }
         
         [self reloadView];
@@ -463,15 +464,15 @@
         } else {
             switch (self.transfersSegmentedControl.selectedSegmentIndex) {
                 case UISegmentedControlNoSegment:
-                case 0: //All
+                case AllSegmentIndex:
                     text = AMLocalizedString(@"transfersEmptyState_titleAll", @"Title shown when the there's no transfers and they aren't paused");
                     break;
                     
-                case 1: //Downloads
+                case DownloadsSegmentIndex:
                     text = AMLocalizedString(@"transfersEmptyState_titleDownload", @"No Download Transfers");
                     break;
                     
-                case 2: //Uploads
+                case UploadsSegmentIndex:
                     text = AMLocalizedString(@"transfersEmptyState_titleUpload", @"No Uploads Transfers");
                     break;
             }
@@ -491,15 +492,15 @@
         } else {
             switch (self.transfersSegmentedControl.selectedSegmentIndex) {
                 case UISegmentedControlNoSegment:
-                case 0: //All
+                case AllSegmentIndex:
                     image = [UIImage imageNamed:@"transfersEmptyState"];
                     break;
                     
-                case 1: //Downloads
+                case DownloadsSegmentIndex:
                     image = [UIImage imageNamed:@"downloadsEmptyState"];
                     break;
                     
-                case 2: //Uploads
+                case UploadsSegmentIndex:
                     image = [UIImage imageNamed:@"uploadsEmptyState"];
                     break;
             }
@@ -547,6 +548,20 @@
 #pragma mark - MEGATransferDelegate
 
 - (void)onTransferStart:(MEGASdk *)api transfer:(MEGATransfer *)transfer {
+    switch (self.transfersSegmentedControl.selectedSegmentIndex) {
+        case UISegmentedControlNoSegment:
+        case AllSegmentIndex:
+            break;
+            
+        case DownloadsSegmentIndex:
+            if (transfer.type == MEGATransferTypeUpload) return;
+            break;
+            
+        case UploadsSegmentIndex:
+            if (transfer.type == MEGATransferTypeDownload) return;
+            break;
+    }
+    
     if (transfer.type == MEGATransferTypeUpload) {
         if ([transfer.appData containsString:@">localIdentifier"]) {
             NSString *localIdentifier = [transfer.appData mnz_stringBetweenString:@">localIdentifier=" andString:@""];
