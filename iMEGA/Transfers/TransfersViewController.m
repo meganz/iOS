@@ -325,6 +325,20 @@ typedef NS_ENUM(NSInteger, SegmentIndex) {
 }
 
 - (void)handleCoreDataChangeNotification:(NSNotification *)notification {
+    for (NSManagedObject *managedObject in [notification.userInfo objectForKey:NSInvalidatedAllObjectsKey]) {
+        if ([managedObject isKindOfClass:MOUploadTransfer.class]) {
+            [self reloadView];
+            return;
+        }
+    }
+    
+    for (NSManagedObject *managedObject in [notification.userInfo objectForKey:NSInvalidatedObjectsKey]) {
+        if ([managedObject isKindOfClass:MOUploadTransfer.class]) {
+            MOUploadTransfer *uploadTransfer = (MOUploadTransfer *)managedObject;
+            [self deleteUploadQueuedTransferWithLocalIdentifier:uploadTransfer.localIdentifier];
+        }
+    }
+    
     for (NSManagedObject *managedObject in [notification.userInfo objectForKey:NSDeletedObjectsKey]) {
         if ([managedObject isKindOfClass:MOUploadTransfer.class]) {
             MOUploadTransfer *uploadTransfer = (MOUploadTransfer *)managedObject;
