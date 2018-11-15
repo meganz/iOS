@@ -615,14 +615,15 @@
         }
     }
     
-    if ([node hasThumbnail]) {
-        cell.nodeHandle = [node handle];
+    if (node.hasThumbnail) {
         [Helper thumbnailForNode:node api:[MEGASdkManager sharedMEGASdk] cell:cell];
     } else {
         [cell.thumbnailImageView mnz_imageForNode:node];
     }
     
-    cell.nameLabel.text = [node name];
+    cell.nameLabel.text = node.name;
+    
+    cell.node = node;
     
     if (self.browserSegmentedControl.selectedSegmentIndex == 0) {
         if (node.isFile) {
@@ -888,8 +889,8 @@
         }
             
         case MEGARequestTypeGetAttrFile: {
-            for (NodeTableViewCell *nodeTableViewCell in [self.tableView visibleCells]) {
-                if ([request nodeHandle] == [nodeTableViewCell nodeHandle]) {
+            for (NodeTableViewCell *nodeTableViewCell in self.tableView.visibleCells) {
+                if (request.nodeHandle == nodeTableViewCell.node.handle) {
                     MEGANode *node = [api nodeForHandle:request.nodeHandle];
                     [Helper setThumbnailForNode:node api:api cell:nodeTableViewCell reindexNode:YES];
                 }

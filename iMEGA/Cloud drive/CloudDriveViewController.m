@@ -156,9 +156,6 @@
     }
     
     [self requestReview];
-//    [UIView performWithoutAnimation:^{
-//        [self.tableView reloadRowsAtIndexPaths:self.tableView.indexPathsForVisibleRows withRowAnimation:UITableViewRowAnimationNone];
-//    }];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -247,7 +244,7 @@
             }
         }
         
-        if (nodesWithThumbnail >= nodesWithoutThumbnail) {
+        if (nodesWithThumbnail > nodesWithoutThumbnail) {
             [self initCollection];
         } else {
             [self initTable];
@@ -1603,7 +1600,7 @@
 }
 
 - (IBAction)restoreTouchUpInside:(UIBarButtonItem *)sender {
-    for (MEGANode *node in self.selectedNodesArray) {        
+    for (MEGANode *node in self.selectedNodesArray) {
         [node mnz_restore];
     }
     [self setEditMode:NO];
@@ -1666,13 +1663,13 @@
             NSString *appData = [[NSString new] mnz_appDataToSaveCoordinates:localFilePath.mnz_coordinatesOfPhotoOrVideo];
             [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:localFilePath.mnz_relativeLocalPath parent:self.parentNode appData:appData isSourceTemporary:YES];
         } else {
-            if ([node parentHandle] == [self.parentNode handle]) {
+            if (node.parentHandle == self.parentNode.handle) {
                 [NSFileManager.defaultManager mnz_removeItemAtPath:localFilePath];
                 
                 NSString *alertMessage = AMLocalizedString(@"fileExistAlertController_Message", nil);
                 
                 NSString *localNameString = [NSString stringWithFormat:@"%@", [url lastPathComponent]];
-                NSString *megaNameString = [NSString stringWithFormat:@"%@", [node name]];
+                NSString *megaNameString = [NSString stringWithFormat:@"%@", node.name];
                 alertMessage = [alertMessage stringByReplacingOccurrencesOfString:@"[A]" withString:localNameString];
                 alertMessage = [alertMessage stringByReplacingOccurrencesOfString:@"[B]" withString:megaNameString];
                 
@@ -1721,7 +1718,7 @@
     switch ([request type]) {
         case MEGARequestTypeGetAttrFile: {
             for (NodeTableViewCell *nodeTableViewCell in [self.cdTableView.tableView visibleCells]) {
-                if ([request nodeHandle] == [nodeTableViewCell nodeHandle]) {
+                if (request.nodeHandle == nodeTableViewCell.node.handle) {
                     MEGANode *node = [api nodeForHandle:request.nodeHandle];
                     [Helper setThumbnailForNode:node api:api cell:nodeTableViewCell reindexNode:YES];
                 }
@@ -1751,7 +1748,7 @@
         return;
     }
     
-    if (transfer.type == MEGATransferTypeDownload) {
+    if (transfer.type == MEGATransferTypeDownload && self.layoutView == CloudDriveLayoutViewTable) {
         NSString *base64Handle = [MEGASdk base64HandleForHandle:transfer.nodeHandle];
         [self.cdTableView reloadRowAtIndexPath:[self.nodesIndexPathMutableDictionary objectForKey:base64Handle]];
     }
@@ -1764,7 +1761,7 @@
     
     NSString *base64Handle = [MEGASdk base64HandleForHandle:transfer.nodeHandle];
     
-    if (transfer.type == MEGATransferTypeDownload && [[Helper downloadingNodes] objectForKey:base64Handle]) {
+    if (transfer.type == MEGATransferTypeDownload && [[Helper downloadingNodes] objectForKey:base64Handle] && self.layoutView == CloudDriveLayoutViewTable) {
         float percentage = ([[transfer transferredBytes] floatValue] / [[transfer totalBytes] floatValue] * 100);
         NSString *percentageCompleted = [NSString stringWithFormat:@"%.f%%", percentage];
         NSString *speed = [NSString stringWithFormat:@"%@/s", [NSByteCountFormatter stringFromByteCount:[[transfer speed] longLongValue]  countStyle:NSByteCountFormatterCountStyleMemory]];
@@ -1793,12 +1790,14 @@
         } else if ([error type] == MEGAErrorTypeApiEIncomplete) {
             [SVProgressHUD showImage:[UIImage imageNamed:@"hudMinus"] status:AMLocalizedString(@"transferCancelled", nil)];
             NSString *base64Handle = [MEGASdk base64HandleForHandle:transfer.nodeHandle];
-            [self.cdTableView reloadRowAtIndexPath:[self.nodesIndexPathMutableDictionary objectForKey:base64Handle]];
+            if (self.layoutView == CloudDriveLayoutViewTable) {
+                [self.cdTableView reloadRowAtIndexPath:[self.nodesIndexPathMutableDictionary objectForKey:base64Handle]];
+            }
         }
         return;
     }
     
-    if ([transfer type] == MEGATransferTypeDownload) {
+    if ([transfer type] == MEGATransferTypeDownload && self.layoutView == CloudDriveLayoutViewTable) {
         NSString *base64Handle = [MEGASdk base64HandleForHandle:transfer.nodeHandle];
         [self.cdTableView reloadRowAtIndexPath:[self.nodesIndexPathMutableDictionary objectForKey:base64Handle]];
     }

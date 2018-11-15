@@ -10,7 +10,6 @@
 
 - (void)configureCellForNode:(MEGANode *)node {
     self.node = node;
-    self.nodeHandle = node.handle;
     
     if (node.hasThumbnail) {
         NSString *thumbnailFilePath = [Helper pathForNode:node inSharedSandboxCacheDirectory:@"thumbnailsV3"];

@@ -42,13 +42,13 @@ static NSString *kPath = @"kPath";
     [self.offline setViewEditing:editing];
     
     if (editing) {
-        for (OfflineTableViewCell *cell in [self.tableView visibleCells]) {
+        for (OfflineTableViewCell *cell in self.tableView.visibleCells) {
             UIView *view = [[UIView alloc] init];
             view.backgroundColor = UIColor.clearColor;
             cell.selectedBackgroundView = view;
         }
     } else {
-        for (OfflineTableViewCell *cell in [self.tableView visibleCells]) {
+        for (OfflineTableViewCell *cell in self.tableView.visibleCells) {
             cell.selectedBackgroundView = nil;
         }
     }
