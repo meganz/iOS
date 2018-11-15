@@ -670,10 +670,11 @@ static MEGAIndexer *indexer;
         }
     }
     
-    NSArray<MOUploadTransfer *> *uploadTransfers = [[MEGAStore shareInstance] fetchUploadTransfers];
-    
-    if (allUploadTransfersPaused && uploadTransfers.count) {
-        [Helper startUploadTransfer:uploadTransfers.firstObject];
+    if (allUploadTransfersPaused) {
+        NSArray<MOUploadTransfer *> *queuedUploadTransfers = [[MEGAStore shareInstance] fetchUploadTransfers];
+        if (queuedUploadTransfers.count) {
+            [Helper startUploadTransfer:queuedUploadTransfers.firstObject];
+        }
     }
 }
 
