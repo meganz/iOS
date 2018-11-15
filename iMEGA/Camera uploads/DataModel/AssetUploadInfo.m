@@ -40,7 +40,7 @@
 
 - (void)encodeWithCoder:(nonnull NSCoder *)aCoder {
     [aCoder encodeObject:self.fileName forKey:@"fileName"];
-    [aCoder encodeInteger:self.fileSize forKey:@"fileSize"];
+    [aCoder encodeObject:@(self.fileSize) forKey:@"fileSize"];
     [aCoder encodeObject:self.fingerprint forKey:@"fingerprint"];
     [aCoder encodeObject:self.originalFingerprint forKey:@"originalFingerprint"];
     [aCoder encodeObject:self.directoryURL forKey:@"directoryURL"];
@@ -52,7 +52,7 @@
     self = [super init];
     if (self) {
         _fileName = [aDecoder decodeObjectForKey:@"fileName"];
-        _fileSize = [aDecoder decodeIntegerForKey:@"fileSize"];
+        _fileSize = [[aDecoder decodeObjectForKey:@"fileSize"] unsignedLongLongValue];
         _fingerprint = [aDecoder decodeObjectForKey:@"fingerprint"];
         _originalFingerprint = [aDecoder decodeObjectForKey:@"originalFingerprint"];
         _directoryURL = [aDecoder decodeObjectForKey:@"directoryURL"];

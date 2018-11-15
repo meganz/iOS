@@ -31,7 +31,7 @@
 }
 
 - (NSString *)description {
-    return [NSString stringWithFormat:@"Video operation %@ %@", self.uploadInfo.asset.localIdentifier, self.uploadInfo.asset.creationDate];
+    return [NSString stringWithFormat:@"Video operation %@ %@ %@", self.uploadInfo.asset.localIdentifier, self.uploadInfo.asset.creationDate, self.uploadInfo.fileName];
 }
 
 #pragma mark - data processing
@@ -153,7 +153,8 @@
     MEGALogDebug(@"[Camera Upload] %@ starts encryption with file size %.2f M", self, self.uploadInfo.fileSize / 1024.0f / 1024.0f);
     
     NSString *urlSuffix;
-    if ([self.uploadInfo.mediaUpload encryptFileAtPath:self.uploadInfo.fileURL.path startPosition:0 length:self.uploadInfo.fileSize outputFilePath:self.uploadInfo.encryptedURL.path urlSuffix:&urlSuffix]) {
+    unsigned fileSize = (unsigned)self.uploadInfo.fileSize;
+    if ([self.uploadInfo.mediaUpload encryptFileAtPath:self.uploadInfo.fileURL.path startPosition:0 length:&fileSize outputFilePath:self.uploadInfo.encryptedURL.path urlSuffix:&urlSuffix]) {
         MEGALogDebug(@"[Camera Upload] %@ got file encrypted with url suffix: %@", self, urlSuffix);
         
         self.uploadInfo.uploadURLStringSuffix = urlSuffix;
