@@ -161,7 +161,9 @@ static const void *richNumberTagKey = &richNumberTagKey;
     NSString *text;
     uint64_t myHandle = [[MEGASdkManager sharedMEGAChatSdk] myUserHandle];
     
-    CGFloat fontSize = 15.0f;
+    UIFont *textFontRegular = [UIFont preferredFontForTextStyle:UIFontTextStyleSubheadline];
+    UIFont *textFontMedium = [[UIFont preferredFontForTextStyle:UIFontTextStyleSubheadline] fontWithWeight:UIFontWeightMedium];
+    UIFont *textFontMediumFootnote = [[UIFont preferredFontForTextStyle:UIFontTextStyleFootnote] fontWithWeight:UIFontWeightMedium];
 
     if (self.isDeleted) {
         text = AMLocalizedString(@"thisMessageHasBeenDeleted", @"A log message in a chat to indicate that the message has been deleted by the user.");
@@ -179,17 +181,17 @@ static const void *richNumberTagKey = &richNumberTagKey;
                             wasRemovedFromTheGroupChatBy = [wasRemovedFromTheGroupChatBy stringByReplacingOccurrencesOfString:@"[B]" withString:fullNameDidAction];
                             text = wasRemovedFromTheGroupChatBy;
                             
-                            NSMutableAttributedString *mutableAttributedString = [[NSMutableAttributedString alloc] initWithString:wasRemovedFromTheGroupChatBy attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:fontSize], NSForegroundColorAttributeName:[UIColor mnz_black333333]}];
-                            [mutableAttributedString addAttribute:NSFontAttributeName value:[UIFont mnz_SFUIMediumWithSize:fontSize] range:[wasRemovedFromTheGroupChatBy rangeOfString:fullNameReceiveAction]];
-                            [mutableAttributedString addAttribute:NSFontAttributeName value:[UIFont mnz_SFUIMediumWithSize:fontSize] range:[wasRemovedFromTheGroupChatBy rangeOfString:fullNameDidAction]];
+                            NSMutableAttributedString *mutableAttributedString = [[NSMutableAttributedString alloc] initWithString:wasRemovedFromTheGroupChatBy attributes:@{NSFontAttributeName:textFontRegular, NSForegroundColorAttributeName:[UIColor mnz_black333333]}];
+                            [mutableAttributedString addAttribute:NSFontAttributeName value:textFontMedium range:[wasRemovedFromTheGroupChatBy rangeOfString:fullNameReceiveAction]];
+                            [mutableAttributedString addAttribute:NSFontAttributeName value:textFontMedium range:[wasRemovedFromTheGroupChatBy rangeOfString:fullNameDidAction]];
                             self.attributedText = mutableAttributedString;
                         } else {
                             NSString *leftTheGroupChat = AMLocalizedString(@"leftTheGroupChat", @"A log message in the chat conversation to tell the reader that a participant [A] left the group chat. For example: Alice left the group chat.");
                             leftTheGroupChat = [leftTheGroupChat stringByReplacingOccurrencesOfString:@"[A]" withString:fullNameReceiveAction];
                             text = leftTheGroupChat;
                             
-                            NSMutableAttributedString *mutableAttributedString = [[NSMutableAttributedString alloc] initWithString:leftTheGroupChat attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:fontSize], NSForegroundColorAttributeName:[UIColor mnz_black333333]}];
-                            [mutableAttributedString addAttribute:NSFontAttributeName value:[UIFont mnz_SFUIMediumWithSize:fontSize] range:[leftTheGroupChat rangeOfString:fullNameReceiveAction]];
+                            NSMutableAttributedString *mutableAttributedString = [[NSMutableAttributedString alloc] initWithString:leftTheGroupChat attributes:@{NSFontAttributeName:textFontRegular, NSForegroundColorAttributeName:[UIColor mnz_black333333]}];
+                            [mutableAttributedString addAttribute:NSFontAttributeName value:textFontMedium range:[leftTheGroupChat rangeOfString:fullNameReceiveAction]];
                             self.attributedText = mutableAttributedString;
                         }
                         break;
@@ -201,9 +203,9 @@ static const void *richNumberTagKey = &richNumberTagKey;
                         joinedTheGroupChatByInvitationFrom = [joinedTheGroupChatByInvitationFrom stringByReplacingOccurrencesOfString:@"[B]" withString:fullNameDidAction];
                         text = joinedTheGroupChatByInvitationFrom;
                         
-                        NSMutableAttributedString *mutableAttributedString = [[NSMutableAttributedString alloc] initWithString:joinedTheGroupChatByInvitationFrom attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:fontSize], NSForegroundColorAttributeName:[UIColor mnz_black333333]}];
-                        [mutableAttributedString addAttribute:NSFontAttributeName value:[UIFont mnz_SFUIMediumWithSize:fontSize] range:[joinedTheGroupChatByInvitationFrom rangeOfString:fullNameReceiveAction]];
-                        [mutableAttributedString addAttribute:NSFontAttributeName value:[UIFont mnz_SFUIMediumWithSize:fontSize] range:[joinedTheGroupChatByInvitationFrom rangeOfString:fullNameDidAction]];
+                        NSMutableAttributedString *mutableAttributedString = [[NSMutableAttributedString alloc] initWithString:joinedTheGroupChatByInvitationFrom attributes:@{NSFontAttributeName:textFontRegular, NSForegroundColorAttributeName:[UIColor mnz_black333333]}];
+                        [mutableAttributedString addAttribute:NSFontAttributeName value:textFontMedium range:[joinedTheGroupChatByInvitationFrom rangeOfString:fullNameReceiveAction]];
+                        [mutableAttributedString addAttribute:NSFontAttributeName value:textFontMedium range:[joinedTheGroupChatByInvitationFrom rangeOfString:fullNameDidAction]];
                         self.attributedText = mutableAttributedString;
                         break;
                     }
@@ -218,8 +220,8 @@ static const void *richNumberTagKey = &richNumberTagKey;
                 clearedTheChatHistory = [clearedTheChatHistory stringByReplacingOccurrencesOfString:@"[A]" withString:fullNameDidAction];
                 text = clearedTheChatHistory;
                 
-                NSMutableAttributedString *mutableAttributedString = [[NSMutableAttributedString alloc] initWithString:clearedTheChatHistory attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:fontSize], NSForegroundColorAttributeName:[UIColor mnz_black333333]}];
-                [mutableAttributedString addAttribute:NSFontAttributeName value:[UIFont mnz_SFUIMediumWithSize:fontSize] range:[clearedTheChatHistory rangeOfString:fullNameDidAction]];
+                NSMutableAttributedString *mutableAttributedString = [[NSMutableAttributedString alloc] initWithString:clearedTheChatHistory attributes:@{NSFontAttributeName:textFontRegular, NSForegroundColorAttributeName:[UIColor mnz_black333333]}];
+                [mutableAttributedString addAttribute:NSFontAttributeName value:textFontMedium range:[clearedTheChatHistory rangeOfString:fullNameDidAction]];
                 self.attributedText = mutableAttributedString;
                 break;
             }
@@ -248,10 +250,10 @@ static const void *richNumberTagKey = &richNumberTagKey;
                 wasChangedToBy = [wasChangedToBy stringByReplacingOccurrencesOfString:@"[C]" withString:fullNameDidAction];
                 text = wasChangedToBy;
                 
-                NSMutableAttributedString *mutableAttributedString = [[NSMutableAttributedString alloc] initWithString:wasChangedToBy attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:fontSize], NSForegroundColorAttributeName:[UIColor mnz_black333333]}];
-                [mutableAttributedString addAttribute:NSFontAttributeName value:[UIFont mnz_SFUIMediumWithSize:fontSize] range:[wasChangedToBy rangeOfString:fullNameReceiveAction]];
-                [mutableAttributedString addAttribute:NSFontAttributeName value:[UIFont mnz_SFUIMediumWithSize:fontSize] range:[wasChangedToBy rangeOfString:privilige]];
-                [mutableAttributedString addAttribute:NSFontAttributeName value:[UIFont mnz_SFUIMediumWithSize:fontSize] range:[wasChangedToBy rangeOfString:fullNameDidAction]];
+                NSMutableAttributedString *mutableAttributedString = [[NSMutableAttributedString alloc] initWithString:wasChangedToBy attributes:@{NSFontAttributeName:textFontRegular, NSForegroundColorAttributeName:[UIColor mnz_black333333]}];
+                [mutableAttributedString addAttribute:NSFontAttributeName value:textFontMedium range:[wasChangedToBy rangeOfString:fullNameReceiveAction]];
+                [mutableAttributedString addAttribute:NSFontAttributeName value:textFontMedium range:[wasChangedToBy rangeOfString:privilige]];
+                [mutableAttributedString addAttribute:NSFontAttributeName value:textFontMedium range:[wasChangedToBy rangeOfString:fullNameDidAction]];
                 self.attributedText = mutableAttributedString;
                 break;
             }
@@ -262,9 +264,9 @@ static const void *richNumberTagKey = &richNumberTagKey;
                 changedGroupChatNameTo = [changedGroupChatNameTo stringByReplacingOccurrencesOfString:@"[B]" withString:(self.content ? self.content : @" ")];
                 text = changedGroupChatNameTo;
                 
-                NSMutableAttributedString *mutableAttributedString = [[NSMutableAttributedString alloc] initWithString:changedGroupChatNameTo attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:fontSize], NSForegroundColorAttributeName:[UIColor mnz_black333333]}];
-                [mutableAttributedString addAttribute:NSFontAttributeName value:[UIFont mnz_SFUIMediumWithSize:fontSize] range:[changedGroupChatNameTo rangeOfString:fullNameDidAction]];
-                if (self.content) [mutableAttributedString addAttribute:NSFontAttributeName value:[UIFont mnz_SFUIMediumWithSize:fontSize] range:[changedGroupChatNameTo rangeOfString:self.content]];
+                NSMutableAttributedString *mutableAttributedString = [[NSMutableAttributedString alloc] initWithString:changedGroupChatNameTo attributes:@{NSFontAttributeName:textFontRegular, NSForegroundColorAttributeName:[UIColor mnz_black333333]}];
+                [mutableAttributedString addAttribute:NSFontAttributeName value:textFontMedium range:[changedGroupChatNameTo rangeOfString:fullNameDidAction]];
+                if (self.content) [mutableAttributedString addAttribute:NSFontAttributeName value:textFontMedium range:[changedGroupChatNameTo rangeOfString:self.content]];
                 self.attributedText = mutableAttributedString;
                 break;
             }
@@ -273,8 +275,8 @@ static const void *richNumberTagKey = &richNumberTagKey;
                 NSString *publicHandleCreated = [NSString stringWithFormat:@"%@ created a public link for the chat.", fullNameReceiveAction];
                 text = publicHandleCreated;
                 
-                NSMutableAttributedString *mutableAttributedString = [[NSMutableAttributedString alloc] initWithString:publicHandleCreated attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:fontSize], NSForegroundColorAttributeName:[UIColor mnz_black333333]}];
-                [mutableAttributedString addAttribute:NSFontAttributeName value:[UIFont mnz_SFUIMediumWithSize:fontSize] range:[publicHandleCreated rangeOfString:fullNameReceiveAction]];
+                NSMutableAttributedString *mutableAttributedString = [[NSMutableAttributedString alloc] initWithString:publicHandleCreated attributes:@{NSFontAttributeName:textFontRegular, NSForegroundColorAttributeName:[UIColor mnz_black333333]}];
+                [mutableAttributedString addAttribute:NSFontAttributeName value:textFontMedium range:[publicHandleCreated rangeOfString:fullNameReceiveAction]];
                 
                 self.attributedText = mutableAttributedString;
                 break;
@@ -284,8 +286,8 @@ static const void *richNumberTagKey = &richNumberTagKey;
                 NSString *publicHandleRemoved = [NSString stringWithFormat:@"%@ removed a public link for the chat.", fullNameReceiveAction];
                 text = publicHandleRemoved;
                 
-                NSMutableAttributedString *mutableAttributedString = [[NSMutableAttributedString alloc] initWithString:publicHandleRemoved attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:fontSize], NSForegroundColorAttributeName:[UIColor mnz_black333333]}];
-                [mutableAttributedString addAttribute:NSFontAttributeName value:[UIFont mnz_SFUIMediumWithSize:fontSize] range:[publicHandleRemoved rangeOfString:fullNameReceiveAction]];
+                NSMutableAttributedString *mutableAttributedString = [[NSMutableAttributedString alloc] initWithString:publicHandleRemoved attributes:@{NSFontAttributeName:textFontRegular, NSForegroundColorAttributeName:[UIColor mnz_black333333]}];
+                [mutableAttributedString addAttribute:NSFontAttributeName value:textFontMedium range:[publicHandleRemoved rangeOfString:fullNameReceiveAction]];
                 
                 self.attributedText = mutableAttributedString;
                 break;
@@ -296,10 +298,10 @@ static const void *richNumberTagKey = &richNumberTagKey;
                 NSString *keyRotationExplanation = @"Key rotation is slightly more secure, but does not allow you to share a link to the chat and new participants will not see past messages.";
                 text = [NSString stringWithFormat:@"%@%@", setPrivateMode, keyRotationExplanation];
                 
-                NSMutableAttributedString *mutableAttributedString = [[NSMutableAttributedString alloc] initWithString:text attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:fontSize], NSForegroundColorAttributeName:[UIColor mnz_black333333]}];
-                [mutableAttributedString addAttribute:NSFontAttributeName value:[UIFont mnz_SFUIMediumWithSize:fontSize] range:[text rangeOfString:fullNameReceiveAction]];
-                [mutableAttributedString addAttribute:NSFontAttributeName value:[UIFont mnz_SFUIMediumWithSize:fontSize] range:[text rangeOfString:@"Encryption Key Rotation"]];
-                [mutableAttributedString addAttribute:NSFontAttributeName value:[UIFont mnz_SFUIMediumWithSize:fontSize-2] range:[text rangeOfString:keyRotationExplanation]];
+                NSMutableAttributedString *mutableAttributedString = [[NSMutableAttributedString alloc] initWithString:text attributes:@{NSFontAttributeName:textFontRegular, NSForegroundColorAttributeName:[UIColor mnz_black333333]}];
+                [mutableAttributedString addAttribute:NSFontAttributeName value:textFontMedium range:[text rangeOfString:fullNameReceiveAction]];
+                [mutableAttributedString addAttribute:NSFontAttributeName value:textFontMedium range:[text rangeOfString:@"Encryption Key Rotation"]];
+                [mutableAttributedString addAttribute:NSFontAttributeName value:textFontMediumFootnote range:[text rangeOfString:keyRotationExplanation]];
                 [mutableAttributedString addAttribute:NSForegroundColorAttributeName value:[UIColor mnz_gray999999] range:[text rangeOfString:keyRotationExplanation]];
                 
                 self.attributedText = mutableAttributedString;
@@ -322,11 +324,11 @@ static const void *richNumberTagKey = &richNumberTagKey;
         UIColor *textColor = self.userHandle == myHandle ? [UIColor whiteColor] : [UIColor mnz_black333333];
         
         self.attributedText = [NSAttributedString mnz_attributedStringFromMessage:self.content
-                                                                             font:[UIFont mnz_SFUIRegularWithSize:fontSize]
+                                                                             font:textFontRegular
                                                                             color:textColor];
         
         if (self.isEdited && self.type != MEGAChatMessageTypeContainsMeta) {
-            NSAttributedString *edited = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@" %@", AMLocalizedString(@"edited", @"A log message in a chat to indicate that the message has been edited by the user.")] attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularItalicWithSize:12.0f], NSForegroundColorAttributeName:textColor}];
+            NSAttributedString *edited = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@" %@", AMLocalizedString(@"edited", @"A log message in a chat to indicate that the message has been edited by the user.")] attributes:@{NSFontAttributeName:[UIFont preferredFontForTextStyle:UIFontTextStyleCaption1].italic, NSForegroundColorAttributeName:textColor}];
             NSMutableAttributedString *attributedText = [self.attributedText mutableCopy];
             [attributedText appendAttributedString:edited];
             self.attributedText = attributedText;
