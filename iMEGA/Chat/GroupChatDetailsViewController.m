@@ -99,8 +99,10 @@
         }
     }
     
-    uint64_t myHandle = [[MEGASdkManager sharedMEGAChatSdk] myUserHandle];
-    [self.participantsMutableArray addObject:[NSNumber numberWithUnsignedLongLong:myHandle]];
+    if (!self.chatRoom.isPreview) {
+        uint64_t myHandle = [[MEGASdkManager sharedMEGAChatSdk] myUserHandle];
+        [self.participantsMutableArray addObject:[NSNumber numberWithUnsignedLongLong:myHandle]];
+    }
     
     self.indexPathsMutableDictionary = [[NSMutableDictionary alloc] initWithCapacity:self.participantsMutableArray.count];
 }
@@ -133,7 +135,7 @@
     [self presentViewController:clearChatHistoryAlertController animated:YES completion:nil];
 }
 
-- (void)showArchiveChatAlertAtIndexPath:(NSIndexPath *)indexPath {
+- (void)showArchiveChatAlert {
     NSString *title = self.chatRoom.isArchived ? AMLocalizedString(@"unarchiveChatMessage", @"Confirmation message for user to confirm it will unarchive an archived chat.") : AMLocalizedString(@"archiveChatMessage", @"Confirmation message on archive chat dialog for user to confirm.");
     UIAlertController *archiveAlertController = [UIAlertController alertControllerWithTitle:title message:nil preferredStyle:UIAlertControllerStyleAlert];
     [archiveAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
@@ -149,12 +151,21 @@
     [self presentViewController:archiveAlertController animated:YES completion:nil];
 }
 
-- (void)showLeaveChatAlertAtIndexPath:(NSIndexPath *)indexPath {
+- (void)showLeaveChatAlert {
     UIAlertController *leaveAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"youWillNoLongerHaveAccessToThisConversation", @"Alert text that explains what means confirming the action 'Leave'") message:nil preferredStyle:UIAlertControllerStyleAlert];
     [leaveAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
     
     [leaveAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"leave", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-        [[MEGASdkManager sharedMEGAChatSdk] leaveChat:self.chatRoom.chatId];
+        if (self.chatRoom.isPreview) {
+            [[MEGASdkManager sharedMEGAChatSdk] closeChatPreview:self.chatRoom.chatId];
+            if (self.presentingViewController) {
+                [self dismissViewControllerAnimated:YES completion:nil];
+            } else {
+                [self.navigationController popToRootViewControllerAnimated:YES];
+            }
+        } else {
+            [[MEGASdkManager sharedMEGAChatSdk] leaveChat:self.chatRoom.chatId];
+        }
     }]];
     
     [self presentViewController:leaveAlertController animated:YES completion:nil];
@@ -227,7 +238,7 @@
             break;
             
         case 3:
-            numberOfRows = 1;
+            numberOfRows = self.chatRoom.isPreview ? 0 : 1;
             break;
             
         case 4:
@@ -389,71 +400,102 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    if (section == 7) return 24.0f;
-    
-    if (section == 6 && !self.chatRoom.isPublicChat) return 0.0f;
-    
-    if (self.chatRoom.ownPrivilege == MEGAChatRoomPrivilegeRm) {
-        if (section == 3) {
-            return 20.0f;
-        } else {
-            return 0.0f;
-        }
-    } else if (self.chatRoom.ownPrivilege >= MEGAChatRoomPrivilegeModerator) {
-        if (section == 0) {
-            return 20.0f;
-        } else if (section == 1 && !self.chatRoom.isPublicChat) {
-            return 0.0f;
-        } else {
-            return 10.0f;
-        }
-    } else {
-        if (section == 3) {
-            return 20.0f;
-        } else if (section == 6) {
-            return 10.0f;
-        } else {
-            return 0.0f;
-        }
+    CGFloat height;
+    switch (section) {
+        case 0:
+            height = (self.chatRoom.ownPrivilege >= MEGAChatRoomPrivilegeModerator) ? 20.0f : 0.1f;
+            break;
+            
+        case 1:
+            height = ((self.chatRoom.ownPrivilege >= MEGAChatRoomPrivilegeModerator) && self.chatRoom.isPublicChat) ? 10.0f : 0.1f;
+            break;
+            
+        case 2:
+            height = (self.chatRoom.ownPrivilege >= MEGAChatRoomPrivilegeModerator) ? 10.0f : 0.1f;
+            break;
+            
+        case 3:
+            if (self.chatRoom.isPreview) {
+                height = 0.1f;
+            } else {
+                if (self.chatRoom.ownPrivilege >= MEGAChatRoomPrivilegeModerator) {
+                    height = 10.0f;
+                } else {
+                    height = 20.0f;
+                }
+            }
+            
+            break;
+            
+        case 4:
+            height = self.chatRoom.isPreview ? 20.0f : 10.0f;
+            break;
+            
+        case 5:
+            height = ((self.chatRoom.ownPrivilege >= MEGAChatRoomPrivilegeModerator) && self.chatRoom.isPublicChat) ? 10.0f : 0.1f;
+            break;
+            
+        case 6:
+            height = self.chatRoom.isPublicChat ? 10.0f : 0.1f;
+            break;
+            
+        case 7:
+            height = 24.0f;
+            break;
+            
+        default:
+            height = 0.1f;
+            break;
     }
+    
+    return height;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
-    if (section == 7) return 20.0f;
-    
-    if (section == 6 && !self.chatRoom.isPublicChat) return 0.0f;
-    
-    if (self.chatRoom.ownPrivilege == MEGAChatRoomPrivilegeRm) {
-        if (section == 3) {
-            return 18.0f;
-        } else {
-            return 0.0f;
-        }
-    } else if (self.chatRoom.ownPrivilege >= MEGAChatRoomPrivilegeModerator) {
-        if (section == 5) {
-            if (self.chatRoom.isPublicChat) {
-                return 70.0f;
-            } else {
-                return 0.0f;
-            }
-        } else if (section == 0 && !self.chatRoom.isPublicChat) {
-            return 0.0f;
-        } else {
-            return 10.0f;
-        }
-    } else {
-        if (section == 3) {
-            return 10.0f;
-        } else if (section == 6) {
-            return 20.0f;
-        } else {
-            return 0.0f;
-        }
+    CGFloat height;
+    switch (section) {
+        case 0:
+            height = (self.chatRoom.ownPrivilege >= MEGAChatRoomPrivilegeModerator) ? 10.0f : 0.1f;
+            break;
+            
+        case 1:
+            height = ((self.chatRoom.ownPrivilege >= MEGAChatRoomPrivilegeModerator) && self.chatRoom.isPublicChat) ? 10.0f : 0.1f;
+            break;
+            
+        case 2:
+            height = (self.chatRoom.ownPrivilege >= MEGAChatRoomPrivilegeModerator) ? 10.0f : 0.1f;
+            break;
+            
+        case 3:
+            height = self.chatRoom.isPreview ? 0.1f : 10.0f;
+            break;
+            
+        case 4:
+            height = 10.0f;
+            break;
+            
+        case 5:
+            height = ((self.chatRoom.ownPrivilege >= MEGAChatRoomPrivilegeModerator) && self.chatRoom.isPublicChat) ? 70.0f : 0.1f;
+            break;
+            
+        case 6:
+            height = self.chatRoom.isPublicChat ? 10.0f : 0.1f;
+            break;
+            
+        case 7:
+            height = 20.0f;
+            break;
+            
+        default:
+            height = 0.1f;
+            break;
     }
+    
+    return height;
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section {
-    if (section == 5 && self.chatRoom.isPublicChat) {
+    if (section == 5 && self.chatRoom.isPublicChat && self.chatRoom.ownPrivilege >= MEGAChatRoomPrivilegeModerator) {
         return AMLocalizedString(@"Key rotation is slightly more secure, but does not allow you to create a link to the chat and new participants will not see past messages.", @"Footer text to explain what means 'Encrypted Key Rotation'");
     }
     return nil;
@@ -478,7 +520,7 @@
             break;
             
         case 3:
-            heightForRow = 44.0f;
+            heightForRow = self.chatRoom.isPreview ? 0.0f : 44.0f;
             break;
             
         case 4:
@@ -583,11 +625,11 @@
             break;
             
         case 3:
-            [self showArchiveChatAlertAtIndexPath:indexPath];
+            [self showArchiveChatAlert];
             break;
             
         case 4:
-            [self showLeaveChatAlertAtIndexPath:indexPath];
+            [self showLeaveChatAlert];
             break;
             
         case 5: {
