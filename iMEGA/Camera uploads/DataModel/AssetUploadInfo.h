@@ -9,7 +9,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (strong, nonatomic) PHAsset *asset;
 @property (strong, nonatomic) NSString *fileName;
-@property (nonatomic) NSUInteger fileSize;
+@property (nonatomic) unsigned long long fileSize;
 
 @property (strong, nonatomic) NSString *fingerprint;
 @property (strong, nonatomic) NSString *originalFingerprint;
