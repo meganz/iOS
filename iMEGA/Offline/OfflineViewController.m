@@ -224,7 +224,7 @@ static NSString *kisDirectory = @"kisDirectory";
             }
         }
         
-        if (nodesWithThumbnail >= nodesWithoutThumbnail) {
+        if (nodesWithThumbnail > nodesWithoutThumbnail) {
             [self initCollection];
         } else {
             [self initTable];

@@ -44,13 +44,13 @@
     [self.cloudDrive setViewEditing:editing];
     
     if (editing) {
-        for (NodeTableViewCell *cell in [self.tableView visibleCells]) {
+        for (NodeTableViewCell *cell in self.tableView.visibleCells) {
             UIView *view = [[UIView alloc] init];
             view.backgroundColor = UIColor.clearColor;
             cell.selectedBackgroundView = view;
         }
     } else {
-        for (NodeTableViewCell *cell in [self.tableView visibleCells]) {
+        for (NodeTableViewCell *cell in self.tableView.visibleCells) {
             cell.selectedBackgroundView = nil;
         }
     }
@@ -96,86 +96,25 @@
 
     [self.cloudDrive.nodesIndexPathMutableDictionary setObject:indexPath forKey:node.base64Handle];
     
-    BOOL isDownloaded = NO;
-    
     NodeTableViewCell *cell;
     if ([[Helper downloadingNodes] objectForKey:node.base64Handle] != nil) {
         cell = [self.tableView dequeueReusableCellWithIdentifier:@"downloadingNodeCell" forIndexPath:indexPath];
         if (cell == nil) {
             cell = [[NodeTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"downloadingNodeCell"];
         }
-        
-        [cell.downloadingArrowImageView setImage:[UIImage imageNamed:@"downloadQueued"]];
-        if (cell.downloadProgressView.progress != 0) {
-            [cell.infoLabel setText:AMLocalizedString(@"paused", @"Paused")];
-        } else {
-            [cell.infoLabel setText:AMLocalizedString(@"queued", @"Queued")];
-        }
     } else {
         cell = [self.tableView dequeueReusableCellWithIdentifier:@"nodeCell" forIndexPath:indexPath];
         if (cell == nil) {
             cell = [[NodeTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"nodeCell"];
         }
-        
-        if (node.type == MEGANodeTypeFile) {
-            MOOfflineNode *offlineNode = [[MEGAStore shareInstance] offlineNodeWithNode:node];
-            
-            if (offlineNode) {
-                isDownloaded = YES;
-            }
-        }
-        
-        cell.infoLabel.text = [Helper sizeAndDateForNode:node api:[MEGASdkManager sharedMEGASdk]];
     }
     
-    if ([node isExported]) {
-        if (isDownloaded) {
-            [cell.upImageView setImage:[UIImage imageNamed:@"linked"]];
-            [cell.middleImageView setImage:nil];
-            [cell.downImageView setImage:[Helper downloadedArrowImage]];
-        } else {
-            [cell.upImageView setImage:nil];
-            [cell.middleImageView setImage:[UIImage imageNamed:@"linked"]];
-            [cell.downImageView setImage:nil];
-        }
-    } else {
-        [cell.upImageView setImage:nil];
-        [cell.downImageView setImage:nil];
-        
-        if (isDownloaded) {
-            [cell.middleImageView setImage:[Helper downloadedArrowImage]];
-        } else {
-            [cell.middleImageView setImage:nil];
-        }
-    }
-    
-    cell.nameLabel.text = [node name];
-    
-    [cell.thumbnailPlayImageView setHidden:YES];
-    
-    if ([node type] == MEGANodeTypeFile) {
-        if ([node hasThumbnail]) {
-            [Helper thumbnailForNode:node api:[MEGASdkManager sharedMEGASdk] cell:cell];
-        } else {
-            [cell.thumbnailImageView mnz_imageForNode:node];
-        }
-        
-        cell.versionedImageView.hidden = ![[MEGASdkManager sharedMEGASdk] hasVersionsForNode:node];
-        
-    } else if ([node type] == MEGANodeTypeFolder) {
-        [cell.thumbnailImageView mnz_imageForNode:node];
-        
-        cell.infoLabel.text = [Helper filesAndFoldersInFolderNode:node api:[MEGASdkManager sharedMEGASdk]];
-        
-        cell.versionedImageView.hidden = YES;
-    }
-    
-    cell.nodeHandle = [node handle];
-    
+    [cell configureCellForNode:node delegate:self api:[MEGASdkManager sharedMEGASdk]];
+ 
     if (self.tableView.isEditing) {
         // Check if selectedNodesArray contains the current node in the tableView
         for (MEGANode *n in self.cloudDrive.selectedNodesArray) {
-            if ([n handle] == [node handle]) {
+            if (n.handle == node.handle) {
                 [self.tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
             }
         }
@@ -183,13 +122,6 @@
         UIView *view = [[UIView alloc] init];
         view.backgroundColor = UIColor.clearColor;
         cell.selectedBackgroundView = view;
-    }
-    
-    if (@available(iOS 11.0, *)) {
-        cell.thumbnailImageView.accessibilityIgnoresInvertColors = YES;
-        cell.thumbnailPlayImageView.accessibilityIgnoresInvertColors = YES;
-    } else {
-        cell.delegate = self;
     }
     
     return cell;

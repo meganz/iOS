@@ -613,7 +613,7 @@
     
     cell.nameLabel.text = node.name;
     
-    cell.nodeHandle = node.handle;
+    cell.node = node;
     
     if (tableView.isEditing) {
         for (MEGANode *n in _selectedNodesArray) {
@@ -925,8 +925,8 @@
         }
             
         case MEGARequestTypeGetAttrFile: {
-            for (NodeTableViewCell *nodeTableViewCell in [self.tableView visibleCells]) {
-                if (request.nodeHandle == nodeTableViewCell.nodeHandle) {
+            for (NodeTableViewCell *nodeTableViewCell in self.tableView.visibleCells) {
+                if (request.nodeHandle == nodeTableViewCell.node.handle) {
                     MEGANode *node = [api nodeForHandle:request.nodeHandle];
                     [Helper setThumbnailForNode:node api:api cell:nodeTableViewCell reindexNode:NO];
                 }
