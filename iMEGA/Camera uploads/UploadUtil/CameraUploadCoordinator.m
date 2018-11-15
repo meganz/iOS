@@ -20,8 +20,8 @@
             [operation addOperation:previewOperation];
             [NSTimer scheduledTimerWithTimeInterval:60 repeats:NO block:^(NSTimer * _Nonnull timer) {
                 MEGALogDebug(@"[Camera Upload] expires thumbnail and preview uploads for asset: %@", info.asset.localIdentifier);
-                [thumbnailOperation finishOperation];
-                [previewOperation finishOperation];
+                [thumbnailOperation expireOperation];
+                [previewOperation expireOperation];
             }];
             [operation waitUntilAllOperationsAreFinished];
             success(node);

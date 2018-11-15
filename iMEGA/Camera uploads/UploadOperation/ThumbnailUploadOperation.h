@@ -9,6 +9,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (instancetype)initWithNode:(MEGANode *)node uploadInfo:(AssetUploadInfo *)uploadInfo;
 
+- (void)expireOperation;
+
 @end
 
 NS_ASSUME_NONNULL_END
