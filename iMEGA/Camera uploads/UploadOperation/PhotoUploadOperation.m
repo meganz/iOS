@@ -20,20 +20,6 @@
     [self requestImageData];
 }
 
-- (void)dealloc {
-    MEGALogDebug(@"photo upload operation gets deallocated");
-}
-
-#pragma mark - property
-
-- (NSString *)cameraUploadBackgroundTaskName {
-    return @"nz.mega.cameraUpload.photo";
-}
-
-- (NSString *)description {
-    return [NSString stringWithFormat:@"Photo operation %@ %@ %@", self.uploadInfo.asset.localIdentifier, self.uploadInfo.asset.creationDate, self.uploadInfo.fileName];
-}
-
 #pragma mark - data processing
 
 - (void)requestImageData {
@@ -83,7 +69,6 @@
     
     if ([JPEGData writeToURL:self.uploadInfo.fileURL atomically:YES]) {
         self.uploadInfo.fileSize = [JPEGData length];
-        [self createThumbnailAndPreviewFiles];
         [self encryptsFile];
     } else {
         [self finishOperationWithStatus:UploadStatusFailed shouldUploadNextAsset:YES];

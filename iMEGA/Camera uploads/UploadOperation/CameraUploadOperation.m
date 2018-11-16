@@ -12,6 +12,10 @@
 
 @interface CameraUploadOperation ()
 
+@property (nonatomic) UIBackgroundTaskIdentifier uploadTaskIdentifier;
+@property (strong, nonatomic, nullable) MEGASdk *attributesDataSDK;
+@property (strong, nonatomic) CameraUploadCoordinator *uploadCoordinator;
+
 @end
 
 @implementation CameraUploadOperation
@@ -28,10 +32,6 @@
 }
 
 #pragma mark - properties
-
-- (NSString *)cameraUploadBackgroundTaskName {
-    return @"nz.mega.cameraUpload";
-}
 
 - (CameraUploadCoordinator *)uploadCoordinator {
     if (_uploadCoordinator == nil) {
@@ -50,6 +50,10 @@
     }
     
     return _attributesDataSDK;
+}
+
+- (NSString *)description {
+    return [NSString stringWithFormat:@"%@ %@ %@ %@", NSStringFromClass(self.class), self.uploadInfo.asset.localIdentifier, self.uploadInfo.asset.creationDate, self.uploadInfo.fileName];
 }
 
 #pragma mark - start operation
@@ -71,7 +75,7 @@
 }
 
 - (void)beginBackgroundTask {
-    self.uploadTaskIdentifier = [UIApplication.sharedApplication beginBackgroundTaskWithName:self.cameraUploadBackgroundTaskName expirationHandler:^{
+    self.uploadTaskIdentifier = [UIApplication.sharedApplication beginBackgroundTaskWithName:[NSString stringWithFormat:@"nz.mega.cameraUpload.%@", NSStringFromClass(self.class)] expirationHandler:^{
         MOAssetUploadRecord *record = [CameraUploadRecordManager.shared fetchAssetUploadRecordByLocalIdentifier:self.uploadInfo.asset.localIdentifier error:nil];
         MEGALogDebug(@"[Camera Upload] %@ background task expired", self);
         if ([record.status isEqualToString:UploadStatusUploading]) {
@@ -143,6 +147,8 @@
 #pragma mark - upload task
 
 - (void)uploadFileToServer {
+    [self createThumbnailAndPreviewFiles];
+    
     MEGALogDebug(@"[Camera Upload] %@ starts uploading file to server: %@", self, self.uploadInfo.uploadURL);
     
     NSURLSessionUploadTask *uploadTask = [[TransferSessionManager shared] photoUploadTaskWithURL:self.uploadInfo.uploadURL fromFile:self.uploadInfo.encryptedURL completion:^(NSData * _Nullable token, NSError * _Nullable error) {

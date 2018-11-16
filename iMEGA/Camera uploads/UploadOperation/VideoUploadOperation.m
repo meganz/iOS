@@ -20,20 +20,6 @@
     [self requestVideoData];
 }
 
-- (void)dealloc {
-    MEGALogDebug(@"video upload operation gets deallocated");
-}
-
-#pragma mark - property
-
-- (NSString *)cameraUploadBackgroundTaskName {
-    return @"nz.mega.cameraUpload.video";
-}
-
-- (NSString *)description {
-    return [NSString stringWithFormat:@"Video operation %@ %@ %@", self.uploadInfo.asset.localIdentifier, self.uploadInfo.asset.creationDate, self.uploadInfo.fileName];
-}
-
 #pragma mark - data processing
 
 - (void)requestVideoData {
@@ -134,7 +120,6 @@
         [self finishOperationWithStatus:UploadStatusDone shouldUploadNextAsset:YES];
         return;
     } else {
-        [self createThumbnailAndPreviewFiles];
         [self encryptsFile];
     }
 }

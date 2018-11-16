@@ -12,10 +12,6 @@ NS_ASSUME_NONNULL_BEGIN
 @interface CameraUploadOperation : MEGAOperation
 
 @property (strong, nonatomic) AssetUploadInfo *uploadInfo;
-@property (nonatomic) UIBackgroundTaskIdentifier uploadTaskIdentifier;
-@property (strong, nonatomic) CameraUploadCoordinator *uploadCoordinator;
-@property (nonatomic, readonly) NSString *cameraUploadBackgroundTaskName;
-@property (strong, nonatomic, nullable) MEGASdk *attributesDataSDK;
 
 - (instancetype)initWithUploadInfo:(AssetUploadInfo *)uploadInfo;
 
@@ -23,7 +19,6 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)uploadFileToServer;
 - (void)copyToParentNodeIfNeededForMatchingNode:(MEGANode *)node;
 - (MEGANode *)nodeForOriginalFingerprint:(NSString *)fingerprint;
-- (void)createThumbnailAndPreviewFiles;
 - (nullable NSURL *)URLForAssetFolder;
 
 @end
