@@ -477,7 +477,7 @@ static MEGAIndexer *indexer;
             [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
         }
         
-        [UIApplication.mnz_visibleViewController presentViewController:alertController animated:YES completion:nil];
+        [UIApplication.mnz_presentingViewController presentViewController:alertController animated:YES completion:nil];
         return NO;
     }
     return YES;
@@ -1229,7 +1229,7 @@ static MEGAIndexer *indexer;
         [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"logoutLabel", @"Title of the button which logs out from your account.") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
             [[MEGASdkManager sharedMEGASdk] logout];
         }]];
-        [UIApplication.mnz_visibleViewController presentViewController:alertController animated:YES completion:nil];
+        [UIApplication.mnz_presentingViewController presentViewController:alertController animated:YES completion:nil];
     } else {
         [[MEGASdkManager sharedMEGASdk] logout];
     }
@@ -1373,7 +1373,7 @@ static MEGAIndexer *indexer;
     
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"recoveryKeyCopiedToClipboard", @"Title of the dialog displayed when copy the user's Recovery Key to the clipboard to be saved or exported - (String as short as possible).") message:nil preferredStyle:UIAlertControllerStyleAlert];
     [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
-    [UIApplication.mnz_visibleViewController presentViewController:alertController animated:YES completion:nil];
+    [UIApplication.mnz_presentingViewController presentViewController:alertController animated:YES completion:nil];
     
     [[MEGASdkManager sharedMEGASdk] masterKeyExported];
 }
@@ -1392,7 +1392,7 @@ static MEGAIndexer *indexer;
         enableLog ? [[MEGALogger sharedLogger] startLogging] : [[MEGALogger sharedLogger] stopLogging];
     }]];
     
-    [UIApplication.mnz_visibleViewController presentViewController:logAlertController animated:YES completion:nil];
+    [UIApplication.mnz_presentingViewController presentViewController:logAlertController animated:YES completion:nil];
 }
 
 @end

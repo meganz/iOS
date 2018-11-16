@@ -150,7 +150,17 @@
         self.selectedIndex = CHAT;
         MEGANavigationController *navigationController = [self.childViewControllers objectAtIndex:CHAT];
         ChatRoomsViewController *chatRoomsVC = navigationController.viewControllers.firstObject;
-        [chatRoomsVC openChatRoomWithID:chatNumber.unsignedLongLongValue];
+        
+        if ([MEGASdkManager sharedMEGAChatSdk].numCalls == 0) {
+            UIViewController *rootViewController = UIApplication.sharedApplication.delegate.window.rootViewController;
+            if (rootViewController.presentedViewController) {
+                [rootViewController dismissViewControllerAnimated:YES completion:^{
+                    [chatRoomsVC openChatRoomWithID:chatNumber.unsignedLongLongValue];
+                }];
+            } else {
+                [chatRoomsVC openChatRoomWithID:chatNumber.unsignedLongLongValue];
+            }
+        }
     }
 }
 
@@ -198,8 +208,6 @@
     
     NSString *badgeValue = unreadChats ? [NSString stringWithFormat:@"%td", unreadChats] : nil;
     [self setBadgeValue:badgeValue tabPosition:CHAT];
-    
-    [UIApplication sharedApplication].applicationIconBadgeNumber = unreadChats;
 }
 
 - (void)setBadgeValue:(NSString *)badgeValue tabPosition:(NSInteger)tabPosition {
@@ -226,7 +234,7 @@
                 callVC.chatRoom  = chatRoom;
                 callVC.videoCall = call.hasRemoteVideo;
                 callVC.callType = CallTypeIncoming;
-                [UIApplication.mnz_visibleViewController presentViewController:callVC animated:YES completion:nil];
+                [UIApplication.mnz_presentingViewController presentViewController:callVC animated:YES completion:nil];
             } else {
                 MEGAChatRoom *chatRoom = [api chatRoomForChatId:call.chatId];
                 UILocalNotification* localNotification = [[UILocalNotification alloc] init];
@@ -257,7 +265,7 @@
         callVC.chatRoom  = chatRoom;
         callVC.videoCall = call.hasRemoteVideo;
         callVC.callType = CallTypeIncoming;
-        [UIApplication.mnz_visibleViewController presentViewController:callVC animated:YES completion:nil];
+        [UIApplication.mnz_presentingViewController presentViewController:callVC animated:YES completion:nil];
     }
 }
 

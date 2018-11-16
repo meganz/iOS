@@ -102,7 +102,7 @@
 "emailInvalidFormat"="Maglagay ng valid email";
 /* Add contacts and share dialog error message when user try to add wrong email address */
 "theEmailAddressFormatIsInvalid"="Mayroon yatang di-mawaring email";
-/* Message shown when the user enters a wrong password  */
+/* Message shown when the user enters a wrong password */
 "passwordInvalidFormat"="Maglagay ng valid password";
 /* Hint text to suggest that the user has to write his email */
 "emailPlaceholder"="Email";
@@ -130,10 +130,8 @@
 "passwordStrong"="Ang password na ito ay matatagalan ang mas matiniding atake ng mga hackers. Siguraduhin lamang na matatandaan mo ito.";
 /*  */
 "agreeWithTheMEGATermsOfService"="Pumapayag ako sa <a href='terms'>Terms of Service</a> ng MEGA";
-/* Error text shown when you have not entered a correct name  */
+/* Error text shown when you have not entered a correct name */
 "nameInvalidFormat"="Maglagay ng valid na pangalan";
-/*  */
-"invalidFirstNameAndLastName"="Maling pangalan o apelyedo";
 /* Error text shown when you have not written the same password */
 "passwordsDoNotMatch"="Di tugma ang password";
 /* Error text shown when you don't have selected the checkbox to agree with the Terms of Service */
@@ -145,7 +143,7 @@
 /* Text shown on the confirm account view to remind the user what to do */
 "confirmText"="Ilagay ang inyong password para makumpirma ang inyong account";
 /* Label for any ‘Confirm account’ button, link, text, title, etc. - (String as short as possible). */
-"Confirm account"="I-confirm inyong account";
+"Confirm account"="Kumpirmahin ang account";
 /* Error text shown when you introduce a wrong password on the confirmation proccess */
 "passwordWrong"="Maling password";
 /* Warning title shown when you try to confirm an account but you are logged in with another one */
@@ -1592,17 +1590,17 @@
 "scanOrCopyTheSeed"="Scan or copy the seed to your Authenticator App. Be sure to backup this seed to a safe place in case you lose your device.";
 /* A button to help them restore their account if they have lost their 2FA device. */
 "lostYourAuthenticatorDevice"="Nawala ang iyong Authenticator device?";
-/* Settings section title where you can enable the option to 'Save Images in Library' */
-"Save Images in Library"="Mag-save ng Images sa Library";
-/* Settings section title where you can enable the option to 'Save Videos in Library' */
-"Save Videos in Library"="Mag-save ng Videos sa Library";
+/* Settings section title where you can enable the option to 'Save Images in Photos' */
+"Save Images in Photos"="Mag-save ng Images sa Library";
+/* Settings section title where you can enable the option to 'Save Videos in Photos' */
+"Save Videos in Photos"="Mag-save ng Videos sa Library";
 /* Footer text shown under the settings for download options 'Save Images/Videos in Library' */
 "Images and/or videos downloaded will be stored in the device’s media library instead of the Offline section."="Images and/or videos downloaded will be stored in the device’s media library instead of the Offline section.";
 /* Setting associated with the 'Camera' of the device */
 "Camera"="Camera";
-/* Settings section title where you can enable the option to 'Save in Library' the images or videos taken from your camera in the MEGA app */
-"Save in Library"="I-save sa Library";
-/* Footer text shown under the Camera setting to explain the option 'Save in Library' */
+/* Settings section title where you can enable the option to 'Save in Photos' the images or videos taken from your camera in the MEGA app */
+"Save in Photos"="I-save sa Library";
+/* Footer text shown under the Camera setting to explain the option 'Save in Photos' */
 "Save a copy of the images and videos taken from the MEGA app in your device’s media library."="Magtabi ng copy ng images at videos na nakuha sa MEGA app ng inyong media library sa device mo";
 /* Title shown in a page of the on boarding screens explaining that the user keeps the encryption keys */
 "You hold the keys"="Hawak mo ang susi";
@@ -1627,7 +1625,7 @@
 /* Title label that explains that the user is going to be asked for the photos permission */
 "Allow Access to Photos"="Bigyan ng Access sa Photos";
 /* Detailed explanation of why the user should give permission to access to the photos */
-"To share photos and videos, allow MEGA to access your library."="Para makapagbahagi ng photos at videos, bigyan ng access ang MEGA sa iyong photos";
+"Please give the MEGA App permission to access Photos to share photos and videos."="Please give the MEGA App permission to access Photos to share photos and videos.";
 /* Title label that explains that the user is going to be asked for the microphone and camera permission */
 "Enable Microphone and Camera"="I-enable ang Microphone at Camera";
 /* Detailed explanation of why the user should give permission to access to the camera and the microphone */

@@ -439,7 +439,7 @@ static NSString *nodeToPresentBase64Handle;
     
     MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:viewController];
     [navigationController addCancelButton];
-    [UIApplication.mnz_visibleViewController presentViewController:navigationController animated:YES completion:nil];
+    [UIApplication.mnz_presentingViewController presentViewController:navigationController animated:YES completion:nil];
 }
 
 + (void)presentConfirmViewWithURLType:(URLType)urlType link:(NSString *)link email:(NSString *)email {
@@ -450,7 +450,7 @@ static NSString *nodeToPresentBase64Handle;
     confirmAccountVC.confirmationLinkString = link;
     confirmAccountVC.emailString = email;
     
-    [UIApplication.mnz_visibleViewController presentViewController:confirmAccountNavigationController animated:YES completion:nil];
+    [UIApplication.mnz_presentingViewController presentViewController:confirmAccountNavigationController animated:YES completion:nil];
 }
 
 + (void)openIn {
@@ -475,7 +475,7 @@ static NSString *nodeToPresentBase64Handle;
             [MEGALinkManager showEncryptedLinkAlert:request.link];
         }]];
         
-        [UIApplication.mnz_visibleViewController presentViewController:alertController animated:YES completion:nil];
+        [UIApplication.mnz_presentingViewController presentViewController:alertController animated:YES completion:nil];
     }];
     
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"decryptionKeyAlertTitle", nil) message:AMLocalizedString(@"decryptionKeyAlertMessage", nil) preferredStyle:UIAlertControllerStyleAlert];

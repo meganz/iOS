@@ -102,7 +102,7 @@
 "emailInvalidFormat"="Introdu un e-mail valid";
 /* Add contacts and share dialog error message when user try to add wrong email address */
 "theEmailAddressFormatIsInvalid"="Formatul adresei de e-mail este nevalid";
-/* Message shown when the user enters a wrong password  */
+/* Message shown when the user enters a wrong password */
 "passwordInvalidFormat"="Introdu o parolă validă";
 /* Hint text to suggest that the user has to write his email */
 "emailPlaceholder"="E-mail";
@@ -130,10 +130,8 @@
 "passwordStrong"="Această parolă va rezista în faţa celor mai sofisticate atacuri de tip „brute-force”.  Te rugăm să te asiguri că o vei reţine.";
 /*  */
 "agreeWithTheMEGATermsOfService"="Sunt de acord cu <a href='terms'>Termenii de utilizare a serviciului</a> MEGA";
-/* Error text shown when you have not entered a correct name  */
+/* Error text shown when you have not entered a correct name */
 "nameInvalidFormat"="Introdu un nume valid";
-/*  */
-"invalidFirstNameAndLastName"="Prenume şi/sau nume nevalide.";
 /* Error text shown when you have not written the same password */
 "passwordsDoNotMatch"="Parolele nu se potrivesc";
 /* Error text shown when you don't have selected the checkbox to agree with the Terms of Service */
@@ -1592,17 +1590,17 @@
 "scanOrCopyTheSeed"="Scan or copy the seed to your Authenticator App. Be sure to backup this seed to a safe place in case you lose your device.";
 /* A button to help them restore their account if they have lost their 2FA device. */
 "lostYourAuthenticatorDevice"="Lost your Authenticator device?";
-/* Settings section title where you can enable the option to 'Save Images in Library' */
-"Save Images in Library"="Save Images in Library";
-/* Settings section title where you can enable the option to 'Save Videos in Library' */
-"Save Videos in Library"="Save Videos in Library";
+/* Settings section title where you can enable the option to 'Save Images in Photos' */
+"Save Images in Photos"="Save Images in Photos";
+/* Settings section title where you can enable the option to 'Save Videos in Photos' */
+"Save Videos in Photos"="Save Videos in Photos";
 /* Footer text shown under the settings for download options 'Save Images/Videos in Library' */
 "Images and/or videos downloaded will be stored in the device’s media library instead of the Offline section."="Images and/or videos downloaded will be stored in the device’s media library instead of the Offline section.";
 /* Setting associated with the 'Camera' of the device */
 "Camera"="Camera";
-/* Settings section title where you can enable the option to 'Save in Library' the images or videos taken from your camera in the MEGA app */
-"Save in Library"="Save in Library";
-/* Footer text shown under the Camera setting to explain the option 'Save in Library' */
+/* Settings section title where you can enable the option to 'Save in Photos' the images or videos taken from your camera in the MEGA app */
+"Save in Photos"="Save in Photos";
+/* Footer text shown under the Camera setting to explain the option 'Save in Photos' */
 "Save a copy of the images and videos taken from the MEGA app in your device’s media library."="Save a copy of the images and videos taken from the MEGA app in your device’s media library.";
 /* Title shown in a page of the on boarding screens explaining that the user keeps the encryption keys */
 "You hold the keys"="You hold the keys";
@@ -1627,7 +1625,7 @@
 /* Title label that explains that the user is going to be asked for the photos permission */
 "Allow Access to Photos"="Allow Access to Photos";
 /* Detailed explanation of why the user should give permission to access to the photos */
-"To share photos and videos, allow MEGA to access your library."="To share photos and videos, allow MEGA to access your library.";
+"Please give the MEGA App permission to access Photos to share photos and videos."="Please give the MEGA App permission to access Photos to share photos and videos.";
 /* Title label that explains that the user is going to be asked for the microphone and camera permission */
 "Enable Microphone and Camera"="Enable Microphone and Camera";
 /* Detailed explanation of why the user should give permission to access to the camera and the microphone */

@@ -110,7 +110,6 @@
     self.closeBarButtonItem.title = AMLocalizedString(@"close", @"A button label.");
 
     if (self.isFolderRootNode) {
-        [MEGASdkManager sharedMEGASdkFolder];
         [[MEGASdkManager sharedMEGASdkFolder] loginToFolderLink:self.publicLinkString delegate:self];
 
         self.navigationItem.leftBarButtonItem = self.closeBarButtonItem;

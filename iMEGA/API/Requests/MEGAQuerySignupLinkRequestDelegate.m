@@ -106,7 +106,7 @@
                 UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"error", nil) message:AMLocalizedString(@"accountAlreadyConfirmed", @"Message shown when the user clicks on a confirm account link that has already been used") preferredStyle:UIAlertControllerStyleAlert];
                 [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
                 
-                [UIApplication.mnz_visibleViewController presentViewController:alertController animated:YES completion:nil];
+                [UIApplication.mnz_presentingViewController presentViewController:alertController animated:YES completion:nil];
                 break;
             }
                 

@@ -102,7 +102,7 @@
 "emailInvalidFormat"="Introduce un correo electrónico válido";
 /* Add contacts and share dialog error message when user try to add wrong email address */
 "theEmailAddressFormatIsInvalid"="El formato del correo electrónico es incorrecto";
-/* Message shown when the user enters a wrong password  */
+/* Message shown when the user enters a wrong password */
 "passwordInvalidFormat"="Introduce una contraseña válida";
 /* Hint text to suggest that the user has to write his email */
 "emailPlaceholder"="Correo electrónico";
@@ -130,10 +130,8 @@
 "passwordStrong"="Esta contraseña podrá soportar los ataques más sofisticados de fuerza bruta. Por favor, asegúrate de recordarla.";
 /*  */
 "agreeWithTheMEGATermsOfService"="Acepto los <a href='terms'>Términos de Servicio</a> de MEGA";
-/* Error text shown when you have not entered a correct name  */
+/* Error text shown when you have not entered a correct name */
 "nameInvalidFormat"="Introduce un nombre";
-/*  */
-"invalidFirstNameAndLastName"="Nombre y/o apellido(s) no válidos.";
 /* Error text shown when you have not written the same password */
 "passwordsDoNotMatch"="Las contraseñas no coinciden";
 /* Error text shown when you don't have selected the checkbox to agree with the Terms of Service */
@@ -145,7 +143,7 @@
 /* Text shown on the confirm account view to remind the user what to do */
 "confirmText"="Por favor, introduce tu contraseña para confirmar tu cuenta.";
 /* Label for any ‘Confirm account’ button, link, text, title, etc. - (String as short as possible). */
-"Confirm account"="Confirma tu cuenta";
+"Confirm account"="Confirmar cuenta";
 /* Error text shown when you introduce a wrong password on the confirmation proccess */
 "passwordWrong"="Contraseña incorrecta";
 /* Warning title shown when you try to confirm an account but you are logged in with another one */
@@ -171,7 +169,7 @@
 /* ToS refers to Terms of Service and AUP refers to Acceptable Use Policy. */
 "fileLinkUnavailableText2"="Este archivo ha sido eliminado por infringir los Términos de servicio y/o condiciones de uso.";
 /* */
-"fileLinkUnavailableText3"="URL Inválida - El enlace al que deseas acceder no existe.";
+"fileLinkUnavailableText3"="Enlace inválido - el enlace al que está intentando acceder no existe";
 /* */
 "fileLinkUnavailableText4"="El archivo ha sido borrado por el usuario.";
 /* Message shown when a download starts */
@@ -189,7 +187,7 @@
 /* */
 "folderLinkUnavailableText2"="El enlace de la carpeta ha sido eliminado por infringir nuestros Términos de servicio.";
 /* */
-"folderLinkUnavailableText3"="URL Inválida - El enlace al que deseas acceder no existe.";
+"folderLinkUnavailableText3"="Enlace inválido - el enlace al que está intentando acceder no existe";
 /* */
 "folderLinkUnavailableText4"="El enlace de la carpeta ha sido desactivado por el usuario.";
 /* Text shown on the app when you don't have connection to the internet or when you have lost it */
@@ -393,7 +391,7 @@
 /* Toast text upon sending multiple files to chat */
 "filesSentToChat"="Archivos enviados al chat";
 /* success message when sending multiple files. Please do not modify the %d placeholder. */
-"xfilesSentSuccesfully"="%d archivos enviados correctamente";
+"xfilesSentSuccesfully"="Se han enviado %d archivos";
 /* Message shown when there is an active link that can be removed or disabled */
 "removeLink"="Eliminar enlace";
 /* Message shown when there are some active links that can be removed or disabled */
@@ -511,7 +509,7 @@
 /* Text shown to explain what means 'Enable Camera Uploads'. The 'Cloud Drive' is the MEGA section, so please keep consistency */
 "automaticallyBackupYourPhotos"="Guarda tus fotos automáticamente en tu Nube";
 /* Button title that enables the functionality 'Camera Uploads', which uploads all the photos in your device to MEGA */
-"enableCameraUploadsButton"="Activar Subidas de la cámara";
+"enableCameraUploadsButton"="Activar las Subidas de la cámara";
 /* Success message shown when Camera Uploads has been enabled */
 "cameraUploadsEnabled"="Subidas de la cámara activadas";
 /* Message shown when the camera uploads have been completed */
@@ -878,7 +876,7 @@
 /* Button title that shows the different MEGA PRO plans to which you can upgrade. (String as short as possible) */
 "buyPRO"="Hazte PRO";
 /* Caption of a button to upgrade the account to Pro status */
-"upgrade"="Hazte Pro";
+"upgrade"="Hazte PRO";
 /* Title show on the hall of My Account section that describes a place where you can view, edit and upgrade your account and profile */
 "viewAndEditProfile"="Ver y editar tu perfil";
 /* Label for any 'Profile' button, link, text, title, etc. - (String as short as possible). */
@@ -952,7 +950,7 @@
 /* Hint text for the first name (Placeholder) */
 "firstName"="Nombre";
 /* Hint text for the last name (Placeholder) */
-"lastName"="Apellidos";
+"lastName"="Apellido(s)";
 /* Button title that goes to the section Usage where you can see how your MEGA space is used */
 "usage"="Uso";
 /* Title for "Local" used space. */
@@ -1098,9 +1096,9 @@
 /* Title that refers to the status of the chat (Either Online or Offline) */
 "status"="Estado";
 /* Title used in settings that enables the generation of link previews in the chat */
-"richUrlPreviews"="Vista previa de la URL enriquecida";
+"richUrlPreviews"="Vista previa del enlace";
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
-"richPreviewsFooter"="Mejora tu experiencia con MEGAchat. El contenido de la URL se recuperará sin cifrado punto a punto.";
+"richPreviewsFooter"="Mejora tu experiencia con MEGAchat. El contenido del enlace se recuperará sin cifrado punto a punto.";
 /* Section title of a button where you can enable mobile data for voice and video calls. */
 "voiceAndVideoCalls"="Llamadas y videollamadas";
 /* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature. */
@@ -1232,7 +1230,7 @@
 /* Button label for sending file attachments through the chat to another user. */
 "sendFiles"="Enviar archivos";
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
-"enableRichUrlPreviews"="Activa la vista previa de la URL enriquecida";
+"enableRichUrlPreviews"="Activar la vista previa del enlace";
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
 "alwaysAllow"="Permitir siempre";
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
@@ -1240,7 +1238,7 @@
 /* */
 "never"="Nunca";
 /* After several times (right now set to 3) that the user may had decided to click \"Not now\" (for when being asked if he/she wants a URL preview to be generated for a link, posted in a chat room), we change the \"Not now\" button to \"Never\". If the user clicks it, we ask for one final time - to ensure he wants to not be asked for this anymore and tell him that he can do that in Settings. */
-"richPreviewsConfirmation"="La vista previa de las URL enriquecidas se desactivará de forma permanente. Puedes volver a activarla desde Ajustes. ¿Quieres continuar?";
+"richPreviewsConfirmation"="La vista previa de los enlaces se desactivará de forma permanente. Puedes volver a activarla desde Ajustes. ¿Quieres continuar?";
 /* Once a preview is generated for a message which contains URLs, the user can remove it. Same button is also shown during loading of the preview - and would cancel the loading (text of the button is the same in both cases). */
 "removePreview"="Eliminar vista previa";
 /* */
@@ -1385,7 +1383,7 @@
 /* Notification text body shown when you have missed several audio calls and video calls. [A] = {number of missed audio calls}. [B] = {number of missed video calls} */
 "missedAudioCallsAndMissedVideoCalls"="[A] llamadas perdidas y [B] videollamadas perdidas";
 /* Button title to see the available bonus */
-"getBonus"="Obtén bonos";
+"getBonus"="Obtén bono";
 /* Text shown under the title 'Video quality' that explains what it means */
 "qualityOfVideosUploadedToAChat"="Calidad de los vídeos subidos a un chat";
 /* Label used near to the option selected to encode the videos uploaded to a chat (Low, Medium, Original) */
@@ -1592,17 +1590,17 @@
 "scanOrCopyTheSeed"="Escanea o copia la clave en tu aplicación de autenticación. Asegúrate de guardarla en un lugar seguro en caso de que pierdas tu dispositivo.";
 /* A button to help them restore their account if they have lost their 2FA device. */
 "lostYourAuthenticatorDevice"="¿Has perdido tu dispositivo de autenticación?";
-/* Settings section title where you can enable the option to 'Save Images in Library' */
-"Save Images in Library"="Guardar imágenes en la galería";
-/* Settings section title where you can enable the option to 'Save Videos in Library' */
-"Save Videos in Library"="Guardar vídeos en la galería";
+/* Settings section title where you can enable the option to 'Save Images in Photos' */
+"Save Images in Photos"="Guardar imágenes en Fotos";
+/* Settings section title where you can enable the option to 'Save Videos in Photos' */
+"Save Videos in Photos"="Guardar vídeos en Fotos";
 /* Footer text shown under the settings for download options 'Save Images/Videos in Library' */
 "Images and/or videos downloaded will be stored in the device’s media library instead of the Offline section."="Las imágenes y/o los videos descargados se almacenarán en la galería del dispositivo en lugar de la sección Sin conexión.";
 /* Setting associated with the 'Camera' of the device */
 "Camera"="Cámara";
-/* Settings section title where you can enable the option to 'Save in Library' the images or videos taken from your camera in the MEGA app */
-"Save in Library"="Guardar en la galería";
-/* Footer text shown under the Camera setting to explain the option 'Save in Library' */
+/* Settings section title where you can enable the option to 'Save in Photos' the images or videos taken from your camera in the MEGA app */
+"Save in Photos"="Guardar en Fotos";
+/* Footer text shown under the Camera setting to explain the option 'Save in Photos' */
 "Save a copy of the images and videos taken from the MEGA app in your device’s media library."="Guarda una copia de las imágenes y de los videos capturados desde la aplicación de MEGA en la galería del dispositivo.";
 /* Title shown in a page of the on boarding screens explaining that the user keeps the encryption keys */
 "You hold the keys"="Tú tienes las claves";
@@ -1627,7 +1625,7 @@
 /* Title label that explains that the user is going to be asked for the photos permission */
 "Allow Access to Photos"="Permitir el acceso a Fotos";
 /* Detailed explanation of why the user should give permission to access to the photos */
-"To share photos and videos, allow MEGA to access your library."="Para compartir fotos y videos, permite que MEGA acceda a la galería.";
+"Please give the MEGA App permission to access Photos to share photos and videos."="Permite a MEGA que acceda a Fotos para compartir fotos y vídeos.";
 /* Title label that explains that the user is going to be asked for the microphone and camera permission */
 "Enable Microphone and Camera"="Activar el micrófono y la cámara";
 /* Detailed explanation of why the user should give permission to access to the camera and the microphone */
@@ -1643,7 +1641,7 @@
 /* Title of the option to enable or disable file versioning on Settings section */
 "File versioning"="Control de versiones de archivos";
 /* Subtitle of the option to enable or disable file versioning on Settings section */
-"Enable or disable file versioning for your entire account.[Br]You may still receive file versions from shared folders if your contacts have this enabled."="Activa o desactiva el control de versiones de archivos para toda su cuenta. \n Puede recibir versiones de archivos de carpetas compartidas si sus contactos lo tienen habilitado.";
+"Enable or disable file versioning for your entire account.[Br]You may still receive file versions from shared folders if your contacts have this enabled."="Activa o desactiva el control de versiones de archivos para toda tu cuenta. \nSeguirás teniendo versiones de archivos en las carpetas compartidas si tus contactos lo tienen activado.";
 /* A confirmation message when the user chooses to disable file versioning. */
 "When file versioning is disabled, the current version will be replaced with the new version once a file is updated (and your changes to the file will no longer be recorded). Are you sure you want to disable file versioning?"="Si desactivas el control de versiones y subes un archivo, la versión nueva reemplazará la actual y los cambios no serán archivados como versiones. ¿Seguro que quieres desactivar el control de versiones?";
 /* Settings preference title to show file versions info of the account */
@@ -1655,7 +1653,7 @@
 /* Text of a button which deletes all historical versions of files in the users entire account. */
 "Delete old versions"="Eliminar versiones anteriores";
 /* A warning note about deleting all file versions in the settings section. */
-"All current files will remain. Only historic versions of your files will be deleted."="Los archivos actuales permanecerán. Solo se borrará el histórico de versiones de tus archivos.";
+"All current files will remain. Only historic versions of your files will be deleted."="Los archivos actuales serán conservados. Solo se borrará el histórico de versiones de tus archivos.";
 /* Text of the dialog to delete all the file versions of the account */
 "You are about to delete the version histories of all files. Any file version shared to you from a contact will need to be deleted by them.[Br][Br]Please note that the current files will not be deleted."="Estás a punto de eliminar el historial de versiones de todos los archivos. Las versiones compartidas contigo por otros contactos las tendrán que borrar ellos.\n\nTen en cuenta que los archivos actuales no serán eliminados.";
 /* Title for the Rubbish-Bin Cleaning Scheduler feature */

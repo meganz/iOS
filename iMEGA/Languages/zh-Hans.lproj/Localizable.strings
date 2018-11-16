@@ -102,7 +102,7 @@
 "emailInvalidFormat"="请输入有效的邮箱地址";
 /* Add contacts and share dialog error message when user try to add wrong email address */
 "theEmailAddressFormatIsInvalid"="email格式无效";
-/* Message shown when the user enters a wrong password  */
+/* Message shown when the user enters a wrong password */
 "passwordInvalidFormat"="请输入有效的密码";
 /* Hint text to suggest that the user has to write his email */
 "emailPlaceholder"="邮箱地址";
@@ -130,10 +130,8 @@
 "passwordStrong"="这个密码将可承受最典型的暴力破解攻击。请确保您会好好记牢。";
 /*  */
 "agreeWithTheMEGATermsOfService"="我同意MEGA的<a href='terms'>服务条款</a>";
-/* Error text shown when you have not entered a correct name  */
+/* Error text shown when you have not entered a correct name */
 "nameInvalidFormat"="请输入有效的名字";
-/*  */
-"invalidFirstNameAndLastName"="无效的名或姓。";
 /* Error text shown when you have not written the same password */
 "passwordsDoNotMatch"="密码不匹配";
 /* Error text shown when you don't have selected the checkbox to agree with the Terms of Service */
@@ -145,7 +143,7 @@
 /* Text shown on the confirm account view to remind the user what to do */
 "confirmText"="请输入您的密码来确认账户";
 /* Label for any ‘Confirm account’ button, link, text, title, etc. - (String as short as possible). */
-"Confirm account"="确认您的账号";
+"Confirm account"="确认账户";
 /* Error text shown when you introduce a wrong password on the confirmation proccess */
 "passwordWrong"="错误密码";
 /* Warning title shown when you try to confirm an account but you are logged in with another one */
@@ -846,7 +844,7 @@
 /* Menu item */
 "help"="客户服务";
 /* Title of the section to access MEGA's help centre */
-"helpCentreLabel"="协助中心";
+"helpCentreLabel"="帮助中心";
 /* Section title that links you to the webpage that let you join and test the beta versions */
 "Join Beta"="加入测试版";
 /* Title to rate the app */
@@ -1567,7 +1565,7 @@
 /* Button title to start the setup of a feature. For example 'Begin Setup' for Two-Factor Authentication */
 "beginSetup"="开始安装";
 /* A message on the Verify Login page telling the user to enter their 2FA code. */
-"pleaseEnterTheSixDigitCode"="请输入您的验证程序中生成的6位验证码。";
+"pleaseEnterTheSixDigitCode"="请输入验证程序中生成的6位验证码。";
 /* Title of the dialog displayed to start setup the Two-Factor Authentication */
 "whyYouDoNeedTwoFactorAuthentication"="为什么您需要双重验证？";
 /* Description for the ‘Two-Factor Authentication’ in the security settings section. */
@@ -1581,7 +1579,7 @@
 /* A title on the mobile web client page showing that 2FA has been enabled successfully. */
 "twoFactorAuthenticationEnabled"="双重验证已启用";
 /* A message on the dialog shown after 2FA was successfully enabled. */
-"twoFactorAuthenticationEnabledDescription"="您在下次登录账户时，系统会要求您输入验证程序提供的6位验证码。";
+"twoFactorAuthenticationEnabledDescription"="您在下次登录账户时，系统会要求您输入验证程序中提供的6位验证码。";
 /* A warning message on the Backup Recovery Key dialog to tell the user to backup their Recovery Key to their local computer. */
 "pleaseSaveYourRecoveryKey"="请将您的恢复秘钥保存在安全位置";
 /* An informational message on the Backup Recovery Key dialog. */
@@ -1592,17 +1590,17 @@
 "scanOrCopyTheSeed"="您可以将种子扫描或复制到您的验证程序中。 以防您的手机丢失，请确保种子已备份至安全位置。";
 /* A button to help them restore their account if they have lost their 2FA device. */
 "lostYourAuthenticatorDevice"="丢失了您的验证设备？";
-/* Settings section title where you can enable the option to 'Save Images in Library' */
-"Save Images in Library"="保存照片至资料库";
-/* Settings section title where you can enable the option to 'Save Videos in Library' */
-"Save Videos in Library"="保存视频至资料库";
+/* Settings section title where you can enable the option to 'Save Images in Photos' */
+"Save Images in Photos"="保存图片至照片";
+/* Settings section title where you can enable the option to 'Save Videos in Photos' */
+"Save Videos in Photos"="保存视频至照片";
 /* Footer text shown under the settings for download options 'Save Images/Videos in Library' */
 "Images and/or videos downloaded will be stored in the device’s media library instead of the Offline section."="已下载的照片与/或视频将储存在您设备的媒体资料库中，而非离线部分。";
 /* Setting associated with the 'Camera' of the device */
 "Camera"="相机";
-/* Settings section title where you can enable the option to 'Save in Library' the images or videos taken from your camera in the MEGA app */
-"Save in Library"="保存至资料库";
-/* Footer text shown under the Camera setting to explain the option 'Save in Library' */
+/* Settings section title where you can enable the option to 'Save in Photos' the images or videos taken from your camera in the MEGA app */
+"Save in Photos"="保存至照片";
+/* Footer text shown under the Camera setting to explain the option 'Save in Photos' */
 "Save a copy of the images and videos taken from the MEGA app in your device’s media library."="将MEGA应用程序中拍摄的照片与视频的副本保存在您设备的媒体资料库中。";
 /* Title shown in a page of the on boarding screens explaining that the user keeps the encryption keys */
 "You hold the keys"="您持有这把密钥";
@@ -1627,7 +1625,7 @@
 /* Title label that explains that the user is going to be asked for the photos permission */
 "Allow Access to Photos"="允许访问照片";
 /* Detailed explanation of why the user should give permission to access to the photos */
-"To share photos and videos, allow MEGA to access your library."="要分享照片与视频，请允许MEGA访问您的照片";
+"Please give the MEGA App permission to access Photos to share photos and videos."="请允许MEGA应用程序访问您的照片，此操作用于共享照片与视频。";
 /* Title label that explains that the user is going to be asked for the microphone and camera permission */
 "Enable Microphone and Camera"="启用麦克风和相机";
 /* Detailed explanation of why the user should give permission to access to the camera and the microphone */
@@ -1637,7 +1635,7 @@
 /* Detailed explanation of why the user should give permission to deliver notifications */
 "We would like to send you notifications so you receive new messages on your device instantly."="我们将向您发送通知，以便您立即在设备上收到新消息。";
 /* Button which triggers a request for a specific permission, that have been explained to the user beforehand */
-"Allow Access"="开启访问";
+"Allow Access"="允许访问";
 /* A section header which contains the file management settings. These settings allow users to remove duplicate files etc. */
 "File Management"="文件管理";
 /* Title of the option to enable or disable file versioning on Settings section */

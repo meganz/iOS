@@ -102,7 +102,7 @@
 "emailInvalidFormat"="請輸入有效的郵箱地址";
 /* Add contacts and share dialog error message when user try to add wrong email address */
 "theEmailAddressFormatIsInvalid"="email格式無效";
-/* Message shown when the user enters a wrong password  */
+/* Message shown when the user enters a wrong password */
 "passwordInvalidFormat"="請輸入有效的密碼";
 /* Hint text to suggest that the user has to write his email */
 "emailPlaceholder"="郵箱地址";
@@ -130,10 +130,8 @@
 "passwordStrong"="這個密碼將可承受最典型的暴力破解攻擊。請確保您會好好記牢。";
 /*  */
 "agreeWithTheMEGATermsOfService"="我同意MEGA的<a href='terms'>服務條款</a>";
-/* Error text shown when you have not entered a correct name  */
+/* Error text shown when you have not entered a correct name */
 "nameInvalidFormat"="請輸入有效的名字";
-/*  */
-"invalidFirstNameAndLastName"="無效的名或姓。";
 /* Error text shown when you have not written the same password */
 "passwordsDoNotMatch"="密碼不匹配";
 /* Error text shown when you don't have selected the checkbox to agree with the Terms of Service */
@@ -145,7 +143,7 @@
 /* Text shown on the confirm account view to remind the user what to do */
 "confirmText"="請輸入您的密碼來確認賬戶";
 /* Label for any ‘Confirm account’ button, link, text, title, etc. - (String as short as possible). */
-"Confirm account"="確認您的帳號";
+"Confirm account"="確認帳戶";
 /* Error text shown when you introduce a wrong password on the confirmation proccess */
 "passwordWrong"="錯誤密碼";
 /* Warning title shown when you try to confirm an account but you are logged in with another one */
@@ -846,7 +844,7 @@
 /* Menu item */
 "help"="支援";
 /* Title of the section to access MEGA's help centre */
-"helpCentreLabel"="協助中心";
+"helpCentreLabel"="幫助中心";
 /* Section title that links you to the webpage that let you join and test the beta versions */
 "Join Beta"="Join Beta";
 /* Title to rate the app */
@@ -1592,17 +1590,17 @@
 "scanOrCopyTheSeed"="Scan or copy the seed to your Authenticator App. Be sure to backup this seed to a safe place in case you lose your device.";
 /* A button to help them restore their account if they have lost their 2FA device. */
 "lostYourAuthenticatorDevice"="Lost your Authenticator device?";
-/* Settings section title where you can enable the option to 'Save Images in Library' */
-"Save Images in Library"="Save Images in Library";
-/* Settings section title where you can enable the option to 'Save Videos in Library' */
-"Save Videos in Library"="Save Videos in Library";
+/* Settings section title where you can enable the option to 'Save Images in Photos' */
+"Save Images in Photos"="Save Images in Photos";
+/* Settings section title where you can enable the option to 'Save Videos in Photos' */
+"Save Videos in Photos"="Save Videos in Photos";
 /* Footer text shown under the settings for download options 'Save Images/Videos in Library' */
 "Images and/or videos downloaded will be stored in the device’s media library instead of the Offline section."="Images and/or videos downloaded will be stored in the device’s media library instead of the Offline section.";
 /* Setting associated with the 'Camera' of the device */
 "Camera"="Camera";
-/* Settings section title where you can enable the option to 'Save in Library' the images or videos taken from your camera in the MEGA app */
-"Save in Library"="Save in Library";
-/* Footer text shown under the Camera setting to explain the option 'Save in Library' */
+/* Settings section title where you can enable the option to 'Save in Photos' the images or videos taken from your camera in the MEGA app */
+"Save in Photos"="Save in Photos";
+/* Footer text shown under the Camera setting to explain the option 'Save in Photos' */
 "Save a copy of the images and videos taken from the MEGA app in your device’s media library."="Save a copy of the images and videos taken from the MEGA app in your device’s media library.";
 /* Title shown in a page of the on boarding screens explaining that the user keeps the encryption keys */
 "You hold the keys"="You hold the keys";
@@ -1627,7 +1625,7 @@
 /* Title label that explains that the user is going to be asked for the photos permission */
 "Allow Access to Photos"="Allow Access to Photos";
 /* Detailed explanation of why the user should give permission to access to the photos */
-"To share photos and videos, allow MEGA to access your library."="To share photos and videos, allow MEGA to access your library.";
+"Please give the MEGA App permission to access Photos to share photos and videos."="Please give the MEGA App permission to access Photos to share photos and videos.";
 /* Title label that explains that the user is going to be asked for the microphone and camera permission */
 "Enable Microphone and Camera"="Enable Microphone and Camera";
 /* Detailed explanation of why the user should give permission to access to the camera and the microphone */

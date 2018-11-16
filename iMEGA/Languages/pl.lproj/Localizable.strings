@@ -102,7 +102,7 @@
 "emailInvalidFormat"="Wprowadź poprawny adres email";
 /* Add contacts and share dialog error message when user try to add wrong email address */
 "theEmailAddressFormatIsInvalid"="Format adresu email jest nie prawidłowy";
-/* Message shown when the user enters a wrong password  */
+/* Message shown when the user enters a wrong password */
 "passwordInvalidFormat"="Wprowadź poprawne hasło";
 /* Hint text to suggest that the user has to write his email */
 "emailPlaceholder"="Email";
@@ -130,10 +130,8 @@
 "passwordStrong"="To hasło będzie wytrzymałe na najbardziej wyrafinowane ataki brute-force. Upewnij się, że jesteś w stanie je zapamiętać.";
 /*  */
 "agreeWithTheMEGATermsOfService"="Akeceptuję <a href='terms'>regulamin</a> MEGA";
-/* Error text shown when you have not entered a correct name  */
+/* Error text shown when you have not entered a correct name */
 "nameInvalidFormat"="Wprowadź poprawną nazwę";
-/*  */
-"invalidFirstNameAndLastName"="Imię i/lub nazwisko zostało podane błędnie.";
 /* Error text shown when you have not written the same password */
 "passwordsDoNotMatch"="Hasła do siebie nie pasują";
 /* Error text shown when you don't have selected the checkbox to agree with the Terms of Service */
@@ -145,7 +143,7 @@
 /* Text shown on the confirm account view to remind the user what to do */
 "confirmText"="Wprowadź hasło, w celu potwierdzenia konta";
 /* Label for any ‘Confirm account’ button, link, text, title, etc. - (String as short as possible). */
-"Confirm account"="Potwierdź swoje konto";
+"Confirm account"="Potwierdź konto";
 /* Error text shown when you introduce a wrong password on the confirmation proccess */
 "passwordWrong"="Błędne hasło";
 /* Warning title shown when you try to confirm an account but you are logged in with another one */
@@ -1567,7 +1565,7 @@
 /* Button title to start the setup of a feature. For example 'Begin Setup' for Two-Factor Authentication */
 "beginSetup"="Rozpocznij instalację";
 /* A message on the Verify Login page telling the user to enter their 2FA code. */
-"pleaseEnterTheSixDigitCode"="Wprowadź 6-cyfrowy kod wygenerowany przez aplikację do uwierzytelniania.";
+"pleaseEnterTheSixDigitCode"="Wprowadź 6-cyfrowy kod wygenerowany przez aplikację Authenticator.";
 /* Title of the dialog displayed to start setup the Two-Factor Authentication */
 "whyYouDoNeedTwoFactorAuthentication"="Dlaczego potrzebujesz uwierzytelniania dwuetapowego?";
 /* Description for the ‘Two-Factor Authentication’ in the security settings section. */
@@ -1581,7 +1579,7 @@
 /* A title on the mobile web client page showing that 2FA has been enabled successfully. */
 "twoFactorAuthenticationEnabled"="Uwierzytelnianie dwuetapowe włączone";
 /* A message on the dialog shown after 2FA was successfully enabled. */
-"twoFactorAuthenticationEnabledDescription"="Gdy następnym razem zalogujesz się na swoje konto, zostaniesz poproszony o wprowadzenie 6-cyfrowego kodu podanego przez aplikację do uwierzytelniania.";
+"twoFactorAuthenticationEnabledDescription"="Gdy następnym razem zalogujesz się na swoje konto, zostaniesz poproszony o podanie 6-cyfrowego kodu podanego przez aplikację Authenticator.";
 /* A warning message on the Backup Recovery Key dialog to tell the user to backup their Recovery Key to their local computer. */
 "pleaseSaveYourRecoveryKey"="Zapisz klucz zapasowy w bezpiecznej lokalizacji";
 /* An informational message on the Backup Recovery Key dialog. */
@@ -1589,20 +1587,20 @@
 /* A message on a dialog to say that 2FA has been successfully disabled. */
 "twoFactorAuthenticationDisabled"="Uwierzytelnianie dwuetapowe wyłączone";
 /* A message on the setup two-factor authentication page on the mobile web client. */
-"scanOrCopyTheSeed"="Zeskanuj lub skopiuj kod do aplikacji do uwierzytelniania. Pamiętaj, aby wykonać kopię zapasową tego materiału w bezpieczne miejsce na wypadek zgubienia telefonu.";
+"scanOrCopyTheSeed"="Zeskanuj lub skopiuj materiał siewny do aplikacji Authenticator. Pamiętaj, aby wykonać kopię zapasową tego materiału siewnego w bezpieczne miejsce na wypadek utraty urządzenia.";
 /* A button to help them restore their account if they have lost their 2FA device. */
 "lostYourAuthenticatorDevice"="Zgubiłeś swoje urządzenie?";
-/* Settings section title where you can enable the option to 'Save Images in Library' */
-"Save Images in Library"="Zapisz obrazy w bibliotece";
-/* Settings section title where you can enable the option to 'Save Videos in Library' */
-"Save Videos in Library"="Zapisz wideo w bibliotece";
+/* Settings section title where you can enable the option to 'Save Images in Photos' */
+"Save Images in Photos"="Zapisz obrazy w zdjęciach";
+/* Settings section title where you can enable the option to 'Save Videos in Photos' */
+"Save Videos in Photos"="Zapisz wideo w zdjęciach";
 /* Footer text shown under the settings for download options 'Save Images/Videos in Library' */
 "Images and/or videos downloaded will be stored in the device’s media library instead of the Offline section."="Zdjęcia i / lub pobrane filmy będą przechowywane w bibliotece multimediów urządzenia zamiast w sekcji Offline.";
 /* Setting associated with the 'Camera' of the device */
 "Camera"="Aparat";
-/* Settings section title where you can enable the option to 'Save in Library' the images or videos taken from your camera in the MEGA app */
-"Save in Library"="Zapisz w bibliotece";
-/* Footer text shown under the Camera setting to explain the option 'Save in Library' */
+/* Settings section title where you can enable the option to 'Save in Photos' the images or videos taken from your camera in the MEGA app */
+"Save in Photos"="Zapisz w zdjęciach";
+/* Footer text shown under the Camera setting to explain the option 'Save in Photos' */
 "Save a copy of the images and videos taken from the MEGA app in your device’s media library."="Zapisz kopię zdjęć i filmów pobranych z aplikacji MEGA w bibliotece multimediów urządzenia.";
 /* Title shown in a page of the on boarding screens explaining that the user keeps the encryption keys */
 "You hold the keys"="Ty przechowujesz klucze";
@@ -1627,7 +1625,7 @@
 /* Title label that explains that the user is going to be asked for the photos permission */
 "Allow Access to Photos"="Zezwalaj na dostęp do zdjęć";
 /* Detailed explanation of why the user should give permission to access to the photos */
-"To share photos and videos, allow MEGA to access your library."="Aby udostępniać zdjęcia i filmy, zezwól MEGA na dostęp do zdjęć";
+"Please give the MEGA App permission to access Photos to share photos and videos."="Zezwól MEGA na dostęp do Zdjęć, aby udostępniać zdjęcia i filmy.";
 /* Title label that explains that the user is going to be asked for the microphone and camera permission */
 "Enable Microphone and Camera"="Włącz mikrofon i kamerę";
 /* Detailed explanation of why the user should give permission to access to the camera and the microphone */
@@ -1637,7 +1635,7 @@
 /* Detailed explanation of why the user should give permission to deliver notifications */
 "We would like to send you notifications so you receive new messages on your device instantly."="Chcemy wysyłać Ci powiadomienia, aby natychmiast otrzymywać nowe wiadomości na Twoim urządzeniu.";
 /* Button which triggers a request for a specific permission, that have been explained to the user beforehand */
-"Allow Access"="Włącz dostęp";
+"Allow Access"="Umożliwić dostęp";
 /* A section header which contains the file management settings. These settings allow users to remove duplicate files etc. */
 "File Management"="Zarządzanie plikami";
 /* Title of the option to enable or disable file versioning on Settings section */
