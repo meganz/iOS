@@ -4,6 +4,7 @@
 #import <ContactsUI/ContactsUI.h>
 
 #import "UIImage+GKContact.h"
+#import "NSDate+DateTools.h"
 #import "SVProgressHUD.h"
 #import "UIScrollView+EmptyDataSet.h"
 #import "UIBarButtonItem+Badge.h"
@@ -1017,14 +1018,7 @@
             }
             MEGAShare *share = [self.outSharesForNodeMutableArray objectAtIndex:indexPath.row];
             [cell.permissionsImageView setImage:[Helper permissionsButtonImageForShareType:share.access]];
-        } else if (self.contactsMode >= ContactsModeChatStartConversation) {
-            cell = [tableView dequeueReusableCellWithIdentifier:@"contactCell" forIndexPath:indexPath];
-            
-            cell.nameLabel.text = userName ? userName : user.email;
-            cell.shareLabel.text = user.email;
-            
-            cell.onlineStatusView.backgroundColor = [UIColor mnz_colorForStatusChange:[[MEGASdkManager sharedMEGAChatSdk] userOnlineStatus:user.handle]];
-        } else {
+        } else if (self.contactsMode == ContactsModeShareFoldersWith) {
             cell = [tableView dequeueReusableCellWithIdentifier:@"contactCell" forIndexPath:indexPath];
             cell.nameLabel.text = userName ? userName : user.email;
             
@@ -1037,7 +1031,18 @@
             } else {
                 cell.shareLabel.text = [NSString stringWithFormat:AMLocalizedString(@"foldersShared", @" folders shared"), numFilesShares];
             }
-        }
+        } else {
+            cell = [tableView dequeueReusableCellWithIdentifier:@"contactCell" forIndexPath:indexPath];
+            
+            cell.nameLabel.text = userName ? userName : user.email;
+            MEGAChatStatus userStatus = [[MEGASdkManager sharedMEGAChatSdk] userOnlineStatus:user.handle];
+            cell.shareLabel.text = [NSString chatStatusString:userStatus];
+            cell.onlineStatusView.backgroundColor = [UIColor mnz_colorForStatusChange:userStatus];
+
+            if ([[[MEGASdkManager sharedMEGAChatSdk] presenceConfig] isLastGreenVisible]) {
+                [[MEGASdkManager sharedMEGAChatSdk] requestLastGreen:user.handle];
+            }
+        } 
         
         [cell.avatarImageView mnz_setImageForUserHandle:user.handle];
         
@@ -1611,6 +1616,23 @@
         if ([self.tableView.indexPathsForVisibleRows containsObject:indexPath]) {
             ContactTableViewCell *cell = (ContactTableViewCell *)[self.tableView cellForRowAtIndexPath:indexPath];
             cell.onlineStatusView.backgroundColor = [UIColor mnz_colorForStatusChange:onlineStatus];
+        }
+    }
+}
+
+- (void)onChatPresenceLastGreen:(MEGAChatSdk *)api userHandle:(uint64_t)userHandle lastGreen:(NSInteger)lastGreen {
+
+    if (userHandle != api.myUserHandle && (self.contactsMode >= ContactsModeChatStartConversation || self.contactsMode == ContactsModeDefault)) {
+        MEGAChatStatus chatStatus = [[MEGASdkManager sharedMEGAChatSdk] userOnlineStatus:userHandle];
+        if (chatStatus == 1 || chatStatus == 2) {
+            NSString *base64Handle = [MEGASdk base64HandleForUserHandle:userHandle];
+            NSIndexPath *indexPath = [self.indexPathsMutableDictionary objectForKey:base64Handle];
+            
+            if ([self.tableView.indexPathsForVisibleRows containsObject:indexPath]) {
+                ContactTableViewCell *cell = (ContactTableViewCell *)[self.tableView cellForRowAtIndexPath:indexPath];
+                NSDate *dateLastSeen = [NSDate dateWithTimeIntervalSinceNow:lastGreen*60];
+                cell.shareLabel.text = [NSString stringWithFormat:@"Last seen %@", dateLastSeen.timeAgoSinceNow];
+            }
         }
     }
 }
