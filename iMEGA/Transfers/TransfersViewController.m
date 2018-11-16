@@ -616,9 +616,8 @@ typedef NS_ENUM(NSInteger, SegmentIndex) {
         if (transfer.state == MEGATransferStateActive) {
             [cell reloadThumbnailImage];
             [cell updatePercentAndSpeedLabelsForTransfer:transfer];
-        } else if (transfer.state == MEGATransferStateCompleting) {
-            [cell configureCellWithTransferState:transfer.state];
         }
+        [cell updateTransferIfNewState:transfer];
     }
 }
 
