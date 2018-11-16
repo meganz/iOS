@@ -20,5 +20,6 @@
 - (void)configureCellWithTransferState:(MEGATransferState)transferState;
 - (void)reloadThumbnailImage;
 - (void)updatePercentAndSpeedLabelsForTransfer:(MEGATransfer *)transfer;
+- (void)updateTransferIfNewState:(MEGATransfer *)transfer;
 
 @end

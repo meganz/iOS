@@ -146,6 +146,13 @@
     self.infoLabel.attributedText = percentageAttributedString;
 }
 
+- (void)updateTransferIfNewState:(MEGATransfer *)transfer {
+    if (self.transfer.state != transfer.state) {
+        self.transfer = transfer;
+        [self configureCellWithTransferState:self.transfer.state];
+    }
+}
+
 #pragma mark - Private
 
 - (void)configureCellWithTransferState:(MEGATransferState)transferState {
