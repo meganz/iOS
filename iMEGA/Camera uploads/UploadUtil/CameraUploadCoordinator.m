@@ -14,15 +14,8 @@
         } else {
             MEGANode *node = [MEGASdkManager.sharedMEGASdk nodeForHandle:request.nodeHandle];
             NSOperationQueue *operation = [[NSOperationQueue alloc] init];
-            ThumbnailUploadOperation *thumbnailOperation = [[ThumbnailUploadOperation alloc] initWithNode:node uploadInfo:info];
-            [operation addOperation:thumbnailOperation];
-            PreviewUploadOperation *previewOperation = [[PreviewUploadOperation alloc] initWithNode:node uploadInfo:info];
-            [operation addOperation:previewOperation];
-            [NSTimer scheduledTimerWithTimeInterval:60 repeats:NO block:^(NSTimer * _Nonnull timer) {
-                MEGALogDebug(@"[Camera Upload] expires thumbnail and preview uploads for asset: %@", info.asset.localIdentifier);
-                [thumbnailOperation expireOperation];
-                [previewOperation expireOperation];
-            }];
+            [operation addOperation:[[ThumbnailUploadOperation alloc] initWithNode:node uploadInfo:info expiresAfterTimeInterval:60]];
+            [operation addOperation:[[PreviewUploadOperation alloc] initWithNode:node uploadInfo:info expiresAfterTimeInterval:60]];
             [operation waitUntilAllOperationsAreFinished];
             success(node);
         }
