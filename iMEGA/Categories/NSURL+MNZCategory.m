@@ -175,7 +175,7 @@
                     }
                 }
                 
-                MEGAPhotoBrowserViewController *photoBrowserVC = [MEGAPhotoBrowserViewController photoBrowserWithMediaNodes:@[node].mutableCopy api:[MEGASdkManager sharedMEGASdkFolder] displayMode:DisplayModeFileLink presentingNode:node preferredIndex:0];
+                MEGAPhotoBrowserViewController *photoBrowserVC = [MEGAPhotoBrowserViewController photoBrowserWithMediaNodes:@[node].mutableCopy api:[MEGASdkManager sharedMEGASdk] displayMode:DisplayModeFileLink presentingNode:node preferredIndex:0];
                 photoBrowserVC.publicLink = fileLinkURLString;
                 
                 [UIApplication.mnz_presentingViewController presentViewController:photoBrowserVC animated:YES completion:nil];
