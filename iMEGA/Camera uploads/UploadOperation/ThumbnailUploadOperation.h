@@ -1,15 +1,9 @@
 
-#import "MEGAOperation.h"
-#import "AssetUploadInfo.h"
-#import "MEGASdkManager.h"
+#import "AttributeUploadOperation.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface ThumbnailUploadOperation : MEGAOperation
-
-- (instancetype)initWithNode:(MEGANode *)node uploadInfo:(AssetUploadInfo *)uploadInfo;
-
-- (void)expireOperation;
+@interface ThumbnailUploadOperation : AttributeUploadOperation
 
 @end
 

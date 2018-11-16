@@ -4,41 +4,16 @@
 #import "CameraUploadRequestDelegate.h"
 #import "NSFileManager+MNZCategory.h"
 
-static NSString * const PreviewErrorDomain = @"nz.mega.cameraUpload.previewUpload";
-static NSString * const PreviewErrorKey = @"message";
-
-@interface PreviewUploadOperation ()
-
-@property (strong, nonatomic) MEGANode *node;
-@property (strong, nonatomic) AssetUploadInfo *uploadInfo;
-@property (nonatomic) UIBackgroundTaskIdentifier backgroundTaskId;
-
-@end
-
 @implementation PreviewUploadOperation
-
-- (instancetype)initWithNode:(MEGANode *)node uploadInfo:(AssetUploadInfo *)uploadInfo {
-    self = [super init];
-    if (self) {
-        _node = node;
-        _uploadInfo = uploadInfo;
-    }
-    
-    return self;
-}
 
 - (void)start {
     [super start];
     
     if (![NSFileManager.defaultManager fileExistsAtPath:self.uploadInfo.previewURL.path]) {
-        [self finishOperationWithError:[NSError errorWithDomain:PreviewErrorDomain code:0 userInfo:@{PreviewErrorKey : [NSString stringWithFormat:@"No preview file found for asset: %@", self.uploadInfo.asset.localIdentifier]}]];
+        [self finishOperationWithError:[self errorWithMessage:[NSString stringWithFormat:@"No preview file found for asset: %@", self.uploadInfo.asset.localIdentifier]]];
         return;
     }
-    
-    self.backgroundTaskId = [UIApplication.sharedApplication beginBackgroundTaskWithName:@"previewUploadBackgroundTask" expirationHandler:^{
-        [self finishOperationWithError:[NSError errorWithDomain:PreviewErrorDomain code:0 userInfo:@{PreviewErrorKey : [NSString stringWithFormat:@"NoBackground task expired in uploading preview for asset: %@", self.uploadInfo.asset.localIdentifier]}]];
-    }];
-    
+
     MEGALogDebug(@"[Camera Upload] Start uploading preview for asset %@ %@", self.uploadInfo.asset.localIdentifier, self.uploadInfo.fileName);
     
     NSError *error;
@@ -65,19 +40,6 @@ static NSString * const PreviewErrorKey = @"message";
         MEGALogDebug(@"[Camera Upload] Move preview to cache failed for asset %@ error %@", self.uploadInfo.asset.localIdentifier, error);
         [self finishOperationWithError:error];
     }
-}
-
-- (void)expireOperation {
-    [self finishOperationWithError:[NSError errorWithDomain:PreviewErrorDomain code:0 userInfo:@{PreviewErrorKey : @"operation gets expired"}]];
-}
-
-- (void)finishOperationWithError:(NSError *)error {
-    [super finishOperation];
-    
-    MEGALogDebug(@"[Camera Upload] Preview operation finished with error: %@", error);
-    
-    [UIApplication.sharedApplication endBackgroundTask:self.backgroundTaskId];
-    self.backgroundTaskId = UIBackgroundTaskInvalid;
 }
 
 @end

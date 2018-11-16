@@ -4,40 +4,15 @@
 #import "CameraUploadRequestDelegate.h"
 #import "NSFileManager+MNZCategory.h"
 
-static NSString * const ThumbnailErrorDomain = @"nz.mega.cameraUpload.thumbnailUpload";
-static NSString * const ThumbnailErrorKey = @"message";
-
-@interface ThumbnailUploadOperation ()
-
-@property (strong, nonatomic) MEGANode *node;
-@property (strong, nonatomic) AssetUploadInfo *uploadInfo;
-@property (nonatomic) UIBackgroundTaskIdentifier backgroundTaskId;
-
-@end
-
 @implementation ThumbnailUploadOperation
-
-- (instancetype)initWithNode:(MEGANode *)node uploadInfo:(AssetUploadInfo *)uploadInfo {
-    self = [super init];
-    if (self) {
-        _node = node;
-        _uploadInfo = uploadInfo;
-    }
-    
-    return self;
-}
 
 - (void)start {
     [super start];
     
     if (![NSFileManager.defaultManager fileExistsAtPath:self.uploadInfo.thumbnailURL.path]) {
-        [self finishOperationWithError:[NSError errorWithDomain:ThumbnailErrorDomain code:0 userInfo:@{ThumbnailErrorKey : [NSString stringWithFormat:@"No thumbnail file found for asset: %@", self.uploadInfo.asset.localIdentifier]}]];
+        [self finishOperationWithError:[self errorWithMessage:[NSString stringWithFormat:@"No thumbnail file found for asset: %@", self.uploadInfo.asset.localIdentifier]]];
         return;
     }
-    
-    self.backgroundTaskId = [UIApplication.sharedApplication beginBackgroundTaskWithName:@"thumbnailUploadBackgroundTask" expirationHandler:^{
-        [self finishOperationWithError:[NSError errorWithDomain:ThumbnailErrorDomain code:0 userInfo:@{ThumbnailErrorKey : [NSString stringWithFormat:@"Background task expired in uploading thumbnail for asset: %@", self.uploadInfo.asset.localIdentifier]}]];
-    }];
     
     MEGALogDebug(@"[Camera Upload] Start uploading thumbnail for asset %@ %@", self.uploadInfo.asset.localIdentifier, self.uploadInfo.fileName);
     
@@ -67,19 +42,5 @@ static NSString * const ThumbnailErrorKey = @"message";
         [self finishOperationWithError:error];
     }
 }
-
-- (void)expireOperation {
-    [self finishOperationWithError:[NSError errorWithDomain:ThumbnailErrorDomain code:0 userInfo:@{ThumbnailErrorKey : @"operation gets expired"}]];
-}
-
-- (void)finishOperationWithError:(NSError *)error {
-    [self finishOperation];
-    
-    MEGALogDebug(@"[Camera Upload] thumbnail operation finished with error: %@", error);
-    
-    [UIApplication.sharedApplication endBackgroundTask:self.backgroundTaskId];
-    self.backgroundTaskId = UIBackgroundTaskInvalid;
-}
-
 
 @end
