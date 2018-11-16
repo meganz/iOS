@@ -1575,7 +1575,7 @@
 /* Alert text shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device */
 "youNeedATwoFactorAuthenticationApp"="이 기기에 2단계 인증 앱이 필요합니다";
 /* Alert text shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device and tap on the question mark */
-"You need an authenticator app to enable 2FA on MEGA. You can download and install the Google Authenticator, Duo Mobile, Authy or Microsoft Authenticator app for your phone or tablet."="MEGA에서 2단계 인증을 활성화하려면 인증기 앱이 필요합니다. 당신의 휴대전화 또는 타블렛용 Google 인증기, Duo Mobile, Authy 또는 Microsoft 인증기 앱을 다운로드하고 설치할 수 있습니다.";
+"You need an authenticator app to enable 2FA on MEGA. You can download and install the Google Authenticator, Duo Mobile, Authy or Microsoft Authenticator app for your phone or tablet."="MEGA에서 2단계 인증을 활성화하려면 인증기 앱이 필요합니다. 당신의 휴대전화 또는 태블릿용 Google 인증기, Duo Mobile, Authy 또는 Microsoft 인증기 앱을 다운로드하고 설치할 수 있습니다.";
 /* A title on the mobile web client page showing that 2FA has been enabled successfully. */
 "twoFactorAuthenticationEnabled"="2단계 인증 활성화됨";
 /* A message on the dialog shown after 2FA was successfully enabled. */
@@ -1587,20 +1587,20 @@
 /* A message on a dialog to say that 2FA has been successfully disabled. */
 "twoFactorAuthenticationDisabled"="2단계 인증 비활성화됨";
 /* A message on the setup two-factor authentication page on the mobile web client. */
-"scanOrCopyTheSeed"="시드를 인증기 앱에서 스캔하거나 복사하세요. 휴대전화를 잃어버렸을 경우를 대비하여 이 시드를 안전한 곳에 백업하세요.";
+"scanOrCopyTheSeed"="시드를 인증기 앱에서 스캔하거나 복사하세요. 기기를 잃어버렸을 경우를 대비하여 이 시드를 안전한 곳에 백업하세요.";
 /* A button to help them restore their account if they have lost their 2FA device. */
 "lostYourAuthenticatorDevice"="인증기 장치를 잃어버렸나요?";
-/* Settings section title where you can enable the option to 'Save Images in Library' */
-"Save Images in Library"="라이브러리에 이미지 저장";
-/* Settings section title where you can enable the option to 'Save Videos in Library' */
-"Save Videos in Library"="라이브러리에 동영상 저장";
+/* Settings section title where you can enable the option to 'Save Images in Photos' */
+"Save Images in Photos"="사진에 이미지 저장";
+/* Settings section title where you can enable the option to 'Save Videos in Photos' */
+"Save Videos in Photos"="사진에 동영상 저장";
 /* Footer text shown under the settings for download options 'Save Images/Videos in Library' */
 "Images and/or videos downloaded will be stored in the device’s media library instead of the Offline section."="다운로드한 이미지와 동영상은 오프라인 영역 대신 기기의 미디어 라이브러리에 저장됩니다.";
 /* Setting associated with the 'Camera' of the device */
 "Camera"="카메라";
-/* Settings section title where you can enable the option to 'Save in Library' the images or videos taken from your camera in the MEGA app */
-"Save in Library"="라이브러리에 저장";
-/* Footer text shown under the Camera setting to explain the option 'Save in Library' */
+/* Settings section title where you can enable the option to 'Save in Photos' the images or videos taken from your camera in the MEGA app */
+"Save in Photos"="사진에 저장";
+/* Footer text shown under the Camera setting to explain the option 'Save in Photos' */
 "Save a copy of the images and videos taken from the MEGA app in your device’s media library."="MEGA 앱에서 촬영한 이미지 또는 동영상의 사본을 기기의 미디어 라이브러리에 저장합니다.";
 /* Title shown in a page of the on boarding screens explaining that the user keeps the encryption keys */
 "You hold the keys"="당신이 열쇠를 갖습니다";
@@ -1625,7 +1625,7 @@
 /* Title label that explains that the user is going to be asked for the photos permission */
 "Allow Access to Photos"="사진첩에 대한 접근 허용";
 /* Detailed explanation of why the user should give permission to access to the photos */
-"To share photos and videos, allow MEGA to access your library."="사진과 동영상을 공유하려면, MEGA가 당신의 사진에 접근할 수 있도록 허용해주세요";
+"Please give the MEGA App permission to access Photos to share photos and videos."="MEGA 앱이 사진과 동영상을 공유하기 위해 사진에 접근할 수 있는 권한을 주세요.";
 /* Title label that explains that the user is going to be asked for the microphone and camera permission */
 "Enable Microphone and Camera"="마이크와 카메라 활성화";
 /* Detailed explanation of why the user should give permission to access to the camera and the microphone */

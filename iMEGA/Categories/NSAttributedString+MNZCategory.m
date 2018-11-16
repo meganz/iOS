@@ -17,7 +17,8 @@
         cache.countLimit = 1000;
     });
     
-    NSString *key = [[NSString stringWithFormat:@"%@%@", message, color.description] SHA256];
+    NSString *fontKey = [NSString stringWithFormat:@"%@%.2f", font.fontName, font.pointSize];
+    NSString *key = [[NSString stringWithFormat:@"%@%@%@", message, color.description, fontKey] SHA256];
     NSAttributedString *cachedAttributedString = [cache objectForKey:key];
     
     if (cachedAttributedString) {

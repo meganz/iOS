@@ -75,4 +75,16 @@
     return [UIFont mnz_SFUIRegularWithSize:size];
 }
 
+- (UIFont *)bold {
+    return [UIFont fontWithDescriptor:[self.fontDescriptor fontDescriptorWithSymbolicTraits:UIFontDescriptorTraitBold] size:0];
+}
+
+- (UIFont *)italic {
+    return [UIFont fontWithDescriptor:[self.fontDescriptor fontDescriptorWithSymbolicTraits:UIFontDescriptorTraitItalic] size:0];
+}
+
+- (UIFont *)fontWithWeight:(UIFontWeight)weight {
+    return [UIFont systemFontOfSize:self.pointSize weight:weight];
+}
+
 @end
