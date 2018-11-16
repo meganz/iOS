@@ -102,7 +102,7 @@
 "emailInvalidFormat"="正しいメールを入力して下さい";
 /* Add contacts and share dialog error message when user try to add wrong email address */
 "theEmailAddressFormatIsInvalid"="メールアドレスのフォーマットが正しくありません。";
-/* Message shown when the user enters a wrong password  */
+/* Message shown when the user enters a wrong password */
 "passwordInvalidFormat"="有効パスワードを入力して下さい";
 /* Hint text to suggest that the user has to write his email */
 "emailPlaceholder"="メール";
@@ -130,10 +130,8 @@
 "passwordStrong"="このパスワードは大抵の攻撃に対抗できるでしょう。絶対に忘れないようにして下さい。";
 /*  */
 "agreeWithTheMEGATermsOfService"="私は、MEGAの <a href='terms'>サービス規約</a>に同意します。";
-/* Error text shown when you have not entered a correct name  */
+/* Error text shown when you have not entered a correct name */
 "nameInvalidFormat"="正しい名前を入力して下さい";
-/*  */
-"invalidFirstNameAndLastName"="名前が無効です。";
 /* Error text shown when you have not written the same password */
 "passwordsDoNotMatch"="パスワードが合いません。";
 /* Error text shown when you don't have selected the checkbox to agree with the Terms of Service */
@@ -1592,17 +1590,17 @@
 "scanOrCopyTheSeed"="シードをオーセンティケータアプリにスキャンまたはコピーします。端末を失くした場合に備えて、このシードを安全な場所に確実にバックアップしてください。";
 /* A button to help them restore their account if they have lost their 2FA device. */
 "lostYourAuthenticatorDevice"="オーセンティケータ端末を紛失しましたか？　";
-/* Settings section title where you can enable the option to 'Save Images in Library' */
-"Save Images in Library"="ライブラリに画像を保存";
-/* Settings section title where you can enable the option to 'Save Videos in Library' */
-"Save Videos in Library"="ライブラリに動画を保存";
+/* Settings section title where you can enable the option to 'Save Images in Photos' */
+"Save Images in Photos"="画像を写真に保存";
+/* Settings section title where you can enable the option to 'Save Videos in Photos' */
+"Save Videos in Photos"="動画を写真に保存";
 /* Footer text shown under the settings for download options 'Save Images/Videos in Library' */
 "Images and/or videos downloaded will be stored in the device’s media library instead of the Offline section."="ダウンロードした画像や動画は、オフラインセクションではなく、端末のメディアライブラリに保存されます。";
 /* Setting associated with the 'Camera' of the device */
 "Camera"="カメラ";
-/* Settings section title where you can enable the option to 'Save in Library' the images or videos taken from your camera in the MEGA app */
-"Save in Library"="ライブラリに保存";
-/* Footer text shown under the Camera setting to explain the option 'Save in Library' */
+/* Settings section title where you can enable the option to 'Save in Photos' the images or videos taken from your camera in the MEGA app */
+"Save in Photos"="写真に保存";
+/* Footer text shown under the Camera setting to explain the option 'Save in Photos' */
 "Save a copy of the images and videos taken from the MEGA app in your device’s media library."="MEGAアプリから取得した画像と動画のコピーをあなたの端末のメディアライブラリに保存します。";
 /* Title shown in a page of the on boarding screens explaining that the user keeps the encryption keys */
 "You hold the keys"="あなたがキーを持っています";
@@ -1627,7 +1625,7 @@
 /* Title label that explains that the user is going to be asked for the photos permission */
 "Allow Access to Photos"="写真へのアクセスを許可する";
 /* Detailed explanation of why the user should give permission to access to the photos */
-"To share photos and videos, allow MEGA to access your library."="写真や動画を共有するには、MEGAがあなたのライブラリへアクセスするのを許可してください";
+"Please give the MEGA App permission to access Photos to share photos and videos."="写真や動画を共有するために、MEGAアプリに写真へのアクセスを許可してください。";
 /* Title label that explains that the user is going to be asked for the microphone and camera permission */
 "Enable Microphone and Camera"="マイクとカメラを有効にする";
 /* Detailed explanation of why the user should give permission to access to the camera and the microphone */

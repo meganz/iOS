@@ -45,10 +45,10 @@
     MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:changePasswordVC];
     [navigationController addCancelButton];
     
-    UIViewController *visibleViewController = UIApplication.mnz_visibleViewController;
+    UIViewController *visibleViewController = UIApplication.mnz_presentingViewController;
     if ([visibleViewController isKindOfClass:UIAlertController.class]) {
         [visibleViewController dismissViewControllerAnimated:NO completion:^{
-            [UIApplication.mnz_visibleViewController presentViewController:navigationController animated:YES completion:nil];
+            [UIApplication.mnz_presentingViewController presentViewController:navigationController animated:YES completion:nil];
         }];
     } else {
         [visibleViewController presentViewController:navigationController animated:YES completion:nil];
@@ -76,7 +76,7 @@
                 UIAlertController *linkHasExpiredAlertController = [UIAlertController alertControllerWithTitle:alertTitle message:nil preferredStyle:UIAlertControllerStyleAlert];
                 [linkHasExpiredAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
                 
-                [UIApplication.mnz_visibleViewController presentViewController:linkHasExpiredAlertController animated:YES completion:nil];
+                [UIApplication.mnz_presentingViewController presentViewController:linkHasExpiredAlertController animated:YES completion:nil];
                 break;
             }
                 

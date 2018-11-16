@@ -38,6 +38,7 @@
 
 - (UIViewController *)mnz_viewControllerForNodeInFolderLink:(BOOL)isFolderLink {
     MEGASdk *api = isFolderLink ? [MEGASdkManager sharedMEGASdkFolder] : [MEGASdkManager sharedMEGASdk];
+    MEGASdk *apiForStreaming = [MEGASdkManager sharedMEGASdk].isLoggedIn ? [MEGASdkManager sharedMEGASdk] : [MEGASdkManager sharedMEGASdkFolder];
     
     MOOfflineNode *offlineNodeExist = [[MEGAStore shareInstance] offlineNodeWithNode:self];
     
@@ -89,9 +90,9 @@
             
             return previewController;
         }
-    } else if (self.name.mnz_isMultimediaPathExtension && [api httpServerStart:YES port:4443]) {
+    } else if (self.name.mnz_isMultimediaPathExtension && [apiForStreaming httpServerStart:YES port:4443]) {
         if (self.mnz_isPlayable) {
-            MEGAAVViewController *megaAVViewController = [[MEGAAVViewController alloc] initWithNode:self folderLink:isFolderLink];
+            MEGAAVViewController *megaAVViewController = [[MEGAAVViewController alloc] initWithNode:self folderLink:isFolderLink apiForStreaming:apiForStreaming];
             return megaAVViewController;
         } else {
             UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"fileNotSupported", @"Alert title shown when users try to stream an unsupported audio/video file") message:AMLocalizedString(@"message_fileNotSupported", @"Alert message shown when users try to stream an unsupported audio/video file") preferredStyle:UIAlertControllerStyleAlert];
@@ -175,7 +176,7 @@
                     downloadsDirectory = downloadsDirectory.mnz_relativeLocalPath;
                     NSString *offlineNameString = [[MEGASdkManager sharedMEGASdkFolder] escapeFsIncompatible:self.name];
                     NSString *localPath = [downloadsDirectory stringByAppendingPathComponent:offlineNameString];
-                    [api startDownloadNode:[api authorizeNode:self] localPath:localPath appData:[[NSString new] mnz_appDataToSaveInPhotosApp]];
+                    [[MEGASdkManager sharedMEGASdk] startDownloadNode:[api authorizeNode:self] localPath:localPath appData:[[NSString new] mnz_appDataToSaveInPhotosApp]];
                 }
                 break;
             }
@@ -390,7 +391,7 @@
                 MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"BrowserNavigationControllerID"];
                 BrowserViewController *browserVC = navigationController.viewControllers.firstObject;
                 browserVC.selectedNodesArray = [NSArray arrayWithObject:self];
-                [UIApplication.mnz_visibleViewController presentViewController:navigationController animated:YES completion:nil];
+                [UIApplication.mnz_presentingViewController presentViewController:navigationController animated:YES completion:nil];
                 
                 browserVC.browserAction = isFolderLink ? BrowserActionImportFromFolderLink : BrowserActionImport;
             }];

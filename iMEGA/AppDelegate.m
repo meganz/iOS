@@ -33,6 +33,7 @@
 #import "UIApplication+MNZCategory.h"
 
 #import "CallViewController.h"
+#import "ChatRoomsViewController.h"
 #import "CheckEmailAndFollowTheLinkViewController.h"
 #import "CloudDriveViewController.h"
 #import "ContactsViewController.h"
@@ -43,6 +44,8 @@
 #import "UpgradeTableViewController.h"
 
 #import "MEGAChatCreateChatGroupRequestDelegate.h"
+#import "MEGAChatNotificationDelegate.h"
+#import "MEGALocalNotificationManager.h"
 #import "MEGACreateAccountRequestDelegate.h"
 #import "MEGAGetAttrUserRequestDelegate.h"
 #import "MEGAInviteContactRequestDelegate.h"
@@ -278,7 +281,7 @@
                 UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"error", nil) message:message preferredStyle:UIAlertControllerStyleAlert];
                 [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
                 [[MEGASdkManager sharedMEGAChatSdk] logout];
-                [UIApplication.mnz_visibleViewController presentViewController:alertController animated:YES completion:nil];
+                [UIApplication.mnz_presentingViewController presentViewController:alertController animated:YES completion:nil];
             }
         }
         
@@ -317,7 +320,7 @@
         if (sessionId && ![[[launchOptions objectForKey:@"UIApplicationLaunchOptionsURLKey"] absoluteString] containsString:@"confirm"]) {
             MEGACreateAccountRequestDelegate *createAccountRequestDelegate = [[MEGACreateAccountRequestDelegate alloc] initWithCompletion:^ (MEGAError *error) {
                 CheckEmailAndFollowTheLinkViewController *checkEmailAndFollowTheLinkVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"CheckEmailAndFollowTheLinkViewControllerID"];
-                [UIApplication.mnz_visibleViewController presentViewController:checkEmailAndFollowTheLinkVC animated:YES completion:nil];
+                [UIApplication.mnz_presentingViewController presentViewController:checkEmailAndFollowTheLinkVC animated:YES completion:nil];
             }];
             createAccountRequestDelegate.resumeCreateAccount = YES;
             [[MEGASdkManager sharedMEGASdk] resumeCreateAccountWithSessionId:sessionId delegate:createAccountRequestDelegate];
@@ -349,6 +352,11 @@
     }
     
     MEGALogDebug(@"Application did finish launching with options %@", launchOptions);
+    
+    if (application.applicationState == UIApplicationStateActive) {
+        UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
+        [center removeAllDeliveredNotifications];
+    }
     
     return YES;
 }
@@ -420,6 +428,9 @@
     self.privacyView = nil;
     
     [self application:application shouldHideWindows:NO];
+    
+    UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
+    [center removeAllDeliveredNotifications];
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
@@ -540,14 +551,14 @@
                                             if (granted) {
                                                 [self performCall];
                                             } else {
-                                                [UIApplication.mnz_visibleViewController presentViewController:[DevicePermissionsHelper videoPermisionAlertController] animated:YES completion:nil];
+                                                [UIApplication.mnz_presentingViewController presentViewController:[DevicePermissionsHelper videoPermisionAlertController] animated:YES completion:nil];
                                             }
                                         }];
                                     } else {
                                         [self performCall];
                                     }
                                 } else {
-                                    [UIApplication.mnz_visibleViewController presentViewController:[DevicePermissionsHelper audioPermisionAlertController] animated:YES completion:nil];
+                                    [UIApplication.mnz_presentingViewController presentViewController:[DevicePermissionsHelper audioPermisionAlertController] animated:YES completion:nil];
                                 }
                             }];
                         }
@@ -680,7 +691,7 @@
 - (void)showCameraUploadsPopUp {
     MEGANavigationController *cameraUploadsNavigationController =[[UIStoryboard storyboardWithName:@"Photos" bundle:nil] instantiateViewControllerWithIdentifier:@"CameraUploadsPopUpNavigationControllerID"];
     
-    [UIApplication.mnz_visibleViewController presentViewController:cameraUploadsNavigationController animated:YES completion:^{
+    [UIApplication.mnz_presentingViewController presentViewController:cameraUploadsNavigationController animated:YES completion:^{
         isAccountFirstLogin = NO;
         if ([MEGALinkManager urlType] == URLTypeConfirmationLink) {
             if ([MEGAPurchase sharedInstance].products.count > 0) {
@@ -809,7 +820,7 @@
 - (void)showOverquotaAlert {
     [self disableCameraUploads];
     
-    if (!UIApplication.mnz_visibleViewController.presentedViewController || UIApplication.mnz_visibleViewController.presentedViewController != self.overquotaAlertView) {
+    if (!UIApplication.mnz_presentingViewController.presentedViewController || UIApplication.mnz_presentingViewController.presentedViewController != self.overquotaAlertView) {
         isOverquota = YES;
         [[MEGASdkManager sharedMEGASdk] getAccountDetails];
     }
@@ -1081,7 +1092,7 @@ void uncaughtExceptionHandler(NSException *exception) {
         };
     }
     
-    [UIApplication.mnz_visibleViewController presentViewController:customModalAlertVC animated:YES completion:nil];
+    [UIApplication.mnz_presentingViewController presentViewController:customModalAlertVC animated:YES completion:nil];
     
     self.presentInviteContactVCLater = NO;
 }
@@ -1099,7 +1110,7 @@ void uncaughtExceptionHandler(NSException *exception) {
     MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:upgradeTVC];
     upgradeTVC.chooseAccountType = YES;
     
-    [UIApplication.mnz_visibleViewController presentViewController:navigationController animated:YES completion:nil];
+    [UIApplication.mnz_presentingViewController presentViewController:navigationController animated:YES completion:nil];
     [MEGALinkManager resetLinkAndURLType];
 }
 
@@ -1289,8 +1300,33 @@ void uncaughtExceptionHandler(NSException *exception) {
 - (void)pushRegistry:(PKPushRegistry *)registry didReceiveIncomingPushWithPayload:(PKPushPayload *)payload forType:(NSString *)type {
     MEGALogDebug(@"Did receive incoming push with payload: %@", [payload dictionaryPayload]);
     
-    if ([[UIApplication sharedApplication] applicationState] == UIApplicationStateBackground) {
+    // Call
+    if ([[UIApplication sharedApplication] applicationState] == UIApplicationStateBackground && [[[payload dictionaryPayload] objectForKey:@"megatype"] integerValue] == 4) {
         [self beginBackgroundTaskWithName:@"VoIP"];
+    }
+    
+    // Message
+    if ([[[payload dictionaryPayload] objectForKey:@"megatype"] integerValue] == 2) {
+        NSString *chatIdB64 = [[[payload dictionaryPayload] objectForKey:@"megadata"] objectForKey:@"chatid"];
+        NSString *msgIdB64 = [[[payload dictionaryPayload] objectForKey:@"megadata"] objectForKey:@"msgid"];
+        NSString *silent = [[[payload dictionaryPayload] objectForKey:@"megadata"] objectForKey:@"silent"];
+        if (chatIdB64 && msgIdB64) {
+            uint64_t chatId = [MEGASdk handleForBase64UserHandle:chatIdB64];
+            uint64_t msgId = [MEGASdk handleForBase64UserHandle:msgIdB64];
+            MEGAChatMessage *message = [[MEGASdkManager sharedMEGAChatSdk] messageForChat:chatId messageId:msgId];
+            MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:chatId];
+            
+            [[MEGASdkManager sharedMEGAChatSdk] pushReceivedWithBeep:YES chatId:chatId];
+                                    
+            if (chatRoom && message && [UIApplication sharedApplication].applicationState != UIApplicationStateActive) {
+                MEGALocalNotificationManager *localNotificationManager = [[MEGALocalNotificationManager alloc] initWithChatRoom:chatRoom message:message silent:NO];
+                [localNotificationManager proccessNotification];
+            } else {
+                [[MEGAStore shareInstance] insertMessage:msgId chatId:chatId];
+            }
+        } else if (silent) {
+            [[MEGASdkManager sharedMEGAChatSdk] pushReceivedWithBeep:NO chatId:~(uint64_t)0];
+        }
     }
 }
 
@@ -1512,7 +1548,6 @@ void uncaughtExceptionHandler(NSException *exception) {
                     
                     UIAlertController *accountCanceledSuccessfullyAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"accountCanceledSuccessfully", @"During account cancellation (deletion)") message:nil preferredStyle:UIAlertControllerStyleAlert];
                     [accountCanceledSuccessfullyAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", @"Button title to accept something") style:UIAlertActionStyleCancel handler:nil]];
-                    
                     [UIApplication.mnz_visibleViewController presentViewController:accountCanceledSuccessfullyAlertController animated:YES completion:^{
                         [MEGALinkManager resetLinkAndURLType];
                     }];
@@ -1520,10 +1555,10 @@ void uncaughtExceptionHandler(NSException *exception) {
                 }
                 
                 if ([request type] == MEGARequestTypeLogin || [request type] == MEGARequestTypeLogout) {
-                    if (!self.API_ESIDAlertController || UIApplication.mnz_visibleViewController.presentedViewController != self.API_ESIDAlertController) {
+                    if (!self.API_ESIDAlertController || UIApplication.mnz_presentingViewController.presentedViewController != self.API_ESIDAlertController) {
                         self.API_ESIDAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"loggedOut_alertTitle", nil) message:AMLocalizedString(@"loggedOutFromAnotherLocation", nil) preferredStyle:UIAlertControllerStyleAlert];
                         [self.API_ESIDAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
-                        [UIApplication.mnz_visibleViewController presentViewController:self.API_ESIDAlertController animated:YES completion:nil];
+                        [UIApplication.mnz_presentingViewController presentViewController:self.API_ESIDAlertController animated:YES completion:nil];
                         [Helper logout];
                     }
                 }
@@ -1572,7 +1607,7 @@ void uncaughtExceptionHandler(NSException *exception) {
                         }
                     }]];
                     
-                    [[UIApplication mnz_visibleViewController] presentViewController:self.sslKeyPinningController animated:YES completion:nil];
+                    [UIApplication.mnz_presentingViewController presentViewController:self.sslKeyPinningController animated:YES completion:nil];
                 }
                 break;
             }
@@ -1581,7 +1616,7 @@ void uncaughtExceptionHandler(NSException *exception) {
                 if ([request type] == MEGARequestTypeLogin || [request type] == MEGARequestTypeFetchNodes) {
                     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"error", nil) message:AMLocalizedString(@"accountBlocked", @"Error message when trying to login and the account is blocked") preferredStyle:UIAlertControllerStyleAlert];
                     [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
-                    [UIApplication.mnz_visibleViewController presentViewController:alertController animated:YES completion:nil];
+                    [UIApplication.mnz_presentingViewController presentViewController:alertController animated:YES completion:nil];
                     [api logout];
                 }
                 
@@ -1632,6 +1667,9 @@ void uncaughtExceptionHandler(NSException *exception) {
             
             if ([[NSUserDefaults standardUserDefaults] boolForKey:@"IsChatEnabled"] || isAccountFirstLogin) {
                 [[MEGASdkManager sharedMEGAChatSdk] addChatDelegate:self.mainTBC];
+                                
+                MEGAChatNotificationDelegate *chatNotificationDelegate = [MEGAChatNotificationDelegate new];
+                [[MEGASdkManager sharedMEGAChatSdk] addChatNotificationDelegate:chatNotificationDelegate];
                 
                 if ([UIApplication sharedApplication].applicationState == UIApplicationStateBackground) {
                     [[MEGASdkManager sharedMEGAChatSdk] connectInBackground];
@@ -1672,7 +1710,7 @@ void uncaughtExceptionHandler(NSException *exception) {
             if (self.messageForSuspendedAccount) {
                 UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"error", nil) message:self.messageForSuspendedAccount preferredStyle:UIAlertControllerStyleAlert];
                 [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
-                [UIApplication.mnz_visibleViewController presentViewController:alertController animated:YES completion:nil];
+                [UIApplication.mnz_presentingViewController presentViewController:alertController animated:YES completion:nil];
             }
             break;
         }
@@ -1690,10 +1728,10 @@ void uncaughtExceptionHandler(NSException *exception) {
                     MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:upgradeTVC];
                     
                     [self dismissPresentedViewsAndDo:^{
-                        [UIApplication.mnz_visibleViewController presentViewController:navigationController animated:YES completion:nil];
+                        [UIApplication.mnz_presentingViewController presentViewController:navigationController animated:YES completion:nil];
                     }];
                 }]];
-                [UIApplication.mnz_visibleViewController presentViewController:self.overquotaAlertView animated:YES completion:nil];
+                [UIApplication.mnz_presentingViewController presentViewController:self.overquotaAlertView animated:YES completion:nil];
                 isOverquota = NO;
             }
             
@@ -1824,7 +1862,7 @@ void uncaughtExceptionHandler(NSException *exception) {
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"error", nil) message:@"Chat disabled (Init error). Enable chat in More -> Settings -> Chat" preferredStyle:UIAlertControllerStyleAlert];
         [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
         [[MEGASdkManager sharedMEGAChatSdk] logout];
-        [UIApplication.mnz_visibleViewController presentViewController:alertController animated:YES completion:nil];
+        [UIApplication.mnz_presentingViewController presentViewController:alertController animated:YES completion:nil];
     }
 }
 
@@ -1892,7 +1930,7 @@ void uncaughtExceptionHandler(NSException *exception) {
                     UpgradeTableViewController *upgradeTVC = [[UIStoryboard storyboardWithName:@"MyAccount" bundle:nil] instantiateViewControllerWithIdentifier:@"UpgradeID"];
                     MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:upgradeTVC];
                     
-                    [UIApplication.mnz_visibleViewController presentViewController:navigationController animated:YES completion:nil];
+                    [UIApplication.mnz_presentingViewController presentViewController:navigationController animated:YES completion:nil];
                 } else {
                     // Redirect to my account if the products are not available
                     [self.mainTBC setSelectedIndex:4];
@@ -1900,7 +1938,7 @@ void uncaughtExceptionHandler(NSException *exception) {
             }];
         };
         
-        [UIApplication.mnz_visibleViewController presentViewController:customModalAlertVC animated:YES completion:nil];
+        [UIApplication.mnz_presentingViewController presentViewController:customModalAlertVC animated:YES completion:nil];
     }
 }
 
