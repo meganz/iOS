@@ -668,6 +668,7 @@
 		B6D11AD7219BAE6D00446B86 /* MOAssetUploadFileNameRecord+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = B6D11AD3219BAE6D00446B86 /* MOAssetUploadFileNameRecord+CoreDataClass.m */; };
 		B6D11AD8219BAE6D00446B86 /* MOAssetUploadFileNameRecord+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = B6D11AD6219BAE6D00446B86 /* MOAssetUploadFileNameRecord+CoreDataProperties.m */; };
 		B6D11ADF219CE69300446B86 /* FileEncryption.m in Sources */ = {isa = PBXBuildFile; fileRef = B6D11ADE219CE69300446B86 /* FileEncryption.m */; };
+		B6D11AE2219E5E2C00446B86 /* AttributeUploadOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = B6D11AE1219E5E2C00446B86 /* AttributeUploadOperation.m */; };
 		B6D9D7E9216AB0C700D7B08A /* CameraScanner.m in Sources */ = {isa = PBXBuildFile; fileRef = B6D9D7E8216AB0C700D7B08A /* CameraScanner.m */; };
 		B6D9D7EF216AE5D000D7B08A /* CameraUploadRecordManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B6D9D7EE216AE5D000D7B08A /* CameraUploadRecordManager.m */; };
 		B6E19B2F21756F0800882F74 /* TransferSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B6E19B2E21756F0800882F74 /* TransferSessionManager.m */; };
@@ -1542,6 +1543,8 @@
 		B6D11ADA219BC68900446B86 /* CameraUploadFileNameRecordManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CameraUploadFileNameRecordManager.h; sourceTree = "<group>"; };
 		B6D11ADD219CE69300446B86 /* FileEncryption.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FileEncryption.h; sourceTree = "<group>"; };
 		B6D11ADE219CE69300446B86 /* FileEncryption.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FileEncryption.m; sourceTree = "<group>"; };
+		B6D11AE0219E5E2C00446B86 /* AttributeUploadOperation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AttributeUploadOperation.h; sourceTree = "<group>"; };
+		B6D11AE1219E5E2C00446B86 /* AttributeUploadOperation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AttributeUploadOperation.m; sourceTree = "<group>"; };
 		B6D9D7E7216AB0C700D7B08A /* CameraScanner.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CameraScanner.h; sourceTree = "<group>"; };
 		B6D9D7E8216AB0C700D7B08A /* CameraScanner.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CameraScanner.m; sourceTree = "<group>"; };
 		B6D9D7ED216AE5D000D7B08A /* CameraUploadRecordManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CameraUploadRecordManager.h; sourceTree = "<group>"; };
@@ -3315,6 +3318,8 @@
 				B658D3B7218F9357004C0D64 /* PhotoUploadOperation.m */,
 				B658D3B9218F936B004C0D64 /* VideoUploadOperation.h */,
 				B658D3BA218F936B004C0D64 /* VideoUploadOperation.m */,
+				B6D11AE0219E5E2C00446B86 /* AttributeUploadOperation.h */,
+				B6D11AE1219E5E2C00446B86 /* AttributeUploadOperation.m */,
 				B6B9593F2193A9140064334D /* ThumbnailUploadOperation.h */,
 				B6B959402193A9140064334D /* ThumbnailUploadOperation.m */,
 				B6B959422193A91E0064334D /* PreviewUploadOperation.h */,
@@ -4075,6 +4080,7 @@
 				417B5AAE1DEC792400A193D5 /* MOUser+CoreDataProperties.m in Sources */,
 				A824A9192039ECD700D777D2 /* SDAVAssetExportSession.m in Sources */,
 				41E250141D79E9D400499A6C /* SAMKeychainQuery.m in Sources */,
+				B6D11AE2219E5E2C00446B86 /* AttributeUploadOperation.m in Sources */,
 				B6D9D7E9216AB0C700D7B08A /* CameraScanner.m in Sources */,
 				41E150041DB7CB1400383645 /* UIImageView+MNZCategory.m in Sources */,
 				94E62E1A1F3C5252003A8DEF /* LanguageTableViewController.m in Sources */,
