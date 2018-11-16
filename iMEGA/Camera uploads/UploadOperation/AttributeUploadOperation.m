@@ -1,22 +1,22 @@
 
 #import "AttributeUploadOperation.h"
 
-static NSString * const AttributeErrorDomain = @"nz.mega.cameraUpload.attibuteUpload";
-static NSString * const AttributeErrorMessageKey = @"message";
-
 @interface AttributeUploadOperation ()
 
 @property (nonatomic) UIBackgroundTaskIdentifier backgroundTaskId;
+@property (strong, nonatomic) NSTimer *watchTimer;
+@property (nonatomic) NSTimeInterval expireTimeInterval;
 
 @end
 
 @implementation AttributeUploadOperation
 
-- (instancetype)initWithNode:(MEGANode *)node uploadInfo:(AssetUploadInfo *)uploadInfo {
+- (instancetype)initWithNode:(MEGANode *)node uploadInfo:(AssetUploadInfo *)uploadInfo expiresAfterTimeInterval:(NSTimeInterval)timeInterval {
     self = [super init];
     if (self) {
         _node = node;
         _uploadInfo = uploadInfo;
+        _expireTimeInterval = timeInterval;
     }
     
     return self;
@@ -26,23 +26,22 @@ static NSString * const AttributeErrorMessageKey = @"message";
     [super start];
     
     self.backgroundTaskId = [UIApplication.sharedApplication beginBackgroundTaskWithName:@"attributeUploadBackgroundTask" expirationHandler:^{
-        [self finishOperationWithError:[self errorWithMessage:[NSString stringWithFormat:@"Background task expired in uploading attribute for asset: %@", self.uploadInfo.asset.localIdentifier]]];
+        MEGALogDebug(@"[Camera Upload] %@ Background task expired in uploading attribute for asset: %@", NSStringFromClass(self.class), self.uploadInfo.asset.localIdentifier);
+        [self finishOperation];
+    }];
+    
+    __weak __typeof__(self) weakSelf = self;
+    self.watchTimer = [NSTimer scheduledTimerWithTimeInterval:self.expireTimeInterval repeats:NO block:^(NSTimer * _Nonnull timer) {
+        MEGALogDebug(@"[Camera Upload] %@ expired with watch timer", NSStringFromClass(weakSelf.class));
+        [weakSelf finishOperation];
     }];
 }
 
-- (NSError *)errorWithMessage:(NSString *)message {
-    return [NSError errorWithDomain:AttributeErrorDomain code:0 userInfo:@{AttributeErrorMessageKey : [NSString stringWithFormat:@"%@ %@", NSStringFromClass(self.class), message]}];
-}
-
-- (void)expireOperation {
-    [self finishOperationWithError:[self errorWithMessage:@"operation gets expired"]];
-}
-
-- (void)finishOperationWithError:(NSError *)error {
+- (void)finishOperation {
     [super finishOperation];
     
-    MEGALogDebug(@"[Camera Upload] %@ operation finished with error: %@", NSStringFromClass(self.class), error);
-    
+    MEGALogDebug(@"[Camera Upload] %@ operation finished", NSStringFromClass(self.class));
+    [self.watchTimer invalidate];
     [UIApplication.sharedApplication endBackgroundTask:self.backgroundTaskId];
     self.backgroundTaskId = UIBackgroundTaskInvalid;
 }

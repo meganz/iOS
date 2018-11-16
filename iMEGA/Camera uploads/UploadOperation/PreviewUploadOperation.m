@@ -10,7 +10,8 @@
     [super start];
     
     if (![NSFileManager.defaultManager fileExistsAtPath:self.uploadInfo.previewURL.path]) {
-        [self finishOperationWithError:[self errorWithMessage:[NSString stringWithFormat:@"No preview file found for asset: %@", self.uploadInfo.asset.localIdentifier]]];
+        MEGALogDebug(@"[Camera Upload] No preview file found for asset: %@", self.uploadInfo.asset.localIdentifier);
+        [self finishOperation];
         return;
     }
 
@@ -20,7 +21,7 @@
     NSURL *cachedPreviewURL = [[[[NSFileManager.defaultManager URLsForDirectory:NSCachesDirectory inDomains:NSUserDomainMask] firstObject] URLByAppendingPathComponent:@"previewsV3" isDirectory:YES] URLByAppendingPathComponent:self.node.base64Handle isDirectory:NO];
     if(![NSFileManager.defaultManager createDirectoryAtURL:cachedPreviewURL withIntermediateDirectories:YES attributes:nil error:&error]) {
         MEGALogDebug(@"[Camera Upload] Create preview directory error %@", error);
-        [self finishOperationWithError:error];
+        [self finishOperation];
         return;
     }
     
@@ -34,11 +35,11 @@
                 MEGALogDebug(@"[Camera Upload] Upload preview success for node: %llu", self.node.handle);
             }
             
-            [self finishOperationWithError:nil];
+            [self finishOperation];
         }]];
     } else {
         MEGALogDebug(@"[Camera Upload] Move preview to cache failed for asset %@ error %@", self.uploadInfo.asset.localIdentifier, error);
-        [self finishOperationWithError:error];
+        [self finishOperation];
     }
 }
 

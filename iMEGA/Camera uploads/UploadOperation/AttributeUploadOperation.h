@@ -10,13 +10,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) MEGANode *node;
 @property (strong, nonatomic) AssetUploadInfo *uploadInfo;
 
-- (instancetype)initWithNode:(MEGANode *)node uploadInfo:(AssetUploadInfo *)uploadInfo;
-
-- (void)expireOperation;
-
-- (void)finishOperationWithError:(nullable NSError *)error;
-
-- (NSError *)errorWithMessage:(NSString *)message;
+- (instancetype)initWithNode:(MEGANode *)node uploadInfo:(AssetUploadInfo *)uploadInfo expiresAfterTimeInterval:(NSTimeInterval)timeInterval;
 
 @end
 
