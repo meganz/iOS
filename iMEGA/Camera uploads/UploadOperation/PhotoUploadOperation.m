@@ -79,7 +79,7 @@
     self.uploadInfo.mediaUpload = [[MEGASdkManager sharedMEGASdk] backgroundMediaUpload];
     NSString *urlSuffix;
     unsigned fileSize = (unsigned)self.uploadInfo.fileSize;
-    if ([self.uploadInfo.mediaUpload encryptFileAtPath:self.uploadInfo.fileURL.path startPosition:0 length:&fileSize outputFilePath:self.uploadInfo.encryptedURL.path urlSuffix:&urlSuffix]) {
+    if ([self.uploadInfo.mediaUpload encryptFileAtPath:self.uploadInfo.fileURL.path startPosition:0 length:&fileSize outputFilePath:self.uploadInfo.encryptedURL.path urlSuffix:&urlSuffix adjustsSizeOnly:NO]) {
         MEGALogDebug(@"[Camera Upload] %@ got file encrypted with url suffix: %@", self, urlSuffix);
         self.uploadInfo.uploadURLStringSuffix = urlSuffix;
         [[MEGASdkManager sharedMEGASdk] requestBackgroundUploadURLWithFileSize:self.uploadInfo.fileSize mediaUpload:self.uploadInfo.mediaUpload delegate:[[CameraUploadRequestDelegate alloc] initWithCompletion:^(MEGARequest * _Nonnull request, MEGAError * _Nonnull error) {
