@@ -1,5 +1,8 @@
 
 #import "AssetUploadInfo.h"
+#import "NSFileManager+MNZCategory.h"
+#import "NSString+MNZCategory.h"
+
 
 @implementation AssetUploadInfo
 
@@ -14,18 +17,18 @@
     return self;
 }
 
++ (NSURL *)assetDirectoryURLForLocalIdentifier:(NSString *)localIdentifier {
+    return [NSFileManager.defaultManager.cameraUploadURL URLByAppendingPathComponent:localIdentifier.stringByRemovingInvalidFileCharacters isDirectory:YES];
+}
+
++ (NSURL *)archivedURLForLocalIdentifier:(NSString *)localIdentifier {
+    return [[self assetDirectoryURLForLocalIdentifier:localIdentifier] URLByAppendingPathComponent:localIdentifier.stringByRemovingInvalidFileCharacters isDirectory:NO];
+}
+
 #pragma mark - properties
 
 - (NSURL *)fileURL {
     return [self.directoryURL URLByAppendingPathComponent:self.fileName];
-}
-
-- (NSURL *)encryptedURL {
-    return [self.fileURL URLByAppendingPathExtension:@"encrypted"];
-}
-
-- (NSURL *)uploadURL {
-    return [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", self.uploadURLString, self.uploadURLStringSuffix]];
 }
 
 - (NSURL *)previewURL {
@@ -34,6 +37,10 @@
 
 - (NSURL *)thumbnailURL {
     return [self.fileURL URLByAppendingPathExtension:@"thumbnail"];
+}
+
+- (NSURL *)encryptionDirectoryURL {
+    return [self.directoryURL URLByAppendingPathComponent:@"encryption"];
 }
 
 #pragma mark - NSCoding protocol

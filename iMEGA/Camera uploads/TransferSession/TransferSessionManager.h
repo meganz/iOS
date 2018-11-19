@@ -20,8 +20,8 @@ typedef void (^UploadCompletionHandler)(NSData  * _Nullable token, NSError * _Nu
 - (void)restorePhotoSessionIfNeeded;
 - (void)restoreVideoSessionIfNeeded;
 
-- (NSURLSessionUploadTask *)photoUploadTaskWithURL:(NSURL *)requestURL fromFile:(NSURL *)fileURL completion:(UploadCompletionHandler)completion;
-- (NSURLSessionUploadTask *)videoUploadTaskWithURL:(NSURL *)requestURL fromFile:(NSURL *)fileURL completion:(UploadCompletionHandler)completion;
+- (NSURLSessionUploadTask *)photoUploadTaskWithURL:(NSURL *)requestURL fromFile:(NSURL *)fileURL completion:(nullable UploadCompletionHandler)completion;
+- (NSURLSessionUploadTask *)videoUploadTaskWithURL:(NSURL *)requestURL fromFile:(NSURL *)fileURL completion:(nullable UploadCompletionHandler)completion;
 
 - (void)didFinishEventsForBackgroundURLSession:(NSURLSession *)session;
 

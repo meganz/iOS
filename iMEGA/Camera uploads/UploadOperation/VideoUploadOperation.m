@@ -124,44 +124,6 @@
     }
 }
 
-- (void)encryptsFile {
-    NSError *error;
-     self.uploadInfo.fileSize = [NSFileManager.defaultManager attributesOfItemAtPath:self.uploadInfo.fileURL.path error:&error].fileSize;
-    if (error) {
-        MEGALogDebug(@"[Camera Upload] %@ got error when to get compressed file attributes %@", self, error)
-        [self finishOperationWithStatus:UploadStatusFailed shouldUploadNextAsset:YES];
-        return;
-    }
-    
-    self.uploadInfo.mediaUpload = [MEGASdkManager.sharedMEGASdk backgroundMediaUpload];
-    
-    MEGALogDebug(@"[Camera Upload] %@ starts encryption with file size %.2f M", self, self.uploadInfo.fileSize / 1024.0f / 1024.0f);
-    
-    NSString *urlSuffix;
-    unsigned fileSize = (unsigned)self.uploadInfo.fileSize;
-    if ([self.uploadInfo.mediaUpload encryptFileAtPath:self.uploadInfo.fileURL.path startPosition:0 length:&fileSize outputFilePath:self.uploadInfo.encryptedURL.path urlSuffix:&urlSuffix adjustsSizeOnly:NO]) {
-        MEGALogDebug(@"[Camera Upload] %@ got file encrypted with url suffix: %@", self, urlSuffix);
-        
-        self.uploadInfo.uploadURLStringSuffix = urlSuffix;
-        [[MEGASdkManager sharedMEGASdk] requestBackgroundUploadURLWithFileSize:self.uploadInfo.fileSize mediaUpload:self.uploadInfo.mediaUpload delegate:[[CameraUploadRequestDelegate alloc] initWithCompletion:^(MEGARequest * _Nonnull request, MEGAError * _Nonnull error) {
-            if (error.type) {
-                MEGALogError(@"[Camera Upload] %@ requests upload url failed with error type: %ld", self, error.type);
-                [self finishOperationWithStatus:UploadStatusFailed shouldUploadNextAsset:YES];
-            } else {
-                self.uploadInfo.uploadURLString = [self.uploadInfo.mediaUpload uploadURLString];
-                if (self.uploadInfo.uploadURL) {
-                    [self uploadFileToServer];
-                } else {
-                    [self finishOperationWithStatus:UploadStatusFailed shouldUploadNextAsset:YES];
-                }
-            }
-        }]];
-    } else {
-        MEGALogError(@"[Camera Upload] %@ encrypts file failed", self);
-        [self finishOperationWithStatus:UploadStatusFailed shouldUploadNextAsset:YES];
-    }
-}
-
 #pragma mark - util methods
 
 - (CGSize)dimensionsForAVAsset:(AVAsset *)asset {

@@ -9,7 +9,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (instancetype)initWithMediaUpload:(MEGABackgroundMediaUpload *)mediaUpload outputFileURL:(NSURL *)outputFileURL;
 
-- (void)encryptFileAtURL:(NSURL *)fileURL completion:(void (^)(BOOL success, unsigned long long fileSize, NSString *urlSuffix))completion;
+- (void)encryptFileAtURL:(NSURL *)fileURL completion:(void (^)(BOOL success, unsigned long long fileSize, NSDictionary<NSString *, NSURL *> * _Nullable chunkURLsKeyedByUploadSuffix, NSError * _Nullable error))completion;
 
 @end
 
