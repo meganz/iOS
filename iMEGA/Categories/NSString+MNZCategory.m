@@ -304,6 +304,10 @@ static NSString* const B = @"[B]";
     return ![[self stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] length];
 }
 
+- (BOOL)mnz_containsInvalidChars {
+    return [self rangeOfCharacterFromSet:[NSCharacterSet characterSetWithCharactersInString:@"|*/:<>?\"\\"]].length;
+}
+
 - (NSString *)mnz_removeWebclientFormatters {
     NSString *string;
     string = [self stringByReplacingOccurrencesOfString:@"[A]" withString:@""];

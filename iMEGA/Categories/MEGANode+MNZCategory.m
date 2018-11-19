@@ -18,6 +18,7 @@
 #import "NSFileManager+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 #import "UIApplication+MNZCategory.h"
+#import "UITextField+MNZCategory.h"
 
 #import "BrowserViewController.h"
 #import "LoginViewController.h"
@@ -211,9 +212,18 @@
         UIAlertController *renameAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"rename", @"Title for the action that allows you to rename a file or folder") message:AMLocalizedString(@"renameNodeMessage", @"Hint text to suggest that the user have to write the new name for the file or folder") preferredStyle:UIAlertControllerStyleAlert];
         
         [renameAlertController addTextFieldWithConfigurationHandler:^(UITextField *textField) {
-            textField.delegate = self;
             textField.text = self.name;
             [textField addTarget:self action:@selector(renameAlertTextFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
+            textField.shouldReturnCompletion = ^BOOL(UITextField *textField) {
+                BOOL shouldReturn = YES;
+                UIAlertController *renameAlertController = (UIAlertController *)UIApplication.mnz_visibleViewController;
+                if (renameAlertController) {
+                    UIAlertAction *rightButtonAction = renameAlertController.actions.lastObject;
+                    shouldReturn = rightButtonAction.enabled;
+                }
+                
+                return shouldReturn;
+            };
         }];
         
         [renameAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
@@ -764,10 +774,9 @@
     return shouldChangeCharacters;
 }
 
-- (void)renameAlertTextFieldDidChange:(UITextField *)sender {
+- (void)renameAlertTextFieldDidChange:(UITextField *)textField {
     UIAlertController *renameAlertController = (UIAlertController *)UIApplication.mnz_visibleViewController;
     if (renameAlertController) {
-        UITextField *textField = renameAlertController.textFields.firstObject;
         UIAlertAction *rightButtonAction = renameAlertController.actions.lastObject;
         BOOL enableRightButton = NO;
         
@@ -775,27 +784,17 @@
         NSString *nodeNameString = self.name;
         
         if (self.isFile || self.isFolder) {
-            BOOL containsInvalidChars = [sender.text rangeOfCharacterFromSet:[NSCharacterSet characterSetWithCharactersInString:@"|*/:<>?\"\\"]].length;
+            BOOL containsInvalidChars = textField.text.mnz_containsInvalidChars;
             if ([newName isEqualToString:@""] || [newName isEqualToString:nodeNameString] || newName.mnz_isEmpty || containsInvalidChars) {
                 enableRightButton = NO;
             } else {
                 enableRightButton = YES;
             }
-            sender.textColor = containsInvalidChars ? UIColor.mnz_redMain : UIColor.darkTextColor;
+            textField.textColor = containsInvalidChars ? UIColor.mnz_redMain : UIColor.darkTextColor;
         }
         
         rightButtonAction.enabled = enableRightButton;
     }
-}
-
-- (BOOL)textFieldShouldReturn:(UITextField *)textField {
-    UIAlertController *renameAlertController = (UIAlertController *)UIApplication.mnz_visibleViewController;    
-    if (renameAlertController) {
-        UIAlertAction *rightButtonAction = renameAlertController.actions.lastObject;
-        return rightButtonAction.enabled;
-    }
-    
-    return YES;
 }
 
 - (void)mnz_copyToGalleryFromTemporaryPath:(NSString *)path {
