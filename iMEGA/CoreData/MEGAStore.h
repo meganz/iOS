@@ -52,8 +52,9 @@
 
 - (void)insertUploadTransferWithLocalIdentifier:(NSString *)localIdentifier parentNodeHandle:(uint64_t)parentNodeHandle;
 - (void)deleteUploadTransfer:(MOUploadTransfer *)uploadTransfer;
+- (void)deleteUploadTransferWithLocalIdentifier:(NSString *)localIdentifier;
 - (NSArray<MOUploadTransfer *> *)fetchUploadTransfers;
-- (MOUploadTransfer *)fetchTransferUpdateWithLocalIdentifier:(NSString *)localIdentifier;
+- (MOUploadTransfer *)fetchUploadTransferWithLocalIdentifier:(NSString *)localIdentifier;
 - (void)removeAllUploadTransfers;
 
 #pragma mark - MOMessage entity
