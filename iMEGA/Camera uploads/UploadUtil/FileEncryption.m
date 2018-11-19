@@ -12,18 +12,19 @@ static NSString * const EncryptionErrorMessageKey = @"message";
 
 @property (strong, nonatomic) NSURL *outputDirectoryURL;
 @property (nonatomic) unsigned long long fileSize;
-@property (nonatomic) NSUInteger chunkSize;
 @property (strong, nonatomic) MEGABackgroundMediaUpload *mediaUpload;
+@property (nonatomic) BOOL shouldTruncateFile;
 
 @end
 
 @implementation FileEncryption
 
-- (instancetype)initWithMediaUpload:(MEGABackgroundMediaUpload *)mediaUpload outputDirectoryURL:(NSURL *)outputDirectoryURL {
+- (instancetype)initWithMediaUpload:(MEGABackgroundMediaUpload *)mediaUpload outputDirectoryURL:(NSURL *)outputDirectoryURL shouldTruncateInputFile:(BOOL)shouldTruncateInputFile {
     self = [super init];
     if (self) {
         _outputDirectoryURL = outputDirectoryURL;
         _mediaUpload = mediaUpload;
+        _shouldTruncateFile = shouldTruncateInputFile;
     }
 
     return self;
@@ -32,19 +33,30 @@ static NSString * const EncryptionErrorMessageKey = @"message";
 - (void)encryptFileAtURL:(NSURL *)fileURL completion:(void (^)(BOOL success, unsigned long long fileSize, NSDictionary<NSString *, NSURL *> *chunkURLsKeyedByUploadSuffix, NSError *error))completion {
     NSError *error;
     [NSFileManager.defaultManager createDirectoryAtPath:self.outputDirectoryURL.path withIntermediateDirectories:YES attributes:nil error:&error];
+    
     NSDictionary<NSFileAttributeKey, id> *attributeDict = [NSFileManager.defaultManager attributesOfItemAtPath:fileURL.path error:&error];
     
     self.fileSize = attributeDict.fileSize;
     unsigned long long deviceFreeSize = [attributeDict[NSFileSystemFreeSize] unsignedLongLongValue];
     
-    if (error || ![NSFileManager.defaultManager isWritableFileAtPath:fileURL.path] || deviceFreeSize < EncryptionMinimumChunkSizeInBytes) {
+    if (error) {
         completion(NO, 0, nil, error);
         return;
     }
     
-    self.chunkSize = [self calculateChunkSizeByDeviceFreeSize:deviceFreeSize];
+    if (deviceFreeSize < EncryptionMinimumChunkSizeInBytes) {
+        completion(NO, 0, nil, [NSError errorWithDomain:EncryptionErrorDomain code:0 userInfo:@{EncryptionErrorMessageKey : @"no enough device free space for encryption"}]);
+        return;
+    }
     
-    NSDictionary *chunkURLsKeyedByUploadSuffix = [self encryptedChunkURLsKeyedByUploadSuffixForFileAtURL:fileURL error:&error];
+    if (self.shouldTruncateFile && ![NSFileManager.defaultManager isWritableFileAtPath:fileURL.path]) {
+        completion(NO, 0, nil, [NSError errorWithDomain:EncryptionErrorDomain code:0 userInfo:@{EncryptionErrorMessageKey : [NSString stringWithFormat:@"no write permission for file %@", fileURL]}]);
+        return;
+    }
+    
+    NSUInteger chunkSize = [self calculateChunkSizeByDeviceFreeSize:deviceFreeSize];
+    
+    NSDictionary *chunkURLsKeyedByUploadSuffix = [self encryptedChunkURLsKeyedByUploadSuffixForFileAtURL:fileURL chunkSize:chunkSize error:&error];
     if (error || chunkURLsKeyedByUploadSuffix.allValues.count == 0) {
         completion(NO, 0, nil, error);
     } else {
@@ -52,9 +64,9 @@ static NSString * const EncryptionErrorMessageKey = @"message";
     }
 }
 
-- (NSDictionary<NSString *, NSURL *> *)encryptedChunkURLsKeyedByUploadSuffixForFileAtURL:(NSURL *)fileURL error:(NSError **)error {
+- (NSDictionary<NSString *, NSURL *> *)encryptedChunkURLsKeyedByUploadSuffixForFileAtURL:(NSURL *)fileURL chunkSize:(NSUInteger)chunkSize error:(NSError **)error {
     NSError *positionError;
-    NSArray<NSNumber *> *chunkPositions = [self calculteChunkPositionsForFileAtURL:fileURL error:&positionError];
+    NSArray<NSNumber *> *chunkPositions = [self calculteChunkPositionsForFileAtURL:fileURL chunkSize:chunkSize error:&positionError];
     if (positionError) {
         if (error != NULL) {
             *error = positionError;
@@ -77,7 +89,10 @@ static NSString * const EncryptionErrorMessageKey = @"message";
     MEGALogDebug(@"[Camera Upload] start encrypting file %@ at size %llu", fileURL, self.fileSize);
     
     NSMutableDictionary<NSString *, NSURL *> *chunksDict = [NSMutableDictionary dictionary];
-    NSFileHandle *fileHandle = [NSFileHandle fileHandleForWritingAtPath:fileURL.path];
+    NSFileHandle *fileHandle;
+    if (self.shouldTruncateFile) {
+         fileHandle = [NSFileHandle fileHandleForWritingAtPath:fileURL.path];
+    }
     
     NSUInteger chunkIndex = 0;
     for (NSNumber *position in reversedPositions) {
@@ -87,7 +102,11 @@ static NSString * const EncryptionErrorMessageKey = @"message";
         unsigned length = (unsigned)(lastPosition - position.unsignedLongLongValue);
         if ([self.mediaUpload encryptFileAtPath:fileURL.path startPosition:position.unsignedLongLongValue length:&length outputFilePath:chunkURL.path urlSuffix:&suffix adjustsSizeOnly:NO]) {
             chunksDict[suffix] = chunkURL;
-            [fileHandle truncateFileAtOffset:position.unsignedLongLongValue];
+            
+            if (self.shouldTruncateFile && fileHandle) {
+                [fileHandle truncateFileAtOffset:position.unsignedLongLongValue];
+            }
+            
             MEGALogDebug(@"[Camera Upload] encrypted %@, file remaining size %llu", chunkName, [NSFileManager.defaultManager attributesOfItemAtPath:fileURL.path error:nil].fileSize);
         } else {
             if (error != NULL) {
@@ -102,18 +121,18 @@ static NSString * const EncryptionErrorMessageKey = @"message";
     return chunksDict;
 }
 
-- (NSArray<NSNumber *> *)calculteChunkPositionsForFileAtURL:(NSURL *)fileURL error:(NSError **)error {
+- (NSArray<NSNumber *> *)calculteChunkPositionsForFileAtURL:(NSURL *)fileURL chunkSize:(NSUInteger)chunkSize error:(NSError **)error {
     NSMutableArray<NSNumber *> *chunkPositions = [NSMutableArray arrayWithObject:@(0)];
     
-    unsigned chunkSize = (unsigned)self.chunkSize;
+    unsigned chunkSizeToBeAdjusted = (unsigned)chunkSize;
     unsigned long long startPosition = 0;
 //    NSUInteger chunkIndex = 0;
 //    NSURL *chunkURL = [self.outputDirectoryURL URLByAppendingPathComponent:[NSString stringWithFormat:@"chunk%lu", chunkIndex]];
 //    NSString *suffix;
     
     while (startPosition < self.fileSize) {
-        if ([self.mediaUpload encryptFileAtPath:fileURL.path startPosition:startPosition length:&chunkSize outputFilePath:nil urlSuffix:nil adjustsSizeOnly:YES]) {
-            startPosition = startPosition + chunkSize;
+        if ([self.mediaUpload encryptFileAtPath:fileURL.path startPosition:startPosition length:&chunkSizeToBeAdjusted outputFilePath:nil urlSuffix:nil adjustsSizeOnly:YES]) {
+            startPosition = startPosition + chunkSizeToBeAdjusted;
             [chunkPositions addObject:@(startPosition)];
         } else {
             if (error != NULL) {
@@ -127,33 +146,6 @@ static NSString * const EncryptionErrorMessageKey = @"message";
     
     return [chunkPositions copy];
 }
-
-//- (BOOL)encryptFileAtURL:(NSURL *)fileURL uploadSuffix:(NSString **)uploadSuffix {
-//    NSFileHandle *fileHandle;
-//    if (self.shouldTruncateChunks) {
-//        NSError *error;
-//        fileHandle = [NSFileHandle fileHandleForWritingToURL:fileURL error:&error];
-//        if (error) {
-//            fileHandle = nil;
-//        }
-//    }
-    
-//    unsigned long long startPosition = 0;
-//    NSUInteger chunkIndex = 0;
-//    while (startPosition < self.fileSize) {
-//        NSString *chunkOutputPath = [self.outputFileURL URLByAppendingPathExtension:[NSString stringWithFormat:@"chunk%lu", chunkIndex]].path;
-//        NSUInteger length = self.chunkSize;
-//        if([self.mediaUpload encryptFileAtPath:fileURL.path startPosition:startPosition length:&length outputFilePath:chunkOutputPath urlSuffix:uploadSuffix]) {
-//            startPosition = startPosition + length;
-//
-//            // ???
-//        } else {
-//            return NO;
-//        }
-//    }
-//
-//    return YES;
-//}
 
 - (NSUInteger)calculateChunkSizeByDeviceFreeSize:(unsigned long long)deviceFreeSize {
     unsigned long long chunkSize = MIN(deviceFreeSize, EncryptionProposedChunkSizeInBytes);

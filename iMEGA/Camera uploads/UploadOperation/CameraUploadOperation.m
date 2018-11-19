@@ -147,7 +147,7 @@
 
 - (void)encryptsFile {
     self.uploadInfo.mediaUpload = [MEGASdkManager.sharedMEGASdk backgroundMediaUpload];
-    FileEncryption *fileEncryption = [[FileEncryption alloc] initWithMediaUpload:self.uploadInfo.mediaUpload outputFileURL:self.uploadInfo.encryptionDirectoryURL];
+    FileEncryption *fileEncryption = [[FileEncryption alloc] initWithMediaUpload:self.uploadInfo.mediaUpload outputDirectoryURL:self.uploadInfo.encryptionDirectoryURL shouldTruncateInputFile:YES];
     [fileEncryption encryptFileAtURL:self.uploadInfo.fileURL completion:^(BOOL success, unsigned long long fileSize, NSDictionary<NSString *,NSURL *> * _Nonnull chunkURLsKeyedByUploadSuffix, NSError * _Nonnull error) {
         if (success) {
             MEGALogDebug(@"[Camera Upload] %@ file encryption is done with chunks %@", self, chunkURLsKeyedByUploadSuffix);
