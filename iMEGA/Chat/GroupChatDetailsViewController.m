@@ -20,7 +20,7 @@
 #import "MEGAArchiveChatRequestDelegate.h"
 #import "MEGAChatGenericRequestDelegate.h"
 
-@interface GroupChatDetailsViewController () <MEGAChatRequestDelegate, MEGAChatRoomDelegate, MEGAChatDelegate, MEGAGlobalDelegate>
+@interface GroupChatDetailsViewController () <MEGAChatRequestDelegate, MEGAChatDelegate, MEGAGlobalDelegate>
 
 @property (weak, nonatomic) IBOutlet UIImageView *avatarImageView;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
@@ -35,8 +35,6 @@
 
 @property (strong, nonatomic) NSMutableArray *participantsMutableArray;
 @property (nonatomic) NSMutableDictionary<NSString *, NSIndexPath *> *indexPathsMutableDictionary;
-
-@property (nonatomic, assign) BOOL openChatRoom;
 
 @end
 
@@ -61,13 +59,6 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    if ([[self.navigationController.viewControllers objectAtIndex:self.navigationController.viewControllers.count-2] class] != [ChatRoomsViewController class]) {
-        [[MEGASdkManager sharedMEGAChatSdk] addChatRoomDelegate:self.chatRoom.chatId delegate:self];
-        self.openChatRoom = NO;
-    } else {
-        [[MEGASdkManager sharedMEGAChatSdk] openChatRoom:self.chatRoom.chatId delegate:self];
-        self.openChatRoom = YES;
-    }
     [[MEGASdkManager sharedMEGASdk] addMEGAGlobalDelegate:self];
     [[MEGASdkManager sharedMEGAChatSdk] addChatDelegate:self];
     
@@ -76,11 +67,6 @@
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    if (self.openChatRoom) {
-        [[MEGASdkManager sharedMEGAChatSdk] closeChatRoom:self.chatRoom.chatId delegate:self];
-    } else {
-        [[MEGASdkManager sharedMEGAChatSdk] removeChatRoomDelegate:self.chatRoom.chatId delegate:self];
-    }
     [[MEGASdkManager sharedMEGASdk] removeMEGAGlobalDelegate:self];
     [[MEGASdkManager sharedMEGAChatSdk] removeChatDelegate:self];
 }
@@ -751,47 +737,33 @@
             break;
     }
 }
+#pragma mark - MEGAChatDelegate
 
-- (void)onChatRoomUpdate:(MEGAChatSdk *)api chat:(MEGAChatRoom *)chat {
-    MEGALogInfo(@"onChatRoomUpdate %@", chat);
-    self.chatRoom = chat;
-    switch (chat.changes) {
-        case MEGAChatRoomChangeTypeStatus:
-            break;
-            
-        case MEGAChatRoomChangeTypeUnreadCount:
-            break;
-            
-        case MEGAChatRoomChangeTypeOwnPriv:
-        case MEGAChatRoomChangeTypeParticipants:            
-            [self setParticipants];
-            [self.tableView reloadData];
-            break;
-            
-        case MEGAChatRoomChangeTypeTitle:
-            self.nameLabel.text = chat.title;
-            break;
-            
-        case MEGAChatRoomChangeTypeUserTyping:
-            break;
-            
-        case MEGAChatRoomChangeTypeClosed:
-            [self.navigationController popToRootViewControllerAnimated:YES];
-            break;
-            
-        case MEGAChatRoomChangeTypeUserStopTyping:
-            break;
-            
-        case MEGAChatRoomChangeTypeUpdatePreviewers:
-            [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:6]] withRowAnimation:UITableViewRowAnimationAutomatic];
-            break;
-            
-        default:
-            break;
+- (void)onChatListItemUpdate:(MEGAChatSdk *)api item:(MEGAChatListItem *)item {
+    if (self.chatRoom.chatId == item.chatId) {
+        self.chatRoom = [api chatRoomForChatId:item.chatId];
+        MEGALogInfo(@"onChatListItemUpdate %@", item);
+        
+        switch (item.changes) {
+            case MEGAChatListItemChangeTypeOwnPrivilege:
+            case MEGAChatListItemChangeTypeParticipants:
+                [self setParticipants];
+                [self.tableView reloadData];
+                break;
+                
+            case MEGAChatListItemChangeTypeTitle:
+                self.nameLabel.text = item.title;
+                break;
+                
+            case MEGAChatListItemChangeTypeClosed:
+                [self.navigationController popToRootViewControllerAnimated:YES];
+                break;
+                
+            default:
+                break;
+        }
     }
 }
-
-#pragma mark - MEGAChatDelegate
 
 - (void)onChatOnlineStatusUpdate:(MEGAChatSdk *)api userHandle:(uint64_t)userHandle status:(MEGAChatStatus)onlineStatus inProgress:(BOOL)inProgress {
     if (inProgress) {
