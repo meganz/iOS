@@ -31,9 +31,10 @@
 #import "NSFileManager+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 #import "NSURL+MNZCategory.h"
+#import "UIApplication+MNZCategory.h"
 #import "UIImage+MNZCategory.h"
 #import "UIImage+GKContact.h"
-#import "UIApplication+MNZCategory.h"
+#import "UITextField+MNZCategory.h"
 
 #import "BrowserViewController.h"
 #import "CallViewController.h"
@@ -1001,6 +1002,10 @@
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"decryptionKeyAlertTitle", nil) message:AMLocalizedString(@"decryptionKeyAlertMessage", nil) preferredStyle:UIAlertControllerStyleAlert];
     [alertController addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
         textField.placeholder = AMLocalizedString(@"decryptionKey", nil);
+        [textField addTarget:self action:@selector(alertTextFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
+        textField.shouldReturnCompletion = ^BOOL(UITextField *textField) {
+            return !textField.text.mnz_isEmpty;
+        };
     }];
     [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         [[MEGASdkManager sharedMEGASdk] decryptPasswordProtectedLink:encryptedLinkURLString password:alertController.textFields.firstObject.text delegate:delegate];
@@ -1613,6 +1618,14 @@ void uncaughtExceptionHandler(NSException *exception) {
     
     [UIApplication.mnz_presentingViewController presentViewController:navigationController animated:YES completion:nil];
     self.urlType = URLTypeDefault;
+}
+
+- (void)alertTextFieldDidChange:(UITextField *)textField {
+    UIAlertController *alertController = (UIAlertController *)UIApplication.mnz_visibleViewController;
+    if (alertController) {
+        UIAlertAction *rightButtonAction = alertController.actions.lastObject;
+        rightButtonAction.enabled = !textField.text.mnz_isEmpty;
+    }
 }
 
 #pragma mark - Battery changed
@@ -2316,6 +2329,10 @@ void uncaughtExceptionHandler(NSException *exception) {
                         masterKeyLoggedInAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"passwordReset", @"Headline of the password reset recovery procedure") message:AMLocalizedString(@"pleaseEnterYourRecoveryKey", @"A message shown to explain that the user has to input (type or paste) their recovery key to continue with the reset password process.") preferredStyle:UIAlertControllerStyleAlert];
                         [masterKeyLoggedInAlertController addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
                             textField.placeholder = AMLocalizedString(@"recoveryKey", @"Label for any 'Recovery Key' button, link, text, title, etc. Preserve uppercase - (String as short as possible). The Recovery Key is the new name for the account 'Master Key', and can unlock (recover) the account if the user forgets their password.");
+                            [textField addTarget:self action:@selector(alertTextFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
+                            textField.shouldReturnCompletion = ^BOOL(UITextField *textField) {
+                                return !textField.text.mnz_isEmpty;
+                            };
                         }];
                     }
                     

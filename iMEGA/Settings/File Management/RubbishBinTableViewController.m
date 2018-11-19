@@ -3,6 +3,7 @@
 
 #import "NSString+MNZCategory.h"
 #import "UIApplication+MNZCategory.h"
+#import "UITextField+MNZCategory.h"
 
 #import "MEGANavigationController.h"
 #import "MEGAReachabilityManager.h"
@@ -66,12 +67,11 @@
     return [NSString stringWithFormat:@"%@ %@", countString, unitString];
 }
 
-- (void)scheduleRubbishBinClearingTextFieldDidChange:(UITextField *)sender {
+- (void)scheduleRubbishBinClearingTextFieldDidChange:(UITextField *)textField {
     UIAlertController *scheduleRubbishBinClearingAlertController = (UIAlertController *)self.presentedViewController;
     if (scheduleRubbishBinClearingAlertController) {
-        NSString *days = sender.text;
         UIAlertAction *doneAction = scheduleRubbishBinClearingAlertController.actions.lastObject;
-        doneAction.enabled = days.mnz_isDecimalNumber;
+        doneAction.enabled = textField.text.mnz_isDecimalNumber;
     }
 }
 
@@ -162,6 +162,9 @@
                         textField.keyboardType = UIKeyboardTypeNumberPad;
                         textField.placeholder = AMLocalizedString(@"Days", @"Label for any ‘Days’ button, link, text, title, etc. - (String as short as possible).");
                         [textField addTarget:self action:@selector(scheduleRubbishBinClearingTextFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
+                        textField.shouldReturnCompletion = ^BOOL(UITextField *textField) {
+                            return textField.text.mnz_isDecimalNumber;
+                        };
                     }];
                     
                     [scheduleRubbishBinClearingAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:nil]];
