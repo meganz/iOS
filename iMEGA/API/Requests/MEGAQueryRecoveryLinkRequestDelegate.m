@@ -8,9 +8,11 @@
 #import "MEGASdkManager.h"
 #import "MEGANavigationController.h"
 #import "MEGALinkManager.h"
+#import "NSString+MNZCategory.h"
 #import "LoginViewController.h"
 #import "TwoFactorAuthenticationViewController.h"
 #import "UIApplication+MNZCategory.h"
+#import "UITextField+MNZCategory.h"
 
 @interface MEGAQueryRecoveryLinkRequestDelegate ()
 
@@ -52,6 +54,14 @@
         }];
     } else {
         [visibleViewController presentViewController:navigationController animated:YES completion:nil];
+    }
+}
+
+- (void)alertTextFieldDidChange:(UITextField *)textField {
+    UIAlertController *alertController = (UIAlertController *)UIApplication.mnz_visibleViewController;
+    if (alertController) {
+        UIAlertAction *rightButtonAction = alertController.actions.lastObject;
+        rightButtonAction.enabled = !textField.text.mnz_isEmpty;
     }
 }
 
@@ -117,6 +127,10 @@
                     masterKeyLoggedInAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"passwordReset", @"Headline of the password reset recovery procedure") message:AMLocalizedString(@"pleaseEnterYourRecoveryKey", @"A message shown to explain that the user has to input (type or paste) their recovery key to continue with the reset password process.") preferredStyle:UIAlertControllerStyleAlert];
                     [masterKeyLoggedInAlertController addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
                         textField.placeholder = AMLocalizedString(@"recoveryKey", @"Label for any 'Recovery Key' button, link, text, title, etc. Preserve uppercase - (String as short as possible). The Recovery Key is the new name for the account 'Master Key', and can unlock (recover) the account if the user forgets their password.");
+                        [textField addTarget:self action:@selector(alertTextFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
+                        textField.shouldReturnCompletion = ^BOOL(UITextField *textField) {
+                            return !textField.text.mnz_isEmpty;
+                        };
                     }];
                 }
                 

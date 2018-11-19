@@ -17,6 +17,7 @@
 #import "MEGALinkManager.h"
 #import "UIApplication+MNZCategory.h"
 #import "UIImageView+MNZCategory.h"
+#import "UITextField+MNZCategory.h"
 
 #import "BrowserViewController.h"
 #import "CustomActionViewController.h"
@@ -270,6 +271,9 @@
     [decryptionAlertController addTextFieldWithConfigurationHandler:^(UITextField *textField) {
         textField.placeholder = AMLocalizedString(@"decryptionKey", nil);
         [textField addTarget:self action:@selector(decryptionTextFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
+        textField.shouldReturnCompletion = ^BOOL(UITextField *textField) {
+            return !textField.text.mnz_isEmpty;
+        };
     }];
     
     [decryptionAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
@@ -341,12 +345,11 @@
     }
 }
 
-- (void)decryptionTextFieldDidChange:(UITextField *)sender {
-    if (self.presentedViewController) {
-        UIAlertController *decryptionAlertController = (UIAlertController *)self.presentedViewController;
-        UITextField *decryptionTextField = decryptionAlertController.textFields.firstObject;
+- (void)decryptionTextFieldDidChange:(UITextField *)textField {
+    UIAlertController *decryptionAlertController = (UIAlertController *)self.presentedViewController;
+    if (decryptionAlertController) {
         UIAlertAction *okAction = decryptionAlertController.actions.lastObject;
-        okAction.enabled = decryptionTextField.text.length > 0;
+        okAction.enabled = !textField.text.mnz_isEmpty;
     }
 }
 
