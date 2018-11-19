@@ -2,8 +2,9 @@
 #import "FileEncryption.h"
 #import "MEGASdkManager.h"
 
-static const NSUInteger EncryptionProposedChunkSizeInBytes = 100 * 1024 * 1024;
-static const NSUInteger EncryptionMinimumChunkSizeInBytes = 5 * 1024 * 1024;
+static const NSUInteger EncryptionProposedChunkSizeForTruncating = 100 * 1024 * 1024;
+static const NSUInteger EncryptionMinimumChunkSize = 5 * 1024 * 1024;
+static const NSUInteger EncryptionProposedChunkSizeWithoutTruncating = 1024 * 1024 * 1024;
 
 static NSString * const EncryptionErrorDomain = @"nz.mega.cameraUpload.encryption";
 static NSString * const EncryptionErrorMessageKey = @"message";
@@ -44,18 +45,24 @@ static NSString * const EncryptionErrorMessageKey = @"message";
         return;
     }
     
-    if (deviceFreeSize < EncryptionMinimumChunkSizeInBytes) {
-        completion(NO, 0, nil, [NSError errorWithDomain:EncryptionErrorDomain code:0 userInfo:@{EncryptionErrorMessageKey : @"no enough device free space for encryption"}]);
-        return;
+    if (self.shouldTruncateFile) {
+        if (deviceFreeSize < EncryptionMinimumChunkSize) {
+            completion(NO, 0, nil, [self noEnoughFreeSpaceError]);
+            return;
+        }
+        
+        if (![NSFileManager.defaultManager isWritableFileAtPath:fileURL.path]) {
+            completion(NO, 0, nil, [NSError errorWithDomain:EncryptionErrorDomain code:0 userInfo:@{EncryptionErrorMessageKey : [NSString stringWithFormat:@"no write permission for file %@", fileURL]}]);
+            return;
+        }
+    } else {
+        if (deviceFreeSize < self.fileSize) {
+            completion(NO, 0, nil, [self noEnoughFreeSpaceError]);
+            return;
+        }
     }
-    
-    if (self.shouldTruncateFile && ![NSFileManager.defaultManager isWritableFileAtPath:fileURL.path]) {
-        completion(NO, 0, nil, [NSError errorWithDomain:EncryptionErrorDomain code:0 userInfo:@{EncryptionErrorMessageKey : [NSString stringWithFormat:@"no write permission for file %@", fileURL]}]);
-        return;
-    }
-    
+
     NSUInteger chunkSize = [self calculateChunkSizeByDeviceFreeSize:deviceFreeSize];
-    
     NSDictionary *chunkURLsKeyedByUploadSuffix = [self encryptedChunkURLsKeyedByUploadSuffixForFileAtURL:fileURL chunkSize:chunkSize error:&error];
     if (error || chunkURLsKeyedByUploadSuffix.allValues.count == 0) {
         completion(NO, 0, nil, error);
@@ -147,9 +154,30 @@ static NSString * const EncryptionErrorMessageKey = @"message";
     return [chunkPositions copy];
 }
 
+
+/**
+ Calculate the chunk size according to the device free space and whether to truncate input file during encryption
+
+ @param deviceFreeSize available space in the device in bytes
+ @return proper chunk size to encrypt file, measured in bytes
+ */
 - (NSUInteger)calculateChunkSizeByDeviceFreeSize:(unsigned long long)deviceFreeSize {
-    unsigned long long chunkSize = MIN(deviceFreeSize, EncryptionProposedChunkSizeInBytes);
-    return MIN(chunkSize, self.fileSize);
+    if (self.shouldTruncateFile) {
+        unsigned long long chunkSize = MIN(deviceFreeSize, EncryptionProposedChunkSizeForTruncating);
+        return MIN(chunkSize, self.fileSize);
+    } else {
+        return EncryptionProposedChunkSizeWithoutTruncating;
+    }
+}
+
+
+/**
+ return a NSError object when there is no encough free space in device
+
+ @return error showing no enough free space
+ */
+- (NSError *)noEnoughFreeSpaceError {
+    return [NSError errorWithDomain:EncryptionErrorDomain code:0 userInfo:@{EncryptionErrorMessageKey : @"no enough device free space for encryption"}];
 }
 
 @end
