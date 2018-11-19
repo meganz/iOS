@@ -662,6 +662,8 @@
 		B68C42C5216D9D47003C5A50 /* MOAssetUploadRecord+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = B68C42C2216D9D47003C5A50 /* MOAssetUploadRecord+CoreDataProperties.m */; };
 		B68C42C8216DA9CF003C5A50 /* MEGAOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = B68C42C6216DA9CE003C5A50 /* MEGAOperation.m */; };
 		B68C42CB216DAA85003C5A50 /* CameraUploadOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = B68C42CA216DAA85003C5A50 /* CameraUploadOperation.m */; };
+		B6A4A11121A2544C007E7EEC /* MEGAError+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = B6A4A11021A2544C007E7EEC /* MEGAError+MNZCategory.m */; };
+		B6A4A11421A256B0007E7EEC /* MEGATaskOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = B6A4A11321A256B0007E7EEC /* MEGATaskOperation.m */; };
 		B6B959412193A9140064334D /* ThumbnailUploadOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = B6B959402193A9140064334D /* ThumbnailUploadOperation.m */; };
 		B6B959442193A91E0064334D /* PreviewUploadOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = B6B959432193A91E0064334D /* PreviewUploadOperation.m */; };
 		B6D11AC6219B8ABC00446B86 /* CameraUploadFileNameRecordManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B6D11AC5219B8ABC00446B86 /* CameraUploadFileNameRecordManager.m */; };
@@ -669,6 +671,7 @@
 		B6D11AD8219BAE6D00446B86 /* MOAssetUploadFileNameRecord+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = B6D11AD6219BAE6D00446B86 /* MOAssetUploadFileNameRecord+CoreDataProperties.m */; };
 		B6D11ADF219CE69300446B86 /* FileEncryption.m in Sources */ = {isa = PBXBuildFile; fileRef = B6D11ADE219CE69300446B86 /* FileEncryption.m */; };
 		B6D11AE2219E5E2C00446B86 /* AttributeUploadOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = B6D11AE1219E5E2C00446B86 /* AttributeUploadOperation.m */; };
+		B6D11AE521A24C7700446B86 /* CompleteUploadOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = B6D11AE421A24C7700446B86 /* CompleteUploadOperation.m */; };
 		B6D9D7E9216AB0C700D7B08A /* CameraScanner.m in Sources */ = {isa = PBXBuildFile; fileRef = B6D9D7E8216AB0C700D7B08A /* CameraScanner.m */; };
 		B6D9D7EF216AE5D000D7B08A /* CameraUploadRecordManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B6D9D7EE216AE5D000D7B08A /* CameraUploadRecordManager.m */; };
 		B6E19B2F21756F0800882F74 /* TransferSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B6E19B2E21756F0800882F74 /* TransferSessionManager.m */; };
@@ -1531,6 +1534,10 @@
 		B68C42C7216DA9CE003C5A50 /* MEGAOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEGAOperation.h; sourceTree = "<group>"; };
 		B68C42C9216DAA85003C5A50 /* CameraUploadOperation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CameraUploadOperation.h; sourceTree = "<group>"; };
 		B68C42CA216DAA85003C5A50 /* CameraUploadOperation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CameraUploadOperation.m; sourceTree = "<group>"; };
+		B6A4A10F21A2544C007E7EEC /* MEGAError+MNZCategory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MEGAError+MNZCategory.h"; sourceTree = "<group>"; };
+		B6A4A11021A2544C007E7EEC /* MEGAError+MNZCategory.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "MEGAError+MNZCategory.m"; sourceTree = "<group>"; };
+		B6A4A11221A256B0007E7EEC /* MEGATaskOperation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MEGATaskOperation.h; sourceTree = "<group>"; };
+		B6A4A11321A256B0007E7EEC /* MEGATaskOperation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MEGATaskOperation.m; sourceTree = "<group>"; };
 		B6B9593F2193A9140064334D /* ThumbnailUploadOperation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ThumbnailUploadOperation.h; sourceTree = "<group>"; };
 		B6B959402193A9140064334D /* ThumbnailUploadOperation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ThumbnailUploadOperation.m; sourceTree = "<group>"; };
 		B6B959422193A91E0064334D /* PreviewUploadOperation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PreviewUploadOperation.h; sourceTree = "<group>"; };
@@ -1545,6 +1552,8 @@
 		B6D11ADE219CE69300446B86 /* FileEncryption.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FileEncryption.m; sourceTree = "<group>"; };
 		B6D11AE0219E5E2C00446B86 /* AttributeUploadOperation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AttributeUploadOperation.h; sourceTree = "<group>"; };
 		B6D11AE1219E5E2C00446B86 /* AttributeUploadOperation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AttributeUploadOperation.m; sourceTree = "<group>"; };
+		B6D11AE321A24C7700446B86 /* CompleteUploadOperation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CompleteUploadOperation.h; sourceTree = "<group>"; };
+		B6D11AE421A24C7700446B86 /* CompleteUploadOperation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CompleteUploadOperation.m; sourceTree = "<group>"; };
 		B6D9D7E7216AB0C700D7B08A /* CameraScanner.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CameraScanner.h; sourceTree = "<group>"; };
 		B6D9D7E8216AB0C700D7B08A /* CameraScanner.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CameraScanner.m; sourceTree = "<group>"; };
 		B6D9D7ED216AE5D000D7B08A /* CameraUploadRecordManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CameraUploadRecordManager.h; sourceTree = "<group>"; };
@@ -2516,6 +2525,8 @@
 				77F43DD82034637300AE4F42 /* UICollectionView+MNZCategory.m */,
 				77B3227D20A436D60037FA89 /* NSURL+MNZCategory.h */,
 				77B3227E20A436D60037FA89 /* NSURL+MNZCategory.m */,
+				B6A4A10F21A2544C007E7EEC /* MEGAError+MNZCategory.h */,
+				B6A4A11021A2544C007E7EEC /* MEGAError+MNZCategory.m */,
 			);
 			path = Categories;
 			sourceTree = "<group>";
@@ -3310,6 +3321,8 @@
 				B68C42C6216DA9CE003C5A50 /* MEGAOperation.m */,
 				B658D3C0218FA16C004C0D64 /* MEGATransactionOperation.h */,
 				B658D3C1218FA16C004C0D64 /* MEGATransactionOperation.m */,
+				B6A4A11221A256B0007E7EEC /* MEGATaskOperation.h */,
+				B6A4A11321A256B0007E7EEC /* MEGATaskOperation.m */,
 				B658D3CD218FBC47004C0D64 /* UploadOperationFactory.h */,
 				B658D3CE218FBC47004C0D64 /* UploadOperationFactory.m */,
 				B68C42C9216DAA85003C5A50 /* CameraUploadOperation.h */,
@@ -3324,6 +3337,8 @@
 				B6B959402193A9140064334D /* ThumbnailUploadOperation.m */,
 				B6B959422193A91E0064334D /* PreviewUploadOperation.h */,
 				B6B959432193A91E0064334D /* PreviewUploadOperation.m */,
+				B6D11AE321A24C7700446B86 /* CompleteUploadOperation.h */,
+				B6D11AE421A24C7700446B86 /* CompleteUploadOperation.m */,
 			);
 			path = UploadOperation;
 			sourceTree = "<group>";
@@ -3357,10 +3372,10 @@
 				B6D9D7E8216AB0C700D7B08A /* CameraScanner.m */,
 				B686F45721866BB4009C0DAA /* CameraUploadRequestDelegate.h */,
 				B686F45821866BB4009C0DAA /* CameraUploadRequestDelegate.m */,
-				B6E19B3B2180126500882F74 /* CameraUploadCoordinator.h */,
-				B6E19B3C2180126500882F74 /* CameraUploadCoordinator.m */,
 				B6D11ADD219CE69300446B86 /* FileEncryption.h */,
 				B6D11ADE219CE69300446B86 /* FileEncryption.m */,
+				B6E19B3B2180126500882F74 /* CameraUploadCoordinator.h */,
+				B6E19B3C2180126500882F74 /* CameraUploadCoordinator.m */,
 			);
 			path = UploadUtil;
 			sourceTree = "<group>";
@@ -3893,6 +3908,7 @@
 				77519C36203707F600FDF92B /* MEGARenameRequestDelegate.m in Sources */,
 				E8BD127F1DB76E03003DC53F /* MasterKeyViewController.m in Sources */,
 				41D21E691D01AEC3002E6296 /* CTAssetsNavigationController.m in Sources */,
+				B6D11AE521A24C7700446B86 /* CompleteUploadOperation.m in Sources */,
 				B6D11AC6219B8ABC00446B86 /* CameraUploadFileNameRecordManager.m in Sources */,
 				41D578241B84A0FB00334ED3 /* PreviewDocumentViewController.m in Sources */,
 				5BFA346B1FAB4169005BFC4E /* MEGARemoveRequestDelegate.m in Sources */,
@@ -3941,9 +3957,11 @@
 				E88E6D801CF355FA00C9AD9E /* UIColor+MNZCategory.m in Sources */,
 				41D21E601D01AEC3002E6296 /* CTAssetScrollView.m in Sources */,
 				836B956F2063EADE003E279B /* SearchInPdfViewController.m in Sources */,
+				B6A4A11421A256B0007E7EEC /* MEGATaskOperation.m in Sources */,
 				41D21E641D01AEC3002E6296 /* CTAssetsGridView.m in Sources */,
 				834AD6052024694200D2527F /* MGSwipeButton.m in Sources */,
 				4172795D1DB663FA001AC818 /* JSQMessagesTypingIndicatorFooterView.m in Sources */,
+				B6A4A11121A2544C007E7EEC /* MEGAError+MNZCategory.m in Sources */,
 				41D21E701D01AEC3002E6296 /* CTAssetsViewControllerTransition.m in Sources */,
 				41D408101B8F240B0001F8BE /* MEGAPurchase.m in Sources */,
 				4131997A1BD7BD5D002CD6EA /* DTTimePeriodChain.m in Sources */,

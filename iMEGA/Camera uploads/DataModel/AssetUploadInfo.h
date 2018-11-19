@@ -18,16 +18,19 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, readonly) NSURL *fileURL;
 @property (nonatomic, readonly) NSURL *previewURL;
 @property (nonatomic, readonly) NSURL *thumbnailURL;
-@property (nonatomic, readonly) NSURL *encryptedURL;
 
-@property (strong, nonatomic) NSString *uploadURLStringSuffix;
+@property (nonatomic, readonly) NSURL *encryptionDirectoryURL;
+@property (strong, nonatomic) NSDictionary<NSString *, NSURL *> *encryptedChunkURLsKeyedByUploadSuffix;
+
 @property (strong, nonatomic) NSString *uploadURLString;
-@property (nonatomic, readonly) NSURL *uploadURL;
 
 @property (strong, nonatomic) MEGABackgroundMediaUpload *mediaUpload;
 @property (strong, nonatomic) MEGANode *parentNode;
 
 - (instancetype)initWithAsset:(PHAsset *)asset parentNode:(MEGANode *)parentNode;
+
++ (NSURL *)assetDirectoryURLForLocalIdentifier:(NSString *)localIdentifier;
++ (NSURL *)archivedURLForLocalIdentifier:(NSString *)localIdentifier;
 
 @end
 
