@@ -622,6 +622,7 @@ static MEGAIndexer *indexer;
         NSString *appData = [NSString new];
         
         appData = [appData mnz_appDataToSaveCoordinates:[filePath mnz_coordinatesOfPhotoOrVideo]];
+        appData = [appData mnz_appDataToLocalIdentifier:uploadTransfer.localIdentifier];
         
         if (![name isEqualToString:newName]) {
             NSString *newFilePath = [[NSFileManager defaultManager].uploadsDirectory stringByAppendingPathComponent:newName];
@@ -635,18 +636,21 @@ static MEGAIndexer *indexer;
         } else {
             [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:filePath.mnz_relativeLocalPath parent:parentNode appData:appData isSourceTemporary:YES];
         }
-        [[MEGAStore shareInstance] deleteUploadTransfer:uploadTransfer];
     } node:^(MEGANode *node) {
         if ([[[MEGASdkManager sharedMEGASdk] parentNodeForNode:node] handle] == parentNode.handle) {
             MEGALogDebug(@"The asset exists in MEGA in the parent folder");
         } else {
             [[MEGASdkManager sharedMEGASdk] copyNode:node newParent:parentNode];
         }
-        [[MEGAStore shareInstance] deleteUploadTransfer:uploadTransfer];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [[MEGAStore shareInstance] deleteUploadTransfer:uploadTransfer];
+        });
         [Helper startPendingUploadTransferIfNeeded];
     } error:^(NSError *error) {
         [SVProgressHUD showImage:[UIImage imageNamed:@"hudError"] status:[NSString stringWithFormat:@"%@ %@ \r %@", AMLocalizedString(@"Transfer failed:", nil), asset.localIdentifier, error.localizedDescription]];
-        [[MEGAStore shareInstance] deleteUploadTransfer:uploadTransfer];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [[MEGAStore shareInstance] deleteUploadTransfer:uploadTransfer];
+        });
         [Helper startPendingUploadTransferIfNeeded];
     }];
     [processAsset prepare];
@@ -666,10 +670,11 @@ static MEGAIndexer *indexer;
         }
     }
     
-    NSArray<MOUploadTransfer *> *uploadTransfers = [[MEGAStore shareInstance] fetchUploadTransfers];
-    
-    if (allUploadTransfersPaused && uploadTransfers.count) {
-        [Helper startUploadTransfer:uploadTransfers.firstObject];
+    if (allUploadTransfersPaused) {
+        NSArray<MOUploadTransfer *> *queuedUploadTransfers = [[MEGAStore shareInstance] fetchUploadTransfers];
+        if (queuedUploadTransfers.count) {
+            [Helper startUploadTransfer:queuedUploadTransfers.firstObject];
+        }
     }
 }
 

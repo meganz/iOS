@@ -96,6 +96,10 @@ static NSString* const B = @"[B]";
     return (coordinates ? [self stringByAppendingString:[NSString stringWithFormat:@">setCoordinates=%@", coordinates]] : self);
 }
 
+- (NSString *)mnz_appDataToLocalIdentifier:(NSString *)localIdentifier {
+    return (localIdentifier ? [self stringByAppendingString:[NSString stringWithFormat:@">localIdentifier=%@", localIdentifier]] : self);
+}
+
 #pragma mark - Utils
 
 + (NSString *)mnz_stringWithoutUnitOfComponents:(NSArray *)componentsSeparatedByStringArray {
