@@ -8,6 +8,7 @@
 #import "NSString+MNZCategory.h"
 #import "NSURL+MNZCategory.h"
 #import "UIApplication+MNZCategory.h"
+#import "UITextField+MNZCategory.h"
 
 #import "BrowserViewController.h"
 #import "CloudDriveViewController.h"
@@ -481,6 +482,10 @@ static NSString *nodeToPresentBase64Handle;
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"decryptionKeyAlertTitle", nil) message:AMLocalizedString(@"decryptionKeyAlertMessage", nil) preferredStyle:UIAlertControllerStyleAlert];
     [alertController addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
         textField.placeholder = AMLocalizedString(@"decryptionKey", nil);
+        [textField addTarget:self action:@selector(alertTextFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
+        textField.shouldReturnCompletion = ^BOOL(UITextField *textField) {
+            return !textField.text.mnz_isEmpty;
+        };
     }];
     [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         [[MEGASdkManager sharedMEGASdk] decryptPasswordProtectedLink:encryptedLinkURLString password:alertController.textFields.firstObject.text delegate:delegate];
@@ -491,6 +496,14 @@ static NSString *nodeToPresentBase64Handle;
     }]];
     
     [UIApplication.mnz_visibleViewController presentViewController:alertController animated:YES completion:nil];
+}
+
+- (void)alertTextFieldDidChange:(UITextField *)textField {
+    UIAlertController *alertController = (UIAlertController *)UIApplication.mnz_visibleViewController;
+    if (alertController) {
+        UIAlertAction *rightButtonAction = alertController.actions.lastObject;
+        rightButtonAction.enabled = !textField.text.mnz_isEmpty;
+    }
 }
 
 + (void)showFileLinkView {
