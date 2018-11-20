@@ -3,6 +3,7 @@
 #import "CameraUploadRequestDelegate.h"
 #import "NSString+MNZCategory.h"
 #import "MEGAError+MNZCategory.h"
+#import "NSError+CameraUpload.h"
 
 @interface CompleteUploadOperation ()
 
@@ -50,7 +51,7 @@
                                                           token:self.transferToken
                                                        delegate:delegate];
     if (!didCreateRequestSuccess) {
-        self.completion(nil, [NSError errorWithDomain:@"error" code:0 userInfo:@{@"message" : @"create request error"}]);
+        self.completion(nil, [NSError errorWithDomain:CameraUploadErrorDomain code:CameraUploadErrorFailedToCreateCompleteUploadRequest userInfo:@{NSLocalizedDescriptionKey : [NSString stringWithFormat:@"Failed to create complete upload request for file %@", self.uploadInfo.fileName]}]);
         [self finishOperation];
     }
 }
