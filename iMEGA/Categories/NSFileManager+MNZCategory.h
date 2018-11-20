@@ -21,4 +21,12 @@
  */
 - (void)removeItemIfExistsAtURL:(NSURL *)URL;
 
+
+/**
+ Get the free space of the device
+
+ @return the free size of the device in bytes.
+ */
+- (unsigned long long)deviceFreeSize;
+
 @end

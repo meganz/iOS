@@ -28,6 +28,7 @@
     NSOperationQueue *queue = [[NSOperationQueue alloc] init];
     CompleteUploadOperation *operation = [[CompleteUploadOperation alloc] initWithUploadInfo:uploadInfo transferToken:token completion:^(MEGANode * _Nullable node, NSError * _Nullable error) {
         if (error) {
+            MEGALogDebug(@"[Camera Upload] error when to complete transfer %@", error);
             [self finishUploadForLocalIdentifier:localIdentifier status:UploadStatusFailed];
         } else {
             [self finishUploadForLocalIdentifier:localIdentifier status:UploadStatusDone];

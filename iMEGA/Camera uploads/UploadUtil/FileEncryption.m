@@ -1,6 +1,7 @@
 
 #import "FileEncryption.h"
 #import "MEGASdkManager.h"
+#import "NSFileManager+MNZCategory.h"
 
 static const NSUInteger EncryptionProposedChunkSizeForTruncating = 100 * 1024 * 1024;
 static const NSUInteger EncryptionMinimumChunkSize = 5 * 1024 * 1024;
@@ -38,7 +39,9 @@ static NSString * const EncryptionErrorMessageKey = @"message";
     NSDictionary<NSFileAttributeKey, id> *attributeDict = [NSFileManager.defaultManager attributesOfItemAtPath:fileURL.path error:&error];
     
     self.fileSize = attributeDict.fileSize;
-    unsigned long long deviceFreeSize = [attributeDict[NSFileSystemFreeSize] unsignedLongLongValue];
+    unsigned long long deviceFreeSize = [NSFileManager.defaultManager deviceFreeSize];
+    
+    MEGALogDebug(@"[Camera Upload] input file size %.2f M, device free size %.2f M", self.fileSize / 1024.0 / 1024.0, deviceFreeSize / 1024.0 / 1024.0);
     
     if (error) {
         completion(NO, 0, nil, error);
@@ -63,6 +66,7 @@ static NSString * const EncryptionErrorMessageKey = @"message";
     }
 
     NSUInteger chunkSize = [self calculateChunkSizeByDeviceFreeSize:deviceFreeSize];
+    MEGALogDebug(@"[Camera Upload] encryption chunk size %.2f M", chunkSize / 1024.0 / 1024.0);
     NSDictionary *chunkURLsKeyedByUploadSuffix = [self encryptedChunkURLsKeyedByUploadSuffixForFileAtURL:fileURL chunkSize:chunkSize error:&error];
     if (error || chunkURLsKeyedByUploadSuffix.allValues.count == 0) {
         completion(NO, 0, nil, error);
@@ -81,19 +85,8 @@ static NSString * const EncryptionErrorMessageKey = @"message";
         
         return @{};
     }
-    
-    NSMutableArray *reversedPositions = [[[chunkPositions reverseObjectEnumerator] allObjects] mutableCopy];
-    unsigned long long lastPosition = [[reversedPositions firstObject] unsignedLongLongValue];
-    if (lastPosition != self.fileSize) {
-        if (error != NULL) {
-            NSString *errorMessage = [NSString stringWithFormat:@"last chunk position doesn't equal to file size %@", fileURL];
-            *error = [NSError errorWithDomain:EncryptionErrorDomain code:0 userInfo:@{EncryptionErrorMessageKey : errorMessage}];
-        }
-        
-        return @{};
-    }
-    
-    MEGALogDebug(@"[Camera Upload] start encrypting file %@ at size %llu", fileURL, self.fileSize);
+
+    MEGALogDebug(@"[Camera Upload] reversed chunk positions %@", chunkPositions);
     
     NSMutableDictionary<NSString *, NSURL *> *chunksDict = [NSMutableDictionary dictionary];
     NSFileHandle *fileHandle;
@@ -101,19 +94,23 @@ static NSString * const EncryptionErrorMessageKey = @"message";
          fileHandle = [NSFileHandle fileHandleForWritingAtPath:fileURL.path];
     }
     
-    NSUInteger chunkIndex = 0;
-    for (NSNumber *position in reversedPositions) {
+    unsigned long long lastPosition = self.fileSize;
+    for (NSInteger chunkIndex = chunkPositions.count - 1; chunkIndex >= 0; chunkIndex --) {
+        NSNumber *position = chunkPositions[chunkIndex];
+        if (position.unsignedLongLongValue == lastPosition) {
+            continue;
+        }
+        
+        unsigned length = (unsigned)(lastPosition - position.unsignedLongLongValue);
         NSString *chunkName = [NSString stringWithFormat:@"chunk%lu", chunkIndex];
         NSURL *chunkURL = [self.outputDirectoryURL URLByAppendingPathComponent:chunkName];
         NSString *suffix;
-        unsigned length = (unsigned)(lastPosition - position.unsignedLongLongValue);
         if ([self.mediaUpload encryptFileAtPath:fileURL.path startPosition:position.unsignedLongLongValue length:&length outputFilePath:chunkURL.path urlSuffix:&suffix adjustsSizeOnly:NO]) {
             chunksDict[suffix] = chunkURL;
-            
+            lastPosition = position.unsignedLongLongValue;
             if (self.shouldTruncateFile && fileHandle) {
                 [fileHandle truncateFileAtOffset:position.unsignedLongLongValue];
             }
-            
             MEGALogDebug(@"[Camera Upload] encrypted %@, file remaining size %llu", chunkName, [NSFileManager.defaultManager attributesOfItemAtPath:fileURL.path error:nil].fileSize);
         } else {
             if (error != NULL) {

@@ -15,8 +15,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (instancetype)initWithUploadInfo:(AssetUploadInfo *)uploadInfo;
 
-- (nullable NSURL *)URLForAssetFolder;
-
 - (void)encryptsFile;
 
 - (void)finishOperationWithStatus:(NSString *)status shouldUploadNextAsset:(BOOL)uploadNextAsset;
