@@ -2,13 +2,11 @@
 #import "FileEncryption.h"
 #import "MEGASdkManager.h"
 #import "NSFileManager+MNZCategory.h"
+#import "NSError+CameraUpload.h"
 
 static const NSUInteger EncryptionProposedChunkSizeForTruncating = 100 * 1024 * 1024;
 static const NSUInteger EncryptionMinimumChunkSize = 5 * 1024 * 1024;
 static const NSUInteger EncryptionProposedChunkSizeWithoutTruncating = 1024 * 1024 * 1024;
-
-static NSString * const EncryptionErrorDomain = @"nz.mega.cameraUpload.encryption";
-static NSString * const EncryptionErrorMessageKey = @"message";
 
 @interface FileEncryption ()
 
@@ -50,17 +48,17 @@ static NSString * const EncryptionErrorMessageKey = @"message";
     
     if (self.shouldTruncateFile) {
         if (deviceFreeSize < EncryptionMinimumChunkSize) {
-            completion(NO, 0, nil, [self noEnoughFreeSpaceError]);
+            completion(NO, 0, nil, [NSError cameraUploadNoEnoughFreeSpaceError]);
             return;
         }
         
         if (![NSFileManager.defaultManager isWritableFileAtPath:fileURL.path]) {
-            completion(NO, 0, nil, [NSError errorWithDomain:EncryptionErrorDomain code:0 userInfo:@{EncryptionErrorMessageKey : [NSString stringWithFormat:@"no write permission for file %@", fileURL]}]);
+            completion(NO, 0, nil, [NSError errorWithDomain:CameraUploadErrorDomain code:CameraUploadErrorNoFileWritePermission userInfo:@{NSLocalizedDescriptionKey : [NSString stringWithFormat:@"no write permission for file %@", fileURL]}]);
             return;
         }
     } else {
         if (deviceFreeSize < self.fileSize) {
-            completion(NO, 0, nil, [self noEnoughFreeSpaceError]);
+            completion(NO, 0, nil, [NSError cameraUploadNoEnoughFreeSpaceError]);
             return;
         }
     }
@@ -68,7 +66,7 @@ static NSString * const EncryptionErrorMessageKey = @"message";
     NSUInteger chunkSize = [self calculateChunkSizeByDeviceFreeSize:deviceFreeSize];
     MEGALogDebug(@"[Camera Upload] encryption chunk size %.2f M", chunkSize / 1024.0 / 1024.0);
     NSDictionary *chunkURLsKeyedByUploadSuffix = [self encryptedChunkURLsKeyedByUploadSuffixForFileAtURL:fileURL chunkSize:chunkSize error:&error];
-    if (error || chunkURLsKeyedByUploadSuffix.allValues.count == 0) {
+    if (error) {
         completion(NO, 0, nil, error);
     } else {
         completion(YES, self.fileSize, chunkURLsKeyedByUploadSuffix, nil);
@@ -114,8 +112,8 @@ static NSString * const EncryptionErrorMessageKey = @"message";
             MEGALogDebug(@"[Camera Upload] encrypted %@, file remaining size %llu", chunkName, [NSFileManager.defaultManager attributesOfItemAtPath:fileURL.path error:nil].fileSize);
         } else {
             if (error != NULL) {
-                NSString *errorMessage = [NSString stringWithFormat:@"error occurred when to encrypt file %@", fileURL];
-                *error = [NSError errorWithDomain:EncryptionErrorDomain code:0 userInfo:@{EncryptionErrorMessageKey : errorMessage}];
+                NSString *errorMessage = [NSString stringWithFormat:@"error occurred when to encrypt file %@", fileURL.lastPathComponent];
+                *error = [NSError errorWithDomain:CameraUploadErrorDomain code:CameraUploadErrorEncryption userInfo:@{NSLocalizedDescriptionKey : errorMessage}];
             }
             
             return @{};
@@ -127,21 +125,16 @@ static NSString * const EncryptionErrorMessageKey = @"message";
 
 - (NSArray<NSNumber *> *)calculteChunkPositionsForFileAtURL:(NSURL *)fileURL chunkSize:(NSUInteger)chunkSize error:(NSError **)error {
     NSMutableArray<NSNumber *> *chunkPositions = [NSMutableArray arrayWithObject:@(0)];
-    
     unsigned chunkSizeToBeAdjusted = (unsigned)chunkSize;
     unsigned long long startPosition = 0;
-//    NSUInteger chunkIndex = 0;
-//    NSURL *chunkURL = [self.outputDirectoryURL URLByAppendingPathComponent:[NSString stringWithFormat:@"chunk%lu", chunkIndex]];
-//    NSString *suffix;
-    
     while (startPosition < self.fileSize) {
         if ([self.mediaUpload encryptFileAtPath:fileURL.path startPosition:startPosition length:&chunkSizeToBeAdjusted outputFilePath:nil urlSuffix:nil adjustsSizeOnly:YES]) {
             startPosition = startPosition + chunkSizeToBeAdjusted;
             [chunkPositions addObject:@(startPosition)];
         } else {
             if (error != NULL) {
-                NSString *errorMessage = [NSString stringWithFormat:@"error occurred when to calculate chunk position for file %@", fileURL];
-                *error = [NSError errorWithDomain:EncryptionErrorDomain code:0 userInfo:@{EncryptionErrorMessageKey : errorMessage}];
+                NSString *errorMessage = [NSString stringWithFormat:@"error occurred when to calculate chunk position for file %@", fileURL.lastPathComponent];
+                *error = [NSError errorWithDomain:CameraUploadErrorDomain code:CameraUploadErrorCalculateEncryptionChunkPositions userInfo:@{NSLocalizedDescriptionKey : errorMessage}];
             }
             
             return @[];
@@ -150,7 +143,6 @@ static NSString * const EncryptionErrorMessageKey = @"message";
     
     return [chunkPositions copy];
 }
-
 
 /**
  Calculate the chunk size according to the device free space and whether to truncate input file during encryption
@@ -165,16 +157,6 @@ static NSString * const EncryptionErrorMessageKey = @"message";
     } else {
         return EncryptionProposedChunkSizeWithoutTruncating;
     }
-}
-
-
-/**
- return a NSError object when there is no encough free space in device
-
- @return error showing no enough free space
- */
-- (NSError *)noEnoughFreeSpaceError {
-    return [NSError errorWithDomain:EncryptionErrorDomain code:0 userInfo:@{EncryptionErrorMessageKey : @"no enough device free space for encryption"}];
 }
 
 @end

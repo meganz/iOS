@@ -34,7 +34,7 @@
 #pragma mark - task level delegate
 
 - (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didCompleteWithError:(NSError *)error {
-    MEGALogDebug(@"[Camera Upload] Session %@ task %@ did complete with error: %@", session.configuration.identifier, task.originalRequest.URL, error);
+    MEGALogDebug(@"[Camera Upload] Session %@ task %@ did complete with error: %@", session.configuration.identifier, task.taskDescription, error);
     
     NSData *transferToken = [self.mutableData copy];
     
@@ -49,7 +49,7 @@
         if (transferToken.length > 0) {
             [self.uploadCoordinator handleCompletedTransferWithLocalIdentifier:task.taskDescription token:transferToken];
         } else {
-            MEGALogDebug(@"[Camera Upload] Session %@ finishes with empty transfer token", session.configuration.identifier);
+            MEGALogDebug(@"[Camera Upload] Session %@ task %@ finishes with empty transfer token", session.configuration.identifier, task.taskDescription);
         }
     }
 }
