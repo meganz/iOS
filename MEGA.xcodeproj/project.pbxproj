@@ -3326,8 +3326,6 @@
 				B658D3C1218FA16C004C0D64 /* MEGATransactionOperation.m */,
 				B6A4A11221A256B0007E7EEC /* MEGATaskOperation.h */,
 				B6A4A11321A256B0007E7EEC /* MEGATaskOperation.m */,
-				B658D3CD218FBC47004C0D64 /* UploadOperationFactory.h */,
-				B658D3CE218FBC47004C0D64 /* UploadOperationFactory.m */,
 				B68C42C9216DAA85003C5A50 /* CameraUploadOperation.h */,
 				B68C42CA216DAA85003C5A50 /* CameraUploadOperation.m */,
 				B658D3B6218F9357004C0D64 /* PhotoUploadOperation.h */,
@@ -3381,6 +3379,8 @@
 				B6E19B3C2180126500882F74 /* CameraUploadCoordinator.m */,
 				B6A4A11821A404DC007E7EEC /* NSError+CameraUpload.h */,
 				B6A4A11921A404DC007E7EEC /* NSError+CameraUpload.m */,
+				B658D3CD218FBC47004C0D64 /* UploadOperationFactory.h */,
+				B658D3CE218FBC47004C0D64 /* UploadOperationFactory.m */,
 			);
 			path = UploadUtil;
 			sourceTree = "<group>";
