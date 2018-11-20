@@ -410,8 +410,10 @@ static NSString *nodeToPresentBase64Handle;
             break;
             
         case URLTypeAchievementsLink: {
-            MainTabBarController *mainTBC = (MainTabBarController *)UIApplication.sharedApplication.keyWindow.rootViewController;
-            [mainTBC showAchievements];
+            if ([Helper hasSession_alertIfNot]) {
+                MainTabBarController *mainTBC = (MainTabBarController *)UIApplication.sharedApplication.keyWindow.rootViewController;
+                [mainTBC showAchievements];
+            }
             break;
         }
             
