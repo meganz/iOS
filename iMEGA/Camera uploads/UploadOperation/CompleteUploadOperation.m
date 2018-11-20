@@ -50,6 +50,7 @@
                                                           token:self.transferToken
                                                        delegate:delegate];
     if (!didCreateRequestSuccess) {
+        self.completion(nil, [NSError errorWithDomain:@"error" code:0 userInfo:@{@"message" : @"create request error"}]);
         [self finishOperation];
     }
 }

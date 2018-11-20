@@ -48,6 +48,8 @@
         
         if (transferToken.length > 0) {
             [self.uploadCoordinator handleCompletedTransferWithLocalIdentifier:task.taskDescription token:transferToken];
+        } else {
+            MEGALogDebug(@"[Camera Upload] Session %@ finishes with empty transfer token", session.configuration.identifier);
         }
     }
 }
@@ -55,7 +57,7 @@
 #pragma mark - data level delegate
 
 - (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask didReceiveData:(NSData *)data {
-    MEGALogDebug(@"[Camera Upload] Session %@ task %@ did receive data with size: %lu", session.configuration.identifier, dataTask.originalRequest.URL, data.length);
+    MEGALogDebug(@"[Camera Upload] Session %@ task %@ did receive data with size: %lu, UTF8: %@", session.configuration.identifier, dataTask.originalRequest.URL, data.length, [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
     [self.mutableData appendData:data];
 }
 

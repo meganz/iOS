@@ -73,6 +73,8 @@
     
     MEGALogDebug(@"[Camera Upload] %@ starts processing", self);
     [[CameraUploadRecordManager shared] updateStatus:UploadStatusProcessing forLocalIdentifier:self.uploadInfo.asset.localIdentifier error:nil];
+    
+    self.uploadInfo.directoryURL = [self URLForAssetFolder];
 }
 
 - (void)beginBackgroundTask {
@@ -196,6 +198,7 @@
     }
     
     [self finishOperation];
+    [[CameraUploadManager shared] uploadNextForAsset:self.uploadInfo.asset];
 }
 
 #pragma mark - archive upload info

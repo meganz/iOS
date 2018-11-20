@@ -60,7 +60,8 @@
                     return;
                 } else {
                     MEGALogDebug(@"[Camera Upload] %@ original file size: %.2f M", self, [NSFileManager.defaultManager attributesOfItemAtPath:urlAsset.URL.path error:nil].fileSize / 1024.0f / 1024.0f);
-                    [self compressVideoByExportSession:session];
+//                    [self compressVideoByExportSession:session];
+                    [self processOriginalURLAsset:urlAsset];
                 }
             } else {
                 [self compressVideoByExportSession:session];
@@ -75,8 +76,7 @@
     MEGALogDebug(@"[Camera Upload] video estimate duration: %.2f, max duration: %.2f, estimate size: %.2f M", CMTimeGetSeconds(session.asset.duration), CMTimeGetSeconds(session.maxDuration), session.estimatedOutputFileLength / 1024.0f / 1024.0f)
     
     MEGALogDebug(@"[Camera Upload] %@ starts compressing video data with original dimensions: %@", self, NSStringFromCGSize([self dimensionsForAVAsset:session.asset]));
-    
-    self.uploadInfo.directoryURL = [self URLForAssetFolder];
+
     NSString *proposedFileName = [[NSString mnz_fileNameWithDate:self.uploadInfo.asset.creationDate] stringByAppendingPathExtension:@"mp4"];
     self.uploadInfo.fileName = [CameraUploadFileNameRecordManager.shared localUniqueFileNameForAssetLocalIdentifier:self.uploadInfo.asset.localIdentifier proposedFileName:proposedFileName];
     
@@ -89,7 +89,7 @@
         switch (session.status) {
             case AVAssetExportSessionStatusCompleted:
                 MEGALogDebug(@"[Camera Upload] %@ has finished video compression", weakSelf);
-                [weakSelf handleCompressedVideoFile];
+                [weakSelf processCompressedVideoFile];
                 break;
             case AVAssetExportSessionStatusCancelled:
                 MEGALogDebug(@"[Camera Upload] %@ video compression got cancelled", weakSelf);
@@ -103,15 +103,7 @@
     }];
 }
 
-- (void)handleCompressedVideoFile {
-    NSError *error;
-    [NSFileManager.defaultManager setAttributes:@{NSFileModificationDate : self.uploadInfo.asset.creationDate} ofItemAtPath:self.uploadInfo.fileURL.path error:&error];
-    if (error) {
-        MEGALogError(@"[Camera Upload] %@ gets error when to rewrite the file creation date %@", self, error);
-        [self finishOperationWithStatus:UploadStatusFailed shouldUploadNextAsset:YES];
-        return;
-    }
-    
+- (void)processCompressedVideoFile {
     self.uploadInfo.fingerprint = [MEGASdkManager.sharedMEGASdk fingerprintForFilePath:self.uploadInfo.fileURL.path modificationTime:self.uploadInfo.asset.creationDate];
     MEGANode *existingNode = [MEGASdkManager.sharedMEGASdk nodeForFingerprint:self.uploadInfo.fingerprint parent:self.uploadInfo.parentNode];
     if (existingNode) {
@@ -122,6 +114,21 @@
     } else {
         [self encryptsFile];
     }
+}
+
+- (void)processOriginalURLAsset:(AVURLAsset *)asset {
+    NSString *proposedFileName = [[NSString mnz_fileNameWithDate:self.uploadInfo.asset.creationDate] stringByAppendingPathExtension:asset.URL.pathExtension];
+    self.uploadInfo.fileName = [CameraUploadFileNameRecordManager.shared localUniqueFileNameForAssetLocalIdentifier:self.uploadInfo.asset.localIdentifier proposedFileName:proposedFileName];
+    self.uploadInfo.fingerprint = self.uploadInfo.originalFingerprint;
+    NSError *error;
+    [NSFileManager.defaultManager copyItemAtURL:asset.URL toURL:self.uploadInfo.fileURL error:&error];
+    if (error) {
+        MEGALogDebug(@"[Camera Upload] %@ got error when to copy original item %@", self, error);
+        [self finishOperationWithStatus:UploadStatusFailed shouldUploadNextAsset:YES];
+        return;
+    }
+
+    [self encryptsFile];
 }
 
 #pragma mark - util methods

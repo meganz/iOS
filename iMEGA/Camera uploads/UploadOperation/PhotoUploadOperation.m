@@ -62,13 +62,11 @@
         [self finishOperationWithStatus:UploadStatusDone shouldUploadNextAsset:YES];
         return;
     }
-    
-    self.uploadInfo.directoryURL = [self URLForAssetFolder];
+
     NSString *proposedFileName = [[NSString mnz_fileNameWithDate:self.uploadInfo.asset.creationDate] stringByAppendingPathExtension:@"jpg"];
     self.uploadInfo.fileName = [CameraUploadFileNameRecordManager.shared localUniqueFileNameForAssetLocalIdentifier:self.uploadInfo.asset.localIdentifier proposedFileName:proposedFileName];
     
     if ([JPEGData writeToURL:self.uploadInfo.fileURL atomically:YES]) {
-        self.uploadInfo.fileSize = [JPEGData length];
         [self encryptsFile];
     } else {
         [self finishOperationWithStatus:UploadStatusFailed shouldUploadNextAsset:YES];
