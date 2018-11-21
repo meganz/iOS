@@ -22,8 +22,8 @@
         
         [weakSelf finishOperation];
     }]];
-    
-    [self cacheAttributeToURL:[[Helper urlForSharedSandboxCacheDirectory:@"thumbnailsV3"] URLByAppendingPathComponent:self.node.base64Handle isDirectory:NO]];
+
+    [self cacheAttributeToDirectoryURL:[Helper urlForSharedSandboxCacheDirectory:@"thumbnailsV3"] fileName:self.node.base64Handle];
 }
 
 @end
