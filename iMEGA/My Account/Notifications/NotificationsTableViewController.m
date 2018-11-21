@@ -22,6 +22,7 @@
 
 @property (nonatomic) NSArray *userAlertsArray;
 @property (nonatomic) NSDateFormatter *dateFormatter;
+@property (nonatomic) UIFont *boldFont;
 
 @end
 
@@ -38,6 +39,8 @@
     self.dateFormatter = [[NSDateFormatter alloc] init];
     self.dateFormatter.dateStyle = NSDateFormatterLongStyle;
     self.dateFormatter.timeStyle = NSDateFormatterShortStyle;
+    
+    self.boldFont = [UIFont boldSystemFontOfSize:14.0f];
     
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
 }
@@ -217,8 +220,16 @@
             
         case MEGAUserAlertTypeDeletedShare: {
             MEGANode *node = [[MEGASdkManager sharedMEGASdk] nodeForHandle:userAlert.nodeHandle];
-            NSString *text = node ? [AMLocalizedString(@"A user has left the shared folder {0}", @"notification text") stringByReplacingOccurrencesOfString:@"{0}" withString:node.name] : AMLocalizedString(@"Access to folders was removed.", @"This is shown in the Notification dialog when the email address of a contact is not found and access to the share is lost for some reason (e.g. share removal or contact removal).");
-            contentLabel.text = text;
+            if (node) {
+                NSAttributedString *nodeName = [[NSAttributedString alloc] initWithString:node.name attributes:@{ NSFontAttributeName : self.boldFont }];
+                NSString *text = AMLocalizedString(@"A user has left the shared folder {0}", @"notification text");
+                NSRange range = [text rangeOfString:@"{0}"];
+                NSMutableAttributedString *attributedText = [[NSMutableAttributedString alloc] initWithString:text];
+                [attributedText replaceCharactersInRange:range withAttributedString:nodeName];
+                contentLabel.attributedText = attributedText;
+            } else {
+                contentLabel.text = AMLocalizedString(@"Access to folders was removed.", @"This is shown in the Notification dialog when the email address of a contact is not found and access to the share is lost for some reason (e.g. share removal or contact removal).");
+            }
             break;
         }
             
@@ -263,18 +274,22 @@
         }
             
         case MEGAUserAlertTypePaymentSucceeded: {
+            NSAttributedString *proPlan = [[NSAttributedString alloc] initWithString:[userAlert stringAtIndex:0] attributes:@{ NSFontAttributeName : self.boldFont }];
             NSString *text = AMLocalizedString(@"Your payment for the %1 plan was received.", @"A notification telling the user that their Pro plan payment was successfully received. The %1 indicates the name of the Pro plan they paid for e.g. Lite, PRO III.");
-            NSString *proPlan = [userAlert stringAtIndex:0];
-            text = [text stringByReplacingOccurrencesOfString:@"%1" withString:proPlan ? proPlan : @""];
-            contentLabel.text = text;
+            NSRange range = [text rangeOfString:@"%1"];
+            NSMutableAttributedString *attributedText = [[NSMutableAttributedString alloc] initWithString:text];
+            [attributedText replaceCharactersInRange:range withAttributedString:proPlan];
+            contentLabel.attributedText = attributedText;
             break;
         }
             
         case MEGAUserAlertTypePaymentFailed: {
+            NSAttributedString *proPlan = [[NSAttributedString alloc] initWithString:[userAlert stringAtIndex:0] attributes:@{ NSFontAttributeName : self.boldFont }];
             NSString *text = AMLocalizedString(@"Your payment for the %1 plan was unsuccessful.", @"A notification telling the user that their Pro plan payment was unsuccessful. The %1 indicates the name of the Pro plan they were trying to pay for e.g. Lite, PRO II.");
-            NSString *proPlan = [userAlert stringAtIndex:0];
-            text = [text stringByReplacingOccurrencesOfString:@"%1" withString:proPlan ? proPlan : @""];
-            contentLabel.text = text;
+            NSRange range = [text rangeOfString:@"%1"];
+            NSMutableAttributedString *attributedText = [[NSMutableAttributedString alloc] initWithString:text];
+            [attributedText replaceCharactersInRange:range withAttributedString:proPlan];
+            contentLabel.attributedText = attributedText;
             break;
         }
             
@@ -293,10 +308,13 @@
             } else if (node.type == MEGANodeTypeFolder) {
                 nodeType = AMLocalizedString(@"folder", nil);
             }
+            NSAttributedString *nodeName = [[NSAttributedString alloc] initWithString:node.name attributes:@{ NSFontAttributeName : self.boldFont }];
             NSString *text = AMLocalizedString(@"Your publicly shared %1 (%2) has been taken down.", @"The text of a notification indicating that a file or folder has been taken down due to infringement or other reason. The %1 placeholder will be replaced with the text ‘file’ or ‘folder’. The %2 will be replaced with the name of the file or folder.");
             text = [text stringByReplacingOccurrencesOfString:@"%1" withString:nodeType.lowercaseString];
-            text = [text stringByReplacingOccurrencesOfString:@"%2" withString:node ? node.name : @""];
-            contentLabel.text = text;
+            NSRange range = [text rangeOfString:@"%2"];
+            NSMutableAttributedString *attributedText = [[NSMutableAttributedString alloc] initWithString:text];
+            [attributedText replaceCharactersInRange:range withAttributedString:nodeName];
+            contentLabel.attributedText = attributedText;
             break;
         }
             
@@ -308,10 +326,13 @@
             } else if (node.type == MEGANodeTypeFolder) {
                 nodeType = AMLocalizedString(@"folder", nil);
             }
+            NSAttributedString *nodeName = [[NSAttributedString alloc] initWithString:node.name attributes:@{ NSFontAttributeName : self.boldFont }];
             NSString *text = AMLocalizedString(@"Your taken down %1 (%2) has been reinstated.", @"The text of a notification indicating that a file or folder that was taken down has now been restored due to a successful counter-notice. The %1 placeholder will be replaced with the text ‘file’ or ‘folder’. The %2 will be replaced with the name of the file or folder.");
             text = [text stringByReplacingOccurrencesOfString:@"%1" withString:nodeType.lowercaseString];
-            text = [text stringByReplacingOccurrencesOfString:@"%2" withString:node ? node.name : @""];
-            contentLabel.text = text;
+            NSRange range = [text rangeOfString:@"%2"];
+            NSMutableAttributedString *attributedText = [[NSMutableAttributedString alloc] initWithString:text];
+            [attributedText replaceCharactersInRange:range withAttributedString:nodeName];
+            contentLabel.attributedText = attributedText;
             break;
         }
             
