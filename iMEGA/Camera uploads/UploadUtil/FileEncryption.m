@@ -109,7 +109,6 @@ static const NSUInteger EncryptionProposedChunkSizeWithoutTruncating = 1024 * 10
             if (self.shouldTruncateFile && fileHandle) {
                 [fileHandle truncateFileAtOffset:position.unsignedLongLongValue];
             }
-            MEGALogDebug(@"[Camera Upload] encrypted %@, file remaining size %llu", chunkName, [NSFileManager.defaultManager attributesOfItemAtPath:fileURL.path error:nil].fileSize);
         } else {
             if (error != NULL) {
                 NSString *errorMessage = [NSString stringWithFormat:@"error occurred when to encrypt file %@", fileURL.lastPathComponent];

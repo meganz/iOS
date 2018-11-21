@@ -54,7 +54,7 @@
 }
 
 - (NSString *)description {
-    return [NSString stringWithFormat:@"%@ %@ %@ %@", NSStringFromClass(self.class), self.uploadInfo.asset.localIdentifier, self.uploadInfo.asset.creationDate, self.uploadInfo.fileName];
+    return [NSString stringWithFormat:@"%@ %@ %@", NSStringFromClass(self.class), self.uploadInfo.asset.creationDate, self.uploadInfo.fileName];
 }
 
 #pragma mark - start operation
@@ -171,6 +171,7 @@
             [self finishOperationWithStatus:UploadStatusFailed shouldUploadNextAsset:YES];
         } else {
             self.uploadInfo.uploadURLString = [self.uploadInfo.mediaUpload uploadURLString];
+            MEGALogDebug(@"[Camera Upload] %@ got upload URL %@", self, self.uploadInfo.uploadURLString);
             [self uploadEncryptedChunksToServer];
         }
     }]];
@@ -178,7 +179,6 @@
 
 - (void)uploadEncryptedChunksToServer {
     [self createThumbnailAndPreviewFiles];
-    MEGALogDebug(@"[Camera Upload] %@ starts uploading file to server: %@", self, self.uploadInfo.uploadURLString);
     [self archiveUploadInfoDataForBackgroundTransfer];
     [CameraUploadRecordManager.shared updateStatus:UploadStatusUploading forLocalIdentifier:self.uploadInfo.asset.localIdentifier error:nil];
     
@@ -189,7 +189,7 @@
             NSURLSessionUploadTask *uploadTask = [[TransferSessionManager shared] photoUploadTaskWithURL:serverURL fromFile:chunkURL completion:nil];
             uploadTask.taskDescription = self.uploadInfo.asset.localIdentifier;
             [uploadTask resume];
-            MEGALogDebug(@"[Camera Upload] %@ starts uploading chunk %@", self, chunkURL);
+            MEGALogDebug(@"[Camera Upload] %@ starts uploading chunk %@", self, chunkURL.lastPathComponent);
         } else {
             MEGALogDebug(@"[Camera Upload] %@ chunk doesn't exist at %@", self, chunkURL);
             [self finishOperationWithStatus:UploadStatusFailed shouldUploadNextAsset:YES];
