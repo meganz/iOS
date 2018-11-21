@@ -163,16 +163,18 @@
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     if (self.isSearchViewVisible) {
         self.searchViewTopConstraint.constant = - scrollView.contentOffset.y;
-        if (scrollView.contentOffset.y > 50) { //hide search view when collection offset up is higher than search view height
+        if (scrollView.contentOffset.y > 50 && !self.cloudDrive.searchController.isActive) { //hide search view when collection offset up is higher than search view height
             self.searchViewVisible = NO;
             self.collectionViewTopConstraint.constant = 0;
-            self.collectionView.contentOffset = CGPointMake(0, 0);
-            self.searchViewTopConstraint.constant = -50;
         }
     } else {
         if (scrollView.contentOffset.y < 0) { //keep the search view next to collection view offset when scroll down
             self.searchViewTopConstraint.constant = - scrollView.contentOffset.y - 50;
         }
+    }
+    
+    if (self.cloudDrive.searchController.isActive) {
+        [self.cloudDrive.searchController.searchBar resignFirstResponder];
     }
 }
 
@@ -247,10 +249,6 @@
 
 - (void)collectionViewSelectIndexPath:(NSIndexPath *)indexPath {
     [self collectionView:self.collectionView didSelectItemAtIndexPath:indexPath];
-}
-
-- (void)setCollectionTopConstraintValue:(NSInteger)value {
-    self.collectionViewTopConstraint.constant = value;
 }
 
 @end

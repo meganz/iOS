@@ -76,6 +76,7 @@
 @property (nonatomic, strong) CloudDriveCollectionViewController *cdCollectionView;
 
 @property (nonatomic, assign) CloudDriveLayoutView layoutView;
+@property (nonatomic, assign) BOOL shouldDetermineLayout;
 
 @end
 
@@ -250,6 +251,8 @@
             [self initTable];
         }
     }
+    
+    self.shouldDetermineLayout = NO;
 }
 
 - (void)initTable {
@@ -769,7 +772,7 @@
             break;
     }
     
-    if ([[self.nodes size] unsignedIntegerValue] == 0) {
+    if (self.nodes.size.unsignedIntegerValue == 0) {
         [self setNavigationBarButtonItemsEnabled:[MEGAReachabilityManager isReachable]];
         
         [self.cdTableView.tableView setTableHeaderView:nil];
@@ -786,6 +789,10 @@
     }
     
     self.nodesArray = tempArray;
+    
+    if (self.shouldDetermineLayout) {
+        [self determineLayoutView];
+    }
     
     [self reloadData];
 }
@@ -1218,7 +1225,7 @@
 
     if (!self.allNodesSelected) {
         MEGANode *n = nil;
-        NSInteger nodeListSize = [[self.nodes size] integerValue];
+        NSInteger nodeListSize = self.nodes.size.integerValue;
         
         for (NSInteger i = 0; i < nodeListSize; i++) {
             n = [self.nodes nodeAtIndex:i];
@@ -1614,13 +1621,13 @@
 
 - (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar {
     if (self.layoutView == CloudDriveLayoutViewCollection) {
-        [self.cdCollectionView setCollectionTopConstraintValue:0];
+        self.cdCollectionView.collectionView.clipsToBounds = YES;
     }
 }
 
 - (void)searchBarTextDidEndEditing:(UISearchBar *)searchBar {
     if (self.layoutView == CloudDriveLayoutViewCollection) {
-        [self.cdCollectionView setCollectionTopConstraintValue:50];
+        self.cdCollectionView.collectionView.clipsToBounds = NO;
     }
 }
 
@@ -1737,6 +1744,9 @@
 #pragma mark - MEGAGlobalDelegate
 
 - (void)onNodesUpdate:(MEGASdk *)api nodeList:(MEGANodeList *)nodeList {
+    if (self.nodes.size.unsignedIntegerValue == 0) {
+        self.shouldDetermineLayout = YES;
+    }
     [self.nodesIndexPathMutableDictionary removeAllObjects];
     [self reloadUI];
 }
