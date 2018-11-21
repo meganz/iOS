@@ -19,15 +19,13 @@ static NSString *kPath = @"kPath";
 
 @implementation OfflineTableViewViewController
 
+#pragma mark - Lifecycle
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self.tableView setContentOffset:CGPointMake(0, CGRectGetHeight(self.offline.searchController.searchBar.frame))];
+    self.tableView.contentOffset = CGPointMake(0, CGRectGetHeight(self.offline.searchController.searchBar.frame));
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
-}
-
-- (void)dealloc {
-    MEGALogInfo(@"OfflineTableViewViewController deallocated");
 }
 
 #pragma mark - Public
@@ -69,17 +67,17 @@ static NSString *kPath = @"kPath";
     NSString *nameString = [[self.offline itemAtIndexPath:indexPath] objectForKey:kFileName];
     NSString *pathForItem = [directoryPathString stringByAppendingPathComponent:nameString];
     
-    [cell setItemNameString:nameString];
+    cell.itemNameString = nameString;
     
     MOOfflineNode *offNode = [[MEGAStore shareInstance] fetchOfflineNodeWithPath:[Helper pathRelativeToOfflineDirectory:pathForItem]];
-    NSString *handleString = [offNode base64Handle];
+    NSString *handleString = offNode.base64Handle;
     
-    [cell.thumbnailPlayImageView setHidden:YES];
+    cell.thumbnailPlayImageView.hidden = YES;
     
     BOOL isDirectory;
     [[NSFileManager defaultManager] fileExistsAtPath:pathForItem isDirectory:&isDirectory];
     if (isDirectory) {
-        [cell.thumbnailImageView setImage:[Helper folderImage]];
+        cell.thumbnailImageView.image = [Helper folderImage];
         
         NSInteger files = 0;
         NSInteger folders = 0;
@@ -95,16 +93,16 @@ static NSString *kPath = @"kPath";
             
         }
         
-        [cell.infoLabel setText:[NSString mnz_stringByFiles:files andFolders:folders]];
+        cell.infoLabel.text = [NSString mnz_stringByFiles:files andFolders:folders];
     } else {
-        NSString *extension = [[nameString pathExtension] lowercaseString];
+        NSString *extension = nameString.pathExtension.lowercaseString;
         
         if (!handleString) {
             NSString *fpLocal = [[MEGASdkManager sharedMEGASdk] fingerprintForFilePath:pathForItem];
             if (fpLocal) {
                 MEGANode *node = [[MEGASdkManager sharedMEGASdk] nodeForFingerprint:fpLocal];
                 if (node) {
-                    handleString = [node base64Handle];
+                    handleString = node.base64Handle;
                     [[MEGAStore shareInstance] insertOfflineNode:node api:[MEGASdkManager sharedMEGASdk] path:[[Helper pathRelativeToOfflineDirectory:pathForItem] decomposedStringWithCanonicalMapping]];
                 }
             }
@@ -115,10 +113,10 @@ static NSString *kPath = @"kPath";
         
         if ([[NSFileManager defaultManager] fileExistsAtPath:thumbnailFilePath] && handleString) {
             UIImage *thumbnailImage = [UIImage imageWithContentsOfFile:thumbnailFilePath];
-            if (thumbnailImage != nil) {
+            if (thumbnailImage) {
                 [cell.thumbnailImageView setImage:thumbnailImage];
                 if (nameString.mnz_isVideoPathExtension) {
-                    [cell.thumbnailPlayImageView setHidden:NO];
+                    cell.thumbnailPlayImageView.hidden = NO;
                 }
             }
             
@@ -142,9 +140,9 @@ static NSString *kPath = @"kPath";
         
         NSString *sizeString = [NSByteCountFormatter stringFromByteCount:size countStyle:NSByteCountFormatterCountStyleMemory];
         NSString *sizeAndDate = [NSString stringWithFormat:@"%@ • %@", sizeString, date];
-        [cell.infoLabel setText:sizeAndDate];
+        cell.infoLabel.text = sizeAndDate;
     }
-    [cell.nameLabel setText:[[MEGASdkManager sharedMEGASdk] unescapeFsIncompatible:nameString]];
+    cell.nameLabel.text = [[MEGASdkManager sharedMEGASdk] unescapeFsIncompatible:nameString];
     
     if (self.tableView.isEditing) {
         for (NSURL *url in self.offline.selectedItems) {
@@ -179,11 +177,7 @@ static NSString *kPath = @"kPath";
         [self.offline updateNavigationBarTitle];
         [self.offline enableButtonsBySelectedItems];
         
-        if (self.offline.selectedItems.count == self.offline.offlineSortedItems.count) {
-            self.offline.allItemsSelected = YES;
-        } else {
-            self.offline.allItemsSelected = NO;
-        }
+        self.offline.allItemsSelected = (self.offline.selectedItems.count == self.offline.offlineSortedItems.count);
         
         return;
     }
@@ -197,9 +191,9 @@ static NSString *kPath = @"kPath";
     if (tableView.isEditing) {
         NSURL *filePathURL = [[self.offline itemAtIndexPath:indexPath] objectForKey:kPath];
         
-        NSMutableArray *tempArray = [self.offline.selectedItems copy];
+        NSMutableArray *tempArray = self.offline.selectedItems.copy;
         for (NSURL *url in tempArray) {
-            if ([[url filePathURL] isEqual:filePathURL]) {
+            if ([url.filePathURL isEqual:filePathURL]) {
                 [self.offline.selectedItems removeObject:url];
             }
         }
@@ -213,17 +207,13 @@ static NSString *kPath = @"kPath";
     }
 }
 
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    return YES;
-}
-
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wunguarded-availability"
 
 - (UISwipeActionsConfiguration *)tableView:(UITableView *)tableView trailingSwipeActionsConfigurationForRowAtIndexPath:(NSIndexPath *)indexPath {
     UIContextualAction *deleteAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:@"Share" handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
         OfflineTableViewCell *cell = (OfflineTableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
-        NSString *itemPath = [[self.offline currentOfflinePath] stringByAppendingPathComponent:[cell itemNameString]];
+        NSString *itemPath = [[self.offline currentOfflinePath] stringByAppendingPathComponent:cell.itemNameString];
         [self.offline removeOfflineNodeCell:itemPath];
     }];
     deleteAction.image = [UIImage imageNamed:@"delete"];
@@ -235,7 +225,7 @@ static NSString *kPath = @"kPath";
 
 #pragma mark - MGSwipeTableCellDelegate
 
-- (BOOL)swipeTableCell:(MGSwipeTableCell*) cell canSwipe:(MGSwipeDirection) direction fromPoint:(CGPoint)point {
+- (BOOL)swipeTableCell:(MGSwipeTableCell *)cell canSwipe:(MGSwipeDirection)direction fromPoint:(CGPoint)point {
     if (self.tableView.isEditing) {
         return NO;
     }
@@ -247,8 +237,7 @@ static NSString *kPath = @"kPath";
     return YES;
 }
 
-- (NSArray*)swipeTableCell:(MGSwipeTableCell*) cell swipeButtonsForDirection:(MGSwipeDirection)direction
-             swipeSettings:(MGSwipeSettings*) swipeSettings expansionSettings:(MGSwipeExpansionSettings*) expansionSettings {
+- (NSArray *)swipeTableCell:(MGSwipeTableCell *)cell swipeButtonsForDirection:(MGSwipeDirection)direction swipeSettings:(MGSwipeSettings *)swipeSettings expansionSettings:(MGSwipeExpansionSettings *)expansionSettings {
     
     swipeSettings.transition = MGSwipeTransitionDrag;
     expansionSettings.buttonIndex = 0;
@@ -260,8 +249,9 @@ static NSString *kPath = @"kPath";
         
         MGSwipeButton *deleteButton = [MGSwipeButton buttonWithTitle:@"" icon:[UIImage imageNamed:@"delete"] backgroundColor:[UIColor colorWithRed:0.93 green:0.22 blue:0.23 alpha:1.0] padding:25 callback:^BOOL(MGSwipeTableCell *sender) {
             OfflineTableViewCell *offlineCell = (OfflineTableViewCell *)cell;
-            NSString *itemPath = [[self.offline currentOfflinePath] stringByAppendingPathComponent:[offlineCell itemNameString]];
+            NSString *itemPath = [self.offline.currentOfflinePath stringByAppendingPathComponent:offlineCell.itemNameString];
             [self.offline removeOfflineNodeCell:itemPath];
+            
             return YES;
         }];
         [deleteButton iconTintColor:[UIColor whiteColor]];

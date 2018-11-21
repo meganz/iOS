@@ -44,7 +44,7 @@
 #import "UpgradeTableViewController.h"
 #import "CloudDriveTableViewController.h"
 #import "CloudDriveCollectionViewController.h"
-#import "CloudDriveLayoutView.h"
+#import "LayoutView.h"
 
 @interface CloudDriveViewController () <UINavigationControllerDelegate, UIDocumentPickerDelegate, UIDocumentMenuDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGADelegate, MEGARequestDelegate, CustomActionViewControllerDelegate, NodeInfoViewControllerDelegate, UITextFieldDelegate> {
     
@@ -75,7 +75,7 @@
 @property (nonatomic, strong) CloudDriveTableViewController *cdTableView;
 @property (nonatomic, strong) CloudDriveCollectionViewController *cdCollectionView;
 
-@property (nonatomic, assign) CloudDriveLayoutView layoutView;
+@property (nonatomic, assign) LayoutMode layoutView;
 @property (nonatomic, assign) BOOL shouldDetermineLayout;
 
 @end
@@ -240,7 +240,7 @@
             MEGANode *node = [nodes nodeAtIndex:i];
             if (node.hasThumbnail) {
                 nodesWithThumbnail = nodesWithThumbnail + 1;
-            }else {
+            } else {
                 nodesWithoutThumbnail = nodesWithoutThumbnail + 1;
             }
         }
@@ -262,7 +262,7 @@
     self.cdCollectionView = nil;
 
     self.searchController = [Helper customSearchControllerWithSearchResultsUpdaterDelegate:self searchBarDelegate:self];
-    self.layoutView = CloudDriveLayoutViewTable;
+    self.layoutView = LayoutModeList;
 
     self.cdTableView = [self.storyboard instantiateViewControllerWithIdentifier:@"CloudDriveTableID"];
     [self addChildViewController:self.cdTableView];
@@ -285,7 +285,7 @@
     self.cdTableView = nil;
     
     self.searchController = [Helper customSearchControllerWithSearchResultsUpdaterDelegate:self searchBarDelegate:self];
-    self.layoutView = CloudDriveLayoutViewCollection;
+    self.layoutView = LayoutModeThumbnail;
 
     self.cdCollectionView = [self.storyboard instantiateViewControllerWithIdentifier:@"CloudDriveCollectionID"];
     self.cdCollectionView.cloudDrive = self;
@@ -298,8 +298,8 @@
     self.cdCollectionView.collectionView.emptyDataSetSource = self;
 }
 
-- (void)changeLayoutView {
-    if (self.layoutView == CloudDriveLayoutViewTable) {
+- (void)changeLayoutMode {
+    if (self.layoutView == LayoutModeList) {
         [self initCollection];
     } else  {
         [self initTable];
@@ -317,7 +317,7 @@
     }
     
     NSIndexPath *indexPath;
-    if (self.layoutView == CloudDriveLayoutViewTable) {
+    if (self.layoutView == LayoutModeList) {
         CGPoint cellPoint = [self.view convertPoint:location toView:self.cdTableView.tableView];
         indexPath = [self.cdTableView.tableView indexPathForRowAtPoint:cellPoint];
         if (!indexPath || ![self.cdTableView.tableView numberOfRowsInSection:indexPath.section]) {
@@ -332,7 +332,7 @@
     }
     
     MEGANode *node = self.searchController.isActive ? [self.searchNodesArray objectAtIndex:indexPath.row] : [self.nodes nodeAtIndex:indexPath.row];
-    previewingContext.sourceRect = [self.cdTableView.tableView convertRect:[self.cdTableView.tableView cellForRowAtIndexPath:indexPath].frame toView:self.view];
+    previewingContext.sourceRect = (self.layoutView == LayoutModeList) ? [self.cdTableView.tableView convertRect:[self.cdTableView.tableView cellForRowAtIndexPath:indexPath].frame toView:self.view] : [self.cdCollectionView.collectionView convertRect:[self.cdCollectionView.collectionView cellForItemAtIndexPath:indexPath].frame toView:self.view];
     
     switch (node.type) {
         case MEGANodeTypeFolder: {
@@ -550,7 +550,7 @@
 
     NSIndexPath *indexPath;
     
-    if (self.layoutView == CloudDriveLayoutViewTable) {
+    if (self.layoutView == LayoutModeList) {
         indexPath = [self.cdTableView.tableView indexPathForRowAtPoint:touchPoint];
         if (!indexPath || ![self.cdTableView.tableView numberOfRowsInSection:indexPath.section]) {
             return;
@@ -775,7 +775,7 @@
     if (self.nodes.size.unsignedIntegerValue == 0) {
         [self setNavigationBarButtonItemsEnabled:[MEGAReachabilityManager isReachable]];
         
-        [self.cdTableView.tableView setTableHeaderView:nil];
+        self.cdTableView.tableView.tableHeaderView = nil;
     } else {
         [self setNavigationBarButtonItemsEnabled:[MEGAReachabilityManager isReachable]];
         if (!self.cdTableView.tableView.tableHeaderView) {
@@ -1193,7 +1193,7 @@
 }
 
 - (void)reloadData {
-    if (self.layoutView == CloudDriveLayoutViewTable) {
+    if (self.layoutView == LayoutModeList) {
         [self.cdTableView.tableView reloadData];
     } else {
         [self.cdCollectionView.collectionView reloadData];
@@ -1201,7 +1201,7 @@
 }
 
 - (void)setEditMode:(BOOL)editMode {
-    if (self.layoutView == CloudDriveLayoutViewTable) {
+    if (self.layoutView == LayoutModeList) {
         [self.cdTableView setTableViewEditing:editMode animated:YES];
     } else {
         [self.cdCollectionView setCollectionViewEditing:editMode animated:YES];
@@ -1209,13 +1209,24 @@
 }
 
 - (void)selectIndexPath:(NSIndexPath *)indexPath {
-    if (self.layoutView == CloudDriveLayoutViewTable) {
+    if (self.layoutView == LayoutModeList) {
         [self.cdTableView tableViewSelectIndexPath:indexPath];
         [self.cdTableView.tableView selectRowAtIndexPath:indexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
     } else {
         [self.cdCollectionView collectionViewSelectIndexPath:indexPath];
         [self.cdCollectionView.collectionView selectItemAtIndexPath:indexPath animated:YES scrollPosition:UICollectionViewScrollPositionNone];
     }
+}
+
+- (NSInteger)numberOfRows {
+    NSInteger numberOfRows = 0;
+    if (self.layoutView == LayoutModeList) {
+        numberOfRows = [self.cdTableView.tableView numberOfRowsInSection:0];
+    } else {
+        numberOfRows = [self.cdCollectionView.collectionView numberOfItemsInSection:0];
+    }
+    
+    return numberOfRows;
 }
 
 #pragma mark - IBActions
@@ -1293,12 +1304,14 @@
     [newFolderAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
     [moreAlertController addAction:newFolderAlertAction];
     
-    NSString *changeViewTitle = self.layoutView == CloudDriveLayoutViewTable ? AMLocalizedString(@"Thumbnail view", @"Text shown for swithing from list view to thumbnail view.") : AMLocalizedString(@"List view", @"Text shown for swithing from thumbnail view to list view.");
-    UIAlertAction *changeViewAlertAction = [UIAlertAction actionWithTitle:changeViewTitle style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-        [self changeLayoutView];
-    }];
-    [changeViewAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
-    [moreAlertController addAction:changeViewAlertAction];
+    if ([self numberOfRows]) {
+        NSString *changeViewTitle = (self.layoutView == LayoutModeList) ? AMLocalizedString(@"Thumbnail view", @"Text shown for switching from list view to thumbnail view.") : AMLocalizedString(@"List view", @"Text shown for switching from thumbnail view to list view.");
+        UIAlertAction *changeViewAlertAction = [UIAlertAction actionWithTitle:changeViewTitle style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            [self changeLayoutMode];
+        }];
+        [changeViewAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
+        [moreAlertController addAction:changeViewAlertAction];
+    }
     
     UIAlertAction *sortByAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"sortTitle", @"Section title of the 'Sort by'") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         [self presentSortByViewController];
@@ -1330,12 +1343,14 @@
     UIAlertController *moreMinimizedAlertController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
     [moreMinimizedAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
     
-    NSString *changeViewTitle = self.layoutView == CloudDriveLayoutViewTable ? AMLocalizedString(@"Thumbnail view", @"Text shown for swithing from list view to thumbnail view.") : AMLocalizedString(@"List view", @"Text shown for swithing from thumbnail view to list view.");
-    UIAlertAction *changeViewAlertAction = [UIAlertAction actionWithTitle:changeViewTitle style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-        [self changeLayoutView];
-    }];
-    [changeViewAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
-    [moreMinimizedAlertController addAction:changeViewAlertAction];
+    if ([self numberOfRows]) {
+        NSString *changeViewTitle = (self.layoutView == LayoutModeList) ? AMLocalizedString(@"Thumbnail view", @"Text shown for switching from list view to thumbnail view.") : AMLocalizedString(@"List view", @"Text shown for switching from thumbnail view to list view.");
+        UIAlertAction *changeViewAlertAction = [UIAlertAction actionWithTitle:changeViewTitle style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            [self changeLayoutMode];
+        }];
+        [changeViewAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
+        [moreMinimizedAlertController addAction:changeViewAlertAction];
+    }
     
     UIAlertAction *sortByAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"sortTitle", @"Section title of the 'Sort by'") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         [self presentSortByViewController];
@@ -1620,13 +1635,13 @@
 }
 
 - (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar {
-    if (self.layoutView == CloudDriveLayoutViewCollection) {
+    if (self.layoutView == LayoutModeThumbnail) {
         self.cdCollectionView.collectionView.clipsToBounds = YES;
     }
 }
 
 - (void)searchBarTextDidEndEditing:(UISearchBar *)searchBar {
-    if (self.layoutView == CloudDriveLayoutViewCollection) {
+    if (self.layoutView == LayoutModeThumbnail) {
         self.cdCollectionView.collectionView.clipsToBounds = NO;
     }
 }
@@ -1724,7 +1739,7 @@
     
     switch ([request type]) {
         case MEGARequestTypeGetAttrFile: {
-            for (NodeTableViewCell *nodeTableViewCell in [self.cdTableView.tableView visibleCells]) {
+            for (NodeTableViewCell *nodeTableViewCell in self.cdTableView.tableView.visibleCells) {
                 if (request.nodeHandle == nodeTableViewCell.node.handle) {
                     MEGANode *node = [api nodeForHandle:request.nodeHandle];
                     [Helper setThumbnailForNode:node api:api cell:nodeTableViewCell reindexNode:YES];
@@ -1758,7 +1773,7 @@
         return;
     }
     
-    if (transfer.type == MEGATransferTypeDownload && self.layoutView == CloudDriveLayoutViewTable) {
+    if (transfer.type == MEGATransferTypeDownload && self.layoutView == LayoutModeList) {
         NSString *base64Handle = [MEGASdk base64HandleForHandle:transfer.nodeHandle];
         [self.cdTableView reloadRowAtIndexPath:[self.nodesIndexPathMutableDictionary objectForKey:base64Handle]];
     }
@@ -1771,7 +1786,7 @@
     
     NSString *base64Handle = [MEGASdk base64HandleForHandle:transfer.nodeHandle];
     
-    if (transfer.type == MEGATransferTypeDownload && [[Helper downloadingNodes] objectForKey:base64Handle] && self.layoutView == CloudDriveLayoutViewTable) {
+    if (transfer.type == MEGATransferTypeDownload && [Helper.downloadingNodes objectForKey:base64Handle] && self.layoutView == LayoutModeList) {
         float percentage = ([[transfer transferredBytes] floatValue] / [[transfer totalBytes] floatValue] * 100);
         NSString *percentageCompleted = [NSString stringWithFormat:@"%.f%%", percentage];
         NSString *speed = [NSString stringWithFormat:@"%@/s", [NSByteCountFormatter stringFromByteCount:[[transfer speed] longLongValue]  countStyle:NSByteCountFormatterCountStyleMemory]];
@@ -1800,14 +1815,14 @@
         } else if ([error type] == MEGAErrorTypeApiEIncomplete) {
             [SVProgressHUD showImage:[UIImage imageNamed:@"hudMinus"] status:AMLocalizedString(@"transferCancelled", nil)];
             NSString *base64Handle = [MEGASdk base64HandleForHandle:transfer.nodeHandle];
-            if (self.layoutView == CloudDriveLayoutViewTable) {
+            if (self.layoutView == LayoutModeList) {
                 [self.cdTableView reloadRowAtIndexPath:[self.nodesIndexPathMutableDictionary objectForKey:base64Handle]];
             }
         }
         return;
     }
     
-    if ([transfer type] == MEGATransferTypeDownload && self.layoutView == CloudDriveLayoutViewTable) {
+    if (transfer.type == MEGATransferTypeDownload && self.layoutView == LayoutModeList) {
         NSString *base64Handle = [MEGASdk base64HandleForHandle:transfer.nodeHandle];
         [self.cdTableView reloadRowAtIndexPath:[self.nodesIndexPathMutableDictionary objectForKey:base64Handle]];
     }
