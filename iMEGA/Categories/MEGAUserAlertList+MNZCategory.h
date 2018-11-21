@@ -3,8 +3,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface MEGAUserAlertList (MNZCategory)
 
-- (NSArray<MEGAUserAlert *> *)mnz_userAlertsArray;
-- (NSUInteger)mnz_unseenCount;
+@property (nonatomic, readonly) NSArray<MEGAUserAlert *> *mnz_userAlertsArray;
+@property (nonatomic, readonly) NSUInteger mnz_unseenCount;
 
 @end
 

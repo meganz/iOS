@@ -210,7 +210,7 @@
         case 1: { // Notifications
             cell.sectionLabel.text = AMLocalizedString(@"notifications", nil);
             cell.iconImageView.image = [UIImage imageNamed:@"Notifications"];
-            NSUInteger unseenUserAlerts = [[MEGASdkManager sharedMEGASdk].userAlertList mnz_unseenCount];
+            NSUInteger unseenUserAlerts = [MEGASdkManager sharedMEGASdk].userAlertList.mnz_unseenCount;
             if (unseenUserAlerts == 0) {
                 cell.pendingView.hidden = YES;
                 cell.pendingLabel.text = nil;
