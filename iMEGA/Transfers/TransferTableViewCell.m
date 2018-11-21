@@ -10,23 +10,22 @@
 #import "MEGASdkManager.h"
 #import "MEGAStore.h"
 #import "NSString+MNZCategory.h"
-#import "QueuedTransferItem.h"
 #import "UIImageView+MNZCategory.h"
 
 @interface TransferTableViewCell ()
 
 @property (weak, nonatomic) IBOutlet UIImageView *iconImageView;
+@property (nonatomic, getter=isThumbnailSet) BOOL thumbnailSet;
+
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *arrowImageView;
 @property (weak, nonatomic) IBOutlet UILabel *infoLabel;
-@property (weak, nonatomic) IBOutlet UILabel *percentageLabel;
-@property (weak, nonatomic) IBOutlet UILabel *speedLabel;
+
 @property (weak, nonatomic) IBOutlet UIButton *cancelButton;
 @property (weak, nonatomic) IBOutlet UIButton *pauseButton;
 
-@property (assign, nonatomic) BOOL isPaused;
 @property (strong, nonatomic) MEGATransfer *transfer;
-@property (strong, nonatomic) QueuedTransferItem *queuedTransfer;
+@property (strong, nonatomic) MOUploadTransfer *uploadTransfer;
 
 @end
 
@@ -37,14 +36,14 @@
 - (void)configureCellForTransfer:(MEGATransfer *)transfer delegate:(id<TransferTableViewCellDelegate>)delegate {
     self.delegate = delegate;
     self.transfer = transfer;
-    self.queuedTransfer = nil;
+    self.uploadTransfer = nil;
     
-    self.nameLabel.text = [[MEGASdkManager sharedMEGASdk] unescapeFsIncompatible:self.transfer.fileName];
-    self.pauseButton.hidden = NO;
+    self.nameLabel.text = [[MEGASdkManager sharedMEGASdk] unescapeFsIncompatible:transfer.fileName];
+    self.pauseButton.hidden = self.cancelButton.hidden = NO;
 
-    MEGANode *node = [[MEGASdkManager sharedMEGASdk] nodeForHandle:self.transfer.nodeHandle];
-    switch (self.transfer.type) {
+    switch (transfer.type) {
         case MEGATransferTypeDownload: {
+            MEGANode *node = [[MEGASdkManager sharedMEGASdk] nodeForHandle:transfer.nodeHandle];
             if (node.hasThumbnail) {
                 NSString *thumbnailFilePath = [Helper pathForNode:node inSharedSandboxCacheDirectory:@"thumbnailsV3"];
                 if ([[NSFileManager defaultManager] fileExistsAtPath:thumbnailFilePath]) {
@@ -59,15 +58,23 @@
             } else {
                 [self.iconImageView mnz_imageForNode:node];
             }
+            self.thumbnailSet = YES;
             break;
         }
             
         case MEGATransferTypeUpload: {
             if (transfer.fileName.mnz_isImagePathExtension || transfer.fileName.mnz_isVideoPathExtension) {
                 NSString *transferThumbnailAbsolutePath = [[[NSHomeDirectory() stringByAppendingPathComponent:transfer.path] stringByDeletingPathExtension] stringByAppendingString:@"_thumbnail"];
-                self.iconImageView.image = [UIImage imageWithContentsOfFile:transferThumbnailAbsolutePath];
+                if ([[NSFileManager defaultManager] fileExistsAtPath:transferThumbnailAbsolutePath]) {
+                    self.iconImageView.image = [UIImage imageWithContentsOfFile:transferThumbnailAbsolutePath];
+                    self.thumbnailSet = YES;
+                } else {
+                    [self.iconImageView mnz_setImageForExtension:transfer.fileName.pathExtension];
+                    self.thumbnailSet = NO;
+                }
             } else {
                 [self.iconImageView mnz_setImageForExtension:transfer.fileName.pathExtension];
+                self.thumbnailSet = YES;
             }
             break;
         }
@@ -77,24 +84,39 @@
     }
     
     
-    [self configureCellState];
+    [self configureCellWithTransferState:transfer.state];
 }
 
-- (void)configureCellForQueuedTransfer:(QueuedTransferItem *)queuedTransferItem delegate:(id<TransferTableViewCellDelegate>)delegate {
-    self.delegate = delegate;
-    self.queuedTransfer = queuedTransferItem;
-    self.transfer = nil;
+- (void)reconfigureCellWithTransfer:(MEGATransfer *)transfer {
+    self.uploadTransfer = nil;
+    self.transfer = transfer;
     
-    PHAssetResource *assetResource = [PHAssetResource assetResourcesForAsset:self.queuedTransfer.asset].firstObject;
-    NSString *name = [[NSString mnz_fileNameWithDate:self.queuedTransfer.asset.creationDate] stringByAppendingPathExtension:assetResource.originalFilename.mnz_lastExtensionInLowercase];
+    [self configureCellWithTransferState:MEGATransferStateActive];
+}
+
+- (void)configureCellForQueuedTransfer:(MOUploadTransfer *)uploadTransfer delegate:(id<TransferTableViewCellDelegate>)delegate {
+    self.delegate = delegate;
+    self.transfer = nil;
+    self.uploadTransfer = uploadTransfer;
+    
+    if (!uploadTransfer || !uploadTransfer.localIdentifier) {
+        return;
+    }
+    
+    PHFetchResult *fetchResult = [PHAsset fetchAssetsWithLocalIdentifiers:@[uploadTransfer.localIdentifier] options:nil];
+    if (fetchResult == nil) {
+        return;
+    }
+    PHAsset *asset = fetchResult.firstObject;
+    PHAssetResource *assetResource = [PHAssetResource assetResourcesForAsset:asset].firstObject;
+    NSString *name = [[NSString mnz_fileNameWithDate:asset.creationDate] stringByAppendingPathExtension:assetResource.originalFilename.mnz_lastExtensionInLowercase];
     self.nameLabel.text = name;
-    self.pauseButton.hidden = YES;
 
     PHImageRequestOptions *options = [[PHImageRequestOptions alloc] init];
     options.version = PHImageRequestOptionsVersionCurrent;
     options.networkAccessAllowed = YES;
     
-    [[PHImageManager defaultManager] requestImageForAsset:self.queuedTransfer.asset targetSize:self.iconImageView.frame.size contentMode:PHImageContentModeAspectFit options:options resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
+    [[PHImageManager defaultManager] requestImageForAsset:asset targetSize:self.iconImageView.frame.size contentMode:PHImageContentModeAspectFit options:options resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
         if (result) {
             self.iconImageView.image = result;
         } else {
@@ -105,73 +127,90 @@
     [self queuedStateLayout];
 }
 
-- (void)updatePercentAndSpeedLabelsForTransfer:(MEGATransfer *)transfer {
-    self.transfer = transfer;
-    
-    if (transfer.type == MEGATransferTypeDownload) {
-        self.arrowImageView.image = [Helper downloadingTransferImage];
-        self.percentageLabel.textColor = UIColor.mnz_green31B500;
-    } else {
-        self.arrowImageView.image = [Helper uploadingTransferImage];
-        self.percentageLabel.textColor = UIColor.mnz_blue2BA6DE;
+- (void)reloadThumbnailImage {
+    if (!self.isThumbnailSet) {
+        NSString *transferThumbnailAbsolutePath = [[[NSHomeDirectory() stringByAppendingPathComponent:self.transfer.path] stringByDeletingPathExtension] stringByAppendingString:@"_thumbnail"];
+        self.iconImageView.image = [UIImage imageWithContentsOfFile:transferThumbnailAbsolutePath];
     }
-    
+}
+
+- (void)updatePercentAndSpeedLabelsForTransfer:(MEGATransfer *)transfer {
+    UIColor *percentageColor = (transfer.type == MEGATransferTypeDownload) ? UIColor.mnz_green31B500 : UIColor.mnz_blue2BA6DE;
     float percentage = (transfer.transferredBytes.floatValue / transfer.totalBytes.floatValue * 100);
     NSString *percentageCompleted = [NSString stringWithFormat:@"%.f %%", percentage];
-    self.percentageLabel.text = percentageCompleted;
-    NSString *speed = [NSString stringWithFormat:@"%@/s", [NSByteCountFormatter stringFromByteCount:transfer.speed.longLongValue countStyle:NSByteCountFormatterCountStyleMemory]];
-    self.speedLabel.text = speed;
+    NSMutableAttributedString *percentageAttributedString = [[NSMutableAttributedString alloc] initWithString:percentageCompleted attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:12.0f], NSForegroundColorAttributeName:percentageColor}];
+    
+    NSString *speed = [NSString stringWithFormat:@" %@/s", [NSByteCountFormatter stringFromByteCount:transfer.speed.longLongValue countStyle:NSByteCountFormatterCountStyleMemory]];
+    NSAttributedString *speedAttributedString = [[NSAttributedString alloc] initWithString:speed attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:12.0f], NSForegroundColorAttributeName:UIColor.mnz_gray666666}];
+    [percentageAttributedString appendAttributedString:speedAttributedString];
+    self.infoLabel.attributedText = percentageAttributedString;
+}
+
+- (void)updateTransferIfNewState:(MEGATransfer *)transfer {
+    if (self.transfer.state != transfer.state) {
+        self.transfer = transfer;
+        [self configureCellWithTransferState:self.transfer.state];
+    }
 }
 
 #pragma mark - Private
 
-- (void)configureCellState {
-
-    switch (self.transfer.state) {
-            
-        case MEGATransferStateActive:
+- (void)configureCellWithTransferState:(MEGATransferState)transferState {
+    switch (transferState) {
+        case MEGATransferStateQueued: {
+            self.arrowImageView.image = (self.transfer.type == MEGATransferTypeDownload) ? [Helper downloadQueuedTransferImage] : [Helper uploadQueuedTransferImage];
+            self.infoLabel.textColor = UIColor.mnz_gray666666;
+            self.infoLabel.text = AMLocalizedString(@"queued", @"Queued");
             [self.pauseButton setImage:[UIImage imageNamed:@"pauseTransfers"] forState:UIControlStateNormal];
-            [self updatePercentAndSpeedLabelsForTransfer:self.transfer];
+            self.pauseButton.hidden = self.cancelButton.hidden = NO;
             break;
+        }
             
-        case MEGATransferStatePaused:
-            [self inactiveStateLayout];
-            self.percentageLabel.text = AMLocalizedString(@"paused", @"Paused");
-            [self.pauseButton setImage:[UIImage imageNamed:@"resumeTransfers"] forState:UIControlStateNormal];
+        case MEGATransferStateActive: {
+            self.arrowImageView.image = (self.transfer.type == MEGATransferTypeDownload) ? [Helper downloadingTransferImage] : [Helper uploadingTransferImage];
+            [self.arrowImageView setNeedsDisplay];
+            [self.pauseButton setImage:[UIImage imageNamed:@"pauseTransfers"] forState:UIControlStateNormal];
+            self.pauseButton.hidden = self.cancelButton.hidden = NO;
             break;
+        }
+            
+        case MEGATransferStatePaused: {
+            self.arrowImageView.image = (self.transfer.type == MEGATransferTypeDownload) ? [Helper downloadQueuedTransferImage] : [Helper uploadQueuedTransferImage];
+            self.infoLabel.textColor = UIColor.mnz_gray666666;
+            self.infoLabel.text = AMLocalizedString(@"paused", @"Paused");
+            [self.pauseButton setImage:[UIImage imageNamed:@"resumeTransfers"] forState:UIControlStateNormal];
+            self.pauseButton.hidden = self.cancelButton.hidden = NO;
+            break;
+        }
             
         case MEGATransferStateRetrying:
-            [self inactiveStateLayout];
-            self.percentageLabel.text = AMLocalizedString(@"Retrying...", @"Label for the state of a transfer when is being retrying - (String as short as possible).");
+            self.infoLabel.text = AMLocalizedString(@"Retrying...", @"Label for the state of a transfer when is being retrying - (String as short as possible).");
+            self.pauseButton.hidden = self.cancelButton.hidden = NO;
             break;
             
         case MEGATransferStateCompleting:
-            [self inactiveStateLayout];
-            self.percentageLabel.text = AMLocalizedString(@"Completing...", @"Label for the state of a transfer when is being completing - (String as short as possible).");
+            self.infoLabel.textColor = (self.transfer.type == MEGATransferTypeDownload) ? UIColor.mnz_green31B500 : UIColor.mnz_blue2BA6DE;
+            self.infoLabel.text = AMLocalizedString(@"Completing...", @"Label for the state of a transfer when is being completing - (String as short as possible).");
+            self.pauseButton.hidden = self.cancelButton.hidden = YES;
             break;
             
-        default:
-            [self inactiveStateLayout];
-            self.percentageLabel.text = AMLocalizedString(@"queued", @"Queued");
+        default: {
+            self.arrowImageView.image = (self.transfer.type == MEGATransferTypeDownload) ? [Helper downloadQueuedTransferImage] : [Helper uploadQueuedTransferImage];
+            self.infoLabel.textColor = UIColor.mnz_gray666666;
+            self.infoLabel.text = AMLocalizedString(@"queued", @"Queued");
+            [self.pauseButton setImage:[UIImage imageNamed:@"pauseTransfers"] forState:UIControlStateNormal];
+            self.pauseButton.hidden = self.cancelButton.hidden = NO;
             break;
-    }
-}
-
-- (void)inactiveStateLayout {
-    [self.pauseButton setImage:[UIImage imageNamed:@"pauseTransfers"] forState:UIControlStateNormal];
-    self.percentageLabel.textColor = UIColor.mnz_gray666666;
-    
-    if (self.transfer.type == MEGATransferTypeDownload) {
-        self.arrowImageView.image = [Helper downloadQueuedTransferImage];
-    } else {
-        self.arrowImageView.image = [Helper uploadQueuedTransferImage];
+        }
     }
 }
 
 - (void)queuedStateLayout {
-    self.percentageLabel.textColor = UIColor.mnz_gray666666;
     self.arrowImageView.image = [Helper uploadQueuedTransferImage];
-    self.percentageLabel.text = AMLocalizedString(@"pending", nil);
+    self.infoLabel.textColor = UIColor.mnz_gray666666;
+    self.infoLabel.text = AMLocalizedString(@"pending", @"Label shown when a contact request is pending");
+    self.pauseButton.hidden = YES;
+    self.cancelButton.hidden = NO;
 }
 
 #pragma mark - IBActions
@@ -185,26 +224,36 @@
                 [[MEGASdkManager sharedMEGASdkFolder] cancelTransferByTag:self.transfer.tag];
             }
         }
-    } else if (self.queuedTransfer) {
-        [[MEGAStore shareInstance] deleteUploadTransfer:self.queuedTransfer.uploadTransfer];
-        [SVProgressHUD showImage:[UIImage imageNamed:@"hudMinus"] status:AMLocalizedString(@"transferCancelled", nil)];
+    } else if (self.uploadTransfer) {
+        NSString *localIdentifier = self.uploadTransfer.localIdentifier;
+        [self.delegate cancelQueuedUploadTransfer:localIdentifier];
     }
 }
 
 - (IBAction)pauseTransfer:(id)sender {
     if (self.transfer) {
-        self.isPaused = self.transfer.state == MEGATransferStatePaused;
-        
         MEGAPauseTransferRequestDelegate *pauseTransferDelegate = [[MEGAPauseTransferRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
-            self.isPaused = self.transfer.state == MEGATransferStatePaused;
-            [self.delegate pauseTransferCell:self];
+            MEGATransfer *transfer = [[MEGASdkManager sharedMEGASdk] transferByTag:self.transfer.tag];
+            if (transfer) {
+                self.transfer = transfer;
+            } else {
+                transfer = [[MEGASdkManager sharedMEGASdkFolder] transferByTag:self.transfer.tag];
+                if (transfer) {
+                    self.transfer = transfer;
+                }
+            }
+            
+            [self.delegate pauseTransfer:self.transfer];
+            [self configureCellWithTransferState:(request.flag) ? MEGATransferStatePaused : MEGATransferStateActive];
         }];
         
-        if ([[MEGASdkManager sharedMEGASdk] transferByTag:self.transfer.tag] != nil) {
-            [[MEGASdkManager sharedMEGASdk] pauseTransferByTag:self.transfer.tag pause:!self.isPaused delegate:pauseTransferDelegate];
+        MEGATransfer *transfer = [[MEGASdkManager sharedMEGASdk] transferByTag:self.transfer.tag];
+        if (transfer) {
+            [[MEGASdkManager sharedMEGASdk] pauseTransferByTag:self.transfer.tag pause:!(transfer.state == MEGATransferStatePaused) delegate:pauseTransferDelegate];
         } else {
-            if ([[MEGASdkManager sharedMEGASdkFolder] transferByTag:self.transfer.tag] != nil) {
-                [[MEGASdkManager sharedMEGASdkFolder] pauseTransferByTag:self.transfer.tag pause:!self.isPaused delegate:pauseTransferDelegate];
+            transfer = [[MEGASdkManager sharedMEGASdkFolder] transferByTag:self.transfer.tag];
+            if (transfer) {
+                [[MEGASdkManager sharedMEGASdkFolder] pauseTransferByTag:self.transfer.tag pause:!(transfer.state == MEGATransferStatePaused) delegate:pauseTransferDelegate];
             }
         }
     }
