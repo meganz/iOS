@@ -365,6 +365,12 @@ static MEGAStore *_megaStore = nil;
     [self saveContext];
 }
 
+- (void)deleteUploadTransferWithLocalIdentifier:(NSString *)localIdentifier {
+    MOUploadTransfer *uploadTransfer = [self fetchUploadTransferWithLocalIdentifier:localIdentifier];
+    
+    [self deleteUploadTransfer:uploadTransfer];
+}
+
 - (NSArray<MOUploadTransfer *> *)fetchUploadTransfers {
     NSFetchRequest *request = [MOUploadTransfer fetchRequest];
     
@@ -373,7 +379,7 @@ static MEGAStore *_megaStore = nil;
     return [self.managedObjectContext executeFetchRequest:request error:&error];
 }
 
-- (MOUploadTransfer *)fetchTransferUpdateWithLocalIdentifier:(NSString *)localIdentifier {
+- (MOUploadTransfer *)fetchUploadTransferWithLocalIdentifier:(NSString *)localIdentifier {
     NSFetchRequest *request = [MOUploadTransfer fetchRequest];
     
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"localIdentifier == %@", localIdentifier];

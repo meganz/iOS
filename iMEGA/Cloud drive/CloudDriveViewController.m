@@ -26,6 +26,7 @@
 #import "MEGAShareRequestDelegate.h"
 #import "MEGAStore.h"
 #import "NSMutableArray+MNZCategory.h"
+#import "UITextField+MNZCategory.h"
 
 #import "BrowserViewController.h"
 #import "ContactsViewController.h"
@@ -953,14 +954,13 @@
     [self presentViewController:alertController animated:YES completion:nil];
 }
 
-- (void)newFolderAlertTextFieldDidChange:(UITextField *)sender {
+- (void)newFolderAlertTextFieldDidChange:(UITextField *)textField {
     UIAlertController *newFolderAlertController = (UIAlertController *)self.presentedViewController;
     if (newFolderAlertController) {
-        UITextField *textField = newFolderAlertController.textFields.firstObject;
         UIAlertAction *rightButtonAction = newFolderAlertController.actions.lastObject;
-        BOOL containsInvalidChars = [sender.text rangeOfCharacterFromSet:[NSCharacterSet characterSetWithCharactersInString:@"|*/:<>?\"\\"]].length;
-        sender.textColor = containsInvalidChars ? UIColor.mnz_redMain : UIColor.darkTextColor;
-        rightButtonAction.enabled = (textField.text.length > 0 && !containsInvalidChars);
+        BOOL containsInvalidChars = textField.text.mnz_containsInvalidChars;
+        textField.textColor = containsInvalidChars ? UIColor.mnz_redMain : UIColor.darkTextColor;
+        rightButtonAction.enabled = (!textField.text.mnz_isEmpty && !containsInvalidChars);
     }
 }
 
@@ -1279,7 +1279,9 @@
         [newFolderAlertController addTextFieldWithConfigurationHandler:^(UITextField *textField) {
             textField.placeholder = AMLocalizedString(@"newFolderMessage", @"Hint text shown on the create folder alert.");
             [textField addTarget:self action:@selector(newFolderAlertTextFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
-            textField.delegate = self;
+            textField.shouldReturnCompletion = ^BOOL(UITextField *textField) {
+                return (!textField.text.mnz_isEmpty && !textField.text.mnz_containsInvalidChars);
+            };
         }];
         
         [newFolderAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
@@ -1715,13 +1717,6 @@
 - (void)documentMenu:(UIDocumentMenuViewController *)documentMenu didPickDocumentPicker:(UIDocumentPickerViewController *)documentPicker {
     documentPicker.delegate = self;
     [self presentViewController:documentPicker animated:YES completion:nil];
-}
-
-#pragma mark - UITextFieldDelegate
-
-- (BOOL)textFieldShouldReturn:(UITextField *)textField {
-    BOOL containsInvalidChars = [textField.text rangeOfCharacterFromSet:[NSCharacterSet characterSetWithCharactersInString:@"|*/:<>?\"\\"]].length;
-    return (textField.text.length > 0 && !containsInvalidChars);
 }
 
 #pragma mark - MEGARequestDelegate
