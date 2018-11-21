@@ -110,6 +110,11 @@ static const NSInteger MaxConcurrentVideoOperationCount = 1;
 
 - (void)uploadNextAssetsWithNumber:(NSInteger)number mediaType:(PHAssetMediaType)mediaType {
     NSArray *records = [CameraUploadRecordManager.shared fetchNonUploadedRecordsWithLimit:number mediaType:mediaType error:nil];
+    if (records.count == 0) {
+        MEGALogDebug(@"[Camera Upload] no more local asset to upload for media type %ld", mediaType);
+        return;
+    }
+    
     for (MOAssetUploadRecord *record in records) {
         [CameraUploadRecordManager.shared updateStatus:UploadStatusQueuedUp forRecord:record error:nil];
         CameraUploadOperation *operation = [UploadOperationFactory operationWithLocalIdentifier:record.localIdentifier parentNode:self.cameraUploadNode];
