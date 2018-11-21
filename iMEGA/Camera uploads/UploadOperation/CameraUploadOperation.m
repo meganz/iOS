@@ -54,7 +54,7 @@
 }
 
 - (NSString *)description {
-    return [NSString stringWithFormat:@"%@ %@ %@", NSStringFromClass(self.class), self.uploadInfo.asset.creationDate, self.uploadInfo.fileName];
+    return [NSString stringWithFormat:@"%@ %@ %@", NSStringFromClass(self.class), [NSString mnz_fileNameWithDate:self.uploadInfo.asset.creationDate], self.uploadInfo.fileName];
 }
 
 #pragma mark - start operation
