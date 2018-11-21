@@ -148,6 +148,8 @@
 #pragma mark - upload task
 
 - (void)encryptsFile {
+    [self createThumbnailAndPreviewFiles];
+    
     self.uploadInfo.mediaUpload = [MEGASdkManager.sharedMEGASdk backgroundMediaUpload];
     FileEncryption *fileEncryption = [[FileEncryption alloc] initWithMediaUpload:self.uploadInfo.mediaUpload outputDirectoryURL:self.uploadInfo.encryptionDirectoryURL shouldTruncateInputFile:YES];
     [fileEncryption encryptFileAtURL:self.uploadInfo.fileURL completion:^(BOOL success, unsigned long long fileSize, NSDictionary<NSString *,NSURL *> * _Nonnull chunkURLsKeyedByUploadSuffix, NSError * _Nonnull error) {
@@ -172,14 +174,13 @@
         } else {
             self.uploadInfo.uploadURLString = [self.uploadInfo.mediaUpload uploadURLString];
             MEGALogDebug(@"[Camera Upload] %@ got upload URL %@", self, self.uploadInfo.uploadURLString);
+            [self archiveUploadInfoDataForBackgroundTransfer];
             [self uploadEncryptedChunksToServer];
         }
     }]];
 }
 
 - (void)uploadEncryptedChunksToServer {
-    [self createThumbnailAndPreviewFiles];
-    [self archiveUploadInfoDataForBackgroundTransfer];
     [CameraUploadRecordManager.shared updateStatus:UploadStatusUploading forLocalIdentifier:self.uploadInfo.asset.localIdentifier error:nil];
     
     for (NSString *uploadSuffix in self.uploadInfo.encryptedChunkURLsKeyedByUploadSuffix.allKeys) {
