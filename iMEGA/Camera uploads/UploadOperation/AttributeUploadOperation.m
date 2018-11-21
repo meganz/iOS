@@ -38,9 +38,10 @@
     }];
 }
 
-- (void)cacheAttributeToURL:(NSURL *)cacheURL {
+- (void)cacheAttributeToDirectoryURL:(NSURL *)directoryURL fileName:(NSString *)fileName {
     NSError *error;
-    if ([NSFileManager.defaultManager createDirectoryAtURL:cacheURL withIntermediateDirectories:YES attributes:nil error:&error]) {
+    if ([NSFileManager.defaultManager createDirectoryAtURL:directoryURL withIntermediateDirectories:YES attributes:nil error:&error]) {
+        NSURL *cacheURL = [directoryURL URLByAppendingPathComponent:fileName isDirectory:NO];
         [NSFileManager.defaultManager removeItemIfExistsAtURL:cacheURL];
         if ([NSFileManager.defaultManager copyItemAtURL:self.attributeURL toURL:cacheURL error:&error]) {
             MEGALogDebug(@"[Camera Upload] %@ Copy attribute to cache succeeded", NSStringFromClass(self.class));

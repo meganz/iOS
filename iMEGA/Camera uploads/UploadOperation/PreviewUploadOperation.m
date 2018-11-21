@@ -23,7 +23,8 @@
         [weakSelf finishOperation];
     }]];
     
-    [self cacheAttributeToURL:[[[[NSFileManager.defaultManager URLsForDirectory:NSCachesDirectory inDomains:NSUserDomainMask] firstObject] URLByAppendingPathComponent:@"previewsV3" isDirectory:YES] URLByAppendingPathComponent:self.node.base64Handle isDirectory:NO]];
+    NSURL *cacheDirectory = [[NSFileManager.defaultManager URLsForDirectory:NSCachesDirectory inDomains:NSUserDomainMask] firstObject];
+    [self cacheAttributeToDirectoryURL:[cacheDirectory URLByAppendingPathComponent:@"previewsV3"] fileName:self.node.base64Handle];
 }
 
 @end

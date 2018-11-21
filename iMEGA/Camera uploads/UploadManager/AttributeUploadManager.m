@@ -50,6 +50,10 @@ static NSString * const AttributePreviewName = @"preview";
 
 - (void)scanLocalAttributesAndRetryUploadIfNeeded {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        if (![NSFileManager.defaultManager fileExistsAtPath:[self attributeDirectoryURL].path]) {
+            return;
+        }
+        
         NSError *error;
         NSArray *resourceKeys = @[NSURLIsDirectoryKey, NSURLNameKey];
         NSArray<NSURL *> *attributeDirectoryURLs = [NSFileManager.defaultManager contentsOfDirectoryAtURL:[self attributeDirectoryURL] includingPropertiesForKeys:resourceKeys options:NSDirectoryEnumerationSkipsHiddenFiles error:&error];
@@ -128,9 +132,12 @@ static NSString * const AttributePreviewName = @"preview";
             break;
     }
     
-    NSURL *uploadURL = [[[self attributeDirectoryURL] URLByAppendingPathComponent:node.base64Handle] URLByAppendingPathComponent:attributeName isDirectory:NO];
+    NSURL *nodeDirectoryURL = [[self attributeDirectoryURL] URLByAppendingPathComponent:node.base64Handle];
+    [NSFileManager.defaultManager createDirectoryAtURL:nodeDirectoryURL withIntermediateDirectories:YES attributes:nil error:nil];
+    
+    NSURL *uploadURL = [nodeDirectoryURL URLByAppendingPathComponent:attributeName isDirectory:NO];
     [NSFileManager.defaultManager removeItemIfExistsAtURL:uploadURL];
-    [NSFileManager.defaultManager createDirectoryAtURL:uploadURL withIntermediateDirectories:YES attributes:nil error:nil];
+    
     return uploadURL;
 }
 
