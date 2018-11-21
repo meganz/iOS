@@ -1268,7 +1268,7 @@
 		77F43DD82034637300AE4F42 /* UICollectionView+MNZCategory.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UICollectionView+MNZCategory.m"; sourceTree = "<group>"; };
 		77F95CED20E3B14D00F42D9C /* ShareFilesDestinationTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShareFilesDestinationTableViewController.h; sourceTree = "<group>"; };
 		77F95CEE20E3B14D00F42D9C /* ShareFilesDestinationTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ShareFilesDestinationTableViewController.m; sourceTree = "<group>"; };
-		83064D88217F207000FA3DAC /* CloudDriveLayoutView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CloudDriveLayoutView.h; sourceTree = "<group>"; };
+		83064D88217F207000FA3DAC /* LayoutView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LayoutView.h; sourceTree = "<group>"; };
 		830B54882178845300BE1E1F /* CloudDriveTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CloudDriveTableViewController.h; sourceTree = "<group>"; };
 		830B54892178845300BE1E1F /* CloudDriveTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CloudDriveTableViewController.m; sourceTree = "<group>"; };
 		830EF9A220062F3800FAA947 /* DevicePermissionsHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DevicePermissionsHelper.h; sourceTree = "<group>"; };
@@ -2805,7 +2805,7 @@
 				773DF39B20EE14C1004C3418 /* ShareAttachmentType.h */,
 				5B72A14B20D3A69C007FE4FD /* URLType.h */,
 				836A987C20F8C8DA00EC719B /* ChatRoomsType.h */,
-				83064D88217F207000FA3DAC /* CloudDriveLayoutView.h */,
+				83064D88217F207000FA3DAC /* LayoutView.h */,
 			);
 			path = Headers;
 			sourceTree = "<group>";

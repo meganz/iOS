@@ -18,7 +18,7 @@
 #import "MEGAQLPreviewController.h"
 #import "OfflineTableViewViewController.h"
 #import "OfflineCollectionViewController.h"
-#import "CloudDriveLayoutView.h"
+#import "LayoutView.h"
 #import "NodeCollectionViewCell.h"
 #import "OfflineTableViewCell.h"
 
@@ -53,7 +53,7 @@ static NSString *kisDirectory = @"kisDirectory";
 
 @property (nonatomic, strong) OfflineTableViewViewController *offlineTableView;
 @property (nonatomic, strong) OfflineCollectionViewController *offlineCollectionView;
-@property (nonatomic, assign) CloudDriveLayoutView layoutView;
+@property (nonatomic, assign) LayoutMode layoutView;
 
 @end
 
@@ -240,7 +240,7 @@ static NSString *kisDirectory = @"kisDirectory";
     self.offlineCollectionView = nil;
     
     self.searchController = [Helper customSearchControllerWithSearchResultsUpdaterDelegate:self searchBarDelegate:self];
-    self.layoutView = CloudDriveLayoutViewTable;
+    self.layoutView = LayoutModeList;
     
     self.offlineTableView = [self.storyboard instantiateViewControllerWithIdentifier:@"OfflineTableID"];
     [self addChildViewController:self.offlineTableView];
@@ -263,7 +263,7 @@ static NSString *kisDirectory = @"kisDirectory";
     self.offlineTableView = nil;
     
     self.searchController = [Helper customSearchControllerWithSearchResultsUpdaterDelegate:self searchBarDelegate:self];
-    self.layoutView = CloudDriveLayoutViewCollection;
+    self.layoutView = LayoutModeThumbnail;
     
     self.offlineCollectionView = [self.storyboard instantiateViewControllerWithIdentifier:@"OfflineCollectionID"];
     self.offlineCollectionView.offline = self;
@@ -276,8 +276,8 @@ static NSString *kisDirectory = @"kisDirectory";
     self.offlineCollectionView.collectionView.emptyDataSetSource = self;
 }
 
-- (void)changeLayoutView {
-    if (self.layoutView == CloudDriveLayoutViewTable) {
+- (void)changeLayoutMode {
+    if (self.layoutView == LayoutModeList) {
         [self initCollection];
     } else  {
         [self initTable];
@@ -554,7 +554,7 @@ static NSString *kisDirectory = @"kisDirectory";
 }
 
 - (void)reloadData {
-    if (self.layoutView == CloudDriveLayoutViewTable) {
+    if (self.layoutView == LayoutModeList) {
         [self.offlineTableView.tableView reloadData];
     } else {
         [self.offlineCollectionView.collectionView reloadData];
@@ -562,7 +562,7 @@ static NSString *kisDirectory = @"kisDirectory";
 }
 
 - (void)setEditMode:(BOOL)editMode {
-    if (self.layoutView == CloudDriveLayoutViewTable) {
+    if (self.layoutView == LayoutModeList) {
         [self.offlineTableView setTableViewEditing:editMode animated:YES];
     } else {
         [self.offlineCollectionView setCollectionViewEditing:editMode animated:YES];
@@ -570,13 +570,24 @@ static NSString *kisDirectory = @"kisDirectory";
 }
 
 - (void)selectIndexPath:(NSIndexPath *)indexPath {
-    if (self.layoutView == CloudDriveLayoutViewTable) {
+    if (self.layoutView == LayoutModeList) {
         [self.offlineTableView tableViewSelectIndexPath:indexPath];
         [self.offlineTableView.tableView selectRowAtIndexPath:indexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
     } else {
         [self.offlineCollectionView collectionViewSelectIndexPath:indexPath];
         [self.offlineCollectionView.collectionView selectItemAtIndexPath:indexPath animated:YES scrollPosition:UICollectionViewScrollPositionNone];
     }
+}
+
+- (NSInteger)numberOfRows {
+    NSInteger numberOfRows = 0;
+    if (self.layoutView == LayoutModeList) {
+        numberOfRows = [self.offlineTableView.tableView numberOfRowsInSection:0];
+    } else {
+        numberOfRows = [self.offlineCollectionView.collectionView numberOfItemsInSection:0];
+    }
+    
+    return numberOfRows;
 }
 
 #pragma mark - IBActions
@@ -669,12 +680,14 @@ static NSString *kisDirectory = @"kisDirectory";
     UIAlertController *moreAlertController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
     [moreAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
     
-    NSString *changeViewTitle = self.layoutView == CloudDriveLayoutViewTable ? AMLocalizedString(@"Thumbnail view", @"Text shown for swithing from list view to thumbnail view.") : AMLocalizedString(@"List view", @"Text shown for swithing from thumbnail view to list view.");
-    UIAlertAction *changeViewAlertAction = [UIAlertAction actionWithTitle:changeViewTitle style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-        [self changeLayoutView];
-    }];
-    [changeViewAlertAction setValue:[UIColor mnz_black333333] forKey:@"titleTextColor"];
-    [moreAlertController addAction:changeViewAlertAction];
+    if ([self numberOfRows]) {
+        NSString *changeViewTitle = (self.layoutView == LayoutModeList) ? AMLocalizedString(@"Thumbnail view", @"Text shown for switching from list view to thumbnail view.") : AMLocalizedString(@"List view", @"Text shown for switching from thumbnail view to list view.");
+        UIAlertAction *changeViewAlertAction = [UIAlertAction actionWithTitle:changeViewTitle style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            [self changeLayoutMode];
+        }];
+        [changeViewAlertAction setValue:[UIColor mnz_black333333] forKey:@"titleTextColor"];
+        [moreAlertController addAction:changeViewAlertAction];
+    }
     
     UIAlertAction *sortByAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"sortTitle", @"Section title of the 'Sort by'") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         [self sortByTapped:self.sortByBarButtonItem];
@@ -757,11 +770,11 @@ static NSString *kisDirectory = @"kisDirectory";
         previewController.nodeFileIndex = [[[self itemAtIndexPath:indexPath] objectForKey:kIndex] integerValue];
         [self presentViewController:navigationController animated:YES completion:nil];
         switch (self.layoutView) {
-            case CloudDriveLayoutViewTable:
+            case LayoutModeList:
                 [self.offlineTableView.tableView deselectRowAtIndexPath:indexPath animated:YES];
                 break;
                 
-            case CloudDriveLayoutViewCollection:
+            case LayoutModeThumbnail:
                 [self.offlineCollectionView.collectionView deselectItemAtIndexPath:indexPath animated:YES];
                 break;
         }
@@ -814,17 +827,17 @@ static NSString *kisDirectory = @"kisDirectory";
     BOOL isDirectory;
     [[NSFileManager defaultManager] fileExistsAtPath:itemPath isDirectory:&isDirectory];
     if (isDirectory) {
-        if ([[[[MEGASdkManager sharedMEGASdk] transfers] size] integerValue] != 0) {
+        if ([[[[MEGASdkManager sharedMEGASdk] transfers] size] integerValue]) {
             [self cancelPendingTransfersOnFolder:itemPath folderLink:NO];
         }
-        if ([[[[MEGASdkManager sharedMEGASdkFolder] transfers] size] integerValue] != 0) {
+        if ([[[[MEGASdkManager sharedMEGASdkFolder] transfers] size] integerValue]) {
             [self cancelPendingTransfersOnFolder:itemPath folderLink:YES];
         }
         offlinePathsOnFolderArray = [self offlinePathOnFolder:itemPath];
     }
     
     NSError *error = nil;
-    BOOL success = [ [NSFileManager defaultManager] removeItemAtPath:itemPath error:&error];
+    BOOL success = [[NSFileManager defaultManager] removeItemAtPath:itemPath error:&error];
     offlineNode = [[MEGAStore shareInstance] fetchOfflineNodeWithPath:[Helper pathRelativeToOfflineDirectory:itemPath]];
     if (!success || error) {
         [SVProgressHUD showErrorWithStatus:@""];
@@ -859,7 +872,7 @@ static NSString *kisDirectory = @"kisDirectory";
         if (self.folderPathFromOffline == nil) {
             navigationTitle = AMLocalizedString(@"offline", @"Offline");
         } else {
-            navigationTitle = [self.folderPathFromOffline lastPathComponent];
+            navigationTitle = self.folderPathFromOffline.lastPathComponent;
         }
     }
     
@@ -893,14 +906,14 @@ static NSString *kisDirectory = @"kisDirectory";
 }
 
 - (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar {
-    if (self.layoutView == CloudDriveLayoutViewCollection) {
-        [self.offlineCollectionView setCollectionTopConstraintValue:0];
+    if (self.layoutView == LayoutModeThumbnail) {
+        self.offlineCollectionView.collectionView.clipsToBounds = YES;
     }
 }
 
 - (void)searchBarTextDidEndEditing:(UISearchBar *)searchBar {
-    if (self.layoutView == CloudDriveLayoutViewCollection) {
-        [self.offlineCollectionView setCollectionTopConstraintValue:50];
+    if (self.layoutView == LayoutModeThumbnail) {
+        self.offlineCollectionView.collectionView.clipsToBounds = NO;
     }
 }
 
@@ -927,7 +940,7 @@ static NSString *kisDirectory = @"kisDirectory";
     CGPoint touchPoint = [longPressGestureRecognizer locationInView:view];
     NSIndexPath *indexPath;
     
-    if (self.layoutView == CloudDriveLayoutViewTable) {
+    if (self.layoutView == LayoutModeList) {
         indexPath = [self.offlineTableView.tableView indexPathForRowAtPoint:touchPoint];
         if (!indexPath || ![self.offlineTableView.tableView numberOfRowsInSection:indexPath.section]) {
             return;
@@ -972,9 +985,9 @@ static NSString *kisDirectory = @"kisDirectory";
     
     NSIndexPath *indexPath;
     NSString *itemName;
-    if (self.layoutView == CloudDriveLayoutViewTable) {
+    if (self.layoutView == LayoutModeList) {
         CGPoint rowPoint = [self.offlineTableView.tableView convertPoint:location fromView:self.view];
-        NSIndexPath *indexPath = [self.offlineTableView.tableView indexPathForRowAtPoint:rowPoint];
+        indexPath = [self.offlineTableView.tableView indexPathForRowAtPoint:rowPoint];
         if (!indexPath || ![self.offlineTableView.tableView numberOfRowsInSection:indexPath.section]) {
             return nil;
         }
@@ -982,7 +995,7 @@ static NSString *kisDirectory = @"kisDirectory";
         itemName = cell.itemNameString;
     } else {
         CGPoint rowPoint = [self.offlineCollectionView.collectionView convertPoint:location fromView:self.view];
-        NSIndexPath *indexPath = [self.offlineCollectionView.collectionView indexPathForItemAtPoint:rowPoint];
+        indexPath = [self.offlineCollectionView.collectionView indexPathForItemAtPoint:rowPoint];
         if (!indexPath || ![self.offlineCollectionView.collectionView numberOfItemsInSection:indexPath.section]) {
             return nil;
         }
@@ -990,7 +1003,7 @@ static NSString *kisDirectory = @"kisDirectory";
         itemName = cell.nameLabel.text;
     }
     
-    previewingContext.sourceRect = [self.offlineTableView.tableView convertRect:[self.offlineTableView.tableView cellForRowAtIndexPath:indexPath].frame toView:self.view];
+    previewingContext.sourceRect = (self.layoutView == LayoutModeList) ? [self.offlineTableView.tableView convertRect:[self.offlineTableView.tableView cellForRowAtIndexPath:indexPath].frame toView:self.view] : [self.offlineCollectionView.collectionView convertRect:[self.offlineCollectionView.collectionView cellForItemAtIndexPath:indexPath].frame toView:self.view];
     
     self.previewDocumentPath = [[self currentOfflinePath] stringByAppendingPathComponent:itemName];
     

@@ -24,6 +24,5 @@
 @property (strong, nonatomic) MEGANode *node;
 
 - (void)configureCellForNode:(MEGANode *)node delegate:(id<MGSwipeTableCellDelegate>)delegate api:(MEGASdk *)api;
-- (void)configureCloudDriveNode:(MEGANode *)node delegate:(id<MGSwipeTableCellDelegate>)delegate api:(MEGASdk *)api;
 
 @end

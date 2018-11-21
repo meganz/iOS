@@ -19,6 +19,8 @@
 
 @implementation CloudDriveTableViewController
 
+#pragma mark - Lifecycle
+
 - (void)viewDidLoad {
     [super viewDidLoad];
 
@@ -26,14 +28,10 @@
     self.tableView.rowHeight = UITableViewAutomaticDimension;
 }
 
-- (void)dealloc {
-    MEGALogInfo(@"CloudDriveTableViewController deallocated");
-}
-
-#pragma mark - Public and Private
+#pragma mark - Public
 
 - (void)reloadRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath != nil) {
+    if (indexPath) {
         [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
     }
 }
@@ -50,7 +48,7 @@
             cell.selectedBackgroundView = view;
         }
     } else {
-        for (NodeTableViewCell *cell in self.tableView.visibleCells) {
+        for (NodeTableViewCell *cell in self.tableView.visibleCells){
             cell.selectedBackgroundView = nil;
         }
     }
@@ -97,7 +95,7 @@
     [self.cloudDrive.nodesIndexPathMutableDictionary setObject:indexPath forKey:node.base64Handle];
     
     NodeTableViewCell *cell;
-    if ([[Helper downloadingNodes] objectForKey:node.base64Handle] != nil) {
+    if ([Helper.downloadingNodes objectForKey:node.base64Handle]) {
         cell = [self.tableView dequeueReusableCellWithIdentifier:@"downloadingNodeCell" forIndexPath:indexPath];
         if (cell == nil) {
             cell = [[NodeTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"downloadingNodeCell"];
@@ -113,8 +111,8 @@
  
     if (self.tableView.isEditing) {
         // Check if selectedNodesArray contains the current node in the tableView
-        for (MEGANode *n in self.cloudDrive.selectedNodesArray) {
-            if (n.handle == node.handle) {
+        for (MEGANode *tempNode in self.cloudDrive.selectedNodesArray) {
+            if (tempNode.handle == node.handle) {
                 [self.tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
             }
         }
@@ -125,10 +123,6 @@
     }
     
     return cell;
-}
-
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    return YES;
 }
 
 #pragma mark - UITableViewDelegate
@@ -156,14 +150,14 @@
     
     switch (node.type) {
         case MEGANodeTypeFolder: {
-            CloudDriveViewController *cdvc = [self.storyboard instantiateViewControllerWithIdentifier:@"CloudDriveID"];
-            [cdvc setParentNode:node];
+            CloudDriveViewController *cloudDriveVC = [self.storyboard instantiateViewControllerWithIdentifier:@"CloudDriveID"];
+            cloudDriveVC.parentNode = node;
             
             if (self.cloudDrive.displayMode == DisplayModeRubbishBin) {
-                [cdvc setDisplayMode:self.cloudDrive.displayMode];
+                cloudDriveVC.displayMode = self.cloudDrive.displayMode;
             }
             
-            [self.navigationController pushViewController:cdvc animated:YES];
+            [self.navigationController pushViewController:cloudDriveVC animated:YES];
             break;
         }
             
@@ -191,11 +185,10 @@
     
     if (tableView.isEditing) {
         
-        //tempArray avoid crash: "was mutated while being enumerated."
-        NSMutableArray *tempArray = [self.cloudDrive.selectedNodesArray copy];
-        for (MEGANode *n in tempArray) {
-            if (n.handle == node.handle) {
-                [self.cloudDrive.selectedNodesArray removeObject:n];
+        NSMutableArray *tempArray = self.cloudDrive.selectedNodesArray.copy;
+        for (MEGANode *tempNode in tempArray) {
+            if (tempNode.handle == node.handle) {
+                [self.cloudDrive.selectedNodesArray removeObject:tempNode];
             }
         }
         
@@ -291,8 +284,7 @@
     nodeCell.moreButton.hidden = NO;
 }
 
-- (NSArray *)swipeTableCell:(MGSwipeTableCell *)cell swipeButtonsForDirection:(MGSwipeDirection)direction
-              swipeSettings:(MGSwipeSettings *)swipeSettings expansionSettings:(MGSwipeExpansionSettings *)expansionSettings {
+- (NSArray *)swipeTableCell:(MGSwipeTableCell *)cell swipeButtonsForDirection:(MGSwipeDirection)direction swipeSettings:(MGSwipeSettings *)swipeSettings expansionSettings:(MGSwipeExpansionSettings *)expansionSettings {
     
     swipeSettings.transition = MGSwipeTransitionDrag;
     expansionSettings.buttonIndex = 0;

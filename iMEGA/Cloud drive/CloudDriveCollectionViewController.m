@@ -23,14 +23,13 @@
 
 @implementation CloudDriveCollectionViewController
 
+#pragma mark - Lifecycle
+
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
+    
     [self.searchView addSubview:self.cloudDrive.searchController.searchBar];
     self.cloudDrive.searchController.searchBar.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-}
-
-- (void)dealloc {
-    MEGALogInfo(@"CloudDriveCollectionViewController deallocated");
 }
 
 #pragma mark - UICollectionViewDataSource
@@ -57,8 +56,8 @@
     if (self.collectionView.allowsMultipleSelection) {
         cell.selectImageView.hidden = NO;
         BOOL selected = NO;
-        for (MEGANode *n in self.cloudDrive.selectedNodesArray) {
-            if (n.handle == node.handle) {
+        for (MEGANode *tempNode in self.cloudDrive.selectedNodesArray) {
+            if (tempNode.handle == node.handle) {
                 selected = YES;
             }
         }
@@ -84,11 +83,7 @@
         
         [self.cloudDrive setToolbarActionsEnabled:YES];
         
-        if (self.cloudDrive.selectedNodesArray.count == self.cloudDrive.nodes.size.integerValue) {
-            self.cloudDrive.allNodesSelected = YES;
-        } else {
-            self.cloudDrive.allNodesSelected = NO;
-        }
+        self.cloudDrive.allNodesSelected = (self.cloudDrive.selectedNodesArray.count == self.cloudDrive.nodes.size.integerValue);
         
         NodeCollectionViewCell *cell = (NodeCollectionViewCell *)[self.collectionView cellForItemAtIndexPath:indexPath];
         [cell selectCell:YES];
@@ -98,14 +93,14 @@
     
     switch (node.type) {
         case MEGANodeTypeFolder: {
-            CloudDriveViewController *cdvc = [self.storyboard instantiateViewControllerWithIdentifier:@"CloudDriveID"];
-            [cdvc setParentNode:node];
+            CloudDriveViewController *cloudDriveVC = [self.storyboard instantiateViewControllerWithIdentifier:@"CloudDriveID"];
+            cloudDriveVC.parentNode = node;
             
             if (self.cloudDrive.displayMode == DisplayModeRubbishBin) {
-                [cdvc setDisplayMode:self.cloudDrive.displayMode];
+                cloudDriveVC.displayMode = self.cloudDrive.displayMode;
             }
             
-            [self.navigationController pushViewController:cdvc animated:YES];
+            [self.navigationController pushViewController:cloudDriveVC animated:YES];
             break;
         }
             
@@ -129,13 +124,12 @@
     }
     
     if (collectionView.allowsMultipleSelection) {
-
         MEGANode *node = [self.cloudDrive.nodes nodeAtIndex:indexPath.row];
 
         NSMutableArray *tempArray = [self.cloudDrive.selectedNodesArray copy];
-        for (MEGANode *n in tempArray) {
-            if (n.handle == node.handle) {
-                [self.cloudDrive.selectedNodesArray removeObject:n];
+        for (MEGANode *tempNode in tempArray) {
+            if (tempNode.handle == node.handle) {
+                [self.cloudDrive.selectedNodesArray removeObject:tempNode];
             }
         }
         
