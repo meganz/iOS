@@ -1,8 +1,7 @@
 
 #import "CameraUploadCoordinator.h"
-#import "ThumbnailUploadOperation.h"
-#import "PreviewUploadOperation.h"
 #import "CompleteUploadOperation.h"
+#import "AttributeUploadManager.h"
 
 @implementation CameraUploadCoordinator
 
@@ -31,6 +30,8 @@
             MEGALogDebug(@"[Camera Upload] error when to complete transfer %@", error);
             [self finishUploadForLocalIdentifier:localIdentifier status:UploadStatusFailed];
         } else {
+            [AttributeUploadManager.shared uploadAttributeAtURL:uploadInfo.thumbnailURL withAttributeType:MEGAAttributeTypeThumbnail forNode:node];
+            [AttributeUploadManager.shared uploadAttributeAtURL:uploadInfo.previewURL withAttributeType:MEGAAttributeTypePreview forNode:node];
             [self finishUploadForLocalIdentifier:localIdentifier status:UploadStatusDone];
         }
     }];
