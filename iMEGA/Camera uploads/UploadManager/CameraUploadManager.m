@@ -7,6 +7,7 @@
 #import "MEGASdkManager.h"
 #import "MEGACreateFolderRequestDelegate.h"
 #import "UploadOperationFactory.h"
+#import "AttributeUploadManager.h"
 
 static NSString * const CameraUplodFolderName = @"Camera Uploads";
 static const NSInteger ConcurrentPhotoUploadCount = 10;
@@ -74,6 +75,8 @@ static const NSInteger MaxConcurrentVideoOperationCount = 1;
 
 - (void)startUploading {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        [AttributeUploadManager.shared scanLocalAttributesAndRetryUploadIfNeeded];
+        
         if (self.cameraUploadNode) {
             [self uploadIfPossible];
         } else {

@@ -10,6 +10,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (instancetype)shared;
 
+- (void)scanLocalAttributesAndRetryUploadIfNeeded;
+
 - (void)uploadAttributeAtURL:(NSURL *)URL withAttributeType:(MEGAAttributeType)type forNode:(MEGANode *)node;
 
 @end
