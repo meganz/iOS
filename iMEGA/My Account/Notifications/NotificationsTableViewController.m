@@ -34,7 +34,7 @@
     self.tableView.emptyDataSetSource = self;
     
     self.navigationItem.title = AMLocalizedString(@"notifications", nil);
-    self.userAlertsArray = [[MEGASdkManager sharedMEGASdk].userAlertList mnz_userAlertsArray];
+    self.userAlertsArray = [MEGASdkManager sharedMEGASdk].userAlertList.mnz_userAlertsArray;
     
     self.dateFormatter = [[NSDateFormatter alloc] init];
     self.dateFormatter.dateStyle = NSDateFormatterLongStyle;
@@ -344,7 +344,7 @@
 
 - (void)internetConnectionChanged {
     if ([MEGAReachabilityManager isReachable]) {
-        self.userAlertsArray = [[MEGASdkManager sharedMEGASdk].userAlertList mnz_userAlertsArray];
+        self.userAlertsArray = [MEGASdkManager sharedMEGASdk].userAlertList.mnz_userAlertsArray;
     } else {
         self.userAlertsArray = @[];
     }
@@ -493,7 +493,7 @@
 #pragma mark - MEGAGlobalDelegate
 
 - (void)onUserAlertsUpdate:(MEGASdk *)api userAlertList:(MEGAUserAlertList *)userAlertList {
-    self.userAlertsArray = [api.userAlertList mnz_userAlertsArray];
+    self.userAlertsArray = api.userAlertList.mnz_userAlertsArray;
     [self.tableView reloadData];
 }
 
