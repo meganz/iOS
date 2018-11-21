@@ -4,6 +4,9 @@
 #import "ThumbnailUploadOperation.h"
 #import "PreviewUploadOperation.h"
 
+static NSString * const AttributeThumbnailName = @"thumbnail";
+static NSString * const AttributePreviewName = @"preview";
+
 @implementation AttributeUploadManager
 
 + (instancetype)shared {
@@ -43,14 +46,82 @@
     }
 }
 
+#pragma mark - attributes scan and retry
+
+- (void)scanLocalAttributesAndRetryUploadIfNeeded {
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        NSError *error;
+        NSArray *resourceKeys = @[NSURLIsDirectoryKey, NSURLNameKey];
+        NSArray<NSURL *> *attributeDirectoryURLs = [NSFileManager.defaultManager contentsOfDirectoryAtURL:[self attributeDirectoryURL] includingPropertiesForKeys:resourceKeys options:NSDirectoryEnumerationSkipsHiddenFiles error:&error];
+        if (error) {
+            MEGALogDebug(@"[Camera Upload] error when to scan local attributes %@", error);
+            return;
+        }
+        
+        for (NSURL *URL in attributeDirectoryURLs) {
+            NSDictionary *resourceValueDict = [URL resourceValuesForKeys:resourceKeys error:nil];
+            if ([resourceValueDict[NSURLIsDirectoryKey] boolValue]) {
+                [self scanAttributeDirectoryURL:URL directoryName:resourceValueDict[NSURLNameKey]];
+            }
+        }
+    });
+}
+
+- (void)scanAttributeDirectoryURL:(NSURL *)URL directoryName:(NSString *)name {
+    NSError *error;
+    NSArray *resourceKeys = @[NSURLIsDirectoryKey, NSURLNameKey];
+    NSArray<NSURL *> *attributeURLs = [NSFileManager.defaultManager contentsOfDirectoryAtURL:URL includingPropertiesForKeys:resourceKeys options:NSDirectoryEnumerationSkipsHiddenFiles error:&error];
+    if (error) {
+        MEGALogDebug(@"[Camera Upload] error when to scan attribute directory %@ %@", URL, error);
+        return;
+    }
+    
+    if (attributeURLs.count == 0) {
+        [NSFileManager.defaultManager removeItemIfExistsAtURL:URL];
+        return;
+    }
+    
+    MEGANode *node = [MEGASdkManager.sharedMEGASdk nodeForHandle:[MEGASdk handleForBase64Handle:name]];
+    if (node == nil) {
+        [NSFileManager.defaultManager removeItemIfExistsAtURL:URL];
+        return;
+    }
+    
+    for (NSURL *URL in attributeURLs) {
+        NSDictionary *resourceValueDict = [URL resourceValuesForKeys:resourceKeys error:nil];
+        if (![resourceValueDict[NSURLIsDirectoryKey] boolValue]) {
+            NSString *fileName = resourceValueDict[NSURLNameKey];
+            [self retryAttributeUploadIfNeededForNode:node attributeAtURL:URL attributeName:fileName];
+        }
+    }
+}
+
+- (void)retryAttributeUploadIfNeededForNode:(MEGANode *)node attributeAtURL:(NSURL *)URL attributeName:(NSString *)name {
+    if ([name isEqualToString:AttributeThumbnailName]) {
+        if ([node hasThumbnail]) {
+            [NSFileManager.defaultManager removeItemIfExistsAtURL:URL];
+        } else {
+            [self.operationQueue addOperation:[[ThumbnailUploadOperation alloc] initWithAttributeURL:URL node:node expiresAfterTimeInterval:90]];
+        }
+    } else if ([name isEqualToString:AttributePreviewName]) {
+        if ([node hasPreview]) {
+            [NSFileManager.defaultManager removeItemIfExistsAtURL:URL];
+        } else {
+            [self.operationQueue addOperation:[[PreviewUploadOperation alloc] initWithAttributeURL:URL node:node expiresAfterTimeInterval:90]];
+        }
+    }
+}
+
+#pragma mark - URLs for attributes
+
 - (NSURL *)attributeUploadURLForAttributeType:(MEGAAttributeType)type node:(MEGANode *)node  {
     NSString *attributeName;
     switch (type) {
         case MEGAAttributeTypeThumbnail:
-            attributeName = @"thumbnail";
+            attributeName = AttributeThumbnailName;
             break;
         case MEGAAttributeTypePreview:
-            attributeName = @"preview";
+            attributeName = AttributePreviewName;
             break;
         default:
             return nil;
