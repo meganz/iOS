@@ -3,6 +3,7 @@
 #import "TransferSessionDelegate.h"
 #import "TransferSessionTaskDelegate.h"
 #import "CameraUploadManager.h"
+#import "AttributeUploadManager.h"
 
 NSString * const photoTransferSessionId = @"nz.mega.photoTransfer";
 NSString * const videoTransferSessionId = @"nz.mega.videoTransfer";
@@ -132,7 +133,7 @@ NSString * const videoTransferSessionId = @"nz.mega.videoTransfer";
 }
 
 - (void)didFinishPhotoSessionEvents {
-//    [[CameraUploadManager shared] uploadNextPhotoBatch];
+    [AttributeUploadManager.shared.operationQueue waitUntilAllOperationsAreFinished];
     
     [NSOperationQueue.mainQueue addOperationWithBlock:^{
         if (self.photoSessionCompletion) {
@@ -142,6 +143,7 @@ NSString * const videoTransferSessionId = @"nz.mega.videoTransfer";
 }
 
 - (void)didFinishVideoSessionEvents {
+    [AttributeUploadManager.shared.operationQueue waitUntilAllOperationsAreFinished];
     
     [NSOperationQueue.mainQueue addOperationWithBlock:^{
         if (self.videoSessionCompletion) {

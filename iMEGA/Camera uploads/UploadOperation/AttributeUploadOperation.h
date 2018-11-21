@@ -8,9 +8,11 @@ NS_ASSUME_NONNULL_BEGIN
 @interface AttributeUploadOperation : MEGATaskOperation
 
 @property (strong, nonatomic) MEGANode *node;
-@property (strong, nonatomic) AssetUploadInfo *uploadInfo;
+@property (strong, nonatomic) NSURL *attributeURL;
 
-- (instancetype)initWithNode:(MEGANode *)node uploadInfo:(AssetUploadInfo *)uploadInfo expiresAfterTimeInterval:(NSTimeInterval)timeInterval;
+- (instancetype)initWithAttributeURL:(NSURL *)URL node:(MEGANode *)node expiresAfterTimeInterval:(NSTimeInterval)timeInterval;
+
+- (void)cacheAttributeToURL:(NSURL *)cacheURL;
 
 @end
 
