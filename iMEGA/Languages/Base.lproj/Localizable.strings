@@ -1678,6 +1678,20 @@
 "Saved to Photos"="Saved to Photos";
 /* Text shown when an error occurs when trying to save a photo or video to Photos app */
 "Could not save Item"="Could not save Item";
+/* Message to inform the local user that someone has joined the current group call */
+"%@ joined the call."="%@ joined the call.";
+/* Message to inform the local user that someone has left the current group call */
+"%@ left the call."="%@ left the call.";
+/* Message to inform the local user is having a bad quality network with someone in the current group call */
+"Poor conection."="Poor conection.";
+/* Message shown in a chat room when there is an active group call */
+"There is an active group call. Tap to join."="There is an active group call. Tap to join.";
+/* Message shown in a chat room for a group call in progress displaying the duration of the call */
+"Touch to return to call %@"="Touch to return to call %@";
+/* Menu item to change from grid view to list view */
+"List view"="List view";
+/* Menu item to change from list view to grid view */
+"Thumbnail view"="Thumbnail view";
 /* There are no notifications to display. */
 "No notifications"="No notifications";
 /* The header of a notification related to payments */
