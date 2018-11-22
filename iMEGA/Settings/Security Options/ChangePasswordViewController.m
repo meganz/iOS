@@ -6,6 +6,7 @@
 #import "NSString+MNZCategory.h"
 #import "SVProgressHUD.h"
 #import "UIApplication+MNZCategory.h"
+#import "UITextField+MNZCategory.h"
 
 #import "AwaitingEmailConfirmationView.h"
 #import "InputView.h"
@@ -301,6 +302,14 @@ typedef NS_ENUM(NSUInteger, TextFieldTag) {
     self.scrollView.scrollIndicatorInsets = UIEdgeInsetsZero;
 }
 
+- (void)alertTextFieldDidChange:(UITextField *)textField {
+    UIAlertController *alertController = (UIAlertController *)UIApplication.mnz_visibleViewController;
+    if (alertController) {
+        UIAlertAction *rightButtonAction = alertController.actions.lastObject;
+        rightButtonAction.enabled = !textField.text.mnz_isEmpty;
+    }
+}
+
 #pragma mark - IBActions
 
 - (IBAction)cancelAction:(UIBarButtonItem *)sender {
@@ -553,6 +562,10 @@ typedef NS_ENUM(NSUInteger, TextFieldTag) {
                         [alertController addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
                             textField.placeholder = AMLocalizedString(@"recoveryKey", @"Label for any 'Recovery Key' button, link, text, title, etc. Preserve uppercase - (String as short as possible). The Recovery Key is the new name for the account 'Master Key', and can unlock (recover) the account if the user forgets their password.");
                             [textField becomeFirstResponder];
+                            [textField addTarget:self action:@selector(alertTextFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
+                            textField.shouldReturnCompletion = ^BOOL(UITextField *textField) {
+                                return !textField.text.mnz_isEmpty;
+                            };
                         }];
                         [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
                                 UITextField *textField = alertController.textFields.firstObject;
@@ -638,7 +651,7 @@ typedef NS_ENUM(NSUInteger, TextFieldTag) {
                     completion();
                 }]];
                 
-                [[UIApplication mnz_visibleViewController] presentViewController:alertController animated:YES completion:nil];
+                [UIApplication.mnz_presentingViewController presentViewController:alertController animated:YES completion:nil];
             }
             
             break;
