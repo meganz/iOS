@@ -35,7 +35,7 @@ static MEGALogger *_megaLogger = nil;
     [[NSUserDefaults standardUserDefaults] synchronize];
     
     [[[NSUserDefaults alloc] initWithSuiteName:@"group.mega.ios"] setBool:YES forKey:@"logging"];
-        
+    
     NSString *version = [NSString stringWithFormat:@"%@ (%@)", [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"], [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleVersion"]];
     NSString *systemVersion = [[UIDevice currentDevice] systemVersion];
     NSArray *languageArray = [NSLocale preferredLanguages];
@@ -72,7 +72,7 @@ static MEGALogger *_megaLogger = nil;
 - (void)stopLoggingToFile:(NSString *)logFilePath {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         [NSFileManager.defaultManager mnz_removeItemAtPath:logFilePath];
-    }
+    });
 }
 
 @end
