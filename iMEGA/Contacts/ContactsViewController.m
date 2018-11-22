@@ -1630,8 +1630,7 @@
             
             if ([self.tableView.indexPathsForVisibleRows containsObject:indexPath]) {
                 ContactTableViewCell *cell = (ContactTableViewCell *)[self.tableView cellForRowAtIndexPath:indexPath];
-                NSDate *dateLastSeen = [NSDate dateWithTimeIntervalSinceNow:lastGreen*60];
-                cell.shareLabel.text = [NSString stringWithFormat:@"Last seen %@", dateLastSeen.timeAgoSinceNow];
+                cell.shareLabel.text = [NSString mnz_lastGreenStringFromMinutes:lastGreen];
             }
         }
     }

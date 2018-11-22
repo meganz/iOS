@@ -422,13 +422,21 @@ const NSUInteger kMaxMessagesToLoad = 256;
             if (self.chatRoom.isGroup) {
                 chatRoomState = [self participantsNames];
                 self.navigationStatusView.hidden = YES;
+                self.navigationSubtitleLabel.hidden = NO;
             } else {
-                self.navigationStatusView.hidden = NO;
-                if ([[[MEGASdkManager sharedMEGAChatSdk] presenceConfig] isLastGreenVisible]) {
-                    [[MEGASdkManager sharedMEGAChatSdk] requestLastGreen:[self.chatRoom peerHandleAtIndex:0]];
+                MEGAChatStatus userStatus = [MEGASdkManager.sharedMEGAChatSdk userOnlineStatus:[self.chatRoom peerHandleAtIndex:0]];
+                if (userStatus != MEGAChatStatusInvalid) {
+                    self.navigationStatusView.hidden = NO;
+                    self.navigationSubtitleLabel.hidden = NO;
+                    if (MEGASdkManager.sharedMEGAChatSdk.presenceConfig.isLastGreenVisible) {
+                        [MEGASdkManager.sharedMEGAChatSdk requestLastGreen:[self.chatRoom peerHandleAtIndex:0]];
+                    }
+                    self.navigationStatusView.backgroundColor = [UIColor mnz_colorForStatusChange:[MEGASdkManager.sharedMEGAChatSdk userOnlineStatus:[self.chatRoom peerHandleAtIndex:0]]];
+                    chatRoomState = [NSString chatStatusString:userStatus];
+                } else {
+                    self.navigationStatusView.hidden = YES;
+                    self.navigationSubtitleLabel.hidden = YES;
                 }
-                self.navigationStatusView.backgroundColor = [UIColor mnz_colorForStatusChange:[[MEGASdkManager sharedMEGAChatSdk] userOnlineStatus:[self.chatRoom peerHandleAtIndex:0]]];
-                chatRoomState = [NSString chatStatusString:[[MEGASdkManager sharedMEGAChatSdk] userOnlineStatus:[self.chatRoom peerHandleAtIndex:0]]];
             }
         }
         
@@ -2623,8 +2631,7 @@ const NSUInteger kMaxMessagesToLoad = 256;
             MEGAChatStatus chatStatus = [[MEGASdkManager sharedMEGAChatSdk] userOnlineStatus:[self.chatRoom peerHandleAtIndex:0]];
             if (chatStatus == 1 || chatStatus == 2) {
                 MEGALogDebug(@"CHAT LAST SEEN minutes: %td for handle: %lld", lastGreen, userHandle);
-                NSDate *dateLastSeen = [NSDate dateWithTimeIntervalSinceNow:lastGreen*60];
-                self.navigationSubtitleLabel.text = [NSString stringWithFormat:@"Last seen %@", dateLastSeen.timeAgoSinceNow];
+                self.navigationSubtitleLabel.text = [NSString mnz_lastGreenStringFromMinutes:lastGreen];
             }
         }
     }

@@ -6,6 +6,8 @@
 #import <MobileCoreServices/MobileCoreServices.h>
 #import <Photos/Photos.h>
 
+#import "NSDate+DateTools.h"
+
 #import "MEGASdkManager.h"
 
 static NSString* const A = @"[A]";
@@ -705,6 +707,16 @@ static NSString* const B = @"[B]";
 
 - (NSString *)mnz_relativeLocalPath {
     return [self stringByReplacingOccurrencesOfString:[NSHomeDirectory() stringByAppendingString:@"/"] withString:@""];
+}
+
++ (NSString *)mnz_lastGreenStringFromMinutes:(NSInteger)minutes {
+    NSDate *dateLastSeen = [NSDate dateWithTimeIntervalSinceNow:-minutes*60];
+    NSDateFormatter *timeFormatter = [[NSDateFormatter alloc] init];
+    timeFormatter.dateFormat = @"HH:mm";
+    timeFormatter.locale = [NSLocale autoupdatingCurrentLocale];
+    NSString *timeString = [timeFormatter stringFromDate:dateLastSeen];
+    NSString *dateString = [[NSCalendar currentCalendar] isDateInToday:dateLastSeen] ? AMLocalizedString(@"Today", @"") : [dateLastSeen formattedDateWithFormat:@"dd MMM YY"];
+    return [NSString stringWithFormat:AMLocalizedString(@"Last seen %@ at %@", @"Text title to inform the user the 'Last seen' time of a contact"), dateString, timeString];
 }
 
 #pragma mark - File names and extensions
