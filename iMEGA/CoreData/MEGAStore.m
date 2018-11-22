@@ -365,6 +365,12 @@ static MEGAStore *_megaStore = nil;
     [self saveContext];
 }
 
+- (void)deleteUploadTransferWithLocalIdentifier:(NSString *)localIdentifier {
+    MOUploadTransfer *uploadTransfer = [self fetchUploadTransferWithLocalIdentifier:localIdentifier];
+    
+    [self deleteUploadTransfer:uploadTransfer];
+}
+
 - (NSArray<MOUploadTransfer *> *)fetchUploadTransfers {
     NSFetchRequest *request = [MOUploadTransfer fetchRequest];
     
@@ -373,7 +379,7 @@ static MEGAStore *_megaStore = nil;
     return [self.managedObjectContext executeFetchRequest:request error:&error];
 }
 
-- (MOUploadTransfer *)fetchTransferUpdateWithLocalIdentifier:(NSString *)localIdentifier {
+- (MOUploadTransfer *)fetchUploadTransferWithLocalIdentifier:(NSString *)localIdentifier {
     NSFetchRequest *request = [MOUploadTransfer fetchRequest];
     
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"localIdentifier == %@", localIdentifier];
@@ -392,6 +398,39 @@ static MEGAStore *_megaStore = nil;
     }
     
     [self saveContext];
+}
+
+#pragma mark - MOMessage entity
+
+- (void)insertMessage:(uint64_t)messageId chatId:(uint64_t)chatId {
+    MOMessage *mMessage = [NSEntityDescription insertNewObjectForEntityForName:@"MOMessage" inManagedObjectContext:self.managedObjectContext];
+    mMessage.chatId = [NSNumber numberWithUnsignedLongLong:chatId];
+    mMessage.messageId = [NSNumber numberWithUnsignedLongLong:messageId];
+    
+    MEGALogDebug(@"Save context - insert MOMessage with chat %@ and message %@", [MEGASdk base64HandleForUserHandle:chatId], [MEGASdk base64HandleForUserHandle:messageId]);
+    
+    [self saveContext];
+}
+
+- (void)deleteMessage:(MOMessage *)message {
+    [self.managedObjectContext deleteObject:message];
+    
+    MEGALogDebug(@"Save context - remove MOMessage with chat %@ and message %@", [MEGASdk base64HandleForUserHandle:message.chatId.unsignedLongLongValue],[MEGASdk base64HandleForUserHandle:message.messageId.unsignedLongLongValue]);
+    
+    [self saveContext];
+}
+
+- (MOUploadTransfer *)fetchMessageWithChatId:(uint64_t)chatId messageId:(uint64_t)messageId {
+    NSFetchRequest *request = [MOMessage fetchRequest];
+    
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"chatId == %llu AND messageId == %llu", chatId, messageId];
+    request.predicate = predicate;
+    
+    NSError *error;
+    NSArray *array = [self.managedObjectContext executeFetchRequest:request error:&error];
+    
+    return array.firstObject;
+    
 }
 
 @end

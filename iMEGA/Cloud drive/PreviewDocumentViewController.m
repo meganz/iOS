@@ -80,7 +80,7 @@
         if (!self.pdfView.hidden) {
             CGPDFPageRef pageRef = self.pdfView.currentPage.pageRef;
             size_t page = CGPDFPageGetPageNumber(pageRef);
-            NSString *fingerprint = [NSString stringWithFormat:@"%@", [[MEGASdkManager sharedMEGASdk] fingerprintForFilePath:self.pdfView.document.documentURL.path]];
+            NSString *fingerprint = [[MEGASdkManager sharedMEGASdk] fingerprintForFilePath:self.pdfView.document.documentURL.path];
             if (page == 1) {
                 [[MEGAStore shareInstance] deleteMediaDestinationWithFingerprint:fingerprint];
             } else {
@@ -290,7 +290,7 @@
     [previewController setModalTransitionStyle:UIModalTransitionStyleCrossDissolve];
     
     [self dismissViewControllerAnimated:YES completion:^{
-        [[UIApplication mnz_visibleViewController] presentViewController:previewController animated:YES completion:nil];
+        [UIApplication.mnz_presentingViewController presentViewController:previewController animated:YES completion:nil];
     }];
 }
 
@@ -360,7 +360,7 @@
 
 - (void)presentParentNode:(MEGANode *)node {
     [self dismissViewControllerAnimated:YES completion:^{
-        UIViewController *visibleViewController = [UIApplication mnz_visibleViewController];
+        UIViewController *visibleViewController = UIApplication.mnz_presentingViewController;
         if ([visibleViewController isKindOfClass:MainTabBarController.class]) {
             NSArray *parentTreeArray = node.mnz_parentTreeArray;
             

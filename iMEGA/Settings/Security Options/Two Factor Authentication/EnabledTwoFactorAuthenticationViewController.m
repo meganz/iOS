@@ -58,7 +58,7 @@
 - (void)showSaveYourRecoveryKeyAlert {
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"pleaseSaveYourRecoveryKey", @"A warning message on the Backup Recovery Key dialog to tell the user to backup their Recovery Key to their local computer.") message:nil preferredStyle:UIAlertControllerStyleAlert];
     [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
-    [UIApplication.mnz_visibleViewController presentViewController:alertController animated:YES completion:nil];
+    [UIApplication.mnz_presentingViewController presentViewController:alertController animated:YES completion:nil];
 }
 
 #pragma mark - IBActions

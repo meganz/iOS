@@ -18,6 +18,7 @@
 #import "NSFileManager+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 #import "UIApplication+MNZCategory.h"
+#import "UITextField+MNZCategory.h"
 
 #import "BrowserViewController.h"
 #import "LoginViewController.h"
@@ -39,6 +40,7 @@
 
 - (UIViewController *)mnz_viewControllerForNodeInFolderLink:(BOOL)isFolderLink {
     MEGASdk *api = isFolderLink ? [MEGASdkManager sharedMEGASdkFolder] : [MEGASdkManager sharedMEGASdk];
+    MEGASdk *apiForStreaming = [MEGASdkManager sharedMEGASdk].isLoggedIn ? [MEGASdkManager sharedMEGASdk] : [MEGASdkManager sharedMEGASdkFolder];
     
     MOOfflineNode *offlineNodeExist = [[MEGAStore shareInstance] offlineNodeWithNode:self];
     
@@ -90,9 +92,9 @@
             
             return previewController;
         }
-    } else if (self.name.mnz_isMultimediaPathExtension && [api httpServerStart:YES port:4443]) {
+    } else if (self.name.mnz_isMultimediaPathExtension && [apiForStreaming httpServerStart:YES port:4443]) {
         if (self.mnz_isPlayable) {
-            MEGAAVViewController *megaAVViewController = [[MEGAAVViewController alloc] initWithNode:self folderLink:isFolderLink];
+            MEGAAVViewController *megaAVViewController = [[MEGAAVViewController alloc] initWithNode:self folderLink:isFolderLink apiForStreaming:apiForStreaming];
             return megaAVViewController;
         } else {
             UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"fileNotSupported", @"Alert title shown when users try to stream an unsupported audio/video file") message:AMLocalizedString(@"message_fileNotSupported", @"Alert message shown when users try to stream an unsupported audio/video file") preferredStyle:UIAlertControllerStyleAlert];
@@ -176,7 +178,7 @@
                     downloadsDirectory = downloadsDirectory.mnz_relativeLocalPath;
                     NSString *offlineNameString = [[MEGASdkManager sharedMEGASdkFolder] escapeFsIncompatible:self.name];
                     NSString *localPath = [downloadsDirectory stringByAppendingPathComponent:offlineNameString];
-                    [api startDownloadNode:[api authorizeNode:self] localPath:localPath appData:[[NSString new] mnz_appDataToSaveInPhotosApp]];
+                    [[MEGASdkManager sharedMEGASdk] startDownloadNode:[api authorizeNode:self] localPath:localPath appData:[[NSString new] mnz_appDataToSaveInPhotosApp]];
                 }
                 break;
             }
@@ -210,9 +212,18 @@
         UIAlertController *renameAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"rename", @"Title for the action that allows you to rename a file or folder") message:AMLocalizedString(@"renameNodeMessage", @"Hint text to suggest that the user have to write the new name for the file or folder") preferredStyle:UIAlertControllerStyleAlert];
         
         [renameAlertController addTextFieldWithConfigurationHandler:^(UITextField *textField) {
-            textField.delegate = self;
             textField.text = self.name;
             [textField addTarget:self action:@selector(renameAlertTextFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
+            textField.shouldReturnCompletion = ^BOOL(UITextField *textField) {
+                BOOL shouldReturn = YES;
+                UIAlertController *renameAlertController = (UIAlertController *)UIApplication.mnz_visibleViewController;
+                if (renameAlertController) {
+                    UIAlertAction *rightButtonAction = renameAlertController.actions.lastObject;
+                    shouldReturn = rightButtonAction.enabled;
+                }
+                
+                return shouldReturn;
+            };
         }];
         
         [renameAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
@@ -394,7 +405,7 @@
                 MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"BrowserNavigationControllerID"];
                 BrowserViewController *browserVC = navigationController.viewControllers.firstObject;
                 browserVC.selectedNodesArray = [NSArray arrayWithObject:self];
-                [UIApplication.mnz_visibleViewController presentViewController:navigationController animated:YES completion:nil];
+                [UIApplication.mnz_presentingViewController presentViewController:navigationController animated:YES completion:nil];
                 
                 browserVC.browserAction = isFolderLink ? BrowserActionImportFromFolderLink : BrowserActionImport;
             }];
@@ -763,10 +774,9 @@
     return shouldChangeCharacters;
 }
 
-- (void)renameAlertTextFieldDidChange:(UITextField *)sender {
+- (void)renameAlertTextFieldDidChange:(UITextField *)textField {
     UIAlertController *renameAlertController = (UIAlertController *)UIApplication.mnz_visibleViewController;
     if (renameAlertController) {
-        UITextField *textField = renameAlertController.textFields.firstObject;
         UIAlertAction *rightButtonAction = renameAlertController.actions.lastObject;
         BOOL enableRightButton = NO;
         
@@ -774,27 +784,17 @@
         NSString *nodeNameString = self.name;
         
         if (self.isFile || self.isFolder) {
-            BOOL containsInvalidChars = [sender.text rangeOfCharacterFromSet:[NSCharacterSet characterSetWithCharactersInString:@"|*/:<>?\"\\"]].length;
+            BOOL containsInvalidChars = textField.text.mnz_containsInvalidChars;
             if ([newName isEqualToString:@""] || [newName isEqualToString:nodeNameString] || newName.mnz_isEmpty || containsInvalidChars) {
                 enableRightButton = NO;
             } else {
                 enableRightButton = YES;
             }
-            sender.textColor = containsInvalidChars ? UIColor.mnz_redMain : UIColor.darkTextColor;
+            textField.textColor = containsInvalidChars ? UIColor.mnz_redMain : UIColor.darkTextColor;
         }
         
         rightButtonAction.enabled = enableRightButton;
     }
-}
-
-- (BOOL)textFieldShouldReturn:(UITextField *)textField {
-    UIAlertController *renameAlertController = (UIAlertController *)UIApplication.mnz_visibleViewController;    
-    if (renameAlertController) {
-        UIAlertAction *rightButtonAction = renameAlertController.actions.lastObject;
-        return rightButtonAction.enabled;
-    }
-    
-    return YES;
 }
 
 - (void)mnz_copyToGalleryFromTemporaryPath:(NSString *)path {

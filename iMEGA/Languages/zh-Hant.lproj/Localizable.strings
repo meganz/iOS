@@ -1590,17 +1590,17 @@
 "scanOrCopyTheSeed"="Scan or copy the seed to your Authenticator App. Be sure to backup this seed to a safe place in case you lose your device.";
 /* A button to help them restore their account if they have lost their 2FA device. */
 "lostYourAuthenticatorDevice"="Lost your Authenticator device?";
-/* Settings section title where you can enable the option to 'Save Images in Library' */
-"Save Images in Library"="Save Images in Library";
-/* Settings section title where you can enable the option to 'Save Videos in Library' */
-"Save Videos in Library"="Save Videos in Library";
+/* Settings section title where you can enable the option to 'Save Images in Photos' */
+"Save Images in Photos"="Save Images in Photos";
+/* Settings section title where you can enable the option to 'Save Videos in Photos' */
+"Save Videos in Photos"="Save Videos in Photos";
 /* Footer text shown under the settings for download options 'Save Images/Videos in Library' */
 "Images and/or videos downloaded will be stored in the device’s media library instead of the Offline section."="Images and/or videos downloaded will be stored in the device’s media library instead of the Offline section.";
 /* Setting associated with the 'Camera' of the device */
 "Camera"="Camera";
-/* Settings section title where you can enable the option to 'Save in Library' the images or videos taken from your camera in the MEGA app */
-"Save in Library"="Save in Library";
-/* Footer text shown under the Camera setting to explain the option 'Save in Library' */
+/* Settings section title where you can enable the option to 'Save in Photos' the images or videos taken from your camera in the MEGA app */
+"Save in Photos"="Save in Photos";
+/* Footer text shown under the Camera setting to explain the option 'Save in Photos' */
 "Save a copy of the images and videos taken from the MEGA app in your device’s media library."="Save a copy of the images and videos taken from the MEGA app in your device’s media library.";
 /* Title shown in a page of the on boarding screens explaining that the user keeps the encryption keys */
 "You hold the keys"="You hold the keys";
@@ -1625,7 +1625,7 @@
 /* Title label that explains that the user is going to be asked for the photos permission */
 "Allow Access to Photos"="Allow Access to Photos";
 /* Detailed explanation of why the user should give permission to access to the photos */
-"To share photos and videos, allow MEGA to access your library."="To share photos and videos, allow MEGA to access your library.";
+"Please give the MEGA App permission to access Photos to share photos and videos."="Please give the MEGA App permission to access Photos to share photos and videos.";
 /* Title label that explains that the user is going to be asked for the microphone and camera permission */
 "Enable Microphone and Camera"="Enable Microphone and Camera";
 /* Detailed explanation of why the user should give permission to access to the camera and the microphone */
@@ -1678,3 +1678,87 @@
 "Saved to Photos"="Saved to Photos";
 /* Text shown when an error occurs when trying to save a photo or video to Photos app */
 "Could not save Item"="Could not save Item";
+/* Message to inform the local user that someone has joined the current group call */
+"%@ joined the call."="%@ joined the call.";
+/* Message to inform the local user that someone has left the current group call */
+"%@ left the call."="%@ left the call.";
+/* Message to inform the local user is having a bad quality network with someone in the current group call */
+"Poor conection."="Poor conection.";
+/* Message shown in a chat room when there is an active group call */
+"There is an active group call. Tap to join."="There is an active group call. Tap to join.";
+/* Message shown in a chat room for a group call in progress displaying the duration of the call */
+"Touch to return to call %@"="Touch to return to call %@";
+/* Menu item to change from grid view to list view */
+"List view"="顯示列表";
+/* Menu item to change from list view to grid view */
+"Thumbnail view"="縮圖檢視";
+/* There are no notifications to display. */
+"No notifications"="沒有新通知";
+/* The header of a notification related to payments */
+"Payment info"="付款資訊";
+/* A title for a notification saying the user’s pricing plan will expire soon. */
+"PRO membership plan expiring soon"="專業版會員專案即將到期";
+/* The header of a notification indicating that a file or folder has been taken down due to infringement or other reason. */
+"Takedown notice"="刪除通知";
+/* The header of a notification indicating that a file or folder that was taken down has now been restored due to a successful counter-notice. */
+"Takedown reinstated"="移除已復原";
+/* Label shown inside an unseen notification */
+"New"="New";
+/* When a contact sent a contact/friend request */
+"Sent you a contact request"="向您發送了聯絡人邀請";
+/* A notification that the other user cancelled their contact request so it is no longer valid. E.g. user@email.com cancelled their contact request. */
+"Cancelled their contact request"="聯絡人邀請已被刪除";
+/* A reminder notification to remind the user to respond to the contact request. */
+"Reminder: You have a contact request"="提醒: 您有一個聯絡人邀請";
+/* A notification telling the user that the other user deleted them as a contact. E.g. user@email.com deleted you as a contact. */
+"Deleted you as a contact"="聯繫人將您刪除";
+/* A notification telling the user that they are now fully connected with the other user (the users are in each other’s address books). */
+"Contact relationship established"="聯絡人關係已建立";
+/* A notification telling the user that one of their contact’s accounts has been deleted or deactivated. */
+"Account has been deleted/deactivated"="賬戶已被刪除/ 停用";
+/* A notification telling the user that another user blocked them as a contact (they will no longer be able to contact them). E.g. name@email.com blocked you as a contact. */
+"Blocked you as a contact"="屏蔽了您";
+/* Response text after clicking Ignore on an incoming contact request notification. */
+"You ignored a contact request"="您已忽略一個聯絡人邀請";
+/* Response text after clicking Accept on an incoming contact request notification. */
+"You accepted a contact request"="您已接受一個聯絡人邀請";
+/* Response text after clicking Deny on an incoming contact request notification. */
+"You denied a contact request"="您已拒絕一個聯絡人邀請";
+/* When somebody accepted your contact request */
+"Accepted your contact request"="已接受您的聯絡人邀請";
+/* When somebody denied your contact request */
+"Denied your contact request"="拒絕了您的聯絡人邀請";
+/* notification text */
+"A user has left the shared folder {0}"="A user has left the shared folder {0}";
+/* This is shown in the Notification dialog when the email address of a contact is not found and access to the share is lost for some reason (e.g. share removal or contact removal). */
+"Access to folders was removed."="存取資料夾已移除";
+/* Content of a notification that informs how many files and folders have been added to a shared folder */
+"Added 1 file"="Added 1 file";
+/* Content of a notification that informs how many files and folders have been added to a shared folder */
+"Added %lld files"="Added %lld files";
+/* Content of a notification that informs how many files and folders have been added to a shared folder */
+"Added 1 folder"="Added 1 folder";
+/* Content of a notification that informs how many files and folders have been added to a shared folder */
+"Added %lld folders"="Added %lld folders";
+/* Content of a notification that informs how many files and folders have been added to a shared folder */
+"Added 1 file and 1 folder"="Added 1 file and 1 folder";
+/* Content of a notification that informs how many files and folders have been added to a shared folder */
+"Added %lld files and 1 folder"="Added %lld files and 1 folder";
+/* Content of a notification that informs how many files and folders have been added to a shared folder */
+"Added 1 file and %lld folders"="Added 1 file and %lld folders";
+/* Content of a notification that informs how many files and folders have been added to a shared folder */
+"Added [A] files and [B] folders"="Added [A] files and [B] folders";
+/* Notification popup. Notification for multiple removed items from a share. Please keep [X] as it will be replaced at runtime with the number of removed items. */
+"Removed [X] items from a share"="已從共享中移除[X]項目";
+/* A notification telling the user that their Pro plan payment was successfully received. The %1 indicates the name of the Pro plan they paid for e.g. Lite, PRO III. */
+"Your payment for the %1 plan was received."="您的 %1付款已經收到。";
+/* A notification telling the user that their Pro plan payment was unsuccessful. The %1 indicates the name of the Pro plan they were trying to pay for e.g. Lite, PRO II. */
+"Your payment for the %1 plan was unsuccessful."="您的 %1付款不成功。";
+/* The professional pricing plan which the user is currently on will expire in one day. */
+"Your PRO membership plan will expire in 1 day."="您的專業版會員專案將在一天內到期";
+/* The professional pricing plan which the user is currently on will expire in 5 days. The %1 is a placeholder for the number of days and should not be removed. */
+"Your PRO membership plan will expire in %1 days."="您的專業版會員專案將在%1天內到期";
+/* The text of a notification indicating that a file or folder has been taken down due to infringement or other reason. The %1 placeholder will be replaced with the text ‘file’ or ‘folder’. The %2 will be replaced with the name of the file or folder. */
+"Your publicly shared %1 (%2) has been taken down."="您公開分享的 %1 (%2) 已被移除。";
+/* The text of a notification indicating that a file or folder that was taken down has now been restored due to a successful counter-notice. The %1 placeholder will be replaced with the text ‘file’ or ‘folder’. The %2 will be replaced with the name of the file or folder. */
+"Your taken down %1 (%2) has been reinstated."="您 %1 (%2) 之刪除已復原。";

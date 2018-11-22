@@ -21,6 +21,7 @@
 #import "NSString+MNZCategory.h"
 #import "UIAlertAction+MNZCategory.h"
 #import "UIImageView+MNZCategory.h"
+#import "UITextField+MNZCategory.h"
 
 #import "ContactDetailsViewController.h"
 #import "ContactLinkQRViewController.h"
@@ -28,7 +29,7 @@
 #import "ShareFolderActivity.h"
 #import "ItemListViewController.h"
 
-@interface ContactsViewController () <CNContactPickerDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAGlobalDelegate, ItemListViewControllerProtocol, UISearchControllerDelegate, UIGestureRecognizerDelegate, MEGAChatDelegate, UITextFieldDelegate>
+@interface ContactsViewController () <CNContactPickerDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAGlobalDelegate, ItemListViewControllerProtocol, UISearchControllerDelegate, UIGestureRecognizerDelegate, MEGAChatDelegate>
 
 @property (nonatomic) id<UIViewControllerPreviewing> previewingContext;
 
@@ -522,13 +523,11 @@
     }
 }
 
-- (void)alertControllerShouldEnableDefaultButtonForEmailTextField:(UITextField *)sender {
+- (void)addContactAlertTextFieldDidChange:(UITextField *)textField {
     UIAlertController *addContactFromEmailAlertController = (UIAlertController *)self.presentedViewController;
     if (addContactFromEmailAlertController) {
-        UITextField *textField = addContactFromEmailAlertController.textFields.firstObject;
         UIAlertAction *rightButtonAction = addContactFromEmailAlertController.actions.lastObject;
-        NSString *email = textField.text;
-        rightButtonAction.enabled = (email.length > 0) ? [email mnz_isValidEmail] : NO;
+        rightButtonAction.enabled = (!textField.text.mnz_isEmpty && textField.text.mnz_isValidEmail);
     }
 }
 
@@ -739,8 +738,10 @@
         
         [addContactFromEmailAlertController addTextFieldWithConfigurationHandler:^(UITextField *textField) {
             textField.placeholder = AMLocalizedString(@"contactEmail", @"Clue text to help the user know what should write there. In this case the contact email you want to add to your contacts list");
-            [textField addTarget:self action:@selector(alertControllerShouldEnableDefaultButtonForEmailTextField:) forControlEvents:UIControlEventEditingChanged];
-            textField.delegate = self;
+            [textField addTarget:self action:@selector(addContactAlertTextFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
+            textField.shouldReturnCompletion = ^BOOL(UITextField *textField) {
+                return (!textField.text.mnz_isEmpty && textField.text.mnz_isValidEmail);
+            };
         }];
         
         [addContactFromEmailAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
@@ -872,8 +873,11 @@
     
     [insertAnEmailToShareWithAlertController addTextFieldWithConfigurationHandler:^(UITextField *textField) {
         textField.placeholder = AMLocalizedString(@"contactEmail", @"Clue text to help the user know what should write there. In this case the contact email you want to add to your contacts list");
-        [textField addTarget:self action:@selector(alertControllerShouldEnableDefaultButtonForEmailTextField:) forControlEvents:UIControlEventEditingChanged];
-        [self alertControllerShouldEnableDefaultButtonForEmailTextField:textField];
+        [textField addTarget:self action:@selector(addContactAlertTextFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
+        [self addContactAlertTextFieldDidChange:textField];
+        textField.shouldReturnCompletion = ^BOOL(UITextField *textField) {
+            return (!textField.text.mnz_isEmpty && textField.text.mnz_isValidEmail);
+        };
     }];
     
     [insertAnEmailToShareWithAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
@@ -1481,13 +1485,6 @@
     }
     
     [self.tableView reloadData];
-}
-
-#pragma mark - UITextFieldDelegate
-
-- (BOOL)textFieldShouldReturn:(UITextField *)textField {
-    NSString *email = textField.text;
-    return (email.length > 0) ? [email mnz_isValidEmail] : NO;
 }
 
 #pragma mark - MEGAGlobalDelegate
