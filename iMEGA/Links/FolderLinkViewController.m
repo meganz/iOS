@@ -13,7 +13,7 @@
 #import "NodeTableViewCell.h"
 #import "NSString+MNZCategory.h"
 #import "UIImageView+MNZCategory.h"
-#import "UnavailableLinkView.h"
+#import "UITextField+MNZCategory.h"
 
 #import "BrowserViewController.h"
 #import "CustomActionViewController.h"
@@ -22,6 +22,7 @@
 #import "MEGANavigationController.h"
 #import "MEGAPhotoBrowserViewController.h"
 #import "MyAccountHallViewController.h"
+#import "UnavailableLinkView.h"
 
 @interface FolderLinkViewController () <UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, UISearchResultsUpdating, UISearchDisplayDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAGlobalDelegate, MEGARequestDelegate, CustomActionViewControllerDelegate> {
     
@@ -107,7 +108,6 @@
     self.closeBarButtonItem.title = AMLocalizedString(@"close", @"A button label.");
 
     if (self.isFolderRootNode) {
-        [MEGASdkManager sharedMEGASdkFolder];
         [[MEGASdkManager sharedMEGASdkFolder] loginToFolderLink:self.folderLinkString delegate:self];
 
         self.navigationItem.leftBarButtonItem = self.closeBarButtonItem;
@@ -268,6 +268,9 @@
     [decryptionAlertController addTextFieldWithConfigurationHandler:^(UITextField *textField) {
         textField.placeholder = AMLocalizedString(@"decryptionKey", nil);
         [textField addTarget:self action:@selector(decryptionTextFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
+        textField.shouldReturnCompletion = ^BOOL(UITextField *textField) {
+            return !textField.text.mnz_isEmpty;
+        };
     }];
     
     [decryptionAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
@@ -339,12 +342,11 @@
     }
 }
 
-- (void)decryptionTextFieldDidChange:(UITextField *)sender {
-    if (self.presentedViewController) {
-        UIAlertController *decryptionAlertController = (UIAlertController *)self.presentedViewController;
-        UITextField *decryptionTextField = decryptionAlertController.textFields.firstObject;
+- (void)decryptionTextFieldDidChange:(UITextField *)textField {
+    UIAlertController *decryptionAlertController = (UIAlertController *)self.presentedViewController;
+    if (decryptionAlertController) {
         UIAlertAction *okAction = decryptionAlertController.actions.lastObject;
-        okAction.enabled = decryptionTextField.text.length > 0;
+        okAction.enabled = !textField.text.mnz_isEmpty;
     }
 }
 
@@ -501,11 +503,11 @@
             [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:AMLocalizedString(@"downloadStarted", nil)];
             
             if (self.selectedNodesArray.count != 0) {
-                for (MEGANode *node in _selectedNodesArray) {
+                for (MEGANode *node in self.selectedNodesArray) {
                     [Helper downloadNode:node folderPath:[Helper relativePathForOffline] isFolderLink:YES shouldOverwrite:NO];
                 }
             } else {
-                [Helper downloadNode:_parentNode folderPath:[Helper relativePathForOffline] isFolderLink:YES shouldOverwrite:NO];
+                [Helper downloadNode:self.parentNode folderPath:[Helper relativePathForOffline] isFolderLink:YES shouldOverwrite:NO];
             }
         }];
     } else {
@@ -900,6 +902,10 @@
             }
             
             isFetchNodesDone = YES;
+            
+            [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithUnsignedLongLong:request.nodeHandle] forKey:@"kLastPublicHandleAccessed"];
+            [[NSUserDefaults standardUserDefaults] setDouble:[NSDate date].timeIntervalSince1970 forKey:@"kLastPublicTimestampAccessed"];
+            
             [self reloadUI];
             
             NSArray *componentsArray = [self.folderLinkString componentsSeparatedByString:@"!"];
@@ -965,6 +971,10 @@
             [self presentViewController:activityVC animated:YES completion:nil];
             break;
         }
+            
+        case MegaNodeActionTypeSaveToPhotos:
+            [node mnz_saveToPhotosWithApi:[MEGASdkManager sharedMEGASdkFolder]];
+            break;
             
         default:
             break;

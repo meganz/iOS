@@ -26,6 +26,7 @@
 #import "MEGAShareRequestDelegate.h"
 #import "MEGAStore.h"
 #import "NSMutableArray+MNZCategory.h"
+#import "UITextField+MNZCategory.h"
 
 #import "BrowserViewController.h"
 #import "ContactsViewController.h"
@@ -265,7 +266,7 @@
         }
         
         if (node.type == MEGANodeTypeFile) {
-            MOOfflineNode *offlineNode = [[MEGAStore shareInstance] offlineNodeWithNode:node api:[MEGASdkManager sharedMEGASdk]];
+            MOOfflineNode *offlineNode = [[MEGAStore shareInstance] offlineNodeWithNode:node];
             
             if (offlineNode) {
                 isDownloaded = YES;
@@ -1110,14 +1111,13 @@
     [self presentViewController:alertController animated:YES completion:nil];
 }
 
-- (void)newFolderAlertTextFieldDidChange:(UITextField *)sender {
+- (void)newFolderAlertTextFieldDidChange:(UITextField *)textField {
     UIAlertController *newFolderAlertController = (UIAlertController *)self.presentedViewController;
     if (newFolderAlertController) {
-        UITextField *textField = newFolderAlertController.textFields.firstObject;
         UIAlertAction *rightButtonAction = newFolderAlertController.actions.lastObject;
-        BOOL containsInvalidChars = [sender.text rangeOfCharacterFromSet:[NSCharacterSet characterSetWithCharactersInString:@"|*/:<>?\"\\"]].length;
-        sender.textColor = containsInvalidChars ? UIColor.mnz_redMain : UIColor.darkTextColor;
-        rightButtonAction.enabled = (textField.text.length > 0 && !containsInvalidChars);
+        BOOL containsInvalidChars = textField.text.mnz_containsInvalidChars;
+        textField.textColor = containsInvalidChars ? UIColor.mnz_redMain : UIColor.darkTextColor;
+        rightButtonAction.enabled = (!textField.text.mnz_isEmpty && !containsInvalidChars);
     }
 }
 
@@ -1267,7 +1267,7 @@
                 }];
             };
             
-            [UIApplication.mnz_visibleViewController presentViewController:customModalAlertVC animated:YES completion:nil];
+            [UIApplication.mnz_presentingViewController presentViewController:customModalAlertVC animated:YES completion:nil];
             
             alreadyPresented = YES;
         } else {
@@ -1401,6 +1401,9 @@
         [newFolderAlertController addTextFieldWithConfigurationHandler:^(UITextField *textField) {
             textField.placeholder = AMLocalizedString(@"newFolderMessage", @"Hint text shown on the create folder alert.");
             [textField addTarget:self action:@selector(newFolderAlertTextFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
+            textField.shouldReturnCompletion = ^BOOL(UITextField *textField) {
+                return (!textField.text.mnz_isEmpty && !textField.text.mnz_containsInvalidChars);
+            };
         }];
         
         [newFolderAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
@@ -1467,6 +1470,22 @@
     }];
     [selectAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
     [moreMinimizedAlertController addAction:selectAlertAction];
+    
+    if (self.displayMode == DisplayModeRubbishBin) {
+        UIAlertAction *clearRubbishBinAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"emptyRubbishBin", @"Section title where you can 'Empty Rubbish Bin' of your MEGA account") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            if ([MEGAReachabilityManager isReachableHUDIfNot]) {
+                UIAlertController *clearRubbishBinAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"emptyRubbishBinAlertTitle", @"Alert title shown when you tap 'Empty Rubbish Bin'") message:nil preferredStyle:UIAlertControllerStyleAlert];
+                [clearRubbishBinAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:nil]];
+                [clearRubbishBinAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                    [[MEGASdkManager sharedMEGASdk] cleanRubbishBin];
+                }]];
+                
+                [UIApplication.mnz_visibleViewController presentViewController:clearRubbishBinAlertController animated:YES completion:nil];
+            }
+        }];
+        [clearRubbishBinAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
+        [moreMinimizedAlertController addAction:clearRubbishBinAlertAction];
+    }
     
     if ([[UIDevice currentDevice] iPadDevice]) {
         moreMinimizedAlertController.modalPresentationStyle = UIModalPresentationPopover;
@@ -1753,10 +1772,7 @@
             [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:localFilePath.mnz_relativeLocalPath parent:self.parentNode appData:appData isSourceTemporary:YES];
         } else {
             if ([node parentHandle] == [self.parentNode handle]) {
-                NSError *error = nil;
-                if (![[NSFileManager defaultManager] removeItemAtPath:localFilePath error:&error]) {
-                    MEGALogError(@"Remove item at path failed with error: %@", error);
-                }
+                [NSFileManager.defaultManager mnz_removeItemAtPath:localFilePath];
                 
                 NSString *alertMessage = AMLocalizedString(@"fileExistAlertController_Message", nil);
                 
@@ -2013,6 +2029,10 @@
             
         case MegaNodeActionTypeRestore:
             [node mnz_restore];
+            break;
+            
+        case MegaNodeActionTypeSaveToPhotos:
+            [node mnz_saveToPhotosWithApi:[MEGASdkManager sharedMEGASdk]];
             break;
             
         default:

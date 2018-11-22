@@ -35,6 +35,8 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
     MEGAMultiFactorAuthCheckRequestDelegate *delegate = [[MEGAMultiFactorAuthCheckRequestDelegate alloc] initWithCompletion:^(MEGARequest *request, MEGAError *error) {
         self.twoFactorAuthenticationEnabled = request.flag;
         
@@ -73,7 +75,7 @@
             [weakCustom dismissViewControllerAnimated:YES completion:nil];
         };
         
-        [UIApplication.mnz_visibleViewController presentViewController:customModalAlertVC animated:YES completion:nil];
+        [UIApplication.mnz_presentingViewController presentViewController:customModalAlertVC animated:YES completion:nil];
     }
 }
 
@@ -105,6 +107,7 @@
             
             EnablingTwoFactorAuthenticationViewController *enablingTwoFactorAuthenticationTVC = [[UIStoryboard storyboardWithName:@"TwoFactorAuthentication" bundle:nil] instantiateViewControllerWithIdentifier:@"EnablingTwoFactorAuthenticationViewControllerID"];
             enablingTwoFactorAuthenticationTVC.seed = request.text; //Returns the Base32 secret code needed to configure multi-factor authentication.
+            enablingTwoFactorAuthenticationTVC.hidesBottomBarWhenPushed = YES;
             
             [self.navigationController pushViewController:enablingTwoFactorAuthenticationTVC animated:YES];
             break;

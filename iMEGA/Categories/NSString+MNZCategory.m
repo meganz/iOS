@@ -81,7 +81,7 @@ static NSString* const B = @"[B]";
 #pragma mark - appData
 
 - (NSString *)mnz_appDataToSaveCameraUploadsCount:(NSUInteger)operationCount {
-    return [self stringByAppendingString:[NSString stringWithFormat:@">CU=%ld", operationCount]];
+    return [self stringByAppendingString:[NSString stringWithFormat:@">CU=%tu", operationCount]];
 }
 
 - (NSString *)mnz_appDataToSaveInPhotosApp {
@@ -94,6 +94,10 @@ static NSString* const B = @"[B]";
 
 - (NSString *)mnz_appDataToSaveCoordinates:(NSString *)coordinates {
     return (coordinates ? [self stringByAppendingString:[NSString stringWithFormat:@">setCoordinates=%@", coordinates]] : self);
+}
+
+- (NSString *)mnz_appDataToLocalIdentifier:(NSString *)localIdentifier {
+    return (localIdentifier ? [self stringByAppendingString:[NSString stringWithFormat:@">localIdentifier=%@", localIdentifier]] : self);
 }
 
 #pragma mark - Utils
@@ -300,6 +304,10 @@ static NSString* const B = @"[B]";
     return ![[self stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] length];
 }
 
+- (BOOL)mnz_containsInvalidChars {
+    return [self rangeOfCharacterFromSet:[NSCharacterSet characterSetWithCharactersInString:@"|*/:<>?\"\\"]].length;
+}
+
 - (NSString *)mnz_removeWebclientFormatters {
     NSString *string;
     string = [self stringByReplacingOccurrencesOfString:@"[A]" withString:@""];
@@ -346,8 +354,8 @@ static NSString* const B = @"[B]";
                 return [NSString stringWithFormat:AMLocalizedString(@"xHours1Minute", nil), (int)hours];
             } else {
                 NSString *durationString = AMLocalizedString(@"xHoursxMinutes", nil);
-                durationString = [durationString stringByReplacingOccurrencesOfString:@"%1$d" withString:[NSString stringWithFormat:@"%lu", hours]];
-                durationString = [durationString stringByReplacingOccurrencesOfString:@"%2$d" withString:[NSString stringWithFormat:@"%lu", minutes]];
+                durationString = [durationString stringByReplacingOccurrencesOfString:@"%1$d" withString:[NSString stringWithFormat:@"%td", hours]];
+                durationString = [durationString stringByReplacingOccurrencesOfString:@"%2$d" withString:[NSString stringWithFormat:@"%td", minutes]];
                 return durationString;
             }
         }

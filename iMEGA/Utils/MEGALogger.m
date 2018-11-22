@@ -1,6 +1,8 @@
 
 #import "MEGALogger.h"
+
 #import "MEGASdkManager.h"
+#import "NSFileManager+MNZCategory.h"
 
 @implementation MEGALogger
 
@@ -50,11 +52,9 @@ static MEGALogger *_megaLogger = nil;
     // Also remove logs in the shared sandbox:
     NSFileManager *fileManager = [NSFileManager defaultManager];
     NSString *logsPath = [[[fileManager containerURLForSecurityApplicationGroupIdentifier:@"group.mega.ios"] URLByAppendingPathComponent:@"logs"] path];
-    if ([fileManager fileExistsAtPath:logsPath]) {
-        [self stopLoggingToFile:[logsPath stringByAppendingPathComponent:@"MEGAiOS.docExt.log"]];
-        [self stopLoggingToFile:[logsPath stringByAppendingPathComponent:@"MEGAiOS.fileExt.log"]];
-        [self stopLoggingToFile:[logsPath stringByAppendingPathComponent:@"MEGAiOS.shareExt.log"]];
-    }
+    [self stopLoggingToFile:[logsPath stringByAppendingPathComponent:@"MEGAiOS.docExt.log"]];
+    [self stopLoggingToFile:[logsPath stringByAppendingPathComponent:@"MEGAiOS.fileExt.log"]];
+    [self stopLoggingToFile:[logsPath stringByAppendingPathComponent:@"MEGAiOS.shareExt.log"]];
     
 #ifndef DEBUG
     [MEGASdk setLogLevel:MEGALogLevelFatal];
@@ -71,20 +71,8 @@ static MEGALogger *_megaLogger = nil;
 
 - (void)stopLoggingToFile:(NSString *)logFilePath {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        if ([[NSFileManager defaultManager] fileExistsAtPath:logFilePath]) {
-            [[NSFileManager defaultManager] removeItemAtPath:logFilePath error:nil];
-        }
-    });
-}
-
-- (void)enableSDKlogs {
-    [MEGAChatSdk setLogToConsole:NO];
-    [MEGASdk setLogToConsole:YES];
-}
-
-- (void)enableChatlogs {
-    [MEGASdk setLogToConsole:NO];
-    [MEGAChatSdk setLogToConsole:YES];
+        [NSFileManager.defaultManager mnz_removeItemAtPath:logFilePath];
+    }
 }
 
 @end

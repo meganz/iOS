@@ -16,9 +16,11 @@
 #import "MEGASdkManager.h"
 #import "MEGAShareRequestDelegate.h"
 #import "MEGAUser+MNZCategory.h"
+#import "NSFileManager+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 #import "UIAlertAction+MNZCategory.h"
 #import "UIImageView+MNZCategory.h"
+#import "UITextField+MNZCategory.h"
 
 #import "ContactDetailsViewController.h"
 #import "ContactLinkQRViewController.h"
@@ -26,7 +28,7 @@
 #import "ShareFolderActivity.h"
 #import "ItemListViewController.h"
 
-@interface ContactsViewController () <CNContactPickerDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAGlobalDelegate, ItemListViewControllerProtocol, UISearchControllerDelegate, UIGestureRecognizerDelegate>
+@interface ContactsViewController () <CNContactPickerDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAGlobalDelegate, ItemListViewControllerProtocol, UISearchControllerDelegate, UIGestureRecognizerDelegate, MEGAChatDelegate>
 
 @property (nonatomic) id<UIViewControllerPreviewing> previewingContext;
 
@@ -111,6 +113,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
 
     [[MEGASdkManager sharedMEGASdk] addMEGAGlobalDelegate:self];
+    [[MEGASdkManager sharedMEGAChatSdk] addChatDelegate:self];
     [[MEGAReachabilityManager sharedManager] retryPendingConnections];
     
     [self reloadUI];
@@ -124,6 +127,7 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
 
     [[MEGASdkManager sharedMEGASdk] removeMEGAGlobalDelegate:self];
+    [[MEGASdkManager sharedMEGAChatSdk] removeChatDelegate:self];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -458,12 +462,7 @@
     if ([user hasChangedType:MEGAUserChangeTypeAvatar]) {
         NSString *userBase64Handle = [MEGASdk base64HandleForUserHandle:user.handle];
         NSString *avatarFilePath = [[Helper pathForSharedSandboxCacheDirectory:@"thumbnailsV3"] stringByAppendingPathComponent:userBase64Handle];
-        BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:avatarFilePath];
-        if (fileExists) {
-            NSError *error = nil;
-            [[NSFileManager defaultManager] removeItemAtPath:avatarFilePath error:&error];
-            MEGALogError(@"Remove item at path failed with error: %@", error);
-        }
+        [NSFileManager.defaultManager mnz_removeItemAtPath:avatarFilePath];
         userHasChanged = YES;
     } else if ([user hasChangedType:MEGAUserChangeTypeFirstname] || [user hasChangedType:MEGAUserChangeTypeLastname] || [user hasChangedType:MEGAUserChangeTypeEmail]) {
         userHasChanged = YES;
@@ -523,13 +522,11 @@
     }
 }
 
-- (void)alertControllerShouldEnableDefaultButtonForEmailTextField:(UITextField *)sender {
+- (void)addContactAlertTextFieldDidChange:(UITextField *)textField {
     UIAlertController *addContactFromEmailAlertController = (UIAlertController *)self.presentedViewController;
     if (addContactFromEmailAlertController) {
-        UITextField *textField = addContactFromEmailAlertController.textFields.firstObject;
         UIAlertAction *rightButtonAction = addContactFromEmailAlertController.actions.lastObject;
-        NSString *email = textField.text;
-        rightButtonAction.enabled = (email.length > 0) ? [email mnz_isValidEmail] : NO;
+        rightButtonAction.enabled = (!textField.text.mnz_isEmpty && textField.text.mnz_isValidEmail);
     }
 }
 
@@ -610,7 +607,7 @@
 
 - (void)startGroup {
     if (self.searchController.isActive) {
-        [self.searchController dismissViewControllerAnimated:YES completion:nil];
+        self.searchController.active = NO;
     }
     ContactsViewController *contactsVC = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactsViewControllerID"];
     contactsVC.contactsMode = ContactsModeChatCreateGroup;
@@ -729,6 +726,9 @@
 }
 
 - (IBAction)addContact:(UIView *)sender {
+    if (self.searchController.isActive) {
+        self.searchController.active = NO;
+    }
     UIAlertController *addContactAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"inviteContact", @"Text shown when the user tries to make a call and the receiver is not a contact") message:nil preferredStyle:UIAlertControllerStyleActionSheet];
     [addContactAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
     
@@ -737,7 +737,10 @@
         
         [addContactFromEmailAlertController addTextFieldWithConfigurationHandler:^(UITextField *textField) {
             textField.placeholder = AMLocalizedString(@"contactEmail", @"Clue text to help the user know what should write there. In this case the contact email you want to add to your contacts list");
-            [textField addTarget:self action:@selector(alertControllerShouldEnableDefaultButtonForEmailTextField:) forControlEvents:UIControlEventEditingChanged];
+            [textField addTarget:self action:@selector(addContactAlertTextFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
+            textField.shouldReturnCompletion = ^BOOL(UITextField *textField) {
+                return (!textField.text.mnz_isEmpty && textField.text.mnz_isValidEmail);
+            };
         }];
         
         [addContactFromEmailAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
@@ -869,8 +872,11 @@
     
     [insertAnEmailToShareWithAlertController addTextFieldWithConfigurationHandler:^(UITextField *textField) {
         textField.placeholder = AMLocalizedString(@"contactEmail", @"Clue text to help the user know what should write there. In this case the contact email you want to add to your contacts list");
-        [textField addTarget:self action:@selector(alertControllerShouldEnableDefaultButtonForEmailTextField:) forControlEvents:UIControlEventEditingChanged];
-        [self alertControllerShouldEnableDefaultButtonForEmailTextField:textField];
+        [textField addTarget:self action:@selector(addContactAlertTextFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
+        [self addContactAlertTextFieldDidChange:textField];
+        textField.shouldReturnCompletion = ^BOOL(UITextField *textField) {
+            return (!textField.text.mnz_isEmpty && textField.text.mnz_isValidEmail);
+        };
     }];
     
     [insertAnEmailToShareWithAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
@@ -1168,17 +1174,10 @@
                     [SVProgressHUD showErrorWithStatus:@"Invalid user"];
                     return;
                 }
-                if (self.searchController.isActive) {
-                    [self.searchController dismissViewControllerAnimated:YES completion:^{
-                        [self dismissViewControllerAnimated:YES completion:^{
-                            self.userSelected(@[user], nil);
-                        }];
-                    }];
-                } else {
-                    [self dismissViewControllerAnimated:YES completion:^{
-                        self.userSelected(@[user], nil);
-                    }];
-                }
+                self.searchController.active = NO;
+                [self dismissViewControllerAnimated:YES completion:^{
+                    self.userSelected(@[user], nil);
+                }];
             }
             break;
         }
@@ -1362,7 +1361,12 @@
     NSUInteger usersCount = contactProperties.count;
     MEGAInviteContactRequestDelegate *inviteContactRequestDelegate = [[MEGAInviteContactRequestDelegate alloc] initWithNumberOfRequests:usersCount];
     for (CNContactProperty *contactProperty in contactProperties) {
-        [[MEGASdkManager sharedMEGASdk] inviteContactWithEmail:contactProperty.value message:@"" action:MEGAInviteActionAdd delegate:inviteContactRequestDelegate];
+        NSString *email = contactProperty.value;
+        if (email.mnz_isValidEmail) {
+            [[MEGASdkManager sharedMEGASdk] inviteContactWithEmail:contactProperty.value message:@"" action:MEGAInviteActionAdd delegate:inviteContactRequestDelegate];
+        } else {
+            [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"%@ %@", AMLocalizedString(@"theEmailAddressFormatIsInvalid", @"Add contacts and share dialog error message when user try to add wrong email address"), email]];
+        }
     }
 }
 
@@ -1589,6 +1593,23 @@
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
     return YES;
+}
+
+#pragma mark - MEGAChatDelegate
+
+- (void)onChatOnlineStatusUpdate:(MEGAChatSdk *)api userHandle:(uint64_t)userHandle status:(MEGAChatStatus)onlineStatus inProgress:(BOOL)inProgress {
+    if (inProgress) {
+        return;
+    }
+
+    if (userHandle != api.myUserHandle) {
+        NSString *base64Handle = [MEGASdk base64HandleForUserHandle:userHandle];
+        NSIndexPath *indexPath = [self.indexPathsMutableDictionary objectForKey:base64Handle];
+        if ([self.tableView.indexPathsForVisibleRows containsObject:indexPath]) {
+            ContactTableViewCell *cell = (ContactTableViewCell *)[self.tableView cellForRowAtIndexPath:indexPath];
+            cell.onlineStatusView.backgroundColor = [UIColor mnz_colorForStatusChange:onlineStatus];
+        }
+    }
 }
 
 @end

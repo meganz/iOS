@@ -8,6 +8,7 @@
 #import "MEGASdkManager.h"
 #import "MEGASdk+MNZCategory.h"
 #import "MEGAStore.h"
+#import "NSFileManager+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 
 @interface FileManagementTableViewController () <MEGAGlobalDelegate, MEGARequestDelegate>
@@ -99,17 +100,6 @@
 
 #pragma mark - Private
 
-- (void)deleteFolderContentsInPath:(NSString *)folderPath {
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-    NSArray *fileArray = [fileManager contentsOfDirectoryAtPath:folderPath error:nil];
-    NSError *error = nil;
-    for (NSString *filename in fileArray) {
-        if (![fileManager removeItemAtPath:[folderPath stringByAppendingPathComponent:filename] error:&error] ) {
-            MEGALogError(@"Remove item at path failed with error: %@", error);
-        }
-    }
-}
-
 - (NSString *)formatStringFromByteCountFormatter:(NSString *)stringFromByteCount {
     NSArray *componentsSeparatedByStringArray = [stringFromByteCount componentsSeparatedByString:@" "];
     NSString *countString = [NSString mnz_stringWithoutUnitOfComponents:componentsSeparatedByStringArray];
@@ -192,7 +182,7 @@
             
         case 3: { //File Versioning - File Versioning
             NSString *fileVersioningDescription = AMLocalizedString(@"Enable or disable file versioning for your entire account.[Br]You may still receive file versions from shared folders if your contacts have this enabled.", @"Subtitle of the option to enable or disable file versioning on Settings section");
-            titleFooter = [fileVersioningDescription stringByReplacingOccurrencesOfString:@"[Br]" withString:@" "];
+            titleFooter = [fileVersioningDescription stringByReplacingOccurrencesOfString:@"\n" withString:@" "];
             break;
         }
             
@@ -223,7 +213,7 @@
             [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
             [SVProgressHUD show];
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
-                [self deleteFolderContentsInPath:offlinePathString];
+                [NSFileManager.defaultManager mnz_removeFolderContentsAtPath:offlinePathString];
                 dispatch_async(dispatch_get_main_queue(), ^(void){
                     [SVProgressHUD dismiss];
                     [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
@@ -241,9 +231,9 @@
             [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
             [SVProgressHUD show];
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
-                [self deleteFolderContentsInPath:thumbnailsPathString];
-                [self deleteFolderContentsInPath:previewsPathString];
-                [self deleteFolderContentsInPath:NSTemporaryDirectory()];
+                [NSFileManager.defaultManager mnz_removeFolderContentsAtPath:thumbnailsPathString];
+                [NSFileManager.defaultManager mnz_removeFolderContentsAtPath:previewsPathString];
+                [NSFileManager.defaultManager mnz_removeFolderContentsAtPath:NSTemporaryDirectory()];
                 dispatch_async(dispatch_get_main_queue(), ^(void){
                     [SVProgressHUD dismiss];
                     [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
@@ -260,7 +250,7 @@
             
         case 5: { //File Versioning - Delete all file versions
             NSString *alertMessage = AMLocalizedString(@"You are about to delete the version histories of all files. Any file version shared to you from a contact will need to be deleted by them.[Br][Br]Please note that the current files will not be deleted.", @"Text of the dialog to delete all the file versions of the account");
-            alertMessage = [alertMessage stringByReplacingOccurrencesOfString:@"[Br][Br]" withString:@"\n"];
+            alertMessage = [alertMessage stringByReplacingOccurrencesOfString:@"\n\n" withString:@"\n"];
             
             UIAlertController *deleteAllFileVersionsAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"Delete all older versions of my files", @"The title of the section about deleting file versions in the settings.") message:alertMessage preferredStyle:UIAlertControllerStyleAlert];
             [deleteAllFileVersionsAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"no", nil) style:UIAlertActionStyleCancel handler:nil]];
