@@ -187,7 +187,12 @@
         NSURL *serverURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", self.uploadInfo.uploadURLString, uploadSuffix]];
         NSURL *chunkURL = self.uploadInfo.encryptedChunkURLsKeyedByUploadSuffix[uploadSuffix];
         if ([NSFileManager.defaultManager fileExistsAtPath:chunkURL.path]) {
-            NSURLSessionUploadTask *uploadTask = [[TransferSessionManager shared] photoUploadTaskWithURL:serverURL fromFile:chunkURL completion:nil];
+            NSURLSessionUploadTask *uploadTask;
+            if (self.uploadInfo.asset.mediaType == PHAssetMediaTypeVideo) {
+                uploadTask = [TransferSessionManager.shared videoUploadTaskWithURL:serverURL fromFile:chunkURL completion:nil];
+            } else {
+                uploadTask = [[TransferSessionManager shared] photoUploadTaskWithURL:serverURL fromFile:chunkURL completion:nil];
+            }
             uploadTask.taskDescription = self.uploadInfo.asset.localIdentifier;
             [uploadTask resume];
             MEGALogDebug(@"[Camera Upload] %@ starts uploading chunk %@", self, chunkURL.lastPathComponent);
