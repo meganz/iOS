@@ -26,6 +26,11 @@
 - (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
     [super onRequestFinish:api request:request error:error];
     
+    if (error.type == MEGAErrorTypeApiOk && self.savePublicHandle && request.publicNode) {
+        [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithUnsignedLongLong:request.publicNode.handle] forKey:@"kLastPublicHandleAccessed"];
+        [[NSUserDefaults standardUserDefaults] setDouble:[NSDate date].timeIntervalSince1970 forKey:@"kLastPublicTimestampAccessed"];
+    }
+    
     if (self.completion) {
         self.completion(request, error);
     }

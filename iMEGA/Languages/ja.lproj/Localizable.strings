@@ -37,7 +37,7 @@
 /* Alert message shown when the user tries to download an empty folder  */
 "emptyFolderMessage"="空のフォルダをダウンロードすることができません。";
 /* Message shown when the user clicks on a confirm account link that has already been used  */
-"accountAlreadyConfirmed"="あなたのアカウントはすでに作成されています。ログインしてください。";
+"accountAlreadyConfirmed"="あなたのアカウントは有効になっています。ログインしてください。";
 /* Message shown when the user clicks on an link that is not valid */
 "linkNotValid"="リンク無効";
 /* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
@@ -102,7 +102,7 @@
 "emailInvalidFormat"="正しいメールを入力して下さい";
 /* Add contacts and share dialog error message when user try to add wrong email address */
 "theEmailAddressFormatIsInvalid"="メールアドレスのフォーマットが正しくありません。";
-/* Message shown when the user enters a wrong password  */
+/* Message shown when the user enters a wrong password */
 "passwordInvalidFormat"="有効パスワードを入力して下さい";
 /* Hint text to suggest that the user has to write his email */
 "emailPlaceholder"="メール";
@@ -130,10 +130,8 @@
 "passwordStrong"="このパスワードは大抵の攻撃に対抗できるでしょう。絶対に忘れないようにして下さい。";
 /*  */
 "agreeWithTheMEGATermsOfService"="私は、MEGAの <a href='terms'>サービス規約</a>に同意します。";
-/* Error text shown when you have not entered a correct name  */
+/* Error text shown when you have not entered a correct name */
 "nameInvalidFormat"="正しい名前を入力して下さい";
-/*  */
-"invalidFirstNameAndLastName"="名前が無効です。";
 /* Error text shown when you have not written the same password */
 "passwordsDoNotMatch"="パスワードが合いません。";
 /* Error text shown when you don't have selected the checkbox to agree with the Terms of Service */
@@ -144,8 +142,8 @@
 "awaitingEmailConfirmation"="少々お待ちください。メール確認が届きます。";
 /* Text shown on the confirm account view to remind the user what to do */
 "confirmText"="アカウント確認のため、パスワードを入力して下さい。";
-/* Button title that triggers the confirm account action */
-"confirmAccountButton"="アカウントを確認";
+/* Label for any ‘Confirm account’ button, link, text, title, etc. - (String as short as possible). */
+"Confirm account"="アカウントを確認";
 /* Error text shown when you introduce a wrong password on the confirmation proccess */
 "passwordWrong"="パスワードが違います。";
 /* Warning title shown when you try to confirm an account but you are logged in with another one */
@@ -684,6 +682,8 @@
 "sdkVersion"="MEGA SDK版";
 /* Title of the label where the MEGAchat SDK version is shown */
 "megachatSdkVersion"="MEGAchat SDKバージョン";
+/* Link to the public code of the app */
+"View source code"="ソースコードを見る";
 /* Title for the section "Acknowledgements" of the app */
 "acknowledgements"="謝意";
 /* Title for the MEGA Recovery Key */
@@ -720,6 +720,8 @@
 "dontUseHttp"="HTTPを使用しない";
 /* Footer text that explains when disabling the HTTP protocol for transfers may be useful */
 "transfersSectionFooter"="転送が開始されない場合にのみ、このオプションを有効にします。通常の状況では、転送はすべてすでに暗号化されているため、HTTPで問題ありません。";
+/* Title of the dialog displayed the first time that a user want to download a image. Asks if wants to export image files to the photo album after download in future and informs that user can change this option afterwards - (String as short as possible). */
+"Download options"="ダウンロードのオプション";
 /* Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped */
 "currentlyUsing"="利用している領域 %s";
 /* In 'My account', when user want to delete/remove/cancel account will click button named 'Cancel your account' */
@@ -843,6 +845,8 @@
 "help"="ヘルプ";
 /* Title of the section to access MEGA's help centre */
 "helpCentreLabel"="ヘルプセンター";
+/* Section title that links you to the webpage that let you join and test the beta versions */
+"Join Beta"="ベータに参加";
 /* Title to rate the app */
 "rateUsLabel"="評価してください";
 /* Title of the Transfers section */
@@ -978,9 +982,9 @@
 /* Text shown under the button 'Skip' to explain that you can upgrade your account later in the section 'My Account'. */
 "youCanUpgradeLaterInMyAccount"="マイアカウントで後でアップグレードできます";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
-"cloudDriveIsAlmostFull"="[S]クラウドドライブはほぼいっぱいです。[/S]PROアカウントに[A]今すぐアップグレード[/A]し、[S]最大4 TB（4096 GB）[/S]のクラウドストレージスペースを取得してください。";
+"cloudDriveIsAlmostFull"="[S]クラウドドライブはほぼいっぱいです。[/S]PROアカウントに[A]今すぐアップグレード[/A]し、[S]最大8TB（8192GB）[/S]のクラウドストレージスペースを取得してください。";
 /* A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text. */
-"cloudDriveIsFull"="[S]あなたのアカウントはいっぱいです。[/S]PROアカウントに[A]今すぐアップグレード[/A]し、[S]最大4 TB（4096 GB）[/S]のクラウドストレージスペースを取得してください。";
+"cloudDriveIsFull"="[S]あなたのアカウントはいっぱいです。[/S]PROアカウントに[A]今すぐアップグレード[/A]し、[S]最大8TB（8192GB）[/S]のクラウドストレージスペースを取得してください。";
 /* Storage related with the MEGA PRO account level you can subscribe */
 "productSpace"="ストレージ";
 /* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
@@ -1561,7 +1565,7 @@
 /* Button title to start the setup of a feature. For example 'Begin Setup' for Two-Factor Authentication */
 "beginSetup"="セットアップを開始";
 /* A message on the Verify Login page telling the user to enter their 2FA code. */
-"pleaseEnterTheSixDigitCode"="オーセンティケータアプリで生成された6桁のコードを入力してください。";
+"pleaseEnterTheSixDigitCode"="オーセンティケータアプリで生成された6桁のコードをご入力ください。";
 /* Title of the dialog displayed to start setup the Two-Factor Authentication */
 "whyYouDoNeedTwoFactorAuthentication"="なぜ二要素認証が必要ですか？　";
 /* Description for the ‘Two-Factor Authentication’ in the security settings section. */
@@ -1570,10 +1574,12 @@
 "whyYouDoNeedTwoFactorAuthenticationDescription"="二要素認証は、アカウント用のセキュリティの第2層です。つまり、たとえ誰かがあなたのパスワードを知っていても、あなただけがアクセスできる6桁のコードにアクセスできない限り、それにアクセスすることはできません。";
 /* Alert text shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device */
 "youNeedATwoFactorAuthenticationApp"="この端末では二要素認証アプリが必要です";
+/* Alert text shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device and tap on the question mark */
+"You need an authenticator app to enable 2FA on MEGA. You can download and install the Google Authenticator, Duo Mobile, Authy or Microsoft Authenticator app for your phone or tablet."="MEGAで2FAを有効にするには、オーセンティケーターアプリが必要です。スマートフォンやタブレット用に、Googleオーセンティケータ、Duo Mobile、Authy、Microsoftオーセンティケータアプリをダウンロードしてインストールできます。";
 /* A title on the mobile web client page showing that 2FA has been enabled successfully. */
 "twoFactorAuthenticationEnabled"="二要素認証が有効になりました";
 /* A message on the dialog shown after 2FA was successfully enabled. */
-"twoFactorAuthenticationEnabledDescription"="次回アカウントにログインすると、認証アプリで提供される6桁のコードを入力するよう求められます。";
+"twoFactorAuthenticationEnabledDescription"="次回アカウントにログインすると、オーセンティケータアプリで提供される6桁のコードを入力するよう求められます。";
 /* A warning message on the Backup Recovery Key dialog to tell the user to backup their Recovery Key to their local computer. */
 "pleaseSaveYourRecoveryKey"="回復キーは安全な場所に保存しておいてください";
 /* An informational message on the Backup Recovery Key dialog. */
@@ -1581,20 +1587,20 @@
 /* A message on a dialog to say that 2FA has been successfully disabled. */
 "twoFactorAuthenticationDisabled"="二要素認証が無効になりました";
 /* A message on the setup two-factor authentication page on the mobile web client. */
-"scanOrCopyTheSeed"="シードをオーセンティケータアプリにスキャンまたはコピーします。携帯電話を失くした場合に備えて、このシードを安全な場所にバックアップしてください。";
+"scanOrCopyTheSeed"="シードをオーセンティケータアプリにスキャンまたはコピーします。端末を失くした場合に備えて、このシードを安全な場所に確実にバックアップしてください。";
 /* A button to help them restore their account if they have lost their 2FA device. */
 "lostYourAuthenticatorDevice"="オーセンティケータ端末を紛失しましたか？　";
-/* Settings section title where you can enable the option to 'Save Images in Library' */
-"Save Images in Library"="ライブラリに画像を保存";
-/* Settings section title where you can enable the option to 'Save Videos in Library' */
-"Save Videos in Library"="ライブラリに動画を保存";
+/* Settings section title where you can enable the option to 'Save Images in Photos' */
+"Save Images in Photos"="画像を写真に保存";
+/* Settings section title where you can enable the option to 'Save Videos in Photos' */
+"Save Videos in Photos"="動画を写真に保存";
 /* Footer text shown under the settings for download options 'Save Images/Videos in Library' */
 "Images and/or videos downloaded will be stored in the device’s media library instead of the Offline section."="ダウンロードした画像や動画は、オフラインセクションではなく、端末のメディアライブラリに保存されます。";
 /* Setting associated with the 'Camera' of the device */
 "Camera"="カメラ";
-/* Settings section title where you can enable the option to 'Save in Library' the images or videos taken from your camera in the MEGA app */
-"Save in Library"="ライブラリに保存";
-/* Footer text shown under the Camera setting to explain the option 'Save in Library' */
+/* Settings section title where you can enable the option to 'Save in Photos' the images or videos taken from your camera in the MEGA app */
+"Save in Photos"="写真に保存";
+/* Footer text shown under the Camera setting to explain the option 'Save in Photos' */
 "Save a copy of the images and videos taken from the MEGA app in your device’s media library."="MEGAアプリから取得した画像と動画のコピーをあなたの端末のメディアライブラリに保存します。";
 /* Title shown in a page of the on boarding screens explaining that the user keeps the encryption keys */
 "You hold the keys"="あなたがキーを持っています";
@@ -1619,7 +1625,7 @@
 /* Title label that explains that the user is going to be asked for the photos permission */
 "Allow Access to Photos"="写真へのアクセスを許可する";
 /* Detailed explanation of why the user should give permission to access to the photos */
-"To share photos and videos, allow MEGA to access your photos"="写真や動画を共有するには、MEGAがあなたの写真へアクセスするのを許可してください";
+"Please give the MEGA App permission to access Photos to share photos and videos."="写真や動画を共有するために、MEGAアプリに写真へのアクセスを許可してください。";
 /* Title label that explains that the user is going to be asked for the microphone and camera permission */
 "Enable Microphone and Camera"="マイクとカメラを有効にする";
 /* Detailed explanation of why the user should give permission to access to the camera and the microphone */
@@ -1629,6 +1635,130 @@
 /* Detailed explanation of why the user should give permission to deliver notifications */
 "We would like to send you notifications so you receive new messages on your device instantly."="あなたに通知を送信し、新しいメッセージを瞬時に端末で受信いただけるようにしたいと思います。";
 /* Button which triggers a request for a specific permission, that have been explained to the user beforehand */
-"Enable Access"="アクセスを有効にする";
+"Allow Access"="アクセスを許可";
+/* A section header which contains the file management settings. These settings allow users to remove duplicate files etc. */
+"File Management"="ファイル管理";
+/* Title of the option to enable or disable file versioning on Settings section */
+"File versioning"="ファイルのバージョン管理";
+/* Subtitle of the option to enable or disable file versioning on Settings section */
+"Enable or disable file versioning for your entire account.[Br]You may still receive file versions from shared folders if your contacts have this enabled."="アカウント全体に対するファイルのバージョン管理を有効または無効にします。\n連絡先がこれを有効にしている場合は、共有フォルダからファイルバージョンを受け取ることができます。";
+/* A confirmation message when the user chooses to disable file versioning. */
+"When file versioning is disabled, the current version will be replaced with the new version once a file is updated (and your changes to the file will no longer be recorded). Are you sure you want to disable file versioning?"="ファイルのバージョン管理が無効になっていると、ファイルが更新されると現在のバージョンが新しいバージョンに置き換えられます（また、当該ファイルへの変更は記録されなくなります）。ファイルのバージョン管理を無効にしてもよろしいですか？　";
+/* Settings preference title to show file versions info of the account */
+"File versions"="ファイルバージョン";
+/* A title message in the user’s account settings for showing the storage used for file versions. */
+"Total size taken up by file versions:"="ファイルバージョンによって占められる合計サイズ：";
+/* The title of the section about deleting file versions in the settings. */
+"Delete all older versions of my files"="古いバージョンのファイルをすべて削除する";
+/* Text of a button which deletes all historical versions of files in the users entire account. */
+"Delete old versions"="古いバージョンを削除する";
+/* A warning note about deleting all file versions in the settings section. */
+"All current files will remain. Only historic versions of your files will be deleted."="現在のファイルはすべて残ります。あなたのファイルの過去バージョンのみが削除されます。";
+/* Text of the dialog to delete all the file versions of the account */
+"You are about to delete the version histories of all files. Any file version shared to you from a contact will need to be deleted by them.[Br][Br]Please note that the current files will not be deleted."="すべてのファイルのバージョン履歴を削除しようとしています。連絡先があなたと共有しているファイルバージョンはいずれも、連絡先が削除する必要があります。\n\n現在のファイルは削除されませんのでご注意ください。";
+/* Title for the Rubbish-Bin Cleaning Scheduler feature */
+"Rubbish-Bin Cleaning Scheduler:"="ゴミ箱クリア管理:";
+/* A rubbish bin scheduler setting which allows removing old files from the rubbish bin automatically. E.g. Remove files older than 15 days. */
+"Remove files older than"="ファイル失効日は";
+/* Label for any ‘Days’ button, link, text, title, etc. - (String as short as possible). */
+"Days"="日";
+/* New server-side rubbish-bin cleaning scheduler description (for Free users) */
+"The Rubbish Bin is cleaned for you automatically. The minimum period is 7 days and your maximum period is 30 days."="ごみ箱は自動的にきれいになります。最小期間は7日間で、あなたの最大期間は30日間です。";
+/* New server-side rubbish-bin cleaning scheduler description (for PRO users) */
+"The Rubbish Bin can be cleaned for you automatically. The minimum period is 7 days."="ごみ箱は自動的にきれいにできます。最小期間は7日間です。";
+/* Description shown when you try to disable the feature Rubbish-Bin Cleaning Scheduler and you are a free user */
+"To disable the Rubbish-Bin Cleaning Scheduler or set a longer retention period, you need to subscribe to a PRO plan."="ごみ箱クリーニングスケジューラを無効にするか、より長い保存期間を設定するには、PROプランをご購読いただく必要がございます。";
 /* Confirmation dialog for the button that logs the user out of all sessions except the current one. */
 "Do you want to close all other sessions? This will log you out on all other active sessions except the current one."="他のセッションをすべて終了しますか？　これにより、現在のセッション以外のすべてのアクティブなセッションでログアウトされます。";
+/* A button label which allows the users save images/videos in the Photos app. */
+"Save to Photos"="写真に保存";
+/* Text shown when starting the process to save a photo or video to Photos app */
+"Saving to Photos…"="写真に保存中…";
+/* Text shown when a photo or video is saved to Photos app */
+"Saved to Photos"="写真に保存されました";
+/* Text shown when an error occurs when trying to save a photo or video to Photos app */
+"Could not save Item"="項目を保存できませんでした";
+/* Message to inform the local user that someone has joined the current group call */
+"%@ joined the call."="%@ joined the call.";
+/* Message to inform the local user that someone has left the current group call */
+"%@ left the call."="%@ left the call.";
+/* Message to inform the local user is having a bad quality network with someone in the current group call */
+"Poor conection."="Poor conection.";
+/* Message shown in a chat room when there is an active group call */
+"There is an active group call. Tap to join."="There is an active group call. Tap to join.";
+/* Message shown in a chat room for a group call in progress displaying the duration of the call */
+"Touch to return to call %@"="Touch to return to call %@";
+/* Menu item to change from grid view to list view */
+"List view"="リスト一覧";
+/* Menu item to change from list view to grid view */
+"Thumbnail view"="サムネールで見る";
+/* There are no notifications to display. */
+"No notifications"="通知はありません";
+/* The header of a notification related to payments */
+"Payment info"="支払いに関して";
+/* A title for a notification saying the user’s pricing plan will expire soon. */
+"PRO membership plan expiring soon"="PROメンバーシッププランが間もなく失効します";
+/* The header of a notification indicating that a file or folder has been taken down due to infringement or other reason. */
+"Takedown notice"="テイクダウン通知";
+/* The header of a notification indicating that a file or folder that was taken down has now been restored due to a successful counter-notice. */
+"Takedown reinstated"="削除が復活しました";
+/* Label shown inside an unseen notification */
+"New"="New";
+/* When a contact sent a contact/friend request */
+"Sent you a contact request"="知り合いリクエストを送りました。";
+/* A notification that the other user cancelled their contact request so it is no longer valid. E.g. user@email.com cancelled their contact request. */
+"Cancelled their contact request"="知り合いリクエストをキャンセルしました。";
+/* A reminder notification to remind the user to respond to the contact request. */
+"Reminder: You have a contact request"="お知らせ: 知り合いからのリクエストがあります。";
+/* A notification telling the user that the other user deleted them as a contact. E.g. user@email.com deleted you as a contact. */
+"Deleted you as a contact"="あなたは削除されました";
+/* A notification telling the user that they are now fully connected with the other user (the users are in each other’s address books). */
+"Contact relationship established"="知り合い関係設立";
+/* A notification telling the user that one of their contact’s accounts has been deleted or deactivated. */
+"Account has been deleted/deactivated"="アカウントは削除され、無効となりました。";
+/* A notification telling the user that another user blocked them as a contact (they will no longer be able to contact them). E.g. name@email.com blocked you as a contact. */
+"Blocked you as a contact"="あなたはブロックされました";
+/* Response text after clicking Ignore on an incoming contact request notification. */
+"You ignored a contact request"="知り合いのリクエストを無視しました。";
+/* Response text after clicking Accept on an incoming contact request notification. */
+"You accepted a contact request"="知り合いリクエストを受け入れました。";
+/* Response text after clicking Deny on an incoming contact request notification. */
+"You denied a contact request"="知り合いのリクエストを拒否しました。";
+/* When somebody accepted your contact request */
+"Accepted your contact request"="知り合いリクエストが受け入れられました。";
+/* When somebody denied your contact request */
+"Denied your contact request"="知り合いリクエストは拒否されました。";
+/* notification text */
+"A user has left the shared folder {0}"="あるユーザーが共有フォルダ{0}から去りました";
+/* This is shown in the Notification dialog when the email address of a contact is not found and access to the share is lost for some reason (e.g. share removal or contact removal). */
+"Access to folders was removed."="フォルダのアクセス接続が削除されました。";
+/* Content of a notification that informs how many files and folders have been added to a shared folder */
+"Added 1 file"="Added 1 file";
+/* Content of a notification that informs how many files and folders have been added to a shared folder */
+"Added %lld files"="Added %lld files";
+/* Content of a notification that informs how many files and folders have been added to a shared folder */
+"Added 1 folder"="Added 1 folder";
+/* Content of a notification that informs how many files and folders have been added to a shared folder */
+"Added %lld folders"="Added %lld folders";
+/* Content of a notification that informs how many files and folders have been added to a shared folder */
+"Added 1 file and 1 folder"="Added 1 file and 1 folder";
+/* Content of a notification that informs how many files and folders have been added to a shared folder */
+"Added %lld files and 1 folder"="Added %lld files and 1 folder";
+/* Content of a notification that informs how many files and folders have been added to a shared folder */
+"Added 1 file and %lld folders"="Added 1 file and %lld folders";
+/* Content of a notification that informs how many files and folders have been added to a shared folder */
+"Added [A] files and [B] folders"="Added [A] files and [B] folders";
+/* Notification popup. Notification for multiple removed items from a share. Please keep [X] as it will be replaced at runtime with the number of removed items. */
+"Removed [X] items from a share"="共有から削除された[X]項目";
+/* A notification telling the user that their Pro plan payment was successfully received. The %1 indicates the name of the Pro plan they paid for e.g. Lite, PRO III. */
+"Your payment for the %1 plan was received."="%1 プランのお支払い、受領いたしました。";
+/* A notification telling the user that their Pro plan payment was unsuccessful. The %1 indicates the name of the Pro plan they were trying to pay for e.g. Lite, PRO II. */
+"Your payment for the %1 plan was unsuccessful."="%1プランのお支払いは受領できませんでした。";
+/* The professional pricing plan which the user is currently on will expire in one day. */
+"Your PRO membership plan will expire in 1 day."="あなたのPROメンバーシッププランは1日後に失効します。";
+/* The professional pricing plan which the user is currently on will expire in 5 days. The %1 is a placeholder for the number of days and should not be removed. */
+"Your PRO membership plan will expire in %1 days."="あなたのPROメンバーシッププランは%1日後に失効します。";
+/* The text of a notification indicating that a file or folder has been taken down due to infringement or other reason. The %1 placeholder will be replaced with the text ‘file’ or ‘folder’. The %2 will be replaced with the name of the file or folder. */
+"Your publicly shared %1 (%2) has been taken down."="あなたの公開共有された%1（%2）は削除されました。";
+/* The text of a notification indicating that a file or folder that was taken down has now been restored due to a successful counter-notice. The %1 placeholder will be replaced with the text ‘file’ or ‘folder’. The %2 will be replaced with the name of the file or folder. */
+"Your taken down %1 (%2) has been reinstated."="あなたの削除された%1（%2）は復活しました。";

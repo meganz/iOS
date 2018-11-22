@@ -39,8 +39,6 @@ static NSMutableArray *nodesFromLinkMutableArray;
 
 static MEGAIndexer *indexer;
 
-static BOOL pointToStaging;
-
 @implementation Helper
 
 #pragma mark - Languages
@@ -512,7 +510,7 @@ static BOOL pointToStaging;
             [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
         }
         
-        [UIApplication.mnz_visibleViewController presentViewController:alertController animated:YES completion:nil];
+        [UIApplication.mnz_presentingViewController presentViewController:alertController animated:YES completion:nil];
         return NO;
     }
     return YES;
@@ -539,13 +537,13 @@ static BOOL pointToStaging;
     if (node.type == MEGANodeTypeFile) {
         if (![[NSFileManager defaultManager] fileExistsAtPath:[NSHomeDirectory() stringByAppendingPathComponent:relativeFilePath]] || overwrite) {
             if (overwrite) { //For node versions
-                [[NSFileManager defaultManager] removeItemAtPath:[NSHomeDirectory() stringByAppendingPathComponent:relativeFilePath] error:nil];
+                [NSFileManager.defaultManager mnz_removeItemAtPath:[NSHomeDirectory() stringByAppendingPathComponent:relativeFilePath]];
                 MOOfflineNode *offlineNode = [[MEGAStore shareInstance] fetchOfflineNodeWithPath:offlineNameString];
                 if (offlineNode) {
                     [[MEGAStore shareInstance] removeOfflineNode:offlineNode];
                 }
             }
-            MOOfflineNode *offlineNodeExist = [[MEGAStore shareInstance] offlineNodeWithNode:node api:api];
+            MOOfflineNode *offlineNodeExist = [[MEGAStore shareInstance] offlineNodeWithNode:node];
             
             NSString *temporaryPath = [[NSTemporaryDirectory() stringByAppendingPathComponent:[node base64Handle]] stringByAppendingPathComponent:node.name];
             NSString *temporaryFingerprint = [[MEGASdkManager sharedMEGASdk] fingerprintForFilePath:temporaryPath];
@@ -553,7 +551,7 @@ static BOOL pointToStaging;
             if (offlineNodeExist) {
                 NSString *itemPath = [[Helper pathForOffline] stringByAppendingPathComponent:offlineNodeExist.localPath];
                 [Helper copyNode:node from:itemPath to:relativeFilePath api:api];
-            } else if ([temporaryFingerprint isEqualToString:[api fingerprintForNode:node]]) {
+            } else if ([temporaryFingerprint isEqualToString:node.fingerprint]) {
                 if ((node.name.mnz_isImagePathExtension && [[NSUserDefaults standardUserDefaults] boolForKey:@"IsSavePhotoToGalleryEnabled"]) || (node.name.mnz_isVideoPathExtension && [[NSUserDefaults standardUserDefaults] boolForKey:@"IsSaveVideoToGalleryEnabled"])) {
                     [node mnz_copyToGalleryFromTemporaryPath:temporaryPath];
                 } else {
@@ -625,6 +623,7 @@ static BOOL pointToStaging;
         NSString *appData = [NSString new];
         
         appData = [appData mnz_appDataToSaveCoordinates:[filePath mnz_coordinatesOfPhotoOrVideo]];
+        appData = [appData mnz_appDataToLocalIdentifier:uploadTransfer.localIdentifier];
         
         if (![name isEqualToString:newName]) {
             NSString *newFilePath = [[NSFileManager defaultManager].uploadsDirectory stringByAppendingPathComponent:newName];
@@ -638,18 +637,21 @@ static BOOL pointToStaging;
         } else {
             [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:filePath.mnz_relativeLocalPath parent:parentNode appData:appData isSourceTemporary:YES];
         }
-        [[MEGAStore shareInstance] deleteUploadTransfer:uploadTransfer];
     } node:^(MEGANode *node) {
         if ([[[MEGASdkManager sharedMEGASdk] parentNodeForNode:node] handle] == parentNode.handle) {
             MEGALogDebug(@"The asset exists in MEGA in the parent folder");
         } else {
             [[MEGASdkManager sharedMEGASdk] copyNode:node newParent:parentNode];
         }
-        [[MEGAStore shareInstance] deleteUploadTransfer:uploadTransfer];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [[MEGAStore shareInstance] deleteUploadTransfer:uploadTransfer];
+        });
         [Helper startPendingUploadTransferIfNeeded];
     } error:^(NSError *error) {
         [SVProgressHUD showImage:[UIImage imageNamed:@"hudError"] status:[NSString stringWithFormat:@"%@ %@ \r %@", AMLocalizedString(@"Transfer failed:", nil), asset.localIdentifier, error.localizedDescription]];
-        [[MEGAStore shareInstance] deleteUploadTransfer:uploadTransfer];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [[MEGAStore shareInstance] deleteUploadTransfer:uploadTransfer];
+        });
         [Helper startPendingUploadTransferIfNeeded];
     }];
     [processAsset prepare];
@@ -669,10 +671,11 @@ static BOOL pointToStaging;
         }
     }
     
-    NSArray<MOUploadTransfer *> *uploadTransfers = [[MEGAStore shareInstance] fetchUploadTransfers];
-    
-    if (allUploadTransfersPaused && uploadTransfers.count) {
-        [Helper startUploadTransfer:uploadTransfers.firstObject];
+    if (allUploadTransfersPaused) {
+        NSArray<MOUploadTransfer *> *queuedUploadTransfers = [[MEGAStore shareInstance] fetchUploadTransfers];
+        if (queuedUploadTransfers.count) {
+            [Helper startUploadTransfer:queuedUploadTransfers.firstObject];
+        }
     }
 }
 
@@ -818,7 +821,7 @@ static BOOL pointToStaging;
     if ([[MEGASdkManager sharedMEGASdk] accessLevelForNode:node] == MEGAShareTypeAccessOwner) {
         completion(node);
     } else {
-        MEGANode *remoteNode = [[MEGASdkManager sharedMEGASdk] nodeForFingerprint:[[MEGASdkManager sharedMEGASdk] fingerprintForNode:node]];
+        MEGANode *remoteNode = [[MEGASdkManager sharedMEGASdk] nodeForFingerprint:node.fingerprint];
         if (remoteNode && [[MEGASdkManager sharedMEGASdk] accessLevelForNode:remoteNode] == MEGAShareTypeAccessOwner) {
             completion(remoteNode);
         } else {
@@ -882,7 +885,7 @@ static BOOL pointToStaging;
                 
             case MEGAChatMessageTypeAttachment: {
                 MEGANode *node = [message.nodeList mnz_nodesArrayFromNodeList].firstObject;
-                MOOfflineNode *offlineNodeExist = [[MEGAStore shareInstance] offlineNodeWithNode:node api:[MEGASdkManager sharedMEGASdk]];
+                MOOfflineNode *offlineNodeExist = [[MEGAStore shareInstance] offlineNodeWithNode:node];
                 if (offlineNodeExist) {
                     NSURL *offlineURL = [NSURL fileURLWithPath:[[Helper pathForOffline] stringByAppendingPathComponent:offlineNodeExist.localPath]];
                     [activityItemsMutableArray addObject:offlineURL];
@@ -1065,7 +1068,7 @@ static BOOL pointToStaging;
 + (NSArray *)checkIfAllOfTheseNodesExistInOffline:(NSArray *)nodesArray {
     NSMutableArray *filesURLMutableArray = [[NSMutableArray alloc] init];
     for (MEGANode *node in nodesArray) {
-        MOOfflineNode *offlineNodeExist = [[MEGAStore shareInstance] offlineNodeWithNode:node api:[MEGASdkManager sharedMEGASdk]];
+        MOOfflineNode *offlineNodeExist = [[MEGAStore shareInstance] offlineNodeWithNode:node];
         if (offlineNodeExist) {
             [filesURLMutableArray addObject:[NSURL fileURLWithPath:[[Helper pathForOffline] stringByAppendingPathComponent:[offlineNodeExist localPath]]]];
         } else {
@@ -1189,6 +1192,18 @@ static BOOL pointToStaging;
 }
 
 + (void)presentSafariViewControllerWithURL:(NSURL *)url {
+    if (url) {
+        if (!([url.scheme.lowercaseString isEqualToString:@"http"] || [url.scheme.lowercaseString isEqualToString:@"https"])) {
+            MEGALogInfo(@"To use SFSafariViewController the URL must use the http or https scheme: \n%@", url.absoluteString);
+            [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"linkNotValid", @"Message shown when the user clicks on an link that is not valid")];
+            return;
+        }
+    } else {
+        MEGALogInfo(@"URL string was malformed or nil: \n%@", url.absoluteString);
+        [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"linkNotValid", @"Message shown when the user clicks on an link that is not valid")];
+        return;
+    }
+    
     if ([MEGAReachabilityManager isReachableHUDIfNot]) {
         SFSafariViewController *safariViewController = [[SFSafariViewController alloc] initWithURL:url];
         if (@available(iOS 10.0, *)) {
@@ -1197,7 +1212,7 @@ static BOOL pointToStaging;
             safariViewController.view.tintColor = UIColor.mnz_redMain;
         }
         
-        [UIApplication.mnz_visibleViewController presentViewController:safariViewController animated:YES completion:nil];
+        [UIApplication.mnz_presentingViewController presentViewController:safariViewController animated:YES completion:nil];
     }
 }
 
@@ -1266,7 +1281,7 @@ static BOOL pointToStaging;
         [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"logoutLabel", @"Title of the button which logs out from your account.") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
             [[MEGASdkManager sharedMEGASdk] logout];
         }]];
-        [UIApplication.mnz_visibleViewController presentViewController:alertController animated:YES completion:nil];
+        [UIApplication.mnz_presentingViewController presentViewController:alertController animated:YES completion:nil];
     } else {
         [[MEGASdkManager sharedMEGASdk] logout];
     }
@@ -1292,68 +1307,38 @@ static BOOL pointToStaging;
 
 + (void)deleteUserData {
     // Delete app's directories: Library/Cache/thumbs - Library/Cache/previews - Documents - tmp
-    NSError *error;
     
     NSString *thumbsDirectory = [Helper pathForSharedSandboxCacheDirectory:@"thumbnailsV3"];
-    if ([[NSFileManager defaultManager] fileExistsAtPath:thumbsDirectory]) {
-        if (![[NSFileManager defaultManager] removeItemAtPath:thumbsDirectory error:&error]) {
-            MEGALogError(@"Remove item at path failed with error: %@", error);
-        }
-    }
+    [NSFileManager.defaultManager mnz_removeItemAtPath:thumbsDirectory];
     
     NSString *previewsDirectory = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"previewsV3"];
-    if ([[NSFileManager defaultManager] fileExistsAtPath:previewsDirectory]) {
-        if (![[NSFileManager defaultManager] removeItemAtPath:previewsDirectory error:&error]) {
-            MEGALogError(@"Remove item at path failed with error: %@", error);
-        }
-    }
+    [NSFileManager.defaultManager mnz_removeItemAtPath:previewsDirectory];
     
     // Remove "Inbox" folder return an error. "Inbox" is reserved by Apple
     NSString *offlineDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-    for (NSString *file in [[NSFileManager defaultManager] contentsOfDirectoryAtPath:offlineDirectory error:&error]) {
-        if (![[NSFileManager defaultManager] removeItemAtPath:[offlineDirectory stringByAppendingPathComponent:file] error:&error]) {
-            MEGALogError(@"Remove item at path failed with error: %@", error);
-        }
-    }
+    [NSFileManager.defaultManager mnz_removeFolderContentsAtPath:offlineDirectory];
     
-    for (NSString *file in [[NSFileManager defaultManager] contentsOfDirectoryAtPath:NSTemporaryDirectory() error:&error]) {
-        if (![[NSFileManager defaultManager] removeItemAtPath:[NSTemporaryDirectory() stringByAppendingPathComponent:file] error:&error]) {
-            MEGALogError(@"Remove item at path failed with error: %@", error);
-        }
-    }
+    [NSFileManager.defaultManager mnz_removeFolderContentsAtPath:NSTemporaryDirectory()];
     
     // Delete v2 thumbnails & previews directory
     NSString *thumbs2Directory = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"thumbs"];
-    if ([[NSFileManager defaultManager] fileExistsAtPath:thumbs2Directory]) {
-        if (![[NSFileManager defaultManager] removeItemAtPath:thumbs2Directory error:&error]) {
-            MEGALogError(@"Remove item at path failed with error: %@", error);
-        }
-    }
+    [NSFileManager.defaultManager mnz_removeItemAtPath:thumbs2Directory];
     
     NSString *previews2Directory = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"previews"];
-    if ([[NSFileManager defaultManager] fileExistsAtPath:previews2Directory]) {
-        if (![[NSFileManager defaultManager] removeItemAtPath:previews2Directory error:&error]) {
-            MEGALogError(@"Remove item at path failed with error: %@", error);
-        }
-    }
+    [NSFileManager.defaultManager mnz_removeItemAtPath:previews2Directory];
     
     // Delete application support directory content
     NSString *applicationSupportDirectory = [NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-    for (NSString *file in [[NSFileManager defaultManager] contentsOfDirectoryAtPath:applicationSupportDirectory error:&error]) {
+    for (NSString *file in [[NSFileManager defaultManager] contentsOfDirectoryAtPath:applicationSupportDirectory error:nil]) {
         if ([file containsString:@"MEGACD"] || [file containsString:@"spotlightTree"] || [file containsString:@"Uploads"] || [file containsString:@"Downloads"]) {
-            if (![[NSFileManager defaultManager] removeItemAtPath:[applicationSupportDirectory stringByAppendingPathComponent:file] error:&error]) {
-                MEGALogError(@"Remove item at path failed with error: %@", error);
-            }
+            [NSFileManager.defaultManager mnz_removeItemAtPath:[applicationSupportDirectory stringByAppendingPathComponent:file]];
         }
     }
     
     // Delete files saved by extensions
     NSString *extensionGroup = [[NSFileManager defaultManager] containerURLForSecurityApplicationGroupIdentifier:@"group.mega.ios"].path;
-    for (NSString *file in [[NSFileManager defaultManager] contentsOfDirectoryAtPath:extensionGroup error:&error]) {
-        if (![[NSFileManager defaultManager] removeItemAtPath:[extensionGroup stringByAppendingPathComponent:file] error:&error]) {
-            MEGALogError(@"Remove item at path failed with error: %@", error);
-        }
-    }
+    [NSFileManager.defaultManager mnz_removeFolderContentsAtPath:extensionGroup];
+    
     [[MEGAStore shareInstance] configureMEGAStore];
     
     // Delete Spotlight index
@@ -1367,16 +1352,9 @@ static BOOL pointToStaging;
 }
 
 + (void)deleteMasterKey {
-    NSError *error;
-    
     NSString *documentsDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
     NSString *masterKeyFilePath = [documentsDirectory stringByAppendingPathComponent:@"RecoveryKey.txt"];
-    
-    if ([[NSFileManager defaultManager] fileExistsAtPath:[documentsDirectory stringByAppendingPathComponent:@"RecoveryKey.txt"]]) {
-        if (![[NSFileManager defaultManager] removeItemAtPath:masterKeyFilePath error:&error]) {
-            MEGALogError(@"Remove item at path failed with error: %@", error);
-        }
-    }
+    [[NSFileManager defaultManager] mnz_removeItemAtPath:masterKeyFilePath];
 }
 
 + (void)resetUserData {
@@ -1447,7 +1425,7 @@ static BOOL pointToStaging;
     
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"recoveryKeyCopiedToClipboard", @"Title of the dialog displayed when copy the user's Recovery Key to the clipboard to be saved or exported - (String as short as possible).") message:nil preferredStyle:UIAlertControllerStyleAlert];
     [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
-    [UIApplication.mnz_visibleViewController presentViewController:alertController animated:YES completion:nil];
+    [UIApplication.mnz_presentingViewController presentViewController:alertController animated:YES completion:nil];
     
     [[MEGASdkManager sharedMEGASdk] masterKeyExported];
 }
@@ -1466,7 +1444,7 @@ static BOOL pointToStaging;
         enableLog ? [[MEGALogger sharedLogger] startLogging] : [[MEGALogger sharedLogger] stopLogging];
     }]];
     
-    [UIApplication.mnz_visibleViewController presentViewController:logAlertController animated:YES completion:nil];
+    [UIApplication.mnz_presentingViewController presentViewController:logAlertController animated:YES completion:nil];
 }
 
 @end

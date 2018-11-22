@@ -1,10 +1,11 @@
 #import <UIKit/UIKit.h>
 
-@class MEGATransfer, TransferTableViewCell, QueuedTransferItem;
+@class MEGATransfer, MOUploadTransfer;
 
 @protocol TransferTableViewCellDelegate
 
-- (void)pauseTransferCell:(TransferTableViewCell *)cell;
+- (void)pauseTransfer:(MEGATransfer *)transfer;
+- (void)cancelQueuedUploadTransfer:(NSString *)localIdentifier;
 
 @end
 
@@ -13,8 +14,12 @@
 @property (assign, nonatomic) id<TransferTableViewCellDelegate> delegate;
 
 - (void)configureCellForTransfer:(MEGATransfer *)transfer delegate:(id<TransferTableViewCellDelegate>)delegate;
-- (void)configureCellForQueuedTransfer:(QueuedTransferItem *)queuedTransferItem delegate:(id<TransferTableViewCellDelegate>)delegate;
+- (void)reconfigureCellWithTransfer:(MEGATransfer *)transfer;
+- (void)configureCellForQueuedTransfer:(MOUploadTransfer *)uploadTransfer delegate:(id<TransferTableViewCellDelegate>)delegate;
 
+- (void)configureCellWithTransferState:(MEGATransferState)transferState;
+- (void)reloadThumbnailImage;
 - (void)updatePercentAndSpeedLabelsForTransfer:(MEGATransfer *)transfer;
+- (void)updateTransferIfNewState:(MEGATransfer *)transfer;
 
 @end

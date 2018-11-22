@@ -13,6 +13,7 @@
 #import "NSString+MNZCategory.h"
 #import "UIAlertAction+MNZCategory.h"
 #import "UIImageView+MNZCategory.h"
+#import "UITextField+MNZCategory.h"
 
 #import "NodeTableViewCell.h"
 
@@ -431,12 +432,13 @@
     [self dismiss];
 }
 
-- (void)alertControllerShouldEnableDefaultButtonForTextField:(UITextField *)sender {
-    UIAlertController *addContactFromEmailAlertController = (UIAlertController *)self.presentedViewController;
-    if (addContactFromEmailAlertController) {
-        UITextField *textField = addContactFromEmailAlertController.textFields.firstObject;
-        UIAlertAction *rightButtonAction = addContactFromEmailAlertController.actions.lastObject;
-        rightButtonAction.enabled = (textField.text.length > 0);
+- (void)newFolderAlertTextFieldDidChange:(UITextField *)textField {
+    UIAlertController *alertController = (UIAlertController *)self.presentedViewController;
+    if (alertController) {
+        BOOL containsInvalidChars = textField.text.mnz_containsInvalidChars;
+        textField.textColor = containsInvalidChars ? UIColor.mnz_redMain : UIColor.darkTextColor;
+        UIAlertAction *rightButtonAction = alertController.actions.lastObject;
+        rightButtonAction.enabled = !textField.text.mnz_isEmpty && !containsInvalidChars;
     }
 }
 
@@ -499,7 +501,10 @@
     
     [newFolderAlertController addTextFieldWithConfigurationHandler:^(UITextField *textField) {
         textField.placeholder = AMLocalizedString(@"newFolderMessage", @"Hint text shown on the create folder alert.");
-        [textField addTarget:self action:@selector(alertControllerShouldEnableDefaultButtonForTextField:) forControlEvents:UIControlEventEditingChanged];
+        [textField addTarget:self action:@selector(newFolderAlertTextFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
+        textField.shouldReturnCompletion = ^BOOL(UITextField *textField) {
+            return (!textField.text.mnz_isEmpty && !textField.text.mnz_containsInvalidChars);
+        };
     }];
     
     [newFolderAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
@@ -528,14 +533,8 @@
 
 - (IBAction)cancel:(UIBarButtonItem *)sender {
     if (self.browserAction == BrowserActionOpenIn) {
-        NSError *error = nil;
         NSString *inboxDirectory = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"Inbox"];
-        for (NSString *file in [[NSFileManager defaultManager] contentsOfDirectoryAtPath:inboxDirectory error:&error]) {
-            error = nil;
-            if ([[NSFileManager defaultManager] removeItemAtPath:[inboxDirectory stringByAppendingPathComponent:file] error:&error]) {
-                MEGALogError(@"Remove item at path failed with error: %@", error);
-            }
-        }
+        [NSFileManager.defaultManager mnz_removeFolderContentsAtPath:inboxDirectory];
     }
     
     [self dismiss];

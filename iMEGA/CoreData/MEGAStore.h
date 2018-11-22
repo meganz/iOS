@@ -6,6 +6,7 @@
 #import "MOChatDraft+CoreDataProperties.h"
 #import "MOMediaDestination+CoreDataProperties.h"
 #import "MOUploadTransfer+CoreDataProperties.h"
+#import "MOMessage+CoreDataProperties.h"
 
 @interface MEGAStore : NSObject
 
@@ -26,7 +27,7 @@
 
 - (void)insertOfflineNode:(MEGANode *)node api:(MEGASdk *)api path:(NSString *)path;
 - (MOOfflineNode *)fetchOfflineNodeWithPath:(NSString *)path;
-- (MOOfflineNode *)offlineNodeWithNode:(MEGANode *)node api:(MEGASdk *)api;
+- (MOOfflineNode *)offlineNodeWithNode:(MEGANode *)node;
 - (void)removeOfflineNode:(MOOfflineNode *)offlineNode;
 - (void)removeAllOfflineNodes;
 
@@ -56,8 +57,15 @@
 
 - (void)insertUploadTransferWithLocalIdentifier:(NSString *)localIdentifier parentNodeHandle:(uint64_t)parentNodeHandle;
 - (void)deleteUploadTransfer:(MOUploadTransfer *)uploadTransfer;
+- (void)deleteUploadTransferWithLocalIdentifier:(NSString *)localIdentifier;
 - (NSArray<MOUploadTransfer *> *)fetchUploadTransfers;
-- (MOUploadTransfer *)fetchTransferUpdateWithLocalIdentifier:(NSString *)localIdentifier;
+- (MOUploadTransfer *)fetchUploadTransferWithLocalIdentifier:(NSString *)localIdentifier;
 - (void)removeAllUploadTransfers;
+
+#pragma mark - MOMessage entity
+
+- (void)insertMessage:(uint64_t)messageId chatId:(uint64_t)chatId;
+- (void)deleteMessage:(MOMessage *)message;
+- (MOMessage *)fetchMessageWithChatId:(uint64_t)chatId messageId:(uint64_t)messageId;
 
 @end

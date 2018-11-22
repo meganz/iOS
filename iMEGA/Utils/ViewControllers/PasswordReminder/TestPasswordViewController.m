@@ -8,7 +8,7 @@
 
 #import "PasswordView.h"
 
-@interface TestPasswordViewController () <PasswordViewDelegate>
+@interface TestPasswordViewController () <UITextFieldDelegate, PasswordViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UILabel *descriptionLabel;
 @property (weak, nonatomic) IBOutlet UIButton *confirmButton;
@@ -49,6 +49,13 @@
     
     self.passwordView.passwordTextField.clearButtonMode = UITextFieldViewModeNever;
     [self.passwordView.passwordTextField becomeFirstResponder];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
 }
 
 #pragma mark - IBActions
@@ -97,6 +104,7 @@
 
 - (void)configureUI {
     self.title = AMLocalizedString(@"testPassword", @"Label for test password button");
+    self.passwordView.passwordTextField.delegate = self;
     if (self.isLoggingOut) {
         self.closeBarButton.title = AMLocalizedString(@"logoutLabel", @"Title of the button which logs out from your account.");
         self.descriptionLabel.text = AMLocalizedString(@"testPasswordLogoutText", @"Text that described that you are about to logout remenbering why the user should remenber the password and/or test it");
@@ -128,10 +136,7 @@
 }
 
 - (void)passwordTestFailed {
-    self.passwordViewHeightConstraint.constant = 101;
-    self.passwordView.wrongPasswordView.hidden = NO;
-
-    self.passwordView.passwordTextField.textColor = UIColor.mnz_redMain;
+    [self.passwordView setErrorState:YES];
     
     [self.backupKeyButton setTitleColor:UIColor.whiteColor forState:UIControlStateNormal];
     self.backupKeyButton.backgroundColor = UIColor.mnz_redMain;
@@ -159,11 +164,8 @@
 }
 
 - (void)resetUI {
-    self.passwordView.passwordTextField.textColor = UIColor.mnz_gray666666;
+    [self.passwordView setErrorState:NO];
     
-    self.passwordViewHeightConstraint.constant = 62;
-    self.passwordView.wrongPasswordView.hidden = YES;
-        
     if (self.isLoggingOut) {
         self.confirmButton.layer.borderWidth = 0.0f;
         self.confirmButton.layer.borderColor = nil;
@@ -190,6 +192,19 @@
     if (UIInterfaceOrientationIsLandscape([UIApplication sharedApplication].statusBarOrientation) && (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)) {
         self.descriptionLabelHeightConstraint.constant = self.descriptionLabelHeight;
     }
+}
+
+#pragma mark - UITextFieldDelegate
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+    [self.passwordView setErrorState:NO];
+    
+    return YES;
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    [textField resignFirstResponder];
+    return YES;
 }
 
 #pragma mark - PasswordViewDelegate
