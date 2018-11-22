@@ -1678,7 +1678,11 @@
 "Saved to Photos"="Saved to Photos";
 /* Text shown when an error occurs when trying to save a photo or video to Photos app */
 "Could not save Item"="Could not save Item";
-/* Footer text to explain the meaning of the functionaly 'Last active' of your chat status. */
+/* Footer text to explain the meaning of the functionaly 'Last seen' of your chat status. */
 "Allow my contacts to see the last time I was active on MEGA. If disabled you won’t be able to see the activity status of your contacts."="Allow my contacts to see the last time I was active on MEGA. If disabled you won’t be able to see the activity status of your contacts.";
-/* Label title to enable/disable the 'Last active' feature of the chat */
-"Show \"Last active…\""="Show \"Last active…\"";
+/* Label title to enable/disable the 'Last seen' feature of the chat */
+"Show \"Last seen…\""="Show \"Last seen…\"";
+/* Text to inform the user the 'Last seen' time of a contact */
+"Last seen %@ at %@"="Last seen %@ at %@";
+/* */
+"Today"="Today";
