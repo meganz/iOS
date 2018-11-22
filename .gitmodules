@@ -1,7 +1,6 @@
 [submodule "iMEGA/Vendor/SDK"]
 	path = iMEGA/Vendor/SDK
 	url = https://code.developers.mega.co.nz/mattw/sdk-mattw-cloudraid-test.git
-	branch = feature/ios_background_photo_uploads3
 [submodule "iMEGA/Vendor/SVProgressHUD"]
 	path = iMEGA/Vendor/SVProgressHUD
 	url = https://github.com/SVProgressHUD/SVProgressHUD.git
