@@ -99,6 +99,8 @@
     }
 }
 
+#pragma mark - URL based file management
+
 - (NSURL *)cameraUploadURL {
     NSURL *uploadURL = nil;
     NSURL *supportURL = [[self URLsForDirectory:NSApplicationSupportDirectory inDomains:NSUserDomainMask] firstObject];
