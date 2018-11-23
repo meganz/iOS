@@ -16,22 +16,26 @@
     [super onRequestFinish:api request:request error:error];
     
     if (error.type) {
+        NSString *title;
         NSString *message;
         switch (error.type) {
             case MEGAErrorTypeApiEExist:
+                title = @"";
                 message = AMLocalizedString(@"emailAlreadyRegistered", @"Error text shown when the users tries to create an account with an email already in use");
                 break;
                 
             case MEGAErrorTypeApiEArgs:
+                title = @"";
                 message = AMLocalizedString(@"accountAlreadyConfirmed", @"Message shown when the user clicks on a confirm account link that has already been used");
                 break;
                 
             default:
+                title = AMLocalizedString(@"error", nil);
                 message = [NSString stringWithFormat:@"%@ %@", request.requestString, error.name];
                 break;
         }
         
-        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"error", nil) message:message preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:UIAlertControllerStyleAlert];
         [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
         
         [[UIApplication sharedApplication].delegate.window.rootViewController.presentedViewController presentViewController:alertController animated:YES completion:nil];

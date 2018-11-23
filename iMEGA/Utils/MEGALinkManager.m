@@ -389,8 +389,10 @@ static NSString *nodeToPresentBase64Handle;
             break;
             
         case URLTypeChatLink: {
-            MainTabBarController *mainTBC = (MainTabBarController *)UIApplication.sharedApplication.keyWindow.rootViewController;
-            mainTBC.selectedIndex = CHAT;
+            if ([Helper hasSession_alertIfNot]) {
+                MainTabBarController *mainTBC = (MainTabBarController *)UIApplication.sharedApplication.keyWindow.rootViewController;
+                mainTBC.selectedIndex = CHAT;
+            }
             break;
         }
             
@@ -659,7 +661,7 @@ static NSString *nodeToPresentBase64Handle;
         }
     }
     
-    [[UIApplication mnz_visibleViewController] presentViewController:inviteOrDismissModal animated:YES completion:nil];
+    [UIApplication.mnz_presentingViewController presentViewController:inviteOrDismissModal animated:YES completion:nil];
 }
 
 @end
