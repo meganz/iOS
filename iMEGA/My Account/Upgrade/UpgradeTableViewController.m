@@ -489,8 +489,6 @@
     productDetailVC.yearlyProduct = yearlyProduct;
     [self.navigationController pushViewController:productDetailVC animated:YES];
     
-    [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
-    
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
