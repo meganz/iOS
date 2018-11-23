@@ -90,6 +90,7 @@
 @property (strong, nonatomic) NSString *email;
 @property (nonatomic) BOOL presentInviteContactVCLater;
 
+@property (nonatomic, getter=isNewAccount) BOOL newAccount;
 @property (nonatomic, getter=showChooseAccountTypeLater) BOOL chooseAccountTypeLater;
 
 @property (nonatomic, strong) UIAlertController *sslKeyPinningController;
@@ -693,13 +694,15 @@
     
     [UIApplication.mnz_presentingViewController presentViewController:cameraUploadsNavigationController animated:YES completion:^{
         isAccountFirstLogin = NO;
-        if ([MEGALinkManager urlType] == URLTypeConfirmationLink) {
+        if (self.isNewAccount) {
             if ([MEGAPurchase sharedInstance].products.count > 0) {
                 [self showChooseAccountType];
             } else {
                 [[MEGAPurchase sharedInstance] setPricingsDelegate:self];
                 self.chooseAccountTypeLater = YES;
             }
+            
+            self.newAccount = NO;
         }
         
         [MEGALinkManager processSelectedOptionOnLink];
@@ -1111,7 +1114,6 @@ void uncaughtExceptionHandler(NSException *exception) {
     upgradeTVC.chooseAccountType = YES;
     
     [UIApplication.mnz_presentingViewController presentViewController:navigationController animated:YES completion:nil];
-    [MEGALinkManager resetLinkAndURLType];
 }
 
 #pragma mark - Battery changed
@@ -1639,6 +1641,7 @@ void uncaughtExceptionHandler(NSException *exception) {
                 isFetchNodesDone = NO;
             } else {
                 isAccountFirstLogin = YES;
+                self.newAccount = ([MEGALinkManager urlType] == URLTypeConfirmationLink);
                 [MEGALinkManager resetLinkAndURLType];
             }
             [[MEGASdkManager sharedMEGASdk] fetchNodes];
