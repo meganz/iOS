@@ -60,6 +60,8 @@
                 }]];
                 
                 [UIApplication.mnz_visibleViewController presentViewController:alertController animated:YES completion:nil];
+                
+                [MEGALinkManager resetLinkAndURLType];
             }
         } else {
             [MEGALinkManager presentConfirmViewWithURLType:URLTypeConfirmationLink link:[MEGALinkManager linkURL].absoluteString email:self.email];
@@ -79,10 +81,11 @@
             
             [MEGALinkManager setEmailOfNewSignUpLink:nil];
         }
+        
+        [MEGALinkManager resetLinkAndURLType];
     }
     
     self.email = nil;
-    [MEGALinkManager resetLinkAndURLType];
 }
 
 #pragma mark - MEGARequestDelegate
