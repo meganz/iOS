@@ -77,7 +77,13 @@ static const NSInteger MaxConcurrentVideoOperationCount = 1;
 
 - (void)startUploading {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        
+        // TODO: may need to move attributes scan to app launch
         [AttributeUploadManager.shared scanLocalAttributesAndRetryUploadIfNeeded];
+        
+        if (self.photoUploadOerationQueue.operationCount > 0 || self.videoUploadOerationQueue.operationCount > 0) {
+            return;
+        }
         
         if (self.cameraUploadNode) {
             [self uploadIfPossible];
@@ -130,6 +136,13 @@ static const NSInteger MaxConcurrentVideoOperationCount = 1;
             [CameraUploadRecordManager.shared deleteRecordsByLocalIdentifiers:@[record.localIdentifier] error:nil];
         }
     }
+}
+
+#pragma mark - stop upload
+
+- (void)stopUploading {
+    [self.photoUploadOerationQueue cancelAllOperations];
+    [self.videoUploadOerationQueue cancelAllOperations];
 }
 
 #pragma mark - handle app lifecycle

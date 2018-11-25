@@ -134,9 +134,6 @@
 
 - (BOOL)application:(UIApplication *)application willFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     NSLog(@"[App Lifecycle] Application will finish launching with options: %@", launchOptions);
-//    NSArray<MOAssetUploadRecord *> *localRecords = [CameraUploadRecordManager.shared fetchAllAssetUploadRecords:nil];
-//    localRecords = [localRecords sortedArrayUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"status" ascending:YES]]];
-//    NSLog(@"local records count: %lu, list: %@", localRecords.count, localRecords);
     return YES;
 }
 
@@ -167,9 +164,6 @@
     [[AVAudioSession sharedInstance] setActive:NO withOptions:AVAudioSessionSetActiveOptionNotifyOthersOnDeactivation error:nil];
     
     [MEGAReachabilityManager sharedManager];
-    
-    [UIDevice currentDevice].batteryMonitoringEnabled = YES;
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(batteryChanged:) name:UIDeviceBatteryStateDidChangeNotification object:nil];
     
     [MEGASdkManager setAppKey:kAppKey];
     NSString *userAgent = [NSString stringWithFormat:@"%@/%@", kUserAgent, [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"]];
@@ -367,15 +361,6 @@
         }
     }
     
-    if ([CameraUploads syncManager].isCameraUploadsEnabled) {
-        [PHPhotoLibrary requestAuthorization:^(PHAuthorizationStatus status) {
-            if (status == PHAuthorizationStatusDenied) {
-                MEGALogInfo(@"Disable Camera Uploads");
-                [[CameraUploads syncManager] setIsCameraUploadsEnabled:NO];
-            }
-        }];
-    }
-    
     self.indexer = [[MEGAIndexer alloc] init];
     [Helper setIndexer:self.indexer];
     
@@ -411,7 +396,7 @@
     [[MEGASdkManager sharedMEGAChatSdk] setBackgroundStatus:YES];
     [[MEGASdkManager sharedMEGAChatSdk] saveCurrentState];
 
-    BOOL pendingTasks = [[[[MEGASdkManager sharedMEGASdk] transfers] size] integerValue] > 0 || [[[[MEGASdkManager sharedMEGASdkFolder] transfers] size] integerValue] > 0 || [[[CameraUploads syncManager] assetsOperationQueue] operationCount] > 0;
+    BOOL pendingTasks = [[[[MEGASdkManager sharedMEGASdk] transfers] size] integerValue] > 0 || [[[[MEGASdkManager sharedMEGASdkFolder] transfers] size] integerValue] > 0;
     if (pendingTasks) {
         [self beginBackgroundTaskWithName:@"PendingTasks"];
     }
@@ -449,9 +434,8 @@
     [[MEGASdkManager sharedMEGAChatSdk] setBackgroundStatus:NO];
     
     if ([[MEGASdkManager sharedMEGASdk] isLoggedIn]) {
-        if ([[CameraUploads syncManager] isCameraUploadsEnabled]) {
-            MEGALogInfo(@"Enable Camera Uploads");
-            [[CameraUploads syncManager] setIsCameraUploadsEnabled:YES];
+        if ([NSUserDefaults.standardUserDefaults boolForKey:kIsCameraUploadsEnabled]) {
+            [CameraUploadManager.shared startUploading];
         }
         
         if (isFetchNodesDone) {
@@ -1144,10 +1128,8 @@
 }
 
 - (void)disableCameraUploads {
-    if ([[CameraUploads syncManager] isCameraUploadsEnabled]) {
-        MEGALogInfo(@"Disable Camera Uploads");
-        [[CameraUploads syncManager] setIsCameraUploadsEnabled:NO];
-    }
+    [NSUserDefaults.standardUserDefaults setValue:@(NO) forKey:kIsCameraUploadsEnabled];
+    [CameraUploadManager.shared stopUploading];
 }
 
 - (void)showLinkNotValid {
@@ -1271,7 +1253,6 @@
         }
     }
     
-    [[CameraUploads syncManager] setTabBarController:_mainTBC];
     if (isAccountFirstLogin) {
         [self registerForVoIPNotifications];
         [self registerForNotifications];
@@ -1623,18 +1604,6 @@ void uncaughtExceptionHandler(NSException *exception) {
     }
 }
 
-#pragma mark - Battery changed
-
-- (void)batteryChanged:(NSNotification *)notification {
-    if ([[CameraUploads syncManager] isOnlyWhenChargingEnabled]) {
-        if ([[UIDevice currentDevice] batteryState] == UIDeviceBatteryStateUnplugged) {
-            [[CameraUploads syncManager] resetOperationQueue];
-        } else {
-            [[CameraUploads syncManager] setIsCameraUploadsEnabled:YES];
-        }
-    }
-}
-
 #pragma mark - LTHPasscodeViewControllerDelegate
 
 - (void)passcodeWasEnteredSuccessfully {
@@ -1941,25 +1910,12 @@ void uncaughtExceptionHandler(NSException *exception) {
     if (!nodeList) {
         MEGATransferList *transferList = [api uploadTransfers];
         if (transferList.size.integerValue == 0) {
-            [[CameraUploadManager shared] startUploading];
-            if ([CameraUploads syncManager].isCameraUploadsEnabled) {
-                MEGALogInfo(@"Enable Camera Uploads");
-                [[CameraUploads syncManager] setIsCameraUploadsEnabled:YES];
-            }
-        } else {
-            for (NSInteger i = 0; i < transferList.size.integerValue; i++) {
-                MEGATransfer *transfer = [transferList transferAtIndex:i];
-                [transfer mnz_cancelPendingCUTransfer];
-                
-                if ([transfer.appData containsString:@"CU"] && [CameraUploads syncManager].isCameraUploadsEnabled && ([MEGAReachabilityManager isReachableViaWiFi] || [CameraUploads syncManager].isUseCellularConnectionEnabled)) {
-                    MEGALogInfo(@"Camera Upload should be delayed");
-                    [CameraUploads syncManager].shouldCameraUploadsBeDelayed = YES;
-                }
+            if ([NSUserDefaults.standardUserDefaults boolForKey:kIsCameraUploadsEnabled]) {
+                [CameraUploadManager.shared startUploading];
             }
         }
-            
+        
         [Helper startPendingUploadTransferIfNeeded];
-
     } else {
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
             NSArray<MEGANode *> *nodesToIndex = [nodeList mnz_nodesArrayFromNodeList];
@@ -2192,7 +2148,6 @@ void uncaughtExceptionHandler(NSException *exception) {
         case MEGARequestTypeFetchNodes: {
             [[SKPaymentQueue defaultQueue] addTransactionObserver:[MEGAPurchase sharedInstance]];
             [[MEGASdkManager sharedMEGASdk] enableTransferResumption];
-            [CameraUploads syncManager].shouldCameraUploadsBeDelayed = NO;
             [self invalidateTimerAPI_EAGAIN];
             
             if ([[NSUserDefaults standardUserDefaults] boolForKey:@"TransfersPaused"]) {
@@ -2633,14 +2588,6 @@ void uncaughtExceptionHandler(NSException *exception) {
     
     if (transfer.type == MEGATransferTypeUpload) {
         [transfer mnz_renameOrRemoveThumbnailAndPreview];
-        
-        if ([CameraUploads syncManager].shouldCameraUploadsBeDelayed) {
-            [CameraUploads syncManager].shouldCameraUploadsBeDelayed = NO;
-            if ([[CameraUploads syncManager] isCameraUploadsEnabled]) {
-                MEGALogInfo(@"Enable Camera Uploads");
-                [[CameraUploads syncManager] setIsCameraUploadsEnabled:YES];
-            }
-        }
         
         if ([transfer.appData containsString:@"attachToChatID"]) {
             if (error.type == MEGAErrorTypeApiEExist) {
