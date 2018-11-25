@@ -19,6 +19,15 @@ static NSString * const AttributePreviewName = @"preview";
     return sharedInstance;
 }
 
+- (instancetype)init {
+    self = [super init];
+    if (self) {
+        _operationQueue = [[NSOperationQueue alloc] init];
+        _operationQueue.qualityOfService = NSQualityOfServiceUtility;
+    }
+    return self;
+}
+
 - (void)uploadAttributeAtURL:(NSURL *)URL withAttributeType:(MEGAAttributeType)type forNode:(MEGANode *)node {
     if (![NSFileManager.defaultManager fileExistsAtPath:URL.path]) {
         MEGALogDebug(@"[Camera Upload] No attribute file found for node %@ at URL: %@", node.name, URL);
