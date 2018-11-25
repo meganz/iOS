@@ -17,8 +17,6 @@
 @property (weak, nonatomic) IBOutlet UISwitch *uploadVideosSwitch;
 @property (weak, nonatomic) IBOutlet UILabel *useCellularConnectionLabel;
 @property (weak, nonatomic) IBOutlet UISwitch *useCellularConnectionSwitch;
-@property (weak, nonatomic) IBOutlet UILabel *onlyWhenChargingLabel;
-@property (weak, nonatomic) IBOutlet UISwitch *onlyWhenChargingSwitch;
 
 @end
 
@@ -36,7 +34,6 @@
     
     self.useCellularConnectionLabel.text = AMLocalizedString(@"useMobileData", @"Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature.");
     [self.uploadVideosLabel setText:AMLocalizedString(@"uploadVideosLabel", nil)];
-    [self.onlyWhenChargingLabel setText:AMLocalizedString(@"onlyWhenChargingLabel", nil)];
     
     if ([[CameraUploads syncManager] isCameraUploadsEnabled]) {
         [self.enableCameraUploadsSwitch setOn:YES animated:YES];
@@ -44,8 +41,6 @@
         [self.uploadVideosSwitch setOn:[[CameraUploads syncManager] isUploadVideosEnabled] animated:YES];
         
         [self.useCellularConnectionSwitch setOn:[[CameraUploads syncManager] isUseCellularConnectionEnabled] animated:YES];
-        
-        [self.onlyWhenChargingSwitch setOn:[[CameraUploads syncManager] isOnlyWhenChargingEnabled] animated:YES];
     } else {
         [self.enableCameraUploadsSwitch setOn:NO animated:YES];
     }
@@ -103,7 +98,6 @@
                         
                         [self.uploadVideosSwitch setOn:isCameraUploadsEnabled animated:YES];
                         [self.useCellularConnectionSwitch setOn:isCameraUploadsEnabled animated:YES];
-                        [self.onlyWhenChargingSwitch setOn:isCameraUploadsEnabled animated:YES];
                     }
                     
                     [self.tableView reloadData];
@@ -130,7 +124,6 @@
                     
                     [self.uploadVideosSwitch setOn:NO animated:YES];
                     [self.useCellularConnectionSwitch setOn:NO animated:YES];
-                    [self.onlyWhenChargingSwitch setOn:NO animated:YES];
                     [self.tableView reloadData];
                 });
                 break;
@@ -178,21 +171,6 @@
     [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:[CameraUploads syncManager].isUseCellularConnectionEnabled] forKey:kIsUseCellularConnectionEnabled];
 }
 
-- (IBAction)onlyWhenChargindSwitchValueChanged:(UISwitch *)sender {
-    [CameraUploads syncManager].isOnlyWhenChargingEnabled = ![CameraUploads syncManager].isOnlyWhenChargingEnabled;
-    if ([[CameraUploads syncManager] isOnlyWhenChargingEnabled]) {
-        if ([[UIDevice currentDevice] batteryState] == 1) {            
-            [[CameraUploads syncManager] resetOperationQueue];
-        }
-    } else {
-        MEGALogInfo(@"Enable Camera Uploads");
-        [[CameraUploads syncManager] setIsCameraUploadsEnabled:YES];
-    }
-    [self.onlyWhenChargingSwitch setOn:[[CameraUploads syncManager] isOnlyWhenChargingEnabled] animated:YES];
-    
-    [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:[CameraUploads syncManager].isOnlyWhenChargingEnabled] forKey:kIsOnlyWhenChargingEnabled];
-}
-
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -202,8 +180,6 @@
     [self.uploadVideosSwitch setEnabled:isCameraUploadsEnabled];
     [self.useCellularConnectionLabel setEnabled:isCameraUploadsEnabled];
     [self.useCellularConnectionSwitch setEnabled:isCameraUploadsEnabled];
-    [self.onlyWhenChargingLabel setEnabled:isCameraUploadsEnabled];
-    [self.onlyWhenChargingSwitch setEnabled:isCameraUploadsEnabled];
     
     return 2;
 }
@@ -217,7 +193,6 @@
             break;
             
         case 1:
-            //TODO: numberOfRows = 3 => Shows upload only when charging option. Valid for uploads in background.
             if ([MEGAReachabilityManager hasCellularConnection]) {
                 numberOfRows = 2;
             } else {

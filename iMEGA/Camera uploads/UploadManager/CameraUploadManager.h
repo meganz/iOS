@@ -12,6 +12,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)uploadNextForAsset:(PHAsset *)asset;
 
+- (void)stopUploading;
+
 @end
 
 NS_ASSUME_NONNULL_END

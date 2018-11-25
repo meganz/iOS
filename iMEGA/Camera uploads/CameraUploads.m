@@ -52,7 +52,6 @@ static CameraUploads *instance = nil;
     _isCameraUploadsEnabled = [[[NSUserDefaults standardUserDefaults] objectForKey:kIsCameraUploadsEnabled] boolValue];
     self.isUploadVideosEnabled = [[[NSUserDefaults standardUserDefaults] objectForKey:kIsUploadVideosEnabled] boolValue];
     self.isUseCellularConnectionEnabled = [[[NSUserDefaults standardUserDefaults] objectForKey:kIsUseCellularConnectionEnabled] boolValue];
-    self.isOnlyWhenChargingEnabled = [[[NSUserDefaults standardUserDefaults] objectForKey:kIsOnlyWhenChargingEnabled] boolValue];
     
     self.assetsOperationQueue = [[NSOperationQueue alloc] init];
     self.assetsOperationQueue.qualityOfService = NSOperationQualityOfServiceUtility;
@@ -139,13 +138,11 @@ static CameraUploads *instance = nil;
         _isCameraUploadsEnabled = NO;
         self.isUploadVideosEnabled = NO;
         self.isUseCellularConnectionEnabled = NO;
-        self.isOnlyWhenChargingEnabled = NO;
         self.shouldCameraUploadsBeDelayed = NO;
         
         [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:_isCameraUploadsEnabled] forKey:kIsCameraUploadsEnabled];
         [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:self.isUploadVideosEnabled] forKey:kIsUploadVideosEnabled];
         [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:self.isUseCellularConnectionEnabled] forKey:kIsUseCellularConnectionEnabled];
-        [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:self.isOnlyWhenChargingEnabled] forKey:kIsOnlyWhenChargingEnabled];
         
         [[NSUserDefaults standardUserDefaults] synchronize];
         

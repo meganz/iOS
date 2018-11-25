@@ -94,9 +94,6 @@
         NSString *newName = [name mnz_sequentialFileNameInParentNode:self.parentNode];
         
         NSString *appData = [NSString new];
-        if (self.isCameraUploads) {
-            appData = [appData mnz_appDataToSaveCameraUploadsCount:[[[CameraUploads syncManager] assetsOperationQueue] operationCount]];
-        }
         
         appData = [appData mnz_appDataToSaveCoordinates:[filePath mnz_coordinatesOfPhotoOrVideo]];
         

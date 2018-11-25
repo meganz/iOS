@@ -661,6 +661,7 @@
 		A8F6E8911F9E75D00087859C /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8F6E8901F9E75C20087859C /* VideoToolbox.framework */; };
 		A8F6E8931F9E75DD0087859C /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8F6E8921F9E75D50087859C /* GLKit.framework */; };
 		A8F6E8941F9E770C0087859C /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9432291D1EDD83FF007DB542 /* MobileCoreServices.framework */; };
+		B60DDC1621A7A7930097E4A3 /* MEGAConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = B60DDC1521A7A7930097E4A3 /* MEGAConstants.m */; };
 		B658D3B8218F9357004C0D64 /* PhotoUploadOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = B658D3B7218F9357004C0D64 /* PhotoUploadOperation.m */; };
 		B658D3BB218F936B004C0D64 /* VideoUploadOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = B658D3BA218F936B004C0D64 /* VideoUploadOperation.m */; };
 		B658D3C2218FA16C004C0D64 /* MEGATransactionOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = B658D3C1218FA16C004C0D64 /* MEGATransactionOperation.m */; };
@@ -1538,6 +1539,8 @@
 		A8F6E88E1F9E75B60087859C /* libwebsockets.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libwebsockets.a; path = iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib/libwebsockets.a; sourceTree = "<group>"; };
 		A8F6E8901F9E75C20087859C /* VideoToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VideoToolbox.framework; path = System/Library/Frameworks/VideoToolbox.framework; sourceTree = SDKROOT; };
 		A8F6E8921F9E75D50087859C /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
+		B60DDC1421A7A7930097E4A3 /* MEGAConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MEGAConstants.h; sourceTree = "<group>"; };
+		B60DDC1521A7A7930097E4A3 /* MEGAConstants.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MEGAConstants.m; sourceTree = "<group>"; };
 		B658D3B6218F9357004C0D64 /* PhotoUploadOperation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PhotoUploadOperation.h; sourceTree = "<group>"; };
 		B658D3B7218F9357004C0D64 /* PhotoUploadOperation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PhotoUploadOperation.m; sourceTree = "<group>"; };
 		B658D3B9218F936B004C0D64 /* VideoUploadOperation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VideoUploadOperation.h; sourceTree = "<group>"; };
@@ -2149,6 +2152,8 @@
 				830EF9A320062F3800FAA947 /* DevicePermissionsHelper.m */,
 				A8F0A1C5217898F600575C57 /* MEGALocalNotificationManager.h */,
 				A8F0A1C6217898F600575C57 /* MEGALocalNotificationManager.m */,
+				B60DDC1421A7A7930097E4A3 /* MEGAConstants.h */,
+				B60DDC1521A7A7930097E4A3 /* MEGAConstants.m */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -2409,12 +2414,12 @@
 				41BADDB41A8E2E92008408B3 /* PhotosViewController.h */,
 				41BADDB51A8E2E92008408B3 /* PhotosViewController.m */,
 				41AC33A21A926B55005118AF /* PhotoCollectionViewCell.h */,
+				41AC33A31A926B55005118AF /* PhotoCollectionViewCell.m */,
 				41AC33A61A926C27005118AF /* HeaderCollectionReusableView.h */,
 				41AC33A71A926C27005118AF /* HeaderCollectionReusableView.m */,
 				412EB2641C6E52AA001EA6D6 /* MEGAAssetOperation.h */,
 				412EB2651C6E52AA001EA6D6 /* MEGAAssetOperation.m */,
 				411E712D1D461E1D00DD7EF8 /* MEGACollectionViewFlowLayout.h */,
-				41AC33A31A926B55005118AF /* PhotoCollectionViewCell.m */,
 				411E712E1D461E1D00DD7EF8 /* MEGACollectionViewFlowLayout.m */,
 				B658D3BF218F93F5004C0D64 /* UploadManager */,
 				B6D11ADC219CE60E00446B86 /* UploadUtil */,
@@ -4056,6 +4061,7 @@
 				41D21E6F1D01AEC3002E6296 /* CTAssetsPickerNoAssetsView.m in Sources */,
 				A815FCEA1FE2AD080075AC29 /* UIApplication+MNZCategory.m in Sources */,
 				A802B1FA1FAB293700AC8BB0 /* MEGAChatBaseRequestDelegate.m in Sources */,
+				B60DDC1621A7A7930097E4A3 /* MEGAConstants.m in Sources */,
 				415226911A692ECC00EC7BB6 /* ContactsViewController.m in Sources */,
 				A8F0A1C7217898F600575C57 /* MEGALocalNotificationManager.m in Sources */,
 				E889C9E91B566EC400ECEFDF /* UsageViewController.m in Sources */,
