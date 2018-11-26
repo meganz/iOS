@@ -1613,6 +1613,10 @@
         if ([self.tableView.indexPathsForVisibleRows containsObject:indexPath]) {
             ContactTableViewCell *cell = (ContactTableViewCell *)[self.tableView cellForRowAtIndexPath:indexPath];
             cell.onlineStatusView.backgroundColor = [UIColor mnz_colorForStatusChange:onlineStatus];
+            cell.shareLabel.text = [NSString chatStatusString:onlineStatus];
+            if (MEGASdkManager.sharedMEGAChatSdk.presenceConfig.isLastGreenVisible) {
+                [MEGASdkManager.sharedMEGAChatSdk requestLastGreen:userHandle];
+            }
         }
     }
 }

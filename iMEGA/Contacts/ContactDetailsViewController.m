@@ -4,6 +4,7 @@
 
 #import "Helper.h"
 #import "UIImageView+MNZCategory.h"
+#import "NSString+MNZCategory.h"
 #import "MEGANavigationController.h"
 #import "MEGANode+MNZCategory.h"
 #import "MEGARemoveContactRequestDelegate.h"
@@ -21,12 +22,13 @@
 #import "SharedItemsTableViewCell.h"
 #import "VerifyCredentialsViewController.h"
 
-@interface ContactDetailsViewController () <CustomActionViewControllerDelegate>
+@interface ContactDetailsViewController () <CustomActionViewControllerDelegate, MEGAChatDelegate>
 
 @property (weak, nonatomic) IBOutlet UIImageView *avatarImageView;
 @property (weak, nonatomic) IBOutlet UIImageView *verifiedImageView;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
-@property (weak, nonatomic) IBOutlet UILabel *emailLabel;
+@property (weak, nonatomic) IBOutlet UILabel *statusLabel;
+@property (weak, nonatomic) IBOutlet UIView *onlineStatusView;
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
@@ -63,13 +65,31 @@
     //TODO: Show the blue check if the Contact is verified
     
     self.nameLabel.text = self.userName;
-    self.emailLabel.text = self.userEmail;
-
+    
+    MEGAChatStatus userStatus = [MEGASdkManager.sharedMEGAChatSdk userOnlineStatus:self.user.handle];
+    if (userStatus != MEGAChatStatusInvalid) {
+        if (MEGASdkManager.sharedMEGAChatSdk.presenceConfig.isLastGreenVisible) {
+            [MEGASdkManager.sharedMEGAChatSdk requestLastGreen:self.user.handle];
+        }
+        self.onlineStatusView.backgroundColor = [UIColor mnz_colorForStatusChange:[MEGASdkManager.sharedMEGAChatSdk userOnlineStatus:self.user.handle]];
+        self.statusLabel.text = [NSString chatStatusString:userStatus];
+    }
+    
     self.incomingNodeListForUser = [[MEGASdkManager sharedMEGASdk] inSharesForUser:self.user];
     
     if (@available(iOS 11.0, *)) {
         self.avatarImageView.accessibilityIgnoresInvertColors = YES;
     }
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [[MEGASdkManager sharedMEGAChatSdk] addChatDelegate:self];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [[MEGASdkManager sharedMEGAChatSdk] removeChatDelegate:self];
 }
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations {
@@ -414,6 +434,35 @@
             
         default:
             break;
+    }
+}
+
+#pragma mark - MEGAChatDelegate
+
+- (void)onChatOnlineStatusUpdate:(MEGAChatSdk *)api userHandle:(uint64_t)userHandle status:(MEGAChatStatus)onlineStatus inProgress:(BOOL)inProgress {
+    if (inProgress) {
+        return;
+    }
+    
+    if (userHandle == self.user.handle) {
+        self.onlineStatusView.backgroundColor = [UIColor mnz_colorForStatusChange:onlineStatus];
+        self.statusLabel.text = [NSString chatStatusString:onlineStatus];
+        if (MEGASdkManager.sharedMEGAChatSdk.presenceConfig.isLastGreenVisible) {
+            [MEGASdkManager.sharedMEGAChatSdk requestLastGreen:self.user.handle];
+        }
+    }
+}
+
+- (void)onChatPresenceLastGreen:(MEGAChatSdk *)api userHandle:(uint64_t)userHandle lastGreen:(NSInteger)lastGreen {
+    if (self.chatRoom.isGroup) {
+        return;
+    } else if (userHandle == self.user.handle) {
+        if (self.user.handle == userHandle) {
+            MEGAChatStatus chatStatus = [[MEGASdkManager sharedMEGAChatSdk] userOnlineStatus:self.user.handle];
+            if (chatStatus == 1 || chatStatus == 2) {
+                self.statusLabel.text = [NSString mnz_lastGreenStringFromMinutes:lastGreen];
+            }
+        }
     }
 }
 

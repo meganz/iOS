@@ -2683,7 +2683,6 @@ const NSUInteger kMaxMessagesToLoad = 256;
         if ([self.chatRoom peerHandleAtIndex:0] == userHandle) {
             MEGAChatStatus chatStatus = [[MEGASdkManager sharedMEGAChatSdk] userOnlineStatus:[self.chatRoom peerHandleAtIndex:0]];
             if (chatStatus == 1 || chatStatus == 2) {
-                MEGALogDebug(@"CHAT LAST SEEN minutes: %td for handle: %lld", lastGreen, userHandle);
                 self.navigationSubtitleLabel.text = [NSString mnz_lastGreenStringFromMinutes:lastGreen];
             }
         }
