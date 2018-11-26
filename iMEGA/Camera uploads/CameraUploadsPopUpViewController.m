@@ -6,9 +6,10 @@
 
 #import "MEGAReachabilityManager.h"
 #import "UIDevice+MNZCategory.h"
-
-#import "CameraUploads.h"
 #import "PhotosViewController.h"
+#import "MEGAConstants.h"
+#import "CameraUploadManager.h"
+#import "UIViewController+MNZCategory.h"
 
 @interface CameraUploadsPopUpViewController ()
 
@@ -61,13 +62,17 @@
 #pragma mark - IBActions
 
 - (IBAction)uploadVideosValueChanged:(UISwitch *)sender {
-    [CameraUploads syncManager].isUploadVideosEnabled = ![CameraUploads syncManager].isUploadVideosEnabled;
-    [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:[CameraUploads syncManager].isUploadVideosEnabled] forKey:kIsUploadVideosEnabled];
+    [NSUserDefaults.standardUserDefaults setBool:sender.isOn forKey:kIsUploadVideosEnabled];
+    if (sender.isOn) {
+        [CameraUploadManager.shared startVideoUploadIfPossible];
+    } else {
+        [CameraUploadManager.shared disableVideoUpload];
+    }
 }
 
 - (IBAction)useCellularConnectionValueChanged:(UISwitch *)sender {
-    [CameraUploads syncManager].isUseCellularConnectionEnabled = ![CameraUploads syncManager].isUseCellularConnectionEnabled;
-    [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:[CameraUploads syncManager].isUseCellularConnectionEnabled] forKey:kIsUseCellularConnectionEnabled];
+    [NSUserDefaults.standardUserDefaults setBool:sender.isOn forKey:kIsUseCellularConnectionEnabled];
+    // TODO: handle cellular connection
 }
 
 - (IBAction)skipTouchUpInside:(UIButton *)sender {
@@ -77,36 +82,23 @@
 - (IBAction)enableTouchUpInside:(UIButton *)sender {
     [PHPhotoLibrary requestAuthorization:^(PHAuthorizationStatus status) {
         switch (status) {
-            case PHAuthorizationStatusNotDetermined:
-                break;
-                
             case PHAuthorizationStatusAuthorized: {
                 MEGALogInfo(@"Enable Camera Uploads");
-                [[CameraUploads syncManager] setIsCameraUploadsEnabled:YES];
-                [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:[CameraUploads syncManager].isCameraUploadsEnabled] forKey:kIsCameraUploadsEnabled];
-                
-                [self dismissViewControllerAnimated:YES completion:^{
-                    [SVProgressHUD showImage:[UIImage imageNamed:@"hudCameraUploads"] status:AMLocalizedString(@"cameraUploadsEnabled", nil)];
-                }];
+                [NSUserDefaults.standardUserDefaults setBool:YES forKey:kIsCameraUploadsEnabled];
+                [CameraUploadManager.shared startCameraUploadIfPossible];
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [self dismissViewControllerAnimated:YES completion:^{
+                        [SVProgressHUD showImage:[UIImage imageNamed:@"hudCameraUploads"] status:AMLocalizedString(@"cameraUploadsEnabled", nil)];
+                    }];
+                });
                 break;
             }
-                
             case PHAuthorizationStatusRestricted:
-                break;
-                
-            case PHAuthorizationStatusDenied:{
-                [self dismissViewControllerAnimated:YES completion:nil];
+            case PHAuthorizationStatusDenied: {
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    UIAlertController *permissionsAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"attention", @"Alert title to attract attention") message:AMLocalizedString(@"photoLibraryPermissions", @"Alert message to explain that the MEGA app needs permission to access your device photos") preferredStyle:UIAlertControllerStyleAlert];
-                    
-                    [permissionsAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
-                    
-                    [permissionsAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-                        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
-                    }]];
-                    
-                    [self presentViewController:permissionsAlertController animated:YES completion:nil];
-
+                    [self dismissViewControllerAnimated:YES completion:^{
+                        [self showPhotoLibraryPermissionAlert];
+                    }];
                 });
                 break;
             }

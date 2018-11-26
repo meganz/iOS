@@ -6,6 +6,7 @@
 #import "CameraUploadManager.h"
 #import "Helper.h"
 #import "MEGAConstants.h"
+#import "UIViewController+MNZCategory.h"
 
 @interface CameraUploadsTableViewController ()
 
@@ -68,13 +69,14 @@
         [PHPhotoLibrary requestAuthorization:^(PHAuthorizationStatus status) {
             switch (status) {
                 case PHAuthorizationStatusAuthorized: {
+                    [NSUserDefaults.standardUserDefaults setBool:YES forKey:kIsCameraUploadsEnabled];
+                    [CameraUploadManager.shared startCameraUploadIfPossible];
                     dispatch_async(dispatch_get_main_queue(), ^{
-                        [NSUserDefaults.standardUserDefaults setBool:YES forKey:kIsCameraUploadsEnabled];
-                        [CameraUploadManager.shared startCameraUploadIfPossible];
                         [self.tableView reloadData];
                     });
                     break;
                 }
+                case PHAuthorizationStatusRestricted:
                 case PHAuthorizationStatusDenied: {
                     dispatch_async(dispatch_get_main_queue(), ^{
                         MEGALogInfo(@"Disable Camera Uploads");
@@ -90,18 +92,6 @@
     } else {
         [CameraUploadManager.shared disableCameraUpload];
     }
-}
-
-- (void)showPhotoLibraryPermissionAlert {
-    UIAlertController *permissionsAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"attention", @"Alert title to attract attention") message:AMLocalizedString(@"photoLibraryPermissions", @"Alert message to explain that the MEGA app needs permission to access your device photos") preferredStyle:UIAlertControllerStyleAlert];
-    
-    [permissionsAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
-    
-    [permissionsAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
-    }]];
-    
-    [self presentViewController:permissionsAlertController animated:YES completion:nil];
 }
 
 - (IBAction)uploadVideosSwitchValueChanged:(UISwitch *)sender {
