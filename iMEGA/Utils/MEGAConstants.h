@@ -5,5 +5,8 @@
 #define kIsUploadVideosEnabled @"IsUploadVideosEnabled"
 #define kIsUseCellularConnectionEnabled @"IsUseCellularConnectionEnabled"
 #define kIsOnlyWhenChargingEnabled @"IsOnlyWhenChargingEnabled"
+#define kCameraUploadsNodeHandle @"CameraUploadsNodeHandle"
+
+extern NSString * const MEGALogoutNotificationName;
 
 

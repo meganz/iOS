@@ -8,6 +8,8 @@
 #import "MEGACreateFolderRequestDelegate.h"
 #import "UploadOperationFactory.h"
 #import "AttributeUploadManager.h"
+#import "MEGAConstants.h"
+@import Photos;
 
 static NSString * const CameraUplodFolderName = @"Camera Uploads";
 static const NSInteger ConcurrentPhotoUploadCount = 10;
@@ -48,6 +50,8 @@ static const NSInteger MaxConcurrentVideoOperationCount = 1;
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             [[MEGASdkManager sharedMEGASdk] ensureMediaInfo];
         });
+        
+        [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(clearCameraUploadSettings) name:MEGALogoutNotificationName object:nil];
     }
     return self;
 }
@@ -75,41 +79,44 @@ static const NSInteger MaxConcurrentVideoOperationCount = 1;
 
 #pragma mark - scan and upload
 
-- (void)startUploading {
+- (void)startCameraUploadIfPossible {
+    if (![NSUserDefaults.standardUserDefaults boolForKey:kIsCameraUploadsEnabled] || self.photoUploadOerationQueue.operationCount > 0) {
+        return;
+    }
+    
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         
         // TODO: may need to move attributes scan to app launch
         [AttributeUploadManager.shared scanLocalAttributesAndRetryUploadIfNeeded];
-        
-        if (self.photoUploadOerationQueue.operationCount > 0 || self.videoUploadOerationQueue.operationCount > 0) {
-            return;
-        }
-        
+   
         if (self.cameraUploadNode) {
-            [self uploadIfPossible];
+            [self startCameraUpload];
         } else {
             [[MEGASdkManager sharedMEGASdk] createFolderWithName:CameraUplodFolderName parent:[[MEGASdkManager sharedMEGASdk] rootNode]
                                                         delegate:[[MEGACreateFolderRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
                 self->_cameraUploadNode = [[MEGASdkManager sharedMEGASdk] nodeForHandle:request.nodeHandle];
                 [self saveCameraUploadHandle:request.nodeHandle];
-                [self uploadIfPossible];
+                [self startCameraUpload];
             }]];
         }
     });
 }
 
-- (void)uploadIfPossible {
-    [PHPhotoLibrary requestAuthorization:^(PHAuthorizationStatus status) {
-        if (status == PHAuthorizationStatusAuthorized) {
-            [self.scanner startScanningWithCompletion:^{
-//                [self uploadNextAssetsWithNumber:ConcurrentPhotoUploadCount mediaType:PHAssetMediaTypeImage];
-//                NSArray *videoRecords = [CameraUploadRecordManager.shared fetchNonUploadedRecordsWithLimit:100 mediaType:PHAssetMediaTypeVideo error:nil];
-//                MEGALogDebug(@"video recors status: %@", videoRecords);
-                
-                [self uploadNextAssetsWithNumber:ConcurrentVideoUploadCount mediaType:PHAssetMediaTypeVideo];
-            }];
-        }
-    }];
+- (void)startCameraUpload {
+    [self uploadNextAssetsWithNumber:ConcurrentPhotoUploadCount mediaType:PHAssetMediaTypeImage];
+    [self startVideoUploadIfPossible];
+}
+
+- (void)startVideoUploadIfPossible {
+    if (!([NSUserDefaults.standardUserDefaults boolForKey:kIsCameraUploadsEnabled] && [NSUserDefaults.standardUserDefaults boolForKey:kIsUploadVideosEnabled])) {
+        return;
+    }
+    
+    if (self.videoUploadOerationQueue.operationCount > 0) {
+        return;
+    }
+    
+    [self uploadNextAssetsWithNumber:ConcurrentVideoUploadCount mediaType:PHAssetMediaTypeVideo];
 }
 
 - (void)uploadNextForAsset:(PHAsset *)asset {
@@ -140,9 +147,23 @@ static const NSInteger MaxConcurrentVideoOperationCount = 1;
 
 #pragma mark - stop upload
 
-- (void)stopUploading {
+- (void)disableCameraUpload {
+    [NSUserDefaults.standardUserDefaults setValue:@(NO) forKey:kIsCameraUploadsEnabled];
     [self.photoUploadOerationQueue cancelAllOperations];
+    [self disableVideoUpload];
+}
+
+- (void)disableVideoUpload {
+    [NSUserDefaults.standardUserDefaults setValue:@(NO) forKey:kIsUploadVideosEnabled];
     [self.videoUploadOerationQueue cancelAllOperations];
+}
+
+#pragma mark - logout
+
+- (void)clearCameraUploadSettings {
+    [NSUserDefaults.standardUserDefaults setBool:NO forKey:kIsCameraUploadsEnabled];
+    [self disableCameraUpload];
+    [NSUserDefaults.standardUserDefaults removeObjectForKey:kCameraUploadsNodeHandle];
 }
 
 #pragma mark - handle app lifecycle

@@ -137,11 +137,11 @@
     if (self.isCameraUploads) {
         if (self.phasset) {
             if (self.phasset.mediaType == PHAssetMediaTypeImage) {
-                [[NSUserDefaults standardUserDefaults] setObject:self.phasset.creationDate forKey:kLastUploadPhotoDate];
+//                [[NSUserDefaults standardUserDefaults] setObject:self.phasset.creationDate forKey:kLastUploadPhotoDate];
             }
             
             if (self.phasset.mediaType == PHAssetMediaTypeVideo) {
-                [[NSUserDefaults standardUserDefaults] setObject:self.phasset.creationDate forKey:kLastUploadVideoDate];
+//                [[NSUserDefaults standardUserDefaults] setObject:self.phasset.creationDate forKey:kLastUploadVideoDate];
             }
         }
     }

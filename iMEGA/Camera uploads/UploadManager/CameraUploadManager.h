@@ -1,18 +1,21 @@
 
 #import <Foundation/Foundation.h>
-@import Photos;
 
 NS_ASSUME_NONNULL_BEGIN
+
+@class PHAsset;
 
 @interface CameraUploadManager : NSObject
 
 + (instancetype)shared;
 
-- (void)startUploading;
+- (void)startCameraUploadIfPossible;
+- (void)startVideoUploadIfPossible;
 
 - (void)uploadNextForAsset:(PHAsset *)asset;
 
-- (void)stopUploading;
+- (void)disableCameraUpload;
+- (void)disableVideoUpload;
 
 @end
 

@@ -1,13 +1,9 @@
 
 #import <ifaddrs.h>
 #import <arpa/inet.h>
-
 #import "SVProgressHUD.h"
-
 #import "MEGAReachabilityManager.h"
 #import "MEGASdkManager.h"
-
-#import "CameraUploads.h"
 
 @interface MEGAReachabilityManager ()
 
@@ -163,18 +159,20 @@
 - (void)reachabilityDidChange:(NSNotification *)notification {
     [self retryOrReconnect];
     
-    if ([[CameraUploads syncManager] isCameraUploadsEnabled]) {
-        if (![[CameraUploads syncManager] isUseCellularConnectionEnabled]) {
-            if ([MEGAReachabilityManager isReachableViaWWAN]) {
-                [[CameraUploads syncManager] resetOperationQueue];
-            }
-            
-            if ([[MEGASdkManager sharedMEGASdk] isLoggedIn] && [MEGAReachabilityManager isReachableViaWiFi]) {
-                MEGALogInfo(@"Enable Camera Uploads");
-                [[CameraUploads syncManager] setIsCameraUploadsEnabled:YES];
-            }
-        }
-    }
+    // TODO: handle reachability change notification
+
+//    if ([[CameraUploads syncManager] isCameraUploadsEnabled]) {
+//        if (![[CameraUploads syncManager] isUseCellularConnectionEnabled]) {
+//            if ([MEGAReachabilityManager isReachableViaWWAN]) {
+//                [[CameraUploads syncManager] resetOperationQueue];
+//            }
+//
+//            if ([[MEGASdkManager sharedMEGASdk] isLoggedIn] && [MEGAReachabilityManager isReachableViaWiFi]) {
+//                MEGALogInfo(@"Enable Camera Uploads");
+//                [[CameraUploads syncManager] setIsCameraUploadsEnabled:YES];
+//            }
+//        }
+//    }
     
     if ([MEGAReachabilityManager isReachable]) {
         NSUInteger chatsConnected = 0;
