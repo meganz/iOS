@@ -42,6 +42,7 @@ typedef NS_ENUM (NSInteger, MEGAChatStatus);
 #pragma mark - Red
 
 + (UIColor *)mnz_redMain;
++ (UIColor *)mnz_redError;
 + (UIColor *)mnz_redProI;
 + (UIColor *)mnz_redProII;
 + (UIColor *)mnz_redProIII;

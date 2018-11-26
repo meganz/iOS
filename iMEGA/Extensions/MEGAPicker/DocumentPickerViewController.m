@@ -46,8 +46,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    [MEGASdk setLogToConsole:YES];
+    
     if ([[[NSUserDefaults alloc] initWithSuiteName:@"group.mega.ios"] boolForKey:@"logging"]) {
-        [[MEGALogger sharedLogger] enableSDKlogs];
         NSFileManager *fileManager = [NSFileManager defaultManager];
         NSString *logsPath = [[[fileManager containerURLForSecurityApplicationGroupIdentifier:@"group.mega.ios"] URLByAppendingPathComponent:@"logs"] path];
         if (![fileManager fileExistsAtPath:logsPath]) {
@@ -68,7 +69,6 @@
 
 #ifdef DEBUG
     [MEGASdk setLogLevel:MEGALogLevelMax];
-    [[MEGALogger sharedLogger] enableSDKlogs];
 #else
     [MEGASdk setLogLevel:MEGALogLevelFatal];
 #endif

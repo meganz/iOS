@@ -102,7 +102,7 @@
 "emailInvalidFormat"="Geçerli bir e-posta girin";
 /* Add contacts and share dialog error message when user try to add wrong email address */
 "theEmailAddressFormatIsInvalid"="E-posta adresi biçimi geçersiz";
-/* Message shown when the user enters a wrong password  */
+/* Message shown when the user enters a wrong password */
 "passwordInvalidFormat"="Geçerli bir parola girin";
 /* Hint text to suggest that the user has to write his email */
 "emailPlaceholder"="Eposta";
@@ -130,10 +130,8 @@
 "passwordStrong"="Bu parola en karmaşık kaba kuvvet saldırılarına karşı gelecektir. Lütfen hatırlayacağınızdan emin olun.";
 /*  */
 "agreeWithTheMEGATermsOfService"="MEGA <a href='terms'>Hizmet Koşulları</a>nı kabul ediyorum";
-/* Error text shown when you have not entered a correct name  */
+/* Error text shown when you have not entered a correct name */
 "nameInvalidFormat"="Geçerli bir isim girin";
-/*  */
-"invalidFirstNameAndLastName"="Geçersiz ad/soyad";
 /* Error text shown when you have not written the same password */
 "passwordsDoNotMatch"="Parolalar eşleşmiyor";
 /* Error text shown when you don't have selected the checkbox to agree with the Terms of Service */
@@ -144,8 +142,8 @@
 "awaitingEmailConfirmation"="Eposta onayı bekleniyor.";
 /* Text shown on the confirm account view to remind the user what to do */
 "confirmText"="Hesabınızı onaylamak için parolanızı girin";
-/* Button title that triggers the confirm account action */
-"confirmAccountButton"="Hesabınızı onaylayın.";
+/* Label for any ‘Confirm account’ button, link, text, title, etc. - (String as short as possible). */
+"Confirm account"="Hesabı onaylayın";
 /* Error text shown when you introduce a wrong password on the confirmation proccess */
 "passwordWrong"="Hatalı parola";
 /* Warning title shown when you try to confirm an account but you are logged in with another one */
@@ -1592,17 +1590,17 @@
 "scanOrCopyTheSeed"="Kaynak kodunu Kimlik Doğrulama uygulamanıza tarayın veya kopyalayın. Cihazınızı kaybetme ihtimalinize karşın bu kaynak kodunu güvenli bir yere yedeklediğinizden emin olun.";
 /* A button to help them restore their account if they have lost their 2FA device. */
 "lostYourAuthenticatorDevice"="Authenticator cihazınızı mı kaybettiniz?";
-/* Settings section title where you can enable the option to 'Save Images in Library' */
-"Save Images in Library"="Görüntüleri Kütüphaneye Kaydet";
-/* Settings section title where you can enable the option to 'Save Videos in Library' */
-"Save Videos in Library"="Videoları Kütüphaneye Kaydet";
+/* Settings section title where you can enable the option to 'Save Images in Photos' */
+"Save Images in Photos"="Görüntüleri Fotoğraflara Kaydet";
+/* Settings section title where you can enable the option to 'Save Videos in Photos' */
+"Save Videos in Photos"="Videoları Fotoğraflara kaydet";
 /* Footer text shown under the settings for download options 'Save Images/Videos in Library' */
 "Images and/or videos downloaded will be stored in the device’s media library instead of the Offline section."="İndirilen görüntüler ve/veya videolar çevrimdışı bölümü yerine cihazınızın medya kütüphanesine indirilecektir.";
 /* Setting associated with the 'Camera' of the device */
 "Camera"="Kamera";
-/* Settings section title where you can enable the option to 'Save in Library' the images or videos taken from your camera in the MEGA app */
-"Save in Library"="Kütüphaneye Kaydet";
-/* Footer text shown under the Camera setting to explain the option 'Save in Library' */
+/* Settings section title where you can enable the option to 'Save in Photos' the images or videos taken from your camera in the MEGA app */
+"Save in Photos"="Fotoğraflara Kaydet";
+/* Footer text shown under the Camera setting to explain the option 'Save in Photos' */
 "Save a copy of the images and videos taken from the MEGA app in your device’s media library."="MEGA uygulamasından çekilen görüntü ve videoların bir kopyasını cihazınızın medya kütüphanesine kaydedin.";
 /* Title shown in a page of the on boarding screens explaining that the user keeps the encryption keys */
 "You hold the keys"="Anahtarlar sizdedir";
@@ -1627,7 +1625,7 @@
 /* Title label that explains that the user is going to be asked for the photos permission */
 "Allow Access to Photos"="Resimlere Erişime İzin Ver";
 /* Detailed explanation of why the user should give permission to access to the photos */
-"To share photos and videos, allow MEGA to access your library."="Fotoğraf ve video paylaşmak için, MEGA'nın kütüphanenize erişmesine izin verin.";
+"Please give the MEGA App permission to access Photos to share photos and videos."="Fotoğraf veya video paylaşmak için, MEGA'nın Fotoğraflarınıza erişimine izin verin.";
 /* Title label that explains that the user is going to be asked for the microphone and camera permission */
 "Enable Microphone and Camera"="Mikrofon ve Kamerayı Etkinleştir";
 /* Detailed explanation of why the user should give permission to access to the camera and the microphone */

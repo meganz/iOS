@@ -102,7 +102,7 @@
 "emailInvalidFormat"="Введите правильный email";
 /* Add contacts and share dialog error message when user try to add wrong email address */
 "theEmailAddressFormatIsInvalid"="Похоже, что email некорректен";
-/* Message shown when the user enters a wrong password  */
+/* Message shown when the user enters a wrong password */
 "passwordInvalidFormat"="Введите правильный пароль";
 /* Hint text to suggest that the user has to write his email */
 "emailPlaceholder"="Email";
@@ -130,10 +130,8 @@
 "passwordStrong"="Этот пароль не поддастся самым самым мощным атакам с применением полного перебора. Убедитесь, что запомнили его.";
 /*  */
 "agreeWithTheMEGATermsOfService"="Я согласен с <a href='terms'>Условиями предоставления услуг</a> MEGA";
-/* Error text shown when you have not entered a correct name  */
+/* Error text shown when you have not entered a correct name */
 "nameInvalidFormat"="Введите правильное имя";
-/*  */
-"invalidFirstNameAndLastName"="Неверное имя и/или фамилия.";
 /* Error text shown when you have not written the same password */
 "passwordsDoNotMatch"="Пароли не совпадают";
 /* Error text shown when you don't have selected the checkbox to agree with the Terms of Service */
@@ -144,8 +142,8 @@
 "awaitingEmailConfirmation"="Ожидание подтверждения по электронной почте.";
 /* Text shown on the confirm account view to remind the user what to do */
 "confirmText"="Пожалуйста, введите пароль, чтобы подтвердить свою учётную запись";
-/* Button title that triggers the confirm account action */
-"confirmAccountButton"="Подтверждение учётной записи";
+/* Label for any ‘Confirm account’ button, link, text, title, etc. - (String as short as possible). */
+"Confirm account"="Подтвердить уч. запись";
 /* Error text shown when you introduce a wrong password on the confirmation proccess */
 "passwordWrong"="Неверный пароль";
 /* Warning title shown when you try to confirm an account but you are logged in with another one */
@@ -1592,17 +1590,17 @@
 "scanOrCopyTheSeed"="Сканируйте или скопируйте seed-ключ в приложение-аутентификатор. Сохраните seed-ключ в безопасном месте на случай потери устройства.";
 /* A button to help them restore their account if they have lost their 2FA device. */
 "lostYourAuthenticatorDevice"="Потеряли аутентификационное устройство?";
-/* Settings section title where you can enable the option to 'Save Images in Library' */
-"Save Images in Library"="Сохранять изображения в библиотеке";
-/* Settings section title where you can enable the option to 'Save Videos in Library' */
-"Save Videos in Library"="Сохранять видео в библиотеке";
+/* Settings section title where you can enable the option to 'Save Images in Photos' */
+"Save Images in Photos"="Сохранять изображения в «Фотографиях»";
+/* Settings section title where you can enable the option to 'Save Videos in Photos' */
+"Save Videos in Photos"="Сохранять видео в «Фотографиях»";
 /* Footer text shown under the settings for download options 'Save Images/Videos in Library' */
 "Images and/or videos downloaded will be stored in the device’s media library instead of the Offline section."="Загруженные изображения и/или видео будут сохранены в медиабиблиотеке устройства, а не в локальном разделе.";
 /* Setting associated with the 'Camera' of the device */
 "Camera"="Камера";
-/* Settings section title where you can enable the option to 'Save in Library' the images or videos taken from your camera in the MEGA app */
-"Save in Library"="Сохранять в библиотеке";
-/* Footer text shown under the Camera setting to explain the option 'Save in Library' */
+/* Settings section title where you can enable the option to 'Save in Photos' the images or videos taken from your camera in the MEGA app */
+"Save in Photos"="Сохранять в «Фотографиях»";
+/* Footer text shown under the Camera setting to explain the option 'Save in Photos' */
 "Save a copy of the images and videos taken from the MEGA app in your device’s media library."="Сохраните копию изображений и видео из приложения MEGA в медиабиблиотеке вашего устройства.";
 /* Title shown in a page of the on boarding screens explaining that the user keeps the encryption keys */
 "You hold the keys"="Ключи хранятся у вас";
@@ -1627,7 +1625,7 @@
 /* Title label that explains that the user is going to be asked for the photos permission */
 "Allow Access to Photos"="Разрешить доступ к фотографиям";
 /* Detailed explanation of why the user should give permission to access to the photos */
-"To share photos and videos, allow MEGA to access your library."="Чтобы обмениваться фотографиями и видео, откройте MEGA доступ к библиотеке.";
+"Please give the MEGA App permission to access Photos to share photos and videos."="Пожалуйста, дайте приложению MEGA разрешение на доступ к фотографиям для обмена фото и видео.";
 /* Title label that explains that the user is going to be asked for the microphone and camera permission */
 "Enable Microphone and Camera"="Включить микрофон и камеру";
 /* Detailed explanation of why the user should give permission to access to the camera and the microphone */

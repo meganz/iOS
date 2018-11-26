@@ -244,7 +244,7 @@
 #pragma mark - NSObject
 
 - (NSUInteger)hash {
-    return super.hash ^ self.message.userHandle ^ self.message.warningDialog;
+    return super.hash ^ (NSUInteger)self.message.userHandle ^ self.message.warningDialog;
 }
 
 - (NSString *)description {
