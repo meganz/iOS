@@ -1678,6 +1678,10 @@
 "Saved to Photos"="Saved to Photos";
 /* Text shown when an error occurs when trying to save a photo or video to Photos app */
 "Could not save Item"="Could not save Item";
+/* Text shown for switching from thumbnail view to list view. */
+"List view"="List view";
+/* Text shown for switching from list view to thumbnail view. */
+"Thumbnail view"="Thumbnail view";
 /* Message to inform the local user that someone has joined the current group call */
 "%@ joined the call."="%@ joined the call.";
 /* Message to inform the local user that someone has left the current group call */

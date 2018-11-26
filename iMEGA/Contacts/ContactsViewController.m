@@ -547,7 +547,7 @@
             self.navigationController.topViewController.toolbarItems = self.toolbar.items;
             [self.navigationController setToolbarHidden:NO animated:animated];
         }
-        for (ContactTableViewCell *cell in [self.tableView visibleCells]) {
+        for (ContactTableViewCell *cell in self.tableView.visibleCells) {
             UIView *view = [[UIView alloc] init];
             view.backgroundColor = UIColor.clearColor;
             cell.selectedBackgroundView = view;
@@ -570,7 +570,7 @@
             [self.navigationController setToolbarHidden:YES animated:animated];
         }
         
-        for (ContactTableViewCell *cell in [self.tableView visibleCells]) {
+        for (ContactTableViewCell *cell in self.tableView.visibleCells) {
             cell.selectedBackgroundView = nil;
         }
     }
