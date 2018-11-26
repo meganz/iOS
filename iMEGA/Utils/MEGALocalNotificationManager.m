@@ -31,6 +31,10 @@
 }
 
 - (void)proccessNotification {
+    if (![[NSUserDefaults standardUserDefaults] boolForKey:@"VoIP_messages"]) {
+        MEGALogDebug(@"Apple VoIP push disabled");
+        return;
+    }
     if (self.message.status == MEGAChatMessageStatusNotSeen) {
         if  (self.message.type == MEGAChatMessageTypeNormal || self.message.type == MEGAChatMessageTypeContact || self.message.type == MEGAChatMessageTypeAttachment) {
             
