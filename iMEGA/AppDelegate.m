@@ -1800,6 +1800,7 @@ void uncaughtExceptionHandler(NSException *exception) {
     
     // Message
     if ([[[payload dictionaryPayload] objectForKey:@"megatype"] integerValue] == 2) {
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"VoIP_messages"];
         NSString *chatIdB64 = [[[payload dictionaryPayload] objectForKey:@"megadata"] objectForKey:@"chatid"];
         NSString *msgIdB64 = [[[payload dictionaryPayload] objectForKey:@"megadata"] objectForKey:@"msgid"];
         NSString *silent = [[[payload dictionaryPayload] objectForKey:@"megadata"] objectForKey:@"silent"];
@@ -2221,6 +2222,7 @@ void uncaughtExceptionHandler(NSException *exception) {
             isOverquota = NO;
             [[MEGASdkManager sharedMEGASdk] getAccountDetails];
             [self copyDatabasesForExtensions];
+            [[NSUserDefaults standardUserDefaults] setBool:[api appleVoipPushEnabled] forKey:@"VoIP_messages"];
             
             break;
         }
