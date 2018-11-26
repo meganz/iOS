@@ -27,7 +27,7 @@
 #import "ShareFolderActivity.h"
 #import "ItemListViewController.h"
 
-@interface ContactsViewController () <CNContactPickerDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAGlobalDelegate, ItemListViewControllerProtocol, UISearchControllerDelegate, UIGestureRecognizerDelegate, MEGAChatDelegate>
+@interface ContactsViewController () <CNContactPickerDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAGlobalDelegate, ItemListViewControllerProtocol, UISearchControllerDelegate, UIGestureRecognizerDelegate, MEGAChatDelegate, UITextFieldDelegate>
 
 @property (nonatomic) id<UIViewControllerPreviewing> previewingContext;
 
@@ -739,6 +739,7 @@
         [addContactFromEmailAlertController addTextFieldWithConfigurationHandler:^(UITextField *textField) {
             textField.placeholder = AMLocalizedString(@"contactEmail", @"Clue text to help the user know what should write there. In this case the contact email you want to add to your contacts list");
             [textField addTarget:self action:@selector(alertControllerShouldEnableDefaultButtonForEmailTextField:) forControlEvents:UIControlEventEditingChanged];
+            textField.delegate = self;
         }];
         
         [addContactFromEmailAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
@@ -1356,7 +1357,12 @@
     NSUInteger usersCount = contactProperties.count;
     MEGAInviteContactRequestDelegate *inviteContactRequestDelegate = [[MEGAInviteContactRequestDelegate alloc] initWithNumberOfRequests:usersCount];
     for (CNContactProperty *contactProperty in contactProperties) {
-        [[MEGASdkManager sharedMEGASdk] inviteContactWithEmail:contactProperty.value message:@"" action:MEGAInviteActionAdd delegate:inviteContactRequestDelegate];
+        NSString *email = contactProperty.value;
+        if (email.mnz_isValidEmail) {
+            [[MEGASdkManager sharedMEGASdk] inviteContactWithEmail:contactProperty.value message:@"" action:MEGAInviteActionAdd delegate:inviteContactRequestDelegate];
+        } else {
+            [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"%@ %@", AMLocalizedString(@"theEmailAddressFormatIsInvalid", @"Add contacts and share dialog error message when user try to add wrong email address"), email]];
+        }
     }
 }
 
@@ -1470,6 +1476,13 @@
     }
     
     [self.tableView reloadData];
+}
+
+#pragma mark - UITextFieldDelegate
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    NSString *email = textField.text;
+    return (email.length > 0) ? [email mnz_isValidEmail] : NO;
 }
 
 #pragma mark - MEGAGlobalDelegate

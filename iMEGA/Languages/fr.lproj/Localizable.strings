@@ -102,7 +102,7 @@
 "emailInvalidFormat"="Saisir une adresse courriel valide";
 /* Add contacts and share dialog error message when user try to add wrong email address */
 "theEmailAddressFormatIsInvalid"="Le format de l'adresse courriel est invalide";
-/* Message shown when the user enters a wrong password  */
+/* Message shown when the user enters a wrong password */
 "passwordInvalidFormat"="Saisir un mot de passe valide";
 /* Hint text to suggest that the user has to write his email */
 "emailPlaceholder"="Adresse courriel";
@@ -130,10 +130,8 @@
 "passwordStrong"="Ce mot de passe résistera à la plupart des attaques par force brute typiques. Veuillez vous assurer de vous en souvenir.";
 /*  */
 "agreeWithTheMEGATermsOfService"="J'accepte les <a href='terms'>conditions générales d'utilisation</a> de MEGA";
-/* Error text shown when you have not entered a correct name  */
+/* Error text shown when you have not entered a correct name */
 "nameInvalidFormat"="Saisir un nom valide";
-/*  */
-"invalidFirstNameAndLastName"="Prénom ou nom de famille invalide.";
 /* Error text shown when you have not written the same password */
 "passwordsDoNotMatch"="Les mots de passes ne correspondent pas";
 /* Error text shown when you don't have selected the checkbox to agree with the Terms of Service */
@@ -144,8 +142,8 @@
 "awaitingEmailConfirmation"="En attente de la confirmation par courriel.";
 /* Text shown on the confirm account view to remind the user what to do */
 "confirmText"="Veuillez saisir votre mot de passe pour confirmer votre compte";
-/* Button title that triggers the confirm account action */
-"confirmAccountButton"="Confirmer votre compte";
+/* Label for any ‘Confirm account’ button, link, text, title, etc. - (String as short as possible). */
+"Confirm account"="Confirmer le compte";
 /* Error text shown when you introduce a wrong password on the confirmation proccess */
 "passwordWrong"="Mot de passe erroné";
 /* Warning title shown when you try to confirm an account but you are logged in with another one */
@@ -1592,17 +1590,17 @@
 "scanOrCopyTheSeed"="Balayez ou copiez la graine vers votre appli d’authentification. Assurez-vous de sauvegarder cette graine en lieu sûr, au cas où vous perdriez votre appareil.";
 /* A button to help them restore their account if they have lost their 2FA device. */
 "lostYourAuthenticatorDevice"="Avez-vous perdu votre appareil d’authentification ?";
-/* Settings section title where you can enable the option to 'Save Images in Library' */
-"Save Images in Library"="Enregistrer les images dans la médiathèque";
-/* Settings section title where you can enable the option to 'Save Videos in Library' */
-"Save Videos in Library"="Enregistrer les vidéos dans la médiathèque";
+/* Settings section title where you can enable the option to 'Save Images in Photos' */
+"Save Images in Photos"="Enregistrer les images dans Photos";
+/* Settings section title where you can enable the option to 'Save Videos in Photos' */
+"Save Videos in Photos"="Enregistrer les vidéos dans Photos";
 /* Footer text shown under the settings for download options 'Save Images/Videos in Library' */
 "Images and/or videos downloaded will be stored in the device’s media library instead of the Offline section."="Les images et les vidéos téléchargées seront enregistrées dans la médiathèque de l’appareil au lieu de la section Hors ligne.";
 /* Setting associated with the 'Camera' of the device */
 "Camera"="Appareil photo";
-/* Settings section title where you can enable the option to 'Save in Library' the images or videos taken from your camera in the MEGA app */
-"Save in Library"="Enregistrer dans la médiathèque";
-/* Footer text shown under the Camera setting to explain the option 'Save in Library' */
+/* Settings section title where you can enable the option to 'Save in Photos' the images or videos taken from your camera in the MEGA app */
+"Save in Photos"="Enregistrer dans Photos";
+/* Footer text shown under the Camera setting to explain the option 'Save in Photos' */
 "Save a copy of the images and videos taken from the MEGA app in your device’s media library."="Enregistrer dans la médiathèque de votre appareil un exemplaire des images et des vidéos prises avec l’appli MEGA.";
 /* Title shown in a page of the on boarding screens explaining that the user keeps the encryption keys */
 "You hold the keys"="Vous détenez les clés";
@@ -1627,7 +1625,7 @@
 /* Title label that explains that the user is going to be asked for the photos permission */
 "Allow Access to Photos"="Autoriser l’accès à Photos";
 /* Detailed explanation of why the user should give permission to access to the photos */
-"To share photos and videos, allow MEGA to access your library."="Pour partager des photos et des vidéos, autorisez MEGA à accéder à votre médiathèque.";
+"Please give the MEGA App permission to access Photos to share photos and videos."="Veuillez donner à l’appli MEGA l’autorisation d’accéder à Photos pour partager vos photos et vidéos.";
 /* Title label that explains that the user is going to be asked for the microphone and camera permission */
 "Enable Microphone and Camera"="Activer le microphone et l’appareil photo";
 /* Detailed explanation of why the user should give permission to access to the camera and the microphone */

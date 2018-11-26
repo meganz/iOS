@@ -43,7 +43,7 @@
 #import "SharedItemsViewController.h"
 #import "UpgradeTableViewController.h"
 
-@interface CloudDriveViewController () <UINavigationControllerDelegate, UIDocumentPickerDelegate, UIDocumentMenuDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGADelegate, MEGARequestDelegate, MGSwipeTableCellDelegate, CustomActionViewControllerDelegate, NodeInfoViewControllerDelegate, UITableViewDelegate, UITableViewDataSource> {
+@interface CloudDriveViewController () <UINavigationControllerDelegate, UIDocumentPickerDelegate, UIDocumentMenuDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGADelegate, MEGARequestDelegate, MGSwipeTableCellDelegate, CustomActionViewControllerDelegate, NodeInfoViewControllerDelegate, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate> {
     BOOL allNodesSelected;
     
     MEGAShareType lowShareType; //Control the actions allowed for node/nodes selected
@@ -1267,7 +1267,7 @@
                 }];
             };
             
-            [UIApplication.mnz_visibleViewController presentViewController:customModalAlertVC animated:YES completion:nil];
+            [UIApplication.mnz_presentingViewController presentViewController:customModalAlertVC animated:YES completion:nil];
             
             alreadyPresented = YES;
         } else {
@@ -1401,6 +1401,7 @@
         [newFolderAlertController addTextFieldWithConfigurationHandler:^(UITextField *textField) {
             textField.placeholder = AMLocalizedString(@"newFolderMessage", @"Hint text shown on the create folder alert.");
             [textField addTarget:self action:@selector(newFolderAlertTextFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
+            textField.delegate = self;
         }];
         
         [newFolderAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
@@ -1798,6 +1799,13 @@
 - (void)documentMenu:(UIDocumentMenuViewController *)documentMenu didPickDocumentPicker:(UIDocumentPickerViewController *)documentPicker {
     documentPicker.delegate = self;
     [self presentViewController:documentPicker animated:YES completion:nil];
+}
+
+#pragma mark - UITextFieldDelegate
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    BOOL containsInvalidChars = [textField.text rangeOfCharacterFromSet:[NSCharacterSet characterSetWithCharactersInString:@"|*/:<>?\"\\"]].length;
+    return (textField.text.length > 0 && !containsInvalidChars);
 }
 
 #pragma mark - MEGARequestDelegate

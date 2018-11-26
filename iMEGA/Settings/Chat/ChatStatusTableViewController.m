@@ -70,7 +70,7 @@
     self.presenceConfig = [[MEGASdkManager sharedMEGAChatSdk] presenceConfig];
     [self updateUIWithPresenceConfig];
     
-    self.autoAwayTimeoutInMinutes = (self.presenceConfig.autoAwayTimeout / 60);
+    self.autoAwayTimeoutInMinutes = (NSInteger)(self.presenceConfig.autoAwayTimeout / 60);
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
