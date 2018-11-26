@@ -23,7 +23,6 @@
 #import "MEGAStore.h"
 #import "MEGAUser+MNZCategory.h"
 
-#import "CameraUploads.h"
 #import "GetLinkActivity.h"
 #import "NodeTableViewCell.h"
 #import "OpenInActivity.h"
@@ -32,6 +31,7 @@
 #import "RemoveSharingActivity.h"
 #import "ShareFolderActivity.h"
 #import "SendToChatActivity.h"
+#import "MEGAConstants.h"
 
 static MEGANode *linkNode;
 static NSInteger linkNodeOption;
@@ -1233,8 +1233,8 @@ static MEGAIndexer *indexer;
     [UIView transitionWithView:window duration:0.5 options:(UIViewAnimationOptionTransitionCrossDissolve | UIViewAnimationOptionAllowAnimatedContent) animations:^{
         [window setRootViewController:viewController];
     } completion:nil];
-        
-    [Helper resetCameraUploadsSettings];
+
+    [NSNotificationCenter.defaultCenter postNotificationName:MEGALogoutNotificationName object:nil];
     [Helper resetUserData];
     
     [Helper deletePasscode];
@@ -1248,7 +1248,7 @@ static MEGAIndexer *indexer;
     [Helper deleteUserData];
     [Helper deleteMasterKey];
     
-    [Helper resetCameraUploadsSettings];
+    [NSNotificationCenter.defaultCenter postNotificationName:MEGALogoutNotificationName object:nil];
     [Helper resetUserData];
     
     [Helper deletePasscode];
@@ -1380,17 +1380,6 @@ static MEGAIndexer *indexer;
     [sharedUserDefaults removeObjectForKey:@"useHttpsOnly"];
     [sharedUserDefaults removeObjectForKey:@"IsChatEnabled"];
     [sharedUserDefaults synchronize];
-}
-
-+ (void)resetCameraUploadsSettings {
-    [[NSUserDefaults standardUserDefaults] removeObjectForKey:kLastUploadPhotoDate];
-    [CameraUploads syncManager].lastUploadPhotoDate = [NSDate dateWithTimeIntervalSince1970:0];
-    
-    [[NSUserDefaults standardUserDefaults] removeObjectForKey:kLastUploadVideoDate];
-    [CameraUploads syncManager].lastUploadVideoDate = [NSDate dateWithTimeIntervalSince1970:0];
-
-    [[CameraUploads syncManager] setIsCameraUploadsEnabled:NO];
-    [[NSUserDefaults standardUserDefaults] removeObjectForKey:kCameraUploadsNodeHandle];
 }
 
 + (void)deletePasscode {

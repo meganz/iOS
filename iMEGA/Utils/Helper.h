@@ -7,10 +7,6 @@
 
 #define kIsEraseAllLocalDataEnabled @"IsEraseAllLocalDataEnabled"
 
-#define kLastUploadPhotoDate @"LastUploadPhotoDate"
-#define kLastUploadVideoDate @"LastUploadVideoDate"
-#define kCameraUploadsNodeHandle @"CameraUploadsNodeHandle"
-
 typedef NS_OPTIONS(NSUInteger, NodesAre) {
     NodesAreFiles    = 1 << 0,
     NodesAreFolders  = 1 << 1,

@@ -13,7 +13,7 @@
 #import "SAMKeychain.h"
 #import "SVProgressHUD.h"
 
-#import "CameraUploads.h"
+#import "MEGAConstants.h"
 #import "Helper.h"
 #import "DevicePermissionsHelper.h"
 #import "MEGAApplication.h"
@@ -434,9 +434,7 @@
     [[MEGASdkManager sharedMEGAChatSdk] setBackgroundStatus:NO];
     
     if ([[MEGASdkManager sharedMEGASdk] isLoggedIn]) {
-        if ([NSUserDefaults.standardUserDefaults boolForKey:kIsCameraUploadsEnabled]) {
-            [CameraUploadManager.shared startUploading];
-        }
+        [CameraUploadManager.shared startCameraUploadIfPossible];
         
         if (isFetchNodesDone) {
             MEGAShowPasswordReminderRequestDelegate *showPasswordReminderDelegate = [[MEGAShowPasswordReminderRequestDelegate alloc] initToLogout:NO];
@@ -1119,17 +1117,12 @@
 }
 
 - (void)showOverquotaAlert {
-    [self disableCameraUploads];
+    [CameraUploadManager.shared disableCameraUpload];
     
     if (!UIApplication.mnz_presentingViewController.presentedViewController || UIApplication.mnz_presentingViewController.presentedViewController != self.overquotaAlertView) {
         isOverquota = YES;
         [[MEGASdkManager sharedMEGASdk] getAccountDetails];
     }
-}
-
-- (void)disableCameraUploads {
-    [NSUserDefaults.standardUserDefaults setValue:@(NO) forKey:kIsCameraUploadsEnabled];
-    [CameraUploadManager.shared stopUploading];
 }
 
 - (void)showLinkNotValid {
@@ -1910,9 +1903,7 @@ void uncaughtExceptionHandler(NSException *exception) {
     if (!nodeList) {
         MEGATransferList *transferList = [api uploadTransfers];
         if (transferList.size.integerValue == 0) {
-            if ([NSUserDefaults.standardUserDefaults boolForKey:kIsCameraUploadsEnabled]) {
-                [CameraUploadManager.shared startUploading];
-            }
+            [CameraUploadManager.shared startCameraUploadIfPossible];
         }
         
         [Helper startPendingUploadTransferIfNeeded];
@@ -2526,14 +2517,9 @@ void uncaughtExceptionHandler(NSException *exception) {
 }
 
 - (void)onTransferUpdate:(MEGASdk *)api transfer:(MEGATransfer *)transfer {
-    if (transfer.type == MEGATransferTypeUpload) {
-        [transfer mnz_cancelPendingCUTransfer];
-    }
-    
     if (transfer.state == MEGATransferStatePaused) {
         [Helper startPendingUploadTransferIfNeeded];
     }
-
 }
 
 - (void)onTransferTemporaryError:(MEGASdk *)api transfer:(MEGATransfer *)transfer error:(MEGAError *)error {

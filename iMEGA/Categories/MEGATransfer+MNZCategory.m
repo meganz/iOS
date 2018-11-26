@@ -1,9 +1,6 @@
 
 #import "MEGATransfer+MNZCategory.h"
-
 #import <Photos/Photos.h>
-
-#import "CameraUploads.h"
 #import "Helper.h"
 #import "MEGANode+MNZCategory.h"
 #import "MEGASdkManager.h"
@@ -102,28 +99,6 @@
             
             if ([appDataType isEqualToString:@"setCoordinates"]) {
                 [self mnz_setCoordinates:appDataComponent];
-            }
-        }
-    }
-}
-
-- (void)mnz_cancelPendingCUTransfer {
-    if ([self.appData containsString:@"CU"]) {
-        if ([CameraUploads syncManager].isCameraUploadsEnabled) {
-            if (![CameraUploads syncManager].isUseCellularConnectionEnabled && [MEGAReachabilityManager isReachableViaWWAN]) {
-                [[MEGASdkManager sharedMEGASdk] cancelTransfer:self];
-            }
-        } else {
-            [[MEGASdkManager sharedMEGASdk] cancelTransfer:self];
-        }
-    }
-}
-
-- (void)mnz_cancelPendingCUVideoTransfer {
-    if ([self.appData containsString:@"CU"]) {
-        if ([CameraUploads syncManager].isCameraUploadsEnabled) {
-            if (self.fileName.mnz_isVideoPathExtension) {
-                [[MEGASdkManager sharedMEGASdk] cancelTransfer:self];
             }
         }
     }

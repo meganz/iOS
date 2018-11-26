@@ -8,8 +8,7 @@
 #import "MEGAReachabilityManager.h"
 #import "Helper.h"
 #import "SVProgressHUD.h"
-#import "CameraUploadsTableViewController.h"
-
+#import "MEGAConstants.h"
 #define kCameraUploads @"Camera Uploads"
 
 @interface CameraUploads () {
@@ -35,17 +34,17 @@ static CameraUploads *instance = nil;
 }
 
 - (void)prepare {
-    self.lastUploadPhotoDate = [[NSUserDefaults standardUserDefaults] objectForKey:kLastUploadPhotoDate];
-    if (!self.lastUploadPhotoDate) {
-        self.lastUploadPhotoDate = [NSDate dateWithTimeIntervalSince1970:0];
-        [[NSUserDefaults standardUserDefaults] setObject:self.lastUploadPhotoDate forKey:kLastUploadPhotoDate];
-    }
-    
-    self.lastUploadVideoDate = [[NSUserDefaults standardUserDefaults] objectForKey:kLastUploadVideoDate];
-    if (!self.lastUploadVideoDate) {
-        self.lastUploadVideoDate = [NSDate dateWithTimeIntervalSince1970:0];
-        [[NSUserDefaults standardUserDefaults] setObject:self.lastUploadVideoDate forKey:kLastUploadVideoDate];
-    }
+//    self.lastUploadPhotoDate = [[NSUserDefaults standardUserDefaults] objectForKey:kLastUploadPhotoDate];
+//    if (!self.lastUploadPhotoDate) {
+//        self.lastUploadPhotoDate = [NSDate dateWithTimeIntervalSince1970:0];
+//        [[NSUserDefaults standardUserDefaults] setObject:self.lastUploadPhotoDate forKey:kLastUploadPhotoDate];
+//    }
+//
+//    self.lastUploadVideoDate = [[NSUserDefaults standardUserDefaults] objectForKey:kLastUploadVideoDate];
+//    if (!self.lastUploadVideoDate) {
+//        self.lastUploadVideoDate = [NSDate dateWithTimeIntervalSince1970:0];
+//        [[NSUserDefaults standardUserDefaults] setObject:self.lastUploadVideoDate forKey:kLastUploadVideoDate];
+//    }
     
     cameraUploadHandle = -1;
     
@@ -81,8 +80,8 @@ static CameraUploads *instance = nil;
             return;
         }
         
-        self.lastUploadPhotoDate = [[NSUserDefaults standardUserDefaults] objectForKey:kLastUploadPhotoDate];
-        self.lastUploadVideoDate = [[NSUserDefaults standardUserDefaults] objectForKey:kLastUploadVideoDate];
+//        self.lastUploadPhotoDate = [[NSUserDefaults standardUserDefaults] objectForKey:kLastUploadPhotoDate];
+//        self.lastUploadVideoDate = [[NSUserDefaults standardUserDefaults] objectForKey:kLastUploadVideoDate];
         if (![[NSUserDefaults standardUserDefaults] objectForKey:kCameraUploadsNodeHandle]){
             cameraUploadHandle = -1;
         } else {
