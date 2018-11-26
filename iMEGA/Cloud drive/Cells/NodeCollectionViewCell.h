@@ -13,8 +13,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (weak, nonatomic) IBOutlet UIImageView *thumbnailPlayImageView;
 
-@property (strong, nonatomic) MEGANode *node;
-
 - (void)configureCellForNode:(MEGANode *)node;
 - (void)selectCell:(BOOL)selected;
 

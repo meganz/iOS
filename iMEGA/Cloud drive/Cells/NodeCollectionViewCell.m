@@ -9,8 +9,6 @@
 @implementation NodeCollectionViewCell
 
 - (void)configureCellForNode:(MEGANode *)node {
-    self.node = node;
-    
     if (node.hasThumbnail) {
         NSString *thumbnailFilePath = [Helper pathForNode:node inSharedSandboxCacheDirectory:@"thumbnailsV3"];
         if ([[NSFileManager defaultManager] fileExistsAtPath:thumbnailFilePath]) {
