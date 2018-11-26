@@ -1600,7 +1600,7 @@ void uncaughtExceptionHandler(NSException *exception) {
 - (void)alertTextFieldDidChange:(UITextField *)textField {
     UIAlertController *alertController = (UIAlertController *)UIApplication.mnz_visibleViewController;
     if (alertController) {
-        UIAlertAction *rightButtonAction = alertController.actions.lastObject;
+        UIAlertAction *rightButtonAction = alertController.actions.firstObject;
         rightButtonAction.enabled = !textField.text.mnz_isEmpty;
     }
 }
@@ -2313,13 +2313,16 @@ void uncaughtExceptionHandler(NSException *exception) {
                         }];
                     }
                     
-                    [masterKeyLoggedInAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:nil]];
-                    [masterKeyLoggedInAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+                    UIAlertAction *okAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
                         NSString *masterKey = masterKeyLoggedInAlertController.textFields.count ? masterKeyLoggedInAlertController.textFields[0].text : [[MEGASdkManager sharedMEGASdk] masterKey];
                         [self presentChangeViewType:ChangeTypeResetPassword email:self.emailOfNewSignUpLink masterKey:masterKey link:self.recoveryLink];
                         self.emailOfNewSignUpLink = nil;
                         self.recoveryLink = nil;
-                    }]];
+                    }];
+                    okAlertAction.enabled = NO;
+                    [masterKeyLoggedInAlertController addAction:okAlertAction];
+                    
+                    [masterKeyLoggedInAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:nil]];
                     
                     self.emailOfNewSignUpLink = request.email;
                     self.recoveryLink = request.link;
