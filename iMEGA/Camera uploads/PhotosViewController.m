@@ -21,6 +21,7 @@
 #import "DisplayMode.h"
 #import "BrowserViewController.h"
 #import "CameraUploadManager.h"
+#import "MEGAConstants.h"
 
 @interface PhotosViewController () <UICollectionViewDelegateFlowLayout, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAPhotoBrowserDelegate> {
     BOOL allNodesSelected;
@@ -88,13 +89,12 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(internetConnectionChanged) name:kReachabilityChangedNotification object:nil];
-    
     [self setEditing:NO animated:NO];
     
-    [[MEGAReachabilityManager sharedManager] retryPendingConnections];
+    [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(internetConnectionChanged) name:kReachabilityChangedNotification object:nil];
+    [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(assetUploadDoneNotification) name:MEGACameraUploadAssetUploadDoneNotificationName object:nil];
+    
     [[MEGASdkManager sharedMEGASdk] addMEGARequestDelegate:self];
-    [[MEGASdkManager sharedMEGASdk] addMEGATransferDelegate:self];
     [[MEGASdkManager sharedMEGASdk] addMEGAGlobalDelegate:self];
     
     [self setNavigationBarButtonItemsEnabled:[MEGAReachabilityManager isReachable]];
@@ -104,10 +104,10 @@
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:kReachabilityChangedNotification object:nil];
+    [NSNotificationCenter.defaultCenter removeObserver:self name:kReachabilityChangedNotification object:nil];
+    [NSNotificationCenter.defaultCenter removeObserver:self name:MEGACameraUploadAssetUploadDoneNotificationName object:nil];
     
     [[MEGASdkManager sharedMEGASdk] removeMEGARequestDelegate:self];
-    [[MEGASdkManager sharedMEGASdk] removeMEGATransferDelegate:self];
     [[MEGASdkManager sharedMEGASdk] removeMEGAGlobalDelegate:self];
 }
 
@@ -291,6 +291,10 @@
     self.moveBarButtonItem.enabled = boolValue;
     self.carbonCopyBarButtonItem.enabled = boolValue;
     self.deleteBarButtonItem.enabled = boolValue;
+}
+
+- (void)assetUploadDoneNotification {
+    [self updateProgressWithKnownCameraUploadInProgress:YES];
 }
 
 - (void)updateProgressWithKnownCameraUploadInProgress:(BOOL)knownCameraUploadInProgress {
@@ -867,25 +871,5 @@
 - (void)onNodesUpdate:(MEGASdk *)api nodeList:(MEGANodeList *)nodeList {
     [self reloadUI];
 }
-
-//#pragma mark - MEGATransferDelegate
-//
-//- (void)onTransferStart:(MEGASdk *)api transfer:(MEGATransfer *)transfer {
-//    if ([transfer.appData containsString:@"CU"]) {
-//        [self updateProgressWithKnownCameraUploadInProgress:YES];
-//    }
-//}
-//
-//- (void)onTransferUpdate:(MEGASdk *)api transfer:(MEGATransfer *)transfer {
-//    if ([transfer.appData containsString:@"CU"]) {
-//        [self updateProgressWithKnownCameraUploadInProgress:YES];
-//    }
-//}
-//
-//- (void)onTransferFinish:(MEGASdk *)api transfer:(MEGATransfer *)transfer error:(MEGAError *)error {
-//    if ([transfer.appData containsString:@"CU"]) {
-//        [self updateProgressWithKnownCameraUploadInProgress:YES];
-//    }
-//}
 
 @end
