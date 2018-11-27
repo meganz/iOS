@@ -69,7 +69,7 @@
             switch (status) {
                 case PHAuthorizationStatusAuthorized: {
                     CameraUploadManager.cameraUploadEnabled = YES;
-                    [CameraUploadManager.shared startCameraUploadIfPossible];
+                    [CameraUploadManager.shared startCameraUploadIfNeeded];
                     dispatch_async(dispatch_get_main_queue(), ^{
                         [self.tableView reloadData];
                     });
@@ -89,7 +89,7 @@
             }
         }];
     } else {
-        [CameraUploadManager.shared disableCameraUpload];
+        [CameraUploadManager.shared stopCameraUpload];
     }
 }
 
@@ -98,9 +98,9 @@
     
     CameraUploadManager.videoUploadEnabled = sender.isOn;
     if (sender.isOn) {
-        [CameraUploadManager.shared startVideoUploadIfPossible];
+        [CameraUploadManager.shared startVideoUploadIfNeeded];
     } else {
-        [CameraUploadManager.shared disableVideoUpload];
+        [CameraUploadManager.shared stopVideoUpload];
     }
 }
 

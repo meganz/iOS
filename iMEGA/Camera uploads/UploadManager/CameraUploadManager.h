@@ -16,13 +16,13 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (instancetype)shared;
 
-- (void)startCameraUploadIfPossible;
-- (void)startVideoUploadIfPossible;
+- (void)startCameraUploadIfNeeded;
+- (void)startVideoUploadIfNeeded;
 
 - (void)uploadNextForAsset:(PHAsset *)asset;
 
-- (void)disableCameraUpload;
-- (void)disableVideoUpload;
+- (void)stopCameraUpload;
+- (void)stopVideoUpload;
 
 @end
 
