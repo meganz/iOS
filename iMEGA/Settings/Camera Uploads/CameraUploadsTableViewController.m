@@ -36,7 +36,7 @@
     if (CameraUploadManager.isCameraUploadEnabled) {
         [self.enableCameraUploadsSwitch setOn:YES animated:YES];
         [self.uploadVideosSwitch setOn:CameraUploadManager.isVideoUploadEnabled animated:YES];
-        [self.useCellularConnectionSwitch setOn:CameraUploadManager.isCellularUploadEnabled animated:YES];
+        [self.useCellularConnectionSwitch setOn:CameraUploadManager.isCellularUploadAllowed animated:YES];
     } else {
         [self.enableCameraUploadsSwitch setOn:NO animated:YES];
     }
@@ -106,8 +106,7 @@
 
 - (IBAction)useCellularConnectionSwitchValueChanged:(UISwitch *)sender {
     MEGALogInfo(@"%@ mobile data", sender.isOn ? @"Enable" : @"Disable");
-    // TODO: add cellular support for background transfer sessions
-    CameraUploadManager.cellularUploadEnabled = sender.isOn;
+    CameraUploadManager.cellularUploadAllowed = sender.isOn;
 }
 
 #pragma mark - UITableViewDataSource

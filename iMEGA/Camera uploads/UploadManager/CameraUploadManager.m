@@ -189,12 +189,12 @@ static const NSInteger MaxConcurrentVideoOperationCount = 1;
     return [NSUserDefaults.standardUserDefaults setBool:videoUploadEnabled forKey:kIsUploadVideosEnabled];
 }
 
-+ (BOOL)isCellularUploadEnabled {
++ (BOOL)isCellularUploadAllowed {
     return [NSUserDefaults.standardUserDefaults boolForKey:kIsUseCellularConnectionEnabled];
 }
 
-+ (void)setCellularUploadEnabled:(BOOL)cellularUploadEnabled {
-    [NSUserDefaults.standardUserDefaults setBool:cellularUploadEnabled forKey:kIsUseCellularConnectionEnabled];
++ (void)setCellularUploadAllowed:(BOOL)cellularUploadAllowed {
+    [NSUserDefaults.standardUserDefaults setBool:cellularUploadAllowed forKey:kIsUseCellularConnectionEnabled];
 }
 
 #pragma mark - upload status
