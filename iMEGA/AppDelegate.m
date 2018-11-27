@@ -378,6 +378,8 @@
     
     MEGALogDebug(@"Application did finish launching with options %@", launchOptions);
     
+    [[MEGASdkManager sharedMEGAChatSdk] enableGroupChatCalls:YES];
+    
     return YES;
 }
 
