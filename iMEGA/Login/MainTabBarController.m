@@ -160,14 +160,14 @@
     int incomingContacts = [[MEGASdkManager sharedMEGASdk] incomingContactRequests].size.intValue;
     NSUInteger unseenUserAlerts = [MEGASdkManager sharedMEGASdk].userAlertList.mnz_unseenCount;
     
-    NSString *badgeValue = incomingContacts + unseenUserAlerts ? @"●" : nil;
+    NSString *badgeValue = incomingContacts + unseenUserAlerts ? @"⦁" : nil;
     [self setBadgeValue:badgeValue tabPosition:MYACCOUNT];
 }
 
 - (void)setBadgeValueForChats {
     NSInteger unreadChats = ([MEGASdkManager sharedMEGAChatSdk] != nil) ? [[MEGASdkManager sharedMEGAChatSdk] unreadChats] : 0;
     
-    NSString *badgeValue = unreadChats ? @"●" : nil;
+    NSString *badgeValue = unreadChats ? @"⦁" : nil;
     [self setBadgeValue:badgeValue tabPosition:CHAT];
 }
 
