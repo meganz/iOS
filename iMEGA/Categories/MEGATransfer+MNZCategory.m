@@ -151,7 +151,7 @@
         NSString *longitude = [setCoordinatesComponentsArray objectAtIndex:1];
         if (latitude && longitude) {
             MEGANode *node = [[MEGASdkManager sharedMEGASdk] nodeForHandle:self.nodeHandle];
-            [[MEGASdkManager sharedMEGASdk] setNodeCoordinates:node latitude:latitude.doubleValue longitude:longitude.doubleValue];
+            [[MEGASdkManager sharedMEGASdk] setNodeCoordinates:node latitude:@(latitude.doubleValue) longitude:@(longitude.doubleValue)];
         }
     }
 }
