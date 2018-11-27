@@ -384,26 +384,35 @@
     
     MEGAUserAlert *userAlert = [self.userAlertsArray objectAtIndex:indexPath.row];
     MEGANode *node = [[MEGASdkManager sharedMEGASdk] nodeForHandle:userAlert.nodeHandle];
-    MainTabBarController *mainTBC = (MainTabBarController *) UIApplication.sharedApplication.delegate.window.rootViewController;
     UINavigationController *navigationController = self.navigationController;
     
     switch (userAlert.type) {
         case MEGAUserAlertTypeIncomingPendingContactRequest:
+        case MEGAUserAlertTypeIncomingPendingContactReminder: {
+            if ([[MEGASdkManager sharedMEGASdk] incomingContactRequests].size.intValue) {
+                UINavigationController *contactRequestsNC = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactsRequestsNavigationControllerID"];
+                [self presentViewController:contactRequestsNC animated:YES completion:nil];
+            }
+            break;
+        }
+            
         case MEGAUserAlertTypeIncomingPendingContactCancelled:
-        case MEGAUserAlertTypeIncomingPendingContactReminder:
         case MEGAUserAlertTypeContactChangeDeletedYou:
-        case MEGAUserAlertTypeContactChangeContactEstablished:
         case MEGAUserAlertTypeContactChangeAccountDeleted:
         case MEGAUserAlertTypeContactChangeBlockedYou:
         case MEGAUserAlertTypeUpdatePendingContactIncomingIgnored:
-        case MEGAUserAlertTypeUpdatePendingContactIncomingAccepted:
         case MEGAUserAlertTypeUpdatePendingContactIncomingDenied:
-        case MEGAUserAlertTypeUpdatePendingContactOutgoingAccepted:
-        case MEGAUserAlertTypeUpdatePendingContactOutgoingDenied: {
-            [navigationController popToRootViewControllerAnimated:NO];
-            ContactsViewController *contactsVC = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactsViewControllerID"];
+        case MEGAUserAlertTypeUpdatePendingContactOutgoingDenied:
+            break;
+        
+        case MEGAUserAlertTypeContactChangeContactEstablished:
+        case MEGAUserAlertTypeUpdatePendingContactIncomingAccepted:
+        case MEGAUserAlertTypeUpdatePendingContactOutgoingAccepted: {
             MEGAUser *user = [[MEGASdkManager sharedMEGASdk] contactForEmail:userAlert.email];
             if (user && user.visibility == MEGAUserVisibilityVisible) {
+                [navigationController popToRootViewControllerAnimated:NO];
+                ContactsViewController *contactsVC = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactsViewControllerID"];
+                contactsVC.avoidPresentIncomingPendingContactRequests = YES;
                 ContactDetailsViewController *contactDetailsVC = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactDetailsViewControllerID"];
                 contactDetailsVC.contactDetailsMode = ContactDetailsModeDefault;
                 contactDetailsVC.userEmail = user.email;
@@ -411,9 +420,6 @@
                 contactDetailsVC.userHandle = user.handle;
                 [navigationController pushViewController:contactsVC animated:NO];
                 [navigationController pushViewController:contactDetailsVC animated:YES];
-                break;
-            } else {
-                [navigationController pushViewController:contactsVC animated:YES];
             }
             break;
         }
@@ -421,15 +427,11 @@
         case MEGAUserAlertTypeNewShare:
         case MEGAUserAlertTypeDeletedShare:
         case MEGAUserAlertTypeNewShareNodes:
-        case MEGAUserAlertTypeRemovedSharesNodes: {
+        case MEGAUserAlertTypeRemovedSharesNodes:
+        case MEGAUserAlertTypeTakedown:
+        case MEGAUserAlertTypeTakedownReinstated: {
             if (node) {
                 [node navigateToParentAndPresent];
-            } else {
-                mainTBC.selectedIndex = SHARES;
-                SharedItemsViewController *sharedItemsVC = mainTBC.childViewControllers[SHARES].childViewControllers.firstObject;
-                [sharedItemsVC selectSegment:0]; // Incoming
-                UINavigationController *navigationController = [mainTBC.childViewControllers objectAtIndex:mainTBC.selectedIndex];
-                [navigationController popToRootViewControllerAnimated:NO];
             }
             break;
         }
@@ -437,18 +439,6 @@
         case MEGAUserAlertTypePaymentSucceeded:
         case MEGAUserAlertTypePaymentFailed:
         case MEGAUserAlertTypePaymentReminder:
-            [navigationController popToRootViewControllerAnimated:YES];
-            break;
-            
-        case MEGAUserAlertTypeTakedown:
-        case MEGAUserAlertTypeTakedownReinstated:
-            if (node) {
-                [node navigateToParentAndPresent];
-            } else {
-                mainTBC.selectedIndex = CLOUD;
-                UINavigationController *navigationController = [mainTBC.childViewControllers objectAtIndex:mainTBC.selectedIndex];
-                [navigationController popToRootViewControllerAnimated:NO];
-            }
             break;
             
         default:
