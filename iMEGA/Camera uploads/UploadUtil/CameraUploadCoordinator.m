@@ -2,6 +2,7 @@
 #import "CameraUploadCoordinator.h"
 #import "CompleteUploadOperation.h"
 #import "AttributeUploadManager.h"
+#import "MEGAConstants.h"
 
 @implementation CameraUploadCoordinator
 
@@ -49,6 +50,10 @@
     NSURL *uploadDirectory = [AssetUploadInfo assetDirectoryURLForLocalIdentifier:localIdentifier];
     [NSFileManager.defaultManager removeItemAtURL:uploadDirectory error:nil];
     MEGALogDebug(@"[Camera Upload] Background Upload finishes with session task %@ and status: %@", localIdentifier, status);
+    
+    if ([status isEqualToString:UploadStatusDone]) {
+        [NSNotificationCenter.defaultCenter postNotificationName:MEGACameraUploadAssetUploadDoneNotificationName object:nil];
+    }
 }
 
 @end
