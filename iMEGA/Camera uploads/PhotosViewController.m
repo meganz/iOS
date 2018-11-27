@@ -17,10 +17,10 @@
 
 #import "PhotoCollectionViewCell.h"
 #import "HeaderCollectionReusableView.h"
-#import "CameraUploads.h"
 #import "CameraUploadsTableViewController.h"
 #import "DisplayMode.h"
 #import "BrowserViewController.h"
+#import "CameraUploadManager.h"
 
 @interface PhotosViewController () <UICollectionViewDelegateFlowLayout, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAPhotoBrowserDelegate> {
     BOOL allNodesSelected;
@@ -294,7 +294,7 @@
 }
 
 - (void)updateProgressWithKnownCameraUploadInProgress:(BOOL)knownCameraUploadInProgress {
-    NSUInteger pendingFiles = [CameraUploads syncManager].assetsOperationQueue.operationCount;
+    NSUInteger pendingFiles = CameraUploadManager.shared.uploadPendingItemsCount;
     if (pendingFiles) {
         if (pendingFiles > self.maxPendingFiles) {
             self.maxPendingFiles = pendingFiles;
@@ -319,8 +319,8 @@
 
 - (void)updateCurrentStateWithKnownCameraUploadInProgress:(BOOL)knownCameraUploadInProgress {
     if ([MEGAReachabilityManager isReachable]) {
-        if ([[CameraUploads syncManager] isCameraUploadsEnabled]) {
-            if ([CameraUploads syncManager].assetsOperationQueue.operationCount > 0) {
+        if (CameraUploadManager.isCameraUploadEnabled) {
+            if (CameraUploadManager.shared.uploadRunningItemsCount > 0) {
                 self.currentState = MEGACameraUploadsStateUploading;
             } else {
                 if (knownCameraUploadInProgress) {
@@ -742,7 +742,7 @@
 - (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView {
     NSString *text;
     if ([MEGAReachabilityManager isReachable]) {
-        if ([[CameraUploads syncManager] isCameraUploadsEnabled]) {
+        if (CameraUploadManager.isCameraUploadEnabled) {
             if ([self.photosByMonthYearArray count] == 0) {
                 text = AMLocalizedString(@"cameraUploadsEnabled", nil);
             } else {
@@ -761,7 +761,7 @@
 - (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView {
     UIImage *image = nil;
     if ([MEGAReachabilityManager isReachable]) {
-        if ([[CameraUploads syncManager] isCameraUploadsEnabled]) {
+        if (CameraUploadManager.isCameraUploadEnabled) {
             if ([self.photosByMonthYearArray count] == 0) {
                 image = [UIImage imageNamed:@"cameraEmptyState"];
             }
@@ -778,7 +778,7 @@
 - (NSAttributedString *)buttonTitleForEmptyDataSet:(UIScrollView *)scrollView forState:(UIControlState)state {
     NSString *text = @"";
     if ([MEGAReachabilityManager isReachable]) {
-        if (![[CameraUploads syncManager] isCameraUploadsEnabled]) {
+        if (!CameraUploadManager.isCameraUploadEnabled) {
             text = AMLocalizedString(@"enable", @"Text button shown when the chat is disabled and if tapped the chat will be enabled");
         }
     }
@@ -794,7 +794,7 @@
 }
 
 - (UIColor *)backgroundColorForEmptyDataSet:(UIScrollView *)scrollView {
-    if ([[CameraUploads syncManager] isCameraUploadsEnabled]) {
+    if (CameraUploadManager.isCameraUploadEnabled) {
         return nil;
     }
     
@@ -807,7 +807,7 @@
 
 - (CGFloat)spaceHeightForEmptyDataSet:(UIScrollView *)scrollView {
     CGFloat spaceHeight = [Helper spaceHeightForEmptyState];
-    if (![[CameraUploads syncManager] isCameraUploadsEnabled] || ![[UIDevice currentDevice] iPhone4X]) {
+    if (!CameraUploadManager.isCameraUploadEnabled || ![[UIDevice currentDevice] iPhone4X]) {
         spaceHeight += 20.0f;
     }
     
@@ -868,24 +868,24 @@
     [self reloadUI];
 }
 
-#pragma mark - MEGATransferDelegate
-
-- (void)onTransferStart:(MEGASdk *)api transfer:(MEGATransfer *)transfer {
-    if ([transfer.appData containsString:@"CU"]) {
-        [self updateProgressWithKnownCameraUploadInProgress:YES];
-    }
-}
-
-- (void)onTransferUpdate:(MEGASdk *)api transfer:(MEGATransfer *)transfer {
-    if ([transfer.appData containsString:@"CU"]) {
-        [self updateProgressWithKnownCameraUploadInProgress:YES];
-    }
-}
-
-- (void)onTransferFinish:(MEGASdk *)api transfer:(MEGATransfer *)transfer error:(MEGAError *)error {
-    if ([transfer.appData containsString:@"CU"]) {
-        [self updateProgressWithKnownCameraUploadInProgress:YES];
-    }
-}
+//#pragma mark - MEGATransferDelegate
+//
+//- (void)onTransferStart:(MEGASdk *)api transfer:(MEGATransfer *)transfer {
+//    if ([transfer.appData containsString:@"CU"]) {
+//        [self updateProgressWithKnownCameraUploadInProgress:YES];
+//    }
+//}
+//
+//- (void)onTransferUpdate:(MEGASdk *)api transfer:(MEGATransfer *)transfer {
+//    if ([transfer.appData containsString:@"CU"]) {
+//        [self updateProgressWithKnownCameraUploadInProgress:YES];
+//    }
+//}
+//
+//- (void)onTransferFinish:(MEGASdk *)api transfer:(MEGATransfer *)transfer error:(MEGAError *)error {
+//    if ([transfer.appData containsString:@"CU"]) {
+//        [self updateProgressWithKnownCameraUploadInProgress:YES];
+//    }
+//}
 
 @end

@@ -7,7 +7,6 @@
 #import "MEGAReachabilityManager.h"
 #import "UIDevice+MNZCategory.h"
 #import "PhotosViewController.h"
-#import "MEGAConstants.h"
 #import "CameraUploadManager.h"
 #import "UIViewController+MNZCategory.h"
 
@@ -62,7 +61,7 @@
 #pragma mark - IBActions
 
 - (IBAction)uploadVideosValueChanged:(UISwitch *)sender {
-    [NSUserDefaults.standardUserDefaults setBool:sender.isOn forKey:kIsUploadVideosEnabled];
+    CameraUploadManager.videoUploadEnabled = sender.isOn;
     if (sender.isOn) {
         [CameraUploadManager.shared startVideoUploadIfPossible];
     } else {
@@ -71,7 +70,7 @@
 }
 
 - (IBAction)useCellularConnectionValueChanged:(UISwitch *)sender {
-    [NSUserDefaults.standardUserDefaults setBool:sender.isOn forKey:kIsUseCellularConnectionEnabled];
+    CameraUploadManager.cellularUploadEnabled = sender.isOn;
     // TODO: handle cellular connection
 }
 
@@ -84,7 +83,7 @@
         switch (status) {
             case PHAuthorizationStatusAuthorized: {
                 MEGALogInfo(@"Enable Camera Uploads");
-                [NSUserDefaults.standardUserDefaults setBool:YES forKey:kIsCameraUploadsEnabled];
+                CameraUploadManager.cameraUploadEnabled = YES;
                 [CameraUploadManager.shared startCameraUploadIfPossible];
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [self dismissViewControllerAnimated:YES completion:^{

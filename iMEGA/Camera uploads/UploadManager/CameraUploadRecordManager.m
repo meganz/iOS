@@ -100,6 +100,22 @@ NSString * const UploadStatusDone = @"Done";
     return records;
 }
 
+- (NSArray<MOAssetUploadRecord *> *)fetchAllPendingUploadRecordsInMediaTypes:(NSArray <NSNumber *> *)mediaTypes error:(NSError *__autoreleasing  _Nullable *)error {
+    __block NSArray<MOAssetUploadRecord *> *records = @[];
+    __block NSError *coreDataError = nil;
+    [self.privateQueueContext performBlockAndWait:^{
+        NSFetchRequest *request = MOAssetUploadRecord.fetchRequest;
+        request.predicate = [NSPredicate predicateWithFormat:@"(status <> %@) AND (mediaType IN %@)", UploadStatusDone, mediaTypes];
+        records = [self.privateQueueContext executeFetchRequest:request error:&coreDataError];
+    }];
+    
+    if (error != NULL) {
+        *error = coreDataError;
+    }
+    
+    return records;
+}
+
 #pragma mark - save assets
 
 - (BOOL)saveAssetFetchResult:(PHFetchResult<PHAsset *> *)result error:(NSError * _Nullable __autoreleasing * _Nullable)error {
