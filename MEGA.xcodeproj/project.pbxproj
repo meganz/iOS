@@ -291,6 +291,10 @@
 		7754ED9920B47A2400FF8B7B /* MEGALoginToFolderLinkRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7754ED9820B47A2400FF8B7B /* MEGALoginToFolderLinkRequestDelegate.m */; };
 		7754ED9C20B47F1000FF8B7B /* MEGAFetchNodesRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7754ED9B20B47F1000FF8B7B /* MEGAFetchNodesRequestDelegate.m */; };
 		775652D7203AD2FC009E7EC8 /* ContactLinkQRViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 775652D6203AD2FC009E7EC8 /* ContactLinkQRViewController.m */; };
+		77597006219DD4D100B31671 /* MEGAUserAlertList+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 77597005219DD4D100B31671 /* MEGAUserAlertList+MNZCategory.m */; };
+		7759700A219EB85300B31671 /* NotificationsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 77597009219EB85300B31671 /* NotificationsTableViewController.m */; };
+		7759700C219EBCE700B31671 /* Notifications.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7759700B219EBCE700B31671 /* Notifications.storyboard */; };
+		7759700F219EC2D700B31671 /* NotificationTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7759700E219EC2D700B31671 /* NotificationTableViewCell.m */; };
 		775D9C0B20EA0D49001BF1E8 /* ShareAttachment.m in Sources */ = {isa = PBXBuildFile; fileRef = 775D9C0A20EA0D49001BF1E8 /* ShareAttachment.m */; };
 		777615AF2175D87D00A7796D /* InputView.m in Sources */ = {isa = PBXBuildFile; fileRef = 777615AE2175D87D00A7796D /* InputView.m */; };
 		777615B12175D88C00A7796D /* InputView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 777615B02175D88C00A7796D /* InputView.xib */; };
@@ -1235,6 +1239,13 @@
 		7754ED9B20B47F1000FF8B7B /* MEGAFetchNodesRequestDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = MEGAFetchNodesRequestDelegate.m; path = API/Requests/MEGAFetchNodesRequestDelegate.m; sourceTree = "<group>"; };
 		775652D5203AD2FC009E7EC8 /* ContactLinkQRViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ContactLinkQRViewController.h; sourceTree = "<group>"; };
 		775652D6203AD2FC009E7EC8 /* ContactLinkQRViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ContactLinkQRViewController.m; sourceTree = "<group>"; };
+		77597004219DD4D100B31671 /* MEGAUserAlertList+MNZCategory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MEGAUserAlertList+MNZCategory.h"; sourceTree = "<group>"; };
+		77597005219DD4D100B31671 /* MEGAUserAlertList+MNZCategory.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "MEGAUserAlertList+MNZCategory.m"; sourceTree = "<group>"; };
+		77597008219EB85300B31671 /* NotificationsTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NotificationsTableViewController.h; sourceTree = "<group>"; };
+		77597009219EB85300B31671 /* NotificationsTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NotificationsTableViewController.m; sourceTree = "<group>"; };
+		7759700B219EBCE700B31671 /* Notifications.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Notifications.storyboard; sourceTree = "<group>"; };
+		7759700D219EC2D700B31671 /* NotificationTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NotificationTableViewCell.h; sourceTree = "<group>"; };
+		7759700E219EC2D700B31671 /* NotificationTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NotificationTableViewCell.m; sourceTree = "<group>"; };
 		775D9C0920EA0D49001BF1E8 /* ShareAttachment.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShareAttachment.h; sourceTree = "<group>"; };
 		775D9C0A20EA0D49001BF1E8 /* ShareAttachment.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ShareAttachment.m; sourceTree = "<group>"; };
 		777615AD2175D87D00A7796D /* InputView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = InputView.h; sourceTree = "<group>"; };
@@ -2511,6 +2522,8 @@
 				77B3227E20A436D60037FA89 /* NSURL+MNZCategory.m */,
 				5B0CD4282188D71100F97A2C /* UITextField+MNZCategory.h */,
 				5B0CD4292188D71100F97A2C /* UITextField+MNZCategory.m */,
+				77597004219DD4D100B31671 /* MEGAUserAlertList+MNZCategory.h */,
+				77597005219DD4D100B31671 /* MEGAUserAlertList+MNZCategory.m */,
 			);
 			path = Categories;
 			sourceTree = "<group>";
@@ -2918,6 +2931,18 @@
 				7747B2D6208623660011814E /* Reachability.m */,
 			);
 			path = Network;
+			sourceTree = "<group>";
+		};
+		77597007219EB7FD00B31671 /* Notifications */ = {
+			isa = PBXGroup;
+			children = (
+				7759700B219EBCE700B31671 /* Notifications.storyboard */,
+				77597008219EB85300B31671 /* NotificationsTableViewController.h */,
+				77597009219EB85300B31671 /* NotificationsTableViewController.m */,
+				7759700D219EC2D700B31671 /* NotificationTableViewCell.h */,
+				7759700E219EC2D700B31671 /* NotificationTableViewCell.m */,
+			);
+			path = Notifications;
 			sourceTree = "<group>";
 		};
 		775D9C0820EA0CF3001BF1E8 /* Model */ = {
@@ -3339,6 +3364,7 @@
 		E889C9DE1B55652B00ECEFDF /* My Account */ = {
 			isa = PBXGroup;
 			children = (
+				77597007219EB7FD00B31671 /* Notifications */,
 				5B48F8001F4C73D0001E3A29 /* Achievements */,
 				41A66D031AE78FF9007D7E20 /* Upgrade */,
 				E889C9E51B5565C900ECEFDF /* MyAccount.storyboard */,
@@ -3668,6 +3694,7 @@
 				5BB68CA220359B5400B03C00 /* PasswordStrengthIndicatorView.xib in Resources */,
 				41A72F1F1C22EA1600516603 /* LTHPasscodeViewController.bundle in Resources */,
 				E8CD198A1A9270CB00CB8B2A /* UnavailableLinkView.xib in Resources */,
+				7759700C219EBCE700B31671 /* Notifications.storyboard in Resources */,
 				5B5FBDDF20BD8CB2000EE35B /* TwoFactorAuthentication.storyboard in Resources */,
 				A841E63E20CAB477005E1D1B /* MEGAMessageCallEndedView.xib in Resources */,
 				417279331DB663FA001AC818 /* JSQMessagesAssets.bundle in Resources */,
@@ -3821,8 +3848,10 @@
 				41EAAE4B1D06B49400622FAF /* PHAssetCollection+CTAssetsPickerController.m in Sources */,
 				77519C36203707F600FDF92B /* MEGARenameRequestDelegate.m in Sources */,
 				E8BD127F1DB76E03003DC53F /* MasterKeyViewController.m in Sources */,
+				7759700A219EB85300B31671 /* NotificationsTableViewController.m in Sources */,
 				41D21E691D01AEC3002E6296 /* CTAssetsNavigationController.m in Sources */,
 				41D578241B84A0FB00334ED3 /* PreviewDocumentViewController.m in Sources */,
+				7759700F219EC2D700B31671 /* NotificationTableViewCell.m in Sources */,
 				5BFA346B1FAB4169005BFC4E /* MEGARemoveRequestDelegate.m in Sources */,
 				83FB1431219AC7CD00418BE6 /* OfflineTableViewViewController.m in Sources */,
 				7747B2D8208625B50011814E /* Reachability.m in Sources */,
@@ -4085,6 +4114,7 @@
 				41D21E5F1D01AEC3002E6296 /* CTAssetPlayButton.m in Sources */,
 				A89629781FACEAF800F02F7A /* MEGAProviderDelegate.m in Sources */,
 				5B14A41520D10043005F8146 /* MEGAMultiFactorAuthCheckRequestDelegate.m in Sources */,
+				77597006219DD4D100B31671 /* MEGAUserAlertList+MNZCategory.m in Sources */,
 				83681578202AFBC000CA8EFC /* CustomActionViewController.m in Sources */,
 				4172794B1DB663FA001AC818 /* JSQMessagesBubbleImage.m in Sources */,
 				41CD14701DB150F600E545BC /* MessagesViewController.m in Sources */,
