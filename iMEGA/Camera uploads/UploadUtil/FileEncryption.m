@@ -155,8 +155,14 @@ static const NSUInteger EncryptionProposedChunkSizeWithoutTruncating = 1024 * 10
  */
 - (NSUInteger)calculateChunkSizeByDeviceFreeSize:(unsigned long long)deviceFreeSize {
     if (self.shouldTruncateFile) {
-        unsigned long long chunkSize = MIN(deviceFreeSize, EncryptionProposedChunkSizeForTruncating);
-        return MIN(chunkSize, self.fileSize);
+        NSUInteger size = MIN(EncryptionProposedChunkSizeForTruncating, self.fileSize);
+        if (deviceFreeSize > size * 5) {
+            return size;
+        } else if (deviceFreeSize > size) {
+            return size / 5;
+        } else {
+            return deviceFreeSize / 5;
+        }
     } else {
         return EncryptionProposedChunkSizeWithoutTruncating;
     }
