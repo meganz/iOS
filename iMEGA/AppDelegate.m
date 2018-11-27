@@ -13,7 +13,6 @@
 #import "SAMKeychain.h"
 #import "SVProgressHUD.h"
 
-#import "MEGAConstants.h"
 #import "Helper.h"
 #import "DevicePermissionsHelper.h"
 #import "MEGAApplication.h"
@@ -1681,19 +1680,9 @@ void uncaughtExceptionHandler(NSException *exception) {
     NSDictionary *cameraUploadsSettings = [[NSDictionary alloc] initWithContentsOfFile:v2PspPath];
     
     if ([cameraUploadsSettings objectForKey:@"syncEnabled"]) {
-        [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:YES] forKey:kIsCameraUploadsEnabled];
-        
-        if ([cameraUploadsSettings objectForKey:@"cellEnabled"]) {
-            [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:YES] forKey:kIsUseCellularConnectionEnabled];
-        } else {
-            [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:NO] forKey:kIsUseCellularConnectionEnabled];
-        }
-        if ([cameraUploadsSettings objectForKey:@"videoEnabled"]) {
-            [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:YES] forKey:kIsUploadVideosEnabled];
-        } else {
-            [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:NO] forKey:kIsUploadVideosEnabled];
-        }
-        
+        CameraUploadManager.cameraUploadEnabled = YES;
+        CameraUploadManager.cellularUploadEnabled = [cameraUploadsSettings objectForKey:@"cellEnabled"] != nil;
+        CameraUploadManager.videoUploadEnabled = [cameraUploadsSettings objectForKey:@"videoEnabled"] != nil;
         [NSFileManager.defaultManager mnz_removeItemAtPath:v2PspPath];
     }
 }

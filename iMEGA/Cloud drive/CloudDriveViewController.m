@@ -38,7 +38,6 @@
 #import "MEGAPhotoBrowserViewController.h"
 #import "NodeInfoViewController.h"
 #import "NodeTableViewCell.h"
-#import "PhotosViewController.h"
 #import "PreviewDocumentViewController.h"
 #import "SortByTableViewController.h"
 #import "SharedItemsViewController.h"

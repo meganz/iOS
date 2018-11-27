@@ -5,7 +5,6 @@
 #import "NSString+MNZCategory.h"
 #import "CameraUploadManager.h"
 #import "Helper.h"
-#import "MEGAConstants.h"
 #import "UIViewController+MNZCategory.h"
 
 @interface CameraUploadsTableViewController ()
@@ -34,10 +33,10 @@
     self.useCellularConnectionLabel.text = AMLocalizedString(@"useMobileData", @"Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature.");
     [self.uploadVideosLabel setText:AMLocalizedString(@"uploadVideosLabel", nil)];
     
-    if ([NSUserDefaults.standardUserDefaults boolForKey:kIsCameraUploadsEnabled]) {
+    if (CameraUploadManager.isCameraUploadEnabled) {
         [self.enableCameraUploadsSwitch setOn:YES animated:YES];
-        [self.uploadVideosSwitch setOn:[NSUserDefaults.standardUserDefaults boolForKey:kIsUploadVideosEnabled] animated:YES];
-        [self.useCellularConnectionSwitch setOn:[NSUserDefaults.standardUserDefaults boolForKey:kIsUseCellularConnectionEnabled] animated:YES];
+        [self.uploadVideosSwitch setOn:CameraUploadManager.isVideoUploadEnabled animated:YES];
+        [self.useCellularConnectionSwitch setOn:CameraUploadManager.isCellularUploadEnabled animated:YES];
     } else {
         [self.enableCameraUploadsSwitch setOn:NO animated:YES];
     }
@@ -69,7 +68,7 @@
         [PHPhotoLibrary requestAuthorization:^(PHAuthorizationStatus status) {
             switch (status) {
                 case PHAuthorizationStatusAuthorized: {
-                    [NSUserDefaults.standardUserDefaults setBool:YES forKey:kIsCameraUploadsEnabled];
+                    CameraUploadManager.cameraUploadEnabled = YES;
                     [CameraUploadManager.shared startCameraUploadIfPossible];
                     dispatch_async(dispatch_get_main_queue(), ^{
                         [self.tableView reloadData];
@@ -97,7 +96,7 @@
 - (IBAction)uploadVideosSwitchValueChanged:(UISwitch *)sender {
     MEGALogInfo(@"%@ uploads videos", sender.isOn ? @"Enable" : @"Disable");
     
-    [NSUserDefaults.standardUserDefaults setBool:sender.isOn forKey:kIsUploadVideosEnabled];
+    CameraUploadManager.videoUploadEnabled = sender.isOn;
     if (sender.isOn) {
         [CameraUploadManager.shared startVideoUploadIfPossible];
     } else {
@@ -108,7 +107,7 @@
 - (IBAction)useCellularConnectionSwitchValueChanged:(UISwitch *)sender {
     MEGALogInfo(@"%@ mobile data", sender.isOn ? @"Enable" : @"Disable");
     // TODO: add cellular support for background transfer sessions
-    [NSUserDefaults.standardUserDefaults setBool:sender.isOn forKey:kIsUseCellularConnectionEnabled];
+    CameraUploadManager.cellularUploadEnabled = sender.isOn;
 }
 
 #pragma mark - UITableViewDataSource
@@ -143,7 +142,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [super tableView:tableView cellForRowAtIndexPath:indexPath];
     
-    BOOL isCameraUploadsEnabled = [NSUserDefaults.standardUserDefaults boolForKey:kIsCameraUploadsEnabled];
+    BOOL isCameraUploadsEnabled = CameraUploadManager.isCameraUploadEnabled;
     [self.uploadVideosLabel setEnabled:isCameraUploadsEnabled];
     [self.uploadVideosSwitch setEnabled:isCameraUploadsEnabled];
     [self.useCellularConnectionLabel setEnabled:isCameraUploadsEnabled];

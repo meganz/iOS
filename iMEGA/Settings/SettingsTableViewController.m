@@ -4,7 +4,7 @@
 #import "LTHPasscodeViewController.h"
 #import "SVProgressHUD.h"
 
-#import "MEGAConstants.h"
+#import "CameraUploadManager.h"
 #import "Helper.h"
 #import "MEGASdkManager.h"
 #import "MEGAReachabilityManager.h"
@@ -100,7 +100,7 @@
     self.navigationItem.title = AMLocalizedString(@"settingsTitle", @"Title of the Settings section");
     
     self.cameraUploadsLabel.text = AMLocalizedString(@"cameraUploadsLabel", @"Title of one of the Settings sections where you can set up the 'Camera Uploads' options");
-    self.cameraUploadsDetailLabel.text = [NSUserDefaults.standardUserDefaults boolForKey:kIsCameraUploadsEnabled] ? AMLocalizedString(@"on", nil) : AMLocalizedString(@"off", nil);
+    self.cameraUploadsDetailLabel.text = CameraUploadManager.isCameraUploadEnabled ? AMLocalizedString(@"on", nil) : AMLocalizedString(@"off", nil);
     self.chatLabel.text = AMLocalizedString(@"chat", @"Chat section header");
     self.chatDetailLabel.text = ([[NSUserDefaults standardUserDefaults] boolForKey:@"IsChatEnabled"] ? AMLocalizedString(@"on", nil) : AMLocalizedString(@"off", nil));
     

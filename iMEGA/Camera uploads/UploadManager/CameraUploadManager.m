@@ -11,6 +11,11 @@
 #import "MEGAConstants.h"
 @import Photos;
 
+#define kIsCameraUploadsEnabled @"IsCameraUploadsEnabled"
+#define kIsUploadVideosEnabled @"IsUploadVideosEnabled"
+#define kIsUseCellularConnectionEnabled @"IsUseCellularConnectionEnabled"
+#define kCameraUploadsNodeHandle @"CameraUploadsNodeHandle"
+
 static NSString * const CameraUplodFolderName = @"Camera Uploads";
 static const NSInteger ConcurrentPhotoUploadCount = 10;
 static const NSInteger MaxConcurrentPhotoOperationCountInBackground = 5;
@@ -80,7 +85,7 @@ static const NSInteger MaxConcurrentVideoOperationCount = 1;
 #pragma mark - scan and upload
 
 - (void)startCameraUploadIfPossible {
-    if (![NSUserDefaults.standardUserDefaults boolForKey:kIsCameraUploadsEnabled] || self.photoUploadOerationQueue.operationCount > 0) {
+    if (!self.class.isCameraUploadEnabled || self.photoUploadOerationQueue.operationCount > 0) {
         return;
     }
     
@@ -108,7 +113,7 @@ static const NSInteger MaxConcurrentVideoOperationCount = 1;
 }
 
 - (void)startVideoUploadIfPossible {
-    if (!([NSUserDefaults.standardUserDefaults boolForKey:kIsCameraUploadsEnabled] && [NSUserDefaults.standardUserDefaults boolForKey:kIsUploadVideosEnabled])) {
+    if (!([self.class isCameraUploadEnabled] && [self.class isVideoUploadEnabled])) {
         return;
     }
     
@@ -161,9 +166,58 @@ static const NSInteger MaxConcurrentVideoOperationCount = 1;
 #pragma mark - logout
 
 - (void)clearCameraUploadSettings {
-    [NSUserDefaults.standardUserDefaults setBool:NO forKey:kIsCameraUploadsEnabled];
+    [self.class setCameraUploadEnabled:NO];
     [self disableCameraUpload];
     [NSUserDefaults.standardUserDefaults removeObjectForKey:kCameraUploadsNodeHandle];
+}
+
+#pragma mark - enable check
+
++ (BOOL)isCameraUploadEnabled {
+    return [NSUserDefaults.standardUserDefaults boolForKey:kIsCameraUploadsEnabled];
+}
+
++ (void)setCameraUploadEnabled:(BOOL)cameraUploadEnabled {
+    [NSUserDefaults.standardUserDefaults setBool:cameraUploadEnabled forKey:kIsCameraUploadsEnabled];
+}
+
++ (BOOL)isVideoUploadEnabled {
+    return [NSUserDefaults.standardUserDefaults boolForKey:kIsUploadVideosEnabled];
+}
+
++ (void)setVideoUploadEnabled:(BOOL)videoUploadEnabled {
+    return [NSUserDefaults.standardUserDefaults setBool:videoUploadEnabled forKey:kIsUploadVideosEnabled];
+}
+
++ (BOOL)isCellularUploadEnabled {
+    return [NSUserDefaults.standardUserDefaults boolForKey:kIsUseCellularConnectionEnabled];
+}
+
++ (void)setCellularUploadEnabled:(BOOL)cellularUploadEnabled {
+    [NSUserDefaults.standardUserDefaults setBool:cellularUploadEnabled forKey:kIsUseCellularConnectionEnabled];
+}
+
+#pragma mark - upload status
+
+- (NSUInteger)uploadPendingItemsCount {
+    NSUInteger pendingCount = 0;
+    
+    if (self.class.isCameraUploadEnabled) {
+        NSArray<NSNumber *> *mediaTypes;
+        if (self.class.isVideoUploadEnabled) {
+            mediaTypes = @[@(PHAssetMediaTypeVideo), @(PHAssetMediaTypeImage)];
+        } else {
+            mediaTypes = @[@(PHAssetMediaTypeImage)];
+        }
+        
+        pendingCount = [CameraUploadRecordManager.shared fetchAllPendingUploadRecordsInMediaTypes:mediaTypes error:nil].count;
+    }
+    
+    return pendingCount;
+}
+
+- (NSUInteger)uploadRunningItemsCount {
+    return self.photoUploadOerationQueue.operationCount + self.videoUploadOerationQueue.operationCount;
 }
 
 #pragma mark - handle app lifecycle
