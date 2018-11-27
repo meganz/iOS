@@ -84,7 +84,7 @@ static const NSInteger MaxConcurrentVideoOperationCount = 1;
 
 #pragma mark - scan and upload
 
-- (void)startCameraUploadIfPossible {
+- (void)startCameraUploadIfNeeded {
     if (!self.class.isCameraUploadEnabled || self.photoUploadOerationQueue.operationCount > 0) {
         return;
     }
@@ -109,10 +109,10 @@ static const NSInteger MaxConcurrentVideoOperationCount = 1;
 
 - (void)startCameraUpload {
     [self uploadNextAssetsWithNumber:ConcurrentPhotoUploadCount mediaType:PHAssetMediaTypeImage];
-    [self startVideoUploadIfPossible];
+    [self startVideoUploadIfNeeded];
 }
 
-- (void)startVideoUploadIfPossible {
+- (void)startVideoUploadIfNeeded {
     if (!([self.class isCameraUploadEnabled] && [self.class isVideoUploadEnabled])) {
         return;
     }
@@ -152,14 +152,14 @@ static const NSInteger MaxConcurrentVideoOperationCount = 1;
 
 #pragma mark - stop upload
 
-- (void)disableCameraUpload {
-    [NSUserDefaults.standardUserDefaults setValue:@(NO) forKey:kIsCameraUploadsEnabled];
+- (void)stopCameraUpload {
+    [self.class setCameraUploadEnabled:NO];
     [self.photoUploadOerationQueue cancelAllOperations];
-    [self disableVideoUpload];
+    [self stopVideoUpload];
 }
 
-- (void)disableVideoUpload {
-    [NSUserDefaults.standardUserDefaults setValue:@(NO) forKey:kIsUploadVideosEnabled];
+- (void)stopVideoUpload {
+    [self.class setVideoUploadEnabled:NO];
     [self.videoUploadOerationQueue cancelAllOperations];
 }
 
@@ -167,7 +167,7 @@ static const NSInteger MaxConcurrentVideoOperationCount = 1;
 
 - (void)clearCameraUploadSettings {
     [self.class setCameraUploadEnabled:NO];
-    [self disableCameraUpload];
+    [self stopCameraUpload];
     [NSUserDefaults.standardUserDefaults removeObjectForKey:kCameraUploadsNodeHandle];
 }
 

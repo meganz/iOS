@@ -63,9 +63,9 @@
 - (IBAction)uploadVideosValueChanged:(UISwitch *)sender {
     CameraUploadManager.videoUploadEnabled = sender.isOn;
     if (sender.isOn) {
-        [CameraUploadManager.shared startVideoUploadIfPossible];
+        [CameraUploadManager.shared startVideoUploadIfNeeded];
     } else {
-        [CameraUploadManager.shared disableVideoUpload];
+        [CameraUploadManager.shared stopVideoUpload];
     }
 }
 
@@ -84,7 +84,7 @@
             case PHAuthorizationStatusAuthorized: {
                 MEGALogInfo(@"Enable Camera Uploads");
                 CameraUploadManager.cameraUploadEnabled = YES;
-                [CameraUploadManager.shared startCameraUploadIfPossible];
+                [CameraUploadManager.shared startCameraUploadIfNeeded];
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [self dismissViewControllerAnimated:YES completion:^{
                         [SVProgressHUD showImage:[UIImage imageNamed:@"hudCameraUploads"] status:AMLocalizedString(@"cameraUploadsEnabled", nil)];

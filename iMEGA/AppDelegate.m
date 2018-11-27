@@ -433,7 +433,7 @@
     [[MEGASdkManager sharedMEGAChatSdk] setBackgroundStatus:NO];
     
     if ([[MEGASdkManager sharedMEGASdk] isLoggedIn]) {
-        [CameraUploadManager.shared startCameraUploadIfPossible];
+        [CameraUploadManager.shared startCameraUploadIfNeeded];
         
         if (isFetchNodesDone) {
             MEGAShowPasswordReminderRequestDelegate *showPasswordReminderDelegate = [[MEGAShowPasswordReminderRequestDelegate alloc] initToLogout:NO];
@@ -1116,7 +1116,7 @@
 }
 
 - (void)showOverquotaAlert {
-    [CameraUploadManager.shared disableCameraUpload];
+    [CameraUploadManager.shared stopCameraUpload];
     
     if (!UIApplication.mnz_presentingViewController.presentedViewController || UIApplication.mnz_presentingViewController.presentedViewController != self.overquotaAlertView) {
         isOverquota = YES;
@@ -1892,7 +1892,7 @@ void uncaughtExceptionHandler(NSException *exception) {
     if (!nodeList) {
         MEGATransferList *transferList = [api uploadTransfers];
         if (transferList.size.integerValue == 0) {
-            [CameraUploadManager.shared startCameraUploadIfPossible];
+            [CameraUploadManager.shared startCameraUploadIfNeeded];
         }
         
         [Helper startPendingUploadTransferIfNeeded];
