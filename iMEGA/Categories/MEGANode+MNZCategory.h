@@ -1,6 +1,7 @@
 
 @interface MEGANode (MNZCategory) <UITextFieldDelegate>
 
+- (void)navigateToParentAndPresent;
 - (void)mnz_openNodeInNavigationController:(UINavigationController *)navigationController folderLink:(BOOL)isFolderLink;
 - (UIViewController *)mnz_viewControllerForNodeInFolderLink:(BOOL)isFolderLink;
 
