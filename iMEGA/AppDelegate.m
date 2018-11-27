@@ -632,13 +632,8 @@
 
 - (void)application:(UIApplication *)application handleEventsForBackgroundURLSession:(NSString *)identifier completionHandler:(void (^)(void))completionHandler {
     MEGALogDebug(@"[App Lifecycle] application handle events for background session: %@", identifier);
-    if ([identifier isEqualToString:photoTransferSessionId]) {
-        [TransferSessionManager shared].photoSessionCompletion = completionHandler;
-        [[TransferSessionManager shared] restorePhotoSessionIfNeeded];
-    } else if ([identifier isEqualToString:videoTransferSessionId]) {
-        [TransferSessionManager shared].videoSessionCompletion = completionHandler;
-        [[TransferSessionManager shared] restoreVideoSessionIfNeeded];
-    }
+    [TransferSessionManager.shared saveSessionCompletion:completionHandler forIdentifier:identifier];
+    [TransferSessionManager.shared restoreSessionIfNeededByIdentifier:identifier];
 }
 
 #pragma mark - Private
@@ -1681,7 +1676,7 @@ void uncaughtExceptionHandler(NSException *exception) {
     
     if ([cameraUploadsSettings objectForKey:@"syncEnabled"]) {
         CameraUploadManager.cameraUploadEnabled = YES;
-        CameraUploadManager.cellularUploadEnabled = [cameraUploadsSettings objectForKey:@"cellEnabled"] != nil;
+        CameraUploadManager.cellularUploadAllowed = [cameraUploadsSettings objectForKey:@"cellEnabled"] != nil;
         CameraUploadManager.videoUploadEnabled = [cameraUploadsSettings objectForKey:@"videoEnabled"] != nil;
         [NSFileManager.defaultManager mnz_removeItemAtPath:v2PspPath];
     }

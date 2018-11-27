@@ -70,8 +70,7 @@
 }
 
 - (IBAction)useCellularConnectionValueChanged:(UISwitch *)sender {
-    CameraUploadManager.cellularUploadEnabled = sender.isOn;
-    // TODO: handle cellular connection
+    CameraUploadManager.cellularUploadAllowed = sender.isOn;
 }
 
 - (IBAction)skipTouchUpInside:(UIButton *)sender {

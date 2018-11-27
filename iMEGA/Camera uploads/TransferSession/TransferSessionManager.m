@@ -5,14 +5,24 @@
 #import "CameraUploadManager.h"
 #import "AttributeUploadManager.h"
 
-NSString * const photoTransferSessionId = @"nz.mega.photoTransfer";
-NSString * const videoTransferSessionId = @"nz.mega.videoTransfer";
+static NSString * const PhotoCellularAllowedUploadSessionId = @"nz.mega.photoTransfer.cellularAllowed";
+static NSString * const PhotoCellularDisallowedUploadSessionId = @"nz.mega.photoTransfer.cellularDisallowed";
+static NSString * const VideoCellularAllowedUploadSessionId = @"nz.mega.videoTransfer.cellularAllowed";
+static NSString * const VideoCellularDisallowedUploadSessionId = @"nz.mega.videoTransfer.cellularDisallowed";
 
 @interface TransferSessionManager () <NSURLSessionDataDelegate>
 
+@property (strong, nonatomic) NSURLSession *photoCellularAllowedUploadSession;
+@property (strong, nonatomic) NSURLSession *photoCellularDisallowedUploadSession;
+@property (strong, nonatomic) NSURLSession *videoCellularAllowedUploadSession;
+@property (strong, nonatomic) NSURLSession *videoCellularDisallowedUploadSession;
+
 @property (strong, nonatomic) dispatch_queue_t serialQueue;
-@property (strong, nonatomic) TransferSessionDelegate *photoSessionDelegate;
-@property (strong, nonatomic) TransferSessionDelegate *videoSessionDelegate;
+
+@property (copy, nonatomic) void (^photoCellularAllowedUploadSessionCompletion)(void);
+@property (copy, nonatomic) void (^photoCellularDisallowedUploadSessionCompletion)(void);
+@property (copy, nonatomic) void (^videoCellularAllowedUploadSessionCompletion)(void);
+@property (copy, nonatomic) void (^videoCellularDisallowedUploadSessionCompletion)(void);
 
 @end
 
@@ -32,46 +42,88 @@ NSString * const videoTransferSessionId = @"nz.mega.videoTransfer";
     self = [super init];
     if (self) {
         _serialQueue = dispatch_queue_create("nz.mega.sessionManager.cameraUploadSessionSerialQueue", DISPATCH_QUEUE_SERIAL);
-        _photoSessionDelegate = [[TransferSessionDelegate alloc] initWithSessionManager:self];
-        _videoSessionDelegate = [[TransferSessionDelegate alloc] initWithSessionManager:self];
     }
     return self;
 }
 
-#pragma mark - photo and video session
+#pragma mark - session creation
 
-- (NSURLSession *)photoSession {
+- (NSURLSession *)photoCellularAllowedUploadSession {
     dispatch_sync(self.serialQueue, ^{
-        if (self->_photoSession == nil) {
-            self->_photoSession = [self createBackgroundSessionWithIdentifier:photoTransferSessionId];
+        if (self->_photoCellularAllowedUploadSession == nil) {
+            self->_photoCellularAllowedUploadSession = [self createBackgroundSessionWithIdentifier:PhotoCellularAllowedUploadSessionId];
         }
     });
     
-    return _photoSession;
+    return _photoCellularAllowedUploadSession;
 }
 
-- (void)restorePhotoSessionIfNeeded {
-    if (_photoSession == nil) {
-        _photoSession = [self createBackgroundSessionWithIdentifier:photoTransferSessionId];
-        [self restoreTaskDelegatesForSession:_photoSession];
-    }
-}
-
-- (NSURLSession *)videoSession {
+- (NSURLSession *)photoCellularDisallowedUploadSession {
     dispatch_sync(self.serialQueue, ^{
-        if (self->_videoSession == nil) {
-            self->_videoSession = [self createBackgroundSessionWithIdentifier:videoTransferSessionId];
+        if (self->_photoCellularDisallowedUploadSession == nil) {
+            self->_photoCellularDisallowedUploadSession = [self createBackgroundSessionWithIdentifier:PhotoCellularDisallowedUploadSessionId];
         }
     });
     
-    return _videoSession;
+    return _photoCellularDisallowedUploadSession;
 }
 
-- (void)restoreVideoSessionIfNeeded {
-    if (_videoSession == nil) {
-        _videoSession = [self createBackgroundSessionWithIdentifier:videoTransferSessionId];
-        [self restoreTaskDelegatesForSession:_videoSession];
+- (NSURLSession *)videoCellularAllowedUploadSession {
+    dispatch_sync(self.serialQueue, ^{
+        if (self->_videoCellularAllowedUploadSession == nil) {
+            self->_videoCellularAllowedUploadSession = [self createBackgroundSessionWithIdentifier:VideoCellularAllowedUploadSessionId];
+        }
+    });
+    
+    return _videoCellularAllowedUploadSession;
+}
+
+- (NSURLSession *)videoCellularDisallowedUploadSession {
+    dispatch_sync(self.serialQueue, ^{
+        if (self->_videoCellularDisallowedUploadSession == nil) {
+            self->_videoCellularDisallowedUploadSession = [self createBackgroundSessionWithIdentifier:VideoCellularDisallowedUploadSessionId];
+        }
+    });
+    
+    return _videoCellularDisallowedUploadSession;
+}
+
+- (NSURLSession *)createBackgroundSessionWithIdentifier:(NSString *)identifier {
+    NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration backgroundSessionConfigurationWithIdentifier:identifier];
+    configuration.discretionary = YES;
+    configuration.sessionSendsLaunchEvents = YES;
+    configuration.allowsCellularAccess = [identifier isEqualToString:PhotoCellularAllowedUploadSessionId] || [identifier isEqualToString:VideoCellularAllowedUploadSessionId];
+    TransferSessionDelegate *delegate = [[TransferSessionDelegate alloc] initWithSessionManager:self];
+    return [NSURLSession sessionWithConfiguration:configuration delegate:delegate delegateQueue:nil];;
+}
+
+#pragma mark - session restoration
+
+- (void)restoreSessionIfNeededByIdentifier:(NSString *)identifier {
+    NSURLSession *restoredSession;
+    if ([identifier isEqualToString:PhotoCellularAllowedUploadSessionId]) {
+        if (_photoCellularAllowedUploadSession == nil) {
+            _photoCellularAllowedUploadSession = [self createBackgroundSessionWithIdentifier:identifier];
+            restoredSession = _photoCellularAllowedUploadSession;
+        }
+    } else if ([identifier isEqualToString:PhotoCellularDisallowedUploadSessionId]) {
+        if (_photoCellularDisallowedUploadSession == nil) {
+            _photoCellularDisallowedUploadSession = [self createBackgroundSessionWithIdentifier:identifier];
+            restoredSession = _photoCellularDisallowedUploadSession;
+        }
+    } else if ([identifier isEqualToString:VideoCellularAllowedUploadSessionId]) {
+        if (_videoCellularAllowedUploadSession == nil) {
+            _videoCellularAllowedUploadSession = [self createBackgroundSessionWithIdentifier:identifier];
+            restoredSession = _videoCellularAllowedUploadSession;
+        }
+    } else if ([identifier isEqualToString:VideoCellularDisallowedUploadSessionId]) {
+        if (_videoCellularDisallowedUploadSession == nil) {
+            _videoCellularDisallowedUploadSession = [self createBackgroundSessionWithIdentifier:identifier];
+            restoredSession = _videoCellularDisallowedUploadSession;
+        }
     }
+    
+    [self restoreTaskDelegatesForSession:restoredSession];
 }
 
 - (void)restoreTaskDelegatesForSession:(NSURLSession *)session {
@@ -82,29 +134,44 @@ NSString * const videoTransferSessionId = @"nz.mega.videoTransfer";
     }];
 }
 
+#pragma mark - session completion handler
 
-- (NSURLSession *)createBackgroundSessionWithIdentifier:(NSString *)identifier {
-    NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration backgroundSessionConfigurationWithIdentifier:identifier];
-    configuration.discretionary = YES;
-    configuration.sessionSendsLaunchEvents = YES;
-    NSURLSession *session;
-    if ([identifier isEqualToString:photoTransferSessionId]) {
-        session = [NSURLSession sessionWithConfiguration:configuration delegate:self.photoSessionDelegate delegateQueue:nil];
-    } else if ([identifier isEqualToString:videoTransferSessionId]) {
-        session = [NSURLSession sessionWithConfiguration:configuration delegate:self.videoSessionDelegate delegateQueue:nil];
+- (void)saveSessionCompletion:(void (^)(void))completion forIdentifier:(NSString *)identifier {
+    if ([identifier isEqualToString:PhotoCellularAllowedUploadSessionId]) {
+        self.photoCellularAllowedUploadSessionCompletion = completion;
+    } else if ([identifier isEqualToString:PhotoCellularDisallowedUploadSessionId]) {
+        self.photoCellularDisallowedUploadSessionCompletion = completion;
+    } else if ([identifier isEqualToString:VideoCellularAllowedUploadSessionId]) {
+        self.videoCellularAllowedUploadSessionCompletion = completion;
+    } else if ([identifier isEqualToString:VideoCellularDisallowedUploadSessionId]) {
+        self.videoCellularDisallowedUploadSessionCompletion = completion;
     }
-    
-    return session;
+}
+
+- (void (^)(void))completionHandlerForIdentifier:(NSString *)identifier {
+    if ([identifier isEqualToString:PhotoCellularAllowedUploadSessionId]) {
+        return self.photoCellularAllowedUploadSessionCompletion;
+    } else if ([identifier isEqualToString:PhotoCellularDisallowedUploadSessionId]) {
+        return self.photoCellularDisallowedUploadSessionCompletion;
+    } else if ([identifier isEqualToString:VideoCellularAllowedUploadSessionId]) {
+        return self.videoCellularAllowedUploadSessionCompletion;
+    } else if ([identifier isEqualToString:VideoCellularDisallowedUploadSessionId]) {
+        return self.videoCellularDisallowedUploadSessionCompletion;
+    } else {
+        return nil;
+    }
 }
 
 #pragma mark - task creation
 
 - (NSURLSessionUploadTask *)photoUploadTaskWithURL:(NSURL *)requestURL fromFile:(NSURL *)fileURL completion:(UploadCompletionHandler)completion {
-    return [self backgroundUploadTaskInSession:self.photoSession withURL:requestURL fromFile:fileURL completion:completion];
+    NSURLSession *photoSession = CameraUploadManager.isCellularUploadAllowed ? self.photoCellularAllowedUploadSession : self.photoCellularDisallowedUploadSession;
+    return [self backgroundUploadTaskInSession:photoSession withURL:requestURL fromFile:fileURL completion:completion];
 }
 
 - (NSURLSessionUploadTask *)videoUploadTaskWithURL:(NSURL *)requestURL fromFile:(NSURL *)fileURL completion:(UploadCompletionHandler)completion {
-    return [self backgroundUploadTaskInSession:self.videoSession withURL:requestURL fromFile:fileURL completion:completion];
+    NSURLSession *videoSession = CameraUploadManager.isCellularUploadAllowed ? self.videoCellularAllowedUploadSession : self.videoCellularDisallowedUploadSession;
+    return [self backgroundUploadTaskInSession:videoSession withURL:requestURL fromFile:fileURL completion:completion];
 }
 
 - (NSURLSessionUploadTask *)backgroundUploadTaskInSession:(NSURLSession *)session withURL:(NSURL *)requestURL fromFile:(NSURL *)fileURL completion:(UploadCompletionHandler)completion {
@@ -125,29 +192,11 @@ NSString * const videoTransferSessionId = @"nz.mega.videoTransfer";
 #pragma mark - session finishes
 
 - (void)didFinishEventsForBackgroundURLSession:(NSURLSession *)session {
-    if ([session.configuration.identifier isEqualToString:photoTransferSessionId]) {
-        [self didFinishPhotoSessionEvents];
-    } else if ([session.configuration.identifier isEqualToString:videoTransferSessionId]) {
-        [self didFinishVideoSessionEvents];
-    }
-}
-
-- (void)didFinishPhotoSessionEvents {
     [AttributeUploadManager.shared.operationQueue waitUntilAllOperationsAreFinished];
-    
+    void (^sessionCompletion)(void) = [self completionHandlerForIdentifier:session.configuration.identifier];
     [NSOperationQueue.mainQueue addOperationWithBlock:^{
-        if (self.photoSessionCompletion) {
-            self.photoSessionCompletion();
-        }
-    }];
-}
-
-- (void)didFinishVideoSessionEvents {
-    [AttributeUploadManager.shared.operationQueue waitUntilAllOperationsAreFinished];
-    
-    [NSOperationQueue.mainQueue addOperationWithBlock:^{
-        if (self.videoSessionCompletion) {
-            self.videoSessionCompletion();
+        if (sessionCompletion) {
+            sessionCompletion();
         }
     }];
 }

@@ -3,24 +3,18 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-extern NSString * const photoTransferSessionId;
-extern NSString * const videoTransferSessionId;
-
 typedef void (^UploadCompletionHandler)(NSData  * _Nullable token, NSError * _Nullable error);
 
 @interface TransferSessionManager : NSObject
 
 + (instancetype)shared;
 
-@property (strong, nonatomic) NSURLSession *photoSession;
-@property (strong, nonatomic) NSURLSession *videoSession;
-@property (copy, nonatomic) void (^photoSessionCompletion)(void);
-@property (copy, nonatomic) void (^videoSessionCompletion)(void);
+- (void)restoreSessionIfNeededByIdentifier:(NSString *)identifier;
 
-- (void)restorePhotoSessionIfNeeded;
-- (void)restoreVideoSessionIfNeeded;
+- (void)saveSessionCompletion:(void (^)(void))completion forIdentifier:(NSString *)identifier;
 
 - (NSURLSessionUploadTask *)photoUploadTaskWithURL:(NSURL *)requestURL fromFile:(NSURL *)fileURL completion:(nullable UploadCompletionHandler)completion;
+
 - (NSURLSessionUploadTask *)videoUploadTaskWithURL:(NSURL *)requestURL fromFile:(NSURL *)fileURL completion:(nullable UploadCompletionHandler)completion;
 
 - (void)didFinishEventsForBackgroundURLSession:(NSURLSession *)session;
