@@ -71,8 +71,6 @@
 
 @property (nonatomic, strong) MEGAUser *userTapped;
 
-@property (nonatomic) BOOL pendingRequestsPresented;
-
 @property (nonatomic, strong) NSMutableArray *searchVisibleUsersArray;
 @property (strong, nonatomic) UISearchController *searchController;
 @property (strong, nonatomic) ItemListViewController *itemListVC;
@@ -90,8 +88,6 @@
     
     self.tableView.emptyDataSetSource = self;
     self.tableView.emptyDataSetDelegate = self;
-    
-    self.pendingRequestsPresented = NO;
 
     self.searchController = [Helper customSearchControllerWithSearchResultsUpdaterDelegate:self searchBarDelegate:self];
     self.searchController.delegate = self;
@@ -138,10 +134,10 @@
         MEGAContactRequestList *incomingContactsLists = [[MEGASdkManager sharedMEGASdk] incomingContactRequests];
         [self setContactRequestBarButtomItemWithValue:incomingContactsLists.size.integerValue];
         
-        if (!self.pendingRequestsPresented && incomingContactsLists.size.intValue > 0) {
+        if (!self.avoidPresentIncomingPendingContactRequests && incomingContactsLists.size.intValue > 0) {
             UINavigationController *contactRequestsNC = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactsRequestsNavigationControllerID"];
             [self presentViewController:contactRequestsNC animated:YES completion:nil];
-            self.pendingRequestsPresented = YES;
+            self.avoidPresentIncomingPendingContactRequests = YES;
         }
     }
 }
