@@ -235,6 +235,14 @@
     [groupCallCell configureCellForPeer:peer inChat:self.chatRoom.chatId];
 }
 
+- (void)collectionView:(UICollectionView *)collectionView didEndDisplayingCell:(UICollectionViewCell *)cell forItemAtIndexPath:(NSIndexPath *)indexPath {
+    MEGAGroupCallPeer *peer = [self.peersInCall objectAtIndex:indexPath.row];
+    GroupCallCollectionViewCell *groupCallCell = (GroupCallCollectionViewCell *)cell;
+    if (!groupCallCell.videoImageView.hidden) {
+        [groupCallCell removeRemoteVideoForPeer:peer inChat:self.chatRoom.chatId];
+    }
+}
+
 #pragma mark - UICollectionViewDelegateFlowLayout
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
@@ -532,12 +540,13 @@
 }
 
 - (void)updateParticipants {
-    self.participantsLabel.text = [NSString stringWithFormat:@"%lu/%lu", self.peersInCall.count, (unsigned long)self.chatRoom.peerCount + 1];
+    self.participantsLabel.text = [NSString stringWithFormat:@"%tu/%tu", self.peersInCall.count, (unsigned long)self.chatRoom.peerCount + 1];
 }
 
 - (void)shouldChangeCallLayout {
     if (self.call.numParticipants < kSmallPeersLayout) {
         if (!self.peerTalkingView.hidden) {
+            [self removeAllVideoListeners];
             NSUInteger previousPeerIndex = [self.peersInCall indexOfObject:[self peerForId:self.lastPeerTalking]];
             GroupCallCollectionViewCell *cell = (GroupCallCollectionViewCell *)[self.collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForItem:previousPeerIndex inSection:0]];
             [cell hideUserOnFocus];
@@ -549,13 +558,14 @@
                     self.collectionViewBottomConstraint.constant = 0;
                     self.collectionView.userInteractionEnabled = NO;
                 } completion:^(BOOL finished) {
-                    [self.collectionView.collectionViewLayout invalidateLayout];
+                    [self resetCollectionView];
                 }];
             }];
         }
     } else {
         if (self.peerTalkingView.hidden) {
             self.peerTalkingView.hidden = NO;
+            [self removeAllVideoListeners];
             UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
             if (orientation == UIInterfaceOrientationPortrait) {
                 [UIView animateWithDuration:0.3f animations:^{
@@ -565,7 +575,7 @@
                         self.collectionViewBottomConstraint.constant = 80 - self.collectionView.frame.size.height;
                         self.collectionView.userInteractionEnabled = YES;
                     } completion:^(BOOL finished) {
-                        [self.collectionView.collectionViewLayout invalidateLayout];
+                        [self resetCollectionView];
                     }];
                 }];
             } else {
@@ -576,13 +586,32 @@
                         self.collectionViewBottomConstraint.constant = 0;
                         self.collectionView.userInteractionEnabled = YES;
                     } completion:^(BOOL finished) {
-                        [self.collectionView.collectionViewLayout invalidateLayout];
+                        [self resetCollectionView];
                     }];
                 }];
             }
             
         }
     }
+}
+
+- (void)removeAllVideoListeners {
+    for (int i = 0; i < self.collectionView.visibleCells.count; i++) {
+        MEGAGroupCallPeer *peer = [self.peersInCall objectAtIndex:i];
+        GroupCallCollectionViewCell *cell = (GroupCallCollectionViewCell *)[self.collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForItem:i inSection:0]];
+        if (cell.videoImageView.hidden) {
+            [cell addRemoteVideoForPeer:peer inChat:self.chatRoom.chatId];
+        }
+    }
+}
+
+- (void)resetCollectionView {
+    for (int i = 0; i < self.collectionView.visibleCells.count; i++) {
+        MEGAGroupCallPeer *peer = [self.peersInCall objectAtIndex:i];
+        GroupCallCollectionViewCell *cell = (GroupCallCollectionViewCell *)[self.collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForItem:i inSection:0]];
+        [cell configureCellForPeer:peer inChat:self.chatRoom.chatId];
+    }
+    [self.collectionView.collectionViewLayout invalidateLayout];
 }
 
 - (void)showOrHideControls {
@@ -699,7 +728,7 @@
             
             if ([call hasChangedForType:MEGAChatCallChangeTypeRemoteAVFlags]) {
 
-                MEGAChatSession *chatSessionWithAVFlags = [self.call sessionForPeer:[self.call peerSessionStatusChange]];
+                MEGAChatSession *chatSessionWithAVFlags = [call sessionForPeer:[call peerSessionStatusChange]];
                 
                 MEGAGroupCallPeer *peerAVFlagsChanged = [self peerForId:chatSessionWithAVFlags.peerId];
 
@@ -712,9 +741,13 @@
                     if (peerAVFlagsChanged.video != chatSessionWithAVFlags.hasVideo) {
                         peerAVFlagsChanged.video = chatSessionWithAVFlags.hasVideo;
                         if (peerAVFlagsChanged.video) {
-                            [cell addRemoteVideoForPeer:peerAVFlagsChanged inChat:self.chatRoom.chatId];
+                            if (cell.videoImageView.hidden) {
+                                [cell addRemoteVideoForPeer:peerAVFlagsChanged inChat:self.chatRoom.chatId];
+                            }
                         } else {
-                            [cell removeRemoteVideoForPeer:peerAVFlagsChanged inChat:self.chatRoom.chatId];
+                            if (!cell.videoImageView.hidden) {
+                                [cell removeRemoteVideoForPeer:peerAVFlagsChanged inChat:self.chatRoom.chatId];
+                            }
                         }
                     }
                     
@@ -735,12 +768,14 @@
                         NSUInteger previousPeerIndex = [self.peersInCall indexOfObject:[self peerForId:self.lastPeerTalking]];
                         GroupCallCollectionViewCell *cell = (GroupCallCollectionViewCell *)[self.collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForItem:previousPeerIndex inSection:0]];
                         [cell hideUserOnFocus];
-                        [[MEGASdkManager sharedMEGAChatSdk] removeChatRemoteVideo:self.chatRoom.chatId peerId:self.lastPeerTalking delegate:self.peerTalkingVideoView];
-                        MEGALogDebug(@"GROUPCALL remove user focused remote video for peer %llu", self.lastPeerTalking);
                         
                         NSUInteger peerIndex = [self.peersInCall indexOfObject:[self peerForId:chatSessionWithAudioLevel.peerId]];
                         cell = (GroupCallCollectionViewCell *)[self.collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForItem:peerIndex inSection:0]];
                         [cell showUserOnFocus];
+                        if (!self.peerTalkingVideoView.hidden) {
+                            [[MEGASdkManager sharedMEGAChatSdk] removeChatRemoteVideo:self.chatRoom.chatId peerId:self.lastPeerTalking delegate:self.peerTalkingVideoView];
+                            MEGALogDebug(@"GROUPCALL remove user focused remote video for peer %llu", self.lastPeerTalking);
+                        }
                         
                         if (chatSessionWithAudioLevel.hasVideo) {
                             [[MEGASdkManager sharedMEGAChatSdk] addChatRemoteVideo:self.chatRoom.chatId peerId:chatSessionWithAudioLevel.peerId delegate:self.peerTalkingVideoView];
@@ -763,7 +798,7 @@
             
             if ([call hasChangedForType:MEGAChatCallChangeTypeNetworkQuality]) {
                 
-                MEGAChatSession *chatSessionWithNetworkQuality = [self.call sessionForPeer:[self.call peerSessionStatusChange]];
+                MEGAChatSession *chatSessionWithNetworkQuality = [call sessionForPeer:[call peerSessionStatusChange]];
                 
                 MEGAGroupCallPeer *peerNetworkQuality = [self peerForId:chatSessionWithNetworkQuality.peerId];
                 
@@ -814,7 +849,7 @@
     }
     
     if ([call hasChangedForType:MEGAChatCallChangeTypeSessionStatus]) {
-        MEGAChatSession *chatSession = [self.call sessionForPeer:[self.call peerSessionStatusChange]];
+        MEGAChatSession *chatSession = [call sessionForPeer:[call peerSessionStatusChange]];
         switch (chatSession.status) {
             case MEGAChatSessionStatusInitial: {
                 if (!self.timer.isValid) {
@@ -850,7 +885,9 @@
                     [self.peersInCall removeObject:peerDestroyed];
                     
                     GroupCallCollectionViewCell *cell = (GroupCallCollectionViewCell *)[self.collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForItem:index inSection:0]];
-                    [cell removeRemoteVideoForPeer:peerDestroyed inChat:self.chatRoom.chatId];
+                    if (!cell.videoImageView.hidden) {
+                        [cell removeRemoteVideoForPeer:peerDestroyed inChat:self.chatRoom.chatId];
+                    }
                     [self.collectionView deleteItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:index inSection:0]]];
 
                     [self showToastMessage:[NSString stringWithFormat:AMLocalizedString(@"%@ left the call.", @"Message to inform the local user that someone has left the current group call"), [self.chatRoom peerFullnameByHandle:chatSession.peerId]] color:@"#00BFA5"];

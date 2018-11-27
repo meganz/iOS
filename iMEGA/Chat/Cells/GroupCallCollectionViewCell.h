@@ -6,6 +6,8 @@
 
 @interface GroupCallCollectionViewCell : UICollectionViewCell
 
+@property (weak, nonatomic) IBOutlet MEGARemoteImageView *videoImageView;
+
 - (void)configureCellForPeer:(MEGAGroupCallPeer *)peer inChat:(uint64_t)chatId;
 - (void)networkQualityChangedForPeer:(MEGAGroupCallPeer *)peer;
 - (void)configureUserAudio:(BOOL)audio;
