@@ -153,9 +153,9 @@ const NSUInteger kMaxMessagesToLoad = 256;
     self.avatarImages = [[NSMutableDictionary alloc] init];
     
     _lastChatRoomStateString = @"";
-    _lastChatRoomStateColor = [UIColor whiteColor];
+    _lastChatRoomStateColor = UIColor.whiteColor;
     if (self.chatRoom.isGroup) {
-        _peerAvatar = [UIImage imageForName:self.chatRoom.title.uppercaseString size:CGSizeMake(80.0f, 80.0f) backgroundColor:[UIColor mnz_gray999999] textColor:[UIColor whiteColor] font:[UIFont mnz_SFUIRegularWithSize:40.0f]];
+        _peerAvatar = [UIImage imageForName:self.chatRoom.title.uppercaseString size:CGSizeMake(80.0f, 80.0f) backgroundColor:UIColor.mnz_gray999999 textColor:UIColor.whiteColor font:[UIFont mnz_SFUIRegularWithSize:40.0f]];
     } else {
         _peerAvatar = [UIImage mnz_imageForUserHandle:[self.chatRoom peerHandleAtIndex:0] size:CGSizeMake(80.0f, 80.0f) delegate:nil];
     }
@@ -234,6 +234,10 @@ const NSUInteger kMaxMessagesToLoad = 256;
     }];
     
     [self setLastMessageAsSeen];
+    
+    if (!self.isMovingToParentViewController) {
+        [self customNavigationBarLabel];
+    }
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -309,8 +313,7 @@ const NSUInteger kMaxMessagesToLoad = 256;
     [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
     
     [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
-        [self instantiateNavigationTitle];
-        [self customNavigationBarLabel];
+        [self configureNavigationBar];
     } completion:nil];
 }
 
@@ -369,7 +372,7 @@ const NSUInteger kMaxMessagesToLoad = 256;
     mainStackView.translatesAutoresizingMaskIntoConstraints = false;
     mainStackView.spacing = 4;
     
-    UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
+    UIInterfaceOrientation orientation = UIApplication.sharedApplication.statusBarOrientation;
     if (UIInterfaceOrientationIsPortrait(orientation)) {
         UIStackView *titleView = [[UIStackView alloc] init];
         titleView.axis = UILayoutConstraintAxisHorizontal;
@@ -454,10 +457,10 @@ const NSUInteger kMaxMessagesToLoad = 256;
                 if (userStatus != MEGAChatStatusInvalid) {
                     self.navigationStatusView.hidden = NO;
                     self.navigationSubtitleLabel.hidden = NO;
-                    if (MEGASdkManager.sharedMEGAChatSdk.presenceConfig.isLastGreenVisible) {
+                    if (MEGASdkManager.sharedMEGAChatSdk.presenceConfig.isLastGreenVisible && userStatus < 3) {
                         [MEGASdkManager.sharedMEGAChatSdk requestLastGreen:[self.chatRoom peerHandleAtIndex:0]];
                     }
-                    self.navigationStatusView.backgroundColor = [UIColor mnz_colorForStatusChange:[MEGASdkManager.sharedMEGAChatSdk userOnlineStatus:[self.chatRoom peerHandleAtIndex:0]]];
+                    self.navigationStatusView.backgroundColor = [UIColor mnz_colorForStatusChange:userStatus];
                     chatRoomState = [NSString chatStatusString:userStatus];
                 } else {
                     self.navigationStatusView.hidden = YES;
@@ -502,7 +505,7 @@ const NSUInteger kMaxMessagesToLoad = 256;
     
     self.unreadLabel = [[UILabel alloc] initWithFrame:CGRectMake(25, 6, 30, 30)];
     self.unreadLabel.font = [UIFont mnz_SFUIMediumWithSize:12.0f];
-    self.unreadLabel.textColor = [UIColor whiteColor];
+    self.unreadLabel.textColor = UIColor.whiteColor;
     self.unreadLabel.userInteractionEnabled = YES;
     
     if (self.presentingViewController && self.parentViewController) {
@@ -604,7 +607,7 @@ const NSUInteger kMaxMessagesToLoad = 256;
             [self.participantsMutableDictionary setObject:[NSNumber numberWithUnsignedLongLong:peerHandle] forKey:[NSNumber numberWithUnsignedLongLong:peerHandle]];
         }
     }
-    contactsVC.participantsMutableDictionary = [self.participantsMutableDictionary copy];
+    contactsVC.participantsMutableDictionary = self.participantsMutableDictionary.copy;
     
     contactsVC.userSelected = ^void(NSArray *users, NSString *groupName) {
         if (addParticipant) {
@@ -648,7 +651,7 @@ const NSUInteger kMaxMessagesToLoad = 256;
     [self.collectionView registerNib:[MEGAMessagesTypingIndicatorFoorterView nib] forSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:[MEGAMessagesTypingIndicatorFoorterView footerReuseIdentifier]];
     
     self.collectionView.accessoryDelegate = self;
-    self.collectionView.backgroundColor = [UIColor whiteColor];
+    self.collectionView.backgroundColor = UIColor.whiteColor;
     
     //Register custom menu actions for cells.
     [JSQMessagesCollectionViewCell registerMenuAction:@selector(edit:message:)];
@@ -660,9 +663,9 @@ const NSUInteger kMaxMessagesToLoad = 256;
     [JSQMessagesCollectionViewCell registerMenuAction:@selector(removeRichPreview:message:indexPath:)];
     [JSQMessagesCollectionViewCell registerMenuAction:@selector(delete:)];
     
-    JSQMessagesBubbleImageFactory *bubbleFactory = [[JSQMessagesBubbleImageFactory alloc] initWithBubbleImage:[UIImage imageNamed:@"bubble_tailless"] capInsets:UIEdgeInsetsZero layoutDirection:[UIApplication sharedApplication].userInterfaceLayoutDirection];
-    self.outgoingBubbleImageData = [bubbleFactory outgoingMessagesBubbleImageWithColor:[UIColor mnz_green00BFA5]];
-    self.incomingBubbleImageData = [bubbleFactory incomingMessagesBubbleImageWithColor:[UIColor mnz_grayE2EAEA]];
+    JSQMessagesBubbleImageFactory *bubbleFactory = [[JSQMessagesBubbleImageFactory alloc] initWithBubbleImage:[UIImage imageNamed:@"bubble_tailless"] capInsets:UIEdgeInsetsZero layoutDirection:UIApplication.sharedApplication.userInterfaceLayoutDirection];
+    self.outgoingBubbleImageData = [bubbleFactory outgoingMessagesBubbleImageWithColor:UIColor.mnz_green00BFA5];
+    self.incomingBubbleImageData = [bubbleFactory incomingMessagesBubbleImageWithColor:UIColor.mnz_grayE2EAEA];
 }
 
 - (void)customiseCollectionViewLayout {
@@ -681,10 +684,10 @@ const NSUInteger kMaxMessagesToLoad = 256;
 
 - (void)customToolbarContentView {
     self.inputToolbar.contentView.textView.jsq_pasteDelegate = self;
-    self.inputToolbar.contentView.textView.placeHolderTextColor = [UIColor mnz_grayCCCCCC];
+    self.inputToolbar.contentView.textView.placeHolderTextColor = UIColor.mnz_grayCCCCCC;
     self.inputToolbar.contentView.textView.font = [UIFont mnz_SFUIRegularWithSize:15.0f];
-    self.inputToolbar.contentView.textView.textColor = [UIColor mnz_black333333];
-    self.inputToolbar.contentView.textView.tintColor = [UIColor mnz_green00BFA5];
+    self.inputToolbar.contentView.textView.textColor = UIColor.mnz_black333333;
+    self.inputToolbar.contentView.textView.tintColor = UIColor.mnz_green00BFA5;
     [self updateToolbarPlaceHolder];
     self.inputToolbar.contentView.textView.delegate = self;
     self.inputToolbar.contentView.textView.text = [[MEGAStore shareInstance] fetchChatDraftWithChatId:self.chatRoom.chatId].text;
@@ -820,8 +823,6 @@ const NSUInteger kMaxMessagesToLoad = 256;
         self.openMessageHeaderView = [self.collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"MEGAOpenMessageHeaderViewID" forIndexPath:indexPath];
     }
     
-    
-    
     self.openMessageHeaderView.chattingWithLabel.text = AMLocalizedString(@"chattingWith", @"Title show above the name of the persons with whom you're chatting");
     self.openMessageHeaderView.conversationWithLabel.text = [self participantsNames];
     self.openMessageHeaderView.onlineStatusLabel.text = self.lastChatRoomStateString;
@@ -834,7 +835,7 @@ const NSUInteger kMaxMessagesToLoad = 256;
     confidentialityExplanationString = [confidentialityExplanationString stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"[S]%@[/S]", confidentialityString] withString:@""];
     
     NSMutableAttributedString *confidentialityAttributedString = [[NSMutableAttributedString alloc] initWithString:confidentialityString attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:15.0f], NSForegroundColorAttributeName:UIColor.mnz_redMain}];
-    NSMutableAttributedString *confidentialityExplanationAttributedString = [[NSMutableAttributedString alloc] initWithString:confidentialityExplanationString attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:15.0f], NSForegroundColorAttributeName:[UIColor mnz_gray777777]}];
+    NSMutableAttributedString *confidentialityExplanationAttributedString = [[NSMutableAttributedString alloc] initWithString:confidentialityExplanationString attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:15.0f], NSForegroundColorAttributeName:UIColor.mnz_gray777777}];
     [confidentialityAttributedString appendAttributedString:confidentialityExplanationAttributedString];
     self.openMessageHeaderView.confidentialityLabel.attributedText = confidentialityAttributedString;
     
@@ -843,7 +844,7 @@ const NSUInteger kMaxMessagesToLoad = 256;
     authenticityExplanationString = [authenticityExplanationString stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"[S]%@[/S]", authenticityString] withString:@""];
 
     NSMutableAttributedString *authenticityAttributedString = [[NSMutableAttributedString alloc] initWithString:authenticityString attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:15.0f], NSForegroundColorAttributeName:UIColor.mnz_redMain}];
-    NSMutableAttributedString *authenticityExplanationAttributedString = [[NSMutableAttributedString alloc] initWithString:authenticityExplanationString attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:15.0f], NSForegroundColorAttributeName:[UIColor mnz_gray777777]}];
+    NSMutableAttributedString *authenticityExplanationAttributedString = [[NSMutableAttributedString alloc] initWithString:authenticityExplanationString attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:15.0f], NSForegroundColorAttributeName:UIColor.mnz_gray777777}];
     [authenticityAttributedString appendAttributedString:authenticityExplanationAttributedString];
     self.openMessageHeaderView.authenticityLabel.attributedText = authenticityAttributedString;
 }
@@ -978,15 +979,15 @@ const NSUInteger kMaxMessagesToLoad = 256;
         self.navigationBarProgressView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleRightMargin;
         self.navigationBarProgressView.frame = CGRectMake(self.navigationController.navigationBar.bounds.origin.x, self.navigationController.navigationBar.bounds.size.height, self.navigationController.navigationBar.bounds.size.width, 2.0f);
         self.navigationBarProgressView.transform = CGAffineTransformScale(self.navigationBarProgressView.transform, 1, 2);
-        self.navigationBarProgressView.progressTintColor = [UIColor mnz_green00BFA5];
-        self.navigationBarProgressView.trackTintColor = [UIColor clearColor];
+        self.navigationBarProgressView.progressTintColor = UIColor.mnz_green00BFA5;
+        self.navigationBarProgressView.trackTintColor = UIColor.clearColor;
         
         dispatch_async(dispatch_get_main_queue(), ^{
             self.navigationBarProgressView = [[UIProgressView alloc] initWithProgressViewStyle:UIProgressViewStyleBar];
             self.navigationBarProgressView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleRightMargin;
             self.navigationBarProgressView.frame = CGRectMake(self.navigationController.navigationBar.bounds.origin.x, self.navigationController.navigationBar.bounds.size.height, self.navigationController.navigationBar.bounds.size.width, 2.0f);
-            self.navigationBarProgressView.progressTintColor = [UIColor mnz_green00BFA5];
-            self.navigationBarProgressView.trackTintColor = [UIColor clearColor];
+            self.navigationBarProgressView.progressTintColor = UIColor.mnz_green00BFA5;
+            self.navigationBarProgressView.trackTintColor = UIColor.clearColor;
             
             [self.navigationController.navigationBar addSubview:self.navigationBarProgressView];
         });
@@ -1009,7 +1010,7 @@ const NSUInteger kMaxMessagesToLoad = 256;
 }
 
 - (void)internetConnectionChanged {
-    self.audioCallBarButtonItem.enabled = self.videoCallBarButtonItem.enabled = ((self.chatRoom.ownPrivilege >= MEGAChatRoomPrivilegeStandard) && [MEGAReachabilityManager isReachable]);
+    self.audioCallBarButtonItem.enabled = self.videoCallBarButtonItem.enabled = ((self.chatRoom.ownPrivilege >= MEGAChatRoomPrivilegeStandard) && MEGAReachabilityManager.isReachable);
     
     [self customNavigationBarLabel];
 
@@ -1133,7 +1134,7 @@ const NSUInteger kMaxMessagesToLoad = 256;
 }
 
 - (void)updateOffsetForCellAtIndexPath:(NSIndexPath *)indexPath previousHeight:(CGFloat)previousHeight {
-    if ([[self.collectionView indexPathsForVisibleItems] containsObject:indexPath]) {
+    if ([self.collectionView.indexPathsForVisibleItems containsObject:indexPath]) {
         UICollectionViewCell *cell = [self.collectionView cellForItemAtIndexPath:indexPath];
         CGFloat currentHeight = cell.frame.size.height;
         CGFloat verticalIncrement = currentHeight - previousHeight;
@@ -1151,7 +1152,7 @@ const NSUInteger kMaxMessagesToLoad = 256;
 - (void)setLastMessageAsSeen {
     if (self.messages.count > 0) {
         MEGAChatMessage *lastMessage = self.messages.lastObject;
-        if (lastMessage.userHandle != [[MEGASdkManager sharedMEGAChatSdk] myUserHandle] && [[MEGASdkManager sharedMEGAChatSdk] lastChatMessageSeenForChat:self.chatRoom.chatId].messageId != lastMessage.messageId) {
+        if (lastMessage.userHandle != [MEGASdkManager sharedMEGAChatSdk].myUserHandle && [[MEGASdkManager sharedMEGAChatSdk] lastChatMessageSeenForChat:self.chatRoom.chatId].messageId != lastMessage.messageId) {
             [[MEGASdkManager sharedMEGAChatSdk] setMessageSeenForChat:self.chatRoom.chatId messageId:lastMessage.messageId];
         }
     }
@@ -1312,7 +1313,7 @@ const NSUInteger kMaxMessagesToLoad = 256;
     UINavigationController *sendToNC = [chatStoryboard instantiateViewControllerWithIdentifier:@"SendToNavigationControllerID"];
     SendToViewController *sendToViewController = sendToNC.viewControllers.firstObject;
     sendToViewController.sendMode = SendModeForward;
-    sendToViewController.messages = [self.selectedMessages copy];
+    sendToViewController.messages = self.selectedMessages.copy;
     sendToViewController.sourceChatId = self.chatRoom.chatId;
     sendToViewController.completion = ^(NSArray<NSNumber *> *chatIdNumbers, NSArray<MEGAChatMessage *> *sentMessages) {
         BOOL selfForwarded = NO, showSuccess = NO;
@@ -1531,7 +1532,7 @@ const NSUInteger kMaxMessagesToLoad = 256;
                             [permissionsAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
                             
                             [permissionsAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-                                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
+                                [UIApplication.sharedApplication openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
                             }]];
                             
                             [self presentViewController:permissionsAlertController animated:YES completion:nil];
@@ -1563,13 +1564,13 @@ const NSUInteger kMaxMessagesToLoad = 256;
                     }
                 };
             }];
-            [sendFromCloudDriveAlertAction setValue:[UIColor mnz_black333333] forKey:@"titleTextColor"];
+            [sendFromCloudDriveAlertAction setValue:UIColor.mnz_black333333 forKey:@"titleTextColor"];
             [selectOptionAlertController addAction:sendFromCloudDriveAlertAction];
             
             UIAlertAction *sendContactAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"contact", @"referring to a contact in the contact list of the user") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
                 [self presentAddOrAttachParticipantToGroup:nil];
             }];
-            [sendContactAlertAction setValue:[UIColor mnz_black333333] forKey:@"titleTextColor"];
+            [sendContactAlertAction setValue:UIColor.mnz_black333333 forKey:@"titleTextColor"];
             [selectOptionAlertController addAction:sendContactAlertAction];
             
             selectOptionAlertController.modalPresentationStyle = UIModalPresentationOverCurrentContext;
@@ -1622,7 +1623,7 @@ const NSUInteger kMaxMessagesToLoad = 256;
 #pragma mark - JSQMessages CollectionView DataSource
 
 - (NSString *)senderId {
-    return [NSString stringWithFormat:@"%llu", [[MEGASdkManager sharedMEGAChatSdk] myUserHandle]];
+    return [NSString stringWithFormat:@"%tu", [MEGASdkManager sharedMEGAChatSdk].myUserHandle];
 }
 
 - (NSString *)senderDisplayName {
@@ -1660,7 +1661,7 @@ const NSUInteger kMaxMessagesToLoad = 256;
 
 - (id<JSQMessageAvatarImageDataSource>)collectionView:(JSQMessagesCollectionView *)collectionView avatarImageDataForItemAtIndexPath:(NSIndexPath *)indexPath {
     MEGAChatMessage *message = [self.messages objectAtIndex:indexPath.item];
-    if (message.userHandle == [[MEGASdkManager sharedMEGAChatSdk] myUserHandle] || message.type == MEGAChatMessageTypeCallEnded) {
+    if (message.userHandle == [MEGASdkManager sharedMEGAChatSdk].myUserHandle || message.type == MEGAChatMessageTypeCallEnded) {
         return nil;
     }
     if (indexPath.item < self.messages.count-1) {
@@ -1704,7 +1705,7 @@ const NSUInteger kMaxMessagesToLoad = 256;
     
     if (showDayMonthYear) {
         NSString *dateString = [[JSQMessagesTimestampFormatter sharedFormatter] relativeDateForDate:message.date];
-        NSAttributedString *dateAttributedString = [[NSAttributedString alloc] initWithString:dateString attributes:@{NSFontAttributeName:[UIFont mnz_SFUIMediumWithSize:12.0f], NSForegroundColorAttributeName:[UIColor mnz_black333333]}];
+        NSAttributedString *dateAttributedString = [[NSAttributedString alloc] initWithString:dateString attributes:@{NSFontAttributeName:[UIFont mnz_SFUIMediumWithSize:12.0f], NSForegroundColorAttributeName:UIColor.mnz_black333333}];
         return dateAttributedString;
     }
     
@@ -1718,7 +1719,7 @@ const NSUInteger kMaxMessagesToLoad = 256;
     BOOL showMessageBubbleTopLabel = [self showHourForMessage:message withIndexPath:indexPath];
     if (showMessageBubbleTopLabel) {
         NSString *hour = [[JSQMessagesTimestampFormatter sharedFormatter] timeForDate:message.date];
-        NSAttributedString *hourAttributed = [[NSAttributedString alloc] initWithString:hour attributes:@{NSFontAttributeName:[UIFont preferredFontForTextStyle:UIFontTextStyleCaption1], NSForegroundColorAttributeName:[UIColor grayColor]}];
+        NSAttributedString *hourAttributed = [[NSAttributedString alloc] initWithString:hour attributes:@{NSFontAttributeName:[UIFont preferredFontForTextStyle:UIFontTextStyleCaption1], NSForegroundColorAttributeName:UIColor.grayColor}];
         NSMutableAttributedString *topCellAttributed = [[NSMutableAttributedString alloc] init];
         
         if (self.chatRoom.isGroup && !message.isManagementMessage) {
@@ -1729,7 +1730,7 @@ const NSUInteger kMaxMessagesToLoad = 256;
                     fullname = @"";
                 }
             }
-            NSAttributedString *fullnameAttributed = [[NSAttributedString alloc] initWithString:[fullname stringByAppendingString:@"   "] attributes:@{NSFontAttributeName:[UIFont preferredFontForTextStyle:UIFontTextStyleCaption1], NSForegroundColorAttributeName:[UIColor grayColor]}];
+            NSAttributedString *fullnameAttributed = [[NSAttributedString alloc] initWithString:[fullname stringByAppendingString:@"   "] attributes:@{NSFontAttributeName:[UIFont preferredFontForTextStyle:UIFontTextStyleCaption1], NSForegroundColorAttributeName:UIColor.grayColor}];
             [topCellAttributed appendAttributedString:fullnameAttributed];
             [topCellAttributed appendAttributedString:hourAttributed];
         } else {
@@ -1767,16 +1768,16 @@ const NSUInteger kMaxMessagesToLoad = 256;
     
     if (message.isDeleted) {
         cell.textView.font = [UIFont preferredFontForTextStyle:UIFontTextStyleSubheadline].italic;
-        cell.textView.textColor = [UIColor mnz_blue2BA6DE];
+        cell.textView.textColor = UIColor.mnz_blue2BA6DE;
     } else if (message.isManagementMessage) {
         cell.textView.font = [UIFont preferredFontForTextStyle:UIFontTextStyleSubheadline];
-        cell.textView.linkTextAttributes = @{NSForegroundColorAttributeName: [UIColor mnz_black333333],
-                                             NSUnderlineColorAttributeName: [UIColor mnz_black333333],
+        cell.textView.linkTextAttributes = @{NSForegroundColorAttributeName: UIColor.mnz_black333333,
+                                             NSUnderlineColorAttributeName: UIColor.mnz_black333333,
                                              NSUnderlineStyleAttributeName: @(NSUnderlineStyleNone)};
         cell.textView.attributedText = message.attributedText;
     } else if (!message.isMediaMessage) {
         cell.textView.font = [UIFont preferredFontForTextStyle:UIFontTextStyleSubheadline];
-        cell.textView.textColor = [message.senderId isEqualToString:self.senderId] ? [UIColor whiteColor] : [UIColor mnz_black333333];
+        cell.textView.textColor = [message.senderId isEqualToString:self.senderId] ? UIColor.whiteColor : UIColor.mnz_black333333;
         
         cell.textView.linkTextAttributes = @{ NSForegroundColorAttributeName : cell.textView.textColor,
                                               NSUnderlineStyleAttributeName : @(NSUnderlineStyleSingle | NSUnderlinePatternSolid) };
@@ -1792,7 +1793,7 @@ const NSUInteger kMaxMessagesToLoad = 256;
         cell.contentView.alpha = 1.0f;
     }
     
-    if ([cell.textView.text mnz_isPureEmojiString]) {
+    if (cell.textView.text.mnz_isPureEmojiString) {
         cell.messageBubbleImageView.image = nil;
         cell.textView.font = [UIFont mnz_defaultFontForPureEmojiStringWithEmojis:[cell.textView.text mnz_emojiCount]];
     } else if (message.attributedText.length > 0) {
@@ -2202,7 +2203,7 @@ const NSUInteger kMaxMessagesToLoad = 256;
 #pragma mark - JSQMessagesComposerTextViewPasteDelegate methods
 
 - (BOOL)composerTextView:(JSQMessagesComposerTextView *)textView shouldPasteWithSender:(id)sender {
-    if ([UIPasteboard generalPasteboard].image) {
+    if (UIPasteboard.generalPasteboard.image) {
         return NO;
     }
     return YES;
@@ -2257,7 +2258,7 @@ const NSUInteger kMaxMessagesToLoad = 256;
                     break;
             }
         }];
-        [retryAlertAction setValue:[UIColor mnz_black333333] forKey:@"titleTextColor"];
+        [retryAlertAction setValue:UIColor.mnz_black333333 forKey:@"titleTextColor"];
         [alertController addAction:retryAlertAction];
         
         [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"deleteMessage", @"Button which allows to delete message in chat conversation.") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
@@ -2267,7 +2268,7 @@ const NSUInteger kMaxMessagesToLoad = 256;
         }]];
         
         alertController.modalPresentationStyle = UIModalPresentationPopover;
-        UIPopoverPresentationController *popoverPresentationController = [alertController popoverPresentationController];
+        UIPopoverPresentationController *popoverPresentationController = alertController.popoverPresentationController;
         CGRect deleteRect = [[view cellForItemAtIndexPath:path] bounds];
         popoverPresentationController.sourceRect = deleteRect;
         popoverPresentationController.sourceView = [view cellForItemAtIndexPath:path];
@@ -2285,7 +2286,7 @@ const NSUInteger kMaxMessagesToLoad = 256;
 - (void)textViewDidChange:(UITextView *)textView {
     [super textViewDidChange:textView];
     NSInteger textLength =  textView.text.length;
-    if (textLength > 0 && ![self.sendTypingTimer isValid]) {
+    if (textLength > 0 && !self.sendTypingTimer.isValid) {
         self.sendTypingTimer = [NSTimer scheduledTimerWithTimeInterval:4.0 target:self selector:@selector(doNothing) userInfo:nil repeats:NO];
         [[MEGASdkManager sharedMEGAChatSdk] sendTypingNotificationForChat:self.chatRoom.chatId];
     } else if (textLength == 0) {
@@ -2322,7 +2323,7 @@ const NSUInteger kMaxMessagesToLoad = 256;
         case MEGAChatMessageTypeCallEnded:
         case MEGAChatMessageTypeContainsMeta: {
             NSUInteger unreads;
-            if ([UIApplication sharedApplication].applicationState == UIApplicationStateActive && UIApplication.mnz_visibleViewController == self) {
+            if (UIApplication.sharedApplication.applicationState == UIApplicationStateActive && UIApplication.mnz_visibleViewController == self) {
                 [[MEGASdkManager sharedMEGAChatSdk] setMessageSeenForChat:self.chatRoom.chatId messageId:message.messageId];
                 unreads = [message.senderId isEqualToString:self.senderId] ? 0 : self.unreadMessages + 1;
             } else {
@@ -2338,10 +2339,10 @@ const NSUInteger kMaxMessagesToLoad = 256;
             
             dispatch_async(dispatch_get_main_queue(), ^{
                 NSUInteger items = [self.collectionView numberOfItemsInSection:0];
-                NSUInteger visibleItems = [self.collectionView indexPathsForVisibleItems].count;
+                NSUInteger visibleItems = self.collectionView.indexPathsForVisibleItems.count;
                 if (items > 1 && visibleItems > 0) {
                     NSIndexPath *lastCellIndexPath = [NSIndexPath indexPathForItem:(items - 2) inSection:0];
-                    if ([[self.collectionView indexPathsForVisibleItems] containsObject:lastCellIndexPath]) {
+                    if ([self.collectionView.indexPathsForVisibleItems containsObject:lastCellIndexPath]) {
                         [self scrollToBottomAnimated:YES];
                     } else {
                         [self showJumpToBottomWithMessage:AMLocalizedString(@"newMessages", @"Label in a button that allows to jump to the latest message")];
@@ -2400,7 +2401,7 @@ const NSUInteger kMaxMessagesToLoad = 256;
         
         [self loadNodesFromMessage:message atTheBeginning:NO];
     
-        if (!self.areAllMessagesSeen && message.userHandle != [[MEGASdkManager sharedMEGAChatSdk] myUserHandle]) {
+        if (!self.areAllMessagesSeen && message.userHandle != [MEGASdkManager sharedMEGAChatSdk].myUserHandle) {
             if ([[MEGASdkManager sharedMEGAChatSdk] lastChatMessageSeenForChat:self.chatRoom.chatId].messageId != message.messageId) {
                 if (!self.isFirstLoad || self.unreadMessages >= 0) {
                     if ([[MEGASdkManager sharedMEGAChatSdk] setMessageSeenForChat:self.chatRoom.chatId messageId:message.messageId]) {
@@ -2503,7 +2504,7 @@ const NSUInteger kMaxMessagesToLoad = 256;
                     NSUInteger unreads = [message.senderId isEqualToString:self.senderId] ? 0 : self.unreadMessages + 1;
                     [self updateUnreadMessagesLabel:unreads];
 
-                    if ([[MEGASdkManager sharedMEGAChatSdk] myUserHandle] == message.userHandle) {
+                    if ([MEGASdkManager sharedMEGAChatSdk].myUserHandle == message.userHandle) {
                         [self scrollToBottomAnimated:YES];
                     }
                     
@@ -2588,7 +2589,7 @@ const NSUInteger kMaxMessagesToLoad = 256;
             
             [self.collectionView performBatchUpdates:^{
                 [self.collectionView.collectionViewLayout invalidateLayoutWithContext:[JSQMessagesCollectionViewFlowLayoutInvalidationContext context]];
-                [self.collectionView reloadItemsAtIndexPaths:[self.collectionView indexPathsForVisibleItems]];
+                [self.collectionView reloadItemsAtIndexPaths:self.collectionView.indexPathsForVisibleItems];
             } completion:^(BOOL finished) {
                 [self scrollToBottomAnimated:YES];
             }];
@@ -2612,7 +2613,7 @@ const NSUInteger kMaxMessagesToLoad = 256;
                 [self setTypingIndicator];
                 
                 NSIndexPath *lastCell = [NSIndexPath indexPathForItem:([self.collectionView numberOfItemsInSection:0] - 1) inSection:0];
-                if ([[self.collectionView indexPathsForVisibleItems] containsObject:lastCell]) {
+                if ([self.collectionView.indexPathsForVisibleItems containsObject:lastCell]) {
                     [self scrollToBottomAnimated:YES];
                 }
                 
@@ -2682,7 +2683,7 @@ const NSUInteger kMaxMessagesToLoad = 256;
     } else {
         if ([self.chatRoom peerHandleAtIndex:0] == userHandle) {
             MEGAChatStatus chatStatus = [[MEGASdkManager sharedMEGAChatSdk] userOnlineStatus:[self.chatRoom peerHandleAtIndex:0]];
-            if (chatStatus == 1 || chatStatus == 2) {
+            if (chatStatus < 3) {
                 self.navigationSubtitleLabel.text = [NSString mnz_lastGreenStringFromMinutes:lastGreen];
             }
         }

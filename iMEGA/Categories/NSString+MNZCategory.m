@@ -718,13 +718,16 @@ static NSString* const B = @"[B]";
 }
 
 + (NSString *)mnz_lastGreenStringFromMinutes:(NSInteger)minutes {
-    NSDate *dateLastSeen = [NSDate dateWithTimeIntervalSinceNow:-minutes*60];
+    NSDate *dateLastSeen = [NSDate dateWithTimeIntervalSinceNow:-minutes*SECONDS_IN_MINUTE];
     NSDateFormatter *timeFormatter = [[NSDateFormatter alloc] init];
     timeFormatter.dateFormat = @"HH:mm";
     timeFormatter.locale = [NSLocale autoupdatingCurrentLocale];
     NSString *timeString = [timeFormatter stringFromDate:dateLastSeen];
     NSString *dateString = [[NSCalendar currentCalendar] isDateInToday:dateLastSeen] ? AMLocalizedString(@"Today", @"") : [dateLastSeen formattedDateWithFormat:@"dd MMM YY"];
-    return [NSString stringWithFormat:AMLocalizedString(@"Last seen %@ at %@", @"Text title to inform the user the 'Last seen' time of a contact"), dateString, timeString];
+    NSString *lastSeenMessage = AMLocalizedString(@"Last seen [A] at [B]", @"Text to inform the user the 'Last seen' time of a contact, for example 'Last seen 20 Nov 18 at 15:15'");
+    lastSeenMessage = [lastSeenMessage stringByReplacingOccurrencesOfString:@"[A]" withString:dateString];
+    lastSeenMessage = [lastSeenMessage stringByReplacingOccurrencesOfString:@"[B]" withString:timeString];
+    return lastSeenMessage;
 }
 
 #pragma mark - File names and extensions

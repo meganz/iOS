@@ -1770,7 +1770,7 @@
 "Allow my contacts to see the last time I was active on MEGA. If disabled you won’t be able to see the activity status of your contacts."="Allow my contacts to see the last time I was active on MEGA. If disabled you won’t be able to see the activity status of your contacts.";
 /* Label title to enable/disable the 'Last seen' feature of the chat */
 "Show \"Last seen…\""="Show \"Last seen…\"";
-/* Text to inform the user the 'Last seen' time of a contact */
-"Last seen %@ at %@"="Last seen %@ at %@";
+/* Text to inform the user the 'Last seen' time of a contact, for example 'Last seen 20 Nov 18 at 15:15' */
+"Last seen [A] at [B]"="Last seen [A] at [B]";
 /* */
 "Today"="Today";
