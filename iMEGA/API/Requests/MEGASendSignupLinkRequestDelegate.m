@@ -4,6 +4,8 @@
 #import "SAMKeychain.h"
 #import "SVProgressHUD.h"
 
+#import "UIApplication+MNZCategory.h"
+
 @implementation MEGASendSignupLinkRequestDelegate
 
 #pragma mark - MEGARequestDelegate
@@ -38,7 +40,7 @@
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:UIAlertControllerStyleAlert];
         [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
         
-        [[UIApplication sharedApplication].delegate.window.rootViewController.presentedViewController presentViewController:alertController animated:YES completion:nil];
+        [UIApplication.mnz_presentingViewController presentViewController:alertController animated:YES completion:nil];
         
         return;
     } else {

@@ -537,10 +537,13 @@
                     MEGAChatCall *call = [[MEGASdkManager sharedMEGAChatSdk] chatCallForChatId:self.chatRoom.chatId];
                     if (call.status == MEGAChatCallStatusInProgress) {
                         MEGALogDebug(@"There is a call in progress for this chat %@", call);
-                        CallViewController *callViewController = (CallViewController *) [UIApplication sharedApplication].keyWindow.rootViewController.presentedViewController;
-                        if (!callViewController.videoCall) {
-                            [callViewController tapOnVideoCallkitWhenDeviceIsLocked];
-                        }                        
+                        UIViewController *presentedVC = UIApplication.mnz_presentingViewController;
+                        if ([presentedVC isKindOfClass:CallViewController.class]) {
+                            CallViewController *callVC = (CallViewController *)UIApplication.mnz_presentingViewController;
+                            if (!callVC.videoCall) {
+                                [callVC tapOnVideoCallkitWhenDeviceIsLocked];
+                            }
+                        }
                     } else {
                         MEGAChatConnection chatConnection = [[MEGASdkManager sharedMEGAChatSdk] chatConnectionState:self.chatRoom.chatId];
                         MEGALogDebug(@"Chat %@ connection state: %ld", [MEGASdk base64HandleForUserHandle:self.chatRoom.chatId], (long)chatConnection);

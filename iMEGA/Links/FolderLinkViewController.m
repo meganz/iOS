@@ -494,8 +494,8 @@
     
     if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
         [self dismissViewControllerAnimated:YES completion:^{
-            if ([[[[[UIApplication sharedApplication] delegate] window] rootViewController] isKindOfClass:[MainTabBarController class]]) {
-                MainTabBarController *mainTBC = (MainTabBarController *)[[[[UIApplication sharedApplication] delegate] window] rootViewController];
+            if ([UIApplication.sharedApplication.keyWindow.rootViewController isKindOfClass:MainTabBarController.class]) {
+                MainTabBarController *mainTBC = (MainTabBarController *)UIApplication.sharedApplication.keyWindow.rootViewController;
                 [mainTBC showOffline];
             }
             
@@ -537,7 +537,7 @@
                 browserVC.selectedNodesArray = [NSArray arrayWithObject:self.parentNode];
             }
             
-            [[[[[UIApplication sharedApplication] delegate] window] rootViewController] presentViewController:navigationController animated:YES completion:nil];
+            [UIApplication.mnz_presentingViewController presentViewController:navigationController animated:YES completion:nil];
         }];
     } else {
         if (self.selectedNodesArray.count != 0) {
