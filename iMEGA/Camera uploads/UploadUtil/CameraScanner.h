@@ -1,12 +1,12 @@
 
 #import <Foundation/Foundation.h>
-#import "MOAssetUploadRecord+CoreDataClass.h"
+@import Photos;
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface CameraScanner : NSObject
 
-- (void)startScanningWithCompletion:(void (^)(void))completion;
+- (void)scanMediaType:(PHAssetMediaType)mediaType completion:(void (^)(void))completion;
 
 @end
 
