@@ -134,16 +134,19 @@
                     }];
                 }
                 
-                [masterKeyLoggedInAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:nil]];
-                [masterKeyLoggedInAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+                UIAlertAction *okAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
                     NSString *masterKey = masterKeyLoggedInAlertController.textFields.count ? masterKeyLoggedInAlertController.textFields[0].text : [[MEGASdkManager sharedMEGASdk] masterKey];
                     [self presentChangeViewType:ChangeTypeResetPassword email:[MEGALinkManager emailOfNewSignUpLink] masterKey:masterKey link:request.link];
                     [MEGALinkManager setEmailOfNewSignUpLink:nil];
-                }]];
+                }];
+                okAlertAction.enabled = NO;
+                [masterKeyLoggedInAlertController addAction:okAlertAction];
+                
+                [masterKeyLoggedInAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:nil]];
                 
                 [MEGALinkManager setEmailOfNewSignUpLink:request.email];
                 
-                [UIApplication.mnz_visibleViewController presentViewController:masterKeyLoggedInAlertController animated:YES completion:nil];
+                [UIApplication.mnz_presentingViewController presentViewController:masterKeyLoggedInAlertController animated:YES completion:nil];
             } else {
                 [self presentChangeViewType:ChangeTypeParkAccount email:request.email masterKey:nil link:request.link];
             }

@@ -21,14 +21,67 @@
 #import "UITextField+MNZCategory.h"
 
 #import "BrowserViewController.h"
+#import "CloudDriveViewController.h"
 #import "LoginViewController.h"
 #import "MainTabBarController.h"
 #import "MEGAAVViewController.h"
 #import "MEGANavigationController.h"
-#import "PreviewDocumentViewController.h"
+#import "MEGAPhotoBrowserViewController.h"
 #import "MEGAQLPreviewController.h"
+#import "PreviewDocumentViewController.h"
+#import "SharedItemsViewController.h"
 
 @implementation MEGANode (MNZCategory)
+
+- (void)navigateToParentAndPresent {
+    MainTabBarController *mainTBC = (MainTabBarController *) UIApplication.sharedApplication.delegate.window.rootViewController;
+    
+    if ([[MEGASdkManager sharedMEGASdk] accessLevelForNode:self] != MEGAShareTypeAccessOwner) { // Node from inshare
+        mainTBC.selectedIndex = SHARES;
+        SharedItemsViewController *sharedItemsVC = mainTBC.childViewControllers[SHARES].childViewControllers.firstObject;
+        [sharedItemsVC selectSegment:0]; // Incoming
+    } else {
+        mainTBC.selectedIndex = CLOUD;
+    }
+    
+    UINavigationController *navigationController = [mainTBC.childViewControllers objectAtIndex:mainTBC.selectedIndex];
+    [navigationController popToRootViewControllerAnimated:NO];
+    
+    NSArray *parentTreeArray = self.mnz_parentTreeArray;
+    for (MEGANode *node in parentTreeArray) {
+        CloudDriveViewController *cloudDriveVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
+        cloudDriveVC.parentNode = node;
+        [navigationController pushViewController:cloudDriveVC animated:NO];
+    }
+    
+    switch (self.type) {
+        case MEGANodeTypeFolder:
+        case MEGANodeTypeRubbish: {
+            CloudDriveViewController *cloudDriveVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
+            cloudDriveVC.parentNode = self;
+            [navigationController pushViewController:cloudDriveVC animated:NO];
+            break;
+        }
+            
+        case MEGANodeTypeFile: {
+            if (self.name.mnz_isImagePathExtension || self.name.mnz_isVideoPathExtension) {
+                MEGANode *parentNode = [[MEGASdkManager sharedMEGASdk] nodeForHandle:self.parentHandle];
+                MEGANodeList *nodeList = [[MEGASdkManager sharedMEGASdk] childrenForParent:parentNode];
+                NSMutableArray<MEGANode *> *mediaNodesArray = [nodeList mnz_mediaNodesMutableArrayFromNodeList];
+                
+                MEGAPhotoBrowserViewController *photoBrowserVC = [MEGAPhotoBrowserViewController photoBrowserWithMediaNodes:mediaNodesArray api:[MEGASdkManager sharedMEGASdk] displayMode:DisplayModeCloudDrive presentingNode:self preferredIndex:0];
+                
+                [navigationController presentViewController:photoBrowserVC animated:YES completion:nil];
+            } else {
+                [self mnz_openNodeInNavigationController:navigationController folderLink:NO];
+            }
+            break;
+        }
+            
+        default:
+            break;
+    }
+}
 
 - (void)mnz_openNodeInNavigationController:(UINavigationController *)navigationController folderLink:(BOOL)isFolderLink {
     UIViewController *viewController = [self mnz_viewControllerForNodeInFolderLink:isFolderLink];

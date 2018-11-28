@@ -11,7 +11,6 @@
 #import "UITextField+MNZCategory.h"
 
 #import "BrowserViewController.h"
-#import "CloudDriveViewController.h"
 #import "ConfirmAccountViewController.h"
 #import "ContactRequestsViewController.h"
 #import "CustomModalAlertViewController.h"
@@ -32,7 +31,6 @@
 #import "MEGAQuerySignupLinkRequestDelegate.h"
 #import "MEGAQueryRecoveryLinkRequestDelegate.h"
 #import "MEGASdkManager.h"
-#import "SharedItemsViewController.h"
 #import "UnavailableLinkView.h"
 
 static NSURL *linkURL;
@@ -195,19 +193,7 @@ static NSString *nodeToPresentBase64Handle;
     MEGANode *node = [[MEGASdkManager sharedMEGASdk] nodeForHandle:handle];
     if (node) {
         if ([UIApplication.sharedApplication.keyWindow.rootViewController isKindOfClass:MainTabBarController.class]) {
-            MainTabBarController *mainTBC = (MainTabBarController *)UIApplication.sharedApplication.keyWindow.rootViewController;
-            
-            UINavigationController *navigationController;
-            if ([[MEGASdkManager sharedMEGASdk] accessLevelForNode:node] != MEGAShareTypeAccessOwner) { // node from inshare
-                mainTBC.selectedIndex = SHARES;
-                SharedItemsViewController *sharedItemsVC = mainTBC.childViewControllers[SHARES].childViewControllers[0];
-                [sharedItemsVC selectSegment:0]; // Incoming
-            } else {
-                mainTBC.selectedIndex = CLOUD;
-            }
-            navigationController = [mainTBC.childViewControllers objectAtIndex:mainTBC.selectedIndex];
-            
-            [MEGALinkManager presentNode:node inNavigationController:navigationController];
+            [node navigateToParentAndPresent];
         }
     } else {
         if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
@@ -242,56 +228,17 @@ static NSString *nodeToPresentBase64Handle;
                         [[MEGASdkManager sharedMEGASdk] logout];
                     }]];
                     
-                    [UIApplication.mnz_visibleViewController presentViewController:warningAlertController animated:YES completion:nil];
+                    [UIApplication.mnz_presentingViewController presentViewController:warningAlertController animated:YES completion:nil];
                 } else {
                     [[MEGASdkManager sharedMEGASdk] logout];
                 }
             }]];
             
-            [UIApplication.mnz_visibleViewController presentViewController:theContentIsNotAvailableAlertController animated:YES completion:nil];
+            [UIApplication.mnz_presentingViewController presentViewController:theContentIsNotAvailableAlertController animated:YES completion:nil];
         }
     }
     
     nodeToPresentBase64Handle = nil;
-}
-
-+ (void)presentNode:(MEGANode *)node inNavigationController:(UINavigationController *)navigationController {
-    [navigationController popToRootViewControllerAnimated:NO];
-    
-    NSArray *parentTreeArray = node.mnz_parentTreeArray;
-    for (MEGANode *node in parentTreeArray) {
-        CloudDriveViewController *cloudDriveVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
-        cloudDriveVC.parentNode = node;
-        [navigationController pushViewController:cloudDriveVC animated:NO];
-    }
-    
-    switch (node.type) {
-        case MEGANodeTypeFolder:
-        case MEGANodeTypeRubbish: {
-            CloudDriveViewController *cloudDriveVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
-            cloudDriveVC.parentNode = node;
-            [navigationController pushViewController:cloudDriveVC animated:NO];
-            break;
-        }
-            
-        case MEGANodeTypeFile: {
-            if (node.name.mnz_isImagePathExtension || node.name.mnz_isVideoPathExtension) {
-                MEGANode *parentNode = [[MEGASdkManager sharedMEGASdk] nodeForHandle:node.parentHandle];
-                MEGANodeList *nodeList = [[MEGASdkManager sharedMEGASdk] childrenForParent:parentNode];
-                NSMutableArray<MEGANode *> *mediaNodesArray = [nodeList mnz_mediaNodesMutableArrayFromNodeList];
-                
-                MEGAPhotoBrowserViewController *photoBrowserVC = [MEGAPhotoBrowserViewController photoBrowserWithMediaNodes:mediaNodesArray api:[MEGASdkManager sharedMEGASdk] displayMode:DisplayModeCloudDrive presentingNode:node preferredIndex:0];
-                
-                [navigationController presentViewController:photoBrowserVC animated:YES completion:nil];
-            } else {
-                [node mnz_openNodeInNavigationController:navigationController folderLink:NO];
-            }
-            break;
-        }
-            
-        default:
-            break;
-    }
 }
 
 #pragma mark - Manage MEGA links

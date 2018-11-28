@@ -1,0 +1,19 @@
+
+#import <UIKit/UIKit.h>
+
+NS_ASSUME_NONNULL_BEGIN
+
+@class CloudDriveViewController;
+@interface CloudDriveTableViewController : UIViewController
+
+@property (nonatomic, strong) CloudDriveViewController *cloudDrive;
+
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
+
+- (void)setTableViewEditing:(BOOL)editing animated:(BOOL)animated;
+- (void)tableViewSelectIndexPath:(NSIndexPath *)indexPath;
+- (void)reloadRowAtIndexPath:(NSIndexPath *)indexPath;
+
+@end
+
+NS_ASSUME_NONNULL_END
