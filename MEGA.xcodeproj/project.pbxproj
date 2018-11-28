@@ -657,6 +657,8 @@
 		B644B6B721ABA27B00A3B8E7 /* MEGAConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = B60DDC1521A7A7930097E4A3 /* MEGAConstants.m */; };
 		B644B6B821ABA27B00A3B8E7 /* MEGAConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = B60DDC1521A7A7930097E4A3 /* MEGAConstants.m */; };
 		B644B6BB21ABA4F700A3B8E7 /* UIViewController+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = B644B6BA21ABA4F700A3B8E7 /* UIViewController+MNZCategory.m */; };
+		B644B6BE21AE0E1900A3B8E7 /* CoordinateUploadOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = B644B6BD21AE0E1900A3B8E7 /* CoordinateUploadOperation.m */; };
+		B644B6C121AE19BC00A3B8E7 /* MEGAExpirableOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = B644B6C021AE19BC00A3B8E7 /* MEGAExpirableOperation.m */; };
 		B658D3B8218F9357004C0D64 /* PhotoUploadOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = B658D3B7218F9357004C0D64 /* PhotoUploadOperation.m */; };
 		B658D3BB218F936B004C0D64 /* VideoUploadOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = B658D3BA218F936B004C0D64 /* VideoUploadOperation.m */; };
 		B658D3C2218FA16C004C0D64 /* MEGATransactionOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = B658D3C1218FA16C004C0D64 /* MEGATransactionOperation.m */; };
@@ -1534,6 +1536,10 @@
 		B60DDC1521A7A7930097E4A3 /* MEGAConstants.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MEGAConstants.m; sourceTree = "<group>"; };
 		B644B6B921ABA4F700A3B8E7 /* UIViewController+MNZCategory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIViewController+MNZCategory.h"; sourceTree = "<group>"; };
 		B644B6BA21ABA4F700A3B8E7 /* UIViewController+MNZCategory.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+MNZCategory.m"; sourceTree = "<group>"; };
+		B644B6BC21AE0E1900A3B8E7 /* CoordinateUploadOperation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CoordinateUploadOperation.h; sourceTree = "<group>"; };
+		B644B6BD21AE0E1900A3B8E7 /* CoordinateUploadOperation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CoordinateUploadOperation.m; sourceTree = "<group>"; };
+		B644B6BF21AE19BC00A3B8E7 /* MEGAExpirableOperation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MEGAExpirableOperation.h; sourceTree = "<group>"; };
+		B644B6C021AE19BC00A3B8E7 /* MEGAExpirableOperation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MEGAExpirableOperation.m; sourceTree = "<group>"; };
 		B658D3B6218F9357004C0D64 /* PhotoUploadOperation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PhotoUploadOperation.h; sourceTree = "<group>"; };
 		B658D3B7218F9357004C0D64 /* PhotoUploadOperation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PhotoUploadOperation.m; sourceTree = "<group>"; };
 		B658D3B9218F936B004C0D64 /* VideoUploadOperation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VideoUploadOperation.h; sourceTree = "<group>"; };
@@ -3363,6 +3369,8 @@
 				B658D3C1218FA16C004C0D64 /* MEGATransactionOperation.m */,
 				B6A4A11221A256B0007E7EEC /* MEGATaskOperation.h */,
 				B6A4A11321A256B0007E7EEC /* MEGATaskOperation.m */,
+				B644B6BF21AE19BC00A3B8E7 /* MEGAExpirableOperation.h */,
+				B644B6C021AE19BC00A3B8E7 /* MEGAExpirableOperation.m */,
 				B68C42C9216DAA85003C5A50 /* CameraUploadOperation.h */,
 				B68C42CA216DAA85003C5A50 /* CameraUploadOperation.m */,
 				B658D3B6218F9357004C0D64 /* PhotoUploadOperation.h */,
@@ -3377,6 +3385,8 @@
 				B6B959432193A91E0064334D /* PreviewUploadOperation.m */,
 				B6D11AE321A24C7700446B86 /* CompleteUploadOperation.h */,
 				B6D11AE421A24C7700446B86 /* CompleteUploadOperation.m */,
+				B644B6BC21AE0E1900A3B8E7 /* CoordinateUploadOperation.h */,
+				B644B6BD21AE0E1900A3B8E7 /* CoordinateUploadOperation.m */,
 			);
 			path = UploadOperation;
 			sourceTree = "<group>";
@@ -3950,6 +3960,7 @@
 				41EAAE4B1D06B49400622FAF /* PHAssetCollection+CTAssetsPickerController.m in Sources */,
 				77519C36203707F600FDF92B /* MEGARenameRequestDelegate.m in Sources */,
 				E8BD127F1DB76E03003DC53F /* MasterKeyViewController.m in Sources */,
+				B644B6C121AE19BC00A3B8E7 /* MEGAExpirableOperation.m in Sources */,
 				41D21E691D01AEC3002E6296 /* CTAssetsNavigationController.m in Sources */,
 				B6D11AE521A24C7700446B86 /* CompleteUploadOperation.m in Sources */,
 				B6D11AC6219B8ABC00446B86 /* CameraUploadFileNameRecordManager.m in Sources */,
@@ -3987,6 +3998,7 @@
 				5B17C9B31F73DE310093F162 /* InviteFriendsViewController.m in Sources */,
 				4172793E1DB663FA001AC818 /* JSQMessagesTimestampFormatter.m in Sources */,
 				E8C8D73F1B1DCB4000BCDBA4 /* MEGANavigationController.m in Sources */,
+				B644B6BE21AE0E1900A3B8E7 /* CoordinateUploadOperation.m in Sources */,
 				B658D3BB218F936B004C0D64 /* VideoUploadOperation.m in Sources */,
 				A8F5D67A1ED58F940087DA40 /* CheckEmailAndFollowTheLinkViewController.m in Sources */,
 				41AC66481AB1D493003FE8DA /* AboutTableViewController.m in Sources */,

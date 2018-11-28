@@ -3,9 +3,17 @@
 #import "NSFileManager+MNZCategory.h"
 #import "ThumbnailUploadOperation.h"
 #import "PreviewUploadOperation.h"
+#import "CoordinateUploadOperation.h"
+@import CoreLocation;
 
 static NSString * const AttributeThumbnailName = @"thumbnail";
 static NSString * const AttributePreviewName = @"preview";
+
+@interface AttributeUploadManager ()
+
+@property (strong, nonatomic) NSOperationQueue *operationQueue;
+
+@end
 
 @implementation AttributeUploadManager
 
@@ -28,7 +36,21 @@ static NSString * const AttributePreviewName = @"preview";
     return self;
 }
 
-- (void)uploadAttributeAtURL:(NSURL *)URL withAttributeType:(MEGAAttributeType)type forNode:(MEGANode *)node {
+#pragma mark - util
+
+- (void)waitUnitlAllAttributeUploadsAreFinished {
+    [self.operationQueue waitUntilAllOperationsAreFinished];
+}
+
+#pragma mark - upload coordinate
+
+- (void)uploadCoordinateAtLocation:(CLLocation *)location forNode:(MEGANode *)node {
+    [self.operationQueue addOperation:[[CoordinateUploadOperation alloc] initWithLocation:location node:node expiresAfterTimeInterval:60]];
+}
+
+#pragma mark - upload preview and thumbnail files
+
+- (void)uploadFileAtURL:(NSURL *)URL withAttributeType:(MEGAAttributeType)type forNode:(MEGANode *)node {
     if (![NSFileManager.defaultManager fileExistsAtPath:URL.path]) {
         MEGALogDebug(@"[Camera Upload] No attribute file found for node %@ at URL: %@", node.name, URL);
         return;
@@ -57,7 +79,7 @@ static NSString * const AttributePreviewName = @"preview";
 
 #pragma mark - attributes scan and retry
 
-- (void)scanLocalAttributesAndRetryUploadIfNeeded {
+- (void)scanLocalAttributeFilesAndRetryUploadIfNeeded {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         if (![NSFileManager.defaultManager fileExistsAtPath:[self attributeDirectoryURL].path]) {
             return;
