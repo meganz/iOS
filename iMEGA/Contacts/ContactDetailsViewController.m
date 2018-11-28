@@ -68,7 +68,7 @@
     
     MEGAChatStatus userStatus = [MEGASdkManager.sharedMEGAChatSdk userOnlineStatus:self.user.handle];
     if (userStatus != MEGAChatStatusInvalid) {
-        if (MEGASdkManager.sharedMEGAChatSdk.presenceConfig.isLastGreenVisible) {
+        if (MEGASdkManager.sharedMEGAChatSdk.presenceConfig.isLastGreenVisible && userStatus < 3) {
             [MEGASdkManager.sharedMEGAChatSdk requestLastGreen:self.user.handle];
         }
         self.onlineStatusView.backgroundColor = [UIColor mnz_colorForStatusChange:[MEGASdkManager.sharedMEGAChatSdk userOnlineStatus:self.user.handle]];
@@ -93,7 +93,7 @@
 }
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations {
-    if ([[UIDevice currentDevice] iPhone4X] || [[UIDevice currentDevice] iPhone5X]) {
+    if (UIDevice.currentDevice.iPhone4X || UIDevice.currentDevice.iPhone5X) {
         return UIInterfaceOrientationMaskPortrait | UIInterfaceOrientationMaskPortraitUpsideDown;
     }
     
@@ -447,7 +447,7 @@
     if (userHandle == self.user.handle) {
         self.onlineStatusView.backgroundColor = [UIColor mnz_colorForStatusChange:onlineStatus];
         self.statusLabel.text = [NSString chatStatusString:onlineStatus];
-        if (MEGASdkManager.sharedMEGAChatSdk.presenceConfig.isLastGreenVisible) {
+        if (MEGASdkManager.sharedMEGAChatSdk.presenceConfig.isLastGreenVisible && onlineStatus < 3) {
             [MEGASdkManager.sharedMEGAChatSdk requestLastGreen:self.user.handle];
         }
     }
@@ -459,7 +459,7 @@
     } else if (userHandle == self.user.handle) {
         if (self.user.handle == userHandle) {
             MEGAChatStatus chatStatus = [[MEGASdkManager sharedMEGAChatSdk] userOnlineStatus:self.user.handle];
-            if (chatStatus == 1 || chatStatus == 2) {
+            if (chatStatus < 3) {
                 self.statusLabel.text = [NSString mnz_lastGreenStringFromMinutes:lastGreen];
             }
         }
