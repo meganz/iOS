@@ -80,7 +80,7 @@
         if (!self.pdfView.hidden) {
             CGPDFPageRef pageRef = self.pdfView.currentPage.pageRef;
             size_t page = CGPDFPageGetPageNumber(pageRef);
-            NSString *fingerprint = [NSString stringWithFormat:@"%@", [[MEGASdkManager sharedMEGASdk] fingerprintForFilePath:self.pdfView.document.documentURL.path]];
+            NSString *fingerprint = [[MEGASdkManager sharedMEGASdk] fingerprintForFilePath:self.pdfView.document.documentURL.path];
             if (page == 1) {
                 [[MEGAStore shareInstance] deleteMediaDestinationWithFingerprint:fingerprint];
             } else {
