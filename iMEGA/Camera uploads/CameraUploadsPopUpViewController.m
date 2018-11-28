@@ -62,11 +62,6 @@
 
 - (IBAction)uploadVideosValueChanged:(UISwitch *)sender {
     CameraUploadManager.videoUploadEnabled = sender.isOn;
-    if (sender.isOn) {
-        [CameraUploadManager.shared startVideoUploadIfNeeded];
-    } else {
-        [CameraUploadManager.shared stopVideoUpload];
-    }
 }
 
 - (IBAction)useCellularConnectionValueChanged:(UISwitch *)sender {

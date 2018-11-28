@@ -1,7 +1,7 @@
 
 #import "CameraScanner.h"
 #import "CameraUploadRecordManager.h"
-@import Photos;
+#import "MOAssetUploadRecord+CoreDataClass.h"
 
 @interface CameraScanner () <PHPhotoLibraryChangeObserver>
 
@@ -26,13 +26,13 @@
 
 #pragma mark - camera scanning
 
-- (void)startScanningWithCompletion:(void (^)(void))completion {
+- (void)scanMediaType:(PHAssetMediaType)mediaType completion:(void (^)(void))completion {
     [self.operationQueue addOperationWithBlock:^{
         MEGALogDebug(@"[Camera Upload] Start local album scanning at: %@", [NSDateFormatter localizedStringFromDate:[NSDate date] dateStyle:NSDateFormatterShortStyle timeStyle:NSDateFormatterFullStyle]);
         
         PHFetchOptions *fetchOptions = [[PHFetchOptions alloc] init];
         fetchOptions.includeAssetSourceTypes = PHAssetSourceTypeUserLibrary | PHAssetSourceTypeCloudShared | PHAssetSourceTypeiTunesSynced;
-        fetchOptions.predicate = [NSPredicate predicateWithFormat:@"mediaType IN %@", @[@(PHAssetMediaTypeImage), @(PHAssetMediaTypeVideo)]];
+        fetchOptions.predicate = [NSPredicate predicateWithFormat:@"mediaType == %@", @(mediaType)];
         self.fetchResult = [PHAsset fetchAssetsWithOptions:fetchOptions];
         if (self.fetchResult.count == 0) {
             return;

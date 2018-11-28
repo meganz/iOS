@@ -108,7 +108,10 @@ static const NSInteger MaxConcurrentVideoOperationCount = 1;
 }
 
 - (void)startCameraUpload {
-    [self uploadNextAssetsWithNumber:ConcurrentPhotoUploadCount mediaType:PHAssetMediaTypeImage];
+    [self.scanner scanMediaType:PHAssetMediaTypeImage completion:^{
+        [self uploadNextAssetsWithNumber:ConcurrentPhotoUploadCount mediaType:PHAssetMediaTypeImage];
+    }];
+    
     [self startVideoUploadIfNeeded];
 }
 
@@ -117,11 +120,13 @@ static const NSInteger MaxConcurrentVideoOperationCount = 1;
         return;
     }
     
-    if (self.videoUploadOerationQueue.operationCount > 0) {
-        return;
-    }
-    
-    [self uploadNextAssetsWithNumber:ConcurrentVideoUploadCount mediaType:PHAssetMediaTypeVideo];
+    [self.scanner scanMediaType:PHAssetMediaTypeVideo completion:^{
+        if (self.videoUploadOerationQueue.operationCount > 0) {
+            return;
+        }
+        
+        [self uploadNextAssetsWithNumber:ConcurrentVideoUploadCount mediaType:PHAssetMediaTypeVideo];
+    }];
 }
 
 - (void)uploadNextForAsset:(PHAsset *)asset {
