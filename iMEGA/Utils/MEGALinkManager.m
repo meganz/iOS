@@ -134,11 +134,13 @@ static NSString *nodeToPresentBase64Handle;
                 return;
             }
             
-            MainTabBarController *mainTBC = (MainTabBarController *)UIApplication.sharedApplication.keyWindow.rootViewController;
-            [mainTBC showOffline];
-            
-            [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:AMLocalizedString(@"downloadStarted", nil)];
-            [Helper downloadNode:node folderPath:[Helper relativePathForOffline] isFolderLink:NO shouldOverwrite:NO];
+            if ([UIApplication.sharedApplication.keyWindow.rootViewController isKindOfClass:MainTabBarController.class]) {
+                MainTabBarController *mainTBC = (MainTabBarController *)UIApplication.sharedApplication.keyWindow.rootViewController;
+                [mainTBC showOffline];
+                
+                [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:AMLocalizedString(@"downloadStarted", @"Message shown when a download starts")];
+                [Helper downloadNode:node folderPath:Helper.relativePathForOffline isFolderLink:NO shouldOverwrite:NO];
+            }
             break;
         }
             
@@ -159,12 +161,14 @@ static NSString *nodeToPresentBase64Handle;
                 }
             }
             
-            MainTabBarController *mainTBC = (MainTabBarController *)UIApplication.sharedApplication.keyWindow.rootViewController;
-            [mainTBC showOffline];
-            
-            [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:AMLocalizedString(@"downloadStarted", nil)];
-            for (MEGANode *node in [MEGALinkManager nodesFromLinkMutableArray]) {
-                [Helper downloadNode:node folderPath:[Helper relativePathForOffline] isFolderLink:YES shouldOverwrite:NO];
+            if ([UIApplication.sharedApplication.keyWindow.rootViewController isKindOfClass:MainTabBarController.class]) {
+                MainTabBarController *mainTBC = (MainTabBarController *)UIApplication.sharedApplication.keyWindow.rootViewController;
+                [mainTBC showOffline];
+                
+                [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:AMLocalizedString(@"downloadStarted", @"Message shown when a download starts")];
+                for (MEGANode *node in [MEGALinkManager nodesFromLinkMutableArray]) {
+                    [Helper downloadNode:node folderPath:Helper.relativePathForOffline isFolderLink:YES shouldOverwrite:NO];
+                }
             }
             break;
         }
@@ -190,19 +194,21 @@ static NSString *nodeToPresentBase64Handle;
     uint64_t handle = [MEGASdk handleForBase64Handle:nodeToPresentBase64Handle];
     MEGANode *node = [[MEGASdkManager sharedMEGASdk] nodeForHandle:handle];
     if (node) {
-        MainTabBarController *mainTBC = (MainTabBarController *)UIApplication.sharedApplication.keyWindow.rootViewController;
-        
-        UINavigationController *navigationController;
-        if ([[MEGASdkManager sharedMEGASdk] accessLevelForNode:node] != MEGAShareTypeAccessOwner) { // node from inshare
-            mainTBC.selectedIndex = SHARES;
-            SharedItemsViewController *sharedItemsVC = mainTBC.childViewControllers[SHARES].childViewControllers[0];
-            [sharedItemsVC selectSegment:0]; // Incoming
-        } else {
-            mainTBC.selectedIndex = CLOUD;
+        if ([UIApplication.sharedApplication.keyWindow.rootViewController isKindOfClass:MainTabBarController.class]) {
+            MainTabBarController *mainTBC = (MainTabBarController *)UIApplication.sharedApplication.keyWindow.rootViewController;
+            
+            UINavigationController *navigationController;
+            if ([[MEGASdkManager sharedMEGASdk] accessLevelForNode:node] != MEGAShareTypeAccessOwner) { // node from inshare
+                mainTBC.selectedIndex = SHARES;
+                SharedItemsViewController *sharedItemsVC = mainTBC.childViewControllers[SHARES].childViewControllers[0];
+                [sharedItemsVC selectSegment:0]; // Incoming
+            } else {
+                mainTBC.selectedIndex = CLOUD;
+            }
+            navigationController = [mainTBC.childViewControllers objectAtIndex:mainTBC.selectedIndex];
+            
+            [MEGALinkManager presentNode:node inNavigationController:navigationController];
         }
-        navigationController = [mainTBC.childViewControllers objectAtIndex:mainTBC.selectedIndex];
-        
-        [MEGALinkManager presentNode:node inNavigationController:navigationController];
     } else {
         if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
             UIAlertController *theContentIsNotAvailableAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"theContentIsNotAvailableForThisAccount", @"") message:nil preferredStyle:UIAlertControllerStyleAlert];
@@ -502,10 +508,10 @@ static NSString *nodeToPresentBase64Handle;
     [UIApplication.mnz_visibleViewController presentViewController:alertController animated:YES completion:nil];
 }
 
-- (void)alertTextFieldDidChange:(UITextField *)textField {
++ (void)alertTextFieldDidChange:(UITextField *)textField {
     UIAlertController *alertController = (UIAlertController *)UIApplication.mnz_visibleViewController;
     if (alertController) {
-        UIAlertAction *rightButtonAction = alertController.actions.lastObject;
+        UIAlertAction *rightButtonAction = alertController.actions.firstObject;
         rightButtonAction.enabled = !textField.text.mnz_isEmpty;
     }
 }

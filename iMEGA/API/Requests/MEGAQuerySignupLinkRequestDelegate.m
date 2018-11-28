@@ -50,7 +50,7 @@
                 UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"accountAlreadyConfirmed", @"Message shown when the user clicks on a confirm account link that has already been used") message:nil preferredStyle:UIAlertControllerStyleAlert];
                 [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
                     
-                    UIViewController *rootViewController = [UIApplication sharedApplication].keyWindow.rootViewController;
+                    UIViewController *rootViewController = UIApplication.sharedApplication.keyWindow.rootViewController;
                     MEGANavigationController *navigationController = (MEGANavigationController *)rootViewController;
                     if ([navigationController.topViewController isKindOfClass:LoginViewController.class]) {
                         LoginViewController *loginVC = (LoginViewController *)navigationController.topViewController;
@@ -67,7 +67,7 @@
             [MEGALinkManager presentConfirmViewWithURLType:URLTypeConfirmationLink link:[MEGALinkManager linkURL].absoluteString email:self.email];
         }
     } else if (self.urlType == URLTypeNewSignUpLink && [MEGALinkManager emailOfNewSignUpLink])  {
-        UIViewController *rootViewController = [UIApplication sharedApplication].keyWindow.rootViewController;
+        UIViewController *rootViewController = UIApplication.sharedApplication.keyWindow.rootViewController;
         if ([rootViewController isKindOfClass:[MEGANavigationController class]]) {
             MEGANavigationController *navigationController = (MEGANavigationController *)rootViewController;
             if ([navigationController.topViewController isKindOfClass:[LoginViewController class]]) {
