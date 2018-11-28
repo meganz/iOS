@@ -4,15 +4,19 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface AttributeUploadManager : NSObject
+@class CLLocation;
 
-@property (strong, nonatomic) NSOperationQueue *operationQueue;
+@interface AttributeUploadManager : NSObject
 
 + (instancetype)shared;
 
-- (void)scanLocalAttributesAndRetryUploadIfNeeded;
+- (void)waitUnitlAllAttributeUploadsAreFinished;
 
-- (void)uploadAttributeAtURL:(NSURL *)URL withAttributeType:(MEGAAttributeType)type forNode:(MEGANode *)node;
+- (void)scanLocalAttributeFilesAndRetryUploadIfNeeded;
+
+- (void)uploadFileAtURL:(NSURL *)URL withAttributeType:(MEGAAttributeType)type forNode:(MEGANode *)node;
+
+- (void)uploadCoordinateAtLocation:(CLLocation *)location forNode:(MEGANode *)node;
 
 @end
 

@@ -2,21 +2,13 @@
 #import "AttributeUploadOperation.h"
 #import "NSFileManager+MNZCategory.h"
 
-@interface AttributeUploadOperation ()
-
-@property (strong, nonatomic) NSTimer *watchTimer;
-@property (nonatomic) NSTimeInterval expireTimeInterval;
-
-@end
-
 @implementation AttributeUploadOperation
 
 - (instancetype)initWithAttributeURL:(NSURL *)URL node:(MEGANode *)node expiresAfterTimeInterval:(NSTimeInterval)timeInterval {
-    self = [super init];
+    self = [super initWithExpireTimeInterval:timeInterval];
     if (self) {
         _node = node;
         _attributeURL = URL;
-        _expireTimeInterval = timeInterval;
     }
     
     return self;
@@ -30,12 +22,6 @@
         [self finishOperation];
         return;
     }
-    
-    __weak __typeof__(self) weakSelf = self;
-    self.watchTimer = [NSTimer scheduledTimerWithTimeInterval:self.expireTimeInterval repeats:NO block:^(NSTimer * _Nonnull timer) {
-        MEGALogDebug(@"[Camera Upload] %@ expired with watch timer", NSStringFromClass(weakSelf.class));
-        [weakSelf finishOperation];
-    }];
 }
 
 - (void)cacheAttributeToDirectoryURL:(NSURL *)directoryURL fileName:(NSString *)fileName {
@@ -57,7 +43,6 @@
     [super finishOperation];
     
     MEGALogDebug(@"[Camera Upload] %@ operation finished", NSStringFromClass(self.class));
-    [self.watchTimer invalidate];
 }
 
 @end

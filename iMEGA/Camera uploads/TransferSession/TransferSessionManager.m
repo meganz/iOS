@@ -192,7 +192,7 @@ static NSString * const VideoCellularDisallowedUploadSessionId = @"nz.mega.video
 #pragma mark - session finishes
 
 - (void)didFinishEventsForBackgroundURLSession:(NSURLSession *)session {
-    [AttributeUploadManager.shared.operationQueue waitUntilAllOperationsAreFinished];
+    [AttributeUploadManager.shared waitUnitlAllAttributeUploadsAreFinished];
     void (^sessionCompletion)(void) = [self completionHandlerForIdentifier:session.configuration.identifier];
     [NSOperationQueue.mainQueue addOperationWithBlock:^{
         if (sessionCompletion) {
