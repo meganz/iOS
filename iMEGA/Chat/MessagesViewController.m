@@ -303,7 +303,7 @@ const NSUInteger kMaxMessagesToLoad = 256;
     
     if ([[MEGASdkManager sharedMEGAChatSdk] hasCallInChatRoom:self.chatRoom.chatId]) {
         MEGAChatCall *call = [[MEGASdkManager sharedMEGAChatSdk] chatCallForChatId:self.chatRoom.chatId];
-        if (call.sessions.size != 0) {
+        if (call.status == MEGAChatCallStatusInProgress) {
             [self showTapToReturnCall:call];
         } else {
             [self showActiveCallButton];
