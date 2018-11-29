@@ -1966,7 +1966,7 @@ void uncaughtExceptionHandler(NSException *exception) {
                 detail = [detail stringByReplacingOccurrencesOfString:@"4" withString:maxStorageTB];
                 alreadyPresented = YES;
                 NSString *title = AMLocalizedString(@"upgradeAccount", @"Button title which triggers the action to upgrade your MEGA account level");
-                UIImage *image = [UIImage imageNamed:@"storage_almost_full"];
+                UIImage *image = event.number == StorageStateOrange ? [UIImage imageNamed:@"storage_almost_full"] : [UIImage imageNamed:@"storage_full"];
                 [self presentUpgradeViewControllerTitle:title detail:detail image:image];
             }
         }
@@ -2098,7 +2098,7 @@ void uncaughtExceptionHandler(NSException *exception) {
             case MEGAErrorTypeApiEOverQuota: {
                 NSString *title = AMLocalizedString(@"upgradeAccount", @"Button title which triggers the action to upgrade your MEGA account level");
                 NSString *detail = AMLocalizedString(@"This action can not be completed as it would take you over your current storage limit", @"Error message shown to user when a copy/import operation would take them over their storage limit.");
-                UIImage *image = [UIImage imageNamed:@"storage_almost_full"];
+                UIImage *image = [api mnz_accountDetails].storageMax.longLongValue > [api mnz_accountDetails].storageUsed.longLongValue ? [UIImage imageNamed:@"storage_almost_full"] : [UIImage imageNamed:@"storage_full"];
                 [self presentUpgradeViewControllerTitle:title detail:detail image:image];
                 
                 break;
@@ -2565,7 +2565,7 @@ void uncaughtExceptionHandler(NSException *exception) {
         } else { // Storage overquota error
             NSString *title = AMLocalizedString(@"upgradeAccount", @"Button title which triggers the action to upgrade your MEGA account level");
             NSString *detail = AMLocalizedString(@"Your upload(s) cannot proceed because your account is full", @"uploads over storage quota warning dialog title");
-            UIImage *image = [UIImage imageNamed:@"storage_almost_full"];
+            UIImage *image = [api mnz_accountDetails].storageMax.longLongValue > [api mnz_accountDetails].storageUsed.longLongValue ? [UIImage imageNamed:@"storage_almost_full"] : [UIImage imageNamed:@"storage_full"];
             [self presentUpgradeViewControllerTitle:title detail:detail image:image];
         }
     }
