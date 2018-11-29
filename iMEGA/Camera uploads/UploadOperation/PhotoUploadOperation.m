@@ -9,6 +9,7 @@
 #import "CameraUploadManager.h"
 #import "CameraUploadRequestDelegate.h"
 #import "CameraUploadFileNameRecordManager.h"
+#import "NSData+ImageIO.h"
 
 @implementation PhotoUploadOperation
 
@@ -54,7 +55,10 @@
         return;
     }
     
+    NSArray <NSDictionary *> *imageProperties = [imageData imagePropertiesByStrippingGPSInfo:YES];
     NSData *JPEGData = UIImageJPEGRepresentation([UIImage imageWithData:imageData], 1.0);
+    JPEGData = [JPEGData dataByAddingImageProperties:imageProperties];
+    
     self.uploadInfo.fingerprint = [[MEGASdkManager sharedMEGASdk] fingerprintForData:JPEGData modificationTime:self.uploadInfo.asset.creationDate];
     matchingNode = [[MEGASdkManager sharedMEGASdk] nodeForFingerprint:self.uploadInfo.fingerprint parent:self.uploadInfo.parentNode];
     if (matchingNode) {
