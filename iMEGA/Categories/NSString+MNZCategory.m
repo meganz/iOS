@@ -717,16 +717,21 @@ static NSString* const B = @"[B]";
     return [self stringByReplacingOccurrencesOfString:[NSHomeDirectory() stringByAppendingString:@"/"] withString:@""];
 }
 
-+ (NSString *)mnz_lastGreenStringFromMinutes:(NSInteger)minutes {
-    NSDate *dateLastSeen = [NSDate dateWithTimeIntervalSinceNow:-minutes*SECONDS_IN_MINUTE];
-    NSDateFormatter *timeFormatter = [[NSDateFormatter alloc] init];
-    timeFormatter.dateFormat = @"HH:mm";
-    timeFormatter.locale = [NSLocale autoupdatingCurrentLocale];
-    NSString *timeString = [timeFormatter stringFromDate:dateLastSeen];
-    NSString *dateString = [[NSCalendar currentCalendar] isDateInToday:dateLastSeen] ? AMLocalizedString(@"Today", @"") : [dateLastSeen formattedDateWithFormat:@"dd MMM YY"];
-    NSString *lastSeenMessage = AMLocalizedString(@"Last seen [A] at [B]", @"Text to inform the user the 'Last seen' time of a contact, for example 'Last seen 20 Nov 18 at 15:15'");
-    lastSeenMessage = [lastSeenMessage stringByReplacingOccurrencesOfString:@"[A]" withString:dateString];
-    lastSeenMessage = [lastSeenMessage stringByReplacingOccurrencesOfString:@"[B]" withString:timeString];
++ (NSString *)mnz_lastGreenStringFromMinutes:(NSInteger)minutes {    
+    NSString *lastSeenMessage;
+    if (minutes < 65535) {
+        NSDate *dateLastSeen = [NSDate dateWithTimeIntervalSinceNow:-minutes*SECONDS_IN_MINUTE];
+        NSDateFormatter *timeFormatter = [[NSDateFormatter alloc] init];
+        timeFormatter.dateFormat = @"HH:mm";
+        timeFormatter.locale = [NSLocale autoupdatingCurrentLocale];
+        NSString *timeString = [timeFormatter stringFromDate:dateLastSeen];
+        NSString *dateString = [[NSCalendar currentCalendar] isDateInToday:dateLastSeen] ? AMLocalizedString(@"Today", @"") : [dateLastSeen formattedDateWithFormat:@"dd MMM"];
+        lastSeenMessage = AMLocalizedString(@"Last seen [A] at [B]", @"Text to inform the user the 'Last seen' time of a contact, for example 'Last seen 20 Nov 18 at 15:15'");
+        lastSeenMessage = [lastSeenMessage stringByReplacingOccurrencesOfString:@"[A]" withString:dateString];
+        lastSeenMessage = [lastSeenMessage stringByReplacingOccurrencesOfString:@"[B]" withString:timeString];
+    } else {
+        lastSeenMessage = AMLocalizedString(@"Last seen a long time ago", @"Text to inform the user the 'Last seen' time of a contact is a long time ago (more than 65535 minutes)");
+    }
     return lastSeenMessage;
 }
 
