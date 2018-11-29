@@ -113,12 +113,16 @@
 
 - (IBAction)bonusTouchUpInside:(UIButton *)sender {
     [self fadeOutBackgroundCompletion:^ {
-        [self dismissViewControllerAnimated:YES completion:^{
-            AchievementsViewController *achievementsVC = [[UIStoryboard storyboardWithName:@"MyAccount" bundle:nil] instantiateViewControllerWithIdentifier:@"AchievementsViewControllerID"];
-            achievementsVC.enableCloseBarButton = YES;
-            UINavigationController *navigation = [[UINavigationController alloc] initWithRootViewController:achievementsVC];
-            [UIApplication.mnz_presentingViewController presentViewController:navigation animated:YES completion:nil];
-        }];
+        if (self.onBonus) {
+            self.onBonus();
+        } else {
+            [self dismissViewControllerAnimated:YES completion:^{
+                AchievementsViewController *achievementsVC = [[UIStoryboard storyboardWithName:@"MyAccount" bundle:nil] instantiateViewControllerWithIdentifier:@"AchievementsViewControllerID"];
+                achievementsVC.enableCloseBarButton = YES;
+                UINavigationController *navigation = [[UINavigationController alloc] initWithRootViewController:achievementsVC];
+                [UIApplication.mnz_presentingViewController presentViewController:navigation animated:YES completion:nil];
+            }];
+        }
     }];
 }
 
