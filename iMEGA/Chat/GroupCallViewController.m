@@ -5,6 +5,7 @@
 #import <QuartzCore/QuartzCore.h>
 
 #import "LTHPasscodeViewController.h"
+#import "SVProgressHUD.h"
 
 #import "NSString+MNZCategory.h"
 #import "UIApplication+MNZCategory.h"
@@ -130,7 +131,11 @@
             
             MEGAChatStartCallRequestDelegate *startCallRequestDelegate = [[MEGAChatStartCallRequestDelegate alloc] initWithCompletion:^(MEGAChatError *error) {
                 if (error.type) {
-                    [weakSelf dismissViewControllerAnimated:YES completion:nil];
+                    [weakSelf dismissViewControllerAnimated:YES completion:^{
+                        if (error.type == MEGAChatErrorTooMany) {
+                            [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"Error. No more participants are allowed in this group call.", @"Message show when a call cannot be established because there are too many participants in the group call")];
+                        }
+                    }];
                 } else {
                     weakSelf.call = [[MEGASdkManager sharedMEGAChatSdk] chatCallForChatId:weakSelf.chatRoom.chatId];
                     weakSelf.incomingCallView.hidden = YES;
@@ -411,7 +416,11 @@
         if (error.type == MEGAChatErrorTypeOk) {
             self.enableDisableVideoButton.selected = YES;
         } else {
-            [self dismissViewControllerAnimated:YES completion:nil];
+            [self dismissViewControllerAnimated:YES completion:^{
+                if (error.type == MEGAChatErrorTooMany) {
+                    [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"Error. No more participants are allowed in this group call.", @"Message show when a call cannot be established because there are too many participants in the group call")];
+                }
+            }];
         }
     }];
     [[MEGASdkManager sharedMEGAChatSdk] answerChatCall:self.chatRoom.chatId enableVideo:YES delegate:answerCallRequestDelegate];
@@ -420,7 +429,11 @@
 - (IBAction)acceptCall:(UIButton *)sender {
     MEGAChatAnswerCallRequestDelegate *answerCallRequestDelegate = [[MEGAChatAnswerCallRequestDelegate alloc] initWithCompletion:^(MEGAChatError *error) {
         if (error.type != MEGAChatErrorTypeOk) {
-            [self dismissViewControllerAnimated:YES completion:nil];
+            [self dismissViewControllerAnimated:YES completion:^{
+                if (error.type == MEGAChatErrorTooMany) {
+                    [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"Error. No more participants are allowed in this group call.", @"Message show when a call cannot be established because there are too many participants in the group call")];
+                }
+            }];
         } else {
             self.incomingCallView.hidden = YES;
             self.outgoingCallView.hidden = NO;
@@ -488,6 +501,8 @@
                         sender.selected = !sender.selected;
                         self.loudSpeakerEnabled = !sender.selected;
                     }
+                } else if (error.type == MEGAChatErrorTooMany) {
+                    [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"Error. No more video are allowed in this group call.", @"Message show when a call cannot be established because there are too many video activated in the group call")];
                 }
             }];
             if (sender.selected) {
@@ -744,7 +759,7 @@
 }
 
 - (void)initDurationTimer {
-    self.initDuration = self.call.duration;
+    self.initDuration = (NSInteger)self.call.duration;
     self.timer = [NSTimer timerWithTimeInterval:1.0f target:self selector:@selector(updateDuration) userInfo:nil repeats:YES];
     [[NSRunLoop mainRunLoop] addTimer:self.timer forMode:NSRunLoopCommonModes];
     self.baseDate = [NSDate date];

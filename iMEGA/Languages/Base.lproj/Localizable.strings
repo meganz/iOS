@@ -1688,3 +1688,7 @@
 "Saved to Photos"="Saved to Photos";
 /* Text shown when an error occurs when trying to save a photo or video to Photos app */
 "Could not save Item"="Could not save Item";
+/* Message show when a call cannot be established because there are too many participants in the group call */
+"Error. No more participants are allowed in this group call."="Error. No more participants are allowed in this group call.";
+/* Message show when a user cannot activate the video in a group call because the max number of videos has been reached */
+"Error. No more video are allowed in this group call."="Error. No more video are allowed in this group call.";
