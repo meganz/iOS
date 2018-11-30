@@ -179,9 +179,6 @@
                                                         <constraint firstAttribute="width" constant="49" id="SnM-u5-3eb"/>
                                                     </constraints>
                                                     <color key="onTintColor" red="0.95294117647058818" green="0.047058823529411764" blue="0.078431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                    <connections>
-                                                        <action selector="onlyWhenChargindSwitchValueChanged:" destination="UiP-r7-fCS" eventType="valueChanged" id="sep-7S-zWB"/>
-                                                    </connections>
                                                 </switch>
                                             </subviews>
                                             <constraints>
@@ -213,8 +210,6 @@
                     <connections>
                         <outlet property="enableCameraUploadsLabel" destination="HR9-x8-ODg" id="RIJ-7Q-t28"/>
                         <outlet property="enableCameraUploadsSwitch" destination="Wm8-2B-GIw" id="Ri7-32-PCE"/>
-                        <outlet property="onlyWhenChargingLabel" destination="wEH-9s-qPx" id="vGM-s8-s8X"/>
-                        <outlet property="onlyWhenChargingSwitch" destination="F1o-Yr-aaR" id="eo3-v6-RAv"/>
                         <outlet property="uploadVideosLabel" destination="6o5-1q-sJ2" id="Elp-xY-im3"/>
                         <outlet property="uploadVideosSwitch" destination="rwP-dc-g1O" id="0M3-Xq-9Fc"/>
                         <outlet property="useCellularConnectionLabel" destination="E5O-3E-Sjl" id="wjj-C6-chF"/>
