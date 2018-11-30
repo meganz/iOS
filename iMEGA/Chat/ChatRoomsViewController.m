@@ -465,6 +465,10 @@
             break;
         }
             
+        case MEGAChatMessageTypeVoiceClip :
+            cell.chatLastMessage.text = AMLocalizedString(@"Voice message", @"Text shown when a notification or the last message of a chat corresponds to a voice clip");
+            break;
+            
         case MEGAChatMessageTypeContact: {
             NSString *senderString;
             if (item.group) {

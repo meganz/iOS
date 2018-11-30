@@ -88,8 +88,12 @@ static NSString* const B = @"[B]";
     return [self stringByAppendingString:@">SaveInPhotosApp"];
 }
 
-- (NSString *)mnz_appDataToAttachToChatID:(uint64_t)chatId {
-    return [self stringByAppendingString:[NSString stringWithFormat:@">attachToChatID=%llu", chatId]];
+- (NSString *)mnz_appDataToAttachToChatID:(uint64_t)chatId asVoiceClip:(BOOL)asVoiceClip {
+    if (asVoiceClip) {
+        return [self stringByAppendingString:[NSString stringWithFormat:@">attachVoiceClipToChatID=%llu", chatId]];
+    } else {
+        return [self stringByAppendingString:[NSString stringWithFormat:@">attachToChatID=%llu", chatId]];
+    }
 }
 
 - (NSString *)mnz_appDataToSaveCoordinates:(NSString *)coordinates {

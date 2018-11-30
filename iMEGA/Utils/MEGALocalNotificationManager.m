@@ -36,7 +36,7 @@
         return;
     }
     if (self.message.status == MEGAChatMessageStatusNotSeen) {
-        if  (self.message.type == MEGAChatMessageTypeNormal || self.message.type == MEGAChatMessageTypeContact || self.message.type == MEGAChatMessageTypeAttachment) {
+        if (self.message.type == MEGAChatMessageTypeNormal || self.message.type == MEGAChatMessageTypeContact || self.message.type == MEGAChatMessageTypeAttachment || self.message.type == MEGAChatMessageTypeVoiceClip) {
             
             if (self.message.deleted) {
                 [self removePendingAndDeliveredNotificationForMessage];
@@ -59,7 +59,7 @@
                 NSString *body;
                 BOOL waitForThumbnail = NO;
                 if (self.message.type == MEGAChatMessageTypeContact) {
-                    if(self.message.usersCount == 1) {
+                    if (self.message.usersCount == 1) {
                         body = [NSString stringWithFormat:@"👤 %@", [self.message userNameAtIndex:0]];
                     } else {
                         body = [self.message userNameAtIndex:0];
@@ -116,6 +116,8 @@
                             }
                         }
                     }
+                } else if (self.message.type == MEGAChatMessageTypeVoiceClip) {
+                    body = [NSString stringWithFormat:@"🎙 %@", AMLocalizedString(@"Voice message", @"Text shown when a notification or the last message of a chat corresponds to a voice clip")];
                 } else {
                     body = self.message.content;
                 }

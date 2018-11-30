@@ -795,13 +795,13 @@ const NSUInteger kMaxMessagesToLoad = 256;
         MEGAImagePickerController *imagePickerController = [[MEGAImagePickerController alloc] initToShareThroughChatWithSourceType:sourceType filePathCompletion:^(NSString *filePath, UIImagePickerControllerSourceType sourceType) {
             MEGANode *parentNode = [[MEGASdkManager sharedMEGASdk] nodeForPath:@"/My chat files"];
             if (filePath.mnz_isImagePathExtension) {
-                [self startUploadAndAttachWithPath:filePath parentNode:parentNode appData:nil];
+                [self startUploadAndAttachWithPath:filePath parentNode:parentNode appData:nil asVoiceClip:NO];
             }
             if (filePath.mnz_isVideoPathExtension) {
                 NSURL *videoURL = [NSURL fileURLWithPath:[NSHomeDirectory() stringByAppendingPathComponent:filePath]];
                 MEGAProcessAsset *processAsset = [[MEGAProcessAsset alloc] initToShareThroughChatWithVideoURL:videoURL filePath:^(NSString *filePath) {
                     NSString *appData = [[NSString new] mnz_appDataToSaveCoordinates:[filePath mnz_coordinatesOfPhotoOrVideo]];
-                    [self startUploadAndAttachWithPath:filePath parentNode:parentNode appData:appData];
+                    [self startUploadAndAttachWithPath:filePath parentNode:parentNode appData:appData asVoiceClip:NO];
                 } node:nil error:^(NSError *error) {
                     NSString *title = AMLocalizedString(@"error", nil);
                     NSString *message = error.localizedDescription;
@@ -819,7 +819,7 @@ const NSUInteger kMaxMessagesToLoad = 256;
     }
 }
 
-- (void)startUploadAndAttachWithPath:(NSString *)path parentNode:(MEGANode *)parentNode appData:(NSString *)appData {
+- (void)startUploadAndAttachWithPath:(NSString *)path parentNode:(MEGANode *)parentNode appData:(NSString *)appData asVoiceClip:(BOOL)asVoiceClip {
     dispatch_async(dispatch_get_main_queue(), ^{
         [self showProgressViewUnderNavigationBar];
     });
@@ -858,7 +858,7 @@ const NSUInteger kMaxMessagesToLoad = 256;
     if (!appData) {
         appData = [NSString new];
     }
-    appData = [appData mnz_appDataToAttachToChatID:self.chatRoom.chatId];
+    appData = [appData mnz_appDataToAttachToChatID:self.chatRoom.chatId asVoiceClip:asVoiceClip];
     
     [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:path parent:parentNode appData:appData isSourceTemporary:YES delegate:startUploadTransferDelegate];
 }
@@ -1073,7 +1073,7 @@ const NSUInteger kMaxMessagesToLoad = 256;
     if (self.inputToolbar.imagePickerView) {
         [self.inputToolbar mnz_accesoryButtonPressed:self.inputToolbar.imagePickerView.accessoryImageButton];
     } else if (self.inputToolbar.contentView.textView.isFirstResponder) {
-        [self.inputToolbar mnz_accesoryButtonPressed:self.inputToolbar.contentView.accessoryTextButton];
+        [self.inputToolbar.contentView.textView resignFirstResponder];
     }
 }
 
@@ -1200,7 +1200,7 @@ const NSUInteger kMaxMessagesToLoad = 256;
 }
 
 - (void)toggleSelectedMessage:(MEGAChatMessage *)message atIndexPath:(NSIndexPath *)indexPath {
-    if (message.type == MEGAChatMessageTypeNormal || message.type == MEGAChatMessageTypeContainsMeta || message.type == MEGAChatMessageTypeContact || message.type == MEGAChatMessageTypeAttachment) {
+    if (message.type == MEGAChatMessageTypeNormal || message.type == MEGAChatMessageTypeContainsMeta || message.type == MEGAChatMessageTypeContact || message.type == MEGAChatMessageTypeAttachment || message.type == MEGAChatMessageTypeVoiceClip) {
         if ([self.selectedMessages containsObject:message]) {
             [self.selectedMessages removeObject:message];
         } else {
@@ -1374,7 +1374,7 @@ const NSUInteger kMaxMessagesToLoad = 256;
     MEGAProcessAsset *processAsset = [[MEGAProcessAsset alloc] initToShareThroughChatWithAssets:assets filePaths:^(NSArray <NSString *> *filePaths) {
         for (NSString *filePath in filePaths) {
             NSString *appData = [[NSString new] mnz_appDataToSaveCoordinates:[filePath mnz_coordinatesOfPhotoOrVideo]];
-            [self startUploadAndAttachWithPath:filePath parentNode:parentNode appData:appData];
+            [self startUploadAndAttachWithPath:filePath parentNode:parentNode appData:appData asVoiceClip:NO];
         }
     } nodes:^(NSArray <MEGANode *> *nodes) {
         for (MEGANode *node in nodes) {
@@ -1399,6 +1399,32 @@ const NSUInteger kMaxMessagesToLoad = 256;
     dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^(void) {
         [processAsset prepare];
     });
+}
+
+- (void)messagesInputToolbar:(MEGAInputToolbar *)toolbar didRecordVoiceClipAtPath:(NSString *)voiceClipPath {
+    MEGANode *myChatFilesNode = [[MEGASdkManager sharedMEGASdk] nodeForPath:@"/My chat files"];
+    if (myChatFilesNode) {
+        MEGANode *myVoiceMessagesNode = [[MEGASdkManager sharedMEGASdk] nodeForPath:@"/My chat files/My voice messages"];
+        if (myVoiceMessagesNode) {
+            [self startUploadAndAttachWithPath:voiceClipPath parentNode:myVoiceMessagesNode appData:nil asVoiceClip:YES];
+        } else {
+            MEGACreateFolderRequestDelegate *createMyVoiceMessagesRequestDelegate = [[MEGACreateFolderRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
+                MEGANode *myVoiceMessagesNode = [[MEGASdkManager sharedMEGASdk] nodeForHandle:request.nodeHandle];
+                [self startUploadAndAttachWithPath:voiceClipPath parentNode:myVoiceMessagesNode appData:nil asVoiceClip:YES];
+            }];
+            [[MEGASdkManager sharedMEGASdk] createFolderWithName:@"My voice messages" parent:myChatFilesNode delegate:createMyVoiceMessagesRequestDelegate];
+        }
+    } else {
+        MEGACreateFolderRequestDelegate *createMyChatFilesRequestDelegate = [[MEGACreateFolderRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
+            MEGANode *myChatFilesNode = [[MEGASdkManager sharedMEGASdk] nodeForHandle:request.nodeHandle];
+            MEGACreateFolderRequestDelegate *createMyVoiceMessagesRequestDelegate = [[MEGACreateFolderRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
+                MEGANode *myVoiceMessagesNode = [[MEGASdkManager sharedMEGASdk] nodeForHandle:request.nodeHandle];
+                [self startUploadAndAttachWithPath:voiceClipPath parentNode:myVoiceMessagesNode appData:nil asVoiceClip:YES];
+            }];
+            [[MEGASdkManager sharedMEGASdk] createFolderWithName:@"My voice messages" parent:myChatFilesNode delegate:createMyVoiceMessagesRequestDelegate];
+        }];
+        [[MEGASdkManager sharedMEGASdk] createFolderWithName:@"My chat files" parent:[MEGASdkManager sharedMEGASdk].rootNode delegate:createMyChatFilesRequestDelegate];
+    }
 }
 
 - (void)didPressAccessoryButton:(UIButton *)sender {
@@ -1711,7 +1737,7 @@ const NSUInteger kMaxMessagesToLoad = 256;
     if (self.selectingMessages) {
         cell.accessoryButton.hidden = YES;
         cell.avatarImageView.hidden = YES;
-        cell.selectionImageView.hidden = !(message.type == MEGAChatMessageTypeNormal || message.type == MEGAChatMessageTypeContainsMeta || message.type == MEGAChatMessageTypeContact || message.type == MEGAChatMessageTypeAttachment);
+        cell.selectionImageView.hidden = !(message.type == MEGAChatMessageTypeNormal || message.type == MEGAChatMessageTypeContainsMeta || message.type == MEGAChatMessageTypeContact || message.type == MEGAChatMessageTypeAttachment || message.type == MEGAChatMessageTypeVoiceClip);
         cell.selectionImageView.image = [self.selectedMessages containsObject:message] ? [UIImage imageNamed:@"checkBoxSelected"] : [UIImage imageNamed:@"checkBoxUnselected"];
     } else {
         cell.avatarImageView.hidden = NO;
@@ -1847,7 +1873,8 @@ const NSUInteger kMaxMessagesToLoad = 256;
             break;
         }
             
-        case MEGAChatMessageTypeAttachment: {
+        case MEGAChatMessageTypeAttachment:
+        case MEGAChatMessageTypeVoiceClip: {
             if (action == @selector(download:message:)) return YES;
             if (action == @selector(forward:message:)) return YES;
 
@@ -2074,6 +2101,10 @@ const NSUInteger kMaxMessagesToLoad = 256;
                 chatAttachedNodesVC.message = message;
                 [self.navigationController pushViewController:chatAttachedNodesVC animated:YES];
             }
+        } else if (message.type == MEGAChatMessageTypeVoiceClip) {
+            // TODO: UI
+            MEGANode *node = [message.nodeList nodeAtIndex:0];
+            [node mnz_openNodeInNavigationController:self.navigationController folderLink:NO];
         } else if (message.type == MEGAChatMessageTypeContact) {
             if (message.usersCount == 1) {
                 NSString *userEmail = [message userEmailAtIndex:0];
@@ -2143,6 +2174,14 @@ const NSUInteger kMaxMessagesToLoad = 256;
                 case MEGAChatMessageTypeAttachment: {
                     MEGANode *node = [message.nodeList nodeAtIndex:0];
                     [[MEGASdkManager sharedMEGAChatSdk] attachNodeToChat:self.chatRoom.chatId node:node.handle delegate:self];
+                    [self.messages removeObjectAtIndex:path.item];
+                    [self.collectionView deleteItemsAtIndexPaths:@[path]];
+                    break;
+                }
+                    
+                case MEGAChatMessageTypeVoiceClip: {
+                    MEGANode *node = [message.nodeList nodeAtIndex:0];
+                    [[MEGASdkManager sharedMEGAChatSdk] attachVoiceMessageToChat:self.chatRoom.chatId node:node.handle delegate:self];
                     [self.messages removeObjectAtIndex:path.item];
                     [self.collectionView deleteItemsAtIndexPaths:@[path]];
                     break;
@@ -2229,7 +2268,8 @@ const NSUInteger kMaxMessagesToLoad = 256;
         case MEGAChatMessageTypeAttachment:
         case MEGAChatMessageTypeContact:
         case MEGAChatMessageTypeCallEnded:
-        case MEGAChatMessageTypeContainsMeta: {
+        case MEGAChatMessageTypeContainsMeta:
+        case MEGAChatMessageTypeVoiceClip: {
             NSUInteger unreads;
             if ([UIApplication sharedApplication].applicationState == UIApplicationStateActive && UIApplication.mnz_visibleViewController == self) {
                 [[MEGASdkManager sharedMEGAChatSdk] setMessageSeenForChat:self.chatRoom.chatId messageId:message.messageId];
@@ -2293,7 +2333,8 @@ const NSUInteger kMaxMessagesToLoad = 256;
             case MEGAChatMessageTypeAttachment:
             case MEGAChatMessageTypeContact:
             case MEGAChatMessageTypeCallEnded:
-            case MEGAChatMessageTypeContainsMeta: {
+            case MEGAChatMessageTypeContainsMeta:
+            case MEGAChatMessageTypeVoiceClip: {
                 if (!message.isDeleted) {
                     [self.messages insertObject:message atIndex:0];
                 }

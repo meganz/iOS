@@ -97,7 +97,12 @@
             
             if ([appDataType isEqualToString:@"attachToChatID"]) {
                 NSString *tempAppDataComponent = [appDataComponent stringByReplacingOccurrencesOfString:@"!" withString:@""];
-                [self mnz_attachtToChatID:tempAppDataComponent];
+                [self mnz_attachtToChatID:tempAppDataComponent asVoiceClip:NO];
+            }
+            
+            if ([appDataType isEqualToString:@"attachVoiceClipToChatID"]) {
+                NSString *tempAppDataComponent = [appDataComponent stringByReplacingOccurrencesOfString:@"!" withString:@""];
+                [self mnz_attachtToChatID:tempAppDataComponent asVoiceClip:YES];
             }
             
             if ([appDataType isEqualToString:@"setCoordinates"]) {
@@ -140,11 +145,15 @@
     [node mnz_copyToGalleryFromTemporaryPath:[NSHomeDirectory() stringByAppendingPathComponent:self.path]];
 }
 
-- (void)mnz_attachtToChatID:(NSString *)attachToChatID {
+- (void)mnz_attachtToChatID:(NSString *)attachToChatID asVoiceClip:(BOOL)asVoiceClip {
     NSArray *appDataComponentComponentsArray = [attachToChatID componentsSeparatedByString:@"="];
     NSString *chatID = [appDataComponentComponentsArray objectAtIndex:1];
     unsigned long long chatIdUll = strtoull(chatID.UTF8String, NULL, 0);
-    [[MEGASdkManager sharedMEGAChatSdk] attachNodeToChat:chatIdUll node:self.nodeHandle];
+    if (asVoiceClip) {
+        [[MEGASdkManager sharedMEGAChatSdk] attachVoiceMessageToChat:chatIdUll node:self.nodeHandle];
+    } else {
+        [[MEGASdkManager sharedMEGAChatSdk] attachNodeToChat:chatIdUll node:self.nodeHandle];
+    }
 }
 
 - (void)mnz_setNodeCoordinates {

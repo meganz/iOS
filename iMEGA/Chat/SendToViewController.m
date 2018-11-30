@@ -8,6 +8,7 @@
 
 #import "Helper.h"
 #import "MEGAChatAttachNodeRequestDelegate.h"
+#import "MEGAChatAttachVoiceClipRequestDelegate.h"
 #import "MEGAChatCreateChatGroupRequestDelegate.h"
 #import "MEGAChatMessage+MNZCategory.h"
 #import "MEGACopyRequestDelegate.h"
@@ -290,7 +291,7 @@
 
 - (void)completeForwardingMessage:(MEGAChatMessage *)message toChat:(uint64_t)chatId {
     @synchronized(self.sentMessages) {
-        if (chatId == self.sourceChatId && message.type != MEGAChatMessageTypeAttachment) {
+        if (chatId == self.sourceChatId && message.type != MEGAChatMessageTypeAttachment && message.type != MEGAChatMessageTypeVoiceClip) {
             [self.sentMessages addObject:message];
         }
         
@@ -324,10 +325,11 @@
             break;
         }
             
-        case MEGAChatMessageTypeAttachment: {
+        case MEGAChatMessageTypeAttachment:
+        case MEGAChatMessageTypeVoiceClip: {
             MEGANode *node = [message.nodeList mnz_nodesArrayFromNodeList].firstObject;
             [Helper importNode:node toShareWithCompletion:^(MEGANode *node) {
-                [self attachNode:node.handle];
+                [self attachNode:node.handle asVoiceClip:message.type == MEGAChatMessageTypeVoiceClip];
             }];
             
             break;
@@ -338,14 +340,25 @@
     }
 }
 
-- (void)attachNode:(uint64_t)handle {
-    MEGAChatAttachNodeRequestDelegate *chatAttachNodeRequestDelegate = [[MEGAChatAttachNodeRequestDelegate alloc] initWithCompletion:^(MEGAChatRequest *request, MEGAChatError *error) {
+- (void)attachNode:(uint64_t)handle asVoiceClip:(BOOL)asVoiceClip {
+    void (^completion)(MEGAChatRequest *request, MEGAChatError *error) = ^(MEGAChatRequest *request, MEGAChatError *error) {
         [self completeForwardingMessage:request.chatMessage toChat:request.chatHandle];
-    }];
+    };
+    
+    MEGAChatBaseRequestDelegate *delegate;
+    if (asVoiceClip) {
+        delegate = [[MEGAChatAttachVoiceClipRequestDelegate alloc] initWithCompletion:completion];
+    } else {
+        delegate = [[MEGAChatAttachNodeRequestDelegate alloc] initWithCompletion:completion];
+    }
     
     for (NSNumber *chatIdNumber in self.chatIdNumbers) {
         uint64_t chatId = chatIdNumber.unsignedLongLongValue;
-        [[MEGASdkManager sharedMEGAChatSdk] attachNodeToChat:chatId node:handle delegate:chatAttachNodeRequestDelegate];
+        if (asVoiceClip) {
+            [[MEGASdkManager sharedMEGAChatSdk] attachVoiceMessageToChat:chatId node:handle delegate:delegate];
+        } else {
+            [[MEGASdkManager sharedMEGAChatSdk] attachNodeToChat:chatId node:handle delegate:delegate];
+        }
     }
 }
 
