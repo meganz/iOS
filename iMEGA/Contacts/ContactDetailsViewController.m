@@ -459,7 +459,7 @@
     } else if (userHandle == self.user.handle) {
         if (self.user.handle == userHandle) {
             MEGAChatStatus chatStatus = [[MEGASdkManager sharedMEGAChatSdk] userOnlineStatus:self.user.handle];
-            if (chatStatus < 3) {
+            if (chatStatus < MEGAChatStatusOnline) {
                 self.statusLabel.text = [NSString mnz_lastGreenStringFromMinutes:lastGreen];
             }
         }
