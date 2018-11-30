@@ -1623,7 +1623,7 @@ const NSUInteger kMaxMessagesToLoad = 256;
 #pragma mark - JSQMessages CollectionView DataSource
 
 - (NSString *)senderId {
-    return [NSString stringWithFormat:@"%tu", [MEGASdkManager sharedMEGAChatSdk].myUserHandle];
+    return [NSString stringWithFormat:@"%llu", [MEGASdkManager sharedMEGAChatSdk].myUserHandle];
 }
 
 - (NSString *)senderDisplayName {
@@ -2683,7 +2683,7 @@ const NSUInteger kMaxMessagesToLoad = 256;
     } else {
         if ([self.chatRoom peerHandleAtIndex:0] == userHandle) {
             MEGAChatStatus chatStatus = [[MEGASdkManager sharedMEGAChatSdk] userOnlineStatus:[self.chatRoom peerHandleAtIndex:0]];
-            if (chatStatus < 3) {
+            if (chatStatus < MEGAChatStatusOnline) {
                 self.navigationSubtitleLabel.text = [NSString mnz_lastGreenStringFromMinutes:lastGreen];
             }
         }

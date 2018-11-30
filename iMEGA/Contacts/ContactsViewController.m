@@ -1621,7 +1621,7 @@
 
     if (userHandle != api.myUserHandle && (self.contactsMode >= ContactsModeChatStartConversation || self.contactsMode == ContactsModeDefault)) {
         MEGAChatStatus chatStatus = [[MEGASdkManager sharedMEGAChatSdk] userOnlineStatus:userHandle];
-        if (chatStatus < 3) {
+        if (chatStatus < MEGAChatStatusOnline) {
             NSString *base64Handle = [MEGASdk base64HandleForUserHandle:userHandle];
             NSIndexPath *indexPath = [self.indexPathsMutableDictionary objectForKey:base64Handle];
             
