@@ -14,7 +14,7 @@ typedef NS_ENUM(NSInteger, MEGAChatMessageEndCallReason);
 
 - (NSString *)mnz_appDataToSaveCameraUploadsCount:(NSUInteger)operationCount;
 - (NSString *)mnz_appDataToSaveInPhotosApp;
-- (NSString *)mnz_appDataToAttachToChatID:(uint64_t)chatId;
+- (NSString *)mnz_appDataToAttachToChatID:(uint64_t)chatId asVoiceClip:(BOOL)asVoiceClip;
 - (NSString *)mnz_appDataToSaveCoordinates:(NSString *)coordinates;
 - (NSString *)mnz_appDataToLocalIdentifier:(NSString *)localIdentifier;
 

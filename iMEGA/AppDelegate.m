@@ -2577,7 +2577,7 @@ void uncaughtExceptionHandler(NSException *exception) {
             }
         }
         
-        if ([transfer.appData containsString:@"attachToChatID"]) {
+        if ([transfer.appData containsString:@"attachToChatID"] || [transfer.appData containsString:@"attachVoiceClipToChatID"]) {
             if (error.type == MEGAErrorTypeApiEExist) {
                 MEGALogInfo(@"Transfer has started with exactly the same data (local path and target parent). File: %@", transfer.fileName);
                 return;

@@ -43,7 +43,7 @@ static const void *nodeSizeTagKey = &nodeSizeTagKey;
 - (BOOL)isMediaMessage {
     BOOL mediaMessage = NO;
     
-    if (!self.isDeleted && (self.type == MEGAChatMessageTypeContact || self.type == MEGAChatMessageTypeAttachment || (self.warningDialog > MEGAChatMessageWarningDialogNone) || (self.type == MEGAChatMessageTypeContainsMeta && [self containsMetaAnyValue]) || self.node || self.type == MEGAChatMessageTypeCallEnded)) {
+    if (!self.isDeleted && (self.type == MEGAChatMessageTypeContact || self.type == MEGAChatMessageTypeAttachment || self.type == MEGAChatMessageTypeVoiceClip || (self.warningDialog > MEGAChatMessageWarningDialogNone) || (self.type == MEGAChatMessageTypeContainsMeta && [self containsMetaAnyValue]) || self.node || self.type == MEGAChatMessageTypeCallEnded)) {
         mediaMessage = YES;
     }
     
@@ -114,7 +114,7 @@ static const void *nodeSizeTagKey = &nodeSizeTagKey;
 - (BOOL)shouldShowForwardAccessory {
     BOOL shouldShowForwardAccessory = NO;
     
-    if (!self.isDeleted && (self.type == MEGAChatMessageTypeContact || self.type == MEGAChatMessageTypeAttachment || (self.type == MEGAChatMessageTypeContainsMeta && [self containsMetaAnyValue]) || self.node)) {
+    if (!self.isDeleted && (self.type == MEGAChatMessageTypeContact || self.type == MEGAChatMessageTypeAttachment || self.type == MEGAChatMessageTypeVoiceClip || (self.type == MEGAChatMessageTypeContainsMeta && [self containsMetaAnyValue]) || self.node)) {
         shouldShowForwardAccessory = YES;
     }
     
@@ -293,6 +293,8 @@ static const void *nodeSizeTagKey = &nodeSizeTagKey;
         text = @"MEGAChatMessageTypeAttachment";
     } else if (self.type == MEGAChatMessageTypeRevokeAttachment) {
         text = @"MEGAChatMessageTypeRevokeAttachment";
+    } else if (self.type == MEGAChatMessageTypeVoiceClip) {
+        text = @"MEGAChatMessageTypeVoiceClip";
     } else if (self.type == MEGAChatMessageTypeContainsMeta && self.containsMeta.type == MEGAChatContainsMetaTypeInvalid) {
         text = @"Message contains invalid meta";
     } else {
@@ -333,6 +335,11 @@ static const void *nodeSizeTagKey = &nodeSizeTagKey;
             break;
         }
             
+        case MEGAChatMessageTypeVoiceClip:
+            // TODO: UI
+            media = [[MEGAAttachmentMediaItem alloc] initWithMEGAChatMessage:self];
+            break;
+            
         case MEGAChatMessageTypeContainsMeta: {
             media = [[MEGARichPreviewMediaItem alloc] initWithMEGAChatMessage:self];
             
@@ -367,7 +374,7 @@ static const void *nodeSizeTagKey = &nodeSizeTagKey;
 #pragma mark - NSObject
 
 - (NSUInteger)hash {
-    NSUInteger contentHash = self.type == MEGAChatMessageTypeAttachment ? (NSUInteger)[self.nodeList nodeAtIndex:0].handle : self.content.hash ^ self.node.hash;
+    NSUInteger contentHash = self.type == MEGAChatMessageTypeAttachment || self.type == MEGAChatMessageTypeVoiceClip ? (NSUInteger)[self.nodeList nodeAtIndex:0].handle : self.content.hash ^ self.node.hash;
     NSUInteger metaHash = self.type == MEGAChatMessageTypeContainsMeta ? self.containsMeta.type : MEGAChatContainsMetaTypeInvalid;
     return self.senderId.hash ^ self.date.hash ^ contentHash ^ self.warningDialog ^ metaHash ^ self.localPreview;
 }
