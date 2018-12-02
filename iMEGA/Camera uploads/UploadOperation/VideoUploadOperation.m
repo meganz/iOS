@@ -83,6 +83,7 @@
     session.outputURL = self.uploadInfo.fileURL;
     session.canPerformMultiplePassesOverSourceMediaData = YES;
     session.shouldOptimizeForNetworkUse = YES;
+    session.metadataItemFilter = [AVMetadataItemFilter metadataItemFilterForSharing];
     
     __weak __typeof__(self) weakSelf = self;
     [session exportAsynchronouslyWithCompletionHandler:^{
