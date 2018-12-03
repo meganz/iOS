@@ -295,8 +295,6 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
 - (IBAction)termsCheckboxTouchUpInside:(id)sender {
     self.termsCheckboxButton.selected = !self.termsCheckboxButton.selected;
     
-    BOOL validForm = !self.firstNameInputView.inputTextField.text.mnz_isEmpty && !self.lastNameInputView.inputTextField.text.mnz_isEmpty && self.emailInputView.inputTextField.text.mnz_isValidEmail && !self.passwordView.passwordTextField.text.mnz_isEmpty && [self.passwordView.passwordTextField.text isEqualToString:self.retypePasswordView.passwordTextField.text] && [[MEGASdkManager sharedMEGASdk] passwordStrength:self.passwordView.passwordTextField.text] > PasswordStrengthVeryWeak && self.termsCheckboxButton.selected;
-    
     [self hideKeyboard];
 }
 
