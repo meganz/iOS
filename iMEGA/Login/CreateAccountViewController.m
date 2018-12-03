@@ -76,6 +76,7 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
     self.emailInputView.inputTextField.returnKeyType = UIReturnKeyNext;
     self.emailInputView.inputTextField.delegate = self;
     self.emailInputView.inputTextField.tag = EmailTextFieldTag;
+    self.emailInputView.inputTextField.keyboardType = UIKeyboardTypeEmailAddress;
     if (self.emailString) {
         self.emailInputView.inputTextField.text = self.emailString;
     }
