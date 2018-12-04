@@ -21,6 +21,7 @@
 #import "DisplayMode.h"
 #import "BrowserViewController.h"
 #import "CameraUploadManager.h"
+#import "CameraUploadManager+Settings.h"
 #import "MEGAConstants.h"
 
 @interface PhotosViewController () <UICollectionViewDelegateFlowLayout, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAPhotoBrowserDelegate> {

@@ -4,7 +4,7 @@
 #import "LTHPasscodeViewController.h"
 #import "SVProgressHUD.h"
 
-#import "CameraUploadManager.h"
+#import "CameraUploadManager+Settings.h"
 #import "Helper.h"
 #import "MEGASdkManager.h"
 #import "MEGAReachabilityManager.h"
