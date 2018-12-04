@@ -16,11 +16,11 @@
             [self showUploadedNodeWithUploadInfo:uploadInfo localIdentifier:localIdentifier transferToken:token];
         } else {
             MEGALogError(@"[Camera Upload] Error when to unarchive upload info for asset: %@", localIdentifier);
-            [self finishUploadForLocalIdentifier:localIdentifier status:UploadStatusFailed];
+            [self finishUploadForLocalIdentifier:localIdentifier status:CameraAssetUploadStatusFailed];
         }
     } else {
         MEGALogError(@"[Camera Upload] Session task completes without any handler: %@", localIdentifier);
-        [self finishUploadForLocalIdentifier:localIdentifier status:UploadStatusFailed];
+        [self finishUploadForLocalIdentifier:localIdentifier status:CameraAssetUploadStatusFailed];
     }
 }
 
@@ -29,12 +29,12 @@
     CompleteUploadOperation *operation = [[CompleteUploadOperation alloc] initWithUploadInfo:uploadInfo transferToken:token completion:^(MEGANode * _Nullable node, NSError * _Nullable error) {
         if (error) {
             MEGALogDebug(@"[Camera Upload] error when to complete transfer %@", error);
-            [self finishUploadForLocalIdentifier:localIdentifier status:UploadStatusFailed];
+            [self finishUploadForLocalIdentifier:localIdentifier status:CameraAssetUploadStatusFailed];
         } else {
             [AttributeUploadManager.shared uploadFileAtURL:uploadInfo.thumbnailURL withAttributeType:MEGAAttributeTypeThumbnail forNode:node];
             [AttributeUploadManager.shared uploadFileAtURL:uploadInfo.previewURL withAttributeType:MEGAAttributeTypePreview forNode:node];
             [AttributeUploadManager.shared uploadCoordinateAtLocation:uploadInfo.location forNode:node];
-            [self finishUploadForLocalIdentifier:localIdentifier status:UploadStatusDone];
+            [self finishUploadForLocalIdentifier:localIdentifier status:CameraAssetUploadStatusDone];
         }
     }];
 
@@ -52,7 +52,7 @@
     [NSFileManager.defaultManager removeItemAtURL:uploadDirectory error:nil];
     MEGALogDebug(@"[Camera Upload] Background Upload finishes with session task %@ and status: %@", localIdentifier, status);
     
-    if ([status isEqualToString:UploadStatusDone]) {
+    if ([status isEqualToString:CameraAssetUploadStatusDone]) {
         [NSNotificationCenter.defaultCenter postNotificationName:MEGACameraUploadAssetUploadDoneNotificationName object:nil];
     }
 }
