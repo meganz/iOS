@@ -1,5 +1,5 @@
 
-#import "FileEncryption.h"
+#import "FileEncrypter.h"
 #import "MEGASdkManager.h"
 #import "NSFileManager+MNZCategory.h"
 #import "NSError+CameraUpload.h"
@@ -8,7 +8,7 @@ static const NSUInteger EncryptionProposedChunkSizeForTruncating = 100 * 1024 * 
 static const NSUInteger EncryptionMinimumChunkSize = 5 * 1024 * 1024;
 static const NSUInteger EncryptionProposedChunkSizeWithoutTruncating = 1024 * 1024 * 1024;
 
-@interface FileEncryption ()
+@interface FileEncrypter ()
 
 @property (strong, nonatomic) NSURL *outputDirectoryURL;
 @property (nonatomic) unsigned long long fileSize;
@@ -17,7 +17,7 @@ static const NSUInteger EncryptionProposedChunkSizeWithoutTruncating = 1024 * 10
 
 @end
 
-@implementation FileEncryption
+@implementation FileEncrypter
 
 - (instancetype)initWithMediaUpload:(MEGABackgroundMediaUpload *)mediaUpload outputDirectoryURL:(NSURL *)outputDirectoryURL shouldTruncateInputFile:(BOOL)shouldTruncateInputFile {
     self = [super init];
