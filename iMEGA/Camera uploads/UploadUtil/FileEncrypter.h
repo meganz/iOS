@@ -5,7 +5,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @class MEGABackgroundMediaUpload;
 
-@interface FileEncryption : NSObject
+@interface FileEncrypter : NSObject
 
 - (instancetype)initWithMediaUpload:(MEGABackgroundMediaUpload *)mediaUpload outputDirectoryURL:(NSURL *)outputDirectoryURL shouldTruncateInputFile:(BOOL)shouldTruncateInputFile;
 

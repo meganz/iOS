@@ -682,7 +682,7 @@
 		B6D11AC6219B8ABC00446B86 /* CameraUploadFileNameRecordManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B6D11AC5219B8ABC00446B86 /* CameraUploadFileNameRecordManager.m */; };
 		B6D11AD7219BAE6D00446B86 /* MOAssetUploadFileNameRecord+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = B6D11AD3219BAE6D00446B86 /* MOAssetUploadFileNameRecord+CoreDataClass.m */; };
 		B6D11AD8219BAE6D00446B86 /* MOAssetUploadFileNameRecord+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = B6D11AD6219BAE6D00446B86 /* MOAssetUploadFileNameRecord+CoreDataProperties.m */; };
-		B6D11ADF219CE69300446B86 /* FileEncryption.m in Sources */ = {isa = PBXBuildFile; fileRef = B6D11ADE219CE69300446B86 /* FileEncryption.m */; };
+		B6D11ADF219CE69300446B86 /* FileEncrypter.m in Sources */ = {isa = PBXBuildFile; fileRef = B6D11ADE219CE69300446B86 /* FileEncrypter.m */; };
 		B6D11AE2219E5E2C00446B86 /* AttributeUploadOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = B6D11AE1219E5E2C00446B86 /* AttributeUploadOperation.m */; };
 		B6D11AE521A24C7700446B86 /* CompleteUploadOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = B6D11AE421A24C7700446B86 /* CompleteUploadOperation.m */; };
 		B6D9D7E9216AB0C700D7B08A /* CameraScanner.m in Sources */ = {isa = PBXBuildFile; fileRef = B6D9D7E8216AB0C700D7B08A /* CameraScanner.m */; };
@@ -1590,8 +1590,8 @@
 		B6D11AD5219BAE6D00446B86 /* MOAssetUploadFileNameRecord+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MOAssetUploadFileNameRecord+CoreDataProperties.h"; sourceTree = "<group>"; };
 		B6D11AD6219BAE6D00446B86 /* MOAssetUploadFileNameRecord+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MOAssetUploadFileNameRecord+CoreDataProperties.m"; sourceTree = "<group>"; };
 		B6D11ADA219BC68900446B86 /* CameraUploadFileNameRecordManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CameraUploadFileNameRecordManager.h; sourceTree = "<group>"; };
-		B6D11ADD219CE69300446B86 /* FileEncryption.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FileEncryption.h; sourceTree = "<group>"; };
-		B6D11ADE219CE69300446B86 /* FileEncryption.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FileEncryption.m; sourceTree = "<group>"; };
+		B6D11ADD219CE69300446B86 /* FileEncrypter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FileEncrypter.h; sourceTree = "<group>"; };
+		B6D11ADE219CE69300446B86 /* FileEncrypter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FileEncrypter.m; sourceTree = "<group>"; };
 		B6D11AE0219E5E2C00446B86 /* AttributeUploadOperation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AttributeUploadOperation.h; sourceTree = "<group>"; };
 		B6D11AE1219E5E2C00446B86 /* AttributeUploadOperation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AttributeUploadOperation.m; sourceTree = "<group>"; };
 		B6D11AE321A24C7700446B86 /* CompleteUploadOperation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CompleteUploadOperation.h; sourceTree = "<group>"; };
@@ -3438,8 +3438,8 @@
 				B6D9D7E8216AB0C700D7B08A /* CameraScanner.m */,
 				B686F45721866BB4009C0DAA /* CameraUploadRequestDelegate.h */,
 				B686F45821866BB4009C0DAA /* CameraUploadRequestDelegate.m */,
-				B6D11ADD219CE69300446B86 /* FileEncryption.h */,
-				B6D11ADE219CE69300446B86 /* FileEncryption.m */,
+				B6D11ADD219CE69300446B86 /* FileEncrypter.h */,
+				B6D11ADE219CE69300446B86 /* FileEncrypter.m */,
 				B6E19B3B2180126500882F74 /* CameraUploadCoordinator.h */,
 				B6E19B3C2180126500882F74 /* CameraUploadCoordinator.m */,
 				B6A4A11821A404DC007E7EEC /* NSError+CameraUpload.h */,
@@ -4025,7 +4025,7 @@
 				B6D11AD7219BAE6D00446B86 /* MOAssetUploadFileNameRecord+CoreDataClass.m in Sources */,
 				41D21E5D1D01AEC3002E6296 /* CTAssetCollectionViewController.m in Sources */,
 				5B6CCF0C21788A3A0049AD14 /* MEGATransferList+MNZCategory.m in Sources */,
-				B6D11ADF219CE69300446B86 /* FileEncryption.m in Sources */,
+				B6D11ADF219CE69300446B86 /* FileEncrypter.m in Sources */,
 				4152269B1A692ECC00EC7BB6 /* MEGASdkManager.m in Sources */,
 				E81616731A8397B5002EFDD7 /* FolderLinkViewController.m in Sources */,
 				A8C262B01FA1D876006172CE /* MEGALocalImageView.m in Sources */,
