@@ -52,7 +52,7 @@ NSString * const CameraAssetUploadStatusDone = @"Done";
 
 #pragma mark - fetch assets
 
-- (MOAssetUploadRecord *)fetchAssetUploadRecordByLocalIdentifier:(NSString *)identifier error:(NSError *__autoreleasing  _Nullable *)error {
+- (MOAssetUploadRecord *)fetchRecordByLocalIdentifier:(NSString *)identifier error:(NSError *__autoreleasing  _Nullable *)error {
     __block MOAssetUploadRecord *record = nil;
     __block NSError *coreDataError = nil;
     [self.privateQueueContext performBlockAndWait:^{
@@ -86,7 +86,7 @@ NSString * const CameraAssetUploadStatusDone = @"Done";
     return records;
 }
 
-- (NSArray<MOAssetUploadRecord *> *)fetchAllAssetUploadRecords:(NSError * _Nullable __autoreleasing * _Nullable)error {
+- (NSArray<MOAssetUploadRecord *> *)fetchAllRecords:(NSError * _Nullable __autoreleasing * _Nullable)error {
     __block NSArray<MOAssetUploadRecord *> *records = @[];
     __block NSError *coreDataError = nil;
     [self.privateQueueContext performBlockAndWait:^{
@@ -100,12 +100,28 @@ NSString * const CameraAssetUploadStatusDone = @"Done";
     return records;
 }
 
-- (NSArray<MOAssetUploadRecord *> *)fetchAllPendingUploadRecordsInMediaTypes:(NSArray <NSNumber *> *)mediaTypes error:(NSError *__autoreleasing  _Nullable *)error {
+- (NSArray<MOAssetUploadRecord *> *)fetchPendingRecordsByMediaTypes:(NSArray <NSNumber *> *)mediaTypes error:(NSError *__autoreleasing  _Nullable *)error {
     __block NSArray<MOAssetUploadRecord *> *records = @[];
     __block NSError *coreDataError = nil;
     [self.privateQueueContext performBlockAndWait:^{
         NSFetchRequest *request = MOAssetUploadRecord.fetchRequest;
         request.predicate = [NSPredicate predicateWithFormat:@"(status <> %@) AND (mediaType IN %@)", CameraAssetUploadStatusDone, mediaTypes];
+        records = [self.privateQueueContext executeFetchRequest:request error:&coreDataError];
+    }];
+    
+    if (error != NULL) {
+        *error = coreDataError;
+    }
+    
+    return records;
+}
+
+- (NSArray<MOAssetUploadRecord *> *)fetchUploadRecordsByStatuses:(NSArray<NSString *> *)statuses error:(NSError * _Nullable __autoreleasing *)error {
+    __block NSArray<MOAssetUploadRecord *> *records = @[];
+    __block NSError *coreDataError = nil;
+    [self.privateQueueContext performBlockAndWait:^{
+        NSFetchRequest *request = MOAssetUploadRecord.fetchRequest;
+        request.predicate = [NSPredicate predicateWithFormat:@"status IN %@", statuses];
         records = [self.privateQueueContext executeFetchRequest:request error:&coreDataError];
     }];
     
@@ -158,7 +174,7 @@ NSString * const CameraAssetUploadStatusDone = @"Done";
 
 #pragma mark - update records
 
-- (BOOL)updateStatus:(NSString *)status forLocalIdentifier:(NSString *)identifier error:(NSError * _Nullable __autoreleasing * _Nullable)error {
+- (BOOL)updateRecordOfLocalIdentifier:(NSString *)identifier withStatus:(NSString *)status error:(NSError *__autoreleasing  _Nullable *)error {
     __block NSError *coreDataError = nil;
     [self.privateQueueContext performBlockAndWait:^{
         NSFetchRequest *request = MOAssetUploadRecord.fetchRequest;
@@ -177,7 +193,7 @@ NSString * const CameraAssetUploadStatusDone = @"Done";
     return coreDataError == nil;
 }
 
-- (BOOL)updateStatus:(NSString *)status forRecord:(MOAssetUploadRecord *)record error:(NSError *__autoreleasing  _Nullable *)error {
+- (BOOL)updateRecord:(MOAssetUploadRecord *)record withStatus:(NSString *)status error:(NSError *__autoreleasing  _Nullable *)error {
     if ([record.status isEqualToString:status]) {
         return YES;
     }
@@ -186,6 +202,28 @@ NSString * const CameraAssetUploadStatusDone = @"Done";
     [self.privateQueueContext performBlockAndWait:^{
         record.status = status;
         [self.privateQueueContext save:&coreDataError];
+    }];
+    
+    if (error != NULL) {
+        *error = coreDataError;
+    }
+    
+    return coreDataError == nil;
+}
+
+- (BOOL)updateRecordsOfStatuses:(NSArray<NSString *> *)statuses withStatus:(NSString *)newStatus error:(NSError *__autoreleasing  _Nullable *)error {
+    __block NSError *coreDataError = nil;
+    [self.privateQueueContext performBlockAndWait:^{
+        NSFetchRequest *request = MOAssetUploadRecord.fetchRequest;
+        request.predicate = [NSPredicate predicateWithFormat:@"status IN %@", statuses];
+        NSArray<MOAssetUploadRecord *> *records = [self.privateQueueContext executeFetchRequest:request error:&coreDataError];
+        if (records.count > 0) {
+            for (MOAssetUploadRecord *record in records) {
+                record.status = newStatus;
+            }
+            
+            [self.privateQueueContext save:&coreDataError];
+        }
     }];
     
     if (error != NULL) {

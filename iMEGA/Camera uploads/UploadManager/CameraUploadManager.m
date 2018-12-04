@@ -10,7 +10,7 @@
 #import "AttributeUploadManager.h"
 #import "MEGAConstants.h"
 #import "CameraUploadManager+Settings.h"
-#import "UploadRecordCollator.h"
+#import "UploadRecordsCollator.h"
 @import Photos;
 
 static NSString * const CameraUploadsNodeHandle = @"CameraUploadsNodeHandle";
@@ -28,7 +28,7 @@ static const NSInteger MaxConcurrentVideoOperationCount = 1;
 @property (strong, nonatomic) NSOperationQueue *videoUploadOerationQueue;
 @property (strong, nonatomic) MEGANode *cameraUploadNode;
 @property (strong, nonatomic) CameraScanner *scanner;
-@property (strong, nonatomic) UploadRecordCollator *dataCollator;
+@property (strong, nonatomic) UploadRecordsCollator *dataCollator;
 
 @end
 
@@ -79,6 +79,14 @@ static const NSInteger MaxConcurrentVideoOperationCount = 1;
     [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(applicationDidEnterBackground) name:UIApplicationDidEnterBackgroundNotification object:nil];
     [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(applicationDidBecomeActive) name:UIApplicationDidBecomeActiveNotification object:nil];
     [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(applicationDidReceiveMemoryWarning) name:UIApplicationDidReceiveMemoryWarningNotification object:nil];
+}
+
+- (UploadRecordsCollator *)dataCollator {
+    if (_dataCollator == nil) {
+        _dataCollator = [[UploadRecordsCollator alloc] init];
+    }
+
+    return _dataCollator;
 }
 
 #pragma mark - scan and upload
@@ -140,7 +148,7 @@ static const NSInteger MaxConcurrentVideoOperationCount = 1;
     }
     
     for (MOAssetUploadRecord *record in records) {
-        [CameraUploadRecordManager.shared updateStatus:CameraAssetUploadStatusQueuedUp forRecord:record error:nil];
+        [CameraUploadRecordManager.shared updateRecord:record withStatus:CameraAssetUploadStatusQueuedUp error:nil];
         CameraUploadOperation *operation = [UploadOperationFactory operationWithLocalIdentifier:record.localIdentifier parentNode:self.cameraUploadNode];
         if (operation) {
             if (mediaType == PHAssetMediaTypeImage) {
@@ -188,7 +196,7 @@ static const NSInteger MaxConcurrentVideoOperationCount = 1;
             mediaTypes = @[@(PHAssetMediaTypeImage)];
         }
         
-        pendingCount = [CameraUploadRecordManager.shared fetchAllPendingUploadRecordsInMediaTypes:mediaTypes error:nil].count;
+        pendingCount = [CameraUploadRecordManager.shared fetchPendingRecordsByMediaTypes:mediaTypes error:nil].count;
     }
     
     return pendingCount;
@@ -216,7 +224,7 @@ static const NSInteger MaxConcurrentVideoOperationCount = 1;
 
 - (void)collateUploadRecordWhenAppLaunches {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-        [self.dataCollator collateUploadRecord];
+        [self.dataCollator collateUploadRecords];
     });
 }
 

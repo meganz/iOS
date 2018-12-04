@@ -101,24 +101,6 @@
 
 #pragma mark - URL based file management
 
-- (NSURL *)cameraUploadURL {
-    NSURL *uploadURL = nil;
-    NSURL *supportURL = [[self URLsForDirectory:NSApplicationSupportDirectory inDomains:NSUserDomainMask] firstObject];
-    if (supportURL) {
-        NSString *bundleId = [[NSBundle mainBundle] bundleIdentifier];
-        uploadURL = [[supportURL URLByAppendingPathComponent:bundleId isDirectory:YES] URLByAppendingPathComponent:@"CameraUploads" isDirectory:YES];
-        NSError *error = nil;
-        if (![self createDirectoryAtURL:uploadURL withIntermediateDirectories:YES attributes:nil error:&error]) {
-            MEGALogError(@"Create directory at url failed with error: %@", uploadURL);
-            return nil;
-        }
-        
-        // TODO: exclude the path from iCloud backup/sync
-    }
-    
-    return uploadURL;
-}
-
 - (void)removeItemIfExistsAtURL:(NSURL *)URL {
     if ([self fileExistsAtPath:URL.path]) {
         NSError *removeFileError;

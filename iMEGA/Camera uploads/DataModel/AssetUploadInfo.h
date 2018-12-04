@@ -30,9 +30,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (instancetype)initWithAsset:(PHAsset *)asset parentNode:(MEGANode *)parentNode;
 
-+ (NSURL *)assetDirectoryURLForLocalIdentifier:(NSString *)localIdentifier;
-+ (NSURL *)archivedURLForLocalIdentifier:(NSString *)localIdentifier;
-
 @end
 
 NS_ASSUME_NONNULL_END

@@ -1,6 +1,7 @@
 
 #import "AttributeUploadManager.h"
 #import "NSFileManager+MNZCategory.h"
+#import "NSURL+CameraUpload.h"
 #import "ThumbnailUploadOperation.h"
 #import "PreviewUploadOperation.h"
 #import "CoordinateUploadOperation.h"
@@ -173,7 +174,7 @@ static NSString * const AttributePreviewName = @"preview";
 }
 
 - (NSURL *)attributeDirectoryURL {
-    return [NSFileManager.defaultManager.cameraUploadURL URLByAppendingPathComponent:@"Attributes" isDirectory:YES];
+    return [NSURL.cameraUploadURL URLByAppendingPathComponent:@"Attributes" isDirectory:YES];
 }
 
 @end

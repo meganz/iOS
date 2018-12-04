@@ -676,7 +676,8 @@
 		B6B959442193A91E0064334D /* PreviewUploadOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = B6B959432193A91E0064334D /* PreviewUploadOperation.m */; };
 		B6BB128621A4B73C00C16277 /* AttributeUploadManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B6BB128521A4B73C00C16277 /* AttributeUploadManager.m */; };
 		B6BD011F21B62D8E00E97086 /* CameraUploadManager+Settings.m in Sources */ = {isa = PBXBuildFile; fileRef = B6BD011E21B62D8E00E97086 /* CameraUploadManager+Settings.m */; };
-		B6BD012221B7123B00E97086 /* UploadRecordCollator.m in Sources */ = {isa = PBXBuildFile; fileRef = B6BD012121B7123B00E97086 /* UploadRecordCollator.m */; };
+		B6BD012221B7123B00E97086 /* UploadRecordsCollator.m in Sources */ = {isa = PBXBuildFile; fileRef = B6BD012121B7123B00E97086 /* UploadRecordsCollator.m */; };
+		B6BD012521B71FB500E97086 /* NSURL+CameraUpload.m in Sources */ = {isa = PBXBuildFile; fileRef = B6BD012421B71FB500E97086 /* NSURL+CameraUpload.m */; };
 		B6C3FD4221B080B3006C70A2 /* NSData+ImageIO.m in Sources */ = {isa = PBXBuildFile; fileRef = B6C3FD4121B080B3006C70A2 /* NSData+ImageIO.m */; };
 		B6D11AC6219B8ABC00446B86 /* CameraUploadFileNameRecordManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B6D11AC5219B8ABC00446B86 /* CameraUploadFileNameRecordManager.m */; };
 		B6D11AD7219BAE6D00446B86 /* MOAssetUploadFileNameRecord+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = B6D11AD3219BAE6D00446B86 /* MOAssetUploadFileNameRecord+CoreDataClass.m */; };
@@ -1577,8 +1578,10 @@
 		B6BB128521A4B73C00C16277 /* AttributeUploadManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AttributeUploadManager.m; sourceTree = "<group>"; };
 		B6BD011D21B62D8E00E97086 /* CameraUploadManager+Settings.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CameraUploadManager+Settings.h"; sourceTree = "<group>"; };
 		B6BD011E21B62D8E00E97086 /* CameraUploadManager+Settings.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "CameraUploadManager+Settings.m"; sourceTree = "<group>"; };
-		B6BD012021B7123B00E97086 /* UploadRecordCollator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UploadRecordCollator.h; sourceTree = "<group>"; };
-		B6BD012121B7123B00E97086 /* UploadRecordCollator.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UploadRecordCollator.m; sourceTree = "<group>"; };
+		B6BD012021B7123B00E97086 /* UploadRecordsCollator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UploadRecordsCollator.h; sourceTree = "<group>"; };
+		B6BD012121B7123B00E97086 /* UploadRecordsCollator.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UploadRecordsCollator.m; sourceTree = "<group>"; };
+		B6BD012321B71FB500E97086 /* NSURL+CameraUpload.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSURL+CameraUpload.h"; sourceTree = "<group>"; };
+		B6BD012421B71FB500E97086 /* NSURL+CameraUpload.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSURL+CameraUpload.m"; sourceTree = "<group>"; };
 		B6C3FD4021B080B3006C70A2 /* NSData+ImageIO.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSData+ImageIO.h"; sourceTree = "<group>"; };
 		B6C3FD4121B080B3006C70A2 /* NSData+ImageIO.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSData+ImageIO.m"; sourceTree = "<group>"; };
 		B6D11AC5219B8ABC00446B86 /* CameraUploadFileNameRecordManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CameraUploadFileNameRecordManager.m; sourceTree = "<group>"; };
@@ -3429,8 +3432,8 @@
 		B6D11ADC219CE60E00446B86 /* UploadUtil */ = {
 			isa = PBXGroup;
 			children = (
-				B6BD012021B7123B00E97086 /* UploadRecordCollator.h */,
-				B6BD012121B7123B00E97086 /* UploadRecordCollator.m */,
+				B6BD012021B7123B00E97086 /* UploadRecordsCollator.h */,
+				B6BD012121B7123B00E97086 /* UploadRecordsCollator.m */,
 				B6D9D7E7216AB0C700D7B08A /* CameraScanner.h */,
 				B6D9D7E8216AB0C700D7B08A /* CameraScanner.m */,
 				B686F45721866BB4009C0DAA /* CameraUploadRequestDelegate.h */,
@@ -3445,6 +3448,8 @@
 				B658D3CE218FBC47004C0D64 /* UploadOperationFactory.m */,
 				B6C3FD4021B080B3006C70A2 /* NSData+ImageIO.h */,
 				B6C3FD4121B080B3006C70A2 /* NSData+ImageIO.m */,
+				B6BD012321B71FB500E97086 /* NSURL+CameraUpload.h */,
+				B6BD012421B71FB500E97086 /* NSURL+CameraUpload.m */,
 			);
 			path = UploadUtil;
 			sourceTree = "<group>";
@@ -4147,7 +4152,7 @@
 				5B0CD42A2188D71100F97A2C /* UITextField+MNZCategory.m in Sources */,
 				5B323F231F5834E100C5F557 /* ReferralBonusesTableViewController.m in Sources */,
 				41EAAE471D06B49400622FAF /* NSDateFormatter+CTAssetsPickerController.m in Sources */,
-				B6BD012221B7123B00E97086 /* UploadRecordCollator.m in Sources */,
+				B6BD012221B7123B00E97086 /* UploadRecordsCollator.m in Sources */,
 				4182B4EF1BF4ADD400E6FFB8 /* ContactRequestsTableViewCell.m in Sources */,
 				B68C42CB216DAA85003C5A50 /* CameraUploadOperation.m in Sources */,
 				41840EEA1E811CD600D8308D /* MEGAApplication.m in Sources */,
@@ -4248,6 +4253,7 @@
 				A8F0A1D92178A73300575C57 /* MOMessage+CoreDataProperties.m in Sources */,
 				E8B519271AC9CD8000BB7324 /* TransferTableViewCell.m in Sources */,
 				4172793C1DB663FA001AC818 /* JSQMessagesBubbleImageFactory.m in Sources */,
+				B6BD012521B71FB500E97086 /* NSURL+CameraUpload.m in Sources */,
 				9437B93F1F55674F0058170D /* MEGAPasswordLinkRequestDelegate.m in Sources */,
 				41D14F711B8603AF0005A27A /* ProductDetailTableViewCell.m in Sources */,
 				E8E6CADE1A9C8C23008A0CD2 /* OfflineTableViewCell.m in Sources */,

@@ -133,6 +133,7 @@
 
 - (BOOL)application:(UIApplication *)application willFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     NSLog(@"[App Lifecycle] Application will finish launching with options: %@", launchOptions);
+    [CameraUploadManager.shared collateUploadRecordWhenAppLaunches];
     return YES;
 }
 
