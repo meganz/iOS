@@ -134,6 +134,18 @@ static NSString * const VideoCellularDisallowedUploadSessionId = @"nz.mega.video
     }];
 }
 
+- (NSArray<NSURLSessionUploadTask *> *)allRunningUploadTasks {
+    NSMutableArray<NSURLSessionUploadTask *> *tasks = [NSMutableArray array];
+    NSArray<NSURLSession *> *sessions = @[self.photoCellularAllowedUploadSession, self.photoCellularDisallowedUploadSession, self.videoCellularAllowedUploadSession, self.videoCellularDisallowedUploadSession];
+    for (NSURLSession *session in sessions) {
+        [session getTasksWithCompletionHandler:^(NSArray<NSURLSessionDataTask *> * _Nonnull dataTasks, NSArray<NSURLSessionUploadTask *> * _Nonnull uploadTasks, NSArray<NSURLSessionDownloadTask *> * _Nonnull downloadTasks) {
+            [tasks addObjectsFromArray:uploadTasks];
+        }];
+    }
+    
+    return [tasks copy];
+}
+
 #pragma mark - session completion handler
 
 - (void)saveSessionCompletion:(void (^)(void))completion forIdentifier:(NSString *)identifier {

@@ -13,6 +13,8 @@ typedef void (^UploadCompletionHandler)(NSData  * _Nullable token, NSError * _Nu
 
 - (void)saveSessionCompletion:(void (^)(void))completion forIdentifier:(NSString *)identifier;
 
+- (NSArray<NSURLSessionUploadTask *> *)allRunningUploadTasks;
+
 - (NSURLSessionUploadTask *)photoUploadTaskWithURL:(NSURL *)requestURL fromFile:(NSURL *)fileURL completion:(nullable UploadCompletionHandler)completion;
 
 - (NSURLSessionUploadTask *)videoUploadTaskWithURL:(NSURL *)requestURL fromFile:(NSURL *)fileURL completion:(nullable UploadCompletionHandler)completion;
