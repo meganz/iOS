@@ -12,6 +12,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (instancetype)shared;
 
+- (void)collateUploadRecordWhenAppLaunches;
+
 - (void)startCameraUploadIfNeeded;
 - (void)startVideoUploadIfNeeded;
 

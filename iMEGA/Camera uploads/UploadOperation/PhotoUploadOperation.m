@@ -33,14 +33,14 @@
     __weak __typeof__(self) weakSelf = self;
     [[PHImageManager defaultManager] requestImageDataForAsset:self.uploadInfo.asset options:options resultHandler:^(NSData * _Nullable imageData, NSString * _Nullable dataUTI, UIImageOrientation orientation, NSDictionary * _Nullable info) {
         if (weakSelf.isCancelled) {
-            [weakSelf finishOperationWithStatus:UploadStatusFailed shouldUploadNextAsset:YES];
+            [weakSelf finishOperationWithStatus:CameraAssetUploadStatusFailed shouldUploadNextAsset:YES];
             return;
         }
         
         if (imageData) {
             [weakSelf processImageData:imageData];
         } else {
-            [weakSelf finishOperationWithStatus:UploadStatusFailed shouldUploadNextAsset:YES];
+            [weakSelf finishOperationWithStatus:CameraAssetUploadStatusFailed shouldUploadNextAsset:YES];
         }
     }];
 }
@@ -51,7 +51,7 @@
     MEGANode *matchingNode = [self nodeForOriginalFingerprint:self.uploadInfo.originalFingerprint];
     if (matchingNode) {
         [self copyToParentNodeIfNeededForMatchingNode:matchingNode];
-        [self finishOperationWithStatus:UploadStatusDone shouldUploadNextAsset:YES];
+        [self finishOperationWithStatus:CameraAssetUploadStatusDone shouldUploadNextAsset:YES];
         return;
     }
     
@@ -63,7 +63,7 @@
     matchingNode = [[MEGASdkManager sharedMEGASdk] nodeForFingerprint:self.uploadInfo.fingerprint parent:self.uploadInfo.parentNode];
     if (matchingNode) {
         [self copyToParentNodeIfNeededForMatchingNode:matchingNode];
-        [self finishOperationWithStatus:UploadStatusDone shouldUploadNextAsset:YES];
+        [self finishOperationWithStatus:CameraAssetUploadStatusDone shouldUploadNextAsset:YES];
         return;
     }
 
@@ -73,7 +73,7 @@
     if ([JPEGData writeToURL:self.uploadInfo.fileURL atomically:YES]) {
         [self encryptsFile];
     } else {
-        [self finishOperationWithStatus:UploadStatusFailed shouldUploadNextAsset:YES];
+        [self finishOperationWithStatus:CameraAssetUploadStatusFailed shouldUploadNextAsset:YES];
     }
 }
 

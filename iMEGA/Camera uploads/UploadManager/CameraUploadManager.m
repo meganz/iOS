@@ -10,6 +10,7 @@
 #import "AttributeUploadManager.h"
 #import "MEGAConstants.h"
 #import "CameraUploadManager+Settings.h"
+#import "UploadRecordCollator.h"
 @import Photos;
 
 static NSString * const CameraUploadsNodeHandle = @"CameraUploadsNodeHandle";
@@ -27,6 +28,7 @@ static const NSInteger MaxConcurrentVideoOperationCount = 1;
 @property (strong, nonatomic) NSOperationQueue *videoUploadOerationQueue;
 @property (strong, nonatomic) MEGANode *cameraUploadNode;
 @property (strong, nonatomic) CameraScanner *scanner;
+@property (strong, nonatomic) UploadRecordCollator *dataCollator;
 
 @end
 
@@ -138,7 +140,7 @@ static const NSInteger MaxConcurrentVideoOperationCount = 1;
     }
     
     for (MOAssetUploadRecord *record in records) {
-        [CameraUploadRecordManager.shared updateStatus:UploadStatusQueuedUp forRecord:record error:nil];
+        [CameraUploadRecordManager.shared updateStatus:CameraAssetUploadStatusQueuedUp forRecord:record error:nil];
         CameraUploadOperation *operation = [UploadOperationFactory operationWithLocalIdentifier:record.localIdentifier parentNode:self.cameraUploadNode];
         if (operation) {
             if (mediaType == PHAssetMediaTypeImage) {
@@ -208,6 +210,14 @@ static const NSInteger MaxConcurrentVideoOperationCount = 1;
 
 - (void)applicationDidReceiveMemoryWarning {
     self.photoUploadOerationQueue.maxConcurrentOperationCount = MaxConcurrentPhotoOperationCountInMemoryWarning;
+}
+
+#pragma mark - data collator
+
+- (void)collateUploadRecordWhenAppLaunches {
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+        [self.dataCollator collateUploadRecord];
+    });
 }
 
 #pragma mark - handle camera upload node

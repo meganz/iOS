@@ -36,7 +36,7 @@
             [weakSelf processRequestedVideoExportSession:exportSession];
         } else {
             MEGALogError(@"[Camera Upload] %@ error when to request export session %@", weakSelf, info);
-            [weakSelf finishOperationWithStatus:UploadStatusFailed shouldUploadNextAsset:YES];
+            [weakSelf finishOperationWithStatus:CameraAssetUploadStatusFailed shouldUploadNextAsset:YES];
         }
     }];
 }
@@ -56,7 +56,7 @@
                 if (matchingNode) {
                     MEGALogDebug(@"[Camera Upload] %@ finds existing node by original fingerprint", self);
                     [self copyToParentNodeIfNeededForMatchingNode:matchingNode];
-                    [self finishOperationWithStatus:UploadStatusDone shouldUploadNextAsset:YES];
+                    [self finishOperationWithStatus:CameraAssetUploadStatusDone shouldUploadNextAsset:YES];
                     return;
                 } else {
                     MEGALogDebug(@"[Camera Upload] %@ original file size: %.2f M", self, [NSFileManager.defaultManager attributesOfItemAtPath:urlAsset.URL.path error:nil].fileSize / 1024.0f / 1024.0f);
@@ -94,11 +94,11 @@
                 break;
             case AVAssetExportSessionStatusCancelled:
                 MEGALogDebug(@"[Camera Upload] %@ video compression got cancelled", weakSelf);
-                [weakSelf finishOperationWithStatus:UploadStatusFailed shouldUploadNextAsset:YES];
+                [weakSelf finishOperationWithStatus:CameraAssetUploadStatusFailed shouldUploadNextAsset:YES];
                 break;
             default:
                 MEGALogError(@"[Camera Upload] %@ got error when to compress video %@", weakSelf, session.error)
-                [weakSelf finishOperationWithStatus:UploadStatusFailed shouldUploadNextAsset:YES];
+                [weakSelf finishOperationWithStatus:CameraAssetUploadStatusFailed shouldUploadNextAsset:YES];
                 break;
         }
     }];
@@ -110,7 +110,7 @@
     if (existingNode) {
         MEGALogDebug(@"[Camera Upload] %@ finds existing node by fingerprint", self);
         [self copyToParentNodeIfNeededForMatchingNode:existingNode];
-        [self finishOperationWithStatus:UploadStatusDone shouldUploadNextAsset:YES];
+        [self finishOperationWithStatus:CameraAssetUploadStatusDone shouldUploadNextAsset:YES];
         return;
     } else {
         [self encryptsFile];
@@ -125,7 +125,7 @@
     [NSFileManager.defaultManager copyItemAtURL:asset.URL toURL:self.uploadInfo.fileURL error:&error];
     if (error) {
         MEGALogDebug(@"[Camera Upload] %@ got error when to copy original item %@", self, error);
-        [self finishOperationWithStatus:UploadStatusFailed shouldUploadNextAsset:YES];
+        [self finishOperationWithStatus:CameraAssetUploadStatusFailed shouldUploadNextAsset:YES];
         return;
     }
 

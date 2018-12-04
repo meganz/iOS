@@ -2,12 +2,12 @@
 #import "CameraUploadRecordManager.h"
 #import "MEGAStore.h"
 
-NSString * const UploadStatusNotStarted = @"NotStarted";
-NSString * const UploadStatusQueuedUp = @"QueuedUp";
-NSString * const UploadStatusProcessing = @"Processing";
-NSString * const UploadStatusUploading = @"Uploading";
-NSString * const UploadStatusFailed = @"Failed";
-NSString * const UploadStatusDone = @"Done";
+NSString * const CameraAssetUploadStatusNotStarted = @"NotStarted";
+NSString * const CameraAssetUploadStatusQueuedUp = @"QueuedUp";
+NSString * const CameraAssetUploadStatusProcessing = @"Processing";
+NSString * const CameraAssetUploadStatusUploading = @"Uploading";
+NSString * const CameraAssetUploadStatusFailed = @"Failed";
+NSString * const CameraAssetUploadStatusDone = @"Done";
 
 @interface CameraUploadRecordManager ()
 
@@ -75,7 +75,7 @@ NSString * const UploadStatusDone = @"Done";
         NSFetchRequest *request = MOAssetUploadRecord.fetchRequest;
         request.fetchLimit = fetchLimit;
         request.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"creationDate" ascending:NO]];
-        request.predicate = [NSPredicate predicateWithFormat:@"(status IN %@) AND (mediaType == %@)", @[UploadStatusNotStarted, UploadStatusFailed], @(mediaType)];
+        request.predicate = [NSPredicate predicateWithFormat:@"(status IN %@) AND (mediaType == %@)", @[CameraAssetUploadStatusNotStarted, CameraAssetUploadStatusFailed], @(mediaType)];
         records = [self.privateQueueContext executeFetchRequest:request error:&coreDataError];
     }];
     
@@ -105,7 +105,7 @@ NSString * const UploadStatusDone = @"Done";
     __block NSError *coreDataError = nil;
     [self.privateQueueContext performBlockAndWait:^{
         NSFetchRequest *request = MOAssetUploadRecord.fetchRequest;
-        request.predicate = [NSPredicate predicateWithFormat:@"(status <> %@) AND (mediaType IN %@)", UploadStatusDone, mediaTypes];
+        request.predicate = [NSPredicate predicateWithFormat:@"(status <> %@) AND (mediaType IN %@)", CameraAssetUploadStatusDone, mediaTypes];
         records = [self.privateQueueContext executeFetchRequest:request error:&coreDataError];
     }];
     
@@ -221,7 +221,7 @@ NSString * const UploadStatusDone = @"Done";
 - (MOAssetUploadRecord *)createUploadStatusFromAsset:(PHAsset *)asset {
     MOAssetUploadRecord *record = [NSEntityDescription insertNewObjectForEntityForName:@"AssetUploadRecord" inManagedObjectContext:self.privateQueueContext];
     record.localIdentifier = asset.localIdentifier;
-    record.status = UploadStatusNotStarted;
+    record.status = CameraAssetUploadStatusNotStarted;
     record.creationDate = asset.creationDate;
     record.mediaType = @(asset.mediaType);
     return record;

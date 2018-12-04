@@ -72,7 +72,7 @@
     [self beginBackgroundTask];
     
     MEGALogDebug(@"[Camera Upload] %@ starts processing", self);
-    [[CameraUploadRecordManager shared] updateStatus:UploadStatusProcessing forLocalIdentifier:self.uploadInfo.asset.localIdentifier error:nil];
+    [[CameraUploadRecordManager shared] updateStatus:CameraAssetUploadStatusProcessing forLocalIdentifier:self.uploadInfo.asset.localIdentifier error:nil];
     
     self.uploadInfo.directoryURL = [self URLForAssetFolder];
 }
@@ -81,12 +81,12 @@
     self.uploadTaskIdentifier = [UIApplication.sharedApplication beginBackgroundTaskWithName:[NSString stringWithFormat:@"nz.mega.cameraUpload.%@", NSStringFromClass(self.class)] expirationHandler:^{
         MOAssetUploadRecord *record = [CameraUploadRecordManager.shared fetchAssetUploadRecordByLocalIdentifier:self.uploadInfo.asset.localIdentifier error:nil];
         MEGALogDebug(@"[Camera Upload] %@ background task expired", self);
-        if ([record.status isEqualToString:UploadStatusUploading]) {
+        if ([record.status isEqualToString:CameraAssetUploadStatusUploading]) {
             [self finishOperation];
             MEGALogDebug(@"[Camera Upload] %@ finishes while uploading", self);
         } else {
             [self cancel];
-            [self finishOperationWithStatus:UploadStatusFailed shouldUploadNextAsset:NO];
+            [self finishOperationWithStatus:CameraAssetUploadStatusFailed shouldUploadNextAsset:NO];
         }
         
         [UIApplication.sharedApplication endBackgroundTask:self.uploadTaskIdentifier];
@@ -160,7 +160,7 @@
             [self requestUploadURL];
         } else {
             MEGALogDebug(@"[Camera Upload] %@ error when to encrypt file %@", self, error);
-            [self finishOperationWithStatus:UploadStatusFailed shouldUploadNextAsset:YES];
+            [self finishOperationWithStatus:CameraAssetUploadStatusFailed shouldUploadNextAsset:YES];
             return;
         }
     }];
@@ -170,7 +170,7 @@
     [[MEGASdkManager sharedMEGASdk] requestBackgroundUploadURLWithFileSize:self.uploadInfo.fileSize mediaUpload:self.uploadInfo.mediaUpload delegate:[[CameraUploadRequestDelegate alloc] initWithCompletion:^(MEGARequest * _Nonnull request, MEGAError * _Nonnull error) {
         if (error.type) {
             MEGALogError(@"[Camera Upload] %@ requests upload url failed with error type: %ld", self, error.type);
-            [self finishOperationWithStatus:UploadStatusFailed shouldUploadNextAsset:YES];
+            [self finishOperationWithStatus:CameraAssetUploadStatusFailed shouldUploadNextAsset:YES];
         } else {
             self.uploadInfo.uploadURLString = [self.uploadInfo.mediaUpload uploadURLString];
             MEGALogDebug(@"[Camera Upload] %@ got upload URL %@", self, self.uploadInfo.uploadURLString);
@@ -181,7 +181,7 @@
 }
 
 - (void)uploadEncryptedChunksToServer {
-    [CameraUploadRecordManager.shared updateStatus:UploadStatusUploading forLocalIdentifier:self.uploadInfo.asset.localIdentifier error:nil];
+    [CameraUploadRecordManager.shared updateStatus:CameraAssetUploadStatusUploading forLocalIdentifier:self.uploadInfo.asset.localIdentifier error:nil];
     
     for (NSString *uploadSuffix in self.uploadInfo.encryptedChunkURLsKeyedByUploadSuffix.allKeys) {
         NSURL *serverURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", self.uploadInfo.uploadURLString, uploadSuffix]];
@@ -198,7 +198,7 @@
             MEGALogDebug(@"[Camera Upload] %@ starts uploading chunk %@", self, chunkURL.lastPathComponent);
         } else {
             MEGALogDebug(@"[Camera Upload] %@ chunk doesn't exist at %@", self, chunkURL);
-            [self finishOperationWithStatus:UploadStatusFailed shouldUploadNextAsset:YES];
+            [self finishOperationWithStatus:CameraAssetUploadStatusFailed shouldUploadNextAsset:YES];
             return;
         }
     }

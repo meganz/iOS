@@ -42,7 +42,7 @@
         self.completion(transferToken, error);
     } else {
         if (error) {
-            [self.uploadCoordinator finishUploadForLocalIdentifier:task.taskDescription status:UploadStatusFailed];
+            [self.uploadCoordinator finishUploadForLocalIdentifier:task.taskDescription status:CameraAssetUploadStatusFailed];
             return;
         }
         
