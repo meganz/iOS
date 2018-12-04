@@ -14,6 +14,7 @@
 #import "MEGARichPreviewMediaItem.h"
 #import "MEGASdkManager.h"
 #import "MEGAStore.h"
+#import "MEGAVoiceClipMediaItem.h"
 #import "NSAttributedString+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 #import "NSURL+MNZCategory.h"
@@ -336,13 +337,11 @@ static const void *nodeSizeTagKey = &nodeSizeTagKey;
         }
             
         case MEGAChatMessageTypeVoiceClip:
-            // TODO: UI
-            media = [[MEGAAttachmentMediaItem alloc] initWithMEGAChatMessage:self];
+            media = [[MEGAVoiceClipMediaItem alloc] initWithMEGAChatMessage:self];
             break;
             
         case MEGAChatMessageTypeContainsMeta: {
             media = [[MEGARichPreviewMediaItem alloc] initWithMEGAChatMessage:self];
-            
             break;
         }
             

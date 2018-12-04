@@ -75,8 +75,7 @@
             contactView.detailLabel.textColor = [UIColor mnz_gray666666];
         }
         
-        // TODO: Remove || ...
-        if (self.message.type == MEGAChatMessageTypeAttachment || self.message.type == MEGAChatMessageTypeVoiceClip) {
+        if (self.message.type == MEGAChatMessageTypeAttachment) {
             NSUInteger totalNodes = [self.message.nodeList.size unsignedIntegerValue];
             NSString *filename;
             NSString *size;
@@ -131,8 +130,7 @@
     
     NSString *title;
     NSString *subtitle;
-    // TODO: Remove || ...
-    if (self.message.type == MEGAChatMessageTypeAttachment || self.message.type == MEGAChatMessageTypeVoiceClip) {
+    if (self.message.type == MEGAChatMessageTypeAttachment) {
         NSUInteger totalNodes = [self.message.nodeList.size unsignedIntegerValue];
         if (totalNodes == 1) {
             MEGANode *node = [self.message.nodeList nodeAtIndex:0];
