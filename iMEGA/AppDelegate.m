@@ -72,8 +72,8 @@
 #import "MEGAPasswordLinkRequestDelegate.h"
 #import "MEGAShowPasswordReminderRequestDelegate.h"
 #import "CameraUploadManager.h"
+#import "CameraUploadManager+Settings.h"
 #import "TransferSessionManager.h"
-#import "CameraUploadRecordManager.h"
 
 #define kUserAgent @"MEGAiOS"
 #define kAppKey @"EVtjzb7R"

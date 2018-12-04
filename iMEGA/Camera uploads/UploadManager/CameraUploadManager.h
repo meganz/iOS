@@ -7,10 +7,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface CameraUploadManager : NSObject
 
-@property (class, nonatomic, getter=isCameraUploadEnabled) BOOL cameraUploadEnabled;
-@property (class, nonatomic, getter=isVideoUploadEnabled) BOOL videoUploadEnabled;
-@property (class, nonatomic, getter=isCellularUploadAllowed) BOOL cellularUploadAllowed;
-
 @property (nonatomic, readonly) NSUInteger uploadRunningItemsCount;
 @property (nonatomic, readonly) NSUInteger uploadPendingItemsCount;
 

@@ -9,13 +9,10 @@
 #import "UploadOperationFactory.h"
 #import "AttributeUploadManager.h"
 #import "MEGAConstants.h"
+#import "CameraUploadManager+Settings.h"
 @import Photos;
 
-#define kIsCameraUploadsEnabled @"IsCameraUploadsEnabled"
-#define kIsUploadVideosEnabled @"IsUploadVideosEnabled"
-#define kIsUseCellularConnectionEnabled @"IsUseCellularConnectionEnabled"
-#define kCameraUploadsNodeHandle @"CameraUploadsNodeHandle"
-
+static NSString * const CameraUploadsNodeHandle = @"CameraUploadsNodeHandle";
 static NSString * const CameraUplodFolderName = @"Camera Uploads";
 static const NSInteger ConcurrentPhotoUploadCount = 10;
 static const NSInteger MaxConcurrentPhotoOperationCountInBackground = 5;
@@ -173,33 +170,7 @@ static const NSInteger MaxConcurrentVideoOperationCount = 1;
 - (void)clearCameraUploadSettings {
     [self.class setCameraUploadEnabled:NO];
     [self stopCameraUpload];
-    [NSUserDefaults.standardUserDefaults removeObjectForKey:kCameraUploadsNodeHandle];
-}
-
-#pragma mark - enable check
-
-+ (BOOL)isCameraUploadEnabled {
-    return [NSUserDefaults.standardUserDefaults boolForKey:kIsCameraUploadsEnabled];
-}
-
-+ (void)setCameraUploadEnabled:(BOOL)cameraUploadEnabled {
-    [NSUserDefaults.standardUserDefaults setBool:cameraUploadEnabled forKey:kIsCameraUploadsEnabled];
-}
-
-+ (BOOL)isVideoUploadEnabled {
-    return [NSUserDefaults.standardUserDefaults boolForKey:kIsUploadVideosEnabled];
-}
-
-+ (void)setVideoUploadEnabled:(BOOL)videoUploadEnabled {
-    return [NSUserDefaults.standardUserDefaults setBool:videoUploadEnabled forKey:kIsUploadVideosEnabled];
-}
-
-+ (BOOL)isCellularUploadAllowed {
-    return [NSUserDefaults.standardUserDefaults boolForKey:kIsUseCellularConnectionEnabled];
-}
-
-+ (void)setCellularUploadAllowed:(BOOL)cellularUploadAllowed {
-    [NSUserDefaults.standardUserDefaults setBool:cellularUploadAllowed forKey:kIsUseCellularConnectionEnabled];
+    [self.class clearLocalSettings];
 }
 
 #pragma mark - upload status
@@ -260,7 +231,7 @@ static const NSInteger MaxConcurrentVideoOperationCount = 1;
 }
 
 - (MEGANode *)savedCameraUploadNode {
-    unsigned long long cameraUploadHandle = [[[NSUserDefaults standardUserDefaults] objectForKey:kCameraUploadsNodeHandle] unsignedLongLongValue];
+    unsigned long long cameraUploadHandle = [[[NSUserDefaults standardUserDefaults] objectForKey:CameraUploadsNodeHandle] unsignedLongLongValue];
     if (cameraUploadHandle > 0) {
         MEGANode *node = [[MEGASdkManager sharedMEGASdk] nodeForHandle:cameraUploadHandle];
         if (node.parentHandle == [[MEGASdkManager sharedMEGASdk] rootNode].handle) {
@@ -273,7 +244,7 @@ static const NSInteger MaxConcurrentVideoOperationCount = 1;
 
 - (void)saveCameraUploadHandle:(uint64_t)handle {
     if (handle > 0) {
-        [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithUnsignedLongLong:handle] forKey:kCameraUploadsNodeHandle];
+        [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithUnsignedLongLong:handle] forKey:CameraUploadsNodeHandle];
     }
 }
 

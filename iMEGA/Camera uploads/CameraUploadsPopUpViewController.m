@@ -8,6 +8,7 @@
 #import "UIDevice+MNZCategory.h"
 #import "PhotosViewController.h"
 #import "CameraUploadManager.h"
+#import "CameraUploadManager+Settings.h"
 #import "UIViewController+MNZCategory.h"
 
 @interface CameraUploadsPopUpViewController ()

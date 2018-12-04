@@ -2,7 +2,7 @@
 #import "TransferSessionManager.h"
 #import "TransferSessionDelegate.h"
 #import "TransferSessionTaskDelegate.h"
-#import "CameraUploadManager.h"
+#import "CameraUploadManager+Settings.h"
 #import "AttributeUploadManager.h"
 
 static NSString * const PhotoCellularAllowedUploadSessionId = @"nz.mega.photoTransfer.cellularAllowed";

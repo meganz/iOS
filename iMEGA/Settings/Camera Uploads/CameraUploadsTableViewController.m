@@ -4,6 +4,7 @@
 #import "MEGATransfer+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 #import "CameraUploadManager.h"
+#import "CameraUploadManager+Settings.h"
 #import "Helper.h"
 #import "UIViewController+MNZCategory.h"
 
