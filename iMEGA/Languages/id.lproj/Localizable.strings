@@ -37,7 +37,7 @@
 /* Alert message shown when the user tries to download an empty folder  */
 "emptyFolderMessage"="Anda tidak dapat mendownload folder kosong";
 /* Message shown when the user clicks on a confirm account link that has already been used  */
-"accountAlreadyConfirmed"="Akun anda telah aktif. Mohon masuk.";
+"accountAlreadyConfirmed"="Akun anda telah di-aktifasi. Silahkan masuk akun anda";
 /* Message shown when the user clicks on an link that is not valid */
 "linkNotValid"="Link salah";
 /* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
@@ -846,7 +846,7 @@
 /* Title of the section to access MEGA's help centre */
 "helpCentreLabel"="Pusat Bantuan";
 /* Section title that links you to the webpage that let you join and test the beta versions */
-"Join Beta"="Join Beta";
+"Join Beta"="Bergabunglah dengan Beta";
 /* Title to rate the app */
 "rateUsLabel"="Rate kami";
 /* Title of the Transfers section */
@@ -1292,7 +1292,7 @@
 /* Inform user that there were unsupported assets in the share extension */
 "shareExtensionUnsupportedAssets"="Beberapa item tidak dapat di share dengan MEGA";
 /* Message shown to the user when the share extension is about to be killed by iOS due to a memory issue */
-"Limited system resources are available when sharing items. Try uploading these files from within the MEGA app."="Limited system resources are available when sharing items. Try uploading these files from within the MEGA app.";
+"Limited system resources are available when sharing items. Try uploading these files from within the MEGA app."="Sumber daya sistem yang terbatas tersedia saat berbagi item. Coba unggah file-file ini dari dalam aplikasi MEGA.";
 /* Notification message shown when a transfer failed. Keep colon. */
 "Transfer failed:"="Gagal transfer:";
 /* MEGAError */
@@ -1575,7 +1575,7 @@
 /* Alert text shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device */
 "youNeedATwoFactorAuthenticationApp"="Anda memerlukan aplikasi autentikasi dua faktor di perangkat ini";
 /* Alert text shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device and tap on the question mark */
-"You need an authenticator app to enable 2FA on MEGA. You can download and install the Google Authenticator, Duo Mobile, Authy or Microsoft Authenticator app for your phone or tablet."="You need an authenticator app to enable 2FA on MEGA. You can download and install the Google Authenticator, Duo Mobile, Authy or Microsoft Authenticator app for your phone or tablet.";
+"You need an authenticator app to enable 2FA on MEGA. You can download and install the Google Authenticator, Duo Mobile, Authy or Microsoft Authenticator app for your phone or tablet."="Anda memerlukan aplikasi authenticator untuk mengaktifkan 2FA di MEGA. Anda dapat mengunduh dan memasang aplikasi Google Authenticator, Duo Mobile, Authy, atau Microsoft Authenticator untuk ponsel atau tablet Anda.";
 /* A title on the mobile web client page showing that 2FA has been enabled successfully. */
 "twoFactorAuthenticationEnabled"="Otentikasi Dua Faktor Diaktifkan";
 /* A message on the dialog shown after 2FA was successfully enabled. */
@@ -1591,61 +1591,61 @@
 /* A button to help them restore their account if they have lost their 2FA device. */
 "lostYourAuthenticatorDevice"="Kehilangan perangkat Authenticator Anda?";
 /* Settings section title where you can enable the option to 'Save Images in Photos' */
-"Save Images in Photos"="Save Images in Photos";
+"Save Images in Photos"="Simpan Gambar di Foto";
 /* Settings section title where you can enable the option to 'Save Videos in Photos' */
-"Save Videos in Photos"="Save Videos in Photos";
+"Save Videos in Photos"="Simpan Video di Foto";
 /* Footer text shown under the settings for download options 'Save Images/Videos in Library' */
-"Images and/or videos downloaded will be stored in the device’s media library instead of the Offline section."="Images and/or videos downloaded will be stored in the device’s media library instead of the Offline section.";
+"Images and/or videos downloaded will be stored in the device’s media library instead of the Offline section."="Gambar dan / atau video yang diunduh akan disimpan di pustaka media perangkat, bukan bagian Offline.";
 /* Setting associated with the 'Camera' of the device */
-"Camera"="Camera";
+"Camera"="Kamera";
 /* Settings section title where you can enable the option to 'Save in Photos' the images or videos taken from your camera in the MEGA app */
-"Save in Photos"="Save in Photos";
+"Save in Photos"="Simpan dalam Foto";
 /* Footer text shown under the Camera setting to explain the option 'Save in Photos' */
-"Save a copy of the images and videos taken from the MEGA app in your device’s media library."="Save a copy of the images and videos taken from the MEGA app in your device’s media library.";
+"Save a copy of the images and videos taken from the MEGA app in your device’s media library."="Simpan salinan gambar dan video yang diambil dari aplikasi MEGA di pustaka media perangkat Anda.";
 /* Title shown in a page of the on boarding screens explaining that the user keeps the encryption keys */
-"You hold the keys"="You hold the keys";
+"You hold the keys"="Anda memegang kunci";
 /* Description shown in a page of the onboarding screens explaining the encryption paradigm */
-"Security is why we exist, your files are safe with us behind a well oiled encryption machine where only you can access your files."="Security is why we exist, your files are safe with us behind a well oiled encryption machine where only you can access your files.";
+"Security is why we exist, your files are safe with us behind a well oiled encryption machine where only you can access your files."="Keamanan adalah alasan kami ada, file Anda aman bersama kami di belakang mesin enkripsi yang diminyaki di mana hanya Anda yang dapat mengakses file Anda.";
 /* Title shown in a page of the on boarding screens explaining that the chat is encrypted */
-"Encrypted chat"="Encrypted chat";
+"Encrypted chat"="Chat terenkripsi";
 /* Description shown in a page of the onboarding screens explaining the chat feature */
-"Fully encrypted chat with voice and video calls, group messaging and file sharing integration with your Cloud Drive."="Fully encrypted chat with voice and video calls, group messaging and file sharing integration with your Cloud Drive.";
+"Fully encrypted chat with voice and video calls, group messaging and file sharing integration with your Cloud Drive."="Obrolan yang sepenuhnya terenkripsi dengan panggilan suara dan video, perpesanan grup, dan integrasi berbagi file dengan Cloud Drive Anda.";
 /* Title shown in a page of the on boarding screens explaining that the user can add contacts to chat and colaborate */
-"Create your Network"="Create your Network";
+"Create your Network"="Buat Jaringan Anda";
 /* Description shown in a page of the onboarding screens explaining contacts */
-"Add contacts, create a network, colaborate, make voice and video calls without ever leaving MEGA"="Add contacts, create a network, colaborate, make voice and video calls without ever leaving MEGA";
+"Add contacts, create a network, colaborate, make voice and video calls without ever leaving MEGA"="Tambahkan kontak, buat jaringan, berkolaborasi, buat panggilan suara dan video tanpa harus meninggalkan MEGA";
 /* Title shown in a page of the on boarding screens explaining that the user can backup the photos automatically */
-"Your Photos in the Cloud"="Your Photos in the Cloud";
+"Your Photos in the Cloud"="Foto Anda di Cloud";
 /* Description shown in a page of the onboarding screens explaining the camera uploads feature */
-"Camera Uploads is an essential feature for any mobile device and we have got you covered. Create your account now."="Camera Uploads is an essential feature for any mobile device and we have got you covered. Create your account now.";
+"Camera Uploads is an essential feature for any mobile device and we have got you covered. Create your account now."="Unggahan Kamera adalah fitur penting untuk perangkat seluler apa pun dan kami telah melindungi Anda. Buat akun Anda sekarang.";
 /* Button which triggers the initial setup */
-"Setup MEGA"="Setup MEGA";
+"Setup MEGA"="Siapkan MEGA";
 /* Detailed explanation of why the user should give some permissions to MEGA */
-"To fully take advantage of your MEGA account we need to ask you some permissions."="To fully take advantage of your MEGA account we need to ask you some permissions.";
+"To fully take advantage of your MEGA account we need to ask you some permissions."="Untuk sepenuhnya memanfaatkan akun MEGA Anda, kami perlu menanyakan beberapa izin.";
 /* Title label that explains that the user is going to be asked for the photos permission */
-"Allow Access to Photos"="Allow Access to Photos";
+"Allow Access to Photos"="Izinkan Akses ke Foto";
 /* Detailed explanation of why the user should give permission to access to the photos */
-"Please give the MEGA App permission to access Photos to share photos and videos."="Please give the MEGA App permission to access Photos to share photos and videos.";
+"Please give the MEGA App permission to access Photos to share photos and videos."="Tolong beri izin MEGA App untuk mengakses Foto untuk berbagi foto dan video.";
 /* Title label that explains that the user is going to be asked for the microphone and camera permission */
-"Enable Microphone and Camera"="Enable Microphone and Camera";
+"Enable Microphone and Camera"="Aktifkan Mikrofon dan Kamera";
 /* Detailed explanation of why the user should give permission to access to the camera and the microphone */
-"To make encrypted voice and video calls, allow MEGA access to your Camera and Microphone"="To make encrypted voice and video calls, allow MEGA access to your Camera and Microphone";
+"To make encrypted voice and video calls, allow MEGA access to your Camera and Microphone"="Untuk membuat panggilan suara dan video terenkripsi, izinkan akses MEGA ke Kamera dan Mikrofon Anda";
 /* Title label that explains that the user is going to be asked for the notifications permission */
 "Enable Notifications"="Aktifkan Notifikasi";
 /* Detailed explanation of why the user should give permission to deliver notifications */
-"We would like to send you notifications so you receive new messages on your device instantly."="We would like to send you notifications so you receive new messages on your device instantly.";
+"We would like to send you notifications so you receive new messages on your device instantly."="Kami ingin mengirimkan pemberitahuan kepada Anda sehingga Anda menerima pesan baru di perangkat Anda secara instan.";
 /* Button which triggers a request for a specific permission, that have been explained to the user beforehand */
-"Allow Access"="Allow Access";
+"Allow Access"="Izinkan Akses";
 /* A section header which contains the file management settings. These settings allow users to remove duplicate files etc. */
 "File Management"="Pengelolaan File";
 /* Title of the option to enable or disable file versioning on Settings section */
-"File versioning"="File versioning";
+"File versioning"="Versi file";
 /* Subtitle of the option to enable or disable file versioning on Settings section */
-"Enable or disable file versioning for your entire account.[Br]You may still receive file versions from shared folders if your contacts have this enabled."="Enable or disable file versioning for your entire account.\nYou may still receive file versions from shared folders if your contacts have this enabled.";
+"Enable or disable file versioning for your entire account.[Br]You may still receive file versions from shared folders if your contacts have this enabled."="Aktifkan atau nonaktifkan versi file untuk seluruh akun Anda.\n Anda masih dapat menerima versi file dari folder bersama jika kontak Anda telah mengaktifkan ini.";
 /* A confirmation message when the user chooses to disable file versioning. */
 "When file versioning is disabled, the current version will be replaced with the new version once a file is updated (and your changes to the file will no longer be recorded). Are you sure you want to disable file versioning?"="Ketika versi file dinonaktifkan, versi saat ini akan diganti dengan versi baru setelah file diperbarui (dan perubahan anda pada file tidak akan dicatat lagi). Yakin ingin menonaktifkan versi file?";
 /* Settings preference title to show file versions info of the account */
-"File versions"="File versions";
+"File versions"="Versi file";
 /* A title message in the user’s account settings for showing the storage used for file versions. */
 "Total size taken up by file versions:"="Ukuran total diambil oleh versi file:";
 /* The title of the section about deleting file versions in the settings. */
@@ -1655,7 +1655,7 @@
 /* A warning note about deleting all file versions in the settings section. */
 "All current files will remain. Only historic versions of your files will be deleted."="Ini akan menghapus secara permanen semua versi file Anda sendiri. Setiap versi file yang dibagikan kepada Anda dari kontak harus dihapus oleh mereka.";
 /* Text of the dialog to delete all the file versions of the account */
-"You are about to delete the version histories of all files. Any file version shared to you from a contact will need to be deleted by them.[Br][Br]Please note that the current files will not be deleted."="You are about to delete the version histories of all files. Any file version shared to you from a contact will need to be deleted by them.\n\nPlease note that the current files will not be deleted.";
+"You are about to delete the version histories of all files. Any file version shared to you from a contact will need to be deleted by them.[Br][Br]Please note that the current files will not be deleted."="Anda akan menghapus riwayat versi semua file. Versi file apa pun yang dibagikan kepada Anda dari kontak harus dihapus oleh mereka.\n\nHarap dicatat bahwa file saat ini tidak akan dihapus.";
 /* Title for the Rubbish-Bin Cleaning Scheduler feature */
 "Rubbish-Bin Cleaning Scheduler:"="Scheduler Pembersih Sampah:";
 /* A rubbish bin scheduler setting which allows removing old files from the rubbish bin automatically. E.g. Remove files older than 15 days. */
@@ -1667,17 +1667,21 @@
 /* New server-side rubbish-bin cleaning scheduler description (for PRO users) */
 "The Rubbish Bin can be cleaned for you automatically. The minimum period is 7 days."="Sampah dapat dibersihkan untuk Anda secara otomatis. Jangka waktu minimum adalah 7 hari.";
 /* Description shown when you try to disable the feature Rubbish-Bin Cleaning Scheduler and you are a free user */
-"To disable the Rubbish-Bin Cleaning Scheduler or set a longer retention period, you need to subscribe to a PRO plan."="To disable the Rubbish-Bin Cleaning Scheduler or set a longer retention period, you need to subscribe to a PRO plan.";
+"To disable the Rubbish-Bin Cleaning Scheduler or set a longer retention period, you need to subscribe to a PRO plan."="Untuk menonaktifkan Penjadwalan Pembersihan Rubbish-Bin atau menetapkan periode retensi yang lebih lama, Anda harus berlangganan ke rencana PRO.";
 /* Confirmation dialog for the button that logs the user out of all sessions except the current one. */
 "Do you want to close all other sessions? This will log you out on all other active sessions except the current one."="Apakah Anda ingin menutup semua sesi lainnya? Ini akan mengeluarkan Anda di semua sesi aktif lainnya kecuali sesi saat ini.";
 /* A button label which allows the users save images/videos in the Photos app. */
-"Save to Photos"="Save to Photos";
+"Save to Photos"="Simpan ke Foto";
 /* Text shown when starting the process to save a photo or video to Photos app */
-"Saving to Photos…"="Saving to Photos…";
+"Saving to Photos…"="Menyimpan ke Foto ...";
 /* Text shown when a photo or video is saved to Photos app */
-"Saved to Photos"="Saved to Photos";
+"Saved to Photos"="Disimpan ke Foto";
 /* Text shown when an error occurs when trying to save a photo or video to Photos app */
-"Could not save Item"="Could not save Item";
+"Could not save Item"="Tidak dapat menyimpan Item";
+/* Text shown for switching from thumbnail view to list view. */
+"List view"="List view";
+/* Text shown for switching from list view to thumbnail view. */
+"Thumbnail view"="Thumbnail view";
 /* Message to inform the local user that someone has joined the current group call */
 "%@ joined the call."="%@ joined the call.";
 /* Message to inform the local user that someone has left the current group call */
@@ -1762,3 +1766,15 @@
 "Your publicly shared %1 (%2) has been taken down."="Anda punya %1 (%2) telah dicopot.";
 /* The text of a notification indicating that a file or folder that was taken down has now been restored due to a successful counter-notice. The %1 placeholder will be replaced with the text ‘file’ or ‘folder’. The %2 will be replaced with the name of the file or folder. */
 "Your taken down %1 (%2) has been reinstated."="Pencopotan %1 (%2) telah dikembalikan.";
+/* Footer text to explain the meaning of the functionaly 'Last seen' of your chat status. */
+"Allow my contacts to see the last time I was active on MEGA. If disabled you won’t be able to see the activity status of your contacts."="Allow my contacts to see the last time I was active on MEGA. If disabled you won’t be able to see the activity status of your contacts.";
+/* Label shown next to a feature name that can be enabled or disabled, like in 'Show Last seen...' */
+"Show"="Show";
+/* Shown when viewing a 1on1 chat (at least for now), if the user is offline. */
+"Last seen %s"="Last seen %s";
+/* Text to inform the user the 'Last seen' time of a contact, for example 'Last seen 20 Nov 18 at 15:15' */
+"Last seen [A] at [B]"="Last seen [A] at [B]";
+/* Text to inform the user the 'Last seen' time of a contact is a long time ago (>= 65535 minutes) */
+"Last seen a long time ago"="Last seen a long time ago";
+/* */
+"Today"="Hari ini";
