@@ -33,7 +33,7 @@ typedef NS_ENUM(NSInteger, SegmentIndex) {
 
 @property (strong, nonatomic) NSMutableArray *transfers;
 
-@property (strong, nonatomic) NSMutableArray<MOUploadTransfer *> *uploadTransfersQueued;
+@property (strong, nonatomic) NSMutableArray<NSString *> *uploadTransfersQueued;
 
 @property (nonatomic, getter=areTransfersPaused) BOOL transfersPaused;
 
@@ -121,8 +121,8 @@ typedef NS_ENUM(NSInteger, SegmentIndex) {
         }
             
         case 1: {
-            MOUploadTransfer *uploadTransfer = [self.uploadTransfersQueued objectAtIndex:indexPath.row];
-            [cell configureCellForQueuedTransfer:uploadTransfer delegate:self];
+            NSString *uploadTransferLocalIdentifier = [self.uploadTransfersQueued objectAtIndex:indexPath.row];
+            [cell configureCellForQueuedTransfer:uploadTransferLocalIdentifier delegate:self];
             break;
         }
     }
@@ -265,7 +265,12 @@ typedef NS_ENUM(NSInteger, SegmentIndex) {
 }
 
 - (void)getQueuedUploadTransfers {
-    self.uploadTransfersQueued = [[NSMutableArray alloc] initWithArray:[[MEGAStore shareInstance] fetchUploadTransfers]];
+    NSArray *tempUploadTransfersQueued = [[MEGAStore shareInstance] fetchUploadTransfers];
+    
+    self.uploadTransfersQueued = [[NSMutableArray alloc] init];
+    for (MOUploadTransfer *uploadQueuedTransfer in tempUploadTransfersQueued) {
+        [self.uploadTransfersQueued addObject:uploadQueuedTransfer.localIdentifier];
+    }
 }
 
 - (void)cleanTransfersList {
@@ -302,8 +307,7 @@ typedef NS_ENUM(NSInteger, SegmentIndex) {
 
 - (NSIndexPath *)indexPathForUploadTransferQueuedWithLocalIdentifier:(NSString *)localIdentifier {
     for (int i = 0; i < self.uploadTransfersQueued.count; i++) {
-        MOUploadTransfer *tempUploadTransfer = [self.uploadTransfersQueued objectAtIndex:i];
-        NSString *tempLocalIndentifier = tempUploadTransfer.localIdentifier;
+        NSString *tempLocalIndentifier = [self.uploadTransfersQueued objectAtIndex:i];
         if ([localIdentifier isEqualToString:tempLocalIndentifier]) {
             return [NSIndexPath indexPathForRow:i inSection:1];
         }
@@ -335,15 +339,35 @@ typedef NS_ENUM(NSInteger, SegmentIndex) {
     for (NSManagedObject *managedObject in [notification.userInfo objectForKey:NSInvalidatedObjectsKey]) {
         if ([managedObject isKindOfClass:MOUploadTransfer.class]) {
             MOUploadTransfer *uploadTransfer = (MOUploadTransfer *)managedObject;
-            [self deleteUploadQueuedTransferWithLocalIdentifier:uploadTransfer.localIdentifier];
+            NSString *coreDataLocalIdentifier = uploadTransfer.localIdentifier;
+            [self manageCoreDataNotificationForLocalIdentifier:coreDataLocalIdentifier];
         }
     }
     
     for (NSManagedObject *managedObject in [notification.userInfo objectForKey:NSDeletedObjectsKey]) {
         if ([managedObject isKindOfClass:MOUploadTransfer.class]) {
             MOUploadTransfer *uploadTransfer = (MOUploadTransfer *)managedObject;
-            [self deleteUploadQueuedTransferWithLocalIdentifier:uploadTransfer.localIdentifier];
+            NSString *coreDataLocalIdentifier = uploadTransfer.localIdentifier;
+            [self manageCoreDataNotificationForLocalIdentifier:coreDataLocalIdentifier];
         }
+    }
+}
+
+- (void)manageCoreDataNotificationForLocalIdentifier:(NSString *)localIdentifier {
+    BOOL ignoreCoreDataNotification = NO;
+    for (NSString *tempLocalIdentifier in [Helper uploadingNodes]) {
+        if ([localIdentifier isEqualToString:tempLocalIdentifier]) {
+            ignoreCoreDataNotification = YES;
+            break;
+        }
+    }
+    
+    if (ignoreCoreDataNotification) {
+        [[Helper uploadingNodes] removeObject:localIdentifier];
+    } else {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self deleteUploadQueuedTransferWithLocalIdentifier:localIdentifier];
+        });
     }
 }
 
@@ -591,7 +615,6 @@ typedef NS_ENUM(NSInteger, SegmentIndex) {
                 
                 NSIndexPath *newIndexPath = [NSIndexPath indexPathForRow:newTransferIndex inSection:0];
                 [self.uploadTransfersQueued removeObjectAtIndex:oldIndexPath.row];
-                [[MEGAStore shareInstance] deleteUploadTransferWithLocalIdentifier:localIdentifier];
                 [self.tableView moveRowAtIndexPath:oldIndexPath toIndexPath:newIndexPath];
                 [self.tableView endUpdates];
             }

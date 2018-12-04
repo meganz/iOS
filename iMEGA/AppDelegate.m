@@ -2586,6 +2586,11 @@ void uncaughtExceptionHandler(NSException *exception) {
         
         [transfer mnz_parseAppData];
         
+        if ([transfer.appData containsString:@">localIdentifier"]) {
+            NSString *localIdentifier = [transfer.appData mnz_stringBetweenString:@">localIdentifier=" andString:@""];
+            [[Helper uploadingNodes] removeObject:localIdentifier];
+        }
+        
         [Helper startPendingUploadTransferIfNeeded];
     }
     
