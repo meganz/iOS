@@ -139,7 +139,7 @@
                     [self presentChangeViewType:ChangeTypeResetPassword email:[MEGALinkManager emailOfNewSignUpLink] masterKey:masterKey link:request.link];
                     [MEGALinkManager setEmailOfNewSignUpLink:nil];
                 }];
-                okAlertAction.enabled = NO;
+                okAlertAction.enabled = !masterKeyLoggedInAlertController.textFields.count;
                 [masterKeyLoggedInAlertController addAction:okAlertAction];
                 
                 [masterKeyLoggedInAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:nil]];
