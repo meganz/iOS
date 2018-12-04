@@ -76,6 +76,7 @@ typedef NS_OPTIONS(NSUInteger, NodesAre) {
 + (BOOL)isFreeSpaceEnoughToDownloadNode:(MEGANode *)node isFolderLink:(BOOL)isFolderLink;
 + (void)downloadNode:(MEGANode *)node folderPath:(NSString *)folderPath isFolderLink:(BOOL)isFolderLink shouldOverwrite:(BOOL)overwrite;
 
++ (NSMutableArray *)uploadingNodes;
 + (void)startPendingUploadTransferIfNeeded;
 
 #pragma mark - Utils
