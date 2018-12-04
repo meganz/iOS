@@ -63,7 +63,7 @@ NSString * const CameraAssetUploadStatusDone = @"Done";
     return [self fetchRecordsByFetchRequest:request error:error];
 }
 
-- (NSArray<MOAssetUploadRecord *> *)fetchUploadRecordsByStatuses:(NSArray<NSString *> *)statuses error:(NSError * _Nullable __autoreleasing *)error {
+- (NSArray<MOAssetUploadRecord *> *)fetchRecordsByStatuses:(NSArray<NSString *> *)statuses error:(NSError * _Nullable __autoreleasing *)error {
     NSFetchRequest *request = MOAssetUploadRecord.fetchRequest;
     request.predicate = [NSPredicate predicateWithFormat:@"status IN %@", statuses];
     return [self fetchRecordsByFetchRequest:request error:error];
@@ -226,13 +226,16 @@ NSString * const CameraAssetUploadStatusDone = @"Done";
 
 #pragma mark - helper methods
 
-- (MOAssetUploadRecord *)createUploadStatusFromAsset:(PHAsset *)asset {
+- (void)createUploadStatusFromAsset:(PHAsset *)asset {
+    if (asset.localIdentifier.length == 0) {
+        return;
+    }
+    
     MOAssetUploadRecord *record = [NSEntityDescription insertNewObjectForEntityForName:@"AssetUploadRecord" inManagedObjectContext:self.privateQueueContext];
     record.localIdentifier = asset.localIdentifier;
     record.status = CameraAssetUploadStatusNotStarted;
     record.creationDate = asset.creationDate;
     record.mediaType = @(asset.mediaType);
-    return record;
 }
 
 @end

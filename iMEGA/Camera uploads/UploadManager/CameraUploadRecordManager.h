@@ -30,7 +30,7 @@ extern NSString * const CameraAssetUploadStatusDone;
 
 - (NSArray<MOAssetUploadRecord *> *)fetchRecordsByMediaTypes:(NSArray <NSNumber *> *)mediaTypes statuses:(NSArray<NSString *> *)statuses error:(NSError *__autoreleasing  _Nullable *)error;
 
-- (NSArray<MOAssetUploadRecord *> *)fetchUploadRecordsByStatuses:(NSArray<NSString *> *)statuses error:(NSError *__autoreleasing  _Nullable *)error;
+- (NSArray<MOAssetUploadRecord *> *)fetchRecordsByStatuses:(NSArray<NSString *> *)statuses error:(NSError *__autoreleasing  _Nullable *)error;
 
 #pragma mark - save records
 

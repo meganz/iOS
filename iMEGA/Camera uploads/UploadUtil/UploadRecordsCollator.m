@@ -3,29 +3,65 @@
 #import "CameraUploadRecordManager.h"
 #import "NSURL+CameraUpload.h"
 #import "NSFileManager+MNZCategory.h"
+#import "TransferSessionManager.h"
 
 @implementation UploadRecordsCollator
 
 - (void)collateUploadRecords {
-    [self collateInterrupptedRecords];
+    [self collateNonUploadingRecords];
+    [self collateUploadingRecords];
 }
 
-- (void)collateInterrupptedRecords {
-    NSArray<MOAssetUploadRecord *> *records = [CameraUploadRecordManager.shared fetchUploadRecordsByStatuses:@[CameraAssetUploadStatusQueuedUp, CameraAssetUploadStatusProcessing] error:nil];
+- (void)collateNonUploadingRecords {
+    NSArray<MOAssetUploadRecord *> *records = [CameraUploadRecordManager.shared fetchRecordsByStatuses:@[CameraAssetUploadStatusQueuedUp, CameraAssetUploadStatusProcessing] error:nil];
     if (records.count == 0) {
         return;
     }
     
     for (MOAssetUploadRecord *record in records) {
-        record.status = CameraAssetUploadStatusNotStarted;
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
-            if (record.localIdentifier) {
-                [NSFileManager.defaultManager removeItemIfExistsAtURL:[NSURL assetDirectoryURLForLocalIdentifier:record.localIdentifier]];
-            }
-        });
+        [self revertBackToNotStartedForRecord:record];
     }
     
     [CameraUploadRecordManager.shared saveChangesIfNeeded:nil];
+}
+
+- (void)collateUploadingRecords {
+    NSArray<MOAssetUploadRecord *> *uploadingRecords = [CameraUploadRecordManager.shared fetchRecordsByStatuses:@[CameraAssetUploadStatusUploading] error:nil];
+    if (uploadingRecords.count == 0) {
+        return;
+    }
+    
+    NSArray<NSURLSessionUploadTask *> *runningTasks = [TransferSessionManager.shared allRunningUploadTasks];
+    NSMutableArray<NSString *> *identifiers = [NSMutableArray array];
+    for (NSURLSessionUploadTask *task in runningTasks) {
+        if (task.taskDescription.length > 0) {
+            [identifiers addObject:task.taskDescription];
+        }
+    }
+    
+    NSComparator localIdComparator = ^(NSString *s1, NSString *s2) {
+        return [s1 compare:s2];
+    };
+    
+    [identifiers sortUsingComparator:localIdComparator];
+    
+    for (MOAssetUploadRecord *record in uploadingRecords) {
+        NSUInteger index = [identifiers indexOfObject:record.localIdentifier inSortedRange:NSMakeRange(0, identifiers.count) options:NSBinarySearchingFirstEqual usingComparator:localIdComparator];
+        if (index == NSNotFound) {
+            [self revertBackToNotStartedForRecord:record];
+        }
+    }
+    
+    [CameraUploadRecordManager.shared saveChangesIfNeeded:nil];
+}
+
+- (void)revertBackToNotStartedForRecord:(MOAssetUploadRecord *)record {
+    record.status = CameraAssetUploadStatusNotStarted;
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+        if (record.localIdentifier) {
+            [NSFileManager.defaultManager removeItemIfExistsAtURL:[NSURL assetDirectoryURLForLocalIdentifier:record.localIdentifier]];
+        }
+    });
 }
 
 @end
