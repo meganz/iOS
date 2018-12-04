@@ -3,11 +3,12 @@
 #import "CompleteUploadOperation.h"
 #import "AttributeUploadManager.h"
 #import "MEGAConstants.h"
+#import "NSURL+CameraUpload.h"
 
 @implementation CameraUploadCoordinator
 
 - (void)handleCompletedTransferWithLocalIdentifier:(NSString *)localIdentifier token:(NSData *)token {
-    NSURL *archivedURL = [AssetUploadInfo archivedURLForLocalIdentifier:localIdentifier];
+    NSURL *archivedURL = [NSURL archivedURLForLocalIdentifier:localIdentifier];
     BOOL isDirectory;
     if ([NSFileManager.defaultManager fileExistsAtPath:archivedURL.path isDirectory:&isDirectory] && !isDirectory) {
         AssetUploadInfo *uploadInfo = [NSKeyedUnarchiver unarchiveObjectWithFile:archivedURL.path];
@@ -47,8 +48,8 @@
         return;
     }
     
-    [CameraUploadRecordManager.shared updateStatus:status forLocalIdentifier:localIdentifier error:nil];
-    NSURL *uploadDirectory = [AssetUploadInfo assetDirectoryURLForLocalIdentifier:localIdentifier];
+    [CameraUploadRecordManager.shared updateRecordOfLocalIdentifier:localIdentifier withStatus:status error:nil];
+    NSURL *uploadDirectory = [NSURL assetDirectoryURLForLocalIdentifier:localIdentifier];
     [NSFileManager.defaultManager removeItemAtURL:uploadDirectory error:nil];
     MEGALogDebug(@"[Camera Upload] Background Upload finishes with session task %@ and status: %@", localIdentifier, status);
     

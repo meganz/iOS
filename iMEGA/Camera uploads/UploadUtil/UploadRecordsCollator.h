@@ -3,9 +3,9 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface UploadRecordCollator : NSObject
+@interface UploadRecordsCollator : NSObject
 
-- (void)collateUploadRecord;
+- (void)collateUploadRecords;
 
 @end
 

@@ -1,8 +1,5 @@
 
 #import "AssetUploadInfo.h"
-#import "NSFileManager+MNZCategory.h"
-#import "NSString+MNZCategory.h"
-
 
 @implementation AssetUploadInfo
 
@@ -16,14 +13,6 @@
         _location = asset.location;
     }
     return self;
-}
-
-+ (NSURL *)assetDirectoryURLForLocalIdentifier:(NSString *)localIdentifier {
-    return [NSFileManager.defaultManager.cameraUploadURL URLByAppendingPathComponent:localIdentifier.stringByRemovingInvalidFileCharacters isDirectory:YES];
-}
-
-+ (NSURL *)archivedURLForLocalIdentifier:(NSString *)localIdentifier {
-    return [[self assetDirectoryURLForLocalIdentifier:localIdentifier] URLByAppendingPathComponent:localIdentifier.stringByRemovingInvalidFileCharacters isDirectory:NO];
 }
 
 #pragma mark - properties
