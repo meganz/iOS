@@ -62,7 +62,11 @@
     self.statusPersistenceLabel.text = AMLocalizedString(@"statusPersistence", nil);
     [self.autoAwayTimeSaveButton setTitle:AMLocalizedString(@"save", @"Button title to 'Save' the selected option") forState:UIControlStateNormal];
     
-    self.lastActiveLabel.text = AMLocalizedString(@"Show \"Last seen…\"", @"Label title to enable/disable the 'Last seen' feature of the chat");
+    NSAttributedString *lastSeenString = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:AMLocalizedString(@"Last seen %s", nil), "..."] attributes:@{NSFontAttributeName:[UIFont italicSystemFontOfSize:17.0]}];
+    NSMutableAttributedString *showLastSeenAttributedString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@ ", AMLocalizedString(@"Show", @"Label shown next to a feature name that can be enabled or disabled, like in 'Show Last seen...'")]];
+    [showLastSeenAttributedString appendAttributedString:lastSeenString];
+    
+    self.lastActiveLabel.attributedText = showLastSeenAttributedString;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
