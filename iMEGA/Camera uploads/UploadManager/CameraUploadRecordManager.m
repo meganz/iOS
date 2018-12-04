@@ -53,75 +53,45 @@ NSString * const CameraAssetUploadStatusDone = @"Done";
 #pragma mark - fetch assets
 
 - (MOAssetUploadRecord *)fetchRecordByLocalIdentifier:(NSString *)identifier error:(NSError *__autoreleasing  _Nullable *)error {
-    __block MOAssetUploadRecord *record = nil;
-    __block NSError *coreDataError = nil;
-    [self.privateQueueContext performBlockAndWait:^{
-        NSFetchRequest *request = MOAssetUploadRecord.fetchRequest;
-        request.predicate = [NSPredicate predicateWithFormat:@"localIdentifier == %@", identifier];
-        record = [[self.privateQueueContext executeFetchRequest:request error:&coreDataError] firstObject];
-    }];
-    
-    if (error != NULL) {
-        *error = coreDataError;
-    }
-    
-    return record;
+    NSFetchRequest *request = MOAssetUploadRecord.fetchRequest;
+    request.predicate = [NSPredicate predicateWithFormat:@"localIdentifier == %@", identifier];
+    return [[self fetchRecordsByFetchRequest:request error:error] firstObject];
 }
 
 - (NSArray<MOAssetUploadRecord *> *)fetchNonUploadedRecordsWithLimit:(NSInteger)fetchLimit mediaType:(PHAssetMediaType)mediaType error:(NSError *__autoreleasing  _Nullable *)error {
-    __block NSArray<MOAssetUploadRecord *> *records = @[];
-    __block NSError *coreDataError = nil;
-    [self.privateQueueContext performBlockAndWait:^{
-        NSFetchRequest *request = MOAssetUploadRecord.fetchRequest;
-        request.fetchLimit = fetchLimit;
-        request.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"creationDate" ascending:NO]];
-        request.predicate = [NSPredicate predicateWithFormat:@"(status IN %@) AND (mediaType == %@)", @[CameraAssetUploadStatusNotStarted, CameraAssetUploadStatusFailed], @(mediaType)];
-        records = [self.privateQueueContext executeFetchRequest:request error:&coreDataError];
-    }];
-    
-    if (error != NULL) {
-        *error = coreDataError;
-    }
-    
-    return records;
+    NSFetchRequest *request = MOAssetUploadRecord.fetchRequest;
+    request.fetchLimit = fetchLimit;
+    request.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"creationDate" ascending:NO]];
+    request.predicate = [NSPredicate predicateWithFormat:@"(status IN %@) AND (mediaType == %@)", @[CameraAssetUploadStatusNotStarted, CameraAssetUploadStatusFailed], @(mediaType)];
+    return [self fetchRecordsByFetchRequest:request error:error];
 }
 
 - (NSArray<MOAssetUploadRecord *> *)fetchAllRecords:(NSError * _Nullable __autoreleasing * _Nullable)error {
-    __block NSArray<MOAssetUploadRecord *> *records = @[];
-    __block NSError *coreDataError = nil;
-    [self.privateQueueContext performBlockAndWait:^{
-        records = [self.privateQueueContext executeFetchRequest:MOAssetUploadRecord.fetchRequest error:&coreDataError];
-    }];
-    
-    if (error != NULL) {
-        *error = coreDataError;
-    }
-    
-    return records;
+    return [self fetchRecordsByFetchRequest:MOAssetUploadRecord.fetchRequest error:error];
 }
 
 - (NSArray<MOAssetUploadRecord *> *)fetchPendingRecordsByMediaTypes:(NSArray <NSNumber *> *)mediaTypes error:(NSError *__autoreleasing  _Nullable *)error {
-    __block NSArray<MOAssetUploadRecord *> *records = @[];
-    __block NSError *coreDataError = nil;
-    [self.privateQueueContext performBlockAndWait:^{
-        NSFetchRequest *request = MOAssetUploadRecord.fetchRequest;
-        request.predicate = [NSPredicate predicateWithFormat:@"(status <> %@) AND (mediaType IN %@)", CameraAssetUploadStatusDone, mediaTypes];
-        records = [self.privateQueueContext executeFetchRequest:request error:&coreDataError];
-    }];
-    
-    if (error != NULL) {
-        *error = coreDataError;
-    }
-    
-    return records;
+    NSFetchRequest *request = MOAssetUploadRecord.fetchRequest;
+    request.predicate = [NSPredicate predicateWithFormat:@"(status <> %@) AND (mediaType IN %@)", CameraAssetUploadStatusDone, mediaTypes];
+    return [self fetchRecordsByFetchRequest:request error:error];
 }
 
 - (NSArray<MOAssetUploadRecord *> *)fetchUploadRecordsByStatuses:(NSArray<NSString *> *)statuses error:(NSError * _Nullable __autoreleasing *)error {
+    NSFetchRequest *request = MOAssetUploadRecord.fetchRequest;
+    request.predicate = [NSPredicate predicateWithFormat:@"status IN %@", statuses];
+    return [self fetchRecordsByFetchRequest:request error:error];
+}
+
+- (NSArray<MOAssetUploadRecord *> *)fetchRecordsByMediaTypes:(NSArray<NSNumber *> *)mediaTypes statuses:(NSArray<NSString *> *)statuses error:(NSError * _Nullable __autoreleasing *)error {
+    NSFetchRequest *request = MOAssetUploadRecord.fetchRequest;
+    request.predicate = [NSPredicate predicateWithFormat:@"(status IN %@) AND (mediaType IN %@)", statuses, mediaTypes];
+    return [self fetchRecordsByFetchRequest:request error:error];
+}
+
+- (NSArray<MOAssetUploadRecord *> *)fetchRecordsByFetchRequest:(NSFetchRequest *)request error:(NSError * _Nullable __autoreleasing *)error {
     __block NSArray<MOAssetUploadRecord *> *records = @[];
     __block NSError *coreDataError = nil;
     [self.privateQueueContext performBlockAndWait:^{
-        NSFetchRequest *request = MOAssetUploadRecord.fetchRequest;
-        request.predicate = [NSPredicate predicateWithFormat:@"status IN %@", statuses];
         records = [self.privateQueueContext executeFetchRequest:request error:&coreDataError];
     }];
     
