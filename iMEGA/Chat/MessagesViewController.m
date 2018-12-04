@@ -2101,10 +2101,6 @@ const NSUInteger kMaxMessagesToLoad = 256;
                 chatAttachedNodesVC.message = message;
                 [self.navigationController pushViewController:chatAttachedNodesVC animated:YES];
             }
-        } else if (message.type == MEGAChatMessageTypeVoiceClip) {
-            // TODO: UI
-            MEGANode *node = [message.nodeList nodeAtIndex:0];
-            [node mnz_openNodeInNavigationController:self.navigationController folderLink:NO];
         } else if (message.type == MEGAChatMessageTypeContact) {
             if (message.usersCount == 1) {
                 NSString *userEmail = [message userEmailAtIndex:0];
