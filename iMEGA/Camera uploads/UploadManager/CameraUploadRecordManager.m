@@ -37,20 +37,7 @@ NSString * const CameraAssetUploadStatusDone = @"Done";
     return self;
 }
 
-- (BOOL)saveChangesIfNeeded:(NSError *__autoreleasing  _Nullable *)error {
-    NSError *coreDataError = nil;
-    if (self.privateQueueContext.hasChanges) {
-        [self.privateQueueContext save:&coreDataError];
-    }
-    
-    if (error != NULL) {
-        *error = coreDataError;
-    }
-    
-    return coreDataError == nil;
-}
-
-#pragma mark - fetch assets
+#pragma mark - fetch records
 
 - (MOAssetUploadRecord *)fetchRecordByLocalIdentifier:(NSString *)identifier error:(NSError *__autoreleasing  _Nullable *)error {
     NSFetchRequest *request = MOAssetUploadRecord.fetchRequest;
@@ -102,7 +89,20 @@ NSString * const CameraAssetUploadStatusDone = @"Done";
     return records;
 }
 
-#pragma mark - save assets
+#pragma mark - save records
+
+- (BOOL)saveChangesIfNeeded:(NSError *__autoreleasing  _Nullable *)error {
+    NSError *coreDataError = nil;
+    if (self.privateQueueContext.hasChanges) {
+        [self.privateQueueContext save:&coreDataError];
+    }
+    
+    if (error != NULL) {
+        *error = coreDataError;
+    }
+    
+    return coreDataError == nil;
+}
 
 - (BOOL)saveAssetFetchResult:(PHFetchResult<PHAsset *> *)result error:(NSError * _Nullable __autoreleasing * _Nullable)error {
     __block NSError *coreDataError = nil;
