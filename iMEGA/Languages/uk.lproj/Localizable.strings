@@ -1678,6 +1678,10 @@
 "Saved to Photos"="Saved to Photos";
 /* Text shown when an error occurs when trying to save a photo or video to Photos app */
 "Could not save Item"="Could not save Item";
+/* Text shown for switching from thumbnail view to list view. */
+"List view"="Перегляд списком";
+/* Text shown for switching from list view to thumbnail view. */
+"Thumbnail view"="Ескізи";
 /* Message to inform the local user that someone has joined the current group call */
 "%@ joined the call."="%@ joined the call.";
 /* Message to inform the local user that someone has left the current group call */
@@ -1762,3 +1766,15 @@
 "Your publicly shared %1 (%2) has been taken down."="Загальний доступ до %1 (%2) було призупинено.";
 /* The text of a notification indicating that a file or folder that was taken down has now been restored due to a successful counter-notice. The %1 placeholder will be replaced with the text ‘file’ or ‘folder’. The %2 will be replaced with the name of the file or folder. */
 "Your taken down %1 (%2) has been reinstated."="Раніше призупинене %1 (%2) було відновлено.";
+/* Footer text to explain the meaning of the functionaly 'Last seen' of your chat status. */
+"Allow my contacts to see the last time I was active on MEGA. If disabled you won’t be able to see the activity status of your contacts."="Allow my contacts to see the last time I was active on MEGA. If disabled you won’t be able to see the activity status of your contacts.";
+/* Label shown next to a feature name that can be enabled or disabled, like in 'Show Last seen...' */
+"Show"="Show";
+/* Shown when viewing a 1on1 chat (at least for now), if the user is offline. */
+"Last seen %s"="Last seen %s";
+/* Text to inform the user the 'Last seen' time of a contact, for example 'Last seen 20 Nov 18 at 15:15' */
+"Last seen [A] at [B]"="Last seen [A] at [B]";
+/* Text to inform the user the 'Last seen' time of a contact is a long time ago (>= 65535 minutes) */
+"Last seen a long time ago"="Last seen a long time ago";
+/* */
+"Today"="Сьогодні";
