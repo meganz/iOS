@@ -67,6 +67,7 @@
     
     self.emailInputView.inputTextField.text = self.emailString;
     self.emailInputView.inputTextField.enabled = NO;
+    self.emailInputView.inputTextField.keyboardType = UIKeyboardTypeEmailAddress;
     if (@available(iOS 11.0, *)) {
         self.emailInputView.inputTextField.textContentType = UITextContentTypeUsername;
     }

@@ -262,7 +262,7 @@
     switch ([request type]) {
             
         case MEGARequestTypeGetAttrUser: {
-            for (ContactRequestsTableViewCell *icrtvc in [self.tableView visibleCells]) {
+            for (ContactRequestsTableViewCell *icrtvc in self.tableView.visibleCells) {
                 if ([[request email] isEqualToString:[icrtvc.nameLabel text]]) {
                     NSString *fileName = [request email];
                     NSString *avatarFilePath = [Helper pathForSharedSandboxCacheDirectory:@"thumbnailsV3"];
