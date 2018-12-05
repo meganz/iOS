@@ -8,6 +8,6 @@
 @interface MEGAAVViewController : AVPlayerViewController
 
 - (instancetype)initWithURL:(NSURL *)fileUrl;
-- (instancetype)initWithNode:(MEGANode *)node folderLink:(BOOL)folderLink;
+- (instancetype)initWithNode:(MEGANode *)node folderLink:(BOOL)folderLink apiForStreaming:(MEGASdk *)apiForStreaming;
 
 @end

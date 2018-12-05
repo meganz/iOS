@@ -1590,17 +1590,17 @@
 "scanOrCopyTheSeed"="Zeskanuj lub skopiuj materiał siewny do aplikacji Authenticator. Pamiętaj, aby wykonać kopię zapasową tego materiału siewnego w bezpieczne miejsce na wypadek utraty urządzenia.";
 /* A button to help them restore their account if they have lost their 2FA device. */
 "lostYourAuthenticatorDevice"="Zgubiłeś swoje urządzenie?";
-/* Settings section title where you can enable the option to 'Save Images in Library' */
-"Save Images in Library"="Zapisz obrazy w bibliotece";
-/* Settings section title where you can enable the option to 'Save Videos in Library' */
-"Save Videos in Library"="Zapisz wideo w bibliotece";
+/* Settings section title where you can enable the option to 'Save Images in Photos' */
+"Save Images in Photos"="Zapisz obrazy w zdjęciach";
+/* Settings section title where you can enable the option to 'Save Videos in Photos' */
+"Save Videos in Photos"="Zapisz wideo w zdjęciach";
 /* Footer text shown under the settings for download options 'Save Images/Videos in Library' */
 "Images and/or videos downloaded will be stored in the device’s media library instead of the Offline section."="Zdjęcia i / lub pobrane filmy będą przechowywane w bibliotece multimediów urządzenia zamiast w sekcji Offline.";
 /* Setting associated with the 'Camera' of the device */
 "Camera"="Aparat";
-/* Settings section title where you can enable the option to 'Save in Library' the images or videos taken from your camera in the MEGA app */
-"Save in Library"="Zapisz w bibliotece";
-/* Footer text shown under the Camera setting to explain the option 'Save in Library' */
+/* Settings section title where you can enable the option to 'Save in Photos' the images or videos taken from your camera in the MEGA app */
+"Save in Photos"="Zapisz w zdjęciach";
+/* Footer text shown under the Camera setting to explain the option 'Save in Photos' */
 "Save a copy of the images and videos taken from the MEGA app in your device’s media library."="Zapisz kopię zdjęć i filmów pobranych z aplikacji MEGA w bibliotece multimediów urządzenia.";
 /* Title shown in a page of the on boarding screens explaining that the user keeps the encryption keys */
 "You hold the keys"="Ty przechowujesz klucze";
@@ -1625,7 +1625,7 @@
 /* Title label that explains that the user is going to be asked for the photos permission */
 "Allow Access to Photos"="Zezwalaj na dostęp do zdjęć";
 /* Detailed explanation of why the user should give permission to access to the photos */
-"To share photos and videos, allow MEGA to access your library."="Aby udostępniać zdjęcia i filmy, zezwól MEGA na dostęp do Twojej biblioteki.";
+"Please give the MEGA App permission to access Photos to share photos and videos."="Zezwól MEGA na dostęp do Zdjęć, aby udostępniać zdjęcia i filmy.";
 /* Title label that explains that the user is going to be asked for the microphone and camera permission */
 "Enable Microphone and Camera"="Włącz mikrofon i kamerę";
 /* Detailed explanation of why the user should give permission to access to the camera and the microphone */
@@ -1678,3 +1678,103 @@
 "Saved to Photos"="Zapisano w Zdjęciach";
 /* Text shown when an error occurs when trying to save a photo or video to Photos app */
 "Could not save Item"="Nie można zapisać elementu";
+/* Text shown for switching from thumbnail view to list view. */
+"List view"="Widok listy";
+/* Text shown for switching from list view to thumbnail view. */
+"Thumbnail view"="Podgląd zdjęcia";
+/* Message to inform the local user that someone has joined the current group call */
+"%@ joined the call."="%@ joined the call.";
+/* Message to inform the local user that someone has left the current group call */
+"%@ left the call."="%@ left the call.";
+/* Message to inform the local user is having a bad quality network with someone in the current group call */
+"Poor conection."="Poor conection.";
+/* Message shown in a chat room when there is an active group call */
+"There is an active group call. Tap to join."="There is an active group call. Tap to join.";
+/* Message shown in a chat room for a group call in progress displaying the duration of the call */
+"Touch to return to call %@"="Touch to return to call %@";
+/* Menu item to change from grid view to list view */
+"List view"="Widok listy";
+/* Menu item to change from list view to grid view */
+"Thumbnail view"="Podgląd zdjęcia";
+/* There are no notifications to display. */
+"No notifications"="Brak powiadomień";
+/* The header of a notification related to payments */
+"Payment info"="Informacje o płatności";
+/* A title for a notification saying the user’s pricing plan will expire soon. */
+"PRO membership plan expiring soon"="Plan PRO niebawem wygaśnie";
+/* The header of a notification indicating that a file or folder has been taken down due to infringement or other reason. */
+"Takedown notice"="Prośba o zablokowanie treści";
+/* The header of a notification indicating that a file or folder that was taken down has now been restored due to a successful counter-notice. */
+"Takedown reinstated"="Informacja o przywróceniu plików";
+/* Label shown inside an unseen notification */
+"New"="New";
+/* When a contact sent a contact/friend request */
+"Sent you a contact request"="Wysłane zaproszenia";
+/* A notification that the other user cancelled their contact request so it is no longer valid. E.g. user@email.com cancelled their contact request. */
+"Cancelled their contact request"="Anulowali swoje zaproszenia";
+/* A reminder notification to remind the user to respond to the contact request. */
+"Reminder: You have a contact request"="Przypomnienie: masz nowe zaproszenie";
+/* A notification telling the user that the other user deleted them as a contact. E.g. user@email.com deleted you as a contact. */
+"Deleted you as a contact"="Usunął cię jako kontakt";
+/* A notification telling the user that they are now fully connected with the other user (the users are in each other’s address books). */
+"Contact relationship established"="Jesteście teraz znajomymi";
+/* A notification telling the user that one of their contact’s accounts has been deleted or deactivated. */
+"Account has been deleted/deactivated"="Konto zostało usunięte/zablokowane";
+/* A notification telling the user that another user blocked them as a contact (they will no longer be able to contact them). E.g. name@email.com blocked you as a contact. */
+"Blocked you as a contact"="Zablokował Cię jako kontakt";
+/* Response text after clicking Ignore on an incoming contact request notification. */
+"You ignored a contact request"="Zignorowałeś nadchodzące połączone";
+/* Response text after clicking Accept on an incoming contact request notification. */
+"You accepted a contact request"="Zaakceptowałeś nowy kontakt";
+/* Response text after clicking Deny on an incoming contact request notification. */
+"You denied a contact request"="Odmówiłeś akceptacji dla kontaktu";
+/* When somebody accepted your contact request */
+"Accepted your contact request"="Zaakceptowane zgłoszenia";
+/* When somebody denied your contact request */
+"Denied your contact request"="Anulowane zaproszenia";
+/* notification text */
+"A user has left the shared folder {0}"="Użytkownik opuścił udostępniony folder {0}";
+/* This is shown in the Notification dialog when the email address of a contact is not found and access to the share is lost for some reason (e.g. share removal or contact removal). */
+"Access to folders was removed."="Dostęp do katalogów został usunięty";
+/* Content of a notification that informs how many files and folders have been added to a shared folder */
+"Added 1 file"="Added 1 file";
+/* Content of a notification that informs how many files and folders have been added to a shared folder */
+"Added %lld files"="Added %lld files";
+/* Content of a notification that informs how many files and folders have been added to a shared folder */
+"Added 1 folder"="Added 1 folder";
+/* Content of a notification that informs how many files and folders have been added to a shared folder */
+"Added %lld folders"="Added %lld folders";
+/* Content of a notification that informs how many files and folders have been added to a shared folder */
+"Added 1 file and 1 folder"="Added 1 file and 1 folder";
+/* Content of a notification that informs how many files and folders have been added to a shared folder */
+"Added %lld files and 1 folder"="Added %lld files and 1 folder";
+/* Content of a notification that informs how many files and folders have been added to a shared folder */
+"Added 1 file and %lld folders"="Added 1 file and %lld folders";
+/* Content of a notification that informs how many files and folders have been added to a shared folder */
+"Added [A] files and [B] folders"="Added [A] files and [B] folders";
+/* Notification popup. Notification for multiple removed items from a share. Please keep [X] as it will be replaced at runtime with the number of removed items. */
+"Removed [X] items from a share"="Usunięto [X] elementów z udostępnionego katalogu";
+/* A notification telling the user that their Pro plan payment was successfully received. The %1 indicates the name of the Pro plan they paid for e.g. Lite, PRO III. */
+"Your payment for the %1 plan was received."="Twoja płatność za konto %1 została potwierdzona.";
+/* A notification telling the user that their Pro plan payment was unsuccessful. The %1 indicates the name of the Pro plan they were trying to pay for e.g. Lite, PRO II. */
+"Your payment for the %1 plan was unsuccessful."="Twoja płatność za konto %1 nie powiodła się.";
+/* The professional pricing plan which the user is currently on will expire in one day. */
+"Your PRO membership plan will expire in 1 day."="Plan PRO wygaśnie za 1 dzień.";
+/* The professional pricing plan which the user is currently on will expire in 5 days. The %1 is a placeholder for the number of days and should not be removed. */
+"Your PRO membership plan will expire in %1 days."="Plan PRO wygaśnie za %1 dni.";
+/* The text of a notification indicating that a file or folder has been taken down due to infringement or other reason. The %1 placeholder will be replaced with the text ‘file’ or ‘folder’. The %2 will be replaced with the name of the file or folder. */
+"Your publicly shared %1 (%2) has been taken down."="Twój udostępniony publicznie katalog  %1 (%2) został zablokowany.";
+/* The text of a notification indicating that a file or folder that was taken down has now been restored due to a successful counter-notice. The %1 placeholder will be replaced with the text ‘file’ or ‘folder’. The %2 will be replaced with the name of the file or folder. */
+"Your taken down %1 (%2) has been reinstated."="Zablokowane pliki %1 (%2) zostały przywrócone.";
+/* Footer text to explain the meaning of the functionaly 'Last seen' of your chat status. */
+"Allow my contacts to see the last time I was active on MEGA. If disabled you won’t be able to see the activity status of your contacts."="Allow my contacts to see the last time I was active on MEGA. If disabled you won’t be able to see the activity status of your contacts.";
+/* Label shown next to a feature name that can be enabled or disabled, like in 'Show Last seen...' */
+"Show"="Show";
+/* Shown when viewing a 1on1 chat (at least for now), if the user is offline. */
+"Last seen %s"="Last seen %s";
+/* Text to inform the user the 'Last seen' time of a contact, for example 'Last seen 20 Nov 18 at 15:15' */
+"Last seen [A] at [B]"="Last seen [A] at [B]";
+/* Text to inform the user the 'Last seen' time of a contact is a long time ago (>= 65535 minutes) */
+"Last seen a long time ago"="Last seen a long time ago";
+/* */
+"Today"="Dzisiaj";

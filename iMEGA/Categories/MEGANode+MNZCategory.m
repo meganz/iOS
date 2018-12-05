@@ -18,17 +18,71 @@
 #import "NSFileManager+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 #import "UIApplication+MNZCategory.h"
+#import "UITextField+MNZCategory.h"
 
 #import "BrowserViewController.h"
+#import "CloudDriveViewController.h"
 #import "LoginViewController.h"
 #import "MainTabBarController.h"
 #import "MEGAAVViewController.h"
 #import "MEGANavigationController.h"
+#import "MEGAPhotoBrowserViewController.h"
+#import "MEGAQLPreviewController.h"
 #import "MyAccountHallViewController.h"
 #import "PreviewDocumentViewController.h"
-#import "MEGAQLPreviewController.h"
+#import "SharedItemsViewController.h"
 
 @implementation MEGANode (MNZCategory)
+
+- (void)navigateToParentAndPresent {
+    MainTabBarController *mainTBC = (MainTabBarController *) UIApplication.sharedApplication.delegate.window.rootViewController;
+    
+    if ([[MEGASdkManager sharedMEGASdk] accessLevelForNode:self] != MEGAShareTypeAccessOwner) { // Node from inshare
+        mainTBC.selectedIndex = SHARES;
+        SharedItemsViewController *sharedItemsVC = mainTBC.childViewControllers[SHARES].childViewControllers.firstObject;
+        [sharedItemsVC selectSegment:0]; // Incoming
+    } else {
+        mainTBC.selectedIndex = CLOUD;
+    }
+    
+    UINavigationController *navigationController = [mainTBC.childViewControllers objectAtIndex:mainTBC.selectedIndex];
+    [navigationController popToRootViewControllerAnimated:NO];
+    
+    NSArray *parentTreeArray = self.mnz_parentTreeArray;
+    for (MEGANode *node in parentTreeArray) {
+        CloudDriveViewController *cloudDriveVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
+        cloudDriveVC.parentNode = node;
+        [navigationController pushViewController:cloudDriveVC animated:NO];
+    }
+    
+    switch (self.type) {
+        case MEGANodeTypeFolder:
+        case MEGANodeTypeRubbish: {
+            CloudDriveViewController *cloudDriveVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
+            cloudDriveVC.parentNode = self;
+            [navigationController pushViewController:cloudDriveVC animated:NO];
+            break;
+        }
+            
+        case MEGANodeTypeFile: {
+            if (self.name.mnz_isImagePathExtension || self.name.mnz_isVideoPathExtension) {
+                MEGANode *parentNode = [[MEGASdkManager sharedMEGASdk] nodeForHandle:self.parentHandle];
+                MEGANodeList *nodeList = [[MEGASdkManager sharedMEGASdk] childrenForParent:parentNode];
+                NSMutableArray<MEGANode *> *mediaNodesArray = [nodeList mnz_mediaNodesMutableArrayFromNodeList];
+                
+                MEGAPhotoBrowserViewController *photoBrowserVC = [MEGAPhotoBrowserViewController photoBrowserWithMediaNodes:mediaNodesArray api:[MEGASdkManager sharedMEGASdk] displayMode:DisplayModeCloudDrive presentingNode:self preferredIndex:0];
+                
+                [navigationController presentViewController:photoBrowserVC animated:YES completion:nil];
+            } else {
+                [self mnz_openNodeInNavigationController:navigationController folderLink:NO];
+            }
+            break;
+        }
+            
+        default:
+            break;
+    }
+}
 
 - (void)mnz_openNodeInNavigationController:(UINavigationController *)navigationController folderLink:(BOOL)isFolderLink {
     UIViewController *viewController = [self mnz_viewControllerForNodeInFolderLink:isFolderLink];
@@ -39,6 +93,7 @@
 
 - (UIViewController *)mnz_viewControllerForNodeInFolderLink:(BOOL)isFolderLink {
     MEGASdk *api = isFolderLink ? [MEGASdkManager sharedMEGASdkFolder] : [MEGASdkManager sharedMEGASdk];
+    MEGASdk *apiForStreaming = [MEGASdkManager sharedMEGASdk].isLoggedIn ? [MEGASdkManager sharedMEGASdk] : [MEGASdkManager sharedMEGASdkFolder];
     
     MOOfflineNode *offlineNodeExist = [[MEGAStore shareInstance] offlineNodeWithNode:self];
     
@@ -90,9 +145,9 @@
             
             return previewController;
         }
-    } else if (self.name.mnz_isMultimediaPathExtension && [api httpServerStart:YES port:4443]) {
+    } else if (self.name.mnz_isMultimediaPathExtension && [apiForStreaming httpServerStart:YES port:4443]) {
         if (self.mnz_isPlayable) {
-            MEGAAVViewController *megaAVViewController = [[MEGAAVViewController alloc] initWithNode:self folderLink:isFolderLink];
+            MEGAAVViewController *megaAVViewController = [[MEGAAVViewController alloc] initWithNode:self folderLink:isFolderLink apiForStreaming:apiForStreaming];
             return megaAVViewController;
         } else {
             UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"fileNotSupported", @"Alert title shown when users try to stream an unsupported audio/video file") message:AMLocalizedString(@"message_fileNotSupported", @"Alert message shown when users try to stream an unsupported audio/video file") preferredStyle:UIAlertControllerStyleAlert];
@@ -176,7 +231,7 @@
                     downloadsDirectory = downloadsDirectory.mnz_relativeLocalPath;
                     NSString *offlineNameString = [[MEGASdkManager sharedMEGASdkFolder] escapeFsIncompatible:self.name];
                     NSString *localPath = [downloadsDirectory stringByAppendingPathComponent:offlineNameString];
-                    [api startDownloadNode:[api authorizeNode:self] localPath:localPath appData:[[NSString new] mnz_appDataToSaveInPhotosApp]];
+                    [[MEGASdkManager sharedMEGASdk] startDownloadNode:[api authorizeNode:self] localPath:localPath appData:[[NSString new] mnz_appDataToSaveInPhotosApp]];
                 }
                 break;
             }
@@ -210,9 +265,18 @@
         UIAlertController *renameAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"rename", @"Title for the action that allows you to rename a file or folder") message:AMLocalizedString(@"renameNodeMessage", @"Hint text to suggest that the user have to write the new name for the file or folder") preferredStyle:UIAlertControllerStyleAlert];
         
         [renameAlertController addTextFieldWithConfigurationHandler:^(UITextField *textField) {
-            textField.delegate = self;
             textField.text = self.name;
             [textField addTarget:self action:@selector(renameAlertTextFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
+            textField.shouldReturnCompletion = ^BOOL(UITextField *textField) {
+                BOOL shouldReturn = YES;
+                UIAlertController *renameAlertController = (UIAlertController *)UIApplication.mnz_visibleViewController;
+                if (renameAlertController) {
+                    UIAlertAction *rightButtonAction = renameAlertController.actions.lastObject;
+                    shouldReturn = rightButtonAction.enabled;
+                }
+                
+                return shouldReturn;
+            };
         }];
         
         [renameAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
@@ -394,7 +458,7 @@
                 MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"BrowserNavigationControllerID"];
                 BrowserViewController *browserVC = navigationController.viewControllers.firstObject;
                 browserVC.selectedNodesArray = [NSArray arrayWithObject:self];
-                [UIApplication.mnz_visibleViewController presentViewController:navigationController animated:YES completion:nil];
+                [UIApplication.mnz_presentingViewController presentViewController:navigationController animated:YES completion:nil];
                 
                 browserVC.browserAction = isFolderLink ? BrowserActionImportFromFolderLink : BrowserActionImport;
             }];
@@ -763,10 +827,9 @@
     return shouldChangeCharacters;
 }
 
-- (void)renameAlertTextFieldDidChange:(UITextField *)sender {
+- (void)renameAlertTextFieldDidChange:(UITextField *)textField {
     UIAlertController *renameAlertController = (UIAlertController *)UIApplication.mnz_visibleViewController;
     if (renameAlertController) {
-        UITextField *textField = renameAlertController.textFields.firstObject;
         UIAlertAction *rightButtonAction = renameAlertController.actions.lastObject;
         BOOL enableRightButton = NO;
         
@@ -774,27 +837,17 @@
         NSString *nodeNameString = self.name;
         
         if (self.isFile || self.isFolder) {
-            BOOL containsInvalidChars = [sender.text rangeOfCharacterFromSet:[NSCharacterSet characterSetWithCharactersInString:@"|*/:<>?\"\\"]].length;
+            BOOL containsInvalidChars = textField.text.mnz_containsInvalidChars;
             if ([newName isEqualToString:@""] || [newName isEqualToString:nodeNameString] || newName.mnz_isEmpty || containsInvalidChars) {
                 enableRightButton = NO;
             } else {
                 enableRightButton = YES;
             }
-            sender.textColor = containsInvalidChars ? UIColor.mnz_redMain : UIColor.darkTextColor;
+            textField.textColor = containsInvalidChars ? UIColor.mnz_redMain : UIColor.darkTextColor;
         }
         
         rightButtonAction.enabled = enableRightButton;
     }
-}
-
-- (BOOL)textFieldShouldReturn:(UITextField *)textField {
-    UIAlertController *renameAlertController = (UIAlertController *)UIApplication.mnz_visibleViewController;    
-    if (renameAlertController) {
-        UIAlertAction *rightButtonAction = renameAlertController.actions.lastObject;
-        return rightButtonAction.enabled;
-    }
-    
-    return YES;
 }
 
 - (void)mnz_copyToGalleryFromTemporaryPath:(NSString *)path {

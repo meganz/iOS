@@ -6,8 +6,9 @@
 #import "CallViewController.h"
 #import "GroupCallViewController.h"
 #import "MEGAProviderDelegate.h"
-#import "MessagesViewController.h"
 #import "MEGAChatCall+MNZCategory.h"
+#import "MEGAUserAlertList+MNZCategory.h"
+#import "MessagesViewController.h"
 #import "NSString+MNZCategory.h"
 #import "UIApplication+MNZCategory.h"
 #import "DevicePermissionsHelper.h"
@@ -38,6 +39,10 @@
     
     for (NSInteger i = 0; i < [defaultViewControllersMutableArray count]; i++) {
         UITabBarItem *tabBarItem = [[defaultViewControllersMutableArray objectAtIndex:i] tabBarItem];
+        if (@available(iOS 10.0, *)) {
+            tabBarItem.badgeColor = UIColor.clearColor;
+            [tabBarItem setBadgeTextAttributes:@{ NSForegroundColorAttributeName: UIColor.mnz_redMain } forState:UIControlStateNormal];
+        }
         [self reloadInsetsForTabBarItem:tabBarItem];
         switch (tabBarItem.tag) {
             case CLOUD:
@@ -83,7 +88,7 @@
     [[MEGASdkManager sharedMEGAChatSdk] addChatCallDelegate:self];
     
     [self setBadgeValueForChats];
-    [self setBadgeValueForIncomingContactRequests];
+    [self setBadgeValueForMyAccount];
     
     if (@available(iOS 10.0, *)) {
         _megaCallManager = [[MEGACallManager alloc] init];
@@ -155,20 +160,30 @@
     }
 }
 
-- (void)setBadgeValueForIncomingContactRequests {
-    MEGAContactRequestList *incomingContactsLists = [[MEGASdkManager sharedMEGASdk] incomingContactRequests];
-    int incomingContacts = incomingContactsLists.size.intValue;
-    NSString *badgeValue = incomingContacts ? [NSString stringWithFormat:@"%d", incomingContacts] : nil;
+- (void)setBadgeValueForMyAccount {
+    int incomingContacts = [[MEGASdkManager sharedMEGASdk] incomingContactRequests].size.intValue;
+    NSUInteger unseenUserAlerts = [MEGASdkManager sharedMEGASdk].userAlertList.mnz_unseenCount;
+    
+    NSString *badgeValue;
+    NSUInteger total = incomingContacts + unseenUserAlerts;
+    if (@available(iOS 10.0, *)) {
+        badgeValue = total ? @"⦁" : nil;
+    } else {
+        badgeValue = total ? [NSString stringWithFormat:@"%tu", total] : nil;
+    }
     [self setBadgeValue:badgeValue tabPosition:MYACCOUNT];
 }
 
 - (void)setBadgeValueForChats {
     NSInteger unreadChats = ([MEGASdkManager sharedMEGAChatSdk] != nil) ? [[MEGASdkManager sharedMEGAChatSdk] unreadChats] : 0;
     
-    NSString *badgeValue = unreadChats ? [NSString stringWithFormat:@"%td", unreadChats] : nil;
+    NSString *badgeValue;
+    if (@available(iOS 10.0, *)) {
+        badgeValue = unreadChats ? @"⦁" : nil;
+    } else {
+        badgeValue = unreadChats ? [NSString stringWithFormat:@"%td", unreadChats] : nil;
+    }
     [self setBadgeValue:badgeValue tabPosition:CHAT];
-    
-    [UIApplication sharedApplication].applicationIconBadgeNumber = unreadChats;
 }
 
 - (void)setBadgeValue:(NSString *)badgeValue tabPosition:(NSInteger)tabPosition {
@@ -198,13 +213,13 @@
                     groupCallVC.videoCall = call.hasVideoInitialCall;
                     groupCallVC.chatRoom = chatRoom;
 
-                    [UIApplication.mnz_visibleViewController presentViewController:groupCallNavigation animated:YES completion:nil];
+                    [UIApplication.mnz_presentingViewController presentViewController:groupCallNavigation animated:YES completion:nil];
                 } else {
                     CallViewController *callVC = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"CallViewControllerID"];
                     callVC.chatRoom  = chatRoom;
                     callVC.videoCall = call.hasVideoInitialCall;
                     callVC.callType = CallTypeIncoming;
-                    [UIApplication.mnz_visibleViewController presentViewController:callVC animated:YES completion:nil];
+                    [UIApplication.mnz_presentingViewController presentViewController:callVC animated:YES completion:nil];
                 }
             } else {
                 MEGAChatRoom *chatRoom = [api chatRoomForChatId:call.chatId];
@@ -240,13 +255,13 @@
             groupCallVC.videoCall = call.hasVideoInitialCall;
             groupCallVC.chatRoom = chatRoom;
             
-            [UIApplication.mnz_visibleViewController presentViewController:groupCallNavigation animated:YES completion:nil];
+            [UIApplication.mnz_presentingViewController presentViewController:groupCallNavigation animated:YES completion:nil];
         } else {
             CallViewController *callVC = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"CallViewControllerID"];
             callVC.chatRoom  = chatRoom;
             callVC.videoCall = call.hasVideoInitialCall;
             callVC.callType = CallTypeIncoming;
-            [UIApplication.mnz_visibleViewController presentViewController:callVC animated:YES completion:nil];
+            [UIApplication.mnz_presentingViewController presentViewController:callVC animated:YES completion:nil];
         }
     }
 }
@@ -254,7 +269,11 @@
 #pragma mark - MEGAGlobalDelegate
 
 - (void)onContactRequestsUpdate:(MEGASdk *)api contactRequestList:(MEGAContactRequestList *)contactRequestList {
-    [self setBadgeValueForIncomingContactRequests];
+    [self setBadgeValueForMyAccount];
+}
+
+- (void)onUserAlertsUpdate:(MEGASdk *)api userAlertList:(MEGAUserAlertList *)userAlertList {
+    [self setBadgeValueForMyAccount];
 }
 
 #pragma mark - MEGAChatDelegate
