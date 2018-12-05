@@ -2485,10 +2485,10 @@
 				41AC33A71A926C27005118AF /* HeaderCollectionReusableView.m */,
 				411E712D1D461E1D00DD7EF8 /* MEGACollectionViewFlowLayout.h */,
 				411E712E1D461E1D00DD7EF8 /* MEGACollectionViewFlowLayout.m */,
-				B658D3BF218F93F5004C0D64 /* UploadManager */,
-				B6D11ADC219CE60E00446B86 /* UploadUtil */,
-				B658D3BE218F93D4004C0D64 /* DataModel */,
-				B658D3BD218F939C004C0D64 /* UploadOperation */,
+				B658D3BF218F93F5004C0D64 /* UploadManagers */,
+				B6D11ADC219CE60E00446B86 /* UploadUtils */,
+				B658D3BE218F93D4004C0D64 /* DataModels */,
+				B658D3BD218F939C004C0D64 /* UploadOperations */,
 				B658D3BC218F9384004C0D64 /* TransferSession */,
 			);
 			path = "Camera uploads";
@@ -3454,7 +3454,7 @@
 			path = TransferSession;
 			sourceTree = "<group>";
 		};
-		B658D3BD218F939C004C0D64 /* UploadOperation */ = {
+		B658D3BD218F939C004C0D64 /* UploadOperations */ = {
 			isa = PBXGroup;
 			children = (
 				B68C42C7216DA9CE003C5A50 /* MEGAOperation.h */,
@@ -3482,19 +3482,19 @@
 				B644B6BC21AE0E1900A3B8E7 /* CoordinateUploadOperation.h */,
 				B644B6BD21AE0E1900A3B8E7 /* CoordinateUploadOperation.m */,
 			);
-			path = UploadOperation;
+			path = UploadOperations;
 			sourceTree = "<group>";
 		};
-		B658D3BE218F93D4004C0D64 /* DataModel */ = {
+		B658D3BE218F93D4004C0D64 /* DataModels */ = {
 			isa = PBXGroup;
 			children = (
 				B6E19B332175852E00882F74 /* AssetUploadInfo.h */,
 				B6E19B342175852E00882F74 /* AssetUploadInfo.m */,
 			);
-			path = DataModel;
+			path = DataModels;
 			sourceTree = "<group>";
 		};
-		B658D3BF218F93F5004C0D64 /* UploadManager */ = {
+		B658D3BF218F93F5004C0D64 /* UploadManagers */ = {
 			isa = PBXGroup;
 			children = (
 				B658D3CA218FBC24004C0D64 /* CameraUploadManager.h */,
@@ -3508,10 +3508,10 @@
 				B6BB128421A4B73C00C16277 /* AttributeUploadManager.h */,
 				B6BB128521A4B73C00C16277 /* AttributeUploadManager.m */,
 			);
-			path = UploadManager;
+			path = UploadManagers;
 			sourceTree = "<group>";
 		};
-		B6D11ADC219CE60E00446B86 /* UploadUtil */ = {
+		B6D11ADC219CE60E00446B86 /* UploadUtils */ = {
 			isa = PBXGroup;
 			children = (
 				B6BD012021B7123B00E97086 /* UploadRecordsCollator.h */,
@@ -3533,7 +3533,7 @@
 				B6BD012321B71FB500E97086 /* NSURL+CameraUpload.h */,
 				B6BD012421B71FB500E97086 /* NSURL+CameraUpload.m */,
 			);
-			path = UploadUtil;
+			path = UploadUtils;
 			sourceTree = "<group>";
 		};
 		E84CDAFE1A7292AA003F4C77 /* Links */ = {
