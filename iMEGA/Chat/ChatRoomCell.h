@@ -10,5 +10,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *unreadCount;
 @property (weak, nonatomic) IBOutlet UIView *unreadView;
 @property (weak, nonatomic) IBOutlet UIImageView *activeCallImageView;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *unreadCountLabelHorizontalMarginConstraint;
 
 @end

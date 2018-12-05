@@ -509,7 +509,7 @@ static MEGAIndexer *indexer;
             [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
         }
         
-        [UIApplication.mnz_visibleViewController presentViewController:alertController animated:YES completion:nil];
+        [UIApplication.mnz_presentingViewController presentViewController:alertController animated:YES completion:nil];
         return NO;
     }
     return YES;
@@ -611,6 +611,15 @@ static MEGAIndexer *indexer;
     }
 }
 
++ (NSMutableArray *)uploadingNodes {
+    static NSMutableArray *uploadingNodes = nil;
+    if (!uploadingNodes) {
+        uploadingNodes = [[NSMutableArray alloc] init];
+    }
+    
+    return uploadingNodes;
+}
+
 + (void)startUploadTransfer:(MOUploadTransfer *)uploadTransfer {
     PHAsset *asset = [PHAsset fetchAssetsWithLocalIdentifiers:@[uploadTransfer.localIdentifier] options:nil].firstObject;
     
@@ -622,6 +631,7 @@ static MEGAIndexer *indexer;
         NSString *appData = [NSString new];
         
         appData = [appData mnz_appDataToSaveCoordinates:[filePath mnz_coordinatesOfPhotoOrVideo]];
+        appData = [appData mnz_appDataToLocalIdentifier:uploadTransfer.localIdentifier];
         
         if (![name isEqualToString:newName]) {
             NSString *newFilePath = [[NSFileManager defaultManager].uploadsDirectory stringByAppendingPathComponent:newName];
@@ -635,6 +645,8 @@ static MEGAIndexer *indexer;
         } else {
             [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:filePath.mnz_relativeLocalPath parent:parentNode appData:appData isSourceTemporary:YES];
         }
+        
+        [[Helper uploadingNodes] addObject:uploadTransfer.localIdentifier];
         [[MEGAStore shareInstance] deleteUploadTransfer:uploadTransfer];
     } node:^(MEGANode *node) {
         if ([[[MEGASdkManager sharedMEGASdk] parentNodeForNode:node] handle] == parentNode.handle) {
@@ -649,6 +661,7 @@ static MEGAIndexer *indexer;
         [[MEGAStore shareInstance] deleteUploadTransfer:uploadTransfer];
         [Helper startPendingUploadTransferIfNeeded];
     }];
+    
     [processAsset prepare];
 }
 
@@ -666,10 +679,11 @@ static MEGAIndexer *indexer;
         }
     }
     
-    NSArray<MOUploadTransfer *> *uploadTransfers = [[MEGAStore shareInstance] fetchUploadTransfers];
-    
-    if (allUploadTransfersPaused && uploadTransfers.count) {
-        [Helper startUploadTransfer:uploadTransfers.firstObject];
+    if (allUploadTransfersPaused) {
+        NSArray<MOUploadTransfer *> *queuedUploadTransfers = [[MEGAStore shareInstance] fetchUploadTransfers];
+        if (queuedUploadTransfers.count) {
+            [Helper startUploadTransfer:queuedUploadTransfers.firstObject];
+        }
     }
 }
 
@@ -1204,7 +1218,7 @@ static MEGAIndexer *indexer;
             safariViewController.view.tintColor = UIColor.mnz_redMain;
         }
         
-        [UIApplication.mnz_visibleViewController presentViewController:safariViewController animated:YES completion:nil];
+        [UIApplication.mnz_presentingViewController presentViewController:safariViewController animated:YES completion:nil];
     }
 }
 
@@ -1273,7 +1287,7 @@ static MEGAIndexer *indexer;
         [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"logoutLabel", @"Title of the button which logs out from your account.") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
             [[MEGASdkManager sharedMEGASdk] logout];
         }]];
-        [UIApplication.mnz_visibleViewController presentViewController:alertController animated:YES completion:nil];
+        [UIApplication.mnz_presentingViewController presentViewController:alertController animated:YES completion:nil];
     } else {
         [[MEGASdkManager sharedMEGASdk] logout];
     }
@@ -1351,6 +1365,7 @@ static MEGAIndexer *indexer;
 
 + (void)resetUserData {
     [[Helper downloadingNodes] removeAllObjects];
+    [[Helper uploadingNodes] removeAllObjects];
     
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"agreedCopywriteWarning"];
     
@@ -1417,7 +1432,7 @@ static MEGAIndexer *indexer;
     
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"recoveryKeyCopiedToClipboard", @"Title of the dialog displayed when copy the user's Recovery Key to the clipboard to be saved or exported - (String as short as possible).") message:nil preferredStyle:UIAlertControllerStyleAlert];
     [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
-    [UIApplication.mnz_visibleViewController presentViewController:alertController animated:YES completion:nil];
+    [UIApplication.mnz_presentingViewController presentViewController:alertController animated:YES completion:nil];
     
     [[MEGASdkManager sharedMEGASdk] masterKeyExported];
 }
@@ -1436,7 +1451,7 @@ static MEGAIndexer *indexer;
         enableLog ? [[MEGALogger sharedLogger] startLogging] : [[MEGALogger sharedLogger] stopLogging];
     }]];
     
-    [UIApplication.mnz_visibleViewController presentViewController:logAlertController animated:YES completion:nil];
+    [UIApplication.mnz_presentingViewController presentViewController:logAlertController animated:YES completion:nil];
 }
 
 @end

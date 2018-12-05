@@ -195,12 +195,12 @@
             groupCallVC.megaCallManager = self.megaCallManager;
             groupCallVC.call = call;
             
-            if ([UIApplication.mnz_visibleViewController isKindOfClass:GroupCallViewController.class]) {
-                [UIApplication.mnz_visibleViewController dismissViewControllerAnimated:YES completion:^{
-                    [UIApplication.mnz_visibleViewController presentViewController:groupCallNavigation animated:YES completion:nil];
+            if ([UIApplication.mnz_presentingViewController isKindOfClass:GroupCallViewController.class]) {
+                [UIApplication.mnz_presentingViewController dismissViewControllerAnimated:YES completion:^{
+                    [UIApplication.mnz_presentingViewController presentViewController:groupCallNavigation animated:YES completion:nil];
                 }];
             } else {
-                [UIApplication.mnz_visibleViewController presentViewController:groupCallNavigation animated:YES completion:nil];
+                [UIApplication.mnz_presentingViewController presentViewController:groupCallNavigation animated:YES completion:nil];
             }
         } else {
             CallViewController *callVC = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"CallViewControllerID"];
@@ -210,12 +210,12 @@
             callVC.megaCallManager = self.megaCallManager;
             callVC.call = call;
             
-            if ([UIApplication.mnz_visibleViewController isKindOfClass:CallViewController.class]) {
-                [UIApplication.mnz_visibleViewController dismissViewControllerAnimated:YES completion:^{
-                    [UIApplication.mnz_visibleViewController presentViewController:callVC animated:YES completion:nil];
+            if ([UIApplication.mnz_presentingViewController isKindOfClass:CallViewController.class]) {
+                [UIApplication.mnz_presentingViewController dismissViewControllerAnimated:YES completion:^{
+                    [UIApplication.mnz_presentingViewController presentViewController:callVC animated:YES completion:nil];
                 }];
             } else {
-                [UIApplication.mnz_visibleViewController presentViewController:callVC animated:YES completion:nil];
+                [UIApplication.mnz_presentingViewController presentViewController:callVC animated:YES completion:nil];
             }
         }
         

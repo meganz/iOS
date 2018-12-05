@@ -67,6 +67,7 @@
     
     self.emailInputView.inputTextField.text = self.emailString;
     self.emailInputView.inputTextField.enabled = NO;
+    self.emailInputView.inputTextField.keyboardType = UIKeyboardTypeEmailAddress;
     if (@available(iOS 11.0, *)) {
         self.emailInputView.inputTextField.textContentType = UITextContentTypeUsername;
     }
@@ -270,7 +271,7 @@
                 
                 [newEmailAddressAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", @"Button title to accept something") style:UIAlertActionStyleDefault handler:nil]];
                 
-                [UIApplication.mnz_visibleViewController presentViewController:newEmailAddressAlertController animated:YES completion:nil];
+                [UIApplication.mnz_presentingViewController presentViewController:newEmailAddressAlertController animated:YES completion:nil];
             }];
             break;
         }

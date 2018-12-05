@@ -62,6 +62,7 @@
     [self.view addGestureRecognizer:tap];
     
     self.emailInputView.inputTextField.delegate = self;
+    self.emailInputView.inputTextField.keyboardType = UIKeyboardTypeEmailAddress;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
