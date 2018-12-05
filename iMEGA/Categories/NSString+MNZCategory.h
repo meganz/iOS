@@ -54,6 +54,8 @@ typedef NS_ENUM(NSInteger, MEGAChatMessageEndCallReason);
 
 - (NSString *)mnz_relativeLocalPath;
 
++ (NSString *)mnz_lastGreenStringFromMinutes:(NSInteger)minutes;
+
 #pragma mark - File names and extensions
 
 + (NSString *)mnz_fileNameWithDate:(NSDate *)date;

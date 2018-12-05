@@ -87,13 +87,16 @@ typedef NS_ENUM(NSUInteger, TextFieldTag) {
             
             self.currentEmailInputView.inputTextField.text = [MEGASdkManager sharedMEGASdk].myEmail;
             self.currentEmailInputView.inputTextField.userInteractionEnabled = NO;
+            self.currentEmailInputView.inputTextField.keyboardType = UIKeyboardTypeEmailAddress;
             
             self.theNewEmailInputView.inputTextField.returnKeyType = UIReturnKeyNext;
             self.theNewEmailInputView.inputTextField.delegate = self;
             self.theNewEmailInputView.inputTextField.tag = NewEmailTextFieldTag;
+            self.theNewEmailInputView.inputTextField.keyboardType = UIKeyboardTypeEmailAddress;
 
             self.confirmEmailInputView.inputTextField.delegate = self;
             self.confirmEmailInputView.inputTextField.tag = ConfirmEmailTextFieldTag;
+            self.confirmEmailInputView.inputTextField.keyboardType = UIKeyboardTypeEmailAddress;
             
             [self.confirmButton setTitle:AMLocalizedString(@"changeEmail", @"The title of the alert dialog to change the email associated to an account.") forState:UIControlStateNormal];
             
