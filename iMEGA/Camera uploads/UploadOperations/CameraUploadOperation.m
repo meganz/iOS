@@ -45,10 +45,7 @@
 
 - (MEGASdk *)attributesDataSDK {
     if (_attributesDataSDK == nil) {
-        NSString *basePath = [[[NSFileManager.defaultManager URLsForDirectory:NSApplicationSupportDirectory inDomains:NSUserDomainMask] firstObject] path];
-        _attributesDataSDK = [[MEGASdk alloc] initWithAppKey:@"EVtjzb7R"
-                                                   userAgent:[NSString stringWithFormat:@"%@/%@", @"MEGAiOS", [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"]]
-                                                    basePath:basePath];
+        _attributesDataSDK = [MEGASdkManager createMEGASdk];
     }
     
     return _attributesDataSDK;
