@@ -4,13 +4,10 @@
 
 @interface MEGASdkManager : NSObject
 
-@property (nonatomic, strong) MEGASdk *megaSDK;
-@property (nonatomic, strong) MEGAChatSdk *MEGAChatSdk;
-
-+ (void)setAppKey:(NSString *)appKey;
-+ (void)setUserAgent:(NSString *)userAgent;
 + (MEGASdk *)sharedMEGASdk;
 + (MEGAChatSdk *)sharedMEGAChatSdk;
++ (MEGASdk *)createMEGASdk;
+
 + (void)createSharedMEGAChatSdk;
 + (void)destroySharedMEGAChatSdk;
 
