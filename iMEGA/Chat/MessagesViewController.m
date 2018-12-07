@@ -674,7 +674,7 @@ const NSUInteger kMaxMessagesToLoad = 256;
     if (self.chatRoom.isGroup) {
         MEGANavigationController *groupCallNavigation = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"GroupCallViewControllerNavigationID"];
         GroupCallViewController *groupCallVC = groupCallNavigation.viewControllers.firstObject;
-        groupCallVC.callType = CallTypeOutgoing;
+        groupCallVC.callType = [[MEGASdkManager sharedMEGAChatSdk] chatCallForChatId:self.chatRoom.chatId].sessions.size ? CallTypeActive : CallTypeOutgoing;
         groupCallVC.videoCall = videoCall;
         groupCallVC.chatRoom = self.chatRoom;
         groupCallVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
