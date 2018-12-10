@@ -108,7 +108,7 @@
 - (void)voiceClipView:(MEGAMessageVoiceClipView *)voiceClipView shouldPlay:(BOOL)play {
     NSError *error;
     if (play) {
-        if (![[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:&error]) {
+        if (![[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayAndRecord error:&error]) {
             MEGALogError(@"[Voice clips] Error setting the audio category: %@", error);
             return;
         }
@@ -136,13 +136,16 @@
                                                      object:self.audioPlayer.currentItem];
         }
         [self.audioPlayer play];
+        [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(proximityChange:) name:UIDeviceProximityStateDidChangeNotification object:nil];
     } else {
         if (![[AVAudioSession sharedInstance] setActive:NO withOptions:AVAudioSessionSetActiveOptionNotifyOthersOnDeactivation error:&error]) {
             MEGALogError(@"[Voice clips] Error deactivating audio session: %@", error);
             return;
         }
         [self.audioPlayer pause];
+        [NSNotificationCenter.defaultCenter removeObserver:self name:UIDeviceProximityStateDidChangeNotification object:nil];
     }
+    UIDevice.currentDevice.proximityMonitoringEnabled = play;
 }
 
 - (void)voiceClipView:(MEGAMessageVoiceClipView *)voiceClipView shouldSeekTo:(float)destination {
@@ -166,6 +169,14 @@
     NSError *error;
     if (![[AVAudioSession sharedInstance] setActive:NO withOptions:AVAudioSessionSetActiveOptionNotifyOthersOnDeactivation error:&error]) {
         MEGALogError(@"[Voice clips] Error deactivating audio session: %@", error);
+    }
+}
+
+- (void)proximityChange:(NSNotification*)aNotification {
+    if (UIDevice.currentDevice.proximityState) {
+        [AVAudioSession.sharedInstance overrideOutputAudioPort:AVAudioSessionPortOverrideNone error:nil];
+    } else {
+        [AVAudioSession.sharedInstance overrideOutputAudioPort:AVAudioSessionPortOverrideSpeaker error:nil];
     }
 }
 
