@@ -1778,3 +1778,9 @@
 "Last seen a long time ago"="Last seen a long time ago";
 /* */
 "Today"="Today";
+/* Text shown in the chat toolbar while the user is recording a voice clip. The < character should be > in RTL languages. */
+"< Slide to cancel"="< Slide to cancel";
+/* First part of the string 'Tap and hold <icon> to record, release to send'. There is a microphone icon between the two parts of the string. */
+"Tap and hold"="Tap and hold";
+/* Second part of the string 'Tap and hold <icon> to record, release to send'. There is a microphone icon between the two parts of the string. */
+"to record, release to send"="to record, release to send";
