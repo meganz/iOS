@@ -40,7 +40,7 @@
     }];
 
     [queue addOperation:operation];
-    [operation waitUntilFinished];
+    [queue waitUntilAllOperationsAreFinished];
 }
 
 - (void)finishUploadForLocalIdentifier:(NSString *)localIdentifier status:(NSString *)status {

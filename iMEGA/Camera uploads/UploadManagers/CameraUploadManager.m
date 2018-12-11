@@ -137,6 +137,14 @@ static const NSInteger MaxConcurrentVideoOperationCount = 1;
 }
 
 - (void)uploadNextForAsset:(PHAsset *)asset {
+    if (![self.class isCameraUploadEnabled]) {
+        return;
+    }
+    
+    if (asset.mediaType == PHAssetMediaTypeVideo && ![self.class isVideoUploadEnabled]) {
+        return;
+    }
+    
     [self uploadNextAssetsWithNumber:1 mediaType:asset.mediaType];
 }
 
