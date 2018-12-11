@@ -278,7 +278,6 @@ const NSUInteger kMaxMessagesToLoad = 256;
         self.collectionView.contentOffset = offset;
     }
     self.unreadMessages = self.chatRoom.unreadCount;
-    
 }
 
 - (void)didBecomeActive {
@@ -612,6 +611,7 @@ const NSUInteger kMaxMessagesToLoad = 256;
 }
 
 - (void)showActiveCallButton {
+    [self.timer invalidate];
     [self.activeCallButton setTitle:AMLocalizedString(@"There is an active group call. Tap to join.", @"Message shown in a chat room when there is na active group call") forState:UIControlStateNormal];
     if (self.activeCallButton.hidden) {
         self.activeCallButton.hidden = NO;
@@ -674,7 +674,7 @@ const NSUInteger kMaxMessagesToLoad = 256;
     if (self.chatRoom.isGroup) {
         MEGANavigationController *groupCallNavigation = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"GroupCallViewControllerNavigationID"];
         GroupCallViewController *groupCallVC = groupCallNavigation.viewControllers.firstObject;
-        groupCallVC.callType = [[MEGASdkManager sharedMEGAChatSdk] chatCallForChatId:self.chatRoom.chatId].sessions.size ? CallTypeActive : CallTypeOutgoing;
+        groupCallVC.callType = [[MEGASdkManager sharedMEGAChatSdk] chatCallForChatId:self.chatRoom.chatId] ? CallTypeActive : CallTypeOutgoing;
         groupCallVC.videoCall = videoCall;
         groupCallVC.chatRoom = self.chatRoom;
         groupCallVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
