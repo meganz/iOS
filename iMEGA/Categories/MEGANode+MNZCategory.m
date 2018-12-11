@@ -428,11 +428,11 @@
             }];
         } else {
             if (isFolderLink) {
-                [[MEGALinkManager nodesFromLinkMutableArray] addObject:self];
-                [MEGALinkManager setSelectedOption:LinkOptionDownloadFolderOrNodes];
+                [MEGALinkManager.nodesFromLinkMutableArray addObject:self];
+                MEGALinkManager.selectedOption = LinkOptionDownloadFolderOrNodes;
             } else {
-                [[MEGALinkManager nodesFromLinkMutableArray] addObject:self];
-                [MEGALinkManager setSelectedOption:LinkOptionDownloadNode];
+                [MEGALinkManager.nodesFromLinkMutableArray addObject:self];
+                MEGALinkManager.selectedOption = LinkOptionDownloadNode;
             }
             
             LoginViewController *loginVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"LoginViewControllerID"];
@@ -460,11 +460,11 @@
             }];
         } else {
             if (isFolderLink) {
-                [[MEGALinkManager nodesFromLinkMutableArray] addObject:self];
-                [MEGALinkManager setSelectedOption:LinkOptionImportFolderOrNodes];
+                [MEGALinkManager.nodesFromLinkMutableArray addObject:self];
+                MEGALinkManager.selectedOption = LinkOptionImportFolderOrNodes;
             } else {
-                [[MEGALinkManager nodesFromLinkMutableArray] addObject:self];
-                [MEGALinkManager setSelectedOption:LinkOptionImportNode];
+                [MEGALinkManager.nodesFromLinkMutableArray addObject:self];
+                MEGALinkManager.selectedOption = LinkOptionImportNode;
             }
             
             LoginViewController *loginVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"LoginViewControllerID"];

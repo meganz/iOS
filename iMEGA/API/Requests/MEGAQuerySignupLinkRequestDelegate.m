@@ -64,22 +64,22 @@
                 [MEGALinkManager resetLinkAndURLType];
             }
         } else {
-            [MEGALinkManager presentConfirmViewWithURLType:URLTypeConfirmationLink link:[MEGALinkManager linkURL].absoluteString email:self.email];
+            [MEGALinkManager presentConfirmViewWithURLType:URLTypeConfirmationLink link:MEGALinkManager.linkURL.absoluteString email:self.email];
         }
-    } else if (self.urlType == URLTypeNewSignUpLink && [MEGALinkManager emailOfNewSignUpLink])  {
+    } else if (self.urlType == URLTypeNewSignUpLink && MEGALinkManager.emailOfNewSignUpLink)  {
         UIViewController *rootViewController = UIApplication.sharedApplication.keyWindow.rootViewController;
         if ([rootViewController isKindOfClass:[MEGANavigationController class]]) {
             MEGANavigationController *navigationController = (MEGANavigationController *)rootViewController;
             if ([navigationController.topViewController isKindOfClass:[LoginViewController class]]) {
                 LoginViewController *loginVC = (LoginViewController *)navigationController.topViewController;
-                [loginVC performSegueWithIdentifier:@"CreateAccountStoryboardSegueID" sender:[MEGALinkManager emailOfNewSignUpLink]];
+                [loginVC performSegueWithIdentifier:@"CreateAccountStoryboardSegueID" sender:MEGALinkManager.emailOfNewSignUpLink];
             } else if ([navigationController.topViewController isKindOfClass:[CreateAccountViewController class]]) {
                 CreateAccountViewController *createAccountVC = (CreateAccountViewController *)navigationController.topViewController;
-                createAccountVC.emailString = [MEGALinkManager emailOfNewSignUpLink];
+                createAccountVC.emailString = MEGALinkManager.emailOfNewSignUpLink;
                 [createAccountVC viewDidLoad];
             }
             
-            [MEGALinkManager setEmailOfNewSignUpLink:nil];
+            MEGALinkManager.emailOfNewSignUpLink = nil;
         }
         
         [MEGALinkManager resetLinkAndURLType];
@@ -123,8 +123,8 @@
         [MEGALinkManager resetLinkAndURLType];
     } else {
         self.email = request.email;
-        [MEGALinkManager setLinkURL:[NSURL URLWithString:request.link]];
-        [MEGALinkManager setEmailOfNewSignUpLink:request.email];
+        MEGALinkManager.linkURL = [NSURL URLWithString:request.link];
+        MEGALinkManager.emailOfNewSignUpLink = request.email;
         
         [self manageQuerySignupLinkRequest:request];
     }

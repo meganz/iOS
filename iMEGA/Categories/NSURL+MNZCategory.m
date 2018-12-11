@@ -11,15 +11,12 @@
 @implementation NSURL (MNZCategory)
 
 - (void)mnz_presentSafariViewController {
-    if (self) {
-        if (!([self.scheme.lowercaseString isEqualToString:@"http"] || [self.scheme.lowercaseString isEqualToString:@"https"])) {
-            MEGALogInfo(@"To use SFSafariViewController the URL must use the http or https scheme: \n%@", self.absoluteString);
-            [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"linkNotValid", @"Message shown when the user clicks on an link that is not valid")];
-            return;
+    if (!([self.scheme.lowercaseString isEqualToString:@"http"] || [self.scheme.lowercaseString isEqualToString:@"https"])) {
+        if (@available(iOS 10.0, *)) {
+            [UIApplication.sharedApplication openURL:self options:@{} completionHandler:nil];
+        } else {
+            [UIApplication.sharedApplication openURL:self];
         }
-    } else {
-        MEGALogInfo(@"URL string was malformed or nil: \n%@", self.absoluteString);
-        [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"linkNotValid", @"Message shown when the user clicks on an link that is not valid")];
         return;
     }
     

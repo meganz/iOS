@@ -168,13 +168,11 @@
 }
 
 - (void)showAchievements {
-    if ([Helper hasSession_alertIfNot]) {
-        self.selectedIndex = MYACCOUNT;
-        MEGANavigationController *navigationController = [self.childViewControllers objectAtIndex:MYACCOUNT];
-        MyAccountHallViewController *myAccountHallVC = navigationController.viewControllers.firstObject;
-        if ([[MEGASdkManager sharedMEGASdk] isAchievementsEnabled]) {
-            [myAccountHallVC openAchievements];
-        }
+    self.selectedIndex = MYACCOUNT;
+    MEGANavigationController *navigationController = [self.childViewControllers objectAtIndex:MYACCOUNT];
+    MyAccountHallViewController *myAccountHallVC = navigationController.viewControllers.firstObject;
+    if ([[MEGASdkManager sharedMEGASdk] isAchievementsEnabled]) {
+        [myAccountHallVC openAchievements];
     }
 }
 

@@ -78,9 +78,9 @@
         switch (error.type) {
             case MEGAErrorTypeApiEExpired: {
                 NSString *alertTitle;
-                if ([MEGALinkManager urlType] == URLTypeCancelAccountLink) {
+                if (MEGALinkManager.urlType == URLTypeCancelAccountLink) {
                     alertTitle = AMLocalizedString(@"cancellationLinkHasExpired", @"During account cancellation (deletion)");
-                } else if ([MEGALinkManager urlType] == URLTypeRecoverLink) {
+                } else if (MEGALinkManager.urlType == URLTypeRecoverLink) {
                     alertTitle = AMLocalizedString(@"recoveryLinkHasExpired", @"Message shown during forgot your password process if the link to reset password has expired");
                 }
                 UIAlertController *linkHasExpiredAlertController = [UIAlertController alertControllerWithTitle:alertTitle message:nil preferredStyle:UIAlertControllerStyleAlert];
@@ -102,11 +102,11 @@
             }
         }
     } else {
-        if ([MEGALinkManager urlType] == URLTypeChangeEmailLink) {
+        if (MEGALinkManager.urlType == URLTypeChangeEmailLink) {
             [MEGALinkManager presentConfirmViewWithURLType:URLTypeChangeEmailLink link:request.link email:request.email];
-        } else if ([MEGALinkManager urlType] == URLTypeCancelAccountLink) {
+        } else if (MEGALinkManager.urlType == URLTypeCancelAccountLink) {
             [MEGALinkManager presentConfirmViewWithURLType:URLTypeCancelAccountLink link:request.link email:request.email];
-        } else if ([MEGALinkManager urlType] == URLTypeRecoverLink) {
+        } else if (MEGALinkManager.urlType == URLTypeRecoverLink) {
             if ([UIApplication.sharedApplication.keyWindow.rootViewController isKindOfClass:MEGANavigationController.class]) {
                 MEGANavigationController *navigationController = (MEGANavigationController *)UIApplication.sharedApplication.keyWindow.rootViewController;
                 if ([navigationController.topViewController isKindOfClass:TwoFactorAuthenticationViewController.class]) {
@@ -136,15 +136,15 @@
                 
                 UIAlertAction *okAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
                     NSString *masterKey = masterKeyLoggedInAlertController.textFields.count ? masterKeyLoggedInAlertController.textFields[0].text : [[MEGASdkManager sharedMEGASdk] masterKey];
-                    [self presentChangeViewType:ChangeTypeResetPassword email:[MEGALinkManager emailOfNewSignUpLink] masterKey:masterKey link:request.link];
-                    [MEGALinkManager setEmailOfNewSignUpLink:nil];
+                    [self presentChangeViewType:ChangeTypeResetPassword email:MEGALinkManager.emailOfNewSignUpLink masterKey:masterKey link:request.link];
+                    MEGALinkManager.emailOfNewSignUpLink = nil;
                 }];
                 okAlertAction.enabled = !masterKeyLoggedInAlertController.textFields.count;
                 [masterKeyLoggedInAlertController addAction:okAlertAction];
                 
                 [masterKeyLoggedInAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:nil]];
                 
-                [MEGALinkManager setEmailOfNewSignUpLink:request.email];
+                MEGALinkManager.emailOfNewSignUpLink = request.email;
                 
                 [UIApplication.mnz_presentingViewController presentViewController:masterKeyLoggedInAlertController animated:YES completion:nil];
             } else {
