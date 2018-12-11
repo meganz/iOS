@@ -69,8 +69,7 @@
         [PHPhotoLibrary requestAuthorization:^(PHAuthorizationStatus status) {
             switch (status) {
                 case PHAuthorizationStatusAuthorized: {
-                    CameraUploadManager.cameraUploadEnabled = YES;
-                    [CameraUploadManager.shared startCameraUploadIfNeeded];
+                    [CameraUploadManager.shared enableCameraUpload];
                     dispatch_async(dispatch_get_main_queue(), ^{
                         [self.tableView reloadData];
                     });
@@ -90,7 +89,7 @@
             }
         }];
     } else {
-        [CameraUploadManager.shared stopCameraUpload];
+        [CameraUploadManager.shared disableCameraUpload];
         [self.tableView reloadData];
     }
 }
@@ -102,7 +101,7 @@
     if (sender.isOn) {
         [CameraUploadManager.shared startVideoUploadIfNeeded];
     } else {
-        [CameraUploadManager.shared stopVideoUpload];
+        [CameraUploadManager.shared disableVideoUpload];
     }
 }
 

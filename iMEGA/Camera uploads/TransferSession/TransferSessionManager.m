@@ -99,6 +99,13 @@ static NSString * const VideoCellularDisallowedUploadSessionId = @"nz.mega.video
 
 #pragma mark - session restoration
 
+- (void)restoreAllSessions {
+    NSArray<NSString *> *allSessionIdentifiers = @[PhotoCellularAllowedUploadSessionId, PhotoCellularDisallowedUploadSessionId, VideoCellularAllowedUploadSessionId, VideoCellularDisallowedUploadSessionId];
+    for (NSString *identifier in allSessionIdentifiers) {
+        [self restoreSessionIfNeededByIdentifier:identifier];
+    }
+}
+
 - (void)restoreSessionIfNeededByIdentifier:(NSString *)identifier {
     NSURLSession *restoredSession;
     if ([identifier isEqualToString:PhotoCellularAllowedUploadSessionId]) {

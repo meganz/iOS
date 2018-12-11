@@ -38,7 +38,7 @@
             [self finishUploadForLocalIdentifier:localIdentifier status:CameraAssetUploadStatusDone];
         }
     }];
-
+    
     [queue addOperation:operation];
     [queue waitUntilAllOperationsAreFinished];
 }
@@ -54,7 +54,9 @@
     MEGALogDebug(@"[Camera Upload] Background Upload finishes with session task %@ and status: %@", localIdentifier, status);
     
     if ([status isEqualToString:CameraAssetUploadStatusDone]) {
-        [NSNotificationCenter.defaultCenter postNotificationName:MEGACameraUploadAssetUploadDoneNotificationName object:nil];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [NSNotificationCenter.defaultCenter postNotificationName:MEGACameraUploadAssetUploadDoneNotificationName object:nil];
+        });
     }
 }
 

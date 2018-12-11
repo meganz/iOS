@@ -91,30 +91,31 @@ static const NSInteger MaxConcurrentVideoOperationCount = 1;
 
 #pragma mark - scan and upload
 
+- (void)enableCameraUpload {
+    [self.class setCameraUploadEnabled:YES];
+    [self startCameraUploadIfNeeded];
+}
+
 - (void)startCameraUploadIfNeeded {
     if (!self.class.isCameraUploadEnabled || self.photoUploadOerationQueue.operationCount > 0) {
         return;
     }
     
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        
-        // TODO: may need to move attributes scan to app launch
-        [AttributeUploadManager.shared scanLocalAttributeFilesAndRetryUploadIfNeeded];
-   
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
         if (self.cameraUploadNode) {
-            [self startCameraUpload];
+            [self uploadCamera];
         } else {
             [[MEGASdkManager sharedMEGASdk] createFolderWithName:CameraUplodFolderName parent:[[MEGASdkManager sharedMEGASdk] rootNode]
                                                         delegate:[[MEGACreateFolderRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
                 self->_cameraUploadNode = [[MEGASdkManager sharedMEGASdk] nodeForHandle:request.nodeHandle];
                 [self saveCameraUploadHandle:request.nodeHandle];
-                [self startCameraUpload];
+                [self uploadCamera];
             }]];
         }
     });
 }
 
-- (void)startCameraUpload {
+- (void)uploadCamera {
     [self.scanner scanMediaType:PHAssetMediaTypeImage completion:^{
         [self uploadNextAssetsWithNumber:ConcurrentPhotoUploadCount mediaType:PHAssetMediaTypeImage];
     }];
@@ -172,13 +173,13 @@ static const NSInteger MaxConcurrentVideoOperationCount = 1;
 
 #pragma mark - stop upload
 
-- (void)stopCameraUpload {
+- (void)disableCameraUpload {
     [self.class setCameraUploadEnabled:NO];
     [self.photoUploadOerationQueue cancelAllOperations];
-    [self stopVideoUpload];
+    [self disableVideoUpload];
 }
 
-- (void)stopVideoUpload {
+- (void)disableVideoUpload {
     [self.class setVideoUploadEnabled:NO];
     [self.videoUploadOerationQueue cancelAllOperations];
 }
@@ -186,8 +187,7 @@ static const NSInteger MaxConcurrentVideoOperationCount = 1;
 #pragma mark - logout
 
 - (void)clearCameraUploadSettings {
-    [self.class setCameraUploadEnabled:NO];
-    [self stopCameraUpload];
+    [self disableCameraUpload];
     [self.class clearLocalSettings];
 }
 
@@ -230,9 +230,15 @@ static const NSInteger MaxConcurrentVideoOperationCount = 1;
 
 #pragma mark - data collator
 
-- (void)collateUploadRecordWhenAppLaunches {
+- (void)collateUploadRecords {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
         [self.dataCollator collateUploadRecords];
+    });
+}
+
+- (void)retryAttributeFileUploads {
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+        [AttributeUploadManager.shared scanLocalAttributeFilesAndRetryUploadIfNeeded];
     });
 }
 
