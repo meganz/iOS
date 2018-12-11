@@ -87,7 +87,9 @@
     PHFetchResultChangeDetails *changes = [changeInstance changeDetailsForFetchResult:self.fetchResult];
     self.fetchResult = changes.fetchResultAfterChanges;
     NSArray<PHAsset *> *newAssets = [changes insertedObjects];
-    [[CameraUploadRecordManager shared] saveAssets:newAssets error:nil];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+        [[CameraUploadRecordManager shared] saveAssets:newAssets error:nil];
+    });
 }
 
 @end
