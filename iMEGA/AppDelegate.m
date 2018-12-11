@@ -469,7 +469,7 @@
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
     MEGALogDebug(@"Application open URL %@, source application %@", url, sourceApplication);
     
-    [MEGALinkManager setLinkURL:url];
+    MEGALinkManager.linkURL = url;
     [self manageLink:url];
     
     return YES;
@@ -509,7 +509,7 @@
     
     if ([MEGAReachabilityManager isReachable]) {
         if ([userActivity.activityType isEqualToString:CSSearchableItemActionType]) {
-            [MEGALinkManager setNodeToPresentBase64Handle:userActivity.userInfo[@"kCSSearchableItemActivityIdentifier"]];
+            MEGALinkManager.nodeToPresentBase64Handle = userActivity.userInfo[@"kCSSearchableItemActivityIdentifier"];
             if ([self.window.rootViewController isKindOfClass:[MainTabBarController class]] && ![LTHPasscodeViewController doesPasscodeExist]) {
                 [MEGALinkManager presentNode];
             }
@@ -585,7 +585,7 @@
         } else if ([userActivity.activityType isEqualToString:@"NSUserActivityTypeBrowsingWeb"]) {
             NSURL *universalLinkURL = userActivity.webpageURL;
             if (universalLinkURL) {
-                [MEGALinkManager setLinkURL:universalLinkURL];
+                MEGALinkManager.linkURL = universalLinkURL;
                 [self manageLink:[NSURL URLWithString:[NSString stringWithFormat:@"mega://%@", [universalLinkURL mnz_afterSlashesString]]]];
             }
         }
@@ -723,7 +723,7 @@
 }
 
 - (void)showLink:(NSURL *)url {
-    if (![MEGALinkManager linkURL]) return;
+    if (!MEGALinkManager.linkURL) return;
     
     [self dismissPresentedViewsAndDo:^{
         [MEGALinkManager processLinkURL:url];
@@ -879,7 +879,7 @@
         }
         
         if (![LTHPasscodeViewController doesPasscodeExist]) {
-            if ([MEGALinkManager nodeToPresentBase64Handle]) {
+            if (MEGALinkManager.nodeToPresentBase64Handle) {
                 [MEGALinkManager presentNode];
             }
             
@@ -887,7 +887,7 @@
                 [self showCameraUploadsPopUp];
             }
             
-            [self showLink:[MEGALinkManager linkURL]];
+            [self showLink:MEGALinkManager.linkURL];
             
             [self manageQuickActionType:self.quickActionType];
         }
@@ -1139,9 +1139,9 @@ void uncaughtExceptionHandler(NSException *exception) {
         [self.window setRootViewController:_mainTBC];
         [[UIApplication sharedApplication] setStatusBarHidden:NO];
     } else {
-        [self showLink:[MEGALinkManager linkURL]];
+        [self showLink:MEGALinkManager.linkURL];
         
-        if ([MEGALinkManager nodeToPresentBase64Handle]) {
+        if (MEGALinkManager.nodeToPresentBase64Handle) {
             [MEGALinkManager presentNode];
         }
         
@@ -1499,7 +1499,7 @@ void uncaughtExceptionHandler(NSException *exception) {
         }
             
         case MEGARequestTypeLogout: {
-            if ([MEGALinkManager urlType] == URLTypeCancelAccountLink) {
+            if (MEGALinkManager.urlType == URLTypeCancelAccountLink) {
                 return;
             }
             
@@ -1549,7 +1549,7 @@ void uncaughtExceptionHandler(NSException *exception) {
             }
                 
             case MEGAErrorTypeApiESid: {                                
-                if ([MEGALinkManager urlType] == URLTypeCancelAccountLink) {
+                if (MEGALinkManager.urlType == URLTypeCancelAccountLink) {
                     [Helper logout];
                     
                     UIAlertController *accountCanceledSuccessfullyAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"accountCanceledSuccessfully", @"During account cancellation (deletion)") message:nil preferredStyle:UIAlertControllerStyleAlert];
@@ -1645,7 +1645,7 @@ void uncaughtExceptionHandler(NSException *exception) {
                 isFetchNodesDone = NO;
             } else {
                 isAccountFirstLogin = YES;
-                self.newAccount = ([MEGALinkManager urlType] == URLTypeConfirmationLink);
+                self.newAccount = (MEGALinkManager.urlType == URLTypeConfirmationLink);
                 [MEGALinkManager resetLinkAndURLType];
             }
             [[MEGASdkManager sharedMEGASdk] fetchNodes];

@@ -2185,10 +2185,10 @@ const NSUInteger kMaxMessagesToLoad = 256;
             }
         } else if (message.type == MEGAChatMessageTypeContainsMeta) {
             NSURL *url = [NSURL URLWithString:message.containsMeta.richPreview.url];
-            [MEGALinkManager setLinkURL:url];
+            MEGALinkManager.linkURL = url;
             [MEGALinkManager processLinkURL:url];
         } else if (message.node) {
-            [MEGALinkManager setLinkURL:message.MEGALink];
+            MEGALinkManager.linkURL = message.MEGALink;
             [MEGALinkManager processLinkURL:message.MEGALink];
         }
     }

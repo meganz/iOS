@@ -40,7 +40,7 @@ static URLType urlType;
 static NSString *emailOfNewSignUpLink;
 
 static NSMutableArray *nodesFromLinkMutableArray;
-static LinkOption linkOption;
+static LinkOption selectedOption;
 
 static NSString *nodeToPresentBase64Handle;
 
@@ -73,8 +73,8 @@ static NSString *nodeToPresentBase64Handle;
 }
 
 + (void)resetLinkAndURLType {
-    [MEGALinkManager setLinkURL:nil];
-    [MEGALinkManager setUrlType:URLTypeDefault];
+    MEGALinkManager.linkURL = nil;
+    MEGALinkManager.urlType = URLTypeDefault;
 }
 
 + (NSString *)emailOfNewSignUpLink {
@@ -96,27 +96,27 @@ static NSString *nodeToPresentBase64Handle;
 }
 
 + (LinkOption)selectedOption {
-    return linkOption;
+    return selectedOption;
 }
 
-+ (void)setSelectedOption:(LinkOption)selectedOption {
-    linkOption = selectedOption;
++ (void)setSelectedOption:(LinkOption)option {
+    selectedOption = option;
 }
 
 + (void)resetUtilsForLinksWithoutSession {
-    [[MEGALinkManager nodesFromLinkMutableArray] removeAllObjects];
+    [MEGALinkManager.nodesFromLinkMutableArray removeAllObjects];
     
-    [MEGALinkManager setSelectedOption:LinkOptionDefault];
+    MEGALinkManager.selectedOption = LinkOptionDefault;
 }
 
 + (void)processSelectedOptionOnLink {
-    if ([MEGALinkManager selectedOption] == LinkOptionDefault) {
+    if (MEGALinkManager.selectedOption == LinkOptionDefault) {
         return;
     }
     
-    switch ([MEGALinkManager selectedOption]) {
+    switch (MEGALinkManager.selectedOption) {
         case LinkOptionImportNode: {
-            MEGANode *node = [[MEGALinkManager nodesFromLinkMutableArray] firstObject];
+            MEGANode *node = [MEGALinkManager.nodesFromLinkMutableArray firstObject];
             MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"BrowserNavigationControllerID"];
             [UIApplication.mnz_visibleViewController presentViewController:navigationController animated:YES completion:nil];
             
@@ -127,7 +127,7 @@ static NSString *nodeToPresentBase64Handle;
         }
             
         case LinkOptionDownloadNode: {
-            MEGANode *node = [[MEGALinkManager nodesFromLinkMutableArray] firstObject];
+            MEGANode *node = [MEGALinkManager.nodesFromLinkMutableArray firstObject];
             if (![Helper isFreeSpaceEnoughToDownloadNode:node isFolderLink:NO]) {
                 return;
             }
@@ -146,14 +146,14 @@ static NSString *nodeToPresentBase64Handle;
             MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"BrowserNavigationControllerID"];
             BrowserViewController *browserVC = navigationController.viewControllers.firstObject;
             [browserVC setBrowserAction:BrowserActionImportFromFolderLink];
-            browserVC.selectedNodesArray = [NSArray arrayWithArray:[MEGALinkManager nodesFromLinkMutableArray]];
+            browserVC.selectedNodesArray = [NSArray arrayWithArray:MEGALinkManager.nodesFromLinkMutableArray];
             
             [UIApplication.mnz_visibleViewController presentViewController:navigationController animated:YES completion:nil];
             break;
         }
             
         case LinkOptionDownloadFolderOrNodes: {
-            for (MEGANode *node in [MEGALinkManager nodesFromLinkMutableArray]) {
+            for (MEGANode *node in MEGALinkManager.nodesFromLinkMutableArray) {
                 if (![Helper isFreeSpaceEnoughToDownloadNode:node isFolderLink:YES]) {
                     return;
                 }
@@ -164,7 +164,7 @@ static NSString *nodeToPresentBase64Handle;
                 [mainTBC showOffline];
                 
                 [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:AMLocalizedString(@"downloadStarted", @"Message shown when a download starts")];
-                for (MEGANode *node in [MEGALinkManager nodesFromLinkMutableArray]) {
+                for (MEGANode *node in MEGALinkManager.nodesFromLinkMutableArray) {
                     [Helper downloadNode:node folderPath:Helper.relativePathForOffline isFolderLink:YES shouldOverwrite:NO];
                 }
             }
@@ -248,10 +248,10 @@ static NSString *nodeToPresentBase64Handle;
         return;
     }
     
-    [MEGALinkManager setUrlType:url.mnz_type];
-    switch ([MEGALinkManager urlType]) {
+    MEGALinkManager.urlType = url.mnz_type;
+    switch (MEGALinkManager.urlType) {
         case URLTypeDefault:
-            [[MEGALinkManager linkURL] mnz_presentSafariViewController];
+            [MEGALinkManager.linkURL mnz_presentSafariViewController];
             [MEGALinkManager resetLinkAndURLType];
             break;
             
@@ -271,7 +271,7 @@ static NSString *nodeToPresentBase64Handle;
             break;
             
         case URLTypeEncryptedLink:
-            [MEGALinkManager setLinkEncryptedURL:MEGALinkManager.linkURL];
+            MEGALinkManager.linkEncryptedURL = MEGALinkManager.linkURL;
             [MEGALinkManager showEncryptedLinkAlert:url.mnz_MEGAURL];
             [MEGALinkManager resetLinkAndURLType];
             break;
@@ -286,7 +286,7 @@ static NSString *nodeToPresentBase64Handle;
                 
                 [alreadyLoggedInAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", @"Button title to accept something") style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
                     MEGAGenericRequestDelegate *logoutRequestDelegate = [[MEGAGenericRequestDelegate alloc] initWithRequestCompletion:^(MEGARequest *request) {
-                        MEGAQuerySignupLinkRequestDelegate *querySignupLinkRequestDelegate = [[MEGAQuerySignupLinkRequestDelegate alloc] initWithCompletion:nil urlType:[MEGALinkManager urlType]];
+                        MEGAQuerySignupLinkRequestDelegate *querySignupLinkRequestDelegate = [[MEGAQuerySignupLinkRequestDelegate alloc] initWithCompletion:nil urlType:MEGALinkManager.urlType];
                         [[MEGASdkManager sharedMEGASdk] querySignupLink:url.mnz_MEGAURL delegate:querySignupLinkRequestDelegate];
                     } errorCompletion:nil];
                     [[MEGASdkManager sharedMEGASdk] logoutWithDelegate:logoutRequestDelegate];
@@ -294,7 +294,7 @@ static NSString *nodeToPresentBase64Handle;
                 
                 [UIApplication.mnz_visibleViewController presentViewController:alreadyLoggedInAlertController animated:YES completion:nil];
             } else {
-                MEGAQuerySignupLinkRequestDelegate *querySignupLinkRequestDelegate = [[MEGAQuerySignupLinkRequestDelegate alloc] initWithCompletion:nil urlType:[MEGALinkManager urlType]];
+                MEGAQuerySignupLinkRequestDelegate *querySignupLinkRequestDelegate = [[MEGAQuerySignupLinkRequestDelegate alloc] initWithCompletion:nil urlType:MEGALinkManager.urlType];
                 [[MEGASdkManager sharedMEGASdk] querySignupLink:url.mnz_MEGAURL delegate:querySignupLinkRequestDelegate];
             }
             break;
@@ -359,7 +359,7 @@ static NSString *nodeToPresentBase64Handle;
         }
             
         case URLTypeHandleLink:
-            [MEGALinkManager setNodeToPresentBase64Handle:[url.mnz_afterSlashesString substringFromIndex:1]];
+            MEGALinkManager.nodeToPresentBase64Handle = [url.mnz_afterSlashesString substringFromIndex:1];
             [MEGALinkManager presentNode];
             
             break;
@@ -425,7 +425,7 @@ static NSString *nodeToPresentBase64Handle;
 + (void)showEncryptedLinkAlert:(NSString *)encryptedLinkURLString {
     MEGAPasswordLinkRequestDelegate *delegate = [[MEGAPasswordLinkRequestDelegate alloc] initForDecryptionWithCompletion:^(MEGARequest *request) {
         NSString *url = [NSString stringWithFormat:@"mega://%@", [[request.text componentsSeparatedByString:@"/"] lastObject]];
-        [MEGALinkManager setLinkURL:[NSURL URLWithString:url]];
+        MEGALinkManager.linkURL = [NSURL URLWithString:url];
         [MEGALinkManager processLinkURL:[NSURL URLWithString:url]];
     } onError:^(MEGARequest *request) {
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"decryptionKeyNotValid", nil) message:nil preferredStyle:UIAlertControllerStyleAlert];
@@ -449,7 +449,7 @@ static NSString *nodeToPresentBase64Handle;
     }]];
     [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
         [MEGALinkManager resetLinkAndURLType];
-        [MEGALinkManager setLinkEncryptedURL:nil];
+        MEGALinkManager.linkEncryptedURL = nil;
     }]];
     
     [UIApplication.mnz_visibleViewController presentViewController:alertController animated:YES completion:nil];
@@ -464,7 +464,7 @@ static NSString *nodeToPresentBase64Handle;
 }
 
 + (void)showFileLinkView {
-    NSString *fileLinkURLString = [MEGALinkManager linkURL].mnz_MEGAURL;
+    NSString *fileLinkURLString = MEGALinkManager.linkURL.mnz_MEGAURL;
     MEGAGetPublicNodeRequestDelegate *delegate = [[MEGAGetPublicNodeRequestDelegate alloc] initWithCompletion:^(MEGARequest *request, MEGAError *error) {
         if (error.type) {
             [MEGALinkManager presentFileLinkViewForLink:fileLinkURLString request:request error:error];
@@ -540,7 +540,7 @@ static NSString *nodeToPresentBase64Handle;
 }
 
 + (void)handleContactLink {
-    NSString *afterSlashesString = [[MEGALinkManager linkURL] mnz_afterSlashesString];
+    NSString *afterSlashesString = [MEGALinkManager.linkURL mnz_afterSlashesString];
     NSRange rangeOfPrefix = [afterSlashesString rangeOfString:@"C!"];
     NSString *contactLinkHandle = [afterSlashesString substringFromIndex:(rangeOfPrefix.location + rangeOfPrefix.length)];
     uint64_t handle = [MEGASdk handleForBase64Handle:contactLinkHandle];

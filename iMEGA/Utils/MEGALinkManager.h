@@ -8,26 +8,17 @@
 
 #pragma mark - Utils to manage MEGA links
 
-+ (NSURL *)linkURL;
-+ (void)setLinkURL:(NSURL *)link;
-
-+ (NSURL *)linkEncryptedURL;
-+ (void)setLinkEncryptedURL:(NSURL *)linkEncrypted;
-
-+ (URLType)urlType;
-+ (void)setUrlType:(URLType)urlType;
+@property (class, nonatomic) NSURL *linkURL;
+@property (class, nonatomic) NSURL *linkEncryptedURL;
+@property (class, nonatomic) URLType urlType;
+@property (class, nonatomic) NSString *emailOfNewSignUpLink;
 
 + (void)resetLinkAndURLType;
 
-+ (NSString *)emailOfNewSignUpLink;
-+ (void)setEmailOfNewSignUpLink:(NSString *)emailOfNewSignUpLink;
-
 #pragma mark - Utils to manage links when you are not logged
 
-+ (NSMutableArray *)nodesFromLinkMutableArray;
-
-+ (LinkOption)selectedOption;
-+ (void)setSelectedOption:(LinkOption)selectedOption;
+@property (class, nonatomic) LinkOption selectedOption;
+@property (class, nonatomic, readonly) NSMutableArray *nodesFromLinkMutableArray;
 
 + (void)resetUtilsForLinksWithoutSession;
 
@@ -35,8 +26,7 @@
 
 #pragma mark - Spotlight
 
-+ (NSString *)nodeToPresentBase64Handle;
-+ (void)setNodeToPresentBase64Handle:(NSString *)base64Handle;
+@property (class, nonatomic) NSString *nodeToPresentBase64Handle;
 
 + (void)presentNode;
 
