@@ -91,6 +91,7 @@
         }];
     } else {
         [CameraUploadManager.shared stopCameraUpload];
+        [self.tableView reloadData];
     }
 }
 
