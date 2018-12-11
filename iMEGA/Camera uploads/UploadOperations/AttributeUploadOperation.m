@@ -40,9 +40,9 @@
 }
 
 - (void)finishOperation {
-    [super finishOperation];
-    
     MEGALogDebug(@"[Camera Upload] %@ operation finished", NSStringFromClass(self.class));
+    [super finishOperation];
+    [NSFileManager.defaultManager removeItemIfExistsAtURL:self.attributeURL];
 }
 
 @end

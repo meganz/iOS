@@ -68,10 +68,10 @@ static NSString * const AttributePreviewName = @"preview";
     
     switch (type) {
         case MEGAAttributeTypeThumbnail:
-            [self.operationQueue addOperation:[[ThumbnailUploadOperation alloc] initWithAttributeURL:URL node:node expiresAfterTimeInterval:90]];
+            [self.operationQueue addOperation:[[ThumbnailUploadOperation alloc] initWithAttributeURL:uploadURL node:node expiresAfterTimeInterval:90]];
             break;
         case MEGAAttributeTypePreview:
-            [self.operationQueue addOperation:[[PreviewUploadOperation alloc] initWithAttributeURL:URL node:node expiresAfterTimeInterval:90]];
+            [self.operationQueue addOperation:[[PreviewUploadOperation alloc] initWithAttributeURL:uploadURL node:node expiresAfterTimeInterval:90]];
             break;
         default:
             break;
