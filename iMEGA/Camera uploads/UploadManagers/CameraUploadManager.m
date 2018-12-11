@@ -117,6 +117,7 @@ static const NSInteger MaxConcurrentVideoOperationCount = 1;
 
 - (void)uploadCamera {
     [self.scanner scanMediaType:PHAssetMediaTypeImage completion:^{
+        [self.scanner observePhotoLibraryChanges];
         [self uploadNextAssetsWithNumber:ConcurrentPhotoUploadCount mediaType:PHAssetMediaTypeImage];
     }];
     
@@ -177,6 +178,7 @@ static const NSInteger MaxConcurrentVideoOperationCount = 1;
     [self.class setCameraUploadEnabled:NO];
     [self.photoUploadOerationQueue cancelAllOperations];
     [self disableVideoUpload];
+    [self.scanner unobservePhotoLibraryChanges];
 }
 
 - (void)disableVideoUpload {

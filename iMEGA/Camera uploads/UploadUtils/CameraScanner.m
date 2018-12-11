@@ -51,8 +51,6 @@
         
         completion();
     }];
-    
-    [[PHPhotoLibrary sharedPhotoLibrary] registerChangeObserver:self];
 }
 
 - (NSArray<PHAsset *> *)findNewAssetsByComparingFetchResult:(PHFetchResult<PHAsset *> *)result uploadRecords:(NSArray<MOAssetUploadRecord *> *)records {
@@ -82,6 +80,14 @@
 }
 
 #pragma mark - PHPhotoLibraryChangeObserver
+
+- (void)observePhotoLibraryChanges {
+    [[PHPhotoLibrary sharedPhotoLibrary] registerChangeObserver:self];
+}
+
+- (void)unobservePhotoLibraryChanges {
+    [[PHPhotoLibrary sharedPhotoLibrary] unregisterChangeObserver:self];
+}
 
 - (void)photoLibraryDidChange:(PHChange *)changeInstance {
     PHFetchResultChangeDetails *changes = [changeInstance changeDetailsForFetchResult:self.fetchResult];
