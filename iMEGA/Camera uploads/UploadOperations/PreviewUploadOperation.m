@@ -17,14 +17,12 @@
             MEGALogError(@"[Camera Upload] Upload preview failed for node: %llu, error: %@", weakSelf.node.handle, error.nativeError);
         } else {
             MEGALogDebug(@"[Camera Upload] Upload preview succeeded for node: %llu", weakSelf.node.handle);
-            [NSFileManager.defaultManager removeItemIfExistsAtURL:weakSelf.attributeURL];
+            NSURL *cacheDirectory = [[NSFileManager.defaultManager URLsForDirectory:NSCachesDirectory inDomains:NSUserDomainMask] firstObject];
+            [weakSelf cacheAttributeToDirectoryURL:[cacheDirectory URLByAppendingPathComponent:@"previewsV3"] fileName:weakSelf.node.base64Handle];
         }
         
         [weakSelf finishOperation];
     }]];
-    
-    NSURL *cacheDirectory = [[NSFileManager.defaultManager URLsForDirectory:NSCachesDirectory inDomains:NSUserDomainMask] firstObject];
-    [self cacheAttributeToDirectoryURL:[cacheDirectory URLByAppendingPathComponent:@"previewsV3"] fileName:self.node.base64Handle];
 }
 
 @end
