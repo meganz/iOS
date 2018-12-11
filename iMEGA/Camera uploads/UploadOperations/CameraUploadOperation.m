@@ -59,13 +59,6 @@
 
 - (void)start {
     [super start];
-    
-    if (self.uploadInfo.asset == nil) {
-        [[CameraUploadRecordManager shared] deleteRecordsByLocalIdentifiers:@[self.uploadInfo.asset.localIdentifier] error:nil];
-        [self finishOperation];
-        MEGALogDebug(@"[Camera Upload] %@ finishes with empty asset", self);
-        return;
-    }
 
     [self beginBackgroundTask];
     
@@ -179,8 +172,6 @@
 }
 
 - (void)uploadEncryptedChunksToServer {
-    [CameraUploadRecordManager.shared updateRecordOfLocalIdentifier:self.uploadInfo.asset.localIdentifier withStatus:CameraAssetUploadStatusUploading error:nil];
-    
     for (NSString *uploadSuffix in self.uploadInfo.encryptedChunkURLsKeyedByUploadSuffix.allKeys) {
         NSURL *serverURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", self.uploadInfo.uploadURLString, uploadSuffix]];
         NSURL *chunkURL = self.uploadInfo.encryptedChunkURLsKeyedByUploadSuffix[uploadSuffix];
@@ -201,8 +192,7 @@
         }
     }
     
-    [self finishOperation];
-    [[CameraUploadManager shared] uploadNextForAsset:self.uploadInfo.asset];
+    [self finishOperationWithStatus:CameraAssetUploadStatusUploading shouldUploadNextAsset:YES];
 }
 
 #pragma mark - archive upload info
@@ -217,23 +207,21 @@
 
 - (void)finishOperationWithStatus:(NSString *)status shouldUploadNextAsset:(BOOL)uploadNextAsset {
     MEGALogDebug(@"[Camera Upload] %@ finishes with status: %@", self, status);
-    
-    [[NSFileManager defaultManager] removeItemAtURL:self.uploadInfo.directoryURL error:nil];
-    
     [CameraUploadRecordManager.shared updateRecordOfLocalIdentifier:self.uploadInfo.asset.localIdentifier withStatus:status error:nil];
-    [self finishOperation];
     
-    if (uploadNextAsset) {
-        [[CameraUploadManager shared] uploadNextForAsset:self.uploadInfo.asset];
+    if (![status isEqualToString:CameraAssetUploadStatusUploading]) {
+        [[NSFileManager defaultManager] removeItemAtURL:self.uploadInfo.directoryURL error:nil];
     }
-}
-
-- (void)finishOperation {
-    [super finishOperation];
+    
+    [self finishOperation];
     
     if (self.uploadTaskIdentifier != UIBackgroundTaskInvalid) {
         [UIApplication.sharedApplication endBackgroundTask:self.uploadTaskIdentifier];
         self.uploadTaskIdentifier = UIBackgroundTaskInvalid;
+    }
+    
+    if (uploadNextAsset) {
+        [[CameraUploadManager shared] uploadNextForAsset:self.uploadInfo.asset];
     }
 }
 

@@ -130,7 +130,9 @@
 
 - (BOOL)application:(UIApplication *)application willFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     NSLog(@"[App Lifecycle] Application will finish launching with options: %@", launchOptions);
-    [CameraUploadManager.shared collateUploadRecordWhenAppLaunches];
+    [TransferSessionManager.shared restoreAllSessions];
+    [CameraUploadManager.shared collateUploadRecords];
+    [CameraUploadManager.shared retryAttributeFileUploads];
     return YES;
 }
 
@@ -1105,7 +1107,7 @@
 }
 
 - (void)showOverquotaAlert {
-    [CameraUploadManager.shared stopCameraUpload];
+    [CameraUploadManager.shared disableCameraUpload];
     
     if (!UIApplication.mnz_presentingViewController.presentedViewController || UIApplication.mnz_presentingViewController.presentedViewController != self.overquotaAlertView) {
         isOverquota = YES;
