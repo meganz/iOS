@@ -32,12 +32,12 @@
     CameraUploadRequestDelegate *delegate = [[CameraUploadRequestDelegate alloc] initWithCompletion:^(MEGARequest * _Nonnull request, MEGAError * _Nonnull error) {
         if (error.type) {
             self.completion(nil, [error nativeError]);
-            [self finishOperation];
         } else {
             MEGANode *node = [MEGASdkManager.sharedMEGASdk nodeForHandle:request.nodeHandle];
             self.completion(node, nil);
-            [self finishOperation];
         }
+        
+        [self finishOperation];
     }];
     
     NSString *serverUniqueFileName = [self.uploadInfo.fileName mnz_sequentialFileNameInParentNode:self.uploadInfo.parentNode];
