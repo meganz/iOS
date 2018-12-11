@@ -32,9 +32,10 @@
             MEGALogDebug(@"[Camera Upload] error when to complete transfer %@", error);
             [self finishUploadForLocalIdentifier:localIdentifier status:CameraAssetUploadStatusFailed];
         } else {
+            MEGALogDebug(@"[Camera Upload] upload succeeded!");
+            [AttributeUploadManager.shared uploadCoordinateAtLocation:uploadInfo.location forNode:node];
             [AttributeUploadManager.shared uploadFileAtURL:uploadInfo.thumbnailURL withAttributeType:MEGAAttributeTypeThumbnail forNode:node];
             [AttributeUploadManager.shared uploadFileAtURL:uploadInfo.previewURL withAttributeType:MEGAAttributeTypePreview forNode:node];
-            [AttributeUploadManager.shared uploadCoordinateAtLocation:uploadInfo.location forNode:node];
             [self finishUploadForLocalIdentifier:localIdentifier status:CameraAssetUploadStatusDone];
         }
     }];
