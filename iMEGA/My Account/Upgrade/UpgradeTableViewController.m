@@ -337,19 +337,11 @@
 }
 
 - (void)showTermsOfService {
-    if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-        [self showURL:@"https://mega.nz/terms"];
-    }
+    [[NSURL URLWithString:@"https://mega.nz/terms"] mnz_presentSafariViewController];
 }
 
 - (void)showPrivacyPolicy {
-    if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-        [self showURL:@"https://mega.nz/privacy"];
-    }
-}
-
-- (void)showURL:(NSString *)urlString {
-    [[NSURL URLWithString:urlString] mnz_presentSafariViewController];
+    [[NSURL URLWithString:@"https://mega.nz/privacy"] mnz_presentSafariViewController];
 }
 
 - (NSString *)storageAndUnitsByProduct:(SKProduct *)product {
