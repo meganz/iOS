@@ -233,15 +233,7 @@ static const NSInteger MaxConcurrentVideoOperationCount = 1;
 #pragma mark - data collator
 
 - (void)collateUploadRecords {
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-        [self.dataCollator collateUploadRecords];
-    });
-}
-
-- (void)retryAttributeFileUploads {
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-        [AttributeUploadManager.shared scanLocalAttributeFilesAndRetryUploadIfNeeded];
-    });
+    [self.dataCollator collateUploadRecords];
 }
 
 #pragma mark - handle camera upload node

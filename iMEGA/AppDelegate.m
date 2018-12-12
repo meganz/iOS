@@ -74,6 +74,7 @@
 #import "CameraUploadManager.h"
 #import "CameraUploadManager+Settings.h"
 #import "TransferSessionManager.h"
+#import "AttributeUploadManager.h"
 
 #define kFirstRun @"FirstRun"
 
@@ -130,9 +131,13 @@
 
 - (BOOL)application:(UIApplication *)application willFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     NSLog(@"[App Lifecycle] Application will finish launching with options: %@", launchOptions);
-    [TransferSessionManager.shared restoreAllSessions];
-    [CameraUploadManager.shared collateUploadRecords];
-    [CameraUploadManager.shared retryAttributeFileUploads];
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        [AttributeUploadManager.shared scanLocalAttributeFilesAndRetryUploadIfNeeded];
+        [TransferSessionManager.shared restoreAllSessions];
+        [CameraUploadManager.shared collateUploadRecords];
+    });
+    
     return YES;
 }
 
