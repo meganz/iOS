@@ -3,7 +3,7 @@
 #import "TransferSessionDelegate.h"
 #import "TransferSessionTaskDelegate.h"
 #import "CameraUploadManager+Settings.h"
-#import "AttributeUploadManager.h"
+#import "CameraUploadCompletionManager.h"
 
 static NSString * const PhotoCellularAllowedUploadSessionId = @"nz.mega.photoTransfer.cellularAllowed";
 static NSString * const PhotoCellularDisallowedUploadSessionId = @"nz.mega.photoTransfer.cellularDisallowed";
@@ -211,7 +211,7 @@ static NSString * const VideoCellularDisallowedUploadSessionId = @"nz.mega.video
 #pragma mark - session finishes
 
 - (void)didFinishEventsForBackgroundURLSession:(NSURLSession *)session {
-    [AttributeUploadManager.shared waitUnitlAllAttributeUploadsAreFinished];
+    [CameraUploadCompletionManager.shared waitUnitlAllUploadsAreCompleted];
     void (^sessionCompletion)(void) = [self completionHandlerForIdentifier:session.configuration.identifier];
     [NSOperationQueue.mainQueue addOperationWithBlock:^{
         if (sessionCompletion) {

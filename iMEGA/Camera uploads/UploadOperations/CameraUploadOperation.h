@@ -2,7 +2,6 @@
 #import <UIKit/UIKit.h>
 #import "MEGAOperation.h"
 #import "AssetUploadInfo.h"
-#import "CameraUploadCoordinator.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
