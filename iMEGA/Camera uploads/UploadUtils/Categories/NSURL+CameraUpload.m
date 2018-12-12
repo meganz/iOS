@@ -22,12 +22,12 @@
     return uploadURL;
 }
 
-+ (NSURL *)assetDirectoryURLForLocalIdentifier:(NSString *)localIdentifier {
++ (NSURL *)mnz_assetDirectoryURLForLocalIdentifier:(NSString *)localIdentifier {
     return [self.cameraUploadURL URLByAppendingPathComponent:localIdentifier.stringByRemovingInvalidFileCharacters isDirectory:YES];
 }
 
-+ (NSURL *)archivedURLForLocalIdentifier:(NSString *)localIdentifier {
-    return [[self assetDirectoryURLForLocalIdentifier:localIdentifier] URLByAppendingPathComponent:localIdentifier.stringByRemovingInvalidFileCharacters isDirectory:NO];
++ (NSURL *)mnz_archivedURLForLocalIdentifier:(NSString *)localIdentifier {
+    return [[self mnz_assetDirectoryURLForLocalIdentifier:localIdentifier] URLByAppendingPathComponent:localIdentifier.stringByRemovingInvalidFileCharacters isDirectory:NO];
 }
 
 @end

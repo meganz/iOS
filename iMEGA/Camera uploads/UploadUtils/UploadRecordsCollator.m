@@ -19,7 +19,7 @@
         return;
     }
     
-    MEGALogDebug(@"[Camera Upload] %ld non-uploading records to collate", records.count);
+    MEGALogDebug(@"[Camera Upload] %lu non-uploading records to collate", (unsigned long)records.count);
     for (MOAssetUploadRecord *record in records) {
         [self revertBackToNotStartedForRecord:record];
     }
@@ -34,7 +34,7 @@
         return;
     }
     
-    MEGALogDebug(@"[Camera Upload] %ld uploading records to collate", uploadingRecords.count);
+    MEGALogDebug(@"[Camera Upload] %lu uploading records to collate", (unsigned long)uploadingRecords.count);
     NSArray<NSURLSessionUploadTask *> *runningTasks = [TransferSessionManager.shared allRunningUploadTasks];
     NSMutableArray<NSString *> *identifiers = [NSMutableArray array];
     for (NSURLSessionUploadTask *task in runningTasks) {
@@ -63,7 +63,7 @@
     record.status = CameraAssetUploadStatusNotStarted;
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
         if (record.localIdentifier) {
-            [NSFileManager.defaultManager removeItemIfExistsAtURL:[NSURL assetDirectoryURLForLocalIdentifier:record.localIdentifier]];
+            [NSFileManager.defaultManager removeItemIfExistsAtURL:[NSURL mnz_assetDirectoryURLForLocalIdentifier:record.localIdentifier]];
         }
     });
 }

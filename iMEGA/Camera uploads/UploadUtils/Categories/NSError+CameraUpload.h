@@ -20,7 +20,7 @@ typedef enum : NSUInteger {
  
  @return error showing no enough free space
  */
-+ (NSError *)cameraUploadNoEnoughFreeSpaceError;
++ (NSError *)mnz_cameraUploadNoEnoughFreeSpaceError;
 
 @end
 

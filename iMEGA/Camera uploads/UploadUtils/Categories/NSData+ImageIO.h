@@ -10,7 +10,7 @@ NS_ASSUME_NONNULL_BEGIN
 
  @return a NSData object by stripping off GPS metadata. If the current data doesn't contain GPS metadata, it will be returned.
  */
-- (NSData *)dataByStrippingOffGPSIfNeeded;
+- (NSData *)mnz_dataByStrippingOffGPSIfNeeded;
 
 
 /**
@@ -21,7 +21,7 @@ NS_ASSUME_NONNULL_BEGIN
  @param properties a EXIF property list
  @return a NSData object by adding or overwritting the image EXIF according to the given property list
  */
-- (NSData *)dataByAddingImageProperties:(NSArray <NSDictionary *> *)properties;
+- (NSData *)mnz_dataByAddingImageProperties:(NSArray <NSDictionary *> *)properties;
 
 
 /**
@@ -30,7 +30,7 @@ NS_ASSUME_NONNULL_BEGIN
 
  @return YES if the image data contains GPS metadata
  */
-- (BOOL)containsGPSInfo;
+- (BOOL)mnz_containsGPSInfo;
 
 
 /**
@@ -40,7 +40,7 @@ NS_ASSUME_NONNULL_BEGIN
  @param shouldStripGPSInfo should strip GPS metadata or not
  @return an array of EXIF property for the image
  */
-- (NSArray <NSDictionary *> *)imagePropertiesByStrippingGPSInfo:(BOOL)shouldStripGPSInfo;
+- (NSArray <NSDictionary *> *)mnz_imagePropertiesByStrippingGPSInfo:(BOOL)shouldStripGPSInfo;
 
 @end
 
