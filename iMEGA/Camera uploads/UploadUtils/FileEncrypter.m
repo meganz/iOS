@@ -48,7 +48,7 @@ static const NSUInteger EncryptionProposedChunkSizeWithoutTruncating = 1024 * 10
     
     if (self.shouldTruncateFile) {
         if (deviceFreeSize < EncryptionMinimumChunkSize) {
-            completion(NO, 0, nil, [NSError cameraUploadNoEnoughFreeSpaceError]);
+            completion(NO, 0, nil, [NSError mnz_cameraUploadNoEnoughFreeSpaceError]);
             return;
         }
         
@@ -58,7 +58,7 @@ static const NSUInteger EncryptionProposedChunkSizeWithoutTruncating = 1024 * 10
         }
     } else {
         if (deviceFreeSize < self.fileSize) {
-            completion(NO, 0, nil, [NSError cameraUploadNoEnoughFreeSpaceError]);
+            completion(NO, 0, nil, [NSError mnz_cameraUploadNoEnoughFreeSpaceError]);
             return;
         }
     }

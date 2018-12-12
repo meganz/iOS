@@ -3511,9 +3511,23 @@
 			path = UploadManagers;
 			sourceTree = "<group>";
 		};
+		B693963C21C0ACF000B58F98 /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				B6C3FD4021B080B3006C70A2 /* NSData+ImageIO.h */,
+				B6C3FD4121B080B3006C70A2 /* NSData+ImageIO.m */,
+				B6BD012321B71FB500E97086 /* NSURL+CameraUpload.h */,
+				B6BD012421B71FB500E97086 /* NSURL+CameraUpload.m */,
+				B6A4A11821A404DC007E7EEC /* NSError+CameraUpload.h */,
+				B6A4A11921A404DC007E7EEC /* NSError+CameraUpload.m */,
+			);
+			path = Categories;
+			sourceTree = "<group>";
+		};
 		B6D11ADC219CE60E00446B86 /* UploadUtils */ = {
 			isa = PBXGroup;
 			children = (
+				B693963C21C0ACF000B58F98 /* Categories */,
 				B6BD012021B7123B00E97086 /* UploadRecordsCollator.h */,
 				B6BD012121B7123B00E97086 /* UploadRecordsCollator.m */,
 				B6D9D7E7216AB0C700D7B08A /* CameraScanner.h */,
@@ -3524,14 +3538,8 @@
 				B6D11ADE219CE69300446B86 /* FileEncrypter.m */,
 				B6E19B3B2180126500882F74 /* CameraUploadCoordinator.h */,
 				B6E19B3C2180126500882F74 /* CameraUploadCoordinator.m */,
-				B6A4A11821A404DC007E7EEC /* NSError+CameraUpload.h */,
-				B6A4A11921A404DC007E7EEC /* NSError+CameraUpload.m */,
 				B658D3CD218FBC47004C0D64 /* UploadOperationFactory.h */,
 				B658D3CE218FBC47004C0D64 /* UploadOperationFactory.m */,
-				B6C3FD4021B080B3006C70A2 /* NSData+ImageIO.h */,
-				B6C3FD4121B080B3006C70A2 /* NSData+ImageIO.m */,
-				B6BD012321B71FB500E97086 /* NSURL+CameraUpload.h */,
-				B6BD012421B71FB500E97086 /* NSURL+CameraUpload.m */,
 			);
 			path = UploadUtils;
 			sourceTree = "<group>";

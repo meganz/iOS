@@ -8,7 +8,7 @@
 @implementation CameraUploadCoordinator
 
 - (void)handleCompletedTransferWithLocalIdentifier:(NSString *)localIdentifier token:(NSData *)token {
-    NSURL *archivedURL = [NSURL archivedURLForLocalIdentifier:localIdentifier];
+    NSURL *archivedURL = [NSURL mnz_archivedURLForLocalIdentifier:localIdentifier];
     BOOL isDirectory;
     if ([NSFileManager.defaultManager fileExistsAtPath:archivedURL.path isDirectory:&isDirectory] && !isDirectory) {
         AssetUploadInfo *uploadInfo = [NSKeyedUnarchiver unarchiveObjectWithFile:archivedURL.path];
@@ -50,7 +50,7 @@
     }
     
     [CameraUploadRecordManager.shared updateRecordOfLocalIdentifier:localIdentifier withStatus:status error:nil];
-    NSURL *uploadDirectory = [NSURL assetDirectoryURLForLocalIdentifier:localIdentifier];
+    NSURL *uploadDirectory = [NSURL mnz_assetDirectoryURLForLocalIdentifier:localIdentifier];
     [NSFileManager.defaultManager removeItemAtURL:uploadDirectory error:nil];
     MEGALogDebug(@"[Camera Upload] Background Upload finishes with session task %@ and status: %@", localIdentifier, status);
     

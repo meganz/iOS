@@ -3,16 +3,16 @@
 
 @implementation NSData (ImageIO)
 
-- (NSData *)dataByStrippingOffGPSIfNeeded {
-    if (![self containsGPSInfo]) {
+- (NSData *)mnz_dataByStrippingOffGPSIfNeeded {
+    if (![self mnz_containsGPSInfo]) {
         return self;
     }
     
     NSDictionary *removeGPSDict = @{(__bridge NSString *)kCGImagePropertyGPSDictionary : (__bridge NSNull *)kCFNull};
-    return [self dataByAddingImageProperties:@[removeGPSDict]];
+    return [self mnz_dataByAddingImageProperties:@[removeGPSDict]];
 }
 
-- (NSData *)dataByAddingImageProperties:(NSArray <NSDictionary *> *)properties {
+- (NSData *)mnz_dataByAddingImageProperties:(NSArray <NSDictionary *> *)properties {
     if (properties.count == 0) {
         return self;
     }
@@ -50,7 +50,7 @@
     }
 }
 
-- (BOOL)containsGPSInfo {
+- (BOOL)mnz_containsGPSInfo {
     BOOL hasGPS = NO;
     CGImageSourceRef source = CGImageSourceCreateWithData((__bridge CFDataRef)self, NULL);
     if (source) {
@@ -69,7 +69,7 @@
     return hasGPS;
 }
 
-- (NSArray <NSDictionary *> *)imagePropertiesByStrippingGPSInfo:(BOOL)shouldStripGPSInfo {
+- (NSArray <NSDictionary *> *)mnz_imagePropertiesByStrippingGPSInfo:(BOOL)shouldStripGPSInfo {
     NSMutableArray *properties = [NSMutableArray array];
     CGImageSourceRef source = CGImageSourceCreateWithData((__bridge CFDataRef)self, NULL);
     if (source) {

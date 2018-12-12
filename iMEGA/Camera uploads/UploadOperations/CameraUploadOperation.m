@@ -124,7 +124,7 @@
 }
 
 - (NSURL *)URLForAssetFolder {
-    NSURL *assetDirectoryURL = [NSURL assetDirectoryURLForLocalIdentifier:self.uploadInfo.asset.localIdentifier];
+    NSURL *assetDirectoryURL = [NSURL mnz_assetDirectoryURLForLocalIdentifier:self.uploadInfo.asset.localIdentifier];
     [NSFileManager.defaultManager removeItemIfExistsAtURL:assetDirectoryURL];
     [[NSFileManager defaultManager] createDirectoryAtURL:assetDirectoryURL withIntermediateDirectories:YES attributes:nil error:nil];
     return assetDirectoryURL;
@@ -199,7 +199,7 @@
 
 - (void)archiveUploadInfoDataForBackgroundTransfer {
     MEGALogDebug(@"[Camera Upload] %@ start archiving upload info", self);
-    NSURL *archivedURL = [NSURL archivedURLForLocalIdentifier:self.uploadInfo.asset.localIdentifier];
+    NSURL *archivedURL = [NSURL mnz_archivedURLForLocalIdentifier:self.uploadInfo.asset.localIdentifier];
     [NSKeyedArchiver archiveRootObject:self.uploadInfo toFile:archivedURL.path];
 }
 

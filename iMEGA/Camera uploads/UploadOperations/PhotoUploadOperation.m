@@ -55,9 +55,9 @@
         return;
     }
     
-    NSArray <NSDictionary *> *imageProperties = [imageData imagePropertiesByStrippingGPSInfo:YES];
+    NSArray <NSDictionary *> *imageProperties = [imageData mnz_imagePropertiesByStrippingGPSInfo:YES];
     NSData *JPEGData = UIImageJPEGRepresentation([UIImage imageWithData:imageData], 1.0);
-    JPEGData = [JPEGData dataByAddingImageProperties:imageProperties];
+    JPEGData = [JPEGData mnz_dataByAddingImageProperties:imageProperties];
     
     self.uploadInfo.fingerprint = [[MEGASdkManager sharedMEGASdk] fingerprintForData:JPEGData modificationTime:self.uploadInfo.asset.creationDate];
     matchingNode = [[MEGASdkManager sharedMEGASdk] nodeForFingerprint:self.uploadInfo.fingerprint parent:self.uploadInfo.parentNode];
