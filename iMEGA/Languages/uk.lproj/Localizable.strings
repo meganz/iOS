@@ -37,7 +37,7 @@
 /* Alert message shown when the user tries to download an empty folder  */
 "emptyFolderMessage"="Ви не можете завантажити порожню теку";
 /* Message shown when the user clicks on a confirm account link that has already been used  */
-"accountAlreadyConfirmed"="Ваш обліковий запис вже активовано. Будь ласка, увійдіть.";
+"accountAlreadyConfirmed"="Ваш акаунт активовано. Будь ласка, увійдіть.";
 /* Message shown when the user clicks on an link that is not valid */
 "linkNotValid"="Невірна ланка";
 /* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
@@ -55,7 +55,7 @@
 /* Alert message shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOutFromAnotherLocation"="Ви закрили сесію на цьому пристрої з іншого місця";
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
-"sslUnverified_alertTitle"="Ключі серверу SSL не можливо перевірити. Ви можете бути уражені атакою людина-по-середині.";
+"sslUnverified_alertTitle"="MEGA не може безпечно під'єднатись через SSL. Ви можете бути у громадському WiFi з додатковими вимогами.";
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
 "theContentIsNotAvailableForThisAccount"="The content you are trying to access is not available for this account. Try to login with same account as in the mobile web client.";
 /* Message shown when the app is waiting for the server to complete a request due to an API lock (error -3). */
@@ -699,7 +699,7 @@
 /*  */
 "masterKey_thirdParagraph"="Зовнішній зловмисник не зможе отримати доступ до вашого рахунку тільки за наявністю вашого ключа. Скидання пароля вимагає ключ і доступ до вашої е-пошти.";
 /* Message of the dialog displayed when copy the user's Recovery Key to the clipboard to be saved or exported. */
-"recoveryKeyCopiedToClipboard"="Ключ відновлення скопійовано в буфер";
+"recoveryKeyCopiedToClipboard"="Ключ відновлення скопійовано в буфер. Будь ласка, зберігайте його в безпечному місці.";
 /* Alert title shown when you have exported your MEGA Recovery Key */
 "masterKeyExported"="Ключ відновлення експортовано";
 /* Alert message shown to explain that the Recovery Key was saved on your device. Also that you can access it through iTunes. And ends with and security advise. */
@@ -1767,14 +1767,12 @@
 /* The text of a notification indicating that a file or folder that was taken down has now been restored due to a successful counter-notice. The %1 placeholder will be replaced with the text ‘file’ or ‘folder’. The %2 will be replaced with the name of the file or folder. */
 "Your taken down %1 (%2) has been reinstated."="Раніше призупинене %1 (%2) було відновлено.";
 /* Footer text to explain the meaning of the functionaly 'Last seen' of your chat status. */
-"Allow your contacts to see the last time you were active on MEGA. If disabled you won’t be able to see the activity status of your contacts."="Allow your contacts to see the last time you were active on MEGA. If disabled you won’t be able to see the activity status of your contacts.";
+"Allow your contacts to see the last time you were active on MEGA."="Allow your contacts to see the last time you were active on MEGA.";
 /* Label shown next to a feature name that can be enabled or disabled, like in 'Show Last seen...' */
-"Show"="Show";
+"Show"="Показати";
 /* Shown when viewing a 1on1 chat (at least for now), if the user is offline. */
 "Last seen %s"="Last seen %s";
-/* Text to inform the user the 'Last seen' time of a contact, for example 'Last seen 20 Nov 18 15:15'. String as sort as possible. */
-"Last seen [A] [B]"="Last seen [A] [B]";
 /* Text to inform the user the 'Last seen' time of a contact is a long time ago (>= 65535 minutes) */
-"Last seen a long time ago"="Last seen a long time ago";
+"Last seen a long time ago"="Давно не бачилися";
 /* */
 "Today"="Сьогодні";
