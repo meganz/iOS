@@ -6,11 +6,15 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface CameraUploadCoordinator : NSObject
+@interface CameraUploadCompletionManager : NSObject
+
++ (instancetype)shared;
 
 - (void)handleCompletedTransferWithLocalIdentifier:(NSString *)localIdentifier token:(NSData *)token;
 
 - (void)finishUploadForLocalIdentifier:(NSString *)localIdentifier status:(NSString *)status;
+
+- (void)waitUnitlAllUploadsAreCompleted;
 
 @end
 

@@ -1,13 +1,12 @@
 
 #import "TransferSessionTaskDelegate.h"
 #import "TransferSessionManager.h"
-#import "CameraUploadCoordinator.h"
+#import "CameraUploadCompletionManager.h"
 
 @interface TransferSessionTaskDelegate ()
 
 @property (strong, nonatomic) NSMutableData *mutableData;
 @property (copy, nonatomic) UploadCompletionHandler completion;
-@property (strong, nonatomic) CameraUploadCoordinator *uploadCoordinator;
 
 @end
 
@@ -23,14 +22,6 @@
     return self;
 }
 
-- (CameraUploadCoordinator *)uploadCoordinator {
-    if (_uploadCoordinator == nil) {
-        _uploadCoordinator = [[CameraUploadCoordinator alloc] init];
-    }
-    
-    return _uploadCoordinator;
-}
-
 #pragma mark - task level delegate
 
 - (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didCompleteWithError:(NSError *)error {
@@ -42,12 +33,12 @@
         self.completion(transferToken, error);
     } else {
         if (error) {
-            [self.uploadCoordinator finishUploadForLocalIdentifier:task.taskDescription status:CameraAssetUploadStatusFailed];
+            [CameraUploadCompletionManager.shared finishUploadForLocalIdentifier:task.taskDescription status:CameraAssetUploadStatusFailed];
             return;
         }
         
         if (transferToken.length > 0) {
-            [self.uploadCoordinator handleCompletedTransferWithLocalIdentifier:task.taskDescription token:transferToken];
+            [CameraUploadCompletionManager.shared handleCompletedTransferWithLocalIdentifier:task.taskDescription token:transferToken];
         } else {
             MEGALogDebug(@"[Camera Upload] Session %@ task %@ finishes with empty transfer token", session.configuration.identifier, task.taskDescription);
         }

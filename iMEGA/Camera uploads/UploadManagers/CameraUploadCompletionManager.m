@@ -1,11 +1,40 @@
 
-#import "CameraUploadCoordinator.h"
+#import "CameraUploadCompletionManager.h"
 #import "CompleteUploadOperation.h"
 #import "AttributeUploadManager.h"
 #import "MEGAConstants.h"
 #import "NSURL+CameraUpload.h"
 
-@implementation CameraUploadCoordinator
+@interface CameraUploadCompletionManager ()
+
+@property (strong, nonatomic) NSOperationQueue *operationQueue;
+
+@end
+
+@implementation CameraUploadCompletionManager
+
++ (instancetype)shared {
+    static id sharedInstance = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        sharedInstance = [[self alloc] init];
+    });
+    
+    return sharedInstance;
+}
+
+- (instancetype)init {
+    self = [super init];
+    if (self) {
+        _operationQueue = [[NSOperationQueue alloc] init];
+    }
+    return self;
+}
+
+- (void)waitUnitlAllUploadsAreCompleted {
+    [self.operationQueue waitUntilAllOperationsAreFinished];
+    [AttributeUploadManager.shared waitUnitlAllAttributeUploadsAreFinished];
+}
 
 - (void)handleCompletedTransferWithLocalIdentifier:(NSString *)localIdentifier token:(NSData *)token {
     NSURL *archivedURL = [NSURL mnz_archivedURLForLocalIdentifier:localIdentifier];
@@ -26,7 +55,6 @@
 }
 
 - (void)showUploadedNodeWithUploadInfo:(AssetUploadInfo *)uploadInfo localIdentifier:(NSString *)localIdentifier transferToken:(NSData *)token {
-    NSOperationQueue *queue = [[NSOperationQueue alloc] init];
     CompleteUploadOperation *operation = [[CompleteUploadOperation alloc] initWithUploadInfo:uploadInfo transferToken:token completion:^(MEGANode * _Nullable node, NSError * _Nullable error) {
         if (error) {
             MEGALogDebug(@"[Camera Upload] error when to complete transfer %@", error);
@@ -40,8 +68,7 @@
         }
     }];
     
-    [queue addOperation:operation];
-    [queue waitUntilAllOperationsAreFinished];
+    [self.operationQueue addOperation:operation];
 }
 
 - (void)finishUploadForLocalIdentifier:(NSString *)localIdentifier status:(NSString *)status {

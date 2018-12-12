@@ -16,7 +16,6 @@
 
 @property (nonatomic) UIBackgroundTaskIdentifier uploadTaskIdentifier;
 @property (strong, nonatomic, nullable) MEGASdk *attributesDataSDK;
-@property (strong, nonatomic) CameraUploadCoordinator *uploadCoordinator;
 
 @end
 
@@ -34,14 +33,6 @@
 }
 
 #pragma mark - properties
-
-- (CameraUploadCoordinator *)uploadCoordinator {
-    if (_uploadCoordinator == nil) {
-        _uploadCoordinator = [[CameraUploadCoordinator alloc] init];
-    }
-    
-    return _uploadCoordinator;
-}
 
 - (MEGASdk *)attributesDataSDK {
     if (_attributesDataSDK == nil) {
