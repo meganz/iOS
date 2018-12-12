@@ -121,10 +121,6 @@
     self.dataProtectionRegulationLabel.text = AMLocalizedString(@"dataProtectionRegulationLabel", @"Title of one of the Settings sections where you can see the MEGA's 'Data Protection Regulation'");
 }
 
-- (void)showURL:(NSString *)urlString {
-    [[NSURL URLWithString:urlString] mnz_presentSafariViewController];
-}
-
 #pragma mark - UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -139,13 +135,13 @@
         case 5: { //Privacy Policy, Terms of Service
             if ([MEGAReachabilityManager isReachableHUDIfNot]) {
                 if (indexPath.row == 0) {
-                    [self showURL:@"https://mega.nz/privacy"];
+                    [[NSURL URLWithString:@"https://mega.nz/privacy"] mnz_presentSafariViewController];
                     break;
                 } else if (indexPath.row == 1) {
-                    [self showURL:@"https://mega.nz/terms"];
+                    [[NSURL URLWithString:@"https://mega.nz/terms"] mnz_presentSafariViewController];
                     break;
                 } else if (indexPath.row == 2) {
-                    [self showURL:@"https://mega.nz/gdpr"];
+                    [[NSURL URLWithString:@"https://mega.nz/gdpr"] mnz_presentSafariViewController];
                     break;
                 }
             }

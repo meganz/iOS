@@ -13,9 +13,21 @@
 - (void)mnz_presentSafariViewController {
     if (!([self.scheme.lowercaseString isEqualToString:@"http"] || [self.scheme.lowercaseString isEqualToString:@"https"])) {
         if (@available(iOS 10.0, *)) {
-            [UIApplication.sharedApplication openURL:self options:@{} completionHandler:nil];
+            [UIApplication.sharedApplication openURL:self options:@{} completionHandler:^(BOOL success) {
+                if (success) {
+                    MEGALogInfo(@"URL opened on other app");
+                } else {
+                    MEGALogInfo(@"URL NOT opened");
+                    [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"linkNotValid", @"Message shown when the user clicks on an link that is not valid")];
+                }
+            }];
         } else {
-            [UIApplication.sharedApplication openURL:self];
+            if ([UIApplication.sharedApplication openURL:self]) {
+                MEGALogInfo(@"URL opened on other app");
+            } else {
+                MEGALogInfo(@"URL NOT opened");
+                [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"linkNotValid", @"Message shown when the user clicks on an link that is not valid")];
+            }
         }
         return;
     }
