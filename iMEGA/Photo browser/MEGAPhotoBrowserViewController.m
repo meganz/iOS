@@ -112,12 +112,21 @@
     self.pieChartView.layer.cornerRadius = self.pieChartView.frame.size.width/2;
     self.pieChartView.layer.masksToBounds = YES;
     
-    if (self.displayMode == DisplayModeFileLink) {
-        self.leftToolbarItem.image = nil;
-        self.leftToolbarItem.title = AMLocalizedString(@"download", nil);
-
-        self.rightToolbarItem.image = nil;
-        self.rightToolbarItem.title = AMLocalizedString(@"import", @"Button title that triggers the importing link action");
+    switch (self.displayMode) {
+        case DisplayModeFileLink:
+            self.leftToolbarItem.image = nil;
+            self.leftToolbarItem.title = AMLocalizedString(@"download", nil);
+            
+            self.rightToolbarItem.image = nil;
+            self.rightToolbarItem.title = AMLocalizedString(@"import", @"Button title that triggers the importing link action");
+            break;
+            
+        case DisplayModeSharedItem:
+            [self.toolbar setItems:@[self.leftToolbarItem]];
+            break;
+            
+        default:
+            break;
     }
 }
 
