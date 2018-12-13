@@ -693,7 +693,7 @@
 		B68C42C8216DA9CF003C5A50 /* MEGAOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = B68C42C6216DA9CE003C5A50 /* MEGAOperation.m */; };
 		B68C42CB216DAA85003C5A50 /* CameraUploadOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = B68C42CA216DAA85003C5A50 /* CameraUploadOperation.m */; };
 		B6A4A11121A2544C007E7EEC /* MEGAError+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = B6A4A11021A2544C007E7EEC /* MEGAError+MNZCategory.m */; };
-		B6A4A11421A256B0007E7EEC /* MEGATaskOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = B6A4A11321A256B0007E7EEC /* MEGATaskOperation.m */; };
+		B6A4A11421A256B0007E7EEC /* MEGABackgroundTaskOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = B6A4A11321A256B0007E7EEC /* MEGABackgroundTaskOperation.m */; };
 		B6A4A11A21A404DC007E7EEC /* NSError+CameraUpload.m in Sources */ = {isa = PBXBuildFile; fileRef = B6A4A11921A404DC007E7EEC /* NSError+CameraUpload.m */; };
 		B6B959412193A9140064334D /* ThumbnailUploadOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = B6B959402193A9140064334D /* ThumbnailUploadOperation.m */; };
 		B6B959442193A91E0064334D /* PreviewUploadOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = B6B959432193A91E0064334D /* PreviewUploadOperation.m */; };
@@ -1615,8 +1615,8 @@
 		B68C42CA216DAA85003C5A50 /* CameraUploadOperation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CameraUploadOperation.m; sourceTree = "<group>"; };
 		B6A4A10F21A2544C007E7EEC /* MEGAError+MNZCategory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MEGAError+MNZCategory.h"; sourceTree = "<group>"; };
 		B6A4A11021A2544C007E7EEC /* MEGAError+MNZCategory.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "MEGAError+MNZCategory.m"; sourceTree = "<group>"; };
-		B6A4A11221A256B0007E7EEC /* MEGATaskOperation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MEGATaskOperation.h; sourceTree = "<group>"; };
-		B6A4A11321A256B0007E7EEC /* MEGATaskOperation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MEGATaskOperation.m; sourceTree = "<group>"; };
+		B6A4A11221A256B0007E7EEC /* MEGABackgroundTaskOperation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MEGABackgroundTaskOperation.h; sourceTree = "<group>"; };
+		B6A4A11321A256B0007E7EEC /* MEGABackgroundTaskOperation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MEGABackgroundTaskOperation.m; sourceTree = "<group>"; };
 		B6A4A11821A404DC007E7EEC /* NSError+CameraUpload.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSError+CameraUpload.h"; sourceTree = "<group>"; };
 		B6A4A11921A404DC007E7EEC /* NSError+CameraUpload.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSError+CameraUpload.m"; sourceTree = "<group>"; };
 		B6B9593F2193A9140064334D /* ThumbnailUploadOperation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ThumbnailUploadOperation.h; sourceTree = "<group>"; };
@@ -3461,8 +3461,8 @@
 				B68C42C6216DA9CE003C5A50 /* MEGAOperation.m */,
 				B658D3C0218FA16C004C0D64 /* MEGATransactionOperation.h */,
 				B658D3C1218FA16C004C0D64 /* MEGATransactionOperation.m */,
-				B6A4A11221A256B0007E7EEC /* MEGATaskOperation.h */,
-				B6A4A11321A256B0007E7EEC /* MEGATaskOperation.m */,
+				B6A4A11221A256B0007E7EEC /* MEGABackgroundTaskOperation.h */,
+				B6A4A11321A256B0007E7EEC /* MEGABackgroundTaskOperation.m */,
 				B644B6BF21AE19BC00A3B8E7 /* MEGAExpirableOperation.h */,
 				B644B6C021AE19BC00A3B8E7 /* MEGAExpirableOperation.m */,
 				B68C42C9216DAA85003C5A50 /* CameraUploadOperation.h */,
@@ -4129,7 +4129,7 @@
 				E88E6D801CF355FA00C9AD9E /* UIColor+MNZCategory.m in Sources */,
 				41D21E601D01AEC3002E6296 /* CTAssetScrollView.m in Sources */,
 				836B956F2063EADE003E279B /* SearchInPdfViewController.m in Sources */,
-				B6A4A11421A256B0007E7EEC /* MEGATaskOperation.m in Sources */,
+				B6A4A11421A256B0007E7EEC /* MEGABackgroundTaskOperation.m in Sources */,
 				41D21E641D01AEC3002E6296 /* CTAssetsGridView.m in Sources */,
 				834AD6052024694200D2527F /* MGSwipeButton.m in Sources */,
 				4172795D1DB663FA001AC818 /* JSQMessagesTypingIndicatorFooterView.m in Sources */,

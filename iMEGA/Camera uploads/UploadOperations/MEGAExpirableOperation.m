@@ -11,7 +11,7 @@
 @implementation MEGAExpirableOperation
 
 - (instancetype)initWithExpireTimeInterval:(NSTimeInterval)timeInterval {
-    self = [super init];
+    self = [super initWithBackgroundTaskExpirationHandler:nil];
     if (self) {
         _expireTimeInterval = timeInterval;
     }

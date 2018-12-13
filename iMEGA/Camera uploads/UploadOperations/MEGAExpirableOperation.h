@@ -1,9 +1,9 @@
 
-#import "MEGATaskOperation.h"
+#import "MEGABackgroundTaskOperation.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface MEGAExpirableOperation : MEGATaskOperation
+@interface MEGAExpirableOperation : MEGABackgroundTaskOperation
 
 - (instancetype)initWithExpireTimeInterval:(NSTimeInterval)timeInterval;
 
