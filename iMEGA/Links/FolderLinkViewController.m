@@ -6,22 +6,25 @@
 
 #import "DisplayMode.h"
 #import "Helper.h"
+#import "MEGANavigationController.h"
 #import "MEGANode+MNZCategory.h"
 #import "MEGANodeList+MNZCategory.h"
+#import "MEGAPhotoBrowserViewController.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGASdkManager.h"
-#import "NodeTableViewCell.h"
+
 #import "NSString+MNZCategory.h"
+#import "MEGALinkManager.h"
+#import "UIApplication+MNZCategory.h"
 #import "UIImageView+MNZCategory.h"
 #import "UITextField+MNZCategory.h"
 
 #import "BrowserViewController.h"
 #import "CustomActionViewController.h"
-#import "LoginViewController.h"
+#import "NodeTableViewCell.h"
 #import "MainTabBarController.h"
-#import "MEGANavigationController.h"
-#import "MEGAPhotoBrowserViewController.h"
-#import "MyAccountHallViewController.h"
+#import "LoginViewController.h"
+#import "LinkOption.h"
 #import "UnavailableLinkView.h"
 
 @interface FolderLinkViewController () <UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, UISearchResultsUpdating, UISearchDisplayDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAGlobalDelegate, MEGARequestDelegate, CustomActionViewControllerDelegate> {
@@ -108,7 +111,7 @@
     self.closeBarButtonItem.title = AMLocalizedString(@"close", @"A button label.");
 
     if (self.isFolderRootNode) {
-        [[MEGASdkManager sharedMEGASdkFolder] loginToFolderLink:self.folderLinkString delegate:self];
+        [[MEGASdkManager sharedMEGASdkFolder] loginToFolderLink:self.publicLinkString delegate:self];
 
         self.navigationItem.leftBarButtonItem = self.closeBarButtonItem;
         
@@ -283,9 +286,9 @@
         NSString *linkString;
         NSString *key = decryptionAlertController.textFields.firstObject.text;
         if ([[key substringToIndex:1] isEqualToString:@"!"]) {
-            linkString = self.folderLinkString;
+            linkString = self.publicLinkString;
         } else {
-            linkString = [self.folderLinkString stringByAppendingString:@"!"];
+            linkString = [self.publicLinkString stringByAppendingString:@"!"];
         }
         linkString = [linkString stringByAppendingString:key];
         
@@ -327,7 +330,7 @@
                     FolderLinkViewController *folderLinkVC = [storyboard instantiateViewControllerWithIdentifier:@"FolderLinkViewControllerID"];
                     [folderLinkVC setParentNode:node];
                     [folderLinkVC setIsFolderRootNode:NO];
-                    [folderLinkVC setFolderLinkString:self.folderLinkString];
+                    folderLinkVC.publicLinkString = self.publicLinkString;
                     [self.navigationController pushViewController:folderLinkVC animated:NO];
 
                 } else {
@@ -363,8 +366,7 @@
 #pragma mark - IBActions
 
 - (IBAction)cancelAction:(UIBarButtonItem *)sender {
-    [Helper setLinkNode:nil];
-    [Helper setSelectedOptionOnLink:0];
+    [MEGALinkManager resetUtilsForLinksWithoutSession];
     
     [[MEGASdkManager sharedMEGASdkFolder] logout];
     
@@ -492,12 +494,9 @@
     
     if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
         [self dismissViewControllerAnimated:YES completion:^{
-            if ([[[[[UIApplication sharedApplication] delegate] window] rootViewController] isKindOfClass:[MainTabBarController class]]) {
-                MainTabBarController *mainTBC = (MainTabBarController *)[[[[UIApplication sharedApplication] delegate] window] rootViewController];
-                mainTBC.selectedIndex = MYACCOUNT;
-                MEGANavigationController *navigationController = [mainTBC.childViewControllers objectAtIndex:MYACCOUNT];
-                MyAccountHallViewController *myAccountHallVC = navigationController.viewControllers.firstObject;
-                [myAccountHallVC openOffline];
+            if ([UIApplication.sharedApplication.keyWindow.rootViewController isKindOfClass:MainTabBarController.class]) {
+                MainTabBarController *mainTBC = (MainTabBarController *)UIApplication.sharedApplication.keyWindow.rootViewController;
+                [mainTBC showOffline];
             }
             
             [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:AMLocalizedString(@"downloadStarted", nil)];
@@ -512,17 +511,15 @@
         }];
     } else {
         if (self.selectedNodesArray.count != 0) {
-            [[Helper nodesFromLinkMutableArray] addObjectsFromArray:_selectedNodesArray];
+            [MEGALinkManager.nodesFromLinkMutableArray addObjectsFromArray:self.selectedNodesArray];
         } else {
-            [[Helper nodesFromLinkMutableArray] addObject:_parentNode];
+            [MEGALinkManager.nodesFromLinkMutableArray addObject:self.parentNode];
         }
-        [Helper setSelectedOptionOnLink:4]; //Download folder or nodes from link
+        MEGALinkManager.selectedOption = LinkOptionDownloadFolderOrNodes;
         
         LoginViewController *loginVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"LoginViewControllerID"];
         [self.navigationController pushViewController:loginVC animated:YES];
     }
-    
-    //TODO: Make a logout in sharedMEGASdkFolder after download the link or the selected nodes.
 }
 
 - (IBAction)importAction:(UIBarButtonItem *)sender {
@@ -540,18 +537,18 @@
                 browserVC.selectedNodesArray = [NSArray arrayWithObject:self.parentNode];
             }
             
-            [[[[[UIApplication sharedApplication] delegate] window] rootViewController] presentViewController:navigationController animated:YES completion:nil];
+            [UIApplication.mnz_presentingViewController presentViewController:navigationController animated:YES completion:nil];
         }];
     } else {
         if (self.selectedNodesArray.count != 0) {
-            [[Helper nodesFromLinkMutableArray] addObjectsFromArray:_selectedNodesArray];
+            [MEGALinkManager.nodesFromLinkMutableArray addObjectsFromArray:self.selectedNodesArray];
         } else {
             if (self.parentNode == nil) {
                 return;
             }
-            [[Helper nodesFromLinkMutableArray] addObject:self.parentNode];
+            [MEGALinkManager.nodesFromLinkMutableArray addObject:self.parentNode];
         }
-        [Helper setSelectedOptionOnLink:3]; //Import folder or nodes from link
+        MEGALinkManager.selectedOption = LinkOptionImportFolderOrNodes;
         
         LoginViewController *loginVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"LoginViewControllerID"];
         [self.navigationController pushViewController:loginVC animated:YES];
@@ -658,7 +655,7 @@
             FolderLinkViewController *folderLinkVC = [storyboard instantiateViewControllerWithIdentifier:@"FolderLinkViewControllerID"];
             [folderLinkVC setParentNode:node];
             [folderLinkVC setIsFolderRootNode:NO];
-            [folderLinkVC setFolderLinkString:self.folderLinkString];
+            folderLinkVC.publicLinkString = self.publicLinkString;
             [self.navigationController pushViewController:folderLinkVC animated:YES];
             break;
         }
@@ -908,7 +905,7 @@
             
             [self reloadUI];
             
-            NSArray *componentsArray = [self.folderLinkString componentsSeparatedByString:@"!"];
+            NSArray *componentsArray = [self.publicLinkString componentsSeparatedByString:@"!"];
             if (componentsArray.count == 4) {
                 [self navigateToNodeWithBase64Handle:componentsArray.lastObject];
             }
@@ -966,7 +963,8 @@
         }
             
         case MegaNodeActionTypeShare: {
-            UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWithActivityItems:@[self.folderLinkString] applicationActivities:nil];
+            NSString *link = self.linkEncryptedString ? self.linkEncryptedString : self.publicLinkString;
+            UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWithActivityItems:@[link] applicationActivities:nil];
             activityVC.popoverPresentationController.barButtonItem = sender;
             [self presentViewController:activityVC animated:YES completion:nil];
             break;

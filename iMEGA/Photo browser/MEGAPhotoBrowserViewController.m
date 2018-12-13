@@ -874,7 +874,8 @@
             
             switch (self.displayMode) {
                 case DisplayModeFileLink: {
-                    activityVC = [[UIActivityViewController alloc] initWithActivityItems:@[self.publicLink] applicationActivities:nil];
+                    NSString *link = self.encryptedLink ? self.encryptedLink : self.publicLink;
+                    activityVC = [[UIActivityViewController alloc] initWithActivityItems:@[link] applicationActivities:nil];
                     [activityVC setExcludedActivityTypes:@[UIActivityTypePrint, UIActivityTypeAssignToContact, UIActivityTypeSaveToCameraRoll, UIActivityTypeAddToReadingList, UIActivityTypeAirDrop]];
                     [activityVC.popoverPresentationController setBarButtonItem:sender];
                     
@@ -990,7 +991,8 @@
         if ([visibleViewController isKindOfClass:MainTabBarController.class]) {
             NSArray *parentTreeArray = node.mnz_parentTreeArray;
 
-            UINavigationController *navigationController = (UINavigationController *)((MainTabBarController *)visibleViewController).viewControllers[((MainTabBarController *)visibleViewController).selectedIndex];
+            MainTabBarController *mainTBC = (MainTabBarController *)visibleViewController;
+            UINavigationController *navigationController = (UINavigationController *)(mainTBC.selectedViewController);
             [navigationController popToRootViewControllerAnimated:NO];
             
             for (MEGANode *node in parentTreeArray) {
