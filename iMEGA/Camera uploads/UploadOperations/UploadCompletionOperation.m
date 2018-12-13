@@ -15,8 +15,8 @@
 
 @implementation UploadCompletionOperation
 
-- (instancetype)initWithUploadInfo:(AssetUploadInfo *)info transferToken:(NSData *)token completion:(UploadCompletionHandler)completion backgroundTaskExpirationHandler:(void (^)(void))expirationHandler {
-    self = [super initWithBackgroundTaskExpirationHandler:expirationHandler];
+- (instancetype)initWithUploadInfo:(AssetUploadInfo *)info transferToken:(NSData *)token completion:(UploadCompletionHandler)completion {
+    self = [super init];
     if (self) {
         _uploadInfo = info;
         _transferToken = token;
@@ -28,6 +28,11 @@
 
 - (void)start {
     [super start];
+    
+    [self beginBackgroundTaskWithExpirationHandler:^{
+        self.completion(nil, [NSError mnz_cameraUploadBackgroundTaskExpiredError]);
+        [self finishOperation];
+    }];
     
     CameraUploadRequestDelegate *delegate = [[CameraUploadRequestDelegate alloc] initWithCompletion:^(MEGARequest * _Nonnull request, MEGAError * _Nonnull error) {
         if (error.type) {

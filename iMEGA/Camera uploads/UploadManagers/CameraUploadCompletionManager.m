@@ -66,9 +66,6 @@
             [AttributeUploadManager.shared uploadFileAtURL:uploadInfo.previewURL withAttributeType:MEGAAttributeTypePreview forNode:node];
             [self finishUploadForLocalIdentifier:localIdentifier status:CameraAssetUploadStatusDone];
         }
-    } backgroundTaskExpirationHandler:^{
-        MEGALogDebug(@"[Camera Upload] background task expired when to complete transfer");
-        [self finishUploadForLocalIdentifier:localIdentifier status:CameraAssetUploadStatusFailed];
     }];
     
     [self.operationQueue addOperation:operation];

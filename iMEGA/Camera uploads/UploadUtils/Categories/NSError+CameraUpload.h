@@ -11,6 +11,7 @@ typedef enum : NSUInteger {
     CameraUploadErrorCalculateEncryptionChunkPositions,
     CameraUploadErrorEncryption,
     CameraUploadErrorFailedToCreateCompleteUploadRequest,
+    CameraUploadErrorBackgroundTaskExpired,
 } CameraUploadError;
 
 @interface NSError (CameraUpload)
@@ -21,6 +22,14 @@ typedef enum : NSUInteger {
  @return error showing no enough free space
  */
 + (NSError *)mnz_cameraUploadNoEnoughFreeSpaceError;
+
+
+/**
+ return a NSError object for camera upload when a background task gets expired
+
+ @return error showing background task expired
+ */
++ (NSError *)mnz_cameraUploadBackgroundTaskExpiredError;
 
 @end
 

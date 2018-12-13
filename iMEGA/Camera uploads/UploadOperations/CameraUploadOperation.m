@@ -15,7 +15,6 @@
 
 @interface CameraUploadOperation ()
 
-@property (nonatomic) UIBackgroundTaskIdentifier uploadTaskIdentifier;
 @property (strong, nonatomic, nullable) MEGASdk *attributesDataSDK;
 
 @end
@@ -26,6 +25,7 @@
 
 - (instancetype)initWithUploadInfo:(AssetUploadInfo *)uploadInfo {
     self = [super init];
+    
     if (self) {
         _uploadInfo = uploadInfo;
     }
@@ -52,28 +52,14 @@
 - (void)start {
     [super start];
 
-    [self beginBackgroundTask];
+    [self beginBackgroundTaskWithExpirationHandler:^{
+        [self finishOperationWithStatus:CameraAssetUploadStatusFailed shouldUploadNextAsset:NO];
+    }];
     
     MEGALogDebug(@"[Camera Upload] %@ starts processing", self);
     [CameraUploadRecordManager.shared updateRecordOfLocalIdentifier:self.uploadInfo.asset.localIdentifier withStatus:CameraAssetUploadStatusProcessing error:nil];
     
     self.uploadInfo.directoryURL = [self URLForAssetFolder];
-}
-
-- (void)beginBackgroundTask {
-    self.uploadTaskIdentifier = [UIApplication.sharedApplication beginBackgroundTaskWithName:[NSString stringWithFormat:@"nz.mega.cameraUpload.%@", NSStringFromClass(self.class)] expirationHandler:^{
-        MOAssetUploadRecord *record = [CameraUploadRecordManager.shared fetchRecordByLocalIdentifier:self.uploadInfo.asset.localIdentifier error:nil];
-        MEGALogDebug(@"[Camera Upload] %@ background task expired", self);
-        if ([record.status isEqualToString:CameraAssetUploadStatusUploading]) {
-            [self finishOperation];
-            MEGALogDebug(@"[Camera Upload] %@ finishes while uploading", self);
-        } else {
-            [self finishOperationWithStatus:CameraAssetUploadStatusFailed shouldUploadNextAsset:NO];
-        }
-        
-        [UIApplication.sharedApplication endBackgroundTask:self.uploadTaskIdentifier];
-        self.uploadTaskIdentifier = UIBackgroundTaskInvalid;
-    }];
 }
 
 #pragma mark - data processing
@@ -210,11 +196,6 @@
         dispatch_async(dispatch_get_main_queue(), ^{
             [NSNotificationCenter.defaultCenter postNotificationName:MEGACameraUploadAssetUploadDoneNotificationName object:nil];
         });
-    }
-    
-    if (self.uploadTaskIdentifier != UIBackgroundTaskInvalid) {
-        [UIApplication.sharedApplication endBackgroundTask:self.uploadTaskIdentifier];
-        self.uploadTaskIdentifier = UIBackgroundTaskInvalid;
     }
     
     if (uploadNextAsset) {
