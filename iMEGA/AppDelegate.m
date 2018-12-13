@@ -174,8 +174,8 @@
 //        [[MEGASdkManager sharedMEGASdkFolder] changeApiUrl:@"https://api-sandbox3.developers.mega.co.nz/" disablepkp:NO];
 //    }
     
-    [[MEGASdkManager sharedMEGASdk] changeApiUrl:@"https://api-sandbox3.developers.mega.co.nz/" disablepkp:NO];
-    [[MEGASdkManager sharedMEGASdkFolder] changeApiUrl:@"https://api-sandbox3.developers.mega.co.nz/" disablepkp:NO];
+    [[MEGASdkManager sharedMEGASdk] changeApiUrl:@"https://api-sandbox3.developers.mega.co.nz/" disablepkp:YES];
+    [[MEGASdkManager sharedMEGASdkFolder] changeApiUrl:@"https://api-sandbox3.developers.mega.co.nz/" disablepkp:YES];
     
     [[MEGASdkManager sharedMEGASdk] addMEGARequestDelegate:self];
     [[MEGASdkManager sharedMEGASdk] addMEGATransferDelegate:self];
