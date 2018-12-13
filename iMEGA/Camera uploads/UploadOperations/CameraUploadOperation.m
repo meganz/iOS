@@ -10,6 +10,7 @@
 #import "CameraUploadRequestDelegate.h"
 #import "FileEncrypter.h"
 #import "NSURL+CameraUpload.h"
+#import "MEGAConstants.h"
 @import Photos;
 
 @interface CameraUploadOperation ()
@@ -197,6 +198,8 @@
 #pragma mark - finish operation
 
 - (void)finishOperationWithStatus:(NSString *)status shouldUploadNextAsset:(BOOL)uploadNextAsset {
+    [self finishOperation];
+    
     MEGALogDebug(@"[Camera Upload] %@ finishes with status: %@", self, status);
     [CameraUploadRecordManager.shared updateRecordOfLocalIdentifier:self.uploadInfo.asset.localIdentifier withStatus:status error:nil];
     
@@ -204,7 +207,11 @@
         [[NSFileManager defaultManager] removeItemAtURL:self.uploadInfo.directoryURL error:nil];
     }
     
-    [self finishOperation];
+    if ([status isEqualToString:CameraAssetUploadStatusDone]) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [NSNotificationCenter.defaultCenter postNotificationName:MEGACameraUploadAssetUploadDoneNotificationName object:nil];
+        });
+    }
     
     if (self.uploadTaskIdentifier != UIBackgroundTaskInvalid) {
         [UIApplication.sharedApplication endBackgroundTask:self.uploadTaskIdentifier];
