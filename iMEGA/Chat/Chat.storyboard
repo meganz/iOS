@@ -882,6 +882,9 @@
                                     <outlet property="delegate" destination="Vz1-hi-tko" id="n6D-5r-IUJ"/>
                                 </connections>
                             </collectionView>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="fAr-Ud-Er3">
+                                <rect key="frame" x="188.66666666666666" y="381.66666666666669" width="37" height="37"/>
+                            </activityIndicatorView>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="D2s-La-0cR" userLabel="incomingCallView">
                                 <rect key="frame" x="60" y="613" width="294" height="100"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
@@ -1039,6 +1042,7 @@
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="eTZ-pY-Nh8" firstAttribute="leading" secondItem="ayG-gj-xo6" secondAttribute="leading" id="2ip-lG-oYD"/>
+                            <constraint firstItem="fAr-Ud-Er3" firstAttribute="centerY" secondItem="ljh-eN-dUg" secondAttribute="centerY" id="DCe-hO-CS8"/>
                             <constraint firstItem="ljh-eN-dUg" firstAttribute="bottom" secondItem="ayG-gj-xo6" secondAttribute="bottom" id="Dbz-ZZ-98m"/>
                             <constraint firstItem="PQT-6z-YPf" firstAttribute="centerX" secondItem="T7i-gV-Gx7" secondAttribute="centerX" id="ZR6-EC-9F8"/>
                             <constraint firstItem="ljh-eN-dUg" firstAttribute="trailing" secondItem="ayG-gj-xo6" secondAttribute="trailing" id="dEG-Vj-DCK"/>
@@ -1046,6 +1050,7 @@
                             <constraint firstItem="PQT-6z-YPf" firstAttribute="top" secondItem="ayG-gj-xo6" secondAttribute="top" id="fUy-Gh-oEi"/>
                             <constraint firstItem="eTZ-pY-Nh8" firstAttribute="trailing" secondItem="ayG-gj-xo6" secondAttribute="trailing" id="gXQ-Ur-6hi"/>
                             <constraint firstItem="ljh-eN-dUg" firstAttribute="top" secondItem="PQT-6z-YPf" secondAttribute="bottom" id="kE4-In-vc3"/>
+                            <constraint firstItem="fAr-Ud-Er3" firstAttribute="centerX" secondItem="ljh-eN-dUg" secondAttribute="centerX" id="ohV-mz-ehr"/>
                             <constraint firstItem="ljh-eN-dUg" firstAttribute="leading" secondItem="ayG-gj-xo6" secondAttribute="leading" id="qqr-Js-k80"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="ayG-gj-xo6"/>
@@ -1058,6 +1063,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="collectionActivity" destination="fAr-Ud-Er3" id="oAC-eW-cho"/>
                         <outlet property="collectionView" destination="ljh-eN-dUg" id="ZGn-sR-1zO"/>
                         <outlet property="collectionViewBottomConstraint" destination="Dbz-ZZ-98m" id="M7k-3P-AOI"/>
                         <outlet property="enableDisableSpeaker" destination="4uv-S3-2LB" id="bJA-ys-6xu"/>
