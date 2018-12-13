@@ -1,6 +1,6 @@
 
 #import "CameraUploadCompletionManager.h"
-#import "CompleteUploadOperation.h"
+#import "UploadCompletionOperation.h"
 #import "AttributeUploadManager.h"
 #import "MEGAConstants.h"
 #import "NSURL+CameraUpload.h"
@@ -55,7 +55,7 @@
 }
 
 - (void)showUploadedNodeWithUploadInfo:(AssetUploadInfo *)uploadInfo localIdentifier:(NSString *)localIdentifier transferToken:(NSData *)token {
-    CompleteUploadOperation *operation = [[CompleteUploadOperation alloc] initWithUploadInfo:uploadInfo transferToken:token completion:^(MEGANode * _Nullable node, NSError * _Nullable error) {
+    UploadCompletionOperation *operation = [[UploadCompletionOperation alloc] initWithUploadInfo:uploadInfo transferToken:token completion:^(MEGANode * _Nullable node, NSError * _Nullable error) {
         if (error) {
             MEGALogDebug(@"[Camera Upload] error when to complete transfer %@", error);
             [self finishUploadForLocalIdentifier:localIdentifier status:CameraAssetUploadStatusFailed];
@@ -66,6 +66,9 @@
             [AttributeUploadManager.shared uploadFileAtURL:uploadInfo.previewURL withAttributeType:MEGAAttributeTypePreview forNode:node];
             [self finishUploadForLocalIdentifier:localIdentifier status:CameraAssetUploadStatusDone];
         }
+    } backgroundTaskExpirationHandler:^{
+        MEGALogDebug(@"[Camera Upload] background task expired when to complete transfer");
+        [self finishUploadForLocalIdentifier:localIdentifier status:CameraAssetUploadStatusFailed];
     }];
     
     [self.operationQueue addOperation:operation];

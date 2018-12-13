@@ -5,7 +5,7 @@
 @implementation AttributeUploadOperation
 
 - (instancetype)initWithAttributeURL:(NSURL *)URL node:(MEGANode *)node expiresAfterTimeInterval:(NSTimeInterval)timeInterval {
-    self = [super initWithExpireTimeInterval:timeInterval];
+    self = [super initWithExpirationTimeInterval:timeInterval];
     if (self) {
         _node = node;
         _attributeURL = URL;
