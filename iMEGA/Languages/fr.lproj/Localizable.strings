@@ -207,9 +207,9 @@
 /* Title shown when the Contacts section is empty, when you have not added any contact. */
 "contactsEmptyState_title"="Aucun contact";
 /* Title shown when there's no incoming Shared Items */
-"noIncomingSharedItemsEmptyState_text"="Aucun dossier partagé entrant";
+"noIncomingSharedItemsEmptyState_text"="Il n’y a aucun dossier partagé entrant";
 /* Title shown when there's no outgoing Shared Items */
-"noOutgoingSharedItemsEmptyState_text"="Aucun dossier partagé sortant";
+"noOutgoingSharedItemsEmptyState_text"="Il n’y a aucun dossier partagé sortant";
 /* Title of Contacts requests section */
 "contactRequests"="Demandes de contact";
 /* Button title shown in empty views when you can 'Add contacts' */
@@ -719,7 +719,7 @@
 /* Text next to a switch that allows disabling the HTTP protocol for transfers */
 "dontUseHttp"="Ne pas utiliser HTTP";
 /* Footer text that explains when disabling the HTTP protocol for transfers may be useful */
-"transfersSectionFooter"="N’activez cette option que si vos transferts ne démarrent pas. Dans des conditions normales, le protocole HTTP est adéquat, car tous les transferts sont déjà chiffrés.";
+"transfersSectionFooter"="N’activer cette option que si vos transferts ne démarrent pas. Dans des conditions normales, le protocole HTTP est adéquat, car tous les transferts sont déjà chiffrés.";
 /* Title of the dialog displayed the first time that a user want to download a image. Asks if wants to export image files to the photo album after download in future and informs that user can change this option afterwards - (String as short as possible). */
 "Download options"="Options de téléchargement";
 /* Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped */
@@ -1272,7 +1272,7 @@
 /* A summary message when a user sent the information of %s number of contacts at once. Please keep %s as it will be replaced at runtime with the number of contacts sent. */
 "sentXContacts"="%s contacts envoyés.";
 /* A message appearing in the chat summary window when the most recent action performed by a user was attaching a file. Please keep %s as it will be replaced at runtime with the name of the attached file. */
-"attachedFile"="Pièce jointe : %s";
+"attachedFile"="Fichier joint : %s";
 /* A summary message when a user has attached many files at once into the chat. Please keep %s as it will be replaced at runtime with the number of files. */
 "attachedXFiles"="%s fichiers joints.";
 /* Label in a button that allows to jump to the latest item */
@@ -1776,3 +1776,5 @@
 "Last seen a long time ago"="Vu pour la dernière fois il y a longtemps";
 /* */
 "Today"="Aujourd’hui";
+/* */
+"Yesterday"="Hier";
