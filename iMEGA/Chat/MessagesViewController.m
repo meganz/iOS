@@ -19,6 +19,7 @@
 #import "MEGAMessagesTypingIndicatorFoorterView.h"
 #import "MEGANode+MNZCategory.h"
 #import "MEGANodeList+MNZCategory.h"
+#import "MEGALinkManager.h"
 #import "MEGAOpenMessageHeaderView.h"
 #import "MEGAProcessAsset.h"
 #import "MEGAReachabilityManager.h"
@@ -28,7 +29,6 @@
 #import "MEGATransfer+MNZCategory.h"
 #import "NSAttributedString+MNZCategory.h"
 #import "NSString+MNZCategory.h"
-#import "NSURL+MNZCategory.h"
 #import "UIImage+MNZCategory.h"
 #import "UIApplication+MNZCategory.h"
 
@@ -2186,9 +2186,12 @@ const NSUInteger kMaxMessagesToLoad = 256;
                 [self.navigationController pushViewController:chatAttachedContactsVC animated:YES];
             }
         } else if (message.type == MEGAChatMessageTypeContainsMeta) {
-            [Helper presentSafariViewControllerWithURL:[NSURL URLWithString:message.containsMeta.richPreview.url]];
+            NSURL *url = [NSURL URLWithString:message.containsMeta.richPreview.url];
+            MEGALinkManager.linkURL = url;
+            [MEGALinkManager processLinkURL:url];
         } else if (message.node) {
-            [message.MEGALink mnz_showLinkView];
+            MEGALinkManager.linkURL = message.MEGALink;
+            [MEGALinkManager processLinkURL:message.MEGALink];
         }
     }
 }
