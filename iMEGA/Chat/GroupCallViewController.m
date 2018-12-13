@@ -50,6 +50,8 @@
 @property (weak, nonatomic) IBOutlet UIView *participantsView;
 @property (weak, nonatomic) IBOutlet UILabel *participantsLabel;
 
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *collectionActivity;
+
 @property BOOL loudSpeakerEnabled;
 
 @property (strong, nonatomic) NSMutableArray<MEGAGroupCallPeer *> *peersInCall;
@@ -63,6 +65,8 @@
 
 @property (nonatomic, getter=isManualMode) BOOL manualMode;
 @property (assign, nonatomic) uint64_t peerManualMode;
+
+@property (nonatomic) BOOL shouldHideAcivity;
 
 @end
 
@@ -716,6 +720,8 @@
                     self.collectionView.userInteractionEnabled = NO;
                 } completion:^(BOOL finished) {
                     [self.collectionView reloadData];
+                    [self.collectionActivity stopAnimating];
+                    self.collectionView.alpha = 1;
                 }];
             }];
         }
@@ -749,6 +755,10 @@
             }
             
         }
+    }
+    if (self.shouldHideAcivity) {
+        [self.collectionActivity stopAnimating];
+        self.collectionView.alpha = 1;
     }
 }
 
@@ -1028,6 +1038,7 @@
     
     if ([call hasChangedForType:MEGAChatCallChangeTypeSessionStatus]) {
         MEGAChatSession *chatSession = [call sessionForPeer:[call peerSessionStatusChange]];
+        MEGALogDebug(@"GROUPCALLACTIVITY MEGAChatCallChangeTypeSessionStatus with call participants: %tu and session status: %tu", call.numParticipants, chatSession.status);
         switch (chatSession.status) {
             case MEGAChatSessionStatusInitial: {
                 if (!self.timer.isValid) {
@@ -1037,6 +1048,10 @@
                     [self updateParticipants];
                 }
                 
+                if (self.peersInCall.count == 6) {
+                    [self.collectionActivity stopAnimating];
+                    self.collectionView.alpha = 1;
+                }
                 MEGAGroupCallPeer *remoteUser = [[MEGAGroupCallPeer alloc] initWithSession:chatSession];
                 [self.peersInCall insertObject:remoteUser atIndex:0];
 
@@ -1059,6 +1074,11 @@
                 MEGAGroupCallPeer *peerDestroyed = [self peerForId:chatSession.peerId];
                 
                 if (peerDestroyed) {
+                    if (self.peersInCall.count == 7) {
+                        [self.collectionActivity startAnimating];
+                        self.collectionView.alpha = 0;
+                    }
+                    
                     if (self.call.numParticipants >= kSmallPeersLayout) {
                         [self configureManualUserOnFocus:0];
                         self.manualMode = NO;
@@ -1088,6 +1108,11 @@
     }
     
     if ([call hasChangedForType:MEGAChatCallChangeTypeCallComposition]) {
+        MEGALogDebug(@"GROUPCALLACTIVITY MEGAChatCallChangeTypeCallComposition with call participants: %tu and peers in call: %tu", call.numParticipants, self.peersInCall.count);
+        if (call.numParticipants == 7 && self.peersInCall.count == 6) {
+            [self.collectionActivity startAnimating];
+            self.collectionView.alpha = 0;
+        }
         [self shouldChangeCallLayout];
     }
 }
