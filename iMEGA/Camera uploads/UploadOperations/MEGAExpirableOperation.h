@@ -5,7 +5,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface MEGAExpirableOperation : MEGABackgroundTaskOperation
 
-- (instancetype)initWithExpireTimeInterval:(NSTimeInterval)timeInterval;
+- (instancetype)initWithExpirationTimeInterval:(NSTimeInterval)timeInterval;
 
 @end
 

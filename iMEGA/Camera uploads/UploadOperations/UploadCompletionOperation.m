@@ -1,22 +1,22 @@
 
-#import "CompleteUploadOperation.h"
+#import "UploadCompletionOperation.h"
 #import "CameraUploadRequestDelegate.h"
 #import "NSString+MNZCategory.h"
 #import "MEGAError+MNZCategory.h"
 #import "NSError+CameraUpload.h"
 
-@interface CompleteUploadOperation ()
+@interface UploadCompletionOperation ()
 
 @property (strong, nonatomic) AssetUploadInfo *uploadInfo;
 @property (strong, nonatomic) NSData *transferToken;
-@property (copy, nonatomic) CompleteUploadCompletionHandler completion;
+@property (copy, nonatomic) UploadCompletionHandler completion;
 
 @end
 
-@implementation CompleteUploadOperation
+@implementation UploadCompletionOperation
 
-- (instancetype)initWithUploadInfo:(AssetUploadInfo *)info transferToken:(NSData *)token completion:(CompleteUploadCompletionHandler)completion {
-    self = [super init];
+- (instancetype)initWithUploadInfo:(AssetUploadInfo *)info transferToken:(NSData *)token completion:(UploadCompletionHandler)completion backgroundTaskExpirationHandler:(void (^)(void))expirationHandler {
+    self = [super initWithBackgroundTaskExpirationHandler:expirationHandler];
     if (self) {
         _uploadInfo = info;
         _transferToken = token;
