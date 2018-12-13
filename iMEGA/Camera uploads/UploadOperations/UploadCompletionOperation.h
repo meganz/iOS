@@ -9,7 +9,7 @@ typedef void (^UploadCompletionHandler)(MEGANode  * _Nullable node, NSError * _N
 
 @interface UploadCompletionOperation : MEGABackgroundTaskOperation
 
-- (instancetype)initWithUploadInfo:(AssetUploadInfo *)info transferToken:(NSData *)token completion:(UploadCompletionHandler)completion backgroundTaskExpirationHandler:(nullable void (^)(void))expirationHandler;
+- (instancetype)initWithUploadInfo:(AssetUploadInfo *)info transferToken:(NSData *)token completion:(UploadCompletionHandler)completion;
 
 @end
 

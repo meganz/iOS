@@ -5,7 +5,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface MEGABackgroundTaskOperation : MEGAOperation
 
-- (instancetype)initWithBackgroundTaskExpirationHandler:(nullable void (^)(void))expirationHandler;
+- (void)beginBackgroundTaskWithExpirationHandler:(nullable void (^)(void))handler;
 
 @end
 

@@ -11,7 +11,7 @@
 @implementation MEGAExpirableOperation
 
 - (instancetype)initWithExpirationTimeInterval:(NSTimeInterval)timeInterval {
-    self = [super initWithBackgroundTaskExpirationHandler:nil];
+    self = [super init];
     if (self) {
         _expireTimeInterval = timeInterval;
     }
@@ -20,6 +20,10 @@
 
 - (void)start {
     [super start];
+    
+    [self beginBackgroundTaskWithExpirationHandler:^{
+        [self finishOperation];
+    }];
     
     __weak __typeof__(self) weakSelf = self;
     self.watchTimer = [NSTimer scheduledTimerWithTimeInterval:self.expireTimeInterval repeats:NO block:^(NSTimer * _Nonnull timer) {
