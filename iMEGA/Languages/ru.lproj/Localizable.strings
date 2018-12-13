@@ -1678,16 +1678,20 @@
 "Saved to Photos"="Сохранено в фото";
 /* Text shown when an error occurs when trying to save a photo or video to Photos app */
 "Could not save Item"="Элемент не сохранён";
+/* Text shown for switching from thumbnail view to list view. */
+"List view"="Вид списка";
+/* Text shown for switching from list view to thumbnail view. */
+"Thumbnail view"="Значки";
 /* Message to inform the local user that someone has joined the current group call */
-"%@ joined the call."="%@ joined the call.";
+"%@ joined the call."="%@ присоединился к вызову.";
 /* Message to inform the local user that someone has left the current group call */
-"%@ left the call."="%@ left the call.";
+"%@ left the call."="%@ покинул вызов.";
 /* Message to inform the local user is having a bad quality network with someone in the current group call */
-"Poor conection."="Poor conection.";
+"Poor connection."="Плохое соединение.";
 /* Message shown in a chat room when there is an active group call */
-"There is an active group call. Tap to join."="There is an active group call. Tap to join.";
+"There is an active group call. Tap to join."="Активный групповой вызов. Нажмите, чтобы присоединиться.";
 /* Message shown in a chat room for a group call in progress displaying the duration of the call */
-"Touch to return to call %@"="Touch to return to call %@";
+"Touch to return to call %@"="Коснитесь для возврата к вызову %@";
 /* Menu item to change from grid view to list view */
 "List view"="Вид списка";
 /* Menu item to change from list view to grid view */
@@ -1703,7 +1707,7 @@
 /* The header of a notification indicating that a file or folder that was taken down has now been restored due to a successful counter-notice. */
 "Takedown reinstated"="Объекты восстановлены";
 /* Label shown inside an unseen notification */
-"New"="New";
+"New"="Новое";
 /* When a contact sent a contact/friend request */
 "Sent you a contact request"="Хочет связаться с вами";
 /* A notification that the other user cancelled their contact request so it is no longer valid. E.g. user@email.com cancelled their contact request. */
@@ -1733,21 +1737,21 @@
 /* This is shown in the Notification dialog when the email address of a contact is not found and access to the share is lost for some reason (e.g. share removal or contact removal). */
 "Access to folders was removed."="Доступ к папкам был закрыт.";
 /* Content of a notification that informs how many files and folders have been added to a shared folder */
-"Added 1 file"="Added 1 file";
+"Added 1 file"="Добавлен 1 файл";
 /* Content of a notification that informs how many files and folders have been added to a shared folder */
-"Added %lld files"="Added %lld files";
+"Added %lld files"="Добавлены файлы(%lld)";
 /* Content of a notification that informs how many files and folders have been added to a shared folder */
-"Added 1 folder"="Added 1 folder";
+"Added 1 folder"="Добавлена 1 папка";
 /* Content of a notification that informs how many files and folders have been added to a shared folder */
-"Added %lld folders"="Added %lld folders";
+"Added %lld folders"="Добавлены папки(%lld)";
 /* Content of a notification that informs how many files and folders have been added to a shared folder */
-"Added 1 file and 1 folder"="Added 1 file and 1 folder";
+"Added 1 file and 1 folder"="Добавлен 1 файл и 1 папка";
 /* Content of a notification that informs how many files and folders have been added to a shared folder */
-"Added %lld files and 1 folder"="Added %lld files and 1 folder";
+"Added %lld files and 1 folder"="Добавлены файлы(%lld) и 1 папка";
 /* Content of a notification that informs how many files and folders have been added to a shared folder */
-"Added 1 file and %lld folders"="Added 1 file and %lld folders";
+"Added 1 file and %lld folders"="Добавлен 1 файл и папки(%lld)";
 /* Content of a notification that informs how many files and folders have been added to a shared folder */
-"Added [A] files and [B] folders"="Added [A] files and [B] folders";
+"Added [A] files and [B] folders"="Добавлены файлы([A]) и папки([B])";
 /* Notification popup. Notification for multiple removed items from a share. Please keep [X] as it will be replaced at runtime with the number of removed items. */
 "Removed [X] items from a share"="Закрыт доступ к [X] элементам";
 /* A notification telling the user that their Pro plan payment was successfully received. The %1 indicates the name of the Pro plan they paid for e.g. Lite, PRO III. */
@@ -1762,3 +1766,15 @@
 "Your publicly shared %1 (%2) has been taken down."="Ваш элемент с общим доступом (%1 (%2)) убран.";
 /* The text of a notification indicating that a file or folder that was taken down has now been restored due to a successful counter-notice. The %1 placeholder will be replaced with the text ‘file’ or ‘folder’. The %2 will be replaced with the name of the file or folder. */
 "Your taken down %1 (%2) has been reinstated."="Убранный элемент восстановлен: %1 (%2).";
+/* Footer text to explain the meaning of the functionaly 'Last seen' of your chat status. */
+"Allow your contacts to see the last time you were active on MEGA. If disabled you won’t be able to see the activity status of your contacts."="Разрешать контактам видеть, когда я был активен в MEGA последний раз. Если отключено, вы не сможете увидеть статус активности своих контактов.";
+/* Label shown next to a feature name that can be enabled or disabled, like in 'Show Last seen...' */
+"Show"="Показывать";
+/* Shown when viewing a 1on1 chat (at least for now), if the user is offline. */
+"Last seen %s"="был в сети %s";
+/* Text to inform the user the 'Last seen' time of a contact, for example 'Last seen 20 Nov 18 15:15'. String as sort as possible. */
+"Last seen [A] [B]"="Last seen [A] [B]";
+/* Text to inform the user the 'Last seen' time of a contact is a long time ago (>= 65535 minutes) */
+"Last seen a long time ago"="Был в сети очень давно";
+/* */
+"Today"="Сегодня";

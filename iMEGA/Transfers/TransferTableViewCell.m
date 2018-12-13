@@ -25,7 +25,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *pauseButton;
 
 @property (strong, nonatomic) MEGATransfer *transfer;
-@property (strong, nonatomic) MOUploadTransfer *uploadTransfer;
+@property (strong, nonatomic) NSString *uploadTransferLocalIdentifier;
 
 @end
 
@@ -36,7 +36,7 @@
 - (void)configureCellForTransfer:(MEGATransfer *)transfer delegate:(id<TransferTableViewCellDelegate>)delegate {
     self.delegate = delegate;
     self.transfer = transfer;
-    self.uploadTransfer = nil;
+    self.uploadTransferLocalIdentifier = nil;
     
     self.nameLabel.text = [[MEGASdkManager sharedMEGASdk] unescapeFsIncompatible:transfer.fileName];
     self.pauseButton.hidden = self.cancelButton.hidden = NO;
@@ -88,22 +88,22 @@
 }
 
 - (void)reconfigureCellWithTransfer:(MEGATransfer *)transfer {
-    self.uploadTransfer = nil;
+    self.uploadTransferLocalIdentifier = nil;
     self.transfer = transfer;
     
     [self configureCellWithTransferState:MEGATransferStateActive];
 }
 
-- (void)configureCellForQueuedTransfer:(MOUploadTransfer *)uploadTransfer delegate:(id<TransferTableViewCellDelegate>)delegate {
+- (void)configureCellForQueuedTransfer:(NSString *)uploadTransferLocalIdentifier delegate:(id<TransferTableViewCellDelegate>)delegate {
     self.delegate = delegate;
     self.transfer = nil;
-    self.uploadTransfer = uploadTransfer;
+    self.uploadTransferLocalIdentifier = uploadTransferLocalIdentifier;
     
-    if (!uploadTransfer || !uploadTransfer.localIdentifier) {
+    if (!uploadTransferLocalIdentifier) {
         return;
     }
     
-    PHFetchResult *fetchResult = [PHAsset fetchAssetsWithLocalIdentifiers:@[uploadTransfer.localIdentifier] options:nil];
+    PHFetchResult *fetchResult = [PHAsset fetchAssetsWithLocalIdentifiers:@[uploadTransferLocalIdentifier] options:nil];
     if (fetchResult == nil) {
         return;
     }
@@ -224,9 +224,8 @@
                 [[MEGASdkManager sharedMEGASdkFolder] cancelTransferByTag:self.transfer.tag];
             }
         }
-    } else if (self.uploadTransfer) {
-        NSString *localIdentifier = self.uploadTransfer.localIdentifier;
-        [self.delegate cancelQueuedUploadTransfer:localIdentifier];
+    } else if (self.uploadTransferLocalIdentifier) {
+        [self.delegate cancelQueuedUploadTransfer:self.uploadTransferLocalIdentifier];
     }
 }
 

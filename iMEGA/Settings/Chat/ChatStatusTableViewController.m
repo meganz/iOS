@@ -62,7 +62,11 @@
     self.statusPersistenceLabel.text = AMLocalizedString(@"statusPersistence", nil);
     [self.autoAwayTimeSaveButton setTitle:AMLocalizedString(@"save", @"Button title to 'Save' the selected option") forState:UIControlStateNormal];
     
-    self.lastActiveLabel.text = AMLocalizedString(@"Show \"Last seen…\"", @"Label title to enable/disable the 'Last seen' feature of the chat");
+    NSAttributedString *lastSeenString = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:AMLocalizedString(@"Last seen %s", nil), "..."] attributes:@{NSFontAttributeName:[UIFont italicSystemFontOfSize:17.0]}];
+    NSMutableAttributedString *showLastSeenAttributedString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@ ", AMLocalizedString(@"Show", @"Label shown next to a feature name that can be enabled or disabled, like in 'Show Last seen...'")]];
+    [showLastSeenAttributedString appendAttributedString:lastSeenString];
+    
+    self.lastActiveLabel.attributedText = showLastSeenAttributedString;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -232,7 +236,7 @@
             break;
             
         case 1:
-            titleForFooter = AMLocalizedString(@"Allow my contacts to see the last time I was active on MEGA. If disabled you won’t be able to see the activity status of your contacts.", @"Footer text to explain the meaning of the functionaly 'Last seen' of your chat status.");
+            titleForFooter = AMLocalizedString(@"Allow your contacts to see the last time you were active on MEGA. If disabled you won’t be able to see the activity status of your contacts.", @"Footer text to explain the meaning of the functionaly 'Last seen' of your chat status.");
             break;
             
         case 2:
