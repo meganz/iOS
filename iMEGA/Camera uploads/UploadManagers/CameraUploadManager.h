@@ -7,7 +7,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface CameraUploadManager : NSObject
 
-@property (nonatomic, readonly) NSUInteger uploadRunningItemsCount;
 @property (nonatomic, readonly) NSUInteger uploadPendingItemsCount;
 
 + (instancetype)shared;

@@ -212,10 +212,6 @@ static const NSInteger MaxConcurrentVideoOperationCount = 1;
     return pendingCount;
 }
 
-- (NSUInteger)uploadRunningItemsCount {
-    return self.photoUploadOerationQueue.operationCount + self.videoUploadOerationQueue.operationCount;
-}
-
 #pragma mark - handle app lifecycle
 
 - (void)applicationDidEnterBackground {

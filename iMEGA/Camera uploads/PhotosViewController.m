@@ -325,7 +325,7 @@
 - (void)updateCurrentStateWithKnownCameraUploadInProgress:(BOOL)knownCameraUploadInProgress {
     if ([MEGAReachabilityManager isReachable]) {
         if (CameraUploadManager.isCameraUploadEnabled) {
-            if (CameraUploadManager.shared.uploadRunningItemsCount > 0) {
+            if (CameraUploadManager.shared.uploadPendingItemsCount > 0) {
                 self.currentState = MEGACameraUploadsStateUploading;
             } else {
                 if (knownCameraUploadInProgress) {
