@@ -1,19 +1,31 @@
 
-#import "MEGATaskOperation.h"
+#import "MEGABackgroundTaskOperation.h"
 
-@interface MEGATaskOperation ()
+@interface MEGABackgroundTaskOperation ()
 
 @property (nonatomic) UIBackgroundTaskIdentifier backgroundTaskId;
+@property (copy, nonatomic) void (^backgroundTaskExpirationHandler)(void);
 
 @end
 
-@implementation MEGATaskOperation
+@implementation MEGABackgroundTaskOperation
+
+- (instancetype)initWithBackgroundTaskExpirationHandler:(void (^)(void))expirationHandler {
+    self = [super init];
+    if (self) {
+        _backgroundTaskExpirationHandler = expirationHandler;
+    }
+    return self;
+}
 
 - (void)start {
     [super start];
     
     self.backgroundTaskId = [UIApplication.sharedApplication beginBackgroundTaskWithName:@"attributeUploadBackgroundTask" expirationHandler:^{
         MEGALogDebug(@"%@ background task expired.", NSStringFromClass(self.class));
+        if (self.backgroundTaskExpirationHandler) {
+            self.backgroundTaskExpirationHandler();
+        }
         [self finishOperation];
     }];
 }
