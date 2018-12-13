@@ -17,6 +17,10 @@
 }
 
 - (void)finishOperation {
+    if (self.isFinished) {
+        return;
+    }
+    
     [self willChangeValueForKey:@"isExecuting"];
     [self willChangeValueForKey:@"isFinished"];
     executing = NO;

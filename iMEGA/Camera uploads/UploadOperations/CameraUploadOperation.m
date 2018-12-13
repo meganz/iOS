@@ -68,7 +68,6 @@
             [self finishOperation];
             MEGALogDebug(@"[Camera Upload] %@ finishes while uploading", self);
         } else {
-            [self cancel];
             [self finishOperationWithStatus:CameraAssetUploadStatusFailed shouldUploadNextAsset:NO];
         }
         
