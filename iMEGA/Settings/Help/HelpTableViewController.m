@@ -30,7 +30,7 @@
     
     self.sendFeedbackLabel.text = AMLocalizedString(@"sendFeedbackLabel", @"Title of one of the Settings sections where you can 'Send Feedback' to MEGA");
     self.helpCentreLabel.text = AMLocalizedString(@"helpCentreLabel", @"Title of the section to access MEGA's help centre");
-    self.rateUsLabel.text = AMLocalizedString(@"Join Beta", @"Section title that links you to the webpage that let you join and test the beta versions");
+    self.joinBetaLabel.text = AMLocalizedString(@"Join Beta", @"Section title that links you to the webpage that let you join and test the beta versions");
     self.rateUsLabel.text = AMLocalizedString(@"rateUsLabel", @"Title to rate the app");
 }
 

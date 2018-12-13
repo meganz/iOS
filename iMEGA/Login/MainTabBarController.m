@@ -41,8 +41,10 @@
     
     for (NSInteger i = 0; i < [defaultViewControllersMutableArray count]; i++) {
         UITabBarItem *tabBarItem = [[defaultViewControllersMutableArray objectAtIndex:i] tabBarItem];
-        tabBarItem.badgeColor = UIColor.clearColor;
-        [tabBarItem setBadgeTextAttributes:@{ NSForegroundColorAttributeName: UIColor.mnz_redMain } forState:UIControlStateNormal];
+        if (@available(iOS 10.0, *)) {
+            tabBarItem.badgeColor = UIColor.clearColor;
+            [tabBarItem setBadgeTextAttributes:@{ NSForegroundColorAttributeName: UIColor.mnz_redMain } forState:UIControlStateNormal];
+        }
         [self reloadInsetsForTabBarItem:tabBarItem];
         switch (tabBarItem.tag) {
             case CLOUD:
@@ -201,14 +203,25 @@
     int incomingContacts = [[MEGASdkManager sharedMEGASdk] incomingContactRequests].size.intValue;
     NSUInteger unseenUserAlerts = [MEGASdkManager sharedMEGASdk].userAlertList.mnz_unseenCount;
     
-    NSString *badgeValue = incomingContacts + unseenUserAlerts ? @"⦁" : nil;
+    NSString *badgeValue;
+    NSUInteger total = incomingContacts + unseenUserAlerts;
+    if (@available(iOS 10.0, *)) {
+        badgeValue = total ? @"⦁" : nil;
+    } else {
+        badgeValue = total ? [NSString stringWithFormat:@"%tu", total] : nil;
+    }
     [self setBadgeValue:badgeValue tabPosition:MYACCOUNT];
 }
 
 - (void)setBadgeValueForChats {
     NSInteger unreadChats = ([MEGASdkManager sharedMEGAChatSdk] != nil) ? [[MEGASdkManager sharedMEGAChatSdk] unreadChats] : 0;
     
-    NSString *badgeValue = unreadChats ? @"⦁" : nil;
+    NSString *badgeValue;
+    if (@available(iOS 10.0, *)) {
+        badgeValue = unreadChats ? @"⦁" : nil;
+    } else {
+        badgeValue = unreadChats ? [NSString stringWithFormat:@"%td", unreadChats] : nil;
+    }
     [self setBadgeValue:badgeValue tabPosition:CHAT];
 }
 

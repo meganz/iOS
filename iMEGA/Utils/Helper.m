@@ -579,6 +579,15 @@ static MEGAIndexer *indexer;
     }
 }
 
++ (NSMutableArray *)uploadingNodes {
+    static NSMutableArray *uploadingNodes = nil;
+    if (!uploadingNodes) {
+        uploadingNodes = [[NSMutableArray alloc] init];
+    }
+    
+    return uploadingNodes;
+}
+
 + (void)startUploadTransfer:(MOUploadTransfer *)uploadTransfer {
     PHAsset *asset = [PHAsset fetchAssetsWithLocalIdentifiers:@[uploadTransfer.localIdentifier] options:nil].firstObject;
     
@@ -604,23 +613,23 @@ static MEGAIndexer *indexer;
         } else {
             [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:filePath.mnz_relativeLocalPath parent:parentNode appData:appData isSourceTemporary:YES];
         }
+        
+        [[Helper uploadingNodes] addObject:uploadTransfer.localIdentifier];
+        [[MEGAStore shareInstance] deleteUploadTransfer:uploadTransfer];
     } node:^(MEGANode *node) {
         if ([[[MEGASdkManager sharedMEGASdk] parentNodeForNode:node] handle] == parentNode.handle) {
             MEGALogDebug(@"The asset exists in MEGA in the parent folder");
         } else {
             [[MEGASdkManager sharedMEGASdk] copyNode:node newParent:parentNode];
         }
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [[MEGAStore shareInstance] deleteUploadTransfer:uploadTransfer];
-        });
+        [[MEGAStore shareInstance] deleteUploadTransfer:uploadTransfer];
         [Helper startPendingUploadTransferIfNeeded];
     } error:^(NSError *error) {
         [SVProgressHUD showImage:[UIImage imageNamed:@"hudError"] status:[NSString stringWithFormat:@"%@ %@ \r %@", AMLocalizedString(@"Transfer failed:", nil), asset.localIdentifier, error.localizedDescription]];
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [[MEGAStore shareInstance] deleteUploadTransfer:uploadTransfer];
-        });
+        [[MEGAStore shareInstance] deleteUploadTransfer:uploadTransfer];
         [Helper startPendingUploadTransferIfNeeded];
     }];
+    
     [processAsset prepare];
 }
 
@@ -1312,6 +1321,7 @@ static MEGAIndexer *indexer;
 
 + (void)resetUserData {
     [[Helper downloadingNodes] removeAllObjects];
+    [[Helper uploadingNodes] removeAllObjects];
     
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"agreedCopywriteWarning"];
     

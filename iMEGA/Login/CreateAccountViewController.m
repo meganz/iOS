@@ -76,6 +76,7 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
     self.emailInputView.inputTextField.returnKeyType = UIReturnKeyNext;
     self.emailInputView.inputTextField.delegate = self;
     self.emailInputView.inputTextField.tag = EmailTextFieldTag;
+    self.emailInputView.inputTextField.keyboardType = UIKeyboardTypeEmailAddress;
     if (self.emailString) {
         self.emailInputView.inputTextField.text = self.emailString;
     }
@@ -293,8 +294,6 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
 
 - (IBAction)termsCheckboxTouchUpInside:(id)sender {
     self.termsCheckboxButton.selected = !self.termsCheckboxButton.selected;
-    
-    BOOL validForm = !self.firstNameInputView.inputTextField.text.mnz_isEmpty && !self.lastNameInputView.inputTextField.text.mnz_isEmpty && self.emailInputView.inputTextField.text.mnz_isValidEmail && !self.passwordView.passwordTextField.text.mnz_isEmpty && [self.passwordView.passwordTextField.text isEqualToString:self.retypePasswordView.passwordTextField.text] && [[MEGASdkManager sharedMEGASdk] passwordStrength:self.passwordView.passwordTextField.text] > PasswordStrengthVeryWeak && self.termsCheckboxButton.selected;
     
     [self hideKeyboard];
 }

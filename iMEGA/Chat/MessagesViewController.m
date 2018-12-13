@@ -256,7 +256,6 @@ const NSUInteger kMaxMessagesToLoad = 256;
         self.collectionView.contentOffset = offset;
     }
     self.unreadMessages = self.chatRoom.unreadCount;
-    
 }
 
 - (void)didBecomeActive {
@@ -336,7 +335,7 @@ const NSUInteger kMaxMessagesToLoad = 256;
 
 - (void)initNavigationTitleViews {
     self.navigationTitleLabel = [[UILabel alloc] init];
-    self.navigationTitleLabel.font = [UIFont mnz_SFUIRegularWithSize:14];
+    self.navigationTitleLabel.font = [UIFont mnz_SFUISemiBoldWithSize:15];
     self.navigationTitleLabel.textColor = UIColor.whiteColor;
     
     self.navigationStatusView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 10, 10)];
@@ -386,6 +385,8 @@ const NSUInteger kMaxMessagesToLoad = 256;
         mainStackView.axis = UILayoutConstraintAxisVertical;
         [mainStackView addArrangedSubview:titleView];
         [mainStackView addArrangedSubview:self.navigationSubtitleLabel];
+        [self.navigationView addSubview:mainStackView];
+        [[mainStackView.trailingAnchor constraintEqualToAnchor:self.navigationView.trailingAnchor] setActive:YES];
     } else {
         mainStackView.axis = UILayoutConstraintAxisHorizontal;
         mainStackView.alignment = UIStackViewAlignmentCenter;
@@ -393,11 +394,12 @@ const NSUInteger kMaxMessagesToLoad = 256;
         [mainStackView addArrangedSubview:self.navigationTitleLabel];
         [mainStackView addArrangedSubview:self.navigationStatusView];
         [mainStackView addArrangedSubview:self.navigationSubtitleLabel];
+        [self.navigationView addSubview:mainStackView];
     }
     
-    [self.navigationView addSubview:mainStackView];
-    [[mainStackView.widthAnchor constraintLessThanOrEqualToAnchor:self.navigationView.widthAnchor multiplier:1] setActive:YES];
-    [[mainStackView.heightAnchor constraintEqualToAnchor:self.navigationView.heightAnchor multiplier:1] setActive:YES];
+    [[mainStackView.leadingAnchor constraintEqualToAnchor:self.navigationView.leadingAnchor] setActive:YES];
+    [[mainStackView.topAnchor constraintEqualToAnchor:self.navigationView.topAnchor] setActive:YES];
+    [[mainStackView.bottomAnchor constraintEqualToAnchor:self.navigationView.bottomAnchor] setActive:YES];
 }
 
 - (void)loadMessages {
@@ -457,7 +459,7 @@ const NSUInteger kMaxMessagesToLoad = 256;
                 if (userStatus != MEGAChatStatusInvalid) {
                     self.navigationStatusView.hidden = NO;
                     self.navigationSubtitleLabel.hidden = NO;
-                    if (MEGASdkManager.sharedMEGAChatSdk.presenceConfig.isLastGreenVisible && userStatus < 3) {
+                    if (userStatus < MEGAChatStatusOnline) {
                         [MEGASdkManager.sharedMEGAChatSdk requestLastGreen:[self.chatRoom peerHandleAtIndex:0]];
                     }
                     self.navigationStatusView.backgroundColor = [UIColor mnz_colorForStatusChange:userStatus];
@@ -476,21 +478,21 @@ const NSUInteger kMaxMessagesToLoad = 256;
             self.navigationSubtitleLabel.text = chatRoomState;
             self.navigationView.gestureRecognizers = @[titleTapRecognizer];
         } else {
-            UILabel *label = [UILabel new];
+            self.navigationTitleLabel = [UILabel new];
             if (chatRoomState && !self.chatRoom.isGroup) {
-                label = [Helper customNavigationBarLabelWithTitle:chatRoomTitle subtitle:chatRoomState];
+                self.navigationTitleLabel = [Helper customNavigationBarLabelWithTitle:chatRoomTitle subtitle:chatRoomState];
             } else {
-                label = [Helper customNavigationBarLabelWithTitle:chatRoomTitle subtitle:@""];
+                self.navigationTitleLabel = [Helper customNavigationBarLabelWithTitle:chatRoomTitle subtitle:@""];
             }
             
-            label.userInteractionEnabled = YES;
-            label.superview.userInteractionEnabled = YES;
-            label.gestureRecognizers = @[titleTapRecognizer];
-            label.adjustsFontSizeToFitWidth = YES;
-            label.minimumScaleFactor = 0.8f;
-            label.frame = CGRectMake(0, 0, self.navigationItem.titleView.bounds.size.width, 44);
+            self.navigationTitleLabel.userInteractionEnabled = YES;
+            self.navigationTitleLabel.superview.userInteractionEnabled = YES;
+            self.navigationTitleLabel.gestureRecognizers = @[titleTapRecognizer];
+            self.navigationTitleLabel.adjustsFontSizeToFitWidth = YES;
+            self.navigationTitleLabel.minimumScaleFactor = 0.8f;
+            self.navigationTitleLabel.frame = CGRectMake(0, 0, self.navigationItem.titleView.bounds.size.width, 44);
             
-            [self.navigationItem setTitleView:label];
+            [self.navigationItem setTitleView:self.navigationTitleLabel];
         }
         
         self.lastChatRoomStateString = chatRoomState;
@@ -2687,7 +2689,13 @@ const NSUInteger kMaxMessagesToLoad = 256;
         if ([self.chatRoom peerHandleAtIndex:0] == userHandle) {
             MEGAChatStatus chatStatus = [[MEGASdkManager sharedMEGAChatSdk] userOnlineStatus:[self.chatRoom peerHandleAtIndex:0]];
             if (chatStatus < MEGAChatStatusOnline) {
-                self.navigationSubtitleLabel.text = [NSString mnz_lastGreenStringFromMinutes:lastGreen];
+                if (@available(iOS 11.0, *)) {
+                    self.navigationSubtitleLabel.text = [NSString mnz_lastGreenStringFromMinutes:lastGreen];
+                } else {
+                    UILabel *label = [Helper customNavigationBarLabelWithTitle:self.chatRoom.title subtitle:[NSString mnz_lastGreenStringFromMinutes:lastGreen]];
+
+                    self.navigationTitleLabel.attributedText = label.attributedText;
+                }
             }
         }
     }
