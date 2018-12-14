@@ -607,6 +607,7 @@
 		A82E5BCB1F3465A3003C149C /* Spotlight_folder@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = A82E5BC71F3465A3003C149C /* Spotlight_folder@3x.png */; };
 		A82E5BF41F3470B5003C149C /* Spotlight_file.png in Resources */ = {isa = PBXBuildFile; fileRef = A82E5BF21F3470B5003C149C /* Spotlight_file.png */; };
 		A82E5BF51F3470B5003C149C /* Spotlight_folder.png in Resources */ = {isa = PBXBuildFile; fileRef = A82E5BF31F3470B5003C149C /* Spotlight_folder.png */; };
+		A82F8A3921C3E34F0045AF1D /* UIApplication+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = A815FCE91FE2AD080075AC29 /* UIApplication+MNZCategory.m */; };
 		A836581B21020FB9005E616F /* ItemListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 835223B32059588300A47438 /* ItemListViewController.m */; };
 		A836581C2102101C005E616F /* Contacts.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 415226731A692ECC00EC7BB6 /* Contacts.storyboard */; };
 		A836581D21021063005E616F /* ItemCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 835223B0205957DD00A47438 /* ItemCollectionViewCell.m */; };
@@ -4221,6 +4222,7 @@
 				832F19ED2091BD8E0067679E /* MOMediaDestination+CoreDataProperties.m in Sources */,
 				831D61A9218738F30038F5B8 /* MOFolderLayout+CoreDataProperties.m in Sources */,
 				9456054B1EDD7AD70094EF0F /* LTHPasscodeViewController.m in Sources */,
+				A82F8A3921C3E34F0045AF1D /* UIApplication+MNZCategory.m in Sources */,
 				944B205E1EE5C6C2003C967B /* LaunchViewController.m in Sources */,
 				5B71631D203D9CE1001E5FBC /* NodeTableViewCell.m in Sources */,
 				942255091EDC04CD0074C51A /* DocumentPickerViewController.m in Sources */,
