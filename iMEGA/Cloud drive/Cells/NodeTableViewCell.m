@@ -74,17 +74,24 @@
     if (node.hasThumbnail) {
         NSString *thumbnailFilePath = [Helper pathForNode:node inSharedSandboxCacheDirectory:@"thumbnailsV3"];
         if ([[NSFileManager defaultManager] fileExistsAtPath:thumbnailFilePath]) {
+            self.thumbnailPlayImageView.hidden = !node.name.mnz_isVideoPathExtension;
             self.thumbnailImageView.image = [UIImage imageWithContentsOfFile:thumbnailFilePath];
         } else {
             MEGAGetThumbnailRequestDelegate *getThumbnailRequestDelegate = [[MEGAGetThumbnailRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
-                self.thumbnailImageView.image = [UIImage imageWithContentsOfFile:request.file];
+                if (request.nodeHandle == self.node.handle) {
+                    self.thumbnailPlayImageView.hidden = !node.name.mnz_isVideoPathExtension;
+                    self.thumbnailImageView.image = [UIImage imageWithContentsOfFile:request.file];
+                }
             }];
             [[MEGASdkManager sharedMEGASdk] getThumbnailNode:node destinationFilePath:thumbnailFilePath delegate:getThumbnailRequestDelegate];
             [self.thumbnailImageView mnz_imageForNode:node];
         }
-        self.thumbnailPlayImageView.hidden = !node.name.mnz_isVideoPathExtension;
     } else {
         [self.thumbnailImageView mnz_imageForNode:node];
+    }
+    
+    if (!node.name.mnz_isVideoPathExtension) {
+        self.thumbnailPlayImageView.hidden = YES;
     }
     
     self.nameLabel.text = node.name;
