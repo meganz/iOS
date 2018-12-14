@@ -475,7 +475,7 @@
         NSMutableArray *selectedNodesMutableArray = self.selectedNodesArray.mutableCopy;
         NSArray *filesAndFolders = selectedNodesMutableArray.mnz_numberOfFilesAndFolders;
         MEGAMoveRequestDelegate *moveRequestDelegate = [[MEGAMoveRequestDelegate alloc] initWithFiles:[filesAndFolders[0] unsignedIntegerValue] folders:[filesAndFolders[1] unsignedIntegerValue] completion:^{
-            [self dismissViewControllerAnimated:YES completion:nil];
+            [self dismiss];
         }];
         
         for (MEGANode *n in self.selectedNodesArray) {
