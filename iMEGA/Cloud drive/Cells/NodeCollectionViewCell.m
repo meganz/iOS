@@ -1,6 +1,8 @@
 
 #import "NodeCollectionViewCell.h"
 
+#import "NSString+MNZCategory.h"
+
 #import "Helper.h"
 #import "MEGAGetThumbnailRequestDelegate.h"
 #import "MEGASdkManager.h"
@@ -29,7 +31,8 @@
     }
         
     self.nameLabel.text = node.name;
-    
+    self.thumbnailPlayImageView.hidden = !node.name.mnz_isVideoPathExtension;
+
     if (@available(iOS 11.0, *)) {
         self.thumbnailImageView.accessibilityIgnoresInvertColors = YES;
         self.thumbnailPlayImageView.accessibilityIgnoresInvertColors = YES;

@@ -1,5 +1,7 @@
 #import "NodeTableViewCell.h"
 
+#import "NSString+MNZCategory.h"
+
 #import "Helper.h"
 #import "MEGAGetThumbnailRequestDelegate.h"
 #import "MEGASdkManager.h"
@@ -80,6 +82,7 @@
             [[MEGASdkManager sharedMEGASdk] getThumbnailNode:node destinationFilePath:thumbnailFilePath delegate:getThumbnailRequestDelegate];
             [self.thumbnailImageView mnz_imageForNode:node];
         }
+        self.thumbnailPlayImageView.hidden = !node.name.mnz_isVideoPathExtension;
     } else {
         [self.thumbnailImageView mnz_imageForNode:node];
     }
