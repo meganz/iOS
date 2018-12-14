@@ -398,6 +398,7 @@
             [self.missedCallsDictionary removeObjectForKey:@(call.chatId)];
             break;
             
+        case MEGAChatCallStatusUserNoPresent:
         case MEGAChatCallStatusDestroyed:
             if (call.isLocalTermCode) {
                 [self.missedCallsDictionary removeObjectForKey:@(call.chatId)];
