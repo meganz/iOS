@@ -2592,12 +2592,12 @@ const NSUInteger kMaxMessagesToLoad = 256;
             [self customNavigationBarLabel];
             [self updateToolbarPlaceHolder];
             
-            [self.collectionView performBatchUpdates:^{
-                [self.collectionView.collectionViewLayout invalidateLayoutWithContext:[JSQMessagesCollectionViewFlowLayoutInvalidationContext context]];
-                [self.collectionView reloadItemsAtIndexPaths:self.collectionView.indexPathsForVisibleItems];
-            } completion:^(BOOL finished) {
-                [self scrollToBottomAnimated:YES];
-            }];
+            if (self.collectionView.indexPathsForVisibleItems.count > 0) {
+                [self.collectionView performBatchUpdates:^{
+                    [self.collectionView.collectionViewLayout invalidateLayoutWithContext:[JSQMessagesCollectionViewFlowLayoutInvalidationContext context]];
+                    [self.collectionView reloadItemsAtIndexPaths:self.collectionView.indexPathsForVisibleItems];
+                } completion:nil];
+            }
             
             break;
         }
