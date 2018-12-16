@@ -175,7 +175,7 @@ static const NSInteger MaxConcurrentVideoOperationCount = 1;
 #pragma mark - stop upload
 
 - (void)disableCameraUpload {
-    [self.class setCameraUploadEnabled:NO];
+    [self.class clearLocalSettings];
     [self.photoUploadOerationQueue cancelAllOperations];
     [self disableVideoUpload];
     [self.scanner unobservePhotoLibraryChanges];
