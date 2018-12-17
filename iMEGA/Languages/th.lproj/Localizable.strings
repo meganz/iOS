@@ -1767,14 +1767,14 @@
 /* The text of a notification indicating that a file or folder that was taken down has now been restored due to a successful counter-notice. The %1 placeholder will be replaced with the text ‘file’ or ‘folder’. The %2 will be replaced with the name of the file or folder. */
 "Your taken down %1 (%2) has been reinstated."="การแจ้งให้ดำเนินการของคุณ %1 (%2) ถูกคืนสิทธิ์เรียบร้อยแล้ว";
 /* Footer text to explain the meaning of the functionaly 'Last seen' of your chat status. */
-"Allow your contacts to see the last time you were active on MEGA. If disabled you won’t be able to see the activity status of your contacts."="อนุญาตให้ผู้ติดต่อของคุณเห็นว่าเป็นครั้งสุดท้ายที่คุณใช้งาน MEGA หากปิดใช้งานคุณจะไม่สามารถดูสถานะการทำงานของผู้ติดต่อของคุณได้";
+"Allow your contacts to see the last time you were active on MEGA."="อนุญาตให้ผู้ติดต่อของคุณเห็นว่า เป็นครั้งสุดท้ายที่คุณใช้งาน MEGA";
 /* Label shown next to a feature name that can be enabled or disabled, like in 'Show Last seen...' */
 "Show"="แสดง";
 /* Shown when viewing a 1on1 chat (at least for now), if the user is offline. */
 "Last seen %s"="ดูครั้งล่าสุด %s";
-/* Text to inform the user the 'Last seen' time of a contact, for example 'Last seen 20 Nov 18 15:15'. String as sort as possible. */
-"Last seen [A] [B]"="Last seen [A] [B]";
 /* Text to inform the user the 'Last seen' time of a contact is a long time ago (>= 65535 minutes) */
 "Last seen a long time ago"="ดูครั้งล่าสุดเมื่อนานมาแล้ว";
 /* */
 "Today"="วันนี้";
+/* */
+"Yesterday"="เมื่อวาน";
