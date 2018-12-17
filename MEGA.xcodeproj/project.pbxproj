@@ -327,6 +327,8 @@
 		77F1DBDF2056AA13005D5F0E /* MEGAContactLinkQueryRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 77F1DBDE2056AA13005D5F0E /* MEGAContactLinkQueryRequestDelegate.m */; };
 		77F1DBE22056B752005D5F0E /* MEGAGetAttrUserRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 77F1DBE12056B752005D5F0E /* MEGAGetAttrUserRequestDelegate.m */; };
 		77F1DBE52056B767005D5F0E /* MEGASetAttrUserRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 77F1DBE42056B767005D5F0E /* MEGASetAttrUserRequestDelegate.m */; };
+		77F3C30321C12F800049A1BA /* UITextField+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B0CD4292188D71100F97A2C /* UITextField+MNZCategory.m */; };
+		77F3C30621C15A5B0049A1BA /* NSFileManager+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 41DC6F711D54E7080081832C /* NSFileManager+MNZCategory.m */; };
 		77F43DD92034637300AE4F42 /* UICollectionView+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 77F43DD82034637300AE4F42 /* UICollectionView+MNZCategory.m */; };
 		77F95CEF20E3B14D00F42D9C /* ShareFilesDestinationTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 77F95CEE20E3B14D00F42D9C /* ShareFilesDestinationTableViewController.m */; };
 		77F95CF020E3E5C000F42D9C /* SendToViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 837A88C420B45C11007B55D1 /* SendToViewController.m */; };
@@ -4290,6 +4292,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				944DF2BC1EF9379E007798DD /* MEGALogger.m in Sources */,
+				77F3C30621C15A5B0049A1BA /* NSFileManager+MNZCategory.m in Sources */,
 				942255041EDC04080074C51A /* FileProvider.m in Sources */,
 				942ED2AD1EDEE50900C9908D /* SAMKeychain.m in Sources */,
 				942ED2AF1EDEE51600C9908D /* MEGASdkManager.m in Sources */,
@@ -4360,6 +4363,7 @@
 				9411355D1F0100CA00D33428 /* CameraUploadsTableViewController.m in Sources */,
 				941135641F01071600D33428 /* NSString+MNZCategory.m in Sources */,
 				A836581D21021063005E616F /* ItemCollectionViewCell.m in Sources */,
+				77F3C30321C12F800049A1BA /* UITextField+MNZCategory.m in Sources */,
 				941135551F01002E00D33428 /* OpenInActivity.m in Sources */,
 				94892C981EFBF03800AEAC25 /* SVProgressHUD.m in Sources */,
 				5B2E78CD1FA0C3310096C9BE /* MEGACreateFolderRequestDelegate.m in Sources */,
