@@ -1,5 +1,7 @@
 #import "NodeTableViewCell.h"
 
+#import "NSString+MNZCategory.h"
+
 #import "Helper.h"
 #import "MEGAGetThumbnailRequestDelegate.h"
 #import "MEGASdkManager.h"
@@ -40,7 +42,6 @@
 
 - (void)configureCellForNode:(MEGANode *)node delegate:(id<MGSwipeTableCellDelegate>)delegate api:(MEGASdk *)api {
     self.node = node;
-    self.nodeHandle = node.handle;
     
     BOOL isDownloaded = NO;
     if ([[Helper downloadingNodes] objectForKey:node.base64Handle]) {
@@ -73,10 +74,14 @@
     if (node.hasThumbnail) {
         NSString *thumbnailFilePath = [Helper pathForNode:node inSharedSandboxCacheDirectory:@"thumbnailsV3"];
         if ([[NSFileManager defaultManager] fileExistsAtPath:thumbnailFilePath]) {
+            self.thumbnailPlayImageView.hidden = !node.name.mnz_isVideoPathExtension;
             self.thumbnailImageView.image = [UIImage imageWithContentsOfFile:thumbnailFilePath];
         } else {
             MEGAGetThumbnailRequestDelegate *getThumbnailRequestDelegate = [[MEGAGetThumbnailRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
-                self.thumbnailImageView.image = [UIImage imageWithContentsOfFile:request.file];
+                if (request.nodeHandle == self.node.handle) {
+                    self.thumbnailPlayImageView.hidden = !node.name.mnz_isVideoPathExtension;
+                    self.thumbnailImageView.image = [UIImage imageWithContentsOfFile:request.file];
+                }
             }];
             [[MEGASdkManager sharedMEGASdk] getThumbnailNode:node destinationFilePath:thumbnailFilePath delegate:getThumbnailRequestDelegate];
             [self.thumbnailImageView mnz_imageForNode:node];
@@ -85,11 +90,17 @@
         [self.thumbnailImageView mnz_imageForNode:node];
     }
     
+    if (!node.name.mnz_isVideoPathExtension) {
+        self.thumbnailPlayImageView.hidden = YES;
+    }
+    
     self.nameLabel.text = node.name;
     if (node.isFile) {
         self.infoLabel.text = [Helper sizeAndDateForNode:node api:api];
+        self.versionedImageView.hidden = ![[MEGASdkManager sharedMEGASdk] hasVersionsForNode:node];
     } else if (node.isFolder) {
         self.infoLabel.text = [Helper filesAndFoldersInFolderNode:node api:api];
+        self.versionedImageView.hidden = YES;
     }
     
     if (@available(iOS 11.0, *)) {
@@ -103,7 +114,7 @@
 #pragma mark - IBActions
 
 - (IBAction)cancelTransfer:(id)sender {
-    NSNumber *transferTag = [[Helper downloadingNodes] objectForKey:[MEGASdk base64HandleForHandle:self.nodeHandle]];
+    NSNumber *transferTag = [[Helper downloadingNodes] objectForKey:[MEGASdk base64HandleForHandle:self.node.handle]];
     if ([[MEGASdkManager sharedMEGASdk] transferByTag:transferTag.integerValue] != nil) {
         [[MEGASdkManager sharedMEGASdk] cancelTransferByTag:transferTag.integerValue];
     } else {

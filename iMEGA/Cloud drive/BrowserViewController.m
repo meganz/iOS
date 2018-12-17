@@ -13,6 +13,7 @@
 #import "NSString+MNZCategory.h"
 #import "UIAlertAction+MNZCategory.h"
 #import "UIImageView+MNZCategory.h"
+#import "UITextField+MNZCategory.h"
 
 #import "NodeTableViewCell.h"
 
@@ -431,12 +432,13 @@
     [self dismiss];
 }
 
-- (void)alertControllerShouldEnableDefaultButtonForTextField:(UITextField *)sender {
-    UIAlertController *addContactFromEmailAlertController = (UIAlertController *)self.presentedViewController;
-    if (addContactFromEmailAlertController) {
-        UITextField *textField = addContactFromEmailAlertController.textFields.firstObject;
-        UIAlertAction *rightButtonAction = addContactFromEmailAlertController.actions.lastObject;
-        rightButtonAction.enabled = (textField.text.length > 0);
+- (void)newFolderAlertTextFieldDidChange:(UITextField *)textField {
+    UIAlertController *alertController = (UIAlertController *)self.presentedViewController;
+    if (alertController) {
+        BOOL containsInvalidChars = textField.text.mnz_containsInvalidChars;
+        textField.textColor = containsInvalidChars ? UIColor.mnz_redMain : UIColor.darkTextColor;
+        UIAlertAction *rightButtonAction = alertController.actions.lastObject;
+        rightButtonAction.enabled = !textField.text.mnz_isEmpty && !containsInvalidChars;
     }
 }
 
@@ -499,7 +501,10 @@
     
     [newFolderAlertController addTextFieldWithConfigurationHandler:^(UITextField *textField) {
         textField.placeholder = AMLocalizedString(@"newFolderMessage", @"Hint text shown on the create folder alert.");
-        [textField addTarget:self action:@selector(alertControllerShouldEnableDefaultButtonForTextField:) forControlEvents:UIControlEventEditingChanged];
+        [textField addTarget:self action:@selector(newFolderAlertTextFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
+        textField.shouldReturnCompletion = ^BOOL(UITextField *textField) {
+            return (!textField.text.mnz_isEmpty && !textField.text.mnz_containsInvalidChars);
+        };
     }];
     
     [newFolderAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
@@ -615,14 +620,15 @@
         }
     }
     
-    if ([node hasThumbnail]) {
-        cell.nodeHandle = [node handle];
+    if (node.hasThumbnail) {
         [Helper thumbnailForNode:node api:[MEGASdkManager sharedMEGASdk] cell:cell];
     } else {
         [cell.thumbnailImageView mnz_imageForNode:node];
     }
     
-    cell.nameLabel.text = [node name];
+    cell.nameLabel.text = node.name;
+    
+    cell.node = node;
     
     if (self.browserSegmentedControl.selectedSegmentIndex == 0) {
         if (node.isFile) {
@@ -888,8 +894,8 @@
         }
             
         case MEGARequestTypeGetAttrFile: {
-            for (NodeTableViewCell *nodeTableViewCell in [self.tableView visibleCells]) {
-                if ([request nodeHandle] == [nodeTableViewCell nodeHandle]) {
+            for (NodeTableViewCell *nodeTableViewCell in self.tableView.visibleCells) {
+                if (request.nodeHandle == nodeTableViewCell.node.handle) {
                     MEGANode *node = [api nodeForHandle:request.nodeHandle];
                     [Helper setThumbnailForNode:node api:api cell:nodeTableViewCell reindexNode:YES];
                 }
