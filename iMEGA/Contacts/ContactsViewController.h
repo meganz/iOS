@@ -16,6 +16,7 @@ typedef NS_ENUM(NSUInteger, ContactsMode) {
 @interface ContactsViewController : UIViewController
 
 @property (nonatomic) ContactsMode contactsMode;
+@property (nonatomic) BOOL avoidPresentIncomingPendingContactRequests;
 
 @property (nonatomic, strong) MEGANode *node;
 @property (nonatomic, strong) NSArray *nodesArray;

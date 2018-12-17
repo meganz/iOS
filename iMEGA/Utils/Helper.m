@@ -611,6 +611,15 @@ static MEGAIndexer *indexer;
     }
 }
 
++ (NSMutableArray *)uploadingNodes {
+    static NSMutableArray *uploadingNodes = nil;
+    if (!uploadingNodes) {
+        uploadingNodes = [[NSMutableArray alloc] init];
+    }
+    
+    return uploadingNodes;
+}
+
 + (void)startUploadTransfer:(MOUploadTransfer *)uploadTransfer {
     PHAsset *asset = [PHAsset fetchAssetsWithLocalIdentifiers:@[uploadTransfer.localIdentifier] options:nil].firstObject;
     
@@ -622,6 +631,7 @@ static MEGAIndexer *indexer;
         NSString *appData = [NSString new];
         
         appData = [appData mnz_appDataToSaveCoordinates:[filePath mnz_coordinatesOfPhotoOrVideo]];
+        appData = [appData mnz_appDataToLocalIdentifier:uploadTransfer.localIdentifier];
         
         if (![name isEqualToString:newName]) {
             NSString *newFilePath = [[NSFileManager defaultManager].uploadsDirectory stringByAppendingPathComponent:newName];
@@ -635,6 +645,8 @@ static MEGAIndexer *indexer;
         } else {
             [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:filePath.mnz_relativeLocalPath parent:parentNode appData:appData isSourceTemporary:YES];
         }
+        
+        [[Helper uploadingNodes] addObject:uploadTransfer.localIdentifier];
         [[MEGAStore shareInstance] deleteUploadTransfer:uploadTransfer];
     } node:^(MEGANode *node) {
         if ([[[MEGASdkManager sharedMEGASdk] parentNodeForNode:node] handle] == parentNode.handle) {
@@ -649,6 +661,7 @@ static MEGAIndexer *indexer;
         [[MEGAStore shareInstance] deleteUploadTransfer:uploadTransfer];
         [Helper startPendingUploadTransferIfNeeded];
     }];
+    
     [processAsset prepare];
 }
 
@@ -666,10 +679,11 @@ static MEGAIndexer *indexer;
         }
     }
     
-    NSArray<MOUploadTransfer *> *uploadTransfers = [[MEGAStore shareInstance] fetchUploadTransfers];
-    
-    if (allUploadTransfersPaused && uploadTransfers.count) {
-        [Helper startUploadTransfer:uploadTransfers.firstObject];
+    if (allUploadTransfersPaused) {
+        NSArray<MOUploadTransfer *> *queuedUploadTransfers = [[MEGAStore shareInstance] fetchUploadTransfers];
+        if (queuedUploadTransfers.count) {
+            [Helper startUploadTransfer:queuedUploadTransfers.firstObject];
+        }
     }
 }
 
@@ -1351,6 +1365,7 @@ static MEGAIndexer *indexer;
 
 + (void)resetUserData {
     [[Helper downloadingNodes] removeAllObjects];
+    [[Helper uploadingNodes] removeAllObjects];
     
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"agreedCopywriteWarning"];
     

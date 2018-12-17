@@ -31,9 +31,10 @@
 #import "NSFileManager+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 #import "NSURL+MNZCategory.h"
+#import "UIApplication+MNZCategory.h"
 #import "UIImage+MNZCategory.h"
 #import "UIImage+GKContact.h"
-#import "UIApplication+MNZCategory.h"
+#import "UITextField+MNZCategory.h"
 
 #import "BrowserViewController.h"
 #import "CallViewController.h"
@@ -978,6 +979,10 @@
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"decryptionKeyAlertTitle", nil) message:AMLocalizedString(@"decryptionKeyAlertMessage", nil) preferredStyle:UIAlertControllerStyleAlert];
     [alertController addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
         textField.placeholder = AMLocalizedString(@"decryptionKey", nil);
+        [textField addTarget:self action:@selector(alertTextFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
+        textField.shouldReturnCompletion = ^BOOL(UITextField *textField) {
+            return !textField.text.mnz_isEmpty;
+        };
     }];
     [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         [[MEGASdkManager sharedMEGASdk] decryptPasswordProtectedLink:encryptedLinkURLString password:alertController.textFields.firstObject.text delegate:delegate];
@@ -1337,17 +1342,7 @@
     uint64_t handle = [MEGASdk handleForBase64Handle:self.nodeToPresentBase64Handle];
     MEGANode *node = [[MEGASdkManager sharedMEGASdk] nodeForHandle:handle];
     if (node) {
-        UINavigationController *navigationController;
-        if ([[MEGASdkManager sharedMEGASdk] accessLevelForNode:node] != MEGAShareTypeAccessOwner) { // node from inshare
-            self.mainTBC.selectedIndex = SHARES;
-            SharedItemsViewController *sharedItemsVC = self.mainTBC.childViewControllers[SHARES].childViewControllers[0];
-            [sharedItemsVC selectSegment:0]; // Incoming
-        } else {
-            self.mainTBC.selectedIndex = CLOUD;
-        }
-        navigationController = [self.mainTBC.childViewControllers objectAtIndex:self.mainTBC.selectedIndex];
-        
-        [self presentNode:node inNavigationController:navigationController];
+        [node navigateToParentAndPresent];
     } else {
         if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
             UIAlertController *theContentIsNotAvailableAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"theContentIsNotAvailableForThisAccount", @"") message:nil preferredStyle:UIAlertControllerStyleAlert];
@@ -1391,45 +1386,6 @@
         }
     }
     self.nodeToPresentBase64Handle = nil;
-}
-
-- (void)presentNode:(MEGANode *)node inNavigationController:(UINavigationController *)navigationController {
-    [navigationController popToRootViewControllerAnimated:NO];
-    
-    NSArray *parentTreeArray = node.mnz_parentTreeArray;
-    for (MEGANode *node in parentTreeArray) {
-        CloudDriveViewController *cloudDriveVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
-        cloudDriveVC.parentNode = node;
-        [navigationController pushViewController:cloudDriveVC animated:NO];
-    }
-    
-    switch (node.type) {
-        case MEGANodeTypeFolder:
-        case MEGANodeTypeRubbish: {
-            CloudDriveViewController *cloudDriveVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
-            cloudDriveVC.parentNode = node;
-            [navigationController pushViewController:cloudDriveVC animated:NO];
-            break;
-        }
-            
-        case MEGANodeTypeFile: {
-            if (node.name.mnz_isImagePathExtension || node.name.mnz_isVideoPathExtension) {
-                MEGANode *parentNode = [[MEGASdkManager sharedMEGASdk] nodeForHandle:node.parentHandle];
-                MEGANodeList *nodeList = [[MEGASdkManager sharedMEGASdk] childrenForParent:parentNode];
-                NSMutableArray<MEGANode *> *mediaNodesArray = [nodeList mnz_mediaNodesMutableArrayFromNodeList];
-                
-                MEGAPhotoBrowserViewController *photoBrowserVC = [MEGAPhotoBrowserViewController photoBrowserWithMediaNodes:mediaNodesArray api:[MEGASdkManager sharedMEGASdk] displayMode:DisplayModeCloudDrive presentingNode:node preferredIndex:0];
-                
-                [navigationController presentViewController:photoBrowserVC animated:YES completion:nil];
-            } else {
-                [node mnz_openNodeInNavigationController:navigationController folderLink:NO];
-            }
-            break;
-        }
-            
-        default:
-            break;
-    }
 }
 
 - (void)migrateLocalCachesLocation {
@@ -1590,6 +1546,14 @@ void uncaughtExceptionHandler(NSException *exception) {
     
     [UIApplication.mnz_presentingViewController presentViewController:navigationController animated:YES completion:nil];
     self.urlType = URLTypeDefault;
+}
+
+- (void)alertTextFieldDidChange:(UITextField *)textField {
+    UIAlertController *alertController = (UIAlertController *)UIApplication.mnz_visibleViewController;
+    if (alertController) {
+        UIAlertAction *rightButtonAction = alertController.actions.firstObject;
+        rightButtonAction.enabled = !textField.text.mnz_isEmpty;
+    }
 }
 
 #pragma mark - Battery changed
@@ -2295,16 +2259,23 @@ void uncaughtExceptionHandler(NSException *exception) {
                         masterKeyLoggedInAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"passwordReset", @"Headline of the password reset recovery procedure") message:AMLocalizedString(@"pleaseEnterYourRecoveryKey", @"A message shown to explain that the user has to input (type or paste) their recovery key to continue with the reset password process.") preferredStyle:UIAlertControllerStyleAlert];
                         [masterKeyLoggedInAlertController addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
                             textField.placeholder = AMLocalizedString(@"recoveryKey", @"Label for any 'Recovery Key' button, link, text, title, etc. Preserve uppercase - (String as short as possible). The Recovery Key is the new name for the account 'Master Key', and can unlock (recover) the account if the user forgets their password.");
+                            [textField addTarget:self action:@selector(alertTextFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
+                            textField.shouldReturnCompletion = ^BOOL(UITextField *textField) {
+                                return !textField.text.mnz_isEmpty;
+                            };
                         }];
                     }
                     
-                    [masterKeyLoggedInAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:nil]];
-                    [masterKeyLoggedInAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+                    UIAlertAction *okAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
                         NSString *masterKey = masterKeyLoggedInAlertController.textFields.count ? masterKeyLoggedInAlertController.textFields[0].text : [[MEGASdkManager sharedMEGASdk] masterKey];
                         [self presentChangeViewType:ChangeTypeResetPassword email:self.emailOfNewSignUpLink masterKey:masterKey link:self.recoveryLink];
                         self.emailOfNewSignUpLink = nil;
                         self.recoveryLink = nil;
-                    }]];
+                    }];
+                    okAlertAction.enabled = NO;
+                    [masterKeyLoggedInAlertController addAction:okAlertAction];
+                    
+                    [masterKeyLoggedInAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:nil]];
                     
                     self.emailOfNewSignUpLink = request.email;
                     self.recoveryLink = request.link;
@@ -2614,6 +2585,11 @@ void uncaughtExceptionHandler(NSException *exception) {
         }
         
         [transfer mnz_parseAppData];
+        
+        if ([transfer.appData containsString:@">localIdentifier"]) {
+            NSString *localIdentifier = [transfer.appData mnz_stringBetweenString:@">localIdentifier=" andString:@""];
+            [[Helper uploadingNodes] removeObject:localIdentifier];
+        }
         
         [Helper startPendingUploadTransferIfNeeded];
     }

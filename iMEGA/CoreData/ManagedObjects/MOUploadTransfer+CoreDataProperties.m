@@ -8,5 +8,6 @@
 }
 
 @dynamic localIdentifier;
+@dynamic parentNodeHandle;
 
 @end
