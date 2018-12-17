@@ -637,7 +637,7 @@
 /* Permissions given to the user you share your folder with */
 "readAndWrite"="อ่านและเขียน";
 /* Permissions given to the user you share your folder with */
-"fullAccess"="เข้าถึงได้เต็มรูปแบบ";
+"fullAccess"="เข้าถึงแบบเต็มที่";
 /* Title of the Settings section */
 "settingsTitle"="ตั้งค่า";
 /* Title of one of the Settings sections where you can set up the 'Camera Uploads' options */
