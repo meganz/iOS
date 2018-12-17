@@ -108,8 +108,14 @@
 }
 
 - (void)createThumbnailAndPreviewFiles {
-    [self.attributesDataSDK createThumbnail:self.uploadInfo.fileURL.path destinatioPath:self.uploadInfo.thumbnailURL.path];
-    [self.attributesDataSDK createPreview:self.uploadInfo.fileURL.path destinatioPath:self.uploadInfo.previewURL.path];
+    BOOL thumbnailCreated = [self.attributesDataSDK createThumbnail:self.uploadInfo.fileURL.path destinatioPath:self.uploadInfo.thumbnailURL.path];
+    if (!thumbnailCreated) {
+        MEGALogDebug(@"[Camera Upload] %@ error when to create thumbnail", self);
+    }
+    BOOL previewCreated = [self.attributesDataSDK createPreview:self.uploadInfo.fileURL.path destinatioPath:self.uploadInfo.previewURL.path];
+    if (!previewCreated) {
+        MEGALogDebug(@"[Camera Upload] %@ error when to create preview", self);
+    }
     self.attributesDataSDK = nil;
 }
 
