@@ -8,6 +8,7 @@
 
 #import "MEGA-Swift.h"
 
+#import "DevicePermissionsHelper.h"
 #import "Helper.h"
 #import "MEGAMoveRequestDelegate.h"
 #import "MEGANodeList+MNZCategory.h"
@@ -218,40 +219,22 @@
 }
 
 - (void)mnz_saveToPhotosWithApi:(MEGASdk *)api {
-    [PHPhotoLibrary requestAuthorization:^(PHAuthorizationStatus status) {
-        switch (status) {
-            case PHAuthorizationStatusAuthorized: {
-                [SVProgressHUD showImage:[UIImage imageNamed:@"saveToPhotos"] status:AMLocalizedString(@"Saving to Photos…", @"Text shown when starting the process to save a photo or video to Photos app")];
-                NSString *temporaryPath = [[NSTemporaryDirectory() stringByAppendingPathComponent:self.base64Handle] stringByAppendingPathComponent:self.name];
-                NSString *temporaryFingerprint = [[MEGASdkManager sharedMEGASdk] fingerprintForFilePath:temporaryPath];
-                if ([temporaryFingerprint isEqualToString:self.fingerprint]) {
-                    [self mnz_copyToGalleryFromTemporaryPath:temporaryPath];
-                } else if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-                    NSString *downloadsDirectory = [[NSFileManager defaultManager] downloadsDirectory];
-                    downloadsDirectory = downloadsDirectory.mnz_relativeLocalPath;
-                    NSString *offlineNameString = [[MEGASdkManager sharedMEGASdkFolder] escapeFsIncompatible:self.name];
-                    NSString *localPath = [downloadsDirectory stringByAppendingPathComponent:offlineNameString];
-                    [[MEGASdkManager sharedMEGASdk] startDownloadNode:[api authorizeNode:self] localPath:localPath appData:[[NSString new] mnz_appDataToSaveInPhotosApp]];
-                }
-                break;
+    [DevicePermissionsHelper photosPermissionWithCompletionHandler:^(BOOL granted) {
+        if (granted) {
+            [SVProgressHUD showImage:[UIImage imageNamed:@"saveToPhotos"] status:AMLocalizedString(@"Saving to Photos…", @"Text shown when starting the process to save a photo or video to Photos app")];
+            NSString *temporaryPath = [[NSTemporaryDirectory() stringByAppendingPathComponent:self.base64Handle] stringByAppendingPathComponent:self.name];
+            NSString *temporaryFingerprint = [[MEGASdkManager sharedMEGASdk] fingerprintForFilePath:temporaryPath];
+            if ([temporaryFingerprint isEqualToString:self.fingerprint]) {
+                [self mnz_copyToGalleryFromTemporaryPath:temporaryPath];
+            } else if ([MEGAReachabilityManager isReachableHUDIfNot]) {
+                NSString *downloadsDirectory = [NSFileManager.defaultManager downloadsDirectory];
+                downloadsDirectory = downloadsDirectory.mnz_relativeLocalPath;
+                NSString *offlineNameString = [[MEGASdkManager sharedMEGASdkFolder] escapeFsIncompatible:self.name];
+                NSString *localPath = [downloadsDirectory stringByAppendingPathComponent:offlineNameString];
+                [[MEGASdkManager sharedMEGASdk] startDownloadNode:[api authorizeNode:self] localPath:localPath appData:[[NSString new] mnz_appDataToSaveInPhotosApp]];
             }
-                
-            case PHAuthorizationStatusRestricted:
-            case PHAuthorizationStatusDenied: {
-                UIAlertController *permissionsAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"attention", @"Alert title to attract attention") message:AMLocalizedString(@"photoLibraryPermissions", @"Alert message to explain that the MEGA app needs permission to access your device photos") preferredStyle:UIAlertControllerStyleAlert];
-                
-                [permissionsAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
-                
-                [permissionsAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-                    [UIApplication.sharedApplication openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString] options:@{} completionHandler:nil];
-                }]];
-                
-                [UIApplication.mnz_visibleViewController presentViewController:permissionsAlertController animated:YES completion:nil];
-                break;
-            }
-                
-            default:
-                break;
+        } else {
+            [DevicePermissionsHelper alertPhotosPermission];
         }
     }];
 }
