@@ -45,6 +45,10 @@
 
 - (void)refreshUI {
     BOOL isCameraUploadsEnabled = CameraUploadManager.isCameraUploadEnabled;
+    if (!isCameraUploadsEnabled) {
+        [CameraUploadManager clearLocalSettings];
+    }
+    
     [self.uploadVideosLabel setEnabled:isCameraUploadsEnabled];
     [self.uploadVideosSwitch setEnabled:isCameraUploadsEnabled];
     [self.useCellularConnectionLabel setEnabled:isCameraUploadsEnabled];
