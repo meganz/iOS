@@ -70,7 +70,11 @@
 }
 
 - (IBAction)skipTouchUpInside:(UIButton *)sender {
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [self dismissViewControllerAnimated:YES completion:^{
+        if (!CameraUploadManager.isCameraUploadEnabled) {
+            [CameraUploadManager clearLocalSettings];
+        }
+    }];
 }
 
 - (IBAction)enableTouchUpInside:(UIButton *)sender {
