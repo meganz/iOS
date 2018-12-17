@@ -16,6 +16,7 @@ typedef NS_ENUM(NSInteger, MEGAChatMessageEndCallReason);
 - (NSString *)mnz_appDataToSaveInPhotosApp;
 - (NSString *)mnz_appDataToAttachToChatID:(uint64_t)chatId;
 - (NSString *)mnz_appDataToSaveCoordinates:(NSString *)coordinates;
+- (NSString *)mnz_appDataToLocalIdentifier:(NSString *)localIdentifier;
 
 #pragma mark - Utils
 
@@ -32,6 +33,8 @@ typedef NS_ENUM(NSInteger, MEGAChatMessageEndCallReason);
 - (BOOL)mnz_isValidEmail;
 
 - (BOOL)mnz_isEmpty;
+
+- (BOOL)mnz_containsInvalidChars;
 
 - (NSString *)mnz_removeWebclientFormatters;
 
@@ -50,6 +53,8 @@ typedef NS_ENUM(NSInteger, MEGAChatMessageEndCallReason);
 + (NSString *)mnz_base64FromBase64URLEncoding:(NSString *)base64URLEncondingString;
 
 - (NSString *)mnz_relativeLocalPath;
+
++ (NSString *)mnz_lastGreenStringFromMinutes:(NSInteger)minutes;
 
 #pragma mark - File names and extensions
 

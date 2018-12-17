@@ -4,12 +4,17 @@
 #import <UserNotifications/UserNotifications.h>
 
 #import "CallViewController.h"
+#import "ChatRoomsViewController.h"
+#import "DevicePermissionsHelper.h"
+#import "Helper.h"
+#import "MEGANavigationController.h"
 #import "MEGAProviderDelegate.h"
-#import "MessagesViewController.h"
 #import "MEGAChatCall+MNZCategory.h"
+#import "MyAccountHallViewController.h"
+#import "MEGAUserAlertList+MNZCategory.h"
+#import "MessagesViewController.h"
 #import "NSString+MNZCategory.h"
 #import "UIApplication+MNZCategory.h"
-#import "DevicePermissionsHelper.h"
 
 @interface MainTabBarController () <UITabBarControllerDelegate, MEGAGlobalDelegate, MEGAChatCallDelegate>
 
@@ -36,6 +41,10 @@
     
     for (NSInteger i = 0; i < [defaultViewControllersMutableArray count]; i++) {
         UITabBarItem *tabBarItem = [[defaultViewControllersMutableArray objectAtIndex:i] tabBarItem];
+        if (@available(iOS 10.0, *)) {
+            tabBarItem.badgeColor = UIColor.clearColor;
+            [tabBarItem setBadgeTextAttributes:@{ NSForegroundColorAttributeName: UIColor.mnz_redMain } forState:UIControlStateNormal];
+        }
         [self reloadInsetsForTabBarItem:tabBarItem];
         switch (tabBarItem.tag) {
             case CLOUD:
@@ -81,7 +90,7 @@
     [[MEGASdkManager sharedMEGAChatSdk] addChatCallDelegate:self];
     
     [self setBadgeValueForChats];
-    [self setBadgeValueForIncomingContactRequests];
+    [self setBadgeValueForMyAccount];
     
     if (@available(iOS 10.0, *)) {
         _megaCallManager = [[MEGACallManager alloc] init];
@@ -139,6 +148,43 @@
     }
 }
 
+#pragma mark - Public
+
+- (void)openChatRoomNumber:(NSNumber *)chatNumber {
+    if (chatNumber) {
+        self.selectedIndex = CHAT;
+        MEGANavigationController *navigationController = [self.childViewControllers objectAtIndex:CHAT];
+        ChatRoomsViewController *chatRoomsVC = navigationController.viewControllers.firstObject;
+        
+        if ([MEGASdkManager sharedMEGAChatSdk].numCalls == 0) {
+            UIViewController *rootViewController = UIApplication.sharedApplication.delegate.window.rootViewController;
+            if (rootViewController.presentedViewController) {
+                [rootViewController dismissViewControllerAnimated:YES completion:^{
+                    [chatRoomsVC openChatRoomWithID:chatNumber.unsignedLongLongValue];
+                }];
+            } else {
+                [chatRoomsVC openChatRoomWithID:chatNumber.unsignedLongLongValue];
+            }
+        }
+    }
+}
+
+- (void)showAchievements {
+    self.selectedIndex = MYACCOUNT;
+    MEGANavigationController *navigationController = [self.childViewControllers objectAtIndex:MYACCOUNT];
+    MyAccountHallViewController *myAccountHallVC = navigationController.viewControllers.firstObject;
+    if ([[MEGASdkManager sharedMEGASdk] isAchievementsEnabled]) {
+        [myAccountHallVC openAchievements];
+    }
+}
+
+- (void)showOffline {
+    self.selectedIndex = MYACCOUNT;
+    MEGANavigationController *navigationController = [self.childViewControllers objectAtIndex:MYACCOUNT];
+    MyAccountHallViewController *myAccountHallVC = navigationController.viewControllers.firstObject;
+    [myAccountHallVC openOffline];
+}
+
 #pragma mark - Private
 
 - (void)reloadInsetsForTabBarItem:(UITabBarItem *)tabBarItem {
@@ -153,20 +199,30 @@
     }
 }
 
-- (void)setBadgeValueForIncomingContactRequests {
-    MEGAContactRequestList *incomingContactsLists = [[MEGASdkManager sharedMEGASdk] incomingContactRequests];
-    long incomingContacts = incomingContactsLists.size.longLongValue;
-    NSString *badgeValue = incomingContacts ? [NSString stringWithFormat:@"%ld", incomingContacts] : nil;
+- (void)setBadgeValueForMyAccount {
+    int incomingContacts = [[MEGASdkManager sharedMEGASdk] incomingContactRequests].size.intValue;
+    NSUInteger unseenUserAlerts = [MEGASdkManager sharedMEGASdk].userAlertList.mnz_unseenCount;
+    
+    NSString *badgeValue;
+    NSUInteger total = incomingContacts + unseenUserAlerts;
+    if (@available(iOS 10.0, *)) {
+        badgeValue = total ? @"⦁" : nil;
+    } else {
+        badgeValue = total ? [NSString stringWithFormat:@"%tu", total] : nil;
+    }
     [self setBadgeValue:badgeValue tabPosition:MYACCOUNT];
 }
 
 - (void)setBadgeValueForChats {
     NSInteger unreadChats = ([MEGASdkManager sharedMEGAChatSdk] != nil) ? [[MEGASdkManager sharedMEGAChatSdk] unreadChats] : 0;
     
-    NSString *badgeValue = unreadChats ? [NSString stringWithFormat:@"%ld", unreadChats] : nil;
+    NSString *badgeValue;
+    if (@available(iOS 10.0, *)) {
+        badgeValue = unreadChats ? @"⦁" : nil;
+    } else {
+        badgeValue = unreadChats ? [NSString stringWithFormat:@"%td", unreadChats] : nil;
+    }
     [self setBadgeValue:badgeValue tabPosition:CHAT];
-    
-    [UIApplication sharedApplication].applicationIconBadgeNumber = unreadChats;
 }
 
 - (void)setBadgeValue:(NSString *)badgeValue tabPosition:(NSInteger)tabPosition {
@@ -193,7 +249,7 @@
                 callVC.chatRoom  = chatRoom;
                 callVC.videoCall = call.hasRemoteVideo;
                 callVC.callType = CallTypeIncoming;
-                [UIApplication.mnz_visibleViewController presentViewController:callVC animated:YES completion:nil];
+                [UIApplication.mnz_presentingViewController presentViewController:callVC animated:YES completion:nil];
             } else {
                 MEGAChatRoom *chatRoom = [api chatRoomForChatId:call.chatId];
                 UILocalNotification* localNotification = [[UILocalNotification alloc] init];
@@ -224,14 +280,18 @@
         callVC.chatRoom  = chatRoom;
         callVC.videoCall = call.hasRemoteVideo;
         callVC.callType = CallTypeIncoming;
-        [UIApplication.mnz_visibleViewController presentViewController:callVC animated:YES completion:nil];
+        [UIApplication.mnz_presentingViewController presentViewController:callVC animated:YES completion:nil];
     }
 }
 
 #pragma mark - MEGAGlobalDelegate
 
 - (void)onContactRequestsUpdate:(MEGASdk *)api contactRequestList:(MEGAContactRequestList *)contactRequestList {
-    [self setBadgeValueForIncomingContactRequests];
+    [self setBadgeValueForMyAccount];
+}
+
+- (void)onUserAlertsUpdate:(MEGASdk *)api userAlertList:(MEGAUserAlertList *)userAlertList {
+    [self setBadgeValueForMyAccount];
 }
 
 #pragma mark - MEGAChatDelegate

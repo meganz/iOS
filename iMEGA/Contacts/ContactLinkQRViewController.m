@@ -7,7 +7,6 @@
 
 #import "CustomModalAlertViewController.h"
 #import "DevicePermissionsHelper.h"
-#import "MainTabBarController.h"
 #import "MEGAContactLinkCreateRequestDelegate.h"
 #import "MEGAContactLinkQueryRequestDelegate.h"
 #import "MEGAInviteContactRequestDelegate.h"

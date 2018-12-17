@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="6uN-CI-8KQ">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="6uN-CI-8KQ">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -70,128 +70,14 @@
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <color key="separatorColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="activeTransferCell" id="tHq-Vb-vFR" userLabel="activeTransferCell" customClass="TransferTableViewCell">
-                                        <rect key="frame" x="0.0" y="22" width="375" height="60"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="tHq-Vb-vFR" id="x4S-nS-49E">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="59.5"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="sYj-FV-cM7" userLabel="Icon Image View">
-                                                    <rect key="frame" x="10" y="10" width="40" height="40"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="40" id="CgI-wU-1Ir"/>
-                                                        <constraint firstAttribute="width" constant="40" id="nFQ-ax-D9a"/>
-                                                    </constraints>
-                                                    <userDefinedRuntimeAttributes>
-                                                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                                            <integer key="value" value="4"/>
-                                                        </userDefinedRuntimeAttribute>
-                                                        <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
-                                                    </userDefinedRuntimeAttributes>
-                                                </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3U3-pH-t8L">
-                                                    <rect key="frame" x="60" y="12" width="32.5" height="18"/>
-                                                    <fontDescription key="fontDescription" name="SFUIText-Medium" family="SF UI Text" pointSize="15"/>
-                                                    <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Hqn-V7-rNU" userLabel="Arrow Image View">
-                                                    <rect key="frame" x="60" y="32" width="11" height="11"/>
-                                                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="11" id="k1u-8t-flC"/>
-                                                        <constraint firstAttribute="height" constant="11" id="upe-hI-2Bq"/>
-                                                    </constraints>
-                                                </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="7" translatesAutoresizingMaskIntoConstraints="NO" id="ynC-ES-fNB" userLabel="Percentage">
-                                                    <rect key="frame" x="77" y="30" width="35" height="15"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="15" id="BHO-u7-vj5"/>
-                                                        <constraint firstAttribute="width" constant="35" id="K5J-zv-TKu"/>
-                                                    </constraints>
-                                                    <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="12"/>
-                                                    <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Gry-Y4-jb0">
-                                                    <rect key="frame" x="283" y="8" width="92" height="44"/>
-                                                    <subviews>
-                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dE6-NS-2V2" userLabel="Cancel Button">
-                                                            <rect key="frame" x="0.0" y="0.0" width="46" height="44"/>
-                                                            <constraints>
-                                                                <constraint firstAttribute="width" constant="46" id="fDZ-2z-ljV"/>
-                                                                <constraint firstAttribute="height" constant="44" id="vXe-UB-9g8"/>
-                                                            </constraints>
-                                                            <state key="normal" image="pauseTransfers">
-                                                                <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                            </state>
-                                                            <connections>
-                                                                <action selector="pauseTransfer:" destination="tHq-Vb-vFR" eventType="touchUpInside" id="Ggn-Yl-AbD"/>
-                                                            </connections>
-                                                        </button>
-                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="blm-2I-lcW" userLabel="Cancel Button">
-                                                            <rect key="frame" x="46" y="0.0" width="46" height="44"/>
-                                                            <constraints>
-                                                                <constraint firstAttribute="height" constant="44" id="e0M-Bk-UHu"/>
-                                                                <constraint firstAttribute="width" constant="46" id="gdw-TL-0DZ"/>
-                                                            </constraints>
-                                                            <state key="normal" image="cancel">
-                                                                <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                            </state>
-                                                            <connections>
-                                                                <action selector="cancelTransfer:" destination="tHq-Vb-vFR" eventType="touchUpInside" id="mW1-dO-haY"/>
-                                                            </connections>
-                                                        </button>
-                                                    </subviews>
-                                                </stackView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="7" translatesAutoresizingMaskIntoConstraints="NO" id="c4a-Tj-bKE" userLabel="Speed">
-                                                    <rect key="frame" x="118" y="30" width="0.0" height="15"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="15" id="uMM-Wx-V2E"/>
-                                                    </constraints>
-                                                    <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="12"/>
-                                                    <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstItem="sYj-FV-cM7" firstAttribute="leading" secondItem="x4S-nS-49E" secondAttribute="leading" constant="10" id="0R3-Cf-a8f"/>
-                                                <constraint firstItem="ynC-ES-fNB" firstAttribute="leading" secondItem="Hqn-V7-rNU" secondAttribute="trailing" constant="6" id="1N6-NA-GBH"/>
-                                                <constraint firstItem="c4a-Tj-bKE" firstAttribute="leading" secondItem="ynC-ES-fNB" secondAttribute="trailing" constant="6" id="3XW-vS-ZZ3"/>
-                                                <constraint firstItem="Hqn-V7-rNU" firstAttribute="centerY" secondItem="c4a-Tj-bKE" secondAttribute="centerY" id="3wm-zz-RZ4"/>
-                                                <constraint firstItem="Hqn-V7-rNU" firstAttribute="centerY" secondItem="ynC-ES-fNB" secondAttribute="centerY" id="81y-7h-KBk"/>
-                                                <constraint firstAttribute="trailing" secondItem="Gry-Y4-jb0" secondAttribute="trailing" id="948-xt-6Da"/>
-                                                <constraint firstItem="Hqn-V7-rNU" firstAttribute="leading" secondItem="sYj-FV-cM7" secondAttribute="trailing" constant="10" id="KLW-nn-Ms1"/>
-                                                <constraint firstItem="ynC-ES-fNB" firstAttribute="top" secondItem="3U3-pH-t8L" secondAttribute="bottom" id="LvU-ni-Yqa"/>
-                                                <constraint firstItem="Gry-Y4-jb0" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="c4a-Tj-bKE" secondAttribute="trailing" constant="10" id="N7e-eJ-6jZ"/>
-                                                <constraint firstItem="3U3-pH-t8L" firstAttribute="top" secondItem="sYj-FV-cM7" secondAttribute="top" constant="2" id="RiB-4e-vuA"/>
-                                                <constraint firstItem="Gry-Y4-jb0" firstAttribute="centerY" secondItem="x4S-nS-49E" secondAttribute="centerY" id="SRP-1j-Ylf"/>
-                                                <constraint firstItem="3U3-pH-t8L" firstAttribute="leading" secondItem="sYj-FV-cM7" secondAttribute="trailing" constant="10" id="b2I-XP-H3d"/>
-                                                <constraint firstAttribute="centerY" secondItem="sYj-FV-cM7" secondAttribute="centerY" id="msA-tc-TKK"/>
-                                                <constraint firstItem="Gry-Y4-jb0" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="3U3-pH-t8L" secondAttribute="trailing" constant="10" id="oCc-ST-aNS"/>
-                                            </constraints>
-                                        </tableViewCellContentView>
-                                        <color key="tintColor" red="0.66666666666666663" green="0.66666666666666663" blue="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <inset key="separatorInset" minX="60" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                        <connections>
-                                            <outlet property="arrowImageView" destination="Hqn-V7-rNU" id="OTC-PD-bsX"/>
-                                            <outlet property="cancelButton" destination="blm-2I-lcW" id="g8j-jy-czH"/>
-                                            <outlet property="iconImageView" destination="sYj-FV-cM7" id="CBi-hE-JDv"/>
-                                            <outlet property="nameLabel" destination="3U3-pH-t8L" id="v6c-tP-3Qu"/>
-                                            <outlet property="pauseButton" destination="dE6-NS-2V2" id="YKV-Ob-xne"/>
-                                            <outlet property="percentageLabel" destination="ynC-ES-fNB" id="D0i-n3-VBq"/>
-                                            <outlet property="speedLabel" destination="c4a-Tj-bKE" id="Njr-ER-Hou"/>
-                                        </connections>
-                                    </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="transferCell" id="qvn-pG-AKw" customClass="TransferTableViewCell">
-                                        <rect key="frame" x="0.0" y="82" width="375" height="60"/>
+                                        <rect key="frame" x="0.0" y="22" width="375" height="60"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="qvn-pG-AKw" id="ZzS-S9-QPl">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="59.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="MZ1-3x-enq" userLabel="Icon Image View">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="MZ1-3x-enq" userLabel="Icon Image View">
                                                     <rect key="frame" x="10" y="10" width="40" height="40"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="40" id="DDL-hH-16O"/>
@@ -233,7 +119,7 @@
                                                 <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="D4t-OQ-tDW">
                                                     <rect key="frame" x="283" y="8" width="92" height="44"/>
                                                     <subviews>
-                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RJg-ce-LC1" userLabel="Cancel Button">
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RJg-ce-LC1" userLabel="Pause Button">
                                                             <rect key="frame" x="0.0" y="0.0" width="46" height="44"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="44" id="uHe-XL-Zct"/>
@@ -281,11 +167,11 @@
                                         <inset key="separatorInset" minX="60" minY="0.0" maxX="0.0" maxY="0.0"/>
                                         <connections>
                                             <outlet property="arrowImageView" destination="TCE-dU-QPa" id="Wec-fw-hUG"/>
+                                            <outlet property="cancelButton" destination="Ws3-xf-NLk" id="ZiD-U4-mrR"/>
                                             <outlet property="iconImageView" destination="MZ1-3x-enq" id="AXC-oB-pyI"/>
                                             <outlet property="infoLabel" destination="RB2-CC-2Yl" id="O0n-Ug-qQy"/>
                                             <outlet property="nameLabel" destination="AGx-71-z6L" id="K3E-eu-zmM"/>
                                             <outlet property="pauseButton" destination="RJg-ce-LC1" id="XSc-wL-7Wu"/>
-                                            <outlet property="percentageLabel" destination="RB2-CC-2Yl" id="Nbo-8d-Vla"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>

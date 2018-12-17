@@ -14,6 +14,7 @@
 #import "MEGANavigationController.h"
 #import "MEGASdkManager.h"
 #import "MEGAUser+MNZCategory.h"
+#import "NSFileManager+MNZCategory.h"
 #import "UIAlertAction+MNZCategory.h"
 #import "UIImageView+MNZCategory.h"
 
@@ -191,9 +192,7 @@
                 NSString *myUserBase64Handle = [MEGASdk base64HandleForUserHandle:[[[MEGASdkManager sharedMEGASdk] myUser] handle]];
                 NSString *myAvatarFilePath = [[Helper pathForSharedSandboxCacheDirectory:@"thumbnailsV3"] stringByAppendingPathComponent:myUserBase64Handle];
                 if (request.file == nil) {
-                    NSError *removeError = nil;
-                    [[NSFileManager defaultManager] removeItemAtPath:myAvatarFilePath error:&removeError];
-                    if (removeError) MEGALogError(@"Remove item at path failed with error: %@", removeError);
+                    [NSFileManager.defaultManager mnz_removeItemAtPath:myAvatarFilePath];
                 }
                 
                 [self setUserAvatar];

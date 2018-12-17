@@ -107,12 +107,12 @@
         }
     }]];
     
-    [UIApplication.mnz_visibleViewController presentViewController:alertController animated:YES completion:nil];
+    [UIApplication.mnz_presentingViewController presentViewController:alertController animated:YES completion:nil];
 }
 
 - (void)firstSectionLabelTapped:(UITapGestureRecognizer *)sender {
     if (sender.state == UIGestureRecognizerStateEnded) {
-        [self youNeedATwoFactorAuthenticationAppAlertWithTitle:AMLocalizedString(@"You need an authenticator app to enable 2FA on MEGA. You can download and install the Google Authenticaor, Duo Mobile, Authy or Microsoft Authenticator app for your phone or tablet.", @"Alert text shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device and tap on the question mark")];
+        [self youNeedATwoFactorAuthenticationAppAlertWithTitle:AMLocalizedString(@"You need an authenticator app to enable 2FA on MEGA. You can download and install the Google Authenticator, Duo Mobile, Authy or Microsoft Authenticator app for your phone or tablet.", @"Alert text shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device and tap on the question mark")];
     }
 }
 

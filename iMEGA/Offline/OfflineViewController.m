@@ -1,22 +1,26 @@
 #import "OfflineViewController.h"
 
 #import "SVProgressHUD.h"
-#import "UIScrollView+EmptyDataSet.h"
 
+#import "UIScrollView+EmptyDataSet.h"
 #import "NSString+MNZCategory.h"
+#import "NSFileManager+MNZCategory.h"
+
 #import "MEGANavigationController.h"
 #import "MEGASdkManager.h"
 #import "PreviewDocumentViewController.h"
 #import "Helper.h"
 #import "MEGAReachabilityManager.h"
-#import "OfflineTableViewCell.h"
 #import "OpenInActivity.h"
 #import "SortByTableViewController.h"
-#import "UIImageView+MNZCategory.h"
-
 #import "MEGAStore.h"
 #import "MEGAAVViewController.h"
 #import "MEGAQLPreviewController.h"
+#import "OfflineTableViewViewController.h"
+#import "OfflineCollectionViewController.h"
+#import "LayoutView.h"
+#import "NodeCollectionViewCell.h"
+#import "OfflineTableViewCell.h"
 
 static NSString *kFileName = @"kFileName";
 static NSString *kIndex = @"kIndex";
@@ -25,23 +29,10 @@ static NSString *kModificationDate = @"kModificationDate";
 static NSString *kFileSize = @"kFileSize";
 static NSString *kisDirectory = @"kisDirectory";
 
-@interface OfflineViewController () <UIViewControllerTransitioningDelegate, UIDocumentInteractionControllerDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGATransferDelegate, MGSwipeTableCellDelegate, UITableViewDataSource, UITableViewDelegate> {
-    NSString *previewDocumentPath;
-    BOOL allItemsSelected;
+@interface OfflineViewController () <UIViewControllerTransitioningDelegate, UIDocumentInteractionControllerDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGATransferDelegate> {
 }
 
-@property (weak, nonatomic) IBOutlet UITableView *tableView;
-
-@property (nonatomic) id<UIViewControllerPreviewing> previewingContext;
-
-@property (nonatomic, strong) NSMutableArray *offlineSortedItems;
-@property (nonatomic, strong) NSMutableArray *offlineFiles;
-@property (nonatomic, strong) NSMutableArray *offlineMultimediaFiles;
-@property (nonatomic, strong) NSMutableArray *offlineItems;
-
-@property (nonatomic, strong) NSString *folderPathFromOffline;
-
-@property (nonatomic, strong) NSMutableArray *selectedItems;
+@property (weak, nonatomic) IBOutlet UIView *containerView;
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *selectAllBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *moreBarButtonItem;
@@ -51,11 +42,18 @@ static NSString *kisDirectory = @"kisDirectory";
 @property (weak, nonatomic) IBOutlet UIToolbar *toolbar;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *activityBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *deleteBarButtonItem;
+@property (nonatomic) id<UIViewControllerPreviewing> previewingContext;
+
+@property (nonatomic, strong) NSMutableArray *offlineMultimediaFiles;
+@property (nonatomic, strong) NSMutableArray *offlineItems;
+@property (nonatomic, strong) NSMutableArray *offlineFiles;
+@property (nonatomic, strong) NSString *folderPathFromOffline;
 
 @property (strong, nonatomic) UIDocumentInteractionController *documentInteractionController;
 
-@property (nonatomic) NSMutableArray *searchItemsArray;
-@property (nonatomic) UISearchController *searchController;
+@property (nonatomic, strong) OfflineTableViewViewController *offlineTableView;
+@property (nonatomic, strong) OfflineCollectionViewController *offlineCollectionView;
+@property (nonatomic, assign) LayoutMode layoutView;
 
 @end
 
@@ -65,15 +63,13 @@ static NSString *kisDirectory = @"kisDirectory";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    self.tableView.emptyDataSetSource = self;
-    self.tableView.emptyDataSetDelegate = self;
+
+    [self determineLayoutView];
     
     if (self.folderPathFromOffline == nil) {
         [self.navigationItem setTitle:AMLocalizedString(@"offline", @"Offline")];
     } else {
-        NSString *currentFolderName = [self.folderPathFromOffline lastPathComponent];
-        [self.navigationItem setTitle:currentFolderName];
+        [self.navigationItem setTitle:self.folderPathFromOffline.lastPathComponent];
     }
     
     UIBarButtonItem *flexibleItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
@@ -84,20 +80,16 @@ static NSString *kisDirectory = @"kisDirectory";
     self.editBarButtonItem.title = AMLocalizedString(@"edit", @"Caption of a button to edit the files that are selected");
     self.navigationItem.rightBarButtonItem = self.moreBarButtonItem;
     
-    self.searchController = [Helper customSearchControllerWithSearchResultsUpdaterDelegate:self searchBarDelegate:self];
-    [self.tableView setContentOffset:CGPointMake(0, CGRectGetHeight(self.searchController.searchBar.frame))];
     self.definesPresentationContext = YES;
     
     [self.view addGestureRecognizer:[[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPress:)]];
-    
-    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self.tableView selector:@selector(reloadEmptyDataSet) name:kReachabilityChangedNotification object:nil];
-    
+    [[NSNotificationCenter defaultCenter] addObserver:self.offlineTableView.tableView selector:@selector(reloadEmptyDataSet) name:kReachabilityChangedNotification object:nil];
+
     [[MEGASdkManager sharedMEGASdk] addMEGATransferDelegate:self];
     [[MEGASdkManager sharedMEGASdkFolder] addMEGATransferDelegate:self];
     [[MEGAReachabilityManager sharedManager] retryPendingConnections];
@@ -111,17 +103,13 @@ static NSString *kisDirectory = @"kisDirectory";
             NSString *documentProviderLog = @"MEGAiOS.docExt.log";
             NSString *fileProviderLog = @"MEGAiOS.fileExt.log";
             NSString *shareExtensionLog = @"MEGAiOS.shareExt.log";
-            [fileManager removeItemAtPath:[[self currentOfflinePath] stringByAppendingPathComponent:documentProviderLog] error:nil];
+            [fileManager mnz_removeItemAtPath:[[self currentOfflinePath] stringByAppendingPathComponent:documentProviderLog]];
             [fileManager copyItemAtPath:[logsPath stringByAppendingPathComponent:documentProviderLog]  toPath:[[self currentOfflinePath] stringByAppendingPathComponent:documentProviderLog] error:nil];
-            [fileManager removeItemAtPath:[[self currentOfflinePath] stringByAppendingPathComponent:fileProviderLog] error:nil];
+            [fileManager mnz_removeItemAtPath:[[self currentOfflinePath] stringByAppendingPathComponent:fileProviderLog]];
             [fileManager copyItemAtPath:[logsPath stringByAppendingPathComponent:fileProviderLog] toPath:[[self currentOfflinePath] stringByAppendingPathComponent:fileProviderLog] error:nil];
-            [fileManager removeItemAtPath:[[self currentOfflinePath] stringByAppendingPathComponent:shareExtensionLog] error:nil];
+            [fileManager mnz_removeItemAtPath:[[self currentOfflinePath] stringByAppendingPathComponent:shareExtensionLog]];
             [fileManager copyItemAtPath:[logsPath stringByAppendingPathComponent:shareExtensionLog] toPath:[[self currentOfflinePath] stringByAppendingPathComponent:shareExtensionLog] error:nil];
         }
-    }
-    
-    if (!self.tableView.tableHeaderView) {
-        self.tableView.tableHeaderView = self.searchController.searchBar;
     }
     
     [self reloadUI];
@@ -130,14 +118,14 @@ static NSString *kisDirectory = @"kisDirectory";
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     
-    [[NSNotificationCenter defaultCenter] removeObserver:self.tableView name:kReachabilityChangedNotification object:nil];
-    
+    [[NSNotificationCenter defaultCenter] removeObserver:self.offlineTableView.tableView name:kReachabilityChangedNotification object:nil];
+
     [[MEGASdkManager sharedMEGASdk] removeMEGATransferDelegate:self];
     [[MEGASdkManager sharedMEGASdkFolder] removeMEGATransferDelegate:self];
     
-    if (self.tableView.isEditing) {
+    if (self.offlineTableView.tableView.isEditing) {
         self.selectedItems = nil;
-        [self setTableViewEditing:NO animated:NO];
+        [self setEditMode:NO];
     }
 }
 
@@ -149,7 +137,7 @@ static NSString *kisDirectory = @"kisDirectory";
     [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
     
     [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
-        [self.tableView reloadEmptyDataSet];
+        [self.offlineTableView.tableView reloadEmptyDataSet];
     } completion:nil];
 }
 
@@ -182,6 +170,121 @@ static NSString *kisDirectory = @"kisDirectory";
             }
         }
     }];
+}
+
+#pragma mark - Layout
+
+
+- (void)determineLayoutView {
+    
+    NSString *relativePath = [[self currentOfflinePath] stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"%@/Documents/", NSHomeDirectory()]  withString:@""];
+    MOOfflineFolderLayout *folderLayout = [[MEGAStore shareInstance] fetchOfflineFolderLayoutWithPath:relativePath];
+    
+    if (folderLayout) {
+        switch (folderLayout.value.integerValue) {
+            case 0:
+                [self initTable];
+                break;
+                
+            case 1:
+                [self initCollection];
+                break;
+                
+            default:
+                [self initTable];
+                break;
+        }
+    } else {
+        NSInteger nodesWithThumbnail = 0;
+        NSInteger nodesWithoutThumbnail = 0;
+        
+        NSString *directoryPathString = [self currentOfflinePath];
+        NSArray *directoryContents = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:directoryPathString error:NULL];
+        
+        for (int i = 0; i < directoryContents.count; i++) {
+            NSString *fileName = [directoryContents objectAtIndex:i];
+            NSString *pathForItem = [directoryPathString stringByAppendingPathComponent:fileName];
+            
+            MOOfflineNode *offNode = [[MEGAStore shareInstance] fetchOfflineNodeWithPath:[Helper pathRelativeToOfflineDirectory:pathForItem]];
+            NSString *handleString = offNode.base64Handle;
+            
+            BOOL isDirectory;
+            [[NSFileManager defaultManager] fileExistsAtPath:pathForItem isDirectory:&isDirectory];
+            if (isDirectory) {
+                nodesWithoutThumbnail = nodesWithoutThumbnail + 1;
+            } else {
+                NSString *thumbnailFilePath = [Helper pathForSharedSandboxCacheDirectory:@"thumbnailsV3"];
+                thumbnailFilePath = [thumbnailFilePath stringByAppendingPathComponent:handleString];
+                
+                if ([[NSFileManager defaultManager] fileExistsAtPath:thumbnailFilePath] && handleString) {
+                    nodesWithThumbnail = nodesWithThumbnail + 1;
+                } else {
+                    nodesWithoutThumbnail = nodesWithoutThumbnail + 1;
+                }
+            }
+        }
+        
+        if (nodesWithThumbnail > nodesWithoutThumbnail) {
+            [self initCollection];
+        } else {
+            [self initTable];
+        }
+    }
+}
+
+
+- (void)initTable {
+    [self.offlineCollectionView willMoveToParentViewController:nil];
+    [self.offlineCollectionView.view removeFromSuperview];
+    [self.offlineCollectionView removeFromParentViewController];
+    self.offlineCollectionView = nil;
+    
+    self.searchController = [Helper customSearchControllerWithSearchResultsUpdaterDelegate:self searchBarDelegate:self];
+    self.layoutView = LayoutModeList;
+    
+    self.offlineTableView = [self.storyboard instantiateViewControllerWithIdentifier:@"OfflineTableID"];
+    [self addChildViewController:self.offlineTableView];
+    self.offlineTableView.view.frame = self.containerView.bounds;
+    [self.containerView addSubview:self.offlineTableView.view];
+    [self.offlineTableView didMoveToParentViewController:self];
+    
+    self.offlineTableView.offline = self;
+    self.offlineTableView.tableView.tableHeaderView = self.searchController.searchBar;
+    self.offlineTableView.tableView.contentOffset = CGPointMake(0, CGRectGetHeight(self.searchController.searchBar.frame));
+    self.offlineTableView.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+    self.offlineTableView.tableView.emptyDataSetDelegate = self;
+    self.offlineTableView.tableView.emptyDataSetSource = self;
+}
+
+- (void)initCollection {
+    [self.offlineTableView willMoveToParentViewController:nil];
+    [self.offlineTableView.view removeFromSuperview];
+    [self.offlineTableView removeFromParentViewController];
+    self.offlineTableView = nil;
+    
+    self.searchController = [Helper customSearchControllerWithSearchResultsUpdaterDelegate:self searchBarDelegate:self];
+    self.layoutView = LayoutModeThumbnail;
+    
+    self.offlineCollectionView = [self.storyboard instantiateViewControllerWithIdentifier:@"OfflineCollectionID"];
+    self.offlineCollectionView.offline = self;
+    [self addChildViewController:self.offlineCollectionView];
+    self.offlineCollectionView.view.frame = self.containerView.bounds;
+    [self.containerView addSubview:self.offlineCollectionView.view];
+    [self.offlineCollectionView didMoveToParentViewController:self];
+    
+    self.offlineCollectionView.collectionView.emptyDataSetDelegate = self;
+    self.offlineCollectionView.collectionView.emptyDataSetSource = self;
+}
+
+- (void)changeLayoutMode {
+    if (self.layoutView == LayoutModeList) {
+        [self initCollection];
+    } else  {
+        [self initTable];
+    }
+    
+    NSString *relativePath = [[self currentOfflinePath] stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"%@/Documents/", NSHomeDirectory()]  withString:@""];
+    [[MEGAStore shareInstance] insertOfflineFolderLayoutWithPOath:relativePath layout:self.layoutView];
 }
 
 #pragma mark - Private
@@ -286,24 +389,16 @@ static NSString *kisDirectory = @"kisDirectory";
     }
     
     if ([self.offlineSortedItems count] == 0) {
-        self.tableView.tableHeaderView = nil;
+        self.offlineTableView.tableView.tableHeaderView = nil;
     } else {
-        if (!self.tableView.tableHeaderView) {
-            self.tableView.tableHeaderView = self.searchController.searchBar;
+        if (!self.offlineTableView.tableView.tableHeaderView) {
+            self.offlineTableView.tableView.tableHeaderView = self.searchController.searchBar;
         }
     }
     
     [self updateNavigationBarTitle];
     
-    [self.tableView reloadData];
-}
-
-- (NSString *)currentOfflinePath {
-    NSString *pathString = [Helper pathForOffline];
-    if (self.folderPathFromOffline != nil) {
-        pathString = [pathString stringByAppendingPathComponent:self.folderPathFromOffline];
-    }
-    return pathString;
+    [self reloadData];
 }
 
 - (NSString *)folderPathFromOffline:(NSString *)absolutePath folder:(NSString *)folderName {
@@ -447,385 +542,65 @@ static NSString *kisDirectory = @"kisDirectory";
     self.offlineItems = [NSMutableArray arrayWithArray:sortedArray];
 }
 
-- (NSDictionary *)itemAtIndexPath:(NSIndexPath *)indexPath {
-    NSDictionary *item = nil;
-    if (indexPath) {
-        if (self.searchController.isActive) {
-            item = [self.searchItemsArray objectAtIndex:indexPath.row];
-        } else {
-            item = [self.offlineSortedItems objectAtIndex:indexPath.row];
-        }
-    }
-    return item;
-}
-
-- (BOOL)removeOfflineNodeCell:(NSString *)itemPath {
-    NSArray *offlinePathsOnFolderArray;
-    MOOfflineNode *offlineNode;
-    
-    BOOL isDirectory;
-    [[NSFileManager defaultManager] fileExistsAtPath:itemPath isDirectory:&isDirectory];
-    if (isDirectory) {
-        if ([[[[MEGASdkManager sharedMEGASdk] transfers] size] integerValue] != 0) {
-            [self cancelPendingTransfersOnFolder:itemPath folderLink:NO];
-        }
-        if ([[[[MEGASdkManager sharedMEGASdkFolder] transfers] size] integerValue] != 0) {
-            [self cancelPendingTransfersOnFolder:itemPath folderLink:YES];
-        }
-        offlinePathsOnFolderArray = [self offlinePathOnFolder:itemPath];
-    }
-    
-    NSError *error = nil;
-    BOOL success = [ [NSFileManager defaultManager] removeItemAtPath:itemPath error:&error];
-    offlineNode = [[MEGAStore shareInstance] fetchOfflineNodeWithPath:[Helper pathRelativeToOfflineDirectory:itemPath]];
-    if (!success || error) {
-        [SVProgressHUD showErrorWithStatus:@""];
-        return NO;
-    } else {
-        if (isDirectory) {
-            for (NSString *localPathAux in offlinePathsOnFolderArray) {
-                offlineNode = [[MEGAStore shareInstance] fetchOfflineNodeWithPath:localPathAux];
-                if (offlineNode) {
-                    [[MEGAStore shareInstance] removeOfflineNode:offlineNode];
-                }
-            }
-        } else {
-            if (offlineNode) {
-                [[MEGAStore shareInstance] removeOfflineNode:offlineNode];
-            }
-        }
-        [self reloadUI];
-        return YES;
-    }
-}
-
 - (MEGAQLPreviewController *)qlPreviewControllerForIndexPath:(NSIndexPath *)indexPath {
     MEGAQLPreviewController *previewController = [[MEGAQLPreviewController alloc] initWithArrayOfFiles:self.offlineFiles];
     
     NSInteger selectedIndexFile = [[[self.offlineSortedItems objectAtIndex:indexPath.row] objectForKey:kIndex] integerValue];
     previewController.currentPreviewItemIndex = selectedIndexFile;
     
-    [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+    [self.offlineTableView.tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     return previewController;
 }
 
-- (void)updateNavigationBarTitle {
-    NSString *navigationTitle;
-    if (self.tableView.isEditing) {
-        if (self.selectedItems.count == 0) {
-            navigationTitle = AMLocalizedString(@"selectTitle", @"Title shown on the Camera Uploads section when the edit mode is enabled. On this mode you can select photos");
-        } else {
-            navigationTitle = (self.selectedItems.count == 1) ? [NSString stringWithFormat:AMLocalizedString(@"oneItemSelected", @"Title shown on the Camera Uploads section when the edit mode is enabled and you have selected one photo"), self.selectedItems.count] : [NSString stringWithFormat:AMLocalizedString(@"itemsSelected", @"Title shown on the Camera Uploads section when the edit mode is enabled and you have selected more than one photo"), self.selectedItems.count];
-        }
+- (void)reloadData {
+    if (self.layoutView == LayoutModeList) {
+        [self.offlineTableView.tableView reloadData];
     } else {
-        if (self.folderPathFromOffline == nil) {
-            navigationTitle = AMLocalizedString(@"offline", @"Offline");
-        } else {
-            navigationTitle = [self.folderPathFromOffline lastPathComponent];
-        }
+        [self.offlineCollectionView.collectionView reloadData];
     }
-    
-    self.navigationItem.title = navigationTitle;
 }
 
-#pragma mark - UITableViewDataSource
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    NSInteger rows = self.searchController.isActive ? self.searchItemsArray.count : self.offlineSortedItems.count;
-    if (rows == 0) {
-        self.sortByBarButtonItem.enabled = NO;
-        [self.editBarButtonItem setEnabled:NO];
+- (void)setEditMode:(BOOL)editMode {
+    if (self.layoutView == LayoutModeList) {
+        [self.offlineTableView setTableViewEditing:editMode animated:YES];
     } else {
-        self.sortByBarButtonItem.enabled = YES;
-        [self.editBarButtonItem setEnabled:YES];
+        [self.offlineCollectionView setCollectionViewEditing:editMode animated:YES];
     }
-    return rows;
 }
 
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    OfflineTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"offlineTableViewCell" forIndexPath:indexPath];
-    
-    NSString *directoryPathString = [self currentOfflinePath];
-    NSString *nameString = [[self itemAtIndexPath:indexPath] objectForKey:kFileName];
-    NSString *pathForItem = [directoryPathString stringByAppendingPathComponent:nameString];
-    
-    [cell setItemNameString:nameString];
-    
-    MOOfflineNode *offNode = [[MEGAStore shareInstance] fetchOfflineNodeWithPath:[Helper pathRelativeToOfflineDirectory:pathForItem]];
-    NSString *handleString = [offNode base64Handle];
-    
-    [cell.thumbnailPlayImageView setHidden:YES];
-    
-    BOOL isDirectory;
-    [[NSFileManager defaultManager] fileExistsAtPath:pathForItem isDirectory:&isDirectory];
-    if (isDirectory) {
-        [cell.thumbnailImageView setImage:[Helper folderImage]];
-        
-        NSInteger files = 0;
-        NSInteger folders = 0;
-        
-        NSArray *directoryContents = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:pathForItem error:nil];
-        for (NSString *file in directoryContents) {
-            BOOL isDirectory;
-            NSString *path = [pathForItem stringByAppendingPathComponent:file];
-            if (![path.pathExtension.lowercaseString isEqualToString:@"mega"]) {
-                [[NSFileManager defaultManager] fileExistsAtPath:path isDirectory:&isDirectory];
-                isDirectory ? folders++ : files++;
-            }
-            
-        }
-        
-        [cell.infoLabel setText:[NSString mnz_stringByFiles:files andFolders:folders]];
+- (void)selectIndexPath:(NSIndexPath *)indexPath {
+    if (self.layoutView == LayoutModeList) {
+        [self.offlineTableView tableViewSelectIndexPath:indexPath];
+        [self.offlineTableView.tableView selectRowAtIndexPath:indexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
     } else {
-        NSString *extension = [[nameString pathExtension] lowercaseString];
-        
-        if (!handleString) {
-            NSString *fpLocal = [[MEGASdkManager sharedMEGASdk] fingerprintForFilePath:pathForItem];
-            if (fpLocal) {
-                MEGANode *node = [[MEGASdkManager sharedMEGASdk] nodeForFingerprint:fpLocal];
-                if (node) {
-                    handleString = [node base64Handle];
-                    [[MEGAStore shareInstance] insertOfflineNode:node api:[MEGASdkManager sharedMEGASdk] path:[[Helper pathRelativeToOfflineDirectory:pathForItem] decomposedStringWithCanonicalMapping]];
-                }
-            }
-        }
-        
-        NSString *thumbnailFilePath = [Helper pathForSharedSandboxCacheDirectory:@"thumbnailsV3"];
-        thumbnailFilePath = [thumbnailFilePath stringByAppendingPathComponent:handleString];
-        
-        if ([[NSFileManager defaultManager] fileExistsAtPath:thumbnailFilePath] && handleString) {
-            UIImage *thumbnailImage = [UIImage imageWithContentsOfFile:thumbnailFilePath];
-            if (thumbnailImage != nil) {
-                [cell.thumbnailImageView setImage:thumbnailImage];
-                if (nameString.mnz_isVideoPathExtension) {
-                    [cell.thumbnailPlayImageView setHidden:NO];
-                }
-            }
-            
-        } else {
-            if (nameString.mnz_isImagePathExtension) {
-                if (![[NSFileManager defaultManager] fileExistsAtPath:thumbnailFilePath]) {
-                    [[MEGASdkManager sharedMEGASdk] createThumbnail:pathForItem destinatioPath:thumbnailFilePath];
-                }
-            } else {
-                [cell.thumbnailImageView mnz_setImageForExtension:extension];
-            }
-        }
-        
-        NSDictionary *filePropertiesDictionary = [[NSFileManager defaultManager] attributesOfItemAtPath:pathForItem error:nil];
-        
-        time_t rawtime = [[filePropertiesDictionary valueForKey:NSFileModificationDate] timeIntervalSince1970];
-        NSString *date = [Helper dateWithISO8601FormatOfRawTime:rawtime];
-        
-        unsigned long long size;
-        size = [[[NSFileManager defaultManager] attributesOfItemAtPath:pathForItem error:nil] fileSize];
-        
-        NSString *sizeString = [NSByteCountFormatter stringFromByteCount:size countStyle:NSByteCountFormatterCountStyleMemory];
-        NSString *sizeAndDate = [NSString stringWithFormat:@"%@ • %@", sizeString, date];
-        [cell.infoLabel setText:sizeAndDate];
+        [self.offlineCollectionView collectionViewSelectIndexPath:indexPath];
+        [self.offlineCollectionView.collectionView selectItemAtIndexPath:indexPath animated:YES scrollPosition:UICollectionViewScrollPositionNone];
     }
-    [cell.nameLabel setText:[[MEGASdkManager sharedMEGASdk] unescapeFsIncompatible:nameString]];
-    
-    if (self.tableView.isEditing) {
-        for (NSURL *url in self.selectedItems) {
-            if ([url.path isEqualToString:pathForItem]) {
-                [self.tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
-            }
-        }
-        
-        UIView *view = [[UIView alloc] init];
-        view.backgroundColor = UIColor.clearColor;
-        cell.selectedBackgroundView = view;
-    }
-    
-    if (@available(iOS 11.0, *)) {
-        cell.thumbnailImageView.accessibilityIgnoresInvertColors = YES;
-        cell.thumbnailPlayImageView.accessibilityIgnoresInvertColors = YES;
+}
+
+- (NSInteger)numberOfRows {
+    NSInteger numberOfRows = 0;
+    if (self.layoutView == LayoutModeList) {
+        numberOfRows = [self.offlineTableView.tableView numberOfRowsInSection:0];
     } else {
-        cell.delegate = self;
+        numberOfRows = [self.offlineCollectionView.collectionView numberOfItemsInSection:0];
     }
     
-    return cell;
+    return numberOfRows;
 }
-
-#pragma mark - UITableViewDelegate
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    if (tableView.isEditing) {
-        NSURL *filePathURL = [[self itemAtIndexPath:indexPath] objectForKey:kPath];
-        [self.selectedItems addObject:filePathURL];
-        
-        [self updateNavigationBarTitle];
-        
-        if (self.selectedItems.count > 0) {
-            [self.activityBarButtonItem setEnabled:![self isDirectorySelected]];
-            [self.deleteBarButtonItem setEnabled:YES];
-        }
-        
-        if (self.selectedItems.count == self.offlineSortedItems.count) {
-            allItemsSelected = YES;
-        } else {
-            allItemsSelected = NO;
-        }
-        
-        return;
-    }
-    
-    OfflineTableViewCell *cell = (OfflineTableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
-    NSString *itemNameString = [cell itemNameString];
-    previewDocumentPath = [[self currentOfflinePath] stringByAppendingPathComponent:itemNameString];
-    
-    BOOL isDirectory;
-    [[NSFileManager defaultManager] fileExistsAtPath:previewDocumentPath isDirectory:&isDirectory];
-    if (isDirectory) {
-        NSString *folderPathFromOffline = [self folderPathFromOffline:previewDocumentPath folder:[cell itemNameString]];
-        
-        OfflineViewController *offlineVC = [self.storyboard instantiateViewControllerWithIdentifier:@"OfflineViewControllerID"];
-        [offlineVC setFolderPathFromOffline:folderPathFromOffline];
-        if (self.searchController.isActive) {
-            [self.searchController dismissViewControllerAnimated:YES completion:^{
-                [self.navigationController pushViewController:offlineVC animated:YES];
-            }];
-        } else {
-            [self.navigationController pushViewController:offlineVC animated:YES];
-        }
-    } else if (previewDocumentPath.mnz_isMultimediaPathExtension) {
-        AVURLAsset *asset = [AVURLAsset assetWithURL:[NSURL fileURLWithPath:previewDocumentPath]];
-        
-        if (asset.playable) {
-            MEGAAVViewController *megaAVViewController = [[MEGAAVViewController alloc] initWithURL:[NSURL fileURLWithPath:previewDocumentPath]];
-            [self presentViewController:megaAVViewController animated:YES completion:nil];
-        } else {
-            MEGAQLPreviewController *previewController = [self qlPreviewControllerForIndexPath:indexPath];
-            [self presentViewController:previewController animated:YES completion:nil];
-        }
-        
-    } else if ([previewDocumentPath.pathExtension isEqualToString:@"pdf"]){
-        MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"previewDocumentNavigationID"];
-        PreviewDocumentViewController *previewController = navigationController.viewControllers.firstObject;
-        previewController.filesPathsArray = self.offlineFiles;
-        previewController.nodeFileIndex = [[[self itemAtIndexPath:indexPath] objectForKey:kIndex] integerValue];
-        [self presentViewController:navigationController animated:YES completion:nil];
-        [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    } else {
-        MEGAQLPreviewController *previewController = [self qlPreviewControllerForIndexPath:indexPath];
-        [self presentViewController:previewController animated:YES completion:nil];
-    }
-}
-
-- (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    if (tableView.isEditing) {
-        NSURL *filePathURL = [[self itemAtIndexPath:indexPath] objectForKey:kPath];
-        
-        NSMutableArray *tempArray = [self.selectedItems copy];
-        for (NSURL *url in tempArray) {
-            if ([[url filePathURL] isEqual:filePathURL]) {
-                [self.selectedItems removeObject:url];
-            }
-        }
-        
-        [self updateNavigationBarTitle];
-        
-        if (self.selectedItems.count == 0) {
-            [self.activityBarButtonItem setEnabled:NO];
-            [self.deleteBarButtonItem setEnabled:NO];
-        } else {
-            [self.activityBarButtonItem setEnabled:![self isDirectorySelected]];
-            [self.deleteBarButtonItem setEnabled:YES];
-        }
-        
-        allItemsSelected = NO;
-        
-        return;
-    }
-}
-
-- (void)setTableViewEditing:(BOOL)editing animated:(BOOL)animated {
-    [self.tableView setEditing:editing animated:animated];
-    
-    [self updateNavigationBarTitle];
-    
-    if (editing) {
-        self.navigationItem.rightBarButtonItem = self.editBarButtonItem;
-        self.editBarButtonItem.title = AMLocalizedString(@"cancel", @"Button title to cancel something");
-        
-        self.navigationItem.leftBarButtonItems = @[self.selectAllBarButtonItem];
-        [self.toolbar setAlpha:0.0];
-        [self.tabBarController.tabBar addSubview:self.toolbar];
-        [UIView animateWithDuration:0.33f animations:^ {
-            [self.toolbar setAlpha:1.0];
-        }];
-        
-        for (OfflineTableViewCell *cell in [self.tableView visibleCells]) {
-            UIView *view = [[UIView alloc] init];
-            view.backgroundColor = UIColor.clearColor;
-            cell.selectedBackgroundView = view;
-        }
-    } else {
-        self.editBarButtonItem.title = AMLocalizedString(@"edit", @"Caption of a button to edit the files that are selected");
-        self.navigationItem.rightBarButtonItem = self.moreBarButtonItem;
-        
-        allItemsSelected = NO;
-        self.selectedItems = nil;
-        self.navigationItem.leftBarButtonItems = @[];
-        
-        [UIView animateWithDuration:0.33f animations:^ {
-            [self.toolbar setAlpha:0.0];
-        } completion:^(BOOL finished) {
-            if (finished) {
-                [self.toolbar removeFromSuperview];
-            }
-        }];
-        
-        for (OfflineTableViewCell *cell in [self.tableView visibleCells]) {
-            cell.selectedBackgroundView = nil;
-        }
-    }
-    
-    if (!self.selectedItems) {
-        self.selectedItems = [[NSMutableArray alloc] init];
-        
-        [self.activityBarButtonItem setEnabled:NO];
-        [self.deleteBarButtonItem setEnabled:NO];
-    }
-}
-
-
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    return YES;
-}
-
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wunguarded-availability"
-
-- (UISwipeActionsConfiguration *)tableView:(UITableView *)tableView trailingSwipeActionsConfigurationForRowAtIndexPath:(NSIndexPath *)indexPath {    
-    UIContextualAction *deleteAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:@"Share" handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
-        OfflineTableViewCell *cell = (OfflineTableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
-        NSString *itemPath = [[self currentOfflinePath] stringByAppendingPathComponent:[cell itemNameString]];
-        [self removeOfflineNodeCell:itemPath];
-    }];
-    deleteAction.image = [UIImage imageNamed:@"delete"];
-    deleteAction.backgroundColor = [UIColor colorWithRed:0.94 green:0.22 blue:0.23 alpha:1];
-    return [UISwipeActionsConfiguration configurationWithActions:@[deleteAction]];
-}
-
-#pragma clang diagnostic pop
 
 #pragma mark - IBActions
 
 - (IBAction)editTapped:(UIBarButtonItem *)sender {
-    BOOL enableEditing = !self.tableView.isEditing;
-    [self setTableViewEditing:enableEditing animated:YES];
+    BOOL enableEditing = self.offlineTableView ? !self.offlineTableView.tableView.isEditing : !self.offlineCollectionView.collectionView.allowsMultipleSelection;
+    [self setEditMode:enableEditing];
 }
 
 - (IBAction)selectAllAction:(UIBarButtonItem *)sender {
     [self.selectedItems removeAllObjects];
     
-    if (!allItemsSelected) {
+    if (!self.allItemsSelected) {
         NSURL *filePathURL = nil;
         
         for (NSInteger i = 0; i < self.offlineSortedItems.count; i++) {
@@ -833,9 +608,9 @@ static NSString *kisDirectory = @"kisDirectory";
             [self.selectedItems addObject:filePathURL];
         }
         
-        allItemsSelected = YES;
+        self.allItemsSelected = YES;
     } else {
-        allItemsSelected = NO;
+        self.allItemsSelected = NO;
     }
     
     if (self.selectedItems.count == 0) {
@@ -848,7 +623,7 @@ static NSString *kisDirectory = @"kisDirectory";
     
     [self updateNavigationBarTitle];
     
-    [self.tableView reloadData];
+    [self reloadData];
 }
 
 - (IBAction)activityTapped:(UIBarButtonItem *)sender {
@@ -864,7 +639,7 @@ static NSString *kisDirectory = @"kisDirectory";
     activityViewController.popoverPresentationController.barButtonItem = self.activityBarButtonItem;
     [activityViewController setCompletionWithItemsHandler:^(NSString *activityType, BOOL completed,  NSArray *returnedItems, NSError *activityError) {
         if (completed) {
-            [self setTableViewEditing:NO animated:YES];
+            [self setEditMode:NO];
         }
     }];
     
@@ -885,7 +660,7 @@ static NSString *kisDirectory = @"kisDirectory";
             [self removeOfflineNodeCell:url.path];
         }
         [self reloadUI];
-        [self setTableViewEditing:NO animated:YES];
+        [self setEditMode:NO];
     }]];
     [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:nil]];
     [self presentViewController:alertController animated:YES completion:nil];
@@ -904,6 +679,15 @@ static NSString *kisDirectory = @"kisDirectory";
 - (IBAction)moreAction:(UIBarButtonItem *)sender {
     UIAlertController *moreAlertController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
     [moreAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
+    
+    if ([self numberOfRows]) {
+        NSString *changeViewTitle = (self.layoutView == LayoutModeList) ? AMLocalizedString(@"Thumbnail view", @"Text shown for switching from list view to thumbnail view.") : AMLocalizedString(@"List view", @"Text shown for switching from thumbnail view to list view.");
+        UIAlertAction *changeViewAlertAction = [UIAlertAction actionWithTitle:changeViewTitle style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            [self changeLayoutMode];
+        }];
+        [changeViewAlertAction setValue:[UIColor mnz_black333333] forKey:@"titleTextColor"];
+        [moreAlertController addAction:changeViewAlertAction];
+    }
     
     UIAlertAction *sortByAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"sortTitle", @"Section title of the 'Sort by'") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         [self sortByTapped:self.sortByBarButtonItem];
@@ -928,10 +712,209 @@ static NSString *kisDirectory = @"kisDirectory";
     [self presentViewController:moreAlertController animated:YES completion:nil];
 }
 
+#pragma mark - Public
+
+- (void)enableButtonsByNumberOfItems {
+    NSInteger rows = self.searchController.isActive ? self.searchItemsArray.count : self.offlineSortedItems.count;
+    if (rows == 0) {
+        self.sortByBarButtonItem.enabled = NO;
+        [self.editBarButtonItem setEnabled:NO];
+    } else {
+        self.sortByBarButtonItem.enabled = YES;
+        [self.editBarButtonItem setEnabled:YES];
+    }
+}
+
+- (void)enableButtonsBySelectedItems {
+    if (self.selectedItems.count == 0) {
+        [self.activityBarButtonItem setEnabled:NO];
+        [self.deleteBarButtonItem setEnabled:NO];
+    } else {
+        [self.activityBarButtonItem setEnabled:![self isDirectorySelected]];
+        [self.deleteBarButtonItem setEnabled:YES];
+    }
+}
+
+- (void)itemTapped:(NSString *)name atIndexPath:(NSIndexPath *)indexPath {
+    self.previewDocumentPath = [[self currentOfflinePath] stringByAppendingPathComponent:name];
+    
+    BOOL isDirectory;
+    [[NSFileManager defaultManager] fileExistsAtPath:self.previewDocumentPath isDirectory:&isDirectory];
+    if (isDirectory) {
+        NSString *folderPathFromOffline = [self folderPathFromOffline:self.previewDocumentPath folder:name];
+        
+        OfflineViewController *offlineVC = [self.storyboard instantiateViewControllerWithIdentifier:@"OfflineViewControllerID"];
+        [offlineVC setFolderPathFromOffline:folderPathFromOffline];
+        if (self.searchController.isActive) {
+            [self.searchController dismissViewControllerAnimated:YES completion:^{
+                [self.navigationController pushViewController:offlineVC animated:YES];
+            }];
+        } else {
+            [self.navigationController pushViewController:offlineVC animated:YES];
+        }
+    } else if (self.previewDocumentPath.mnz_isMultimediaPathExtension) {
+        AVURLAsset *asset = [AVURLAsset assetWithURL:[NSURL fileURLWithPath:self.previewDocumentPath]];
+        
+        if (asset.playable) {
+            MEGAAVViewController *megaAVViewController = [[MEGAAVViewController alloc] initWithURL:[NSURL fileURLWithPath:self.previewDocumentPath]];
+            [self presentViewController:megaAVViewController animated:YES completion:nil];
+        } else {
+            MEGAQLPreviewController *previewController = [self qlPreviewControllerForIndexPath:indexPath];
+            [self presentViewController:previewController animated:YES completion:nil];
+        }
+        
+    } else if ([self.previewDocumentPath.pathExtension isEqualToString:@"pdf"]){
+        MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"previewDocumentNavigationID"];
+        PreviewDocumentViewController *previewController = navigationController.viewControllers.firstObject;
+        previewController.filesPathsArray = self.offlineFiles;
+        previewController.nodeFileIndex = [[[self itemAtIndexPath:indexPath] objectForKey:kIndex] integerValue];
+        [self presentViewController:navigationController animated:YES completion:nil];
+        switch (self.layoutView) {
+            case LayoutModeList:
+                [self.offlineTableView.tableView deselectRowAtIndexPath:indexPath animated:YES];
+                break;
+                
+            case LayoutModeThumbnail:
+                [self.offlineCollectionView.collectionView deselectItemAtIndexPath:indexPath animated:YES];
+                break;
+        }
+    } else {
+        MEGAQLPreviewController *previewController = [self qlPreviewControllerForIndexPath:indexPath];
+        [self presentViewController:previewController animated:YES completion:nil];
+    }
+}
+
+- (void)setViewEditing:(BOOL)editing {
+    [self updateNavigationBarTitle];
+    
+    if (editing) {
+        self.navigationItem.rightBarButtonItem = self.editBarButtonItem;
+        self.editBarButtonItem.title = AMLocalizedString(@"cancel", @"Button title to cancel something");
+        self.navigationItem.leftBarButtonItems = @[self.selectAllBarButtonItem];
+        [self.toolbar setAlpha:0.0];
+        [self.tabBarController.tabBar addSubview:self.toolbar];
+        [UIView animateWithDuration:0.33f animations:^ {
+            [self.toolbar setAlpha:1.0];
+        }];
+    } else {
+        self.editBarButtonItem.title = AMLocalizedString(@"edit", @"Caption of a button to edit the files that are selected");
+        self.navigationItem.rightBarButtonItem = self.moreBarButtonItem;
+        self.allItemsSelected = NO;
+        self.selectedItems = nil;
+        self.navigationItem.leftBarButtonItems = @[];
+        
+        [UIView animateWithDuration:0.33f animations:^ {
+            [self.toolbar setAlpha:0.0];
+        } completion:^(BOOL finished) {
+            if (finished) {
+                [self.toolbar removeFromSuperview];
+            }
+        }];
+    }
+    
+    if (!self.selectedItems) {
+        self.selectedItems = [[NSMutableArray alloc] init];
+        
+        [self.activityBarButtonItem setEnabled:NO];
+        [self.deleteBarButtonItem setEnabled:NO];
+    }
+}
+
+- (BOOL)removeOfflineNodeCell:(NSString *)itemPath {
+    NSArray *offlinePathsOnFolderArray;
+    MOOfflineNode *offlineNode;
+    
+    BOOL isDirectory;
+    [[NSFileManager defaultManager] fileExistsAtPath:itemPath isDirectory:&isDirectory];
+    if (isDirectory) {
+        if ([[[[MEGASdkManager sharedMEGASdk] transfers] size] integerValue]) {
+            [self cancelPendingTransfersOnFolder:itemPath folderLink:NO];
+        }
+        if ([[[[MEGASdkManager sharedMEGASdkFolder] transfers] size] integerValue]) {
+            [self cancelPendingTransfersOnFolder:itemPath folderLink:YES];
+        }
+        offlinePathsOnFolderArray = [self offlinePathOnFolder:itemPath];
+    }
+    
+    NSError *error = nil;
+    BOOL success = [[NSFileManager defaultManager] removeItemAtPath:itemPath error:&error];
+    offlineNode = [[MEGAStore shareInstance] fetchOfflineNodeWithPath:[Helper pathRelativeToOfflineDirectory:itemPath]];
+    if (!success || error) {
+        [SVProgressHUD showErrorWithStatus:@""];
+        return NO;
+    } else {
+        if (isDirectory) {
+            for (NSString *localPathAux in offlinePathsOnFolderArray) {
+                offlineNode = [[MEGAStore shareInstance] fetchOfflineNodeWithPath:localPathAux];
+                if (offlineNode) {
+                    [[MEGAStore shareInstance] removeOfflineNode:offlineNode];
+                }
+            }
+        } else {
+            if (offlineNode) {
+                [[MEGAStore shareInstance] removeOfflineNode:offlineNode];
+            }
+        }
+        [self reloadUI];
+        return YES;
+    }
+}
+
+- (void)updateNavigationBarTitle {
+    NSString *navigationTitle;
+    if (self.offlineTableView.tableView.isEditing || self.offlineCollectionView.collectionView.allowsMultipleSelection) {
+        if (self.selectedItems.count == 0) {
+            navigationTitle = AMLocalizedString(@"selectTitle", @"Title shown on the Camera Uploads section when the edit mode is enabled. On this mode you can select photos");
+        } else {
+            navigationTitle = (self.selectedItems.count == 1) ? [NSString stringWithFormat:AMLocalizedString(@"oneItemSelected", @"Title shown on the Camera Uploads section when the edit mode is enabled and you have selected one photo"), self.selectedItems.count] : [NSString stringWithFormat:AMLocalizedString(@"itemsSelected", @"Title shown on the Camera Uploads section when the edit mode is enabled and you have selected more than one photo"), self.selectedItems.count];
+        }
+    } else {
+        if (self.folderPathFromOffline == nil) {
+            navigationTitle = AMLocalizedString(@"offline", @"Offline");
+        } else {
+            navigationTitle = self.folderPathFromOffline.lastPathComponent;
+        }
+    }
+    
+    self.navigationItem.title = navigationTitle;
+}
+
+- (NSDictionary *)itemAtIndexPath:(NSIndexPath *)indexPath {
+    NSDictionary *item = nil;
+    if (indexPath) {
+        if (self.searchController.isActive) {
+            item = [self.searchItemsArray objectAtIndex:indexPath.row];
+        } else {
+            item = [self.offlineSortedItems objectAtIndex:indexPath.row];
+        }
+    }
+    return item;
+}
+
+- (NSString *)currentOfflinePath {
+    NSString *pathString = [Helper pathForOffline];
+    if (self.folderPathFromOffline != nil) {
+        pathString = [pathString stringByAppendingPathComponent:self.folderPathFromOffline];
+    }
+    return pathString;
+}
+
 #pragma mark - UISearchBarDelegate
 
 - (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
     self.searchItemsArray = nil;
+}
+
+- (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar {
+    if (self.layoutView == LayoutModeThumbnail) {
+        self.offlineCollectionView.collectionView.clipsToBounds = YES;
+    }
+}
+
+- (void)searchBarTextDidEndEditing:(UISearchBar *)searchBar {
+    if (self.layoutView == LayoutModeThumbnail) {
+        self.offlineCollectionView.collectionView.clipsToBounds = NO;
+    }
 }
 
 #pragma mark - UISearchResultsUpdating
@@ -947,89 +930,109 @@ static NSString *kisDirectory = @"kisDirectory";
         }
     }
     
-    [self.tableView reloadData];
+    [self reloadData];
 }
 
 #pragma mark - UILongPressGestureRecognizer
 
 - (void)longPress:(UILongPressGestureRecognizer *)longPressGestureRecognizer {
-    CGPoint touchPoint = [longPressGestureRecognizer locationInView:self.tableView];
-    NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:touchPoint];
+    UIView *view = self.offlineTableView ? self.offlineTableView.tableView : self.offlineCollectionView.collectionView;
+    CGPoint touchPoint = [longPressGestureRecognizer locationInView:view];
+    NSIndexPath *indexPath;
     
-    if (!indexPath || ![self.tableView numberOfRowsInSection:indexPath.section]) {
-        return;
+    if (self.layoutView == LayoutModeList) {
+        indexPath = [self.offlineTableView.tableView indexPathForRowAtPoint:touchPoint];
+        if (!indexPath || ![self.offlineTableView.tableView numberOfRowsInSection:indexPath.section]) {
+            return;
+        }
+    } else {
+        indexPath = [self.offlineCollectionView.collectionView indexPathForItemAtPoint:touchPoint];
+        if (!indexPath || ![self.offlineCollectionView.collectionView numberOfItemsInSection:indexPath.section]) {
+            return;
+        }
     }
     
     if (longPressGestureRecognizer.state == UIGestureRecognizerStateBegan) {        
-        if (self.tableView.isEditing) {
+        if (self.offlineTableView.tableView.isEditing) {
             // Only stop editing if long pressed over a cell that is the only one selected or when selected none
             if (self.selectedItems.count == 0) {
-                [self setTableViewEditing:NO animated:YES];
+                [self setEditMode:NO];
             }
             if (self.selectedItems.count == 1) {
                 NSURL *offlineUrlSelected = self.selectedItems.firstObject;
                 NSURL *offlineUrlPressed = [[self.offlineSortedItems objectAtIndex:indexPath.row] objectForKey:kPath];
                 if ([[offlineUrlPressed path] compare:[offlineUrlSelected path]] == NSOrderedSame) {
-                    [self setTableViewEditing:NO animated:YES];
+                    [self setEditMode:NO];
                 }
             }
         } else {
-            [self setTableViewEditing:YES animated:YES];
-            [self tableView:self.tableView didSelectRowAtIndexPath:indexPath];
-            [self.tableView selectRowAtIndexPath:indexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
+            [self setEditMode:YES];
+            [self selectIndexPath:indexPath];
         }
     }
     
     if (longPressGestureRecognizer.state == UIGestureRecognizerStateEnded) {
-        [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+        [self.offlineTableView.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
     }
 }
 
 #pragma mark - UIViewControllerPreviewingDelegate
 
 - (UIViewController *)previewingContext:(id<UIViewControllerPreviewing>)previewingContext viewControllerForLocation:(CGPoint)location {
-    if (self.tableView.isEditing) {
+    if (self.offlineTableView.tableView.isEditing || self.offlineCollectionView.collectionView.allowsMultipleSelection) {
         return nil;
     }
     
-    CGPoint rowPoint = [self.tableView convertPoint:location fromView:self.view];
-    NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:rowPoint];
-    if (!indexPath || ![self.tableView numberOfRowsInSection:indexPath.section]) {
-        return nil;
+    NSIndexPath *indexPath;
+    NSString *itemName;
+    if (self.layoutView == LayoutModeList) {
+        CGPoint rowPoint = [self.offlineTableView.tableView convertPoint:location fromView:self.view];
+        indexPath = [self.offlineTableView.tableView indexPathForRowAtPoint:rowPoint];
+        if (!indexPath || ![self.offlineTableView.tableView numberOfRowsInSection:indexPath.section]) {
+            return nil;
+        }
+        OfflineTableViewCell *cell = (OfflineTableViewCell *)[self.offlineTableView.tableView cellForRowAtIndexPath:indexPath];
+        itemName = cell.itemNameString;
+    } else {
+        CGPoint rowPoint = [self.offlineCollectionView.collectionView convertPoint:location fromView:self.view];
+        indexPath = [self.offlineCollectionView.collectionView indexPathForItemAtPoint:rowPoint];
+        if (!indexPath || ![self.offlineCollectionView.collectionView numberOfItemsInSection:indexPath.section]) {
+            return nil;
+        }
+        NodeCollectionViewCell *cell = (NodeCollectionViewCell *)[self.offlineCollectionView.collectionView cellForItemAtIndexPath:indexPath];
+        itemName = cell.nameLabel.text;
     }
     
-    previewingContext.sourceRect = [self.tableView convertRect:[self.tableView cellForRowAtIndexPath:indexPath].frame toView:self.view];
+    previewingContext.sourceRect = (self.layoutView == LayoutModeList) ? [self.offlineTableView.tableView convertRect:[self.offlineTableView.tableView cellForRowAtIndexPath:indexPath].frame toView:self.view] : [self.offlineCollectionView.collectionView convertRect:[self.offlineCollectionView.collectionView cellForItemAtIndexPath:indexPath].frame toView:self.view];
     
-    OfflineTableViewCell *cell = (OfflineTableViewCell *)[self.tableView cellForRowAtIndexPath:indexPath];
-    NSString *itemNameString = cell.itemNameString;
-    previewDocumentPath = [[self currentOfflinePath] stringByAppendingPathComponent:itemNameString];
+    self.previewDocumentPath = [[self currentOfflinePath] stringByAppendingPathComponent:itemName];
     
     BOOL isDirectory;
-    [[NSFileManager defaultManager] fileExistsAtPath:previewDocumentPath isDirectory:&isDirectory];
+    [[NSFileManager defaultManager] fileExistsAtPath:self.previewDocumentPath isDirectory:&isDirectory];
     if (isDirectory) {
-        NSString *folderPathFromOffline = [self folderPathFromOffline:previewDocumentPath folder:cell.itemNameString];
+        NSString *folderPathFromOffline = [self folderPathFromOffline:self.previewDocumentPath folder:itemName];
         
         OfflineViewController *offlineVC = [self.storyboard instantiateViewControllerWithIdentifier:@"OfflineViewControllerID"];
         offlineVC.folderPathFromOffline = folderPathFromOffline;
         offlineVC.peekIndexPath = indexPath;
         
         return offlineVC;
-    } else if (previewDocumentPath.mnz_isMultimediaPathExtension) {
-        AVURLAsset *asset = [AVURLAsset assetWithURL:[NSURL fileURLWithPath:previewDocumentPath]];
+    } else if (self.previewDocumentPath.mnz_isMultimediaPathExtension) {
+        AVURLAsset *asset = [AVURLAsset assetWithURL:[NSURL fileURLWithPath:self.previewDocumentPath]];
         
         if (asset.playable) {
-            MEGAAVViewController *megaAVViewController = [[MEGAAVViewController alloc] initWithURL:[NSURL fileURLWithPath:previewDocumentPath]];
+            MEGAAVViewController *megaAVViewController = [[MEGAAVViewController alloc] initWithURL:[NSURL fileURLWithPath:self.previewDocumentPath]];
             return megaAVViewController;
         } else {
             return [self qlPreviewControllerForIndexPath:indexPath];
         }
-    } else if ([previewDocumentPath.pathExtension isEqualToString:@"pdf"]){
+    } else if ([self.previewDocumentPath.pathExtension isEqualToString:@"pdf"]){
         MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"previewDocumentNavigationID"];
         PreviewDocumentViewController *previewController = navigationController.viewControllers.firstObject;
         previewController.filesPathsArray = self.offlineFiles;
         previewController.nodeFileIndex = [[[self itemAtIndexPath:indexPath] objectForKey:kIndex] integerValue];
         
-        [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+        [self.offlineTableView.tableView deselectRowAtIndexPath:indexPath animated:YES];
         
         return navigationController;
     } else {
@@ -1051,10 +1054,10 @@ static NSString *kisDirectory = @"kisDirectory";
     UIPreviewAction *deleteAction = [UIPreviewAction actionWithTitle:AMLocalizedString(@"remove", @"Title for the action that allows to remove a file or folder")
                                                                style:UIPreviewActionStyleDestructive
                                                              handler:^(UIPreviewAction * _Nonnull action, UIViewController * _Nonnull previewViewController) {
-                                                                 OfflineViewController *offlineVC = (OfflineViewController *)previewViewController;
-                                                                 [offlineVC tableView:offlineVC.tableView commitEditingStyle:UITableViewCellEditingStyleDelete forRowAtIndexPath:offlineVC.peekIndexPath];
+                                                                 if ([self removeOfflineNodeCell:[self currentOfflinePath]]) {
+                                                                     [self reloadData];
+                                                                 }
                                                              }];
-    
     return @[deleteAction];
 }
 
@@ -1124,46 +1127,6 @@ static NSString *kisDirectory = @"kisDirectory";
     
     if ([transfer type] == MEGATransferTypeDownload) {
         [self reloadUI];
-    }
-}
-
-#pragma mark - MGSwipeTableCellDelegate
-
-- (BOOL)swipeTableCell:(MGSwipeTableCell*) cell canSwipe:(MGSwipeDirection) direction fromPoint:(CGPoint)point {
-    if (self.tableView.isEditing) {
-        return NO;
-    }
-    
-    if (direction == MGSwipeDirectionLeftToRight) {
-        return NO;
-    }
-    
-    return YES;
-}
-
-- (NSArray*)swipeTableCell:(MGSwipeTableCell*) cell swipeButtonsForDirection:(MGSwipeDirection)direction
-             swipeSettings:(MGSwipeSettings*) swipeSettings expansionSettings:(MGSwipeExpansionSettings*) expansionSettings {
-    
-    swipeSettings.transition = MGSwipeTransitionDrag;
-    expansionSettings.buttonIndex = 0;
-    expansionSettings.expansionLayout = MGSwipeExpansionLayoutCenter;
-    expansionSettings.fillOnTrigger = NO;
-    expansionSettings.threshold = 2;
-    
-    if (direction == MGSwipeDirectionRightToLeft) {
-        
-        MGSwipeButton *deleteButton = [MGSwipeButton buttonWithTitle:@"" icon:[UIImage imageNamed:@"delete"] backgroundColor:[UIColor colorWithRed:0.93 green:0.22 blue:0.23 alpha:1.0] padding:25 callback:^BOOL(MGSwipeTableCell *sender) {
-            OfflineTableViewCell *offlineCell = (OfflineTableViewCell *)cell;
-            NSString *itemPath = [[self currentOfflinePath] stringByAppendingPathComponent:[offlineCell itemNameString]];
-            [self removeOfflineNodeCell:itemPath];
-            return YES;
-        }];
-        [deleteButton iconTintColor:[UIColor whiteColor]];
-        
-        return @[deleteButton];
-    }
-    else {
-        return nil;
     }
 }
 

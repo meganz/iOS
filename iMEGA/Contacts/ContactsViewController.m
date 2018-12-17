@@ -4,6 +4,7 @@
 #import <ContactsUI/ContactsUI.h>
 
 #import "UIImage+GKContact.h"
+#import "NSDate+DateTools.h"
 #import "SVProgressHUD.h"
 #import "UIScrollView+EmptyDataSet.h"
 #import "UIBarButtonItem+Badge.h"
@@ -16,9 +17,11 @@
 #import "MEGASdkManager.h"
 #import "MEGAShareRequestDelegate.h"
 #import "MEGAUser+MNZCategory.h"
+#import "NSFileManager+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 #import "UIAlertAction+MNZCategory.h"
 #import "UIImageView+MNZCategory.h"
+#import "UITextField+MNZCategory.h"
 
 #import "ContactDetailsViewController.h"
 #import "ContactLinkQRViewController.h"
@@ -26,7 +29,7 @@
 #import "ShareFolderActivity.h"
 #import "ItemListViewController.h"
 
-@interface ContactsViewController () <CNContactPickerDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAGlobalDelegate, ItemListViewControllerProtocol, UISearchControllerDelegate, UIGestureRecognizerDelegate>
+@interface ContactsViewController () <CNContactPickerDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAGlobalDelegate, ItemListViewControllerProtocol, UISearchControllerDelegate, UIGestureRecognizerDelegate, MEGAChatDelegate>
 
 @property (nonatomic) id<UIViewControllerPreviewing> previewingContext;
 
@@ -68,8 +71,6 @@
 
 @property (nonatomic, strong) MEGAUser *userTapped;
 
-@property (nonatomic) BOOL pendingRequestsPresented;
-
 @property (nonatomic, strong) NSMutableArray *searchVisibleUsersArray;
 @property (strong, nonatomic) UISearchController *searchController;
 @property (strong, nonatomic) ItemListViewController *itemListVC;
@@ -87,8 +88,6 @@
     
     self.tableView.emptyDataSetSource = self;
     self.tableView.emptyDataSetDelegate = self;
-    
-    self.pendingRequestsPresented = NO;
 
     self.searchController = [Helper customSearchControllerWithSearchResultsUpdaterDelegate:self searchBarDelegate:self];
     self.searchController.delegate = self;
@@ -111,6 +110,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
 
     [[MEGASdkManager sharedMEGASdk] addMEGAGlobalDelegate:self];
+    [[MEGASdkManager sharedMEGAChatSdk] addChatDelegate:self];
     [[MEGAReachabilityManager sharedManager] retryPendingConnections];
     
     [self reloadUI];
@@ -124,6 +124,7 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
 
     [[MEGASdkManager sharedMEGASdk] removeMEGAGlobalDelegate:self];
+    [[MEGASdkManager sharedMEGAChatSdk] removeChatDelegate:self];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -133,10 +134,10 @@
         MEGAContactRequestList *incomingContactsLists = [[MEGASdkManager sharedMEGASdk] incomingContactRequests];
         [self setContactRequestBarButtomItemWithValue:incomingContactsLists.size.integerValue];
         
-        if (!self.pendingRequestsPresented && incomingContactsLists.size.intValue > 0) {
+        if (!self.avoidPresentIncomingPendingContactRequests && incomingContactsLists.size.intValue > 0) {
             UINavigationController *contactRequestsNC = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactsRequestsNavigationControllerID"];
             [self presentViewController:contactRequestsNC animated:YES completion:nil];
-            self.pendingRequestsPresented = YES;
+            self.avoidPresentIncomingPendingContactRequests = YES;
         }
     }
 }
@@ -237,7 +238,7 @@
         }
             
         case ContactsModeChatCreateGroup: {
-            self.tableView.backgroundColor = [UIColor mnz_grayFCFCFC];
+            self.tableView.backgroundColor = UIColor.mnz_grayFCFCFC;
             [self setTableViewEditing:YES animated:NO];
             self.createGroupBarButtonItem.title = AMLocalizedString(@"next", nil);
             self.createGroupBarButtonItem.enabled = NO;
@@ -273,7 +274,7 @@
 - (void)reloadUI {
     [self setNavigationBarTitle];
     
-    [self setNavigationBarButtonItemsEnabled:[MEGAReachabilityManager isReachable]];
+    [self setNavigationBarButtonItemsEnabled:MEGAReachabilityManager.isReachable];
     
     self.visibleUsersArray = [[NSMutableArray alloc] init];
     [self.indexPathsMutableDictionary removeAllObjects];
@@ -307,7 +308,7 @@
     [self.tableView reloadData];
     
     if (self.contactsMode == ContactsModeFolderSharedWith) {
-        if ([self.visibleUsersArray count] == 0) {
+        if (self.visibleUsersArray.count == 0) {
             [self.editBarButtonItem setEnabled:NO];
             self.addParticipantBarButtonItem.enabled = NO;
             self.tableView.tableHeaderView = nil;
@@ -322,7 +323,7 @@
 }
 
 - (void)internetConnectionChanged {
-    BOOL boolValue = [MEGAReachabilityManager isReachable];
+    BOOL boolValue = MEGAReachabilityManager.isReachable;
     [self setNavigationBarButtonItemsEnabled:boolValue];
     
     boolValue ? [self reloadUI] : [self.tableView reloadData];
@@ -382,19 +383,19 @@
     UIAlertAction *fullAccessAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"fullAccess", @"Permissions given to the user you share your folder with") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         [self shareNodesWithLevel:MEGAShareTypeAccessFull];
     }];
-    [fullAccessAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
+    [fullAccessAlertAction mnz_setTitleTextColor:UIColor.mnz_black333333];
     [shareFolderAlertController addAction:fullAccessAlertAction];
     
     UIAlertAction *readAndWritetAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"readAndWrite", @"Permissions given to the user you share your folder with") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         [self shareNodesWithLevel:MEGAShareTypeAccessReadWrite];
     }];
-    [readAndWritetAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
+    [readAndWritetAlertAction mnz_setTitleTextColor:UIColor.mnz_black333333];
     [shareFolderAlertController addAction:readAndWritetAlertAction];
     
     UIAlertAction *readOnlyAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"readOnly", @"Permissions given to the user you share your folder with") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         [self shareNodesWithLevel:MEGAShareTypeAccessRead];
     }];
-    [readOnlyAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
+    [readOnlyAlertAction mnz_setTitleTextColor:UIColor.mnz_black333333];
     [shareFolderAlertController addAction:readOnlyAlertAction];
     
     shareFolderAlertController.modalPresentationStyle = UIModalPresentationPopover;
@@ -432,7 +433,7 @@
         void (^completion)(void);
         if (shareType == MEGAShareTypeAccessUnknown) {
             completion = ^{
-                if ([self.selectedUsersArray count] == [self.visibleUsersArray count]) {
+                if (self.selectedUsersArray.count == self.visibleUsersArray.count) {
                     [self.navigationController popToRootViewControllerAnimated:YES];
                 }
                 
@@ -458,12 +459,7 @@
     if ([user hasChangedType:MEGAUserChangeTypeAvatar]) {
         NSString *userBase64Handle = [MEGASdk base64HandleForUserHandle:user.handle];
         NSString *avatarFilePath = [[Helper pathForSharedSandboxCacheDirectory:@"thumbnailsV3"] stringByAppendingPathComponent:userBase64Handle];
-        BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:avatarFilePath];
-        if (fileExists) {
-            NSError *error = nil;
-            [[NSFileManager defaultManager] removeItemAtPath:avatarFilePath error:&error];
-            MEGALogError(@"Remove item at path failed with error: %@", error);
-        }
+        [NSFileManager.defaultManager mnz_removeItemAtPath:avatarFilePath];
         userHasChanged = YES;
     } else if ([user hasChangedType:MEGAUserChangeTypeFirstname] || [user hasChangedType:MEGAUserChangeTypeLastname] || [user hasChangedType:MEGAUserChangeTypeEmail]) {
         userHasChanged = YES;
@@ -523,13 +519,11 @@
     }
 }
 
-- (void)alertControllerShouldEnableDefaultButtonForEmailTextField:(UITextField *)sender {
+- (void)addContactAlertTextFieldDidChange:(UITextField *)textField {
     UIAlertController *addContactFromEmailAlertController = (UIAlertController *)self.presentedViewController;
     if (addContactFromEmailAlertController) {
-        UITextField *textField = addContactFromEmailAlertController.textFields.firstObject;
         UIAlertAction *rightButtonAction = addContactFromEmailAlertController.actions.lastObject;
-        NSString *email = textField.text;
-        rightButtonAction.enabled = (email.length > 0) ? [email mnz_isValidEmail] : NO;
+        rightButtonAction.enabled = (!textField.text.mnz_isEmpty && textField.text.mnz_isValidEmail);
     }
 }
 
@@ -550,7 +544,7 @@
             self.navigationController.topViewController.toolbarItems = self.toolbar.items;
             [self.navigationController setToolbarHidden:NO animated:animated];
         }
-        for (ContactTableViewCell *cell in [self.tableView visibleCells]) {
+        for (ContactTableViewCell *cell in self.tableView.visibleCells) {
             UIView *view = [[UIView alloc] init];
             view.backgroundColor = UIColor.clearColor;
             cell.selectedBackgroundView = view;
@@ -573,7 +567,7 @@
             [self.navigationController setToolbarHidden:YES animated:animated];
         }
         
-        for (ContactTableViewCell *cell in [self.tableView visibleCells]) {
+        for (ContactTableViewCell *cell in self.tableView.visibleCells) {
             cell.selectedBackgroundView = nil;
         }
     }
@@ -597,7 +591,7 @@
 }
 
 - (void)setContactRequestBarButtomItemWithValue:(NSInteger)value {
-    self.contactRequestsBarButtonItem.badgeBGColor = [UIColor whiteColor];
+    self.contactRequestsBarButtonItem.badgeBGColor = UIColor.whiteColor;
     self.contactRequestsBarButtonItem.badgeTextColor = UIColor.mnz_redMain;
     self.contactRequestsBarButtonItem.badgeFont = [UIFont mnz_SFUIMediumWithSize:11.0f];
     self.contactRequestsBarButtonItem.shouldAnimateBadge = NO;
@@ -610,7 +604,7 @@
 
 - (void)startGroup {
     if (self.searchController.isActive) {
-        [self.searchController dismissViewControllerAnimated:YES completion:nil];
+        self.searchController.active = NO;
     }
     ContactsViewController *contactsVC = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactsViewControllerID"];
     contactsVC.contactsMode = ContactsModeChatCreateGroup;
@@ -729,6 +723,9 @@
 }
 
 - (IBAction)addContact:(UIView *)sender {
+    if (self.searchController.isActive) {
+        self.searchController.active = NO;
+    }
     UIAlertController *addContactAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"inviteContact", @"Text shown when the user tries to make a call and the receiver is not a contact") message:nil preferredStyle:UIAlertControllerStyleActionSheet];
     [addContactAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
     
@@ -737,7 +734,10 @@
         
         [addContactFromEmailAlertController addTextFieldWithConfigurationHandler:^(UITextField *textField) {
             textField.placeholder = AMLocalizedString(@"contactEmail", @"Clue text to help the user know what should write there. In this case the contact email you want to add to your contacts list");
-            [textField addTarget:self action:@selector(alertControllerShouldEnableDefaultButtonForEmailTextField:) forControlEvents:UIControlEventEditingChanged];
+            [textField addTarget:self action:@selector(addContactAlertTextFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
+            textField.shouldReturnCompletion = ^BOOL(UITextField *textField) {
+                return (!textField.text.mnz_isEmpty && textField.text.mnz_isValidEmail);
+            };
         }];
         
         [addContactFromEmailAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
@@ -755,7 +755,7 @@
         
         [self presentViewController:addContactFromEmailAlertController animated:YES completion:nil];
     }];
-    [addFromEmailAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
+    [addFromEmailAlertAction mnz_setTitleTextColor:UIColor.mnz_black333333];
     [addContactAlertController addAction:addFromEmailAlertAction];
     
     UIAlertAction *addFromContactsAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"addFromContacts", @"Item menu option to add a contact through your device app Contacts") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
@@ -769,7 +769,7 @@
         contactsPickerViewController.delegate = self;
         [self presentViewController:contactsPickerViewController animated:YES completion:nil];
     }];
-    [addFromContactsAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
+    [addFromContactsAlertAction mnz_setTitleTextColor:UIColor.mnz_black333333];
     [addContactAlertController addAction:addFromContactsAlertAction];
     
     UIAlertAction *scanCodeAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"scanCode", @"Segmented control title for view that allows the user to scan QR codes. String as short as possible.") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
@@ -777,7 +777,7 @@
         contactLinkVC.scanCode = YES;
         [self presentViewController:contactLinkVC animated:YES completion:nil];
     }];
-    [scanCodeAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
+    [scanCodeAlertAction mnz_setTitleTextColor:UIColor.mnz_black333333];
     [addContactAlertController addAction:scanCodeAlertAction];
     
     addContactAlertController.modalPresentationStyle = UIModalPresentationPopover;
@@ -794,7 +794,7 @@
 - (IBAction)deleteAction:(UIBarButtonItem *)sender {
     if (self.contactsMode == ContactsModeFolderSharedWith) {
         MEGAShareRequestDelegate *shareRequestDelegate = [[MEGAShareRequestDelegate alloc] initToChangePermissionsWithNumberOfRequests:self.selectedUsersArray.count completion:^{
-            if ([self.selectedUsersArray count] == [self.visibleUsersArray count]) {
+            if (self.selectedUsersArray.count == self.visibleUsersArray.count) {
                 [self.navigationController popViewControllerAnimated:YES];
             } else {
                 [self reloadUI];
@@ -869,8 +869,11 @@
     
     [insertAnEmailToShareWithAlertController addTextFieldWithConfigurationHandler:^(UITextField *textField) {
         textField.placeholder = AMLocalizedString(@"contactEmail", @"Clue text to help the user know what should write there. In this case the contact email you want to add to your contacts list");
-        [textField addTarget:self action:@selector(alertControllerShouldEnableDefaultButtonForEmailTextField:) forControlEvents:UIControlEventEditingChanged];
-        [self alertControllerShouldEnableDefaultButtonForEmailTextField:textField];
+        [textField addTarget:self action:@selector(addContactAlertTextFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
+        [self addContactAlertTextFieldDidChange:textField];
+        textField.shouldReturnCompletion = ^BOOL(UITextField *textField) {
+            return (!textField.text.mnz_isEmpty && textField.text.mnz_isValidEmail);
+        };
     }];
     
     [insertAnEmailToShareWithAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
@@ -934,7 +937,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     NSInteger numberOfRows = 0;
-    if ([MEGAReachabilityManager isReachable]) {
+    if (MEGAReachabilityManager.isReachable) {
         if (self.contactsMode == ContactsModeChatStartConversation && section == 0) {
             if (self.visibleUsersArray.count > 0) {
                 return 2;
@@ -946,7 +949,7 @@
         } else if (self.contactsMode == ContactsModeChatNamingGroup && section == 1) {
             return self.selectedUsersArray.count;
         }
-        numberOfRows = (self.searchController.isActive && ![self.searchController.searchBar.text isEqual: @""]) ? [self.searchVisibleUsersArray count] : [self.visibleUsersArray count];
+        numberOfRows = (self.searchController.isActive && ![self.searchController.searchBar.text isEqual: @""]) ? self.searchVisibleUsersArray.count : self.visibleUsersArray.count;
     }
     return numberOfRows;
 }
@@ -1015,14 +1018,7 @@
             }
             MEGAShare *share = [self.outSharesForNodeMutableArray objectAtIndex:indexPath.row];
             [cell.permissionsImageView setImage:[Helper permissionsButtonImageForShareType:share.access]];
-        } else if (self.contactsMode >= ContactsModeChatStartConversation) {
-            cell = [tableView dequeueReusableCellWithIdentifier:@"contactCell" forIndexPath:indexPath];
-            
-            cell.nameLabel.text = userName ? userName : user.email;
-            cell.shareLabel.text = user.email;
-            
-            cell.onlineStatusView.backgroundColor = [UIColor mnz_colorForStatusChange:[[MEGASdkManager sharedMEGAChatSdk] userOnlineStatus:user.handle]];
-        } else {
+        } else if (self.contactsMode == ContactsModeShareFoldersWith) {
             cell = [tableView dequeueReusableCellWithIdentifier:@"contactCell" forIndexPath:indexPath];
             cell.nameLabel.text = userName ? userName : user.email;
             
@@ -1035,7 +1031,18 @@
             } else {
                 cell.shareLabel.text = [NSString stringWithFormat:AMLocalizedString(@"foldersShared", @" folders shared"), numFilesShares];
             }
-        }
+        } else {
+            cell = [tableView dequeueReusableCellWithIdentifier:@"contactCell" forIndexPath:indexPath];
+            
+            cell.nameLabel.text = userName ? userName : user.email;
+            MEGAChatStatus userStatus = [[MEGASdkManager sharedMEGAChatSdk] userOnlineStatus:user.handle];
+            cell.shareLabel.text = [NSString chatStatusString:userStatus];
+            cell.onlineStatusView.backgroundColor = [UIColor mnz_colorForStatusChange:userStatus];
+
+            if (userStatus < MEGAChatStatusOnline) {
+                [[MEGASdkManager sharedMEGAChatSdk] requestLastGreen:user.handle];
+            }
+        } 
         
         [cell.avatarImageView mnz_setImageForUserHandle:user.handle];
         
@@ -1211,7 +1218,7 @@
     
     if (tableView.isEditing) {
         //tempArray avoid crash: "was mutated while being enumerated."
-        NSMutableArray *tempArray = [self.selectedUsersArray copy];
+        NSMutableArray *tempArray = self.selectedUsersArray.copy;
         for (MEGAUser *u in tempArray) {
             if ([u.email isEqualToString:user.email]) {
                 [self.selectedUsersArray removeObject:u];
@@ -1355,7 +1362,12 @@
     NSUInteger usersCount = contactProperties.count;
     MEGAInviteContactRequestDelegate *inviteContactRequestDelegate = [[MEGAInviteContactRequestDelegate alloc] initWithNumberOfRequests:usersCount];
     for (CNContactProperty *contactProperty in contactProperties) {
-        [[MEGASdkManager sharedMEGASdk] inviteContactWithEmail:contactProperty.value message:@"" action:MEGAInviteActionAdd delegate:inviteContactRequestDelegate];
+        NSString *email = contactProperty.value;
+        if (email.mnz_isValidEmail) {
+            [[MEGASdkManager sharedMEGASdk] inviteContactWithEmail:contactProperty.value message:@"" action:MEGAInviteActionAdd delegate:inviteContactRequestDelegate];
+        } else {
+            [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"%@ %@", AMLocalizedString(@"theEmailAddressFormatIsInvalid", @"Add contacts and share dialog error message when user try to add wrong email address"), email]];
+        }
     }
 }
 
@@ -1363,7 +1375,7 @@
 
 - (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView {
     NSString *text = @"";
-    if ([MEGAReachabilityManager isReachable]) {
+    if (MEGAReachabilityManager.isReachable) {
         if (self.searchController.isActive ) {
             if (self.searchController.searchBar.text.length > 0) {
                 text = AMLocalizedString(@"noResults", @"Title shown when you make a search and there is 'No Results'");
@@ -1379,7 +1391,7 @@
 }
 
 - (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView {
-    if ([MEGAReachabilityManager isReachable]) {
+    if (MEGAReachabilityManager.isReachable) {
         if (self.searchController.isActive) {
             if (self.searchController.searchBar.text.length > 0) {
                 return [UIImage imageNamed:@"searchEmptyState"];
@@ -1400,7 +1412,7 @@
     }
     
     NSString *text = @"";
-    if ([MEGAReachabilityManager isReachable] && !self.searchController.isActive) {
+    if (MEGAReachabilityManager.isReachable && !self.searchController.isActive) {
         text = AMLocalizedString(@"inviteContact", @"Text shown when the user tries to make a call and the receiver is not a contact");
     }
     
@@ -1415,7 +1427,7 @@
 }
 
 - (UIColor *)backgroundColorForEmptyDataSet:(UIScrollView *)scrollView {
-    return [UIColor whiteColor];
+    return UIColor.whiteColor;
 }
 
 - (CGFloat)verticalOffsetForEmptyDataSet:(UIScrollView *)scrollView {
@@ -1464,7 +1476,7 @@
             [self.searchVisibleUsersArray removeAllObjects];
         } else {
             NSPredicate *resultPredicate = [NSPredicate predicateWithFormat:@"SELF.mnz_fullName contains[c] %@", searchString];
-            self.searchVisibleUsersArray = [[self.visibleUsersArray filteredArrayUsingPredicate:resultPredicate] mutableCopy];
+            self.searchVisibleUsersArray = [self.visibleUsersArray filteredArrayUsingPredicate:resultPredicate].mutableCopy;
         }
     }
     
@@ -1582,6 +1594,43 @@
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
     return YES;
+}
+
+#pragma mark - MEGAChatDelegate
+
+- (void)onChatOnlineStatusUpdate:(MEGAChatSdk *)api userHandle:(uint64_t)userHandle status:(MEGAChatStatus)onlineStatus inProgress:(BOOL)inProgress {
+    if (inProgress) {
+        return;
+    }
+
+    if (userHandle != api.myUserHandle) {
+        NSString *base64Handle = [MEGASdk base64HandleForUserHandle:userHandle];
+        NSIndexPath *indexPath = [self.indexPathsMutableDictionary objectForKey:base64Handle];
+        if ([self.tableView.indexPathsForVisibleRows containsObject:indexPath]) {
+            ContactTableViewCell *cell = (ContactTableViewCell *)[self.tableView cellForRowAtIndexPath:indexPath];
+            cell.onlineStatusView.backgroundColor = [UIColor mnz_colorForStatusChange:onlineStatus];
+            cell.shareLabel.text = [NSString chatStatusString:onlineStatus];
+            if (onlineStatus < MEGAChatStatusOnline) {
+                [MEGASdkManager.sharedMEGAChatSdk requestLastGreen:userHandle];
+            }
+        }
+    }
+}
+
+- (void)onChatPresenceLastGreen:(MEGAChatSdk *)api userHandle:(uint64_t)userHandle lastGreen:(NSInteger)lastGreen {
+
+    if (userHandle != api.myUserHandle && (self.contactsMode >= ContactsModeChatStartConversation || self.contactsMode == ContactsModeDefault)) {
+        MEGAChatStatus chatStatus = [[MEGASdkManager sharedMEGAChatSdk] userOnlineStatus:userHandle];
+        if (chatStatus < MEGAChatStatusOnline) {
+            NSString *base64Handle = [MEGASdk base64HandleForUserHandle:userHandle];
+            NSIndexPath *indexPath = [self.indexPathsMutableDictionary objectForKey:base64Handle];
+            
+            if ([self.tableView.indexPathsForVisibleRows containsObject:indexPath]) {
+                ContactTableViewCell *cell = (ContactTableViewCell *)[self.tableView cellForRowAtIndexPath:indexPath];
+                cell.shareLabel.text = [NSString mnz_lastGreenStringFromMinutes:lastGreen];
+            }
+        }
+    }
 }
 
 @end

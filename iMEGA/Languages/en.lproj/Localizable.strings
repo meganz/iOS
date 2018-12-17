@@ -37,7 +37,7 @@
 /* Alert message shown when the user tries to download an empty folder  */
 "emptyFolderMessage"="You can’t download an empty folder";
 /* Message shown when the user clicks on a confirm account link that has already been used  */
-"accountAlreadyConfirmed"="Your account has already been activated. Please log in.";
+"accountAlreadyConfirmed"="Your account has been activated. Please log in.";
 /* Message shown when the user clicks on an link that is not valid */
 "linkNotValid"="Invalid link";
 /* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
@@ -91,18 +91,18 @@
 /* Button title which triggers the action to create a MEGA account */
 "createAccount"="Create Account";
 /* Message shown when the user writes a wrong email or password on login */
-"invalidMailOrPassword"="Invalid e-mail and/or password. Please try again";
+"invalidMailOrPassword"="Invalid email and/or password. Please try again";
 /* Error message when to many attempts to login */
 "tooManyAttemptsLogin"="You have attempted to log in too many times. Please wait until %@ and try again.";
 /* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
-"accountNotConfirmed"="Please check your e-mail and follow the link to confirm your account.";
+"accountNotConfirmed"="Please check your email and follow the link to confirm your account.";
 /* Error message when trying to login and the account is blocked */
 "accountBlocked"="Your account has been blocked. Please contact support@mega.nz";
 /* Message shown when the user writes an invalid format in the email field */
 "emailInvalidFormat"="Enter a valid email";
 /* Add contacts and share dialog error message when user try to add wrong email address */
 "theEmailAddressFormatIsInvalid"="The email address format is invalid";
-/* Message shown when the user enters a wrong password  */
+/* Message shown when the user enters a wrong password */
 "passwordInvalidFormat"="Enter a valid password";
 /* Hint text to suggest that the user has to write his email */
 "emailPlaceholder"="Email";
@@ -130,22 +130,20 @@
 "passwordStrong"="This password will withstand most sophisticated brute-force attacks. Please ensure that you will remember it.";
 /*  */
 "agreeWithTheMEGATermsOfService"="I agree with the MEGA <a href=’terms’>Terms of Service</a>";
-/* Error text shown when you have not entered a correct name  */
+/* Error text shown when you have not entered a correct name */
 "nameInvalidFormat"="Enter a valid name";
-/*  */
-"invalidFirstNameAndLastName"="Invalid first name and/or last name.";
 /* Error text shown when you have not written the same password */
 "passwordsDoNotMatch"="Passwords do not match";
 /* Error text shown when you don't have selected the checkbox to agree with the Terms of Service */
 "termsCheckboxUnselected"="You need to agree with the Terms of Service to register an account on MEGA.";
 /* Error text shown when the users tries to create an account with an email already in use */
-"emailAlreadyRegistered"="This e-mail address has already registered an account with MEGA";
+"emailAlreadyRegistered"="This email address has already registered an account with MEGA";
 /* Title shown just after doing some action that requires confirming the action by an email */
 "awaitingEmailConfirmation"="Awaiting email confirmation.";
 /* Text shown on the confirm account view to remind the user what to do */
 "confirmText"="Please enter your password to confirm your account";
-/* Button title that triggers the confirm account action */
-"confirmAccountButton"="Confirm your account";
+/* Label for any ‘Confirm account’ button, link, text, title, etc. - (String as short as possible). */
+"Confirm account"="Confirm account";
 /* Error text shown when you introduce a wrong password on the confirmation proccess */
 "passwordWrong"="Wrong password";
 /* Warning title shown when you try to confirm an account but you are logged in with another one */
@@ -699,7 +697,7 @@
 /* Detailed explanation of how the master encryption key (now renamed "Recovery Key") works, and why it is important to remember your password. */
 "masterKey_firstParagraph"="Your data is only readable through a chain of decryption operations that begins with your master encryption key (Recovery Key), which we store encrypted with your password. This means that if you lose your password, your Recovery Key can no longer be decrypted, and you can no longer decrypt your data.";
 /*  */
-"masterKey_thirdParagraph"="An external attacker cannot gain access to your account with just your key. A password reset requires both the key and access to your e-mail.";
+"masterKey_thirdParagraph"="An external attacker cannot gain access to your account with just your key. A password reset requires both the key and access to your email.";
 /* Message of the dialog displayed when copy the user's Recovery Key to the clipboard to be saved or exported. */
 "recoveryKeyCopiedToClipboard"="The Recovery Key has been copied to the clipboard. Please store it in a safe place.";
 /* Alert title shown when you have exported your MEGA Recovery Key */
@@ -826,11 +824,11 @@
 /* Error message when a use wants to validate the same email twice */
 "emailAddressChangeAlreadyRequested"="You have already requested a confirmation link for that email address.";
 /* Text shown just after tap to change an email account to remenber the user what to do to complete the change email proccess */
-"emailIsChanging_description"="Please go to your inbox and click the link to confirm your new e-mail address.";
+"emailIsChanging_description"="Please go to your inbox and click the link to confirm your new email address.";
 /* Text shown on the confirm email view to remind the user what to do */
 "verifyYourEmailAddress_description"="Please enter your password to verify your email address";
 /* The [X] will be replaced with the e-mail address. */
-"congratulationsNewEmailAddress"="Congratulations, your new e-mail address for this MEGA account is: [X]";
+"congratulationsNewEmailAddress"="Congratulations, your new email address for this MEGA account is: [X]";
 /* Button text to close other login sessions except the current session in use. This will log out other devices which have an active login session. */
 "closeOtherSessions"="Close other sessions";
 /* Message shown when you click on 'Close other session' to block other login sessions except the current session in use. This message is shown when this has been done. */
@@ -846,7 +844,7 @@
 /* Menu item */
 "help"="Help";
 /* Title of the section to access MEGA's help centre */
-"helpCentreLabel"="Help centre";
+"helpCentreLabel"="Help Centre";
 /* Section title that links you to the webpage that let you join and test the beta versions */
 "Join Beta"="Join Beta";
 /* Title to rate the app */
@@ -984,9 +982,9 @@
 /* Text shown under the button 'Skip' to explain that you can upgrade your account later in the section 'My Account'. */
 "youCanUpgradeLaterInMyAccount"="You can upgrade later in My Account";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
-"cloudDriveIsAlmostFull"="[S]Cloud Drive is almost full.[/S] [A]Upgrade now[/A] to a PRO account and get [S]up to 4 TB (4096 GB)[/S] of cloud storage space.";
+"cloudDriveIsAlmostFull"="[S]Cloud Drive is almost full.[/S] [A]Upgrade now[/A] to a PRO account and get [S]up to 8 TB (8192 GB)[/S] of cloud storage space.";
 /* A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text. */
-"cloudDriveIsFull"="[S]Your account is full.[/S] [A]Upgrade now[/A] to a PRO account and get [S]up to 4 TB (4096 GB)[/S] of cloud storage space.";
+"cloudDriveIsFull"="[S]Your account is full.[/S] [A]Upgrade now[/A] to a PRO account and get [S]up to 8 TB (8192 GB)[/S] of cloud storage space.";
 /* Storage related with the MEGA PRO account level you can subscribe */
 "productSpace"="Storage";
 /* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
@@ -1521,7 +1519,7 @@
 /* When an active call of user A with user B had failed */
 "callFailed"="Call failed";
 /* When an active call of user A with user B had ended */
-"callEnded"="Call ended.";
+"callEnded"="Call ended";
 /* Displayed after a call had ended, where %@ is the duration of the call (1h, 10seconds, etc) */
 "duration"="Duration: %@";
 /* */
@@ -1567,7 +1565,7 @@
 /* Button title to start the setup of a feature. For example 'Begin Setup' for Two-Factor Authentication */
 "beginSetup"="Begin Setup";
 /* A message on the Verify Login page telling the user to enter their 2FA code. */
-"pleaseEnterTheSixDigitCode"="Please enter the 6-digit code generated by your Authentication app.";
+"pleaseEnterTheSixDigitCode"="Please enter the 6-digit code generated by your Authenticator App.";
 /* Title of the dialog displayed to start setup the Two-Factor Authentication */
 "whyYouDoNeedTwoFactorAuthentication"="Why do you need Two-Factor Authentication?";
 /* Description for the ‘Two-Factor Authentication’ in the security settings section. */
@@ -1576,10 +1574,12 @@
 "whyYouDoNeedTwoFactorAuthenticationDescription"="Two-Factor Authentication is a second layer of security for your account. Which means that even if someone knows your password they cannot access it, without also having access to the six digit code only you have access to.";
 /* Alert text shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device */
 "youNeedATwoFactorAuthenticationApp"="You need a two factor authentication app on this device";
+/* Alert text shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device and tap on the question mark */
+"You need an authenticator app to enable 2FA on MEGA. You can download and install the Google Authenticator, Duo Mobile, Authy or Microsoft Authenticator app for your phone or tablet."="You need an authenticator app to enable 2FA on MEGA. You can download and install the Google Authenticator, Duo Mobile, Authy or Microsoft Authenticator app for your phone or tablet.";
 /* A title on the mobile web client page showing that 2FA has been enabled successfully. */
 "twoFactorAuthenticationEnabled"="Two-Factor Authentication Enabled";
 /* A message on the dialog shown after 2FA was successfully enabled. */
-"twoFactorAuthenticationEnabledDescription"="Next time you login to your account you will be asked to enter a 6-digit code provided by your authentication app.";
+"twoFactorAuthenticationEnabledDescription"="Next time you login to your account you will be asked to enter a 6-digit code provided by your Authenticator App.";
 /* A warning message on the Backup Recovery Key dialog to tell the user to backup their Recovery Key to their local computer. */
 "pleaseSaveYourRecoveryKey"="Please save your Recovery Key in a safe location";
 /* An informational message on the Backup Recovery Key dialog. */
@@ -1587,20 +1587,20 @@
 /* A message on a dialog to say that 2FA has been successfully disabled. */
 "twoFactorAuthenticationDisabled"="Two-Factor Authentication Disabled";
 /* A message on the setup two-factor authentication page on the mobile web client. */
-"scanOrCopyTheSeed"="Scan or copy the seed to your Authenticator App. Be sure to backup this seed to a safe place in case you lose your phone.";
+"scanOrCopyTheSeed"="Scan or copy the seed to your Authenticator App. Be sure to backup this seed to a safe place in case you lose your device.";
 /* A button to help them restore their account if they have lost their 2FA device. */
 "lostYourAuthenticatorDevice"="Lost your Authenticator device?";
-/* Settings section title where you can enable the option to 'Save Images in Library' */
-"Save Images in Library"="Save Images in Library";
-/* Settings section title where you can enable the option to 'Save Videos in Library' */
-"Save Videos in Library"="Save Videos in Library";
+/* Settings section title where you can enable the option to 'Save Images in Photos' */
+"Save Images in Photos"="Save Images in Photos";
+/* Settings section title where you can enable the option to 'Save Videos in Photos' */
+"Save Videos in Photos"="Save Videos in Photos";
 /* Footer text shown under the settings for download options 'Save Images/Videos in Library' */
 "Images and/or videos downloaded will be stored in the device’s media library instead of the Offline section."="Images and/or videos downloaded will be stored in the device’s media library instead of the Offline section.";
 /* Setting associated with the 'Camera' of the device */
 "Camera"="Camera";
-/* Settings section title where you can enable the option to 'Save in Library' the images or videos taken from your camera in the MEGA app */
-"Save in Library"="Save in Library";
-/* Footer text shown under the Camera setting to explain the option 'Save in Library' */
+/* Settings section title where you can enable the option to 'Save in Photos' the images or videos taken from your camera in the MEGA app */
+"Save in Photos"="Save in Photos";
+/* Footer text shown under the Camera setting to explain the option 'Save in Photos' */
 "Save a copy of the images and videos taken from the MEGA app in your device’s media library."="Save a copy of the images and videos taken from the MEGA app in your device’s media library.";
 /* Title shown in a page of the on boarding screens explaining that the user keeps the encryption keys */
 "You hold the keys"="You hold the keys";
@@ -1625,7 +1625,7 @@
 /* Title label that explains that the user is going to be asked for the photos permission */
 "Allow Access to Photos"="Allow Access to Photos";
 /* Detailed explanation of why the user should give permission to access to the photos */
-"To share photos and videos, allow MEGA to access your photos"="To share photos and videos, allow MEGA to access your photos";
+"Please give the MEGA App permission to access Photos to share photos and videos."="Please give the MEGA App permission to access Photos to share photos and videos.";
 /* Title label that explains that the user is going to be asked for the microphone and camera permission */
 "Enable Microphone and Camera"="Enable Microphone and Camera";
 /* Detailed explanation of why the user should give permission to access to the camera and the microphone */
@@ -1635,7 +1635,7 @@
 /* Detailed explanation of why the user should give permission to deliver notifications */
 "We would like to send you notifications so you receive new messages on your device instantly."="We would like to send you notifications so you receive new messages on your device instantly.";
 /* Button which triggers a request for a specific permission, that have been explained to the user beforehand */
-"Enable Access"="Enable Access";
+"Allow Access"="Allow Access";
 /* A section header which contains the file management settings. These settings allow users to remove duplicate files etc. */
 "File Management"="File Management";
 /* Title of the option to enable or disable file versioning on Settings section */
@@ -1656,8 +1656,8 @@
 "All current files will remain. Only historic versions of your files will be deleted."="All current files will remain. Only historic versions of your files will be deleted.";
 /* Text of the dialog to delete all the file versions of the account */
 "You are about to delete the version histories of all files. Any file version shared to you from a contact will need to be deleted by them.[Br][Br]Please note that the current files will not be deleted."="You are about to delete the version histories of all files. Any file version shared to you from a contact will need to be deleted by them.\n\nPlease note that the current files will not be deleted.";
-/*  */
-"Rubbish-Bin Cleaning Scheduler"="Rubbish-Bin Cleaning Scheduler";
+/* Title for the Rubbish-Bin Cleaning Scheduler feature */
+"Rubbish-Bin Cleaning Scheduler:"="Rubbish-Bin Cleaning Scheduler:";
 /* A rubbish bin scheduler setting which allows removing old files from the rubbish bin automatically. E.g. Remove files older than 15 days. */
 "Remove files older than"="Remove files older than";
 /* Label for any ‘Days’ button, link, text, title, etc. - (String as short as possible). */
@@ -1667,6 +1667,114 @@
 /* New server-side rubbish-bin cleaning scheduler description (for PRO users) */
 "The Rubbish Bin can be cleaned for you automatically. The minimum period is 7 days."="The Rubbish Bin can be cleaned for you automatically. The minimum period is 7 days.";
 /* Description shown when you try to disable the feature Rubbish-Bin Cleaning Scheduler and you are a free user */
-"To disable Rubbish-Bin Cleaning Scheduler or set a longer retention period you need to subscribe to a PRO plan"="To disable Rubbish-Bin Cleaning Scheduler or set a longer retention period you need to subscribe to a PRO plan";
+"To disable the Rubbish-Bin Cleaning Scheduler or set a longer retention period, you need to subscribe to a PRO plan."="To disable the Rubbish-Bin Cleaning Scheduler or set a longer retention period, you need to subscribe to a PRO plan.";
 /* Confirmation dialog for the button that logs the user out of all sessions except the current one. */
 "Do you want to close all other sessions? This will log you out on all other active sessions except the current one."="Do you want to close all other sessions? This will log you out on all other active sessions except the current one.";
+/* A button label which allows the users save images/videos in the Photos app. */
+"Save to Photos"="Save to Photos";
+/* Text shown when starting the process to save a photo or video to Photos app */
+"Saving to Photos…"="Saving to Photos…";
+/* Text shown when a photo or video is saved to Photos app */
+"Saved to Photos"="Saved to Photos";
+/* Text shown when an error occurs when trying to save a photo or video to Photos app */
+"Could not save Item"="Could not save Item";
+/* Text shown for switching from thumbnail view to list view. */
+"List view"="List view";
+/* Text shown for switching from list view to thumbnail view. */
+"Thumbnail view"="Thumbnail view";
+/* Message to inform the local user that someone has joined the current group call */
+"%@ joined the call."="%@ joined the call.";
+/* Message to inform the local user that someone has left the current group call */
+"%@ left the call."="%@ left the call.";
+/* Message to inform the local user is having a bad quality network with someone in the current group call */
+"Poor connection."="Poor connection.";
+/* Message shown in a chat room when there is an active group call */
+"There is an active group call. Tap to join."="There is an active group call. Tap to join.";
+/* Message shown in a chat room for a group call in progress displaying the duration of the call */
+"Touch to return to call %@"="Touch to return to call %@";
+/* Menu item to change from grid view to list view */
+"List view"="List view";
+/* Menu item to change from list view to grid view */
+"Thumbnail view"="Thumbnail view";
+/* There are no notifications to display. */
+"No notifications"="No notifications";
+/* The header of a notification related to payments */
+"Payment info"="Payment info";
+/* A title for a notification saying the user’s pricing plan will expire soon. */
+"PRO membership plan expiring soon"="PRO membership plan expiring soon";
+/* The header of a notification indicating that a file or folder has been taken down due to infringement or other reason. */
+"Takedown notice"="Takedown notice";
+/* The header of a notification indicating that a file or folder that was taken down has now been restored due to a successful counter-notice. */
+"Takedown reinstated"="Takedown reinstated";
+/* Label shown inside an unseen notification */
+"New"="New";
+/* When a contact sent a contact/friend request */
+"Sent you a contact request"="Sent you a contact request";
+/* A notification that the other user cancelled their contact request so it is no longer valid. E.g. user@email.com cancelled their contact request. */
+"Cancelled their contact request"="Cancelled their contact request";
+/* A reminder notification to remind the user to respond to the contact request. */
+"Reminder: You have a contact request"="Reminder: You have a contact request";
+/* A notification telling the user that the other user deleted them as a contact. E.g. user@email.com deleted you as a contact. */
+"Deleted you as a contact"="Deleted you as a contact";
+/* A notification telling the user that they are now fully connected with the other user (the users are in each other’s address books). */
+"Contact relationship established"="Contact relationship established";
+/* A notification telling the user that one of their contact’s accounts has been deleted or deactivated. */
+"Account has been deleted/deactivated"="Account has been deleted/deactivated";
+/* A notification telling the user that another user blocked them as a contact (they will no longer be able to contact them). E.g. name@email.com blocked you as a contact. */
+"Blocked you as a contact"="Blocked you as a contact";
+/* Response text after clicking Ignore on an incoming contact request notification. */
+"You ignored a contact request"="You ignored a contact request";
+/* Response text after clicking Accept on an incoming contact request notification. */
+"You accepted a contact request"="You accepted a contact request";
+/* Response text after clicking Deny on an incoming contact request notification. */
+"You denied a contact request"="You denied a contact request";
+/* When somebody accepted your contact request */
+"Accepted your contact request"="Accepted your contact request";
+/* When somebody denied your contact request */
+"Denied your contact request"="Denied your contact request";
+/* notification text */
+"A user has left the shared folder {0}"="A user has left the shared folder {0}";
+/* This is shown in the Notification dialog when the email address of a contact is not found and access to the share is lost for some reason (e.g. share removal or contact removal). */
+"Access to folders was removed."="Access to folders was removed.";
+/* Content of a notification that informs how many files and folders have been added to a shared folder */
+"Added 1 file"="Added 1 file";
+/* Content of a notification that informs how many files and folders have been added to a shared folder */
+"Added %lld files"="Added %lld files";
+/* Content of a notification that informs how many files and folders have been added to a shared folder */
+"Added 1 folder"="Added 1 folder";
+/* Content of a notification that informs how many files and folders have been added to a shared folder */
+"Added %lld folders"="Added %lld folders";
+/* Content of a notification that informs how many files and folders have been added to a shared folder */
+"Added 1 file and 1 folder"="Added 1 file and 1 folder";
+/* Content of a notification that informs how many files and folders have been added to a shared folder */
+"Added %lld files and 1 folder"="Added %lld files and 1 folder";
+/* Content of a notification that informs how many files and folders have been added to a shared folder */
+"Added 1 file and %lld folders"="Added 1 file and %lld folders";
+/* Content of a notification that informs how many files and folders have been added to a shared folder */
+"Added [A] files and [B] folders"="Added [A] files and [B] folders";
+/* Notification popup. Notification for multiple removed items from a share. Please keep [X] as it will be replaced at runtime with the number of removed items. */
+"Removed [X] items from a share"="Removed [X] items from a share";
+/* A notification telling the user that their Pro plan payment was successfully received. The %1 indicates the name of the Pro plan they paid for e.g. Lite, PRO III. */
+"Your payment for the %1 plan was received."="Your payment for the %1 plan was received.";
+/* A notification telling the user that their Pro plan payment was unsuccessful. The %1 indicates the name of the Pro plan they were trying to pay for e.g. Lite, PRO II. */
+"Your payment for the %1 plan was unsuccessful."="Your payment for the %1 plan was unsuccessful.";
+/* The professional pricing plan which the user is currently on will expire in one day. */
+"Your PRO membership plan will expire in 1 day."="Your PRO membership plan will expire in 1 day.";
+/* The professional pricing plan which the user is currently on will expire in 5 days. The %1 is a placeholder for the number of days and should not be removed. */
+"Your PRO membership plan will expire in %1 days."="Your PRO membership plan will expire in %1 days.";
+/* The text of a notification indicating that a file or folder has been taken down due to infringement or other reason. The %1 placeholder will be replaced with the text ‘file’ or ‘folder’. The %2 will be replaced with the name of the file or folder. */
+"Your publicly shared %1 (%2) has been taken down."="Your publicly shared %1 (%2) has been taken down.";
+/* The text of a notification indicating that a file or folder that was taken down has now been restored due to a successful counter-notice. The %1 placeholder will be replaced with the text ‘file’ or ‘folder’. The %2 will be replaced with the name of the file or folder. */
+"Your taken down %1 (%2) has been reinstated."="Your taken down %1 (%2) has been reinstated.";
+/* Footer text to explain the meaning of the functionaly 'Last seen' of your chat status. */
+"Allow your contacts to see the last time you were active on MEGA. If disabled you won’t be able to see the activity status of your contacts."="Allow your contacts to see the last time you were active on MEGA. If disabled you won’t be able to see the activity status of your contacts.";
+/* Label shown next to a feature name that can be enabled or disabled, like in 'Show Last seen...' */
+"Show"="Show";
+/* Shown when viewing a 1on1 chat (at least for now), if the user is offline. */
+"Last seen %s"="Last seen %s";
+/* Text to inform the user the 'Last seen' time of a contact, for example 'Last seen 20 Nov 18 15:15'. String as sort as possible. */
+"Last seen [A] [B]"="Last seen [A] [B]";
+/* Text to inform the user the 'Last seen' time of a contact is a long time ago (>= 65535 minutes) */
+"Last seen a long time ago"="Last seen a long time ago";
+/* */
+"Today"="Today";

@@ -17,6 +17,7 @@ static const NSUInteger MIN_SECOND = 10; // Save only where the users were playi
 @property (nonatomic, strong) MEGANode *node;
 @property (nonatomic, assign, getter=isFolderLink) BOOL folderLink;
 @property (nonatomic, assign, getter=isEndPlaying) BOOL endPlaying;
+@property (nonatomic, strong) MEGASdk *apiForStreaming;
 
 @end
 
@@ -34,13 +35,14 @@ static const NSUInteger MIN_SECOND = 10; // Save only where the users were playi
     return self;
 }
 
-- (instancetype)initWithNode:(MEGANode *)node folderLink:(BOOL)folderLink {
+- (instancetype)initWithNode:(MEGANode *)node folderLink:(BOOL)folderLink apiForStreaming:(MEGASdk *)apiForStreaming {
     self = [super init];
     
     if (self) {
-        _node       = node;
-        _folderLink = folderLink;
-        _fileUrl    = nil;
+        _apiForStreaming = apiForStreaming;
+        _node            = folderLink ? [[MEGASdkManager sharedMEGASdkFolder] authorizeNode:node] : node;
+        _folderLink      = folderLink;
+        _fileUrl         = [apiForStreaming httpServerGetLocalLink:_node];
     }
     
     return self;
@@ -73,7 +75,7 @@ static const NSUInteger MIN_SECOND = 10; // Save only where the users were playi
 
     if (fingerprint && ![fingerprint isEqualToString:@""]) {
         MOMediaDestination *mediaDestination = [[MEGAStore shareInstance] fetchMediaDestinationWithFingerprint:fingerprint];
-        if (mediaDestination) {
+        if (mediaDestination.destination.longLongValue > 0 && mediaDestination.timescale.intValue > 0) {
             if ([self fileName].mnz_isVideoPathExtension) {
                 NSString *infoVideoDestination = AMLocalizedString(@"continueOrRestartVideoMessage", @"Message to show the user info (name and time) about the resume of the video");
                 infoVideoDestination = [infoVideoDestination stringByReplacingOccurrencesOfString:@"%1$s" withString:[self fileName]];
@@ -111,7 +113,7 @@ static const NSUInteger MIN_SECOND = 10; // Save only where the users were playi
     [self stopStreaming];
     
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"presentPasscodeLater"] && [LTHPasscodeViewController doesPasscodeExist]) {
-        [[LTHPasscodeViewController sharedUser] showLockScreenOver:UIApplication.mnz_visibleViewController.view
+        [[LTHPasscodeViewController sharedUser] showLockScreenOver:UIApplication.mnz_presentingViewController.view
                                                      withAnimation:YES
                                                         withLogout:NO
                                                     andLogoutTitle:nil];
@@ -142,14 +144,6 @@ static const NSUInteger MIN_SECOND = 10; // Save only where the users were playi
 #pragma mark - Private
 
 - (void)seekToDestination:(MOMediaDestination *)mediaDestination play:(BOOL)play {
-    if (self.node) {
-        if (self.folderLink) {
-            self.fileUrl = [[MEGASdkManager sharedMEGASdkFolder] httpServerGetLocalLink:self.node];
-        } else {
-            self.fileUrl = [[MEGASdkManager sharedMEGASdk] httpServerGetLocalLink:self.node];
-        }
-    }
-    
     if (!self.fileUrl) {
         return;
     }
@@ -169,11 +163,7 @@ static const NSUInteger MIN_SECOND = 10; // Save only where the users were playi
 
 - (void)stopStreaming {
     if (self.node) {
-        if (self.isFolderLink) {
-            [[MEGASdkManager sharedMEGASdkFolder] httpServerStop];
-        } else {
-            [[MEGASdkManager sharedMEGASdk] httpServerStop];
-        }
+        [self.apiForStreaming httpServerStop];
     }
 }
 
@@ -195,13 +185,9 @@ static const NSUInteger MIN_SECOND = 10; // Save only where the users were playi
     NSString *fingerprint;
 
     if (self.node) {
-        if (self.folderLink) {
-            fingerprint = [[MEGASdkManager sharedMEGASdkFolder] fingerprintForNode:self.node];
-        } else {
-            fingerprint = [[MEGASdkManager sharedMEGASdk] fingerprintForNode:self.node];
-        }
+        fingerprint = self.node.fingerprint;
     } else {
-        fingerprint = [NSString stringWithFormat:@"%@", [[MEGASdkManager sharedMEGASdk] fingerprintForFilePath:self.fileUrl.path]];
+        fingerprint = [[MEGASdkManager sharedMEGASdk] fingerprintForFilePath:self.fileUrl.path];
     }
     
     return fingerprint;

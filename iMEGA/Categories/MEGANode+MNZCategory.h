@@ -1,6 +1,7 @@
 
 @interface MEGANode (MNZCategory) <UITextFieldDelegate>
 
+- (void)navigateToParentAndPresent;
 - (void)mnz_openNodeInNavigationController:(UINavigationController *)navigationController folderLink:(BOOL)isFolderLink;
 - (UIViewController *)mnz_viewControllerForNodeInFolderLink:(BOOL)isFolderLink;
 
@@ -18,6 +19,7 @@
 - (void)mnz_removeSharing;
 - (void)mnz_copyToGalleryFromTemporaryPath:(NSString *)path;
 - (void)mnz_restore;
+- (void)mnz_saveToPhotosWithApi:(MEGASdk *)api;
 
 #pragma mark - File links
 

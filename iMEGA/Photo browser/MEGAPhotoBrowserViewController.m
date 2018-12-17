@@ -112,12 +112,21 @@
     self.pieChartView.layer.cornerRadius = self.pieChartView.frame.size.width/2;
     self.pieChartView.layer.masksToBounds = YES;
     
-    if (self.displayMode == DisplayModeFileLink) {
-        self.leftToolbarItem.image = nil;
-        self.leftToolbarItem.title = AMLocalizedString(@"download", nil);
-
-        self.rightToolbarItem.image = nil;
-        self.rightToolbarItem.title = AMLocalizedString(@"import", @"Button title that triggers the importing link action");
+    switch (self.displayMode) {
+        case DisplayModeFileLink:
+            self.leftToolbarItem.image = nil;
+            self.leftToolbarItem.title = AMLocalizedString(@"download", nil);
+            
+            self.rightToolbarItem.image = nil;
+            self.rightToolbarItem.title = AMLocalizedString(@"import", @"Button title that triggers the importing link action");
+            break;
+            
+        case DisplayModeSharedItem:
+            [self.toolbar setItems:@[self.leftToolbarItem]];
+            break;
+            
+        default:
+            break;
     }
 }
 
@@ -182,7 +191,7 @@
     self.scrollView.contentSize = CGSizeMake(self.scrollView.frame.size.width * self.mediaNodes.count, self.scrollView.frame.size.height);
     
     if (self.currentIndex >= self.mediaNodes.count) {
-        MEGALogError(@"MEGAPhotoBrowserViewController tried to show the node at index %lu, with %lu items in the array of nodes", self.currentIndex, self.mediaNodes.count);
+        MEGALogError(@"MEGAPhotoBrowserViewController tried to show the node at index %tu, with %tu items in the array of nodes", self.currentIndex, self.mediaNodes.count);
         if (self.mediaNodes.count > 0) {
             self.currentIndex = self.mediaNodes.count - 1;
         } else {
@@ -195,7 +204,9 @@
     self.scrollView.contentOffset = CGPointMake(self.currentIndex * (self.view.frame.size.width + self.gapBetweenPages), 0);
     [self reloadTitle];
     [self airplayDisplayCurrentImage];
-    [self.delegate photoBrowser:self didPresentNode:[self.mediaNodes objectAtIndex:self.currentIndex]];
+    if ([self.delegate respondsToSelector:@selector(photoBrowser:didPresentNode:)]) {
+        [self.delegate photoBrowser:self didPresentNode:[self.mediaNodes objectAtIndex:self.currentIndex]];
+    }
 }
 
 - (void)reloadTitle {
@@ -265,7 +276,9 @@
             [self resetZooms];
             [self reloadTitle];
             [self airplayDisplayCurrentImage];
-            [self.delegate photoBrowser:self didPresentNode:[self.mediaNodes objectAtIndex:self.currentIndex]];
+            if ([self.delegate respondsToSelector:@selector(photoBrowser:didPresentNode:)]) {
+                [self.delegate photoBrowser:self didPresentNode:[self.mediaNodes objectAtIndex:self.currentIndex]];
+            }
         }
     }
 }
@@ -551,7 +564,9 @@
     [self toggleTransparentInterfaceForDismissal:YES];
 
     [self dismissViewControllerAnimated:YES completion:^{
-        [self.delegate photoBrowser:self willDismissWithNode:node];
+        if ([self.delegate respondsToSelector:@selector(photoBrowser:willDismissWithNode:)]) {
+            [self.delegate photoBrowser:self willDismissWithNode:node];
+        }
     }];
 }
 
@@ -611,7 +626,7 @@
                 MEGAActivityItemProvider *activityItemProvider = [[MEGAActivityItemProvider alloc] initWithPlaceholderString:node.name node:node];
                 NSMutableArray *activitiesMutableArray = [[NSMutableArray alloc] init];
                 if (node.name.mnz_isImagePathExtension) {
-                    SaveToCameraRollActivity *saveToCameraRollActivity = [[SaveToCameraRollActivity alloc] initWithNode:node];
+                    SaveToCameraRollActivity *saveToCameraRollActivity = [[SaveToCameraRollActivity alloc] initWithNode:node api:self.api];
                     [activitiesMutableArray addObject:saveToCameraRollActivity];
                 }
                 activityViewController = [[UIActivityViewController alloc] initWithActivityItems:@[activityItemProvider] applicationActivities:activitiesMutableArray];
@@ -664,7 +679,9 @@
         case UIGestureRecognizerStateCancelled: {
             if (ABS(verticalIncrement) > 50.0f) {
                 [self dismissViewControllerAnimated:YES completion:^{
-                    [self.delegate photoBrowser:self willDismissWithNode:node];
+                    if ([self.delegate respondsToSelector:@selector(photoBrowser:willDismissWithNode:)]) {
+                        [self.delegate photoBrowser:self willDismissWithNode:node];
+                    }
                 }];
             } else {
                 [UIView animateWithDuration:0.3 animations:^{
@@ -857,7 +874,8 @@
             
             switch (self.displayMode) {
                 case DisplayModeFileLink: {
-                    activityVC = [[UIActivityViewController alloc] initWithActivityItems:@[self.publicLink] applicationActivities:nil];
+                    NSString *link = self.encryptedLink ? self.encryptedLink : self.publicLink;
+                    activityVC = [[UIActivityViewController alloc] initWithActivityItems:@[link] applicationActivities:nil];
                     [activityVC setExcludedActivityTypes:@[UIActivityTypePrint, UIActivityTypeAssignToContact, UIActivityTypeSaveToCameraRoll, UIActivityTypeAddToReadingList, UIActivityTypeAirDrop]];
                     [activityVC.popoverPresentationController setBarButtonItem:sender];
                     
@@ -949,6 +967,10 @@
             [node mnz_removeInViewController:self];
             break;
             
+        case MegaNodeActionTypeSaveToPhotos:
+            [node mnz_saveToPhotosWithApi:self.api];
+            break;
+            
         default:
             break;
     }
@@ -962,12 +984,15 @@
     [self toggleTransparentInterfaceForDismissal:YES];
 
     [self dismissViewControllerAnimated:YES completion:^{
-        [self.delegate photoBrowser:self willDismissWithNode:node];
-        UIViewController *visibleViewController = UIApplication.mnz_visibleViewController;
+        if ([self.delegate respondsToSelector:@selector(photoBrowser:willDismissWithNode:)]) {
+            [self.delegate photoBrowser:self willDismissWithNode:node];
+        }
+        UIViewController *visibleViewController = UIApplication.mnz_presentingViewController;
         if ([visibleViewController isKindOfClass:MainTabBarController.class]) {
             NSArray *parentTreeArray = node.mnz_parentTreeArray;
 
-            UINavigationController *navigationController = (UINavigationController *)((MainTabBarController *)visibleViewController).viewControllers[((MainTabBarController *)visibleViewController).selectedIndex];
+            MainTabBarController *mainTBC = (MainTabBarController *)visibleViewController;
+            UINavigationController *navigationController = (UINavigationController *)(mainTBC.selectedViewController);
             [navigationController popToRootViewControllerAnimated:NO];
             
             for (MEGANode *node in parentTreeArray) {
