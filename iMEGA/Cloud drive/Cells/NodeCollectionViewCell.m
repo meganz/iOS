@@ -1,21 +1,34 @@
 
 #import "NodeCollectionViewCell.h"
 
+#import "NSString+MNZCategory.h"
+
 #import "Helper.h"
 #import "MEGAGetThumbnailRequestDelegate.h"
 #import "MEGASdkManager.h"
 #import "UIImageView+MNZCategory.h"
 
+@interface NodeCollectionViewCell ()
+
+@property (strong, nonatomic) MEGANode *node;
+
+@end
+
 @implementation NodeCollectionViewCell
 
 - (void)configureCellForNode:(MEGANode *)node {
+    self.node = node;
     if (node.hasThumbnail) {
         NSString *thumbnailFilePath = [Helper pathForNode:node inSharedSandboxCacheDirectory:@"thumbnailsV3"];
         if ([[NSFileManager defaultManager] fileExistsAtPath:thumbnailFilePath]) {
+            self.thumbnailPlayImageView.hidden = !node.name.mnz_isVideoPathExtension;
             self.thumbnailImageView.image = [UIImage imageWithContentsOfFile:thumbnailFilePath];
         } else {
             MEGAGetThumbnailRequestDelegate *getThumbnailRequestDelegate = [[MEGAGetThumbnailRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
-                self.thumbnailImageView.image = [UIImage imageWithContentsOfFile:request.file];
+                if (request.nodeHandle == self.node.handle) {
+                    self.thumbnailPlayImageView.hidden = !node.name.mnz_isVideoPathExtension;
+                    self.thumbnailImageView.image = [UIImage imageWithContentsOfFile:request.file];
+                }
             }];
             [[MEGASdkManager sharedMEGASdk] getThumbnailNode:node destinationFilePath:thumbnailFilePath delegate:getThumbnailRequestDelegate];
             [self.thumbnailImageView mnz_imageForNode:node];
@@ -29,7 +42,10 @@
     }
         
     self.nameLabel.text = node.name;
-    
+    if (!node.name.mnz_isVideoPathExtension) {
+        self.thumbnailPlayImageView.hidden = YES;
+    }
+
     if (@available(iOS 11.0, *)) {
         self.thumbnailImageView.accessibilityIgnoresInvertColors = YES;
         self.thumbnailPlayImageView.accessibilityIgnoresInvertColors = YES;
