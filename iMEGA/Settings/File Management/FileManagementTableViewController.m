@@ -8,6 +8,7 @@
 #import "MEGASdkManager.h"
 #import "MEGASdk+MNZCategory.h"
 #import "MEGAStore.h"
+#import "NSFileManager+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 
 @interface FileManagementTableViewController () <MEGAGlobalDelegate, MEGARequestDelegate>
@@ -98,17 +99,6 @@
 }
 
 #pragma mark - Private
-
-- (void)deleteFolderContentsInPath:(NSString *)folderPath {
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-    NSArray *fileArray = [fileManager contentsOfDirectoryAtPath:folderPath error:nil];
-    NSError *error = nil;
-    for (NSString *filename in fileArray) {
-        if (![fileManager removeItemAtPath:[folderPath stringByAppendingPathComponent:filename] error:&error] ) {
-            MEGALogError(@"Remove item at path failed with error: %@", error);
-        }
-    }
-}
 
 - (NSString *)formatStringFromByteCountFormatter:(NSString *)stringFromByteCount {
     NSArray *componentsSeparatedByStringArray = [stringFromByteCount componentsSeparatedByString:@" "];
@@ -223,7 +213,7 @@
             [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
             [SVProgressHUD show];
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
-                [self deleteFolderContentsInPath:offlinePathString];
+                [NSFileManager.defaultManager mnz_removeFolderContentsAtPath:offlinePathString];
                 dispatch_async(dispatch_get_main_queue(), ^(void){
                     [SVProgressHUD dismiss];
                     [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
@@ -241,9 +231,9 @@
             [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
             [SVProgressHUD show];
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
-                [self deleteFolderContentsInPath:thumbnailsPathString];
-                [self deleteFolderContentsInPath:previewsPathString];
-                [self deleteFolderContentsInPath:NSTemporaryDirectory()];
+                [NSFileManager.defaultManager mnz_removeFolderContentsAtPath:thumbnailsPathString];
+                [NSFileManager.defaultManager mnz_removeFolderContentsAtPath:previewsPathString];
+                [NSFileManager.defaultManager mnz_removeFolderContentsAtPath:NSTemporaryDirectory()];
                 dispatch_async(dispatch_get_main_queue(), ^(void){
                     [SVProgressHUD dismiss];
                     [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];

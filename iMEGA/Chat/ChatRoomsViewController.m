@@ -146,13 +146,13 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kReachabilityChangedNotification object:nil];
     
     [[MEGASdkManager sharedMEGAChatSdk] removeChatDelegate:self];
-    
-    [self.chatListItemArray removeAllObjects];
-    [self.chatIdIndexPathDictionary removeAllObjects];
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
+    
+    [self.chatListItemArray removeAllObjects];
+    [self.chatIdIndexPathDictionary removeAllObjects];
     [self.tableView reloadData];
 }
 
@@ -228,7 +228,7 @@
         }
     }
     
-    NSDictionary *attributes = @{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:14.0f], NSForegroundColorAttributeName:[UIColor mnz_gray777777]};
+    NSDictionary *attributes = @{NSFontAttributeName:[UIFont preferredFontForTextStyle:UIFontTextStyleFootnote], NSForegroundColorAttributeName:[UIColor mnz_gray777777]};
     
     return [[NSAttributedString alloc] initWithString:text attributes:attributes];
 }
@@ -322,7 +322,19 @@
 - (void)openChatRoomWithID:(uint64_t)chatID {
     NSArray *viewControllers = self.navigationController.viewControllers;
     if (viewControllers.count > 1) {
-        [self.navigationController popToRootViewControllerAnimated:NO];
+        UIViewController *currentVC = self.navigationController.viewControllers[1];
+        if ([currentVC isKindOfClass:MessagesViewController.class]) {
+            MessagesViewController *currentMessagesVC = (MessagesViewController *)currentVC;
+            if (currentMessagesVC.chatRoom.chatId == chatID) {
+                if (viewControllers.count != 2) {
+                    [self.navigationController popToViewController:currentMessagesVC animated:YES];
+                }
+                return;
+            } else {
+                [[MEGASdkManager sharedMEGAChatSdk] closeChatRoom:currentMessagesVC.chatRoom.chatId delegate:currentMessagesVC];
+                [self.navigationController popToRootViewControllerAnimated:NO];
+            }
+        }
     }
     
     MessagesViewController *messagesVC = [[MessagesViewController alloc] init];
@@ -411,30 +423,28 @@
 }
 
 - (void)updateCell:(ChatRoomCell *)cell forUnreadCountChange:(NSInteger)unreadCount {
+    cell.chatTitle.font = [[UIFont preferredFontForTextStyle:UIFontTextStyleSubheadline] fontWithWeight:UIFontWeightMedium];
+    cell.chatTitle.textColor = [UIColor mnz_black333333];
+    
     if (unreadCount != 0) {
-        if (cell.unreadView.hidden) {
-            cell.chatTitle.font = [UIFont mnz_SFUIMediumWithSize:15.0f];
-            cell.chatTitle.textColor = [UIColor mnz_black333333];
-            cell.chatLastMessage.font = [UIFont mnz_SFUIMediumWithSize:12.0f];
-            cell.chatLastMessage.textColor = [UIColor mnz_black333333];
-            cell.chatLastTime.font = [UIFont mnz_SFUIMediumWithSize:10.0f];
-            cell.chatLastTime.textColor = [UIColor mnz_black333333];
-            
-            cell.unreadView.hidden = NO;
-            cell.unreadView.clipsToBounds = YES;
-        }
+        cell.chatLastMessage.font = [[UIFont preferredFontForTextStyle:UIFontTextStyleCaption1] fontWithWeight:UIFontWeightMedium];
+        cell.chatLastMessage.textColor = [UIColor mnz_black333333];
+
+        cell.chatLastTime.font = [[UIFont preferredFontForTextStyle:UIFontTextStyleCaption2] fontWithWeight:UIFontWeightMedium];
+        cell.chatLastTime.textColor = [UIColor mnz_black333333];
+        
+        cell.unreadView.hidden = NO;
+        cell.unreadView.clipsToBounds = YES;
         
         if (unreadCount > 0) {
-            cell.unreadCount.text = [NSString stringWithFormat:@"%ld", unreadCount];
+            cell.unreadCount.text = [NSString stringWithFormat:@"%td", unreadCount];
         } else {
-            cell.unreadCount.text = [NSString stringWithFormat:@"%ld+", -unreadCount];
+            cell.unreadCount.text = [NSString stringWithFormat:@"%td+", -unreadCount];
         }
     } else {
-        cell.chatTitle.font = [UIFont mnz_SFUIMediumWithSize:15.0f];
-        cell.chatTitle.textColor = UIColor.mnz_black333333;
-        cell.chatLastMessage.font = [UIFont mnz_SFUIRegularWithSize:12.0f];
+        cell.chatLastMessage.font = [UIFont preferredFontForTextStyle:UIFontTextStyleCaption1];
         cell.chatLastMessage.textColor = [UIColor mnz_gray666666];
-        cell.chatLastTime.font = [UIFont mnz_SFUIRegularWithSize:10.0f];
+        cell.chatLastTime.font = [UIFont preferredFontForTextStyle:UIFontTextStyleCaption2];
         cell.chatLastTime.textColor = [UIColor mnz_gray666666];
         
         cell.unreadView.hidden = YES;
@@ -466,7 +476,7 @@
                 lastMessageString = [attachedFileString stringByReplacingOccurrencesOfString:@"%s" withString:lastMessageString];
             } else {
                 lastMessageString = AMLocalizedString(@"attachedXFiles", @"A summary message when a user has attached many files at once into the chat. Please keep %s as it will be replaced at runtime with the number of files.");
-                lastMessageString = [lastMessageString stringByReplacingOccurrencesOfString:@"%s" withString:[NSString stringWithFormat:@"%lu", componentsArray.count]];
+                lastMessageString = [lastMessageString stringByReplacingOccurrencesOfString:@"%s" withString:[NSString stringWithFormat:@"%tu", componentsArray.count]];
             }
             cell.chatLastMessage.text = senderString ? [NSString stringWithFormat:@"%@: %@",senderString, lastMessageString] : lastMessageString;
             break;
@@ -484,7 +494,7 @@
                 lastMessageString = [sentContactString stringByReplacingOccurrencesOfString:@"%s" withString:lastMessageString];
             } else {
                 lastMessageString = AMLocalizedString(@"sentXContacts", @"A summary message when a user sent the information of %s number of contacts at once. Please keep %s as it will be replaced at runtime with the number of contacts sent.");
-                lastMessageString = [lastMessageString stringByReplacingOccurrencesOfString:@"%s" withString:[NSString stringWithFormat:@"%lu", componentsArray.count]];
+                lastMessageString = [lastMessageString stringByReplacingOccurrencesOfString:@"%s" withString:[NSString stringWithFormat:@"%tu", componentsArray.count]];
             }
             cell.chatLastMessage.text = senderString ? [NSString stringWithFormat:@"%@: %@",senderString, lastMessageString] : lastMessageString;
             break;
@@ -786,16 +796,8 @@
     cell.unreadView.hidden = NO;
     cell.unreadView.backgroundColor = UIColor.mnz_gray777777;
     cell.unreadView.layer.cornerRadius = 4;
-    NSArray *constraints = cell.unreadView.constraints;
-    for (NSLayoutConstraint *constraint in constraints) {
-        if (constraint.firstAttribute == NSLayoutAttributeHeight) {
-            constraint.constant = 20;
-        }
-        if (constraint.firstAttribute == NSLayoutAttributeWidth) {
-            constraint.constant = 14;
-        }
-    }
     cell.unreadCount.text = AMLocalizedString(@"archived", @"Title of flag of archived chats.").uppercaseString;
+    cell.unreadCountLabelHorizontalMarginConstraint.constant = 7;
 
     return cell;
 }
@@ -907,18 +909,6 @@
         }
     } else {
         return [self numberOfChatRooms];
-    }
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (self.isArchivedChatsRowVisible) {
-        if (indexPath.section == 0) {
-            return 44;
-        } else {
-            return 60;
-        }
-    } else {
-        return 60;
     }
 }
 

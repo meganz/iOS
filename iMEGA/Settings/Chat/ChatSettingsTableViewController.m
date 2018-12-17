@@ -102,8 +102,6 @@
 - (IBAction)chatValueChanged:(UISwitch *)sender {
     MEGALogInfo(@"Chat: %@", (sender.isOn ? @"ON" : @"OFF"));
     if (sender.isOn) {
-        [[MEGALogger sharedLogger] enableChatlogs];
-        
         if ([MEGASdkManager sharedMEGAChatSdk] == nil) {
             [MEGASdkManager createSharedMEGAChatSdk];
         }
@@ -137,7 +135,6 @@
         [[MEGASdkManager sharedMEGAChatSdk] logoutWithDelegate:self];
         [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"IsChatEnabled"];
         [[[NSUserDefaults alloc] initWithSuiteName:@"group.mega.ios"] setBool:NO forKey:@"IsChatEnabled"];
-        [[MEGALogger sharedLogger] enableSDKlogs];
     }
 }
 

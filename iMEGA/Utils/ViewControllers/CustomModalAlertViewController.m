@@ -117,7 +117,7 @@
             AchievementsViewController *achievementsVC = [[UIStoryboard storyboardWithName:@"MyAccount" bundle:nil] instantiateViewControllerWithIdentifier:@"AchievementsViewControllerID"];
             achievementsVC.enableCloseBarButton = YES;
             UINavigationController *navigation = [[UINavigationController alloc] initWithRootViewController:achievementsVC];
-            [UIApplication.mnz_visibleViewController presentViewController:navigation animated:YES completion:nil];
+            [UIApplication.mnz_presentingViewController presentViewController:navigation animated:YES completion:nil];
         }];
     }];
 }

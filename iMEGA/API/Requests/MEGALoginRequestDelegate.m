@@ -84,10 +84,11 @@
             case MEGAErrorTypeApiEExpired: {
                 if (self.errorCompletion) {
                     self.errorCompletion(error);
+                    return;
                 } else {
                     message = [NSString stringWithFormat:@"%@ %@", request.requestString, error.name];
+                    break;
                 }
-                return;
             }
                 
             case MEGAErrorTypeApiEFailed:
@@ -118,7 +119,7 @@
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"error", nil) message:message preferredStyle:UIAlertControllerStyleAlert];
         [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
         
-        [UIApplication.mnz_visibleViewController presentViewController:alertController animated:YES completion:nil];
+        [UIApplication.mnz_presentingViewController presentViewController:alertController animated:YES completion:nil];
         
         return;
     }

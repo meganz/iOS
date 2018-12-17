@@ -63,6 +63,10 @@
     return [UIColor colorWithRed:238.0/255.0 green:238.0/255.0 blue:238.0/255.0 alpha:1.0];
 }
 
++ (UIColor *)mnz_grayFAFAFA {
+    return [UIColor colorWithRed:250.0/255.0 green:250.0/255.0 blue:250.0/255.0 alpha:1.0];
+}
+
 + (UIColor *)mnz_grayFCFCFC {
     return [UIColor colorWithRed:252.0/255.0 green:252.0/255.0 blue:252.0/255.0 alpha:1.0];
 }
@@ -76,6 +80,10 @@
 }
 
 #pragma mark - Green
+
++ (UIColor *)mnz_green00897B {
+    return [UIColor colorWithRed:0.0f green:0.54 blue:0.48 alpha:1.0f];
+}
 
 + (UIColor *)mnz_green00BFA5 {
     return [UIColor colorWithRed:0.0f green:0.75 blue:0.65 alpha:1.0f];
@@ -104,6 +112,10 @@
 
 + (UIColor *)mnz_redMain {
     return [UIColor mnz_redF30C14];
+}
+
++ (UIColor *)mnz_redError {
+    return [UIColor mnz_redD90007];
 }
 
 + (UIColor *)mnz_redProI {

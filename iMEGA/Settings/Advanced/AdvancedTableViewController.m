@@ -59,9 +59,9 @@
     [super viewWillAppear:animated];
     
     [self.dontUseHttpLabel setText:AMLocalizedString(@"dontUseHttp", @"Text next to a switch that allows disabling the HTTP protocol for transfers")];
-    self.savePhotosLabel.text = AMLocalizedString(@"Save Images in Library", @"Settings section title where you can enable the option to 'Save Images in Library'");
-    self.saveVideosLabel.text = AMLocalizedString(@"Save Videos in Library", @"Settings section title where you can enable the option to 'Save Videos in Library'");
-    self.saveMediaInGalleryLabel.text = AMLocalizedString(@"Save in Library", @"Settings section title where you can enable the option to 'Save in Library' the images or videos taken from your camera in the MEGA app");
+    self.savePhotosLabel.text = AMLocalizedString(@"Save Images in Photos", @"Settings section title where you can enable the option to 'Save Images in Photos'");
+    self.saveVideosLabel.text = AMLocalizedString(@"Save Videos in Photos", @"Settings section title where you can enable the option to 'Save Videos in Photos'");
+    self.saveMediaInGalleryLabel.text = AMLocalizedString(@"Save in Photos", @"Settings section title where you can enable the option to 'Save in Photos' the images or videos taken from your camera in the MEGA app");
     
     BOOL useHttpsOnly = [[[NSUserDefaults alloc] initWithSuiteName:@"group.mega.ios"] boolForKey:@"useHttpsOnly"];
     [self.useHttpsOnlySwitch setOn:useHttpsOnly];
@@ -175,7 +175,7 @@
         }
             
         case 2: { //Camera
-            titleFooter = AMLocalizedString(@"Save a copy of the images and videos taken from the MEGA app in your device’s media library.", @"Footer text shown under the Camera setting to explain the option 'Save in Library'");
+            titleFooter = AMLocalizedString(@"Save a copy of the images and videos taken from the MEGA app in your device’s media library.", @"Footer text shown under the Camera setting to explain the option 'Save in Photos'");
             break;
         }
     }

@@ -6,6 +6,7 @@
 #import "Helper.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGASdkManager.h"
+#import "NSURL+MNZCategory.h"
 
 @interface AboutTableViewController ()
 
@@ -38,10 +39,10 @@
     self.versionCell.gestureRecognizers = @[tapGestureRecognizer, longPressGestureRecognizer];
     
     self.sdkVersionLabel.text = AMLocalizedString(@"sdkVersion", @"Title of the label where the SDK version is shown");
-    self.sdkVersionSHALabel.text = @"d902e1a5";
+    self.sdkVersionSHALabel.text = @"4911017d";
     
     self.megachatSdkVersionLabel.text = AMLocalizedString(@"megachatSdkVersion", @"Title of the label where the MEGAchat SDK version is shown");
-    self.megachatSdkSHALabel.text = @"b81e8314";
+    self.megachatSdkSHALabel.text = @"b5fadce9";
     
     self.viewSourceCodeLabel.text = AMLocalizedString(@"View source code", @"Link to the public code of the ap");
     
@@ -83,9 +84,9 @@
             
         case 1: {
             if (indexPath.row == 0) { //View source code
-                [Helper presentSafariViewControllerWithURL:[NSURL URLWithString:@"https://github.com/meganz/iOS"]];
+                [[NSURL URLWithString:@"https://github.com/meganz/iOS"] mnz_presentSafariViewController];
             } else if (indexPath.row == 1) { //Acknowledgements
-                [Helper presentSafariViewControllerWithURL:[NSURL URLWithString:@"https://github.com/meganz/iOS3/blob/master/CREDITS.md"]];
+                [[NSURL URLWithString:@"https://github.com/meganz/iOS3/blob/master/CREDITS.md"] mnz_presentSafariViewController];
             }
             break;
         }

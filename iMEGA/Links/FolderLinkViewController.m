@@ -8,21 +8,26 @@
 
 #import "DisplayMode.h"
 #import "Helper.h"
+#import "MEGANavigationController.h"
 #import "MEGANode+MNZCategory.h"
 #import "MEGANodeList+MNZCategory.h"
+#import "MEGAPhotoBrowserViewController.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGASdkManager.h"
-#import "NodeTableViewCell.h"
+
 #import "NSString+MNZCategory.h"
+#import "MEGALinkManager.h"
+#import "UIApplication+MNZCategory.h"
 #import "UIImageView+MNZCategory.h"
-#import "UnavailableLinkView.h"
+#import "UITextField+MNZCategory.h"
 
 #import "BrowserViewController.h"
 #import "CustomActionViewController.h"
+#import "NodeTableViewCell.h"
 #import "MainTabBarController.h"
-#import "MEGANavigationController.h"
-#import "MEGAPhotoBrowserViewController.h"
-#import "MyAccountHallViewController.h"
+#import "LoginViewController.h"
+#import "LinkOption.h"
+#import "UnavailableLinkView.h"
 
 @interface FolderLinkViewController () <UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, UISearchResultsUpdating, UISearchDisplayDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAGlobalDelegate, MEGARequestDelegate, CustomActionViewControllerDelegate> {
     
@@ -108,8 +113,7 @@
     self.closeBarButtonItem.title = AMLocalizedString(@"close", @"A button label.");
 
     if (self.isFolderRootNode) {
-        [MEGASdkManager sharedMEGASdkFolder];
-        [[MEGASdkManager sharedMEGASdkFolder] loginToFolderLink:self.folderLinkString delegate:self];
+        [[MEGASdkManager sharedMEGASdkFolder] loginToFolderLink:self.publicLinkString delegate:self];
 
         self.navigationItem.leftBarButtonItem = self.closeBarButtonItem;
         
@@ -269,6 +273,9 @@
     [decryptionAlertController addTextFieldWithConfigurationHandler:^(UITextField *textField) {
         textField.placeholder = AMLocalizedString(@"decryptionKey", nil);
         [textField addTarget:self action:@selector(decryptionTextFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
+        textField.shouldReturnCompletion = ^BOOL(UITextField *textField) {
+            return !textField.text.mnz_isEmpty;
+        };
     }];
     
     [decryptionAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
@@ -281,9 +288,9 @@
         NSString *linkString;
         NSString *key = decryptionAlertController.textFields.firstObject.text;
         if ([[key substringToIndex:1] isEqualToString:@"!"]) {
-            linkString = self.folderLinkString;
+            linkString = self.publicLinkString;
         } else {
-            linkString = [self.folderLinkString stringByAppendingString:@"!"];
+            linkString = [self.publicLinkString stringByAppendingString:@"!"];
         }
         linkString = [linkString stringByAppendingString:key];
         
@@ -325,7 +332,7 @@
                     FolderLinkViewController *folderLinkVC = [storyboard instantiateViewControllerWithIdentifier:@"FolderLinkViewControllerID"];
                     [folderLinkVC setParentNode:node];
                     [folderLinkVC setIsFolderRootNode:NO];
-                    [folderLinkVC setFolderLinkString:self.folderLinkString];
+                    folderLinkVC.publicLinkString = self.publicLinkString;
                     [self.navigationController pushViewController:folderLinkVC animated:NO];
 
                 } else {
@@ -340,12 +347,11 @@
     }
 }
 
-- (void)decryptionTextFieldDidChange:(UITextField *)sender {
-    if (self.presentedViewController) {
-        UIAlertController *decryptionAlertController = (UIAlertController *)self.presentedViewController;
-        UITextField *decryptionTextField = decryptionAlertController.textFields.firstObject;
+- (void)decryptionTextFieldDidChange:(UITextField *)textField {
+    UIAlertController *decryptionAlertController = (UIAlertController *)self.presentedViewController;
+    if (decryptionAlertController) {
         UIAlertAction *okAction = decryptionAlertController.actions.lastObject;
-        okAction.enabled = decryptionTextField.text.length > 0;
+        okAction.enabled = !textField.text.mnz_isEmpty;
     }
 }
 
@@ -362,8 +368,7 @@
 #pragma mark - IBActions
 
 - (IBAction)cancelAction:(UIBarButtonItem *)sender {
-    [Helper setLinkNode:nil];
-    [Helper setSelectedOptionOnLink:0];
+    [MEGALinkManager resetUtilsForLinksWithoutSession];
     
     [[MEGASdkManager sharedMEGASdkFolder] logout];
     
@@ -491,36 +496,31 @@
     
     if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
         [self dismissViewControllerAnimated:YES completion:^{
-            if ([[[[[UIApplication sharedApplication] delegate] window] rootViewController] isKindOfClass:[MainTabBarController class]]) {
-                MainTabBarController *mainTBC = (MainTabBarController *)[[[[UIApplication sharedApplication] delegate] window] rootViewController];
-                mainTBC.selectedIndex = MYACCOUNT;
-                MEGANavigationController *navigationController = [mainTBC.childViewControllers objectAtIndex:MYACCOUNT];
-                MyAccountHallViewController *myAccountHallVC = navigationController.viewControllers.firstObject;
-                [myAccountHallVC openOffline];
+            if ([UIApplication.sharedApplication.keyWindow.rootViewController isKindOfClass:MainTabBarController.class]) {
+                MainTabBarController *mainTBC = (MainTabBarController *)UIApplication.sharedApplication.keyWindow.rootViewController;
+                [mainTBC showOffline];
             }
             
             [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:AMLocalizedString(@"downloadStarted", nil)];
             
             if (self.selectedNodesArray.count != 0) {
-                for (MEGANode *node in _selectedNodesArray) {
+                for (MEGANode *node in self.selectedNodesArray) {
                     [Helper downloadNode:node folderPath:[Helper relativePathForOffline] isFolderLink:YES shouldOverwrite:NO];
                 }
             } else {
-                [Helper downloadNode:_parentNode folderPath:[Helper relativePathForOffline] isFolderLink:YES shouldOverwrite:NO];
+                [Helper downloadNode:self.parentNode folderPath:[Helper relativePathForOffline] isFolderLink:YES shouldOverwrite:NO];
             }
         }];
     } else {
         if (self.selectedNodesArray.count != 0) {
-            [[Helper nodesFromLinkMutableArray] addObjectsFromArray:_selectedNodesArray];
+            [MEGALinkManager.nodesFromLinkMutableArray addObjectsFromArray:self.selectedNodesArray];
         } else {
-            [[Helper nodesFromLinkMutableArray] addObject:_parentNode];
+            [MEGALinkManager.nodesFromLinkMutableArray addObject:self.parentNode];
         }
-        [Helper setSelectedOptionOnLink:4]; //Download folder or nodes from link
+        MEGALinkManager.selectedOption = LinkOptionDownloadFolderOrNodes;
         
         [self.navigationController pushViewController:[OnboardingViewController new] animated:YES];
     }
-    
-    //TODO: Make a logout in sharedMEGASdkFolder after download the link or the selected nodes.
 }
 
 - (IBAction)importAction:(UIBarButtonItem *)sender {
@@ -538,18 +538,18 @@
                 browserVC.selectedNodesArray = [NSArray arrayWithObject:self.parentNode];
             }
             
-            [[[[[UIApplication sharedApplication] delegate] window] rootViewController] presentViewController:navigationController animated:YES completion:nil];
+            [UIApplication.mnz_presentingViewController presentViewController:navigationController animated:YES completion:nil];
         }];
     } else {
         if (self.selectedNodesArray.count != 0) {
-            [[Helper nodesFromLinkMutableArray] addObjectsFromArray:_selectedNodesArray];
+            [MEGALinkManager.nodesFromLinkMutableArray addObjectsFromArray:self.selectedNodesArray];
         } else {
             if (self.parentNode == nil) {
                 return;
             }
-            [[Helper nodesFromLinkMutableArray] addObject:self.parentNode];
+            [MEGALinkManager.nodesFromLinkMutableArray addObject:self.parentNode];
         }
-        [Helper setSelectedOptionOnLink:3]; //Import folder or nodes from link
+        MEGALinkManager.selectedOption = LinkOptionImportFolderOrNodes;
         
         [self.navigationController pushViewController:[OnboardingViewController new] animated:YES];
     }
@@ -612,7 +612,7 @@
     
     cell.nameLabel.text = node.name;
     
-    cell.nodeHandle = node.handle;
+    cell.node = node;
     
     if (tableView.isEditing) {
         for (MEGANode *n in _selectedNodesArray) {
@@ -655,7 +655,7 @@
             FolderLinkViewController *folderLinkVC = [storyboard instantiateViewControllerWithIdentifier:@"FolderLinkViewControllerID"];
             [folderLinkVC setParentNode:node];
             [folderLinkVC setIsFolderRootNode:NO];
-            [folderLinkVC setFolderLinkString:self.folderLinkString];
+            folderLinkVC.publicLinkString = self.publicLinkString;
             [self.navigationController pushViewController:folderLinkVC animated:YES];
             break;
         }
@@ -899,9 +899,13 @@
             }
             
             isFetchNodesDone = YES;
+            
+            [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithUnsignedLongLong:request.nodeHandle] forKey:@"kLastPublicHandleAccessed"];
+            [[NSUserDefaults standardUserDefaults] setDouble:[NSDate date].timeIntervalSince1970 forKey:@"kLastPublicTimestampAccessed"];
+            
             [self reloadUI];
             
-            NSArray *componentsArray = [self.folderLinkString componentsSeparatedByString:@"!"];
+            NSArray *componentsArray = [self.publicLinkString componentsSeparatedByString:@"!"];
             if (componentsArray.count == 4) {
                 [self navigateToNodeWithBase64Handle:componentsArray.lastObject];
             }
@@ -920,8 +924,8 @@
         }
             
         case MEGARequestTypeGetAttrFile: {
-            for (NodeTableViewCell *nodeTableViewCell in [self.tableView visibleCells]) {
-                if (request.nodeHandle == nodeTableViewCell.nodeHandle) {
+            for (NodeTableViewCell *nodeTableViewCell in self.tableView.visibleCells) {
+                if (request.nodeHandle == nodeTableViewCell.node.handle) {
                     MEGANode *node = [api nodeForHandle:request.nodeHandle];
                     [Helper setThumbnailForNode:node api:api cell:nodeTableViewCell reindexNode:NO];
                 }
@@ -959,11 +963,16 @@
         }
             
         case MegaNodeActionTypeShare: {
-            UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWithActivityItems:@[self.folderLinkString] applicationActivities:nil];
+            NSString *link = self.linkEncryptedString ? self.linkEncryptedString : self.publicLinkString;
+            UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWithActivityItems:@[link] applicationActivities:nil];
             activityVC.popoverPresentationController.barButtonItem = sender;
             [self presentViewController:activityVC animated:YES completion:nil];
             break;
         }
+            
+        case MegaNodeActionTypeSaveToPhotos:
+            [node mnz_saveToPhotosWithApi:[MEGASdkManager sharedMEGASdkFolder]];
+            break;
             
         default:
             break;

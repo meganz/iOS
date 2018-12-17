@@ -549,7 +549,7 @@
     
     cell.nodeHandle = [node handle];
     
-    cell.thumbnailSelectionOverlayView.layer.borderColor = [UIColor.mnz_redMain CGColor];
+    cell.thumbnailSelectionOverlayView.layer.borderColor = [UIColor.mnz_green00BFA5 CGColor];
     cell.thumbnailSelectionOverlayView.hidden = [self.selectedItemsDictionary objectForKey:[NSNumber numberWithLongLong:node.handle]] == nil;
 
     if (node.name.mnz_isVideoPathExtension && node.duration > -1) {

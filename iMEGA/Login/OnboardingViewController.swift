@@ -104,7 +104,7 @@ class OnboardingViewController: UIViewController, UIScrollViewDelegate {
             pageControl.currentPageIndicatorTintColor = UIColor.mnz_green00BFA5()
             pageControl.isUserInteractionEnabled = false;
 
-            primaryButton.setTitle("Enable Access".localized(withComment: "Button which triggers a request for a specific permission, that have been explained to the user beforehand"), for: .normal)
+            primaryButton.setTitle("Allow Access".localized(withComment: "Button which triggers a request for a specific permission, that have been explained to the user beforehand"), for: .normal)
             primaryButton.backgroundColor = UIColor.mnz_green00BFA5()
             
             secondaryButton.setTitle("notNow".localized(), for: .normal)

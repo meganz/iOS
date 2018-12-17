@@ -410,7 +410,7 @@
             [self.toolbar setAlpha:1.0];
         }];
         
-        for (SharedItemsTableViewCell *cell in [self.tableView visibleCells]) {
+        for (SharedItemsTableViewCell *cell in self.tableView.visibleCells) {
             UIView *view = [[UIView alloc] init];
             view.backgroundColor = UIColor.clearColor;
             cell.selectedBackgroundView = view;
@@ -430,7 +430,7 @@
             }
         }];
         
-        for (SharedItemsTableViewCell *cell in [self.tableView visibleCells]) {
+        for (SharedItemsTableViewCell *cell in self.tableView.visibleCells) {
             cell.selectedBackgroundView = nil;
         }
     }

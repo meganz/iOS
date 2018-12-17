@@ -106,10 +106,10 @@
         self.bonusExpireInView.layer.borderColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.14].CGColor;
         
         if (awardExpirationdDate.daysUntil > 30) {
-            bonusExpiresIn = [bonusExpiresIn stringByReplacingOccurrencesOfString:@"%1" withString:[NSString stringWithFormat:@"%lu", awardExpirationdDate.monthsUntil]];
+            bonusExpiresIn = [bonusExpiresIn stringByReplacingOccurrencesOfString:@"%1" withString:[NSString stringWithFormat:@"%zd", awardExpirationdDate.monthsUntil]];
             bonusExpiresIn = [bonusExpiresIn stringByReplacingOccurrencesOfString:@"%2" withString:AMLocalizedString(@"months", @"Used to display the number of months a plan was purchased for e.g. 3 months, 6 months.")];
         } else {
-            bonusExpiresIn = [bonusExpiresIn stringByReplacingOccurrencesOfString:@"%1" withString:[NSString stringWithFormat:@"%lu", awardExpirationdDate.daysUntil]];
+            bonusExpiresIn = [bonusExpiresIn stringByReplacingOccurrencesOfString:@"%1" withString:[NSString stringWithFormat:@"%zd", awardExpirationdDate.daysUntil]];
             bonusExpiresIn = [bonusExpiresIn stringByReplacingOccurrencesOfString:@"%2" withString:AMLocalizedString(@"days", @"")];
         }
     }

@@ -282,7 +282,7 @@
         self.navigationItem.leftBarButtonItems = @[self.selectAllBarButtonItem];
         [self.navigationController setToolbarHidden:NO animated:YES];
         
-        for (NodeTableViewCell *cell in [self.tableView visibleCells]) {
+        for (NodeTableViewCell *cell in self.tableView.visibleCells) {
             UIView *view = [[UIView alloc] init];
             view.backgroundColor = UIColor.clearColor;
             cell.selectedBackgroundView = view;
@@ -296,7 +296,7 @@
         
         [self.navigationController setToolbarHidden:YES animated:YES];
         
-        for (NodeTableViewCell *cell in [self.tableView visibleCells]) {
+        for (NodeTableViewCell *cell in self.tableView.visibleCells) {
             cell.selectedBackgroundView = nil;
         }
     }
@@ -530,6 +530,10 @@
         case MegaNodeActionTypeRevertVersion:
             self.selectedNodesArray = [NSMutableArray arrayWithObject:node];
             [self revertAction:nil];
+            break;
+            
+        case MegaNodeActionTypeSaveToPhotos:
+            [node mnz_saveToPhotosWithApi:[MEGASdkManager sharedMEGASdk]];
             break;
             
         default:

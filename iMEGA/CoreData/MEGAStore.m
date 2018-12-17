@@ -97,7 +97,7 @@ static MEGAStore *_megaStore = nil;
     [offlineNode setBase64Handle:node.base64Handle];
     [offlineNode setParentBase64Handle:[[api parentNodeForNode:[api nodeForHandle:node.handle]] base64Handle]];
     [offlineNode setLocalPath:path];
-    [offlineNode setFingerprint:[api fingerprintForNode:node]];
+    [offlineNode setFingerprint:node.fingerprint];
 
     MEGALogDebug(@"Save context: insert offline node: %@", offlineNode);
     
@@ -119,14 +119,14 @@ static MEGAStore *_megaStore = nil;
     return [array firstObject];
 }
 
-- (MOOfflineNode *)offlineNodeWithNode:(MEGANode *)node api:(MEGASdk *)api {
+- (MOOfflineNode *)offlineNodeWithNode:(MEGANode *)node {
     NSEntityDescription *entityDescription = [NSEntityDescription entityForName:@"OfflineNode" inManagedObjectContext:self.managedObjectContext];
     
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
     [request setEntity:entityDescription];
 
     NSPredicate *predicate;
-    NSString *fingerprint = [api fingerprintForNode:node];
+    NSString *fingerprint = node.fingerprint;
     if(fingerprint) {
         predicate = [NSPredicate predicateWithFormat:@"fingerprint == %@", fingerprint];
     } else {
@@ -365,6 +365,12 @@ static MEGAStore *_megaStore = nil;
     [self saveContext];
 }
 
+- (void)deleteUploadTransferWithLocalIdentifier:(NSString *)localIdentifier {
+    MOUploadTransfer *uploadTransfer = [self fetchUploadTransferWithLocalIdentifier:localIdentifier];
+    
+    [self deleteUploadTransfer:uploadTransfer];
+}
+
 - (NSArray<MOUploadTransfer *> *)fetchUploadTransfers {
     NSFetchRequest *request = [MOUploadTransfer fetchRequest];
     
@@ -373,7 +379,7 @@ static MEGAStore *_megaStore = nil;
     return [self.managedObjectContext executeFetchRequest:request error:&error];
 }
 
-- (MOUploadTransfer *)fetchTransferUpdateWithLocalIdentifier:(NSString *)localIdentifier {
+- (MOUploadTransfer *)fetchUploadTransferWithLocalIdentifier:(NSString *)localIdentifier {
     NSFetchRequest *request = [MOUploadTransfer fetchRequest];
     
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"localIdentifier == %@", localIdentifier];
@@ -392,6 +398,103 @@ static MEGAStore *_megaStore = nil;
     }
     
     [self saveContext];
+}
+
+#pragma mark - MOFolderLayout entity
+
+- (void)insertFolderLayoutWithHandle:(uint64_t)handle layout:(NSInteger)layout {
+    MOFolderLayout *folderLayout = [self fetchFolderLayoutWithHandle:handle];
+    
+    if (folderLayout) {
+        folderLayout.value = [NSNumber numberWithInteger:layout];
+        
+        MEGALogDebug(@"Save context - update MOFolderLayout for folder %llu", handle);
+    } else {
+        MOFolderLayout *moFolderLayout = [NSEntityDescription insertNewObjectForEntityForName:@"MOFolderLayout" inManagedObjectContext:self.managedObjectContext];
+        moFolderLayout.handle = [NSNumber numberWithUnsignedLongLong:handle];
+        moFolderLayout.value = [NSNumber numberWithInteger:layout];
+        
+        MEGALogDebug(@"Save context - insert MOFolderLayout for folder %llu", handle);
+    }
+    
+    [self saveContext];
+}
+
+- (MOFolderLayout *)fetchFolderLayoutWithHandle:(uint64_t)handle {
+    NSFetchRequest *request = [MOFolderLayout fetchRequest];
+    
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"handle == %@", [NSNumber numberWithUnsignedLongLong:handle]];
+    request.predicate = predicate;
+    
+    NSError *error;
+    NSArray *array = [self.managedObjectContext executeFetchRequest:request error:&error];
+    
+    return array.firstObject;
+}
+
+#pragma mark - MOOfflineFolderLayout entity
+
+- (void)insertOfflineFolderLayoutWithPOath:(NSString *)path layout:(NSInteger)layout {
+    MOOfflineFolderLayout *offlineFolderLayout = [self fetchOfflineFolderLayoutWithPath:path];
+    
+    if (offlineFolderLayout) {
+        offlineFolderLayout.value = [NSNumber numberWithInteger:layout];
+        
+        MEGALogDebug(@"Save context - update MOOfflineFolderLayout for folder path %@", path);
+    } else {
+        MOOfflineFolderLayout *moOfflineFolderLayout = [NSEntityDescription insertNewObjectForEntityForName:@"MOOfflineFolderLayout" inManagedObjectContext:self.managedObjectContext];
+        moOfflineFolderLayout.localPath = path;
+        moOfflineFolderLayout.value = [NSNumber numberWithInteger:layout];
+        
+        MEGALogDebug(@"Save context - insert MOOfflineFolderLayout for folder  path %@", path);
+    }
+    
+    [self saveContext];
+}
+
+- (MOOfflineFolderLayout *)fetchOfflineFolderLayoutWithPath:(NSString *)path {
+    NSFetchRequest *request = [MOOfflineFolderLayout fetchRequest];
+    
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"localPath == %@", path];
+    request.predicate = predicate;
+    
+    NSError *error;
+    NSArray *array = [self.managedObjectContext executeFetchRequest:request error:&error];
+    
+    return array.firstObject;
+}
+
+#pragma mark - MOMessage entity
+
+- (void)insertMessage:(uint64_t)messageId chatId:(uint64_t)chatId {
+    MOMessage *mMessage = [NSEntityDescription insertNewObjectForEntityForName:@"MOMessage" inManagedObjectContext:self.managedObjectContext];
+    mMessage.chatId = [NSNumber numberWithUnsignedLongLong:chatId];
+    mMessage.messageId = [NSNumber numberWithUnsignedLongLong:messageId];
+    
+    MEGALogDebug(@"Save context - insert MOMessage with chat %@ and message %@", [MEGASdk base64HandleForUserHandle:chatId], [MEGASdk base64HandleForUserHandle:messageId]);
+    
+    [self saveContext];
+}
+
+- (void)deleteMessage:(MOMessage *)message {
+    [self.managedObjectContext deleteObject:message];
+    
+    MEGALogDebug(@"Save context - remove MOMessage with chat %@ and message %@", [MEGASdk base64HandleForUserHandle:message.chatId.unsignedLongLongValue],[MEGASdk base64HandleForUserHandle:message.messageId.unsignedLongLongValue]);
+    
+    [self saveContext];
+}
+
+- (MOUploadTransfer *)fetchMessageWithChatId:(uint64_t)chatId messageId:(uint64_t)messageId {
+    NSFetchRequest *request = [MOMessage fetchRequest];
+    
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"chatId == %llu AND messageId == %llu", chatId, messageId];
+    request.predicate = predicate;
+    
+    NSError *error;
+    NSArray *array = [self.managedObjectContext executeFetchRequest:request error:&error];
+    
+    return array.firstObject;
+    
 }
 
 @end

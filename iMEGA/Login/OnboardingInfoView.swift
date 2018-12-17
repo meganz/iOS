@@ -66,7 +66,7 @@ class OnboardingInfoView: UIView {
         case .photosPermission:
             imageView.image = UIImage(named: "photosPermission")
             titleLabel.text = "Allow Access to Photos".localized(withComment: "Title label that explains that the user is going to be asked for the photos permission")
-            descriptionLabel.text = "To share photos and videos, allow MEGA to access your photos".localized(withComment: "Detailed explanation of why the user should give permission to access to the photos")
+            descriptionLabel.text = "Please give the MEGA App permission to access Photos to share photos and videos.".localized(withComment: "Detailed explanation of why the user should give permission to access to the photos")
         case .microphoneAndCameraPermissions:
             imageView.image = UIImage(named: "groupChat")
             titleLabel.text = "Enable Microphone and Camera".localized(withComment: "Title label that explains that the user is going to be asked for the microphone and camera permission")
