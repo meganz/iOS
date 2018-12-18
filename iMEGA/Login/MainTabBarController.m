@@ -256,7 +256,7 @@
                 localNotification.alertTitle = @"MEGA";
                 localNotification.soundName = @"incoming_voice_video_call_iOS9.mp3";
                 localNotification.fireDate = [NSDate dateWithTimeIntervalSinceNow:0];
-                localNotification.alertBody = [NSString stringWithFormat:@"%@: %@", chatRoom.title, AMLocalizedString(@"calling...", @"Label shown when you receive an incoming call, before start the call.")];
+                localNotification.alertBody = [NSString stringWithFormat:@"%@: %@", chatRoom.title, AMLocalizedString(@"Incoming call", @"notification subtitle of incoming calls")];
                 localNotification.userInfo = @{@"chatId" : @(call.chatId),
                                                @"callId" : @(call.callId)
                                                };
