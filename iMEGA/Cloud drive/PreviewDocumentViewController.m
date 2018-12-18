@@ -364,7 +364,8 @@
         if ([visibleViewController isKindOfClass:MainTabBarController.class]) {
             NSArray *parentTreeArray = node.mnz_parentTreeArray;
             
-            UINavigationController *navigationController = (UINavigationController *)((MainTabBarController *)visibleViewController).viewControllers[((MainTabBarController *)visibleViewController).selectedIndex];
+            MainTabBarController *mainTBC = (MainTabBarController *)visibleViewController;
+            UINavigationController *navigationController = (UINavigationController *)(mainTBC.selectedViewController);
             [navigationController popToRootViewControllerAnimated:NO];
             
             for (MEGANode *node in parentTreeArray) {

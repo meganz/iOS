@@ -255,7 +255,7 @@
         }
             
         case ContactsModeChatNamingGroup: {
-            self.navigationItem.leftBarButtonItems = @[self.backBarButtonItem];
+            self.backBarButtonItem.image = self.backBarButtonItem.image.imageFlippedForRightToLeftLayoutDirection;
             self.createGroupBarButtonItem.title = AMLocalizedString(@"createFolderButton", nil);
             [self.createGroupBarButtonItem setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
                                                               [UIFont mnz_SFUIMediumWithSize:17],
@@ -1039,7 +1039,7 @@
             cell.shareLabel.text = [NSString chatStatusString:userStatus];
             cell.onlineStatusView.backgroundColor = [UIColor mnz_colorForStatusChange:userStatus];
 
-            if ([[[MEGASdkManager sharedMEGAChatSdk] presenceConfig] isLastGreenVisible] && userStatus < 3) {
+            if (userStatus < MEGAChatStatusOnline) {
                 [[MEGASdkManager sharedMEGAChatSdk] requestLastGreen:user.handle];
             }
         } 
@@ -1610,7 +1610,7 @@
             ContactTableViewCell *cell = (ContactTableViewCell *)[self.tableView cellForRowAtIndexPath:indexPath];
             cell.onlineStatusView.backgroundColor = [UIColor mnz_colorForStatusChange:onlineStatus];
             cell.shareLabel.text = [NSString chatStatusString:onlineStatus];
-            if (MEGASdkManager.sharedMEGAChatSdk.presenceConfig.isLastGreenVisible && onlineStatus < 3) {
+            if (onlineStatus < MEGAChatStatusOnline) {
                 [MEGASdkManager.sharedMEGAChatSdk requestLastGreen:userHandle];
             }
         }

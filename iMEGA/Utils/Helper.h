@@ -60,15 +60,6 @@ typedef NS_OPTIONS(NSUInteger, NodesAre) {
 
 + (NSString *)pathForSharedSandboxCacheDirectory:(NSString *)directory;
 
-#pragma mark - Utils for links when you are not logged
-
-+ (MEGANode *)linkNode;
-+ (void)setLinkNode:(MEGANode *)node;
-+ (NSMutableArray *)nodesFromLinkMutableArray;
-
-+ (NSInteger)selectedOptionOnLink;
-+ (void)setSelectedOptionOnLink:(NSInteger)option;
-
 #pragma mark - Utils for transfers
 
 + (NSMutableDictionary *)downloadingNodes;
@@ -119,13 +110,13 @@ typedef NS_OPTIONS(NSUInteger, NodesAre) {
 + (UILabel *)customNavigationBarLabelWithTitle:(NSString *)title subtitle:(NSString *)subtitle color:(UIColor *)color;
 
 + (UISearchController *)customSearchControllerWithSearchResultsUpdaterDelegate:(id<UISearchResultsUpdating>)searchResultsUpdaterDelegate searchBarDelegate:(id<UISearchBarDelegate>)searchBarDelegate;
-
-+ (void)presentSafariViewControllerWithURL:(NSURL *)url;
     
 + (void)showExportMasterKeyInView:(UIViewController *)viewController completion:(void (^ __nullable)(void))completion;
 + (void)showMasterKeyCopiedAlert;
 
-#pragma mark - Logout
+#pragma mark - Manage session
+
++ (BOOL)hasSession_alertIfNot;
 
 + (void)logout;
 + (void)logoutFromConfirmAccount;

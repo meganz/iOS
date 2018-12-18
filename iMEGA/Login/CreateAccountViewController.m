@@ -4,10 +4,10 @@
 #import "SAMKeychain.h"
 #import "SVProgressHUD.h"
 
-#import "Helper.h"
 #import "InputView.h"
 #import "MEGACreateAccountRequestDelegate.h"
 #import "MEGAReachabilityManager.h"
+#import "NSURL+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 
 #import "CheckEmailAndFollowTheLinkViewController.h"
@@ -299,7 +299,7 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
 }
 
 - (IBAction)termOfServiceTouchUpInside:(UIButton *)sender {
-    [Helper presentSafariViewControllerWithURL:[NSURL URLWithString:@"https://mega.nz/terms"]];
+    [[NSURL URLWithString:@"https://mega.nz/terms"] mnz_presentSafariViewController];
 }
 
 - (IBAction)createAccountTouchUpInside:(id)sender {
