@@ -72,11 +72,6 @@ static NSString *kisDirectory = @"kisDirectory";
         [self.navigationItem setTitle:self.folderPathFromOffline.lastPathComponent];
     }
     
-    UIBarButtonItem *flexibleItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
-    
-    [self.toolbar setFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.frame), 49)];
-    [self.toolbar setItems:@[self.activityBarButtonItem, flexibleItem, self.deleteBarButtonItem]];
-    
     self.editBarButtonItem.title = AMLocalizedString(@"edit", @"Caption of a button to edit the files that are selected");
     self.navigationItem.rightBarButtonItem = self.moreBarButtonItem;
     
@@ -788,11 +783,19 @@ static NSString *kisDirectory = @"kisDirectory";
     [self updateNavigationBarTitle];
     
     if (editing) {
+        UIBarButtonItem *flexibleItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
+        self.toolbar.items = @[self.activityBarButtonItem, flexibleItem, self.deleteBarButtonItem];
+        
         self.navigationItem.rightBarButtonItem = self.editBarButtonItem;
         self.editBarButtonItem.title = AMLocalizedString(@"cancel", @"Button title to cancel something");
         self.navigationItem.leftBarButtonItems = @[self.selectAllBarButtonItem];
         [self.toolbar setAlpha:0.0];
-        [self.tabBarController.tabBar addSubview:self.toolbar];
+        [self.tabBarController.view addSubview:self.toolbar];
+        self.toolbar.translatesAutoresizingMaskIntoConstraints = NO;
+        [NSLayoutConstraint activateConstraints:@[[self.toolbar.topAnchor constraintEqualToAnchor:self.tabBarController.tabBar.topAnchor constant:0],
+                                                  [self.toolbar.leadingAnchor constraintEqualToAnchor:self.tabBarController.tabBar.leadingAnchor constant:0],
+                                                  [self.toolbar.trailingAnchor constraintEqualToAnchor:self.tabBarController.tabBar.trailingAnchor constant:0],
+                                                  [self.toolbar.heightAnchor constraintEqualToConstant:49.0]]];
         [UIView animateWithDuration:0.33f animations:^ {
             [self.toolbar setAlpha:1.0];
         }];
