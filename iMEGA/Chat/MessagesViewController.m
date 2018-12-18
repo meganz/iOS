@@ -44,6 +44,7 @@
 #import "MEGAImagePickerController.h"
 #import "MEGANavigationController.h"
 #import "SendToViewController.h"
+#import "ShareLocationViewController.h"
 
 const CGFloat kGroupChatCellLabelHeightBuffer = 12.0f;
 const CGFloat k1on1CellLabelHeightBuffer = 5.0f;
@@ -51,7 +52,7 @@ const CGFloat kAvatarImageDiameter = 24.0f;
 
 const NSUInteger kMaxMessagesToLoad = 256;
 
-@interface MessagesViewController () <MEGAPhotoBrowserDelegate, JSQMessagesViewAccessoryButtonDelegate, JSQMessagesComposerTextViewPasteDelegate, MEGAChatDelegate, MEGAChatRequestDelegate, MEGARequestDelegate>
+@interface MessagesViewController () <MEGAPhotoBrowserDelegate, JSQMessagesViewAccessoryButtonDelegate, JSQMessagesComposerTextViewPasteDelegate, ShareLocationViewControllerDelegate, MEGAChatDelegate, MEGAChatRequestDelegate, MEGARequestDelegate>
 
 @property (nonatomic, strong) MEGAOpenMessageHeaderView *openMessageHeaderView;
 @property (nonatomic, strong) MEGAMessagesTypingIndicatorFoorterView *footerView;
@@ -1575,6 +1576,12 @@ const NSUInteger kMaxMessagesToLoad = 256;
             [sendContactAlertAction setValue:UIColor.mnz_black333333 forKey:@"titleTextColor"];
             [selectOptionAlertController addAction:sendContactAlertAction];
             
+            UIAlertAction *sendLocationAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"location", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {                
+                [self presentShareLocationViewController];
+            }];
+            [sendLocationAlertAction setValue:[UIColor mnz_black333333] forKey:@"titleTextColor"];
+            [selectOptionAlertController addAction:sendLocationAlertAction];
+            
             selectOptionAlertController.modalPresentationStyle = UIModalPresentationOverCurrentContext;
             selectOptionAlertController.popoverPresentationController.sourceView = self.inputToolbar.contentView;
             selectOptionAlertController.popoverPresentationController.sourceRect = self.inputToolbar.contentView.accessoryUploadButton.frame;
@@ -1590,6 +1597,15 @@ const NSUInteger kMaxMessagesToLoad = 256;
             break;
     }
     [self updateToolbarPlaceHolder];
+}
+
+- (void)presentShareLocationViewController {
+    ShareLocationViewController *slvc = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"ShareLocationViewControllerID"];
+    MEGANavigationController *navigationViewController = [[MEGANavigationController alloc] initWithRootViewController:slvc];
+    slvc.chatRoom = self.chatRoom;
+    slvc.shareLocationViewControllerDelegate = self;
+    [navigationViewController addCancelButton];
+    [self presentViewController:navigationViewController animated:YES completion:nil];
 }
 
 - (void)scrollToBottomAnimated:(BOOL)animated {
@@ -1909,7 +1925,7 @@ const NSUInteger kMaxMessagesToLoad = 256;
             
         case MEGAChatMessageTypeContainsMeta: {
             //All messages
-            if (action == @selector(copy:)) return YES;
+            if (action == @selector(copy:) && message.containsMeta.type != MEGAChatContainsMetaTypeGeolocation) return YES;
             if (action == @selector(forward:message:)) return YES;
 
             //Your messages
@@ -2186,9 +2202,26 @@ const NSUInteger kMaxMessagesToLoad = 256;
                 [self.navigationController pushViewController:chatAttachedContactsVC animated:YES];
             }
         } else if (message.type == MEGAChatMessageTypeContainsMeta) {
-            NSURL *url = [NSURL URLWithString:message.containsMeta.richPreview.url];
-            MEGALinkManager.linkURL = url;
-            [MEGALinkManager processLinkURL:url];
+            if (message.containsMeta.type == MEGAChatContainsMetaTypeRichPreview) {
+                NSURL *url = [NSURL URLWithString:message.containsMeta.richPreview.url];
+                MEGALinkManager.linkURL = url;
+                [MEGALinkManager processLinkURL:url];
+            } else if (message.containsMeta.type == MEGAChatContainsMetaTypeGeolocation) {
+                CLGeocoder *geocoder = [[CLGeocoder alloc] init];
+                CLLocation *location = [[CLLocation alloc] initWithLatitude:message.containsMeta.geolocation.latitude longitude:message.containsMeta.geolocation.longitude];
+                [geocoder reverseGeocodeLocation:location completionHandler:^(NSArray<CLPlacemark *> * _Nullable placemarks, NSError * _Nullable error) {
+                    MKPlacemark *placemark = [[MKPlacemark alloc] initWithCoordinate:location.coordinate];
+                    MKMapItem *mapItem = [[MKMapItem alloc] initWithPlacemark:placemark];
+
+                    if (!error && placemarks.count > 0) {
+                        CLPlacemark *clPlacemark = placemarks.firstObject;
+                        mapItem.name = clPlacemark.name;
+                    }
+                    
+                    
+                    [mapItem openInMapsWithLaunchOptions:nil];
+                }];
+            }
         } else if (message.node) {
             MEGALinkManager.linkURL = message.MEGALink;
             [MEGALinkManager processLinkURL:message.MEGALink];
@@ -2307,6 +2340,16 @@ const NSUInteger kMaxMessagesToLoad = 256;
 
 - (void)photoBrowser:(MEGAPhotoBrowserViewController *)photoBrowser willDismissWithNode:(MEGANode *)node {
     [self setLastMessageAsSeen];
+}
+
+#pragma mark - ShareLocationViewControllerDelegate
+
+- (void)locationMessage:(MEGAChatMessage *)message {
+    message.chatRoom = self.chatRoom;
+    [self.messages addObject:message];
+    [self.collectionView insertItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:self.messages.count-1 inSection:0]]];
+    [self finishSendingMessage];
+    [self updateUnreadMessagesLabel:0];
 }
 
 #pragma mark - MEGAChatRoomDelegate
