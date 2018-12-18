@@ -4,8 +4,6 @@
 #import "SAMKeychain.h"
 #import "UIScrollView+EmptyDataSet.h"
 
-#import "MEGA-Swift.h"
-
 #import "DisplayMode.h"
 #import "Helper.h"
 #import "MEGANavigationController.h"
@@ -25,6 +23,7 @@
 #import "CustomActionViewController.h"
 #import "NodeTableViewCell.h"
 #import "MainTabBarController.h"
+#import "OnboardingViewController.h"
 #import "LoginViewController.h"
 #import "LinkOption.h"
 #import "UnavailableLinkView.h"
@@ -519,7 +518,7 @@
         }
         MEGALinkManager.selectedOption = LinkOptionDownloadFolderOrNodes;
         
-        [self.navigationController pushViewController:[OnboardingViewController new] animated:YES];
+        [self.navigationController pushViewController:[OnboardingViewController onboardingViewControllerOfType:OnboardingTypeDefault] animated:YES];
     }
 }
 
@@ -551,7 +550,7 @@
         }
         MEGALinkManager.selectedOption = LinkOptionImportFolderOrNodes;
         
-        [self.navigationController pushViewController:[OnboardingViewController new] animated:YES];
+        [self.navigationController pushViewController:[OnboardingViewController onboardingViewControllerOfType:OnboardingTypeDefault] animated:YES];
     }
     
     return;
