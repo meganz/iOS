@@ -14,6 +14,7 @@
 #import "MEGAChatMessage+MNZCategory.h"
 #import "MEGACreateFolderRequestDelegate.h"
 #import "MEGACopyRequestDelegate.h"
+#import "MEGAGenericRequestDelegate.h"
 #import "MEGAGetAttrUserRequestDelegate.h"
 #import "MEGAInviteContactRequestDelegate.h"
 #import "MEGAMessagesTypingIndicatorFoorterView.h"
@@ -1576,8 +1577,30 @@ const NSUInteger kMaxMessagesToLoad = 256;
             [sendContactAlertAction setValue:UIColor.mnz_black333333 forKey:@"titleTextColor"];
             [selectOptionAlertController addAction:sendContactAlertAction];
             
-            UIAlertAction *sendLocationAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"location", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {                
-                [self presentShareLocationViewController];
+            UIAlertAction *sendLocationAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"location", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+                MEGAGenericRequestDelegate *isGeolocationEnabledDelegate = [[MEGAGenericRequestDelegate alloc] initWithRequestCompletion:^(MEGARequest *request) {
+                    [self presentShareLocationViewController];
+                } errorCompletion:^(MEGARequest *request, MEGAError *error) {
+                    UIAlertController *sendLocationAlert = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"Send Location", @"Alert title shown when the user opens a shared Geolocation for the first time from any client, we will show a confirmation dialog warning the user that he is now leaving the E2EE paradigm") message:AMLocalizedString(@"This location will be opened using a third party maps provider outside the end-to-end encrypted MEGA platform.", @"Message shown when the user opens a shared Geolocation for the first time from any client, we will show a confirmation dialog warning the user that he is now leaving the E2EE paradigm") preferredStyle:UIAlertControllerStyleAlert];
+                    [sendLocationAlert addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"") style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+                        self.inputToolbar.hidden = self.chatRoom.ownPrivilege <= MEGAChatRoomPrivilegeRo;
+                    }]];
+                    [sendLocationAlert addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"continue", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                        MEGAGenericRequestDelegate *enableGeolocationDelegate = [[MEGAGenericRequestDelegate alloc] initWithRequestCompletion:^(MEGARequest *request) {
+                            [self presentShareLocationViewController];
+                        } errorCompletion:^(MEGARequest *request, MEGAError *error) {
+                            UIAlertController *enableGeolocationAlert = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"error", @"") message:[NSString stringWithFormat:@"Enable geolocation failed. Error: %@", error.name] preferredStyle:UIAlertControllerStyleAlert];
+                            [enableGeolocationAlert addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                                self.inputToolbar.hidden = self.chatRoom.ownPrivilege <= MEGAChatRoomPrivilegeRo;
+                            }]];
+                            [self presentViewController:enableGeolocationAlert animated:YES completion:nil];
+                        }];
+                        [[MEGASdkManager sharedMEGASdk] enableGeolocationWithDelegate:enableGeolocationDelegate];
+                    }]];
+                    [self presentViewController:sendLocationAlert animated:YES completion:nil];
+                }];
+                
+                [[MEGASdkManager sharedMEGASdk] isGeolocationEnabledWithDelegate:isGeolocationEnabledDelegate];
             }];
             [sendLocationAlertAction setValue:[UIColor mnz_black333333] forKey:@"titleTextColor"];
             [selectOptionAlertController addAction:sendLocationAlertAction];
