@@ -6,8 +6,6 @@
 #import "SAMKeychain.h"
 #import "SVProgressHUD.h"
 
-#import "MEGA-Swift.h"
-
 #import "DevicePermissionsHelper.h"
 #import "Helper.h"
 #import "MEGAMoveRequestDelegate.h"
@@ -30,6 +28,7 @@
 #import "MEGANavigationController.h"
 #import "MEGAPhotoBrowserViewController.h"
 #import "MEGAQLPreviewController.h"
+#import "OnboardingViewController.h"
 #import "PreviewDocumentViewController.h"
 #import "SharedItemsViewController.h"
 
@@ -419,7 +418,7 @@
                 MEGALinkManager.selectedOption = LinkOptionDownloadNode;
             }
             
-            OnboardingViewController *onboardingVC = [OnboardingViewController new];
+            OnboardingViewController *onboardingVC = [OnboardingViewController onboardingViewControllerOfType:OnboardingTypeDefault];
             if (viewController.navigationController) {
                 [viewController.navigationController pushViewController:onboardingVC animated:YES];
             } else {
@@ -451,7 +450,7 @@
                 MEGALinkManager.selectedOption = LinkOptionImportNode;
             }
             
-            OnboardingViewController *onboardingVC = [OnboardingViewController new];
+            OnboardingViewController *onboardingVC = [OnboardingViewController onboardingViewControllerOfType:OnboardingTypeDefault];
             if (viewController.navigationController) {
                 [viewController.navigationController pushViewController:onboardingVC animated:YES];
             } else {

@@ -1,7 +1,7 @@
 
 #import "InitialLaunchViewController.h"
 
-#import "MEGA-Swift.h"
+#import "OnboardingViewController.h"
 
 @interface InitialLaunchViewController () <MEGARequestDelegate>
 
@@ -40,8 +40,7 @@
 #pragma mark - IBActions
 
 - (IBAction)setupButtonPressed:(UIButton *)sender {
-    OnboardingViewController *setupVC = [OnboardingViewController new];
-    setupVC.type = OnboardingViewControllerTypePermissions;
+    OnboardingViewController *setupVC = [OnboardingViewController onboardingViewControllerOfType:OnboardingTypePermissions];
     setupVC.completion = ^{
         [self.delegate setupFinished];
     };

@@ -11,8 +11,6 @@
 #import "SAMKeychain.h"
 #import "SVProgressHUD.h"
 
-#import "MEGA-Swift.h"
-
 #import "CameraUploads.h"
 #import "Helper.h"
 #import "DevicePermissionsHelper.h"
@@ -44,6 +42,7 @@
 #import "LaunchViewController.h"
 #import "MainTabBarController.h"
 #import "MEGAAssetsPickerController.h"
+#import "OnboardingViewController.h"
 #import "UpgradeTableViewController.h"
 
 #import "MEGAChatCreateChatGroupRequestDelegate.h"
@@ -330,7 +329,7 @@
             createAccountRequestDelegate.resumeCreateAccount = YES;
             [[MEGASdkManager sharedMEGASdk] resumeCreateAccountWithSessionId:sessionId delegate:createAccountRequestDelegate];
         } else {
-            self.window.rootViewController = [OnboardingViewController new];
+            self.window.rootViewController = [OnboardingViewController onboardingViewControllerOfType:OnboardingTypeDefault];
         }
     }
     
@@ -905,7 +904,7 @@
 }
 
 - (void)showOnboarding {
-    OnboardingViewController *onboardingVC = [OnboardingViewController new];
+    OnboardingViewController *onboardingVC = [OnboardingViewController onboardingViewControllerOfType:OnboardingTypeDefault];
     dispatch_async(dispatch_get_main_queue(), ^{
         UIView *overlayView = [[UIScreen mainScreen] snapshotViewAfterScreenUpdates:NO];
         [onboardingVC.view addSubview:overlayView];
