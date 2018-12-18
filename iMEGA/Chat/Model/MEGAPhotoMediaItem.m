@@ -108,7 +108,11 @@
     }
     
     if (self.image) {
-        [self configureCachedImageViewWithImagePath:self.previewFilePath];
+        if (self.node) {
+            [self configureCachedImageViewWithImagePath:self.previewFilePath];
+        } else {
+            self.cachedImageView.image = self.image;
+        }
     } else if (self.previewFilePath) {
         self.activityIndicator = [JSQMessagesMediaPlaceholderView viewWithActivityIndicator];
         self.activityIndicator.frame = self.cachedImageView.frame;

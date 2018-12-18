@@ -58,7 +58,7 @@
 #pragma mark - Public
 
 - (void)addCancelButton {
-    self.viewControllers.firstObject.navigationItem.rightBarButtonItem = [self cancelBarButtonItem];
+    self.viewControllers.firstObject.navigationItem.leftBarButtonItem = [self cancelBarButtonItem];
 }
 
 #pragma mark - Private
