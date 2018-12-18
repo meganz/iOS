@@ -236,7 +236,7 @@
             break;
             
         case 1:
-            titleForFooter = AMLocalizedString(@"Allow my contacts to see the last time I was active on MEGA. If disabled you won’t be able to see the activity status of your contacts.", @"Footer text to explain the meaning of the functionaly 'Last seen' of your chat status.");
+            titleForFooter = AMLocalizedString(@"Allow your contacts to see the last time you were active on MEGA.", @"Footer text to explain the meaning of the functionaly 'Last seen' of your chat status.");
             break;
             
         case 2:

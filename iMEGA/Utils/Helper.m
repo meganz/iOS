@@ -2,7 +2,6 @@
 
 #import <CoreSpotlight/CoreSpotlight.h>
 #import "LTHPasscodeViewController.h"
-#import <SafariServices/SafariServices.h>
 #import "SAMKeychain.h"
 #import "SVProgressHUD.h"
 
@@ -18,7 +17,6 @@
 #import "MEGANodeList+MNZCategory.h"
 #import "MEGAProcessAsset.h"
 #import "MEGALogger.h"
-#import "MEGAReachabilityManager.h"
 #import "MEGASdkManager.h"
 #import "MEGAStore.h"
 #import "MEGAUser+MNZCategory.h"
@@ -32,10 +30,6 @@
 #import "ShareFolderActivity.h"
 #import "SendToChatActivity.h"
 #import "MEGAConstants.h"
-
-static MEGANode *linkNode;
-static NSInteger linkNodeOption;
-static NSMutableArray *nodesFromLinkMutableArray;
 
 static MEGAIndexer *indexer;
 
@@ -442,32 +436,6 @@ static MEGAIndexer *indexer;
     NSURL *destinationURL = [[containerURL URLByAppendingPathComponent:cacheDirectory isDirectory:YES] URLByAppendingPathComponent:directory isDirectory:YES];
     [[NSFileManager defaultManager] createDirectoryAtURL:destinationURL withIntermediateDirectories:YES attributes:nil error:nil];
     return destinationURL;
-}
-
-#pragma mark - Utils for links when you are not logged
-
-+ (MEGANode *)linkNode {
-    return linkNode;
-}
-
-+ (void)setLinkNode:(MEGANode *)node {
-    linkNode = node;
-}
-
-+ (NSMutableArray *)nodesFromLinkMutableArray {
-    if (nodesFromLinkMutableArray == nil) {
-        nodesFromLinkMutableArray = [[NSMutableArray alloc] init];
-    }
-    
-    return nodesFromLinkMutableArray;
-}
-
-+ (NSInteger)selectedOptionOnLink {
-    return linkNodeOption;
-}
-
-+ (void)setSelectedOptionOnLink:(NSInteger)option {
-    linkNodeOption = option;
 }
 
 #pragma mark - Utils for transfers
@@ -1200,28 +1168,16 @@ static MEGAIndexer *indexer;
     return searchController;
 }
 
-+ (void)presentSafariViewControllerWithURL:(NSURL *)url {
-    if (url) {
-        if (!([url.scheme.lowercaseString isEqualToString:@"http"] || [url.scheme.lowercaseString isEqualToString:@"https"])) {
-            MEGALogInfo(@"To use SFSafariViewController the URL must use the http or https scheme: \n%@", url.absoluteString);
-            [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"linkNotValid", @"Message shown when the user clicks on an link that is not valid")];
-            return;
-        }
+#pragma mark - Manage session
+
++ (BOOL)hasSession_alertIfNot {
+    if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
+        return YES;
     } else {
-        MEGALogInfo(@"URL string was malformed or nil: \n%@", url.absoluteString);
-        [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"linkNotValid", @"Message shown when the user clicks on an link that is not valid")];
-        return;
-    }
-    
-    if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-        SFSafariViewController *safariViewController = [[SFSafariViewController alloc] initWithURL:url];
-        if (@available(iOS 10.0, *)) {
-            safariViewController.preferredControlTintColor = UIColor.mnz_redMain;
-        } else {
-            safariViewController.view.tintColor = UIColor.mnz_redMain;
-        }
-        
-        [UIApplication.mnz_presentingViewController presentViewController:safariViewController animated:YES completion:nil];
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"pleaseLogInToYourAccount", @"Alert title shown when you need to log in to continue with the action you want to do") message:nil preferredStyle:UIAlertControllerStyleAlert];
+        [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
+        [UIApplication.mnz_visibleViewController presentViewController:alertController animated:YES completion:nil];
+        return NO;
     }
 }
 

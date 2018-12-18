@@ -683,7 +683,7 @@
 /* Title of the label where the MEGAchat SDK version is shown */
 "megachatSdkVersion"="MEGAchat - versão do SDK";
 /* Link to the public code of the app */
-"View source code"="Ver o código fonte";
+"View source code"="Ver o código-fonte";
 /* Title for the section "Acknowledgements" of the app */
 "acknowledgements"="Agradecimentos";
 /* Title for the MEGA Recovery Key */
@@ -1683,15 +1683,15 @@
 /* Text shown for switching from list view to thumbnail view. */
 "Thumbnail view"="Visualização em miniaturas";
 /* Message to inform the local user that someone has joined the current group call */
-"%@ joined the call."="%@ joined the call.";
+"%@ joined the call."="%@ entrou na chamada.";
 /* Message to inform the local user that someone has left the current group call */
-"%@ left the call."="%@ left the call.";
+"%@ left the call."="%@ saiu da chamada.";
 /* Message to inform the local user is having a bad quality network with someone in the current group call */
-"Poor conection."="Poor conection.";
+"Poor connection."="Conexão ruim.";
 /* Message shown in a chat room when there is an active group call */
-"There is an active group call. Tap to join."="There is an active group call. Tap to join.";
+"There is an active group call. Tap to join."="Há uma chamada em grupo ativa. Toque para participar.";
 /* Message shown in a chat room for a group call in progress displaying the duration of the call */
-"Touch to return to call %@"="Touch to return to call %@";
+"Touch to return to call %@"="Toque para voltar à chamada %@";
 /* Menu item to change from grid view to list view */
 "List view"="Visualização em lista";
 /* Menu item to change from list view to grid view */
@@ -1707,7 +1707,7 @@
 /* The header of a notification indicating that a file or folder that was taken down has now been restored due to a successful counter-notice. */
 "Takedown reinstated"="Remoção revogada";
 /* Label shown inside an unseen notification */
-"New"="New";
+"New"="Nova";
 /* When a contact sent a contact/friend request */
 "Sent you a contact request"="Enviou uma solicitação de contato";
 /* A notification that the other user cancelled their contact request so it is no longer valid. E.g. user@email.com cancelled their contact request. */
@@ -1737,21 +1737,21 @@
 /* This is shown in the Notification dialog when the email address of a contact is not found and access to the share is lost for some reason (e.g. share removal or contact removal). */
 "Access to folders was removed."="O acesso às pastas foi removido.";
 /* Content of a notification that informs how many files and folders have been added to a shared folder */
-"Added 1 file"="Added 1 file";
+"Added 1 file"="1 arquivo adicionado";
 /* Content of a notification that informs how many files and folders have been added to a shared folder */
-"Added %lld files"="Added %lld files";
+"Added %lld files"="%lld arquivos adicionados";
 /* Content of a notification that informs how many files and folders have been added to a shared folder */
-"Added 1 folder"="Added 1 folder";
+"Added 1 folder"="1 pasta adicionada";
 /* Content of a notification that informs how many files and folders have been added to a shared folder */
-"Added %lld folders"="Added %lld folders";
+"Added %lld folders"="%lld pastas adicionadas";
 /* Content of a notification that informs how many files and folders have been added to a shared folder */
-"Added 1 file and 1 folder"="Added 1 file and 1 folder";
+"Added 1 file and 1 folder"="1 pasta e 1 arquivo adicionados";
 /* Content of a notification that informs how many files and folders have been added to a shared folder */
-"Added %lld files and 1 folder"="Added %lld files and 1 folder";
+"Added %lld files and 1 folder"="1 pasta e %lld arquivos adicionados";
 /* Content of a notification that informs how many files and folders have been added to a shared folder */
-"Added 1 file and %lld folders"="Added 1 file and %lld folders";
+"Added 1 file and %lld folders"="%lld pastas e 1 arquivo adicionados";
 /* Content of a notification that informs how many files and folders have been added to a shared folder */
-"Added [A] files and [B] folders"="Added [A] files and [B] folders";
+"Added [A] files and [B] folders"="[B] pastas e [A] arquivos adicionados";
 /* Notification popup. Notification for multiple removed items from a share. Please keep [X] as it will be replaced at runtime with the number of removed items. */
 "Removed [X] items from a share"="[X] itens foram eliminados da pasta compartilhada";
 /* A notification telling the user that their Pro plan payment was successfully received. The %1 indicates the name of the Pro plan they paid for e.g. Lite, PRO III. */
@@ -1767,14 +1767,14 @@
 /* The text of a notification indicating that a file or folder that was taken down has now been restored due to a successful counter-notice. The %1 placeholder will be replaced with the text ‘file’ or ‘folder’. The %2 will be replaced with the name of the file or folder. */
 "Your taken down %1 (%2) has been reinstated."="A remoção de %1 (%2) foi revogada.";
 /* Footer text to explain the meaning of the functionaly 'Last seen' of your chat status. */
-"Allow my contacts to see the last time I was active on MEGA. If disabled you won’t be able to see the activity status of your contacts."="Allow my contacts to see the last time I was active on MEGA. If disabled you won’t be able to see the activity status of your contacts.";
+"Allow your contacts to see the last time you were active on MEGA."="Permitir que seus contatos vejam o seu último acesso ao MEGA.";
 /* Label shown next to a feature name that can be enabled or disabled, like in 'Show Last seen...' */
-"Show"="Show";
+"Show"="Mostrar";
 /* Shown when viewing a 1on1 chat (at least for now), if the user is offline. */
-"Last seen %s"="Last seen %s";
-/* Text to inform the user the 'Last seen' time of a contact, for example 'Last seen 20 Nov 18 at 15:15' */
-"Last seen [A] at [B]"="Last seen [A] at [B]";
+"Last seen %s"="Último acesso %s";
 /* Text to inform the user the 'Last seen' time of a contact is a long time ago (>= 65535 minutes) */
-"Last seen a long time ago"="Last seen a long time ago";
+"Last seen a long time ago"="Último acesso há muito tempo atrás";
 /* */
 "Today"="Hoje";
+/* */
+"Yesterday"="Ontem";

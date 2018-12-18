@@ -11,8 +11,12 @@ static NSInteger const MYACCOUNT = 4;
 
 @interface MainTabBarController : UITabBarController <MEGAChatDelegate>
 
-- (void)setBadgeValueForChats;
-
 @property (nonatomic, strong) MEGACallManager *megaCallManager;
+
+- (void)openChatRoomNumber:(NSNumber *)chatNumber;
+- (void)showAchievements;
+- (void)showOffline;
+
+- (void)setBadgeValueForChats;
 
 @end
