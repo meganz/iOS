@@ -1515,21 +1515,25 @@ void uncaughtExceptionHandler(NSException *exception) {
             break;
             
         case EventStorage: {
-            [api getAccountDetails];
-            static BOOL alreadyPresented = NO;
-            if (!alreadyPresented && (event.number == StorageStateRed || event.number == StorageStateOrange)) {
-                NSString *detail = event.number == StorageStateOrange ? AMLocalizedString(@"cloudDriveIsAlmostFull", @"Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are.") : AMLocalizedString(@"cloudDriveIsFull", @"A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text.");
-                detail = [detail mnz_removeWebclientFormatters];
-                NSString *maxStorage = [NSString stringWithFormat:@"%ld", (long)[[MEGAPurchase sharedInstance].pricing storageGBAtProductIndex:7]];
-                NSString *maxStorageTB = [NSString stringWithFormat:@"%ld", (long)[[MEGAPurchase sharedInstance].pricing storageGBAtProductIndex:7] / 1024];
-                detail = [detail stringByReplacingOccurrencesOfString:@"4096" withString:maxStorage];
-                detail = [detail stringByReplacingOccurrencesOfString:@"4" withString:maxStorageTB];
-                alreadyPresented = YES;
-                NSString *title = AMLocalizedString(@"upgradeAccount", @"Button title which triggers the action to upgrade your MEGA account level");
-                UIImage *image = event.number == StorageStateOrange ? [UIImage imageNamed:@"storage_almost_full"] : [UIImage imageNamed:@"storage_full"];
-                [self presentUpgradeViewControllerTitle:title detail:detail image:image];
+            if (event.number == StorageStateChange) {
+                [api getAccountDetails];
+            } else {
+                static BOOL alreadyPresented = NO;
+                if (!alreadyPresented && (event.number == StorageStateRed || event.number == StorageStateOrange)) {
+                    NSString *detail = event.number == StorageStateOrange ? AMLocalizedString(@"cloudDriveIsAlmostFull", @"Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are.") : AMLocalizedString(@"cloudDriveIsFull", @"A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text.");
+                    detail = [detail mnz_removeWebclientFormatters];
+                    NSString *maxStorage = [NSString stringWithFormat:@"%ld", (long)[[MEGAPurchase sharedInstance].pricing storageGBAtProductIndex:7]];
+                    NSString *maxStorageTB = [NSString stringWithFormat:@"%ld", (long)[[MEGAPurchase sharedInstance].pricing storageGBAtProductIndex:7] / 1024];
+                    detail = [detail stringByReplacingOccurrencesOfString:@"4096" withString:maxStorage];
+                    detail = [detail stringByReplacingOccurrencesOfString:@"4" withString:maxStorageTB];
+                    alreadyPresented = YES;
+                    NSString *title = AMLocalizedString(@"upgradeAccount", @"Button title which triggers the action to upgrade your MEGA account level");
+                    UIImage *image = event.number == StorageStateOrange ? [UIImage imageNamed:@"storage_almost_full"] : [UIImage imageNamed:@"storage_full"];
+                    [self presentUpgradeViewControllerTitle:title detail:detail image:image];
+                }
             }
         }
+            
             break;
             
         default:
