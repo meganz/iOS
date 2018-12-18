@@ -73,8 +73,9 @@
                                 <color key="pageIndicatorTintColor" red="0.84705882352941175" green="0.84705882352941175" blue="0.84705882352941175" alpha="1" colorSpace="calibratedRGB"/>
                             </pageControl>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hj1-cN-Wxd">
-                                <rect key="frame" x="44" y="516" width="287" height="50"/>
+                                <rect key="frame" x="43.5" y="516" width="288" height="50"/>
                                 <constraints>
+                                    <constraint firstAttribute="width" constant="288" id="bBU-Tx-gVe"/>
                                     <constraint firstAttribute="height" constant="50" id="tDo-eG-YEq"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
@@ -91,9 +92,10 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TZS-mp-L0Q">
-                                <rect key="frame" x="44" y="582" width="287" height="50"/>
+                                <rect key="frame" x="43.5" y="582" width="288" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="aMp-Cn-KsK"/>
+                                    <constraint firstAttribute="width" constant="288" id="xyL-9v-bFh"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
                                 <state key="normal" title="Button"/>
@@ -104,14 +106,12 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="BUQ-n8-sSm" firstAttribute="trailing" secondItem="Hj1-cN-Wxd" secondAttribute="trailing" constant="44" id="A9L-8j-EFk"/>
+                            <constraint firstItem="TZS-mp-L0Q" firstAttribute="centerX" secondItem="gew-dm-7J5" secondAttribute="centerX" id="4zc-jP-FjT"/>
                             <constraint firstItem="xBY-vN-fzC" firstAttribute="top" secondItem="BUQ-n8-sSm" secondAttribute="top" constant="64" id="GaR-D5-tIV"/>
                             <constraint firstItem="TZS-mp-L0Q" firstAttribute="top" secondItem="Hj1-cN-Wxd" secondAttribute="bottom" constant="16" id="NPT-Ig-DZj"/>
-                            <constraint firstItem="TZS-mp-L0Q" firstAttribute="leading" secondItem="BUQ-n8-sSm" secondAttribute="leading" constant="44" id="Ogr-01-ZIM"/>
                             <constraint firstItem="BUQ-n8-sSm" firstAttribute="trailing" secondItem="Jxv-iR-b0m" secondAttribute="trailing" id="RdL-rG-0VW"/>
-                            <constraint firstItem="Hj1-cN-Wxd" firstAttribute="leading" secondItem="BUQ-n8-sSm" secondAttribute="leading" constant="44" id="TA8-ET-4f6"/>
+                            <constraint firstItem="Hj1-cN-Wxd" firstAttribute="centerX" secondItem="gew-dm-7J5" secondAttribute="centerX" id="Wac-QE-P8W"/>
                             <constraint firstItem="Jxv-iR-b0m" firstAttribute="top" secondItem="xBY-vN-fzC" secondAttribute="bottom" constant="22" id="bQt-qr-14b"/>
-                            <constraint firstItem="BUQ-n8-sSm" firstAttribute="trailing" secondItem="TZS-mp-L0Q" secondAttribute="trailing" constant="44" id="cRd-kT-Bra"/>
                             <constraint firstItem="BUQ-n8-sSm" firstAttribute="bottom" secondItem="TZS-mp-L0Q" secondAttribute="bottom" constant="35" id="fDe-G4-J4V"/>
                             <constraint firstItem="Jxv-iR-b0m" firstAttribute="leading" secondItem="BUQ-n8-sSm" secondAttribute="leading" id="fz8-No-n5A"/>
                             <constraint firstItem="BUQ-n8-sSm" firstAttribute="trailing" secondItem="xBY-vN-fzC" secondAttribute="trailing" id="sSa-OW-SSd"/>

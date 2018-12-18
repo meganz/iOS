@@ -28,8 +28,8 @@
 - (void)performAnimation {
     [UIView animateWithDuration:0.5 delay:0.0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
         self.circularShapeLayer.hidden = YES;
-        CGFloat newXY = self.logoImageView.frame.origin.x;
-        self.logoImageView.frame = CGRectMake(newXY, newXY, self.logoImageView.frame.size.width, self.logoImageView.frame.size.height);
+        CGFloat newY = MIN(self.logoImageView.frame.origin.x, 145.0f);
+        self.logoImageView.frame = CGRectMake(self.logoImageView.frame.origin.x, newY, self.logoImageView.frame.size.width, self.logoImageView.frame.size.height);
     } completion:^(BOOL finished) {
         self.titleLabel.hidden = self.descriptionLabel.hidden = NO;
         self.setupButton.hidden = self.skipButton.hidden = NO;
