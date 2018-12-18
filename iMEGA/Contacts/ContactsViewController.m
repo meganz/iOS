@@ -255,7 +255,7 @@
         }
             
         case ContactsModeChatNamingGroup: {
-            self.navigationItem.leftBarButtonItems = @[self.backBarButtonItem];
+            self.backBarButtonItem.image = self.backBarButtonItem.image.imageFlippedForRightToLeftLayoutDirection;
             self.createGroupBarButtonItem.title = AMLocalizedString(@"createFolderButton", nil);
             [self.createGroupBarButtonItem setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
                                                               [UIFont mnz_SFUIMediumWithSize:17],
