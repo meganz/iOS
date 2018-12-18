@@ -100,7 +100,7 @@
     self.pageControl.numberOfPages = self.scrollView.subviews.firstObject.subviews.count;
 }
 
-#pragma mark - Rotation settings
+#pragma mark - Rotation
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations {
     if (UIDevice.currentDevice.iPhoneDevice) {
@@ -108,6 +108,14 @@
     }
     
     return UIInterfaceOrientationMaskAll;
+}
+
+- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
+    [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
+    
+    [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext>  _Nonnull context) {
+        [self scrollTo:self.pageControl.currentPage];
+    } completion:nil];
 }
 
 #pragma mark - Private
