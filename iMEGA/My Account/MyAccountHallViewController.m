@@ -134,7 +134,7 @@
         [self.navigationController popToRootViewControllerAnimated:NO];
     }
     
-    NSIndexPath *achievementsIndexPath = [NSIndexPath indexPathForRow:2 inSection:0];
+    NSIndexPath *achievementsIndexPath = [NSIndexPath indexPathForRow:3 inSection:0];
     [self tableView:self.tableView didSelectRowAtIndexPath:achievementsIndexPath];
 }
 
@@ -144,7 +144,7 @@
         [self.navigationController popToRootViewControllerAnimated:NO];
     }
     
-    NSIndexPath *offlineIndexPath = [NSIndexPath indexPathForRow:4 inSection:0];
+    NSIndexPath *offlineIndexPath = [NSIndexPath indexPathForRow:5 inSection:0];
     [self tableView:self.tableView didSelectRowAtIndexPath:offlineIndexPath];
 }
 

@@ -25,7 +25,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *pauseButton;
 
 @property (strong, nonatomic) MEGATransfer *transfer;
-@property (strong, nonatomic) MOUploadTransfer *uploadTransfer;
+@property (strong, nonatomic) NSString *uploadTransferLocalIdentifier;
 
 @end
 
@@ -36,7 +36,7 @@
 - (void)configureCellForTransfer:(MEGATransfer *)transfer delegate:(id<TransferTableViewCellDelegate>)delegate {
     self.delegate = delegate;
     self.transfer = transfer;
-    self.uploadTransfer = nil;
+    self.uploadTransferLocalIdentifier = nil;
     
     self.nameLabel.text = [[MEGASdkManager sharedMEGASdk] unescapeFsIncompatible:transfer.fileName];
     self.pauseButton.hidden = self.cancelButton.hidden = NO;
@@ -88,28 +88,41 @@
 }
 
 - (void)reconfigureCellWithTransfer:(MEGATransfer *)transfer {
-    self.uploadTransfer = nil;
+    self.uploadTransferLocalIdentifier = nil;
     self.transfer = transfer;
     
     [self configureCellWithTransferState:MEGATransferStateActive];
 }
 
-- (void)configureCellForQueuedTransfer:(MOUploadTransfer *)uploadTransfer delegate:(id<TransferTableViewCellDelegate>)delegate {
+- (void)configureCellForQueuedTransfer:(NSString *)uploadTransferLocalIdentifier delegate:(id<TransferTableViewCellDelegate>)delegate {
     self.delegate = delegate;
     self.transfer = nil;
-    self.uploadTransfer = uploadTransfer;
+    self.uploadTransferLocalIdentifier = uploadTransferLocalIdentifier;
     
-    if (!uploadTransfer || !uploadTransfer.localIdentifier) {
+    if (!uploadTransferLocalIdentifier) {
         return;
     }
     
-    PHFetchResult *fetchResult = [PHAsset fetchAssetsWithLocalIdentifiers:@[uploadTransfer.localIdentifier] options:nil];
+    PHFetchResult *fetchResult = [PHAsset fetchAssetsWithLocalIdentifiers:@[uploadTransferLocalIdentifier] options:nil];
     if (fetchResult == nil) {
         return;
     }
+    
     PHAsset *asset = fetchResult.firstObject;
-    PHAssetResource *assetResource = [PHAssetResource assetResourcesForAsset:asset].firstObject;
-    NSString *name = [[NSString mnz_fileNameWithDate:asset.creationDate] stringByAppendingPathExtension:assetResource.originalFilename.mnz_lastExtensionInLowercase];
+    NSString *extension;
+    
+    if ([PHAssetResource assetResourcesForAsset:asset].count > 0) {
+        PHAssetResource *assetResource = [PHAssetResource assetResourcesForAsset:asset].firstObject;
+        if (assetResource.originalFilename) {
+            extension = assetResource.originalFilename.mnz_lastExtensionInLowercase;
+        }
+    }
+    
+    NSString *name = [NSString mnz_fileNameWithDate:asset.creationDate];
+    if (extension) {
+        name = [name stringByAppendingPathExtension:extension];
+    }
+    
     self.nameLabel.text = name;
 
     PHImageRequestOptions *options = [[PHImageRequestOptions alloc] init];
@@ -120,7 +133,7 @@
         if (result) {
             self.iconImageView.image = result;
         } else {
-            [self.iconImageView mnz_setImageForExtension:assetResource.originalFilename.pathExtension];
+            [self.iconImageView mnz_setImageForExtension:extension];
         }
     }];
     
@@ -224,9 +237,8 @@
                 [[MEGASdkManager sharedMEGASdkFolder] cancelTransferByTag:self.transfer.tag];
             }
         }
-    } else if (self.uploadTransfer) {
-        NSString *localIdentifier = self.uploadTransfer.localIdentifier;
-        [self.delegate cancelQueuedUploadTransfer:localIdentifier];
+    } else if (self.uploadTransferLocalIdentifier) {
+        [self.delegate cancelQueuedUploadTransfer:self.uploadTransferLocalIdentifier];
     }
 }
 

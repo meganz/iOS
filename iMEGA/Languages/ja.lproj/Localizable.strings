@@ -1678,16 +1678,20 @@
 "Saved to Photos"="写真に保存されました";
 /* Text shown when an error occurs when trying to save a photo or video to Photos app */
 "Could not save Item"="項目を保存できませんでした";
+/* Text shown for switching from thumbnail view to list view. */
+"List view"="リスト一覧";
+/* Text shown for switching from list view to thumbnail view. */
+"Thumbnail view"="サムネールで見る";
 /* Message to inform the local user that someone has joined the current group call */
-"%@ joined the call."="%@ joined the call.";
+"%@ joined the call."="%@さんが通話に参加しました。";
 /* Message to inform the local user that someone has left the current group call */
-"%@ left the call."="%@ left the call.";
+"%@ left the call."="%@さんが通話から抜けました。";
 /* Message to inform the local user is having a bad quality network with someone in the current group call */
-"Poor conection."="Poor conection.";
+"Poor connection."="接続不良。";
 /* Message shown in a chat room when there is an active group call */
-"There is an active group call. Tap to join."="There is an active group call. Tap to join.";
+"There is an active group call. Tap to join."="有効なグループ通話があります。タップして参加します。";
 /* Message shown in a chat room for a group call in progress displaying the duration of the call */
-"Touch to return to call %@"="Touch to return to call %@";
+"Touch to return to call %@"="タッチして通話に戻る %@";
 /* Menu item to change from grid view to list view */
 "List view"="リスト一覧";
 /* Menu item to change from list view to grid view */
@@ -1703,7 +1707,7 @@
 /* The header of a notification indicating that a file or folder that was taken down has now been restored due to a successful counter-notice. */
 "Takedown reinstated"="削除が復活しました";
 /* Label shown inside an unseen notification */
-"New"="New";
+"New"="新";
 /* When a contact sent a contact/friend request */
 "Sent you a contact request"="知り合いリクエストを送りました。";
 /* A notification that the other user cancelled their contact request so it is no longer valid. E.g. user@email.com cancelled their contact request. */
@@ -1733,21 +1737,21 @@
 /* This is shown in the Notification dialog when the email address of a contact is not found and access to the share is lost for some reason (e.g. share removal or contact removal). */
 "Access to folders was removed."="フォルダのアクセス接続が削除されました。";
 /* Content of a notification that informs how many files and folders have been added to a shared folder */
-"Added 1 file"="Added 1 file";
+"Added 1 file"="1個のファイルが追加されました";
 /* Content of a notification that informs how many files and folders have been added to a shared folder */
-"Added %lld files"="Added %lld files";
+"Added %lld files"="%lld個のファイルが追加されました";
 /* Content of a notification that informs how many files and folders have been added to a shared folder */
-"Added 1 folder"="Added 1 folder";
+"Added 1 folder"="1個のフォルダが追加されました";
 /* Content of a notification that informs how many files and folders have been added to a shared folder */
-"Added %lld folders"="Added %lld folders";
+"Added %lld folders"="%lld個のフォルダが追加されました";
 /* Content of a notification that informs how many files and folders have been added to a shared folder */
-"Added 1 file and 1 folder"="Added 1 file and 1 folder";
+"Added 1 file and 1 folder"="1個のファイルと1個のフォルダが追加されました";
 /* Content of a notification that informs how many files and folders have been added to a shared folder */
-"Added %lld files and 1 folder"="Added %lld files and 1 folder";
+"Added %lld files and 1 folder"="%lld個のファイルと1個のフォルダが追加されました";
 /* Content of a notification that informs how many files and folders have been added to a shared folder */
-"Added 1 file and %lld folders"="Added 1 file and %lld folders";
+"Added 1 file and %lld folders"="1個のファイルと%lld個のフォルダが追加されました";
 /* Content of a notification that informs how many files and folders have been added to a shared folder */
-"Added [A] files and [B] folders"="Added [A] files and [B] folders";
+"Added [A] files and [B] folders"="[A]個のファイルと[B]個のフォルダが追加されました";
 /* Notification popup. Notification for multiple removed items from a share. Please keep [X] as it will be replaced at runtime with the number of removed items. */
 "Removed [X] items from a share"="共有から削除された[X]項目";
 /* A notification telling the user that their Pro plan payment was successfully received. The %1 indicates the name of the Pro plan they paid for e.g. Lite, PRO III. */
@@ -1762,3 +1766,15 @@
 "Your publicly shared %1 (%2) has been taken down."="あなたの公開共有された%1（%2）は削除されました。";
 /* The text of a notification indicating that a file or folder that was taken down has now been restored due to a successful counter-notice. The %1 placeholder will be replaced with the text ‘file’ or ‘folder’. The %2 will be replaced with the name of the file or folder. */
 "Your taken down %1 (%2) has been reinstated."="あなたの削除された%1（%2）は復活しました。";
+/* Footer text to explain the meaning of the functionaly 'Last seen' of your chat status. */
+"Allow your contacts to see the last time you were active on MEGA."="あなたの連絡先がMEGAであなたが最後に活動していた時間を見れるようにします。";
+/* Label shown next to a feature name that can be enabled or disabled, like in 'Show Last seen...' */
+"Show"="表示";
+/* Shown when viewing a 1on1 chat (at least for now), if the user is offline. */
+"Last seen %s"="最終ログイン%s";
+/* Text to inform the user the 'Last seen' time of a contact is a long time ago (>= 65535 minutes) */
+"Last seen a long time ago"="最終ログインはだいぶ前";
+/* */
+"Today"="今日";
+/* */
+"Yesterday"="昨日";

@@ -637,7 +637,7 @@
 /* Permissions given to the user you share your folder with */
 "readAndWrite"="อ่านและเขียน";
 /* Permissions given to the user you share your folder with */
-"fullAccess"="เข้าถึงได้เต็มรูปแบบ";
+"fullAccess"="เข้าถึงแบบเต็มที่";
 /* Title of the Settings section */
 "settingsTitle"="ตั้งค่า";
 /* Title of one of the Settings sections where you can set up the 'Camera Uploads' options */
@@ -1678,16 +1678,20 @@
 "Saved to Photos"="บันทึกไปยังรูปภาพแล้ว";
 /* Text shown when an error occurs when trying to save a photo or video to Photos app */
 "Could not save Item"="ไม่สามารถบันทึกรายการได้";
+/* Text shown for switching from thumbnail view to list view. */
+"List view"="มุมมองรายการ";
+/* Text shown for switching from list view to thumbnail view. */
+"Thumbnail view"="มุมมองภาพตัวอย่าง";
 /* Message to inform the local user that someone has joined the current group call */
-"%@ joined the call."="%@ joined the call.";
+"%@ joined the call."="%@ เข้าร่วมสายแล้ว";
 /* Message to inform the local user that someone has left the current group call */
-"%@ left the call."="%@ left the call.";
+"%@ left the call."="%@ วางสายไปแล้ว";
 /* Message to inform the local user is having a bad quality network with someone in the current group call */
-"Poor conection."="Poor conection.";
+"Poor connection."="การเชื่อมต่อไม่ดี";
 /* Message shown in a chat room when there is an active group call */
-"There is an active group call. Tap to join."="There is an active group call. Tap to join.";
+"There is an active group call. Tap to join."="มีการโทรกลุ่มอยู่ในขณะนี้ แตะเพื่อเข้าร่วม";
 /* Message shown in a chat room for a group call in progress displaying the duration of the call */
-"Touch to return to call %@"="Touch to return to call %@";
+"Touch to return to call %@"="แตะเพื่อกลับไปที่สาย %@";
 /* Menu item to change from grid view to list view */
 "List view"="มุมมองรายการ";
 /* Menu item to change from list view to grid view */
@@ -1703,7 +1707,7 @@
 /* The header of a notification indicating that a file or folder that was taken down has now been restored due to a successful counter-notice. */
 "Takedown reinstated"="คืนสิทธิ์การลบเนื้อหา";
 /* Label shown inside an unseen notification */
-"New"="New";
+"New"="ใหม่";
 /* When a contact sent a contact/friend request */
 "Sent you a contact request"="ส่งคำขอสำหรับรายการติดต่อแล้ว";
 /* A notification that the other user cancelled their contact request so it is no longer valid. E.g. user@email.com cancelled their contact request. */
@@ -1733,21 +1737,21 @@
 /* This is shown in the Notification dialog when the email address of a contact is not found and access to the share is lost for some reason (e.g. share removal or contact removal). */
 "Access to folders was removed."="การเข้าถึงโฟลเดอร์ถูกลบออกแล้ว";
 /* Content of a notification that informs how many files and folders have been added to a shared folder */
-"Added 1 file"="Added 1 file";
+"Added 1 file"="เพิ่ม 1 ไฟล์แล้ว";
 /* Content of a notification that informs how many files and folders have been added to a shared folder */
-"Added %lld files"="Added %lld files";
+"Added %lld files"="เพิ่ม %lld ไฟล์แล้ว";
 /* Content of a notification that informs how many files and folders have been added to a shared folder */
-"Added 1 folder"="Added 1 folder";
+"Added 1 folder"="เพิ่ม 1 โฟลเดอร์แล้ว";
 /* Content of a notification that informs how many files and folders have been added to a shared folder */
-"Added %lld folders"="Added %lld folders";
+"Added %lld folders"="เพิ่ม %lld โฟลเดอร์แล้ว";
 /* Content of a notification that informs how many files and folders have been added to a shared folder */
-"Added 1 file and 1 folder"="Added 1 file and 1 folder";
+"Added 1 file and 1 folder"="เพิ่ม 1 ไฟล์และ 1 โฟลเดอร์แล้ว";
 /* Content of a notification that informs how many files and folders have been added to a shared folder */
-"Added %lld files and 1 folder"="Added %lld files and 1 folder";
+"Added %lld files and 1 folder"="เพิ่ม %lld ไฟล์และ 1 โฟลเดอร์แล้ว";
 /* Content of a notification that informs how many files and folders have been added to a shared folder */
-"Added 1 file and %lld folders"="Added 1 file and %lld folders";
+"Added 1 file and %lld folders"="เพิ่ม 1 ไฟล์และ %lld โฟลเดอร์แล้ว";
 /* Content of a notification that informs how many files and folders have been added to a shared folder */
-"Added [A] files and [B] folders"="Added [A] files and [B] folders";
+"Added [A] files and [B] folders"="เพิ่ม [A] ไฟล์และ [B] โฟลเดอร์แล้ว";
 /* Notification popup. Notification for multiple removed items from a share. Please keep [X] as it will be replaced at runtime with the number of removed items. */
 "Removed [X] items from a share"="ได้เอา [X] รายการออกจากการแชร์";
 /* A notification telling the user that their Pro plan payment was successfully received. The %1 indicates the name of the Pro plan they paid for e.g. Lite, PRO III. */
@@ -1762,3 +1766,15 @@
 "Your publicly shared %1 (%2) has been taken down."="การแชร์สาธารณะของคุณ %1 (%2) ถูกแจ้งว่าให้ลบเนื้อหา";
 /* The text of a notification indicating that a file or folder that was taken down has now been restored due to a successful counter-notice. The %1 placeholder will be replaced with the text ‘file’ or ‘folder’. The %2 will be replaced with the name of the file or folder. */
 "Your taken down %1 (%2) has been reinstated."="การแจ้งให้ดำเนินการของคุณ %1 (%2) ถูกคืนสิทธิ์เรียบร้อยแล้ว";
+/* Footer text to explain the meaning of the functionaly 'Last seen' of your chat status. */
+"Allow your contacts to see the last time you were active on MEGA."="อนุญาตให้ผู้ติดต่อของคุณเห็นว่า เป็นครั้งสุดท้ายที่คุณใช้งาน MEGA";
+/* Label shown next to a feature name that can be enabled or disabled, like in 'Show Last seen...' */
+"Show"="แสดง";
+/* Shown when viewing a 1on1 chat (at least for now), if the user is offline. */
+"Last seen %s"="ดูครั้งล่าสุด %s";
+/* Text to inform the user the 'Last seen' time of a contact is a long time ago (>= 65535 minutes) */
+"Last seen a long time ago"="ดูครั้งล่าสุดเมื่อนานมาแล้ว";
+/* */
+"Today"="วันนี้";
+/* */
+"Yesterday"="เมื่อวาน";

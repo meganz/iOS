@@ -15,7 +15,7 @@
 
 - (void)configureCellForTransfer:(MEGATransfer *)transfer delegate:(id<TransferTableViewCellDelegate>)delegate;
 - (void)reconfigureCellWithTransfer:(MEGATransfer *)transfer;
-- (void)configureCellForQueuedTransfer:(MOUploadTransfer *)uploadTransfer delegate:(id<TransferTableViewCellDelegate>)delegate;
+- (void)configureCellForQueuedTransfer:(NSString *)uploadTransferLocalIdentifier delegate:(id<TransferTableViewCellDelegate>)delegate;
 
 - (void)configureCellWithTransferState:(MEGATransferState)transferState;
 - (void)reloadThumbnailImage;

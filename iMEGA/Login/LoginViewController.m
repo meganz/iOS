@@ -11,6 +11,7 @@
 #import "MEGALogger.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGASdkManager.h"
+#import "NSURL+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 
 #import "CreateAccountViewController.h"
@@ -57,6 +58,7 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
     self.emailInputView.inputTextField.returnKeyType = UIReturnKeyNext;
     self.emailInputView.inputTextField.delegate = self;
     self.emailInputView.inputTextField.tag = EmailTextFieldTag;
+    self.emailInputView.inputTextField.keyboardType = UIKeyboardTypeEmailAddress;
     if (@available(iOS 11.0, *)) {
         self.emailInputView.inputTextField.textContentType = UITextContentTypeUsername;
     }
@@ -136,7 +138,7 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
 }
 
 - (IBAction)forgotPasswordTouchUpInside:(UIButton *)sender {
-    [Helper presentSafariViewControllerWithURL:[NSURL URLWithString:@"https://mega.nz/recovery"]];
+    [[NSURL URLWithString:@"https://mega.nz/recovery"] mnz_presentSafariViewController];
 }
 
 #pragma mark - Private
