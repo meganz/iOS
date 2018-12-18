@@ -51,7 +51,9 @@
     [super viewDidLoad];
     
     self.backBarButtonItem.image = self.backBarButtonItem.image.imageFlippedForRightToLeftLayoutDirection;
-    self.navigationItem.leftBarButtonItem = self.backBarButtonItem;
+    if (self.contactDetailsMode == ContactDetailsModeFromChat) {
+        self.navigationItem.leftBarButtonItem = self.backBarButtonItem;
+    }
     self.navigationItem.title = AMLocalizedString(@"contactInfo", @"title of the contact properties screen");
     
     self.user = [[MEGASdkManager sharedMEGASdk] contactForEmail:self.userEmail];
@@ -68,11 +70,14 @@
     
     MEGAChatStatus userStatus = [MEGASdkManager.sharedMEGAChatSdk userOnlineStatus:self.user.handle];
     if (userStatus != MEGAChatStatusInvalid) {
-        if (MEGASdkManager.sharedMEGAChatSdk.presenceConfig.isLastGreenVisible && userStatus < 3) {
+        if (userStatus < MEGAChatStatusOnline) {
             [MEGASdkManager.sharedMEGAChatSdk requestLastGreen:self.user.handle];
         }
         self.onlineStatusView.backgroundColor = [UIColor mnz_colorForStatusChange:[MEGASdkManager.sharedMEGAChatSdk userOnlineStatus:self.user.handle]];
         self.statusLabel.text = [NSString chatStatusString:userStatus];
+    } else {
+        self.statusLabel.hidden = YES;
+        self.onlineStatusView.hidden = YES;
     }
     
     self.incomingNodeListForUser = [[MEGASdkManager sharedMEGASdk] inSharesForUser:self.user];
@@ -447,7 +452,7 @@
     if (userHandle == self.user.handle) {
         self.onlineStatusView.backgroundColor = [UIColor mnz_colorForStatusChange:onlineStatus];
         self.statusLabel.text = [NSString chatStatusString:onlineStatus];
-        if (MEGASdkManager.sharedMEGAChatSdk.presenceConfig.isLastGreenVisible && onlineStatus < 3) {
+        if (onlineStatus < MEGAChatStatusOnline) {
             [MEGASdkManager.sharedMEGAChatSdk requestLastGreen:self.user.handle];
         }
     }

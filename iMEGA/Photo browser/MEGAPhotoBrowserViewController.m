@@ -112,12 +112,21 @@
     self.pieChartView.layer.cornerRadius = self.pieChartView.frame.size.width/2;
     self.pieChartView.layer.masksToBounds = YES;
     
-    if (self.displayMode == DisplayModeFileLink) {
-        self.leftToolbarItem.image = nil;
-        self.leftToolbarItem.title = AMLocalizedString(@"download", nil);
-
-        self.rightToolbarItem.image = nil;
-        self.rightToolbarItem.title = AMLocalizedString(@"import", @"Button title that triggers the importing link action");
+    switch (self.displayMode) {
+        case DisplayModeFileLink:
+            self.leftToolbarItem.image = nil;
+            self.leftToolbarItem.title = AMLocalizedString(@"download", nil);
+            
+            self.rightToolbarItem.image = nil;
+            self.rightToolbarItem.title = AMLocalizedString(@"import", @"Button title that triggers the importing link action");
+            break;
+            
+        case DisplayModeSharedItem:
+            [self.toolbar setItems:@[self.leftToolbarItem]];
+            break;
+            
+        default:
+            break;
     }
 }
 
@@ -865,7 +874,8 @@
             
             switch (self.displayMode) {
                 case DisplayModeFileLink: {
-                    activityVC = [[UIActivityViewController alloc] initWithActivityItems:@[self.publicLink] applicationActivities:nil];
+                    NSString *link = self.encryptedLink ? self.encryptedLink : self.publicLink;
+                    activityVC = [[UIActivityViewController alloc] initWithActivityItems:@[link] applicationActivities:nil];
                     [activityVC setExcludedActivityTypes:@[UIActivityTypePrint, UIActivityTypeAssignToContact, UIActivityTypeSaveToCameraRoll, UIActivityTypeAddToReadingList, UIActivityTypeAirDrop]];
                     [activityVC.popoverPresentationController setBarButtonItem:sender];
                     
@@ -981,7 +991,8 @@
         if ([visibleViewController isKindOfClass:MainTabBarController.class]) {
             NSArray *parentTreeArray = node.mnz_parentTreeArray;
 
-            UINavigationController *navigationController = (UINavigationController *)((MainTabBarController *)visibleViewController).viewControllers[((MainTabBarController *)visibleViewController).selectedIndex];
+            MainTabBarController *mainTBC = (MainTabBarController *)visibleViewController;
+            UINavigationController *navigationController = (UINavigationController *)(mainTBC.selectedViewController);
             [navigationController popToRootViewControllerAnimated:NO];
             
             for (MEGANode *node in parentTreeArray) {

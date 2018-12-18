@@ -1,6 +1,8 @@
 
 #import "ProductDetailViewController.h"
 
+#import "UIApplication+MNZCategory.h"
+
 #import "CameraUploadsPopUpViewController.h"
 #import "ProductDetailTableViewCell.h"
 
@@ -155,10 +157,11 @@
         if (isRestore) {
             UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"thankYou_title", nil)  message:AMLocalizedString(@"purchaseRestore_message", nil) preferredStyle:UIAlertControllerStyleAlert];
             [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-                if ([[[[[UIApplication sharedApplication] delegate] window] rootViewController] presentedViewController] != nil) {
-                    [[[[[[UIApplication sharedApplication] delegate] window] rootViewController] presentedViewController] dismissViewControllerAnimated:YES completion:nil];
+                if (UIApplication.mnz_presentingViewController) {
+                    [UIApplication.mnz_presentingViewController dismissViewControllerAnimated:YES completion:nil];
                 }
             }]];
+            
             [self presentViewController:alertController animated:YES completion:nil];
         } else {
             if (self.presentingViewController) {

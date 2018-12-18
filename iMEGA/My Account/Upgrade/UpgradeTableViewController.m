@@ -6,8 +6,8 @@
 
 #import "MEGASdk+MNZCategory.h"
 #import "NSString+MNZCategory.h"
+#import "NSURL+MNZCategory.h"
 
-#import "Helper.h"
 #import "MEGAPurchase.h"
 #import "MEGASdkManager.h"
 #import "MEGAReachabilityManager.h"
@@ -337,19 +337,11 @@
 }
 
 - (void)showTermsOfService {
-    if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-        [self showURL:@"https://mega.nz/terms"];
-    }
+    [[NSURL URLWithString:@"https://mega.nz/terms"] mnz_presentSafariViewController];
 }
 
 - (void)showPrivacyPolicy {
-    if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-        [self showURL:@"https://mega.nz/privacy"];
-    }
-}
-
-- (void)showURL:(NSString *)urlString {
-    [Helper presentSafariViewControllerWithURL:[NSURL URLWithString:urlString]];
+    [[NSURL URLWithString:@"https://mega.nz/privacy"] mnz_presentSafariViewController];
 }
 
 - (NSString *)storageAndUnitsByProduct:(SKProduct *)product {
@@ -488,8 +480,6 @@
     productDetailVC.monthlyProduct = monthlyProduct;
     productDetailVC.yearlyProduct = yearlyProduct;
     [self.navigationController pushViewController:productDetailVC animated:YES];
-    
-    [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }

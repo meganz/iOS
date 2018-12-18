@@ -3,10 +3,10 @@
 
 #import "SVProgressHUD.h"
 
-#import "Helper.h"
 #import "MEGALoginRequestDelegate.h"
 #import "MEGASdkManager.h"
 #import "NSString+MNZCategory.h"
+#import "NSURL+MNZCategory.h"
 #import "UIApplication+MNZCategory.h"
 
 #import "MEGANavigationController.h"
@@ -183,7 +183,7 @@
 #pragma mark - IBActions
 
 - (IBAction)lostYourAuthenticatorDeviceTouchUpInside:(UIButton *)sender {
-    [Helper presentSafariViewControllerWithURL:[NSURL URLWithString:@"https://mega.nz/recovery"]];
+    [[NSURL URLWithString:@"https://mega.nz/recovery"] mnz_presentSafariViewController];
 }
 
 #pragma mark - UITextViewDelegate
