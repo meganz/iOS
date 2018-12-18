@@ -207,9 +207,9 @@
 /* Title shown when the Contacts section is empty, when you have not added any contact. */
 "contactsEmptyState_title"="Aucun contact";
 /* Title shown when there's no incoming Shared Items */
-"noIncomingSharedItemsEmptyState_text"="Aucun dossier partagé entrant";
+"noIncomingSharedItemsEmptyState_text"="Il n’y a aucun dossier partagé entrant";
 /* Title shown when there's no outgoing Shared Items */
-"noOutgoingSharedItemsEmptyState_text"="Aucun dossier partagé sortant";
+"noOutgoingSharedItemsEmptyState_text"="Il n’y a aucun dossier partagé sortant";
 /* Title of Contacts requests section */
 "contactRequests"="Demandes de contact";
 /* Button title shown in empty views when you can 'Add contacts' */
@@ -719,7 +719,7 @@
 /* Text next to a switch that allows disabling the HTTP protocol for transfers */
 "dontUseHttp"="Ne pas utiliser HTTP";
 /* Footer text that explains when disabling the HTTP protocol for transfers may be useful */
-"transfersSectionFooter"="N’activez cette option que si vos transferts ne démarrent pas. Dans des conditions normales, le protocole HTTP est adéquat, car tous les transferts sont déjà chiffrés.";
+"transfersSectionFooter"="N’activer cette option que si vos transferts ne démarrent pas. Dans des conditions normales, le protocole HTTP est adéquat, car tous les transferts sont déjà chiffrés.";
 /* Title of the dialog displayed the first time that a user want to download a image. Asks if wants to export image files to the photo album after download in future and informs that user can change this option afterwards - (String as short as possible). */
 "Download options"="Options de téléchargement";
 /* Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped */
@@ -984,7 +984,7 @@
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
 "cloudDriveIsAlmostFull"="[S]Votre disque nuagique est presque plein.[/S] [A]Surclassez votre compte maintenant[/A] vers un compte PRO et obtenez [S]jusqu’à 8 To (8 192 Go)[/S] d’espace de stockage nuagique.";
 /* A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text. */
-"cloudDriveIsFull"="[S]Votre compte est plein.[/S] [A]Surclassez votre compte maintenant[/A] vers un compte PRO et obtenez [S]jusqu’à 8 To (8 192 Go)[/S] d’espace de stockage nuagique.";
+"cloudDriveIsFull"="[S]Votre espace de stockage est plein.[/S] [A]Surclassez votre compte maintenant[/A] vers un compte PRO et obtenez [S]jusqu’à 8 To (8 192 Go)[/S] d’espace de stockage nuagique.";
 /* Storage related with the MEGA PRO account level you can subscribe */
 "productSpace"="Espace de stockage";
 /* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
@@ -1272,7 +1272,7 @@
 /* A summary message when a user sent the information of %s number of contacts at once. Please keep %s as it will be replaced at runtime with the number of contacts sent. */
 "sentXContacts"="%s contacts envoyés.";
 /* A message appearing in the chat summary window when the most recent action performed by a user was attaching a file. Please keep %s as it will be replaced at runtime with the name of the attached file. */
-"attachedFile"="Pièce jointe : %s";
+"attachedFile"="Fichier joint : %s";
 /* A summary message when a user has attached many files at once into the chat. Please keep %s as it will be replaced at runtime with the number of files. */
 "attachedXFiles"="%s fichiers joints.";
 /* Label in a button that allows to jump to the latest item */
@@ -1683,15 +1683,15 @@
 /* Text shown for switching from list view to thumbnail view. */
 "Thumbnail view"="Vue en imagettes";
 /* Message to inform the local user that someone has joined the current group call */
-"%@ joined the call."="%@ joined the call.";
+"%@ joined the call."="%@ s’est joint à l’appel.";
 /* Message to inform the local user that someone has left the current group call */
-"%@ left the call."="%@ left the call.";
+"%@ left the call."="%@ a quitté l’appel.";
 /* Message to inform the local user is having a bad quality network with someone in the current group call */
-"Poor conection."="Poor conection.";
+"Poor connection."="La connexion est de mauvaise qualité.";
 /* Message shown in a chat room when there is an active group call */
-"There is an active group call. Tap to join."="There is an active group call. Tap to join.";
+"There is an active group call. Tap to join."="Un appel de groupe est actif. Touchez pour vous y joindre.";
 /* Message shown in a chat room for a group call in progress displaying the duration of the call */
-"Touch to return to call %@"="Touch to return to call %@";
+"Touch to return to call %@"="Touchez pour revenir à l’appel %@";
 /* Menu item to change from grid view to list view */
 "List view"="Vue en liste";
 /* Menu item to change from list view to grid view */
@@ -1707,7 +1707,7 @@
 /* The header of a notification indicating that a file or folder that was taken down has now been restored due to a successful counter-notice. */
 "Takedown reinstated"="Retrait rétabli";
 /* Label shown inside an unseen notification */
-"New"="New";
+"New"="Nouvelle";
 /* When a contact sent a contact/friend request */
 "Sent you a contact request"="Vous a envoyé une demande de contact";
 /* A notification that the other user cancelled their contact request so it is no longer valid. E.g. user@email.com cancelled their contact request. */
@@ -1737,21 +1737,21 @@
 /* This is shown in the Notification dialog when the email address of a contact is not found and access to the share is lost for some reason (e.g. share removal or contact removal). */
 "Access to folders was removed."="L'accès aux dossiers a été retiré.";
 /* Content of a notification that informs how many files and folders have been added to a shared folder */
-"Added 1 file"="Added 1 file";
+"Added 1 file"="1 fichier a été ajouté";
 /* Content of a notification that informs how many files and folders have been added to a shared folder */
-"Added %lld files"="Added %lld files";
+"Added %lld files"="%lld fichiers ont été ajoutés";
 /* Content of a notification that informs how many files and folders have been added to a shared folder */
-"Added 1 folder"="Added 1 folder";
+"Added 1 folder"="1 dossier a été ajouté";
 /* Content of a notification that informs how many files and folders have been added to a shared folder */
-"Added %lld folders"="Added %lld folders";
+"Added %lld folders"="%lld dossiers ont été ajoutés";
 /* Content of a notification that informs how many files and folders have been added to a shared folder */
-"Added 1 file and 1 folder"="Added 1 file and 1 folder";
+"Added 1 file and 1 folder"="1 fichier et 1 dossier ont été ajoutés";
 /* Content of a notification that informs how many files and folders have been added to a shared folder */
-"Added %lld files and 1 folder"="Added %lld files and 1 folder";
+"Added %lld files and 1 folder"="%lld fichiers et 1 dossier ont été ajoutés";
 /* Content of a notification that informs how many files and folders have been added to a shared folder */
-"Added 1 file and %lld folders"="Added 1 file and %lld folders";
+"Added 1 file and %lld folders"="1 fichier et %lld dossiers ont été ajoutés";
 /* Content of a notification that informs how many files and folders have been added to a shared folder */
-"Added [A] files and [B] folders"="Added [A] files and [B] folders";
+"Added [A] files and [B] folders"="[A] fichiers [B] dossiers ont été ajoutés";
 /* Notification popup. Notification for multiple removed items from a share. Please keep [X] as it will be replaced at runtime with the number of removed items. */
 "Removed [X] items from a share"="[X] éléments ont été retirés d’un partage";
 /* A notification telling the user that their Pro plan payment was successfully received. The %1 indicates the name of the Pro plan they paid for e.g. Lite, PRO III. */
@@ -1767,14 +1767,14 @@
 /* The text of a notification indicating that a file or folder that was taken down has now been restored due to a successful counter-notice. The %1 placeholder will be replaced with the text ‘file’ or ‘folder’. The %2 will be replaced with the name of the file or folder. */
 "Your taken down %1 (%2) has been reinstated."="Votre %1 (%2) retiré a été rétabli";
 /* Footer text to explain the meaning of the functionaly 'Last seen' of your chat status. */
-"Allow my contacts to see the last time I was active on MEGA. If disabled you won’t be able to see the activity status of your contacts."="Allow my contacts to see the last time I was active on MEGA. If disabled you won’t be able to see the activity status of your contacts.";
+"Allow your contacts to see the last time you were active on MEGA."="Permettre à vos contacts de voir l’heure de votre dernière activité sur MEGA.";
 /* Label shown next to a feature name that can be enabled or disabled, like in 'Show Last seen...' */
-"Show"="Show";
+"Show"="Afficher";
 /* Shown when viewing a 1on1 chat (at least for now), if the user is offline. */
-"Last seen %s"="Last seen %s";
-/* Text to inform the user the 'Last seen' time of a contact, for example 'Last seen 20 Nov 18 at 15:15' */
-"Last seen [A] at [B]"="Last seen [A] at [B]";
+"Last seen %s"="Vu pour la dernière fois %s";
 /* Text to inform the user the 'Last seen' time of a contact is a long time ago (>= 65535 minutes) */
-"Last seen a long time ago"="Last seen a long time ago";
+"Last seen a long time ago"="Vu pour la dernière fois il y a longtemps";
 /* */
 "Today"="Aujourd’hui";
+/* */
+"Yesterday"="Hier";

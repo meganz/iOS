@@ -80,7 +80,7 @@
     self.fetchNodesDone = NO;
     self.passcodePresented = NO;
     self.passcodeToBePresented = NO;
-
+    self.semaphore = dispatch_semaphore_create(0);
     [self languageCompatibility];
     
 #ifdef DEBUG
@@ -141,8 +141,6 @@
     
     self.openedChatIds = [NSMutableSet<NSNumber *> new];
     self.lastProgressChange = [NSDate new];
-    
-    self.semaphore = dispatch_semaphore_create(0);
 }
 
 - (void)viewWillAppear:(BOOL)animated{
@@ -167,6 +165,9 @@
 }
 
 - (void)didEnterBackground {
+    if ([self.presentedViewController isKindOfClass:LTHPasscodeViewController.class]) {
+        [self.presentedViewController dismissViewControllerAnimated:NO completion:nil];
+    }
     self.passcodePresented = NO;
     
     [[MEGASdkManager sharedMEGAChatSdk] setBackgroundStatus:YES];

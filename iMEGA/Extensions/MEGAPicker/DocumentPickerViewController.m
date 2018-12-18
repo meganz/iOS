@@ -120,6 +120,9 @@
 }
 
 - (void)didEnterBackground {
+    if ([self.presentedViewController isKindOfClass:LTHPasscodeViewController.class]) {
+        [self.presentedViewController dismissViewControllerAnimated:NO completion:nil];
+    }
     self.passcodePresented = NO;
 }
 
