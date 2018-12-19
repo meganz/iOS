@@ -254,7 +254,15 @@
         }
     }
     
+    UIView *view = [[UIView alloc] init];
+    view.backgroundColor = UIColor.clearColor;
+    cell.selectedBackgroundView = view;
+    
     return cell;
+}
+
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    return [self.alreadyContactsIndexPathMutableDictionary objectForKey:indexPath] ? NO : YES;
 }
 
 #pragma mark - UITableViewDelegate
@@ -328,6 +336,10 @@
         self.addBarButtonItem.title = (selectedUsersCount > 1) ? AMLocalizedString(@"addContacts", @"Button title shown in empty views when you can 'Add contacts'") : AMLocalizedString(@"addContact", @"Alert title shown when you select to add a contact inserting his/her email");
         self.addBarButtonItem.enabled = (selectedUsersCount == 0) ? NO : YES;
     }
+}
+
+- (BOOL)tableView:(UITableView *)tableView shouldIndentWhileEditingRowAtIndexPath:(NSIndexPath *)indexPath {
+    return [self.alreadyContactsIndexPathMutableDictionary objectForKey:indexPath] ? NO : YES;
 }
 
 @end
