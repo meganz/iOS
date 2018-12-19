@@ -5,6 +5,7 @@
 #import "UIScrollView+EmptyDataSet.h"
 #import "NSString+MNZCategory.h"
 #import "NSFileManager+MNZCategory.h"
+#import "UIApplication+MNZCategory.h"
 
 #import "MEGANavigationController.h"
 #import "MEGASdkManager.h"
@@ -29,7 +30,7 @@ static NSString *kModificationDate = @"kModificationDate";
 static NSString *kFileSize = @"kFileSize";
 static NSString *kisDirectory = @"kisDirectory";
 
-@interface OfflineViewController () <UIViewControllerTransitioningDelegate, UIDocumentInteractionControllerDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGATransferDelegate> {
+@interface OfflineViewController () <UIViewControllerTransitioningDelegate, UIDocumentInteractionControllerDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGATransferDelegate, UISearchControllerDelegate> {
 }
 
 @property (weak, nonatomic) IBOutlet UIView *containerView;
@@ -83,6 +84,8 @@ static NSString *kisDirectory = @"kisDirectory";
     self.definesPresentationContext = YES;
     
     [self.view addGestureRecognizer:[[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPress:)]];
+    
+    self.searchController.delegate = self;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -138,6 +141,17 @@ static NSString *kisDirectory = @"kisDirectory";
     
     [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
         [self.offlineTableView.tableView reloadEmptyDataSet];
+        if (self.searchController.active) {
+            if (UIDevice.currentDevice.iPad) {
+                if (self != UIApplication.mnz_visibleViewController) {
+                    self.searchController.view.frame = CGRectMake(0, UIApplication.sharedApplication.statusBarFrame.size.height, self.searchController.view.frame.size.width, self.searchController.view.frame.size.height);
+                    self.searchController.searchBar.frame = CGRectMake(0, 0, self.searchController.searchBar.frame.size.width, self.searchController.searchBar.frame.size.height);
+                }
+            } else {
+                self.searchController.view.frame = CGRectMake(0, UIApplication.sharedApplication.statusBarFrame.size.height, self.searchController.view.frame.size.width, self.searchController.view.frame.size.height);
+                self.searchController.searchBar.frame = CGRectMake(0, 0, self.searchController.searchBar.frame.size.width, self.searchController.searchBar.frame.size.height);
+            }
+        }
     } completion:nil];
 }
 
@@ -745,13 +759,9 @@ static NSString *kisDirectory = @"kisDirectory";
         
         OfflineViewController *offlineVC = [self.storyboard instantiateViewControllerWithIdentifier:@"OfflineViewControllerID"];
         [offlineVC setFolderPathFromOffline:folderPathFromOffline];
-        if (self.searchController.isActive) {
-            [self.searchController dismissViewControllerAnimated:YES completion:^{
-                [self.navigationController pushViewController:offlineVC animated:YES];
-            }];
-        } else {
-            [self.navigationController pushViewController:offlineVC animated:YES];
-        }
+        
+        [self.navigationController pushViewController:offlineVC animated:YES];
+        
     } else if (self.previewDocumentPath.mnz_isMultimediaPathExtension) {
         AVURLAsset *asset = [AVURLAsset assetWithURL:[NSURL fileURLWithPath:self.previewDocumentPath]];
         
@@ -931,6 +941,15 @@ static NSString *kisDirectory = @"kisDirectory";
     }
     
     [self reloadData];
+}
+
+#pragma mark - UISearchControllerDelegate
+
+- (void)didPresentSearchController:(UISearchController *)searchController {
+    if (UIDevice.currentDevice.iPhoneDevice && UIDeviceOrientationIsLandscape(UIDevice.currentDevice.orientation)) {
+        self.searchController.searchBar.superview.frame = CGRectMake(0, 0, self.searchController.searchBar.superview.frame.size.width, self.searchController.searchBar.superview.frame.size.height);
+        self.searchController.searchBar.frame = CGRectMake(0, 0, self.searchController.searchBar.frame.size.width, self.searchController.searchBar.frame.size.height);
+    }
 }
 
 #pragma mark - UILongPressGestureRecognizer
