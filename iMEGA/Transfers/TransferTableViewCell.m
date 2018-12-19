@@ -107,9 +107,22 @@
     if (fetchResult == nil) {
         return;
     }
+    
     PHAsset *asset = fetchResult.firstObject;
-    PHAssetResource *assetResource = [PHAssetResource assetResourcesForAsset:asset].firstObject;
-    NSString *name = [[NSString mnz_fileNameWithDate:asset.creationDate] stringByAppendingPathExtension:assetResource.originalFilename.mnz_lastExtensionInLowercase];
+    NSString *extension;
+    
+    if ([PHAssetResource assetResourcesForAsset:asset].count > 0) {
+        PHAssetResource *assetResource = [PHAssetResource assetResourcesForAsset:asset].firstObject;
+        if (assetResource.originalFilename) {
+            extension = assetResource.originalFilename.mnz_lastExtensionInLowercase;
+        }
+    }
+    
+    NSString *name = [NSString mnz_fileNameWithDate:asset.creationDate];
+    if (extension) {
+        name = [name stringByAppendingPathExtension:extension];
+    }
+    
     self.nameLabel.text = name;
 
     PHImageRequestOptions *options = [[PHImageRequestOptions alloc] init];
@@ -120,7 +133,7 @@
         if (result) {
             self.iconImageView.image = result;
         } else {
-            [self.iconImageView mnz_setImageForExtension:assetResource.originalFilename.pathExtension];
+            [self.iconImageView mnz_setImageForExtension:extension];
         }
     }];
     
