@@ -4,6 +4,7 @@
 #import "SVProgressHUD.h"
 #import "UIImage+GKContact.h"
 #import "UIScrollView+EmptyDataSet.h"
+#import "UIApplication+MNZCategory.h"
 
 #import "Helper.h"
 #import "MEGANavigationController.h"
@@ -23,7 +24,7 @@
 #import "GroupChatDetailsViewController.h"
 #import "MessagesViewController.h"
 
-@interface ChatRoomsViewController () <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAChatDelegate, UIScrollViewDelegate>
+@interface ChatRoomsViewController () <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAChatDelegate, UIScrollViewDelegate, UISearchControllerDelegate>
 
 @property (nonatomic) id<UIViewControllerPreviewing> previewingContext;
 
@@ -55,6 +56,7 @@
     self.tableView.emptyDataSetDelegate = self;
     
     self.searchController = [Helper customSearchControllerWithSearchResultsUpdaterDelegate:self searchBarDelegate:self];
+    self.searchController.delegate = self;
     self.tableView.tableHeaderView = self.searchController.searchBar;
     self.definesPresentationContext = YES;
     
@@ -159,6 +161,17 @@
     
     [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
         [self.tableView reloadEmptyDataSet];
+        if (self.searchController.active) {
+            if (UIDevice.currentDevice.iPad) {
+                if (self != UIApplication.mnz_visibleViewController) {
+                    self.searchController.view.frame = CGRectMake(0, UIApplication.sharedApplication.statusBarFrame.size.height, self.searchController.view.frame.size.width, self.searchController.view.frame.size.height);
+                    self.searchController.searchBar.frame = CGRectMake(0, 0, self.searchController.searchBar.frame.size.width, self.searchController.searchBar.frame.size.height);
+                }
+            } else {
+                self.searchController.view.frame = CGRectMake(0, UIApplication.sharedApplication.statusBarFrame.size.height, self.searchController.view.frame.size.width, self.searchController.view.frame.size.height);
+                self.searchController.searchBar.frame = CGRectMake(0, 0, self.searchController.searchBar.frame.size.width, self.searchController.searchBar.frame.size.height);
+            }
+        }
     } completion:nil];
 }
 
@@ -1031,6 +1044,15 @@
     
     [self updateChatIdIndexPathDictionary];
     [self.tableView reloadData];
+}
+
+#pragma mark - UISearchControllerDelegate
+
+- (void)didPresentSearchController:(UISearchController *)searchController {
+    if (UIDevice.currentDevice.iPhoneDevice && UIDeviceOrientationIsLandscape(UIDevice.currentDevice.orientation)) {
+        self.searchController.searchBar.superview.frame = CGRectMake(0, 0, self.searchController.searchBar.superview.frame.size.width, self.searchController.searchBar.superview.frame.size.height);
+        self.searchController.searchBar.frame = CGRectMake(0, 0, self.searchController.searchBar.frame.size.width, self.searchController.searchBar.frame.size.height);
+    }
 }
 
 #pragma mark - UIViewControllerPreviewingDelegate
