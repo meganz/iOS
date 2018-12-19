@@ -288,6 +288,10 @@
         [cell.thumbnailImageView mnz_imageForNode:currentNode];
     }
     
+    UIView *view = [[UIView alloc] init];
+    view.backgroundColor = UIColor.clearColor;
+    cell.selectedBackgroundView = view;
+    
     return cell;
 }
 
