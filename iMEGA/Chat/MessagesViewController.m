@@ -245,6 +245,12 @@ const NSUInteger kMaxMessagesToLoad = 256;
     
     [self showOrHideJumpToBottom];
     self.initialToolbarHeight = self.inputToolbar.frame.size.height;
+    
+    if (@available(iOS 11.0, *)) { //Fix for devices with safe area not rendering navbar buttons when the VC is instantiated
+        if ((UIDeviceOrientationIsLandscape(UIDevice.currentDevice.orientation) || UIDevice.currentDevice.orientation == UIDeviceOrientationUnknown) && self.view.safeAreaInsets.left != 0) {
+            [self configureNavigationBar];
+        }
+    }
 }
 
 - (void)willEnterForeground {
