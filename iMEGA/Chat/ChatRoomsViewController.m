@@ -247,7 +247,7 @@
             switch (self.chatRoomsType) {
                 case ChatRoomsTypeDefault:
                     text = AMLocalizedString(@"invite", @"A button on a dialog which invites a contact to join MEGA.");
-                    
+                    break;
                 case ChatRoomsTypeArchived:
                     return nil;
             }

@@ -24,13 +24,13 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
 @property (nonatomic, copy) void (^error)(NSError *error);
 @property (nonatomic, strong) MEGANode *parentNode;
 
-@property (nonatomic, copy) NSMutableArray <PHAsset *> *assets;
+@property (nonatomic, strong) NSMutableArray <PHAsset *> *assets;
 @property (nonatomic, copy) void (^filePaths)(NSArray <NSString *> *filePaths);
 @property (nonatomic, copy) void (^nodes)(NSArray <MEGANode *> *nodes);
 @property (nonatomic, copy) void (^errors)(NSArray <NSError *> *errors);
-@property (nonatomic, copy) NSMutableArray <NSString *> *filePathsArray;
-@property (nonatomic, copy) NSMutableArray <MEGANode *> *nodesArray;
-@property (nonatomic, copy) NSMutableArray <NSError *> *errorsArray;
+@property (nonatomic, strong) NSMutableArray <NSString *> *filePathsArray;
+@property (nonatomic, strong) NSMutableArray <MEGANode *> *nodesArray;
+@property (nonatomic, strong) NSMutableArray <NSError *> *errorsArray;
 @property (nonatomic) double totalDuration;
 @property (nonatomic) double currentProgress;   // Duration of all videos processed
 @property (nonatomic) BOOL cancelExportByUser;
