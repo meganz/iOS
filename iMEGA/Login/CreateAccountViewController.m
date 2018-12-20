@@ -386,31 +386,25 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
     NSString *text = [textField.text stringByReplacingCharactersInRange:range withString:string];
-    BOOL createAccountEnabled = NO;
     
     switch (textField.tag) {
         case FirstNameTextFieldTag:
-            createAccountEnabled = !text.mnz_isEmpty && !self.lastNameInputView.inputTextField.text.mnz_isEmpty && self.emailInputView.inputTextField.text.mnz_isValidEmail && !self.passwordView.passwordTextField.text.mnz_isEmpty && [self.passwordView.passwordTextField.text isEqualToString:self.retypePasswordView.passwordTextField.text] && [[MEGASdkManager sharedMEGASdk] passwordStrength:self.passwordView.passwordTextField.text] > PasswordStrengthVeryWeak && self.termsCheckboxButton.selected;
             [self.firstNameInputView setErrorState:NO withText:AMLocalizedString(@"firstName", @"Hint text for the first name (Placeholder)")];
             break;
             
         case LastNameTextFieldTag:
-            createAccountEnabled = !self.firstNameInputView.inputTextField.text.mnz_isEmpty && !text.mnz_isEmpty && self.emailInputView.inputTextField.text.mnz_isValidEmail && !self.passwordView.passwordTextField.text.mnz_isEmpty && [self.passwordView.passwordTextField.text isEqualToString:self.retypePasswordView.passwordTextField.text] && [[MEGASdkManager sharedMEGASdk] passwordStrength:self.passwordView.passwordTextField.text] > PasswordStrengthVeryWeak && self.termsCheckboxButton.selected;
             [self.lastNameInputView setErrorState:NO withText:AMLocalizedString(@"lastName", @"Hint text for the last name (Placeholder)")];
             break;
             
         case EmailTextFieldTag:
-            createAccountEnabled = !self.firstNameInputView.inputTextField.text.mnz_isEmpty && !self.lastNameInputView.inputTextField.text.mnz_isEmpty && text.mnz_isValidEmail && !self.passwordView.passwordTextField.text.mnz_isEmpty && [self.passwordView.passwordTextField.text isEqualToString:self.retypePasswordView.passwordTextField.text] && [[MEGASdkManager sharedMEGASdk] passwordStrength:self.passwordView.passwordTextField.text] > PasswordStrengthVeryWeak && self.termsCheckboxButton.selected;
             [self.emailInputView setErrorState:NO withText:AMLocalizedString(@"emailPlaceholder", @"Hint text to suggest that the user has to write his email")];
             break;
             
         case PasswordTextFieldTag:
-            createAccountEnabled = !self.firstNameInputView.inputTextField.text.mnz_isEmpty && !self.lastNameInputView.inputTextField.text.mnz_isEmpty && self.emailInputView.inputTextField.text.mnz_isValidEmail && !text.mnz_isEmpty && [text isEqualToString:self.retypePasswordView.passwordTextField.text] && [[MEGASdkManager sharedMEGASdk] passwordStrength:text] > PasswordStrengthVeryWeak && self.termsCheckboxButton.selected;
             [self.passwordView setErrorState:NO withText:AMLocalizedString(@"passwordPlaceholder", @"Hint text to suggest that the user has to write his password")];
             break;
             
         case RetypeTextFieldTag:
-            createAccountEnabled = !self.firstNameInputView.inputTextField.text.mnz_isEmpty && !self.lastNameInputView.inputTextField.text.mnz_isEmpty && self.emailInputView.inputTextField.text.mnz_isValidEmail && !self.passwordView.passwordTextField.text.mnz_isEmpty && [self.passwordView.passwordTextField.text isEqualToString:text] && [[MEGASdkManager sharedMEGASdk] passwordStrength:self.passwordView.passwordTextField.text] > PasswordStrengthVeryWeak && self.termsCheckboxButton.selected;
             [self.retypePasswordView setErrorState:NO withText:AMLocalizedString(@"confirmPassword", @"Hint text where the user have to re-write the new password to confirm it")];
             break;
             

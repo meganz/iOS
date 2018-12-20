@@ -1455,11 +1455,13 @@ void uncaughtExceptionHandler(NSException *exception) {
         [Helper startPendingUploadTransferIfNeeded];
 
     } else {
-        NSArray<MEGANode *> *nodesToIndex = [nodeList mnz_nodesArrayFromNodeList];
-        MEGALogDebug(@"Spotlight indexing %tu nodes updated", nodesToIndex.count);
-        for (MEGANode *node in nodesToIndex) {
-            [self.indexer index:node];
-        }
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+            NSArray<MEGANode *> *nodesToIndex = [nodeList mnz_nodesArrayFromNodeList];
+            MEGALogDebug(@"Spotlight indexing %tu nodes updated", nodesToIndex.count);
+            for (MEGANode *node in nodesToIndex) {
+                [self.indexer index:node];
+            }
+        });
     }
 }
 
@@ -1902,7 +1904,9 @@ void uncaughtExceptionHandler(NSException *exception) {
     }
     
     if (transfer.type == MEGATransferTypeUpload) {
-        [transfer mnz_createThumbnailAndPreview];
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            [transfer mnz_createThumbnailAndPreview];
+        });
     }
 }
 
