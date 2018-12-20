@@ -64,12 +64,6 @@ static const NSInteger MaxConcurrentVideoOperationCount = 1;
     _photoUploadOerationQueue = [[NSOperationQueue alloc] init];
     _photoUploadOerationQueue.qualityOfService = NSQualityOfServiceUtility;
     
-    if (UIApplication.sharedApplication.applicationState == UIApplicationStateActive) {
-        _photoUploadOerationQueue.maxConcurrentOperationCount = NSOperationQueueDefaultMaxConcurrentOperationCount;
-    } else {
-        _photoUploadOerationQueue.maxConcurrentOperationCount = MaxConcurrentPhotoOperationCountInBackground;
-    }
-    
     _videoUploadOerationQueue = [[NSOperationQueue alloc] init];
     _videoUploadOerationQueue.qualityOfService = NSQualityOfServiceUtility;
     _videoUploadOerationQueue.maxConcurrentOperationCount = MaxConcurrentVideoOperationCount;
