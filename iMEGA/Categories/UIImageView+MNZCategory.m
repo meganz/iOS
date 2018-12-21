@@ -5,6 +5,7 @@
 #import "MEGASdkManager.h"
 #import "UIImage+MNZCategory.h"
 #import "UIImage+GKContact.h"
+#import "MEGAGetThumbnailRequestDelegate.h"
 
 @implementation UIImageView (MNZCategory)
 
@@ -16,22 +17,26 @@
     self.layer.cornerRadius = self.frame.size.width / 2;
     self.layer.masksToBounds = YES;
     
-    self.image = [UIImage mnz_imageForUserHandle:userHandle name:name size:self.frame.size delegate:self];
+    MEGAGetThumbnailRequestDelegate *getThumbnailRequestDelegate = [[MEGAGetThumbnailRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
+        self.image = [UIImage imageWithContentsOfFile:request.file];
+    }];
+    self.image = [UIImage mnz_imageForUserHandle:userHandle name:name size:self.frame.size delegate:getThumbnailRequestDelegate];
 }
 
 - (void)mnz_setThumbnailByNode:(MEGANode *)node {
     if (node.hasThumbnail) {
-        NSString *thumbnailFilePath = [[Helper pathForSharedSandboxCacheDirectory:@"thumbnailsV3"] stringByAppendingPathComponent:node.base64Handle];
+        NSString *thumbnailFilePath = [Helper pathForNode:node inSharedSandboxCacheDirectory:@"thumbnailsV3"];
         if ([[NSFileManager defaultManager] fileExistsAtPath:thumbnailFilePath]) {
             self.image = [UIImage imageWithContentsOfFile:thumbnailFilePath];
-        } else {            
-            [self mnz_setImageForExtension:node.name.pathExtension];
-            if (node) {
-                [[MEGASdkManager sharedMEGASdk] getThumbnailNode:node destinationFilePath:thumbnailFilePath delegate:self];
-            }
+        } else {
+            MEGAGetThumbnailRequestDelegate *getThumbnailRequestDelegate = [[MEGAGetThumbnailRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
+                self.image = [UIImage imageWithContentsOfFile:request.file];
+            }];
+            [self mnz_imageForNode:node];
+            [[MEGASdkManager sharedMEGASdk] getThumbnailNode:node destinationFilePath:thumbnailFilePath delegate:getThumbnailRequestDelegate];
         }
     } else {
-        [self mnz_setImageForExtension:node.name.pathExtension];
+        [self mnz_imageForNode:node];
     }
 }
 
@@ -76,18 +81,6 @@
             
         default:
             self.image = [Helper genericImage];
-    }
-}
-
-#pragma mark - MEGARequestDelegate
-
-- (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
-    if (error.type != MEGAErrorTypeApiOk) {
-        return;
-    }
-    
-    if (request.type == MEGARequestTypeGetAttrUser || request.type == MEGARequestTypeGetAttrFile) {
-        self.image = [UIImage imageWithContentsOfFile:request.file];
     }
 }
 
