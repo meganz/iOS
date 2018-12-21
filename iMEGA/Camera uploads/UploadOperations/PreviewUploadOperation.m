@@ -18,7 +18,7 @@
         } else {
             MEGALogDebug(@"[Camera Upload] Upload preview succeeded for node: %llu", weakSelf.node.handle);
             NSURL *cacheDirectory = [[NSFileManager.defaultManager URLsForDirectory:NSCachesDirectory inDomains:NSUserDomainMask] firstObject];
-            [weakSelf cacheAttributeToDirectoryURL:[cacheDirectory URLByAppendingPathComponent:@"previewsV3"] fileName:weakSelf.node.base64Handle];
+            [weakSelf moveAttributeToDirectoryURL:[cacheDirectory URLByAppendingPathComponent:@"previewsV3"] newFileName:weakSelf.node.base64Handle];
         }
         
         [weakSelf finishOperation];

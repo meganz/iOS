@@ -12,7 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (instancetype)initWithAttributeURL:(NSURL *)URL node:(MEGANode *)node expiresAfterTimeInterval:(NSTimeInterval)timeInterval;
 
-- (void)cacheAttributeToDirectoryURL:(NSURL *)directoryURL fileName:(NSString *)fileName;
+- (void)moveAttributeToDirectoryURL:(NSURL *)directoryURL newFileName:(NSString *)fileName;
 
 @end
 

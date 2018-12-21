@@ -17,7 +17,7 @@
             MEGALogError(@"[Camera Upload] Upload thumbnail failed for node: %llu, error: %@", weakSelf.node.handle, error.nativeError);
         } else {
             MEGALogDebug(@"[Camera Upload] Upload thumbnail succeeded for node: %llu", weakSelf.node.handle);
-            [weakSelf cacheAttributeToDirectoryURL:[Helper urlForSharedSandboxCacheDirectory:@"thumbnailsV3"] fileName:self.node.base64Handle];
+            [weakSelf moveAttributeToDirectoryURL:[Helper urlForSharedSandboxCacheDirectory:@"thumbnailsV3"] newFileName:self.node.base64Handle];
         }
         
         [weakSelf finishOperation];
