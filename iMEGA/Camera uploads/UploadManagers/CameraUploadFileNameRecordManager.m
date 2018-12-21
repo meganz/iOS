@@ -74,7 +74,7 @@
     NSInteger index = 0;
     while (index != NSNotFound) {
         if (index > 0) {
-            uniqueFileName = [[NSString stringWithFormat:@"%@_%ld", proposedFileName.stringByDeletingPathExtension, index] stringByAppendingPathExtension:proposedFileName.pathExtension];
+            uniqueFileName = [[NSString stringWithFormat:@"%@_%ld", proposedFileName.stringByDeletingPathExtension, (long)index] stringByAppendingPathExtension:proposedFileName.pathExtension];
         }
         
         index = [sortedFileNames indexOfObject:uniqueFileName inSortedRange:NSMakeRange(0, sortedFileNames.count) options:NSBinarySearchingFirstEqual usingComparator:fileNameComparator];
