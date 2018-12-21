@@ -2026,7 +2026,15 @@ void uncaughtExceptionHandler(NSException *exception) {
     
     if (error.type) {
         switch (error.type) {
-            default:{
+            MEGAErrorTypeApiEgoingOverquota:
+            MEGAErrorTypeApiEOverQuota: {
+                NSString *title = AMLocalizedString(@"upgradeAccount", @"Button title which triggers the action to upgrade your MEGA account level");
+                NSString *detail = AMLocalizedString(@"Your upload(s) cannot proceed because your account is full", @"uploads over storage quota warning dialog title");
+                UIImage *image = [api mnz_accountDetails].storageMax.longLongValue > [api mnz_accountDetails].storageUsed.longLongValue ? [UIImage imageNamed:@"storage_almost_full"] : [UIImage imageNamed:@"storage_full"];
+                [self presentUpgradeViewControllerTitle:title detail:detail image:image];
+                break;
+            }
+            default: {
                 if (error.type != MEGAErrorTypeApiESid && error.type != MEGAErrorTypeApiESSL && error.type != MEGAErrorTypeApiEExist && error.type != MEGAErrorTypeApiEIncomplete) {
                     NSString *transferFailed = AMLocalizedString(@"Transfer failed:", @"Notification message shown when a transfer failed. Keep colon.");
                     [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"%@\n%@ %@", transfer.fileName, transferFailed, AMLocalizedString(error.name, nil)]];
