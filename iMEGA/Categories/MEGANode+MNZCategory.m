@@ -415,16 +415,10 @@
         }
 
         if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
+            [Helper downloadNode:self folderPath:Helper.relativePathForOffline isFolderLink:isFolderLink shouldOverwrite:NO];
+            
             [viewController dismissViewControllerAnimated:YES completion:^{
-                UIViewController *rootVC = UIApplication.sharedApplication.delegate.window.rootViewController;
-                if ([rootVC isKindOfClass:MainTabBarController.class]) {
-                    MainTabBarController *mainTBC = (MainTabBarController *)rootVC;
-                    [mainTBC showOffline];
-                }
-                
                 [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:AMLocalizedString(@"downloadStarted", nil)];
-                
-                [Helper downloadNode:self folderPath:[Helper relativePathForOffline] isFolderLink:isFolderLink shouldOverwrite:NO];
             }];
         } else {
             if (isFolderLink) {
