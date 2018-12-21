@@ -100,7 +100,7 @@ static const NSUInteger EncryptionProposedChunkSizeWithoutTruncating = 1024 * 10
         }
         
         unsigned length = (unsigned)(lastPosition - position.unsignedLongLongValue);
-        NSString *chunkName = [NSString stringWithFormat:@"chunk%lu", chunkIndex];
+        NSString *chunkName = [NSString stringWithFormat:@"chunk%ld", (long)chunkIndex];
         NSURL *chunkURL = [self.outputDirectoryURL URLByAppendingPathComponent:chunkName];
         NSString *suffix;
         if ([self.mediaUpload encryptFileAtPath:fileURL.path startPosition:position.unsignedLongLongValue length:&length outputFilePath:chunkURL.path urlSuffix:&suffix adjustsSizeOnly:NO]) {
@@ -155,13 +155,13 @@ static const NSUInteger EncryptionProposedChunkSizeWithoutTruncating = 1024 * 10
  */
 - (NSUInteger)calculateChunkSizeByDeviceFreeSize:(unsigned long long)deviceFreeSize {
     if (self.shouldTruncateFile) {
-        NSUInteger size = MIN(EncryptionProposedChunkSizeForTruncating, self.fileSize);
+        NSUInteger size = MIN(EncryptionProposedChunkSizeForTruncating, (NSUInteger)self.fileSize);
         if (deviceFreeSize > size * 5) {
             return size;
         } else if (deviceFreeSize > size) {
             return size / 5;
         } else {
-            return deviceFreeSize / 5;
+            return (NSUInteger)(deviceFreeSize / 5);
         }
     } else {
         return EncryptionProposedChunkSizeWithoutTruncating;
