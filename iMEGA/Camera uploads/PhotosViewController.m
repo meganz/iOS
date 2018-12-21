@@ -683,15 +683,6 @@
                 [self setEditing:NO animated:YES];
             }
             if (self.selectedItemsDictionary.count == 1) {
-                NSInteger index = 0;
-                for (NSInteger i = 0; i < indexPath.section; i++) {
-                    NSDictionary *dict = [self.photosByMonthYearArray objectAtIndex:i];
-                    NSString *key = [[dict allKeys] objectAtIndex:0];
-                    NSArray *array = [dict objectForKey:key];
-                    index += array.count;
-                }
-                index += indexPath.row;
-                
                 NSDictionary *monthPhotosDictionary = [self.photosByMonthYearArray objectAtIndex:indexPath.section];
                 NSString *monthKey = [monthPhotosDictionary.allKeys objectAtIndex:0];
                 NSArray *monthPhotosArray = [monthPhotosDictionary objectForKey:monthKey];

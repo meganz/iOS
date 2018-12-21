@@ -44,20 +44,7 @@
     switch (transfer.type) {
         case MEGATransferTypeDownload: {
             MEGANode *node = [[MEGASdkManager sharedMEGASdk] nodeForHandle:transfer.nodeHandle];
-            if (node.hasThumbnail) {
-                NSString *thumbnailFilePath = [Helper pathForNode:node inSharedSandboxCacheDirectory:@"thumbnailsV3"];
-                if ([[NSFileManager defaultManager] fileExistsAtPath:thumbnailFilePath]) {
-                    self.iconImageView.image = [UIImage imageWithContentsOfFile:thumbnailFilePath];
-                } else {
-                    MEGAGetThumbnailRequestDelegate *getThumbnailRequestDelegate = [[MEGAGetThumbnailRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
-                        self.iconImageView.image = [UIImage imageWithContentsOfFile:request.file];
-                    }];
-                    [[MEGASdkManager sharedMEGASdk] getThumbnailNode:node destinationFilePath:thumbnailFilePath delegate:getThumbnailRequestDelegate];
-                    [self.iconImageView mnz_imageForNode:node];
-                }
-            } else {
-                [self.iconImageView mnz_imageForNode:node];
-            }
+            [self.iconImageView mnz_setThumbnailByNode:node];
             self.thumbnailSet = YES;
             break;
         }
