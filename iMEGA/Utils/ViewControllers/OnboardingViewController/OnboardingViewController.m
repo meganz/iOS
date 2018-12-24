@@ -126,7 +126,8 @@
 
 - (void)scrollTo:(NSUInteger)page {
     CGFloat newX = (CGFloat)page * self.scrollView.frame.size.width;
-    self.scrollView.contentOffset = CGPointMake(newX, 0.0f);
+    BOOL animated = self.type == OnboardingTypeDefault;
+    [self.scrollView setContentOffset:CGPointMake(newX, 0.0f) animated:animated];
     self.pageControl.currentPage = page;
 }
 
