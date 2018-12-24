@@ -100,6 +100,10 @@
     self.pageControl.numberOfPages = self.scrollView.subviews.firstObject.subviews.count;
 }
 
+- (BOOL)prefersStatusBarHidden {
+    return YES;
+}
+
 #pragma mark - Rotation
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations {
