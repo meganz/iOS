@@ -42,7 +42,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="dZ8-bF-ZqB">
-                                                    <rect key="frame" x="10" y="11.999999999999996" width="394" height="54.666666666666657"/>
+                                                    <rect key="frame" x="10" y="12" width="394" height="54.666666666666657"/>
                                                     <subviews>
                                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="dTo-eS-oy4">
                                                             <rect key="frame" x="0.0" y="7.3333333333333321" width="40" height="40"/>
@@ -1581,9 +1581,10 @@
                                             <action selector="infoButtonTouchUpInside:" destination="Sqd-Fy-LKX" eventType="touchUpInside" id="KkH-5i-Nde"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="contactAdd" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PY4-jr-sF4" userLabel="Current location">
-                                        <rect key="frame" x="12" y="62" width="22" height="22"/>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PY4-jr-sF4" userLabel="Current location">
+                                        <rect key="frame" x="9" y="59" width="28" height="28"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <state key="normal" image="location"/>
                                         <connections>
                                             <action selector="currentLocationTouchUpInside:" destination="Sqd-Fy-LKX" eventType="touchUpInside" id="mcU-l0-jpu"/>
                                         </connections>
@@ -1618,7 +1619,7 @@
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="0iB-i8-ike">
                                         <rect key="frame" x="12" y="15" width="148" height="40"/>
                                         <subviews>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="selected" translatesAutoresizingMaskIntoConstraints="NO" id="T9w-q6-r9Z">
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="sendLocation" translatesAutoresizingMaskIntoConstraints="NO" id="T9w-q6-r9Z">
                                                 <rect key="frame" x="0.0" y="0.0" width="40" height="40"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="40" id="4pj-a4-Tfk"/>
@@ -1696,6 +1697,7 @@
         <image name="chatSelectedIcon" width="31" height="28"/>
         <image name="hudNoCamera" width="28" height="28"/>
         <image name="info_sharedWithArrow" width="22" height="22"/>
+        <image name="location" width="28" height="28"/>
         <image name="micOff" width="64" height="64"/>
         <image name="micOn" width="64" height="64"/>
         <image name="readPermissions" width="46" height="44"/>
@@ -1703,7 +1705,7 @@
         <image name="rejectCall" width="64" height="64"/>
         <image name="remote_mic_mute" width="22" height="22"/>
         <image name="selectAll" width="22" height="22"/>
-        <image name="selected" width="28" height="28"/>
+        <image name="sendLocation" width="40" height="40"/>
         <image name="speakerOff" width="64" height="64"/>
         <image name="speakerOn" width="64" height="64"/>
         <image name="video_list" width="22" height="22"/>
