@@ -44,6 +44,10 @@
     [self.sendLocationView addGestureRecognizer:gesture];
     
     self.sendLocationLabel.text = AMLocalizedString(@"Send This Location", @"Title of the button to share a location in a chat.");
+    
+    UIView *layer = [[UIView alloc] initWithFrame:CGRectMake(0, 45, self.mapOptionsView.frame.size.width, 1)];
+    layer.backgroundColor = [UIColor colorWithRed:0.85 green:0.85 blue:0.87 alpha:1];
+    [self.mapOptionsView addSubview:layer];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
