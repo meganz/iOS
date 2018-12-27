@@ -1961,11 +1961,11 @@ const NSUInteger kMaxMessagesToLoad = 256;
                     }
                 }
                 
-                if (action == @selector(edit:message:)) {
+                if (action == @selector(edit:message:) && message.containsMeta.type != MEGAChatContainsMetaTypeGeolocation) {
                     if (message.isEditable) return YES;
                 }
                 
-                if (action == @selector(removeRichPreview:message:indexPath:)) {
+                if (action == @selector(removeRichPreview:message:indexPath:) && message.containsMeta.type != MEGAChatContainsMetaTypeGeolocation) {
                     if (message.isEditable) return YES;
                 }
             }
