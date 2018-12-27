@@ -686,6 +686,8 @@
 		A8F0A1D92178A73300575C57 /* MOMessage+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = A8F0A1D72178A73300575C57 /* MOMessage+CoreDataProperties.m */; };
 		A8F0A1DA2178B41900575C57 /* MOMessage+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = A8F0A1D42178A73300575C57 /* MOMessage+CoreDataClass.m */; };
 		A8F0A1DC2178B43300575C57 /* MOMessage+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = A8F0A1D42178A73300575C57 /* MOMessage+CoreDataClass.m */; };
+		A8F1381C21D3ABF2003C7364 /* LocationSearchTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A8F1381B21D3ABF2003C7364 /* LocationSearchTableViewController.m */; };
+		A8F1381F21D3F8B0003C7364 /* LocationSearchTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A8F1381E21D3F8AF003C7364 /* LocationSearchTableViewCell.m */; };
 		A8F2629A1FA8F7C3000B2768 /* incoming_voice_video_call.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = A8F262991FA8F7C2000B2768 /* incoming_voice_video_call.mp3 */; };
 		A8F2629C1FA8F82F000B2768 /* hang_out.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = A8F2629B1FA8F82F000B2768 /* hang_out.mp3 */; };
 		A8F43939218726690054472A /* PieChartView.m in Sources */ = {isa = PBXBuildFile; fileRef = A8F43937218726690054472A /* PieChartView.m */; };
@@ -1574,6 +1576,10 @@
 		A8F0A1D52178A73300575C57 /* MOMessage+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MOMessage+CoreDataProperties.h"; sourceTree = "<group>"; };
 		A8F0A1D62178A73300575C57 /* MOMessage+CoreDataClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MOMessage+CoreDataClass.h"; sourceTree = "<group>"; };
 		A8F0A1D72178A73300575C57 /* MOMessage+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MOMessage+CoreDataProperties.m"; sourceTree = "<group>"; };
+		A8F1381A21D3ABF2003C7364 /* LocationSearchTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LocationSearchTableViewController.h; path = Chat/LocationSearchTableViewController.h; sourceTree = "<group>"; };
+		A8F1381B21D3ABF2003C7364 /* LocationSearchTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = LocationSearchTableViewController.m; path = Chat/LocationSearchTableViewController.m; sourceTree = "<group>"; };
+		A8F1381D21D3F8AE003C7364 /* LocationSearchTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LocationSearchTableViewCell.h; path = Chat/LocationSearchTableViewCell.h; sourceTree = "<group>"; };
+		A8F1381E21D3F8AF003C7364 /* LocationSearchTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = LocationSearchTableViewCell.m; path = Chat/LocationSearchTableViewCell.m; sourceTree = "<group>"; };
 		A8F262991FA8F7C2000B2768 /* incoming_voice_video_call.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = incoming_voice_video_call.mp3; sourceTree = "<group>"; };
 		A8F2629B1FA8F82F000B2768 /* hang_out.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = hang_out.mp3; sourceTree = "<group>"; };
 		A8F43937218726690054472A /* PieChartView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PieChartView.m; sourceTree = "<group>"; };
@@ -2791,6 +2797,10 @@
 				A89629771FACEAF800F02F7A /* MEGAProviderDelegate.m */,
 				A8E10D7D21A5677900ACD42F /* ShareLocationViewController.h */,
 				A8E10D7E21A5677900ACD42F /* ShareLocationViewController.m */,
+				A8F1381A21D3ABF2003C7364 /* LocationSearchTableViewController.h */,
+				A8F1381B21D3ABF2003C7364 /* LocationSearchTableViewController.m */,
+				A8F1381D21D3F8AE003C7364 /* LocationSearchTableViewCell.h */,
+				A8F1381E21D3F8AF003C7364 /* LocationSearchTableViewCell.m */,
 			);
 			name = Chat;
 			sourceTree = "<group>";
@@ -4151,6 +4161,7 @@
 				4172795B1DB663FA001AC818 /* JSQMessagesToolbarContentView.m in Sources */,
 				411504941CEB183600BF38E3 /* SaveToCameraRollActivity.m in Sources */,
 				832F19EC2091BA970067679E /* MOMediaDestination+CoreDataClass.m in Sources */,
+				A8F1381F21D3F8B0003C7364 /* LocationSearchTableViewCell.m in Sources */,
 				41D8ECDE1BCEBD3200B8FA08 /* SVIndefiniteAnimatedView.m in Sources */,
 				41D21E5C1D01AEC3002E6296 /* CTAssetCollectionViewCell.m in Sources */,
 				E8D5BF6C1BF3B28500955550 /* SharedItemsTableViewCell.m in Sources */,
@@ -4178,6 +4189,7 @@
 				77597006219DD4D100B31671 /* MEGAUserAlertList+MNZCategory.m in Sources */,
 				83681578202AFBC000CA8EFC /* CustomActionViewController.m in Sources */,
 				4172794B1DB663FA001AC818 /* JSQMessagesBubbleImage.m in Sources */,
+				A8F1381C21D3ABF2003C7364 /* LocationSearchTableViewController.m in Sources */,
 				41CD14701DB150F600E545BC /* MessagesViewController.m in Sources */,
 				777615AF2175D87D00A7796D /* InputView.m in Sources */,
 				A8F6C5F31FAB3FD3001E274D /* MEGAChatEnableDisableAudioRequestDelegate.m in Sources */,

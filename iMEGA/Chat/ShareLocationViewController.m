@@ -3,9 +3,12 @@
 
 #import <MapKit/MapKit.h>
 
+#import "Helper.h"
 #import "MEGASdkManager.h"
 
-@interface ShareLocationViewController () <MKMapViewDelegate, CLLocationManagerDelegate>
+#import "LocationSearchTableViewController.h"
+
+@interface ShareLocationViewController () <MKMapViewDelegate, CLLocationManagerDelegate, LocationSearchTableViewControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
 @property (weak, nonatomic) IBOutlet UIView *mapOptionsView;
@@ -13,6 +16,8 @@
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
 @property (weak, nonatomic) IBOutlet UILabel *sendLocationLabel;
 @property (weak, nonatomic) IBOutlet UILabel *subtitleLabel;
+
+@property (strong, nonatomic) UISearchController *searchController;
 
 @property (nonatomic) CLLocationManager *locationManager;
 @property (nonatomic) id<MKAnnotation> annotation;
@@ -48,6 +53,30 @@
     UIView *layer = [[UIView alloc] initWithFrame:CGRectMake(0, 45, self.mapOptionsView.frame.size.width, 1)];
     layer.backgroundColor = [UIColor colorWithRed:0.85 green:0.85 blue:0.87 alpha:1];
     [self.mapOptionsView addSubview:layer];
+    
+    LocationSearchTableViewController *locationSearchTVC = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"LocationSearchTableViewControllerID"];
+    locationSearchTVC.mapView = self.mapView;
+    locationSearchTVC.delegate = self;
+
+    UINavigationController *navigationViewController = [[UINavigationController alloc] initWithRootViewController:locationSearchTVC];
+    
+    self.searchController = [[UISearchController alloc] initWithSearchResultsController:navigationViewController];
+    self.searchController.searchResultsUpdater = locationSearchTVC;
+    self.searchController.hidesNavigationBarDuringPresentation = NO;
+    self.searchController.dimsBackgroundDuringPresentation = YES;
+    self.searchController.searchBar.searchBarStyle = UISearchBarStyleMinimal;
+    self.searchController.searchBar.translucent = NO;
+    self.searchController.searchBar.backgroundImage = [UIImage imageWithCGImage:(__bridge CGImageRef)(UIColor.clearColor)];
+    self.searchController.searchBar.barTintColor = UIColor.whiteColor;
+    self.searchController.searchBar.tintColor = UIColor.mnz_redMain;
+    self.searchController.searchBar.frame = CGRectMake(0, 0, self.view.frame.size.width, self.searchController.searchBar.frame.size.height);
+    [self.view addSubview:self.searchController.searchBar];
+    
+    self.navigationItem.title = AMLocalizedString(@"Send Location", @"Alert title shown when the user opens a shared Geolocation for the first time from any client, we will show a confirmation dialog warning the user that he is now leaving the E2EE paradigm");
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -188,6 +217,12 @@
             self.subtitleLabel.text = [NSString stringWithFormat:AMLocalizedString(@"Accurate to %d meters", @"Label to give feedback to the user when he is going to share his location, indicating that it may not be the exact location."), (int)location.horizontalAccuracy];
         }
     }];
+}
+
+#pragma mark - LocationSearchTableViewControllerDelegate
+
+- (void)didSelectPlacemark:(MKPlacemark *)placemark {
+    [self sendGeolocationWithCoordinage2d:placemark.coordinate];
 }
 
 @end
