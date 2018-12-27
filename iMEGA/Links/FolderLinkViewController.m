@@ -27,7 +27,7 @@
 #import "LinkOption.h"
 #import "UnavailableLinkView.h"
 
-@interface FolderLinkViewController () <UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, UISearchResultsUpdating, UISearchDisplayDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAGlobalDelegate, MEGARequestDelegate, CustomActionViewControllerDelegate> {
+@interface FolderLinkViewController () <UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, UISearchResultsUpdating, UISearchDisplayDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAGlobalDelegate, MEGARequestDelegate, CustomActionViewControllerDelegate, UISearchControllerDelegate> {
     
     BOOL isLoginDone;
     BOOL isFetchNodesDone;
@@ -72,6 +72,8 @@
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     
     self.searchController = [Helper customSearchControllerWithSearchResultsUpdaterDelegate:self searchBarDelegate:self];
+    self.searchController.delegate = self;
+
     self.definesPresentationContext = YES;
     
     isLoginDone = NO;
@@ -159,6 +161,15 @@
         }
         
         [self.tableView reloadEmptyDataSet];
+        if (self.searchController.active) {
+            if (UIDevice.currentDevice.iPad) {
+                if (self != UIApplication.mnz_visibleViewController) {
+                    [Helper resetSearchControllerFrame:self.searchController];
+                }
+            } else {
+                [Helper resetSearchControllerFrame:self.searchController];
+            }
+        }
     } completion:nil];
 }
 
@@ -712,6 +723,14 @@
         self.searchNodesArray = [self.nodesArray filteredArrayUsingPredicate:resultPredicate];
     }
     [self.tableView reloadData];
+}
+
+#pragma mark - UISearchControllerDelegate
+
+- (void)didPresentSearchController:(UISearchController *)searchController {
+    if (UIDevice.currentDevice.iPhoneDevice && UIDeviceOrientationIsLandscape(UIDevice.currentDevice.orientation)) {
+        [Helper resetSearchControllerFrame:searchController];
+    }
 }
 
 #pragma mark - UILongPressGestureRecognizer
