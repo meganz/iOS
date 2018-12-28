@@ -555,14 +555,14 @@
                                             if (granted) {
                                                 [self performCall];
                                             } else {
-                                                [UIApplication.mnz_presentingViewController presentViewController:[DevicePermissionsHelper videoPermisionAlertController] animated:YES completion:nil];
+                                                [UIApplication.mnz_presentingViewController presentViewController:DevicePermissionsHelper.videoPermissionAlertController animated:YES completion:nil];
                                             }
                                         }];
                                     } else {
                                         [self performCall];
                                     }
                                 } else {
-                                    [UIApplication.mnz_presentingViewController presentViewController:[DevicePermissionsHelper audioPermisionAlertController] animated:YES completion:nil];
+                                    [UIApplication.mnz_presentingViewController presentViewController:DevicePermissionsHelper.audioPermissionAlertController animated:YES completion:nil];
                                 }
                             }];
                         }

@@ -574,14 +574,14 @@ const NSUInteger kMaxMessagesToLoad = 256;
                     if (granted) {
                         [self openCallViewWithVideo:sender.tag];
                     } else {
-                        [self presentViewController:[DevicePermissionsHelper videoPermisionAlertController] animated:YES completion:nil];
+                        [self presentViewController:DevicePermissionsHelper.videoPermissionAlertController animated:YES completion:nil];
                     }
                 }];
             } else {
                 [self openCallViewWithVideo:sender.tag];
             }
         } else {
-            [self presentViewController:[DevicePermissionsHelper audioPermisionAlertController] animated:YES completion:nil];
+            [self presentViewController:DevicePermissionsHelper.audioPermissionAlertController animated:YES completion:nil];
         }
     }];
 }
