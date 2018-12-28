@@ -1081,41 +1081,20 @@
     
     static BOOL alreadyPresented = NO;
     if (!alreadyPresented && ![[MEGASdkManager sharedMEGASdk] mnz_isProAccount]) {
-        MEGAAccountDetails *accountDetails = [[MEGASdkManager sharedMEGASdk] mnz_accountDetails];
-        double percentage = accountDetails.storageUsed.doubleValue / accountDetails.storageMax.doubleValue;
-        if (accountDetails && percentage > 0.95) { // +95% used storage
-            NSString *alertMessage = percentage < 1 ? AMLocalizedString(@"cloudDriveIsAlmostFull", @"Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are.") : AMLocalizedString(@"cloudDriveIsFull", @"A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text.");
-            alertMessage = [alertMessage mnz_removeWebclientFormatters];
-            NSString *maxStorage = [NSString stringWithFormat:@"%ld", (long)[[MEGAPurchase sharedInstance].pricing storageGBAtProductIndex:7]];
-            NSString *maxStorageTB = [NSString stringWithFormat:@"%ld", (long)[[MEGAPurchase sharedInstance].pricing storageGBAtProductIndex:7] / 1024];
-            alertMessage = [alertMessage stringByReplacingOccurrencesOfString:@"4096" withString:maxStorage];
-            alertMessage = [alertMessage stringByReplacingOccurrencesOfString:@"4" withString:maxStorageTB];
-            
-            CustomModalAlertViewController *customModalAlertVC = [[CustomModalAlertViewController alloc] init];
-            customModalAlertVC.modalPresentationStyle = UIModalPresentationOverCurrentContext;
-            customModalAlertVC.image = [UIImage imageNamed:@"storage_almost_full"];
-            customModalAlertVC.viewTitle = AMLocalizedString(@"upgradeAccount", @"Button title which triggers the action to upgrade your MEGA account level");
-            customModalAlertVC.detail = alertMessage;
-            customModalAlertVC.action = AMLocalizedString(@"seePlans", @"Button title to see the available pro plans in MEGA");
-            if ([[MEGASdkManager sharedMEGASdk] isAchievementsEnabled]) {
-                customModalAlertVC.bonus = AMLocalizedString(@"getBonus", @"Button title to see the available bonus");
+        NSDate *lastEncourageUpgradeDate = [[NSUserDefaults standardUserDefaults] objectForKey:@"lastEncourageUpgradeDate"];
+        if (lastEncourageUpgradeDate) {
+            NSInteger week = [[NSCalendar currentCalendar] components:NSCalendarUnitWeekOfYear
+                                                              fromDate:lastEncourageUpgradeDate
+                                                                toDate:[NSDate date]
+                                                               options:NSCalendarWrapComponents].weekOfYear;
+            if (week < 1) {
+                return;
             }
-            customModalAlertVC.dismiss = AMLocalizedString(@"dismiss", @"Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible).");
-            __weak typeof(CustomModalAlertViewController) *weakCustom = customModalAlertVC;
-            customModalAlertVC.completion = ^{
-                [weakCustom dismissViewControllerAnimated:YES completion:^{
-                    [self showUpgradeTVC];
-                }];
-            };
-            
-            [UIApplication.mnz_presentingViewController presentViewController:customModalAlertVC animated:YES completion:nil];
-            
+        }
+        MEGAAccountDetails *accountDetails = [[MEGASdkManager sharedMEGASdk] mnz_accountDetails];                
+        if (accountDetails && (arc4random_uniform(20) == 0)) { // 5 % of the times
+            [self showUpgradeTVC];
             alreadyPresented = YES;
-        } else {
-            if (accountDetails && (arc4random_uniform(20) == 0)) { // 5 % of the times
-                [self showUpgradeTVC];
-                alreadyPresented = YES;
-            }
         }
     }
 }
@@ -1124,7 +1103,7 @@
     if ([MEGAPurchase sharedInstance].products.count > 0) {
         UpgradeTableViewController *upgradeTVC = [[UIStoryboard storyboardWithName:@"MyAccount" bundle:nil] instantiateViewControllerWithIdentifier:@"UpgradeID"];
         MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:upgradeTVC];
-        
+        [[NSUserDefaults standardUserDefaults] setObject:[NSDate date] forKey:@"lastEncourageUpgradeDate"];
         [self presentViewController:navigationController animated:YES completion:nil];
     }
 }
