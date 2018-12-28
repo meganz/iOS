@@ -272,21 +272,11 @@
         }
     }
     
-    if (currentNode.hasThumbnail) {
-        NSString *thumbnailFilePath = [Helper pathForNode:currentNode inSharedSandboxCacheDirectory:@"thumbnailsV3"];
-        
-        if ([[NSFileManager defaultManager] fileExistsAtPath:thumbnailFilePath]) {
-            cell.thumbnailImageView.image = [UIImage imageWithContentsOfFile:thumbnailFilePath];
-        } else {
-            MEGAGetThumbnailRequestDelegate *getThumbnailRequestDelegate = [[MEGAGetThumbnailRequestDelegate alloc] initWithCompletion:^(MEGARequest *request){
-                cell.thumbnailImageView.image = [UIImage imageWithContentsOfFile:request.file];
-            }];
-            [[MEGASdkManager sharedMEGASdk] getThumbnailNode:currentNode destinationFilePath:thumbnailFilePath delegate:getThumbnailRequestDelegate];
-            [cell.thumbnailImageView mnz_imageForNode:currentNode];
-        }
-    } else {
-        [cell.thumbnailImageView mnz_imageForNode:currentNode];
-    }
+    [cell.thumbnailImageView mnz_setThumbnailByNode:currentNode];
+    
+    UIView *view = [[UIView alloc] init];
+    view.backgroundColor = UIColor.clearColor;
+    cell.selectedBackgroundView = view;
     
     return cell;
 }

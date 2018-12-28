@@ -493,22 +493,20 @@
     }
     
     if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
-        [self dismissViewControllerAnimated:YES completion:^{
-            if ([UIApplication.sharedApplication.keyWindow.rootViewController isKindOfClass:MainTabBarController.class]) {
-                MainTabBarController *mainTBC = (MainTabBarController *)UIApplication.sharedApplication.keyWindow.rootViewController;
-                [mainTBC showOffline];
+        if (self.selectedNodesArray.count) {
+            for (MEGANode *node in self.selectedNodesArray) {
+                [Helper downloadNode:node folderPath:Helper.relativePathForOffline isFolderLink:YES shouldOverwrite:NO];
             }
-            
-            [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:AMLocalizedString(@"downloadStarted", nil)];
-            
-            if (self.selectedNodesArray.count != 0) {
-                for (MEGANode *node in self.selectedNodesArray) {
-                    [Helper downloadNode:node folderPath:[Helper relativePathForOffline] isFolderLink:YES shouldOverwrite:NO];
-                }
-            } else {
-                [Helper downloadNode:self.parentNode folderPath:[Helper relativePathForOffline] isFolderLink:YES shouldOverwrite:NO];
-            }
-        }];
+        } else {
+            [Helper downloadNode:self.parentNode folderPath:Helper.relativePathForOffline isFolderLink:YES shouldOverwrite:NO];
+        }
+        
+        //FIXME: Temporal fix. This lets the SDK process some transfers before going back to the Transfers view (In case it is on the navigation stack)
+        [SVProgressHUD show];
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:AMLocalizedString(@"downloadStarted", @"Message shown when a download starts")];
+            [self dismissViewControllerAnimated:YES completion:nil];
+        });
     } else {
         if (self.selectedNodesArray.count != 0) {
             [MEGALinkManager.nodesFromLinkMutableArray addObjectsFromArray:self.selectedNodesArray];
