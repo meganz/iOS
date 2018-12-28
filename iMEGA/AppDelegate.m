@@ -2034,6 +2034,7 @@ void uncaughtExceptionHandler(NSException *exception) {
                 [self presentUpgradeViewControllerTitle:title detail:detail image:image];
                 break;
             }
+                
             default: {
                 if (error.type != MEGAErrorTypeApiESid && error.type != MEGAErrorTypeApiESSL && error.type != MEGAErrorTypeApiEExist && error.type != MEGAErrorTypeApiEIncomplete) {
                     NSString *transferFailed = AMLocalizedString(@"Transfer failed:", @"Notification message shown when a transfer failed. Keep colon.");
