@@ -614,7 +614,9 @@ static MEGAIndexer *indexer;
             [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:filePath.mnz_relativeLocalPath parent:parentNode appData:appData isSourceTemporary:YES];
         }
         
-        [[Helper uploadingNodes] addObject:uploadTransfer.localIdentifier];
+        if (uploadTransfer.localIdentifier) {
+            [[Helper uploadingNodes] addObject:uploadTransfer.localIdentifier];
+        }
         [[MEGAStore shareInstance] deleteUploadTransfer:uploadTransfer];
     } node:^(MEGANode *node) {
         if ([[[MEGASdkManager sharedMEGASdk] parentNodeForNode:node] handle] == parentNode.handle) {
@@ -758,7 +760,9 @@ static MEGAIndexer *indexer;
     }
     
     if (reindex) {
-        [indexer index:node];
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+            [indexer index:node];
+        });
     }
 }
 
