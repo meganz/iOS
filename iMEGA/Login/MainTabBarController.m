@@ -306,6 +306,8 @@
                 [messagesViewController updateUnreadLabel];
             }
         }        
+    } else if (item.changes == MEGAChatListItemChangeTypeArchived && item.unreadCount) {
+        [UIApplication sharedApplication].applicationIconBadgeNumber = api.unreadChats;
     }
 }
 
