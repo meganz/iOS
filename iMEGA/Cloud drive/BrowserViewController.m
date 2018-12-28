@@ -860,8 +860,12 @@
 - (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
     if ([error type]) {
         if (request.type == MEGARequestTypeCopy) {
-            [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
-            [SVProgressHUD showErrorWithStatus:error.name];
+            if (error.type == MEGAErrorTypeApiEOverQuota || error.type == MEGAErrorTypeApiEgoingOverquota) {
+                [SVProgressHUD dismiss];
+            } else {
+                [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
+                [SVProgressHUD showErrorWithStatus:error.name];
+            }
         }
         return;
     }
