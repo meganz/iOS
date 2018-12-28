@@ -138,7 +138,6 @@
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     
-    self.navigationController.toolbarHidden = YES;
     
     [[MEGASdkManager sharedMEGASdkFolder] removeMEGAGlobalDelegate:self];
     [[MEGASdkManager sharedMEGASdkFolder] removeMEGARequestDelegate:self];
@@ -363,6 +362,22 @@
     [self.navigationController presentViewController:photoBrowserVC animated:YES completion:nil];
 }
 
+- (void)setTableViewEditing:(BOOL)editing animated:(BOOL)animated {
+    [self.tableView setEditing:editing animated:animated];
+    
+    if (editing) {
+        for (NodeTableViewCell *cell in self.tableView.visibleCells) {
+            UIView *view = [[UIView alloc] init];
+            view.backgroundColor = UIColor.clearColor;
+            cell.selectedBackgroundView = view;
+        }
+    } else {
+        for (NodeTableViewCell *cell in self.tableView.visibleCells){
+            cell.selectedBackgroundView = nil;
+        }
+    }
+}
+
 #pragma mark - IBActions
 
 - (IBAction)cancelAction:(UIBarButtonItem *)sender {
@@ -405,7 +420,7 @@
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated {
     [super setEditing:editing animated:animated];
     
-    [_tableView setEditing:editing animated:YES];
+    [self setTableViewEditing:editing animated:YES];
     
     [self setToolbarButtonsEnabled:!editing];
     
@@ -601,12 +616,12 @@
         }
         
         cell.infoLabel.text = [Helper sizeAndDateForNode:node api:[MEGASdkManager sharedMEGASdkFolder]];
-        
     } else if (node.isFolder) {
         [cell.thumbnailImageView mnz_imageForNode:node];
         
         cell.infoLabel.text = [Helper filesAndFoldersInFolderNode:node api:[MEGASdkManager sharedMEGASdkFolder]];
     }
+    cell.thumbnailPlayImageView.hidden = !node.name.mnz_isVideoPathExtension;
     
     cell.nameLabel.text = node.name;
     
@@ -618,7 +633,16 @@
                 [tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
             }
         }
+        
+        UIView *view = [[UIView alloc] init];
+        view.backgroundColor = UIColor.clearColor;
+        cell.selectedBackgroundView = view;
+    } else {
+        cell.selectedBackgroundView = nil;
     }
+    
+    cell.separatorView.layer.borderColor = UIColor.mnz_grayCCCCCC.CGColor;
+    cell.separatorView.layer.borderWidth = 0.5;
     
     if (@available(iOS 11.0, *)) {
         cell.thumbnailImageView.accessibilityIgnoresInvertColors = YES;
