@@ -339,14 +339,14 @@
                             if (granted) {
                                 [self presentRingingCall:api call:[api chatCallForCallId:call.callId]];
                             } else {
-                                [self presentViewController:[DevicePermissionsHelper videoPermisionAlertController] animated:YES completion:nil];
+                                [self presentViewController:DevicePermissionsHelper.videoPermissionAlertController animated:YES completion:nil];
                             }
                         }];
                     } else {
                         [self presentRingingCall:api call:[api chatCallForCallId:call.callId]];
                     }
                 } else {
-                    [self presentViewController:[DevicePermissionsHelper audioPermisionAlertController] animated:YES completion:nil];
+                    [self presentViewController:DevicePermissionsHelper.audioPermissionAlertController animated:YES completion:nil];
                 }
             }];
             break;
