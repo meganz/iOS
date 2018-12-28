@@ -860,7 +860,7 @@
 - (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
     if ([error type]) {
         if (request.type == MEGARequestTypeCopy) {
-            if (error.type != MEGAErrorTypeApiEOverQuota || error.type != MEGAErrorTypeApiEgoingOverquota) {
+            if (error.type == MEGAErrorTypeApiEOverQuota || error.type == MEGAErrorTypeApiEgoingOverquota) {
                 [SVProgressHUD dismiss];
             } else {
                 [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];

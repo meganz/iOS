@@ -1083,10 +1083,10 @@
     
     static BOOL alreadyPresented = NO;
     if (!alreadyPresented && ![[MEGASdkManager sharedMEGASdk] mnz_isProAccount]) {
-        NSDate *lastEncourageDate = [[NSUserDefaults standardUserDefaults] objectForKey:@"encourageUpgradeDate"];
-        if (lastEncourageDate) {            
+        NSDate *lastEncourageUpgradeDate = [[NSUserDefaults standardUserDefaults] objectForKey:@"lastEncourageUpgradeDate"];
+        if (lastEncourageUpgradeDate) {
             NSInteger week = [[NSCalendar currentCalendar] components:NSCalendarUnitWeekOfYear
-                                                              fromDate:lastEncourageDate
+                                                              fromDate:lastEncourageUpgradeDate
                                                                 toDate:[NSDate date]
                                                                options:NSCalendarWrapComponents].weekOfYear;
             if (week < 1) {
@@ -1105,7 +1105,7 @@
     if ([MEGAPurchase sharedInstance].products.count > 0) {
         UpgradeTableViewController *upgradeTVC = [[UIStoryboard storyboardWithName:@"MyAccount" bundle:nil] instantiateViewControllerWithIdentifier:@"UpgradeID"];
         MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:upgradeTVC];
-        [[NSUserDefaults standardUserDefaults] setObject:[NSDate date] forKey:@"encourageUpgradeDate"];
+        [[NSUserDefaults standardUserDefaults] setObject:[NSDate date] forKey:@"lastEncourageUpgradeDate"];
         [self presentViewController:navigationController animated:YES completion:nil];
     }
 }
