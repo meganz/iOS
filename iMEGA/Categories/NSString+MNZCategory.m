@@ -663,7 +663,7 @@ static NSString* const B = @"[B]";
             if (data) {
                 CGImageSourceRef imageData = CGImageSourceCreateWithData((CFDataRef)data, NULL);
                 if (imageData) {
-                    NSDictionary *metadata = (__bridge NSDictionary *)CGImageSourceCopyPropertiesAtIndex(imageData, 0, NULL);
+                    NSDictionary *metadata = (__bridge_transfer NSDictionary *)CGImageSourceCopyPropertiesAtIndex(imageData, 0, NULL);
                     
                     CFRelease(imageData);
                     
@@ -725,7 +725,14 @@ static NSString* const B = @"[B]";
         timeFormatter.dateFormat = @"HH:mm";
         timeFormatter.locale = [NSLocale autoupdatingCurrentLocale];
         NSString *timeString = [timeFormatter stringFromDate:dateLastSeen];
-        NSString *dateString = [[NSCalendar currentCalendar] isDateInToday:dateLastSeen] ? AMLocalizedString(@"Today", @"") : [dateLastSeen formattedDateWithFormat:@"dd MMM"];
+        NSString *dateString;
+        if ([[NSCalendar currentCalendar] isDateInToday:dateLastSeen]) {
+            dateString = AMLocalizedString(@"Today", @"");
+        } else if ([[NSCalendar currentCalendar] isDateInYesterday:dateLastSeen]) {
+            dateString = AMLocalizedString(@"Yesterday", @"");
+        } else {
+            dateString = [dateLastSeen formattedDateWithFormat:@"dd MMM"];
+        }
         lastSeenMessage = AMLocalizedString(@"Last seen %s", @"Shown when viewing a 1on1 chat (at least for now), if the user is offline.");
         BOOL isRTLLanguage = UIApplication.sharedApplication.userInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft;
         if (isRTLLanguage) {

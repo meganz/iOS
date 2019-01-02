@@ -683,7 +683,7 @@
 /* Title of the label where the MEGAchat SDK version is shown */
 "megachatSdkVersion"="MEGAchat - versão do SDK";
 /* Link to the public code of the app */
-"View source code"="Ver o código fonte";
+"View source code"="Ver o código-fonte";
 /* Title for the section "Acknowledgements" of the app */
 "acknowledgements"="Agradecimentos";
 /* Title for the MEGA Recovery Key */
@@ -1364,8 +1364,10 @@
 /* Between paragraph 5 and 6 we have to put the string with the 'autorenewableDescription' key */
 /* Paragraph 6 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
 "generalDescriptionParagraph6"="Para mais informações, consulte o nosso site: https://mega.nz/\nTermos de serviço: https://mega.nz/terms\nPolítica de privacidade: https://mega.nz/privacy";
-/* Label shown when you receive an incoming call, before start the call. */
+/* Label shown when you call someone (outgoing call), before the call starts. */
 "calling..."="Chamando...";
+/* notification subtitle of incoming calls */
+"Incoming call"="Chamada recebida";
 /* Notification text body shown when you have missed one audio call */
 "missedAudioCall"="Uma chamada de áudio perdida";
 /* Notification text body shown when you have missed several audio calls. [A] = {number of missed audio calls} */
@@ -1767,14 +1769,14 @@
 /* The text of a notification indicating that a file or folder that was taken down has now been restored due to a successful counter-notice. The %1 placeholder will be replaced with the text ‘file’ or ‘folder’. The %2 will be replaced with the name of the file or folder. */
 "Your taken down %1 (%2) has been reinstated."="A remoção de %1 (%2) foi revogada.";
 /* Footer text to explain the meaning of the functionaly 'Last seen' of your chat status. */
-"Allow your contacts to see the last time you were active on MEGA. If disabled you won’t be able to see the activity status of your contacts."="Permitir que os meus contatos vejam a hora do meu último acesso ao MEGA. Se estiver desativado, você não poderá ver o último acesso dos seus contatos.";
+"Allow your contacts to see the last time you were active on MEGA."="Permitir que seus contatos vejam o seu último acesso ao MEGA.";
 /* Label shown next to a feature name that can be enabled or disabled, like in 'Show Last seen...' */
 "Show"="Mostrar";
 /* Shown when viewing a 1on1 chat (at least for now), if the user is offline. */
 "Last seen %s"="Último acesso %s";
-/* Text to inform the user the 'Last seen' time of a contact, for example 'Last seen 20 Nov 18 15:15'. String as sort as possible. */
-"Last seen [A] [B]"="Last seen [A] [B]";
 /* Text to inform the user the 'Last seen' time of a contact is a long time ago (>= 65535 minutes) */
 "Last seen a long time ago"="Último acesso há muito tempo atrás";
 /* */
 "Today"="Hoje";
+/* */
+"Yesterday"="Ontem";

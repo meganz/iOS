@@ -174,8 +174,6 @@
 - (void)setupContacts {
     self.indexPathsMutableDictionary = [[NSMutableDictionary alloc] init];
     
-    [self.toolbar setFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.frame), 49)];
-    
     switch (self.contactsMode) {
         case ContactsModeDefault: {
             NSArray *buttonsItems = @[self.addBarButtonItem, self.contactRequestsBarButtonItem];
@@ -255,7 +253,7 @@
         }
             
         case ContactsModeChatNamingGroup: {
-            self.navigationItem.leftBarButtonItems = @[self.backBarButtonItem];
+            self.backBarButtonItem.image = self.backBarButtonItem.image.imageFlippedForRightToLeftLayoutDirection;
             self.createGroupBarButtonItem.title = AMLocalizedString(@"createFolderButton", nil);
             [self.createGroupBarButtonItem setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
                                                               [UIFont mnz_SFUIMediumWithSize:17],
@@ -536,7 +534,13 @@
         
         if (self.tabBarController) {
             [self.toolbar setAlpha:0.0];
-            [self.tabBarController.tabBar addSubview:self.toolbar];
+            [self.tabBarController.view addSubview:self.toolbar];
+            self.toolbar.translatesAutoresizingMaskIntoConstraints = NO;
+            [NSLayoutConstraint activateConstraints:@[[self.toolbar.topAnchor constraintEqualToAnchor:self.tabBarController.tabBar.topAnchor constant:0],
+                                                      [self.toolbar.leadingAnchor constraintEqualToAnchor:self.tabBarController.tabBar.leadingAnchor constant:0],
+                                                      [self.toolbar.trailingAnchor constraintEqualToAnchor:self.tabBarController.tabBar.trailingAnchor constant:0],
+                                                      [self.toolbar.heightAnchor constraintEqualToConstant:49.0]]];
+            
             [UIView animateWithDuration:0.33f animations:^ {
                 [self.toolbar setAlpha:1.0];
             }];

@@ -17,7 +17,7 @@
 
 #import "NodeTableViewCell.h"
 
-@interface BrowserViewController () <UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGADelegate>
+@interface BrowserViewController () <UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGADelegate, UISearchControllerDelegate>
 
 @property (nonatomic) id<UIViewControllerPreviewing> previewingContext;
 @property (nonatomic, getter=isParentBrowser) BOOL parentBrowser;
@@ -87,7 +87,7 @@
     [super viewWillDisappear:animated];
     
     if (self.searchController.isActive) {
-        [self.searchController dismissViewControllerAnimated:NO completion:nil];
+        self.searchController.active = NO;
     }
     
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kReachabilityChangedNotification object:nil];
@@ -104,6 +104,12 @@
     
     [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
         [self.tableView reloadEmptyDataSet];
+        if (self.searchController.isActive) {
+            float yCorrection = self.browserSegmentedControlView.hidden ? 0 : 44;
+            
+            self.searchController.view.frame = CGRectMake(0, UIApplication.sharedApplication.statusBarFrame.size.height + self.navigationController.navigationBar.frame.size.height + yCorrection, self.searchController.view.frame.size.width, self.searchController.view.frame.size.height);
+            self.searchController.searchBar.superview.frame = CGRectMake(0, 0, self.searchController.searchBar.superview.frame.size.width, self.searchController.searchBar.superview.frame.size.height);
+        }
     } completion:nil];
 }
 
@@ -417,13 +423,11 @@
     browserVC.selectedNodesMutableDictionary = self.selectedNodesMutableDictionary;
     browserVC.selectedNodesArray = self.selectedNodesArray;
     browserVC.browserViewControllerDelegate = self.browserViewControllerDelegate;
+    
+    [self.navigationController pushViewController:browserVC animated:YES];
 
     if (self.searchController.isActive) {
-        [self.searchController dismissViewControllerAnimated:NO completion:^{
-            [self.navigationController pushViewController:browserVC animated:YES];
-        }];
-    } else {
-        [self.navigationController pushViewController:browserVC animated:YES];
+        self.searchController.active = NO;
     }
 }
 
@@ -445,9 +449,10 @@
 - (void)addSearchController {
     self.searchController = [Helper customSearchControllerWithSearchResultsUpdaterDelegate:self searchBarDelegate:self];
     self.searchController.hidesNavigationBarDuringPresentation = NO;
+    self.searchController.delegate = self;
     self.tableView.tableHeaderView = self.searchController.searchBar;
     [self.tableView setContentOffset:CGPointMake(0, CGRectGetHeight(self.searchController.searchBar.frame))];
-    self.definesPresentationContext = NO;
+    self.definesPresentationContext = YES;
 }
 
 - (MEGANode *)nodeAtIndexPath:(NSIndexPath *)indexPath {
@@ -456,12 +461,9 @@
 
 - (void)dismiss {
     if (self.searchController.isActive) {
-        [self.searchController dismissViewControllerAnimated:YES completion:^{
-            [self dismissViewControllerAnimated:YES completion:nil];
-        }];
-    } else {
-        [self dismissViewControllerAnimated:YES completion:nil];
+        self.searchController.active = NO;
     }
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark - IBActions
@@ -475,7 +477,7 @@
         NSMutableArray *selectedNodesMutableArray = self.selectedNodesArray.mutableCopy;
         NSArray *filesAndFolders = selectedNodesMutableArray.mnz_numberOfFilesAndFolders;
         MEGAMoveRequestDelegate *moveRequestDelegate = [[MEGAMoveRequestDelegate alloc] initWithFiles:[filesAndFolders[0] unsignedIntegerValue] folders:[filesAndFolders[1] unsignedIntegerValue] completion:^{
-            [self dismissViewControllerAnimated:YES completion:nil];
+            [self dismiss];
         }];
         
         for (MEGANode *n in self.selectedNodesArray) {
@@ -744,6 +746,13 @@
     [self.tableView reloadData];
 }
 
+#pragma mark - UISearchControllerDelegate
+
+- (void)didPresentSearchController:(UISearchController *)searchController {
+    float yPosition = self.browserSegmentedControlView.hidden ? 0 : 44;
+    self.searchController.searchBar.superview.frame = CGRectMake(0, yPosition, self.searchController.searchBar.superview.frame.size.width, self.searchController.searchBar.superview.frame.size.height);
+}
+
 #pragma mark - UIViewControllerPreviewingDelegate
 
 - (UIViewController *)previewingContext:(id<UIViewControllerPreviewing>)previewingContext viewControllerForLocation:(CGPoint)location {
@@ -860,8 +869,12 @@
 - (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
     if ([error type]) {
         if (request.type == MEGARequestTypeCopy) {
-            [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
-            [SVProgressHUD showErrorWithStatus:error.name];
+            if (error.type == MEGAErrorTypeApiEOverQuota || error.type == MEGAErrorTypeApiEgoingOverquota) {
+                [SVProgressHUD dismiss];
+            } else {
+                [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
+                [SVProgressHUD showErrorWithStatus:error.name];
+            }
         }
         return;
     }
