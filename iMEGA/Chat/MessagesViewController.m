@@ -240,6 +240,8 @@ const NSUInteger kMaxMessagesToLoad = 256;
     if (!self.isMovingToParentViewController) {
         [self customNavigationBarLabel];
     }
+    
+    self.editMessage = nil;
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -1579,7 +1581,7 @@ const NSUInteger kMaxMessagesToLoad = 256;
             
             UIAlertAction *sendLocationAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"location", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
                 MEGAGenericRequestDelegate *isGeolocationEnabledDelegate = [[MEGAGenericRequestDelegate alloc] initWithRequestCompletion:^(MEGARequest *request) {
-                    [self presentShareLocationViewController];
+                    [self presentShareLocationViewControllerForEditing:NO];
                 } errorCompletion:^(MEGARequest *request, MEGAError *error) {
                     UIAlertController *sendLocationAlert = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"Send Location", @"Alert title shown when the user opens a shared Geolocation for the first time from any client, we will show a confirmation dialog warning the user that he is now leaving the E2EE paradigm") message:AMLocalizedString(@"This location will be opened using a third party maps provider outside the end-to-end encrypted MEGA platform.", @"Message shown when the user opens a shared Geolocation for the first time from any client, we will show a confirmation dialog warning the user that he is now leaving the E2EE paradigm") preferredStyle:UIAlertControllerStyleAlert];
                     [sendLocationAlert addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"") style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
@@ -1587,7 +1589,7 @@ const NSUInteger kMaxMessagesToLoad = 256;
                     }]];
                     [sendLocationAlert addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"continue", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
                         MEGAGenericRequestDelegate *enableGeolocationDelegate = [[MEGAGenericRequestDelegate alloc] initWithRequestCompletion:^(MEGARequest *request) {
-                            [self presentShareLocationViewController];
+                            [self presentShareLocationViewControllerForEditing:NO];
                         } errorCompletion:^(MEGARequest *request, MEGAError *error) {
                             UIAlertController *enableGeolocationAlert = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"error", @"") message:[NSString stringWithFormat:@"Enable geolocation failed. Error: %@", error.name] preferredStyle:UIAlertControllerStyleAlert];
                             [enableGeolocationAlert addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
@@ -1622,10 +1624,15 @@ const NSUInteger kMaxMessagesToLoad = 256;
     [self updateToolbarPlaceHolder];
 }
 
-- (void)presentShareLocationViewController {
+- (void)presentShareLocationViewControllerForEditing:(BOOL)editing {
     ShareLocationViewController *slvc = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"ShareLocationViewControllerID"];
     MEGANavigationController *navigationViewController = [[MEGANavigationController alloc] initWithRootViewController:slvc];
     slvc.chatRoom = self.chatRoom;
+    
+    if (editing) {
+        slvc.editMessage = self.editMessage;
+    }
+    
     slvc.shareLocationViewControllerDelegate = self;
     [navigationViewController addCancelButton];
     [self presentViewController:navigationViewController animated:YES completion:nil];
@@ -1961,7 +1968,7 @@ const NSUInteger kMaxMessagesToLoad = 256;
                     }
                 }
                 
-                if (action == @selector(edit:message:) && message.containsMeta.type != MEGAChatContainsMetaTypeGeolocation) {
+                if (action == @selector(edit:message:)) {
                     if (message.isEditable) return YES;
                 }
                 
@@ -2057,9 +2064,13 @@ const NSUInteger kMaxMessagesToLoad = 256;
 }
 
 - (void)edit:(id)sender message:(MEGAChatMessage *)message {
-    [self.inputToolbar.contentView.textView becomeFirstResponder];
-    self.inputToolbar.contentView.textView.text = message.content;
     self.editMessage = message;
+    if (message.containsMeta.type == MEGAChatContainsMetaTypeGeolocation) {
+        [self presentShareLocationViewControllerForEditing:YES];
+    } else {
+        [self.inputToolbar.contentView.textView becomeFirstResponder];
+        self.inputToolbar.contentView.textView.text = message.content;
+    }
 }
 
 - (void)forward:(id)sender message:(MEGAChatMessage *)message {
@@ -2367,12 +2378,20 @@ const NSUInteger kMaxMessagesToLoad = 256;
 
 #pragma mark - ShareLocationViewControllerDelegate
 
-- (void)locationMessage:(MEGAChatMessage *)message {
+- (void)locationMessage:(MEGAChatMessage *)message editing:(BOOL)editing {
     message.chatRoom = self.chatRoom;
-    [self.messages addObject:message];
-    [self.collectionView insertItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:self.messages.count-1 inSection:0]]];
-    [self finishSendingMessage];
-    [self updateUnreadMessagesLabel:0];
+    if (editing) {
+        NSUInteger index = [self.messages indexOfObject:self.editMessage];
+        if (index != NSNotFound) {
+            [self.messages replaceObjectAtIndex:index withObject:message];
+            [self.collectionView reloadItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:index inSection:0]]];
+        }
+    } else {
+        [self.messages addObject:message];
+        [self.collectionView insertItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:self.messages.count-1 inSection:0]]];
+        [self finishSendingMessage];
+        [self updateUnreadMessagesLabel:0];
+    }
 }
 
 #pragma mark - MEGAChatRoomDelegate
