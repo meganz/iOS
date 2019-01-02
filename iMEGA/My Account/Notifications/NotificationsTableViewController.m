@@ -221,7 +221,7 @@
             
         case MEGAUserAlertTypeDeletedShare: {
             MEGANode *node = [[MEGASdkManager sharedMEGASdk] nodeForHandle:userAlert.nodeHandle];
-            if (node && ![userAlert.path hasPrefix:userAlert.email]) {
+            if ([userAlert numberAtIndex:0] == 0) {
                 NSAttributedString *nodeName = [[NSAttributedString alloc] initWithString:node.name attributes:@{ NSFontAttributeName : self.boldFont }];
                 NSString *text = AMLocalizedString(@"A user has left the shared folder {0}", @"notification text");
                 NSRange range = [text rangeOfString:@"{0}"];
@@ -275,7 +275,8 @@
         }
             
         case MEGAUserAlertTypePaymentSucceeded: {
-            NSAttributedString *proPlan = [[NSAttributedString alloc] initWithString:[userAlert stringAtIndex:0] attributes:@{ NSFontAttributeName : self.boldFont }];
+            NSString *proPlanString = [userAlert stringAtIndex:0] ? [userAlert stringAtIndex:0] : @"";
+            NSAttributedString *proPlan = [[NSAttributedString alloc] initWithString:proPlanString attributes:@{ NSFontAttributeName : self.boldFont }];
             NSString *text = AMLocalizedString(@"Your payment for the %1 plan was received.", @"A notification telling the user that their Pro plan payment was successfully received. The %1 indicates the name of the Pro plan they paid for e.g. Lite, PRO III.");
             NSRange range = [text rangeOfString:@"%1"];
             NSMutableAttributedString *attributedText = [[NSMutableAttributedString alloc] initWithString:text];
@@ -285,7 +286,8 @@
         }
             
         case MEGAUserAlertTypePaymentFailed: {
-            NSAttributedString *proPlan = [[NSAttributedString alloc] initWithString:[userAlert stringAtIndex:0] attributes:@{ NSFontAttributeName : self.boldFont }];
+            NSString *proPlanString = [userAlert stringAtIndex:0] ? [userAlert stringAtIndex:0] : @"";
+            NSAttributedString *proPlan = [[NSAttributedString alloc] initWithString:proPlanString attributes:@{ NSFontAttributeName : self.boldFont }];
             NSString *text = AMLocalizedString(@"Your payment for the %1 plan was unsuccessful.", @"A notification telling the user that their Pro plan payment was unsuccessful. The %1 indicates the name of the Pro plan they were trying to pay for e.g. Lite, PRO II.");
             NSRange range = [text rangeOfString:@"%1"];
             NSMutableAttributedString *attributedText = [[NSMutableAttributedString alloc] initWithString:text];

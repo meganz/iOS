@@ -119,7 +119,7 @@
         return URLTypeLoginRequiredLink;
     }
     
-    if (afterSlashesString.length >= 1 && [afterSlashesString hasPrefix:@"#"]) {
+    if ((afterSlashesString.length == 9) && [afterSlashesString hasPrefix:@"#"]) {
         return URLTypeHandleLink;
     }
     

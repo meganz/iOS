@@ -247,11 +247,7 @@
     
     self.sizeLabel.text = [NSByteCountFormatter stringFromByteCount:[[self.node size] longLongValue] countStyle:NSByteCountFormatterCountStyleMemory];
     
-    if (self.node.isFolder) {
-        [self.thumbnailImageView mnz_imageForNode:self.node];
-    } else {
-        [self.thumbnailImageView mnz_setThumbnailByNode:self.node];
-    }
+    [self.thumbnailImageView mnz_setThumbnailByNode:self.node];
     
     [self setUIItemsHidden:NO];
 }

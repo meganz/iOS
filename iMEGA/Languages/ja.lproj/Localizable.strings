@@ -1364,8 +1364,10 @@
 /* Between paragraph 5 and 6 we have to put the string with the 'autorenewableDescription' key */
 /* Paragraph 6 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
 "generalDescriptionParagraph6"="詳細については、当社のウェブサイトをご覧ください：https://mega.nz/\nご利用規約：https://mega.nz/terms\nプライバシーポリシー：https://mega.nz/privacy";
-/* Label shown when you receive an incoming call, before start the call. */
+/* Label shown when you call someone (outgoing call), before the call starts. */
 "calling..."="着信中…";
+/* notification subtitle of incoming calls */
+"Incoming call"="着信";
 /* Notification text body shown when you have missed one audio call */
 "missedAudioCall"="不在音声着信";
 /* Notification text body shown when you have missed several audio calls. [A] = {number of missed audio calls} */
@@ -1767,14 +1769,14 @@
 /* The text of a notification indicating that a file or folder that was taken down has now been restored due to a successful counter-notice. The %1 placeholder will be replaced with the text ‘file’ or ‘folder’. The %2 will be replaced with the name of the file or folder. */
 "Your taken down %1 (%2) has been reinstated."="あなたの削除された%1（%2）は復活しました。";
 /* Footer text to explain the meaning of the functionaly 'Last seen' of your chat status. */
-"Allow your contacts to see the last time you were active on MEGA. If disabled you won’t be able to see the activity status of your contacts."="あなたの連絡先がMEGAであなたが最後に活動していた時間を見れるようにします。無効にすると、あなたの連絡先の活動状態を見られなくなります。";
+"Allow your contacts to see the last time you were active on MEGA."="あなたの連絡先がMEGAであなたが最後に活動していた時間を見れるようにします。";
 /* Label shown next to a feature name that can be enabled or disabled, like in 'Show Last seen...' */
 "Show"="表示";
 /* Shown when viewing a 1on1 chat (at least for now), if the user is offline. */
 "Last seen %s"="最終ログイン%s";
-/* Text to inform the user the 'Last seen' time of a contact, for example 'Last seen 20 Nov 18 15:15'. String as sort as possible. */
-"Last seen [A] [B]"="Last seen [A] [B]";
 /* Text to inform the user the 'Last seen' time of a contact is a long time ago (>= 65535 minutes) */
 "Last seen a long time ago"="最終ログインはだいぶ前";
 /* */
 "Today"="今日";
+/* */
+"Yesterday"="昨日";

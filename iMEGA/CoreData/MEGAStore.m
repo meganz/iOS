@@ -358,11 +358,13 @@ static MEGAStore *_megaStore = nil;
 }
 
 - (void)deleteUploadTransfer:(MOUploadTransfer *)uploadTransfer {
-    [self.managedObjectContext deleteObject:uploadTransfer];
-    
-    MEGALogDebug(@"Save context - remove MOUploadTransfer with local identifier %@", uploadTransfer.localIdentifier);
-    
-    [self saveContext];
+    if (uploadTransfer) {
+        [self.managedObjectContext deleteObject:uploadTransfer];
+        
+        MEGALogDebug(@"Save context - remove MOUploadTransfer with local identifier %@", uploadTransfer.localIdentifier);
+        
+        [self saveContext];
+    }
 }
 
 - (void)deleteUploadTransferWithLocalIdentifier:(NSString *)localIdentifier {
