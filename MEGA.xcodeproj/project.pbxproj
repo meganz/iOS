@@ -691,7 +691,6 @@
 		B60DDC1621A7A7930097E4A3 /* MEGAConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = B60DDC1521A7A7930097E4A3 /* MEGAConstants.m */; };
 		B644B6B721ABA27B00A3B8E7 /* MEGAConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = B60DDC1521A7A7930097E4A3 /* MEGAConstants.m */; };
 		B644B6B821ABA27B00A3B8E7 /* MEGAConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = B60DDC1521A7A7930097E4A3 /* MEGAConstants.m */; };
-		B644B6BB21ABA4F700A3B8E7 /* UIViewController+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = B644B6BA21ABA4F700A3B8E7 /* UIViewController+MNZCategory.m */; };
 		B644B6BE21AE0E1900A3B8E7 /* CoordinateUploadOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = B644B6BD21AE0E1900A3B8E7 /* CoordinateUploadOperation.m */; };
 		B644B6C121AE19BC00A3B8E7 /* MEGAExpirableOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = B644B6C021AE19BC00A3B8E7 /* MEGAExpirableOperation.m */; };
 		B658D3B8218F9357004C0D64 /* PhotoUploadOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = B658D3B7218F9357004C0D64 /* PhotoUploadOperation.m */; };
@@ -1610,8 +1609,6 @@
 		A8F6E8921F9E75D50087859C /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
 		B60DDC1421A7A7930097E4A3 /* MEGAConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MEGAConstants.h; sourceTree = "<group>"; };
 		B60DDC1521A7A7930097E4A3 /* MEGAConstants.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MEGAConstants.m; sourceTree = "<group>"; };
-		B644B6B921ABA4F700A3B8E7 /* UIViewController+MNZCategory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIViewController+MNZCategory.h"; sourceTree = "<group>"; };
-		B644B6BA21ABA4F700A3B8E7 /* UIViewController+MNZCategory.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+MNZCategory.m"; sourceTree = "<group>"; };
 		B644B6BC21AE0E1900A3B8E7 /* CoordinateUploadOperation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CoordinateUploadOperation.h; sourceTree = "<group>"; };
 		B644B6BD21AE0E1900A3B8E7 /* CoordinateUploadOperation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CoordinateUploadOperation.m; sourceTree = "<group>"; };
 		B644B6BF21AE19BC00A3B8E7 /* MEGAExpirableOperation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MEGAExpirableOperation.h; sourceTree = "<group>"; };
@@ -2656,8 +2653,6 @@
 				5B0CD4292188D71100F97A2C /* UITextField+MNZCategory.m */,
 				B6A4A10F21A2544C007E7EEC /* MEGAError+MNZCategory.h */,
 				B6A4A11021A2544C007E7EEC /* MEGAError+MNZCategory.m */,
-				B644B6B921ABA4F700A3B8E7 /* UIViewController+MNZCategory.h */,
-				B644B6BA21ABA4F700A3B8E7 /* UIViewController+MNZCategory.m */,
 				77597004219DD4D100B31671 /* MEGAUserAlertList+MNZCategory.h */,
 				77597005219DD4D100B31671 /* MEGAUserAlertList+MNZCategory.m */,
 			);
@@ -4333,7 +4328,6 @@
 				5B7B4CA31EE5AC1200DA6A8D /* MEGAShareRequestDelegate.m in Sources */,
 				A86FC4FC1EBB4999006053A6 /* MEGAPhotoMediaItem.m in Sources */,
 				77CAAAE3202C72F8004B16ED /* MEGAPhotoBrowserPickerCollectionViewCell.m in Sources */,
-				B644B6BB21ABA4F700A3B8E7 /* UIViewController+MNZCategory.m in Sources */,
 				E879DFDA1D12A31D009B74FD /* UIDevice+MNZCategory.m in Sources */,
 				41EAAE4A1D06B49400622FAF /* PHAsset+CTAssetsPickerController.m in Sources */,
 				41D21E6B1D01AEC3002E6296 /* CTAssetsPageViewController.m in Sources */,
@@ -4520,7 +4514,6 @@
 				5BEACE201FB472CC0010E02F /* MEGANodeList+MNZCategory.m in Sources */,
 				83FB143B219C3C6D00418BE6 /* MOOfflineFolderLayout+CoreDataProperties.m in Sources */,
 				945605471EDD67520094EF0F /* MEGASdkManager.m in Sources */,
-				9432292C1EDD8542007DB542 /* CameraUploadsTableViewController.m in Sources */,
 				839D5A9821C25A7D00FAE757 /* GridFlowLayout.m in Sources */,
 				945605521EDD7E020094EF0F /* GetLinkActivity.m in Sources */,
 				945605441EDD66CE0094EF0F /* UIColor+MNZCategory.m in Sources */,

@@ -7,7 +7,6 @@
 #import "CameraUploadManager+Settings.h"
 #import "DevicePermissionsHelper.h"
 #import "Helper.h"
-#import "UIViewController+MNZCategory.h"
 
 @interface CameraUploadsTableViewController ()
 
