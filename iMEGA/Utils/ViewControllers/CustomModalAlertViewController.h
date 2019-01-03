@@ -5,6 +5,7 @@
 
 @property (nonatomic, strong) void (^completion)(void);
 @property (nonatomic, strong) void (^onDismiss)(void);
+@property (nonatomic, strong) void (^onBonus)(void);
 
 @property (nonatomic) UIImage *image;
 @property (getter=shouldRoundImage) BOOL roundImage;

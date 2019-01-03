@@ -63,6 +63,8 @@
 #pragma mark - Lifecycle
 
 - (void)viewDidLoad {
+    [super viewDidLoad];
+    
     NSSetUncaughtExceptionHandler(&uncaughtExceptionHandler);
 
     self.sharedUserDefaults = [[NSUserDefaults alloc] initWithSuiteName:@"group.mega.ios"];
@@ -221,6 +223,8 @@
 }
 
 - (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    
     MEGALogError(@"Share extension received memory warning");
     if (!self.presentedViewController) {
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"shareExtensionUnsupportedAssets", nil) message:AMLocalizedString(@"Limited system resources are available when sharing items. Try uploading these files from within the MEGA app.", @"Message shown to the user when the share extension is about to be killed by iOS due to a memory issue") preferredStyle:UIAlertControllerStyleAlert];

@@ -200,6 +200,8 @@
 		5B367577204FFC150087362D /* SendToChatActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B367574204FFBF60087362D /* SendToChatActivity.m */; };
 		5B367578204FFC1B0087362D /* SendToChatActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B367574204FFBF60087362D /* SendToChatActivity.m */; };
 		5B39DAA21EF916D900BC2319 /* ChatAttachedContactsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B39DAA11EF916D900BC2319 /* ChatAttachedContactsViewController.m */; };
+		5B3B1CFB21D6488400138502 /* DevicePermissionsHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 830EF9A320062F3800FAA947 /* DevicePermissionsHelper.m */; };
+		5B3B1CFC21D648A500138502 /* DevicePermissionsHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 830EF9A320062F3800FAA947 /* DevicePermissionsHelper.m */; };
 		5B40AB321F7A512E0034C3B3 /* AchievementsDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B40AB301F7A512D0034C3B3 /* AchievementsDetailsViewController.m */; };
 		5B4429401E6D705D00BCACC0 /* SF-UI-Display-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5B44293E1E6D705D00BCACC0 /* SF-UI-Display-Medium.otf */; };
 		5B4429411E6D705D00BCACC0 /* SF-UI-Text-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5B44293F1E6D705D00BCACC0 /* SF-UI-Text-Medium.otf */; };
@@ -390,9 +392,9 @@
 		837A88BF20B42290007B55D1 /* CloudDriveViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 837A88BE20B42290007B55D1 /* CloudDriveViewController.m */; };
 		837A88C220B44AA8007B55D1 /* OfflineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 837A88C120B44AA8007B55D1 /* OfflineViewController.m */; };
 		837A88C520B45C11007B55D1 /* SendToViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 837A88C420B45C11007B55D1 /* SendToViewController.m */; };
-		839D5A9721C25A7D00FAE757 /* CloudDriveGridFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 839D5A9621C25A7D00FAE757 /* CloudDriveGridFlowLayout.m */; };
-		839D5A9821C25A7D00FAE757 /* CloudDriveGridFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 839D5A9621C25A7D00FAE757 /* CloudDriveGridFlowLayout.m */; };
-		839D5A9921C25A7D00FAE757 /* CloudDriveGridFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 839D5A9621C25A7D00FAE757 /* CloudDriveGridFlowLayout.m */; };
+		839D5A9721C25A7D00FAE757 /* GridFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 839D5A9621C25A7D00FAE757 /* GridFlowLayout.m */; };
+		839D5A9821C25A7D00FAE757 /* GridFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 839D5A9621C25A7D00FAE757 /* GridFlowLayout.m */; };
+		839D5A9921C25A7D00FAE757 /* GridFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 839D5A9621C25A7D00FAE757 /* GridFlowLayout.m */; };
 		83B841672051905E00E5AC69 /* MEGAGetThumbnailRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A820DA3B1F0E5BDC00F1F832 /* MEGAGetThumbnailRequestDelegate.m */; };
 		83B841682051913C00E5AC69 /* MEGAGetThumbnailRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A820DA3B1F0E5BDC00F1F832 /* MEGAGetThumbnailRequestDelegate.m */; };
 		83D64E2D20178A0400E24155 /* PasswordReminder.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 83D64E2C20178A0400E24155 /* PasswordReminder.storyboard */; };
@@ -1407,8 +1409,8 @@
 		837A88C120B44AA8007B55D1 /* OfflineViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OfflineViewController.m; sourceTree = "<group>"; };
 		837A88C320B45C11007B55D1 /* SendToViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SendToViewController.h; path = Chat/SendToViewController.h; sourceTree = "<group>"; };
 		837A88C420B45C11007B55D1 /* SendToViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = SendToViewController.m; path = Chat/SendToViewController.m; sourceTree = "<group>"; };
-		839D5A9521C25A7D00FAE757 /* CloudDriveGridFlowLayout.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CloudDriveGridFlowLayout.h; sourceTree = "<group>"; };
-		839D5A9621C25A7D00FAE757 /* CloudDriveGridFlowLayout.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CloudDriveGridFlowLayout.m; sourceTree = "<group>"; };
+		839D5A9521C25A7D00FAE757 /* GridFlowLayout.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GridFlowLayout.h; sourceTree = "<group>"; };
+		839D5A9621C25A7D00FAE757 /* GridFlowLayout.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GridFlowLayout.m; sourceTree = "<group>"; };
 		83D64E2C20178A0400E24155 /* PasswordReminder.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = PasswordReminder.storyboard; sourceTree = "<group>"; };
 		83E076F32179D7BC00058409 /* NodeCollectionViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NodeCollectionViewCell.h; sourceTree = "<group>"; };
 		83E076F42179D7BC00058409 /* NodeCollectionViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NodeCollectionViewCell.m; sourceTree = "<group>"; };
@@ -2130,8 +2132,6 @@
 				830B54892178845300BE1E1F /* CloudDriveTableViewController.m */,
 				83369CE22179D0A0002B09C3 /* CloudDriveCollectionViewController.h */,
 				83369CE32179D0A0002B09C3 /* CloudDriveCollectionViewController.m */,
-				839D5A9521C25A7D00FAE757 /* CloudDriveGridFlowLayout.h */,
-				839D5A9621C25A7D00FAE757 /* CloudDriveGridFlowLayout.m */,
 			);
 			path = "Cloud drive";
 			sourceTree = "<group>";
@@ -2214,6 +2214,7 @@
 		415226861A692ECC00EC7BB6 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				5B06BB7B21D508D1001F3C31 /* Flow Layouts */,
 				7747B2D5208623550011814E /* Network */,
 				5B8281451E7BE7FA0079C1BB /* Cells */,
 				A85D93BE20457E3F0066F45B /* Enums */,
@@ -2931,6 +2932,15 @@
 				5B5A983A212EF29500FDBC79 /* RubbishBinTableViewController.m */,
 			);
 			path = "File Management";
+			sourceTree = "<group>";
+		};
+		5B06BB7B21D508D1001F3C31 /* Flow Layouts */ = {
+			isa = PBXGroup;
+			children = (
+				839D5A9521C25A7D00FAE757 /* GridFlowLayout.h */,
+				839D5A9621C25A7D00FAE757 /* GridFlowLayout.m */,
+			);
+			path = "Flow Layouts";
 			sourceTree = "<group>";
 		};
 		5B1F74D02126E2B000F09A16 /* AwaitingEmailConfirmation */ = {
@@ -4175,7 +4185,7 @@
 				A85740C52032F6B80033034C /* MOChatDraft+CoreDataClass.m in Sources */,
 				4122C0E61B274E8C001CE833 /* LocalizationSystem.m in Sources */,
 				5BADE39A1F02BD1F009C9AD7 /* MEGANodeList+MNZCategory.m in Sources */,
-				839D5A9721C25A7D00FAE757 /* CloudDriveGridFlowLayout.m in Sources */,
+				839D5A9721C25A7D00FAE757 /* GridFlowLayout.m in Sources */,
 				5B367576204FFBF60087362D /* SendToChatActivity.m in Sources */,
 				5B00B6E8210745BF0076D5BB /* FileManagementTableViewController.m in Sources */,
 				5B78F0B21F3C5362007ED721 /* MyAccountHallViewController.m in Sources */,
@@ -4485,6 +4495,7 @@
 				9456054D1EDD7DB20094EF0F /* RemoveLinkActivity.m in Sources */,
 				7747B2D9208625B50011814E /* Reachability.m in Sources */,
 				5B367577204FFC150087362D /* SendToChatActivity.m in Sources */,
+				5B3B1CFC21D648A500138502 /* DevicePermissionsHelper.m in Sources */,
 				945605451EDD66DA0094EF0F /* UIFont+MNZCategory.m in Sources */,
 				8361359421074C5D002FA3CC /* MOUploadTransfer+CoreDataProperties.m in Sources */,
 				943229401EDD8969007DB542 /* UIScrollView+EmptyDataSet.m in Sources */,
@@ -4509,7 +4520,8 @@
 				5BEACE201FB472CC0010E02F /* MEGANodeList+MNZCategory.m in Sources */,
 				83FB143B219C3C6D00418BE6 /* MOOfflineFolderLayout+CoreDataProperties.m in Sources */,
 				945605471EDD67520094EF0F /* MEGASdkManager.m in Sources */,
-				839D5A9821C25A7D00FAE757 /* CloudDriveGridFlowLayout.m in Sources */,
+				9432292C1EDD8542007DB542 /* CameraUploadsTableViewController.m in Sources */,
+				839D5A9821C25A7D00FAE757 /* GridFlowLayout.m in Sources */,
 				945605521EDD7E020094EF0F /* GetLinkActivity.m in Sources */,
 				945605441EDD66CE0094EF0F /* UIColor+MNZCategory.m in Sources */,
 				5BFA34711FAC5BFB005BFC4E /* MEGARemoveRequestDelegate.m in Sources */,
@@ -4571,7 +4583,7 @@
 				77892E9F20E5029B0020A533 /* MOUser+CoreDataProperties.m in Sources */,
 				5BEACE2A1FB474060010E02F /* MEGAUser+MNZCategory.m in Sources */,
 				94892C901EFBEA1F00AEAC25 /* SAMKeychain.m in Sources */,
-				839D5A9921C25A7D00FAE757 /* CloudDriveGridFlowLayout.m in Sources */,
+				839D5A9921C25A7D00FAE757 /* GridFlowLayout.m in Sources */,
 				775D9C0B20EA0D49001BF1E8 /* ShareAttachment.m in Sources */,
 				941135561F01004000D33428 /* ShareFolderActivity.m in Sources */,
 				5BEACE241FB473940010E02F /* UIImageView+MNZCategory.m in Sources */,
@@ -4616,6 +4628,7 @@
 				A836581D21021063005E616F /* ItemCollectionViewCell.m in Sources */,
 				77F3C30321C12F800049A1BA /* UITextField+MNZCategory.m in Sources */,
 				941135551F01002E00D33428 /* OpenInActivity.m in Sources */,
+				5B3B1CFB21D6488400138502 /* DevicePermissionsHelper.m in Sources */,
 				94892C981EFBF03800AEAC25 /* SVProgressHUD.m in Sources */,
 				5B2E78CD1FA0C3310096C9BE /* MEGACreateFolderRequestDelegate.m in Sources */,
 				941135501F00FFAB00D33428 /* BrowserViewController.m in Sources */,

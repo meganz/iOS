@@ -79,7 +79,7 @@
             [self acceptCall:nil];
         } else {
             _call = [[MEGASdkManager sharedMEGAChatSdk] chatCallForChatId:self.chatRoom.chatId];
-            self.statusCallLabel.text = AMLocalizedString(@"calling...", @"Label shown when you receive an incoming call, before start the call.");
+            self.statusCallLabel.text = AMLocalizedString(@"Incoming call", nil);
         }
     } else {
         MEGAChatStartCallRequestDelegate *startCallRequestDelegate = [[MEGAChatStartCallRequestDelegate alloc] initWithCompletion:^(MEGAChatError *error) {
@@ -89,7 +89,7 @@
                 _call = [[MEGASdkManager sharedMEGAChatSdk] chatCallForChatId:self.chatRoom.chatId];
                 self.incomingCallView.hidden = YES;
 
-                self.statusCallLabel.text = AMLocalizedString(@"calling...", @"Label shown when you receive an incoming call, before start the call.");
+                self.statusCallLabel.text = AMLocalizedString(@"calling...", @"Label shown when you call someone (outgoing call), before the call starts.");
                 
                 if (@available(iOS 10.0, *)) {
                     NSUUID *uuid = [[NSUUID alloc] init];
