@@ -7,8 +7,8 @@
 #import "DevicePermissionsHelper.h"
 #import "MEGAReachabilityManager.h"
 #import "UIDevice+MNZCategory.h"
-
-#import "CameraUploads.h"
+#import "CameraUploadManager.h"
+#import "CameraUploadManager+Settings.h"
 #import "CameraUploadsTableViewController.h"
 #import "PhotosViewController.h"
 
@@ -63,44 +63,39 @@
 #pragma mark - IBActions
 
 - (IBAction)uploadVideosValueChanged:(UISwitch *)sender {
-    [CameraUploads syncManager].isUploadVideosEnabled = ![CameraUploads syncManager].isUploadVideosEnabled;
-    [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:[CameraUploads syncManager].isUploadVideosEnabled] forKey:kIsUploadVideosEnabled];
+    CameraUploadManager.videoUploadEnabled = sender.isOn;
 }
 
 - (IBAction)useCellularConnectionValueChanged:(UISwitch *)sender {
-    [CameraUploads syncManager].isUseCellularConnectionEnabled = ![CameraUploads syncManager].isUseCellularConnectionEnabled;
-    [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:[CameraUploads syncManager].isUseCellularConnectionEnabled] forKey:kIsUseCellularConnectionEnabled];
+    CameraUploadManager.cellularUploadAllowed = sender.isOn;
 }
 
 - (IBAction)skipTouchUpInside:(UIButton *)sender {
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [self dismissViewControllerAnimated:YES completion:^{
+        if (!CameraUploadManager.isCameraUploadEnabled) {
+            [CameraUploadManager clearLocalSettings];
+        }
+    }];
 }
 
 - (IBAction)enableTouchUpInside:(UIButton *)sender {
     [PHPhotoLibrary requestAuthorization:^(PHAuthorizationStatus status) {
         switch (status) {
-            case PHAuthorizationStatusNotDetermined:
-                break;
-                
             case PHAuthorizationStatusAuthorized: {
                 MEGALogInfo(@"Enable Camera Uploads");
-                [[CameraUploads syncManager] setIsCameraUploadsEnabled:YES];
-                [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:[CameraUploads syncManager].isCameraUploadsEnabled] forKey:kIsCameraUploadsEnabled];
-                
-                [self dismissViewControllerAnimated:YES completion:^{
-                    [SVProgressHUD showImage:[UIImage imageNamed:@"hudCameraUploads"] status:AMLocalizedString(@"cameraUploadsEnabled", nil)];
-                }];
+                [CameraUploadManager.shared enableCameraUpload];
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [self dismissViewControllerAnimated:YES completion:^{
+                        [SVProgressHUD showImage:[UIImage imageNamed:@"hudCameraUploads"] status:AMLocalizedString(@"cameraUploadsEnabled", nil)];
+                    }];
+                });
                 break;
             }
-                
-            case PHAuthorizationStatusRestricted:
-                break;
-                
-            case PHAuthorizationStatusDenied:{
-                [self dismissViewControllerAnimated:YES completion:nil];
+            case PHAuthorizationStatusDenied: {
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    [self presentViewController:DevicePermissionsHelper.photosPermissionDeniedAlertController animated:YES completion:nil];
-
+                    [self dismissViewControllerAnimated:YES completion:^{
+                        [self presentViewController:DevicePermissionsHelper.photosPermissionDeniedAlertController animated:YES completion:nil];
+                    }];
                 });
                 break;
             }
