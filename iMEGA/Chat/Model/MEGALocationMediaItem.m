@@ -79,7 +79,7 @@
     NSData *imageData = [[NSData alloc] initWithBase64EncodedString:self.message.containsMeta.geolocation.image options:NSDataBase64DecodingIgnoreUnknownCharacters];
     UIImage *image = [UIImage imageWithData:imageData];
     geolocationView.imageView.image = image;
-    geolocationView.titleLabel.text = @"Pinned Location";
+    geolocationView.titleLabel.text = AMLocalizedString(@"Pinned Location", @"Text shown in location-type messages");
     geolocationView.subtitleLabel.text = [NSString mnz_convertCoordinatesLatitude:self.message.containsMeta.geolocation.latitude longitude:self.message.containsMeta.geolocation.longitude];
     
     if (@available(iOS 11.0, *)) {
