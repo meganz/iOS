@@ -1364,8 +1364,10 @@
 /* Between paragraph 5 and 6 we have to put the string with the 'autorenewableDescription' key */
 /* Paragraph 6 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
 "generalDescriptionParagraph6"="For more info, please check our website: https://mega.nz/\nTerms of Service: https://mega.nz/terms\nPrivacy Policy: https://mega.nz/privacy";
-/* Label shown when you receive an incoming call, before start the call. */
+/* Label shown when you call someone (outgoing call), before the call starts. */
 "calling..."="Tumatawag...";
+/* notification subtitle of incoming calls */
+"Incoming call"="Padating na tawag";
 /* Notification text body shown when you have missed one audio call */
 "missedAudioCall"="Missed audio call";
 /* Notification text body shown when you have missed several audio calls. [A] = {number of missed audio calls} */

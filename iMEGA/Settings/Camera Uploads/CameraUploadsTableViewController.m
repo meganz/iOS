@@ -5,6 +5,7 @@
 #import "NSString+MNZCategory.h"
 #import "CameraUploadManager.h"
 #import "CameraUploadManager+Settings.h"
+#import "DevicePermissionsHelper.h"
 #import "Helper.h"
 #import "UIViewController+MNZCategory.h"
 
@@ -74,7 +75,7 @@
                 case PHAuthorizationStatusDenied: {
                     dispatch_async(dispatch_get_main_queue(), ^{
                         MEGALogInfo(@"Disable Camera Uploads");
-                        [self showPhotoLibraryPermissionAlert];
+                        [self presentViewController:DevicePermissionsHelper.photosPermissionDeniedAlertController animated:YES completion:nil];
                         [self refreshUI];
                     });
                     break;
