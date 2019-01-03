@@ -70,6 +70,7 @@
     self.searchController.searchBar.barTintColor = UIColor.whiteColor;
     self.searchController.searchBar.tintColor = UIColor.mnz_redMain;
     self.searchController.searchBar.frame = CGRectMake(0, 0, self.view.frame.size.width, self.searchController.searchBar.frame.size.height);
+    self.searchController.searchBar.autoresizingMask = UIViewAutoresizingFlexibleWidth;
     [self.view addSubview:self.searchController.searchBar];
     
     self.navigationItem.title = AMLocalizedString(@"Send Location", @"Alert title shown when the user opens a shared Geolocation for the first time from any client, we will show a confirmation dialog warning the user that he is now leaving the E2EE paradigm");
