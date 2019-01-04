@@ -475,7 +475,7 @@
         NSMutableArray *selectedNodesMutableArray = self.selectedNodesArray.mutableCopy;
         NSArray *filesAndFolders = selectedNodesMutableArray.mnz_numberOfFilesAndFolders;
         MEGAMoveRequestDelegate *moveRequestDelegate = [[MEGAMoveRequestDelegate alloc] initWithFiles:[filesAndFolders[0] unsignedIntegerValue] folders:[filesAndFolders[1] unsignedIntegerValue] completion:^{
-            [self dismissViewControllerAnimated:YES completion:nil];
+            [self dismiss];
         }];
         
         for (MEGANode *n in self.selectedNodesArray) {
@@ -512,7 +512,7 @@
     UIAlertAction *createFolderAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"createFolderButton", @"Title button for the create folder alert.") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         if ([MEGAReachabilityManager isReachableHUDIfNot]) {
             UITextField *textField = [[newFolderAlertController textFields] firstObject];
-            MEGANodeList *childrenNodeList = [[MEGASdkManager sharedMEGASdk] nodeListSearchForNode:self.parentNode searchString:textField.text];
+            MEGANodeList *childrenNodeList = [[MEGASdkManager sharedMEGASdk] nodeListSearchForNode:self.parentNode searchString:textField.text recursive:NO];
             if ([childrenNodeList mnz_existsFolderWithName:textField.text]) {
                 [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"There is already a folder with the same name", @"A tooltip message which is shown when a folder name is duplicated during renaming or creation.")];
             } else {

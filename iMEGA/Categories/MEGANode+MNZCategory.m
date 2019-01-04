@@ -7,9 +7,9 @@
 #import "SVProgressHUD.h"
 
 #import "Helper.h"
-#import "MEGANode.h"
 #import "MEGAMoveRequestDelegate.h"
 #import "MEGANodeList+MNZCategory.h"
+#import "MEGALinkManager.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGARemoveRequestDelegate.h"
 #import "MEGARenameRequestDelegate.h"
@@ -28,7 +28,6 @@
 #import "MEGANavigationController.h"
 #import "MEGAPhotoBrowserViewController.h"
 #import "MEGAQLPreviewController.h"
-#import "MyAccountHallViewController.h"
 #import "PreviewDocumentViewController.h"
 #import "SharedItemsViewController.h"
 
@@ -416,27 +415,18 @@
         }
 
         if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
+            [Helper downloadNode:self folderPath:Helper.relativePathForOffline isFolderLink:isFolderLink shouldOverwrite:NO];
+            
             [viewController dismissViewControllerAnimated:YES completion:^{
-                UIViewController *rootVC = UIApplication.sharedApplication.delegate.window.rootViewController;
-                if ([rootVC isKindOfClass:MainTabBarController.class]) {
-                    MainTabBarController *mainTBC = (MainTabBarController *)rootVC;
-                    mainTBC.selectedIndex = MYACCOUNT;
-                    MEGANavigationController *navigationController = [mainTBC.childViewControllers objectAtIndex:MYACCOUNT];
-                    MyAccountHallViewController *myAccountHallVC = navigationController.viewControllers.firstObject;
-                    [myAccountHallVC openOffline];
-                }
-                
                 [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:AMLocalizedString(@"downloadStarted", nil)];
-                
-                [Helper downloadNode:self folderPath:[Helper relativePathForOffline] isFolderLink:isFolderLink shouldOverwrite:NO];
             }];
         } else {
             if (isFolderLink) {
-                [[Helper nodesFromLinkMutableArray] addObject:self];
-                [Helper setSelectedOptionOnLink:4]; //Download folder or nodes from link
+                [MEGALinkManager.nodesFromLinkMutableArray addObject:self];
+                MEGALinkManager.selectedOption = LinkOptionDownloadFolderOrNodes;
             } else {
-                [Helper setLinkNode:self];
-                [Helper setSelectedOptionOnLink:2]; //Download file from link
+                [MEGALinkManager.nodesFromLinkMutableArray addObject:self];
+                MEGALinkManager.selectedOption = LinkOptionDownloadNode;
             }
             
             LoginViewController *loginVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"LoginViewControllerID"];
@@ -464,11 +454,11 @@
             }];
         } else {
             if (isFolderLink) {
-                [[Helper nodesFromLinkMutableArray] addObject:self];
-                [Helper setSelectedOptionOnLink:3]; //Import folder or nodes from link
+                [MEGALinkManager.nodesFromLinkMutableArray addObject:self];
+                MEGALinkManager.selectedOption = LinkOptionImportFolderOrNodes;
             } else {
-                [Helper setLinkNode:self];
-                [Helper setSelectedOptionOnLink:1]; //Import file from link
+                [MEGALinkManager.nodesFromLinkMutableArray addObject:self];
+                MEGALinkManager.selectedOption = LinkOptionImportNode;
             }
             
             LoginViewController *loginVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"LoginViewControllerID"];
