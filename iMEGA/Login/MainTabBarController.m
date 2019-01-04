@@ -256,7 +256,7 @@
                 localNotification.alertTitle = @"MEGA";
                 localNotification.soundName = @"incoming_voice_video_call_iOS9.mp3";
                 localNotification.fireDate = [NSDate dateWithTimeIntervalSinceNow:0];
-                localNotification.alertBody = [NSString stringWithFormat:@"%@: %@", chatRoom.title, AMLocalizedString(@"calling...", @"Label shown when you receive an incoming call, before start the call.")];
+                localNotification.alertBody = [NSString stringWithFormat:@"%@: %@", chatRoom.title, AMLocalizedString(@"Incoming call", @"notification subtitle of incoming calls")];
                 localNotification.userInfo = @{@"chatId" : @(call.chatId),
                                                @"callId" : @(call.callId)
                                                };
@@ -306,6 +306,8 @@
                 [messagesViewController updateUnreadLabel];
             }
         }        
+    } else if (item.changes == MEGAChatListItemChangeTypeArchived && item.unreadCount) {
+        [UIApplication sharedApplication].applicationIconBadgeNumber = api.unreadChats;
     }
 }
 
@@ -337,14 +339,14 @@
                             if (granted) {
                                 [self presentRingingCall:api call:[api chatCallForCallId:call.callId]];
                             } else {
-                                [self presentViewController:[DevicePermissionsHelper videoPermisionAlertController] animated:YES completion:nil];
+                                [self presentViewController:DevicePermissionsHelper.videoPermissionAlertController animated:YES completion:nil];
                             }
                         }];
                     } else {
                         [self presentRingingCall:api call:[api chatCallForCallId:call.callId]];
                     }
                 } else {
-                    [self presentViewController:[DevicePermissionsHelper audioPermisionAlertController] animated:YES completion:nil];
+                    [self presentViewController:DevicePermissionsHelper.audioPermissionAlertController animated:YES completion:nil];
                 }
             }];
             break;

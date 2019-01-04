@@ -663,7 +663,7 @@ static NSString* const B = @"[B]";
             if (data) {
                 CGImageSourceRef imageData = CGImageSourceCreateWithData((CFDataRef)data, NULL);
                 if (imageData) {
-                    NSDictionary *metadata = (__bridge NSDictionary *)CGImageSourceCopyPropertiesAtIndex(imageData, 0, NULL);
+                    NSDictionary *metadata = (__bridge_transfer NSDictionary *)CGImageSourceCopyPropertiesAtIndex(imageData, 0, NULL);
                     
                     CFRelease(imageData);
                     

@@ -614,7 +614,9 @@ static MEGAIndexer *indexer;
             [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:filePath.mnz_relativeLocalPath parent:parentNode appData:appData isSourceTemporary:YES];
         }
         
-        [[Helper uploadingNodes] addObject:uploadTransfer.localIdentifier];
+        if (uploadTransfer.localIdentifier) {
+            [[Helper uploadingNodes] addObject:uploadTransfer.localIdentifier];
+        }
         [[MEGAStore shareInstance] deleteUploadTransfer:uploadTransfer];
     } node:^(MEGANode *node) {
         if ([[[MEGASdkManager sharedMEGASdk] parentNodeForNode:node] handle] == parentNode.handle) {
@@ -758,7 +760,9 @@ static MEGAIndexer *indexer;
     }
     
     if (reindex) {
-        [indexer index:node];
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+            [indexer index:node];
+        });
     }
 }
 
@@ -1163,6 +1167,12 @@ static MEGAIndexer *indexer;
     searchTextField.tintColor = UIColor.mnz_green00BFA5;
     
     return searchController;
+}
+
++ (void)resetSearchControllerFrame:(UISearchController *)searchController {
+    searchController.view.frame = CGRectMake(0, UIApplication.sharedApplication.statusBarFrame.size.height, searchController.view.frame.size.width, searchController.view.frame.size.height);
+    searchController.searchBar.superview.frame = CGRectMake(0, 0, searchController.searchBar.superview.frame.size.width, searchController.searchBar.superview.frame.size.height);
+    searchController.searchBar.frame = CGRectMake(0, 0, searchController.searchBar.frame.size.width, searchController.searchBar.frame.size.height);
 }
 
 #pragma mark - Manage session

@@ -27,7 +27,7 @@
 #import "LinkOption.h"
 #import "UnavailableLinkView.h"
 
-@interface FolderLinkViewController () <UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, UISearchResultsUpdating, UISearchDisplayDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAGlobalDelegate, MEGARequestDelegate, CustomActionViewControllerDelegate> {
+@interface FolderLinkViewController () <UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, UISearchResultsUpdating, UISearchDisplayDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAGlobalDelegate, MEGARequestDelegate, CustomActionViewControllerDelegate, UISearchControllerDelegate> {
     
     BOOL isLoginDone;
     BOOL isFetchNodesDone;
@@ -72,6 +72,8 @@
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     
     self.searchController = [Helper customSearchControllerWithSearchResultsUpdaterDelegate:self searchBarDelegate:self];
+    self.searchController.delegate = self;
+
     self.definesPresentationContext = YES;
     
     isLoginDone = NO;
@@ -138,7 +140,6 @@
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     
-    self.navigationController.toolbarHidden = YES;
     
     [[MEGASdkManager sharedMEGASdkFolder] removeMEGAGlobalDelegate:self];
     [[MEGASdkManager sharedMEGASdkFolder] removeMEGARequestDelegate:self];
@@ -159,6 +160,15 @@
         }
         
         [self.tableView reloadEmptyDataSet];
+        if (self.searchController.active) {
+            if (UIDevice.currentDevice.iPad) {
+                if (self != UIApplication.mnz_visibleViewController) {
+                    [Helper resetSearchControllerFrame:self.searchController];
+                }
+            } else {
+                [Helper resetSearchControllerFrame:self.searchController];
+            }
+        }
     } completion:nil];
 }
 
@@ -363,6 +373,22 @@
     [self.navigationController presentViewController:photoBrowserVC animated:YES completion:nil];
 }
 
+- (void)setTableViewEditing:(BOOL)editing animated:(BOOL)animated {
+    [self.tableView setEditing:editing animated:animated];
+    
+    if (editing) {
+        for (NodeTableViewCell *cell in self.tableView.visibleCells) {
+            UIView *view = [[UIView alloc] init];
+            view.backgroundColor = UIColor.clearColor;
+            cell.selectedBackgroundView = view;
+        }
+    } else {
+        for (NodeTableViewCell *cell in self.tableView.visibleCells){
+            cell.selectedBackgroundView = nil;
+        }
+    }
+}
+
 #pragma mark - IBActions
 
 - (IBAction)cancelAction:(UIBarButtonItem *)sender {
@@ -405,7 +431,7 @@
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated {
     [super setEditing:editing animated:animated];
     
-    [_tableView setEditing:editing animated:YES];
+    [self setTableViewEditing:editing animated:YES];
     
     [self setToolbarButtonsEnabled:!editing];
     
@@ -493,22 +519,20 @@
     }
     
     if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
-        [self dismissViewControllerAnimated:YES completion:^{
-            if ([UIApplication.sharedApplication.keyWindow.rootViewController isKindOfClass:MainTabBarController.class]) {
-                MainTabBarController *mainTBC = (MainTabBarController *)UIApplication.sharedApplication.keyWindow.rootViewController;
-                [mainTBC showOffline];
+        if (self.selectedNodesArray.count) {
+            for (MEGANode *node in self.selectedNodesArray) {
+                [Helper downloadNode:node folderPath:Helper.relativePathForOffline isFolderLink:YES shouldOverwrite:NO];
             }
-            
-            [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:AMLocalizedString(@"downloadStarted", nil)];
-            
-            if (self.selectedNodesArray.count != 0) {
-                for (MEGANode *node in self.selectedNodesArray) {
-                    [Helper downloadNode:node folderPath:[Helper relativePathForOffline] isFolderLink:YES shouldOverwrite:NO];
-                }
-            } else {
-                [Helper downloadNode:self.parentNode folderPath:[Helper relativePathForOffline] isFolderLink:YES shouldOverwrite:NO];
-            }
-        }];
+        } else {
+            [Helper downloadNode:self.parentNode folderPath:Helper.relativePathForOffline isFolderLink:YES shouldOverwrite:NO];
+        }
+        
+        //FIXME: Temporal fix. This lets the SDK process some transfers before going back to the Transfers view (In case it is on the navigation stack)
+        [SVProgressHUD show];
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:AMLocalizedString(@"downloadStarted", @"Message shown when a download starts")];
+            [self dismissViewControllerAnimated:YES completion:nil];
+        });
     } else {
         if (self.selectedNodesArray.count != 0) {
             [MEGALinkManager.nodesFromLinkMutableArray addObjectsFromArray:self.selectedNodesArray];
@@ -603,12 +627,12 @@
         }
         
         cell.infoLabel.text = [Helper sizeAndDateForNode:node api:[MEGASdkManager sharedMEGASdkFolder]];
-        
     } else if (node.isFolder) {
         [cell.thumbnailImageView mnz_imageForNode:node];
         
         cell.infoLabel.text = [Helper filesAndFoldersInFolderNode:node api:[MEGASdkManager sharedMEGASdkFolder]];
     }
+    cell.thumbnailPlayImageView.hidden = !node.name.mnz_isVideoPathExtension;
     
     cell.nameLabel.text = node.name;
     
@@ -620,7 +644,16 @@
                 [tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
             }
         }
+        
+        UIView *view = [[UIView alloc] init];
+        view.backgroundColor = UIColor.clearColor;
+        cell.selectedBackgroundView = view;
+    } else {
+        cell.selectedBackgroundView = nil;
     }
+    
+    cell.separatorView.layer.borderColor = UIColor.mnz_grayCCCCCC.CGColor;
+    cell.separatorView.layer.borderWidth = 0.5;
     
     if (@available(iOS 11.0, *)) {
         cell.thumbnailImageView.accessibilityIgnoresInvertColors = YES;
@@ -712,6 +745,14 @@
         self.searchNodesArray = [self.nodesArray filteredArrayUsingPredicate:resultPredicate];
     }
     [self.tableView reloadData];
+}
+
+#pragma mark - UISearchControllerDelegate
+
+- (void)didPresentSearchController:(UISearchController *)searchController {
+    if (UIDevice.currentDevice.iPhoneDevice && UIDeviceOrientationIsLandscape(UIDevice.currentDevice.orientation)) {
+        [Helper resetSearchControllerFrame:searchController];
+    }
 }
 
 #pragma mark - UILongPressGestureRecognizer
