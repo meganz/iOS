@@ -171,7 +171,7 @@
             } else {
                 sender.selectedSegmentIndex = 0;
                 [self valueChangedAtSegmentedControl:sender];
-                [self presentViewController:[DevicePermissionsHelper videoPermisionAlertController] animated:YES completion:nil];
+                [self presentViewController:DevicePermissionsHelper.videoPermissionAlertController animated:YES completion:nil];
             }
             
             break;

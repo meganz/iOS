@@ -828,7 +828,7 @@
                                                 <constraint firstItem="JhP-sF-uyB" firstAttribute="top" secondItem="1Vq-gO-h5T" secondAttribute="bottom" constant="3" id="v4e-EW-eR3"/>
                                             </constraints>
                                         </tableViewCellContentView>
-                                        <color key="tintColor" red="0.95294117647058818" green="0.047058823529411764" blue="0.078431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="tintColor" red="0.0" green="0.74901960779999999" blue="0.64705882349999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="JhP-sF-uyB" secondAttribute="trailing" constant="10" id="otB-bN-qQM"/>
                                         </constraints>
@@ -1477,7 +1477,7 @@
                                                 <constraint firstItem="RkJ-YH-mFt" firstAttribute="leading" secondItem="qEg-Qp-Sfr" secondAttribute="trailing" constant="44" id="s2k-CM-nKX"/>
                                             </constraints>
                                         </tableViewCellContentView>
-                                        <color key="tintColor" red="0.95294117647058818" green="0.047058823529411764" blue="0.078431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="tintColor" red="0.0" green="0.74901960779999999" blue="0.64705882349999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <inset key="separatorInset" minX="58" minY="0.0" maxX="0.0" maxY="0.0"/>
                                         <connections>
                                             <outlet property="infoLabel" destination="fnS-9K-HhH" id="ugA-MB-sZG"/>

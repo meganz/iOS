@@ -131,14 +131,9 @@ static NSString *nodeToPresentBase64Handle;
             if (![Helper isFreeSpaceEnoughToDownloadNode:node isFolderLink:NO]) {
                 return;
             }
-            
-            if ([UIApplication.sharedApplication.keyWindow.rootViewController isKindOfClass:MainTabBarController.class]) {
-                MainTabBarController *mainTBC = (MainTabBarController *)UIApplication.sharedApplication.keyWindow.rootViewController;
-                [mainTBC showOffline];
                 
-                [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:AMLocalizedString(@"downloadStarted", @"Message shown when a download starts")];
-                [Helper downloadNode:node folderPath:Helper.relativePathForOffline isFolderLink:NO shouldOverwrite:NO];
-            }
+            [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:AMLocalizedString(@"downloadStarted", @"Message shown when a download starts")];
+            [Helper downloadNode:node folderPath:Helper.relativePathForOffline isFolderLink:NO shouldOverwrite:NO];
             break;
         }
             
@@ -158,15 +153,10 @@ static NSString *nodeToPresentBase64Handle;
                     return;
                 }
             }
-            
-            if ([UIApplication.sharedApplication.keyWindow.rootViewController isKindOfClass:MainTabBarController.class]) {
-                MainTabBarController *mainTBC = (MainTabBarController *)UIApplication.sharedApplication.keyWindow.rootViewController;
-                [mainTBC showOffline];
                 
-                [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:AMLocalizedString(@"downloadStarted", @"Message shown when a download starts")];
-                for (MEGANode *node in MEGALinkManager.nodesFromLinkMutableArray) {
-                    [Helper downloadNode:node folderPath:Helper.relativePathForOffline isFolderLink:YES shouldOverwrite:NO];
-                }
+            [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:AMLocalizedString(@"downloadStarted", @"Message shown when a download starts")];
+            for (MEGANode *node in MEGALinkManager.nodesFromLinkMutableArray) {
+                [Helper downloadNode:node folderPath:Helper.relativePathForOffline isFolderLink:YES shouldOverwrite:NO];
             }
             break;
         }

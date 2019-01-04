@@ -44,20 +44,7 @@
     switch (transfer.type) {
         case MEGATransferTypeDownload: {
             MEGANode *node = [[MEGASdkManager sharedMEGASdk] nodeForHandle:transfer.nodeHandle];
-            if (node.hasThumbnail) {
-                NSString *thumbnailFilePath = [Helper pathForNode:node inSharedSandboxCacheDirectory:@"thumbnailsV3"];
-                if ([[NSFileManager defaultManager] fileExistsAtPath:thumbnailFilePath]) {
-                    self.iconImageView.image = [UIImage imageWithContentsOfFile:thumbnailFilePath];
-                } else {
-                    MEGAGetThumbnailRequestDelegate *getThumbnailRequestDelegate = [[MEGAGetThumbnailRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
-                        self.iconImageView.image = [UIImage imageWithContentsOfFile:request.file];
-                    }];
-                    [[MEGASdkManager sharedMEGASdk] getThumbnailNode:node destinationFilePath:thumbnailFilePath delegate:getThumbnailRequestDelegate];
-                    [self.iconImageView mnz_imageForNode:node];
-                }
-            } else {
-                [self.iconImageView mnz_imageForNode:node];
-            }
+            [self.iconImageView mnz_setThumbnailByNode:node];
             self.thumbnailSet = YES;
             break;
         }
@@ -107,9 +94,22 @@
     if (fetchResult == nil) {
         return;
     }
+    
     PHAsset *asset = fetchResult.firstObject;
-    PHAssetResource *assetResource = [PHAssetResource assetResourcesForAsset:asset].firstObject;
-    NSString *name = [[NSString mnz_fileNameWithDate:asset.creationDate] stringByAppendingPathExtension:assetResource.originalFilename.mnz_lastExtensionInLowercase];
+    NSString *extension;
+    
+    if ([PHAssetResource assetResourcesForAsset:asset].count > 0) {
+        PHAssetResource *assetResource = [PHAssetResource assetResourcesForAsset:asset].firstObject;
+        if (assetResource.originalFilename) {
+            extension = assetResource.originalFilename.mnz_lastExtensionInLowercase;
+        }
+    }
+    
+    NSString *name = [NSString mnz_fileNameWithDate:asset.creationDate];
+    if (extension) {
+        name = [name stringByAppendingPathExtension:extension];
+    }
+    
     self.nameLabel.text = name;
 
     PHImageRequestOptions *options = [[PHImageRequestOptions alloc] init];
@@ -120,7 +120,7 @@
         if (result) {
             self.iconImageView.image = result;
         } else {
-            [self.iconImageView mnz_setImageForExtension:assetResource.originalFilename.pathExtension];
+            [self.iconImageView mnz_setImageForExtension:extension];
         }
     }];
     
