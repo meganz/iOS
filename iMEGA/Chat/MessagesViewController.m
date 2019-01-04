@@ -19,6 +19,7 @@
 #import "MEGAMessagesTypingIndicatorFoorterView.h"
 #import "MEGANode+MNZCategory.h"
 #import "MEGANodeList+MNZCategory.h"
+#import "MEGALinkManager.h"
 #import "MEGAOpenMessageHeaderView.h"
 #import "MEGAProcessAsset.h"
 #import "MEGAReachabilityManager.h"
@@ -28,7 +29,6 @@
 #import "MEGATransfer+MNZCategory.h"
 #import "NSAttributedString+MNZCategory.h"
 #import "NSString+MNZCategory.h"
-#import "NSURL+MNZCategory.h"
 #import "UIImage+MNZCategory.h"
 #import "UIApplication+MNZCategory.h"
 
@@ -245,6 +245,12 @@ const NSUInteger kMaxMessagesToLoad = 256;
     
     [self showOrHideJumpToBottom];
     self.initialToolbarHeight = self.inputToolbar.frame.size.height;
+    
+    if (@available(iOS 11.0, *)) { //Fix for devices with safe area not rendering navbar buttons when the VC is instantiated
+        if ((UIDeviceOrientationIsLandscape(UIDevice.currentDevice.orientation) || UIDevice.currentDevice.orientation == UIDeviceOrientationUnknown) && self.view.safeAreaInsets.left != 0) {
+            [self configureNavigationBar];
+        }
+    }
 }
 
 - (void)willEnterForeground {
@@ -2186,9 +2192,12 @@ const NSUInteger kMaxMessagesToLoad = 256;
                 [self.navigationController pushViewController:chatAttachedContactsVC animated:YES];
             }
         } else if (message.type == MEGAChatMessageTypeContainsMeta) {
-            [Helper presentSafariViewControllerWithURL:[NSURL URLWithString:message.containsMeta.richPreview.url]];
+            NSURL *url = [NSURL URLWithString:message.containsMeta.richPreview.url];
+            MEGALinkManager.linkURL = url;
+            [MEGALinkManager processLinkURL:url];
         } else if (message.node) {
-            [message.MEGALink mnz_showLinkView];
+            MEGALinkManager.linkURL = message.MEGALink;
+            [MEGALinkManager processLinkURL:message.MEGALink];
         }
     }
 }
@@ -2589,12 +2598,12 @@ const NSUInteger kMaxMessagesToLoad = 256;
             [self customNavigationBarLabel];
             [self updateToolbarPlaceHolder];
             
-            [self.collectionView performBatchUpdates:^{
-                [self.collectionView.collectionViewLayout invalidateLayoutWithContext:[JSQMessagesCollectionViewFlowLayoutInvalidationContext context]];
-                [self.collectionView reloadItemsAtIndexPaths:self.collectionView.indexPathsForVisibleItems];
-            } completion:^(BOOL finished) {
-                [self scrollToBottomAnimated:YES];
-            }];
+            if (self.collectionView.indexPathsForVisibleItems.count > 0) {
+                [self.collectionView performBatchUpdates:^{
+                    [self.collectionView.collectionViewLayout invalidateLayoutWithContext:[JSQMessagesCollectionViewFlowLayoutInvalidationContext context]];
+                    [self.collectionView reloadItemsAtIndexPaths:self.collectionView.indexPathsForVisibleItems];
+                } completion:nil];
+            }
             
             break;
         }

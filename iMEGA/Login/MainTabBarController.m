@@ -4,13 +4,17 @@
 #import <UserNotifications/UserNotifications.h>
 
 #import "CallViewController.h"
+#import "ChatRoomsViewController.h"
+#import "DevicePermissionsHelper.h"
+#import "Helper.h"
+#import "MEGANavigationController.h"
 #import "MEGAProviderDelegate.h"
 #import "MEGAChatCall+MNZCategory.h"
+#import "MyAccountHallViewController.h"
 #import "MEGAUserAlertList+MNZCategory.h"
 #import "MessagesViewController.h"
 #import "NSString+MNZCategory.h"
 #import "UIApplication+MNZCategory.h"
-#import "DevicePermissionsHelper.h"
 
 @interface MainTabBarController () <UITabBarControllerDelegate, MEGAGlobalDelegate, MEGAChatCallDelegate>
 
@@ -144,6 +148,43 @@
     }
 }
 
+#pragma mark - Public
+
+- (void)openChatRoomNumber:(NSNumber *)chatNumber {
+    if (chatNumber) {
+        self.selectedIndex = CHAT;
+        MEGANavigationController *navigationController = [self.childViewControllers objectAtIndex:CHAT];
+        ChatRoomsViewController *chatRoomsVC = navigationController.viewControllers.firstObject;
+        
+        if ([MEGASdkManager sharedMEGAChatSdk].numCalls == 0) {
+            UIViewController *rootViewController = UIApplication.sharedApplication.delegate.window.rootViewController;
+            if (rootViewController.presentedViewController) {
+                [rootViewController dismissViewControllerAnimated:YES completion:^{
+                    [chatRoomsVC openChatRoomWithID:chatNumber.unsignedLongLongValue];
+                }];
+            } else {
+                [chatRoomsVC openChatRoomWithID:chatNumber.unsignedLongLongValue];
+            }
+        }
+    }
+}
+
+- (void)showAchievements {
+    self.selectedIndex = MYACCOUNT;
+    MEGANavigationController *navigationController = [self.childViewControllers objectAtIndex:MYACCOUNT];
+    MyAccountHallViewController *myAccountHallVC = navigationController.viewControllers.firstObject;
+    if ([[MEGASdkManager sharedMEGASdk] isAchievementsEnabled]) {
+        [myAccountHallVC openAchievements];
+    }
+}
+
+- (void)showOffline {
+    self.selectedIndex = MYACCOUNT;
+    MEGANavigationController *navigationController = [self.childViewControllers objectAtIndex:MYACCOUNT];
+    MyAccountHallViewController *myAccountHallVC = navigationController.viewControllers.firstObject;
+    [myAccountHallVC openOffline];
+}
+
 #pragma mark - Private
 
 - (void)reloadInsetsForTabBarItem:(UITabBarItem *)tabBarItem {
@@ -215,7 +256,7 @@
                 localNotification.alertTitle = @"MEGA";
                 localNotification.soundName = @"incoming_voice_video_call_iOS9.mp3";
                 localNotification.fireDate = [NSDate dateWithTimeIntervalSinceNow:0];
-                localNotification.alertBody = [NSString stringWithFormat:@"%@: %@", chatRoom.title, AMLocalizedString(@"calling...", @"Label shown when you receive an incoming call, before start the call.")];
+                localNotification.alertBody = [NSString stringWithFormat:@"%@: %@", chatRoom.title, AMLocalizedString(@"Incoming call", @"notification subtitle of incoming calls")];
                 localNotification.userInfo = @{@"chatId" : @(call.chatId),
                                                @"callId" : @(call.callId)
                                                };
