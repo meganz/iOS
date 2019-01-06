@@ -49,7 +49,7 @@ static NSString * const ShouldConvertHEVCVideo = @"ShouldConvertHEVCVideo";
     [NSUserDefaults.standardUserDefaults setBool:convertHEVCVideo forKey:ShouldConvertHEVCVideo];
 }
 
-+ (BOOL)shuoldConvertHEIFPhoto {
++ (BOOL)shouldConvertHEIFPhoto {
     return [NSUserDefaults.standardUserDefaults boolForKey:ShouldConvertHEIFPhoto];
 }
 

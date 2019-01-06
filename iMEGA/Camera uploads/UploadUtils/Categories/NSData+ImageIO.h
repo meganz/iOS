@@ -8,20 +8,19 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  Strip off GPS metadata from image EXIF if the image contains GPS metadata
 
- @return a NSData object by stripping off GPS metadata. If the current data doesn't contain GPS metadata, it will be returned.
+ @return a new NSData object by stripping off GPS metadata. If the current data doesn't contain GPS metadata, it will be returned.
  */
 - (NSData *)mnz_dataByStrippingOffGPSIfNeeded;
 
 
 /**
- add or overwrite image EXIF according to the given property list.
- 
- We will try to match the property index with the image index inside the image data source container. The first property will be used if we can not match the image index.
+ Convert the data to a new image UTI type, and provide the ability to strip off GPS info from EXIF
 
- @param properties a EXIF property list
- @return a NSData object by adding or overwritting the image EXIF according to the given property list
+ @param imageUTIType new image data UTI type. If it is null, image type won't be converted.
+ @param shouldStripGPSInfo whether to strip off GPS info from EXIF
+ @return a new NSData object by converting to the given type, and the GPS info will be stripped off if `shouldStripGPSInfo` is YES.
  */
-- (NSData *)mnz_dataByAddingImageProperties:(NSArray <NSDictionary *> *)properties;
+- (NSData *)mnz_dataByConvertingToType:(nullable NSString *)imageUTIType shouldStripGPSInfo:(BOOL)shouldStripGPSInfo;
 
 
 /**
