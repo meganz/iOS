@@ -8,28 +8,33 @@
         return self;
     }
     
-    NSDictionary *removeGPSDict = @{(__bridge NSString *)kCGImagePropertyGPSDictionary : (__bridge NSNull *)kCFNull};
-    return [self mnz_dataByAddingImageProperties:@[removeGPSDict]];
+    return [self mnz_dataByConvertingToType:nil shouldStripGPSInfo:YES];
 }
 
-- (NSData *)mnz_dataByAddingImageProperties:(NSArray <NSDictionary *> *)properties {
-    if (properties.count == 0) {
-        return self;
-    }
-    
+- (NSData *)mnz_dataByConvertingToType:(NSString *)imageUTIType shouldStripGPSInfo:(BOOL)shouldStripGPSInfo {
+    NSDictionary *removeGPSDict = @{(__bridge NSString *)kCGImagePropertyGPSDictionary : (__bridge NSNull *)kCFNull};
+    return [self mnz_dataByConvertingToType:imageUTIType andAddingImageProperties:shouldStripGPSInfo ? @[removeGPSDict] : @[]];
+}
+
+- (NSData *)mnz_dataByConvertingToType:(NSString *)imageUTIType andAddingImageProperties:(NSArray <NSDictionary *> *)properties {
     CGImageSourceRef source = CGImageSourceCreateWithData((__bridge CFDataRef)self, NULL);
     if (source) {
         NSMutableData *mutableData = [NSMutableData data];
-        
+        CFStringRef type = (__bridge CFStringRef)imageUTIType;
+        if (imageUTIType.length == 0) {
+            type = CGImageSourceGetType(source);
+        }
         size_t size = CGImageSourceGetCount(source);
-        CFStringRef type = CGImageSourceGetType(source);
         CGImageDestinationRef destination = CGImageDestinationCreateWithData((__bridge CFMutableDataRef)mutableData, type, size, NULL);
         
         if (destination) {
             for (size_t index = 0; index < size; index++) {
-                NSDictionary *property = properties[0];
-                if (properties.count > index) {
-                    property = properties[index];
+                NSDictionary *property = nil;
+                if (properties.count > 0) {
+                    property = properties[0];
+                    if (properties.count > index) {
+                        property = properties[index];
+                    }
                 }
                 
                 CGImageDestinationAddImageFromSource(destination, source, index, (__bridge CFDictionaryRef)property);
