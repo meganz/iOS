@@ -60,7 +60,7 @@ static NSString * const kUTITypeHEICImage = @"public.heic";
         [self finishOperationWithStatus:CameraAssetUploadStatusDone shouldUploadNextAsset:YES];
         return;
     }
-    
+
     NSString *fileExtension;
     NSData *processedImageData;
     if ([CameraUploadManager shouldConvertHEIFPhoto] && UTTypeConformsTo((__bridge CFStringRef)dataUTI, (__bridge CFStringRef)kUTITypeHEICImage)) {

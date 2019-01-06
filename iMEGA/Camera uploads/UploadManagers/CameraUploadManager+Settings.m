@@ -23,6 +23,7 @@ static NSString * const ShouldConvertHEVCVideo = @"ShouldConvertHEVCVideo";
 
 + (void)setCameraUploadEnabled:(BOOL)cameraUploadEnabled {
     [NSUserDefaults.standardUserDefaults setBool:cameraUploadEnabled forKey:IsCameraUploadsEnabled];
+    [self setConvertHEIFPhoto:YES];
 }
 
 + (BOOL)isVideoUploadEnabled {
