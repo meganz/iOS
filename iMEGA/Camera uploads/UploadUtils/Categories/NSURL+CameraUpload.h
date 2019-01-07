@@ -10,7 +10,7 @@ NS_ASSUME_NONNULL_BEGIN
  
  @return The URL for camera upload directory
  */
-@property (class, nonatomic, readonly) NSURL *cameraUploadURL;
+@property (class, nonatomic, readonly) NSURL *mnz_cameraUploadURL;
 
 + (NSURL *)mnz_assetDirectoryURLForLocalIdentifier:(NSString *)localIdentifier;
 
