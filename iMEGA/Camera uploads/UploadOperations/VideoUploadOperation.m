@@ -8,7 +8,11 @@
 #import "CameraUploadRecordManager.h"
 #import "CameraUploadManager.h"
 #import "CameraUploadRequestDelegate.h"
-#import "CameraUploadFileNameRecordManager.h"
+#import "CameraUploadManager+Settings.h"
+#import "AVAsset+CameraUpload.h"
+#import "AVURLAsset+CameraUpload.h"
+#import "MEGAConstants.h"
+#import "PHAsset+CameraUpload.h"
 
 @implementation VideoUploadOperation
 
@@ -29,68 +33,85 @@
     options.deliveryMode = PHVideoRequestOptionsDeliveryModeHighQualityFormat;
     options.networkAccessAllowed = YES;
     
-    // TODO: the preset should configurable in settings
     __weak __typeof__(self) weakSelf = self;
-    [PHImageManager.defaultManager requestExportSessionForVideo:self.uploadInfo.asset options:options exportPreset:AVAssetExportPresetHighestQuality resultHandler:^(AVAssetExportSession * _Nullable exportSession, NSDictionary * _Nullable info) {
-        if (exportSession) {
-            [weakSelf processRequestedVideoExportSession:exportSession];
+    [PHImageManager.defaultManager requestAVAssetForVideo:self.uploadInfo.asset options:options resultHandler:^(AVAsset * _Nullable asset, AVAudioMix * _Nullable audioMix, NSDictionary * _Nullable info) {
+        if (asset) {
+            if ([asset isMemberOfClass:[AVURLAsset class]]) {
+                AVURLAsset *urlAsset = (AVURLAsset *)asset;
+                self.uploadInfo.originalFingerprint = [MEGASdkManager.sharedMEGASdk fingerprintForFilePath:urlAsset.URL.path modificationTime:self.uploadInfo.asset.creationDate];
+                MEGANode *matchingNode = [self nodeForOriginalFingerprint:self.uploadInfo.originalFingerprint];
+                if (matchingNode) {
+                    MEGALogDebug(@"[Camera Upload] %@ finds existing node by original fingerprint", self);
+                    [self finishUploadForFingerprintMatchedNode:matchingNode];
+                    return;
+                }
+            }
+            
+            [weakSelf processVideoAsset:asset];
         } else {
-            MEGALogError(@"[Camera Upload] %@ error when to request export session %@", weakSelf, info);
+            MEGALogError(@"[Camera Upload] %@ request video asset failed", weakSelf);
             [weakSelf finishOperationWithStatus:CameraAssetUploadStatusFailed shouldUploadNextAsset:YES];
         }
     }];
 }
 
-- (void)processRequestedVideoExportSession:(AVAssetExportSession *)session {
-    // TODO: the format should be configurate, between HEVC and H.264
-    session.outputFileType = AVFileTypeMPEG4;
-    [AVAssetExportSession determineCompatibilityOfExportPreset:session.presetName withAsset:session.asset outputFileType:session.outputFileType completionHandler:^(BOOL compatible) {
-        if (compatible) {
-            if ([session.asset isMemberOfClass:[AVURLAsset class]]) {
-                AVURLAsset *urlAsset = (AVURLAsset *)session.asset;
-                
-                MEGALogDebug("[Camera Upload] %@ phasset creation time %@, phasset modification time %@, file creation time %@, file modification time %@", self, self.uploadInfo.asset.creationDate, self.uploadInfo.asset.modificationDate, [NSFileManager.defaultManager attributesOfItemAtPath:urlAsset.URL.path error:nil].fileCreationDate, [NSFileManager.defaultManager attributesOfItemAtPath:urlAsset.URL.path error:nil].fileModificationDate);
-                
-                self.uploadInfo.originalFingerprint = [MEGASdkManager.sharedMEGASdk fingerprintForFilePath:urlAsset.URL.path modificationTime:self.uploadInfo.asset.creationDate];
-                MEGANode *matchingNode = [self nodeForOriginalFingerprint:self.uploadInfo.originalFingerprint];
-                if (matchingNode) {
-                    MEGALogDebug(@"[Camera Upload] %@ finds existing node by original fingerprint", self);
-                    [self copyToParentNodeIfNeededForMatchingNode:matchingNode];
-                    [self finishOperationWithStatus:CameraAssetUploadStatusDone shouldUploadNextAsset:YES];
-                    return;
-                } else {
-                    MEGALogDebug(@"[Camera Upload] %@ original file size: %.2f M", self, [NSFileManager.defaultManager attributesOfItemAtPath:urlAsset.URL.path error:nil].fileSize / 1024.0f / 1024.0f);
-//                    [self compressVideoByExportSession:session];
-                    [self processOriginalURLAsset:urlAsset];
-                }
+- (void)processVideoAsset:(AVAsset *)asset {
+    if (CameraUploadManager.shouldConvertHEVCVideo && asset.mnz_containsHEVCCodec) {
+        [self transcodeHEVCVideoAsset:asset];
+    } else if ([asset isMemberOfClass:[AVURLAsset class]]) {
+        AVURLAsset *urlAsset = (AVURLAsset *)asset;
+        if (self.uploadInfo.location) {
+            if (urlAsset.mnz_isQuickTimeMovie) {
+                [self exportAsset:asset withPreset:AVAssetExportPresetPassthrough outputFileType:AVFileTypeQuickTimeMovie outputFileExtension:urlAsset.URL.pathExtension];
             } else {
-                [self compressVideoByExportSession:session];
+                [self exportAsset:asset withPreset:AVAssetExportPresetPassthrough outputFileType:AVFileTypeMPEG4 outputFileExtension:MEGAMP4FileExtension];
             }
         } else {
-            MEGALogError(@"[Camera Upload] %@ doesn't compatible with preset %@ and output file type %@", self, session.presetName, session.outputFileType);
+            [self uploadVideoAtURL:urlAsset.URL];
         }
-    }];
+    } else {
+        [self exportAsset:asset withPreset:AVAssetExportPresetPassthrough outputFileType:AVFileTypeQuickTimeMovie outputFileExtension:MEGAQuickTimeFileExtension];
+    }
 }
 
-- (void)compressVideoByExportSession:(AVAssetExportSession *)session {
-    MEGALogDebug(@"[Camera Upload] video estimate duration: %.2f, max duration: %.2f, estimate size: %.2f M", CMTimeGetSeconds(session.asset.duration), CMTimeGetSeconds(session.maxDuration), session.estimatedOutputFileLength / 1024.0f / 1024.0f)
+- (void)transcodeHEVCVideoAsset:(AVAsset *)asset {
+    NSString *preset;
+    switch (CameraUploadManager.HEVCToH264CompressionQuality) {
+        case CameraUploadVideoQualityOriginal:
+            preset = AVAssetExportPresetHighestQuality;
+            break;
+        case CameraUploadVideoQualityHigh:
+            preset = AVAssetExportPreset1920x1080;
+            break;
+        case CameraUploadVideoQualityMedium:
+            preset = AVAssetExportPreset1280x720;
+            break;
+        case CameraUploadVideoQualityLow:
+            preset = AVAssetExportPreset640x480;
+            break;
+    }
     
-    MEGALogDebug(@"[Camera Upload] %@ starts compressing video data with original dimensions: %@", self, NSStringFromCGSize([self dimensionsForAVAsset:session.asset]));
+    [self exportAsset:asset withPreset:preset outputFileType:AVFileTypeMPEG4 outputFileExtension:MEGAMP4FileExtension];
+}
 
-    NSString *proposedFileName = [[NSString mnz_fileNameWithDate:self.uploadInfo.asset.creationDate] stringByAppendingPathExtension:@"mp4"];
-    self.uploadInfo.fileName = [CameraUploadFileNameRecordManager.shared localUniqueFileNameForAssetLocalIdentifier:self.uploadInfo.asset.localIdentifier proposedFileName:proposedFileName];
+- (void)exportAsset:(AVAsset *)asset withPreset:(NSString *)preset outputFileType:(AVFileType)outputFileType outputFileExtension:(NSString *)extension {
+    MEGALogDebug(@"[Camera Upload] %@ starts exporting video data with original dimensions: %@", self, NSStringFromCGSize(asset.mnz_dimensions));
     
-    session.outputURL = self.uploadInfo.fileURL;
+    AVAssetExportSession *session = [AVAssetExportSession exportSessionWithAsset:asset presetName:preset];
+    session.outputFileType = outputFileType;
     session.canPerformMultiplePassesOverSourceMediaData = YES;
     session.shouldOptimizeForNetworkUse = YES;
     session.metadataItemFilter = [AVMetadataItemFilter metadataItemFilterForSharing];
+    
+    self.uploadInfo.fileName = [self.uploadInfo.asset mnz_cameraUploadFileNameWithExtension:extension];
+    session.outputURL = self.uploadInfo.fileURL;
     
     __weak __typeof__(self) weakSelf = self;
     [session exportAsynchronouslyWithCompletionHandler:^{
         switch (session.status) {
             case AVAssetExportSessionStatusCompleted:
                 MEGALogDebug(@"[Camera Upload] %@ has finished video compression", weakSelf);
-                [weakSelf processCompressedVideoFile];
+                [weakSelf checkAndEncryptVideoFile];
                 break;
             case AVAssetExportSessionStatusCancelled:
                 MEGALogDebug(@"[Camera Upload] %@ video compression got cancelled", weakSelf);
@@ -104,40 +125,28 @@
     }];
 }
 
-- (void)processCompressedVideoFile {
-    self.uploadInfo.fingerprint = [MEGASdkManager.sharedMEGASdk fingerprintForFilePath:self.uploadInfo.fileURL.path modificationTime:self.uploadInfo.asset.creationDate];
-    MEGANode *existingNode = [MEGASdkManager.sharedMEGASdk nodeForFingerprint:self.uploadInfo.fingerprint parent:self.uploadInfo.parentNode];
-    if (existingNode) {
-        MEGALogDebug(@"[Camera Upload] %@ finds existing node by fingerprint", self);
-        [self copyToParentNodeIfNeededForMatchingNode:existingNode];
-        [self finishOperationWithStatus:CameraAssetUploadStatusDone shouldUploadNextAsset:YES];
-        return;
-    } else {
-        [self encryptsFile];
-    }
-}
-
-- (void)processOriginalURLAsset:(AVURLAsset *)asset {
-    NSString *proposedFileName = [[NSString mnz_fileNameWithDate:self.uploadInfo.asset.creationDate] stringByAppendingPathExtension:asset.URL.pathExtension];
-    self.uploadInfo.fileName = [CameraUploadFileNameRecordManager.shared localUniqueFileNameForAssetLocalIdentifier:self.uploadInfo.asset.localIdentifier proposedFileName:proposedFileName];
-    self.uploadInfo.fingerprint = self.uploadInfo.originalFingerprint;
+- (void)uploadVideoAtURL:(NSURL *)URL {
+    self.uploadInfo.fileName = [self.uploadInfo.asset mnz_cameraUploadFileNameWithExtension:URL.pathExtension];
     NSError *error;
-    [NSFileManager.defaultManager copyItemAtURL:asset.URL toURL:self.uploadInfo.fileURL error:&error];
+    [NSFileManager.defaultManager copyItemAtURL:URL toURL:self.uploadInfo.fileURL error:&error];
     if (error) {
         MEGALogDebug(@"[Camera Upload] %@ got error when to copy original item %@", self, error);
         [self finishOperationWithStatus:CameraAssetUploadStatusFailed shouldUploadNextAsset:YES];
         return;
     }
-
-    [self encryptsFile];
+    
+    [self checkAndEncryptVideoFile];
 }
 
-#pragma mark - util methods
-
-- (CGSize)dimensionsForAVAsset:(AVAsset *)asset {
-    AVAssetTrack *videoTrack = [[asset tracksWithMediaType:AVMediaTypeVideo] firstObject];
-    CGSize size = CGSizeApplyAffineTransform(videoTrack.naturalSize, videoTrack.preferredTransform);
-    return CGSizeMake(fabs(size.width), fabs(size.height));
+- (void)checkAndEncryptVideoFile {
+    self.uploadInfo.fingerprint = [MEGASdkManager.sharedMEGASdk fingerprintForFilePath:self.uploadInfo.fileURL.path modificationTime:self.uploadInfo.asset.creationDate];
+    MEGANode *matchingNode = [MEGASdkManager.sharedMEGASdk nodeForFingerprint:self.uploadInfo.fingerprint parent:self.uploadInfo.parentNode];
+    if (matchingNode) {
+        [self finishUploadForFingerprintMatchedNode:matchingNode];
+        return;
+    }
+    
+    [self encryptsFile];
 }
 
 @end

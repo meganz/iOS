@@ -9,7 +9,6 @@
 #import "CameraUploadRecordManager.h"
 #import "CameraUploadManager.h"
 #import "CameraUploadRequestDelegate.h"
-#import "CameraUploadFileNameRecordManager.h"
 #import "NSData+ImageIO.h"
 #import "CameraUploadManager+Settings.h"
 #import "PHAsset+CameraUpload.h"
@@ -56,8 +55,7 @@ static NSString * const kUTITypeHEICImage = @"public.heic";
     self.uploadInfo.originalFingerprint = [[MEGASdkManager sharedMEGASdk] fingerprintForData:imageData modificationTime:self.uploadInfo.asset.creationDate];
     MEGANode *matchingNode = [self nodeForOriginalFingerprint:self.uploadInfo.originalFingerprint];
     if (matchingNode) {
-        [self copyToParentNodeIfNeededForMatchingNode:matchingNode];
-        [self finishOperationWithStatus:CameraAssetUploadStatusDone shouldUploadNextAsset:YES];
+        [self finishUploadForFingerprintMatchedNode:matchingNode];
         return;
     }
 
@@ -68,20 +66,18 @@ static NSString * const kUTITypeHEICImage = @"public.heic";
         fileExtension = @"jpg";
     } else {
         processedImageData = [imageData mnz_dataByStrippingOffGPSIfNeeded];
-        fileExtension = [self.uploadInfo.asset fileExtensionFromAssetInfo:dataInfo];
+        fileExtension = [self.uploadInfo.asset mnz_fileExtensionFromAssetInfo:dataInfo];
     }
     
     self.uploadInfo.fingerprint = [[MEGASdkManager sharedMEGASdk] fingerprintForData:processedImageData modificationTime:self.uploadInfo.asset.creationDate];
-    matchingNode = [[MEGASdkManager sharedMEGASdk] nodeForFingerprint:self.uploadInfo.fingerprint parent:self.uploadInfo.parentNode];
+    matchingNode = [MEGASdkManager.sharedMEGASdk nodeForFingerprint:self.uploadInfo.fingerprint parent:self.uploadInfo.parentNode];
     if (matchingNode) {
-        [self copyToParentNodeIfNeededForMatchingNode:matchingNode];
-        [self finishOperationWithStatus:CameraAssetUploadStatusDone shouldUploadNextAsset:YES];
+        [self finishUploadForFingerprintMatchedNode:matchingNode];
         return;
     }
-
-    NSString *proposedFileName = [[NSString mnz_fileNameWithDate:self.uploadInfo.asset.creationDate] stringByAppendingPathExtension:fileExtension];
-    self.uploadInfo.fileName = [CameraUploadFileNameRecordManager.shared localUniqueFileNameForAssetLocalIdentifier:self.uploadInfo.asset.localIdentifier proposedFileName:proposedFileName];
     
+    self.uploadInfo.fileName = [self.uploadInfo.asset mnz_cameraUploadFileNameWithExtension:fileExtension];
+
     if ([processedImageData writeToURL:self.uploadInfo.fileURL atomically:YES]) {
         [self encryptsFile];
     } else {

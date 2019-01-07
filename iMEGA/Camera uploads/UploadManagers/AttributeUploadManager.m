@@ -174,7 +174,7 @@ static NSString * const AttributePreviewName = @"preview";
 }
 
 - (NSURL *)attributeDirectoryURL {
-    return [NSURL.cameraUploadURL URLByAppendingPathComponent:@"Attributes" isDirectory:YES];
+    return [NSURL.mnz_cameraUploadURL URLByAppendingPathComponent:@"Attributes" isDirectory:YES];
 }
 
 @end

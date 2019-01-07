@@ -17,10 +17,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)encryptsFile;
 
-- (void)finishOperationWithStatus:(NSString *)status shouldUploadNextAsset:(BOOL)uploadNextAsset;
-
-- (void)copyToParentNodeIfNeededForMatchingNode:(MEGANode *)node;
 - (MEGANode *)nodeForOriginalFingerprint:(NSString *)fingerprint;
+
+- (void)finishUploadForFingerprintMatchedNode:(MEGANode *)node;
+
+- (void)finishOperationWithStatus:(NSString *)status shouldUploadNextAsset:(BOOL)uploadNextAsset;
 
 @end
 

@@ -5,7 +5,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface PHAsset (CameraUpload)
 
-- (nullable NSString *)fileExtensionFromAssetInfo:(nullable NSDictionary *)info;
+- (nullable NSString *)mnz_fileExtensionFromAssetInfo:(nullable NSDictionary *)info;
+
+- (NSString *)mnz_cameraUploadFileNameWithExtension:(NSString *)extension;
 
 @end
 

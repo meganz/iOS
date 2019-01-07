@@ -62,7 +62,7 @@
     self.uploadInfo.directoryURL = [self URLForAssetFolder];
 }
 
-#pragma mark - data processing
+#pragma mark - handle fingerprint
 
 - (void)copyToParentNodeIfNeededForMatchingNode:(MEGANode *)node {
     if (node == nil) {
@@ -99,6 +99,13 @@
     
     return nil;
 }
+
+- (void)finishUploadForFingerprintMatchedNode:(MEGANode *)node {
+    [self copyToParentNodeIfNeededForMatchingNode:node];
+    [self finishOperationWithStatus:CameraAssetUploadStatusDone shouldUploadNextAsset:YES];
+}
+
+#pragma mark - data processing
 
 - (NSURL *)URLForAssetFolder {
     NSURL *assetDirectoryURL = [NSURL mnz_assetDirectoryURLForLocalIdentifier:self.uploadInfo.asset.localIdentifier];

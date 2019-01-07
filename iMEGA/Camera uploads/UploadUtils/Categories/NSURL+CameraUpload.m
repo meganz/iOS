@@ -4,7 +4,7 @@
 
 @implementation NSURL (CameraUpload)
 
-+ (NSURL *)cameraUploadURL {
++ (NSURL *)mnz_cameraUploadURL {
     NSURL *uploadURL = nil;
     NSURL *supportURL = [[NSFileManager.defaultManager URLsForDirectory:NSApplicationSupportDirectory inDomains:NSUserDomainMask] firstObject];
     if (supportURL) {
@@ -23,7 +23,7 @@
 }
 
 + (NSURL *)mnz_assetDirectoryURLForLocalIdentifier:(NSString *)localIdentifier {
-    return [self.cameraUploadURL URLByAppendingPathComponent:localIdentifier.stringByRemovingInvalidFileCharacters isDirectory:YES];
+    return [self.mnz_cameraUploadURL URLByAppendingPathComponent:localIdentifier.stringByRemovingInvalidFileCharacters isDirectory:YES];
 }
 
 + (NSURL *)mnz_archivedURLForLocalIdentifier:(NSString *)localIdentifier {

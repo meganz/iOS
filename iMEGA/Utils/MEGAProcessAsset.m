@@ -513,7 +513,7 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
         return @"jpg";
     }
     
-    return [asset fileExtensionFromAssetInfo:info];
+    return [asset mnz_fileExtensionFromAssetInfo:info];
 }
 
 - (void)proccessImageData:(NSData *)imageData asset:(PHAsset *)asset withInfo:(NSDictionary *)info {
