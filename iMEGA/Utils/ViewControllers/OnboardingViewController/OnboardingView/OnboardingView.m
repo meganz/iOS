@@ -1,6 +1,17 @@
 
 #import "OnboardingView.h"
 
+@interface OnboardingView ()
+
+@property (nonatomic) UIView *customView;
+
+@property (weak, nonatomic) IBOutlet UIImageView *imageView;
+@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
+@property (weak, nonatomic) IBOutlet UILabel *descriptionLabel;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *imageViewLeadingConstraint;
+
+@end
+
 @implementation OnboardingView
 
 - (instancetype)initWithFrame:(CGRect)frame {
@@ -66,19 +77,25 @@
             break;
             
         case OnboardingViewTypePhotosPermission:
+            self.imageViewLeadingConstraint.active = NO;
             self.imageView.image = [UIImage imageNamed:@"photosPermission"];
+            self.imageView.contentMode = UIViewContentModeScaleAspectFit;
             self.titleLabel.text = AMLocalizedString(@"Allow Access to Photos", @"Title label that explains that the user is going to be asked for the photos permission");
             self.descriptionLabel.text = AMLocalizedString(@"Please give the MEGA App permission to access Photos to share photos and videos.", @"Detailed explanation of why the user should give permission to access to the photos");
             break;
             
         case OnboardingViewTypeMicrophoneAndCameraPermissions:
+            self.imageViewLeadingConstraint.active = NO;
             self.imageView.image = [UIImage imageNamed:@"groupChat"];
+            self.imageView.contentMode = UIViewContentModeScaleAspectFit;
             self.titleLabel.text = AMLocalizedString(@"Enable Microphone and Camera", @"Title label that explains that the user is going to be asked for the microphone and camera permission");
             self.descriptionLabel.text = AMLocalizedString(@"To make encrypted voice and video calls, allow MEGA access to your Camera and Microphone", @"Detailed explanation of why the user should give permission to access to the camera and the microphone");
             break;
      
         case OnboardingViewTypeNotificationsPermission:
+            self.imageViewLeadingConstraint.active = NO;
             self.imageView.image = [UIImage imageNamed:@"micAndCamPermission"];
+            self.imageView.contentMode = UIViewContentModeScaleAspectFit;
             self.titleLabel.text = AMLocalizedString(@"Enable Notifications", @"Title label that explains that the user is going to be asked for the notifications permission");
             self.descriptionLabel.text = AMLocalizedString(@"We would like to send you notifications so you receive new messages on your device instantly.", @"Detailed explanation of why the user should give permission to deliver notifications");
             break;
