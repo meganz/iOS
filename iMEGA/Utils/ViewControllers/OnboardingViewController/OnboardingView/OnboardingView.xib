@@ -13,6 +13,7 @@
             <connections>
                 <outlet property="descriptionLabel" destination="e3I-Uu-tdO" id="DYj-sc-b2z"/>
                 <outlet property="imageView" destination="Y42-PF-RT6" id="G3C-tI-6rY"/>
+                <outlet property="imageViewLeadingConstraint" destination="bdb-RD-UR5" id="RTn-JL-b8x"/>
                 <outlet property="titleLabel" destination="Dmw-bK-SlV" id="lSF-9h-2bI"/>
             </connections>
         </placeholder>
