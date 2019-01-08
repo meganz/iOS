@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -24,10 +25,6 @@
         <scene sceneID="9MH-E6-bcN">
             <objects>
                 <viewController storyboardIdentifier="FolderLinkViewControllerID" id="9ZV-tM-uu1" customClass="FolderLinkViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="phq-C4-flR"/>
-                        <viewControllerLayoutGuide type="bottom" id="B63-wU-db4"/>
-                    </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="ffw-DJ-D1l">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -366,11 +363,12 @@
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="lUT-Rt-g8P" secondAttribute="trailing" id="Gj1-4v-wXG"/>
-                            <constraint firstItem="lUT-Rt-g8P" firstAttribute="leading" secondItem="ffw-DJ-D1l" secondAttribute="leading" id="aAB-i6-J45"/>
-                            <constraint firstItem="lUT-Rt-g8P" firstAttribute="top" secondItem="phq-C4-flR" secondAttribute="bottom" id="gBP-Mo-ES5"/>
-                            <constraint firstItem="B63-wU-db4" firstAttribute="top" secondItem="lUT-Rt-g8P" secondAttribute="bottom" id="vUO-66-U1l"/>
+                            <constraint firstItem="iNc-eL-ja7" firstAttribute="trailing" secondItem="lUT-Rt-g8P" secondAttribute="trailing" id="Gj1-4v-wXG"/>
+                            <constraint firstItem="lUT-Rt-g8P" firstAttribute="leading" secondItem="iNc-eL-ja7" secondAttribute="leading" id="aAB-i6-J45"/>
+                            <constraint firstItem="lUT-Rt-g8P" firstAttribute="top" secondItem="iNc-eL-ja7" secondAttribute="top" id="gBP-Mo-ES5"/>
+                            <constraint firstItem="iNc-eL-ja7" firstAttribute="bottom" secondItem="lUT-Rt-g8P" secondAttribute="bottom" id="vUO-66-U1l"/>
                         </constraints>
+                        <viewLayoutGuide key="safeArea" id="iNc-eL-ja7"/>
                     </view>
                     <navigationItem key="navigationItem" id="5HE-bc-Hh9">
                         <barButtonItem key="backBarButtonItem" title=" " id="yce-RA-6Iy"/>
@@ -405,6 +403,7 @@
                     <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <viewLayoutGuide key="safeArea" id="TRc-6b-pxN"/>
                     <items>
                         <barButtonItem tag="2" title="Download" id="3v0-rP-iq6">
                             <connections>
@@ -445,10 +444,6 @@
         <scene sceneID="L1l-Zr-ARy">
             <objects>
                 <viewController storyboardIdentifier="FileLinkViewControllerID" id="2U9-0D-RuC" customClass="FileLinkViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="VqQ-0h-wpC"/>
-                        <viewControllerLayoutGuide type="bottom" id="za7-Z7-cKF"/>
-                    </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="iPt-fM-G85">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -533,12 +528,13 @@
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="iqn-3S-XJb" secondAttribute="trailing" id="Fr0-qB-a0r"/>
-                            <constraint firstItem="iqn-3S-XJb" firstAttribute="top" secondItem="VqQ-0h-wpC" secondAttribute="bottom" id="LiX-b8-0tx"/>
-                            <constraint firstItem="za7-Z7-cKF" firstAttribute="top" secondItem="iqn-3S-XJb" secondAttribute="bottom" id="Lwe-WM-4c4"/>
+                            <constraint firstItem="4B9-F0-3U8" firstAttribute="trailing" secondItem="iqn-3S-XJb" secondAttribute="trailing" id="Fr0-qB-a0r"/>
+                            <constraint firstItem="iqn-3S-XJb" firstAttribute="top" secondItem="4B9-F0-3U8" secondAttribute="top" id="LiX-b8-0tx"/>
+                            <constraint firstItem="4B9-F0-3U8" firstAttribute="bottom" secondItem="iqn-3S-XJb" secondAttribute="bottom" id="Lwe-WM-4c4"/>
                             <constraint firstItem="GzC-xY-ksk" firstAttribute="height" secondItem="iPt-fM-G85" secondAttribute="height" multiplier="0.4" id="ate-bL-i5t"/>
-                            <constraint firstItem="iqn-3S-XJb" firstAttribute="leading" secondItem="iPt-fM-G85" secondAttribute="leading" id="ykt-Yg-vO2"/>
+                            <constraint firstItem="iqn-3S-XJb" firstAttribute="leading" secondItem="4B9-F0-3U8" secondAttribute="leading" id="ykt-Yg-vO2"/>
                         </constraints>
+                        <viewLayoutGuide key="safeArea" id="4B9-F0-3U8"/>
                     </view>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="syg-IT-vUx">
@@ -572,6 +568,7 @@
                     <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <viewLayoutGuide key="safeArea" id="aI3-gc-4ar"/>
                     <items>
                         <barButtonItem tag="2" title="Download" id="tCc-eK-W9t">
                             <connections>
