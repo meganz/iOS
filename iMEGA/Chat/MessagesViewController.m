@@ -17,7 +17,7 @@
 #import "MEGACopyRequestDelegate.h"
 #import "MEGAGetAttrUserRequestDelegate.h"
 #import "MEGAInviteContactRequestDelegate.h"
-#import "MEGAMessagesTypingIndicatorFoorterView.h"
+#import "MEGAMessagesTypingIndicatorFooterView.h"
 #import "MEGANode+MNZCategory.h"
 #import "MEGANodeList+MNZCategory.h"
 #import "MEGALinkManager.h"
@@ -55,7 +55,7 @@ const NSUInteger kMaxMessagesToLoad = 256;
 @interface MessagesViewController () <MEGAPhotoBrowserDelegate, JSQMessagesViewAccessoryButtonDelegate, JSQMessagesComposerTextViewPasteDelegate, MEGAChatDelegate, MEGAChatRequestDelegate, MEGARequestDelegate>
 
 @property (nonatomic, strong) MEGAOpenMessageHeaderView *openMessageHeaderView;
-@property (nonatomic, strong) MEGAMessagesTypingIndicatorFoorterView *footerView;
+@property (nonatomic, strong) MEGAMessagesTypingIndicatorFooterView *footerView;
 
 @property (nonatomic, strong) NSMutableArray <MEGAChatMessage *> *messages;
 
@@ -657,7 +657,7 @@ const NSUInteger kMaxMessagesToLoad = 256;
     [self customiseCollectionViewLayout];
     
     [self.collectionView registerNib:[MEGAOpenMessageHeaderView nib] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:[MEGAOpenMessageHeaderView headerReuseIdentifier]];
-    [self.collectionView registerNib:[MEGAMessagesTypingIndicatorFoorterView nib] forSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:[MEGAMessagesTypingIndicatorFoorterView footerReuseIdentifier]];
+    [self.collectionView registerNib:MEGAMessagesTypingIndicatorFooterView.nib forSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:MEGAMessagesTypingIndicatorFooterView.footerReuseIdentifier];
     
     self.collectionView.accessoryDelegate = self;
     self.collectionView.backgroundColor = UIColor.whiteColor;
@@ -1833,9 +1833,9 @@ const NSUInteger kMaxMessagesToLoad = 256;
 
 #pragma mark - Typing indicator
 
-- (MEGAMessagesTypingIndicatorFoorterView *)dequeueTypingIndicatorFooterViewForIndexPath:(NSIndexPath *)indexPath {
+- (MEGAMessagesTypingIndicatorFooterView *)dequeueTypingIndicatorFooterViewForIndexPath:(NSIndexPath *)indexPath {
     self.footerView = [self.collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionFooter
-                                                                                                 withReuseIdentifier:[MEGAMessagesTypingIndicatorFoorterView footerReuseIdentifier]
+                                                                                                 withReuseIdentifier:MEGAMessagesTypingIndicatorFooterView.footerReuseIdentifier
                                                                                                         forIndexPath:indexPath];
     [self setTypingIndicator];
     

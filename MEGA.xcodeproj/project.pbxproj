@@ -11,8 +11,8 @@
 		137361931A6664C300B740E8 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 137361921A6664C300B740E8 /* AppDelegate.m */; };
 		1373619E1A6664C300B740E8 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1373619D1A6664C300B740E8 /* Images.xcassets */; };
 		410AD3C11C883AA900BF939E /* MEGAAVViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 410AD3C01C883AA900BF939E /* MEGAAVViewController.m */; };
-		41136FBC1E1692A90031C516 /* MEGAMessagesTypingIndicatorFoorterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 41136FBB1E1692A90031C516 /* MEGAMessagesTypingIndicatorFoorterView.m */; };
-		41136FBE1E1693410031C516 /* MEGAMessagesTypingIndicatorFoorterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 41136FBD1E1693410031C516 /* MEGAMessagesTypingIndicatorFoorterView.xib */; };
+		41136FBC1E1692A90031C516 /* MEGAMessagesTypingIndicatorFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 41136FBB1E1692A90031C516 /* MEGAMessagesTypingIndicatorFooterView.m */; };
+		41136FBE1E1693410031C516 /* MEGAMessagesTypingIndicatorFooterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 41136FBD1E1693410031C516 /* MEGAMessagesTypingIndicatorFooterView.xib */; };
 		411504941CEB183600BF38E3 /* SaveToCameraRollActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 411504931CEB183600BF38E3 /* SaveToCameraRollActivity.m */; };
 		4115D6441E718B1F004BB0FF /* UIImage+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 4115D6431E718B1F004BB0FF /* UIImage+MNZCategory.m */; };
 		411C8B6B1DECBD87006A0D8C /* MEGAUser+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 411C8B6A1DECBD87006A0D8C /* MEGAUser+MNZCategory.m */; };
@@ -202,6 +202,8 @@
 		5B367577204FFC150087362D /* SendToChatActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B367574204FFBF60087362D /* SendToChatActivity.m */; };
 		5B367578204FFC1B0087362D /* SendToChatActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B367574204FFBF60087362D /* SendToChatActivity.m */; };
 		5B39DAA21EF916D900BC2319 /* ChatAttachedContactsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B39DAA11EF916D900BC2319 /* ChatAttachedContactsViewController.m */; };
+		5B3B1CFB21D6488400138502 /* DevicePermissionsHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 830EF9A320062F3800FAA947 /* DevicePermissionsHelper.m */; };
+		5B3B1CFC21D648A500138502 /* DevicePermissionsHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 830EF9A320062F3800FAA947 /* DevicePermissionsHelper.m */; };
 		5B40AB321F7A512E0034C3B3 /* AchievementsDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B40AB301F7A512D0034C3B3 /* AchievementsDetailsViewController.m */; };
 		5B4429401E6D705D00BCACC0 /* SF-UI-Display-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5B44293E1E6D705D00BCACC0 /* SF-UI-Display-Medium.otf */; };
 		5B4429411E6D705D00BCACC0 /* SF-UI-Text-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5B44293F1E6D705D00BCACC0 /* SF-UI-Text-Medium.otf */; };
@@ -804,9 +806,9 @@
 		410333FA1B9995DC00380FF3 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; lineEnding = 0; name = "zh-Hant"; path = "zh-Hant.lproj/Localizable.strings"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.simpleColoring; };
 		410AD3BF1C883AA900BF939E /* MEGAAVViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEGAAVViewController.h; sourceTree = "<group>"; };
 		410AD3C01C883AA900BF939E /* MEGAAVViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEGAAVViewController.m; sourceTree = "<group>"; };
-		41136FBA1E1692A90031C516 /* MEGAMessagesTypingIndicatorFoorterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEGAMessagesTypingIndicatorFoorterView.h; sourceTree = "<group>"; };
-		41136FBB1E1692A90031C516 /* MEGAMessagesTypingIndicatorFoorterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEGAMessagesTypingIndicatorFoorterView.m; sourceTree = "<group>"; };
-		41136FBD1E1693410031C516 /* MEGAMessagesTypingIndicatorFoorterView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MEGAMessagesTypingIndicatorFoorterView.xib; sourceTree = "<group>"; };
+		41136FBA1E1692A90031C516 /* MEGAMessagesTypingIndicatorFooterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEGAMessagesTypingIndicatorFooterView.h; sourceTree = "<group>"; };
+		41136FBB1E1692A90031C516 /* MEGAMessagesTypingIndicatorFooterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEGAMessagesTypingIndicatorFooterView.m; sourceTree = "<group>"; };
+		41136FBD1E1693410031C516 /* MEGAMessagesTypingIndicatorFooterView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MEGAMessagesTypingIndicatorFooterView.xib; sourceTree = "<group>"; };
 		411504921CEB183600BF38E3 /* SaveToCameraRollActivity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SaveToCameraRollActivity.h; sourceTree = "<group>"; };
 		411504931CEB183600BF38E3 /* SaveToCameraRollActivity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SaveToCameraRollActivity.m; sourceTree = "<group>"; };
 		4115D6421E718B1F004BB0FF /* UIImage+MNZCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+MNZCategory.h"; sourceTree = "<group>"; };
@@ -1926,9 +1928,9 @@
 		41136FB91E1692650031C516 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				41136FBD1E1693410031C516 /* MEGAMessagesTypingIndicatorFoorterView.xib */,
-				41136FBA1E1692A90031C516 /* MEGAMessagesTypingIndicatorFoorterView.h */,
-				41136FBB1E1692A90031C516 /* MEGAMessagesTypingIndicatorFoorterView.m */,
+				41136FBA1E1692A90031C516 /* MEGAMessagesTypingIndicatorFooterView.h */,
+				41136FBB1E1692A90031C516 /* MEGAMessagesTypingIndicatorFooterView.m */,
+				41136FBD1E1693410031C516 /* MEGAMessagesTypingIndicatorFooterView.xib */,
 				E8E3E6F61E0939BE00D45F45 /* MEGAOpenMessageHeaderView.h */,
 				E8E3E6F71E0939BE00D45F45 /* MEGAOpenMessageHeaderView.m */,
 				E8E3E6F81E0939BE00D45F45 /* MEGAOpenMessageHeaderView.xib */,
@@ -3806,7 +3808,7 @@
 				4172795C1DB663FA001AC818 /* JSQMessagesToolbarContentView.xib in Resources */,
 				4172795E1DB663FA001AC818 /* JSQMessagesTypingIndicatorFooterView.xib in Resources */,
 				5B5B50011E684FDC00DBEB3B /* SF-UI-Display-Regular.otf in Resources */,
-				41136FBE1E1693410031C516 /* MEGAMessagesTypingIndicatorFoorterView.xib in Resources */,
+				41136FBE1E1693410031C516 /* MEGAMessagesTypingIndicatorFooterView.xib in Resources */,
 				83D64E2D20178A0400E24155 /* PasswordReminder.storyboard in Resources */,
 				A82E5BC81F3465A3003C149C /* Spotlight_file@2x.png in Resources */,
 				5B6429E02020A8CF000E0DCB /* SF-UI-Text-Semibold.otf in Resources */,
@@ -4260,7 +4262,7 @@
 				A81613FE1EDC1CA900500381 /* MEGACreateAccountRequestDelegate.m in Sources */,
 				41EAAE4E1D06B49400622FAF /* UIImage+CTAssetsPickerController.m in Sources */,
 				A820DA3C1F0E5BDC00F1F832 /* MEGAGetThumbnailRequestDelegate.m in Sources */,
-				41136FBC1E1692A90031C516 /* MEGAMessagesTypingIndicatorFoorterView.m in Sources */,
+				41136FBC1E1692A90031C516 /* MEGAMessagesTypingIndicatorFooterView.m in Sources */,
 				94F376E71FE7C126009AAA10 /* MEGAToolbarAssetPicker.m in Sources */,
 				7795677721C80CDF002B6227 /* OnboardingViewController.m in Sources */,
 				41FC83C01AAE056C008FA551 /* CameraUploadsTableViewController.m in Sources */,
@@ -4293,6 +4295,7 @@
 				9456054D1EDD7DB20094EF0F /* RemoveLinkActivity.m in Sources */,
 				7747B2D9208625B50011814E /* Reachability.m in Sources */,
 				5B367577204FFC150087362D /* SendToChatActivity.m in Sources */,
+				5B3B1CFC21D648A500138502 /* DevicePermissionsHelper.m in Sources */,
 				945605451EDD66DA0094EF0F /* UIFont+MNZCategory.m in Sources */,
 				8361359421074C5D002FA3CC /* MOUploadTransfer+CoreDataProperties.m in Sources */,
 				943229401EDD8969007DB542 /* UIScrollView+EmptyDataSet.m in Sources */,
@@ -4430,6 +4433,7 @@
 				A836581D21021063005E616F /* ItemCollectionViewCell.m in Sources */,
 				77F3C30321C12F800049A1BA /* UITextField+MNZCategory.m in Sources */,
 				941135551F01002E00D33428 /* OpenInActivity.m in Sources */,
+				5B3B1CFB21D6488400138502 /* DevicePermissionsHelper.m in Sources */,
 				94892C981EFBF03800AEAC25 /* SVProgressHUD.m in Sources */,
 				5B2E78CD1FA0C3310096C9BE /* MEGACreateFolderRequestDelegate.m in Sources */,
 				941135581F01005D00D33428 /* CameraUploads.m in Sources */,
