@@ -62,7 +62,7 @@
         self.chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:self.chatId];
         [self.avatarImageView mnz_setImageForUserHandle:[self.chatRoom peerHandleAtIndex:0] name:self.chatRoom.title];
     } else {
-        if (self.user) {
+        if (self.user.visibility == MEGAUserVisibilityVisible) {
             [self.avatarImageView mnz_setImageForUserHandle:self.user.handle];
         } else {
             [self.avatarImageView mnz_setImageForUserHandle:self.userHandle name:self.userName];
@@ -231,7 +231,7 @@
     if (section == 0) {
         if (self.contactDetailsMode == ContactDetailsModeDefault) {
             //TODO: When possible, re-add the rows "Chat Notifications", "Set Nickname" and "Verify Credentials".
-            if (self.user) {
+            if (self.user.visibility == MEGAUserVisibilityVisible) {
                 numberOfRows = 2;
             } else {
                 numberOfRows = 1;
@@ -258,7 +258,7 @@
         cell = [self.tableView dequeueReusableCellWithIdentifier:@"ContactDetailsDefaultTypeID" forIndexPath:indexPath];
         
         if (self.contactDetailsMode == ContactDetailsModeDefault) {
-            if (self.user) {
+            if (self.user.visibility == MEGAUserVisibilityVisible) {
                 switch (indexPath.row) {
                     case 0: //Send Message
                         cell.avatarImageView.image = [UIImage imageNamed:@"sendMessage"];
@@ -366,7 +366,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0) {
         if (self.contactDetailsMode == ContactDetailsModeDefault) {
-            if (self.user) {
+            if (self.user.visibility == MEGAUserVisibilityVisible) {
                 switch (indexPath.row) {
                     case 0: { //Send Message
                         if ([[NSUserDefaults standardUserDefaults] boolForKey:@"IsChatEnabled"]) {

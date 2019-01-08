@@ -1968,8 +1968,21 @@ const NSUInteger kMaxMessagesToLoad = 256;
                     if (message.isDeletable) return YES;
                 }
                 //TODO: Send Message
-            } else {
-                if (action == @selector(addContact:message:)) return YES;
+            }
+                        
+            if (action == @selector(addContact:message:)) {
+                if (message.usersCount == 1) {
+                    NSString *email = [message userEmailAtIndex:0];
+                    MEGAUser *user = [[MEGASdkManager sharedMEGASdk] contactForEmail:email];
+                    if (user.visibility != MEGAUserVisibilityVisible) return YES;
+                } else {
+                    for (NSInteger i = 0; i < message.usersCount; i++) {
+                        NSString *email = [message userEmailAtIndex:i];
+                        MEGAUser *user = [[MEGASdkManager sharedMEGASdk] contactForEmail:email];
+                        if (user.visibility == MEGAUserVisibilityVisible) return NO;
+                    }
+                    return YES;
+                }
             }
             break;
         }
