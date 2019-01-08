@@ -71,11 +71,17 @@
     [_numberFormatter setMaximumFractionDigits:0];
     
     MEGAContactLinkCreateRequestDelegate *delegate = [[MEGAContactLinkCreateRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
-        NSString *destination = [NSString stringWithFormat:@"https://mega.nz/C!%@", [MEGASdk base64HandleForHandle:request.nodeHandle]];
-        self.qrCodeImageView.image = [UIImage mnz_qrImageWithDotsFromString:destination withSize:self.qrCodeImageView.frame.size color:UIColor.mnz_redMain];
-        self.avatarImageView.layer.borderColor = [UIColor whiteColor].CGColor;
-        self.avatarImageView.layer.borderWidth = 6.0f;
-        self.avatarImageView.layer.cornerRadius = 40.0f;
+        CGSize qrImageSie = self.qrCodeImageView.frame.size;
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+            NSString *destination = [NSString stringWithFormat:@"https://mega.nz/C!%@", [MEGASdk base64HandleForHandle:request.nodeHandle]];
+            UIImage *image = [UIImage mnz_qrImageWithDotsFromString:destination withSize:qrImageSie color:UIColor.mnz_redMain];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                self.qrCodeImageView.image = image;
+                self.avatarImageView.layer.borderColor = [UIColor whiteColor].CGColor;
+                self.avatarImageView.layer.borderWidth = 6.0f;
+                self.avatarImageView.layer.cornerRadius = 40.0f;
+            });
+        });
     }];
     [[MEGASdkManager sharedMEGASdk] contactLinkCreateRenew:NO delegate:delegate];
 
