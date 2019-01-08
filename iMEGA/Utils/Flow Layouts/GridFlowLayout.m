@@ -1,7 +1,7 @@
 
-#import "CloudDriveGridFlowLayout.h"
+#import "GridFlowLayout.h"
 
-@implementation CloudDriveGridFlowLayout
+@implementation GridFlowLayout
 
 - (void)prepareLayout {
     [super prepareLayout];

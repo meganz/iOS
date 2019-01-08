@@ -62,7 +62,6 @@
     
     if(context == NULL) {
         NSLog(@"Error context not created");
-        free(pixels);
     }
     
     UIImage *image = nil;

@@ -5,6 +5,7 @@
 #import "UIScrollView+EmptyDataSet.h"
 #import "NSString+MNZCategory.h"
 #import "NSFileManager+MNZCategory.h"
+#import "UIApplication+MNZCategory.h"
 
 #import "MEGANavigationController.h"
 #import "MEGASdkManager.h"
@@ -29,7 +30,7 @@ static NSString *kModificationDate = @"kModificationDate";
 static NSString *kFileSize = @"kFileSize";
 static NSString *kisDirectory = @"kisDirectory";
 
-@interface OfflineViewController () <UIViewControllerTransitioningDelegate, UIDocumentInteractionControllerDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGATransferDelegate> {
+@interface OfflineViewController () <UIViewControllerTransitioningDelegate, UIDocumentInteractionControllerDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGATransferDelegate, UISearchControllerDelegate> {
 }
 
 @property (weak, nonatomic) IBOutlet UIView *containerView;
@@ -72,17 +73,14 @@ static NSString *kisDirectory = @"kisDirectory";
         [self.navigationItem setTitle:self.folderPathFromOffline.lastPathComponent];
     }
     
-    UIBarButtonItem *flexibleItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
-    
-    [self.toolbar setFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.frame), 49)];
-    [self.toolbar setItems:@[self.activityBarButtonItem, flexibleItem, self.deleteBarButtonItem]];
-    
     self.editBarButtonItem.title = AMLocalizedString(@"edit", @"Caption of a button to edit the files that are selected");
     self.navigationItem.rightBarButtonItem = self.moreBarButtonItem;
     
     self.definesPresentationContext = YES;
     
     [self.view addGestureRecognizer:[[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPress:)]];
+    
+    self.searchController.delegate = self;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -138,6 +136,15 @@ static NSString *kisDirectory = @"kisDirectory";
     
     [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
         [self.offlineTableView.tableView reloadEmptyDataSet];
+        if (self.searchController.active) {
+            if (UIDevice.currentDevice.iPad) {
+                if (self != UIApplication.mnz_visibleViewController) {
+                    [Helper resetSearchControllerFrame:self.searchController];
+                }
+            } else {
+                [Helper resetSearchControllerFrame:self.searchController];
+            }
+        }
     } completion:nil];
 }
 
@@ -745,13 +752,9 @@ static NSString *kisDirectory = @"kisDirectory";
         
         OfflineViewController *offlineVC = [self.storyboard instantiateViewControllerWithIdentifier:@"OfflineViewControllerID"];
         [offlineVC setFolderPathFromOffline:folderPathFromOffline];
-        if (self.searchController.isActive) {
-            [self.searchController dismissViewControllerAnimated:YES completion:^{
-                [self.navigationController pushViewController:offlineVC animated:YES];
-            }];
-        } else {
-            [self.navigationController pushViewController:offlineVC animated:YES];
-        }
+        
+        [self.navigationController pushViewController:offlineVC animated:YES];
+        
     } else if (self.previewDocumentPath.mnz_isMultimediaPathExtension) {
         AVURLAsset *asset = [AVURLAsset assetWithURL:[NSURL fileURLWithPath:self.previewDocumentPath]];
         
@@ -788,11 +791,19 @@ static NSString *kisDirectory = @"kisDirectory";
     [self updateNavigationBarTitle];
     
     if (editing) {
+        UIBarButtonItem *flexibleItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
+        self.toolbar.items = @[self.activityBarButtonItem, flexibleItem, self.deleteBarButtonItem];
+        
         self.navigationItem.rightBarButtonItem = self.editBarButtonItem;
         self.editBarButtonItem.title = AMLocalizedString(@"cancel", @"Button title to cancel something");
         self.navigationItem.leftBarButtonItems = @[self.selectAllBarButtonItem];
         [self.toolbar setAlpha:0.0];
-        [self.tabBarController.tabBar addSubview:self.toolbar];
+        [self.tabBarController.view addSubview:self.toolbar];
+        self.toolbar.translatesAutoresizingMaskIntoConstraints = NO;
+        [NSLayoutConstraint activateConstraints:@[[self.toolbar.topAnchor constraintEqualToAnchor:self.tabBarController.tabBar.topAnchor constant:0],
+                                                  [self.toolbar.leadingAnchor constraintEqualToAnchor:self.tabBarController.tabBar.leadingAnchor constant:0],
+                                                  [self.toolbar.trailingAnchor constraintEqualToAnchor:self.tabBarController.tabBar.trailingAnchor constant:0],
+                                                  [self.toolbar.heightAnchor constraintEqualToConstant:49.0]]];
         [UIView animateWithDuration:0.33f animations:^ {
             [self.toolbar setAlpha:1.0];
         }];
@@ -931,6 +942,14 @@ static NSString *kisDirectory = @"kisDirectory";
     }
     
     [self reloadData];
+}
+
+#pragma mark - UISearchControllerDelegate
+
+- (void)didPresentSearchController:(UISearchController *)searchController {
+    if (UIDevice.currentDevice.iPhoneDevice && UIDeviceOrientationIsLandscape(UIDevice.currentDevice.orientation)) {
+        [Helper resetSearchControllerFrame:searchController];
+    }
 }
 
 #pragma mark - UILongPressGestureRecognizer

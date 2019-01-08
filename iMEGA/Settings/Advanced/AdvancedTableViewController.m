@@ -133,9 +133,12 @@
 
 - (IBAction)mediaInGallerySwitchChanged:(UISwitch *)sender {
     [DevicePermissionsHelper photosPermissionWithCompletionHandler:^(BOOL granted) {
-        if (granted) {
-            [[NSUserDefaults standardUserDefaults] setBool:self.saveMediaInGallerySwitch.isOn forKey:@"isSaveMediaCapturedToGalleryEnabled"];
-            [[NSUserDefaults standardUserDefaults] synchronize];
+        if (!granted && self.saveMediaInGallerySwitch.isOn) {
+            [self.saveMediaInGallerySwitch setOn:NO animated:YES];
+            [DevicePermissionsHelper alertPhotosPermission];
+        } else {
+            [NSUserDefaults.standardUserDefaults setBool:self.saveMediaInGallerySwitch.isOn forKey:@"isSaveMediaCapturedToGalleryEnabled"];
+            [NSUserDefaults.standardUserDefaults synchronize];
         }
     }];
 }

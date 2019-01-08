@@ -7,6 +7,7 @@
 #import "SVProgressHUD.h"
 #import "UIImage+GKContact.h"
 #import "NSDate+DateTools.h"
+#import "UIImage+MNZCategory.h"
 
 #import "Helper.h"
 #import "DevicePermissionsHelper.h"
@@ -155,9 +156,9 @@ const NSUInteger kMaxMessagesToLoad = 256;
     _lastChatRoomStateString = @"";
     _lastChatRoomStateColor = UIColor.whiteColor;
     if (self.chatRoom.isGroup) {
-        _peerAvatar = [UIImage imageForName:self.chatRoom.title.uppercaseString size:CGSizeMake(80.0f, 80.0f) backgroundColor:UIColor.mnz_gray999999 textColor:UIColor.whiteColor font:[UIFont mnz_SFUIRegularWithSize:40.0f]];
+        self.peerAvatar = [UIImage imageForName:self.chatRoom.title.uppercaseString size:CGSizeMake(80.0f, 80.0f) backgroundColor:UIColor.mnz_gray999999 textColor:UIColor.whiteColor font:[UIFont mnz_SFUIRegularWithSize:40.0f]];
     } else {
-        _peerAvatar = [UIImage mnz_imageForUserHandle:[self.chatRoom peerHandleAtIndex:0] size:CGSizeMake(80.0f, 80.0f) delegate:nil];
+        self.peerAvatar = [UIImage mnz_imageForUserHandle:[self.chatRoom peerHandleAtIndex:0] name:self.chatRoom.title size:CGSizeMake(80.0f, 80.0f) delegate:nil];
     }
     
     // Add an observer to get notified when going to background:
@@ -245,6 +246,12 @@ const NSUInteger kMaxMessagesToLoad = 256;
     
     [self showOrHideJumpToBottom];
     self.initialToolbarHeight = self.inputToolbar.frame.size.height;
+    
+    if (@available(iOS 11.0, *)) { //Fix for devices with safe area not rendering navbar buttons when the VC is instantiated
+        if ((UIDeviceOrientationIsLandscape(UIDevice.currentDevice.orientation) || UIDevice.currentDevice.orientation == UIDeviceOrientationUnknown) && self.view.safeAreaInsets.left != 0) {
+            [self configureNavigationBar];
+        }
+    }
 }
 
 - (void)willEnterForeground {
@@ -1656,7 +1663,7 @@ const NSUInteger kMaxMessagesToLoad = 256;
     NSNumber *avatarKey = @(message.userHandle);
     UIImage *avatar = [self.avatarImages objectForKey:avatarKey];
     if (!avatar) {
-        avatar = [UIImage mnz_imageForUserHandle:message.userHandle size:CGSizeMake(kAvatarImageDiameter, kAvatarImageDiameter) delegate:nil];
+        avatar = [UIImage mnz_imageForUserHandle:message.userHandle name:self.chatRoom.title size:CGSizeMake(kAvatarImageDiameter, kAvatarImageDiameter) delegate:nil];
         if (avatar) {
             [self.avatarImages setObject:avatar forKey:avatarKey];
         } else {
