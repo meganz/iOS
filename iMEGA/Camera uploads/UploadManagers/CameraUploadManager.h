@@ -23,6 +23,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)collateUploadRecords;
 
+- (void)scanPhotoLibraryWithCompletion:(void (^)(void))completion;
+
 @end
 
 NS_ASSUME_NONNULL_END

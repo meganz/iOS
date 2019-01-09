@@ -58,6 +58,7 @@
 
 #define kFirstRun @"FirstRun"
 static const NSTimeInterval MinimumBackgroundRefreshInterval = 3600 * 2;
+static const NSTimeInterval BackgroundRefreshDuration = 25;
 
 @interface AppDelegate () <PKPushRegistryDelegate, UIApplicationDelegate, UNUserNotificationCenterDelegate, LTHPasscodeViewControllerDelegate, MEGAApplicationDelegate, MEGAChatDelegate, MEGAChatRequestDelegate, MEGAGlobalDelegate, MEGAPurchasePricingDelegate, MEGARequestDelegate, MEGATransferDelegate> {
     BOOL isAccountFirstLogin;
@@ -617,7 +618,20 @@ static const NSTimeInterval MinimumBackgroundRefreshInterval = 3600 * 2;
 - (void)application:(UIApplication *)application performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
     MEGALogDebug(@"[App Lifecycle] application perform background refresh");
     if (CameraUploadManager.isCameraUploadEnabled) {
-        [CameraUploadManager.shared startCameraUploadIfNeeded];
+        
+        [CameraUploadManager.shared scanPhotoLibraryWithCompletion:^{
+            if (CameraUploadManager.shared.uploadPendingItemsCount == 0) {
+                completionHandler(UIBackgroundFetchResultNoData);
+            } else {
+                [CameraUploadManager.shared startCameraUploadIfNeeded];
+                [NSTimer scheduledTimerWithTimeInterval:BackgroundRefreshDuration repeats:NO block:^(NSTimer * _Nonnull timer) {
+                    completionHandler(UIBackgroundFetchResultNewData);
+                    if (CameraUploadManager.shared.uploadPendingItemsCount == 0) {
+                        completionHandler(UIBackgroundFetchResultNoData);
+                    }
+                }];
+            }
+        }];
     } else {
         completionHandler(UIBackgroundFetchResultNoData);
     }
