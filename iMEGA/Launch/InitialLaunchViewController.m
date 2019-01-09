@@ -23,6 +23,14 @@
     [self.skipButton setTitle:AMLocalizedString(@"skipButton", @"Button title that skips the current action") forState:UIControlStateNormal];
 }
 
+- (UIInterfaceOrientationMask)supportedInterfaceOrientations {
+    if (UIDevice.currentDevice.iPhoneDevice) {
+        return UIInterfaceOrientationMaskPortrait | UIInterfaceOrientationMaskPortraitUpsideDown;
+    }
+    
+    return UIInterfaceOrientationMaskAll;
+}
+
 #pragma mark - Private
 
 - (void)performAnimation {
