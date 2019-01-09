@@ -75,6 +75,12 @@
 	<string>NSPhotoLibraryAddUsageDescription</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>NSPhotoLibraryUsageDescription</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>Please select &quot;Always&quot; allow our app to access your localtion, so we can upload your camera in the background</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Please select &quot;Always&quot; allow our app to access your localtion, so we can upload your camera in the background</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>Please select &quot;Always&quot; allow our app to access your localtion, so we can upload your camera in the background</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>SF-UI-Display-Medium.otf</string>
@@ -134,10 +140,11 @@
 	</array>
 	<key>UIBackgroundModes</key>
 	<array>
-		<string>voip</string>
 		<string>audio</string>
 		<string>fetch</string>
+		<string>location</string>
 		<string>remote-notification</string>
+		<string>voip</string>
 	</array>
 	<key>UIFileSharingEnabled</key>
 	<true/>

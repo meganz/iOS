@@ -55,6 +55,7 @@
 #import "CameraUploadManager+Settings.h"
 #import "TransferSessionManager.h"
 #import "AttributeUploadManager.h"
+#import "BackgroundUploadManager.h"
 
 #define kFirstRun @"FirstRun"
 static const NSTimeInterval MinimumBackgroundRefreshInterval = 3600 * 2;
@@ -113,6 +114,7 @@ static const NSTimeInterval BackgroundRefreshDuration = 25;
     });
     
     [application setMinimumBackgroundFetchInterval:MinimumBackgroundRefreshInterval];
+    [BackgroundUploadManager.shared enableBackgroundUploadIfPossible];
     
     return YES;
 }
@@ -393,6 +395,8 @@ static const NSTimeInterval BackgroundRefreshDuration = 25;
     if (UIApplication.sharedApplication.windows.count > 0 && ![NSStringFromClass(UIApplication.sharedApplication.windows.firstObject.class) isEqualToString:@"UIWindow"]) {
         [[LTHPasscodeViewController sharedUser] disablePasscodeWhenApplicationEntersBackground];
     }
+    
+    [CameraUploadManager.shared startCameraUploadIfNeeded];
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
@@ -618,7 +622,6 @@ static const NSTimeInterval BackgroundRefreshDuration = 25;
 - (void)application:(UIApplication *)application performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
     MEGALogDebug(@"[App Lifecycle] application perform background refresh");
     if (CameraUploadManager.isCameraUploadEnabled) {
-        
         [CameraUploadManager.shared scanPhotoLibraryWithCompletion:^{
             if (CameraUploadManager.shared.uploadPendingItemsCount == 0) {
                 completionHandler(UIBackgroundFetchResultNoData);

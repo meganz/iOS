@@ -17,6 +17,7 @@ typedef NS_ENUM(NSUInteger, CameraUploadVideoQuality) {
 @property (class, nonatomic, getter=isCellularUploadAllowed) BOOL cellularUploadAllowed;
 @property (class, nonatomic, getter=shouldConvertHEIFPhoto) BOOL convertHEIFPhoto;
 @property (class, nonatomic, getter=shouldConvertHEVCVideo) BOOL convertHEVCVideo;
+@property (class, nonatomic, getter=isBackgroundUploadEnabled) BOOL backgroundUploadEnabled;
 @property (class, nonatomic) CameraUploadVideoQuality HEVCToH264CompressionQuality;
 
 + (void)clearLocalSettings;
