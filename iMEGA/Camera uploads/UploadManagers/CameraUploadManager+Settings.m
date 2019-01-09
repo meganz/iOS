@@ -7,6 +7,7 @@ static NSString * const IsCellularAllowedKey = @"IsUseCellularConnectionEnabled"
 static NSString * const ShouldConvertHEIFPhotoKey = @"ShouldConvertHEIFPhoto";
 static NSString * const ShouldConvertHEVCVideoKey = @"ShouldConvertHEVCVideo";
 static NSString * const HEVCToH264CompressionQualityKey = @"HEVCToH264CompressionQuality";
+static NSString * const IsLocationBasedBackgroundUploadEnabledKey = @"IsLocationBasedBackgroundUploadEnabled";
 
 @implementation CameraUploadManager (Settings)
 
@@ -17,6 +18,7 @@ static NSString * const HEVCToH264CompressionQualityKey = @"HEVCToH264Compressio
     [NSUserDefaults.standardUserDefaults removeObjectForKey:ShouldConvertHEIFPhotoKey];
     [NSUserDefaults.standardUserDefaults removeObjectForKey:ShouldConvertHEVCVideoKey];
     [NSUserDefaults.standardUserDefaults removeObjectForKey:HEVCToH264CompressionQualityKey];
+    [NSUserDefaults.standardUserDefaults removeObjectForKey:IsLocationBasedBackgroundUploadEnabledKey];
 }
 
 + (BOOL)isCameraUploadEnabled {
@@ -66,6 +68,14 @@ static NSString * const HEVCToH264CompressionQualityKey = @"HEVCToH264Compressio
 
 + (void)setHEVCToH264CompressionQuality:(CameraUploadVideoQuality)HEVCToH264CompressionQuality {
     [NSUserDefaults.standardUserDefaults setInteger:HEVCToH264CompressionQuality forKey:HEVCToH264CompressionQualityKey];
+}
+
++ (BOOL)isBackgroundUploadEnabled {
+    return [NSUserDefaults.standardUserDefaults boolForKey:IsLocationBasedBackgroundUploadEnabledKey];
+}
+
++ (void)setBackgroundUploadEnabled:(BOOL)backgroundUploadEnabled {
+    [NSUserDefaults.standardUserDefaults setBool:backgroundUploadEnabled forKey:IsLocationBasedBackgroundUploadEnabledKey];
 }
 
 @end
