@@ -51,10 +51,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.backBarButtonItem.image = self.backBarButtonItem.image.imageFlippedForRightToLeftLayoutDirection;
-    if (self.contactDetailsMode == ContactDetailsModeFromChat) {
-        self.navigationItem.leftBarButtonItem = self.backBarButtonItem;
-    }
     self.navigationItem.title = AMLocalizedString(@"contactInfo", @"title of the contact properties screen");
     
     self.user = [[MEGASdkManager sharedMEGASdk] contactForEmail:self.userEmail];
@@ -67,6 +63,11 @@
         } else {
             [self.avatarImageView mnz_setImageForUserHandle:self.userHandle name:self.userName];
         }
+    }
+    
+    self.backBarButtonItem.image = self.backBarButtonItem.image.imageFlippedForRightToLeftLayoutDirection;
+    if ((self.contactDetailsMode == ContactDetailsModeFromChat) || ((self.contactDetailsMode == ContactDetailsModeDefault) && (self.user.visibility != MEGAUserVisibilityVisible))) {
+        self.navigationItem.leftBarButtonItem = self.backBarButtonItem;
     }
     
     //TODO: Show the blue check if the Contact is verified
