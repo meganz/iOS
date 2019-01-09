@@ -1754,6 +1754,8 @@
 "Added 1 file and %lld folders"="Added 1 file and %lld folders";
 /* Content of a notification that informs how many files and folders have been added to a shared folder */
 "Added [A] files and [B] folders"="Added [A] files and [B] folders";
+/* Notification when on client side when owner of a shared folder removes folder/file from it. */
+"Removed item from shared folder"="已從分享資料夾中移除檔案";
 /* Notification popup. Notification for multiple removed items from a share. Please keep [X] as it will be replaced at runtime with the number of removed items. */
 "Removed [X] items from a share"="已從共享中移除[X]項目";
 /* A notification telling the user that their Pro plan payment was successfully received. The %1 indicates the name of the Pro plan they paid for e.g. Lite, PRO III. */
@@ -1768,6 +1770,10 @@
 "Your publicly shared %1 (%2) has been taken down."="您公開分享的 %1 (%2) 已被移除。";
 /* The text of a notification indicating that a file or folder that was taken down has now been restored due to a successful counter-notice. The %1 placeholder will be replaced with the text ‘file’ or ‘folder’. The %2 will be replaced with the name of the file or folder. */
 "Your taken down %1 (%2) has been reinstated."="您 %1 (%2) 之刪除已復原。";
+/* Error message shown to user when a copy/import operation would take them over their storage limit. */
+"This action can not be completed as it would take you over your current storage limit"="因將超出目前的儲存空間限制，此操作無法完成";
+/* uploads over storage quota warning dialog title */
+"Your upload(s) cannot proceed because your account is full"="由於您的帳戶已滿，您的上傳無法繼續";
 /* Footer text to explain the meaning of the functionaly 'Last seen' of your chat status. */
 "Allow your contacts to see the last time you were active on MEGA."="Allow your contacts to see the last time you were active on MEGA.";
 /* Label shown next to a feature name that can be enabled or disabled, like in 'Show Last seen...' */
