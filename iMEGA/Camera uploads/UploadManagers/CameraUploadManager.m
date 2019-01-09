@@ -109,8 +109,24 @@ static const NSInteger MaxConcurrentVideoOperationCount = 1;
     });
 }
 
+- (void)scanPhotoLibraryWithCompletion:(void (^)(void))completion {
+    NSMutableArray<NSNumber *> *mediaTypes = [NSMutableArray array];
+    
+    if ([self.class isCameraUploadEnabled]) {
+        [mediaTypes addObject:@(PHAssetMediaTypeImage)];
+        if ([self.class isVideoUploadEnabled]) {
+            [mediaTypes addObject:@(PHAssetMediaTypeVideo)];
+        }
+        
+        [self.scanner scanMediaTypes:mediaTypes completion:completion];
+    } else {
+        completion();
+        return;
+    }
+}
+
 - (void)uploadCamera {
-    [self.scanner scanMediaType:PHAssetMediaTypeImage completion:^{
+    [self.scanner scanMediaTypes:@[@(PHAssetMediaTypeImage)] completion:^{
         [self.scanner observePhotoLibraryChanges];
         [self uploadNextAssetsWithNumber:ConcurrentPhotoUploadCount mediaType:PHAssetMediaTypeImage];
     }];
@@ -123,7 +139,7 @@ static const NSInteger MaxConcurrentVideoOperationCount = 1;
         return;
     }
     
-    [self.scanner scanMediaType:PHAssetMediaTypeVideo completion:^{
+    [self.scanner scanMediaTypes:@[@(PHAssetMediaTypeVideo)] completion:^{
         if (self.videoUploadOerationQueue.operationCount > 0) {
             return;
         }

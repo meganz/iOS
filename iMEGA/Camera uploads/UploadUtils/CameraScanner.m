@@ -26,13 +26,13 @@
 
 #pragma mark - camera scanning
 
-- (void)scanMediaType:(PHAssetMediaType)mediaType completion:(void (^)(void))completion {
+- (void)scanMediaTypes:(NSArray<NSNumber *> *)mediaTypes completion:(void (^)(void))completion {
     [self.operationQueue addOperationWithBlock:^{
         MEGALogDebug(@"[Camera Upload] Start local album scanning at: %@", [NSDateFormatter localizedStringFromDate:[NSDate date] dateStyle:NSDateFormatterShortStyle timeStyle:NSDateFormatterFullStyle]);
         
         PHFetchOptions *fetchOptions = [[PHFetchOptions alloc] init];
         fetchOptions.includeAssetSourceTypes = PHAssetSourceTypeUserLibrary | PHAssetSourceTypeCloudShared | PHAssetSourceTypeiTunesSynced;
-        fetchOptions.predicate = [NSPredicate predicateWithFormat:@"mediaType == %@", @(mediaType)];
+        fetchOptions.predicate = [NSPredicate predicateWithFormat:@"mediaType IN %@", mediaTypes];
         self.fetchResult = [PHAsset fetchAssetsWithOptions:fetchOptions];
         if (self.fetchResult.count == 0) {
             return;
