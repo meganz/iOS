@@ -57,6 +57,7 @@
 #import "AttributeUploadManager.h"
 
 #define kFirstRun @"FirstRun"
+static const NSTimeInterval MinimumBackgroundRefreshInterval = 3600 * 2;
 
 @interface AppDelegate () <PKPushRegistryDelegate, UIApplicationDelegate, UNUserNotificationCenterDelegate, LTHPasscodeViewControllerDelegate, MEGAApplicationDelegate, MEGAChatDelegate, MEGAChatRequestDelegate, MEGAGlobalDelegate, MEGAPurchasePricingDelegate, MEGARequestDelegate, MEGATransferDelegate> {
     BOOL isAccountFirstLogin;
@@ -109,6 +110,8 @@
         [TransferSessionManager.shared restoreAllSessions];
         [CameraUploadManager.shared collateUploadRecords];
     });
+    
+    [application setMinimumBackgroundFetchInterval:MinimumBackgroundRefreshInterval];
     
     return YES;
 }
@@ -609,6 +612,15 @@
     MEGALogDebug(@"[App Lifecycle] application handle events for background session: %@", identifier);
     [TransferSessionManager.shared saveSessionCompletion:completionHandler forIdentifier:identifier];
     [TransferSessionManager.shared restoreSessionIfNeededByIdentifier:identifier];
+}
+
+- (void)application:(UIApplication *)application performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
+    MEGALogDebug(@"[App Lifecycle] application perform background refresh");
+    if (CameraUploadManager.isCameraUploadEnabled) {
+        [CameraUploadManager.shared startCameraUploadIfNeeded];
+    } else {
+        completionHandler(UIBackgroundFetchResultNoData);
+    }
 }
 
 #pragma mark - Private
