@@ -1528,6 +1528,7 @@ const NSUInteger kMaxMessagesToLoad = 256;
                     }];
                 } else {
                     [DevicePermissionsHelper alertVideoPermissionWithCompletionHandler:nil];
+                    self.inputToolbar.hidden = NO;
                 }
             }];
             
