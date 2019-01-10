@@ -1968,8 +1968,21 @@ const NSUInteger kMaxMessagesToLoad = 256;
                     if (message.isDeletable) return YES;
                 }
                 //TODO: Send Message
-            } else {
-                if (action == @selector(addContact:message:)) return YES;
+            }
+                        
+            if (action == @selector(addContact:message:)) {
+                if (message.usersCount == 1) {
+                    NSString *email = [message userEmailAtIndex:0];
+                    MEGAUser *user = [[MEGASdkManager sharedMEGASdk] contactForEmail:email];
+                    if (user.visibility != MEGAUserVisibilityVisible) return YES;
+                } else {
+                    for (NSInteger i = 0; i < message.usersCount; i++) {
+                        NSString *email = [message userEmailAtIndex:i];
+                        MEGAUser *user = [[MEGASdkManager sharedMEGASdk] contactForEmail:email];
+                        if (user.visibility == MEGAUserVisibilityVisible) return NO;
+                    }
+                    return YES;
+                }
             }
             break;
         }
@@ -2178,15 +2191,14 @@ const NSUInteger kMaxMessagesToLoad = 256;
         } else if (message.type == MEGAChatMessageTypeContact) {
             if (message.usersCount == 1) {
                 NSString *userEmail = [message userEmailAtIndex:0];
-                MEGAUser *user = [[MEGASdkManager sharedMEGASdk] contactForEmail:userEmail];
-                if ((user != nil) && (user.visibility == MEGAUserVisibilityVisible)) { //It's one of your contacts, open 'Contact Info' view
-                    ContactDetailsViewController *contactDetailsVC = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactDetailsViewControllerID"];
-                    contactDetailsVC.contactDetailsMode = ContactDetailsModeDefault;
-                    contactDetailsVC.userEmail          = userEmail;
-                    contactDetailsVC.userName           = [message userNameAtIndex:0];
-                    contactDetailsVC.userHandle         = [message userHandleAtIndex:0];
-                    [self.navigationController pushViewController:contactDetailsVC animated:YES];
-                }
+                NSString *userName = [message userNameAtIndex:0];
+                uint64_t userHandle = [message userHandleAtIndex:0];
+                ContactDetailsViewController *contactDetailsVC = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactDetailsViewControllerID"];
+                contactDetailsVC.contactDetailsMode = ContactDetailsModeDefault;
+                contactDetailsVC.userEmail          = userEmail;
+                contactDetailsVC.userName           = userName;
+                contactDetailsVC.userHandle         = userHandle;
+                [self.navigationController pushViewController:contactDetailsVC animated:YES];
             } else {
                 ChatAttachedContactsViewController *chatAttachedContactsVC = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"ChatAttachedContactsViewControllerID"];
                 chatAttachedContactsVC.message = message;
