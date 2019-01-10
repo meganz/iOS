@@ -1336,8 +1336,6 @@ static MEGAIndexer *indexer;
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"IsSaveVideoToGalleryEnabled"];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"ChatVideoQuality"];
     
-    [NSUserDefaults.standardUserDefaults removeObjectForKey:@"notificationsPermissionModalShown"];
-    
     //Set default order on logout
     [[NSUserDefaults standardUserDefaults] setInteger:1 forKey:@"SortOrderType"];
     [[NSUserDefaults standardUserDefaults] setInteger:1 forKey:@"OfflineSortOrderType"];

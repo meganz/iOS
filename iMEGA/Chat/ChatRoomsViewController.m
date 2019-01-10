@@ -131,13 +131,8 @@
     
     NSInteger unreadChats = MEGASdkManager.sharedMEGAChatSdk ? MEGASdkManager.sharedMEGAChatSdk.unreadChats : 0;
     if (unreadChats > 0) {
-        if (![NSUserDefaults.standardUserDefaults boolForKey:@"notificationsPermissionModalShown"]) {
-            if (DevicePermissionsHelper.shouldAskForNotificationsPermissions) {
-                [DevicePermissionsHelper modalNotificationsPermission];
-            }
-            
-            [NSUserDefaults.standardUserDefaults setBool:YES forKey:@"notificationsPermissionModalShown"];
-            [NSUserDefaults.standardUserDefaults synchronize];
+        if ([DevicePermissionsHelper shouldAskForNotificationsPermissions]) {
+            [DevicePermissionsHelper modalNotificationsPermission];
         }
     }
 }

@@ -1218,15 +1218,6 @@ const NSUInteger kMaxMessagesToLoad = 256;
     
     dispatch_async(dispatch_get_main_queue(), ^{
         [self finishSendingMessageAnimated:YES];
-        
-        if (![NSUserDefaults.standardUserDefaults boolForKey:@"notificationsPermissionModalShown"]) {
-            if (DevicePermissionsHelper.shouldAskForNotificationsPermissions) {
-                [DevicePermissionsHelper modalNotificationsPermission];
-            }
-            
-            [NSUserDefaults.standardUserDefaults setBool:YES forKey:@"notificationsPermissionModalShown"];
-            [NSUserDefaults.standardUserDefaults synchronize];
-        }
     });
     
     [[MEGASdkManager sharedMEGAChatSdk] sendStopTypingNotificationForChat:self.chatRoom.chatId];
