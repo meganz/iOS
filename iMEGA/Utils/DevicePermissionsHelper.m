@@ -135,8 +135,7 @@
     permissionsModal.image = [UIImage imageNamed:@"micAndCamPermission"];
     permissionsModal.viewTitle = AMLocalizedString(@"Enable Notifications", @"Title label that explains that the user is going to be asked for the notifications permission");
     permissionsModal.detail = AMLocalizedString(@"We would like to send you notifications so you receive new messages on your device instantly.", @"Detailed explanation of why the user should give permission to deliver notifications");
-    permissionsModal.action = AMLocalizedString(@"Allow Access", @"Button which triggers a request for a specific permission, that have been explained to the user beforehand");
-    permissionsModal.dismiss = AMLocalizedString(@"notNow", nil);
+    permissionsModal.action = AMLocalizedString(@"continue", @"'Next' button in a dialog");
     
     permissionsModal.completion = ^{
         [self notificationsPermissionWithCompletionHandler:^(BOOL granted) {
