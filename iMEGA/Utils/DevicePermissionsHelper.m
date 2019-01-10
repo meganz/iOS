@@ -14,7 +14,7 @@
 #pragma mark - Permissions requests
 
 + (void)audioPermissionModal:(BOOL)modal forIncomingCall:(BOOL)incomingCall withCompletionHandler:(void (^)(BOOL granted))handler {
-    if (modal && [self shouldAskForAudioPermissions]) {
+    if (modal && self.shouldAskForAudioPermissions) {
         [self modalAudioPermissionForIncomingCall:incomingCall withCompletionHandler:handler];
     } else {
         [self audioPermissionWithCompletionHandler:handler];
@@ -165,6 +165,7 @@
     if ([AVCaptureDevice respondsToSelector:@selector(requestAccessForMediaType:completionHandler:)]) {
         return [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeAudio] == AVAuthorizationStatusNotDetermined;
     }
+    
     return NO;
 }
 
@@ -172,11 +173,12 @@
     if ([AVCaptureDevice respondsToSelector:@selector(requestAccessForMediaType:completionHandler:)]) {
         return [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeVideo] == AVAuthorizationStatusNotDetermined;
     }
+    
     return NO;
 }
 
 + (BOOL)shouldAskForPhotosPermissions {
-    return [PHPhotoLibrary authorizationStatus] == PHAuthorizationStatusNotDetermined;
+    return PHPhotoLibrary.authorizationStatus == PHAuthorizationStatusNotDetermined;
 }
 
 + (BOOL)shouldAskForNotificationsPermissions {
@@ -195,14 +197,15 @@
     } else {
         shouldAskForNotificationsPermissions = !UIApplication.sharedApplication.isRegisteredForRemoteNotifications;
     }
+    
     return shouldAskForNotificationsPermissions;
 }
 
 + (BOOL)shouldSetupPermissions {
-    BOOL shouldAskForAudioPermissions = [self shouldAskForAudioPermissions];
-    BOOL shouldAskForVideoPermissions = [self shouldAskForVideoPermissions];
-    BOOL shouldAskForPhotosPermissions = [self shouldAskForPhotosPermissions];
-    BOOL shouldAskForNotificationsPermissions = [self shouldAskForNotificationsPermissions];
+    BOOL shouldAskForAudioPermissions = self.shouldAskForAudioPermissions;
+    BOOL shouldAskForVideoPermissions = self.shouldAskForVideoPermissions;
+    BOOL shouldAskForPhotosPermissions = self.shouldAskForPhotosPermissions;
+    BOOL shouldAskForNotificationsPermissions = self.shouldAskForNotificationsPermissions;
     
     return shouldAskForAudioPermissions || shouldAskForVideoPermissions || shouldAskForPhotosPermissions || shouldAskForNotificationsPermissions;
 }

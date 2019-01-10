@@ -20,9 +20,10 @@
 
 #pragma mark - Initialization
 
-+ (OnboardingViewController *)onboardingViewControllerOfType:(OnboardingType)type {
++ (OnboardingViewController *)instanciateOnboardingWithType:(OnboardingType)type {
     OnboardingViewController *onboardingViewController = [[UIStoryboard storyboardWithName:@"Onboarding" bundle:nil] instantiateViewControllerWithIdentifier:@"OnboardingViewControllerID"];
     onboardingViewController.type = type;
+    
     return onboardingViewController;
 }
 
@@ -68,7 +69,7 @@
             if (self.scrollView.subviews.firstObject.subviews.count == 4) {
                 [self.scrollView.subviews.firstObject.subviews.lastObject removeFromSuperview];
                 int nextIndex = 0;
-                if ([DevicePermissionsHelper shouldAskForPhotosPermissions]) {
+                if (DevicePermissionsHelper.shouldAskForPhotosPermissions) {
                     OnboardingView *onboardingView = self.scrollView.subviews.firstObject.subviews[nextIndex];
                     onboardingView.type = OnboardingViewTypePhotosPermission;
                     nextIndex++;
@@ -76,7 +77,7 @@
                     [self.scrollView.subviews.firstObject.subviews[nextIndex] removeFromSuperview];
                 }
                 
-                if ([DevicePermissionsHelper shouldAskForAudioPermissions] || [DevicePermissionsHelper shouldAskForVideoPermissions]) {
+                if (DevicePermissionsHelper.shouldAskForAudioPermissions || DevicePermissionsHelper.shouldAskForVideoPermissions) {
                     OnboardingView *onboardingView = self.scrollView.subviews.firstObject.subviews[nextIndex];
                     onboardingView.type = OnboardingViewTypeMicrophoneAndCameraPermissions;
                     nextIndex++;
@@ -84,7 +85,7 @@
                     [self.scrollView.subviews.firstObject.subviews[nextIndex] removeFromSuperview];
                 }
                 
-                if ([DevicePermissionsHelper shouldAskForNotificationsPermissions]) {
+                if (DevicePermissionsHelper.shouldAskForNotificationsPermissions) {
                     OnboardingView *onboardingView = self.scrollView.subviews.firstObject.subviews[nextIndex];
                     onboardingView.type = OnboardingViewTypeNotificationsPermission;
                     nextIndex++;

@@ -110,9 +110,10 @@
     [super viewDidAppear:animated];
     
     if (![NSUserDefaults.standardUserDefaults objectForKey:kIsCameraUploadsEnabled]) {
-        MEGANavigationController *cameraUploadsNavigationController = [[UIStoryboard storyboardWithName:@"Photos" bundle:nil] instantiateViewControllerWithIdentifier:@"CameraUploadsPopUpNavigationControllerID"];
-        
-        [self presentViewController:cameraUploadsNavigationController animated:YES completion:nil];
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            MEGANavigationController *cameraUploadsNavigationController = [[UIStoryboard storyboardWithName:@"Photos" bundle:nil] instantiateViewControllerWithIdentifier:@"CameraUploadsPopUpNavigationControllerID"];
+            [self presentViewController:cameraUploadsNavigationController animated:YES completion:nil];
+        });
     }
 }
 

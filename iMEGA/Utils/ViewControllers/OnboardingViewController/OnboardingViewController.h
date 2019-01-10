@@ -7,7 +7,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface OnboardingViewController : UIViewController
 
-+ (OnboardingViewController *)onboardingViewControllerOfType:(OnboardingType)type;
++ (OnboardingViewController *)instanciateOnboardingWithType:(OnboardingType)type;
 
 @property (nonatomic, copy) void (^completion)(void);
 

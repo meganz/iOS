@@ -552,7 +552,7 @@
         }
         MEGALinkManager.selectedOption = LinkOptionDownloadFolderOrNodes;
         
-        [self.navigationController pushViewController:[OnboardingViewController onboardingViewControllerOfType:OnboardingTypeDefault] animated:YES];
+        [self.navigationController pushViewController:[OnboardingViewController instanciateOnboardingWithType:OnboardingTypeDefault] animated:YES];
     }
 }
 
@@ -584,7 +584,7 @@
         }
         MEGALinkManager.selectedOption = LinkOptionImportFolderOrNodes;
         
-        [self.navigationController pushViewController:[OnboardingViewController onboardingViewControllerOfType:OnboardingTypeDefault] animated:YES];
+        [self.navigationController pushViewController:[OnboardingViewController instanciateOnboardingWithType:OnboardingTypeDefault] animated:YES];
     }
     
     return;

@@ -1330,13 +1330,13 @@ static MEGAIndexer *indexer;
     
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"TransfersPaused"];
     
-    [[NSUserDefaults standardUserDefaults] removeObjectForKey:kIsCameraUploadsEnabled];
-    [[NSUserDefaults standardUserDefaults] removeObjectForKey:kIsUploadVideosEnabled];
+    [NSUserDefaults.standardUserDefaults removeObjectForKey:kIsCameraUploadsEnabled];
+    [NSUserDefaults.standardUserDefaults removeObjectForKey:kIsUploadVideosEnabled];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"IsSavePhotoToGalleryEnabled"];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"IsSaveVideoToGalleryEnabled"];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"ChatVideoQuality"];
     
-    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"notificationsPermissionModalShown"];
+    [NSUserDefaults.standardUserDefaults removeObjectForKey:@"notificationsPermissionModalShown"];
     
     //Set default order on logout
     [[NSUserDefaults standardUserDefaults] setInteger:1 forKey:@"SortOrderType"];

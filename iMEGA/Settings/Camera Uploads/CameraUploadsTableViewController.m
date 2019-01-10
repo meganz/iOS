@@ -89,7 +89,7 @@
     [DevicePermissionsHelper photosPermissionWithCompletionHandler:^(BOOL granted) {
         if (granted) {
             BOOL isCameraUploadsEnabled = ![CameraUploads syncManager].isCameraUploadsEnabled;
-            [[CameraUploads syncManager] setIsCameraUploadsEnabled:isCameraUploadsEnabled];
+            CameraUploads.syncManager.isCameraUploadsEnabled = isCameraUploadsEnabled;
             [NSUserDefaults.standardUserDefaults setObject:@(isCameraUploadsEnabled) forKey:kIsCameraUploadsEnabled];
             
             if (isCameraUploadsEnabled) {
@@ -104,7 +104,7 @@
             [DevicePermissionsHelper alertPhotosPermission];
             
             MEGALogInfo(@"Disable Camera Uploads");
-            [[CameraUploads syncManager] setIsCameraUploadsEnabled:NO];
+            CameraUploads.syncManager.isCameraUploadsEnabled = NO;
             
             [self.uploadVideosSwitch setOn:NO animated:YES];
             [self.useCellularConnectionSwitch setOn:NO animated:YES];

@@ -50,8 +50,8 @@
         [NSUserDefaults.standardUserDefaults setObject:@(granted) forKey:kIsCameraUploadsEnabled];
         if (granted) {
             MEGALogInfo(@"Enable Camera Uploads");
-            [CameraUploads syncManager].isCameraUploadsEnabled = YES;
-            [CameraUploads syncManager].isUploadVideosEnabled = YES;
+            CameraUploads.syncManager.isCameraUploadsEnabled = YES;
+            CameraUploads.syncManager.isUploadVideosEnabled = YES;
             [NSUserDefaults.standardUserDefaults setObject:@1 forKey:kIsUploadVideosEnabled];
             
             [self dismissViewControllerAnimated:YES completion:^{
