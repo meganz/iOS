@@ -253,17 +253,6 @@
     }];
 }
 
-- (UIAlertController *)videoPermisionHangCallAlertController {
-    UIAlertController *permissionsAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"attention", @"Alert title to attract attention") message:AMLocalizedString(@"cameraPermissions", @"Alert message to remember that MEGA app needs permission to use the Camera to take a photo or video and it doesn't have it") preferredStyle:UIAlertControllerStyleAlert];
-    [permissionsAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
-    __weak __typeof(self) weakSelf = self;
-    [permissionsAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-        [weakSelf hangCall:nil];
-        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
-    }]];
-    return permissionsAlertController;
-}
-
 - (void)enablePasscodeIfNeeded {
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"presentPasscodeLater"] && [LTHPasscodeViewController doesPasscodeExist]) {
         [[LTHPasscodeViewController sharedUser] showLockScreenOver:UIApplication.mnz_presentingViewController.view
@@ -324,6 +313,7 @@
 }
 
 - (IBAction)enableDisableVideo:(UIButton *)sender {
+    __weak CallViewController *weakSelf = self;
     [DevicePermissionsHelper videoPermissionWithCompletionHandler:^(BOOL granted) {
         if (granted) {
             MEGAChatEnableDisableVideoRequestDelegate *enableDisableVideoRequestDelegate = [[MEGAChatEnableDisableVideoRequestDelegate alloc] initWithCompletion:^(MEGAChatError *error) {
@@ -349,7 +339,9 @@
                 [[MEGASdkManager sharedMEGAChatSdk] enableVideoForChat:self.chatRoom.chatId delegate:enableDisableVideoRequestDelegate];
             }
         } else {
-            [self presentViewController:[self videoPermisionHangCallAlertController] animated:YES completion:nil];
+            [DevicePermissionsHelper alertVideoPermissionWithCompletionHandler:^{
+                [weakSelf hangCall:nil];
+            }];
         }
     }];
 }

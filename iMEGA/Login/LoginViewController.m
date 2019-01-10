@@ -25,6 +25,8 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
 
 @interface LoginViewController () <UITextFieldDelegate, MEGARequestDelegate>
 
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *cancelBarButtonItem;
+
 @property (weak, nonatomic) IBOutlet UIImageView *logoImageView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *logoTopLayoutConstraint;
 
@@ -33,7 +35,6 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
 
 @property (weak, nonatomic) IBOutlet UIButton *loginButton;
 
-@property (weak, nonatomic) IBOutlet UIButton *createAccountButton;
 @property (weak, nonatomic) IBOutlet UIButton *forgotPasswordButton;
 
 @end
@@ -55,6 +56,8 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
     longPressGestureRecognizer.minimumPressDuration = 5.0f;
     self.logoImageView.gestureRecognizers = @[tapGestureRecognizer, longPressGestureRecognizer];
     
+    self.cancelBarButtonItem.title = AMLocalizedString(@"cancel", @"Button title to cancel something");
+    
     self.emailInputView.inputTextField.returnKeyType = UIReturnKeyNext;
     self.emailInputView.inputTextField.delegate = self;
     self.emailInputView.inputTextField.tag = EmailTextFieldTag;
@@ -71,7 +74,6 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
     
     [self.loginButton setTitle:AMLocalizedString(@"login", @"Login") forState:UIControlStateNormal];
 
-    [self.createAccountButton setTitle:AMLocalizedString(@"createAccount", nil) forState:UIControlStateNormal];
     NSString *forgotPasswordString = AMLocalizedString(@"forgotPassword", @"An option to reset the password.");
     forgotPasswordString = [forgotPasswordString stringByReplacingOccurrencesOfString:@"?" withString:@""];
     forgotPasswordString = [forgotPasswordString stringByReplacingOccurrencesOfString:@"¿" withString:@""];
@@ -80,8 +82,6 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    
-    [self.navigationController setNavigationBarHidden:YES animated:YES];
     
     [self.navigationItem setTitle:AMLocalizedString(@"login", nil)];
     
@@ -139,6 +139,11 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
 
 - (IBAction)forgotPasswordTouchUpInside:(UIButton *)sender {
     [[NSURL URLWithString:@"https://mega.nz/recovery"] mnz_presentSafariViewController];
+}
+
+- (IBAction)cancel:(UIBarButtonItem *)sender {
+    [self.view endEditing:YES];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark - Private
@@ -218,16 +223,6 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
     [self.view endEditing:YES];
-}
-
-#pragma mark - UIViewController
-
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if ([segue.identifier isEqualToString:@"CreateAccountStoryboardSegueID"] && [sender isKindOfClass:[NSString class]]) {
-        MEGANavigationController *createAccountNC = (MEGANavigationController *)segue.destinationViewController;
-        CreateAccountViewController *createAccountVC = (CreateAccountViewController *)createAccountNC.childViewControllers.firstObject;
-        [createAccountVC setEmailString:sender];
-    }
 }
 
 #pragma mark - UITextFieldDelegate

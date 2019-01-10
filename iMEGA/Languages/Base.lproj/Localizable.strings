@@ -1630,6 +1630,8 @@
 "Please give the MEGA App permission to access Photos to share photos and videos."="Please give the MEGA App permission to access Photos to share photos and videos.";
 /* Title label that explains that the user is going to be asked for the microphone and camera permission */
 "Enable Microphone and Camera"="Enable Microphone and Camera";
+/* notification subtitle of incoming calls */
+"Incoming call"="Incoming call";
 /* Detailed explanation of why the user should give permission to access to the camera and the microphone */
 "To make encrypted voice and video calls, allow MEGA access to your Camera and Microphone"="To make encrypted voice and video calls, allow MEGA access to your Camera and Microphone";
 /* Title label that explains that the user is going to be asked for the notifications permission */
