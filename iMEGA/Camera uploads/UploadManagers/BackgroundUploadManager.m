@@ -25,6 +25,7 @@
     if (_locationManager == nil) {
         _locationManager = [[CLLocationManager alloc] init];
         _locationManager.delegate = self;
+        _locationManager.allowsBackgroundLocationUpdates = YES;
     }
     
     return _locationManager;
@@ -33,14 +34,14 @@
 - (void)enableBackgroundUploadIfPossible {
     if ([CameraUploadManager isBackgroundUploadEnabled] &&
         CLLocationManager.authorizationStatus == kCLAuthorizationStatusAuthorizedAlways &&
-        CLLocationManager.significantLocationChangeMonitoringAvailable) {
-        [self.locationManager startMonitoringSignificantLocationChanges];
+        CLLocationManager.locationServicesEnabled) {
+        [self.locationManager startMonitoringVisits];
     }
 }
 
 - (void)disableBackgroundUpload {
     [CameraUploadManager setBackgroundUploadEnabled:NO];
-    [self.locationManager stopMonitoringSignificantLocationChanges];
+    [self.locationManager stopMonitoringVisits];
 }
 
 #pragma mark - Location manager delegate
@@ -51,8 +52,14 @@
             [self enableBackgroundUploadIfPossible];
             break;
         default:
-            [self disableBackgroundUpload];
+            [self.locationManager stopMonitoringVisits];
             break;
+    }
+}
+
+- (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error {
+    if (error.code == kCLErrorDenied) {
+        [self.locationManager stopMonitoringVisits];
     }
 }
 
