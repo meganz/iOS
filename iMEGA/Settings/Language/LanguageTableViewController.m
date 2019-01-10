@@ -90,7 +90,7 @@
         
         // Schedule a notification to make it easy to reopen MEGA:
         NSString *notificationText = AMLocalizedString(@"languageRestartNotification", @"Text shown in a notification to make it easy for the user to restart the app after the language is changed");
-        if ([DevicePermissionsHelper shouldAskForNotificationsPermissions]) {
+        if (DevicePermissionsHelper.shouldAskForNotificationsPermissions) {
             exit(0);
         } else {
             [DevicePermissionsHelper notificationsPermissionWithCompletionHandler:^(BOOL granted) {
@@ -98,7 +98,7 @@
                     if (granted) {
                         UNMutableNotificationContent *content = [UNMutableNotificationContent new];
                         content.body = notificationText;
-                        content.sound = [UNNotificationSound defaultSound];
+                        content.sound = UNNotificationSound.defaultSound;
                         UNTimeIntervalNotificationTrigger *trigger = [UNTimeIntervalNotificationTrigger triggerWithTimeInterval:1
                                                                                                                         repeats:NO];
                         NSString *identifier = @"nz.mega";
@@ -114,7 +114,7 @@
                     UILocalNotification* localNotification = [[UILocalNotification alloc] init];
                     localNotification.fireDate = [NSDate dateWithTimeIntervalSinceNow:1];
                     localNotification.alertBody = notificationText;
-                    localNotification.timeZone = [NSTimeZone defaultTimeZone];
+                    localNotification.timeZone = NSTimeZone.defaultTimeZone;
                     [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
                     // The exit must be called some time after the previous method is called, because there is no way to
                     // know when the notification is properly scheduled, and calling exit inmediatley causes to not have

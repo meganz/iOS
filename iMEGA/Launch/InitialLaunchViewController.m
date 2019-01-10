@@ -83,7 +83,7 @@
 #pragma mark - IBActions
 
 - (IBAction)setupButtonPressed:(UIButton *)sender {
-    OnboardingViewController *setupVC = [OnboardingViewController onboardingViewControllerOfType:OnboardingTypePermissions];
+    OnboardingViewController *setupVC = [OnboardingViewController instanciateOnboardingWithType:OnboardingTypePermissions];
     setupVC.completion = ^{
         [self.delegate setupFinished];
     };

@@ -129,8 +129,8 @@
                     if (granted) {
                         [self showImagePickerForSourceType:UIImagePickerControllerSourceTypeCamera];
                     } else {
-                        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"isSaveMediaCapturedToGalleryEnabled"];
-                        [[NSUserDefaults standardUserDefaults] synchronize];
+                        [NSUserDefaults.standardUserDefaults setBool:NO forKey:@"isSaveMediaCapturedToGalleryEnabled"];
+                        [NSUserDefaults.standardUserDefaults synchronize];
                         [self showImagePickerForSourceType:UIImagePickerControllerSourceTypeCamera];
                     }
                 }];

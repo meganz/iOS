@@ -129,10 +129,10 @@
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     
-    NSInteger unreadChats = [MEGASdkManager sharedMEGAChatSdk] != nil ? [MEGASdkManager sharedMEGAChatSdk].unreadChats : 0;
+    NSInteger unreadChats = MEGASdkManager.sharedMEGAChatSdk ? MEGASdkManager.sharedMEGAChatSdk.unreadChats : 0;
     if (unreadChats > 0) {
         if (![NSUserDefaults.standardUserDefaults boolForKey:@"notificationsPermissionModalShown"]) {
-            if ([DevicePermissionsHelper shouldAskForNotificationsPermissions]) {
+            if (DevicePermissionsHelper.shouldAskForNotificationsPermissions) {
                 [DevicePermissionsHelper modalNotificationsPermission];
             }
             

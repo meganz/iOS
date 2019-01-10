@@ -130,7 +130,7 @@
         [[MEGAStore shareInstance] configureMEGAStore];
         
         LaunchViewController *launchVC;
-        if ([DevicePermissionsHelper shouldSetupPermissions]) {
+        if (DevicePermissionsHelper.shouldSetupPermissions) {
             launchVC = [[UIStoryboard storyboardWithName:@"Launch" bundle:nil] instantiateViewControllerWithIdentifier:@"InitialLaunchViewControllerID"];
         } else {
             launchVC = [[UIStoryboard storyboardWithName:@"Launch" bundle:nil] instantiateViewControllerWithIdentifier:@"LaunchViewControllerID"];

@@ -327,7 +327,7 @@
             createAccountRequestDelegate.resumeCreateAccount = YES;
             [[MEGASdkManager sharedMEGASdk] resumeCreateAccountWithSessionId:sessionId delegate:createAccountRequestDelegate];
         } else {
-            self.window.rootViewController = [OnboardingViewController onboardingViewControllerOfType:OnboardingTypeDefault];
+            self.window.rootViewController = [OnboardingViewController instanciateOnboardingWithType:OnboardingTypeDefault];
         }
     }
     
@@ -861,10 +861,10 @@
             if (isAccountFirstLogin) {
                 isAccountFirstLogin = NO;
                 if (self.isNewAccount) {
-                    if ([MEGAPurchase sharedInstance].products.count > 0) {
+                    if (MEGAPurchase.sharedInstance.products.count > 0) {
                         [self showChooseAccountType];
                     } else {
-                        [[MEGAPurchase sharedInstance] setPricingsDelegate:self];
+                        [MEGAPurchase.sharedInstance setPricingsDelegate:self];
                         self.chooseAccountTypeLater = YES;
                     }
                     self.newAccount = NO;
@@ -893,9 +893,9 @@
 }
 
 - (void)showOnboarding {
-    OnboardingViewController *onboardingVC = [OnboardingViewController onboardingViewControllerOfType:OnboardingTypeDefault];
+    OnboardingViewController *onboardingVC = [OnboardingViewController instanciateOnboardingWithType:OnboardingTypeDefault];
     dispatch_async(dispatch_get_main_queue(), ^{
-        UIView *overlayView = [[UIScreen mainScreen] snapshotViewAfterScreenUpdates:NO];
+        UIView *overlayView = [UIScreen.mainScreen snapshotViewAfterScreenUpdates:NO];
         [onboardingVC.view addSubview:overlayView];
         self.window.rootViewController = onboardingVC;
         
@@ -944,7 +944,7 @@
 
 - (void)registerForNotifications {
     UNUserNotificationCenter.currentNotificationCenter.delegate = self;
-    if (![DevicePermissionsHelper shouldAskForNotificationsPermissions]) {
+    if (!DevicePermissionsHelper.shouldAskForNotificationsPermissions) {
         [DevicePermissionsHelper notificationsPermissionWithCompletionHandler:^(BOOL granted) {
             if (granted) {
                 [[UIApplication sharedApplication] registerForRemoteNotifications];

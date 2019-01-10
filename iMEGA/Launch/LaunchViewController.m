@@ -30,13 +30,13 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    [[MEGASdkManager sharedMEGASdk] addMEGARequestDelegate:self];
+    [MEGASdkManager.sharedMEGASdk addMEGARequestDelegate:self];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     
-    [[MEGASdkManager sharedMEGASdk] removeMEGARequestDelegate:self];
+    [MEGASdkManager.sharedMEGASdk removeMEGARequestDelegate:self];
 }
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations {

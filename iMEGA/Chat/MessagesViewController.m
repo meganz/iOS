@@ -1220,7 +1220,7 @@ const NSUInteger kMaxMessagesToLoad = 256;
         [self finishSendingMessageAnimated:YES];
         
         if (![NSUserDefaults.standardUserDefaults boolForKey:@"notificationsPermissionModalShown"]) {
-            if ([DevicePermissionsHelper shouldAskForNotificationsPermissions]) {
+            if (DevicePermissionsHelper.shouldAskForNotificationsPermissions) {
                 [DevicePermissionsHelper modalNotificationsPermission];
             }
             
@@ -1521,8 +1521,8 @@ const NSUInteger kMaxMessagesToLoad = 256;
                         if (granted) {
                             [self showImagePickerForSourceType:UIImagePickerControllerSourceTypeCamera];
                         } else {
-                            [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"isSaveMediaCapturedToGalleryEnabled"];
-                            [[NSUserDefaults standardUserDefaults] synchronize];
+                            [NSUserDefaults.standardUserDefaults setBool:NO forKey:@"isSaveMediaCapturedToGalleryEnabled"];
+                            [NSUserDefaults.standardUserDefaults synchronize];
                             [self showImagePickerForSourceType:UIImagePickerControllerSourceTypeCamera];
                         }
                     }];

@@ -222,15 +222,15 @@
         if (granted) {
             [SVProgressHUD showImage:[UIImage imageNamed:@"saveToPhotos"] status:AMLocalizedString(@"Saving to Photos…", @"Text shown when starting the process to save a photo or video to Photos app")];
             NSString *temporaryPath = [[NSTemporaryDirectory() stringByAppendingPathComponent:self.base64Handle] stringByAppendingPathComponent:self.name];
-            NSString *temporaryFingerprint = [[MEGASdkManager sharedMEGASdk] fingerprintForFilePath:temporaryPath];
+            NSString *temporaryFingerprint = [MEGASdkManager.sharedMEGASdk fingerprintForFilePath:temporaryPath];
             if ([temporaryFingerprint isEqualToString:self.fingerprint]) {
                 [self mnz_copyToGalleryFromTemporaryPath:temporaryPath];
-            } else if ([MEGAReachabilityManager isReachableHUDIfNot]) {
+            } else if (MEGAReachabilityManager.isReachableHUDIfNot) {
                 NSString *downloadsDirectory = [NSFileManager.defaultManager downloadsDirectory];
                 downloadsDirectory = downloadsDirectory.mnz_relativeLocalPath;
-                NSString *offlineNameString = [[MEGASdkManager sharedMEGASdkFolder] escapeFsIncompatible:self.name];
+                NSString *offlineNameString = [MEGASdkManager.sharedMEGASdkFolder escapeFsIncompatible:self.name];
                 NSString *localPath = [downloadsDirectory stringByAppendingPathComponent:offlineNameString];
-                [[MEGASdkManager sharedMEGASdk] startDownloadNode:[api authorizeNode:self] localPath:localPath appData:[[NSString new] mnz_appDataToSaveInPhotosApp]];
+                [MEGASdkManager.sharedMEGASdk startDownloadNode:[api authorizeNode:self] localPath:localPath appData:[[NSString new] mnz_appDataToSaveInPhotosApp]];
             }
         } else {
             [DevicePermissionsHelper alertPhotosPermission];
@@ -412,7 +412,7 @@
                 MEGALinkManager.selectedOption = LinkOptionDownloadNode;
             }
             
-            OnboardingViewController *onboardingVC = [OnboardingViewController onboardingViewControllerOfType:OnboardingTypeDefault];
+            OnboardingViewController *onboardingVC = [OnboardingViewController instanciateOnboardingWithType:OnboardingTypeDefault];
             if (viewController.navigationController) {
                 [viewController.navigationController pushViewController:onboardingVC animated:YES];
             } else {
@@ -444,7 +444,7 @@
                 MEGALinkManager.selectedOption = LinkOptionImportNode;
             }
             
-            OnboardingViewController *onboardingVC = [OnboardingViewController onboardingViewControllerOfType:OnboardingTypeDefault];
+            OnboardingViewController *onboardingVC = [OnboardingViewController instanciateOnboardingWithType:OnboardingTypeDefault];
             if (viewController.navigationController) {
                 [viewController.navigationController pushViewController:onboardingVC animated:YES];
             } else {
