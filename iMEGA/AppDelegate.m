@@ -894,18 +894,16 @@
 
 - (void)showOnboarding {
     OnboardingViewController *onboardingVC = [OnboardingViewController instanciateOnboardingWithType:OnboardingTypeDefault];
-    dispatch_async(dispatch_get_main_queue(), ^{
-        UIView *overlayView = [UIScreen.mainScreen snapshotViewAfterScreenUpdates:NO];
-        [onboardingVC.view addSubview:overlayView];
-        self.window.rootViewController = onboardingVC;
-        
-        [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
-            overlayView.alpha = 0;
-        } completion:^(BOOL finished) {
-            [overlayView removeFromSuperview];
-            [SVProgressHUD dismiss];
-        }];
-    });
+    UIView *overlayView = [UIScreen.mainScreen snapshotViewAfterScreenUpdates:NO];
+    [onboardingVC.view addSubview:overlayView];
+    self.window.rootViewController = onboardingVC;
+    
+    [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
+        overlayView.alpha = 0;
+    } completion:^(BOOL finished) {
+        [overlayView removeFromSuperview];
+        [SVProgressHUD dismiss];
+    }];
 }
 
 - (void)openTabBasedOnNotificationMegatype {
@@ -1610,11 +1608,12 @@ void uncaughtExceptionHandler(NSException *exception) {
                 
                 if ([request type] == MEGARequestTypeLogin || [request type] == MEGARequestTypeLogout) {
                     if (!self.API_ESIDAlertController || UIApplication.mnz_presentingViewController.presentedViewController != self.API_ESIDAlertController) {
+                        [Helper logout];
+                        [self showOnboarding];
+                        
                         self.API_ESIDAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"loggedOut_alertTitle", nil) message:AMLocalizedString(@"loggedOutFromAnotherLocation", nil) preferredStyle:UIAlertControllerStyleAlert];
                         [self.API_ESIDAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
                         [UIApplication.mnz_presentingViewController presentViewController:self.API_ESIDAlertController animated:YES completion:nil];
-                        [Helper logout];
-                        [self showOnboarding];
                     }
                 }
                 break;
