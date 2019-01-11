@@ -114,6 +114,7 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
             MEGALogError(@"Init Karere without sesion must return waiting for a new sesion");
             [[MEGASdkManager sharedMEGAChatSdk] logout];
         }
+        [MEGASdkManager.sharedMEGAChatSdk enableGroupChatCalls:YES];
     }
     
     [self.emailInputView.inputTextField resignFirstResponder];

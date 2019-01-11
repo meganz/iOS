@@ -283,6 +283,7 @@
                 [[MEGASdkManager sharedMEGAChatSdk] logout];
                 [UIApplication.mnz_presentingViewController presentViewController:alertController animated:YES completion:nil];
             }
+            [MEGASdkManager.sharedMEGAChatSdk enableGroupChatCalls:YES];
         }
         
         MEGALoginRequestDelegate *loginRequestDelegate = [[MEGALoginRequestDelegate alloc] init];
@@ -353,8 +354,6 @@
     
     MEGALogDebug(@"Application did finish launching with options %@", launchOptions);
     
-    [[MEGASdkManager sharedMEGAChatSdk] enableGroupChatCalls:YES];
-
     if (application.applicationState == UIApplicationStateActive) {
         UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
         [center removeAllDeliveredNotifications];
