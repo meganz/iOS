@@ -11,6 +11,7 @@
 #import "MEGAConstants.h"
 #import "CameraUploadManager+Settings.h"
 #import "UploadRecordsCollator.h"
+#import "BackgroundUploadManager.h"
 @import Photos;
 
 static NSString * const CameraUploadsNodeHandle = @"CameraUploadsNodeHandle";
@@ -55,7 +56,7 @@ static const NSInteger MaxConcurrentVideoOperationCount = 1;
             [[MEGASdkManager sharedMEGASdk] ensureMediaInfo];
         });
         
-        [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(clearCameraUploadSettings) name:MEGALogoutNotificationName object:nil];
+        [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(resetCameraUpload) name:MEGALogoutNotificationName object:nil];
     }
     return self;
 }
@@ -87,11 +88,6 @@ static const NSInteger MaxConcurrentVideoOperationCount = 1;
 }
 
 #pragma mark - scan and upload
-
-- (void)enableCameraUpload {
-    [self.class setCameraUploadEnabled:YES];
-    [self startCameraUploadIfNeeded];
-}
 
 - (void)startCameraUploadIfNeeded {
     if (!self.class.isCameraUploadEnabled || self.photoUploadOerationQueue.operationCount > 0) {
@@ -187,23 +183,20 @@ static const NSInteger MaxConcurrentVideoOperationCount = 1;
 
 #pragma mark - stop upload
 
-- (void)disableCameraUpload {
+- (void)resetCameraUpload {
     [self.class clearLocalSettings];
+    [self.class setCameraUploadEnabled:NO];
+}
+
+- (void)stopCameraUpload {
+    [self stopVideoUpload];
     [self.photoUploadOerationQueue cancelAllOperations];
-    [self disableVideoUpload];
     [self.scanner unobservePhotoLibraryChanges];
+    [BackgroundUploadManager.shared disableBackgroundUpload];
 }
 
-- (void)disableVideoUpload {
-    [self.class setVideoUploadEnabled:NO];
+- (void)stopVideoUpload {
     [self.videoUploadOerationQueue cancelAllOperations];
-}
-
-#pragma mark - logout
-
-- (void)clearCameraUploadSettings {
-    [self disableCameraUpload];
-    [self.class clearLocalSettings];
 }
 
 #pragma mark - upload status

@@ -61,7 +61,7 @@ static NSString * const kUTITypeHEICImage = @"public.heic";
 
     NSString *fileExtension;
     NSData *processedImageData;
-    if ([CameraUploadManager shouldConvertHEIFPhoto] && UTTypeConformsTo((__bridge CFStringRef)dataUTI, (__bridge CFStringRef)kUTITypeHEICImage)) {
+    if ([CameraUploadManager shouldConvertHEICPhoto] && UTTypeConformsTo((__bridge CFStringRef)dataUTI, (__bridge CFStringRef)kUTITypeHEICImage)) {
         processedImageData = [imageData mnz_dataByConvertingToType:(__bridge NSString *)kUTTypeJPEG shouldStripGPSInfo:YES];
         fileExtension = @"jpg";
     } else {

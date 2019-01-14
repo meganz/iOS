@@ -31,16 +31,18 @@
     return _locationManager;
 }
 
++ (BOOL)isBackgroundUploadEnabled {
+    return [CameraUploadManager isBackgroundUploadAllowed] && CLLocationManager.authorizationStatus == kCLAuthorizationStatusAuthorizedAlways && CLLocationManager.locationServicesEnabled;
+}
+
 - (void)enableBackgroundUploadIfPossible {
-    if ([CameraUploadManager isBackgroundUploadEnabled] &&
-        CLLocationManager.authorizationStatus == kCLAuthorizationStatusAuthorizedAlways &&
-        CLLocationManager.locationServicesEnabled) {
+    if ([self.class isBackgroundUploadEnabled]) {
         [self.locationManager startMonitoringVisits];
     }
 }
 
 - (void)disableBackgroundUpload {
-    [CameraUploadManager setBackgroundUploadEnabled:NO];
+    [CameraUploadManager setBackgroundUploadAllowed:NO];
     [self.locationManager stopMonitoringVisits];
 }
 

@@ -1,24 +1,35 @@
 
 #import "CameraUploadManager+Settings.h"
+#import "CameraUploadManager.h"
 
 static NSString * const IsCameraUploadsEnabledKey = @"IsCameraUploadsEnabled";
 static NSString * const IsVideoUploadsEnabledKey = @"IsUploadVideosEnabled";
 static NSString * const IsCellularAllowedKey = @"IsUseCellularConnectionEnabled";
-static NSString * const ShouldConvertHEIFPhotoKey = @"ShouldConvertHEIFPhoto";
+static NSString * const IsCellularForVideosAllowedKey = @"IsUseCellularConnectionForVideosEnabled";
+static NSString * const ShouldConvertHEICPhotoKey = @"ShouldConvertHEICPhoto";
 static NSString * const ShouldConvertHEVCVideoKey = @"ShouldConvertHEVCVideo";
 static NSString * const HEVCToH264CompressionQualityKey = @"HEVCToH264CompressionQuality";
-static NSString * const IsLocationBasedBackgroundUploadEnabledKey = @"IsLocationBasedBackgroundUploadEnabled";
+static NSString * const IsLocationBasedBackgroundUploadAllowedKey = @"IsLocationBasedBackgroundUploadAllowed";
 
 @implementation CameraUploadManager (Settings)
 
 + (void)clearLocalSettings {
     [NSUserDefaults.standardUserDefaults removeObjectForKey:IsCameraUploadsEnabledKey];
-    [NSUserDefaults.standardUserDefaults removeObjectForKey:IsVideoUploadsEnabledKey];
+    [self clearCameraSettings];
+}
+
++ (void)clearCameraSettings {
     [NSUserDefaults.standardUserDefaults removeObjectForKey:IsCellularAllowedKey];
-    [NSUserDefaults.standardUserDefaults removeObjectForKey:ShouldConvertHEIFPhotoKey];
+    [NSUserDefaults.standardUserDefaults removeObjectForKey:ShouldConvertHEICPhotoKey];
+    [NSUserDefaults.standardUserDefaults removeObjectForKey:IsLocationBasedBackgroundUploadAllowedKey];
+    [NSUserDefaults.standardUserDefaults removeObjectForKey:IsVideoUploadsEnabledKey];
+    [self clearVideoSettings];
+}
+
++ (void)clearVideoSettings {
     [NSUserDefaults.standardUserDefaults removeObjectForKey:ShouldConvertHEVCVideoKey];
     [NSUserDefaults.standardUserDefaults removeObjectForKey:HEVCToH264CompressionQualityKey];
-    [NSUserDefaults.standardUserDefaults removeObjectForKey:IsLocationBasedBackgroundUploadEnabledKey];
+    [NSUserDefaults.standardUserDefaults removeObjectForKey:IsCellularForVideosAllowedKey];
 }
 
 + (BOOL)isCameraUploadEnabled {
@@ -26,8 +37,17 @@ static NSString * const IsLocationBasedBackgroundUploadEnabledKey = @"IsLocation
 }
 
 + (void)setCameraUploadEnabled:(BOOL)cameraUploadEnabled {
+    BOOL previousValue = [self isCameraUploadEnabled];
     [NSUserDefaults.standardUserDefaults setBool:cameraUploadEnabled forKey:IsCameraUploadsEnabledKey];
-    [self setConvertHEIFPhoto:YES];
+    if (cameraUploadEnabled) {
+        if (!previousValue) {
+            [self setConvertHEICPhoto:YES];
+        }
+        [CameraUploadManager.shared startCameraUploadIfNeeded];
+    } else {
+        [self clearCameraSettings];
+        [CameraUploadManager.shared stopCameraUpload];
+    }
 }
 
 + (BOOL)isVideoUploadEnabled {
@@ -35,7 +55,17 @@ static NSString * const IsLocationBasedBackgroundUploadEnabledKey = @"IsLocation
 }
 
 + (void)setVideoUploadEnabled:(BOOL)videoUploadEnabled {
-    return [NSUserDefaults.standardUserDefaults setBool:videoUploadEnabled forKey:IsVideoUploadsEnabledKey];
+    BOOL previousValue = [self isVideoUploadEnabled];
+    [NSUserDefaults.standardUserDefaults setBool:videoUploadEnabled forKey:IsVideoUploadsEnabledKey];
+    if (videoUploadEnabled) {
+        if (!previousValue) {
+            [self setConvertHEVCVideo:YES];
+        }
+        [CameraUploadManager.shared startVideoUploadIfNeeded];
+    } else {
+        [self clearVideoSettings];
+        [CameraUploadManager.shared stopVideoUpload];
+    }
 }
 
 + (BOOL)isCellularUploadAllowed {
@@ -46,20 +76,36 @@ static NSString * const IsLocationBasedBackgroundUploadEnabledKey = @"IsLocation
     [NSUserDefaults.standardUserDefaults setBool:cellularUploadAllowed forKey:IsCellularAllowedKey];
 }
 
++ (BOOL)isCellularUploadForVideosAllowed {
+    return [NSUserDefaults.standardUserDefaults boolForKey:IsCellularForVideosAllowedKey];
+}
+
++ (void)setCellularUploadForVideosAllowed:(BOOL)cellularUploadForVideosAllowed {
+    [NSUserDefaults.standardUserDefaults setBool:cellularUploadForVideosAllowed forKey:IsCellularForVideosAllowedKey];
+}
+
 + (BOOL)shouldConvertHEVCVideo {
     return [NSUserDefaults.standardUserDefaults boolForKey:ShouldConvertHEVCVideoKey];
 }
 
 + (void)setConvertHEVCVideo:(BOOL)convertHEVCVideo {
+    BOOL previousValue = [self shouldConvertHEVCVideo];
     [NSUserDefaults.standardUserDefaults setBool:convertHEVCVideo forKey:ShouldConvertHEVCVideoKey];
+    if (convertHEVCVideo) {
+        if (!previousValue) {
+            [self setHEVCToH264CompressionQuality:CameraUploadVideoQualityMedium];
+        }
+    } else {
+        [NSUserDefaults.standardUserDefaults removeObjectForKey:HEVCToH264CompressionQualityKey];
+    }
 }
 
-+ (BOOL)shouldConvertHEIFPhoto {
-    return [NSUserDefaults.standardUserDefaults boolForKey:ShouldConvertHEIFPhotoKey];
++ (BOOL)shouldConvertHEICPhoto {
+    return [NSUserDefaults.standardUserDefaults boolForKey:ShouldConvertHEICPhotoKey];
 }
 
-+ (void)setConvertHEIFPhoto:(BOOL)convertHEIFPhoto {
-    [NSUserDefaults.standardUserDefaults setBool:convertHEIFPhoto forKey:ShouldConvertHEIFPhotoKey];
++ (void)setConvertHEICPhoto:(BOOL)convertHEICPhoto {
+    [NSUserDefaults.standardUserDefaults setBool:convertHEICPhoto forKey:ShouldConvertHEICPhotoKey];
 }
 
 + (CameraUploadVideoQuality)HEVCToH264CompressionQuality {
@@ -70,12 +116,20 @@ static NSString * const IsLocationBasedBackgroundUploadEnabledKey = @"IsLocation
     [NSUserDefaults.standardUserDefaults setInteger:HEVCToH264CompressionQuality forKey:HEVCToH264CompressionQualityKey];
 }
 
-+ (BOOL)isBackgroundUploadEnabled {
-    return [NSUserDefaults.standardUserDefaults boolForKey:IsLocationBasedBackgroundUploadEnabledKey];
++ (BOOL)isBackgroundUploadAllowed {
+    return [NSUserDefaults.standardUserDefaults boolForKey:IsLocationBasedBackgroundUploadAllowedKey];
 }
 
-+ (void)setBackgroundUploadEnabled:(BOOL)backgroundUploadEnabled {
-    [NSUserDefaults.standardUserDefaults setBool:backgroundUploadEnabled forKey:IsLocationBasedBackgroundUploadEnabledKey];
++ (void)setBackgroundUploadAllowed:(BOOL)backgroundUploadAllowed {
+    [NSUserDefaults.standardUserDefaults setBool:backgroundUploadAllowed forKey:IsLocationBasedBackgroundUploadAllowedKey];
+}
+
++ (BOOL)shouldShowPhotoAndVideoFormat {
+    if (@available(iOS 11.0, *)) {
+        return YES;
+    } else {
+        return NO;
+    }
 }
 
 @end
