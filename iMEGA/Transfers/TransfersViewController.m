@@ -53,7 +53,6 @@ typedef NS_ENUM(NSInteger, SegmentIndex) {
     [self.transfersSegmentedControl setTitle:AMLocalizedString(@"downloads", @"Downloads") forSegmentAtIndex:1];
     [self.transfersSegmentedControl setTitle:AMLocalizedString(@"uploads", @"Uploads") forSegmentAtIndex:2];
     
-    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -131,30 +130,39 @@ typedef NS_ENUM(NSInteger, SegmentIndex) {
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    switch (section) {
-        case 0:
-            return self.transfers.count;
-
-        case 1:
-            return self.uploadTransfersQueued.count;
-            
-        default:
-            return 0;
+    NSInteger numberOfRows = 0;
+    if (MEGAReachabilityManager.isReachable) {
+        switch (section) {
+            case 0:
+                numberOfRows = self.transfers.count;
+                break;
+                
+            case 1:
+                numberOfRows = self.uploadTransfersQueued.count;
+                break;
+                
+            default:
+                break;
+        }
     }
+    
+    return numberOfRows;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     NSInteger numberOfSections = 0;
-    switch (self.transfersSegmentedControl.selectedSegmentIndex) {
-        case UISegmentedControlNoSegment:
-        case AllSegmentIndex:
-        case UploadsSegmentIndex:
-            numberOfSections = 2;
-            break;
-            
-        case DownloadsSegmentIndex:
-            numberOfSections = 1;
-            break;
+    if (MEGAReachabilityManager.isReachable) {
+        switch (self.transfersSegmentedControl.selectedSegmentIndex) {
+            case UISegmentedControlNoSegment:
+            case AllSegmentIndex:
+            case UploadsSegmentIndex:
+                numberOfSections = 2;
+                break;
+                
+            case DownloadsSegmentIndex:
+                numberOfSections = 1;
+                break;
+        }
     }
     
     return numberOfSections;
