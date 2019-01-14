@@ -1364,8 +1364,10 @@
 /* Between paragraph 5 and 6 we have to put the string with the 'autorenewableDescription' key */
 /* Paragraph 6 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
 "generalDescriptionParagraph6"="Để biết thêm thông tin, xin truy cập website của chúng tôi: https://mega.nz/\nĐiều Khoản Sử Dụng Dịch Vụ: https://mega.nz/terms\nChính Sách Quyền Riêng Tư: https://mega.nz/privacy";
-/* Label shown when you receive an incoming call, before start the call. */
+/* Label shown when you call someone (outgoing call), before the call starts. */
 "calling..."="Đang gọi...";
+/* notification subtitle of incoming calls */
+"Incoming call"="Cuộc gọi đến";
 /* Notification text body shown when you have missed one audio call */
 "missedAudioCall"="Bạn bỏ lỡ một cuộc gọi thoại";
 /* Notification text body shown when you have missed several audio calls. [A] = {number of missed audio calls} */
@@ -1683,15 +1685,15 @@
 /* Text shown for switching from list view to thumbnail view. */
 "Thumbnail view"="Hiện dạng ảnh nhỏ";
 /* Message to inform the local user that someone has joined the current group call */
-"%@ joined the call."="%@ joined the call.";
+"%@ joined the call."="%@ tham gia vào cuộc gọi.";
 /* Message to inform the local user that someone has left the current group call */
-"%@ left the call."="%@ left the call.";
+"%@ left the call."="%@ đã rời khỏi cuội gọi.";
 /* Message to inform the local user is having a bad quality network with someone in the current group call */
-"Poor connection."="Poor connection.";
+"Poor connection."="Mạng yếu.";
 /* Message shown in a chat room when there is an active group call */
-"There is an active group call. Tap to join."="There is an active group call. Tap to join.";
+"There is an active group call. Tap to join."="Có một cuộc gọi nhóm đang diễn ra. Chạm để tham gia.";
 /* Message shown in a chat room for a group call in progress displaying the duration of the call */
-"Touch to return to call %@"="Touch to return to call %@";
+"Touch to return to call %@"="Chạm để quay trở lại cuộc gọi %@";
 /* Menu item to change from grid view to list view */
 "List view"="Xem dạng danh sách";
 /* Menu item to change from list view to grid view */
@@ -1707,7 +1709,7 @@
 /* The header of a notification indicating that a file or folder that was taken down has now been restored due to a successful counter-notice. */
 "Takedown reinstated"="Mục bị gỡ bỏ đã được phục hồi";
 /* Label shown inside an unseen notification */
-"New"="New";
+"New"="Mới";
 /* When a contact sent a contact/friend request */
 "Sent you a contact request"="Vừa gửi bạn lời mời thêm vào danh bạ";
 /* A notification that the other user cancelled their contact request so it is no longer valid. E.g. user@email.com cancelled their contact request. */
@@ -1737,21 +1739,23 @@
 /* This is shown in the Notification dialog when the email address of a contact is not found and access to the share is lost for some reason (e.g. share removal or contact removal). */
 "Access to folders was removed."="Quyền truy cập tới thư mục đã bị xóa.";
 /* Content of a notification that informs how many files and folders have been added to a shared folder */
-"Added 1 file"="Added 1 file";
+"Added 1 file"="Đã thêm 1 tệp";
 /* Content of a notification that informs how many files and folders have been added to a shared folder */
-"Added %lld files"="Added %lld files";
+"Added %lld files"="Đã thêm %lld tệp";
 /* Content of a notification that informs how many files and folders have been added to a shared folder */
-"Added 1 folder"="Added 1 folder";
+"Added 1 folder"="Đã thêm 1 thư mục";
 /* Content of a notification that informs how many files and folders have been added to a shared folder */
-"Added %lld folders"="Added %lld folders";
+"Added %lld folders"="Đã thêm %lld thư mục";
 /* Content of a notification that informs how many files and folders have been added to a shared folder */
-"Added 1 file and 1 folder"="Added 1 file and 1 folder";
+"Added 1 file and 1 folder"="Đã thêm 1 tệp và 1 thư mục";
 /* Content of a notification that informs how many files and folders have been added to a shared folder */
-"Added %lld files and 1 folder"="Added %lld files and 1 folder";
+"Added %lld files and 1 folder"="Đã thêm %lld tệp và 1 thư mục";
 /* Content of a notification that informs how many files and folders have been added to a shared folder */
-"Added 1 file and %lld folders"="Added 1 file and %lld folders";
+"Added 1 file and %lld folders"="Đã thêm 1 tệp và %lld thư mục";
 /* Content of a notification that informs how many files and folders have been added to a shared folder */
-"Added [A] files and [B] folders"="Added [A] files and [B] folders";
+"Added [A] files and [B] folders"="Đã thêm [A] tệp và [B] thư mục";
+/* Notification when on client side when owner of a shared folder removes folder/file from it. */
+"Removed item from shared folder"="Đã loại bỏ một mục khỏi việc chia sẻ";
 /* Notification popup. Notification for multiple removed items from a share. Please keep [X] as it will be replaced at runtime with the number of removed items. */
 "Removed [X] items from a share"="Đã loại bỏ [X] mục khỏi việc chia sẻ";
 /* A notification telling the user that their Pro plan payment was successfully received. The %1 indicates the name of the Pro plan they paid for e.g. Lite, PRO III. */
@@ -1766,6 +1770,10 @@
 "Your publicly shared %1 (%2) has been taken down."="Một %1 của bạn (tên %2) đã bị tháo bỏ do vi phạm bản quyền.";
 /* The text of a notification indicating that a file or folder that was taken down has now been restored due to a successful counter-notice. The %1 placeholder will be replaced with the text ‘file’ or ‘folder’. The %2 will be replaced with the name of the file or folder. */
 "Your taken down %1 (%2) has been reinstated."="Nội dung %1 (tên %2) đã được phục hồi lại.";
+/* Error message shown to user when a copy/import operation would take them over their storage limit. */
+"This action can not be completed as it would take you over your current storage limit"="Thao tác này không thể hoàn tất bởi vì toàn bộ không gian lưu trữ sẽ bị dùng hết.";
+/* uploads over storage quota warning dialog title */
+"Your upload(s) cannot proceed because your account is full"="Phiên tải lên không thể tiến hành vì tài khoản đã bị đầy";
 /* Footer text to explain the meaning of the functionaly 'Last seen' of your chat status. */
 "Allow your contacts to see the last time you were active on MEGA."="Allow your contacts to see the last time you were active on MEGA.";
 /* Label shown next to a feature name that can be enabled or disabled, like in 'Show Last seen...' */

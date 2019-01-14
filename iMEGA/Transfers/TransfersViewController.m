@@ -381,7 +381,7 @@ typedef NS_ENUM(NSInteger, SegmentIndex) {
     }
 }
 
-- (void)deleteUploadTransfer:(MEGATransfer *)transfer {
+- (void)deleteUploadingTransfer:(MEGATransfer *)transfer {
     NSIndexPath *indexPath = [self indexPathForTransfer:transfer];
     if (indexPath) {
         [self.tableView beginUpdates];
@@ -655,7 +655,7 @@ typedef NS_ENUM(NSInteger, SegmentIndex) {
         }
     }
     
-    [self deleteUploadTransfer:transfer];
+    [self deleteUploadingTransfer:transfer];
 }
 
 #pragma mark - TransferTableViewCellDelegate

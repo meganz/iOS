@@ -699,7 +699,7 @@
 /*  */
 "masterKey_thirdParagraph"="Un attaccante esterno non può accedere al tuo account solo con la chiave. Un reset della password richiede sia la chiave e l'accesso alla tua e-mail.";
 /* Message of the dialog displayed when copy the user's Recovery Key to the clipboard to be saved or exported. */
-"recoveryKeyCopiedToClipboard"="La Chiave di Recupero è stata copiata negli appunti. Per favore, archiviala in una posizione sicura.";
+"recoveryKeyCopiedToClipboard"="La Chiave di Recupero è stata copiata negli appunti. Per favore, archiviala in un posto sicuro.";
 /* Alert title shown when you have exported your MEGA Recovery Key */
 "masterKeyExported"="Chiave di recupero esportata";
 /* Alert message shown to explain that the Recovery Key was saved on your device. Also that you can access it through iTunes. And ends with and security advise. */
@@ -1104,7 +1104,7 @@
 /* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature. */
 "useMobileData"="Usa dati mobili";
 /* A header in the Chat settings. This changes the user's status to Away after some time of inactivity. */
-"autoAway"="Automaticamente lontano";
+"autoAway"="Inattività automatica";
 /* */
 "xMinutes"="[X] minuti";
 /* */
@@ -1122,7 +1122,7 @@
 /*  */
 "online"="Online";
 /*  */
-"away"="Via";
+"away"="Assente";
 /*  */
 "busy"="Occupato";
 /* title of the contact properties screen */
@@ -1364,8 +1364,10 @@
 /* Between paragraph 5 and 6 we have to put the string with the 'autorenewableDescription' key */
 /* Paragraph 6 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
 "generalDescriptionParagraph6"="Per maggiori informazioni, per favore visita il nostro sito web: https://mega.nz/\nTermini di Servizio: https://mega.nz/terms\nPolitica sulla Privacy: https://mega.nz/privacy";
-/* Label shown when you receive an incoming call, before start the call. */
+/* Label shown when you call someone (outgoing call), before the call starts. */
 "calling..."="Chiamata in corso...";
+/* notification subtitle of incoming calls */
+"Incoming call"="Chiamata in arrivo";
 /* Notification text body shown when you have missed one audio call */
 "missedAudioCall"="Chiamata audio persa";
 /* Notification text body shown when you have missed several audio calls. [A] = {number of missed audio calls} */
@@ -1581,13 +1583,13 @@
 /* A message on the dialog shown after 2FA was successfully enabled. */
 "twoFactorAuthenticationEnabledDescription"="La prossima volta che effettuerai l'accesso al tuo account ti verrà chiesto di inserire il codice di 6 cifre che ti è stato fornito dalla app di autenticazione.";
 /* A warning message on the Backup Recovery Key dialog to tell the user to backup their Recovery Key to their local computer. */
-"pleaseSaveYourRecoveryKey"="Per favore, salva la tua Chiave di Recupero in una posizione sicura";
+"pleaseSaveYourRecoveryKey"="Per favore, salva la tua Chiave di Recupero in un posto sicuro";
 /* An informational message on the Backup Recovery Key dialog. */
 "twoFactorAuthenticationEnabledWarning"="Se perdi accesso al tuo account dopo aver attivato la 2FA e non hai una copia della tua Chiave di Recupero, MEGA non può aiutarti ad ottenere nuovamente accesso al tuo account.";
 /* A message on a dialog to say that 2FA has been successfully disabled. */
 "twoFactorAuthenticationDisabled"="Autenticazione a due fattori disabilitata";
 /* A message on the setup two-factor authentication page on the mobile web client. */
-"scanOrCopyTheSeed"="Scansiona o copia il seed della tua app di autenticazione. Sii sicuro di copiare questo seed in una posizione sicura nel caso in cui tu perda il tuo dispositivo.";
+"scanOrCopyTheSeed"="Scansiona o copia il seed della tua app di autenticazione. Assicurati di copiare questo seed in un posto sicuro nel caso in cui tu perda il tuo dispositivo.";
 /* A button to help them restore their account if they have lost their 2FA device. */
 "lostYourAuthenticatorDevice"="Hai perso il tuo dispositivo autenticatore?";
 /* Settings section title where you can enable the option to 'Save Images in Photos' */
@@ -1752,6 +1754,8 @@
 "Added 1 file and %lld folders"="1 file e %lld cartelle aggiunte";
 /* Content of a notification that informs how many files and folders have been added to a shared folder */
 "Added [A] files and [B] folders"="[A] file e [B] cartelle aggiunte";
+/* Notification when on client side when owner of a shared folder removes folder/file from it. */
+"Removed item from shared folder"="Oggetto rimosso dalla cartella condivisa";
 /* Notification popup. Notification for multiple removed items from a share. Please keep [X] as it will be replaced at runtime with the number of removed items. */
 "Removed [X] items from a share"="Rimossi [X] oggetti dalla condivisione";
 /* A notification telling the user that their Pro plan payment was successfully received. The %1 indicates the name of the Pro plan they paid for e.g. Lite, PRO III. */
@@ -1766,6 +1770,10 @@
 "Your publicly shared %1 (%2) has been taken down."="Il/la tuo/a %1 condiviso/a pubblicamente (%2) è stato/a chiuso/a.";
 /* The text of a notification indicating that a file or folder that was taken down has now been restored due to a successful counter-notice. The %1 placeholder will be replaced with the text ‘file’ or ‘folder’. The %2 will be replaced with the name of the file or folder. */
 "Your taken down %1 (%2) has been reinstated."="Il/la tuo/a %1 (%2) chiuso/a è stato/a riattivato/a.";
+/* Error message shown to user when a copy/import operation would take them over their storage limit. */
+"This action can not be completed as it would take you over your current storage limit"="Questa azione non può essere completata in quanto ti farebbe superare il limite del tuo spazio di archiviazione";
+/* uploads over storage quota warning dialog title */
+"Your upload(s) cannot proceed because your account is full"="Il tuo o i tuoi upload non possono procedere poiché il tuo account è pieno.";
 /* Footer text to explain the meaning of the functionaly 'Last seen' of your chat status. */
 "Allow your contacts to see the last time you were active on MEGA."="Permetti ai tuoi contatti di vedere l'ultima volta in cui sei stato attivo su MEGA.";
 /* Label shown next to a feature name that can be enabled or disabled, like in 'Show Last seen...' */

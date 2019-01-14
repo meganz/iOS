@@ -222,7 +222,7 @@
         case MEGAUserAlertTypeDeletedShare: {
             MEGANode *node = [[MEGASdkManager sharedMEGASdk] nodeForHandle:userAlert.nodeHandle];
             if ([userAlert numberAtIndex:0] == 0) {
-                NSAttributedString *nodeName = [[NSAttributedString alloc] initWithString:node.name attributes:@{ NSFontAttributeName : self.boldFont }];
+                NSAttributedString *nodeName = [[NSAttributedString alloc] initWithString:node.name ?: @""  attributes:@{ NSFontAttributeName : self.boldFont }];
                 NSString *text = AMLocalizedString(@"A user has left the shared folder {0}", @"notification text");
                 NSRange range = [text rangeOfString:@"{0}"];
                 NSMutableAttributedString *attributedText = [[NSMutableAttributedString alloc] initWithString:text];
@@ -270,7 +270,11 @@
             
         case MEGAUserAlertTypeRemovedSharesNodes: {
             int64_t itemCount = [userAlert numberAtIndex:0];
-            contentLabel.text = [AMLocalizedString(@"Removed [X] items from a share", @"Notification popup. Notification for multiple removed items from a share. Please keep [X] as it will be replaced at runtime with the number of removed items.") stringByReplacingOccurrencesOfString:@"[X]" withString:[NSString stringWithFormat:@"%lld", itemCount]];
+            if (itemCount == 1) {
+                contentLabel.text = AMLocalizedString(@"Removed item from shared folder", @"Notification when on client side when owner of a shared folder removes folder/file from it.");
+            } else {
+                contentLabel.text = [AMLocalizedString(@"Removed [X] items from a share", @"Notification popup. Notification for multiple removed items from a share. Please keep [X] as it will be replaced at runtime with the number of removed items.") stringByReplacingOccurrencesOfString:@"[X]" withString:[NSString stringWithFormat:@"%lld", itemCount]];
+            }
             break;
         }
             
