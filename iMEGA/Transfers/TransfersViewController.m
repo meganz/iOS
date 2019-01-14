@@ -628,7 +628,9 @@ typedef NS_ENUM(NSInteger, SegmentIndex) {
         }
     } else if (transfer.type == MEGATransferTypeDownload) {
         NSIndexPath *indexPath = [self indexPathForTransfer:transfer];
-        [self.transfers replaceObjectAtIndex:indexPath.row withObject:transfer];
+        if (indexPath) {
+            [self.transfers replaceObjectAtIndex:indexPath.row withObject:transfer];
+        }
     }
 }
 
