@@ -1624,6 +1624,10 @@
 "Setup MEGA"="Setup MEGA";
 /* Detailed explanation of why the user should give some permissions to MEGA */
 "To fully take advantage of your MEGA account we need to ask you some permissions."="To fully take advantage of your MEGA account we need to ask you some permissions.";
+/* Message warning the user about the risk of not setting up permissions */
+"The MEGA app may not work as expected without permissions. Are you sure?"="The MEGA app may not work as expected without permissions. Are you sure?";
+/* Shows number of the current page. '%1' will be replaced by current page number. '%2' will be replaced by number of all pages. */
+"%1 of %2"="%1 von %2";
 /* Title label that explains that the user is going to be asked for the photos permission */
 "Allow Access to Photos"="Allow Access to Photos";
 /* Detailed explanation of why the user should give permission to access to the photos */
