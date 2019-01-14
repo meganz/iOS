@@ -201,7 +201,7 @@
 
 - (void)setBadgeValueForMyAccount {
     int incomingContacts = [[MEGASdkManager sharedMEGASdk] incomingContactRequests].size.intValue;
-    NSUInteger unseenUserAlerts = [MEGASdkManager sharedMEGASdk].userAlertList.mnz_unseenCount;
+    NSUInteger unseenUserAlerts = [MEGASdkManager sharedMEGASdk].userAlertList.mnz_relevantUnseenCount;
     
     NSString *badgeValue;
     NSUInteger total = incomingContacts + unseenUserAlerts;
