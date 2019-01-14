@@ -598,7 +598,7 @@ const NSUInteger kMaxMessagesToLoad = 256;
     callVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
 
     if (@available(iOS 10.0, *)) {
-        callVC.megaCallManager = [(MainTabBarController *)self.navigationController.tabBarController megaCallManager];
+        callVC.megaCallManager = [(MainTabBarController *)UIApplication.sharedApplication.keyWindow.rootViewController megaCallManager];
     }
     [self presentViewController:callVC animated:YES completion:nil];
 }
