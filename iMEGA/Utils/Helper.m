@@ -614,7 +614,9 @@ static MEGAIndexer *indexer;
             [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:filePath.mnz_relativeLocalPath parent:parentNode appData:appData isSourceTemporary:YES];
         }
         
-        [[Helper uploadingNodes] addObject:uploadTransfer.localIdentifier];
+        if (uploadTransfer.localIdentifier) {
+            [[Helper uploadingNodes] addObject:uploadTransfer.localIdentifier];
+        }
         [[MEGAStore shareInstance] deleteUploadTransfer:uploadTransfer];
     } node:^(MEGANode *node) {
         if ([[[MEGASdkManager sharedMEGASdk] parentNodeForNode:node] handle] == parentNode.handle) {
@@ -758,7 +760,9 @@ static MEGAIndexer *indexer;
     }
     
     if (reindex) {
-        [indexer index:node];
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+            [indexer index:node];
+        });
     }
 }
 
@@ -1166,6 +1170,12 @@ static MEGAIndexer *indexer;
     return searchController;
 }
 
++ (void)resetSearchControllerFrame:(UISearchController *)searchController {
+    searchController.view.frame = CGRectMake(0, UIApplication.sharedApplication.statusBarFrame.size.height, searchController.view.frame.size.width, searchController.view.frame.size.height);
+    searchController.searchBar.superview.frame = CGRectMake(0, 0, searchController.searchBar.superview.frame.size.width, searchController.searchBar.superview.frame.size.height);
+    searchController.searchBar.frame = CGRectMake(0, 0, searchController.searchBar.frame.size.width, searchController.searchBar.frame.size.height);
+}
+
 #pragma mark - Manage session
 
 + (BOOL)hasSession_alertIfNot {
@@ -1189,14 +1199,7 @@ static MEGAIndexer *indexer;
     
     [Helper deleteUserData];
     [Helper deleteMasterKey];
-    
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    UIViewController *viewController = [storyboard instantiateViewControllerWithIdentifier:@"initialViewControllerID"];
-    UIWindow *window = [[[UIApplication sharedApplication] delegate] window];
-    [UIView transitionWithView:window duration:0.5 options:(UIViewAnimationOptionTransitionCrossDissolve | UIViewAnimationOptionAllowAnimatedContent) animations:^{
-        [window setRootViewController:viewController];
-    } completion:nil];
-        
+            
     [Helper resetCameraUploadsSettings];
     [Helper resetUserData];
     
@@ -1328,6 +1331,8 @@ static MEGAIndexer *indexer;
     
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"TransfersPaused"];
     
+    [NSUserDefaults.standardUserDefaults removeObjectForKey:kIsCameraUploadsEnabled];
+    [NSUserDefaults.standardUserDefaults removeObjectForKey:kIsUploadVideosEnabled];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"IsSavePhotoToGalleryEnabled"];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"IsSaveVideoToGalleryEnabled"];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"ChatVideoQuality"];

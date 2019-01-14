@@ -1364,8 +1364,10 @@
 /* Between paragraph 5 and 6 we have to put the string with the 'autorenewableDescription' key */
 /* Paragraph 6 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
 "generalDescriptionParagraph6"="자세한 정보는, 우리의 웹사이트를 확인하세요: https://mega.nz/\n이용 약관: https://mega.nz/terms\n개인정보 처리방침: https://mega.nz/privacy";
-/* Label shown when you receive an incoming call, before start the call. */
+/* Label shown when you call someone (outgoing call), before the call starts. */
 "calling..."="통화중...";
+/* notification subtitle of incoming calls */
+"Incoming call"="수신중 전화";
 /* Notification text body shown when you have missed one audio call */
 "missedAudioCall"="부재중 전화";
 /* Notification text body shown when you have missed several audio calls. [A] = {number of missed audio calls} */
@@ -1752,6 +1754,8 @@
 "Added 1 file and %lld folders"="파일 1개와 폴더 %lld개 추가됨";
 /* Content of a notification that informs how many files and folders have been added to a shared folder */
 "Added [A] files and [B] folders"="파일 [A]개와 폴더 [B]개 추가됨";
+/* Notification when on client side when owner of a shared folder removes folder/file from it. */
+"Removed item from shared folder"="공유 폴더에서 항목을 제거했습니다";
 /* Notification popup. Notification for multiple removed items from a share. Please keep [X] as it will be replaced at runtime with the number of removed items. */
 "Removed [X] items from a share"="[X] 항목이 공유에서 제거됨";
 /* A notification telling the user that their Pro plan payment was successfully received. The %1 indicates the name of the Pro plan they paid for e.g. Lite, PRO III. */
@@ -1766,8 +1770,12 @@
 "Your publicly shared %1 (%2) has been taken down."="공개적으로 공유된 %1 (%2)가 게시 중단되었습니다.";
 /* The text of a notification indicating that a file or folder that was taken down has now been restored due to a successful counter-notice. The %1 placeholder will be replaced with the text ‘file’ or ‘folder’. The %2 will be replaced with the name of the file or folder. */
 "Your taken down %1 (%2) has been reinstated."="게시 중단 %1 (%2)가 복원되었습니다.";
+/* Error message shown to user when a copy/import operation would take them over their storage limit. */
+"This action can not be completed as it would take you over your current storage limit"="이 행동은 현재 저장 공간 한도를 초과할 수 있어서 완료될 수 없습니다";
+/* uploads over storage quota warning dialog title */
+"Your upload(s) cannot proceed because your account is full"="당신의 계정이 꽉 차서 업로드를 진행할 수 없습니다.";
 /* Footer text to explain the meaning of the functionaly 'Last seen' of your chat status. */
-"Allow your contacts to see the last time you were active on MEGA."="당신의 연락처가 당신이 최근에 MEGA에서 활동한 시간을 볼 수 있도록 합니다. 만약 해제하면 당신의 연락처의 활동 상황을 볼 수 없게 됩니다.";
+"Allow your contacts to see the last time you were active on MEGA."="당신의 연락처가 당신이 최근에 MEGA에서 활동한 시간을 볼 수 있도록 합니다.";
 /* Label shown next to a feature name that can be enabled or disabled, like in 'Show Last seen...' */
 "Show"="보기";
 /* Shown when viewing a 1on1 chat (at least for now), if the user is offline. */

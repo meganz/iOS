@@ -152,7 +152,7 @@
         ctAlt = CTFontCreateCopyWithSymbolicTraits(ctBase, 0, NULL, kCTFontItalicTrait, kCTFontItalicTrait);
     }
     CFStringRef altName = CTFontCopyName(ctAlt, kCTFontPostScriptNameKey);
-    UIFont *altFont = [UIFont fontWithName:(__bridge NSString *)altName size:size] ?: font;
+    UIFont *altFont = [UIFont fontWithName:(__bridge_transfer NSString *)altName size:size] ?: font;
     fonts[fontCacheKey] = altFont;
     
     if (ctBase) {
@@ -160,9 +160,6 @@
     }
     if (ctAlt) {
         CFRelease(ctAlt);
-    }
-    if (name) {
-        CFRelease(name);
     }
     
     return altFont;

@@ -1630,6 +1630,8 @@
 "Please give the MEGA App permission to access Photos to share photos and videos."="Please give the MEGA App permission to access Photos to share photos and videos.";
 /* Title label that explains that the user is going to be asked for the microphone and camera permission */
 "Enable Microphone and Camera"="Enable Microphone and Camera";
+/* notification subtitle of incoming calls */
+"Incoming call"="Incoming call";
 /* Detailed explanation of why the user should give permission to access to the camera and the microphone */
 "To make encrypted voice and video calls, allow MEGA access to your Camera and Microphone"="To make encrypted voice and video calls, allow MEGA access to your Camera and Microphone";
 /* Title label that explains that the user is going to be asked for the notifications permission */
@@ -1754,6 +1756,8 @@
 "Added 1 file and %lld folders"="Added 1 file and %lld folders";
 /* Content of a notification that informs how many files and folders have been added to a shared folder */
 "Added [A] files and [B] folders"="Added [A] files and [B] folders";
+/* Notification when on client side when owner of a shared folder removes folder/file from it. */
+"Removed item from shared folder"="Removed item from shared folder";
 /* Notification popup. Notification for multiple removed items from a share. Please keep [X] as it will be replaced at runtime with the number of removed items. */
 "Removed [X] items from a share"="Removed [X] items from a share";
 /* A notification telling the user that their Pro plan payment was successfully received. The %1 indicates the name of the Pro plan they paid for e.g. Lite, PRO III. */
@@ -1770,6 +1774,10 @@
 "Your taken down %1 (%2) has been reinstated."="Your taken down %1 (%2) has been reinstated.";
 /* Text shown when a notification or the last message of a chat corresponds to a voice clip */
 "Voice message"="Voice message";
+/* Error message shown to user when a copy/import operation would take them over their storage limit. */
+"This action can not be completed as it would take you over your current storage limit"="This action can not be completed as it would take you over your current storage limit";
+/* uploads over storage quota warning dialog title */
+"Your upload(s) cannot proceed because your account is full"="Your upload(s) cannot proceed because your account is full";
 /* Footer text to explain the meaning of the functionaly 'Last seen' of your chat status. */
 "Allow your contacts to see the last time you were active on MEGA."="Allow your contacts to see the last time you were active on MEGA.";
 /* Label shown next to a feature name that can be enabled or disabled, like in 'Show Last seen...' */

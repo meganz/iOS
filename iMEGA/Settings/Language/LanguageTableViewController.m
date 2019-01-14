@@ -3,6 +3,7 @@
 
 #import <UserNotifications/UserNotifications.h>
 
+#import "DevicePermissionsHelper.h"
 #import "Helper.h"
 #import "MEGASDKManager.h"
 #import "SelectableTableViewCell.h"
@@ -89,39 +90,40 @@
         
         // Schedule a notification to make it easy to reopen MEGA:
         NSString *notificationText = AMLocalizedString(@"languageRestartNotification", @"Text shown in a notification to make it easy for the user to restart the app after the language is changed");
-        if (@available(iOS 10.0, *)) {
-            UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
-            UNAuthorizationOptions options = UNAuthorizationOptionAlert + UNAuthorizationOptionSound;
-            [center requestAuthorizationWithOptions:options
-                                  completionHandler:^(BOOL granted, NSError * _Nullable error) {
-                                      if (granted) {
-                                          UNMutableNotificationContent *content = [UNMutableNotificationContent new];
-                                          content.body = notificationText;
-                                          content.sound = [UNNotificationSound defaultSound];
-                                          UNTimeIntervalNotificationTrigger *trigger = [UNTimeIntervalNotificationTrigger triggerWithTimeInterval:1
-                                                                                                                                          repeats:NO];
-                                          NSString *identifier = @"nz.mega";
-                                          UNNotificationRequest *request = [UNNotificationRequest requestWithIdentifier:identifier
-                                                                                                                content:content trigger:trigger];
-                                          [center addNotificationRequest:request withCompletionHandler:^(NSError * _Nullable error) {
-                                              exit(0);
-                                          }];
-                                      } else {
-                                          exit(0);
-                                      }
-                                  }];
+        if (DevicePermissionsHelper.shouldAskForNotificationsPermissions) {
+            exit(0);
         } else {
-            UILocalNotification* localNotification = [[UILocalNotification alloc] init];
-            localNotification.fireDate = [NSDate dateWithTimeIntervalSinceNow:1];
-            localNotification.alertBody = notificationText;
-            localNotification.timeZone = [NSTimeZone defaultTimeZone];
-            [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
-            // The exit must be called some time after the previous method is called, because there is no way to
-            // know when the notification is properly scheduled, and calling exit inmediatley causes to not have
-            // it shown:
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                exit(0);
-            });
+            [DevicePermissionsHelper notificationsPermissionWithCompletionHandler:^(BOOL granted) {
+                if (@available(iOS 10.0, *)) {
+                    if (granted) {
+                        UNMutableNotificationContent *content = [UNMutableNotificationContent new];
+                        content.body = notificationText;
+                        content.sound = UNNotificationSound.defaultSound;
+                        UNTimeIntervalNotificationTrigger *trigger = [UNTimeIntervalNotificationTrigger triggerWithTimeInterval:1
+                                                                                                                        repeats:NO];
+                        NSString *identifier = @"nz.mega";
+                        UNNotificationRequest *request = [UNNotificationRequest requestWithIdentifier:identifier
+                                                                                              content:content trigger:trigger];
+                        [UNUserNotificationCenter.currentNotificationCenter addNotificationRequest:request withCompletionHandler:^(NSError * _Nullable error) {
+                            exit(0);
+                        }];
+                    } else {
+                        exit(0);
+                    }
+                } else {
+                    UILocalNotification* localNotification = [[UILocalNotification alloc] init];
+                    localNotification.fireDate = [NSDate dateWithTimeIntervalSinceNow:1];
+                    localNotification.alertBody = notificationText;
+                    localNotification.timeZone = NSTimeZone.defaultTimeZone;
+                    [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
+                    // The exit must be called some time after the previous method is called, because there is no way to
+                    // know when the notification is properly scheduled, and calling exit inmediatley causes to not have
+                    // it shown:
+                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                        exit(0);
+                    });
+                }
+            }];
         }
     }]];
     

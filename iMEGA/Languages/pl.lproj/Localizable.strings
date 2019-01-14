@@ -1364,8 +1364,10 @@
 /* Between paragraph 5 and 6 we have to put the string with the 'autorenewableDescription' key */
 /* Paragraph 6 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
 "generalDescriptionParagraph6"="Po więcej informacji przejdź do strony: https://mega.nz/\nRegulamin: https://mega.nz/terms\nPolityka prywatności: https://mega.nz/privacy";
-/* Label shown when you receive an incoming call, before start the call. */
+/* Label shown when you call someone (outgoing call), before the call starts. */
 "calling..."="Dzwonię...";
+/* notification subtitle of incoming calls */
+"Incoming call"="Nadchodzące połączenie";
 /* Notification text body shown when you have missed one audio call */
 "missedAudioCall"="Nieodebrane połączenia audio";
 /* Notification text body shown when you have missed several audio calls. [A] = {number of missed audio calls} */
@@ -1752,6 +1754,8 @@
 "Added 1 file and %lld folders"="Dodano 1 plik i %lld katalogów";
 /* Content of a notification that informs how many files and folders have been added to a shared folder */
 "Added [A] files and [B] folders"="Dodano [A] plików i [B] katalogów";
+/* Notification when on client side when owner of a shared folder removes folder/file from it. */
+"Removed item from shared folder"="Usuń element z udostępnionego katalogu";
 /* Notification popup. Notification for multiple removed items from a share. Please keep [X] as it will be replaced at runtime with the number of removed items. */
 "Removed [X] items from a share"="Usunięto [X] elementów z udostępnionego katalogu";
 /* A notification telling the user that their Pro plan payment was successfully received. The %1 indicates the name of the Pro plan they paid for e.g. Lite, PRO III. */
@@ -1766,6 +1770,10 @@
 "Your publicly shared %1 (%2) has been taken down."="Twój udostępniony publicznie katalog  %1 (%2) został zablokowany.";
 /* The text of a notification indicating that a file or folder that was taken down has now been restored due to a successful counter-notice. The %1 placeholder will be replaced with the text ‘file’ or ‘folder’. The %2 will be replaced with the name of the file or folder. */
 "Your taken down %1 (%2) has been reinstated."="Zablokowane pliki %1 (%2) zostały przywrócone.";
+/* Error message shown to user when a copy/import operation would take them over their storage limit. */
+"This action can not be completed as it would take you over your current storage limit"="Ta operacja nie zostanie zakończona prawidłowo, ponieważ przekroczy dostępny limit pamięci na Twoim koncie.";
+/* uploads over storage quota warning dialog title */
+"Your upload(s) cannot proceed because your account is full"="Twoje przesłanie nie może być kontynuowane, ponieważ Twoje konto jest pełne";
 /* Footer text to explain the meaning of the functionaly 'Last seen' of your chat status. */
 "Allow your contacts to see the last time you were active on MEGA."="Pozwól swoim kontaktom zobaczyć ostatni raz, kiedy byłeś aktywny w MEGA.";
 /* Label shown next to a feature name that can be enabled or disabled, like in 'Show Last seen...' */
