@@ -279,7 +279,7 @@
 }
 
 - (void)pushCameraUploadSettings {
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Settings" bundle:nil];
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"CameraUploadSettings" bundle:nil];
     CameraUploadsTableViewController *cameraUploadsTableViewController = [storyboard instantiateViewControllerWithIdentifier:@"CameraUploadsSettingsID"];
     [self.navigationController pushViewController:cameraUploadsTableViewController animated:YES];
 }

@@ -717,6 +717,9 @@
 		B6C524DD21E2BC9900AE3575 /* AVAsset+CameraUpload.m in Sources */ = {isa = PBXBuildFile; fileRef = B6C524DC21E2BC9900AE3575 /* AVAsset+CameraUpload.m */; };
 		B6C524E021E3E00C00AE3575 /* AVURLAsset+CameraUpload.m in Sources */ = {isa = PBXBuildFile; fileRef = B6C524DF21E3E00C00AE3575 /* AVURLAsset+CameraUpload.m */; };
 		B6C524EC21E59DC700AE3575 /* BackgroundUploadManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B6C524EB21E59DC700AE3575 /* BackgroundUploadManager.m */; };
+		B6CCC36621E6F67B00B68E2C /* VideoUploadsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B6CCC36521E6F67B00B68E2C /* VideoUploadsTableViewController.m */; };
+		B6CCC36921E800E400B68E2C /* VideoUploadsQualityTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B6CCC36821E800E400B68E2C /* VideoUploadsQualityTableViewController.m */; };
+		B6CCC36B21E8297F00B68E2C /* CameraUploadSettings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B6CCC36A21E8297F00B68E2C /* CameraUploadSettings.storyboard */; };
 		B6D11AC6219B8ABC00446B86 /* CameraUploadFileNameRecordManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B6D11AC5219B8ABC00446B86 /* CameraUploadFileNameRecordManager.m */; };
 		B6D11AD7219BAE6D00446B86 /* MOAssetUploadFileNameRecord+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = B6D11AD3219BAE6D00446B86 /* MOAssetUploadFileNameRecord+CoreDataClass.m */; };
 		B6D11AD8219BAE6D00446B86 /* MOAssetUploadFileNameRecord+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = B6D11AD6219BAE6D00446B86 /* MOAssetUploadFileNameRecord+CoreDataProperties.m */; };
@@ -1665,6 +1668,11 @@
 		B6C524DF21E3E00C00AE3575 /* AVURLAsset+CameraUpload.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "AVURLAsset+CameraUpload.m"; sourceTree = "<group>"; };
 		B6C524EA21E59DC700AE3575 /* BackgroundUploadManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BackgroundUploadManager.h; sourceTree = "<group>"; };
 		B6C524EB21E59DC700AE3575 /* BackgroundUploadManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BackgroundUploadManager.m; sourceTree = "<group>"; };
+		B6CCC36421E6F67B00B68E2C /* VideoUploadsTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VideoUploadsTableViewController.h; sourceTree = "<group>"; };
+		B6CCC36521E6F67B00B68E2C /* VideoUploadsTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VideoUploadsTableViewController.m; sourceTree = "<group>"; };
+		B6CCC36721E800E400B68E2C /* VideoUploadsQualityTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VideoUploadsQualityTableViewController.h; sourceTree = "<group>"; };
+		B6CCC36821E800E400B68E2C /* VideoUploadsQualityTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VideoUploadsQualityTableViewController.m; sourceTree = "<group>"; };
+		B6CCC36A21E8297F00B68E2C /* CameraUploadSettings.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = CameraUploadSettings.storyboard; sourceTree = "<group>"; };
 		B6D11AC5219B8ABC00446B86 /* CameraUploadFileNameRecordManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CameraUploadFileNameRecordManager.m; sourceTree = "<group>"; };
 		B6D11AD3219BAE6D00446B86 /* MOAssetUploadFileNameRecord+CoreDataClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MOAssetUploadFileNameRecord+CoreDataClass.m"; sourceTree = "<group>"; };
 		B6D11AD4219BAE6D00446B86 /* MOAssetUploadFileNameRecord+CoreDataClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MOAssetUploadFileNameRecord+CoreDataClass.h"; sourceTree = "<group>"; };
@@ -2926,6 +2934,11 @@
 			children = (
 				41FC83BE1AAE056C008FA551 /* CameraUploadsTableViewController.h */,
 				41FC83BF1AAE056C008FA551 /* CameraUploadsTableViewController.m */,
+				B6CCC36421E6F67B00B68E2C /* VideoUploadsTableViewController.h */,
+				B6CCC36521E6F67B00B68E2C /* VideoUploadsTableViewController.m */,
+				B6CCC36721E800E400B68E2C /* VideoUploadsQualityTableViewController.h */,
+				B6CCC36821E800E400B68E2C /* VideoUploadsQualityTableViewController.m */,
+				B6CCC36A21E8297F00B68E2C /* CameraUploadSettings.storyboard */,
 			);
 			path = "Camera Uploads";
 			sourceTree = "<group>";
@@ -3979,6 +3992,7 @@
 				9462A1811FDFFD4800008F32 /* MEGAToolbarTextContentView.xib in Resources */,
 				A89E77491EA605A900ADC0D2 /* MEGAMessageAttachmentView.xib in Resources */,
 				4152273A1A692EEF00EC7BB6 /* SVProgressHUD.bundle in Resources */,
+				B6CCC36B21E8297F00B68E2C /* CameraUploadSettings.storyboard in Resources */,
 				94B120BA1FE2B6CB0099E382 /* MEGAToolbarImagePickerView.xib in Resources */,
 				4152273F1A692F8D00EC7BB6 /* Localizable.strings in Resources */,
 				77B32279209C6F060037FA89 /* MEGAMessageRichPreviewView.xib in Resources */,
@@ -4384,6 +4398,7 @@
 				41BADDAD1A8E1659008408B3 /* NSString+MNZCategory.m in Sources */,
 				83337CAB21009494000F40A7 /* ItemListModel.m in Sources */,
 				7720C5B5206A931E00F995D1 /* MEGATransfer+MNZCategory.m in Sources */,
+				B6CCC36621E6F67B00B68E2C /* VideoUploadsTableViewController.m in Sources */,
 				4152273B1A692EEF00EC7BB6 /* SVProgressHUD.m in Sources */,
 				E8C289FD1BF65B7800F7A034 /* LaunchViewController.m in Sources */,
 				41BADDB61A8E2E92008408B3 /* PhotosViewController.m in Sources */,
@@ -4458,6 +4473,7 @@
 				5B2E918D1F1F454C003C6920 /* MEGAStartUploadTransferDelegate.m in Sources */,
 				41D21E671D01AEC3002E6296 /* CTAssetsGridViewFooter.m in Sources */,
 				417840A01AC328A600713F3C /* ChangePasswordViewController.m in Sources */,
+				B6CCC36921E800E400B68E2C /* VideoUploadsQualityTableViewController.m in Sources */,
 				E85044C61A6D84620064B675 /* FileLinkViewController.m in Sources */,
 				B6E19B2F21756F0800882F74 /* TransferSessionManager.m in Sources */,
 				A85D93BC2045751E0066F45B /* ChatVideoQualityTableViewController.m in Sources */,

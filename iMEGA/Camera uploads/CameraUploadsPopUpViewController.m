@@ -83,7 +83,7 @@
         switch (status) {
             case PHAuthorizationStatusAuthorized: {
                 MEGALogInfo(@"Enable Camera Uploads");
-                [CameraUploadManager.shared enableCameraUpload];
+                CameraUploadManager.cameraUploadEnabled = YES;
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [self dismissViewControllerAnimated:YES completion:^{
                         [SVProgressHUD showImage:[UIImage imageNamed:@"hudCameraUploads"] status:AMLocalizedString(@"cameraUploadsEnabled", nil)];
