@@ -1589,7 +1589,7 @@
 /* A message on a dialog to say that 2FA has been successfully disabled. */
 "twoFactorAuthenticationDisabled"="Twee-Stap Authenticatie Uitgeschakeld";
 /* A message on the setup two-factor authentication page on the mobile web client. */
-"scanOrCopyTheSeed"="Scan or copy the seed to your Authenticator App. Be sure to backup this seed to a safe place in case you lose your device.";
+"scanOrCopyTheSeed"="Scan of kopieer de seed naar uw Authenticator Applicatie. Zorg ervoor dat u een reservekopie maakt op een veilige plek voor het geval u uw apparaat verliest.";
 /* A button to help them restore their account if they have lost their 2FA device. */
 "lostYourAuthenticatorDevice"="Bent u uw Authenticatie apparaat verloren?";
 /* Settings section title where you can enable the option to 'Save Images in Photos' */
@@ -1624,6 +1624,10 @@
 "Setup MEGA"="MEGA Instellen";
 /* Detailed explanation of why the user should give some permissions to MEGA */
 "To fully take advantage of your MEGA account we need to ask you some permissions."="Om volledig voordeel te krijgen van uw MEGA account hebben we sommige toestemmingen nodig.";
+/* Message warning the user about the risk of not setting up permissions */
+"The MEGA app may not work as expected without permissions. Are you sure?"="The MEGA app may not work as expected without permissions. Are you sure?";
+/* Shows number of the current page. '%1' will be replaced by current page number. '%2' will be replaced by number of all pages. */
+"%1 of %2"="%1 van de %2";
 /* Title label that explains that the user is going to be asked for the photos permission */
 "Allow Access to Photos"="Verleen Toegang tot Foto's";
 /* Detailed explanation of why the user should give permission to access to the photos */
