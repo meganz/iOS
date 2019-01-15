@@ -81,6 +81,10 @@ static const CGFloat TableViewSectionHeaderFooterHiddenHeight = 0.1;
     [self.uploadVideosLabel setText:AMLocalizedString(@"uploadVideosLabel", nil)];
     
     self.useCellularConnectionLabel.text = AMLocalizedString(@"useMobileData", @"Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature.");
+    
+    NSMutableAttributedString *JPGAttributedString = [[NSMutableAttributedString alloc] initWithString:@"JPG " attributes:@{NSFontAttributeName : [UIFont systemFontOfSize:17.0], NSForegroundColorAttributeName : [UIColor mnz_black333333]}];
+    [JPGAttributedString appendAttributedString:[[NSAttributedString alloc] initWithString:@"(Recommended)" attributes:@{NSFontAttributeName : [UIFont systemFontOfSize:17.0], NSForegroundColorAttributeName : [UIColor mnz_gray999999]}]];
+    self.JPGLabel.attributedText = JPGAttributedString;
 }
 
 - (void)viewWillAppear:(BOOL)animated {

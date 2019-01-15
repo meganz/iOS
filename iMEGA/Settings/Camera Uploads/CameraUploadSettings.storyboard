@@ -544,7 +544,9 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="Video Uploads" id="h22-hu-je4"/>
                     <connections>
+                        <outlet property="H264Label" destination="ndC-eu-p6i" id="W8C-dA-ij0"/>
                         <outlet property="H264RedCheckmarkImageView" destination="73G-TG-n8A" id="Ini-A0-ROY"/>
+                        <outlet property="HEVCLabel" destination="pNE-cR-dcI" id="0rZ-hd-cuk"/>
                         <outlet property="HEVCRedCheckmarkImageView" destination="iEn-cx-SzU" id="fep-Zv-chM"/>
                         <outlet property="uploadVideosLabel" destination="0SH-jf-FQK" id="IH3-Dz-Fr1"/>
                         <outlet property="uploadVideosSwitch" destination="gDZ-aQ-Ily" id="zP9-vj-0hp"/>
