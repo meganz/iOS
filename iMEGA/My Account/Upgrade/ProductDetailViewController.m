@@ -1,13 +1,10 @@
 
 #import "ProductDetailViewController.h"
 
-#import "UIApplication+MNZCategory.h"
-
-#import "CameraUploadsPopUpViewController.h"
-#import "ProductDetailTableViewCell.h"
-
 #import "MEGANavigationController.h"
 #import "MEGAPurchase.h"
+#import "ProductDetailTableViewCell.h"
+#import "UIApplication+MNZCategory.h"
 
 @interface ProductDetailViewController () <MEGAPurchaseDelegate, UITableViewDataSource, UITableViewDelegate> {
     BOOL isPurchased;
