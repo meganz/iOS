@@ -215,10 +215,6 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
     return [dateFormatter stringFromDate:date];
 }
 
-- (void)cleanPasswordTextField {
-    self.passwordView.passwordTextField.text = nil;
-}
-
 #pragma mark - UIResponder
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
