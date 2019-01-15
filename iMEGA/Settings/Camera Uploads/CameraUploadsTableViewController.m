@@ -1,14 +1,14 @@
+
 #import "CameraUploadsTableViewController.h"
 
 #import <Photos/Photos.h>
 
-#import "MEGAReachabilityManager.h"
-#import "MEGATransfer+MNZCategory.h"
-#import "NSString+MNZCategory.h"
-
 #import "CameraUploads.h"
 #import "DevicePermissionsHelper.h"
 #import "Helper.h"
+#import "MEGAReachabilityManager.h"
+#import "MEGATransfer+MNZCategory.h"
+#import "NSString+MNZCategory.h"
 
 @interface CameraUploadsTableViewController ()
 
@@ -86,51 +86,32 @@
         }
     }
     
-    [PHPhotoLibrary requestAuthorization:^(PHAuthorizationStatus status) {
-        switch (status) {
-            case PHAuthorizationStatusNotDetermined:
-                break;
-            case PHAuthorizationStatusAuthorized: {
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    BOOL isCameraUploadsEnabled = ![CameraUploads syncManager].isCameraUploadsEnabled;
-                    if (isCameraUploadsEnabled) {
-                        MEGALogInfo(@"Enable Camera Uploads");
-                        [[CameraUploads syncManager] setIsCameraUploadsEnabled:YES];
-                        [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:isCameraUploadsEnabled] forKey:kIsCameraUploadsEnabled];
-                    } else {
-                        MEGALogInfo(@"Disable Camera Uploads");
-                        [[CameraUploads syncManager] setIsCameraUploadsEnabled:NO];
-                        [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:isCameraUploadsEnabled] forKey:kIsCameraUploadsEnabled];
-                        
-                        [self.uploadVideosSwitch setOn:isCameraUploadsEnabled animated:YES];
-                        [self.useCellularConnectionSwitch setOn:isCameraUploadsEnabled animated:YES];
-                        [self.onlyWhenChargingSwitch setOn:isCameraUploadsEnabled animated:YES];
-                    }
-                    
-                    [self.tableView reloadData];
-                });
-                break;
+    [DevicePermissionsHelper photosPermissionWithCompletionHandler:^(BOOL granted) {
+        if (granted) {
+            BOOL isCameraUploadsEnabled = ![CameraUploads syncManager].isCameraUploadsEnabled;
+            CameraUploads.syncManager.isCameraUploadsEnabled = isCameraUploadsEnabled;
+            [NSUserDefaults.standardUserDefaults setObject:@(isCameraUploadsEnabled) forKey:kIsCameraUploadsEnabled];
+            
+            if (isCameraUploadsEnabled) {
+                MEGALogInfo(@"Enable Camera Uploads");
+            } else {
+                MEGALogInfo(@"Disable Camera Uploads");
+                [self.uploadVideosSwitch setOn:isCameraUploadsEnabled animated:YES];
+                [self.useCellularConnectionSwitch setOn:isCameraUploadsEnabled animated:YES];
+                [self.onlyWhenChargingSwitch setOn:isCameraUploadsEnabled animated:YES];
             }
-            case PHAuthorizationStatusRestricted: {
-                break;
-            }
-            case PHAuthorizationStatusDenied:{
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    [self presentViewController:DevicePermissionsHelper.photosPermissionDeniedAlertController animated:YES completion:nil];
-                    
-                    MEGALogInfo(@"Disable Camera Uploads");
-                    [[CameraUploads syncManager] setIsCameraUploadsEnabled:NO];
-                    
-                    [self.uploadVideosSwitch setOn:NO animated:YES];
-                    [self.useCellularConnectionSwitch setOn:NO animated:YES];
-                    [self.onlyWhenChargingSwitch setOn:NO animated:YES];
-                    [self.tableView reloadData];
-                });
-                break;
-            }
-            default:
-                break;
+        } else {
+            [DevicePermissionsHelper alertPhotosPermission];
+            
+            MEGALogInfo(@"Disable Camera Uploads");
+            CameraUploads.syncManager.isCameraUploadsEnabled = NO;
+            
+            [self.uploadVideosSwitch setOn:NO animated:YES];
+            [self.useCellularConnectionSwitch setOn:NO animated:YES];
+            [self.onlyWhenChargingSwitch setOn:NO animated:YES];
         }
+        
+        [self.tableView reloadData];
     }];
 }
 
@@ -152,7 +133,7 @@
     
     [self.uploadVideosSwitch setOn:[[CameraUploads syncManager] isUploadVideosEnabled] animated:YES];
     
-    [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:[CameraUploads syncManager].isUploadVideosEnabled] forKey:kIsUploadVideosEnabled];
+    [NSUserDefaults.standardUserDefaults setObject:@([CameraUploads syncManager].isUploadVideosEnabled) forKey:kIsUploadVideosEnabled];
 }
 
 - (IBAction)useCellularConnectionSwitchValueChanged:(UISwitch *)sender {
@@ -168,7 +149,7 @@
     }
     [self.useCellularConnectionSwitch setOn:[[CameraUploads syncManager] isUseCellularConnectionEnabled] animated:YES];
     
-    [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:[CameraUploads syncManager].isUseCellularConnectionEnabled] forKey:kIsUseCellularConnectionEnabled];
+    [NSUserDefaults.standardUserDefaults setObject:@([CameraUploads syncManager].isUseCellularConnectionEnabled) forKey:kIsUseCellularConnectionEnabled];
 }
 
 - (IBAction)onlyWhenChargindSwitchValueChanged:(UISwitch *)sender {
@@ -183,7 +164,7 @@
     }
     [self.onlyWhenChargingSwitch setOn:[[CameraUploads syncManager] isOnlyWhenChargingEnabled] animated:YES];
     
-    [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:[CameraUploads syncManager].isOnlyWhenChargingEnabled] forKey:kIsOnlyWhenChargingEnabled];
+    [NSUserDefaults.standardUserDefaults setObject:@([CameraUploads syncManager].isOnlyWhenChargingEnabled) forKey:kIsOnlyWhenChargingEnabled];
 }
 
 #pragma mark - UITableViewDataSource

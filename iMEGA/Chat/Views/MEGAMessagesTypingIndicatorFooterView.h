@@ -1,6 +1,6 @@
 #import "JSQMessagesTypingIndicatorFooterView.h"
 
-@interface MEGAMessagesTypingIndicatorFoorterView : JSQMessagesTypingIndicatorFooterView
+@interface MEGAMessagesTypingIndicatorFooterView : JSQMessagesTypingIndicatorFooterView
 
 @property (weak, nonatomic) IBOutlet UILabel *typingLabel;
 
