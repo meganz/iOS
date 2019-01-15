@@ -192,7 +192,7 @@ static const NSInteger MaxConcurrentVideoOperationCount = 1;
     [self stopVideoUpload];
     [self.photoUploadOerationQueue cancelAllOperations];
     [self.scanner unobservePhotoLibraryChanges];
-    [BackgroundUploadManager.shared disableBackgroundUpload];
+    [BackgroundUploadManager.shared stopBackgroundUpload];
 }
 
 - (void)stopVideoUpload {

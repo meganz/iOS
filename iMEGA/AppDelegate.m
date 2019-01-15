@@ -114,7 +114,7 @@ static const NSTimeInterval BackgroundRefreshDuration = 25;
     });
     
     [application setMinimumBackgroundFetchInterval:MinimumBackgroundRefreshInterval];
-    [BackgroundUploadManager.shared enableBackgroundUploadIfPossible];
+    [BackgroundUploadManager.shared startBackgroundUploadIfPossible];
     
     return YES;
 }

@@ -316,12 +316,17 @@
                                                         <constraint firstAttribute="width" constant="49" id="lhf-oL-Sxv"/>
                                                     </constraints>
                                                     <color key="onTintColor" red="0.95294117649999999" green="0.047058823530000002" blue="0.078431372550000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                    <connections>
-                                                        <action selector="backgroundUploadSwitchValueChanged:" destination="0gq-O0-v8H" eventType="valueChanged" id="f5k-ZV-hNv"/>
-                                                    </connections>
                                                 </switch>
+                                                <button opaque="NO" contentMode="scaleToFill" placeholderIntrinsicWidth="49" placeholderIntrinsicHeight="31" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VOM-uP-22O">
+                                                    <rect key="frame" x="310" y="6.5" width="49" height="31"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <connections>
+                                                        <action selector="backgroundUploadButtonTouched:" destination="0gq-O0-v8H" eventType="touchUpInside" id="1f0-OZ-wrD"/>
+                                                    </connections>
+                                                </button>
                                             </subviews>
                                             <constraints>
+                                                <constraint firstItem="VOM-uP-22O" firstAttribute="height" secondItem="tAf-hK-tam" secondAttribute="height" id="L56-Y2-eeX"/>
                                                 <constraint firstItem="wmG-6X-jAS" firstAttribute="leading" secondItem="j20-CG-gjb" secondAttribute="leadingMargin" id="aAT-mS-vMV"/>
                                                 <constraint firstItem="tAf-hK-tam" firstAttribute="trailing" secondItem="j20-CG-gjb" secondAttribute="trailingMargin" id="aAh-Dn-usH"/>
                                                 <constraint firstItem="wmG-6X-jAS" firstAttribute="centerY" secondItem="j20-CG-gjb" secondAttribute="centerY" id="aUQ-S1-Fea"/>
@@ -329,6 +334,9 @@
                                                 <constraint firstItem="tAf-hK-tam" firstAttribute="centerY" secondItem="j20-CG-gjb" secondAttribute="centerY" id="eyE-0Q-W1G"/>
                                                 <constraint firstItem="tAf-hK-tam" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="wmG-6X-jAS" secondAttribute="trailing" constant="8" id="i3n-QQ-z1X"/>
                                                 <constraint firstItem="wmG-6X-jAS" firstAttribute="leading" secondItem="j20-CG-gjb" secondAttribute="leadingMargin" id="rBn-NY-ue2"/>
+                                                <constraint firstItem="VOM-uP-22O" firstAttribute="width" secondItem="tAf-hK-tam" secondAttribute="width" id="vxQ-Fp-z2I"/>
+                                                <constraint firstItem="VOM-uP-22O" firstAttribute="centerY" secondItem="tAf-hK-tam" secondAttribute="centerY" id="wk8-lI-dkC"/>
+                                                <constraint firstItem="VOM-uP-22O" firstAttribute="leading" secondItem="tAf-hK-tam" secondAttribute="leading" id="z6Q-IK-ZUz"/>
                                             </constraints>
                                             <variation key="default">
                                                 <mask key="constraints">
