@@ -7,10 +7,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (instancetype)shared;
 
-+ (BOOL)isBackgroundUploadEnabled;
-
-- (void)enableBackgroundUploadIfPossible;
-- (void)disableBackgroundUpload;
+- (void)startBackgroundUploadIfPossible;
+- (void)stopBackgroundUpload;
 
 @end
 

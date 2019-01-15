@@ -8,6 +8,8 @@
 #import "DevicePermissionsHelper.h"
 #import "Helper.h"
 #import "BackgroundUploadManager.h"
+#import "CustomModalAlertViewController.h"
+@import CoreLocation;
 
 typedef NS_ENUM(NSUInteger, CameraUploadSection) {
     CameraUploadSectionFeatureSwitch,
@@ -35,7 +37,7 @@ typedef NS_ENUM(NSUInteger, CameraUploadPhotoFormatRow) {
 
 static const CGFloat TableViewSectionHeaderFooterHiddenHeight = 0.1;
 
-@interface CameraUploadsTableViewController ()
+@interface CameraUploadsTableViewController () <CLLocationManagerDelegate>
 
 @property (weak, nonatomic) IBOutlet UILabel *enableCameraUploadsLabel;
 @property (weak, nonatomic) IBOutlet UISwitch *enableCameraUploadsSwitch;
@@ -59,6 +61,8 @@ static const CGFloat TableViewSectionHeaderFooterHiddenHeight = 0.1;
 @property (weak, nonatomic) IBOutlet UILabel *backgroundUploadLabel;
 @property (weak, nonatomic) IBOutlet UISwitch *backgroundUploadSwitch;
 
+@property (strong, nonatomic) CLLocationManager *locationManager;
+
 @end
 
 @implementation CameraUploadsTableViewController
@@ -77,18 +81,34 @@ static const CGFloat TableViewSectionHeaderFooterHiddenHeight = 0.1;
     [self.uploadVideosLabel setText:AMLocalizedString(@"uploadVideosLabel", nil)];
     
     self.useCellularConnectionLabel.text = AMLocalizedString(@"useMobileData", @"Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature.");
-    
-    
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(configBackgroudUploadUI) name:UIApplicationDidBecomeActiveNotification object:nil];
     
     [self configUI];
 }
 
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    
+    [NSNotificationCenter.defaultCenter removeObserver:self name:UIApplicationDidBecomeActiveNotification object:nil];
+}
+
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations {
     return UIInterfaceOrientationMaskAll;
+}
+
+#pragma mark - Properties
+
+- (CLLocationManager *)locationManager {
+    if (_locationManager == nil) {
+        _locationManager = [[CLLocationManager alloc] init];
+        _locationManager.delegate = self;
+    }
+    
+    return _locationManager;
 }
 
 #pragma mark - UI configuration
@@ -112,7 +132,11 @@ static const CGFloat TableViewSectionHeaderFooterHiddenHeight = 0.1;
 - (void)configOptionsUI {
     self.useCellularConnectionSwitch.on = CameraUploadManager.isCellularUploadAllowed;
     self.useCellularConnectionForVideosSwitch.on = CameraUploadManager.isCellularUploadForVideosAllowed;
-    self.backgroundUploadSwitch.on = BackgroundUploadManager.isBackgroundUploadEnabled;
+    [self configBackgroudUploadUI];
+}
+
+- (void)configBackgroudUploadUI {
+    self.backgroundUploadSwitch.on = CameraUploadManager.isBackgroundUploadAllowed && CLLocationManager.authorizationStatus == kCLAuthorizationStatusAuthorizedAlways;
 }
 
 #pragma mark - IBActions
@@ -163,8 +187,52 @@ static const CGFloat TableViewSectionHeaderFooterHiddenHeight = 0.1;
     CameraUploadManager.cellularUploadForVideosAllowed = sender.isOn;
 }
 
-- (IBAction)backgroundUploadSwitchValueChanged:(UISwitch *)sender {
+- (IBAction)backgroundUploadButtonTouched:(UIButton *)sender {
+    if (self.backgroundUploadSwitch.isOn) {
+        CameraUploadManager.backgroundUploadAllowed = NO;
+        [self configBackgroudUploadUI];
+    } else {
+        switch (CLLocationManager.authorizationStatus) {
+            case kCLAuthorizationStatusNotDetermined:
+                [self.locationManager requestAlwaysAuthorization];
+                break;
+            default:
+                [self showBackgroundUploadBoardingScreen];
+                break;
+        }
+    }
+}
+
+- (void)showBackgroundUploadBoardingScreen {
+    CustomModalAlertViewController *customModalAlertVC = [[CustomModalAlertViewController alloc] init];
+    customModalAlertVC.modalPresentationStyle = UIModalPresentationOverFullScreen;
+    customModalAlertVC.image = [UIImage imageNamed:@"backgroundUploadLocation"];
+    customModalAlertVC.viewTitle = @"Enable location services for background upload";
+    NSString *actionTitle;
+    NSString *detail;
+    if (CLLocationManager.authorizationStatus == kCLAuthorizationStatusAuthorizedAlways) {
+        actionTitle = @"Turn On";
+        detail = @"MEGA can periodically start camera uploads when your location changes.";
+    } else {
+        actionTitle = @"Turn On in Settings";
+        detail = @"Please select “Always” at your Location page in Settings, then MEGA can periodically start camera uploads when your location changes.";
+    }
+    customModalAlertVC.detail = detail;
+    customModalAlertVC.action = actionTitle;
+    customModalAlertVC.actionColor = [UIColor mnz_green00BFA5];
+    customModalAlertVC.dismiss = AMLocalizedString(@"notNow", @"Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers.");
+    customModalAlertVC.dismissColor = [UIColor colorFromHexString:@"899B9C"];
+    customModalAlertVC.completion = ^{
+        [self dismissViewControllerAnimated:YES completion:nil];
+        if (CLLocationManager.authorizationStatus == kCLAuthorizationStatusAuthorizedAlways) {
+            CameraUploadManager.backgroundUploadAllowed = YES;
+            [self configBackgroudUploadUI];
+        } else {
+            [UIApplication.sharedApplication openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
+        }
+    };
     
+    [self presentViewController:customModalAlertVC animated:YES completion:nil];
 }
 
 #pragma mark - UITableview data source and delegate
@@ -262,6 +330,13 @@ static const CGFloat TableViewSectionHeaderFooterHiddenHeight = 0.1;
 //    }
 //    return titleForFooter;
 //}
+
+#pragma mark - Location manager delegate
+
+- (void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status {
+    CameraUploadManager.backgroundUploadAllowed = status == kCLAuthorizationStatusAuthorizedAlways;
+    [self configBackgroudUploadUI];
+}
 
 #pragma mark - util methods
 
