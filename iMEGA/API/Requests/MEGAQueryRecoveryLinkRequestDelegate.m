@@ -107,18 +107,6 @@
         } else if (MEGALinkManager.urlType == URLTypeCancelAccountLink) {
             [MEGALinkManager presentConfirmViewWithURLType:URLTypeCancelAccountLink link:request.link email:request.email];
         } else if (MEGALinkManager.urlType == URLTypeRecoverLink) {
-            if ([UIApplication.sharedApplication.keyWindow.rootViewController isKindOfClass:MEGANavigationController.class]) {
-                MEGANavigationController *navigationController = (MEGANavigationController *)UIApplication.sharedApplication.keyWindow.rootViewController;
-                if ([navigationController.topViewController isKindOfClass:TwoFactorAuthenticationViewController.class]) {
-                    [navigationController popViewControllerAnimated:NO];
-                    
-                    if ([navigationController.topViewController isKindOfClass:LoginViewController.class]) {
-                        LoginViewController *loginVC = (LoginViewController *)navigationController.topViewController;
-                        [loginVC cleanPasswordTextField];
-                    }
-                }
-            }
-            
             if (request.flag) {
                 UIAlertController *masterKeyLoggedInAlertController;
                 if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
