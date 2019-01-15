@@ -20,6 +20,8 @@ typedef NS_ENUM(NSUInteger, VideoUploadsFormatRow) {
 @property (weak, nonatomic) IBOutlet UISwitch *uploadVideosSwitch;
 @property (weak, nonatomic) IBOutlet UILabel *videoQualityLabel;
 @property (weak, nonatomic) IBOutlet UILabel *videoQualityRightDetailLabel;
+@property (weak, nonatomic) IBOutlet UILabel *HEVCLabel;
+@property (weak, nonatomic) IBOutlet UILabel *H264Label;
 @property (weak, nonatomic) IBOutlet UIImageView *HEVCRedCheckmarkImageView;
 @property (weak, nonatomic) IBOutlet UIImageView *H264RedCheckmarkImageView;
 
@@ -32,6 +34,10 @@ typedef NS_ENUM(NSUInteger, VideoUploadsFormatRow) {
     
     [self.uploadVideosLabel setText:AMLocalizedString(@"uploadVideosLabel", nil)];
     self.videoQualityLabel.text = AMLocalizedString(@"videoQuality", @"Title that refers to the video compression quality when to transcode from HEVC to H.264 codec");
+    
+    NSMutableAttributedString *H264AttributedString = [[NSMutableAttributedString alloc] initWithString:@"H.264 " attributes:@{NSFontAttributeName : [UIFont systemFontOfSize:17.0], NSForegroundColorAttributeName : [UIColor mnz_black333333]}];
+    [H264AttributedString appendAttributedString:[[NSAttributedString alloc] initWithString:@"(Recommended)" attributes:@{NSFontAttributeName : [UIFont systemFontOfSize:17.0], NSForegroundColorAttributeName : [UIColor mnz_gray999999]}]];
+    self.H264Label.attributedText = H264AttributedString;
 }
 
 - (void)configUI {
