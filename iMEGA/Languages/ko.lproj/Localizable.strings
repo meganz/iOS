@@ -1006,7 +1006,7 @@
 /* Button on the Pro page to request a custom Pro plan because their storage usage is more than the regular plans. */
 "requestAPlan"="요금제 요청";
 /* Asks the user to request a custom Pro plan from customer support because their storage usage is more than the regular plans. */
-"thereAreNoPlansSuitableForYourCurrentUsage"="현재 사용량에 맞는 요금제가 없습니다. 개인화된 요금제는 [A]지원에 연락[/A]하세요.";
+"thereAreNoPlansSuitableForYourCurrentUsage"="현재 사용량에 맞는 요금제가 없습니다. 맞춤 요금제는 [A]지원에 연락[/A]하세요.";
 /* Header shown to help on the purchasin process */
 "selectMembership"="멤버쉽 선택:";
 /* Footer shown to remenber that if you select a yearly plan yo will save up to 17% */
@@ -1625,7 +1625,7 @@
 /* Detailed explanation of why the user should give some permissions to MEGA */
 "To fully take advantage of your MEGA account we need to ask you some permissions."="당신의 MEGA 계정의 원활한 이용을 위해, 우리는 몇 가지 권한 허용이 필요합니다.";
 /* Message warning the user about the risk of not setting up permissions */
-"The MEGA app may not work as expected without permissions. Are you sure?"="The MEGA app may not work as expected without permissions. Are you sure?";
+"The MEGA app may not work as expected without the required permissions. Are you sure?"="MEGA 앱이 필요한 권한 없이는 예상과 다르게 작동할 수 있습니다. 확실합니까?";
 /* Shows number of the current page. '%1' will be replaced by current page number. '%2' will be replaced by number of all pages. */
 "%1 of %2"="%2 중 %1";
 /* Title label that explains that the user is going to be asked for the photos permission */

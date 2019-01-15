@@ -95,7 +95,7 @@
 }
 
 - (IBAction)skipButtonPressed:(UIButton *)sender {
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"attention", @"Alert title to attract attention") message:AMLocalizedString(@"The MEGA app may not work as expected without permissions. Are you sure?", @"Message warning the user about the risk of not setting up permissions") preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"attention", @"Alert title to attract attention") message:AMLocalizedString(@"The MEGA app may not work as expected without the required permissions. Are you sure?", @"Message warning the user about the risk of not setting up permissions") preferredStyle:UIAlertControllerStyleAlert];
     [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"yes", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         [self.delegate setupFinished];
     }]];
