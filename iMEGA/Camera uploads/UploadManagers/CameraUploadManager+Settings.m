@@ -14,6 +14,8 @@ static NSString * const IsLocationBasedBackgroundUploadAllowedKey = @"IsLocation
 
 @implementation CameraUploadManager (Settings)
 
+#pragma mark - setting clean ups
+
 + (void)clearLocalSettings {
     [NSUserDefaults.standardUserDefaults removeObjectForKey:IsCameraUploadsEnabledKey];
     [self clearCameraSettings];
@@ -31,6 +33,12 @@ static NSString * const IsLocationBasedBackgroundUploadAllowedKey = @"IsLocation
     [NSUserDefaults.standardUserDefaults removeObjectForKey:ShouldConvertHEVCVideoKey];
     [NSUserDefaults.standardUserDefaults removeObjectForKey:HEVCToH264CompressionQualityKey];
     [NSUserDefaults.standardUserDefaults removeObjectForKey:IsCellularForVideosAllowedKey];
+}
+
+#pragma mark - properties
+
++ (BOOL)shouldShowCameraUploadBoardingScreen {
+    return [NSUserDefaults.standardUserDefaults objectForKey:IsCameraUploadsEnabledKey] == nil;
 }
 
 + (BOOL)isCameraUploadEnabled {

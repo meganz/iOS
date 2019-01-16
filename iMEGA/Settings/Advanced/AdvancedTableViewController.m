@@ -132,33 +132,13 @@
 }
 
 - (IBAction)mediaInGallerySwitchChanged:(UISwitch *)sender {
-    [PHPhotoLibrary requestAuthorization:^(PHAuthorizationStatus status) {
-        switch (status) {
-            case PHAuthorizationStatusNotDetermined:
-                break;
-            case PHAuthorizationStatusAuthorized: {
-                [[NSUserDefaults standardUserDefaults] setBool:self.saveMediaInGallerySwitch.isOn forKey:@"isSaveMediaCapturedToGalleryEnabled"];
-                [[NSUserDefaults standardUserDefaults] synchronize];
-                break;
-            }
-            case PHAuthorizationStatusRestricted: {
-                break;
-            }
-            case PHAuthorizationStatusDenied:{
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    if (self.saveMediaInGallerySwitch.isOn) {
-                        [self presentViewController:DevicePermissionsHelper.photosPermissionDeniedAlertController animated:YES completion:nil];
-                        
-                        [self.saveMediaInGallerySwitch setOn:NO animated:YES];
-                    } else {
-                        [[NSUserDefaults standardUserDefaults] setBool:sender.on forKey:@"isSaveMediaCapturedToGalleryEnabled"];
-                        [[NSUserDefaults standardUserDefaults] synchronize];
-                    }
-                });
-                break;
-            }
-            default:
-                break;
+    [DevicePermissionsHelper photosPermissionWithCompletionHandler:^(BOOL granted) {
+        if (!granted && self.saveMediaInGallerySwitch.isOn) {
+            [self.saveMediaInGallerySwitch setOn:NO animated:YES];
+            [DevicePermissionsHelper alertPhotosPermission];
+        } else {
+            [NSUserDefaults.standardUserDefaults setBool:self.saveMediaInGallerySwitch.isOn forKey:@"isSaveMediaCapturedToGalleryEnabled"];
+            [NSUserDefaults.standardUserDefaults synchronize];
         }
     }];
 }
