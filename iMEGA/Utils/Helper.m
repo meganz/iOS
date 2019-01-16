@@ -1363,7 +1363,11 @@ static MEGAIndexer *indexer;
 
 + (void)deletePasscode {
     if ([LTHPasscodeViewController doesPasscodeExist]) {
-        [LTHPasscodeViewController deletePasscode];
+        if (LTHPasscodeViewController.sharedUser.isLockscreenPresent) {
+            [LTHPasscodeViewController deletePasscodeAndClose];
+        } else {
+            [LTHPasscodeViewController deletePasscode];
+        }
     }
 }
 
