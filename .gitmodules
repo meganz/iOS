@@ -1,6 +1,6 @@
 [submodule "iMEGA/Vendor/SDK"]
 	path = iMEGA/Vendor/SDK
-	url = https://github.com/meganz/sdk/tree/feature/background_photo_uploads
+	url = https://github.com/meganz/sdk.git
 [submodule "iMEGA/Vendor/SVProgressHUD"]
 	path = iMEGA/Vendor/SVProgressHUD
 	url = https://github.com/SVProgressHUD/SVProgressHUD.git
