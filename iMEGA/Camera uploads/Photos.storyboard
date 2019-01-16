@@ -303,22 +303,6 @@
             </objects>
             <point key="canvasLocation" x="842" y="453.00000000000006"/>
         </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="LbZ-S6-1AG">
-            <objects>
-                <navigationController storyboardIdentifier="CameraUploadsPopUpNavigationControllerID" automaticallyAdjustsScrollViewInsets="NO" id="37X-KQ-TGF" customClass="MEGANavigationController" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="e0Q-gH-Idh">
-                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <color key="barTintColor" red="0.97647058819999999" green="0.97647058819999999" blue="0.97647058819999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="LKF-Fx-Nhn" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="842" y="1201"/>
-        </scene>
     </scenes>
     <resources>
         <image name="cameraUploadsIcon" width="31" height="28"/>

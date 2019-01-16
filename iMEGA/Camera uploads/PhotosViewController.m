@@ -112,35 +112,33 @@
     [super viewDidAppear:animated];
     
     if (CameraUploadManager.shouldShowCameraUploadBoardingScreen) {
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            [self showCameraUploadBoardingScreen];
-        });
+        [self showCameraUploadBoardingScreen];
     }
 }
 
 - (void)showCameraUploadBoardingScreen {
-    CustomModalAlertViewController *customModalAlertVC = [[CustomModalAlertViewController alloc] init];
-    customModalAlertVC.modalPresentationStyle = UIModalPresentationOverFullScreen;
-    customModalAlertVC.image = [UIImage imageNamed:@"cameraUploadsPopUp"];
-    customModalAlertVC.viewTitle = AMLocalizedString(@"enableCameraUploadsButton", @"Button title that enables the functionality 'Camera Uploads', which uploads all the photos in your device to MEGA");
-    customModalAlertVC.detail = AMLocalizedString(@"automaticallyBackupYourPhotos", @"Text shown to explain what means 'Enable Camera Uploads'.");;
-    customModalAlertVC.action = AMLocalizedString(@"enable", @"Text button shown when camera upload will be enabled");
-    customModalAlertVC.actionColor = [UIColor mnz_green00BFA5];
-    customModalAlertVC.dismiss = AMLocalizedString(@"notNow", nil);
-    customModalAlertVC.dismissColor = [UIColor colorFromHexString:@"899B9C"];
+    CustomModalAlertViewController *boardingAlertVC = [[CustomModalAlertViewController alloc] init];
+    boardingAlertVC.modalPresentationStyle = UIModalPresentationOverFullScreen;
+    boardingAlertVC.image = [UIImage imageNamed:@"cameraUploadsPopUp"];
+    boardingAlertVC.viewTitle = AMLocalizedString(@"enableCameraUploadsButton", @"Button title that enables the functionality 'Camera Uploads', which uploads all the photos in your device to MEGA");
+    boardingAlertVC.detail = AMLocalizedString(@"automaticallyBackupYourPhotos", @"Text shown to explain what means 'Enable Camera Uploads'.");;
+    boardingAlertVC.action = AMLocalizedString(@"enable", @"Text button shown when camera upload will be enabled");
+    boardingAlertVC.actionColor = [UIColor mnz_green00BFA5];
+    boardingAlertVC.dismiss = AMLocalizedString(@"notNow", nil);
+    boardingAlertVC.dismissColor = [UIColor colorFromHexString:@"899B9C"];
     
-    customModalAlertVC.completion = ^{
+    boardingAlertVC.completion = ^{
         [self dismissViewControllerAnimated:YES completion:^{
             [self pushCameraUploadSettings];
         }];
     };
     
-    customModalAlertVC.onDismiss = ^{
+    boardingAlertVC.onDismiss = ^{
         [self dismissViewControllerAnimated:YES completion:nil];
         CameraUploadManager.cameraUploadEnabled = NO;
     };
     
-    [self presentViewController:customModalAlertVC animated:YES completion:nil];
+    [self presentViewController:boardingAlertVC animated:YES completion:nil];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
