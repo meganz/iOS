@@ -19,7 +19,7 @@
     if (extension.length == 0) {
         switch (self.mediaType) {
             case PHAssetMediaTypeImage:
-                extension = MEGAJPEGFileExtension;
+                extension = MEGAJPGFileExtension;
                 break;
             case PHAssetMediaTypeVideo:
                 extension = MEGAQuickTimeFileExtension;

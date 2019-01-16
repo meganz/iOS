@@ -12,9 +12,8 @@
 #import "NSData+ImageIO.h"
 #import "CameraUploadManager+Settings.h"
 #import "PHAsset+CameraUpload.h"
+#import "MEGAConstants.h"
 @import CoreServices;
-
-static NSString * const kUTITypeHEICImage = @"public.heic";
 
 @implementation PhotoUploadOperation
 
@@ -61,9 +60,9 @@ static NSString * const kUTITypeHEICImage = @"public.heic";
 
     NSString *fileExtension;
     NSData *processedImageData;
-    if ([CameraUploadManager shouldConvertHEICPhoto] && UTTypeConformsTo((__bridge CFStringRef)dataUTI, (__bridge CFStringRef)kUTITypeHEICImage)) {
+    if ([self shouldConvertToJPGForUTI:dataUTI]) {
         processedImageData = [imageData mnz_dataByConvertingToType:(__bridge NSString *)kUTTypeJPEG shouldStripGPSInfo:YES];
-        fileExtension = @"jpg";
+        fileExtension = MEGAJPGFileExtension;
     } else {
         processedImageData = [imageData mnz_dataByStrippingOffGPSIfNeeded];
         fileExtension = [self.uploadInfo.asset mnz_fileExtensionFromAssetInfo:dataInfo];
@@ -82,6 +81,14 @@ static NSString * const kUTITypeHEICImage = @"public.heic";
         [self encryptsFile];
     } else {
         [self finishOperationWithStatus:CameraAssetUploadStatusFailed shouldUploadNextAsset:YES];
+    }
+}
+
+- (BOOL)shouldConvertToJPGForUTI:(NSString *)dataUTI {
+    if (@available(iOS 11.0, *)) {
+        return [CameraUploadManager shouldConvertHEICPhoto] && UTTypeConformsTo((__bridge CFStringRef)dataUTI, (__bridge CFStringRef)AVFileTypeHEIC);
+    } else {
+        return NO;
     }
 }
 
