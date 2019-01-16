@@ -23,6 +23,7 @@
 #import "CameraUploadManager.h"
 #import "CameraUploadManager+Settings.h"
 #import "MEGAConstants.h"
+#import "CustomModalAlertViewController.h"
 
 @interface PhotosViewController () <UICollectionViewDelegateFlowLayout, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAPhotoBrowserDelegate> {
     BOOL allNodesSelected;
@@ -112,10 +113,34 @@
     
     if (CameraUploadManager.shouldShowCameraUploadBoardingScreen) {
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            MEGANavigationController *cameraUploadsNavigationController = [[UIStoryboard storyboardWithName:@"Photos" bundle:nil] instantiateViewControllerWithIdentifier:@"CameraUploadsPopUpNavigationControllerID"];
-            [self presentViewController:cameraUploadsNavigationController animated:YES completion:nil];
+            [self showCameraUploadBoardingScreen];
         });
     }
+}
+
+- (void)showCameraUploadBoardingScreen {
+    CustomModalAlertViewController *customModalAlertVC = [[CustomModalAlertViewController alloc] init];
+    customModalAlertVC.modalPresentationStyle = UIModalPresentationOverFullScreen;
+    customModalAlertVC.image = [UIImage imageNamed:@"cameraUploadsPopUp"];
+    customModalAlertVC.viewTitle = AMLocalizedString(@"enableCameraUploadsButton", @"Button title that enables the functionality 'Camera Uploads', which uploads all the photos in your device to MEGA");
+    customModalAlertVC.detail = AMLocalizedString(@"automaticallyBackupYourPhotos", @"Text shown to explain what means 'Enable Camera Uploads'.");;
+    customModalAlertVC.action = AMLocalizedString(@"enable", @"Text button shown when camera upload will be enabled");
+    customModalAlertVC.actionColor = [UIColor mnz_green00BFA5];
+    customModalAlertVC.dismiss = AMLocalizedString(@"notNow", nil);
+    customModalAlertVC.dismissColor = [UIColor colorFromHexString:@"899B9C"];
+    
+    customModalAlertVC.completion = ^{
+        [self dismissViewControllerAnimated:YES completion:^{
+            [self pushCameraUploadSettings];
+        }];
+    };
+    
+    customModalAlertVC.onDismiss = ^{
+        [self dismissViewControllerAnimated:YES completion:nil];
+        CameraUploadManager.cameraUploadEnabled = NO;
+    };
+    
+    [self presentViewController:customModalAlertVC animated:YES completion:nil];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
