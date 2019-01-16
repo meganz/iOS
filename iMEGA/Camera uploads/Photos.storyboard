@@ -13,9 +13,6 @@
         <array key="SF-UI-Text-Regular.otf">
             <string>SFUIText-Regular</string>
         </array>
-        <array key="SF-UI-Text-Semibold.otf">
-            <string>SFUIText-Semibold</string>
-        </array>
     </customFonts>
     <scenes>
         <!--Photos View Controller-->
@@ -306,105 +303,6 @@
             </objects>
             <point key="canvasLocation" x="842" y="453.00000000000006"/>
         </scene>
-        <!--Camera Uploads Pop Up View Controller-->
-        <scene sceneID="JRT-Qw-WKE">
-            <objects>
-                <viewController storyboardIdentifier="CameraUploadsPopUpViewControllerID" hidesBottomBarWhenPushed="YES" id="liW-Oa-2YP" customClass="CameraUploadsPopUpViewController" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="Rf7-1t-7Zq">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="32" translatesAutoresizingMaskIntoConstraints="NO" id="0MG-G0-1ad">
-                                <rect key="frame" x="69.5" y="20" width="236" height="563"/>
-                                <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="750" text="Automatically backup your photos to the Cloud Drive" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vnD-OB-rty">
-                                        <rect key="frame" x="0.0" y="0.0" width="236" height="29"/>
-                                        <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="12"/>
-                                        <color key="textColor" red="0.60000002384185791" green="0.60000002384185791" blue="0.60000002384185791" alpha="1" colorSpace="calibratedRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" placeholderIntrinsicWidth="237" placeholderIntrinsicHeight="260" image="cameraUploadsPopUp" translatesAutoresizingMaskIntoConstraints="NO" id="djp-QD-Fzh">
-                                        <rect key="frame" x="0.0" y="106" width="236" height="260"/>
-                                        <accessibility key="accessibilityConfiguration">
-                                            <accessibilityTraits key="traits" image="YES" notEnabled="YES"/>
-                                        </accessibility>
-                                    </imageView>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="A6e-hX-fMv">
-                                        <rect key="frame" x="0.0" y="443" width="236" height="120"/>
-                                        <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="inc-er-uaq">
-                                                <rect key="frame" x="0.0" y="0.0" width="236" height="50"/>
-                                                <color key="backgroundColor" red="0.0" green="0.74901960779999999" blue="0.64705882349999999" alpha="1" colorSpace="calibratedRGB"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="50" id="pfz-ht-rcn"/>
-                                                </constraints>
-                                                <fontDescription key="fontDescription" name="SFUIText-Semibold" family="SF UI Text" pointSize="17"/>
-                                                <inset key="contentEdgeInsets" minX="0.0" minY="10" maxX="0.0" maxY="12"/>
-                                                <state key="normal" title="Enable">
-                                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                </state>
-                                                <userDefinedRuntimeAttributes>
-                                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                                        <integer key="value" value="8"/>
-                                                    </userDefinedRuntimeAttribute>
-                                                </userDefinedRuntimeAttributes>
-                                                <connections>
-                                                    <action selector="enableTouchUpInside:" destination="liW-Oa-2YP" eventType="touchUpInside" id="fiD-kG-RWv"/>
-                                                </connections>
-                                            </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vAc-18-aEo">
-                                                <rect key="frame" x="0.0" y="70" width="236" height="50"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="50" id="W8S-LE-nGu"/>
-                                                </constraints>
-                                                <fontDescription key="fontDescription" name="SFUIText-Semibold" family="SF UI Text" pointSize="17"/>
-                                                <inset key="contentEdgeInsets" minX="0.0" minY="10" maxX="0.0" maxY="12"/>
-                                                <state key="normal" title="Not Now">
-                                                    <color key="titleColor" red="0.53725490200000003" green="0.60784313729999995" blue="0.61176470589999998" alpha="1" colorSpace="calibratedRGB"/>
-                                                </state>
-                                                <connections>
-                                                    <action selector="skipTouchUpInside:" destination="liW-Oa-2YP" eventType="touchUpInside" id="FVl-SA-MQK"/>
-                                                </connections>
-                                            </button>
-                                        </subviews>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <constraints>
-                                            <constraint firstAttribute="trailing" secondItem="vAc-18-aEo" secondAttribute="trailing" id="96u-7N-YqA"/>
-                                            <constraint firstItem="inc-er-uaq" firstAttribute="leading" secondItem="A6e-hX-fMv" secondAttribute="leading" id="AsU-yZ-Zz7"/>
-                                            <constraint firstItem="inc-er-uaq" firstAttribute="top" secondItem="A6e-hX-fMv" secondAttribute="top" id="CnV-uk-fiV"/>
-                                            <constraint firstAttribute="trailing" secondItem="inc-er-uaq" secondAttribute="trailing" id="NmJ-9z-bRy"/>
-                                            <constraint firstItem="vAc-18-aEo" firstAttribute="leading" secondItem="A6e-hX-fMv" secondAttribute="leading" id="R7T-pV-2DN"/>
-                                            <constraint firstItem="vAc-18-aEo" firstAttribute="top" secondItem="inc-er-uaq" secondAttribute="bottom" constant="20" id="gh5-TI-drg"/>
-                                            <constraint firstAttribute="height" constant="120" id="mCJ-2W-iOO"/>
-                                        </constraints>
-                                    </view>
-                                </subviews>
-                                <constraints>
-                                    <constraint firstItem="A6e-hX-fMv" firstAttribute="leading" secondItem="0MG-G0-1ad" secondAttribute="leading" id="dGb-Oz-ved"/>
-                                    <constraint firstAttribute="trailing" secondItem="A6e-hX-fMv" secondAttribute="trailing" id="lNx-Ro-u3c"/>
-                                    <constraint firstAttribute="width" relation="lessThanOrEqual" constant="236" id="nKQ-aH-odp"/>
-                                </constraints>
-                            </stackView>
-                        </subviews>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <constraints>
-                            <constraint firstItem="0MG-G0-1ad" firstAttribute="top" secondItem="NZH-zd-jis" secondAttribute="top" constant="20" id="3zs-dX-kcW"/>
-                            <constraint firstItem="0MG-G0-1ad" firstAttribute="centerX" secondItem="Rf7-1t-7Zq" secondAttribute="centerX" id="RmJ-uh-fwe"/>
-                            <constraint firstItem="NZH-zd-jis" firstAttribute="bottom" secondItem="0MG-G0-1ad" secondAttribute="bottom" constant="20" id="Tkh-Dl-n0Z"/>
-                        </constraints>
-                        <viewLayoutGuide key="safeArea" id="NZH-zd-jis"/>
-                    </view>
-                    <navigationItem key="navigationItem" id="8Ex-Gd-tHN"/>
-                    <connections>
-                        <outlet property="enableButton" destination="inc-er-uaq" id="BBZ-M8-5Jo"/>
-                        <outlet property="skipButton" destination="vAc-18-aEo" id="Xqh-YJ-NlD"/>
-                        <outlet property="topLabel" destination="vnD-OB-rty" id="Fua-vV-hph"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="CiE-Xl-P7v" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1702.5" y="1198.75"/>
-        </scene>
         <!--Navigation Controller-->
         <scene sceneID="LbZ-S6-1AG">
             <objects>
@@ -416,9 +314,6 @@
                         <color key="barTintColor" red="0.97647058819999999" green="0.97647058819999999" blue="0.97647058819999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="liW-Oa-2YP" kind="relationship" relationship="rootViewController" id="Ox9-1p-RRd"/>
-                    </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LKF-Fx-Nhn" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -427,7 +322,6 @@
     </scenes>
     <resources>
         <image name="cameraUploadsIcon" width="31" height="28"/>
-        <image name="cameraUploadsPopUp" width="237" height="260"/>
         <image name="copy" width="32" height="32"/>
         <image name="download" width="32" height="32"/>
         <image name="move" width="28" height="28"/>

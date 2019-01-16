@@ -232,6 +232,19 @@ static const NSInteger MaxConcurrentVideoOperationCount = 1;
     self.photoUploadOerationQueue.maxConcurrentOperationCount = MaxConcurrentPhotoOperationCountInMemoryWarning;
 }
 
+#pragma mark - photos access permission check
+
++ (void)disableCameraUploadIfNoAccess {
+    switch (PHPhotoLibrary.authorizationStatus) {
+        case PHAuthorizationStatusDenied:
+        case PHAuthorizationStatusRestricted:
+            [self.class setCameraUploadEnabled:NO];
+            break;
+        default:
+            break;
+    }
+}
+
 #pragma mark - data collator
 
 - (void)collateUploadRecords {
