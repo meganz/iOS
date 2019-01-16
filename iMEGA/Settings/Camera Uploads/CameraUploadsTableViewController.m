@@ -147,27 +147,14 @@ static const CGFloat TableViewSectionHeaderFooterHiddenHeight = 0.1;
 
 - (IBAction)enableCameraUploadsSwitchValueChanged:(UISwitch *)sender {
     if (sender.isOn) {
-        [PHPhotoLibrary requestAuthorization:^(PHAuthorizationStatus status) {
-            switch (status) {
-                case PHAuthorizationStatusAuthorized: {
-                    CameraUploadManager.cameraUploadEnabled = YES;
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        [self configUI];
-                    });
-                    break;
-                }
-                case PHAuthorizationStatusRestricted:
-                case PHAuthorizationStatusDenied: {
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        MEGALogInfo(@"Disable Camera Uploads");
-                        [self presentViewController:DevicePermissionsHelper.photosPermissionDeniedAlertController animated:YES completion:nil];
-                        [self configUI];
-                    });
-                    break;
-                }
-                default:
-                    break;
+        [DevicePermissionsHelper photosPermissionWithCompletionHandler:^(BOOL granted) {
+            if (granted) {
+                CameraUploadManager.cameraUploadEnabled = YES;
+            } else {
+                [DevicePermissionsHelper alertPhotosPermission];
             }
+            
+            [self configUI];
         }];
     } else {
         CameraUploadManager.cameraUploadEnabled = NO;

@@ -23,6 +23,7 @@
 #import "CustomActionViewController.h"
 #import "NodeTableViewCell.h"
 #import "MainTabBarController.h"
+#import "OnboardingViewController.h"
 #import "LoginViewController.h"
 #import "LinkOption.h"
 #import "UnavailableLinkView.h"
@@ -551,8 +552,7 @@
         }
         MEGALinkManager.selectedOption = LinkOptionDownloadFolderOrNodes;
         
-        LoginViewController *loginVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"LoginViewControllerID"];
-        [self.navigationController pushViewController:loginVC animated:YES];
+        [self.navigationController pushViewController:[OnboardingViewController instanciateOnboardingWithType:OnboardingTypeDefault] animated:YES];
     }
 }
 
@@ -584,8 +584,7 @@
         }
         MEGALinkManager.selectedOption = LinkOptionImportFolderOrNodes;
         
-        LoginViewController *loginVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"LoginViewControllerID"];
-        [self.navigationController pushViewController:loginVC animated:YES];
+        [self.navigationController pushViewController:[OnboardingViewController instanciateOnboardingWithType:OnboardingTypeDefault] animated:YES];
     }
     
     return;

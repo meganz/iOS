@@ -10,6 +10,7 @@
 #import "MEGALinkManager.h"
 #import "MEGALoginRequestDelegate.h"
 #import "MEGASdkManager.h"
+#import "OnboardingViewController.h"
 #import "UIApplication+MNZCategory.h"
 
 #import "SAMKeychain.h"
@@ -49,13 +50,13 @@
             } else {
                 UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"accountAlreadyConfirmed", @"Message shown when the user clicks on a confirm account link that has already been used") message:nil preferredStyle:UIAlertControllerStyleAlert];
                 [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-                    
                     UIViewController *rootViewController = UIApplication.sharedApplication.keyWindow.rootViewController;
-                    MEGANavigationController *navigationController = (MEGANavigationController *)rootViewController;
-                    if ([navigationController.topViewController isKindOfClass:LoginViewController.class]) {
-                        LoginViewController *loginVC = (LoginViewController *)navigationController.topViewController;
+                    if ([rootViewController isKindOfClass:OnboardingViewController.class]) {
+                        UINavigationController *loginNC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"LoginNavigationControllerID"];
+                        LoginViewController *loginVC = loginNC.viewControllers.firstObject;
                         loginVC.emailString = request.email;
-                        [loginVC viewWillAppear:NO];
+                        
+                        [UIApplication.mnz_presentingViewController presentViewController:loginNC animated:YES completion:nil];
                     }
                 }]];
                 
@@ -68,16 +69,12 @@
         }
     } else if (self.urlType == URLTypeNewSignUpLink && MEGALinkManager.emailOfNewSignUpLink)  {
         UIViewController *rootViewController = UIApplication.sharedApplication.keyWindow.rootViewController;
-        if ([rootViewController isKindOfClass:[MEGANavigationController class]]) {
-            MEGANavigationController *navigationController = (MEGANavigationController *)rootViewController;
-            if ([navigationController.topViewController isKindOfClass:[LoginViewController class]]) {
-                LoginViewController *loginVC = (LoginViewController *)navigationController.topViewController;
-                [loginVC performSegueWithIdentifier:@"CreateAccountStoryboardSegueID" sender:MEGALinkManager.emailOfNewSignUpLink];
-            } else if ([navigationController.topViewController isKindOfClass:[CreateAccountViewController class]]) {
-                CreateAccountViewController *createAccountVC = (CreateAccountViewController *)navigationController.topViewController;
-                createAccountVC.emailString = MEGALinkManager.emailOfNewSignUpLink;
-                [createAccountVC viewDidLoad];
-            }
+        if ([rootViewController isKindOfClass:OnboardingViewController.class]) {
+            UINavigationController *createNC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"CreateAccountNavigationControllerID"];
+            CreateAccountViewController *createAccountVC = createNC.viewControllers.firstObject;
+            createAccountVC.emailString = MEGALinkManager.emailOfNewSignUpLink;
+            
+            [UIApplication.mnz_presentingViewController presentViewController:createNC animated:YES completion:nil];
             
             MEGALinkManager.emailOfNewSignUpLink = nil;
         }

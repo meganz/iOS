@@ -1754,6 +1754,8 @@
 "Added 1 file and %lld folders"="1 bestand en %lld mappen toegevoegd";
 /* Content of a notification that informs how many files and folders have been added to a shared folder */
 "Added [A] files and [B] folders"="[A] bestanden en [B] mappen toegevoegd";
+/* Notification when on client side when owner of a shared folder removes folder/file from it. */
+"Removed item from shared folder"="Verwijderd item van gedeelde map";
 /* Notification popup. Notification for multiple removed items from a share. Please keep [X] as it will be replaced at runtime with the number of removed items. */
 "Removed [X] items from a share"="Verwijder [X] items van gedeelde map";
 /* A notification telling the user that their Pro plan payment was successfully received. The %1 indicates the name of the Pro plan they paid for e.g. Lite, PRO III. */
@@ -1768,6 +1770,10 @@
 "Your publicly shared %1 (%2) has been taken down."="Uw publiekelijk gedeelde %1 (%2) is weggehaald.";
 /* The text of a notification indicating that a file or folder that was taken down has now been restored due to a successful counter-notice. The %1 placeholder will be replaced with the text ‘file’ or ‘folder’. The %2 will be replaced with the name of the file or folder. */
 "Your taken down %1 (%2) has been reinstated."="Uw weggehaalde %1 (%2) is hersteld.";
+/* Error message shown to user when a copy/import operation would take them over their storage limit. */
+"This action can not be completed as it would take you over your current storage limit"="Deze actie kan niet worden voltooid omdat het u over de huidige opslaglimiet brengt.";
+/* uploads over storage quota warning dialog title */
+"Your upload(s) cannot proceed because your account is full"="Uw upload(s) kunnen niet doorgaan omdat uw account vol is";
 /* Footer text to explain the meaning of the functionaly 'Last seen' of your chat status. */
 "Allow your contacts to see the last time you were active on MEGA."="Contacten toestaan om te zien wanneer u de laatste keer actief was op MEGA.";
 /* Label shown next to a feature name that can be enabled or disabled, like in 'Show Last seen...' */

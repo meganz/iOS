@@ -12,6 +12,7 @@ typedef NS_ENUM(NSUInteger, CameraUploadVideoQuality) {
 
 @interface CameraUploadManager (Settings)
 
+@property (class, nonatomic, readonly) BOOL shouldShowCameraUploadBoardingScreen;
 @property (class, nonatomic, getter=isCameraUploadEnabled) BOOL cameraUploadEnabled;
 @property (class, nonatomic, getter=isVideoUploadEnabled) BOOL videoUploadEnabled;
 @property (class, nonatomic, getter=isCellularUploadAllowed) BOOL cellularUploadAllowed;

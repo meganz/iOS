@@ -594,6 +594,7 @@
                         <outlet property="onlineRedCheckmarkImageView" destination="Xu0-PS-Bgx" id="tUG-j1-DF1"/>
                         <outlet property="statusPersistenceLabel" destination="7Zi-Lu-rhp" id="Pig-CZ-nxL"/>
                         <outlet property="statusPersistenceSwitch" destination="WML-0a-bJq" id="wZX-e9-01M"/>
+                        <outlet property="timeAutoAwayCell" destination="5SQ-a8-ViS" id="LoS-lX-z9I"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4G8-zc-oHS" userLabel="First Responder" sceneMemberID="firstResponder"/>
