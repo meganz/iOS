@@ -49,7 +49,7 @@
 - (void)URLSession:(NSURLSession *)session didReceiveChallenge:(NSURLAuthenticationChallenge *)challenge completionHandler:(void (^)(NSURLSessionAuthChallengeDisposition, NSURLCredential * _Nullable))completionHandler {
     MEGALogDebug(@"[Camera Upload] Session %@ did receive challenge for protection space: %@", session.configuration.identifier, challenge.protectionSpace);
     if (challenge.protectionSpace.authenticationMethod == NSURLAuthenticationMethodServerTrust) {
-        // TODO: implement authentication validation, like public key
+#warning add public key matching check here to improve the security
         SecTrustRef trust = challenge.protectionSpace.serverTrust;
         completionHandler(NSURLSessionAuthChallengeUseCredential, [NSURLCredential credentialForTrust:trust]);
     } else {
