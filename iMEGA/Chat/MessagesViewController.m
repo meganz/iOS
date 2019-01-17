@@ -260,7 +260,7 @@ const NSUInteger kMaxMessagesToLoad = 256;
         [self.view addSubview:self.activeCallButton];
     }
     
-    if ([[MEGASdkManager sharedMEGAChatSdk] hasCallInChatRoom:self.chatRoom.chatId]) {
+    if ([[MEGASdkManager sharedMEGAChatSdk] hasCallInChatRoom:self.chatRoom.chatId] && self.chatRoom.isGroup) {
         MEGAChatCall *call = [[MEGASdkManager sharedMEGAChatSdk] chatCallForChatId:self.chatRoom.chatId];
         if (call.status == MEGAChatCallStatusInProgress) {
             [self showTapToReturnCall:call];
@@ -653,6 +653,10 @@ const NSUInteger kMaxMessagesToLoad = 256;
     groupCallVC.chatRoom = self.chatRoom;
     groupCallVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
     
+    if (@available(iOS 10.0, *)) {
+        groupCallVC.megaCallManager = [(MainTabBarController *)UIApplication.sharedApplication.keyWindow.rootViewController megaCallManager];
+    }
+    
     [self presentViewController:groupCallNavigation animated:YES completion:nil];
 }
 
@@ -690,7 +694,7 @@ const NSUInteger kMaxMessagesToLoad = 256;
         groupCallVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
 
         if (@available(iOS 10.0, *)) {
-            groupCallVC.megaCallManager = [(MainTabBarController *)self.navigationController.tabBarController megaCallManager];
+            groupCallVC.megaCallManager = [(MainTabBarController *)UIApplication.sharedApplication.keyWindow.rootViewController megaCallManager];
         }
         [self presentViewController:groupCallNavigation animated:YES completion:nil];
     } else {
@@ -701,7 +705,7 @@ const NSUInteger kMaxMessagesToLoad = 256;
         callVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
         
         if (@available(iOS 10.0, *)) {
-            callVC.megaCallManager = [(MainTabBarController *)self.navigationController.tabBarController megaCallManager];
+            callVC.megaCallManager = [(MainTabBarController *)UIApplication.sharedApplication.keyWindow.rootViewController megaCallManager];
         }
         [self presentViewController:callVC animated:YES completion:nil];
     }
@@ -2856,7 +2860,8 @@ const NSUInteger kMaxMessagesToLoad = 256;
 #pragma mark - MEGAChatCallDelegate
 
 - (void)onChatCallUpdate:(MEGAChatSdk *)api call:(MEGAChatCall *)call {
-    if ([[MEGASdkManager sharedMEGAChatSdk] hasCallInChatRoom:self.chatRoom.chatId]) {
+    
+    if ([[MEGASdkManager sharedMEGAChatSdk] hasCallInChatRoom:self.chatRoom.chatId] && self.chatRoom.isGroup) {
         MEGALogDebug(@"onChatCallUpdate %@", call);
 
         switch (call.status) {

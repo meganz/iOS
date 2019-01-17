@@ -81,96 +81,33 @@
     [self initDataSource];
  
     if (self.callType == CallTypeIncoming) {
-        self.outgoingCallView.hidden = YES;
-        if (@available(iOS 10.0, *)) {
-            [self acceptCall:nil];
-        } else {
-            _call = [[MEGASdkManager sharedMEGAChatSdk] chatCallForChatId:self.chatRoom.chatId];
-        }
-        [self playCallingSound];
-
+        [self showIncomingCall];
     } else  if (self.callType == CallTypeOutgoing) {
-        __weak __typeof(self) weakSelf = self;
-
-        MEGAChatStartCallRequestDelegate *startCallRequestDelegate = [[MEGAChatStartCallRequestDelegate alloc] initWithCompletion:^(MEGAChatError *error) {
-            if (error.type) {
-                [weakSelf dismissViewControllerAnimated:YES completion:nil];
-            } else {
-                weakSelf.call = [[MEGASdkManager sharedMEGAChatSdk] chatCallForChatId:weakSelf.chatRoom.chatId];
-                weakSelf.incomingCallView.hidden = YES;
-                
-                if (@available(iOS 10.0, *)) {
-                    NSUUID *uuid = [[NSUUID alloc] init];
-                    weakSelf.call.uuid = uuid;
-                    [weakSelf.megaCallManager addCall:weakSelf.call];
-                    
-                    uint64_t peerHandle = [weakSelf.chatRoom peerHandleAtIndex:0];
-                    NSString *peerEmail = [weakSelf.chatRoom peerEmailByHandle:peerHandle];
-                    [weakSelf.megaCallManager startCall:weakSelf.call email:peerEmail];
-                }
-               
-                [self.collectionView reloadData];
-                [self playCallingSound];
-            }
-        }];
-        
-        [[MEGASdkManager sharedMEGAChatSdk] startChatCall:self.chatRoom.chatId enableVideo:self.videoCall delegate:startCallRequestDelegate];
+        [self startOutgoingCall];
     } else  if (self.callType == CallTypeActive) {
         self.call = [[MEGASdkManager sharedMEGAChatSdk] chatCallForChatId:self.chatRoom.chatId];
-
         if (self.call.sessions.size != 0) { //The call exists in karere and we are participating
-            for (int i = 0; i < self.call.sessions.size; i ++) {
-                MEGAChatSession *chatSession = [self.call sessionForPeer:[self.call.sessions megaHandleAtIndex:i]];
-                MEGAGroupCallPeer *remoteUser = [[MEGAGroupCallPeer alloc] initWithSession:chatSession];
-                [self.peersInCall insertObject:remoteUser atIndex:0];
-            }
-            if (self.call.numParticipants >= kSmallPeersLayout) {
-                self.collectionView.alpha = 0;
-                [self.collectionActivity startAnimating];
-                self.shouldHideAcivity = YES;
-                [self initLocalUserFocused];
-            }
-            self.incomingCallView.hidden = YES;
-            [self initDurationTimer];
-            [self initShowHideControls];
-            [self updateParticipants];
-            [self.collectionView reloadData];
+            [self instantiatePeersInCall];
         } else { //The call exists in karere but we are not participating
-            __weak __typeof(self) weakSelf = self;
-            
-            MEGAChatStartCallRequestDelegate *startCallRequestDelegate = [[MEGAChatStartCallRequestDelegate alloc] initWithCompletion:^(MEGAChatError *error) {
-                if (error.type) {
-                    [weakSelf dismissViewControllerAnimated:YES completion:^{
-                        if (error.type == MEGAChatErrorTooMany) {
-                            [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"Error. No more participants are allowed in this group call.", @"Message show when a call cannot be established because there are too many participants in the group call")];
-                        }
-                    }];
-                } else {
-                    weakSelf.call = [[MEGASdkManager sharedMEGAChatSdk] chatCallForChatId:weakSelf.chatRoom.chatId];
-                    weakSelf.incomingCallView.hidden = YES;
-                    if (self.call.numParticipants >= kSmallPeersLayout) {
-                        self.collectionView.alpha = 0;
-                        [self.collectionActivity startAnimating];
-                        [self initLocalUserFocused];
-                    }
-                    [self initDurationTimer];
-                    [self initShowHideControls];
-                    [self updateParticipants];
-                    [self.collectionView reloadData];
-                }
-            }];
-            
-            [[MEGASdkManager sharedMEGAChatSdk] startChatCall:self.chatRoom.chatId enableVideo:self.videoCall delegate:startCallRequestDelegate];
+            [self joinActiveCall];
         }
     }
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didSessionRouteChange:) name:AVAudioSessionRouteChangeNotification object:nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [[MEGASdkManager sharedMEGAChatSdk] addChatCallDelegate:self];
     [[UIApplication sharedApplication] setIdleTimerDisabled:YES];
+    
+    [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(didSessionRouteChange:) name:AVAudioSessionRouteChangeNotification object:nil];
+    
+    //NOTE: If we open this view controller from 'MEGA' or 'VIDEO' CallKit buttons, we should update the call and configure all the UI
+    if (self.call.status == MEGAChatCallStatusRingIn) {
+        self.call = [[MEGASdkManager sharedMEGAChatSdk] chatCallForChatId:self.chatRoom.chatId];
+        if (self.call.status == MEGAChatCallStatusInProgress) {
+            [self instantiatePeersInCall];
+        }
+    }
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -335,7 +272,7 @@
             self.peerTalkingVideoView.hidden = YES;
             self.peerTalkingImageView.hidden = NO;
         }
-        self.peerTalkingMuteView.hidden = NO;
+        self.peerTalkingMuteView.hidden = [self peerForId:0].audio;
         self.peerTalkingQualityView.hidden = YES;
     } else {
         MEGAChatSession *chatSessionManualMode = [self.call sessionForPeer:self.peerManualMode];
@@ -487,11 +424,7 @@
 
 - (IBAction)hangCall:(UIButton *)sender {
     if (@available(iOS 10.0, *)) {
-        if (self.callType == CallTypeActive) {
-            [[MEGASdkManager sharedMEGAChatSdk] hangChatCall:self.chatRoom.chatId];
-        } else {
-            [self.megaCallManager endCall:self.call];
-        }
+        [self.megaCallManager endCall:self.call];
     } else {
         [[MEGASdkManager sharedMEGAChatSdk] hangChatCall:self.chatRoom.chatId];
     }
@@ -601,6 +534,16 @@
     [[NSUserDefaults standardUserDefaults] synchronize];
     [self.timer invalidate];
     [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+#pragma mark - Public
+
+- (void)tapOnVideoCallkitWhenDeviceIsLocked {
+    self.enableDisableVideoButton.selected = NO;
+    [self enableDisableVideo:self.enableDisableVideoButton];
+    self.call = [[MEGASdkManager sharedMEGAChatSdk] chatCallForChatId:self.chatRoom.chatId];
+    MEGAGroupCallPeer *localUser = [self peerForId:0];
+    localUser.video = YES;
 }
 
 #pragma mark - Private
@@ -885,6 +828,110 @@
     return nil;
 }
 
+- (void)deleteActiveCallFlags {
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"groupCallLocalVideo"];
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"groupCallLocalAudio"];
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"groupCallSpeaker"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+- (void)configureInitialUI {
+    if (!self.timer.isValid) {
+        [self.player stop];
+        [self initDurationTimer];
+        [self initShowHideControls];
+        [self updateParticipants];
+    }
+}
+
+- (void)instantiatePeersInCall {
+    for (int i = 0; i < self.call.sessions.size; i ++) {
+        MEGAChatSession *chatSession = [self.call sessionForPeer:[self.call.sessions megaHandleAtIndex:i]];
+        MEGAGroupCallPeer *remoteUser = [[MEGAGroupCallPeer alloc] initWithSession:chatSession];
+        [self.peersInCall insertObject:remoteUser atIndex:0];
+    }
+    if (self.call.numParticipants >= kSmallPeersLayout) {
+        self.collectionView.alpha = 0;
+        [self.collectionActivity startAnimating];
+        self.shouldHideAcivity = YES;
+        [self initLocalUserFocused];
+    }
+    self.incomingCallView.hidden = YES;
+    [self initDurationTimer];
+    [self initShowHideControls];
+    [self updateParticipants];
+    [self.collectionView reloadData];
+}
+
+- (void)joinActiveCall {
+    __weak __typeof(self) weakSelf = self;
+    
+    [self deleteActiveCallFlags];
+    
+    MEGAChatStartCallRequestDelegate *startCallRequestDelegate = [[MEGAChatStartCallRequestDelegate alloc] initWithCompletion:^(MEGAChatError *error) {
+        if (error.type) {
+            [weakSelf dismissViewControllerAnimated:YES completion:^{
+                if (error.type == MEGAChatErrorTooMany) {
+                    [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"Error. No more participants are allowed in this group call.", @"Message show when a call cannot be established because there are too many participants in the group call")];
+                }
+            }];
+        } else {
+            [self initDataSource];
+            weakSelf.call = [[MEGASdkManager sharedMEGAChatSdk] chatCallForChatId:weakSelf.chatRoom.chatId];
+            weakSelf.incomingCallView.hidden = YES;
+            if (self.call.numParticipants >= kSmallPeersLayout) {
+                self.collectionView.alpha = 0;
+                [self.collectionActivity startAnimating];
+                [self initLocalUserFocused];
+            }
+            [self initDurationTimer];
+            [self initShowHideControls];
+            [self updateParticipants];
+            [self.collectionView reloadData];
+        }
+    }];
+    
+    [[MEGASdkManager sharedMEGAChatSdk] startChatCall:self.chatRoom.chatId enableVideo:self.videoCall delegate:startCallRequestDelegate];
+}
+
+- (void)startOutgoingCall {
+    __weak __typeof(self) weakSelf = self;
+    
+    MEGAChatStartCallRequestDelegate *startCallRequestDelegate = [[MEGAChatStartCallRequestDelegate alloc] initWithCompletion:^(MEGAChatError *error) {
+        if (error.type) {
+            [weakSelf dismissViewControllerAnimated:YES completion:nil];
+        } else {
+            weakSelf.call = [[MEGASdkManager sharedMEGAChatSdk] chatCallForChatId:weakSelf.chatRoom.chatId];
+            weakSelf.incomingCallView.hidden = YES;
+            
+            if (@available(iOS 10.0, *)) {
+                NSUUID *uuid = [[NSUUID alloc] init];
+                weakSelf.call.uuid = uuid;
+                [weakSelf.megaCallManager addCall:weakSelf.call];
+                
+                uint64_t peerHandle = [weakSelf.chatRoom peerHandleAtIndex:0];
+                NSString *peerEmail = [weakSelf.chatRoom peerEmailByHandle:peerHandle];
+                [weakSelf.megaCallManager startCall:weakSelf.call email:peerEmail];
+            }
+            
+            [self.collectionView reloadData];
+            [self playCallingSound];
+        }
+    }];
+    
+    [[MEGASdkManager sharedMEGAChatSdk] startChatCall:self.chatRoom.chatId enableVideo:self.videoCall delegate:startCallRequestDelegate];
+}
+
+- (void)showIncomingCall {
+    self.outgoingCallView.hidden = YES;
+    if (@available(iOS 10.0, *)) {
+        [self acceptCall:nil];
+    } else {
+        _call = [[MEGASdkManager sharedMEGAChatSdk] chatCallForChatId:self.chatRoom.chatId];
+    }
+    [self playCallingSound];
+}
+
 #pragma mark - MEGAChatCallDelegate
 
 - (void)onChatCallUpdate:(MEGAChatSdk *)api call:(MEGAChatCall *)call {
@@ -1021,10 +1068,7 @@
             
             [self.player play];
             
-            [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"groupCallLocalVideo"];
-            [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"groupCallLocalAudio"];
-            [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"groupCallSpeaker"];
-            [[NSUserDefaults standardUserDefaults] synchronize];
+            [self deleteActiveCallFlags];
             
             [self dismissViewControllerAnimated:YES completion:^{
                 [self enablePasscodeIfNeeded];
@@ -1041,13 +1085,8 @@
         MEGALogDebug(@"GROUPCALLACTIVITY MEGAChatCallChangeTypeSessionStatus with call participants: %tu and session status: %tu", call.numParticipants, chatSession.status);
         switch (chatSession.status) {
             case MEGAChatSessionStatusInitial: {
-                if (!self.timer.isValid) {
-                    [self.player stop];
-                    [self initDurationTimer];
-                    [self initShowHideControls];
-                    [self updateParticipants];
-                }
-                
+                [self configureInitialUI];
+
                 if (self.peersInCall.count == 6) {
                     [self.collectionActivity stopAnimating];
                     self.collectionView.alpha = 1;
