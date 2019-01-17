@@ -215,11 +215,12 @@
 }
 
 - (void)setBadgeValueForChats {
-    NSInteger unreadChats = ([MEGASdkManager sharedMEGAChatSdk] != nil) ? [[MEGASdkManager sharedMEGAChatSdk] unreadChats] : 0;
+    NSInteger unreadChats = [MEGASdkManager sharedMEGAChatSdk] ? [MEGASdkManager sharedMEGAChatSdk].unreadChats : 0;
+    NSInteger numCalls = [MEGASdkManager sharedMEGAChatSdk] ? [MEGASdkManager sharedMEGAChatSdk].numCalls : 0;
     
     NSString *badgeValue;
     if (@available(iOS 10.0, *)) {
-        badgeValue = unreadChats ? @"⦁" : nil;
+        badgeValue = unreadChats | numCalls ? @"⦁" : nil;
     } else {
         badgeValue = unreadChats ? [NSString stringWithFormat:@"%td", unreadChats] : nil;
     }
@@ -337,6 +338,7 @@
 
 - (void)onChatCallUpdate:(MEGAChatSdk *)api call:(MEGAChatCall *)call {
     MEGALogDebug(@"onChatCallUpdate %@", call);
+    [self setBadgeValueForChats];
     
     switch (call.status) {
         case MEGAChatCallStatusInitial:
