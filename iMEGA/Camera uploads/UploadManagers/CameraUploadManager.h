@@ -9,7 +9,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, readonly) NSUInteger uploadPendingItemsCount;
 
+/**
+ @return a singleton camera upload manager instance
+ */
 + (instancetype)shared;
+
+#pragma mark - camera upload management
 
 + (void)disableCameraUploadIfAccessProhibited;
 
@@ -21,9 +26,23 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)uploadNextForAsset:(PHAsset *)asset;
 
+#pragma mark - upload records collation
+
 - (void)collateUploadRecords;
 
+#pragma mark - photo library scan
+
 - (void)scanPhotoLibraryWithCompletion:(void (^)(void))completion;
+
+#pragma mark - background refresh
+
++ (void)enableBackgroundRefreshIfNeeded;
++ (void)disableBackgroundRefresh;
+
+#pragma mark - background upload
+
+- (void)startBackgroundUploadIfPossible;
+- (void)stopBackgroundUpload;
 
 @end
 

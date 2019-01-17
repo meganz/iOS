@@ -1,25 +1,15 @@
 
-#import "BackgroundUploadManager.h"
+#import "BackgroundUploadMonitor.h"
 #import "CameraUploadManager+Settings.h"
 @import CoreLocation;
 
-@interface BackgroundUploadManager () <CLLocationManagerDelegate>
+@interface BackgroundUploadMonitor () <CLLocationManagerDelegate>
 
 @property (strong, nonatomic) CLLocationManager *locationManager;
 
 @end
 
-@implementation BackgroundUploadManager
-
-+ (instancetype)shared {
-    static id sharedInstance = nil;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        sharedInstance = [[self alloc] init];
-    });
-    
-    return sharedInstance;
-}
+@implementation BackgroundUploadMonitor
 
 - (CLLocationManager *)locationManager {
     if (_locationManager == nil) {

@@ -7,7 +7,6 @@
 #import "CameraUploadManager+Settings.h"
 #import "DevicePermissionsHelper.h"
 #import "Helper.h"
-#import "BackgroundUploadManager.h"
 #import "CustomModalAlertViewController.h"
 @import CoreLocation;
 

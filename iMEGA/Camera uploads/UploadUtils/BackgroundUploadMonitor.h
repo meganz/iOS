@@ -3,9 +3,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface BackgroundUploadManager : NSObject
-
-+ (instancetype)shared;
+@interface BackgroundUploadMonitor : NSObject
 
 - (void)startBackgroundUploadIfPossible;
 - (void)stopBackgroundUpload;

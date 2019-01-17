@@ -1,7 +1,6 @@
 
 #import "CameraUploadManager+Settings.h"
 #import "CameraUploadManager.h"
-#import "BackgroundUploadManager.h"
 
 static NSString * const IsCameraUploadsEnabledKey = @"IsCameraUploadsEnabled";
 static NSString * const IsVideoUploadsEnabledKey = @"IsUploadVideosEnabled";
@@ -53,6 +52,7 @@ static NSString * const IsLocationBasedBackgroundUploadAllowedKey = @"IsLocation
             [self setConvertHEICPhoto:YES];
         }
         [CameraUploadManager.shared startCameraUploadIfNeeded];
+        [self enableBackgroundRefreshIfNeeded];
     } else {
         [self clearCameraSettings];
         [CameraUploadManager.shared stopCameraUpload];
@@ -132,9 +132,9 @@ static NSString * const IsLocationBasedBackgroundUploadAllowedKey = @"IsLocation
 + (void)setBackgroundUploadAllowed:(BOOL)backgroundUploadAllowed {
     [NSUserDefaults.standardUserDefaults setBool:backgroundUploadAllowed forKey:IsLocationBasedBackgroundUploadAllowedKey];
     if (backgroundUploadAllowed) {
-        [BackgroundUploadManager.shared startBackgroundUploadIfPossible];
+        [CameraUploadManager.shared startBackgroundUploadIfPossible];
     } else {
-        [BackgroundUploadManager.shared stopBackgroundUpload];
+        [CameraUploadManager.shared stopBackgroundUpload];
     }
 }
 

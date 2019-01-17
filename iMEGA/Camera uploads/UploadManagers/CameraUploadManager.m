@@ -11,7 +11,7 @@
 #import "MEGAConstants.h"
 #import "CameraUploadManager+Settings.h"
 #import "UploadRecordsCollator.h"
-#import "BackgroundUploadManager.h"
+#import "BackgroundUploadMonitor.h"
 @import Photos;
 
 static NSString * const CameraUploadsNodeHandle = @"CameraUploadsNodeHandle";
@@ -23,6 +23,8 @@ static const NSInteger MaxConcurrentPhotoOperationCountInMemoryWarning = 2;
 static const NSInteger ConcurrentVideoUploadCount = 1;
 static const NSInteger MaxConcurrentVideoOperationCount = 1;
 
+static const NSTimeInterval MinimumBackgroundRefreshInterval = 3600 * 2;
+
 @interface CameraUploadManager ()
 
 @property (strong, nonatomic) NSOperationQueue *photoUploadOerationQueue;
@@ -30,6 +32,7 @@ static const NSInteger MaxConcurrentVideoOperationCount = 1;
 @property (strong, nonatomic) MEGANode *cameraUploadNode;
 @property (strong, nonatomic) CameraScanner *scanner;
 @property (strong, nonatomic) UploadRecordsCollator *dataCollator;
+@property (strong, nonatomic) BackgroundUploadMonitor *backgroundUploadMonitor;
 
 @end
 
@@ -79,12 +82,22 @@ static const NSInteger MaxConcurrentVideoOperationCount = 1;
     [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(applicationDidReceiveMemoryWarning) name:UIApplicationDidReceiveMemoryWarningNotification object:nil];
 }
 
+#pragma mark - properties
+
 - (UploadRecordsCollator *)dataCollator {
     if (_dataCollator == nil) {
         _dataCollator = [[UploadRecordsCollator alloc] init];
     }
 
     return _dataCollator;
+}
+
+- (BackgroundUploadMonitor *)backgroundUploadMonitor {
+    if (_backgroundUploadMonitor == nil) {
+        _backgroundUploadMonitor = [[BackgroundUploadMonitor alloc] init];
+    }
+    
+    return _backgroundUploadMonitor;
 }
 
 #pragma mark - scan and upload
@@ -196,7 +209,8 @@ static const NSInteger MaxConcurrentVideoOperationCount = 1;
     [self stopVideoUpload];
     [self.photoUploadOerationQueue cancelAllOperations];
     [self.scanner unobservePhotoLibraryChanges];
-    [BackgroundUploadManager.shared stopBackgroundUpload];
+    [self.class disableBackgroundRefresh];
+    [self stopBackgroundUpload];
 }
 
 - (void)stopVideoUpload {
@@ -242,7 +256,9 @@ static const NSInteger MaxConcurrentVideoOperationCount = 1;
     switch (PHPhotoLibrary.authorizationStatus) {
         case PHAuthorizationStatusDenied:
         case PHAuthorizationStatusRestricted:
-            [self.class setCameraUploadEnabled:NO];
+            if ([self isCameraUploadEnabled]) {
+                [self setCameraUploadEnabled:NO];
+            }
             break;
         default:
             break;
@@ -253,6 +269,28 @@ static const NSInteger MaxConcurrentVideoOperationCount = 1;
 
 - (void)collateUploadRecords {
     [self.dataCollator collateUploadRecords];
+}
+
+#pragma mark - background refresh
+
++ (void)enableBackgroundRefreshIfNeeded {
+    if ([self isCameraUploadEnabled]) {
+        [UIApplication.sharedApplication setMinimumBackgroundFetchInterval:MinimumBackgroundRefreshInterval];
+    }
+}
+
++ (void)disableBackgroundRefresh {
+    [UIApplication.sharedApplication setMinimumBackgroundFetchInterval:UIApplicationBackgroundFetchIntervalNever];
+}
+
+#pragma mark - background upload
+
+- (void)startBackgroundUploadIfPossible {
+    [self.backgroundUploadMonitor startBackgroundUploadIfPossible];
+}
+
+- (void)stopBackgroundUpload {
+    [self.backgroundUploadMonitor stopBackgroundUpload];
 }
 
 #pragma mark - handle camera upload node
