@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.30.1" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="aAh-l2-z5Q">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="aAh-l2-z5Q">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.19.1"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -38,9 +38,10 @@
         <!--Navigation Controller-->
         <scene sceneID="95S-kL-tcJ">
             <objects>
-                <navigationController storyboardIdentifier="initialViewControllerID" automaticallyAdjustsScrollViewInsets="NO" navigationBarHidden="YES" id="aAh-l2-z5Q" customClass="MEGANavigationController" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="LoginNavigationControllerID" automaticallyAdjustsScrollViewInsets="NO" id="aAh-l2-z5Q" customClass="MEGANavigationController" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" translucent="NO" id="0CH-fW-Exe">
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <textAttributes key="titleTextAttributes">
                             <color key="textColor" red="0.12941177189350128" green="0.13333334028720856" blue="0.12941177189350128" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -77,18 +78,18 @@
             <objects>
                 <viewController storyboardIdentifier="LoginViewControllerID" id="y7g-EC-7mD" customClass="LoginViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="HNb-vZ-9Rz">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="megaThePrivacyCompanyLogo" translatesAutoresizingMaskIntoConstraints="NO" id="aOs-mq-CX2">
-                                <rect key="frame" x="102.5" y="108" width="170" height="54"/>
+                                <rect key="frame" x="102.5" y="88" width="170" height="54"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="54" id="1ph-wu-0iA"/>
                                     <constraint firstAttribute="width" constant="170" id="2ot-9H-7wh"/>
                                 </constraints>
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Cud-y6-Xtd" customClass="InputView">
-                                <rect key="frame" x="0.0" y="227" width="375" height="60"/>
+                                <rect key="frame" x="0.0" y="207" width="375" height="60"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="60" id="MtR-IB-gf8"/>
                                     <constraint firstAttribute="width" constant="622" id="d9g-rL-JsO"/>
@@ -109,7 +110,7 @@
                                 </variation>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NEs-0T-7bT" customClass="PasswordView">
-                                <rect key="frame" x="0.0" y="307" width="375" height="60"/>
+                                <rect key="frame" x="0.0" y="287" width="375" height="60"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="622" id="0XG-yA-VDl"/>
                                     <constraint firstAttribute="height" constant="60" id="qSP-AI-czH"/>
@@ -130,7 +131,7 @@
                                 </variation>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UnQ-C2-8bb">
-                                <rect key="frame" x="228" y="375" width="110" height="28"/>
+                                <rect key="frame" x="228" y="355" width="110" height="28"/>
                                 <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="13"/>
                                 <state key="normal" title="Forgot password?">
                                     <color key="titleColor" red="0.66666666666666663" green="0.66666666666666663" blue="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -140,14 +141,14 @@
                                 </connections>
                             </button>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="forgotPasswordQuestionMark" translatesAutoresizingMaskIntoConstraints="NO" id="Ssu-EP-cXE">
-                                <rect key="frame" x="346" y="383" width="12" height="12"/>
+                                <rect key="frame" x="346" y="363" width="12" height="12"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="12" id="4Su-XB-Yee"/>
                                     <constraint firstAttribute="width" constant="12" id="ind-kZ-OfL"/>
                                 </constraints>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EcF-LZ-UjW">
-                                <rect key="frame" x="43.5" y="515" width="288" height="50"/>
+                                <rect key="frame" x="43.5" y="518" width="288" height="50"/>
                                 <color key="backgroundColor" red="0.95294117647058818" green="0.047058823529411764" blue="0.078431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="288" id="mrn-qU-2pE"/>
@@ -166,25 +167,9 @@
                                     <action selector="tapLogin:" destination="y7g-EC-7mD" eventType="touchUpInside" id="a04-W6-hXS"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ety-kE-DRx">
-                                <rect key="frame" x="43.5" y="582" width="288" height="50"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="50" id="Gqt-mO-Jdw"/>
-                                    <constraint firstAttribute="width" constant="288" id="RmR-2c-kiZ"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="SFUIText-Semibold" family="SF UI Text" pointSize="17"/>
-                                <state key="normal" title="Create account">
-                                    <color key="titleColor" red="0.95294117647058818" green="0.047058823529411764" blue="0.078431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                </state>
-                                <connections>
-                                    <segue destination="Rh5-jO-s7B" kind="presentation" identifier="CreateAccountStoryboardSegueID" id="WKd-V4-5nl"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.9882352941176471" green="0.9882352941176471" blue="0.9882352941176471" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="heF-2Z-7lj" firstAttribute="bottom" secondItem="ety-kE-DRx" secondAttribute="bottom" constant="35" id="0W1-Ab-tCp"/>
-                            <constraint firstItem="ety-kE-DRx" firstAttribute="top" secondItem="EcF-LZ-UjW" secondAttribute="bottom" constant="17" id="4wN-rr-2HO"/>
                             <constraint firstItem="Cud-y6-Xtd" firstAttribute="centerX" secondItem="HNb-vZ-9Rz" secondAttribute="centerX" id="5GN-jr-1Vb"/>
                             <constraint firstItem="Cud-y6-Xtd" firstAttribute="leading" secondItem="heF-2Z-7lj" secondAttribute="leading" id="76J-eA-fKj"/>
                             <constraint firstItem="Ssu-EP-cXE" firstAttribute="leading" secondItem="UnQ-C2-8bb" secondAttribute="trailing" constant="8" id="J75-dC-VDJ"/>
@@ -192,6 +177,7 @@
                             <constraint firstItem="aOs-mq-CX2" firstAttribute="centerX" secondItem="HNb-vZ-9Rz" secondAttribute="centerX" id="NPg-Ze-aWV"/>
                             <constraint firstItem="EcF-LZ-UjW" firstAttribute="centerX" secondItem="HNb-vZ-9Rz" secondAttribute="centerX" id="Sn7-lh-sVR"/>
                             <constraint firstItem="NEs-0T-7bT" firstAttribute="leading" secondItem="heF-2Z-7lj" secondAttribute="leading" id="XiW-zA-Wex"/>
+                            <constraint firstItem="heF-2Z-7lj" firstAttribute="bottom" secondItem="EcF-LZ-UjW" secondAttribute="bottom" constant="35" id="c3s-0X-j7E"/>
                             <constraint firstItem="UnQ-C2-8bb" firstAttribute="centerY" secondItem="Ssu-EP-cXE" secondAttribute="centerY" id="diJ-V4-ZhZ"/>
                             <constraint firstItem="NEs-0T-7bT" firstAttribute="centerX" secondItem="HNb-vZ-9Rz" secondAttribute="centerX" id="gbz-1I-MCD"/>
                             <constraint firstItem="NEs-0T-7bT" firstAttribute="top" secondItem="Cud-y6-Xtd" secondAttribute="bottom" constant="20" id="mko-dX-ugn"/>
@@ -199,7 +185,6 @@
                             <constraint firstItem="Ssu-EP-cXE" firstAttribute="top" secondItem="NEs-0T-7bT" secondAttribute="bottom" constant="16" id="qUM-cn-kCe"/>
                             <constraint firstItem="Cud-y6-Xtd" firstAttribute="top" secondItem="aOs-mq-CX2" secondAttribute="bottom" constant="65" id="sgD-CE-x32"/>
                             <constraint firstItem="NEs-0T-7bT" firstAttribute="trailing" secondItem="Ssu-EP-cXE" secondAttribute="trailing" constant="17" id="tsX-Qb-X59"/>
-                            <constraint firstItem="ety-kE-DRx" firstAttribute="centerX" secondItem="HNb-vZ-9Rz" secondAttribute="centerX" id="v3e-LF-Jzh"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="heF-2Z-7lj"/>
                         <variation key="widthClass=regular">
@@ -212,9 +197,14 @@
                     <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
                     <navigationItem key="navigationItem" title="Login" id="5it-Nq-awd">
                         <barButtonItem key="backBarButtonItem" title=" " id="X3m-8I-usX"/>
+                        <barButtonItem key="rightBarButtonItem" title="Cancel" id="2nL-g4-dVf">
+                            <connections>
+                                <action selector="cancel:" destination="y7g-EC-7mD" id="suH-mo-96Q"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="createAccountButton" destination="ety-kE-DRx" id="Hlx-Wp-mN3"/>
+                        <outlet property="cancelBarButtonItem" destination="2nL-g4-dVf" id="3Oj-ZO-QYL"/>
                         <outlet property="emailInputView" destination="Cud-y6-Xtd" id="BeF-cI-CfR"/>
                         <outlet property="forgotPasswordButton" destination="UnQ-C2-8bb" id="sfk-E1-nda"/>
                         <outlet property="loginButton" destination="EcF-LZ-UjW" id="K0I-E4-okS"/>
@@ -768,7 +758,7 @@
         <!--Navigation Controller-->
         <scene sceneID="MTX-eK-g0d">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Rh5-jO-s7B" customClass="MEGANavigationController" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="CreateAccountNavigationControllerID" automaticallyAdjustsScrollViewInsets="NO" id="Rh5-jO-s7B" customClass="MEGANavigationController" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" translucent="NO" id="kSy-fZ-nhX">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>

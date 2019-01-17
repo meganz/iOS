@@ -35,6 +35,7 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *lastActiveLabel;
 @property (weak, nonatomic) IBOutlet UISwitch *lastActiveSwitch;
+@property (weak, nonatomic) IBOutlet UITableViewCell *timeAutoAwayCell;
 
 @end
 
@@ -102,6 +103,7 @@
     [self updateCurrentIndexPathForOnlineStatus];
     
     self.autoAwaySwitch.on = self.presenceConfig.isAutoAwayEnabled;
+    self.timeAutoAwayCell.hidden = !self.presenceConfig.isAutoAwayEnabled;
     [self updateAutoAwayTimeLabel];
     
     self.statusPersistenceSwitch.on = self.presenceConfig.isPersist;
@@ -244,11 +246,13 @@
             break;
             
         case 3:
-            if ((self.presenceConfig.autoAwayTimeout / 60) >= 2) {
-                titleForFooter = AMLocalizedString(@"showMeAwayAfterXMinutesOfInactivity", @"Footer text to explain the meaning of the functionaly Auto-away of your chat status.");
-                titleForFooter = [titleForFooter stringByReplacingOccurrencesOfString:@"[X]" withString:[NSString stringWithFormat:@"%lld", (self.presenceConfig.autoAwayTimeout / 60)]];
-            } else {
-                titleForFooter = AMLocalizedString(@"showMeAwayAfter1MinuteOfInactivity", @"Footer text to explain the meaning of the functionaly Auto-away of your chat status.");
+            if (self.presenceConfig.isAutoAwayEnabled) {
+                if ((self.presenceConfig.autoAwayTimeout / 60) >= 2) {
+                    titleForFooter = AMLocalizedString(@"showMeAwayAfterXMinutesOfInactivity", @"Footer text to explain the meaning of the functionaly Auto-away of your chat status.");
+                    titleForFooter = [titleForFooter stringByReplacingOccurrencesOfString:@"[X]" withString:[NSString stringWithFormat:@"%lld", (self.presenceConfig.autoAwayTimeout / 60)]];
+                } else {
+                    titleForFooter = AMLocalizedString(@"showMeAwayAfter1MinuteOfInactivity", @"Footer text to explain the meaning of the functionaly Auto-away of your chat status.");
+                }
             }
             break;
     }

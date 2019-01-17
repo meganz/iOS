@@ -1198,14 +1198,7 @@ static MEGAIndexer *indexer;
     
     [Helper deleteUserData];
     [Helper deleteMasterKey];
-    
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    UIViewController *viewController = [storyboard instantiateViewControllerWithIdentifier:@"initialViewControllerID"];
-    UIWindow *window = [[[UIApplication sharedApplication] delegate] window];
-    [UIView transitionWithView:window duration:0.5 options:(UIViewAnimationOptionTransitionCrossDissolve | UIViewAnimationOptionAllowAnimatedContent) animations:^{
-        [window setRootViewController:viewController];
-    } completion:nil];
-        
+            
     [Helper resetCameraUploadsSettings];
     [Helper resetUserData];
     
@@ -1337,6 +1330,8 @@ static MEGAIndexer *indexer;
     
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"TransfersPaused"];
     
+    [NSUserDefaults.standardUserDefaults removeObjectForKey:kIsCameraUploadsEnabled];
+    [NSUserDefaults.standardUserDefaults removeObjectForKey:kIsUploadVideosEnabled];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"IsSavePhotoToGalleryEnabled"];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"IsSaveVideoToGalleryEnabled"];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"ChatVideoQuality"];
@@ -1368,7 +1363,11 @@ static MEGAIndexer *indexer;
 
 + (void)deletePasscode {
     if ([LTHPasscodeViewController doesPasscodeExist]) {
-        [LTHPasscodeViewController deletePasscode];
+        if (LTHPasscodeViewController.sharedUser.isLockscreenPresent) {
+            [LTHPasscodeViewController deletePasscodeAndClose];
+        } else {
+            [LTHPasscodeViewController deletePasscode];
+        }
     }
 }
 

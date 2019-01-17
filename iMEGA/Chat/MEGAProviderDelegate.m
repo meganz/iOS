@@ -218,9 +218,6 @@
                 [UIApplication.mnz_presentingViewController presentViewController:callVC animated:YES completion:nil];
             }
         }
-        
-        
-        
         [action fulfill];
         [self disablePasscodeIfNeeded];
     } else {
