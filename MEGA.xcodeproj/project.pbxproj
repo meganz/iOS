@@ -723,7 +723,7 @@
 		B6C524DA21DEC20100AE3575 /* PHAsset+CameraUpload.m in Sources */ = {isa = PBXBuildFile; fileRef = B6C524D921DEC20100AE3575 /* PHAsset+CameraUpload.m */; };
 		B6C524DD21E2BC9900AE3575 /* AVAsset+CameraUpload.m in Sources */ = {isa = PBXBuildFile; fileRef = B6C524DC21E2BC9900AE3575 /* AVAsset+CameraUpload.m */; };
 		B6C524E021E3E00C00AE3575 /* AVURLAsset+CameraUpload.m in Sources */ = {isa = PBXBuildFile; fileRef = B6C524DF21E3E00C00AE3575 /* AVURLAsset+CameraUpload.m */; };
-		B6C524EC21E59DC700AE3575 /* BackgroundUploadManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B6C524EB21E59DC700AE3575 /* BackgroundUploadManager.m */; };
+		B6C524EC21E59DC700AE3575 /* BackgroundUploadMonitor.m in Sources */ = {isa = PBXBuildFile; fileRef = B6C524EB21E59DC700AE3575 /* BackgroundUploadMonitor.m */; };
 		B6CCC36621E6F67B00B68E2C /* VideoUploadsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B6CCC36521E6F67B00B68E2C /* VideoUploadsTableViewController.m */; };
 		B6CCC36921E800E400B68E2C /* VideoUploadsQualityTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B6CCC36821E800E400B68E2C /* VideoUploadsQualityTableViewController.m */; };
 		B6CCC36B21E8297F00B68E2C /* CameraUploadSettings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B6CCC36A21E8297F00B68E2C /* CameraUploadSettings.storyboard */; };
@@ -1683,8 +1683,8 @@
 		B6C524DC21E2BC9900AE3575 /* AVAsset+CameraUpload.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "AVAsset+CameraUpload.m"; sourceTree = "<group>"; };
 		B6C524DE21E3E00C00AE3575 /* AVURLAsset+CameraUpload.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AVURLAsset+CameraUpload.h"; sourceTree = "<group>"; };
 		B6C524DF21E3E00C00AE3575 /* AVURLAsset+CameraUpload.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "AVURLAsset+CameraUpload.m"; sourceTree = "<group>"; };
-		B6C524EA21E59DC700AE3575 /* BackgroundUploadManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BackgroundUploadManager.h; sourceTree = "<group>"; };
-		B6C524EB21E59DC700AE3575 /* BackgroundUploadManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BackgroundUploadManager.m; sourceTree = "<group>"; };
+		B6C524EA21E59DC700AE3575 /* BackgroundUploadMonitor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BackgroundUploadMonitor.h; sourceTree = "<group>"; };
+		B6C524EB21E59DC700AE3575 /* BackgroundUploadMonitor.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BackgroundUploadMonitor.m; sourceTree = "<group>"; };
 		B6CCC36421E6F67B00B68E2C /* VideoUploadsTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VideoUploadsTableViewController.h; sourceTree = "<group>"; };
 		B6CCC36521E6F67B00B68E2C /* VideoUploadsTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VideoUploadsTableViewController.m; sourceTree = "<group>"; };
 		B6CCC36721E800E400B68E2C /* VideoUploadsQualityTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VideoUploadsQualityTableViewController.h; sourceTree = "<group>"; };
@@ -3610,8 +3610,6 @@
 				B6BB128521A4B73C00C16277 /* AttributeUploadManager.m */,
 				B6E19B3B2180126500882F74 /* CameraUploadCompletionManager.h */,
 				B6E19B3C2180126500882F74 /* CameraUploadCompletionManager.m */,
-				B6C524EA21E59DC700AE3575 /* BackgroundUploadManager.h */,
-				B6C524EB21E59DC700AE3575 /* BackgroundUploadManager.m */,
 			);
 			path = UploadManagers;
 			sourceTree = "<group>";
@@ -3639,16 +3637,18 @@
 			isa = PBXGroup;
 			children = (
 				B693963C21C0ACF000B58F98 /* Categories */,
+				B686F45721866BB4009C0DAA /* CameraUploadRequestDelegate.h */,
+				B686F45821866BB4009C0DAA /* CameraUploadRequestDelegate.m */,
 				B6BD012021B7123B00E97086 /* UploadRecordsCollator.h */,
 				B6BD012121B7123B00E97086 /* UploadRecordsCollator.m */,
 				B6D9D7E7216AB0C700D7B08A /* CameraScanner.h */,
 				B6D9D7E8216AB0C700D7B08A /* CameraScanner.m */,
-				B686F45721866BB4009C0DAA /* CameraUploadRequestDelegate.h */,
-				B686F45821866BB4009C0DAA /* CameraUploadRequestDelegate.m */,
 				B6D11ADD219CE69300446B86 /* FileEncrypter.h */,
 				B6D11ADE219CE69300446B86 /* FileEncrypter.m */,
 				B658D3CD218FBC47004C0D64 /* UploadOperationFactory.h */,
 				B658D3CE218FBC47004C0D64 /* UploadOperationFactory.m */,
+				B6C524EA21E59DC700AE3575 /* BackgroundUploadMonitor.h */,
+				B6C524EB21E59DC700AE3575 /* BackgroundUploadMonitor.m */,
 			);
 			path = UploadUtils;
 			sourceTree = "<group>";
@@ -4247,7 +4247,7 @@
 				41D21E601D01AEC3002E6296 /* CTAssetScrollView.m in Sources */,
 				836B956F2063EADE003E279B /* SearchInPdfViewController.m in Sources */,
 				B6A4A11421A256B0007E7EEC /* MEGABackgroundTaskOperation.m in Sources */,
-				B6C524EC21E59DC700AE3575 /* BackgroundUploadManager.m in Sources */,
+				B6C524EC21E59DC700AE3575 /* BackgroundUploadMonitor.m in Sources */,
 				41D21E641D01AEC3002E6296 /* CTAssetsGridView.m in Sources */,
 				834AD6052024694200D2527F /* MGSwipeButton.m in Sources */,
 				4172795D1DB663FA001AC818 /* JSQMessagesTypingIndicatorFooterView.m in Sources */,

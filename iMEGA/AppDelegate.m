@@ -57,10 +57,8 @@
 #import "CameraUploadManager+Settings.h"
 #import "TransferSessionManager.h"
 #import "AttributeUploadManager.h"
-#import "BackgroundUploadManager.h"
 
 #define kFirstRun @"FirstRun"
-static const NSTimeInterval MinimumBackgroundRefreshInterval = 3600 * 2;
 static const NSTimeInterval BackgroundRefreshDuration = 25;
 
 @interface AppDelegate () <PKPushRegistryDelegate, UIApplicationDelegate, UNUserNotificationCenterDelegate, LTHPasscodeViewControllerDelegate, LaunchViewControllerDelegate, MEGAApplicationDelegate, MEGAChatDelegate, MEGAChatRequestDelegate, MEGAGlobalDelegate, MEGAPurchasePricingDelegate, MEGARequestDelegate, MEGATransferDelegate> {
@@ -110,15 +108,14 @@ static const NSTimeInterval BackgroundRefreshDuration = 25;
     NSLog(@"[App Lifecycle] Application will finish launching with options: %@", launchOptions);
     
     [CameraUploadManager disableCameraUploadIfAccessProhibited];
+    [CameraUploadManager enableBackgroundRefreshIfNeeded];
+    [CameraUploadManager.shared startBackgroundUploadIfPossible];
 
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         [AttributeUploadManager.shared scanLocalAttributeFilesAndRetryUploadIfNeeded];
         [TransferSessionManager.shared restoreAllSessions];
         [CameraUploadManager.shared collateUploadRecords];
     });
-    
-    [application setMinimumBackgroundFetchInterval:MinimumBackgroundRefreshInterval];
-    [BackgroundUploadManager.shared startBackgroundUploadIfPossible];
     
     return YES;
 }
