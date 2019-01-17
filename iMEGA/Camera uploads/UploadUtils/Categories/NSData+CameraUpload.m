@@ -3,30 +3,30 @@
 
 @implementation NSData (CameraUpload)
 
-- (NSData *)mnz_dataByStrippingOffGPSIfNeeded {
-    if (![self mnz_containsGPSInfo]) {
-        return self;
+- (BOOL)mnz_exportToURL:(NSURL *)URL shouldStripGPSInfo:(BOOL)shouldStripGPSInfo {
+    if (!shouldStripGPSInfo || (shouldStripGPSInfo && ![self mnz_containsGPSInfo])) {
+        return [self writeToURL:URL atomically:YES];
     }
     
-    return [self mnz_dataByConvertingToType:nil shouldStripGPSInfo:YES];
+    return [self mnz_exportToURL:URL imageType:nil shouldStripGPSInfo:shouldStripGPSInfo];
 }
 
-- (NSData *)mnz_dataByConvertingToType:(NSString *)imageUTIType shouldStripGPSInfo:(BOOL)shouldStripGPSInfo {
+- (BOOL)mnz_exportToURL:(NSURL *)URL imageType:(NSString *)imageUTIType shouldStripGPSInfo:(BOOL)shouldStripGPSInfo {
     NSDictionary *removeGPSDict = @{(__bridge NSString *)kCGImagePropertyGPSDictionary : (__bridge NSNull *)kCFNull};
-    return [self mnz_dataByConvertingToType:imageUTIType andAddingImageProperties:shouldStripGPSInfo ? @[removeGPSDict] : @[]];
+    return [self mnz_exportToURL:URL imageType:imageUTIType imageProperties:shouldStripGPSInfo ? @[removeGPSDict] : @[]];
 }
 
-- (NSData *)mnz_dataByConvertingToType:(NSString *)imageUTIType andAddingImageProperties:(NSArray <NSDictionary *> *)properties {
+- (BOOL)mnz_exportToURL:(NSURL *)URL imageType:(NSString *)imageUTIType imageProperties:(NSArray <NSDictionary *> *)properties {
+    BOOL isExportedSucceeded = NO;
+
     CGImageSourceRef source = CGImageSourceCreateWithData((__bridge CFDataRef)self, NULL);
     if (source) {
-        NSMutableData *mutableData = [NSMutableData data];
         CFStringRef type = (__bridge CFStringRef)imageUTIType;
         if (imageUTIType.length == 0) {
             type = CGImageSourceGetType(source);
         }
         size_t size = CGImageSourceGetCount(source);
-        CGImageDestinationRef destination = CGImageDestinationCreateWithData((__bridge CFMutableDataRef)mutableData, type, size, NULL);
-        
+        CGImageDestinationRef destination = CGImageDestinationCreateWithURL((__bridge CFURLRef)URL, type, size, NULL);
         if (destination) {
             for (size_t index = 0; index < size; index++) {
                 NSDictionary *property = nil;
@@ -40,19 +40,14 @@
                 CGImageDestinationAddImageFromSource(destination, source, index, (__bridge CFDictionaryRef)property);
             }
             
-            if (!CGImageDestinationFinalize(destination)) {
-                MEGALogDebug(@"[Camera Upload] image data without GPS created failed");
-            }
-            
+            isExportedSucceeded = CGImageDestinationFinalize(destination);
             CFRelease(destination);
         }
         
         CFRelease(source);
-        
-        return [mutableData copy];
-    } else {
-        return nil;
     }
+    
+    return isExportedSucceeded;
 }
 
 - (BOOL)mnz_containsGPSInfo {

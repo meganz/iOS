@@ -125,7 +125,7 @@
                 switch (session.status) {
                     case AVAssetExportSessionStatusCompleted:
                         MEGALogDebug(@"[Camera Upload] %@ has finished video compression", weakSelf);
-                        [weakSelf checkAndEncryptVideoFile];
+                        [weakSelf checkExistenceAndEncryptFileIfNeeded];
                         break;
                     case AVAssetExportSessionStatusCancelled:
                         MEGALogDebug(@"[Camera Upload] %@ video compression got cancelled", weakSelf);
@@ -154,18 +154,7 @@
         return;
     }
     
-    [self checkAndEncryptVideoFile];
-}
-
-- (void)checkAndEncryptVideoFile {
-    self.uploadInfo.fingerprint = [MEGASdkManager.sharedMEGASdk fingerprintForFilePath:self.uploadInfo.fileURL.path modificationTime:self.uploadInfo.asset.creationDate];
-    MEGANode *matchingNode = [MEGASdkManager.sharedMEGASdk nodeForFingerprint:self.uploadInfo.fingerprint parent:self.uploadInfo.parentNode];
-    if (matchingNode) {
-        [self finishUploadForFingerprintMatchedNode:matchingNode];
-        return;
-    }
-    
-    [self encryptsFile];
+    [self checkExistenceAndEncryptFileIfNeeded];
 }
 
 @end
