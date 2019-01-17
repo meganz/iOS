@@ -14,10 +14,12 @@ static NSString * const HEVCCodec = @"hvc1";
 - (BOOL)mnz_containsHEVCCodec {
     NSArray<AVAssetTrack *> *tracks = [self tracksWithMediaType:AVMediaTypeVideo];
     for (AVAssetTrack *track in tracks) {
-        CMFormatDescriptionRef desc = (__bridge CMFormatDescriptionRef)track.formatDescriptions.firstObject;
-        NSString *codec = FourCCString(CMFormatDescriptionGetMediaSubType(desc));
-        if ([[codec lowercaseString] isEqualToString:HEVCCodec]) {
-            return YES;
+        for (int i = 0; i < track.formatDescriptions.count; i++) {
+            CMFormatDescriptionRef desc = (__bridge CMFormatDescriptionRef)track.formatDescriptions[i];
+            NSString *codec = FourCCString(CMFormatDescriptionGetMediaSubType(desc));
+            if ([[codec lowercaseString] isEqualToString:HEVCCodec]) {
+                return YES;
+            }
         }
     }
     

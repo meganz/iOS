@@ -22,7 +22,7 @@
 }
 
 - (void)dealloc {
-    [[PHPhotoLibrary sharedPhotoLibrary] unregisterChangeObserver:self];
+    [self unobservePhotoLibraryChanges];
 }
 
 #pragma mark - camera scanning
