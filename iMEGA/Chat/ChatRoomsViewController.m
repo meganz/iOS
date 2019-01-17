@@ -6,6 +6,7 @@
 #import "UIScrollView+EmptyDataSet.h"
 #import "UIApplication+MNZCategory.h"
 
+#import "DevicePermissionsHelper.h"
 #import "Helper.h"
 #import "MEGANavigationController.h"
 #import "MEGAReachabilityManager.h"
@@ -124,6 +125,17 @@
     [[MEGAReachabilityManager sharedManager] retryPendingConnections];
     
     [self.tableView reloadData];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
+    NSInteger unreadChats = MEGASdkManager.sharedMEGAChatSdk ? MEGASdkManager.sharedMEGAChatSdk.unreadChats : 0;
+    if (unreadChats > 0) {
+        if ([DevicePermissionsHelper shouldAskForNotificationsPermissions]) {
+            [DevicePermissionsHelper modalNotificationsPermission];
+        }
+    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated {

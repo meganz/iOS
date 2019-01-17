@@ -17,7 +17,7 @@
 #import "MEGACopyRequestDelegate.h"
 #import "MEGAGetAttrUserRequestDelegate.h"
 #import "MEGAInviteContactRequestDelegate.h"
-#import "MEGAMessagesTypingIndicatorFoorterView.h"
+#import "MEGAMessagesTypingIndicatorFooterView.h"
 #import "MEGANode+MNZCategory.h"
 #import "MEGANodeList+MNZCategory.h"
 #import "MEGALinkManager.h"
@@ -56,7 +56,7 @@ const NSUInteger kMaxMessagesToLoad = 256;
 @interface MessagesViewController () <MEGAPhotoBrowserDelegate, JSQMessagesViewAccessoryButtonDelegate, JSQMessagesComposerTextViewPasteDelegate, MEGAChatDelegate, MEGAChatRequestDelegate, MEGARequestDelegate, MEGAChatCallDelegate>
 
 @property (nonatomic, strong) MEGAOpenMessageHeaderView *openMessageHeaderView;
-@property (nonatomic, strong) MEGAMessagesTypingIndicatorFoorterView *footerView;
+@property (nonatomic, strong) MEGAMessagesTypingIndicatorFooterView *footerView;
 
 @property (nonatomic, strong) NSMutableArray <MEGAChatMessage *> *messages;
 
@@ -661,21 +661,21 @@ const NSUInteger kMaxMessagesToLoad = 256;
 }
 
 - (void)startAudioVideoCall:(UIBarButtonItem *)sender {
-    [DevicePermissionsHelper audioPermissionWithCompletionHandler:^(BOOL granted) {
+    [DevicePermissionsHelper audioPermissionModal:YES forIncomingCall:NO withCompletionHandler:^(BOOL granted) {
         if (granted) {
             if (sender.tag) {
                 [DevicePermissionsHelper videoPermissionWithCompletionHandler:^(BOOL granted) {
                     if (granted) {
                         [self openCallViewWithVideo:sender.tag];
                     } else {
-                        [self presentViewController:DevicePermissionsHelper.videoPermissionAlertController animated:YES completion:nil];
+                        [DevicePermissionsHelper alertVideoPermissionWithCompletionHandler:nil];
                     }
                 }];
             } else {
                 [self openCallViewWithVideo:sender.tag];
             }
         } else {
-            [self presentViewController:DevicePermissionsHelper.audioPermissionAlertController animated:YES completion:nil];
+            [DevicePermissionsHelper alertAudioPermission];
         }
     }];
 }
@@ -765,7 +765,7 @@ const NSUInteger kMaxMessagesToLoad = 256;
     [self customiseCollectionViewLayout];
     
     [self.collectionView registerNib:[MEGAOpenMessageHeaderView nib] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:[MEGAOpenMessageHeaderView headerReuseIdentifier]];
-    [self.collectionView registerNib:[MEGAMessagesTypingIndicatorFoorterView nib] forSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:[MEGAMessagesTypingIndicatorFoorterView footerReuseIdentifier]];
+    [self.collectionView registerNib:MEGAMessagesTypingIndicatorFooterView.nib forSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:MEGAMessagesTypingIndicatorFooterView.footerReuseIdentifier];
     
     self.collectionView.accessoryDelegate = self;
     self.collectionView.backgroundColor = UIColor.whiteColor;
@@ -1614,49 +1614,22 @@ const NSUInteger kMaxMessagesToLoad = 256;
     switch (sender.tag) {
         case MEGAChatAccessoryButtonCamera: {
             self.inputToolbar.hidden = YES;
-            if ([AVCaptureDevice respondsToSelector:@selector(requestAccessForMediaType:completionHandler:)]) {
-                [AVCaptureDevice requestAccessForMediaType:AVMediaTypeVideo completionHandler:^(BOOL permissionGranted) {
-                    if (permissionGranted) {
-                        dispatch_async(dispatch_get_main_queue(), ^{
-                            [PHPhotoLibrary requestAuthorization:^(PHAuthorizationStatus status) {
-                                switch (status) {
-                                    case PHAuthorizationStatusAuthorized: {
-                                        dispatch_async(dispatch_get_main_queue(), ^{
-                                            [self showImagePickerForSourceType:UIImagePickerControllerSourceTypeCamera];
-                                        });
-                                        break;
-                                    }
-                                    
-                                    case PHAuthorizationStatusNotDetermined:
-                                    case PHAuthorizationStatusRestricted:
-                                    case PHAuthorizationStatusDenied:{
-                                        dispatch_async(dispatch_get_main_queue(), ^{
-                                            [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"isSaveMediaCapturedToGalleryEnabled"];
-                                            [[NSUserDefaults standardUserDefaults] synchronize];
-                                            [self showImagePickerForSourceType:UIImagePickerControllerSourceTypeCamera];
-                                        });
-                                        break;
-                                    }
-                                    
-                                    default:
-                                        break;
-                                }
-                            }];
-                        });
-                    } else {
-                        dispatch_async(dispatch_get_main_queue(), ^{
-                            UIAlertController *permissionsAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"attention", @"Alert title to attract attention") message:AMLocalizedString(@"cameraPermissions", @"Alert message to remember that MEGA app needs permission to use the Camera to take a photo or video and it doesn't have it") preferredStyle:UIAlertControllerStyleAlert];
-                            [permissionsAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
-                            
-                            [permissionsAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-                                [UIApplication.sharedApplication openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
-                            }]];
-                            
-                            [self presentViewController:permissionsAlertController animated:YES completion:nil];
-                        });
-                    }
-                }];
-            }
+            [DevicePermissionsHelper videoPermissionWithCompletionHandler:^(BOOL granted) {
+                if (granted) {
+                    [DevicePermissionsHelper photosPermissionWithCompletionHandler:^(BOOL granted) {
+                        if (granted) {
+                            [self showImagePickerForSourceType:UIImagePickerControllerSourceTypeCamera];
+                        } else {
+                            [NSUserDefaults.standardUserDefaults setBool:NO forKey:@"isSaveMediaCapturedToGalleryEnabled"];
+                            [NSUserDefaults.standardUserDefaults synchronize];
+                            [self showImagePickerForSourceType:UIImagePickerControllerSourceTypeCamera];
+                        }
+                    }];
+                } else {
+                    [DevicePermissionsHelper alertVideoPermissionWithCompletionHandler:nil];
+                    self.inputToolbar.hidden = NO;
+                }
+            }];
             
             break;
         }
@@ -1960,9 +1933,9 @@ const NSUInteger kMaxMessagesToLoad = 256;
 
 #pragma mark - Typing indicator
 
-- (MEGAMessagesTypingIndicatorFoorterView *)dequeueTypingIndicatorFooterViewForIndexPath:(NSIndexPath *)indexPath {
+- (MEGAMessagesTypingIndicatorFooterView *)dequeueTypingIndicatorFooterViewForIndexPath:(NSIndexPath *)indexPath {
     self.footerView = [self.collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionFooter
-                                                                                                 withReuseIdentifier:[MEGAMessagesTypingIndicatorFoorterView footerReuseIdentifier]
+                                                                                                 withReuseIdentifier:MEGAMessagesTypingIndicatorFooterView.footerReuseIdentifier
                                                                                                         forIndexPath:indexPath];
     [self setTypingIndicator];
     
@@ -2076,8 +2049,21 @@ const NSUInteger kMaxMessagesToLoad = 256;
                     if (message.isDeletable) return YES;
                 }
                 //TODO: Send Message
-            } else {
-                if (action == @selector(addContact:message:)) return YES;
+            }
+                        
+            if (action == @selector(addContact:message:)) {
+                if (message.usersCount == 1) {
+                    NSString *email = [message userEmailAtIndex:0];
+                    MEGAUser *user = [[MEGASdkManager sharedMEGASdk] contactForEmail:email];
+                    if (user.visibility != MEGAUserVisibilityVisible) return YES;
+                } else {
+                    for (NSInteger i = 0; i < message.usersCount; i++) {
+                        NSString *email = [message userEmailAtIndex:i];
+                        MEGAUser *user = [[MEGASdkManager sharedMEGASdk] contactForEmail:email];
+                        if (user.visibility == MEGAUserVisibilityVisible) return NO;
+                    }
+                    return YES;
+                }
             }
             break;
         }
@@ -2286,15 +2272,14 @@ const NSUInteger kMaxMessagesToLoad = 256;
         } else if (message.type == MEGAChatMessageTypeContact) {
             if (message.usersCount == 1) {
                 NSString *userEmail = [message userEmailAtIndex:0];
-                MEGAUser *user = [[MEGASdkManager sharedMEGASdk] contactForEmail:userEmail];
-                if ((user != nil) && (user.visibility == MEGAUserVisibilityVisible)) { //It's one of your contacts, open 'Contact Info' view
-                    ContactDetailsViewController *contactDetailsVC = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactDetailsViewControllerID"];
-                    contactDetailsVC.contactDetailsMode = ContactDetailsModeDefault;
-                    contactDetailsVC.userEmail          = userEmail;
-                    contactDetailsVC.userName           = [message userNameAtIndex:0];
-                    contactDetailsVC.userHandle         = [message userHandleAtIndex:0];
-                    [self.navigationController pushViewController:contactDetailsVC animated:YES];
-                }
+                NSString *userName = [message userNameAtIndex:0];
+                uint64_t userHandle = [message userHandleAtIndex:0];
+                ContactDetailsViewController *contactDetailsVC = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactDetailsViewControllerID"];
+                contactDetailsVC.contactDetailsMode = ContactDetailsModeDefault;
+                contactDetailsVC.userEmail          = userEmail;
+                contactDetailsVC.userName           = userName;
+                contactDetailsVC.userHandle         = userHandle;
+                [self.navigationController pushViewController:contactDetailsVC animated:YES];
             } else {
                 ChatAttachedContactsViewController *chatAttachedContactsVC = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"ChatAttachedContactsViewControllerID"];
                 chatAttachedContactsVC.message = message;

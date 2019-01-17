@@ -96,6 +96,10 @@
     }
     
     PHAsset *asset = fetchResult.firstObject;
+    if (asset == nil) {
+        return;
+    }
+    
     NSString *extension;
     
     if ([PHAssetResource assetResourcesForAsset:asset].count > 0) {

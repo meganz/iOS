@@ -23,6 +23,7 @@
 #import "CustomActionViewController.h"
 #import "NodeTableViewCell.h"
 #import "MainTabBarController.h"
+#import "OnboardingViewController.h"
 #import "LoginViewController.h"
 #import "LinkOption.h"
 #import "UnavailableLinkView.h"
@@ -34,8 +35,6 @@
     BOOL isFolderLinkNotValid;
     BOOL isValidatingDecryptionKey;
 }
-
-@property (weak, nonatomic) UILabel *navigationBarLabel;
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *closeBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *selectAllBarButtonItem;
@@ -208,13 +207,21 @@
 }
 
 - (void)setNavigationBarTitleLabel {
-    if (self.parentNode.name && !isFolderLinkNotValid) {
-        UILabel *label = [Helper customNavigationBarLabelWithTitle:self.parentNode.name subtitle:AMLocalizedString(@"folderLink", nil)];
-        label.frame = CGRectMake(0, 0, self.navigationItem.titleView.bounds.size.width, 44);
-        self.navigationBarLabel = label;
-        self.navigationItem.titleView = self.navigationBarLabel;
+    if (self.tableView.isEditing) {
+        self.navigationItem.titleView = nil;
+        if (self.selectedNodesArray.count == 0) {
+            self.navigationItem.title = AMLocalizedString(@"selectTitle", @"Title shown on the Camera Uploads section when the edit mode is enabled. On this mode you can select photos");
+        } else {
+            self.navigationItem.title= (self.selectedNodesArray.count == 1) ? [NSString stringWithFormat:AMLocalizedString(@"oneItemSelected", @"Title shown on the Camera Uploads section when the edit mode is enabled and you have selected one photo"), self.selectedNodesArray.count] : [NSString stringWithFormat:AMLocalizedString(@"itemsSelected", @"Title shown on the Camera Uploads section when the edit mode is enabled and you have selected more than one photo"), self.selectedNodesArray.count];
+        }
     } else {
-        self.navigationItem.title = AMLocalizedString(@"folderLink", nil);
+        if (self.parentNode.name && !isFolderLinkNotValid) {
+            UILabel *label = [Helper customNavigationBarLabelWithTitle:self.parentNode.name subtitle:AMLocalizedString(@"folderLink", nil)];
+            label.frame = CGRectMake(0, 0, self.navigationItem.titleView.bounds.size.width, 44);
+            self.navigationItem.titleView = label;
+        } else {
+            self.navigationItem.title = AMLocalizedString(@"folderLink", nil);
+        }
     }
 }
 
@@ -433,6 +440,8 @@
     
     [self setTableViewEditing:editing animated:YES];
     
+    [self setNavigationBarTitleLabel];
+
     [self setToolbarButtonsEnabled:!editing];
     
     if (editing) {
@@ -476,6 +485,8 @@
     }
     
     (self.selectedNodesArray.count == 0) ? [self setToolbarButtonsEnabled:NO] : [self setToolbarButtonsEnabled:YES];
+    
+    [self setNavigationBarTitleLabel];
     
     [_tableView reloadData];
 }
@@ -541,8 +552,7 @@
         }
         MEGALinkManager.selectedOption = LinkOptionDownloadFolderOrNodes;
         
-        LoginViewController *loginVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"LoginViewControllerID"];
-        [self.navigationController pushViewController:loginVC animated:YES];
+        [self.navigationController pushViewController:[OnboardingViewController instanciateOnboardingWithType:OnboardingTypeDefault] animated:YES];
     }
 }
 
@@ -553,7 +563,7 @@
             BrowserViewController *browserVC = navigationController.viewControllers.firstObject;
             [browserVC setBrowserAction:BrowserActionImportFromFolderLink];
             if (self.selectedNodesArray.count != 0) {
-                browserVC.selectedNodesArray = [NSArray arrayWithArray:_selectedNodesArray];
+                browserVC.selectedNodesArray = [NSArray arrayWithArray:self.selectedNodesArray];
             } else {
                 if (self.parentNode == nil) {
                     return;
@@ -574,8 +584,7 @@
         }
         MEGALinkManager.selectedOption = LinkOptionImportFolderOrNodes;
         
-        LoginViewController *loginVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"LoginViewControllerID"];
-        [self.navigationController pushViewController:loginVC animated:YES];
+        [self.navigationController pushViewController:[OnboardingViewController instanciateOnboardingWithType:OnboardingTypeDefault] animated:YES];
     }
     
     return;
@@ -671,6 +680,8 @@
     if (tableView.isEditing) {
         [_selectedNodesArray addObject:node];
         
+        [self setNavigationBarTitleLabel];
+
         [self setToolbarButtonsEnabled:YES];
         
         if ([_selectedNodesArray count] == [_nodeList.size integerValue]) {
@@ -719,6 +730,8 @@
                 [_selectedNodesArray removeObject:n];
             }
         }
+        
+        [self setNavigationBarTitleLabel];
         
         (self.selectedNodesArray.count == 0) ? [self setToolbarButtonsEnabled:NO] : [self setToolbarButtonsEnabled:YES];
         

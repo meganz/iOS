@@ -202,7 +202,7 @@
 
 - (void)setBadgeValueForMyAccount {
     int incomingContacts = [[MEGASdkManager sharedMEGASdk] incomingContactRequests].size.intValue;
-    NSUInteger unseenUserAlerts = [MEGASdkManager sharedMEGASdk].userAlertList.mnz_unseenCount;
+    NSUInteger unseenUserAlerts = [MEGASdkManager sharedMEGASdk].userAlertList.mnz_relevantUnseenCount;
     
     NSString *badgeValue;
     NSUInteger total = incomingContacts + unseenUserAlerts;
@@ -355,28 +355,22 @@
             break;
             
         case MEGAChatCallStatusRingIn: {
-            [DevicePermissionsHelper audioPermissionWithCompletionHandler:^(BOOL granted) {
+            [self.missedCallsDictionary setObject:call forKey:@(call.chatId)];
+            [DevicePermissionsHelper audioPermissionModal:YES forIncomingCall:YES withCompletionHandler:^(BOOL granted) {
                 if (granted) {
                     if (call.hasVideoInitialCall) {
                         [DevicePermissionsHelper videoPermissionWithCompletionHandler:^(BOOL granted) {
                             if (granted) {
-                                if (![self.missedCallsDictionary objectForKey:@(call.chatId)]) {
-                                    [self presentRingingCall:api call:[api chatCallForCallId:call.callId]];
-                                }
-                                [self.missedCallsDictionary setObject:call forKey:@(call.chatId)];
+                                [self presentRingingCall:api call:[api chatCallForCallId:call.callId]];
                             } else {
-                                [self presentViewController:DevicePermissionsHelper.videoPermissionAlertController animated:YES completion:nil];
+                                [DevicePermissionsHelper alertVideoPermissionWithCompletionHandler:nil];
                             }
                         }];
                     } else {
-        
-                        if (![self.missedCallsDictionary objectForKey:@(call.chatId)]) {
-                            [self presentRingingCall:api call:[api chatCallForCallId:call.callId]];
-                        }
-                        [self.missedCallsDictionary setObject:call forKey:@(call.chatId)];
+                        [self presentRingingCall:api call:[api chatCallForCallId:call.callId]];
                     }
                 } else {
-                    [self presentViewController:DevicePermissionsHelper.audioPermissionAlertController animated:YES completion:nil];
+                    [DevicePermissionsHelper alertAudioPermission];
                 }
             }];
             break;
