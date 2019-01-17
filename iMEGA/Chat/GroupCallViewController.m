@@ -86,10 +86,10 @@
         [self startOutgoingCall];
     } else  if (self.callType == CallTypeActive) {
         self.call = [[MEGASdkManager sharedMEGAChatSdk] chatCallForChatId:self.chatRoom.chatId];
-        if (self.call.sessions.size != 0) { //The call exists in karere and we are participating
-            [self instantiatePeersInCall];
-        } else { //The call exists in karere but we are not participating
+        if (self.call.status == MEGAChatCallStatusUserNoPresent) {
             [self joinActiveCall];
+        } else {
+            [self instantiatePeersInCall];
         }
     }
 }
