@@ -3,7 +3,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface NSData (ImageIO)
+@interface NSData (CameraUpload)
 
 /**
  Strip off GPS metadata from image EXIF if the image contains GPS metadata

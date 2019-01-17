@@ -10,13 +10,17 @@
     if (supportURL) {
         NSString *bundleId = [[NSBundle mainBundle] bundleIdentifier];
         uploadURL = [[supportURL URLByAppendingPathComponent:bundleId isDirectory:YES] URLByAppendingPathComponent:@"CameraUploads" isDirectory:YES];
-        NSError *error = nil;
-        if (![NSFileManager.defaultManager createDirectoryAtURL:uploadURL withIntermediateDirectories:YES attributes:nil error:&error]) {
-            MEGALogError(@"Create directory at url failed with error: %@", uploadURL);
-            return nil;
-        }
         
-        // TODO: exclude the path from iCloud backup/sync
+        BOOL isDirectory = false;
+        if(!([NSFileManager.defaultManager fileExistsAtPath:uploadURL.path isDirectory:&isDirectory] && isDirectory)) {
+            NSError *error = nil;
+            if (![NSFileManager.defaultManager createDirectoryAtURL:uploadURL withIntermediateDirectories:YES attributes:nil error:&error]) {
+                MEGALogError(@"Create directory at url failed with error: %@", uploadURL);
+                uploadURL = nil;
+            }
+            
+            [uploadURL setResourceValue:@(YES) forKey:NSURLIsExcludedFromBackupKey error:nil];
+        }
     }
     
     return uploadURL;

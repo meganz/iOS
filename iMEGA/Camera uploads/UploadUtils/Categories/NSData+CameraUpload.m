@@ -1,7 +1,7 @@
 
-#import "NSData+ImageIO.h"
+#import "NSData+CameraUpload.h"
 
-@implementation NSData (ImageIO)
+@implementation NSData (CameraUpload)
 
 - (NSData *)mnz_dataByStrippingOffGPSIfNeeded {
     if (![self mnz_containsGPSInfo]) {
