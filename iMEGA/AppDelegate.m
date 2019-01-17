@@ -103,7 +103,7 @@
 
 - (BOOL)application:(UIApplication *)application willFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     NSLog(@"[App Lifecycle] Application will finish launching with options: %@", launchOptions);
-    [CameraUploadManager configCameraUploadWhenAppLaunches];
+    [CameraUploadManager.shared configCameraUploadWhenAppLaunches];
     return YES;
 }
 

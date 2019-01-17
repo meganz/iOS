@@ -85,15 +85,15 @@ static const NSTimeInterval BackgroundRefreshDuration = 25;
     [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(applicationDidReceiveMemoryWarning) name:UIApplicationDidReceiveMemoryWarningNotification object:nil];
 }
 
-+ (void)configCameraUploadWhenAppLaunches {
-    [self disableCameraUploadIfAccessProhibited];
-    [self enableBackgroundRefreshIfNeeded];
-    [CameraUploadManager.shared startBackgroundUploadIfPossible];
+- (void)configCameraUploadWhenAppLaunches {
+    [CameraUploadManager disableCameraUploadIfAccessProhibited];
+    [CameraUploadManager enableBackgroundRefreshIfNeeded];
+    [self startBackgroundUploadIfPossible];
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         [AttributeUploadManager.shared scanLocalAttributeFilesAndRetryUploadIfNeeded];
         [TransferSessionManager.shared restoreAllSessions];
-        [CameraUploadManager.shared collateUploadRecords];
+        [self collateUploadRecords];
     });
 }
 
@@ -281,8 +281,8 @@ static const NSTimeInterval BackgroundRefreshDuration = 25;
     switch (PHPhotoLibrary.authorizationStatus) {
         case PHAuthorizationStatusDenied:
         case PHAuthorizationStatusRestricted:
-            if ([self isCameraUploadEnabled]) {
-                [self setCameraUploadEnabled:NO];
+            if (CameraUploadManager.isCameraUploadEnabled) {
+                CameraUploadManager.cameraUploadEnabled = NO;
             }
             break;
         default:
@@ -299,7 +299,7 @@ static const NSTimeInterval BackgroundRefreshDuration = 25;
 #pragma mark - background refresh
 
 + (void)enableBackgroundRefreshIfNeeded {
-    if ([self isCameraUploadEnabled]) {
+    if (CameraUploadManager.isCameraUploadEnabled) {
         [UIApplication.sharedApplication setMinimumBackgroundFetchInterval:MinimumBackgroundRefreshInterval];
     }
 }

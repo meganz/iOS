@@ -16,7 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - camera upload management
 
-+ (void)configCameraUploadWhenAppLaunches;
+- (void)configCameraUploadWhenAppLaunches;
 
 - (void)startCameraUploadIfNeeded;
 - (void)startVideoUploadIfNeeded;
