@@ -828,7 +828,11 @@
         cell.avatarImageView.accessibilityIgnoresInvertColors = YES;
     }
     
-    cell.activeCallImageView.hidden = ![[MEGASdkManager sharedMEGAChatSdk] hasCallInChatRoom:chatListItem.chatId];
+    if (chatListItem.isGroup) {
+        cell.activeCallImageView.hidden = ![[MEGASdkManager sharedMEGAChatSdk] hasCallInChatRoom:chatListItem.chatId];
+    } else {
+        cell.activeCallImageView.hidden = YES;
+    }
     
     return cell;
 }

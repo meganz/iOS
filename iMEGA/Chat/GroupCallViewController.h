@@ -12,4 +12,6 @@
 @property (nonatomic, strong) MEGAChatRoom *chatRoom;
 @property (nonatomic, strong) MEGAChatCall *call;
 
+- (void)tapOnVideoCallkitWhenDeviceIsLocked;
+
 @end
