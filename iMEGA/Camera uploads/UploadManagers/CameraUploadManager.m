@@ -90,6 +90,10 @@ static const NSInteger MaxConcurrentVideoOperationCount = 1;
 #pragma mark - scan and upload
 
 - (void)startCameraUploadIfNeeded {
+    if (!MEGASdkManager.sharedMEGASdk.isLoggedIn) {
+        return;
+    }
+    
     if (!self.class.isCameraUploadEnabled || self.photoUploadOerationQueue.operationCount > 0) {
         return;
     }
@@ -234,7 +238,7 @@ static const NSInteger MaxConcurrentVideoOperationCount = 1;
 
 #pragma mark - photos access permission check
 
-+ (void)disableCameraUploadIfNoAccess {
++ (void)disableCameraUploadIfAccessProhibited {
     switch (PHPhotoLibrary.authorizationStatus) {
         case PHAuthorizationStatusDenied:
         case PHAuthorizationStatusRestricted:

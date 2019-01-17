@@ -18,18 +18,14 @@ typedef enum : NSUInteger {
 
 /**
  return a NSError object for camera upload when there is no encough free space in device
- 
- @return error showing no enough free space
  */
-+ (NSError *)mnz_cameraUploadNoEnoughFreeSpaceError;
+@property (class, readonly) NSError *mnz_cameraUploadNoEnoughFreeSpaceError;
 
 
 /**
  return a NSError object for camera upload when a background task gets expired
-
- @return error showing background task expired
  */
-+ (NSError *)mnz_cameraUploadBackgroundTaskExpiredError;
+@property (class, readonly) NSError *mnz_cameraUploadBackgroundTaskExpiredError;
 
 @end
 
