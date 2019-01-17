@@ -12,6 +12,7 @@
 #import "CameraUploadManager+Settings.h"
 #import "UploadRecordsCollator.h"
 #import "BackgroundUploadMonitor.h"
+#import "TransferSessionManager.h"
 @import Photos;
 
 static NSString * const CameraUploadsNodeHandle = @"CameraUploadsNodeHandle";
@@ -24,6 +25,7 @@ static const NSInteger ConcurrentVideoUploadCount = 1;
 static const NSInteger MaxConcurrentVideoOperationCount = 1;
 
 static const NSTimeInterval MinimumBackgroundRefreshInterval = 3600 * 2;
+static const NSTimeInterval BackgroundRefreshDuration = 25;
 
 @interface CameraUploadManager ()
 
@@ -38,6 +40,8 @@ static const NSTimeInterval MinimumBackgroundRefreshInterval = 3600 * 2;
 
 @implementation CameraUploadManager
 
+#pragma mark - initilization
+
 + (instancetype)shared {
     static id sharedInstance = nil;
     static dispatch_once_t onceToken;
@@ -51,12 +55,11 @@ static const NSTimeInterval MinimumBackgroundRefreshInterval = 3600 * 2;
 - (instancetype)init {
     self = [super init];
     if (self) {
-        _scanner = [[CameraScanner alloc] init];
         [self initializeUploadOperationQueues];
         [self registerNotifications];
         
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            [[MEGASdkManager sharedMEGASdk] ensureMediaInfo];
+            [MEGASdkManager.sharedMEGASdk ensureMediaInfo];
         });
         
         [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(resetCameraUpload) name:MEGALogoutNotificationName object:nil];
@@ -82,6 +85,18 @@ static const NSTimeInterval MinimumBackgroundRefreshInterval = 3600 * 2;
     [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(applicationDidReceiveMemoryWarning) name:UIApplicationDidReceiveMemoryWarningNotification object:nil];
 }
 
++ (void)configCameraUploadWhenAppLaunches {
+    [self disableCameraUploadIfAccessProhibited];
+    [self enableBackgroundRefreshIfNeeded];
+    [CameraUploadManager.shared startBackgroundUploadIfPossible];
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        [AttributeUploadManager.shared scanLocalAttributeFilesAndRetryUploadIfNeeded];
+        [TransferSessionManager.shared restoreAllSessions];
+        [CameraUploadManager.shared collateUploadRecords];
+    });
+}
+
 #pragma mark - properties
 
 - (UploadRecordsCollator *)dataCollator {
@@ -100,14 +115,22 @@ static const NSTimeInterval MinimumBackgroundRefreshInterval = 3600 * 2;
     return _backgroundUploadMonitor;
 }
 
-#pragma mark - scan and upload
+- (CameraScanner *)scanner {
+    if (_scanner == nil) {
+        _scanner = [[CameraScanner alloc] init];
+    }
+    
+    return _scanner;
+}
+
+#pragma mark - camera upload management
 
 - (void)startCameraUploadIfNeeded {
     if (!MEGASdkManager.sharedMEGASdk.isLoggedIn) {
         return;
     }
     
-    if (!self.class.isCameraUploadEnabled || self.photoUploadOerationQueue.operationCount > 0) {
+    if (!CameraUploadManager.isCameraUploadEnabled || self.photoUploadOerationQueue.operationCount > 0) {
         return;
     }
     
@@ -125,22 +148,6 @@ static const NSTimeInterval MinimumBackgroundRefreshInterval = 3600 * 2;
     });
 }
 
-- (void)scanPhotoLibraryWithCompletion:(void (^)(void))completion {
-    NSMutableArray<NSNumber *> *mediaTypes = [NSMutableArray array];
-    
-    if ([self.class isCameraUploadEnabled]) {
-        [mediaTypes addObject:@(PHAssetMediaTypeImage)];
-        if ([self.class isVideoUploadEnabled]) {
-            [mediaTypes addObject:@(PHAssetMediaTypeVideo)];
-        }
-        
-        [self.scanner scanMediaTypes:mediaTypes completion:completion];
-    } else {
-        completion();
-        return;
-    }
-}
-
 - (void)uploadCamera {
     [self.scanner scanMediaTypes:@[@(PHAssetMediaTypeImage)] completion:^{
         [self.scanner observePhotoLibraryChanges];
@@ -151,7 +158,7 @@ static const NSTimeInterval MinimumBackgroundRefreshInterval = 3600 * 2;
 }
 
 - (void)startVideoUploadIfNeeded {
-    if (!([self.class isCameraUploadEnabled] && [self.class isVideoUploadEnabled])) {
+    if (!(CameraUploadManager.isCameraUploadEnabled && CameraUploadManager.isVideoUploadEnabled)) {
         return;
     }
     
@@ -165,11 +172,11 @@ static const NSTimeInterval MinimumBackgroundRefreshInterval = 3600 * 2;
 }
 
 - (void)uploadNextForAsset:(PHAsset *)asset {
-    if (![self.class isCameraUploadEnabled]) {
+    if (!CameraUploadManager.isCameraUploadEnabled) {
         return;
     }
     
-    if (asset.mediaType == PHAssetMediaTypeVideo && ![self.class isVideoUploadEnabled]) {
+    if (asset.mediaType == PHAssetMediaTypeVideo && !CameraUploadManager.isVideoUploadEnabled) {
         return;
     }
     
@@ -201,15 +208,15 @@ static const NSTimeInterval MinimumBackgroundRefreshInterval = 3600 * 2;
 #pragma mark - stop upload
 
 - (void)resetCameraUpload {
-    [self.class clearLocalSettings];
-    [self.class setCameraUploadEnabled:NO];
+    [CameraUploadManager clearLocalSettings];
+    CameraUploadManager.cameraUploadEnabled = NO;
 }
 
 - (void)stopCameraUpload {
     [self stopVideoUpload];
     [self.photoUploadOerationQueue cancelAllOperations];
     [self.scanner unobservePhotoLibraryChanges];
-    [self.class disableBackgroundRefresh];
+    [CameraUploadManager disableBackgroundRefresh];
     [self stopBackgroundUpload];
 }
 
@@ -222,9 +229,9 @@ static const NSTimeInterval MinimumBackgroundRefreshInterval = 3600 * 2;
 - (NSUInteger)uploadPendingItemsCount {
     NSUInteger pendingCount = 0;
     
-    if (self.class.isCameraUploadEnabled) {
+    if (CameraUploadManager.isCameraUploadEnabled) {
         NSArray<NSNumber *> *mediaTypes;
-        if (self.class.isVideoUploadEnabled) {
+        if (CameraUploadManager.isVideoUploadEnabled) {
             mediaTypes = @[@(PHAssetMediaTypeVideo), @(PHAssetMediaTypeImage)];
         } else {
             mediaTypes = @[@(PHAssetMediaTypeImage)];
@@ -234,6 +241,24 @@ static const NSTimeInterval MinimumBackgroundRefreshInterval = 3600 * 2;
     }
     
     return pendingCount;
+}
+
+#pragma mark - photo library scan
+
+- (void)scanPhotoLibraryWithCompletion:(void (^)(void))completion {
+    NSMutableArray<NSNumber *> *mediaTypes = [NSMutableArray array];
+    
+    if (CameraUploadManager.isCameraUploadEnabled) {
+        [mediaTypes addObject:@(PHAssetMediaTypeImage)];
+        if (CameraUploadManager.isVideoUploadEnabled) {
+            [mediaTypes addObject:@(PHAssetMediaTypeVideo)];
+        }
+        
+        [self.scanner scanMediaTypes:mediaTypes completion:completion];
+    } else {
+        completion();
+        return;
+    }
 }
 
 #pragma mark - handle app lifecycle
@@ -281,6 +306,26 @@ static const NSTimeInterval MinimumBackgroundRefreshInterval = 3600 * 2;
 
 + (void)disableBackgroundRefresh {
     [UIApplication.sharedApplication setMinimumBackgroundFetchInterval:UIApplicationBackgroundFetchIntervalNever];
+}
+
+- (void)performBackgroundRefreshWithCompletion:(void (^)(UIBackgroundFetchResult))completion {
+    if (CameraUploadManager.isCameraUploadEnabled) {
+        [self scanPhotoLibraryWithCompletion:^{
+            if (self.uploadPendingItemsCount == 0) {
+                completion(UIBackgroundFetchResultNoData);
+            } else {
+                [self startCameraUploadIfNeeded];
+                [NSTimer scheduledTimerWithTimeInterval:BackgroundRefreshDuration repeats:NO block:^(NSTimer * _Nonnull timer) {
+                    completion(UIBackgroundFetchResultNewData);
+                    if (self.uploadPendingItemsCount == 0) {
+                        completion(UIBackgroundFetchResultNoData);
+                    }
+                }];
+            }
+        }];
+    } else {
+        completion(UIBackgroundFetchResultNoData);
+    }
 }
 
 #pragma mark - background upload
