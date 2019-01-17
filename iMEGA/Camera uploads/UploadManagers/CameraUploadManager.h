@@ -11,7 +11,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (instancetype)shared;
 
-+ (void)disableCameraUploadIfNoAccess;
++ (void)disableCameraUploadIfAccessProhibited;
 
 - (void)startCameraUploadIfNeeded;
 - (void)startVideoUploadIfNeeded;

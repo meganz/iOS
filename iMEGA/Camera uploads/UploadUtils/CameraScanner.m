@@ -2,6 +2,7 @@
 #import "CameraScanner.h"
 #import "CameraUploadRecordManager.h"
 #import "MOAssetUploadRecord+CoreDataClass.h"
+#import "CameraUploadManager.h"
 
 @interface CameraScanner () <PHPhotoLibraryChangeObserver>
 
@@ -94,7 +95,8 @@
     self.fetchResult = changes.fetchResultAfterChanges;
     NSArray<PHAsset *> *newAssets = [changes insertedObjects];
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
-        [[CameraUploadRecordManager shared] saveAssets:newAssets error:nil];
+        [CameraUploadRecordManager.shared saveAssets:newAssets error:nil];
+        [CameraUploadManager.shared startCameraUploadIfNeeded];
     });
 }
 

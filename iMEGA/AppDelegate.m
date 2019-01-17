@@ -109,7 +109,7 @@ static const NSTimeInterval BackgroundRefreshDuration = 25;
 - (BOOL)application:(UIApplication *)application willFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     NSLog(@"[App Lifecycle] Application will finish launching with options: %@", launchOptions);
     
-    [CameraUploadManager disableCameraUploadIfNoAccess];
+    [CameraUploadManager disableCameraUploadIfAccessProhibited];
 
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         [AttributeUploadManager.shared scanLocalAttributeFilesAndRetryUploadIfNeeded];

@@ -12,17 +12,17 @@ typedef NS_ENUM(NSUInteger, CameraUploadVideoQuality) {
 
 @interface CameraUploadManager (Settings)
 
-@property (class, nonatomic, readonly) BOOL shouldShowCameraUploadBoardingScreen;
-@property (class, nonatomic, getter=isCameraUploadEnabled) BOOL cameraUploadEnabled;
-@property (class, nonatomic, getter=isVideoUploadEnabled) BOOL videoUploadEnabled;
-@property (class, nonatomic, getter=isCellularUploadAllowed) BOOL cellularUploadAllowed;
-@property (class, nonatomic, getter=isCellularUploadForVideosAllowed) BOOL cellularUploadForVideosAllowed;
-@property (class, nonatomic, getter=shouldConvertHEICPhoto) BOOL convertHEICPhoto;
-@property (class, nonatomic, getter=shouldConvertHEVCVideo) BOOL convertHEVCVideo;
-@property (class, nonatomic, getter=isBackgroundUploadAllowed) BOOL backgroundUploadAllowed;
-@property (class, nonatomic) CameraUploadVideoQuality HEVCToH264CompressionQuality;
+@property (class, readonly) BOOL shouldShowCameraUploadBoardingScreen;
+@property (class, getter=isCameraUploadEnabled) BOOL cameraUploadEnabled;
+@property (class, getter=isVideoUploadEnabled) BOOL videoUploadEnabled;
+@property (class, getter=isCellularUploadAllowed) BOOL cellularUploadAllowed;
+@property (class, getter=isCellularUploadForVideosAllowed) BOOL cellularUploadForVideosAllowed;
+@property (class, getter=shouldConvertHEICPhoto) BOOL convertHEICPhoto;
+@property (class, getter=shouldConvertHEVCVideo) BOOL convertHEVCVideo;
+@property (class, getter=isBackgroundUploadAllowed) BOOL backgroundUploadAllowed;
+@property (class) CameraUploadVideoQuality HEVCToH264CompressionQuality;
 
-@property (class, nonatomic, readonly) BOOL shouldShowPhotoAndVideoFormat;
+@property (class, readonly) BOOL shouldShowPhotoAndVideoFormat;
 
 + (void)clearLocalSettings;
 
