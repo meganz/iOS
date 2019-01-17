@@ -9,7 +9,7 @@
 #import "CameraUploadRecordManager.h"
 #import "CameraUploadManager.h"
 #import "CameraUploadRequestDelegate.h"
-#import "NSData+ImageIO.h"
+#import "NSData+CameraUpload.h"
 #import "CameraUploadManager+Settings.h"
 #import "PHAsset+CameraUpload.h"
 #import "MEGAConstants.h"

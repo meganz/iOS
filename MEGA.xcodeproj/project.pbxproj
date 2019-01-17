@@ -719,7 +719,7 @@
 		B6BD011F21B62D8E00E97086 /* CameraUploadManager+Settings.m in Sources */ = {isa = PBXBuildFile; fileRef = B6BD011E21B62D8E00E97086 /* CameraUploadManager+Settings.m */; };
 		B6BD012221B7123B00E97086 /* UploadRecordsCollator.m in Sources */ = {isa = PBXBuildFile; fileRef = B6BD012121B7123B00E97086 /* UploadRecordsCollator.m */; };
 		B6BD012521B71FB500E97086 /* NSURL+CameraUpload.m in Sources */ = {isa = PBXBuildFile; fileRef = B6BD012421B71FB500E97086 /* NSURL+CameraUpload.m */; };
-		B6C3FD4221B080B3006C70A2 /* NSData+ImageIO.m in Sources */ = {isa = PBXBuildFile; fileRef = B6C3FD4121B080B3006C70A2 /* NSData+ImageIO.m */; };
+		B6C3FD4221B080B3006C70A2 /* NSData+CameraUpload.m in Sources */ = {isa = PBXBuildFile; fileRef = B6C3FD4121B080B3006C70A2 /* NSData+CameraUpload.m */; };
 		B6C524DA21DEC20100AE3575 /* PHAsset+CameraUpload.m in Sources */ = {isa = PBXBuildFile; fileRef = B6C524D921DEC20100AE3575 /* PHAsset+CameraUpload.m */; };
 		B6C524DD21E2BC9900AE3575 /* AVAsset+CameraUpload.m in Sources */ = {isa = PBXBuildFile; fileRef = B6C524DC21E2BC9900AE3575 /* AVAsset+CameraUpload.m */; };
 		B6C524E021E3E00C00AE3575 /* AVURLAsset+CameraUpload.m in Sources */ = {isa = PBXBuildFile; fileRef = B6C524DF21E3E00C00AE3575 /* AVURLAsset+CameraUpload.m */; };
@@ -1675,8 +1675,8 @@
 		B6BD012121B7123B00E97086 /* UploadRecordsCollator.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UploadRecordsCollator.m; sourceTree = "<group>"; };
 		B6BD012321B71FB500E97086 /* NSURL+CameraUpload.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSURL+CameraUpload.h"; sourceTree = "<group>"; };
 		B6BD012421B71FB500E97086 /* NSURL+CameraUpload.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSURL+CameraUpload.m"; sourceTree = "<group>"; };
-		B6C3FD4021B080B3006C70A2 /* NSData+ImageIO.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSData+ImageIO.h"; sourceTree = "<group>"; };
-		B6C3FD4121B080B3006C70A2 /* NSData+ImageIO.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSData+ImageIO.m"; sourceTree = "<group>"; };
+		B6C3FD4021B080B3006C70A2 /* NSData+CameraUpload.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSData+CameraUpload.h"; sourceTree = "<group>"; };
+		B6C3FD4121B080B3006C70A2 /* NSData+CameraUpload.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSData+CameraUpload.m"; sourceTree = "<group>"; };
 		B6C524D821DEC20100AE3575 /* PHAsset+CameraUpload.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PHAsset+CameraUpload.h"; sourceTree = "<group>"; };
 		B6C524D921DEC20100AE3575 /* PHAsset+CameraUpload.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "PHAsset+CameraUpload.m"; sourceTree = "<group>"; };
 		B6C524DB21E2BC9900AE3575 /* AVAsset+CameraUpload.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AVAsset+CameraUpload.h"; sourceTree = "<group>"; };
@@ -3619,8 +3619,8 @@
 		B693963C21C0ACF000B58F98 /* Categories */ = {
 			isa = PBXGroup;
 			children = (
-				B6C3FD4021B080B3006C70A2 /* NSData+ImageIO.h */,
-				B6C3FD4121B080B3006C70A2 /* NSData+ImageIO.m */,
+				B6C3FD4021B080B3006C70A2 /* NSData+CameraUpload.h */,
+				B6C3FD4121B080B3006C70A2 /* NSData+CameraUpload.m */,
 				B6BD012321B71FB500E97086 /* NSURL+CameraUpload.h */,
 				B6BD012421B71FB500E97086 /* NSURL+CameraUpload.m */,
 				B6A4A11821A404DC007E7EEC /* NSError+CameraUpload.h */,
@@ -4300,7 +4300,7 @@
 				B68C42C5216D9D47003C5A50 /* MOAssetUploadRecord+CoreDataProperties.m in Sources */,
 				41EAAE4D1D06B49400622FAF /* UICollectionView+CTAssetsPickerController.m in Sources */,
 				41D21E6F1D01AEC3002E6296 /* CTAssetsPickerNoAssetsView.m in Sources */,
-				B6C3FD4221B080B3006C70A2 /* NSData+ImageIO.m in Sources */,
+				B6C3FD4221B080B3006C70A2 /* NSData+CameraUpload.m in Sources */,
 				A815FCEA1FE2AD080075AC29 /* UIApplication+MNZCategory.m in Sources */,
 				A802B1FA1FAB293700AC8BB0 /* MEGAChatBaseRequestDelegate.m in Sources */,
 				B60DDC1621A7A7930097E4A3 /* MEGAConstants.m in Sources */,
