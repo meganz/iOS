@@ -6,21 +6,24 @@ NS_ASSUME_NONNULL_BEGIN
 @interface NSData (CameraUpload)
 
 /**
- Strip off GPS metadata from image EXIF if the image contains GPS metadata
+ Export the image to an URL and with the option to strip off GPS info from image EXIF
 
- @return a new NSData object by stripping off GPS metadata. If the current data doesn't contain GPS metadata, it will be returned.
+ @param URL where you want to export your image data
+ @param shouldStripGPSInfo whether to strip off GPS info from EXIF
+ @return YES if the export succeeded, otherwise NO
  */
-- (NSData *)mnz_dataByStrippingOffGPSIfNeeded;
+- (BOOL)mnz_exportToURL:(NSURL *)URL shouldStripGPSInfo:(BOOL)shouldStripGPSInfo;
 
 
 /**
- Convert the data to a new image UTI type, and provide the ability to strip off GPS info from EXIF
+ Export the image to an URL and with the options to convert to another image type and strip off GPS info from image EXIF
 
+ @param URL where you want to export your image data
  @param imageUTIType new image data UTI type. If it is null, image type won't be converted.
  @param shouldStripGPSInfo whether to strip off GPS info from EXIF
- @return a new NSData object by converting to the given type, and the GPS info will be stripped off if `shouldStripGPSInfo` is YES.
+ @return YES if the export succeeded, otherwise NO
  */
-- (NSData *)mnz_dataByConvertingToType:(nullable NSString *)imageUTIType shouldStripGPSInfo:(BOOL)shouldStripGPSInfo;
+- (BOOL)mnz_exportToURL:(NSURL *)URL imageType:(nullable NSString *)imageUTIType shouldStripGPSInfo:(BOOL)shouldStripGPSInfo;
 
 
 /**

@@ -57,31 +57,26 @@
         [self finishUploadForFingerprintMatchedNode:matchingNode];
         return;
     }
-
-    NSString *fileExtension;
-    NSData *processedImageData;
-    if ([self shouldConvertToJPGForUTI:dataUTI]) {
-        processedImageData = [imageData mnz_dataByConvertingToType:(__bridge NSString *)kUTTypeJPEG shouldStripGPSInfo:YES];
-        fileExtension = MEGAJPGFileExtension;
-    } else {
-        processedImageData = [imageData mnz_dataByStrippingOffGPSIfNeeded];
-        fileExtension = [self.uploadInfo.asset mnz_fileExtensionFromAssetInfo:dataInfo];
-    }
     
-    self.uploadInfo.fingerprint = [[MEGASdkManager sharedMEGASdk] fingerprintForData:processedImageData modificationTime:self.uploadInfo.asset.creationDate];
-    matchingNode = [MEGASdkManager.sharedMEGASdk nodeForFingerprint:self.uploadInfo.fingerprint parent:self.uploadInfo.parentNode];
-    if (matchingNode) {
-        [self finishUploadForFingerprintMatchedNode:matchingNode];
-        return;
-    }
-    
-    self.uploadInfo.fileName = [self.uploadInfo.asset mnz_cameraUploadFileNameWithExtension:fileExtension];
-
-    if ([processedImageData writeToURL:self.uploadInfo.fileURL atomically:YES]) {
-        [self encryptsFile];
+    if ([self exportImageData:imageData dataUTI:dataUTI dataInfo:dataInfo] && [NSFileManager.defaultManager fileExistsAtPath:self.uploadInfo.fileURL.path]) {
+        [self checkExistenceAndEncryptFileIfNeeded];
     } else {
         [self finishOperationWithStatus:CameraAssetUploadStatusFailed shouldUploadNextAsset:YES];
     }
+}
+
+- (BOOL)exportImageData:(NSData *)imageData dataUTI:(NSString *)dataUTI dataInfo:(NSDictionary *)dataInfo {
+    BOOL isImageExportedSuccessfully = NO;
+    if ([self shouldConvertToJPGForUTI:dataUTI]) {
+        self.uploadInfo.fileName = [self.uploadInfo.asset mnz_cameraUploadFileNameWithExtension:MEGAJPGFileExtension];
+        isImageExportedSuccessfully = [imageData mnz_exportToURL:self.uploadInfo.fileURL imageType:(__bridge NSString *)kUTTypeJPEG shouldStripGPSInfo:YES];
+    } else {
+        NSString *fileExtension = [self.uploadInfo.asset mnz_fileExtensionFromAssetInfo:dataInfo];
+        self.uploadInfo.fileName = [self.uploadInfo.asset mnz_cameraUploadFileNameWithExtension:fileExtension];
+        isImageExportedSuccessfully = [imageData mnz_exportToURL:self.uploadInfo.fileURL shouldStripGPSInfo:YES];
+    }
+    
+    return isImageExportedSuccessfully;
 }
 
 - (BOOL)shouldConvertToJPGForUTI:(NSString *)dataUTI {
