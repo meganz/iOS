@@ -1240,10 +1240,10 @@ void uncaughtExceptionHandler(NSException *exception) {
     
     NSDictionary *cameraUploadsSettings = [[NSDictionary alloc] initWithContentsOfFile:v2PspPath];
     
-    if ([cameraUploadsSettings objectForKey:@"syncEnabled"]) {
+    if (cameraUploadsSettings[@"syncEnabled"]) {
         CameraUploadManager.cameraUploadEnabled = YES;
-        CameraUploadManager.cellularUploadAllowed = [cameraUploadsSettings objectForKey:@"cellEnabled"] != nil;
-        CameraUploadManager.videoUploadEnabled = [cameraUploadsSettings objectForKey:@"videoEnabled"] != nil;
+        CameraUploadManager.cellularUploadAllowed = cameraUploadsSettings[@"cellEnabled"] != nil;
+        CameraUploadManager.videoUploadEnabled = cameraUploadsSettings[@"videoEnabled"] != nil;
         [NSFileManager.defaultManager mnz_removeItemAtPath:v2PspPath];
     }
 }

@@ -306,6 +306,8 @@ static const CGFloat TableViewSectionHeaderFooterHiddenHeight = 0.1;
     }
 }
 
+#warning add localisation for all the new added texts
+
 //- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
 //    NSString *titleForHeader;
 //    if (section == 1) {
