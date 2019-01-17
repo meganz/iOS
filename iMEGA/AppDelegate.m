@@ -53,13 +53,10 @@
 #import "MEGAInviteContactRequestDelegate.h"
 #import "MEGALoginRequestDelegate.h"
 #import "MEGAShowPasswordReminderRequestDelegate.h"
-#import "CameraUploadManager.h"
 #import "CameraUploadManager+Settings.h"
 #import "TransferSessionManager.h"
-#import "AttributeUploadManager.h"
 
 #define kFirstRun @"FirstRun"
-static const NSTimeInterval BackgroundRefreshDuration = 25;
 
 @interface AppDelegate () <PKPushRegistryDelegate, UIApplicationDelegate, UNUserNotificationCenterDelegate, LTHPasscodeViewControllerDelegate, LaunchViewControllerDelegate, MEGAApplicationDelegate, MEGAChatDelegate, MEGAChatRequestDelegate, MEGAGlobalDelegate, MEGAPurchasePricingDelegate, MEGARequestDelegate, MEGATransferDelegate> {
     BOOL isAccountFirstLogin;
@@ -106,17 +103,7 @@ static const NSTimeInterval BackgroundRefreshDuration = 25;
 
 - (BOOL)application:(UIApplication *)application willFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     NSLog(@"[App Lifecycle] Application will finish launching with options: %@", launchOptions);
-    
-    [CameraUploadManager disableCameraUploadIfAccessProhibited];
-    [CameraUploadManager enableBackgroundRefreshIfNeeded];
-    [CameraUploadManager.shared startBackgroundUploadIfPossible];
-
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        [AttributeUploadManager.shared scanLocalAttributeFilesAndRetryUploadIfNeeded];
-        [TransferSessionManager.shared restoreAllSessions];
-        [CameraUploadManager.shared collateUploadRecords];
-    });
-    
+    [CameraUploadManager configCameraUploadWhenAppLaunches];
     return YES;
 }
 
@@ -626,23 +613,7 @@ static const NSTimeInterval BackgroundRefreshDuration = 25;
 
 - (void)application:(UIApplication *)application performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
     MEGALogDebug(@"[App Lifecycle] application perform background refresh");
-    if (CameraUploadManager.isCameraUploadEnabled) {
-        [CameraUploadManager.shared scanPhotoLibraryWithCompletion:^{
-            if (CameraUploadManager.shared.uploadPendingItemsCount == 0) {
-                completionHandler(UIBackgroundFetchResultNoData);
-            } else {
-                [CameraUploadManager.shared startCameraUploadIfNeeded];
-                [NSTimer scheduledTimerWithTimeInterval:BackgroundRefreshDuration repeats:NO block:^(NSTimer * _Nonnull timer) {
-                    completionHandler(UIBackgroundFetchResultNewData);
-                    if (CameraUploadManager.shared.uploadPendingItemsCount == 0) {
-                        completionHandler(UIBackgroundFetchResultNoData);
-                    }
-                }];
-            }
-        }];
-    } else {
-        completionHandler(UIBackgroundFetchResultNoData);
-    }
+    [CameraUploadManager.shared performBackgroundRefreshWithCompletion:completionHandler];
 }
 
 #pragma mark - Private

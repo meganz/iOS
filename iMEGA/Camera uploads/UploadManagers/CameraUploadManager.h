@@ -16,7 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - camera upload management
 
-+ (void)disableCameraUploadIfAccessProhibited;
++ (void)configCameraUploadWhenAppLaunches;
 
 - (void)startCameraUploadIfNeeded;
 - (void)startVideoUploadIfNeeded;
@@ -26,18 +26,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)uploadNextForAsset:(PHAsset *)asset;
 
-#pragma mark - upload records collation
-
-- (void)collateUploadRecords;
-
-#pragma mark - photo library scan
-
-- (void)scanPhotoLibraryWithCompletion:(void (^)(void))completion;
-
 #pragma mark - background refresh
 
 + (void)enableBackgroundRefreshIfNeeded;
 + (void)disableBackgroundRefresh;
+
+- (void)performBackgroundRefreshWithCompletion:(void (^)(UIBackgroundFetchResult))completion;
 
 #pragma mark - background upload
 
