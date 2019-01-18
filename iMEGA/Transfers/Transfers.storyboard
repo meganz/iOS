@@ -65,16 +65,15 @@
                                     </mask>
                                 </variation>
                             </view>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" allowsSelection="NO" allowsSelectionDuringEditing="YES" allowsMultipleSelectionDuringEditing="YES" rowHeight="60" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="Gol-pZ-yZD">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="60" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="Gol-pZ-yZD">
                                 <rect key="frame" x="0.0" y="44" width="375" height="510"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <color key="separatorColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="transferCell" id="qvn-pG-AKw" customClass="TransferTableViewCell">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="gray" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="transferCell" id="qvn-pG-AKw" customClass="TransferTableViewCell">
                                         <rect key="frame" x="0.0" y="22" width="375" height="60"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="qvn-pG-AKw" id="ZzS-S9-QPl">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="59.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="60"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="MZ1-3x-enq" userLabel="Icon Image View">
@@ -147,16 +146,25 @@
                                                         </button>
                                                     </subviews>
                                                 </stackView>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="n8l-gq-VES" userLabel="Separator View">
+                                                    <rect key="frame" x="60" y="59.5" width="315" height="0.5"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="0.5" id="x0S-7d-ldj"/>
+                                                    </constraints>
+                                                </view>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="TCE-dU-QPa" firstAttribute="leading" secondItem="MZ1-3x-enq" secondAttribute="trailing" constant="10" id="ASa-T7-04r"/>
                                                 <constraint firstItem="AGx-71-z6L" firstAttribute="top" secondItem="MZ1-3x-enq" secondAttribute="top" constant="2" id="CpX-Iy-dsC"/>
                                                 <constraint firstItem="D4t-OQ-tDW" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="RB2-CC-2Yl" secondAttribute="trailing" constant="10" id="EyB-OS-y8k"/>
                                                 <constraint firstItem="RB2-CC-2Yl" firstAttribute="top" secondItem="AGx-71-z6L" secondAttribute="bottom" id="Fy3-xX-eYz"/>
+                                                <constraint firstAttribute="bottom" secondItem="n8l-gq-VES" secondAttribute="bottom" id="HGK-8a-2pv"/>
                                                 <constraint firstItem="D4t-OQ-tDW" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="AGx-71-z6L" secondAttribute="trailing" constant="10" id="Hwl-QP-T5G"/>
                                                 <constraint firstAttribute="trailing" secondItem="D4t-OQ-tDW" secondAttribute="trailing" id="Q6y-ct-GfE"/>
+                                                <constraint firstItem="n8l-gq-VES" firstAttribute="leading" secondItem="TCE-dU-QPa" secondAttribute="leading" id="RqZ-p7-dMW"/>
                                                 <constraint firstItem="MZ1-3x-enq" firstAttribute="leading" secondItem="ZzS-S9-QPl" secondAttribute="leading" constant="10" id="YhX-OF-RWs"/>
                                                 <constraint firstItem="D4t-OQ-tDW" firstAttribute="centerY" secondItem="ZzS-S9-QPl" secondAttribute="centerY" id="buw-M5-HHa"/>
+                                                <constraint firstAttribute="trailing" secondItem="n8l-gq-VES" secondAttribute="trailing" id="ccC-5l-JZX"/>
                                                 <constraint firstItem="AGx-71-z6L" firstAttribute="leading" secondItem="MZ1-3x-enq" secondAttribute="trailing" constant="10" id="i1b-Sq-VcT"/>
                                                 <constraint firstAttribute="centerY" secondItem="MZ1-3x-enq" secondAttribute="centerY" id="lxn-5L-6cF"/>
                                                 <constraint firstItem="TCE-dU-QPa" firstAttribute="centerY" secondItem="RB2-CC-2Yl" secondAttribute="centerY" id="uCa-rr-Rwx"/>
@@ -172,6 +180,7 @@
                                             <outlet property="infoLabel" destination="RB2-CC-2Yl" id="O0n-Ug-qQy"/>
                                             <outlet property="nameLabel" destination="AGx-71-z6L" id="K3E-eu-zmM"/>
                                             <outlet property="pauseButton" destination="RJg-ce-LC1" id="XSc-wL-7Wu"/>
+                                            <outlet property="separatorView" destination="n8l-gq-VES" id="LsY-6u-v9I"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>

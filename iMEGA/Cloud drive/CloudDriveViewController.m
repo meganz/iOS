@@ -1,3 +1,4 @@
+
 #import "CloudDriveViewController.h"
 
 #import <AVFoundation/AVCaptureDevice.h>
@@ -13,6 +14,7 @@
 #import "UIApplication+MNZCategory.h"
 #import "UIImageView+MNZCategory.h"
 
+#import "DevicePermissionsHelper.h"
 #import "Helper.h"
 #import "MEGACreateFolderRequestDelegate.h"
 #import "MEGAMoveRequestDelegate.h"
@@ -47,7 +49,7 @@
 #import "CloudDriveCollectionViewController.h"
 #import "LayoutView.h"
 
-@interface CloudDriveViewController () <UINavigationControllerDelegate, UIDocumentPickerDelegate, UIDocumentMenuDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGADelegate, MEGARequestDelegate, CustomActionViewControllerDelegate, NodeInfoViewControllerDelegate, UITextFieldDelegate> {
+@interface CloudDriveViewController () <UINavigationControllerDelegate, UIDocumentPickerDelegate, UIDocumentMenuDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGADelegate, MEGARequestDelegate, CustomActionViewControllerDelegate, NodeInfoViewControllerDelegate, UITextFieldDelegate, UISearchControllerDelegate> {
     
     MEGAShareType lowShareType; //Control the actions allowed for node/nodes selected
 }
@@ -132,6 +134,8 @@
     self.nodesIndexPathMutableDictionary = [[NSMutableDictionary alloc] init];
     
     [self.view addGestureRecognizer:[[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPress:)]];
+    
+    self.searchController.delegate = self;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -192,6 +196,15 @@
     
     [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
         [self.cdTableView.tableView reloadEmptyDataSet];
+        if (self.searchController.active) {
+            if (UIDevice.currentDevice.iPad) {
+                if (self != UIApplication.mnz_visibleViewController) {
+                    [Helper resetSearchControllerFrame:self.searchController];
+                }
+            } else {
+                [Helper resetSearchControllerFrame:self.searchController];
+            }
+        }
     } completion:nil];
 }
 
@@ -801,11 +814,13 @@
         MEGAImagePickerController *imagePickerController = [[MEGAImagePickerController alloc] initToUploadWithParentNode:self.parentNode sourceType:sourceType];
         [self presentViewController:imagePickerController animated:YES completion:nil];
     } else {
-        [PHPhotoLibrary requestAuthorization:^(PHAuthorizationStatus status) {
-            dispatch_async(dispatch_get_main_queue(), ^{
+        [DevicePermissionsHelper photosPermissionWithCompletionHandler:^(BOOL granted) {
+            if (granted) {
                 MEGAAssetsPickerController *pickerViewController = [[MEGAAssetsPickerController alloc] initToUploadToCloudDriveWithParentNode:self.parentNode];
                 [self presentViewController:pickerViewController animated:YES completion:nil];
-            });
+            } else {
+                [DevicePermissionsHelper alertPhotosPermission];
+            }
         }];
     }
 }
@@ -973,50 +988,21 @@
     [uploadAlertController addAction:fromPhotosAlertAction];
     
     UIAlertAction *captureAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"capturePhotoVideo", @"Menu option from the `Add` section that allows the user to capture a video or a photo and upload it directly to MEGA.") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-        if ([AVCaptureDevice respondsToSelector:@selector(requestAccessForMediaType:completionHandler:)]) {
-            [AVCaptureDevice requestAccessForMediaType:AVMediaTypeVideo completionHandler:^(BOOL permissionGranted) {
-                if (permissionGranted) {
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        [PHPhotoLibrary requestAuthorization:^(PHAuthorizationStatus status) {
-                            switch (status) {
-                                case PHAuthorizationStatusAuthorized: {
-                                    dispatch_async(dispatch_get_main_queue(), ^{
-                                        [self showImagePickerForSourceType:UIImagePickerControllerSourceTypeCamera];
-                                    });
-                                    break;
-                                }
-                                
-                                case PHAuthorizationStatusNotDetermined:
-                                case PHAuthorizationStatusRestricted:
-                                case PHAuthorizationStatusDenied:{
-                                    dispatch_async(dispatch_get_main_queue(), ^{
-                                        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"isSaveMediaCapturedToGalleryEnabled"];
-                                        [[NSUserDefaults standardUserDefaults] synchronize];
-                                        [self showImagePickerForSourceType:UIImagePickerControllerSourceTypeCamera];
-                                    });
-                                    break;
-                                }
-                                
-                                default:
-                                    break;
-                            }
-                        }];
-                    });
-                } else {
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        UIAlertController *permissionsAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"attention", @"Alert title to attract attention") message:AMLocalizedString(@"cameraPermissions", @"Alert message to remember that MEGA app needs permission to use the Camera to take a photo or video and it doesn't have it") preferredStyle:UIAlertControllerStyleAlert];
-                        
-                        [permissionsAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
-                        
-                        [permissionsAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-                            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
-                        }]];
-                        
-                        [self presentViewController:permissionsAlertController animated:YES completion:nil];
-                    });
-                }
-            }];
-        }
+        [DevicePermissionsHelper videoPermissionWithCompletionHandler:^(BOOL granted) {
+            if (granted) {
+                [DevicePermissionsHelper photosPermissionWithCompletionHandler:^(BOOL granted) {
+                    if (granted) {
+                        [self showImagePickerForSourceType:UIImagePickerControllerSourceTypeCamera];
+                    } else {
+                        [NSUserDefaults.standardUserDefaults setBool:NO forKey:@"isSaveMediaCapturedToGalleryEnabled"];
+                        [NSUserDefaults.standardUserDefaults synchronize];
+                        [self showImagePickerForSourceType:UIImagePickerControllerSourceTypeCamera];
+                    }
+                }];
+            } else {
+                [DevicePermissionsHelper alertVideoPermissionWithCompletionHandler:nil];
+            }
+        }];
     }];
     [captureAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
     [uploadAlertController addAction:captureAlertAction];
@@ -1081,41 +1067,20 @@
     
     static BOOL alreadyPresented = NO;
     if (!alreadyPresented && ![[MEGASdkManager sharedMEGASdk] mnz_isProAccount]) {
-        MEGAAccountDetails *accountDetails = [[MEGASdkManager sharedMEGASdk] mnz_accountDetails];
-        double percentage = accountDetails.storageUsed.doubleValue / accountDetails.storageMax.doubleValue;
-        if (accountDetails && percentage > 0.95) { // +95% used storage
-            NSString *alertMessage = percentage < 1 ? AMLocalizedString(@"cloudDriveIsAlmostFull", @"Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are.") : AMLocalizedString(@"cloudDriveIsFull", @"A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text.");
-            alertMessage = [alertMessage mnz_removeWebclientFormatters];
-            NSString *maxStorage = [NSString stringWithFormat:@"%ld", (long)[[MEGAPurchase sharedInstance].pricing storageGBAtProductIndex:7]];
-            NSString *maxStorageTB = [NSString stringWithFormat:@"%ld", (long)[[MEGAPurchase sharedInstance].pricing storageGBAtProductIndex:7] / 1024];
-            alertMessage = [alertMessage stringByReplacingOccurrencesOfString:@"4096" withString:maxStorage];
-            alertMessage = [alertMessage stringByReplacingOccurrencesOfString:@"4" withString:maxStorageTB];
-            
-            CustomModalAlertViewController *customModalAlertVC = [[CustomModalAlertViewController alloc] init];
-            customModalAlertVC.modalPresentationStyle = UIModalPresentationOverCurrentContext;
-            customModalAlertVC.image = [UIImage imageNamed:@"storage_almost_full"];
-            customModalAlertVC.viewTitle = AMLocalizedString(@"upgradeAccount", @"Button title which triggers the action to upgrade your MEGA account level");
-            customModalAlertVC.detail = alertMessage;
-            customModalAlertVC.action = AMLocalizedString(@"seePlans", @"Button title to see the available pro plans in MEGA");
-            if ([[MEGASdkManager sharedMEGASdk] isAchievementsEnabled]) {
-                customModalAlertVC.bonus = AMLocalizedString(@"getBonus", @"Button title to see the available bonus");
+        NSDate *lastEncourageUpgradeDate = [[NSUserDefaults standardUserDefaults] objectForKey:@"lastEncourageUpgradeDate"];
+        if (lastEncourageUpgradeDate) {
+            NSInteger week = [[NSCalendar currentCalendar] components:NSCalendarUnitWeekOfYear
+                                                              fromDate:lastEncourageUpgradeDate
+                                                                toDate:[NSDate date]
+                                                               options:NSCalendarWrapComponents].weekOfYear;
+            if (week < 1) {
+                return;
             }
-            customModalAlertVC.dismiss = AMLocalizedString(@"dismiss", @"Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible).");
-            __weak typeof(CustomModalAlertViewController) *weakCustom = customModalAlertVC;
-            customModalAlertVC.completion = ^{
-                [weakCustom dismissViewControllerAnimated:YES completion:^{
-                    [self showUpgradeTVC];
-                }];
-            };
-            
-            [UIApplication.mnz_presentingViewController presentViewController:customModalAlertVC animated:YES completion:nil];
-            
+        }
+        MEGAAccountDetails *accountDetails = [[MEGASdkManager sharedMEGASdk] mnz_accountDetails];                
+        if (accountDetails && (arc4random_uniform(20) == 0)) { // 5 % of the times
+            [self showUpgradeTVC];
             alreadyPresented = YES;
-        } else {
-            if (accountDetails && (arc4random_uniform(20) == 0)) { // 5 % of the times
-                [self showUpgradeTVC];
-                alreadyPresented = YES;
-            }
         }
     }
 }
@@ -1124,7 +1089,7 @@
     if ([MEGAPurchase sharedInstance].products.count > 0) {
         UpgradeTableViewController *upgradeTVC = [[UIStoryboard storyboardWithName:@"MyAccount" bundle:nil] instantiateViewControllerWithIdentifier:@"UpgradeID"];
         MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:upgradeTVC];
-        
+        [[NSUserDefaults standardUserDefaults] setObject:[NSDate date] forKey:@"lastEncourageUpgradeDate"];
         [self presentViewController:navigationController animated:YES completion:nil];
     }
 }
@@ -1669,6 +1634,14 @@
         }
     }
     [self reloadData];
+}
+
+#pragma mark - UISearchControllerDelegate
+
+- (void)didPresentSearchController:(UISearchController *)searchController {
+    if (UIDevice.currentDevice.iPhoneDevice && UIDeviceOrientationIsLandscape(UIDevice.currentDevice.orientation)) {
+        [Helper resetSearchControllerFrame:searchController];
+    }
 }
 
 #pragma mark - UIDocumentPickerDelegate
