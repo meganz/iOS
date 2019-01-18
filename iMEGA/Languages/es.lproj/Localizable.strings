@@ -1676,6 +1676,16 @@
 "To disable the Rubbish-Bin Cleaning Scheduler or set a longer retention period, you need to subscribe to a PRO plan."="Para desactivar la limpieza automática de la papelera o establecer un período de retención más largo, hazte PRO.";
 /* Confirmation dialog for the button that logs the user out of all sessions except the current one. */
 "Do you want to close all other sessions? This will log you out on all other active sessions except the current one."="¿Quieres cerrar las demás sesiones? Te desconectarás de todas sesiones activas excepto la actual.";
+/* Message to inform the local user that someone has joined the current group call */
+"%@ joined the call."="%@ se ha unido a la llamada.";
+/* Message to inform the local user that someone has left the current group call */
+"%@ left the call."="%@ ha abandonado la llamada.";
+/* Message to inform the local user is having a bad quality network with someone in the current group call */
+"Poor conection."="Mala conexión.";
+/* Message shown in a chat room when there is an active group call */
+"There is an active group call. Tap to join."="Llamada de grupo en curso. Toca para unirte.";
+/* Message shown in a chat room for a group call in progress displaying the duration of the call */
+"Touch to return to call %@"="Toca para volver a la llamada %@";
 /* A button label which allows the users save images/videos in the Photos app. */
 "Save to Photos"="Guardar en Fotos";
 /* Text shown when starting the process to save a photo or video to Photos app */
@@ -1684,6 +1694,10 @@
 "Saved to Photos"="Guardado en Fotos";
 /* Text shown when an error occurs when trying to save a photo or video to Photos app */
 "Could not save Item"="El elemento no se ha podido guardar";
+/* Message show when a call cannot be established because there are too many participants in the group call */
+"Error. No more participants are allowed in this group call."="Error. No more participants are allowed in this group call.";
+/* Message show when a user cannot activate the video in a group call because the max number of videos has been reached */
+"Error. No more video are allowed in this group call."="Error. No more video are allowed in this group call.";
 /* Text shown for switching from thumbnail view to list view. */
 "List view"="Ver como lista";
 /* Text shown for switching from list view to thumbnail view. */
@@ -1770,6 +1784,10 @@
 "Your PRO membership plan will expire in 1 day."="Tu plan PRO caducará en 1 día.";
 /* The professional pricing plan which the user is currently on will expire in 5 days. The %1 is a placeholder for the number of days and should not be removed. */
 "Your PRO membership plan will expire in %1 days."="Tu plan PRO caducará en %1 días.";
+/* The professional pricing plan which the user was on expired one day ago. */
+"Your PRO membership plan expired 1 day ago"="Your PRO membership plan expired 1 day ago";
+/* The professional pricing plan which the user was on expired %1 days ago. The %1 is a placeholder for the number of days and should not be removed. */
+"Your PRO membership plan expired %1 days ago"="Your PRO membership plan expired %1 days ago";
 /* The text of a notification indicating that a file or folder has been taken down due to infringement or other reason. The %1 placeholder will be replaced with the text ‘file’ or ‘folder’. The %2 will be replaced with the name of the file or folder. */
 "Your publicly shared %1 (%2) has been taken down."="Tu  %1 (%2) que has compartido públicamente ha sido eliminado/a.";
 /* The text of a notification indicating that a file or folder that was taken down has now been restored due to a successful counter-notice. The %1 placeholder will be replaced with the text ‘file’ or ‘folder’. The %2 will be replaced with the name of the file or folder. */
