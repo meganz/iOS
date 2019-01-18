@@ -501,6 +501,7 @@
                                 }
                             }
                         }
+                        [self updateParticipants];
                     }
                 } else if (error.type == MEGAChatErrorTooMany) {
                     [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"Error. No more video are allowed in this group call.", @"Message show when a call cannot be established because there are too many video activated in the group call")];
@@ -634,7 +635,17 @@
 }
 
 - (void)updateParticipants {
-    self.participantsLabel.text = [NSString stringWithFormat:@"%tu/%tu", self.peersInCall.count, (unsigned long)self.chatRoom.peerCount + 1];
+    self.participantsLabel.text = [NSString stringWithFormat:@"%tu/6", [self participantsWithVideo]];
+}
+
+- (NSInteger)participantsWithVideo {
+    NSInteger videos = 0;
+    for (MEGAGroupCallPeer *peer in self.peersInCall) {
+        if (peer.video) {
+            videos = videos + 1;
+        }
+    }
+    return videos;
 }
 
 - (void)shouldChangeCallLayout {
@@ -982,6 +993,7 @@
                             self.peerTalkingMuteView.hidden = peerAVFlagsChanged.audio;
                             self.peerTalkingQualityView.hidden = peerAVFlagsChanged.networkQuality < 2;
                         }
+                        [self updateParticipants];
                     }
                     
                     if (peerAVFlagsChanged.audio != chatSessionWithAVFlags.hasAudio) {
