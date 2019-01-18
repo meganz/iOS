@@ -7,7 +7,8 @@
 #import "UIImageView+MNZCategory.h"
 
 #import <AVFoundation/AVFoundation.h>
-//#import <AudioToolbox/AudioToolbox.h>
+#import <AudioToolbox/AudioToolbox.h>
+#import <MediaPlayer/MediaPlayer.h>
 
 #import "LTHPasscodeViewController.h"
 
@@ -32,6 +33,7 @@
 @property (weak, nonatomic) IBOutlet UIView *incomingCallView;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *statusCallLabel;
+@property (weak, nonatomic) IBOutlet UIView *volumeView;
 
 @property (weak, nonatomic) IBOutlet UIImageView *remoteMicImageView;
 
@@ -110,6 +112,7 @@
     [[UIDevice currentDevice] setProximityMonitoringEnabled:!self.videoCall];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didSessionRouteChange:) name:AVAudioSessionRouteChangeNotification object:nil];
+    [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(didWirelessRoutesAvailableChange:) name:MPVolumeViewWirelessRoutesAvailableDidChangeNotification object:nil];
     
     self.nameLabel.text = [self.chatRoom peerFullnameAtIndex:0];
     
@@ -132,6 +135,11 @@
         [[MEGASdkManager sharedMEGAChatSdk] addChatLocalVideo:self.chatRoom.chatId delegate:self.localVideoImageView];
     }
     [[UIApplication sharedApplication] setIdleTimerDisabled:YES];
+    
+    MPVolumeView *volumeView = [[MPVolumeView alloc] initWithFrame:self.enableDisableSpeaker.bounds];
+    volumeView.showsVolumeSlider = NO;
+    [volumeView setRouteButtonImage:[UIImage imageNamed:@"audioSourceActive"] forState:UIControlStateNormal];
+    [self.volumeView addSubview:volumeView];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -201,6 +209,17 @@
         else {
             [self disableLoudspeaker];
         }
+    }
+}
+
+- (void)didWirelessRoutesAvailableChange:(NSNotification *)notification {
+    MPVolumeView* volumeView = (MPVolumeView*)notification.object;
+    if (volumeView.areWirelessRoutesAvailable) {
+        self.volumeView.hidden = NO;
+        self.enableDisableSpeaker.hidden = YES;
+    } else {
+        self.enableDisableSpeaker.hidden = NO;
+        self.volumeView.hidden = YES;
     }
 }
 
