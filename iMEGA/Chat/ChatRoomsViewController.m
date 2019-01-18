@@ -4,7 +4,9 @@
 #import "SVProgressHUD.h"
 #import "UIImage+GKContact.h"
 #import "UIScrollView+EmptyDataSet.h"
+#import "UIApplication+MNZCategory.h"
 
+#import "DevicePermissionsHelper.h"
 #import "Helper.h"
 #import "MEGANavigationController.h"
 #import "MEGAReachabilityManager.h"
@@ -23,7 +25,7 @@
 #import "GroupChatDetailsViewController.h"
 #import "MessagesViewController.h"
 
-@interface ChatRoomsViewController () <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAChatDelegate, UIScrollViewDelegate>
+@interface ChatRoomsViewController () <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAChatDelegate, UIScrollViewDelegate, UISearchControllerDelegate>
 
 @property (nonatomic) id<UIViewControllerPreviewing> previewingContext;
 
@@ -55,6 +57,7 @@
     self.tableView.emptyDataSetDelegate = self;
     
     self.searchController = [Helper customSearchControllerWithSearchResultsUpdaterDelegate:self searchBarDelegate:self];
+    self.searchController.delegate = self;
     self.tableView.tableHeaderView = self.searchController.searchBar;
     self.definesPresentationContext = YES;
     
@@ -123,6 +126,17 @@
     [self.tableView reloadData];
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
+    NSInteger unreadChats = MEGASdkManager.sharedMEGAChatSdk ? MEGASdkManager.sharedMEGAChatSdk.unreadChats : 0;
+    if (unreadChats > 0) {
+        if ([DevicePermissionsHelper shouldAskForNotificationsPermissions]) {
+            [DevicePermissionsHelper modalNotificationsPermission];
+        }
+    }
+}
+
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     
@@ -159,6 +173,15 @@
     
     [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
         [self.tableView reloadEmptyDataSet];
+        if (self.searchController.active) {
+            if (UIDevice.currentDevice.iPad) {
+                if (self != UIApplication.mnz_visibleViewController) {
+                    [Helper resetSearchControllerFrame:self.searchController];
+                }
+            } else {
+                [Helper resetSearchControllerFrame:self.searchController];
+            }
+        }
     } completion:nil];
 }
 
@@ -1031,6 +1054,14 @@
     
     [self updateChatIdIndexPathDictionary];
     [self.tableView reloadData];
+}
+
+#pragma mark - UISearchControllerDelegate
+
+- (void)didPresentSearchController:(UISearchController *)searchController {
+    if (UIDevice.currentDevice.iPhoneDevice && UIDeviceOrientationIsLandscape(UIDevice.currentDevice.orientation)) {
+        [Helper resetSearchControllerFrame:searchController];
+    }
 }
 
 #pragma mark - UIViewControllerPreviewingDelegate

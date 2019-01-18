@@ -31,16 +31,19 @@
 #import "NSString+MNZCategory.h"
 #import "NSURL+MNZCategory.h"
 #import "UIApplication+MNZCategory.h"
-
+#import "AchievementsViewController.h"
 #import "CallViewController.h"
 #import "ChatRoomsViewController.h"
 #import "CheckEmailAndFollowTheLinkViewController.h"
 #import "CloudDriveViewController.h"
 #import "ContactsViewController.h"
 #import "CustomModalAlertViewController.h"
+#import "InitialLaunchViewController.h"
 #import "LaunchViewController.h"
 #import "MainTabBarController.h"
 #import "MEGAAssetsPickerController.h"
+#import "OnboardingViewController.h"
+#import "ProductDetailViewController.h"
 #import "UpgradeTableViewController.h"
 
 #import "MEGAChatCreateChatGroupRequestDelegate.h"
@@ -57,11 +60,9 @@
 
 #define kFirstRun @"FirstRun"
 
-@interface AppDelegate () <PKPushRegistryDelegate, UIApplicationDelegate, UNUserNotificationCenterDelegate, LTHPasscodeViewControllerDelegate, MEGAApplicationDelegate, MEGAChatDelegate, MEGAChatRequestDelegate, MEGAGlobalDelegate, MEGAPurchasePricingDelegate, MEGARequestDelegate, MEGATransferDelegate> {
+@interface AppDelegate () <PKPushRegistryDelegate, UIApplicationDelegate, UNUserNotificationCenterDelegate, LTHPasscodeViewControllerDelegate, LaunchViewControllerDelegate, MEGAApplicationDelegate, MEGAChatDelegate, MEGAChatRequestDelegate, MEGAGlobalDelegate, MEGAPurchasePricingDelegate, MEGARequestDelegate, MEGATransferDelegate> {
     BOOL isAccountFirstLogin;
     BOOL isFetchNodesDone;
-    
-    BOOL isOverquota;
     
     BOOL isFirstFetchNodesRequestUpdate;
     NSTimer *timerAPI_EAGAIN;
@@ -71,8 +72,6 @@
 
 @property (nonatomic, strong) NSString *quickActionType;
 @property (nonatomic, strong) NSString *messageForSuspendedAccount;
-
-@property (nonatomic, strong) UIAlertController *overquotaAlertView;
 
 @property (nonatomic, strong) UIAlertController *API_ESIDAlertController;
 
@@ -98,6 +97,7 @@
 @property (nonatomic) NSMutableDictionary *backgroundTaskMutableDictionary;
 
 @property (nonatomic, getter=wasAppSuspended) BOOL appSuspended;
+@property (nonatomic, getter=isUpgradeVCPresented) BOOL upgradeVCPresented;
 
 @end
 
@@ -113,6 +113,8 @@
     [MEGASdk setLogLevel:MEGALogLevelFatal];
 #endif
     
+    self.window = [[UIWindow alloc] initWithFrame:UIScreen.mainScreen.bounds];
+
     [MEGASdk setLogToConsole:YES];
     
     [self migrateLocalCachesLocation];
@@ -255,7 +257,6 @@
         
         [self registerForVoIPNotifications];
         [self registerForNotifications];
-        [self requestCameraAndMicPermissions];
         
         isAccountFirstLogin = NO;
         
@@ -325,12 +326,14 @@
             }];
             createAccountRequestDelegate.resumeCreateAccount = YES;
             [[MEGASdkManager sharedMEGASdk] resumeCreateAccountWithSessionId:sessionId delegate:createAccountRequestDelegate];
+        } else {
+            self.window.rootViewController = [OnboardingViewController instanciateOnboardingWithType:OnboardingTypeDefault];
         }
     }
     
     if ([CameraUploads syncManager].isCameraUploadsEnabled) {
-        [PHPhotoLibrary requestAuthorization:^(PHAuthorizationStatus status) {
-            if (status == PHAuthorizationStatusDenied) {
+        [DevicePermissionsHelper photosPermissionWithCompletionHandler:^(BOOL granted) {
+            if (!granted) {
                 MEGALogInfo(@"Disable Camera Uploads");
                 [[CameraUploads syncManager] setIsCameraUploadsEnabled:NO];
             }
@@ -354,6 +357,7 @@
     
     MEGALogDebug(@"Application did finish launching with options %@", launchOptions);
     
+    [self.window makeKeyAndVisible];
     if (application.applicationState == UIApplicationStateActive) {
         UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
         [center removeAllDeliveredNotifications];
@@ -466,8 +470,8 @@
     }
 }
 
-- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
-    MEGALogDebug(@"Application open URL %@, source application %@", url, sourceApplication);
+- (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options {
+    MEGALogDebug(@"Application open URL %@", url);
     
     MEGALinkManager.linkURL = url;
     [self manageLink:url];
@@ -548,21 +552,21 @@
                         MEGAChatConnection chatConnection = [[MEGASdkManager sharedMEGAChatSdk] chatConnectionState:self.chatRoom.chatId];
                         MEGALogDebug(@"Chat %@ connection state: %ld", [MEGASdk base64HandleForUserHandle:self.chatRoom.chatId], (long)chatConnection);
                         if (chatConnection == MEGAChatConnectionOnline) {
-                            [DevicePermissionsHelper audioPermissionWithCompletionHandler:^(BOOL granted) {
+                            [DevicePermissionsHelper audioPermissionModal:YES forIncomingCall:NO withCompletionHandler:^(BOOL granted) {
                                 if (granted) {
                                     if (self.videoCall) {
                                         [DevicePermissionsHelper videoPermissionWithCompletionHandler:^(BOOL granted) {
                                             if (granted) {
                                                 [self performCall];
                                             } else {
-                                                [UIApplication.mnz_presentingViewController presentViewController:[DevicePermissionsHelper videoPermisionAlertController] animated:YES completion:nil];
+                                                [DevicePermissionsHelper alertVideoPermissionWithCompletionHandler:nil];
                                             }
                                         }];
                                     } else {
                                         [self performCall];
                                     }
                                 } else {
-                                    [UIApplication.mnz_presentingViewController presentViewController:[DevicePermissionsHelper audioPermisionAlertController] animated:YES completion:nil];
+                                    [DevicePermissionsHelper alertAudioPermission];
                                 }
                             }];
                         }
@@ -692,26 +696,6 @@
     [self.backgroundTaskMutableDictionary setObject:name forKey:[NSNumber numberWithUnsignedInteger:backgroundTaskIdentifier]];
 }
 
-- (void)showCameraUploadsPopUp {
-    MEGANavigationController *cameraUploadsNavigationController =[[UIStoryboard storyboardWithName:@"Photos" bundle:nil] instantiateViewControllerWithIdentifier:@"CameraUploadsPopUpNavigationControllerID"];
-    
-    [UIApplication.mnz_presentingViewController presentViewController:cameraUploadsNavigationController animated:YES completion:^{
-        isAccountFirstLogin = NO;
-        if (self.isNewAccount) {
-            if ([MEGAPurchase sharedInstance].products.count > 0) {
-                [self showChooseAccountType];
-            } else {
-                [[MEGAPurchase sharedInstance] setPricingsDelegate:self];
-                self.chooseAccountTypeLater = YES;
-            }
-            
-            self.newAccount = NO;
-        }
-        
-        [MEGALinkManager processSelectedOptionOnLink];
-    }];
-}
-
 - (void)manageLink:(NSURL *)url {
     if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
         if (![LTHPasscodeViewController doesPasscodeExist] && isFetchNodesDone) {
@@ -823,15 +807,6 @@
     }
 }
 
-- (void)showOverquotaAlert {
-    [self disableCameraUploads];
-    
-    if (!UIApplication.mnz_presentingViewController.presentedViewController || UIApplication.mnz_presentingViewController.presentedViewController != self.overquotaAlertView) {
-        isOverquota = YES;
-        [[MEGASdkManager sharedMEGASdk] getAccountDetails];
-    }
-}
-
 - (void)disableCameraUploads {
     if ([[CameraUploads syncManager] isCameraUploadsEnabled]) {
         MEGALogInfo(@"Disable Camera Uploads");
@@ -884,7 +859,18 @@
             }
             
             if (isAccountFirstLogin) {
-                [self showCameraUploadsPopUp];
+                isAccountFirstLogin = NO;
+                if (self.isNewAccount) {
+                    if (MEGAPurchase.sharedInstance.products.count > 0) {
+                        [self showChooseAccountType];
+                    } else {
+                        [MEGAPurchase.sharedInstance setPricingsDelegate:self];
+                        self.chooseAccountTypeLater = YES;
+                    }
+                    self.newAccount = NO;
+                }
+        
+                [MEGALinkManager processSelectedOptionOnLink];
             }
             
             [self showLink:MEGALinkManager.linkURL];
@@ -897,7 +883,6 @@
     if (isAccountFirstLogin) {
         [self registerForVoIPNotifications];
         [self registerForNotifications];
-        [self requestCameraAndMicPermissions];
     }
     
     [self openTabBasedOnNotificationMegatype];
@@ -905,6 +890,22 @@
     if (self.presentInviteContactVCLater) {
         [self presentInviteContactCustomAlertViewController];
     }
+}
+
+- (void)showOnboarding {
+    OnboardingViewController *onboardingVC = [OnboardingViewController instanciateOnboardingWithType:OnboardingTypeDefault];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        UIView *overlayView = [UIScreen.mainScreen snapshotViewAfterScreenUpdates:NO];
+        [onboardingVC.view addSubview:overlayView];
+        self.window.rootViewController = onboardingVC;
+        
+        [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
+            overlayView.alpha = 0;
+        } completion:^(BOOL finished) {
+            [overlayView removeFromSuperview];
+            [SVProgressHUD dismiss];
+        }];
+    });
 }
 
 - (void)openTabBasedOnNotificationMegatype {
@@ -942,40 +943,14 @@
 }
 
 - (void)registerForNotifications {
-    if (@available(iOS 10.0, *)) {
-        UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
-        center.delegate = self;
-        [center requestAuthorizationWithOptions:(UNAuthorizationOptionBadge | UNAuthorizationOptionSound | UNAuthorizationOptionAlert)
-                              completionHandler:^(BOOL granted, NSError * _Nullable error) {
-                                  if (!error) {
-                                      MEGALogInfo(@"Request notifications authorization succeeded");
-                                  }
-                                  if (granted) {
-                                      [self notificationsSettings];
-                                  }
-                              }];
-    } else {
-        [[UIApplication sharedApplication] registerUserNotificationSettings:[UIUserNotificationSettings
-                                                                             settingsForTypes:UIUserNotificationTypeAlert | UIUserNotificationTypeBadge |
-                                                                             UIUserNotificationTypeSound categories:nil]];
-    }
-}
-
-- (void)requestCameraAndMicPermissions {
-    [DevicePermissionsHelper audioPermissionWithCompletionHandler:nil];
-    [DevicePermissionsHelper videoPermissionWithCompletionHandler:nil];
-}
-
-- (void)notificationsSettings {
-    UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
-    [center getNotificationSettingsWithCompletionHandler:^(UNNotificationSettings *settings) {
-        MEGALogInfo(@"Notifications settings %@", settings);
-        if (settings.authorizationStatus == UNAuthorizationStatusAuthorized) {
-            dispatch_async(dispatch_get_main_queue(), ^(void) {
+    UNUserNotificationCenter.currentNotificationCenter.delegate = self;
+    if (!DevicePermissionsHelper.shouldAskForNotificationsPermissions) {
+        [DevicePermissionsHelper notificationsPermissionWithCompletionHandler:^(BOOL granted) {
+            if (granted) {
                 [[UIApplication sharedApplication] registerForRemoteNotifications];
-            });
-        }
-    }];
+            }
+        }];
+    }
 }
 
 - (void)migrateLocalCachesLocation {
@@ -1118,6 +1093,54 @@ void uncaughtExceptionHandler(NSException *exception) {
     
     [UIApplication.mnz_presentingViewController presentViewController:navigationController animated:YES completion:nil];
 }
+- (void)presentUpgradeViewControllerTitle:(NSString *)title detail:(NSString *)detail image:(UIImage *)image {
+    if (!self.isUpgradeVCPresented && ![UIApplication.mnz_visibleViewController isKindOfClass:UpgradeTableViewController.class] && ![UIApplication.mnz_visibleViewController isKindOfClass:ProductDetailViewController.class]) {
+        CustomModalAlertViewController *customModalAlertVC = [[CustomModalAlertViewController alloc] init];
+        customModalAlertVC.modalPresentationStyle = UIModalPresentationOverCurrentContext;
+        customModalAlertVC.image = image;
+        customModalAlertVC.viewTitle = title;
+        customModalAlertVC.detail = detail;
+        customModalAlertVC.action = AMLocalizedString(@"seePlans", @"Button title to see the available pro plans in MEGA");
+        if ([[MEGASdkManager sharedMEGASdk] isAchievementsEnabled]) {
+            customModalAlertVC.bonus = AMLocalizedString(@"getBonus", @"Button title to see the available bonus");
+        }
+        customModalAlertVC.dismiss = AMLocalizedString(@"dismiss", @"Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible).");
+        __weak typeof(CustomModalAlertViewController) *weakCustom = customModalAlertVC;
+        customModalAlertVC.completion = ^{
+            [weakCustom dismissViewControllerAnimated:YES completion:^{
+                self.upgradeVCPresented = NO;
+                if ([MEGAPurchase sharedInstance].products.count > 0) {
+                    UpgradeTableViewController *upgradeTVC = [[UIStoryboard storyboardWithName:@"MyAccount" bundle:nil] instantiateViewControllerWithIdentifier:@"UpgradeID"];
+                    MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:upgradeTVC];
+                    
+                    [UIApplication.mnz_presentingViewController presentViewController:navigationController animated:YES completion:nil];
+                } else {
+                    // Redirect to my account if the products are not available
+                    [self.mainTBC setSelectedIndex:4];
+                }
+            }];
+        };
+        
+        customModalAlertVC.onDismiss = ^{
+            [weakCustom dismissViewControllerAnimated:YES completion:^{
+                self.upgradeVCPresented = NO;
+            }];
+        };
+        
+        customModalAlertVC.onBonus = ^{
+            [weakCustom dismissViewControllerAnimated:YES completion:^{
+                self.upgradeVCPresented = NO;
+                AchievementsViewController *achievementsVC = [[UIStoryboard storyboardWithName:@"MyAccount" bundle:nil] instantiateViewControllerWithIdentifier:@"AchievementsViewControllerID"];
+                achievementsVC.enableCloseBarButton = YES;
+                UINavigationController *navigation = [[UINavigationController alloc] initWithRootViewController:achievementsVC];
+                [UIApplication.mnz_presentingViewController presentViewController:navigation animated:YES completion:nil];
+            }];
+        };
+        
+        self.upgradeVCPresented = YES;
+        [UIApplication.mnz_presentingViewController presentViewController:customModalAlertVC animated:YES completion:nil];
+    }
+}
 
 #pragma mark - Battery changed
 
@@ -1213,18 +1236,11 @@ void uncaughtExceptionHandler(NSException *exception) {
     NSDictionary *cameraUploadsSettings = [[NSDictionary alloc] initWithContentsOfFile:v2PspPath];
     
     if ([cameraUploadsSettings objectForKey:@"syncEnabled"]) {
-        [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:YES] forKey:kIsCameraUploadsEnabled];
-        
-        if ([cameraUploadsSettings objectForKey:@"cellEnabled"]) {
-            [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:YES] forKey:kIsUseCellularConnectionEnabled];
-        } else {
-            [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:NO] forKey:kIsUseCellularConnectionEnabled];
-        }
-        if ([cameraUploadsSettings objectForKey:@"videoEnabled"]) {
-            [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:YES] forKey:kIsUploadVideosEnabled];
-        } else {
-            [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:NO] forKey:kIsUploadVideosEnabled];
-        }
+        [NSUserDefaults.standardUserDefaults setObject:@1 forKey:kIsCameraUploadsEnabled];
+        BOOL cellEnabled = [cameraUploadsSettings objectForKey:@"cellEnabled"];
+        [NSUserDefaults.standardUserDefaults setObject:@(cellEnabled) forKey:kIsUseCellularConnectionEnabled];
+        BOOL videoEnabled = [cameraUploadsSettings objectForKey:@"videoEnabled"];
+        [NSUserDefaults.standardUserDefaults setObject:@(videoEnabled) forKey:kIsUploadVideosEnabled];
         
         [NSFileManager.defaultManager mnz_removeItemAtPath:v2PspPath];
     }
@@ -1359,6 +1375,12 @@ void uncaughtExceptionHandler(NSException *exception) {
     }
 }
 
+#pragma mark - LaunchViewControllerDelegate
+
+- (void)setupFinished {
+    [self showMainTabBar];
+}
+
 #pragma mark - MEGAPurchasePricingDelegate
 
 - (void)pricingsReady {
@@ -1479,6 +1501,28 @@ void uncaughtExceptionHandler(NSException *exception) {
             _messageForSuspendedAccount = event.text;
             break;
             
+        case EventStorage: {
+            if (event.number == StorageStateChange) {
+                [api getAccountDetails];
+            } else {
+                static BOOL alreadyPresented = NO;
+                if (!alreadyPresented && (event.number == StorageStateRed || event.number == StorageStateOrange)) {
+                    NSString *detail = event.number == StorageStateOrange ? AMLocalizedString(@"cloudDriveIsAlmostFull", @"Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are.") : AMLocalizedString(@"cloudDriveIsFull", @"A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text.");
+                    detail = [detail mnz_removeWebclientFormatters];
+                    NSString *maxStorage = [NSString stringWithFormat:@"%ld", (long)[[MEGAPurchase sharedInstance].pricing storageGBAtProductIndex:7]];
+                    NSString *maxStorageTB = [NSString stringWithFormat:@"%ld", (long)[[MEGAPurchase sharedInstance].pricing storageGBAtProductIndex:7] / 1024];
+                    detail = [detail stringByReplacingOccurrencesOfString:@"4096" withString:maxStorage];
+                    detail = [detail stringByReplacingOccurrencesOfString:@"4" withString:maxStorageTB];
+                    alreadyPresented = YES;
+                    NSString *title = AMLocalizedString(@"upgradeAccount", @"Button title which triggers the action to upgrade your MEGA account level");
+                    UIImage *image = event.number == StorageStateOrange ? [UIImage imageNamed:@"storage_almost_full"] : [UIImage imageNamed:@"storage_full"];
+                    [self presentUpgradeViewControllerTitle:title detail:detail image:image];
+                }
+            }
+        }
+            
+            break;
+            
         default:
             break;
     }
@@ -1546,6 +1590,7 @@ void uncaughtExceptionHandler(NSException *exception) {
             case MEGAErrorTypeApiEArgs: {
                 if ([request type] == MEGARequestTypeLogin) {
                     [Helper logout];
+                    [self showOnboarding];
                 }
                 break;
             }
@@ -1553,6 +1598,7 @@ void uncaughtExceptionHandler(NSException *exception) {
             case MEGAErrorTypeApiESid: {                                
                 if (MEGALinkManager.urlType == URLTypeCancelAccountLink) {
                     [Helper logout];
+                    [self showOnboarding];
                     
                     UIAlertController *accountCanceledSuccessfullyAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"accountCanceledSuccessfully", @"During account cancellation (deletion)") message:nil preferredStyle:UIAlertControllerStyleAlert];
                     [accountCanceledSuccessfullyAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", @"Button title to accept something") style:UIAlertActionStyleCancel handler:nil]];
@@ -1568,6 +1614,7 @@ void uncaughtExceptionHandler(NSException *exception) {
                         [self.API_ESIDAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
                         [UIApplication.mnz_presentingViewController presentViewController:self.API_ESIDAlertController animated:YES completion:nil];
                         [Helper logout];
+                        [self showOnboarding];
                     }
                 }
                 break;
@@ -1575,7 +1622,11 @@ void uncaughtExceptionHandler(NSException *exception) {
                 
             case MEGAErrorTypeApiEgoingOverquota:
             case MEGAErrorTypeApiEOverQuota: {
-                [self showOverquotaAlert];
+                NSString *title = AMLocalizedString(@"upgradeAccount", @"Button title which triggers the action to upgrade your MEGA account level");
+                NSString *detail = AMLocalizedString(@"This action can not be completed as it would take you over your current storage limit", @"Error message shown to user when a copy/import operation would take them over their storage limit.");
+                UIImage *image = [api mnz_accountDetails].storageMax.longLongValue > [api mnz_accountDetails].storageUsed.longLongValue ? [UIImage imageNamed:@"storage_almost_full"] : [UIImage imageNamed:@"storage_full"];
+                [self presentUpgradeViewControllerTitle:title detail:detail image:image];
+                
                 break;
             }
                 
@@ -1690,8 +1741,11 @@ void uncaughtExceptionHandler(NSException *exception) {
                     [[[NSUserDefaults alloc] initWithSuiteName:@"group.mega.ios"] setBool:YES forKey:@"IsChatEnabled"];
                 }
             }
-            [self showMainTabBar];
-
+            
+            if (!isAccountFirstLogin) {
+                [self showMainTabBar];
+            }
+            
             NSUserDefaults *sharedUserDefaults = [[NSUserDefaults alloc] initWithSuiteName:@"group.mega.ios"];
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
                 if (![sharedUserDefaults boolForKey:@"treeCompleted"]) {
@@ -1704,7 +1758,6 @@ void uncaughtExceptionHandler(NSException *exception) {
                 }
             });
             
-            isOverquota = NO;
             [[MEGASdkManager sharedMEGASdk] getAccountDetails];
             [self copyDatabasesForExtensions];
             [[NSUserDefaults standardUserDefaults] setBool:[api appleVoipPushEnabled] forKey:@"VoIP_messages"];
@@ -1714,7 +1767,8 @@ void uncaughtExceptionHandler(NSException *exception) {
             
         case MEGARequestTypeLogout: {            
             [Helper logout];
-            [SVProgressHUD dismiss];
+            [self showOnboarding];
+            
             [[MEGASdkManager sharedMEGASdk] mnz_setAccountDetails:nil];
             
             if (self.messageForSuspendedAccount) {
@@ -1725,28 +1779,9 @@ void uncaughtExceptionHandler(NSException *exception) {
             break;
         }
             
-        case MEGARequestTypeAccountDetails: {
-            
+        case MEGARequestTypeAccountDetails:
             [[MEGASdkManager sharedMEGASdk] mnz_setAccountDetails:[request megaAccountDetails]];
-            
-            if (isOverquota) {
-                NSString *overquotaMessage = [[request megaAccountDetails] type] > MEGAAccountTypeFree ? AMLocalizedString(@"quotaExceeded", nil) : AMLocalizedString(@"overquotaAlert_message", nil);
-                self.overquotaAlertView = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"overquotaAlert_title", nil) message:overquotaMessage preferredStyle:UIAlertControllerStyleAlert];
-                [self.overquotaAlertView addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:nil]];
-                [self.overquotaAlertView addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-                    UpgradeTableViewController *upgradeTVC = [[UIStoryboard storyboardWithName:@"MyAccount" bundle:nil] instantiateViewControllerWithIdentifier:@"UpgradeID"];
-                    MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:upgradeTVC];
-                    
-                    [self dismissPresentedViewsAndDo:^{
-                        [UIApplication.mnz_presentingViewController presentViewController:navigationController animated:YES completion:nil];
-                    }];
-                }]];
-                [UIApplication.mnz_presentingViewController presentViewController:self.overquotaAlertView animated:YES completion:nil];
-                isOverquota = NO;
-            }
-            
             break;
-        }
             
         case MEGARequestTypeGetAttrUser: {
             MEGAUser *user = (request.email == nil) ? [[MEGASdkManager sharedMEGASdk] myUser] : [api contactForEmail:request.email];
@@ -1922,35 +1957,21 @@ void uncaughtExceptionHandler(NSException *exception) {
 }
 
 - (void)onTransferTemporaryError:(MEGASdk *)api transfer:(MEGATransfer *)transfer error:(MEGAError *)error {
-    if (error.type == MEGAErrorTypeApiEOverQuota && error.value) {
+    MEGALogDebug(@"onTransferTemporaryError %td", error.type)
+    if (error.type == MEGAErrorTypeApiEOverQuota || error.type == MEGAErrorTypeApiEgoingOverquota) {
         [SVProgressHUD dismiss];
         
-        CustomModalAlertViewController *customModalAlertVC = [[CustomModalAlertViewController alloc] init];
-        customModalAlertVC.modalPresentationStyle = UIModalPresentationOverCurrentContext;
-        customModalAlertVC.image = [UIImage imageNamed:@"transfer-quota-empty"];
-        customModalAlertVC.viewTitle = AMLocalizedString(@"depletedTransferQuota_title", @"Title shown when you almost had used your available transfer quota.");
-        customModalAlertVC.detail = AMLocalizedString(@"depletedTransferQuota_message", @"Description shown when you almost had used your available transfer quota.");
-        customModalAlertVC.action = AMLocalizedString(@"seePlans", @"Button title to see the available pro plans in MEGA");
-        customModalAlertVC.dismiss = AMLocalizedString(@"dismiss", @"Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible).");
-        if ([[MEGASdkManager sharedMEGASdk] isAchievementsEnabled]) {
-            customModalAlertVC.bonus = AMLocalizedString(@"getBonus", @"Button title to see the available bonus");
+        if (error.value) { // Bandwidth overquota error
+            NSString *title = AMLocalizedString(@"depletedTransferQuota_title", @"Title shown when you almost had used your available transfer quota.");
+            NSString *detail = AMLocalizedString(@"depletedTransferQuota_message", @"Description shown when you almost had used your available transfer quota.");
+            UIImage *image = [UIImage imageNamed:@"transfer-quota-empty"];
+            [self presentUpgradeViewControllerTitle:title detail:detail image:image];
+        } else { // Storage overquota error
+            NSString *title = AMLocalizedString(@"upgradeAccount", @"Button title which triggers the action to upgrade your MEGA account level");
+            NSString *detail = AMLocalizedString(@"Your upload(s) cannot proceed because your account is full", @"uploads over storage quota warning dialog title");
+            UIImage *image = [api mnz_accountDetails].storageMax.longLongValue > [api mnz_accountDetails].storageUsed.longLongValue ? [UIImage imageNamed:@"storage_almost_full"] : [UIImage imageNamed:@"storage_full"];
+            [self presentUpgradeViewControllerTitle:title detail:detail image:image];
         }
-        __weak typeof(CustomModalAlertViewController) *weakCustom = customModalAlertVC;
-        customModalAlertVC.completion = ^{
-            [weakCustom dismissViewControllerAnimated:YES completion:^{
-                if ([MEGAPurchase sharedInstance].products.count > 0) {
-                    UpgradeTableViewController *upgradeTVC = [[UIStoryboard storyboardWithName:@"MyAccount" bundle:nil] instantiateViewControllerWithIdentifier:@"UpgradeID"];
-                    MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:upgradeTVC];
-                    
-                    [UIApplication.mnz_presentingViewController presentViewController:navigationController animated:YES completion:nil];
-                } else {
-                    // Redirect to my account if the products are not available
-                    [self.mainTBC setSelectedIndex:4];
-                }
-            }];
-        };
-        
-        [UIApplication.mnz_presentingViewController presentViewController:customModalAlertVC animated:YES completion:nil];
     }
 }
 
@@ -2001,13 +2022,16 @@ void uncaughtExceptionHandler(NSException *exception) {
     
     if (error.type) {
         switch (error.type) {
-            case MEGAErrorTypeApiEgoingOverquota:
-            case MEGAErrorTypeApiEOverQuota: {
-                [self showOverquotaAlert];
+            MEGAErrorTypeApiEgoingOverquota:
+            MEGAErrorTypeApiEOverQuota: {
+                NSString *title = AMLocalizedString(@"upgradeAccount", @"Button title which triggers the action to upgrade your MEGA account level");
+                NSString *detail = AMLocalizedString(@"Your upload(s) cannot proceed because your account is full", @"uploads over storage quota warning dialog title");
+                UIImage *image = [api mnz_accountDetails].storageMax.longLongValue > [api mnz_accountDetails].storageUsed.longLongValue ? [UIImage imageNamed:@"storage_almost_full"] : [UIImage imageNamed:@"storage_full"];
+                [self presentUpgradeViewControllerTitle:title detail:detail image:image];
                 break;
             }
                 
-            default:{
+            default: {
                 if (error.type != MEGAErrorTypeApiESid && error.type != MEGAErrorTypeApiESSL && error.type != MEGAErrorTypeApiEExist && error.type != MEGAErrorTypeApiEIncomplete) {
                     NSString *transferFailed = AMLocalizedString(@"Transfer failed:", @"Notification message shown when a transfer failed. Keep colon.");
                     [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"%@\n%@ %@", transfer.fileName, transferFailed, AMLocalizedString(error.name, nil)]];

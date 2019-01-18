@@ -99,6 +99,24 @@
     [self reloadUI];
 }
 
+- (void)viewDidLayoutSubviews {
+    [super viewDidLayoutSubviews];
+    
+    self.cellSize = [self.photosCollectionView mnz_calculateCellSizeForInset:self.cellInset];
+    [self reloadUI];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
+    if (![NSUserDefaults.standardUserDefaults objectForKey:kIsCameraUploadsEnabled]) {
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            MEGANavigationController *cameraUploadsNavigationController = [[UIStoryboard storyboardWithName:@"Photos" bundle:nil] instantiateViewControllerWithIdentifier:@"CameraUploadsPopUpNavigationControllerID"];
+            [self presentViewController:cameraUploadsNavigationController animated:YES completion:nil];
+        });
+    }
+}
+
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     
@@ -107,13 +125,6 @@
     [[MEGASdkManager sharedMEGASdk] removeMEGARequestDelegate:self];
     [[MEGASdkManager sharedMEGASdk] removeMEGATransferDelegate:self];
     [[MEGASdkManager sharedMEGASdk] removeMEGAGlobalDelegate:self];
-}
-
-- (void)viewDidLayoutSubviews {
-    [super viewDidLayoutSubviews];
-    
-    self.cellSize = [self.photosCollectionView mnz_calculateCellSizeForInset:self.cellInset];
-    [self reloadUI];
 }
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations {

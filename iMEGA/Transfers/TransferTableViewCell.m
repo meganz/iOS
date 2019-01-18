@@ -24,6 +24,8 @@
 @property (weak, nonatomic) IBOutlet UIButton *cancelButton;
 @property (weak, nonatomic) IBOutlet UIButton *pauseButton;
 
+@property (weak, nonatomic) IBOutlet UIView *separatorView;
+
 @property (strong, nonatomic) MEGATransfer *transfer;
 @property (strong, nonatomic) NSString *uploadTransferLocalIdentifier;
 
@@ -44,7 +46,11 @@
     switch (transfer.type) {
         case MEGATransferTypeDownload: {
             MEGANode *node = [[MEGASdkManager sharedMEGASdk] nodeForHandle:transfer.nodeHandle];
-            [self.iconImageView mnz_setThumbnailByNode:node];
+            if (node) {
+                [self.iconImageView mnz_setThumbnailByNode:node];
+            } else {
+                [self.iconImageView mnz_setImageForExtension:transfer.fileName.pathExtension];
+            }
             self.thumbnailSet = YES;
             break;
         }
@@ -72,6 +78,9 @@
     
     
     [self configureCellWithTransferState:transfer.state];
+    
+    self.separatorView.layer.borderColor = UIColor.mnz_grayCCCCCC.CGColor;
+    self.separatorView.layer.borderWidth = 0.5;
 }
 
 - (void)reconfigureCellWithTransfer:(MEGATransfer *)transfer {
@@ -96,6 +105,10 @@
     }
     
     PHAsset *asset = fetchResult.firstObject;
+    if (asset == nil) {
+        return;
+    }
+    
     NSString *extension;
     
     if ([PHAssetResource assetResourcesForAsset:asset].count > 0) {
@@ -183,10 +196,12 @@
             break;
         }
             
-        case MEGATransferStateRetrying:
+        case MEGATransferStateRetrying: {
+            self.arrowImageView.image = (self.transfer.type == MEGATransferTypeDownload) ? [Helper downloadingTransferImage] : [Helper uploadingTransferImage];
             self.infoLabel.text = AMLocalizedString(@"Retrying...", @"Label for the state of a transfer when is being retrying - (String as short as possible).");
             self.pauseButton.hidden = self.cancelButton.hidden = NO;
             break;
+        }
             
         case MEGATransferStateCompleting:
             self.infoLabel.textColor = (self.transfer.type == MEGATransferTypeDownload) ? UIColor.mnz_green31B500 : UIColor.mnz_blue2BA6DE;

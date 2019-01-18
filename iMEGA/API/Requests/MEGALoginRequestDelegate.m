@@ -4,7 +4,8 @@
 #import "SAMKeychain.h"
 #import "SVProgressHUD.h"
 
-#import "LaunchViewController.h"
+#import "DevicePermissionsHelper.h"
+#import "InitialLaunchViewController.h"
 #import "Helper.h"
 #import "MEGAStore.h"
 #import "NSString+MNZCategory.h"
@@ -128,8 +129,15 @@
         [SAMKeychain setPassword:session forService:@"MEGA" account:@"sessionV3"];
         [[MEGAStore shareInstance] configureMEGAStore];
         
-        LaunchViewController *launchVC = [[UIStoryboard storyboardWithName:@"Launch" bundle:nil] instantiateViewControllerWithIdentifier:@"LaunchViewControllerID"];
-        UIWindow *window = [[[UIApplication sharedApplication] delegate] window];
+        LaunchViewController *launchVC;
+        if (DevicePermissionsHelper.shouldSetupPermissions) {
+            launchVC = [[UIStoryboard storyboardWithName:@"Launch" bundle:nil] instantiateViewControllerWithIdentifier:@"InitialLaunchViewControllerID"];
+        } else {
+            launchVC = [[UIStoryboard storyboardWithName:@"Launch" bundle:nil] instantiateViewControllerWithIdentifier:@"LaunchViewControllerID"];
+        }
+        
+        launchVC.delegate = (id<LaunchViewControllerDelegate>)UIApplication.sharedApplication.delegate;
+        UIWindow *window = UIApplication.sharedApplication.delegate.window;
         [UIView transitionWithView:window duration:0.5 options:(UIViewAnimationOptionTransitionCrossDissolve | UIViewAnimationOptionAllowAnimatedContent) animations:^{
             [window setRootViewController:launchVC];
         } completion:nil];

@@ -11,7 +11,7 @@
 /*  */
 "error"="Erreur";
 /*  */
-"name"="Nom";
+"name"="Prénom";
 /* Caption of a button to edit the files that are selected */
 "edit"="Modifier";
 /* State shown if something is 'Saved' (String as short as possible). */
@@ -129,7 +129,7 @@
 /*  */
 "passwordStrong"="Ce mot de passe résistera à la plupart des attaques par force brute typiques. Veuillez vous assurer de vous en souvenir.";
 /*  */
-"agreeWithTheMEGATermsOfService"="J'accepte les <a href='terms'>conditions générales d'utilisation</a> de MEGA";
+"agreeWithTheMEGATermsOfService"="J’accepte les <a href='terms'>conditions générales d’utilisation</a> de MEGA";
 /* Error text shown when you have not entered a correct name */
 "nameInvalidFormat"="Saisir un nom valide";
 /* Error text shown when you have not written the same password */
@@ -191,7 +191,7 @@
 /* */
 "folderLinkUnavailableText4"="Le lien du dossier a été désactivé par l’utilisateur.";
 /* Text shown on the app when you don't have connection to the internet or when you have lost it */
-"noInternetConnection"="Aucune connexion Internet";
+"noInternetConnection"="Il n’y a pas de connexion à Internet";
 /* Title shown when a folder doesn't have any files */
 "emptyFolder"="Le dossier est vide";
 /* Title shown when your Cloud Drive is empty, when you don't have any files. */
@@ -203,7 +203,7 @@
 /* Title shown when your Rubbish Bin is empty. */
 "cloudDriveEmptyState_titleRubbishBin"="Vider la corbeille";
 /* Title shown when the Offline section is empty, when you don't have download any files. Keep the upper. */
-"offlineEmptyState_title"="Aucun fichier enregistré Hors ligne";
+"offlineEmptyState_title"="Aucun fichier n’est enregistré Hors ligne";
 /* Title shown when the Contacts section is empty, when you have not added any contact. */
 "contactsEmptyState_title"="Aucun contact";
 /* Title shown when there's no incoming Shared Items */
@@ -231,7 +231,7 @@
 /* Success message shown when you remove a contact request */
 "requestDeleted"="La demande a été supprimée";
 /* Title shown when there's no pending contact requests */
-"noRequestPending"="Aucune requête en attente";
+"noRequestPending"="Il n’y a aucune requête en attente";
 /* Title shown when the transfers are paused */
 "transfersEmptyState_titlePaused"="Transferts en pause";
 /* Title shown when the there is not any transfer and they are not paused */
@@ -511,9 +511,9 @@
 /* Button title that enables the functionality 'Camera Uploads', which uploads all the photos in your device to MEGA */
 "enableCameraUploadsButton"="Activer les téléversements de la caméra";
 /* Success message shown when Camera Uploads has been enabled */
-"cameraUploadsEnabled"="Les téléversements de la caméra sont activés";
+"cameraUploadsEnabled"="Les téléversements de l’appareil photo sont activés";
 /* Message shown when the camera uploads have been completed */
-"cameraUploadsComplete"="Téléversement de la caméra terminé";
+"cameraUploadsComplete"="Les téléversements de l’appareil photo sont terminés";
 /* Message shown while uploading files. Singular. */
 "cameraUploadsPendingFile"="Téléversement en cours, 1 fichier en attente";
 /* Message shown while uploading files. Plural. */
@@ -1058,13 +1058,13 @@
 /* Alert message shown when the user remove various items from the Offline section */
 "removeItemsFromOffline"="Voulez-vous vraiment supprimer ces éléments Hors ligne ?";
 /* Chat section header */
-"chat"="Dialogue";
+"chat"="Dialogue en ligne";
 /* Empty Conversations section */
 "noConversations"="Aucune conversation";
 /* Empty Conversations description */
 "noConversationsDescription"="Commencez à discuter en toute sécurité avec vos contacts grâce au chiffrement de bout en bout";
 /* Title show when the chat is disabled */
-"chatIsDisabled"="Le dialogue est désactivé";
+"chatIsDisabled"="Le dialogue en ligne est désactivé";
 /* Text button shown when the chat is disabled and if tapped the chat will be enabled */
 "enable"="Activer";
 /* Text button shown when an option is enabled, to allow to disable it. String as sort as possible. */
@@ -1364,8 +1364,10 @@
 /* Between paragraph 5 and 6 we have to put the string with the 'autorenewableDescription' key */
 /* Paragraph 6 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
 "generalDescriptionParagraph6"="Pour plus d’informations, veuillez consulter notre site Web : https://mega.nz/\nConditions générales d’utilisation : https://mega.nz/terms\nPolitique de confidentialité : https://mega.nz/privacy";
-/* Label shown when you receive an incoming call, before start the call. */
+/* Label shown when you call someone (outgoing call), before the call starts. */
 "calling..."="Appel…";
+/* notification subtitle of incoming calls */
+"Incoming call"="Appel entrant";
 /* Notification text body shown when you have missed one audio call */
 "missedAudioCall"="Appel vocal manqué";
 /* Notification text body shown when you have missed several audio calls. [A] = {number of missed audio calls} */
@@ -1401,7 +1403,7 @@
 /* Label for the setting that allow users to automatically add contacts when they scan his/her QR code. String as short as possible. */
 "autoAccept"="Accepter automatiquement";
 /* Footer that explains the way Auto-Accept works for QR codes */
-"autoAcceptFooter"="Les contacts qui lisent votre code QR seront automatiquement ajoutés à votre liste de contacts.";
+"autoAcceptFooter"="Les contacts qui balayeront votre code QR seront automatiquement ajoutés à votre liste de contacts.";
 /* Action to reset the current valid QR code of the user */
 "resetQrCode"="Réinitialiser le code QR";
 /* Footer that explains what would happen if the user resets his/her QR code */
@@ -1409,13 +1411,13 @@
 /* Title for view that displays the QR code of the user. String as short as possible. */
 "myCode"="Mon code";
 /* Segmented control title for view that allows the user to scan QR codes. String as short as possible. */
-"scanCode"="Lire un code";
+"scanCode"="Balayer un code";
 /* Label that encourage the user to line the QR to scan with the camera */
-"lineCodeWithCamera"="Aligner le code QR pour le lire avec l’appareil photo de votre appareil";
+"lineCodeWithCamera"="Aligner le code QR pour le balayer avec l’appareil photo de votre appareil";
 /* Error text shown when the user scans a QR that is not valid. String as short as possible. */
 "invalidCode"="Code invalide";
 /* Success text shown in a label when the user scans a valid QR. String as short as possible. */
-"codeScanned"="Code lu";
+"codeScanned"="Code balayé";
 /* title of the screen that shows the users with whom the user has shared a folder */
 "sharedWidth"="Partagé avec :";
 /*   */
@@ -1433,7 +1435,7 @@
 /* Title of the incoming shared folders of a user in singular */
 "sharedFolder"="Dossier partagé";
 /* The label of the folder creation time. For example: "Created: 2013-02-02" (no need to put the colon punctuation in the translation) */
-"created"="Créé";
+"created"="Créé le";
 /* Label for what a selection contains. For example: "Contains: 3 folders & 13 files". (no need to put the colon punctuation in the translation) */
 "contains"="Contient";
 /* A label for any 'Modified' text or title. For example to show the modification date of a file/folder. */
@@ -1622,6 +1624,10 @@
 "Setup MEGA"="Configurer MEGA";
 /* Detailed explanation of why the user should give some permissions to MEGA */
 "To fully take advantage of your MEGA account we need to ask you some permissions."="Pour profiter pleinement de votre compte MEGA, nous devons vous demander quelques autorisations.";
+/* Message warning the user about the risk of not setting up permissions */
+"The MEGA app may not work as expected without the required permissions. Are you sure?"="L’appli MEGA pourrait ne pas fonctionner comme prévu sans les autorisations nécessaires. Êtes-vous certain ?";
+/* Shows number of the current page. '%1' will be replaced by current page number. '%2' will be replaced by number of all pages. */
+"%1 of %2"="%1 sur %2";
 /* Title label that explains that the user is going to be asked for the photos permission */
 "Allow Access to Photos"="Autoriser l’accès à Photos";
 /* Detailed explanation of why the user should give permission to access to the photos */
@@ -1752,6 +1758,8 @@
 "Added 1 file and %lld folders"="1 fichier et %lld dossiers ont été ajoutés";
 /* Content of a notification that informs how many files and folders have been added to a shared folder */
 "Added [A] files and [B] folders"="[A] fichiers [B] dossiers ont été ajoutés";
+/* Notification when on client side when owner of a shared folder removes folder/file from it. */
+"Removed item from shared folder"="Un élément a été retiré d’un dossier partagé";
 /* Notification popup. Notification for multiple removed items from a share. Please keep [X] as it will be replaced at runtime with the number of removed items. */
 "Removed [X] items from a share"="[X] éléments ont été retirés d’un partage";
 /* A notification telling the user that their Pro plan payment was successfully received. The %1 indicates the name of the Pro plan they paid for e.g. Lite, PRO III. */
@@ -1766,6 +1774,10 @@
 "Your publicly shared %1 (%2) has been taken down."="Votre partage public %1 (%2) a été retiré.";
 /* The text of a notification indicating that a file or folder that was taken down has now been restored due to a successful counter-notice. The %1 placeholder will be replaced with the text ‘file’ or ‘folder’. The %2 will be replaced with the name of the file or folder. */
 "Your taken down %1 (%2) has been reinstated."="Votre %1 (%2) retiré a été rétabli";
+/* Error message shown to user when a copy/import operation would take them over their storage limit. */
+"This action can not be completed as it would take you over your current storage limit"="Cette action ne peut pas être menée à bien, car elle vous ferait dépasser votre limite de stockage actuelle";
+/* uploads over storage quota warning dialog title */
+"Your upload(s) cannot proceed because your account is full"="Vos téléversements ne peuvent pas se poursuivre, car votre espace de stockage est plein";
 /* Footer text to explain the meaning of the functionaly 'Last seen' of your chat status. */
 "Allow your contacts to see the last time you were active on MEGA."="Permettre à vos contacts de voir l’heure de votre dernière activité sur MEGA.";
 /* Label shown next to a feature name that can be enabled or disabled, like in 'Show Last seen...' */

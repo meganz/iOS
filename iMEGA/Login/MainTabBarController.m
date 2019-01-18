@@ -306,6 +306,8 @@
                 [messagesViewController updateUnreadLabel];
             }
         }        
+    } else if (item.changes == MEGAChatListItemChangeTypeArchived && item.unreadCount) {
+        [UIApplication sharedApplication].applicationIconBadgeNumber = api.unreadChats;
     }
 }
 
@@ -330,21 +332,21 @@
             
         case MEGAChatCallStatusRingIn: {
             [self.missedCallsDictionary setObject:call forKey:@(call.chatId)];
-            [DevicePermissionsHelper audioPermissionWithCompletionHandler:^(BOOL granted) {
+            [DevicePermissionsHelper audioPermissionModal:YES forIncomingCall:YES withCompletionHandler:^(BOOL granted) {
                 if (granted) {
                     if (call.hasRemoteVideo) {
                         [DevicePermissionsHelper videoPermissionWithCompletionHandler:^(BOOL granted) {
                             if (granted) {
                                 [self presentRingingCall:api call:[api chatCallForCallId:call.callId]];
                             } else {
-                                [self presentViewController:[DevicePermissionsHelper videoPermisionAlertController] animated:YES completion:nil];
+                                [DevicePermissionsHelper alertVideoPermissionWithCompletionHandler:nil];
                             }
                         }];
                     } else {
                         [self presentRingingCall:api call:[api chatCallForCallId:call.callId]];
                     }
                 } else {
-                    [self presentViewController:[DevicePermissionsHelper audioPermisionAlertController] animated:YES completion:nil];
+                    [DevicePermissionsHelper alertAudioPermission];
                 }
             }];
             break;
