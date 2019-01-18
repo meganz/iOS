@@ -321,7 +321,7 @@
 /* The text is shown as an option on the details of a file or folder */
 "saveForOffline"="离线储存";
 /* List option shown on the details of a file or folder */
-"savedForOffline"="离线储存";
+"savedForOffline"="保存为离线";
 /* Error message shown when a user tries to download a folder with the name Inbox on the main directory of the offline section */
 "folderInboxError"="这个收件夹标签仅供Apple使用";
 /* Title shown under the action that allows you to save an image to your camera roll */
@@ -976,7 +976,7 @@
 /* Sentence shown under the available space to complete the info with the user account maximum storage. "available of {maximun storage}" */
 "available of %@"="共%@ 可用";
 /* Button title which triggers the action to upgrade your MEGA account level */
-"upgradeAccount"="付费升级账户";
+"upgradeAccount"="升级帐户";
 /*  */
 "chooseYourAccountType"="选择您的账号类型";
 /* Text shown under the button 'Skip' to explain that you can upgrade your account later in the section 'My Account'. */
@@ -1624,6 +1624,10 @@
 "Setup MEGA"="安装MEGA";
 /* Detailed explanation of why the user should give some permissions to MEGA */
 "To fully take advantage of your MEGA account we need to ask you some permissions."="要充分利用您的MEGA帐户，我们需要得到您的允许。";
+/* Message warning the user about the risk of not setting up permissions */
+"The MEGA app may not work as expected without the required permissions. Are you sure?"="MEGA应用程序可能在无权限状态下无法正常工作。您确定要这样做吗？";
+/* Shows number of the current page. '%1' will be replaced by current page number. '%2' will be replaced by number of all pages. */
+"%1 of %2"="%1 / %2";
 /* Title label that explains that the user is going to be asked for the photos permission */
 "Allow Access to Photos"="允许访问照片";
 /* Detailed explanation of why the user should give permission to access to the photos */
@@ -1681,9 +1685,9 @@
 /* Text shown when an error occurs when trying to save a photo or video to Photos app */
 "Could not save Item"="无法保存该项目";
 /* Text shown for switching from thumbnail view to list view. */
-"List view"="列表视图";
+"List view"="列表显示";
 /* Text shown for switching from list view to thumbnail view. */
-"Thumbnail view"="缩略视图";
+"Thumbnail view"="缩略图";
 /* Message to inform the local user that someone has joined the current group call */
 "%@ joined the call."="%@已加入通话。";
 /* Message to inform the local user that someone has left the current group call */
@@ -1695,9 +1699,9 @@
 /* Message shown in a chat room for a group call in progress displaying the duration of the call */
 "Touch to return to call %@"="触摸即可返回通话%@";
 /* Menu item to change from grid view to list view */
-"List view"="列表视图";
+"List view"="列表显示";
 /* Menu item to change from list view to grid view */
-"Thumbnail view"="缩略视图";
+"Thumbnail view"="缩略图";
 /* There are no notifications to display. */
 "No notifications"="没有新通知";
 /* The header of a notification related to payments */

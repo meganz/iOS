@@ -72,6 +72,12 @@
                                 </constraints>
                                 <color key="pageIndicatorTintColor" red="0.84705882352941175" green="0.84705882352941175" blue="0.84705882352941175" alpha="1" colorSpace="calibratedRGB"/>
                             </pageControl>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3GA-0B-4mn">
+                                <rect key="frame" x="172" y="458" width="31" height="14.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                <color key="textColor" red="0.46666666666666667" green="0.46666666666666667" blue="0.46666666666666667" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hj1-cN-Wxd">
                                 <rect key="frame" x="43.5" y="516" width="288" height="50"/>
                                 <constraints>
@@ -108,9 +114,11 @@
                         <constraints>
                             <constraint firstItem="TZS-mp-L0Q" firstAttribute="centerX" secondItem="gew-dm-7J5" secondAttribute="centerX" id="4zc-jP-FjT"/>
                             <constraint firstItem="xBY-vN-fzC" firstAttribute="top" secondItem="gew-dm-7J5" secondAttribute="top" id="GaR-D5-tIV"/>
+                            <constraint firstItem="3GA-0B-4mn" firstAttribute="centerY" secondItem="Jxv-iR-b0m" secondAttribute="centerY" id="Jhi-vk-89Q"/>
                             <constraint firstItem="TZS-mp-L0Q" firstAttribute="top" secondItem="Hj1-cN-Wxd" secondAttribute="bottom" constant="16" id="NPT-Ig-DZj"/>
                             <constraint firstItem="BUQ-n8-sSm" firstAttribute="trailing" secondItem="Jxv-iR-b0m" secondAttribute="trailing" id="RdL-rG-0VW"/>
                             <constraint firstItem="Hj1-cN-Wxd" firstAttribute="centerX" secondItem="gew-dm-7J5" secondAttribute="centerX" id="Wac-QE-P8W"/>
+                            <constraint firstItem="3GA-0B-4mn" firstAttribute="centerX" secondItem="Jxv-iR-b0m" secondAttribute="centerX" id="XV4-kj-iM3"/>
                             <constraint firstItem="Jxv-iR-b0m" firstAttribute="top" secondItem="xBY-vN-fzC" secondAttribute="bottom" constant="22" id="bQt-qr-14b"/>
                             <constraint firstItem="BUQ-n8-sSm" firstAttribute="bottom" secondItem="TZS-mp-L0Q" secondAttribute="bottom" constant="35" id="fDe-G4-J4V"/>
                             <constraint firstItem="Jxv-iR-b0m" firstAttribute="leading" secondItem="BUQ-n8-sSm" secondAttribute="leading" id="fz8-No-n5A"/>
@@ -122,6 +130,7 @@
                     </view>
                     <connections>
                         <outlet property="pageControl" destination="Jxv-iR-b0m" id="fXb-Mn-suf"/>
+                        <outlet property="pageLabel" destination="3GA-0B-4mn" id="FOR-EL-icI"/>
                         <outlet property="primaryButton" destination="Hj1-cN-Wxd" id="btg-DF-ESN"/>
                         <outlet property="scrollView" destination="xBY-vN-fzC" id="cw1-7N-plp"/>
                         <outlet property="secondaryButton" destination="TZS-mp-L0Q" id="Pbh-W6-hiG"/>
