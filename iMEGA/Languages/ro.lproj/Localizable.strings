@@ -37,7 +37,7 @@
 /* Alert message shown when the user tries to download an empty folder  */
 "emptyFolderMessage"="Nu poţi descărca un folder gol";
 /* Message shown when the user clicks on a confirm account link that has already been used  */
-"accountAlreadyConfirmed"="Contul tău a fost activat deja. Te rugăm să te autentifici.";
+"accountAlreadyConfirmed"="Contul tău a fost activat. Te rugăm să te autentifici.";
 /* Message shown when the user clicks on an link that is not valid */
 "linkNotValid"="Link nevalid";
 /* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
@@ -55,7 +55,7 @@
 /* Alert message shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOutFromAnotherLocation"="Ai fost deconectat de pe acest dispozitiv din altă locaţie";
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
-"sslUnverified_alertTitle"="Cheia SSL a serverului nu poate fi verificată. Ai putea fi afectat de un atac de tip man-in-the-middle.";
+"sslUnverified_alertTitle"="MEGA nu se poate conecta securizat prin SSL. S-ar putea să fii pe WiFi public cu cerințe suplimentare.";
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
 "theContentIsNotAvailableForThisAccount"="Conţinutul pe care încerci să îl accesezi nu este disponibil pentru acest cont. Încearcă să te autentifici cu acelaşi cont ca şi în clientul web mobil.";
 /* Message shown when the app is waiting for the server to complete a request due to an API lock (error -3). */
@@ -215,11 +215,11 @@
 /* Button title shown in empty views when you can 'Add contacts' */
 "addContacts"="Adaugă contacte";
 /* Text shown when the user tries to make a call and the receiver is not a contact */
-"inviteContact"="Invite Contact";
+"inviteContact"="Invită contactul";
 /* Text shown when the user sends a contact invitation */
-"inviteSent"="Invite Sent";
+"inviteSent"="Invitație trimisă";
 /* Button title to allow the user postpone an action */
-"later"="Later";
+"later"="Mai târziu";
 /* Title of one of the filters in 'Contacts requests' section. If 'Received' is selected, it will only show the requests which have been recieved. */
 "received"="Primite";
 /* Title of one of the filters in 'Contacts requests' section. If 'Sent' is selected, it will only show the requests which have been sent out. */
@@ -293,7 +293,7 @@
 /* Title button for the create folder alert.  */
 "createFolderButton"="Creează";
 /* A tooltip message which is shown when a folder name is duplicated during renaming or creation. */
-"There is already a folder with the same name"="There is already a folder with the same name";
+"There is already a folder with the same name"="Există deja un folder cu același nume";
 /* A tooltip message which shows when a file name is duplicated during renaming. */
 "There is already a file with the same name"="Există deja un fişier cu acelaşi nume";
 /* Option given on the `Add` section to allow the user upload something from another cloud storage provider. The three dots implies that an action occurs after tapping on it. */
@@ -699,7 +699,7 @@
 /*  */
 "masterKey_thirdParagraph"="Un atacator extern nu poate obţine acces la contul tău doar cu cheia ta. Resetarea parolei necesită atât cheia, cât şi acces la adresa ta de e-mail.";
 /* Message of the dialog displayed when copy the user's Recovery Key to the clipboard to be saved or exported. */
-"recoveryKeyCopiedToClipboard"="Cheie de recuperare copiată în clipboard";
+"recoveryKeyCopiedToClipboard"="Cheia de recuperare a fost copiată în clipboard. Te rugăm să o stochezi într-un loc sigur.";
 /* Alert title shown when you have exported your MEGA Recovery Key */
 "masterKeyExported"="Cheie de recuperare exportată";
 /* Alert message shown to explain that the Recovery Key was saved on your device. Also that you can access it through iTunes. And ends with and security advise. */
@@ -844,7 +844,7 @@
 /* Menu item */
 "help"="Ajutor";
 /* Title of the section to access MEGA's help centre */
-"helpCentreLabel"="Centrul de ajutor";
+"helpCentreLabel"="Centru de ajutor";
 /* Section title that links you to the webpage that let you join and test the beta versions */
 "Join Beta"="Join Beta";
 /* Title to rate the app */
@@ -982,9 +982,9 @@
 /* Text shown under the button 'Skip' to explain that you can upgrade your account later in the section 'My Account'. */
 "youCanUpgradeLaterInMyAccount"="Poţi upgrada mai târziu din Contul meu";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
-"cloudDriveIsAlmostFull"="[S]Unitatea cloud este aproape plină.[/S] [A]Upgradează acum[/A] la un cont PRO şi obţine [S]până la 4 TB (4096 GB)[/S] spaţiu de stocare în cloud.";
+"cloudDriveIsAlmostFull"="[S]Unitatea cloud este aproape plină.[/S] [A]Upgradează acum[/A] la un cont PRO și obține [S]până la 8 TB (8192 GB)[/S] spațiu de stocare în cloud.";
 /* A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text. */
-"cloudDriveIsFull"="[S]Contul tău este plin.[/S] [A]Upgradează acum[/A] la un cont PRO şi obţine [S]până la 4 TB (4096 GB)[/S] spaţiu de stocare în cloud.";
+"cloudDriveIsFull"="[S]Contul tău este plin.[/S] [A]Upgradează acum[/A] la un cont PRO și obține [S]până la 8 TB (8192 GB)[/S] spațiu de stocare în cloud.";
 /* Storage related with the MEGA PRO account level you can subscribe */
 "productSpace"="Spaţiu de stocare";
 /* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
@@ -998,11 +998,11 @@
 /* Header that help you with the upgrading process explaining that you have to choose one of the plans below  to continue */
 "choosePlan"="Alege unul dintre planurile de mai jos:";
 /* Text that explains that you have to select the plan you want and/or need after creating an account */
-"selectOneAccountType"="Select one account type:";
+"selectOneAccountType"="Selectează un tip de cont:";
 /* Text shown in the purchase plan view to explain that annual subscription is 17% cheaper than 12 monthly payments */
-"twoMonthsFree"="An annual subscription is 17% cheaper than 12 monthly payments";
+"twoMonthsFree"="Un abonament anual este cu 17% mai ieftin decât 12 plăți lunare";
 /* Text shown on the upgrade account page above the current PRO plan subscription */
-"currentPlan"="Current Plan:";
+"currentPlan"="Plan actual:";
 /* Button on the Pro page to request a custom Pro plan because their storage usage is more than the regular plans. */
 "requestAPlan"="Solicită un plan";
 /* Asks the user to request a custom Pro plan from customer support because their storage usage is more than the regular plans. */
@@ -1194,7 +1194,7 @@
 /* Chat conversation header with user %@. Please leave %@ as it is. */
 "conversationWith"="Conversaţie cu %@";
 /* Title show above the name of the persons with whom you're chatting */
-"chattingWith"="Chatting with";
+"chattingWith"="Chat împreună cu";
 /* Full text: MEGA protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: Confidentiality - Only the author and intended recipients are able to decipher and read the content. Authenticity - There is an assurance that the message received was authored by the stated sender, and its content has not been tampered with during transport or on the server. */
 "chatIntroductionMessage"="MEGA îţi protejează conversaţiile cu criptare (controlată de utilizator) capăt-la-capăt oferind asigurări de siguranţă:";
 /* Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit. */
@@ -1367,25 +1367,25 @@
 /* Label shown when you call someone (outgoing call), before the call starts. */
 "calling..."="Se apelează...";
 /* notification subtitle of incoming calls */
-"Incoming call"="Incoming call";
+"Incoming call"="Apel primit";
 /* Notification text body shown when you have missed one audio call */
-"missedAudioCall"="Missed audio call";
+"missedAudioCall"="Apel audio ratat";
 /* Notification text body shown when you have missed several audio calls. [A] = {number of missed audio calls} */
-"missedAudioCalls"="[A] missed audio calls";
+"missedAudioCalls"="[A] apeluri audio ratate";
 /* Notification text body shown when you have missed one video call */
-"missedVideoCall"="Missed video call";
+"missedVideoCall"="Apel video ratat";
 /* Notification text body shown when you have missed several video calls. [A] = {number of missed video calls} */
-"missedVideoCalls"="[A] missed video calls";
+"missedVideoCalls"="[A] apeluri video ratate";
 /* Notification text body shown when you have missed one audio call and one video call */
-"missedAudioCallAndMissedVideoCall"="Missed audio call and missed video call";
+"missedAudioCallAndMissedVideoCall"="1 apel audio ratat și 1 apel video ratat";
 /* Notification text body shown when you have missed one audio call and several video calls. [A] = {number of missed video calls} */
-"missedAudioCallAndMissedVideoCalls"="Missed audio call and [A] missed video calls";
+"missedAudioCallAndMissedVideoCalls"="1 apel audio ratat și [A] apeluri video ratate";
 /* Notification text body shown when you have missed several audio calls and one video call. [A] = {number of missed audio calls} */
-"missedAudioCallsAndMissedVideoCall"="[A] missed audio calls and missed video call";
+"missedAudioCallsAndMissedVideoCall"="[A] apeluri audio ratate și 1 apel video ratat";
 /* Notification text body shown when you have missed several audio calls and video calls. [A] = {number of missed audio calls}. [B] = {number of missed video calls} */
-"missedAudioCallsAndMissedVideoCalls"="[A] missed audio calls  and [B] missed video calls";
+"missedAudioCallsAndMissedVideoCalls"="[A] apeluri audio ratate și [B] apeluri video ratate";
 /* Button title to see the available bonus */
-"getBonus"="Get Bonus";
+"getBonus"="Obține bonusul";
 /* Text shown under the title 'Video quality' that explains what it means */
 "qualityOfVideosUploadedToAChat"="Quality of videos uploaded to a chat";
 /* Label used near to the option selected to encode the videos uploaded to a chat (Low, Medium, Original) */
@@ -1399,25 +1399,25 @@
 /* Label for the status of a transfer when is being preparing - (String as short as possible). */
 "preparing..."="Se pregăteşte...";
 /* QR Code label, used in Settings as title. String as short as possible */
-"qrCode"="QR Code";
+"qrCode"="Cod QR";
 /* Label for the setting that allow users to automatically add contacts when they scan his/her QR code. String as short as possible. */
-"autoAccept"="Auto-Accept";
+"autoAccept"="Acceptă automat";
 /* Footer that explains the way Auto-Accept works for QR codes */
-"autoAcceptFooter"="Contacts that scan your QR Code will be automatically added to your contact list.";
+"autoAcceptFooter"="Contactele care îți scanează codul QR vor fi adăugați automat în lista de contacte.";
 /* Action to reset the current valid QR code of the user */
 "resetQrCode"="Resetează codul QR";
 /* Footer that explains what would happen if the user resets his/her QR code */
 "resetQrCodeFooter"="Codurile QR anterioare nu vor mai fi valide.";
 /* Title for view that displays the QR code of the user. String as short as possible. */
-"myCode"="My Code";
+"myCode"="Codul meu";
 /* Segmented control title for view that allows the user to scan QR codes. String as short as possible. */
-"scanCode"="Scan Code";
+"scanCode"="Scanează codul";
 /* Label that encourage the user to line the QR to scan with the camera */
 "lineCodeWithCamera"="Line up the QR code to scan it with your device’s camera";
 /* Error text shown when the user scans a QR that is not valid. String as short as possible. */
-"invalidCode"="Invalid code";
+"invalidCode"="Cod invalid";
 /* Success text shown in a label when the user scans a valid QR. String as short as possible. */
-"codeScanned"="Code scanned";
+"codeScanned"="Cod scanat";
 /* title of the screen that shows the users with whom the user has shared a folder */
 "sharedWidth"="Partajat cu:";
 /*   */
@@ -1477,9 +1477,9 @@
 /* Text next to a toggle that if enabled won't appear again */
 "dontShowAgain"="Nu-mi afişa din nou";
 /* Label for test password button and titles */
-"testPassword"="Test Password";
+"testPassword"="Testează parola";
 /* Label for recovery key button */
-"backupRecoveryKey"="Cheia de recuperare pentru backup";
+"backupRecoveryKey"="Fă backup cheii recup";
 /* Used as a message in the 'Password reminder' dialog as a tip on why confirming the password and/or exporting the recovery key is important and vital for the user to not lose any data. */
 "testPasswordText"="Te rugăm să îţi testezi parola mai jos pentru a te asigura că ţi-o aduci aminte. Dacă îţi pierzi parola, vei pierde accesul la datele tale MEGA. [A]Află mai multe[/A]";
 /* Title text for the account confirmation. */
@@ -1489,7 +1489,7 @@
 /* A dialog title to export the Recovery Key for the current user. */
 "exportRecoveryKey"="Exportă cheia de recuperare";
 /* Title to confirm that you want to logout */
-"proceedToLogout"="Proceed to logout";
+"proceedToLogout"="Continuă pentru a te deconecta";
 /* Used as a message in the "Password reminder" dialog as a tip on why confirming the password and/or exporting the recovery key is important and vital for the user to not lose any data.  */
 "testPasswordLogoutText"="You are about to logout, please test your password to ensure you remember it. If you lose your password, you will lose access to your MEGA data.";
 /* state previous to import a file */
@@ -1511,7 +1511,7 @@
 /* Title to preview document */
 "previewContent"="Preview Content";
 /* Title of the notification for a missed call */
-"missedCall"="Missed call";
+"missedCall"="Apel ratat";
 /* When an outgoing call of user A with user B had been rejected by user B */
 "callWasRejected"="Call was rejected";
 /* When an active call of user A with user B had cancelled */
@@ -1545,7 +1545,7 @@
 /* Alert message shown when users try to stream an unsupported audio/video file */
 "message_fileNotSupported"="You can save it for Offline and open it in a compatible app.";
 /* Item of a menu to forward a message chat to another chatroom */
-"forward"="Forward";
+"forward"="Redirecționează";
 /* Success message shown after forwarding messages to other chats */
 "messagesSent"="Mesaje trimise";
 /* Title of archived chats button */
@@ -1655,11 +1655,11 @@
 /* A title message in the user’s account settings for showing the storage used for file versions. */
 "Total size taken up by file versions:"="Mărimea totală ocupată de versiunile fişierelor:";
 /* The title of the section about deleting file versions in the settings. */
-"Delete all older versions of my files"="Delete all older versions of my files";
+"Delete all older versions of my files"="Șterge toate versiunile mai vechi ale fișierelor mele";
 /* Text of a button which deletes all historical versions of files in the users entire account. */
-"Delete old versions"="Şterge toate";
+"Delete old versions"="Șterge versiunile vechi";
 /* A warning note about deleting all file versions in the settings section. */
-"All current files will remain. Only historic versions of your files will be deleted."="Acest lucru va şterge definitiv toate versiunile fişierelor proprii. Orice versiune de fişier partajată cu tine de la un contact va trebui să fie ştearsă de către aceştia.";
+"All current files will remain. Only historic versions of your files will be deleted."="Toate fișierele actuale vor rămâne. Doar versiunile istorice ale fișierelor vor fi șterse.";
 /* Text of the dialog to delete all the file versions of the account */
 "You are about to delete the version histories of all files. Any file version shared to you from a contact will need to be deleted by them.[Br][Br]Please note that the current files will not be deleted."="You are about to delete the version histories of all files. Any file version shared to you from a contact will need to be deleted by them.\n\nPlease note that the current files will not be deleted.";
 /* Title for the Rubbish-Bin Cleaning Scheduler feature */
@@ -1676,6 +1676,16 @@
 "To disable the Rubbish-Bin Cleaning Scheduler or set a longer retention period, you need to subscribe to a PRO plan."="To disable the Rubbish-Bin Cleaning Scheduler or set a longer retention period, you need to subscribe to a PRO plan.";
 /* Confirmation dialog for the button that logs the user out of all sessions except the current one. */
 "Do you want to close all other sessions? This will log you out on all other active sessions except the current one."="Do you want to close all other sessions? This will log you out on all other active sessions except the current one.";
+/* Message to inform the local user that someone has joined the current group call */
+"%@ joined the call."="%@ joined the call.";
+/* Message to inform the local user that someone has left the current group call */
+"%@ left the call."="%@ left the call.";
+/* Message to inform the local user is having a bad quality network with someone in the current group call */
+"Poor conection."="Poor connection.";
+/* Message shown in a chat room when there is an active group call */
+"There is an active group call. Tap to join."="There is an active group call. Tap to join.";
+/* Message shown in a chat room for a group call in progress displaying the duration of the call */
+"Touch to return to call %@"="Touch to return to call %@";
 /* A button label which allows the users save images/videos in the Photos app. */
 "Save to Photos"="Save to Photos";
 /* Text shown when starting the process to save a photo or video to Photos app */
@@ -1684,6 +1694,10 @@
 "Saved to Photos"="Saved to Photos";
 /* Text shown when an error occurs when trying to save a photo or video to Photos app */
 "Could not save Item"="Could not save Item";
+/* Message show when a call cannot be established because there are too many participants in the group call */
+"Error. No more participants are allowed in this group call."="Error. No more participants are allowed in this group call.";
+/* Message show when a user cannot activate the video in a group call because the max number of videos has been reached */
+"Error. No more video are allowed in this group call."="Error. No more video are allowed in this group call.";
 /* Text shown for switching from thumbnail view to list view. */
 "List view"="Vizualizare tip listă";
 /* Text shown for switching from list view to thumbnail view. */
@@ -1770,6 +1784,10 @@
 "Your PRO membership plan will expire in 1 day."="Planul tău de membru PRO va expira în termen de 1 zi.";
 /* The professional pricing plan which the user is currently on will expire in 5 days. The %1 is a placeholder for the number of days and should not be removed. */
 "Your PRO membership plan will expire in %1 days."="Planul tău de membru PRO va expira în %1 zile.";
+/* The professional pricing plan which the user was on expired one day ago. */
+"Your PRO membership plan expired 1 day ago"="Your PRO membership plan expired 1 day ago";
+/* The professional pricing plan which the user was on expired %1 days ago. The %1 is a placeholder for the number of days and should not be removed. */
+"Your PRO membership plan expired %1 days ago"="Your PRO membership plan expired %1 days ago";
 /* The text of a notification indicating that a file or folder has been taken down due to infringement or other reason. The %1 placeholder will be replaced with the text ‘file’ or ‘folder’. The %2 will be replaced with the name of the file or folder. */
 "Your publicly shared %1 (%2) has been taken down."="Partajarea ta publică %1 (%2) a fost eliminată.";
 /* The text of a notification indicating that a file or folder that was taken down has now been restored due to a successful counter-notice. The %1 placeholder will be replaced with the text ‘file’ or ‘folder’. The %2 will be replaced with the name of the file or folder. */

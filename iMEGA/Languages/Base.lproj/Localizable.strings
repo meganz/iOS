@@ -777,7 +777,7 @@
 /* Hint text to suggest that the user have to write his/her current password */
 "currentPassword"="Current Password";
 /* Hint text to suggest that the user have to write the new password on it */
-"newPassword"="New Password";
+"newPassword"="New password";
 /* Hint text where the user have to re-write the new password to confirm it */
 "confirmPassword"="Confirm Password";
 /* Success message shown when the password has been changed */
@@ -966,7 +966,7 @@
 /* Text that shows the expiry date of the account PRO level */
 "expiresOn"="expires on %@";
 /* Button title for the section where you can see the 'Purchase history' related to your account */
-"purchaseHistory"="Purchase history";
+"purchaseHistory"="Purchase History";
 /* Title of the Incoming Shares section. Here you can see the folders that your contacts have shared with you */
 "incomingShares"="Incoming Shares";
 /* Sentence shown under the used space percentage to complete the info with the user account maximum storage. "of {maximun storage}" */
@@ -1681,7 +1681,7 @@
 /* Message to inform the local user that someone has left the current group call */
 "%@ left the call."="%@ left the call.";
 /* Message to inform the local user is having a bad quality network with someone in the current group call */
-"Poor conection."="Poor conection.";
+"Poor conection."="Poor connection.";
 /* Message shown in a chat room when there is an active group call */
 "There is an active group call. Tap to join."="There is an active group call. Tap to join.";
 /* Message shown in a chat room for a group call in progress displaying the duration of the call */
