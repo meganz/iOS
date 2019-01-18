@@ -11,6 +11,7 @@
 
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UIPageControl *pageControl;
+@property (weak, nonatomic) IBOutlet UILabel *pageLabel;
 @property (weak, nonatomic) IBOutlet UIButton *primaryButton;
 @property (weak, nonatomic) IBOutlet UIButton *secondaryButton;
 
@@ -56,9 +57,7 @@
             
         case OnboardingTypePermissions:
             self.scrollView.userInteractionEnabled = NO;
-            
-            self.pageControl.currentPageIndicatorTintColor = UIColor.mnz_green00BFA5;
-            self.pageControl.userInteractionEnabled = NO;
+            self.pageControl.hidden = YES;
             
             [self.primaryButton setTitle:AMLocalizedString(@"Allow Access", @"Button which triggers a request for a specific permission, that have been explained to the user beforehand") forState:UIControlStateNormal];
             self.primaryButton.backgroundColor = UIColor.mnz_green00BFA5;
@@ -93,6 +92,9 @@
                     [self.scrollView.subviews.firstObject.subviews[nextIndex] removeFromSuperview];
                 }
             }
+            
+            self.pageLabel.text = [[AMLocalizedString(@"%1 of %2", @"Shows number of the current page. '%1' will be replaced by current page number. '%2' will be replaced by number of all pages.") stringByReplacingOccurrencesOfString:@"%1" withString:@"1"] stringByReplacingOccurrencesOfString:@"%2" withString:[NSString stringWithFormat:@"%tu", self.scrollView.subviews.firstObject.subviews.count]];
+            self.pageLabel.hidden = NO;
             
             break;
     }
@@ -130,6 +132,7 @@
     BOOL animated = self.type == OnboardingTypeDefault;
     [self.scrollView setContentOffset:CGPointMake(newX, 0.0f) animated:animated];
     self.pageControl.currentPage = page;
+    self.pageLabel.text = [[AMLocalizedString(@"%1 of %2", @"Shows number of the current page. '%1' will be replaced by current page number. '%2' will be replaced by number of all pages.") stringByReplacingOccurrencesOfString:@"%1" withString:[NSString stringWithFormat:@"%td", page + 1]] stringByReplacingOccurrencesOfString:@"%2" withString:[NSString stringWithFormat:@"%tu", self.scrollView.subviews.firstObject.subviews.count]];
 }
 
 - (void)nextPageOrDismiss {
