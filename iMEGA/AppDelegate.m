@@ -595,23 +595,21 @@
                 MEGAChatCall *call = [[MEGASdkManager sharedMEGAChatSdk] chatCallForChatId:handle];
                 self.videoCall = [userActivity.activityType isEqualToString:@"INStartVideoCallIntent"] ? YES : NO;
 
-                if (call) {
+                if (call && call.status == MEGAChatCallStatusInProgress) {
                     self.chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:call.chatId];
                     MEGALogDebug(@"call id %tu", call.callId);
-                    if (call.status == MEGAChatCallStatusInProgress) {
-                        MEGALogDebug(@"There is a call in progress for this chat %@", call);
-                        UIViewController *presentedVC = UIApplication.mnz_presentingViewController;
-                        if ([presentedVC isKindOfClass:MEGANavigationController.class]) {
-                            MEGANavigationController *navigation = (MEGANavigationController *)presentedVC;
-                            if ([navigation.viewControllers.firstObject isKindOfClass:GroupCallViewController.class]) {
-                                GroupCallViewController *callVC = (GroupCallViewController *)navigation.viewControllers.firstObject;
-                                callVC.callType = CallTypeActive;
-                                if (!callVC.videoCall) {
-                                    [callVC tapOnVideoCallkitWhenDeviceIsLocked];
-                                }
+                    MEGALogDebug(@"There is a call in progress for this chat %@", call);
+                    UIViewController *presentedVC = UIApplication.mnz_presentingViewController;
+                    if ([presentedVC isKindOfClass:MEGANavigationController.class]) {
+                        MEGANavigationController *navigation = (MEGANavigationController *)presentedVC;
+                        if ([navigation.viewControllers.firstObject isKindOfClass:GroupCallViewController.class]) {
+                            GroupCallViewController *callVC = (GroupCallViewController *)navigation.viewControllers.firstObject;
+                            callVC.callType = CallTypeActive;
+                            if (!callVC.videoCall) {
+                                [callVC tapOnVideoCallkitWhenDeviceIsLocked];
                             }
                         }
-                    } 
+                    }
                 } else {
                     self.chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:handle];
                     MEGAChatConnection chatConnection = [[MEGASdkManager sharedMEGAChatSdk] chatConnectionState:self.chatRoom.chatId];
