@@ -1701,7 +1701,9 @@ void uncaughtExceptionHandler(NSException *exception) {
             } else {
                 isAccountFirstLogin = YES;
                 self.newAccount = (MEGALinkManager.urlType == URLTypeConfirmationLink);
-                [MEGALinkManager resetLinkAndURLType];
+                if (MEGALinkManager.selectedOption == LinkOptionDefault) {
+                    [MEGALinkManager resetLinkAndURLType];
+                }
             }
             [[MEGASdkManager sharedMEGASdk] fetchNodes];
             break;

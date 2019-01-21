@@ -185,6 +185,7 @@ static NSString *nodeToPresentBase64Handle;
             break;
     }
     
+    [MEGALinkManager resetLinkAndURLType];
     [MEGALinkManager resetUtilsForLinksWithoutSession];
 }
 
