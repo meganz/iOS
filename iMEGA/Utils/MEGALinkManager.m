@@ -634,7 +634,7 @@ static NSString *nodeToPresentBase64Handle;
     [UIApplication.mnz_presentingViewController presentViewController:inviteOrDismissModal animated:YES completion:nil];
 }
 
-- (void)handlePublicChatLink {
++ (void)handlePublicChatLink {
     NSURL *chatLinkUrl = MEGALinkManager.linkURL;
     [SVProgressHUD show];
     
