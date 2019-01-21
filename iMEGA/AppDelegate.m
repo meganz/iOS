@@ -113,8 +113,6 @@
     [MEGASdk setLogLevel:MEGALogLevelFatal];
 #endif
     
-    self.window = [[UIWindow alloc] initWithFrame:UIScreen.mainScreen.bounds];
-
     [MEGASdk setLogToConsole:YES];
     
     [self migrateLocalCachesLocation];
