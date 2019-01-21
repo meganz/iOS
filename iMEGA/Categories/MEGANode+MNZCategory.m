@@ -6,10 +6,11 @@
 #import "SAMKeychain.h"
 #import "SVProgressHUD.h"
 
+#import "DevicePermissionsHelper.h"
 #import "Helper.h"
-#import "MEGANode.h"
 #import "MEGAMoveRequestDelegate.h"
 #import "MEGANodeList+MNZCategory.h"
+#import "MEGALinkManager.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGARemoveRequestDelegate.h"
 #import "MEGARenameRequestDelegate.h"
@@ -21,15 +22,68 @@
 #import "UITextField+MNZCategory.h"
 
 #import "BrowserViewController.h"
-#import "LoginViewController.h"
+#import "CloudDriveViewController.h"
 #import "MainTabBarController.h"
 #import "MEGAAVViewController.h"
 #import "MEGANavigationController.h"
-#import "MyAccountHallViewController.h"
-#import "PreviewDocumentViewController.h"
+#import "MEGAPhotoBrowserViewController.h"
 #import "MEGAQLPreviewController.h"
+#import "OnboardingViewController.h"
+#import "PreviewDocumentViewController.h"
+#import "SharedItemsViewController.h"
 
 @implementation MEGANode (MNZCategory)
+
+- (void)navigateToParentAndPresent {
+    MainTabBarController *mainTBC = (MainTabBarController *) UIApplication.sharedApplication.delegate.window.rootViewController;
+    
+    if ([[MEGASdkManager sharedMEGASdk] accessLevelForNode:self] != MEGAShareTypeAccessOwner) { // Node from inshare
+        mainTBC.selectedIndex = SHARES;
+        SharedItemsViewController *sharedItemsVC = mainTBC.childViewControllers[SHARES].childViewControllers.firstObject;
+        [sharedItemsVC selectSegment:0]; // Incoming
+    } else {
+        mainTBC.selectedIndex = CLOUD;
+    }
+    
+    UINavigationController *navigationController = [mainTBC.childViewControllers objectAtIndex:mainTBC.selectedIndex];
+    [navigationController popToRootViewControllerAnimated:NO];
+    
+    NSArray *parentTreeArray = self.mnz_parentTreeArray;
+    for (MEGANode *node in parentTreeArray) {
+        CloudDriveViewController *cloudDriveVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
+        cloudDriveVC.parentNode = node;
+        [navigationController pushViewController:cloudDriveVC animated:NO];
+    }
+    
+    switch (self.type) {
+        case MEGANodeTypeFolder:
+        case MEGANodeTypeRubbish: {
+            CloudDriveViewController *cloudDriveVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
+            cloudDriveVC.parentNode = self;
+            [navigationController pushViewController:cloudDriveVC animated:NO];
+            break;
+        }
+            
+        case MEGANodeTypeFile: {
+            if (self.name.mnz_isImagePathExtension || self.name.mnz_isVideoPathExtension) {
+                MEGANode *parentNode = [[MEGASdkManager sharedMEGASdk] nodeForHandle:self.parentHandle];
+                MEGANodeList *nodeList = [[MEGASdkManager sharedMEGASdk] childrenForParent:parentNode];
+                NSMutableArray<MEGANode *> *mediaNodesArray = [nodeList mnz_mediaNodesMutableArrayFromNodeList];
+                
+                DisplayMode displayMode = [[MEGASdkManager sharedMEGASdk] accessLevelForNode:self] == MEGAShareTypeAccessOwner ? DisplayModeCloudDrive : DisplayModeSharedItem;
+                MEGAPhotoBrowserViewController *photoBrowserVC = [MEGAPhotoBrowserViewController photoBrowserWithMediaNodes:mediaNodesArray api:[MEGASdkManager sharedMEGASdk] displayMode:displayMode presentingNode:self preferredIndex:0];
+                
+                [navigationController presentViewController:photoBrowserVC animated:YES completion:nil];
+            } else {
+                [self mnz_openNodeInNavigationController:navigationController folderLink:NO];
+            }
+            break;
+        }
+            
+        default:
+            break;
+    }
+}
 
 - (void)mnz_openNodeInNavigationController:(UINavigationController *)navigationController folderLink:(BOOL)isFolderLink {
     UIViewController *viewController = [self mnz_viewControllerForNodeInFolderLink:isFolderLink];
@@ -165,40 +219,22 @@
 }
 
 - (void)mnz_saveToPhotosWithApi:(MEGASdk *)api {
-    [PHPhotoLibrary requestAuthorization:^(PHAuthorizationStatus status) {
-        switch (status) {
-            case PHAuthorizationStatusAuthorized: {
-                [SVProgressHUD showImage:[UIImage imageNamed:@"saveToPhotos"] status:AMLocalizedString(@"Saving to Photos…", @"Text shown when starting the process to save a photo or video to Photos app")];
-                NSString *temporaryPath = [[NSTemporaryDirectory() stringByAppendingPathComponent:self.base64Handle] stringByAppendingPathComponent:self.name];
-                NSString *temporaryFingerprint = [[MEGASdkManager sharedMEGASdk] fingerprintForFilePath:temporaryPath];
-                if ([temporaryFingerprint isEqualToString:self.fingerprint]) {
-                    [self mnz_copyToGalleryFromTemporaryPath:temporaryPath];
-                } else if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-                    NSString *downloadsDirectory = [[NSFileManager defaultManager] downloadsDirectory];
-                    downloadsDirectory = downloadsDirectory.mnz_relativeLocalPath;
-                    NSString *offlineNameString = [[MEGASdkManager sharedMEGASdkFolder] escapeFsIncompatible:self.name];
-                    NSString *localPath = [downloadsDirectory stringByAppendingPathComponent:offlineNameString];
-                    [[MEGASdkManager sharedMEGASdk] startDownloadNode:[api authorizeNode:self] localPath:localPath appData:[[NSString new] mnz_appDataToSaveInPhotosApp]];
-                }
-                break;
+    [DevicePermissionsHelper photosPermissionWithCompletionHandler:^(BOOL granted) {
+        if (granted) {
+            [SVProgressHUD showImage:[UIImage imageNamed:@"saveToPhotos"] status:AMLocalizedString(@"Saving to Photos…", @"Text shown when starting the process to save a photo or video to Photos app")];
+            NSString *temporaryPath = [[NSTemporaryDirectory() stringByAppendingPathComponent:self.base64Handle] stringByAppendingPathComponent:self.name];
+            NSString *temporaryFingerprint = [MEGASdkManager.sharedMEGASdk fingerprintForFilePath:temporaryPath];
+            if ([temporaryFingerprint isEqualToString:self.fingerprint]) {
+                [self mnz_copyToGalleryFromTemporaryPath:temporaryPath];
+            } else if (MEGAReachabilityManager.isReachableHUDIfNot) {
+                NSString *downloadsDirectory = [NSFileManager.defaultManager downloadsDirectory];
+                downloadsDirectory = downloadsDirectory.mnz_relativeLocalPath;
+                NSString *offlineNameString = [MEGASdkManager.sharedMEGASdkFolder escapeFsIncompatible:self.name];
+                NSString *localPath = [downloadsDirectory stringByAppendingPathComponent:offlineNameString];
+                [MEGASdkManager.sharedMEGASdk startDownloadNode:[api authorizeNode:self] localPath:localPath appData:[[NSString new] mnz_appDataToSaveInPhotosApp]];
             }
-                
-            case PHAuthorizationStatusRestricted:
-            case PHAuthorizationStatusDenied: {
-                UIAlertController *permissionsAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"attention", @"Alert title to attract attention") message:AMLocalizedString(@"photoLibraryPermissions", @"Alert message to explain that the MEGA app needs permission to access your device photos") preferredStyle:UIAlertControllerStyleAlert];
-                
-                [permissionsAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
-                
-                [permissionsAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-                    [UIApplication.sharedApplication openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString] options:@{} completionHandler:nil];
-                }]];
-                
-                [UIApplication.mnz_visibleViewController presentViewController:permissionsAlertController animated:YES completion:nil];
-                break;
-            }
-                
-            default:
-                break;
+        } else {
+            [DevicePermissionsHelper alertPhotosPermission];
         }
     }];
 }
@@ -363,34 +399,25 @@
         }
 
         if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
+            [Helper downloadNode:self folderPath:Helper.relativePathForOffline isFolderLink:isFolderLink shouldOverwrite:NO];
+            
             [viewController dismissViewControllerAnimated:YES completion:^{
-                UIViewController *rootVC = UIApplication.sharedApplication.delegate.window.rootViewController;
-                if ([rootVC isKindOfClass:MainTabBarController.class]) {
-                    MainTabBarController *mainTBC = (MainTabBarController *)rootVC;
-                    mainTBC.selectedIndex = MYACCOUNT;
-                    MEGANavigationController *navigationController = [mainTBC.childViewControllers objectAtIndex:MYACCOUNT];
-                    MyAccountHallViewController *myAccountHallVC = navigationController.viewControllers.firstObject;
-                    [myAccountHallVC openOffline];
-                }
-                
                 [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:AMLocalizedString(@"downloadStarted", nil)];
-                
-                [Helper downloadNode:self folderPath:[Helper relativePathForOffline] isFolderLink:isFolderLink shouldOverwrite:NO];
             }];
         } else {
             if (isFolderLink) {
-                [[Helper nodesFromLinkMutableArray] addObject:self];
-                [Helper setSelectedOptionOnLink:AfterLoginActionDownloadFolderLink];
+                [MEGALinkManager.nodesFromLinkMutableArray addObject:self];
+                MEGALinkManager.selectedOption = LinkOptionDownloadFolderOrNodes;
             } else {
-                [Helper setLinkNode:self];
-                [Helper setSelectedOptionOnLink:AfterLoginActionDownloadFileLink];
+                [MEGALinkManager.nodesFromLinkMutableArray addObject:self];
+                MEGALinkManager.selectedOption = LinkOptionDownloadNode;
             }
             
-            LoginViewController *loginVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"LoginViewControllerID"];
+            OnboardingViewController *onboardingVC = [OnboardingViewController instanciateOnboardingWithType:OnboardingTypeDefault];
             if (viewController.navigationController) {
-                [viewController.navigationController pushViewController:loginVC animated:YES];
+                [viewController.navigationController pushViewController:onboardingVC animated:YES];
             } else {
-                MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:loginVC];
+                MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:onboardingVC];
                 [navigationController addCancelButton];
                 [viewController presentViewController:navigationController animated:YES completion:nil];
             }
@@ -411,18 +438,18 @@
             }];
         } else {
             if (isFolderLink) {
-                [[Helper nodesFromLinkMutableArray] addObject:self];
-                [Helper setSelectedOptionOnLink:AfterLoginActionImportFolderLink];
+                [MEGALinkManager.nodesFromLinkMutableArray addObject:self];
+                MEGALinkManager.selectedOption = LinkOptionImportFolderOrNodes;
             } else {
-                [Helper setLinkNode:self];
-                [Helper setSelectedOptionOnLink:AfterLoginActionImportFileLink];
+                [MEGALinkManager.nodesFromLinkMutableArray addObject:self];
+                MEGALinkManager.selectedOption = LinkOptionImportNode;
             }
             
-            LoginViewController *loginVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"LoginViewControllerID"];
+            OnboardingViewController *onboardingVC = [OnboardingViewController instanciateOnboardingWithType:OnboardingTypeDefault];
             if (viewController.navigationController) {
-                [viewController.navigationController pushViewController:loginVC animated:YES];
+                [viewController.navigationController pushViewController:onboardingVC animated:YES];
             } else {
-                MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:loginVC];
+                MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:onboardingVC];
                 [navigationController addCancelButton];
                 [viewController presentViewController:navigationController animated:YES completion:nil];
             }

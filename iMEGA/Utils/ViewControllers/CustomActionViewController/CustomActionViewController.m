@@ -107,17 +107,20 @@
     UICollectionReusableView *header = [self.collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:@"actionHeader" forIndexPath:indexPath];
     
     UILabel *title = [header viewWithTag:1];
-    title.text = self.node.name;
     UILabel *info = [header viewWithTag:2];
-    info.text = [Helper sizeAndDateForNode:self.node api:[MEGASdkManager sharedMEGASdk]];
-    
     UIImageView *imageView = [header viewWithTag:100];
     
+    title.text = self.node.name;
     if (self.node.isFile) {
         [imageView mnz_setThumbnailByNode:self.node];
+        info.text = [Helper sizeAndDateForNode:self.node api:[MEGASdkManager sharedMEGASdk]];
     } else if (self.node.isFolder) {
         [imageView mnz_imageForNode:self.node];
-        info.text = [Helper filesAndFoldersInFolderNode:self.node api:[MEGASdkManager sharedMEGASdk]];
+        if (self.displayMode == DisplayModeFolderLink) {
+            info.text = [Helper filesAndFoldersInFolderNode:self.node api:[MEGASdkManager sharedMEGASdkFolder]];
+        } else {
+            info.text = [Helper filesAndFoldersInFolderNode:self.node api:[MEGASdkManager sharedMEGASdk]];
+        }
     }
     
     return header;

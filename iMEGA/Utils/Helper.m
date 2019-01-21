@@ -2,7 +2,6 @@
 
 #import <CoreSpotlight/CoreSpotlight.h>
 #import "LTHPasscodeViewController.h"
-#import <SafariServices/SafariServices.h>
 #import "SAMKeychain.h"
 #import "SVProgressHUD.h"
 
@@ -18,7 +17,6 @@
 #import "MEGANodeList+MNZCategory.h"
 #import "MEGAProcessAsset.h"
 #import "MEGALogger.h"
-#import "MEGAReachabilityManager.h"
 #import "MEGASdkManager.h"
 #import "MEGAStore.h"
 #import "MEGAUser+MNZCategory.h"
@@ -32,11 +30,6 @@
 #import "RemoveSharingActivity.h"
 #import "ShareFolderActivity.h"
 #import "SendToChatActivity.h"
-
-static MEGANode *linkNode;
-static NSMutableArray *nodesFromLinkMutableArray;
-static NSURL *chatLink;
-static AfterLoginAction linkOption;
 
 static MEGAIndexer *indexer;
 
@@ -444,40 +437,6 @@ static MEGAIndexer *indexer;
     return destinationPath;
 }
 
-#pragma mark - Utils for links when you are not logged
-
-+ (MEGANode *)linkNode {
-    return linkNode;
-}
-
-+ (void)setLinkNode:(MEGANode *)node {
-    linkNode = node;
-}
-
-+ (NSMutableArray *)nodesFromLinkMutableArray {
-    if (nodesFromLinkMutableArray == nil) {
-        nodesFromLinkMutableArray = [[NSMutableArray alloc] init];
-    }
-    
-    return nodesFromLinkMutableArray;
-}
-
-+ (NSURL *)chatLink {
-    return chatLink;
-}
-
-+ (void)setChatLink:(NSURL *)pChatLink {
-    chatLink = pChatLink;
-}
-
-+ (AfterLoginAction)selectedOptionOnLink {
-    return linkOption;
-}
-
-+ (void)setSelectedOptionOnLink:(AfterLoginAction)option {
-    linkOption = option;
-}
-
 #pragma mark - Utils for transfers
 
 + (NSMutableDictionary *)downloadingNodes {
@@ -620,6 +579,15 @@ static MEGAIndexer *indexer;
     }
 }
 
++ (NSMutableArray *)uploadingNodes {
+    static NSMutableArray *uploadingNodes = nil;
+    if (!uploadingNodes) {
+        uploadingNodes = [[NSMutableArray alloc] init];
+    }
+    
+    return uploadingNodes;
+}
+
 + (void)startUploadTransfer:(MOUploadTransfer *)uploadTransfer {
     PHAsset *asset = [PHAsset fetchAssetsWithLocalIdentifiers:@[uploadTransfer.localIdentifier] options:nil].firstObject;
     
@@ -645,23 +613,25 @@ static MEGAIndexer *indexer;
         } else {
             [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:filePath.mnz_relativeLocalPath parent:parentNode appData:appData isSourceTemporary:YES];
         }
+        
+        if (uploadTransfer.localIdentifier) {
+            [[Helper uploadingNodes] addObject:uploadTransfer.localIdentifier];
+        }
+        [[MEGAStore shareInstance] deleteUploadTransfer:uploadTransfer];
     } node:^(MEGANode *node) {
         if ([[[MEGASdkManager sharedMEGASdk] parentNodeForNode:node] handle] == parentNode.handle) {
             MEGALogDebug(@"The asset exists in MEGA in the parent folder");
         } else {
             [[MEGASdkManager sharedMEGASdk] copyNode:node newParent:parentNode];
         }
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [[MEGAStore shareInstance] deleteUploadTransfer:uploadTransfer];
-        });
+        [[MEGAStore shareInstance] deleteUploadTransfer:uploadTransfer];
         [Helper startPendingUploadTransferIfNeeded];
     } error:^(NSError *error) {
         [SVProgressHUD showImage:[UIImage imageNamed:@"hudError"] status:[NSString stringWithFormat:@"%@ %@ \r %@", AMLocalizedString(@"Transfer failed:", nil), asset.localIdentifier, error.localizedDescription]];
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [[MEGAStore shareInstance] deleteUploadTransfer:uploadTransfer];
-        });
+        [[MEGAStore shareInstance] deleteUploadTransfer:uploadTransfer];
         [Helper startPendingUploadTransferIfNeeded];
     }];
+    
     [processAsset prepare];
 }
 
@@ -790,7 +760,9 @@ static MEGAIndexer *indexer;
     }
     
     if (reindex) {
-        [indexer index:node];
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+            [indexer index:node];
+        });
     }
 }
 
@@ -1197,28 +1169,22 @@ static MEGAIndexer *indexer;
     return searchController;
 }
 
-+ (void)presentSafariViewControllerWithURL:(NSURL *)url {
-    if (url) {
-        if (!([url.scheme.lowercaseString isEqualToString:@"http"] || [url.scheme.lowercaseString isEqualToString:@"https"])) {
-            MEGALogInfo(@"To use SFSafariViewController the URL must use the http or https scheme: \n%@", url.absoluteString);
-            [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"linkNotValid", @"Message shown when the user clicks on an link that is not valid")];
-            return;
-        }
++ (void)resetSearchControllerFrame:(UISearchController *)searchController {
+    searchController.view.frame = CGRectMake(0, UIApplication.sharedApplication.statusBarFrame.size.height, searchController.view.frame.size.width, searchController.view.frame.size.height);
+    searchController.searchBar.superview.frame = CGRectMake(0, 0, searchController.searchBar.superview.frame.size.width, searchController.searchBar.superview.frame.size.height);
+    searchController.searchBar.frame = CGRectMake(0, 0, searchController.searchBar.frame.size.width, searchController.searchBar.frame.size.height);
+}
+
+#pragma mark - Manage session
+
++ (BOOL)hasSession_alertIfNot {
+    if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
+        return YES;
     } else {
-        MEGALogInfo(@"URL string was malformed or nil: \n%@", url.absoluteString);
-        [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"linkNotValid", @"Message shown when the user clicks on an link that is not valid")];
-        return;
-    }
-    
-    if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-        SFSafariViewController *safariViewController = [[SFSafariViewController alloc] initWithURL:url];
-        if (@available(iOS 10.0, *)) {
-            safariViewController.preferredControlTintColor = UIColor.mnz_redMain;
-        } else {
-            safariViewController.view.tintColor = UIColor.mnz_redMain;
-        }
-        
-        [UIApplication.mnz_presentingViewController presentViewController:safariViewController animated:YES completion:nil];
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"pleaseLogInToYourAccount", @"Alert title shown when you need to log in to continue with the action you want to do") message:nil preferredStyle:UIAlertControllerStyleAlert];
+        [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
+        [UIApplication.mnz_visibleViewController presentViewController:alertController animated:YES completion:nil];
+        return NO;
     }
 }
 
@@ -1232,14 +1198,7 @@ static MEGAIndexer *indexer;
     
     [Helper deleteUserData];
     [Helper deleteMasterKey];
-    
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    UIViewController *viewController = [storyboard instantiateViewControllerWithIdentifier:@"initialViewControllerID"];
-    UIWindow *window = [[[UIApplication sharedApplication] delegate] window];
-    [UIView transitionWithView:window duration:0.5 options:(UIViewAnimationOptionTransitionCrossDissolve | UIViewAnimationOptionAllowAnimatedContent) animations:^{
-        [window setRootViewController:viewController];
-    } completion:nil];
-        
+            
     [Helper resetCameraUploadsSettings];
     [Helper resetUserData];
     
@@ -1365,11 +1324,14 @@ static MEGAIndexer *indexer;
 
 + (void)resetUserData {
     [[Helper downloadingNodes] removeAllObjects];
+    [[Helper uploadingNodes] removeAllObjects];
     
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"agreedCopywriteWarning"];
     
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"TransfersPaused"];
     
+    [NSUserDefaults.standardUserDefaults removeObjectForKey:kIsCameraUploadsEnabled];
+    [NSUserDefaults.standardUserDefaults removeObjectForKey:kIsUploadVideosEnabled];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"IsSavePhotoToGalleryEnabled"];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"IsSaveVideoToGalleryEnabled"];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"ChatVideoQuality"];
@@ -1401,7 +1363,11 @@ static MEGAIndexer *indexer;
 
 + (void)deletePasscode {
     if ([LTHPasscodeViewController doesPasscodeExist]) {
-        [LTHPasscodeViewController deletePasscode];
+        if (LTHPasscodeViewController.sharedUser.isLockscreenPresent) {
+            [LTHPasscodeViewController deletePasscodeAndClose];
+        } else {
+            [LTHPasscodeViewController deletePasscode];
+        }
     }
 }
 

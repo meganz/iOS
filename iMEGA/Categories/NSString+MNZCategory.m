@@ -6,6 +6,8 @@
 #import <MobileCoreServices/MobileCoreServices.h>
 #import <Photos/Photos.h>
 
+#import "NSDate+DateTools.h"
+
 #import "MEGASdkManager.h"
 
 static NSString* const A = @"[A]";
@@ -661,7 +663,7 @@ static NSString* const B = @"[B]";
             if (data) {
                 CGImageSourceRef imageData = CGImageSourceCreateWithData((CFDataRef)data, NULL);
                 if (imageData) {
-                    NSDictionary *metadata = (__bridge NSDictionary *)CGImageSourceCopyPropertiesAtIndex(imageData, 0, NULL);
+                    NSDictionary *metadata = (__bridge_transfer NSDictionary *)CGImageSourceCopyPropertiesAtIndex(imageData, 0, NULL);
                     
                     CFRelease(imageData);
                     
@@ -713,6 +715,35 @@ static NSString* const B = @"[B]";
 
 - (NSString *)mnz_relativeLocalPath {
     return [self stringByReplacingOccurrencesOfString:[NSHomeDirectory() stringByAppendingString:@"/"] withString:@""];
+}
+
++ (NSString *)mnz_lastGreenStringFromMinutes:(NSInteger)minutes {    
+    NSString *lastSeenMessage;
+    if (minutes < 65535) {
+        NSDate *dateLastSeen = [NSDate dateWithTimeIntervalSinceNow:-minutes*SECONDS_IN_MINUTE];
+        NSDateFormatter *timeFormatter = [[NSDateFormatter alloc] init];
+        timeFormatter.dateFormat = @"HH:mm";
+        timeFormatter.locale = [NSLocale autoupdatingCurrentLocale];
+        NSString *timeString = [timeFormatter stringFromDate:dateLastSeen];
+        NSString *dateString;
+        if ([[NSCalendar currentCalendar] isDateInToday:dateLastSeen]) {
+            dateString = AMLocalizedString(@"Today", @"");
+        } else if ([[NSCalendar currentCalendar] isDateInYesterday:dateLastSeen]) {
+            dateString = AMLocalizedString(@"Yesterday", @"");
+        } else {
+            dateString = [dateLastSeen formattedDateWithFormat:@"dd MMM"];
+        }
+        lastSeenMessage = AMLocalizedString(@"Last seen %s", @"Shown when viewing a 1on1 chat (at least for now), if the user is offline.");
+        BOOL isRTLLanguage = UIApplication.sharedApplication.userInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft;
+        if (isRTLLanguage) {
+            lastSeenMessage = [lastSeenMessage stringByReplacingOccurrencesOfString:@"%s" withString:[NSString stringWithFormat:@"%@ %@", timeString, dateString]];
+        } else {
+            lastSeenMessage = [lastSeenMessage stringByReplacingOccurrencesOfString:@"%s" withString:[NSString stringWithFormat:@"%@ %@", dateString, timeString]];
+        }
+    } else {
+        lastSeenMessage = AMLocalizedString(@"Last seen a long time ago", @"Text to inform the user the 'Last seen' time of a contact is a long time ago (more than 65535 minutes)");
+    }
+    return lastSeenMessage;
 }
 
 #pragma mark - File names and extensions

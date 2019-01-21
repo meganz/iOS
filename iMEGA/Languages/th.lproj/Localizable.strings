@@ -637,7 +637,7 @@
 /* Permissions given to the user you share your folder with */
 "readAndWrite"="อ่านและเขียน";
 /* Permissions given to the user you share your folder with */
-"fullAccess"="เข้าถึงได้เต็มรูปแบบ";
+"fullAccess"="เข้าถึงแบบเต็มที่";
 /* Title of the Settings section */
 "settingsTitle"="ตั้งค่า";
 /* Title of one of the Settings sections where you can set up the 'Camera Uploads' options */
@@ -1364,8 +1364,10 @@
 /* Between paragraph 5 and 6 we have to put the string with the 'autorenewableDescription' key */
 /* Paragraph 6 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
 "generalDescriptionParagraph6"="สำหรับข้อมูลเพิ่มเติม กรุณาตรวจสอบได้ที่เว็บไซต์ของเรา: https://mega.nz/\nเงื่อนไขการให้บริการ: https://mega.nz/terms\nนโยบายสิทธิส่วนบุคคล: https://mega.nz/privacy";
-/* Label shown when you receive an incoming call, before start the call. */
+/* Label shown when you call someone (outgoing call), before the call starts. */
 "calling..."="กำลังโทร...";
+/* notification subtitle of incoming calls */
+"Incoming call"="สายเรียกเข้า";
 /* Notification text body shown when you have missed one audio call */
 "missedAudioCall"="สายที่ไม่ได้รับ";
 /* Notification text body shown when you have missed several audio calls. [A] = {number of missed audio calls} */
@@ -1622,6 +1624,10 @@
 "Setup MEGA"="ตั้งค่า MEGA";
 /* Detailed explanation of why the user should give some permissions to MEGA */
 "To fully take advantage of your MEGA account we need to ask you some permissions."="เพื่อใช้ประโยชน์จากบัญชี MEGA ของคุณอย่างเต็มที่ เราจำเป็นต้องขอสิทธิ์บางอย่างแก่คุณ";
+/* Message warning the user about the risk of not setting up permissions */
+"The MEGA app may not work as expected without the required permissions. Are you sure?"="แอป MEGA อาจไม่ทำงานอย่างที่คาดไว้ หากไม่มีการอนุญาตที่จำเป็น คุณแน่ใจหรือไม่";
+/* Shows number of the current page. '%1' will be replaced by current page number. '%2' will be replaced by number of all pages. */
+"%1 of %2"="%1 จาก %2";
 /* Title label that explains that the user is going to be asked for the photos permission */
 "Allow Access to Photos"="อนุญาตให้เข้าถึงรูปถ่าย";
 /* Detailed explanation of why the user should give permission to access to the photos */
@@ -1678,3 +1684,109 @@
 "Saved to Photos"="บันทึกไปยังรูปภาพแล้ว";
 /* Text shown when an error occurs when trying to save a photo or video to Photos app */
 "Could not save Item"="ไม่สามารถบันทึกรายการได้";
+/* Text shown for switching from thumbnail view to list view. */
+"List view"="มุมมองรายการ";
+/* Text shown for switching from list view to thumbnail view. */
+"Thumbnail view"="มุมมองภาพตัวอย่าง";
+/* Message to inform the local user that someone has joined the current group call */
+"%@ joined the call."="%@ เข้าร่วมสายแล้ว";
+/* Message to inform the local user that someone has left the current group call */
+"%@ left the call."="%@ วางสายไปแล้ว";
+/* Message to inform the local user is having a bad quality network with someone in the current group call */
+"Poor connection."="การเชื่อมต่อไม่ดี";
+/* Message shown in a chat room when there is an active group call */
+"There is an active group call. Tap to join."="มีการโทรกลุ่มอยู่ในขณะนี้ แตะเพื่อเข้าร่วม";
+/* Message shown in a chat room for a group call in progress displaying the duration of the call */
+"Touch to return to call %@"="แตะเพื่อกลับไปที่สาย %@";
+/* Menu item to change from grid view to list view */
+"List view"="มุมมองรายการ";
+/* Menu item to change from list view to grid view */
+"Thumbnail view"="มุมมองภาพตัวอย่าง";
+/* There are no notifications to display. */
+"No notifications"="ไม่มีแจ้งเตือน";
+/* The header of a notification related to payments */
+"Payment info"="ข้อมูลการชำระเงิน";
+/* A title for a notification saying the user’s pricing plan will expire soon. */
+"PRO membership plan expiring soon"="แผนสมาชิกแบบ PRO จะหมดอายุเร็ว ๆนี้";
+/* The header of a notification indicating that a file or folder has been taken down due to infringement or other reason. */
+"Takedown notice"="แจ้งให้ลบเนื้อหา";
+/* The header of a notification indicating that a file or folder that was taken down has now been restored due to a successful counter-notice. */
+"Takedown reinstated"="คืนสิทธิ์การลบเนื้อหา";
+/* Label shown inside an unseen notification */
+"New"="ใหม่";
+/* When a contact sent a contact/friend request */
+"Sent you a contact request"="ส่งคำขอสำหรับรายการติดต่อแล้ว";
+/* A notification that the other user cancelled their contact request so it is no longer valid. E.g. user@email.com cancelled their contact request. */
+"Cancelled their contact request"="ยกเลิกคำขอผู้ติดต่อของพวกเขาแล้ว";
+/* A reminder notification to remind the user to respond to the contact request. */
+"Reminder: You have a contact request"="แจ้งเตือน: คุณมีคำขอผู้ติดต่อใหม่";
+/* A notification telling the user that the other user deleted them as a contact. E.g. user@email.com deleted you as a contact. */
+"Deleted you as a contact"="ลบคุณออกจากผู้ติดต่อ";
+/* A notification telling the user that they are now fully connected with the other user (the users are in each other’s address books). */
+"Contact relationship established"="ความสัมพันธ์ของผู้ติดต่อที่สร้างขึ้น";
+/* A notification telling the user that one of their contact’s accounts has been deleted or deactivated. */
+"Account has been deleted/deactivated"="บัญชีได้ถูกลบ/ปิดใช้งานแล้ว";
+/* A notification telling the user that another user blocked them as a contact (they will no longer be able to contact them). E.g. name@email.com blocked you as a contact. */
+"Blocked you as a contact"="บล็อกคุณจากผู้ติดต่อ";
+/* Response text after clicking Ignore on an incoming contact request notification. */
+"You ignored a contact request"="คุณละเว้นคำขอผู้ติดต่อแล้ว";
+/* Response text after clicking Accept on an incoming contact request notification. */
+"You accepted a contact request"="คุณยอมรับคำขอผู้ติดต่อแล้ว";
+/* Response text after clicking Deny on an incoming contact request notification. */
+"You denied a contact request"="คุณปฏิเสธคำขอผู้ติดต่อ";
+/* When somebody accepted your contact request */
+"Accepted your contact request"="ยอมรับคำขอผู้ติดต่อของคุณแล้ว";
+/* When somebody denied your contact request */
+"Denied your contact request"="ปฏิเสธคำขอผู้ติดต่อแล้ว";
+/* notification text */
+"A user has left the shared folder {0}"="ผู้ใช้ออกจากโฟลเดอร์ที่ใช้ร่วมกัน {0}";
+/* This is shown in the Notification dialog when the email address of a contact is not found and access to the share is lost for some reason (e.g. share removal or contact removal). */
+"Access to folders was removed."="การเข้าถึงโฟลเดอร์ถูกลบออกแล้ว";
+/* Content of a notification that informs how many files and folders have been added to a shared folder */
+"Added 1 file"="เพิ่ม 1 ไฟล์แล้ว";
+/* Content of a notification that informs how many files and folders have been added to a shared folder */
+"Added %lld files"="เพิ่ม %lld ไฟล์แล้ว";
+/* Content of a notification that informs how many files and folders have been added to a shared folder */
+"Added 1 folder"="เพิ่ม 1 โฟลเดอร์แล้ว";
+/* Content of a notification that informs how many files and folders have been added to a shared folder */
+"Added %lld folders"="เพิ่ม %lld โฟลเดอร์แล้ว";
+/* Content of a notification that informs how many files and folders have been added to a shared folder */
+"Added 1 file and 1 folder"="เพิ่ม 1 ไฟล์และ 1 โฟลเดอร์แล้ว";
+/* Content of a notification that informs how many files and folders have been added to a shared folder */
+"Added %lld files and 1 folder"="เพิ่ม %lld ไฟล์และ 1 โฟลเดอร์แล้ว";
+/* Content of a notification that informs how many files and folders have been added to a shared folder */
+"Added 1 file and %lld folders"="เพิ่ม 1 ไฟล์และ %lld โฟลเดอร์แล้ว";
+/* Content of a notification that informs how many files and folders have been added to a shared folder */
+"Added [A] files and [B] folders"="เพิ่ม [A] ไฟล์และ [B] โฟลเดอร์แล้ว";
+/* Notification when on client side when owner of a shared folder removes folder/file from it. */
+"Removed item from shared folder"="ลบรายการออกจากโฟลเดอร์ที่แชร์";
+/* Notification popup. Notification for multiple removed items from a share. Please keep [X] as it will be replaced at runtime with the number of removed items. */
+"Removed [X] items from a share"="ได้เอา [X] รายการออกจากการแชร์";
+/* A notification telling the user that their Pro plan payment was successfully received. The %1 indicates the name of the Pro plan they paid for e.g. Lite, PRO III. */
+"Your payment for the %1 plan was received."="การชำระเงินสำหรับแผน %1 ได้รับเรียบร้อยแล้ว";
+/* A notification telling the user that their Pro plan payment was unsuccessful. The %1 indicates the name of the Pro plan they were trying to pay for e.g. Lite, PRO II. */
+"Your payment for the %1 plan was unsuccessful."="การชำระเงินสำหรับแผน %1 ไม่สมบูรณ์";
+/* The professional pricing plan which the user is currently on will expire in one day. */
+"Your PRO membership plan will expire in 1 day."="แผนสมาชิกแบบ PRO ของคุณจะหมดอายุใน 1 วัน";
+/* The professional pricing plan which the user is currently on will expire in 5 days. The %1 is a placeholder for the number of days and should not be removed. */
+"Your PRO membership plan will expire in %1 days."="แผนสมาชิกแบบ PRO ของคุณจะหมดอายุใน %1 วัน";
+/* The text of a notification indicating that a file or folder has been taken down due to infringement or other reason. The %1 placeholder will be replaced with the text ‘file’ or ‘folder’. The %2 will be replaced with the name of the file or folder. */
+"Your publicly shared %1 (%2) has been taken down."="การแชร์สาธารณะของคุณ %1 (%2) ถูกแจ้งว่าให้ลบเนื้อหา";
+/* The text of a notification indicating that a file or folder that was taken down has now been restored due to a successful counter-notice. The %1 placeholder will be replaced with the text ‘file’ or ‘folder’. The %2 will be replaced with the name of the file or folder. */
+"Your taken down %1 (%2) has been reinstated."="การแจ้งให้ดำเนินการของคุณ %1 (%2) ถูกคืนสิทธิ์เรียบร้อยแล้ว";
+/* Error message shown to user when a copy/import operation would take them over their storage limit. */
+"This action can not be completed as it would take you over your current storage limit"="ไม่สามารถดำเนินการนี้ได้ เพราะจะทำให้พื้นที่เก็บข้อมูลปัจจุบันของคุณเกินขีดจำกัดได้";
+/* uploads over storage quota warning dialog title */
+"Your upload(s) cannot proceed because your account is full"="การอัปโหลดของคุณไม่สามารถดำเนินการต่อได้ เนื่องจากบัญชีของคุณเต็มแล้ว";
+/* Footer text to explain the meaning of the functionaly 'Last seen' of your chat status. */
+"Allow your contacts to see the last time you were active on MEGA."="อนุญาตให้ผู้ติดต่อของคุณเห็นว่า เป็นครั้งสุดท้ายที่คุณใช้งาน MEGA";
+/* Label shown next to a feature name that can be enabled or disabled, like in 'Show Last seen...' */
+"Show"="แสดง";
+/* Shown when viewing a 1on1 chat (at least for now), if the user is offline. */
+"Last seen %s"="ดูครั้งล่าสุด %s";
+/* Text to inform the user the 'Last seen' time of a contact is a long time ago (>= 65535 minutes) */
+"Last seen a long time ago"="ดูครั้งล่าสุดเมื่อนานมาแล้ว";
+/* */
+"Today"="วันนี้";
+/* */
+"Yesterday"="เมื่อวาน";

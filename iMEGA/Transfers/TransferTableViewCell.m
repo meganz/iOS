@@ -24,8 +24,10 @@
 @property (weak, nonatomic) IBOutlet UIButton *cancelButton;
 @property (weak, nonatomic) IBOutlet UIButton *pauseButton;
 
+@property (weak, nonatomic) IBOutlet UIView *separatorView;
+
 @property (strong, nonatomic) MEGATransfer *transfer;
-@property (strong, nonatomic) MOUploadTransfer *uploadTransfer;
+@property (strong, nonatomic) NSString *uploadTransferLocalIdentifier;
 
 @end
 
@@ -36,7 +38,7 @@
 - (void)configureCellForTransfer:(MEGATransfer *)transfer delegate:(id<TransferTableViewCellDelegate>)delegate {
     self.delegate = delegate;
     self.transfer = transfer;
-    self.uploadTransfer = nil;
+    self.uploadTransferLocalIdentifier = nil;
     
     self.nameLabel.text = [[MEGASdkManager sharedMEGASdk] unescapeFsIncompatible:transfer.fileName];
     self.pauseButton.hidden = self.cancelButton.hidden = NO;
@@ -44,19 +46,10 @@
     switch (transfer.type) {
         case MEGATransferTypeDownload: {
             MEGANode *node = [[MEGASdkManager sharedMEGASdk] nodeForHandle:transfer.nodeHandle];
-            if (node.hasThumbnail) {
-                NSString *thumbnailFilePath = [Helper pathForNode:node inSharedSandboxCacheDirectory:@"thumbnailsV3"];
-                if ([[NSFileManager defaultManager] fileExistsAtPath:thumbnailFilePath]) {
-                    self.iconImageView.image = [UIImage imageWithContentsOfFile:thumbnailFilePath];
-                } else {
-                    MEGAGetThumbnailRequestDelegate *getThumbnailRequestDelegate = [[MEGAGetThumbnailRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
-                        self.iconImageView.image = [UIImage imageWithContentsOfFile:request.file];
-                    }];
-                    [[MEGASdkManager sharedMEGASdk] getThumbnailNode:node destinationFilePath:thumbnailFilePath delegate:getThumbnailRequestDelegate];
-                    [self.iconImageView mnz_imageForNode:node];
-                }
+            if (node) {
+                [self.iconImageView mnz_setThumbnailByNode:node];
             } else {
-                [self.iconImageView mnz_imageForNode:node];
+                [self.iconImageView mnz_setImageForExtension:transfer.fileName.pathExtension];
             }
             self.thumbnailSet = YES;
             break;
@@ -85,31 +78,51 @@
     
     
     [self configureCellWithTransferState:transfer.state];
+    
+    self.separatorView.layer.borderColor = UIColor.mnz_grayCCCCCC.CGColor;
+    self.separatorView.layer.borderWidth = 0.5;
 }
 
 - (void)reconfigureCellWithTransfer:(MEGATransfer *)transfer {
-    self.uploadTransfer = nil;
+    self.uploadTransferLocalIdentifier = nil;
     self.transfer = transfer;
     
     [self configureCellWithTransferState:MEGATransferStateActive];
 }
 
-- (void)configureCellForQueuedTransfer:(MOUploadTransfer *)uploadTransfer delegate:(id<TransferTableViewCellDelegate>)delegate {
+- (void)configureCellForQueuedTransfer:(NSString *)uploadTransferLocalIdentifier delegate:(id<TransferTableViewCellDelegate>)delegate {
     self.delegate = delegate;
     self.transfer = nil;
-    self.uploadTransfer = uploadTransfer;
+    self.uploadTransferLocalIdentifier = uploadTransferLocalIdentifier;
     
-    if (!uploadTransfer || !uploadTransfer.localIdentifier) {
+    if (!uploadTransferLocalIdentifier) {
         return;
     }
     
-    PHFetchResult *fetchResult = [PHAsset fetchAssetsWithLocalIdentifiers:@[uploadTransfer.localIdentifier] options:nil];
+    PHFetchResult *fetchResult = [PHAsset fetchAssetsWithLocalIdentifiers:@[uploadTransferLocalIdentifier] options:nil];
     if (fetchResult == nil) {
         return;
     }
+    
     PHAsset *asset = fetchResult.firstObject;
-    PHAssetResource *assetResource = [PHAssetResource assetResourcesForAsset:asset].firstObject;
-    NSString *name = [[NSString mnz_fileNameWithDate:asset.creationDate] stringByAppendingPathExtension:assetResource.originalFilename.mnz_lastExtensionInLowercase];
+    if (asset == nil) {
+        return;
+    }
+    
+    NSString *extension;
+    
+    if ([PHAssetResource assetResourcesForAsset:asset].count > 0) {
+        PHAssetResource *assetResource = [PHAssetResource assetResourcesForAsset:asset].firstObject;
+        if (assetResource.originalFilename) {
+            extension = assetResource.originalFilename.mnz_lastExtensionInLowercase;
+        }
+    }
+    
+    NSString *name = [NSString mnz_fileNameWithDate:asset.creationDate];
+    if (extension) {
+        name = [name stringByAppendingPathExtension:extension];
+    }
+    
     self.nameLabel.text = name;
 
     PHImageRequestOptions *options = [[PHImageRequestOptions alloc] init];
@@ -120,7 +133,7 @@
         if (result) {
             self.iconImageView.image = result;
         } else {
-            [self.iconImageView mnz_setImageForExtension:assetResource.originalFilename.pathExtension];
+            [self.iconImageView mnz_setImageForExtension:extension];
         }
     }];
     
@@ -183,10 +196,12 @@
             break;
         }
             
-        case MEGATransferStateRetrying:
+        case MEGATransferStateRetrying: {
+            self.arrowImageView.image = (self.transfer.type == MEGATransferTypeDownload) ? [Helper downloadingTransferImage] : [Helper uploadingTransferImage];
             self.infoLabel.text = AMLocalizedString(@"Retrying...", @"Label for the state of a transfer when is being retrying - (String as short as possible).");
             self.pauseButton.hidden = self.cancelButton.hidden = NO;
             break;
+        }
             
         case MEGATransferStateCompleting:
             self.infoLabel.textColor = (self.transfer.type == MEGATransferTypeDownload) ? UIColor.mnz_green31B500 : UIColor.mnz_blue2BA6DE;
@@ -224,9 +239,8 @@
                 [[MEGASdkManager sharedMEGASdkFolder] cancelTransferByTag:self.transfer.tag];
             }
         }
-    } else if (self.uploadTransfer) {
-        NSString *localIdentifier = self.uploadTransfer.localIdentifier;
-        [self.delegate cancelQueuedUploadTransfer:localIdentifier];
+    } else if (self.uploadTransferLocalIdentifier) {
+        [self.delegate cancelQueuedUploadTransfer:self.uploadTransferLocalIdentifier];
     }
 }
 

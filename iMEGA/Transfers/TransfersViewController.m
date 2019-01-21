@@ -33,7 +33,7 @@ typedef NS_ENUM(NSInteger, SegmentIndex) {
 
 @property (strong, nonatomic) NSMutableArray *transfers;
 
-@property (strong, nonatomic) NSMutableArray<MOUploadTransfer *> *uploadTransfersQueued;
+@property (strong, nonatomic) NSMutableArray<NSString *> *uploadTransfersQueued;
 
 @property (nonatomic, getter=areTransfersPaused) BOOL transfersPaused;
 
@@ -53,7 +53,6 @@ typedef NS_ENUM(NSInteger, SegmentIndex) {
     [self.transfersSegmentedControl setTitle:AMLocalizedString(@"downloads", @"Downloads") forSegmentAtIndex:1];
     [self.transfersSegmentedControl setTitle:AMLocalizedString(@"uploads", @"Uploads") forSegmentAtIndex:2];
     
-    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -121,8 +120,8 @@ typedef NS_ENUM(NSInteger, SegmentIndex) {
         }
             
         case 1: {
-            MOUploadTransfer *uploadTransfer = [self.uploadTransfersQueued objectAtIndex:indexPath.row];
-            [cell configureCellForQueuedTransfer:uploadTransfer delegate:self];
+            NSString *uploadTransferLocalIdentifier = [self.uploadTransfersQueued objectAtIndex:indexPath.row];
+            [cell configureCellForQueuedTransfer:uploadTransferLocalIdentifier delegate:self];
             break;
         }
     }
@@ -131,30 +130,39 @@ typedef NS_ENUM(NSInteger, SegmentIndex) {
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    switch (section) {
-        case 0:
-            return self.transfers.count;
-
-        case 1:
-            return self.uploadTransfersQueued.count;
-            
-        default:
-            return 0;
+    NSInteger numberOfRows = 0;
+    if (MEGAReachabilityManager.isReachable) {
+        switch (section) {
+            case 0:
+                numberOfRows = self.transfers.count;
+                break;
+                
+            case 1:
+                numberOfRows = self.uploadTransfersQueued.count;
+                break;
+                
+            default:
+                break;
+        }
     }
+    
+    return numberOfRows;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     NSInteger numberOfSections = 0;
-    switch (self.transfersSegmentedControl.selectedSegmentIndex) {
-        case UISegmentedControlNoSegment:
-        case AllSegmentIndex:
-        case UploadsSegmentIndex:
-            numberOfSections = 2;
-            break;
-            
-        case DownloadsSegmentIndex:
-            numberOfSections = 1;
-            break;
+    if (MEGAReachabilityManager.isReachable) {
+        switch (self.transfersSegmentedControl.selectedSegmentIndex) {
+            case UISegmentedControlNoSegment:
+            case AllSegmentIndex:
+            case UploadsSegmentIndex:
+                numberOfSections = 2;
+                break;
+                
+            case DownloadsSegmentIndex:
+                numberOfSections = 1;
+                break;
+        }
     }
     
     return numberOfSections;
@@ -265,7 +273,12 @@ typedef NS_ENUM(NSInteger, SegmentIndex) {
 }
 
 - (void)getQueuedUploadTransfers {
-    self.uploadTransfersQueued = [[NSMutableArray alloc] initWithArray:[[MEGAStore shareInstance] fetchUploadTransfers]];
+    NSArray *tempUploadTransfersQueued = [[MEGAStore shareInstance] fetchUploadTransfers];
+    
+    self.uploadTransfersQueued = [[NSMutableArray alloc] init];
+    for (MOUploadTransfer *uploadQueuedTransfer in tempUploadTransfersQueued) {
+        [self.uploadTransfersQueued addObject:uploadQueuedTransfer.localIdentifier];
+    }
 }
 
 - (void)cleanTransfersList {
@@ -302,8 +315,7 @@ typedef NS_ENUM(NSInteger, SegmentIndex) {
 
 - (NSIndexPath *)indexPathForUploadTransferQueuedWithLocalIdentifier:(NSString *)localIdentifier {
     for (int i = 0; i < self.uploadTransfersQueued.count; i++) {
-        MOUploadTransfer *tempUploadTransfer = [self.uploadTransfersQueued objectAtIndex:i];
-        NSString *tempLocalIndentifier = tempUploadTransfer.localIdentifier;
+        NSString *tempLocalIndentifier = [self.uploadTransfersQueued objectAtIndex:i];
         if ([localIdentifier isEqualToString:tempLocalIndentifier]) {
             return [NSIndexPath indexPathForRow:i inSection:1];
         }
@@ -335,15 +347,35 @@ typedef NS_ENUM(NSInteger, SegmentIndex) {
     for (NSManagedObject *managedObject in [notification.userInfo objectForKey:NSInvalidatedObjectsKey]) {
         if ([managedObject isKindOfClass:MOUploadTransfer.class]) {
             MOUploadTransfer *uploadTransfer = (MOUploadTransfer *)managedObject;
-            [self deleteUploadQueuedTransferWithLocalIdentifier:uploadTransfer.localIdentifier];
+            NSString *coreDataLocalIdentifier = uploadTransfer.localIdentifier;
+            [self manageCoreDataNotificationForLocalIdentifier:coreDataLocalIdentifier];
         }
     }
     
     for (NSManagedObject *managedObject in [notification.userInfo objectForKey:NSDeletedObjectsKey]) {
         if ([managedObject isKindOfClass:MOUploadTransfer.class]) {
             MOUploadTransfer *uploadTransfer = (MOUploadTransfer *)managedObject;
-            [self deleteUploadQueuedTransferWithLocalIdentifier:uploadTransfer.localIdentifier];
+            NSString *coreDataLocalIdentifier = uploadTransfer.localIdentifier;
+            [self manageCoreDataNotificationForLocalIdentifier:coreDataLocalIdentifier];
         }
+    }
+}
+
+- (void)manageCoreDataNotificationForLocalIdentifier:(NSString *)localIdentifier {
+    BOOL ignoreCoreDataNotification = NO;
+    for (NSString *tempLocalIdentifier in [Helper uploadingNodes]) {
+        if ([localIdentifier isEqualToString:tempLocalIdentifier]) {
+            ignoreCoreDataNotification = YES;
+            break;
+        }
+    }
+    
+    if (ignoreCoreDataNotification) {
+        [[Helper uploadingNodes] removeObject:localIdentifier];
+    } else {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self deleteUploadQueuedTransferWithLocalIdentifier:localIdentifier];
+        });
     }
 }
 
@@ -357,7 +389,7 @@ typedef NS_ENUM(NSInteger, SegmentIndex) {
     }
 }
 
-- (void)deleteUploadTransfer:(MEGATransfer *)transfer {
+- (void)deleteUploadingTransfer:(MEGATransfer *)transfer {
     NSIndexPath *indexPath = [self indexPathForTransfer:transfer];
     if (indexPath) {
         [self.tableView beginUpdates];
@@ -591,7 +623,6 @@ typedef NS_ENUM(NSInteger, SegmentIndex) {
                 
                 NSIndexPath *newIndexPath = [NSIndexPath indexPathForRow:newTransferIndex inSection:0];
                 [self.uploadTransfersQueued removeObjectAtIndex:oldIndexPath.row];
-                [[MEGAStore shareInstance] deleteUploadTransferWithLocalIdentifier:localIdentifier];
                 [self.tableView moveRowAtIndexPath:oldIndexPath toIndexPath:newIndexPath];
                 [self.tableView endUpdates];
             }
@@ -605,7 +636,9 @@ typedef NS_ENUM(NSInteger, SegmentIndex) {
         }
     } else if (transfer.type == MEGATransferTypeDownload) {
         NSIndexPath *indexPath = [self indexPathForTransfer:transfer];
-        [self.transfers replaceObjectAtIndex:indexPath.row withObject:transfer];
+        if (indexPath) {
+            [self.transfers replaceObjectAtIndex:indexPath.row withObject:transfer];
+        }
     }
 }
 
@@ -632,7 +665,7 @@ typedef NS_ENUM(NSInteger, SegmentIndex) {
         }
     }
     
-    [self deleteUploadTransfer:transfer];
+    [self deleteUploadingTransfer:transfer];
 }
 
 #pragma mark - TransferTableViewCellDelegate

@@ -1,7 +1,6 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-#import "AfterLoginAction.h"
 #import "MEGAChatMessage.h"
 #import "MEGAIndexer.h"
 #import "MEGASdk.h"
@@ -61,17 +60,6 @@ typedef NS_OPTIONS(NSUInteger, NodesAre) {
 
 + (NSString *)pathForSharedSandboxCacheDirectory:(NSString *)directory;
 
-#pragma mark - Utils for links when you are not logged
-
-+ (MEGANode *)linkNode;
-+ (void)setLinkNode:(MEGANode *)node;
-+ (NSMutableArray *)nodesFromLinkMutableArray;
-+ (NSURL *)chatLink;
-+ (void)setChatLink:(NSURL *)chatLink;
-
-+ (AfterLoginAction)selectedOptionOnLink;
-+ (void)setSelectedOptionOnLink:(AfterLoginAction)option;
-
 #pragma mark - Utils for transfers
 
 + (NSMutableDictionary *)downloadingNodes;
@@ -79,6 +67,7 @@ typedef NS_OPTIONS(NSUInteger, NodesAre) {
 + (BOOL)isFreeSpaceEnoughToDownloadNode:(MEGANode *)node isFolderLink:(BOOL)isFolderLink;
 + (void)downloadNode:(MEGANode *)node folderPath:(NSString *)folderPath isFolderLink:(BOOL)isFolderLink shouldOverwrite:(BOOL)overwrite;
 
++ (NSMutableArray *)uploadingNodes;
 + (void)startPendingUploadTransferIfNeeded;
 
 #pragma mark - Utils
@@ -121,13 +110,14 @@ typedef NS_OPTIONS(NSUInteger, NodesAre) {
 + (UILabel *)customNavigationBarLabelWithTitle:(NSString *)title subtitle:(NSString *)subtitle color:(UIColor *)color;
 
 + (UISearchController *)customSearchControllerWithSearchResultsUpdaterDelegate:(id<UISearchResultsUpdating>)searchResultsUpdaterDelegate searchBarDelegate:(id<UISearchBarDelegate>)searchBarDelegate;
++ (void)resetSearchControllerFrame:(UISearchController *)searchController;
 
-+ (void)presentSafariViewControllerWithURL:(NSURL *)url;
-    
 + (void)showExportMasterKeyInView:(UIViewController *)viewController completion:(void (^ __nullable)(void))completion;
 + (void)showMasterKeyCopiedAlert;
 
-#pragma mark - Logout
+#pragma mark - Manage session
+
++ (BOOL)hasSession_alertIfNot;
 
 + (void)logout;
 + (void)logoutFromConfirmAccount;

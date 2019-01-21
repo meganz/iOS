@@ -66,6 +66,9 @@ static const NSUInteger MIN_SECOND = 10; // Save only where the users were playi
                                              selector:@selector(applicationDidEnterBackground:)
                                                  name:UIApplicationDidEnterBackgroundNotification
                                                object:nil];
+    
+    [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:nil];
+    [[AVAudioSession sharedInstance] setActive:YES error:nil];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -75,7 +78,7 @@ static const NSUInteger MIN_SECOND = 10; // Save only where the users were playi
 
     if (fingerprint && ![fingerprint isEqualToString:@""]) {
         MOMediaDestination *mediaDestination = [[MEGAStore shareInstance] fetchMediaDestinationWithFingerprint:fingerprint];
-        if (mediaDestination.destination && mediaDestination.timescale) {
+        if (mediaDestination.destination.longLongValue > 0 && mediaDestination.timescale.intValue > 0) {
             if ([self fileName].mnz_isVideoPathExtension) {
                 NSString *infoVideoDestination = AMLocalizedString(@"continueOrRestartVideoMessage", @"Message to show the user info (name and time) about the resume of the video");
                 infoVideoDestination = [infoVideoDestination stringByReplacingOccurrencesOfString:@"%1$s" withString:[self fileName]];
@@ -111,6 +114,9 @@ static const NSUInteger MIN_SECOND = 10; // Save only where the users were playi
                                                   object:nil];
     
     [self stopStreaming];
+    
+    [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayAndRecord error:nil];
+    [[AVAudioSession sharedInstance] setActive:NO withOptions:AVAudioSessionSetActiveOptionNotifyOthersOnDeactivation error:nil];
     
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"presentPasscodeLater"] && [LTHPasscodeViewController doesPasscodeExist]) {
         [[LTHPasscodeViewController sharedUser] showLockScreenOver:UIApplication.mnz_presentingViewController.view
@@ -187,7 +193,7 @@ static const NSUInteger MIN_SECOND = 10; // Save only where the users were playi
     if (self.node) {
         fingerprint = self.node.fingerprint;
     } else {
-        fingerprint = [NSString stringWithFormat:@"%@", [[MEGASdkManager sharedMEGASdk] fingerprintForFilePath:self.fileUrl.path]];
+        fingerprint = [[MEGASdkManager sharedMEGASdk] fingerprintForFilePath:self.fileUrl.path];
     }
     
     return fingerprint;

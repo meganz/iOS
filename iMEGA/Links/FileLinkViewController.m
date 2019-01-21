@@ -5,6 +5,7 @@
 #import "Helper.h"
 #import "MEGAGetPublicNodeRequestDelegate.h"
 #import "MEGANode+MNZCategory.h"
+#import "MEGALinkManager.h"
 #import "MEGAPhotoBrowserViewController.h"
 #import "MEGASdkManager.h"
 #import "MEGAReachabilityManager.h"
@@ -137,7 +138,7 @@
     if (self.node.name.mnz_isImagePathExtension || self.node.name.mnz_isVideoPathExtension) {
         [self dismissViewControllerAnimated:YES completion:^{
             MEGAPhotoBrowserViewController *photoBrowserVC = [MEGAPhotoBrowserViewController photoBrowserWithMediaNodes:@[self.node].mutableCopy api:[MEGASdkManager sharedMEGASdk] displayMode:DisplayModeFileLink presentingNode:self.node preferredIndex:0];
-            photoBrowserVC.publicLink = self.fileLinkString;
+            photoBrowserVC.publicLink = self.publicLinkString;
             
             [UIApplication.mnz_presentingViewController presentViewController:photoBrowserVC animated:YES completion:nil];
         }];
@@ -207,7 +208,7 @@
     UIAlertAction *decryptAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"decrypt", @"Button title to try to decrypt the link") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         if ([MEGAReachabilityManager isReachableHUDIfNot]) {
             NSString *key = decryptionAlertController.textFields.firstObject.text;
-            NSString *linkString = ([[key substringToIndex:1] isEqualToString:@"!"]) ? self.fileLinkString : [self.fileLinkString stringByAppendingString:@"!"];
+            NSString *linkString = ([[key substringToIndex:1] isEqualToString:@"!"]) ? self.publicLinkString : [self.publicLinkString stringByAppendingString:@"!"];
             linkString = [linkString stringByAppendingString:key];
             
             MEGAGetPublicNodeRequestDelegate *delegate = [[MEGAGetPublicNodeRequestDelegate alloc] initWithCompletion:^(MEGARequest *request, MEGAError *error) {
@@ -246,11 +247,7 @@
     
     self.sizeLabel.text = [NSByteCountFormatter stringFromByteCount:[[self.node size] longLongValue] countStyle:NSByteCountFormatterCountStyleMemory];
     
-    if (self.node.isFolder) {
-        [self.thumbnailImageView mnz_imageForNode:self.node];
-    } else {
-        [self.thumbnailImageView mnz_setThumbnailByNode:self.node];
-    }
+    [self.thumbnailImageView mnz_setThumbnailByNode:self.node];
     
     [self setUIItemsHidden:NO];
 }
@@ -266,9 +263,7 @@
 #pragma mark - IBActions
 
 - (IBAction)cancelTouchUpInside:(UIBarButtonItem *)sender {
-    
-    [Helper setLinkNode:nil];
-    [Helper setSelectedOptionOnLink:AfterLoginActionNone];
+    [MEGALinkManager resetUtilsForLinksWithoutSession];
     
     [SVProgressHUD dismiss];
     
@@ -335,7 +330,8 @@
             break;
             
         case MegaNodeActionTypeShare: {
-            UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWithActivityItems:@[self.fileLinkString] applicationActivities:nil];
+            NSString *link = self.linkEncryptedString ? self.linkEncryptedString : self.publicLinkString;
+            UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWithActivityItems:@[link] applicationActivities:nil];
             activityVC.popoverPresentationController.barButtonItem = sender;
             [self presentViewController:activityVC animated:YES completion:nil];
             break;

@@ -47,6 +47,10 @@
     return [UIColor colorWithRed:204.0/255.0 green:204.0/255.0 blue:204.0/255.0 alpha:1.0];
 }
 
++ (UIColor *)mnz_grayD8D8D8 {
+    return [UIColor colorWithRed:0.85f green:0.85f blue:0.85f alpha:1.0];
+}
+
 + (UIColor *)mnz_grayE2EAEA {
     return [UIColor colorWithRed:0.89f green:0.92f blue:0.92f alpha:1.0];
 }
@@ -57,6 +61,10 @@
 
 + (UIColor *)mnz_grayEEEEEE {
     return [UIColor colorWithRed:238.0/255.0 green:238.0/255.0 blue:238.0/255.0 alpha:1.0];
+}
+
++ (UIColor *)mnz_grayFAFAFA {
+    return [UIColor colorWithRed:250.0/255.0 green:250.0/255.0 blue:250.0/255.0 alpha:1.0];
 }
 
 + (UIColor *)mnz_grayFCFCFC {
@@ -73,6 +81,10 @@
 
 #pragma mark - Green
 
++ (UIColor *)mnz_green00897B {
+    return [UIColor colorWithRed:0.0f green:0.54 blue:0.48 alpha:1.0f];
+}
+
 + (UIColor *)mnz_green00BFA5 {
     return [UIColor colorWithRed:0.0f green:0.75 blue:0.65 alpha:1.0f];
 }
@@ -84,6 +96,11 @@
 + (UIColor *)mnz_green31B500 {
     return [UIColor colorWithRed:49.0/255.0 green:181.0/255.0 blue:0.0 alpha:1.0];
 }
+
++ (UIColor *)mnz_green899B9C {
+    return [UIColor colorWithRed:0.54 green:0.61 blue:0.61 alpha:1];
+}
+
 
 #pragma mark - Orange
 
