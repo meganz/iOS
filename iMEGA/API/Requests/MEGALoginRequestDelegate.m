@@ -141,8 +141,6 @@
         [UIView transitionWithView:window duration:0.5 options:(UIViewAnimationOptionTransitionCrossDissolve | UIViewAnimationOptionAllowAnimatedContent) animations:^{
             [window setRootViewController:launchVC];
         } completion:nil];
-        
-        [[UIApplication sharedApplication] setStatusBarHidden:YES];
     }
 }
 
