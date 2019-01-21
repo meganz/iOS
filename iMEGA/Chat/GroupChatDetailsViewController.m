@@ -624,10 +624,9 @@
         case 5: {
             CustomModalAlertViewController *customModalAlertVC = [[CustomModalAlertViewController alloc] init];
             customModalAlertVC.modalPresentationStyle = UIModalPresentationOverCurrentContext;
-            // TODO: add the image as soon as design team share it.
-            // customModalAlertVC.image = [UIImage imageNamed:];
+            customModalAlertVC.image = [UIImage imageNamed:@"lock"];
             customModalAlertVC.viewTitle = AMLocalizedString(@"Enable Encrypted Key Rotation", @"Title show in a cell where the users can enable the 'Encrypted Key Rotation'");
-            customModalAlertVC.detail = @"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna.";
+            customModalAlertVC.detail = AMLocalizedString(@"Key rotation is slightly more secure, but does not allow you to create a link to the chat and new participants will not see past messages.", @"Footer text to explain what means 'Encrypted Key Rotation'");
             customModalAlertVC.action = AMLocalizedString(@"enable", nil);
             customModalAlertVC.dismiss = AMLocalizedString(@"cancel", nil);
             __weak typeof(CustomModalAlertViewController) *weakCustom = customModalAlertVC;
