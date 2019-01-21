@@ -9,10 +9,12 @@
 #import "MEGAPurchase.h"
 #import "MEGASdk+MNZCategory.h"
 #import "MEGAUser+MNZCategory.h"
+#import "MEGAUserAlertList+MNZCategory.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGASdkManager.h"
 #import "MyAccountHallTableViewCell.h"
 #import "MyAccountViewController.h"
+#import "NotificationsTableViewController.h"
 #import "SettingsTableViewController.h"
 #import "TransfersViewController.h"
 #import "UIImage+MNZCategory.h"
@@ -69,11 +71,17 @@
     [_numberFormatter setMaximumFractionDigits:0];
     
     MEGAContactLinkCreateRequestDelegate *delegate = [[MEGAContactLinkCreateRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
-        NSString *destination = [NSString stringWithFormat:@"https://mega.nz/C!%@", [MEGASdk base64HandleForHandle:request.nodeHandle]];
-        self.qrCodeImageView.image = [UIImage mnz_qrImageWithDotsFromString:destination withSize:self.qrCodeImageView.frame.size color:UIColor.mnz_redMain];
-        self.avatarImageView.layer.borderColor = [UIColor whiteColor].CGColor;
-        self.avatarImageView.layer.borderWidth = 6.0f;
-        self.avatarImageView.layer.cornerRadius = 40.0f;
+        CGSize qrImageSie = self.qrCodeImageView.frame.size;
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+            NSString *destination = [NSString stringWithFormat:@"https://mega.nz/C!%@", [MEGASdk base64HandleForHandle:request.nodeHandle]];
+            UIImage *image = [UIImage mnz_qrImageWithDotsFromString:destination withSize:qrImageSie color:UIColor.mnz_redMain];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                self.qrCodeImageView.image = image;
+                self.avatarImageView.layer.borderColor = [UIColor whiteColor].CGColor;
+                self.avatarImageView.layer.borderWidth = 6.0f;
+                self.avatarImageView.layer.cornerRadius = 40.0f;
+            });
+        });
     }];
     [[MEGASdkManager sharedMEGASdk] contactLinkCreateRenew:NO delegate:delegate];
 
@@ -132,7 +140,7 @@
         [self.navigationController popToRootViewControllerAnimated:NO];
     }
     
-    NSIndexPath *achievementsIndexPath = [NSIndexPath indexPathForRow:2 inSection:0];
+    NSIndexPath *achievementsIndexPath = [NSIndexPath indexPathForRow:3 inSection:0];
     [self tableView:self.tableView didSelectRowAtIndexPath:achievementsIndexPath];
 }
 
@@ -142,7 +150,7 @@
         [self.navigationController popToRootViewControllerAnimated:NO];
     }
     
-    NSIndexPath *offlineIndexPath = [NSIndexPath indexPathForRow:4 inSection:0];
+    NSIndexPath *offlineIndexPath = [NSIndexPath indexPathForRow:5 inSection:0];
     [self tableView:self.tableView didSelectRowAtIndexPath:offlineIndexPath];
 }
 
@@ -167,14 +175,14 @@
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 6;
+    return 7;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     NSString *identifier;
     if (indexPath.row == 0) {
         identifier = @"MyAccountHallUsedStorageTableViewCellID";
-    } else if (indexPath.row == 2) {
+    } else if (indexPath.row == 3) {
         identifier = @"MyAccountHallWithSubtitleTableViewCellID";
     } else {
         identifier = @"MyAccountHallTableViewCellID";
@@ -205,7 +213,25 @@
             break;
         }
             
-        case 1: {  //Contacts
+        case 1: { // Notifications
+            cell.sectionLabel.text = AMLocalizedString(@"notifications", nil);
+            cell.iconImageView.image = [UIImage imageNamed:@"Notifications"];
+            NSUInteger unseenUserAlerts = [MEGASdkManager sharedMEGASdk].userAlertList.mnz_relevantUnseenCount;
+            if (unseenUserAlerts == 0) {
+                cell.pendingView.hidden = YES;
+                cell.pendingLabel.text = nil;
+            } else {
+                if (cell.pendingView.hidden) {
+                    cell.pendingView.hidden = NO;
+                    cell.pendingView.clipsToBounds = YES;
+                }
+                
+                cell.pendingLabel.text = [NSString stringWithFormat:@"%tu", unseenUserAlerts];
+            }
+            break;
+        }
+            
+        case 2: { // Contacts
             cell.sectionLabel.text = AMLocalizedString(@"contactsTitle", @"Title of the Contacts section");
             cell.iconImageView.image = [UIImage imageNamed:@"myAccountContactsIcon"];
             MEGAContactRequestList *incomingContactsLists = [[MEGASdkManager sharedMEGASdk] incomingContactRequests];
@@ -219,12 +245,12 @@
                     cell.pendingView.clipsToBounds = YES;
                 }
                 
-                cell.pendingLabel.text = [NSString stringWithFormat:@"%lu", (unsigned long)incomingContacts];
+                cell.pendingLabel.text = [NSString stringWithFormat:@"%tu", incomingContacts];
             }
             break;
         }
             
-        case 2: { //Achievements
+        case 3: { // Achievements
             cell.sectionLabel.text = AMLocalizedString(@"achievementsTitle", @"Title of the Achievements section");
             cell.subtitleLabel.text = AMLocalizedString(@"inviteFriendsAndGetRewards", @"Subtitle show under the Achievements label to explain what is this section");
             cell.iconImageView.image = [UIImage imageNamed:@"myAccountAchievementsIcon"];
@@ -233,7 +259,7 @@
             break;
         }
             
-        case 3: { //Transfers
+        case 4: { // Transfers
             cell.sectionLabel.text = AMLocalizedString(@"transfers", @"Title of the Transfers section");
             cell.iconImageView.image = [UIImage imageNamed:@"myAccountTransfersIcon"];
             cell.pendingView.hidden = YES;
@@ -241,7 +267,7 @@
             break;
         }
             
-        case 4: { //Offline
+        case 5: { // Offline
             cell.sectionLabel.text = AMLocalizedString(@"offline", @"Title of the Offline section");
             cell.iconImageView.image = [UIImage imageNamed:@"myAccountOfflineIcon"];
             cell.pendingView.hidden = YES;
@@ -249,8 +275,7 @@
             break;
         }
             
-        case 5: {
-            //Settings
+        case 6: { // Settings
             cell.sectionLabel.text = AMLocalizedString(@"settingsTitle", @"Title of the Settings section");
             cell.iconImageView.image = [UIImage imageNamed:@"myAccountSettingsIcon"];
             cell.pendingView.hidden = YES;
@@ -266,7 +291,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     CGFloat heightForRow;
-    if (indexPath.row == 2 && ![[MEGASdkManager sharedMEGASdk] isAchievementsEnabled]) {
+    if (indexPath.row == 3 && ![[MEGASdkManager sharedMEGASdk] isAchievementsEnabled]) {
         heightForRow = 0.0f;
     } else {
         heightForRow = 60.0f;
@@ -294,31 +319,38 @@
             
             break;
         }
-        case 1: { //Contacts
+            
+        case 1: { // Notifications
+            NotificationsTableViewController *notificationsTVC = [[UIStoryboard storyboardWithName:@"Notifications" bundle:nil] instantiateViewControllerWithIdentifier:@"NotificationsTableViewControllerID"];
+            [self.navigationController pushViewController:notificationsTVC animated:YES];
+            break;
+        }
+            
+        case 2: { // Contacts
             ContactsViewController *contactsVC = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactsViewControllerID"];
             [self.navigationController pushViewController:contactsVC animated:YES];
             break;
         }
             
-        case 2: { //Achievements
+        case 3: { // Achievements
             AchievementsViewController *achievementsVC = [[UIStoryboard storyboardWithName:@"MyAccount" bundle:nil] instantiateViewControllerWithIdentifier:@"AchievementsViewControllerID"];
             [self.navigationController pushViewController:achievementsVC animated:YES];
             break;
         }
             
-        case 3: { //Transfers
+        case 4: { // Transfers
             TransfersViewController *transferVC = [[UIStoryboard storyboardWithName:@"Transfers" bundle:nil] instantiateViewControllerWithIdentifier:@"TransfersViewControllerID"];
             [self.navigationController pushViewController:transferVC animated:YES];
             break;
         }
             
-        case 4: { //Offline
+        case 5: { // Offline
             OfflineViewController *offlineVC = [[UIStoryboard storyboardWithName:@"Offline" bundle:nil] instantiateViewControllerWithIdentifier:@"OfflineViewControllerID"];
             [self.navigationController pushViewController:offlineVC animated:YES];
             break;
         }
             
-        case 5: { //Settings
+        case 6: { // Settings
             SettingsTableViewController *settingsTVC = [[UIStoryboard storyboardWithName:@"Settings" bundle:nil] instantiateViewControllerWithIdentifier:@"SettingsTableViewControllerID"];
             [self.navigationController pushViewController:settingsTVC animated:YES];
             break;
@@ -337,8 +369,13 @@
 #pragma mark - MEGAGlobalDelegate
 
 - (void)onContactRequestsUpdate:(MEGASdk *)api contactRequestList:(MEGAContactRequestList *)contactRequestList {
-    NSIndexPath *contactsIndexPath = [NSIndexPath indexPathForRow:1 inSection:0];
+    NSIndexPath *contactsIndexPath = [NSIndexPath indexPathForRow:2 inSection:0];
     [self.tableView reloadRowsAtIndexPaths:@[contactsIndexPath] withRowAnimation:UITableViewRowAnimationNone];
+}
+
+- (void)onUserAlertsUpdate:(MEGASdk *)api userAlertList:(MEGAUserAlertList *)userAlertList {
+    NSIndexPath *notificationsIndexPath = [NSIndexPath indexPathForRow:1 inSection:0];
+    [self.tableView reloadRowsAtIndexPaths:@[notificationsIndexPath] withRowAnimation:UITableViewRowAnimationNone];
 }
 
 #pragma mark - MEGARequestDelegate

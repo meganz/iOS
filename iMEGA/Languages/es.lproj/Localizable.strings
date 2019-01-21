@@ -1364,8 +1364,10 @@
 /* Between paragraph 5 and 6 we have to put the string with the 'autorenewableDescription' key */
 /* Paragraph 6 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
 "generalDescriptionParagraph6"="Para más información, entra en nuestra web: https://mega.nz/\n Términos de servicio: https://mega.nz/terms\n Política de privacidad: https://mega.nz/privacy";
-/* Label shown when you receive an incoming call, before start the call. */
+/* Label shown when you call someone (outgoing call), before the call starts. */
 "calling..."="Llamando...";
+/* notification subtitle of incoming calls */
+"Incoming call"="Llamada entrante";
 /* Notification text body shown when you have missed one audio call */
 "missedAudioCall"="Una llamada perdida";
 /* Notification text body shown when you have missed several audio calls. [A] = {number of missed audio calls} */
@@ -1622,6 +1624,10 @@
 "Setup MEGA"="Configurar MEGA";
 /* Detailed explanation of why the user should give some permissions to MEGA */
 "To fully take advantage of your MEGA account we need to ask you some permissions."="Para aprovechar al máximo tu cuenta MEGA, debemos pedirte algunos permisos.";
+/* Message warning the user about the risk of not setting up permissions */
+"The MEGA app may not work as expected without the required permissions. Are you sure?"="Es posible que la aplicación de MEGA no funcione correctamente sin los permisos necesarios. ¿Estás seguro?";
+/* Shows number of the current page. '%1' will be replaced by current page number. '%2' will be replaced by number of all pages. */
+"%1 of %2"="%1 de %2";
 /* Title label that explains that the user is going to be asked for the photos permission */
 "Allow Access to Photos"="Permitir el acceso a Fotos";
 /* Detailed explanation of why the user should give permission to access to the photos */
@@ -1678,3 +1684,109 @@
 "Saved to Photos"="Guardado en Fotos";
 /* Text shown when an error occurs when trying to save a photo or video to Photos app */
 "Could not save Item"="El elemento no se ha podido guardar";
+/* Text shown for switching from thumbnail view to list view. */
+"List view"="Ver como lista";
+/* Text shown for switching from list view to thumbnail view. */
+"Thumbnail view"="Vista en miniatura";
+/* Message to inform the local user that someone has joined the current group call */
+"%@ joined the call."="%@ se ha unido a la llamada.";
+/* Message to inform the local user that someone has left the current group call */
+"%@ left the call."="%@ ha abandonado la llamada.";
+/* Message to inform the local user is having a bad quality network with someone in the current group call */
+"Poor connection."="Mala conexión.";
+/* Message shown in a chat room when there is an active group call */
+"There is an active group call. Tap to join."="Llamada de grupo en curso. Toca para unirte.";
+/* Message shown in a chat room for a group call in progress displaying the duration of the call */
+"Touch to return to call %@"="Toca para volver a la llamada %@";
+/* Menu item to change from grid view to list view */
+"List view"="Ver como lista";
+/* Menu item to change from list view to grid view */
+"Thumbnail view"="Vista en miniatura";
+/* There are no notifications to display. */
+"No notifications"="Sin notificaciones";
+/* The header of a notification related to payments */
+"Payment info"="Información de pago";
+/* A title for a notification saying the user’s pricing plan will expire soon. */
+"PRO membership plan expiring soon"="Tu plan PRO caducará en breve";
+/* The header of a notification indicating that a file or folder has been taken down due to infringement or other reason. */
+"Takedown notice"="Notificación y retirada";
+/* The header of a notification indicating that a file or folder that was taken down has now been restored due to a successful counter-notice. */
+"Takedown reinstated"="Retirada revocada";
+/* Label shown inside an unseen notification */
+"New"="Nueva";
+/* When a contact sent a contact/friend request */
+"Sent you a contact request"="Te envió una solicitud de contacto";
+/* A notification that the other user cancelled their contact request so it is no longer valid. E.g. user@email.com cancelled their contact request. */
+"Cancelled their contact request"="Ha cancelado su solicitud de contacto";
+/* A reminder notification to remind the user to respond to the contact request. */
+"Reminder: You have a contact request"="Recordatorio: tienes una solicitud de contacto";
+/* A notification telling the user that the other user deleted them as a contact. E.g. user@email.com deleted you as a contact. */
+"Deleted you as a contact"="Te ha eliminado de sus contactos";
+/* A notification telling the user that they are now fully connected with the other user (the users are in each other’s address books). */
+"Contact relationship established"="Ahora ambos sois contactos";
+/* A notification telling the user that one of their contact’s accounts has been deleted or deactivated. */
+"Account has been deleted/deactivated"="La cuenta ha sido eliminada/desactivada";
+/* A notification telling the user that another user blocked them as a contact (they will no longer be able to contact them). E.g. name@email.com blocked you as a contact. */
+"Blocked you as a contact"="Te ha bloqueado como contacto";
+/* Response text after clicking Ignore on an incoming contact request notification. */
+"You ignored a contact request"="Has ignorado una solicitud de contacto";
+/* Response text after clicking Accept on an incoming contact request notification. */
+"You accepted a contact request"="Has aceptado una solicitud de contacto";
+/* Response text after clicking Deny on an incoming contact request notification. */
+"You denied a contact request"="Has denegado una solicitud de contacto";
+/* When somebody accepted your contact request */
+"Accepted your contact request"="Aceptar la solicitud de tu contacto";
+/* When somebody denied your contact request */
+"Denied your contact request"="Denegó tu solicitud de contacto";
+/* notification text */
+"A user has left the shared folder {0}"="Un usuario ha abandonado la carpeta compartida {0}";
+/* This is shown in the Notification dialog when the email address of a contact is not found and access to the share is lost for some reason (e.g. share removal or contact removal). */
+"Access to folders was removed."="El acceso a las carpetas ha sido eliminado.";
+/* Content of a notification that informs how many files and folders have been added to a shared folder */
+"Added 1 file"="Ha añadido 1 archivo";
+/* Content of a notification that informs how many files and folders have been added to a shared folder */
+"Added %lld files"="Ha añadido %lld archivos";
+/* Content of a notification that informs how many files and folders have been added to a shared folder */
+"Added 1 folder"="Ha añadido 1 carpeta";
+/* Content of a notification that informs how many files and folders have been added to a shared folder */
+"Added %lld folders"="Ha añadido %lld carpetas";
+/* Content of a notification that informs how many files and folders have been added to a shared folder */
+"Added 1 file and 1 folder"="Ha añadido 1 archivo y 1 carpeta";
+/* Content of a notification that informs how many files and folders have been added to a shared folder */
+"Added %lld files and 1 folder"="Ha añadido %lld archivos y 1 carpeta";
+/* Content of a notification that informs how many files and folders have been added to a shared folder */
+"Added 1 file and %lld folders"="Ha añadido 1 archivo y %lld carpetas";
+/* Content of a notification that informs how many files and folders have been added to a shared folder */
+"Added [A] files and [B] folders"="Ha añadido [A] archivos y [B] carpetas";
+/* Notification when on client side when owner of a shared folder removes folder/file from it. */
+"Removed item from shared folder"="Elemento eliminado de una carpeta compartida";
+/* Notification popup. Notification for multiple removed items from a share. Please keep [X] as it will be replaced at runtime with the number of removed items. */
+"Removed [X] items from a share"="Se han eliminado [X] elementos compartidos";
+/* A notification telling the user that their Pro plan payment was successfully received. The %1 indicates the name of the Pro plan they paid for e.g. Lite, PRO III. */
+"Your payment for the %1 plan was received."="Tu pago para el plan %1 ha sido recibido.";
+/* A notification telling the user that their Pro plan payment was unsuccessful. The %1 indicates the name of the Pro plan they were trying to pay for e.g. Lite, PRO II. */
+"Your payment for the %1 plan was unsuccessful."="Tu pago para el plan %1 no se ha completado.";
+/* The professional pricing plan which the user is currently on will expire in one day. */
+"Your PRO membership plan will expire in 1 day."="Tu plan PRO caducará en 1 día.";
+/* The professional pricing plan which the user is currently on will expire in 5 days. The %1 is a placeholder for the number of days and should not be removed. */
+"Your PRO membership plan will expire in %1 days."="Tu plan PRO caducará en %1 días.";
+/* The text of a notification indicating that a file or folder has been taken down due to infringement or other reason. The %1 placeholder will be replaced with the text ‘file’ or ‘folder’. The %2 will be replaced with the name of the file or folder. */
+"Your publicly shared %1 (%2) has been taken down."="Tu  %1 (%2) que has compartido públicamente ha sido eliminado/a.";
+/* The text of a notification indicating that a file or folder that was taken down has now been restored due to a successful counter-notice. The %1 placeholder will be replaced with the text ‘file’ or ‘folder’. The %2 will be replaced with the name of the file or folder. */
+"Your taken down %1 (%2) has been reinstated."="La eliminación de: %1 (%2) ha sido revocada.";
+/* Error message shown to user when a copy/import operation would take them over their storage limit. */
+"This action can not be completed as it would take you over your current storage limit"="Esta acción no se puede completar ya que te llevaría por encima de tu límite de almacenamiento actual";
+/* uploads over storage quota warning dialog title */
+"Your upload(s) cannot proceed because your account is full"="La subida no puede continuar porque tu cuenta está llena";
+/* Footer text to explain the meaning of the functionaly 'Last seen' of your chat status. */
+"Allow your contacts to see the last time you were active on MEGA."="Permitir que tus contactos vean tu último acceso a MEGA.";
+/* Label shown next to a feature name that can be enabled or disabled, like in 'Show Last seen...' */
+"Show"="Mostrar";
+/* Shown when viewing a 1on1 chat (at least for now), if the user is offline. */
+"Last seen %s"="Último acceso %s";
+/* Text to inform the user the 'Last seen' time of a contact is a long time ago (>= 65535 minutes) */
+"Last seen a long time ago"="Último acceso hace mucho tiempo";
+/* */
+"Today"="Hoy";
+/* */
+"Yesterday"="Ayer";

@@ -66,6 +66,8 @@
 #pragma mark - Lifecycle
 
 - (void)viewDidLoad {
+    [super viewDidLoad];
+    
     NSSetUncaughtExceptionHandler(&uncaughtExceptionHandler);
 
     self.sharedUserDefaults = [[NSUserDefaults alloc] initWithSuiteName:@"group.mega.ios"];
@@ -83,7 +85,8 @@
     self.fetchNodesDone = NO;
     self.passcodePresented = NO;
     self.passcodeToBePresented = NO;
-
+    self.semaphore = dispatch_semaphore_create(0);
+    
     [MEGASdkManager setAppKey:kAppKey];
     NSString *userAgent = [NSString stringWithFormat:@"%@/%@", kUserAgent, [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"]];
     [MEGASdkManager setUserAgent:userAgent];
@@ -147,8 +150,6 @@
     
     self.openedChatIds = [NSMutableSet<NSNumber *> new];
     self.lastProgressChange = [NSDate new];
-    
-    self.semaphore = dispatch_semaphore_create(0);
 }
 
 - (void)viewWillAppear:(BOOL)animated{
@@ -173,6 +174,9 @@
 }
 
 - (void)didEnterBackground {
+    if ([self.presentedViewController isKindOfClass:LTHPasscodeViewController.class]) {
+        [self.presentedViewController dismissViewControllerAnimated:NO completion:nil];
+    }
     self.passcodePresented = NO;
     
     [[MEGASdkManager sharedMEGAChatSdk] setBackgroundStatus:YES];
@@ -226,6 +230,8 @@
 }
 
 - (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    
     MEGALogError(@"Share extension received memory warning");
     if (!self.presentedViewController) {
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"shareExtensionUnsupportedAssets", nil) message:AMLocalizedString(@"Limited system resources are available when sharing items. Try uploading these files from within the MEGA app.", @"Message shown to the user when the share extension is about to be killed by iOS due to a memory issue") preferredStyle:UIAlertControllerStyleAlert];

@@ -45,12 +45,17 @@
             uuid = [keysArray objectAtIndex:0];
         }
     }
+    
     if (uuid) {
         MEGALogDebug(@"[CallKit] End call %@, uuid: %@", call, uuid);
         CXEndCallAction *endCallAction = [[CXEndCallAction alloc] initWithCallUUID:uuid];
         CXTransaction *transaction = [[CXTransaction alloc] init];
         [transaction addAction:endCallAction];
         [self requestTransaction:transaction];
+    } else {
+        MEGALogDebug(@"[CallKit] Call %@ not found in the calls dictionary. Hang the call", call);
+        [self printAllCalls];
+        [[MEGASdkManager sharedMEGAChatSdk] hangChatCall:call.chatId];
     }
 }
 

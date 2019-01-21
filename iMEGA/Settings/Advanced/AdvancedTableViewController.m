@@ -5,6 +5,7 @@
 
 #import "SVProgressHUD.h"
 
+#import "DevicePermissionsHelper.h"
 #import "Helper.h"
 #import "MEGAMultiFactorAuthCheckRequestDelegate.h"
 #import "MEGAReachabilityManager.h"
@@ -22,8 +23,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *savePhotosLabel;
 @property (weak, nonatomic) IBOutlet UILabel *saveVideosLabel;
 
-@property (weak, nonatomic) IBOutlet UISwitch *photosSwitch;
-@property (weak, nonatomic) IBOutlet UISwitch *videosSwitch;
+@property (weak, nonatomic) IBOutlet UISwitch *saveImagesSwitch;
+@property (weak, nonatomic) IBOutlet UISwitch *saveVideosSwitch;
 
 @property (weak, nonatomic) IBOutlet UILabel *cancelAccountLabel;
 
@@ -66,10 +67,10 @@
     [self.useHttpsOnlySwitch setOn:useHttpsOnly];
     
     BOOL isSavePhotoToGalleryEnabled = [[NSUserDefaults standardUserDefaults] boolForKey:@"IsSavePhotoToGalleryEnabled"];
-    [self.photosSwitch setOn:isSavePhotoToGalleryEnabled];
+    [self.saveImagesSwitch setOn:isSavePhotoToGalleryEnabled];
     
     BOOL isSaveVideoToGalleryEnabled = [[NSUserDefaults standardUserDefaults] boolForKey:@"IsSaveVideoToGalleryEnabled"];
-    [self.videosSwitch setOn:isSaveVideoToGalleryEnabled];
+    [self.saveVideosSwitch setOn:isSaveVideoToGalleryEnabled];
     
     BOOL isSaveMediaCapturedToGalleryEnabled = [[NSUserDefaults standardUserDefaults] boolForKey:@"isSaveMediaCapturedToGalleryEnabled"];
     [self.saveMediaInGallerySwitch setOn:isSaveMediaCapturedToGalleryEnabled];
@@ -84,19 +85,24 @@
     switch (phAuthorizationStatus) {
         case PHAuthorizationStatusRestricted:
         case PHAuthorizationStatusDenied: {
+            //If the app doesn't have access to Photos (Or the permission has been revoked), update the settings associated with Photos accordingly.
+            [NSUserDefaults.standardUserDefaults setBool:NO forKey:@"IsSavePhotoToGalleryEnabled"];
+            [NSUserDefaults.standardUserDefaults setBool:NO forKey:@"IsSaveVideoToGalleryEnabled"];
             if ([[NSUserDefaults standardUserDefaults] boolForKey:@"isSaveMediaCapturedToGalleryEnabled"]) {
                 [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"isSaveMediaCapturedToGalleryEnabled"];
-                [[NSUserDefaults standardUserDefaults] synchronize];
             }
+            [NSUserDefaults.standardUserDefaults synchronize];
             break;
         }
             
-        case PHAuthorizationStatusAuthorized:
+        case PHAuthorizationStatusAuthorized: {
+            //If the app has 'Read and Write' access to Photos and the user didn't configure the setting to save the media captured from the MEGA app in Photos, enable it by default.
             if (![[NSUserDefaults standardUserDefaults] objectForKey:@"isSaveMediaCapturedToGalleryEnabled"]) {
                 [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"isSaveMediaCapturedToGalleryEnabled"];
                 [[NSUserDefaults standardUserDefaults] synchronize];
             }
             break;
+        }
             
         default:
             break;
@@ -113,6 +119,20 @@
     self.view = awaitingEmailConfirmationView;
 }
 
+- (void)checkPhotosPermissionForUserDefaultSetting:(NSString *)userDefaultSetting settingSwitch:(UISwitch *)settingSwitch {
+    [DevicePermissionsHelper photosPermissionWithCompletionHandler:^(BOOL granted) {
+        if (granted) {
+            [settingSwitch setOn:!settingSwitch.isOn animated:YES];
+        } else {
+            [settingSwitch setOn:NO animated:YES];
+            [DevicePermissionsHelper alertPhotosPermission];
+        }
+        
+        [NSUserDefaults.standardUserDefaults setBool:settingSwitch.isOn forKey:userDefaultSetting];
+        [NSUserDefaults.standardUserDefaults synchronize];
+    }];
+}
+
 #pragma mark - IBActions
 
 - (IBAction)useHttpsOnlySwitch:(UISwitch *)sender {
@@ -120,54 +140,16 @@
     [[MEGASdkManager sharedMEGASdk] useHttpsOnly:sender.on];
 }
 
-- (IBAction)photosSwitchValueChanged:(UISwitch *)sender {
-    [[NSUserDefaults standardUserDefaults] setBool:sender.on forKey:@"IsSavePhotoToGalleryEnabled"];
-    [[NSUserDefaults standardUserDefaults] synchronize];
+- (IBAction)downloadOptionsSaveImagesSwitchTouchUpInside:(UIButton *)sender {
+    [self checkPhotosPermissionForUserDefaultSetting:@"IsSavePhotoToGalleryEnabled" settingSwitch:self.saveImagesSwitch];
 }
 
-- (IBAction)videosSwitchValueChanged:(UISwitch *)sender {
-    [[NSUserDefaults standardUserDefaults] setBool:sender.on forKey:@"IsSaveVideoToGalleryEnabled"];
-    [[NSUserDefaults standardUserDefaults] synchronize];
+- (IBAction)downloadOptionsSaveVideosSwitchTouchUpInside:(UIButton *)sender {
+    [self checkPhotosPermissionForUserDefaultSetting:@"IsSaveVideoToGalleryEnabled" settingSwitch:self.saveVideosSwitch];
 }
 
-- (IBAction)mediaInGallerySwitchChanged:(UISwitch *)sender {
-    [PHPhotoLibrary requestAuthorization:^(PHAuthorizationStatus status) {
-        switch (status) {
-            case PHAuthorizationStatusNotDetermined:
-                break;
-            case PHAuthorizationStatusAuthorized: {
-                [[NSUserDefaults standardUserDefaults] setBool:self.saveMediaInGallerySwitch.isOn forKey:@"isSaveMediaCapturedToGalleryEnabled"];
-                [[NSUserDefaults standardUserDefaults] synchronize];
-                break;
-            }
-            case PHAuthorizationStatusRestricted: {
-                break;
-            }
-            case PHAuthorizationStatusDenied:{
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    if (self.saveMediaInGallerySwitch.isOn) {
-                        UIAlertController *permissionsAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"attention", @"Alert title to attract attention") message:AMLocalizedString(@"photoLibraryPermissions", @"Alert message to explain that the MEGA app needs permission to access your device photos") preferredStyle:UIAlertControllerStyleAlert];
-                        
-                        [permissionsAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
-                        
-                        [permissionsAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-                            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
-                        }]];
-                        
-                        [self presentViewController:permissionsAlertController animated:YES completion:nil];
-                        
-                        [self.saveMediaInGallerySwitch setOn:NO animated:YES];
-                    } else {
-                        [[NSUserDefaults standardUserDefaults] setBool:sender.on forKey:@"isSaveMediaCapturedToGalleryEnabled"];
-                        [[NSUserDefaults standardUserDefaults] synchronize];
-                    }
-                });
-                break;
-            }
-            default:
-                break;
-        }
-    }];
+- (IBAction)saveInLibrarySwitchTouchUpInside:(UIButton *)sender {
+    [self checkPhotosPermissionForUserDefaultSetting:@"isSaveMediaCapturedToGalleryEnabled" settingSwitch:self.saveMediaInGallerySwitch];
 }
 
 #pragma mark - UITableViewDataSource

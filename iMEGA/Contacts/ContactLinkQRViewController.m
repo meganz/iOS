@@ -7,7 +7,6 @@
 
 #import "CustomModalAlertViewController.h"
 #import "DevicePermissionsHelper.h"
-#import "MainTabBarController.h"
 #import "MEGAContactLinkCreateRequestDelegate.h"
 #import "MEGAContactLinkQueryRequestDelegate.h"
 #import "MEGAInviteContactRequestDelegate.h"
@@ -172,7 +171,7 @@
             } else {
                 sender.selectedSegmentIndex = 0;
                 [self valueChangedAtSegmentedControl:sender];
-                [self presentViewController:[DevicePermissionsHelper videoPermisionAlertController] animated:YES completion:nil];
+                [DevicePermissionsHelper alertVideoPermissionWithCompletionHandler:nil];
             }
             
             break;

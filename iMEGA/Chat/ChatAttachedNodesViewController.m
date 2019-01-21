@@ -67,6 +67,7 @@
 - (void)setupAttachedNodes {
     self.selectedNodesMutableArray = [[NSMutableArray alloc] init];
     
+    self.backBarButtonItem.image = self.backBarButtonItem.image.imageFlippedForRightToLeftLayoutDirection;
     self.navigationItem.leftBarButtonItem = self.backBarButtonItem;
     self.editBarButtonItem.title = AMLocalizedString(@"edit", @"Caption of a button to edit the files that are selected");
     self.navigationItem.rightBarButtonItems = @[self.editBarButtonItem];
@@ -271,21 +272,11 @@
         }
     }
     
-    if (currentNode.hasThumbnail) {
-        NSString *thumbnailFilePath = [Helper pathForNode:currentNode inSharedSandboxCacheDirectory:@"thumbnailsV3"];
-        
-        if ([[NSFileManager defaultManager] fileExistsAtPath:thumbnailFilePath]) {
-            cell.thumbnailImageView.image = [UIImage imageWithContentsOfFile:thumbnailFilePath];
-        } else {
-            MEGAGetThumbnailRequestDelegate *getThumbnailRequestDelegate = [[MEGAGetThumbnailRequestDelegate alloc] initWithCompletion:^(MEGARequest *request){
-                cell.thumbnailImageView.image = [UIImage imageWithContentsOfFile:request.file];
-            }];
-            [[MEGASdkManager sharedMEGASdk] getThumbnailNode:currentNode destinationFilePath:thumbnailFilePath delegate:getThumbnailRequestDelegate];
-            [cell.thumbnailImageView mnz_imageForNode:currentNode];
-        }
-    } else {
-        [cell.thumbnailImageView mnz_imageForNode:currentNode];
-    }
+    [cell.thumbnailImageView mnz_setThumbnailByNode:currentNode];
+    
+    UIView *view = [[UIView alloc] init];
+    view.backgroundColor = UIColor.clearColor;
+    cell.selectedBackgroundView = view;
     
     return cell;
 }

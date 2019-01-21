@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13770" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13770"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -148,6 +149,7 @@
                 <constraint firstAttribute="trailing" secondItem="LeX-Tk-n6q" secondAttribute="trailing" id="XW0-Cp-1GE"/>
                 <constraint firstAttribute="bottom" secondItem="LeX-Tk-n6q" secondAttribute="bottom" id="gf6-TX-Hxt"/>
             </constraints>
+            <viewLayoutGuide key="safeArea" id="fop-2D-L19"/>
             <connections>
                 <outlet property="authenticityLabel" destination="wF1-fy-peZ" id="XVX-Qw-w4k"/>
                 <outlet property="chattingWithLabel" destination="q3q-Xv-Onm" id="pnx-Dx-pke"/>
@@ -158,11 +160,11 @@
                 <outlet property="onlineStatusLabel" destination="Tay-NU-39O" id="qPF-JD-Evj"/>
                 <outlet property="onlineStatusView" destination="3Bu-Yy-k1F" id="k4q-0N-bPb"/>
             </connections>
-            <point key="canvasLocation" x="714" y="433"/>
+            <point key="canvasLocation" x="1142.4000000000001" y="389.5052473763119"/>
         </collectionReusableView>
     </objects>
     <resources>
-        <image name="checkmark_welcomeMessage" width="64" height="64"/>
-        <image name="lock_welcomeMessage" width="64" height="64"/>
+        <image name="checkmark_welcomeMessage" width="32" height="32"/>
+        <image name="lock_welcomeMessage" width="32" height="32"/>
     </resources>
 </document>

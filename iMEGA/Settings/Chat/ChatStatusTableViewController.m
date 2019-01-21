@@ -33,6 +33,10 @@
 @property (weak, nonatomic) IBOutlet UILabel *statusPersistenceLabel;
 @property (weak, nonatomic) IBOutlet UISwitch *statusPersistenceSwitch;
 
+@property (weak, nonatomic) IBOutlet UILabel *lastActiveLabel;
+@property (weak, nonatomic) IBOutlet UISwitch *lastActiveSwitch;
+@property (weak, nonatomic) IBOutlet UITableViewCell *timeAutoAwayCell;
+
 @end
 
 @implementation ChatStatusTableViewController
@@ -58,6 +62,12 @@
     
     self.statusPersistenceLabel.text = AMLocalizedString(@"statusPersistence", nil);
     [self.autoAwayTimeSaveButton setTitle:AMLocalizedString(@"save", @"Button title to 'Save' the selected option") forState:UIControlStateNormal];
+    
+    NSAttributedString *lastSeenString = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:AMLocalizedString(@"Last seen %s", nil), "..."] attributes:@{NSFontAttributeName:[UIFont italicSystemFontOfSize:17.0]}];
+    NSMutableAttributedString *showLastSeenAttributedString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@ ", AMLocalizedString(@"Show", @"Label shown next to a feature name that can be enabled or disabled, like in 'Show Last seen...'")]];
+    [showLastSeenAttributedString appendAttributedString:lastSeenString];
+    
+    self.lastActiveLabel.attributedText = showLastSeenAttributedString;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -93,9 +103,12 @@
     [self updateCurrentIndexPathForOnlineStatus];
     
     self.autoAwaySwitch.on = self.presenceConfig.isAutoAwayEnabled;
+    self.timeAutoAwayCell.hidden = !self.presenceConfig.isAutoAwayEnabled;
     [self updateAutoAwayTimeLabel];
     
     self.statusPersistenceSwitch.on = self.presenceConfig.isPersist;
+    
+    self.lastActiveSwitch.on = self.presenceConfig.isLastGreenVisible;
     
     [self.tableView reloadData];
 }
@@ -188,6 +201,13 @@
     [[MEGASdkManager sharedMEGAChatSdk] setPresencePersist:sender.on];
 }
 
+- (IBAction)lastGreenValueChanged:(UISwitch *)sender {
+    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
+    [SVProgressHUD show];
+    
+    [[MEGASdkManager sharedMEGAChatSdk] setLastGreenVisible:sender.on];
+}
+
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -196,14 +216,14 @@
         MEGAChatStatus onlineStatus = self.presenceConfig.onlineStatus;
         if (onlineStatus == MEGAChatStatusOnline) {
             if (self.presenceConfig.isPersist) {
-                numberOfSections = 2; //If Status Persistence is active = No autoaway
+                numberOfSections = 3; //If Status Persistence is active = No autoaway
             } else {
-                numberOfSections = 3;
+                numberOfSections = 4;
             }
         } else if (onlineStatus == MEGAChatStatusOffline) {
-            numberOfSections = 1; //No autoaway nor persist
+            numberOfSections = 2; //No autoaway nor persist
         } else {
-            numberOfSections =  2; //No autoaway
+            numberOfSections = 3; //No autoaway
         }
     }
     
@@ -218,15 +238,21 @@
             break;
             
         case 1:
-            titleForFooter = AMLocalizedString(@"maintainMyChosenStatusAppearance", @"Footer text to explain the meaning of the functionaly 'Auto-away' of your chat status.");
+            titleForFooter = AMLocalizedString(@"Allow your contacts to see the last time you were active on MEGA.", @"Footer text to explain the meaning of the functionaly 'Last seen' of your chat status.");
             break;
             
         case 2:
-            if ((self.presenceConfig.autoAwayTimeout / 60) >= 2) {
-                titleForFooter = AMLocalizedString(@"showMeAwayAfterXMinutesOfInactivity", @"Footer text to explain the meaning of the functionaly Auto-away of your chat status.");
-                titleForFooter = [titleForFooter stringByReplacingOccurrencesOfString:@"[X]" withString:[NSString stringWithFormat:@"%lld", (self.presenceConfig.autoAwayTimeout / 60)]];
-            } else {
-                titleForFooter = AMLocalizedString(@"showMeAwayAfter1MinuteOfInactivity", @"Footer text to explain the meaning of the functionaly Auto-away of your chat status.");
+            titleForFooter = AMLocalizedString(@"maintainMyChosenStatusAppearance", @"Footer text to explain the meaning of the functionaly 'Auto-away' of your chat status.");
+            break;
+            
+        case 3:
+            if (self.presenceConfig.isAutoAwayEnabled) {
+                if ((self.presenceConfig.autoAwayTimeout / 60) >= 2) {
+                    titleForFooter = AMLocalizedString(@"showMeAwayAfterXMinutesOfInactivity", @"Footer text to explain the meaning of the functionaly Auto-away of your chat status.");
+                    titleForFooter = [titleForFooter stringByReplacingOccurrencesOfString:@"[X]" withString:[NSString stringWithFormat:@"%lld", (self.presenceConfig.autoAwayTimeout / 60)]];
+                } else {
+                    titleForFooter = AMLocalizedString(@"showMeAwayAfter1MinuteOfInactivity", @"Footer text to explain the meaning of the functionaly Auto-away of your chat status.");
+                }
             }
             break;
     }
@@ -268,7 +294,7 @@
                 [[MEGASdkManager sharedMEGAChatSdk] setOnlineStatus:MEGAChatStatusOffline];
                 break;
         }
-    } else if (indexPath.section == 2 && indexPath.row == 1) { //Auto-away - Number of minutes for Auto-away
+    } else if (indexPath.section == 3 && indexPath.row == 1) { //Auto-away - Number of minutes for Auto-away
         [self.autoAwayTimeTextField becomeFirstResponder];
     }
 }

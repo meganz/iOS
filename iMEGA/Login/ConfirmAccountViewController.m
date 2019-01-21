@@ -4,12 +4,15 @@
 #import "SVProgressHUD.h"
 
 #import "Helper.h"
-#import "InputView.h"
+#import "MEGALinkManager.h"
 #import "MEGALoginRequestDelegate.h"
 #import "MEGAReachabilityManager.h"
+#import "MEGASdkManager.h"
 #import "NSString+MNZCategory.h"
-#import "PasswordView.h"
 #import "UIApplication+MNZCategory.h"
+
+#import "InputView.h"
+#import "PasswordView.h"
 
 @interface ConfirmAccountViewController () <UITextFieldDelegate, MEGARequestDelegate>
 
@@ -43,23 +46,26 @@
         self.logoTopLayoutConstraint.constant = 24.f;
     }
     
-    switch (self.confirmType) {
-        case ConfirmTypeAccount:
+    switch (self.urlType) {
+        case URLTypeConfirmationLink:
             self.confirmTextLabel.text = AMLocalizedString(@"confirmText", @"Text shown on the confirm account view to remind the user what to do");
             [self.confirmAccountButton setTitle:AMLocalizedString(@"Confirm account", @"Label for any ‘Confirm account’ button, link, text, title, etc. - (String as short as possible).") forState:UIControlStateNormal];
             
             break;
         
-        case ConfirmTypeEmail:
+        case URLTypeChangeEmailLink:
             self.confirmTextLabel.text = AMLocalizedString(@"verifyYourEmailAddress_description", @"Text shown on the confirm email view to remind the user what to do");
             [self.confirmAccountButton setTitle:AMLocalizedString(@"confirmEmail", @"Button text for the user to confirm their change of email address.") forState:UIControlStateNormal];
             
             break;
         
-        case ConfirmTypeCancelAccount:
+        case URLTypeCancelAccountLink:
             self.confirmTextLabel.text = AMLocalizedString(@"enterYourPasswordToConfirmThatYouWanToClose", @"Account closure, message shown when you click on the link in the email to confirm the closure of your account");
             [self.confirmAccountButton setTitle:AMLocalizedString(@"closeAccount", @"Account closure, password check dialog when user click on closure email.") forState:UIControlStateNormal];
             
+            break;
+            
+        default:
             break;
     }
     
@@ -67,6 +73,7 @@
     
     self.emailInputView.inputTextField.text = self.emailString;
     self.emailInputView.inputTextField.enabled = NO;
+    self.emailInputView.inputTextField.keyboardType = UIKeyboardTypeEmailAddress;
     if (@available(iOS 11.0, *)) {
         self.emailInputView.inputTextField.textContentType = UITextContentTypeUsername;
     }
@@ -92,20 +99,23 @@
         if ([self validateForm]) {
             [SVProgressHUD show];
             [self lockUI:YES];
-            switch (self.confirmType) {
-                case ConfirmTypeAccount:
+            switch (self.urlType) {
+                case URLTypeConfirmationLink:
                     [[MEGASdkManager sharedMEGASdk] confirmAccountWithLink:self.confirmationLinkString password:self.passwordView.passwordTextField.text delegate:self];
                     
                     break;
                     
-                case ConfirmTypeEmail:
+                case URLTypeChangeEmailLink:
                     [[MEGASdkManager sharedMEGASdk] confirmChangeEmailWithLink:self.confirmationLinkString password:self.passwordView.passwordTextField.text delegate:self];
                     
                     break;
                     
-                case ConfirmTypeCancelAccount:
+                case URLTypeCancelAccountLink:
                     [[MEGASdkManager sharedMEGASdk] confirmCancelAccountWithLink:self.confirmationLinkString password:self.passwordView.passwordTextField.text delegate:self];
                     
+                    break;
+                    
+                default:
                     break;
             }
         }
@@ -115,11 +125,15 @@
 - (IBAction)cancelTouchUpInside:(UIButton *)sender {
     [self.passwordView.passwordTextField resignFirstResponder];
 
-    if (self.confirmType == ConfirmTypeAccount) {
+    if (self.urlType == URLTypeConfirmationLink) {
         NSString *message = AMLocalizedString(@"areYouSureYouWantToAbortTheRegistration", @"Asking whether the user really wants to abort/stop the registration process or continue on.");
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:message preferredStyle:UIAlertControllerStyleAlert];
-        [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:nil]];
+        [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+            [MEGALinkManager resetLinkAndURLType];
+        }]];
         [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            [MEGALinkManager resetLinkAndURLType];
+            
             if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionId"]) {
                 [[MEGASdkManager sharedMEGASdk] logout];
                 [Helper clearEphemeralSession];

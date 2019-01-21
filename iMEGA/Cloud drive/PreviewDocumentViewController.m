@@ -80,7 +80,7 @@
         if (!self.pdfView.hidden) {
             CGPDFPageRef pageRef = self.pdfView.currentPage.pageRef;
             size_t page = CGPDFPageGetPageNumber(pageRef);
-            NSString *fingerprint = [NSString stringWithFormat:@"%@", [[MEGASdkManager sharedMEGASdk] fingerprintForFilePath:self.pdfView.document.documentURL.path]];
+            NSString *fingerprint = [[MEGASdkManager sharedMEGASdk] fingerprintForFilePath:self.pdfView.document.documentURL.path];
             if (page == 1) {
                 [[MEGAStore shareInstance] deleteMediaDestinationWithFingerprint:fingerprint];
             } else {
@@ -364,7 +364,8 @@
         if ([visibleViewController isKindOfClass:MainTabBarController.class]) {
             NSArray *parentTreeArray = node.mnz_parentTreeArray;
             
-            UINavigationController *navigationController = (UINavigationController *)((MainTabBarController *)visibleViewController).viewControllers[((MainTabBarController *)visibleViewController).selectedIndex];
+            MainTabBarController *mainTBC = (MainTabBarController *)visibleViewController;
+            UINavigationController *navigationController = (UINavigationController *)(mainTBC.selectedViewController);
             [navigationController popToRootViewControllerAnimated:NO];
             
             for (MEGANode *node in parentTreeArray) {
