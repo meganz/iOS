@@ -51,7 +51,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>3</string>
+	<string>4</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
 	<key>LSRequiresIPhoneOS</key>
@@ -69,18 +69,18 @@
 	<string>NSContactsUsageDescription</string>
 	<key>NSFaceIDUsageDescription</key>
 	<string>NSFaceIDUsageDescription</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>Please select “Always” - your photos and videos will be automatically uploaded to MEGA when your location changes.</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>Please select “Always” - your photos and videos will be automatically uploaded to MEGA when your location changes.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Please select “Always” - your photos and videos will be automatically uploaded to MEGA when your location changes.</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>NSMicrophoneUsageDescription</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
 	<string>NSPhotoLibraryAddUsageDescription</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>NSPhotoLibraryUsageDescription</string>
-	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>Please select “Always” - your photos and videos will be automatically uploaded to MEGA when your location changes.</string>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Please select “Always” - your photos and videos will be automatically uploaded to MEGA when your location changes.</string>
-	<key>NSLocationAlwaysUsageDescription</key>
-	<string>Please select “Always” - your photos and videos will be automatically uploaded to MEGA when your location changes.</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>SF-UI-Display-Medium.otf</string>
