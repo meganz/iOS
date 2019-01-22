@@ -14,7 +14,6 @@
 #import "PHAsset+CameraUpload.h"
 #import "MEGAConstants.h"
 #import "PhotoExportManager.h"
-#import "PhotoExportOperation.h"
 @import CoreServices;
 
 @implementation PhotoUploadOperation
@@ -60,23 +59,22 @@
         return;
     }
     
-    NSString *outputImageUTI;
+    NSString *outputTypeUTI;
     if ([self shouldConvertToJPGForUTI:dataUTI]) {
         self.uploadInfo.fileName = [self.uploadInfo.asset mnz_cameraUploadFileNameWithExtension:MEGAJPGFileExtension];
-        outputImageUTI = (__bridge NSString *)kUTTypeJPEG;
+        outputTypeUTI = (__bridge NSString *)kUTTypeJPEG;
     } else {
         NSString *fileExtension = [self.uploadInfo.asset mnz_fileExtensionFromAssetInfo:dataInfo];
         self.uploadInfo.fileName = [self.uploadInfo.asset mnz_cameraUploadFileNameWithExtension:fileExtension];
     }
     
-    PhotoExportOperation *exportOperation = [[PhotoExportOperation alloc] initWithPhotoData:imageData outputURL:self.uploadInfo.fileURL outputImageTypeUTI:outputImageUTI shouldStripGPSInfo:YES completion:^(BOOL succeeded) {
+    [PhotoExportManager.shared exportPhotoData:imageData dataTypeUTI:dataUTI outputURL:self.uploadInfo.fileURL outputTypeUTI:outputTypeUTI shouldStripGPSInfo:YES completion:^(BOOL succeeded) {
         if (succeeded && [NSFileManager.defaultManager fileExistsAtPath:self.uploadInfo.fileURL.path]) {
             [self checkFingerprintAndEncryptFileIfNeeded];
         } else {
             [self finishOperationWithStatus:CameraAssetUploadStatusFailed shouldUploadNextAsset:YES];
         }
     }];
-    [PhotoExportManager.shared.operationQueue addOperation:exportOperation];
 }
 
 - (BOOL)shouldConvertToJPGForUTI:(NSString *)dataUTI {

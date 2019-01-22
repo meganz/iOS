@@ -3,7 +3,6 @@
 
 extern NSString * const MEGALogoutNotificationName;
 extern NSString * const MEGACameraUploadAssetUploadDoneNotificationName;
-extern NSString * const MEGACameraUploadSwitchPhotoFormatNotificationName;
 
 extern NSString * const MEGAJPGFileExtension;
 extern NSString * const MEGAMP4FileExtension;

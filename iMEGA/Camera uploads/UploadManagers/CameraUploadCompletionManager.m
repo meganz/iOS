@@ -27,6 +27,7 @@
     self = [super init];
     if (self) {
         _operationQueue = [[NSOperationQueue alloc] init];
+        _operationQueue.qualityOfService = NSQualityOfServiceUtility;
     }
     return self;
 }
