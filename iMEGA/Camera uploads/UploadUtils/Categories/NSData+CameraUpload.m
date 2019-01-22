@@ -37,12 +37,12 @@
                 [metadata addEntriesFromDictionary:@{(__bridge NSString *)kCGImageDestinationMetadata : (__bridge id)sourceMetadata,
                                                      (__bridge NSString *)kCGImageDestinationMergeMetadata : @(YES)}];
                 isExportedSuccessfully = CGImageDestinationCopyImageSource(destination, source, (__bridge CFDictionaryRef)[metadata copy], &error);
+                CFRelease(destination);
+                
                 if (!isExportedSuccessfully) {
                     isExportedSuccessfully = [self mnz_exportToURL:URL alwaysEncodeToImageUTIType:sourceType imageProperty:removeGPSDict];
                 }
             }
-            
-            CFRelease(destination);
         }
         
         CFRelease(source);

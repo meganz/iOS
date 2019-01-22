@@ -7,7 +7,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (instancetype)shared;
 
-@property (strong, nonatomic) NSOperationQueue *operationQueue;
+- (void)exportPhotoData:(NSData *)data dataTypeUTI:(NSString *)dataUTI outputURL:(NSURL *)outputURL outputTypeUTI:(NSString *)outputUTI shouldStripGPSInfo:(BOOL)shouldStripGPSInfo completion:(void (^)(BOOL))completion;
 
 @end
 
