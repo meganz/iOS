@@ -53,13 +53,13 @@
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="49" id="9uh-4i-vTX"/>
                                                     </constraints>
-                                                    <color key="onTintColor" red="0.95294117647058818" green="0.047058823529411764" blue="0.078431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <color key="onTintColor" red="0.0" green="0.74901960779999999" blue="0.64705882349999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <connections>
                                                         <action selector="passcodeSwitchValueChanged:" destination="9Kd-ys-eJ4" eventType="valueChanged" id="hHy-VL-YbL"/>
                                                     </connections>
                                                 </switch>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Passcode" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SuP-oK-n1S">
-                                                    <rect key="frame" x="16" y="12" width="77.5" height="20"/>
+                                                    <rect key="frame" x="16" y="12" width="75.5" height="20"/>
                                                     <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="17"/>
                                                     <color key="textColor" red="0.20000000298023224" green="0.20000000298023224" blue="0.20000000298023224" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -109,7 +109,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Simple Passcode" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="B2c-dr-838">
-                                                    <rect key="frame" x="16" y="12" width="136.5" height="20"/>
+                                                    <rect key="frame" x="16" y="12" width="132.5" height="20"/>
                                                     <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="17"/>
                                                     <color key="textColor" red="0.20000000298023224" green="0.20000000298023224" blue="0.20000000298023224" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -119,7 +119,7 @@
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="49" id="OWO-tg-4g7"/>
                                                     </constraints>
-                                                    <color key="onTintColor" red="0.95294117647058818" green="0.047058823529411764" blue="0.078431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <color key="onTintColor" red="0.0" green="0.74901960779999999" blue="0.64705882349999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <connections>
                                                         <action selector="simplePasscodeSwitchValueChanged:" destination="9Kd-ys-eJ4" eventType="valueChanged" id="ymv-W9-dSB"/>
                                                     </connections>
@@ -156,7 +156,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Touch ID" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AnW-qx-AM1">
-                                                    <rect key="frame" x="16" y="12" width="71" height="20"/>
+                                                    <rect key="frame" x="16" y="12" width="67" height="20"/>
                                                     <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="17"/>
                                                     <color key="textColor" red="0.20000000298023224" green="0.20000000298023224" blue="0.20000000298023224" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -166,7 +166,7 @@
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="49" id="X8O-cF-2nt"/>
                                                     </constraints>
-                                                    <color key="onTintColor" red="0.95294117647058818" green="0.047058823529411764" blue="0.078431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <color key="onTintColor" red="0.0" green="0.74901960779999999" blue="0.64705882349999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <connections>
                                                         <action selector="biometricsSwitchValueChanged:" destination="9Kd-ys-eJ4" eventType="valueChanged" id="3hd-ij-G3j"/>
                                                     </connections>
@@ -207,7 +207,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Erase local data" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7ey-W1-w1Z">
-                                                    <rect key="frame" x="16" y="12" width="127.5" height="20"/>
+                                                    <rect key="frame" x="16" y="12" width="122" height="20"/>
                                                     <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="17"/>
                                                     <color key="textColor" red="0.20000000298023224" green="0.20000000298023224" blue="0.20000000298023224" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -217,7 +217,7 @@
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="49" id="Lob-dy-qtQ"/>
                                                     </constraints>
-                                                    <color key="onTintColor" red="0.95294117647058818" green="0.047058823529411764" blue="0.078431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <color key="onTintColor" red="0.0" green="0.74901960779999999" blue="0.64705882349999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <connections>
                                                         <action selector="eraseLocalDataSwitchValueChanged:" destination="9Kd-ys-eJ4" eventType="valueChanged" id="799-xq-Olc"/>
                                                     </connections>
@@ -839,7 +839,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Auto-Accept" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ODN-wg-dNs">
-                                                    <rect key="frame" x="16" y="12" width="101.5" height="20"/>
+                                                    <rect key="frame" x="16" y="12" width="96.5" height="20"/>
                                                     <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -849,7 +849,7 @@
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="49" id="xkr-g7-Eme"/>
                                                     </constraints>
-                                                    <color key="onTintColor" red="0.95294117647058818" green="0.047058823529411764" blue="0.078431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <color key="onTintColor" red="0.0" green="0.74901960779999999" blue="0.64705882349999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <connections>
                                                         <action selector="autoAcceptSwitchDidChange:" destination="uCw-IP-Y5s" eventType="valueChanged" id="Vph-Mx-QJk"/>
                                                     </connections>
@@ -1103,14 +1103,13 @@
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="49" id="MKM-D1-FnI"/>
                                                     </constraints>
-                                                    <color key="onTintColor" red="0.95294117649999999" green="0.047058823530000002" blue="0.078431372550000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <color key="onTintColor" red="0.0" green="0.74901960779999999" blue="0.64705882349999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <connections>
-                                                        <action selector="photosSwitchValueChanged:" destination="Zqt-Yf-u7D" eventType="valueChanged" id="vHy-zT-7dD"/>
                                                         <action selector="useHttpsOnlySwitch:" destination="Zqt-Yf-u7D" eventType="valueChanged" id="PRf-l2-BHX"/>
                                                     </connections>
                                                 </switch>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Don't use HTTP" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1kL-0h-YiN" userLabel="Don't use HTTP">
-                                                    <rect key="frame" x="16" y="12" width="126" height="20"/>
+                                                    <rect key="frame" x="16" y="12" width="121" height="20"/>
                                                     <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="17"/>
                                                     <color key="textColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -1146,18 +1145,22 @@
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="kXr-NU-yFc">
+                                                <switch opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="kXr-NU-yFc">
                                                     <rect key="frame" x="310" y="6.5" width="51" height="31"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="49" id="pfa-ik-Gvr"/>
                                                     </constraints>
-                                                    <color key="onTintColor" red="0.95294117647058818" green="0.047058823529411764" blue="0.078431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                    <connections>
-                                                        <action selector="photosSwitchValueChanged:" destination="Zqt-Yf-u7D" eventType="valueChanged" id="lDp-Qk-qpT"/>
-                                                    </connections>
+                                                    <color key="onTintColor" red="0.0" green="0.74901960779999999" blue="0.64705882349999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 </switch>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0xX-SB-VHF">
+                                                    <rect key="frame" x="310" y="6.5" width="49" height="31"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <connections>
+                                                        <action selector="downloadOptionsSaveImagesSwitchTouchUpInside:" destination="Zqt-Yf-u7D" eventType="touchUpInside" id="Pdq-ws-A04"/>
+                                                    </connections>
+                                                </button>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Save Images in Library" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gFD-P4-mTY" userLabel="Save Photos in Library Label">
-                                                    <rect key="frame" x="16" y="12" width="181" height="20"/>
+                                                    <rect key="frame" x="16" y="12" width="173" height="20"/>
                                                     <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="17"/>
                                                     <color key="textColor" red="0.20000000298023224" green="0.20000000298023224" blue="0.20000000298023224" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -1167,11 +1170,15 @@
                                                 <constraint firstAttribute="trailingMargin" secondItem="kXr-NU-yFc" secondAttribute="trailing" id="3mm-o5-cPD"/>
                                                 <constraint firstItem="kXr-NU-yFc" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="gFD-P4-mTY" secondAttribute="trailing" constant="8" id="7of-g9-8cm"/>
                                                 <constraint firstItem="gFD-P4-mTY" firstAttribute="leading" secondItem="OpU-Jz-CNM" secondAttribute="leadingMargin" constant="15" id="C0m-cL-nm0"/>
+                                                <constraint firstItem="0xX-SB-VHF" firstAttribute="centerX" secondItem="kXr-NU-yFc" secondAttribute="centerX" id="H9p-zi-bFG"/>
+                                                <constraint firstItem="0xX-SB-VHF" firstAttribute="width" secondItem="kXr-NU-yFc" secondAttribute="width" id="KRb-15-x68"/>
                                                 <constraint firstItem="kXr-NU-yFc" firstAttribute="centerY" secondItem="OpU-Jz-CNM" secondAttribute="centerY" id="SKX-Fk-9Sn"/>
+                                                <constraint firstItem="0xX-SB-VHF" firstAttribute="height" secondItem="kXr-NU-yFc" secondAttribute="height" id="Z1T-bd-MZ9"/>
                                                 <constraint firstItem="kXr-NU-yFc" firstAttribute="trailing" secondItem="OpU-Jz-CNM" secondAttribute="trailingMargin" id="faw-Yp-Tgi"/>
                                                 <constraint firstItem="gFD-P4-mTY" firstAttribute="centerY" secondItem="OpU-Jz-CNM" secondAttribute="centerY" id="iaO-Gy-uaf"/>
                                                 <constraint firstItem="gFD-P4-mTY" firstAttribute="trailing" secondItem="OpU-Jz-CNM" secondAttribute="trailingMargin" id="sPt-Lc-Ziq"/>
                                                 <constraint firstItem="gFD-P4-mTY" firstAttribute="leading" secondItem="OpU-Jz-CNM" secondAttribute="leadingMargin" id="vZV-gN-hsm"/>
+                                                <constraint firstItem="0xX-SB-VHF" firstAttribute="centerY" secondItem="kXr-NU-yFc" secondAttribute="centerY" id="x2I-oT-Wgh"/>
                                             </constraints>
                                             <variation key="default">
                                                 <mask key="constraints">
@@ -1189,28 +1196,36 @@
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="7Cc-dW-hDg">
+                                                <switch opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="7Cc-dW-hDg">
                                                     <rect key="frame" x="310" y="6.5" width="51" height="31"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="49" id="la6-Vm-cFh"/>
                                                     </constraints>
-                                                    <color key="onTintColor" red="0.95294117647058818" green="0.047058823529411764" blue="0.078431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                    <connections>
-                                                        <action selector="videosSwitchValueChanged:" destination="Zqt-Yf-u7D" eventType="valueChanged" id="ULf-Qu-ayQ"/>
-                                                    </connections>
+                                                    <color key="onTintColor" red="0.0" green="0.74901960779999999" blue="0.64705882349999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 </switch>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="d0c-df-U4e">
+                                                    <rect key="frame" x="310" y="6.5" width="49" height="31"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <connections>
+                                                        <action selector="downloadOptionsSaveVideosSwitchTouchUpInside:" destination="Zqt-Yf-u7D" eventType="touchUpInside" id="GdY-sS-fiY"/>
+                                                    </connections>
+                                                </button>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Save Videos in Library" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IIQ-d9-Fdl" userLabel="Save Videos in Library Label">
-                                                    <rect key="frame" x="16" y="12" width="178" height="20"/>
+                                                    <rect key="frame" x="16" y="12" width="169" height="20"/>
                                                     <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="17"/>
                                                     <color key="textColor" red="0.20000000298023224" green="0.20000000298023224" blue="0.20000000298023224" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
                                             <constraints>
+                                                <constraint firstItem="d0c-df-U4e" firstAttribute="height" secondItem="7Cc-dW-hDg" secondAttribute="height" id="1Gr-qu-UgT"/>
                                                 <constraint firstItem="IIQ-d9-Fdl" firstAttribute="trailing" secondItem="shB-pb-yOU" secondAttribute="trailingMargin" id="32j-tp-rO1"/>
                                                 <constraint firstItem="7Cc-dW-hDg" firstAttribute="trailing" secondItem="shB-pb-yOU" secondAttribute="trailingMargin" id="79o-si-Cde"/>
                                                 <constraint firstItem="IIQ-d9-Fdl" firstAttribute="centerY" secondItem="shB-pb-yOU" secondAttribute="centerY" id="7r4-9P-Kjs"/>
+                                                <constraint firstItem="d0c-df-U4e" firstAttribute="centerY" secondItem="7Cc-dW-hDg" secondAttribute="centerY" id="ArA-tA-HSr"/>
+                                                <constraint firstItem="d0c-df-U4e" firstAttribute="centerX" secondItem="7Cc-dW-hDg" secondAttribute="centerX" id="Cla-Zn-OOR"/>
                                                 <constraint firstItem="IIQ-d9-Fdl" firstAttribute="leading" secondItem="shB-pb-yOU" secondAttribute="leadingMargin" id="FRQ-uG-prk"/>
+                                                <constraint firstItem="d0c-df-U4e" firstAttribute="width" secondItem="7Cc-dW-hDg" secondAttribute="width" id="TQs-cY-LYS"/>
                                                 <constraint firstItem="7Cc-dW-hDg" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="IIQ-d9-Fdl" secondAttribute="trailing" constant="8" id="XkR-XX-9k3"/>
                                                 <constraint firstItem="IIQ-d9-Fdl" firstAttribute="leading" secondItem="shB-pb-yOU" secondAttribute="leadingMargin" constant="15" id="aak-KW-eP8"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="7Cc-dW-hDg" secondAttribute="trailing" id="lnf-KQ-7ch"/>
@@ -1236,18 +1251,22 @@
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="uU3-hV-B7S" userLabel="Save to Gallery Switch">
+                                                <switch opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="uU3-hV-B7S" userLabel="Save to Gallery Switch">
                                                     <rect key="frame" x="310" y="6.5" width="51" height="31"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="49" id="vnL-ai-xUy"/>
                                                     </constraints>
-                                                    <color key="onTintColor" red="0.95294117649999999" green="0.047058823530000002" blue="0.078431372550000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                    <connections>
-                                                        <action selector="mediaInGallerySwitchChanged:" destination="Zqt-Yf-u7D" eventType="valueChanged" id="kcF-MB-P4N"/>
-                                                    </connections>
+                                                    <color key="onTintColor" red="0.0" green="0.74901960779999999" blue="0.64705882349999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 </switch>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ac8-ls-Zj9">
+                                                    <rect key="frame" x="310" y="6.5" width="49" height="31"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <connections>
+                                                        <action selector="saveInLibrarySwitchTouchUpInside:" destination="Zqt-Yf-u7D" eventType="touchUpInside" id="KKI-J5-0PX"/>
+                                                    </connections>
+                                                </button>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Save in Library" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4YB-6E-Htm" userLabel="Save to Galllery">
-                                                    <rect key="frame" x="16" y="12" width="118.5" height="20"/>
+                                                    <rect key="frame" x="16" y="12" width="113" height="20"/>
                                                     <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="17"/>
                                                     <color key="textColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -1259,9 +1278,13 @@
                                                 <constraint firstItem="uU3-hV-B7S" firstAttribute="centerY" secondItem="uRA-az-Dr6" secondAttribute="centerY" id="HTO-YM-Kh5"/>
                                                 <constraint firstItem="uU3-hV-B7S" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="4YB-6E-Htm" secondAttribute="trailing" constant="8" id="N5m-Lm-xvX"/>
                                                 <constraint firstItem="4YB-6E-Htm" firstAttribute="leading" secondItem="uRA-az-Dr6" secondAttribute="leadingMargin" id="Q9A-l7-MwD"/>
+                                                <constraint firstItem="ac8-ls-Zj9" firstAttribute="height" secondItem="uU3-hV-B7S" secondAttribute="height" id="SQF-jl-I3o"/>
                                                 <constraint firstItem="4YB-6E-Htm" firstAttribute="trailing" secondItem="uRA-az-Dr6" secondAttribute="trailingMargin" id="Wp3-Kr-sJ5"/>
+                                                <constraint firstItem="ac8-ls-Zj9" firstAttribute="centerX" secondItem="uU3-hV-B7S" secondAttribute="centerX" id="XVG-5l-f5c"/>
                                                 <constraint firstItem="4YB-6E-Htm" firstAttribute="leading" secondItem="uRA-az-Dr6" secondAttribute="leadingMargin" constant="15" id="emM-vt-ezt"/>
+                                                <constraint firstItem="ac8-ls-Zj9" firstAttribute="width" secondItem="uU3-hV-B7S" secondAttribute="width" id="pNa-vc-9nr"/>
                                                 <constraint firstItem="uU3-hV-B7S" firstAttribute="trailing" secondItem="uRA-az-Dr6" secondAttribute="trailingMargin" id="peN-Di-yNX"/>
+                                                <constraint firstItem="ac8-ls-Zj9" firstAttribute="centerY" secondItem="uU3-hV-B7S" secondAttribute="centerY" id="sbX-R6-JJJ"/>
                                             </constraints>
                                             <variation key="default">
                                                 <mask key="constraints">
@@ -1307,13 +1330,13 @@
                     <connections>
                         <outlet property="cancelAccountLabel" destination="Cab-ov-Gol" id="cgP-TO-wow"/>
                         <outlet property="dontUseHttpLabel" destination="1kL-0h-YiN" id="dTh-da-9fl"/>
-                        <outlet property="photosSwitch" destination="kXr-NU-yFc" id="pMD-zN-OWf"/>
+                        <outlet property="saveImagesSwitch" destination="kXr-NU-yFc" id="pMD-zN-OWf"/>
                         <outlet property="saveMediaInGalleryLabel" destination="4YB-6E-Htm" id="EXR-mc-Kl2"/>
                         <outlet property="saveMediaInGallerySwitch" destination="uU3-hV-B7S" id="2vf-HH-H6L"/>
                         <outlet property="savePhotosLabel" destination="gFD-P4-mTY" id="tda-4j-GxT"/>
                         <outlet property="saveVideosLabel" destination="IIQ-d9-Fdl" id="r3m-el-iaA"/>
+                        <outlet property="saveVideosSwitch" destination="7Cc-dW-hDg" id="B5Z-6l-2hG"/>
                         <outlet property="useHttpsOnlySwitch" destination="Vyq-Yn-Bxz" id="eDN-vd-W8p"/>
-                        <outlet property="videosSwitch" destination="7Cc-dW-hDg" id="B5Z-6l-2hG"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NC8-4Q-Rd8" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1417,7 +1440,7 @@
                                 </variation>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Why do I need a Recovery Key?" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MbZ-sd-Eec" userLabel="Why Do I Need a Recovery Key Label And Button">
-                                <rect key="frame" x="77" y="395" width="221.5" height="36"/>
+                                <rect key="frame" x="80.5" y="395" width="214.5" height="36"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="36" id="v5q-V7-KNg"/>
                                 </constraints>
@@ -1426,7 +1449,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jTL-gV-SRV" userLabel="Why Do I Need a Recovery Key? Button">
-                                <rect key="frame" x="77" y="395" width="221.5" height="36"/>
+                                <rect key="frame" x="80.5" y="395" width="214.5" height="36"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="68" id="plH-QP-ycX"/>
                                 </constraints>
@@ -1915,14 +1938,14 @@ You may still receive file versions from shared folders if your contacts have th
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="File Versioning" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pTR-ca-8uK">
-                                                    <rect key="frame" x="16" y="12" width="117" height="20"/>
+                                                    <rect key="frame" x="16" y="12" width="110" height="20"/>
                                                     <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="17"/>
                                                     <color key="textColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <switch opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="DdX-Za-PDc" userLabel="File Versioning Switch">
                                                     <rect key="frame" x="310" y="6.5" width="51" height="31"/>
-                                                    <color key="onTintColor" red="0.94117647059999998" green="0.2156862745" blue="0.2274509804" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <color key="onTintColor" red="0.0" green="0.74901960779999999" blue="0.64705882349999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 </switch>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RXc-nc-xOp">
                                                     <rect key="frame" x="310" y="6.5" width="49" height="31"/>
@@ -2082,10 +2105,10 @@ You may still receive file versions from shared folders if your contacts have th
                                             <subviews>
                                                 <switch opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="l0G-G7-8HZ">
                                                     <rect key="frame" x="310" y="6.5" width="51" height="31"/>
-                                                    <color key="onTintColor" red="0.95294117649999999" green="0.047058823530000002" blue="0.078431372550000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <color key="onTintColor" red="0.0" green="0.74901960779999999" blue="0.64705882349999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 </switch>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Rubbish-Bin Cleaning Scheduler" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="abK-a2-a0A">
-                                                    <rect key="frame" x="16" y="12" width="259" height="20"/>
+                                                    <rect key="frame" x="16" y="12" width="247.5" height="20"/>
                                                     <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="17"/>
                                                     <color key="textColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>

@@ -116,8 +116,6 @@
     [MEGASdk setLogLevel:MEGALogLevelFatal];
 #endif
     
-    self.window = [[UIWindow alloc] initWithFrame:UIScreen.mainScreen.bounds];
-
     [MEGASdk setLogToConsole:YES];
     
     [self migrateLocalCachesLocation];
@@ -294,7 +292,6 @@
             [UIView transitionWithView:self.window duration:0.5 options:(UIViewAnimationOptionTransitionCrossDissolve | UIViewAnimationOptionAllowAnimatedContent) animations:^{
                 [self.window setRootViewController:launchVC];
             } completion:nil];
-            [[UIApplication sharedApplication] setStatusBarHidden:YES];
         } else {
             if ([LTHPasscodeViewController doesPasscodeExist]) {
                 if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsEraseAllLocalDataEnabled]) {
@@ -308,7 +305,6 @@
             } else {
                 _mainTBC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"TabBarControllerID"];
                 [self.window setRootViewController:_mainTBC];
-                [[UIApplication sharedApplication] setStatusBarHidden:NO];
             }
         }
         
@@ -643,6 +639,8 @@
     
     [[UISegmentedControl appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:13.0f]} forState:UIControlStateNormal];
     
+    UISwitch.appearance.onTintColor = UIColor.mnz_green00BFA5;
+    
     [[UIBarButtonItem appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:17.0f]} forState:UIControlStateNormal];
     [UIBarButtonItem appearanceWhenContainedInInstancesOfClasses:@[[UIToolbar class]]].tintColor = UIColor.mnz_redMain;
 
@@ -825,7 +823,6 @@
         if (![self.window.rootViewController isKindOfClass:[MainTabBarController class]]) {
             _mainTBC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"TabBarControllerID"];
             [self.window setRootViewController:_mainTBC];
-            [[UIApplication sharedApplication] setStatusBarHidden:NO];
             
             if ([LTHPasscodeViewController doesPasscodeExist]) {
                 if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsEraseAllLocalDataEnabled]) {
@@ -1133,7 +1130,6 @@ void uncaughtExceptionHandler(NSException *exception) {
     if (![MEGAReachabilityManager isReachable] || [self.window.rootViewController isKindOfClass:[LTHPasscodeViewController class]]) {
         _mainTBC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"TabBarControllerID"];
         [self.window setRootViewController:_mainTBC];
-        [[UIApplication sharedApplication] setStatusBarHidden:NO];
     } else {
         [self showLink:MEGALinkManager.linkURL];
         
