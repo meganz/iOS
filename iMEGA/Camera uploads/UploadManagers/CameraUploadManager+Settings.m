@@ -1,6 +1,7 @@
 
 #import "CameraUploadManager+Settings.h"
 #import "CameraUploadManager.h"
+#import "MEGAConstants.h"
 
 static NSString * const IsCameraUploadsEnabledKey = @"IsCameraUploadsEnabled";
 static NSString * const IsVideoUploadsEnabledKey = @"IsUploadVideosEnabled";
@@ -115,6 +116,7 @@ static NSString * const IsLocationBasedBackgroundUploadAllowedKey = @"IsLocation
 
 + (void)setConvertHEICPhoto:(BOOL)convertHEICPhoto {
     [NSUserDefaults.standardUserDefaults setBool:convertHEICPhoto forKey:ShouldConvertHEICPhotoKey];
+    [NSNotificationCenter.defaultCenter postNotificationName:MEGACameraUploadSwitchPhotoFormatNotificationName object:nil];
 }
 
 + (CameraUploadVideoQuality)HEVCToH264CompressionQuality {

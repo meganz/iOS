@@ -15,7 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (instancetype)initWithUploadInfo:(AssetUploadInfo *)uploadInfo;
 
-- (void)checkExistenceAndEncryptFileIfNeeded;
+- (void)checkFingerprintAndEncryptFileIfNeeded;
 
 - (MEGANode *)nodeForOriginalFingerprint:(NSString *)fingerprint;
 

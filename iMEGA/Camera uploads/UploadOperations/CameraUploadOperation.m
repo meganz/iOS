@@ -128,7 +128,7 @@
 
 #pragma mark - upload task
 
-- (void)checkExistenceAndEncryptFileIfNeeded {
+- (void)checkFingerprintAndEncryptFileIfNeeded {
     self.uploadInfo.fingerprint = [MEGASdkManager.sharedMEGASdk fingerprintForFilePath:self.uploadInfo.fileURL.path modificationTime:self.uploadInfo.asset.creationDate];
     MEGANode *matchingNode = [MEGASdkManager.sharedMEGASdk nodeForFingerprint:self.uploadInfo.fingerprint parent:self.uploadInfo.parentNode];
     if (matchingNode) {
