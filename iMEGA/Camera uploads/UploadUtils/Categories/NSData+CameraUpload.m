@@ -24,8 +24,43 @@
         
         if (destination) {
             NSDictionary *removeGPSDict = @{(__bridge NSString *)kCGImageMetadataShouldExcludeGPS : @(shouldStripGPSInfo)};
+            
+            if (shouldConvertImageType) {
+                for (size_t index = 0; index < size; index++) {
+                    CGImageDestinationAddImageFromSource(destination, source, index, (__bridge CFDictionaryRef)removeGPSDict);
+                }
+                isExportedSuccessfully = CGImageDestinationFinalize(destination);
+            } else {
+                CFErrorRef error;
+                NSMutableDictionary *metadata = [removeGPSDict mutableCopy];
+                CGImageMetadataRef sourceMetadata = CGImageSourceCopyMetadataAtIndex(source, 0, NULL);
+                [metadata addEntriesFromDictionary:@{(__bridge NSString *)kCGImageDestinationMetadata : (__bridge id)sourceMetadata,
+                                                     (__bridge NSString *)kCGImageDestinationMergeMetadata : @(YES)}];
+                isExportedSuccessfully = CGImageDestinationCopyImageSource(destination, source, (__bridge CFDictionaryRef)[metadata copy], &error);
+                if (!isExportedSuccessfully) {
+                    isExportedSuccessfully = [self mnz_exportToURL:URL alwaysEncodeToImageUTIType:sourceType imageProperty:removeGPSDict];
+                }
+            }
+            
+            CFRelease(destination);
+        }
+        
+        CFRelease(source);
+    }
+    
+    return isExportedSuccessfully;
+}
+
+- (BOOL)mnz_exportToURL:(NSURL *)URL alwaysEncodeToImageUTIType:(CFStringRef)imageUTI imageProperty:(NSDictionary *)property {
+    BOOL isExportedSuccessfully = NO;
+    CGImageSourceRef source = CGImageSourceCreateWithData((__bridge CFDataRef)self, NULL);
+    if (source) {
+        size_t size = CGImageSourceGetCount(source);
+        CGImageDestinationRef destination = CGImageDestinationCreateWithURL((__bridge CFURLRef)URL, imageUTI, size, NULL);
+        
+        if (destination) {
             for (size_t index = 0; index < size; index++) {
-                CGImageDestinationAddImageFromSource(destination, source, index, (__bridge CFDictionaryRef)removeGPSDict);
+                CGImageDestinationAddImageFromSource(destination, source, index, (__bridge CFDictionaryRef)property);
             }
             isExportedSuccessfully = CGImageDestinationFinalize(destination);
             
