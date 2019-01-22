@@ -69,7 +69,7 @@
         self.uploadInfo.fileName = [self.uploadInfo.asset mnz_cameraUploadFileNameWithExtension:fileExtension];
     }
     
-    PhotoExportOperation *exportOperation = [[PhotoExportOperation alloc] initWithPhotoData:imageData outputURL:self.uploadInfo.fileURL outputImageTypeUTI:outputImageUTI shouldStripGPSInfo:YES completionHandler:^(BOOL succeeded) {
+    PhotoExportOperation *exportOperation = [[PhotoExportOperation alloc] initWithPhotoData:imageData outputURL:self.uploadInfo.fileURL outputImageTypeUTI:outputImageUTI shouldStripGPSInfo:YES completion:^(BOOL succeeded) {
         if (succeeded && [NSFileManager.defaultManager fileExistsAtPath:self.uploadInfo.fileURL.path]) {
             [self checkFingerprintAndEncryptFileIfNeeded];
         } else {

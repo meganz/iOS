@@ -50,7 +50,12 @@
 #pragma mark - start operation
 
 - (void)start {
-    [super start];
+    if (self.isCancelled) {
+        [self finishOperationWithStatus:CameraAssetUploadStatusFailed shouldUploadNextAsset:YES];
+        return;
+    }
+    
+    [self startExecuting];
 
     [self beginBackgroundTaskWithExpirationHandler:^{
         [self finishOperationWithStatus:CameraAssetUploadStatusFailed shouldUploadNextAsset:NO];
