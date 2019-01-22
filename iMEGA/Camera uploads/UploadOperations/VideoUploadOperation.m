@@ -125,7 +125,7 @@
                 switch (session.status) {
                     case AVAssetExportSessionStatusCompleted:
                         MEGALogDebug(@"[Camera Upload] %@ has finished video compression", weakSelf);
-                        [weakSelf checkExistenceAndEncryptFileIfNeeded];
+                        [weakSelf checkFingerprintAndEncryptFileIfNeeded];
                         break;
                     case AVAssetExportSessionStatusCancelled:
                         MEGALogDebug(@"[Camera Upload] %@ video compression got cancelled", weakSelf);
@@ -154,7 +154,7 @@
         return;
     }
     
-    [self checkExistenceAndEncryptFileIfNeeded];
+    [self checkFingerprintAndEncryptFileIfNeeded];
 }
 
 @end

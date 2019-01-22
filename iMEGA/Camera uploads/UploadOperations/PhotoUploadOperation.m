@@ -13,6 +13,8 @@
 #import "CameraUploadManager+Settings.h"
 #import "PHAsset+CameraUpload.h"
 #import "MEGAConstants.h"
+#import "PhotoExportManager.h"
+#import "PhotoExportOperation.h"
 @import CoreServices;
 
 @implementation PhotoUploadOperation
@@ -58,25 +60,23 @@
         return;
     }
     
-    if ([self exportImageData:imageData dataUTI:dataUTI dataInfo:dataInfo] && [NSFileManager.defaultManager fileExistsAtPath:self.uploadInfo.fileURL.path]) {
-        [self checkExistenceAndEncryptFileIfNeeded];
-    } else {
-        [self finishOperationWithStatus:CameraAssetUploadStatusFailed shouldUploadNextAsset:YES];
-    }
-}
-
-- (BOOL)exportImageData:(NSData *)imageData dataUTI:(NSString *)dataUTI dataInfo:(NSDictionary *)dataInfo {
-    BOOL isImageExportedSuccessfully = NO;
+    NSString *outputImageUTI;
     if ([self shouldConvertToJPGForUTI:dataUTI]) {
         self.uploadInfo.fileName = [self.uploadInfo.asset mnz_cameraUploadFileNameWithExtension:MEGAJPGFileExtension];
-        isImageExportedSuccessfully = [imageData mnz_exportToURL:self.uploadInfo.fileURL imageType:(__bridge NSString *)kUTTypeJPEG shouldStripGPSInfo:YES];
+        outputImageUTI = (__bridge NSString *)kUTTypeJPEG;
     } else {
         NSString *fileExtension = [self.uploadInfo.asset mnz_fileExtensionFromAssetInfo:dataInfo];
         self.uploadInfo.fileName = [self.uploadInfo.asset mnz_cameraUploadFileNameWithExtension:fileExtension];
-        isImageExportedSuccessfully = [imageData mnz_exportToURL:self.uploadInfo.fileURL shouldStripGPSInfo:YES];
     }
     
-    return isImageExportedSuccessfully;
+    PhotoExportOperation *exportOperation = [[PhotoExportOperation alloc] initWithPhotoData:imageData outputURL:self.uploadInfo.fileURL outputImageTypeUTI:outputImageUTI shouldStripGPSInfo:YES completionHandler:^(BOOL succeeded) {
+        if (succeeded && [NSFileManager.defaultManager fileExistsAtPath:self.uploadInfo.fileURL.path]) {
+            [self checkFingerprintAndEncryptFileIfNeeded];
+        } else {
+            [self finishOperationWithStatus:CameraAssetUploadStatusFailed shouldUploadNextAsset:YES];
+        }
+    }];
+    [PhotoExportManager.shared.operationQueue addOperation:exportOperation];
 }
 
 - (BOOL)shouldConvertToJPGForUTI:(NSString *)dataUTI {
