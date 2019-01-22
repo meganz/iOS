@@ -12,6 +12,7 @@ typedef enum : NSUInteger {
     CameraUploadErrorEncryption,
     CameraUploadErrorFailedToCreateCompleteUploadRequest,
     CameraUploadErrorBackgroundTaskExpired,
+    CameraUploadOperationCancelled
 } CameraUploadError;
 
 @interface NSError (CameraUpload)
@@ -26,6 +27,12 @@ typedef enum : NSUInteger {
  return a NSError object for camera upload when a background task gets expired
  */
 @property (class, readonly) NSError *mnz_cameraUploadBackgroundTaskExpiredError;
+
+
+/**
+ return a NSError object if one camera upload operation gets cancelled
+ */
+@property (class, readonly) NSError *mnz_cameraUploadOperationCancelled;
 
 @end
 

@@ -11,6 +11,10 @@
         return;
     }
     
+    [self startExecuting];
+}
+
+- (void)startExecuting {
     [self willChangeValueForKey:@"isExecuting"];
     executing = YES;
     [self didChangeValueForKey:@"isExecuting"];

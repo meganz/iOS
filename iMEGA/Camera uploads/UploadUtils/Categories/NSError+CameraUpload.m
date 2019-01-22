@@ -13,4 +13,8 @@ NSString * const CameraUploadErrorDomain = @"nz.mega.cameraUpload";
     return [NSError errorWithDomain:CameraUploadErrorDomain code:CameraUploadErrorBackgroundTaskExpired userInfo:@{NSLocalizedDescriptionKey : @"background task is expired"}];
 }
 
++ (NSError *)mnz_cameraUploadOperationCancelled {
+    return [NSError errorWithDomain:CameraUploadErrorDomain code:CameraUploadOperationCancelled userInfo:@{NSLocalizedDescriptionKey : @"operation gets cancelled"}];
+}
+
 @end

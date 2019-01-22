@@ -27,7 +27,16 @@
 }
 
 - (void)start {
-    [super start];
+    if (self.isCancelled) {
+        if (self.completion) {
+            self.completion(nil, [NSError mnz_cameraUploadOperationCancelled]);
+        }
+        [self finishOperation];
+        
+        return;
+    }
+    
+    [self startExecuting];
     
     [self beginBackgroundTaskWithExpirationHandler:^{
         self.completion(nil, [NSError mnz_cameraUploadBackgroundTaskExpiredError]);
