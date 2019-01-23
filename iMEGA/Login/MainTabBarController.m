@@ -157,15 +157,13 @@
         MEGANavigationController *navigationController = [self.childViewControllers objectAtIndex:CHAT];
         ChatRoomsViewController *chatRoomsVC = navigationController.viewControllers.firstObject;
         
-        if ([MEGASdkManager sharedMEGAChatSdk].numCalls == 0) {
-            UIViewController *rootViewController = UIApplication.sharedApplication.delegate.window.rootViewController;
-            if (rootViewController.presentedViewController) {
-                [rootViewController dismissViewControllerAnimated:YES completion:^{
-                    [chatRoomsVC openChatRoomWithID:chatNumber.unsignedLongLongValue];
-                }];
-            } else {
+        UIViewController *rootViewController = UIApplication.sharedApplication.delegate.window.rootViewController;
+        if (rootViewController.presentedViewController) {
+            [rootViewController dismissViewControllerAnimated:YES completion:^{
                 [chatRoomsVC openChatRoomWithID:chatNumber.unsignedLongLongValue];
-            }
+            }];
+        } else {
+            [chatRoomsVC openChatRoomWithID:chatNumber.unsignedLongLongValue];
         }
     }
 }
