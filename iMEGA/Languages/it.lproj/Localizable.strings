@@ -689,7 +689,7 @@
 /* Title for the MEGA Recovery Key */
 "masterKey"="Chiave di Recupero";
 /* Section title where you can change your MEGA's password */
-"changePasswordLabel"="Cambia password";
+"changePasswordLabel"="Modifica Password";
 /* Advising the user to keep the user's master key safe. */
 "exportMasterKeyFooter"="Esportare la Chiave di Recupero e tenerla in un posto sicuro ti permette di reimpostare la password senza perdite di dati.";
 /* Question button to present a view where it's explained what is the Recovery Key */
@@ -966,7 +966,7 @@
 /* Text that shows the expiry date of the account PRO level */
 "expiresOn"="scade il %@";
 /* Button title for the section where you can see the 'Purchase history' related to your account */
-"purchaseHistory"="Storico acquisti";
+"purchaseHistory"="Storico Acquisti";
 /* Title of the Incoming Shares section. Here you can see the folders that your contacts have shared with you */
 "incomingShares"="Condivisioni in arrivo";
 /* Sentence shown under the used space percentage to complete the info with the user account maximum storage. "of {maximun storage}" */
@@ -1676,6 +1676,16 @@
 "To disable the Rubbish-Bin Cleaning Scheduler or set a longer retention period, you need to subscribe to a PRO plan."="Per disabilitare il calendario di pulizia automatica del Cestino o impostare un periodo di ritenzione, devi abbonarti ad un piano PRO.";
 /* Confirmation dialog for the button that logs the user out of all sessions except the current one. */
 "Do you want to close all other sessions? This will log you out on all other active sessions except the current one."="Vuoi chiudere tutte le altre sessioni? Questo ti farà uscire da tutte le altre sessioni attive, fatta eccezione per quella corrente.";
+/* Message to inform the local user that someone has joined the current group call */
+"%@ joined the call."="%@ si è unito alla chiamata.";
+/* Message to inform the local user that someone has left the current group call */
+"%@ left the call."="%@ ha abbandonato la chiamata.";
+/* Message to inform the local user is having a bad quality network with someone in the current group call */
+"Poor conection."="Connessione debole.";
+/* Message shown in a chat room when there is an active group call */
+"There is an active group call. Tap to join."="C'è una chiamata di gruppo attiva. Clicca per unirti.";
+/* Message shown in a chat room for a group call in progress displaying the duration of the call */
+"Touch to return to call %@"="Tocca per tornare alla chiamata %@";
 /* A button label which allows the users save images/videos in the Photos app. */
 "Save to Photos"="Salva nella Galleria";
 /* Text shown when starting the process to save a photo or video to Photos app */
@@ -1684,6 +1694,10 @@
 "Saved to Photos"="Salvata nella Galleria";
 /* Text shown when an error occurs when trying to save a photo or video to Photos app */
 "Could not save Item"="Non ho potuto salvare l'oggetto";
+/* Message show when a call cannot be established because there are too many participants in the group call */
+"Error. No more participants are allowed in this group call."="Non ti è permesso di partecipare a questa chiamata in quanto ha raggiunto il massimo numero di partecipanti.";
+/* Message show when a user cannot activate the video in a group call because the max number of videos has been reached */
+"Error. No more video are allowed in this group call."="Non ti è permesso di attivare il video in questa chiamata in quanto ha raggiunto il massimo numero di partecipanti che utilizzano il video.";
 /* Text shown for switching from thumbnail view to list view. */
 "List view"="Modalità lista";
 /* Text shown for switching from list view to thumbnail view. */
@@ -1770,6 +1784,10 @@
 "Your PRO membership plan will expire in 1 day."="Il tuo piano di iscrizione PRO scadrà tra 1 giorno.";
 /* The professional pricing plan which the user is currently on will expire in 5 days. The %1 is a placeholder for the number of days and should not be removed. */
 "Your PRO membership plan will expire in %1 days."="Il tuo piano di iscrizione PRO scadrà tra %1 giorni.";
+/* The professional pricing plan which the user was on expired one day ago. */
+"Your PRO membership plan expired 1 day ago"="Il tuo piano PRO è scaduto 1 giorno fa";
+/* The professional pricing plan which the user was on expired %1 days ago. The %1 is a placeholder for the number of days and should not be removed. */
+"Your PRO membership plan expired %1 days ago"="Il tuo piano PRO è scaduto %1 giorni fa";
 /* The text of a notification indicating that a file or folder has been taken down due to infringement or other reason. The %1 placeholder will be replaced with the text ‘file’ or ‘folder’. The %2 will be replaced with the name of the file or folder. */
 "Your publicly shared %1 (%2) has been taken down."="Il/la tuo/a %1 condiviso/a pubblicamente (%2) è stato/a chiuso/a.";
 /* The text of a notification indicating that a file or folder that was taken down has now been restored due to a successful counter-notice. The %1 placeholder will be replaced with the text ‘file’ or ‘folder’. The %2 will be replaced with the name of the file or folder. */
