@@ -1096,7 +1096,7 @@
 /* Title that refers to the status of the chat (Either Online or Offline) */
 "status"="Status";
 /* Title used in settings that enables the generation of link previews in the chat */
-"richUrlPreviews"="Podgląd URL";
+"richUrlPreviews"="Zaawansowane podglądy adresów URL";
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
 "richPreviewsFooter"="Zwiększ możliwości MEGAchat. Linki będą pobierane bez szyfrowania.";
 /* Section title of a button where you can enable mobile data for voice and video calls. */
@@ -1645,7 +1645,7 @@
 /* A section header which contains the file management settings. These settings allow users to remove duplicate files etc. */
 "File Management"="Zarządzanie plikami";
 /* Title of the option to enable or disable file versioning on Settings section */
-"File versioning"="Wersjonowanie plików";
+"File versioning"="Wersja pliku";
 /* Subtitle of the option to enable or disable file versioning on Settings section */
 "Enable or disable file versioning for your entire account.[Br]You may still receive file versions from shared folders if your contacts have this enabled."="Włącz lub wyłącz wersjonowanie plików dla całego konta. \nNadal możesz odbierać wersje plików z folderów współdzielonych, jeśli są one włączone.";
 /* A confirmation message when the user chooses to disable file versioning. */
@@ -1676,6 +1676,16 @@
 "To disable the Rubbish-Bin Cleaning Scheduler or set a longer retention period, you need to subscribe to a PRO plan."="Aby wyłączyć harmonogram czyszczenia śmieci lub ustawić dłuższy okres przechowywania, musisz subskrybować plan PRO.";
 /* Confirmation dialog for the button that logs the user out of all sessions except the current one. */
 "Do you want to close all other sessions? This will log you out on all other active sessions except the current one."="Czy chcesz zamknąć wszystkie inne sesje? Spowoduje to wylogowanie wszystkich innych aktywnych sesji oprócz bieżącego.";
+/* Message to inform the local user that someone has joined the current group call */
+"%@ joined the call."="%@ dołączył do połączenia.";
+/* Message to inform the local user that someone has left the current group call */
+"%@ left the call."="%@ opuścił połączenie.";
+/* Message to inform the local user is having a bad quality network with someone in the current group call */
+"Poor conection."="Słabe połączenie.";
+/* Message shown in a chat room when there is an active group call */
+"There is an active group call. Tap to join."="Istnieje aktywne połączenie grupowe. Kliknij, aby dołączyć.";
+/* Message shown in a chat room for a group call in progress displaying the duration of the call */
+"Touch to return to call %@"="Dotknij, aby wrócić do połączenia %@";
 /* A button label which allows the users save images/videos in the Photos app. */
 "Save to Photos"="Zapisz w Zdjęciach";
 /* Text shown when starting the process to save a photo or video to Photos app */
@@ -1684,6 +1694,10 @@
 "Saved to Photos"="Zapisano w Zdjęciach";
 /* Text shown when an error occurs when trying to save a photo or video to Photos app */
 "Could not save Item"="Nie można zapisać elementu";
+/* Message show when a call cannot be established because there are too many participants in the group call */
+"Error. No more participants are allowed in this group call."="Nie możesz dołączyć do tej rozmowy, ponieważ osiągnęła maksymalną liczbę uczestników.";
+/* Message show when a user cannot activate the video in a group call because the max number of videos has been reached */
+"Error. No more video are allowed in this group call."="Nie możesz włączyć wideo, ponieważ to połączenie osiągnęło maksymalną liczbę uczestników korzystających z wideo.";
 /* Text shown for switching from thumbnail view to list view. */
 "List view"="Widok listy";
 /* Text shown for switching from list view to thumbnail view. */
@@ -1770,6 +1784,10 @@
 "Your PRO membership plan will expire in 1 day."="Plan PRO wygaśnie za 1 dzień.";
 /* The professional pricing plan which the user is currently on will expire in 5 days. The %1 is a placeholder for the number of days and should not be removed. */
 "Your PRO membership plan will expire in %1 days."="Plan PRO wygaśnie za %1 dni.";
+/* The professional pricing plan which the user was on expired one day ago. */
+"Your PRO membership plan expired 1 day ago"="Twój abonament PRO wygasł 1 dzień temu";
+/* The professional pricing plan which the user was on expired %1 days ago. The %1 is a placeholder for the number of days and should not be removed. */
+"Your PRO membership plan expired %1 days ago"="Twój plan PRO wygasł %1 dni temu";
 /* The text of a notification indicating that a file or folder has been taken down due to infringement or other reason. The %1 placeholder will be replaced with the text ‘file’ or ‘folder’. The %2 will be replaced with the name of the file or folder. */
 "Your publicly shared %1 (%2) has been taken down."="Twój udostępniony publicznie katalog  %1 (%2) został zablokowany.";
 /* The text of a notification indicating that a file or folder that was taken down has now been restored due to a successful counter-notice. The %1 placeholder will be replaced with the text ‘file’ or ‘folder’. The %2 will be replaced with the name of the file or folder. */
