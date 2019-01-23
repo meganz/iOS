@@ -839,12 +839,8 @@
     if (@available(iOS 11.0, *)) {
         cell.avatarImageView.accessibilityIgnoresInvertColors = YES;
     }
-    
-    if (chatListItem.isGroup) {
-        cell.activeCallImageView.hidden = ![[MEGASdkManager sharedMEGAChatSdk] hasCallInChatRoom:chatListItem.chatId];
-    } else {
-        cell.activeCallImageView.hidden = YES;
-    }
+        
+    cell.activeCallImageView.hidden = ![[MEGASdkManager sharedMEGAChatSdk] hasCallInChatRoom:chatListItem.chatId];
     
     return cell;
 }

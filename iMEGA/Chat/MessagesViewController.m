@@ -260,7 +260,7 @@ const NSUInteger kMaxMessagesToLoad = 256;
         [self.view addSubview:self.activeCallButton];
     }
     
-    if ([[MEGASdkManager sharedMEGAChatSdk] hasCallInChatRoom:self.chatRoom.chatId] && self.chatRoom.isGroup) {
+    if ([[MEGASdkManager sharedMEGAChatSdk] hasCallInChatRoom:self.chatRoom.chatId]) {
         MEGAChatCall *call = [[MEGASdkManager sharedMEGAChatSdk] chatCallForChatId:self.chatRoom.chatId];
         if (call.status == MEGAChatCallStatusInProgress) {
             [self showTapToReturnCall:call];
@@ -594,7 +594,13 @@ const NSUInteger kMaxMessagesToLoad = 256;
     UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, -44, self.view.frame.size.width, 44)];
     button.hidden = YES;
     button.backgroundColor = [UIColor colorWithRed:0 green:0.75 blue:0.65 alpha:1];
-    [button setTitle:AMLocalizedString(@"There is an active group call. Tap to join.", @"Message shown in a chat room when there is na active group call") forState:UIControlStateNormal];
+    NSString *title;
+    if (self.chatRoom.isGroup) {
+        title = AMLocalizedString(@"There is an active group call. Tap to join.", @"Message shown in a chat room when there is an active group call");
+    } else {
+        title = AMLocalizedString(@"There is an active call. Tap to join.", @"Message shown in a chat room when there is an active call");
+    }
+    [button setTitle:title forState:UIControlStateNormal];
     [button setTitleColor:UIColor.whiteColor forState:UIControlStateNormal];
     button.titleLabel.font = [UIFont mnz_SFUIMediumWithSize:12];
     [button addTarget:self action:@selector(joinActiveCall:) forControlEvents:UIControlEventTouchUpInside];
@@ -622,7 +628,13 @@ const NSUInteger kMaxMessagesToLoad = 256;
 
 - (void)showActiveCallButton {
     [self.timer invalidate];
-    [self.activeCallButton setTitle:AMLocalizedString(@"There is an active group call. Tap to join.", @"Message shown in a chat room when there is na active group call") forState:UIControlStateNormal];
+    NSString *title;
+    if (self.chatRoom.isGroup) {
+        title = AMLocalizedString(@"There is an active group call. Tap to join.", @"Message shown in a chat room when there is an active group call");
+    } else {
+        title = AMLocalizedString(@"There is an active call. Tap to join.", @"Message shown in a chat room when there is an active call");
+    }
+    [self.activeCallButton setTitle:title forState:UIControlStateNormal];
     if (self.activeCallButton.hidden) {
         self.activeCallButton.hidden = NO;
         [UIView animateWithDuration:.5f animations:^ {
@@ -646,18 +658,31 @@ const NSUInteger kMaxMessagesToLoad = 256;
 - (IBAction)joinActiveCall:(id)sender {
     [self.timer invalidate];
 
-    MEGANavigationController *groupCallNavigation = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"GroupCallViewControllerNavigationID"];
-    GroupCallViewController *groupCallVC = groupCallNavigation.viewControllers.firstObject;
-    groupCallVC.callType = CallTypeActive;
-    groupCallVC.videoCall = NO;
-    groupCallVC.chatRoom = self.chatRoom;
-    groupCallVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
-    
-    if (@available(iOS 10.0, *)) {
-        groupCallVC.megaCallManager = [(MainTabBarController *)UIApplication.sharedApplication.keyWindow.rootViewController megaCallManager];
+    if (self.chatRoom.isGroup) {
+        MEGANavigationController *groupCallNavigation = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"GroupCallViewControllerNavigationID"];
+        GroupCallViewController *groupCallVC = groupCallNavigation.viewControllers.firstObject;
+        groupCallVC.callType = CallTypeActive;
+        groupCallVC.videoCall = NO;
+        groupCallVC.chatRoom = self.chatRoom;
+        groupCallVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+        
+        if (@available(iOS 10.0, *)) {
+            groupCallVC.megaCallManager = [(MainTabBarController *)UIApplication.sharedApplication.keyWindow.rootViewController megaCallManager];
+        }
+        
+        [self presentViewController:groupCallNavigation animated:YES completion:nil];
+    } else {
+        CallViewController *callVC = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"CallViewControllerID"];
+        callVC.chatRoom = self.chatRoom;
+        callVC.videoCall = NO;
+        callVC.callType = CallTypeActive;
+        callVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+        
+        if (@available(iOS 10.0, *)) {
+            callVC.megaCallManager = [(MainTabBarController *)UIApplication.sharedApplication.keyWindow.rootViewController megaCallManager];
+        }
+        [self presentViewController:callVC animated:YES completion:nil];
     }
-    
-    [self presentViewController:groupCallNavigation animated:YES completion:nil];
 }
 
 - (void)startAudioVideoCall:(UIBarButtonItem *)sender {

@@ -39,7 +39,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="dZ8-bF-ZqB">
-                                                    <rect key="frame" x="10" y="11.999999999999996" width="394" height="54.666666666666657"/>
+                                                    <rect key="frame" x="10" y="12" width="394" height="54.666666666666657"/>
                                                     <subviews>
                                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="dTo-eS-oy4">
                                                             <rect key="frame" x="0.0" y="7.3333333333333321" width="40" height="40"/>
@@ -716,23 +716,36 @@
                                     <constraint firstAttribute="height" constant="120" id="fP5-WE-BbN"/>
                                 </constraints>
                             </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="E7j-Hb-08n">
+                                <rect key="frame" x="31" y="23" width="34" height="36"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="34" id="aJ7-uU-vbc"/>
+                                </constraints>
+                                <state key="normal" image="down-arrow"/>
+                                <connections>
+                                    <action selector="hideCall:" destination="m0F-zS-y46" eventType="touchUpInside" id="IUE-rF-32K"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="fD1-GO-MnE" firstAttribute="centerX" secondItem="jfp-B6-ZWa" secondAttribute="centerX" id="38a-fS-y8T"/>
                             <constraint firstItem="fD1-GO-MnE" firstAttribute="centerY" secondItem="2DR-0o-zFw" secondAttribute="centerY" multiplier="0.5" id="3fG-3u-r6V"/>
+                            <constraint firstItem="8NQ-41-n6m" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="E7j-Hb-08n" secondAttribute="trailing" constant="5" id="4yo-d4-M45"/>
                             <constraint firstItem="fD1-GO-MnE" firstAttribute="top" secondItem="2Au-MG-eIH" secondAttribute="bottom" constant="26" id="9ss-FV-cDi"/>
                             <constraint firstItem="agW-lq-qgD" firstAttribute="top" secondItem="jfp-B6-ZWa" secondAttribute="top" constant="43" id="KQK-o6-Sic"/>
-                            <constraint firstItem="8NQ-41-n6m" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="jfp-B6-ZWa" secondAttribute="leading" constant="20" id="Rrh-RR-7Xu"/>
                             <constraint firstItem="2Au-MG-eIH" firstAttribute="top" secondItem="8NQ-41-n6m" secondAttribute="bottom" constant="9" id="TA6-RV-iPz"/>
+                            <constraint firstItem="jfp-B6-ZWa" firstAttribute="top" secondItem="E7j-Hb-08n" secondAttribute="top" constant="-3" id="Ve3-Ss-GjS"/>
                             <constraint firstItem="2Au-MG-eIH" firstAttribute="leading" secondItem="agW-lq-qgD" secondAttribute="trailing" constant="8" id="ah5-xF-Bkg"/>
                             <constraint firstItem="jfp-B6-ZWa" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="8NQ-41-n6m" secondAttribute="trailing" constant="20" id="cOF-ZZ-0Pg"/>
                             <constraint firstItem="2Au-MG-eIH" firstAttribute="centerX" secondItem="jfp-B6-ZWa" secondAttribute="centerX" id="ctu-E8-wMi"/>
                             <constraint firstItem="fD1-GO-MnE" firstAttribute="centerY" secondItem="2DR-0o-zFw" secondAttribute="centerY" multiplier="0.5" id="dnp-JA-7n5"/>
                             <constraint firstItem="fD1-GO-MnE" firstAttribute="top" secondItem="2Au-MG-eIH" secondAttribute="bottom" constant="86" id="fdG-rb-xJU"/>
                             <constraint firstItem="8NQ-41-n6m" firstAttribute="centerX" secondItem="jfp-B6-ZWa" secondAttribute="centerX" id="i7W-EF-0nV"/>
+                            <constraint firstItem="E7j-Hb-08n" firstAttribute="baseline" secondItem="8NQ-41-n6m" secondAttribute="firstBaseline" constant="3" id="l8q-OT-ZcL"/>
                             <constraint firstItem="2Au-MG-eIH" firstAttribute="top" secondItem="jfp-B6-ZWa" secondAttribute="top" constant="45" id="nhX-Gg-OLR"/>
                             <constraint firstItem="8NQ-41-n6m" firstAttribute="top" secondItem="jfp-B6-ZWa" secondAttribute="top" constant="7" id="v6m-2T-l0W"/>
+                            <constraint firstItem="E7j-Hb-08n" firstAttribute="leading" secondItem="jfp-B6-ZWa" secondAttribute="leading" constant="31" id="ygl-fU-KfD"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="jfp-B6-ZWa"/>
                         <variation key="default">
@@ -766,6 +779,7 @@
                         <outlet property="enableDisableVideoButton" destination="hqO-Tf-O54" id="xK7-Wv-1ie"/>
                         <outlet property="incomingCallView" destination="eGD-Fd-hut" id="qw7-ME-H9Q"/>
                         <outlet property="localVideoImageView" destination="XBi-5G-ZJL" id="NKM-kX-4GF"/>
+                        <outlet property="minimizeButton" destination="E7j-Hb-08n" id="7zC-eQ-DrM"/>
                         <outlet property="muteUnmuteMicrophone" destination="22a-wx-Shy" id="26Q-94-law"/>
                         <outlet property="nameLabel" destination="8NQ-41-n6m" id="hjK-Op-VEu"/>
                         <outlet property="outgoingCallView" destination="Zo2-s1-xCp" id="OGV-yW-dPv"/>
@@ -778,7 +792,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3ui-lT-2Za" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3622" y="-250"/>
+            <point key="canvasLocation" x="3621.739130434783" y="-250.27173913043481"/>
         </scene>
         <!--Group Call-->
         <scene sceneID="vQN-TC-N3z">

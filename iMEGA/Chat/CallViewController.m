@@ -36,6 +36,7 @@
 @property (weak, nonatomic) IBOutlet UIView *volumeView;
 
 @property (weak, nonatomic) IBOutlet UIImageView *remoteMicImageView;
+@property (weak, nonatomic) IBOutlet UIButton *minimizeButton;
 
 @property BOOL loudSpeakerEnabled;
 @property BOOL statusBarShouldBeHidden;
@@ -46,6 +47,7 @@
 @property (strong, nonatomic) AVAudioPlayer *player;
 
 @property NSUUID *currentCallUUID;
+@property (assign, nonatomic) NSInteger initDuration;
 
 @end
 
@@ -80,15 +82,15 @@
         if (@available(iOS 10.0, *)) {
             [self acceptCall:nil];
         } else {
-            _call = [[MEGASdkManager sharedMEGAChatSdk] chatCallForChatId:self.chatRoom.chatId];
+            self.call = [[MEGASdkManager sharedMEGAChatSdk] chatCallForChatId:self.chatRoom.chatId];
             self.statusCallLabel.text = AMLocalizedString(@"Incoming call", nil);
         }
-    } else {
+    } else if (self.callType == CallTypeOutgoing) {
         MEGAChatStartCallRequestDelegate *startCallRequestDelegate = [[MEGAChatStartCallRequestDelegate alloc] initWithCompletion:^(MEGAChatError *error) {
             if (error.type) {
                 [self dismissViewControllerAnimated:YES completion:nil];
             } else {
-                _call = [[MEGASdkManager sharedMEGAChatSdk] chatCallForChatId:self.chatRoom.chatId];
+                self.call = [[MEGASdkManager sharedMEGAChatSdk] chatCallForChatId:self.chatRoom.chatId];
                 self.incomingCallView.hidden = YES;
 
                 self.statusCallLabel.text = AMLocalizedString(@"calling...", @"Label shown when you call someone (outgoing call), before the call starts.");
@@ -107,6 +109,17 @@
         }];
         
         [[MEGASdkManager sharedMEGAChatSdk] startChatCall:self.chatRoom.chatId enableVideo:self.videoCall delegate:startCallRequestDelegate];
+    } else {
+        self.call = [[MEGASdkManager sharedMEGAChatSdk] chatCallForChatId:self.chatRoom.chatId];
+        self.incomingCallView.hidden = YES;
+        self.outgoingCallView.hidden = NO;
+        
+        NSTimeInterval interval = ([NSDate date].timeIntervalSince1970 - [NSDate date].timeIntervalSince1970 + self.call.duration);
+        self.statusCallLabel.text = [NSString mnz_stringFromTimeInterval:interval];
+
+        [self initShowHideControls];
+        [self initDurationTimer];
+        
     }
     
     [[UIDevice currentDevice] setProximityMonitoringEnabled:!self.videoCall];
@@ -130,10 +143,41 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [[MEGASdkManager sharedMEGAChatSdk] addChatCallDelegate:self];
+    
     if (self.videoCall) {
         [[MEGASdkManager sharedMEGAChatSdk] addChatRemoteVideo:self.chatRoom.chatId peerId:[self.chatRoom peerHandleAtIndex:0] delegate:self.remoteVideoImageView];
         [[MEGASdkManager sharedMEGAChatSdk] addChatLocalVideo:self.chatRoom.chatId delegate:self.localVideoImageView];
+    } else if (self.callType == CallTypeActive) {
+        self.enableDisableVideoButton.selected = [[NSUserDefaults standardUserDefaults] objectForKey:@"oneOnOneCallLocalVideo"] ? [[NSUserDefaults standardUserDefaults] boolForKey:@"oneOnOneCallLocalVideo"] : self.videoCall;
+        self.muteUnmuteMicrophone.selected = [[NSUserDefaults standardUserDefaults] objectForKey:@"oneOnOneCallLocalAudio"] ? [[NSUserDefaults standardUserDefaults] boolForKey:@"oneOnOneCallLocalAudio"] : YES;
+        self.enableDisableSpeaker.selected = [[NSUserDefaults standardUserDefaults] objectForKey:@"oneOnOneCallSpeaker"] ? [[NSUserDefaults standardUserDefaults] boolForKey:@"oneOnOneCallSpeaker"] : self.videoCall;
+        
+        self.localVideoImageView.hidden = !self.enableDisableVideoButton.selected;
+        
+        if (self.enableDisableSpeaker.selected) {
+            [self enableLoudspeaker];
+        } else {
+            [self disableLoudspeaker];
+        }
+        
+        MEGAChatSession *session = [self.call sessionForPeer:[self.chatRoom peerHandleAtIndex:0]];
+        self.remoteMicImageView.hidden = session.hasAudio;
+        self.remoteVideoImageView.hidden = !session.hasVideo;
+        
+        if (session.hasVideo) {
+            [[MEGASdkManager sharedMEGAChatSdk] addChatRemoteVideo:self.chatRoom.chatId peerId:[self.chatRoom peerHandleAtIndex:0] delegate:self.remoteVideoImageView];
+            self.remoteAvatarImageView.hidden = YES;
+        }
+        
+        if (self.enableDisableVideoButton.selected) {
+            [[MEGASdkManager sharedMEGAChatSdk] addChatLocalVideo:self.chatRoom.chatId delegate:self.localVideoImageView];
+            self.remoteAvatarImageView.hidden = YES;
+        }
+        
+        self.localVideoImageView.userInteractionEnabled = session.hasVideo;
+        [self.localVideoImageView remoteVideoEnable:session.hasVideo];
     }
+    
     [[UIApplication sharedApplication] setIdleTimerDisabled:YES];
     
     MPVolumeView *volumeView = [[MPVolumeView alloc] initWithFrame:self.enableDisableSpeaker.bounds];
@@ -244,8 +288,8 @@
     }
 }
 
-- (void)updateLabel {
-    NSTimeInterval interval = ([NSDate date].timeIntervalSince1970 - self.baseDate.timeIntervalSince1970);
+- (void)updateDuration {
+    NSTimeInterval interval = ([NSDate date].timeIntervalSince1970 - self.baseDate.timeIntervalSince1970 + self.initDuration);
     self.statusCallLabel.text = [NSString mnz_stringFromTimeInterval:interval];
 }
 
@@ -259,6 +303,7 @@
                 [self setNeedsStatusBarAppearanceUpdate];
             }];
             self.localVideoImageView.visibleControls = YES;
+            self.minimizeButton.hidden = NO;
         } else {
             [self.outgoingCallView setAlpha:0.0f];
             self.statusBarShouldBeHidden = YES;
@@ -267,6 +312,7 @@
             }];
             [self.nameLabel setAlpha:0.0f];
             self.localVideoImageView.visibleControls = NO;
+            self.minimizeButton.hidden = YES;
         }
          
         [self.view layoutIfNeeded];
@@ -282,6 +328,35 @@
         [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"presentPasscodeLater"];
     }
     [[LTHPasscodeViewController sharedUser] enablePasscodeWhenApplicationEntersBackground];
+}
+
+- (void)initDurationTimer {
+    self.initDuration = (NSInteger)self.call.duration;
+    self.timer = [NSTimer timerWithTimeInterval:1.0f target:self selector:@selector(updateDuration) userInfo:nil repeats:YES];
+    [[NSRunLoop mainRunLoop] addTimer:self.timer forMode:NSRunLoopCommonModes];
+    self.baseDate = [NSDate date];
+}
+
+- (void)initShowHideControls {
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        //Add Tap to hide/show controls
+        UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showOrHideControls)];
+        tapGestureRecognizer.numberOfTapsRequired = 1;
+        tapGestureRecognizer.cancelsTouchesInView = NO;        
+        [self.view addGestureRecognizer:tapGestureRecognizer];
+        
+        [self showOrHideControls];
+    });
+}
+
+- (void)deleteActiveCallFlags {
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"oneOnOneCallLocalVideo"];
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"oneOnOneCallLocalAudio"];
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"oneOnOneCallSpeaker"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+- (void)configureLocalControls {
 }
 
 #pragma mark - IBActions
@@ -375,6 +450,15 @@
     sender.selected = !sender.selected;
 }
 
+- (IBAction)hideCall:(UIButton *)sender {
+    [[NSUserDefaults standardUserDefaults] setBool:!self.localVideoImageView.hidden forKey:@"oneOnOneCallLocalVideo"];
+    [[NSUserDefaults standardUserDefaults] setBool:self.muteUnmuteMicrophone.selected forKey:@"oneOnOneCallLocalAudio"];
+    [[NSUserDefaults standardUserDefaults] setBool:self.enableDisableSpeaker.selected forKey:@"oneOnOneCallSpeaker"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    [self.timer invalidate];
+    
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
 
 #pragma mark - MEGAChatCallDelegate
 
@@ -403,17 +487,10 @@
             if (!self.timer.isValid) {
                 [self.player stop];
                 
-                _timer = [NSTimer timerWithTimeInterval:1.0f target:self selector:@selector(updateLabel) userInfo:nil repeats:YES];
+                _timer = [NSTimer timerWithTimeInterval:1.0f target:self selector:@selector(updateDuration) userInfo:nil repeats:YES];
                 [[NSRunLoop mainRunLoop] addTimer:self.timer forMode:NSRunLoopCommonModes];
                 _baseDate = [NSDate date];
-                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                    //Add Tap to hide/show controls
-                    UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showOrHideControls)];
-                    [tapGestureRecognizer setNumberOfTapsRequired:1];
-                    [self.view addGestureRecognizer:tapGestureRecognizer];
-                    
-                    [self showOrHideControls];
-                });
+                [self initShowHideControls];
             }
         } else {
             self.statusCallLabel.text = AMLocalizedString(@"connecting", nil);
@@ -474,6 +551,8 @@
                 [self.player stop];
                 return;
             }
+            
+            [self deleteActiveCallFlags];
             
             self.incomingCallView.userInteractionEnabled = NO;
             
