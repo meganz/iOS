@@ -1684,6 +1684,8 @@
 "Poor conection."="Poor connection.";
 /* Message shown in a chat room when there is an active group call */
 "There is an active group call. Tap to join."="There is an active group call. Tap to join.";
+/* Message shown in a chat room when there is an active call */
+"There is an active call. Tap to join."="There is an active call. Tap to join.";
 /* Message shown in a chat room for a group call in progress displaying the duration of the call */
 "Touch to return to call %@"="Touch to return to call %@";
 /* A button label which allows the users save images/videos in the Photos app. */
