@@ -62,7 +62,7 @@
                                                      parentNode:self.uploadInfo.parentNode
                                                     fingerprint:self.uploadInfo.fingerprint
                                             originalFingerprint:self.uploadInfo.originalFingerprint
-                                                          token:self.transferToken
+                                              binaryUploadToken:self.transferToken
                                                        delegate:delegate];
     if (!didCreateRequestSuccess) {
         self.completion(nil, [NSError errorWithDomain:CameraUploadErrorDomain code:CameraUploadErrorFailedToCreateCompleteUploadRequest userInfo:@{NSLocalizedDescriptionKey : [NSString stringWithFormat:@"Failed to create complete upload request for file %@", self.uploadInfo.fileName]}]);
