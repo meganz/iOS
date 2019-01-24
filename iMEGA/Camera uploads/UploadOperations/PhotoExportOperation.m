@@ -46,7 +46,7 @@
         [self finishOperation];
     }];
     
-    BOOL succeeded = [self.photoData mnz_exportToURL:self.outputURL imageType:self.outputImageTypeUTI shouldStripGPSInfo:self.shouldStripGPSInfo];
+    BOOL succeeded = [self.photoData mnz_exportToURL:self.outputURL outputImageUTIType:self.outputImageTypeUTI shouldStripGPSInfo:self.shouldStripGPSInfo];
     self.completion(succeeded);
     [self finishOperation];
 }

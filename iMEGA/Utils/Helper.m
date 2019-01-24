@@ -706,8 +706,11 @@ static MEGAIndexer *indexer;
         [changeApiServerAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
         
         [changeApiServerAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", @"Button title to cancel something") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-            [[MEGASdkManager sharedMEGASdk] changeApiUrl:@"https://staging.api.mega.co.nz/" disablepkp:NO];
-            [[MEGASdkManager sharedMEGASdkFolder] changeApiUrl:@"https://staging.api.mega.co.nz/" disablepkp:NO];
+//            [[MEGASdkManager sharedMEGASdk] changeApiUrl:@"https://staging.api.mega.co.nz/" disablepkp:NO];
+//            [[MEGASdkManager sharedMEGASdkFolder] changeApiUrl:@"https://staging.api.mega.co.nz/" disablepkp:NO];
+            // Temporary change, will revert back to staging once the changes in sandbox3 gets released
+            [[MEGASdkManager sharedMEGASdk] changeApiUrl:@"https://api-sandbox3.developers.mega.co.nz/" disablepkp:YES];
+            [[MEGASdkManager sharedMEGASdkFolder] changeApiUrl:@"https://api-sandbox3.developers.mega.co.nz/" disablepkp:YES];
             [Helper apiURLChanged];
         }]];
         

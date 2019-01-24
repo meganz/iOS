@@ -4,17 +4,17 @@
 @implementation NSData (CameraUpload)
 
 - (BOOL)mnz_exportToURL:(NSURL *)URL shouldStripGPSInfo:(BOOL)shouldStripGPSInfo {
-    return [self mnz_exportToURL:URL imageType:nil shouldStripGPSInfo:shouldStripGPSInfo];
+    return [self mnz_exportToURL:URL outputImageUTIType:nil shouldStripGPSInfo:shouldStripGPSInfo];
 }
 
-- (BOOL)mnz_exportToURL:(NSURL *)URL imageType:(NSString *)imageUTIType shouldStripGPSInfo:(BOOL)shouldStripGPSInfo {
+- (BOOL)mnz_exportToURL:(NSURL *)URL outputImageUTIType:(NSString *)UTIType shouldStripGPSInfo:(BOOL)shouldStripGPSInfo {
     BOOL isExportedSuccessfully = NO;
     CGImageSourceRef source = CGImageSourceCreateWithData((__bridge CFDataRef)self, NULL);
     if (source) {
         size_t size = CGImageSourceGetCount(source);
         CFStringRef sourceType = CGImageSourceGetType(source);
-        CFStringRef newType = (__bridge CFStringRef)imageUTIType;
-        BOOL shouldConvertImageType = !(imageUTIType.length == 0 || CFStringCompare(sourceType, newType, kCFCompareCaseInsensitive) == kCFCompareEqualTo);
+        CFStringRef newType = (__bridge CFStringRef)UTIType;
+        BOOL shouldConvertImageType = !(UTIType.length == 0 || CFStringCompare(sourceType, newType, kCFCompareCaseInsensitive) == kCFCompareEqualTo);
         
         if (!shouldConvertImageType && (!shouldStripGPSInfo || (shouldStripGPSInfo && ![self mnz_containsGPSInfo]))) {
             return [self writeToURL:URL atomically:YES];
