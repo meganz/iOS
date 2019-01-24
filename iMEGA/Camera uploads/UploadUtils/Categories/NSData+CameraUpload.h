@@ -19,11 +19,11 @@ NS_ASSUME_NONNULL_BEGIN
  Export the image to an URL and with the options to convert to another image type and strip off GPS info from image EXIF
 
  @param URL where you want to export your image data
- @param imageUTIType new image data UTI type. If it is null, image type won't be converted and the source image type will be used.
+ @param UTIType new image data UTI type. If it is null, image type won't be converted and the source image type will be used.
  @param shouldStripGPSInfo whether to strip off GPS info from EXIF
  @return YES if the export succeeded, otherwise NO
  */
-- (BOOL)mnz_exportToURL:(NSURL *)URL imageType:(nullable NSString *)imageUTIType shouldStripGPSInfo:(BOOL)shouldStripGPSInfo;
+- (BOOL)mnz_exportToURL:(NSURL *)URL outputImageUTIType:(nullable NSString *)UTIType shouldStripGPSInfo:(BOOL)shouldStripGPSInfo;
 
 
 /**
