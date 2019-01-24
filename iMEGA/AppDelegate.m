@@ -527,7 +527,7 @@
             
             if (personHandle.type == INPersonHandleTypeEmailAddress) {
                 self.email = personHandle.value;
-                self.videoCall = [userActivity.activityType isEqualToString:@"INStartVideoCallIntent"] ? YES : NO;
+                self.videoCall = [userActivity.activityType isEqualToString:@"INStartVideoCallIntent"];
                 MEGALogDebug(@"Email %@", self.email);
                 uint64_t userHandle = [[MEGASdkManager sharedMEGAChatSdk] userHandleByEmail:self.email];
                 
@@ -556,7 +556,7 @@
                             MEGAChatConnection chatConnection = [[MEGASdkManager sharedMEGAChatSdk] chatConnectionState:self.chatRoom.chatId];
                             MEGALogDebug(@"Chat %@ connection state: %ld", [MEGASdk base64HandleForUserHandle:self.chatRoom.chatId], (long)chatConnection);
                             if (chatConnection == MEGAChatConnectionOnline) {
-                                [DevicePermissionsHelper audioPermissionModal:YES forIncomingCall:NO withCompletionHandler:^(BOOL granted) {
+                                [DevicePermissionsHelper audioPermissionModal:YES forIncomingCall:YES withCompletionHandler:^(BOOL granted) {
                                     if (granted) {
                                         if (self.videoCall) {
                                             [DevicePermissionsHelper videoPermissionWithCompletionHandler:^(BOOL granted) {
@@ -615,7 +615,7 @@
                     MEGAChatConnection chatConnection = [[MEGASdkManager sharedMEGAChatSdk] chatConnectionState:self.chatRoom.chatId];
                     MEGALogDebug(@"Chat %@ connection state: %ld", [MEGASdk base64HandleForUserHandle:self.chatRoom.chatId], (long)chatConnection);
                     if (chatConnection == MEGAChatConnectionOnline) {
-                        [DevicePermissionsHelper audioPermissionModal:YES forIncomingCall:NO withCompletionHandler:^(BOOL granted) {
+                        [DevicePermissionsHelper audioPermissionModal:YES forIncomingCall:YES withCompletionHandler:^(BOOL granted) {
                             if (granted) {
                                 if (self.videoCall) {
                                     [DevicePermissionsHelper videoPermissionWithCompletionHandler:^(BOOL granted) {
@@ -1387,6 +1387,24 @@ void uncaughtExceptionHandler(NSException *exception) {
     // Call
     if ([[UIApplication sharedApplication] applicationState] == UIApplicationStateBackground && [[[payload dictionaryPayload] objectForKey:@"megatype"] integerValue] == 4) {
         [self beginBackgroundTaskWithName:@"VoIP"];
+        
+        if (!DevicePermissionsHelper.shouldAskForNotificationsPermissions) {
+            [DevicePermissionsHelper notificationsPermissionWithCompletionHandler:^(BOOL granted) {
+                if (@available(iOS 10.0, *)) {
+                    if (granted && !DevicePermissionsHelper.audioAndVideoPermissionsGranted) {
+                        UNMutableNotificationContent *content = [UNMutableNotificationContent new];
+                        content.body = AMLocalizedString(@"Incoming call", @"notification subtitle of incoming calls");
+                        content.sound = [UNNotificationSound soundNamed:@"incoming_voice_video_call_iOS9.mp3"];
+                        UNTimeIntervalNotificationTrigger *trigger = [UNTimeIntervalNotificationTrigger triggerWithTimeInterval:1 repeats:NO];
+                        NSString *identifier = @"Incoming call";
+                        UNNotificationRequest *request = [UNNotificationRequest requestWithIdentifier:identifier
+                                                                                              content:content
+                                                                                              trigger:trigger];
+                        [UNUserNotificationCenter.currentNotificationCenter addNotificationRequest:request withCompletionHandler:nil];
+                    }
+                }
+            }];
+        }
     }
     
     // Message
