@@ -1808,3 +1808,7 @@
 "Today"="今天";
 /* */
 "Yesterday"="昨天";
+/* Plural of participant. 2 participants */
+"%d participants"="%d 人参与";
+/* Singular of participant. 1 participant */
+"%d participant"="%d 人参与";
