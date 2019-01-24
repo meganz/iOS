@@ -777,7 +777,7 @@
 /* Hint text to suggest that the user have to write his/her current password */
 "currentPassword"="Huidige wachtwoord";
 /* Hint text to suggest that the user have to write the new password on it */
-"newPassword"="Nieuwe wachtwoord";
+"newPassword"="Nieuw wachtwoord";
 /* Hint text where the user have to re-write the new password to confirm it */
 "confirmPassword"="Bevestig wachtwoord";
 /* Success message shown when the password has been changed */
@@ -1625,7 +1625,7 @@
 /* Detailed explanation of why the user should give some permissions to MEGA */
 "To fully take advantage of your MEGA account we need to ask you some permissions."="Om volledig voordeel te krijgen van uw MEGA account hebben we sommige toestemmingen nodig.";
 /* Message warning the user about the risk of not setting up permissions */
-"The MEGA app may not work as expected without the required permissions. Are you sure?"="The MEGA app may not work as expected without the required permissions. Are you sure?";
+"The MEGA app may not work as expected without the required permissions. Are you sure?"="De MEGA applicatie kan niet werken zoals verwacht zonder de vereiste toestemmingen. Weet u het zeker?";
 /* Shows number of the current page. '%1' will be replaced by current page number. '%2' will be replaced by number of all pages. */
 "%1 of %2"="%1 van de %2";
 /* Title label that explains that the user is going to be asked for the photos permission */
@@ -1676,6 +1676,16 @@
 "To disable the Rubbish-Bin Cleaning Scheduler or set a longer retention period, you need to subscribe to a PRO plan."="Om de planner van de Prullenbak uit te schakelen of een langere bewaar periode in te stellen, is het nodig om u in te schrijven voor een PRO abonnement";
 /* Confirmation dialog for the button that logs the user out of all sessions except the current one. */
 "Do you want to close all other sessions? This will log you out on all other active sessions except the current one."="Wilt u alle andere sessies sluiten? Dit logt u uit op alle andere actieve sessies behalve de huidige sessie.";
+/* Message to inform the local user that someone has joined the current group call */
+"%@ joined the call."="%@ heeft zich toegevoegd tot de oproep.";
+/* Message to inform the local user that someone has left the current group call */
+"%@ left the call."="%@ heeft de oproep verlaten.";
+/* Message to inform the local user is having a bad quality network with someone in the current group call */
+"Poor conection."="Slechte connectie.";
+/* Message shown in a chat room when there is an active group call */
+"There is an active group call. Tap to join."="Er is een actieve groep oproep. Tik om mee te doen.";
+/* Message shown in a chat room for a group call in progress displaying the duration of the call */
+"Touch to return to call %@"="Tik om %@ terug te bellen";
 /* A button label which allows the users save images/videos in the Photos app. */
 "Save to Photos"="Opslaan naar Foto's";
 /* Text shown when starting the process to save a photo or video to Photos app */
@@ -1684,6 +1694,10 @@
 "Saved to Photos"="Opgeslagen naar Foto's";
 /* Text shown when an error occurs when trying to save a photo or video to Photos app */
 "Could not save Item"="Kon Item niet opslaan";
+/* Message show when a call cannot be established because there are too many participants in the group call */
+"Error. No more participants are allowed in this group call."="You are not allowed to join this call as it has reached the maximum number of participants.";
+/* Message show when a user cannot activate the video in a group call because the max number of videos has been reached */
+"Error. No more video are allowed in this group call."="You are not allowed to enable video as this call has reached the maximum number of participants using video.";
 /* Text shown for switching from thumbnail view to list view. */
 "List view"="Lijstweergave";
 /* Text shown for switching from list view to thumbnail view. */
@@ -1770,6 +1784,10 @@
 "Your PRO membership plan will expire in 1 day."="Uw PRO abonnement verloopt binnen 1 dag.";
 /* The professional pricing plan which the user is currently on will expire in 5 days. The %1 is a placeholder for the number of days and should not be removed. */
 "Your PRO membership plan will expire in %1 days."="Uw PRO abonnement zal binnen %1 dagen verlopen.";
+/* The professional pricing plan which the user was on expired one day ago. */
+"Your PRO membership plan expired 1 day ago"="Your PRO membership plan expired 1 day ago";
+/* The professional pricing plan which the user was on expired %1 days ago. The %1 is a placeholder for the number of days and should not be removed. */
+"Your PRO membership plan expired %1 days ago"="Your PRO membership plan expired %1 days ago";
 /* The text of a notification indicating that a file or folder has been taken down due to infringement or other reason. The %1 placeholder will be replaced with the text ‘file’ or ‘folder’. The %2 will be replaced with the name of the file or folder. */
 "Your publicly shared %1 (%2) has been taken down."="Uw publiekelijk gedeelde %1 (%2) is weggehaald.";
 /* The text of a notification indicating that a file or folder that was taken down has now been restored due to a successful counter-notice. The %1 placeholder will be replaced with the text ‘file’ or ‘folder’. The %2 will be replaced with the name of the file or folder. */

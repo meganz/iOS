@@ -689,7 +689,7 @@
 /* Title for the MEGA Recovery Key */
 "masterKey"="Kurtarma Anahtarı";
 /* Section title where you can change your MEGA's password */
-"changePasswordLabel"="Parola değiştir";
+"changePasswordLabel"="Parola Değiştir";
 /* Advising the user to keep the user's master key safe. */
 "exportMasterKeyFooter"="Ana Anahtarı dışa aktarmak ve güvenli bir konumda saklamak, veri kaybı yaşamadan yeni bir parola belirleyebilmenizi sağlar.";
 /* Question button to present a view where it's explained what is the Recovery Key */
@@ -777,7 +777,7 @@
 /* Hint text to suggest that the user have to write his/her current password */
 "currentPassword"="Mevcut Parola";
 /* Hint text to suggest that the user have to write the new password on it */
-"newPassword"="Yeni Parola";
+"newPassword"="Yeni parola";
 /* Hint text where the user have to re-write the new password to confirm it */
 "confirmPassword"="Parolayı onaylayın";
 /* Success message shown when the password has been changed */
@@ -966,7 +966,7 @@
 /* Text that shows the expiry date of the account PRO level */
 "expiresOn"="%@ tarihinde sona eriyor";
 /* Button title for the section where you can see the 'Purchase history' related to your account */
-"purchaseHistory"="Satın alma geçmişi";
+"purchaseHistory"="Satın Alma Geçmişi";
 /* Title of the Incoming Shares section. Here you can see the folders that your contacts have shared with you */
 "incomingShares"="Gelen Paylaşımlar";
 /* Sentence shown under the used space percentage to complete the info with the user account maximum storage. "of {maximun storage}" */
@@ -1096,7 +1096,7 @@
 /* Title that refers to the status of the chat (Either Online or Offline) */
 "status"="Durum";
 /* Title used in settings that enables the generation of link previews in the chat */
-"richUrlPreviews"="Zengin URL önizlemeleri";
+"richUrlPreviews"="Zengin URL Önizlemeleri";
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
 "richPreviewsFooter"="MEGAchat deneyiminizi geliştirin. URL içeriği uçtan uca şifreleme olmadan alınacaktır.";
 /* Section title of a button where you can enable mobile data for voice and video calls. */
@@ -1625,7 +1625,7 @@
 /* Detailed explanation of why the user should give some permissions to MEGA */
 "To fully take advantage of your MEGA account we need to ask you some permissions."="MEGA hesabınızın tüm avantajlarından yararlanabilmeniz için bazı izinler vermeniz gerekiyor.";
 /* Message warning the user about the risk of not setting up permissions */
-"The MEGA app may not work as expected without the required permissions. Are you sure?"="The MEGA app may not work as expected without the required permissions. Are you sure?";
+"The MEGA app may not work as expected without the required permissions. Are you sure?"="MEGA uygulaması gerekli izinler olmadan düzgün çalışmayabilir. Emin misiniz?";
 /* Shows number of the current page. '%1' will be replaced by current page number. '%2' will be replaced by number of all pages. */
 "%1 of %2"="%1 / %2";
 /* Title label that explains that the user is going to be asked for the photos permission */
@@ -1645,7 +1645,7 @@
 /* A section header which contains the file management settings. These settings allow users to remove duplicate files etc. */
 "File Management"="Dosya yönetimi";
 /* Title of the option to enable or disable file versioning on Settings section */
-"File versioning"="Dosya sürümlendirme";
+"File versioning"="Dosya Sürümlendirme";
 /* Subtitle of the option to enable or disable file versioning on Settings section */
 "Enable or disable file versioning for your entire account.[Br]You may still receive file versions from shared folders if your contacts have this enabled."="Hesabınız için dosya sürümlemeyi etkinleştirin veya devre dışı bırakın.\nKişileriniz bu özelliği etkinleştirmiş ise dosya sürümü almaya devam edebilirsiniz.";
 /* A confirmation message when the user chooses to disable file versioning. */
@@ -1676,6 +1676,16 @@
 "To disable the Rubbish-Bin Cleaning Scheduler or set a longer retention period, you need to subscribe to a PRO plan."="Çöp kutusu temizleyicisini devre dışı bırakmak veya daha uzun saklama süreci seçmek için bir PRO tarifesine abone olmanız gerekiyor.";
 /* Confirmation dialog for the button that logs the user out of all sessions except the current one. */
 "Do you want to close all other sessions? This will log you out on all other active sessions except the current one."="Diğer tüm oturumları kapatmak istiyor musunuz? Bu, geçerli oturumunuz hariç diğer tüm aktif oturumlarınızı kapatacaktır.";
+/* Message to inform the local user that someone has joined the current group call */
+"%@ joined the call."="%@ aramaya katıldı.";
+/* Message to inform the local user that someone has left the current group call */
+"%@ left the call."="%@ konuşmadan ayrıldı.";
+/* Message to inform the local user is having a bad quality network with someone in the current group call */
+"Poor conection."="Bağlantı zayıf.";
+/* Message shown in a chat room when there is an active group call */
+"There is an active group call. Tap to join."="Aktif grup araması var. Katılmak için dokunun.";
+/* Message shown in a chat room for a group call in progress displaying the duration of the call */
+"Touch to return to call %@"="Konuşmaya dönmek için dokunun %@";
 /* A button label which allows the users save images/videos in the Photos app. */
 "Save to Photos"="Fotoğraflarıma kaydet";
 /* Text shown when starting the process to save a photo or video to Photos app */
@@ -1684,6 +1694,10 @@
 "Saved to Photos"="Fotoğraflarıma kaydet";
 /* Text shown when an error occurs when trying to save a photo or video to Photos app */
 "Could not save Item"="Öğe kaydedilemedi";
+/* Message show when a call cannot be established because there are too many participants in the group call */
+"Error. No more participants are allowed in this group call."="Bu arama azami katılımcı sayısına eriştiği için katılmanıza izin verilmiyor.";
+/* Message show when a user cannot activate the video in a group call because the max number of videos has been reached */
+"Error. No more video are allowed in this group call."="Bu arama azami görüntülü katılımcı sayısına eriştiği için görüntünüzü açmanıza izin verilmiyor.";
 /* Text shown for switching from thumbnail view to list view. */
 "List view"="Liste görünümü";
 /* Text shown for switching from list view to thumbnail view. */
@@ -1693,7 +1707,7 @@
 /* Message to inform the local user that someone has left the current group call */
 "%@ left the call."="%@ konuşmadan ayrıldı.";
 /* Message to inform the local user is having a bad quality network with someone in the current group call */
-"Poor connection."="Zayıf bağlantı.";
+"Poor connection."="Bağlantı zayıf.";
 /* Message shown in a chat room when there is an active group call */
 "There is an active group call. Tap to join."="Aktif grup araması var. Katılmak için dokunun.";
 /* Message shown in a chat room for a group call in progress displaying the duration of the call */
@@ -1770,6 +1784,10 @@
 "Your PRO membership plan will expire in 1 day."="PRO üyeliğinizin süresi 1 gün içerisinde dolacak";
 /* The professional pricing plan which the user is currently on will expire in 5 days. The %1 is a placeholder for the number of days and should not be removed. */
 "Your PRO membership plan will expire in %1 days."="PRO üyeliğinizin süresi %1 gün içerisinde dolacak";
+/* The professional pricing plan which the user was on expired one day ago. */
+"Your PRO membership plan expired 1 day ago"="PRO üyelik tarifeniz 1 gün önce bitti";
+/* The professional pricing plan which the user was on expired %1 days ago. The %1 is a placeholder for the number of days and should not be removed. */
+"Your PRO membership plan expired %1 days ago"="PRO üyelik tarifeniz %1 gün önce bitti";
 /* The text of a notification indicating that a file or folder has been taken down due to infringement or other reason. The %1 placeholder will be replaced with the text ‘file’ or ‘folder’. The %2 will be replaced with the name of the file or folder. */
 "Your publicly shared %1 (%2) has been taken down."="Herkese açık olarak paylaşılan %1 (%2), telif hakkı nedeniyle yayından kaldırıldı.";
 /* The text of a notification indicating that a file or folder that was taken down has now been restored due to a successful counter-notice. The %1 placeholder will be replaced with the text ‘file’ or ‘folder’. The %2 will be replaced with the name of the file or folder. */

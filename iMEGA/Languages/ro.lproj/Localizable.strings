@@ -25,25 +25,25 @@
 /* Error message shown when there's no camera available on the device */
 "noCamera"="Nicio cameră disponibilă";
 /* Alert title to attract attention */
-"attention"="Atenţie";
+"attention"="Atenție";
 /* Alert message to remember that MEGA app needs permission to use the Camera to take a photo or video and it doesn't have it */
-"cameraPermissions"="Te rugăm să-i dai aplicaţiei MEGA permisiunea de a accesa camera din Setări";
+"cameraPermissions"="Te rugăm să-i dai aplicației MEGA permisiunea de a accesa camera din Setări";
 /* Alert message to notify that MEGA video calls needs the Camera permission and the call will end*/
-"cameraPermissionsInCall"="Please give MEGA app permission to access your Camera in your Settings. In case you proceed the call will end because the app will be restarted.";
+"cameraPermissionsInCall"="Te rugăm să-i dai aplicației MEGA permisiunea de a-ți accesa camera din Setări. În cazul în care continui, apelul se va încheia deoarece aplicația va fi repornită.";
 /* Alert message to remember that MEGA app needs permission to use the Microphone to make calls and record videos and it doesn't have it */
-"microphonePermissions"="Please give MEGA app permission to access your Microphone in your Settings";
+"microphonePermissions"="Te rugăm să-i dai aplicației MEGA permisiunea de a-ți accesa microfonul din Setări";
 /* Alert message to explain that the MEGA app needs permission to access your device photos */
-"photoLibraryPermissions"="Te rugăm să-i dai aplicaţiei MEGA permisiunea de a accesa biblioteca de fotografii din Setări";
+"photoLibraryPermissions"="Te rugăm să-i dai aplicației MEGA permisiunea de a accesa biblioteca de fotografii din Setări";
 /* Alert message shown when the user tries to download an empty folder  */
-"emptyFolderMessage"="Nu poţi descărca un folder gol";
+"emptyFolderMessage"="Nu poți descărca un folder gol";
 /* Message shown when the user clicks on a confirm account link that has already been used  */
-"accountAlreadyConfirmed"="Contul tău a fost activat deja. Te rugăm să te autentifici.";
+"accountAlreadyConfirmed"="Contul tău a fost activat. Te rugăm să te autentifici.";
 /* Message shown when the user clicks on an link that is not valid */
 "linkNotValid"="Link nevalid";
 /* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
 "decryptionKeyAlertTitle"="Introdu cheia de decriptare";
 /* Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
-"decryptionKeyAlertMessage"="Pentru a accesa acest folder/fişier, vei avea nevoie de cheia de decriptare a acestuia. Dacă nu ai cheia, contactează creatorul linkului.";
+"decryptionKeyAlertMessage"="Pentru a accesa acest folder/fișier, vei avea nevoie de cheia de decriptare a acestuia. Dacă nu ai cheia, contactează creatorul linkului.";
 /* Hint text to suggest that the user has to write the decryption key */
 "decryptionKey"="Cheie de decriptare";
 /* Button title to try to decrypt the link */
@@ -53,49 +53,49 @@
 /* Alert title shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOut_alertTitle"="Deconectat";
 /* Alert message shown when your account has been closed through another client or the web by killing all your sessions */
-"loggedOutFromAnotherLocation"="Ai fost deconectat de pe acest dispozitiv din altă locaţie";
+"loggedOutFromAnotherLocation"="Ai fost deconectat de pe acest dispozitiv din altă locație";
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
-"sslUnverified_alertTitle"="Cheia SSL a serverului nu poate fi verificată. Ai putea fi afectat de un atac de tip man-in-the-middle.";
+"sslUnverified_alertTitle"="MEGA nu se poate conecta securizat prin SSL. S-ar putea să fii pe WiFi public cu cerințe suplimentare.";
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
-"theContentIsNotAvailableForThisAccount"="Conţinutul pe care încerci să îl accesezi nu este disponibil pentru acest cont. Încearcă să te autentifici cu acelaşi cont ca şi în clientul web mobil.";
+"theContentIsNotAvailableForThisAccount"="Conținutul pe care încerci să îl accesezi nu este disponibil pentru acest cont. Încearcă să te autentifici cu același cont ca și în clientul web mobil.";
 /* Message shown when the app is waiting for the server to complete a request due to an API lock (error -3). */
-"takingLongerThanExpected"="Procesul durează mai mult decât era de aşteptat. Te rugăm să aştepţi...";
+"takingLongerThanExpected"="Procesul durează mai mult decât era de așteptat. Te rugăm să aștepți...";
 /* Message shown when the app is waiting for the server to complete a request due to a HTTP error 500. */
-"serversAreTooBusy"="Serverele sunt prea ocupate. Te rugăm să aştepţi.";
+"serversAreTooBusy"="Serverele sunt prea ocupate. Te rugăm să aștepți.";
 /* Message shown when the app is waiting for the server to complete a request due to connectivity issue. */
-"unableToReachMega"="Unable to reach MEGA. Please check your connectivity or try again later.";
+"unableToReachMega"="Nu se poate accesa MEGA. Te rugăm să verifici conectivitatea sau încearcă din nou mai târziu.";
 /* Message shown when the app is waiting for the server to complete a request due to a rate limit (error -4). */
-"tooManyRequest"="Too many requests. Please wait.";
+"tooManyRequest"="Prea multe cereri. Te rugăm să aștepți.";
 /* Alert title shown when you need to log in to continue with the action you want to do */
 "pleaseLogInToYourAccount"="Te rugăm să te autentifici.";
 /* Error message when a user attempts to change their email without an active login session. */
-"needToBeLoggedInToCompleteYourEmailChange"="Trebuie să fii autentificat pentru a finaliza schimbarea e-mailului. Te rugăm să te autentifici din nou cu adresa de e-mail actuală şi apoi dă clic pe linkul de confirmare din nou.";
+"needToBeLoggedInToCompleteYourEmailChange"="Trebuie să fii autentificat pentru a finaliza schimbarea e-mailului. Te rugăm să te autentifici din nou cu adresa de e-mail actuală și apoi dă clic pe linkul de confirmare din nou.";
 /* Title shown on the app's start animation to explain what MEGA offers you (1/4) */
-"megaSpace"="SPAŢIU MEGA";
+"megaSpace"="SPAȚIU MEGA";
 /* Title shown on the app's start animation to explain what MEGA offers you (2/4) */
 "megaSpeed"="VITEZĂ MEGA";
 /* Title shown on the app's start animation to explain what MEGA offers you (3/4) */
-"megaPrivacy"="CONFIDENŢIALITATE MEGA";
+"megaPrivacy"="CONFIDENȚIALITATE MEGA";
 /* Title shown on the app's start animation to explain what MEGA offers you (4/4) */
 "megaAccess"="ACCES MEGA";
 /* Message shown on the app's start animation to explain what MEGA SPACE means */
-"megaSpaceText"="Înregistrează-te acum şi obţine 50 GB spaţiu gratuit.";
+"megaSpaceText"="Înregistrează-te acum și obține 50 GB spațiu gratuit.";
 /* Message shown on the app's start animation to explain what MEGA SPEED means */
-"megaSpeedText"="Încărcările sunt rapide.Partajează rapid fişiere cu toţi.";
+"megaSpeedText"="Încărcările sunt rapide.Partajează rapid fișiere cu toți.";
 /* Message shown on the app's start animation to explain what MEGA PRIVACY means */
-"megaPrivacyText"="Păstrează toate fişierele în siguranţăcu criptarea capăt-la-capăt MEGA.";
+"megaPrivacyText"="Păstrează toate fișierele în siguranțăcu criptarea capăt-la-capăt MEGA.";
 /* Message shown on the app's start animation to explain what MEGA ACCESS means */
-"megaAccessText"="Obţine acces complet criptate oriunde, oricând.";
+"megaAccessText"="Obține acces complet criptate oriunde, oricând.";
 /* Button title which triggers the action to login in your MEGA account */
 "login"="Autentificare";
 /* Button title which triggers the action to create a MEGA account */
 "createAccount"="Creează cont";
 /* Message shown when the user writes a wrong email or password on login */
-"invalidMailOrPassword"="E-mailul şi/sau parola nevalide. Te rugăm să încerci din nou";
+"invalidMailOrPassword"="E-mailul și/sau parola nevalide. Te rugăm să încerci din nou";
 /* Error message when to many attempts to login */
-"tooManyAttemptsLogin"="Ai încercat să te autentifici de prea multe ori. Te rugăm să aştepţi până la %@ şi să încerci din nou.";
+"tooManyAttemptsLogin"="Ai încercat să te autentifici de prea multe ori. Te rugăm să aștepți până la %@ și să încerci din nou.";
 /* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
-"accountNotConfirmed"="Te rugăm să verifici e-mailul şi să urmăreşti linkul pentru a confirma contul.";
+"accountNotConfirmed"="Te rugăm să verifici e-mailul și să urmărești linkul pentru a confirma contul.";
 /* Error message when trying to login and the account is blocked */
 "accountBlocked"="Contul tău a fost blocat. Te rugăm să contactezi support@mega.nz";
 /* Message shown when the user writes an invalid format in the email field */
@@ -115,7 +115,7 @@
 /*  */
 "weak"="Slabă";
 /*  */
-"passwordVeryWeakOrWeak"="Parola ta e uşor de ghicit. Încearcă să faci parola mai lungă. Combină litere mari şi litere mici. Adaugă caractere speciale. Nu folosi nume sau cuvinte din dicţionar.";
+"passwordVeryWeakOrWeak"="Parola ta e ușor de ghicit. Încearcă să faci parola mai lungă. Combină litere mari și litere mici. Adaugă caractere speciale. Nu folosi nume sau cuvinte din dicționar.";
 /* Label displayed during checking the strength of the password introduced. Represents Medium security */
 "medium"="Medie";
 /*  */
@@ -123,11 +123,11 @@
 /*  */
 "good"="Bună";
 /*  */
-"passwordGood"="Această parolă va rezista în faţa celor mai tipice atacuri de tip „brute-force”. Te rugăm să te asiguri că o vei reţine.";
+"passwordGood"="Această parolă va rezista în fața celor mai tipice atacuri de tip „brute-force”. Te rugăm să te asiguri că o vei reține.";
 /* Label displayed during checking the strength of the password introduced. Represents Strong security */
 "strong"="Puternică";
 /*  */
-"passwordStrong"="Această parolă va rezista în faţa celor mai sofisticate atacuri de tip „brute-force”.  Te rugăm să te asiguri că o vei reţine.";
+"passwordStrong"="Această parolă va rezista în fața celor mai sofisticate atacuri de tip „brute-force”. Te rugăm să te asiguri că o vei reține.";
 /*  */
 "agreeWithTheMEGATermsOfService"="Sunt de acord cu <a href='terms'>Termenii de utilizare a serviciului</a> MEGA";
 /* Error text shown when you have not entered a correct name */
@@ -139,39 +139,39 @@
 /* Error text shown when the users tries to create an account with an email already in use */
 "emailAlreadyRegistered"="Această adresă de e-mail a înregistrat deja un cont cu MEGA";
 /* Title shown just after doing some action that requires confirming the action by an email */
-"awaitingEmailConfirmation"="Se aşteaptă confirmarea e-mailului.";
+"awaitingEmailConfirmation"="Se așteaptă confirmarea e-mailului.";
 /* Text shown on the confirm account view to remind the user what to do */
 "confirmText"="Te rugăm să introduci parola pentru a confirma contul";
 /* Label for any ‘Confirm account’ button, link, text, title, etc. - (String as short as possible). */
 "Confirm account"="Confirmă contul";
 /* Error text shown when you introduce a wrong password on the confirmation proccess */
-"passwordWrong"="Parolă greşită";
+"passwordWrong"="Parolă greșită";
 /* Warning title shown when you try to confirm an account but you are logged in with another one */
-"alreadyLoggedInAlertTitle"="Eşti autentificat cu un alt cont";
+"alreadyLoggedInAlertTitle"="Ești autentificat cu un alt cont";
 /* Warning message shown when you try to confirm an account but you are logged in with another one */
-"alreadyLoggedInAlertMessage"="Dacă eşti de acord, contul actual va fi deconectat şi toate datele offline vor fi şterse. Doreşti să continui?";
+"alreadyLoggedInAlertMessage"="Dacă ești de acord, contul actual va fi deconectat și toate datele offline vor fi șterse. Dorești să continui?";
 /* Error shown when the user tries to change his mail to one that is already used */
 "emailAlreadyInUse"="Eroare. Această adresă de e-mail este folosită deja.";
 /* Title shown inside an alert if you don't have enough space on your device to download something */
-"nodeTooBig"="Trebuie să eliberezi ceva spaţiu pe dispozitiv";
+"nodeTooBig"="Trebuie să eliberezi ceva spațiu pe dispozitiv";
 /* Title for the file link view */
-"fileLink"="Linkul fişierului";
+"fileLink"="Linkul fișierului";
 /* Button title to trigger the action of opening the file without downloading or opening it. */
 "openButton"="Deschide";
 /* Error message shown when you try to download something bigger than the space available in your device */
-"fileTooBigMessage"="Fişierul pe care încerci să îl descarci este mai mare decât memoria disponibilă.";
+"fileTooBigMessage"="Fișierul pe care încerci să îl descarci este mai mare decât memoria disponibilă.";
 /* Error message shown when you try to open something bigger than the free space in your device */
-"fileTooBigMessage_open"="Fişierul pe care încerci să îl deschizi este mai mare decât memoria disponibilă.";
+"fileTooBigMessage_open"="Fișierul pe care încerci să îl deschizi este mai mare decât memoria disponibilă.";
 /* Error title shown when you open a file or folder link and it's no longer available */
 "linkUnavailable"="Link indisponibil";
 /* */
 "fileLinkUnavailableText1"="Acest lucru ar putea fi din cauza următoarelor motive:";
 /* ToS refers to Terms of Service and AUP refers to Acceptable Use Policy. */
-"fileLinkUnavailableText2"="Fişierul a fost eliminat din cauza unei încălcări a ToS/AUP.";
+"fileLinkUnavailableText2"="Fișierul a fost eliminat din cauza unei încălcări a ToS/AUP.";
 /* */
 "fileLinkUnavailableText3"="URL nevalid - linkul pe care încerci să-l accesezi nu există";
 /* */
-"fileLinkUnavailableText4"="Fişierul a fost şters de către utilizator.";
+"fileLinkUnavailableText4"="Fișierul a fost șters de către utilizator.";
 /* Message shown when a download starts */
 "downloadStarted"="Descărcarea a început";
 /* Title for the folder link view */
@@ -193,17 +193,17 @@
 /* Text shown on the app when you don't have connection to the internet or when you have lost it */
 "noInternetConnection"="Fără conexiune la internet";
 /* Title shown when a folder doesn't have any files */
-"emptyFolder"="Niciun fişier în folder";
+"emptyFolder"="Niciun fișier în folder";
 /* Title shown when your Cloud Drive is empty, when you don't have any files. */
-"cloudDriveEmptyState_title"="Niciun fişier în unitatea cloud";
+"cloudDriveEmptyState_title"="Niciun fișier în unitatea cloud";
 /* Button title shown in empty views when you can 'Add files' */
-"addFiles"="Adaugă fişiere";
+"addFiles"="Adaugă fișiere";
 /* Title shown when you make a search and there is 'No Results' */
 "noResults"="Niciun rezultat";
 /* Title shown when your Rubbish Bin is empty. */
-"cloudDriveEmptyState_titleRubbishBin"="Coş de gunoi gol";
+"cloudDriveEmptyState_titleRubbishBin"="Coș de gunoi gol";
 /* Title shown when the Offline section is empty, when you don't have download any files. Keep the upper. */
-"offlineEmptyState_title"="Niciun fişier salvat pentru offline";
+"offlineEmptyState_title"="Niciun fișier salvat pentru offline";
 /* Title shown when the Contacts section is empty, when you have not added any contact. */
 "contactsEmptyState_title"="Niciun contact";
 /* Title shown when there's no incoming Shared Items */
@@ -215,11 +215,11 @@
 /* Button title shown in empty views when you can 'Add contacts' */
 "addContacts"="Adaugă contacte";
 /* Text shown when the user tries to make a call and the receiver is not a contact */
-"inviteContact"="Invite Contact";
+"inviteContact"="Invită contactul";
 /* Text shown when the user sends a contact invitation */
-"inviteSent"="Invite Sent";
+"inviteSent"="Invitație trimisă";
 /* Button title to allow the user postpone an action */
-"later"="Later";
+"later"="Mai târziu";
 /* Title of one of the filters in 'Contacts requests' section. If 'Received' is selected, it will only show the requests which have been recieved. */
 "received"="Primite";
 /* Title of one of the filters in 'Contacts requests' section. If 'Sent' is selected, it will only show the requests which have been sent out. */
@@ -229,9 +229,9 @@
 /* Success message shown when you Cancelled a contact request */
 "requestCancelled"="Cerere anulată";
 /* Success message shown when you remove a contact request */
-"requestDeleted"="Cerere ştearsă";
+"requestDeleted"="Cerere ștearsă";
 /* Title shown when there's no pending contact requests */
-"noRequestPending"="Nicio cerere în aşteptare";
+"noRequestPending"="Nicio cerere în așteptare";
 /* Title shown when the transfers are paused */
 "transfersEmptyState_titlePaused"="Transferuri puse pe pauză";
 /* Title shown when the there is not any transfer and they are not paused */
@@ -243,23 +243,23 @@
 /* Title of the Cloud Drive section */
 "cloudDrive"="Unitate cloud";
 /* Subtitle shown on folders that gives you information about its content. This case "{1} file" */
-"oneFile"="%d fişier";
+"oneFile"="%d fișier";
 /* Subtitle shown on folders that gives you information about its content. This case "{1+} files" */
-"files"="%d fişiere";
+"files"="%d fișiere";
 /* Subtitle shown on folders that gives you information about its content. This case "{1} folder" */
 "oneFolder"="%d folder";
 /* Subtitle shown on folders that gives you information about its content. This case "{1+} folders" */
 "folders"="%d foldere";
 /* Subtitle shown on folders that gives you information about its content. This case "{1} folder • {1} file" */
-"folderAndFile"="1 folder + 1 fişier";
+"folderAndFile"="1 folder + 1 fișier";
 /* Subtitle shown on folders that gives you information about its content. This case "[A] = {1+} folders • [B] = {1+} files" */
-"foldersAndFiles"="[A] foldere • [B] fişiere";
+"foldersAndFiles"="[A] foldere • [B] fișiere";
 /* Subtitle shown on folders that gives you information about its content. This case "{1+} folder • {1} file" */
-"foldersAndFile"="%d foldere • 1 fişier";
+"foldersAndFile"="%d foldere • 1 fișier";
 /* Subtitle shown on folders that gives you information about its content. This case "{1} folder • {1+} file" */
-"folderAndFiles"="1 folder • %d fişier";
+"folderAndFiles"="1 folder • %d fișier";
 /* Text shown when one file has been selected to be downloaded but it's on the queue to be downloaded, it's pending for download */
-"queued"="În coada de aşteptare";
+"queued"="În coada de așteptare";
 /* A label to indicate a paused state for a transfer item (upload/download). */
 "paused"="Pus pe pauză";
 /* Label for the state of a transfer when is being completing - (String as short as possible). */
@@ -293,29 +293,29 @@
 /* Title button for the create folder alert.  */
 "createFolderButton"="Creează";
 /* A tooltip message which is shown when a folder name is duplicated during renaming or creation. */
-"There is already a folder with the same name"="There is already a folder with the same name";
+"There is already a folder with the same name"="Există deja un folder cu același nume";
 /* A tooltip message which shows when a file name is duplicated during renaming. */
-"There is already a file with the same name"="Există deja un fişier cu acelaşi nume";
+"There is already a file with the same name"="Există deja un fișier cu același nume";
 /* Option given on the `Add` section to allow the user upload something from another cloud storage provider. The three dots implies that an action occurs after tapping on it. */
 "uploadFrom"="Importă din...";
 /* Message shown when the user selects a file from another cloud storage provider that's already uploaded. "[A] = {name of the original file} already uploaded with name [B] = {name of the file in MEGA}" */
 "fileExistAlertController_Message"="[A] încărcat deja cu numele [B]";
 /* Message shown when you try to upload one photo or video that is already uploaded in the current folder. “Already uploaded with name {File name} */
-"fileAlreadyExistMessage"="Fişierul a fost încărcat deja cu numele %@";
+"fileAlreadyExistMessage"="Fișierul a fost încărcat deja cu numele %@";
 /* Message shown when you try to upload some photos or/and videos that are already uploaded in the current folder */
-"filesAlreadyExistMessage"="%d fişiere selectate au fost încărcate deja în acest folder.";
+"filesAlreadyExistMessage"="%d fișiere selectate au fost încărcate deja în acest folder.";
 /* Message shown when a upload starts */
 "uploadStarted_Message"="Încărcarea a început";
 /* Alert title shown when you are seeing the details of a file and you moved it to the Rubbish Bin from another location */
-"fileMovedToTheRubbishBin_alertTitle"="Acest fişier a fost mutat în coşul de gunoi";
+"fileMovedToTheRubbishBin_alertTitle"="Acest fișier a fost mutat în coșul de gunoi";
 /* Alert title shown when you are seeing the details of a folder and you moved it to the Rubbish Bin from another location */
-"folderMovedToTheRubbishBin_alertTitle"="Acest folder a fost mutat în coşul de gunoi";
+"folderMovedToTheRubbishBin_alertTitle"="Acest folder a fost mutat în coșul de gunoi";
 /* Alert title shown when you are seeing the details of a file and you moved it from another location */
-"fileMoved_alertTitle"="Acest fişier a fost mutat";
+"fileMoved_alertTitle"="Acest fișier a fost mutat";
 /* Alert title shown when you are seeing the details of a folder and you moved it from another location */
 "folderMoved_alertTitle"="Acest folder a fost mutat";
 /* Alert title shown when you are seeing the details of a file and you are not able to access it anymore because it has been removed or moved from the shared folder where it used to be */
-"youNoLongerHaveAccessToThisFile_alertTitle"="Nu mai ai acces la acest fişier";
+"youNoLongerHaveAccessToThisFile_alertTitle"="Nu mai ai acces la acest fișier";
 /* Alert title shown when you are seeing the details of a folder and you are not able to access it anymore because it has been removed or moved from the shared folder where it used to be */
 "youNoLongerHaveAccessToThisFolder_alertTitle"="Nu mai ai acces la acest folder";
 /* The text is shown as an option on the details of a file or folder */
@@ -329,9 +329,9 @@
 /* Title shown under the action that allows you to save several images to your camera roll */
 "saveImages"="Salvează imaginile";
 /* Title shown under the action that allows you to get a link to file or folder */
-"getLink"="Obţine linkul";
+"getLink"="Obține linkul";
 /* Title shown under the action that allows you to get several links to files and/or folders */
-"getLinks"="Obţine linkuri";
+"getLinks"="Obține linkuri";
 /* Item menu option upon right click on one or multiple files. */
 "manageLink"="Gestionează linkul";
 /* A menu item in the right click context menu in the Cloud Drive. This menu item will take the user to a dialog where they can manage the public folder/file links which they currently have selected. */
@@ -349,11 +349,11 @@
 /* A title for the Copyright Warning dialog. */
 "copyrightWarning"="Avertisment privind drepturile de autor";
 /* A title for the Copyright Warning dialog. Designed to make the user feel as though this is not targeting them, but is a warning for everybody who uses our service. */
-"copyrightWarningToAll"="Avertisment privind drepturile de autor pentru toţi utilizatorii";
+"copyrightWarningToAll"="Avertisment privind drepturile de autor pentru toți utilizatorii";
 /* String already exists: 367, but we need to split paragraphs. */
-"copyrightMessagePart1"="MEGA respectă drepturile de autor ale celorlalţi şi impune utilizatorilor serviciului de stocare în cloud MEGA să se conformeze cu legile drepturilor de autor.";
+"copyrightMessagePart1"="MEGA respectă drepturile de autor ale celorlalți și impune utilizatorilor serviciului de stocare în cloud MEGA să se conformeze cu legile drepturilor de autor.";
 /* String already exists: 367, but we need to split paragraphs */
-"copyrightMessagePart2"="Ai interdicţia strică de a folosi serviciul de stocare în cloud MEGA pentru încălcarea drepturilor de autor. Nu poţi încărca, descărca, stoca, partaja, afişa, distribui, trimite e-mail, oferi link, transmite sau altfel pune la dispoziţie fişiere, date sau conţinut care încalcă orice drept de autor sau alte drepturi de proprietate ale unei persoane sau entităţi.";
+"copyrightMessagePart2"="Ai interdicția strică de a folosi serviciul de stocare în cloud MEGA pentru încălcarea drepturilor de autor. Nu poți încărca, descărca, stoca, partaja, afișa, distribui, trimite e-mail, oferi link, transmite sau altfel pune la dispoziție fișiere, date sau conținut care încalcă orice drept de autor sau alte drepturi de proprietate ale unei persoane sau entități.";
 /* button caption text that the user clicks when he agrees */
 "agree"="De acord";
 /* button caption text that the user clicks when he disagrees */
@@ -367,7 +367,7 @@
 /* A label in the Get Link dialog which allows the user to set an expiry date on their public link. */
 "setExpiryDate"="Setează data de expirare";
 /* This is a title label on the Export Link dialog. The title covers the section where the user can password protect a public link. */
-"setPasswordProtection"="Setează protecţie prin parolă";
+"setPasswordProtection"="Setează protecție prin parolă";
 /* The text of a button. This button will encrypt a link with a password. */
 "encrypt"="Criptează";
 /* The text of a button. This button will encrypt a link with a password. */
@@ -381,17 +381,17 @@
 /* */
 "uploadToMega"="Încarcă pe MEGA";
 /* Footer shown in the Share Extension telling that a file can be renamed if tapped */
-"tapFileToRename"="Tap file to rename";
+"tapFileToRename"="Atinge fișierul pentru redenumire";
 /* */
 "sendToContact"="Trimite contactului";
 /* Toast text upon sending a single file to chat */
-"fileSentToChat"="Fişiere trimise în chat";
+"fileSentToChat"="Fișiere trimise în chat";
 /* Success message when the attachment has been sent to a many chats */
-"fileSentToXChats"="Fişier trimis către %1$d chaturi";
+"fileSentToXChats"="Fișier trimis către %1$d chaturi";
 /* Toast text upon sending multiple files to chat */
-"filesSentToChat"="Fişiere trimise în chat";
+"filesSentToChat"="Fișiere trimise în chat";
 /* success message when sending multiple files. Please do not modify the %d placeholder. */
-"xfilesSentSuccesfully"="%d fişiere trimise cu succes";
+"xfilesSentSuccesfully"="%d fișiere trimise cu succes";
 /* Message shown when there is an active link that can be removed or disabled */
 "removeLink"="Elimină linkul";
 /* Message shown when there are some active links that can be removed or disabled */
@@ -403,85 +403,85 @@
 /* Title show when a file is being downloaded */
 "downloading"="Se descarcă";
 /* Message shown when you tap on the cancel button of an active transfer */
-"cancelDownloadAlertViewText"="Doreşti să anulezi descărcarea?";
+"cancelDownloadAlertViewText"="Dorești să anulezi descărcarea?";
 /* Title shown on the navigation bar to explain that you have to choose a destination for the files and/or folders in case you copy, move, import or do some action with them. */
-"selectDestination"="Selectează destinaţia";
+"selectDestination"="Selectează destinația";
 /* Text of the button for user to select files in MEGA. */
-"selectFiles"="Selectează fişiere";
+"selectFiles"="Selectează fișiere";
 /* Title for the action that allows you to move a file or folder */
 "move"="Mută";
 /* Success message shown when you have moved 1 file */
-"moveFileMessage"="1 fişier eliminat";
+"moveFileMessage"="1 fișier eliminat";
 /* Success message shown when you have moved {1+} files */
-"moveFilesMessage"="%d fişiere mutate";
+"moveFilesMessage"="%d fișiere mutate";
 /* Success message shown when you have moved 1 folder */
 "moveFolderMessage"="1 folder mutat";
 /* Success message shown when you have moved {1+} folders */
 "moveFoldersMessage"="%d foldere mutate";
 /* Success message shown when you have moved 1 file and 1 folder */
-"moveFileFolderMessage"="1 fişier şi 1 folder mutat";
+"moveFileFolderMessage"="1 fișier și 1 folder mutat";
 /* Success message shown when you have moved 1 file and {1+} folders */
-"moveFileFoldersMessage"="1 fişier şi %d foldere mutate";
+"moveFileFoldersMessage"="1 fișier și %d foldere mutate";
 /* Success message shown when you have moved {1+} files and 1 folder */
-"moveFilesFolderMessage"="%d fişiere şi 1 folder mutat";
+"moveFilesFolderMessage"="%d fișiere și 1 folder mutat";
 /* Success message shown when you have moved [A] = {1+} files and [B] = {1+} folders */
-"moveFilesFoldersMessage"="[A] fişiere şi [B] foldere mutate";
+"moveFilesFoldersMessage"="[A] fișiere și [B] foldere mutate";
 /* List option shown on the details of a file or folder */
 "copy"="Copiază";
 /* Success message shown when you have copied 1 file */
-"copyFileMessage"="1 fişier copiat";
+"copyFileMessage"="1 fișier copiat";
 /* Success message shown when you have copied {1+} files */
-"copyFilesMessage"="%d fişiere copiate";
+"copyFilesMessage"="%d fișiere copiate";
 /* Success message shown when you have copied 1 folder */
 "copyFolderMessage"="1 folder copiat";
 /* Success message shown when you have copied {1+} folders */
 "copyFoldersMessage"="%d foldere copiate";
 /* Success message shown when you have copied 1 file and 1 folder */
-"copyFileFolderMessage"="1 fişier şi 1 folder copiat";
+"copyFileFolderMessage"="1 fișier și 1 folder copiat";
 /* Success message shown when you have copied 1 file and {1+} folders */
-"copyFileFoldersMessage"="1 fişier şi %d foldere copiate";
+"copyFileFoldersMessage"="1 fișier și %d foldere copiate";
 /* Success message shown when you have copied {1+} files and 1 folder */
-"copyFilesFolderMessage"="%d fişiere şi 1 folder copiat";
+"copyFilesFolderMessage"="%d fișiere și 1 folder copiat";
 /* Success message shown when you have copied [A] = {1+} files and [B] = {1+} folders */
-"copyFilesFoldersMessage"="[A] fişiere şi [B] foldere copiate";
+"copyFilesFoldersMessage"="[A] fișiere și [B] foldere copiate";
 /* Title for the action that allows you to rename a file or folder  */
-"rename"="Redenumeşte";
+"rename"="Redenumește";
 /* Hint text to suggest that the user have to write the new name for the file or folder */
 "renameNodeMessage"="Introdu numele nou";
 /* Title for the action that allows you to 'Move to the Rubbish Bin' files or folders */
-"moveToTheRubbishBin"="Mută la coşul de gunoi";
+"moveToTheRubbishBin"="Mută la coșul de gunoi";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin '1 file' */
-"moveFileToRubbishBinMessage"="Sigur vrei să muţi 1 fişier în coşul de gunoi?";
+"moveFileToRubbishBinMessage"="Sigur vrei să muți 1 fișier în coșul de gunoi?";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin '{1+} files' */
-"moveFilesToRubbishBinMessage"="Sigur vrei să muţi %d fişiere în coşul de gunoi?";
+"moveFilesToRubbishBinMessage"="Sigur vrei să muți %d fișiere în coșul de gunoi?";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin '1 folder' */
-"moveFolderToRubbishBinMessage"="Sigur vrei să muţi 1 folder în coşul de gunoi?";
+"moveFolderToRubbishBinMessage"="Sigur vrei să muți 1 folder în coșul de gunoi?";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "{1+} folders" */
-"moveFoldersToRubbishBinMessage"="Sigur vrei să muţi %d foldere în coşul de gunoi?";
+"moveFoldersToRubbishBinMessage"="Sigur vrei să muți %d foldere în coșul de gunoi?";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "1 file and 1 folder" */
-"moveFileFolderToRubbishBinMessage"="Sigur vrei să muţi 1 fişier şi 1 folder în coşul de gunoi?";
+"moveFileFolderToRubbishBinMessage"="Sigur vrei să muți 1 fișier și 1 folder în coșul de gunoi?";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "1 file and {1+} folders" */
-"moveFileFoldersToRubbishBinMessage"="Sigur vrei să muţi 1 fişier şi %d foldere în coşul de gunoi?";
+"moveFileFoldersToRubbishBinMessage"="Sigur vrei să muți 1 fișier și %d foldere în coșul de gunoi?";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "{1+} files and 1 folder" */
-"moveFilesFolderToRubbishBinMessage"="Sigur vrei să muţi %d fişiere şi 1 folder în coşul de gunoi?";
+"moveFilesFolderToRubbishBinMessage"="Sigur vrei să muți %d fișiere și 1 folder în coșul de gunoi?";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "[A] = {1+} files and [B] = {1+} folders" */
-"moveFilesFoldersToRubbishBinMessage"="Sigur vrei să muţi [A] fişiere şi [B] foldere în coşul de gunoi?";
+"moveFilesFoldersToRubbishBinMessage"="Sigur vrei să muți [A] fișiere și [B] foldere în coșul de gunoi?";
 /* Success message shown when you have moved 1 file to the rubbish bin */
-"fileMovedToRubbishBinMessage"="1 fişier mutat în coşul de gunoi";
+"fileMovedToRubbishBinMessage"="1 fișier mutat în coșul de gunoi";
 /* Success message shown when you have moved {1+} files to the rubbish bin */
-"filesMovedToRubbishBinMessage"="%d fişiere mutate în coşul de gunoi";
+"filesMovedToRubbishBinMessage"="%d fișiere mutate în coșul de gunoi";
 /* Success message shown when you have moved 1 folder to the rubbish bin */
-"folderMovedToRubbishBinMessage"="1 folder mutat în coşul de gunoi";
+"folderMovedToRubbishBinMessage"="1 folder mutat în coșul de gunoi";
 /* Success message shown when you have moved {1+} folders to the rubbish bin */
-"foldersMovedToRubbishBinMessage"="%d foldere mutate în coşul de gunoi";
+"foldersMovedToRubbishBinMessage"="%d foldere mutate în coșul de gunoi";
 /* Success message shown when you have moved 1 file and 1 folder to the rubbish bin */
-"fileFolderMovedToRubbishBinMessage"="1 fişier şi 1 folder mutate în coşul de gunoi";
+"fileFolderMovedToRubbishBinMessage"="1 fișier și 1 folder mutate în coșul de gunoi";
 /* Success message shown when you have moved 1 file and {1+} folders to the rubbish bin */
-"fileFoldersMovedToRubbishBinMessage"="1 fişier şi %d foldere mutate în coşul de gunoi";
+"fileFoldersMovedToRubbishBinMessage"="1 fișier și %d foldere mutate în coșul de gunoi";
 /* Success message shown when you have moved {1+} files and 1 folder to the rubbish bin */
-"filesFolderMovedToRubbishBinMessage"="%d fişiere şi 1 folder mutate în coşul de gunoi";
+"filesFolderMovedToRubbishBinMessage"="%d fișiere și 1 folder mutate în coșul de gunoi";
 /* Success message shown when you have moved [A] = {1+} files and [B] = {1+} folders to the rubbish bin */
-"filesFoldersMovedToRubbishBinMessage"="[A] fişiere şi [B] foldere mutate în coşul de gunoi";
+"filesFoldersMovedToRubbishBinMessage"="[A] fișiere și [B] foldere mutate în coșul de gunoi";
 /* Error title shown when you are trying to do an action with a file or folder and you don't have the necessary permissions */
 "permissionTitle"="Eroare privind permisiunile";
 /* Error message shown when you are trying to do an action with a file or folder and you don't have the necessary permissions */
@@ -493,15 +493,15 @@
 /* Button title that triggers the importing link action */
 "import"="Importă";
 /* Message shown when a file has been imported */
-"fileImported"="Fişier importat";
+"fileImported"="Fișier importat";
 /* Message shown when some files have been imported */
-"filesImported"="Fişiere importate";
+"filesImported"="Fișiere importate";
 /* Error message shown when you have used more MEGA storage than you can */
-"quotaExceeded"="Cota de stocare depăşită";
+"quotaExceeded"="Cota de stocare depășită";
 /* Alert title shown when the user is overquota */
-"overquotaAlert_title"="Alertă de depăşire cotă!";
+"overquotaAlert_title"="Alertă de depășire cotă!";
 /* Alert message shown when the user is overquota */
-"overquotaAlert_message"="Operaţie nepermisă, vei depăşi limita de stocare a contului. Doreşti să upgradezi contul?";
+"overquotaAlert_message"="Operație nepermisă, vei depăși limita de stocare a contului. Dorești să upgradezi contul?";
 /* Title shown on the Camera Uploads section when the edit mode is enabled. On this mode you can select photos */
 "selectTitle"="Selectează elementele";
 /* Button title that skips the current action */
@@ -515,13 +515,13 @@
 /* Message shown when the camera uploads have been completed */
 "cameraUploadsComplete"="Încărcări cameră încheiate";
 /* Message shown while uploading files. Singular. */
-"cameraUploadsPendingFile"="Upload in progress, 1 file pending";
+"cameraUploadsPendingFile"="Încărcare în curs, 1 fișier în așteptare";
 /* Message shown while uploading files. Plural. */
-"cameraUploadsPendingFiles"="Upload in progress, %lu files pending";
+"cameraUploadsPendingFiles"="Încărcare în curs, %lu fișiere în așteptare";
 /* Singular, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 1 file. */
-"indexOfTotalFile"="%1$d din %2$d fişier";
+"indexOfTotalFile"="%1$d din %2$d fișier";
 /* Plural, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 3 files. */
-"indexOfTotalFiles"="%1$d din %2$d fişiere";
+"indexOfTotalFiles"="%1$d din %2$d fișiere";
 /* Title shown on the Camera Uploads section when the edit mode is enabled and you have selected one photo */
 "oneItemSelected"="%lu element selectat";
 /* Title shown on the Camera Uploads section when the edit mode is enabled and you have selected more than one photo */
@@ -531,7 +531,7 @@
 /* Alert title displayed when Camera Uploads will be disabled because of unexpected errors */
 "cameraUploadsWillBeDisabled"="Încărcări cameră va fi dezactivat";
 /* Message shown when you have Camera Uploads enabled and your device don't have enough space to make it work */
-"cameraUploadsDisabled_alertView_message"="Încărcări cameră va fi dezactivat, deoarece nu ai spaţiu suficient pe dispozitiv";
+"cameraUploadsDisabled_alertView_message"="Încărcări cameră va fi dezactivat, deoarece nu ai spațiu suficient pe dispozitiv";
 /* Title of the Offline section */
 "offline"="Offline";
 /* Title of the Contacts section */
@@ -591,9 +591,9 @@
 /* Add contacts and share dialog error message when user try to add already existing email address. */
 "alreadyHaveAContactWithThatEmailAddress"="Ai deja un contact cu acea adresă de e-mail";
 /* Success message shown when a contact has been invited */
-"theUserHasBeenInvited"="Utilizatorul [X] a fost invitat şi va apărea în lista de contacte odată ce a acceptat.";
+"theUserHasBeenInvited"="Utilizatorul [X] a fost invitat și va apărea în lista de contacte de îndată ce a acceptat invitația.";
 /* Success message shown when some contacts have been invited */
-"theUsersHaveBeenInvited"="Utilizatorii au fost invitaţi şi vor apărea în lista de contacte odată ce au acceptat.";
+"theUsersHaveBeenInvited"="Utilizatorii au fost invitați și vor apărea în lista de contacte de îndată ce au acceptat invitația.";
 /* Error message shown when it hasn't been posible to add a contact */
 "addContactError"="Eroare la adăugarea contactului";
 /* Alert title shown when you want to remove one or more contacts */
@@ -611,11 +611,11 @@
 /* Alert title shown when you add a contact from your device and the selected one doesn't have an email. */
 "contactWithoutEmail"="Contactul nu are un e-mail";
 /* Button title of the action that allows to leave a shared folder */
-"leaveFolder"="Părăseşte";
+"leaveFolder"="Părăsește";
 /* Alert message shown when the user tap on the leave share action for one inshare */
-"leaveShareAlertMessage"="Sigur vrei să părăseşti această partajare?";
+"leaveShareAlertMessage"="Sigur vrei să părăsești această partajare?";
 /* Alert message shown when the user tap on the leave share action selecting multiple inshares */
-"leaveSharesAlertMessage"="Sigur vrei să părăseşti aceste partajări?";
+"leaveSharesAlertMessage"="Sigur vrei să părăsești aceste partajări?";
 /* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected */
 "share"="Partajează";
 /* Select all items/elements on the list */
@@ -635,7 +635,7 @@
 /* Permissions given to the user you share your folder with */
 "readOnly"="Numai citire";
 /* Permissions given to the user you share your folder with */
-"readAndWrite"="Citire şi scriere";
+"readAndWrite"="Citire și scriere";
 /* Permissions given to the user you share your folder with */
 "fullAccess"="Acces complet";
 /* Title of the Settings section */
@@ -643,11 +643,11 @@
 /* Title of one of the Settings sections where you can set up the 'Camera Uploads' options */
 "cameraUploadsLabel"="Încărcări cameră";
 /* Title of one of the Settings sections where you can see your MEGA 'Rubbish Bin' */
-"rubbishBinLabel"="Coş de gunoi";
+"rubbishBinLabel"="Coș de gunoi";
 /* Title of one of the Settings sections where you can configure 'Advanced' options */
 "advanced"="Avansat";
 /* Title of one of the Settings sections where you can configure "Security Options" of your MEGA account */
-"securityOptions"="Opţiuni de securitate";
+"securityOptions"="Opțiuni de securitate";
 /* Title of one of the Settings sections where you can see things 'About' the app */
 "about"="Despre";
 /* Title of one of the Settings sections where you can set up the 'Language' of the app */
@@ -659,7 +659,7 @@
 /* Text shown when you want to send feedback of the app and you don't have an email account set up on your device */
 "noEmailAccountConfigured"="Niciun cont de e-mail configurat pe dispozitivul tău";
 /* Title of one of the Settings sections where you can see the MEGA's 'Privacy Policy' */
-"privacyPolicyLabel"="Politica de confidenţialitate";
+"privacyPolicyLabel"="Politica de confidențialitate";
 /* Title of one of the Settings sections where you can see the MEGA's 'Terms of Service' */
 "termsOfServicesLabel"="Termenii de utilizare a serviciului";
 /* Title of one of the Settings sections where you can see the MEGA's 'Data Protection Regulation' */
@@ -669,15 +669,15 @@
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode On" */
 "on"="Activat";
 /* Header to explain that 'Upload videos', 'Use cellular connection' and 'Only when charging' are options of the Camera Uploads */
-"options"="Opţiuni";
+"options"="Opțiuni";
 /* Option title to enable upload videos with Camera Uploads */
 "uploadVideosLabel"="Încarcă videoclipuri";
 /* Option title to enable Camera Uploads only when the device is charging */
 "onlyWhenChargingLabel"="Doar când se încarcă";
 /* Footer text to explain the Camera Uploads functionality */
-"cameraUploads_footer"="Când este activat, noile fotografii şi videoclipuri vor fi încărcate.";
+"cameraUploads_footer"="Când este activat, noile fotografii și videoclipuri vor fi încărcate.";
 /* App means “Application” */
-"App version"="Versiunea aplicaţiei";
+"App version"="Versiunea aplicației";
 /* Title of the label where the SDK version is shown */
 "sdkVersion"="Versiune MEGA SDK";
 /* Title of the label where the MEGAchat SDK version is shown */
@@ -691,37 +691,37 @@
 /* Section title where you can change your MEGA's password */
 "changePasswordLabel"="Schimbă parola";
 /* Advising the user to keep the user's master key safe. */
-"exportMasterKeyFooter"="Exportarea cheii de recuperare şi păstrarea ei într-o locaţie sigură îţi dă posibilitatea să setezi o parolă nouă fără pierderea datelor.";
+"exportMasterKeyFooter"="Exportarea cheii de recuperare și păstrarea ei într-o locație sigură îți dă posibilitatea să setezi o parolă nouă fără pierderea datelor.";
 /* Question button to present a view where it's explained what is the Recovery Key */
 "whyDoINeedARecoveryKey"="De ce am nevoie de o cheie de recuperare?";
 /* Detailed explanation of how the master encryption key (now renamed "Recovery Key") works, and why it is important to remember your password. */
-"masterKey_firstParagraph"="Datele tale pot fi citite doar printr-un lanţ de operaţii de decriptare, lanţ care începe cu cheia principală de criptare (cheia de recuperare), pe care o stocăm criptată cu parola ta. Acest lucru înseamnă că dacă pierzi parola, cheia de recuperare nu mai poate fi decriptată şi nu mai poţi să-ţi decriptezi datele.";
+"masterKey_firstParagraph"="Datele tale pot fi citite doar printr-un lanț de operații de decriptare, lanț care începe cu cheia principală de criptare (cheia de recuperare), pe care o stocăm criptată cu parola ta. Acest lucru înseamnă că dacă pierzi parola, cheia de recuperare nu mai poate fi decriptată și nu mai poți să-ți decriptezi datele.";
 /*  */
-"masterKey_thirdParagraph"="Un atacator extern nu poate obţine acces la contul tău doar cu cheia ta. Resetarea parolei necesită atât cheia, cât şi acces la adresa ta de e-mail.";
+"masterKey_thirdParagraph"="Un atacator extern nu poate obține acces la contul tău doar cu cheia ta. Resetarea parolei necesită atât cheia, cât și acces la adresa ta de e-mail.";
 /* Message of the dialog displayed when copy the user's Recovery Key to the clipboard to be saved or exported. */
-"recoveryKeyCopiedToClipboard"="Cheie de recuperare copiată în clipboard";
+"recoveryKeyCopiedToClipboard"="Cheia de recuperare a fost copiată în clipboard. Te rugăm să o stochezi într-un loc sigur.";
 /* Alert title shown when you have exported your MEGA Recovery Key */
 "masterKeyExported"="Cheie de recuperare exportată";
 /* Alert message shown to explain that the Recovery Key was saved on your device. Also that you can access it through iTunes. And ends with and security advise. */
-"masterKeyExported_alertMessage"="Cheia de recuperare a fost exportată în secţiunea Offline ca RecoveryKey.txt. Notă: Aceasta va fi ştearsă dacă te deconectezi, te rugăm să o stochezi într-un loc sigur.";
+"masterKeyExported_alertMessage"="Cheia de recuperare a fost exportată în secțiunea Offline ca RecoveryKey.txt. Notă: Aceasta va fi ștearsă dacă te deconectezi, te rugăm să o stochezi într-un loc sigur.";
 /* Title header that refers to where do you do the actions 'Clear Offlines files' and 'Clear cache' inside 'Settings' -> 'Advanced' section" */
 "onYourDevice"="Pe dispozitiv";
 /* Section title where you can 'Clear Offline files' of your MEGA app */
-"clearOfflineFiles"="Şterge fişierele offline";
+"clearOfflineFiles"="Șterge fișierele offline";
 /* Section title where you can 'Clear Cache' of your MEGA app */
-"clearCache"="Şterge cache-ul";
+"clearCache"="Șterge cache-ul";
 /* "Title header that refers to where do you do the action 'Empty Rubbish Bin' inside 'Settings' -> 'Advanced' section" */
 "onMEGA"="Pe MEGA";
 /* Button text on the Rubbish Bin page. This button will empty all files and folders currently stored in the rubbish bin. */
-"emptyRubbishBin"="Clear Rubbish Bin";
+"emptyRubbishBin"="Golește coșul de gunoi";
 /* Alert title shown when you tap 'Empty Rubbish Bin' */
-"emptyRubbishBinAlertTitle"="Toate elementele din coşul de gunoi vor fi şterse";
+"emptyRubbishBinAlertTitle"="Toate elementele din coșul de gunoi vor fi șterse";
 /* Text next to a switch that allows disabling the HTTP protocol for transfers */
 "dontUseHttp"="Nu folosi HTTP";
 /* Footer text that explains when disabling the HTTP protocol for transfers may be useful */
-"transfersSectionFooter"="Activează această opţiune numai dacă transferurile tale nu pornesc. În circumstanţe normale, HTTP este satisfăcător deoarece toate transferurile sunt deja criptate.";
+"transfersSectionFooter"="Activează această opțiune numai dacă transferurile tale nu pornesc. În circumstanțe normale, HTTP este satisfăcător deoarece toate transferurile sunt deja criptate.";
 /* Title of the dialog displayed the first time that a user want to download a image. Asks if wants to export image files to the photo album after download in future and informs that user can change this option afterwards - (String as short as possible). */
-"Download options"="Opţiuni de descărcare";
+"Download options"="Opțiuni de descărcare";
 /* Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped */
 "currentlyUsing"="În prezent folosind %s";
 /* In 'My account', when user want to delete/remove/cancel account will click button named 'Cancel your account' */
@@ -729,11 +729,11 @@
 /* Message that is shown when the user click on 'Cancel your account' to confirm that he's aware that his data will be deleted. */
 "youWillLooseAllData"="Vei pierde toate datele asociate cu acest cont. Sigur vrei să continui?";
 /* Account closure, warning message to remind user to contact MEGA support after he confirms that he wants to cancel account. */
-"ifYouCantAccessYourEmailAccount"="Dacă nu-ţi poţi accesa e-mailul, te rugăm să contactezi support@mega.nz.";
+"ifYouCantAccessYourEmailAccount"="Dacă nu-ți poți accesa e-mailul, te rugăm să contactezi support@mega.nz.";
 /* During account cancellation (deletion) */
 "cancellationLinkHasExpired"="Linkul de anulare a expirat.";
 /* Text shown in the last alert dialog to confirm the cancellation of an account */
-"enterYourPasswordToConfirmThatYouWanToClose"="Acesta este ultimul pas pentru a-ţi anula contul. Vei pierde definitiv toate datele stocate în cloud. Te rugăm să introduci parola mai jos.";
+"enterYourPasswordToConfirmThatYouWanToClose"="Acesta este ultimul pas pentru a-ți anula contul. Vei pierde definitiv toate datele stocate în cloud. Te rugăm să introduci parola mai jos.";
 /* During account cancellation (deletion) */
 "accountCanceledSuccessfully"="Contul tău a fost anulat cu succes.";
 /* Account closure, password check dialog when user click on closure email. */
@@ -743,37 +743,37 @@
 /* Alert title shown on the Rubbish Bin when you want to remove some files and folders of your MEGA account */
 "removeNodeFromRubbishBinTitle"="Confirmă eliminarea";
 /* Alert message shown on the Rubbish Bin when you want to remove '1 file' */
-"removeFileToRubbishBinMessage"="Eşti pe cale să ştergi definitiv 1 fişier. Doreşti să continui? (Nu poţi anula această acţiune)";
+"removeFileToRubbishBinMessage"="Ești pe cale să ștergi definitiv 1 fișier. Dorești să continui? (Nu poți anula această acțiune)";
 /* Alert message shown on the Rubbish Bin when you want to remove "{1+} files" */
-"removeFilesToRubbishBinMessage"="Eşti pe cale să ştergi definitiv %d fişiere. Doreşti să continui? (Nu poţi anula această acţiune.)";
+"removeFilesToRubbishBinMessage"="Ești pe cale să ștergi definitiv %d fișiere. Dorești să continui? (Nu poți anula această acțiune.)";
 /* Alert message shown on the Rubbish Bin when you want to remove '1 folder' */
-"removeFolderToRubbishBinMessage"="Eşti pe cale să ştergi definitiv 1 folder. Doreşti să continui? (Nu poţi anula această acţiune.)";
+"removeFolderToRubbishBinMessage"="Ești pe cale să ștergi definitiv 1 folder. Dorești să continui? (Nu poți anula această acțiune.)";
 /* Alert message shown on the Rubbish Bin when you want to remove "{1+} folders" */
-"removeFoldersToRubbishBinMessage"="Eşti pe cale să ştergi definitiv %d foldere. Doreşti să continui? (Nu poţi anula această acţiune.)";
+"removeFoldersToRubbishBinMessage"="Ești pe cale să ștergi definitiv %d foldere. Dorești să continui? (Nu poți anula această acțiune.)";
 /* Alert message shown on the Rubbish Bin when you want to remove "1 file and 1 folder" */
-"removeFileFolderToRubbishBinMessage"="Eşti pe cale să ştergi definitiv 1 fişier şi 1 folder. Doreşti să continui? (Nu poţi anula această acţiune.)";
+"removeFileFolderToRubbishBinMessage"="Ești pe cale să ștergi definitiv 1 fișier și 1 folder. Dorești să continui? (Nu poți anula această acțiune.)";
 /* Alert message shown on the Rubbish Bin when you want to remove "1 file and {1+} folders" */
-"removeFileFoldersToRubbishBinMessage"="Eşti pe cale să ştergi definitiv 1 fişier şi %d foldere. Doreşti să continui? (Nu poţi anula această acţiune.)";
+"removeFileFoldersToRubbishBinMessage"="Ești pe cale să ștergi definitiv 1 fișier și %d foldere. Dorești să continui? (Nu poți anula această acțiune.)";
 /* Alert message shown on the Rubbish Bin when you want to remove "{1+} files and 1 folder" */
-"removeFilesFolderToRubbishBinMessage"="Eşti pe cale să ştergi definitiv %d fişiere şi 1 folder. Doreşti să continui? (Nu poţi anula această acţiune.)";
+"removeFilesFolderToRubbishBinMessage"="Ești pe cale să ștergi definitiv %d fișiere și 1 folder. Dorești să continui? (Nu poți anula această acțiune.)";
 /* Alert message shown on the Rubbish Bin when you want to remove "[A] = {1+} files and [B] = {1+} folders */
-"removeFilesFoldersToRubbishBinMessage"="Eşti pe cale să ştergi definitiv [A] fişiere şi [B] foldere. Doreşti să continui? (Nu poţi anula această acţiune.)";
+"removeFilesFoldersToRubbishBinMessage"="Ești pe cale să ștergi definitiv [A] fișiere și [B] foldere. Dorești să continui? (Nu poți anula această acțiune.)";
 /* Success message shown when 1 file has been removed from MEGA */
-"fileRemovedToRubbishBinMessage"="1 fişier eliminat de pe MEGA";
+"fileRemovedToRubbishBinMessage"="1 fișier eliminat de pe MEGA";
 /* Success message shown when {1+} files have been removed from MEGA */
-"filesRemovedToRubbishBinMessage"="%d fişiere eliminate de pe MEGA";
+"filesRemovedToRubbishBinMessage"="%d fișiere eliminate de pe MEGA";
 /* Success message shown when 1 folder has been removed from MEGA */
 "folderRemovedToRubbishBinMessage"="1 folder eliminat de pe MEGA";
 /* Success message shown when {1+} folders have been removed from MEGA */
 "foldersRemovedToRubbishBinMessage"="%d foldere eliminate de pe MEGA";
 /* Success message shown when 1 file and 1 folder have been removed from MEGA */
-"fileFolderRemovedToRubbishBinMessage"="1 fişier şi 1 folder eliminate de pe MEGA";
+"fileFolderRemovedToRubbishBinMessage"="1 fișier și 1 folder eliminate de pe MEGA";
 /* Success message shown when 1 file and {1+} folders have been removed from MEGA */
-"fileFoldersRemovedToRubbishBinMessage"="1 fişier şi %d foldere eliminate de pe MEGA";
+"fileFoldersRemovedToRubbishBinMessage"="1 fișier și %d foldere eliminate de pe MEGA";
 /* Success message shown when {1+} files and 1 folder have been removed from MEGA */
-"filesFolderRemovedToRubbishBinMessage"="%d fişiere şi 1 folder eliminate de pe MEGA";
+"filesFolderRemovedToRubbishBinMessage"="%d fișiere și 1 folder eliminate de pe MEGA";
 /* Success message shown when [A] = {1+} files and [B] = {1+} folders have been removed from MEGA */
-"filesFoldersRemovedToRubbishBinMessage"="[A] fişiere şi [B] foldere eliminate de pe MEGA";
+"filesFoldersRemovedToRubbishBinMessage"="[A] fișiere și [B] foldere eliminate de pe MEGA";
 /* Hint text to suggest that the user have to write his/her current password */
 "currentPassword"="Parola actuală";
 /* Hint text to suggest that the user have to write the new password on it */
@@ -795,20 +795,20 @@
 /* An alert title where the user provided the incorrect Recovery Key. */
 "invalidRecoveryKey"="Cheie de recuperare nevalidă";
 /* Text of the alert after opening the recovery link to reset pass being logged. */
-"youRecoveryKeyIsGoingTo"="Cheia de recuperare va fi folosită pentru a-ţi reseta parola. Te rugăm să introduci parola nouă.";
+"youRecoveryKeyIsGoingTo"="Cheia de recuperare va fi folosită pentru a-ți reseta parola. Te rugăm să introduci parola nouă.";
 /*  */
-"yourPasswordHasBeenReset"="Parola ta a fost resetată cu succes.  Te rugăm să te autentifici în contul tău acum.";
+"yourPasswordHasBeenReset"="Parola ta a fost resetată cu succes. Te rugăm să te autentifici în contul tău acum.";
 /* Label for any 'Send' button, link, text, title, etc. - (String as short as possible). */
 "send"="Trimite";
 /* The title of the screen to park an account. */
 /* Headline for parking an account (basically restarting from scratch) */
 "parkAccount"="Cont parcat";
 /* Label text of a checkbox to ensure that the user is aware that the data of his current account will be lost when proceeding unless they remember their password or have their master encryption key (now renamed "Recovery Key") */
-"startingFreshAccount"="Recunosc că încep un cont nou, gol şi că voi pierde toate datele în contul meu prezent, cu excepţia cazului în care îmi aduc aminte de parolă sau găsesc o cheie de recuperare exportată.";
+"startingFreshAccount"="Recunosc că încep un cont nou, gol și că voi pierde toate datele în contul meu prezent, cu excepția cazului în care îmi aduc aminte de parolă sau găsesc o cheie de recuperare exportată.";
 /* Caption of the button to proceed */
 "startNewAccount"="Începe un cont nou";
 /*  */
-"yourAccounHasBeenParked"="Contul tău vechi a fost parcat cu succes. Poţi acum să te autentifici în contul tău nou.";
+"yourAccounHasBeenParked"="Contul tău vechi a fost parcat cu succes. Poți acum să te autentifici în contul tău nou.";
 /* Hint text to suggest that the user have to write the new email on it */
 "newEmail"="E-mail nou";
 /* Button text for the user to confirm their change of email address. */
@@ -818,15 +818,15 @@
 /* The title of the alert dialog to change the email associated to an account. */
 "changeEmail"="Schimbă e-mailul";
 /* Error message shown when the users tryes to change his/her email and writes the current one as the new one. */
-"oldAndNewEmailMatch"="E-mailul nou şi cel vechi nu se potrivesc";
+"oldAndNewEmailMatch"="E-mailul nou și cel vechi nu se potrivesc";
 /* Error message shown when you have not written the same email when confirming a new one */
 "emailsDoNotMatch"="E-mailurile nu se potrivesc";
 /* Error message when a use wants to validate the same email twice */
 "emailAddressChangeAlreadyRequested"="Ai solicitat deja un link de confirmare pentru acea adresă de e-mail.";
 /* Text shown just after tap to change an email account to remenber the user what to do to complete the change email proccess */
-"emailIsChanging_description"="Te rugăm să accesezi e-mailul şi să dai clic pe link pentru a confirma adresa nouă de e-mail.";
+"emailIsChanging_description"="Te rugăm să accesezi e-mailul și să dai clic pe link pentru a confirma adresa nouă de e-mail.";
 /* Text shown on the confirm email view to remind the user what to do */
-"verifyYourEmailAddress_description"="Te rugăm să introduci parola pentru a-ţi verifica adresa de e-mail";
+"verifyYourEmailAddress_description"="Te rugăm să introduci parola pentru a-ți verifica adresa de e-mail";
 /* The [X] will be replaced with the e-mail address. */
 "congratulationsNewEmailAddress"="Felicitări, adresa de e-mail nouă pentru acest cont MEGA este: [X]";
 /* Button text to close other login sessions except the current session in use. This will log out other devices which have an active login session. */
@@ -838,13 +838,13 @@
 /* Title to describe a simple (four digit) passcode */
 "simplePasscodeLabel"="Cod de trecere simplu";
 /* Title of one of the passcode options. If enabled will do what footer explains. */
-"eraseAllLocalDataLabel"="Şterge datele locale";
+"eraseAllLocalDataLabel"="Șterge datele locale";
 /* Footer text that explain what will happen if "Erase local data" is enabled */
-"failedAttempstSectionTitle"="Deconectează-te şi şterge datele locale după 10 încercări eşuate pentru codul de trecere";
+"failedAttempstSectionTitle"="Deconectează-te și șterge datele locale după 10 încercări eșuate pentru codul de trecere";
 /* Menu item */
 "help"="Ajutor";
 /* Title of the section to access MEGA's help centre */
-"helpCentreLabel"="Centrul de ajutor";
+"helpCentreLabel"="Centru de ajutor";
 /* Section title that links you to the webpage that let you join and test the beta versions */
 "Join Beta"="Join Beta";
 /* Title to rate the app */
@@ -864,7 +864,7 @@
 /* Title of the alert shown when you try to cancel transfers */
 "cancelTransfersTitle"="Anulează transferurile";
 /* Message of the alert shown when you try to cancel transfers where {%@} = {ALL, UPLOAD or DOWNLOAD} + {tranfers} */
-"cancelTransfersText"="Doreşti să anulezi %@?";
+"cancelTransfersText"="Dorești să anulezi %@?";
 /* Rest of the message of the alert shown when you try to cancel transfers. ALL uppercase. */
 "allInUppercaseTransfers"="TOATE transferurile";
 /* Rest of the message of the alert shown when you try to cancel transfers. UPLOAD uppercase. */
@@ -878,7 +878,7 @@
 /* Caption of a button to upgrade the account to Pro status */
 "upgrade"="Upgradează";
 /* Title show on the hall of My Account section that describes a place where you can view, edit and upgrade your account and profile */
-"viewAndEditProfile"="Vezi şi editează profilul";
+"viewAndEditProfile"="Vezi și editează profilul";
 /* Label for any 'Profile' button, link, text, title, etc. - (String as short as possible). */
 "profile"="Profil";
 /* Title of the Achievements section */
@@ -886,23 +886,23 @@
 /* Title of the Used storage section */
 "usedStorage"="Stocare folosită";
 /* Subtitle show on My Account view under the 'Achievements' title to give more details of the section that will appear if tapped 2/2 */
-"inviteFriendsAndGetRewards"="Invită prieteni şi obţine bonusuri";
+"inviteFriendsAndGetRewards"="Invită prieteni și obține bonusuri";
 /* Indicating text for when "you invite your friends" */
-"inviteYourFriends"="Invită-ţi prietenii";
+"inviteYourFriends"="Invită-ți prietenii";
 /* title of the introduction for the achievements screen */
-"inviteFriendsAndGetForEachReferral"="Obţine %1$s stocare şi %2$s transferuri pentru fiecare recomandare";
+"inviteFriendsAndGetForEachReferral"="Obține %1$s stocare și %2$s transferuri pentru fiecare recomandare";
 /* Text shown to explain how and where you can invite friends */
 "inviteYourFriendsExplanation"="Selectează contacte din lista de contacte a telefonului sau introdu mai multe adrese de e-mail.";
 /*  */
 "insertYourFriendsEmails"="Introdu e-mailul(urile) prietenului:";
 /*  */
-"howItWorks"="Cum funcţionează";
+"howItWorks"="Cum funcționează";
 /*  */
-"howItWorksMain"="Prietenul tău trebuie să se înregistreze pentru un cont gratuit pe MEGA şi [S]să instaleze cel puţin un client MEGA[/S] (fie clientul de sincronizare, fie una dintre aplicaţiile noastre mobile)";
+"howItWorksMain"="Prietenul tău trebuie să se înregistreze pentru un cont gratuit pe MEGA și [S]să instaleze cel puțin un client MEGA[/S] (fie clientul de sincronizare, fie una dintre aplicațiile noastre mobile)";
 /*  */
-"howItWorksSecondary"="Poţi să îţi informezi prietenul prin orice metodă. Vei câştiga cota dacă ai introdus e-mailul prietenului tău aici înainte de a se înregistra cu acea adresă.";
+"howItWorksSecondary"="Poți să îți informezi prietenul prin orice metodă. Vei câștiga cota dacă ai introdus e-mailul prietenului tău aici înainte de a se înregistra cu acea adresă.";
 /* A message which is shown once someone has invited a friend as part of the achievements program. */
-"howItWorksTertiary"="Nu vei primi credit pentru invitarea cuiva care a folosit MEGA anterior şi nu vei fi notificat despre o astfel de respingere.";
+"howItWorksTertiary"="Nu vei primi credit pentru invitarea cuiva care a folosit MEGA anterior și nu vei fi notificat despre o astfel de respingere.";
 /* Header of block with achievements bonuses. */
 "unlockedBonuses"="Bonusuri deblocate:";
 /* A header/title of a section which contains information about used/available storage space on a user's cloud drive. */
@@ -914,17 +914,17 @@
 /* achievement type */
 "registrationBonus"="Bonus de înregistrare";
 /* Message shown on the achievements dialog for achieved achievements, %1 is replaced with e.g. 20 GB */
-"registrationBonusExplanation"="Ai primit %1 spaţiu de stocare ca bonus de înregistrare gratuită.";
+"registrationBonusExplanation"="Ai primit %1 spațiu de stocare ca bonus de înregistrare gratuită.";
 /* achievement type */
 "referralBonuses"="Bonusuri pentru recomandări";
 /*  */
 "installMEGASync"="Instalează MEGAsync";
 /* Message shown on the achievements dialog for achieved achievements, %1 and %2 are replaced with e.g. 20 GB */
-"installMEGASyncCompletedExplanation"="Ai primit %1 spaţiu de stocare şi %2 cotă de transfer pentru instalarea MEGAsync.";
+"installMEGASyncCompletedExplanation"="Ai primit %1 spațiu de stocare și %2 cotă de transfer pentru instalarea MEGAsync.";
 /*  */
-"installOurMobileApp"="Instalează aplicaţia noastră mobilă";
+"installOurMobileApp"="Instalează aplicația noastră mobilă";
 /* Message shown on the achievements dialog for achieved achievements, %1 and %2 are replaced with e.g. 20 GB */
-"installOurMobileAppCompletedExplanation"="Ai primit %1 spaţiu de stocare şi %2 cotă de transfer pentru instalarea aplicaţiei noastre mobile.";
+"installOurMobileAppCompletedExplanation"="Ai primit %1 spațiu de stocare și %2 cotă de transfer pentru instalarea aplicației noastre mobile.";
 /*  */
 "xDaysLeft"="%1 zile rămase";
 /* %1 will be replaced by a numeric value and %2 will be 'days' or 'months', for example (Expires in [S]10[/S] days) */
@@ -966,7 +966,7 @@
 /* Text that shows the expiry date of the account PRO level */
 "expiresOn"="expiră pe %@";
 /* Button title for the section where you can see the 'Purchase history' related to your account */
-"purchaseHistory"="Istoricul achiziţiilor";
+"purchaseHistory"="Istoricul achizițiilor";
 /* Title of the Incoming Shares section. Here you can see the folders that your contacts have shared with you */
 "incomingShares"="Partajări primite";
 /* Sentence shown under the used space percentage to complete the info with the user account maximum storage. "of {maximun storage}" */
@@ -980,13 +980,13 @@
 /*  */
 "chooseYourAccountType"="Alege tipul contului tău";
 /* Text shown under the button 'Skip' to explain that you can upgrade your account later in the section 'My Account'. */
-"youCanUpgradeLaterInMyAccount"="Poţi upgrada mai târziu din Contul meu";
+"youCanUpgradeLaterInMyAccount"="Poți upgrada mai târziu din Contul meu";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
-"cloudDriveIsAlmostFull"="[S]Unitatea cloud este aproape plină.[/S] [A]Upgradează acum[/A] la un cont PRO şi obţine [S]până la 4 TB (4096 GB)[/S] spaţiu de stocare în cloud.";
+"cloudDriveIsAlmostFull"="[S]Unitatea cloud este aproape plină.[/S] [A]Upgradează acum[/A] la un cont PRO și obține [S]până la 8 TB (8192 GB)[/S] spațiu de stocare în cloud.";
 /* A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text. */
-"cloudDriveIsFull"="[S]Contul tău este plin.[/S] [A]Upgradează acum[/A] la un cont PRO şi obţine [S]până la 4 TB (4096 GB)[/S] spaţiu de stocare în cloud.";
+"cloudDriveIsFull"="[S]Contul tău este plin.[/S] [A]Upgradează acum[/A] la un cont PRO și obține [S]până la 8 TB (8192 GB)[/S] spațiu de stocare în cloud.";
 /* Storage related with the MEGA PRO account level you can subscribe */
-"productSpace"="Spaţiu de stocare";
+"productSpace"="Spațiu de stocare";
 /* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
 "transferQuota"="Cotă de transfer";
 /* Label for any 'Limited' button, link, text, title, etc. - (String as short as possible). */
@@ -998,29 +998,29 @@
 /* Header that help you with the upgrading process explaining that you have to choose one of the plans below  to continue */
 "choosePlan"="Alege unul dintre planurile de mai jos:";
 /* Text that explains that you have to select the plan you want and/or need after creating an account */
-"selectOneAccountType"="Select one account type:";
+"selectOneAccountType"="Selectează un tip de cont:";
 /* Text shown in the purchase plan view to explain that annual subscription is 17% cheaper than 12 monthly payments */
-"twoMonthsFree"="An annual subscription is 17% cheaper than 12 monthly payments";
+"twoMonthsFree"="Un abonament anual este cu 17% mai ieftin decât 12 plăți lunare";
 /* Text shown on the upgrade account page above the current PRO plan subscription */
-"currentPlan"="Current Plan:";
+"currentPlan"="Plan actual:";
 /* Button on the Pro page to request a custom Pro plan because their storage usage is more than the regular plans. */
 "requestAPlan"="Solicită un plan";
 /* Asks the user to request a custom Pro plan from customer support because their storage usage is more than the regular plans. */
-"thereAreNoPlansSuitableForYourCurrentUsage"="Nu există planuri adecvate pentru utilizarea ta actuală. Te rugăm [A]să contactezi echipa de asistenţă[/A] pentru un plan personalizat.";
+"thereAreNoPlansSuitableForYourCurrentUsage"="Nu există planuri adecvate pentru utilizarea ta actuală. Te rugăm [A]să contactezi echipa de asistență[/A] pentru un plan personalizat.";
 /* Header shown to help on the purchasin process */
 "selectMembership"="Selectează contul de membru:";
 /* Footer shown to remenber that if you select a yearly plan yo will save up to 17% */
-"save17"="Economiseşte 17%";
+"save17"="Economisește 17%";
 /* Error message shown when the purchase has failed */
-"wrongPurchase"="ACHIZIŢIE GREŞITĂ %@ (%ld)";
+"wrongPurchase"="ACHIZIȚIE GREȘITĂ %@ (%ld)";
 /* Error message shown the In App Purchase is disabled in the device Settings */
-"appPurchaseDisabled"="Achiziţiile în aplicaţie sunt dezactivate, te rugăm să le activezi din setările iOS";
+"appPurchaseDisabled"="Achizițiile în aplicație sunt dezactivate, te rugăm să le activezi din setările iOS";
 /* Error message shown when the selected product doesn't exist */
-"productNotFound"="Produsul  %@ nu este găsit, te rugăm să contactezi ios@mega.nz";
+"productNotFound"="Produsul %@ nu a fost găsit, te rugăm să contactezi ios@mega.nz";
 /* Alert title to remenber the user that needs to enable purchases */
-"allowPurchase_title"="Permite achiziţiile";
+"allowPurchase_title"="Permite achizițiile";
 /* Alert message to remenber the user that needs to enable purchases before continue */
-"allowPurchase_message"="Trebuie să activezi achiziţiile în aplicaţie din setările iOS înainte de a restaura o achiziţie.";
+"allowPurchase_message"="Trebuie să activezi achizițiile în aplicație din setările iOS înainte de a restaura o achiziție.";
 /* Button title to restore failed purchases */
 "restore"="Restaurează";
 /* "Monthly" subscriptions */
@@ -1028,41 +1028,41 @@
 /* "Yearly" subscriptions */
 "yearly"="Anual";
 /* Alert title shown when a selected plan is not available at that moment on the App store */
-"productNotAvailable"="Acest element de achiziţie în aplicaţie nu este disponibil în App Store în acest moment. Te rugăm să reîncerci mai târziu.";
+"productNotAvailable"="Acest element de achiziție în aplicație nu este disponibil în App Store în acest moment. Te rugăm să reîncerci mai târziu.";
 /* Alert title shown when the user has purchase correctly some plan */
-"thankYou_title"="Îţi mulţumim";
+"thankYou_title"="Îți mulțumim";
 /* Alert message shown when a purchase was restored succesfully */
-"purchaseRestore_message"="Achiziţia ta a fost restaurată";
+"purchaseRestore_message"="Achiziția ta a fost restaurată";
 /* Alert title shown when a purchase has stopped because some error between the process */
-"failedPurchase_title"="Achiziţie oprită";
+"failedPurchase_title"="Achiziție oprită";
 /* Alert message shown when a purchase has stopped because some error between the process */
-"failedPurchase_message"="Fie ai anulat cererea, fie Apple a raportat o eroare de tranzacţie. Te rugăm să reîncerci mai târziu sau să contactezi ios@mega.nz.";
+"failedPurchase_message"="Fie ai anulat cererea, fie Apple a raportat o eroare de tranzacție. Te rugăm să reîncerci mai târziu sau să contactezi ios@mega.nz.";
 /* Alert title shown when a restore hasn't been completed correctly */
 "incompleteRestore_title"="Problemă de restaurare";
 /* Alert message shown when a restore hasn't been completed correctly */
-"incompleteRestore_message"="Achiziţionarea anterioră nu a putut fi găsită. Te rugăm să selectezi produsul achiziţionat anterior pentru restabilire. NU veţi fi taxat din nou.";
+"incompleteRestore_message"="Achiziționarea anterioră nu a putut fi găsită. Te rugăm să selectezi produsul achiziționat anterior pentru restabilire. NU veți fi taxat din nou.";
 /* Alert title shown when the restoring process has stopped for some reason */
 "failedRestore_title"="Restaurare oprită";
 /* Alert message shown when the restoring process has stopped for some reason */
-"failedRestore_message"="Fie cererea a fost anulată, fie achiziţionarea anterioară nu a putut fi restaurată. Te rugăm să reîncerci mai târziu sau să contactezi ios@mega.nz.";
+"failedRestore_message"="Fie cererea a fost anulată, fie achiziționarea anterioară nu a putut fi restaurată. Te rugăm să reîncerci mai târziu sau să contactezi ios@mega.nz.";
 /* Alert title shown when the DEBUG mode is enabled */
 "enableDebugMode_title"="Activează modul DEPANARE";
 /* Alert message shown when the DEBUG mode is enabled */
-"enableDebugMode_message"="Un log va fi creat în secţiunea Offline (MEGAiOS.log). Fişierele log pot conţine informaţii referitoare la contul tău.";
+"enableDebugMode_message"="Un log va fi creat în secțiunea Offline (MEGAiOS.log). Fișierele log pot conține informații referitoare la contul tău.";
 /* Alert title shown when the DEBUG mode is disabled */
 "disableDebugMode_title"="Dezactivează modul DEPANARE";
 /* Alert message shown when the DEBUG mode is disabled */
-"disableDebugMode_message"="Fişierul log (MEGAiOS.log) va fi şters din secţiunea Offline.";
+"disableDebugMode_message"="Fișierul log (MEGAiOS.log) va fi șters din secțiunea Offline.";
 /* Alert message shown when the user remove one item from the Offline section */
-"removeItemFromOffline"="Sigur vrei să ştergi acest element din Offline?";
+"removeItemFromOffline"="Sigur vrei să ștergi acest element din Offline?";
 /* Alert message shown when the user remove various items from the Offline section */
-"removeItemsFromOffline"="Sigur vrei să ştergi aceste elemente din Offline?";
+"removeItemsFromOffline"="Sigur vrei să ștergi aceste elemente din Offline?";
 /* Chat section header */
-"chat"="Chatuieşte";
+"chat"="Chatuiește";
 /* Empty Conversations section */
-"noConversations"="Nicio conversaţie";
+"noConversations"="Nicio conversație";
 /* Empty Conversations description */
-"noConversationsDescription"="Start chatting securely with your contacts using end-to-end encryption";
+"noConversationsDescription"="Începe să chatuiești în siguranță cu contactele tale folosind criptarea capăt-la-capăt";
 /* Title show when the chat is disabled */
 "chatIsDisabled"="Chatul este dezactivat";
 /* Text button shown when the chat is disabled and if tapped the chat will be enabled */
@@ -1070,11 +1070,11 @@
 /* Text button shown when an option is enabled, to allow to disable it. String as sort as possible. */
 "disable"="Dezactivează";
 /* Conversations section */
-"conversations"="Conversaţii";
+"conversations"="Conversații";
 /* A button on a dialog which invites a contact to join MEGA. */
 "invite"="Invită";
 /* A log message in a chat to indicate that the message has been deleted by the user. */
-"thisMessageHasBeenDeleted"="Acest mesaj a fost şters.";
+"thisMessageHasBeenDeleted"="Acest mesaj a fost șters.";
 /* The title for my message in a chat. The message was sent from yourself. */
 "me"="Eu";
 /* A log message in a chat conversation to tell the reader that a participant [A] was removed from the group chat by the moderator [B]. Please keep [A] and [B], they will be replaced by the participant and the moderator names at runtime. For example: Alice was removed from the group chat by Frank. */
@@ -1082,7 +1082,7 @@
 /* A log message in the chat conversation to tell the reader that a participant [A] left the group chat. For example: Alice left the group chat. */
 "leftTheGroupChat"="[A] a părăsit chatul de grup.";
 /* A log message in a chat conversation to tell the reader that a participant [A] was added to the chat by a moderator [B]. Please keep the [A] and [B] placeholders, they will be replaced by the participant and the moderator names at runtime. For example: Alice joined the group chat by invitation from Frank. */
-"joinedTheGroupChatByInvitationFrom"="[A] s-a alăturat chatului de grup prin invitaţie de la [B].";
+"joinedTheGroupChatByInvitationFrom"="[A] s-a alăturat chatului de grup prin invitație de la [B].";
 /* A log message in the chat conversation to tell the reader that a participant [A] cleared the history of the chat. For example, Alice cleared the chat history. */
 "clearedTheChatHistory"="[A] a golit istoricul chatului.";
 /* A log message in a chat to display that a participant's permission was changed and by whom. This message begins with the user's name who receive the permission change [A]. [B] will be replaced with the permission name (such as Moderator or Read-only) and [C] will be replaced with the person who did it. Please keep the [A], [B] and [C] placeholders, they will be replaced at runtime. For example: Alice Jones was changed to Moderator by John Smith. */
@@ -1092,17 +1092,17 @@
 /* Button label. Allows to add contacts in current chat conversation. */
 "addParticipant"="Adaugă participant...";
 /* Menu item to add participants to a chat */
-"addParticipants"="Adaugă participanţi";
+"addParticipants"="Adaugă participanți";
 /* Title that refers to the status of the chat (Either Online or Offline) */
 "status"="Stare";
 /* Title used in settings that enables the generation of link previews in the chat */
-"richUrlPreviews"="Previzualizări îmbogăţite ale URL-urilor";
+"richUrlPreviews"="Previzualizări îmbogățite ale URL-urilor";
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
-"richPreviewsFooter"="Enhance the MEGAchat experience. URL content will be retrieved without end-to-end encryption.";
+"richPreviewsFooter"="Îmbunătățește experiența MEGAchat. Conținutul URL-urilor va fi preluat fără criptare capăt-la-capăt.";
 /* Section title of a button where you can enable mobile data for voice and video calls. */
-"voiceAndVideoCalls"="Apeluri voce şi video";
+"voiceAndVideoCalls"="Apeluri voce și video";
 /* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature. */
-"useMobileData"="Foloseşte datele mobile";
+"useMobileData"="Folosește datele mobile";
 /* A header in the Chat settings. This changes the user's status to Away after some time of inactivity. */
 "autoAway"="Plecat automat";
 /* */
@@ -1110,13 +1110,13 @@
 /* */
 "1Minute"="1 minut";
 /* Footer text to explain the meaning of the functionaly 'Auto-away' of your chat status. */
-"showMeAwayAfterXMinutesOfInactivity"="Afişează-mă plecat după [X] minute de inactivitate";
+"showMeAwayAfterXMinutesOfInactivity"="Afișează-mă plecat după [X] minute de inactivitate";
 /* Footer text to explain the meaning of the functionaly 'Auto-away' of your chat status. */
-"showMeAwayAfter1MinuteOfInactivity"="Afişează-mă plecat după 1 minute de inactivitate";
+"showMeAwayAfter1MinuteOfInactivity"="Afișează-mă plecat după 1 minute de inactivitate";
 /* Label title to enable/disable the feature of the chat status that mantains your chosen status even if you don't have connected devices */
-"statusPersistence"="Persistenţa statusului";
+"statusPersistence"="Persistența statusului";
 /* Footer text to explain the meaning of the functionaly 'Status Persistence' of your chat status. */
-"maintainMyChosenStatusAppearance"="Menţine înfăţişarea statusului meu ales chiar dacă nu am dispozitive conectate.";
+"maintainMyChosenStatusAppearance"="Menține înfățișarea statusului meu ales chiar dacă nu am dispozitive conectate.";
 /* A log message in a chat to indicate that the message has been edited by the user. */
 "edited"="(editat)";
 /*  */
@@ -1126,17 +1126,17 @@
 /*  */
 "busy"="Ocupat";
 /* title of the contact properties screen */
-"contactInfo"="Informaţii de contact";
+"contactInfo"="Informații de contact";
 /*  */
 "notifications"="Notificări";
 /* Title to perform the action of sending a message to a contact. */
 "sendMessage"="Trimite mesaj";
 /* Title for a section on the fingerprint warning dialog. Below it is a button which will allow the user to verify their contact's fingerprint credentials. */
-"verifyCredentials"="Verifică credenţialele";
+"verifyCredentials"="Verifică credențialele";
 /* A button title to delete the history of a chat. */
-"clearChatHistory"="Goleşte istoricul chatului";
+"clearChatHistory"="Golește istoricul chatului";
 /* A confirmation message for a user to confirm that they want to clear the history of a chat. */
-"clearTheFullMessageHistory"="Sigur vrei să goleşti istoricul complet al mesajelor din această conversaţie?";
+"clearTheFullMessageHistory"="Sigur vrei să golești istoricul complet al mesajelor din această conversație?";
 /* 'Next' button in a dialog */
 "continue"="Continuă";
 /* Button title that allows the user to close a chat. */
@@ -1144,47 +1144,47 @@
 /* Title of the incoming shared folders of a user. */
 "sharedFolders"="Foldere partajate";
 /* Label title above the fingerprint credentials of a user's contact. A credential in this case is a stored piece of information representing the identity of the contact */
-"contactCredentials"="Credenţialele contactului";
+"contactCredentials"="Credențialele contactului";
 /* "Verify user" dialog description */
-"thisIsBestDoneInRealLife"="Acest lucru este realizat cel mai bine întâlnindu-vă faţă în faţă. Dacă ai un alt canal verificat deja precum OTR sau PGP verificat, l-ai putea folosi şi pe acela.";
+"thisIsBestDoneInRealLife"="Acest lucru este realizat cel mai bine întâlnindu-vă față în față. Dacă ai un alt canal verificat deja precum OTR sau PGP verificat, l-ai putea folosi și pe acela.";
 /* Label title above your fingerprint credentials.  A credential in this case is a stored piece of information representing your identity */
-"yourCredentials"="Credenţialele tale";
+"yourCredentials"="Credențialele tale";
 /* Button to reset the password */
 "reset"="Resetează";
 /* Button title */
 "approve"="Aprobă";
 /* start a chat/conversation */
-"startConversation"="Începe o conversaţie";
+"startConversation"="Începe o conversație";
 /* Title of a menu button which allows users to start a conversation creating a 'Group' chat. */
 "group"="Grup";
 /* Title of section where you can see the chat group information and the options that you can do with it. Like 'Notifications' or 'Leave Group' and also the participants of the group */
-"groupInfo"="Informaţii privind grupul";
+"groupInfo"="Informații privind grupul";
 /* Label title for a group chat */
 "groupChat"="Chat de grup";
 /* The title of a menu button which allows users to rename a group chat. */
-"renameGroup"="Redenumeşte grupul";
+"renameGroup"="Redenumește grupul";
 /* Title of the action that allows you to change the avatar of a group chat. */
 "changeGroupAvatar"="Schimbă avatarul grupului";
 /* Text used as hint to give the user information to write a name for the group chat. */
 "enterGroupName"="Introdu numele grupului";
 /* A button label. The button allows the user to leave the group conversation. */
-"leave"="Părăseşte";
+"leave"="Părăsește";
 /* Top menu option which opens more menu options in a context menu. */
 "more"="Mai multe";
 /* A button label. The button allows the user to mute a conversation. */
 "mute"="Pune pe mut";
 /* A button label. The button allows the user to get more info of the current context. */
-"info"="Informaţii";
+"info"="Informații";
 /* A button label. The button allows the user to close the conversation. */
 "close"="Închide";
 /* Alert text that explains what means confirming the action 'Leave' */
-"youWillNoLongerHaveAccessToThisConversation"="Nu vei mai avea acces la această conversaţie";
+"youWillNoLongerHaveAccessToThisConversation"="Nu vei mai avea acces la această conversație";
 /* A button label. The button allows the user to leave the conversation. */
-"leaveChat"="Părăseşte chatul";
+"leaveChat"="Părăsește chatul";
 /* Button title that allows the user to leave a group chat. */
-"leaveGroup"="Părăseşte grupul";
+"leaveGroup"="Părăsește grupul";
 /* Label to describe the section where you can see the participants of a group chat */
-"participants"="Participanţi";
+"participants"="Participanți";
 /* The Moderator permission level in chat. With moderator permissions a participant can manage the chat. */
 "moderator"="Moderator";
 /* The Standard permission level in chat. With the standard permissions a participant can read and type messages in a chat. */
@@ -1192,15 +1192,15 @@
 /* A button title which removes a participant from a chat. */
 "removeParticipant"="Elimină participantul";
 /* Chat conversation header with user %@. Please leave %@ as it is. */
-"conversationWith"="Conversaţie cu %@";
+"conversationWith"="Conversație cu %@";
 /* Title show above the name of the persons with whom you're chatting */
-"chattingWith"="Chatting with";
+"chattingWith"="Chat împreună cu";
 /* Full text: MEGA protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: Confidentiality - Only the author and intended recipients are able to decipher and read the content. Authenticity - There is an assurance that the message received was authored by the stated sender, and its content has not been tampered with during transport or on the server. */
-"chatIntroductionMessage"="MEGA îţi protejează conversaţiile cu criptare (controlată de utilizator) capăt-la-capăt oferind asigurări de siguranţă:";
+"chatIntroductionMessage"="MEGA îți protejează conversațiile cu criptare (controlată de utilizator) capăt-la-capăt oferind asigurări de siguranță:";
 /* Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit. */
-"confidentialityExplanation"="[S]Confidenţialitate.[/S] Doar autorul şi destinatarii vizaţi sunt capabili să descifreze şi să citească conţinutul.";
+"confidentialityExplanation"="[S]Confidențialitate.[/S] Doar autorul și destinatarii vizați sunt capabili să descifreze și să citească conținutul.";
 /* Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit. */
-"authenticityExplanation"="[S]Autenticitate.[/S] Sistemul se asigură că datele primite sunt de la expeditor afişate, iar conţinutul său nu a fost manipulat în timpul tranzitului.";
+"authenticityExplanation"="[S]Autenticitate.[/S] Sistemul se asigură că datele primite sunt de la expeditor afișate, iar conținutul său nu a fost manipulat în timpul tranzitului.";
 /* Alert message shown when a chat does not exist */
 "chatNotFound"="Chat negăsit";
 /* A typing indicator in the chat. Please leave the %@ which will be automatically replaced with the user's name at runtime. */
@@ -1208,15 +1208,15 @@
 /* Plural, a hint that appears when two users are typing in a group chat at the same time. The parameter will be the concatenation of both user names. The tags and placeholders shouldn't be translated or modified. */
 "twoUsersAreTyping"="%1$s [A]tastează...[/A]";
 /* text that appear when there are more than 2 people writing at that time in a chat. For example User1, user2 and more are typing... The parameter will be the concatenation of the first two user names. The tags and placeholders shouldn't be translated or modified. */
-"moreThanTwoUsersAreTyping"="%1$s [A]şi mai mulţi tastează...[/A]";
+"moreThanTwoUsersAreTyping"="%1$s [A]și mai mulți tastează...[/A]";
 /* This is shown in the typing area in chat, as a placeholder before the user starts typing anything in the field. The format is: Write a message to Contact Name... Write a message to "Chat room topic"... Write a message to Contact Name1, Contact Name2, Contact Name3 */
 "writeAMessage"="Scrie un mesaj către %s…";
 /* Information if there are no history messages in current chat conversation */
-"noConversationHistory"="Niciun istoric al conversaţiilor";
+"noConversationHistory"="Niciun istoric al conversațiilor";
 /* Button which allows to retry send message in chat conversation. */
 "retry"="Reîncearcă";
 /* Button which allows to delete message in chat conversation. */
-"deleteMessage"="Şterge mesajul";
+"deleteMessage"="Șterge mesajul";
 /*  */
 "fromCloudDrive"="Din unitatea cloud";
 /*  */
@@ -1228,27 +1228,27 @@
 /* */
 "done"="Gata";
 /* Button label for sending file attachments through the chat to another user. */
-"sendFiles"="Trimite fişiere";
+"sendFiles"="Trimite fișiere";
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
-"enableRichUrlPreviews"="Activează previzualizările îmbogăţite ale URL-urilor";
+"enableRichUrlPreviews"="Activează previzualizările îmbogățite ale URL-urilor";
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
-"alwaysAllow"="Always Allow";
+"alwaysAllow"="Permite întotdeauna";
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
-"notNow"="Not Now";
+"notNow"="Nu acum";
 /* */
 "never"="Niciodată";
 /* After several times (right now set to 3) that the user may had decided to click \"Not now\" (for when being asked if he/she wants a URL preview to be generated for a link, posted in a chat room), we change the \"Not now\" button to \"Never\". If the user clicks it, we ask for one final time - to ensure he wants to not be asked for this anymore and tell him that he can do that in Settings. */
-"richPreviewsConfirmation"="Dezactivezi definitiv previzualizările îmbogăţite ale URL-urilor. Poţi reactiva previzualizările îmbogăţite ale URL-urilor din setări. Doreşti să continui?";
+"richPreviewsConfirmation"="Dezactivezi definitiv previzualizările îmbogățite ale URL-urilor. Poți reactiva previzualizările îmbogățite ale URL-urilor din setări. Dorești să continui?";
 /* Once a preview is generated for a message which contains URLs, the user can remove it. Same button is also shown during loading of the preview - and would cancel the loading (text of the button is the same in both cases). */
-"removePreview"="Remove preview";
+"removePreview"="Elimină previzualizarea";
 /* */
 "warning"="Avertisment";
 /* Alert message shown when the user perform logout and has files in the Offline directory */
-"allFilesSavedForOfflineWillBeDeletedFromYourDevice"="Toate fişierele salvate pentru offline vor fi şterse de pe dispozitiv. Continui spre deconectare?";
+"allFilesSavedForOfflineWillBeDeletedFromYourDevice"="Toate fișierele salvate pentru offline vor fi șterse de pe dispozitiv. Continui spre deconectare?";
 /* Title shown when you almost had used your available transfer quota. */
 "depletedTransferQuota_title"="Cotă de transfer epuizată";
 /* Description shown when you almost had used your available transfer quota. */
-"depletedTransferQuota_message"="Descărcarea în coadă depăşeşte cota de transfer actuală disponibilă pentru contul tău şi, prin urmare, poate fi întreruptă.";
+"depletedTransferQuota_message"="Descărcarea în coadă depășește cota de transfer actuală disponibilă pentru contul tău și, prin urmare, poate fi întreruptă.";
 /* Button title to see the available pro plans in MEGA */
 "seePlans"="Vezi planurile";
 /* Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible). */
@@ -1262,7 +1262,7 @@
 /* Asking whether the user really wants to abort/stop the registration process or continue on. */
 "areYouSureYouWantToAbortTheRegistration"="Sigur vrei să abandonezi înregistrarea?";
 /* A hint shown at the bottom of the Send Signup Link dialog to tell users they can edit the provided email. */
-"misspelledEmailAddress"="Dacă ţi-ai scris greşit adresa de e-mail, corecteaz-o şi dă clic pe 'Retrimite'.";
+"misspelledEmailAddress"="Dacă ți-ai scris greșit adresa de e-mail, corecteaz-o și dă clic pe 'Retrimite'.";
 /* A button to resend the email confirmation. */
 "resend"="Retrimite";
 /* Error message displayed when trying to invite a contact who is already added. */
@@ -1272,11 +1272,11 @@
 /* A summary message when a user sent the information of %s number of contacts at once. Please keep %s as it will be replaced at runtime with the number of contacts sent. */
 "sentXContacts"="%s contacte trimise.";
 /* A message appearing in the chat summary window when the most recent action performed by a user was attaching a file. Please keep %s as it will be replaced at runtime with the name of the attached file. */
-"attachedFile"="Ataşat: %s";
+"attachedFile"="Atașat: %s";
 /* A summary message when a user has attached many files at once into the chat. Please keep %s as it will be replaced at runtime with the number of files. */
-"attachedXFiles"="%s fişiere ataşate.";
+"attachedXFiles"="%s fișiere atașate.";
 /* Label in a button that allows to jump to the latest item */
-"jumpToLatest"="Sari la ultimul obiect";
+"jumpToLatest"="Sari la ultimul element";
 /* Label in a button that allows to jump to the latest message */
 "newMessages"="Mesaje noi";
 /* Label in chat rooms that indicates how many messages are unread. Singular and as short as possible. */
@@ -1284,9 +1284,9 @@
 /* Label in chat rooms that indicates how many messages are unread. Plural and as short as possible. */
 "unreadMessages"="%lu mesaje necitite";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
-"autorenewableDescription"="Abonamentele sunt reînnoite automat pentru perioade de abonare succesive de aceeaşi durată şi la acelaşi preţ ca şi perioada iniţială aleasă. Poţi dezactiva reînnoirea automată a abonamentului tău MEGA PRO nu mai târziu de 24 de ore înainte ca următoarea ta plată pentru abonament să se realizeze prin pagina de setări a contului iTunes. Pentru a gestiona abonamentele, clic pe pictograma App Store de pe telefon, autentifică-te cu ID-ul Apple în partea de jos a paginii (dacă nu ai făcut deja acest lucru), iar apoi clic pe Afişaţi ID. Vei ajunge la pagina contului tău unde poţi să derulezi în jos pentru a gestiona abonamentele aplicaţiilor. De acolo poţi selecta abonamentul MEGA PRO şi să vezi data de reînnoire programată, alege un pachet de abonament diferit sau setează comutatorul on-off la off pentru a dezactiva reînnoirea automată a abonamentului.";
+"autorenewableDescription"="Abonamentele sunt reînnoite automat pentru perioade de abonare succesive de aceeași durată și la același preț ca și perioada inițială aleasă. Poți dezactiva reînnoirea automată a abonamentului tău MEGA PRO nu mai târziu de 24 de ore înainte ca următoarea ta plată pentru abonament să se realizeze prin pagina de setări a contului iTunes. Pentru a gestiona abonamentele, clic pe pictograma App Store de pe telefon, autentifică-te cu ID-ul Apple în partea de jos a paginii (dacă nu ai făcut deja acest lucru), iar apoi clic pe Afișați ID. Vei ajunge la pagina contului tău unde poți să derulezi în jos pentru a gestiona abonamentele aplicațiilor. De acolo poți selecta abonamentul MEGA PRO și să vezi data de reînnoire programată, alege un pachet de abonament diferit sau setează comutatorul on-off la off pentru a dezactiva reînnoirea automată a abonamentului.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
-"openMEGAAndSignInToContinue"="Deschide MEGA şi autentifică-te pentru a continua";
+"openMEGAAndSignInToContinue"="Deschide MEGA și autentifică-te pentru a continua";
 /* Label in login screen to inform about the chat initialization proccess */
 "connecting"="Se conectează…";
 /* Inform user that there were unsupported assets in the share extension */
@@ -1294,7 +1294,7 @@
 /* Message shown to the user when the share extension is about to be killed by iOS due to a memory issue */
 "Limited system resources are available when sharing items. Try uploading these files from within the MEGA app."="Limited system resources are available when sharing items. Try uploading these files from within the MEGA app.";
 /* Notification message shown when a transfer failed. Keep colon. */
-"Transfer failed:"="Transfer eşuat:";
+"Transfer failed:"="Transfer eșuat:";
 /* MEGAError */
 /* Label to show that an SDK operation has been complete successfully. */
 "No error"="Nicio eroare";
@@ -1303,11 +1303,11 @@
 /* Label to show that an error of Invalid argument occurs during a SDK operation. */
 "Invalid argument"="Argument nevalid";
 /* Label to show that a request error occurs during a SDK operation. */
-"Request failed, retrying"="Cerere eşuată, se reîncearcă";
+"Request failed, retrying"="Cerere eșuată, se reîncearcă";
 /* Label to show that the rate limit has been reached during a SDK operation. */
-"Rate limit exceeded"="Limita de rată depăşită";
+"Rate limit exceeded"="Limita de rată depășită";
 /* Label to show that a SDK operation has failed permanently. */
-"Failed permanently"="Eşec definitiv";
+"Failed permanently"="Eșec definitiv";
 /* Label to show that an error for multiple concurrent connections or transfers occurs during a SDK operation. */
 "Too many concurrent connections or transfers"="Prea multe conexiuni sau transferuri simultane";
 /* Label to show that an error of Out of range occurs during a SDK operation. */
@@ -1327,11 +1327,11 @@
 /* Label to show that an error related with the decryption process of a node occurs during a SDK operation. */
 "Invalid key/Decryption error"="Cheie nevalidă/eroare de decriptare";
 /* Label to show that an error related with a bad session ID occurs during a SDK operation. */
-"Bad session ID"="ID-ul sesiunii greşit";
+"Bad session ID"="ID-ul sesiunii greșit";
 /* Label to show that an error related with a blocked account occurs during a SDK operation. */
 "Blocked"="Blocat";
 /* Label to show that an error related with an over quota occurs during a SDK operation. */
-"Over quota"="Cotă depăşită";
+"Over quota"="Cotă depășită";
 /* Label to show that an error related with a temporary problem occurs during a SDK operation. */
 "Temporarily not available"="Temporar indisponibil";
 /* Label to show that an error related with too many connections occurs during a SDK operation. */
@@ -1341,83 +1341,83 @@
 /* Label to show that an error related with an read error occurs during a SDK operation. */
 "Read error"="Eroare la citire";
 /* Label to show that an error related with an invalid or missing application key occurs during a SDK operation. */
-"Invalid application key"="Cheia aplicaţiei nevalidă";
+"Invalid application key"="Cheia aplicației nevalidă";
 /* Label to show that an error related with an unknown error occurs during a SDK operation. */
 "Unknown error"="Eroare necunoscută";
 /* Text shown in an alert when the user is about to change the language of the app */
-"languageRestartAlert"="Va trebui să reporneşti MEGA după schimbarea limbii";
+"languageRestartAlert"="Va trebui să repornești MEGA după schimbarea limbii";
 /* Text shown in a notification to make it easy for the user to restart the app after the language is changed */
 "languageRestartNotification"="Limbă schimbată. Atinge pentru repornire.";
 /* The following strings are only for the App Store description, they're not used on the app (The only exception is the one with 'autorenewableDescription' key) On the 'generalDescriptionParagraph6' we must delete 'Desktop - https://mega.nz/' because the app can be rejected because of that. */
 /* Paragraph 1 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
-"generalDescriptionParagraph1"="MEGA oferă stocare în cloud criptată, controlată de utilizatori prin intermediul browserelor web standard, împreună cu aplicaţii dedicate pentru dispozitivele mobile. Spre deosebire de ceilalţi furnizori de stocare în cloud, datele tale sunt criptate şi decriptate doar de către dispozitivele client ale tale şi niciodată de către noi.";
+"generalDescriptionParagraph1"="MEGA oferă stocare în cloud criptată, controlată de utilizatori prin intermediul browserelor web standard, împreună cu aplicații dedicate pentru dispozitivele mobile. Spre deosebire de ceilalți furnizori de stocare în cloud, datele tale sunt criptate și decriptate doar de către dispozitivele client ale tale și niciodată de către noi.";
 /* Paragraph 2 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
-"generalDescriptionParagraph2"="Încarcă fişierele de pe smartphone sau tabletă, apoi caută, stochează, descarcă, transmite, vezi, partajează, redenumeşte sau şterge fişierele oricând, de pe orice dispozitiv, oriunde. Partajează folderele cu contactele tale şi vezi modificările acestora în timp real.";
+"generalDescriptionParagraph2"="Încarcă fișierele de pe smartphone sau tabletă, apoi caută, stochează, descarcă, transmite, vezi, partajează, redenumește sau șterge fișierele oricând, de pe orice dispozitiv, oriunde. Partajează folderele cu contactele tale și vezi modificările acestora în timp real.";
 /* Paragraph 3 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
-"generalDescriptionParagraph3"="Procesul de criptare înseamnă că nu putem să îţi accesăm sau să îţi resetăm parola astfel încât TREBUIE să o reţii (excepţie făcând cazul în care ai cheia de recuperare păstrată ca backup) sau vei pierde accesul la fişierele tale stocate.";
+"generalDescriptionParagraph3"="Procesul de criptare înseamnă că nu putem să îți accesăm sau să îți resetăm parola astfel încât TREBUIE să o reții (excepție făcând cazul în care ai cheia de recuperare păstrată ca backup) sau vei pierde accesul la fișierele tale stocate.";
 /* Paragraph between 3rd and 4th of the general description of MEGA shown on the iOS App Store, part of Android string 17769 */
 "generalDescriptionVideoChat"="End-to-end user-encrypted MEGA video chat allows for total privacy, and has been available through the browser since 2016. It has been extended to our mobile app, with chat history accessible across multiple devices. Users can also easily add files to a chat from their MEGA Cloud Drive.";
 /* Paragraph 4 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
-"generalDescriptionParagraph4"="MEGA oferă un spaţiu de stocare generos de 50 GB gratuit pentru toţi utilizatorii înregistraţi cu realizările bonus şi oferă planuri plătite cu limite mult mai mari:";
+"generalDescriptionParagraph4"="MEGA oferă un spațiu de stocare generos de 50 GB gratuit pentru toți utilizatorii înregistrați cu realizările bonus și oferă planuri plătite cu limite mult mai mari:";
 /* Paragraph 5 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
-"generalDescriptionParagraph5"="Abonamentul PRO LITE: 4,99€ (4,99$ SUA) pe lună sau 49,99€ (49,99$ SUA) pe an îţi oferă 200 GB spaţiu de stocare şi 1 TB cotă de transfer pe lună.\nAbonamentul PRO I: 9,99€ (9,99$ SUA) pe lună sau 99,99€ (99,99$ SUA) pe an îţi oferă 1 TB spaţiu de stocare şi 2 TB cotă de transfer pe lună.\nAbonamentul PRO II: 19,99€ (19,99$ SUA) pe lună sau 199,99€ (199,99$ SUA) pe an îţi oferă 4 TB spaţiu de stocare şi 8 TB cotă de transfer pe lună.\nAbonamentul PRO III: 29,99€ (29,99$ SUA) pe lună sau 299,99€ (299,99$ SUA) pe an îţi oferă 8 TB spaţiu de stocare şi 16 TB cotă de transfer pe lună.";
+"generalDescriptionParagraph5"="Abonamentul PRO LITE: 4,99€ (4,99$ SUA) pe lună sau 49,99€ (49,99$ SUA) pe an îți oferă 200 GB spațiu de stocare și 1 TB cotă de transfer pe lună.\nAbonamentul PRO I: 9,99€ (9,99$ SUA) pe lună sau 99,99€ (99,99$ SUA) pe an îți oferă 1 TB spațiu de stocare și 2 TB cotă de transfer pe lună.\nAbonamentul PRO II: 19,99€ (19,99$ SUA) pe lună sau 199,99€ (199,99$ SUA) pe an îți oferă 4 TB spațiu de stocare și 8 TB cotă de transfer pe lună.\nAbonamentul PRO III: 29,99€ (29,99$ SUA) pe lună sau 299,99€ (299,99$ SUA) pe an îți oferă 8 TB spațiu de stocare și 16 TB cotă de transfer pe lună.";
 /* Between paragraph 5 and 6 we have to put the string with the 'autorenewableDescription' key */
 /* Paragraph 6 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
-"generalDescriptionParagraph6"="Pentru mai multe informaţii, te rugăm să verifici site-ul nostru web: https://mega.nz/\nTermenii de utilizare a serviciului: https://mega.nz/terms\nPolitica de confidenţialitate: https://mega.nz/privacy";
+"generalDescriptionParagraph6"="Pentru mai multe informații, te rugăm să verifici site-ul nostru web: https://mega.nz/\nTermenii de utilizare a serviciului: https://mega.nz/terms\nPolitica de confidențialitate: https://mega.nz/privacy";
 /* Label shown when you call someone (outgoing call), before the call starts. */
 "calling..."="Se apelează...";
 /* notification subtitle of incoming calls */
-"Incoming call"="Incoming call";
+"Incoming call"="Apel primit";
 /* Notification text body shown when you have missed one audio call */
-"missedAudioCall"="Missed audio call";
+"missedAudioCall"="Apel audio ratat";
 /* Notification text body shown when you have missed several audio calls. [A] = {number of missed audio calls} */
-"missedAudioCalls"="[A] missed audio calls";
+"missedAudioCalls"="[A] apeluri audio ratate";
 /* Notification text body shown when you have missed one video call */
-"missedVideoCall"="Missed video call";
+"missedVideoCall"="Apel video ratat";
 /* Notification text body shown when you have missed several video calls. [A] = {number of missed video calls} */
-"missedVideoCalls"="[A] missed video calls";
+"missedVideoCalls"="[A] apeluri video ratate";
 /* Notification text body shown when you have missed one audio call and one video call */
-"missedAudioCallAndMissedVideoCall"="Missed audio call and missed video call";
+"missedAudioCallAndMissedVideoCall"="1 apel audio ratat și 1 apel video ratat";
 /* Notification text body shown when you have missed one audio call and several video calls. [A] = {number of missed video calls} */
-"missedAudioCallAndMissedVideoCalls"="Missed audio call and [A] missed video calls";
+"missedAudioCallAndMissedVideoCalls"="1 apel audio ratat și [A] apeluri video ratate";
 /* Notification text body shown when you have missed several audio calls and one video call. [A] = {number of missed audio calls} */
-"missedAudioCallsAndMissedVideoCall"="[A] missed audio calls and missed video call";
+"missedAudioCallsAndMissedVideoCall"="[A] apeluri audio ratate și 1 apel video ratat";
 /* Notification text body shown when you have missed several audio calls and video calls. [A] = {number of missed audio calls}. [B] = {number of missed video calls} */
-"missedAudioCallsAndMissedVideoCalls"="[A] missed audio calls  and [B] missed video calls";
+"missedAudioCallsAndMissedVideoCalls"="[A] apeluri audio ratate și [B] apeluri video ratate";
 /* Button title to see the available bonus */
-"getBonus"="Get Bonus";
+"getBonus"="Obține bonusul";
 /* Text shown under the title 'Video quality' that explains what it means */
-"qualityOfVideosUploadedToAChat"="Quality of videos uploaded to a chat";
+"qualityOfVideosUploadedToAChat"="Calitatea videoclipurilor încărcate într-un chat";
 /* Label used near to the option selected to encode the videos uploaded to a chat (Low, Medium, Original) */
 "videoQuality"="Calitate video";
 /* Property associated with something smaller than the usual or average size, number, value, or amount. For example: option to encode a video with low quality. */
-"low"="Low";
+"low"="Scăzut(ă)";
 /* Option to upload videos with the same resolution and same framerate than the original one, but converting them to MP4. */
-"high"="High";
+"high"="Ridicat(ă)";
 /* Property associated with the first one made and not a copy. For example: Get the original video, without encoding.  */
 "original"="Original";
 /* Label for the status of a transfer when is being preparing - (String as short as possible). */
-"preparing..."="Se pregăteşte...";
+"preparing..."="Se pregătește...";
 /* QR Code label, used in Settings as title. String as short as possible */
-"qrCode"="QR Code";
+"qrCode"="Cod QR";
 /* Label for the setting that allow users to automatically add contacts when they scan his/her QR code. String as short as possible. */
-"autoAccept"="Auto-Accept";
+"autoAccept"="Acceptă automat";
 /* Footer that explains the way Auto-Accept works for QR codes */
-"autoAcceptFooter"="Contacts that scan your QR Code will be automatically added to your contact list.";
+"autoAcceptFooter"="Contactele care îți scanează codul QR vor fi adăugați automat în lista de contacte.";
 /* Action to reset the current valid QR code of the user */
 "resetQrCode"="Resetează codul QR";
 /* Footer that explains what would happen if the user resets his/her QR code */
 "resetQrCodeFooter"="Codurile QR anterioare nu vor mai fi valide.";
 /* Title for view that displays the QR code of the user. String as short as possible. */
-"myCode"="My Code";
+"myCode"="Codul meu";
 /* Segmented control title for view that allows the user to scan QR codes. String as short as possible. */
-"scanCode"="Scan Code";
+"scanCode"="Scanează codul";
 /* Label that encourage the user to line the QR to scan with the camera */
-"lineCodeWithCamera"="Line up the QR code to scan it with your device’s camera";
+"lineCodeWithCamera"="Aliniază codul QR pentru a-l scana cu camera dispozitivului";
 /* Error text shown when the user scans a QR that is not valid. String as short as possible. */
-"invalidCode"="Invalid code";
+"invalidCode"="Cod nevalid";
 /* Success text shown in a label when the user scans a valid QR. String as short as possible. */
-"codeScanned"="Code scanned";
+"codeScanned"="Cod scanat";
 /* title of the screen that shows the users with whom the user has shared a folder */
 "sharedWidth"="Partajat cu:";
 /*   */
@@ -1427,7 +1427,7 @@
 /* Title of section to display number of all historical versions of files. */
 "versions"="Versiuni";
 /* Title label of a node property. */
-"location"="Locaţie";
+"location"="Locație";
 /* label for the total file size of multiple files and/or folders (no need to put the colon punctuation in the translation)*/
 "totalSize"="Mărime totală";
 /* Refers to the type of a file or folder. */
@@ -1437,7 +1437,7 @@
 /* The label of the folder creation time. For example: "Created: 2013-02-02" (no need to put the colon punctuation in the translation) */
 "created"="Creat";
 /* Label for what a selection contains. For example: "Contains: 3 folders & 13 files". (no need to put the colon punctuation in the translation) */
-"contains"="Conţine";
+"contains"="Conține";
 /* A label for any 'Modified' text or title. For example to show the modification date of a file/folder. */
 "modified"="Modificat";
 /* used for example when a folder is shared with 2 or more users */
@@ -1447,21 +1447,21 @@
 /* Message to display the number of historical versions of files. Please keep [X] as it will be replaced at the runtime. */
 "xVersions"="[X] versiuni";
 /* Label of the option menu. When clicking this button, the app shows the info of the file */
-"fileInfo"="Informaţii despre fişier";
+"fileInfo"="Informații despre fișier";
 /* Label of the option menu. When clicking this button, the app shows the info of the folder */
-"folderInfo"="Informaţii despre folder";
+"folderInfo"="Informații despre folder";
 /* Question to ensure user wants to delete file version. */
-"deleteVersion"="Vrei să ştergi această versiune?";
+"deleteVersion"="Vrei să ștergi această versiune?";
 /* Message to notify user the file version will be permanently removed */
 "permanentlyRemoved"="Va fi eliminată definitiv";
 /*  */
-"delete"="Şterge";
+"delete"="Șterge";
 /* A button label which reverts a certain version of a file to be the current version of the selected file. */
 "revert"="Revenire la versiunea anterioară";
 /*  */
 "download"="Descarcă";
 /* Singular of file. 1 file */
-"file"="fişier";
+"file"="fișier";
 /* Title of section to display information of the current version of a file. */
 "currentVersion"="Versiunea actuală";
 /* A button label which opens a dialog to display the full version history of the selected file. */
@@ -1469,19 +1469,19 @@
 /* Title of section to display information of all current versions of files. */
 "currentVersions"="Versiunile actuale";
 /* Used as a title in the "Password reminder" dialog, that pop ups to ensure that the user had exported his recovery key OR still remembers his password. */
-"remindPasswordTitle"="Îţi mai aduci aminte parola?";
+"remindPasswordTitle"="Îți mai aduci aminte parola?";
 /* Text that describes why the user should test his/her password */
-"remindPasswordText"="Due to MEGA’s encryption technology you are unable to reset your password without data loss. Please make sure you remember your password.";
+"remindPasswordText"="Datorită tehnologiei de criptare MEGA, nu poți să îți resetezi parola fără pierderea datelor. Te rugăm să te asiguri că ții minte parola.";
 /* Text that describes why the user should test his/her password before logging out */
-"remindPasswordLogoutText"="Before logging out we recommend you export your Recovery Key to a safe place. Note that you’re not able to reset your password if you forget it.";
+"remindPasswordLogoutText"="Înainte de a te deconecta, îți recomandăm să exporți cheia de recuperare într-un loc sigur. Reține că nu poți să resetezi parola dacă o uiți.";
 /* Text next to a toggle that if enabled won't appear again */
-"dontShowAgain"="Nu-mi afişa din nou";
+"dontShowAgain"="Nu-mi afișa din nou";
 /* Label for test password button and titles */
-"testPassword"="Test Password";
+"testPassword"="Testează parola";
 /* Label for recovery key button */
-"backupRecoveryKey"="Cheia de recuperare pentru backup";
+"backupRecoveryKey"="Fă backup cheii recup";
 /* Used as a message in the 'Password reminder' dialog as a tip on why confirming the password and/or exporting the recovery key is important and vital for the user to not lose any data. */
-"testPasswordText"="Te rugăm să îţi testezi parola mai jos pentru a te asigura că ţi-o aduci aminte. Dacă îţi pierzi parola, vei pierde accesul la datele tale MEGA. [A]Află mai multe[/A]";
+"testPasswordText"="Te rugăm să îți testezi parola mai jos pentru a te asigura că ți-o aduci aminte. Dacă îți pierzi parola, vei pierde accesul la datele tale MEGA. [A]Află mai multe[/A]";
 /* Title text for the account confirmation. */
 "confirm"="Confirmă";
 /* Used as a message in the "Password reminder" dialog that is shown when the user enters his password, clicks confirm and his password is correct. */
@@ -1489,9 +1489,9 @@
 /* A dialog title to export the Recovery Key for the current user. */
 "exportRecoveryKey"="Exportă cheia de recuperare";
 /* Title to confirm that you want to logout */
-"proceedToLogout"="Proceed to logout";
+"proceedToLogout"="Continuă pentru a te deconecta";
 /* Used as a message in the "Password reminder" dialog as a tip on why confirming the password and/or exporting the recovery key is important and vital for the user to not lose any data.  */
-"testPasswordLogoutText"="You are about to logout, please test your password to ensure you remember it. If you lose your password, you will lose access to your MEGA data.";
+"testPasswordLogoutText"="Ești pe cale să te deconectezi, te rugăm să îți testezi parola pentru a te asigura că ți-o aduci aminte. Dacă îți pierzi parola, vei pierde accesul la datele tale MEGA.";
 /* state previous to import a file */
 "loading"="Se încarcă...";
 /*   */
@@ -1499,61 +1499,61 @@
 /* Button title to allow the user ignore something */
 "ignore"="Ignoră";
 /* Button title to allow the user open the default browser */
-"openBrowser"="Open browser";
+"openBrowser"="Deschide browserul";
 /* A label for the Restart button to relaunch MEGAsync. */
-"restart"="Reporneşte";
+"restart"="Repornește";
 /* Title to alert user the possibility of resume playing the video or start from the beginning */
-"resumePlayback"="Resume playback?";
+"resumePlayback"="Reiei redarea?";
 /* Message to show the user info (name and time) about the resume of the video */
-"continueOrRestartVideoMessage"="%1$s will continue at %2$s";
+"continueOrRestartVideoMessage"="%1$s va continua de la %2$s";
 /*  */
 "resume"="Reia";
 /* Title to preview document */
-"previewContent"="Preview Content";
+"previewContent"="Previzualizează conținutul";
 /* Title of the notification for a missed call */
-"missedCall"="Missed call";
+"missedCall"="Apel ratat";
 /* When an outgoing call of user A with user B had been rejected by user B */
-"callWasRejected"="Call was rejected";
+"callWasRejected"="Apelul a fost respins";
 /* When an active call of user A with user B had cancelled */
-"callWasCancelled"="Call was cancelled";
+"callWasCancelled"="Apelul a fost anulat";
 /* When an active call of user A with user B had not answered */
-"callWasNotAnswered"="Call was not answered";
+"callWasNotAnswered"="Nu s-a răspuns la apel";
 /* When an active call of user A with user B had failed */
-"callFailed"="Call failed";
+"callFailed"="Apel eșuat";
 /* When an active call of user A with user B had ended */
-"callEnded"="Call ended";
+"callEnded"="Apel încheiat";
 /* Displayed after a call had ended, where %@ is the duration of the call (1h, 10seconds, etc) */
-"duration"="Duration: %@";
+"duration"="Durată: %@";
 /* */
-"xSeconds"="%d seconds";
+"xSeconds"="%d secunde";
 /* */
-"1Second"="1 second";
+"1Second"="1 secundă";
 /* */
-"1Hour"="1 hour";
+"1Hour"="1 oră";
 /* */
-"xHours"="%d hours";
+"xHours"="%d ore";
 /* */
-"1Hour1Minute"="1 hour, 1 minute";
+"1Hour1Minute"="1 oră, 1 minut";
 /* */
-"1HourxMinutes"="1 hour, %d minutes";
+"1HourxMinutes"="1 oră, %d minute";
 /* */
-"xHours1Minute"="%d hours, 1 minute";
+"xHours1Minute"="%d ore, 1 minut";
 /* */
-"xHoursxMinutes"="%1$d hours, %2$d minutes";
+"xHoursxMinutes"="%1$d ore, %2$d minute";
 /* Alert title shown when users try to stream an unsupported audio/video file */
-"fileNotSupported"="File not supported";
+"fileNotSupported"="Fișier nesuportat";
 /* Alert message shown when users try to stream an unsupported audio/video file */
-"message_fileNotSupported"="You can save it for Offline and open it in a compatible app.";
+"message_fileNotSupported"="Poți salva fișierul în Offline și să-l deschizi într-o aplicație compatibilă.";
 /* Item of a menu to forward a message chat to another chatroom */
-"forward"="Forward";
+"forward"="Redirecționează";
 /* Success message shown after forwarding messages to other chats */
 "messagesSent"="Mesaje trimise";
 /* Title of archived chats button */
 "archivedChats"="Chaturi arhivate";
 /* Confirmation message on archive chat dialog for user to confirm. */
-"archiveChatMessage"="Sigur vrei să arhivezi această conversaţie?";
+"archiveChatMessage"="Sigur vrei să arhivezi această conversație?";
 /* Confirmation message for user to confirm it will unarchive an archived chat. */
-"unarchiveChatMessage"="Sigur vrei să dezarhivezi această conversaţie?";
+"unarchiveChatMessage"="Sigur vrei să dezarhivezi această conversație?";
 /* The title of the dialog to unarchive an archived chat. */
 "unarchiveChat"="Dezarhivează chatul";
 /* Title of button to archive chats. */
@@ -1563,35 +1563,35 @@
 /* Title of empty state view for archived chats. */
 "noArchivedChats"="Niciun chat arhivat";
 /* A title for the Two-Factor Authentication section on the My Account - Security page. */
-"twoFactorAuthentication"="Two-Factor Authentication";
+"twoFactorAuthentication"="Autentificarea în doi factori";
 /* Button title to start the setup of a feature. For example 'Begin Setup' for Two-Factor Authentication */
-"beginSetup"="Begin Setup";
+"beginSetup"="Începe configurarea";
 /* A message on the Verify Login page telling the user to enter their 2FA code. */
-"pleaseEnterTheSixDigitCode"="Please enter the 6-digit code generated by your Authenticator App.";
+"pleaseEnterTheSixDigitCode"="Te rugăm să introduci codul din 6 cifre generat de aplicația de autentificare.";
 /* Title of the dialog displayed to start setup the Two-Factor Authentication */
 "whyYouDoNeedTwoFactorAuthentication"="De ce ai nevoie de autentificarea cu doi factori?";
 /* Description for the ‘Two-Factor Authentication’ in the security settings section. */
-"whatIsTwoFactorAuthentication"="Two-Factor Authentication is a second layer of security for your account.";
+"whatIsTwoFactorAuthentication"="Autentificarea în doi factori reprezintă un al doilea strat de securitate pentru contul tău.";
 /* Description text of the dialog displayed to start setup the Two-Factor Authentication */
-"whyYouDoNeedTwoFactorAuthenticationDescription"="Two-Factor Authentication is a second layer of security for your account. Which means that even if someone knows your password they cannot access it, without also having access to the six digit code only you have access to.";
+"whyYouDoNeedTwoFactorAuthenticationDescription"="Autentificarea în doi factori reprezintă un al doilea strat de securitate pentru contul tău. Ceea ce înseamnă că, chiar dacă cineva îți cunoaște parola, nu îți poate accesa contul fără să aibă acces la codul din șase cifre la care doar tu ai acces.";
 /* Alert text shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device */
-"youNeedATwoFactorAuthenticationApp"="You need a two factor authentication app on this device";
+"youNeedATwoFactorAuthenticationApp"="Ai nevoie de o aplicație de autentificare în doi factori pe acest dispozitiv";
 /* Alert text shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device and tap on the question mark */
 "You need an authenticator app to enable 2FA on MEGA. You can download and install the Google Authenticator, Duo Mobile, Authy or Microsoft Authenticator app for your phone or tablet."="You need an authenticator app to enable 2FA on MEGA. You can download and install the Google Authenticator, Duo Mobile, Authy or Microsoft Authenticator app for your phone or tablet.";
 /* A title on the mobile web client page showing that 2FA has been enabled successfully. */
-"twoFactorAuthenticationEnabled"="Two-Factor Authentication Enabled";
+"twoFactorAuthenticationEnabled"="Autentificarea în doi factori activată";
 /* A message on the dialog shown after 2FA was successfully enabled. */
-"twoFactorAuthenticationEnabledDescription"="Next time you login to your account you will be asked to enter a 6-digit code provided by your Authenticator App.";
+"twoFactorAuthenticationEnabledDescription"="Data viitoare când te autentifici în contul ți se va cere să introduci un cod din 6 cifre furnizat de aplicația de autentificare.";
 /* A warning message on the Backup Recovery Key dialog to tell the user to backup their Recovery Key to their local computer. */
-"pleaseSaveYourRecoveryKey"="Please save your Recovery Key in a safe location";
+"pleaseSaveYourRecoveryKey"="Te rugăm să salvezi cheia de recuperare într-o locație sigură";
 /* An informational message on the Backup Recovery Key dialog. */
-"twoFactorAuthenticationEnabledWarning"="If you lose access to your account after enabling 2FA and you have not backed up your Recovery Key, MEGA cannot help you gain access to it again.";
+"twoFactorAuthenticationEnabledWarning"="Dacă pierzi accesul la contul tău după ce ai activat 2FA și nu ai făcut un backup al cheii de recuperare, MEGA nu te poate ajuta să obții din nou accesul la acesta.";
 /* A message on a dialog to say that 2FA has been successfully disabled. */
-"twoFactorAuthenticationDisabled"="Two-Factor Authentication Disabled";
+"twoFactorAuthenticationDisabled"="Autentificarea în doi factori dezactivată";
 /* A message on the setup two-factor authentication page on the mobile web client. */
-"scanOrCopyTheSeed"="Scan or copy the seed to your Authenticator App. Be sure to backup this seed to a safe place in case you lose your device.";
+"scanOrCopyTheSeed"="Scanează sau copiază sămânța în aplicația de autentificare. Asigură-te că copiezi această sămânță într-un loc sigur în cazul în care îți pierzi dispozitivul.";
 /* A button to help them restore their account if they have lost their 2FA device. */
-"lostYourAuthenticatorDevice"="Lost your Authenticator device?";
+"lostYourAuthenticatorDevice"="Ți-ai pierdut dispozitivul pentru autentificare?";
 /* Settings section title where you can enable the option to 'Save Images in Photos' */
 "Save Images in Photos"="Save Images in Photos";
 /* Settings section title where you can enable the option to 'Save Videos in Photos' */
@@ -1643,39 +1643,49 @@
 /* Button which triggers a request for a specific permission, that have been explained to the user beforehand */
 "Allow Access"="Allow Access";
 /* A section header which contains the file management settings. These settings allow users to remove duplicate files etc. */
-"File Management"="Managementul fişierelor";
+"File Management"="Managementul fișierelor";
 /* Title of the option to enable or disable file versioning on Settings section */
-"File versioning"="File versioning";
+"File versioning"="Versionarea fișierelor";
 /* Subtitle of the option to enable or disable file versioning on Settings section */
-"Enable or disable file versioning for your entire account.[Br]You may still receive file versions from shared folders if your contacts have this enabled."="Enable or disable file versioning for your entire account.\nYou may still receive file versions from shared folders if your contacts have this enabled.";
+"Enable or disable file versioning for your entire account.[Br]You may still receive file versions from shared folders if your contacts have this enabled."="Activează sau dezactivează versionarea fișierelor pentru întregul cont.\nEste posibil să primești în continuare versiuni ale fișierelor din folderele partajate, dacă contactele tale au această opțiune activată.";
 /* A confirmation message when the user chooses to disable file versioning. */
-"When file versioning is disabled, the current version will be replaced with the new version once a file is updated (and your changes to the file will no longer be recorded). Are you sure you want to disable file versioning?"="Când versionarea fişierelor este dezactivată, versiunea actuală va fi înlocuită cu noua versiune odată ce fişierul este actualizat (iar modificările aduse fişierului nu vor mai fi înregistrate). Sigur vrei să dezactivezi versionarea fişierelor?";
+"When file versioning is disabled, the current version will be replaced with the new version once a file is updated (and your changes to the file will no longer be recorded). Are you sure you want to disable file versioning?"="Când versionarea fișierelor este dezactivată, versiunea actuală va fi înlocuită cu noua versiune odată ce fișierul este actualizat (iar modificările aduse fișierului nu vor mai fi înregistrate). Sigur vrei să dezactivezi versionarea fișierelor?";
 /* Settings preference title to show file versions info of the account */
-"File versions"="File versions";
+"File versions"="Versiunile fișierelor";
 /* A title message in the user’s account settings for showing the storage used for file versions. */
-"Total size taken up by file versions:"="Mărimea totală ocupată de versiunile fişierelor:";
+"Total size taken up by file versions:"="Mărimea totală ocupată de versiunile fișierelor:";
 /* The title of the section about deleting file versions in the settings. */
-"Delete all older versions of my files"="Delete all older versions of my files";
+"Delete all older versions of my files"="Șterge toate versiunile mai vechi ale fișierelor mele";
 /* Text of a button which deletes all historical versions of files in the users entire account. */
-"Delete old versions"="Şterge toate";
+"Delete old versions"="Șterge versiunile vechi";
 /* A warning note about deleting all file versions in the settings section. */
-"All current files will remain. Only historic versions of your files will be deleted."="Acest lucru va şterge definitiv toate versiunile fişierelor proprii. Orice versiune de fişier partajată cu tine de la un contact va trebui să fie ştearsă de către aceştia.";
+"All current files will remain. Only historic versions of your files will be deleted."="Toate fișierele actuale vor rămâne. Doar versiunile istorice ale fișierelor vor fi șterse.";
 /* Text of the dialog to delete all the file versions of the account */
-"You are about to delete the version histories of all files. Any file version shared to you from a contact will need to be deleted by them.[Br][Br]Please note that the current files will not be deleted."="You are about to delete the version histories of all files. Any file version shared to you from a contact will need to be deleted by them.\n\nPlease note that the current files will not be deleted.";
+"You are about to delete the version histories of all files. Any file version shared to you from a contact will need to be deleted by them.[Br][Br]Please note that the current files will not be deleted."="Ești pe cale să ștergi istoricul versiunilor tuturor fișierelor. Orice versiune a vreunui fișier partajat ție de la un contact trebuie să fie șters de către acesta\n\nTe rugăm să reții că fișierele actuale nu vor fi șterse.";
 /* Title for the Rubbish-Bin Cleaning Scheduler feature */
-"Rubbish-Bin Cleaning Scheduler:"="Planificatorul de golire a coşului de gunoi:";
+"Rubbish-Bin Cleaning Scheduler:"="Planificatorul de golire a coșului de gunoi:";
 /* A rubbish bin scheduler setting which allows removing old files from the rubbish bin automatically. E.g. Remove files older than 15 days. */
-"Remove files older than"="Elimină fişierele mai vechi de";
+"Remove files older than"="Elimină fișierele mai vechi de";
 /* Label for any ‘Days’ button, link, text, title, etc. - (String as short as possible). */
-"Days"="Days";
+"Days"="Zile";
 /* New server-side rubbish-bin cleaning scheduler description (for Free users) */
-"The Rubbish Bin is cleaned for you automatically. The minimum period is 7 days and your maximum period is 30 days."="The Rubbish Bin is cleaned for you automatically. The minimum period is 7 days and your maximum period is 30 days.";
+"The Rubbish Bin is cleaned for you automatically. The minimum period is 7 days and your maximum period is 30 days."="Coșul de gunoi este golit pentru tine automat. Perioada minimă este de 7 zile și perioada maximă este de 30 de zile.";
 /* New server-side rubbish-bin cleaning scheduler description (for PRO users) */
-"The Rubbish Bin can be cleaned for you automatically. The minimum period is 7 days."="The Rubbish Bin can be cleaned for you automatically. The minimum period is 7 days.";
+"The Rubbish Bin can be cleaned for you automatically. The minimum period is 7 days."="Coșul de gunoi poate fi golit pentru tine automat. Perioada minimă este de 7 zile.";
 /* Description shown when you try to disable the feature Rubbish-Bin Cleaning Scheduler and you are a free user */
 "To disable the Rubbish-Bin Cleaning Scheduler or set a longer retention period, you need to subscribe to a PRO plan."="To disable the Rubbish-Bin Cleaning Scheduler or set a longer retention period, you need to subscribe to a PRO plan.";
 /* Confirmation dialog for the button that logs the user out of all sessions except the current one. */
-"Do you want to close all other sessions? This will log you out on all other active sessions except the current one."="Do you want to close all other sessions? This will log you out on all other active sessions except the current one.";
+"Do you want to close all other sessions? This will log you out on all other active sessions except the current one."="Vrei să închizi toate celelalte sesiuni? Acest lucru te va deconecta din toate celelalte sesiuni active, cu excepția celei actuale.";
+/* Message to inform the local user that someone has joined the current group call */
+"%@ joined the call."="%@ joined the call.";
+/* Message to inform the local user that someone has left the current group call */
+"%@ left the call."="%@ left the call.";
+/* Message to inform the local user is having a bad quality network with someone in the current group call */
+"Poor conection."="Poor connection.";
+/* Message shown in a chat room when there is an active group call */
+"There is an active group call. Tap to join."="There is an active group call. Tap to join.";
+/* Message shown in a chat room for a group call in progress displaying the duration of the call */
+"Touch to return to call %@"="Touch to return to call %@";
 /* A button label which allows the users save images/videos in the Photos app. */
 "Save to Photos"="Save to Photos";
 /* Text shown when starting the process to save a photo or video to Photos app */
@@ -1684,10 +1694,14 @@
 "Saved to Photos"="Saved to Photos";
 /* Text shown when an error occurs when trying to save a photo or video to Photos app */
 "Could not save Item"="Could not save Item";
+/* Message show when a call cannot be established because there are too many participants in the group call */
+"Error. No more participants are allowed in this group call."="You are not allowed to join this call as it has reached the maximum number of participants.";
+/* Message show when a user cannot activate the video in a group call because the max number of videos has been reached */
+"Error. No more video are allowed in this group call."="You are not allowed to enable video as this call has reached the maximum number of participants using video.";
 /* Text shown for switching from thumbnail view to list view. */
 "List view"="Vizualizare tip listă";
 /* Text shown for switching from list view to thumbnail view. */
-"Thumbnail view"="Vizualizare tip grilă";
+"Thumbnail view"="Vizualizare tip miniatură";
 /* Message to inform the local user that someone has joined the current group call */
 "%@ joined the call."="%@ joined the call.";
 /* Message to inform the local user that someone has left the current group call */
@@ -1701,11 +1715,11 @@
 /* Menu item to change from grid view to list view */
 "List view"="Vizualizare tip listă";
 /* Menu item to change from list view to grid view */
-"Thumbnail view"="Vizualizare tip grilă";
+"Thumbnail view"="Vizualizare tip miniatură";
 /* There are no notifications to display. */
 "No notifications"="Nicio notificare";
 /* The header of a notification related to payments */
-"Payment info"="Informaţii de plată";
+"Payment info"="Informații de plată";
 /* A title for a notification saying the user’s pricing plan will expire soon. */
 "PRO membership plan expiring soon"="Planul de membru PRO expiră în curând";
 /* The header of a notification indicating that a file or folder has been taken down due to infringement or other reason. */
@@ -1715,17 +1729,17 @@
 /* Label shown inside an unseen notification */
 "New"="New";
 /* When a contact sent a contact/friend request */
-"Sent you a contact request"="Ţi-a trimis o cerere de contact";
+"Sent you a contact request"="Ți-a trimis o cerere de contact";
 /* A notification that the other user cancelled their contact request so it is no longer valid. E.g. user@email.com cancelled their contact request. */
 "Cancelled their contact request"="A anulat cererea sa de contact";
 /* A reminder notification to remind the user to respond to the contact request. */
 "Reminder: You have a contact request"="Memento: Ai o cerere de contact";
 /* A notification telling the user that the other user deleted them as a contact. E.g. user@email.com deleted you as a contact. */
-"Deleted you as a contact"="te-a şters ca contact";
+"Deleted you as a contact"="te-a șters ca contact";
 /* A notification telling the user that they are now fully connected with the other user (the users are in each other’s address books). */
-"Contact relationship established"="Relaţie de contact stabilită";
+"Contact relationship established"="Relație de contact stabilită";
 /* A notification telling the user that one of their contact’s accounts has been deleted or deactivated. */
-"Account has been deleted/deactivated"="Contul a fost şters/dezactivat";
+"Account has been deleted/deactivated"="Contul a fost șters/dezactivat";
 /* A notification telling the user that another user blocked them as a contact (they will no longer be able to contact them). E.g. name@email.com blocked you as a contact. */
 "Blocked you as a contact"="Te-a blocat ca contact";
 /* Response text after clicking Ignore on an incoming contact request notification. */
@@ -1735,11 +1749,11 @@
 /* Response text after clicking Deny on an incoming contact request notification. */
 "You denied a contact request"="Ai refuzat o cerere de contact";
 /* When somebody accepted your contact request */
-"Accepted your contact request"="Ţi-a acceptat cererea de contact";
+"Accepted your contact request"="Ți-a acceptat cererea de contact";
 /* When somebody denied your contact request */
-"Denied your contact request"="Ţi-a refuzat cererea de contact";
+"Denied your contact request"="Ți-a refuzat cererea de contact";
 /* notification text */
-"A user has left the shared folder {0}"="A user has left the shared folder {0}";
+"A user has left the shared folder {0}"="Un utilizator a părăsit folderul partajat {0}";
 /* This is shown in the Notification dialog when the email address of a contact is not found and access to the share is lost for some reason (e.g. share removal or contact removal). */
 "Access to folders was removed."="Accesul la foldere a fost eliminat.";
 /* Content of a notification that informs how many files and folders have been added to a shared folder */
@@ -1770,14 +1784,18 @@
 "Your PRO membership plan will expire in 1 day."="Planul tău de membru PRO va expira în termen de 1 zi.";
 /* The professional pricing plan which the user is currently on will expire in 5 days. The %1 is a placeholder for the number of days and should not be removed. */
 "Your PRO membership plan will expire in %1 days."="Planul tău de membru PRO va expira în %1 zile.";
+/* The professional pricing plan which the user was on expired one day ago. */
+"Your PRO membership plan expired 1 day ago"="Your PRO membership plan expired 1 day ago";
+/* The professional pricing plan which the user was on expired %1 days ago. The %1 is a placeholder for the number of days and should not be removed. */
+"Your PRO membership plan expired %1 days ago"="Your PRO membership plan expired %1 days ago";
 /* The text of a notification indicating that a file or folder has been taken down due to infringement or other reason. The %1 placeholder will be replaced with the text ‘file’ or ‘folder’. The %2 will be replaced with the name of the file or folder. */
 "Your publicly shared %1 (%2) has been taken down."="Partajarea ta publică %1 (%2) a fost eliminată.";
 /* The text of a notification indicating that a file or folder that was taken down has now been restored due to a successful counter-notice. The %1 placeholder will be replaced with the text ‘file’ or ‘folder’. The %2 will be replaced with the name of the file or folder. */
 "Your taken down %1 (%2) has been reinstated."="Eliminarea ta %1 (%2) a fost restabilită.";
 /* Error message shown to user when a copy/import operation would take them over their storage limit. */
-"This action can not be completed as it would take you over your current storage limit"="Această acţiune nu poate fi finalizată, deoarece îţi va depăşi limita actuală de stocare";
+"This action can not be completed as it would take you over your current storage limit"="Această acțiune nu poate fi finalizată, deoarece îți va depăși limita actuală de stocare";
 /* uploads over storage quota warning dialog title */
-"Your upload(s) cannot proceed because your account is full"="Your upload(s) cannot proceed because your account is full";
+"Your upload(s) cannot proceed because your account is full"="Încărcarea(ările) nu poate(pot) continua deoarece contul tău este plin";
 /* Footer text to explain the meaning of the functionaly 'Last seen' of your chat status. */
 "Allow your contacts to see the last time you were active on MEGA."="Allow your contacts to see the last time you were active on MEGA.";
 /* Label shown next to a feature name that can be enabled or disabled, like in 'Show Last seen...' */
