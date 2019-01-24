@@ -1701,7 +1701,7 @@ void uncaughtExceptionHandler(NSException *exception) {
             } else {
                 isAccountFirstLogin = YES;
                 self.newAccount = (MEGALinkManager.urlType == URLTypeConfirmationLink);
-                if (MEGALinkManager.selectedOption == LinkOptionDefault) {
+                if (MEGALinkManager.selectedOption != LinkOptionJoinChatLink) {
                     [MEGALinkManager resetLinkAndURLType];
                 }
             }

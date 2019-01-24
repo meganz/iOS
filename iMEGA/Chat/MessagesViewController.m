@@ -245,17 +245,17 @@ const NSUInteger kMaxMessagesToLoad = 256;
     }
 }
 
+- (void)viewDidLayoutSubviews {
+    [super viewDidLayoutSubviews];
+    
+    [self configureNavigationBar];
+}
+
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     
     [self showOrHideJumpToBottom];
     self.initialToolbarHeight = self.inputToolbar.frame.size.height;
-    
-    if (@available(iOS 11.0, *)) { //Fix for devices with safe area not rendering navbar buttons when the VC is instantiated
-        if ((UIDeviceOrientationIsLandscape(UIDevice.currentDevice.orientation) || UIDevice.currentDevice.orientation == UIDeviceOrientationUnknown) && self.view.safeAreaInsets.left != 0) {
-            [self configureNavigationBar];
-        }
-    }
 }
 
 - (void)willEnterForeground {
@@ -1607,6 +1607,7 @@ const NSUInteger kMaxMessagesToLoad = 256;
         [self dismissChatRoom];
     } else {
         MEGAChatGenericRequestDelegate *delegate = [[MEGAChatGenericRequestDelegate alloc] initWithCompletion:^(MEGAChatRequest * _Nonnull request, MEGAChatError * _Nonnull error) {
+            self.chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:request.chatHandle];
             [self updateJoinView];
         }];
         if (!self.chatRoom.isPreview && !self.chatRoom.isActive) {
