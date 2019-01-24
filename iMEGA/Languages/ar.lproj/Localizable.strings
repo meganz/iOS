@@ -1096,7 +1096,7 @@
 /* Title that refers to the status of the chat (Either Online or Offline) */
 "status"="الحالة";
 /* Title used in settings that enables the generation of link previews in the chat */
-"richUrlPreviews"="مشاهدة محتوى الروابط URL";
+"richUrlPreviews"="مشاهدة الروابط الإلكترونية URL";
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
 "richPreviewsFooter"="قم بجعل تجربة الدردشة على MEGAchat أجمل من خلال السماح بإظهار محتوى الرابط ولكن دون التشفير المتناظر من طرف الى طرف";
 /* Section title of a button where you can enable mobile data for voice and video calls. */
@@ -1695,9 +1695,9 @@
 /* Text shown when an error occurs when trying to save a photo or video to Photos app */
 "Could not save Item"="Could not save Item";
 /* Message show when a call cannot be established because there are too many participants in the group call */
-"Error. No more participants are allowed in this group call."="Error. No more participants are allowed in this group call.";
+"Error. No more participants are allowed in this group call."="You are not allowed to join this call as it has reached the maximum number of participants.";
 /* Message show when a user cannot activate the video in a group call because the max number of videos has been reached */
-"Error. No more video are allowed in this group call."="Error. No more video are allowed in this group call.";
+"Error. No more video are allowed in this group call."="You are not allowed to enable video as this call has reached the maximum number of participants using video.";
 /* Text shown for switching from thumbnail view to list view. */
 "List view"="طريقة عرض القائمة";
 /* Text shown for switching from list view to thumbnail view. */

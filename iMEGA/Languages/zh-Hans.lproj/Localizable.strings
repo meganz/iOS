@@ -689,7 +689,7 @@
 /* Title for the MEGA Recovery Key */
 "masterKey"="恢复密钥";
 /* Section title where you can change your MEGA's password */
-"changePasswordLabel"="变更密码";
+"changePasswordLabel"="更改密码";
 /* Advising the user to keep the user's master key safe. */
 "exportMasterKeyFooter"="导出恢复密钥并将其保存在安全位置，使您可以设置新密码并不会丢失数据信息。";
 /* Question button to present a view where it's explained what is the Recovery Key */
@@ -1096,7 +1096,7 @@
 /* Title that refers to the status of the chat (Either Online or Offline) */
 "status"="状态";
 /* Title used in settings that enables the generation of link previews in the chat */
-"richUrlPreviews"="带缩略图和简介的链接";
+"richUrlPreviews"="丰富的网址预览";
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
 "richPreviewsFooter"="增强MEGAchat体验。 URL内容将在没有端对端加密的情况下被检索。";
 /* Section title of a button where you can enable mobile data for voice and video calls. */
@@ -1645,7 +1645,7 @@
 /* A section header which contains the file management settings. These settings allow users to remove duplicate files etc. */
 "File Management"="文件管理";
 /* Title of the option to enable or disable file versioning on Settings section */
-"File versioning"="文件版本控制";
+"File versioning"="文件版本";
 /* Subtitle of the option to enable or disable file versioning on Settings section */
 "Enable or disable file versioning for your entire account.[Br]You may still receive file versions from shared folders if your contacts have this enabled."="启用或禁用整个帐户的文件版本控制。如果您的联系人已启用此功能，\n您仍可以从共享文件夹接收文件版本。";
 /* A confirmation message when the user chooses to disable file versioning. */
@@ -1695,9 +1695,9 @@
 /* Text shown when an error occurs when trying to save a photo or video to Photos app */
 "Could not save Item"="无法保存该项目";
 /* Message show when a call cannot be established because there are too many participants in the group call */
-"Error. No more participants are allowed in this group call."="Error. No more participants are allowed in this group call.";
+"Error. No more participants are allowed in this group call."="You are not allowed to join this call as it has reached the maximum number of participants.";
 /* Message show when a user cannot activate the video in a group call because the max number of videos has been reached */
-"Error. No more video are allowed in this group call."="Error. No more video are allowed in this group call.";
+"Error. No more video are allowed in this group call."="You are not allowed to enable video as this call has reached the maximum number of participants using video.";
 /* Text shown for switching from thumbnail view to list view. */
 "List view"="列表显示";
 /* Text shown for switching from list view to thumbnail view. */
