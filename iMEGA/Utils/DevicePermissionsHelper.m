@@ -160,6 +160,10 @@
 
 #pragma mark - Permissions status
 
++ (BOOL)audioAndVideoPermissionsGranted {
+    return [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeAudio] == AVAuthorizationStatusAuthorized && [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeVideo] == AVAuthorizationStatusAuthorized;
+}
+
 + (BOOL)shouldAskForAudioPermissions {
     if ([AVCaptureDevice respondsToSelector:@selector(requestAccessForMediaType:completionHandler:)]) {
         return [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeAudio] == AVAuthorizationStatusNotDetermined;

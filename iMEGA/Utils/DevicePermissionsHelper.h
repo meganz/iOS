@@ -14,6 +14,7 @@
 
 + (void)modalNotificationsPermission;
 
++ (BOOL)audioAndVideoPermissionsGranted;
 + (BOOL)shouldAskForAudioPermissions;
 + (BOOL)shouldAskForVideoPermissions;
 + (BOOL)shouldAskForPhotosPermissions;
