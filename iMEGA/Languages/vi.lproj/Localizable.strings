@@ -1645,7 +1645,7 @@
 /* A section header which contains the file management settings. These settings allow users to remove duplicate files etc. */
 "File Management"="Quản Lý Tệp Tin";
 /* Title of the option to enable or disable file versioning on Settings section */
-"File versioning"="File versioning";
+"File versioning"="File Versioning";
 /* Subtitle of the option to enable or disable file versioning on Settings section */
 "Enable or disable file versioning for your entire account.[Br]You may still receive file versions from shared folders if your contacts have this enabled."="Enable or disable file versioning for your entire account.\nYou may still receive file versions from shared folders if your contacts have this enabled.";
 /* A confirmation message when the user chooses to disable file versioning. */
@@ -1695,9 +1695,9 @@
 /* Text shown when an error occurs when trying to save a photo or video to Photos app */
 "Could not save Item"="Could not save Item";
 /* Message show when a call cannot be established because there are too many participants in the group call */
-"Error. No more participants are allowed in this group call."="Error. No more participants are allowed in this group call.";
+"Error. No more participants are allowed in this group call."="You are not allowed to join this call as it has reached the maximum number of participants.";
 /* Message show when a user cannot activate the video in a group call because the max number of videos has been reached */
-"Error. No more video are allowed in this group call."="Error. No more video are allowed in this group call.";
+"Error. No more video are allowed in this group call."="You are not allowed to enable video as this call has reached the maximum number of participants using video.";
 /* Text shown for switching from thumbnail view to list view. */
 "List view"="Xem dạng danh sách";
 /* Text shown for switching from list view to thumbnail view. */
