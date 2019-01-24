@@ -689,7 +689,7 @@
 /* Title for the MEGA Recovery Key */
 "masterKey"="還原金鑰";
 /* Section title where you can change your MEGA's password */
-"changePasswordLabel"="變更密碼";
+"changePasswordLabel"="更改密碼";
 /* Advising the user to keep the user's master key safe. */
 "exportMasterKeyFooter"="正在匯出您的還原金鑰，請妥善保管。您的還原金鑰可以使您不會因為重新設定密碼而遺失過去上傳的資料。";
 /* Question button to present a view where it's explained what is the Recovery Key */
@@ -1808,3 +1808,7 @@
 "Today"="今天";
 /* */
 "Yesterday"="昨天";
+/* Plural of participant. 2 participants */
+"%d participants"="%d participants";
+/* Singular of participant. 1 participant */
+"%d participant"="%d participant";

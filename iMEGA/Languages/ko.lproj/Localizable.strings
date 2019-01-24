@@ -1808,3 +1808,7 @@
 "Today"="오늘";
 /* */
 "Yesterday"="어제";
+/* Plural of participant. 2 participants */
+"%d participants"="참가자 %d명";
+/* Singular of participant. 1 participant */
+"%d participant"="참가자 %d명";
