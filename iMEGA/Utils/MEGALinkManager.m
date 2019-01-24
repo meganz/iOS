@@ -165,18 +165,25 @@ static NSString *nodeToPresentBase64Handle;
             
         case LinkOptionJoinChatLink: {
             MEGAChatGenericRequestDelegate *openChatPreviewDelegate = [[MEGAChatGenericRequestDelegate alloc] initWithCompletion:^(MEGAChatRequest * _Nonnull request, MEGAChatError * _Nonnull error) {
-                if (!error.type) {
-                    MEGAChatGenericRequestDelegate *autojoinPublicChatDelegate = [[MEGAChatGenericRequestDelegate alloc] initWithCompletion:^(MEGAChatRequest * _Nonnull request, MEGAChatError * _Nonnull error) {
-                        if (!error.type) {                            
-                            MainTabBarController *mainTBC = (MainTabBarController *)UIApplication.sharedApplication.keyWindow.rootViewController;
-                            mainTBC.selectedIndex = CHAT;
-                            [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"done", nil)];
-                        }
-                    }];
-                    [[MEGASdkManager sharedMEGAChatSdk] autojoinPublicChat:request.chatHandle delegate:autojoinPublicChatDelegate];
+                if (error.type != MEGAErrorTypeApiOk && error.type != MEGAErrorTypeApiEExist) {
+                    return;
+                }
+                MEGAChatGenericRequestDelegate *autojoinOrRejoinPublicChatDelegate = [[MEGAChatGenericRequestDelegate alloc] initWithCompletion:^(MEGAChatRequest * _Nonnull request, MEGAChatError * _Nonnull error) {
+                    if (!error.type) {
+                        MainTabBarController *mainTBC = (MainTabBarController *)UIApplication.sharedApplication.keyWindow.rootViewController;
+                        mainTBC.selectedIndex = CHAT;
+                        [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"done", nil)];
+                    }
+                }];
+                MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:request.chatHandle];
+                if (!chatRoom.isPreview && !chatRoom.isActive) {
+                    [[MEGASdkManager sharedMEGAChatSdk] autorejoinPublicChat:request.chatHandle publicHandle:request.userHandle delegate:autojoinOrRejoinPublicChatDelegate];
+                } else {
+                    [[MEGASdkManager sharedMEGAChatSdk] autojoinPublicChat:request.chatHandle delegate:autojoinOrRejoinPublicChatDelegate];
                 }
             }];
             [[MEGASdkManager sharedMEGAChatSdk] openChatPreview:MEGALinkManager.linkURL delegate:openChatPreviewDelegate];
+            [MEGALinkManager resetLinkAndURLType];
             
             break;
         }
@@ -185,7 +192,6 @@ static NSString *nodeToPresentBase64Handle;
             break;
     }
     
-    [MEGALinkManager resetLinkAndURLType];
     [MEGALinkManager resetUtilsForLinksWithoutSession];
 }
 
@@ -645,6 +651,16 @@ static NSString *nodeToPresentBase64Handle;
             if ([rootViewController isKindOfClass:MainTabBarController.class]) {
                 MainTabBarController *mainTBC = (MainTabBarController *)rootViewController;
                 mainTBC.selectedIndex = CHAT;
+                UINavigationController *chatNC = mainTBC.selectedViewController;
+                for (UIViewController *viewController in chatNC.childViewControllers) {
+                    if ([viewController isKindOfClass:MessagesViewController.class]) {
+                        MessagesViewController *messagesVC = (MessagesViewController *)viewController;
+                        if (messagesVC.chatRoom.chatId == request.chatHandle) {
+                            [SVProgressHUD dismiss];
+                            return;
+                        }
+                    }
+                }
             }
             
             MessagesViewController *messagesVC = [[MessagesViewController alloc] init];
