@@ -2871,7 +2871,7 @@ const NSUInteger kMaxMessagesToLoad = 256;
 
 - (void)onChatCallUpdate:(MEGAChatSdk *)api call:(MEGAChatCall *)call {
     
-    if ([[MEGASdkManager sharedMEGAChatSdk] hasCallInChatRoom:self.chatRoom.chatId] && self.chatRoom.isGroup) {
+    if ([[MEGASdkManager sharedMEGAChatSdk] hasCallInChatRoom:self.chatRoom.chatId]) {
         MEGALogDebug(@"onChatCallUpdate %@", call);
 
         switch (call.status) {
