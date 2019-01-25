@@ -16,6 +16,7 @@
 @interface CameraUploadOperation ()
 
 @property (strong, nonatomic, nullable) MEGASdk *attributesDataSDK;
+@property (strong, nonatomic) MOAssetUploadRecord *uploadRecord;
 
 @end
 
@@ -23,11 +24,11 @@
 
 #pragma mark - initializers
 
-- (instancetype)initWithUploadInfo:(AssetUploadInfo *)uploadInfo {
+- (instancetype)initWithUploadInfo:(AssetUploadInfo *)uploadInfo uploadRecord:(MOAssetUploadRecord *)uploadRecord {
     self = [super init];
-    
     if (self) {
         _uploadInfo = uploadInfo;
+        _uploadRecord = uploadRecord;
     }
     
     return self;
@@ -62,7 +63,7 @@
     }];
     
     MEGALogDebug(@"[Camera Upload] %@ starts processing", self);
-    [CameraUploadRecordManager.shared updateRecordOfLocalIdentifier:self.uploadInfo.asset.localIdentifier withStatus:CameraAssetUploadStatusProcessing error:nil];
+    [CameraUploadRecordManager.shared updateRecord:self.uploadRecord withStatus:CameraAssetUploadStatusProcessing error:nil];
     
     self.uploadInfo.directoryURL = [self URLForAssetFolder];
 }
@@ -211,7 +212,7 @@
     [self finishOperation];
     
     MEGALogDebug(@"[Camera Upload] %@ finishes with status: %@", self, status);
-    [CameraUploadRecordManager.shared updateRecordOfLocalIdentifier:self.uploadInfo.asset.localIdentifier withStatus:status error:nil];
+    [CameraUploadRecordManager.shared updateRecord:self.uploadRecord withStatus:status error:nil];
     
     if (![status isEqualToString:CameraAssetUploadStatusUploading]) {
         [[NSFileManager defaultManager] removeItemAtURL:self.uploadInfo.directoryURL error:nil];

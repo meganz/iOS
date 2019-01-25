@@ -6,6 +6,8 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+@class MOAssetUploadRecord;
+
 /**
  A base class for camera upload operation. It's supposed to be subclassed.
  */
@@ -13,7 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (strong, nonatomic) AssetUploadInfo *uploadInfo;
 
-- (instancetype)initWithUploadInfo:(AssetUploadInfo *)uploadInfo;
+- (instancetype)initWithUploadInfo:(AssetUploadInfo *)uploadInfo uploadRecord:(MOAssetUploadRecord *)uploadRecord;
 
 - (void)checkFingerprintAndEncryptFileIfNeeded;
 

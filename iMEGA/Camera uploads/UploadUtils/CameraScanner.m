@@ -45,7 +45,7 @@
             [[CameraUploadRecordManager shared] saveAssetFetchResult:self.fetchResult error:nil];
         } else {
             NSArray<PHAsset *> *newAssets = [self findNewAssetsByComparingFetchResult:self.fetchResult uploadRecords:records];
-            [[CameraUploadRecordManager shared] saveAssets:newAssets error:nil];
+            [[CameraUploadRecordManager shared] saveAssets:newAssets checkExistence:NO error:nil];
         }
         
         MEGALogDebug(@"[Camera Upload] Finish local album scanning at: %@", [NSDateFormatter localizedStringFromDate:[NSDate date] dateStyle:NSDateFormatterShortStyle timeStyle:NSDateFormatterFullStyle]);
@@ -92,12 +92,20 @@
 
 - (void)photoLibraryDidChange:(PHChange *)changeInstance {
     PHFetchResultChangeDetails *changes = [changeInstance changeDetailsForFetchResult:self.fetchResult];
-    self.fetchResult = changes.fetchResultAfterChanges;
-    NSArray<PHAsset *> *newAssets = [changes insertedObjects];
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
-        [CameraUploadRecordManager.shared saveAssets:newAssets error:nil];
-        [CameraUploadManager.shared startCameraUploadIfNeeded];
-    });
+    if (changes) {
+        self.fetchResult = changes.fetchResultAfterChanges;
+        if ([changes hasIncrementalChanges]) {
+            NSArray<PHAsset *> *newAssets = [changes insertedObjects];
+            if (newAssets.count == 0) {
+                return;
+            }
+            
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+                [CameraUploadRecordManager.shared saveAssets:newAssets checkExistence:YES error:nil];
+                [CameraUploadManager.shared startCameraUploadIfNeeded];
+            });
+        }
+    }
 }
 
 @end

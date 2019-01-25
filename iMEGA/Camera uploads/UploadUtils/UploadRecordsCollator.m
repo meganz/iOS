@@ -10,6 +10,7 @@
 - (void)collateUploadRecords {
     [self collateNonUploadingRecords];
     [self collateUploadingRecords];
+    [self clearErrorRecordsPerLaunch];
 }
 
 - (void)collateNonUploadingRecords {
@@ -57,6 +58,10 @@
     }
     
     [CameraUploadRecordManager.shared saveChangesIfNeeded:nil];
+}
+
+- (void)clearErrorRecordsPerLaunch {
+    [CameraUploadRecordManager.shared clearErrorRecordsPerLaunchWithError:nil];
 }
 
 - (void)revertBackToNotStartedForRecord:(MOAssetUploadRecord *)record {

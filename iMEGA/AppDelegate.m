@@ -102,12 +102,6 @@
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application willFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    NSLog(@"[App Lifecycle] Application will finish launching with options: %@", launchOptions);
-    [CameraUploadManager.shared configCameraUploadWhenAppLaunches];
-    return YES;
-}
-
-- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     NSSetUncaughtExceptionHandler(&uncaughtExceptionHandler);
 #ifdef DEBUG
     [MEGASdk setLogLevel:MEGALogLevelMax];
@@ -118,14 +112,22 @@
     
     [MEGASdk setLogToConsole:YES];
     
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"logging"]) {
+        [[MEGALogger sharedLogger] startLogging];
+    }
+
+    MEGALogDebug(@"[App Lifecycle] Application will finish launching with options: %@", launchOptions);
+    
+    [CameraUploadManager.shared configCameraUploadWhenAppLaunches];
+    
+    return YES;
+}
+
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     [self migrateLocalCachesLocation];
     
     if ([launchOptions objectForKey:@"UIApplicationLaunchOptionsRemoteNotificationKey"]) {
         _megatype = [[[launchOptions objectForKey:@"UIApplicationLaunchOptionsRemoteNotificationKey"] objectForKey:@"megatype"] unsignedIntegerValue];
-    }
-    
-    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"logging"]) {
-        [[MEGALogger sharedLogger] startLogging];
     }
     
     _signalActivityRequired = NO;

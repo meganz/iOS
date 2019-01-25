@@ -1,12 +1,13 @@
 
 #import "UploadOperationFactory.h"
 #import "AssetUploadInfo.h"
+#import "MOAssetUploadRecord+CoreDataClass.h"
 @import Photos;
 
 @implementation UploadOperationFactory
 
-+ (CameraUploadOperation *)operationWithLocalIdentifier:(NSString *)identifier parentNode:(MEGANode *)node {
-    PHAsset *asset = [[PHAsset fetchAssetsWithLocalIdentifiers:@[identifier] options:nil] firstObject];
++ (CameraUploadOperation *)operationWithUploadRecord:(MOAssetUploadRecord *)uploadRecord parentNode:(MEGANode *)node {
+    PHAsset *asset = [[PHAsset fetchAssetsWithLocalIdentifiers:@[[uploadRecord localIdentifier]] options:nil] firstObject];
     if (asset == nil) {
         return nil;
     }
@@ -14,10 +15,10 @@
     AssetUploadInfo *uploadInfo = [[AssetUploadInfo alloc] initWithAsset:asset parentNode:node];
     switch (asset.mediaType) {
         case PHAssetMediaTypeImage:
-            return [[PhotoUploadOperation alloc] initWithUploadInfo:uploadInfo];
+            return [[PhotoUploadOperation alloc] initWithUploadInfo:uploadInfo uploadRecord:uploadRecord];
             break;
         case PHAssetMediaTypeVideo:
-            return [[VideoUploadOperation alloc] initWithUploadInfo:uploadInfo];
+            return [[VideoUploadOperation alloc] initWithUploadInfo:uploadInfo uploadRecord:uploadRecord];
             break;
         default:
             return nil;

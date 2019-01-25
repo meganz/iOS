@@ -2,6 +2,8 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
+@class MOAssetUploadErrorPerLaunch, MOAssetUploadErrorPerLogin;
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface MOAssetUploadRecord : NSManagedObject

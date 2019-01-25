@@ -7,9 +7,11 @@
 	return [NSFetchRequest fetchRequestWithEntityName:@"AssetUploadRecord"];
 }
 
-@dynamic localIdentifier;
-@dynamic status;
 @dynamic creationDate;
+@dynamic localIdentifier;
 @dynamic mediaType;
+@dynamic status;
+@dynamic errorPerLaunch;
+@dynamic errorPerLogin;
 
 @end
