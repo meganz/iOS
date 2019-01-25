@@ -1808,3 +1808,7 @@
 "Today"="Vandaag";
 /* */
 "Yesterday"="Gisteren";
+/* Plural of participant. 2 participants */
+"%d participants"="%d deelnemers";
+/* Singular of participant. 1 participant */
+"%d participant"="%d deelnemer";

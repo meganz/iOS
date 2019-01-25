@@ -458,7 +458,16 @@ const NSUInteger kMaxMessagesToLoad = 256;
             chatRoomState = AMLocalizedString(@"archived", @"Title of flag of archived chats.");
         } else {
             if (self.chatRoom.isGroup) {
-                chatRoomState = [self participantsNames];
+                if (self.chatRoom.hasCustomTitle) {
+                    chatRoomState = [self participantsNames];
+                } else {
+                    if (self.chatRoom.peerCount) {
+                        chatRoomState = [NSString stringWithFormat:AMLocalizedString(@"%d participants", @"Singular of participant. 1 participant").capitalizedString, self.chatRoom.peerCount + 1];
+                    } else {
+                        chatRoomState = [NSString stringWithFormat:AMLocalizedString(@"%d participant", @"Singular of participant. 1 participant").capitalizedString, 1];
+                    }
+                }
+                
                 self.navigationStatusView.hidden = YES;
                 self.navigationSubtitleLabel.hidden = NO;
             } else {
