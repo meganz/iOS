@@ -12,6 +12,7 @@
 #import "MEGAProviderDelegate.h"
 #import "MEGAChatCall+MNZCategory.h"
 #import "MyAccountHallViewController.h"
+#import "MEGAReachabilityManager.h"
 #import "MEGAUserAlertList+MNZCategory.h"
 #import "MessagesViewController.h"
 #import "NSString+MNZCategory.h"
@@ -108,8 +109,14 @@
     if (@available(iOS 10.0, *)) {} else {
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(presentCallViewControllerIfThereIsAnIncomingCall) name:UIApplicationDidBecomeActiveNotification object:nil];
     }
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(internetConnectionChanged) name:kReachabilityChangedNotification object:nil];
 }
-    
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [NSNotificationCenter.defaultCenter removeObserver:self name:kReachabilityChangedNotification object:nil];
+}
+
 - (BOOL)shouldAutorotate {
     if ([self.selectedViewController respondsToSelector:@selector(shouldAutorotate)]) {
         return [self.selectedViewController shouldAutorotate];
@@ -218,7 +225,11 @@
     
     NSString *badgeValue;
     if (@available(iOS 10.0, *)) {
-        badgeValue = unreadChats | numCalls ? @"⦁" : nil;
+        if (MEGAReachabilityManager.isReachable) {
+            badgeValue = unreadChats | numCalls ? @"⦁" : nil;
+        } else {
+            badgeValue = unreadChats ? @"⦁" : nil;
+        }
     } else {
         badgeValue = unreadChats ? [NSString stringWithFormat:@"%td", unreadChats] : nil;
     }
@@ -303,6 +314,10 @@
             [UIApplication.mnz_presentingViewController presentViewController:callVC animated:YES completion:nil];
         }
     }
+}
+
+- (void)internetConnectionChanged {
+    [self setBadgeValueForChats];
 }
 
 #pragma mark - MEGAGlobalDelegate
