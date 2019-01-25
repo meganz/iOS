@@ -1,5 +1,6 @@
 
 #import "AssetUploadInfo.h"
+#import "CameraUploadManager.h"
 
 @implementation AssetUploadInfo
 
@@ -56,6 +57,9 @@
         _originalFingerprint = [aDecoder decodeObjectForKey:@"originalFingerprint"];
         _directoryURL = [aDecoder decodeObjectForKey:@"directoryURL"];
         _parentNode = [MEGASdkManager.sharedMEGASdk nodeForHandle:[[aDecoder decodeObjectForKey:@"parentHandle"] unsignedLongLongValue]];
+        if (_parentNode == nil) {
+            _parentNode = [CameraUploadManager.shared cameraUploadNode];
+        }
         NSData *serializedData = [aDecoder decodeObjectForKey:@"mediaUpload"];
         _mediaUpload = [[MEGASdkManager sharedMEGASdk] resumeBackgroundMediaUploadBySerializedData:serializedData];
     }
