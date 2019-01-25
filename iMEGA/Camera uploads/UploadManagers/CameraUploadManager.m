@@ -33,7 +33,7 @@ static const NSTimeInterval BackgroundRefreshDuration = 25;
 
 @property (strong, nonatomic) NSOperationQueue *photoUploadOerationQueue;
 @property (strong, nonatomic) NSOperationQueue *videoUploadOerationQueue;
-@property (strong, nonatomic) MEGANode *cameraUploadNode;
+@property (strong, readwrite, nonatomic) MEGANode *cameraUploadNode;
 @property (strong, nonatomic) CameraScanner *scanner;
 @property (strong, nonatomic) UploadRecordsCollator *dataCollator;
 @property (strong, nonatomic) BackgroundUploadMonitor *backgroundUploadMonitor;
