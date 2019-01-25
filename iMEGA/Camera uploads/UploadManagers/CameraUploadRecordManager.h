@@ -20,15 +20,11 @@ extern NSString * const CameraAssetUploadStatusDone;
 
 #pragma mark - fetch records
 
-- (nullable MOAssetUploadRecord *)fetchRecordByLocalIdentifier:(NSString *)identifier error:(NSError * _Nullable __autoreleasing * _Nullable)error;
-
-- (NSArray<MOAssetUploadRecord *> *)fetchNonUploadedRecordsWithLimit:(NSInteger)fetchLimit mediaType:(PHAssetMediaType)mediaType error:(NSError * _Nullable __autoreleasing * _Nullable)error;
+- (NSArray<MOAssetUploadRecord *> *)fetchToBeUploadedRecordsWithLimit:(NSInteger)fetchLimit mediaType:(PHAssetMediaType)mediaType error:(NSError * _Nullable __autoreleasing * _Nullable)error;
 
 - (NSArray<MOAssetUploadRecord *> *)fetchAllRecords:(NSError * _Nullable __autoreleasing * _Nullable)error;
 
-- (NSArray<MOAssetUploadRecord *> *)fetchPendingRecordsByMediaTypes:(NSArray <NSNumber *> *)mediaTypes error:(NSError *__autoreleasing  _Nullable *)error;
-
-- (NSArray<MOAssetUploadRecord *> *)fetchRecordsByMediaTypes:(NSArray <NSNumber *> *)mediaTypes statuses:(NSArray<NSString *> *)statuses error:(NSError *__autoreleasing  _Nullable *)error;
+- (NSUInteger)pendingRecordsCountByMediaTypes:(NSArray <NSNumber *> *)mediaTypes error:(NSError *__autoreleasing  _Nullable *)error;
 
 - (NSArray<MOAssetUploadRecord *> *)fetchRecordsByStatuses:(NSArray<NSString *> *)statuses error:(NSError *__autoreleasing  _Nullable *)error;
 
@@ -38,7 +34,7 @@ extern NSString * const CameraAssetUploadStatusDone;
 
 - (BOOL)saveAssetFetchResult:(PHFetchResult *)result error:(NSError * _Nullable __autoreleasing * _Nullable)error;
 
-- (BOOL)saveAssets:(NSArray<PHAsset *> *)assets error:(NSError * _Nullable __autoreleasing * _Nullable)error;
+- (BOOL)saveAssets:(NSArray<PHAsset *> *)assets checkExistence:(BOOL)checkExistence error:(NSError * _Nullable __autoreleasing * _Nullable)error;
 
 #pragma mark - update records
 
@@ -46,11 +42,13 @@ extern NSString * const CameraAssetUploadStatusDone;
 
 - (BOOL)updateRecord:(MOAssetUploadRecord *)record withStatus:(NSString *)status error:(NSError * _Nullable __autoreleasing * _Nullable)error;
 
-- (BOOL)updateRecordsOfStatuses:(NSArray<NSString *> *)statuses withStatus:(NSString *)newStatus error:(NSError * _Nullable __autoreleasing * _Nullable)error;
-
 #pragma mark - delete records
 
 - (BOOL)deleteRecordsByLocalIdentifiers:(NSArray<NSString *> *)identifiers error:(NSError * _Nullable __autoreleasing * _Nullable)error;
+
+#pragma mark - upload error records management
+
+- (BOOL)clearErrorRecordsPerLaunchWithError:(NSError * _Nullable __autoreleasing * _Nullable)error;
 
 @end
 

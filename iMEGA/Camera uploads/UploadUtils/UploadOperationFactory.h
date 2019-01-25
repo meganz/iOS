@@ -5,9 +5,11 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+@class MOAssetUploadRecord;
+
 @interface UploadOperationFactory : NSObject
 
-+ (nullable CameraUploadOperation *)operationWithLocalIdentifier:(NSString *)identifier parentNode:(MEGANode *)node;
++ (nullable CameraUploadOperation *)operationWithUploadRecord:(MOAssetUploadRecord *)uploadRecord parentNode:(MEGANode *)node;
 
 @end
 

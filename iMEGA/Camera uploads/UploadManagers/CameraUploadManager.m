@@ -13,6 +13,8 @@
 #import "UploadRecordsCollator.h"
 #import "BackgroundUploadMonitor.h"
 #import "TransferSessionManager.h"
+#import "NSFileManager+MNZCategory.h"
+#import "NSURL+CameraUpload.h"
 @import Photos;
 
 static NSString * const CameraUploadsNodeHandle = @"CameraUploadsNodeHandle";
@@ -184,7 +186,7 @@ static const NSTimeInterval BackgroundRefreshDuration = 25;
 }
 
 - (void)uploadNextAssetsWithNumber:(NSInteger)number mediaType:(PHAssetMediaType)mediaType {
-    NSArray *records = [CameraUploadRecordManager.shared fetchNonUploadedRecordsWithLimit:number mediaType:mediaType error:nil];
+    NSArray *records = [CameraUploadRecordManager.shared fetchToBeUploadedRecordsWithLimit:number mediaType:mediaType error:nil];
     if (records.count == 0) {
         MEGALogDebug(@"[Camera Upload] no more local asset to upload for media type %li", (long)mediaType);
         return;
@@ -192,7 +194,7 @@ static const NSTimeInterval BackgroundRefreshDuration = 25;
     
     for (MOAssetUploadRecord *record in records) {
         [CameraUploadRecordManager.shared updateRecord:record withStatus:CameraAssetUploadStatusQueuedUp error:nil];
-        CameraUploadOperation *operation = [UploadOperationFactory operationWithLocalIdentifier:record.localIdentifier parentNode:self.cameraUploadNode];
+        CameraUploadOperation *operation = [UploadOperationFactory operationWithUploadRecord:record parentNode:self.cameraUploadNode];
         if (operation) {
             if (mediaType == PHAssetMediaTypeImage) {
                 [self.photoUploadOerationQueue addOperation:operation];
@@ -210,6 +212,7 @@ static const NSTimeInterval BackgroundRefreshDuration = 25;
 - (void)resetCameraUpload {
     [CameraUploadManager clearLocalSettings];
     CameraUploadManager.cameraUploadEnabled = NO;
+    [NSFileManager.defaultManager removeItemIfExistsAtURL:NSURL.mnz_cameraUploadURL];
 }
 
 - (void)stopCameraUpload {
@@ -237,7 +240,7 @@ static const NSTimeInterval BackgroundRefreshDuration = 25;
             mediaTypes = @[@(PHAssetMediaTypeImage)];
         }
         
-        pendingCount = [CameraUploadRecordManager.shared fetchPendingRecordsByMediaTypes:mediaTypes error:nil].count;
+        pendingCount = [CameraUploadRecordManager.shared pendingRecordsCountByMediaTypes:mediaTypes error:nil];
     }
     
     return pendingCount;
