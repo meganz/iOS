@@ -635,7 +635,7 @@
 }
 
 - (void)updateParticipants {
-    self.participantsLabel.text = [NSString stringWithFormat:@"%tu/6", [self participantsWithVideo]];
+    self.participantsLabel.text = [NSString stringWithFormat:@"%tu/%tu", [self participantsWithVideo], [MEGASdkManager sharedMEGAChatSdk].getMaxVideoCallParticipants];
 }
 
 - (NSInteger)participantsWithVideo {

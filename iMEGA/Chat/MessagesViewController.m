@@ -58,7 +58,7 @@ const NSUInteger kMaxMessagesToLoad = 256;
 @property (nonatomic, strong) MEGAOpenMessageHeaderView *openMessageHeaderView;
 @property (nonatomic, strong) MEGAMessagesTypingIndicatorFooterView *footerView;
 
-@property (nonatomic, strong) NSMutableArray <MEGAChatMessage *> *messages;
+@property (strong, nonatomic) NSMutableArray <MEGAChatMessage *> *messages;
 
 @property (strong, nonatomic) JSQMessagesBubbleImage *outgoingBubbleImageData;
 @property (strong, nonatomic) JSQMessagesBubbleImage *incomingBubbleImageData;
@@ -190,6 +190,8 @@ const NSUInteger kMaxMessagesToLoad = 256;
         self.collectionView.prefetchingEnabled = NO;
     }
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(internetConnectionChanged) name:kReachabilityChangedNotification object:nil];
+
     // Tap gesture for Jump to bottom view:
     UITapGestureRecognizer *jumpButtonTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(jumpToBottomPressed:)];
     [self.jumpToBottomView addGestureRecognizer:jumpButtonTap];
@@ -216,16 +218,17 @@ const NSUInteger kMaxMessagesToLoad = 256;
 
     [[MEGAReachabilityManager sharedManager] retryPendingConnections];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(internetConnectionChanged) name:kReachabilityChangedNotification object:nil];
     
     [self updateUnreadLabel];
     [self customForwardingToolbar];
     
     self.inputToolbar.contentView.textView.text = [[MEGAStore shareInstance] fetchChatDraftWithChatId:self.chatRoom.chatId].text;
     
+    __weak MessagesViewController *weakSelf = self;
+
     UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
     [center getDeliveredNotificationsWithCompletionHandler:^(NSArray<UNNotification *> *notifications) {
-        NSString *base64ChatId = [MEGASdk base64HandleForUserHandle:self.chatRoom.chatId];
+        NSString *base64ChatId = [MEGASdk base64HandleForUserHandle:weakSelf.chatRoom.chatId];
         for (UNNotification *notification in notifications) {
             if ([notification.request.identifier containsString:base64ChatId]) {
                 [center removeDeliveredNotificationsWithIdentifiers:@[notification.request.identifier]];
@@ -234,7 +237,7 @@ const NSUInteger kMaxMessagesToLoad = 256;
     }];
     
     [center getPendingNotificationRequestsWithCompletionHandler:^(NSArray<UNNotificationRequest *> * _Nonnull requests) {
-        NSString *base64ChatId = [MEGASdk base64HandleForUserHandle:self.chatRoom.chatId];
+        NSString *base64ChatId = [MEGASdk base64HandleForUserHandle:weakSelf.chatRoom.chatId];
         for (UNNotificationRequest *request in requests) {
             if ([request.identifier containsString:base64ChatId]) {
                 [center removePendingNotificationRequestsWithIdentifiers:@[request.identifier]];
@@ -247,20 +250,13 @@ const NSUInteger kMaxMessagesToLoad = 256;
     if (!self.isMovingToParentViewController) {
         [self customNavigationBarLabel];
     }
-}
-
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
-    
-    [self showOrHideJumpToBottom];
-    self.initialToolbarHeight = self.inputToolbar.frame.size.height;
     
     if (!self.activeCallButton) {
         [self createJoinActiveCallButton];
         [self.view addSubview:self.activeCallButton];
     }
     
-    if ([[MEGASdkManager sharedMEGAChatSdk] hasCallInChatRoom:self.chatRoom.chatId]) {
+    if ([[MEGASdkManager sharedMEGAChatSdk] hasCallInChatRoom:self.chatRoom.chatId] && MEGAReachabilityManager.isReachable) {
         MEGAChatCall *call = [[MEGASdkManager sharedMEGAChatSdk] chatCallForChatId:self.chatRoom.chatId];
         if (call.status == MEGAChatCallStatusInProgress) {
             [self showTapToReturnCall:call];
@@ -268,6 +264,13 @@ const NSUInteger kMaxMessagesToLoad = 256;
             [self showActiveCallButton];
         }
     }
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
+    [self showOrHideJumpToBottom];
+    self.initialToolbarHeight = self.inputToolbar.frame.size.height;
     
     if (@available(iOS 11.0, *)) { //Fix for devices with safe area not rendering navbar buttons when the VC is instantiated
         if ((UIDeviceOrientationIsLandscape(UIDevice.currentDevice.orientation) || UIDevice.currentDevice.orientation == UIDeviceOrientationUnknown) && self.view.safeAreaInsets.left != 0) {
@@ -304,13 +307,12 @@ const NSUInteger kMaxMessagesToLoad = 256;
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:kReachabilityChangedNotification object:nil];
-
     if ([self.navigationController.viewControllers indexOfObject:self] == NSNotFound || self.presentingViewController) {
         [[MEGASdkManager sharedMEGAChatSdk] closeChatRoom:self.chatRoom.chatId delegate:self];
     }
     [[MEGASdkManager sharedMEGAChatSdk] removeChatDelegate:self];
-    
+    [[MEGASdkManager sharedMEGAChatSdk] removeChatCallDelegate:self];
+
     [[MEGAStore shareInstance] insertOrUpdateChatDraftWithChatId:self.chatRoom.chatId text:self.inputToolbar.contentView.textView.text];
 }
 
@@ -335,7 +337,7 @@ const NSUInteger kMaxMessagesToLoad = 256;
         [message removeObserver:self forKeyPath:@"node"];
     }
     [self.observedNodeMessages removeAllObjects];
-    [[MEGASdkManager sharedMEGAChatSdk] removeChatCallDelegate:self];
+    [NSNotificationCenter.defaultCenter removeObserver:self name:kReachabilityChangedNotification object:nil];
 }
 
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
@@ -573,8 +575,8 @@ const NSUInteger kMaxMessagesToLoad = 256;
     } else {
         NSMutableArray *barButtons = [NSMutableArray new];
         
-        _videoCallBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"videoCall"] style:UIBarButtonItemStyleDone target:self action:@selector(startAudioVideoCall:)];
-        _audioCallBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"audioCall"] style:UIBarButtonItemStyleDone target:self action:@selector(startAudioVideoCall:)];
+        self.videoCallBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"videoCall"] style:UIBarButtonItemStyleDone target:self action:@selector(startAudioVideoCall:)];
+        self.audioCallBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"audioCall"] style:UIBarButtonItemStyleDone target:self action:@selector(startAudioVideoCall:)];
         self.videoCallBarButtonItem.tag = 1;
         [barButtons addObjectsFromArray:@[self.videoCallBarButtonItem, self.audioCallBarButtonItem]];
         
@@ -605,6 +607,7 @@ const NSUInteger kMaxMessagesToLoad = 256;
     button.titleLabel.font = [UIFont mnz_SFUIMediumWithSize:12];
     [button addTarget:self action:@selector(joinActiveCall:) forControlEvents:UIControlEventTouchUpInside];
     button.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+    button.hidden = YES;
     self.activeCallButton = button;
 }
 
@@ -1159,6 +1162,16 @@ const NSUInteger kMaxMessagesToLoad = 256;
     if (self.openMessageHeaderView) {
         self.openMessageHeaderView.onlineStatusLabel.text = self.lastChatRoomStateString;
         self.openMessageHeaderView.onlineStatusView.backgroundColor = self.lastChatRoomStateColor;
+    }
+    
+    if (MEGAReachabilityManager.isReachable) {
+        if (self.activeCallButton.hidden && [[MEGASdkManager sharedMEGAChatSdk] hasCallInChatRoom:self.chatRoom.chatId] && self.chatRoom.isGroup) {
+            [self showActiveCallButton];
+        }
+    } else {
+        if (!self.activeCallButton.hidden) {
+            [self hideActiveCallButton];
+        }
     }
 }
 
@@ -2876,7 +2889,9 @@ const NSUInteger kMaxMessagesToLoad = 256;
 
         switch (call.status) {
             case MEGAChatCallStatusUserNoPresent:
-                [self showActiveCallButton];
+                if (self.activeCallButton.hidden) {
+                    [self showActiveCallButton];
+                }
                 break;
 
             default:
