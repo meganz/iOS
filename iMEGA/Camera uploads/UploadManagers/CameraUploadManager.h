@@ -1,5 +1,6 @@
 
 #import <Foundation/Foundation.h>
+@import Photos;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -25,7 +26,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)stopCameraUpload;
 - (void)stopVideoUpload;
 
-- (void)uploadNextForAsset:(PHAsset *)asset;
+- (void)uploadNextAssetWithMediaType:(PHAssetMediaType)mediaType;
 
 #pragma mark - background refresh
 

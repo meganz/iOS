@@ -9,6 +9,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (NSString *)mnz_cameraUploadFileNameWithExtension:(NSString *)extension;
 
+- (NSString *)mnz_cameraUploadLivePhotoFileNameWithExtension:(NSString *)extension;
+
 @end
 
 NS_ASSUME_NONNULL_END

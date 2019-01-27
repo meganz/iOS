@@ -15,10 +15,11 @@
 #import "TransferSessionManager.h"
 #import "NSFileManager+MNZCategory.h"
 #import "NSURL+CameraUpload.h"
-@import Photos;
 
 static NSString * const CameraUploadsNodeHandle = @"CameraUploadsNodeHandle";
 static NSString * const CameraUplodFolderName = @"Camera Uploads";
+static NSString * const CameraUploadIdentifierSeparator = @",";
+
 static const NSInteger ConcurrentPhotoUploadCount = 10;
 static const NSInteger MaxConcurrentPhotoOperationCountInBackground = 5;
 static const NSInteger MaxConcurrentPhotoOperationCountInMemoryWarning = 2;
@@ -31,8 +32,8 @@ static const NSTimeInterval BackgroundRefreshDuration = 25;
 
 @interface CameraUploadManager ()
 
-@property (strong, nonatomic) NSOperationQueue *photoUploadOerationQueue;
-@property (strong, nonatomic) NSOperationQueue *videoUploadOerationQueue;
+@property (strong, nonatomic) NSOperationQueue *photoUploadOperationQueue;
+@property (strong, nonatomic) NSOperationQueue *videoUploadOperationQueue;
 @property (strong, readwrite, nonatomic) MEGANode *cameraUploadNode;
 @property (strong, nonatomic) CameraScanner *scanner;
 @property (strong, nonatomic) UploadRecordsCollator *dataCollator;
@@ -70,15 +71,15 @@ static const NSTimeInterval BackgroundRefreshDuration = 25;
 }
 
 - (void)initializeUploadOperationQueues {
-    _photoUploadOerationQueue = [[NSOperationQueue alloc] init];
-    _photoUploadOerationQueue.qualityOfService = NSQualityOfServiceUtility;
+    _photoUploadOperationQueue = [[NSOperationQueue alloc] init];
+    _photoUploadOperationQueue.qualityOfService = NSQualityOfServiceUtility;
     if (UIApplication.sharedApplication.applicationState == UIApplicationStateBackground) {
-        _photoUploadOerationQueue.maxConcurrentOperationCount = MaxConcurrentPhotoOperationCountInBackground;
+        _photoUploadOperationQueue.maxConcurrentOperationCount = MaxConcurrentPhotoOperationCountInBackground;
     }
     
-    _videoUploadOerationQueue = [[NSOperationQueue alloc] init];
-    _videoUploadOerationQueue.qualityOfService = NSQualityOfServiceUtility;
-    _videoUploadOerationQueue.maxConcurrentOperationCount = MaxConcurrentVideoOperationCount;
+    _videoUploadOperationQueue = [[NSOperationQueue alloc] init];
+    _videoUploadOperationQueue.qualityOfService = NSQualityOfServiceUtility;
+    _videoUploadOperationQueue.maxConcurrentOperationCount = MaxConcurrentVideoOperationCount;
 }
 
 - (void)registerNotifications {
@@ -132,7 +133,7 @@ static const NSTimeInterval BackgroundRefreshDuration = 25;
         return;
     }
     
-    if (!CameraUploadManager.isCameraUploadEnabled || self.photoUploadOerationQueue.operationCount > 0) {
+    if (!CameraUploadManager.isCameraUploadEnabled || self.photoUploadOperationQueue.operationCount > 0) {
         return;
     }
     
@@ -165,7 +166,7 @@ static const NSTimeInterval BackgroundRefreshDuration = 25;
     }
     
     [self.scanner scanMediaTypes:@[@(PHAssetMediaTypeVideo)] completion:^{
-        if (self.videoUploadOerationQueue.operationCount > 0) {
+        if (self.videoUploadOperationQueue.operationCount > 0) {
             return;
         }
         
@@ -173,16 +174,16 @@ static const NSTimeInterval BackgroundRefreshDuration = 25;
     }];
 }
 
-- (void)uploadNextForAsset:(PHAsset *)asset {
+- (void)uploadNextAssetWithMediaType:(PHAssetMediaType)mediaType {
     if (!CameraUploadManager.isCameraUploadEnabled) {
         return;
     }
     
-    if (asset.mediaType == PHAssetMediaTypeVideo && !CameraUploadManager.isVideoUploadEnabled) {
+    if (mediaType == PHAssetMediaTypeVideo && !CameraUploadManager.isVideoUploadEnabled) {
         return;
     }
     
-    [self uploadNextAssetsWithNumber:1 mediaType:asset.mediaType];
+    [self uploadNextAssetsWithNumber:1 mediaType:mediaType];
 }
 
 - (void)uploadNextAssetsWithNumber:(NSInteger)number mediaType:(PHAssetMediaType)mediaType {
@@ -194,16 +195,26 @@ static const NSTimeInterval BackgroundRefreshDuration = 25;
     
     for (MOAssetUploadRecord *record in records) {
         [CameraUploadRecordManager.shared updateRecord:record withStatus:CameraAssetUploadStatusQueuedUp error:nil];
-        CameraUploadOperation *operation = [UploadOperationFactory operationWithUploadRecord:record parentNode:self.cameraUploadNode];
+        PHAssetMediaSubtype savedMediaSubtype = PHAssetMediaSubtypeNone;
+        CameraUploadOperation *operation = [UploadOperationFactory operationWithUploadRecord:record parentNode:self.cameraUploadNode identifierSeparator:CameraUploadIdentifierSeparator savedMediaSubtype:&savedMediaSubtype];
+        PHAsset *asset = operation.uploadInfo.asset;
         if (operation) {
-            if (mediaType == PHAssetMediaTypeImage) {
-                [self.photoUploadOerationQueue addOperation:operation];
+            if (asset.mediaType == PHAssetMediaTypeImage) {
+                [self.photoUploadOperationQueue addOperation:operation];
+                [self addUploadRecordIfNeededForAsset:asset savedMediaSubtype:savedMediaSubtype];
             } else {
-                [self.videoUploadOerationQueue addOperation:operation];
+                [self.videoUploadOperationQueue addOperation:operation];
             }
         } else {
-            [CameraUploadRecordManager.shared deleteRecordsByLocalIdentifiers:@[record.localIdentifier] error:nil];
+            [CameraUploadRecordManager.shared deleteRecord:record error:nil];
         }
+    }
+}
+
+- (void)addUploadRecordIfNeededForAsset:(PHAsset *)asset savedMediaSubtype:(PHAssetMediaSubtype)savedMediaSubtype {
+    if (savedMediaSubtype == PHAssetMediaSubtypeNone && (asset.mediaSubtypes & PHAssetMediaSubtypePhotoLive)) {
+        NSString *mediaSubtypedLocalIdentifier = [@[asset.localIdentifier, [@(PHAssetMediaSubtypePhotoLive) stringValue]] componentsJoinedByString:CameraUploadIdentifierSeparator];
+        [CameraUploadRecordManager.shared saveAsset:asset mediaSubtypedLocalIdentifier:mediaSubtypedLocalIdentifier error:nil];
     }
 }
 
@@ -217,14 +228,14 @@ static const NSTimeInterval BackgroundRefreshDuration = 25;
 
 - (void)stopCameraUpload {
     [self stopVideoUpload];
-    [self.photoUploadOerationQueue cancelAllOperations];
+    [self.photoUploadOperationQueue cancelAllOperations];
     [self.scanner unobservePhotoLibraryChanges];
     [CameraUploadManager disableBackgroundRefresh];
     [self stopBackgroundUpload];
 }
 
 - (void)stopVideoUpload {
-    [self.videoUploadOerationQueue cancelAllOperations];
+    [self.videoUploadOperationQueue cancelAllOperations];
 }
 
 #pragma mark - upload status
@@ -267,15 +278,15 @@ static const NSTimeInterval BackgroundRefreshDuration = 25;
 #pragma mark - handle app lifecycle
 
 - (void)applicationDidEnterBackground {
-    self.photoUploadOerationQueue.maxConcurrentOperationCount = MaxConcurrentPhotoOperationCountInBackground;
+    self.photoUploadOperationQueue.maxConcurrentOperationCount = MaxConcurrentPhotoOperationCountInBackground;
 }
 
 - (void)applicationDidBecomeActive {
-    self.photoUploadOerationQueue.maxConcurrentOperationCount = NSOperationQueueDefaultMaxConcurrentOperationCount;
+    self.photoUploadOperationQueue.maxConcurrentOperationCount = NSOperationQueueDefaultMaxConcurrentOperationCount;
 }
 
 - (void)applicationDidReceiveMemoryWarning {
-    self.photoUploadOerationQueue.maxConcurrentOperationCount = MaxConcurrentPhotoOperationCountInMemoryWarning;
+    self.photoUploadOperationQueue.maxConcurrentOperationCount = MaxConcurrentPhotoOperationCountInMemoryWarning;
 }
 
 #pragma mark - photos access permission check

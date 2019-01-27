@@ -700,6 +700,7 @@
 		B644B6B821ABA27B00A3B8E7 /* MEGAConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = B60DDC1521A7A7930097E4A3 /* MEGAConstants.m */; };
 		B644B6BE21AE0E1900A3B8E7 /* CoordinateUploadOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = B644B6BD21AE0E1900A3B8E7 /* CoordinateUploadOperation.m */; };
 		B644B6C121AE19BC00A3B8E7 /* MEGAExpirableOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = B644B6C021AE19BC00A3B8E7 /* MEGAExpirableOperation.m */; };
+		B6575FD021FC526D00B7AD82 /* LivePhotoUploadOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = B6575FCF21FC526D00B7AD82 /* LivePhotoUploadOperation.m */; };
 		B658D3B8218F9357004C0D64 /* PhotoUploadOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = B658D3B7218F9357004C0D64 /* PhotoUploadOperation.m */; };
 		B658D3BB218F936B004C0D64 /* VideoUploadOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = B658D3BA218F936B004C0D64 /* VideoUploadOperation.m */; };
 		B658D3CC218FBC24004C0D64 /* CameraUploadManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B658D3C9218FBC24004C0D64 /* CameraUploadManager.m */; };
@@ -1644,6 +1645,8 @@
 		B644B6BD21AE0E1900A3B8E7 /* CoordinateUploadOperation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CoordinateUploadOperation.m; sourceTree = "<group>"; };
 		B644B6BF21AE19BC00A3B8E7 /* MEGAExpirableOperation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MEGAExpirableOperation.h; sourceTree = "<group>"; };
 		B644B6C021AE19BC00A3B8E7 /* MEGAExpirableOperation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MEGAExpirableOperation.m; sourceTree = "<group>"; };
+		B6575FCE21FC526D00B7AD82 /* LivePhotoUploadOperation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LivePhotoUploadOperation.h; sourceTree = "<group>"; };
+		B6575FCF21FC526D00B7AD82 /* LivePhotoUploadOperation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LivePhotoUploadOperation.m; sourceTree = "<group>"; };
 		B658D3B6218F9357004C0D64 /* PhotoUploadOperation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PhotoUploadOperation.h; sourceTree = "<group>"; };
 		B658D3B7218F9357004C0D64 /* PhotoUploadOperation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PhotoUploadOperation.m; sourceTree = "<group>"; };
 		B658D3B9218F936B004C0D64 /* VideoUploadOperation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VideoUploadOperation.h; sourceTree = "<group>"; };
@@ -3582,6 +3585,8 @@
 				B68C42CA216DAA85003C5A50 /* CameraUploadOperation.m */,
 				B658D3B6218F9357004C0D64 /* PhotoUploadOperation.h */,
 				B658D3B7218F9357004C0D64 /* PhotoUploadOperation.m */,
+				B6575FCE21FC526D00B7AD82 /* LivePhotoUploadOperation.h */,
+				B6575FCF21FC526D00B7AD82 /* LivePhotoUploadOperation.m */,
 				B658D3B9218F936B004C0D64 /* VideoUploadOperation.h */,
 				B658D3BA218F936B004C0D64 /* VideoUploadOperation.m */,
 				B6D11AE0219E5E2C00446B86 /* AttributeUploadOperation.h */,
@@ -4575,6 +4580,7 @@
 				5BB50E091F20E840000CA24D /* MEGACreateFolderRequestDelegate.m in Sources */,
 				A81AD7391F3099F800CA4059 /* MEGAProcessAsset.m in Sources */,
 				417279531DB663FA001AC818 /* JSQMessagesCollectionViewCellOutgoing.m in Sources */,
+				B6575FD021FC526D00B7AD82 /* LivePhotoUploadOperation.m in Sources */,
 				B65AC8E521F9B7A30094FF4F /* MOAssetUploadErrorPerLaunch+CoreDataProperties.m in Sources */,
 				41319F551B14968600696BA8 /* SortByTableViewController.m in Sources */,
 				41D21E631D01AEC3002E6296 /* CTAssetsGridSelectedView.m in Sources */,

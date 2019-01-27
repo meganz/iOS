@@ -45,6 +45,7 @@
     [aCoder encodeObject:self.directoryURL forKey:@"directoryURL"];
     [aCoder encodeObject:self.mediaUpload.serialize forKey:@"mediaUpload"];
     [aCoder encodeObject:@(self.parentNode.handle) forKey:@"parentHandle"];
+    [aCoder encodeObject:self.savedRecordLocalIdentifier forKey:@"savedRecordLocalIdentifier"];
 }
 
 - (nullable instancetype)initWithCoder:(nonnull NSCoder *)aDecoder {
@@ -62,6 +63,7 @@
         }
         NSData *serializedData = [aDecoder decodeObjectForKey:@"mediaUpload"];
         _mediaUpload = [[MEGASdkManager sharedMEGASdk] resumeBackgroundMediaUploadBySerializedData:serializedData];
+        _savedRecordLocalIdentifier = [aDecoder decodeObjectForKey:@"savedRecordLocalIdentifier"];
     }
     
     return self;

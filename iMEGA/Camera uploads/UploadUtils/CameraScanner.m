@@ -17,6 +17,7 @@
     self = [super init];
     if (self) {
         _operationQueue = [[NSOperationQueue alloc] init];
+        _operationQueue.maxConcurrentOperationCount = 1;
     }
     return self;
 }
@@ -42,10 +43,10 @@
         NSError *error = nil;
         NSArray<MOAssetUploadRecord *> *records = [[CameraUploadRecordManager shared] fetchAllRecords:&error];
         if (records.count == 0) {
-            [[CameraUploadRecordManager shared] saveAssetFetchResult:self.fetchResult error:nil];
+            [[CameraUploadRecordManager shared] initialSaveWithAssetFetchResult:self.fetchResult error:nil];
         } else {
             NSArray<PHAsset *> *newAssets = [self findNewAssetsByComparingFetchResult:self.fetchResult uploadRecords:records];
-            [[CameraUploadRecordManager shared] saveAssets:newAssets checkExistence:NO error:nil];
+            [[CameraUploadRecordManager shared] saveAssets:newAssets error:nil];
         }
         
         MEGALogDebug(@"[Camera Upload] Finish local album scanning at: %@", [NSDateFormatter localizedStringFromDate:[NSDate date] dateStyle:NSDateFormatterShortStyle timeStyle:NSDateFormatterFullStyle]);
@@ -101,7 +102,7 @@
             }
             
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
-                [CameraUploadRecordManager.shared saveAssets:newAssets checkExistence:YES error:nil];
+                [CameraUploadRecordManager.shared saveAssets:newAssets error:nil];
                 [CameraUploadManager.shared startCameraUploadIfNeeded];
             });
         }

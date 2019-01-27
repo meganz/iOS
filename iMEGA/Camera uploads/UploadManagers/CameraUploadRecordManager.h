@@ -32,9 +32,11 @@ extern NSString * const CameraAssetUploadStatusDone;
 
 - (BOOL)saveChangesIfNeeded:(NSError * _Nullable __autoreleasing * _Nullable)error;
 
-- (BOOL)saveAssetFetchResult:(PHFetchResult *)result error:(NSError * _Nullable __autoreleasing * _Nullable)error;
+- (BOOL)initialSaveWithAssetFetchResult:(PHFetchResult *)result error:(NSError * _Nullable __autoreleasing * _Nullable)error;
 
-- (BOOL)saveAssets:(NSArray<PHAsset *> *)assets checkExistence:(BOOL)checkExistence error:(NSError * _Nullable __autoreleasing * _Nullable)error;
+- (BOOL)saveAssets:(NSArray<PHAsset *> *)assets error:(NSError * _Nullable __autoreleasing * _Nullable)error;
+
+- (BOOL)saveAsset:(PHAsset *)asset mediaSubtypedLocalIdentifier:(NSString *)identifier error:(NSError * _Nullable __autoreleasing * _Nullable)error;
 
 #pragma mark - update records
 
@@ -43,6 +45,8 @@ extern NSString * const CameraAssetUploadStatusDone;
 - (BOOL)updateRecord:(MOAssetUploadRecord *)record withStatus:(NSString *)status error:(NSError * _Nullable __autoreleasing * _Nullable)error;
 
 #pragma mark - delete records
+
+- (BOOL)deleteRecord:(MOAssetUploadRecord *)record error:(NSError * _Nullable __autoreleasing * _Nullable)error;
 
 - (BOOL)deleteRecordsByLocalIdentifiers:(NSArray<NSString *> *)identifiers error:(NSError * _Nullable __autoreleasing * _Nullable)error;
 
