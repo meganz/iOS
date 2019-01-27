@@ -4,6 +4,8 @@
 #import "CameraUploadFileNameRecordManager.h"
 #import "NSString+MNZCategory.h"
 
+static NSString * const CameraUploadLivePhotoExtension = @"live";
+
 @implementation PHAsset (CameraUpload)
 
 - (NSString *)mnz_fileExtensionFromAssetInfo:(NSDictionary *)info {
@@ -34,6 +36,11 @@
 
 - (NSString *)mnz_cameraUploadFileNameWithExtension:(NSString *)extension {
     NSString *proposedFileName = [[NSString mnz_fileNameWithDate:self.creationDate] stringByAppendingPathExtension:extension];
+    return [CameraUploadFileNameRecordManager.shared localUniqueFileNameForAssetLocalIdentifier:self.localIdentifier proposedFileName:proposedFileName];
+}
+
+- (NSString *)mnz_cameraUploadLivePhotoFileNameWithExtension:(NSString *)extension {
+    NSString *proposedFileName = [[[NSString mnz_fileNameWithDate:self.creationDate] stringByAppendingPathExtension:CameraUploadLivePhotoExtension] stringByAppendingPathExtension:extension];
     return [CameraUploadFileNameRecordManager.shared localUniqueFileNameForAssetLocalIdentifier:self.localIdentifier proposedFileName:proposedFileName];
 }
 

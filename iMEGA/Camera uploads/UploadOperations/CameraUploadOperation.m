@@ -114,7 +114,7 @@
 #pragma mark - data processing
 
 - (NSURL *)URLForAssetFolder {
-    NSURL *assetDirectoryURL = [NSURL mnz_assetDirectoryURLForLocalIdentifier:self.uploadInfo.asset.localIdentifier];
+    NSURL *assetDirectoryURL = [NSURL mnz_assetDirectoryURLForLocalIdentifier:self.uploadInfo.savedRecordLocalIdentifier];
     [NSFileManager.defaultManager removeItemIfExistsAtURL:assetDirectoryURL];
     [[NSFileManager defaultManager] createDirectoryAtURL:assetDirectoryURL withIntermediateDirectories:YES attributes:nil error:nil];
     return assetDirectoryURL;
@@ -185,7 +185,7 @@
             } else {
                 uploadTask = [[TransferSessionManager shared] photoUploadTaskWithURL:serverURL fromFile:chunkURL completion:nil];
             }
-            uploadTask.taskDescription = self.uploadInfo.asset.localIdentifier;
+            uploadTask.taskDescription = self.uploadInfo.savedRecordLocalIdentifier;
             [uploadTask resume];
             MEGALogDebug(@"[Camera Upload] %@ starts uploading chunk %@", self, chunkURL.lastPathComponent);
         } else {
@@ -202,7 +202,7 @@
 
 - (void)archiveUploadInfoDataForBackgroundTransfer {
     MEGALogDebug(@"[Camera Upload] %@ start archiving upload info", self);
-    NSURL *archivedURL = [NSURL mnz_archivedURLForLocalIdentifier:self.uploadInfo.asset.localIdentifier];
+    NSURL *archivedURL = [NSURL mnz_archivedURLForLocalIdentifier:self.uploadInfo.savedRecordLocalIdentifier];
     [NSKeyedArchiver archiveRootObject:self.uploadInfo toFile:archivedURL.path];
 }
 
@@ -225,7 +225,7 @@
     }
     
     if (uploadNextAsset) {
-        [[CameraUploadManager shared] uploadNextForAsset:self.uploadInfo.asset];
+        [CameraUploadManager.shared uploadNextAssetWithMediaType:self.uploadInfo.asset.mediaType];
     }
 }
 
