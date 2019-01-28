@@ -689,7 +689,7 @@
 /* Title for the MEGA Recovery Key */
 "masterKey"="リカバリーキー";
 /* Section title where you can change your MEGA's password */
-"changePasswordLabel"="パスワードを変更する";
+"changePasswordLabel"="パスワードの変更";
 /* Advising the user to keep the user's master key safe. */
 "exportMasterKeyFooter"="回復キーをエクスポートして安全な場所に保管すると、データを失うことなく新しいパスワードを設定できます。";
 /* Question button to present a view where it's explained what is the Recovery Key */
@@ -1676,6 +1676,16 @@
 "To disable the Rubbish-Bin Cleaning Scheduler or set a longer retention period, you need to subscribe to a PRO plan."="ごみ箱クリーニングスケジューラを無効にするか、より長い保存期間を設定するには、PROプランをご購読いただく必要がございます。";
 /* Confirmation dialog for the button that logs the user out of all sessions except the current one. */
 "Do you want to close all other sessions? This will log you out on all other active sessions except the current one."="他のセッションをすべて終了しますか？　これにより、現在のセッション以外のすべてのアクティブなセッションでログアウトされます。";
+/* Message to inform the local user that someone has joined the current group call */
+"%@ joined the call."="%@さんが通話に参加しました。";
+/* Message to inform the local user that someone has left the current group call */
+"%@ left the call."="%@さんが通話から抜けました。";
+/* Message to inform the local user is having a bad quality network with someone in the current group call */
+"Poor conection."="接続不良。";
+/* Message shown in a chat room when there is an active group call */
+"There is an active group call. Tap to join."="有効なグループ通話があります。タップして参加します。";
+/* Message shown in a chat room for a group call in progress displaying the duration of the call */
+"Touch to return to call %@"="タッチして通話に戻る %@";
 /* A button label which allows the users save images/videos in the Photos app. */
 "Save to Photos"="写真に保存";
 /* Text shown when starting the process to save a photo or video to Photos app */
@@ -1684,6 +1694,10 @@
 "Saved to Photos"="写真に保存されました";
 /* Text shown when an error occurs when trying to save a photo or video to Photos app */
 "Could not save Item"="項目を保存できませんでした";
+/* Message show when a call cannot be established because there are too many participants in the group call */
+"Error. No more participants are allowed in this group call."="最大参加者数に達したため、この通話に参加できません。";
+/* Message show when a user cannot activate the video in a group call because the max number of videos has been reached */
+"Error. No more video are allowed in this group call."="この通話はビデオを使用している最大参加者数に達したため、ビデオを有効にできません。";
 /* Text shown for switching from thumbnail view to list view. */
 "List view"="リスト一覧";
 /* Text shown for switching from list view to thumbnail view. */
@@ -1770,6 +1784,10 @@
 "Your PRO membership plan will expire in 1 day."="あなたのPROメンバーシッププランは1日後に失効します。";
 /* The professional pricing plan which the user is currently on will expire in 5 days. The %1 is a placeholder for the number of days and should not be removed. */
 "Your PRO membership plan will expire in %1 days."="あなたのPROメンバーシッププランは%1日後に失効します。";
+/* The professional pricing plan which the user was on expired one day ago. */
+"Your PRO membership plan expired 1 day ago"="あなたのPROメンバーシッププランは1日前に失効しました";
+/* The professional pricing plan which the user was on expired %1 days ago. The %1 is a placeholder for the number of days and should not be removed. */
+"Your PRO membership plan expired %1 days ago"="あなたのPROメンバーシッププランは%1日前に失効しました";
 /* The text of a notification indicating that a file or folder has been taken down due to infringement or other reason. The %1 placeholder will be replaced with the text ‘file’ or ‘folder’. The %2 will be replaced with the name of the file or folder. */
 "Your publicly shared %1 (%2) has been taken down."="あなたの公開共有された%1（%2）は削除されました。";
 /* The text of a notification indicating that a file or folder that was taken down has now been restored due to a successful counter-notice. The %1 placeholder will be replaced with the text ‘file’ or ‘folder’. The %2 will be replaced with the name of the file or folder. */
@@ -1790,3 +1808,7 @@
 "Today"="今日";
 /* */
 "Yesterday"="昨日";
+/* Plural of participant. 2 participants */
+"%d participants"="%d人の参加者";
+/* Singular of participant. 1 participant */
+"%d participant"="%d人の参加者";
