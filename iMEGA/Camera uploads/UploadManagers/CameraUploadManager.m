@@ -194,27 +194,30 @@ static const NSTimeInterval BackgroundRefreshDuration = 25;
     }
     
     for (MOAssetUploadRecord *record in records) {
-        [CameraUploadRecordManager.shared updateRecord:record withStatus:CameraAssetUploadStatusQueuedUp error:nil];
+        [CameraUploadRecordManager.shared updateUploadRecord:record withStatus:CameraAssetUploadStatusQueuedUp error:nil];
         PHAssetMediaSubtype savedMediaSubtype = PHAssetMediaSubtypeNone;
         CameraUploadOperation *operation = [UploadOperationFactory operationWithUploadRecord:record parentNode:self.cameraUploadNode identifierSeparator:CameraUploadIdentifierSeparator savedMediaSubtype:&savedMediaSubtype];
         PHAsset *asset = operation.uploadInfo.asset;
         if (operation) {
             if (asset.mediaType == PHAssetMediaTypeImage) {
                 [self.photoUploadOperationQueue addOperation:operation];
-                [self addUploadRecordIfNeededForAsset:asset savedMediaSubtype:savedMediaSubtype];
             } else {
                 [self.videoUploadOperationQueue addOperation:operation];
             }
+            
+            [self addUploadRecordIfNeededForAsset:asset savedMediaSubtype:savedMediaSubtype];
         } else {
-            [CameraUploadRecordManager.shared deleteRecord:record error:nil];
+            [CameraUploadRecordManager.shared deleteUploadRecord:record error:nil];
         }
     }
 }
 
 - (void)addUploadRecordIfNeededForAsset:(PHAsset *)asset savedMediaSubtype:(PHAssetMediaSubtype)savedMediaSubtype {
-    if (savedMediaSubtype == PHAssetMediaSubtypeNone && (asset.mediaSubtypes & PHAssetMediaSubtypePhotoLive)) {
-        NSString *mediaSubtypedLocalIdentifier = [@[asset.localIdentifier, [@(PHAssetMediaSubtypePhotoLive) stringValue]] componentsJoinedByString:CameraUploadIdentifierSeparator];
-        [CameraUploadRecordManager.shared saveAsset:asset mediaSubtypedLocalIdentifier:mediaSubtypedLocalIdentifier error:nil];
+    if (@available(iOS 9.1, *)) {
+        if (asset.mediaType == PHAssetMediaTypeImage && savedMediaSubtype == PHAssetMediaSubtypeNone && (asset.mediaSubtypes & PHAssetMediaSubtypePhotoLive)) {
+            NSString *mediaSubtypedLocalIdentifier = [@[asset.localIdentifier, [@(PHAssetMediaSubtypePhotoLive) stringValue]] componentsJoinedByString:CameraUploadIdentifierSeparator];
+            [CameraUploadRecordManager.shared saveAsset:asset mediaSubtypedLocalIdentifier:mediaSubtypedLocalIdentifier error:nil];
+        }
     }
 }
 
@@ -251,7 +254,7 @@ static const NSTimeInterval BackgroundRefreshDuration = 25;
             mediaTypes = @[@(PHAssetMediaTypeImage)];
         }
         
-        pendingCount = [CameraUploadRecordManager.shared pendingRecordsCountByMediaTypes:mediaTypes error:nil];
+        pendingCount = [CameraUploadRecordManager.shared pendingUploadRecordsCountByMediaTypes:mediaTypes error:nil];
     }
     
     return pendingCount;

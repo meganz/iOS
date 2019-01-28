@@ -77,7 +77,7 @@
         return;
     }
     
-    [CameraUploadRecordManager.shared updateRecordOfLocalIdentifier:localIdentifier withStatus:status error:nil];
+    [CameraUploadRecordManager.shared updateUploadRecordByLocalIdentifier:localIdentifier withStatus:status error:nil];
     NSURL *uploadDirectory = [NSURL mnz_assetDirectoryURLForLocalIdentifier:localIdentifier];
     [NSFileManager.defaultManager removeItemAtURL:uploadDirectory error:nil];
     MEGALogDebug(@"[Camera Upload] Background Upload finishes with session task %@ and status: %@", localIdentifier, status);

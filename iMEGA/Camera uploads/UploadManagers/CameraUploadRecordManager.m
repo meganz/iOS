@@ -44,11 +44,11 @@ static const NSUInteger MaximumUploadRetryPerLoginCount = 200;
 
 #pragma mark - fetch records
 
-- (NSArray<MOAssetUploadRecord *> *)fetchRecordByLocalIdentifier:(NSString *)identifier error:(NSError *__autoreleasing  _Nullable *)error {
+- (NSArray<MOAssetUploadRecord *> *)fetchUploadRecordsByLocalIdentifier:(NSString *)identifier error:(NSError *__autoreleasing  _Nullable *)error {
     NSFetchRequest *request = MOAssetUploadRecord.fetchRequest;
     request.predicate = [NSPredicate predicateWithFormat:@"localIdentifier == %@", identifier];
     [request setRelationshipKeyPathsForPrefetching:@[@"errorPerLaunch", @"errorPerLogin"]];
-    return [self fetchRecordsByFetchRequest:request error:error];
+    return [self fetchUploadRecordsByFetchRequest:request error:error];
 }
 
 - (NSArray<MOAssetUploadRecord *> *)fetchToBeUploadedRecordsWithLimit:(NSInteger)fetchLimit mediaType:(PHAssetMediaType)mediaType error:(NSError *__autoreleasing  _Nullable *)error {
@@ -58,14 +58,14 @@ static const NSUInteger MaximumUploadRetryPerLoginCount = 200;
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(status IN %@) AND (mediaType == %@)", @[CameraAssetUploadStatusNotStarted, CameraAssetUploadStatusFailed], @(mediaType)];
     request.predicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[predicate, [self predicateForAssetUploadRecordError]]];
     [request setRelationshipKeyPathsForPrefetching:@[@"errorPerLaunch", @"errorPerLogin"]];
-    return [self fetchRecordsByFetchRequest:request error:error];
+    return [self fetchUploadRecordsByFetchRequest:request error:error];
 }
 
-- (NSArray<MOAssetUploadRecord *> *)fetchAllRecords:(NSError * _Nullable __autoreleasing * _Nullable)error {
-    return [self fetchRecordsByFetchRequest:MOAssetUploadRecord.fetchRequest error:error];
+- (NSArray<MOAssetUploadRecord *> *)fetchAllUploadRecords:(NSError * _Nullable __autoreleasing * _Nullable)error {
+    return [self fetchUploadRecordsByFetchRequest:MOAssetUploadRecord.fetchRequest error:error];
 }
 
-- (NSUInteger)pendingRecordsCountByMediaTypes:(NSArray<NSNumber *> *)mediaTypes error:(NSError * _Nullable __autoreleasing *)error {
+- (NSUInteger)pendingUploadRecordsCountByMediaTypes:(NSArray<NSNumber *> *)mediaTypes error:(NSError * _Nullable __autoreleasing *)error {
     __block NSUInteger pendingCount = 0;
     __block NSError *coreDataError = nil;
     [self.privateQueueContext performBlockAndWait:^{
@@ -86,13 +86,13 @@ static const NSUInteger MaximumUploadRetryPerLoginCount = 200;
     return pendingCount;
 }
 
-- (NSArray<MOAssetUploadRecord *> *)fetchRecordsByStatuses:(NSArray<NSString *> *)statuses error:(NSError * _Nullable __autoreleasing *)error {
+- (NSArray<MOAssetUploadRecord *> *)fetchUploadRecordsByStatuses:(NSArray<NSString *> *)statuses error:(NSError * _Nullable __autoreleasing *)error {
     NSFetchRequest *request = MOAssetUploadRecord.fetchRequest;
     request.predicate = [NSPredicate predicateWithFormat:@"status IN %@", statuses];
-    return [self fetchRecordsByFetchRequest:request error:error];
+    return [self fetchUploadRecordsByFetchRequest:request error:error];
 }
 
-- (NSArray<MOAssetUploadRecord *> *)fetchRecordsByFetchRequest:(NSFetchRequest *)request error:(NSError * _Nullable __autoreleasing *)error {
+- (NSArray<MOAssetUploadRecord *> *)fetchUploadRecordsByFetchRequest:(NSFetchRequest *)request error:(NSError * _Nullable __autoreleasing *)error {
     __block NSArray<MOAssetUploadRecord *> *records = @[];
     __block NSError *coreDataError = nil;
     [self.privateQueueContext performBlockAndWait:^{
@@ -145,7 +145,7 @@ static const NSUInteger MaximumUploadRetryPerLoginCount = 200;
     if (assets.count > 0) {
         [self.privateQueueContext performBlockAndWait:^{
             for (PHAsset *asset in assets) {
-                if ([self fetchRecordByLocalIdentifier:asset.localIdentifier error:nil].count == 0) {
+                if ([self fetchUploadRecordsByLocalIdentifier:asset.localIdentifier error:nil].count == 0) {
                     [self createUploadRecordFromAsset:asset];
                 }
             }
@@ -162,7 +162,7 @@ static const NSUInteger MaximumUploadRetryPerLoginCount = 200;
 }
 
 - (BOOL)saveAsset:(PHAsset *)asset mediaSubtypedLocalIdentifier:(NSString *)identifier error:(NSError * _Nullable __autoreleasing * _Nullable)error {
-    if ([self fetchRecordByLocalIdentifier:identifier error:nil].count == 0) {
+    if ([self fetchUploadRecordsByLocalIdentifier:identifier error:nil].count == 0) {
         __block NSError *coreDataError = nil;
         [self.privateQueueContext performBlockAndWait:^{
             MOAssetUploadRecord *record = [self createUploadRecordFromAsset:asset];
@@ -182,11 +182,11 @@ static const NSUInteger MaximumUploadRetryPerLoginCount = 200;
 
 #pragma mark - update records
 
-- (BOOL)updateRecordOfLocalIdentifier:(NSString *)identifier withStatus:(NSString *)status error:(NSError *__autoreleasing  _Nullable *)error {
+- (BOOL)updateUploadRecordByLocalIdentifier:(NSString *)identifier withStatus:(NSString *)status error:(NSError *__autoreleasing  _Nullable *)error {
     __block NSError *coreDataError = nil;
-    NSArray *records = [self fetchRecordByLocalIdentifier:identifier error:&coreDataError];
+    NSArray *records = [self fetchUploadRecordsByLocalIdentifier:identifier error:&coreDataError];
     for (MOAssetUploadRecord *record in records) {
-        [self updateRecord:record withStatus:status error:&coreDataError];
+        [self updateUploadRecord:record withStatus:status error:&coreDataError];
     }
 
     if (error != NULL) {
@@ -196,7 +196,7 @@ static const NSUInteger MaximumUploadRetryPerLoginCount = 200;
     return coreDataError == nil;
 }
 
-- (BOOL)updateRecord:(MOAssetUploadRecord *)record withStatus:(NSString *)status error:(NSError *__autoreleasing  _Nullable *)error {
+- (BOOL)updateUploadRecord:(MOAssetUploadRecord *)record withStatus:(NSString *)status error:(NSError *__autoreleasing  _Nullable *)error {
     __block NSError *coreDataError = nil;
     [self.privateQueueContext performBlockAndWait:^{
         record.status = status;
@@ -227,7 +227,22 @@ static const NSUInteger MaximumUploadRetryPerLoginCount = 200;
 
 #pragma mark - delete records
 
-- (BOOL)deleteRecord:(MOAssetUploadRecord *)record error:(NSError * _Nullable __autoreleasing * _Nullable)error {
+- (BOOL)deleteAllUploadRecordsWithError:(NSError * _Nullable __autoreleasing * _Nullable)error {
+    __block NSError *coreDataError = nil;
+    [self.privateQueueContext performBlockAndWait:^{
+        NSFetchRequest *request = MOAssetUploadRecord.fetchRequest;
+        NSBatchDeleteRequest *deleteRequest = [[NSBatchDeleteRequest alloc] initWithFetchRequest:request];
+        [self.privateQueueContext executeRequest:deleteRequest error:&coreDataError];
+    }];
+    
+    if (error != NULL) {
+        *error = coreDataError;
+    }
+    
+    return coreDataError == nil;
+}
+
+- (BOOL)deleteUploadRecord:(MOAssetUploadRecord *)record error:(NSError * _Nullable __autoreleasing * _Nullable)error {
     __block NSError *coreDataError = nil;
     [self.privateQueueContext performBlockAndWait:^{
         [self.privateQueueContext deleteObject:record];
@@ -241,7 +256,7 @@ static const NSUInteger MaximumUploadRetryPerLoginCount = 200;
     return coreDataError == nil;
 }
 
-- (BOOL)deleteRecordsByLocalIdentifiers:(NSArray<NSString *> *)identifiers error:(NSError * _Nullable __autoreleasing * _Nullable)error {
+- (BOOL)deleteUploadRecordsByLocalIdentifiers:(NSArray<NSString *> *)identifiers error:(NSError * _Nullable __autoreleasing * _Nullable)error {
     __block NSError *coreDataError = nil;
     if (identifiers.count > 0) {
         [self.privateQueueContext performBlockAndWait:^{
@@ -262,7 +277,7 @@ static const NSUInteger MaximumUploadRetryPerLoginCount = 200;
 
 #pragma mark - error record management
 
-- (BOOL)clearErrorRecordsPerLaunchWithError:(NSError * _Nullable __autoreleasing * _Nullable)error {
+- (BOOL)deleteAllErrorRecordsPerLaunchWithError:(NSError * _Nullable __autoreleasing * _Nullable)error {
     __block NSError *coreDataError = nil;
     [self.privateQueueContext performBlockAndWait:^{
         NSFetchRequest *request = MOAssetUploadErrorPerLaunch.fetchRequest;

@@ -21,7 +21,9 @@
     options.deliveryMode = PHImageRequestOptionsDeliveryModeHighQualityFormat;
     __weak __typeof__(self) weakSelf = self;
     [PHImageManager.defaultManager requestLivePhotoForAsset:self.uploadInfo.asset targetSize:PHImageManagerMaximumSize contentMode:PHImageContentModeDefault options:options resultHandler:^(PHLivePhoto * _Nullable livePhoto, NSDictionary * _Nullable info) {
-        [weakSelf processLivePhoto:livePhoto];
+        if (![info[PHImageResultIsDegradedKey] boolValue]) {
+            [weakSelf processLivePhoto:livePhoto];
+        }
     }];
 }
 

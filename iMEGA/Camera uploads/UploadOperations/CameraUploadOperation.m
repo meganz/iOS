@@ -63,7 +63,7 @@
     }];
     
     MEGALogDebug(@"[Camera Upload] %@ starts processing", self);
-    [CameraUploadRecordManager.shared updateRecord:self.uploadRecord withStatus:CameraAssetUploadStatusProcessing error:nil];
+    [CameraUploadRecordManager.shared updateUploadRecord:self.uploadRecord withStatus:CameraAssetUploadStatusProcessing error:nil];
     
     self.uploadInfo.directoryURL = [self URLForAssetFolder];
 }
@@ -212,7 +212,7 @@
     [self finishOperation];
     
     MEGALogDebug(@"[Camera Upload] %@ finishes with status: %@", self, status);
-    [CameraUploadRecordManager.shared updateRecord:self.uploadRecord withStatus:status error:nil];
+    [CameraUploadRecordManager.shared updateUploadRecord:self.uploadRecord withStatus:status error:nil];
     
     if (![status isEqualToString:CameraAssetUploadStatusUploading]) {
         [[NSFileManager defaultManager] removeItemAtURL:self.uploadInfo.directoryURL error:nil];
