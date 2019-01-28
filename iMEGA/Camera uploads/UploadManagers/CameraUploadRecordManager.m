@@ -44,10 +44,13 @@ static const NSUInteger MaximumUploadRetryPerLoginCount = 200;
 
 #pragma mark - fetch records
 
-- (NSArray<MOAssetUploadRecord *> *)fetchUploadRecordsByLocalIdentifier:(NSString *)identifier error:(NSError *__autoreleasing  _Nullable *)error {
+- (NSArray<MOAssetUploadRecord *> *)fetchUploadRecordsByLocalIdentifier:(NSString *)identifier shouldPrefetchErrorRecords:(BOOL)prefetchErrorRecords error:(NSError *__autoreleasing  _Nullable *)error {
     NSFetchRequest *request = MOAssetUploadRecord.fetchRequest;
     request.predicate = [NSPredicate predicateWithFormat:@"localIdentifier == %@", identifier];
-    [request setRelationshipKeyPathsForPrefetching:@[@"errorPerLaunch", @"errorPerLogin"]];
+    if (prefetchErrorRecords) {
+        [request setRelationshipKeyPathsForPrefetching:@[@"errorPerLaunch", @"errorPerLogin"]];
+    }
+
     return [self fetchUploadRecordsByFetchRequest:request error:error];
 }
 
@@ -145,7 +148,7 @@ static const NSUInteger MaximumUploadRetryPerLoginCount = 200;
     if (assets.count > 0) {
         [self.privateQueueContext performBlockAndWait:^{
             for (PHAsset *asset in assets) {
-                if ([self fetchUploadRecordsByLocalIdentifier:asset.localIdentifier error:nil].count == 0) {
+                if ([self fetchUploadRecordsByLocalIdentifier:asset.localIdentifier shouldPrefetchErrorRecords:NO error:nil].count == 0) {
                     [self createUploadRecordFromAsset:asset];
                 }
             }
@@ -162,7 +165,7 @@ static const NSUInteger MaximumUploadRetryPerLoginCount = 200;
 }
 
 - (BOOL)saveAsset:(PHAsset *)asset mediaSubtypedLocalIdentifier:(NSString *)identifier error:(NSError * _Nullable __autoreleasing * _Nullable)error {
-    if ([self fetchUploadRecordsByLocalIdentifier:identifier error:nil].count == 0) {
+    if ([self fetchUploadRecordsByLocalIdentifier:identifier shouldPrefetchErrorRecords:NO error:nil].count == 0) {
         __block NSError *coreDataError = nil;
         [self.privateQueueContext performBlockAndWait:^{
             MOAssetUploadRecord *record = [self createUploadRecordFromAsset:asset];
@@ -184,7 +187,7 @@ static const NSUInteger MaximumUploadRetryPerLoginCount = 200;
 
 - (BOOL)updateUploadRecordByLocalIdentifier:(NSString *)identifier withStatus:(NSString *)status error:(NSError *__autoreleasing  _Nullable *)error {
     __block NSError *coreDataError = nil;
-    NSArray *records = [self fetchUploadRecordsByLocalIdentifier:identifier error:&coreDataError];
+    NSArray *records = [self fetchUploadRecordsByLocalIdentifier:identifier shouldPrefetchErrorRecords:YES error:&coreDataError];
     for (MOAssetUploadRecord *record in records) {
         [self updateUploadRecord:record withStatus:status error:&coreDataError];
     }
@@ -211,8 +214,15 @@ static const NSUInteger MaximumUploadRetryPerLoginCount = 200;
             }
             record.errorPerLogin.errorCount = @(record.errorPerLogin.errorCount.unsignedIntegerValue + 1);
         } else if ([status isEqualToString:CameraAssetUploadStatusDone]) {
-            [self deleteErrorRecordsPerLaunchByLocalIdentifiers:@[[record localIdentifier]] error:nil];
-            [self deleteErrorRecordsPerLoginByLocalIdentifiers:@[[record localIdentifier]] error:nil];
+            MOAssetUploadErrorPerLaunch *errorPerLaunch = [record errorPerLaunch];
+            if (errorPerLaunch) {
+                [self.privateQueueContext deleteObject:errorPerLaunch];
+            }
+            
+            MOAssetUploadErrorPerLogin *errorPerLogin = [record errorPerLogin];
+            if (errorPerLogin) {
+                [self.privateQueueContext deleteObject:errorPerLogin];
+            }
         }
         
         [self.privateQueueContext save:&coreDataError];
@@ -284,42 +294,6 @@ static const NSUInteger MaximumUploadRetryPerLoginCount = 200;
         NSBatchDeleteRequest *deleteRequest = [[NSBatchDeleteRequest alloc] initWithFetchRequest:request];
         [self.privateQueueContext executeRequest:deleteRequest error:&coreDataError];
     }];
-    
-    if (error != NULL) {
-        *error = coreDataError;
-    }
-    
-    return coreDataError == nil;
-}
-
-- (BOOL)deleteErrorRecordsPerLaunchByLocalIdentifiers:(NSArray<NSString *> *)identifiers error:(NSError * _Nullable __autoreleasing * _Nullable)error {
-    __block NSError *coreDataError = nil;
-    if (identifiers.count > 0) {
-        [self.privateQueueContext performBlockAndWait:^{
-            NSFetchRequest *perLaunchRequest = MOAssetUploadErrorPerLaunch.fetchRequest;
-            perLaunchRequest.predicate = [NSPredicate predicateWithFormat:@"localIdentifier IN %@", identifiers];
-            NSBatchDeleteRequest *deleteRequest = [[NSBatchDeleteRequest alloc] initWithFetchRequest:perLaunchRequest];
-            [self.privateQueueContext executeRequest:deleteRequest error:&coreDataError];
-        }];
-    }
-    
-    if (error != NULL) {
-        *error = coreDataError;
-    }
-    
-    return coreDataError == nil;
-}
-
-- (BOOL)deleteErrorRecordsPerLoginByLocalIdentifiers:(NSArray<NSString *> *)identifiers error:(NSError * _Nullable __autoreleasing * _Nullable)error {
-    __block NSError *coreDataError = nil;
-    if (identifiers.count > 0) {
-        [self.privateQueueContext performBlockAndWait:^{
-            NSFetchRequest *perLoginRequest = MOAssetUploadErrorPerLogin.fetchRequest;
-            perLoginRequest.predicate = [NSPredicate predicateWithFormat:@"localIdentifier IN %@", identifiers];
-            NSBatchDeleteRequest *deleteRequest = [[NSBatchDeleteRequest alloc] initWithFetchRequest:perLoginRequest];
-            [self.privateQueueContext executeRequest:deleteRequest error:&coreDataError];
-        }];
-    }
     
     if (error != NULL) {
         *error = coreDataError;
