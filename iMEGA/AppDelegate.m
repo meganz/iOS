@@ -589,7 +589,7 @@
             } if (personHandle.type == INPersonHandleTypeUnknown) {
                 uint64_t handle = [MEGASdk handleForBase64UserHandle:personHandle.value];
                 MEGAChatCall *call = [[MEGASdkManager sharedMEGAChatSdk] chatCallForChatId:handle];
-                self.videoCall = [userActivity.activityType isEqualToString:@"INStartVideoCallIntent"] ? YES : NO;
+                self.videoCall = [userActivity.activityType isEqualToString:@"INStartVideoCallIntent"];
 
                 if (call && call.status == MEGAChatCallStatusInProgress) {
                     self.chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:call.chatId];

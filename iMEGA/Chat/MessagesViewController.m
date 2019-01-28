@@ -595,7 +595,7 @@ const NSUInteger kMaxMessagesToLoad = 256;
 - (void)createJoinActiveCallButton {
     UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, -44, self.view.frame.size.width, 44)];
     button.hidden = YES;
-    button.backgroundColor = [UIColor colorWithRed:0 green:0.75 blue:0.65 alpha:1];
+    button.backgroundColor = UIColor.mnz_green00BFA5;
     NSString *title;
     if (self.chatRoom.isGroup) {
         title = AMLocalizedString(@"There is an active group call. Tap to join.", @"Message shown in a chat room when there is an active group call");
