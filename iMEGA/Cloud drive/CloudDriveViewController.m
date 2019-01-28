@@ -89,11 +89,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self determineLayoutView];
-    
     self.definesPresentationContext = YES;
-    
-    [self setNavigationBarButtonItems];
     
     switch (self.displayMode) {
         case DisplayModeCloudDrive: {
@@ -111,6 +107,10 @@
         default:
             break;
     }
+    
+    [self determineLayoutView];
+    
+    [self setNavigationBarButtonItems];
     
     MEGAShareType shareType = [[MEGASdkManager sharedMEGASdk] accessLevelForNode:self.parentNode];
     [self toolbarActionsForShareType:shareType];

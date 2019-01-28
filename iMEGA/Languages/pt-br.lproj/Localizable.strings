@@ -966,7 +966,7 @@
 /* Text that shows the expiry date of the account PRO level */
 "expiresOn"="expira em %@";
 /* Button title for the section where you can see the 'Purchase history' related to your account */
-"purchaseHistory"="Histórico de compras";
+"purchaseHistory"="Histórico de Compras";
 /* Title of the Incoming Shares section. Here you can see the folders that your contacts have shared with you */
 "incomingShares"="Compartilhado comigo";
 /* Sentence shown under the used space percentage to complete the info with the user account maximum storage. "of {maximun storage}" */
@@ -1676,6 +1676,16 @@
 "To disable the Rubbish-Bin Cleaning Scheduler or set a longer retention period, you need to subscribe to a PRO plan."="Para desativar o Planejador de limpeza da lixeira ou definir um período de retenção mais longo, você precisa assinar um plano PRO.";
 /* Confirmation dialog for the button that logs the user out of all sessions except the current one. */
 "Do you want to close all other sessions? This will log you out on all other active sessions except the current one."="Você quer fechar as demais sessões? Essa ação faráo  logout de todas as outras sessões ativas, exceto a atual.";
+/* Message to inform the local user that someone has joined the current group call */
+"%@ joined the call."="%@ entrou na chamada.";
+/* Message to inform the local user that someone has left the current group call */
+"%@ left the call."="%@ saiu da chamada.";
+/* Message to inform the local user is having a bad quality network with someone in the current group call */
+"Poor conection."="Conexão ruim.";
+/* Message shown in a chat room when there is an active group call */
+"There is an active group call. Tap to join."="Há uma chamada em grupo ativa. Toque para participar.";
+/* Message shown in a chat room for a group call in progress displaying the duration of the call */
+"Touch to return to call %@"="Toque para voltar à chamada %@";
 /* A button label which allows the users save images/videos in the Photos app. */
 "Save to Photos"="Salvar no Fotos";
 /* Text shown when starting the process to save a photo or video to Photos app */
@@ -1684,6 +1694,10 @@
 "Saved to Photos"="Salvo no Fotos";
 /* Text shown when an error occurs when trying to save a photo or video to Photos app */
 "Could not save Item"="Não foi possível salvar";
+/* Message show when a call cannot be established because there are too many participants in the group call */
+"Error. No more participants are allowed in this group call."="Você não pode participar desta chamada porque o número máximo de participantes foi alcançado.";
+/* Message show when a user cannot activate the video in a group call because the max number of videos has been reached */
+"Error. No more video are allowed in this group call."="Você não tem permissão para ativar o vídeo, pois essa chamada alcançou o número máximo de participantes usando o vídeo.";
 /* Text shown for switching from thumbnail view to list view. */
 "List view"="Visualização em lista";
 /* Text shown for switching from list view to thumbnail view. */
@@ -1770,6 +1784,10 @@
 "Your PRO membership plan will expire in 1 day."="O seu plano PRO expirará em 1 dia.";
 /* The professional pricing plan which the user is currently on will expire in 5 days. The %1 is a placeholder for the number of days and should not be removed. */
 "Your PRO membership plan will expire in %1 days."="O seu plano PRO expirará em %1 dias.";
+/* The professional pricing plan which the user was on expired one day ago. */
+"Your PRO membership plan expired 1 day ago"="O seu plano PRO expirou há 1 dia";
+/* The professional pricing plan which the user was on expired %1 days ago. The %1 is a placeholder for the number of days and should not be removed. */
+"Your PRO membership plan expired %1 days ago"="O seu plano PRO expirou há %1 dias";
 /* The text of a notification indicating that a file or folder has been taken down due to infringement or other reason. The %1 placeholder will be replaced with the text ‘file’ or ‘folder’. The %2 will be replaced with the name of the file or folder. */
 "Your publicly shared %1 (%2) has been taken down."="O(a) %1 (%2) compartilhado publicamente foi removido(a).";
 /* The text of a notification indicating that a file or folder that was taken down has now been restored due to a successful counter-notice. The %1 placeholder will be replaced with the text ‘file’ or ‘folder’. The %2 will be replaced with the name of the file or folder. */
@@ -1790,3 +1808,7 @@
 "Today"="Hoje";
 /* */
 "Yesterday"="Ontem";
+/* Plural of participant. 2 participants */
+"%d participants"="%d participantes";
+/* Singular of participant. 1 participant */
+"%d participant"="%d participante";
