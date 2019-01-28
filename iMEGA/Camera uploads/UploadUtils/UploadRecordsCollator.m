@@ -14,7 +14,7 @@
 }
 
 - (void)collateNonUploadingRecords {
-    NSArray<MOAssetUploadRecord *> *records = [CameraUploadRecordManager.shared fetchRecordsByStatuses:@[CameraAssetUploadStatusQueuedUp, CameraAssetUploadStatusProcessing] error:nil];
+    NSArray<MOAssetUploadRecord *> *records = [CameraUploadRecordManager.shared fetchUploadRecordsByStatuses:@[CameraAssetUploadStatusQueuedUp, CameraAssetUploadStatusProcessing] error:nil];
     if (records.count == 0) {
         MEGALogDebug(@"[Camera Upload] no non-uploading records to collate");
         return;
@@ -29,7 +29,7 @@
 }
 
 - (void)collateUploadingRecords {
-    NSArray<MOAssetUploadRecord *> *uploadingRecords = [CameraUploadRecordManager.shared fetchRecordsByStatuses:@[CameraAssetUploadStatusUploading] error:nil];
+    NSArray<MOAssetUploadRecord *> *uploadingRecords = [CameraUploadRecordManager.shared fetchUploadRecordsByStatuses:@[CameraAssetUploadStatusUploading] error:nil];
     if (uploadingRecords.count == 0) {
         MEGALogDebug(@"[Camera Upload] no uploading records to collate");
         return;
@@ -61,7 +61,7 @@
 }
 
 - (void)clearErrorRecordsPerLaunch {
-    [CameraUploadRecordManager.shared clearErrorRecordsPerLaunchWithError:nil];
+    [CameraUploadRecordManager.shared deleteAllErrorRecordsPerLaunchWithError:nil];
 }
 
 - (void)revertBackToNotStartedForRecord:(MOAssetUploadRecord *)record {

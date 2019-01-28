@@ -41,7 +41,7 @@
         }
         
         NSError *error = nil;
-        NSArray<MOAssetUploadRecord *> *records = [[CameraUploadRecordManager shared] fetchAllRecords:&error];
+        NSArray<MOAssetUploadRecord *> *records = [[CameraUploadRecordManager shared] fetchAllUploadRecords:&error];
         if (records.count == 0) {
             [[CameraUploadRecordManager shared] initialSaveWithAssetFetchResult:self.fetchResult error:nil];
         } else {
