@@ -96,7 +96,7 @@
 
 - (void)showUserOnFocus {
     self.layer.borderWidth = 2;
-    self.layer.borderColor = [[UIColor colorWithRed:1 green:0.83 blue:0 alpha:1] CGColor];
+    self.layer.borderColor = UIColor.mnz_orangeFFD300.CGColor;
 }
 
 - (void)hideUserOnFocus {

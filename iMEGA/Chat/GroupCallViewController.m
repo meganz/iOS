@@ -213,7 +213,7 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     if (self.peersInCall.count >= kSmallPeersLayout) {
-        //remove border stroke of previous menual selected participant
+        //remove border stroke of previous manual selected participant
         NSUInteger previousPeerIndex;
         if (self.manualMode) {
             previousPeerIndex = [self.peersInCall indexOfObject:[self peerForId:self.peerManualMode]];
@@ -513,7 +513,10 @@
                 [[MEGASdkManager sharedMEGAChatSdk] enableVideoForChat:self.chatRoom.chatId delegate:enableDisableVideoRequestDelegate];
             }
         } else {
-            [self presentViewController:[self videoPermisionHangCallAlertController] animated:YES completion:nil];
+            [DevicePermissionsHelper alertVideoPermissionWithCompletionHandler:^{
+                __weak __typeof(self) weakSelf = self;
+                [weakSelf hangCall:nil];
+            }];
         }
     }];
 }
@@ -557,7 +560,7 @@
         [self.navigationItem.titleView sizeToFit];
     }
     
-    [UINavigationBar appearanceWhenContainedInInstancesOfClasses:@[MEGANavigationController.class]].barTintColor = [UIColor colorWithRed:0.08 green:0.08 blue:0.07 alpha:0.9];
+    [UINavigationBar appearanceWhenContainedInInstancesOfClasses:@[MEGANavigationController.class]].barTintColor = UIColor.mnz_black151412_09;
     
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.participantsView];
     [self updateParticipants];
@@ -746,17 +749,6 @@
         
         [self.view layoutIfNeeded];
     }];
-}
-
-- (UIAlertController *)videoPermisionHangCallAlertController {
-    UIAlertController *permissionsAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"attention", @"Alert title to attract attention") message:AMLocalizedString(@"cameraPermissions", @"Alert message to remember that MEGA app needs permission to use the Camera to take a photo or video and it doesn't have it") preferredStyle:UIAlertControllerStyleAlert];
-    [permissionsAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
-    __weak __typeof(self) weakSelf = self;
-    [permissionsAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-        [weakSelf hangCall:nil];
-        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
-    }]];
-    return permissionsAlertController;
 }
 
 - (void)enablePasscodeIfNeeded {

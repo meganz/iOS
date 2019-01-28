@@ -356,9 +356,6 @@
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
-- (void)configureLocalControls {
-}
-
 #pragma mark - IBActions
 
 - (IBAction)acceptCallWithVideo:(UIButton *)sender {
