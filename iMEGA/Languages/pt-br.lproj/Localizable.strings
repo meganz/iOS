@@ -1808,3 +1808,7 @@
 "Today"="Hoje";
 /* */
 "Yesterday"="Ontem";
+/* Plural of participant. 2 participants */
+"%d participants"="%d participantes";
+/* Singular of participant. 1 participant */
+"%d participant"="%d participante";

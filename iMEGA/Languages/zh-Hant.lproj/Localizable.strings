@@ -689,7 +689,7 @@
 /* Title for the MEGA Recovery Key */
 "masterKey"="還原金鑰";
 /* Section title where you can change your MEGA's password */
-"changePasswordLabel"="變更密碼";
+"changePasswordLabel"="更改密碼";
 /* Advising the user to keep the user's master key safe. */
 "exportMasterKeyFooter"="正在匯出您的還原金鑰，請妥善保管。您的還原金鑰可以使您不會因為重新設定密碼而遺失過去上傳的資料。";
 /* Question button to present a view where it's explained what is the Recovery Key */
@@ -1785,9 +1785,9 @@
 /* The professional pricing plan which the user is currently on will expire in 5 days. The %1 is a placeholder for the number of days and should not be removed. */
 "Your PRO membership plan will expire in %1 days."="您的專業版會員專案將在%1天內到期";
 /* The professional pricing plan which the user was on expired one day ago. */
-"Your PRO membership plan expired 1 day ago"="Your PRO membership plan expired 1 day ago";
+"Your PRO membership plan expired 1 day ago"="您的PRO專業版會員資格已於1天前到期";
 /* The professional pricing plan which the user was on expired %1 days ago. The %1 is a placeholder for the number of days and should not be removed. */
-"Your PRO membership plan expired %1 days ago"="Your PRO membership plan expired %1 days ago";
+"Your PRO membership plan expired %1 days ago"="您的PRO專業版會員資格已於%1天前到期";
 /* The text of a notification indicating that a file or folder has been taken down due to infringement or other reason. The %1 placeholder will be replaced with the text ‘file’ or ‘folder’. The %2 will be replaced with the name of the file or folder. */
 "Your publicly shared %1 (%2) has been taken down."="您公開分享的 %1 (%2) 已被移除。";
 /* The text of a notification indicating that a file or folder that was taken down has now been restored due to a successful counter-notice. The %1 placeholder will be replaced with the text ‘file’ or ‘folder’. The %2 will be replaced with the name of the file or folder. */
@@ -1808,3 +1808,7 @@
 "Today"="今天";
 /* */
 "Yesterday"="昨天";
+/* Plural of participant. 2 participants */
+"%d participants"="%d participants";
+/* Singular of participant. 1 participant */
+"%d participant"="%d participant";

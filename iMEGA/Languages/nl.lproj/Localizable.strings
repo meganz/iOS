@@ -689,7 +689,7 @@
 /* Title for the MEGA Recovery Key */
 "masterKey"="Herstel Sleutel";
 /* Section title where you can change your MEGA's password */
-"changePasswordLabel"="Wijzig wachtwoord";
+"changePasswordLabel"="Wijzig Wachtwoord";
 /* Advising the user to keep the user's master key safe. */
 "exportMasterKeyFooter"="Het exporteren en bewaren van de Master Key op een veilige locatie stelt u in staat om een nieuw wachtwoord in te stellen zonder het verlies van gegevens.";
 /* Question button to present a view where it's explained what is the Recovery Key */
@@ -1096,7 +1096,7 @@
 /* Title that refers to the status of the chat (Either Online or Offline) */
 "status"="Status";
 /* Title used in settings that enables the generation of link previews in the chat */
-"richUrlPreviews"="Rijke URL weergave";
+"richUrlPreviews"="Rijke URL Weergave";
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
 "richPreviewsFooter"="Verbeter de MEGAchat ervaring. URL inhoud wordt binnengehaald zonder eind-tot-eind codering.";
 /* Section title of a button where you can enable mobile data for voice and video calls. */
@@ -1645,7 +1645,7 @@
 /* A section header which contains the file management settings. These settings allow users to remove duplicate files etc. */
 "File Management"="Bestandsmanagement";
 /* Title of the option to enable or disable file versioning on Settings section */
-"File versioning"="Bestandsversies";
+"File versioning"="Bestand Versies";
 /* Subtitle of the option to enable or disable file versioning on Settings section */
 "Enable or disable file versioning for your entire account.[Br]You may still receive file versions from shared folders if your contacts have this enabled."="bestandsversies inschakelen of uitschakelen voor uw hele account. \nU kunt nog steeds bestandsversies ontvangen van gedeelde mappen als contacten dit hebben ingeschakeld.";
 /* A confirmation message when the user chooses to disable file versioning. */
@@ -1681,7 +1681,7 @@
 /* Message to inform the local user that someone has left the current group call */
 "%@ left the call."="%@ heeft de oproep verlaten.";
 /* Message to inform the local user is having a bad quality network with someone in the current group call */
-"Poor conection."="Slechte connectie.";
+"Poor conection."="Slechte verbinding";
 /* Message shown in a chat room when there is an active group call */
 "There is an active group call. Tap to join."="Er is een actieve groep oproep. Tik om mee te doen.";
 /* Message shown in a chat room for a group call in progress displaying the duration of the call */
@@ -1695,9 +1695,9 @@
 /* Text shown when an error occurs when trying to save a photo or video to Photos app */
 "Could not save Item"="Kon Item niet opslaan";
 /* Message show when a call cannot be established because there are too many participants in the group call */
-"Error. No more participants are allowed in this group call."="You are not allowed to join this call as it has reached the maximum number of participants.";
+"Error. No more participants are allowed in this group call."="U mag niet deelnemen aan deze oproep omdat deze het maximale aantal deelnemers heeft bereikt.";
 /* Message show when a user cannot activate the video in a group call because the max number of videos has been reached */
-"Error. No more video are allowed in this group call."="You are not allowed to enable video as this call has reached the maximum number of participants using video.";
+"Error. No more video are allowed in this group call."="U mag geen video inschakelen omdat deze oproep het maximale aantal deelnemers heeft bereikt dat video gebruikt.";
 /* Text shown for switching from thumbnail view to list view. */
 "List view"="Lijstweergave";
 /* Text shown for switching from list view to thumbnail view. */
@@ -1707,7 +1707,7 @@
 /* Message to inform the local user that someone has left the current group call */
 "%@ left the call."="%@ heeft de oproep verlaten.";
 /* Message to inform the local user is having a bad quality network with someone in the current group call */
-"Poor connection."="Slechte connectie.";
+"Poor connection."="Slechte verbinding";
 /* Message shown in a chat room when there is an active group call */
 "There is an active group call. Tap to join."="Er is een actieve groep oproep. Tik om mee te doen.";
 /* Message shown in a chat room for a group call in progress displaying the duration of the call */
@@ -1785,9 +1785,9 @@
 /* The professional pricing plan which the user is currently on will expire in 5 days. The %1 is a placeholder for the number of days and should not be removed. */
 "Your PRO membership plan will expire in %1 days."="Uw PRO abonnement zal binnen %1 dagen verlopen.";
 /* The professional pricing plan which the user was on expired one day ago. */
-"Your PRO membership plan expired 1 day ago"="Your PRO membership plan expired 1 day ago";
+"Your PRO membership plan expired 1 day ago"="Uw PRO lidmaatschap abonnement is 1 dag geleden verlopen";
 /* The professional pricing plan which the user was on expired %1 days ago. The %1 is a placeholder for the number of days and should not be removed. */
-"Your PRO membership plan expired %1 days ago"="Your PRO membership plan expired %1 days ago";
+"Your PRO membership plan expired %1 days ago"="Uw PRO lidmaatschap abonnement is %1 dagen geleden verlopen";
 /* The text of a notification indicating that a file or folder has been taken down due to infringement or other reason. The %1 placeholder will be replaced with the text ‘file’ or ‘folder’. The %2 will be replaced with the name of the file or folder. */
 "Your publicly shared %1 (%2) has been taken down."="Uw publiekelijk gedeelde %1 (%2) is weggehaald.";
 /* The text of a notification indicating that a file or folder that was taken down has now been restored due to a successful counter-notice. The %1 placeholder will be replaced with the text ‘file’ or ‘folder’. The %2 will be replaced with the name of the file or folder. */
@@ -1808,3 +1808,7 @@
 "Today"="Vandaag";
 /* */
 "Yesterday"="Gisteren";
+/* Plural of participant. 2 participants */
+"%d participants"="%d deelnemers";
+/* Singular of participant. 1 participant */
+"%d participant"="%d deelnemer";
