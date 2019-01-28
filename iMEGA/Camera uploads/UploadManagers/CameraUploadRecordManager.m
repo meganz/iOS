@@ -12,7 +12,7 @@ NSString * const CameraAssetUploadStatusFailed = @"Failed";
 NSString * const CameraAssetUploadStatusDone = @"Done";
 
 static const NSUInteger MaximumUploadRetryPerLaunchCount = 20;
-static const NSUInteger MaximumUploadRetryPerLoginCount = 200;
+static const NSUInteger MaximumUploadRetryPerLoginCount = 400;
 
 @interface CameraUploadRecordManager ()
 
