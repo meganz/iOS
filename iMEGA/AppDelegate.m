@@ -1385,16 +1385,20 @@ void uncaughtExceptionHandler(NSException *exception) {
         if (!DevicePermissionsHelper.shouldAskForNotificationsPermissions) {
             [DevicePermissionsHelper notificationsPermissionWithCompletionHandler:^(BOOL granted) {
                 if (@available(iOS 10.0, *)) {
-                    if (granted && !DevicePermissionsHelper.audioAndVideoPermissionsGranted) {
-                        UNMutableNotificationContent *content = [UNMutableNotificationContent new];
-                        content.body = AMLocalizedString(@"Incoming call", @"notification subtitle of incoming calls");
-                        content.sound = [UNNotificationSound soundNamed:@"incoming_voice_video_call_iOS9.mp3"];
-                        UNTimeIntervalNotificationTrigger *trigger = [UNTimeIntervalNotificationTrigger triggerWithTimeInterval:1 repeats:NO];
-                        NSString *identifier = @"Incoming call";
-                        UNNotificationRequest *request = [UNNotificationRequest requestWithIdentifier:identifier
-                                                                                              content:content
-                                                                                              trigger:trigger];
-                        [UNUserNotificationCenter.currentNotificationCenter addNotificationRequest:request withCompletionHandler:nil];
+                    if (granted && !DevicePermissionsHelper.shouldAskForAudioPermissions) {
+                        [DevicePermissionsHelper audioPermissionModal:NO forIncomingCall:YES withCompletionHandler:^(BOOL granted) {
+                            if (!granted) {
+                                UNMutableNotificationContent *content = [UNMutableNotificationContent new];
+                                content.body = AMLocalizedString(@"Incoming call", @"notification subtitle of incoming calls");
+                                content.sound = [UNNotificationSound soundNamed:@"incoming_voice_video_call_iOS9.mp3"];
+                                UNTimeIntervalNotificationTrigger *trigger = [UNTimeIntervalNotificationTrigger triggerWithTimeInterval:1 repeats:NO];
+                                NSString *identifier = @"Incoming call";
+                                UNNotificationRequest *request = [UNNotificationRequest requestWithIdentifier:identifier
+                                                                                                      content:content
+                                                                                                      trigger:trigger];
+                                [UNUserNotificationCenter.currentNotificationCenter addNotificationRequest:request withCompletionHandler:nil];
+                            }
+                        }];
                     }
                 }
             }];
