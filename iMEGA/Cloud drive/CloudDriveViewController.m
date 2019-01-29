@@ -173,7 +173,7 @@
 - (void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
     
-    if (self.cdTableView.tableView.isEditing) {
+    if (self.cdTableView.tableView.isEditing || self.cdCollectionView.collectionView.allowsMultipleSelection) {
         self.selectedNodesArray = nil;
         [self setEditMode:NO];
     }
