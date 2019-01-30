@@ -368,24 +368,26 @@
             break;
             
         case MEGAChatCallStatusRingIn: {
-            [self.missedCallsDictionary setObject:call forKey:@(call.chatId)];
-            [DevicePermissionsHelper audioPermissionModal:YES forIncomingCall:YES withCompletionHandler:^(BOOL granted) {
-                if (granted) {
-                    if (call.hasVideoInitialCall) {
-                        [DevicePermissionsHelper videoPermissionWithCompletionHandler:^(BOOL granted) {
-                            if (granted) {
-                                [self presentRingingCall:api call:[api chatCallForCallId:call.callId]];
-                            } else {
-                                [DevicePermissionsHelper alertVideoPermissionWithCompletionHandler:nil];
-                            }
-                        }];
+            if (![self.missedCallsDictionary objectForKey:@(call.chatId)]) {
+                [self.missedCallsDictionary setObject:call forKey:@(call.chatId)];
+                [DevicePermissionsHelper audioPermissionModal:YES forIncomingCall:YES withCompletionHandler:^(BOOL granted) {
+                    if (granted) {
+                        if (call.hasVideoInitialCall) {
+                            [DevicePermissionsHelper videoPermissionWithCompletionHandler:^(BOOL granted) {
+                                if (granted) {
+                                    [self presentRingingCall:api call:[api chatCallForCallId:call.callId]];
+                                } else {
+                                    [DevicePermissionsHelper alertVideoPermissionWithCompletionHandler:nil];
+                                }
+                            }];
+                        } else {
+                            [self presentRingingCall:api call:[api chatCallForCallId:call.callId]];
+                        }
                     } else {
-                        [self presentRingingCall:api call:[api chatCallForCallId:call.callId]];
+                        [DevicePermissionsHelper alertAudioPermission];
                     }
-                } else {
-                    [DevicePermissionsHelper alertAudioPermission];
-                }
-            }];
+                }];
+            }
             break;
         }
             
@@ -405,11 +407,10 @@
             [self.missedCallsDictionary removeObjectForKey:@(call.chatId)];
             break;
             
-        case MEGAChatCallStatusTerminatingUserParticipation:
-            [self.missedCallsDictionary removeObjectForKey:@(call.chatId)];
+        case MEGAChatCallStatusUserNoPresent:
             break;
             
-        case MEGAChatCallStatusUserNoPresent:
+        case MEGAChatCallStatusTerminatingUserParticipation:
         case MEGAChatCallStatusDestroyed:
             if (call.isLocalTermCode) {
                 [self.missedCallsDictionary removeObjectForKey:@(call.chatId)];
