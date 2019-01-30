@@ -942,7 +942,8 @@
     MEGALogDebug(@"onChatCallUpdate %@", call);
     
     switch (call.status) {
-        case MEGAChatCallStatusUserNoPresent: {
+        case MEGAChatCallStatusUserNoPresent:
+        case MEGAChatCallStatusInProgress: {
             NSIndexPath *indexPath = [self.chatIdIndexPathDictionary objectForKey:@(call.chatId)];
             if ([self.tableView.indexPathsForVisibleRows containsObject:indexPath]) {
                 [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];

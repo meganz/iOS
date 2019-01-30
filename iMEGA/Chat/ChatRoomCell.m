@@ -88,11 +88,10 @@
         MEGAChatCall *call = [[MEGASdkManager sharedMEGAChatSdk] chatCallForChatId:chatListItem.chatId];
         if (call.status == MEGAChatCallStatusUserNoPresent) {
             self.activeCallImageView.hidden = NO;
-            self.chatLastTime.hidden = NO;
+            self.chatLastTime.hidden = YES;
             self.onCallInfoView.hidden = YES;
             self.chatLastMessage.text = AMLocalizedString(@"Ongoing Call", @"Text to inform the user there is an active call and is not participating");
             self.chatLastTime.font = [[UIFont preferredFontForTextStyle:UIFontTextStyleCaption2] fontWithWeight:UIFontWeightMedium];
-            self.chatLastTime.textColor = UIColor.mnz_green00BFA5;
         } else {
             self.activeCallImageView.hidden = YES;
             self.chatLastMessage.text = AMLocalizedString(@"Call Started", @"Text to inform the user there is an active call and is participating");
@@ -107,7 +106,7 @@
                 self.onCallMicImageView.hidden = ![NSUserDefaults.standardUserDefaults boolForKey:@"oneOnOneCallLocalAudio"];
                 self.onCallVideoImageView.hidden = ![NSUserDefaults.standardUserDefaults boolForKey:@"oneOnOneCallLocalVideo"];
             }
-            if (!self.timer.valid) {
+            if (!self.timer.valid && call.status == MEGAChatCallStatusInProgress) {
                 self.initDuration = call.duration;
                 self.baseDate = [NSDate date];
                 [self updateDuration];
