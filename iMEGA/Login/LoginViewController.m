@@ -27,6 +27,8 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *cancelBarButtonItem;
 
+@property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
+
 @property (weak, nonatomic) IBOutlet UIImageView *logoImageView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *logoTopLayoutConstraint;
 
@@ -45,10 +47,6 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    if (UIDevice.currentDevice.iPhone4X) {
-        self.logoTopLayoutConstraint.constant = 12.f;
-    }
     
     UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(logoTappedFiveTimes:)];
     tapGestureRecognizer.numberOfTapsRequired = 5;
@@ -78,6 +76,8 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
     forgotPasswordString = [forgotPasswordString stringByReplacingOccurrencesOfString:@"?" withString:@""];
     forgotPasswordString = [forgotPasswordString stringByReplacingOccurrencesOfString:@"¿" withString:@""];
     [self.forgotPasswordButton setTitle:forgotPasswordString forState:UIControlStateNormal];
+    
+    [self registerForKeyboardNotifications];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -91,6 +91,13 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
         
         [self.passwordView.passwordTextField becomeFirstResponder];
     }
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardDidShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
 }
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations {
@@ -213,6 +220,38 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
     NSDate *date = [NSDate dateWithTimeIntervalSinceNow:totalSeconds];
     
     return [dateFormatter stringFromDate:date];
+}
+
+- (void)registerForKeyboardNotifications {
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWasShown:)
+                                                 name:UIKeyboardDidShowNotification object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillBeHidden:)
+                                                 name:UIKeyboardWillHideNotification object:nil];
+    
+}
+
+- (void)keyboardWasShown:(NSNotification*)aNotification {
+    NSDictionary *info = aNotification.userInfo;
+    CGSize keyboardSize = [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
+    
+    UIEdgeInsets contentInsets = UIEdgeInsetsMake(0.0, 0.0, keyboardSize.height, 0.0);
+    self.scrollView.contentInset = contentInsets;
+    self.scrollView.scrollIndicatorInsets = contentInsets;
+    
+    CGRect viewFrame = self.view.frame;
+    viewFrame.size.height -= keyboardSize.height;
+    CGRect activeTextFieldFrame = self.emailInputView.inputTextField.isFirstResponder ? self.emailInputView.frame : self.passwordView.frame;
+    if (!CGRectContainsPoint(viewFrame, activeTextFieldFrame.origin)) {
+        [self.scrollView scrollRectToVisible:activeTextFieldFrame animated:YES];
+    }
+}
+
+- (void)keyboardWillBeHidden:(NSNotification *)aNotification {
+    self.scrollView.contentInset = UIEdgeInsetsZero;
+    self.scrollView.scrollIndicatorInsets = UIEdgeInsetsZero;
 }
 
 #pragma mark - UIResponder
