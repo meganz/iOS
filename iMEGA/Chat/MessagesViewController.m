@@ -603,7 +603,6 @@ const NSUInteger kMaxMessagesToLoad = 256;
 
 - (void)createJoinActiveCallButton {
     UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, -44, self.view.frame.size.width, 44)];
-    button.hidden = YES;
     button.backgroundColor = UIColor.mnz_green00BFA5;
     NSString *title;
     if (self.chatRoom.isGroup) {
@@ -613,7 +612,7 @@ const NSUInteger kMaxMessagesToLoad = 256;
     }
     [button setTitle:title forState:UIControlStateNormal];
     [button setTitleColor:UIColor.whiteColor forState:UIControlStateNormal];
-    button.titleLabel.font = [UIFont mnz_SFUIMediumWithSize:12];
+    button.titleLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleCaption1];
     [button addTarget:self action:@selector(joinActiveCall:) forControlEvents:UIControlEventTouchUpInside];
     button.autoresizingMask = UIViewAutoresizingFlexibleWidth;
     button.hidden = YES;
@@ -622,9 +621,10 @@ const NSUInteger kMaxMessagesToLoad = 256;
 
 - (void)showTapToReturnCall:(MEGAChatCall *)call {
     self.initDuration = call.duration;
+    self.baseDate = [NSDate date];
+    [self updateDuration];
     self.timer = [NSTimer timerWithTimeInterval:1.0f target:self selector:@selector(updateDuration) userInfo:nil repeats:YES];
     [[NSRunLoop mainRunLoop] addTimer:self.timer forMode:NSRunLoopCommonModes];
-    self.baseDate = [NSDate date];
     if (self.activeCallButton.hidden) {
         self.activeCallButton.hidden = NO;
         [UIView animateWithDuration:.5f animations:^ {
