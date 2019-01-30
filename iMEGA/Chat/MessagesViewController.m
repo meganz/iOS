@@ -2009,9 +2009,15 @@ const NSUInteger kMaxMessagesToLoad = 256;
     }
     
     if (action == @selector(delete:)) {
-        MEGAChatMessage *deleteMessage = [[MEGASdkManager sharedMEGAChatSdk] deleteMessageForChat:self.chatRoom.chatId messageId:message.messageId];
+        uint64_t messageId = (message.status == MEGAChatMessageStatusSending) ? message.temporalId : message.messageId;
+        MEGAChatMessage *deleteMessage = [[MEGASdkManager sharedMEGAChatSdk] deleteMessageForChat:self.chatRoom.chatId messageId:messageId];
         deleteMessage.chatRoom = self.chatRoom;
-        [self.messages replaceObjectAtIndex:indexPath.item withObject:deleteMessage];
+        if (message.status == MEGAChatMessageStatusSending) {
+            [self.messages removeObjectAtIndex:indexPath.item];
+            [self.collectionView deleteItemsAtIndexPaths:@[indexPath]];
+        } else {
+            [self.messages replaceObjectAtIndex:indexPath.item withObject:deleteMessage];
+        }
     }
     
     if (action != @selector(delete:)) {
