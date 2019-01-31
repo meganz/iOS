@@ -42,6 +42,13 @@
 @property (assign, nonatomic) BOOL isArchivedChatsRowVisible;
 @property (assign, nonatomic) BOOL isScrollAtTop;
 
+@property (weak, nonatomic) IBOutlet UIButton *activeCallButton;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *activeCallTopConstraint;
+@property (strong, nonatomic) NSTimer *timer;
+@property (strong, nonatomic) NSDate *baseDate;
+@property (assign, nonatomic) NSInteger initDuration;
+@property (strong, nonatomic) MEGAChatRoom *chatRoomOnGoingCall;
+
 @end
 
 @implementation ChatRoomsViewController
@@ -128,6 +135,26 @@
             [DevicePermissionsHelper modalNotificationsPermission];
         }
     }
+    
+    if ([MEGASdkManager sharedMEGAChatSdk].numCalls && MEGAReachabilityManager.isReachable) {
+        MEGAHandleList *chatRoomsWithCall = [MEGASdkManager sharedMEGAChatSdk].chatCalls;
+        self.chatRoomOnGoingCall = nil;
+        for (int i = 0; i < chatRoomsWithCall.size; i++) {
+            MEGAChatCall *call = [[MEGASdkManager sharedMEGAChatSdk] chatCallForChatId:[chatRoomsWithCall megaHandleAtIndex:i]];
+            if (call.status == MEGAChatCallStatusInProgress) {
+                self.chatRoomOnGoingCall = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:[chatRoomsWithCall megaHandleAtIndex:i]];
+                if (self.activeCallTopConstraint.constant == -44) {
+                    [self showActiveCallButton:call];
+                }
+                break;
+            }
+        }
+        if (!self.chatRoomOnGoingCall && self.activeCallTopConstraint.constant == 0) {
+            [self hideActiveCallButton];
+        }
+       
+    }
+
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -581,6 +608,63 @@
     return cell;
 }
 
+- (void)showActiveCallButton:(MEGAChatCall *)call {
+    self.initDuration = call.duration;
+    self.baseDate = [NSDate date];
+    [self updateDuration];
+    self.timer = [NSTimer timerWithTimeInterval:1.0f target:self selector:@selector(updateDuration) userInfo:nil repeats:YES];
+    [[NSRunLoop mainRunLoop] addTimer:self.timer forMode:NSRunLoopCommonModes];
+    [UIView animateWithDuration:.5f animations:^ {
+        self.activeCallTopConstraint.constant = 0;
+        self.tableView.contentInset = UIEdgeInsetsMake(44, 0, 0, 0);
+        self.tableView.contentOffset = CGPointZero;
+        [self.view layoutIfNeeded];
+    } completion:nil];
+}
+
+- (void)updateDuration {
+    NSTimeInterval interval = ([NSDate date].timeIntervalSince1970 - self.baseDate.timeIntervalSince1970 + self.initDuration);
+    [self.activeCallButton setTitle:[NSString stringWithFormat:AMLocalizedString(@"Touch to return to call %@", @"Message shown in a chat room for a group call in progress displaying the duration of the call"), [NSString mnz_stringFromTimeInterval:interval]] forState:UIControlStateNormal];
+}
+
+- (void)hideActiveCallButton {
+    [UIView animateWithDuration:.5f animations:^ {
+        self.activeCallTopConstraint.constant = -44;
+        self.tableView.contentInset = UIEdgeInsetsZero;
+        [self.tableView setContentOffset:CGPointMake(0, CGRectGetHeight(self.searchController.searchBar.frame))];
+        [self.view layoutIfNeeded];
+    } completion:nil];
+    [self.timer invalidate];
+}
+
+- (IBAction)joinActiveCall:(id)sender {
+    [self.timer invalidate];
+    if (self.chatRoomOnGoingCall.isGroup) {
+        MEGANavigationController *groupCallNavigation = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"GroupCallViewControllerNavigationID"];
+        GroupCallViewController *groupCallVC = groupCallNavigation.viewControllers.firstObject;
+        groupCallVC.callType = CallTypeActive;
+        groupCallVC.videoCall = NO;
+        groupCallVC.chatRoom = self.chatRoomOnGoingCall;
+        groupCallVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+        
+        if (@available(iOS 10.0, *)) {
+            groupCallVC.megaCallManager = [(MainTabBarController *)UIApplication.sharedApplication.keyWindow.rootViewController megaCallManager];
+        }
+        [self presentViewController:groupCallNavigation animated:YES completion:nil];
+    } else {
+        CallViewController *callVC = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"CallViewControllerID"];
+        callVC.chatRoom = self.chatRoomOnGoingCall;
+        callVC.videoCall = NO;
+        callVC.callType = CallTypeActive;
+        callVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+        
+        if (@available(iOS 10.0, *)) {
+            callVC.megaCallManager = [(MainTabBarController *)UIApplication.sharedApplication.keyWindow.rootViewController megaCallManager];
+        }
+        [self presentViewController:callVC animated:YES completion:nil];
+    }
+}
+
 #pragma mark - IBActions
 
 - (IBAction)addTapped:(UIBarButtonItem *)sender {
@@ -941,6 +1025,13 @@
 - (void)onChatCallUpdate:(MEGAChatSdk *)api call:(MEGAChatCall *)call {
     MEGALogDebug(@"onChatCallUpdate %@", call);
     
+    if (call.chatId == self.chatRoomOnGoingCall.chatId) {
+        if (call.status == MEGAChatCallStatusTerminatingUserParticipation) {
+            self.chatRoomOnGoingCall = nil;
+            [self hideActiveCallButton];
+        }
+    }
+
     switch (call.status) {
         case MEGAChatCallStatusUserNoPresent:
         case MEGAChatCallStatusInProgress: {
