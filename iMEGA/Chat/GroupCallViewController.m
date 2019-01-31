@@ -68,6 +68,10 @@
 
 @property (nonatomic) BOOL shouldHideAcivity;
 
+@property UIView *navigationView;
+@property UILabel *navigationTitleLabel;
+@property UILabel *navigationSubtitleLabel;
+
 @end
 
 @implementation GroupCallViewController
@@ -167,6 +171,7 @@
             [self.collectionView reloadData];
             self.collectionView.userInteractionEnabled = NO;
         }
+        [self instantiateNavigationTitle];
     } completion:nil];
 }
 
@@ -553,8 +558,13 @@
 #pragma mark - Private
 
 - (void)configureNavigation {
-    if (self.callType == CallTypeActive) {
-        self.title = self.chatRoom.title;
+    
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.participantsView];
+
+    if (@available(iOS 11.0, *)) {
+        [self initNavigationTitleViews];
+        [self instantiateNavigationTitle];
+        [self customNavigationBarLabel];
     } else {
         [self.navigationItem setTitleView:[Helper customNavigationBarLabelWithTitle:self.chatRoom.title subtitle:AMLocalizedString(@"connecting", nil)]];
         [self.navigationItem.titleView sizeToFit];
@@ -562,8 +572,57 @@
     
     [UINavigationBar appearanceWhenContainedInInstancesOfClasses:@[MEGANavigationController.class]].barTintColor = UIColor.mnz_black151412_09;
     
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.participantsView];
     [self updateParticipants];
+}
+
+- (void)initNavigationTitleViews {
+    self.navigationTitleLabel = [[UILabel alloc] init];
+    self.navigationTitleLabel.font = [UIFont mnz_SFUISemiBoldWithSize:15];
+    self.navigationTitleLabel.textColor = UIColor.whiteColor;
+    
+    self.navigationSubtitleLabel = [[UILabel alloc] init];
+    self.navigationSubtitleLabel.font = [UIFont mnz_SFUIRegularWithSize:12];
+    self.navigationSubtitleLabel.textColor = UIColor.mnz_grayE3E3E3;
+}
+
+- (void)instantiateNavigationTitle {
+    float leftBarButtonsWidth = 24 + 44; //24 is by the margins, 44 the hide button
+    
+    self.navigationView = [[UIView alloc] initWithFrame:CGRectMake(0, 4, self.navigationController.navigationBar.bounds.size.width - leftBarButtonsWidth - self.participantsView.frame.size.width, 36)];
+    self.navigationView.clipsToBounds = YES;
+    self.navigationView.userInteractionEnabled = YES;
+    [self.navigationItem setTitleView:self.navigationView];
+    
+    [[self.navigationView.widthAnchor constraintEqualToConstant:self.navigationItem.titleView.bounds.size.width] setActive:YES];
+    [[self.navigationView.heightAnchor constraintEqualToConstant:self.navigationItem.titleView.bounds.size.height] setActive:YES];
+    
+    UIStackView *mainStackView = [[UIStackView alloc] init];
+    mainStackView.distribution = UIStackViewDistributionEqualSpacing;
+    mainStackView.alignment = UIStackViewAlignmentLeading;
+    mainStackView.translatesAutoresizingMaskIntoConstraints = false;
+    mainStackView.spacing = 4;
+    mainStackView.axis = UILayoutConstraintAxisVertical;
+    [mainStackView addArrangedSubview:self.navigationTitleLabel];
+    [mainStackView addArrangedSubview:self.navigationSubtitleLabel];
+    [self.navigationView addSubview:mainStackView];
+    
+    [[mainStackView.trailingAnchor constraintEqualToAnchor:self.navigationView.trailingAnchor] setActive:YES];
+    [[mainStackView.leadingAnchor constraintEqualToAnchor:self.navigationView.leadingAnchor] setActive:YES];
+    [[mainStackView.topAnchor constraintEqualToAnchor:self.navigationView.topAnchor] setActive:YES];
+    [[mainStackView.bottomAnchor constraintEqualToAnchor:self.navigationView.bottomAnchor] setActive:YES];
+}
+
+- (void)customNavigationBarLabel {
+    NSString *groupCallTitle = self.chatRoom.title;
+    NSString *groupCallDuration = self.callType == CallTypeActive ? @"" : AMLocalizedString(@"connecting", nil);
+    
+    if (@available(iOS 11.0, *)) {
+        self.navigationTitleLabel.text = groupCallTitle;
+        self.navigationSubtitleLabel.text = groupCallDuration;
+    } else {
+        [self.navigationItem setTitleView:[Helper customNavigationBarLabelWithTitle:groupCallTitle subtitle:groupCallDuration]];
+        [self.navigationItem.titleView sizeToFit];
+    }
 }
 
 - (void)configureControlsForLocalUser:(MEGAGroupCallPeer *)localUser {
@@ -633,8 +692,12 @@
 
 - (void)updateDuration {
     NSTimeInterval interval = ([NSDate date].timeIntervalSince1970 - self.baseDate.timeIntervalSince1970 + self.initDuration);
-    self.navigationItem.titleView =  [Helper customNavigationBarLabelWithTitle:self.chatRoom.title subtitle:[NSString mnz_stringFromTimeInterval:interval]];
-    [self.navigationItem.titleView sizeToFit];
+    if (@available(iOS 11.0, *)) {
+        self.navigationSubtitleLabel.text = [NSString mnz_stringFromTimeInterval:interval];
+    } else {
+        self.navigationItem.titleView =  [Helper customNavigationBarLabelWithTitle:self.chatRoom.title subtitle:[NSString mnz_stringFromTimeInterval:interval]];
+        [self.navigationItem.titleView sizeToFit];
+    }
 }
 
 - (void)updateParticipants {
