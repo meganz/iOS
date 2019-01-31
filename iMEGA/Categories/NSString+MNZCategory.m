@@ -8,6 +8,7 @@
 
 #import "NSDate+DateTools.h"
 
+#import "NSDate+MNZCategory.h"
 #import "MEGASdkManager.h"
 
 static NSString* const A = @"[A]";
@@ -721,10 +722,7 @@ static NSString* const B = @"[B]";
     NSString *lastSeenMessage;
     if (minutes < 65535) {
         NSDate *dateLastSeen = [NSDate dateWithTimeIntervalSinceNow:-minutes*SECONDS_IN_MINUTE];
-        NSDateFormatter *timeFormatter = [[NSDateFormatter alloc] init];
-        timeFormatter.dateFormat = @"HH:mm";
-        timeFormatter.locale = [NSLocale autoupdatingCurrentLocale];
-        NSString *timeString = [timeFormatter stringFromDate:dateLastSeen];
+        NSString *timeString = dateLastSeen.mnz_formattedHourAndMinutes;
         NSString *dateString;
         if ([[NSCalendar currentCalendar] isDateInToday:dateLastSeen]) {
             dateString = AMLocalizedString(@"Today", @"");
@@ -747,14 +745,6 @@ static NSString* const B = @"[B]";
 }
 
 #pragma mark - File names and extensions
-
-+ (NSString *)mnz_fileNameWithDate:(NSDate *)date {
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    dateFormatter.dateFormat = @"yyyy'-'MM'-'dd' 'HH'.'mm'.'ss";
-    dateFormatter.locale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"];
-    
-    return [dateFormatter stringFromDate:date];
-}
 
 - (NSString *)mnz_fileNameWithLowercaseExtension {
     NSString *fileName;

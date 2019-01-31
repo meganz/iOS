@@ -9,6 +9,7 @@
 #import "MEGAGetThumbnailRequestDelegate.h"
 #import "MEGASdkManager.h"
 #import "MEGAStore.h"
+#import "NSDate+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 #import "UIImageView+MNZCategory.h"
 
@@ -118,7 +119,7 @@
         }
     }
     
-    NSString *name = [NSString mnz_fileNameWithDate:asset.creationDate];
+    NSString *name = asset.creationDate.mnz_formattedDefaultNameForMedia;
     if (extension) {
         name = [name stringByAppendingPathExtension:extension];
     }
