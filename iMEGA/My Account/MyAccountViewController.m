@@ -55,6 +55,8 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *upgradeAccountTopLayoutConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *logoutButtonTopLayoutConstraint;
 
+@property (nonatomic) NSDateFormatter *dateFormatter;
+
 @end
 
 @implementation MyAccountViewController
@@ -176,14 +178,16 @@
         
         NSString *expiresString;
         if (accountDetails.type) {
-            NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-            dateFormatter.dateStyle = NSDateFormatterShortStyle;
-            dateFormatter.timeStyle = NSDateFormatterNoStyle;
-            NSString *currentLanguageID = [[LocalizationSystem sharedLocalSystem] getLanguage];
-            dateFormatter.locale = [[NSLocale alloc] initWithLocaleIdentifier:currentLanguageID];
+            static dispatch_once_t onceToken;
+            dispatch_once(&onceToken, ^{
+                self.dateFormatter = NSDateFormatter.alloc.init;
+                self.dateFormatter.dateStyle = NSDateFormatterShortStyle;
+                self.dateFormatter.timeStyle = NSDateFormatterNoStyle;
+                self.dateFormatter.locale = NSLocale.autoupdatingCurrentLocale;
+            });
             
             NSDate *expireDate = [[NSDate alloc] initWithTimeIntervalSince1970:accountDetails.proExpiration];
-            expiresString = [NSString stringWithFormat:AMLocalizedString(@"expiresOn", @"Text that shows the expiry date of the account PRO level"), [dateFormatter stringFromDate:expireDate]];
+            expiresString = [NSString stringWithFormat:AMLocalizedString(@"expiresOn", @"Text that shows the expiry date of the account PRO level"), [self.dateFormatter stringFromDate:expireDate]];
         }
         
         switch (accountDetails.type) {
