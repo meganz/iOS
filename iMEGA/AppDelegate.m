@@ -55,6 +55,7 @@
 #import "MEGAShowPasswordReminderRequestDelegate.h"
 #import "CameraUploadManager+Settings.h"
 #import "TransferSessionManager.h"
+#import "MEGAConstants.h"
 
 #define kFirstRun @"FirstRun"
 
@@ -191,7 +192,7 @@
         [[NSUserDefaults standardUserDefaults] synchronize];
         
         // Camera uploads settings
-        [self cameraUploadsSettingsCompatibility];
+        [CameraUploadManager migrateOldCameraUploadsSettings];
         
         [SAMKeychain deletePasswordForService:@"MEGA" account:@"session"];
     }
@@ -602,8 +603,10 @@
 
 - (void)application:(UIApplication *)application handleEventsForBackgroundURLSession:(NSString *)identifier completionHandler:(void (^)(void))completionHandler {
     MEGALogDebug(@"[App Lifecycle] application handle events for background session: %@", identifier);
-    [TransferSessionManager.shared saveSessionCompletion:completionHandler forIdentifier:identifier];
-    [TransferSessionManager.shared restoreSessionIfNeededByIdentifier:identifier];
+    if (CameraUploadManager.isCameraUploadEnabled) {
+        [TransferSessionManager.shared saveSessionCompletion:completionHandler forIdentifier:identifier];
+        [TransferSessionManager.shared restoreSessionIfNeededByIdentifier:identifier];
+    }
 }
 
 - (void)application:(UIApplication *)application performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
@@ -1183,34 +1186,6 @@ void uncaughtExceptionHandler(NSException *exception) {
     }
 }
 
-- (void)cameraUploadsSettingsCompatibility {
-    // PhotoSync old location of completed uploads
-    NSString *oldCompleted = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject stringByAppendingPathComponent:@"PhotoSync/completed.plist"];
-    [NSFileManager.defaultManager mnz_removeItemAtPath:oldCompleted];
-    
-    // PhotoSync v2 location of completed uploads
-    NSString *v2Completed = [NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES).firstObject stringByAppendingPathComponent:@"PhotoSync/com.plist"];
-    [NSFileManager.defaultManager mnz_removeItemAtPath:v2Completed];
-    
-    // PhotoSync settings
-    NSString *oldPspPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject stringByAppendingPathComponent:@"PhotoSync/psp.plist"];
-    NSString *v2PspPath  = [NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES).firstObject stringByAppendingPathComponent:@"PhotoSync/psp.plist"];
-    
-    // check for file in previous location
-    if ([[NSFileManager defaultManager] fileExistsAtPath:oldPspPath]) {
-        [[NSFileManager defaultManager] moveItemAtPath:oldPspPath toPath:v2PspPath error:nil];
-    }
-    
-    NSDictionary *cameraUploadsSettings = [[NSDictionary alloc] initWithContentsOfFile:v2PspPath];
-    
-    if (cameraUploadsSettings[@"syncEnabled"]) {
-        CameraUploadManager.cameraUploadEnabled = YES;
-        CameraUploadManager.cellularUploadAllowed = cameraUploadsSettings[@"cellEnabled"] != nil;
-        CameraUploadManager.videoUploadEnabled = cameraUploadsSettings[@"videoEnabled"] != nil;
-        [NSFileManager.defaultManager mnz_removeItemAtPath:v2PspPath];
-    }
-}
-
 - (void)removeOldStateCache {
     NSString *libraryDirectory = [NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES) objectAtIndex:0];
     [NSFileManager.defaultManager mnz_removeFolderContentsRecursivelyAtPath:libraryDirectory forItemsExtension:@"db"];
@@ -1421,11 +1396,6 @@ void uncaughtExceptionHandler(NSException *exception) {
 
 - (void)onNodesUpdate:(MEGASdk *)api nodeList:(MEGANodeList *)nodeList {
     if (!nodeList) {
-        MEGATransferList *transferList = [api uploadTransfers];
-        if (transferList.size.integerValue == 0) {
-            [CameraUploadManager.shared startCameraUploadIfNeeded];
-        }
-        
         [Helper startPendingUploadTransferIfNeeded];
     } else {
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
@@ -1669,6 +1639,7 @@ void uncaughtExceptionHandler(NSException *exception) {
                 [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"TransfersPaused"];
             }
             isFetchNodesDone = YES;
+            [NSNotificationCenter.defaultCenter postNotificationName:MEGANodesFetchDoneNotificationName object:nil userInfo:nil];
             
             [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
             [SVProgressHUD dismiss];

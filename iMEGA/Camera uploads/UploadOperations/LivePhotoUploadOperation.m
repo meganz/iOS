@@ -28,6 +28,11 @@
 }
 
 - (void)processLivePhoto:(nullable PHLivePhoto *)livePhoto {
+    if (self.isCancelled) {
+        [self finishOperationWithStatus:CameraAssetUploadStatusFailed shouldUploadNextAsset:NO];
+        return;
+    }
+    
     if (livePhoto == nil) {
         [self finishOperationWithStatus:CameraAssetUploadStatusFailed shouldUploadNextAsset:YES];
         return;
@@ -53,6 +58,11 @@
 }
 
 - (void)writeDataForVideoResource:(PHAssetResource *)resource {
+    if (self.isCancelled) {
+        [self finishOperationWithStatus:CameraAssetUploadStatusFailed shouldUploadNextAsset:NO];
+        return;
+    }
+    
     NSURL *videoURL = [self.uploadInfo.directoryURL URLByAppendingPathComponent:@"video.mov"];
     PHAssetResourceRequestOptions *options = [[PHAssetResourceRequestOptions alloc] init];
     options.networkAccessAllowed = YES;
@@ -73,6 +83,11 @@
 }
 
 - (void)exportVideoFromResourceFileURL:(NSURL *)videoFileURL {
+    if (self.isCancelled) {
+        [self finishOperationWithStatus:CameraAssetUploadStatusFailed shouldUploadNextAsset:NO];
+        return;
+    }
+    
     AVURLAsset *urlAsset = [AVURLAsset assetWithURL:videoFileURL];
     AVAssetExportSession *session = [AVAssetExportSession exportSessionWithAsset:urlAsset presetName:AVAssetExportPresetHighestQuality];
     session.outputFileType = AVFileTypeMPEG4;

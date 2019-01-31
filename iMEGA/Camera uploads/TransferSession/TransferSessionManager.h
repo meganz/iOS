@@ -9,8 +9,10 @@ typedef void (^UploadCompletionHandler)(NSData  * _Nullable token, NSError * _Nu
 
 + (instancetype)shared;
 
-- (void)restoreAllSessions;
+- (void)invalidateAndCancelVideoSessions;
+- (void)invalidateAndCancelPhotoSessions;
 
+- (void)restoreAllSessions;
 - (void)restoreSessionIfNeededByIdentifier:(NSString *)identifier;
 
 - (void)saveSessionCompletion:(void (^)(void))completion forIdentifier:(NSString *)identifier;

@@ -2,6 +2,7 @@
 #import "CameraUploadManager+Settings.h"
 #import "CameraUploadManager.h"
 #import "MEGAConstants.h"
+#import "NSFileManager+MNZCategory.h"
 
 static NSString * const IsCameraUploadsEnabledKey = @"IsCameraUploadsEnabled";
 static NSString * const IsVideoUploadsEnabledKey = @"IsUploadVideosEnabled";
@@ -144,6 +145,36 @@ static NSString * const IsLocationBasedBackgroundUploadAllowedKey = @"IsLocation
         return YES;
     } else {
         return NO;
+    }
+}
+
+#pragma mark - migrate old settings
+
++ (void)migrateOldCameraUploadsSettings {
+    // PhotoSync old location of completed uploads
+    NSString *oldCompleted = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject stringByAppendingPathComponent:@"PhotoSync/completed.plist"];
+    [NSFileManager.defaultManager mnz_removeItemAtPath:oldCompleted];
+    
+    // PhotoSync v2 location of completed uploads
+    NSString *v2Completed = [NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES).firstObject stringByAppendingPathComponent:@"PhotoSync/com.plist"];
+    [NSFileManager.defaultManager mnz_removeItemAtPath:v2Completed];
+    
+    // PhotoSync settings
+    NSString *oldPspPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject stringByAppendingPathComponent:@"PhotoSync/psp.plist"];
+    NSString *v2PspPath  = [NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES).firstObject stringByAppendingPathComponent:@"PhotoSync/psp.plist"];
+    
+    // check for file in previous location
+    if ([[NSFileManager defaultManager] fileExistsAtPath:oldPspPath]) {
+        [[NSFileManager defaultManager] moveItemAtPath:oldPspPath toPath:v2PspPath error:nil];
+    }
+    
+    NSDictionary *cameraUploadsSettings = [[NSDictionary alloc] initWithContentsOfFile:v2PspPath];
+    
+    if (cameraUploadsSettings[@"syncEnabled"]) {
+        CameraUploadManager.cameraUploadEnabled = YES;
+        CameraUploadManager.cellularUploadAllowed = cameraUploadsSettings[@"cellEnabled"] != nil;
+        CameraUploadManager.videoUploadEnabled = cameraUploadsSettings[@"videoEnabled"] != nil;
+        [NSFileManager.defaultManager mnz_removeItemAtPath:v2PspPath];
     }
 }
 
