@@ -11,6 +11,7 @@
 #import "FileEncrypter.h"
 #import "NSURL+CameraUpload.h"
 #import "MEGAConstants.h"
+#import "PHAsset+CameraUpload.h"
 @import Photos;
 
 @interface CameraUploadOperation ()
@@ -76,7 +77,7 @@
     }
     
     if (node.parentHandle != self.uploadInfo.parentNode.handle) {
-        [[MEGASdkManager sharedMEGASdk] copyNode:node newParent:self.uploadInfo.parentNode];
+        [[MEGASdkManager sharedMEGASdk] copyNode:node newParent:self.uploadInfo.parentNode];        
     }
 }
 
@@ -145,6 +146,8 @@
     [self createThumbnailAndPreviewFiles];
     
     self.uploadInfo.mediaUpload = [MEGASdkManager.sharedMEGASdk backgroundMediaUpload];
+    [self.uploadInfo.mediaUpload analyseMediaInfoForFileAtPath:self.uploadInfo.fileURL.path];
+    
     FileEncrypter *encrypter = [[FileEncrypter alloc] initWithMediaUpload:self.uploadInfo.mediaUpload outputDirectoryURL:self.uploadInfo.encryptionDirectoryURL shouldTruncateInputFile:YES];
     [encrypter encryptFileAtURL:self.uploadInfo.fileURL completion:^(BOOL success, unsigned long long fileSize, NSDictionary<NSString *,NSURL *> * _Nonnull chunkURLsKeyedByUploadSuffix, NSError * _Nonnull error) {
         if (success) {
@@ -178,7 +181,7 @@
     for (NSString *uploadSuffix in self.uploadInfo.encryptedChunkURLsKeyedByUploadSuffix.allKeys) {
         NSURL *serverURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", self.uploadInfo.uploadURLString, uploadSuffix]];
         NSURL *chunkURL = self.uploadInfo.encryptedChunkURLsKeyedByUploadSuffix[uploadSuffix];
-        if ([NSFileManager.defaultManager fileExistsAtPath:chunkURL.path]) {
+        if ([NSFileManager.defaultManager isReadableFileAtPath:chunkURL.path]) {
             NSURLSessionUploadTask *uploadTask;
             if (self.uploadInfo.asset.mediaType == PHAssetMediaTypeVideo) {
                 uploadTask = [TransferSessionManager.shared videoUploadTaskWithURL:serverURL fromFile:chunkURL completion:nil];

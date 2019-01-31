@@ -9,7 +9,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface CameraUploadManager : NSObject
 
 @property (nonatomic, readonly) NSUInteger uploadPendingItemsCount;
-@property (strong, readonly, nonatomic) MEGANode *cameraUploadNode;
+@property (strong, readonly, nonatomic) MEGANode *existingCameraUploadNode;
 
 /**
  @return a singleton camera upload manager instance

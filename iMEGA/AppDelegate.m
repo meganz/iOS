@@ -138,11 +138,8 @@
     [MEGAReachabilityManager sharedManager];
     
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"pointToStaging"]) {
-//        [[MEGASdkManager sharedMEGASdk] changeApiUrl:@"https://staging.api.mega.co.nz/" disablepkp:NO];
-//        [[MEGASdkManager sharedMEGASdkFolder] changeApiUrl:@"https://staging.api.mega.co.nz/" disablepkp:NO];
-        // Temporary change, will revert back to staging once the changes in sandbox3 gets released
-        [[MEGASdkManager sharedMEGASdk] changeApiUrl:@"https://api-sandbox3.developers.mega.co.nz/" disablepkp:YES];
-        [[MEGASdkManager sharedMEGASdkFolder] changeApiUrl:@"https://api-sandbox3.developers.mega.co.nz/" disablepkp:YES];
+        [[MEGASdkManager sharedMEGASdk] changeApiUrl:@"https://staging.api.mega.co.nz/" disablepkp:NO];
+        [[MEGASdkManager sharedMEGASdkFolder] changeApiUrl:@"https://staging.api.mega.co.nz/" disablepkp:NO];
     }
     
     [[MEGASdkManager sharedMEGASdk] addMEGARequestDelegate:self];

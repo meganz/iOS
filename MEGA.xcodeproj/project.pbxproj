@@ -701,6 +701,8 @@
 		B644B6BE21AE0E1900A3B8E7 /* CoordinateUploadOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = B644B6BD21AE0E1900A3B8E7 /* CoordinateUploadOperation.m */; };
 		B644B6C121AE19BC00A3B8E7 /* MEGAExpirableOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = B644B6C021AE19BC00A3B8E7 /* MEGAExpirableOperation.m */; };
 		B6575FD021FC526D00B7AD82 /* LivePhotoUploadOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = B6575FCF21FC526D00B7AD82 /* LivePhotoUploadOperation.m */; };
+		B6575FD3220101BB00B7AD82 /* MediaInfoLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = B6575FD2220101BB00B7AD82 /* MediaInfoLoader.m */; };
+		B6575FD622012F8D00B7AD82 /* LoadMediaInfoOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = B6575FD522012F8D00B7AD82 /* LoadMediaInfoOperation.m */; };
 		B658D3B8218F9357004C0D64 /* PhotoUploadOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = B658D3B7218F9357004C0D64 /* PhotoUploadOperation.m */; };
 		B658D3BB218F936B004C0D64 /* VideoUploadOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = B658D3BA218F936B004C0D64 /* VideoUploadOperation.m */; };
 		B658D3CC218FBC24004C0D64 /* CameraUploadManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B658D3C9218FBC24004C0D64 /* CameraUploadManager.m */; };
@@ -1647,6 +1649,10 @@
 		B644B6C021AE19BC00A3B8E7 /* MEGAExpirableOperation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MEGAExpirableOperation.m; sourceTree = "<group>"; };
 		B6575FCE21FC526D00B7AD82 /* LivePhotoUploadOperation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LivePhotoUploadOperation.h; sourceTree = "<group>"; };
 		B6575FCF21FC526D00B7AD82 /* LivePhotoUploadOperation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LivePhotoUploadOperation.m; sourceTree = "<group>"; };
+		B6575FD1220101BB00B7AD82 /* MediaInfoLoader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MediaInfoLoader.h; sourceTree = "<group>"; };
+		B6575FD2220101BB00B7AD82 /* MediaInfoLoader.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MediaInfoLoader.m; sourceTree = "<group>"; };
+		B6575FD422012F8D00B7AD82 /* LoadMediaInfoOperation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LoadMediaInfoOperation.h; sourceTree = "<group>"; };
+		B6575FD522012F8D00B7AD82 /* LoadMediaInfoOperation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LoadMediaInfoOperation.m; sourceTree = "<group>"; };
 		B658D3B6218F9357004C0D64 /* PhotoUploadOperation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PhotoUploadOperation.h; sourceTree = "<group>"; };
 		B658D3B7218F9357004C0D64 /* PhotoUploadOperation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PhotoUploadOperation.m; sourceTree = "<group>"; };
 		B658D3B9218F936B004C0D64 /* VideoUploadOperation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VideoUploadOperation.h; sourceTree = "<group>"; };
@@ -3601,6 +3607,8 @@
 				B644B6BD21AE0E1900A3B8E7 /* CoordinateUploadOperation.m */,
 				B65AC8B821F6A91A0094FF4F /* PhotoExportOperation.h */,
 				B65AC8B921F6A91A0094FF4F /* PhotoExportOperation.m */,
+				B6575FD422012F8D00B7AD82 /* LoadMediaInfoOperation.h */,
+				B6575FD522012F8D00B7AD82 /* LoadMediaInfoOperation.m */,
 			);
 			path = UploadOperations;
 			sourceTree = "<group>";
@@ -3697,6 +3705,8 @@
 				B658D3CE218FBC47004C0D64 /* UploadOperationFactory.m */,
 				B6C524EA21E59DC700AE3575 /* BackgroundUploadMonitor.h */,
 				B6C524EB21E59DC700AE3575 /* BackgroundUploadMonitor.m */,
+				B6575FD1220101BB00B7AD82 /* MediaInfoLoader.h */,
+				B6575FD2220101BB00B7AD82 /* MediaInfoLoader.m */,
 			);
 			path = UploadUtils;
 			sourceTree = "<group>";
@@ -4372,6 +4382,7 @@
 				4115D6441E718B1F004BB0FF /* UIImage+MNZCategory.m in Sources */,
 				41D21E5B1D01AEC3002E6296 /* CTAssetCheckmark.m in Sources */,
 				41B2D41C1A6D06780002E29E /* UIImage+GKContact.m in Sources */,
+				B6575FD622012F8D00B7AD82 /* LoadMediaInfoOperation.m in Sources */,
 				A8C262AA1FA0B8F9006172CE /* CallViewController.m in Sources */,
 				41D8ECDF1BCEBD3200B8FA08 /* SVRadialGradientLayer.m in Sources */,
 				B6B959442193A91E0064334D /* PreviewUploadOperation.m in Sources */,
@@ -4522,6 +4533,7 @@
 				E8D5BF6C1BF3B28500955550 /* SharedItemsTableViewCell.m in Sources */,
 				E8F7917E1BC5754A00C58676 /* GetLinkActivity.m in Sources */,
 				41AA1A1C1AC081C600D32691 /* SecurityOptionsTableViewController.m in Sources */,
+				B6575FD3220101BB00B7AD82 /* MediaInfoLoader.m in Sources */,
 				5B40AB321F7A512E0034C3B3 /* AchievementsDetailsViewController.m in Sources */,
 				411E712F1D461E1D00DD7EF8 /* MEGACollectionViewFlowLayout.m in Sources */,
 				4131997B1BD7BD5D002CD6EA /* DTTimePeriodCollection.m in Sources */,
