@@ -6,6 +6,10 @@
 @synthesize executing, finished;
 
 - (void)start {
+    if (self.isFinished) {
+        return;
+    }
+
     if (self.isCancelled) {
         [self finishOperation];
         return;

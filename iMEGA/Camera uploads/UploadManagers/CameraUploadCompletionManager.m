@@ -4,6 +4,8 @@
 #import "AttributeUploadManager.h"
 #import "MEGAConstants.h"
 #import "NSURL+CameraUpload.h"
+#import "CameraUploadManager.h"
+#import "NodesFetchListenerOperation.h"
 
 @interface CameraUploadCompletionManager ()
 
@@ -27,17 +29,23 @@
     self = [super init];
     if (self) {
         _operationQueue = [[NSOperationQueue alloc] init];
-        _operationQueue.qualityOfService = NSQualityOfServiceUtility;
+        _operationQueue.qualityOfService = NSQualityOfServiceUserInteractive;
     }
     return self;
 }
 
-- (void)waitUnitlAllUploadsAreCompleted {
+- (void)waitUnitlAllUploadsAreFinished {
     [self.operationQueue waitUntilAllOperationsAreFinished];
     [AttributeUploadManager.shared waitUnitlAllAttributeUploadsAreFinished];
 }
 
 - (void)handleCompletedTransferWithLocalIdentifier:(NSString *)localIdentifier token:(NSData *)token {
+    if (!CameraUploadManager.shared.isNodesFetchDone) {
+        NodesFetchListenerOperation *nodesFetchListenerOperation = [[NodesFetchListenerOperation alloc] init];
+        [nodesFetchListenerOperation start];
+        [nodesFetchListenerOperation waitUntilFinished];
+    }
+    
     NSURL *archivedURL = [NSURL mnz_archivedURLForLocalIdentifier:localIdentifier];
     BOOL isDirectory;
     if ([NSFileManager.defaultManager fileExistsAtPath:archivedURL.path isDirectory:&isDirectory] && !isDirectory) {

@@ -51,6 +51,11 @@
 }
 
 - (void)processImageData:(NSData *)imageData dataUTI:(NSString *)dataUTI dataInfo:(NSDictionary *)dataInfo {
+    if (self.isCancelled) {
+        [self finishOperationWithStatus:CameraAssetUploadStatusFailed shouldUploadNextAsset:NO];
+        return;
+    }
+    
     MEGALogDebug(@"[Camera Upload] %@ starts processing image data", self);
     self.uploadInfo.originalFingerprint = [[MEGASdkManager sharedMEGASdk] fingerprintForData:imageData modificationTime:self.uploadInfo.asset.creationDate];
     MEGANode *matchingNode = [self nodeForOriginalFingerprint:self.uploadInfo.originalFingerprint];
@@ -69,7 +74,7 @@
     }
     
     [PhotoExportManager.shared exportPhotoData:imageData dataTypeUTI:dataUTI outputURL:self.uploadInfo.fileURL outputTypeUTI:outputTypeUTI shouldStripGPSInfo:YES completion:^(BOOL succeeded) {
-        if (succeeded && [NSFileManager.defaultManager fileExistsAtPath:self.uploadInfo.fileURL.path]) {
+        if (succeeded && [NSFileManager.defaultManager isReadableFileAtPath:self.uploadInfo.fileURL.path]) {
             [self checkFingerprintAndEncryptFileIfNeeded];
         } else {
             [self finishOperationWithStatus:CameraAssetUploadStatusFailed shouldUploadNextAsset:YES];

@@ -51,6 +51,11 @@
 }
 
 - (void)processVideoAsset:(nullable AVAsset *)asset {
+    if (self.isCancelled) {
+        [self finishOperationWithStatus:CameraAssetUploadStatusFailed shouldUploadNextAsset:NO];
+        return;
+    }
+    
     if (CameraUploadManager.shouldConvertHEVCVideo && asset.mnz_containsHEVCCodec) {
         [self transcodeHEVCVideoAsset:asset];
     } else if ([asset isMemberOfClass:[AVURLAsset class]]) {
@@ -107,6 +112,11 @@
 }
 
 - (void)exportAsset:(AVAsset *)asset withPreset:(NSString *)preset outputFileType:(AVFileType)outputFileType outputFileExtension:(NSString *)extension {
+    if (self.isCancelled) {
+        [self finishOperationWithStatus:CameraAssetUploadStatusFailed shouldUploadNextAsset:NO];
+        return;
+    }
+    
     MEGALogDebug(@"[Camera Upload] %@ starts exporting video data with original dimensions: %@", self, NSStringFromCGSize(asset.mnz_dimensions));
     
     [AVAssetExportSession determineCompatibilityOfExportPreset:preset withAsset:asset outputFileType:outputFileType completionHandler:^(BOOL compatible) {
@@ -145,6 +155,11 @@
 }
 
 - (void)uploadVideoAtURL:(NSURL *)URL {
+    if (self.isCancelled) {
+        [self finishOperationWithStatus:CameraAssetUploadStatusFailed shouldUploadNextAsset:NO];
+        return;
+    }
+    
     self.uploadInfo.fileName = [self.uploadInfo.asset mnz_cameraUploadFileNameWithExtension:URL.pathExtension.lowercaseString];
     NSError *error;
     [NSFileManager.defaultManager copyItemAtURL:URL toURL:self.uploadInfo.fileURL error:&error];

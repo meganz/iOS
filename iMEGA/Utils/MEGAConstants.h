@@ -2,6 +2,8 @@
 #import <Foundation/Foundation.h>
 
 extern NSString * const MEGALogoutNotificationName;
+extern NSString * const MEGANodesFetchDoneNotificationName;
+
 extern NSString * const MEGACameraUploadAssetUploadDoneNotificationName;
 
 extern NSString * const MEGAJPGFileExtension;

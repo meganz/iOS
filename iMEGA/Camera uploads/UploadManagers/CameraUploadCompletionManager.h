@@ -14,7 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)finishUploadForLocalIdentifier:(NSString *)localIdentifier status:(NSString *)status;
 
-- (void)waitUnitlAllUploadsAreCompleted;
+- (void)waitUnitlAllUploadsAreFinished;
 
 @end
 

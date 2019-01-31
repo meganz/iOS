@@ -97,6 +97,24 @@ static NSString * const VideoCellularDisallowedUploadSessionId = @"nz.mega.video
     return [NSURLSession sessionWithConfiguration:configuration delegate:delegate delegateQueue:nil];;
 }
 
+#pragma mark - invalidate sessions
+
+- (void)invalidateAndCancelVideoSessions {
+    [_videoCellularAllowedUploadSession invalidateAndCancel];
+    _videoCellularAllowedUploadSession = nil;
+    
+    [_videoCellularDisallowedUploadSession invalidateAndCancel];
+    _videoCellularDisallowedUploadSession = nil;
+}
+
+- (void)invalidateAndCancelPhotoSessions {
+    [_photoCellularAllowedUploadSession invalidateAndCancel];
+    _photoCellularAllowedUploadSession = nil;
+    
+    [_photoCellularDisallowedUploadSession invalidateAndCancel];
+    _photoCellularDisallowedUploadSession = nil;
+}
+
 #pragma mark - session restoration
 
 - (void)restoreAllSessions {
@@ -211,7 +229,7 @@ static NSString * const VideoCellularDisallowedUploadSessionId = @"nz.mega.video
 #pragma mark - session finishes
 
 - (void)didFinishEventsForBackgroundURLSession:(NSURLSession *)session {
-    [CameraUploadCompletionManager.shared waitUnitlAllUploadsAreCompleted];
+    [CameraUploadCompletionManager.shared waitUnitlAllUploadsAreFinished];
     void (^sessionCompletion)(void) = [self completionHandlerForIdentifier:session.configuration.identifier];
     [NSOperationQueue.mainQueue addOperationWithBlock:^{
         if (sessionCompletion) {

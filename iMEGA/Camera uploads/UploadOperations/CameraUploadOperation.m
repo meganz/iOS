@@ -12,6 +12,7 @@
 #import "NSURL+CameraUpload.h"
 #import "MEGAConstants.h"
 #import "PHAsset+CameraUpload.h"
+#import "CameraUploadManager+Settings.h"
 @import Photos;
 
 @interface CameraUploadOperation ()
@@ -53,7 +54,7 @@
 
 - (void)start {
     if (self.isCancelled) {
-        [self finishOperationWithStatus:CameraAssetUploadStatusFailed shouldUploadNextAsset:YES];
+        [self finishOperationWithStatus:CameraAssetUploadStatusFailed shouldUploadNextAsset:NO];
         return;
     }
     
@@ -136,6 +137,11 @@
 #pragma mark - upload task
 
 - (void)checkFingerprintAndEncryptFileIfNeeded {
+    if (self.isCancelled) {
+        [self finishOperationWithStatus:CameraAssetUploadStatusFailed shouldUploadNextAsset:NO];
+        return;
+    }
+    
     self.uploadInfo.fingerprint = [MEGASdkManager.sharedMEGASdk fingerprintForFilePath:self.uploadInfo.fileURL.path modificationTime:self.uploadInfo.asset.creationDate];
     MEGANode *matchingNode = [MEGASdkManager.sharedMEGASdk nodeForFingerprint:self.uploadInfo.fingerprint parent:self.uploadInfo.parentNode];
     if (matchingNode) {
@@ -164,6 +170,11 @@
 }
 
 - (void)requestUploadURL {
+    if (self.isCancelled) {
+        [self finishOperationWithStatus:CameraAssetUploadStatusFailed shouldUploadNextAsset:NO];
+        return;
+    }
+    
     [[MEGASdkManager sharedMEGASdk] requestBackgroundUploadURLWithFileSize:self.uploadInfo.fileSize mediaUpload:self.uploadInfo.mediaUpload delegate:[[CameraUploadRequestDelegate alloc] initWithCompletion:^(MEGARequest * _Nonnull request, MEGAError * _Nonnull error) {
         if (error.type) {
             MEGALogError(@"[Camera Upload] %@ requests upload url failed with error type: %ld", self, (long)error.type);
@@ -178,6 +189,11 @@
 }
 
 - (void)uploadEncryptedChunksToServer {
+    if (self.isCancelled) {
+        [self finishOperationWithStatus:CameraAssetUploadStatusFailed shouldUploadNextAsset:NO];
+        return;
+    }
+    
     for (NSString *uploadSuffix in self.uploadInfo.encryptedChunkURLsKeyedByUploadSuffix.allKeys) {
         NSURL *serverURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", self.uploadInfo.uploadURLString, uploadSuffix]];
         NSURL *chunkURL = self.uploadInfo.encryptedChunkURLsKeyedByUploadSuffix[uploadSuffix];
