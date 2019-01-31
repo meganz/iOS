@@ -51,7 +51,9 @@
         
         MEGALogDebug(@"[Camera Upload] Finish local album scanning at: %@", [NSDateFormatter localizedStringFromDate:[NSDate date] dateStyle:NSDateFormatterShortStyle timeStyle:NSDateFormatterFullStyle]);
         
-        completion();
+        if (completion) {
+            completion();
+        }
     }];
 }
 

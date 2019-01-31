@@ -39,7 +39,7 @@ static NSString * const CameraUploadLivePhotoExtension = @"live";
     return [CameraUploadFileNameRecordManager.shared localUniqueFileNameForAssetLocalIdentifier:self.localIdentifier proposedFileName:proposedFileName];
 }
 
-- (NSString *)mnz_cameraUploadLivePhotoFileNameWithExtension:(NSString *)extension {
+- (NSString *)mnz_cameraUploadLivePhotoVideoFileNameWithExtension:(NSString *)extension {
     NSString *proposedFileName = [[[NSString mnz_fileNameWithDate:self.creationDate] stringByAppendingPathExtension:CameraUploadLivePhotoExtension] stringByAppendingPathExtension:extension];
     return [CameraUploadFileNameRecordManager.shared localUniqueFileNameForAssetLocalIdentifier:self.localIdentifier proposedFileName:proposedFileName];
 }

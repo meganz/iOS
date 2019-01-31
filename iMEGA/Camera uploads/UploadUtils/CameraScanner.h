@@ -6,7 +6,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface CameraScanner : NSObject
 
-- (void)scanMediaTypes:(NSArray<NSNumber *> *)mediaTypes completion:(void (^)(void))completion;
+- (void)scanMediaTypes:(NSArray<NSNumber *> *)mediaTypes completion:(nullable void (^)(void))completion;
 
 - (void)observePhotoLibraryChanges;
 - (void)unobservePhotoLibraryChanges;

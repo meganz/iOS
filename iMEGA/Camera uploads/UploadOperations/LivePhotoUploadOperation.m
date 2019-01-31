@@ -76,7 +76,7 @@
     AVURLAsset *urlAsset = [AVURLAsset assetWithURL:videoFileURL];
     AVAssetExportSession *session = [AVAssetExportSession exportSessionWithAsset:urlAsset presetName:AVAssetExportPresetHighestQuality];
     session.outputFileType = AVFileTypeMPEG4;
-    self.uploadInfo.fileName = [self.uploadInfo.asset mnz_cameraUploadLivePhotoFileNameWithExtension:MEGAMP4FileExtension];
+    self.uploadInfo.fileName = [self.uploadInfo.asset mnz_cameraUploadLivePhotoVideoFileNameWithExtension:MEGAMP4FileExtension];
     session.outputURL = self.uploadInfo.fileURL;
     session.canPerformMultiplePassesOverSourceMediaData = YES;
     session.shouldOptimizeForNetworkUse = YES;
