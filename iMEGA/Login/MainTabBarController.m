@@ -24,6 +24,7 @@
 @property (getter=shouldReportOutgoingCall) BOOL reportOutgoingCall;
 @property (nonatomic, strong) NSMutableDictionary *missedCallsDictionary;
 @property (nonatomic, strong) NSMutableArray *currentNotifications;
+@property (nonatomic, strong) UIImageView *phoneBadgeImageView;
 
 @end
 
@@ -101,6 +102,12 @@
     
     _missedCallsDictionary = [[NSMutableDictionary alloc] init];
     _currentNotifications = [[NSMutableArray alloc] init];
+    [self configurePhoneImageBadge];
+}
+
+- (void)viewDidLayoutSubviews {
+    [super viewDidLayoutSubviews];
+    [self.view bringSubviewToFront:self.phoneBadgeImageView];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -151,6 +158,7 @@
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
     [super traitCollectionDidChange:previousTraitCollection];
     
+    [self configurePhoneImageBadge];
     for (UITabBarItem *tabBarItem in self.tabBar.items) {
         [self reloadInsetsForTabBarItem:tabBarItem];
     }
@@ -224,9 +232,18 @@
     NSInteger numCalls = [MEGASdkManager sharedMEGAChatSdk] ? [MEGASdkManager sharedMEGAChatSdk].numCalls : 0;
     
     NSString *badgeValue;
+    self.phoneBadgeImageView.hidden = YES;
     if (@available(iOS 10.0, *)) {
-        if (MEGAReachabilityManager.isReachable) {
-            badgeValue = unreadChats | numCalls ? @"⦁" : nil;
+        if (MEGAReachabilityManager.isReachable && numCalls) {
+            MEGAHandleList *chatRoomsWithCall = [MEGASdkManager sharedMEGAChatSdk].chatCalls;
+            for (int i = 0; i < chatRoomsWithCall.size; i++) {
+                MEGAChatCall *call = [[MEGASdkManager sharedMEGAChatSdk] chatCallForChatId:[chatRoomsWithCall megaHandleAtIndex:i]];
+                if (call.status != MEGAChatCallStatusInProgress) {
+                    self.phoneBadgeImageView.hidden = NO;
+                    break;
+                }
+            }
+            badgeValue = self.phoneBadgeImageView.hidden && unreadChats ? @"⦁" : nil;
         } else {
             badgeValue = unreadChats ? @"⦁" : nil;
         }
@@ -318,6 +335,15 @@
 
 - (void)internetConnectionChanged {
     [self setBadgeValueForChats];
+}
+
+- (void)configurePhoneImageBadge {
+    if (!self.phoneBadgeImageView) {
+        self.phoneBadgeImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"onACall"]];
+        self.phoneBadgeImageView.hidden = YES;
+        [self.view addSubview:self.phoneBadgeImageView];
+    }
+    self.phoneBadgeImageView.frame = CGRectMake(self.tabBar.frame.size.width / 2 + 10, self.tabBar.frame.origin.y + 6, 10, 10);
 }
 
 #pragma mark - MEGAGlobalDelegate
