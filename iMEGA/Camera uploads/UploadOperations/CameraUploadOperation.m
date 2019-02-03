@@ -54,7 +54,7 @@
 
 - (void)start {
     if (self.isCancelled) {
-        [self finishOperationWithStatus:CameraAssetUploadStatusFailed shouldUploadNextAsset:NO];
+        [self finishOperationWithStatus:CameraAssetUploadStatusCancelled shouldUploadNextAsset:NO];
         return;
     }
     
@@ -138,7 +138,7 @@
 
 - (void)checkFingerprintAndEncryptFileIfNeeded {
     if (self.isCancelled) {
-        [self finishOperationWithStatus:CameraAssetUploadStatusFailed shouldUploadNextAsset:NO];
+        [self finishOperationWithStatus:CameraAssetUploadStatusCancelled shouldUploadNextAsset:NO];
         return;
     }
     
@@ -171,7 +171,7 @@
 
 - (void)requestUploadURL {
     if (self.isCancelled) {
-        [self finishOperationWithStatus:CameraAssetUploadStatusFailed shouldUploadNextAsset:NO];
+        [self finishOperationWithStatus:CameraAssetUploadStatusCancelled shouldUploadNextAsset:NO];
         return;
     }
     
@@ -190,7 +190,7 @@
 
 - (void)uploadEncryptedChunksToServer {
     if (self.isCancelled) {
-        [self finishOperationWithStatus:CameraAssetUploadStatusFailed shouldUploadNextAsset:NO];
+        [self finishOperationWithStatus:CameraAssetUploadStatusCancelled shouldUploadNextAsset:NO];
         return;
     }
     

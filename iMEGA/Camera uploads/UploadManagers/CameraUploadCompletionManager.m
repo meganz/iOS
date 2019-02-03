@@ -44,7 +44,10 @@
         NodesFetchListenerOperation *nodesFetchListenerOperation = [[NodesFetchListenerOperation alloc] init];
         [nodesFetchListenerOperation start];
         [nodesFetchListenerOperation waitUntilFinished];
+        MEGALogDebug(@"[Camera Upload] Waiting for nodes fetching");
     }
+    
+    MEGALogDebug(@"[Camera Upload] Start putting nodes as nodes fetch is done");
     
     NSURL *archivedURL = [NSURL mnz_archivedURLForLocalIdentifier:localIdentifier];
     BOOL isDirectory;

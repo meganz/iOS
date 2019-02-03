@@ -25,7 +25,7 @@
         [self revertBackToNotStartedForRecord:record];
     }
     
-    [CameraUploadRecordManager.shared saveChangesIfNeeded:nil];
+    [CameraUploadRecordManager.shared saveChangesIfNeededWithError:nil];
 }
 
 - (void)collateUploadingRecords {
@@ -57,7 +57,7 @@
         }
     }
     
-    [CameraUploadRecordManager.shared saveChangesIfNeeded:nil];
+    [CameraUploadRecordManager.shared saveChangesIfNeededWithError:nil];
 }
 
 - (void)clearErrorRecordsPerLaunch {

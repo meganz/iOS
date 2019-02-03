@@ -13,8 +13,12 @@ NSString * const CameraUploadErrorDomain = @"nz.mega.cameraUpload";
     return [NSError errorWithDomain:CameraUploadErrorDomain code:CameraUploadErrorBackgroundTaskExpired userInfo:@{NSLocalizedDescriptionKey : @"background task is expired"}];
 }
 
-+ (NSError *)mnz_cameraUploadOperationCancelled {
-    return [NSError errorWithDomain:CameraUploadErrorDomain code:CameraUploadOperationCancelled userInfo:@{NSLocalizedDescriptionKey : @"operation gets cancelled"}];
++ (NSError *)mnz_cameraUploadOperationCancelledError {
+    return [NSError errorWithDomain:CameraUploadErrorDomain code:CameraUploadErrorOperationCancelled userInfo:@{NSLocalizedDescriptionKey : @"operation gets cancelled"}];
+}
+
++ (NSError *)mnz_cameraUploadNodeIsNotFoundError {
+    return [NSError errorWithDomain:CameraUploadErrorDomain code:CameraUploadErrrorCameraUploadNodeIsNotFound userInfo:@{NSLocalizedDescriptionKey : @"camera upload node is not found"}];
 }
 
 @end

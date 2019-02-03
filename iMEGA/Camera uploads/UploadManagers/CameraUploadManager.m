@@ -34,6 +34,7 @@ static const NSTimeInterval LoadMediaInfoTimeoutInSeconds = 120;
 
 @interface CameraUploadManager ()
 
+@property (nonatomic) BOOL isNodesFetchDone;
 @property (strong, nonatomic) NSOperationQueue *photoUploadOperationQueue;
 @property (strong, nonatomic) NSOperationQueue *videoUploadOperationQueue;
 @property (strong, readwrite, nonatomic) MEGANode *cameraUploadNode;
@@ -145,12 +146,12 @@ static const NSTimeInterval LoadMediaInfoTimeoutInSeconds = 120;
     }];
     
     if (self.mediaInfoLoader.isMediaInfoLoaded) {
-        [self requestCameraUploadNode];
+        [self requestCameraUploadNodeToUpload];
     } else {
         __weak __typeof__(self) weakSelf = self;
         [self.mediaInfoLoader loadMediaInfoWithTimeout:LoadMediaInfoTimeoutInSeconds completion:^(BOOL loaded) {
             if (loaded) {
-                [weakSelf requestCameraUploadNode];
+                [weakSelf requestCameraUploadNodeToUpload];
             } else {
                 [weakSelf startCameraUploadIfNeeded];
             }
@@ -158,7 +159,7 @@ static const NSTimeInterval LoadMediaInfoTimeoutInSeconds = 120;
     }
 }
 
-- (void)requestCameraUploadNode {
+- (void)requestCameraUploadNodeToUpload {
     if (!self.isNodesFetchDone) {
         return;
     }
@@ -216,7 +217,7 @@ static const NSTimeInterval LoadMediaInfoTimeoutInSeconds = 120;
 }
 
 - (void)uploadNextAssetsWithNumber:(NSInteger)number mediaType:(PHAssetMediaType)mediaType {
-    NSArray *records = [CameraUploadRecordManager.shared fetchToBeUploadedRecordsWithLimit:number mediaType:mediaType error:nil];
+    NSArray *records = [CameraUploadRecordManager.shared fetchRecordsToQueueUpForUploadWithLimit:number mediaType:mediaType error:nil];
     if (records.count == 0) {
         MEGALogDebug(@"[Camera Upload] no more local asset to upload for media type %li", (long)mediaType);
         return;
