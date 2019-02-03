@@ -10,6 +10,7 @@ extern NSString * const CameraAssetUploadStatusQueuedUp;
 extern NSString * const CameraAssetUploadStatusProcessing;
 extern NSString * const CameraAssetUploadStatusUploading;
 extern NSString * const CameraAssetUploadStatusFailed;
+extern NSString * const CameraAssetUploadStatusCancelled;
 extern NSString * const CameraAssetUploadStatusDone;
 
 @class PHAsset, PHFetchResult;
@@ -20,7 +21,7 @@ extern NSString * const CameraAssetUploadStatusDone;
 
 #pragma mark - fetch records
 
-- (NSArray<MOAssetUploadRecord *> *)fetchToBeUploadedRecordsWithLimit:(NSInteger)fetchLimit mediaType:(PHAssetMediaType)mediaType error:(NSError * _Nullable __autoreleasing * _Nullable)error;
+- (NSArray<MOAssetUploadRecord *> *)fetchRecordsToQueueUpForUploadWithLimit:(NSInteger)fetchLimit mediaType:(PHAssetMediaType)mediaType error:(NSError * _Nullable __autoreleasing * _Nullable)error;
 
 - (NSArray<MOAssetUploadRecord *> *)fetchAllUploadRecords:(NSError * _Nullable __autoreleasing * _Nullable)error;
 
@@ -30,7 +31,7 @@ extern NSString * const CameraAssetUploadStatusDone;
 
 #pragma mark - save records
 
-- (BOOL)saveChangesIfNeeded:(NSError * _Nullable __autoreleasing * _Nullable)error;
+- (BOOL)saveChangesIfNeededWithError:(NSError * _Nullable __autoreleasing * _Nullable)error;
 
 - (BOOL)initialSaveWithAssetFetchResult:(PHFetchResult *)result error:(NSError * _Nullable __autoreleasing * _Nullable)error;
 

@@ -29,7 +29,7 @@
 
 - (void)processLivePhoto:(nullable PHLivePhoto *)livePhoto {
     if (self.isCancelled) {
-        [self finishOperationWithStatus:CameraAssetUploadStatusFailed shouldUploadNextAsset:NO];
+        [self finishOperationWithStatus:CameraAssetUploadStatusCancelled shouldUploadNextAsset:NO];
         return;
     }
     
@@ -59,7 +59,7 @@
 
 - (void)writeDataForVideoResource:(PHAssetResource *)resource {
     if (self.isCancelled) {
-        [self finishOperationWithStatus:CameraAssetUploadStatusFailed shouldUploadNextAsset:NO];
+        [self finishOperationWithStatus:CameraAssetUploadStatusCancelled shouldUploadNextAsset:NO];
         return;
     }
     
@@ -84,7 +84,7 @@
 
 - (void)exportVideoFromResourceFileURL:(NSURL *)videoFileURL {
     if (self.isCancelled) {
-        [self finishOperationWithStatus:CameraAssetUploadStatusFailed shouldUploadNextAsset:NO];
+        [self finishOperationWithStatus:CameraAssetUploadStatusCancelled shouldUploadNextAsset:NO];
         return;
     }
     
@@ -106,7 +106,7 @@
                 break;
             case AVAssetExportSessionStatusCancelled:
                 MEGALogDebug(@"[Camera Upload] %@ video compression got cancelled", weakSelf);
-                [weakSelf finishOperationWithStatus:CameraAssetUploadStatusFailed shouldUploadNextAsset:YES];
+                [weakSelf finishOperationWithStatus:CameraAssetUploadStatusCancelled shouldUploadNextAsset:YES];
                 break;
             default:
                 MEGALogError(@"[Camera Upload] %@ got error when to compress video %@", weakSelf, session.error)

@@ -4,6 +4,7 @@
 #import "NSString+MNZCategory.h"
 #import "MEGAError+MNZCategory.h"
 #import "NSError+CameraUpload.h"
+#import "CameraUploadManager.h"
 
 @interface UploadCompletionOperation ()
 
@@ -28,9 +29,7 @@
 
 - (void)start {
     if (self.isCancelled) {
-        if (self.completion) {
-            self.completion(nil, [NSError mnz_cameraUploadOperationCancelled]);
-        }
+        self.completion(nil, NSError.mnz_cameraUploadOperationCancelledError);
         [self finishOperation];
         
         return;
@@ -54,8 +53,23 @@
         [self finishOperation];
     }];
     
+    if (self.uploadInfo.parentNode == nil) {
+        [CameraUploadManager.shared requestCameraUploadNodeWithCompletion:^(MEGANode * _Nullable cameraUploadNode) {
+            if (cameraUploadNode == nil) {
+                self.completion(nil, NSError.mnz_cameraUploadNodeIsNotFoundError);
+                [self finishOperation];
+            } else {
+                self.uploadInfo.parentNode = cameraUploadNode;
+                [self putNodeWithDelegate:delegate];
+            }
+        }];
+    } else {
+        [self putNodeWithDelegate:delegate];
+    }
+}
+
+- (void)putNodeWithDelegate:(id<MEGARequestDelegate>)delegate {
     NSString *serverUniqueFileName = [self.uploadInfo.fileName mnz_sequentialFileNameInParentNode:self.uploadInfo.parentNode];
-    
     BOOL didCreateRequestSuccess =
     [MEGASdkManager.sharedMEGASdk completeBackgroundMediaUpload:self.uploadInfo.mediaUpload
                                                        fileName:serverUniqueFileName

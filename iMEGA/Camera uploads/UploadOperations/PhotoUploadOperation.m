@@ -37,11 +37,6 @@
     
     __weak __typeof__(self) weakSelf = self;
     [[PHImageManager defaultManager] requestImageDataForAsset:self.uploadInfo.asset options:options resultHandler:^(NSData * _Nullable imageData, NSString * _Nullable dataUTI, UIImageOrientation orientation, NSDictionary * _Nullable info) {
-        if (weakSelf.isCancelled) {
-            [weakSelf finishOperationWithStatus:CameraAssetUploadStatusFailed shouldUploadNextAsset:YES];
-            return;
-        }
-        
         if (imageData) {
             [weakSelf processImageData:imageData dataUTI:dataUTI dataInfo:info];
         } else {
@@ -52,7 +47,7 @@
 
 - (void)processImageData:(NSData *)imageData dataUTI:(NSString *)dataUTI dataInfo:(NSDictionary *)dataInfo {
     if (self.isCancelled) {
-        [self finishOperationWithStatus:CameraAssetUploadStatusFailed shouldUploadNextAsset:NO];
+        [self finishOperationWithStatus:CameraAssetUploadStatusCancelled shouldUploadNextAsset:NO];
         return;
     }
     

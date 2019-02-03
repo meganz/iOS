@@ -4,12 +4,12 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@class PHAsset;
+@class PHAsset, MEGANode;
 
 @interface CameraUploadManager : NSObject
 
-@property (nonatomic, readonly) NSUInteger uploadPendingItemsCount;
-@property (nonatomic) BOOL isNodesFetchDone;
+@property (readonly) NSUInteger uploadPendingItemsCount;
+@property (readonly) BOOL isNodesFetchDone;
 
 /**
  @return a singleton camera upload manager instance
@@ -39,6 +39,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)startBackgroundUploadIfPossible;
 - (void)stopBackgroundUpload;
+
+#pragma mark - request camera upload node
+
+- (void)requestCameraUploadNodeWithCompletion:(void (^)(MEGANode * _Nullable cameraUploadNode))completion;
 
 @end
 

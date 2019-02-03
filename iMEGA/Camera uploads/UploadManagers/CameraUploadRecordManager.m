@@ -9,6 +9,7 @@ NSString * const CameraAssetUploadStatusQueuedUp = @"QueuedUp";
 NSString * const CameraAssetUploadStatusProcessing = @"Processing";
 NSString * const CameraAssetUploadStatusUploading = @"Uploading";
 NSString * const CameraAssetUploadStatusFailed = @"Failed";
+NSString * const CameraAssetUploadStatusCancelled = @"Cancelled";
 NSString * const CameraAssetUploadStatusDone = @"Done";
 
 static const NSUInteger MaximumUploadRetryPerLaunchCount = 20;
@@ -54,11 +55,11 @@ static const NSUInteger MaximumUploadRetryPerLoginCount = 400;
     return [self fetchUploadRecordsByFetchRequest:request error:error];
 }
 
-- (NSArray<MOAssetUploadRecord *> *)fetchToBeUploadedRecordsWithLimit:(NSInteger)fetchLimit mediaType:(PHAssetMediaType)mediaType error:(NSError *__autoreleasing  _Nullable *)error {
+- (NSArray<MOAssetUploadRecord *> *)fetchRecordsToQueueUpForUploadWithLimit:(NSInteger)fetchLimit mediaType:(PHAssetMediaType)mediaType error:(NSError *__autoreleasing  _Nullable *)error {
     NSFetchRequest *request = MOAssetUploadRecord.fetchRequest;
     request.fetchLimit = fetchLimit;
     request.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"creationDate" ascending:NO]];
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(status IN %@) AND (mediaType == %@)", @[CameraAssetUploadStatusNotStarted, CameraAssetUploadStatusFailed], @(mediaType)];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(status IN %@) AND (mediaType == %@)", [self recordStatusesReadyToQueueUp], @(mediaType)];
     request.predicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[predicate, [self predicateForAssetUploadRecordError]]];
     [request setRelationshipKeyPathsForPrefetching:@[@"errorPerLaunch", @"errorPerLogin"]];
     return [self fetchUploadRecordsByFetchRequest:request error:error];
@@ -111,7 +112,7 @@ static const NSUInteger MaximumUploadRetryPerLoginCount = 400;
 
 #pragma mark - save records
 
-- (BOOL)saveChangesIfNeeded:(NSError *__autoreleasing  _Nullable *)error {
+- (BOOL)saveChangesIfNeededWithError:(NSError *__autoreleasing  _Nullable *)error {
     NSError *coreDataError = nil;
     if (self.privateQueueContext.hasChanges) {
         [self.privateQueueContext save:&coreDataError];
@@ -336,6 +337,10 @@ static const NSUInteger MaximumUploadRetryPerLoginCount = 400;
     NSPredicate *errorPerLaunch = [NSPredicate predicateWithFormat:@"(errorPerLaunch == %@) OR (errorPerLaunch.errorCount <= %@)", NSNull.null, @(MaximumUploadRetryPerLaunchCount)];
     NSPredicate *errorPerLogin = [NSPredicate predicateWithFormat:@"(errorPerLogin == %@) OR (errorPerLogin.errorCount <= %@)", NSNull.null, @(MaximumUploadRetryPerLoginCount)];
     return [NSCompoundPredicate andPredicateWithSubpredicates:@[errorPerLaunch, errorPerLogin]];
+}
+
+- (NSArray<NSString *> *)recordStatusesReadyToQueueUp {
+    return @[CameraAssetUploadStatusNotStarted, CameraAssetUploadStatusFailed, CameraAssetUploadStatusCancelled];
 }
 
 @end
