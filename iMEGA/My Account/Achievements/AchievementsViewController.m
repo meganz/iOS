@@ -33,6 +33,8 @@
 
 @property (nonatomic, getter=haveReferralBonuses) BOOL referralBonuses;
 
+@property (strong, nonatomic) NSNumberFormatter *numberFormatter;
+
 @end
 
 @implementation AchievementsViewController
@@ -44,6 +46,11 @@
     
     self.byteCountFormatter = [[NSByteCountFormatter alloc] init];
     self.byteCountFormatter.countStyle = NSByteCountFormatterCountStyleMemory;
+    
+    self.numberFormatter = NSNumberFormatter.alloc.init;
+    self.numberFormatter.numberStyle = NSNumberFormatterDecimalStyle;
+    self.numberFormatter.locale = NSLocale.autoupdatingCurrentLocale;
+    self.numberFormatter.maximumFractionDigits = 0;
     
     self.navigationItem.title = AMLocalizedString(@"achievementsTitle", @"Title of the Achievements section");
     
@@ -71,11 +78,6 @@
 #pragma mark - Private
 
 - (NSMutableAttributedString *)textForUnlockedBonuses:(long long)quota {
-    NSNumberFormatter *numberFormatter = [[NSNumberFormatter alloc] init];
-    numberFormatter.numberStyle = NSNumberFormatterDecimalStyle;
-    numberFormatter.locale = [NSLocale currentLocale];
-    numberFormatter.maximumFractionDigits = 0;
-    
     NSString *stringFromByteCount;
     NSRange firstPartRange;
     NSRange secondPartRange;
@@ -85,8 +87,8 @@
     NSArray *componentsSeparatedByStringArray = [stringFromByteCount componentsSeparatedByString:@" "];
     
     NSString *firstPartString = [NSString mnz_stringWithoutUnitOfComponents:componentsSeparatedByStringArray];
-    NSNumber *number = [numberFormatter numberFromString:firstPartString];
-    firstPartString = [numberFormatter stringFromNumber:number];
+    NSNumber *number = [self.numberFormatter numberFromString:firstPartString];
+    firstPartString = [self.numberFormatter stringFromNumber:number];
     
     if (firstPartString.length == 0) {
         firstPartString = [NSString mnz_stringWithoutUnitOfComponents:componentsSeparatedByStringArray];
