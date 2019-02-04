@@ -29,8 +29,6 @@
 @property (nonatomic, copy) NSString *offlineSizeString;
 @property (nonatomic, copy) NSString *cacheSizeString;
 
-@property (nonatomic)  NSByteCountFormatter *byteCountFormatter;
-
 @property (nonatomic, getter=isFileVersioningEnabled) BOOL fileVersioningEnabled;
 
 @end
@@ -41,9 +39,6 @@
     [super viewDidLoad];
     
     self.navigationItem.title = AMLocalizedString(@"File Management", @"A section header which contains the file management settings. These settings allow users to remove duplicate files etc.");
-    
-    self.byteCountFormatter = [[NSByteCountFormatter alloc] init];
-    self.byteCountFormatter.countStyle = NSByteCountFormatterCountStyleMemory;
     
     _offlineSizeString = @"...";
     _cacheSizeString = @"...";
@@ -80,7 +75,7 @@
 - (void)reloadUI {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
         unsigned long long offlineSize = [Helper sizeOfFolderAtPath:[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0]];
-        self.offlineSizeString = [self.byteCountFormatter stringFromByteCount:offlineSize];
+        self.offlineSizeString = [Helper memoryStyleStringFromByteCount:offlineSize];
         self.offlineSizeString = [self formatStringFromByteCountFormatter:self.offlineSizeString];
         
         unsigned long long thumbnailsSize = [Helper sizeOfFolderAtPath:[Helper pathForSharedSandboxCacheDirectory:@"thumbnailsV3"]];
@@ -88,7 +83,7 @@
         unsigned long long temporaryDirectory = [Helper sizeOfFolderAtPath:NSTemporaryDirectory()];
         unsigned long long cacheSize = thumbnailsSize + previewsSize + temporaryDirectory;
         
-        self.cacheSizeString = [self.byteCountFormatter stringFromByteCount:cacheSize];
+        self.cacheSizeString = [Helper memoryStyleStringFromByteCount:cacheSize];
         self.cacheSizeString = [self formatStringFromByteCountFormatter:self.cacheSizeString];
         
         dispatch_async(dispatch_get_main_queue(), ^(void){
@@ -172,7 +167,7 @@
             
         case 2: { //On MEGA - Rubbish Bin
             NSNumber *rubbishBinSizeNumber = [[MEGASdkManager sharedMEGASdk] sizeForNode:[[MEGASdkManager sharedMEGASdk] rubbishNode]];
-            NSString *stringFromByteCount = [self.byteCountFormatter stringFromByteCount:rubbishBinSizeNumber.unsignedLongLongValue];
+            NSString *stringFromByteCount = [Helper memoryStyleStringFromByteCount:rubbishBinSizeNumber.unsignedLongLongValue];
             stringFromByteCount = [self formatStringFromByteCountFormatter:stringFromByteCount];
             NSString *currentlyUsingString = AMLocalizedString(@"currentlyUsing", @"Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped");
             currentlyUsingString = [currentlyUsingString stringByReplacingOccurrencesOfString:@"%s" withString:stringFromByteCount];
@@ -188,7 +183,7 @@
             
         case 4: { //File Versioning - File Versions
             long long totalNumberOfVersionsSize = [[[MEGASdkManager sharedMEGASdk] mnz_accountDetails] versionStorageUsedForHandle:[[[MEGASdkManager sharedMEGASdk] rootNode] handle]];
-            NSString *stringFromByteCount = [self.byteCountFormatter stringFromByteCount:totalNumberOfVersionsSize];
+            NSString *stringFromByteCount = [Helper memoryStyleStringFromByteCount:totalNumberOfVersionsSize];
             stringFromByteCount = [self formatStringFromByteCountFormatter:stringFromByteCount];
             NSString *totalFileVersionsSize = [NSString stringWithFormat:@"%@ %@", AMLocalizedString(@"Total size taken up by file versions:", @"A title message in the user’s account settings for showing the storage used for file versions."), stringFromByteCount];
             titleFooter = totalFileVersionsSize;
