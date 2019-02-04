@@ -18,8 +18,6 @@
     NSNumber *localSize;
     NSNumber *usedStorage;
     NSNumber *maxStorage;
-    
-    NSByteCountFormatter *byteCountFormatter;
 }
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *editBarButtonItem;
@@ -81,9 +79,6 @@
     
     [self.logoutButton setTitle:AMLocalizedString(@"logoutLabel", @"Title of the button which logs out from your account.") forState:UIControlStateNormal];
     
-    byteCountFormatter = [[NSByteCountFormatter alloc] init];
-    [byteCountFormatter setCountStyle:NSByteCountFormatterCountStyleMemory];
-    
     if ([[UIDevice currentDevice] iPhone4X]) {
         float constant = ([[MEGASdkManager sharedMEGASdk] mnz_isProAccount]) ? 4.0f : 8.0f;
         self.usedLabelTopLayoutConstraint.constant = constant;
@@ -107,7 +102,7 @@
     
     localSize = [NSNumber numberWithLongLong:(thumbsSize + previewsSize + offlineSize)];
     
-    NSString *stringFromByteCount = [byteCountFormatter stringFromByteCount:[localSize longLongValue]];
+    NSString *stringFromByteCount = [Helper memoryStyleStringFromByteCount:localSize.longLongValue];
     self.localUsedSpaceLabel.attributedText = [self textForSizeLabels:stringFromByteCount];
     
     [self setupWithAccountDetails];
@@ -169,9 +164,9 @@
         usedStorage = accountDetails.storageUsed;
         maxStorage = accountDetails.storageMax;
         
-        NSString *usedStorageString = [byteCountFormatter stringFromByteCount:[usedStorage longLongValue]];
+        NSString *usedStorageString = [Helper memoryStyleStringFromByteCount:usedStorage.longLongValue];
         long long availableStorage = maxStorage.longLongValue - usedStorage.longLongValue;
-        NSString *availableStorageString = [byteCountFormatter stringFromByteCount:(availableStorage < 0) ? 0 : availableStorage];
+        NSString *availableStorageString = [Helper memoryStyleStringFromByteCount:((availableStorage < 0) ? 0 : availableStorage)];
         
         self.usedSpaceLabel.attributedText = [self textForSizeLabels:usedStorageString];
         self.availableSpaceLabel.attributedText = [self textForSizeLabels:availableStorageString];
