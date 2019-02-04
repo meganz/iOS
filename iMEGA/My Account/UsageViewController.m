@@ -32,6 +32,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *incomingSharesSizeLabel;
 @property (weak, nonatomic) IBOutlet UIProgressView *incomingSharesProgressView;
 
+@property (nonatomic) NSNumberFormatter *numberFormatter;
+
 @end
 
 @implementation UsageViewController
@@ -41,6 +43,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
+    self.numberFormatter = NSNumberFormatter.alloc.init;
+    self.numberFormatter.numberStyle = NSNumberFormatterDecimalStyle;
+    self.numberFormatter.locale = NSLocale.autoupdatingCurrentLocale;
+    self.numberFormatter.maximumFractionDigits = 0;
+    
     self.pieChartView.delegate = self;
     self.pieChartView.datasource = self;
     
@@ -109,12 +116,6 @@
 }
 
 - (NSMutableAttributedString *)textForMainLabel:(NSInteger)currentPage {
-    
-    NSNumberFormatter *numberFormatter = [[NSNumberFormatter alloc] init];
-    [numberFormatter setNumberStyle:NSNumberFormatterDecimalStyle];
-    [numberFormatter setLocale:[NSLocale currentLocale]];
-    [numberFormatter setMaximumFractionDigits:0];
-    
     NSMutableAttributedString *firstPartMutableAttributedString;
     NSMutableAttributedString *secondPartMutableAttributedString;
     NSString *stringFromByteCount;
@@ -124,7 +125,7 @@
     switch (currentPage) {
         case 0: {
             NSNumber *number = [NSNumber numberWithFloat:(([[self.sizesArray objectAtIndex:3] floatValue] / [[self.sizesArray objectAtIndex:4] floatValue]) * 100)];
-            NSString *firstPartString = [numberFormatter stringFromNumber:number];
+            NSString *firstPartString = [self.numberFormatter stringFromNumber:number];
             firstPartRange = [firstPartString rangeOfString:firstPartString];
             firstPartMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:firstPartString];
             
