@@ -27,6 +27,19 @@
     return [hourAndMinutesDateFormatter stringFromDate:self];
 }
 
+- (NSString *)mnz_formattedDateMediumStyle {
+    static NSDateFormatter *dateMediumStyleDateFormatter = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        dateMediumStyleDateFormatter = NSDateFormatter.alloc.init;
+        dateMediumStyleDateFormatter.dateStyle = NSDateFormatterMediumStyle;
+        dateMediumStyleDateFormatter.timeStyle = NSDateFormatterNoStyle;
+        dateMediumStyleDateFormatter.locale = NSLocale.autoupdatingCurrentLocale;
+    });
+    
+    return [dateMediumStyleDateFormatter stringFromDate:self];
+}
+
 - (NSString *)mnz_formattedMonthAndYear {
     static NSDateFormatter *monthAndYearDateFormatter = nil;
     static dispatch_once_t onceToken;
