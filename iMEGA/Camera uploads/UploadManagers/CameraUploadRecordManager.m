@@ -37,7 +37,7 @@ static const NSUInteger MaximumUploadRetryPerLoginCount = 400;
     self = [super init];
     if (self) {
         _privateQueueContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
-        _privateQueueContext.persistentStoreCoordinator = [MEGAStore shareInstance].persistentStoreCoordinator;
+        _privateQueueContext.persistentStoreCoordinator = [MEGAStore storeCoordinator];
     }
     
     return self;

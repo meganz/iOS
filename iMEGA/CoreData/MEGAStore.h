@@ -14,7 +14,6 @@
 
 #pragma mark - Properties
 
-@property (strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 
 #pragma mark - Singleton Lifecycle
@@ -24,6 +23,8 @@
 #pragma mark - Configure
 
 - (void)configureMEGAStore;
+
++ (NSPersistentStoreCoordinator *)storeCoordinator;
 
 #pragma mark - MOOfflineNode entity
 

@@ -3,12 +3,6 @@
 
 #import "NSString+MNZCategory.h"
 
-@interface MEGAStore ()
-
-@property (strong, nonatomic) NSManagedObjectModel *managedObjectModel;
-
-@end
-
 @implementation MEGAStore
 
 static MEGAStore *_megaStore = nil;
@@ -32,27 +26,32 @@ static MEGAStore *_megaStore = nil;
     return self;
 }
 
-- (void)configureMEGAStore {
-    _managedObjectModel = [NSManagedObjectModel mergedModelFromBundles:nil];
++ (NSPersistentStoreCoordinator *)storeCoordinator {
+    NSManagedObjectModel *model = [NSManagedObjectModel mergedModelFromBundles:nil];
     NSURL *storeURL = [self storeURL];
     
     NSError *error = nil;
-    _persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:_managedObjectModel];
+    NSPersistentStoreCoordinator *coordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:model];
     NSDictionary *options = @{ NSMigratePersistentStoresAutomaticallyOption : @YES,
-                              NSInferMappingModelAutomaticallyOption : @YES };
+                               NSInferMappingModelAutomaticallyOption : @YES };
     
-    if (![_persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:options error:&error]) {
+    if (![coordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:options error:&error]) {
         MEGALogError(@"Unresolved error %@, %@", error, error.userInfo);
         abort();
     }
     
-    if (_persistentStoreCoordinator != nil) {
+    return coordinator;
+}
+
+- (void)configureMEGAStore {
+    NSPersistentStoreCoordinator *coordinator = [MEGAStore storeCoordinator];
+    if (coordinator != nil) {
         _managedObjectContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSMainQueueConcurrencyType];
-        [_managedObjectContext setPersistentStoreCoordinator:_persistentStoreCoordinator];
+        [_managedObjectContext setPersistentStoreCoordinator:coordinator];
     }
 }
 
-- (NSURL *)storeURL {
++ (NSURL *)storeURL {
     NSString *dbName = @"MEGACD.sqlite";
     NSError *error;
     NSFileManager *fileManager = NSFileManager.defaultManager;
