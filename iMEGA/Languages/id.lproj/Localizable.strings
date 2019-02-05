@@ -689,7 +689,7 @@
 /* Title for the MEGA Recovery Key */
 "masterKey"="Recovery Key";
 /* Section title where you can change your MEGA's password */
-"changePasswordLabel"="Ubah kata sandi";
+"changePasswordLabel"="Change Password";
 /* Advising the user to keep the user's master key safe. */
 "exportMasterKeyFooter"="Meng-ekspor Recovery Key dan menyimpan nya di tempat yang aman membolehkan anda mengatur password baru tanpa kehilangan data.";
 /* Question button to present a view where it's explained what is the Recovery Key */

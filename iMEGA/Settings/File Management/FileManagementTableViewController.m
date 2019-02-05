@@ -272,6 +272,17 @@
     [self.tableView reloadData];
 }
 
+- (void)onUsersUpdate:(MEGASdk *)api userList:(MEGAUserList *)userList {
+    NSInteger userListCount = userList.size.integerValue;
+    for (NSInteger i = 0 ; i < userListCount; i++) {
+        MEGAUser *user = [userList userAtIndex:i];
+        
+        if (user.handle == api.myUser.handle && [user hasChangedType:MEGAUserChangeTypeDisableVersions] && user.isOwnChange == 0) {
+            [api getFileVersionsOptionWithDelegate:self];
+        }
+    }
+}
+
 #pragma mark - MEGARequestDelegate
 
 - (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
