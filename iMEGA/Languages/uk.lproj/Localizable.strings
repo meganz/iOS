@@ -689,7 +689,7 @@
 /* Title for the MEGA Recovery Key */
 "masterKey"="Ключ Відновлення";
 /* Section title where you can change your MEGA's password */
-"changePasswordLabel"="Змінити пароль";
+"changePasswordLabel"="Change Password";
 /* Advising the user to keep the user's master key safe. */
 "exportMasterKeyFooter"="Експорт ключа відновлення і збереження його у безпечному місці дозволить встановити новий пароль без втрати даних.";
 /* Question button to present a view where it's explained what is the Recovery Key */
@@ -1673,7 +1673,7 @@
 /* New server-side rubbish-bin cleaning scheduler description (for PRO users) */
 "The Rubbish Bin can be cleaned for you automatically. The minimum period is 7 days."="The Rubbish Bin can be cleaned for you automatically. The minimum period is 7 days.";
 /* Description shown when you try to disable the feature Rubbish-Bin Cleaning Scheduler and you are a free user */
-"To disable the Rubbish-Bin Cleaning Scheduler or set a longer retention period, you need to subscribe to a PRO plan."="To disable the Rubbish-Bin Cleaning Scheduler or set a longer retention period, you need to subscribe to a PRO plan.";
+"To disable the Rubbish-Bin Cleaning Scheduler or set a longer retention period, you need to subscribe to a PRO plan."="To disable the Rubbish Bin Clearing Scheduler or set a longer retention period, you need to subscribe to a PRO plan.";
 /* Confirmation dialog for the button that logs the user out of all sessions except the current one. */
 "Do you want to close all other sessions? This will log you out on all other active sessions except the current one."="Do you want to close all other sessions? This will log you out on all other active sessions except the current one.";
 /* Message to inform the local user that someone has joined the current group call */

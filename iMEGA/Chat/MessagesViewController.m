@@ -307,7 +307,7 @@ const NSUInteger kMaxMessagesToLoad = 256;
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     
-    if ([self.navigationController.viewControllers indexOfObject:self] == NSNotFound || self.presentingViewController) {
+    if ([self.navigationController.viewControllers indexOfObject:self] == NSNotFound) {
         [[MEGASdkManager sharedMEGAChatSdk] closeChatRoom:self.chatRoom.chatId delegate:self];
     }
     [[MEGASdkManager sharedMEGAChatSdk] removeChatDelegate:self];
@@ -322,10 +322,6 @@ const NSUInteger kMaxMessagesToLoad = 256;
 
 - (void)popViewController {
     [self.navigationController popViewControllerAnimated:YES];
-}
-
-- (void)dismissChatRoom {
-    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)dealloc {
@@ -551,29 +547,23 @@ const NSUInteger kMaxMessagesToLoad = 256;
     self.unreadLabel.textColor = UIColor.whiteColor;
     self.unreadLabel.userInteractionEnabled = YES;
     
-    if (self.presentingViewController && self.parentViewController) {
-        self.unreadBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.unreadLabel];
-        UIBarButtonItem *chatBackBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:AMLocalizedString(@"chat", @"Chat section header") style:UIBarButtonItemStylePlain target:self action:@selector(dismissChatRoom)];
-        
-        self.leftBarButtonItems = @[chatBackBarButtonItem, self.unreadBarButtonItem];
-    } else {
-        //TODO: leftItemsSupplementBackButton
-        UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 66, 44)];
-        UIImage *image = [[UIImage imageNamed:@"backArrow"] imageFlippedForRightToLeftLayoutDirection];
-        UIImageView *imageView = [[UIImageView alloc] initWithImage:[image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]];
-        imageView.frame = CGRectMake(0, 10, 22, 22);
-        imageView.contentMode = UIViewContentModeScaleAspectFit;
-        [view addGestureRecognizer:singleTap];
-        [view addSubview:imageView];
-        [view addSubview:self.unreadLabel];
-        [imageView configureForAutoLayout];
-        [imageView autoPinEdgesToSuperviewMarginsExcludingEdge:ALEdgeTrailing];
-        [imageView autoPinEdge:ALEdgeTrailing toEdge:ALEdgeLeading ofView:self.unreadLabel];
-        [self.unreadLabel configureForAutoLayout];
-        [self.unreadLabel autoPinEdgesToSuperviewMarginsExcludingEdge:ALEdgeLeading];
-        
-        self.leftBarButtonItems = @[[[UIBarButtonItem alloc] initWithCustomView:view]];
-    }
+    //TODO: leftItemsSupplementBackButton
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 66, 44)];
+    UIImage *image = [[UIImage imageNamed:@"backArrow"] imageFlippedForRightToLeftLayoutDirection];
+    UIImageView *imageView = [[UIImageView alloc] initWithImage:[image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]];
+    imageView.frame = CGRectMake(0, 10, 22, 22);
+    imageView.contentMode = UIViewContentModeScaleAspectFit;
+    [view addGestureRecognizer:singleTap];
+    [view addSubview:imageView];
+    [view addSubview:self.unreadLabel];
+    [imageView configureForAutoLayout];
+    [imageView autoPinEdgesToSuperviewMarginsExcludingEdge:ALEdgeTrailing];
+    [imageView autoPinEdge:ALEdgeTrailing toEdge:ALEdgeLeading ofView:self.unreadLabel];
+    [self.unreadLabel configureForAutoLayout];
+    [self.unreadLabel autoPinEdgesToSuperviewMarginsExcludingEdge:ALEdgeLeading];
+    
+    self.leftBarButtonItems = @[[[UIBarButtonItem alloc] initWithCustomView:view]];
+    
     self.navigationItem.leftBarButtonItems = self.leftBarButtonItems;
 }
 
@@ -1746,11 +1736,15 @@ const NSUInteger kMaxMessagesToLoad = 256;
     self.jumpToBottomConstraint.constant = bottom + 27.0f;
     self.lastBottomInset = bottom;
 
-    if (increment > 0) {
-        bounds.origin.y += increment;
-        bounds.size.height -= bottom;
-        [self.collectionView scrollRectToVisible:bounds animated:NO];
+    // If there are no messages, the increment may scroll the collection view beyond its bounds
+    CGFloat maxIncrement = self.collectionView.contentSize.height - (bounds.size.height - bottom);
+    if (increment > maxIncrement) {
+        increment = maxIncrement;
     }
+    
+    bounds.origin.y += increment;
+    bounds.size.height -= bottom;
+    [self.collectionView scrollRectToVisible:bounds animated:NO];
     
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [self showOrHideJumpToBottom];
