@@ -27,7 +27,7 @@
     self = [super init];
     if (self) {
         _privateQueueContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
-        _privateQueueContext.persistentStoreCoordinator = [MEGAStore shareInstance].persistentStoreCoordinator;
+        _privateQueueContext.persistentStoreCoordinator = [MEGAStore storeCoordinator];
         _serialQueue = dispatch_queue_create("nz.mega.cameraUpload.fileNameManagerSerialQueue", DISPATCH_QUEUE_SERIAL);
     }
     
