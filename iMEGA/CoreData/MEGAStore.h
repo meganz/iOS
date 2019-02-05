@@ -24,7 +24,7 @@
 
 - (void)configureMEGAStore;
 
-+ (NSPersistentStoreCoordinator *)storeCoordinator;
++ (NSPersistentStoreCoordinator *)newStoreCoordinator;
 
 #pragma mark - MOOfflineNode entity
 
