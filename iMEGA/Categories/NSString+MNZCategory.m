@@ -421,7 +421,7 @@ static NSString* const B = @"[B]";
                  const unichar ls = [substring characterAtIndex:1];
                  const int uc = ((hs - 0xd800) * 0x400) + (ls - 0xdc00) + 0x10000;
                  if (0x1d000 <= uc &&
-                     uc <= 0x1f9c0)
+                     uc <= 0x1f9ff)
                  {
                      containsEmoji = YES;
                  }
@@ -510,7 +510,7 @@ static NSString* const B = @"[B]";
                  const unichar ls = [substring characterAtIndex:1];
                  const int uc = ((hs - 0xd800) * 0x400) + (ls - 0xdc00) + 0x10000;
                  if (0x1d000 <= uc &&
-                     uc <= 0x1f9c0)
+                     uc <= 0x1f9ff)
                  {
                      containsEmoji = YES;
                  }
@@ -594,7 +594,7 @@ static NSString* const B = @"[B]";
                  const unichar ls = [substring characterAtIndex:1];
                  const int uc = ((hs - 0xd800) * 0x400) + (ls - 0xdc00) + 0x10000;
                  if (0x1d000 <= uc &&
-                     uc <= 0x1f9c0)
+                     uc <= 0x1f9ff)
                  {
                      emojiCount = emojiCount + 1;
                  }
