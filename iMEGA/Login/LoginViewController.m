@@ -23,14 +23,13 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
     PasswordTextFieldTag
 };
 
-@interface LoginViewController () <UITextFieldDelegate, MEGARequestDelegate>
+@interface LoginViewController () <UIGestureRecognizerDelegate, UITextFieldDelegate, MEGARequestDelegate>
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *cancelBarButtonItem;
 
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 
 @property (weak, nonatomic) IBOutlet UIImageView *logoImageView;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *logoTopLayoutConstraint;
 
 @property (weak, nonatomic) IBOutlet InputView *emailInputView;
 @property (weak, nonatomic) IBOutlet PasswordView *passwordView;
@@ -38,6 +37,8 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
 @property (weak, nonatomic) IBOutlet UIButton *loginButton;
 
 @property (weak, nonatomic) IBOutlet UIButton *forgotPasswordButton;
+
+@property (strong, nonatomic) UITapGestureRecognizer *tapGesture;
 
 @end
 
@@ -47,6 +48,11 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    self.tapGesture = [UITapGestureRecognizer.alloc initWithTarget:self action:@selector(hideKeyboard)];
+    self.tapGesture.cancelsTouchesInView = NO;
+    self.tapGesture.delegate = self;
+    [self.scrollView addGestureRecognizer:self.tapGesture];
     
     UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(logoTappedFiveTimes:)];
     tapGestureRecognizer.numberOfTapsRequired = 5;
@@ -254,10 +260,18 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
     self.scrollView.scrollIndicatorInsets = UIEdgeInsetsZero;
 }
 
-#pragma mark - UIResponder
-
-- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+- (void)hideKeyboard {
     [self.view endEditing:YES];
+}
+
+#pragma mark - UIGestureRecognizerDelegate
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
+    if ((touch.view == self.passwordView.toggleSecureButton) && (gestureRecognizer == self.tapGesture)) {
+        return NO;
+    }
+    
+    return YES;
 }
 
 #pragma mark - UITextFieldDelegate
