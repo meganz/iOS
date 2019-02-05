@@ -26,7 +26,7 @@ static MEGAStore *_megaStore = nil;
     return self;
 }
 
-+ (NSPersistentStoreCoordinator *)storeCoordinator {
++ (NSPersistentStoreCoordinator *)newStoreCoordinator {
     NSManagedObjectModel *model = [NSManagedObjectModel mergedModelFromBundles:nil];
     NSURL *storeURL = [self storeURL];
     
@@ -44,7 +44,7 @@ static MEGAStore *_megaStore = nil;
 }
 
 - (void)configureMEGAStore {
-    NSPersistentStoreCoordinator *coordinator = [MEGAStore storeCoordinator];
+    NSPersistentStoreCoordinator *coordinator = [MEGAStore newStoreCoordinator];
     if (coordinator != nil) {
         _managedObjectContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSMainQueueConcurrencyType];
         [_managedObjectContext setPersistentStoreCoordinator:coordinator];
