@@ -1590,17 +1590,15 @@ const NSUInteger kMaxMessagesToLoad = 256;
     self.jumpToBottomConstraint.constant = bottom + 27.0f;
     self.lastBottomInset = bottom;
 
-    // If there are no messages, the increment may scroll the collection view too much
+    // If there are no messages, the increment may scroll the collection view beyond its bounds
     CGFloat maxIncrement = self.collectionView.contentSize.height - (bounds.size.height - bottom);
     if (increment > maxIncrement) {
         increment = maxIncrement;
     }
     
-    if (increment > 0) {
-        bounds.origin.y += increment;
-        bounds.size.height -= bottom;
-        [self.collectionView scrollRectToVisible:bounds animated:NO];
-    }
+    bounds.origin.y += increment;
+    bounds.size.height -= bottom;
+    [self.collectionView scrollRectToVisible:bounds animated:NO];
     
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [self showOrHideJumpToBottom];
