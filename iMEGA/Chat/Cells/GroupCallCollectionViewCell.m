@@ -25,7 +25,7 @@
     self.videoImageView.group = YES;
 }
 
-- (void)configureCellForPeer:(MEGAGroupCallPeer *)peer inChat:(uint64_t)chatId {
+- (void)configureCellForPeer:(MEGAGroupCallPeer *)peer inChat:(uint64_t)chatId numParticipants:(NSInteger)numParticipants {
     
     if (peer.peerId == 0) {
         [self.avatarImageView mnz_setImageForUserHandle:[MEGASdkManager sharedMEGAChatSdk].myUserHandle];
@@ -52,6 +52,16 @@
     }
     
     [self configureUserAudio:peer.audio];
+    
+    if (numParticipants < 7) {
+        self.micTopConstraint.constant = self.micTrailingConstraint.constant = self.qualityBottomConstraint.constant = self.qualityLeadingConstraint.constant = 12;
+    } else {
+        self.micTopConstraint.constant = self.micTrailingConstraint.constant = self.qualityBottomConstraint.constant = self.qualityLeadingConstraint.constant = 0;
+    }
+}
+
+- (void)configureConstraintsForInfoViews:(NSInteger)constant {
+    self.micTopConstraint.constant = self.micTrailingConstraint.constant = self.qualityBottomConstraint.constant = self.qualityLeadingConstraint.constant = constant;
 }
 
 - (void)networkQualityChangedForPeer:(MEGAGroupCallPeer *)peer {
@@ -77,17 +87,17 @@
 }
 
 - (void)removeRemoteVideoForPeer:(MEGAGroupCallPeer *)peer inChat:(uint64_t)chatId {
-    [[MEGASdkManager sharedMEGAChatSdk] removeChatRemoteVideo:chatId peerId:peer.peerId delegate:self.videoImageView];
+    [[MEGASdkManager sharedMEGAChatSdk] removeChatRemoteVideo:chatId peerId:peer.peerId cliendId:peer.clientId delegate:self.videoImageView];
     self.videoImageView.hidden = YES;
     self.avatarImageView.hidden = NO;
-    MEGALogDebug(@"GROUPCALLCELLVIDEO remove remote video for peer %llu", peer.peerId);
+    MEGALogDebug(@"GROUPCALLCELLVIDEO remove remote video for peer %llu in client %llu", peer.peerId, peer.clientId);
 }
 
 - (void)addRemoteVideoForPeer:(MEGAGroupCallPeer *)peer inChat:(uint64_t)chatId {
-    [[MEGASdkManager sharedMEGAChatSdk] addChatRemoteVideo:chatId peerId:peer.peerId delegate:self.videoImageView];
+    [[MEGASdkManager sharedMEGAChatSdk] addChatRemoteVideo:chatId peerId:peer.peerId cliendId:peer.clientId delegate:self.videoImageView];
     self.videoImageView.hidden = NO;
     self.avatarImageView.hidden = YES;
-    MEGALogDebug(@"GROUPCALLCELLVIDEO add remote video for peer %llu", peer.peerId);
+    MEGALogDebug(@"GROUPCALLCELLVIDEO add remote video for peer %llu in client %llu", peer.peerId, peer.clientId);
 }
 
 - (void)configureUserAudio:(BOOL)audio {
