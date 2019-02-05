@@ -79,120 +79,142 @@
                 <viewController storyboardIdentifier="LoginViewControllerID" id="y7g-EC-7mD" customClass="LoginViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="HNb-vZ-9Rz">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="megaThePrivacyCompanyLogo" translatesAutoresizingMaskIntoConstraints="NO" id="aOs-mq-CX2">
-                                <rect key="frame" x="102.5" y="88" width="170" height="54"/>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="C2Y-Yd-Fhv">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ptk-b4-EIp" userLabel="Content View">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
+                                        <subviews>
+                                            <imageView contentMode="scaleToFill" image="megaThePrivacyCompanyLogo" translatesAutoresizingMaskIntoConstraints="NO" id="aOs-mq-CX2">
+                                                <rect key="frame" x="102.5" y="68" width="170" height="54"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="54" id="Llm-JX-oSv"/>
+                                                </constraints>
+                                            </imageView>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Cud-y6-Xtd" customClass="InputView">
+                                                <rect key="frame" x="0.0" y="187" width="375" height="60"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="60" id="2pT-9g-rid"/>
+                                                    <constraint firstAttribute="width" constant="622" id="68t-xJ-P8k"/>
+                                                </constraints>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="image" keyPath="iconImage" value="mail"/>
+                                                    <userDefinedRuntimeAttribute type="string" keyPath="topLabelTextKey" value="emailPlaceholder"/>
+                                                </userDefinedRuntimeAttributes>
+                                                <variation key="default">
+                                                    <mask key="constraints">
+                                                        <exclude reference="68t-xJ-P8k"/>
+                                                    </mask>
+                                                </variation>
+                                                <variation key="widthClass=regular">
+                                                    <mask key="constraints">
+                                                        <include reference="68t-xJ-P8k"/>
+                                                    </mask>
+                                                </variation>
+                                            </view>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NEs-0T-7bT" customClass="PasswordView">
+                                                <rect key="frame" x="0.0" y="267" width="375" height="60"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="60" id="4Li-i5-muc"/>
+                                                    <constraint firstAttribute="width" constant="622" id="CnO-WG-FFi"/>
+                                                </constraints>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="image" keyPath="leftImage" value="icon-link-only"/>
+                                                    <userDefinedRuntimeAttribute type="string" keyPath="topLabelTextKey" value="passwordPlaceholder"/>
+                                                </userDefinedRuntimeAttributes>
+                                                <variation key="default">
+                                                    <mask key="constraints">
+                                                        <exclude reference="CnO-WG-FFi"/>
+                                                    </mask>
+                                                </variation>
+                                                <variation key="widthClass=regular">
+                                                    <mask key="constraints">
+                                                        <include reference="CnO-WG-FFi"/>
+                                                    </mask>
+                                                </variation>
+                                            </view>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UnQ-C2-8bb">
+                                                <rect key="frame" x="228" y="335" width="110" height="28"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="28" id="hjN-Kb-jeD"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="13"/>
+                                                <state key="normal" title="Forgot password?">
+                                                    <color key="titleColor" red="0.66666666666666663" green="0.66666666666666663" blue="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="forgotPasswordTouchUpInside:" destination="y7g-EC-7mD" eventType="touchUpInside" id="0iO-Wq-K0q"/>
+                                                </connections>
+                                            </button>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="forgotPasswordQuestionMark" translatesAutoresizingMaskIntoConstraints="NO" id="Ssu-EP-cXE">
+                                                <rect key="frame" x="346" y="343" width="12" height="12"/>
+                                            </imageView>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EcF-LZ-UjW">
+                                                <rect key="frame" x="43.5" y="518" width="288" height="50"/>
+                                                <color key="backgroundColor" red="0.95294117647058818" green="0.047058823529411764" blue="0.078431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="50" id="M9c-MZ-MYw"/>
+                                                    <constraint firstAttribute="width" constant="288" id="VXZ-WV-DEp"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" name="SFUIText-Semibold" family="SF UI Text" pointSize="17"/>
+                                                <state key="normal" title="Login">
+                                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                </state>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                        <integer key="value" value="8"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                </userDefinedRuntimeAttributes>
+                                                <connections>
+                                                    <action selector="tapLogin:" destination="y7g-EC-7mD" eventType="touchUpInside" id="a04-W6-hXS"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstItem="NEs-0T-7bT" firstAttribute="leading" secondItem="ptk-b4-EIp" secondAttribute="leading" id="0K6-yz-Axz"/>
+                                            <constraint firstItem="UnQ-C2-8bb" firstAttribute="top" secondItem="NEs-0T-7bT" secondAttribute="bottom" constant="8" id="14p-KH-qQj"/>
+                                            <constraint firstItem="EcF-LZ-UjW" firstAttribute="top" secondItem="UnQ-C2-8bb" secondAttribute="bottom" constant="155" id="9yD-n8-Q8E"/>
+                                            <constraint firstItem="aOs-mq-CX2" firstAttribute="top" secondItem="ptk-b4-EIp" secondAttribute="top" constant="68" id="MEe-9z-NdN"/>
+                                            <constraint firstAttribute="trailing" secondItem="Ssu-EP-cXE" secondAttribute="trailing" constant="17" id="TCg-FR-GUF"/>
+                                            <constraint firstItem="Cud-y6-Xtd" firstAttribute="leading" secondItem="ptk-b4-EIp" secondAttribute="leading" id="UVT-10-iXU"/>
+                                            <constraint firstItem="Ssu-EP-cXE" firstAttribute="leading" secondItem="UnQ-C2-8bb" secondAttribute="trailing" constant="8" id="UZE-68-3nk"/>
+                                            <constraint firstItem="NEs-0T-7bT" firstAttribute="centerX" secondItem="ptk-b4-EIp" secondAttribute="centerX" id="Wid-5N-tY8"/>
+                                            <constraint firstItem="aOs-mq-CX2" firstAttribute="centerX" secondItem="ptk-b4-EIp" secondAttribute="centerX" id="faI-h2-unT"/>
+                                            <constraint firstItem="Cud-y6-Xtd" firstAttribute="centerX" secondItem="ptk-b4-EIp" secondAttribute="centerX" id="kqE-Jr-Dkf"/>
+                                            <constraint firstItem="Ssu-EP-cXE" firstAttribute="centerY" secondItem="UnQ-C2-8bb" secondAttribute="centerY" id="oeJ-GX-JT9"/>
+                                            <constraint firstItem="EcF-LZ-UjW" firstAttribute="centerX" secondItem="ptk-b4-EIp" secondAttribute="centerX" id="qBC-7o-ixt"/>
+                                            <constraint firstAttribute="bottom" secondItem="EcF-LZ-UjW" secondAttribute="bottom" constant="35" id="vZE-oa-Wig"/>
+                                            <constraint firstItem="Cud-y6-Xtd" firstAttribute="top" secondItem="aOs-mq-CX2" secondAttribute="bottom" constant="65" id="wAq-ZV-ptX"/>
+                                            <constraint firstItem="NEs-0T-7bT" firstAttribute="top" secondItem="Cud-y6-Xtd" secondAttribute="bottom" constant="20" id="yZC-eq-ATw"/>
+                                        </constraints>
+                                        <variation key="widthClass=regular">
+                                            <mask key="constraints">
+                                                <exclude reference="UVT-10-iXU"/>
+                                                <exclude reference="0K6-yz-Axz"/>
+                                            </mask>
+                                        </variation>
+                                    </view>
+                                </subviews>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="54" id="1ph-wu-0iA"/>
-                                    <constraint firstAttribute="width" constant="170" id="2ot-9H-7wh"/>
+                                    <constraint firstAttribute="trailing" secondItem="ptk-b4-EIp" secondAttribute="trailing" id="JgG-ot-fRO"/>
+                                    <constraint firstItem="ptk-b4-EIp" firstAttribute="leading" secondItem="C2Y-Yd-Fhv" secondAttribute="leading" id="Kvr-NM-J3p"/>
+                                    <constraint firstAttribute="bottom" secondItem="ptk-b4-EIp" secondAttribute="bottom" id="gcq-sg-9dc"/>
+                                    <constraint firstItem="ptk-b4-EIp" firstAttribute="top" secondItem="C2Y-Yd-Fhv" secondAttribute="top" id="xrv-gd-Fuv"/>
                                 </constraints>
-                            </imageView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Cud-y6-Xtd" customClass="InputView">
-                                <rect key="frame" x="0.0" y="207" width="375" height="60"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="60" id="MtR-IB-gf8"/>
-                                    <constraint firstAttribute="width" constant="622" id="d9g-rL-JsO"/>
-                                </constraints>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="image" keyPath="iconImage" value="mail"/>
-                                    <userDefinedRuntimeAttribute type="string" keyPath="topLabelTextKey" value="emailPlaceholder"/>
-                                </userDefinedRuntimeAttributes>
-                                <variation key="default">
-                                    <mask key="constraints">
-                                        <exclude reference="d9g-rL-JsO"/>
-                                    </mask>
-                                </variation>
-                                <variation key="widthClass=regular">
-                                    <mask key="constraints">
-                                        <include reference="d9g-rL-JsO"/>
-                                    </mask>
-                                </variation>
-                            </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NEs-0T-7bT" customClass="PasswordView">
-                                <rect key="frame" x="0.0" y="287" width="375" height="60"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="622" id="0XG-yA-VDl"/>
-                                    <constraint firstAttribute="height" constant="60" id="qSP-AI-czH"/>
-                                </constraints>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="image" keyPath="leftImage" value="icon-link-only"/>
-                                    <userDefinedRuntimeAttribute type="string" keyPath="topLabelTextKey" value="passwordPlaceholder"/>
-                                </userDefinedRuntimeAttributes>
-                                <variation key="default">
-                                    <mask key="constraints">
-                                        <exclude reference="0XG-yA-VDl"/>
-                                    </mask>
-                                </variation>
-                                <variation key="widthClass=regular">
-                                    <mask key="constraints">
-                                        <include reference="0XG-yA-VDl"/>
-                                    </mask>
-                                </variation>
-                            </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UnQ-C2-8bb">
-                                <rect key="frame" x="228" y="355" width="110" height="28"/>
-                                <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="13"/>
-                                <state key="normal" title="Forgot password?">
-                                    <color key="titleColor" red="0.66666666666666663" green="0.66666666666666663" blue="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                </state>
-                                <connections>
-                                    <action selector="forgotPasswordTouchUpInside:" destination="y7g-EC-7mD" eventType="touchUpInside" id="0iO-Wq-K0q"/>
-                                </connections>
-                            </button>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="forgotPasswordQuestionMark" translatesAutoresizingMaskIntoConstraints="NO" id="Ssu-EP-cXE">
-                                <rect key="frame" x="346" y="363" width="12" height="12"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="12" id="4Su-XB-Yee"/>
-                                    <constraint firstAttribute="width" constant="12" id="ind-kZ-OfL"/>
-                                </constraints>
-                            </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EcF-LZ-UjW">
-                                <rect key="frame" x="43.5" y="518" width="288" height="50"/>
-                                <color key="backgroundColor" red="0.95294117647058818" green="0.047058823529411764" blue="0.078431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="288" id="mrn-qU-2pE"/>
-                                    <constraint firstAttribute="height" constant="50" id="xUX-3G-cXd"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="SFUIText-Semibold" family="SF UI Text" pointSize="17"/>
-                                <state key="normal" title="Login">
-                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                </state>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                        <integer key="value" value="8"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                                <connections>
-                                    <action selector="tapLogin:" destination="y7g-EC-7mD" eventType="touchUpInside" id="a04-W6-hXS"/>
-                                </connections>
-                            </button>
+                            </scrollView>
                         </subviews>
                         <color key="backgroundColor" red="0.9882352941176471" green="0.9882352941176471" blue="0.9882352941176471" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="Cud-y6-Xtd" firstAttribute="centerX" secondItem="HNb-vZ-9Rz" secondAttribute="centerX" id="5GN-jr-1Vb"/>
-                            <constraint firstItem="Cud-y6-Xtd" firstAttribute="leading" secondItem="heF-2Z-7lj" secondAttribute="leading" id="76J-eA-fKj"/>
-                            <constraint firstItem="Ssu-EP-cXE" firstAttribute="leading" secondItem="UnQ-C2-8bb" secondAttribute="trailing" constant="8" id="J75-dC-VDJ"/>
-                            <constraint firstItem="UnQ-C2-8bb" firstAttribute="top" secondItem="NEs-0T-7bT" secondAttribute="bottom" constant="8" id="MSa-pv-Rq7"/>
-                            <constraint firstItem="aOs-mq-CX2" firstAttribute="centerX" secondItem="HNb-vZ-9Rz" secondAttribute="centerX" id="NPg-Ze-aWV"/>
-                            <constraint firstItem="EcF-LZ-UjW" firstAttribute="centerX" secondItem="HNb-vZ-9Rz" secondAttribute="centerX" id="Sn7-lh-sVR"/>
-                            <constraint firstItem="NEs-0T-7bT" firstAttribute="leading" secondItem="heF-2Z-7lj" secondAttribute="leading" id="XiW-zA-Wex"/>
-                            <constraint firstItem="heF-2Z-7lj" firstAttribute="bottom" secondItem="EcF-LZ-UjW" secondAttribute="bottom" constant="35" id="c3s-0X-j7E"/>
-                            <constraint firstItem="UnQ-C2-8bb" firstAttribute="centerY" secondItem="Ssu-EP-cXE" secondAttribute="centerY" id="diJ-V4-ZhZ"/>
-                            <constraint firstItem="NEs-0T-7bT" firstAttribute="centerX" secondItem="HNb-vZ-9Rz" secondAttribute="centerX" id="gbz-1I-MCD"/>
-                            <constraint firstItem="NEs-0T-7bT" firstAttribute="top" secondItem="Cud-y6-Xtd" secondAttribute="bottom" constant="20" id="mko-dX-ugn"/>
-                            <constraint firstItem="aOs-mq-CX2" firstAttribute="top" secondItem="heF-2Z-7lj" secondAttribute="top" constant="88" id="paH-Di-Hqp"/>
-                            <constraint firstItem="Ssu-EP-cXE" firstAttribute="top" secondItem="NEs-0T-7bT" secondAttribute="bottom" constant="16" id="qUM-cn-kCe"/>
-                            <constraint firstItem="Cud-y6-Xtd" firstAttribute="top" secondItem="aOs-mq-CX2" secondAttribute="bottom" constant="65" id="sgD-CE-x32"/>
-                            <constraint firstItem="NEs-0T-7bT" firstAttribute="trailing" secondItem="Ssu-EP-cXE" secondAttribute="trailing" constant="17" id="tsX-Qb-X59"/>
+                            <constraint firstItem="C2Y-Yd-Fhv" firstAttribute="width" secondItem="heF-2Z-7lj" secondAttribute="width" id="7YN-v5-MkE"/>
+                            <constraint firstItem="C2Y-Yd-Fhv" firstAttribute="height" secondItem="heF-2Z-7lj" secondAttribute="height" id="ZII-31-e3p"/>
+                            <constraint firstItem="C2Y-Yd-Fhv" firstAttribute="bottom" secondItem="heF-2Z-7lj" secondAttribute="bottom" id="fBe-f8-aEW"/>
+                            <constraint firstItem="ptk-b4-EIp" firstAttribute="width" secondItem="HNb-vZ-9Rz" secondAttribute="width" id="jOd-14-hQq"/>
+                            <constraint firstItem="C2Y-Yd-Fhv" firstAttribute="leading" secondItem="heF-2Z-7lj" secondAttribute="leading" id="q63-D4-Fbv"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="heF-2Z-7lj"/>
-                        <variation key="widthClass=regular">
-                            <mask key="constraints">
-                                <exclude reference="76J-eA-fKj"/>
-                                <exclude reference="XiW-zA-Wex"/>
-                            </mask>
-                        </variation>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
                     <navigationItem key="navigationItem" title="Login" id="5it-Nq-awd">
@@ -209,8 +231,8 @@
                         <outlet property="forgotPasswordButton" destination="UnQ-C2-8bb" id="sfk-E1-nda"/>
                         <outlet property="loginButton" destination="EcF-LZ-UjW" id="K0I-E4-okS"/>
                         <outlet property="logoImageView" destination="aOs-mq-CX2" id="hkL-Ws-BWG"/>
-                        <outlet property="logoTopLayoutConstraint" destination="paH-Di-Hqp" id="Fni-WO-alw"/>
                         <outlet property="passwordView" destination="NEs-0T-7bT" id="Jbi-h7-AA5"/>
+                        <outlet property="scrollView" destination="C2Y-Yd-Fhv" id="pPn-x5-6vg"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3Bb-77-UMw" sceneMemberID="firstResponder"/>
