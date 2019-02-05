@@ -33,14 +33,9 @@
         self.completion(transferToken, error);
     } else {
         if (error) {
-            [CameraUploadCompletionManager.shared finishUploadForLocalIdentifier:task.taskDescription status:CameraAssetUploadStatusFailed];
-            return;
-        }
-        
-        if (transferToken.length > 0) {
-            [CameraUploadCompletionManager.shared handleCompletedTransferWithLocalIdentifier:task.taskDescription token:transferToken];
+            [self handleURLSessionError:error forTask:task];
         } else {
-            MEGALogDebug(@"[Camera Upload] Session %@ task %@ finishes with empty transfer token", session.configuration.identifier, task.taskDescription);
+            [self handleTransferToken:transferToken forTask:task inSession:session];
         }
     }
 }
@@ -50,6 +45,27 @@
 - (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask didReceiveData:(NSData *)data {
     MEGALogDebug(@"[Camera Upload] Session %@ task %@ did receive data with size: %lu, UTF8: %@", session.configuration.identifier, dataTask.taskDescription, (unsigned long)data.length, [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
     [self.mutableData appendData:data];
+}
+
+#pragma mark - util methods
+
+- (void)handleURLSessionError:(NSError *)error forTask:(NSURLSessionTask *)task {
+    NSString *errorStatus;
+    if (error.code == NSURLErrorCancelled) {
+        errorStatus = CameraAssetUploadStatusCancelled;
+    } else {
+        errorStatus = CameraAssetUploadStatusFailed;
+    }
+    
+    [CameraUploadCompletionManager.shared finishUploadForLocalIdentifier:task.taskDescription status:errorStatus];
+}
+
+- (void)handleTransferToken:(NSData *)token forTask:(NSURLSessionTask *)task inSession:(NSURLSession *)session {
+    if (token.length > 0) {
+        [CameraUploadCompletionManager.shared handleCompletedTransferWithLocalIdentifier:task.taskDescription token:token];
+    } else {
+        MEGALogDebug(@"[Camera Upload] Session %@ task %@ finishes with empty transfer token", session.configuration.identifier, task.taskDescription);
+    }
 }
 
 @end
