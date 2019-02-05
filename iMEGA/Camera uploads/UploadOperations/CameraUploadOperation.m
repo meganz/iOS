@@ -122,7 +122,7 @@
     return assetDirectoryURL;
 }
 
-- (void)createThumbnailAndPreviewFiles {
+- (BOOL)createThumbnailAndPreviewFiles {
     BOOL thumbnailCreated = [self.attributesDataSDK createThumbnail:self.uploadInfo.fileURL.path destinatioPath:self.uploadInfo.thumbnailURL.path];
     if (!thumbnailCreated) {
         MEGALogDebug(@"[Camera Upload] %@ error when to create thumbnail", self);
@@ -132,6 +132,7 @@
         MEGALogDebug(@"[Camera Upload] %@ error when to create preview", self);
     }
     self.attributesDataSDK = nil;
+    return thumbnailCreated && previewCreated;
 }
 
 #pragma mark - upload task
@@ -149,7 +150,10 @@
         return;
     }
     
-    [self createThumbnailAndPreviewFiles];
+    if (![self createThumbnailAndPreviewFiles]) {
+        [self finishOperationWithStatus:CameraAssetUploadStatusFailed shouldUploadNextAsset:YES];
+        return;
+    }
     
     self.uploadInfo.mediaUpload = [MEGASdkManager.sharedMEGASdk backgroundMediaUpload];
     [self.uploadInfo.mediaUpload analyseMediaInfoForFileAtPath:self.uploadInfo.fileURL.path];
