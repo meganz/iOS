@@ -179,6 +179,7 @@
                                             <constraint firstItem="EcF-LZ-UjW" firstAttribute="top" secondItem="UnQ-C2-8bb" secondAttribute="bottom" constant="155" id="9yD-n8-Q8E"/>
                                             <constraint firstItem="aOs-mq-CX2" firstAttribute="top" secondItem="ptk-b4-EIp" secondAttribute="top" constant="68" id="MEe-9z-NdN"/>
                                             <constraint firstAttribute="trailing" secondItem="Ssu-EP-cXE" secondAttribute="trailing" constant="17" id="TCg-FR-GUF"/>
+                                            <constraint firstItem="NEs-0T-7bT" firstAttribute="trailing" secondItem="Ssu-EP-cXE" secondAttribute="trailing" constant="17" id="Ta1-OW-RWP"/>
                                             <constraint firstItem="Cud-y6-Xtd" firstAttribute="leading" secondItem="ptk-b4-EIp" secondAttribute="leading" id="UVT-10-iXU"/>
                                             <constraint firstItem="Ssu-EP-cXE" firstAttribute="leading" secondItem="UnQ-C2-8bb" secondAttribute="trailing" constant="8" id="UZE-68-3nk"/>
                                             <constraint firstItem="NEs-0T-7bT" firstAttribute="centerX" secondItem="ptk-b4-EIp" secondAttribute="centerX" id="Wid-5N-tY8"/>
@@ -194,6 +195,11 @@
                                             <mask key="constraints">
                                                 <exclude reference="UVT-10-iXU"/>
                                                 <exclude reference="0K6-yz-Axz"/>
+                                            </mask>
+                                        </variation>
+                                        <variation key="heightClass=regular-widthClass=regular">
+                                            <mask key="constraints">
+                                                <exclude reference="TCg-FR-GUF"/>
                                             </mask>
                                         </variation>
                                     </view>
