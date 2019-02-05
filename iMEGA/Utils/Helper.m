@@ -843,15 +843,48 @@ static MEGAIndexer *indexer;
             case MEGAChatMessageTypeContact: {
                 for (NSUInteger i = 0; i < message.usersCount; i++) {
                     MEGAUser *user = [[MEGASdkManager sharedMEGASdk] contactForEmail:[message userEmailAtIndex:i]];
-                    CNContact *cnContact = user.mnz_cnContact;
+                    CNContact *cnContact;
+                    NSString *fullName;
+                    if (user) {
+                        cnContact = user.mnz_cnContact;
+                        fullName = user.mnz_fullName;
+                    } else {
+                        CNMutableContact *cnMutableContact = [[CNMutableContact alloc] init];
+                        
+                        MOUser *moUser = [[MEGAStore shareInstance] fetchUserWithUserHandle:[message userHandleAtIndex:i]];
+                        
+                        if (moUser.firstName) {
+                            cnMutableContact.givenName = moUser.firstname;
+                        }
+                        
+                        if (moUser.lastname) {
+                            cnMutableContact.familyName = moUser.lastname;
+                        }
+                        
+                        if (!moUser.firstName && !moUser.lastname) {
+                            cnMutableContact.givenName = [message userNameAtIndex:i];
+                        }
+                        
+                        cnMutableContact.emailAddresses = @[[CNLabeledValue labeledValueWithLabel:CNLabelHome value:[message userEmailAtIndex:i]]];
+                        
+                        NSString *avatarFilePath = [[Helper pathForSharedSandboxCacheDirectory:@"thumbnailsV3"] stringByAppendingPathComponent:[MEGASdk base64HandleForUserHandle:[message userHandleAtIndex:i]]];
+                        if ([[NSFileManager defaultManager] fileExistsAtPath:avatarFilePath]) {
+                            UIImage *avatarImage = [UIImage imageWithContentsOfFile:avatarFilePath];
+                            cnMutableContact.imageData = UIImageJPEGRepresentation(avatarImage, 1.0f);
+                        }
+                        cnContact = cnMutableContact;
+                        fullName = [message userNameAtIndex:i];
+                    }
                     NSData *vCardData = [CNContactVCardSerialization dataWithContacts:@[cnContact] error:nil];                    
                     NSString* vcString = [[NSString alloc] initWithData:vCardData encoding:NSUTF8StringEncoding];
                     NSString* base64Image = [cnContact.imageData base64EncodedStringWithOptions:0];
-                    NSString* vcardImageString = [[@"PHOTO;TYPE=JPEG;ENCODING=BASE64:" stringByAppendingString:base64Image] stringByAppendingString:@"\n"];
-                    vcString = [vcString stringByReplacingOccurrencesOfString:@"END:VCARD" withString:[vcardImageString stringByAppendingString:@"END:VCARD"]];
+                    if (base64Image) {
+                        NSString* vcardImageString = [[@"PHOTO;TYPE=JPEG;ENCODING=BASE64:" stringByAppendingString:base64Image] stringByAppendingString:@"\n"];
+                        vcString = [vcString stringByReplacingOccurrencesOfString:@"END:VCARD" withString:[vcardImageString stringByAppendingString:@"END:VCARD"]];
+                    }
                     vCardData = [vcString dataUsingEncoding:NSUTF8StringEncoding];
                     
-                    NSString *tempPath = [NSTemporaryDirectory() stringByAppendingPathComponent:[[user mnz_fullName] stringByAppendingString:@".vcf"]];
+                    NSString *tempPath = [NSTemporaryDirectory() stringByAppendingPathComponent:[fullName stringByAppendingString:@".vcf"]];
                     if ([vCardData writeToFile:tempPath atomically:YES]) {
                         [activityItemsMutableArray addObject:[NSURL fileURLWithPath:tempPath]];
                         fileCount++;
