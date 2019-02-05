@@ -1590,6 +1590,12 @@ const NSUInteger kMaxMessagesToLoad = 256;
     self.jumpToBottomConstraint.constant = bottom + 27.0f;
     self.lastBottomInset = bottom;
 
+    // If there are no messages, the increment may scroll the collection view too much
+    CGFloat maxIncrement = self.collectionView.contentSize.height - (bounds.size.height - bottom);
+    if (increment > maxIncrement) {
+        increment = maxIncrement;
+    }
+    
     if (increment > 0) {
         bounds.origin.y += increment;
         bounds.size.height -= bottom;
