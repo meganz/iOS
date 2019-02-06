@@ -9,7 +9,7 @@
 }
 
 - (NSString *)fullName {
-    NSString *fullName = nil;
+    NSString *fullName;
     if (self) {
         if (self.firstname) {
             fullName = self.firstname;
@@ -27,18 +27,18 @@
         fullName = nil;
     }
     
-    return fullName ? fullName : self.email;
+    return fullName ?: self.email;
 }
 
 - (NSString *)firstName {
-    NSString *firstname = nil;
+    NSString *firstname;
     if (self) {
         if (self.firstname) {
             firstname = self.firstname;
         }
     }
     
-    return firstname ? firstname : self.email;
+    return firstname;
 }
 
 @end
