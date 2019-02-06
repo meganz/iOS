@@ -15,6 +15,4 @@
 
 @property (nonatomic, readonly) NSString *mnz_firstName;
 
-@property (nonatomic, readonly) CNContact *mnz_cnContact;
-
 @end
