@@ -725,6 +725,7 @@ static MEGAIndexer *indexer;
     
     if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
         [[MEGASdkManager sharedMEGASdk] fastLoginWithSession:[SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"]];
+        [[MEGASdkManager sharedMEGAChatSdk] refreshUrls];
     }
 }
 
