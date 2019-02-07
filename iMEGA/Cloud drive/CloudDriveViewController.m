@@ -90,11 +90,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self determineLayoutView];
-    
     self.definesPresentationContext = YES;
-    
-    [self setNavigationBarButtonItems];
     
     switch (self.displayMode) {
         case DisplayModeCloudDrive: {
@@ -112,6 +108,10 @@
         default:
             break;
     }
+    
+    [self determineLayoutView];
+    
+    [self setNavigationBarButtonItems];
     
     MEGAShareType shareType = [[MEGASdkManager sharedMEGASdk] accessLevelForNode:self.parentNode];
     [self toolbarActionsForShareType:shareType];
@@ -1146,7 +1146,8 @@
         }
     }
     
-    MEGAPhotoBrowserViewController *photoBrowserVC = [MEGAPhotoBrowserViewController photoBrowserWithMediaNodes:mediaNodesArray api:[MEGASdkManager sharedMEGASdk] displayMode:self.displayMode presentingNode:node preferredIndex:0];
+    DisplayMode displayMode = [[MEGASdkManager sharedMEGASdk] accessLevelForNode:node] == MEGAShareTypeAccessOwner ? self.displayMode : DisplayModeSharedItem;
+    MEGAPhotoBrowserViewController *photoBrowserVC = [MEGAPhotoBrowserViewController photoBrowserWithMediaNodes:mediaNodesArray api:[MEGASdkManager sharedMEGASdk] displayMode:displayMode presentingNode:node preferredIndex:0];
     
     return photoBrowserVC;
 }

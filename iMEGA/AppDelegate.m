@@ -113,8 +113,6 @@
     [MEGASdk setLogLevel:MEGALogLevelFatal];
 #endif
     
-    self.window = [[UIWindow alloc] initWithFrame:UIScreen.mainScreen.bounds];
-
     [MEGASdk setLogToConsole:YES];
     
     [self migrateLocalCachesLocation];
@@ -295,7 +293,6 @@
             [UIView transitionWithView:self.window duration:0.5 options:(UIViewAnimationOptionTransitionCrossDissolve | UIViewAnimationOptionAllowAnimatedContent) animations:^{
                 [self.window setRootViewController:launchVC];
             } completion:nil];
-            [[UIApplication sharedApplication] setStatusBarHidden:YES];
         } else {
             if ([LTHPasscodeViewController doesPasscodeExist]) {
                 if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsEraseAllLocalDataEnabled]) {
@@ -309,7 +306,6 @@
             } else {
                 _mainTBC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"TabBarControllerID"];
                 [self.window setRootViewController:_mainTBC];
-                [[UIApplication sharedApplication] setStatusBarHidden:NO];
             }
         }
         
@@ -649,6 +645,8 @@
     
     [[UISegmentedControl appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:13.0f]} forState:UIControlStateNormal];
     
+    UISwitch.appearance.onTintColor = UIColor.mnz_green00BFA5;
+    
     [[UIBarButtonItem appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:17.0f]} forState:UIControlStateNormal];
     [UIBarButtonItem appearanceWhenContainedInInstancesOfClasses:@[[UIToolbar class]]].tintColor = UIColor.mnz_redMain;
 
@@ -838,7 +836,6 @@
         if (![self.window.rootViewController isKindOfClass:[MainTabBarController class]]) {
             _mainTBC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"TabBarControllerID"];
             [self.window setRootViewController:_mainTBC];
-            [[UIApplication sharedApplication] setStatusBarHidden:NO];
             
             if ([LTHPasscodeViewController doesPasscodeExist]) {
                 if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsEraseAllLocalDataEnabled]) {
@@ -894,18 +891,16 @@
 
 - (void)showOnboarding {
     OnboardingViewController *onboardingVC = [OnboardingViewController instanciateOnboardingWithType:OnboardingTypeDefault];
-    dispatch_async(dispatch_get_main_queue(), ^{
-        UIView *overlayView = [UIScreen.mainScreen snapshotViewAfterScreenUpdates:NO];
-        [onboardingVC.view addSubview:overlayView];
-        self.window.rootViewController = onboardingVC;
-        
-        [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
-            overlayView.alpha = 0;
-        } completion:^(BOOL finished) {
-            [overlayView removeFromSuperview];
-            [SVProgressHUD dismiss];
-        }];
-    });
+    UIView *overlayView = [UIScreen.mainScreen snapshotViewAfterScreenUpdates:NO];
+    [onboardingVC.view addSubview:overlayView];
+    self.window.rootViewController = onboardingVC;
+    
+    [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
+        overlayView.alpha = 0;
+    } completion:^(BOOL finished) {
+        [overlayView removeFromSuperview];
+        [SVProgressHUD dismiss];
+    }];
 }
 
 - (void)openTabBasedOnNotificationMegatype {
@@ -1160,7 +1155,6 @@ void uncaughtExceptionHandler(NSException *exception) {
     if (![MEGAReachabilityManager isReachable] || [self.window.rootViewController isKindOfClass:[LTHPasscodeViewController class]]) {
         _mainTBC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"TabBarControllerID"];
         [self.window setRootViewController:_mainTBC];
-        [[UIApplication sharedApplication] setStatusBarHidden:NO];
     } else {
         [self showLink:MEGALinkManager.linkURL];
         
@@ -1602,7 +1596,7 @@ void uncaughtExceptionHandler(NSException *exception) {
                     
                     UIAlertController *accountCanceledSuccessfullyAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"accountCanceledSuccessfully", @"During account cancellation (deletion)") message:nil preferredStyle:UIAlertControllerStyleAlert];
                     [accountCanceledSuccessfullyAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", @"Button title to accept something") style:UIAlertActionStyleCancel handler:nil]];
-                    [UIApplication.mnz_visibleViewController presentViewController:accountCanceledSuccessfullyAlertController animated:YES completion:^{
+                    [UIApplication.mnz_presentingViewController presentViewController:accountCanceledSuccessfullyAlertController animated:YES completion:^{
                         [MEGALinkManager resetLinkAndURLType];
                     }];
                     return;
@@ -1610,11 +1604,12 @@ void uncaughtExceptionHandler(NSException *exception) {
                 
                 if ([request type] == MEGARequestTypeLogin || [request type] == MEGARequestTypeLogout) {
                     if (!self.API_ESIDAlertController || UIApplication.mnz_presentingViewController.presentedViewController != self.API_ESIDAlertController) {
+                        [Helper logout];
+                        [self showOnboarding];
+                        
                         self.API_ESIDAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"loggedOut_alertTitle", nil) message:AMLocalizedString(@"loggedOutFromAnotherLocation", nil) preferredStyle:UIAlertControllerStyleAlert];
                         [self.API_ESIDAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
                         [UIApplication.mnz_presentingViewController presentViewController:self.API_ESIDAlertController animated:YES completion:nil];
-                        [Helper logout];
-                        [self showOnboarding];
                     }
                 }
                 break;
