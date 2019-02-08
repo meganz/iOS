@@ -17,11 +17,13 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (instancetype)initWithUploadInfo:(AssetUploadInfo *)uploadInfo uploadRecord:(MOAssetUploadRecord *)uploadRecord;
 
-- (void)checkFingerprintAndEncryptFileIfNeeded;
+- (void)handleProcessedUploadFile;
 
 - (MEGANode *)nodeForOriginalFingerprint:(NSString *)fingerprint;
 
 - (void)finishUploadForFingerprintMatchedNode:(MEGANode *)node;
+
+- (void)finishUploadWithNoEnoughDiskSpace;
 
 - (void)finishOperationWithStatus:(NSString *)status shouldUploadNextAsset:(BOOL)uploadNextAsset;
 

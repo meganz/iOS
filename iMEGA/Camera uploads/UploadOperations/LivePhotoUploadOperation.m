@@ -4,7 +4,10 @@
 #import "CameraUploadRecordManager.h"
 #import "PHAsset+CameraUpload.h"
 #import "MEGAConstants.h"
+#import "NSFileManager+MNZCategory.h"
 @import Photos;
+
+static NSString * const LivePhotoVideoResourceTemporaryName = @"video.mov";
 
 @implementation LivePhotoUploadOperation
 
@@ -15,12 +18,30 @@
 }
 
 - (void)requestLivePhoto {
+    __weak __typeof__(self) weakSelf = self;
+    
     PHLivePhotoRequestOptions *options = [[PHLivePhotoRequestOptions alloc] init];
     options.networkAccessAllowed = YES;
     options.version = PHImageRequestOptionsVersionOriginal;
     options.deliveryMode = PHImageRequestOptionsDeliveryModeHighQualityFormat;
-    __weak __typeof__(self) weakSelf = self;
+    options.progressHandler = ^(double progress, NSError * _Nullable error, BOOL * _Nonnull stop, NSDictionary * _Nullable info) {
+        if (weakSelf.isCancelled) {
+            *stop = YES;
+            [weakSelf finishOperationWithStatus:CameraAssetUploadStatusCancelled shouldUploadNextAsset:NO];
+        }
+        
+        if (error != nil) {
+            MEGALogError(@"[Camera Upload] %@ error when to download images from iCloud: %@", weakSelf, error);
+            [weakSelf finishOperationWithStatus:CameraAssetUploadStatusFailed shouldUploadNextAsset:YES];
+        }
+    };
+    
+    
     [PHImageManager.defaultManager requestLivePhotoForAsset:self.uploadInfo.asset targetSize:PHImageManagerMaximumSize contentMode:PHImageContentModeDefault options:options resultHandler:^(PHLivePhoto * _Nullable livePhoto, NSDictionary * _Nullable info) {
+        if (weakSelf.isFinished) {
+            return;
+        }
+        
         if (![info[PHImageResultIsDegradedKey] boolValue]) {
             [weakSelf processLivePhoto:livePhoto];
         }
@@ -63,12 +84,23 @@
         return;
     }
     
-    NSURL *videoURL = [self.uploadInfo.directoryURL URLByAppendingPathComponent:@"video.mov"];
+    if ([self fileSizeForResource:resource] > NSFileManager.defaultManager.deviceFreeSize) {
+        [self finishUploadWithNoEnoughDiskSpace];
+        return;
+    }
+
+    NSURL *videoURL = [self.uploadInfo.directoryURL URLByAppendingPathComponent:LivePhotoVideoResourceTemporaryName];
     PHAssetResourceRequestOptions *options = [[PHAssetResourceRequestOptions alloc] init];
     options.networkAccessAllowed = YES;
     [PHAssetResourceManager.defaultManager writeDataForAssetResource:resource toFile:videoURL options:options completionHandler:^(NSError * _Nullable error) {
         if (error) {
-            [self finishOperationWithStatus:CameraAssetUploadStatusFailed shouldUploadNextAsset:YES];
+            if (error.domain == AVFoundationErrorDomain && error.code == AVErrorDiskFull) {
+                [self finishUploadWithNoEnoughDiskSpace];
+            } else if (error.domain == NSCocoaErrorDomain && error.code == NSFileWriteOutOfSpaceError) {
+                [self finishUploadWithNoEnoughDiskSpace];
+            } else {
+                [self finishOperationWithStatus:CameraAssetUploadStatusFailed shouldUploadNextAsset:YES];
+            }
         } else {
             self.uploadInfo.originalFingerprint = [MEGASdkManager.sharedMEGASdk fingerprintForFilePath:videoURL.path modificationTime:self.uploadInfo.asset.creationDate];
             MEGANode *matchingNode = [self nodeForOriginalFingerprint:self.uploadInfo.originalFingerprint];
@@ -102,18 +134,38 @@
         switch (session.status) {
             case AVAssetExportSessionStatusCompleted:
                 MEGALogDebug(@"[Camera Upload] %@ has finished video compression", weakSelf);
-                [weakSelf checkFingerprintAndEncryptFileIfNeeded];
+                [weakSelf handleProcessedUploadFile];
                 break;
             case AVAssetExportSessionStatusCancelled:
                 MEGALogDebug(@"[Camera Upload] %@ video compression got cancelled", weakSelf);
                 [weakSelf finishOperationWithStatus:CameraAssetUploadStatusCancelled shouldUploadNextAsset:YES];
                 break;
-            default:
+            case AVAssetExportSessionStatusFailed:
                 MEGALogError(@"[Camera Upload] %@ got error when to compress video %@", weakSelf, session.error)
-                [weakSelf finishOperationWithStatus:CameraAssetUploadStatusFailed shouldUploadNextAsset:YES];
+                if (session.error.domain == AVFoundationErrorDomain && session.error.code == AVErrorDiskFull) {
+                    [weakSelf finishUploadWithNoEnoughDiskSpace];
+                } else {
+                    [weakSelf finishOperationWithStatus:CameraAssetUploadStatusFailed shouldUploadNextAsset:YES];
+                }
+                break;
+            default:
                 break;
         }
     }];
+}
+
+#pragma mark - util methods
+
+- (unsigned long long)fileSizeForResource:(PHAssetResource *)resource {
+    unsigned long long size = 0;
+    if ([resource respondsToSelector:@selector(fileSize)]) {
+        id resourceSize = [resource valueForKey:@"fileSize"];
+        if ([resourceSize respondsToSelector:@selector(unsignedLongLongValue)]) {
+            size = [resourceSize unsignedLongLongValue];
+        }
+    }
+    
+    return size;
 }
 
 @end

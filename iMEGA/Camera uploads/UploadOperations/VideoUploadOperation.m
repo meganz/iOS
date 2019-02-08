@@ -28,20 +28,36 @@
 
 - (void)requestVideoData {
     MEGALogDebug(@"[Camera Upload] %@ starts requesting video data", self);
+    __weak __typeof__(self) weakSelf = self;
     PHVideoRequestOptions *options = [[PHVideoRequestOptions alloc] init];
     options.version = PHVideoRequestOptionsVersionCurrent;
     options.deliveryMode = PHVideoRequestOptionsDeliveryModeHighQualityFormat;
     options.networkAccessAllowed = YES;
+    options.progressHandler = ^(double progress, NSError * _Nullable error, BOOL * _Nonnull stop, NSDictionary * _Nullable info) {
+        if (weakSelf.isCancelled) {
+            *stop = YES;
+            [weakSelf finishOperationWithStatus:CameraAssetUploadStatusCancelled shouldUploadNextAsset:NO];
+        }
+        
+        if (error != nil) {
+            MEGALogError(@"[Camera Upload] %@ error when to download video from iCloud: %@", weakSelf, error);
+            [weakSelf finishOperationWithStatus:CameraAssetUploadStatusFailed shouldUploadNextAsset:YES];
+        }
+    };
     
-    __weak __typeof__(self) weakSelf = self;
+    
     [PHImageManager.defaultManager requestAVAssetForVideo:self.uploadInfo.asset options:options resultHandler:^(AVAsset * _Nullable asset, AVAudioMix * _Nullable audioMix, NSDictionary * _Nullable info) {
+        if (weakSelf.isFinished) {
+            return;
+        }
+        
         if ([asset isMemberOfClass:[AVURLAsset class]]) {
             AVURLAsset *urlAsset = (AVURLAsset *)asset;
-            self.uploadInfo.originalFingerprint = [MEGASdkManager.sharedMEGASdk fingerprintForFilePath:urlAsset.URL.path modificationTime:self.uploadInfo.asset.creationDate];
-            MEGANode *matchingNode = [self nodeForOriginalFingerprint:self.uploadInfo.originalFingerprint];
+            weakSelf.uploadInfo.originalFingerprint = [MEGASdkManager.sharedMEGASdk fingerprintForFilePath:urlAsset.URL.path modificationTime:weakSelf.uploadInfo.asset.creationDate];
+            MEGANode *matchingNode = [weakSelf nodeForOriginalFingerprint:weakSelf.uploadInfo.originalFingerprint];
             if (matchingNode) {
-                MEGALogDebug(@"[Camera Upload] %@ finds existing node by original fingerprint", self);
-                [self finishUploadForFingerprintMatchedNode:matchingNode];
+                MEGALogDebug(@"[Camera Upload] %@ finds existing node by original fingerprint", weakSelf);
+                [weakSelf finishUploadForFingerprintMatchedNode:matchingNode];
                 return;
             }
         }
@@ -135,15 +151,22 @@
                 switch (session.status) {
                     case AVAssetExportSessionStatusCompleted:
                         MEGALogDebug(@"[Camera Upload] %@ has finished video compression", weakSelf);
-                        [weakSelf checkFingerprintAndEncryptFileIfNeeded];
+                        [weakSelf handleProcessedUploadFile];
                         break;
                     case AVAssetExportSessionStatusCancelled:
                         MEGALogDebug(@"[Camera Upload] %@ video compression got cancelled", weakSelf);
                         [weakSelf finishOperationWithStatus:CameraAssetUploadStatusCancelled shouldUploadNextAsset:YES];
                         break;
-                    default:
+                    case AVAssetExportSessionStatusFailed:
                         MEGALogError(@"[Camera Upload] %@ got error when to compress video %@", weakSelf, session.error)
-                        [weakSelf finishOperationWithStatus:CameraAssetUploadStatusFailed shouldUploadNextAsset:YES];
+                        if (session.error.domain == AVFoundationErrorDomain && session.error.code == AVErrorDiskFull) {
+                            [weakSelf finishUploadWithNoEnoughDiskSpace];
+                        } else {
+                            [weakSelf finishOperationWithStatus:CameraAssetUploadStatusFailed shouldUploadNextAsset:YES];
+                        }
+                        
+                        break;
+                    default:
                         break;
                 }
             }];
@@ -160,16 +183,27 @@
         return;
     }
     
+    unsigned long long videoSize = [NSFileManager.defaultManager attributesOfItemAtPath:self.uploadInfo.fileURL.path error:nil].fileSize;
+    if (videoSize > NSFileManager.defaultManager.deviceFreeSize) {
+        [self finishUploadWithNoEnoughDiskSpace];
+        return;
+    }
+    
     self.uploadInfo.fileName = [self.uploadInfo.asset mnz_cameraUploadFileNameWithExtension:URL.pathExtension.lowercaseString];
     NSError *error;
     [NSFileManager.defaultManager copyItemAtURL:URL toURL:self.uploadInfo.fileURL error:&error];
     if (error) {
         MEGALogDebug(@"[Camera Upload] %@ got error when to copy original item %@", self, error);
-        [self finishOperationWithStatus:CameraAssetUploadStatusFailed shouldUploadNextAsset:YES];
+        if (error.domain == NSCocoaErrorDomain && error.code == NSFileWriteOutOfSpaceError) {
+            [self finishUploadWithNoEnoughDiskSpace];
+        } else {
+            [self finishOperationWithStatus:CameraAssetUploadStatusFailed shouldUploadNextAsset:YES];
+        }
+
         return;
     }
     
-    [self checkFingerprintAndEncryptFileIfNeeded];
+    [self handleProcessedUploadFile];
 }
 
 @end

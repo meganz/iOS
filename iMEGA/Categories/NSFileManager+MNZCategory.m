@@ -111,6 +111,8 @@
     }
 }
 
+#pragma mark - properties
+
 - (unsigned long long)deviceFreeSize {
     return [[self attributesOfFileSystemForPath:NSHomeDirectory() error:nil][NSFileSystemFreeSize] unsignedLongLongValue];
 }

@@ -697,6 +697,7 @@
 		A8F6E8941F9E770C0087859C /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9432291D1EDD83FF007DB542 /* MobileCoreServices.framework */; };
 		B6031EE52202A6BF00F7EAA1 /* NodesFetchListenerOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = B6031EE42202A6BF00F7EAA1 /* NodesFetchListenerOperation.m */; };
 		B60DDC1621A7A7930097E4A3 /* MEGAConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = B60DDC1521A7A7930097E4A3 /* MEGAConstants.m */; };
+		B61F01C6220D37A400F4A917 /* DiskSpaceDetector.m in Sources */ = {isa = PBXBuildFile; fileRef = B61F01C5220D37A400F4A917 /* DiskSpaceDetector.m */; };
 		B644B6B721ABA27B00A3B8E7 /* MEGAConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = B60DDC1521A7A7930097E4A3 /* MEGAConstants.m */; };
 		B644B6B821ABA27B00A3B8E7 /* MEGAConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = B60DDC1521A7A7930097E4A3 /* MEGAConstants.m */; };
 		B644B6BE21AE0E1900A3B8E7 /* CoordinateUploadOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = B644B6BD21AE0E1900A3B8E7 /* CoordinateUploadOperation.m */; };
@@ -1646,6 +1647,8 @@
 		B6031EE42202A6BF00F7EAA1 /* NodesFetchListenerOperation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NodesFetchListenerOperation.m; sourceTree = "<group>"; };
 		B60DDC1421A7A7930097E4A3 /* MEGAConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MEGAConstants.h; sourceTree = "<group>"; };
 		B60DDC1521A7A7930097E4A3 /* MEGAConstants.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MEGAConstants.m; sourceTree = "<group>"; };
+		B61F01C4220D37A400F4A917 /* DiskSpaceDetector.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DiskSpaceDetector.h; sourceTree = "<group>"; };
+		B61F01C5220D37A400F4A917 /* DiskSpaceDetector.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DiskSpaceDetector.m; sourceTree = "<group>"; };
 		B644B6BC21AE0E1900A3B8E7 /* CoordinateUploadOperation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CoordinateUploadOperation.h; sourceTree = "<group>"; };
 		B644B6BD21AE0E1900A3B8E7 /* CoordinateUploadOperation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CoordinateUploadOperation.m; sourceTree = "<group>"; };
 		B644B6BF21AE19BC00A3B8E7 /* MEGAExpirableOperation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MEGAExpirableOperation.h; sourceTree = "<group>"; };
@@ -3712,6 +3715,8 @@
 				B6C524EB21E59DC700AE3575 /* BackgroundUploadMonitor.m */,
 				B6575FD1220101BB00B7AD82 /* MediaInfoLoader.h */,
 				B6575FD2220101BB00B7AD82 /* MediaInfoLoader.m */,
+				B61F01C4220D37A400F4A917 /* DiskSpaceDetector.h */,
+				B61F01C5220D37A400F4A917 /* DiskSpaceDetector.m */,
 			);
 			path = UploadUtils;
 			sourceTree = "<group>";
@@ -4520,6 +4525,7 @@
 				41A66D071AE7900F007D7E20 /* UpgradeTableViewController.m in Sources */,
 				5B20B01120E6300300511C0F /* MEGAGenericRequestDelegate.m in Sources */,
 				4172794E1DB663FA001AC818 /* JSQMessagesCellTextView.m in Sources */,
+				B61F01C6220D37A400F4A917 /* DiskSpaceDetector.m in Sources */,
 				4180727A1AA5BBA00078D950 /* MEGAReachabilityManager.m in Sources */,
 				41D21E611D01AEC3002E6296 /* CTAssetSelectionButton.m in Sources */,
 				5BD4A0221F838606000E24E6 /* ScrollViewFrameAccessor.m in Sources */,
