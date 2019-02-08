@@ -16,6 +16,8 @@
 #import "PhotoExportManager.h"
 @import CoreServices;
 
+const NSInteger PhotoExportDiskSizeMultiplicationFactor = 2;
+
 @implementation PhotoUploadOperation
 
 #pragma mark - operation lifecycle
@@ -30,13 +32,29 @@
 
 - (void)requestImageData {
     MEGALogDebug(@"[Camera Upload] %@ starts requesting image data", self);
+    __weak __typeof__(self) weakSelf = self;
+    
     PHImageRequestOptions *options = [[PHImageRequestOptions alloc] init];
     options.networkAccessAllowed = YES;
     options.version = PHImageRequestOptionsVersionCurrent;
     options.synchronous = YES;
+    options.progressHandler = ^(double progress, NSError * _Nullable error, BOOL * _Nonnull stop, NSDictionary * _Nullable info) {
+        if (weakSelf.isCancelled) {
+            *stop = YES;
+            [weakSelf finishOperationWithStatus:CameraAssetUploadStatusCancelled shouldUploadNextAsset:NO];
+        }
+        
+        if (error != nil) {
+            MEGALogError(@"[Camera Upload] %@ error when to download images from iCloud: %@", weakSelf, error);
+            [weakSelf finishOperationWithStatus:CameraAssetUploadStatusFailed shouldUploadNextAsset:YES];
+        }
+    };
     
-    __weak __typeof__(self) weakSelf = self;
     [[PHImageManager defaultManager] requestImageDataForAsset:self.uploadInfo.asset options:options resultHandler:^(NSData * _Nullable imageData, NSString * _Nullable dataUTI, UIImageOrientation orientation, NSDictionary * _Nullable info) {
+        if (weakSelf.isFinished) {
+            return;
+        }
+        
         if (imageData) {
             [weakSelf processImageData:imageData dataUTI:dataUTI dataInfo:info];
         } else {
@@ -68,9 +86,14 @@
         self.uploadInfo.fileName = [self.uploadInfo.asset mnz_cameraUploadFileNameWithExtension:fileExtension];
     }
     
+    if (imageData.length * PhotoExportDiskSizeMultiplicationFactor > NSFileManager.defaultManager.deviceFreeSize) {
+        [self finishUploadWithNoEnoughDiskSpace];
+        return;
+    }
+    
     [PhotoExportManager.shared exportPhotoData:imageData dataTypeUTI:dataUTI outputURL:self.uploadInfo.fileURL outputTypeUTI:outputTypeUTI shouldStripGPSInfo:YES completion:^(BOOL succeeded) {
         if (succeeded && [NSFileManager.defaultManager isReadableFileAtPath:self.uploadInfo.fileURL.path]) {
-            [self checkFingerprintAndEncryptFileIfNeeded];
+            [self handleProcessedUploadFile];
         } else {
             [self finishOperationWithStatus:CameraAssetUploadStatusFailed shouldUploadNextAsset:YES];
         }

@@ -13,6 +13,7 @@
 #import "MEGAConstants.h"
 #import "PHAsset+CameraUpload.h"
 #import "CameraUploadManager+Settings.h"
+#import "NSError+CameraUpload.h"
 @import Photos;
 
 @interface CameraUploadOperation ()
@@ -61,7 +62,7 @@
     [self startExecuting];
 
     [self beginBackgroundTaskWithExpirationHandler:^{
-        [self finishOperationWithStatus:CameraAssetUploadStatusFailed shouldUploadNextAsset:NO];
+        [self cancel];
     }];
     
     MEGALogDebug(@"[Camera Upload] %@ starts processing", self);
@@ -113,6 +114,11 @@
     [self finishOperationWithStatus:CameraAssetUploadStatusDone shouldUploadNextAsset:YES];
 }
 
+- (void)finishUploadWithNoEnoughDiskSpace {
+    [NSNotificationCenter.defaultCenter postNotificationName:MEGACameraUploadNoEnoughDiskSpaceNotificationName object:nil];
+    [self finishOperationWithStatus:CameraAssetUploadStatusFailed shouldUploadNextAsset:NO];
+}
+
 #pragma mark - data processing
 
 - (NSURL *)URLForAssetFolder {
@@ -137,7 +143,7 @@
 
 #pragma mark - upload task
 
-- (void)checkFingerprintAndEncryptFileIfNeeded {
+- (void)handleProcessedUploadFile {
     if (self.isCancelled) {
         [self finishOperationWithStatus:CameraAssetUploadStatusCancelled shouldUploadNextAsset:NO];
         return;
@@ -158,6 +164,10 @@
     self.uploadInfo.mediaUpload = [MEGASdkManager.sharedMEGASdk backgroundMediaUpload];
     [self.uploadInfo.mediaUpload analyseMediaInfoForFileAtPath:self.uploadInfo.fileURL.path];
     
+    [self encryptFile];
+}
+
+- (void)encryptFile {
     FileEncrypter *encrypter = [[FileEncrypter alloc] initWithMediaUpload:self.uploadInfo.mediaUpload outputDirectoryURL:self.uploadInfo.encryptionDirectoryURL shouldTruncateInputFile:YES];
     [encrypter encryptFileAtURL:self.uploadInfo.fileURL completion:^(BOOL success, unsigned long long fileSize, NSDictionary<NSString *,NSURL *> * _Nonnull chunkURLsKeyedByUploadSuffix, NSError * _Nonnull error) {
         if (success) {
@@ -167,7 +177,13 @@
             [self requestUploadURL];
         } else {
             MEGALogDebug(@"[Camera Upload] %@ error when to encrypt file %@", self, error);
-            [self finishOperationWithStatus:CameraAssetUploadStatusFailed shouldUploadNextAsset:YES];
+            if (error.domain == CameraUploadErrorDomain && error.code == CameraUploadErrorNoEnoughDiskFreeSpace) {
+                [self finishUploadWithNoEnoughDiskSpace];
+            } else if (error.domain == NSCocoaErrorDomain && error.code == NSFileWriteOutOfSpaceError) {
+                [self finishUploadWithNoEnoughDiskSpace];
+            } else {
+                [self finishOperationWithStatus:CameraAssetUploadStatusFailed shouldUploadNextAsset:YES];
+            }
             return;
         }
     }];
@@ -186,8 +202,11 @@
         } else {
             self.uploadInfo.uploadURLString = [self.uploadInfo.mediaUpload uploadURLString];
             MEGALogDebug(@"[Camera Upload] %@ got upload URL %@", self, self.uploadInfo.uploadURLString);
-            [self archiveUploadInfoDataForBackgroundTransfer];
-            [self uploadEncryptedChunksToServer];
+            if ([self archiveUploadInfoDataForBackgroundTransfer]) {
+                [self uploadEncryptedChunksToServer];
+            } else {
+                [self finishOperationWithStatus:CameraAssetUploadStatusFailed shouldUploadNextAsset:YES];
+            }
         }
     }]];
 }
@@ -223,10 +242,10 @@
 
 #pragma mark - archive upload info
 
-- (void)archiveUploadInfoDataForBackgroundTransfer {
+- (BOOL)archiveUploadInfoDataForBackgroundTransfer {
     MEGALogDebug(@"[Camera Upload] %@ start archiving upload info", self);
     NSURL *archivedURL = [NSURL mnz_archivedURLForLocalIdentifier:self.uploadInfo.savedRecordLocalIdentifier];
-    [NSKeyedArchiver archiveRootObject:self.uploadInfo toFile:archivedURL.path];
+    return [NSKeyedArchiver archiveRootObject:self.uploadInfo toFile:archivedURL.path];
 }
 
 #pragma mark - finish operation

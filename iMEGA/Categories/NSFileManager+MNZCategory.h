@@ -3,6 +3,11 @@
 
 @interface NSFileManager (MNZCategory)
 
+/**
+ amount of free space on the file system in bytes
+ */
+@property (readonly) unsigned long long deviceFreeSize;
+
 #pragma mark - Paths
 
 - (NSString *)downloadsDirectory;
@@ -25,12 +30,5 @@
  */
 - (void)removeItemIfExistsAtURL:(NSURL *)URL;
 
-
-/**
- Get the free space of the device
-
- @return the free size of the device in bytes.
- */
-- (unsigned long long)deviceFreeSize;
 
 @end

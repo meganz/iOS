@@ -48,17 +48,17 @@ static const NSUInteger EncryptionProposedChunkSizeWithoutTruncating = 1024 * 10
     
     if (self.shouldTruncateFile) {
         if (deviceFreeSize < EncryptionMinimumChunkSize) {
-            completion(NO, 0, nil, [NSError mnz_cameraUploadNoEnoughFreeSpaceError]);
+            completion(NO, 0, nil, [NSError mnz_cameraUploadNoEnoughDiskSpaceError]);
             return;
         }
         
         if (![NSFileManager.defaultManager isWritableFileAtPath:fileURL.path]) {
-            completion(NO, 0, nil, [NSError errorWithDomain:CameraUploadErrorDomain code:CameraUploadErrorNoFileWritePermission userInfo:@{NSLocalizedDescriptionKey : [NSString stringWithFormat:@"no write permission for file %@", fileURL]}]);
+            completion(NO, 0, nil, [NSError mnz_cameraUploadNoWritePermissionErrorForFileURL:fileURL]);
             return;
         }
     } else {
         if (deviceFreeSize < self.fileSize) {
-            completion(NO, 0, nil, [NSError mnz_cameraUploadNoEnoughFreeSpaceError]);
+            completion(NO, 0, nil, [NSError mnz_cameraUploadNoEnoughDiskSpaceError]);
             return;
         }
     }
@@ -111,8 +111,7 @@ static const NSUInteger EncryptionProposedChunkSizeWithoutTruncating = 1024 * 10
             }
         } else {
             if (error != NULL) {
-                NSString *errorMessage = [NSString stringWithFormat:@"error occurred when to encrypt file %@", fileURL.lastPathComponent];
-                *error = [NSError errorWithDomain:CameraUploadErrorDomain code:CameraUploadErrorEncryption userInfo:@{NSLocalizedDescriptionKey : errorMessage}];
+                *error = [NSError mnz_cameraUploadEncryptionErrorForFileURL:fileURL];
             }
             
             return @{};
