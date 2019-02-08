@@ -216,18 +216,6 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
     return validPassword;
 }
 
-- (NSString *)timeFormatted:(NSUInteger)totalSeconds {
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    dateFormatter.dateStyle = NSDateFormatterNoStyle;
-    dateFormatter.timeStyle = NSDateFormatterMediumStyle;
-    NSString *currentLanguageID = [[LocalizationSystem sharedLocalSystem] getLanguage];
-    dateFormatter.locale = [[NSLocale alloc] initWithLocaleIdentifier:currentLanguageID];
-    
-    NSDate *date = [NSDate dateWithTimeIntervalSinceNow:totalSeconds];
-    
-    return [dateFormatter stringFromDate:date];
-}
-
 - (void)registerForKeyboardNotifications {
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardWasShown:)

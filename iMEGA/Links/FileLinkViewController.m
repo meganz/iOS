@@ -245,7 +245,7 @@
     self.nameLabel.text = name;
     [self setNavigationBarTitleLabel];
     
-    self.sizeLabel.text = [NSByteCountFormatter stringFromByteCount:[[self.node size] longLongValue] countStyle:NSByteCountFormatterCountStyleMemory];
+    self.sizeLabel.text = [Helper memoryStyleStringFromByteCount:self.node.size.longLongValue];
     
     [self.thumbnailImageView mnz_setThumbnailByNode:self.node];
     
