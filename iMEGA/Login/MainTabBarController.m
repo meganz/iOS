@@ -107,7 +107,7 @@
 
 - (void)viewDidLayoutSubviews {
     [super viewDidLayoutSubviews];
-    [self.view bringSubviewToFront:self.phoneBadgeImageView];
+    [self.tabBar bringSubviewToFront:self.phoneBadgeImageView];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -341,9 +341,9 @@
     if (!self.phoneBadgeImageView) {
         self.phoneBadgeImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"onACall"]];
         self.phoneBadgeImageView.hidden = YES;
-        [self.view addSubview:self.phoneBadgeImageView];
+        [self.tabBar addSubview:self.phoneBadgeImageView];
     }
-    self.phoneBadgeImageView.frame = CGRectMake(self.tabBar.frame.size.width / 2 + 10, self.tabBar.frame.origin.y + 6, 10, 10);
+    self.phoneBadgeImageView.frame = CGRectMake(self.tabBar.frame.size.width / 2 + 10, 6, 10, 10);
 }
 
 #pragma mark - MEGAGlobalDelegate
