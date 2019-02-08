@@ -196,7 +196,7 @@
         versionsSize.text = nil;
     } else {
         titleSection.text = AMLocalizedString(@"previousVersions", @"A button label which opens a dialog to display the full version history of the selected file").uppercaseString;
-        versionsSize.text = [NSByteCountFormatter stringFromByteCount:self.node.mnz_versionsSize  countStyle:NSByteCountFormatterCountStyleMemory];
+        versionsSize.text = [Helper memoryStyleStringFromByteCount:self.node.mnz_versionsSize];
     }
     
     return sectionHeader;
@@ -616,7 +616,7 @@
     if (transfer.type == MEGATransferTypeDownload && [[Helper downloadingNodes] objectForKey:base64Handle]) {
         float percentage = (transfer.transferredBytes.floatValue / transfer.totalBytes.floatValue * 100);
         NSString *percentageCompleted = [NSString stringWithFormat:@"%.f%%", percentage];
-        NSString *speed = [NSString stringWithFormat:@"%@/s", [NSByteCountFormatter stringFromByteCount:transfer.speed.longLongValue countStyle:NSByteCountFormatterCountStyleMemory]];
+        NSString *speed = [NSString stringWithFormat:@"%@/s", [Helper memoryStyleStringFromByteCount:transfer.speed.longLongValue]];
         
         NSIndexPath *indexPath = [self.nodesIndexPathMutableDictionary objectForKey:base64Handle];
         if (indexPath != nil) {

@@ -9,9 +9,7 @@
 #import "MEGAReachabilityManager.h"
 #import "Helper.h"
 
-@interface UsageViewController () <PieChartViewDelegate, PieChartViewDataSource, UIGestureRecognizerDelegate, UIScrollViewDelegate> {
-    NSByteCountFormatter *byteCountFormatter;
-}
+@interface UsageViewController () <PieChartViewDelegate, PieChartViewDataSource, UIGestureRecognizerDelegate, UIScrollViewDelegate>
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *pieChartTopLayoutConstraint;
 @property (weak, nonatomic) IBOutlet PieChartView *pieChartView;
@@ -32,6 +30,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *incomingSharesSizeLabel;
 @property (weak, nonatomic) IBOutlet UIProgressView *incomingSharesProgressView;
 
+@property (nonatomic) NSNumberFormatter *numberFormatter;
+
 @end
 
 @implementation UsageViewController
@@ -41,6 +41,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
+    self.numberFormatter = NSNumberFormatter.alloc.init;
+    self.numberFormatter.numberStyle = NSNumberFormatterDecimalStyle;
+    self.numberFormatter.locale = NSLocale.autoupdatingCurrentLocale;
+    self.numberFormatter.maximumFractionDigits = 0;
+    
     self.pieChartView.delegate = self;
     self.pieChartView.datasource = self;
     
@@ -52,22 +57,19 @@
     [self.rubbishBinLabel setText:AMLocalizedString(@"rubbishBinLabel", @"")];
     [self.incomingSharesLabel setText:AMLocalizedString(@"incomingShares", @"")];
     
-    byteCountFormatter = [[NSByteCountFormatter alloc] init];
-    [byteCountFormatter setCountStyle:NSByteCountFormatterCountStyleMemory];
-    
     [_pieChartView.layer setCornerRadius:CGRectGetWidth(self.pieChartView.frame)/2];
     [_pieChartView.layer setMasksToBounds:YES];
     [self changePieChartText:_usagePageControl.currentPage];
     
-    NSString *stringFromByteCount = [byteCountFormatter stringFromByteCount:[[self.sizesArray objectAtIndex:0] longLongValue]];
+    NSString *stringFromByteCount = [Helper memoryStyleStringFromByteCount:[[self.sizesArray objectAtIndex:0] longLongValue]];
     [_cloudDriveSizeLabel setAttributedText:[self textForSizeLabels:stringFromByteCount]];
     [_cloudDriveProgressView setProgress:([[self.sizesArray objectAtIndex:0] floatValue] / [[self.sizesArray objectAtIndex:4] floatValue]) animated:NO];
     
-    stringFromByteCount = [byteCountFormatter stringFromByteCount:[[self.sizesArray objectAtIndex:1] longLongValue]];
+    stringFromByteCount = [Helper memoryStyleStringFromByteCount:[[self.sizesArray objectAtIndex:1] longLongValue]];
     [_rubbishBinSizeLabel setAttributedText:[self textForSizeLabels:stringFromByteCount]];
     [_rubbishBinProgressView setProgress:([[self.sizesArray objectAtIndex:1] floatValue] / [[self.sizesArray objectAtIndex:4] floatValue]) animated:NO];
      
-    stringFromByteCount = [byteCountFormatter stringFromByteCount:[[self.sizesArray objectAtIndex:2] longLongValue]];
+    stringFromByteCount = [Helper memoryStyleStringFromByteCount:[[self.sizesArray objectAtIndex:2] longLongValue]];
     [_incomingSharesSizeLabel setAttributedText:[self textForSizeLabels:stringFromByteCount]];
     [_incomingSharesProgressView setProgress:([[self.sizesArray objectAtIndex:2] floatValue] / [[self.sizesArray objectAtIndex:4] floatValue]) animated:NO];
 }
@@ -91,17 +93,17 @@
     NSString *textSecondaryLabel;
     switch (currentPage) {
         case 0: {
-            textSecondaryLabel = [NSString stringWithFormat:AMLocalizedString(@"of %@", @"Sentece showed under the used space percentage to complete the info with the maximum storage."), [byteCountFormatter stringFromByteCount:[[self.sizesArray objectAtIndex:4] longLongValue]]];
+            textSecondaryLabel = [NSString stringWithFormat:AMLocalizedString(@"of %@", @"Sentece showed under the used space percentage to complete the info with the maximum storage."), [Helper memoryStyleStringFromByteCount:[[self.sizesArray objectAtIndex:4] longLongValue]]];
             break;
         }
             
         case 1: {
-            textSecondaryLabel = [NSString stringWithFormat:AMLocalizedString(@"used of %@", @"Sentece showed under the used space to complete the info with the maximum storage."), [byteCountFormatter stringFromByteCount:[[self.sizesArray objectAtIndex:4] longLongValue]]];
+            textSecondaryLabel = [NSString stringWithFormat:AMLocalizedString(@"used of %@", @"Sentece showed under the used space to complete the info with the maximum storage."), [Helper memoryStyleStringFromByteCount:[[self.sizesArray objectAtIndex:4] longLongValue]]];
             break;
         }
             
         case 2: {
-            textSecondaryLabel = [NSString stringWithFormat:AMLocalizedString(@"available of %@", @"Sentece showed under the available space to complete the info with the maximum storage."), [byteCountFormatter stringFromByteCount:[[self.sizesArray objectAtIndex:4] longLongValue]]];
+            textSecondaryLabel = [NSString stringWithFormat:AMLocalizedString(@"available of %@", @"Sentece showed under the available space to complete the info with the maximum storage."), [Helper memoryStyleStringFromByteCount:[[self.sizesArray objectAtIndex:4] longLongValue]]];
             break;
         }
     }
@@ -109,12 +111,6 @@
 }
 
 - (NSMutableAttributedString *)textForMainLabel:(NSInteger)currentPage {
-    
-    NSNumberFormatter *numberFormatter = [[NSNumberFormatter alloc] init];
-    [numberFormatter setNumberStyle:NSNumberFormatterDecimalStyle];
-    [numberFormatter setLocale:[NSLocale currentLocale]];
-    [numberFormatter setMaximumFractionDigits:0];
-    
     NSMutableAttributedString *firstPartMutableAttributedString;
     NSMutableAttributedString *secondPartMutableAttributedString;
     NSString *stringFromByteCount;
@@ -124,7 +120,7 @@
     switch (currentPage) {
         case 0: {
             NSNumber *number = [NSNumber numberWithFloat:(([[self.sizesArray objectAtIndex:3] floatValue] / [[self.sizesArray objectAtIndex:4] floatValue]) * 100)];
-            NSString *firstPartString = [numberFormatter stringFromNumber:number];
+            NSString *firstPartString = [self.numberFormatter stringFromNumber:number];
             firstPartRange = [firstPartString rangeOfString:firstPartString];
             firstPartMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:firstPartString];
             
@@ -135,13 +131,13 @@
         }
             
         case 1: {
-            stringFromByteCount = [byteCountFormatter stringFromByteCount:[[self.sizesArray objectAtIndex:3] longLongValue]];
+            stringFromByteCount = [Helper memoryStyleStringFromByteCount:[[self.sizesArray objectAtIndex:3] longLongValue]];
             break;
         }
             
         case 2: {
             long long availableStorage = [[self.sizesArray objectAtIndex:4] longLongValue] - [[self.sizesArray objectAtIndex:3] longLongValue];
-            stringFromByteCount = [byteCountFormatter stringFromByteCount:(availableStorage < 0) ? 0 : availableStorage];
+            stringFromByteCount = [Helper memoryStyleStringFromByteCount:(availableStorage < 0) ? 0 : availableStorage];
             break;
         }
     }

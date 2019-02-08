@@ -9,6 +9,7 @@
 #import "Helper.h"
 #import "MEGACreateFolderRequestDelegate.h"
 #import "MEGASdkManager.h"
+#import "NSDate+MNZCategory.h"
 #import "NSFileManager+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 
@@ -195,7 +196,7 @@
     NSString *mediaType = [info objectForKey:UIImagePickerControllerMediaType];
     
     if ([mediaType isEqualToString:(__bridge NSString *)kUTTypeImage]) {
-        NSString *imageName = [NSString stringWithFormat:@"%@.jpg", [NSString mnz_fileNameWithDate:[NSDate date]]];
+        NSString *imageName = [NSString stringWithFormat:@"%@.jpg", NSDate.date.mnz_formattedDefaultNameForMedia];
         NSString *imagePath = (self.toUploadSomething || self.toShareThroughChat) ? [[[NSFileManager defaultManager] uploadsDirectory] stringByAppendingPathComponent:imageName] : [NSTemporaryDirectory() stringByAppendingPathComponent:imageName];
         UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
         NSData *imageData = UIImageJPEGRepresentation(image, 1);
@@ -217,7 +218,7 @@
         NSURL *videoUrl = (NSURL *)[info objectForKey:UIImagePickerControllerMediaURL];
         NSDictionary *attributesDictionary = [[NSFileManager defaultManager] attributesOfItemAtPath:videoUrl.path error:nil];
         NSDate *modificationDate = [attributesDictionary objectForKey:NSFileModificationDate];
-        NSString *videoName = [[NSString mnz_fileNameWithDate:modificationDate] stringByAppendingPathExtension:@"mov"];
+        NSString *videoName = [modificationDate.mnz_formattedDefaultNameForMedia stringByAppendingPathExtension:@"mov"];
         NSString *localFilePath = [[[NSFileManager defaultManager] uploadsDirectory] stringByAppendingPathComponent:videoName];
         NSError *error = nil;
         

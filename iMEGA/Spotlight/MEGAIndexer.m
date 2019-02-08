@@ -22,7 +22,6 @@
 @property (nonatomic) NSURL *thumbnailGeneric;
 @property (nonatomic) NSURL *thumbnailFolder;
 
-@property (nonatomic) NSByteCountFormatter *byteCountFormatter;
 @property (nonatomic) NSUserDefaults *sharedUserDefaults;
 
 @property (nonatomic) NSString *pListPath;
@@ -48,8 +47,6 @@
             _thumbnailGeneric = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"Spotlight_file@3x" ofType:@"png"]];
             _thumbnailFolder = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"Spotlight_folder@3x" ofType:@"png"]];
         }
-        _byteCountFormatter = [[NSByteCountFormatter alloc] init];
-        _byteCountFormatter.countStyle = NSByteCountFormatterCountStyleMemory;
         _sharedUserDefaults = [[NSUserDefaults alloc] initWithSuiteName:@"group.mega.ios"];
         _pListPath = [[[[NSFileManager defaultManager] URLForDirectory:NSApplicationSupportDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:YES error:nil] URLByAppendingPathComponent:@"spotlightTree.plist"] path];
         if ([_sharedUserDefaults boolForKey:@"treeCompleted"]) {
@@ -174,7 +171,7 @@
     attributeSet.title = node.name;
     
     if (node.isFile) {
-        NSString *extendedDescription = [self.byteCountFormatter stringFromByteCount:node.size.longLongValue];
+        NSString *extendedDescription = [Helper memoryStyleStringFromByteCount:node.size.longLongValue];
         attributeSet.contentDescription = [NSString stringWithFormat:@"%@\n%@", path, extendedDescription];
     } else {
         attributeSet.contentDescription = path;
