@@ -120,8 +120,8 @@
         self.activeCallImageView.hidden = YES;
         self.onCallInfoView.hidden = YES;
         self.chatLastTime.hidden = NO;
-        [self updateUnreadCountChange:chatListItem.unreadCount];
     }
+    [self updateUnreadCountChange:chatListItem.unreadCount];
 }
 
 - (void)updateDuration {

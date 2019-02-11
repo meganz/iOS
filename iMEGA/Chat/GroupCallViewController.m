@@ -3,6 +3,7 @@
 
 #import <AVFoundation/AVFoundation.h>
 #import <QuartzCore/QuartzCore.h>
+#import <MediaPlayer/MediaPlayer.h>
 
 #import "LTHPasscodeViewController.h"
 #import "SVProgressHUD.h"
@@ -51,6 +52,9 @@
 @property (weak, nonatomic) IBOutlet UILabel *participantsLabel;
 
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *collectionActivity;
+
+@property (weak, nonatomic) IBOutlet UIView *volumeContainerView;
+@property (strong, nonatomic) MPVolumeView *mpVolumeView;
 
 @property BOOL loudSpeakerEnabled;
 
@@ -105,7 +109,8 @@
     [[UIApplication sharedApplication] setIdleTimerDisabled:YES];
     
     [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(didSessionRouteChange:) name:AVAudioSessionRouteChangeNotification object:nil];
-    
+    [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(didWirelessRoutesAvailableChange:) name:MPVolumeViewWirelessRoutesAvailableDidChangeNotification object:nil];
+
     //NOTE: If we open this view controller from 'MEGA' or 'VIDEO' CallKit buttons, we should update the call and configure all the UI
     if (self.call.status == MEGAChatCallStatusRingIn) {
         self.call = [[MEGASdkManager sharedMEGAChatSdk] chatCallForChatId:self.chatRoom.chatId];
@@ -113,6 +118,11 @@
             [self instantiatePeersInCall];
         }
     }
+    
+    self.mpVolumeView = [[MPVolumeView alloc] initWithFrame:self.enableDisableSpeaker.bounds];
+    self.mpVolumeView.showsVolumeSlider = NO;
+    [self.mpVolumeView setRouteButtonImage:[UIImage imageNamed:@"audioSourceActive"] forState:UIControlStateNormal];
+    [self.volumeContainerView addSubview:self.mpVolumeView];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -654,37 +664,59 @@
 }
 
 - (void)didSessionRouteChange:(NSNotification *)notification {
-    NSDictionary *interuptionDict = notification.userInfo;
-    const NSInteger routeChangeReason = [[interuptionDict valueForKey:AVAudioSessionRouteChangeReasonKey] integerValue];
-    
-    if (routeChangeReason == AVAudioSessionRouteChangeReasonRouteConfigurationChange) {
-        if (self.loudSpeakerEnabled) {
-            [self enableLoudspeaker];
-        } else {
-            [self disableLoudspeaker];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        if (!self.volumeContainerView.hidden) { //wireless device available
+            NSDictionary *interuptionDict = notification.userInfo;
+            const NSInteger routeChangeReason = [[interuptionDict valueForKey:AVAudioSessionRouteChangeReasonKey] integerValue];
+            NSLog(@"didSessionRouteChange routeChangeReason: %ld", (long)routeChangeReason);
+            
+            switch (routeChangeReason) {
+                case AVAudioSessionRouteChangeReasonRouteConfigurationChange: //From wireless device to regular speaker
+                    [self.mpVolumeView setRouteButtonImage:[UIImage imageNamed:@"speakerOff"] forState:UIControlStateNormal];
+                    break;
+                    
+                case AVAudioSessionRouteChangeReasonCategoryChange:
+                    if (self.call.status == MEGAChatCallStatusInProgress) { //From speaker to regular speaker
+                        [self.mpVolumeView setRouteButtonImage:[UIImage imageNamed:@"speakerOff"] forState:UIControlStateNormal];
+                    } else { //Wireless device when start a call and it was previously connected
+                        [self.mpVolumeView setRouteButtonImage:[UIImage imageNamed:@"audioSourceActive"] forState:UIControlStateNormal];
+                    }
+                    break;
+                    
+                case AVAudioSessionRouteChangeReasonOverride: //From regular speaker or wireless device to speaker
+                    [self.mpVolumeView setRouteButtonImage:[UIImage imageNamed:@"speakerOn"] forState:UIControlStateNormal];
+                    break;
+                    
+                case AVAudioSessionRouteChangeReasonNewDeviceAvailable: //To a wireless device
+                    [self.mpVolumeView setRouteButtonImage:[UIImage imageNamed:@"audioSourceActive"] forState:UIControlStateNormal];
+                    break;
+                    
+                default:
+                    break;
+            }
         }
+    });
+}
+
+- (void)didWirelessRoutesAvailableChange:(NSNotification *)notification {
+    MPVolumeView* volumeView = (MPVolumeView*)notification.object;
+    if (volumeView.areWirelessRoutesAvailable) {
+        self.volumeContainerView.hidden = NO;
+        self.enableDisableSpeaker.hidden = YES;
+    } else {
+        self.enableDisableSpeaker.hidden = NO;
+        self.volumeContainerView.hidden = YES;
     }
 }
 
 - (void)enableLoudspeaker {
     self.loudSpeakerEnabled = TRUE;
-    AVAudioSession *audioSession = [AVAudioSession sharedInstance];
-    AVAudioSessionCategoryOptions options = audioSession.categoryOptions;
-    if (options & AVAudioSessionCategoryOptionDefaultToSpeaker) return;
-    options |= AVAudioSessionCategoryOptionDefaultToSpeaker;
-    [audioSession setActive:YES error:nil];
-    [audioSession setCategory:AVAudioSessionCategoryPlayAndRecord withOptions:options error:nil];
+    [[AVAudioSession sharedInstance] overrideOutputAudioPort:AVAudioSessionPortOverrideSpeaker error:nil];
 }
 
 - (void)disableLoudspeaker {
     self.loudSpeakerEnabled = FALSE;
-    AVAudioSession *audioSession = [AVAudioSession sharedInstance];
-    AVAudioSessionCategoryOptions options = audioSession.categoryOptions;
-    if (options & AVAudioSessionCategoryOptionDefaultToSpeaker) {
-        options &= ~AVAudioSessionCategoryOptionDefaultToSpeaker;
-        [audioSession setActive:YES error:nil];
-        [audioSession setCategory:AVAudioSessionCategoryPlayAndRecord withOptions:options error:nil];
-    }
+    [[AVAudioSession sharedInstance] overrideOutputAudioPort:AVAudioSessionPortOverrideNone error:nil];
 }
 
 - (void)updateDuration {
@@ -962,7 +994,6 @@
             [self initDurationTimer];
             [self initShowHideControls];
             [self updateParticipants];
-            [self.collectionView reloadData];
         }
     }];
     
