@@ -30,6 +30,7 @@
 #import "MEGAToolbarContentView.h"
 #import "MEGATransfer+MNZCategory.h"
 #import "NSAttributedString+MNZCategory.h"
+#import "NSDate+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 #import "UIImage+MNZCategory.h"
 #import "UIApplication+MNZCategory.h"
@@ -288,7 +289,7 @@ const NSUInteger kMaxMessagesToLoad = 256;
     
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kReachabilityChangedNotification object:nil];
 
-    if ([self.navigationController.viewControllers indexOfObject:self] == NSNotFound || self.presentingViewController) {
+    if ([self.navigationController.viewControllers indexOfObject:self] == NSNotFound) {
         [[MEGASdkManager sharedMEGAChatSdk] closeChatRoom:self.chatRoom.chatId delegate:self];
     }
     [[MEGASdkManager sharedMEGAChatSdk] removeChatDelegate:self];
@@ -302,10 +303,6 @@ const NSUInteger kMaxMessagesToLoad = 256;
 
 - (void)popViewController {
     [self.navigationController popViewControllerAnimated:YES];
-}
-
-- (void)dismissChatRoom {
-    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)dealloc {
@@ -462,7 +459,16 @@ const NSUInteger kMaxMessagesToLoad = 256;
             chatRoomState = AMLocalizedString(@"archived", @"Title of flag of archived chats.");
         } else {
             if (self.chatRoom.isGroup) {
-                chatRoomState = [self participantsNames];
+                if (self.chatRoom.hasCustomTitle) {
+                    chatRoomState = [self participantsNames];
+                } else {
+                    if (self.chatRoom.peerCount) {
+                        chatRoomState = [NSString stringWithFormat:AMLocalizedString(@"%d participants", @"Singular of participant. 1 participant").capitalizedString, self.chatRoom.peerCount + 1];
+                    } else {
+                        chatRoomState = [NSString stringWithFormat:AMLocalizedString(@"%d participant", @"Singular of participant. 1 participant").capitalizedString, 1];
+                    }
+                }
+                
                 self.navigationStatusView.hidden = YES;
                 self.navigationSubtitleLabel.hidden = NO;
             } else {
@@ -521,29 +527,23 @@ const NSUInteger kMaxMessagesToLoad = 256;
     self.unreadLabel.textColor = UIColor.whiteColor;
     self.unreadLabel.userInteractionEnabled = YES;
     
-    if (self.presentingViewController && self.parentViewController) {
-        self.unreadBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.unreadLabel];
-        UIBarButtonItem *chatBackBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:AMLocalizedString(@"chat", @"Chat section header") style:UIBarButtonItemStylePlain target:self action:@selector(dismissChatRoom)];
-        
-        self.leftBarButtonItems = @[chatBackBarButtonItem, self.unreadBarButtonItem];
-    } else {
-        //TODO: leftItemsSupplementBackButton
-        UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 66, 44)];
-        UIImage *image = [[UIImage imageNamed:@"backArrow"] imageFlippedForRightToLeftLayoutDirection];
-        UIImageView *imageView = [[UIImageView alloc] initWithImage:[image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]];
-        imageView.frame = CGRectMake(0, 10, 22, 22);
-        imageView.contentMode = UIViewContentModeScaleAspectFit;
-        [view addGestureRecognizer:singleTap];
-        [view addSubview:imageView];
-        [view addSubview:self.unreadLabel];
-        [imageView configureForAutoLayout];
-        [imageView autoPinEdgesToSuperviewMarginsExcludingEdge:ALEdgeTrailing];
-        [imageView autoPinEdge:ALEdgeTrailing toEdge:ALEdgeLeading ofView:self.unreadLabel];
-        [self.unreadLabel configureForAutoLayout];
-        [self.unreadLabel autoPinEdgesToSuperviewMarginsExcludingEdge:ALEdgeLeading];
-        
-        self.leftBarButtonItems = @[[[UIBarButtonItem alloc] initWithCustomView:view]];
-    }
+    //TODO: leftItemsSupplementBackButton
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 66, 44)];
+    UIImage *image = [[UIImage imageNamed:@"backArrow"] imageFlippedForRightToLeftLayoutDirection];
+    UIImageView *imageView = [[UIImageView alloc] initWithImage:[image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]];
+    imageView.frame = CGRectMake(0, 10, 22, 22);
+    imageView.contentMode = UIViewContentModeScaleAspectFit;
+    [view addGestureRecognizer:singleTap];
+    [view addSubview:imageView];
+    [view addSubview:self.unreadLabel];
+    [imageView configureForAutoLayout];
+    [imageView autoPinEdgesToSuperviewMarginsExcludingEdge:ALEdgeTrailing];
+    [imageView autoPinEdge:ALEdgeTrailing toEdge:ALEdgeLeading ofView:self.unreadLabel];
+    [self.unreadLabel configureForAutoLayout];
+    [self.unreadLabel autoPinEdgesToSuperviewMarginsExcludingEdge:ALEdgeLeading];
+    
+    self.leftBarButtonItems = @[[[UIBarButtonItem alloc] initWithCustomView:view]];
+    
     self.navigationItem.leftBarButtonItems = self.leftBarButtonItems;
 }
 
@@ -1637,11 +1637,15 @@ const NSUInteger kMaxMessagesToLoad = 256;
     self.jumpToBottomConstraint.constant = bottom + 27.0f;
     self.lastBottomInset = bottom;
 
-    if (increment > 0) {
-        bounds.origin.y += increment;
-        bounds.size.height -= bottom;
-        [self.collectionView scrollRectToVisible:bounds animated:NO];
+    // If there are no messages, the increment may scroll the collection view beyond its bounds
+    CGFloat maxIncrement = self.collectionView.contentSize.height - (bounds.size.height - bottom);
+    if (increment > maxIncrement) {
+        increment = maxIncrement;
     }
+    
+    bounds.origin.y += increment;
+    bounds.size.height -= bottom;
+    [self.collectionView scrollRectToVisible:bounds animated:NO];
     
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [self showOrHideJumpToBottom];
@@ -1732,7 +1736,7 @@ const NSUInteger kMaxMessagesToLoad = 256;
     }
     
     if (showDayMonthYear) {
-        NSString *dateString = [[JSQMessagesTimestampFormatter sharedFormatter] relativeDateForDate:message.date];
+        NSString *dateString = message.date.mnz_formattedDateMediumStyle;
         NSAttributedString *dateAttributedString = [[NSAttributedString alloc] initWithString:dateString attributes:@{NSFontAttributeName:[UIFont mnz_SFUIMediumWithSize:12.0f], NSForegroundColorAttributeName:UIColor.mnz_black333333}];
         return dateAttributedString;
     }
@@ -1746,7 +1750,7 @@ const NSUInteger kMaxMessagesToLoad = 256;
     
     BOOL showMessageBubbleTopLabel = [self showHourForMessage:message withIndexPath:indexPath];
     if (showMessageBubbleTopLabel) {
-        NSString *hour = [[JSQMessagesTimestampFormatter sharedFormatter] timeForDate:message.date];
+        NSString *hour = message.date.mnz_formattedHourAndMinutes;
         NSAttributedString *hourAttributed = [[NSAttributedString alloc] initWithString:hour attributes:@{NSFontAttributeName:[UIFont preferredFontForTextStyle:UIFontTextStyleCaption1], NSForegroundColorAttributeName:UIColor.grayColor}];
         NSMutableAttributedString *topCellAttributed = [[NSMutableAttributedString alloc] init];
         
@@ -2046,9 +2050,15 @@ const NSUInteger kMaxMessagesToLoad = 256;
     }
     
     if (action == @selector(delete:)) {
-        MEGAChatMessage *deleteMessage = [[MEGASdkManager sharedMEGAChatSdk] deleteMessageForChat:self.chatRoom.chatId messageId:message.messageId];
+        uint64_t messageId = (message.status == MEGAChatMessageStatusSending) ? message.temporalId : message.messageId;
+        MEGAChatMessage *deleteMessage = [[MEGASdkManager sharedMEGAChatSdk] deleteMessageForChat:self.chatRoom.chatId messageId:messageId];
         deleteMessage.chatRoom = self.chatRoom;
-        [self.messages replaceObjectAtIndex:indexPath.item withObject:deleteMessage];
+        if (message.status == MEGAChatMessageStatusSending) {
+            [self.messages removeObjectAtIndex:indexPath.item];
+            [self.collectionView deleteItemsAtIndexPaths:@[indexPath]];
+        } else {
+            [self.messages replaceObjectAtIndex:indexPath.item withObject:deleteMessage];
+        }
     }
     
     if (action != @selector(delete:)) {

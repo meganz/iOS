@@ -3,8 +3,8 @@
 
 #import "AchievementsViewController.h"
 #import "ContactsViewController.h"
+#import "Helper.h"
 #import "MEGAContactLinkCreateRequestDelegate.h"
-#import "OfflineViewController.h"
 #import "MEGANavigationController.h"
 #import "MEGAPurchase.h"
 #import "MEGASdk+MNZCategory.h"
@@ -15,6 +15,7 @@
 #import "MyAccountHallTableViewCell.h"
 #import "MyAccountViewController.h"
 #import "NotificationsTableViewController.h"
+#import "OfflineViewController.h"
 #import "SettingsTableViewController.h"
 #import "TransfersViewController.h"
 #import "UIImage+MNZCategory.h"
@@ -33,7 +34,6 @@
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
-@property (strong, nonatomic) NSByteCountFormatter *byteCountFormatter;
 @property (strong, nonatomic) NSNumberFormatter *numberFormatter;
 @property (strong, nonatomic) NSNumber *cloudDriveSize;
 @property (strong, nonatomic) NSNumber *rubbishBinSize;
@@ -61,9 +61,6 @@
     self.profileView.gestureRecognizers = @[tapGestureRecognizer];
     
     self.viewAndEditProfileDisclosureImageView.image = self.viewAndEditProfileDisclosureImageView.image.imageFlippedForRightToLeftLayoutDirection;
-    
-    _byteCountFormatter = [[NSByteCountFormatter alloc] init];
-    [_byteCountFormatter setCountStyle:NSByteCountFormatterCountStyleMemory];
     
     _numberFormatter = [[NSNumberFormatter alloc] init];
     [_numberFormatter setNumberStyle:NSNumberFormatterDecimalStyle];
@@ -199,10 +196,10 @@
             
             if ([[MEGASdkManager sharedMEGASdk] mnz_accountDetails]) {
                 MEGAAccountDetails *accountDetails = [[MEGASdkManager sharedMEGASdk] mnz_accountDetails];
-                cell.usedLabel.text = [self.byteCountFormatter stringFromByteCount:accountDetails.storageUsed.longLongValue];
+                cell.usedLabel.text = [Helper memoryStyleStringFromByteCount:accountDetails.storageUsed.longLongValue];
                 NSNumber *number = [NSNumber numberWithFloat:((accountDetails.storageUsed.floatValue / accountDetails.storageMax.floatValue) * 100)];
                 NSString *percentageString = [self.numberFormatter stringFromNumber:number];
-                NSString *ofString = [NSString stringWithFormat:AMLocalizedString(@"of %@", @"Sentece showed under the used space percentage to complete the info with the maximum storage."), [self.byteCountFormatter stringFromByteCount:accountDetails.storageMax.longLongValue]];
+                NSString *ofString = [NSString stringWithFormat:AMLocalizedString(@"of %@", @"Sentece showed under the used space percentage to complete the info with the maximum storage."), [Helper memoryStyleStringFromByteCount:accountDetails.storageMax.longLongValue]];
                 cell.usedPercentageLabel.text = [NSString stringWithFormat:@"%@ %% %@", percentageString, ofString];
                 cell.usedProgressView.progress = number.floatValue / 100;
             } else {
