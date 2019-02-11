@@ -35,7 +35,7 @@
     self.tableView.emptyDataSetSource = self;
     
     self.navigationItem.title = AMLocalizedString(@"notifications", nil);
-    self.userAlertsArray = [MEGASdkManager sharedMEGASdk].userAlertList.mnz_userAlertsArray;
+    self.userAlertsArray = [MEGASdkManager sharedMEGASdk].userAlertList.mnz_relevantUserAlertsArray;
     
     self.dateFormatter = [[NSDateFormatter alloc] init];
     self.dateFormatter.dateStyle = NSDateFormatterLongStyle;
@@ -301,8 +301,17 @@
         }
             
         case MEGAUserAlertTypePaymentReminder: {
-            NSUInteger days = ([userAlert timestampAtIndex:1] - [NSDate date].timeIntervalSince1970) / SECONDS_IN_DAY;
-            NSString *text = days == 1 ? AMLocalizedString(@"Your PRO membership plan will expire in 1 day.", @"The professional pricing plan which the user is currently on will expire in one day.") : [AMLocalizedString(@"Your PRO membership plan will expire in %1 days.", @"The professional pricing plan which the user is currently on will expire in 5 days. The %1 is a placeholder for the number of days and should not be removed.") stringByReplacingOccurrencesOfString:@"%1" withString:[NSString stringWithFormat:@"%tu", days]];
+            NSInteger days = ([userAlert timestampAtIndex:1] - [NSDate date].timeIntervalSince1970) / SECONDS_IN_DAY;
+            NSString *text;
+            if (days == 1) {
+                text = AMLocalizedString(@"Your PRO membership plan will expire in 1 day.", @"The professional pricing plan which the user is currently on will expire in one day.");
+            } else if (days >= 0) {
+                text = [AMLocalizedString(@"Your PRO membership plan will expire in %1 days.", @"The professional pricing plan which the user is currently on will expire in 5 days. The %1 is a placeholder for the number of days and should not be removed.") stringByReplacingOccurrencesOfString:@"%1" withString:[NSString stringWithFormat:@"%td", days]];
+            } else if (days == -1) {
+                text = AMLocalizedString(@"Your PRO membership plan expired 1 day ago", @"The professional pricing plan which the user was on expired one day ago.");
+            } else {
+                text = [AMLocalizedString(@"Your PRO membership plan expired %1 days ago", @"The professional pricing plan which the user was on expired %1 days ago. The %1 is a placeholder for the number of days and should not be removed.") stringByReplacingOccurrencesOfString:@"%1" withString:[NSString stringWithFormat:@"%td", days]];
+            }
             contentLabel.text = text;
             break;
         }
@@ -351,7 +360,7 @@
 
 - (void)internetConnectionChanged {
     if ([MEGAReachabilityManager isReachable]) {
-        self.userAlertsArray = [MEGASdkManager sharedMEGASdk].userAlertList.mnz_userAlertsArray;
+        self.userAlertsArray = [MEGASdkManager sharedMEGASdk].userAlertList.mnz_relevantUserAlertsArray;
     } else {
         self.userAlertsArray = @[];
     }
@@ -490,7 +499,7 @@
 #pragma mark - MEGAGlobalDelegate
 
 - (void)onUserAlertsUpdate:(MEGASdk *)api userAlertList:(MEGAUserAlertList *)userAlertList {
-    self.userAlertsArray = api.userAlertList.mnz_userAlertsArray;
+    self.userAlertsArray = api.userAlertList.mnz_relevantUserAlertsArray;
     [self.tableView reloadData];
 }
 

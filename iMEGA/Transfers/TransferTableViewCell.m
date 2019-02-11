@@ -9,6 +9,7 @@
 #import "MEGAGetThumbnailRequestDelegate.h"
 #import "MEGASdkManager.h"
 #import "MEGAStore.h"
+#import "NSDate+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 #import "UIImageView+MNZCategory.h"
 
@@ -23,6 +24,8 @@
 
 @property (weak, nonatomic) IBOutlet UIButton *cancelButton;
 @property (weak, nonatomic) IBOutlet UIButton *pauseButton;
+
+@property (weak, nonatomic) IBOutlet UIView *separatorView;
 
 @property (strong, nonatomic) MEGATransfer *transfer;
 @property (strong, nonatomic) NSString *uploadTransferLocalIdentifier;
@@ -44,7 +47,11 @@
     switch (transfer.type) {
         case MEGATransferTypeDownload: {
             MEGANode *node = [[MEGASdkManager sharedMEGASdk] nodeForHandle:transfer.nodeHandle];
-            [self.iconImageView mnz_setThumbnailByNode:node];
+            if (node) {
+                [self.iconImageView mnz_setThumbnailByNode:node];
+            } else {
+                [self.iconImageView mnz_setImageForExtension:transfer.fileName.pathExtension];
+            }
             self.thumbnailSet = YES;
             break;
         }
@@ -72,6 +79,9 @@
     
     
     [self configureCellWithTransferState:transfer.state];
+    
+    self.separatorView.layer.borderColor = UIColor.mnz_grayCCCCCC.CGColor;
+    self.separatorView.layer.borderWidth = 0.5;
 }
 
 - (void)reconfigureCellWithTransfer:(MEGATransfer *)transfer {
@@ -109,7 +119,7 @@
         }
     }
     
-    NSString *name = [NSString mnz_fileNameWithDate:asset.creationDate];
+    NSString *name = asset.creationDate.mnz_formattedDefaultNameForMedia;
     if (extension) {
         name = [name stringByAppendingPathExtension:extension];
     }
@@ -144,7 +154,7 @@
     NSString *percentageCompleted = [NSString stringWithFormat:@"%.f %%", percentage];
     NSMutableAttributedString *percentageAttributedString = [[NSMutableAttributedString alloc] initWithString:percentageCompleted attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:12.0f], NSForegroundColorAttributeName:percentageColor}];
     
-    NSString *speed = [NSString stringWithFormat:@" %@/s", [NSByteCountFormatter stringFromByteCount:transfer.speed.longLongValue countStyle:NSByteCountFormatterCountStyleMemory]];
+    NSString *speed = [NSString stringWithFormat:@" %@/s", [Helper memoryStyleStringFromByteCount:transfer.speed.longLongValue]];
     NSAttributedString *speedAttributedString = [[NSAttributedString alloc] initWithString:speed attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:12.0f], NSForegroundColorAttributeName:UIColor.mnz_gray666666}];
     [percentageAttributedString appendAttributedString:speedAttributedString];
     self.infoLabel.attributedText = percentageAttributedString;
@@ -187,10 +197,12 @@
             break;
         }
             
-        case MEGATransferStateRetrying:
+        case MEGATransferStateRetrying: {
+            self.arrowImageView.image = (self.transfer.type == MEGATransferTypeDownload) ? [Helper downloadingTransferImage] : [Helper uploadingTransferImage];
             self.infoLabel.text = AMLocalizedString(@"Retrying...", @"Label for the state of a transfer when is being retrying - (String as short as possible).");
             self.pauseButton.hidden = self.cancelButton.hidden = NO;
             break;
+        }
             
         case MEGATransferStateCompleting:
             self.infoLabel.textColor = (self.transfer.type == MEGATransferTypeDownload) ? UIColor.mnz_green31B500 : UIColor.mnz_blue2BA6DE;

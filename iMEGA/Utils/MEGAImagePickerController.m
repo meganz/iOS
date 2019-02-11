@@ -9,6 +9,7 @@
 #import "Helper.h"
 #import "MEGACreateFolderRequestDelegate.h"
 #import "MEGASdkManager.h"
+#import "NSDate+MNZCategory.h"
 #import "NSFileManager+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 
@@ -195,12 +196,13 @@
     NSString *mediaType = [info objectForKey:UIImagePickerControllerMediaType];
     
     if ([mediaType isEqualToString:(__bridge NSString *)kUTTypeImage]) {
-        NSString *imageName = [NSString stringWithFormat:@"%@.jpg", [NSString mnz_fileNameWithDate:[NSDate date]]];
+        NSString *imageName = [NSString stringWithFormat:@"%@.jpg", NSDate.date.mnz_formattedDefaultNameForMedia];
         NSString *imagePath = (self.toUploadSomething || self.toShareThroughChat) ? [[[NSFileManager defaultManager] uploadsDirectory] stringByAppendingPathComponent:imageName] : [NSTemporaryDirectory() stringByAppendingPathComponent:imageName];
         UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
         NSData *imageData = UIImageJPEGRepresentation(image, 1);
         [imageData writeToFile:imagePath atomically:YES];
         
+        //If the app has 'Read and Write' access to Photos and the user didn't configure the setting to save the media captured from the MEGA app in Photos, enable it by default.
         if (![[NSUserDefaults standardUserDefaults] objectForKey:@"isSaveMediaCapturedToGalleryEnabled"]) {
             [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"isSaveMediaCapturedToGalleryEnabled"];
             [[NSUserDefaults standardUserDefaults] synchronize];
@@ -216,12 +218,13 @@
         NSURL *videoUrl = (NSURL *)[info objectForKey:UIImagePickerControllerMediaURL];
         NSDictionary *attributesDictionary = [[NSFileManager defaultManager] attributesOfItemAtPath:videoUrl.path error:nil];
         NSDate *modificationDate = [attributesDictionary objectForKey:NSFileModificationDate];
-        NSString *videoName = [[NSString mnz_fileNameWithDate:modificationDate] stringByAppendingPathExtension:@"mov"];
+        NSString *videoName = [modificationDate.mnz_formattedDefaultNameForMedia stringByAppendingPathExtension:@"mov"];
         NSString *localFilePath = [[[NSFileManager defaultManager] uploadsDirectory] stringByAppendingPathComponent:videoName];
         NSError *error = nil;
         
         self.filePath = localFilePath.mnz_relativeLocalPath;
         if ([[NSFileManager defaultManager] moveItemAtPath:videoUrl.path toPath:localFilePath error:&error]) {
+            //If the app has 'Read and Write' access to Photos and the user didn't configure the setting to save the media captured from the MEGA app in Photos, enable it by default.
             if (![[NSUserDefaults standardUserDefaults] objectForKey:@"isSaveMediaCapturedToGalleryEnabled"]) {
                 [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"isSaveMediaCapturedToGalleryEnabled"];
                 [[NSUserDefaults standardUserDefaults] synchronize];

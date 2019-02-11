@@ -48,6 +48,8 @@
 @property (strong, nonatomic) NSMutableDictionary *proLevelsIndexesMutableDictionary;
 @property (nonatomic) MEGAAccountType userProLevel;
 
+@property (strong, nonatomic) NSNumberFormatter *numberFormatter;
+
 @end
 
 @implementation UpgradeTableViewController
@@ -56,6 +58,11 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    self.numberFormatter = NSNumberFormatter.alloc.init;
+    self.numberFormatter.numberStyle = NSNumberFormatterCurrencyStyle;
+    SKProduct *product = [MEGAPurchase.sharedInstance.products objectAtIndex:0];
+    self.numberFormatter.locale = product.priceLocale;
     
     self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:self.navigationItem.backBarButtonItem.style target:nil action:nil];
     
@@ -356,13 +363,6 @@
     return [NSString stringWithFormat:@"%@ %@", [transferArray objectAtIndex:0], [transferArray objectAtIndex:1]];
 }
 
-- (NSString *)priceByProduct:(SKProduct *)product {
-    NSNumberFormatter *numberFormatter = [[NSNumberFormatter alloc] init];
-    [numberFormatter setNumberStyle: NSNumberFormatterCurrencyStyle];
-    numberFormatter.locale = product.priceLocale;
-    return [numberFormatter stringFromNumber:product.price];
-}
-
 #pragma mark - IBActions
 
 - (IBAction)skipTouchUpInside:(UIBarButtonItem *)sender {
@@ -431,7 +431,7 @@
     
     SKProduct *product = [[MEGAPurchase sharedInstance].products objectAtIndex:proLevelIndexNumber.integerValue];
     
-    NSString *productPriceString = [NSString stringWithFormat:AMLocalizedString(@"productPricePerMonth", @"Price asociated with the MEGA PRO account level you can subscribe"), [self priceByProduct:product]];
+    NSString *productPriceString = [NSString stringWithFormat:AMLocalizedString(@"productPricePerMonth", @"Price asociated with the MEGA PRO account level you can subscribe"), [self.numberFormatter stringFromNumber:product.price]];
     NSAttributedString *asteriskAttributedString = [[NSAttributedString alloc] initWithString:@" *" attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:12.0f], NSForegroundColorAttributeName:UIColor.mnz_redMain}];
     NSMutableAttributedString *productPriceMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:productPriceString attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:12.0f], NSForegroundColorAttributeName:[self colorForProLevel:proLevelNumber.integerValue]}];
     [productPriceMutableAttributedString appendAttributedString:asteriskAttributedString];
@@ -475,8 +475,8 @@
     
     productDetailVC.storageString = storageFormattedString;
     productDetailVC.bandwidthString = bandwidthFormattedString;
-    productDetailVC.priceMonthString = [self priceByProduct:monthlyProduct];
-    productDetailVC.priceYearlyString = [self priceByProduct:yearlyProduct];
+    productDetailVC.priceMonthString = [self.numberFormatter stringFromNumber:monthlyProduct.price];
+    productDetailVC.priceYearlyString = [self.numberFormatter stringFromNumber:yearlyProduct.price];
     productDetailVC.monthlyProduct = monthlyProduct;
     productDetailVC.yearlyProduct = yearlyProduct;
     [self.navigationController pushViewController:productDetailVC animated:YES];
