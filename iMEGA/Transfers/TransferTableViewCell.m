@@ -9,6 +9,7 @@
 #import "MEGAGetThumbnailRequestDelegate.h"
 #import "MEGASdkManager.h"
 #import "MEGAStore.h"
+#import "NSDate+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 #import "UIImageView+MNZCategory.h"
 
@@ -118,7 +119,7 @@
         }
     }
     
-    NSString *name = [NSString mnz_fileNameWithDate:asset.creationDate];
+    NSString *name = asset.creationDate.mnz_formattedDefaultNameForMedia;
     if (extension) {
         name = [name stringByAppendingPathExtension:extension];
     }
@@ -153,7 +154,7 @@
     NSString *percentageCompleted = [NSString stringWithFormat:@"%.f %%", percentage];
     NSMutableAttributedString *percentageAttributedString = [[NSMutableAttributedString alloc] initWithString:percentageCompleted attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:12.0f], NSForegroundColorAttributeName:percentageColor}];
     
-    NSString *speed = [NSString stringWithFormat:@" %@/s", [NSByteCountFormatter stringFromByteCount:transfer.speed.longLongValue countStyle:NSByteCountFormatterCountStyleMemory]];
+    NSString *speed = [NSString stringWithFormat:@" %@/s", [Helper memoryStyleStringFromByteCount:transfer.speed.longLongValue]];
     NSAttributedString *speedAttributedString = [[NSAttributedString alloc] initWithString:speed attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:12.0f], NSForegroundColorAttributeName:UIColor.mnz_gray666666}];
     [percentageAttributedString appendAttributedString:speedAttributedString];
     self.infoLabel.attributedText = percentageAttributedString;

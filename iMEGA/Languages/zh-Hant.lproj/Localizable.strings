@@ -87,7 +87,7 @@
 /* Message shown on the app's start animation to explain what MEGA ACCESS means */
 "megaAccessText"="隨時隨地獲得完全加密訪問";
 /* Button title which triggers the action to login in your MEGA account */
-"login"="登錄";
+"login"="登入";
 /* Button title which triggers the action to create a MEGA account */
 "createAccount"="建立帳號";
 /* Message shown when the user writes a wrong email or password on login */
@@ -141,15 +141,15 @@
 /* Title shown just after doing some action that requires confirming the action by an email */
 "awaitingEmailConfirmation"="正在等待確認電子信箱。";
 /* Text shown on the confirm account view to remind the user what to do */
-"confirmText"="請輸入您的密碼來確認賬戶";
+"confirmText"="請輸入您的密碼以確認帳戶";
 /* Label for any ‘Confirm account’ button, link, text, title, etc. - (String as short as possible). */
 "Confirm account"="確認帳戶";
 /* Error text shown when you introduce a wrong password on the confirmation proccess */
 "passwordWrong"="錯誤密碼";
 /* Warning title shown when you try to confirm an account but you are logged in with another one */
-"alreadyLoggedInAlertTitle"="您已經使用其他賬戶登錄了";
+"alreadyLoggedInAlertTitle"="您已有使用其他帳戶登入了";
 /* Warning message shown when you try to confirm an account but you are logged in with another one */
-"alreadyLoggedInAlertMessage"="如果您同意，當前的賬戶將被登出並且所有離線數據將被刪除。是否要繼續？";
+"alreadyLoggedInAlertMessage"="如果您同意，目前的帳戶將被登出，並且所有離線資料將被刪除。是否確定要繼續？";
 /* Error shown when the user tries to change his mail to one that is already used */
 "emailAlreadyInUse"="發生錯誤，此電子信箱已被使用。";
 /* Title shown inside an alert if you don't have enough space on your device to download something */
@@ -501,7 +501,7 @@
 /* Alert title shown when the user is overquota */
 "overquotaAlert_title"="超過配額警告！";
 /* Alert message shown when the user is overquota */
-"overquotaAlert_message"="操作被禁，您將超過您的賬戶儲存限額。您要升級賬戶嗎？";
+"overquotaAlert_message"="無法執行此操作，因為您將超過您的帳戶儲存限額。您要升級帳戶嗎？";
 /* Title shown on the Camera Uploads section when the edit mode is enabled. On this mode you can select photos */
 "selectTitle"="選擇項目";
 /* Button title that skips the current action */
@@ -657,13 +657,13 @@
 /* Message body of the email that appears when the users tap on "Send feedback" */
 "pleaseWriteYourFeedback"="請於此處寫下您的意見";
 /* Text shown when you want to send feedback of the app and you don't have an email account set up on your device */
-"noEmailAccountConfigured"="您在該設備中尚未登錄";
+"noEmailAccountConfigured"="您的設備中沒有設定電子郵件帳戶";
 /* Title of one of the Settings sections where you can see the MEGA's 'Privacy Policy' */
 "privacyPolicyLabel"="隱私政策";
 /* Title of one of the Settings sections where you can see the MEGA's 'Terms of Service' */
 "termsOfServicesLabel"="服務條款";
 /* Title of one of the Settings sections where you can see the MEGA's 'Data Protection Regulation' */
-"dataProtectionRegulationLabel"="Data Protection Regulation";
+"dataProtectionRegulationLabel"="資料保護條例";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode Off" */
 "off"="關閉";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode On" */
@@ -689,7 +689,7 @@
 /* Title for the MEGA Recovery Key */
 "masterKey"="還原金鑰";
 /* Section title where you can change your MEGA's password */
-"changePasswordLabel"="變更密碼";
+"changePasswordLabel"="更改密碼";
 /* Advising the user to keep the user's master key safe. */
 "exportMasterKeyFooter"="正在匯出您的還原金鑰，請妥善保管。您的還原金鑰可以使您不會因為重新設定密碼而遺失過去上傳的資料。";
 /* Question button to present a view where it's explained what is the Recovery Key */
@@ -1415,7 +1415,7 @@
 /* Label that encourage the user to line the QR to scan with the camera */
 "lineCodeWithCamera"="Line up the QR code to scan it with your device’s camera";
 /* Error text shown when the user scans a QR that is not valid. String as short as possible. */
-"invalidCode"="Invalid code";
+"invalidCode"="無效的條碼";
 /* Success text shown in a label when the user scans a valid QR. String as short as possible. */
 "codeScanned"="Code scanned";
 /* title of the screen that shows the users with whom the user has shared a folder */
@@ -1663,7 +1663,7 @@
 /* Text of the dialog to delete all the file versions of the account */
 "You are about to delete the version histories of all files. Any file version shared to you from a contact will need to be deleted by them.[Br][Br]Please note that the current files will not be deleted."="You are about to delete the version histories of all files. Any file version shared to you from a contact will need to be deleted by them.\n\nPlease note that the current files will not be deleted.";
 /* Title for the Rubbish-Bin Cleaning Scheduler feature */
-"Rubbish-Bin Cleaning Scheduler:"="垃圾夾清理調度：";
+"Rubbish-Bin Cleaning Scheduler:"="垃圾桶清理時程";
 /* A rubbish bin scheduler setting which allows removing old files from the rubbish bin automatically. E.g. Remove files older than 15 days. */
 "Remove files older than"="刪除較舊的檔案，早於";
 /* Label for any ‘Days’ button, link, text, title, etc. - (String as short as possible). */
@@ -1673,7 +1673,7 @@
 /* New server-side rubbish-bin cleaning scheduler description (for PRO users) */
 "The Rubbish Bin can be cleaned for you automatically. The minimum period is 7 days."="系統可以定期為您清理垃圾桶。可設定的最短保留期限為7天。";
 /* Description shown when you try to disable the feature Rubbish-Bin Cleaning Scheduler and you are a free user */
-"To disable the Rubbish-Bin Cleaning Scheduler or set a longer retention period, you need to subscribe to a PRO plan."="To disable the Rubbish-Bin Cleaning Scheduler or set a longer retention period, you need to subscribe to a PRO plan.";
+"To disable the Rubbish-Bin Cleaning Scheduler or set a longer retention period, you need to subscribe to a PRO plan."="To disable the Rubbish Bin Clearing Scheduler or set a longer retention period, you need to subscribe to a PRO plan.";
 /* Confirmation dialog for the button that logs the user out of all sessions except the current one. */
 "Do you want to close all other sessions? This will log you out on all other active sessions except the current one."="您想關閉所有其他頁面嗎？這將使您登出除了目前頁面之外的所有其他活動頁面。";
 /* Message to inform the local user that someone has joined the current group call */
@@ -1739,7 +1739,7 @@
 /* A notification telling the user that they are now fully connected with the other user (the users are in each other’s address books). */
 "Contact relationship established"="聯絡人關係已建立";
 /* A notification telling the user that one of their contact’s accounts has been deleted or deactivated. */
-"Account has been deleted/deactivated"="賬戶已被刪除/ 停用";
+"Account has been deleted/deactivated"="帳戶已被刪除/ 停用";
 /* A notification telling the user that another user blocked them as a contact (they will no longer be able to contact them). E.g. name@email.com blocked you as a contact. */
 "Blocked you as a contact"="屏蔽了您";
 /* Response text after clicking Ignore on an incoming contact request notification. */
@@ -1785,9 +1785,9 @@
 /* The professional pricing plan which the user is currently on will expire in 5 days. The %1 is a placeholder for the number of days and should not be removed. */
 "Your PRO membership plan will expire in %1 days."="您的專業版會員專案將在%1天內到期";
 /* The professional pricing plan which the user was on expired one day ago. */
-"Your PRO membership plan expired 1 day ago"="Your PRO membership plan expired 1 day ago";
+"Your PRO membership plan expired 1 day ago"="您的PRO專業版會員資格已於1天前到期";
 /* The professional pricing plan which the user was on expired %1 days ago. The %1 is a placeholder for the number of days and should not be removed. */
-"Your PRO membership plan expired %1 days ago"="Your PRO membership plan expired %1 days ago";
+"Your PRO membership plan expired %1 days ago"="您的PRO專業版會員資格已於%1天前到期";
 /* The text of a notification indicating that a file or folder has been taken down due to infringement or other reason. The %1 placeholder will be replaced with the text ‘file’ or ‘folder’. The %2 will be replaced with the name of the file or folder. */
 "Your publicly shared %1 (%2) has been taken down."="您公開分享的 %1 (%2) 已被移除。";
 /* The text of a notification indicating that a file or folder that was taken down has now been restored due to a successful counter-notice. The %1 placeholder will be replaced with the text ‘file’ or ‘folder’. The %2 will be replaced with the name of the file or folder. */
@@ -1808,3 +1808,7 @@
 "Today"="今天";
 /* */
 "Yesterday"="昨天";
+/* Plural of participant. 2 participants */
+"%d participants"="%d participants";
+/* Singular of participant. 1 participant */
+"%d participant"="%d participant";
