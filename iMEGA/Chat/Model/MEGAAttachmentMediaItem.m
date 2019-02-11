@@ -8,8 +8,9 @@
 #import "UIColor+JSQMessages.h"
 
 #import "UIDevice+MNZCategory.h"
-#import "UIImageView+MNZCategory.h"
+#import "Helper.h"
 #import "MEGASdkManager.h"
+#import "UIImageView+MNZCategory.h"
 
 @interface MEGAAttachmentMediaItem ()
 
@@ -82,7 +83,7 @@
             if (totalNodes == 1) {
                 MEGANode *node = [self.message.nodeList nodeAtIndex:0];
                 filename = node.name;
-                size = [NSByteCountFormatter stringFromByteCount:node.size.longLongValue countStyle:NSByteCountFormatterCountStyleMemory];
+                size = [Helper memoryStyleStringFromByteCount:node.size.longLongValue];
                 [contactView.avatarImage mnz_setThumbnailByNode:node];
             } else {
                 filename = [NSString stringWithFormat:AMLocalizedString(@"files", nil), totalNodes];
@@ -90,7 +91,7 @@
                 for (NSUInteger i = 0; i < totalNodes; i++) {
                     totalSize += [[[self.message.nodeList nodeAtIndex:i] size] unsignedIntegerValue];
                 }
-                size = [NSByteCountFormatter stringFromByteCount:totalSize  countStyle:NSByteCountFormatterCountStyleMemory];
+                size = [Helper memoryStyleStringFromByteCount:totalSize];
                 UIImage *avatar = [UIImage imageForName:[NSString stringWithFormat:@"%tu", totalNodes] size:contactView.avatarImage.frame.size backgroundColor:[UIColor mnz_gray999999] textColor:[UIColor whiteColor] font:[UIFont mnz_SFUIRegularWithSize:(contactView.avatarImage.frame.size.width/2.0f)]];
                 contactView.avatarImage.image = avatar;
             }
@@ -135,14 +136,14 @@
         if (totalNodes == 1) {
             MEGANode *node = [self.message.nodeList nodeAtIndex:0];
             title = node.name;
-            subtitle = [NSByteCountFormatter stringFromByteCount:node.size.longLongValue countStyle:NSByteCountFormatterCountStyleMemory];
+            subtitle = [Helper memoryStyleStringFromByteCount:node.size.longLongValue];
         } else {
             title = [NSString stringWithFormat:AMLocalizedString(@"files", nil), totalNodes];
             NSUInteger totalSize = 0;
             for (NSUInteger i = 0; i < totalNodes; i++) {
                 totalSize += [[[self.message.nodeList nodeAtIndex:i] size] unsignedIntegerValue];
             }
-            subtitle = [NSByteCountFormatter stringFromByteCount:totalSize countStyle:NSByteCountFormatterCountStyleMemory];
+            subtitle = [Helper memoryStyleStringFromByteCount:totalSize];
         }
     } else { // MEGAChatMessageTypeContact
         if (self.message.usersCount == 1) {
