@@ -199,6 +199,8 @@ static const NSTimeInterval LoadMediaInfoTimeoutInSeconds = 120;
         return;
     }
     
+    [CameraUploadManager enableBackgroundRefreshIfNeeded];
+    
     [self.cameraScanner scanMediaTypes:@[@(PHAssetMediaTypeImage)] completion:^{
         [self.cameraScanner observePhotoLibraryChanges];
         [self requestMediaInfoForUpload];
@@ -356,6 +358,7 @@ static const NSTimeInterval LoadMediaInfoTimeoutInSeconds = 120;
 - (void)stopCameraUpload {
     [self stopVideoUpload];
     [self.photoUploadOperationQueue cancelAllOperations];
+    [self.diskSpaceDetector stopDetectingPhotoUpload];
     [TransferSessionManager.shared invalidateAndCancelPhotoSessions];
     [self.cameraScanner unobservePhotoLibraryChanges];
     [CameraUploadManager disableBackgroundRefresh];
@@ -364,6 +367,7 @@ static const NSTimeInterval LoadMediaInfoTimeoutInSeconds = 120;
 
 - (void)stopVideoUpload {
     [self.videoUploadOperationQueue cancelAllOperations];
+    [self.diskSpaceDetector stopDetectingVideoUpload];
     [TransferSessionManager.shared invalidateAndCancelVideoSessions];
 }
 
