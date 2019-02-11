@@ -53,7 +53,7 @@ const CGFloat kAvatarImageDiameter = 24.0f;
 
 const NSUInteger kMaxMessagesToLoad = 256;
 
-@interface MessagesViewController () <MEGAPhotoBrowserDelegate, JSQMessagesViewAccessoryButtonDelegate, JSQMessagesComposerTextViewPasteDelegate, MEGAChatDelegate, MEGAChatRequestDelegate, MEGARequestDelegate, MEGAChatCallDelegate>
+@interface MessagesViewController () <MEGAPhotoBrowserDelegate, JSQMessagesViewAccessoryButtonDelegate, JSQMessagesComposerTextViewPasteDelegate, MEGAChatDelegate, MEGAChatRequestDelegate, MEGARequestDelegate>
 
 @property (nonatomic, strong) MEGAOpenMessageHeaderView *openMessageHeaderView;
 @property (nonatomic, strong) MEGAMessagesTypingIndicatorFooterView *footerView;
@@ -214,10 +214,8 @@ const NSUInteger kMaxMessagesToLoad = 256;
     [super viewWillAppear:animated];
     
     [[MEGASdkManager sharedMEGAChatSdk] addChatDelegate:self];
-    [[MEGASdkManager sharedMEGAChatSdk] addChatCallDelegate:self];
 
     [[MEGAReachabilityManager sharedManager] retryPendingConnections];
-    
     
     [self updateUnreadLabel];
     [self customForwardingToolbar];
@@ -256,14 +254,8 @@ const NSUInteger kMaxMessagesToLoad = 256;
         [self.view addSubview:self.activeCallButton];
     }
     
-    if ([[MEGASdkManager sharedMEGAChatSdk] hasCallInChatRoom:self.chatRoom.chatId] && MEGAReachabilityManager.isReachable) {
-        MEGAChatCall *call = [[MEGASdkManager sharedMEGAChatSdk] chatCallForChatId:self.chatRoom.chatId];
-        if (call.status == MEGAChatCallStatusInProgress) {
-            [self showTapToReturnCall:call];
-        } else {
-            [self showActiveCallButton];
-        }
-    }
+    
+    [self updateUIbasedOnChatConnectionAndReachability];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -585,9 +577,26 @@ const NSUInteger kMaxMessagesToLoad = 256;
         }
         
         self.navigationItem.rightBarButtonItems = barButtons;
-        
-        MEGAChatConnection chatConnection = [[MEGASdkManager sharedMEGAChatSdk] chatConnectionState:self.chatRoom.chatId];
-        self.audioCallBarButtonItem.enabled = self.videoCallBarButtonItem.enabled = ((self.chatRoom.ownPrivilege >= MEGAChatRoomPrivilegeStandard) && (chatConnection == MEGAChatConnectionOnline));
+    }
+}
+
+- (void)updateUIbasedOnChatConnectionAndReachability {
+    MEGAChatConnection chatConnection = [[MEGASdkManager sharedMEGAChatSdk] chatConnectionState:self.chatRoom.chatId];
+    self.audioCallBarButtonItem.enabled = self.videoCallBarButtonItem.enabled = ((self.chatRoom.ownPrivilege >= MEGAChatRoomPrivilegeStandard) && (chatConnection == MEGAChatConnectionOnline) && MEGAReachabilityManager.isReachable);
+    
+    if (self.audioCallBarButtonItem.enabled) {
+        if ([[MEGASdkManager sharedMEGAChatSdk] hasCallInChatRoom:self.chatRoom.chatId]) {
+            MEGAChatCall *call = [[MEGASdkManager sharedMEGAChatSdk] chatCallForChatId:self.chatRoom.chatId];
+            if (call.status == MEGAChatCallStatusInProgress) {
+                [self showTapToReturnCall:call];
+            } else {
+                [self showActiveCallButton];
+            }
+        }
+    } else {
+        if (!self.activeCallButton.hidden) {
+            [self hideActiveCallButton];
+        }
     }
 }
 
@@ -618,7 +627,7 @@ const NSUInteger kMaxMessagesToLoad = 256;
     if (self.activeCallButton.hidden) {
         self.activeCallButton.hidden = NO;
         [UIView animateWithDuration:.5f animations:^ {
-            self.activeCallButton.frame = CGRectOffset(self.activeCallButton.frame, 0, 44);
+            self.activeCallButton.frame = CGRectMake(0, 0, self.activeCallButton.frame.size.width, self.activeCallButton.frame.size.height);
         } completion:nil];
     }
 }
@@ -640,7 +649,7 @@ const NSUInteger kMaxMessagesToLoad = 256;
     if (self.activeCallButton.hidden) {
         self.activeCallButton.hidden = NO;
         [UIView animateWithDuration:.5f animations:^ {
-            self.activeCallButton.frame = CGRectOffset(self.activeCallButton.frame, 0, 44);
+            self.activeCallButton.frame = CGRectMake(0, 0, self.activeCallButton.frame.size.width, self.activeCallButton.frame.size.height);
         } completion:nil];
     }
 }
@@ -648,7 +657,7 @@ const NSUInteger kMaxMessagesToLoad = 256;
 - (void)hideActiveCallButton {
     if (!self.activeCallButton.hidden) {
         [UIView animateWithDuration:.5f animations:^ {
-            self.activeCallButton.frame = CGRectOffset(self.activeCallButton.frame, 0, -44);
+            self.activeCallButton.frame = CGRectMake(0, -44, self.activeCallButton.frame.size.width, self.activeCallButton.frame.size.height);
         } completion:^(BOOL finished) {
             if (finished) {
                 self.activeCallButton.hidden = YES;
@@ -1154,23 +1163,13 @@ const NSUInteger kMaxMessagesToLoad = 256;
 }
 
 - (void)internetConnectionChanged {
-    self.audioCallBarButtonItem.enabled = self.videoCallBarButtonItem.enabled = ((self.chatRoom.ownPrivilege >= MEGAChatRoomPrivilegeStandard) && MEGAReachabilityManager.isReachable);
+    [self updateUIbasedOnChatConnectionAndReachability];
     
     [self customNavigationBarLabel];
 
     if (self.openMessageHeaderView) {
         self.openMessageHeaderView.onlineStatusLabel.text = self.lastChatRoomStateString;
         self.openMessageHeaderView.onlineStatusView.backgroundColor = self.lastChatRoomStateColor;
-    }
-    
-    if (MEGAReachabilityManager.isReachable) {
-        if (self.activeCallButton.hidden && [[MEGASdkManager sharedMEGAChatSdk] hasCallInChatRoom:self.chatRoom.chatId] && self.chatRoom.isGroup) {
-            [self showActiveCallButton];
-        }
-    } else {
-        if (!self.activeCallButton.hidden) {
-            [self hideActiveCallButton];
-        }
     }
 }
 
@@ -2823,12 +2822,16 @@ const NSUInteger kMaxMessagesToLoad = 256;
 - (void)onChatConnectionStateUpdate:(MEGAChatSdk *)api chatId:(uint64_t)chatId newState:(int)newState {
     if (chatId == self.chatRoom.chatId) {
         [self customNavigationBarLabel];
-        [self createRightBarButtonItems];
         
-        if (self.loadMessagesLater && newState == MEGAChatConnectionOnline) {
-            self.loadMessagesLater = NO;
-            self.isFirstLoad = YES;
-            [self loadMessages];
+        if (newState == MEGAChatConnectionOnline) {
+            [self updateUIbasedOnChatConnectionAndReachability];
+            if (self.loadMessagesLater) {
+                self.loadMessagesLater = NO;
+                self.isFirstLoad = YES;
+                [self loadMessages];
+            }
+        } else if (newState == MEGAChatConnectionOffline) {
+            [self updateUIbasedOnChatConnectionAndReachability];
         }
     }
 }
@@ -2886,26 +2889,6 @@ const NSUInteger kMaxMessagesToLoad = 256;
             
         default:
             break;
-    }
-}
-
-#pragma mark - MEGAChatCallDelegate
-
-- (void)onChatCallUpdate:(MEGAChatSdk *)api call:(MEGAChatCall *)call {
-    
-    if ([[MEGASdkManager sharedMEGAChatSdk] hasCallInChatRoom:self.chatRoom.chatId]) {
-        MEGALogDebug(@"onChatCallUpdate %@", call);
-
-        switch (call.status) {
-            case MEGAChatCallStatusUserNoPresent:
-                if (self.activeCallButton.hidden) {
-                    [self showActiveCallButton];
-                }
-                break;
-
-            default:
-                break;
-        }
     }
 }
 
