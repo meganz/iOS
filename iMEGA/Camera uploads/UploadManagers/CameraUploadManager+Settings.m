@@ -54,7 +54,6 @@ static NSString * const IsLocationBasedBackgroundUploadAllowedKey = @"IsLocation
             [self setConvertHEICPhoto:YES];
         }
         [CameraUploadManager.shared startCameraUploadIfNeeded];
-        [self enableBackgroundRefreshIfNeeded];
     } else {
         [self clearCameraSettings];
         [CameraUploadManager.shared stopCameraUpload];
