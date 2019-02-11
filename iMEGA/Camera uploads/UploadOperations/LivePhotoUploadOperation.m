@@ -32,7 +32,7 @@ static NSString * const LivePhotoVideoResourceTemporaryName = @"video.mov";
         
         if (error != nil) {
             MEGALogError(@"[Camera Upload] %@ error when to download images from iCloud: %@", weakSelf, error);
-            [weakSelf finishOperationWithStatus:CameraAssetUploadStatusFailed shouldUploadNextAsset:YES];
+            [weakSelf handleCloudDownloadError:error];
         }
     };
     

@@ -14,6 +14,7 @@
 #import "PHAsset+CameraUpload.h"
 #import "CameraUploadManager+Settings.h"
 #import "NSError+CameraUpload.h"
+#import "MEGAReachabilityManager.h"
 @import Photos;
 
 @interface CameraUploadOperation ()
@@ -114,9 +115,26 @@
     [self finishOperationWithStatus:CameraAssetUploadStatusDone shouldUploadNextAsset:YES];
 }
 
+#pragma mark - disk space
+
 - (void)finishUploadWithNoEnoughDiskSpace {
-    [NSNotificationCenter.defaultCenter postNotificationName:MEGACameraUploadNoEnoughDiskSpaceNotificationName object:nil];
+    if (self.uploadInfo.asset.mediaType == PHAssetMediaTypeVideo) {
+        [NSNotificationCenter.defaultCenter postNotificationName:MEGACameraUploadVideoUploadLocalDiskFullNotificationName object:nil];
+    } else {
+        [NSNotificationCenter.defaultCenter postNotificationName:MEGACameraUploadPhotoUploadLocalDiskFullNotificationName object:nil];
+    }
+    
     [self finishOperationWithStatus:CameraAssetUploadStatusFailed shouldUploadNextAsset:NO];
+}
+
+#pragma mark - icloud download error handing
+
+- (void)handleCloudDownloadError:(NSError *)error {
+    if (NSFileManager.defaultManager.deviceFreeSize < MEGACameraUploadLowDiskStorageSizeInBytes) {
+        [self finishUploadWithNoEnoughDiskSpace];
+    } else {
+        [self finishOperationWithStatus:CameraAssetUploadStatusFailed shouldUploadNextAsset:YES];
+    }
 }
 
 #pragma mark - data processing

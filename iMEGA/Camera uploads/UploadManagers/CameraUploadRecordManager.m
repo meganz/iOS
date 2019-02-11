@@ -13,7 +13,7 @@ NSString * const CameraAssetUploadStatusCancelled = @"Cancelled";
 NSString * const CameraAssetUploadStatusDone = @"Done";
 
 static const NSUInteger MaximumUploadRetryPerLaunchCount = 20;
-static const NSUInteger MaximumUploadRetryPerLoginCount = 400;
+static const NSUInteger MaximumUploadRetryPerLoginCount = 1000;
 
 @interface CameraUploadRecordManager ()
 

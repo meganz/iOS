@@ -3,7 +3,7 @@
 
 @interface MEGAExpirableOperation ()
 
-@property (strong, nonatomic) NSTimer *watchTimer;
+@property (strong, nonatomic) NSTimer *expireTimer;
 @property (nonatomic) NSTimeInterval expireTimeInterval;
 
 @end
@@ -26,7 +26,7 @@
     }];
     
     __weak __typeof__(self) weakSelf = self;
-    self.watchTimer = [NSTimer scheduledTimerWithTimeInterval:self.expireTimeInterval repeats:NO block:^(NSTimer * _Nonnull timer) {
+    self.expireTimer = [NSTimer scheduledTimerWithTimeInterval:self.expireTimeInterval repeats:NO block:^(NSTimer * _Nonnull timer) {
         MEGALogDebug(@"%@ expired after time interval %.2f", NSStringFromClass(weakSelf.class), self.expireTimeInterval);
         [weakSelf finishOperation];
     }];
@@ -34,7 +34,9 @@
 
 - (void)finishOperation {
     [super finishOperation];
-    [self.watchTimer invalidate];
+    if (self.expireTimer.isValid) {
+        [self.expireTimer invalidate];
+    }
 }
 
 

@@ -10,6 +10,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (readonly) NSUInteger uploadPendingItemsCount;
 @property (readonly) BOOL isNodesFetchDone;
+@property (nonatomic, getter=isPhotoUploadPaused) BOOL pausePhotoUpload;
+@property (nonatomic, getter=isVideoUploadPaused) BOOL pauseVideoUpload;
+@property (readonly) BOOL isCameraUploadPausedByDiskFull;
 
 /**
  @return a singleton camera upload manager instance
