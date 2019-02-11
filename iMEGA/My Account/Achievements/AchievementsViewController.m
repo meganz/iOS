@@ -3,6 +3,7 @@
 
 #import "NSDate+DateTools.h"
 
+#import "Helper.h"
 #import "MEGASdkManager.h"
 #import "NSString+MNZCategory.h"
 
@@ -26,12 +27,12 @@
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
-@property (nonatomic) NSByteCountFormatter *byteCountFormatter;
-
 @property (nonatomic) MEGAAchievementsDetails *achievementsDetails;
 @property (nonatomic) NSMutableArray *achievementsIndexesMutableArray;
 
 @property (nonatomic, getter=haveReferralBonuses) BOOL referralBonuses;
+
+@property (strong, nonatomic) NSNumberFormatter *numberFormatter;
 
 @end
 
@@ -42,8 +43,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.byteCountFormatter = [[NSByteCountFormatter alloc] init];
-    self.byteCountFormatter.countStyle = NSByteCountFormatterCountStyleMemory;
+    
+    self.numberFormatter = NSNumberFormatter.alloc.init;
+    self.numberFormatter.numberStyle = NSNumberFormatterDecimalStyle;
+    self.numberFormatter.locale = NSLocale.autoupdatingCurrentLocale;
+    self.numberFormatter.maximumFractionDigits = 0;
     
     self.navigationItem.title = AMLocalizedString(@"achievementsTitle", @"Title of the Achievements section");
     
@@ -71,22 +75,17 @@
 #pragma mark - Private
 
 - (NSMutableAttributedString *)textForUnlockedBonuses:(long long)quota {
-    NSNumberFormatter *numberFormatter = [[NSNumberFormatter alloc] init];
-    numberFormatter.numberStyle = NSNumberFormatterDecimalStyle;
-    numberFormatter.locale = [NSLocale currentLocale];
-    numberFormatter.maximumFractionDigits = 0;
-    
     NSString *stringFromByteCount;
     NSRange firstPartRange;
     NSRange secondPartRange;
     
-    stringFromByteCount = [self.byteCountFormatter stringFromByteCount:quota];
+    stringFromByteCount = [Helper memoryStyleStringFromByteCount:quota];
 
     NSArray *componentsSeparatedByStringArray = [stringFromByteCount componentsSeparatedByString:@" "];
     
     NSString *firstPartString = [NSString mnz_stringWithoutUnitOfComponents:componentsSeparatedByStringArray];
-    NSNumber *number = [numberFormatter numberFromString:firstPartString];
-    firstPartString = [numberFormatter stringFromNumber:number];
+    NSNumber *number = [self.numberFormatter numberFromString:firstPartString];
+    firstPartString = [self.numberFormatter stringFromNumber:number];
     
     if (firstPartString.length == 0) {
         firstPartString = [NSString mnz_stringWithoutUnitOfComponents:componentsSeparatedByStringArray];
@@ -126,10 +125,10 @@
     }
     
     cell.storageQuotaRewardView.backgroundColor = cell.storageQuotaRewardLabel.backgroundColor = ((classStorageReward == 0) ? [UIColor mnz_grayCCCCCC] : [UIColor mnz_blue2BA6DE]);
-    cell.storageQuotaRewardLabel.text = (classStorageReward == 0) ? @"— GB" : [self.byteCountFormatter stringFromByteCount:classStorageReward];
+    cell.storageQuotaRewardLabel.text = (classStorageReward == 0) ? @"— GB" : [Helper memoryStyleStringFromByteCount:classStorageReward];
     
     cell.transferQuotaRewardView.backgroundColor = cell.transferQuotaRewardLabel.backgroundColor = ((classTransferReward == 0) ? [UIColor mnz_grayCCCCCC] : [UIColor mnz_green31B500]);
-    cell.transferQuotaRewardLabel.text = (classTransferReward == 0) ? @"— GB" : [self.byteCountFormatter stringFromByteCount:classTransferReward];
+    cell.transferQuotaRewardLabel.text = (classTransferReward == 0) ? @"— GB" : [Helper memoryStyleStringFromByteCount:classTransferReward];
 }
 
 - (void)pushAchievementsDetailsWithIndexPath:(NSIndexPath *)indexPath {
@@ -261,8 +260,8 @@
             }
         }
         
-        NSString *inviteStorageString = [self.byteCountFormatter stringFromByteCount:[self.achievementsDetails classStorageForClassId:MEGAAchievementInvite]];
-        NSString *inviteTransferString = [self.byteCountFormatter stringFromByteCount:[self.achievementsDetails classTransferForClassId:MEGAAchievementInvite]];
+        NSString *inviteStorageString = [Helper memoryStyleStringFromByteCount:[self.achievementsDetails classStorageForClassId:MEGAAchievementInvite]];
+        NSString *inviteTransferString = [Helper memoryStyleStringFromByteCount:[self.achievementsDetails classTransferForClassId:MEGAAchievementInvite]];
         NSString *inviteFriendsAndGetForEachReferral = AMLocalizedString(@"inviteFriendsAndGetForEachReferral", @"title of the introduction for the achievements screen");
         inviteFriendsAndGetForEachReferral = [inviteFriendsAndGetForEachReferral stringByReplacingOccurrencesOfString:@"%1$s" withString:inviteStorageString];
         inviteFriendsAndGetForEachReferral = [inviteFriendsAndGetForEachReferral stringByReplacingOccurrencesOfString:@"%2$s" withString:inviteTransferString];

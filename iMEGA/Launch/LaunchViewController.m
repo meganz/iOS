@@ -47,8 +47,8 @@
     return UIInterfaceOrientationMaskAll;
 }
 
-- (UIStatusBarStyle)preferredStatusBarStyle {
-    return UIStatusBarStyleLightContent;
+- (BOOL)prefersStatusBarHidden {
+    return YES;
 }
 
 #pragma mark - MEGARequestDelegate

@@ -107,18 +107,6 @@
         } else if (MEGALinkManager.urlType == URLTypeCancelAccountLink) {
             [MEGALinkManager presentConfirmViewWithURLType:URLTypeCancelAccountLink link:request.link email:request.email];
         } else if (MEGALinkManager.urlType == URLTypeRecoverLink) {
-            if ([UIApplication.sharedApplication.keyWindow.rootViewController isKindOfClass:MEGANavigationController.class]) {
-                MEGANavigationController *navigationController = (MEGANavigationController *)UIApplication.sharedApplication.keyWindow.rootViewController;
-                if ([navigationController.topViewController isKindOfClass:TwoFactorAuthenticationViewController.class]) {
-                    [navigationController popViewControllerAnimated:NO];
-                    
-                    if ([navigationController.topViewController isKindOfClass:LoginViewController.class]) {
-                        LoginViewController *loginVC = (LoginViewController *)navigationController.topViewController;
-                        [loginVC cleanPasswordTextField];
-                    }
-                }
-            }
-            
             if (request.flag) {
                 UIAlertController *masterKeyLoggedInAlertController;
                 if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
@@ -134,6 +122,8 @@
                     }];
                 }
                 
+                [masterKeyLoggedInAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:nil]];
+                
                 UIAlertAction *okAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
                     NSString *masterKey = masterKeyLoggedInAlertController.textFields.count ? masterKeyLoggedInAlertController.textFields[0].text : [[MEGASdkManager sharedMEGASdk] masterKey];
                     [self presentChangeViewType:ChangeTypeResetPassword email:MEGALinkManager.emailOfNewSignUpLink masterKey:masterKey link:request.link];
@@ -141,8 +131,6 @@
                 }];
                 okAlertAction.enabled = !masterKeyLoggedInAlertController.textFields.count;
                 [masterKeyLoggedInAlertController addAction:okAlertAction];
-                
-                [masterKeyLoggedInAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:nil]];
                 
                 MEGALinkManager.emailOfNewSignUpLink = request.email;
                 

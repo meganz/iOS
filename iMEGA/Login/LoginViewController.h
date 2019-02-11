@@ -5,6 +5,4 @@
 
 @property (strong, nonatomic) NSString *emailString;
 
-- (void)cleanPasswordTextField;
-
 @end
