@@ -1058,7 +1058,7 @@
 /* Alert message shown when the user remove various items from the Offline section */
 "removeItemsFromOffline"="Sigur vrei să ștergi aceste elemente din Offline?";
 /* Chat section header */
-"chat"="Chatuiește";
+"chat"="Chat";
 /* Empty Conversations section */
 "noConversations"="Nicio conversație";
 /* Empty Conversations description */
