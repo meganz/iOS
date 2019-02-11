@@ -124,13 +124,15 @@
         [NSNotificationCenter.defaultCenter postNotificationName:MEGACameraUploadPhotoUploadLocalDiskFullNotificationName object:nil];
     }
     
-    [self finishOperationWithStatus:CameraAssetUploadStatusFailed shouldUploadNextAsset:NO];
+    [self finishOperationWithStatus:CameraAssetUploadStatusCancelled shouldUploadNextAsset:NO];
 }
 
 #pragma mark - icloud download error handing
 
 - (void)handleCloudDownloadError:(NSError *)error {
-    if (NSFileManager.defaultManager.deviceFreeSize < MEGACameraUploadLowDiskStorageSizeInBytes) {
+    if (!MEGAReachabilityManager.isReachable) {
+        [self finishOperationWithStatus:CameraAssetUploadStatusNotReady shouldUploadNextAsset:YES];
+    } else if (NSFileManager.defaultManager.deviceFreeSize < MEGACameraUploadLowDiskStorageSizeInBytes) {
         [self finishUploadWithNoEnoughDiskSpace];
     } else {
         [self finishOperationWithStatus:CameraAssetUploadStatusFailed shouldUploadNextAsset:YES];
@@ -268,17 +270,17 @@
 
 #pragma mark - finish operation
 
-- (void)finishOperationWithStatus:(NSString *)status shouldUploadNextAsset:(BOOL)uploadNextAsset {
+- (void)finishOperationWithStatus:(CameraAssetUploadStatus)status shouldUploadNextAsset:(BOOL)uploadNextAsset {
     [self finishOperation];
     
-    MEGALogDebug(@"[Camera Upload] %@ finishes with status: %@", self, status);
+    MEGALogDebug(@"[Camera Upload] %@ finishes with status: %@", self, [AssetUploadStatus stringForStatus:status]);
     [CameraUploadRecordManager.shared updateUploadRecord:self.uploadRecord withStatus:status error:nil];
     
-    if (![status isEqualToString:CameraAssetUploadStatusUploading]) {
-        [[NSFileManager defaultManager] removeItemAtURL:self.uploadInfo.directoryURL error:nil];
+    if (status != CameraAssetUploadStatusUploading) {
+        [NSFileManager.defaultManager removeItemAtURL:self.uploadInfo.directoryURL error:nil];
     }
     
-    if ([status isEqualToString:CameraAssetUploadStatusDone]) {
+    if (status == CameraAssetUploadStatusDone) {
         dispatch_async(dispatch_get_main_queue(), ^{
             [NSNotificationCenter.defaultCenter postNotificationName:MEGACameraUploadAssetUploadDoneNotificationName object:nil];
         });

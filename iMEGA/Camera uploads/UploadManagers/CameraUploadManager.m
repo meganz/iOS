@@ -305,7 +305,11 @@ static const NSTimeInterval LoadMediaInfoTimeoutInSeconds = 120;
 }
 
 - (void)uploadNextAssetsWithNumber:(NSInteger)number mediaType:(PHAssetMediaType)mediaType {
-    NSArray *records = [CameraUploadRecordManager.shared fetchRecordsToQueueUpForUploadWithLimit:number mediaType:mediaType error:nil];
+    NSArray<NSNumber *> *statuses = AssetUploadStatus.statusesReadyToQueueUp;
+    if (MEGAReachabilityManager.isReachable) {
+        statuses = AssetUploadStatus.allStatusesToQueueUp;
+    }
+    NSArray *records = [CameraUploadRecordManager.shared fetchRecordsToUploadByStatuses:statuses fetchLimit:number mediaType:mediaType error:nil];
     if (records.count == 0) {
         MEGALogDebug(@"[Camera Upload] no more local asset to upload for media type %li", (long)mediaType);
         return;

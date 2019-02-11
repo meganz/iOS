@@ -83,7 +83,7 @@
     [self.operationQueue addOperation:operation];
 }
 
-- (void)finishUploadForLocalIdentifier:(NSString *)localIdentifier status:(NSString *)status {
+- (void)finishUploadForLocalIdentifier:(NSString *)localIdentifier status:(CameraAssetUploadStatus)status {
     if (localIdentifier.length == 0) {
         return;
     }
@@ -91,9 +91,9 @@
     [CameraUploadRecordManager.shared updateUploadRecordByLocalIdentifier:localIdentifier withStatus:status error:nil];
     NSURL *uploadDirectory = [NSURL mnz_assetDirectoryURLForLocalIdentifier:localIdentifier];
     [NSFileManager.defaultManager removeItemAtURL:uploadDirectory error:nil];
-    MEGALogDebug(@"[Camera Upload] Background Upload finishes with session task %@ and status: %@", localIdentifier, status);
+    MEGALogDebug(@"[Camera Upload] Background Upload finishes with session task %@ and status: %@", localIdentifier, [AssetUploadStatus stringForStatus:status]);
     
-    if ([status isEqualToString:CameraAssetUploadStatusDone]) {
+    if (status == CameraAssetUploadStatusDone) {
         dispatch_async(dispatch_get_main_queue(), ^{
             [NSNotificationCenter.defaultCenter postNotificationName:MEGACameraUploadAssetUploadDoneNotificationName object:nil];
         });

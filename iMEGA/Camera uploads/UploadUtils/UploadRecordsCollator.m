@@ -14,7 +14,7 @@
 }
 
 - (void)collateNonUploadingRecords {
-    NSArray<MOAssetUploadRecord *> *records = [CameraUploadRecordManager.shared fetchUploadRecordsByStatuses:@[CameraAssetUploadStatusQueuedUp, CameraAssetUploadStatusProcessing] error:nil];
+    NSArray<MOAssetUploadRecord *> *records = [CameraUploadRecordManager.shared fetchAllUploadRecordsByStatuses:AssetUploadStatus.nonUploadingStatusesToCollate error:nil];
     if (records.count == 0) {
         MEGALogDebug(@"[Camera Upload] no non-uploading records to collate");
         return;
@@ -29,7 +29,7 @@
 }
 
 - (void)collateUploadingRecords {
-    NSArray<MOAssetUploadRecord *> *uploadingRecords = [CameraUploadRecordManager.shared fetchUploadRecordsByStatuses:@[CameraAssetUploadStatusUploading] error:nil];
+    NSArray<MOAssetUploadRecord *> *uploadingRecords = [CameraUploadRecordManager.shared fetchAllUploadRecordsByStatuses:@[@(CameraAssetUploadStatusUploading)] error:nil];
     if (uploadingRecords.count == 0) {
         MEGALogDebug(@"[Camera Upload] no uploading records to collate");
         return;
@@ -65,7 +65,7 @@
 }
 
 - (void)revertBackToNotStartedForRecord:(MOAssetUploadRecord *)record {
-    record.status = CameraAssetUploadStatusNotStarted;
+    record.status = @(CameraAssetUploadStatusNotStarted);
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
         if (record.localIdentifier) {
             [NSFileManager.defaultManager removeItemIfExistsAtURL:[NSURL mnz_assetDirectoryURLForLocalIdentifier:record.localIdentifier]];
