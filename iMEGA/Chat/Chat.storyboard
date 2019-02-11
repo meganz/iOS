@@ -844,7 +844,7 @@
                         <outlet property="remoteMicImageView" destination="agW-lq-qgD" id="LHt-62-Ma7"/>
                         <outlet property="remoteVideoImageView" destination="tqR-aM-aH4" id="441-Bt-n47"/>
                         <outlet property="statusCallLabel" destination="2Au-MG-eIH" id="Jkt-cS-jRd"/>
-                        <outlet property="volumeView" destination="Wfs-st-ace" id="qSz-1t-GJS"/>
+                        <outlet property="volumeContainerView" destination="Wfs-st-ace" id="oeJ-g5-QFK"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3ui-lT-2Za" userLabel="First Responder" sceneMemberID="firstResponder"/>

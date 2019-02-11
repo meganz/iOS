@@ -33,7 +33,9 @@
 @property (weak, nonatomic) IBOutlet UIView *incomingCallView;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *statusCallLabel;
-@property (weak, nonatomic) IBOutlet UIView *volumeView;
+
+@property (weak, nonatomic) IBOutlet UIView *volumeContainerView;
+@property (strong, nonatomic) MPVolumeView *mpVolumeView;
 
 @property (weak, nonatomic) IBOutlet UIImageView *remoteMicImageView;
 @property (weak, nonatomic) IBOutlet UIButton *minimizeButton;
@@ -180,10 +182,10 @@
     
     [[UIApplication sharedApplication] setIdleTimerDisabled:YES];
     
-    MPVolumeView *volumeView = [[MPVolumeView alloc] initWithFrame:self.enableDisableSpeaker.bounds];
-    volumeView.showsVolumeSlider = NO;
-    [volumeView setRouteButtonImage:[UIImage imageNamed:@"audioSourceActive"] forState:UIControlStateNormal];
-    [self.volumeView addSubview:volumeView];
+    self.mpVolumeView = [[MPVolumeView alloc] initWithFrame:self.enableDisableSpeaker.bounds];
+    self.mpVolumeView.showsVolumeSlider = NO;
+    [self.mpVolumeView setRouteButtonImage:[UIImage imageNamed:@"audioSourceActive"] forState:UIControlStateNormal];
+    [self.volumeContainerView addSubview:self.mpVolumeView];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -243,27 +245,48 @@
 #pragma mark - Private
 
 - (void)didSessionRouteChange:(NSNotification *)notification {
-    NSDictionary *interuptionDict = notification.userInfo;
-    const NSInteger routeChangeReason = [[interuptionDict valueForKey:AVAudioSessionRouteChangeReasonKey] integerValue];
-    
-    if (routeChangeReason == AVAudioSessionRouteChangeReasonRouteConfigurationChange) {
-        if (self.loudSpeakerEnabled) {
-            [self enableLoudspeaker];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        if (!self.volumeContainerView.hidden) { //wireless device available
+            NSDictionary *interuptionDict = notification.userInfo;
+            const NSInteger routeChangeReason = [[interuptionDict valueForKey:AVAudioSessionRouteChangeReasonKey] integerValue];
+            NSLog(@"didSessionRouteChange routeChangeReason: %ld", (long)routeChangeReason);
+            
+            switch (routeChangeReason) {
+                case AVAudioSessionRouteChangeReasonRouteConfigurationChange: //From wireless device to regular speaker
+                    [self.mpVolumeView setRouteButtonImage:[UIImage imageNamed:@"speakerOff"] forState:UIControlStateNormal];
+                    break;
+                    
+                case AVAudioSessionRouteChangeReasonCategoryChange:
+                    if (self.call.status == MEGAChatCallStatusInProgress) { //From speaker to regular speaker
+                        [self.mpVolumeView setRouteButtonImage:[UIImage imageNamed:@"speakerOff"] forState:UIControlStateNormal];
+                    } else { //Wireless device when start a call and it was previously connected
+                        [self.mpVolumeView setRouteButtonImage:[UIImage imageNamed:@"audioSourceActive"] forState:UIControlStateNormal];
+                    }
+                    break;
+                    
+                case AVAudioSessionRouteChangeReasonOverride: //From regular speaker or wireless device to speaker
+                    [self.mpVolumeView setRouteButtonImage:[UIImage imageNamed:@"speakerOn"] forState:UIControlStateNormal];
+                    break;
+                    
+                case AVAudioSessionRouteChangeReasonNewDeviceAvailable: //To a wireless device
+                    [self.mpVolumeView setRouteButtonImage:[UIImage imageNamed:@"audioSourceActive"] forState:UIControlStateNormal];
+                    break;
+                    
+                default:
+                    break;
+            }
         }
-        else {
-            [self disableLoudspeaker];
-        }
-    }
+    });
 }
 
 - (void)didWirelessRoutesAvailableChange:(NSNotification *)notification {
     MPVolumeView* volumeView = (MPVolumeView*)notification.object;
     if (volumeView.areWirelessRoutesAvailable) {
-        self.volumeView.hidden = NO;
+        self.volumeContainerView.hidden = NO;
         self.enableDisableSpeaker.hidden = YES;
     } else {
         self.enableDisableSpeaker.hidden = NO;
-        self.volumeView.hidden = YES;
+        self.volumeContainerView.hidden = YES;
     }
 }
 
