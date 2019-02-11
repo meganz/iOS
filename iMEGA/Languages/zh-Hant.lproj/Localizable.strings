@@ -87,7 +87,7 @@
 /* Message shown on the app's start animation to explain what MEGA ACCESS means */
 "megaAccessText"="隨時隨地獲得完全加密訪問";
 /* Button title which triggers the action to login in your MEGA account */
-"login"="登錄";
+"login"="登入";
 /* Button title which triggers the action to create a MEGA account */
 "createAccount"="建立帳號";
 /* Message shown when the user writes a wrong email or password on login */
@@ -141,15 +141,15 @@
 /* Title shown just after doing some action that requires confirming the action by an email */
 "awaitingEmailConfirmation"="正在等待確認電子信箱。";
 /* Text shown on the confirm account view to remind the user what to do */
-"confirmText"="請輸入您的密碼來確認賬戶";
+"confirmText"="請輸入您的密碼以確認帳戶";
 /* Label for any ‘Confirm account’ button, link, text, title, etc. - (String as short as possible). */
 "Confirm account"="確認帳戶";
 /* Error text shown when you introduce a wrong password on the confirmation proccess */
 "passwordWrong"="錯誤密碼";
 /* Warning title shown when you try to confirm an account but you are logged in with another one */
-"alreadyLoggedInAlertTitle"="您已經使用其他賬戶登錄了";
+"alreadyLoggedInAlertTitle"="您已有使用其他帳戶登入了";
 /* Warning message shown when you try to confirm an account but you are logged in with another one */
-"alreadyLoggedInAlertMessage"="如果您同意，當前的賬戶將被登出並且所有離線數據將被刪除。是否要繼續？";
+"alreadyLoggedInAlertMessage"="如果您同意，目前的帳戶將被登出，並且所有離線資料將被刪除。是否確定要繼續？";
 /* Error shown when the user tries to change his mail to one that is already used */
 "emailAlreadyInUse"="發生錯誤，此電子信箱已被使用。";
 /* Title shown inside an alert if you don't have enough space on your device to download something */
@@ -501,7 +501,7 @@
 /* Alert title shown when the user is overquota */
 "overquotaAlert_title"="超過配額警告！";
 /* Alert message shown when the user is overquota */
-"overquotaAlert_message"="操作被禁，您將超過您的賬戶儲存限額。您要升級賬戶嗎？";
+"overquotaAlert_message"="無法執行此操作，因為您將超過您的帳戶儲存限額。您要升級帳戶嗎？";
 /* Title shown on the Camera Uploads section when the edit mode is enabled. On this mode you can select photos */
 "selectTitle"="選擇項目";
 /* Button title that skips the current action */
@@ -657,7 +657,7 @@
 /* Message body of the email that appears when the users tap on "Send feedback" */
 "pleaseWriteYourFeedback"="請於此處寫下您的意見";
 /* Text shown when you want to send feedback of the app and you don't have an email account set up on your device */
-"noEmailAccountConfigured"="您在該設備中尚未登錄";
+"noEmailAccountConfigured"="您的設備中沒有設定電子郵件帳戶";
 /* Title of one of the Settings sections where you can see the MEGA's 'Privacy Policy' */
 "privacyPolicyLabel"="隱私政策";
 /* Title of one of the Settings sections where you can see the MEGA's 'Terms of Service' */
@@ -1739,7 +1739,7 @@
 /* A notification telling the user that they are now fully connected with the other user (the users are in each other’s address books). */
 "Contact relationship established"="聯絡人關係已建立";
 /* A notification telling the user that one of their contact’s accounts has been deleted or deactivated. */
-"Account has been deleted/deactivated"="賬戶已被刪除/ 停用";
+"Account has been deleted/deactivated"="帳戶已被刪除/ 停用";
 /* A notification telling the user that another user blocked them as a contact (they will no longer be able to contact them). E.g. name@email.com blocked you as a contact. */
 "Blocked you as a contact"="屏蔽了您";
 /* Response text after clicking Ignore on an incoming contact request notification. */
