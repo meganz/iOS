@@ -4,8 +4,8 @@
 #import "CameraUploadManager.h"
 #import "NSFileManager+MNZCategory.h"
 
-static const NSUInteger PhotoRetryExtraDiskSpaceInBytes = 10 * 1024 * 1024;
-static const NSUInteger VideoRetryExtraDiskSpaceInBytes = 50 * 1024 * 1024;
+static const NSUInteger PhotoRetryExtraDiskSpaceInBytes = 5 * 1024 * 1024;
+static const NSUInteger VideoRetryExtraDiskSpaceInBytes = 30 * 1024 * 1024;
 static const NSTimeInterval RetryTimerInterval = 60;
 static const NSTimeInterval RetryTimerTolerance = 6;
 

@@ -3,6 +3,7 @@
 #import "MEGAOperation.h"
 #import "AssetUploadInfo.h"
 #import "MEGABackgroundTaskOperation.h"
+#import "AssetUploadStatus.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -26,7 +27,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)finishUploadWithNoEnoughDiskSpace;
 
-- (void)finishOperationWithStatus:(NSString *)status shouldUploadNextAsset:(BOOL)uploadNextAsset;
+- (void)finishOperationWithStatus:(CameraAssetUploadStatus)status shouldUploadNextAsset:(BOOL)uploadNextAsset;
 
 @end
 

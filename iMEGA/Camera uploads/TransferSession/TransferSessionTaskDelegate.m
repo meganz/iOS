@@ -50,7 +50,7 @@
 #pragma mark - util methods
 
 - (void)handleURLSessionError:(NSError *)error forTask:(NSURLSessionTask *)task {
-    NSString *errorStatus;
+    CameraAssetUploadStatus errorStatus;
     if (error.code == NSURLErrorCancelled) {
         errorStatus = CameraAssetUploadStatusCancelled;
     } else {

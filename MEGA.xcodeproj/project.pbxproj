@@ -716,8 +716,6 @@
 		B65AC8E421F9B7A30094FF4F /* MOAssetUploadErrorPerLogin+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = B65AC8D721F9B7A20094FF4F /* MOAssetUploadErrorPerLogin+CoreDataProperties.m */; };
 		B65AC8E521F9B7A30094FF4F /* MOAssetUploadErrorPerLaunch+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = B65AC8D821F9B7A20094FF4F /* MOAssetUploadErrorPerLaunch+CoreDataProperties.m */; };
 		B65AC8E621F9B7A30094FF4F /* MOAssetUploadErrorPerLaunch+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = B65AC8D921F9B7A20094FF4F /* MOAssetUploadErrorPerLaunch+CoreDataClass.m */; };
-		B65AC8E721F9B7A30094FF4F /* MOAssetUploadRecord+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = B65AC8DA21F9B7A20094FF4F /* MOAssetUploadRecord+CoreDataProperties.m */; };
-		B65AC8E821F9B7A30094FF4F /* MOAssetUploadRecord+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = B65AC8DB21F9B7A20094FF4F /* MOAssetUploadRecord+CoreDataClass.m */; };
 		B65AC8E921F9B7A30094FF4F /* MOAssetUploadErrorRecord+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = B65AC8DE21F9B7A30094FF4F /* MOAssetUploadErrorRecord+CoreDataClass.m */; };
 		B686F45921866BB4009C0DAA /* CameraUploadRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B686F45821866BB4009C0DAA /* CameraUploadRequestDelegate.m */; };
 		B68C42C8216DA9CF003C5A50 /* MEGAOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = B68C42C6216DA9CE003C5A50 /* MEGAOperation.m */; };
@@ -748,6 +746,9 @@
 		B6D9D7E9216AB0C700D7B08A /* CameraScanner.m in Sources */ = {isa = PBXBuildFile; fileRef = B6D9D7E8216AB0C700D7B08A /* CameraScanner.m */; };
 		B6D9D7EF216AE5D000D7B08A /* CameraUploadRecordManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B6D9D7EE216AE5D000D7B08A /* CameraUploadRecordManager.m */; };
 		B6DA6E5D2210CDEF003CB372 /* PhotosViewController+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = B6DA6E5C2210CDEF003CB372 /* PhotosViewController+MNZCategory.m */; };
+		B6DA6E652212065E003CB372 /* MOAssetUploadRecord+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = B6DA6E622212065E003CB372 /* MOAssetUploadRecord+CoreDataProperties.m */; };
+		B6DA6E662212065E003CB372 /* MOAssetUploadRecord+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = B6DA6E642212065E003CB372 /* MOAssetUploadRecord+CoreDataClass.m */; };
+		B6DA6E6922120DBB003CB372 /* AssetUploadStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = B6DA6E6822120DBB003CB372 /* AssetUploadStatus.m */; };
 		B6E19B2F21756F0800882F74 /* TransferSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B6E19B2E21756F0800882F74 /* TransferSessionManager.m */; };
 		B6E19B322175716600882F74 /* TransferSessionTaskDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B6E19B312175716600882F74 /* TransferSessionTaskDelegate.m */; };
 		B6E19B352175852E00882F74 /* AssetUploadInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = B6E19B342175852E00882F74 /* AssetUploadInfo.m */; };
@@ -1676,16 +1677,12 @@
 		B65AC8D321F9B7A10094FF4F /* MOAssetUploadErrorPerLogin+CoreDataClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MOAssetUploadErrorPerLogin+CoreDataClass.m"; sourceTree = "<group>"; };
 		B65AC8D421F9B7A20094FF4F /* MOAssetUploadErrorPerLaunch+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MOAssetUploadErrorPerLaunch+CoreDataProperties.h"; sourceTree = "<group>"; };
 		B65AC8D521F9B7A20094FF4F /* MOAssetUploadErrorPerLogin+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MOAssetUploadErrorPerLogin+CoreDataProperties.h"; sourceTree = "<group>"; };
-		B65AC8D621F9B7A20094FF4F /* MOAssetUploadRecord+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MOAssetUploadRecord+CoreDataProperties.h"; sourceTree = "<group>"; };
 		B65AC8D721F9B7A20094FF4F /* MOAssetUploadErrorPerLogin+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MOAssetUploadErrorPerLogin+CoreDataProperties.m"; sourceTree = "<group>"; };
 		B65AC8D821F9B7A20094FF4F /* MOAssetUploadErrorPerLaunch+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MOAssetUploadErrorPerLaunch+CoreDataProperties.m"; sourceTree = "<group>"; };
 		B65AC8D921F9B7A20094FF4F /* MOAssetUploadErrorPerLaunch+CoreDataClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MOAssetUploadErrorPerLaunch+CoreDataClass.m"; sourceTree = "<group>"; };
-		B65AC8DA21F9B7A20094FF4F /* MOAssetUploadRecord+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MOAssetUploadRecord+CoreDataProperties.m"; sourceTree = "<group>"; };
-		B65AC8DB21F9B7A20094FF4F /* MOAssetUploadRecord+CoreDataClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MOAssetUploadRecord+CoreDataClass.m"; sourceTree = "<group>"; };
 		B65AC8DC21F9B7A20094FF4F /* MOAssetUploadErrorRecord+CoreDataClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MOAssetUploadErrorRecord+CoreDataClass.h"; sourceTree = "<group>"; };
 		B65AC8DD21F9B7A30094FF4F /* MOAssetUploadErrorPerLaunch+CoreDataClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MOAssetUploadErrorPerLaunch+CoreDataClass.h"; sourceTree = "<group>"; };
 		B65AC8DE21F9B7A30094FF4F /* MOAssetUploadErrorRecord+CoreDataClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MOAssetUploadErrorRecord+CoreDataClass.m"; sourceTree = "<group>"; };
-		B65AC8DF21F9B7A30094FF4F /* MOAssetUploadRecord+CoreDataClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MOAssetUploadRecord+CoreDataClass.h"; sourceTree = "<group>"; };
 		B65AC8E021F9B7A30094FF4F /* MOAssetUploadErrorPerLogin+CoreDataClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MOAssetUploadErrorPerLogin+CoreDataClass.h"; sourceTree = "<group>"; };
 		B65AC8E121F9B7A30094FF4F /* MOAssetUploadErrorRecord+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MOAssetUploadErrorRecord+CoreDataProperties.h"; sourceTree = "<group>"; };
 		B686F45721866BB4009C0DAA /* CameraUploadRequestDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CameraUploadRequestDelegate.h; sourceTree = "<group>"; };
@@ -1745,6 +1742,12 @@
 		B6D9D7EE216AE5D000D7B08A /* CameraUploadRecordManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CameraUploadRecordManager.m; sourceTree = "<group>"; };
 		B6DA6E5B2210CDEF003CB372 /* PhotosViewController+MNZCategory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PhotosViewController+MNZCategory.h"; sourceTree = "<group>"; };
 		B6DA6E5C2210CDEF003CB372 /* PhotosViewController+MNZCategory.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "PhotosViewController+MNZCategory.m"; sourceTree = "<group>"; };
+		B6DA6E612212065E003CB372 /* MOAssetUploadRecord+CoreDataClass.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "MOAssetUploadRecord+CoreDataClass.h"; path = "/Users/simonwang/Documents/dev/iMEGA/CoreData/ManagedObjects/CameraUploads/MOAssetUploadRecord+CoreDataClass.h"; sourceTree = "<absolute>"; };
+		B6DA6E622212065E003CB372 /* MOAssetUploadRecord+CoreDataProperties.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "MOAssetUploadRecord+CoreDataProperties.m"; path = "/Users/simonwang/Documents/dev/iMEGA/CoreData/ManagedObjects/CameraUploads/MOAssetUploadRecord+CoreDataProperties.m"; sourceTree = "<absolute>"; };
+		B6DA6E632212065E003CB372 /* MOAssetUploadRecord+CoreDataProperties.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "MOAssetUploadRecord+CoreDataProperties.h"; path = "/Users/simonwang/Documents/dev/iMEGA/CoreData/ManagedObjects/CameraUploads/MOAssetUploadRecord+CoreDataProperties.h"; sourceTree = "<absolute>"; };
+		B6DA6E642212065E003CB372 /* MOAssetUploadRecord+CoreDataClass.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "MOAssetUploadRecord+CoreDataClass.m"; path = "/Users/simonwang/Documents/dev/iMEGA/CoreData/ManagedObjects/CameraUploads/MOAssetUploadRecord+CoreDataClass.m"; sourceTree = "<absolute>"; };
+		B6DA6E6722120DBB003CB372 /* AssetUploadStatus.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AssetUploadStatus.h; sourceTree = "<group>"; };
+		B6DA6E6822120DBB003CB372 /* AssetUploadStatus.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AssetUploadStatus.m; sourceTree = "<group>"; };
 		B6E19B2D21756F0800882F74 /* TransferSessionManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TransferSessionManager.h; sourceTree = "<group>"; };
 		B6E19B2E21756F0800882F74 /* TransferSessionManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TransferSessionManager.m; sourceTree = "<group>"; };
 		B6E19B302175716600882F74 /* TransferSessionTaskDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransferSessionTaskDelegate.h; sourceTree = "<group>"; };
@@ -3631,6 +3634,8 @@
 			children = (
 				B6E19B332175852E00882F74 /* AssetUploadInfo.h */,
 				B6E19B342175852E00882F74 /* AssetUploadInfo.m */,
+				B6DA6E6722120DBB003CB372 /* AssetUploadStatus.h */,
+				B6DA6E6822120DBB003CB372 /* AssetUploadStatus.m */,
 			);
 			path = DataModels;
 			sourceTree = "<group>";
@@ -3659,10 +3664,10 @@
 		B65AC8D121F9B3D20094FF4F /* CameraUploads */ = {
 			isa = PBXGroup;
 			children = (
-				B65AC8DF21F9B7A30094FF4F /* MOAssetUploadRecord+CoreDataClass.h */,
-				B65AC8DB21F9B7A20094FF4F /* MOAssetUploadRecord+CoreDataClass.m */,
-				B65AC8D621F9B7A20094FF4F /* MOAssetUploadRecord+CoreDataProperties.h */,
-				B65AC8DA21F9B7A20094FF4F /* MOAssetUploadRecord+CoreDataProperties.m */,
+				B6DA6E612212065E003CB372 /* MOAssetUploadRecord+CoreDataClass.h */,
+				B6DA6E642212065E003CB372 /* MOAssetUploadRecord+CoreDataClass.m */,
+				B6DA6E632212065E003CB372 /* MOAssetUploadRecord+CoreDataProperties.h */,
+				B6DA6E622212065E003CB372 /* MOAssetUploadRecord+CoreDataProperties.m */,
 				B65AC8DC21F9B7A20094FF4F /* MOAssetUploadErrorRecord+CoreDataClass.h */,
 				B65AC8DE21F9B7A30094FF4F /* MOAssetUploadErrorRecord+CoreDataClass.m */,
 				B65AC8E121F9B7A30094FF4F /* MOAssetUploadErrorRecord+CoreDataProperties.h */,
@@ -4292,6 +4297,7 @@
 				E8F791811BC5754A00C58676 /* RemoveLinkActivity.m in Sources */,
 				B65AC8E321F9B7A30094FF4F /* MOAssetUploadErrorPerLogin+CoreDataClass.m in Sources */,
 				77B32277209C6EC00037FA89 /* MEGAMessageRichPreviewView.m in Sources */,
+				B6DA6E6922120DBB003CB372 /* AssetUploadStatus.m in Sources */,
 				77D9A56C2023547900B48470 /* MEGAPhotoBrowserViewController.m in Sources */,
 				5BC4912F20AC457F00F7F952 /* SetupTwoFactorAuthenticationTableViewController.m in Sources */,
 				417279361DB663FA001AC818 /* UIColor+JSQMessages.m in Sources */,
@@ -4315,7 +4321,6 @@
 				41D21E5D1D01AEC3002E6296 /* CTAssetCollectionViewController.m in Sources */,
 				5B6CCF0C21788A3A0049AD14 /* MEGATransferList+MNZCategory.m in Sources */,
 				B6D11ADF219CE69300446B86 /* FileEncrypter.m in Sources */,
-				B65AC8E721F9B7A30094FF4F /* MOAssetUploadRecord+CoreDataProperties.m in Sources */,
 				4152269B1A692ECC00EC7BB6 /* MEGASdkManager.m in Sources */,
 				E81616731A8397B5002EFDD7 /* FolderLinkViewController.m in Sources */,
 				A8C262B01FA1D876006172CE /* MEGALocalImageView.m in Sources */,
@@ -4409,7 +4414,6 @@
 				E8CD19871A9266D600CB8B2A /* UnavailableLinkView.m in Sources */,
 				5B1AB4AF20E5407300FEDAF9 /* MEGAQuerySignupLinkRequestDelegate.m in Sources */,
 				E8D4B8911A69429200A3B2E2 /* ConfirmAccountViewController.m in Sources */,
-				B65AC8E821F9B7A30094FF4F /* MOAssetUploadRecord+CoreDataClass.m in Sources */,
 				835223AD20568BB200A47438 /* MEGAGetFolderInfoRequestDelegate.m in Sources */,
 				5B5737D61EFBE6410027ECCD /* MEGANode+MNZCategory.m in Sources */,
 				B6D9D7EF216AE5D000D7B08A /* CameraUploadRecordManager.m in Sources */,
@@ -4540,6 +4544,7 @@
 				A841E63C20CAB460005E1D1B /* MEGAMessageCallEndedView.m in Sources */,
 				B6E19B3A2178424600882F74 /* TransferSessionDelegate.m in Sources */,
 				4172794A1DB663FA001AC818 /* JSQMessagesAvatarImage.m in Sources */,
+				B6DA6E652212065E003CB372 /* MOAssetUploadRecord+CoreDataProperties.m in Sources */,
 				417279461DB663FA001AC818 /* JSQAudioMediaItem.m in Sources */,
 				9462A1841FDFFD8B00008F32 /* MEGAToolbarContentView.m in Sources */,
 				4172795B1DB663FA001AC818 /* JSQMessagesToolbarContentView.m in Sources */,
@@ -4591,6 +4596,7 @@
 				831D61A5218738D20038F5B8 /* MOFolderLayout+CoreDataClass.m in Sources */,
 				B658D3CC218FBC24004C0D64 /* CameraUploadManager.m in Sources */,
 				94624CFB1F50484200D52504 /* MEGAExportRequestDelegate.m in Sources */,
+				B6DA6E662212065E003CB372 /* MOAssetUploadRecord+CoreDataClass.m in Sources */,
 				77F1DBDF2056AA13005D5F0E /* MEGAContactLinkQueryRequestDelegate.m in Sources */,
 				7795677D21C81C6E002B6227 /* OnboardingView.m in Sources */,
 				417279451DB663FA001AC818 /* JSQMessagesCollectionViewLayoutAttributes.m in Sources */,

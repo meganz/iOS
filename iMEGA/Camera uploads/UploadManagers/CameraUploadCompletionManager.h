@@ -12,7 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)handleCompletedTransferWithLocalIdentifier:(NSString *)localIdentifier token:(NSData *)token;
 
-- (void)finishUploadForLocalIdentifier:(NSString *)localIdentifier status:(NSString *)status;
+- (void)finishUploadForLocalIdentifier:(NSString *)localIdentifier status:(CameraAssetUploadStatus)status;
 
 - (void)waitUnitlAllUploadsAreFinished;
 
