@@ -24,6 +24,7 @@
 #import "CameraUploadManager+Settings.h"
 #import "MEGAConstants.h"
 #import "CustomModalAlertViewController.h"
+#import "PhotosViewController+MNZCategory.h"
 
 @interface PhotosViewController () <UICollectionViewDelegateFlowLayout, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAPhotoBrowserDelegate> {
     BOOL allNodesSelected;
@@ -113,32 +114,9 @@
     
     if (CameraUploadManager.shouldShowCameraUploadBoardingScreen) {
         [self showCameraUploadBoardingScreen];
+    } else if (CameraUploadManager.shared.isCameraUploadPausedByDiskFull) {
+        [self showLocalDiskIsFullWarningScreen];
     }
-}
-
-- (void)showCameraUploadBoardingScreen {
-    CustomModalAlertViewController *boardingAlertVC = [[CustomModalAlertViewController alloc] init];
-    boardingAlertVC.modalPresentationStyle = UIModalPresentationOverFullScreen;
-    boardingAlertVC.image = [UIImage imageNamed:@"cameraUploadsPopUp"];
-    boardingAlertVC.viewTitle = AMLocalizedString(@"enableCameraUploadsButton", @"Button title that enables the functionality 'Camera Uploads', which uploads all the photos in your device to MEGA");
-    boardingAlertVC.detail = AMLocalizedString(@"automaticallyBackupYourPhotos", @"Text shown to explain what means 'Enable Camera Uploads'.");;
-    boardingAlertVC.action = AMLocalizedString(@"enable", @"Text button shown when camera upload will be enabled");
-    boardingAlertVC.actionColor = [UIColor mnz_green00BFA5];
-    boardingAlertVC.dismiss = AMLocalizedString(@"notNow", nil);
-    boardingAlertVC.dismissColor = [UIColor colorFromHexString:@"899B9C"];
-    
-    boardingAlertVC.completion = ^{
-        [self dismissViewControllerAnimated:YES completion:^{
-            [self pushCameraUploadSettings];
-        }];
-    };
-    
-    boardingAlertVC.onDismiss = ^{
-        [self dismissViewControllerAnimated:YES completion:nil];
-        CameraUploadManager.cameraUploadEnabled = NO;
-    };
-    
-    [self presentViewController:boardingAlertVC animated:YES completion:nil];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -310,12 +288,6 @@
 
 - (void)setNavigationBarButtonItemsEnabled:(BOOL)boolValue {
     [self.editButtonItem setEnabled:boolValue];
-}
-
-- (void)pushCameraUploadSettings {
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"CameraUploadSettings" bundle:nil];
-    CameraUploadsTableViewController *cameraUploadsTableViewController = [storyboard instantiateViewControllerWithIdentifier:@"CameraUploadsSettingsID"];
-    [self.navigationController pushViewController:cameraUploadsTableViewController animated:YES];
 }
 
 - (void)setToolbarActionsEnabled:(BOOL)boolValue {

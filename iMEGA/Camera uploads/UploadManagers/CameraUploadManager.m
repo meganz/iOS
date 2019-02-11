@@ -16,19 +16,20 @@
 #import "NSFileManager+MNZCategory.h"
 #import "NSURL+CameraUpload.h"
 #import "MediaInfoLoader.h"
+#import "DiskSpaceDetector.h"
+#import "MEGAReachabilityManager.h"
 
 static NSString * const CameraUploadsNodeHandle = @"CameraUploadsNodeHandle";
 static NSString * const CameraUplodFolderName = @"Camera Uploads";
 static NSString * const CameraUploadIdentifierSeparator = @",";
 
-static const NSInteger ConcurrentPhotoUploadCount = 10;
-static const NSInteger MaxConcurrentPhotoOperationCountInBackground = 5;
-static const NSInteger MaxConcurrentPhotoOperationCountInMemoryWarning = 2;
+static const NSInteger PhotoUploadInForegroundConcurrentCount = 10;
+static const NSInteger PhotoUploadInBackgroundConcurrentCount = 5;
+static const NSInteger PhotoUploadInMemoryWarningConcurrentCount = 2;
 
-static const NSInteger ConcurrentVideoUploadCount = 1;
-static const NSInteger MaxConcurrentVideoOperationCount = 1;
+static const NSInteger VideoUploadConcurrentCount = 1;
 
-static const NSTimeInterval MinimumBackgroundRefreshInterval = 3600 * 1;
+static const NSTimeInterval MinimumBackgroundRefreshInterval = 3600 * 2;
 static const NSTimeInterval BackgroundRefreshDuration = 25;
 static const NSTimeInterval LoadMediaInfoTimeoutInSeconds = 120;
 
@@ -42,6 +43,7 @@ static const NSTimeInterval LoadMediaInfoTimeoutInSeconds = 120;
 @property (strong, nonatomic) UploadRecordsCollator *dataCollator;
 @property (strong, nonatomic) BackgroundUploadMonitor *backgroundUploadMonitor;
 @property (strong, nonatomic) MediaInfoLoader *mediaInfoLoader;
+@property (strong, nonatomic) DiskSpaceDetector *diskSpaceDetector;
 
 @end
 
@@ -64,8 +66,6 @@ static const NSTimeInterval LoadMediaInfoTimeoutInSeconds = 120;
     if (self) {
         [self initializeUploadOperationQueues];
         [self registerNotifications];
-        [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(resetCameraUpload) name:MEGALogoutNotificationName object:nil];
-        [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(nodesFetchDoneNotification) name:MEGANodesFetchDoneNotificationName object:nil];
     }
     return self;
 }
@@ -73,17 +73,24 @@ static const NSTimeInterval LoadMediaInfoTimeoutInSeconds = 120;
 - (void)initializeUploadOperationQueues {
     _photoUploadOperationQueue = [[NSOperationQueue alloc] init];
     if (UIApplication.sharedApplication.applicationState == UIApplicationStateBackground) {
-        _photoUploadOperationQueue.maxConcurrentOperationCount = MaxConcurrentPhotoOperationCountInBackground;
+        _photoUploadOperationQueue.maxConcurrentOperationCount = PhotoUploadInBackgroundConcurrentCount;
+    } else {
+        _photoUploadOperationQueue.maxConcurrentOperationCount = PhotoUploadInForegroundConcurrentCount;
     }
     
     _videoUploadOperationQueue = [[NSOperationQueue alloc] init];
-    _videoUploadOperationQueue.maxConcurrentOperationCount = MaxConcurrentVideoOperationCount;
+    _videoUploadOperationQueue.maxConcurrentOperationCount = VideoUploadConcurrentCount;
 }
 
 - (void)registerNotifications {
     [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(applicationDidEnterBackground) name:UIApplicationDidEnterBackgroundNotification object:nil];
     [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(applicationDidBecomeActive) name:UIApplicationDidBecomeActiveNotification object:nil];
     [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(applicationDidReceiveMemoryWarning) name:UIApplicationDidReceiveMemoryWarningNotification object:nil];
+    
+    [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(resetCameraUpload) name:MEGALogoutNotificationName object:nil];
+    [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(nodesFetchDoneNotification) name:MEGANodesFetchDoneNotificationName object:nil];
+    
+    [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(startCameraUploadIfNeeded) name:kReachabilityChangedNotification object:nil];
 }
 
 #pragma mark - configuration when app launches
@@ -134,6 +141,57 @@ static const NSTimeInterval LoadMediaInfoTimeoutInSeconds = 120;
     return _mediaInfoLoader;
 }
 
+- (DiskSpaceDetector *)diskSpaceDetector {
+    if (_diskSpaceDetector == nil) {
+        _diskSpaceDetector = [[DiskSpaceDetector alloc] init];
+    }
+    
+    return _diskSpaceDetector;
+}
+
+- (void)setPausePhotoUpload:(BOOL)pausePhotoUpload {
+    if (_pausePhotoUpload != pausePhotoUpload) {
+        _pausePhotoUpload = pausePhotoUpload;
+        if (!pausePhotoUpload) {
+            [self startCameraUploadIfNeeded];
+        }
+    }
+}
+
+- (void)setPauseVideoUpload:(BOOL)pauseVideoUpload {
+    if (_pauseVideoUpload != pauseVideoUpload) {
+        _pauseVideoUpload = pauseVideoUpload;
+        if (!pauseVideoUpload) {
+            [self startVideoUploadIfNeeded];
+        }
+    }
+}
+
+- (BOOL)isCameraUploadPausedByDiskFull {
+    BOOL isFull = NO;
+    if ([self isPhotoUploadDone]) {
+        if (CameraUploadManager.isVideoUploadEnabled && ![self isVideoUploadDone]) {
+            isFull = [self isVideoUploadPausedByDiskFull];
+        }
+    } else {
+        isFull = [self isPhotoUploadPausedByDiskFull];
+        
+        if (CameraUploadManager.isVideoUploadEnabled && ![self isVideoUploadDone]) {
+            isFull &= [self isVideoUploadPausedByDiskFull];
+        }
+    }
+
+    return isFull;
+}
+
+- (BOOL)isPhotoUploadPausedByDiskFull {
+    return self.isPhotoUploadPaused && self.diskSpaceDetector.isDiskFullForPhotos;
+}
+
+- (BOOL)isVideoUploadPausedByDiskFull {
+    return self.isVideoUploadPaused && self.diskSpaceDetector.isDiskFullForVideos;
+}
+
 #pragma mark - camera upload management
 
 - (void)startCameraUploadIfNeeded {
@@ -143,15 +201,18 @@ static const NSTimeInterval LoadMediaInfoTimeoutInSeconds = 120;
     
     [self.cameraScanner scanMediaTypes:@[@(PHAssetMediaTypeImage)] completion:^{
         [self.cameraScanner observePhotoLibraryChanges];
+        [self requestMediaInfoForUpload];
     }];
-    
+}
+
+- (void)requestMediaInfoForUpload {
     if (self.mediaInfoLoader.isMediaInfoLoaded) {
-        [self requestCameraUploadNodeToUpload];
+        [self requestCameraUploadNodeForUpload];
     } else {
         __weak __typeof__(self) weakSelf = self;
         [self.mediaInfoLoader loadMediaInfoWithTimeout:LoadMediaInfoTimeoutInSeconds completion:^(BOOL loaded) {
             if (loaded) {
-                [weakSelf requestCameraUploadNodeToUpload];
+                [weakSelf requestCameraUploadNodeForUpload];
             } else {
                 [weakSelf startCameraUploadIfNeeded];
             }
@@ -159,7 +220,7 @@ static const NSTimeInterval LoadMediaInfoTimeoutInSeconds = 120;
     }
 }
 
-- (void)requestCameraUploadNodeToUpload {
+- (void)requestCameraUploadNodeForUpload {
     if (!self.isNodesFetchDone) {
         return;
     }
@@ -177,10 +238,14 @@ static const NSTimeInterval LoadMediaInfoTimeoutInSeconds = 120;
 }
 
 - (void)uploadCamera {
-    if (self.photoUploadOperationQueue.operationCount == 0) {
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-            [self uploadNextAssetsWithNumber:ConcurrentPhotoUploadCount mediaType:PHAssetMediaTypeImage];
-        });
+    if (self.isPhotoUploadPaused) {
+        return;
+    }
+    
+    [self.diskSpaceDetector startDetectingPhotoUploadDetection];
+    
+    if (self.photoUploadOperationQueue.operationCount < PhotoUploadInForegroundConcurrentCount) {
+        [self uploadNextAssetsWithNumber:PhotoUploadInForegroundConcurrentCount mediaType:PHAssetMediaTypeImage];
     }
 
     [self startVideoUploadIfNeeded];
@@ -191,26 +256,47 @@ static const NSTimeInterval LoadMediaInfoTimeoutInSeconds = 120;
         return;
     }
     
-    [self.cameraScanner scanMediaTypes:@[@(PHAssetMediaTypeVideo)] completion:nil];
-    
+    [self.cameraScanner scanMediaTypes:@[@(PHAssetMediaTypeVideo)] completion:^{
+        [self uploadVideos];
+    }];
+}
+
+- (void)uploadVideos {
     if (!(self.mediaInfoLoader.isMediaInfoLoaded && self.isNodesFetchDone && self.cameraUploadNode != nil)) {
         return;
     }
     
-    if (self.videoUploadOperationQueue.operationCount == 0) {
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-            [self uploadNextAssetsWithNumber:ConcurrentVideoUploadCount mediaType:PHAssetMediaTypeVideo];
-        });
+    if (self.isVideoUploadPaused) {
+        return;
+    }
+    
+    [self.diskSpaceDetector startDetectingVideoUpload];
+    
+    if (self.videoUploadOperationQueue.operationCount < VideoUploadConcurrentCount) {
+        [self uploadNextAssetsWithNumber:VideoUploadConcurrentCount mediaType:PHAssetMediaTypeVideo];
     }
 }
+
+#pragma mark - upload next assets
 
 - (void)uploadNextAssetWithMediaType:(PHAssetMediaType)mediaType {
     if (!CameraUploadManager.isCameraUploadEnabled) {
         return;
     }
     
-    if (mediaType == PHAssetMediaTypeVideo && !CameraUploadManager.isVideoUploadEnabled) {
-        return;
+    switch (mediaType) {
+        case PHAssetMediaTypeImage:
+            if (self.isPhotoUploadPaused) {
+                return;
+            }
+            break;
+        case PHAssetMediaTypeVideo:
+            if (!CameraUploadManager.isVideoUploadEnabled || self.isVideoUploadPaused) {
+                return;
+            }
+            break;
+        default:
+            break;
     }
     
     [self uploadNextAssetsWithNumber:1 mediaType:mediaType];
@@ -284,20 +370,30 @@ static const NSTimeInterval LoadMediaInfoTimeoutInSeconds = 120;
 #pragma mark - upload status
 
 - (NSUInteger)uploadPendingItemsCount {
-    NSUInteger pendingCount = 0;
-    
-    if (CameraUploadManager.isCameraUploadEnabled) {
-        NSArray<NSNumber *> *mediaTypes;
-        if (CameraUploadManager.isVideoUploadEnabled) {
-            mediaTypes = @[@(PHAssetMediaTypeVideo), @(PHAssetMediaTypeImage)];
-        } else {
-            mediaTypes = @[@(PHAssetMediaTypeImage)];
-        }
-        
-        pendingCount = [CameraUploadRecordManager.shared pendingUploadRecordsCountByMediaTypes:mediaTypes error:nil];
+    NSArray<NSNumber *> *mediaTypes;
+    if (CameraUploadManager.isVideoUploadEnabled) {
+        mediaTypes = @[@(PHAssetMediaTypeVideo), @(PHAssetMediaTypeImage)];
+    } else {
+        mediaTypes = @[@(PHAssetMediaTypeImage)];
     }
     
-    return pendingCount;
+    return [CameraUploadRecordManager.shared pendingUploadRecordsCountByMediaTypes:mediaTypes error:nil];
+}
+
+- (BOOL)isPhotoUploadDone {
+    if (CameraUploadManager.isCameraUploadEnabled) {
+        return self.photoUploadOperationQueue.operationCount == 0 && [CameraUploadRecordManager.shared pendingUploadRecordsCountByMediaTypes:@[@(PHAssetMediaTypeImage)] error:nil] == 0;
+    } else {
+        return NO;
+    }
+}
+
+- (BOOL)isVideoUploadDone {
+    if (CameraUploadManager.isCameraUploadEnabled && CameraUploadManager.isVideoUploadEnabled) {
+        return self.videoUploadOperationQueue.operationCount == 0 && [CameraUploadRecordManager.shared pendingUploadRecordsCountByMediaTypes:@[@(PHAssetMediaTypeVideo)] error:nil] == 0;
+    } else {
+        return NO;
+    }
 }
 
 #pragma mark - photo library scan
@@ -321,15 +417,15 @@ static const NSTimeInterval LoadMediaInfoTimeoutInSeconds = 120;
 #pragma mark - handle app lifecycle
 
 - (void)applicationDidEnterBackground {
-    self.photoUploadOperationQueue.maxConcurrentOperationCount = MaxConcurrentPhotoOperationCountInBackground;
+    self.photoUploadOperationQueue.maxConcurrentOperationCount = PhotoUploadInBackgroundConcurrentCount;
 }
 
 - (void)applicationDidBecomeActive {
-    self.photoUploadOperationQueue.maxConcurrentOperationCount = NSOperationQueueDefaultMaxConcurrentOperationCount;
+    self.photoUploadOperationQueue.maxConcurrentOperationCount = PhotoUploadInForegroundConcurrentCount;
 }
 
 - (void)applicationDidReceiveMemoryWarning {
-    self.photoUploadOperationQueue.maxConcurrentOperationCount = MaxConcurrentPhotoOperationCountInMemoryWarning;
+    self.photoUploadOperationQueue.maxConcurrentOperationCount = PhotoUploadInMemoryWarningConcurrentCount;
 }
 
 #pragma mark - photos access permission check
