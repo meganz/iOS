@@ -1301,11 +1301,11 @@ static MEGAIndexer *indexer;
         }
     }
     
+    [MEGAStore.shareInstance deleteStoreStack];
+    
     // Delete files saved by extensions
     NSString *extensionGroup = [[NSFileManager defaultManager] containerURLForSecurityApplicationGroupIdentifier:@"group.mega.ios"].path;
     [NSFileManager.defaultManager mnz_removeFolderContentsAtPath:extensionGroup];
-    
-    [[MEGAStore shareInstance] configureMEGAStore];
     
     // Delete Spotlight index
     [[CSSearchableIndex defaultSearchableIndex] deleteSearchableItemsWithDomainIdentifiers:@[@"nodes"] completionHandler:^(NSError * _Nullable error) {

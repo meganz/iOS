@@ -12,6 +12,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (instancetype)shared;
 
+- (void)resetDataContext;
+
 #pragma mark - fetch records
 
 - (NSArray<MOAssetUploadRecord *> *)fetchRecordsToUploadByStatuses:(NSArray<NSNumber *> *)statuses fetchLimit:(NSInteger)fetchLimit mediaType:(PHAssetMediaType)mediaType error:(NSError * _Nullable __autoreleasing * _Nullable)error;
