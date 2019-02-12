@@ -29,6 +29,7 @@
 #import "MEGAToolbarContentView.h"
 #import "MEGATransfer+MNZCategory.h"
 #import "NSAttributedString+MNZCategory.h"
+#import "NSDate+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 #import "UIImage+MNZCategory.h"
 #import "UIApplication+MNZCategory.h"
@@ -1834,7 +1835,7 @@ const NSUInteger kMaxMessagesToLoad = 256;
     }
     
     if (showDayMonthYear) {
-        NSString *dateString = [[JSQMessagesTimestampFormatter sharedFormatter] relativeDateForDate:message.date];
+        NSString *dateString = message.date.mnz_formattedDateMediumStyle;
         NSAttributedString *dateAttributedString = [[NSAttributedString alloc] initWithString:dateString attributes:@{NSFontAttributeName:[UIFont mnz_SFUIMediumWithSize:12.0f], NSForegroundColorAttributeName:UIColor.mnz_black333333}];
         return dateAttributedString;
     }
@@ -1848,7 +1849,7 @@ const NSUInteger kMaxMessagesToLoad = 256;
     
     BOOL showMessageBubbleTopLabel = [self showHourForMessage:message withIndexPath:indexPath];
     if (showMessageBubbleTopLabel) {
-        NSString *hour = [[JSQMessagesTimestampFormatter sharedFormatter] timeForDate:message.date];
+        NSString *hour = message.date.mnz_formattedHourAndMinutes;
         NSAttributedString *hourAttributed = [[NSAttributedString alloc] initWithString:hour attributes:@{NSFontAttributeName:[UIFont preferredFontForTextStyle:UIFontTextStyleCaption1], NSForegroundColorAttributeName:UIColor.grayColor}];
         NSMutableAttributedString *topCellAttributed = [[NSMutableAttributedString alloc] init];
         

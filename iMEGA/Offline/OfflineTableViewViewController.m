@@ -138,7 +138,7 @@ static NSString *kPath = @"kPath";
         unsigned long long size;
         size = [[[NSFileManager defaultManager] attributesOfItemAtPath:pathForItem error:nil] fileSize];
         
-        NSString *sizeString = [NSByteCountFormatter stringFromByteCount:size countStyle:NSByteCountFormatterCountStyleMemory];
+        NSString *sizeString = [Helper memoryStyleStringFromByteCount:size];
         NSString *sizeAndDate = [NSString stringWithFormat:@"%@ • %@", sizeString, date];
         cell.infoLabel.text = sizeAndDate;
     }
