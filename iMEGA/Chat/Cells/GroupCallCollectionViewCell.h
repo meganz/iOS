@@ -1,5 +1,7 @@
 
 #import <UIKit/UIKit.h>
+
+#import "CallPeerAudio.h"
 #import "MEGARemoteImageView.h"
 
 @class MEGARemoteImageView, MEGAGroupCallPeer;
@@ -14,7 +16,7 @@
 
 - (void)configureCellForPeer:(MEGAGroupCallPeer *)peer inChat:(uint64_t)chatId numParticipants:(NSInteger)numParticipants;
 - (void)networkQualityChangedForPeer:(MEGAGroupCallPeer *)peer;
-- (void)configureUserAudio:(BOOL)audio;
+- (void)configureUserAudio:(CallPeerAudio)audio;
 - (void)removeLocalVideoInChat:(uint64_t)chatId;
 - (void)addLocalVideoInChat:(uint64_t)chatId;
 - (void)removeRemoteVideoForPeer:(MEGAGroupCallPeer *)peer inChat:(uint64_t)chatId;

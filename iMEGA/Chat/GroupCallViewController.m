@@ -1199,6 +1199,8 @@
                     self.collectionView.alpha = 1;
                 }
                 MEGAGroupCallPeer *remoteUser = [[MEGAGroupCallPeer alloc] initWithSession:chatSession];
+                remoteUser.video = CallPeerVideoUnknown;
+                remoteUser.audio = CallPeerAudioUnknown;
                 [self.peersInCall insertObject:remoteUser atIndex:0];
 
                 [self.collectionView insertItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:0 inSection:0]]];

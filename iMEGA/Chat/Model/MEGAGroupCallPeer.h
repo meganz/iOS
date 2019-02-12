@@ -1,6 +1,9 @@
 
 #import <Foundation/Foundation.h>
 
+#import "CallPeerAudio.h"
+#import "CallPeerVideo.h"
+
 @class MEGAChatSession;
 
 NS_ASSUME_NONNULL_BEGIN
@@ -9,8 +12,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (assign, nonatomic) uint64_t peerId;
 @property (assign, nonatomic) uint64_t clientId;
-@property (assign, nonatomic) BOOL video;
-@property (assign, nonatomic) BOOL audio;
+@property (assign, nonatomic) CallPeerVideo video;
+@property (assign, nonatomic) CallPeerAudio audio;
 @property (assign, nonatomic) NSUInteger networkQuality;
 
 - (instancetype)initWithSession:(MEGAChatSession *)session;
