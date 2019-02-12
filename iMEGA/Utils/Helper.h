@@ -72,6 +72,8 @@ typedef NS_OPTIONS(NSUInteger, NodesAre) {
 
 #pragma mark - Utils
 
++ (NSString *)memoryStyleStringFromByteCount:(long long)byteCount;
+
 + (unsigned long long)sizeOfFolderAtPath:(NSString *)path;
 + (uint64_t)freeDiskSpace;
 

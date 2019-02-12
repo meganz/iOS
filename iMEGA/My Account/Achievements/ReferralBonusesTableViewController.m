@@ -3,17 +3,16 @@
 
 #import "NSDate+DateTools.h"
 
-#import "UIImageView+MNZCategory.h"
+#import "Helper.h"
 #import "MEGAGetAttrUserRequestDelegate.h"
 #import "MEGASdkManager.h"
 #import "MEGAStore.h"
 #import "MEGAUser+MNZCategory.h"
+#import "UIImageView+MNZCategory.h"
 
 #import "AchievementsTableViewCell.h"
 
 @interface ReferralBonusesTableViewController () <UITableViewDataSource>
-
-@property (nonatomic) NSByteCountFormatter *byteCountFormatter;
 
 @property (nonatomic) NSMutableArray *inviteAchievementsIndexesMutableArray;
 @property (nonatomic) NSMutableArray *inviteAchievementsEmailsMutableArray;
@@ -26,9 +25,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    self.byteCountFormatter = [[NSByteCountFormatter alloc] init];
-    self.byteCountFormatter.countStyle = NSByteCountFormatterCountStyleMemory;
     
     self.navigationItem.title = AMLocalizedString(@"referralBonuses", @"achievement type");
     
@@ -56,10 +52,10 @@
     long long classTransferReward = [self.achievementsDetails rewardTransferByAwardId:awardId];
     
     cell.storageQuotaRewardView.backgroundColor = cell.storageQuotaRewardLabel.backgroundColor = ((classStorageReward == 0) ? [UIColor mnz_grayCCCCCC] : [UIColor mnz_blue2BA6DE]);
-    cell.storageQuotaRewardLabel.text = (classStorageReward == 0) ? @"— GB" : [self.byteCountFormatter stringFromByteCount:classStorageReward];
+    cell.storageQuotaRewardLabel.text = (classStorageReward == 0) ? @"— GB" : [Helper memoryStyleStringFromByteCount:classStorageReward];
     
     cell.transferQuotaRewardView.backgroundColor = cell.transferQuotaRewardLabel.backgroundColor = ((classTransferReward == 0) ? [UIColor mnz_grayCCCCCC] : [UIColor mnz_green31B500]);
-    cell.transferQuotaRewardLabel.text = (classTransferReward == 0) ? @"— GB" : [self.byteCountFormatter stringFromByteCount:classTransferReward];
+    cell.transferQuotaRewardLabel.text = (classTransferReward == 0) ? @"— GB" : [Helper memoryStyleStringFromByteCount:classTransferReward];
 }
 
 #pragma mark - UITableViewDataSource

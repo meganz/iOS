@@ -659,6 +659,17 @@ static MEGAIndexer *indexer;
 
 #pragma mark - Utils
 
++ (NSString *)memoryStyleStringFromByteCount:(long long)byteCount {
+    static NSByteCountFormatter *byteCountFormatter = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        byteCountFormatter = NSByteCountFormatter.alloc.init;
+        byteCountFormatter.countStyle = NSByteCountFormatterCountStyleMemory;
+    });
+    
+    return [byteCountFormatter stringFromByteCount:byteCount];
+}
+
 + (unsigned long long)sizeOfFolderAtPath:(NSString *)path {
     unsigned long long folderSize = 0;
     
@@ -725,6 +736,7 @@ static MEGAIndexer *indexer;
     
     if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
         [[MEGASdkManager sharedMEGASdk] fastLoginWithSession:[SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"]];
+        [[MEGASdkManager sharedMEGAChatSdk] refreshUrls];
     }
 }
 
@@ -773,9 +785,9 @@ static MEGAIndexer *indexer;
 + (NSString *)sizeForNode:(MEGANode *)node api:(MEGASdk *)api {
     NSString *size;
     if ([node isFile]) {
-        size = [NSByteCountFormatter stringFromByteCount:node.size.longLongValue  countStyle:NSByteCountFormatterCountStyleMemory];
+        size = [Helper memoryStyleStringFromByteCount:node.size.longLongValue];
     } else {
-        size = [NSByteCountFormatter stringFromByteCount:[[api sizeForNode:node] longLongValue] countStyle:NSByteCountFormatterCountStyleMemory];
+        size = [Helper memoryStyleStringFromByteCount:[api sizeForNode:node].longLongValue];
     }
     return size;
 }
