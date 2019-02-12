@@ -22,13 +22,13 @@
 }
 
 - (void)startBackgroundUploadIfPossible {
-    if (CameraUploadManager.isBackgroundUploadAllowed && CLLocationManager.authorizationStatus == kCLAuthorizationStatusAuthorizedAlways) {
-        [self.locationManager startMonitoringVisits];
+    if (CameraUploadManager.canBackgroundUploadBeStarted) {
+        [self.locationManager startMonitoringSignificantLocationChanges];
     }
 }
 
 - (void)stopBackgroundUpload {
-    [self.locationManager stopMonitoringVisits];
+    [self.locationManager stopMonitoringSignificantLocationChanges];
 }
 
 #pragma mark - Location manager delegate

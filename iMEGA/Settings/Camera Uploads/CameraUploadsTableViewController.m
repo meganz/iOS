@@ -139,7 +139,7 @@ static const CGFloat TableViewSectionHeaderFooterHiddenHeight = 0.1;
 }
 
 - (void)configBackgroudUploadUI {
-    self.backgroundUploadSwitch.on = CameraUploadManager.isBackgroundUploadAllowed && CLLocationManager.authorizationStatus == kCLAuthorizationStatusAuthorizedAlways;
+    self.backgroundUploadSwitch.on = CameraUploadManager.canBackgroundUploadBeStarted;
 }
 
 #pragma mark - IBActions

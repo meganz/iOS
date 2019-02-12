@@ -3,6 +3,7 @@
 #import "CameraUploadManager.h"
 #import "MEGAConstants.h"
 #import "NSFileManager+MNZCategory.h"
+@import CoreLocation;
 
 static NSString * const IsCameraUploadsEnabledKey = @"IsCameraUploadsEnabled";
 static NSString * const IsVideoUploadsEnabledKey = @"IsUploadVideosEnabled";
@@ -53,11 +54,18 @@ static NSString * const IsLocationBasedBackgroundUploadAllowedKey = @"IsLocation
         if (!previousValue) {
             [self setConvertHEICPhoto:YES];
         }
-        [CameraUploadManager.shared startCameraUploadIfNeeded];
+        [self didEnableCameraUpload];
     } else {
         [self clearCameraSettings];
         [CameraUploadManager.shared stopCameraUpload];
     }
+}
+
++ (void)didEnableCameraUpload {
+    [CameraUploadManager enableBackgroundRefreshIfNeeded];
+    [CameraUploadManager.shared startBackgroundUploadIfPossible];
+    
+    [CameraUploadManager.shared startCameraUploadIfNeeded];
 }
 
 + (BOOL)isVideoUploadEnabled {
@@ -145,6 +153,10 @@ static NSString * const IsLocationBasedBackgroundUploadAllowedKey = @"IsLocation
     } else {
         return NO;
     }
+}
+
++ (BOOL)canBackgroundUploadBeStarted {
+    return CameraUploadManager.isBackgroundUploadAllowed && CLLocationManager.authorizationStatus == kCLAuthorizationStatusAuthorizedAlways && CLLocationManager.significantLocationChangeMonitoringAvailable;
 }
 
 #pragma mark - migrate old settings

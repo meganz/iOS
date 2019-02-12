@@ -23,6 +23,7 @@ typedef NS_ENUM(NSUInteger, CameraUploadVideoQuality) {
 @property (class) CameraUploadVideoQuality HEVCToH264CompressionQuality;
 
 @property (class, readonly) BOOL shouldShowPhotoAndVideoFormat;
+@property (class, readonly) BOOL canBackgroundUploadBeStarted;
 
 + (void)clearLocalSettings;
 

@@ -197,9 +197,7 @@ static const NSTimeInterval LoadMediaInfoTimeoutInSeconds = 120;
     if (!MEGASdkManager.sharedMEGASdk.isLoggedIn || !CameraUploadManager.isCameraUploadEnabled) {
         return;
     }
-    
-    [CameraUploadManager enableBackgroundRefreshIfNeeded];
-    
+
     [self.cameraScanner scanMediaTypes:@[@(PHAssetMediaTypeImage)] completion:^{
         [self.cameraScanner observePhotoLibraryChanges];
         [self requestMediaInfoForUpload];
