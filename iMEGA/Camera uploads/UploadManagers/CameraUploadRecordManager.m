@@ -9,7 +9,8 @@ static const NSUInteger MaximumUploadRetryPerLoginCount = 1000;
 
 @interface CameraUploadRecordManager ()
 
-@property (strong, nonatomic) NSManagedObjectContext *privateQueueContext;
+@property (strong, nonatomic, nullable) NSManagedObjectContext *backgroundContext;
+@property (strong, nonatomic) dispatch_queue_t serialQueue;
 
 @end
 
@@ -28,11 +29,25 @@ static const NSUInteger MaximumUploadRetryPerLoginCount = 1000;
 - (instancetype)init {
     self = [super init];
     if (self) {
-        _privateQueueContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
-        _privateQueueContext.persistentStoreCoordinator = [MEGAStore newStoreCoordinator];
+        _serialQueue = dispatch_queue_create("nz.mega.cameraUpload.uploadRecordManagerSerialQueue", DISPATCH_QUEUE_SERIAL);
     }
     
     return self;
+}
+
+- (NSManagedObjectContext *)backgroundContext {
+    dispatch_sync(self.serialQueue, ^{
+        if (self->_backgroundContext == nil) {
+            self->_backgroundContext = [MEGAStore.shareInstance newBackgroundContext];
+        }
+    });
+    
+    return _backgroundContext;
+}
+
+- (void)resetDataContext {
+    [_backgroundContext reset];
+    _backgroundContext = nil;
 }
 
 #pragma mark - fetch records
@@ -64,11 +79,11 @@ static const NSUInteger MaximumUploadRetryPerLoginCount = 1000;
 - (NSUInteger)pendingUploadRecordsCountByMediaTypes:(NSArray<NSNumber *> *)mediaTypes error:(NSError * _Nullable __autoreleasing *)error {
     __block NSUInteger pendingCount = 0;
     __block NSError *coreDataError = nil;
-    [self.privateQueueContext performBlockAndWait:^{
+    [self.backgroundContext performBlockAndWait:^{
         NSFetchRequest *request = MOAssetUploadRecord.fetchRequest;
         NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(status <> %@) AND (mediaType IN %@)", @(CameraAssetUploadStatusDone), mediaTypes];
         request.predicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[predicate, [self predicateForAssetUploadRecordError]]];
-        pendingCount = [self.privateQueueContext countForFetchRequest:request error:&coreDataError];
+        pendingCount = [self.backgroundContext countForFetchRequest:request error:&coreDataError];
     }];
     
     if (error != NULL) {
@@ -91,8 +106,8 @@ static const NSUInteger MaximumUploadRetryPerLoginCount = 1000;
 - (NSArray<MOAssetUploadRecord *> *)fetchUploadRecordsByFetchRequest:(NSFetchRequest *)request error:(NSError * _Nullable __autoreleasing *)error {
     __block NSArray<MOAssetUploadRecord *> *records = @[];
     __block NSError *coreDataError = nil;
-    [self.privateQueueContext performBlockAndWait:^{
-        records = [self.privateQueueContext executeFetchRequest:request error:&coreDataError];
+    [self.backgroundContext performBlockAndWait:^{
+        records = [self.backgroundContext executeFetchRequest:request error:&coreDataError];
     }];
     
     if (error != NULL) {
@@ -106,8 +121,8 @@ static const NSUInteger MaximumUploadRetryPerLoginCount = 1000;
 
 - (BOOL)saveChangesIfNeededWithError:(NSError *__autoreleasing  _Nullable *)error {
     NSError *coreDataError = nil;
-    if (self.privateQueueContext.hasChanges) {
-        [self.privateQueueContext save:&coreDataError];
+    if (self.backgroundContext.hasChanges) {
+        [self.backgroundContext save:&coreDataError];
     }
     
     if (error != NULL) {
@@ -120,12 +135,12 @@ static const NSUInteger MaximumUploadRetryPerLoginCount = 1000;
 - (BOOL)initialSaveWithAssetFetchResult:(PHFetchResult<PHAsset *> *)result error:(NSError * _Nullable __autoreleasing * _Nullable)error {
     __block NSError *coreDataError = nil;
     if (result.count > 0) {
-        [self.privateQueueContext performBlockAndWait:^{
+        [self.backgroundContext performBlockAndWait:^{
             for (PHAsset *asset in result) {
                 [self createUploadRecordFromAsset:asset];
             }
             
-            [self.privateQueueContext save:&coreDataError];
+            [self.backgroundContext save:&coreDataError];
         }];
     }
     
@@ -139,14 +154,14 @@ static const NSUInteger MaximumUploadRetryPerLoginCount = 1000;
 - (BOOL)saveAssets:(NSArray<PHAsset *> *)assets error:(NSError * _Nullable __autoreleasing * _Nullable)error {
     __block NSError *coreDataError = nil;
     if (assets.count > 0) {
-        [self.privateQueueContext performBlockAndWait:^{
+        [self.backgroundContext performBlockAndWait:^{
             for (PHAsset *asset in assets) {
                 if ([self fetchUploadRecordsByLocalIdentifier:asset.localIdentifier shouldPrefetchErrorRecords:NO error:nil].count == 0) {
                     [self createUploadRecordFromAsset:asset];
                 }
             }
             
-            [self.privateQueueContext save:&coreDataError];
+            [self.backgroundContext save:&coreDataError];
         }];
     }
     
@@ -160,10 +175,10 @@ static const NSUInteger MaximumUploadRetryPerLoginCount = 1000;
 - (BOOL)saveAsset:(PHAsset *)asset mediaSubtypedLocalIdentifier:(NSString *)identifier error:(NSError * _Nullable __autoreleasing * _Nullable)error {
     if ([self fetchUploadRecordsByLocalIdentifier:identifier shouldPrefetchErrorRecords:NO error:nil].count == 0) {
         __block NSError *coreDataError = nil;
-        [self.privateQueueContext performBlockAndWait:^{
+        [self.backgroundContext performBlockAndWait:^{
             MOAssetUploadRecord *record = [self createUploadRecordFromAsset:asset];
             record.localIdentifier = identifier;
-            [self.privateQueueContext save:&coreDataError];
+            [self.backgroundContext save:&coreDataError];
         }];
         
         if (error != NULL) {
@@ -194,7 +209,7 @@ static const NSUInteger MaximumUploadRetryPerLoginCount = 1000;
 
 - (BOOL)updateUploadRecord:(MOAssetUploadRecord *)record withStatus:(CameraAssetUploadStatus)status error:(NSError *__autoreleasing  _Nullable *)error {
     __block NSError *coreDataError = nil;
-    [self.privateQueueContext performBlockAndWait:^{
+    [self.backgroundContext performBlockAndWait:^{
         record.status = @(status);
         if (status == CameraAssetUploadStatusFailed) {
             if (record.errorPerLaunch == nil) {
@@ -209,16 +224,16 @@ static const NSUInteger MaximumUploadRetryPerLoginCount = 1000;
         } else if (status == CameraAssetUploadStatusDone) {
             MOAssetUploadErrorPerLaunch *errorPerLaunch = [record errorPerLaunch];
             if (errorPerLaunch) {
-                [self.privateQueueContext deleteObject:errorPerLaunch];
+                [self.backgroundContext deleteObject:errorPerLaunch];
             }
             
             MOAssetUploadErrorPerLogin *errorPerLogin = [record errorPerLogin];
             if (errorPerLogin) {
-                [self.privateQueueContext deleteObject:errorPerLogin];
+                [self.backgroundContext deleteObject:errorPerLogin];
             }
         }
         
-        [self.privateQueueContext save:&coreDataError];
+        [self.backgroundContext save:&coreDataError];
     }];
     
     if (error != NULL) {
@@ -232,10 +247,10 @@ static const NSUInteger MaximumUploadRetryPerLoginCount = 1000;
 
 - (BOOL)deleteAllUploadRecordsWithError:(NSError * _Nullable __autoreleasing * _Nullable)error {
     __block NSError *coreDataError = nil;
-    [self.privateQueueContext performBlockAndWait:^{
+    [self.backgroundContext performBlockAndWait:^{
         NSFetchRequest *request = MOAssetUploadRecord.fetchRequest;
         NSBatchDeleteRequest *deleteRequest = [[NSBatchDeleteRequest alloc] initWithFetchRequest:request];
-        [self.privateQueueContext executeRequest:deleteRequest error:&coreDataError];
+        [self.backgroundContext executeRequest:deleteRequest error:&coreDataError];
     }];
     
     if (error != NULL) {
@@ -247,9 +262,9 @@ static const NSUInteger MaximumUploadRetryPerLoginCount = 1000;
 
 - (BOOL)deleteUploadRecord:(MOAssetUploadRecord *)record error:(NSError * _Nullable __autoreleasing * _Nullable)error {
     __block NSError *coreDataError = nil;
-    [self.privateQueueContext performBlockAndWait:^{
-        [self.privateQueueContext deleteObject:record];
-        [self.privateQueueContext save:&coreDataError];
+    [self.backgroundContext performBlockAndWait:^{
+        [self.backgroundContext deleteObject:record];
+        [self.backgroundContext save:&coreDataError];
     }];
     
     if (error != NULL) {
@@ -262,11 +277,11 @@ static const NSUInteger MaximumUploadRetryPerLoginCount = 1000;
 - (BOOL)deleteUploadRecordsByLocalIdentifiers:(NSArray<NSString *> *)identifiers error:(NSError * _Nullable __autoreleasing * _Nullable)error {
     __block NSError *coreDataError = nil;
     if (identifiers.count > 0) {
-        [self.privateQueueContext performBlockAndWait:^{
+        [self.backgroundContext performBlockAndWait:^{
             NSFetchRequest *request = MOAssetUploadRecord.fetchRequest;
             request.predicate = [NSPredicate predicateWithFormat:@"localIdentifier IN %@", identifiers];
             NSBatchDeleteRequest *deleteRequest = [[NSBatchDeleteRequest alloc] initWithFetchRequest:request];
-            [self.privateQueueContext executeRequest:deleteRequest error:&coreDataError];
+            [self.backgroundContext executeRequest:deleteRequest error:&coreDataError];
             
         }];
     }
@@ -282,10 +297,10 @@ static const NSUInteger MaximumUploadRetryPerLoginCount = 1000;
 
 - (BOOL)deleteAllErrorRecordsPerLaunchWithError:(NSError * _Nullable __autoreleasing * _Nullable)error {
     __block NSError *coreDataError = nil;
-    [self.privateQueueContext performBlockAndWait:^{
+    [self.backgroundContext performBlockAndWait:^{
         NSFetchRequest *request = MOAssetUploadErrorPerLaunch.fetchRequest;
         NSBatchDeleteRequest *deleteRequest = [[NSBatchDeleteRequest alloc] initWithFetchRequest:request];
-        [self.privateQueueContext executeRequest:deleteRequest error:&coreDataError];
+        [self.backgroundContext executeRequest:deleteRequest error:&coreDataError];
     }];
     
     if (error != NULL) {
@@ -302,7 +317,7 @@ static const NSUInteger MaximumUploadRetryPerLoginCount = 1000;
         return nil;
     }
     
-    MOAssetUploadRecord *record = [NSEntityDescription insertNewObjectForEntityForName:@"AssetUploadRecord" inManagedObjectContext:self.privateQueueContext];
+    MOAssetUploadRecord *record = [NSEntityDescription insertNewObjectForEntityForName:@"AssetUploadRecord" inManagedObjectContext:self.backgroundContext];
     record.localIdentifier = asset.localIdentifier;
     record.status = @(CameraAssetUploadStatusNotStarted);
     record.creationDate = asset.creationDate;
@@ -312,14 +327,14 @@ static const NSUInteger MaximumUploadRetryPerLoginCount = 1000;
 }
 
 - (MOAssetUploadErrorPerLaunch *)createErrorRecordPerLaunchForLocalIdentifier:(NSString *)identifier {
-    MOAssetUploadErrorPerLaunch *errorPerLaunch = [NSEntityDescription insertNewObjectForEntityForName:@"AssetUploadErrorPerLaunch" inManagedObjectContext:self.privateQueueContext];
+    MOAssetUploadErrorPerLaunch *errorPerLaunch = [NSEntityDescription insertNewObjectForEntityForName:@"AssetUploadErrorPerLaunch" inManagedObjectContext:self.backgroundContext];
     errorPerLaunch.localIdentifier = identifier;
     errorPerLaunch.errorCount = @(0);
     return errorPerLaunch;
 }
 
 - (MOAssetUploadErrorPerLogin *)createErrorRecordPerLoginForLocalIdentifier:(NSString *)identifier {
-    MOAssetUploadErrorPerLogin *errorPerLogin = [NSEntityDescription insertNewObjectForEntityForName:@"AssetUploadErrorPerLogin" inManagedObjectContext:self.privateQueueContext];
+    MOAssetUploadErrorPerLogin *errorPerLogin = [NSEntityDescription insertNewObjectForEntityForName:@"AssetUploadErrorPerLogin" inManagedObjectContext:self.backgroundContext];
     errorPerLogin.localIdentifier = identifier;
     errorPerLogin.errorCount = @(0);
     return errorPerLogin;

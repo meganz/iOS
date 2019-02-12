@@ -6,7 +6,7 @@
 
 @interface CameraUploadFileNameRecordManager ()
 
-@property (strong, nonatomic) NSManagedObjectContext *privateQueueContext;
+@property (strong, nonatomic, nullable) NSManagedObjectContext *backgroundContext;
 @property (strong, nonatomic) dispatch_queue_t serialQueue;
 
 @end
@@ -26,12 +26,23 @@
 - (instancetype)init {
     self = [super init];
     if (self) {
-        _privateQueueContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
-        _privateQueueContext.persistentStoreCoordinator = [MEGAStore newStoreCoordinator];
         _serialQueue = dispatch_queue_create("nz.mega.cameraUpload.fileNameManagerSerialQueue", DISPATCH_QUEUE_SERIAL);
     }
     
     return self;
+}
+
+- (NSManagedObjectContext *)backgroundContext {
+    if (_backgroundContext == nil) {
+        _backgroundContext = [MEGAStore.shareInstance newBackgroundContext];
+    }
+    
+    return _backgroundContext;
+}
+
+- (void)resetDataContext {
+    [_backgroundContext reset];
+    _backgroundContext = nil;
 }
 
 - (NSString *)localUniqueFileNameForAssetLocalIdentifier:(NSString *)identifier proposedFileName:(NSString *)proposedFileName {
@@ -88,10 +99,10 @@
 - (MOAssetUploadFileNameRecord *)fetchLocalFileNameRecordByAssetLocalIdentifier:(NSString *)identifier error:(NSError * _Nullable __autoreleasing * _Nullable)error {
     __block MOAssetUploadFileNameRecord *fileNameRecord = nil;
     __block NSError *coreDataError = nil;
-    [self.privateQueueContext performBlockAndWait:^{
+    [self.backgroundContext performBlockAndWait:^{
         NSFetchRequest *request = MOAssetUploadFileNameRecord.fetchRequest;
         request.predicate = [NSPredicate predicateWithFormat:@"localIdentifier == %@", identifier];
-        fileNameRecord = [[self.privateQueueContext executeFetchRequest:request error:&coreDataError] firstObject];
+        fileNameRecord = [[self.backgroundContext executeFetchRequest:request error:&coreDataError] firstObject];
     }];
     
     if (error != NULL) {
@@ -104,10 +115,10 @@
 - (NSArray<MOAssetUploadFileNameRecord *> *)searchLocalFileNamesByProposedFileName:(NSString *)proposedFileName error:(NSError * _Nullable __autoreleasing * _Nullable)error {
     __block NSArray<MOAssetUploadFileNameRecord *> *fileNameRecords = [NSArray array];
     __block NSError *coreDataError = nil;
-    [self.privateQueueContext performBlockAndWait:^{
+    [self.backgroundContext performBlockAndWait:^{
         NSFetchRequest *request = MOAssetUploadFileNameRecord.fetchRequest;
         request.predicate = [NSPredicate predicateWithFormat:@"localUniqueFileName BEGINSWITH[cd] %@", proposedFileName];
-        fileNameRecords = [self.privateQueueContext executeFetchRequest:request error:&coreDataError];
+        fileNameRecords = [self.backgroundContext executeFetchRequest:request error:&coreDataError];
     }];
     
     if (error != NULL) {
@@ -121,17 +132,17 @@
 
 - (BOOL)saveLocalUniqueFileName:(NSString *)localUniqueFileName forAssetLocalIdentifier:(NSString *)identifier error:(NSError * _Nullable __autoreleasing * _Nullable)error {
     __block NSError *coreDataError = nil;
-    [self.privateQueueContext performBlockAndWait:^{
+    [self.backgroundContext performBlockAndWait:^{
         MOAssetUploadFileNameRecord *record = [self fetchLocalFileNameRecordByAssetLocalIdentifier:identifier error:&coreDataError];
         if (record == nil) {
-            record = [NSEntityDescription insertNewObjectForEntityForName:@"AssetUploadFileNameRecord" inManagedObjectContext:self.privateQueueContext];
+            record = [NSEntityDescription insertNewObjectForEntityForName:@"AssetUploadFileNameRecord" inManagedObjectContext:self.backgroundContext];
             record.localUniqueFileName = localUniqueFileName;
             record.localIdentifier = identifier;
         } else {
             record.localUniqueFileName = localUniqueFileName;
         }
         
-        [self.privateQueueContext save:&coreDataError];
+        [self.backgroundContext save:&coreDataError];
     }];
     
     if (error != NULL) {

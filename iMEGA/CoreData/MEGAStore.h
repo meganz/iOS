@@ -12,9 +12,11 @@
 
 @interface MEGAStore : NSObject
 
-#pragma mark - Properties
+#pragma mark - managed object contexts
 
-@property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
+@property (readonly) NSManagedObjectContext *viewContext;
+
+- (NSManagedObjectContext *)newBackgroundContext;
 
 #pragma mark - Singleton Lifecycle
 
@@ -23,8 +25,7 @@
 #pragma mark - Configure
 
 - (void)configureMEGAStore;
-
-+ (NSPersistentStoreCoordinator *)newStoreCoordinator;
+- (void)deleteStoreStack;
 
 #pragma mark - MOOfflineNode entity
 

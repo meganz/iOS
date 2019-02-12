@@ -7,6 +7,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (instancetype)shared;
 
+- (void)resetDataContext;
+
 /**
  Generate a local unique file name for a given asset local identifier and proposed file name. Under the hood, we have a serial queue to handle fetchfing local upload file name records from local core data db, generating local unique file name base on a binary search algorithm, and saving the new local unique file name to local core data db.
  

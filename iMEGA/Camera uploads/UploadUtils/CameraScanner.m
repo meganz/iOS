@@ -37,6 +37,9 @@
         fetchOptions.predicate = [NSPredicate predicateWithFormat:@"mediaType IN %@", mediaTypes];
         self.fetchResult = [PHAsset fetchAssetsWithOptions:fetchOptions];
         if (self.fetchResult.count == 0) {
+            if (completion) {
+                completion();
+            }
             return;
         }
         

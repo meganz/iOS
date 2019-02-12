@@ -18,6 +18,8 @@
 #import "MediaInfoLoader.h"
 #import "DiskSpaceDetector.h"
 #import "MEGAReachabilityManager.h"
+#import "CameraUploadFileNameRecordManager.h"
+#import "MEGAStore.h"
 
 static NSString * const CameraUploadsNodeHandle = @"CameraUploadsNodeHandle";
 static NSString * const CameraUplodFolderName = @"Camera Uploads";
@@ -92,8 +94,6 @@ static const NSTimeInterval LoadMediaInfoTimeoutInSeconds = 120;
     
     [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(startCameraUploadIfNeeded) name:kReachabilityChangedNotification object:nil];
 }
-
-#pragma mark - configuration when app launches
 
 - (void)configCameraUploadWhenAppLaunches {
     [CameraUploadManager disableCameraUploadIfAccessProhibited];
@@ -357,6 +357,8 @@ static const NSTimeInterval LoadMediaInfoTimeoutInSeconds = 120;
     CameraUploadManager.cameraUploadEnabled = NO;
     [NSFileManager.defaultManager removeItemIfExistsAtURL:NSURL.mnz_cameraUploadURL];
     [CameraUploadManager clearLocalSettings];
+    [CameraUploadRecordManager.shared resetDataContext];
+    [CameraUploadFileNameRecordManager.shared resetDataContext];
 }
 
 - (void)stopCameraUpload {

@@ -1,15 +1,21 @@
 
 #import "MEGAStore.h"
-
 #import "NSString+MNZCategory.h"
 
-@implementation MEGAStore
+@interface MEGAStore ()
 
-static MEGAStore *_megaStore = nil;
+@property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
+@property (strong, nonatomic) NSPersistentStoreCoordinator *storeCoordinator;
+@property (strong, nonatomic) NSPersistentContainer *persistentContainer;
+
+@end
+
+@implementation MEGAStore
 
 #pragma mark - Singleton Lifecycle
 
 + (MEGAStore *)shareInstance {
+    static MEGAStore *_megaStore = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         _megaStore = [[self alloc] init];
@@ -26,7 +32,46 @@ static MEGAStore *_megaStore = nil;
     return self;
 }
 
-+ (NSPersistentStoreCoordinator *)newStoreCoordinator {
+#pragma mark - Core data stack
+
+- (void)configureMEGAStore {
+    if (@available(iOS 10.0, *)) {
+        _persistentContainer = [self newPersistentContainer];
+    } else {
+        _storeCoordinator = [self newStoreCoordinatorForiOSBelow10];
+    }
+}
+
+- (NSPersistentContainer *)persistentContainer {
+    if (_persistentContainer == nil) {
+        _persistentContainer = [self newPersistentContainer];
+    }
+    
+    return _persistentContainer;
+}
+
+- (NSPersistentStoreCoordinator *)storeCoordinator {
+    if (_storeCoordinator == nil) {
+        _storeCoordinator = [self newStoreCoordinatorForiOSBelow10];
+    }
+    
+    return _storeCoordinator;
+}
+
+- (NSPersistentContainer *)newPersistentContainer {
+    NSPersistentContainer *container = [NSPersistentContainer persistentContainerWithName:@"MEGACD"];
+    NSPersistentStoreDescription *storeDescription = [NSPersistentStoreDescription persistentStoreDescriptionWithURL:[self storeURL]];
+    container.persistentStoreDescriptions = @[storeDescription];
+    [container loadPersistentStoresWithCompletionHandler:^(NSPersistentStoreDescription * _Nonnull storeDescription, NSError * _Nullable error) {
+        if (error) {
+            MEGALogError(@"error when to create core data stack %@", error);
+            abort();
+        }
+    }];
+    return container;
+}
+
+- (NSPersistentStoreCoordinator *)newStoreCoordinatorForiOSBelow10 {
     NSManagedObjectModel *model = [NSManagedObjectModel mergedModelFromBundles:nil];
     NSURL *storeURL = [self storeURL];
     
@@ -43,15 +88,34 @@ static MEGAStore *_megaStore = nil;
     return coordinator;
 }
 
-- (void)configureMEGAStore {
-    NSPersistentStoreCoordinator *coordinator = [MEGAStore newStoreCoordinator];
-    if (coordinator != nil) {
-        _managedObjectContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSMainQueueConcurrencyType];
-        [_managedObjectContext setPersistentStoreCoordinator:coordinator];
+- (NSManagedObjectContext *)managedObjectContext {
+    return self.viewContext;
+}
+
+- (NSManagedObjectContext *)viewContext {
+    if (@available(iOS 10.0, *)) {
+        return self.persistentContainer.viewContext;
+    } else {
+        if (_managedObjectContext == nil) {
+            _managedObjectContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSMainQueueConcurrencyType];
+            _managedObjectContext.persistentStoreCoordinator = self.storeCoordinator;
+        }
+        
+        return _managedObjectContext;
     }
 }
 
-+ (NSURL *)storeURL {
+- (NSManagedObjectContext *)newBackgroundContext {
+    if (@available(iOS 10.0, *)) {
+        return self.persistentContainer.newBackgroundContext;
+    } else {
+        NSManagedObjectContext *context = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
+        context.persistentStoreCoordinator = self.storeCoordinator;
+        return context;
+    }
+}
+
+- (NSURL *)storeURL {
     NSString *dbName = @"MEGACD.sqlite";
     NSError *error;
     NSFileManager *fileManager = NSFileManager.defaultManager;
@@ -74,6 +138,26 @@ static MEGAStore *_megaStore = nil;
     }
     
     return newStoreURL;
+}
+
+- (void)deleteStoreStack {
+    NSPersistentStoreCoordinator *coordinator;
+    if (@available(iOS 10.0, *)) {
+        coordinator = self.persistentContainer.persistentStoreCoordinator;
+    } else {
+        coordinator = self.storeCoordinator;
+    }
+    
+    [self.managedObjectContext reset];
+    
+    NSError *error;
+    [coordinator destroyPersistentStoreAtURL:[self storeURL] withType:NSSQLiteStoreType options:nil error:&error];
+    if (@available(iOS 10.0, *)) {
+        _persistentContainer = nil;
+    } else {
+        _managedObjectContext = nil;
+        _storeCoordinator = nil;
+    }
 }
 
 - (void)saveContext {
