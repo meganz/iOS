@@ -26,10 +26,17 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)startCameraUploadIfNeeded;
 - (void)startVideoUploadIfNeeded;
 
+- (void)uploadNextAssetWithMediaType:(PHAssetMediaType)mediaType;
+
+#pragma mark - stop upload
+
 - (void)stopCameraUpload;
 - (void)stopVideoUpload;
 
-- (void)uploadNextAssetWithMediaType:(PHAssetMediaType)mediaType;
+#pragma mark - pause and resume upload
+
+- (void)pauseCameraUpload;
+- (void)resumeCameraUpload;
 
 #pragma mark - background refresh
 

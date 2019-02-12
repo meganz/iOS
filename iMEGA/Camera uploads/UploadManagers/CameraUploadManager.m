@@ -376,6 +376,18 @@ static const NSTimeInterval LoadMediaInfoTimeoutInSeconds = 120;
     [TransferSessionManager.shared invalidateAndCancelVideoSessions];
 }
 
+#pragma mark - pause and resume upload
+
+- (void)pauseCameraUpload {
+    self.pausePhotoUpload = YES;
+    self.pauseVideoUpload = YES;
+}
+
+- (void)resumeCameraUpload {
+    self.pausePhotoUpload = NO;
+    self.pauseVideoUpload = NO;
+}
+
 #pragma mark - upload status
 
 - (NSUInteger)uploadPendingItemsCount {
