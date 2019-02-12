@@ -30,7 +30,7 @@ static const NSInteger PhotoUploadInMemoryWarningConcurrentCount = 2;
 
 static const NSInteger VideoUploadConcurrentCount = 1;
 
-static const NSTimeInterval MinimumBackgroundRefreshInterval = 3600 * 2;
+static const NSTimeInterval MinimumBackgroundRefreshInterval = 3600;
 static const NSTimeInterval BackgroundRefreshDuration = 25;
 static const NSTimeInterval LoadMediaInfoTimeoutInSeconds = 120;
 
