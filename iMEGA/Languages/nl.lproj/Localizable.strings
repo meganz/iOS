@@ -1673,7 +1673,7 @@
 /* New server-side rubbish-bin cleaning scheduler description (for PRO users) */
 "The Rubbish Bin can be cleaned for you automatically. The minimum period is 7 days."="De Prullenbak kan automatisch voor u worden gewist. De minimale periode is 7 dagen.";
 /* Description shown when you try to disable the feature Rubbish-Bin Cleaning Scheduler and you are a free user */
-"To disable the Rubbish-Bin Cleaning Scheduler or set a longer retention period, you need to subscribe to a PRO plan."="Om de planner van de Prullenbak uit te schakelen of een langere bewaar periode in te stellen, is het nodig om u in te schrijven voor een PRO abonnement";
+"To disable the Rubbish-Bin Cleaning Scheduler or set a longer retention period, you need to subscribe to a PRO plan."="Om het Wis Schema van de Prullenbak uit te schakelen of een langer bewaarperiode in te stellen, zal u een PRO abonnement nodig hebben.";
 /* Confirmation dialog for the button that logs the user out of all sessions except the current one. */
 "Do you want to close all other sessions? This will log you out on all other active sessions except the current one."="Wilt u alle andere sessies sluiten? Dit logt u uit op alle andere actieve sessies behalve de huidige sessie.";
 /* Message to inform the local user that someone has joined the current group call */

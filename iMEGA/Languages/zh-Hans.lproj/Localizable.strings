@@ -1673,7 +1673,7 @@
 /* New server-side rubbish-bin cleaning scheduler description (for PRO users) */
 "The Rubbish Bin can be cleaned for you automatically. The minimum period is 7 days."="垃圾箱可以自动清洁。最短期限为7天。";
 /* Description shown when you try to disable the feature Rubbish-Bin Cleaning Scheduler and you are a free user */
-"To disable the Rubbish-Bin Cleaning Scheduler or set a longer retention period, you need to subscribe to a PRO plan."="想要禁用垃圾箱清空计划或设置延长保留期，您需要订阅PRO计划。";
+"To disable the Rubbish-Bin Cleaning Scheduler or set a longer retention period, you need to subscribe to a PRO plan."="如果您想要禁用垃圾桶定时清理或设置延长保留期限，您需要订阅PRO计划。";
 /* Confirmation dialog for the button that logs the user out of all sessions except the current one. */
 "Do you want to close all other sessions? This will log you out on all other active sessions except the current one."="是否关闭所有其他会话？这会将您注销到除当前会话之外的所有其他活动会话。";
 /* Message to inform the local user that someone has joined the current group call */
@@ -1785,9 +1785,9 @@
 /* The professional pricing plan which the user is currently on will expire in 5 days. The %1 is a placeholder for the number of days and should not be removed. */
 "Your PRO membership plan will expire in %1 days."="您的专业版会员计划将在%1天内到期";
 /* The professional pricing plan which the user was on expired one day ago. */
-"Your PRO membership plan expired 1 day ago"="您的PRO会员计划于1天前已到期";
+"Your PRO membership plan expired 1 day ago"="您的PRO计划于1天前已到期";
 /* The professional pricing plan which the user was on expired %1 days ago. The %1 is a placeholder for the number of days and should not be removed. */
-"Your PRO membership plan expired %1 days ago"="您的PRO会员计划于%1天前已到期";
+"Your PRO membership plan expired %1 days ago"="您的PRO计划于%1天前已到期";
 /* The text of a notification indicating that a file or folder has been taken down due to infringement or other reason. The %1 placeholder will be replaced with the text ‘file’ or ‘folder’. The %2 will be replaced with the name of the file or folder. */
 "Your publicly shared %1 (%2) has been taken down."="您公开分享的%1 (%2) 已被移除。";
 /* The text of a notification indicating that a file or folder that was taken down has now been restored due to a successful counter-notice. The %1 placeholder will be replaced with the text ‘file’ or ‘folder’. The %2 will be replaced with the name of the file or folder. */

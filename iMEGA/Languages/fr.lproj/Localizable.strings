@@ -645,7 +645,7 @@
 /* Title of one of the Settings sections where you can see your MEGA 'Rubbish Bin' */
 "rubbishBinLabel"="Corbeille";
 /* Title of one of the Settings sections where you can configure 'Advanced' options */
-"advanced"="Avancé";
+"advanced"="Paramètres avancés";
 /* Title of one of the Settings sections where you can configure "Security Options" of your MEGA account */
 "securityOptions"="Options de sécurité";
 /* Title of one of the Settings sections where you can see things 'About' the app */
