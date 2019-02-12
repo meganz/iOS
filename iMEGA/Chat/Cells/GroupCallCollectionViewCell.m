@@ -29,7 +29,7 @@
     
     if (peer.peerId == 0) {
         [self.avatarImageView mnz_setImageForUserHandle:[MEGASdkManager sharedMEGAChatSdk].myUserHandle];
-        if (peer.video) {
+        if (peer.video == CallPeerVideoOn) {
             if (self.videoImageView.hidden) {
                 [self addLocalVideoInChat:chatId];
             }
@@ -40,7 +40,7 @@
         }
     } else {
         [self.avatarImageView mnz_setImageForUserHandle:peer.peerId];
-        if (peer.video) {
+        if (peer.video == CallPeerVideoOn) {
             if (self.videoImageView.hidden) {
                 [self addRemoteVideoForPeer:peer inChat:chatId];
             }
@@ -100,8 +100,8 @@
     MEGALogDebug(@"GROUPCALLCELLVIDEO add remote video for peer %llu in client %llu", peer.peerId, peer.clientId);
 }
 
-- (void)configureUserAudio:(BOOL)audio {
-    self.userMutedImageView.hidden = audio;
+- (void)configureUserAudio:(CallPeerAudio)audio {
+    self.userMutedImageView.hidden = audio != CallPeerAudioOff;
 }
 
 - (void)showUserOnFocus {
