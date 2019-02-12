@@ -19,9 +19,7 @@ static MEGALogger *_megaLogger = nil;
 
 - (void)startLogging {
     NSString *logFilePath = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"MEGAiOS.log"];
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-        [self startLoggingToFile:logFilePath];
-    });
+    [self startLoggingToFile:logFilePath];
 }
 
 - (void)startLoggingToFile:(NSString *)logFilePath {
