@@ -1785,7 +1785,7 @@
 /* The professional pricing plan which the user is currently on will expire in 5 days. The %1 is a placeholder for the number of days and should not be removed. */
 "Your PRO membership plan will expire in %1 days."="Plan PRO wygaśnie za %1 dni.";
 /* The professional pricing plan which the user was on expired one day ago. */
-"Your PRO membership plan expired 1 day ago"="Twój abonament PRO wygasł 1 dzień temu";
+"Your PRO membership plan expired 1 day ago"="Twój plan PRO wygasł 1 dzień temu";
 /* The professional pricing plan which the user was on expired %1 days ago. The %1 is a placeholder for the number of days and should not be removed. */
 "Your PRO membership plan expired %1 days ago"="Twój plan PRO wygasł %1 dni temu";
 /* The text of a notification indicating that a file or folder has been taken down due to infringement or other reason. The %1 placeholder will be replaced with the text ‘file’ or ‘folder’. The %2 will be replaced with the name of the file or folder. */
