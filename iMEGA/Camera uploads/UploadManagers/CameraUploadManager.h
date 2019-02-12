@@ -15,11 +15,11 @@ NS_ASSUME_NONNULL_BEGIN
 @property (readonly) BOOL isCameraUploadPausedByDiskFull;
 
 /**
- @return a singleton camera upload manager instance
+ @return a shared camera upload manager instance
  */
 + (instancetype)shared;
 
-#pragma mark - camera upload management
+#pragma mark - start upload
 
 - (void)configCameraUploadWhenAppLaunches;
 

@@ -19,7 +19,6 @@
 #import "DiskSpaceDetector.h"
 #import "MEGAReachabilityManager.h"
 #import "CameraUploadFileNameRecordManager.h"
-#import "MEGAStore.h"
 
 static NSString * const CameraUploadsNodeHandle = @"CameraUploadsNodeHandle";
 static NSString * const CameraUplodFolderName = @"Camera Uploads";
@@ -192,7 +191,7 @@ static const NSTimeInterval LoadMediaInfoTimeoutInSeconds = 120;
     return self.isVideoUploadPaused && self.diskSpaceDetector.isDiskFullForVideos;
 }
 
-#pragma mark - camera upload management
+#pragma mark - start upload
 
 - (void)startCameraUploadIfNeeded {
     if (!MEGASdkManager.sharedMEGASdk.isLoggedIn || !CameraUploadManager.isCameraUploadEnabled) {
