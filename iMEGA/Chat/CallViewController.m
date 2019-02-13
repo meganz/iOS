@@ -214,6 +214,7 @@
     }
     
     MEGAChatSession *chatSession = [self.call sessionForPeer:[self.call.sessionsPeerId megaHandleAtIndex:0] clientId:[self.call.sessionsClientId megaHandleAtIndex:0]];
+
     if (viewWillChangeOrientation && self.call.hasLocalVideo && chatSession.hasVideo) {
         [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
             [self.localVideoImageView rotate];
@@ -539,6 +540,7 @@
             
             if ([call hasChangedForType:MEGAChatCallChangeTypeRemoteAVFlags]) {
                 MEGAChatSession *chatSession = [self.call sessionForPeer:self.call.peerSessionStatusChange clientId:self.call.clientSessionStatusChange];
+
                 self.localVideoImageView.userInteractionEnabled = chatSession.hasVideo;
                 if (chatSession.hasVideo) {
                     if (self.remoteVideoImageView.hidden) {
