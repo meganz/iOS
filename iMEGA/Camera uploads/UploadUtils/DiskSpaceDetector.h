@@ -8,7 +8,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, readonly, getter=isDiskFullForPhotos) BOOL diskIsFullForPhotos;
 @property (nonatomic, readonly, getter=isDiskFullForVideos) BOOL diskIsFullForVideos;
 
-- (void)startDetectingPhotoUploadDetection;
+- (void)startDetectingPhotoUpload;
 - (void)startDetectingVideoUpload;
 
 - (void)stopDetectingPhotoUpload;

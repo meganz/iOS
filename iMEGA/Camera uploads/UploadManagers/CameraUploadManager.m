@@ -37,6 +37,7 @@ static const NSTimeInterval LoadMediaInfoTimeoutInSeconds = 120;
 @interface CameraUploadManager ()
 
 @property (nonatomic) BOOL isNodesFetchDone;
+@property (nonatomic) StorageState storageState;
 @property (strong, nonatomic) NSOperationQueue *photoUploadOperationQueue;
 @property (strong, nonatomic) NSOperationQueue *videoUploadOperationQueue;
 @property (strong, readwrite, nonatomic) MEGANode *cameraUploadNode;
@@ -85,13 +86,19 @@ static const NSTimeInterval LoadMediaInfoTimeoutInSeconds = 120;
 
 - (void)registerNotifications {
     [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(applicationDidEnterBackground) name:UIApplicationDidEnterBackgroundNotification object:nil];
+    
     [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(applicationDidBecomeActive) name:UIApplicationDidBecomeActiveNotification object:nil];
+    
     [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(applicationDidReceiveMemoryWarning) name:UIApplicationDidReceiveMemoryWarningNotification object:nil];
     
-    [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(resetCameraUpload) name:MEGALogoutNotificationName object:nil];
-    [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(nodesFetchDoneNotification) name:MEGANodesFetchDoneNotificationName object:nil];
+    [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(logoutCameraUpload) name:MEGALogoutNotificationName object:nil];
+    [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(didReceiveNodesFetchDoneNotification) name:MEGANodesFetchDoneNotificationName object:nil];
     
     [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(startCameraUploadIfNeeded) name:kReachabilityChangedNotification object:nil];
+    
+    [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(pauseCameraUploadIfNeeded) name:MEGAStorageOverQuotaNotificationName object:nil];
+    
+    [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(didReceiveStorageEventNotification:) name:MEGAStorageEventNotificationName object:nil];
 }
 
 - (void)configCameraUploadWhenAppLaunches {
@@ -241,7 +248,7 @@ static const NSTimeInterval LoadMediaInfoTimeoutInSeconds = 120;
         return;
     }
     
-    [self.diskSpaceDetector startDetectingPhotoUploadDetection];
+    [self.diskSpaceDetector startDetectingPhotoUpload];
     
     if (self.photoUploadOperationQueue.operationCount < PhotoUploadInForegroundConcurrentCount) {
         [self uploadNextAssetsWithNumber:PhotoUploadInForegroundConcurrentCount mediaType:PHAssetMediaTypeImage];
@@ -340,28 +347,23 @@ static const NSTimeInterval LoadMediaInfoTimeoutInSeconds = 120;
     }
 }
 
-#pragma mark - nodes fetch done notification
-
-- (void)nodesFetchDoneNotification {
-    self.isNodesFetchDone = YES;
-    [self startCameraUploadIfNeeded];
-    [AttributeUploadManager.shared scanLocalAttributeFilesAndRetryUploadIfNeeded];
-}
-
 #pragma mark - stop upload
 
-- (void)resetCameraUpload {
+- (void)logoutCameraUpload {
     CameraUploadManager.cameraUploadEnabled = NO;
     [NSFileManager.defaultManager removeItemIfExistsAtURL:NSURL.mnz_cameraUploadURL];
     [CameraUploadManager clearLocalSettings];
     [CameraUploadRecordManager.shared resetDataContext];
     [CameraUploadFileNameRecordManager.shared resetDataContext];
+    _isNodesFetchDone = NO;
 }
 
 - (void)stopCameraUpload {
     [self stopVideoUpload];
     [self.photoUploadOperationQueue cancelAllOperations];
     [self.diskSpaceDetector stopDetectingPhotoUpload];
+    _pausePhotoUpload = NO;
+    _storageState = StorageStateGreen;
     [TransferSessionManager.shared invalidateAndCancelPhotoSessions];
     [self.cameraScanner unobservePhotoLibraryChanges];
     [CameraUploadManager disableBackgroundRefresh];
@@ -371,14 +373,17 @@ static const NSTimeInterval LoadMediaInfoTimeoutInSeconds = 120;
 - (void)stopVideoUpload {
     [self.videoUploadOperationQueue cancelAllOperations];
     [self.diskSpaceDetector stopDetectingVideoUpload];
+    _pauseVideoUpload = NO;
     [TransferSessionManager.shared invalidateAndCancelVideoSessions];
 }
 
 #pragma mark - pause and resume upload
 
-- (void)pauseCameraUpload {
-    self.pausePhotoUpload = YES;
-    self.pauseVideoUpload = YES;
+- (void)pauseCameraUploadIfNeeded {
+    if (CameraUploadManager.isCameraUploadEnabled) {
+        self.pausePhotoUpload = YES;
+        self.pauseVideoUpload = YES;
+    }
 }
 
 - (void)resumeCameraUpload {
@@ -445,6 +450,34 @@ static const NSTimeInterval LoadMediaInfoTimeoutInSeconds = 120;
 
 - (void)applicationDidReceiveMemoryWarning {
     self.photoUploadOperationQueue.maxConcurrentOperationCount = PhotoUploadInMemoryWarningConcurrentCount;
+}
+
+#pragma mark - notifications
+
+- (void)didReceiveStorageEventNotification:(NSNotification *)notification {
+    NSUInteger state = [notification.userInfo[MEGAStorageEventStateUserInfoKey] unsignedIntegerValue];
+    if (self.storageState == state) {
+        return;
+    }
+    
+    self.storageState = state;
+    switch (state) {
+        case StorageStateGreen:
+        case StorageStateOrange:
+            [self resumeCameraUpload];
+            break;
+        case StorageStateRed:
+            [self pauseCameraUploadIfNeeded];
+            break;
+        default:
+            break;
+    }
+}
+
+- (void)didReceiveNodesFetchDoneNotification {
+    self.isNodesFetchDone = YES;
+    [self startCameraUploadIfNeeded];
+    [AttributeUploadManager.shared scanLocalAttributeFilesAndRetryUploadIfNeeded];
 }
 
 #pragma mark - photos access permission check
