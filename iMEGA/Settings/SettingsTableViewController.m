@@ -69,7 +69,7 @@
                             @"pl":@"Język Polski",
                             @"pt-br":@"Português Brasileiro",
                             @"pt":@"Português",
-                            @"ro":@"Limba Română",
+                            @"ro":@"Română",
                             @"ru":@"Pусский язык",
                             @"sk":@"Slovenský",
                             @"sl":@"Slovenščina",
