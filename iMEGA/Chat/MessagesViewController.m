@@ -570,11 +570,15 @@ const NSUInteger kMaxMessagesToLoad = 256;
         self.videoCallBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"videoCall"] style:UIBarButtonItemStyleDone target:self action:@selector(startAudioVideoCall:)];
         self.audioCallBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"audioCall"] style:UIBarButtonItemStyleDone target:self action:@selector(startAudioVideoCall:)];
         self.videoCallBarButtonItem.tag = 1;
-        [barButtons addObjectsFromArray:@[self.videoCallBarButtonItem, self.audioCallBarButtonItem]];
         
-        if (self.chatRoom.isGroup && self.chatRoom.ownPrivilege == MEGAChatRoomPrivilegeModerator) {
-            UIBarButtonItem *addContactBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"addContact"] style:UIBarButtonItemStyleDone target:self action:@selector(presentAddOrAttachParticipantToGroup:)];
-            [barButtons addObject:addContactBarButtonItem];
+        if (self.chatRoom.isGroup) {
+            if (self.chatRoom.ownPrivilege == MEGAChatRoomPrivilegeModerator) {
+                UIBarButtonItem *addContactBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"addContact"] style:UIBarButtonItemStyleDone target:self action:@selector(presentAddOrAttachParticipantToGroup:)];
+                [barButtons addObject:addContactBarButtonItem];
+            }
+            [barButtons addObject:self.audioCallBarButtonItem];
+        } else {
+            [barButtons addObjectsFromArray:@[self.videoCallBarButtonItem, self.audioCallBarButtonItem]];
         }
         
         self.navigationItem.rightBarButtonItems = barButtons;
@@ -1792,7 +1796,7 @@ const NSUInteger kMaxMessagesToLoad = 256;
 
 - (id<JSQMessageAvatarImageDataSource>)collectionView:(JSQMessagesCollectionView *)collectionView avatarImageDataForItemAtIndexPath:(NSIndexPath *)indexPath {
     MEGAChatMessage *message = [self.messages objectAtIndex:indexPath.item];
-    if (message.userHandle == [MEGASdkManager sharedMEGAChatSdk].myUserHandle || message.type == MEGAChatMessageTypeCallEnded) {
+    if (message.userHandle == [MEGASdkManager sharedMEGAChatSdk].myUserHandle || message.type == MEGAChatMessageTypeCallEnded || message.type == MEGAChatMessageTypeCallStarted) {
         return nil;
     }
     if (indexPath.item < self.messages.count-1) {
@@ -2477,6 +2481,7 @@ const NSUInteger kMaxMessagesToLoad = 256;
         case MEGAChatMessageTypeAttachment:
         case MEGAChatMessageTypeContact:
         case MEGAChatMessageTypeCallEnded:
+        case MEGAChatMessageTypeCallStarted:
         case MEGAChatMessageTypeContainsMeta: {
             NSUInteger unreads;
             if (UIApplication.sharedApplication.applicationState == UIApplicationStateActive && UIApplication.mnz_visibleViewController == self) {
@@ -2541,6 +2546,7 @@ const NSUInteger kMaxMessagesToLoad = 256;
             case MEGAChatMessageTypeAttachment:
             case MEGAChatMessageTypeContact:
             case MEGAChatMessageTypeCallEnded:
+            case MEGAChatMessageTypeCallStarted:
             case MEGAChatMessageTypeContainsMeta: {
                 if (!message.isDeleted) {
                     [self.messages insertObject:message atIndex:0];

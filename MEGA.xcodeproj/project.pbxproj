@@ -347,6 +347,9 @@
 		77F95CF220E3E5F800F42D9C /* MEGAChatBaseRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A802B1F91FAB293700AC8BB0 /* MEGAChatBaseRequestDelegate.m */; };
 		77F95CF320E3E60A00F42D9C /* MEGAChatAttachNodeRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B222A73205A9CD40083D433 /* MEGAChatAttachNodeRequestDelegate.m */; };
 		830B548A2178845300BE1E1F /* CloudDriveTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 830B54892178845300BE1E1F /* CloudDriveTableViewController.m */; };
+		830DD63222141A000025DD3C /* MEGAMessageCallStartedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 830DD63122141A000025DD3C /* MEGAMessageCallStartedView.m */; };
+		830DD63422141A110025DD3C /* MEGAMessageCallStartedView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 830DD63322141A100025DD3C /* MEGAMessageCallStartedView.xib */; };
+		830DD63722141B130025DD3C /* MEGACallStartedMediaItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 830DD63622141B130025DD3C /* MEGACallStartedMediaItem.m */; };
 		830EF9A420062F3800FAA947 /* DevicePermissionsHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 830EF9A320062F3800FAA947 /* DevicePermissionsHelper.m */; };
 		8310488A21AECD860057400D /* DTConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 413199691BD7BD5D002CD6EA /* DTConstants.m */; };
 		8310488B21AECDBA0057400D /* DTConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 413199691BD7BD5D002CD6EA /* DTConstants.m */; };
@@ -1335,6 +1338,11 @@
 		83064D88217F207000FA3DAC /* LayoutView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LayoutView.h; sourceTree = "<group>"; };
 		830B54882178845300BE1E1F /* CloudDriveTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CloudDriveTableViewController.h; sourceTree = "<group>"; };
 		830B54892178845300BE1E1F /* CloudDriveTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CloudDriveTableViewController.m; sourceTree = "<group>"; };
+		830DD63022141A000025DD3C /* MEGAMessageCallStartedView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MEGAMessageCallStartedView.h; sourceTree = "<group>"; };
+		830DD63122141A000025DD3C /* MEGAMessageCallStartedView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MEGAMessageCallStartedView.m; sourceTree = "<group>"; };
+		830DD63322141A100025DD3C /* MEGAMessageCallStartedView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MEGAMessageCallStartedView.xib; sourceTree = "<group>"; };
+		830DD63522141B130025DD3C /* MEGACallStartedMediaItem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MEGACallStartedMediaItem.h; sourceTree = "<group>"; };
+		830DD63622141B130025DD3C /* MEGACallStartedMediaItem.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MEGACallStartedMediaItem.m; sourceTree = "<group>"; };
 		830EF9A220062F3800FAA947 /* DevicePermissionsHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DevicePermissionsHelper.h; sourceTree = "<group>"; };
 		830EF9A320062F3800FAA947 /* DevicePermissionsHelper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DevicePermissionsHelper.m; sourceTree = "<group>"; };
 		831D61A1218738D20038F5B8 /* MOFolderLayout+CoreDataProperties.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MOFolderLayout+CoreDataProperties.h"; sourceTree = "<group>"; };
@@ -1963,6 +1971,9 @@
 				77B32275209C6EC00037FA89 /* MEGAMessageRichPreviewView.h */,
 				77B32276209C6EC00037FA89 /* MEGAMessageRichPreviewView.m */,
 				77B32278209C6F060037FA89 /* MEGAMessageRichPreviewView.xib */,
+				830DD63022141A000025DD3C /* MEGAMessageCallStartedView.h */,
+				830DD63122141A000025DD3C /* MEGAMessageCallStartedView.m */,
+				830DD63322141A100025DD3C /* MEGAMessageCallStartedView.xib */,
 			);
 			name = Views;
 			path = Chat/Views;
@@ -2609,6 +2620,8 @@
 				774FA6632090F5A20061DD85 /* MEGADialogMediaItem.m */,
 				77B32272209C6DE80037FA89 /* MEGARichPreviewMediaItem.h */,
 				77B32273209C6DE80037FA89 /* MEGARichPreviewMediaItem.m */,
+				830DD63522141B130025DD3C /* MEGACallStartedMediaItem.h */,
+				830DD63622141B130025DD3C /* MEGACallStartedMediaItem.m */,
 			);
 			name = Model;
 			path = Chat/Model;
@@ -3834,6 +3847,7 @@
 				77B32279209C6F060037FA89 /* MEGAMessageRichPreviewView.xib in Resources */,
 				E8E3E6FA1E0939BE00D45F45 /* MEGAOpenMessageHeaderView.xib in Resources */,
 				77D9A56E202355F800B48470 /* MEGAPhotoBrowserViewController.storyboard in Resources */,
+				830DD63422141A110025DD3C /* MEGAMessageCallStartedView.xib in Resources */,
 				A8278D7F200E72A00040B076 /* incoming_voice_video_call_iOS9.mp3 in Resources */,
 				5B4429431E6D7B7000BCACC0 /* SF-UI-Text-RegularItalic.otf in Resources */,
 				E803CB641D5336F100F81A36 /* InfoPlist.strings in Resources */,
@@ -4103,6 +4117,7 @@
 				5B118EC31FB1B0C6005D7D90 /* NSMutableArray+MNZCategory.m in Sources */,
 				E8CD19871A9266D600CB8B2A /* UnavailableLinkView.m in Sources */,
 				5B1AB4AF20E5407300FEDAF9 /* MEGAQuerySignupLinkRequestDelegate.m in Sources */,
+				830DD63722141B130025DD3C /* MEGACallStartedMediaItem.m in Sources */,
 				E8D4B8911A69429200A3B2E2 /* ConfirmAccountViewController.m in Sources */,
 				835223AD20568BB200A47438 /* MEGAGetFolderInfoRequestDelegate.m in Sources */,
 				5B5737D61EFBE6410027ECCD /* MEGANode+MNZCategory.m in Sources */,
@@ -4232,6 +4247,7 @@
 				E8F7917E1BC5754A00C58676 /* GetLinkActivity.m in Sources */,
 				41AA1A1C1AC081C600D32691 /* SecurityOptionsTableViewController.m in Sources */,
 				5B40AB321F7A512E0034C3B3 /* AchievementsDetailsViewController.m in Sources */,
+				830DD63222141A000025DD3C /* MEGAMessageCallStartedView.m in Sources */,
 				411E712F1D461E1D00DD7EF8 /* MEGACollectionViewFlowLayout.m in Sources */,
 				4131997B1BD7BD5D002CD6EA /* DTTimePeriodCollection.m in Sources */,
 				946BD1331FEBBE4E00B76785 /* MEGAToolbarSelectedAssets.m in Sources */,
