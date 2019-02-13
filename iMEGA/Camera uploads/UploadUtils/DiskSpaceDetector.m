@@ -42,7 +42,7 @@ static const NSTimeInterval RetryTimerTolerance = 6;
 
 #pragma mark - start and stop detections
 
-- (void)startDetectingPhotoUploadDetection {
+- (void)startDetectingPhotoUpload {
     [NSNotificationCenter.defaultCenter removeObserver:self name:MEGACameraUploadPhotoUploadLocalDiskFullNotificationName object:nil];
     [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(didReceivePhotoUploadDiskFullNotification) name:MEGACameraUploadPhotoUploadLocalDiskFullNotificationName object:nil];
 }

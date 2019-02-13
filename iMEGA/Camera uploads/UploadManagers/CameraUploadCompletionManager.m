@@ -70,7 +70,12 @@
     UploadCompletionOperation *operation = [[UploadCompletionOperation alloc] initWithUploadInfo:uploadInfo transferToken:token completion:^(MEGANode * _Nullable node, NSError * _Nullable error) {
         if (error) {
             MEGALogDebug(@"[Camera Upload] error when to complete transfer %@", error);
-            [self finishUploadForLocalIdentifier:localIdentifier status:CameraAssetUploadStatusFailed];
+            if (error.code == MEGAErrorTypeApiEOverQuota || error.code == MEGAErrorTypeApiEgoingOverquota) {
+                [NSNotificationCenter.defaultCenter postNotificationName:MEGAStorageOverQuotaNotificationName object:nil];
+                [self finishUploadForLocalIdentifier:localIdentifier status:CameraAssetUploadStatusCancelled];
+            } else {
+                [self finishUploadForLocalIdentifier:localIdentifier status:CameraAssetUploadStatusFailed];
+            }
         } else {
             MEGALogDebug(@"[Camera Upload] upload succeeded!");
             [AttributeUploadManager.shared uploadCoordinateAtLocation:uploadInfo.location forNode:node];

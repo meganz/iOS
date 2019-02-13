@@ -3,6 +3,9 @@
 
 NSString * const MEGALogoutNotificationName = @"nz.mega.logout";
 NSString * const MEGANodesFetchDoneNotificationName = @"nz.mega.nodesFetchFinished";
+NSString * const MEGAStorageOverQuotaNotificationName = @"nz.mega.storageOverQuota";
+NSString * const MEGAStorageEventNotificationName = @"nz.mega.event.storage";
+NSString * const MEGAStorageEventStateUserInfoKey = @"nz.mega.event.storage.stateKey";
 
 NSString * const MEGACameraUploadAssetUploadDoneNotificationName = @"nz.mega.cameraUpload.assetUploadDone";
 NSString * const MEGACameraUploadPhotoUploadLocalDiskFullNotificationName = @"nz.mega.cameraUpload.photo.localDiskFull";

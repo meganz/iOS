@@ -37,6 +37,10 @@ static const NSUInteger HEICMaxConcurrentOperationCount = 1;
 }
 
 - (NSOperationQueue *)HEICExportOerationQueue {
+    if (_HEICExportOerationQueue) {
+        return _HEICExportOerationQueue;
+    }
+    
     dispatch_sync(self.serialQueue, ^{
         if (self->_HEICExportOerationQueue == nil) {
             self->_HEICExportOerationQueue = [[NSOperationQueue alloc] init];
@@ -48,6 +52,10 @@ static const NSUInteger HEICMaxConcurrentOperationCount = 1;
 }
 
 - (NSOperationQueue *)generalExportOperationQueue {
+    if (_generalExportOperationQueue) {
+        return _generalExportOperationQueue;
+    }
+    
     dispatch_sync(self.serialQueue, ^{
         if (self->_generalExportOperationQueue == nil) {
             self->_generalExportOperationQueue = [[NSOperationQueue alloc] init];

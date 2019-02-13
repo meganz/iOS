@@ -35,7 +35,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - pause and resume upload
 
-- (void)pauseCameraUpload;
+- (void)pauseCameraUploadIfNeeded;
 - (void)resumeCameraUpload;
 
 #pragma mark - background refresh

@@ -36,6 +36,10 @@ static const NSUInteger MaximumUploadRetryPerLoginCount = 1000;
 }
 
 - (NSManagedObjectContext *)backgroundContext {
+    if (_backgroundContext) {
+        return _backgroundContext;
+    }
+
     dispatch_sync(self.serialQueue, ^{
         if (self->_backgroundContext == nil) {
             self->_backgroundContext = [MEGAStore.shareInstance newBackgroundContext];

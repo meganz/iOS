@@ -4,6 +4,10 @@
 extern NSString * const MEGALogoutNotificationName;
 extern NSString * const MEGANodesFetchDoneNotificationName;
 
+extern NSString * const MEGAStorageOverQuotaNotificationName;
+extern NSString * const MEGAStorageEventNotificationName;
+extern NSString * const MEGAStorageEventStateUserInfoKey;
+
 extern NSString * const MEGACameraUploadAssetUploadDoneNotificationName;
 extern NSString * const MEGACameraUploadPhotoUploadLocalDiskFullNotificationName;
 extern NSString * const MEGACameraUploadVideoUploadLocalDiskFullNotificationName;
