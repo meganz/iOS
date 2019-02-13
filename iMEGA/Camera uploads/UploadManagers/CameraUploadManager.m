@@ -94,14 +94,14 @@ static const NSTimeInterval LoadMediaInfoTimeoutInSeconds = 120;
     [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(logoutCameraUpload) name:MEGALogoutNotificationName object:nil];
     [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(didReceiveNodesFetchDoneNotification) name:MEGANodesFetchDoneNotificationName object:nil];
     
-    [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(startCameraUploadIfNeeded) name:kReachabilityChangedNotification object:nil];
+    [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(didReceiveReachabilityChangedNotification) name:kReachabilityChangedNotification object:nil];
     
     [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(pauseCameraUploadIfNeeded) name:MEGAStorageOverQuotaNotificationName object:nil];
     
     [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(didReceiveStorageEventNotification:) name:MEGAStorageEventNotificationName object:nil];
 }
 
-- (void)configCameraUploadWhenAppLaunches {
+- (void)setupCameraUploadWhenAppLaunches {
     [CameraUploadManager disableCameraUploadIfAccessProhibited];
     [CameraUploadManager enableBackgroundRefreshIfNeeded];
     [self startBackgroundUploadIfPossible];
@@ -478,6 +478,13 @@ static const NSTimeInterval LoadMediaInfoTimeoutInSeconds = 120;
     self.isNodesFetchDone = YES;
     [self startCameraUploadIfNeeded];
     [AttributeUploadManager.shared scanLocalAttributeFilesAndRetryUploadIfNeeded];
+}
+
+- (void)didReceiveReachabilityChangedNotification {
+    if (MEGAReachabilityManager.isReachable) {
+        [self startCameraUploadIfNeeded];
+        [AttributeUploadManager.shared scanLocalAttributeFilesAndRetryUploadIfNeeded];
+    }
 }
 
 #pragma mark - photos access permission check

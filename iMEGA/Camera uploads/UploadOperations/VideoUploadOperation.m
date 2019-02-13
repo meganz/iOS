@@ -183,7 +183,7 @@
         return;
     }
     
-    unsigned long long videoSize = [NSFileManager.defaultManager attributesOfItemAtPath:self.uploadInfo.fileURL.path error:nil].fileSize;
+    unsigned long long videoSize = [NSFileManager.defaultManager attributesOfItemAtPath:URL.path error:nil].fileSize;
     if (videoSize > NSFileManager.defaultManager.deviceFreeSize) {
         [self finishUploadWithNoEnoughDiskSpace];
         return;
