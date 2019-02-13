@@ -119,7 +119,7 @@
 
     MEGALogDebug(@"[App Lifecycle] Application will finish launching with options: %@", launchOptions);
     
-    [CameraUploadManager.shared configCameraUploadWhenAppLaunches];
+    [CameraUploadManager.shared setupCameraUploadWhenAppLaunches];
     
     return YES;
 }

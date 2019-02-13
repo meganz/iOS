@@ -19,7 +19,11 @@
 #pragma mark - properties
 
 - (NSURL *)fileURL {
-    return [self.directoryURL URLByAppendingPathComponent:self.fileName];
+    if (self.fileName == nil) {
+        return nil;
+    } else {
+        return [self.directoryURL URLByAppendingPathComponent:self.fileName];
+    }
 }
 
 - (NSURL *)previewURL {
