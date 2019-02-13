@@ -1567,7 +1567,9 @@ const NSUInteger kMaxMessagesToLoad = 256;
                 browserVC.browserAction = BrowserActionSendFromCloudDrive;
                 browserVC.selectedNodes = ^void(NSArray *selectedNodes) {
                     for (MEGANode *node in selectedNodes) {
-                        [[MEGASdkManager sharedMEGAChatSdk] attachNodeToChat:self.chatRoom.chatId node:node.handle delegate:self];
+                        [Helper importNode:node toShareWithCompletion:^(MEGANode *node) {
+                            [[MEGASdkManager sharedMEGAChatSdk] attachNodeToChat:self.chatRoom.chatId node:node.handle delegate:self];
+                        }];
                     }
                 };
             }];

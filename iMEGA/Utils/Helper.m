@@ -808,11 +808,11 @@ static MEGAIndexer *indexer;
 }
 
 + (void)importNode:(MEGANode *)node toShareWithCompletion:(void (^)(MEGANode *node))completion {
-    if ([[MEGASdkManager sharedMEGASdk] accessLevelForNode:node] == MEGAShareTypeAccessOwner) {
+    if (node.owner == [MEGASdkManager sharedMEGAChatSdk].myUserHandle) {
         completion(node);
     } else {
         MEGANode *remoteNode = [[MEGASdkManager sharedMEGASdk] nodeForFingerprint:node.fingerprint];
-        if (remoteNode && [[MEGASdkManager sharedMEGASdk] accessLevelForNode:remoteNode] == MEGAShareTypeAccessOwner) {
+        if (remoteNode && remoteNode.owner == [MEGASdkManager sharedMEGAChatSdk].myUserHandle) {
             completion(remoteNode);
         } else {
             MEGACopyRequestDelegate *copyRequestDelegate = [[MEGACopyRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {

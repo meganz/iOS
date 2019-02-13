@@ -38,7 +38,7 @@
                                  @"nl":@"Nederlands",
                                  @"pl":@"Język Polski",
                                  @"pt-br":@"Português Brasileiro",
-                                 @"ro":@"Limba Română",
+                                 @"ro":@"Română",
                                  @"ru":@"Pусский язык",
                                  @"th":@"ไทย",
                                  @"tl":@"Tagalog",
