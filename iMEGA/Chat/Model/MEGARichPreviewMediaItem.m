@@ -136,7 +136,7 @@
         URLType type = [self.message.MEGALink mnz_type];
         dialogView.contentTextView.text = self.message.content;
         dialogView.titleLabel.text = self.message.node.name;
-        dialogView.descriptionLabel.text = [NSByteCountFormatter stringFromByteCount:self.message.nodeSize.longLongValue countStyle:NSByteCountFormatterCountStyleMemory];
+        dialogView.descriptionLabel.text = [Helper memoryStyleStringFromByteCount:self.message.nodeSize.longLongValue];
         dialogView.linkLabel.text = @"mega.nz";
         if (type == URLTypeFileLink) {
             [dialogView.imageImageView mnz_setThumbnailByNode:self.message.node];

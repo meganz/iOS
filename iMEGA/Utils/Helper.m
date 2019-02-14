@@ -659,6 +659,17 @@ static MEGAIndexer *indexer;
 
 #pragma mark - Utils
 
++ (NSString *)memoryStyleStringFromByteCount:(long long)byteCount {
+    static NSByteCountFormatter *byteCountFormatter = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        byteCountFormatter = NSByteCountFormatter.alloc.init;
+        byteCountFormatter.countStyle = NSByteCountFormatterCountStyleMemory;
+    });
+    
+    return [byteCountFormatter stringFromByteCount:byteCount];
+}
+
 + (unsigned long long)sizeOfFolderAtPath:(NSString *)path {
     unsigned long long folderSize = 0;
     
@@ -725,6 +736,7 @@ static MEGAIndexer *indexer;
     
     if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
         [[MEGASdkManager sharedMEGASdk] fastLoginWithSession:[SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"]];
+        [[MEGASdkManager sharedMEGAChatSdk] refreshUrls];
     }
 }
 
@@ -773,9 +785,9 @@ static MEGAIndexer *indexer;
 + (NSString *)sizeForNode:(MEGANode *)node api:(MEGASdk *)api {
     NSString *size;
     if ([node isFile]) {
-        size = [NSByteCountFormatter stringFromByteCount:node.size.longLongValue  countStyle:NSByteCountFormatterCountStyleMemory];
+        size = [Helper memoryStyleStringFromByteCount:node.size.longLongValue];
     } else {
-        size = [NSByteCountFormatter stringFromByteCount:[[api sizeForNode:node] longLongValue] countStyle:NSByteCountFormatterCountStyleMemory];
+        size = [Helper memoryStyleStringFromByteCount:[api sizeForNode:node].longLongValue];
     }
     return size;
 }
@@ -796,11 +808,11 @@ static MEGAIndexer *indexer;
 }
 
 + (void)importNode:(MEGANode *)node toShareWithCompletion:(void (^)(MEGANode *node))completion {
-    if ([[MEGASdkManager sharedMEGASdk] accessLevelForNode:node] == MEGAShareTypeAccessOwner) {
+    if (node.owner == [MEGASdkManager sharedMEGAChatSdk].myUserHandle) {
         completion(node);
     } else {
         MEGANode *remoteNode = [[MEGASdkManager sharedMEGASdk] nodeForFingerprint:node.fingerprint];
-        if (remoteNode && [[MEGASdkManager sharedMEGASdk] accessLevelForNode:remoteNode] == MEGAShareTypeAccessOwner) {
+        if (remoteNode && remoteNode.owner == [MEGASdkManager sharedMEGAChatSdk].myUserHandle) {
             completion(remoteNode);
         } else {
             MEGACopyRequestDelegate *copyRequestDelegate = [[MEGACopyRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
@@ -842,16 +854,40 @@ static MEGAIndexer *indexer;
                 
             case MEGAChatMessageTypeContact: {
                 for (NSUInteger i = 0; i < message.usersCount; i++) {
-                    MEGAUser *user = [[MEGASdkManager sharedMEGASdk] contactForEmail:[message userEmailAtIndex:i]];
-                    CNContact *cnContact = user.mnz_cnContact;
-                    NSData *vCardData = [CNContactVCardSerialization dataWithContacts:@[cnContact] error:nil];                    
+                    CNMutableContact *cnMutableContact = [[CNMutableContact alloc] init];
+                    
+                    MOUser *moUser = [[MEGAStore shareInstance] fetchUserWithUserHandle:[message userHandleAtIndex:i]];
+                    
+                    if (moUser.firstName) {
+                        cnMutableContact.givenName = moUser.firstname;
+                    }
+                    
+                    if (moUser.lastname) {
+                        cnMutableContact.familyName = moUser.lastname;
+                    }
+                    
+                    if (!moUser.firstName && !moUser.lastname) {
+                        cnMutableContact.givenName = [message userNameAtIndex:i];
+                    }
+                    
+                    cnMutableContact.emailAddresses = @[[CNLabeledValue labeledValueWithLabel:CNLabelHome value:[message userEmailAtIndex:i]]];
+                    
+                    NSString *avatarFilePath = [[Helper pathForSharedSandboxCacheDirectory:@"thumbnailsV3"] stringByAppendingPathComponent:[MEGASdk base64HandleForUserHandle:[message userHandleAtIndex:i]]];
+                    if ([[NSFileManager defaultManager] fileExistsAtPath:avatarFilePath]) {
+                        UIImage *avatarImage = [UIImage imageWithContentsOfFile:avatarFilePath];
+                        cnMutableContact.imageData = UIImageJPEGRepresentation(avatarImage, 1.0f);
+                    }
+                    NSData *vCardData = [CNContactVCardSerialization dataWithContacts:@[cnMutableContact] error:nil];
                     NSString* vcString = [[NSString alloc] initWithData:vCardData encoding:NSUTF8StringEncoding];
-                    NSString* base64Image = [cnContact.imageData base64EncodedStringWithOptions:0];
-                    NSString* vcardImageString = [[@"PHOTO;TYPE=JPEG;ENCODING=BASE64:" stringByAppendingString:base64Image] stringByAppendingString:@"\n"];
-                    vcString = [vcString stringByReplacingOccurrencesOfString:@"END:VCARD" withString:[vcardImageString stringByAppendingString:@"END:VCARD"]];
+                    NSString* base64Image = [cnMutableContact.imageData base64EncodedStringWithOptions:0];
+                    if (base64Image) {
+                        NSString* vcardImageString = [[@"PHOTO;TYPE=JPEG;ENCODING=BASE64:" stringByAppendingString:base64Image] stringByAppendingString:@"\n"];
+                        vcString = [vcString stringByReplacingOccurrencesOfString:@"END:VCARD" withString:[vcardImageString stringByAppendingString:@"END:VCARD"]];
+                    }
                     vCardData = [vcString dataUsingEncoding:NSUTF8StringEncoding];
                     
-                    NSString *tempPath = [NSTemporaryDirectory() stringByAppendingPathComponent:[[user mnz_fullName] stringByAppendingString:@".vcf"]];
+                    NSString *fullName = [message userNameAtIndex:i];
+                    NSString *tempPath = [NSTemporaryDirectory() stringByAppendingPathComponent:[fullName stringByAppendingString:@".vcf"]];
                     if ([vCardData writeToFile:tempPath atomically:YES]) {
                         [activityItemsMutableArray addObject:[NSURL fileURLWithPath:tempPath]];
                         fileCount++;

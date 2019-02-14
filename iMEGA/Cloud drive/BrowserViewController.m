@@ -857,7 +857,9 @@
     switch ([request type]) {
         case MEGARequestTypeCopy: {
             [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
-            [SVProgressHUD show];
+            if (self.browserAction != BrowserActionSendFromCloudDrive) {
+                [SVProgressHUD show];
+            }
             break;
         }
             

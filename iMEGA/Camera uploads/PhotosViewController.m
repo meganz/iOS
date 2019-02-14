@@ -10,6 +10,7 @@
 #import "MEGANodeList+MNZCategory.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGAStore.h"
+#import "NSDate+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 #import "MEGAPhotoBrowserViewController.h"
 #import "UICollectionView+MNZCategory.h"
@@ -238,12 +239,6 @@
     
     self.nodeList = [[MEGASdkManager sharedMEGASdk] childrenForParent:self.parentNode order:MEGASortOrderTypeModificationDesc];
     
-    NSDateFormatter *df = [[NSDateFormatter alloc] init];
-    df.dateStyle = NSDateFormatterLongStyle;
-    df.timeStyle = NSDateFormatterNoStyle;
-    df.locale = [NSLocale currentLocale];
-    df.dateFormat = @"LLLL yyyy";
-    
     self.mediaNodesArray = [[NSMutableArray alloc] initWithCapacity:self.nodeList.size.unsignedIntegerValue];
     
     for (NSInteger i = 0; i < [self.nodeList.size integerValue]; i++) {
@@ -253,7 +248,7 @@
             continue;
         }
         
-        NSString *currentMonthYearString = [df stringFromDate:[node modificationTime]];
+        NSString *currentMonthYearString = node.modificationTime.mnz_formattedMonthAndYear;
         
         if (![photosByMonthYearDictionary objectForKey:currentMonthYearString]) {
             photosByMonthYearDictionary = [NSMutableDictionary new];

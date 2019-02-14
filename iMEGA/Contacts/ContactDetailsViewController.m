@@ -14,7 +14,6 @@
 
 #import "BrowserViewController.h"
 #import "CloudDriveViewController.h"
-#import "ChatRoomsViewController.h"
 #import "CustomActionViewController.h"
 #import "ContactTableViewCell.h"
 #import "DisplayMode.h"
@@ -172,16 +171,11 @@
     [self.navigationController pushViewController:verifyCredentialsVC animated:YES];
 }
 
-- (void)changeToChatTabAndOpenChatId:(uint64_t)chatId {
+- (void)openChatRoomWithChatId:(uint64_t)chatId {
     MEGAChatRoom *chatRoom             = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:chatId];
     MessagesViewController *messagesVC = [[MessagesViewController alloc] init];
     messagesVC.chatRoom                = chatRoom;
-    
-    MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:messagesVC];
-    [self presentViewController:navigationController animated:YES completion:^{
-        NSUInteger chatTabPosition = 2;
-        self.tabBarController.selectedIndex = chatTabPosition;
-    }];
+    [self.navigationController pushViewController:messagesVC animated:YES];
 }
 
 #pragma mark - IBActions
@@ -373,12 +367,12 @@
                         if ([[NSUserDefaults standardUserDefaults] boolForKey:@"IsChatEnabled"]) {
                             MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomByUser:self.userHandle];
                             if (chatRoom) {
-                                [self changeToChatTabAndOpenChatId:chatRoom.chatId];
+                                [self openChatRoomWithChatId:chatRoom.chatId];
                             } else {
                                 MEGAChatPeerList *peerList = [[MEGAChatPeerList alloc] init];
                                 [peerList addPeerWithHandle:self.userHandle privilege:MEGAChatRoomPrivilegeStandard];
                                 MEGAChatCreateChatGroupRequestDelegate *createChatGroupRequestDelegate = [[MEGAChatCreateChatGroupRequestDelegate alloc] initWithCompletion:^(MEGAChatRoom *chatRoom) {
-                                    [self changeToChatTabAndOpenChatId:chatRoom.chatId];
+                                    [self openChatRoomWithChatId:chatRoom.chatId];
                                 }];
                                 [[MEGASdkManager sharedMEGAChatSdk] createChatGroup:NO peers:peerList delegate:createChatGroupRequestDelegate];
                             }
