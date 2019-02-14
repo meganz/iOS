@@ -312,14 +312,13 @@ static const NSTimeInterval LoadMediaInfoTimeoutInSeconds = 120;
     if (MEGAReachabilityManager.isReachable) {
         statuses = AssetUploadStatus.allStatusesToQueueUp;
     }
-    NSArray *records = [CameraUploadRecordManager.shared fetchRecordsToUploadByStatuses:statuses fetchLimit:number mediaType:mediaType error:nil];
+    NSArray *records = [CameraUploadRecordManager.shared queueUpUploadRecordsByStatuses:statuses fetchLimit:number mediaType:mediaType error:nil];
     if (records.count == 0) {
         MEGALogDebug(@"[Camera Upload] no more local asset to upload for media type %li", (long)mediaType);
         return;
     }
     
     for (MOAssetUploadRecord *record in records) {
-        [CameraUploadRecordManager.shared updateUploadRecord:record withStatus:CameraAssetUploadStatusQueuedUp error:nil];
         PHAssetMediaSubtype savedMediaSubtype = PHAssetMediaSubtypeNone;
         CameraUploadOperation *operation = [UploadOperationFactory operationWithUploadRecord:record parentNode:self.cameraUploadNode identifierSeparator:CameraUploadIdentifierSeparator savedMediaSubtype:&savedMediaSubtype];
         PHAsset *asset = operation.uploadInfo.asset;
