@@ -453,6 +453,8 @@
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     MEGALogDebug(@"Application will terminate");
     
+    [MEGASdkManager destroySharedMEGAChatSdk];
+    
     [[SKPaymentQueue defaultQueue] removeTransactionObserver:[MEGAPurchase sharedInstance]];
     
     if (![SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
