@@ -2,6 +2,7 @@
 #import <Foundation/Foundation.h>
 #import "MOAssetUploadRecord+CoreDataClass.h"
 #import "AssetUploadStatus.h"
+#import "LocalFileNameCoordinator.h"
 @import Photos;
 
 NS_ASSUME_NONNULL_BEGIN
@@ -9,6 +10,8 @@ NS_ASSUME_NONNULL_BEGIN
 @class PHAsset, PHFetchResult;
 
 @interface CameraUploadRecordManager : NSObject
+
+@property (readonly) LocalFileNameCoordinator *fileNameCoordinator;
 
 + (instancetype)shared;
 

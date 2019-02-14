@@ -14,6 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nullable, nonatomic, copy) NSNumber *status;
 @property (nullable, nonatomic, retain) MOAssetUploadErrorPerLaunch *errorPerLaunch;
 @property (nullable, nonatomic, retain) MOAssetUploadErrorPerLogin *errorPerLogin;
+@property (nullable, nonatomic, retain) MOAssetUploadFileNameRecord *fileNameRecord;
 
 @end
 

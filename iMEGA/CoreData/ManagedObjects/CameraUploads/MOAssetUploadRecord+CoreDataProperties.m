@@ -13,5 +13,6 @@
 @dynamic status;
 @dynamic errorPerLaunch;
 @dynamic errorPerLogin;
+@dynamic fileNameRecord;
 
 @end

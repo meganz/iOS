@@ -2,7 +2,7 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-@class MOAssetUploadErrorPerLaunch, MOAssetUploadErrorPerLogin;
+@class MOAssetUploadErrorPerLaunch, MOAssetUploadErrorPerLogin, MOAssetUploadFileNameRecord;
 
 NS_ASSUME_NONNULL_BEGIN
 

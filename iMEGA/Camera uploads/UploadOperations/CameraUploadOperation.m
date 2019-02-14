@@ -20,7 +20,6 @@
 @interface CameraUploadOperation ()
 
 @property (strong, nonatomic, nullable) MEGASdk *attributesDataSDK;
-@property (strong, nonatomic) MOAssetUploadRecord *uploadRecord;
 
 @end
 

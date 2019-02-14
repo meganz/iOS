@@ -7,8 +7,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (NSFetchRequest<MOAssetUploadFileNameRecord *> *)fetchRequest;
 
-@property (nullable, nonatomic, copy) NSString *localIdentifier;
 @property (nullable, nonatomic, copy) NSString *localUniqueFileName;
+@property (nullable, nonatomic, copy) NSString *fileExtension;
+@property (nullable, nonatomic, retain) MOAssetUploadRecord *uploadRecord;
+
 
 @end
 

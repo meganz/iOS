@@ -718,6 +718,7 @@
 		B65AC8E621F9B7A30094FF4F /* MOAssetUploadErrorPerLaunch+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = B65AC8D921F9B7A20094FF4F /* MOAssetUploadErrorPerLaunch+CoreDataClass.m */; };
 		B65AC8E921F9B7A30094FF4F /* MOAssetUploadErrorRecord+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = B65AC8DE21F9B7A30094FF4F /* MOAssetUploadErrorRecord+CoreDataClass.m */; };
 		B686F45921866BB4009C0DAA /* CameraUploadRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B686F45821866BB4009C0DAA /* CameraUploadRequestDelegate.m */; };
+		B68B33F2221501AA0058C4EF /* MOAssetUploadRecord+CameraUpload.m in Sources */ = {isa = PBXBuildFile; fileRef = B68B33F1221501AA0058C4EF /* MOAssetUploadRecord+CameraUpload.m */; };
 		B68C42C8216DA9CF003C5A50 /* MEGAOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = B68C42C6216DA9CE003C5A50 /* MEGAOperation.m */; };
 		B68C42CB216DAA85003C5A50 /* CameraUploadOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = B68C42CA216DAA85003C5A50 /* CameraUploadOperation.m */; };
 		B6A4A11121A2544C007E7EEC /* MEGAError+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = B6A4A11021A2544C007E7EEC /* MEGAError+MNZCategory.m */; };
@@ -737,7 +738,7 @@
 		B6CCC36621E6F67B00B68E2C /* VideoUploadsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B6CCC36521E6F67B00B68E2C /* VideoUploadsTableViewController.m */; };
 		B6CCC36921E800E400B68E2C /* VideoUploadsQualityTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B6CCC36821E800E400B68E2C /* VideoUploadsQualityTableViewController.m */; };
 		B6CCC36B21E8297F00B68E2C /* CameraUploadSettings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B6CCC36A21E8297F00B68E2C /* CameraUploadSettings.storyboard */; };
-		B6D11AC6219B8ABC00446B86 /* CameraUploadFileNameRecordManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B6D11AC5219B8ABC00446B86 /* CameraUploadFileNameRecordManager.m */; };
+		B6D11AC6219B8ABC00446B86 /* LocalFileNameCoordinator.m in Sources */ = {isa = PBXBuildFile; fileRef = B6D11AC5219B8ABC00446B86 /* LocalFileNameCoordinator.m */; };
 		B6D11AD7219BAE6D00446B86 /* MOAssetUploadFileNameRecord+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = B6D11AD3219BAE6D00446B86 /* MOAssetUploadFileNameRecord+CoreDataClass.m */; };
 		B6D11AD8219BAE6D00446B86 /* MOAssetUploadFileNameRecord+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = B6D11AD6219BAE6D00446B86 /* MOAssetUploadFileNameRecord+CoreDataProperties.m */; };
 		B6D11ADF219CE69300446B86 /* FileEncrypter.m in Sources */ = {isa = PBXBuildFile; fileRef = B6D11ADE219CE69300446B86 /* FileEncrypter.m */; };
@@ -1687,6 +1688,8 @@
 		B65AC8E121F9B7A30094FF4F /* MOAssetUploadErrorRecord+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MOAssetUploadErrorRecord+CoreDataProperties.h"; sourceTree = "<group>"; };
 		B686F45721866BB4009C0DAA /* CameraUploadRequestDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CameraUploadRequestDelegate.h; sourceTree = "<group>"; };
 		B686F45821866BB4009C0DAA /* CameraUploadRequestDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CameraUploadRequestDelegate.m; sourceTree = "<group>"; };
+		B68B33F0221501AA0058C4EF /* MOAssetUploadRecord+CameraUpload.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MOAssetUploadRecord+CameraUpload.h"; sourceTree = "<group>"; };
+		B68B33F1221501AA0058C4EF /* MOAssetUploadRecord+CameraUpload.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "MOAssetUploadRecord+CameraUpload.m"; sourceTree = "<group>"; };
 		B68C42C6216DA9CE003C5A50 /* MEGAOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEGAOperation.m; sourceTree = "<group>"; };
 		B68C42C7216DA9CE003C5A50 /* MEGAOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEGAOperation.h; sourceTree = "<group>"; };
 		B68C42C9216DAA85003C5A50 /* CameraUploadOperation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CameraUploadOperation.h; sourceTree = "<group>"; };
@@ -1724,12 +1727,12 @@
 		B6CCC36721E800E400B68E2C /* VideoUploadsQualityTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VideoUploadsQualityTableViewController.h; sourceTree = "<group>"; };
 		B6CCC36821E800E400B68E2C /* VideoUploadsQualityTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VideoUploadsQualityTableViewController.m; sourceTree = "<group>"; };
 		B6CCC36A21E8297F00B68E2C /* CameraUploadSettings.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = CameraUploadSettings.storyboard; sourceTree = "<group>"; };
-		B6D11AC5219B8ABC00446B86 /* CameraUploadFileNameRecordManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CameraUploadFileNameRecordManager.m; sourceTree = "<group>"; };
+		B6D11AC5219B8ABC00446B86 /* LocalFileNameCoordinator.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LocalFileNameCoordinator.m; sourceTree = "<group>"; };
 		B6D11AD3219BAE6D00446B86 /* MOAssetUploadFileNameRecord+CoreDataClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MOAssetUploadFileNameRecord+CoreDataClass.m"; sourceTree = "<group>"; };
 		B6D11AD4219BAE6D00446B86 /* MOAssetUploadFileNameRecord+CoreDataClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MOAssetUploadFileNameRecord+CoreDataClass.h"; sourceTree = "<group>"; };
 		B6D11AD5219BAE6D00446B86 /* MOAssetUploadFileNameRecord+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MOAssetUploadFileNameRecord+CoreDataProperties.h"; sourceTree = "<group>"; };
 		B6D11AD6219BAE6D00446B86 /* MOAssetUploadFileNameRecord+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MOAssetUploadFileNameRecord+CoreDataProperties.m"; sourceTree = "<group>"; };
-		B6D11ADA219BC68900446B86 /* CameraUploadFileNameRecordManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CameraUploadFileNameRecordManager.h; sourceTree = "<group>"; };
+		B6D11ADA219BC68900446B86 /* LocalFileNameCoordinator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalFileNameCoordinator.h; sourceTree = "<group>"; };
 		B6D11ADD219CE69300446B86 /* FileEncrypter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FileEncrypter.h; sourceTree = "<group>"; };
 		B6D11ADE219CE69300446B86 /* FileEncrypter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FileEncrypter.m; sourceTree = "<group>"; };
 		B6D11AE0219E5E2C00446B86 /* AttributeUploadOperation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AttributeUploadOperation.h; sourceTree = "<group>"; };
@@ -3636,6 +3639,8 @@
 				B6E19B342175852E00882F74 /* AssetUploadInfo.m */,
 				B6DA6E6722120DBB003CB372 /* AssetUploadStatus.h */,
 				B6DA6E6822120DBB003CB372 /* AssetUploadStatus.m */,
+				B68B33F0221501AA0058C4EF /* MOAssetUploadRecord+CameraUpload.h */,
+				B68B33F1221501AA0058C4EF /* MOAssetUploadRecord+CameraUpload.m */,
 			);
 			path = DataModels;
 			sourceTree = "<group>";
@@ -3649,8 +3654,6 @@
 				B6BD011E21B62D8E00E97086 /* CameraUploadManager+Settings.m */,
 				B6D9D7ED216AE5D000D7B08A /* CameraUploadRecordManager.h */,
 				B6D9D7EE216AE5D000D7B08A /* CameraUploadRecordManager.m */,
-				B6D11ADA219BC68900446B86 /* CameraUploadFileNameRecordManager.h */,
-				B6D11AC5219B8ABC00446B86 /* CameraUploadFileNameRecordManager.m */,
 				B6BB128421A4B73C00C16277 /* AttributeUploadManager.h */,
 				B6BB128521A4B73C00C16277 /* AttributeUploadManager.m */,
 				B6E19B3B2180126500882F74 /* CameraUploadCompletionManager.h */,
@@ -3727,6 +3730,8 @@
 				B6575FD2220101BB00B7AD82 /* MediaInfoLoader.m */,
 				B61F01C4220D37A400F4A917 /* DiskSpaceDetector.h */,
 				B61F01C5220D37A400F4A917 /* DiskSpaceDetector.m */,
+				B6D11ADA219BC68900446B86 /* LocalFileNameCoordinator.h */,
+				B6D11AC5219B8ABC00446B86 /* LocalFileNameCoordinator.m */,
 			);
 			path = UploadUtils;
 			sourceTree = "<group>";
@@ -4270,7 +4275,7 @@
 				B65AC8E621F9B7A30094FF4F /* MOAssetUploadErrorPerLaunch+CoreDataClass.m in Sources */,
 				41D21E691D01AEC3002E6296 /* CTAssetsNavigationController.m in Sources */,
 				B6D11AE521A24C7700446B86 /* UploadCompletionOperation.m in Sources */,
-				B6D11AC6219B8ABC00446B86 /* CameraUploadFileNameRecordManager.m in Sources */,
+				B6D11AC6219B8ABC00446B86 /* LocalFileNameCoordinator.m in Sources */,
 				41D578241B84A0FB00334ED3 /* PreviewDocumentViewController.m in Sources */,
 				7759700F219EC2D700B31671 /* NotificationTableViewCell.m in Sources */,
 				5BFA346B1FAB4169005BFC4E /* MEGARemoveRequestDelegate.m in Sources */,
@@ -4578,6 +4583,7 @@
 				A89629781FACEAF800F02F7A /* MEGAProviderDelegate.m in Sources */,
 				5B14A41520D10043005F8146 /* MEGAMultiFactorAuthCheckRequestDelegate.m in Sources */,
 				77597006219DD4D100B31671 /* MEGAUserAlertList+MNZCategory.m in Sources */,
+				B68B33F2221501AA0058C4EF /* MOAssetUploadRecord+CameraUpload.m in Sources */,
 				83681578202AFBC000CA8EFC /* CustomActionViewController.m in Sources */,
 				4172794B1DB663FA001AC818 /* JSQMessagesBubbleImage.m in Sources */,
 				41CD14701DB150F600E545BC /* MessagesViewController.m in Sources */,

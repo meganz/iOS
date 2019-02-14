@@ -7,7 +7,8 @@
 	return [NSFetchRequest fetchRequestWithEntityName:@"AssetUploadFileNameRecord"];
 }
 
-@dynamic localIdentifier;
 @dynamic localUniqueFileName;
+@dynamic fileExtension;
+@dynamic uploadRecord;
 
 @end
