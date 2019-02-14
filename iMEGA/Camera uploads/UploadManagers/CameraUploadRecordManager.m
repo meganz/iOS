@@ -3,6 +3,7 @@
 #import "MEGAStore.h"
 #import "MOAssetUploadErrorPerLaunch+CoreDataClass.h"
 #import "MOAssetUploadErrorPerLogin+CoreDataClass.h"
+#import "LocalFileNameCoordinator.h"
 
 static const NSUInteger MaximumUploadRetryPerLaunchCount = 20;
 static const NSUInteger MaximumUploadRetryPerLoginCount = 1000;
@@ -10,7 +11,9 @@ static const NSUInteger MaximumUploadRetryPerLoginCount = 1000;
 @interface CameraUploadRecordManager ()
 
 @property (strong, nonatomic, nullable) NSManagedObjectContext *backgroundContext;
-@property (strong, nonatomic) dispatch_queue_t serialQueue;
+@property (strong, nonatomic) LocalFileNameCoordinator *fileNameCoordinator;
+@property (strong, nonatomic) dispatch_queue_t serialQueueForContext;
+@property (strong, nonatomic) dispatch_queue_t serialQueueForFileCoordinator;
 
 @end
 
@@ -29,10 +32,25 @@ static const NSUInteger MaximumUploadRetryPerLoginCount = 1000;
 - (instancetype)init {
     self = [super init];
     if (self) {
-        _serialQueue = dispatch_queue_create("nz.mega.cameraUpload.uploadRecordManagerSerialQueue", DISPATCH_QUEUE_SERIAL);
+        _serialQueueForContext = dispatch_queue_create("nz.mega.cameraUpload.recordManager.context", DISPATCH_QUEUE_SERIAL);
+        _serialQueueForFileCoordinator = dispatch_queue_create("nz.mega.cameraUpload.recordManager.coordinator", DISPATCH_QUEUE_SERIAL);
     }
     
     return self;
+}
+
+- (LocalFileNameCoordinator *)fileNameCoordinator {
+    if (_fileNameCoordinator) {
+        return _fileNameCoordinator;
+    }
+    
+    dispatch_sync(self.serialQueueForFileCoordinator, ^{
+        if (self->_fileNameCoordinator == nil) {
+            self->_fileNameCoordinator = [[LocalFileNameCoordinator alloc] initWithBackgroundContext:self.backgroundContext];
+        }
+    });
+    
+    return _fileNameCoordinator;
 }
 
 - (NSManagedObjectContext *)backgroundContext {
@@ -40,7 +58,7 @@ static const NSUInteger MaximumUploadRetryPerLoginCount = 1000;
         return _backgroundContext;
     }
 
-    dispatch_sync(self.serialQueue, ^{
+    dispatch_sync(self.serialQueueForContext, ^{
         if (self->_backgroundContext == nil) {
             self->_backgroundContext = [MEGAStore.shareInstance newBackgroundContext];
         }
@@ -52,6 +70,7 @@ static const NSUInteger MaximumUploadRetryPerLoginCount = 1000;
 - (void)resetDataContext {
     [_backgroundContext reset];
     _backgroundContext = nil;
+    _fileNameCoordinator = nil;
 }
 
 #pragma mark - fetch records
@@ -60,7 +79,7 @@ static const NSUInteger MaximumUploadRetryPerLoginCount = 1000;
     NSFetchRequest *request = MOAssetUploadRecord.fetchRequest;
     request.predicate = [NSPredicate predicateWithFormat:@"localIdentifier == %@", identifier];
     if (prefetchErrorRecords) {
-        [request setRelationshipKeyPathsForPrefetching:@[@"errorPerLaunch", @"errorPerLogin"]];
+        [request setRelationshipKeyPathsForPrefetching:@[@"errorPerLaunch", @"errorPerLogin", @"fileNameRecord"]];
     }
     
     return [self fetchUploadRecordsByFetchRequest:request error:error];
@@ -72,7 +91,7 @@ static const NSUInteger MaximumUploadRetryPerLoginCount = 1000;
     request.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"creationDate" ascending:NO]];
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(status IN %@) AND (mediaType == %@)", statuses, @(mediaType)];
     request.predicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[predicate, [self predicateForAssetUploadRecordError]]];
-    [request setRelationshipKeyPathsForPrefetching:@[@"errorPerLaunch", @"errorPerLogin"]];
+    [request setRelationshipKeyPathsForPrefetching:@[@"errorPerLaunch", @"errorPerLogin", @"fileNameRecord"]];
     return [self fetchUploadRecordsByFetchRequest:request error:error];
 }
 

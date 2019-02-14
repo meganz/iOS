@@ -18,7 +18,6 @@
 #import "MediaInfoLoader.h"
 #import "DiskSpaceDetector.h"
 #import "MEGAReachabilityManager.h"
-#import "CameraUploadFileNameRecordManager.h"
 
 static NSString * const CameraUploadsNodeHandle = @"CameraUploadsNodeHandle";
 static NSString * const CameraUplodFolderName = @"Camera Uploads";
@@ -354,7 +353,6 @@ static const NSTimeInterval LoadMediaInfoTimeoutInSeconds = 120;
     [NSFileManager.defaultManager removeItemIfExistsAtURL:NSURL.mnz_cameraUploadURL];
     [CameraUploadManager clearLocalSettings];
     [CameraUploadRecordManager.shared resetDataContext];
-    [CameraUploadFileNameRecordManager.shared resetDataContext];
     _isNodesFetchDone = NO;
 }
 

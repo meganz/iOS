@@ -15,6 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface CameraUploadOperation :  MEGABackgroundTaskOperation
 
 @property (strong, nonatomic) AssetUploadInfo *uploadInfo;
+@property (strong, nonatomic) MOAssetUploadRecord *uploadRecord;
 
 - (instancetype)initWithUploadInfo:(AssetUploadInfo *)uploadInfo uploadRecord:(MOAssetUploadRecord *)uploadRecord;
 

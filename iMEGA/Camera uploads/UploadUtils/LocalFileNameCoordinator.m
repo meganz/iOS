@@ -1,0 +1,125 @@
+
+#import "LocalFileNameCoordinator.h"
+#import "NSString+MNZCategory.h"
+#import "MEGAStore.h"
+#import "MOAssetUploadFileNameRecord+CoreDataClass.h"
+#import "MOAssetUploadRecord+CoreDataClass.h"
+
+@interface LocalFileNameCoordinator ()
+
+@property (strong, nonatomic, nullable) NSManagedObjectContext *backgroundContext;
+@property (strong, nonatomic) dispatch_queue_t serialQueue;
+
+@end
+
+@implementation LocalFileNameCoordinator
+
+- (instancetype)initWithBackgroundContext:(NSManagedObjectContext *)context {
+    self = [super init];
+    if (self) {
+        _backgroundContext = context;
+        _serialQueue = dispatch_queue_create("nz.mega.cameraUpload.fileNameManagerSerialQueue", DISPATCH_QUEUE_SERIAL);
+    }
+    
+    return self;
+}
+
+- (NSString *)generateUniqueLocalFileNameForUploadRecord:(MOAssetUploadRecord *)record withOriginalFileName:(NSString *)originalFileName {
+    if (record.fileNameRecord) {
+        return record.fileNameRecord.localUniqueFileName;
+    }
+    
+    __block NSString *localUniqueFileName = nil;
+    NSString *fileExtension = originalFileName.pathExtension;
+    dispatch_sync(self.serialQueue, ^{
+        if (record.fileNameRecord) {
+            localUniqueFileName = record.fileNameRecord.localUniqueFileName;
+        } else {
+            NSArray<MOAssetUploadFileNameRecord *> *similarFileNameRecords = [self searchSimilarNameRecordsByFileExtension:fileExtension fileNamePrefix:originalFileName.stringByDeletingPathExtension error:nil];
+            if (similarFileNameRecords.count > 0) {
+                localUniqueFileName = [self calculateUniqueFileNameFromOriginalFileName:originalFileName similarFileNameRecords:similarFileNameRecords];
+            } else {
+                localUniqueFileName = originalFileName;
+            }
+            
+            [self saveLocalUniqueFileName:localUniqueFileName fileExtension:fileExtension forUploadRecord:record error:nil];
+        }
+    });
+    
+    return localUniqueFileName;
+}
+
+#pragma mark - the algorithm to generate local unique file name
+
+- (NSString *)calculateUniqueFileNameFromOriginalFileName:(NSString *)originalFileName similarFileNameRecords:(NSArray<MOAssetUploadFileNameRecord *> *)fileNameRecords {
+    if (fileNameRecords.count == 0) {
+        return originalFileName;
+    }
+    
+    NSString *uniqueFileName = originalFileName;
+    
+    NSComparator fileNameComparator = ^(NSString *s1, NSString *s2) {
+        return [s1 compare:s2];
+    };
+    
+    NSMutableArray<NSString *> *sortedFileNames = [NSMutableArray arrayWithCapacity:fileNameRecords.count];
+    for (MOAssetUploadFileNameRecord *record in fileNameRecords) {
+        [sortedFileNames addObject:record.localUniqueFileName];
+    }
+    
+    [sortedFileNames sortUsingComparator:fileNameComparator];
+    
+    NSUInteger fileNameSuffixStep = 0;
+    NSInteger matchingIndex = 0;
+    while (matchingIndex != NSNotFound) {
+        matchingIndex = [sortedFileNames indexOfObject:uniqueFileName inSortedRange:NSMakeRange(0, sortedFileNames.count) options:NSBinarySearchingLastEqual usingComparator:fileNameComparator];
+        if (matchingIndex != NSNotFound) {
+            fileNameSuffixStep++;
+            uniqueFileName = [[NSString stringWithFormat:@"%@_%ld", originalFileName.stringByDeletingPathExtension, (long)fileNameSuffixStep] stringByAppendingPathExtension:originalFileName.pathExtension];
+        }
+    }
+    
+    return uniqueFileName;
+}
+
+#pragma mark - search local file name records
+
+- (NSArray<MOAssetUploadFileNameRecord *> *)searchSimilarNameRecordsByFileExtension:(NSString *)extension fileNamePrefix:(NSString *)prefix error:(NSError * _Nullable __autoreleasing * _Nullable)error {
+    __block NSArray<MOAssetUploadFileNameRecord *> *fileNameRecords = [NSArray array];
+    __block NSError *coreDataError = nil;
+    [self.backgroundContext performBlockAndWait:^{
+        NSFetchRequest *request = MOAssetUploadFileNameRecord.fetchRequest;
+        request.predicate = [NSPredicate predicateWithFormat:@"(fileExtension == %@) AND (localUniqueFileName BEGINSWITH[cd] %@)", extension, prefix];
+        fileNameRecords = [self.backgroundContext executeFetchRequest:request error:&coreDataError];
+    }];
+    
+    if (error != NULL) {
+        *error = coreDataError;
+    }
+    
+    return fileNameRecords;
+}
+
+#pragma mark - save local unique file name to core data
+
+- (BOOL)saveLocalUniqueFileName:(NSString *)name fileExtension:(NSString *)extension forUploadRecord:(MOAssetUploadRecord *)record error:(NSError * _Nullable __autoreleasing * _Nullable)error {
+    __block NSError *coreDataError = nil;
+    [self.backgroundContext performBlockAndWait:^{
+        if (record.fileNameRecord == nil) {
+            record.fileNameRecord = [NSEntityDescription insertNewObjectForEntityForName:@"AssetUploadFileNameRecord" inManagedObjectContext:self.backgroundContext];
+        }
+        
+        record.fileNameRecord.localUniqueFileName = name;
+        record.fileNameRecord.fileExtension = extension;
+        
+        [self.backgroundContext save:&coreDataError];
+    }];
+    
+    if (error != NULL) {
+        *error = coreDataError;
+    }
+    
+    return coreDataError == nil;
+}
+
+@end

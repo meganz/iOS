@@ -7,10 +7,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (nullable NSString *)mnz_fileExtensionFromAssetInfo:(nullable NSDictionary *)info;
 
-- (NSString *)mnz_cameraUploadFileNameWithExtension:(NSString *)extension;
-
-- (NSString *)mnz_cameraUploadLivePhotoVideoFileNameWithExtension:(NSString *)extension;
-
 @end
 
 NS_ASSUME_NONNULL_END

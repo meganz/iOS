@@ -13,6 +13,7 @@
 #import "AVURLAsset+CameraUpload.h"
 #import "MEGAConstants.h"
 #import "PHAsset+CameraUpload.h"
+#import "MOAssetUploadRecord+CameraUpload.h"
 
 @implementation VideoUploadOperation
 
@@ -143,7 +144,7 @@
             session.shouldOptimizeForNetworkUse = YES;
             session.metadataItemFilter = [AVMetadataItemFilter metadataItemFilterForSharing];
             
-            self.uploadInfo.fileName = [self.uploadInfo.asset mnz_cameraUploadFileNameWithExtension:extension];
+            self.uploadInfo.fileName = [self.uploadRecord mnz_localFileNameWithExtension:extension];
             session.outputURL = self.uploadInfo.fileURL;
             
             __weak __typeof__(self) weakSelf = self;
@@ -189,7 +190,7 @@
         return;
     }
     
-    self.uploadInfo.fileName = [self.uploadInfo.asset mnz_cameraUploadFileNameWithExtension:URL.pathExtension.lowercaseString];
+    self.uploadInfo.fileName = [self.uploadRecord mnz_localFileNameWithExtension:URL.pathExtension.lowercaseString];
     NSError *error;
     [NSFileManager.defaultManager copyItemAtURL:URL toURL:self.uploadInfo.fileURL error:&error];
     if (error) {

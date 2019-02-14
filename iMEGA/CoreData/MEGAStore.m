@@ -110,7 +110,9 @@
         return self.persistentContainer.newBackgroundContext;
     } else {
         NSManagedObjectContext *context = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
-        context.persistentStoreCoordinator = self.storeCoordinator;
+        [context performBlockAndWait:^{
+            context.persistentStoreCoordinator = self.storeCoordinator;
+        }];
         return context;
     }
 }
