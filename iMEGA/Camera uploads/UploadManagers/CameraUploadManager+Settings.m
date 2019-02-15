@@ -54,18 +54,9 @@ static NSString * const IsLocationBasedBackgroundUploadAllowedKey = @"IsLocation
         if (!previousValue) {
             [self setConvertHEICPhoto:YES];
         }
-        [self didEnableCameraUpload];
     } else {
         [self clearCameraSettings];
-        [CameraUploadManager.shared stopCameraUpload];
     }
-}
-
-+ (void)didEnableCameraUpload {
-    [CameraUploadManager enableBackgroundRefreshIfNeeded];
-    [CameraUploadManager.shared startBackgroundUploadIfPossible];
-    
-    [CameraUploadManager.shared startCameraUploadIfNeeded];
 }
 
 + (BOOL)isVideoUploadEnabled {
@@ -79,10 +70,8 @@ static NSString * const IsLocationBasedBackgroundUploadAllowedKey = @"IsLocation
         if (!previousValue) {
             [self setConvertHEVCVideo:YES];
         }
-        [CameraUploadManager.shared startVideoUploadIfNeeded];
     } else {
         [self clearVideoSettings];
-        [CameraUploadManager.shared stopVideoUpload];
     }
 }
 

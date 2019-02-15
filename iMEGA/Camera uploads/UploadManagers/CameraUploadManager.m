@@ -351,19 +351,23 @@ static const NSTimeInterval LoadMediaInfoTimeoutInSeconds = 120;
     }
 }
 
-#pragma mark - stop upload
+#pragma mark - enable, disable and stop upload
 
-- (void)logoutCameraUpload {
-    CameraUploadManager.cameraUploadEnabled = NO;
-    [NSFileManager.defaultManager removeItemIfExistsAtURL:NSURL.mnz_cameraUploadURL];
-    [CameraUploadManager clearLocalSettings];
-    [CameraUploadRecordManager.shared resetDataContext];
-    _isNodesFetchDone = NO;
-    _cameraUploadNode = nil;
+- (void)enableCameraUpload {
+    CameraUploadManager.cameraUploadEnabled = YES;
+    [CameraUploadManager enableBackgroundRefreshIfNeeded];
+    [self startBackgroundUploadIfPossible];
+    [self startCameraUploadIfNeeded];
 }
 
-- (void)stopCameraUpload {
-    [self stopVideoUpload];
+- (void)enableVideoUpload {
+    CameraUploadManager.videoUploadEnabled = YES;
+    [self startVideoUploadIfNeeded];
+}
+
+- (void)disableCameraUpload {
+    [self disableVideoUpload];
+    CameraUploadManager.cameraUploadEnabled = NO;
     [self.photoUploadOperationQueue cancelAllOperations];
     [self.diskSpaceDetector stopDetectingPhotoUpload];
     _pausePhotoUpload = NO;
@@ -374,11 +378,21 @@ static const NSTimeInterval LoadMediaInfoTimeoutInSeconds = 120;
     [self stopBackgroundUpload];
 }
 
-- (void)stopVideoUpload {
+- (void)disableVideoUpload {
+    CameraUploadManager.videoUploadEnabled = NO;
     [self.videoUploadOperationQueue cancelAllOperations];
     [self.diskSpaceDetector stopDetectingVideoUpload];
     _pauseVideoUpload = NO;
     [TransferSessionManager.shared invalidateAndCancelVideoSessions];
+}
+
+- (void)logoutCameraUpload {
+    [self disableCameraUpload];
+    [NSFileManager.defaultManager removeItemIfExistsAtURL:NSURL.mnz_cameraUploadURL];
+    [CameraUploadRecordManager.shared resetDataContext];
+    [CameraUploadManager clearLocalSettings];
+    _isNodesFetchDone = NO;
+    _cameraUploadNode = nil;
 }
 
 #pragma mark - pause and resume upload
@@ -498,7 +512,7 @@ static const NSTimeInterval LoadMediaInfoTimeoutInSeconds = 120;
         case PHAuthorizationStatusDenied:
         case PHAuthorizationStatusRestricted:
             if (CameraUploadManager.isCameraUploadEnabled) {
-                CameraUploadManager.cameraUploadEnabled = NO;
+                [CameraUploadManager.shared disableCameraUpload];
             }
             break;
         default:

@@ -148,7 +148,7 @@ static const CGFloat TableViewSectionHeaderFooterHiddenHeight = 0.1;
     if (sender.isOn) {
         [DevicePermissionsHelper photosPermissionWithCompletionHandler:^(BOOL granted) {
             if (granted) {
-                CameraUploadManager.cameraUploadEnabled = YES;
+                [CameraUploadManager.shared enableCameraUpload];
             } else {
                 [DevicePermissionsHelper alertPhotosPermission];
             }
@@ -156,14 +156,18 @@ static const CGFloat TableViewSectionHeaderFooterHiddenHeight = 0.1;
             [self configUI];
         }];
     } else {
-        CameraUploadManager.cameraUploadEnabled = NO;
+        [CameraUploadManager.shared disableCameraUpload];
         [self configUI];
     }
 }
 
 - (IBAction)uploadVideosSwitchValueChanged:(UISwitch *)sender {
     MEGALogInfo(@"%@ uploads videos", sender.isOn ? @"Enable" : @"Disable");
-    CameraUploadManager.videoUploadEnabled = sender.isOn;
+    if (sender.isOn) {
+        [CameraUploadManager.shared enableVideoUpload];
+    } else {
+        [CameraUploadManager.shared disableVideoUpload];
+    }
 }
 
 - (IBAction)useCellularConnectionSwitchValueChanged:(UISwitch *)sender {

@@ -19,19 +19,24 @@ NS_ASSUME_NONNULL_BEGIN
  */
 + (instancetype)shared;
 
-#pragma mark - start upload
-
 - (void)setupCameraUploadWhenAppLaunches;
+
+#pragma mark - start upload
 
 - (void)startCameraUploadIfNeeded;
 - (void)startVideoUploadIfNeeded;
 
 - (void)uploadNextAssetWithMediaType:(PHAssetMediaType)mediaType;
 
-#pragma mark - stop upload
+#pragma mark - enable camera upload
 
-- (void)stopCameraUpload;
-- (void)stopVideoUpload;
+- (void)enableCameraUpload;
+- (void)enableVideoUpload;
+
+#pragma mark - disable camera upload
+
+- (void)disableCameraUpload;
+- (void)disableVideoUpload;
 
 #pragma mark - pause and resume upload
 
