@@ -5,7 +5,6 @@
 #import "CameraUploadOperation.h"
 #import "Helper.h"
 #import "MEGASdkManager.h"
-#import "MEGACreateFolderRequestDelegate.h"
 #import "UploadOperationFactory.h"
 #import "AttributeUploadManager.h"
 #import "MEGAConstants.h"
@@ -18,9 +17,8 @@
 #import "MediaInfoLoader.h"
 #import "DiskSpaceDetector.h"
 #import "MEGAReachabilityManager.h"
+#import "CameraUploadNodeLoader.h"
 
-static NSString * const CameraUploadsNodeHandle = @"CameraUploadsNodeHandle";
-static NSString * const CameraUplodFolderName = @"Camera Uploads";
 static NSString * const CameraUploadIdentifierSeparator = @",";
 
 static const NSInteger PhotoUploadInForegroundConcurrentCount = 10;
@@ -45,6 +43,7 @@ static const NSTimeInterval LoadMediaInfoTimeoutInSeconds = 120;
 @property (strong, nonatomic) BackgroundUploadMonitor *backgroundUploadMonitor;
 @property (strong, nonatomic) MediaInfoLoader *mediaInfoLoader;
 @property (strong, nonatomic) DiskSpaceDetector *diskSpaceDetector;
+@property (strong, nonatomic) CameraUploadNodeLoader *cameraUploadNodeLoader;
 
 @end
 
@@ -113,6 +112,14 @@ static const NSTimeInterval LoadMediaInfoTimeoutInSeconds = 120;
 }
 
 #pragma mark - properties
+
+- (CameraUploadNodeLoader *)cameraUploadNodeLoader {
+    if (_cameraUploadNodeLoader == nil) {
+        _cameraUploadNodeLoader = [[CameraUploadNodeLoader alloc] init];
+    }
+    
+    return _cameraUploadNodeLoader;
+}
 
 - (UploadRecordsCollator *)dataCollator {
     if (_dataCollator == nil) {
@@ -230,13 +237,12 @@ static const NSTimeInterval LoadMediaInfoTimeoutInSeconds = 120;
         return;
     }
     
-    [self requestCameraUploadNodeWithCompletion:^(MEGANode * _Nullable cameraUploadNode) {
+    [self.cameraUploadNodeLoader loadCameraUploadNodeWithCompletion:^(MEGANode * _Nullable cameraUploadNode) {
+        if (cameraUploadNode != self.cameraUploadNode) {
+            self.cameraUploadNode = cameraUploadNode;
+        }
+        
         if (cameraUploadNode) {
-            if (cameraUploadNode != self.cameraUploadNode) {
-                self.cameraUploadNode = cameraUploadNode;
-                [self saveCameraUploadHandle:cameraUploadNode.handle];
-            }
-            
             [self uploadCamera];
         }
     }];
@@ -353,6 +359,7 @@ static const NSTimeInterval LoadMediaInfoTimeoutInSeconds = 120;
     [CameraUploadManager clearLocalSettings];
     [CameraUploadRecordManager.shared resetDataContext];
     _isNodesFetchDone = NO;
+    _cameraUploadNode = nil;
 }
 
 - (void)stopCameraUpload {
@@ -545,70 +552,6 @@ static const NSTimeInterval LoadMediaInfoTimeoutInSeconds = 120;
 
 - (void)stopBackgroundUpload {
     [self.backgroundUploadMonitor stopBackgroundUpload];
-}
-
-#pragma mark - handle camera upload node
-
-- (MEGANode *)cameraUploadNode {
-    if (_cameraUploadNode == nil) {
-        _cameraUploadNode = [self restoreCameraUploadNode];
-    }
-    
-    return _cameraUploadNode;
-}
-
-- (MEGANode *)restoreCameraUploadNode {
-    MEGANode *node = [self savedCameraUploadNode];
-    if (node == nil) {
-        node = [self findCameraUploadNodeInRoot];
-        [self saveCameraUploadHandle:node.handle];
-    }
-    
-    return node;
-}
-
-- (MEGANode *)savedCameraUploadNode {
-    unsigned long long cameraUploadHandle = [[[NSUserDefaults standardUserDefaults] objectForKey:CameraUploadsNodeHandle] unsignedLongLongValue];
-    if (cameraUploadHandle > 0) {
-        MEGANode *node = [[MEGASdkManager sharedMEGASdk] nodeForHandle:cameraUploadHandle];
-        if (node.parentHandle == [[MEGASdkManager sharedMEGASdk] rootNode].handle) {
-            return node;
-        }
-    }
-    
-    return nil;
-}
-
-- (void)saveCameraUploadHandle:(uint64_t)handle {
-    if (handle > 0) {
-        [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithUnsignedLongLong:handle] forKey:CameraUploadsNodeHandle];
-    }
-}
-
-- (MEGANode *)findCameraUploadNodeInRoot {
-    MEGANodeList *nodeList = [[MEGASdkManager sharedMEGASdk] childrenForParent:[[MEGASdkManager sharedMEGASdk] rootNode]];
-    NSInteger nodeListSize = [[nodeList size] integerValue];
-    
-    for (NSInteger i = 0; i < nodeListSize; i++) {
-        MEGANode *node = [nodeList nodeAtIndex:i];
-        if ([CameraUplodFolderName isEqualToString:node.name] && node.isFolder) {
-            return node;
-        }
-    }
-    
-    return nil;
-}
-
-- (void)requestCameraUploadNodeWithCompletion:(void (^)(MEGANode * _Nullable cameraUploadNode))completion {
-    if (self.cameraUploadNode) {
-        completion(self.cameraUploadNode);
-    } else {
-        [[MEGASdkManager sharedMEGASdk] createFolderWithName:CameraUplodFolderName parent:[[MEGASdkManager sharedMEGASdk] rootNode]
-                                                    delegate:[[MEGACreateFolderRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
-            MEGANode *node = [[MEGASdkManager sharedMEGASdk] nodeForHandle:request.nodeHandle];
-            completion(node);
-        }]];
-    }
 }
 
 @end

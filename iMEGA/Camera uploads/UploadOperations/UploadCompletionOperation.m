@@ -5,12 +5,14 @@
 #import "MEGAError+MNZCategory.h"
 #import "NSError+CameraUpload.h"
 #import "CameraUploadManager.h"
+#import "CameraUploadNodeLoader.h"
 
 @interface UploadCompletionOperation ()
 
 @property (strong, nonatomic) AssetUploadInfo *uploadInfo;
 @property (strong, nonatomic) NSData *transferToken;
 @property (copy, nonatomic) UploadCompletionHandler completion;
+@property (strong, nonatomic) CameraUploadNodeLoader *cameraUploadNodeLoader;
 
 @end
 
@@ -25,6 +27,14 @@
     }
     
     return self;
+}
+
+- (CameraUploadNodeLoader *)cameraUploadNodeLoader {
+    if (_cameraUploadNodeLoader == nil) {
+        _cameraUploadNodeLoader = [[CameraUploadNodeLoader alloc] init];
+    }
+    
+    return _cameraUploadNodeLoader;
 }
 
 - (void)start {
@@ -54,7 +64,7 @@
     }];
     
     if (self.uploadInfo.parentNode == nil) {
-        [CameraUploadManager.shared requestCameraUploadNodeWithCompletion:^(MEGANode * _Nullable cameraUploadNode) {
+        [self.cameraUploadNodeLoader loadCameraUploadNodeWithCompletion:^(MEGANode * _Nullable cameraUploadNode) {
             if (cameraUploadNode == nil) {
                 self.completion(nil, NSError.mnz_cameraUploadNodeIsNotFoundError);
                 [self finishOperation];

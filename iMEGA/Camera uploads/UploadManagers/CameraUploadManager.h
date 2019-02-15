@@ -50,10 +50,6 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)startBackgroundUploadIfPossible;
 - (void)stopBackgroundUpload;
 
-#pragma mark - request camera upload node
-
-- (void)requestCameraUploadNodeWithCompletion:(void (^)(MEGANode * _Nullable cameraUploadNode))completion;
-
 @end
 
 NS_ASSUME_NONNULL_END
