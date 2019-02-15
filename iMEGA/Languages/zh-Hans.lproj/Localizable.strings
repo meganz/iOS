@@ -70,22 +70,6 @@
 "pleaseLogInToYourAccount"="请登入您的账号。";
 /* Error message when a user attempts to change their email without an active login session. */
 "needToBeLoggedInToCompleteYourEmailChange"="您必须登入以完成您的电子邮件地址变更作业。请您使用目前的电子邮件地址重新登入，然后再次点击您的确认链接。";
-/* Title shown on the app's start animation to explain what MEGA offers you (1/4) */
-"megaSpace"="MEGA 存储空间";
-/* Title shown on the app's start animation to explain what MEGA offers you (2/4) */
-"megaSpeed"="MEGA 网络速度";
-/* Title shown on the app's start animation to explain what MEGA offers you (3/4) */
-"megaPrivacy"="MEGA 隐私保护";
-/* Title shown on the app's start animation to explain what MEGA offers you (4/4) */
-"megaAccess"="访问MEGA";
-/* Message shown on the app's start animation to explain what MEGA SPACE means */
-"megaSpaceText"="马上注册获得50 GB 免费空间";
-/* Message shown on the app's start animation to explain what MEGA SPEED means */
-"megaSpeedText"="高速上传。快速共享文件给每个人。";
-/* Message shown on the app's start animation to explain what MEGA PRIVACY means */
-"megaPrivacyText"="使用MEGA确保您的文件的安全性终端至终端加密技术";
-/* Message shown on the app's start animation to explain what MEGA ACCESS means */
-"megaAccessText"="随时随地获得完全加密访问";
 /* Button title which triggers the action to login in your MEGA account */
 "login"="登录";
 /* Button title which triggers the action to create a MEGA account */
@@ -1684,6 +1668,8 @@
 "Poor conection."="网络连接不佳。";
 /* Message shown in a chat room when there is an active group call */
 "There is an active group call. Tap to join."="您有一个活跃的群组通话。点击加入。";
+/* Message shown in a chat room when there is an active call */
+"There is an active call. Tap to join."="There is an active call. Tap to join.";
 /* Message shown in a chat room for a group call in progress displaying the duration of the call */
 "Touch to return to call %@"="触摸即可返回通话%@";
 /* A button label which allows the users save images/videos in the Photos app. */
@@ -1812,3 +1798,7 @@
 "%d participants"="%d 人参与";
 /* Singular of participant. 1 participant */
 "%d participant"="%d 人参与";
+/* Text to inform the user there is an active call and is not participating */
+"Ongoing Call"="Ongoing Call";
+/* Text to inform the user there is an active call and is participating */
+"Call Started"="Call Started";

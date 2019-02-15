@@ -70,22 +70,6 @@
 "pleaseLogInToYourAccount"="กรุณาเข้าสู่ระบบในบัญชีของคุณ";
 /* Error message when a user attempts to change their email without an active login session. */
 "needToBeLoggedInToCompleteYourEmailChange"="คุณต้องเข้าสู่ระบบเพื่อทำการเปลี่ยนแปลงอีเมลของคุณ กรุณาเข้าสู่ระบบด้วยอยู่อีเมลปัจจุบันของคุณ จากนั้นคลิกที่ลิงก์ยืนยันของคุณอีกครั้ง";
-/* Title shown on the app's start animation to explain what MEGA offers you (1/4) */
-"megaSpace"="พื้นที่ว่างบน MEGA";
-/* Title shown on the app's start animation to explain what MEGA offers you (2/4) */
-"megaSpeed"="ความเร็วของ MEGA";
-/* Title shown on the app's start animation to explain what MEGA offers you (3/4) */
-"megaPrivacy"="ความเป็นส่วนตัวของ MEGA";
-/* Title shown on the app's start animation to explain what MEGA offers you (4/4) */
-"megaAccess"="การเข้าถึง MEGA";
-/* Message shown on the app's start animation to explain what MEGA SPACE means */
-"megaSpaceText"="ลงทะเบียนตอนนี้ รับสิทธิ์ฟรีพื้นที่ 50 GB";
-/* Message shown on the app's start animation to explain what MEGA SPEED means */
-"megaSpeedText"="อัปโหลดรวดเร็ว แชร์ไฟล์ไปยังทุกคนได้อย่างง่ายดาย";
-/* Message shown on the app's start animation to explain what MEGA PRIVACY means */
-"megaPrivacyText"="เก็บไฟล์ทั้งหมดของคุณให้ปลอดภัยด้วยการเข้ารหัสตั้งแต่ต้นทางถึงปลายทางของ MEGA";
-/* Message shown on the app's start animation to explain what MEGA ACCESS means */
-"megaAccessText"="รองรับการเข้ารหัส พร้อมเข้าถึงได้ทุกที่ทุกเวลา";
 /* Button title which triggers the action to login in your MEGA account */
 "login"="เข้าสู่ระบบ";
 /* Button title which triggers the action to create a MEGA account */
@@ -986,7 +970,7 @@
 /* A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text. */
 "cloudDriveIsFull"="[S]บัญชีของคุณเต็มแล้ว[/S] [A]อัปเกรดเดี๋ยวนี้[/A] เป็นบัญชี PRO และเพิ่มพื้นที่เก็บข้อมูลระบบคลาวด์ได้ถึง [S]8 TB (8192 GB)[/S]";
 /* Storage related with the MEGA PRO account level you can subscribe */
-"productSpace"="พื้นที่จัดเก็บข้อมูล";
+"productSpace"="ที่เก็บข้อมูล";
 /* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
 "transferQuota"="โควต้าการถ่ายโอน";
 /* Label for any 'Limited' button, link, text, title, etc. - (String as short as possible). */
@@ -1684,6 +1668,8 @@
 "Poor conection."="การเชื่อมต่อแย่";
 /* Message shown in a chat room when there is an active group call */
 "There is an active group call. Tap to join."="มีการโทรกลุ่มอยู่ในขณะนี้ แตะเพื่อเข้าร่วม";
+/* Message shown in a chat room when there is an active call */
+"There is an active call. Tap to join."="There is an active call. Tap to join.";
 /* Message shown in a chat room for a group call in progress displaying the duration of the call */
 "Touch to return to call %@"="แตะเพื่อกลับไปที่สาย %@";
 /* A button label which allows the users save images/videos in the Photos app. */
@@ -1812,3 +1798,7 @@
 "%d participants"="ผู้เข้าร่วม %d คน";
 /* Singular of participant. 1 participant */
 "%d participant"="ผู้เข้าร่วม %d คน";
+/* Text to inform the user there is an active call and is not participating */
+"Ongoing Call"="Ongoing Call";
+/* Text to inform the user there is an active call and is participating */
+"Call Started"="Call Started";

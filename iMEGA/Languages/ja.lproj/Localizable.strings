@@ -70,22 +70,6 @@
 "pleaseLogInToYourAccount"="あなたのアカウントにログインして下さい。";
 /* Error message when a user attempts to change their email without an active login session. */
 "needToBeLoggedInToCompleteYourEmailChange"="メールの変更を完了するには、ログインする必要があります。現在のメールアドレスで再度ログインしてから、確認リンクをもう一度クリックしてください。";
-/* Title shown on the app's start animation to explain what MEGA offers you (1/4) */
-"megaSpace"="MEGA の超デカスペース";
-/* Title shown on the app's start animation to explain what MEGA offers you (2/4) */
-"megaSpeed"="MEGA の超速スピード";
-/* Title shown on the app's start animation to explain what MEGA offers you (3/4) */
-"megaPrivacy"="MEGA ならではの完璧プライバシー";
-/* Title shown on the app's start animation to explain what MEGA offers you (4/4) */
-"megaAccess"="MEGAへのアクセス方法";
-/* Message shown on the app's start animation to explain what MEGA SPACE means */
-"megaSpaceText"="今すぐ登録して、50 GB の無料スペースをどうぞ！";
-/* Message shown on the app's start animation to explain what MEGA SPEED means */
-"megaSpeedText"="す速いアップロード。みんなとファイルを今すぐ共有。";
-/* Message shown on the app's start animation to explain what MEGA PRIVACY means */
-"megaPrivacyText"="MEGAの末端間暗号化システムならあなたのファイルは安全です。";
-/* Message shown on the app's start animation to explain what MEGA ACCESS means */
-"megaAccessText"="いつでも、どこでも完全に暗号化。";
 /* Button title which triggers the action to login in your MEGA account */
 "login"="ログイン";
 /* Button title which triggers the action to create a MEGA account */
@@ -1684,6 +1668,8 @@
 "Poor conection."="接続不良。";
 /* Message shown in a chat room when there is an active group call */
 "There is an active group call. Tap to join."="有効なグループ通話があります。タップして参加します。";
+/* Message shown in a chat room when there is an active call */
+"There is an active call. Tap to join."="There is an active call. Tap to join.";
 /* Message shown in a chat room for a group call in progress displaying the duration of the call */
 "Touch to return to call %@"="タッチして通話に戻る %@";
 /* A button label which allows the users save images/videos in the Photos app. */
@@ -1812,3 +1798,7 @@
 "%d participants"="%d人の参加者";
 /* Singular of participant. 1 participant */
 "%d participant"="%d人の参加者";
+/* Text to inform the user there is an active call and is not participating */
+"Ongoing Call"="Ongoing Call";
+/* Text to inform the user there is an active call and is participating */
+"Call Started"="Call Started";
