@@ -10,6 +10,7 @@
 
 #import "NSDate+MNZCategory.h"
 #import "MEGASdkManager.h"
+#import "MEGAUser+MNZCategory.h"
 
 static NSString* const A = @"[A]";
 static NSString* const B = @"[B]";
@@ -742,6 +743,41 @@ static NSString* const B = @"[B]";
         lastSeenMessage = AMLocalizedString(@"Last seen a long time ago", @"Text to inform the user the 'Last seen' time of a contact is a long time ago (more than 65535 minutes)");
     }
     return lastSeenMessage;
+}
+
++ (NSString *)mnz_addedByInRecentActionBucket:(MEGARecentActionBucket *)recentActionBucket nodesArray:(NSArray *)nodesArray {
+    NSString *addebByString;
+    if (recentActionBucket.isUpdate) {
+        if (nodesArray.count == 1) {
+            addebByString = AMLocalizedString(@"%1 modified by %3", @"Title for a recent action shown in the webclient, see the attached image for context.");
+            addebByString = [addebByString stringByReplacingOccurrencesOfString:@"%1 " withString:@""];
+            MEGAUser *user = [MEGASdkManager.sharedMEGASdk contactForEmail:recentActionBucket.userEmail];
+            addebByString = [addebByString stringByReplacingOccurrencesOfString:@"%3" withString:user.mnz_firstName];
+        } else if (nodesArray.count > 1) {
+            addebByString = AMLocalizedString(@"%1 and [A]%2 more[/A] modified by %3", @"Title for a recent action shown in the webclient, see the attached image for context. Please ensure that the `%2 more` is inside the [A] tag as this will become a toggle to show the hidden content.");
+            addebByString = addebByString.mnz_removeWebclientFormatters;
+            addebByString = [addebByString stringByReplacingOccurrencesOfString:@"%1 " withString:@""];
+            addebByString = [addebByString stringByReplacingOccurrencesOfString:@"%2" withString:[NSString stringWithFormat:@"%lu", (unsigned long)nodesArray.count]];
+            MEGAUser *user = [MEGASdkManager.sharedMEGASdk contactForEmail:recentActionBucket.userEmail];
+            addebByString = [addebByString stringByReplacingOccurrencesOfString:@"%3" withString:user.mnz_firstName];
+        }
+    } else {
+        if (nodesArray.count == 1) {
+            addebByString = AMLocalizedString(@"%1 created by %3", @"Title for a recent action shown in the webclient, see the attached image for context.");
+            addebByString = [addebByString stringByReplacingOccurrencesOfString:@"%1 " withString:@""];
+            MEGAUser *user = [MEGASdkManager.sharedMEGASdk contactForEmail:recentActionBucket.userEmail];
+            addebByString = [addebByString stringByReplacingOccurrencesOfString:@"%3" withString:user.mnz_firstName];
+        } else if (nodesArray.count > 1) {
+            addebByString = AMLocalizedString(@"%1 and [A]%2 more[/A] created by %3", @"Title for a recent action shown in the webclient, see the attached image for context. Please ensure that the `%2 more` is inside the [A] tag as this will become a toggle to show the hidden content.");
+            addebByString = addebByString.mnz_removeWebclientFormatters;
+            addebByString = [addebByString stringByReplacingOccurrencesOfString:@"%1 " withString:@""];
+            addebByString = [addebByString stringByReplacingOccurrencesOfString:@"%2" withString:[NSString stringWithFormat:@"%lu", (unsigned long)nodesArray.count]];
+            MEGAUser *user = [MEGASdkManager.sharedMEGASdk contactForEmail:recentActionBucket.userEmail];
+            addebByString = [addebByString stringByReplacingOccurrencesOfString:@"%3" withString:user.mnz_firstName];
+        }
+    }
+    
+    return addebByString;
 }
 
 #pragma mark - File names and extensions

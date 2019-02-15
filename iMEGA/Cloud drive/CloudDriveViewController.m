@@ -31,6 +31,8 @@
 #import "UITextField+MNZCategory.h"
 
 #import "BrowserViewController.h"
+#import "CloudDriveTableViewController.h"
+#import "CloudDriveCollectionViewController.h"
 #import "ContactsViewController.h"
 #import "CustomActionViewController.h"
 #import "CustomModalAlertViewController.h"
@@ -40,14 +42,13 @@
 #import "MEGAPhotoBrowserViewController.h"
 #import "NodeInfoViewController.h"
 #import "NodeTableViewCell.h"
+#import "LayoutView.h"
 #import "PhotosViewController.h"
 #import "PreviewDocumentViewController.h"
+#import "RecentsViewController.h"
 #import "SortByTableViewController.h"
 #import "SharedItemsViewController.h"
 #import "UpgradeTableViewController.h"
-#import "CloudDriveTableViewController.h"
-#import "CloudDriveCollectionViewController.h"
-#import "LayoutView.h"
 
 @interface CloudDriveViewController () <UINavigationControllerDelegate, UIDocumentPickerDelegate, UIDocumentMenuDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGADelegate, MEGARequestDelegate, CustomActionViewControllerDelegate, NodeInfoViewControllerDelegate, UITextFieldDelegate, UISearchControllerDelegate> {
     
@@ -55,6 +56,12 @@
 }
 
 @property (weak, nonatomic) IBOutlet UIView *containerView;
+
+@property (weak, nonatomic) IBOutlet UIView *selectorView;
+@property (weak, nonatomic) IBOutlet UIButton *recentsButton;
+@property (weak, nonatomic) IBOutlet UIView *recentsLineView;
+@property (weak, nonatomic) IBOutlet UIButton *cloudDriveButton;
+@property (weak, nonatomic) IBOutlet UIView *cloudDriveLineView;
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *selectAllBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *moreBarButtonItem;
@@ -77,6 +84,7 @@
 
 @property (nonatomic, strong) CloudDriveTableViewController *cdTableView;
 @property (nonatomic, strong) CloudDriveCollectionViewController *cdCollectionView;
+@property (nonatomic, strong) RecentsViewController *recentsVC;
 
 @property (nonatomic, assign) LayoutMode layoutView;
 @property (nonatomic, assign) BOOL shouldDetermineLayout;
@@ -110,6 +118,10 @@
     }
     
     [self determineLayoutView];
+    
+    if (self.shouldHideSelectorView || self.displayMode != DisplayModeCloudDrive || ([MEGASdkManager.sharedMEGASdk accessLevelForNode:self.parentNode] != MEGAShareTypeAccessOwner)) {
+        self.selectorViewHeightLayoutConstraint.constant = 0;
+    }
     
     [self setNavigationBarButtonItems];
     
@@ -350,6 +362,7 @@
         case MEGANodeTypeFolder: {
             CloudDriveViewController *cloudDriveVC = [self.storyboard instantiateViewControllerWithIdentifier:@"CloudDriveID"];
             cloudDriveVC.parentNode = node;
+            cloudDriveVC.hideSelectorView = YES;
             if (self.displayMode == DisplayModeRubbishBin) {
                 cloudDriveVC.displayMode = self.displayMode;
             }
@@ -1032,7 +1045,7 @@
         switch (self.displayMode) {
             case DisplayModeCloudDrive: {
                 if ([self.parentNode type] == MEGANodeTypeRoot) {
-                    navigationTitle = AMLocalizedString(@"cloudDrive", @"Title of the Cloud Drive section");
+                    navigationTitle = @"MEGA";
                 } else {
                     if (!self.parentNode) {
                         navigationTitle = AMLocalizedString(@"cloudDrive", @"Title of the Cloud Drive section");
@@ -1194,6 +1207,51 @@
 }
 
 #pragma mark - IBActions
+
+- (IBAction)recentsTouchUpInside:(UIButton *)sender {
+    sender.selected = !sender.selected;
+    self.cloudDriveButton.selected = !self.cloudDriveButton.selected;
+    
+    self.recentsLineView.backgroundColor = UIColor.mnz_redMain;
+    self.cloudDriveLineView.backgroundColor = UIColor.mnz_grayCCCCCC;
+    
+    if (self.layoutView == LayoutModeList) {
+        [self.cdTableView willMoveToParentViewController:nil];
+        [self.cdTableView.view removeFromSuperview];
+        [self.cdTableView removeFromParentViewController];
+        self.cdTableView = nil;
+    } else  {
+        [self.cdCollectionView willMoveToParentViewController:nil];
+        [self.cdCollectionView.view removeFromSuperview];
+        [self.cdCollectionView removeFromParentViewController];
+        self.cdCollectionView = nil;
+    }
+    
+    self.searchController = nil;
+    
+    self.recentsVC = [[UIStoryboard storyboardWithName:@"Recents" bundle:nil] instantiateViewControllerWithIdentifier:@"RecentsViewControllerID"];
+    [self addChildViewController:self.recentsVC];
+    self.recentsVC.view.frame = self.containerView.bounds;
+    [self.containerView addSubview:self.recentsVC.view];
+    [self.recentsVC didMoveToParentViewController:self];
+    
+    self.recentsVC.cloudDrive = self;
+}
+
+- (IBAction)cloudDriveTouchUpInside:(UIButton *)sender {
+    self.recentsButton.selected = !self.recentsButton.selected;
+    sender.selected = !sender.selected;
+    
+    self.recentsLineView.backgroundColor = UIColor.mnz_grayCCCCCC;
+    self.cloudDriveLineView.backgroundColor = UIColor.mnz_redMain;
+    
+    [self.recentsVC willMoveToParentViewController:nil];
+    [self.recentsVC.view removeFromSuperview];
+    [self.recentsVC removeFromParentViewController];
+    self.recentsVC = nil;
+    
+    [self determineLayoutView];
+}
 
 - (IBAction)selectAllAction:(UIBarButtonItem *)sender {
     [self.selectedNodesArray removeAllObjects];

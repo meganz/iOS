@@ -1,11 +1,13 @@
 #import "NodeTableViewCell.h"
 
-#import "NSString+MNZCategory.h"
+#import "MEGANodeList+MNZCategory.h"
 
 #import "Helper.h"
 #import "MEGAGetThumbnailRequestDelegate.h"
 #import "MEGASdkManager.h"
 #import "MEGAStore.h"
+#import "NSDate+MNZCategory.h"
+#import "NSString+MNZCategory.h"
 #import "UIImageView+MNZCategory.h"
 
 @implementation NodeTableViewCell
@@ -109,6 +111,45 @@
     } else {
         self.delegate = delegate;
     }
+}
+
+- (void)configureForRecentAction:(MEGARecentActionBucket *)recentActionBucket {
+    NSArray *nodesArray = recentActionBucket.nodesList.mnz_nodesArrayFromNodeList;
+    
+    MEGANode *node = [nodesArray objectAtIndex:0];
+    [self.thumbnailImageView mnz_setThumbnailByNode:node];
+    self.thumbnailPlayImageView.hidden = node.hasThumbnail ? !node.name.mnz_isVideoPathExtension : YES;
+    
+    NSString *title;
+    if (nodesArray.count == 1) {
+        title = node.name;
+        
+        self.moreButton.hidden = NO;
+        self.accessoryType = UITableViewCellAccessoryNone;
+    } else if (nodesArray.count > 1) {
+        NSString *tempString = AMLocalizedString(@"%1 and [A]%2 more[/A]", @"Title for a recent action shown in the webclient, see the attached image for context. Please ensure that the `%2 more` is inside the [A] tag as this will become a toggle to show the hidden content.");
+        tempString = tempString.mnz_removeWebclientFormatters;
+        tempString = [tempString stringByReplacingOccurrencesOfString:@"%1" withString:node.name];
+        title = [tempString stringByReplacingOccurrencesOfString:@"%2" withString:[NSString stringWithFormat:@"%lu", (unsigned long)(nodesArray.count - 1)]];
+        
+        self.moreButton.hidden = YES;
+        self.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    }
+    self.nameLabel.text = title;
+    
+    if (![recentActionBucket.userEmail isEqualToString:MEGASdkManager.sharedMEGASdk.myEmail]) {
+        self.subtitleLabel.text = [NSString mnz_addedByInRecentActionBucket:recentActionBucket nodesArray:nodesArray];
+        
+        MEGAShareType shareType = [MEGASdkManager.sharedMEGASdk accessLevelForNode:node];
+        self.incomingOrOutgoingImageView.image = (shareType == MEGAShareTypeAccessOwner) ? [UIImage imageNamed:@"mini_folder_outgoing"] : [UIImage imageNamed:@"mini_folder_incoming"];
+    }
+    
+    MEGANode *parentNode = [MEGASdkManager.sharedMEGASdk nodeForHandle:recentActionBucket.parentHandle];
+    self.infoLabel.text = [NSString stringWithFormat:@"%@ ・", parentNode.name];
+    
+    self.uploadOrVersionImageView.image = recentActionBucket.isUpdate ? [UIImage imageNamed:@"versioned"] : [UIImage imageNamed:@"recentUpload"];
+    
+    self.timeLabel.text = recentActionBucket.timestamp.mnz_formattedHourAndMinutes;
 }
 
 #pragma mark - IBActions

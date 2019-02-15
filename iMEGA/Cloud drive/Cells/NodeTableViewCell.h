@@ -6,9 +6,20 @@
 @property (weak, nonatomic) IBOutlet UIImageView *middleImageView;
 @property (weak, nonatomic) IBOutlet UIImageView *downImageView;
 @property (weak, nonatomic) IBOutlet UIImageView *thumbnailImageView;
+
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
+
 @property (weak, nonatomic) IBOutlet UIImageView *downloadingArrowImageView;
+
+@property (weak, nonatomic) IBOutlet UILabel *subtitleLabel;
+
 @property (weak, nonatomic) IBOutlet UILabel *infoLabel;
+
+@property (weak, nonatomic) IBOutlet UIImageView *incomingOrOutgoingImageView;
+@property (weak, nonatomic) IBOutlet UIImageView *uploadOrVersionImageView;
+
+@property (weak, nonatomic) IBOutlet UILabel *timeLabel;
+
 @property (weak, nonatomic) IBOutlet UIButton *cancelButton;
 @property (weak, nonatomic) IBOutlet UIButton *moreButton;
 
@@ -24,5 +35,7 @@
 @property (strong, nonatomic) MEGANode *node;
 
 - (void)configureCellForNode:(MEGANode *)node delegate:(id<MGSwipeTableCellDelegate>)delegate api:(MEGASdk *)api;
+
+- (void)configureForRecentAction:(MEGARecentActionBucket *)recentActionBucket;
 
 @end
