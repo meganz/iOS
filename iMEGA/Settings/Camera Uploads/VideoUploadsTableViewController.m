@@ -83,7 +83,12 @@ typedef NS_ENUM(NSUInteger, VideoUploadsFormatRow) {
 #pragma mark - UI Actions
 
 - (IBAction)uploadVideosSwitchValueChanged:(UISwitch *)sender {
-    CameraUploadManager.videoUploadEnabled = sender.isOn;
+    if (sender.isOn) {
+        [CameraUploadManager.shared enableVideoUpload];
+    } else {
+        [CameraUploadManager.shared disableVideoUpload];
+    }
+    
     [self configUI];
 }
 
