@@ -6,6 +6,7 @@
 #import "NSURL+CameraUpload.h"
 #import "CameraUploadManager.h"
 #import "NodesFetchListenerOperation.h"
+#import "CameraUploadManager+Settings.h"
 
 @interface CameraUploadCompletionManager ()
 
@@ -40,6 +41,10 @@
 }
 
 - (void)handleCompletedTransferWithLocalIdentifier:(NSString *)localIdentifier token:(NSData *)token {
+    if (!CameraUploadManager.isCameraUploadEnabled) {
+        return;
+    }
+    
     if (!CameraUploadManager.shared.isNodesFetchDone) {
         NodesFetchListenerOperation *nodesFetchListenerOperation = [[NodesFetchListenerOperation alloc] init];
         [nodesFetchListenerOperation start];
