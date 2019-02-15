@@ -70,22 +70,6 @@
 "pleaseLogInToYourAccount"="Veuillez vous connecter à votre compte.";
 /* Error message when a user attempts to change their email without an active login session. */
 "needToBeLoggedInToCompleteYourEmailChange"="Vous devez être connecté pour effectuer votre changement d'adresse courriel. Veuillez vous connecter de nouveau avec votre adresse courriel actuelle et recliquer ensuite sur le lien de confirmation.";
-/* Title shown on the app's start animation to explain what MEGA offers you (1/4) */
-"megaSpace"="L’ESPACE MEGA";
-/* Title shown on the app's start animation to explain what MEGA offers you (2/4) */
-"megaSpeed"="VITESSE MEGA";
-/* Title shown on the app's start animation to explain what MEGA offers you (3/4) */
-"megaPrivacy"="CONFIDENTIALITÉ MEGA";
-/* Title shown on the app's start animation to explain what MEGA offers you (4/4) */
-"megaAccess"="ACCÈS MEGA";
-/* Message shown on the app's start animation to explain what MEGA SPACE means */
-"megaSpaceText"="Créez un compte maintenant et obtenez 50 Go d’espace gratuits.";
-/* Message shown on the app's start animation to explain what MEGA SPEED means */
-"megaSpeedText"="Les téléversements sont rapides. Partagez rapidement des fichiers avec tout le monde.";
-/* Message shown on the app's start animation to explain what MEGA PRIVACY means */
-"megaPrivacyText"="Assurez la sécurité de tous vos fichiers grâce au chiffrement de bout en bout de MEGA";
-/* Message shown on the app's start animation to explain what MEGA ACCESS means */
-"megaAccessText"="Disposez d’un accès entièrement chiffré n’importe où, n’importe quand.";
 /* Button title which triggers the action to login in your MEGA account */
 "login"="Connexion";
 /* Button title which triggers the action to create a MEGA account */
@@ -1684,6 +1668,8 @@
 "Poor conection."="La connexion est de mauvaise qualité.";
 /* Message shown in a chat room when there is an active group call */
 "There is an active group call. Tap to join."="Un appel de groupe est actif. Touchez pour vous y joindre.";
+/* Message shown in a chat room when there is an active call */
+"There is an active call. Tap to join."="There is an active call. Tap to join.";
 /* Message shown in a chat room for a group call in progress displaying the duration of the call */
 "Touch to return to call %@"="Touchez pour revenir à l’appel %@";
 /* A button label which allows the users save images/videos in the Photos app. */
@@ -1812,3 +1798,7 @@
 "%d participants"="%d participants";
 /* Singular of participant. 1 participant */
 "%d participant"="%d participant";
+/* Text to inform the user there is an active call and is not participating */
+"Ongoing Call"="Ongoing Call";
+/* Text to inform the user there is an active call and is participating */
+"Call Started"="Call Started";

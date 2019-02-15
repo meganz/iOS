@@ -70,22 +70,6 @@
 "pleaseLogInToYourAccount"="Te rugăm să te autentifici.";
 /* Error message when a user attempts to change their email without an active login session. */
 "needToBeLoggedInToCompleteYourEmailChange"="Trebuie să fii autentificat pentru a finaliza schimbarea e-mailului. Te rugăm să te autentifici din nou cu adresa de e-mail actuală și apoi dă clic pe linkul de confirmare din nou.";
-/* Title shown on the app's start animation to explain what MEGA offers you (1/4) */
-"megaSpace"="SPAȚIU MEGA";
-/* Title shown on the app's start animation to explain what MEGA offers you (2/4) */
-"megaSpeed"="VITEZĂ MEGA";
-/* Title shown on the app's start animation to explain what MEGA offers you (3/4) */
-"megaPrivacy"="CONFIDENȚIALITATE MEGA";
-/* Title shown on the app's start animation to explain what MEGA offers you (4/4) */
-"megaAccess"="ACCES MEGA";
-/* Message shown on the app's start animation to explain what MEGA SPACE means */
-"megaSpaceText"="Înregistrează-te acum și obține 50 GB spațiu gratuit.";
-/* Message shown on the app's start animation to explain what MEGA SPEED means */
-"megaSpeedText"="Încărcările sunt rapide.Partajează rapid fișiere cu toți.";
-/* Message shown on the app's start animation to explain what MEGA PRIVACY means */
-"megaPrivacyText"="Păstrează toate fișierele în siguranțăcu criptarea capăt-la-capăt MEGA.";
-/* Message shown on the app's start animation to explain what MEGA ACCESS means */
-"megaAccessText"="Obține acces complet criptate oriunde, oricând.";
 /* Button title which triggers the action to login in your MEGA account */
 "login"="Autentificare";
 /* Button title which triggers the action to create a MEGA account */
@@ -681,7 +665,7 @@
 /* Title of the label where the SDK version is shown */
 "sdkVersion"="Versiune MEGA SDK";
 /* Title of the label where the MEGAchat SDK version is shown */
-"megachatSdkVersion"="Versiunea SDK a MEGAchat";
+"megachatSdkVersion"="Versiunea SDK MEGAchat";
 /* Link to the public code of the app */
 "View source code"="Vezi codul sursă";
 /* Title for the section "Acknowledgements" of the app */
@@ -1252,7 +1236,7 @@
 /* Button title to see the available pro plans in MEGA */
 "seePlans"="Vezi planurile";
 /* Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible). */
-"dismiss"="Îndepărtează";
+"dismiss"="Înlătură";
 /* Notification text body shown when you have received a new chat message */
 "newMessage"="Mesaj nou";
 /* Notification text body shown when you have received a contact request */
@@ -1684,6 +1668,8 @@
 "Poor conection."="Conexiune slabă.";
 /* Message shown in a chat room when there is an active group call */
 "There is an active group call. Tap to join."="Există un apel de grup activ. Atinge pentru a te alătura.";
+/* Message shown in a chat room when there is an active call */
+"There is an active call. Tap to join."="There is an active call. Tap to join.";
 /* Message shown in a chat room for a group call in progress displaying the duration of the call */
 "Touch to return to call %@"="Atinge pentru a reveni la apelul %@";
 /* A button label which allows the users save images/videos in the Photos app. */
@@ -1812,3 +1798,7 @@
 "%d participants"="%d participanți";
 /* Singular of participant. 1 participant */
 "%d participant"="%d participant";
+/* Text to inform the user there is an active call and is not participating */
+"Ongoing Call"="Ongoing Call";
+/* Text to inform the user there is an active call and is participating */
+"Call Started"="Call Started";

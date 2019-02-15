@@ -70,22 +70,6 @@
 "pleaseLogInToYourAccount"="Log in op uw account.";
 /* Error message when a user attempts to change their email without an active login session. */
 "needToBeLoggedInToCompleteYourEmailChange"="U moet ingelogd zijn om de wijziging van uw e-mailadres te voltooien. Log alstublieft opnieuw in met uw huidige e-mailadres en klik vervolgens opnieuw op uw bevestigings-koppeling.";
-/* Title shown on the app's start animation to explain what MEGA offers you (1/4) */
-"megaSpace"="MEGA OPSLAGRUIMTE";
-/* Title shown on the app's start animation to explain what MEGA offers you (2/4) */
-"megaSpeed"="MEGA SNEL";
-/* Title shown on the app's start animation to explain what MEGA offers you (3/4) */
-"megaPrivacy"="MEGA PRIVACY";
-/* Title shown on the app's start animation to explain what MEGA offers you (4/4) */
-"megaAccess"="MEGA TOEGANG";
-/* Message shown on the app's start animation to explain what MEGA SPACE means */
-"megaSpaceText"="Registreer nu en ontvang 50 GB gratis opslagruimte.";
-/* Message shown on the app's start animation to explain what MEGA SPEED means */
-"megaSpeedText"="Uploads zijn snel. Deel snel bestanden met iedereen.";
-/* Message shown on the app's start animation to explain what MEGA PRIVACY means */
-"megaPrivacyText"="Bewaar al uw bestanden veilig met MEGA's eind-tot-eind codering.";
-/* Message shown on the app's start animation to explain what MEGA ACCESS means */
-"megaAccessText"="Krijg overal en altijd volledig gecodeerde toegang.";
 /* Button title which triggers the action to login in your MEGA account */
 "login"="Login";
 /* Button title which triggers the action to create a MEGA account */
@@ -1684,6 +1668,8 @@
 "Poor conection."="Slechte verbinding";
 /* Message shown in a chat room when there is an active group call */
 "There is an active group call. Tap to join."="Er is een actieve groep oproep. Tik om mee te doen.";
+/* Message shown in a chat room when there is an active call */
+"There is an active call. Tap to join."="There is an active call. Tap to join.";
 /* Message shown in a chat room for a group call in progress displaying the duration of the call */
 "Touch to return to call %@"="Tik om %@ terug te bellen";
 /* A button label which allows the users save images/videos in the Photos app. */
@@ -1785,9 +1771,9 @@
 /* The professional pricing plan which the user is currently on will expire in 5 days. The %1 is a placeholder for the number of days and should not be removed. */
 "Your PRO membership plan will expire in %1 days."="Uw PRO abonnement zal binnen %1 dagen verlopen.";
 /* The professional pricing plan which the user was on expired one day ago. */
-"Your PRO membership plan expired 1 day ago"="Uw PRO lidmaatschap abonnement is 1 dag geleden verlopen";
+"Your PRO membership plan expired 1 day ago"="Uw PRO abonnement is 1 dag geleden verlopen";
 /* The professional pricing plan which the user was on expired %1 days ago. The %1 is a placeholder for the number of days and should not be removed. */
-"Your PRO membership plan expired %1 days ago"="Uw PRO lidmaatschap abonnement is %1 dagen geleden verlopen";
+"Your PRO membership plan expired %1 days ago"="Uw PRO abonnement is %1 dagen geleden verlopen";
 /* The text of a notification indicating that a file or folder has been taken down due to infringement or other reason. The %1 placeholder will be replaced with the text ‘file’ or ‘folder’. The %2 will be replaced with the name of the file or folder. */
 "Your publicly shared %1 (%2) has been taken down."="Uw publiekelijk gedeelde %1 (%2) is weggehaald.";
 /* The text of a notification indicating that a file or folder that was taken down has now been restored due to a successful counter-notice. The %1 placeholder will be replaced with the text ‘file’ or ‘folder’. The %2 will be replaced with the name of the file or folder. */
@@ -1812,3 +1798,7 @@
 "%d participants"="%d deelnemers";
 /* Singular of participant. 1 participant */
 "%d participant"="%d deelnemer";
+/* Text to inform the user there is an active call and is not participating */
+"Ongoing Call"="Ongoing Call";
+/* Text to inform the user there is an active call and is participating */
+"Call Started"="Call Started";

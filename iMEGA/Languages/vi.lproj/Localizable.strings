@@ -70,22 +70,6 @@
 "pleaseLogInToYourAccount"="Xin đăng nhập vào tài khoản.";
 /* Error message when a user attempts to change their email without an active login session. */
 "needToBeLoggedInToCompleteYourEmailChange"="Bạn cần phải đăng nhập vào trước khi bạn được phép tiến hành việc thay đổi email. Xin sử dụng email hiện thời của tài khoản này và sau đó nhấp vào đường liên kết xác thực.";
-/* Title shown on the app's start animation to explain what MEGA offers you (1/4) */
-"megaSpace"="MEGA LƯU TRỮ";
-/* Title shown on the app's start animation to explain what MEGA offers you (2/4) */
-"megaSpeed"="MEGA TỐC ĐỘ";
-/* Title shown on the app's start animation to explain what MEGA offers you (3/4) */
-"megaPrivacy"="MEGA BẢO MẬT";
-/* Title shown on the app's start animation to explain what MEGA offers you (4/4) */
-"megaAccess"="MEGA TRUY CẬP";
-/* Message shown on the app's start animation to explain what MEGA SPACE means */
-"megaSpaceText"="Đăng ký ngay để nhận 50 GB dung lượng miễn phí.";
-/* Message shown on the app's start animation to explain what MEGA SPEED means */
-"megaSpeedText"="Tải lên nhanh chóng. Chia sẻ dữ liệu cực nhanh.";
-/* Message shown on the app's start animation to explain what MEGA PRIVACY means */
-"megaPrivacyText"="Lưu trữ tất cả dữ liệu an toàn vớibảo mật đầu-cuối từ MEGA.";
-/* Message shown on the app's start animation to explain what MEGA ACCESS means */
-"megaAccessText"="Truy cập dữ liệu an toàn mọi lúc, mọi nơi.";
 /* Button title which triggers the action to login in your MEGA account */
 "login"="Đăng nhập";
 /* Button title which triggers the action to create a MEGA account */
@@ -1684,6 +1668,8 @@
 "Poor conection."="Mạng yếu.";
 /* Message shown in a chat room when there is an active group call */
 "There is an active group call. Tap to join."="Có một cuộc gọi nhóm đang diễn ra. Chạm để tham gia.";
+/* Message shown in a chat room when there is an active call */
+"There is an active call. Tap to join."="There is an active call. Tap to join.";
 /* Message shown in a chat room for a group call in progress displaying the duration of the call */
 "Touch to return to call %@"="Chạm để quay trở lại cuộc gọi %@";
 /* A button label which allows the users save images/videos in the Photos app. */
@@ -1812,3 +1798,7 @@
 "%d participants"="%d participants";
 /* Singular of participant. 1 participant */
 "%d participant"="%d participant";
+/* Text to inform the user there is an active call and is not participating */
+"Ongoing Call"="Ongoing Call";
+/* Text to inform the user there is an active call and is participating */
+"Call Started"="Call Started";
