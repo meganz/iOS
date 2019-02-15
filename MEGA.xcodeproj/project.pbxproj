@@ -721,6 +721,7 @@
 		B68B33F2221501AA0058C4EF /* MOAssetUploadRecord+CameraUpload.m in Sources */ = {isa = PBXBuildFile; fileRef = B68B33F1221501AA0058C4EF /* MOAssetUploadRecord+CameraUpload.m */; };
 		B68C42C8216DA9CF003C5A50 /* MEGAOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = B68C42C6216DA9CE003C5A50 /* MEGAOperation.m */; };
 		B68C42CB216DAA85003C5A50 /* CameraUploadOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = B68C42CA216DAA85003C5A50 /* CameraUploadOperation.m */; };
+		B6A26AAF2216385D0076AF6D /* CameraUploadNodeLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = B6A26AAE2216385D0076AF6D /* CameraUploadNodeLoader.m */; };
 		B6A4A11121A2544C007E7EEC /* MEGAError+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = B6A4A11021A2544C007E7EEC /* MEGAError+MNZCategory.m */; };
 		B6A4A11421A256B0007E7EEC /* MEGABackgroundTaskOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = B6A4A11321A256B0007E7EEC /* MEGABackgroundTaskOperation.m */; };
 		B6A4A11A21A404DC007E7EEC /* NSError+CameraUpload.m in Sources */ = {isa = PBXBuildFile; fileRef = B6A4A11921A404DC007E7EEC /* NSError+CameraUpload.m */; };
@@ -1694,6 +1695,8 @@
 		B68C42C7216DA9CE003C5A50 /* MEGAOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEGAOperation.h; sourceTree = "<group>"; };
 		B68C42C9216DAA85003C5A50 /* CameraUploadOperation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CameraUploadOperation.h; sourceTree = "<group>"; };
 		B68C42CA216DAA85003C5A50 /* CameraUploadOperation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CameraUploadOperation.m; sourceTree = "<group>"; };
+		B6A26AAD2216385D0076AF6D /* CameraUploadNodeLoader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CameraUploadNodeLoader.h; sourceTree = "<group>"; };
+		B6A26AAE2216385D0076AF6D /* CameraUploadNodeLoader.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CameraUploadNodeLoader.m; sourceTree = "<group>"; };
 		B6A4A10F21A2544C007E7EEC /* MEGAError+MNZCategory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MEGAError+MNZCategory.h"; sourceTree = "<group>"; };
 		B6A4A11021A2544C007E7EEC /* MEGAError+MNZCategory.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "MEGAError+MNZCategory.m"; sourceTree = "<group>"; };
 		B6A4A11221A256B0007E7EEC /* MEGABackgroundTaskOperation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MEGABackgroundTaskOperation.h; sourceTree = "<group>"; };
@@ -3732,6 +3735,8 @@
 				B61F01C5220D37A400F4A917 /* DiskSpaceDetector.m */,
 				B6D11ADA219BC68900446B86 /* LocalFileNameCoordinator.h */,
 				B6D11AC5219B8ABC00446B86 /* LocalFileNameCoordinator.m */,
+				B6A26AAD2216385D0076AF6D /* CameraUploadNodeLoader.h */,
+				B6A26AAE2216385D0076AF6D /* CameraUploadNodeLoader.m */,
 			);
 			path = UploadUtils;
 			sourceTree = "<group>";
@@ -4407,6 +4412,7 @@
 				41D21E731D01AEC3002E6296 /* CTAssetThumbnailView.m in Sources */,
 				4115D6441E718B1F004BB0FF /* UIImage+MNZCategory.m in Sources */,
 				41D21E5B1D01AEC3002E6296 /* CTAssetCheckmark.m in Sources */,
+				B6A26AAF2216385D0076AF6D /* CameraUploadNodeLoader.m in Sources */,
 				41B2D41C1A6D06780002E29E /* UIImage+GKContact.m in Sources */,
 				B6575FD622012F8D00B7AD82 /* LoadMediaInfoOperation.m in Sources */,
 				A8C262AA1FA0B8F9006172CE /* CallViewController.m in Sources */,

@@ -86,17 +86,17 @@ static const NSUInteger MaximumUploadRetryPerLoginCount = 1000;
 }
 
 - (NSArray<MOAssetUploadRecord *> *)queueUpUploadRecordsByStatuses:(NSArray<NSNumber *> *)statuses fetchLimit:(NSInteger)fetchLimit mediaType:(PHAssetMediaType)mediaType error:(NSError *__autoreleasing  _Nullable *)error {
-    NSFetchRequest *request = MOAssetUploadRecord.fetchRequest;
-    request.fetchLimit = fetchLimit;
-    request.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"creationDate" ascending:NO]];
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(status IN %@) AND (mediaType == %@)", statuses, @(mediaType)];
-    request.predicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[predicate, [self predicateForAssetUploadRecordError]]];
-    [request setRelationshipKeyPathsForPrefetching:@[@"errorPerLaunch", @"errorPerLogin", @"fileNameRecord"]];
-
     __block NSArray<MOAssetUploadRecord *> *records = @[];
     __block NSError *coreDataError = nil;
     [self.backgroundContext performBlockAndWait:^{
+        NSFetchRequest *request = MOAssetUploadRecord.fetchRequest;
+        request.fetchLimit = fetchLimit;
+        request.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"creationDate" ascending:NO]];
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(status IN %@) AND (mediaType == %@)", statuses, @(mediaType)];
+        request.predicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[predicate, [self predicateForAssetUploadRecordError]]];
+        [request setRelationshipKeyPathsForPrefetching:@[@"errorPerLaunch", @"errorPerLogin", @"fileNameRecord"]];
         records = [self.backgroundContext executeFetchRequest:request error:&coreDataError];
+        
         for (MOAssetUploadRecord *record in records) {
             record.status = @(CameraAssetUploadStatusQueuedUp);
         }
