@@ -92,6 +92,11 @@ static const NSTimeInterval LoadMediaInfoTimeoutInSeconds = 120;
         [AttributeUploadManager.shared scanLocalAttributeFilesAndRetryUploadIfNeeded];
         [TransferSessionManager.shared restoreAllSessions];
         [self collateUploadRecords];
+        
+        if (UIApplication.sharedApplication.applicationState == UIApplicationStateBackground) {
+            MEGALogDebug(@"[Camera Upload] upload camera when app launches to background");
+            [CameraUploadManager.shared startCameraUploadIfNeeded];
+        }
     });
 }
 
@@ -255,6 +260,7 @@ static const NSTimeInterval LoadMediaInfoTimeoutInSeconds = 120;
 }
 
 - (void)requestMediaInfoForUpload {
+    MEGALogDebug(@"[Camera Upload] request media info for upload");
     if (self.mediaInfoLoader.isMediaInfoLoaded) {
         [self loadCameraUploadNodeForUpload];
     } else {
@@ -271,7 +277,7 @@ static const NSTimeInterval LoadMediaInfoTimeoutInSeconds = 120;
 }
 
 - (void)loadCameraUploadNodeForUpload {
-    MEGALogDebug(@"[Camera Upload] start loading camera upload node");
+    MEGALogDebug(@"[Camera Upload] load camera upload node");
     if (!self.isNodesFetchDone) {
         return;
     }
@@ -295,7 +301,7 @@ static const NSTimeInterval LoadMediaInfoTimeoutInSeconds = 120;
         return;
     }
     
-    MEGALogDebug(@"[Camera Upload] camera upload node is loaded and start uploading camera with current operation count %lu", (unsigned long)self.photoUploadOperationQueue.operationCount);
+    MEGALogDebug(@"[Camera Upload] start uploading photos with current operation count %lu", (unsigned long)self.photoUploadOperationQueue.operationCount);
     [self.diskSpaceDetector startDetectingPhotoUpload];
     
     if (self.photoUploadOperationQueue.operationCount < PhotoUploadInForegroundConcurrentCount) {
