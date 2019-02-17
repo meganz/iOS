@@ -106,6 +106,7 @@ static NSString * const LivePhotoVideoResourceTemporaryName = @"video.mov";
             self.uploadInfo.originalFingerprint = [MEGASdkManager.sharedMEGASdk fingerprintForFilePath:videoURL.path modificationTime:self.uploadInfo.asset.creationDate];
             MEGANode *matchingNode = [self nodeForOriginalFingerprint:self.uploadInfo.originalFingerprint];
             if (matchingNode) {
+                MEGALogDebug(@"[Camera Upload] %@ found existing node by original file fingerprint", self);
                 [self finishUploadForFingerprintMatchedNode:matchingNode];
                 return;
             } else {
