@@ -39,8 +39,6 @@ static const NSUInteger EncryptionProposedChunkSizeWithoutTruncating = 1024 * 10
     self.fileSize = attributeDict.fileSize;
     unsigned long long deviceFreeSize = [NSFileManager.defaultManager deviceFreeSize];
     
-    MEGALogDebug(@"[Camera Upload] input file size %.2f M, device free size %.2f M", self.fileSize / 1024.0 / 1024.0, deviceFreeSize / 1024.0 / 1024.0);
-    
     if (error) {
         completion(NO, 0, nil, error);
         return;
@@ -64,7 +62,6 @@ static const NSUInteger EncryptionProposedChunkSizeWithoutTruncating = 1024 * 10
     }
 
     NSUInteger chunkSize = [self calculateChunkSizeByDeviceFreeSize:deviceFreeSize];
-    MEGALogDebug(@"[Camera Upload] encryption chunk size %.2f M", chunkSize / 1024.0 / 1024.0);
     NSDictionary *chunkURLsKeyedByUploadSuffix = [self encryptedChunkURLsKeyedByUploadSuffixForFileAtURL:fileURL chunkSize:chunkSize error:&error];
     if (error) {
         completion(NO, 0, nil, error);
@@ -83,8 +80,6 @@ static const NSUInteger EncryptionProposedChunkSizeWithoutTruncating = 1024 * 10
         
         return @{};
     }
-
-    MEGALogDebug(@"[Camera Upload] reversed chunk positions %@", chunkPositions);
     
     NSMutableDictionary<NSString *, NSURL *> *chunksDict = [NSMutableDictionary dictionary];
     NSFileHandle *fileHandle;

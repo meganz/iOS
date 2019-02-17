@@ -9,14 +9,13 @@
 
 - (void)start {
     [super start];
-
-    MEGALogDebug(@"[Camera Upload] Start uploading thumbnail at URL %@", self.attributeURL);
+    
     __weak __typeof__(self) weakSelf = self;
     [MEGASdkManager.sharedMEGASdk setThumbnailNode:self.node sourceFilePath:self.attributeURL.path delegate:[[CameraUploadRequestDelegate alloc] initWithCompletion:^(MEGARequest * _Nonnull request, MEGAError * _Nonnull error) {
         if (error.type) {
-            MEGALogError(@"[Camera Upload] Upload thumbnail failed for node: %llu, error: %@", weakSelf.node.handle, error.nativeError);
+            MEGALogError(@"[Camera Upload] Upload thumbnail failed for node: %@, error: %@", weakSelf.node.name, error.nativeError);
         } else {
-            MEGALogDebug(@"[Camera Upload] Upload thumbnail succeeded for node: %llu", weakSelf.node.handle);
+            MEGALogDebug(@"[Camera Upload] Upload thumbnail succeeded for node %@", weakSelf.node.name);
             [weakSelf moveAttributeToDirectoryURL:[Helper urlForSharedSandboxCacheDirectory:@"thumbnailsV3"] newFileName:self.node.base64Handle];
         }
         
