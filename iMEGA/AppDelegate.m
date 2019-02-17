@@ -121,11 +121,6 @@
     
     [CameraUploadManager.shared setupCameraUploadWhenAppLaunches];
     
-    if (application.applicationState == UIApplicationStateBackground) {
-        MEGALogDebug(@"[Camera Upload] upload camera when app launches to background");
-        [CameraUploadManager.shared startCameraUploadIfNeeded];
-    }
-    
     return YES;
 }
 
@@ -388,8 +383,6 @@
     if (UIApplication.sharedApplication.windows.count > 0 && ![NSStringFromClass(UIApplication.sharedApplication.windows.firstObject.class) isEqualToString:@"UIWindow"]) {
         [[LTHPasscodeViewController sharedUser] disablePasscodeWhenApplicationEntersBackground];
     }
-    
-    [CameraUploadManager.shared startCameraUploadIfNeeded];
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
