@@ -121,6 +121,11 @@
     
     [CameraUploadManager.shared setupCameraUploadWhenAppLaunches];
     
+    if (application.applicationState == UIApplicationStateBackground) {
+        MEGALogDebug(@"[Camera Upload] upload camera when app launches to background");
+        [CameraUploadManager.shared startCameraUploadIfNeeded];
+    }
+    
     return YES;
 }
 
