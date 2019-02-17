@@ -106,7 +106,7 @@ static NSString * const VideoCellularDisallowedUploadSessionId = @"nz.mega.video
 
 - (NSURLSession *)createBackgroundSessionWithIdentifier:(NSString *)identifier {
     NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration backgroundSessionConfigurationWithIdentifier:identifier];
-    configuration.discretionary = YES;
+    configuration.discretionary = NO;
     configuration.sessionSendsLaunchEvents = YES;
     configuration.allowsCellularAccess = [identifier isEqualToString:PhotoCellularAllowedUploadSessionId] || [identifier isEqualToString:VideoCellularAllowedUploadSessionId];
     TransferSessionDelegate *delegate = [[TransferSessionDelegate alloc] initWithSessionManager:self];
