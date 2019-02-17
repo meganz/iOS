@@ -15,6 +15,7 @@
 #import "CameraUploadManager+Settings.h"
 #import "NSError+CameraUpload.h"
 #import "MEGAReachabilityManager.h"
+#import "MEGAError+MNZCategory.h"
 @import Photos;
 
 @interface CameraUploadOperation ()
@@ -150,11 +151,11 @@
 - (BOOL)createThumbnailAndPreviewFiles {
     BOOL thumbnailCreated = [self.attributesDataSDK createThumbnail:self.uploadInfo.fileURL.path destinatioPath:self.uploadInfo.thumbnailURL.path];
     if (!thumbnailCreated) {
-        MEGALogDebug(@"[Camera Upload] %@ error when to create thumbnail", self);
+        MEGALogError(@"[Camera Upload] %@ error when to create thumbnail", self);
     }
     BOOL previewCreated = [self.attributesDataSDK createPreview:self.uploadInfo.fileURL.path destinatioPath:self.uploadInfo.previewURL.path];
     if (!previewCreated) {
-        MEGALogDebug(@"[Camera Upload] %@ error when to create preview", self);
+        MEGALogError(@"[Camera Upload] %@ error when to create preview", self);
     }
     self.attributesDataSDK = nil;
     return thumbnailCreated && previewCreated;
@@ -190,12 +191,11 @@
     FileEncrypter *encrypter = [[FileEncrypter alloc] initWithMediaUpload:self.uploadInfo.mediaUpload outputDirectoryURL:self.uploadInfo.encryptionDirectoryURL shouldTruncateInputFile:YES];
     [encrypter encryptFileAtURL:self.uploadInfo.fileURL completion:^(BOOL success, unsigned long long fileSize, NSDictionary<NSString *,NSURL *> * _Nonnull chunkURLsKeyedByUploadSuffix, NSError * _Nonnull error) {
         if (success) {
-            MEGALogDebug(@"[Camera Upload] %@ file encryption is done with chunks %@", self, chunkURLsKeyedByUploadSuffix);
             self.uploadInfo.fileSize = fileSize;
             self.uploadInfo.encryptedChunkURLsKeyedByUploadSuffix = chunkURLsKeyedByUploadSuffix;
             [self requestUploadURL];
         } else {
-            MEGALogDebug(@"[Camera Upload] %@ error when to encrypt file %@", self, error);
+            MEGALogError(@"[Camera Upload] %@ error when to encrypt file %@", self, error);
             if (error.domain == CameraUploadErrorDomain && error.code == CameraUploadErrorNoEnoughDiskFreeSpace) {
                 [self finishUploadWithNoEnoughDiskSpace];
             } else if (error.domain == NSCocoaErrorDomain && error.code == NSFileWriteOutOfSpaceError) {
@@ -216,16 +216,15 @@
     
     [[MEGASdkManager sharedMEGASdk] requestBackgroundUploadURLWithFileSize:self.uploadInfo.fileSize mediaUpload:self.uploadInfo.mediaUpload delegate:[[CameraUploadRequestDelegate alloc] initWithCompletion:^(MEGARequest * _Nonnull request, MEGAError * _Nonnull error) {
         if (error.type) {
-            MEGALogError(@"[Camera Upload] %@ requests upload url failed with error type: %ld", self, (long)error.type);
+            MEGALogError(@"[Camera Upload] %@ error when to requests upload url %@", self, error.nativeError);
             if (error.type == MEGAErrorTypeApiEOverQuota || error.type == MEGAErrorTypeApiEgoingOverquota) {
-                [NSNotificationCenter.defaultCenter postNotificationName:MEGAStorageOverQuotaNotificationName object:nil];
+                [NSNotificationCenter.defaultCenter postNotificationName:MEGAStorageOverQuotaNotificationName object:self];
                 [self finishOperationWithStatus:CameraAssetUploadStatusCancelled shouldUploadNextAsset:NO];
             } else {
                 [self finishOperationWithStatus:CameraAssetUploadStatusFailed shouldUploadNextAsset:YES];
             }
         } else {
             self.uploadInfo.uploadURLString = [self.uploadInfo.mediaUpload uploadURLString];
-            MEGALogDebug(@"[Camera Upload] %@ got upload URL %@", self, self.uploadInfo.uploadURLString);
             if ([self archiveUploadInfoDataForBackgroundTransfer]) {
                 [self uploadEncryptedChunksToServer];
             } else {
@@ -253,9 +252,8 @@
             }
             uploadTask.taskDescription = self.uploadInfo.savedRecordLocalIdentifier;
             [uploadTask resume];
-            MEGALogDebug(@"[Camera Upload] %@ starts uploading chunk %@", self, chunkURL.lastPathComponent);
         } else {
-            MEGALogDebug(@"[Camera Upload] %@ chunk doesn't exist at %@", self, chunkURL);
+            MEGALogError(@"[Camera Upload] %@ error when to upload chunk as file doesn't exist at %@", self, chunkURL);
             [self finishOperationWithStatus:CameraAssetUploadStatusFailed shouldUploadNextAsset:YES];
             return;
         }
@@ -267,7 +265,6 @@
 #pragma mark - archive upload info
 
 - (BOOL)archiveUploadInfoDataForBackgroundTransfer {
-    MEGALogDebug(@"[Camera Upload] %@ start archiving upload info", self);
     NSURL *archivedURL = [NSURL mnz_archivedURLForLocalIdentifier:self.uploadInfo.savedRecordLocalIdentifier];
     return [NSKeyedArchiver archiveRootObject:self.uploadInfo toFile:archivedURL.path];
 }

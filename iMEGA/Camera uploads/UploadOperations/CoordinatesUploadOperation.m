@@ -1,17 +1,17 @@
 
-#import "CoordinateUploadOperation.h"
+#import "CoordinatesUploadOperation.h"
 #import "CameraUploadRequestDelegate.h"
 #import "MEGAError+MNZCategory.h"
 @import CoreLocation;
 
-@interface CoordinateUploadOperation ()
+@interface CoordinatesUploadOperation ()
 
 @property (strong, nonatomic) MEGANode *node;
 @property (strong, nonatomic) CLLocation *location;
 
 @end
 
-@implementation CoordinateUploadOperation
+@implementation CoordinatesUploadOperation
 
 - (instancetype)initWithLocation:(CLLocation *)location node:(MEGANode *)node expiresAfterTimeInterval:(NSTimeInterval)timeInterval {
     self = [super initWithExpirationTimeInterval:timeInterval];

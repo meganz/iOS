@@ -28,7 +28,6 @@
 #pragma mark - data processing
 
 - (void)requestVideoData {
-    MEGALogDebug(@"[Camera Upload] %@ starts requesting video data", self);
     __weak __typeof__(self) weakSelf = self;
     PHVideoRequestOptions *options = [[PHVideoRequestOptions alloc] init];
     options.version = PHVideoRequestOptionsVersionCurrent;
@@ -57,7 +56,7 @@
             weakSelf.uploadInfo.originalFingerprint = [MEGASdkManager.sharedMEGASdk fingerprintForFilePath:urlAsset.URL.path modificationTime:weakSelf.uploadInfo.asset.creationDate];
             MEGANode *matchingNode = [weakSelf nodeForOriginalFingerprint:weakSelf.uploadInfo.originalFingerprint];
             if (matchingNode) {
-                MEGALogDebug(@"[Camera Upload] %@ finds existing node by original fingerprint", weakSelf);
+                MEGALogDebug(@"[Camera Upload] %@ found existing node by original fingerprint", weakSelf);
                 [weakSelf finishUploadForFingerprintMatchedNode:matchingNode];
                 return;
             }
@@ -134,7 +133,7 @@
         return;
     }
     
-    MEGALogDebug(@"[Camera Upload] %@ starts exporting video data with original dimensions: %@", self, NSStringFromCGSize(asset.mnz_dimensions));
+    MEGALogDebug(@"[Camera Upload] %@ starts exporting video data", self);
     
     [AVAssetExportSession determineCompatibilityOfExportPreset:preset withAsset:asset outputFileType:outputFileType completionHandler:^(BOOL compatible) {
         if (compatible) {
@@ -151,7 +150,7 @@
             [session exportAsynchronouslyWithCompletionHandler:^{
                 switch (session.status) {
                     case AVAssetExportSessionStatusCompleted:
-                        MEGALogDebug(@"[Camera Upload] %@ has finished video compression", weakSelf);
+                        MEGALogDebug(@"[Camera Upload] %@ finished exporting video to URL %@", weakSelf, weakSelf.uploadInfo.fileURL);
                         [weakSelf handleProcessedUploadFile];
                         break;
                     case AVAssetExportSessionStatusCancelled:

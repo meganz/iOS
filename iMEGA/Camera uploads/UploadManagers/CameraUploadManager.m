@@ -79,8 +79,8 @@ static const NSTimeInterval LoadMediaInfoTimeoutInSeconds = 120;
 }
 
 - (void)registerGlobalNotifications {
-    [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(didReceiveLogoutNotification) name:MEGALogoutNotificationName object:nil];
-    [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(didReceiveNodesFetchDoneNotification) name:MEGANodesFetchDoneNotificationName object:nil];
+    [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(didReceiveLogoutNotification:) name:MEGALogoutNotificationName object:nil];
+    [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(didReceiveNodesFetchDoneNotification:) name:MEGANodesFetchDoneNotificationName object:nil];
 }
 
 - (void)setupCameraUploadWhenAppLaunches {
@@ -127,8 +127,8 @@ static const NSTimeInterval LoadMediaInfoTimeoutInSeconds = 120;
     [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(applicationDidEnterBackground) name:UIApplicationDidEnterBackgroundNotification object:nil];
     [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(applicationDidBecomeActive) name:UIApplicationDidBecomeActiveNotification object:nil];
     [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(applicationDidReceiveMemoryWarning) name:UIApplicationDidReceiveMemoryWarningNotification object:nil];
-    [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(didReceiveReachabilityChangedNotification) name:kReachabilityChangedNotification object:nil];
-    [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(pauseCameraUploadIfNeeded) name:MEGAStorageOverQuotaNotificationName object:nil];
+    [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(didReceiveReachabilityChangedNotification:) name:kReachabilityChangedNotification object:nil];
+    [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(didReceiveStorageOverQuotaNotification:) name:MEGAStorageOverQuotaNotificationName object:nil];
     [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(didReceiveStorageEventNotification:) name:MEGAStorageEventNotificationName object:nil];
 }
 
@@ -241,6 +241,7 @@ static const NSTimeInterval LoadMediaInfoTimeoutInSeconds = 120;
 #pragma mark - start upload
 
 - (void)startCameraUploadIfNeeded {
+    MEGALogDebug(@"[Camera Upload] start camera upload if needed");
     if (!MEGASdkManager.sharedMEGASdk.isLoggedIn || !CameraUploadManager.isCameraUploadEnabled) {
         return;
     }
@@ -253,12 +254,12 @@ static const NSTimeInterval LoadMediaInfoTimeoutInSeconds = 120;
 
 - (void)requestMediaInfoForUpload {
     if (self.mediaInfoLoader.isMediaInfoLoaded) {
-        [self requestCameraUploadNodeForUpload];
+        [self loadCameraUploadNodeForUpload];
     } else {
         __weak __typeof__(self) weakSelf = self;
         [self.mediaInfoLoader loadMediaInfoWithTimeout:LoadMediaInfoTimeoutInSeconds completion:^(BOOL loaded) {
             if (loaded) {
-                [weakSelf requestCameraUploadNodeForUpload];
+                [weakSelf loadCameraUploadNodeForUpload];
             } else {
                 [weakSelf startCameraUploadIfNeeded];
             }
@@ -266,7 +267,8 @@ static const NSTimeInterval LoadMediaInfoTimeoutInSeconds = 120;
     }
 }
 
-- (void)requestCameraUploadNodeForUpload {
+- (void)loadCameraUploadNodeForUpload {
+    MEGALogDebug(@"[Camera Upload] start loading camera upload node");
     if (!self.isNodesFetchDone) {
         return;
     }
@@ -283,21 +285,25 @@ static const NSTimeInterval LoadMediaInfoTimeoutInSeconds = 120;
 }
 
 - (void)uploadCamera {
+    [self startVideoUploadIfNeeded];
+    
     if (self.isPhotoUploadPaused) {
+        MEGALogDebug(@"[Camera Upload] photo upload is paused");
         return;
     }
     
+    MEGALogDebug(@"[Camera Upload] camera upload node is loaded and start uploading camera with current operation count %lu", (unsigned long)self.photoUploadOperationQueue.operationCount);
     [self.diskSpaceDetector startDetectingPhotoUpload];
     
     if (self.photoUploadOperationQueue.operationCount < PhotoUploadInForegroundConcurrentCount) {
         [self uploadNextAssetsWithNumber:PhotoUploadInForegroundConcurrentCount mediaType:PHAssetMediaTypeImage];
     }
-
-    [self startVideoUploadIfNeeded];
 }
 
 - (void)startVideoUploadIfNeeded {
+    MEGALogDebug(@"[Camera Upload] start video upload if needed");
     if (!(CameraUploadManager.isCameraUploadEnabled && CameraUploadManager.isVideoUploadEnabled)) {
+        MEGALogDebug(@"[Camera Upload] video upload is not enabled");
         return;
     }
     
@@ -308,12 +314,16 @@ static const NSTimeInterval LoadMediaInfoTimeoutInSeconds = 120;
 
 - (void)uploadVideos {
     if (!(self.mediaInfoLoader.isMediaInfoLoaded && self.isNodesFetchDone && self.cameraUploadNode != nil)) {
+        MEGALogDebug(@"[Camera Upload] can not upload videos due to the dependency on media info and camera uplaod node issues");
         return;
     }
     
     if (self.isVideoUploadPaused) {
+        MEGALogDebug(@"[Camera Upload] video upload is paused");
         return;
     }
+    
+    MEGALogDebug(@"[Camera Upload] start uploading videos with current video operation count %lu", (unsigned long)self.videoUploadOperationQueue.operationCount);
     
     [self.diskSpaceDetector startDetectingVideoUpload];
     
@@ -332,11 +342,15 @@ static const NSTimeInterval LoadMediaInfoTimeoutInSeconds = 120;
     switch (mediaType) {
         case PHAssetMediaTypeImage:
             if (self.isPhotoUploadPaused) {
+                MEGALogDebug(@"[Camera Upload] photo upload is paused when to upload next asset");
                 return;
             }
             break;
         case PHAssetMediaTypeVideo:
-            if (!CameraUploadManager.isVideoUploadEnabled || self.isVideoUploadPaused) {
+            if (!CameraUploadManager.isVideoUploadEnabled) {
+                return;
+            } else if (self.isVideoUploadPaused) {
+                MEGALogDebug(@"[Camera Upload] video upload is paused when to upload next asset");
                 return;
             }
             break;
@@ -501,7 +515,13 @@ static const NSTimeInterval LoadMediaInfoTimeoutInSeconds = 120;
 
 #pragma mark - notifications
 
+- (void)didReceiveStorageOverQuotaNotification:(NSNotification *)notification {
+    MEGALogDebug(@"[Camera Upload] did receive storage over quota notification %@", notification);
+    [self pauseCameraUploadIfNeeded];
+}
+
 - (void)didReceiveStorageEventNotification:(NSNotification *)notification {
+    MEGALogDebug(@"[Camera Upload] did receive storage event notification %@", notification);
     NSUInteger state = [notification.userInfo[MEGAStorageEventStateUserInfoKey] unsignedIntegerValue];
     if (self.storageState == state) {
         return;
@@ -521,20 +541,23 @@ static const NSTimeInterval LoadMediaInfoTimeoutInSeconds = 120;
     }
 }
 
-- (void)didReceiveNodesFetchDoneNotification {
+- (void)didReceiveNodesFetchDoneNotification:(NSNotification *)notification {
+    MEGALogDebug(@"[Camera Upload] did receive nodes fetch done notification %@", notification);
     self.isNodesFetchDone = YES;
     [self startCameraUploadIfNeeded];
     [AttributeUploadManager.shared scanLocalAttributeFilesAndRetryUploadIfNeeded];
 }
 
-- (void)didReceiveReachabilityChangedNotification {
+- (void)didReceiveReachabilityChangedNotification:(NSNotification *)notification {
+    MEGALogDebug(@"[Camera Upload] did receive reachability changed notification %@", notification);
     if (MEGAReachabilityManager.isReachable) {
         [self startCameraUploadIfNeeded];
         [AttributeUploadManager.shared scanLocalAttributeFilesAndRetryUploadIfNeeded];
     }
 }
 
-- (void)didReceiveLogoutNotification {
+- (void)didReceiveLogoutNotification:(NSNotification *)notification {
+    MEGALogDebug(@"[Camera Upload] did receive logout notification %@", notification);
     [self disableCameraUpload];
     [NSFileManager.defaultManager removeItemIfExistsAtURL:NSURL.mnz_cameraUploadURL];
     [CameraUploadRecordManager.shared resetDataContext];

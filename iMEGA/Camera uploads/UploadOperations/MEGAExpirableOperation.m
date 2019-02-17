@@ -27,7 +27,7 @@
     
     __weak __typeof__(self) weakSelf = self;
     self.expireTimer = [NSTimer scheduledTimerWithTimeInterval:self.expireTimeInterval repeats:NO block:^(NSTimer * _Nonnull timer) {
-        MEGALogDebug(@"%@ expired after time interval %.2f", NSStringFromClass(weakSelf.class), self.expireTimeInterval);
+        MEGALogDebug(@"%@ expired after time interval %.2f", weakSelf, self.expireTimeInterval);
         [weakSelf finishOperation];
     }];
 }

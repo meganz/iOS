@@ -30,19 +30,19 @@
         NSURL *cacheURL = [directoryURL URLByAppendingPathComponent:fileName isDirectory:NO];
         [NSFileManager.defaultManager removeItemIfExistsAtURL:cacheURL];
         if ([NSFileManager.defaultManager moveItemAtURL:self.attributeURL toURL:cacheURL error:&error]) {
-            MEGALogDebug(@"[Camera Upload] %@ Copy attribute to cache succeeded", NSStringFromClass(self.class));
+            MEGALogDebug(@"[Camera Upload] %@ copy attribute to cache succeeded", self);
         } else {
-            MEGALogDebug(@"[Camera Upload] %@ Copy attribute to cache error %@", NSStringFromClass(self.class), error);
+            MEGALogDebug(@"[Camera Upload] %@ error when to copy attribute to cache %@", self, error);
         }
     } else {
-        MEGALogDebug(@"[Camera Upload] %@ Create attribute cache directory error %@", NSStringFromClass(self.class), error);
+        MEGALogDebug(@"[Camera Upload] %@ error when to create attribute cache directory %@", self, error);
     }
 }
 
 - (void)finishOperation {
     [super finishOperation];
     
-    MEGALogDebug(@"[Camera Upload] %@ operation finished", NSStringFromClass(self.class));
+    MEGALogDebug(@"[Camera Upload] %@ operation finished", self);
 }
 
 @end

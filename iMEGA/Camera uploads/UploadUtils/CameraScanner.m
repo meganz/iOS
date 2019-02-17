@@ -30,7 +30,7 @@
 
 - (void)scanMediaTypes:(NSArray<NSNumber *> *)mediaTypes completion:(void (^)(void))completion {
     [self.operationQueue addOperationWithBlock:^{
-        MEGALogDebug(@"[Camera Upload] Start local album scanning at: %@", [NSDateFormatter localizedStringFromDate:[NSDate date] dateStyle:NSDateFormatterShortStyle timeStyle:NSDateFormatterFullStyle]);
+        MEGALogDebug(@"[Camera Upload] Start local album scanning for media types %@", mediaTypes);
         
         PHFetchOptions *fetchOptions = [[PHFetchOptions alloc] init];
         fetchOptions.includeAssetSourceTypes = PHAssetSourceTypeUserLibrary | PHAssetSourceTypeCloudShared | PHAssetSourceTypeiTunesSynced;
@@ -52,7 +52,7 @@
             [[CameraUploadRecordManager shared] saveAssets:newAssets error:nil];
         }
         
-        MEGALogDebug(@"[Camera Upload] Finish local album scanning at: %@", [NSDateFormatter localizedStringFromDate:[NSDate date] dateStyle:NSDateFormatterShortStyle timeStyle:NSDateFormatterFullStyle]);
+        MEGALogDebug(@"[Camera Upload] Finish local album scanning");
         
         if (completion) {
             completion();
@@ -106,7 +106,8 @@
                 return;
             }
             
-            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+            dispatch_async(dispatch_get_global_queue(QOS_CLASS_BACKGROUND, 0), ^{
+                MEGALogDebug(@"[Camera Upload] new assets detected: %@", newAssets);
                 [CameraUploadRecordManager.shared saveAssets:newAssets error:nil];
                 [CameraUploadManager.shared startCameraUploadIfNeeded];
             });

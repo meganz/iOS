@@ -700,7 +700,7 @@
 		B61F01C6220D37A400F4A917 /* DiskSpaceDetector.m in Sources */ = {isa = PBXBuildFile; fileRef = B61F01C5220D37A400F4A917 /* DiskSpaceDetector.m */; };
 		B644B6B721ABA27B00A3B8E7 /* MEGAConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = B60DDC1521A7A7930097E4A3 /* MEGAConstants.m */; };
 		B644B6B821ABA27B00A3B8E7 /* MEGAConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = B60DDC1521A7A7930097E4A3 /* MEGAConstants.m */; };
-		B644B6BE21AE0E1900A3B8E7 /* CoordinateUploadOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = B644B6BD21AE0E1900A3B8E7 /* CoordinateUploadOperation.m */; };
+		B644B6BE21AE0E1900A3B8E7 /* CoordinatesUploadOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = B644B6BD21AE0E1900A3B8E7 /* CoordinatesUploadOperation.m */; };
 		B644B6C121AE19BC00A3B8E7 /* MEGAExpirableOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = B644B6C021AE19BC00A3B8E7 /* MEGAExpirableOperation.m */; };
 		B6575FD021FC526D00B7AD82 /* LivePhotoUploadOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = B6575FCF21FC526D00B7AD82 /* LivePhotoUploadOperation.m */; };
 		B6575FD3220101BB00B7AD82 /* MediaInfoLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = B6575FD2220101BB00B7AD82 /* MediaInfoLoader.m */; };
@@ -1653,8 +1653,8 @@
 		B60DDC1521A7A7930097E4A3 /* MEGAConstants.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MEGAConstants.m; sourceTree = "<group>"; };
 		B61F01C4220D37A400F4A917 /* DiskSpaceDetector.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DiskSpaceDetector.h; sourceTree = "<group>"; };
 		B61F01C5220D37A400F4A917 /* DiskSpaceDetector.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DiskSpaceDetector.m; sourceTree = "<group>"; };
-		B644B6BC21AE0E1900A3B8E7 /* CoordinateUploadOperation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CoordinateUploadOperation.h; sourceTree = "<group>"; };
-		B644B6BD21AE0E1900A3B8E7 /* CoordinateUploadOperation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CoordinateUploadOperation.m; sourceTree = "<group>"; };
+		B644B6BC21AE0E1900A3B8E7 /* CoordinatesUploadOperation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CoordinatesUploadOperation.h; sourceTree = "<group>"; };
+		B644B6BD21AE0E1900A3B8E7 /* CoordinatesUploadOperation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CoordinatesUploadOperation.m; sourceTree = "<group>"; };
 		B644B6BF21AE19BC00A3B8E7 /* MEGAExpirableOperation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MEGAExpirableOperation.h; sourceTree = "<group>"; };
 		B644B6C021AE19BC00A3B8E7 /* MEGAExpirableOperation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MEGAExpirableOperation.m; sourceTree = "<group>"; };
 		B6575FCE21FC526D00B7AD82 /* LivePhotoUploadOperation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LivePhotoUploadOperation.h; sourceTree = "<group>"; };
@@ -3623,8 +3623,8 @@
 				B6B959432193A91E0064334D /* PreviewUploadOperation.m */,
 				B6D11AE321A24C7700446B86 /* UploadCompletionOperation.h */,
 				B6D11AE421A24C7700446B86 /* UploadCompletionOperation.m */,
-				B644B6BC21AE0E1900A3B8E7 /* CoordinateUploadOperation.h */,
-				B644B6BD21AE0E1900A3B8E7 /* CoordinateUploadOperation.m */,
+				B644B6BC21AE0E1900A3B8E7 /* CoordinatesUploadOperation.h */,
+				B644B6BD21AE0E1900A3B8E7 /* CoordinatesUploadOperation.m */,
 				B65AC8B821F6A91A0094FF4F /* PhotoExportOperation.h */,
 				B65AC8B921F6A91A0094FF4F /* PhotoExportOperation.m */,
 				B6575FD422012F8D00B7AD82 /* LoadMediaInfoOperation.h */,
@@ -4323,7 +4323,7 @@
 				4172793E1DB663FA001AC818 /* JSQMessagesTimestampFormatter.m in Sources */,
 				B6C524E021E3E00C00AE3575 /* AVURLAsset+CameraUpload.m in Sources */,
 				E8C8D73F1B1DCB4000BCDBA4 /* MEGANavigationController.m in Sources */,
-				B644B6BE21AE0E1900A3B8E7 /* CoordinateUploadOperation.m in Sources */,
+				B644B6BE21AE0E1900A3B8E7 /* CoordinatesUploadOperation.m in Sources */,
 				B658D3BB218F936B004C0D64 /* VideoUploadOperation.m in Sources */,
 				A8F5D67A1ED58F940087DA40 /* CheckEmailAndFollowTheLinkViewController.m in Sources */,
 				41AC66481AB1D493003FE8DA /* AboutTableViewController.m in Sources */,

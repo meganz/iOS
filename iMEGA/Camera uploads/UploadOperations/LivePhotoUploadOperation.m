@@ -134,7 +134,6 @@ static NSString * const LivePhotoVideoResourceTemporaryName = @"video.mov";
     [session exportAsynchronouslyWithCompletionHandler:^{
         switch (session.status) {
             case AVAssetExportSessionStatusCompleted:
-                MEGALogDebug(@"[Camera Upload] %@ has finished video compression", weakSelf);
                 [weakSelf handleProcessedUploadFile];
                 break;
             case AVAssetExportSessionStatusCancelled:

@@ -1200,7 +1200,7 @@ static MEGAIndexer *indexer;
     [Helper deleteUserData];
     [Helper deleteMasterKey];
 
-    [NSNotificationCenter.defaultCenter postNotificationName:MEGALogoutNotificationName object:nil];
+    [NSNotificationCenter.defaultCenter postNotificationName:MEGALogoutNotificationName object:self];
     [Helper resetUserData];
     
     [Helper deletePasscode];
@@ -1214,7 +1214,7 @@ static MEGAIndexer *indexer;
     [Helper deleteUserData];
     [Helper deleteMasterKey];
     
-    [NSNotificationCenter.defaultCenter postNotificationName:MEGALogoutNotificationName object:nil];
+    [NSNotificationCenter.defaultCenter postNotificationName:MEGALogoutNotificationName object:self];
     [Helper resetUserData];
     
     [Helper deletePasscode];

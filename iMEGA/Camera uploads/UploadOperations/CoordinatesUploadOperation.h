@@ -6,7 +6,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @class CLLocation;
 
-@interface CoordinateUploadOperation : MEGAExpirableOperation
+@interface CoordinatesUploadOperation : MEGAExpirableOperation
 
 - (instancetype)initWithLocation:(CLLocation *)location node:(MEGANode *)node expiresAfterTimeInterval:(NSTimeInterval)timeInterval;
 
