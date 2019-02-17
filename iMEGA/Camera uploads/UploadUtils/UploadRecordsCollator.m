@@ -66,7 +66,7 @@
 
 - (void)revertBackToNotStartedForRecord:(MOAssetUploadRecord *)record {
     record.status = @(CameraAssetUploadStatusNotStarted);
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+    dispatch_async(dispatch_get_global_queue(QOS_CLASS_BACKGROUND, 0), ^{
         if (record.localIdentifier) {
             [NSFileManager.defaultManager removeItemIfExistsAtURL:[NSURL mnz_assetDirectoryURLForLocalIdentifier:record.localIdentifier]];
         }

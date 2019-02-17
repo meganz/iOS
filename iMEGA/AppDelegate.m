@@ -1423,7 +1423,7 @@ void uncaughtExceptionHandler(NSException *exception) {
             break;
             
         case EventStorage: {
-            [NSNotificationCenter.defaultCenter postNotificationName:MEGAStorageEventNotificationName object:nil userInfo:@{MEGAStorageEventStateUserInfoKey : @(event.number)}];
+            [NSNotificationCenter.defaultCenter postNotificationName:MEGAStorageEventNotificationName object:self userInfo:@{MEGAStorageEventStateUserInfoKey : @(event.number)}];
             
             if (event.number == StorageStateChange) {
                 [api getAccountDetails];
@@ -1546,7 +1546,7 @@ void uncaughtExceptionHandler(NSException *exception) {
                 
             case MEGAErrorTypeApiEgoingOverquota:
             case MEGAErrorTypeApiEOverQuota: {
-                [NSNotificationCenter.defaultCenter postNotificationName:MEGAStorageOverQuotaNotificationName object:nil];
+                [NSNotificationCenter.defaultCenter postNotificationName:MEGAStorageOverQuotaNotificationName object:self];
                 
                 NSString *title = AMLocalizedString(@"upgradeAccount", @"Button title which triggers the action to upgrade your MEGA account level");
                 NSString *detail = AMLocalizedString(@"This action can not be completed as it would take you over your current storage limit", @"Error message shown to user when a copy/import operation would take them over their storage limit.");
@@ -1643,7 +1643,7 @@ void uncaughtExceptionHandler(NSException *exception) {
                 [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"TransfersPaused"];
             }
             isFetchNodesDone = YES;
-            [NSNotificationCenter.defaultCenter postNotificationName:MEGANodesFetchDoneNotificationName object:nil userInfo:nil];
+            [NSNotificationCenter.defaultCenter postNotificationName:MEGANodesFetchDoneNotificationName object:self];
             
             [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
             [SVProgressHUD dismiss];
@@ -1941,7 +1941,7 @@ void uncaughtExceptionHandler(NSException *exception) {
                 NSString *detail = AMLocalizedString(@"Your upload(s) cannot proceed because your account is full", @"uploads over storage quota warning dialog title");
                 UIImage *image = [api mnz_accountDetails].storageMax.longLongValue > [api mnz_accountDetails].storageUsed.longLongValue ? [UIImage imageNamed:@"storage_almost_full"] : [UIImage imageNamed:@"storage_full"];
                 [self presentUpgradeViewControllerTitle:title detail:detail image:image];
-                [NSNotificationCenter.defaultCenter postNotificationName:MEGAStorageOverQuotaNotificationName object:nil];
+                [NSNotificationCenter.defaultCenter postNotificationName:MEGAStorageOverQuotaNotificationName object:self];
                 break;
             }
                 

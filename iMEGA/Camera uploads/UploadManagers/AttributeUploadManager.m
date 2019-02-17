@@ -4,7 +4,7 @@
 #import "NSURL+CameraUpload.h"
 #import "ThumbnailUploadOperation.h"
 #import "PreviewUploadOperation.h"
-#import "CoordinateUploadOperation.h"
+#import "CoordinatesUploadOperation.h"
 #import "CameraUploadManager.h"
 @import CoreLocation;
 
@@ -47,14 +47,13 @@ static NSString * const AttributePreviewName = @"preview";
 #pragma mark - upload coordinate
 
 - (void)uploadCoordinateAtLocation:(CLLocation *)location forNode:(MEGANode *)node {
-    [self.operationQueue addOperation:[[CoordinateUploadOperation alloc] initWithLocation:location node:node expiresAfterTimeInterval:60]];
+    [self.operationQueue addOperation:[[CoordinatesUploadOperation alloc] initWithLocation:location node:node expiresAfterTimeInterval:60]];
 }
 
 #pragma mark - upload preview and thumbnail files
 
 - (void)uploadFileAtURL:(NSURL *)URL withAttributeType:(MEGAAttributeType)type forNode:(MEGANode *)node {
     if (![NSFileManager.defaultManager isReadableFileAtPath:URL.path]) {
-        MEGALogDebug(@"[Camera Upload] No attribute file found for node %@ at URL: %@", node.name, URL);
         return;
     }
     
@@ -63,7 +62,7 @@ static NSString * const AttributePreviewName = @"preview";
     NSError *error;
     [NSFileManager.defaultManager copyItemAtURL:URL toURL:uploadURL error:&error];
     if (error) {
-        MEGALogDebug(@"[Camera Upload] Error when to copy attribute file to %@ %@", uploadURL, error);
+        MEGALogError(@"[Camera Upload] error when to copy attribute file to %@, error: %@", uploadURL, error);
         return;
     }
     
@@ -86,7 +85,9 @@ static NSString * const AttributePreviewName = @"preview";
         return;
     }
     
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+    MEGALogDebug(@"[Camera Upload] scan local attribute files and retry upload");
+    
+    dispatch_async(dispatch_get_global_queue(QOS_CLASS_UTILITY, 0), ^{
         if (![NSFileManager.defaultManager fileExistsAtPath:[self attributeDirectoryURL].path]) {
             return;
         }
@@ -95,7 +96,7 @@ static NSString * const AttributePreviewName = @"preview";
         NSArray *resourceKeys = @[NSURLIsDirectoryKey, NSURLNameKey];
         NSArray<NSURL *> *attributeDirectoryURLs = [NSFileManager.defaultManager contentsOfDirectoryAtURL:[self attributeDirectoryURL] includingPropertiesForKeys:resourceKeys options:NSDirectoryEnumerationSkipsHiddenFiles error:&error];
         if (error) {
-            MEGALogDebug(@"[Camera Upload] error when to scan local attributes %@", error);
+            MEGALogError(@"[Camera Upload] error when to scan local attributes %@", error);
             return;
         }
         
@@ -113,7 +114,7 @@ static NSString * const AttributePreviewName = @"preview";
     NSArray *resourceKeys = @[NSURLIsDirectoryKey, NSURLNameKey];
     NSArray<NSURL *> *attributeURLs = [NSFileManager.defaultManager contentsOfDirectoryAtURL:URL includingPropertiesForKeys:resourceKeys options:NSDirectoryEnumerationSkipsHiddenFiles error:&error];
     if (error) {
-        MEGALogDebug(@"[Camera Upload] error when to scan attribute directory %@ %@", URL, error);
+        MEGALogError(@"[Camera Upload] error when to scan attribute directory %@ %@", URL, error);
         return;
     }
     

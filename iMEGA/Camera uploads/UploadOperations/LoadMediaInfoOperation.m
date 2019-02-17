@@ -26,7 +26,7 @@
 #pragma mark - MEGAGlobalDelegate
 
 - (void)onMediaDetectionAvailable {
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+    dispatch_async(dispatch_get_global_queue(QOS_CLASS_UTILITY, 0), ^{
         [self finishOperation];
     });
 }

@@ -32,7 +32,6 @@ const NSInteger PhotoExportDiskSizeMultiplicationFactor = 2;
 #pragma mark - data processing
 
 - (void)requestImageData {
-    MEGALogDebug(@"[Camera Upload] %@ starts requesting image data", self);
     __weak __typeof__(self) weakSelf = self;
     
     PHImageRequestOptions *options = [[PHImageRequestOptions alloc] init];
@@ -69,11 +68,11 @@ const NSInteger PhotoExportDiskSizeMultiplicationFactor = 2;
         [self finishOperationWithStatus:CameraAssetUploadStatusCancelled shouldUploadNextAsset:NO];
         return;
     }
-    
-    MEGALogDebug(@"[Camera Upload] %@ starts processing image data", self);
+
     self.uploadInfo.originalFingerprint = [[MEGASdkManager sharedMEGASdk] fingerprintForData:imageData modificationTime:self.uploadInfo.asset.creationDate];
     MEGANode *matchingNode = [self nodeForOriginalFingerprint:self.uploadInfo.originalFingerprint];
     if (matchingNode) {
+        MEGALogDebug(@"[Camera Upload] %@ finds existing node by original fingerprint", self);
         [self finishUploadForFingerprintMatchedNode:matchingNode];
         return;
     }
@@ -96,6 +95,7 @@ const NSInteger PhotoExportDiskSizeMultiplicationFactor = 2;
         if (succeeded && [NSFileManager.defaultManager isReadableFileAtPath:self.uploadInfo.fileURL.path]) {
             [self handleProcessedUploadFile];
         } else {
+            MEGALogError(@"[Camera Upload] error when to export image to URL %@", self.uploadInfo.fileURL);
             [self finishOperationWithStatus:CameraAssetUploadStatusFailed shouldUploadNextAsset:YES];
         }
     }];

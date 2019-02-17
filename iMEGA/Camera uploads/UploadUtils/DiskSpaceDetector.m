@@ -44,12 +44,12 @@ static const NSTimeInterval RetryTimerTolerance = 6;
 
 - (void)startDetectingPhotoUpload {
     [NSNotificationCenter.defaultCenter removeObserver:self name:MEGACameraUploadPhotoUploadLocalDiskFullNotificationName object:nil];
-    [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(didReceivePhotoUploadDiskFullNotification) name:MEGACameraUploadPhotoUploadLocalDiskFullNotificationName object:nil];
+    [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(didReceivePhotoUploadDiskFullNotification:) name:MEGACameraUploadPhotoUploadLocalDiskFullNotificationName object:nil];
 }
 
 - (void)startDetectingVideoUpload {
     [NSNotificationCenter.defaultCenter removeObserver:self name:MEGACameraUploadVideoUploadLocalDiskFullNotificationName object:nil];
-    [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(didReceiveVideoUploadDiskFullNotification) name:MEGACameraUploadVideoUploadLocalDiskFullNotificationName object:nil];
+    [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(didReceiveVideoUploadDiskFullNotification:) name:MEGACameraUploadVideoUploadLocalDiskFullNotificationName object:nil];
 }
 
 - (void)stopDetectingPhotoUpload {
@@ -74,7 +74,8 @@ static const NSTimeInterval RetryTimerTolerance = 6;
 
 #pragma mark - notifications
 
-- (void)didReceivePhotoUploadDiskFullNotification {
+- (void)didReceivePhotoUploadDiskFullNotification:(NSNotification *)notification {
+    MEGALogDebug(@"[Camera Upload] did receive photo upload disk full notification %@", notification);
     self.diskIsFullForPhotos = YES;
     self.photoRetryDiskFreeSpace = NSFileManager.defaultManager.deviceFreeSize + PhotoRetryExtraDiskSpaceInBytes;
     [NSOperationQueue.mainQueue addOperationWithBlock:^{
@@ -82,7 +83,8 @@ static const NSTimeInterval RetryTimerTolerance = 6;
     }];
 }
 
-- (void)didReceiveVideoUploadDiskFullNotification {
+- (void)didReceiveVideoUploadDiskFullNotification:(NSNotification *)notification {
+    MEGALogDebug(@"[Camera Upload] did receive video upload disk full notification %@", notification);
     self.diskIsFullForVideos = YES;
     self.videoRetryDiskFreeSpace = NSFileManager.defaultManager.deviceFreeSize + VideoRetryExtraDiskSpaceInBytes;
     [NSOperationQueue.mainQueue addOperationWithBlock:^{

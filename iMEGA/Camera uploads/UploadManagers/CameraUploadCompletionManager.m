@@ -49,7 +49,7 @@
         NodesFetchListenerOperation *nodesFetchListenerOperation = [[NodesFetchListenerOperation alloc] init];
         [nodesFetchListenerOperation start];
         [nodesFetchListenerOperation waitUntilFinished];
-        MEGALogDebug(@"[Camera Upload] Waiting for nodes fetching");
+        MEGALogDebug(@"[Camera Upload] waiting for nodes fetching");
     }
     
     MEGALogDebug(@"[Camera Upload] Start putting nodes as nodes fetch is done");
@@ -59,14 +59,13 @@
     if ([NSFileManager.defaultManager fileExistsAtPath:archivedURL.path isDirectory:&isDirectory] && !isDirectory) {
         AssetUploadInfo *uploadInfo = [NSKeyedUnarchiver unarchiveObjectWithFile:archivedURL.path];
         if (uploadInfo) {
-            MEGALogDebug(@"[Camera Upload] Resumed upload info from serialized data for asset: %@", uploadInfo);
             [self showUploadedNodeWithUploadInfo:uploadInfo localIdentifier:localIdentifier transferToken:token];
         } else {
-            MEGALogError(@"[Camera Upload] Error when to unarchive upload info for asset: %@", localIdentifier);
+            MEGALogError(@"[Camera Upload] error when to unarchive upload info for asset: %@", localIdentifier);
             [self finishUploadForLocalIdentifier:localIdentifier status:CameraAssetUploadStatusFailed];
         }
     } else {
-        MEGALogError(@"[Camera Upload] Session task completes without any handler: %@", localIdentifier);
+        MEGALogError(@"[Camera Upload] session task completes without any archived upload info: %@", localIdentifier);
         [self finishUploadForLocalIdentifier:localIdentifier status:CameraAssetUploadStatusFailed];
     }
 }
@@ -76,13 +75,13 @@
         if (error) {
             MEGALogDebug(@"[Camera Upload] error when to complete transfer %@", error);
             if (error.code == MEGAErrorTypeApiEOverQuota || error.code == MEGAErrorTypeApiEgoingOverquota) {
-                [NSNotificationCenter.defaultCenter postNotificationName:MEGAStorageOverQuotaNotificationName object:nil];
+                [NSNotificationCenter.defaultCenter postNotificationName:MEGAStorageOverQuotaNotificationName object:self];
                 [self finishUploadForLocalIdentifier:localIdentifier status:CameraAssetUploadStatusCancelled];
             } else {
                 [self finishUploadForLocalIdentifier:localIdentifier status:CameraAssetUploadStatusFailed];
             }
         } else {
-            MEGALogDebug(@"[Camera Upload] upload succeeded!");
+            MEGALogDebug(@"[Camera Upload] put node succeeded!");
             [AttributeUploadManager.shared uploadCoordinateAtLocation:uploadInfo.location forNode:node];
             [AttributeUploadManager.shared uploadFileAtURL:uploadInfo.thumbnailURL withAttributeType:MEGAAttributeTypeThumbnail forNode:node];
             [AttributeUploadManager.shared uploadFileAtURL:uploadInfo.previewURL withAttributeType:MEGAAttributeTypePreview forNode:node];

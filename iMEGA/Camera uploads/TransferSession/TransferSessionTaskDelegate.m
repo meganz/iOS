@@ -43,7 +43,7 @@
 #pragma mark - data level delegate
 
 - (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask didReceiveData:(NSData *)data {
-    MEGALogDebug(@"[Camera Upload] Session %@ task %@ did receive data with size: %lu, UTF8: %@", session.configuration.identifier, dataTask.taskDescription, (unsigned long)data.length, [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
+    MEGALogDebug(@"[Camera Upload] Session %@ task %@ did receive data with size: %lu", session.configuration.identifier, dataTask.taskDescription, (unsigned long)data.length);
     [self.mutableData appendData:data];
 }
 
