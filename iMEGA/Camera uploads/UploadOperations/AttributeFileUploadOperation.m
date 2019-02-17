@@ -1,8 +1,8 @@
 
-#import "AttributeUploadOperation.h"
+#import "AttributeFileUploadOperation.h"
 #import "NSFileManager+MNZCategory.h"
 
-@implementation AttributeUploadOperation
+@implementation AttributeFileUploadOperation
 
 - (instancetype)initWithAttributeURL:(NSURL *)URL node:(MEGANode *)node expiresAfterTimeInterval:(NSTimeInterval)timeInterval {
     self = [super initWithExpirationTimeInterval:timeInterval];
@@ -30,7 +30,6 @@
         NSURL *cacheURL = [directoryURL URLByAppendingPathComponent:fileName isDirectory:NO];
         [NSFileManager.defaultManager removeItemIfExistsAtURL:cacheURL];
         if ([NSFileManager.defaultManager moveItemAtURL:self.attributeURL toURL:cacheURL error:&error]) {
-            MEGALogDebug(@"[Camera Upload] %@ copy attribute to cache succeeded", self);
         } else {
             MEGALogDebug(@"[Camera Upload] %@ error when to copy attribute to cache %@", self, error);
         }

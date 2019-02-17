@@ -195,6 +195,7 @@ static const NSTimeInterval LoadMediaInfoTimeoutInSeconds = 120;
     if (_pausePhotoUpload != pausePhotoUpload) {
         _pausePhotoUpload = pausePhotoUpload;
         if (!pausePhotoUpload) {
+            MEGALogDebug(@"[Camera Upload] resume camera upload");
             [self startCameraUploadIfNeeded];
         }
     }
@@ -204,6 +205,7 @@ static const NSTimeInterval LoadMediaInfoTimeoutInSeconds = 120;
     if (_pauseVideoUpload != pauseVideoUpload) {
         _pauseVideoUpload = pauseVideoUpload;
         if (!pauseVideoUpload) {
+            MEGALogDebug(@"[Camera Upload] resume video upload");
             [self startVideoUploadIfNeeded];
         }
     }
@@ -261,6 +263,7 @@ static const NSTimeInterval LoadMediaInfoTimeoutInSeconds = 120;
             if (loaded) {
                 [weakSelf loadCameraUploadNodeForUpload];
             } else {
+                MEGALogDebug(@"[Camera Upload] retry to start camera upload due to failed to load media into");
                 [weakSelf startCameraUploadIfNeeded];
             }
         }];
@@ -605,6 +608,7 @@ static const NSTimeInterval LoadMediaInfoTimeoutInSeconds = 120;
             if (self.uploadPendingItemsCount == 0) {
                 completion(UIBackgroundFetchResultNoData);
             } else {
+                MEGALogDebug(@"[Camera Upload] upload camera in background refresh");
                 [self startCameraUploadIfNeeded];
                 [NSTimer scheduledTimerWithTimeInterval:BackgroundRefreshDuration repeats:NO block:^(NSTimer * _Nonnull timer) {
                     completion(UIBackgroundFetchResultNewData);
