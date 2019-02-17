@@ -56,7 +56,7 @@
             weakSelf.uploadInfo.originalFingerprint = [MEGASdkManager.sharedMEGASdk fingerprintForFilePath:urlAsset.URL.path modificationTime:weakSelf.uploadInfo.asset.creationDate];
             MEGANode *matchingNode = [weakSelf nodeForOriginalFingerprint:weakSelf.uploadInfo.originalFingerprint];
             if (matchingNode) {
-                MEGALogDebug(@"[Camera Upload] %@ found existing node by original fingerprint", weakSelf);
+                MEGALogDebug(@"[Camera Upload] %@ found existing node by original file fingerprint", weakSelf);
                 [weakSelf finishUploadForFingerprintMatchedNode:matchingNode];
                 return;
             }

@@ -72,7 +72,7 @@ const NSInteger PhotoExportDiskSizeMultiplicationFactor = 2;
     self.uploadInfo.originalFingerprint = [[MEGASdkManager sharedMEGASdk] fingerprintForData:imageData modificationTime:self.uploadInfo.asset.creationDate];
     MEGANode *matchingNode = [self nodeForOriginalFingerprint:self.uploadInfo.originalFingerprint];
     if (matchingNode) {
-        MEGALogDebug(@"[Camera Upload] %@ finds existing node by original fingerprint", self);
+        MEGALogDebug(@"[Camera Upload] %@ found existing node by original file fingerprint", self);
         [self finishUploadForFingerprintMatchedNode:matchingNode];
         return;
     }

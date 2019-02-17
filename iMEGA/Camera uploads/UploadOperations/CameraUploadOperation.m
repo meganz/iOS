@@ -172,6 +172,7 @@
     self.uploadInfo.fingerprint = [MEGASdkManager.sharedMEGASdk fingerprintForFilePath:self.uploadInfo.fileURL.path modificationTime:self.uploadInfo.asset.creationDate];
     MEGANode *matchingNode = [MEGASdkManager.sharedMEGASdk nodeForFingerprint:self.uploadInfo.fingerprint parent:self.uploadInfo.parentNode];
     if (matchingNode) {
+        MEGALogDebug(@"[Camera Upload] %@ found existing node by file fingerprint", self);
         [self finishUploadForFingerprintMatchedNode:matchingNode];
         return;
     }
