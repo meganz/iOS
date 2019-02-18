@@ -289,7 +289,7 @@ const NSUInteger kMaxMessagesToLoad = 256;
     
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kReachabilityChangedNotification object:nil];
 
-    if ([self.navigationController.viewControllers indexOfObject:self] == NSNotFound) {
+    if ([self.navigationController.viewControllers indexOfObject:self] == NSNotFound || self.presentingViewController) {
         [[MEGASdkManager sharedMEGAChatSdk] closeChatRoom:self.chatRoom.chatId delegate:self];
     }
     [[MEGASdkManager sharedMEGAChatSdk] removeChatDelegate:self];
@@ -308,10 +308,12 @@ const NSUInteger kMaxMessagesToLoad = 256;
 - (void)dismissChatRoom {
     self.inputToolbar.hidden = YES;
     [self dismissViewControllerAnimated:YES completion:^{
-        MEGAChatGenericRequestDelegate *delegate = [[MEGAChatGenericRequestDelegate alloc] initWithCompletion:^(MEGAChatRequest * _Nonnull request, MEGAChatError * _Nonnull error) {
-            [MEGASdkManager destroySharedMEGAChatSdk];
-        }];
-        [[MEGASdkManager sharedMEGAChatSdk] logoutWithDelegate:delegate];
+        if ([[MEGASdkManager sharedMEGAChatSdk] initState] == MEGAChatInitAnonymous) {
+            MEGAChatGenericRequestDelegate *delegate = [[MEGAChatGenericRequestDelegate alloc] initWithCompletion:^(MEGAChatRequest * _Nonnull request, MEGAChatError * _Nonnull error) {
+                [MEGASdkManager destroySharedMEGAChatSdk];
+            }];
+            [[MEGASdkManager sharedMEGAChatSdk] logoutWithDelegate:delegate];
+        }
     }];
 }
 
@@ -537,24 +539,29 @@ const NSUInteger kMaxMessagesToLoad = 256;
     self.unreadLabel.textColor = UIColor.whiteColor;
     self.unreadLabel.userInteractionEnabled = YES;
     
-    //TODO: leftItemsSupplementBackButton
-    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 66, 44)];
-    UIImage *image = [[UIImage imageNamed:@"backArrow"] imageFlippedForRightToLeftLayoutDirection];
-    UIImageView *imageView = [[UIImageView alloc] initWithImage:[image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]];
-    imageView.frame = CGRectMake(0, 10, 22, 22);
-    imageView.contentMode = UIViewContentModeScaleAspectFit;
-    [view addGestureRecognizer:singleTap];
-    [view addSubview:imageView];
-    [view addSubview:self.unreadLabel];
-    [imageView configureForAutoLayout];
-    [imageView autoPinEdgesToSuperviewMarginsExcludingEdge:ALEdgeTrailing];
-    [imageView autoPinEdge:ALEdgeTrailing toEdge:ALEdgeLeading ofView:self.unreadLabel];
-    [self.unreadLabel configureForAutoLayout];
-    [self.unreadLabel autoPinEdgesToSuperviewMarginsExcludingEdge:ALEdgeLeading];
-    
-    self.leftBarButtonItems = @[[[UIBarButtonItem alloc] initWithCustomView:view]];
-    
-    self.navigationItem.leftBarButtonItems = self.leftBarButtonItems;
+    if (self.presentingViewController && self.parentViewController) {
+        self.unreadBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.unreadLabel];
+        UIBarButtonItem *chatBackBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:AMLocalizedString(@"close", nil) style:UIBarButtonItemStylePlain target:self action:@selector(dismissChatRoom)];
+        
+        self.leftBarButtonItems = @[chatBackBarButtonItem, self.unreadBarButtonItem];
+    } else {
+        //TODO: leftItemsSupplementBackButton
+        UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 66, 44)];
+        UIImage *image = [[UIImage imageNamed:@"backArrow"] imageFlippedForRightToLeftLayoutDirection];
+        UIImageView *imageView = [[UIImageView alloc] initWithImage:[image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]];
+        imageView.frame = CGRectMake(0, 10, 22, 22);
+        imageView.contentMode = UIViewContentModeScaleAspectFit;
+        [view addGestureRecognizer:singleTap];
+        [view addSubview:imageView];
+        [view addSubview:self.unreadLabel];
+        [imageView configureForAutoLayout];
+        [imageView autoPinEdgesToSuperviewMarginsExcludingEdge:ALEdgeTrailing];
+        [imageView autoPinEdge:ALEdgeTrailing toEdge:ALEdgeLeading ofView:self.unreadLabel];
+        [self.unreadLabel configureForAutoLayout];
+        [self.unreadLabel autoPinEdgesToSuperviewMarginsExcludingEdge:ALEdgeLeading];
+        
+        self.leftBarButtonItems = @[[[UIBarButtonItem alloc] initWithCustomView:view]];
+    }
 }
 
 - (void)createRightBarButtonItems {
