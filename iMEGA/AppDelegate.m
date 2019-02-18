@@ -119,7 +119,7 @@
 
     MEGALogDebug(@"[App Lifecycle] Application will finish launching with options: %@", launchOptions);
     
-    [CameraUploadManager.shared setupCameraUploadWhenAppLaunches];
+    [CameraUploadManager.shared setupCameraUploadWhenApplicationLaunches:application];
     
     return YES;
 }
@@ -604,6 +604,7 @@
     if (CameraUploadManager.isCameraUploadEnabled) {
         [TransferSessionManager.shared saveSessionCompletion:completionHandler forIdentifier:identifier];
         [TransferSessionManager.shared restoreSessionIfNeededByIdentifier:identifier];
+        [CameraUploadManager.shared startCameraUploadIfNeeded];
     }
 }
 
