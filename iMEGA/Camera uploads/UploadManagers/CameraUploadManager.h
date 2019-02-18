@@ -19,7 +19,7 @@ NS_ASSUME_NONNULL_BEGIN
  */
 + (instancetype)shared;
 
-- (void)setupCameraUploadWhenAppLaunches;
+- (void)setupCameraUploadWhenApplicationLaunches:(UIApplication *)application;
 
 #pragma mark - start upload
 
