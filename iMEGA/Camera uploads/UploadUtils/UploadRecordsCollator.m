@@ -20,7 +20,7 @@
         return;
     }
     
-    MEGALogDebug(@"[Camera Upload] %lu non-uploading records to collate", (unsigned long)records.count);
+    MEGALogDebug(@"[Camera Upload] %lu non-uploading records to revert back to not stated status", (unsigned long)records.count);
     for (MOAssetUploadRecord *record in records) {
         [self revertBackToNotStartedForRecord:record];
     }
@@ -65,6 +65,7 @@
 }
 
 - (void)revertBackToNotStartedForRecord:(MOAssetUploadRecord *)record {
+    MEGALogDebug(@"[Camera Upload] revert record status %@ to not started", [AssetUploadStatus stringForStatus:record.status.unsignedIntegerValue]);
     record.status = @(CameraAssetUploadStatusNotStarted);
     dispatch_async(dispatch_get_global_queue(QOS_CLASS_BACKGROUND, 0), ^{
         if (record.localIdentifier) {
