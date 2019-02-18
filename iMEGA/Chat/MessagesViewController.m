@@ -306,7 +306,7 @@ const NSUInteger kMaxMessagesToLoad = 256;
 }
 
 - (void)dismissChatRoom {
-    self.inputToolbar.hidden = YES;
+    [self.inputToolbar removeFromSuperview];
     [self dismissViewControllerAnimated:YES completion:^{
         if ([[MEGASdkManager sharedMEGAChatSdk] initState] == MEGAChatInitAnonymous) {
             MEGAChatGenericRequestDelegate *delegate = [[MEGAChatGenericRequestDelegate alloc] initWithCompletion:^(MEGAChatRequest * _Nonnull request, MEGAChatError * _Nonnull error) {
