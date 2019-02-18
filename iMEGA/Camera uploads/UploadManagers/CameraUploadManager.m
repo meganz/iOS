@@ -25,7 +25,9 @@ static const NSInteger PhotoUploadInForegroundConcurrentCount = 10;
 static const NSInteger PhotoUploadInBackgroundConcurrentCount = 5;
 static const NSInteger PhotoUploadInMemoryWarningConcurrentCount = 2;
 
-static const NSInteger VideoUploadConcurrentCount = 1;
+static const NSInteger VideoUploadInForegroundConcurrentCount = 2;
+static const NSInteger VideoUploadInBackgroundConcurrentCount = 1;
+static const NSInteger VideoUploadInMemoryWarningConcurrentCount = 1;
 
 static const NSTimeInterval MinimumBackgroundRefreshInterval = 3600;
 static const NSTimeInterval BackgroundRefreshDuration = 25;
@@ -83,7 +85,7 @@ static const NSTimeInterval LoadMediaInfoTimeoutInSeconds = 120;
     [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(didReceiveNodesFetchDoneNotification:) name:MEGANodesFetchDoneNotificationName object:nil];
 }
 
-- (void)setupCameraUploadWhenAppLaunches {
+- (void)setupCameraUploadWhenApplicationLaunches:(UIApplication *)application {
     [CameraUploadManager disableCameraUploadIfAccessProhibited];
     [CameraUploadManager enableBackgroundRefreshIfNeeded];
     [self startBackgroundUploadIfPossible];
@@ -93,7 +95,8 @@ static const NSTimeInterval LoadMediaInfoTimeoutInSeconds = 120;
         [TransferSessionManager.shared restoreAllSessions];
         [self collateUploadRecords];
         
-        if (UIApplication.sharedApplication.applicationState == UIApplicationStateBackground) {
+        MEGALogDebug(@"[Camera Upload] app launches to state %@", @(application.applicationState));
+        if (application.applicationState == UIApplicationStateBackground) {
             MEGALogDebug(@"[Camera Upload] upload camera when app launches to background");
             [CameraUploadManager.shared startCameraUploadIfNeeded];
         }
@@ -118,7 +121,11 @@ static const NSTimeInterval LoadMediaInfoTimeoutInSeconds = 120;
 
 - (void)initializeVideoUploadQueue {
     _videoUploadOperationQueue = [[NSOperationQueue alloc] init];
-    _videoUploadOperationQueue.maxConcurrentOperationCount = VideoUploadConcurrentCount;
+    if (UIApplication.sharedApplication.applicationState == UIApplicationStateBackground) {
+        _videoUploadOperationQueue.maxConcurrentOperationCount = VideoUploadInBackgroundConcurrentCount;
+    } else {
+        _videoUploadOperationQueue.maxConcurrentOperationCount = VideoUploadInForegroundConcurrentCount;
+    }
 }
 
 - (void)resetVideoUploadQueue {
@@ -336,8 +343,8 @@ static const NSTimeInterval LoadMediaInfoTimeoutInSeconds = 120;
     
     [self.diskSpaceDetector startDetectingVideoUpload];
     
-    if (self.videoUploadOperationQueue.operationCount < VideoUploadConcurrentCount) {
-        [self uploadNextAssetsWithNumber:VideoUploadConcurrentCount mediaType:PHAssetMediaTypeVideo];
+    if (self.videoUploadOperationQueue.operationCount < VideoUploadInForegroundConcurrentCount) {
+        [self uploadNextAssetsWithNumber:VideoUploadInForegroundConcurrentCount mediaType:PHAssetMediaTypeVideo];
     }
 }
 
@@ -512,14 +519,17 @@ static const NSTimeInterval LoadMediaInfoTimeoutInSeconds = 120;
 
 - (void)applicationDidEnterBackground {
     self.photoUploadOperationQueue.maxConcurrentOperationCount = PhotoUploadInBackgroundConcurrentCount;
+    self.videoUploadOperationQueue.maxConcurrentOperationCount = VideoUploadInBackgroundConcurrentCount;
 }
 
 - (void)applicationDidBecomeActive {
     self.photoUploadOperationQueue.maxConcurrentOperationCount = PhotoUploadInForegroundConcurrentCount;
+    self.videoUploadOperationQueue.maxConcurrentOperationCount = VideoUploadInForegroundConcurrentCount;
 }
 
 - (void)applicationDidReceiveMemoryWarning {
     self.photoUploadOperationQueue.maxConcurrentOperationCount = PhotoUploadInMemoryWarningConcurrentCount;
+    self.videoUploadOperationQueue.maxConcurrentOperationCount = VideoUploadInMemoryWarningConcurrentCount;
 }
 
 #pragma mark - notifications
