@@ -105,6 +105,7 @@ static NSString * const VideoCellularDisallowedUploadSessionId = @"nz.mega.video
 }
 
 - (NSURLSession *)createBackgroundSessionWithIdentifier:(NSString *)identifier {
+    MEGALogDebug(@"[Camera Upload] create new background session with identifier %@", identifier);
     NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration backgroundSessionConfigurationWithIdentifier:identifier];
     configuration.discretionary = NO;
     configuration.sessionSendsLaunchEvents = YES;
