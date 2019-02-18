@@ -118,7 +118,7 @@
         return URLTypeLoginRequiredLink;
     }
     
-    if (afterSlashesString.length >= 2 && [[afterSlashesString substringToIndex:2] isEqualToString:@"c/"]) {
+    if (afterSlashesString.length >= 5 && [[afterSlashesString substringToIndex:5] isEqualToString:@"chat/"]) {
         return URLTypePublicChatLink;
     }
     
