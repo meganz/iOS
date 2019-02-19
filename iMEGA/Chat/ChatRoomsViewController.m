@@ -57,6 +57,10 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    //White background for the view behind the table view
+    self.tableView.backgroundView = UIView.alloc.init;
+    
     self.tableView.emptyDataSetSource = self;
     self.tableView.emptyDataSetDelegate = self;
     
