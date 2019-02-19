@@ -7,6 +7,7 @@
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 @property (strong, nonatomic) NSPersistentStoreCoordinator *storeCoordinator;
 @property (strong, nonatomic) NSPersistentContainer *persistentContainer;
+@property (strong, nonatomic) dispatch_queue_t serialQueue;
 
 @end
 
@@ -23,41 +24,57 @@
     return _megaStore;
 }
 
-- (instancetype)init {
+- (instancetype)init
+{
     self = [super init];
-    if (self != nil) {
-        [self configureMEGAStore];
+    if (self) {
+        _serialQueue = dispatch_queue_create("nz.mega.megaStore.stack", DISPATCH_QUEUE_SERIAL);
     }
-    
     return self;
 }
 
 #pragma mark - Core data stack
 
-- (void)configureMEGAStore {
-    if (@available(iOS 10.0, *)) {
+- (NSPersistentContainer *)persistentContainer {
+    if (_persistentContainer) {
+        return _persistentContainer;
+    }
+    
+    if (NSThread.isMainThread) {
         _persistentContainer = [self newPersistentContainer];
     } else {
-        _storeCoordinator = [self newStoreCoordinatorForiOSBelow10];
-    }
-}
-
-- (NSPersistentContainer *)persistentContainer {
-    if (_persistentContainer == nil) {
-        _persistentContainer = [self newPersistentContainer];
+        dispatch_sync(self.serialQueue, ^{
+            if (self->_persistentContainer == nil) {
+                self->_persistentContainer = [self newPersistentContainer];
+            }
+        });
     }
     
     return _persistentContainer;
 }
 
 - (NSPersistentStoreCoordinator *)storeCoordinator {
-    if (_storeCoordinator == nil) {
-        _storeCoordinator = [self newStoreCoordinatorForiOSBelow10];
+    if (_storeCoordinator) {
+        return _storeCoordinator;
     }
+    
+    dispatch_sync(self.serialQueue, ^{
+        if (self->_storeCoordinator == nil) {
+            self->_storeCoordinator = [self newStoreCoordinatorForiOSBelow10];
+        }
+    });
     
     return _storeCoordinator;
 }
 
+
+/**
+ we use this method to create a new persistent container.
+ 
+ Please note: the persistent container will lock main thread internally during initialization, please please avoid locking main thread when to call this method. Otherwise, a grid lock will be created.
+
+ @return a new NSPersistentContainer object
+ */
 - (NSPersistentContainer *)newPersistentContainer {
     NSPersistentContainer *container = [NSPersistentContainer persistentContainerWithName:@"MEGACD"];
     NSPersistentStoreDescription *storeDescription = [NSPersistentStoreDescription persistentStoreDescriptionWithURL:[self storeURL]];
@@ -77,11 +94,10 @@
     
     NSError *error = nil;
     NSPersistentStoreCoordinator *coordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:model];
-    NSDictionary *options = @{ NSMigratePersistentStoresAutomaticallyOption : @YES,
-                               NSInferMappingModelAutomaticallyOption : @YES };
-    
+    NSDictionary *options = @{NSMigratePersistentStoresAutomaticallyOption : @YES,
+                              NSInferMappingModelAutomaticallyOption : @YES};
     if (![coordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:options error:&error]) {
-        MEGALogError(@"Unresolved error %@, %@", error, error.userInfo);
+        MEGALogError(@"error when to create core data stack %@", error);
         abort();
     }
     
