@@ -228,6 +228,9 @@
 
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.item == self.peersInCall.count - 1) {
+        return;
+    }
     if (self.peersInCall.count >= kSmallPeersLayout) {
         //remove border stroke of previous manual selected participant
         NSUInteger previousPeerIndex;
@@ -251,58 +254,6 @@
         } else {
             [self configureManualUserOnFocus:peerSelected];
         }
-    }
-}
-
-- (void)configureManualUserOnFocus:(MEGAGroupCallPeer *)peerSelected {
-    //if previous manual selected participant has video, remove it
-    if (!self.peerTalkingVideoView.hidden) {
-        MEGAGroupCallPeer *previousPeerSelected = self.manualMode ? self.peerManualMode : self.lastPeerTalking;
-        if (previousPeerSelected.peerId == 0) {
-            [[MEGASdkManager sharedMEGAChatSdk] removeChatLocalVideo:self.chatRoom.chatId delegate:self.peerTalkingVideoView];
-            MEGALogDebug(@"GROUPCALLFOCUSVIDEO remove user focused local video for peer %tu in didSelectItemAtIndexPath", previousPeerSelected);
-        } else {
-            [[MEGASdkManager sharedMEGAChatSdk] removeChatRemoteVideo:self.chatRoom.chatId peerId:previousPeerSelected.peerId cliendId:previousPeerSelected.clientId  delegate:self.peerTalkingVideoView];
-            MEGALogDebug(@"GROUPCALLFOCUSVIDEO remove user focused remote video for peer %tu in didSelectItemAtIndexPath", previousPeerSelected);
-        }
-    }
-    
-    self.peerManualMode = peerSelected;
-    self.manualMode = YES;
-    
-    //show border stroke of manual selected participant
-    NSUInteger peerIndex = [self.peersInCall indexOfObject:[self peerForPeerId:self.peerManualMode.peerId clientId:self.peerManualMode.clientId]];
-    GroupCallCollectionViewCell *cell = (GroupCallCollectionViewCell *)[self.collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForItem:peerIndex inSection:0]];
-    [cell showUserOnFocus];
-    
-    //configure large view for manual selected participant
-    if (self.peerManualMode == 0) {
-        if (self.localPeer.video) {
-            [[MEGASdkManager sharedMEGAChatSdk] addChatLocalVideo:self.chatRoom.chatId delegate:self.peerTalkingVideoView];
-            MEGALogDebug(@"GROUPCALLFOCUSVIDEO add user manual focused local video for peer %tu in didSelectItemAtIndexPath", self.peerManualMode);
-            self.peerTalkingVideoView.hidden = NO;
-            self.peerTalkingImageView.hidden = YES;
-        } else {
-            [self.peerTalkingImageView mnz_setImageForUserHandle:[MEGASdkManager sharedMEGAChatSdk].myUserHandle];
-            self.peerTalkingVideoView.hidden = YES;
-            self.peerTalkingImageView.hidden = NO;
-        }
-        self.peerTalkingMuteView.hidden = self.localPeer.audio;
-        self.peerTalkingQualityView.hidden = YES;
-    } else {
-        MEGAChatSession *chatSessionManualMode = [self.call sessionForPeer:self.peerManualMode.peerId clientId:self.peerManualMode.clientId];
-        if (chatSessionManualMode.hasVideo) {
-            [[MEGASdkManager sharedMEGAChatSdk] addChatRemoteVideo:self.chatRoom.chatId peerId:chatSessionManualMode.peerId cliendId:chatSessionManualMode.clientId  delegate:self.peerTalkingVideoView];
-            MEGALogDebug(@"GROUPCALLFOCUSVIDEO add user manual focused remote video for peer %tu in didSelectItemAtIndexPath", self.peerManualMode);
-            self.peerTalkingVideoView.hidden = NO;
-            self.peerTalkingImageView.hidden = YES;
-        } else {
-            [self.peerTalkingImageView mnz_setImageForUserHandle:self.peerManualMode.peerId];
-            self.peerTalkingVideoView.hidden = YES;
-            self.peerTalkingImageView.hidden = NO;
-        }
-        self.peerTalkingMuteView.hidden = chatSessionManualMode.hasAudio;
-        self.peerTalkingQualityView.hidden = chatSessionManualMode.networkQuality < 2;
     }
 }
 
@@ -495,25 +446,6 @@
                         sender.selected = !sender.selected;
                         self.loudSpeakerEnabled = !sender.selected;
                         
-                        MEGAGroupCallPeer *peerTalking = self.manualMode ? self.peerManualMode : self.lastPeerTalking;
-                        if (self.call.numParticipants >= kSmallPeersLayout && peerTalking.peerId == 0) {
-                            if (localUserVideoFlagChanged.video) {
-                                if (self.peerTalkingVideoView.hidden) {
-                                    [[MEGASdkManager sharedMEGAChatSdk] addChatLocalVideo:self.chatRoom.chatId delegate:self.peerTalkingVideoView];
-                                    MEGALogDebug(@"GROUPCALLFOCUSVIDEO add user manual focused local video for peer %tu in enableDisableVideo", peerTalking);
-                                    self.peerTalkingVideoView.hidden = NO;
-                                    self.peerTalkingImageView.hidden = YES;
-                                }
-                            } else {
-                                if (!self.peerTalkingVideoView.hidden) {
-                                    [[MEGASdkManager sharedMEGAChatSdk] removeChatLocalVideo:self.chatRoom.chatId delegate:self.peerTalkingVideoView];
-                                    MEGALogDebug(@"GROUPCALLFOCUSVIDEO remove user focused local video for peer %tu in enableDisableVideo", peerTalking);
-                                    [self.peerTalkingImageView mnz_setImageForUserHandle:[MEGASdkManager sharedMEGAChatSdk].myUserHandle];
-                                    self.peerTalkingVideoView.hidden = YES;
-                                    self.peerTalkingImageView.hidden = NO;
-                                }
-                            }
-                        }
                         [self updateParticipants];
                     }
                 } else if (error.type == MEGAChatErrorTooMany) {
@@ -658,7 +590,6 @@
     self.peerManualMode = nil;
     self.lastPeerTalking = nil;
     self.peerTalkingVideoView.group = YES;
-    [self.peerTalkingImageView mnz_setImageForUserHandle:[MEGASdkManager sharedMEGAChatSdk].myUserHandle];
     
     [[UIDevice currentDevice] setProximityMonitoringEnabled:!self.localPeer.video];
 }
@@ -751,7 +682,6 @@
             MEGALogDebug(@"GROUPCALLFOCUSVIDEO remove user focused remote video for peer %tu in shouldChangeCallLayout", previousPeerSelected);
             self.peerTalkingVideoView.hidden = YES;
             self.peerTalkingImageView.hidden = NO;
-            [self.peerTalkingImageView mnz_setImageForUserHandle:[MEGASdkManager sharedMEGAChatSdk].myUserHandle];
         }
         self.manualMode = NO;
         self.peerManualMode = nil;
@@ -776,6 +706,8 @@
         }
     } else {
         if (self.peerTalkingView.hidden) {
+            MEGAGroupCallPeer *firstPeer = [self.peersInCall objectAtIndex:0];
+            [self.peerTalkingImageView mnz_setImageForUserHandle:firstPeer.peerId name:firstPeer.name];
             self.peerTalkingView.hidden = NO;
             [self removeAllVideoListeners];
             UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
@@ -892,16 +824,6 @@
     });
 }
 
-- (void)initLocalUserFocused {
-    if (self.localPeer.video) {
-        [[MEGASdkManager sharedMEGAChatSdk] addChatLocalVideo:self.chatRoom.chatId delegate:self.peerTalkingVideoView];
-        MEGALogDebug(@"GROUPCALLFOCUSVIDEO add user manual focused local video for peer %tu in CallTypeActive", self.peerManualMode);
-        self.peerTalkingVideoView.hidden = NO;
-        self.peerTalkingImageView.hidden = YES;
-    }
-    self.peerTalkingMuteView.hidden = self.localPeer.audio;
-}
-
 - (void)playCallingSound {
     if (@available(iOS 10.0, *)) {} else {
         NSString *soundFilePath = [[NSBundle mainBundle] pathForResource:@"incoming_voice_video_call" ofType:@"mp3"];
@@ -961,7 +883,8 @@
         self.collectionView.alpha = 0;
         [self.collectionActivity startAnimating];
         self.shouldHideAcivity = YES;
-        [self initLocalUserFocused];
+        [self configureManualUserOnFocus:[self.peersInCall objectAtIndex:0]];
+        self.manualMode = NO;
     }
     self.incomingCallView.hidden = YES;
     [self initDurationTimer];
@@ -987,9 +910,8 @@
             weakSelf.call = [[MEGASdkManager sharedMEGAChatSdk] chatCallForChatId:weakSelf.chatRoom.chatId];
             weakSelf.incomingCallView.hidden = YES;
             if (self.call.numParticipants >= kSmallPeersLayout) {
-                self.collectionView.alpha = 0;
-                [self.collectionActivity startAnimating];
-                [self initLocalUserFocused];
+                [self configureManualUserOnFocus:[self.peersInCall objectAtIndex:0]];
+                self.manualMode = NO;
             }
             [self initDurationTimer];
             [self initShowHideControls];
@@ -1036,6 +958,37 @@
         _call = [[MEGASdkManager sharedMEGAChatSdk] chatCallForChatId:self.chatRoom.chatId];
     }
     [self playCallingSound];
+}
+
+- (void)configureManualUserOnFocus:(MEGAGroupCallPeer *)peerSelected {
+    //if previous manual selected participant has video, remove it
+    if (!self.peerTalkingVideoView.hidden) {
+        MEGAGroupCallPeer *previousPeerSelected = self.manualMode ? self.peerManualMode : self.lastPeerTalking;
+        [[MEGASdkManager sharedMEGAChatSdk] removeChatRemoteVideo:self.chatRoom.chatId peerId:previousPeerSelected.peerId cliendId:previousPeerSelected.clientId  delegate:self.peerTalkingVideoView];
+        MEGALogDebug(@"GROUPCALLFOCUSVIDEO remove user focused remote video for peer %tu in didSelectItemAtIndexPath", previousPeerSelected);
+    }
+    
+    self.peerManualMode = peerSelected;
+    self.manualMode = YES;
+    
+    //show border stroke of manual selected participant
+    NSUInteger peerIndex = [self.peersInCall indexOfObject:[self peerForPeerId:self.peerManualMode.peerId clientId:self.peerManualMode.clientId]];
+    GroupCallCollectionViewCell *cell = (GroupCallCollectionViewCell *)[self.collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForItem:peerIndex inSection:0]];
+    [cell showUserOnFocus];
+    
+    //configure large view for manual selected participant
+    MEGAChatSession *chatSessionManualMode = [self.call sessionForPeer:self.peerManualMode.peerId clientId:self.peerManualMode.clientId];
+    if (chatSessionManualMode.hasVideo) {
+        [[MEGASdkManager sharedMEGAChatSdk] addChatRemoteVideo:self.chatRoom.chatId peerId:chatSessionManualMode.peerId cliendId:chatSessionManualMode.clientId  delegate:self.peerTalkingVideoView];
+        MEGALogDebug(@"GROUPCALLFOCUSVIDEO add user manual focused remote video for peer %tu in didSelectItemAtIndexPath", self.peerManualMode);
+        self.peerTalkingVideoView.hidden = NO;
+        self.peerTalkingImageView.hidden = YES;
+    } else {
+        self.peerTalkingVideoView.hidden = YES;
+        self.peerTalkingImageView.hidden = NO;
+    }
+    self.peerTalkingMuteView.hidden = chatSessionManualMode.hasAudio;
+    self.peerTalkingQualityView.hidden = chatSessionManualMode.networkQuality < 2;
 }
 
 #pragma mark - MEGAChatCallDelegate
@@ -1110,13 +1063,8 @@
                 if (chatSessionWithAudioLevel.audioDetected) {
                     if (self.lastPeerTalking.peerId != chatSessionWithAudioLevel.peerId) {
                         if (!self.peerTalkingVideoView.hidden) {
-                            if (self.lastPeerTalking.peerId == 0) {
-                                [[MEGASdkManager sharedMEGAChatSdk] removeChatLocalVideo:self.chatRoom.chatId delegate:self.peerTalkingVideoView];
-                                MEGALogDebug(@"GROUPCALLFOCUSVIDEO remove user focused local video for peer %tu in onChatCallUpdate", self.lastPeerTalking);
-                            } else {
-                                [[MEGASdkManager sharedMEGAChatSdk] removeChatRemoteVideo:self.chatRoom.chatId peerId:self.lastPeerTalking.peerId cliendId:self.lastPeerTalking.clientId delegate:self.peerTalkingVideoView];
-                                MEGALogDebug(@"GROUPCALLFOCUSVIDEO remove user focused remote video for peer %tu in onChatCallUpdate", self.lastPeerTalking);
-                            }
+                            [[MEGASdkManager sharedMEGAChatSdk] removeChatRemoteVideo:self.chatRoom.chatId peerId:self.lastPeerTalking.peerId cliendId:self.lastPeerTalking.clientId delegate:self.peerTalkingVideoView];
+                            MEGALogDebug(@"GROUPCALLFOCUSVIDEO remove user focused remote video for peer %tu in onChatCallUpdate", self.lastPeerTalking);
                         }
                         
                         if (chatSessionWithAudioLevel.hasVideo) {
