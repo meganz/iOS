@@ -6,7 +6,7 @@
 #import "LocalFileNameCoordinator.h"
 
 static const NSUInteger MaximumUploadRetryPerLaunchCount = 20;
-static const NSUInteger MaximumUploadRetryPerLoginCount = 1000;
+static const NSUInteger MaximumUploadRetryPerLoginCount = 800;
 
 @interface CameraUploadRecordManager ()
 

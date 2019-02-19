@@ -276,7 +276,7 @@ static const NSTimeInterval LoadMediaInfoTimeoutInSeconds = 120;
             if (loaded) {
                 [weakSelf loadCameraUploadNodeForUpload];
             } else {
-                MEGALogDebug(@"[Camera Upload] retry to start camera upload due to failed to load media into");
+                MEGALogError(@"[Camera Upload] retry to start camera upload due to failed to load media into");
                 [weakSelf startCameraUploadIfNeeded];
             }
         }];
@@ -304,7 +304,7 @@ static const NSTimeInterval LoadMediaInfoTimeoutInSeconds = 120;
     [self startVideoUploadIfNeeded];
     
     if (self.isPhotoUploadPaused) {
-        MEGALogDebug(@"[Camera Upload] photo upload is paused");
+        MEGALogInfo(@"[Camera Upload] photo upload is paused");
         return;
     }
     
@@ -314,6 +314,8 @@ static const NSTimeInterval LoadMediaInfoTimeoutInSeconds = 120;
     if (self.photoUploadOperationQueue.operationCount < PhotoUploadInForegroundConcurrentCount) {
         [self uploadNextAssetsWithNumber:PhotoUploadInForegroundConcurrentCount mediaType:PHAssetMediaTypeImage];
     }
+    
+    MEGALogDebug(@"[Camera Upload] uploading photos with operation count %lu", (unsigned long)self.photoUploadOperationQueue.operationCount);
 }
 
 - (void)startVideoUploadIfNeeded {
@@ -335,7 +337,7 @@ static const NSTimeInterval LoadMediaInfoTimeoutInSeconds = 120;
     }
     
     if (self.isVideoUploadPaused) {
-        MEGALogDebug(@"[Camera Upload] video upload is paused");
+        MEGALogInfo(@"[Camera Upload] video upload is paused");
         return;
     }
     
@@ -346,6 +348,8 @@ static const NSTimeInterval LoadMediaInfoTimeoutInSeconds = 120;
     if (self.videoUploadOperationQueue.operationCount < VideoUploadInForegroundConcurrentCount) {
         [self uploadNextAssetsWithNumber:VideoUploadInForegroundConcurrentCount mediaType:PHAssetMediaTypeVideo];
     }
+    
+    MEGALogDebug(@"[Camera Upload] uploading videos with video operation count %lu", (unsigned long)self.videoUploadOperationQueue.operationCount);
 }
 
 #pragma mark - upload next assets
@@ -358,7 +362,7 @@ static const NSTimeInterval LoadMediaInfoTimeoutInSeconds = 120;
     switch (mediaType) {
         case PHAssetMediaTypeImage:
             if (self.isPhotoUploadPaused) {
-                MEGALogDebug(@"[Camera Upload] photo upload is paused when to upload next asset");
+                MEGALogInfo(@"[Camera Upload] photo upload is paused when to upload next asset");
                 return;
             }
             break;
@@ -366,7 +370,7 @@ static const NSTimeInterval LoadMediaInfoTimeoutInSeconds = 120;
             if (!CameraUploadManager.isVideoUploadEnabled) {
                 return;
             } else if (self.isVideoUploadPaused) {
-                MEGALogDebug(@"[Camera Upload] video upload is paused when to upload next asset");
+                MEGALogInfo(@"[Camera Upload] video upload is paused when to upload next asset");
                 return;
             }
             break;
@@ -384,7 +388,7 @@ static const NSTimeInterval LoadMediaInfoTimeoutInSeconds = 120;
     }
     NSArray *records = [CameraUploadRecordManager.shared queueUpUploadRecordsByStatuses:statuses fetchLimit:number mediaType:mediaType error:nil];
     if (records.count == 0) {
-        MEGALogDebug(@"[Camera Upload] no more local asset to upload for media type %li", (long)mediaType);
+        MEGALogInfo(@"[Camera Upload] no more local asset to upload for media type %li", (long)mediaType);
         return;
     }
     

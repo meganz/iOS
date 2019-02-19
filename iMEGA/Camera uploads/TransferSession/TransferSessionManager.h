@@ -23,7 +23,7 @@ typedef void (^UploadCompletionHandler)(NSData  * _Nullable token, NSError * _Nu
 
 - (NSURLSessionUploadTask *)videoUploadTaskWithURL:(NSURL *)requestURL fromFile:(NSURL *)fileURL completion:(nullable UploadCompletionHandler)completion;
 
-- (void)didFinishEventsForBackgroundURLSession:(NSURLSession *)session;
+- (void)finishEventsForBackgroundURLSession:(NSURLSession *)session;
 
 @end
 

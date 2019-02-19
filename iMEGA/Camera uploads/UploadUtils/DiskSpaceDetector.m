@@ -28,7 +28,7 @@ static const NSTimeInterval RetryTimerTolerance = 6;
     if (_diskIsFullForPhotos != diskIsFullForPhotos) {
         _diskIsFullForPhotos = diskIsFullForPhotos;
         CameraUploadManager.shared.pausePhotoUpload = diskIsFullForPhotos;
-        MEGALogDebug(@"[Camera Upload] disk is %@ for photos", diskIsFullForPhotos ? @"full" : @"not full");
+        MEGALogDebug(@"[Camera Upload] disk is %@ for photos", diskIsFullForPhotos ? @"full" : @"available");
     }
 }
 
@@ -36,7 +36,7 @@ static const NSTimeInterval RetryTimerTolerance = 6;
     if (_diskIsFullForVideos != diskIsFullForVideos) {
         _diskIsFullForVideos = diskIsFullForVideos;
         CameraUploadManager.shared.pauseVideoUpload = diskIsFullForVideos;
-        MEGALogDebug(@"[Camera Upload] disk is %@ for videos", diskIsFullForVideos ? @"full" : @"not full");
+        MEGALogDebug(@"[Camera Upload] disk is %@ for videos", diskIsFullForVideos ? @"full" : @"available");
     }
 }
 

@@ -18,7 +18,7 @@
     [super start];
     
     if (![NSFileManager.defaultManager fileExistsAtPath:self.attributeURL.path]) {
-        MEGALogDebug(@"[Camera Upload] No attribute file found at URL %@", self.attributeURL);
+        MEGALogError(@"[Camera Upload] No attribute file found at URL %@", self.attributeURL);
         [self finishOperation];
         return;
     }
@@ -31,10 +31,10 @@
         [NSFileManager.defaultManager removeItemIfExistsAtURL:cacheURL];
         if ([NSFileManager.defaultManager moveItemAtURL:self.attributeURL toURL:cacheURL error:&error]) {
         } else {
-            MEGALogDebug(@"[Camera Upload] %@ error when to copy attribute to cache %@", self, error);
+            MEGALogError(@"[Camera Upload] %@ error when to copy attribute to cache %@", self, error);
         }
     } else {
-        MEGALogDebug(@"[Camera Upload] %@ error when to create attribute cache directory %@", self, error);
+        MEGALogError(@"[Camera Upload] %@ error when to create attribute cache directory %@", self, error);
     }
 }
 

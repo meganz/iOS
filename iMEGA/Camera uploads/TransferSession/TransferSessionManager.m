@@ -245,11 +245,13 @@ static NSString * const VideoCellularDisallowedUploadSessionId = @"nz.mega.video
 
 #pragma mark - session finishes
 
-- (void)didFinishEventsForBackgroundURLSession:(NSURLSession *)session {
+- (void)finishEventsForBackgroundURLSession:(NSURLSession *)session {
+    MEGALogDebug(@"[Camera Upload] finish events for background session %@", session.configuration.identifier);
     [CameraUploadCompletionManager.shared waitUnitlAllUploadsAreFinished];
     void (^sessionCompletion)(void) = [self completionHandlerForIdentifier:session.configuration.identifier];
     [NSOperationQueue.mainQueue addOperationWithBlock:^{
         if (sessionCompletion) {
+            MEGALogDebug(@"[Camera Upload] call session completion handler for %@", session.configuration.identifier);
             sessionCompletion();
         }
     }];
