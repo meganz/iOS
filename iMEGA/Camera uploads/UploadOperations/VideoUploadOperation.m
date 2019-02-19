@@ -134,6 +134,9 @@
     }
     
     MEGALogDebug(@"[Camera Upload] %@ starts exporting video data", self);
+    if ([asset isMemberOfClass:[AVURLAsset class]]) {
+        MEGALogDebug(@"[Camera Upload] %@ original video size %llu MB", self, [NSFileManager.defaultManager attributesOfItemAtPath:[(AVURLAsset *)asset URL].path error:nil].fileSize / 1024 / 1024);
+    }
     
     [AVAssetExportSession determineCompatibilityOfExportPreset:preset withAsset:asset outputFileType:outputFileType completionHandler:^(BOOL compatible) {
         if (compatible) {
@@ -193,7 +196,7 @@
     NSError *error;
     [NSFileManager.defaultManager copyItemAtURL:URL toURL:self.uploadInfo.fileURL error:&error];
     if (error) {
-        MEGALogDebug(@"[Camera Upload] %@ got error when to copy original item %@", self, error);
+        MEGALogError(@"[Camera Upload] %@ got error when to copy original item %@", self, error);
         if (error.domain == NSCocoaErrorDomain && error.code == NSFileWriteOutOfSpaceError) {
             [self finishUploadWithNoEnoughDiskSpace];
         } else {

@@ -77,6 +77,8 @@
     self.photosCollectionView.emptyDataSetSource = self;
     self.photosCollectionView.emptyDataSetDelegate = self;
     
+    self.photosUploadedProgressView.progressTintColor = [UIColor mnz_green00BFA5];
+    
     self.selectedItemsDictionary = [[NSMutableDictionary alloc] init];
     
     self.editBarButtonItem.title = AMLocalizedString(@"edit", @"Caption of a button to edit the files that are selected");

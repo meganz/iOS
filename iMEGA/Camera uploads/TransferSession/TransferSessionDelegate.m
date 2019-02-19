@@ -38,16 +38,16 @@
 #pragma mark - session level delegate
 
 - (void)URLSession:(NSURLSession *)session didBecomeInvalidWithError:(NSError *)error {
-    MEGALogDebug(@"[Camera Upload] Session %@ did become invalid with error: %@", session.configuration.identifier, error);
+    MEGALogError(@"[Camera Upload] Session %@ did become invalid with error: %@", session.configuration.identifier, error);
 }
 
 - (void)URLSessionDidFinishEventsForBackgroundURLSession:(NSURLSession *)session {
-    MEGALogDebug(@"[Camera Upload] Session %@ did finish events for background URL Session", session.configuration.identifier);
-    [self.manager didFinishEventsForBackgroundURLSession:session];
+    MEGALogInfo(@"[Camera Upload] Session %@ did finish events for background URL Session", session.configuration.identifier);
+    [self.manager finishEventsForBackgroundURLSession:session];
 }
 
 - (void)URLSession:(NSURLSession *)session didReceiveChallenge:(NSURLAuthenticationChallenge *)challenge completionHandler:(void (^)(NSURLSessionAuthChallengeDisposition, NSURLCredential * _Nullable))completionHandler {
-    MEGALogDebug(@"[Camera Upload] Session %@ did receive challenge for protection space: %@", session.configuration.identifier, challenge.protectionSpace);
+    MEGALogInfo(@"[Camera Upload] Session %@ did receive challenge for protection space: %@", session.configuration.identifier, challenge.protectionSpace);
     if (challenge.protectionSpace.authenticationMethod == NSURLAuthenticationMethodServerTrust) {
 #warning add public key matching check here to improve the security
         SecTrustRef trust = challenge.protectionSpace.serverTrust;
