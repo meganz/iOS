@@ -13,6 +13,8 @@
 @property (weak, nonatomic) IBOutlet UIImageView *userMutedImageView;
 @property (weak, nonatomic) IBOutlet UIView *lowQualityView;
 
+@property (strong, nonatomic) MEGAGroupCallPeer *peer;
+
 @end
 
 @implementation GroupCallCollectionViewCell
@@ -27,9 +29,19 @@
 
 - (void)configureCellForPeer:(MEGAGroupCallPeer *)peer inChat:(uint64_t)chatId numParticipants:(NSInteger)numParticipants {
     
-    if (peer.peerId == 0) {
+    if (peer.peerId != self.peer.peerId) {
+        if (self.peer.peerId == 0) {
+            [self removeLocalVideoInChat:chatId];
+        } else {
+            [self removeRemoteVideoForPeer:self.peer inChat:chatId];
+        }
+    }
+    
+    self.peer = peer;
+    
+    if (self.peer.peerId == 0) {
         [self.avatarImageView mnz_setImageForUserHandle:[MEGASdkManager sharedMEGAChatSdk].myUserHandle];
-        if (peer.video == CallPeerVideoOn) {
+        if (self.peer.video == CallPeerVideoOn) {
             if (self.videoImageView.hidden) {
                 [self addLocalVideoInChat:chatId];
             }
@@ -39,19 +51,19 @@
             }
         }
     } else {
-        [self.avatarImageView mnz_setImageForUserHandle:peer.peerId];
-        if (peer.video == CallPeerVideoOn) {
+        [self.avatarImageView mnz_setImageForUserHandle:self.peer.peerId name:self.peer.name];
+        if (self.peer.video == CallPeerVideoOn) {
             if (self.videoImageView.hidden) {
-                [self addRemoteVideoForPeer:peer inChat:chatId];
+                [self addRemoteVideoForPeer:self.peer inChat:chatId];
             }
         } else {
             if (!self.videoImageView.hidden) {
-                [self removeRemoteVideoForPeer:peer inChat:chatId];
+                [self removeRemoteVideoForPeer:self.peer inChat:chatId];
             }
         }
     }
     
-    [self configureUserAudio:peer.audio];
+    [self configureUserAudio:self.peer.audio];
     
     if (numParticipants < 7) {
         self.micTopConstraint.constant = self.micTrailingConstraint.constant = self.qualityBottomConstraint.constant = self.qualityLeadingConstraint.constant = 12;
@@ -65,10 +77,13 @@
 }
 
 - (void)networkQualityChangedForPeer:(MEGAGroupCallPeer *)peer {
-    if (peer.networkQuality < 2) {
-        self.lowQualityView.hidden = NO;
-    } else {
-        self.lowQualityView.hidden = YES;
+    if (self.peer.peerId == peer.peerId) {
+        self.peer = peer;
+        if (self.peer.networkQuality < 2) {
+            self.lowQualityView.hidden = NO;
+        } else {
+            self.lowQualityView.hidden = YES;
+        }
     }
 }
 

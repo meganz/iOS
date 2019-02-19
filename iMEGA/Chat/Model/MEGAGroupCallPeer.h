@@ -15,6 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (assign, nonatomic) CallPeerVideo video;
 @property (assign, nonatomic) CallPeerAudio audio;
 @property (assign, nonatomic) NSUInteger networkQuality;
+@property (strong, nonatomic) NSString *name;
 
 - (instancetype)initWithSession:(MEGAChatSession *)session;
 
