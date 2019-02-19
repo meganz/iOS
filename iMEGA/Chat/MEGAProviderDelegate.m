@@ -49,14 +49,8 @@
     MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:call.chatId];
 
     CXCallUpdate *update = [[CXCallUpdate alloc] init];
-    if (chatRoom.isGroup) {
-        update.remoteHandle = [[CXHandle alloc] initWithType:CXHandleTypeGeneric value:[MEGASdk base64HandleForUserHandle:chatRoom.chatId]];
-        update.localizedCallerName = chatRoom.title;
-    } else {
-        update.remoteHandle = [[CXHandle alloc] initWithType:CXHandleTypeEmailAddress value:user.email];
-        update.localizedCallerName = user.mnz_fullName;
-    }
-    
+    update.remoteHandle = [[CXHandle alloc] initWithType:CXHandleTypeGeneric value:[MEGASdk base64HandleForUserHandle:chatRoom.chatId]];
+    update.localizedCallerName = chatRoom.title;
     update.supportsHolding = NO;
     update.supportsGrouping = NO;
     update.supportsUngrouping = NO;
@@ -152,18 +146,10 @@
     
     if (call) {
         MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:call.chatId];
-        uint64_t peerHandle = [chatRoom peerHandleAtIndex:0];
-        NSString *email = [chatRoom peerEmailByHandle:peerHandle];
-        MEGAUser *user = [[MEGASdkManager sharedMEGASdk] contactForEmail:email];
         
         CXCallUpdate *update = [[CXCallUpdate alloc] init];
-        if (chatRoom.isGroup) {
-            update.remoteHandle = [[CXHandle alloc] initWithType:CXHandleTypeGeneric value:[MEGASdk base64HandleForUserHandle:chatRoom.chatId]];
-            update.localizedCallerName = chatRoom.title;
-        } else {
-            update.remoteHandle = [[CXHandle alloc] initWithType:CXHandleTypeEmailAddress value:user.email];
-            update.localizedCallerName = user.mnz_fullName;
-        }
+        update.remoteHandle = [[CXHandle alloc] initWithType:CXHandleTypeGeneric value:[MEGASdk base64HandleForUserHandle:chatRoom.chatId]];
+        update.localizedCallerName = chatRoom.title;
         update.supportsHolding = NO;
         update.supportsGrouping = NO;
         update.supportsUngrouping = NO;
@@ -195,10 +181,17 @@
             groupCallVC.megaCallManager = self.megaCallManager;
             groupCallVC.call = call;
             
-            if ([UIApplication.mnz_presentingViewController isKindOfClass:GroupCallViewController.class]) {
+            if ([UIApplication.mnz_presentingViewController isKindOfClass:CallViewController.class]) {
                 [UIApplication.mnz_presentingViewController dismissViewControllerAnimated:YES completion:^{
                     [UIApplication.mnz_presentingViewController presentViewController:groupCallNavigation animated:YES completion:nil];
                 }];
+            } else if ([UIApplication.mnz_presentingViewController isKindOfClass:MEGANavigationController.class]) {
+                MEGANavigationController *navigation = (MEGANavigationController*)UIApplication.mnz_presentingViewController;
+                if ([navigation.topViewController isKindOfClass:GroupCallViewController.class]) {
+                    [UIApplication.mnz_presentingViewController dismissViewControllerAnimated:YES completion:^{
+                        [UIApplication.mnz_presentingViewController presentViewController:groupCallNavigation animated:YES completion:nil];
+                    }];
+                }
             } else {
                 [UIApplication.mnz_presentingViewController presentViewController:groupCallNavigation animated:YES completion:nil];
             }
@@ -210,10 +203,17 @@
             callVC.megaCallManager = self.megaCallManager;
             callVC.call = call;
             
-            if ([UIApplication.mnz_presentingViewController isKindOfClass:CallViewController.class]) {
+            if ([UIApplication.mnz_presentingViewController isKindOfClass:CallViewController.class] || [UIApplication.mnz_presentingViewController isKindOfClass:MEGANavigationController.class])  {
                 [UIApplication.mnz_presentingViewController dismissViewControllerAnimated:YES completion:^{
                     [UIApplication.mnz_presentingViewController presentViewController:callVC animated:YES completion:nil];
                 }];
+            } else if ([UIApplication.mnz_presentingViewController isKindOfClass:MEGANavigationController.class]) {
+                MEGANavigationController *navigation = (MEGANavigationController*)UIApplication.mnz_presentingViewController;
+                if ([navigation.topViewController isKindOfClass:GroupCallViewController.class]) {
+                    [UIApplication.mnz_presentingViewController dismissViewControllerAnimated:YES completion:^{
+                        [UIApplication.mnz_presentingViewController presentViewController:callVC animated:YES completion:nil];
+                    }];
+                }
             } else {
                 [UIApplication.mnz_presentingViewController presentViewController:callVC animated:YES completion:nil];
             }
