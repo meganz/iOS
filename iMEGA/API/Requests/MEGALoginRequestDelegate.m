@@ -127,7 +127,6 @@
     if (!self.hasSession) {
         NSString *session = [api dumpSession];
         [SAMKeychain setPassword:session forService:@"MEGA" account:@"sessionV3"];
-        [[MEGAStore shareInstance] configureMEGAStore];
         
         LaunchViewController *launchVC;
         if (DevicePermissionsHelper.shouldSetupPermissions) {

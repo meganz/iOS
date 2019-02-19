@@ -22,9 +22,8 @@
 
 + (MEGAStore *)shareInstance;
 
-#pragma mark - Configure
+#pragma mark - store stack
 
-- (void)configureMEGAStore;
 - (void)deleteStoreStack;
 
 #pragma mark - MOOfflineNode entity
