@@ -601,11 +601,9 @@
 
 - (void)application:(UIApplication *)application handleEventsForBackgroundURLSession:(NSString *)identifier completionHandler:(void (^)(void))completionHandler {
     MEGALogDebug(@"[App Lifecycle] application handle events for background session: %@", identifier);
-    if (CameraUploadManager.isCameraUploadEnabled) {
-        [TransferSessionManager.shared saveSessionCompletion:completionHandler forIdentifier:identifier];
-        [TransferSessionManager.shared restoreSessionIfNeededByIdentifier:identifier];
-        [CameraUploadManager.shared startCameraUploadIfNeeded];
-    }
+    [TransferSessionManager.shared saveSessionCompletion:completionHandler forIdentifier:identifier];
+    [TransferSessionManager.shared restoreSessionIfNeededByIdentifier:identifier];
+    [CameraUploadManager.shared startCameraUploadIfNeeded];
 }
 
 - (void)application:(UIApplication *)application performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
