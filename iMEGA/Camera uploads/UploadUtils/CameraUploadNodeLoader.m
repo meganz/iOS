@@ -70,5 +70,4 @@ static NSString * const CameraUplodFolderName = @"Camera Uploads";
     }
 }
 
-
 @end
