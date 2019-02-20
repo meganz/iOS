@@ -6,6 +6,7 @@
 #import "MEGAConstants.h"
 #import "MEGAReachabilityManager.h"
 #import "NSFileManager+MNZCategory.h"
+#import "NSDate+MNZCategory.h"
 
 static NSString * const CameraUploadLivePhotoExtension = @"live";
 
@@ -81,12 +82,12 @@ static NSString * const CameraUploadLivePhotoExtension = @"live";
 #pragma mark - generate local file name
 
 - (NSString *)mnz_generateLocalFileNamewithExtension:(NSString *)extension {
-    NSString *originalFileName = [[NSString mnz_fileNameWithDate:self.uploadInfo.asset.creationDate] stringByAppendingPathExtension:extension];
+    NSString *originalFileName = [[self.uploadInfo.asset.creationDate mnz_formattedDefaultNameForMedia] stringByAppendingPathExtension:extension];
     return [CameraUploadRecordManager.shared.fileNameCoordinator generateUniqueLocalFileNameForUploadRecord:self.uploadRecord withOriginalFileName:originalFileName];
 }
 
 - (NSString *)mnz_generateLocalLivePhotoFileNameWithExtension:(NSString *)extension {
-    NSString *originalFileName = [[[NSString mnz_fileNameWithDate:self.uploadInfo.asset.creationDate] stringByAppendingPathExtension:CameraUploadLivePhotoExtension] stringByAppendingPathExtension:extension];
+    NSString *originalFileName = [[[self.uploadInfo.asset.creationDate mnz_formattedDefaultNameForMedia] stringByAppendingPathExtension:CameraUploadLivePhotoExtension] stringByAppendingPathExtension:extension];
     return [CameraUploadRecordManager.shared.fileNameCoordinator generateUniqueLocalFileNameForUploadRecord:self.uploadRecord withOriginalFileName:originalFileName];
 }
 
