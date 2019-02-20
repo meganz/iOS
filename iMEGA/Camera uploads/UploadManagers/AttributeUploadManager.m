@@ -10,11 +10,11 @@
 
 static NSString * const AttributeThumbnailName = @"thumbnail";
 static NSString * const AttributePreviewName = @"preview";
-static const NSTimeInterval AttributeUploadExpireTimeInterval = 90;
 
 @interface AttributeUploadManager ()
 
-@property (strong, nonatomic) NSOperationQueue *operationQueue;
+@property (strong, nonatomic) NSOperationQueue *thumbnailOperationQueue;
+@property (strong, nonatomic) NSOperationQueue *attributeOerationQueue;
 
 @end
 
@@ -33,8 +33,11 @@ static const NSTimeInterval AttributeUploadExpireTimeInterval = 90;
 - (instancetype)init {
     self = [super init];
     if (self) {
-        _operationQueue = [[NSOperationQueue alloc] init];
-        _operationQueue.qualityOfService = NSQualityOfServiceUtility;
+        _thumbnailOperationQueue = [[NSOperationQueue alloc] init];
+        _thumbnailOperationQueue.qualityOfService = NSQualityOfServiceUserInteractive;
+        
+        _attributeOerationQueue = [[NSOperationQueue alloc] init];
+        _attributeOerationQueue.qualityOfService = NSQualityOfServiceUserInitiated;
     }
     return self;
 }
@@ -42,18 +45,19 @@ static const NSTimeInterval AttributeUploadExpireTimeInterval = 90;
 #pragma mark - util
 
 - (void)waitUnitlAllAttributeUploadsAreFinished {
-    [self.operationQueue waitUntilAllOperationsAreFinished];
+    [self.thumbnailOperationQueue waitUntilAllOperationsAreFinished];
+    [self.attributeOerationQueue waitUntilAllOperationsAreFinished];
 }
 
 #pragma mark - upload coordinate
 
-- (void)uploadCoordinateAtLocation:(CLLocation *)location forNode:(MEGANode *)node {
-    [self.operationQueue addOperation:[[CoordinatesUploadOperation alloc] initWithLocation:location node:node expiresAfterTimeInterval:AttributeUploadExpireTimeInterval]];
+- (void)uploadCoordinateLocation:(CLLocation *)location forNode:(MEGANode *)node {
+    [self.attributeOerationQueue addOperation:[[CoordinatesUploadOperation alloc] initWithLocation:location node:node]];
 }
 
 #pragma mark - upload preview and thumbnail files
 
-- (void)uploadFileAtURL:(NSURL *)URL withAttributeType:(MEGAAttributeType)type forNode:(MEGANode *)node {
+- (void)uploadFile:(NSURL *)URL withAttributeType:(MEGAAttributeType)type forNode:(MEGANode *)node {
     if (![NSFileManager.defaultManager isReadableFileAtPath:URL.path]) {
         return;
     }
@@ -69,10 +73,10 @@ static const NSTimeInterval AttributeUploadExpireTimeInterval = 90;
     
     switch (type) {
         case MEGAAttributeTypeThumbnail:
-            [self.operationQueue addOperation:[[ThumbnailUploadOperation alloc] initWithAttributeURL:uploadURL node:node expiresAfterTimeInterval:AttributeUploadExpireTimeInterval]];
+            [self.thumbnailOperationQueue addOperation:[[ThumbnailUploadOperation alloc] initWithAttributeURL:uploadURL node:node]];
             break;
         case MEGAAttributeTypePreview:
-            [self.operationQueue addOperation:[[PreviewUploadOperation alloc] initWithAttributeURL:uploadURL node:node expiresAfterTimeInterval:AttributeUploadExpireTimeInterval]];
+            [self.attributeOerationQueue addOperation:[[PreviewUploadOperation alloc] initWithAttributeURL:uploadURL node:node]];
             break;
         default:
             break;
@@ -144,13 +148,13 @@ static const NSTimeInterval AttributeUploadExpireTimeInterval = 90;
         if ([node hasThumbnail]) {
             [NSFileManager.defaultManager removeItemIfExistsAtURL:URL];
         } else {
-            [self.operationQueue addOperation:[[ThumbnailUploadOperation alloc] initWithAttributeURL:URL node:node expiresAfterTimeInterval:AttributeUploadExpireTimeInterval]];
+            [self.thumbnailOperationQueue addOperation:[[ThumbnailUploadOperation alloc] initWithAttributeURL:URL node:node]];
         }
     } else if ([name isEqualToString:AttributePreviewName]) {
         if ([node hasPreview]) {
             [NSFileManager.defaultManager removeItemIfExistsAtURL:URL];
         } else {
-            [self.operationQueue addOperation:[[PreviewUploadOperation alloc] initWithAttributeURL:URL node:node expiresAfterTimeInterval:AttributeUploadExpireTimeInterval]];
+            [self.attributeOerationQueue addOperation:[[PreviewUploadOperation alloc] initWithAttributeURL:URL node:node]];
         }
     }
 }

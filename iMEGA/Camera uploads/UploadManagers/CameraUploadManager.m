@@ -91,7 +91,7 @@ static const NSTimeInterval LoadMediaInfoTimeoutInSeconds = 120;
     [CameraUploadManager enableBackgroundRefreshIfNeeded];
     [self startBackgroundUploadIfPossible];
     
-    dispatch_async(dispatch_get_global_queue(QOS_CLASS_DEFAULT, 0), ^{
+    dispatch_async(dispatch_get_global_queue(QOS_CLASS_UTILITY, 0), ^{
         [AttributeUploadManager.shared scanLocalAttributeFilesAndRetryUploadIfNeeded];
         [TransferSessionManager.shared restoreAllSessions];
         [self collateUploadRecords];
@@ -108,6 +108,7 @@ static const NSTimeInterval LoadMediaInfoTimeoutInSeconds = 120;
 
 - (void)initializePhotoUploadQueue {
     _photoUploadOperationQueue = [[NSOperationQueue alloc] init];
+    _photoUploadOperationQueue.qualityOfService = NSQualityOfServiceUtility;
     if (UIApplication.sharedApplication.applicationState == UIApplicationStateBackground) {
         _photoUploadOperationQueue.maxConcurrentOperationCount = PhotoUploadInBackgroundConcurrentCount;
     } else {
@@ -122,6 +123,7 @@ static const NSTimeInterval LoadMediaInfoTimeoutInSeconds = 120;
 
 - (void)initializeVideoUploadQueue {
     _videoUploadOperationQueue = [[NSOperationQueue alloc] init];
+    _videoUploadOperationQueue.qualityOfService = NSQualityOfServiceBackground;
     if (UIApplication.sharedApplication.applicationState == UIApplicationStateBackground) {
         _videoUploadOperationQueue.maxConcurrentOperationCount = VideoUploadInBackgroundConcurrentCount;
     } else {

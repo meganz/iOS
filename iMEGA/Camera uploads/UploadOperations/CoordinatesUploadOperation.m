@@ -13,8 +13,8 @@
 
 @implementation CoordinatesUploadOperation
 
-- (instancetype)initWithLocation:(CLLocation *)location node:(MEGANode *)node expiresAfterTimeInterval:(NSTimeInterval)timeInterval {
-    self = [super initWithExpirationTimeInterval:timeInterval];
+- (instancetype)initWithLocation:(CLLocation *)location node:(MEGANode *)node {
+    self = [super init];
     if (self) {
         _node = node;
         _location = location;
@@ -30,6 +30,10 @@
         [self finishOperation];
         return;
     }
+    
+    [self beginBackgroundTaskWithExpirationHandler:^{
+        [self finishOperation];
+    }];
     
     __weak __typeof__(self) weakSelf = self;
     [MEGASdkManager.sharedMEGASdk setUnshareableNodeCoordinates:self.node latitude:@(self.location.coordinate.latitude) longitude:@(self.location.coordinate.longitude) delegate:[[CameraUploadRequestDelegate alloc] initWithCompletion:^(MEGARequest * _Nonnull request, MEGAError * _Nonnull error) {

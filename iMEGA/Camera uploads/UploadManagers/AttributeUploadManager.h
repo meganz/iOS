@@ -14,9 +14,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)scanLocalAttributeFilesAndRetryUploadIfNeeded;
 
-- (void)uploadFileAtURL:(NSURL *)URL withAttributeType:(MEGAAttributeType)type forNode:(MEGANode *)node;
+- (void)uploadFile:(NSURL *)URL withAttributeType:(MEGAAttributeType)type forNode:(MEGANode *)node;
 
-- (void)uploadCoordinateAtLocation:(CLLocation *)location forNode:(MEGANode *)node;
+- (void)uploadCoordinateLocation:(CLLocation *)location forNode:(MEGANode *)node;
 
 @end
 
