@@ -69,7 +69,8 @@
     
     NSMutableArray<NSString *> *scannedLocalIds = [NSMutableArray arrayWithCapacity:records.count];
     for (MOAssetUploadRecord *record in records) {
-        [scannedLocalIds addObject:record.localIdentifier];
+        NSString *identifier = [CameraUploadRecordManager.shared savedIdentifierInRecord:record];
+        [scannedLocalIds addObject:identifier];
     }
     NSComparator localIdComparator = ^(NSString *s1, NSString *s2) {
         return [s1 compare:s2];

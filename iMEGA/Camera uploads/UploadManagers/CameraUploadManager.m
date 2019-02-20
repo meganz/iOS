@@ -614,11 +614,13 @@ static const NSTimeInterval LoadMediaInfoTimeoutInSeconds = 120;
 
 + (void)enableBackgroundRefreshIfNeeded {
     if (CameraUploadManager.isCameraUploadEnabled) {
+        MEGALogInfo(@"[Camera Upload] enable background refresh for background upload");
         [UIApplication.sharedApplication setMinimumBackgroundFetchInterval:MinimumBackgroundRefreshInterval];
     }
 }
 
 + (void)disableBackgroundRefresh {
+    MEGALogInfo(@"[Camera Upload] disable background refresh for background upload");
     [UIApplication.sharedApplication setMinimumBackgroundFetchInterval:UIApplicationBackgroundFetchIntervalNever];
 }
 

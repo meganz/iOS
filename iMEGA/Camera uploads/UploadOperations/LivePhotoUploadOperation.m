@@ -5,7 +5,7 @@
 #import "PHAsset+CameraUpload.h"
 #import "MEGAConstants.h"
 #import "NSFileManager+MNZCategory.h"
-#import "MOAssetUploadRecord+CameraUpload.h"
+#import "CameraUploadOperation+Utils.h"
 @import Photos;
 
 static NSString * const LivePhotoVideoResourceTemporaryName = @"video.mov";
@@ -125,7 +125,7 @@ static NSString * const LivePhotoVideoResourceTemporaryName = @"video.mov";
     AVURLAsset *urlAsset = [AVURLAsset assetWithURL:videoFileURL];
     AVAssetExportSession *session = [AVAssetExportSession exportSessionWithAsset:urlAsset presetName:AVAssetExportPresetHighestQuality];
     session.outputFileType = AVFileTypeMPEG4;
-    self.uploadInfo.fileName = [self.uploadRecord mnz_localLivePhotoFileNameWithExtension:MEGAMP4FileExtension];
+    self.uploadInfo.fileName = [self mnz_generateLocalLivePhotoFileNameWithExtension:MEGAMP4FileExtension];
     session.outputURL = self.uploadInfo.fileURL;
     session.canPerformMultiplePassesOverSourceMediaData = YES;
     session.shouldOptimizeForNetworkUse = YES;
