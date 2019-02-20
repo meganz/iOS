@@ -34,7 +34,7 @@ static const NSTimeInterval AttributeUploadExpireTimeInterval = 90;
     self = [super init];
     if (self) {
         _operationQueue = [[NSOperationQueue alloc] init];
-        _operationQueue.qualityOfService = NSQualityOfServiceUserInitiated;
+        _operationQueue.qualityOfService = NSQualityOfServiceUtility;
     }
     return self;
 }

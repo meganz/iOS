@@ -58,7 +58,7 @@ static NSString * const CameraUplodFolderName = @"Camera Uploads";
         completion(node);
     } else {
         MEGACreateFolderRequestDelegate *delegate = [[MEGACreateFolderRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
-            dispatch_async(dispatch_get_global_queue(QOS_CLASS_DEFAULT, 0), ^{
+            dispatch_async(dispatch_get_global_queue(QOS_CLASS_UTILITY, 0), ^{
                 MEGANode *node = [MEGASdkManager.sharedMEGASdk nodeForHandle:request.nodeHandle];
                 [self saveCameraUploadNode:node];
                 completion(node);
