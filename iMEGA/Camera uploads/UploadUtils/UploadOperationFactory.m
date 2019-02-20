@@ -4,57 +4,81 @@
 #import "MOAssetUploadRecord+CoreDataClass.h"
 #import "LivePhotoUploadOperation.h"
 #import "CameraUploadRecordManager.h"
+#import "SavedIdentifierParser.h"
+#import "MEGAConstants.h"
 @import Photos;
 
 @implementation UploadOperationFactory
 
-+ (CameraUploadOperation *)operationWithUploadRecord:(MOAssetUploadRecord *)uploadRecord parentNode:(MEGANode *)node identifierSeparator:(NSString *)identifierSeparator savedMediaSubtype:(PHAssetMediaSubtype *)savedMediaSubtype {
++ (NSArray<CameraUploadOperation *> *)operationsForUploadRecord:(MOAssetUploadRecord *)uploadRecord parentNode:(MEGANode *)node {
+    NSMutableArray<CameraUploadOperation *> *operations = [NSMutableArray array];
+    
     NSString *savedIdentifier = [CameraUploadRecordManager.shared savedIdentifierInRecord:uploadRecord];
+    AssetIdentifierInfo *identifierInfo = [[[SavedIdentifierParser alloc] init] parseSavedIdentifier:savedIdentifier separator:MEGACameraUploadIdentifierSeparator];
     
-    NSString *localIdentifier;
-    PHAssetMediaSubtype mediaSubtype = PHAssetMediaSubtypeNone;
-    NSArray<NSString *> *separatedStrings = [savedIdentifier componentsSeparatedByString:identifierSeparator];
-    if (separatedStrings.count == 0) {
-        return nil;
-    } else if (separatedStrings.count == 1) {
-        localIdentifier = [separatedStrings firstObject];
-    } else if (separatedStrings.count == 2) {
-        localIdentifier = [separatedStrings firstObject];
-        mediaSubtype = (PHAssetMediaSubtype)[separatedStrings[1] integerValue];
-    } else {
-        NSString *subTypeString = [separatedStrings lastObject];
-        mediaSubtype = (PHAssetMediaSubtype)[subTypeString integerValue];
-        NSRange identifierRange = NSMakeRange(0, savedIdentifier.length - subTypeString.length - identifierSeparator.length);
-        localIdentifier = [savedIdentifier substringWithRange:identifierRange];
+    if (identifierInfo.localIdentifier.length == 0) {
+        return [operations copy];
     }
     
-    if (localIdentifier.length == 0) {
-        return nil;
-    }
-    
-    PHAsset *asset = [[PHAsset fetchAssetsWithLocalIdentifiers:@[localIdentifier] options:nil] firstObject];
+    PHAsset *asset = [[PHAsset fetchAssetsWithLocalIdentifiers:@[identifierInfo.localIdentifier] options:nil] firstObject];
     if (asset == nil) {
-        return nil;
+        return [operations copy];
     }
+    
+    AssetUploadInfo *uploadInfo = [[AssetUploadInfo alloc] initWithAsset:asset savedIdentifier:savedIdentifier parentNode:node];
+    CameraUploadOperation *operation = [self operationWithUploadInfo:uploadInfo uploadRecord:uploadRecord savedMediaSubtype:identifierInfo.mediaSubtype];
+    if (operation) {
+        [operations addObject:operation];
+    }
+    
+    NSArray<CameraUploadOperation *> *subTypeOperations = [self operationsForSavedMediaSubtype:identifierInfo.mediaSubtype asset:asset parentNode:node];
+    [operations addObjectsFromArray:subTypeOperations];
+    
+    return [operations copy];
+}
 
-    *savedMediaSubtype = mediaSubtype;
-    AssetUploadInfo *uploadInfo = [[AssetUploadInfo alloc] initWithAsset:asset parentNode:node];
-    uploadInfo.savedRecordLocalIdentifier = savedIdentifier;
-    switch (asset.mediaType) {
++ (NSArray<CameraUploadOperation *> *)operationsForSavedMediaSubtype:(PHAssetMediaSubtype)savedMediaSubtype asset:(PHAsset *)asset parentNode:(MEGANode *)node {
+    NSMutableArray<CameraUploadOperation *> *operations = [NSMutableArray array];
+    
+    if (@available(iOS 9.1, *)) {
+        if (asset.mediaType == PHAssetMediaTypeImage && savedMediaSubtype == PHAssetMediaSubtypeNone && (asset.mediaSubtypes & PHAssetMediaSubtypePhotoLive)) {
+            NSString *mediaSubtypedLocalIdentifier = [@[asset.localIdentifier, [@(PHAssetMediaSubtypePhotoLive) stringValue]] componentsJoinedByString:MEGACameraUploadIdentifierSeparator];
+            NSError *error;
+            MOAssetUploadRecord *record = [CameraUploadRecordManager.shared saveAsset:asset mediaSubtypedLocalIdentifier:mediaSubtypedLocalIdentifier error:&error];
+            
+            if (record && error == nil) {
+                AssetUploadInfo *uploadInfo = [[AssetUploadInfo alloc] initWithAsset:asset savedIdentifier:mediaSubtypedLocalIdentifier parentNode:node];
+                CameraUploadOperation *operation = [self operationWithUploadInfo:uploadInfo uploadRecord:record savedMediaSubtype:PHAssetMediaSubtypePhotoLive];
+                if (operation) {
+                    [operations addObject:operation];
+                }
+            } else {
+                MEGALogError(@"[Camera Upload] error when to save asset for media subtyped identifier %@ %@", mediaSubtypedLocalIdentifier, error);
+            }
+        }
+    }
+    
+    return [operations copy];
+}
+
++ (nullable CameraUploadOperation *)operationWithUploadInfo:(AssetUploadInfo *)uploadInfo uploadRecord:(MOAssetUploadRecord *)uploadRecord savedMediaSubtype:(PHAssetMediaSubtype)mediaSubtype {
+    CameraUploadOperation *operation;
+    switch (uploadInfo.asset.mediaType) {
         case PHAssetMediaTypeImage:
             if (mediaSubtype == PHAssetMediaSubtypePhotoLive) {
-                return [[LivePhotoUploadOperation alloc] initWithUploadInfo:uploadInfo uploadRecord:uploadRecord];
+                operation = [[LivePhotoUploadOperation alloc] initWithUploadInfo:uploadInfo uploadRecord:uploadRecord];
             } else {
-                return [[PhotoUploadOperation alloc] initWithUploadInfo:uploadInfo uploadRecord:uploadRecord];
+                operation = [[PhotoUploadOperation alloc] initWithUploadInfo:uploadInfo uploadRecord:uploadRecord];
             }
             break;
         case PHAssetMediaTypeVideo:
-            return [[VideoUploadOperation alloc] initWithUploadInfo:uploadInfo uploadRecord:uploadRecord];
+            operation = [[VideoUploadOperation alloc] initWithUploadInfo:uploadInfo uploadRecord:uploadRecord];
             break;
         default:
-            return nil;
             break;
     }
+    
+    return operation;
 }
 
 @end

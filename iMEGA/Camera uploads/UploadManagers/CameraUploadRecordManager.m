@@ -108,7 +108,7 @@ static const NSUInteger MaximumUploadRetryPerLoginCount = 800;
     return [self fetchUploadRecordsByFetchRequest:request error:error];
 }
 
-- (NSArray<MOAssetUploadRecord *> *)queueUpUploadRecordsByStatuses:(NSArray<NSNumber *> *)statuses fetchLimit:(NSInteger)fetchLimit mediaType:(PHAssetMediaType)mediaType error:(NSError *__autoreleasing  _Nullable *)error {
+- (NSArray<MOAssetUploadRecord *> *)queueUpUploadRecordsByStatuses:(NSArray<NSNumber *> *)statuses fetchLimit:(NSUInteger)fetchLimit mediaType:(PHAssetMediaType)mediaType error:(NSError *__autoreleasing  _Nullable *)error {
     __block NSArray<MOAssetUploadRecord *> *records = @[];
     __block NSError *coreDataError = nil;
     [self.backgroundContext performBlockAndWait:^{
@@ -249,11 +249,12 @@ static const NSUInteger MaximumUploadRetryPerLoginCount = 800;
     return coreDataError == nil;
 }
 
-- (BOOL)saveAsset:(PHAsset *)asset mediaSubtypedLocalIdentifier:(NSString *)identifier error:(NSError * _Nullable __autoreleasing * _Nullable)error {
-    if ([self fetchUploadRecordsByLocalIdentifier:identifier shouldPrefetchErrorRecords:NO error:nil].count == 0) {
+- (MOAssetUploadRecord *)saveAsset:(PHAsset *)asset mediaSubtypedLocalIdentifier:(NSString *)identifier error:(NSError * _Nullable __autoreleasing * _Nullable)error {
+    __block MOAssetUploadRecord *record = [[self fetchUploadRecordsByLocalIdentifier:identifier shouldPrefetchErrorRecords:YES error:nil] firstObject];
+    if (record == nil) {
         __block NSError *coreDataError = nil;
         [self.backgroundContext performBlockAndWait:^{
-            MOAssetUploadRecord *record = [self createUploadRecordFromAsset:asset];
+            record = [self createUploadRecordFromAsset:asset];
             record.localIdentifier = identifier;
             [self.backgroundContext save:&coreDataError];
         }];
@@ -261,11 +262,9 @@ static const NSUInteger MaximumUploadRetryPerLoginCount = 800;
         if (error != NULL) {
             *error = coreDataError;
         }
-        
-        return coreDataError == nil;
-    } else {
-        return YES;
     }
+    
+    return record;
 }
 
 #pragma mark - update records

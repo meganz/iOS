@@ -6,10 +6,11 @@
 
 #pragma mark - init
 
-- (instancetype)initWithAsset:(PHAsset *)asset parentNode:(MEGANode *)parentNode {
+- (instancetype)initWithAsset:(PHAsset *)asset savedIdentifier:(NSString *)savedIdentifier parentNode:(MEGANode *)parentNode {
     self = [super init];
     if (self) {
         _asset = asset;
+        _savedRecordLocalIdentifier = savedIdentifier;
         _parentNode = parentNode;
         _location = asset.location;
     }
