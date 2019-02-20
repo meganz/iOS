@@ -52,6 +52,10 @@ static NSString * const AttributePreviewName = @"preview";
 #pragma mark - upload coordinate
 
 - (void)uploadCoordinateLocation:(CLLocation *)location forNode:(MEGANode *)node {
+    if (location == nil) {
+        return;
+    }
+    
     [self.attributeOerationQueue addOperation:[[CoordinatesUploadOperation alloc] initWithLocation:location node:node]];
 }
 

@@ -24,13 +24,7 @@
 
 - (void)start {
     [super start];
-    
-    if (self.location == nil) {
-        MEGALogDebug(@"[Camera Upload] No coordinate data found for node %@", self.node.name);
-        [self finishOperation];
-        return;
-    }
-    
+
     [self beginBackgroundTaskWithExpirationHandler:^{
         [self finishOperation];
     }];
