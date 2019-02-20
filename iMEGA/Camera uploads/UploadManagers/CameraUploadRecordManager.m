@@ -116,7 +116,7 @@ static const NSUInteger MaximumUploadRetryPerLoginCount = 800;
         request.fetchLimit = fetchLimit;
         request.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"creationDate" ascending:NO]];
         NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(status IN %@) AND (mediaType == %@)", statuses, @(mediaType)];
-        request.predicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[predicate, [self predicateForAssetUploadRecordError]]];
+        request.predicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[predicate, [self predicateByFilterAssetUploadRecordError]]];
         [request setRelationshipKeyPathsForPrefetching:@[@"errorPerLaunch", @"errorPerLogin", @"fileNameRecord"]];
         records = [self.backgroundContext executeFetchRequest:request error:&coreDataError];
         
@@ -134,27 +134,6 @@ static const NSUInteger MaximumUploadRetryPerLoginCount = 800;
 
 - (NSArray<MOAssetUploadRecord *> *)fetchAllUploadRecords:(NSError * _Nullable __autoreleasing * _Nullable)error {
     return [self fetchUploadRecordsByFetchRequest:MOAssetUploadRecord.fetchRequest error:error];
-}
-
-- (NSUInteger)pendingUploadRecordsCountByMediaTypes:(NSArray<NSNumber *> *)mediaTypes error:(NSError * _Nullable __autoreleasing *)error {
-    __block NSUInteger pendingCount = 0;
-    __block NSError *coreDataError = nil;
-    [self.backgroundContext performBlockAndWait:^{
-        NSFetchRequest *request = MOAssetUploadRecord.fetchRequest;
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(status <> %@) AND (mediaType IN %@)", @(CameraAssetUploadStatusDone), mediaTypes];
-        request.predicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[predicate, [self predicateForAssetUploadRecordError]]];
-        pendingCount = [self.backgroundContext countForFetchRequest:request error:&coreDataError];
-    }];
-    
-    if (error != NULL) {
-        *error = coreDataError;
-    }
-    
-    if (coreDataError != nil) {
-        pendingCount = 0;
-    }
-    
-    return pendingCount;
 }
 
 - (NSArray<MOAssetUploadRecord *> *)fetchAllUploadRecordsByStatuses:(NSArray<NSNumber *> *)statuses error:(NSError * _Nullable __autoreleasing *)error {
@@ -175,6 +154,42 @@ static const NSUInteger MaximumUploadRetryPerLoginCount = 800;
     }
     
     return records;
+}
+
+#pragma mark - fetch upload counts
+
+- (NSUInteger)uploadDoneRecordsCountByMediaTypes:(NSArray<NSNumber *> *)mediaTypes error:(NSError * _Nullable __autoreleasing *)error {
+    NSFetchRequest *request = MOAssetUploadRecord.fetchRequest;
+    request.predicate = [NSPredicate predicateWithFormat:@"(status == %@) AND (mediaType IN %@)", @(CameraAssetUploadStatusDone), mediaTypes];
+    return [self countForFetchRequest:request error:error];
+}
+
+- (NSUInteger)totalRecordsCountByMediaTypes:(NSArray<NSNumber *> *)mediaTypes error:(NSError * _Nullable __autoreleasing *)error {
+    NSFetchRequest *request = MOAssetUploadRecord.fetchRequest;
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"mediaType IN %@", mediaTypes];
+    request.predicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[predicate, [self predicateByFilterAssetUploadRecordError]]];
+    return [self countForFetchRequest:request error:error];
+}
+
+- (NSUInteger)pendingUploadRecordsCountByMediaTypes:(NSArray<NSNumber *> *)mediaTypes error:(NSError * _Nullable __autoreleasing *)error {
+    NSFetchRequest *request = MOAssetUploadRecord.fetchRequest;
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(status <> %@) AND (mediaType IN %@)", @(CameraAssetUploadStatusDone), mediaTypes];
+    request.predicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[predicate, [self predicateByFilterAssetUploadRecordError]]];
+    return [self countForFetchRequest:request error:error];
+}
+
+- (NSUInteger)countForFetchRequest:(NSFetchRequest *)request error:(NSError * _Nullable __autoreleasing *)error {
+    __block NSUInteger count = 0;
+    __block NSError *coreDataError = nil;
+    [self.backgroundContext performBlockAndWait:^{
+        count = [self.backgroundContext countForFetchRequest:request error:&coreDataError];
+    }];
+    
+    if (error != NULL) {
+        *error = coreDataError;
+    }
+    
+    return count;
 }
 
 #pragma mark - save records
@@ -402,7 +417,7 @@ static const NSUInteger MaximumUploadRetryPerLoginCount = 800;
     return errorPerLogin;
 }
 
-- (NSPredicate *)predicateForAssetUploadRecordError {
+- (NSPredicate *)predicateByFilterAssetUploadRecordError {
     NSPredicate *errorPerLaunch = [NSPredicate predicateWithFormat:@"(errorPerLaunch == %@) OR (errorPerLaunch.errorCount <= %@)", NSNull.null, @(MaximumUploadRetryPerLaunchCount)];
     NSPredicate *errorPerLogin = [NSPredicate predicateWithFormat:@"(errorPerLogin == %@) OR (errorPerLogin.errorCount <= %@)", NSNull.null, @(MaximumUploadRetryPerLoginCount)];
     return [NSCompoundPredicate andPredicateWithSubpredicates:@[errorPerLaunch, errorPerLogin]];

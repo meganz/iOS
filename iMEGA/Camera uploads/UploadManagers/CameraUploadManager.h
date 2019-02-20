@@ -8,7 +8,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface CameraUploadManager : NSObject
 
-@property (readonly) NSUInteger uploadPendingItemsCount;
+@property (readonly) NSUInteger uploadPendingAssetsCount;
+@property (readonly) NSUInteger totalAssetsCount;
+@property (readonly) NSUInteger uploadDoneAssetsCount;
+
 @property (readonly) BOOL isNodesFetchDone;
 @property (nonatomic, getter=isPhotoUploadPaused) BOOL pausePhotoUpload;
 @property (nonatomic, getter=isVideoUploadPaused) BOOL pauseVideoUpload;

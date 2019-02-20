@@ -62,7 +62,6 @@
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *selectAllBarButtonItem;
 
 @property (nonatomic) MEGACameraUploadsState currentState;
-@property (nonatomic) NSUInteger maxPendingFiles;
 
 @property (nonatomic) NSIndexPath *browsingIndexPath;
 
@@ -300,33 +299,27 @@
 }
 
 - (void)updateProgressWithKnownCameraUploadInProgress:(BOOL)knownCameraUploadInProgress {
-    NSUInteger pendingFiles = CameraUploadManager.shared.uploadPendingItemsCount;
-    if (pendingFiles) {
-        if (pendingFiles > self.maxPendingFiles) {
-            self.maxPendingFiles = pendingFiles;
-        }
-        
-        float uploadedFiles = self.maxPendingFiles - pendingFiles;
-        self.photosUploadedProgressView.progress = (float) (uploadedFiles / (float) self.maxPendingFiles);
-        
-        NSString *progressText;
-        if (pendingFiles == 1) {
-            progressText = AMLocalizedString(@"cameraUploadsPendingFile", @"Message shown while uploading files. Singular.");
-        } else {
-            progressText = [NSString stringWithFormat:AMLocalizedString(@"cameraUploadsPendingFiles", @"Message shown while uploading files. Plural."), pendingFiles];
-        }
-        
-        self.photosUploadedLabel.text = progressText;
+    NSUInteger pendingFiles = CameraUploadManager.shared.uploadPendingAssetsCount;
+    NSUInteger totalFiles = CameraUploadManager.shared.totalAssetsCount;
+    NSUInteger doneFiles = CameraUploadManager.shared.uploadDoneAssetsCount;
+    
+    self.photosUploadedProgressView.progress = (float)doneFiles / (float)totalFiles;
+    
+    NSString *progressText;
+    if (pendingFiles == 1) {
+        progressText = AMLocalizedString(@"cameraUploadsPendingFile", @"Message shown while uploading files. Singular.");
     } else {
-        self.maxPendingFiles = 0;
+        progressText = [NSString stringWithFormat:AMLocalizedString(@"cameraUploadsPendingFiles", @"Message shown while uploading files. Plural."), pendingFiles];
     }
+    self.photosUploadedLabel.text = progressText;
+    
     [self updateCurrentStateWithKnownCameraUploadInProgress:knownCameraUploadInProgress];
 }
 
 - (void)updateCurrentStateWithKnownCameraUploadInProgress:(BOOL)knownCameraUploadInProgress {
     if ([MEGAReachabilityManager isReachable]) {
         if (CameraUploadManager.isCameraUploadEnabled) {
-            if (CameraUploadManager.shared.uploadPendingItemsCount > 0) {
+            if (CameraUploadManager.shared.uploadPendingAssetsCount > 0) {
                 self.currentState = MEGACameraUploadsStateUploading;
             } else {
                 if (knownCameraUploadInProgress) {
