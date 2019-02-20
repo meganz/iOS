@@ -4,6 +4,7 @@
 #import "ChatVideoUploadQuality.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGASdkManager.h"
+#import "NSDate+MNZCategory.h"
 #import "NSFileManager+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 
@@ -501,7 +502,7 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
         }
     } else {
         NSString *extension = [self extensionWithInfo:info asset:asset];
-        name = [[NSString mnz_fileNameWithDate:asset.creationDate] stringByAppendingPathExtension:extension];
+        name = [asset.creationDate.mnz_formattedDefaultNameForMedia stringByAppendingPathExtension:extension];
     }
     
     NSString *filePath = [[[NSFileManager defaultManager] uploadsDirectory] stringByAppendingPathComponent:name];

@@ -5,6 +5,7 @@
 #import "UIApplication+MNZCategory.h"
 #import "UITextField+MNZCategory.h"
 
+#import "Helper.h"
 #import "MEGANavigationController.h"
 #import "MEGAReachabilityManager.h"
 
@@ -26,18 +27,9 @@
 
 @property NSInteger rubbishBinAutopurgePeriod;
 
-@property (nonatomic) NSByteCountFormatter *byteCountFormatter;
-
 @end
 
 @implementation RubbishBinTableViewController
-
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    
-    self.byteCountFormatter = [[NSByteCountFormatter alloc] init];
-    self.byteCountFormatter.countStyle = NSByteCountFormatterCountStyleMemory;
-}
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
@@ -46,7 +38,7 @@
     
     self.clearRubbishBinLabel.text = AMLocalizedString(@"emptyRubbishBin", @"Section title where you can 'Empty Rubbish Bin' of your MEGA account");
     NSNumber *rubbishBinSizeNumber = [[MEGASdkManager sharedMEGASdk] sizeForNode:[[MEGASdkManager sharedMEGASdk] rubbishNode]];
-    NSString *stringFromByteCount = [self.byteCountFormatter stringFromByteCount:rubbishBinSizeNumber.unsignedLongLongValue];
+    NSString *stringFromByteCount = [Helper memoryStyleStringFromByteCount:rubbishBinSizeNumber.unsignedLongLongValue];
     self.clearRubbishBinDetailLabel.text = [self formatStringFromByteCountFormatter:stringFromByteCount];
     
     self.rubbishBinCleaningSchedulerLabel.text = [AMLocalizedString(@"Rubbish-Bin Cleaning Scheduler:", @"Title for the Rubbish-Bin Cleaning Scheduler feature") stringByReplacingOccurrencesOfString:@":" withString:@""];

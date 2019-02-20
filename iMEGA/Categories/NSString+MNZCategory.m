@@ -8,6 +8,7 @@
 
 #import "NSDate+DateTools.h"
 
+#import "NSDate+MNZCategory.h"
 #import "MEGASdkManager.h"
 
 static NSString* const A = @"[A]";
@@ -416,7 +417,7 @@ static NSString* const B = @"[B]";
                  const unichar ls = [substring characterAtIndex:1];
                  const int uc = ((hs - 0xd800) * 0x400) + (ls - 0xdc00) + 0x10000;
                  if (0x1d000 <= uc &&
-                     uc <= 0x1f9c0)
+                     uc <= 0x1f9ff)
                  {
                      containsEmoji = YES;
                  }
@@ -505,7 +506,7 @@ static NSString* const B = @"[B]";
                  const unichar ls = [substring characterAtIndex:1];
                  const int uc = ((hs - 0xd800) * 0x400) + (ls - 0xdc00) + 0x10000;
                  if (0x1d000 <= uc &&
-                     uc <= 0x1f9c0)
+                     uc <= 0x1f9ff)
                  {
                      containsEmoji = YES;
                  }
@@ -589,7 +590,7 @@ static NSString* const B = @"[B]";
                  const unichar ls = [substring characterAtIndex:1];
                  const int uc = ((hs - 0xd800) * 0x400) + (ls - 0xdc00) + 0x10000;
                  if (0x1d000 <= uc &&
-                     uc <= 0x1f9c0)
+                     uc <= 0x1f9ff)
                  {
                      emojiCount = emojiCount + 1;
                  }
@@ -717,10 +718,7 @@ static NSString* const B = @"[B]";
     NSString *lastSeenMessage;
     if (minutes < 65535) {
         NSDate *dateLastSeen = [NSDate dateWithTimeIntervalSinceNow:-minutes*SECONDS_IN_MINUTE];
-        NSDateFormatter *timeFormatter = [[NSDateFormatter alloc] init];
-        timeFormatter.dateFormat = @"HH:mm";
-        timeFormatter.locale = [NSLocale autoupdatingCurrentLocale];
-        NSString *timeString = [timeFormatter stringFromDate:dateLastSeen];
+        NSString *timeString = dateLastSeen.mnz_formattedHourAndMinutes;
         NSString *dateString;
         if ([[NSCalendar currentCalendar] isDateInToday:dateLastSeen]) {
             dateString = AMLocalizedString(@"Today", @"");
@@ -743,14 +741,6 @@ static NSString* const B = @"[B]";
 }
 
 #pragma mark - File names and extensions
-
-+ (NSString *)mnz_fileNameWithDate:(NSDate *)date {
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    dateFormatter.dateFormat = @"yyyy'-'MM'-'dd' 'HH'.'mm'.'ss";
-    dateFormatter.locale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"];
-    
-    return [dateFormatter stringFromDate:date];
-}
 
 - (NSString *)mnz_fileNameWithLowercaseExtension {
     NSString *fileName;

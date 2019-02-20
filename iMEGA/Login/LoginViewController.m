@@ -23,12 +23,13 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
     PasswordTextFieldTag
 };
 
-@interface LoginViewController () <UITextFieldDelegate, MEGARequestDelegate>
+@interface LoginViewController () <UIGestureRecognizerDelegate, UITextFieldDelegate, MEGARequestDelegate>
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *cancelBarButtonItem;
 
+@property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
+
 @property (weak, nonatomic) IBOutlet UIImageView *logoImageView;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *logoTopLayoutConstraint;
 
 @property (weak, nonatomic) IBOutlet InputView *emailInputView;
 @property (weak, nonatomic) IBOutlet PasswordView *passwordView;
@@ -36,6 +37,8 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
 @property (weak, nonatomic) IBOutlet UIButton *loginButton;
 
 @property (weak, nonatomic) IBOutlet UIButton *forgotPasswordButton;
+
+@property (strong, nonatomic) UITapGestureRecognizer *tapGesture;
 
 @end
 
@@ -46,9 +49,10 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    if (UIDevice.currentDevice.iPhone4X) {
-        self.logoTopLayoutConstraint.constant = 12.f;
-    }
+    self.tapGesture = [UITapGestureRecognizer.alloc initWithTarget:self action:@selector(hideKeyboard)];
+    self.tapGesture.cancelsTouchesInView = NO;
+    self.tapGesture.delegate = self;
+    [self.scrollView addGestureRecognizer:self.tapGesture];
     
     UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(logoTappedFiveTimes:)];
     tapGestureRecognizer.numberOfTapsRequired = 5;
@@ -78,6 +82,8 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
     forgotPasswordString = [forgotPasswordString stringByReplacingOccurrencesOfString:@"?" withString:@""];
     forgotPasswordString = [forgotPasswordString stringByReplacingOccurrencesOfString:@"¿" withString:@""];
     [self.forgotPasswordButton setTitle:forgotPasswordString forState:UIControlStateNormal];
+    
+    [self registerForKeyboardNotifications];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -91,6 +97,13 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
         
         [self.passwordView.passwordTextField becomeFirstResponder];
     }
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardDidShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
 }
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations {
@@ -203,22 +216,50 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
     return validPassword;
 }
 
-- (NSString *)timeFormatted:(NSUInteger)totalSeconds {
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    dateFormatter.dateStyle = NSDateFormatterNoStyle;
-    dateFormatter.timeStyle = NSDateFormatterMediumStyle;
-    NSString *currentLanguageID = [[LocalizationSystem sharedLocalSystem] getLanguage];
-    dateFormatter.locale = [[NSLocale alloc] initWithLocaleIdentifier:currentLanguageID];
+- (void)registerForKeyboardNotifications {
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWasShown:)
+                                                 name:UIKeyboardDidShowNotification object:nil];
     
-    NSDate *date = [NSDate dateWithTimeIntervalSinceNow:totalSeconds];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillBeHidden:)
+                                                 name:UIKeyboardWillHideNotification object:nil];
     
-    return [dateFormatter stringFromDate:date];
 }
 
-#pragma mark - UIResponder
+- (void)keyboardWasShown:(NSNotification*)aNotification {
+    NSDictionary *info = aNotification.userInfo;
+    CGSize keyboardSize = [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
+    
+    UIEdgeInsets contentInsets = UIEdgeInsetsMake(0.0, 0.0, keyboardSize.height, 0.0);
+    self.scrollView.contentInset = contentInsets;
+    self.scrollView.scrollIndicatorInsets = contentInsets;
+    
+    CGRect viewFrame = self.view.frame;
+    viewFrame.size.height -= keyboardSize.height;
+    CGRect activeTextFieldFrame = self.emailInputView.inputTextField.isFirstResponder ? self.emailInputView.frame : self.passwordView.frame;
+    if (!CGRectContainsPoint(viewFrame, activeTextFieldFrame.origin)) {
+        [self.scrollView scrollRectToVisible:activeTextFieldFrame animated:YES];
+    }
+}
 
-- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+- (void)keyboardWillBeHidden:(NSNotification *)aNotification {
+    self.scrollView.contentInset = UIEdgeInsetsZero;
+    self.scrollView.scrollIndicatorInsets = UIEdgeInsetsZero;
+}
+
+- (void)hideKeyboard {
     [self.view endEditing:YES];
+}
+
+#pragma mark - UIGestureRecognizerDelegate
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
+    if ((touch.view == self.passwordView.toggleSecureButton) && (gestureRecognizer == self.tapGesture)) {
+        return NO;
+    }
+    
+    return YES;
 }
 
 #pragma mark - UITextFieldDelegate
