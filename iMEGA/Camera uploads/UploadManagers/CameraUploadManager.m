@@ -2,7 +2,6 @@
 #import "CameraUploadManager.h"
 #import "CameraUploadRecordManager.h"
 #import "CameraScanner.h"
-#import "CameraUploadOperation.h"
 #import "Helper.h"
 #import "MEGASdkManager.h"
 #import "UploadOperationFactory.h"
@@ -19,16 +18,16 @@
 #import "MEGAReachabilityManager.h"
 #import "CameraUploadNodeLoader.h"
 #import "VideoUploadOperation.h"
+#import "LivePhotoUploadOperation.h"
+#import "PhotoUploadOperation.h"
 
-static NSString * const CameraUploadIdentifierSeparator = @",";
+static const NSUInteger PhotoUploadInForegroundConcurrentCount = 10;
+static const NSUInteger PhotoUploadInBackgroundConcurrentCount = 5;
+static const NSUInteger PhotoUploadInMemoryWarningConcurrentCount = 2;
 
-static const NSInteger PhotoUploadInForegroundConcurrentCount = 10;
-static const NSInteger PhotoUploadInBackgroundConcurrentCount = 5;
-static const NSInteger PhotoUploadInMemoryWarningConcurrentCount = 2;
-
-static const NSInteger VideoUploadInForegroundConcurrentCount = 1;
-static const NSInteger VideoUploadInBackgroundConcurrentCount = 1;
-static const NSInteger VideoUploadInMemoryWarningConcurrentCount = 1;
+static const NSUInteger VideoUploadInForegroundConcurrentCount = 1;
+static const NSUInteger VideoUploadInBackgroundConcurrentCount = 1;
+static const NSUInteger VideoUploadInMemoryWarningConcurrentCount = 1;
 
 static const NSTimeInterval MinimumBackgroundRefreshInterval = 3600;
 static const NSTimeInterval BackgroundRefreshDuration = 25;
@@ -319,7 +318,7 @@ static const NSTimeInterval LoadMediaInfoTimeoutInSeconds = 120;
     [self.diskSpaceDetector startDetectingPhotoUpload];
     
     MEGALogDebug(@"[Camera Upload] start uploading photos with current photo operation count %lu", (unsigned long)self.photoUploadOperationQueue.operationCount);
-    [self uploadNextAssetsWithNumber:PhotoUploadInForegroundConcurrentCount mediaType:PHAssetMediaTypeImage];
+    [self uploadAssetsForMediaType:PHAssetMediaTypeImage concurrentCount:PhotoUploadInForegroundConcurrentCount];
 }
 
 - (void)startVideoUploadIfNeeded {
@@ -348,12 +347,12 @@ static const NSTimeInterval LoadMediaInfoTimeoutInSeconds = 120;
     [self.diskSpaceDetector startDetectingVideoUpload];
     
     MEGALogDebug(@"[Camera Upload] start uploading videos with current video operation count %lu", (unsigned long)self.videoUploadOperationQueue.operationCount);
-    [self uploadNextAssetsWithNumber:VideoUploadInForegroundConcurrentCount mediaType:PHAssetMediaTypeVideo];
+    [self uploadAssetsForMediaType:PHAssetMediaTypeVideo concurrentCount:VideoUploadInForegroundConcurrentCount];
 }
 
 #pragma mark - upload next assets
 
-- (void)uploadNextAssetWithMediaType:(PHAssetMediaType)mediaType {
+- (void)uploadNextAssetForMediaType:(PHAssetMediaType)mediaType {
     if (!CameraUploadManager.isCameraUploadEnabled) {
         return;
     }
@@ -377,47 +376,35 @@ static const NSTimeInterval LoadMediaInfoTimeoutInSeconds = 120;
             break;
     }
     
-    [self uploadNextAssetsWithNumber:1 mediaType:mediaType];
+    [self uploadAssetsForMediaType:mediaType concurrentCount:1];
 }
 
-- (void)uploadNextAssetsWithNumber:(NSInteger)number mediaType:(PHAssetMediaType)mediaType {
+- (void)uploadAssetsForMediaType:(PHAssetMediaType)mediaType concurrentCount:(NSUInteger)count {
     NSArray<NSNumber *> *statuses = AssetUploadStatus.statusesReadyToQueueUp;
     if (MEGAReachabilityManager.isReachable) {
         statuses = AssetUploadStatus.allStatusesToQueueUp;
     }
-    NSArray *records = [CameraUploadRecordManager.shared queueUpUploadRecordsByStatuses:statuses fetchLimit:number mediaType:mediaType error:nil];
+    NSArray *records = [CameraUploadRecordManager.shared queueUpUploadRecordsByStatuses:statuses fetchLimit:count mediaType:mediaType error:nil];
     if (records.count == 0) {
         MEGALogInfo(@"[Camera Upload] no more local asset to upload for media type %li", (long)mediaType);
         return;
     }
     
     for (MOAssetUploadRecord *record in records) {
-        PHAssetMediaSubtype savedMediaSubtype = PHAssetMediaSubtypeNone;
-        CameraUploadOperation *operation = [UploadOperationFactory operationWithUploadRecord:record parentNode:self.cameraUploadNode identifierSeparator:CameraUploadIdentifierSeparator savedMediaSubtype:&savedMediaSubtype];
-        PHAsset *asset = operation.uploadInfo.asset;
-        if (operation) {
-            if (asset.mediaType == PHAssetMediaTypeImage) {
-                if (asset.mediaSubtypes & PHAssetMediaSubtypePhotoLive) {
-                    [self.videoUploadOperationQueue addOperation:operation];
-                } else {
+        NSArray<CameraUploadOperation *> *operations = [UploadOperationFactory operationsForUploadRecord:record parentNode:self.cameraUploadNode];
+        if (operations.count > 0) {
+            for (CameraUploadOperation *operation in operations) {
+                if ([operation isMemberOfClass:[PhotoUploadOperation class]]) {
                     [self.photoUploadOperationQueue addOperation:operation];
+                } else if ([operation isMemberOfClass:[LivePhotoUploadOperation class]]) {
+                    [self.videoUploadOperationQueue addOperation:operation];
+                } else if ([operation isMemberOfClass:[VideoUploadOperation class]]) {
+                    [self.videoUploadOperationQueue addOperation:operation];
                 }
-            } else {
-                [self.videoUploadOperationQueue addOperation:operation];
             }
-            
-            [self addUploadRecordIfNeededForAsset:asset savedMediaSubtype:savedMediaSubtype];
         } else {
+            MEGALogInfo(@"[Camera Upload] delete record as we don't have data to upload");
             [CameraUploadRecordManager.shared deleteUploadRecord:record error:nil];
-        }
-    }
-}
-
-- (void)addUploadRecordIfNeededForAsset:(PHAsset *)asset savedMediaSubtype:(PHAssetMediaSubtype)savedMediaSubtype {
-    if (@available(iOS 9.1, *)) {
-        if (asset.mediaType == PHAssetMediaTypeImage && savedMediaSubtype == PHAssetMediaSubtypeNone && (asset.mediaSubtypes & PHAssetMediaSubtypePhotoLive)) {
-            NSString *mediaSubtypedLocalIdentifier = [@[asset.localIdentifier, [@(PHAssetMediaSubtypePhotoLive) stringValue]] componentsJoinedByString:CameraUploadIdentifierSeparator];
-            [CameraUploadRecordManager.shared saveAsset:asset mediaSubtypedLocalIdentifier:mediaSubtypedLocalIdentifier error:nil];
         }
     }
 }

@@ -224,7 +224,7 @@
     }
     
     if (uploadNextAsset) {
-        [CameraUploadManager.shared uploadNextAssetWithMediaType:self.uploadInfo.asset.mediaType];
+        [CameraUploadManager.shared uploadNextAssetForMediaType:self.uploadInfo.asset.mediaType];
     }
 }
 

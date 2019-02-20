@@ -29,7 +29,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) MEGABackgroundMediaUpload *mediaUpload;
 @property (strong, nonatomic) MEGANode *parentNode;
 
-- (instancetype)initWithAsset:(PHAsset *)asset parentNode:(MEGANode *)parentNode;
+- (instancetype)initWithAsset:(PHAsset *)asset savedIdentifier:(NSString *)savedIdentifier parentNode:(MEGANode *)parentNode;
 
 @end
 
