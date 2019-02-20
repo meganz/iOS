@@ -109,6 +109,8 @@ static NSString * const AttributePreviewName = @"preview";
             return;
         }
         
+        [MEGASdkManager.sharedMEGASdk retryPendingConnections];
+        
         for (NSURL *URL in attributeDirectoryURLs) {
             NSDictionary *resourceValueDict = [URL resourceValuesForKeys:resourceKeys error:nil];
             if ([resourceValueDict[NSURLIsDirectoryKey] boolValue]) {
@@ -151,21 +153,51 @@ static NSString * const AttributePreviewName = @"preview";
     if ([name isEqualToString:AttributeThumbnailName]) {
         if ([node hasThumbnail]) {
             [NSFileManager.defaultManager removeItemIfExistsAtURL:URL];
-        } else {
+        } else if (![self hasPendingAttributeOperationsForNode:node attributeType:MEGAAttributeTypeThumbnail]) {
             [self.thumbnailOperationQueue addOperation:[[ThumbnailUploadOperation alloc] initWithAttributeURL:URL node:node]];
         }
     } else if ([name isEqualToString:AttributePreviewName]) {
         if ([node hasPreview]) {
             [NSFileManager.defaultManager removeItemIfExistsAtURL:URL];
-        } else {
+        } else if (![self hasPendingAttributeOperationsForNode:node attributeType:MEGAAttributeTypePreview]) {
             [self.attributeOerationQueue addOperation:[[PreviewUploadOperation alloc] initWithAttributeURL:URL node:node]];
         }
     }
 }
 
-#pragma mark - URLs for attributes
+- (BOOL)hasPendingAttributeOperationsForNode:(MEGANode *)node attributeType:(MEGAAttributeType)type {
+    BOOL hasPendingOperation = NO;
+    
+    if (type == MEGAAttributeTypeThumbnail) {
+        for (NSOperation *operation in self.thumbnailOperationQueue.operations) {
+            if ([operation isMemberOfClass:[ThumbnailUploadOperation class]]) {
+                ThumbnailUploadOperation *thumbnailUploadOperation = (ThumbnailUploadOperation *)operation;
+                if (thumbnailUploadOperation.node.handle == node.handle) {
+                    hasPendingOperation = YES;
+                    break;
+                }
+            }
+        }
+    } else if (type == MEGAAttributeTypePreview) {
+        for (NSOperation *operation in self.attributeOerationQueue.operations) {
+            if ([operation isMemberOfClass:[PreviewUploadOperation class]]) {
+                PreviewUploadOperation *previewUploadOperation = (PreviewUploadOperation *)operation;
+                if (previewUploadOperation.node.handle == node.handle) {
+                    hasPendingOperation = YES;
+                    break;
+                }
+            }
+        }
+    }
+    
+    MEGALogDebug(@"[Camera Upload] %@ for node %@ and attribute %@", hasPendingOperation ? @"found pending operation" : @"no pending operation", node.name, [self stringForAttributeType:type]);
+    
+    return hasPendingOperation;
+}
 
-- (NSURL *)attributeUploadURLForAttributeType:(MEGAAttributeType)type node:(MEGANode *)node  {
+#pragma mark - Utils
+
+- (NSString *)stringForAttributeType:(MEGAAttributeType)type {
     NSString *attributeName;
     switch (type) {
         case MEGAAttributeTypeThumbnail:
@@ -179,6 +211,11 @@ static NSString * const AttributePreviewName = @"preview";
             break;
     }
     
+    return attributeName;
+}
+
+- (NSURL *)attributeUploadURLForAttributeType:(MEGAAttributeType)type node:(MEGANode *)node  {
+    NSString *attributeName = [self stringForAttributeType:type];
     NSURL *nodeDirectoryURL = [[self attributeDirectoryURL] URLByAppendingPathComponent:node.base64Handle];
     [NSFileManager.defaultManager createDirectoryAtURL:nodeDirectoryURL withIntermediateDirectories:YES attributes:nil error:nil];
     
