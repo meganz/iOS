@@ -68,7 +68,7 @@ static const NSUInteger MEGATransferTokenLength = 36;
     } else if (token.length == MEGATransferTokenLength) {
         [CameraUploadCompletionManager.shared handleCompletedTransferWithLocalIdentifier:task.taskDescription token:token];
     } else {
-        MEGALogDebug(@"[Camera Upload] Session %@ task %@ finishes with bad transfer token %@", session.configuration.identifier, task.taskDescription, [[NSString alloc] initWithData:token encoding:NSUTF8StringEncoding]);
+        MEGALogError(@"[Camera Upload] Session %@ task %@ finishes with bad transfer token %@", session.configuration.identifier, task.taskDescription, [[NSString alloc] initWithData:token encoding:NSUTF8StringEncoding]);
         [CameraUploadCompletionManager.shared finishUploadForLocalIdentifier:task.taskDescription status:CameraAssetUploadStatusFailed];
     }
 }
