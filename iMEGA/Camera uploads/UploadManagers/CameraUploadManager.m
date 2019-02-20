@@ -25,7 +25,7 @@ static const NSInteger PhotoUploadInForegroundConcurrentCount = 10;
 static const NSInteger PhotoUploadInBackgroundConcurrentCount = 5;
 static const NSInteger PhotoUploadInMemoryWarningConcurrentCount = 2;
 
-static const NSInteger VideoUploadInForegroundConcurrentCount = 2;
+static const NSInteger VideoUploadInForegroundConcurrentCount = 1;
 static const NSInteger VideoUploadInBackgroundConcurrentCount = 1;
 static const NSInteger VideoUploadInMemoryWarningConcurrentCount = 1;
 
