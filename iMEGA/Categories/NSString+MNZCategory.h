@@ -57,8 +57,6 @@ typedef NS_ENUM(NSInteger, MEGAChatMessageEndCallReason);
 
 #pragma mark - File names and extensions
 
-+ (NSString *)mnz_fileNameWithDate:(NSDate *)date;
-
 - (NSString *)mnz_fileNameWithLowercaseExtension;
 - (NSString *)mnz_lastExtensionInLowercase;
 - (NSString *)mnz_sequentialFileNameInParentNode:(MEGANode *)parentNode;

@@ -24,6 +24,9 @@ static NSString *kPath = @"kPath";
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    //White background for the view behind the table view
+    self.tableView.backgroundView = UIView.alloc.init;
+    
     self.tableView.contentOffset = CGPointMake(0, CGRectGetHeight(self.offline.searchController.searchBar.frame));
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
 }
@@ -138,7 +141,7 @@ static NSString *kPath = @"kPath";
         unsigned long long size;
         size = [[[NSFileManager defaultManager] attributesOfItemAtPath:pathForItem error:nil] fileSize];
         
-        NSString *sizeString = [NSByteCountFormatter stringFromByteCount:size countStyle:NSByteCountFormatterCountStyleMemory];
+        NSString *sizeString = [Helper memoryStyleStringFromByteCount:size];
         NSString *sizeAndDate = [NSString stringWithFormat:@"%@ • %@", sizeString, date];
         cell.infoLabel.text = sizeAndDate;
     }

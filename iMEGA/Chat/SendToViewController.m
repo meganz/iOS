@@ -409,19 +409,25 @@
                 
                 for (MEGANode *node in self.nodes) {
                     for (MEGAChatListItem *chatListItem in self.selectedGroupChatsMutableArray) {
-                        [[MEGASdkManager sharedMEGAChatSdk] attachNodeToChat:chatListItem.chatId node:node.handle delegate:chatAttachNodeRequestDelegate];
+                        [Helper importNode:node toShareWithCompletion:^(MEGANode *node) {
+                            [[MEGASdkManager sharedMEGAChatSdk] attachNodeToChat:chatListItem.chatId node:node.handle delegate:chatAttachNodeRequestDelegate];
+                        }];
                     }
                     
                     for (MEGAUser *user in self.selectedUsersMutableArray) {
                         MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomByUser:user.handle];
                         if (chatRoom) {
-                            [[MEGASdkManager sharedMEGAChatSdk] attachNodeToChat:chatRoom.chatId node:node.handle delegate:chatAttachNodeRequestDelegate];
+                            [Helper importNode:node toShareWithCompletion:^(MEGANode *node) {
+                                [[MEGASdkManager sharedMEGAChatSdk] attachNodeToChat:chatRoom.chatId node:node.handle delegate:chatAttachNodeRequestDelegate];
+                            }];
                         } else {
                             MEGALogDebug(@"There is not a chat with %@, create the chat and attach", user.email);
                             MEGAChatPeerList *peerList = [[MEGAChatPeerList alloc] init];
                             [peerList addPeerWithHandle:user.handle privilege:MEGAChatRoomPrivilegeStandard];
                             MEGAChatCreateChatGroupRequestDelegate *createChatGroupRequestDelegate = [[MEGAChatCreateChatGroupRequestDelegate alloc] initWithCompletion:^(MEGAChatRoom *chatRoom) {
-                                [[MEGASdkManager sharedMEGAChatSdk] attachNodeToChat:chatRoom.chatId node:node.handle delegate:chatAttachNodeRequestDelegate];
+                                [Helper importNode:node toShareWithCompletion:^(MEGANode *node) {
+                                    [[MEGASdkManager sharedMEGAChatSdk] attachNodeToChat:chatRoom.chatId node:node.handle delegate:chatAttachNodeRequestDelegate];
+                                }];
                             }];
                             [[MEGASdkManager sharedMEGAChatSdk] createChatGroup:NO peers:peerList delegate:createChatGroupRequestDelegate];
                         }
