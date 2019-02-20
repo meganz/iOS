@@ -122,6 +122,8 @@ static NSString * const LivePhotoVideoResourceTemporaryName = @"video.mov";
         return;
     }
     
+    MEGALogDebug(@"[Camera Upload] %@ starts exporting live photo to video", self);
+    
     AVURLAsset *urlAsset = [AVURLAsset assetWithURL:videoFileURL];
     AVAssetExportSession *session = [AVAssetExportSession exportSessionWithAsset:urlAsset presetName:AVAssetExportPresetHighestQuality];
     session.outputFileType = AVFileTypeMPEG4;
@@ -135,6 +137,7 @@ static NSString * const LivePhotoVideoResourceTemporaryName = @"video.mov";
     [session exportAsynchronouslyWithCompletionHandler:^{
         switch (session.status) {
             case AVAssetExportSessionStatusCompleted:
+                MEGALogDebug(@"[Camera Upload] %@ finished exporting video to URL %@", weakSelf, weakSelf.uploadInfo.fileURL);
                 [weakSelf handleProcessedUploadFile];
                 break;
             case AVAssetExportSessionStatusCancelled:

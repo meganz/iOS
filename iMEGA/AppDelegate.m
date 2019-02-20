@@ -603,7 +603,7 @@
     MEGALogDebug(@"[App Lifecycle] application handle events for background session: %@", identifier);
     [TransferSessionManager.shared saveSessionCompletion:completionHandler forIdentifier:identifier];
     [TransferSessionManager.shared restoreSessionIfNeededByIdentifier:identifier];
-    [CameraUploadManager.shared startCameraUploadIfNeeded];
+    [CameraUploadManager.shared startCameraUploadWhenApplicationResumesFromBackgroundTransfer];
 }
 
 - (void)application:(UIApplication *)application performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {

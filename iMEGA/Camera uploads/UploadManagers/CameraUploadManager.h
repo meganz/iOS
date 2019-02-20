@@ -22,7 +22,11 @@ NS_ASSUME_NONNULL_BEGIN
  */
 + (instancetype)shared;
 
+#pragma mark - application lifecycle
+
 - (void)setupCameraUploadWhenApplicationLaunches:(UIApplication *)application;
+
+- (void)startCameraUploadWhenApplicationResumesFromBackgroundTransfer;
 
 #pragma mark - start upload
 
