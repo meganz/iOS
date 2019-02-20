@@ -157,11 +157,11 @@
                         [weakSelf handleProcessedUploadFile];
                         break;
                     case AVAssetExportSessionStatusCancelled:
-                        MEGALogDebug(@"[Camera Upload] %@ video compression got cancelled", weakSelf);
+                        MEGALogDebug(@"[Camera Upload] %@ video exporting got cancelled", weakSelf);
                         [weakSelf finishOperationWithStatus:CameraAssetUploadStatusCancelled shouldUploadNextAsset:YES];
                         break;
                     case AVAssetExportSessionStatusFailed:
-                        MEGALogError(@"[Camera Upload] %@ got error when to compress video %@", weakSelf, session.error)
+                        MEGALogError(@"[Camera Upload] %@ got error when to export video %@", weakSelf, session.error)
                         if (session.error.domain == AVFoundationErrorDomain && session.error.code == AVErrorDiskFull) {
                             [weakSelf finishUploadWithNoEnoughDiskSpace];
                         } else {
