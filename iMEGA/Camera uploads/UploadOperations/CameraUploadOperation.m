@@ -17,6 +17,7 @@
 #import "MEGAReachabilityManager.h"
 #import "MEGAError+MNZCategory.h"
 #import "CameraUploadOperation+Utils.h"
+#import "NSDate+MNZCategory.h"
 @import Photos;
 
 @interface CameraUploadOperation ()
@@ -50,7 +51,7 @@
 }
 
 - (NSString *)description {
-    return [NSString stringWithFormat:@"%@ %@ %@ %@", NSStringFromClass(self.class), [NSString mnz_fileNameWithDate:self.uploadInfo.asset.creationDate], self.uploadInfo.fileName, self.uploadInfo.savedRecordLocalIdentifier];
+    return [NSString stringWithFormat:@"%@ %@ %@ %@", NSStringFromClass(self.class), [self.uploadInfo.asset.creationDate mnz_formattedDefaultNameForMedia], self.uploadInfo.fileName, self.uploadInfo.savedRecordLocalIdentifier];
 }
 
 #pragma mark - start operation
