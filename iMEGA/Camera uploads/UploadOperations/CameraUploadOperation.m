@@ -214,7 +214,7 @@
     [CameraUploadRecordManager.shared updateUploadRecord:self.uploadRecord withStatus:status error:nil];
     
     if (status != CameraAssetUploadStatusUploading) {
-        [NSFileManager.defaultManager removeItemAtURL:self.uploadInfo.directoryURL error:nil];
+        [NSFileManager.defaultManager removeItemIfExistsAtURL:self.uploadInfo.directoryURL];
     }
     
     if (status == CameraAssetUploadStatusDone) {
