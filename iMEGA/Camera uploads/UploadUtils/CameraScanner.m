@@ -18,6 +18,7 @@
     if (self) {
         _operationQueue = [[NSOperationQueue alloc] init];
         _operationQueue.maxConcurrentOperationCount = 1;
+        _operationQueue.qualityOfService = NSQualityOfServiceUserInitiated;
     }
     return self;
 }
@@ -109,7 +110,7 @@
                 return;
             }
             
-            dispatch_async(dispatch_get_global_queue(QOS_CLASS_BACKGROUND, 0), ^{
+            dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0), ^{
                 MEGALogDebug(@"[Camera Upload] new assets detected: %@", newAssets);
                 [CameraUploadRecordManager.shared saveAssets:newAssets error:nil];
                 [CameraUploadManager.shared startCameraUploadIfNeeded];

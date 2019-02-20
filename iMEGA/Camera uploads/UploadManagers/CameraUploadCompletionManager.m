@@ -31,7 +31,7 @@
     self = [super init];
     if (self) {
         _operationQueue = [[NSOperationQueue alloc] init];
-        _operationQueue.qualityOfService = NSQualityOfServiceUserInitiated;
+        _operationQueue.qualityOfService = NSQualityOfServiceUserInteractive;
     }
     return self;
 }
@@ -83,9 +83,9 @@
             }
         } else {
             MEGALogDebug(@"[Camera Upload] put node succeeded!");
-            [AttributeUploadManager.shared uploadCoordinateAtLocation:uploadInfo.location forNode:node];
-            [AttributeUploadManager.shared uploadFileAtURL:uploadInfo.thumbnailURL withAttributeType:MEGAAttributeTypeThumbnail forNode:node];
-            [AttributeUploadManager.shared uploadFileAtURL:uploadInfo.previewURL withAttributeType:MEGAAttributeTypePreview forNode:node];
+            [AttributeUploadManager.shared uploadCoordinateLocation:uploadInfo.location forNode:node];
+            [AttributeUploadManager.shared uploadFile:uploadInfo.thumbnailURL withAttributeType:MEGAAttributeTypeThumbnail forNode:node];
+            [AttributeUploadManager.shared uploadFile:uploadInfo.previewURL withAttributeType:MEGAAttributeTypePreview forNode:node];
             [self finishUploadForLocalIdentifier:localIdentifier status:CameraAssetUploadStatusDone];
         }
     }];
