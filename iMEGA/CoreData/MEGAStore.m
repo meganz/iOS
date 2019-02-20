@@ -58,20 +58,23 @@
         return _storeCoordinator;
     }
     
-    dispatch_sync(self.serialQueue, ^{
-        if (self->_storeCoordinator == nil) {
-            self->_storeCoordinator = [self newStoreCoordinatorForiOSBelow10];
-        }
-    });
+    if (NSThread.isMainThread) {
+        _storeCoordinator = [self newStoreCoordinatorForiOSBelow10];
+    } else {
+        dispatch_sync(self.serialQueue, ^{
+            if (self->_storeCoordinator == nil) {
+                self->_storeCoordinator = [self newStoreCoordinatorForiOSBelow10];
+            }
+        });
+    }
     
     return _storeCoordinator;
 }
 
-
 /**
  we use this method to create a new persistent container.
  
- Please note: the persistent container will lock main thread internally during initialization, please please avoid locking main thread when to call this method. Otherwise, a grid lock will be created.
+ Please note: the persistent container will lock main thread internally during initialization due to the setting of NSPersistentStoreCoordinator in NSManagedObjectContext, so please avoid locking main thread when to call this method. Otherwise, a grid lock will be created.
 
  @return a new NSPersistentContainer object
  */

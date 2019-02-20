@@ -3,12 +3,13 @@
 #import "AssetUploadInfo.h"
 #import "MOAssetUploadRecord+CoreDataClass.h"
 #import "LivePhotoUploadOperation.h"
+#import "CameraUploadRecordManager.h"
 @import Photos;
 
 @implementation UploadOperationFactory
 
 + (CameraUploadOperation *)operationWithUploadRecord:(MOAssetUploadRecord *)uploadRecord parentNode:(MEGANode *)node identifierSeparator:(NSString *)identifierSeparator savedMediaSubtype:(PHAssetMediaSubtype *)savedMediaSubtype {
-    NSString *savedIdentifier = [uploadRecord localIdentifier];
+    NSString *savedIdentifier = [CameraUploadRecordManager.shared savedIdentifierInRecord:uploadRecord];
     
     NSString *localIdentifier;
     PHAssetMediaSubtype mediaSubtype = PHAssetMediaSubtypeNone;

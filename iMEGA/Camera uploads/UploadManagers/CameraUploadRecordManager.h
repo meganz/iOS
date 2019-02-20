@@ -12,10 +12,15 @@ NS_ASSUME_NONNULL_BEGIN
 @interface CameraUploadRecordManager : NSObject
 
 @property (readonly) LocalFileNameCoordinator *fileNameCoordinator;
+@property (readonly) NSManagedObjectContext *backgroundContext;
 
 + (instancetype)shared;
 
 - (void)resetDataContext;
+
+#pragma mark - access properties of record
+
+- (NSString *)savedIdentifierInRecord:(MOAssetUploadRecord *)record;
 
 #pragma mark - fetch records
 

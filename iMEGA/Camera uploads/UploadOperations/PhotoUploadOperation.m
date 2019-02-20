@@ -14,7 +14,7 @@
 #import "PHAsset+CameraUpload.h"
 #import "MEGAConstants.h"
 #import "PhotoExportManager.h"
-#import "MOAssetUploadRecord+CameraUpload.h"
+#import "CameraUploadOperation+Utils.h"
 @import CoreServices;
 
 const NSInteger PhotoExportDiskSizeMultiplicationFactor = 2;
@@ -79,11 +79,11 @@ const NSInteger PhotoExportDiskSizeMultiplicationFactor = 2;
     
     NSString *outputTypeUTI;
     if ([self shouldConvertToJPGForUTI:dataUTI]) {
-        self.uploadInfo.fileName = [self.uploadRecord mnz_localFileNameWithExtension:MEGAJPGFileExtension];
+        self.uploadInfo.fileName = [self mnz_generateLocalFileNamewithExtension:MEGAJPGFileExtension];
         outputTypeUTI = (__bridge NSString *)kUTTypeJPEG;
     } else {
         NSString *fileExtension = [self.uploadInfo.asset mnz_fileExtensionFromAssetInfo:dataInfo];
-        self.uploadInfo.fileName = [self.uploadRecord mnz_localFileNameWithExtension:fileExtension];
+        self.uploadInfo.fileName = [self mnz_generateLocalFileNamewithExtension:fileExtension];
     }
     
     if (imageData.length * PhotoExportDiskSizeMultiplicationFactor > NSFileManager.defaultManager.deviceFreeSize) {

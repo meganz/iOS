@@ -23,11 +23,13 @@
 
 - (void)startBackgroundUploadIfPossible {
     if (CameraUploadManager.canBackgroundUploadBeStarted) {
+        MEGALogInfo(@"[Camera Upload] start monitoring location changes for background upload");
         [self.locationManager startMonitoringSignificantLocationChanges];
     }
 }
 
 - (void)stopBackgroundUpload {
+    MEGALogInfo(@"[Camera Upload] stop monitoring location changes for background upload");
     [self.locationManager stopMonitoringSignificantLocationChanges];
 }
 

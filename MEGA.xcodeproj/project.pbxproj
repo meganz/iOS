@@ -717,8 +717,8 @@
 		B65AC8E521F9B7A30094FF4F /* MOAssetUploadErrorPerLaunch+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = B65AC8D821F9B7A20094FF4F /* MOAssetUploadErrorPerLaunch+CoreDataProperties.m */; };
 		B65AC8E621F9B7A30094FF4F /* MOAssetUploadErrorPerLaunch+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = B65AC8D921F9B7A20094FF4F /* MOAssetUploadErrorPerLaunch+CoreDataClass.m */; };
 		B65AC8E921F9B7A30094FF4F /* MOAssetUploadErrorRecord+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = B65AC8DE21F9B7A30094FF4F /* MOAssetUploadErrorRecord+CoreDataClass.m */; };
+		B672EDB3221CD96000DE6684 /* CameraUploadOperation+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = B672EDB2221CD96000DE6684 /* CameraUploadOperation+Utils.m */; };
 		B686F45921866BB4009C0DAA /* CameraUploadRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B686F45821866BB4009C0DAA /* CameraUploadRequestDelegate.m */; };
-		B68B33F2221501AA0058C4EF /* MOAssetUploadRecord+CameraUpload.m in Sources */ = {isa = PBXBuildFile; fileRef = B68B33F1221501AA0058C4EF /* MOAssetUploadRecord+CameraUpload.m */; };
 		B68C42C8216DA9CF003C5A50 /* MEGAOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = B68C42C6216DA9CE003C5A50 /* MEGAOperation.m */; };
 		B68C42CB216DAA85003C5A50 /* CameraUploadOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = B68C42CA216DAA85003C5A50 /* CameraUploadOperation.m */; };
 		B6A26AAF2216385D0076AF6D /* CameraUploadNodeLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = B6A26AAE2216385D0076AF6D /* CameraUploadNodeLoader.m */; };
@@ -1687,10 +1687,10 @@
 		B65AC8DE21F9B7A30094FF4F /* MOAssetUploadErrorRecord+CoreDataClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MOAssetUploadErrorRecord+CoreDataClass.m"; sourceTree = "<group>"; };
 		B65AC8E021F9B7A30094FF4F /* MOAssetUploadErrorPerLogin+CoreDataClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MOAssetUploadErrorPerLogin+CoreDataClass.h"; sourceTree = "<group>"; };
 		B65AC8E121F9B7A30094FF4F /* MOAssetUploadErrorRecord+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MOAssetUploadErrorRecord+CoreDataProperties.h"; sourceTree = "<group>"; };
+		B672EDB1221CD96000DE6684 /* CameraUploadOperation+Utils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CameraUploadOperation+Utils.h"; sourceTree = "<group>"; };
+		B672EDB2221CD96000DE6684 /* CameraUploadOperation+Utils.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "CameraUploadOperation+Utils.m"; sourceTree = "<group>"; };
 		B686F45721866BB4009C0DAA /* CameraUploadRequestDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CameraUploadRequestDelegate.h; sourceTree = "<group>"; };
 		B686F45821866BB4009C0DAA /* CameraUploadRequestDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CameraUploadRequestDelegate.m; sourceTree = "<group>"; };
-		B68B33F0221501AA0058C4EF /* MOAssetUploadRecord+CameraUpload.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MOAssetUploadRecord+CameraUpload.h"; sourceTree = "<group>"; };
-		B68B33F1221501AA0058C4EF /* MOAssetUploadRecord+CameraUpload.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "MOAssetUploadRecord+CameraUpload.m"; sourceTree = "<group>"; };
 		B68C42C6216DA9CE003C5A50 /* MEGAOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEGAOperation.m; sourceTree = "<group>"; };
 		B68C42C7216DA9CE003C5A50 /* MEGAOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEGAOperation.h; sourceTree = "<group>"; };
 		B68C42C9216DAA85003C5A50 /* CameraUploadOperation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CameraUploadOperation.h; sourceTree = "<group>"; };
@@ -3609,6 +3609,8 @@
 				B644B6C021AE19BC00A3B8E7 /* MEGAExpirableOperation.m */,
 				B68C42C9216DAA85003C5A50 /* CameraUploadOperation.h */,
 				B68C42CA216DAA85003C5A50 /* CameraUploadOperation.m */,
+				B672EDB1221CD96000DE6684 /* CameraUploadOperation+Utils.h */,
+				B672EDB2221CD96000DE6684 /* CameraUploadOperation+Utils.m */,
 				B658D3B6218F9357004C0D64 /* PhotoUploadOperation.h */,
 				B658D3B7218F9357004C0D64 /* PhotoUploadOperation.m */,
 				B6575FCE21FC526D00B7AD82 /* LivePhotoUploadOperation.h */,
@@ -3642,8 +3644,6 @@
 				B6E19B342175852E00882F74 /* AssetUploadInfo.m */,
 				B6DA6E6722120DBB003CB372 /* AssetUploadStatus.h */,
 				B6DA6E6822120DBB003CB372 /* AssetUploadStatus.m */,
-				B68B33F0221501AA0058C4EF /* MOAssetUploadRecord+CameraUpload.h */,
-				B68B33F1221501AA0058C4EF /* MOAssetUploadRecord+CameraUpload.m */,
 			);
 			path = DataModels;
 			sourceTree = "<group>";
@@ -4469,6 +4469,7 @@
 				77F1DBE22056B752005D5F0E /* MEGAGetAttrUserRequestDelegate.m in Sources */,
 				775652D7203AD2FC009E7EC8 /* ContactLinkQRViewController.m in Sources */,
 				5B0CD42A2188D71100F97A2C /* UITextField+MNZCategory.m in Sources */,
+				B672EDB3221CD96000DE6684 /* CameraUploadOperation+Utils.m in Sources */,
 				5B323F231F5834E100C5F557 /* ReferralBonusesTableViewController.m in Sources */,
 				41EAAE471D06B49400622FAF /* NSDateFormatter+CTAssetsPickerController.m in Sources */,
 				B6BD012221B7123B00E97086 /* UploadRecordsCollator.m in Sources */,
@@ -4589,7 +4590,6 @@
 				A89629781FACEAF800F02F7A /* MEGAProviderDelegate.m in Sources */,
 				5B14A41520D10043005F8146 /* MEGAMultiFactorAuthCheckRequestDelegate.m in Sources */,
 				77597006219DD4D100B31671 /* MEGAUserAlertList+MNZCategory.m in Sources */,
-				B68B33F2221501AA0058C4EF /* MOAssetUploadRecord+CameraUpload.m in Sources */,
 				83681578202AFBC000CA8EFC /* CustomActionViewController.m in Sources */,
 				4172794B1DB663FA001AC818 /* JSQMessagesBubbleImage.m in Sources */,
 				41CD14701DB150F600E545BC /* MessagesViewController.m in Sources */,

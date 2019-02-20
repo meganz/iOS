@@ -8,7 +8,6 @@
 @interface LocalFileNameCoordinator ()
 
 @property (strong, nonatomic, nullable) NSManagedObjectContext *backgroundContext;
-@property (strong, nonatomic) dispatch_queue_t serialQueue;
 
 @end
 
@@ -18,23 +17,18 @@
     self = [super init];
     if (self) {
         _backgroundContext = context;
-        _serialQueue = dispatch_queue_create("nz.mega.cameraUpload.fileNameManagerSerialQueue", DISPATCH_QUEUE_SERIAL);
     }
     
     return self;
 }
 
 - (NSString *)generateUniqueLocalFileNameForUploadRecord:(MOAssetUploadRecord *)record withOriginalFileName:(NSString *)originalFileName {
-    if (record.fileNameRecord) {
-        return record.fileNameRecord.localUniqueFileName;
-    }
-    
-    __block NSString *localUniqueFileName = nil;
-    NSString *fileExtension = originalFileName.pathExtension;
-    dispatch_sync(self.serialQueue, ^{
+    __block NSString *localUniqueFileName;
+    [self.backgroundContext performBlockAndWait:^{
         if (record.fileNameRecord) {
             localUniqueFileName = record.fileNameRecord.localUniqueFileName;
         } else {
+            NSString *fileExtension = originalFileName.pathExtension;
             NSArray<MOAssetUploadFileNameRecord *> *similarFileNameRecords = [self searchSimilarNameRecordsByFileExtension:fileExtension fileNamePrefix:originalFileName.stringByDeletingPathExtension error:nil];
             if (similarFileNameRecords.count > 0) {
                 localUniqueFileName = [self calculateUniqueFileNameFromOriginalFileName:originalFileName similarFileNameRecords:similarFileNameRecords];
@@ -44,7 +38,7 @@
             
             [self saveLocalUniqueFileName:localUniqueFileName fileExtension:fileExtension forUploadRecord:record error:nil];
         }
-    });
+    }];
     
     return localUniqueFileName;
 }

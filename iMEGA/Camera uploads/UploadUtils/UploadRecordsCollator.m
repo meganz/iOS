@@ -21,11 +21,12 @@
     }
     
     MEGALogDebug(@"[Camera Upload] %lu non-uploading records to revert back to not stated status", (unsigned long)records.count);
-    for (MOAssetUploadRecord *record in records) {
-        [self revertBackToNotStartedForRecord:record];
-    }
-    
-    [CameraUploadRecordManager.shared saveChangesIfNeededWithError:nil];
+    [CameraUploadRecordManager.shared.backgroundContext performBlock:^{
+        for (MOAssetUploadRecord *record in records) {
+            [self revertBackToNotStartedForRecord:record];
+        }
+        [CameraUploadRecordManager.shared saveChangesIfNeededWithError:nil];
+    }];
 }
 
 - (void)collateUploadingRecords {
@@ -50,14 +51,16 @@
     
     [identifiers sortUsingComparator:localIdComparator];
     
-    for (MOAssetUploadRecord *record in uploadingRecords) {
-        NSUInteger index = [identifiers indexOfObject:record.localIdentifier inSortedRange:NSMakeRange(0, identifiers.count) options:NSBinarySearchingFirstEqual usingComparator:localIdComparator];
-        if (index == NSNotFound) {
-            [self revertBackToNotStartedForRecord:record];
+    [CameraUploadRecordManager.shared.backgroundContext performBlock:^{
+        for (MOAssetUploadRecord *record in uploadingRecords) {
+            NSUInteger index = [identifiers indexOfObject:record.localIdentifier inSortedRange:NSMakeRange(0, identifiers.count) options:NSBinarySearchingFirstEqual usingComparator:localIdComparator];
+            if (index == NSNotFound) {
+                [self revertBackToNotStartedForRecord:record];
+            }
         }
-    }
-    
-    [CameraUploadRecordManager.shared saveChangesIfNeededWithError:nil];
+        
+        [CameraUploadRecordManager.shared saveChangesIfNeededWithError:nil];
+    }];
 }
 
 - (void)clearErrorRecordsPerLaunch {
@@ -67,11 +70,7 @@
 - (void)revertBackToNotStartedForRecord:(MOAssetUploadRecord *)record {
     MEGALogDebug(@"[Camera Upload] revert record status %@ to not started", [AssetUploadStatus stringForStatus:record.status.unsignedIntegerValue]);
     record.status = @(CameraAssetUploadStatusNotStarted);
-    dispatch_async(dispatch_get_global_queue(QOS_CLASS_BACKGROUND, 0), ^{
-        if (record.localIdentifier) {
-            [NSFileManager.defaultManager removeItemIfExistsAtURL:[NSURL mnz_assetDirectoryURLForLocalIdentifier:record.localIdentifier]];
-        }
-    });
+    [NSFileManager.defaultManager removeItemIfExistsAtURL:[NSURL mnz_assetDirectoryURLForLocalIdentifier:record.localIdentifier]];
 }
 
 @end

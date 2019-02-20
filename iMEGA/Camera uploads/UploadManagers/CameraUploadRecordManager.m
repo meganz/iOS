@@ -73,6 +73,17 @@ static const NSUInteger MaximumUploadRetryPerLoginCount = 800;
     _fileNameCoordinator = nil;
 }
 
+#pragma mark - access properties of record
+
+- (NSString *)savedIdentifierInRecord:(MOAssetUploadRecord *)record {
+    __block NSString *identifier;
+    [self.backgroundContext performBlockAndWait:^{
+        identifier = record.localIdentifier;
+    }];
+    
+    return identifier;
+}
+
 #pragma mark - fetch records
 
 - (NSArray<MOAssetUploadRecord *> *)fetchUploadRecordsByLocalIdentifier:(NSString *)identifier shouldPrefetchErrorRecords:(BOOL)prefetchErrorRecords error:(NSError *__autoreleasing  _Nullable *)error {
@@ -157,10 +168,12 @@ static const NSUInteger MaximumUploadRetryPerLoginCount = 800;
 #pragma mark - save records
 
 - (BOOL)saveChangesIfNeededWithError:(NSError *__autoreleasing  _Nullable *)error {
-    NSError *coreDataError = nil;
-    if (self.backgroundContext.hasChanges) {
-        [self.backgroundContext save:&coreDataError];
-    }
+    __block NSError *coreDataError = nil;
+    [self.backgroundContext performBlockAndWait:^{
+        if (self.backgroundContext.hasChanges) {
+            [self.backgroundContext save:&coreDataError];
+        }
+    }];
     
     if (error != NULL) {
         *error = coreDataError;
