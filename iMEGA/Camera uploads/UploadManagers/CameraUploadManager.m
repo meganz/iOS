@@ -46,6 +46,7 @@ static const NSTimeInterval LoadMediaInfoTimeoutInSeconds = 120;
 @property (strong, nonatomic) MediaInfoLoader *mediaInfoLoader;
 @property (strong, nonatomic) DiskSpaceDetector *diskSpaceDetector;
 @property (strong, nonatomic) CameraUploadNodeLoader *cameraUploadNodeLoader;
+@property (readonly) NSArray<NSNumber *> *enabledMediaTypes;
 
 @end
 
@@ -474,15 +475,16 @@ static const NSTimeInterval LoadMediaInfoTimeoutInSeconds = 120;
 
 #pragma mark - upload status
 
-- (NSUInteger)uploadPendingItemsCount {
-    NSArray<NSNumber *> *mediaTypes;
-    if (CameraUploadManager.isVideoUploadEnabled) {
-        mediaTypes = @[@(PHAssetMediaTypeVideo), @(PHAssetMediaTypeImage)];
-    } else {
-        mediaTypes = @[@(PHAssetMediaTypeImage)];
-    }
-    
-    return [CameraUploadRecordManager.shared pendingUploadRecordsCountByMediaTypes:mediaTypes error:nil];
+- (NSUInteger)totalAssetsCount {
+    return [CameraUploadRecordManager.shared totalRecordsCountByMediaTypes:self.enabledMediaTypes error:nil];
+}
+
+- (NSUInteger)uploadDoneAssetsCount {
+    return [CameraUploadRecordManager.shared uploadDoneRecordsCountByMediaTypes:self.enabledMediaTypes error:nil];
+}
+
+- (NSUInteger)uploadPendingAssetsCount {
+    return [CameraUploadRecordManager.shared pendingUploadRecordsCountByMediaTypes:self.enabledMediaTypes error:nil];
 }
 
 - (BOOL)isPhotoUploadDone {
@@ -499,6 +501,19 @@ static const NSTimeInterval LoadMediaInfoTimeoutInSeconds = 120;
     } else {
         return NO;
     }
+}
+
+- (NSArray<NSNumber *> *)enabledMediaTypes {
+    NSMutableArray<NSNumber *> *mediaTypes = [NSMutableArray array];
+    if (CameraUploadManager.isCameraUploadEnabled) {
+        [mediaTypes addObject:@(PHAssetMediaTypeImage)];
+        
+        if (CameraUploadManager.isVideoUploadEnabled) {
+            [mediaTypes addObject:@(PHAssetMediaTypeVideo)];
+        }
+    }
+    
+    return [mediaTypes copy];
 }
 
 #pragma mark - photo library scan
@@ -627,14 +642,14 @@ static const NSTimeInterval LoadMediaInfoTimeoutInSeconds = 120;
 - (void)performBackgroundRefreshWithCompletion:(void (^)(UIBackgroundFetchResult))completion {
     if (CameraUploadManager.isCameraUploadEnabled) {
         [self scanPhotoLibraryWithCompletion:^{
-            if (self.uploadPendingItemsCount == 0) {
+            if (self.uploadPendingAssetsCount == 0) {
                 completion(UIBackgroundFetchResultNoData);
             } else {
                 MEGALogDebug(@"[Camera Upload] upload camera in background refresh");
                 [self startCameraUploadIfNeeded];
                 [NSTimer scheduledTimerWithTimeInterval:BackgroundRefreshDuration repeats:NO block:^(NSTimer * _Nonnull timer) {
                     completion(UIBackgroundFetchResultNewData);
-                    if (self.uploadPendingItemsCount == 0) {
+                    if (self.uploadPendingAssetsCount == 0) {
                         completion(UIBackgroundFetchResultNoData);
                     }
                 }];
