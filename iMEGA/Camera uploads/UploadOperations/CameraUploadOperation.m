@@ -22,7 +22,7 @@
 
 @interface CameraUploadOperation ()
 
-@property (strong, nonatomic, nullable) MEGASdk *attributesDataSDK;
+@property (strong, nonatomic, nullable) MEGASdk *sdk;
 
 @end
 
@@ -42,12 +42,12 @@
 
 #pragma mark - properties
 
-- (MEGASdk *)attributesDataSDK {
-    if (_attributesDataSDK == nil) {
-        _attributesDataSDK = [MEGASdkManager createMEGASdk];
+- (MEGASdk *)sdk {
+    if (_sdk == nil) {
+        _sdk = [MEGASdkManager createMEGASdk];
     }
     
-    return _attributesDataSDK;
+    return _sdk;
 }
 
 - (NSString *)description {
@@ -84,15 +84,15 @@
 }
 
 - (BOOL)createThumbnailAndPreviewFiles {
-    BOOL thumbnailCreated = [self.attributesDataSDK createThumbnail:self.uploadInfo.fileURL.path destinatioPath:self.uploadInfo.thumbnailURL.path];
+    BOOL thumbnailCreated = [self.sdk createThumbnail:self.uploadInfo.fileURL.path destinatioPath:self.uploadInfo.thumbnailURL.path];
     if (!thumbnailCreated) {
         MEGALogError(@"[Camera Upload] %@ error when to create thumbnail", self);
     }
-    BOOL previewCreated = [self.attributesDataSDK createPreview:self.uploadInfo.fileURL.path destinatioPath:self.uploadInfo.previewURL.path];
+    BOOL previewCreated = [self.sdk createPreview:self.uploadInfo.fileURL.path destinatioPath:self.uploadInfo.previewURL.path];
     if (!previewCreated) {
         MEGALogError(@"[Camera Upload] %@ error when to create preview", self);
     }
-    self.attributesDataSDK = nil;
+    self.sdk = nil;
     return thumbnailCreated && previewCreated;
 }
 
