@@ -106,7 +106,7 @@
         NSError *removeFileError;
         [self removeItemAtURL:URL error:&removeFileError];
         if (removeFileError) {
-            MEGALogDebug(@"Error when to remove existing file %@, error detail: %@", URL, removeFileError);
+            MEGALogDebug(@"Error when to remove existing file %@, error: %@", URL, removeFileError);
         }
     }
 }

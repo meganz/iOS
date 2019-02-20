@@ -86,6 +86,18 @@ static const NSUInteger MaximumUploadRetryPerLoginCount = 800;
 
 #pragma mark - fetch records
 
+- (CameraAssetUploadStatus)uploadStatusForLocalIdentifier:(NSString *)identifier {
+    MOAssetUploadRecord *record = [[self fetchUploadRecordsByLocalIdentifier:identifier shouldPrefetchErrorRecords:NO error:nil] firstObject];
+    __block CameraAssetUploadStatus status = CameraAssetUploadStatusUnknown;
+    if (record != nil) {
+        [self.backgroundContext performBlockAndWait:^{
+            status = (CameraAssetUploadStatus)[record.status integerValue];
+        }];
+    }
+    
+    return status;
+}
+
 - (NSArray<MOAssetUploadRecord *> *)fetchUploadRecordsByLocalIdentifier:(NSString *)identifier shouldPrefetchErrorRecords:(BOOL)prefetchErrorRecords error:(NSError *__autoreleasing  _Nullable *)error {
     NSFetchRequest *request = MOAssetUploadRecord.fetchRequest;
     request.predicate = [NSPredicate predicateWithFormat:@"localIdentifier == %@", identifier];

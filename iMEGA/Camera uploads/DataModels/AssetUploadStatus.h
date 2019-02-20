@@ -1,7 +1,8 @@
 
 #import <Foundation/Foundation.h>
 
-typedef NS_ENUM(NSUInteger, CameraAssetUploadStatus) {
+typedef NS_ENUM(NSInteger, CameraAssetUploadStatus) {
+    CameraAssetUploadStatusUnknown = -15,
     CameraAssetUploadStatusNotStarted = 0,
     CameraAssetUploadStatusNotReady = 15,
     CameraAssetUploadStatusQueuedUp = 30,
