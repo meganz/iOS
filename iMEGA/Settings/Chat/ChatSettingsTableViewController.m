@@ -1,12 +1,10 @@
 #import "ChatSettingsTableViewController.h"
 
 #import "UIScrollView+EmptyDataSet.h"
-#import "SVProgressHUD.h"
 
 #import "Helper.h"
 #import "MEGAGetAttrUserRequestDelegate.h"
 #import "MEGAReachabilityManager.h"
-#import "MEGALogger.h"
 #import "MEGASdkManager.h"
 #import "NSString+MNZCategory.h"
 

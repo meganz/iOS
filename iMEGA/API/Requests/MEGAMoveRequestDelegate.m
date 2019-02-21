@@ -3,8 +3,6 @@
 
 #import "SVProgressHUD.h"
 
-#import "MEGASdkManager.h"
-
 @interface MEGAMoveRequestDelegate ()
 
 @property (nonatomic) NSUInteger numberOfFiles;

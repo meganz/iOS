@@ -1,11 +1,7 @@
 
 #import "AboutTableViewController.h"
 
-#import "SVProgressHUD.h"
-
 #import "Helper.h"
-#import "MEGAReachabilityManager.h"
-#import "MEGASdkManager.h"
 #import "NSURL+MNZCategory.h"
 
 @interface AboutTableViewController ()
