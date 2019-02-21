@@ -9,6 +9,8 @@
 
 #import "TestPasswordViewController.h"
 
+#import "MEGAGenericRequestDelegate.h"
+
 @interface PasswordReminderViewController ()
 
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
@@ -79,14 +81,15 @@
 #pragma mark - Private
 
 - (void)notifyUserSkippedOrBlockedPasswordReminder {
+    MEGAGenericRequestDelegate *delegate = [[MEGAGenericRequestDelegate alloc] initWithCompletion:^(MEGARequest *request, MEGAError *error) {
+        if (self.isLoggingOut) {
+            [Helper logoutAfterPasswordReminder];
+        }
+    }];
     if (self.dontShowAgainSwitch.isOn) {
-        [[MEGASdkManager sharedMEGASdk] passwordReminderDialogBlocked];
+        [[MEGASdkManager sharedMEGASdk] passwordReminderDialogBlockedWithDelegate:delegate];
     } else {
-        [[MEGASdkManager sharedMEGASdk] passwordReminderDialogSkipped];
-    }
-    
-    if (self.isLoggingOut) {
-        [Helper logoutAfterPasswordReminder];
+        [[MEGASdkManager sharedMEGASdk] passwordReminderDialogSkippedWithDelegate:delegate];
     }
 }
 
