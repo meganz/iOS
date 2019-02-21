@@ -3,6 +3,7 @@
 
 #import "Helper.h"
 #import "MEGAStore.h"
+#import "MEGASdkManager.h"
 
 #import "UIImage+GKContact.h"
 #import "UIColor+MNZCategory.h"

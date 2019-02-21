@@ -2,7 +2,6 @@
 #import "CheckEmailAndFollowTheLinkViewController.h"
 
 #import "SAMKeychain.h"
-#import "SVProgressHUD.h"
 
 #import "NSString+MNZCategory.h"
 
