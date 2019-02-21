@@ -57,7 +57,6 @@
             }];
             
             if (operation) {
-                MEGALogDebug(@"[Camera Upload] %@ sub type operation got queue up", operation);
                 [operations addObject:operation];
             }
         }

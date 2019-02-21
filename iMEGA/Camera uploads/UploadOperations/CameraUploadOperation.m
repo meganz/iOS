@@ -51,7 +51,7 @@
 }
 
 - (NSString *)description {
-    return [NSString stringWithFormat:@"%@ %@ %@ %@", NSStringFromClass(self.class), [self.uploadInfo.asset.creationDate mnz_formattedDefaultNameForMedia], self.uploadInfo.fileName, self.uploadInfo.savedRecordLocalIdentifier];
+    return [NSString stringWithFormat:@"%@ %@ %@", NSStringFromClass(self.class), [self.uploadInfo.asset.creationDate mnz_formattedDefaultNameForMedia], self.uploadInfo.savedRecordLocalIdentifier];
 }
 
 #pragma mark - start operation
