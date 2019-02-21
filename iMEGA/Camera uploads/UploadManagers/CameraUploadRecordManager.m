@@ -249,19 +249,18 @@ static const NSUInteger MaximumUploadRetryPerLoginCount = 800;
     return coreDataError == nil;
 }
 
-- (MOAssetUploadRecord *)saveAsset:(PHAsset *)asset mediaSubtypedLocalIdentifier:(NSString *)identifier error:(NSError * _Nullable __autoreleasing * _Nullable)error {
-    __block MOAssetUploadRecord *record = [[self fetchUploadRecordsByLocalIdentifier:identifier shouldPrefetchErrorRecords:YES error:nil] firstObject];
-    if (record == nil) {
-        __block NSError *coreDataError = nil;
-        [self.backgroundContext performBlockAndWait:^{
-            record = [self createUploadRecordFromAsset:asset];
-            record.localIdentifier = identifier;
-            [self.backgroundContext save:&coreDataError];
-        }];
-        
-        if (error != NULL) {
-            *error = coreDataError;
-        }
+- (nullable MOAssetUploadRecord *)saveAndQueueUpUploadRecordForAsset:(PHAsset *)asset withMediaSubtypedLocalIdentifier:(NSString *)identifier error:(NSError * _Nullable __autoreleasing * _Nullable)error {
+    __block MOAssetUploadRecord *record;
+    __block NSError *coreDataError = nil;
+    [self.backgroundContext performBlockAndWait:^{
+        record = [self createUploadRecordFromAsset:asset];
+        record.status = @(CameraAssetUploadStatusQueuedUp);
+        record.localIdentifier = identifier;
+        [self.backgroundContext save:&coreDataError];
+    }];
+    
+    if (error != NULL) {
+        *error = coreDataError;
     }
     
     return record;

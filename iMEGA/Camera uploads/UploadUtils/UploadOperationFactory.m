@@ -39,21 +39,25 @@
 
 + (NSArray<CameraUploadOperation *> *)operationsForSavedMediaSubtype:(PHAssetMediaSubtype)savedMediaSubtype asset:(PHAsset *)asset parentNode:(MEGANode *)node {
     NSMutableArray<CameraUploadOperation *> *operations = [NSMutableArray array];
-    
     if (@available(iOS 9.1, *)) {
         if (asset.mediaType == PHAssetMediaTypeImage && savedMediaSubtype == PHAssetMediaSubtypeNone && (asset.mediaSubtypes & PHAssetMediaSubtypePhotoLive)) {
             NSString *mediaSubtypedLocalIdentifier = [@[asset.localIdentifier, [@(PHAssetMediaSubtypePhotoLive) stringValue]] componentsJoinedByString:MEGACameraUploadIdentifierSeparator];
-            NSError *error;
-            MOAssetUploadRecord *record = [CameraUploadRecordManager.shared saveAsset:asset mediaSubtypedLocalIdentifier:mediaSubtypedLocalIdentifier error:&error];
             
-            if (record && error == nil) {
-                AssetUploadInfo *uploadInfo = [[AssetUploadInfo alloc] initWithAsset:asset savedIdentifier:mediaSubtypedLocalIdentifier parentNode:node];
-                CameraUploadOperation *operation = [self operationWithUploadInfo:uploadInfo uploadRecord:record savedMediaSubtype:PHAssetMediaSubtypePhotoLive];
-                if (operation) {
-                    [operations addObject:operation];
+            __block CameraUploadOperation *operation;
+            [CameraUploadRecordManager.shared.backgroundContext performBlockAndWait:^{
+                NSArray *existingRecords = [CameraUploadRecordManager.shared fetchUploadRecordsByLocalIdentifier:mediaSubtypedLocalIdentifier shouldPrefetchErrorRecords:NO error:nil];
+                if (existingRecords.count == 0) {
+                    NSError *error;
+                    MOAssetUploadRecord *record = [CameraUploadRecordManager.shared saveAndQueueUpUploadRecordForAsset:asset withMediaSubtypedLocalIdentifier:mediaSubtypedLocalIdentifier error:&error];
+                    if (record && error == nil) {
+                        AssetUploadInfo *uploadInfo = [[AssetUploadInfo alloc] initWithAsset:asset savedIdentifier:mediaSubtypedLocalIdentifier parentNode:node];
+                        operation = [self operationWithUploadInfo:uploadInfo uploadRecord:record savedMediaSubtype:PHAssetMediaSubtypePhotoLive];
+                    }
                 }
-            } else {
-                MEGALogError(@"[Camera Upload] error when to save asset for media subtyped identifier %@ %@", mediaSubtypedLocalIdentifier, error);
+            }];
+            
+            if (operation) {
+                [operations addObject:operation];
             }
         }
     }
