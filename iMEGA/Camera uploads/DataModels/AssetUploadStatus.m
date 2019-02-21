@@ -25,6 +25,9 @@
 + (NSString *)stringForStatus:(CameraAssetUploadStatus)status {
     NSString *statusString;
     switch (status) {
+        case CameraAssetUploadStatusUnknown:
+            statusString = @"Unknown";
+            break;
         case CameraAssetUploadStatusNotStarted:
             statusString = @"NotStarted";
             break;

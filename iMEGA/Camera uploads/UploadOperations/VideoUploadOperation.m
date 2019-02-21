@@ -161,7 +161,7 @@
             [session exportAsynchronouslyWithCompletionHandler:^{
                 switch (session.status) {
                     case AVAssetExportSessionStatusCompleted:
-                        MEGALogDebug(@"[Camera Upload] %@ finished exporting video to URL %@", weakSelf, weakSelf.uploadInfo.fileURL);
+                        MEGALogDebug(@"[Camera Upload] %@ finished exporting video to file %@", weakSelf, weakSelf.uploadInfo.fileName);
                         [weakSelf handleProcessedUploadFile];
                         break;
                     case AVAssetExportSessionStatusCancelled:
