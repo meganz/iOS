@@ -59,6 +59,7 @@ typedef NS_ENUM(NSUInteger, TextFieldTag) {
     
     switch (self.changeType) {
         case ChangeTypePassword:
+        case ChangeTypePasswordFromLogout:
             self.navigationItem.title = AMLocalizedString(@"changePasswordLabel", @"Section title where you can change your MEGA's password");
             
             self.theNewPasswordView.passwordTextField.returnKeyType = UIReturnKeyNext;
@@ -163,6 +164,14 @@ typedef NS_ENUM(NSUInteger, TextFieldTag) {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
 }
 
+#pragma mark - Public
+
+- (void)createNavigationCancelButton {
+    UIBarButtonItem *cancel = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelAction:)];
+    [cancel setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:17.0f], NSForegroundColorAttributeName:UIColor.whiteColor} forState:UIControlStateNormal];
+    self.navigationItem.rightBarButtonItem = cancel;
+}
+
 #pragma mark - Private
 
 - (BOOL)validateForm {
@@ -171,6 +180,7 @@ typedef NS_ENUM(NSUInteger, TextFieldTag) {
         case ChangeTypePassword:
         case ChangeTypeResetPassword:
         case ChangeTypeParkAccount:
+        case ChangeTypePasswordFromLogout:
             if (![self validateNewPassword]) {
                 [self.theNewPasswordView.passwordTextField becomeFirstResponder];
                 
@@ -324,9 +334,10 @@ typedef NS_ENUM(NSUInteger, TextFieldTag) {
         if ([self validateForm]) {
             switch (self.changeType) {
                 case ChangeTypePassword:
+                case ChangeTypePasswordFromLogout:
                     if (self.isTwoFactorAuthenticationEnabled) {
                         TwoFactorAuthenticationViewController *twoFactorAuthenticationVC = [[UIStoryboard storyboardWithName:@"TwoFactorAuthentication" bundle:nil] instantiateViewControllerWithIdentifier:@"TwoFactorAuthenticationViewControllerID"];
-                        twoFactorAuthenticationVC.twoFAMode = TwoFactorAuthenticationChangePassword;
+                        twoFactorAuthenticationVC.twoFAMode = self.changeType == ChangeTypePassword ? TwoFactorAuthenticationChangePassword : TwoFactorAuthenticationChangePasswordFromLogout;
                         twoFactorAuthenticationVC.newerPassword = self.theNewPasswordView.passwordTextField.text;
                         
                         [self.navigationController pushViewController:twoFactorAuthenticationVC animated:YES];
