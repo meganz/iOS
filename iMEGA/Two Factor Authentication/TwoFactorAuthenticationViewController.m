@@ -3,6 +3,7 @@
 
 #import "SVProgressHUD.h"
 
+#import "Helper.h"
 #import "MEGALoginRequestDelegate.h"
 #import "MEGASdkManager.h"
 #import "NSString+MNZCategory.h"
@@ -283,7 +284,7 @@
             if (self.twoFAMode == TwoFactorAuthenticationChangePassword) {
                 [self.navigationController popToViewController:self.navigationController.viewControllers[2] animated:YES];
             } else if (self.twoFAMode == TwoFactorAuthenticationChangePasswordFromLogout) {
-                [self dismissViewControllerAnimated:YES completion:nil];
+                [Helper logoutAfterPasswordReminder];
             }
             break;
         }
