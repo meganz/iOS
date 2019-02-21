@@ -1795,9 +1795,9 @@
 /* */
 "Yesterday"="昨天";
 /* Plural of participant. 2 participants */
-"%d participants"="%d participants";
+"%d participants"="%d位與會者";
 /* Singular of participant. 1 participant */
-"%d participant"="%d participant";
+"%d participant"="%d位與會者";
 /* Text to inform the user there is an active call and is not participating */
 "Ongoing Call"="Ongoing Call";
 /* Text to inform the user there is an active call and is participating */

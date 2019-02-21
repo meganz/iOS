@@ -99,7 +99,7 @@
 /*  */
 "weak"="Mahina";
 /*  */
-"passwordVeryWeakOrWeak"="Ang password ay sobrang daling mahulaan. Kailangang pahabain mo pa ang password mo. Pagsamahin ang uppercase at lowercase na mga letra. Magdagdag ng mga espesyal na letra. Huwag gumamit ng pangalan o dictionary words.";
+"passwordVeryWeakOrWeak"="Ang password ay sobrang daling mahulaan. Kailangang pahabain mo pa ang password mo. Pagsamahin ang uppercase at lowercase na mga letra. Magdagdag ng mga espesyal na letra. Huwag gumamit ng pangalan o dictionary words";
 /* Label displayed during checking the strength of the password introduced. Represents Medium security */
 "medium"="Tama lang";
 /*  */
@@ -1653,9 +1653,9 @@
 /* Label for any ‘Days’ button, link, text, title, etc. - (String as short as possible). */
 "Days"="Mga Araw";
 /* New server-side rubbish-bin cleaning scheduler description (for Free users) */
-"The Rubbish Bin is cleaned for you automatically. The minimum period is 7 days and your maximum period is 30 days."="The Rubbish Bin is cleaned for you automatically. The minimum period is 7 days and your maximum period is 30 days.";
+"The Rubbish Bin is cleaned for you automatically. The minimum period is 7 days and your maximum period is 30 days."="The Rubbish Bin is cleared for you automatically. The minimum period is 7 days and your maximum period is 30 days.";
 /* New server-side rubbish-bin cleaning scheduler description (for PRO users) */
-"The Rubbish Bin can be cleaned for you automatically. The minimum period is 7 days."="The Rubbish Bin can be cleaned for you automatically. The minimum period is 7 days.";
+"The Rubbish Bin can be cleaned for you automatically. The minimum period is 7 days."="The Rubbish Bin can be cleared for you automatically. The minimum period is 7 days.";
 /* Description shown when you try to disable the feature Rubbish-Bin Cleaning Scheduler and you are a free user */
 "To disable the Rubbish-Bin Cleaning Scheduler or set a longer retention period, you need to subscribe to a PRO plan."="To disable the Rubbish Bin Clearing Scheduler or set a longer retention period, you need to subscribe to a PRO plan.";
 /* Confirmation dialog for the button that logs the user out of all sessions except the current one. */

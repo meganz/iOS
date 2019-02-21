@@ -99,7 +99,7 @@
 /*  */
 "weak"="Fraca";
 /*  */
-"passwordVeryWeakOrWeak"="A sua senha é muito fácil de adivinhar. Tente deixá-la mais longa, incluir maiúsculas e minúsculas e adicionar caracteres especiais. Não utilize nomes ou palavras do dicionário.";
+"passwordVeryWeakOrWeak"="A sua senha é muito fácil de adivinhar. Tente deixá-la mais longa, incluir maiúsculas e minúsculas e adicionar caracteres especiais. Não utilize nomes ou palavras do dicionário";
 /* Label displayed during checking the strength of the password introduced. Represents Medium security */
 "medium"="Média";
 /*  */

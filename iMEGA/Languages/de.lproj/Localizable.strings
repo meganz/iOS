@@ -99,7 +99,7 @@
 /*  */
 "weak"="Schwach";
 /*  */
-"passwordVeryWeakOrWeak"="Ihr Passwort ist zu einfach. Verlängern Sie Ihr Passwort. Kombinieren Sie Groß- und Kleinschreibung, fügen Sie Sonderzeichen und Zahlen hinzu. Verwenden Sie keine Namen oder allgemein gebräuchliche Wörter.";
+"passwordVeryWeakOrWeak"="Ihr Passwort ist zu einfach. Versuchen Sie ein längeres Passwort, kombinieren Sie Groß- und Kleinbuchstaben. Fügen Sie Sonderzeichen und Zahlen hinzu. Benutzen Sie keine Namen oder gebräuchliche Wörter.";
 /* Label displayed during checking the strength of the password introduced. Represents Medium security */
 "medium"="Mittel";
 /*  */
@@ -619,7 +619,7 @@
 /* Permissions given to the user you share your folder with */
 "readOnly"="Nur lesen";
 /* Permissions given to the user you share your folder with */
-"readAndWrite"="Lesen & hinzufügen";
+"readAndWrite"="Lese- und Schreibzugriff";
 /* Permissions given to the user you share your folder with */
 "fullAccess"="Vollzugriff";
 /* Title of the Settings section */
