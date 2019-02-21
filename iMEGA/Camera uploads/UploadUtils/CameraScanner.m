@@ -47,11 +47,11 @@
         NSError *error = nil;
         NSArray<MOAssetUploadRecord *> *records = [[CameraUploadRecordManager shared] fetchAllUploadRecords:&error];
         if (records.count == 0) {
-            MEGALogDebug(@"[Camera Upload] initial save with asset count %lu", self.fetchResult.count);
+            MEGALogDebug(@"[Camera Upload] initial save with asset count %lu", (unsigned long)self.fetchResult.count);
             [[CameraUploadRecordManager shared] initialSaveWithAssetFetchResult:self.fetchResult error:nil];
         } else {
             NSArray<PHAsset *> *newAssets = [self findNewAssetsByComparingFetchResult:self.fetchResult uploadRecords:records];
-            MEGALogDebug(@"[Camera Upload] new assets scanned with count %lu", newAssets.count);
+            MEGALogDebug(@"[Camera Upload] new assets scanned with count %lu", (unsigned long)newAssets.count);
             [[CameraUploadRecordManager shared] saveAssets:newAssets error:nil];
         }
         
