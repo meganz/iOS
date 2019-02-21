@@ -403,7 +403,7 @@ static const NSTimeInterval LoadMediaInfoTimeoutInSeconds = 120;
                 }
             }
             
-            MEGALogDebug(@"[Camera Upload] photo queue count %lu, video queue count %lu", self.photoUploadOperationQueue.operationCount, self.videoUploadOperationQueue.operationCount);
+            MEGALogDebug(@"[Camera Upload] photo queue count %lu, video queue count %lu", (unsigned long)self.photoUploadOperationQueue.operationCount, (unsigned long)self.videoUploadOperationQueue.operationCount);
         } else {
             MEGALogInfo(@"[Camera Upload] delete record as we don't have data to upload");
             [CameraUploadRecordManager.shared deleteUploadRecord:record error:nil];
