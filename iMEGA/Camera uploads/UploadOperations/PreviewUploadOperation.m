@@ -14,14 +14,21 @@
     [MEGASdkManager.sharedMEGASdk setPreviewNode:self.node sourceFilePath:self.attributeURL.path delegate:[[CameraUploadRequestDelegate alloc] initWithCompletion:^(MEGARequest * _Nonnull request, MEGAError * _Nonnull error) {
         if (error.type) {
             MEGALogError(@"[Camera Upload] Upload preview failed for node: %@, error: %@", weakSelf.node.name, error.nativeError);
+            if (error.type == MEGAErrorTypeApiEExist) {
+                [weakSelf cacheAttributeFile];
+            }
         } else {
             MEGALogDebug(@"[Camera Upload] Upload preview succeeded for node %@", weakSelf.node.name);
-            NSURL *cacheDirectory = [[NSFileManager.defaultManager URLsForDirectory:NSCachesDirectory inDomains:NSUserDomainMask] firstObject];
-            [weakSelf moveAttributeToDirectoryURL:[cacheDirectory URLByAppendingPathComponent:@"previewsV3"] newFileName:weakSelf.node.base64Handle];
+            [weakSelf cacheAttributeFile];
         }
         
         [weakSelf finishOperation];
     }]];
+}
+
+- (void)cacheAttributeFile {
+    NSURL *cacheDirectory = [[NSFileManager.defaultManager URLsForDirectory:NSCachesDirectory inDomains:NSUserDomainMask] firstObject];
+    [self moveAttributeToDirectoryURL:[cacheDirectory URLByAppendingPathComponent:@"previewsV3"] newFileName:self.node.base64Handle];
 }
 
 @end
