@@ -9,6 +9,7 @@
 #import "UITextField+MNZCategory.h"
 
 #import "AwaitingEmailConfirmationView.h"
+#import "Helper.h"
 #import "InputView.h"
 #import "PasswordStrengthIndicatorView.h"
 #import "PasswordView.h"
@@ -616,7 +617,12 @@ typedef NS_ENUM(NSUInteger, TextFieldTag) {
         case MEGARequestTypeChangePassword: {
             [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"passwordChanged", @"The label showed when your password has been changed")];
             
-            [self.navigationController popToViewController:self.navigationController.viewControllers[2] animated:YES];
+            if (self.changeType == ChangeTypePassword) {
+                [self.navigationController popToViewController:self.navigationController.viewControllers[2] animated:YES];
+            } else if (self.changeType == ChangeTypePasswordFromLogout) {
+                [Helper logoutAfterPasswordReminder];
+            }
+            
             break;
         }
             
