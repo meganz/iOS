@@ -15,13 +15,20 @@
 #import "PHAsset+CameraUpload.h"
 #import "CameraUploadOperation+Utils.h"
 
+@interface VideoUploadOperation ()
+
+@property (strong, nonatomic) AVAssetExportSession *exportSession;
+@property (nonatomic) PHImageRequestID videoRequestId;
+
+@end
+
 @implementation VideoUploadOperation
 
 #pragma mark - operation lifecycle
 
 - (void)start {
     [super start];
-    
+
     [self requestVideoData];
 }
 
@@ -46,7 +53,7 @@
     };
     
     
-    [PHImageManager.defaultManager requestAVAssetForVideo:self.uploadInfo.asset options:options resultHandler:^(AVAsset * _Nullable asset, AVAudioMix * _Nullable audioMix, NSDictionary * _Nullable info) {
+    self.videoRequestId = [PHImageManager.defaultManager requestAVAssetForVideo:self.uploadInfo.asset options:options resultHandler:^(AVAsset * _Nullable asset, AVAudioMix * _Nullable audioMix, NSDictionary * _Nullable info) {
         if (weakSelf.isFinished) {
             return;
         }
@@ -141,6 +148,7 @@
     [AVAssetExportSession determineCompatibilityOfExportPreset:preset withAsset:asset outputFileType:outputFileType completionHandler:^(BOOL compatible) {
         if (compatible) {
             AVAssetExportSession *session = [AVAssetExportSession exportSessionWithAsset:asset presetName:preset];
+            self.exportSession = session;
             session.outputFileType = outputFileType;
             session.canPerformMultiplePassesOverSourceMediaData = YES;
             session.shouldOptimizeForNetworkUse = YES;
@@ -207,6 +215,27 @@
     }
     
     [self handleProcessedUploadFile];
+}
+
+#pragma mark - cancel video exporting
+
+- (void)cancelPendingTasks {
+    [super cancelPendingTasks];
+    
+    if (self.videoRequestId != PHInvalidImageRequestID) {
+        MEGALogDebug(@"[Camera Upload] %@ cancel video data request with request Id %d", self, self.videoRequestId);
+        [PHImageManager.defaultManager cancelImageRequest:self.videoRequestId];
+    }
+    
+    switch (self.exportSession.status) {
+        case AVAssetExportSessionStatusWaiting:
+        case AVAssetExportSessionStatusExporting:
+            MEGALogDebug(@"[Camera Upload] %@ cancel video exporting as the operation is cancelled", self);
+            [self.exportSession cancelExport];
+            break;
+        default:
+            break;
+    }
 }
 
 @end

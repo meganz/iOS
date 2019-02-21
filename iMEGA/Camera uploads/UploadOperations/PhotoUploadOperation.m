@@ -19,6 +19,12 @@
 
 const NSInteger PhotoExportDiskSizeMultiplicationFactor = 2;
 
+@interface PhotoUploadOperation ()
+
+@property (nonatomic) PHImageRequestID imageRequestId;
+
+@end
+
 @implementation PhotoUploadOperation
 
 #pragma mark - operation lifecycle
@@ -50,7 +56,7 @@ const NSInteger PhotoExportDiskSizeMultiplicationFactor = 2;
         }
     };
     
-    [[PHImageManager defaultManager] requestImageDataForAsset:self.uploadInfo.asset options:options resultHandler:^(NSData * _Nullable imageData, NSString * _Nullable dataUTI, UIImageOrientation orientation, NSDictionary * _Nullable info) {
+    self.imageRequestId = [[PHImageManager defaultManager] requestImageDataForAsset:self.uploadInfo.asset options:options resultHandler:^(NSData * _Nullable imageData, NSString * _Nullable dataUTI, UIImageOrientation orientation, NSDictionary * _Nullable info) {
         if (weakSelf.isFinished) {
             return;
         }
@@ -106,6 +112,17 @@ const NSInteger PhotoExportDiskSizeMultiplicationFactor = 2;
         return [CameraUploadManager shouldConvertHEICPhoto] && UTTypeConformsTo((__bridge CFStringRef)dataUTI, (__bridge CFStringRef)AVFileTypeHEIC);
     } else {
         return NO;
+    }
+}
+
+#pragma mark - cancel pending tasks
+
+- (void)cancelPendingTasks {
+    [super cancelPendingTasks];
+    
+    if (self.imageRequestId != PHInvalidImageRequestID) {
+        MEGALogDebug(@"[Camera Upload] %@ cancel live photo data request with request Id %d", self, self.imageRequestId);
+        [PHImageManager.defaultManager cancelImageRequest:self.imageRequestId];
     }
 }
 
