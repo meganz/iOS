@@ -57,6 +57,7 @@
             }];
             
             if (operation) {
+                MEGALogDebug(@"[Camera Upload] %@ sub type operation got queue up", operation);
                 [operations addObject:operation];
             }
         }
@@ -69,7 +70,7 @@
     CameraUploadOperation *operation;
     switch (uploadInfo.asset.mediaType) {
         case PHAssetMediaTypeImage:
-            if (mediaSubtype == PHAssetMediaSubtypePhotoLive) {
+            if (mediaSubtype & PHAssetMediaSubtypePhotoLive) {
                 operation = [[LivePhotoUploadOperation alloc] initWithUploadInfo:uploadInfo uploadRecord:uploadRecord];
             } else {
                 operation = [[PhotoUploadOperation alloc] initWithUploadInfo:uploadInfo uploadRecord:uploadRecord];
