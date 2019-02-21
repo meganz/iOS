@@ -7,7 +7,6 @@
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 @property (strong, nonatomic) NSPersistentStoreCoordinator *storeCoordinator;
 @property (strong, nonatomic) NSPersistentContainer *persistentContainer;
-@property (strong, nonatomic) dispatch_queue_t serialQueue;
 
 @end
 
@@ -24,15 +23,6 @@
     return _megaStore;
 }
 
-- (instancetype)init
-{
-    self = [super init];
-    if (self) {
-        _serialQueue = dispatch_queue_create("nz.mega.megaStore.stack", DISPATCH_QUEUE_SERIAL);
-    }
-    return self;
-}
-
 #pragma mark - Core data stack
 
 - (NSPersistentContainer *)persistentContainer {
@@ -43,7 +33,7 @@
     if (NSThread.isMainThread) {
         _persistentContainer = [self newPersistentContainer];
     } else {
-        dispatch_sync(self.serialQueue, ^{
+        dispatch_sync(dispatch_get_main_queue(), ^{
             if (self->_persistentContainer == nil) {
                 self->_persistentContainer = [self newPersistentContainer];
             }
@@ -61,7 +51,7 @@
     if (NSThread.isMainThread) {
         _storeCoordinator = [self newStoreCoordinatorForiOSBelow10];
     } else {
-        dispatch_sync(self.serialQueue, ^{
+        dispatch_sync(dispatch_get_main_queue(), ^{
             if (self->_storeCoordinator == nil) {
                 self->_storeCoordinator = [self newStoreCoordinatorForiOSBelow10];
             }
