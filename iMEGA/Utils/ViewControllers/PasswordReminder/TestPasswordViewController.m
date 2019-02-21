@@ -4,9 +4,15 @@
 #import "Helper.h"
 #import "MEGASdkManager.h"
 #import "MEGAReachabilityManager.h"
+#import "MEGANavigationController.h"
 #import "NSString+MNZCategory.h"
+#import "MainTabBarController.h"
+#import "UIApplication+MNZCategory.h"
 
 #import "PasswordView.h"
+#import "ChangePasswordViewController.h"
+
+#import "MEGAMultiFactorAuthCheckRequestDelegate.h"
 
 @interface TestPasswordViewController () <UITextFieldDelegate, PasswordViewDelegate>
 
@@ -19,6 +25,7 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *passwordViewHeightConstraint;
 
 @property (assign, nonatomic) float descriptionLabelHeight;
+@property (assign, nonatomic) NSInteger testFailedCount;
 
 @end
 
@@ -29,6 +36,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
+    self.testFailedCount = 0;
+    
     [self configureUI];
     
     self.descriptionLabelHeight = self.descriptionLabelHeightConstraint.constant;
@@ -140,6 +149,23 @@
     
     [self.backupKeyButton setTitleColor:UIColor.whiteColor forState:UIControlStateNormal];
     self.backupKeyButton.backgroundColor = UIColor.mnz_redMain;
+    
+    self.testFailedCount++;
+    
+    if (self.testFailedCount == 3) {
+        MEGAMultiFactorAuthCheckRequestDelegate *delegate = [[MEGAMultiFactorAuthCheckRequestDelegate alloc] initWithCompletion:^(MEGARequest *request, MEGAError *error) {
+            [self dismissViewControllerAnimated:YES completion:^{
+                ChangePasswordViewController *changePasswordVC = [[UIStoryboard storyboardWithName:@"Settings" bundle:nil] instantiateViewControllerWithIdentifier:@"ChangePasswordViewControllerID"];
+                changePasswordVC.changeType = ChangeTypePasswordFromLogout;
+                changePasswordVC.twoFactorAuthenticationEnabled = request.flag;
+                [changePasswordVC createNavigationCancelButton];
+                
+                MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:changePasswordVC];
+                [UIApplication.mnz_presentingViewController presentViewController:navigationController animated:YES completion:nil];
+            }];
+        }];
+        [[MEGASdkManager sharedMEGASdk] multiFactorAuthCheckWithEmail:[[MEGASdkManager sharedMEGASdk] myEmail] delegate:delegate];
+    }
 }
 
 - (void)passwordTestSuccess {
