@@ -7,7 +7,7 @@
     AssetIdentifierInfo *info = [[AssetIdentifierInfo alloc] init];
     
     NSArray<NSString *> *separatedStrings = [identifier componentsSeparatedByString:separator];
-    if (separatedStrings.count == 0) {
+    if (separatedStrings.count > 0) {
         if (separatedStrings.count == 1) {
             info.localIdentifier = [separatedStrings firstObject];
         } else if (separatedStrings.count == 2) {

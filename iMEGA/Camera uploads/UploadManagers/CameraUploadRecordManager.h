@@ -20,7 +20,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - access properties of record
 
-- (NSString *)savedIdentifierInRecord:(MOAssetUploadRecord *)record;
+- (nullable NSString *)savedIdentifierInRecord:(MOAssetUploadRecord *)record;
 
 #pragma mark - fetch records
 

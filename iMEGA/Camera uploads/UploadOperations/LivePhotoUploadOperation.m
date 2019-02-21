@@ -10,6 +10,13 @@
 
 static NSString * const LivePhotoVideoResourceTemporaryName = @"video.mov";
 
+@interface LivePhotoUploadOperation ()
+
+@property (strong, nonatomic) AVAssetExportSession *exportSession;
+@property (nonatomic) PHImageRequestID livePhotoRequestId;
+
+@end
+
 @implementation LivePhotoUploadOperation
 
 - (void)start {
@@ -38,7 +45,7 @@ static NSString * const LivePhotoVideoResourceTemporaryName = @"video.mov";
     };
     
     
-    [PHImageManager.defaultManager requestLivePhotoForAsset:self.uploadInfo.asset targetSize:PHImageManagerMaximumSize contentMode:PHImageContentModeDefault options:options resultHandler:^(PHLivePhoto * _Nullable livePhoto, NSDictionary * _Nullable info) {
+    self.livePhotoRequestId = [PHImageManager.defaultManager requestLivePhotoForAsset:self.uploadInfo.asset targetSize:PHImageManagerMaximumSize contentMode:PHImageContentModeDefault options:options resultHandler:^(PHLivePhoto * _Nullable livePhoto, NSDictionary * _Nullable info) {
         if (weakSelf.isFinished) {
             return;
         }
@@ -126,6 +133,7 @@ static NSString * const LivePhotoVideoResourceTemporaryName = @"video.mov";
     
     AVURLAsset *urlAsset = [AVURLAsset assetWithURL:videoFileURL];
     AVAssetExportSession *session = [AVAssetExportSession exportSessionWithAsset:urlAsset presetName:AVAssetExportPresetHighestQuality];
+    self.exportSession = session;
     session.outputFileType = AVFileTypeMPEG4;
     self.uploadInfo.fileName = [self mnz_generateLocalLivePhotoFileNameWithExtension:MEGAMP4FileExtension];
     session.outputURL = self.uploadInfo.fileURL;
@@ -156,6 +164,27 @@ static NSString * const LivePhotoVideoResourceTemporaryName = @"video.mov";
                 break;
         }
     }];
+}
+
+#pragma mark - cancel live photo exporting
+
+- (void)cancelPendingTasks {
+    [super cancelPendingTasks];
+    
+    if (self.livePhotoRequestId != PHInvalidImageRequestID) {
+        MEGALogDebug(@"[Camera Upload] %@ cancel live photo data request with request Id %d", self, self.livePhotoRequestId);
+        [PHImageManager.defaultManager cancelImageRequest:self.livePhotoRequestId];
+    }
+    
+    switch (self.exportSession.status) {
+        case AVAssetExportSessionStatusWaiting:
+        case AVAssetExportSessionStatusExporting:
+            MEGALogDebug(@"[Camera Upload] %@ cancel live photo video exporting as the operation is cancelled", self);
+            [self.exportSession cancelExport];
+            break;
+        default:
+            break;
+    }
 }
 
 #pragma mark - util methods

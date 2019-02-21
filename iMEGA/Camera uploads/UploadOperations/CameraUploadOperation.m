@@ -74,6 +74,13 @@
     self.uploadInfo.directoryURL = [self URLForAssetFolder];
 }
 
+- (void)cancel {
+    [super cancel];
+    [self cancelPendingTasks];
+}
+
+- (void)cancelPendingTasks {}
+
 #pragma mark - data processing
 
 - (NSURL *)URLForAssetFolder {
