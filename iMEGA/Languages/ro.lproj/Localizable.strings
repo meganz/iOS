@@ -99,7 +99,7 @@
 /*  */
 "weak"="Slabă";
 /*  */
-"passwordVeryWeakOrWeak"="Parola ta e ușor de ghicit. Încearcă să faci parola mai lungă. Combină litere mari și litere mici. Adaugă caractere speciale. Nu folosi nume sau cuvinte din dicționar.";
+"passwordVeryWeakOrWeak"="Parola ta e ușor de ghicit. Încearcă să faci parola mai lungă. Combină litere mari și litere mici. Adaugă caractere speciale. Nu folosi nume sau cuvinte din dicționar";
 /* Label displayed during checking the strength of the password introduced. Represents Medium security */
 "medium"="Medie";
 /*  */

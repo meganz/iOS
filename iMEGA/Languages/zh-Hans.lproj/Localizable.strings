@@ -99,7 +99,7 @@
 /*  */
 "weak"="弱";
 /*  */
-"passwordVeryWeakOrWeak"="您的密码很容易被猜到。轻尝试增加密码长度。结合大小写字母。添加特殊符号。请不要使用名字或词语。";
+"passwordVeryWeakOrWeak"="您的密码太容易被猜到了。请尝试增加密码长度。结合大小写。添加特殊字元。不要使用名字或单词。";
 /* Label displayed during checking the strength of the password introduced. Represents Medium security */
 "medium"="中等";
 /*  */

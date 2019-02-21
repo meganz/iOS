@@ -99,7 +99,7 @@
 /*  */
 "weak"="Yếu";
 /*  */
-"passwordVeryWeakOrWeak"="Mật khẩu này khá dễ đoán. Hãy thử tạo một mật khẩu dài hơn. Bao gồm chữ thường & chữ in hoa. Thêm các ký tự đặc biệt. Đừng dùng tên hay những từ thông dụng.";
+"passwordVeryWeakOrWeak"="Mật khẩu này khá dễ đoán. Hãy thử tạo một mật khẩu dài hơn. Bao gồm chữ thường & chữ in hoa. Thêm các ký tự đặc biệt. Đừng dùng tên hay những từ thông dụng";
 /* Label displayed during checking the strength of the password introduced. Represents Medium security */
 "medium"="Trung Bình";
 /*  */

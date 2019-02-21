@@ -868,7 +868,7 @@
 /* Title of the Achievements section */
 "achievementsTitle"="Obiettivi";
 /* Title of the Used storage section */
-"usedStorage"="Spazio di archiviazione utilizzato";
+"usedStorage"="Spazio utilizzato";
 /* Subtitle show on My Account view under the 'Achievements' title to give more details of the section that will appear if tapped 2/2 */
 "inviteFriendsAndGetRewards"="Invita degli amici ed ottieni dei bonus";
 /* Indicating text for when "you invite your friends" */

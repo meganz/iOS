@@ -952,7 +952,7 @@
 /* Button title for the section where you can see the 'Purchase history' related to your account */
 "purchaseHistory"="Historial de compras";
 /* Title of the Incoming Shares section. Here you can see the folders that your contacts have shared with you */
-"incomingShares"="Carpetas compartidas entrantes";
+"incomingShares"="Compartido conmigo";
 /* Sentence shown under the used space percentage to complete the info with the user account maximum storage. "of {maximun storage}" */
 "of %@"="de %@";
 /* Sentence shown under the used space to complete the info with the user account maximum storage. "used of {maximun storage}" */

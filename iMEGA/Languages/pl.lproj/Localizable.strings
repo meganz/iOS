@@ -99,7 +99,7 @@
 /*  */
 "weak"="Słabe";
 /*  */
-"passwordVeryWeakOrWeak"="Twoje hasło jest łatwe do odgadnięcia. Spróbuj wpisać dłuższe hasło. Kombinację dużych i małych liter. Dodaj znaki specjalne. Nie używaj imion ani słów ze słownika.";
+"passwordVeryWeakOrWeak"="Twoje hasło można łatwo odgadnąć. Spróbuj zwiększyć swoje hasło. Połącz wielkie i małe litery. Dodaj znaki specjalne. Nie używaj nazw ani słów słownikowych.";
 /* Label displayed during checking the strength of the password introduced. Represents Medium security */
 "medium"="Średnie";
 /*  */
@@ -619,7 +619,7 @@
 /* Permissions given to the user you share your folder with */
 "readOnly"="Tylko do odczytu";
 /* Permissions given to the user you share your folder with */
-"readAndWrite"="Do odczytu i zapisu";
+"readAndWrite"="Oczyt i zapis";
 /* Permissions given to the user you share your folder with */
 "fullAccess"="Pełen dostęp";
 /* Title of the Settings section */
@@ -1653,9 +1653,9 @@
 /* Label for any ‘Days’ button, link, text, title, etc. - (String as short as possible). */
 "Days"="Dni";
 /* New server-side rubbish-bin cleaning scheduler description (for Free users) */
-"The Rubbish Bin is cleaned for you automatically. The minimum period is 7 days and your maximum period is 30 days."="Kosz jest opróżniany autoatycznie. Minimalny okres pomiędzy którym następuje oczyszczenie kosza to między 7 a 30 dni.";
+"The Rubbish Bin is cleaned for you automatically. The minimum period is 7 days and your maximum period is 30 days."="Kosz na śmieci jest automatycznie sprawdzany. Minimalny okres to 7 dni, a maksymalny okres 30 dni.";
 /* New server-side rubbish-bin cleaning scheduler description (for PRO users) */
-"The Rubbish Bin can be cleaned for you automatically. The minimum period is 7 days."="Kosz może być opróżniany automatycznie. Minimalny okres to 8 dni.";
+"The Rubbish Bin can be cleaned for you automatically. The minimum period is 7 days."="Pojemnik na śmieci może zostać automatycznie wyczyszczony. Minimalny okres to 7 dni.";
 /* Description shown when you try to disable the feature Rubbish-Bin Cleaning Scheduler and you are a free user */
 "To disable the Rubbish-Bin Cleaning Scheduler or set a longer retention period, you need to subscribe to a PRO plan."="To disable the Rubbish Bin Clearing Scheduler or set a longer retention period, you need to subscribe to a PRO plan.";
 /* Confirmation dialog for the button that logs the user out of all sessions except the current one. */
@@ -1669,7 +1669,7 @@
 /* Message shown in a chat room when there is an active group call */
 "There is an active group call. Tap to join."="Istnieje aktywne połączenie grupowe. Kliknij, aby dołączyć.";
 /* Message shown in a chat room when there is an active call */
-"There is an active call. Tap to join."="There is an active call. Tap to join.";
+"There is an active call. Tap to join."="Jest aktywne połączenie. Kliknij, aby dołączyć.";
 /* Message shown in a chat room for a group call in progress displaying the duration of the call */
 "Touch to return to call %@"="Dotknij, aby wrócić do połączenia %@";
 /* A button label which allows the users save images/videos in the Photos app. */
@@ -1799,6 +1799,6 @@
 /* Singular of participant. 1 participant */
 "%d participant"="%d uczestnik";
 /* Text to inform the user there is an active call and is not participating */
-"Ongoing Call"="Ongoing Call";
+"Ongoing Call"="Trwające połączenie";
 /* Text to inform the user there is an active call and is participating */
-"Call Started"="Call Started";
+"Call Started"="Połączenie rozpoczęte";
