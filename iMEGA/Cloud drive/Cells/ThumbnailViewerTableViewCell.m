@@ -5,9 +5,11 @@
 #import "NSDate+DateTools.h"
 #import "UIImageView+MNZCategory.h"
 
+#import "CloudDriveViewController.h"
 #import "Helper.h"
 #import "MEGAGetThumbnailRequestDelegate.h"
 #import "MEGANodeList+MNZCategory.h"
+#import "MEGAPhotoBrowserViewController.h"
 #import "MEGASdkManager.h"
 #import "MEGAUser+MNZCategory.h"
 #import "NSDate+MNZCategory.h"
@@ -108,6 +110,14 @@
     itemCell.videoOverlayView.hidden = !node.name.mnz_isVideoPathExtension;
     
     return itemCell;
+}
+
+#pragma mark - UICollectionViewDelegate
+
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    MEGAPhotoBrowserViewController *photoBrowserVC = [MEGAPhotoBrowserViewController photoBrowserWithMediaNodes:self.nodesArray.mutableCopy api:MEGASdkManager.sharedMEGASdk displayMode:DisplayModeCloudDrive presentingNode:self.nodesArray[indexPath.row] preferredIndex:indexPath.row];
+    
+    [self.cloudDrive.navigationController presentViewController:photoBrowserVC animated:YES completion:nil];
 }
 
 @end

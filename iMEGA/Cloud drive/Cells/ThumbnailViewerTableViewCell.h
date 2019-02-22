@@ -1,6 +1,8 @@
 
 #import <UIKit/UIKit.h>
 
+@class CloudDriveViewController;
+
 @interface ThumbnailViewerTableViewCell : UITableViewCell
 
 @property (weak, nonatomic) IBOutlet UIImageView *thumbnailImageView;
@@ -22,6 +24,8 @@
 @property (weak, nonatomic) IBOutlet UIView *thumbnailViewerView;
 
 @property (strong, nonatomic) NSArray<MEGANode *> *nodesArray;
+
+@property (nonatomic, strong) CloudDriveViewController *cloudDrive;
 
 - (void)configureForRecentAction:(MEGARecentActionBucket *)recentActionBucket;
 
