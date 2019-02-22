@@ -168,6 +168,8 @@ static const CGFloat TableViewSectionHeaderFooterHiddenHeight = 0.1;
     } else {
         [CameraUploadManager.shared disableVideoUpload];
     }
+    
+    [self configUI];
 }
 
 - (IBAction)useCellularConnectionSwitchValueChanged:(UISwitch *)sender {
@@ -249,7 +251,7 @@ static const CGFloat TableViewSectionHeaderFooterHiddenHeight = 0.1;
             numberOfRows = 2;
             break;
         case CameraUploadSectionPhotoFormat:
-            if (CameraUploadManager.shouldShowPhotoAndVideoFormat) {
+            if (CameraUploadManager.isHEVCFormatSupported) {
                 numberOfRows = 2;
             } else {
                 numberOfRows = 0;
@@ -348,7 +350,7 @@ static const CGFloat TableViewSectionHeaderFooterHiddenHeight = 0.1;
     BOOL hide = NO;
     switch (section) {
         case CameraUploadSectionPhotoFormat:
-            hide = !CameraUploadManager.shouldShowPhotoAndVideoFormat;
+            hide = !CameraUploadManager.isHEVCFormatSupported;
             break;
         default:
             break;
@@ -362,10 +364,10 @@ static const CGFloat TableViewSectionHeaderFooterHiddenHeight = 0.1;
     if (indexPath.section == CameraUploadSectionVideoInfo) {
         switch (indexPath.row) {
             case CameraUploadVideoRowDetailInfo:
-                hide = !CameraUploadManager.shouldShowPhotoAndVideoFormat;
+                hide = !CameraUploadManager.isHEVCFormatSupported;
                 break;
             case CameraUploadVideoRowSinglePageSetting:
-                hide = CameraUploadManager.shouldShowPhotoAndVideoFormat;
+                hide = CameraUploadManager.isHEVCFormatSupported;
                 break;
             default: break;
         }

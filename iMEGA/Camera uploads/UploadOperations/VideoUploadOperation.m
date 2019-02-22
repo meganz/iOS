@@ -79,7 +79,7 @@
         return;
     }
     
-    if (CameraUploadManager.shouldConvertHEVCVideo && asset.mnz_containsHEVCCodec) {
+    if (CameraUploadManager.isHEVCFormatSupported && CameraUploadManager.shouldConvertHEVCVideo && asset.mnz_containsHEVCCodec) {
         [self transcodeHEVCVideoAsset:asset];
     } else if ([asset isMemberOfClass:[AVURLAsset class]]) {
         [self exportURLAsset:(AVURLAsset *)asset];

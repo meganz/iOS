@@ -25,11 +25,12 @@
         [self finishOperation];
     }];
     
-    __weak __typeof__(self) weakSelf = self;
-    self.expireTimer = [NSTimer scheduledTimerWithTimeInterval:self.expireTimeInterval repeats:NO block:^(NSTimer * _Nonnull timer) {
-        MEGALogDebug(@"%@ expired after time interval %.2f", weakSelf, self.expireTimeInterval);
-        [weakSelf finishOperation];
-    }];
+    self.expireTimer = [NSTimer scheduledTimerWithTimeInterval:self.expireTimeInterval target:self selector:@selector(timerExpired) userInfo:nil repeats:NO];
+}
+
+- (void)timerExpired {
+    MEGALogDebug(@"%@ expired after time interval %.2f", self, self.expireTimeInterval);
+    [self finishOperation];
 }
 
 - (void)finishOperation {

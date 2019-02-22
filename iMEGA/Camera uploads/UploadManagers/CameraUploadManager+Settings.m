@@ -96,6 +96,10 @@ static NSString * const IsLocationBasedBackgroundUploadAllowedKey = @"IsLocation
 }
 
 + (void)setConvertHEVCVideo:(BOOL)convertHEVCVideo {
+    if (![self isHEVCFormatSupported]) {
+        return;
+    }
+    
     BOOL previousValue = [self shouldConvertHEVCVideo];
     [NSUserDefaults.standardUserDefaults setBool:convertHEVCVideo forKey:ShouldConvertHEVCVideoKey];
     if (convertHEVCVideo) {
@@ -112,6 +116,10 @@ static NSString * const IsLocationBasedBackgroundUploadAllowedKey = @"IsLocation
 }
 
 + (void)setConvertHEICPhoto:(BOOL)convertHEICPhoto {
+    if (![self isHEVCFormatSupported]) {
+        return;
+    }
+    
     [NSUserDefaults.standardUserDefaults setBool:convertHEICPhoto forKey:ShouldConvertHEICPhotoKey];
 }
 
@@ -120,6 +128,10 @@ static NSString * const IsLocationBasedBackgroundUploadAllowedKey = @"IsLocation
 }
 
 + (void)setHEVCToH264CompressionQuality:(CameraUploadVideoQuality)HEVCToH264CompressionQuality {
+    if (![self isHEVCFormatSupported]) {
+        return;
+    }
+    
     [NSUserDefaults.standardUserDefaults setInteger:HEVCToH264CompressionQuality forKey:HEVCToH264CompressionQualityKey];
 }
 
@@ -136,7 +148,7 @@ static NSString * const IsLocationBasedBackgroundUploadAllowedKey = @"IsLocation
     }
 }
 
-+ (BOOL)shouldShowPhotoAndVideoFormat {
++ (BOOL)isHEVCFormatSupported {
     if (@available(iOS 11.0, *)) {
         return YES;
     } else {
