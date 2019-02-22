@@ -1,9 +1,6 @@
 
 #import "ChatAttachedContactsViewController.h"
 
-#import "SVProgressHUD.h"
-
-#import "Helper.h"
 #import "MEGAInviteContactRequestDelegate.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGASdkManager.h"
