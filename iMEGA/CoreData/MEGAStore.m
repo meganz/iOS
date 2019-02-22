@@ -132,7 +132,7 @@
     NSFileManager *fileManager = NSFileManager.defaultManager;
     NSURL *groupSupportURL = [[fileManager containerURLForSecurityApplicationGroupIdentifier:@"group.mega.ios"] URLByAppendingPathComponent:@"GroupSupport"];
     if (![fileManager fileExistsAtPath:groupSupportURL.path]) {
-        if (![fileManager createDirectoryAtURL:groupSupportURL withIntermediateDirectories:NO attributes:nil error:&error]) {
+        if (![fileManager createDirectoryAtURL:groupSupportURL withIntermediateDirectories:YES attributes:nil error:&error]) {
             MEGALogError(@"Error creating GroupSupport directory in the shared sandbox: %@", error);
             abort();
         }
