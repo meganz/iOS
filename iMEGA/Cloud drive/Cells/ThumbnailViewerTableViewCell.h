@@ -17,6 +17,8 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *timeLabel;
 
+@property (weak, nonatomic) IBOutlet UIView *disclosureIndicatorView;
+
 @property (weak, nonatomic) IBOutlet UIView *thumbnailViewerView;
 
 @property (strong, nonatomic) NSArray<MEGANode *> *nodesArray;
