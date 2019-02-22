@@ -19,13 +19,6 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jOT-6B-CKg" userLabel="Content View">
                     <rect key="frame" x="0.0" y="0.0" width="375" height="36"/>
                     <subviews>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QtR-zP-Pcj" userLabel="Top Separator View">
-                            <rect key="frame" x="0.0" y="0.0" width="375" height="0.5"/>
-                            <constraints>
-                                <constraint firstAttribute="height" constant="0.5" id="jKW-fY-ifa"/>
-                            </constraints>
-                            <viewLayoutGuide key="safeArea" id="uQy-XX-OVQ"/>
-                        </view>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TODAY" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KJ3-n9-GrK" userLabel="Date Label">
                             <rect key="frame" x="12" y="16" width="41" height="15"/>
                             <fontDescription key="fontDescription" type="system" weight="medium" pointSize="12"/>
@@ -44,10 +37,7 @@
                     <constraints>
                         <constraint firstAttribute="bottom" secondItem="wet-V6-Nr3" secondAttribute="bottom" id="2zc-ty-bSH"/>
                         <constraint firstAttribute="trailing" secondItem="wet-V6-Nr3" secondAttribute="trailing" id="7CN-Dd-e0I"/>
-                        <constraint firstItem="QtR-zP-Pcj" firstAttribute="leading" secondItem="jOT-6B-CKg" secondAttribute="leading" id="8s0-6d-XRC"/>
-                        <constraint firstAttribute="trailing" secondItem="QtR-zP-Pcj" secondAttribute="trailing" id="Ed6-2l-47K"/>
                         <constraint firstItem="KJ3-n9-GrK" firstAttribute="leading" secondItem="jOT-6B-CKg" secondAttribute="leading" constant="12" id="VnZ-bp-sun"/>
-                        <constraint firstItem="QtR-zP-Pcj" firstAttribute="top" secondItem="jOT-6B-CKg" secondAttribute="top" id="W60-gs-Egr"/>
                         <constraint firstAttribute="bottom" secondItem="KJ3-n9-GrK" secondAttribute="bottom" constant="5" id="au0-Az-zmY"/>
                         <constraint firstItem="wet-V6-Nr3" firstAttribute="leading" secondItem="jOT-6B-CKg" secondAttribute="leading" id="mH5-RI-Ebp"/>
                         <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="KJ3-n9-GrK" secondAttribute="trailing" constant="10" id="q8o-k6-c0O"/>
@@ -65,7 +55,6 @@
             <connections>
                 <outlet property="bottomSeparatorView" destination="wet-V6-Nr3" id="vcq-tZ-kfC"/>
                 <outlet property="dateLabel" destination="KJ3-n9-GrK" id="hiW-8d-WsX"/>
-                <outlet property="topSeparatorView" destination="QtR-zP-Pcj" id="1cd-09-FVf"/>
             </connections>
         </view>
     </objects>

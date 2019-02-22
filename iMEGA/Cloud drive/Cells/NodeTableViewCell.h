@@ -23,6 +23,8 @@
 @property (weak, nonatomic) IBOutlet UIButton *cancelButton;
 @property (weak, nonatomic) IBOutlet UIButton *moreButton;
 
+@property (weak, nonatomic) IBOutlet UIView *disclosureIndicatorView;
+
 @property (weak, nonatomic) IBOutlet UIView *separatorView;
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *cancelButtonTrailingConstraint;
@@ -33,6 +35,7 @@
 @property (weak, nonatomic) IBOutlet UIImageView *versionedImageView;
 
 @property (strong, nonatomic) MEGANode *node;
+@property (strong, nonatomic) MEGARecentActionBucket *recentActionBucket;
 
 - (void)configureCellForNode:(MEGANode *)node delegate:(id<MGSwipeTableCellDelegate>)delegate api:(MEGASdk *)api;
 

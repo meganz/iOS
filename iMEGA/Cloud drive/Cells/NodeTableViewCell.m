@@ -37,7 +37,7 @@
             [self layoutIfNeeded];
         }];
         if ([[Helper downloadingNodes] objectForKey:self.node.base64Handle] == nil) {
-            self.moreButton.hidden = NO;
+            self.moreButton.hidden = self.recentActionBucket ? self.moreButton.hidden : NO;
         }
     }
 }
@@ -114,18 +114,23 @@
 }
 
 - (void)configureForRecentAction:(MEGARecentActionBucket *)recentActionBucket {
+    self.recentActionBucket = recentActionBucket;
     NSArray *nodesArray = recentActionBucket.nodesList.mnz_nodesArrayFromNodeList;
     
     MEGANode *node = [nodesArray objectAtIndex:0];
     [self.thumbnailImageView mnz_setThumbnailByNode:node];
     self.thumbnailPlayImageView.hidden = node.hasThumbnail ? !node.name.mnz_isVideoPathExtension : YES;
+    if (@available(iOS 11.0, *)) {
+        self.thumbnailImageView.accessibilityIgnoresInvertColors = YES;
+        self.thumbnailPlayImageView.accessibilityIgnoresInvertColors = YES;
+    }
     
     NSString *title;
     if (nodesArray.count == 1) {
         title = node.name;
         
         self.moreButton.hidden = NO;
-        self.accessoryType = UITableViewCellAccessoryNone;
+        self.disclosureIndicatorView.hidden = YES;
     } else if (nodesArray.count > 1) {
         NSString *tempString = AMLocalizedString(@"%1 and [A]%2 more[/A]", @"Title for a recent action shown in the webclient, see the attached image for context. Please ensure that the `%2 more` is inside the [A] tag as this will become a toggle to show the hidden content.");
         tempString = tempString.mnz_removeWebclientFormatters;
@@ -133,7 +138,7 @@
         title = [tempString stringByReplacingOccurrencesOfString:@"%2" withString:[NSString stringWithFormat:@"%lu", (unsigned long)(nodesArray.count - 1)]];
         
         self.moreButton.hidden = YES;
-        self.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        self.disclosureIndicatorView.hidden = NO;
     }
     self.nameLabel.text = title;
     
