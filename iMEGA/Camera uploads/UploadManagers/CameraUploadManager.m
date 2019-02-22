@@ -22,7 +22,7 @@
 #import "PhotoUploadOperation.h"
 
 static const NSUInteger PhotoUploadInForegroundConcurrentCount = 10;
-static const NSUInteger PhotoUploadInBackgroundConcurrentCount = 5;
+static const NSUInteger PhotoUploadInBackgroundConcurrentCount = 4;
 static const NSUInteger PhotoUploadInMemoryWarningConcurrentCount = 2;
 
 static const NSUInteger VideoUploadInForegroundConcurrentCount = 1;
@@ -519,16 +519,19 @@ static const NSTimeInterval LoadMediaInfoTimeoutInSeconds = 120;
 #pragma mark - handle app lifecycle
 
 - (void)applicationDidEnterBackground {
+    MEGALogDebug(@"[Camera Upload] adjust concurrent count when app went background");
     self.photoUploadOperationQueue.maxConcurrentOperationCount = PhotoUploadInBackgroundConcurrentCount;
     self.videoUploadOperationQueue.maxConcurrentOperationCount = VideoUploadInBackgroundConcurrentCount;
 }
 
 - (void)applicationDidBecomeActive {
+    MEGALogDebug(@"[Camera Upload] adjust concurrent count when app became active");
     self.photoUploadOperationQueue.maxConcurrentOperationCount = PhotoUploadInForegroundConcurrentCount;
     self.videoUploadOperationQueue.maxConcurrentOperationCount = VideoUploadInForegroundConcurrentCount;
 }
 
 - (void)applicationDidReceiveMemoryWarning {
+    MEGALogDebug(@"[Camera Upload] adjust concurrent count app got memory warning");
     self.photoUploadOperationQueue.maxConcurrentOperationCount = PhotoUploadInMemoryWarningConcurrentCount;
     self.videoUploadOperationQueue.maxConcurrentOperationCount = VideoUploadInMemoryWarningConcurrentCount;
 }
