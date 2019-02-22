@@ -6,6 +6,7 @@
 
 #import "Helper.h"
 #import "MEGAStore.h"
+#import "MEGASdkManager.h"
 
 #import "OfflineTableViewCell.h"
 #import "OfflineViewController.h"
@@ -23,6 +24,9 @@ static NSString *kPath = @"kPath";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    //White background for the view behind the table view
+    self.tableView.backgroundView = UIView.alloc.init;
     
     self.tableView.contentOffset = CGPointMake(0, CGRectGetHeight(self.offline.searchController.searchBar.frame));
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
