@@ -9,11 +9,13 @@ typedef NS_ENUM(NSUInteger, CameraUploadError) {
     CameraUploadErrorNoFileWritePermission,
     CameraUploadErrorNoEnoughDiskFreeSpace,
     CameraUploadErrorCalculateEncryptionChunkPositions,
-    CameraUploadErrorEncryption,
+    CameraUploadErrorEncryptionFailed,
+    CameraUploadErrorEncryptionCancelled,
     CameraUploadErrorFailedToCreateCompleteUploadRequest,
     CameraUploadErrorBackgroundTaskExpired,
     CameraUploadErrorOperationCancelled,
-    CameraUploadErrrorCameraUploadNodeIsNotFound,
+    CameraUploadErrorCameraUploadNodeIsNotFound,
+    CameraUploadErrorChunksMissing,
 };
 
 @interface NSError (CameraUpload)
@@ -37,6 +39,16 @@ typedef NS_ENUM(NSUInteger, CameraUploadError) {
  return a NSError object with CameraUploadErrrorCameraUploadNodeIsNotFound error code if camera upload node is not found
  */
 @property (class, readonly) NSError *mnz_cameraUploadNodeIsNotFoundError;
+
+/**
+ return a NSError object with CameraUploadErrorEncryptionCancelled error code if file encryption gets cancelled
+ */
+@property (class, readonly) NSError *mnz_cameraUploadEncryptionCancelledError;
+
+/**
+ return a NSError object with CameraUploadErrorChunksMissing error code if we can not find required file chunks
+ */
+@property (class, readonly) NSError *mnz_cameraUploadChunkMissingError;
 
 /**
  creates a NSError object if we don't have write permission to a file in camera upload

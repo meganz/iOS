@@ -14,6 +14,7 @@ static const NSUInteger EncryptionProposedChunkSizeWithoutTruncating = 1024 * 10
 @property (nonatomic) unsigned long long fileSize;
 @property (strong, nonatomic) MEGABackgroundMediaUpload *mediaUpload;
 @property (nonatomic) BOOL shouldTruncateFile;
+@property (nonatomic) BOOL isEncryptionCancelled;
 
 @end
 
@@ -28,6 +29,10 @@ static const NSUInteger EncryptionProposedChunkSizeWithoutTruncating = 1024 * 10
     }
 
     return self;
+}
+
+- (void)cancelEncryption {
+    self.isEncryptionCancelled = YES;
 }
 
 - (void)encryptFileAtURL:(NSURL *)fileURL completion:(void (^)(BOOL success, unsigned long long fileSize, NSDictionary<NSString *, NSURL *> *chunkURLsKeyedByUploadSuffix, NSError *error))completion {
@@ -62,6 +67,12 @@ static const NSUInteger EncryptionProposedChunkSizeWithoutTruncating = 1024 * 10
     }
 
     NSUInteger chunkSize = [self calculateChunkSizeByDeviceFreeSize:deviceFreeSize];
+    
+    if (self.isEncryptionCancelled) {
+        completion(NO, 0, nil, [NSError mnz_cameraUploadEncryptionCancelledError]);
+        return;
+    }
+    
     NSDictionary *chunkURLsKeyedByUploadSuffix = [self encryptedChunkURLsKeyedByUploadSuffixForFileAtURL:fileURL chunkSize:chunkSize error:&error];
     if (error) {
         completion(NO, 0, nil, error);
@@ -89,6 +100,14 @@ static const NSUInteger EncryptionProposedChunkSizeWithoutTruncating = 1024 * 10
     
     unsigned long long lastPosition = self.fileSize;
     for (NSInteger chunkIndex = chunkPositions.count - 1; chunkIndex >= 0; chunkIndex --) {
+        if (self.isEncryptionCancelled) {
+            if (error != NULL) {
+                *error = [NSError mnz_cameraUploadEncryptionCancelledError];
+            }
+            
+            return @{};
+        }
+        
         NSNumber *position = chunkPositions[chunkIndex];
         if (position.unsignedLongLongValue == lastPosition) {
             continue;
@@ -125,6 +144,14 @@ static const NSUInteger EncryptionProposedChunkSizeWithoutTruncating = 1024 * 10
     unsigned chunkSizeToBeAdjusted = (unsigned)chunkSize;
     unsigned long long startPosition = 0;
     while (startPosition < self.fileSize) {
+        if (self.isEncryptionCancelled) {
+            if (error != NULL) {
+                *error = [NSError mnz_cameraUploadEncryptionCancelledError];
+            }
+            
+            return @[];
+        }
+        
         if ([self.mediaUpload encryptFileAtPath:fileURL.path startPosition:startPosition length:&chunkSizeToBeAdjusted outputFilePath:nil urlSuffix:nil adjustsSizeOnly:YES]) {
             startPosition = startPosition + chunkSizeToBeAdjusted;
             [chunkPositions addObject:@(startPosition)];

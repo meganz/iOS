@@ -11,6 +11,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)encryptFileAtURL:(NSURL *)fileURL completion:(void (^)(BOOL success, unsigned long long fileSize, NSDictionary<NSString *, NSURL *> * _Nullable chunkURLsKeyedByUploadSuffix, NSError * _Nullable error))completion;
 
+- (void)cancelEncryption;
+
 @end
 
 NS_ASSUME_NONNULL_END

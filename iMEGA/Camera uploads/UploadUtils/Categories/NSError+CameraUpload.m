@@ -17,8 +17,16 @@ NSString * const CameraUploadErrorDomain = @"nz.mega.cameraUpload";
     return [NSError errorWithDomain:CameraUploadErrorDomain code:CameraUploadErrorOperationCancelled userInfo:@{NSLocalizedDescriptionKey : @"operation gets cancelled"}];
 }
 
++ (NSError *)mnz_cameraUploadEncryptionCancelledError {
+    return [NSError errorWithDomain:CameraUploadErrorDomain code:CameraUploadErrorEncryptionCancelled userInfo:@{NSLocalizedDescriptionKey : @"encryption gets cancelled"}];
+}
+
 + (NSError *)mnz_cameraUploadNodeIsNotFoundError {
-    return [NSError errorWithDomain:CameraUploadErrorDomain code:CameraUploadErrrorCameraUploadNodeIsNotFound userInfo:@{NSLocalizedDescriptionKey : @"camera upload node is not found"}];
+    return [NSError errorWithDomain:CameraUploadErrorDomain code:CameraUploadErrorCameraUploadNodeIsNotFound userInfo:@{NSLocalizedDescriptionKey : @"camera upload node is not found"}];
+}
+
++ (NSError *)mnz_cameraUploadChunkMissingError {
+    return [NSError errorWithDomain:CameraUploadErrorDomain code:CameraUploadErrorChunksMissing userInfo:@{NSLocalizedDescriptionKey : @"file chunk is not found"}];
 }
 
 + (NSError *)mnz_cameraUploadNoWritePermissionErrorForFileURL:(NSURL *)URL {
@@ -26,7 +34,7 @@ NSString * const CameraUploadErrorDomain = @"nz.mega.cameraUpload";
 }
 
 + (NSError *)mnz_cameraUploadEncryptionErrorForFileURL:(NSURL *)URL {
-    return [NSError errorWithDomain:CameraUploadErrorDomain code:CameraUploadErrorEncryption userInfo:@{NSLocalizedDescriptionKey : [NSString stringWithFormat:@"error occurred when to encrypt file URL %@", URL]}];
+    return [NSError errorWithDomain:CameraUploadErrorDomain code:CameraUploadErrorEncryptionFailed userInfo:@{NSLocalizedDescriptionKey : [NSString stringWithFormat:@"error occurred when to encrypt file URL %@", URL]}];
 }
 
 @end
