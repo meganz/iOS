@@ -66,6 +66,7 @@
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *selectAllBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *moreBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *moreMinimizedBarButtonItem;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *moreRecentsBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *editBarButtonItem;
 
 @property (weak, nonatomic) IBOutlet UIToolbar *toolbar;
@@ -793,6 +794,11 @@
             break;
         }
             
+        case DisplayModeRecents: {
+            [self updateNavigationBarTitle];
+            break;
+        }
+            
         default:
             break;
     }
@@ -940,6 +946,10 @@
             self.navigationItem.rightBarButtonItems = @[self.moreMinimizedBarButtonItem];
             break;
             
+        case DisplayModeRecents:
+            self.navigationItem.rightBarButtonItems = @[];
+            break;
+            
         default:
             break;
     }
@@ -1062,6 +1072,12 @@
                 } else {
                     navigationTitle = [self.parentNode name];
                 }
+                break;
+            }
+                
+            case DisplayModeRecents: {
+                NSString *itemsString =  AMLocalizedString(@"items", @"Plural of items which contains a folder. 2 items");
+                navigationTitle = [NSString stringWithFormat:@"%ld %@", (long)self.nodes.size.integerValue, itemsString];
                 break;
             }
                 
@@ -1236,6 +1252,8 @@
     [self.recentsVC didMoveToParentViewController:self];
     
     self.recentsVC.cloudDrive = self;
+    
+    self.navigationItem.rightBarButtonItems = @[self.moreRecentsBarButtonItem];
 }
 
 - (IBAction)cloudDriveTouchUpInside:(UIButton *)sender {
@@ -1251,6 +1269,8 @@
     self.recentsVC = nil;
     
     [self determineLayoutView];
+    
+    [self setNavigationBarButtonItems];
 }
 
 - (IBAction)selectAllAction:(UIBarButtonItem *)sender {
@@ -1412,6 +1432,35 @@
     }
     
     [self presentViewController:moreMinimizedAlertController animated:YES completion:nil];
+}
+
+- (IBAction)moreRecentsAction:(UIBarButtonItem *)sender {
+    UIAlertController *recentsMoreAlertController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    [recentsMoreAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
+    
+    UIAlertAction *uploadAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"upload", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        [self presentUploadAlertController];
+    }];
+    [uploadAlertAction mnz_setTitleTextColor:UIColor.mnz_black333333];
+    [recentsMoreAlertController addAction:uploadAlertAction];
+    
+    UIAlertAction *rubbishBinAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"rubbishBinLabel", @"Title of one of the Settings sections where you can see your MEGA 'Rubbish Bin'") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        CloudDriveViewController *cloudDriveVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
+        cloudDriveVC.parentNode = MEGASdkManager.sharedMEGASdk.rubbishNode;
+        cloudDriveVC.displayMode = DisplayModeRubbishBin;
+        cloudDriveVC.title = AMLocalizedString(@"rubbishBinLabel", @"Title of one of the Settings sections where you can see your MEGA 'Rubbish Bin'");
+        [self.navigationController pushViewController:cloudDriveVC animated:YES];
+    }];
+    [rubbishBinAlertAction mnz_setTitleTextColor:UIColor.mnz_black333333];
+    [recentsMoreAlertController addAction:rubbishBinAlertAction];
+    
+    if (UIDevice.currentDevice.iPadDevice) {
+        recentsMoreAlertController.modalPresentationStyle = UIModalPresentationPopover;
+        recentsMoreAlertController.popoverPresentationController.barButtonItem = self.moreRecentsBarButtonItem;
+        recentsMoreAlertController.popoverPresentationController.sourceView = self.view;
+    }
+    
+    [self presentViewController:recentsMoreAlertController animated:YES completion:nil];
 }
 
 - (IBAction)editTapped:(UIBarButtonItem *)sender {
@@ -1613,22 +1662,7 @@
     
     MEGANode *node = self.searchController.isActive ? [self.searchNodesArray objectAtIndex:indexPath.row] : [self.nodes nodeAtIndex:indexPath.row];
     
-    CustomActionViewController *actionController = [[CustomActionViewController alloc] init];
-    actionController.node = node;
-    actionController.displayMode = self.displayMode;
-    actionController.incomingShareChildView = self.isIncomingShareChildView;
-    actionController.actionDelegate = self;
-    actionController.actionSender = sender;
-    
-    if ([[UIDevice currentDevice] iPadDevice]) {
-        actionController.modalPresentationStyle = UIModalPresentationPopover;
-        actionController.popoverPresentationController.delegate = actionController;
-        actionController.popoverPresentationController.sourceView = sender;
-        actionController.popoverPresentationController.sourceRect = CGRectMake(0, 0, sender.frame.size.width/2, sender.frame.size.height/2);
-    } else {
-        actionController.modalPresentationStyle = UIModalPresentationOverFullScreen;
-    }
-    [self presentViewController:actionController animated:YES completion:nil];
+    [self showCustomActionsForNode:node sender:sender];
 }
 
 - (void)showCustomActionsForNode:(MEGANode *)node sender:(UIButton *)sender {

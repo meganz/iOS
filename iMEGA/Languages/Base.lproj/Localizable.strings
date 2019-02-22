@@ -1838,3 +1838,5 @@
 "%1 and [A]%2 more[/A] created by %3"="%1 and [A]%2 more[/A] created by %3";
 /* Message shown when the user has not recent activity in their account. */
 "No recent activity"="No recent activity";
+/* Plural of items which contains a folder. 2 items */
+"items"="items";

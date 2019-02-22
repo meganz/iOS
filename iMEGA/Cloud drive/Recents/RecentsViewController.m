@@ -12,6 +12,7 @@
 #import "NSString+MNZCategory.h"
 
 #import "CloudDriveViewController.h"
+#import "MEGAPhotoBrowserViewController.h"
 #import "NodeTableViewCell.h"
 #import "RecentsTableViewHeaderFooterView.h"
 #import "ThumbnailViewerTableViewCell.h"
@@ -119,6 +120,8 @@
     }
     [cell configureForRecentAction:recentActionBucket];
     
+    cell.cloudDrive = self.cloudDrive;
+    
     return cell;
 }
 
@@ -184,7 +187,7 @@
         MEGANode *node = [nodesArray objectAtIndex:0];
         switch (node.type) {
             case MEGANodeTypeFolder: {
-                CloudDriveViewController *cloudDriveVC = [self.storyboard instantiateViewControllerWithIdentifier:@"CloudDriveID"];
+                CloudDriveViewController *cloudDriveVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
                 cloudDriveVC.parentNode = node;
                 cloudDriveVC.hideSelectorView = YES;
                 
@@ -198,7 +201,9 @@
                 
             case MEGANodeTypeFile: {
                 if (node.name.mnz_imagePathExtension || node.name.mnz_isVideoPathExtension) {
-                    //Show MEGAPhotoBrowser
+                    MEGAPhotoBrowserViewController *photoBrowserVC = [MEGAPhotoBrowserViewController photoBrowserWithMediaNodes:@[nodesArray[0]].mutableCopy api:MEGASdkManager.sharedMEGASdk displayMode:DisplayModeCloudDrive presentingNode:nodesArray[0] preferredIndex:0];
+                    
+                    [self.cloudDrive.navigationController presentViewController:photoBrowserVC animated:YES completion:nil];
                 } else {
                     [node mnz_openNodeInNavigationController:self.cloudDrive.navigationController folderLink:NO];
                 }
@@ -209,7 +214,18 @@
                 break;
         }
     } else {
-        //Show MEGAPhotoBrowser / BrowserViewController 
+        if (recentActionBucket.isMedia) {
+            NSMutableArray<MEGANode *> *mediaNodesArray = [recentActionBucket.nodesList mnz_mediaNodesMutableArrayFromNodeList];
+            MEGAPhotoBrowserViewController *photoBrowserVC = [MEGAPhotoBrowserViewController photoBrowserWithMediaNodes:mediaNodesArray api:MEGASdkManager.sharedMEGASdk displayMode:DisplayModeCloudDrive presentingNode:nodesArray[0] preferredIndex:0];
+            
+            [self.cloudDrive.navigationController presentViewController:photoBrowserVC animated:YES completion:nil];
+        } else {
+            CloudDriveViewController *cloudDriveVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
+            cloudDriveVC.nodes = recentActionBucket.nodesList;
+            cloudDriveVC.displayMode = DisplayModeRecents;
+            
+            [self.cloudDrive.navigationController pushViewController:cloudDriveVC animated:YES];
+        }
     }
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
