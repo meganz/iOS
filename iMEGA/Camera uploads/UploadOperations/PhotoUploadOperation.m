@@ -61,17 +61,18 @@ const NSInteger PhotoExportDiskSizeMultiplicationFactor = 2;
             return;
         }
         
-        if (imageData) {
-            [weakSelf processImageData:imageData dataUTI:dataUTI dataInfo:info];
-        } else {
-            [weakSelf finishOperationWithStatus:CameraAssetUploadStatusFailed shouldUploadNextAsset:YES];
-        }
+        [weakSelf processImageData:imageData dataUTI:dataUTI dataInfo:info];
     }];
 }
 
 - (void)processImageData:(NSData *)imageData dataUTI:(NSString *)dataUTI dataInfo:(NSDictionary *)dataInfo {
     if (self.isCancelled) {
         [self finishOperationWithStatus:CameraAssetUploadStatusCancelled shouldUploadNextAsset:NO];
+        return;
+    }
+    
+    if (imageData == nil) {
+        [self finishOperationWithStatus:CameraAssetUploadStatusFailed shouldUploadNextAsset:YES];
         return;
     }
 
@@ -121,7 +122,7 @@ const NSInteger PhotoExportDiskSizeMultiplicationFactor = 2;
     [super cancelPendingTasks];
     
     if (self.imageRequestId != PHInvalidImageRequestID) {
-        MEGALogDebug(@"[Camera Upload] %@ cancel live photo data request with request Id %d", self, self.imageRequestId);
+        MEGALogDebug(@"[Camera Upload] %@ cancel photo data request with request Id %d", self, self.imageRequestId);
         [PHImageManager.defaultManager cancelImageRequest:self.imageRequestId];
     }
 }
