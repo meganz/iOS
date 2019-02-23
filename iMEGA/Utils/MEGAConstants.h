@@ -6,7 +6,7 @@
 extern NSString * const MEGALogoutNotificationName;
 extern NSString * const MEGANodesFetchDoneNotificationName;
 extern NSString * const MEGAStorageOverQuotaNotificationName;
-extern NSString * const MEGAStorageEventNotificationName;
+extern NSString * const MEGAStorageEventDidChangeNotificationName;
 
 #pragma mark - global notification keys
 
@@ -17,6 +17,13 @@ extern NSString * const MEGAStorageEventStateUserInfoKey;
 extern NSString * const MEGACameraUploadAssetUploadDoneNotificationName;
 extern NSString * const MEGACameraUploadPhotoUploadLocalDiskFullNotificationName;
 extern NSString * const MEGACameraUploadVideoUploadLocalDiskFullNotificationName;
+extern NSString * const MEGACameraUploadPhotoConcurrentCountChangedNotificationName;
+extern NSString * const MEGACameraUploadVideoConcurrentCountChangedNotificationName;
+
+#pragma mark - camera upload notification keys
+
+extern NSString * const MEGAPhotoConcurrentCountUserInfoKey;
+extern NSString * const MEGAVideoConcurrentCountUserInfoKey;
 
 #pragma mark - camera upload constants
 

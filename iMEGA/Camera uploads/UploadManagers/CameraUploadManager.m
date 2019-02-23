@@ -20,18 +20,16 @@
 #import "VideoUploadOperation.h"
 #import "LivePhotoUploadOperation.h"
 #import "PhotoUploadOperation.h"
-
-static const NSUInteger PhotoUploadInForegroundConcurrentCount = 10;
-static const NSUInteger PhotoUploadInBackgroundConcurrentCount = 4;
-static const NSUInteger PhotoUploadInMemoryWarningConcurrentCount = 2;
-
-static const NSUInteger VideoUploadInForegroundConcurrentCount = 1;
-static const NSUInteger VideoUploadInBackgroundConcurrentCount = 1;
-static const NSUInteger VideoUploadInMemoryWarningConcurrentCount = 1;
+#import "CameraUploadConcurrentCountCalculator.h"
 
 static const NSTimeInterval MinimumBackgroundRefreshInterval = 3600;
 static const NSTimeInterval BackgroundRefreshDuration = 25;
 static const NSTimeInterval LoadMediaInfoTimeoutInSeconds = 120;
+
+static const NSUInteger PhotoUploadBatchCount = 10;
+static const NSUInteger VideoUploadBatchCount = 1;
+
+static const CGFloat MemoryWarningConcurrentThrottleRatio = .5;
 
 @interface CameraUploadManager ()
 
@@ -46,6 +44,7 @@ static const NSTimeInterval LoadMediaInfoTimeoutInSeconds = 120;
 @property (strong, nonatomic) MediaInfoLoader *mediaInfoLoader;
 @property (strong, nonatomic) DiskSpaceDetector *diskSpaceDetector;
 @property (strong, nonatomic) CameraUploadNodeLoader *cameraUploadNodeLoader;
+@property (strong, nonatomic) CameraUploadConcurrentCountCalculator *concurrentCountCalculator;
 @property (readonly) NSArray<NSNumber *> *enabledMediaTypes;
 
 @end
@@ -112,17 +111,11 @@ static const NSTimeInterval LoadMediaInfoTimeoutInSeconds = 120;
 - (void)initializeCameraUploadQueues {
     _photoUploadOperationQueue = [[NSOperationQueue alloc] init];
     _photoUploadOperationQueue.qualityOfService = NSQualityOfServiceUtility;
+    _photoUploadOperationQueue.maxConcurrentOperationCount = [self.concurrentCountCalculator calculatePhotoUploadConcurrentCount];
     
     _videoUploadOperationQueue = [[NSOperationQueue alloc] init];
     _videoUploadOperationQueue.qualityOfService = NSQualityOfServiceBackground;
-    
-    if (UIApplication.sharedApplication.applicationState == UIApplicationStateBackground) {
-        _photoUploadOperationQueue.maxConcurrentOperationCount = PhotoUploadInBackgroundConcurrentCount;
-        _videoUploadOperationQueue.maxConcurrentOperationCount = VideoUploadInBackgroundConcurrentCount;
-    } else {
-        _photoUploadOperationQueue.maxConcurrentOperationCount = PhotoUploadInForegroundConcurrentCount;
-        _videoUploadOperationQueue.maxConcurrentOperationCount = VideoUploadInForegroundConcurrentCount;
-    }
+    _videoUploadOperationQueue.maxConcurrentOperationCount = [self.concurrentCountCalculator calculateVideoUploadConcurrentCount];
 }
 
 - (void)resetCameraUploadQueues {
@@ -143,21 +136,21 @@ static const NSTimeInterval LoadMediaInfoTimeoutInSeconds = 120;
 #pragma mark - register and unregister notifications
 
 - (void)registerNotificationsForUpload {
-    [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(applicationDidEnterBackground) name:UIApplicationDidEnterBackgroundNotification object:nil];
-    [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(applicationDidBecomeActive) name:UIApplicationDidBecomeActiveNotification object:nil];
-    [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(applicationDidReceiveMemoryWarning) name:UIApplicationDidReceiveMemoryWarningNotification object:nil];
+    [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(didReceivePhotoConcurrentCountChangedNotification:) name:MEGACameraUploadPhotoConcurrentCountChangedNotificationName object:nil];
+    [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(didReceiveVideoConcurrentCountChangedNotification:) name:MEGACameraUploadVideoConcurrentCountChangedNotificationName object:nil];
+    [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(didReceiveMemoryWarningNotification) name:UIApplicationDidReceiveMemoryWarningNotification object:nil];
     [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(didReceiveReachabilityChangedNotification:) name:kReachabilityChangedNotification object:nil];
     [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(didReceiveStorageOverQuotaNotification:) name:MEGAStorageOverQuotaNotificationName object:nil];
-    [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(didReceiveStorageEventNotification:) name:MEGAStorageEventNotificationName object:nil];
+    [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(didReceiveStorageEventChangedNotification:) name:MEGAStorageEventDidChangeNotificationName object:nil];
 }
 
 - (void)unregisterNotificationsForUpload {
-    [NSNotificationCenter.defaultCenter removeObserver:self name:UIApplicationDidEnterBackgroundNotification object:nil];
-    [NSNotificationCenter.defaultCenter removeObserver:self name:UIApplicationDidBecomeActiveNotification object:nil];
+    [NSNotificationCenter.defaultCenter removeObserver:self name:MEGACameraUploadPhotoConcurrentCountChangedNotificationName object:nil];
+    [NSNotificationCenter.defaultCenter removeObserver:self name:MEGACameraUploadVideoConcurrentCountChangedNotificationName object:nil];
     [NSNotificationCenter.defaultCenter removeObserver:self name:UIApplicationDidReceiveMemoryWarningNotification object:nil];
     [NSNotificationCenter.defaultCenter removeObserver:self name:kReachabilityChangedNotification object:nil];
     [NSNotificationCenter.defaultCenter removeObserver:self name:MEGAStorageOverQuotaNotificationName object:nil];
-    [NSNotificationCenter.defaultCenter removeObserver:self name:MEGAStorageEventNotificationName object:nil];
+    [NSNotificationCenter.defaultCenter removeObserver:self name:MEGAStorageEventDidChangeNotificationName object:nil];
 }
 
 #pragma mark - properties
@@ -208,6 +201,14 @@ static const NSTimeInterval LoadMediaInfoTimeoutInSeconds = 120;
     }
     
     return _diskSpaceDetector;
+}
+
+- (CameraUploadConcurrentCountCalculator *)concurrentCountCalculator {
+    if (_concurrentCountCalculator == nil) {
+        _concurrentCountCalculator = [[CameraUploadConcurrentCountCalculator alloc] init];
+    }
+    
+    return _concurrentCountCalculator;
 }
 
 - (void)setPausePhotoUpload:(BOOL)pausePhotoUpload {
@@ -316,9 +317,10 @@ static const NSTimeInterval LoadMediaInfoTimeoutInSeconds = 120;
     }
     
     [self.diskSpaceDetector startDetectingPhotoUpload];
+    [self.concurrentCountCalculator startCalculatingConcurrentCount];
     
     MEGALogDebug(@"[Camera Upload] start uploading photos with current photo operation count %lu", (unsigned long)self.photoUploadOperationQueue.operationCount);
-    [self uploadAssetsForMediaType:PHAssetMediaTypeImage concurrentCount:PhotoUploadInForegroundConcurrentCount];
+    [self uploadAssetsForMediaType:PHAssetMediaTypeImage concurrentCount:PhotoUploadBatchCount];
 }
 
 - (void)startVideoUploadIfNeeded {
@@ -347,7 +349,7 @@ static const NSTimeInterval LoadMediaInfoTimeoutInSeconds = 120;
     [self.diskSpaceDetector startDetectingVideoUpload];
     
     MEGALogDebug(@"[Camera Upload] start uploading videos with current video operation count %lu", (unsigned long)self.videoUploadOperationQueue.operationCount);
-    [self uploadAssetsForMediaType:PHAssetMediaTypeVideo concurrentCount:VideoUploadInForegroundConcurrentCount];
+    [self uploadAssetsForMediaType:PHAssetMediaTypeVideo concurrentCount:VideoUploadBatchCount];
 }
 
 #pragma mark - upload next assets
@@ -403,7 +405,7 @@ static const NSTimeInterval LoadMediaInfoTimeoutInSeconds = 120;
                 }
             }
             
-            MEGALogDebug(@"[Camera Upload] photo queue count %lu, video queue count %lu", (unsigned long)self.photoUploadOperationQueue.operationCount, (unsigned long)self.videoUploadOperationQueue.operationCount);
+            MEGALogDebug(@"[Camera Upload] photo count %lu concurrent %ld, video count %lu concurrent %ld", (unsigned long)self.photoUploadOperationQueue.operationCount, (long)self.photoUploadOperationQueue.maxConcurrentOperationCount, (unsigned long)self.videoUploadOperationQueue.operationCount, (long)self.videoUploadOperationQueue.maxConcurrentOperationCount);
         } else {
             MEGALogInfo(@"[Camera Upload] delete record as we don't have data to upload");
             [CameraUploadRecordManager.shared deleteUploadRecord:record error:nil];
@@ -433,6 +435,7 @@ static const NSTimeInterval LoadMediaInfoTimeoutInSeconds = 120;
     [self resetCameraUploadQueues];
     [self unregisterNotificationsForUpload];
     [self.diskSpaceDetector stopDetectingPhotoUpload];
+    [self.concurrentCountCalculator stopCalculatingConcurrentCount];
     _pausePhotoUpload = NO;
     _storageState = StorageStateGreen;
     [TransferSessionManager.shared invalidateAndCancelPhotoSessions];
@@ -516,35 +519,52 @@ static const NSTimeInterval LoadMediaInfoTimeoutInSeconds = 120;
     }
 }
 
-#pragma mark - handle app lifecycle
-
-- (void)applicationDidEnterBackground {
-    MEGALogDebug(@"[Camera Upload] adjust concurrent count when app went background");
-    self.photoUploadOperationQueue.maxConcurrentOperationCount = PhotoUploadInBackgroundConcurrentCount;
-    self.videoUploadOperationQueue.maxConcurrentOperationCount = VideoUploadInBackgroundConcurrentCount;
-}
-
-- (void)applicationDidBecomeActive {
-    MEGALogDebug(@"[Camera Upload] adjust concurrent count when app became active");
-    self.photoUploadOperationQueue.maxConcurrentOperationCount = PhotoUploadInForegroundConcurrentCount;
-    self.videoUploadOperationQueue.maxConcurrentOperationCount = VideoUploadInForegroundConcurrentCount;
-}
-
-- (void)applicationDidReceiveMemoryWarning {
-    MEGALogDebug(@"[Camera Upload] adjust concurrent count app got memory warning");
-    self.photoUploadOperationQueue.maxConcurrentOperationCount = PhotoUploadInMemoryWarningConcurrentCount;
-    self.videoUploadOperationQueue.maxConcurrentOperationCount = VideoUploadInMemoryWarningConcurrentCount;
-}
-
 #pragma mark - notifications
 
+- (void)didReceivePhotoConcurrentCountChangedNotification:(NSNotification *)notification {
+    MEGALogDebug(@"[Camera Upload] photo concurrent count changed %@", notification);
+    NSInteger photoConcurrentCount = [notification.userInfo[MEGAPhotoConcurrentCountUserInfoKey] integerValue];
+    self.photoUploadOperationQueue.maxConcurrentOperationCount = photoConcurrentCount;
+    if (self.photoUploadOperationQueue.operationCount < photoConcurrentCount) {
+        [self startCameraUploadIfNeeded];
+    }
+}
+
+- (void)didReceiveVideoConcurrentCountChangedNotification:(NSNotification *)notification {
+    MEGALogDebug(@"[Camera Upload] video concurrent count changed %@", notification);
+    NSInteger videoConcurrentCount = [notification.userInfo[MEGAVideoConcurrentCountUserInfoKey] integerValue];
+    self.videoUploadOperationQueue.maxConcurrentOperationCount = videoConcurrentCount;
+    if (self.videoUploadOperationQueue.operationCount < videoConcurrentCount) {
+        [self startVideoUploadIfNeeded];
+    }
+}
+
+- (void)didReceiveMemoryWarningNotification {
+    MEGALogDebug(@"[Camera Upload] memory warning");
+    NSInteger photoConcurrentCount = [self.concurrentCountCalculator calculatePhotoUploadConcurrentCount];
+    NSInteger throttledConcurrentCount = lroundf(photoConcurrentCount * MemoryWarningConcurrentThrottleRatio);
+    self.photoUploadOperationQueue.maxConcurrentOperationCount = throttledConcurrentCount;
+    
+    NSInteger index = 0;
+    for (NSOperation *operation in self.photoUploadOperationQueue.operations) {
+        if (operation.isExecuting) {
+            index++;
+            
+            if (index > throttledConcurrentCount) {
+                MEGALogDebug(@"[Camera Upload] release memory in cancelling %@", operation);
+                [operation cancel];
+            }
+        }
+    }
+}
+
 - (void)didReceiveStorageOverQuotaNotification:(NSNotification *)notification {
-    MEGALogDebug(@"[Camera Upload] did receive storage over quota notification %@", notification);
+    MEGALogDebug(@"[Camera Upload] storage over quota notification %@", notification);
     [self pauseCameraUploadIfNeeded];
 }
 
-- (void)didReceiveStorageEventNotification:(NSNotification *)notification {
-    MEGALogDebug(@"[Camera Upload] did receive storage event notification %@", notification);
+- (void)didReceiveStorageEventChangedNotification:(NSNotification *)notification {
+    MEGALogDebug(@"[Camera Upload] storage event notification %@", notification);
     NSUInteger state = [notification.userInfo[MEGAStorageEventStateUserInfoKey] unsignedIntegerValue];
     if (self.storageState == state) {
         return;
@@ -565,14 +585,14 @@ static const NSTimeInterval LoadMediaInfoTimeoutInSeconds = 120;
 }
 
 - (void)didReceiveNodesFetchDoneNotification:(NSNotification *)notification {
-    MEGALogDebug(@"[Camera Upload] did receive nodes fetch done notification %@", notification);
+    MEGALogDebug(@"[Camera Upload] nodes fetch done notification %@", notification);
     self.isNodesFetchDone = YES;
     [self startCameraUploadIfNeeded];
     [AttributeUploadManager.shared scanLocalAttributeFilesAndRetryUploadIfNeeded];
 }
 
 - (void)didReceiveReachabilityChangedNotification:(NSNotification *)notification {
-    MEGALogDebug(@"[Camera Upload] did receive reachability changed notification %@", notification);
+    MEGALogDebug(@"[Camera Upload] reachability changed notification %@", notification);
     if (MEGAReachabilityManager.isReachable) {
         [self startCameraUploadIfNeeded];
         [AttributeUploadManager.shared scanLocalAttributeFilesAndRetryUploadIfNeeded];
@@ -580,7 +600,7 @@ static const NSTimeInterval LoadMediaInfoTimeoutInSeconds = 120;
 }
 
 - (void)didReceiveLogoutNotification:(NSNotification *)notification {
-    MEGALogDebug(@"[Camera Upload] did receive logout notification %@", notification);
+    MEGALogDebug(@"[Camera Upload] logout notification %@", notification);
     [self disableCameraUpload];
     [NSFileManager.defaultManager removeItemIfExistsAtURL:NSURL.mnz_cameraUploadURL];
     [CameraUploadRecordManager.shared resetDataContext];
