@@ -119,6 +119,8 @@
 
     MEGALogDebug(@"[App Lifecycle] Application will finish launching with options: %@", launchOptions);
     
+    UIDevice.currentDevice.batteryMonitoringEnabled = YES;
+    
     [CameraUploadManager.shared setupCameraUploadWhenApplicationLaunches:application];
     
     return YES;
@@ -1420,7 +1422,7 @@ void uncaughtExceptionHandler(NSException *exception) {
             break;
             
         case EventStorage: {
-            [NSNotificationCenter.defaultCenter postNotificationName:MEGAStorageEventNotificationName object:self userInfo:@{MEGAStorageEventStateUserInfoKey : @(event.number)}];
+            [NSNotificationCenter.defaultCenter postNotificationName:MEGAStorageEventDidChangeNotificationName object:self userInfo:@{MEGAStorageEventStateUserInfoKey : @(event.number)}];
             
             if (event.number == StorageStateChange) {
                 [api getAccountDetails];
