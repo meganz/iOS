@@ -1,17 +1,17 @@
 
-#import "LocalFileNameCoordinator.h"
+#import "LocalFileNameGenerator.h"
 #import "NSString+MNZCategory.h"
 #import "MEGAStore.h"
 #import "MOAssetUploadFileNameRecord+CoreDataClass.h"
 #import "MOAssetUploadRecord+CoreDataClass.h"
 
-@interface LocalFileNameCoordinator ()
+@interface LocalFileNameGenerator ()
 
 @property (strong, nonatomic, nullable) NSManagedObjectContext *backgroundContext;
 
 @end
 
-@implementation LocalFileNameCoordinator
+@implementation LocalFileNameGenerator
 
 - (instancetype)initWithBackgroundContext:(NSManagedObjectContext *)context {
     self = [super init];
@@ -35,6 +35,8 @@
             } else {
                 localUniqueFileName = originalFileName;
             }
+            
+            MEGALogDebug(@"[Camera Upload] %@ local name generated", localUniqueFileName);
             
             [self saveLocalUniqueFileName:localUniqueFileName fileExtension:fileExtension forUploadRecord:record error:nil];
         }
@@ -77,6 +79,17 @@
 }
 
 #pragma mark - search local file name records
+
+- (NSArray<MOAssetUploadFileNameRecord *> *)fetchAllNameRecords {
+    __block NSArray<MOAssetUploadFileNameRecord *> *fileNameRecords = [NSArray array];
+    [self.backgroundContext performBlockAndWait:^{
+        NSFetchRequest *request = MOAssetUploadFileNameRecord.fetchRequest;
+        request.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"localUniqueFileName" ascending:NO]];
+        fileNameRecords = [self.backgroundContext executeFetchRequest:request error:nil];
+    }];
+    
+    return fileNameRecords;
+}
 
 - (NSArray<MOAssetUploadFileNameRecord *> *)searchSimilarNameRecordsByFileExtension:(NSString *)extension fileNamePrefix:(NSString *)prefix error:(NSError * _Nullable __autoreleasing * _Nullable)error {
     __block NSArray<MOAssetUploadFileNameRecord *> *fileNameRecords = [NSArray array];
