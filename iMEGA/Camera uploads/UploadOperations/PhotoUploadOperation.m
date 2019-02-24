@@ -39,7 +39,6 @@ const NSInteger PhotoExportDiskSizeMultiplicationFactor = 2;
 
 - (void)requestImageData {
     __weak __typeof__(self) weakSelf = self;
-    
     PHImageRequestOptions *options = [[PHImageRequestOptions alloc] init];
     options.networkAccessAllowed = YES;
     options.version = PHImageRequestOptionsVersionCurrent;
@@ -98,12 +97,18 @@ const NSInteger PhotoExportDiskSizeMultiplicationFactor = 2;
         return;
     }
     
+    __weak __typeof__(self) weakSelf = self;
     [PhotoExportManager.shared exportPhotoData:imageData dataTypeUTI:dataUTI outputURL:self.uploadInfo.fileURL outputTypeUTI:outputTypeUTI shouldStripGPSInfo:YES completion:^(BOOL succeeded) {
+        if (weakSelf.isCancelled) {
+            [weakSelf finishOperationWithStatus:CameraAssetUploadStatusCancelled shouldUploadNextAsset:NO];
+            return;
+        }
+        
         if (succeeded && [NSFileManager.defaultManager isReadableFileAtPath:self.uploadInfo.fileURL.path]) {
-            [self handleProcessedUploadFile];
+            [weakSelf handleProcessedUploadFile];
         } else {
             MEGALogError(@"[Camera Upload] error when to export image to URL %@", self.uploadInfo.fileURL);
-            [self finishOperationWithStatus:CameraAssetUploadStatusFailed shouldUploadNextAsset:YES];
+            [weakSelf finishOperationWithStatus:CameraAssetUploadStatusFailed shouldUploadNextAsset:YES];
         }
     }];
 }

@@ -42,10 +42,4 @@
     }
 }
 
-- (void)finishOperation {
-    [super finishOperation];
-    
-    MEGALogDebug(@"[Camera Upload] %@ operation finished", self);
-}
-
 @end

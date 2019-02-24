@@ -37,17 +37,16 @@
     }
     
     [self startExecuting];
-    
-    [self beginBackgroundTaskWithExpirationHandler:^{
-        if (self.completion) {
-            self.completion(NO);
-        }
-        
-        [self finishOperation];
-    }];
-    
+
     BOOL succeeded = [self.photoData mnz_exportToURL:self.outputURL outputImageUTIType:self.outputImageTypeUTI shouldStripGPSInfo:self.shouldStripGPSInfo];
-    self.completion(succeeded);
+    if (self.completion) {
+        if (self.isCancelled) {
+            self.completion(NO);
+        } else {
+            self.completion(succeeded);
+        }
+    }
+    
     [self finishOperation];
 }
 

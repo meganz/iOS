@@ -27,7 +27,6 @@ static NSString * const LivePhotoVideoResourceTemporaryName = @"video.mov";
 
 - (void)requestLivePhoto {
     __weak __typeof__(self) weakSelf = self;
-    
     PHLivePhotoRequestOptions *options = [[PHLivePhotoRequestOptions alloc] init];
     options.networkAccessAllowed = YES;
     options.version = PHImageRequestOptionsVersionOriginal;
@@ -86,6 +85,8 @@ static NSString * const LivePhotoVideoResourceTemporaryName = @"video.mov";
     return nil;
 }
 
+#pragma mark - write video resource to file
+
 - (void)writeDataForVideoResource:(PHAssetResource *)resource {
     if (self.isCancelled) {
         [self finishOperationWithStatus:CameraAssetUploadStatusCancelled shouldUploadNextAsset:NO];
@@ -100,28 +101,40 @@ static NSString * const LivePhotoVideoResourceTemporaryName = @"video.mov";
     NSURL *videoURL = [self.uploadInfo.directoryURL URLByAppendingPathComponent:LivePhotoVideoResourceTemporaryName];
     PHAssetResourceRequestOptions *options = [[PHAssetResourceRequestOptions alloc] init];
     options.networkAccessAllowed = YES;
+    __weak __typeof__(self) weakSelf = self;
     [PHAssetResourceManager.defaultManager writeDataForAssetResource:resource toFile:videoURL options:options completionHandler:^(NSError * _Nullable error) {
-        if (error) {
-            if (error.domain == AVFoundationErrorDomain && error.code == AVErrorDiskFull) {
-                [self finishUploadWithNoEnoughDiskSpace];
-            } else if (error.domain == NSCocoaErrorDomain && error.code == NSFileWriteOutOfSpaceError) {
-                [self finishUploadWithNoEnoughDiskSpace];
-            } else {
-                [self finishOperationWithStatus:CameraAssetUploadStatusFailed shouldUploadNextAsset:YES];
-            }
-        } else {
-            self.uploadInfo.originalFingerprint = [MEGASdkManager.sharedMEGASdk fingerprintForFilePath:videoURL.path modificationTime:self.uploadInfo.asset.creationDate];
-            MEGANode *matchingNode = [self nodeForOriginalFingerprint:self.uploadInfo.originalFingerprint];
-            if (matchingNode) {
-                MEGALogDebug(@"[Camera Upload] %@ found existing node by original file fingerprint", self);
-                [self finishUploadForFingerprintMatchedNode:matchingNode];
-                return;
-            } else {
-                [self exportVideoFromResourceFileURL:videoURL];
-            }
-        }
+        [weakSelf handleResourceWritingCompletionWithFileURL:videoURL error:error];
     }];
 }
+
+- (void)handleResourceWritingCompletionWithFileURL:(NSURL *)URL error:(NSError *)error {
+    if (self.isCancelled) {
+        [self finishOperationWithStatus:CameraAssetUploadStatusCancelled shouldUploadNextAsset:NO];
+        return;
+    }
+    
+    if (error) {
+        if (error.domain == AVFoundationErrorDomain && error.code == AVErrorDiskFull) {
+            [self finishUploadWithNoEnoughDiskSpace];
+        } else if (error.domain == NSCocoaErrorDomain && error.code == NSFileWriteOutOfSpaceError) {
+            [self finishUploadWithNoEnoughDiskSpace];
+        } else {
+            [self finishOperationWithStatus:CameraAssetUploadStatusFailed shouldUploadNextAsset:YES];
+        }
+    } else {
+        self.uploadInfo.originalFingerprint = [MEGASdkManager.sharedMEGASdk fingerprintForFilePath:URL.path modificationTime:self.uploadInfo.asset.creationDate];
+        MEGANode *matchingNode = [self nodeForOriginalFingerprint:self.uploadInfo.originalFingerprint];
+        if (matchingNode) {
+            MEGALogDebug(@"[Camera Upload] %@ found existing node by original file fingerprint", self);
+            [self finishUploadForFingerprintMatchedNode:matchingNode];
+            return;
+        } else {
+            [self exportVideoFromResourceFileURL:URL];
+        }
+    }
+}
+
+#pragma mark - export video from resource file
 
 - (void)exportVideoFromResourceFileURL:(NSURL *)videoFileURL {
     if (self.isCancelled) {
@@ -143,6 +156,11 @@ static NSString * const LivePhotoVideoResourceTemporaryName = @"video.mov";
     
     __weak __typeof__(self) weakSelf = self;
     [session exportAsynchronouslyWithCompletionHandler:^{
+        if (weakSelf.isCancelled) {
+            [weakSelf finishOperationWithStatus:CameraAssetUploadStatusCancelled shouldUploadNextAsset:NO];
+            return;
+        }
+        
         switch (session.status) {
             case AVAssetExportSessionStatusCompleted:
                 MEGALogDebug(@"[Camera Upload] %@ finished exporting video to file %@", weakSelf, weakSelf.uploadInfo.fileName);
@@ -150,7 +168,7 @@ static NSString * const LivePhotoVideoResourceTemporaryName = @"video.mov";
                 break;
             case AVAssetExportSessionStatusCancelled:
                 MEGALogDebug(@"[Camera Upload] %@ video exporting got cancelled", weakSelf);
-                [weakSelf finishOperationWithStatus:CameraAssetUploadStatusCancelled shouldUploadNextAsset:YES];
+                [weakSelf finishOperationWithStatus:CameraAssetUploadStatusCancelled shouldUploadNextAsset:NO];
                 break;
             case AVAssetExportSessionStatusFailed:
                 MEGALogError(@"[Camera Upload] %@ got error when to export video %@", weakSelf, session.error)
