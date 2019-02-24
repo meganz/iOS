@@ -3,7 +3,7 @@
 #import "MEGAStore.h"
 #import "MOAssetUploadErrorPerLaunch+CoreDataClass.h"
 #import "MOAssetUploadErrorPerLogin+CoreDataClass.h"
-#import "LocalFileNameCoordinator.h"
+#import "LocalFileNameGenerator.h"
 
 static const NSUInteger MaximumUploadRetryPerLaunchCount = 20;
 static const NSUInteger MaximumUploadRetryPerLoginCount = 800;
@@ -11,7 +11,7 @@ static const NSUInteger MaximumUploadRetryPerLoginCount = 800;
 @interface CameraUploadRecordManager ()
 
 @property (strong, nonatomic, nullable) NSManagedObjectContext *backgroundContext;
-@property (strong, nonatomic) LocalFileNameCoordinator *fileNameCoordinator;
+@property (strong, nonatomic) LocalFileNameGenerator *fileNameCoordinator;
 @property (strong, nonatomic) dispatch_queue_t serialQueueForContext;
 @property (strong, nonatomic) dispatch_queue_t serialQueueForFileCoordinator;
 
@@ -39,14 +39,14 @@ static const NSUInteger MaximumUploadRetryPerLoginCount = 800;
     return self;
 }
 
-- (LocalFileNameCoordinator *)fileNameCoordinator {
+- (LocalFileNameGenerator *)fileNameCoordinator {
     if (_fileNameCoordinator) {
         return _fileNameCoordinator;
     }
     
     dispatch_sync(self.serialQueueForFileCoordinator, ^{
         if (self->_fileNameCoordinator == nil) {
-            self->_fileNameCoordinator = [[LocalFileNameCoordinator alloc] initWithBackgroundContext:self.backgroundContext];
+            self->_fileNameCoordinator = [[LocalFileNameGenerator alloc] initWithBackgroundContext:self.backgroundContext];
         }
     });
     

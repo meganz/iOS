@@ -5,7 +5,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @class MOAssetUploadRecord;
 
-@interface LocalFileNameCoordinator : NSObject
+@interface LocalFileNameGenerator : NSObject
 
 - (instancetype)initWithBackgroundContext:(NSManagedObjectContext *)context;
 
