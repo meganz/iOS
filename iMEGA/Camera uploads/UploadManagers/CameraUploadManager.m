@@ -522,7 +522,7 @@ static const CGFloat MemoryWarningConcurrentThrottleRatio = .5;
 #pragma mark - notifications
 
 - (void)didReceivePhotoConcurrentCountChangedNotification:(NSNotification *)notification {
-    MEGALogDebug(@"[Camera Upload] photo concurrent count changed %@", notification);
+    MEGALogDebug(@"[Camera Upload] photo concurrent count changed %@", notification.userInfo);
     NSInteger photoConcurrentCount = [notification.userInfo[MEGAPhotoConcurrentCountUserInfoKey] integerValue];
     self.photoUploadOperationQueue.maxConcurrentOperationCount = photoConcurrentCount;
     if (self.photoUploadOperationQueue.operationCount < photoConcurrentCount) {
@@ -531,7 +531,7 @@ static const CGFloat MemoryWarningConcurrentThrottleRatio = .5;
 }
 
 - (void)didReceiveVideoConcurrentCountChangedNotification:(NSNotification *)notification {
-    MEGALogDebug(@"[Camera Upload] video concurrent count changed %@", notification);
+    MEGALogDebug(@"[Camera Upload] video concurrent count changed %@", notification.userInfo);
     NSInteger videoConcurrentCount = [notification.userInfo[MEGAVideoConcurrentCountUserInfoKey] integerValue];
     self.videoUploadOperationQueue.maxConcurrentOperationCount = videoConcurrentCount;
     if (self.videoUploadOperationQueue.operationCount < videoConcurrentCount) {
@@ -559,12 +559,12 @@ static const CGFloat MemoryWarningConcurrentThrottleRatio = .5;
 }
 
 - (void)didReceiveStorageOverQuotaNotification:(NSNotification *)notification {
-    MEGALogDebug(@"[Camera Upload] storage over quota notification %@", notification);
+    MEGALogDebug(@"[Camera Upload] storage over quota notification %@", notification.userInfo);
     [self pauseCameraUploadIfNeeded];
 }
 
 - (void)didReceiveStorageEventChangedNotification:(NSNotification *)notification {
-    MEGALogDebug(@"[Camera Upload] storage event notification %@", notification);
+    MEGALogDebug(@"[Camera Upload] storage event notification %@", notification.userInfo);
     NSUInteger state = [notification.userInfo[MEGAStorageEventStateUserInfoKey] unsignedIntegerValue];
     if (self.storageState == state) {
         return;
@@ -592,7 +592,7 @@ static const CGFloat MemoryWarningConcurrentThrottleRatio = .5;
 }
 
 - (void)didReceiveReachabilityChangedNotification:(NSNotification *)notification {
-    MEGALogDebug(@"[Camera Upload] reachability changed notification %@", notification);
+    MEGALogDebug(@"[Camera Upload] reachability changed notification %@", notification.userInfo);
     if (MEGAReachabilityManager.isReachable) {
         [self startCameraUploadIfNeeded];
         [AttributeUploadManager.shared scanLocalAttributeFilesAndRetryUploadIfNeeded];
