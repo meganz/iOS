@@ -4,11 +4,11 @@
 NS_ASSUME_NONNULL_BEGIN
 
 typedef NS_ENUM(NSInteger, PhotoUploadConcurrentCount) {
-    PhotoUploadConcurrentCountInForeground = 8,
+    PhotoUploadConcurrentCountInForeground = 9,
     PhotoUploadConcurrentCountInBackground = 4,
     PhotoUploadConcurrentCountInLowPowerMode = 2,
     PhotoUploadConcurrentCountInMemoryWarning = 2,
-    PhotoUploadConcurrentCountInBatteryCharging = 9,
+    PhotoUploadConcurrentCountInBatteryCharging = 10,
     PhotoUploadConcurrentCountInBatteryLevelBelow75 = 7,
     PhotoUploadConcurrentCountInBatteryLevelBelow55 = 5,
     PhotoUploadConcurrentCountInBatteryLevelBelow35 = 3,

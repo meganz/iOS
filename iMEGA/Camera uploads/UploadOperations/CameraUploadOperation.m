@@ -24,6 +24,7 @@
 
 @property (strong, nonatomic, nullable) MEGASdk *sdk;
 @property (strong, nonatomic) FileEncrypter *fileEncrypter;
+@property (strong, nonatomic) dispatch_queue_t serialQueue;
 
 @end
 
@@ -36,6 +37,7 @@
     if (self) {
         _uploadInfo = uploadInfo;
         _uploadRecord = uploadRecord;
+        _serialQueue = dispatch_queue_create("nz.mega.cameraUpload.uploadOperation", DISPATCH_QUEUE_SERIAL);
     }
     
     return self;
@@ -152,6 +154,11 @@
     
     self.fileEncrypter = [[FileEncrypter alloc] initWithMediaUpload:self.uploadInfo.mediaUpload outputDirectoryURL:self.uploadInfo.encryptionDirectoryURL shouldTruncateInputFile:YES];
     [self.fileEncrypter encryptFileAtURL:self.uploadInfo.fileURL completion:^(BOOL success, unsigned long long fileSize, NSDictionary<NSString *,NSURL *> * _Nonnull chunkURLsKeyedByUploadSuffix, NSError * _Nonnull error) {
+        if (self.isCancelled) {
+            [self finishOperationWithStatus:CameraAssetUploadStatusCancelled shouldUploadNextAsset:NO];
+            return;
+        }
+
         if (success) {
             self.uploadInfo.fileSize = fileSize;
             self.uploadInfo.encryptedChunkURLsKeyedByUploadSuffix = chunkURLsKeyedByUploadSuffix;
@@ -178,21 +185,27 @@
         return;
     }
     
+    __weak __typeof__(self) weakSelf = self;
     [MEGASdkManager.sharedMEGASdk requestBackgroundUploadURLWithFileSize:self.uploadInfo.fileSize mediaUpload:self.uploadInfo.mediaUpload delegate:[[CameraUploadRequestDelegate alloc] initWithCompletion:^(MEGARequest * _Nonnull request, MEGAError * _Nonnull error) {
+        if (weakSelf.isCancelled) {
+            [weakSelf finishOperationWithStatus:CameraAssetUploadStatusCancelled shouldUploadNextAsset:NO];
+            return;
+        }
+        
         if (error.type) {
-            MEGALogError(@"[Camera Upload] %@ error when to requests upload url %@", self, error.nativeError);
+            MEGALogError(@"[Camera Upload] %@ error when to requests upload url %@", weakSelf, error.nativeError);
             if (error.type == MEGAErrorTypeApiEOverQuota || error.type == MEGAErrorTypeApiEgoingOverquota) {
-                [NSNotificationCenter.defaultCenter postNotificationName:MEGAStorageOverQuotaNotificationName object:self];
-                [self finishOperationWithStatus:CameraAssetUploadStatusCancelled shouldUploadNextAsset:NO];
+                [NSNotificationCenter.defaultCenter postNotificationName:MEGAStorageOverQuotaNotificationName object:weakSelf];
+                [weakSelf finishOperationWithStatus:CameraAssetUploadStatusCancelled shouldUploadNextAsset:NO];
             } else {
-                [self finishOperationWithStatus:CameraAssetUploadStatusFailed shouldUploadNextAsset:YES];
+                [weakSelf finishOperationWithStatus:CameraAssetUploadStatusFailed shouldUploadNextAsset:YES];
             }
         } else {
-            self.uploadInfo.uploadURLString = [self.uploadInfo.mediaUpload uploadURLString];
-            if ([self archiveUploadInfoDataForBackgroundTransfer]) {
-                [self uploadEncryptedChunksToServer];
+            weakSelf.uploadInfo.uploadURLString = [weakSelf.uploadInfo.mediaUpload uploadURLString];
+            if ([weakSelf archiveUploadInfoDataForBackgroundTransfer]) {
+                [weakSelf uploadEncryptedChunksToServer];
             } else {
-                [self finishOperationWithStatus:CameraAssetUploadStatusFailed shouldUploadNextAsset:YES];
+                [weakSelf finishOperationWithStatus:CameraAssetUploadStatusFailed shouldUploadNextAsset:YES];
             }
         }
     }]];
@@ -210,13 +223,16 @@
         MEGALogError(@"[Camera Upload] %@ error when to create upload task %@", self, error);
         [self finishOperationWithStatus:CameraAssetUploadStatusFailed shouldUploadNextAsset:YES];
         for (NSURLSessionTask *task in uploadTasks) {
+            MEGALogDebug(@"[Camera Upload] %@ cancel upload task %@", self, task.taskDescription);
             [task cancel];
         }
         return;
     }
     
     if (self.isCancelled) {
+        [self finishOperationWithStatus:CameraAssetUploadStatusCancelled shouldUploadNextAsset:NO];
         for (NSURLSessionTask *task in uploadTasks) {
+            MEGALogDebug(@"[Camera Upload] %@ cancel upload task %@", self, task.taskDescription);
             [task cancel];
         }
         return;
@@ -270,24 +286,30 @@
 #pragma mark - finish operation
 
 - (void)finishOperationWithStatus:(CameraAssetUploadStatus)status shouldUploadNextAsset:(BOOL)uploadNextAsset {
-    [self finishOperation];
-    
-    MEGALogDebug(@"[Camera Upload] %@ finishes with status: %@", self, [AssetUploadStatus stringForStatus:status]);
-    [CameraUploadRecordManager.shared updateUploadRecord:self.uploadRecord withStatus:status error:nil];
-    
-    if (status != CameraAssetUploadStatusUploading) {
-        [NSFileManager.defaultManager removeItemIfExistsAtURL:self.uploadInfo.directoryURL];
-    }
-    
-    if (status == CameraAssetUploadStatusDone) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [NSNotificationCenter.defaultCenter postNotificationName:MEGACameraUploadAssetUploadDoneNotificationName object:nil];
-        });
-    }
-    
-    if (uploadNextAsset) {
-        [CameraUploadManager.shared uploadNextAssetForMediaType:self.uploadInfo.asset.mediaType];
-    }
+    dispatch_sync(self.serialQueue, ^{
+        if (self.isFinished) {
+            return;
+        }
+        
+        [self finishOperation];
+        
+        MEGALogDebug(@"[Camera Upload] %@ finishes with status: %@", self, [AssetUploadStatus stringForStatus:status]);
+        [CameraUploadRecordManager.shared updateUploadRecord:self.uploadRecord withStatus:status error:nil];
+        
+        if (status != CameraAssetUploadStatusUploading) {
+            [NSFileManager.defaultManager removeItemIfExistsAtURL:self.uploadInfo.directoryURL];
+        }
+        
+        if (status == CameraAssetUploadStatusDone) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [NSNotificationCenter.defaultCenter postNotificationName:MEGACameraUploadAssetUploadDoneNotificationName object:nil];
+            });
+        }
+        
+        if (uploadNextAsset) {
+            [CameraUploadManager.shared uploadNextAssetForMediaType:self.uploadInfo.asset.mediaType];
+        }
+    });
 }
 
 @end

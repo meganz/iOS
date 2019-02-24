@@ -159,6 +159,11 @@
             
             __weak __typeof__(self) weakSelf = self;
             [session exportAsynchronouslyWithCompletionHandler:^{
+                if (weakSelf.isCancelled) {
+                    [weakSelf finishOperationWithStatus:CameraAssetUploadStatusCancelled shouldUploadNextAsset:NO];
+                    return;
+                }
+                
                 switch (session.status) {
                     case AVAssetExportSessionStatusCompleted:
                         MEGALogDebug(@"[Camera Upload] %@ finished exporting video to file %@", weakSelf, weakSelf.uploadInfo.fileName);
@@ -166,7 +171,7 @@
                         break;
                     case AVAssetExportSessionStatusCancelled:
                         MEGALogDebug(@"[Camera Upload] %@ video exporting got cancelled", weakSelf);
-                        [weakSelf finishOperationWithStatus:CameraAssetUploadStatusCancelled shouldUploadNextAsset:YES];
+                        [weakSelf finishOperationWithStatus:CameraAssetUploadStatusCancelled shouldUploadNextAsset:NO];
                         break;
                     case AVAssetExportSessionStatusFailed:
                         MEGALogError(@"[Camera Upload] %@ got error when to export video %@", weakSelf, session.error)
@@ -187,6 +192,8 @@
         }
     }];
 }
+
+
 
 - (void)uploadVideoAtURL:(NSURL *)URL {
     if (self.isCancelled) {

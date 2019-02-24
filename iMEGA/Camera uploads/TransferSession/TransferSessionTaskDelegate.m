@@ -27,10 +27,8 @@ static const NSUInteger MEGATransferTokenLength = 36;
 #pragma mark - task level delegate
 
 - (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didCompleteWithError:(NSError *)error {
-    MEGALogDebug(@"[Camera Upload] Session %@ task %@ did complete with error: %@", session.configuration.identifier, task.taskDescription, error);
-    
+    MEGALogDebug(@"[Camera Upload] Session %@ task %@ did complete", session.configuration.identifier, task.taskDescription);
     NSData *transferToken = [self.mutableData copy];
-    
     if (self.completion) {
         self.completion(transferToken, error);
     } else {
@@ -52,6 +50,7 @@ static const NSUInteger MEGATransferTokenLength = 36;
 #pragma mark - util methods
 
 - (void)handleURLSessionError:(NSError *)error forTask:(NSURLSessionTask *)task {
+    MEGALogDebug(@"[Camera Upload] Session task %@ completed with error %@", task.taskDescription, error);
     CameraAssetUploadStatus errorStatus;
     if (error.code == NSURLErrorCancelled) {
         errorStatus = CameraAssetUploadStatusCancelled;
