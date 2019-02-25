@@ -8,7 +8,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface AssetUploadInfo : NSObject <NSCoding>
 
 @property (strong, nonatomic) PHAsset *asset;
-@property (strong, nonatomic) NSString *savedRecordLocalIdentifier;
+@property (strong, nonatomic) NSString *savedLocalIdentifier;
 @property (strong, nonatomic) NSString *fileName;
 @property (nonatomic) unsigned long long fileSize;
 @property (strong, nonatomic, nullable) CLLocation *location;

@@ -78,7 +78,7 @@ const NSInteger PhotoExportDiskSizeMultiplicationFactor = 2;
     self.uploadInfo.originalFingerprint = [[MEGASdkManager sharedMEGASdk] fingerprintForData:imageData modificationTime:self.uploadInfo.asset.creationDate];
     MEGANode *matchingNode = [self nodeForOriginalFingerprint:self.uploadInfo.originalFingerprint];
     if (matchingNode) {
-        MEGALogDebug(@"[Camera Upload] %@ found existing node by original file fingerprint", self);
+        MEGALogDebug(@"[Camera Upload] %@ found node by original fingerprint", self);
         [self finishUploadForFingerprintMatchedNode:matchingNode];
         return;
     }
@@ -107,7 +107,7 @@ const NSInteger PhotoExportDiskSizeMultiplicationFactor = 2;
         if (succeeded && [NSFileManager.defaultManager isReadableFileAtPath:self.uploadInfo.fileURL.path]) {
             [weakSelf handleProcessedUploadFile];
         } else {
-            MEGALogError(@"[Camera Upload] error when to export image to URL %@", self.uploadInfo.fileURL);
+            MEGALogError(@"[Camera Upload] %@ error when to export image to file %@", self, self.uploadInfo.fileName);
             [weakSelf finishOperationWithStatus:CameraAssetUploadStatusFailed shouldUploadNextAsset:YES];
         }
     }];

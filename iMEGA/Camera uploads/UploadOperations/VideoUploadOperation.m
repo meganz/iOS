@@ -140,7 +140,7 @@
         return;
     }
     
-    MEGALogDebug(@"[Camera Upload] %@ starts exporting video data", self);
+    MEGALogDebug(@"[Camera Upload] %@ starts exporting video %@, %@, %@", self, preset, outputFileType, extension);
     if ([asset isMemberOfClass:[AVURLAsset class]]) {
         MEGALogDebug(@"[Camera Upload] %@ original video size %llu MB", self, [NSFileManager.defaultManager attributesOfItemAtPath:[(AVURLAsset *)asset URL].path error:nil].fileSize / 1024 / 1024);
     }
@@ -174,7 +174,7 @@
                         [weakSelf finishOperationWithStatus:CameraAssetUploadStatusCancelled shouldUploadNextAsset:NO];
                         break;
                     case AVAssetExportSessionStatusFailed:
-                        MEGALogError(@"[Camera Upload] %@ got error when to export video %@", weakSelf, session.error)
+                        MEGALogError(@"[Camera Upload] %@ error when to export video %@", weakSelf, session.error)
                         if (session.error.domain == AVFoundationErrorDomain && session.error.code == AVErrorDiskFull) {
                             [weakSelf finishUploadWithNoEnoughDiskSpace];
                         } else {
@@ -187,7 +187,7 @@
                 }
             }];
         } else {
-            MEGALogError(@"[Camera Upload] %@ doesn't compatible with preset %@ and output file type %@", self, preset, outputFileType);
+            MEGALogError(@"[Camera Upload] %@ not compatible with preset %@ and output type %@", self, preset, outputFileType);
             [self finishOperationWithStatus:CameraAssetUploadStatusFailed shouldUploadNextAsset:YES];
         }
     }];

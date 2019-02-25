@@ -54,7 +54,7 @@
 }
 
 - (NSString *)description {
-    return [NSString stringWithFormat:@"%@ %@ %@", NSStringFromClass(self.class), [self.uploadInfo.asset.creationDate mnz_formattedDefaultNameForMedia], self.uploadInfo.savedRecordLocalIdentifier];
+    return [NSString stringWithFormat:@"%@ %@ %@", NSStringFromClass(self.class), [self.uploadInfo.asset.creationDate mnz_formattedDefaultNameForMedia], self.uploadInfo.savedLocalIdentifier];
 }
 
 #pragma mark - start operation
@@ -89,7 +89,7 @@
 #pragma mark - data processing
 
 - (NSURL *)URLForAssetProcessing {
-    NSURL *directoryURL = [NSURL mnz_assetDirectoryURLForLocalIdentifier:self.uploadInfo.savedRecordLocalIdentifier];
+    NSURL *directoryURL = [NSURL mnz_assetDirectoryURLForLocalIdentifier:self.uploadInfo.savedLocalIdentifier];
     [NSFileManager.defaultManager removeItemIfExistsAtURL:directoryURL];
     [[NSFileManager defaultManager] createDirectoryAtURL:directoryURL withIntermediateDirectories:YES attributes:nil error:nil];
     return directoryURL;
@@ -258,7 +258,7 @@
             } else {
                 uploadTask = [[TransferSessionManager shared] photoUploadTaskWithURL:serverURL fromFile:chunkURL completion:nil];
             }
-            uploadTask.taskDescription = self.uploadInfo.savedRecordLocalIdentifier;
+            uploadTask.taskDescription = self.uploadInfo.savedLocalIdentifier;
             [uploadTasks addObject:uploadTask];
         } else {
             if (error != NULL) {
@@ -279,7 +279,7 @@
         return NO;
     }
     
-    NSURL *archivedURL = [NSURL mnz_archivedURLForLocalIdentifier:self.uploadInfo.savedRecordLocalIdentifier];
+    NSURL *archivedURL = [NSURL mnz_archivedURLForLocalIdentifier:self.uploadInfo.savedLocalIdentifier];
     return [NSKeyedArchiver archiveRootObject:self.uploadInfo toFile:archivedURL.path];
 }
 

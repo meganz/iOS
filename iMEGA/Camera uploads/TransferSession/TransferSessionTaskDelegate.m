@@ -27,7 +27,7 @@ static const NSUInteger MEGATransferTokenLength = 36;
 #pragma mark - task level delegate
 
 - (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didCompleteWithError:(NSError *)error {
-    MEGALogDebug(@"[Camera Upload] Session %@ task %@ did complete", session.configuration.identifier, task.taskDescription);
+    MEGALogDebug(@"[Camera Upload] Session %@ task %@ completed", session.configuration.identifier, task.taskDescription);
     NSData *transferToken = [self.mutableData copy];
     if (self.completion) {
         self.completion(transferToken, error);
@@ -43,7 +43,7 @@ static const NSUInteger MEGATransferTokenLength = 36;
 #pragma mark - data level delegate
 
 - (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask didReceiveData:(NSData *)data {
-    MEGALogDebug(@"[Camera Upload] Session %@ task %@ did receive data with size: %lu", session.configuration.identifier, dataTask.taskDescription, (unsigned long)data.length);
+    MEGALogDebug(@"[Camera Upload] Session %@ task %@ received data with size: %lu", session.configuration.identifier, dataTask.taskDescription, (unsigned long)data.length);
     [self.mutableData appendData:data];
 }
 
@@ -63,11 +63,11 @@ static const NSUInteger MEGATransferTokenLength = 36;
 
 - (void)handleTransferToken:(NSData *)token forTask:(NSURLSessionTask *)task inSession:(NSURLSession *)session {
     if (token.length == 0) {
-        MEGALogDebug(@"[Camera Upload] Session %@ task %@ finishes with empty token", session.configuration.identifier, task.taskDescription);
+        MEGALogDebug(@"[Camera Upload] Session %@ task %@ completed with empty token", session.configuration.identifier, task.taskDescription);
     } else if (token.length == MEGATransferTokenLength) {
         [CameraUploadCompletionManager.shared handleCompletedTransferWithLocalIdentifier:task.taskDescription token:token];
     } else {
-        MEGALogError(@"[Camera Upload] Session %@ task %@ finishes with bad transfer token %@", session.configuration.identifier, task.taskDescription, [[NSString alloc] initWithData:token encoding:NSUTF8StringEncoding]);
+        MEGALogError(@"[Camera Upload] Session %@ task %@ completed with bad transfer token %@", session.configuration.identifier, task.taskDescription, [[NSString alloc] initWithData:token encoding:NSUTF8StringEncoding]);
         [CameraUploadCompletionManager.shared finishUploadForLocalIdentifier:task.taskDescription status:CameraAssetUploadStatusFailed];
     }
 }
