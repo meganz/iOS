@@ -22,7 +22,7 @@
 #import "PhotoUploadOperation.h"
 #import "CameraUploadConcurrentCountCalculator.h"
 
-static const NSTimeInterval MinimumBackgroundRefreshInterval = 3600;
+static const NSTimeInterval MinimumBackgroundRefreshInterval = 2 * 3600;
 static const NSTimeInterval BackgroundRefreshDuration = 25;
 static const NSTimeInterval LoadMediaInfoTimeoutInSeconds = 120;
 
