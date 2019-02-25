@@ -552,7 +552,24 @@
 
 - (void)customNavigationBarLabel {
     NSString *groupCallTitle = self.chatRoom.title;
-    NSString *groupCallDuration = self.callType == CallTypeActive ? @"" : AMLocalizedString(@"connecting", nil);
+    NSString *groupCallDuration;
+    
+    switch (self.callType) {
+        case CallTypeActive:
+            groupCallDuration = @"";
+            break;
+            
+        case CallTypeOutgoing:
+            groupCallDuration = AMLocalizedString(@"calling...", @"Label shown when you call someone (outgoing call), before the call starts.");
+            break;
+            
+        case CallTypeIncoming:
+            groupCallDuration = AMLocalizedString(@"connecting", nil);
+            break;
+            
+        default:
+            break;
+    }
     
     if (@available(iOS 11.0, *)) {
         self.navigationTitleLabel.text = groupCallTitle;
