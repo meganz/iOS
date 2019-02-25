@@ -1,5 +1,5 @@
 
-#import "UploadCompletionOperation.h"
+#import "PutNodeOperation.h"
 #import "CameraUploadRequestDelegate.h"
 #import "NSString+MNZCategory.h"
 #import "MEGAError+MNZCategory.h"
@@ -7,18 +7,17 @@
 #import "CameraUploadManager.h"
 #import "CameraUploadNodeLoader.h"
 
-@interface UploadCompletionOperation ()
+@interface PutNodeOperation ()
 
-@property (strong, nonatomic) AssetUploadInfo *uploadInfo;
 @property (strong, nonatomic) NSData *transferToken;
-@property (copy, nonatomic) UploadCompletionHandler completion;
+@property (copy, nonatomic) PutNodeCompletionHandler completion;
 @property (strong, nonatomic) CameraUploadNodeLoader *cameraUploadNodeLoader;
 
 @end
 
-@implementation UploadCompletionOperation
+@implementation PutNodeOperation
 
-- (instancetype)initWithUploadInfo:(AssetUploadInfo *)info transferToken:(NSData *)token completion:(UploadCompletionHandler)completion {
+- (instancetype)initWithUploadInfo:(AssetUploadInfo *)info transferToken:(NSData *)token completion:(PutNodeCompletionHandler)completion {
     self = [super init];
     if (self) {
         _uploadInfo = info;
@@ -46,12 +45,7 @@
     }
     
     [self startExecuting];
-    
-    [self beginBackgroundTaskWithExpirationHandler:^{
-        self.completion(nil, [NSError mnz_cameraUploadBackgroundTaskExpiredError]);
-        [self finishOperation];
-    }];
-    
+
     CameraUploadRequestDelegate *delegate = [[CameraUploadRequestDelegate alloc] initWithCompletion:^(MEGARequest * _Nonnull request, MEGAError * _Nonnull error) {
         if (error.type) {
             self.completion(nil, [error nativeError]);

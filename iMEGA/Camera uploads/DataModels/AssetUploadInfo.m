@@ -10,7 +10,7 @@
     self = [super init];
     if (self) {
         _asset = asset;
-        _savedRecordLocalIdentifier = savedIdentifier;
+        _savedLocalIdentifier = savedIdentifier;
         _parentNode = parentNode;
         _location = asset.location;
     }
@@ -50,7 +50,7 @@
     [aCoder encodeObject:self.directoryURL forKey:@"directoryURL"];
     [aCoder encodeObject:self.mediaUpload.serialize forKey:@"mediaUpload"];
     [aCoder encodeObject:@(self.parentNode.handle) forKey:@"parentHandle"];
-    [aCoder encodeObject:self.savedRecordLocalIdentifier forKey:@"savedRecordLocalIdentifier"];
+    [aCoder encodeObject:self.savedLocalIdentifier forKey:@"savedLocalIdentifier"];
 }
 
 - (nullable instancetype)initWithCoder:(nonnull NSCoder *)aDecoder {
@@ -65,7 +65,7 @@
         _parentNode = [MEGASdkManager.sharedMEGASdk nodeForHandle:[[aDecoder decodeObjectForKey:@"parentHandle"] unsignedLongLongValue]];
         NSData *serializedData = [aDecoder decodeObjectForKey:@"mediaUpload"];
         _mediaUpload = [[MEGASdkManager sharedMEGASdk] resumeBackgroundMediaUploadBySerializedData:serializedData];
-        _savedRecordLocalIdentifier = [aDecoder decodeObjectForKey:@"savedRecordLocalIdentifier"];
+        _savedLocalIdentifier = [aDecoder decodeObjectForKey:@"savedLocalIdentifier"];
     }
     
     return self;
