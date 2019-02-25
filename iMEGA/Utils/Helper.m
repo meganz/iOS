@@ -1228,6 +1228,7 @@ static MEGAIndexer *indexer;
 #pragma mark - Logout
 
 + (void)logout {
+    [NSNotificationCenter.defaultCenter postNotificationName:MEGALogoutNotificationName object:self];
     [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
     [Helper cancelAllTransfers];
     
@@ -1236,13 +1237,13 @@ static MEGAIndexer *indexer;
     [Helper deleteUserData];
     [Helper deleteMasterKey];
 
-    [NSNotificationCenter.defaultCenter postNotificationName:MEGALogoutNotificationName object:self];
     [Helper resetUserData];
     
     [Helper deletePasscode];
 }
 
-+ (void)logoutFromConfirmAccount {    
++ (void)logoutFromConfirmAccount {
+    [NSNotificationCenter.defaultCenter postNotificationName:MEGALogoutNotificationName object:self];
     [Helper cancelAllTransfers];
     
     [Helper clearSession];
@@ -1250,7 +1251,6 @@ static MEGAIndexer *indexer;
     [Helper deleteUserData];
     [Helper deleteMasterKey];
     
-    [NSNotificationCenter.defaultCenter postNotificationName:MEGALogoutNotificationName object:self];
     [Helper resetUserData];
     
     [Helper deletePasscode];

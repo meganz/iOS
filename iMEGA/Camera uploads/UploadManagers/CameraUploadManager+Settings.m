@@ -64,6 +64,10 @@ static NSString * const IsLocationBasedBackgroundUploadAllowedKey = @"IsLocation
 }
 
 + (void)setVideoUploadEnabled:(BOOL)videoUploadEnabled {
+    if (videoUploadEnabled && ![self isCameraUploadEnabled]) {
+        return;
+    }
+    
     BOOL previousValue = [self isVideoUploadEnabled];
     [NSUserDefaults.standardUserDefaults setBool:videoUploadEnabled forKey:IsVideoUploadsEnabledKey];
     if (videoUploadEnabled) {
