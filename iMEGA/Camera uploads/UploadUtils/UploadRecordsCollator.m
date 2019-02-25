@@ -38,10 +38,11 @@
     
     MEGALogDebug(@"[Camera Upload] %lu uploading records to collate", (unsigned long)uploadingRecords.count);
     NSArray<NSURLSessionUploadTask *> *runningTasks = [TransferSessionManager.shared allRunningUploadTasks];
-    NSMutableArray<NSString *> *identifiers = [NSMutableArray array];
+    NSMutableArray<NSString *> *runningTaskIdentifiers = [NSMutableArray array];
     for (NSURLSessionUploadTask *task in runningTasks) {
+        MEGALogDebug(@"[Camera Upload] %@ task state %li", task.taskDescription, task.state);
         if (task.taskDescription.length > 0) {
-            [identifiers addObject:task.taskDescription];
+            [runningTaskIdentifiers addObject:task.taskDescription];
         }
     }
     
@@ -49,11 +50,11 @@
         return [s1 compare:s2];
     };
     
-    [identifiers sortUsingComparator:localIdComparator];
+    [runningTaskIdentifiers sortUsingComparator:localIdComparator];
     
     [CameraUploadRecordManager.shared.backgroundContext performBlock:^{
         for (MOAssetUploadRecord *record in uploadingRecords) {
-            NSUInteger index = [identifiers indexOfObject:record.localIdentifier inSortedRange:NSMakeRange(0, identifiers.count) options:NSBinarySearchingFirstEqual usingComparator:localIdComparator];
+            NSUInteger index = [runningTaskIdentifiers indexOfObject:record.localIdentifier inSortedRange:NSMakeRange(0, runningTaskIdentifiers.count) options:NSBinarySearchingFirstEqual usingComparator:localIdComparator];
             if (index == NSNotFound) {
                 [self revertBackToNotStartedForRecord:record];
             }
@@ -68,7 +69,7 @@
 }
 
 - (void)revertBackToNotStartedForRecord:(MOAssetUploadRecord *)record {
-    MEGALogDebug(@"[Camera Upload] revert record status %@ to not started", [AssetUploadStatus stringForStatus:record.status.unsignedIntegerValue]);
+    MEGALogDebug(@"[Camera Upload] revert record status %@ to not started for %@", [AssetUploadStatus stringForStatus:record.status.unsignedIntegerValue], record.localIdentifier);
     record.status = @(CameraAssetUploadStatusNotStarted);
     [NSFileManager.defaultManager removeItemIfExistsAtURL:[NSURL mnz_assetDirectoryURLForLocalIdentifier:record.localIdentifier]];
 }

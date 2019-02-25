@@ -91,7 +91,7 @@ static const CGFloat MemoryWarningConcurrentThrottleRatio = .5;
     dispatch_async(dispatch_get_global_queue(QOS_CLASS_UTILITY, 0), ^{
         [AttributeUploadManager.shared scanLocalAttributeFilesAndRetryUploadIfNeeded];
         [TransferSessionManager.shared restoreAllSessions];
-        [self collateUploadRecords];
+        [self.dataCollator collateUploadRecords];
         
         MEGALogDebug(@"[Camera Upload] app launches to state %@", @(application.applicationState));
         if (application.applicationState == UIApplicationStateBackground) {
@@ -622,12 +622,6 @@ static const CGFloat MemoryWarningConcurrentThrottleRatio = .5;
         default:
             break;
     }
-}
-
-#pragma mark - data collator
-
-- (void)collateUploadRecords {
-    [self.dataCollator collateUploadRecords];
 }
 
 #pragma mark - background refresh
