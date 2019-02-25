@@ -115,6 +115,10 @@
         return;
     }
     
+    if (!CameraUploadManager.isCameraUploadEnabled) {
+        return;
+    }
+    
     if ([self shouldUpdateStatus:status forLocalIdentifier:localIdentifier]) {
         [CameraUploadRecordManager.shared updateUploadRecordByLocalIdentifier:localIdentifier withStatus:status error:nil];
     }

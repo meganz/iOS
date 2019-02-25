@@ -293,6 +293,10 @@
         
         [self finishOperation];
         
+        if (!CameraUploadManager.isCameraUploadEnabled) {
+            return;
+        }
+        
         MEGALogDebug(@"[Camera Upload] %@ finishes with status: %@", self, [AssetUploadStatus stringForStatus:status]);
         [CameraUploadRecordManager.shared updateUploadRecord:self.uploadRecord withStatus:status error:nil];
         
