@@ -134,14 +134,18 @@ static NSString * const VideoCellularDisallowedUploadSessionId = @"nz.mega.video
 
 #pragma mark - session restoration
 
-- (void)restoreAllSessions {
+- (NSArray<NSURLSessionUploadTask *> *)restoreAllSessionTasks {
+    NSMutableArray<NSURLSessionUploadTask *> *allTasks = [NSMutableArray array];
     NSArray<NSString *> *allSessionIdentifiers = @[PhotoCellularAllowedUploadSessionId, PhotoCellularDisallowedUploadSessionId, VideoCellularAllowedUploadSessionId, VideoCellularDisallowedUploadSessionId];
     for (NSString *identifier in allSessionIdentifiers) {
-        [self restoreSessionIfNeededByIdentifier:identifier];
+        NSArray<NSURLSessionUploadTask *> *sessionTasks = [self restoreSessionTasksByIdentifier:identifier];
+        [allTasks addObjectsFromArray:sessionTasks];
     }
+    
+    return allTasks;
 }
 
-- (void)restoreSessionIfNeededByIdentifier:(NSString *)identifier {
+- (NSArray<NSURLSessionUploadTask *> *)restoreSessionTasksByIdentifier:(NSString *)identifier {
     NSURLSession *restoredSession;
     if ([identifier isEqualToString:PhotoCellularAllowedUploadSessionId]) {
         if (_photoCellularAllowedUploadSession == nil) {
@@ -165,15 +169,19 @@ static NSString * const VideoCellularDisallowedUploadSessionId = @"nz.mega.video
         }
     }
     
-    [self restoreTaskDelegatesForSession:restoredSession];
+    return [self restoreTaskDelegatesForSession:restoredSession];
 }
 
-- (void)restoreTaskDelegatesForSession:(NSURLSession *)session {
+- (NSArray<NSURLSessionUploadTask *> *)restoreTaskDelegatesForSession:(NSURLSession *)session {
+    __block NSArray<NSURLSessionUploadTask *> *tasks;
     [session getTasksWithCompletionHandler:^(NSArray<NSURLSessionDataTask *> * _Nonnull dataTasks, NSArray<NSURLSessionUploadTask *> * _Nonnull uploadTasks, NSArray<NSURLSessionDownloadTask *> * _Nonnull downloadTasks) {
+        tasks = uploadTasks;
         for (NSURLSessionUploadTask *task in uploadTasks) {
             [self addDelegateForTask:task inSession:session completion:nil];
         }
     }];
+    
+    return tasks;
 }
 
 - (NSArray<NSURLSessionUploadTask *> *)allRunningUploadTasks {
