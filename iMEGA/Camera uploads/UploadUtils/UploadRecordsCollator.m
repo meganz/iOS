@@ -68,6 +68,11 @@
 }
 
 - (void)revertBackToNotStartedForRecord:(MOAssetUploadRecord *)record {
+    if (record.status.integerValue == CameraAssetUploadStatusDone) {
+        MEGALogDebug(@"[Camera Upload] skip collation as upload is done for %@", record.localIdentifier);
+        return;
+    }
+    
     MEGALogDebug(@"[Camera Upload] revert record status %@ to not started for %@", [AssetUploadStatus stringForStatus:record.status.unsignedIntegerValue], record.localIdentifier);
     record.status = @(CameraAssetUploadStatusNotStarted);
     [NSFileManager.defaultManager removeItemIfExistsAtURL:[NSURL mnz_assetDirectoryURLForLocalIdentifier:record.localIdentifier]];
