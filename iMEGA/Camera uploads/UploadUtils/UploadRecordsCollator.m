@@ -7,9 +7,9 @@
 
 @implementation UploadRecordsCollator
 
-- (void)collateUploadRecords {
+- (void)collateUploadRecordsWithRunningTasks:(NSArray<NSURLSessionTask *> *)tasks {
+    [self collateUploadingRecordsByRunningTasks:tasks];
     [self collateNonUploadingRecords];
-    [self collateUploadingRecords];
     [self clearErrorRecordsPerLaunch];
 }
 
@@ -29,7 +29,7 @@
     }];
 }
 
-- (void)collateUploadingRecords {
+- (void)collateUploadingRecordsByRunningTasks:(NSArray<NSURLSessionTask *> *)tasks {
     NSArray<MOAssetUploadRecord *> *uploadingRecords = [CameraUploadRecordManager.shared fetchAllUploadRecordsByStatuses:@[@(CameraAssetUploadStatusUploading)] error:nil];
     if (uploadingRecords.count == 0) {
         MEGALogDebug(@"[Camera Upload] no uploading records to collate");
@@ -37,10 +37,9 @@
     }
     
     MEGALogDebug(@"[Camera Upload] %lu uploading records to collate", (unsigned long)uploadingRecords.count);
-    NSArray<NSURLSessionUploadTask *> *runningTasks = [TransferSessionManager.shared allRunningUploadTasks];
     NSMutableArray<NSString *> *runningTaskIdentifiers = [NSMutableArray array];
-    for (NSURLSessionUploadTask *task in runningTasks) {
-        MEGALogDebug(@"[Camera Upload] %@ task state %li", task.taskDescription, task.state);
+    for (NSURLSessionUploadTask *task in tasks) {
+        MEGALogDebug(@"[Camera Upload] %@ task state %li", task.taskDescription, (long)task.state);
         if (task.taskDescription.length > 0) {
             [runningTaskIdentifiers addObject:task.taskDescription];
         }

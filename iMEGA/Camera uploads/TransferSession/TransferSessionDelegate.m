@@ -7,6 +7,7 @@
 
 @property (strong, nonatomic) NSMutableDictionary<NSNumber *, TransferSessionTaskDelegate *> *taskDelegateDict;
 @property (weak, nonatomic) TransferSessionManager *manager;
+@property (strong, nonatomic) dispatch_queue_t serialQueue;
 
 @end
 
@@ -17,6 +18,7 @@
     if (self) {
         _manager = manager;
         _taskDelegateDict = [NSMutableDictionary dictionary];
+        _serialQueue = dispatch_queue_create("nz.mega.sessionManager.cameraUpload.sessionDelegate", DISPATCH_QUEUE_SERIAL);
     }
     return self;
 }
@@ -24,15 +26,25 @@
 #pragma mark - session tasks
 
 - (TransferSessionTaskDelegate *)delegateForTask:(NSURLSessionTask *)task {
-    return self.taskDelegateDict[@(task.taskIdentifier)];
+    __block TransferSessionTaskDelegate *taskDelegate;
+    dispatch_sync(self.serialQueue, ^{
+        taskDelegate = self.taskDelegateDict[@(task.taskIdentifier)];
+    });
+    return taskDelegate;
 }
 
 - (void)removeDelegateForTask:(NSURLSessionTask *)task {
-    [self.taskDelegateDict removeObjectForKey:@(task.taskIdentifier)];
+    dispatch_sync(self.serialQueue, ^{
+        [self.taskDelegateDict removeObjectForKey:@(task.taskIdentifier)];
+    });
 }
 
 - (void)addDelegate:(TransferSessionTaskDelegate *)delegate forTask:(NSURLSessionTask *)task {
-    self.taskDelegateDict[@(task.taskIdentifier)] = delegate;
+    dispatch_sync(self.serialQueue, ^{
+        if (self.taskDelegateDict[@(task.taskIdentifier)] == nil) {
+            self.taskDelegateDict[@(task.taskIdentifier)] = delegate;
+        }
+    });
 }
 
 #pragma mark - session level delegate

@@ -84,14 +84,14 @@ static const CGFloat MemoryWarningConcurrentThrottleRatio = .5;
 #pragma mark - application lifecycle
 
 - (void)setupCameraUploadWhenApplicationLaunches:(UIApplication *)application {
+    NSArray<NSURLSessionTask *> *tasks = [TransferSessionManager.shared restoreAllSessionTasks];
     [CameraUploadManager disableCameraUploadIfAccessProhibited];
     [CameraUploadManager enableBackgroundRefreshIfNeeded];
     [self startBackgroundUploadIfPossible];
     
     dispatch_async(dispatch_get_global_queue(QOS_CLASS_UTILITY, 0), ^{
+        [self.dataCollator collateUploadRecordsWithRunningTasks:tasks];
         [AttributeUploadManager.shared scanLocalAttributeFilesAndRetryUploadIfNeeded];
-        [TransferSessionManager.shared restoreAllSessions];
-        [self.dataCollator collateUploadRecords];
         
         MEGALogDebug(@"[Camera Upload] app launches to state %@", @(application.applicationState));
         if (application.applicationState == UIApplicationStateBackground) {

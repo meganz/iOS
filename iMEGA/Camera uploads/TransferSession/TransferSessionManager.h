@@ -12,8 +12,8 @@ typedef void (^UploadCompletionHandler)(NSData  * _Nullable token, NSError * _Nu
 - (void)invalidateAndCancelVideoSessions;
 - (void)invalidateAndCancelPhotoSessions;
 
-- (void)restoreAllSessions;
-- (void)restoreSessionIfNeededByIdentifier:(NSString *)identifier;
+- (NSArray<NSURLSessionUploadTask *> *)restoreAllSessionTasks;
+- (NSArray<NSURLSessionUploadTask *> *)restoreSessionTasksByIdentifier:(NSString *)identifier;
 
 - (void)saveSessionCompletion:(void (^)(void))completion forIdentifier:(NSString *)identifier;
 
