@@ -430,8 +430,8 @@ static const CGFloat MemoryWarningConcurrentThrottleRatio = .5;
 }
 
 - (void)disableCameraUpload {
-    [self disableVideoUpload];
     CameraUploadManager.cameraUploadEnabled = NO;
+    [self disableVideoUpload];
     [self resetCameraUploadQueues];
     [self unregisterNotificationsForUpload];
     [self.diskSpaceDetector stopDetectingPhotoUpload];

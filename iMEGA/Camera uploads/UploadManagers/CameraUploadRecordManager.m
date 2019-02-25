@@ -68,9 +68,11 @@ static const NSUInteger MaximumUploadRetryPerLoginCount = 800;
 }
 
 - (void)resetDataContext {
-    [_backgroundContext reset];
-    _backgroundContext = nil;
-    _fileNameCoordinator = nil;
+    [self.backgroundContext performBlockAndWait:^{
+        [self.backgroundContext reset];
+    }];
+    self.backgroundContext = nil;
+    self.fileNameCoordinator = nil;
 }
 
 #pragma mark - access properties of record
