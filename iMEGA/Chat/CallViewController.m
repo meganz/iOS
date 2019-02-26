@@ -116,12 +116,14 @@
         self.incomingCallView.hidden = YES;
         self.outgoingCallView.hidden = NO;
         
-        NSTimeInterval interval = ([NSDate date].timeIntervalSince1970 - [NSDate date].timeIntervalSince1970 + self.call.duration);
-        self.statusCallLabel.text = [NSString mnz_stringFromTimeInterval:interval];
-
-        [self initShowHideControls];
-        [self initDurationTimer];
-        
+        if (self.call.status == MEGAChatCallStatusInProgress) {
+            NSTimeInterval interval = ([NSDate date].timeIntervalSince1970 - [NSDate date].timeIntervalSince1970 + self.call.duration);
+            self.statusCallLabel.text = [NSString mnz_stringFromTimeInterval:interval];
+            [self initShowHideControls];
+            [self initDurationTimer];
+        } else {
+            self.statusCallLabel.text = AMLocalizedString(@"calling...", @"Label shown when you call someone (outgoing call), before the call starts.");
+        }
     }
     
     [[UIDevice currentDevice] setProximityMonitoringEnabled:!self.videoCall];
