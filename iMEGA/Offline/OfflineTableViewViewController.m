@@ -6,6 +6,7 @@
 
 #import "Helper.h"
 #import "MEGAStore.h"
+#import "MEGASdkManager.h"
 
 #import "OfflineTableViewCell.h"
 #import "OfflineViewController.h"
