@@ -99,7 +99,7 @@
 /*  */
 "weak"="Ненадёжный";
 /*  */
-"passwordVeryWeakOrWeak"="Ваш пароль легко подбирается. Попробуйте использовать более длинный пароль. Используйте сочетания заглавных и прописных букв. Используйте символы. Не используйте имена или словарные слова";
+"passwordVeryWeakOrWeak"="Ваш пароль легко подбирается. Попробуйте использовать более длинный пароль. Используйте сочетания прописных и строчных букв. Используйте символы. Не используйте имена или словарные слова";
 /* Label displayed during checking the strength of the password introduced. Represents Medium security */
 "medium"="Средний";
 /*  */
@@ -1669,7 +1669,7 @@
 /* Message shown in a chat room when there is an active group call */
 "There is an active group call. Tap to join."="Активный групповой вызов. Нажмите, чтобы присоединиться.";
 /* Message shown in a chat room when there is an active call */
-"There is an active call. Tap to join."="There is an active call. Tap to join.";
+"There is an active call. Tap to join."="Есть активный звонок. Нажмите, чтобы присоединиться.";
 /* Message shown in a chat room for a group call in progress displaying the duration of the call */
 "Touch to return to call %@"="Коснитесь для возврата к вызову %@";
 /* A button label which allows the users save images/videos in the Photos app. */
@@ -1799,6 +1799,6 @@
 /* Singular of participant. 1 participant */
 "%d participant"="%d участник";
 /* Text to inform the user there is an active call and is not participating */
-"Ongoing Call"="Ongoing Call";
+"Ongoing Call"="Текущий звонок";
 /* Text to inform the user there is an active call and is participating */
-"Call Started"="Call Started";
+"Call Started"="Звонок начался";

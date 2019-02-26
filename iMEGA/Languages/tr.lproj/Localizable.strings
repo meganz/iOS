@@ -1653,7 +1653,7 @@
 /* Label for any ‘Days’ button, link, text, title, etc. - (String as short as possible). */
 "Days"="Günler";
 /* New server-side rubbish-bin cleaning scheduler description (for Free users) */
-"The Rubbish Bin is cleaned for you automatically. The minimum period is 7 days and your maximum period is 30 days."="Çöp kutusu sizin yerinize otomatik olarak temizlenebilir. Asgari süre 7 gündür ve sizin azami süreniz 30 gün.";
+"The Rubbish Bin is cleaned for you automatically. The minimum period is 7 days and your maximum period is 30 days."="Çöp kutusu sizin yerinize otomatik olarak temizlendi. Asgari süre 7 gündür ve sizin azami süreniz 30 gündür.";
 /* New server-side rubbish-bin cleaning scheduler description (for PRO users) */
 "The Rubbish Bin can be cleaned for you automatically. The minimum period is 7 days."="Çöp kutusu sizin yerinize otomatik olarak temizlenebilir. Asgari süre 7 gündür.";
 /* Description shown when you try to disable the feature Rubbish-Bin Cleaning Scheduler and you are a free user */

@@ -1397,7 +1397,7 @@
 /* Segmented control title for view that allows the user to scan QR codes. String as short as possible. */
 "scanCode"="扫码";
 /* Label that encourage the user to line the QR to scan with the camera */
-"lineCodeWithCamera"="排列二位码后使用设备的相机进行扫描";
+"lineCodeWithCamera"="使用此设备上的相机对准二维码内并扫描";
 /* Error text shown when the user scans a QR that is not valid. String as short as possible. */
 "invalidCode"="该码无效";
 /* Success text shown in a label when the user scans a valid QR. String as short as possible. */

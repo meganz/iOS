@@ -994,7 +994,7 @@
 /* Header shown to help on the purchasin process */
 "selectMembership"="Choisir un abonnement :";
 /* Footer shown to remenber that if you select a yearly plan yo will save up to 17% */
-"save17"="Économisez 17 %";
+"save17"="Économisez 17 %";
 /* Error message shown when the purchase has failed */
 "wrongPurchase"="L'ACHAT A ÉCHOUÉ  %@ (%ld)";
 /* Error message shown the In App Purchase is disabled in the device Settings */
@@ -1032,7 +1032,7 @@
 /* Alert title shown when the DEBUG mode is enabled */
 "enableDebugMode_title"="Activer le mode DÉBOGAGE";
 /* Alert message shown when the DEBUG mode is enabled */
-"enableDebugMode_message"="Un journal sera créé dans la section Hors ligne (MEGAiOS.log). Les journaux peuvent contenir des informations associées à votre compte.";
+"enableDebugMode_message"="Un journal sera créé dans la section Hors ligne (MEGAiOS.log). Les journaux peuvent contenir des renseignements associés à votre compte.";
 /* Alert title shown when the DEBUG mode is disabled */
 "disableDebugMode_title"="Désactiver le mode DÉBOGAGE";
 /* Alert message shown when the DEBUG mode is disabled */
@@ -1142,7 +1142,7 @@
 /* Title of a menu button which allows users to start a conversation creating a 'Group' chat. */
 "group"="Groupe";
 /* Title of section where you can see the chat group information and the options that you can do with it. Like 'Notifications' or 'Leave Group' and also the participants of the group */
-"groupInfo"="Infos sur le groupe";
+"groupInfo"="Renseignements sur le groupe";
 /* Label title for a group chat */
 "groupChat"="Conversation de groupe";
 /* The title of a menu button which allows users to rename a group chat. */
@@ -1158,7 +1158,7 @@
 /* A button label. The button allows the user to mute a conversation. */
 "mute"="Sourdine";
 /* A button label. The button allows the user to get more info of the current context. */
-"info"="Infos";
+"info"="Renseignements";
 /* A button label. The button allows the user to close the conversation. */
 "close"="Fermer";
 /* Alert text that explains what means confirming the action 'Leave' */
@@ -1347,7 +1347,7 @@
 "generalDescriptionParagraph5"="Abonnement PRO LÉGER : 4,99 € (4,99 USD) par mois ou 49,99 € (49,99 USD) par an vous donne 200 Go d’espace de stockage et 1 To de quota de transfert par mois. \n Abonnement PRO I : 9,99 € (9,99 USD) par mois ou 99,99 € (99,99 USD) par an vous donne 1 To d’espace de stockage et 2 To de quota de transfert par mois. \n Abonnement PRO II : 19,99 € (19,99 USD) par mois ou 199,99 € (199,99 USD) par an vous donne 4 To d’espace de stockage et 8 To de quota de transfert par mois. \n Abonnement PRO III : 29,99 € (29,99 USD) par mois ou 299,99 € (299,99 USD) par an vous donne 8 To d’espace de stockage et 16 To de quota de transfert par mois.";
 /* Between paragraph 5 and 6 we have to put the string with the 'autorenewableDescription' key */
 /* Paragraph 6 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
-"generalDescriptionParagraph6"="Pour plus d’informations, veuillez consulter notre site Web : https://mega.nz/\nConditions générales d’utilisation : https://mega.nz/terms\nPolitique de confidentialité : https://mega.nz/privacy";
+"generalDescriptionParagraph6"="Pour de plus amples renseignements, veuillez consulter notre site Web : https://mega.nz/\nConditions générales d’utilisation : https://mega.nz/terms\nPolitique de confidentialité : https://mega.nz/privacy";
 /* Label shown when you call someone (outgoing call), before the call starts. */
 "calling..."="Appel…";
 /* notification subtitle of incoming calls */
@@ -1431,9 +1431,9 @@
 /* Message to display the number of historical versions of files. Please keep [X] as it will be replaced at the runtime. */
 "xVersions"="[X] versions";
 /* Label of the option menu. When clicking this button, the app shows the info of the file */
-"fileInfo"="Infos sur le fichier";
+"fileInfo"="Renseignements sur le fichier";
 /* Label of the option menu. When clicking this button, the app shows the info of the folder */
-"folderInfo"="Infos sur le dossier";
+"folderInfo"="Renseignements sur le dossier";
 /* Question to ensure user wants to delete file version. */
 "deleteVersion"="Voulez-vous supprimer cette version ?";
 /* Message to notify user the file version will be permanently removed */
@@ -1705,7 +1705,7 @@
 /* There are no notifications to display. */
 "No notifications"="Aucune notification";
 /* The header of a notification related to payments */
-"Payment info"="Infos de paiement";
+"Payment info"="Renseignements sur le paiement";
 /* A title for a notification saying the user’s pricing plan will expire soon. */
 "PRO membership plan expiring soon"="Votre abonnement PRO arrivera bientôt à expiration";
 /* The header of a notification indicating that a file or folder has been taken down due to infringement or other reason. */
