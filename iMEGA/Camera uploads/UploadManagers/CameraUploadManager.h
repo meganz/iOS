@@ -12,7 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (readonly) NSUInteger totalAssetsCount;
 @property (readonly) NSUInteger uploadDoneAssetsCount;
 
-@property (readonly) BOOL isNodesFetchDone;
+@property (readonly) BOOL isNodeTreeCurrent;
 @property (nonatomic, getter=isPhotoUploadPaused) BOOL pausePhotoUpload;
 @property (nonatomic, getter=isVideoUploadPaused) BOOL pauseVideoUpload;
 @property (readonly) BOOL isCameraUploadPausedByDiskFull;

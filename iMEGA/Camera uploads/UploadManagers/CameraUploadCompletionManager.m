@@ -46,7 +46,7 @@
         return;
     }
     
-    if (!CameraUploadManager.shared.isNodesFetchDone) {
+    if (!CameraUploadManager.shared.isNodeTreeCurrent) {
         NodesFetchListenerOperation *nodesFetchListenerOperation = [[NodesFetchListenerOperation alloc] init];
         [nodesFetchListenerOperation start];
         [nodesFetchListenerOperation waitUntilFinished];

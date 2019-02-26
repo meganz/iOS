@@ -36,7 +36,7 @@ static const CGFloat MemoryWarningConcurrentThrottleRatio = .5;
 
 @property (copy, nonatomic) void (^backgroundRefreshCompletion)(UIBackgroundFetchResult);
 @property (readonly) NSArray<NSNumber *> *enabledMediaTypes;
-@property (nonatomic) BOOL isNodesFetchDone;
+@property (nonatomic) BOOL isNodeTreeCurrent;
 @property (nonatomic) StorageState storageState;
 
 @property (strong, nonatomic) NSOperationQueue *photoUploadOperationQueue;
@@ -87,7 +87,7 @@ static const CGFloat MemoryWarningConcurrentThrottleRatio = .5;
 
 - (void)registerGlobalNotifications {
     [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(didReceiveLogoutNotification:) name:MEGALogoutNotificationName object:nil];
-    [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(didReceiveNodesFetchDoneNotification:) name:MEGANodesFetchDoneNotificationName object:nil];
+    [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(didReceiveNodesCurrentNotification:) name:MEGANodesCurrentNotificationName object:nil];
 }
 
 #pragma mark - application lifecycle
@@ -312,7 +312,7 @@ static const CGFloat MemoryWarningConcurrentThrottleRatio = .5;
 
 - (void)loadCameraUploadNodeForUpload {
     MEGALogDebug(@"[Camera Upload] load camera upload node");
-    if (!self.isNodesFetchDone) {
+    if (!self.isNodeTreeCurrent) {
         return;
     }
     
@@ -361,7 +361,7 @@ static const CGFloat MemoryWarningConcurrentThrottleRatio = .5;
 }
 
 - (void)uploadVideos {
-    if (!(self.mediaInfoLoader.isMediaInfoLoaded && self.isNodesFetchDone && self.cameraUploadNode != nil)) {
+    if (!(self.mediaInfoLoader.isMediaInfoLoaded && self.isNodeTreeCurrent && self.cameraUploadNode != nil)) {
         MEGALogDebug(@"[Camera Upload] can not upload videos due to the dependency on media info and camera uplaod node issues");
         return;
     }
@@ -645,9 +645,9 @@ static const CGFloat MemoryWarningConcurrentThrottleRatio = .5;
     }
 }
 
-- (void)didReceiveNodesFetchDoneNotification:(NSNotification *)notification {
-    MEGALogDebug(@"[Camera Upload] nodes fetch done notification %@", notification);
-    self.isNodesFetchDone = YES;
+- (void)didReceiveNodesCurrentNotification:(NSNotification *)notification {
+    MEGALogDebug(@"[Camera Upload] nodes current notification %@", notification);
+    self.isNodeTreeCurrent = YES;
     [self startCameraUploadIfNeeded];
 }
 
@@ -677,7 +677,7 @@ static const CGFloat MemoryWarningConcurrentThrottleRatio = .5;
     [NSFileManager.defaultManager removeItemIfExistsAtURL:NSURL.mnz_cameraUploadURL];
     [CameraUploadRecordManager.shared resetDataContext];
     [CameraUploadManager clearLocalSettings];
-    _isNodesFetchDone = NO;
+    _isNodeTreeCurrent = NO;
     _cameraUploadNode = nil;
 }
 

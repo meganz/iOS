@@ -1420,6 +1420,10 @@ void uncaughtExceptionHandler(NSException *exception) {
             _messageForSuspendedAccount = event.text;
             break;
             
+        case EventNodesCurrent:
+            [NSNotificationCenter.defaultCenter postNotificationName:MEGANodesCurrentNotificationName object:self];
+            break;
+            
         case EventStorage: {
             [NSNotificationCenter.defaultCenter postNotificationName:MEGAStorageEventDidChangeNotificationName object:self userInfo:@{MEGAStorageEventStateUserInfoKey : @(event.number)}];
             
@@ -1641,7 +1645,6 @@ void uncaughtExceptionHandler(NSException *exception) {
                 [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"TransfersPaused"];
             }
             isFetchNodesDone = YES;
-            [NSNotificationCenter.defaultCenter postNotificationName:MEGANodesFetchDoneNotificationName object:self];
             
             [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
             [SVProgressHUD dismiss];
