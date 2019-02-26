@@ -105,7 +105,12 @@
     }
     
     if (!hasExistingPutNode) {
-        [self.operationQueue addOperation:operation];
+        MEGANode *existingNode = [MEGASdkManager.sharedMEGASdk nodeForFingerprint:uploadInfo.fingerprint];
+        if (existingNode == nil) {
+            [self.operationQueue addOperation:operation];
+        } else {
+            MEGALogInfo(@"[Camera Upload] existing node %@ found for %@ by fingerprint match", existingNode.name, uploadInfo.savedLocalIdentifier);
+        }
     } else {
         MEGALogError(@"[Camera Upload] existing put node found for %@ with token %@", uploadInfo.savedLocalIdentifier, [[NSString alloc] initWithData:token encoding:NSUTF8StringEncoding]);
     }
