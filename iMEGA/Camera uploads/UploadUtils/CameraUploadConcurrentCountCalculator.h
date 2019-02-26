@@ -4,17 +4,16 @@
 NS_ASSUME_NONNULL_BEGIN
 
 typedef NS_ENUM(NSInteger, PhotoUploadConcurrentCount) {
-    PhotoUploadConcurrentCountInForeground = 9,
-    PhotoUploadConcurrentCountInBackground = 4,
+    PhotoUploadConcurrentCountInForeground = 6,
+    PhotoUploadConcurrentCountInBackground = 3,
     PhotoUploadConcurrentCountInLowPowerMode = 2,
-    PhotoUploadConcurrentCountInMemoryWarning = 2,
-    PhotoUploadConcurrentCountInBatteryCharging = 10,
-    PhotoUploadConcurrentCountInBatteryLevelBelow75 = 7,
-    PhotoUploadConcurrentCountInBatteryLevelBelow55 = 5,
-    PhotoUploadConcurrentCountInBatteryLevelBelow35 = 3,
+    PhotoUploadConcurrentCountInBatteryCharging = 7,
+    PhotoUploadConcurrentCountInBatteryLevelBelow75 = 5,
+    PhotoUploadConcurrentCountInBatteryLevelBelow55 = 3,
+    PhotoUploadConcurrentCountInBatteryLevelBelow35 = 2,
     PhotoUploadConcurrentCountInBatteryLevelBelow20 = 1,
     PhotoUploadConcurrentCountInBatteryLevelBelow10 = 0,
-    PhotoUploadConcurrentCountInThermalStateFair = 6,
+    PhotoUploadConcurrentCountInThermalStateFair = 4,
     PhotoUploadConcurrentCountInThermalStateSerious = 1,
     PhotoUploadConcurrentCountInThermalStateCritical = 0,
 };
@@ -24,7 +23,6 @@ typedef NS_ENUM(NSInteger, VideoUploadConcurrentCount) {
     VideoUploadConcurrentCountInForeground = 1,
     VideoUploadConcurrentCountInBackground = 1,
     VideoUploadConcurrentCountInLowPowerMode = 0,
-    VideoUploadConcurrentCountInMemoryWarning = 0,
     VideoUploadConcurrentCountInBatteryCharging = 1,
     VideoUploadConcurrentCountInBatteryLevelBelow75 = 1,
     VideoUploadConcurrentCountInBatteryLevelBelow55 = 1,
