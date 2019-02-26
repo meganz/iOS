@@ -2,7 +2,6 @@
 #import "MEGACallEndedMediaItem.h"
 #import "MEGAMessageCallEndedView.h"
 
-#import "MEGASdkManager.h"
 #import "NSString+MNZCategory.h"
 #import "UIImage+MNZCategory.h"
 
