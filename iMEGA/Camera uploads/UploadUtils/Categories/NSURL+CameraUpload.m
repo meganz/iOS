@@ -27,11 +27,11 @@
 }
 
 + (NSURL *)mnz_assetDirectoryURLForLocalIdentifier:(NSString *)localIdentifier {
-    return [self.mnz_cameraUploadURL URLByAppendingPathComponent:localIdentifier.stringByRemovingInvalidFileCharacters isDirectory:YES];
+    return [self.mnz_cameraUploadURL URLByAppendingPathComponent:localIdentifier.mnz_stringByRemovingInvalidFileCharacters isDirectory:YES];
 }
 
 + (NSURL *)mnz_archivedURLForLocalIdentifier:(NSString *)localIdentifier {
-    return [[self mnz_assetDirectoryURLForLocalIdentifier:localIdentifier] URLByAppendingPathComponent:localIdentifier.stringByRemovingInvalidFileCharacters isDirectory:NO];
+    return [[self mnz_assetDirectoryURLForLocalIdentifier:localIdentifier] URLByAppendingPathComponent:localIdentifier.mnz_stringByRemovingInvalidFileCharacters isDirectory:NO];
 }
 
 @end

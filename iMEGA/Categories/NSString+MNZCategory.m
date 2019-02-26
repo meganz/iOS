@@ -785,7 +785,7 @@ static NSString* const B = @"[B]";
     return [nameWithoutExtension stringByAppendingPathExtension:extension];
 }
 
-- (NSString *)stringByRemovingInvalidFileCharacters {
+- (NSString *)mnz_stringByRemovingInvalidFileCharacters {
     NSCharacterSet *set = [NSCharacterSet characterSetWithCharactersInString:@":/\\"];
     return [[self componentsSeparatedByCharactersInSet:set] componentsJoinedByString:@""];
 }

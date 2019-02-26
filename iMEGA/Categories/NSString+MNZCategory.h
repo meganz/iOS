@@ -68,6 +68,6 @@ typedef NS_ENUM(NSInteger, MEGAChatMessageEndCallReason);
 
  @return a new string without invalid characters
  */
-- (NSString *)stringByRemovingInvalidFileCharacters;
+- (NSString *)mnz_stringByRemovingInvalidFileCharacters;
 
 @end
