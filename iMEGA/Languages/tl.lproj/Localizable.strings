@@ -99,7 +99,7 @@
 /*  */
 "weak"="Mahina";
 /*  */
-"passwordVeryWeakOrWeak"="Ang password ay sobrang daling mahulaan. Kailangang pahabain mo pa ang password mo. Pagsamahin ang uppercase at lowercase na mga letra. Magdagdag ng mga espesyal na letra. Huwag gumamit ng pangalan o dictionary words";
+"passwordVeryWeakOrWeak"="Ang password ay madaling mahulian. Subukang gumawa ng mas mahabang password. Pagsamahin ang uppercase at lowercase letters. Magdagdag ng special characters. Huwag gumamit ng pangalan o dictionary words.";
 /* Label displayed during checking the strength of the password introduced. Represents Medium security */
 "medium"="Tama lang";
 /*  */
@@ -619,7 +619,7 @@
 /* Permissions given to the user you share your folder with */
 "readOnly"="Read-only lamang";
 /* Permissions given to the user you share your folder with */
-"readAndWrite"="Read & Write";
+"readAndWrite"="Read at Write";
 /* Permissions given to the user you share your folder with */
 "fullAccess"="Ganap na access";
 /* Title of the Settings section */
