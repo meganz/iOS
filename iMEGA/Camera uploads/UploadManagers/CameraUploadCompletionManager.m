@@ -74,6 +74,11 @@
 #pragma mark - put node
 
 - (void)putNodeWithUploadInfo:(AssetUploadInfo *)uploadInfo transferToken:(NSData *)token {
+    AssetLocalAttribute *attributeInfo = [AttributeUploadManager.shared saveAttributeForUploadInfo:uploadInfo];
+    if (attributeInfo == nil) {
+        attributeInfo = [AttributeUploadManager.shared saveAttributeForUploadInfo:uploadInfo];
+    }
+    
     PutNodeOperation *operation = [[PutNodeOperation alloc] initWithUploadInfo:uploadInfo transferToken:token completion:^(MEGANode * _Nullable node, NSError * _Nullable error) {
         if (error) {
             MEGALogError(@"[Camera Upload] error when to complete transfer %@ with token %@ %@", uploadInfo.savedLocalIdentifier, [[NSString alloc] initWithData:token encoding:NSUTF8StringEncoding], error);
@@ -86,8 +91,7 @@
         } else {
             MEGALogDebug(@"[Camera Upload] put node succeeded for %@", uploadInfo.savedLocalIdentifier);
             [AttributeUploadManager.shared uploadCoordinateLocation:uploadInfo.location forNode:node];
-            [AttributeUploadManager.shared uploadFile:uploadInfo.thumbnailURL withAttributeType:MEGAAttributeTypeThumbnail forNode:node];
-            [AttributeUploadManager.shared uploadFile:uploadInfo.previewURL withAttributeType:MEGAAttributeTypePreview forNode:node];
+            [AttributeUploadManager.shared uploadLocalAttribute:attributeInfo forNode:node];
             [self finishUploadForLocalIdentifier:uploadInfo.savedLocalIdentifier status:CameraAssetUploadStatusDone];
         }
     }];

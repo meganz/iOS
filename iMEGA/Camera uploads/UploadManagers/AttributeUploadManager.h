@@ -1,6 +1,8 @@
 
 #import <Foundation/Foundation.h>
 #import "MEGASdkManager.h"
+#import "AssetLocalAttribute.h"
+#import "AssetUploadInfo.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -11,12 +13,12 @@ NS_ASSUME_NONNULL_BEGIN
 + (instancetype)shared;
 
 - (void)waitUntilAllThumbnailUploadsAreFinished;
-
 - (void)waitUntilAllAttributeUploadsAreFinished;
 
 - (void)scanLocalAttributeFilesAndRetryUploadIfNeeded;
 
-- (void)uploadFile:(NSURL *)URL withAttributeType:(MEGAAttributeType)type forNode:(MEGANode *)node;
+- (AssetLocalAttribute *)saveAttributeForUploadInfo:(AssetUploadInfo *)uploadInfo;
+- (void)uploadLocalAttribute:(AssetLocalAttribute *)attribute forNode:(MEGANode *)node;
 
 - (void)uploadCoordinateLocation:(nullable CLLocation *)location forNode:(MEGANode *)node;
 

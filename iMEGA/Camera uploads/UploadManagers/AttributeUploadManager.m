@@ -6,10 +6,8 @@
 #import "PreviewUploadOperation.h"
 #import "CoordinatesUploadOperation.h"
 #import "CameraUploadManager.h"
+#import "NSString+MNZCategory.h"
 @import CoreLocation;
-
-static NSString * const AttributeThumbnailName = @"thumbnail";
-static NSString * const AttributePreviewName = @"preview";
 
 @interface AttributeUploadManager ()
 
@@ -65,29 +63,36 @@ static NSString * const AttributePreviewName = @"preview";
 
 #pragma mark - upload preview and thumbnail files
 
-- (void)uploadFile:(NSURL *)URL withAttributeType:(MEGAAttributeType)type forNode:(MEGANode *)node {
-    if (![NSFileManager.defaultManager isReadableFileAtPath:URL.path]) {
-        return;
-    }
-    
-    NSURL *uploadURL = [self attributeUploadURLForAttributeType:type node:node];
-    
+- (AssetLocalAttribute *)saveAttributeForUploadInfo:(AssetUploadInfo *)uploadInfo {
     NSError *error;
-    [NSFileManager.defaultManager copyItemAtURL:URL toURL:uploadURL error:&error];
+    NSURL *attributeDirectoryURL = [self nodeAttributesDirectoryURLByLocalIdentifier:uploadInfo.savedLocalIdentifier];
+    [NSFileManager.defaultManager removeItemIfExistsAtURL:attributeDirectoryURL];
+    [NSFileManager.defaultManager createDirectoryAtURL:attributeDirectoryURL withIntermediateDirectories:YES attributes:nil error:&error];
+    
+    AssetLocalAttribute *attribute = [[AssetLocalAttribute alloc] initWithAttributeDirectoryURL:attributeDirectoryURL];
+    [uploadInfo.fingerprint writeToURL:attribute.fingerprintURL atomically:YES encoding:NSUTF8StringEncoding error:&error];
+    [NSFileManager.defaultManager copyItemAtURL:uploadInfo.thumbnailURL toURL:attribute.thumbnailURL error:&error];
+    [NSFileManager.defaultManager copyItemAtURL:uploadInfo.previewURL toURL:attribute.previewURL error:&error];
+    
     if (error) {
-        MEGALogError(@"[Camera Upload] error when to copy attribute file to %@, error: %@", uploadURL, error);
-        return;
+        MEGALogError(@"[Camera Upload] error when to save attributes for identifier %@ %@", uploadInfo.savedLocalIdentifier, error);
+        return nil;
     }
     
-    switch (type) {
-        case MEGAAttributeTypeThumbnail:
-            [self.thumbnailOperationQueue addOperation:[[ThumbnailUploadOperation alloc] initWithAttributeURL:uploadURL node:node]];
-            break;
-        case MEGAAttributeTypePreview:
-            [self.attributeOerationQueue addOperation:[[PreviewUploadOperation alloc] initWithAttributeURL:uploadURL node:node]];
-            break;
-        default:
-            break;
+    return attribute;
+}
+
+- (void)uploadLocalAttribute:(AssetLocalAttribute *)attribute forNode:(MEGANode *)node {
+    if ([NSFileManager.defaultManager isReadableFileAtPath:attribute.thumbnailURL.path]) {
+        [self.thumbnailOperationQueue addOperation:[[ThumbnailUploadOperation alloc] initWithAttributeURL:attribute.thumbnailURL node:node]];
+    } else {
+        MEGALogError(@"[Camera Upload] No thumbnail file found at URL %@", attribute.thumbnailURL);
+    }
+    
+    if ([NSFileManager.defaultManager isReadableFileAtPath:attribute.previewURL.path]) {
+        [self.attributeOerationQueue addOperation:[[PreviewUploadOperation alloc] initWithAttributeURL:attribute.previewURL node:node]];
+    } else {
+        MEGALogError(@"[Camera Upload] No preview file found at URL %@", attribute.previewURL);
     }
 }
 
@@ -106,8 +111,7 @@ static NSString * const AttributePreviewName = @"preview";
         }
         
         NSError *error;
-        NSArray *resourceKeys = @[NSURLIsDirectoryKey, NSURLNameKey];
-        NSArray<NSURL *> *attributeDirectoryURLs = [NSFileManager.defaultManager contentsOfDirectoryAtURL:[self attributeDirectoryURL] includingPropertiesForKeys:resourceKeys options:NSDirectoryEnumerationSkipsHiddenFiles error:&error];
+        NSArray<NSURL *> *attributeDirectoryURLs = [NSFileManager.defaultManager contentsOfDirectoryAtURL:[self attributeDirectoryURL] includingPropertiesForKeys:nil options:NSDirectoryEnumerationSkipsHiddenFiles error:&error];
         if (error) {
             MEGALogError(@"[Camera Upload] error when to scan local attributes %@", error);
             return;
@@ -116,57 +120,44 @@ static NSString * const AttributePreviewName = @"preview";
         [MEGASdkManager.sharedMEGASdk retryPendingConnections];
         
         for (NSURL *URL in attributeDirectoryURLs) {
-            NSDictionary *resourceValueDict = [URL resourceValuesForKeys:resourceKeys error:nil];
-            if ([resourceValueDict[NSURLIsDirectoryKey] boolValue]) {
-                [self scanAttributeDirectoryURL:URL directoryName:resourceValueDict[NSURLNameKey]];
-            }
+            [self scanAttributeDirectoryURL:URL];
         }
     });
 }
 
-- (void)scanAttributeDirectoryURL:(NSURL *)URL directoryName:(NSString *)name {
-    NSError *error;
-    NSArray *resourceKeys = @[NSURLIsDirectoryKey, NSURLNameKey];
-    NSArray<NSURL *> *attributeURLs = [NSFileManager.defaultManager contentsOfDirectoryAtURL:URL includingPropertiesForKeys:resourceKeys options:NSDirectoryEnumerationSkipsHiddenFiles error:&error];
-    if (error) {
-        MEGALogError(@"[Camera Upload] error when to scan attribute directory %@ %@", URL, error);
-        return;
-    }
-    
-    if (attributeURLs.count == 0) {
+- (void)scanAttributeDirectoryURL:(NSURL *)URL {
+    AssetLocalAttribute *attribute = [[AssetLocalAttribute alloc] initWithAttributeDirectoryURL:URL];
+    if (!attribute.hasAttributes) {
         [NSFileManager.defaultManager removeItemIfExistsAtURL:URL];
         return;
     }
     
-    MEGANode *node = [MEGASdkManager.sharedMEGASdk nodeForHandle:[MEGASdk handleForBase64Handle:name]];
+    MEGANode *node = [MEGASdkManager.sharedMEGASdk nodeForFingerprint:attribute.savedFingerprint];
     if (node == nil) {
+        MEGALogError(@"[Camera Upload] no node can be created from %@ for %@", attribute.savedFingerprint, URL.lastPathComponent);
         [NSFileManager.defaultManager removeItemIfExistsAtURL:URL];
         return;
     }
     
-    for (NSURL *URL in attributeURLs) {
-        NSDictionary *resourceValueDict = [URL resourceValuesForKeys:resourceKeys error:nil];
-        if (![resourceValueDict[NSURLIsDirectoryKey] boolValue]) {
-            NSString *fileName = resourceValueDict[NSURLNameKey];
-            [self retryAttributeUploadIfNeededForNode:node attributeAtURL:URL attributeName:fileName];
-        }
-    }
+    [self retryUploadLocalAttribute:attribute forNode:node];
 }
 
-- (void)retryAttributeUploadIfNeededForNode:(MEGANode *)node attributeAtURL:(NSURL *)URL attributeName:(NSString *)name {
-    if ([name isEqualToString:AttributeThumbnailName]) {
+- (void)retryUploadLocalAttribute:(AssetLocalAttribute *)attribute forNode:(MEGANode *)node {
+    if (attribute.hasSavedThumbnail) {
         if ([node hasThumbnail]) {
-            [NSFileManager.defaultManager removeItemIfExistsAtURL:URL];
+            [NSFileManager.defaultManager removeItemIfExistsAtURL:attribute.thumbnailURL];
         } else if (![self hasPendingAttributeOperationsForNode:node attributeType:MEGAAttributeTypeThumbnail]) {
             MEGALogDebug(@"[Camera Upload] retry thumbnail upload for %@", node.name);
-            [self.thumbnailOperationQueue addOperation:[[ThumbnailUploadOperation alloc] initWithAttributeURL:URL node:node]];
+            [self.thumbnailOperationQueue addOperation:[[ThumbnailUploadOperation alloc] initWithAttributeURL:attribute.thumbnailURL node:node]];
         }
-    } else if ([name isEqualToString:AttributePreviewName]) {
+    }
+    
+    if (attribute.hasSavedPreview) {
         if ([node hasPreview]) {
-            [NSFileManager.defaultManager removeItemIfExistsAtURL:URL];
+            [NSFileManager.defaultManager removeItemIfExistsAtURL:attribute.previewURL];
         } else if (![self hasPendingAttributeOperationsForNode:node attributeType:MEGAAttributeTypePreview]) {
             MEGALogDebug(@"[Camera Upload] retry preview upload for %@", node.name);
-            [self.attributeOerationQueue addOperation:[[PreviewUploadOperation alloc] initWithAttributeURL:URL node:node]];
+            [self.attributeOerationQueue addOperation:[[PreviewUploadOperation alloc] initWithAttributeURL:attribute.previewURL node:node]];
         }
     }
 }
@@ -201,36 +192,12 @@ static NSString * const AttributePreviewName = @"preview";
 
 #pragma mark - Utils
 
-- (NSString *)stringForAttributeType:(MEGAAttributeType)type {
-    NSString *attributeName;
-    switch (type) {
-        case MEGAAttributeTypeThumbnail:
-            attributeName = AttributeThumbnailName;
-            break;
-        case MEGAAttributeTypePreview:
-            attributeName = AttributePreviewName;
-            break;
-        default:
-            return nil;
-            break;
-    }
-    
-    return attributeName;
-}
-
-- (NSURL *)attributeUploadURLForAttributeType:(MEGAAttributeType)type node:(MEGANode *)node  {
-    NSString *attributeName = [self stringForAttributeType:type];
-    NSURL *nodeDirectoryURL = [[self attributeDirectoryURL] URLByAppendingPathComponent:node.base64Handle];
-    [NSFileManager.defaultManager createDirectoryAtURL:nodeDirectoryURL withIntermediateDirectories:YES attributes:nil error:nil];
-    
-    NSURL *uploadURL = [nodeDirectoryURL URLByAppendingPathComponent:attributeName isDirectory:NO];
-    [NSFileManager.defaultManager removeItemIfExistsAtURL:uploadURL];
-    
-    return uploadURL;
-}
-
 - (NSURL *)attributeDirectoryURL {
     return [NSURL.mnz_cameraUploadURL URLByAppendingPathComponent:@"Attributes" isDirectory:YES];
+}
+
+- (NSURL *)nodeAttributesDirectoryURLByLocalIdentifier:(NSString *)identifier {
+    return [[self attributeDirectoryURL] URLByAppendingPathComponent:identifier.mnz_stringByRemovingInvalidFileCharacters];
 }
 
 @end
