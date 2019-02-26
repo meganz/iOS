@@ -26,6 +26,7 @@ extern NSString * const MEGACameraUploadUploadingTasksCountChangedNotificationNa
 extern NSString * const MEGAPhotoConcurrentCountUserInfoKey;
 extern NSString * const MEGAVideoConcurrentCountUserInfoKey;
 extern NSString * const MEGAHasUploadingTasksReachedMaximumCountUserInfoKey;
+extern NSString * const MEGACurrentUploadingTasksCountUserInfoKey;
 
 #pragma mark - camera upload constants
 
