@@ -11,8 +11,9 @@
 
 @interface AttributeUploadManager ()
 
-@property (strong, nonatomic) NSOperationQueue *thumbnailOperationQueue;
-@property (strong, nonatomic) NSOperationQueue *attributeOerationQueue;
+@property (strong, nonatomic) NSOperationQueue *thumbnailUploadOperationQueue;
+@property (strong, nonatomic) NSOperationQueue *attributeUploadOerationQueue;
+@property (strong, nonatomic) NSOperationQueue *attributeScanQueue;
 
 @end
 
@@ -31,11 +32,15 @@
 - (instancetype)init {
     self = [super init];
     if (self) {
-        _thumbnailOperationQueue = [[NSOperationQueue alloc] init];
-        _thumbnailOperationQueue.qualityOfService = NSQualityOfServiceUserInteractive;
+        _thumbnailUploadOperationQueue = [[NSOperationQueue alloc] init];
+        _thumbnailUploadOperationQueue.qualityOfService = NSQualityOfServiceUserInteractive;
         
-        _attributeOerationQueue = [[NSOperationQueue alloc] init];
-        _attributeOerationQueue.qualityOfService = NSQualityOfServiceUserInitiated;
+        _attributeUploadOerationQueue = [[NSOperationQueue alloc] init];
+        _attributeUploadOerationQueue.qualityOfService = NSQualityOfServiceUserInitiated;
+        
+        _attributeScanQueue = [[NSOperationQueue alloc] init];
+        _attributeScanQueue.maxConcurrentOperationCount = 1;
+        _attributeScanQueue.qualityOfService = NSQualityOfServiceUtility;
     }
     return self;
 }
@@ -43,12 +48,12 @@
 #pragma mark - util
 
 - (void)waitUntilAllThumbnailUploadsAreFinished {
-    [self.thumbnailOperationQueue waitUntilAllOperationsAreFinished];
+    [self.thumbnailUploadOperationQueue waitUntilAllOperationsAreFinished];
 }
 
 - (void)waitUntilAllAttributeUploadsAreFinished {
     [self waitUntilAllThumbnailUploadsAreFinished];
-    [self.attributeOerationQueue waitUntilAllOperationsAreFinished];
+    [self.attributeUploadOerationQueue waitUntilAllOperationsAreFinished];
 }
 
 #pragma mark - upload coordinate
@@ -58,7 +63,7 @@
         return;
     }
     
-    [self.attributeOerationQueue addOperation:[[CoordinatesUploadOperation alloc] initWithLocation:location node:node]];
+    [self.attributeUploadOerationQueue addOperation:[[CoordinatesUploadOperation alloc] initWithLocation:location node:node]];
 }
 
 #pragma mark - upload preview and thumbnail files
@@ -84,13 +89,13 @@
 
 - (void)uploadLocalAttribute:(AssetLocalAttribute *)attribute forNode:(MEGANode *)node {
     if ([NSFileManager.defaultManager isReadableFileAtPath:attribute.thumbnailURL.path]) {
-        [self.thumbnailOperationQueue addOperation:[[ThumbnailUploadOperation alloc] initWithAttributeURL:attribute.thumbnailURL node:node]];
+        [self.thumbnailUploadOperationQueue addOperation:[[ThumbnailUploadOperation alloc] initWithAttributeURL:attribute.thumbnailURL node:node]];
     } else {
         MEGALogError(@"[Camera Upload] No thumbnail file found at URL %@", attribute.thumbnailURL);
     }
     
     if ([NSFileManager.defaultManager isReadableFileAtPath:attribute.previewURL.path]) {
-        [self.attributeOerationQueue addOperation:[[PreviewUploadOperation alloc] initWithAttributeURL:attribute.previewURL node:node]];
+        [self.attributeUploadOerationQueue addOperation:[[PreviewUploadOperation alloc] initWithAttributeURL:attribute.previewURL node:node]];
     } else {
         MEGALogError(@"[Camera Upload] No preview file found at URL %@", attribute.previewURL);
     }
@@ -99,17 +104,18 @@
 #pragma mark - attributes scan and retry
 
 - (void)scanLocalAttributeFilesAndRetryUploadIfNeeded {
+    MEGALogDebug(@"[Camera Upload] scan local attribute files and retry upload");
     if (!(MEGASdkManager.sharedMEGASdk.isLoggedIn && CameraUploadManager.shared.isNodesFetchDone)) {
         return;
     }
     
-    MEGALogDebug(@"[Camera Upload] scan local attribute files and retry upload");
+    if (![NSFileManager.defaultManager fileExistsAtPath:[self attributeDirectoryURL].path]) {
+        return;
+    }
     
-    dispatch_async(dispatch_get_global_queue(QOS_CLASS_UTILITY, 0), ^{
-        if (![NSFileManager.defaultManager fileExistsAtPath:[self attributeDirectoryURL].path]) {
-            return;
-        }
-        
+    [MEGASdkManager.sharedMEGASdk retryPendingConnections];
+    
+    [self.attributeScanQueue addOperationWithBlock:^{
         NSError *error;
         NSArray<NSURL *> *attributeDirectoryURLs = [NSFileManager.defaultManager contentsOfDirectoryAtURL:[self attributeDirectoryURL] includingPropertiesForKeys:nil options:NSDirectoryEnumerationSkipsHiddenFiles error:&error];
         if (error) {
@@ -117,25 +123,17 @@
             return;
         }
         
-        [MEGASdkManager.sharedMEGASdk retryPendingConnections];
-        
         for (NSURL *URL in attributeDirectoryURLs) {
             [self scanAttributeDirectoryURL:URL];
         }
-    });
+    }];
 }
 
 - (void)scanAttributeDirectoryURL:(NSURL *)URL {
     AssetLocalAttribute *attribute = [[AssetLocalAttribute alloc] initWithAttributeDirectoryURL:URL];
-    if (!attribute.hasAttributes) {
-        [NSFileManager.defaultManager removeItemIfExistsAtURL:URL];
-        return;
-    }
-    
     MEGANode *node = [MEGASdkManager.sharedMEGASdk nodeForFingerprint:attribute.savedFingerprint];
     if (node == nil) {
-        MEGALogError(@"[Camera Upload] no node can be created from %@ for %@", attribute.savedFingerprint, URL.lastPathComponent);
-        [NSFileManager.defaultManager removeItemIfExistsAtURL:URL];
+        MEGALogDebug(@"[Camera Upload] no node can be created from %@ for %@", attribute.savedFingerprint, URL.lastPathComponent);
         return;
     }
     
@@ -146,48 +144,64 @@
     if (attribute.hasSavedThumbnail) {
         if ([node hasThumbnail]) {
             [NSFileManager.defaultManager removeItemIfExistsAtURL:attribute.thumbnailURL];
-        } else if (![self hasPendingAttributeOperationsForNode:node attributeType:MEGAAttributeTypeThumbnail]) {
+        } else if (![self hasPendingThumbnailOperationForNode:node]) {
             MEGALogDebug(@"[Camera Upload] retry thumbnail upload for %@", node.name);
-            [self.thumbnailOperationQueue addOperation:[[ThumbnailUploadOperation alloc] initWithAttributeURL:attribute.thumbnailURL node:node]];
+            [self.thumbnailUploadOperationQueue addOperation:[[ThumbnailUploadOperation alloc] initWithAttributeURL:attribute.thumbnailURL node:node]];
         }
     }
     
     if (attribute.hasSavedPreview) {
         if ([node hasPreview]) {
             [NSFileManager.defaultManager removeItemIfExistsAtURL:attribute.previewURL];
-        } else if (![self hasPendingAttributeOperationsForNode:node attributeType:MEGAAttributeTypePreview]) {
+        } else if (![self hasPendingPreviewOperationForNode:node]) {
             MEGALogDebug(@"[Camera Upload] retry preview upload for %@", node.name);
-            [self.attributeOerationQueue addOperation:[[PreviewUploadOperation alloc] initWithAttributeURL:attribute.previewURL node:node]];
+            [self.attributeUploadOerationQueue addOperation:[[PreviewUploadOperation alloc] initWithAttributeURL:attribute.previewURL node:node]];
         }
     }
 }
 
-- (BOOL)hasPendingAttributeOperationsForNode:(MEGANode *)node attributeType:(MEGAAttributeType)type {
+- (BOOL)hasPendingThumbnailOperationForNode:(MEGANode *)node {
     BOOL hasPendingOperation = NO;
     
-    if (type == MEGAAttributeTypeThumbnail) {
-        for (NSOperation *operation in self.thumbnailOperationQueue.operations) {
-            if ([operation isMemberOfClass:[ThumbnailUploadOperation class]]) {
-                ThumbnailUploadOperation *thumbnailUploadOperation = (ThumbnailUploadOperation *)operation;
-                if (thumbnailUploadOperation.node.handle == node.handle) {
-                    hasPendingOperation = YES;
-                    break;
-                }
-            }
-        }
-    } else if (type == MEGAAttributeTypePreview) {
-        for (NSOperation *operation in self.attributeOerationQueue.operations) {
-            if ([operation isMemberOfClass:[PreviewUploadOperation class]]) {
-                PreviewUploadOperation *previewUploadOperation = (PreviewUploadOperation *)operation;
-                if (previewUploadOperation.node.handle == node.handle) {
-                    hasPendingOperation = YES;
-                    break;
-                }
+    for (NSOperation *operation in self.thumbnailUploadOperationQueue.operations) {
+        if ([operation isMemberOfClass:[ThumbnailUploadOperation class]]) {
+            ThumbnailUploadOperation *thumbnailUploadOperation = (ThumbnailUploadOperation *)operation;
+            if (thumbnailUploadOperation.node.handle == node.handle) {
+                hasPendingOperation = YES;
+                break;
             }
         }
     }
     
     return hasPendingOperation;
+}
+
+- (BOOL)hasPendingPreviewOperationForNode:(MEGANode *)node {
+    BOOL hasPendingOperation = NO;
+    
+    for (NSOperation *operation in self.attributeUploadOerationQueue.operations) {
+        if ([operation isMemberOfClass:[PreviewUploadOperation class]]) {
+            PreviewUploadOperation *previewUploadOperation = (PreviewUploadOperation *)operation;
+            if (previewUploadOperation.node.handle == node.handle) {
+                hasPendingOperation = YES;
+                break;
+            }
+        }
+    }
+    
+    return hasPendingOperation;
+}
+
+#pragma mark - data collation
+
+- (void)collateLocalAttributes {
+    NSArray<NSURL *> *attributeDirectoryURLs = [NSFileManager.defaultManager contentsOfDirectoryAtURL:[self attributeDirectoryURL] includingPropertiesForKeys:nil options:NSDirectoryEnumerationSkipsHiddenFiles error:nil];
+    for (NSURL *URL in attributeDirectoryURLs) {
+        AssetLocalAttribute *localAttribute = [[AssetLocalAttribute alloc] initWithAttributeDirectoryURL:URL];
+        if (!localAttribute.hasSavedAttributes) {
+            [NSFileManager.defaultManager removeItemIfExistsAtURL:URL];
+        }
+    }
 }
 
 #pragma mark - Utils

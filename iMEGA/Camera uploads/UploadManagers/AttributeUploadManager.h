@@ -22,6 +22,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)uploadCoordinateLocation:(nullable CLLocation *)location forNode:(MEGANode *)node;
 
+- (void)collateLocalAttributes;
+
 @end
 
 NS_ASSUME_NONNULL_END

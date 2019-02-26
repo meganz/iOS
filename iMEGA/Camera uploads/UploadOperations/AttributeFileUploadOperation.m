@@ -16,13 +16,7 @@
 
 - (void)start {
     [super start];
-    
-    if (![NSFileManager.defaultManager fileExistsAtPath:self.attributeURL.path]) {
-        MEGALogError(@"[Camera Upload] No attribute file found at URL %@", self.attributeURL);
-        [self finishOperation];
-        return;
-    }
-    
+
     [self beginBackgroundTaskWithExpirationHandler:^{
         [self finishOperation];
     }];

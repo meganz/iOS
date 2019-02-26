@@ -16,7 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (readonly) NSURL *previewURL;
 @property (readonly) BOOL hasSavedPreview;
 
-@property (readonly) BOOL hasAttributes;
+@property (readonly) BOOL hasSavedAttributes;
 
 - (instancetype)initWithAttributeDirectoryURL:(NSURL *)URL;
 
