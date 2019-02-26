@@ -4,7 +4,7 @@
 #pragma mark - global notifications
 
 NSString * const MEGALogoutNotificationName = @"nz.mega.logout";
-NSString * const MEGANodesFetchDoneNotificationName = @"nz.mega.nodesFetchFinished";
+NSString * const MEGANodesCurrentNotificationName = @"nz.mega.nodesCurrent";
 NSString * const MEGAStorageOverQuotaNotificationName = @"nz.mega.storageOverQuota";
 NSString * const MEGAStorageEventDidChangeNotificationName = @"nz.mega.event.storage";
 

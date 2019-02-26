@@ -36,7 +36,7 @@
                 localUniqueFileName = originalFileName;
             }
             
-            MEGALogDebug(@"[Camera Upload] %@ local name generated", localUniqueFileName);
+            MEGALogDebug(@"[Camera Upload] %@ local name generated for %@", localUniqueFileName, record.localIdentifier);
             
             [self saveLocalUniqueFileName:localUniqueFileName fileExtension:fileExtension forUploadRecord:record error:nil];
         }

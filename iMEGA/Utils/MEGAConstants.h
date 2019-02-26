@@ -4,7 +4,7 @@
 #pragma mark - global notifications
 
 extern NSString * const MEGALogoutNotificationName;
-extern NSString * const MEGANodesFetchDoneNotificationName;
+extern NSString * const MEGANodesCurrentNotificationName;
 extern NSString * const MEGAStorageOverQuotaNotificationName;
 extern NSString * const MEGAStorageEventDidChangeNotificationName;
 

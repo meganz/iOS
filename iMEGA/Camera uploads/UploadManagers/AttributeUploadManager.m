@@ -105,7 +105,7 @@
 
 - (void)scanLocalAttributeFilesAndRetryUploadIfNeeded {
     MEGALogDebug(@"[Camera Upload] scan local attribute files and retry upload");
-    if (!(MEGASdkManager.sharedMEGASdk.isLoggedIn && CameraUploadManager.shared.isNodesFetchDone)) {
+    if (!(MEGASdkManager.sharedMEGASdk.isLoggedIn && CameraUploadManager.shared.isNodeTreeCurrent)) {
         return;
     }
     
