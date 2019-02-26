@@ -41,7 +41,7 @@ static NSString * const FingerprintFileName = @"fingerprint";
     return [NSFileManager.defaultManager fileExistsAtPath:self.thumbnailURL.path isDirectory:&isDirectory] && !isDirectory;
 }
 
-- (BOOL)hasAttributes {
+- (BOOL)hasSavedAttributes {
     NSArray<NSString *> *contents = [NSFileManager.defaultManager contentsOfDirectoryAtPath:self.attributeDirectoryURL.path error:nil];
     if (contents.count == 0) {
         return NO;
