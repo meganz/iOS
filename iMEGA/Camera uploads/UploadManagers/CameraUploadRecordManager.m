@@ -180,6 +180,12 @@ static const NSUInteger MaximumUploadRetryPerLoginCount = 800;
     return [self countForFetchRequest:request error:error];
 }
 
+- (NSUInteger)uploadingUploadRecordsCountWithError:(NSError * _Nullable __autoreleasing *)error {
+    NSFetchRequest *request = MOAssetUploadRecord.fetchRequest;
+    request.predicate = [NSPredicate predicateWithFormat:@"status == %@", @(CameraAssetUploadStatusUploading)];
+    return [self countForFetchRequest:request error:error];
+}
+
 - (NSUInteger)countForFetchRequest:(NSFetchRequest *)request error:(NSError * _Nullable __autoreleasing *)error {
     __block NSUInteger count = 0;
     __block NSError *coreDataError = nil;

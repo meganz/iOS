@@ -19,11 +19,13 @@ NSString * const MEGACameraUploadPhotoUploadLocalDiskFullNotificationName = @"nz
 NSString * const MEGACameraUploadVideoUploadLocalDiskFullNotificationName = @"nz.mega.cameraUpload.video.localDiskFull";
 NSString * const MEGACameraUploadPhotoConcurrentCountChangedNotificationName = @"nz.mega.cameraUpload.photo.concurrentCountChanged";
 NSString * const MEGACameraUploadVideoConcurrentCountChangedNotificationName = @"nz.mega.cameraUpload.video.concurrentCountChanged";
+NSString * const MEGACameraUploadUploadingTasksCountChangedNotificationName = @"nz.mega.cameraUpload.uploadingTaskCountChanged";
 
 #pragma mark - camera upload notification keys
 
 NSString * const MEGAPhotoConcurrentCountUserInfoKey = @"nz.mega.photoConcurrentCountKey";
 NSString * const MEGAVideoConcurrentCountUserInfoKey = @"nz.mega.videoConcurrentCountKey";
+NSString * const MEGAHasUploadingTasksReachedMaximumCountUserInfoKey = @"nz.mega.uploadingTasksReachedMaximumCountKey";
 
 #pragma mark - camera upload constants
 

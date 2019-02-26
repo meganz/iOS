@@ -44,6 +44,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (NSUInteger)pendingUploadRecordsCountByMediaTypes:(NSArray <NSNumber *> *)mediaTypes error:(NSError *__autoreleasing  _Nullable *)error;
 
+- (NSUInteger)uploadingUploadRecordsCountWithError:(NSError *__autoreleasing  _Nullable *)error;
+
 #pragma mark - save records
 
 - (BOOL)saveChangesIfNeededWithError:(NSError * _Nullable __autoreleasing * _Nullable)error;
