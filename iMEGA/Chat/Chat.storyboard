@@ -1009,9 +1009,9 @@
                                             <constraint firstAttribute="width" constant="120" id="OJc-3V-MaQ"/>
                                         </constraints>
                                     </imageView>
-                                    <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="userMutedBig" translatesAutoresizingMaskIntoConstraints="NO" id="QFf-4o-CyE">
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="userMutedBig" translatesAutoresizingMaskIntoConstraints="NO" id="QFf-4o-CyE">
                                         <rect key="frame" x="-24" y="0.0" width="24" height="24"/>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="QFf-4o-CyE" secondAttribute="height" multiplier="1:1" id="Bsp-gL-Pn6"/>
                                             <constraint firstAttribute="width" relation="lessThanOrEqual" constant="46" id="CRL-tu-aBM"/>
@@ -1034,7 +1034,7 @@
                                                 </userDefinedRuntimeAttributes>
                                             </view>
                                         </subviews>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.40095248290000002" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstItem="C2w-Uz-VIR" firstAttribute="centerY" secondItem="eIc-Xg-TJy" secondAttribute="centerY" id="2RD-A3-P2O"/>
                                             <constraint firstItem="C2w-Uz-VIR" firstAttribute="centerX" secondItem="eIc-Xg-TJy" secondAttribute="centerX" id="Tz4-mb-FbE"/>
