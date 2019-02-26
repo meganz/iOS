@@ -192,6 +192,10 @@ const NSUInteger kMaxMessagesToLoad = 256;
     _whoIsTypingMutableArray = [[NSMutableArray alloc] init];
     _whoIsTypingTimersMutableDictionary = [[NSMutableDictionary alloc] init];
     
+    // Voice clips tooltip:
+    self.tapAndHoldLabel.text = AMLocalizedString(@"Tap and hold", @"First part of the string 'Tap and hold <icon> to record, release to send'. There is a microphone icon between the two parts of the string.");
+    self.releaseToSendLabel.text = AMLocalizedString(@"to record, release to send", @"Second part of the string 'Tap and hold <icon> to record, release to send'. There is a microphone icon between the two parts of the string.");
+    
     // Array of observed messages:
     self.observedDialogMessages = [[NSMutableSet<MEGAChatMessage *> alloc] init];
     self.observedNodeMessages = [[NSMutableSet<MEGAChatMessage *> alloc] init];
@@ -1167,6 +1171,14 @@ const NSUInteger kMaxMessagesToLoad = 256;
     }
 }
 
+#pragma mark - IBActions
+
+- (IBAction)closeTooltipTapped:(UIButton *)sender {
+    [UIView animateWithDuration:0.2f animations:^{
+        self.tooltipView.alpha = 0.0f;
+    } completion:nil];
+}
+
 #pragma mark - Gesture recognizer
 
 - (void)hideInputToolbar {
@@ -1469,6 +1481,13 @@ const NSUInteger kMaxMessagesToLoad = 256;
         }];
         [[MEGASdkManager sharedMEGASdk] createFolderWithName:@"My chat files" parent:[[MEGASdkManager sharedMEGASdk] rootNode] delegate:createFolderRequestDelegate];
     }
+}
+
+- (void)messagesInputToolbar:(MEGAInputToolbar *)toolbar didPressNotHeldRecordButton:(UIButton *)sender {
+    self.tooltipView.alpha = 1.0f;
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self closeTooltipTapped:nil];
+    });
 }
 
 - (void)uploadAssets:(NSArray<PHAsset *> *)assets toParentNode:(MEGANode *)parentNode {
