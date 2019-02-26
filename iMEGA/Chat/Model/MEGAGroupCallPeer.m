@@ -17,6 +17,10 @@
     return self;
 }
 
+- (NSString *)description {
+    return [NSString stringWithFormat:@"peerid=%llu clientid=%llu video=%@, audio=%@", self.peerId, self.clientId, self.video ? @"YES" : @"NO", self.audio ? @"YES" : @"NO"];
+}
+
 - (BOOL)isEqualToPeer:(MEGAGroupCallPeer *)peer {
     return self.peerId == peer.peerId && self.clientId == peer.clientId;
 }
