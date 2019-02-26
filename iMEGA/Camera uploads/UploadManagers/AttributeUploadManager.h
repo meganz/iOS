@@ -10,7 +10,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (instancetype)shared;
 
-- (void)waitUnitlAllAttributeUploadsAreFinished;
+- (void)waitUntilAllThumbnailUploadsAreFinished;
+
+- (void)waitUntilAllAttributeUploadsAreFinished;
 
 - (void)scanLocalAttributeFilesAndRetryUploadIfNeeded;
 

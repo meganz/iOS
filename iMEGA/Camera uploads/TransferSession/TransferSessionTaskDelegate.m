@@ -50,9 +50,9 @@ static const NSUInteger MEGATransferTokenLength = 36;
 #pragma mark - util methods
 
 - (void)handleURLSessionError:(NSError *)error forTask:(NSURLSessionTask *)task {
-    MEGALogDebug(@"[Camera Upload] Session task %@ completed with error %@", task.taskDescription, error);
+    MEGALogError(@"[Camera Upload] Session task %@ completed with error %@", task.taskDescription, error);
     CameraAssetUploadStatus errorStatus;
-    if (error.code == NSURLErrorCancelled) {
+    if (error.code == NSURLErrorCancelled || error.code == NSURLErrorBackgroundSessionWasDisconnected || error.code == NSURLErrorTimedOut) {
         errorStatus = CameraAssetUploadStatusCancelled;
     } else {
         errorStatus = CameraAssetUploadStatusFailed;
