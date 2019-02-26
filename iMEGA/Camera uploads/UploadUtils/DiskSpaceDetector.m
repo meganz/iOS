@@ -98,14 +98,16 @@ static const NSTimeInterval RetryTimerTolerance = 6;
     if (self.photoRetryTimer.isValid) {
         [self.photoRetryTimer invalidate];
     }
-
-    self.photoRetryTimer = [NSTimer scheduledTimerWithTimeInterval:RetryTimerInterval repeats:YES block:^(NSTimer * _Nonnull timer) {
-        if (NSFileManager.defaultManager.deviceFreeSize > self.photoRetryDiskFreeSpace) {
-            [timer invalidate];
-            self.diskIsFullForPhotos = NO;
-        }
-    }];
+    
+    self.photoRetryTimer = [NSTimer scheduledTimerWithTimeInterval:RetryTimerInterval target:self selector:@selector(firePhotoRetryTimer:) userInfo:nil repeats:YES];
     self.photoRetryTimer.tolerance = RetryTimerTolerance;
+}
+
+- (void)firePhotoRetryTimer:(NSTimer *)timer {
+    if (NSFileManager.defaultManager.deviceFreeSize > self.photoRetryDiskFreeSpace) {
+        [timer invalidate];
+        self.diskIsFullForPhotos = NO;
+    }
 }
 
 - (void)setupVideoUploadRetryTimer {
@@ -113,13 +115,15 @@ static const NSTimeInterval RetryTimerTolerance = 6;
         [self.videoRetryTimer invalidate];
     }
     
-    self.videoRetryTimer = [NSTimer scheduledTimerWithTimeInterval:RetryTimerInterval repeats:YES block:^(NSTimer * _Nonnull timer) {
-        if (NSFileManager.defaultManager.deviceFreeSize > self.videoRetryDiskFreeSpace) {
-            [timer invalidate];
-            self.diskIsFullForVideos = NO;
-        }
-    }];
+    self.videoRetryTimer = [NSTimer scheduledTimerWithTimeInterval:RetryTimerInterval target:self selector:@selector(fireVideoRetryTimer:) userInfo:nil repeats:YES];
     self.videoRetryTimer.tolerance = RetryTimerTolerance;
+}
+
+- (void)fireVideoRetryTimer:(NSTimer *)timer {
+    if (NSFileManager.defaultManager.deviceFreeSize > self.videoRetryDiskFreeSpace) {
+        [timer invalidate];
+        self.diskIsFullForVideos = NO;
+    }
 }
 
 @end

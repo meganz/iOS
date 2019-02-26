@@ -21,6 +21,7 @@
 #import "LivePhotoUploadOperation.h"
 #import "PhotoUploadOperation.h"
 #import "CameraUploadConcurrentCountCalculator.h"
+#import "BackgroundUploadingTaskMonitor.h"
 
 static const NSTimeInterval MinimumBackgroundRefreshInterval = 2 * 3600;
 static const NSTimeInterval BackgroundRefreshDuration = 25;
@@ -33,19 +34,24 @@ static const CGFloat MemoryWarningConcurrentThrottleRatio = .5;
 
 @interface CameraUploadManager ()
 
+@property (copy, nonatomic) void (^backgroundRefreshCompletion)(UIBackgroundFetchResult);
+@property (readonly) NSArray<NSNumber *> *enabledMediaTypes;
 @property (nonatomic) BOOL isNodesFetchDone;
 @property (nonatomic) StorageState storageState;
+
 @property (strong, nonatomic) NSOperationQueue *photoUploadOperationQueue;
 @property (strong, nonatomic) NSOperationQueue *videoUploadOperationQueue;
+
 @property (strong, readwrite, nonatomic) MEGANode *cameraUploadNode;
+
 @property (strong, nonatomic) CameraScanner *cameraScanner;
 @property (strong, nonatomic) UploadRecordsCollator *uploadRecordsCollator;
 @property (strong, nonatomic) BackgroundUploadMonitor *backgroundUploadMonitor;
 @property (strong, nonatomic) MediaInfoLoader *mediaInfoLoader;
 @property (strong, nonatomic) DiskSpaceDetector *diskSpaceDetector;
 @property (strong, nonatomic) CameraUploadNodeLoader *cameraUploadNodeLoader;
-@property (strong, nonatomic) CameraUploadConcurrentCountCalculator *concurrentCountCalculator;
-@property (readonly) NSArray<NSNumber *> *enabledMediaTypes;
+@property (strong, nonatomic) CameraUploadConcurrentCountCalculator *concurrentCountCalculator;\
+@property (strong, nonatomic) BackgroundUploadingTaskMonitor *backgroundUploadingTaskMonitor;
 
 @end
 
@@ -140,6 +146,7 @@ static const CGFloat MemoryWarningConcurrentThrottleRatio = .5;
     [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(didReceiveReachabilityChangedNotification:) name:kReachabilityChangedNotification object:nil];
     [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(didReceiveStorageOverQuotaNotification:) name:MEGAStorageOverQuotaNotificationName object:nil];
     [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(didReceiveStorageEventChangedNotification:) name:MEGAStorageEventDidChangeNotificationName object:nil];
+    [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(didReceiveUploadingTaskCountChangedNotification:) name:MEGACameraUploadUploadingTasksCountChangedNotificationName object:nil];
 }
 
 - (void)unregisterNotificationsForUpload {
@@ -149,6 +156,7 @@ static const CGFloat MemoryWarningConcurrentThrottleRatio = .5;
     [NSNotificationCenter.defaultCenter removeObserver:self name:kReachabilityChangedNotification object:nil];
     [NSNotificationCenter.defaultCenter removeObserver:self name:MEGAStorageOverQuotaNotificationName object:nil];
     [NSNotificationCenter.defaultCenter removeObserver:self name:MEGAStorageEventDidChangeNotificationName object:nil];
+    [NSNotificationCenter.defaultCenter removeObserver:self name:MEGACameraUploadUploadingTasksCountChangedNotificationName object:nil];
 }
 
 #pragma mark - properties
@@ -207,6 +215,14 @@ static const CGFloat MemoryWarningConcurrentThrottleRatio = .5;
     }
     
     return _concurrentCountCalculator;
+}
+
+- (BackgroundUploadingTaskMonitor *)backgroundUploadingTaskMonitor {
+    if (_backgroundUploadingTaskMonitor == nil) {
+        _backgroundUploadingTaskMonitor = [[BackgroundUploadingTaskMonitor alloc] init];
+    }
+    
+    return _backgroundUploadingTaskMonitor;
 }
 
 - (void)setPausePhotoUpload:(BOOL)pausePhotoUpload {
@@ -318,6 +334,7 @@ static const CGFloat MemoryWarningConcurrentThrottleRatio = .5;
     
     [self.diskSpaceDetector startDetectingPhotoUpload];
     [self.concurrentCountCalculator startCalculatingConcurrentCount];
+    [self.backgroundUploadingTaskMonitor startMonitoringBackgroundUploadingTasks];
     
     MEGALogDebug(@"[Camera Upload] start uploading photos with current photo operation count %lu", (unsigned long)self.photoUploadOperationQueue.operationCount);
     [self uploadAssetsForMediaType:PHAssetMediaTypeImage concurrentCount:PhotoUploadBatchCount];
@@ -436,6 +453,7 @@ static const CGFloat MemoryWarningConcurrentThrottleRatio = .5;
     [self unregisterNotificationsForUpload];
     [self.diskSpaceDetector stopDetectingPhotoUpload];
     [self.concurrentCountCalculator stopCalculatingConcurrentCount];
+    [self.backgroundUploadingTaskMonitor stopMonitoringBackgroundUploadingTasks];
     _pausePhotoUpload = NO;
     _storageState = StorageStateGreen;
     [TransferSessionManager.shared invalidateAndCancelPhotoSessions];
@@ -597,6 +615,16 @@ static const CGFloat MemoryWarningConcurrentThrottleRatio = .5;
     }
 }
 
+- (void)didReceiveUploadingTaskCountChangedNotification:(NSNotification *)notification {
+    MEGALogDebug(@"[Camera Upload] uploading task count changed notification %@", notification.userInfo);
+    BOOL hasReachedMaximumCount = [notification.userInfo[MEGAHasUploadingTasksReachedMaximumCountUserInfoKey] boolValue];
+    if (hasReachedMaximumCount) {
+        [self pauseCameraUploadIfNeeded];
+    } else {
+        [self resumeCameraUpload];
+    }
+}
+
 - (void)didReceiveLogoutNotification:(NSNotification *)notification {
     MEGALogDebug(@"[Camera Upload] logout notification %@", notification);
     [self disableCameraUpload];
@@ -644,16 +672,21 @@ static const CGFloat MemoryWarningConcurrentThrottleRatio = .5;
             } else {
                 MEGALogDebug(@"[Camera Upload] upload camera in background refresh");
                 [self startCameraUploadIfNeeded];
-                [NSTimer scheduledTimerWithTimeInterval:BackgroundRefreshDuration repeats:NO block:^(NSTimer * _Nonnull timer) {
-                    completion(UIBackgroundFetchResultNewData);
-                    if (self.uploadPendingAssetsCount == 0) {
-                        completion(UIBackgroundFetchResultNoData);
-                    }
-                }];
+                self.backgroundRefreshCompletion = completion;
+                [NSTimer scheduledTimerWithTimeInterval:BackgroundRefreshDuration target:self selector:@selector(backgroudRefreshTimerExpired:) userInfo:nil repeats:NO];
             }
         }];
     } else {
         completion(UIBackgroundFetchResultNoData);
+    }
+}
+
+- (void)backgroudRefreshTimerExpired:(NSTimer *)timer {
+    if (self.backgroundRefreshCompletion) {
+        self.backgroundRefreshCompletion(UIBackgroundFetchResultNewData);
+        if (self.uploadPendingAssetsCount == 0) {
+            self.backgroundRefreshCompletion(UIBackgroundFetchResultNoData);
+        }
     }
 }
 
