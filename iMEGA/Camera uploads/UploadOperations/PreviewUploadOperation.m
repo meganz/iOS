@@ -4,6 +4,7 @@
 #import "CameraUploadRequestDelegate.h"
 #import "NSFileManager+MNZCategory.h"
 #import "MEGAError+MNZCategory.h"
+#import "NSURL+CameraUpload.h"
 
 @implementation PreviewUploadOperation
 
@@ -27,8 +28,7 @@
 }
 
 - (void)cacheAttributeFile {
-    NSURL *cacheDirectory = [[NSFileManager.defaultManager URLsForDirectory:NSCachesDirectory inDomains:NSUserDomainMask] firstObject];
-    [self moveAttributeToDirectoryURL:[cacheDirectory URLByAppendingPathComponent:@"previewsV3"] newFileName:self.node.base64Handle];
+    [self.attributeURL mnz_cachePreviewForNode:self.node];
 }
 
 @end

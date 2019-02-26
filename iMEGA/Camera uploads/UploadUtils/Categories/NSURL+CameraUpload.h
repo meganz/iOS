@@ -3,6 +3,8 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+@class MEGANode;
+
 @interface NSURL (CameraUpload)
 
 /**
@@ -15,6 +17,11 @@ NS_ASSUME_NONNULL_BEGIN
 + (NSURL *)mnz_assetDirectoryURLForLocalIdentifier:(NSString *)localIdentifier;
 
 + (NSURL *)mnz_archivedURLForLocalIdentifier:(NSString *)localIdentifier;
+
+- (BOOL)mnz_moveToDirectory:(NSURL *)directoryURL renameTo:(NSString *)fileName;
+
+- (BOOL)mnz_cacheThumbnailForNode:(MEGANode *)node;
+- (BOOL)mnz_cachePreviewForNode:(MEGANode *)node;
 
 @end
 

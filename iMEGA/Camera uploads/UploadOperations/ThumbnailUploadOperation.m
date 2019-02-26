@@ -4,6 +4,7 @@
 #import "CameraUploadRequestDelegate.h"
 #import "MEGAError+MNZCategory.h"
 #import "NSFileManager+MNZCategory.h"
+#import "NSURL+CameraUpload.h"
 
 @implementation ThumbnailUploadOperation
 
@@ -27,7 +28,7 @@
 }
 
 - (void)cacheAttributeFile {
-    [self moveAttributeToDirectoryURL:[Helper urlForSharedSandboxCacheDirectory:@"thumbnailsV3"] newFileName:self.node.base64Handle];
+    [self.attributeURL mnz_cacheThumbnailForNode:self.node];
 }
 
 @end

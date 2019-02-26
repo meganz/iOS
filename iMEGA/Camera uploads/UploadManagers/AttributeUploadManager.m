@@ -143,7 +143,7 @@
 - (void)retryUploadLocalAttribute:(AssetLocalAttribute *)attribute forNode:(MEGANode *)node {
     if (attribute.hasSavedThumbnail) {
         if ([node hasThumbnail]) {
-            [NSFileManager.defaultManager removeItemIfExistsAtURL:attribute.thumbnailURL];
+            [attribute.thumbnailURL mnz_cacheThumbnailForNode:node];
         } else if (![self hasPendingThumbnailOperationForNode:node]) {
             MEGALogDebug(@"[Camera Upload] retry thumbnail upload for %@", node.name);
             [self.thumbnailUploadOperationQueue addOperation:[[ThumbnailUploadOperation alloc] initWithAttributeURL:attribute.thumbnailURL node:node]];
@@ -152,13 +152,15 @@
     
     if (attribute.hasSavedPreview) {
         if ([node hasPreview]) {
-            [NSFileManager.defaultManager removeItemIfExistsAtURL:attribute.previewURL];
+            [attribute.previewURL mnz_cachePreviewForNode:node];
         } else if (![self hasPendingPreviewOperationForNode:node]) {
             MEGALogDebug(@"[Camera Upload] retry preview upload for %@", node.name);
             [self.attributeUploadOerationQueue addOperation:[[PreviewUploadOperation alloc] initWithAttributeURL:attribute.previewURL node:node]];
         }
     }
 }
+
+#pragma mark - pending operations check
 
 - (BOOL)hasPendingThumbnailOperationForNode:(MEGANode *)node {
     BOOL hasPendingOperation = NO;
