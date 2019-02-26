@@ -12,8 +12,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (instancetype)initWithAttributeURL:(NSURL *)URL node:(MEGANode *)node;
 
-- (void)moveAttributeToDirectoryURL:(NSURL *)directoryURL newFileName:(NSString *)fileName;
-
 @end
 
 NS_ASSUME_NONNULL_END
