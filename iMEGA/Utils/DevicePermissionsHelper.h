@@ -19,5 +19,7 @@
 + (BOOL)shouldAskForPhotosPermissions;
 + (BOOL)shouldAskForNotificationsPermissions;
 + (BOOL)shouldSetupPermissions;
++ (BOOL)isAudioPermissionAuthorizedOrNotDetermined;
++ (BOOL)isVideoPermissionAuthorizedOrNotDetermined;
 
 @end
