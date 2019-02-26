@@ -568,7 +568,7 @@
                                             [self performCall];
                                         }
                                     } else {
-                                        [DevicePermissionsHelper alertAudioPermission];
+                                        [DevicePermissionsHelper alertAudioPermissionForIncomingCall:YES];
                                     }
                                 }];
                             }
@@ -627,7 +627,7 @@
                                     [self performCall];
                                 }
                             } else {
-                                [DevicePermissionsHelper alertAudioPermission];
+                                [DevicePermissionsHelper alertAudioPermissionForIncomingCall:YES];
                             }
                         }];
                     }

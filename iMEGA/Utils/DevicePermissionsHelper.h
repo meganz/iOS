@@ -8,7 +8,7 @@
 + (void)photosPermissionWithCompletionHandler:(void (^)(BOOL granted))handler;
 + (void)notificationsPermissionWithCompletionHandler:(void (^)(BOOL granted))handler;
 
-+ (void)alertAudioPermission;
++ (void)alertAudioPermissionForIncomingCall:(BOOL)incomingCall;
 + (void)alertVideoPermissionWithCompletionHandler:(void (^)(void))handler;
 + (void)alertPhotosPermission;
 
