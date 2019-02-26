@@ -158,12 +158,14 @@ static NSString * const AttributePreviewName = @"preview";
         if ([node hasThumbnail]) {
             [NSFileManager.defaultManager removeItemIfExistsAtURL:URL];
         } else if (![self hasPendingAttributeOperationsForNode:node attributeType:MEGAAttributeTypeThumbnail]) {
+            MEGALogDebug(@"[Camera Upload] retry thumbnail upload for %@", node.name);
             [self.thumbnailOperationQueue addOperation:[[ThumbnailUploadOperation alloc] initWithAttributeURL:URL node:node]];
         }
     } else if ([name isEqualToString:AttributePreviewName]) {
         if ([node hasPreview]) {
             [NSFileManager.defaultManager removeItemIfExistsAtURL:URL];
         } else if (![self hasPendingAttributeOperationsForNode:node attributeType:MEGAAttributeTypePreview]) {
+            MEGALogDebug(@"[Camera Upload] retry preview upload for %@", node.name);
             [self.attributeOerationQueue addOperation:[[PreviewUploadOperation alloc] initWithAttributeURL:URL node:node]];
         }
     }
@@ -193,8 +195,6 @@ static NSString * const AttributePreviewName = @"preview";
             }
         }
     }
-    
-    MEGALogDebug(@"[Camera Upload] %@ for node %@ and attribute %@", hasPendingOperation ? @"found pending operation" : @"no pending operation", node.name, [self stringForAttributeType:type]);
     
     return hasPendingOperation;
 }

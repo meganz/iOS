@@ -103,11 +103,6 @@ static const CGFloat MemoryWarningConcurrentThrottleRatio = .5;
     });
 }
 
-- (void)startCameraUploadWhenApplicationResumesFromBackgroundTransfer {
-    [self startCameraUploadIfNeeded];
-    [AttributeUploadManager.shared scanLocalAttributeFilesAndRetryUploadIfNeeded];
-}
-
 #pragma mark - manage operation queues
 
 - (void)initializeCameraUploadQueues {
@@ -266,6 +261,8 @@ static const CGFloat MemoryWarningConcurrentThrottleRatio = .5;
 
 - (void)startCameraUploadIfNeeded {
     MEGALogDebug(@"[Camera Upload] start camera upload if needed");
+    [AttributeUploadManager.shared scanLocalAttributeFilesAndRetryUploadIfNeeded];
+    
     if (!MEGASdkManager.sharedMEGASdk.isLoggedIn || !CameraUploadManager.isCameraUploadEnabled) {
         return;
     }
@@ -590,14 +587,12 @@ static const CGFloat MemoryWarningConcurrentThrottleRatio = .5;
     MEGALogDebug(@"[Camera Upload] nodes fetch done notification %@", notification);
     self.isNodesFetchDone = YES;
     [self startCameraUploadIfNeeded];
-    [AttributeUploadManager.shared scanLocalAttributeFilesAndRetryUploadIfNeeded];
 }
 
 - (void)didReceiveReachabilityChangedNotification:(NSNotification *)notification {
     MEGALogDebug(@"[Camera Upload] reachability changed notification %@", notification.userInfo);
     if (MEGAReachabilityManager.isReachable) {
         [self startCameraUploadIfNeeded];
-        [AttributeUploadManager.shared scanLocalAttributeFilesAndRetryUploadIfNeeded];
     }
 }
 
