@@ -590,7 +590,7 @@ const NSUInteger kMaxMessagesToLoad = 256;
     MEGAChatConnection chatConnection = [[MEGASdkManager sharedMEGAChatSdk] chatConnectionState:self.chatRoom.chatId];
     [self updateNavigationBarButtonsState];
     
-    if (chatConnection == MEGAChatConnectionOnline && MEGAReachabilityManager.isReachable) {
+    if (self.chatRoom.ownPrivilege >= MEGAChatRoomPrivilegeStandard && chatConnection == MEGAChatConnectionOnline && MEGAReachabilityManager.isReachable && [DevicePermissionsHelper isAudioPermissionAuthorizedOrNotDetermined]) {
         if ([[MEGASdkManager sharedMEGAChatSdk] hasCallInChatRoom:self.chatRoom.chatId]) {
             MEGAChatCall *call = [[MEGASdkManager sharedMEGAChatSdk] chatCallForChatId:self.chatRoom.chatId];
             if (call.status == MEGAChatCallStatusInProgress) {
