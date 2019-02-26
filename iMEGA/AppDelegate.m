@@ -120,7 +120,7 @@
     MEGALogDebug(@"[App Lifecycle] Application will finish launching with options: %@", launchOptions);
     
     UIDevice.currentDevice.batteryMonitoringEnabled = YES;
-    
+
     [CameraUploadManager.shared setupCameraUploadWhenApplicationLaunches:application];
     
     return YES;

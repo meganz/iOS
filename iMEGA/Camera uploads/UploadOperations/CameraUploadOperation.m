@@ -218,11 +218,11 @@
     }
     
     NSError *error;
-    NSArray<NSURLSessionTask *> *uploadTasks = [self createUploadTasksWithError:&error];
+    NSArray<NSURLSessionUploadTask *> *uploadTasks = [self createUploadTasksWithError:&error];
     if (error) {
         MEGALogError(@"[Camera Upload] %@ error when to create upload task %@", self, error);
         [self finishOperationWithStatus:CameraAssetUploadStatusFailed shouldUploadNextAsset:YES];
-        for (NSURLSessionTask *task in uploadTasks) {
+        for (NSURLSessionUploadTask *task in uploadTasks) {
             MEGALogDebug(@"[Camera Upload] %@ cancel upload task %@", self, task.taskDescription);
             [task cancel];
         }
@@ -231,22 +231,22 @@
     
     if (self.isCancelled) {
         [self finishOperationWithStatus:CameraAssetUploadStatusCancelled shouldUploadNextAsset:NO];
-        for (NSURLSessionTask *task in uploadTasks) {
+        for (NSURLSessionUploadTask *task in uploadTasks) {
             MEGALogDebug(@"[Camera Upload] %@ cancel upload task %@", self, task.taskDescription);
             [task cancel];
         }
         return;
     }
     
-    for (NSURLSessionTask *task in uploadTasks) {
+    for (NSURLSessionUploadTask *task in uploadTasks) {
         [task resume];
     }
     
     [self finishOperationWithStatus:CameraAssetUploadStatusUploading shouldUploadNextAsset:YES];
 }
 
-- (NSArray<NSURLSessionTask *> *)createUploadTasksWithError:(NSError **)error {
-    NSMutableArray<NSURLSessionTask *> *uploadTasks = [NSMutableArray array];
+- (NSArray<NSURLSessionUploadTask *> *)createUploadTasksWithError:(NSError **)error {
+    NSMutableArray<NSURLSessionUploadTask *> *uploadTasks = [NSMutableArray array];
     
     for (NSString *uploadSuffix in self.uploadInfo.encryptedChunkURLsKeyedByUploadSuffix.allKeys) {
         NSURL *serverURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", self.uploadInfo.uploadURLString, uploadSuffix]];

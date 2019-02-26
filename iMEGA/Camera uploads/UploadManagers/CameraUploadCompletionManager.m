@@ -38,7 +38,7 @@
 
 - (void)waitUnitlAllUploadsAreFinished {
     [self.operationQueue waitUntilAllOperationsAreFinished];
-    [AttributeUploadManager.shared waitUnitlAllAttributeUploadsAreFinished];
+    [AttributeUploadManager.shared waitUntilAllThumbnailUploadsAreFinished];
 }
 
 - (void)handleCompletedTransferWithLocalIdentifier:(NSString *)localIdentifier token:(NSData *)token {
@@ -110,41 +110,36 @@
 #pragma mark - update status
 
 - (void)finishUploadForLocalIdentifier:(NSString *)localIdentifier status:(CameraAssetUploadStatus)status {
-    MEGALogDebug(@"[Camera Upload] background Upload finishes with session task %@ and status: %@", localIdentifier, [AssetUploadStatus stringForStatus:status]);
-    if (localIdentifier.length == 0) {
-        return;
-    }
-    
     if (!CameraUploadManager.isCameraUploadEnabled) {
         return;
     }
     
-    if ([self shouldUpdateStatus:status forLocalIdentifier:localIdentifier]) {
-        [CameraUploadRecordManager.shared updateUploadRecordByLocalIdentifier:localIdentifier withStatus:status error:nil];
-    }
-    
-    [NSFileManager.defaultManager removeItemIfExistsAtURL:[NSURL mnz_assetDirectoryURLForLocalIdentifier:localIdentifier]];
-    
-    if (status == CameraAssetUploadStatusDone) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [NSNotificationCenter.defaultCenter postNotificationName:MEGACameraUploadAssetUploadDoneNotificationName object:nil];
-        });
-    }
-}
-
-- (BOOL)shouldUpdateStatus:(CameraAssetUploadStatus)status forLocalIdentifier:(NSString *)localIdentifier {
-    BOOL shouldUpdate = YES;
-    
-    NSURL *assetDirectory = [NSURL mnz_assetDirectoryURLForLocalIdentifier:localIdentifier];
-    BOOL isDirectory;
-    if (!([NSFileManager.defaultManager fileExistsAtPath:assetDirectory.path isDirectory:&isDirectory] && isDirectory)) {
-        if (status == CameraAssetUploadStatusFailed && [CameraUploadRecordManager.shared uploadStatusForLocalIdentifier:localIdentifier] == CameraAssetUploadStatusFailed) {
-            shouldUpdate = NO;
-            MEGALogDebug(@"[Camera Upload] %@ do not update record status as it was marked by another chunk background session task", localIdentifier);
+    [CameraUploadRecordManager.shared.backgroundContext performBlockAndWait:^{
+        MEGALogDebug(@"[Camera Upload] background Upload finishes with session task %@ and status: %@", localIdentifier, [AssetUploadStatus stringForStatus:status]);
+        if (localIdentifier.length == 0) {
+            return;
         }
-    }
-    
-    return shouldUpdate;
+        
+        if (!CameraUploadManager.isCameraUploadEnabled) {
+            return;
+        }
+        
+        MOAssetUploadRecord *record = [[CameraUploadRecordManager.shared fetchUploadRecordsByLocalIdentifier:localIdentifier shouldPrefetchErrorRecords:YES error:nil] firstObject];
+        if (record.status.integerValue != CameraAssetUploadStatusUploading || record == nil) {
+            MEGALogDebug(@"[Camera Upload] %@ record status: %@ is not uploading", localIdentifier, [AssetUploadStatus stringForStatus:record.status.integerValue]);
+            return;
+        }
+        
+        [CameraUploadRecordManager.shared updateUploadRecord:record withStatus:status error:nil];
+        
+        [NSFileManager.defaultManager removeItemIfExistsAtURL:[NSURL mnz_assetDirectoryURLForLocalIdentifier:localIdentifier]];
+        
+        if (status == CameraAssetUploadStatusDone) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [NSNotificationCenter.defaultCenter postNotificationName:MEGACameraUploadAssetUploadDoneNotificationName object:nil];
+            });
+        }
+    }];
 }
 
 @end

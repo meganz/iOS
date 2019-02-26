@@ -44,8 +44,12 @@ static NSString * const AttributePreviewName = @"preview";
 
 #pragma mark - util
 
-- (void)waitUnitlAllAttributeUploadsAreFinished {
+- (void)waitUntilAllThumbnailUploadsAreFinished {
     [self.thumbnailOperationQueue waitUntilAllOperationsAreFinished];
+}
+
+- (void)waitUntilAllAttributeUploadsAreFinished {
+    [self waitUntilAllThumbnailUploadsAreFinished];
     [self.attributeOerationQueue waitUntilAllOperationsAreFinished];
 }
 

@@ -23,7 +23,7 @@
     return self;
 }
 
-#pragma mark - session tasks
+#pragma mark - session task delegate
 
 - (TransferSessionTaskDelegate *)delegateForTask:(NSURLSessionTask *)task {
     __block TransferSessionTaskDelegate *taskDelegate;
@@ -41,9 +41,7 @@
 
 - (void)addDelegate:(TransferSessionTaskDelegate *)delegate forTask:(NSURLSessionTask *)task {
     dispatch_sync(self.serialQueue, ^{
-        if (self.taskDelegateDict[@(task.taskIdentifier)] == nil) {
-            self.taskDelegateDict[@(task.taskIdentifier)] = delegate;
-        }
+        self.taskDelegateDict[@(task.taskIdentifier)] = delegate;
     });
 }
 

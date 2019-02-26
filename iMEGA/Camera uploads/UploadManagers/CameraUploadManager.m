@@ -39,7 +39,7 @@ static const CGFloat MemoryWarningConcurrentThrottleRatio = .5;
 @property (strong, nonatomic) NSOperationQueue *videoUploadOperationQueue;
 @property (strong, readwrite, nonatomic) MEGANode *cameraUploadNode;
 @property (strong, nonatomic) CameraScanner *cameraScanner;
-@property (strong, nonatomic) UploadRecordsCollator *dataCollator;
+@property (strong, nonatomic) UploadRecordsCollator *uploadRecordsCollator;
 @property (strong, nonatomic) BackgroundUploadMonitor *backgroundUploadMonitor;
 @property (strong, nonatomic) MediaInfoLoader *mediaInfoLoader;
 @property (strong, nonatomic) DiskSpaceDetector *diskSpaceDetector;
@@ -84,15 +84,17 @@ static const CGFloat MemoryWarningConcurrentThrottleRatio = .5;
 #pragma mark - application lifecycle
 
 - (void)setupCameraUploadWhenApplicationLaunches:(UIApplication *)application {
-    NSArray<NSURLSessionTask *> *tasks = [TransferSessionManager.shared restoreAllSessionTasks];
+    [TransferSessionManager.shared restoreAllSessionsWithCompletion:^(NSArray<NSURLSessionUploadTask *> * _Nonnull uploadTasks) {
+        [self.uploadRecordsCollator collateUploadingRecordsByPendingTasks:uploadTasks];
+    }];
+    
     [CameraUploadManager disableCameraUploadIfAccessProhibited];
     [CameraUploadManager enableBackgroundRefreshIfNeeded];
     [self startBackgroundUploadIfPossible];
     
     dispatch_async(dispatch_get_global_queue(QOS_CLASS_UTILITY, 0), ^{
-        [self.dataCollator collateUploadRecordsWithRunningTasks:tasks];
+        [self.uploadRecordsCollator collateNonUploadingRecords];
         [AttributeUploadManager.shared scanLocalAttributeFilesAndRetryUploadIfNeeded];
-        
         MEGALogDebug(@"[Camera Upload] app launches to state %@", @(application.applicationState));
         if (application.applicationState == UIApplicationStateBackground) {
             MEGALogDebug(@"[Camera Upload] upload camera when app launches to background");
@@ -163,12 +165,12 @@ static const CGFloat MemoryWarningConcurrentThrottleRatio = .5;
     return _cameraUploadNodeLoader;
 }
 
-- (UploadRecordsCollator *)dataCollator {
-    if (_dataCollator == nil) {
-        _dataCollator = [[UploadRecordsCollator alloc] init];
+- (UploadRecordsCollator *)uploadRecordsCollator {
+    if (_uploadRecordsCollator == nil) {
+        _uploadRecordsCollator = [[UploadRecordsCollator alloc] init];
     }
     
-    return _dataCollator;
+    return _uploadRecordsCollator;
 }
 
 - (BackgroundUploadMonitor *)backgroundUploadMonitor {

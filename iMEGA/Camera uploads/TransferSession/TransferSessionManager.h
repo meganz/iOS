@@ -4,6 +4,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 typedef void (^UploadCompletionHandler)(NSData  * _Nullable token, NSError * _Nullable error);
+typedef void (^RestoreSessionCompletionHandler)(NSArray<NSURLSessionUploadTask *> * _Nonnull uploadTasks);
 
 @interface TransferSessionManager : NSObject
 
@@ -12,12 +13,10 @@ typedef void (^UploadCompletionHandler)(NSData  * _Nullable token, NSError * _Nu
 - (void)invalidateAndCancelVideoSessions;
 - (void)invalidateAndCancelPhotoSessions;
 
-- (NSArray<NSURLSessionUploadTask *> *)restoreAllSessionTasks;
-- (NSArray<NSURLSessionUploadTask *> *)restoreSessionTasksByIdentifier:(NSString *)identifier;
+- (void)restoreAllSessionsWithCompletion:(nullable RestoreSessionCompletionHandler)completion;
+- (void)restoreSessionByIdentifier:(NSString *)identifier completion:(nullable RestoreSessionCompletionHandler)completion;
 
 - (void)saveSessionCompletion:(void (^)(void))completion forIdentifier:(NSString *)identifier;
-
-- (NSArray<NSURLSessionUploadTask *> *)allRunningUploadTasks;
 
 - (NSURLSessionUploadTask *)photoUploadTaskWithURL:(NSURL *)requestURL fromFile:(NSURL *)fileURL completion:(nullable UploadCompletionHandler)completion;
 
