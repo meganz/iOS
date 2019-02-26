@@ -715,7 +715,7 @@ const NSUInteger kMaxMessagesToLoad = 256;
                 [self openCallViewWithVideo:sender.tag active:NO];
             }
         } else {
-            [DevicePermissionsHelper alertAudioPermission];
+            [DevicePermissionsHelper alertAudioPermissionForIncomingCall:NO];
         }
     }];
 }

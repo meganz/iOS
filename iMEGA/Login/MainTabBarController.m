@@ -400,17 +400,13 @@
                     if (granted) {
                         if (call.hasVideoInitialCall) {
                             [DevicePermissionsHelper videoPermissionWithCompletionHandler:^(BOOL granted) {
-                                if (granted) {
-                                    [self presentRingingCall:api call:[api chatCallForCallId:call.callId]];
-                                } else {
-                                    [DevicePermissionsHelper alertVideoPermissionWithCompletionHandler:nil];
-                                }
+                                [self presentRingingCall:api call:[api chatCallForCallId:call.callId]];
                             }];
                         } else {
                             [self presentRingingCall:api call:[api chatCallForCallId:call.callId]];
                         }
                     } else {
-                        [DevicePermissionsHelper alertAudioPermission];
+                        [DevicePermissionsHelper alertAudioPermissionForIncomingCall:YES];
                     }
                 }];
             }
