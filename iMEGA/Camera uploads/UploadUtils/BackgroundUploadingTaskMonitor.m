@@ -3,9 +3,9 @@
 #import "CameraUploadRecordManager.h"
 #import "MEGAConstants.h"
 
-static const NSTimeInterval MonitorTimerInterval = 100;
+static const NSTimeInterval MonitorTimerInterval = 60;
 static const NSUInteger MaximumBackgroundPendingTaskCount = 700;
-static const NSTimeInterval MonitorTimerTolerance = 10;
+static const NSTimeInterval MonitorTimerTolerance = 6;
 
 @interface BackgroundUploadingTaskMonitor ()
 
@@ -43,7 +43,8 @@ static const NSTimeInterval MonitorTimerTolerance = 10;
         return;
     }
     
-    [NSNotificationCenter.defaultCenter postNotificationName:MEGACameraUploadUploadingTasksCountChangedNotificationName object:self userInfo:@{MEGAHasUploadingTasksReachedMaximumCountUserInfoKey : @(uploadingTaskCount > MaximumBackgroundPendingTaskCount)}];
+    NSDictionary *info = @{MEGAHasUploadingTasksReachedMaximumCountUserInfoKey : @(uploadingTaskCount > MaximumBackgroundPendingTaskCount), MEGACurrentUploadingTasksCountUserInfoKey : @(uploadingTaskCount)};
+    [NSNotificationCenter.defaultCenter postNotificationName:MEGACameraUploadUploadingTasksCountChangedNotificationName object:self userInfo:info];
 }
 
 @end

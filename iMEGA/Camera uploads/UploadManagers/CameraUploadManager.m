@@ -42,6 +42,9 @@ static const CGFloat MemoryWarningConcurrentThrottleRatio = .5;
 @property (strong, nonatomic) NSOperationQueue *photoUploadOperationQueue;
 @property (strong, nonatomic) NSOperationQueue *videoUploadOperationQueue;
 
+@property (readonly) BOOL isPhotoUploadQueueSuspended;
+@property (readonly) BOOL isVideoUploadQueueSuspended;
+    
 @property (strong, readwrite, nonatomic) MEGANode *cameraUploadNode;
 
 @property (strong, nonatomic) CameraScanner *cameraScanner;
@@ -332,6 +335,11 @@ static const CGFloat MemoryWarningConcurrentThrottleRatio = .5;
         return;
     }
     
+    if (self.isPhotoUploadQueueSuspended) {
+        MEGALogInfo(@"[Camera Upload] photo upload queue is suspended");
+        return;
+    }
+    
     [self.diskSpaceDetector startDetectingPhotoUpload];
     [self.concurrentCountCalculator startCalculatingConcurrentCount];
     [self.backgroundUploadingTaskMonitor startMonitoringBackgroundUploadingTasks];
@@ -363,6 +371,11 @@ static const CGFloat MemoryWarningConcurrentThrottleRatio = .5;
         return;
     }
     
+    if (self.isVideoUploadQueueSuspended) {
+        MEGALogInfo(@"[Camera Upload] video upload queue is suspended");
+        return;
+    }
+    
     [self.diskSpaceDetector startDetectingVideoUpload];
     
     MEGALogDebug(@"[Camera Upload] start uploading videos with current video operation count %lu", (unsigned long)self.videoUploadOperationQueue.operationCount);
@@ -378,16 +391,16 @@ static const CGFloat MemoryWarningConcurrentThrottleRatio = .5;
     
     switch (mediaType) {
         case PHAssetMediaTypeImage:
-            if (self.isPhotoUploadPaused) {
-                MEGALogInfo(@"[Camera Upload] photo upload is paused when to upload next asset");
+            if (self.isPhotoUploadPaused || self.isPhotoUploadQueueSuspended) {
+                MEGALogInfo(@"[Camera Upload] photo upload is paused or queue is suspended");
                 return;
             }
             break;
         case PHAssetMediaTypeVideo:
             if (!CameraUploadManager.isVideoUploadEnabled) {
                 return;
-            } else if (self.isVideoUploadPaused) {
-                MEGALogInfo(@"[Camera Upload] video upload is paused when to upload next asset");
+            } else if (self.isVideoUploadPaused || self.isVideoUploadQueueSuspended) {
+                MEGALogInfo(@"[Camera Upload] video upload is paused or queue is suspended");
                 return;
             }
             break;
@@ -482,6 +495,36 @@ static const CGFloat MemoryWarningConcurrentThrottleRatio = .5;
 - (void)resumeCameraUpload {
     self.pausePhotoUpload = NO;
     self.pauseVideoUpload = NO;
+}
+
+#pragma mark - suspend and unsuspend camera upload
+
+- (void)suspendCameraUploadQueues {
+    if (!self.isPhotoUploadQueueSuspended) {
+        self.photoUploadOperationQueue.suspended = YES;
+    }
+    
+    if (!self.isPhotoUploadQueueSuspended) {
+        self.videoUploadOperationQueue.suspended = YES;
+    }
+}
+
+- (void)unsuspendCameraUploadQueues {
+    if (self.isPhotoUploadQueueSuspended) {
+        self.photoUploadOperationQueue.suspended = NO;
+    }
+    
+    if (self.isVideoUploadQueueSuspended) {
+        self.videoUploadOperationQueue.suspended = NO;
+    }
+}
+
+- (BOOL)isPhotoUploadQueueSuspended {
+    return self.photoUploadOperationQueue.isSuspended;
+}
+
+- (BOOL)isVideoUploadQueueSuspended {
+    return self.videoUploadOperationQueue.isSuspended;
 }
 
 #pragma mark - upload status
@@ -618,10 +661,13 @@ static const CGFloat MemoryWarningConcurrentThrottleRatio = .5;
 - (void)didReceiveUploadingTaskCountChangedNotification:(NSNotification *)notification {
     MEGALogDebug(@"[Camera Upload] uploading task count changed notification %@", notification.userInfo);
     BOOL hasReachedMaximumCount = [notification.userInfo[MEGAHasUploadingTasksReachedMaximumCountUserInfoKey] boolValue];
+    NSUInteger currentUploadingCount = [notification.userInfo[MEGACurrentUploadingTasksCountUserInfoKey] unsignedIntegerValue];
     if (hasReachedMaximumCount) {
-        [self pauseCameraUploadIfNeeded];
+        MEGALogDebug(@"[Camera Upload] suspend upload queues with current uplaoding tasks count %lu", (unsigned long)currentUploadingCount);
+        [self suspendCameraUploadQueues];
     } else {
-        [self resumeCameraUpload];
+        MEGALogDebug(@"[Camera Upload] unsuspend upload queues with current uplaoding tasks count %lu", (unsigned long)currentUploadingCount);
+        [self unsuspendCameraUploadQueues];
     }
 }
 
