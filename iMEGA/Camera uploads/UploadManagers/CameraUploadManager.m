@@ -90,7 +90,7 @@ static const CGFloat MemoryWarningConcurrentThrottleRatio = .5;
     [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(didReceiveNodesCurrentNotification:) name:MEGANodesCurrentNotificationName object:nil];
 }
 
-#pragma mark - application lifecycle
+#pragma mark - setup when app launches
 
 - (void)setupCameraUploadWhenApplicationLaunches:(UIApplication *)application {
     [AttributeUploadManager.shared collateLocalAttributes];
@@ -143,9 +143,11 @@ static const CGFloat MemoryWarningConcurrentThrottleRatio = .5;
 #pragma mark - register and unregister notifications
 
 - (void)registerNotificationsForUpload {
+    [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(didReceiveMemoryWarningNotification) name:UIApplicationDidReceiveMemoryWarningNotification object:nil];
+    [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(didReceiveApplicationWillTerminateNotification) name:UIApplicationWillTerminateNotification object:nil];
+    
     [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(didReceivePhotoConcurrentCountChangedNotification:) name:MEGACameraUploadPhotoConcurrentCountChangedNotificationName object:nil];
     [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(didReceiveVideoConcurrentCountChangedNotification:) name:MEGACameraUploadVideoConcurrentCountChangedNotificationName object:nil];
-    [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(didReceiveMemoryWarningNotification) name:UIApplicationDidReceiveMemoryWarningNotification object:nil];
     [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(didReceiveReachabilityChangedNotification:) name:kReachabilityChangedNotification object:nil];
     [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(didReceiveStorageOverQuotaNotification:) name:MEGAStorageOverQuotaNotificationName object:nil];
     [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(didReceiveStorageEventChangedNotification:) name:MEGAStorageEventDidChangeNotificationName object:nil];
@@ -153,9 +155,11 @@ static const CGFloat MemoryWarningConcurrentThrottleRatio = .5;
 }
 
 - (void)unregisterNotificationsForUpload {
+    [NSNotificationCenter.defaultCenter removeObserver:self name:UIApplicationDidReceiveMemoryWarningNotification object:nil];
+    [NSNotificationCenter.defaultCenter removeObserver:self name:UIApplicationWillTerminateNotification object:nil];
+    
     [NSNotificationCenter.defaultCenter removeObserver:self name:MEGACameraUploadPhotoConcurrentCountChangedNotificationName object:nil];
     [NSNotificationCenter.defaultCenter removeObserver:self name:MEGACameraUploadVideoConcurrentCountChangedNotificationName object:nil];
-    [NSNotificationCenter.defaultCenter removeObserver:self name:UIApplicationDidReceiveMemoryWarningNotification object:nil];
     [NSNotificationCenter.defaultCenter removeObserver:self name:kReachabilityChangedNotification object:nil];
     [NSNotificationCenter.defaultCenter removeObserver:self name:MEGAStorageOverQuotaNotificationName object:nil];
     [NSNotificationCenter.defaultCenter removeObserver:self name:MEGAStorageEventDidChangeNotificationName object:nil];
@@ -617,6 +621,11 @@ static const CGFloat MemoryWarningConcurrentThrottleRatio = .5;
             }
         }
     }
+}
+
+- (void)didReceiveApplicationWillTerminateNotification {
+    MEGALogDebug(@"[Camera Upload] app will terminate");
+    [self resetCameraUploadQueues];
 }
 
 - (void)didReceiveStorageOverQuotaNotification:(NSNotification *)notification {
