@@ -24,9 +24,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - fetch records
 
-- (CameraAssetUploadStatus)uploadStatusForLocalIdentifier:(NSString *)identifier;
+- (CameraAssetUploadStatus)uploadStatusForIdentifier:(NSString *)identifier;
 
-- (NSArray<MOAssetUploadRecord *> *)fetchUploadRecordsByLocalIdentifier:(NSString *)identifier shouldPrefetchErrorRecords:(BOOL)prefetchErrorRecords error:(NSError *__autoreleasing  _Nullable *)error;
+- (NSArray<MOAssetUploadRecord *> *)fetchUploadRecordsByIdentifier:(NSString *)identifier shouldPrefetchErrorRecords:(BOOL)prefetchErrorRecords error:(NSError *__autoreleasing  _Nullable *)error;
 
 - (NSArray<MOAssetUploadRecord *> *)queueUpUploadRecordsByStatuses:(NSArray<NSNumber *> *)statuses fetchLimit:(NSUInteger)fetchLimit mediaType:(PHAssetMediaType)mediaType error:(NSError * _Nullable __autoreleasing * _Nullable)error;
 
@@ -42,9 +42,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (NSUInteger)totalRecordsCountByMediaTypes:(NSArray<NSNumber *> *)mediaTypes error:(NSError * _Nullable __autoreleasing *)error;
 
-- (NSUInteger)pendingUploadRecordsCountByMediaTypes:(NSArray <NSNumber *> *)mediaTypes error:(NSError *__autoreleasing  _Nullable *)error;
+- (NSUInteger)pendingRecordsCountByMediaTypes:(NSArray <NSNumber *> *)mediaTypes error:(NSError *__autoreleasing  _Nullable *)error;
 
-- (NSUInteger)uploadingUploadRecordsCountWithError:(NSError *__autoreleasing  _Nullable *)error;
+- (NSUInteger)uploadingRecordsCountWithError:(NSError *__autoreleasing  _Nullable *)error;
 
 #pragma mark - save records
 

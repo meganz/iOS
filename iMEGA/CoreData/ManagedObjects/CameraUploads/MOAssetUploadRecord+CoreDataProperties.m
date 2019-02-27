@@ -14,5 +14,6 @@
 @dynamic errorPerLaunch;
 @dynamic errorPerLogin;
 @dynamic fileNameRecord;
+@dynamic additionalMediaSubtype;
 
 @end

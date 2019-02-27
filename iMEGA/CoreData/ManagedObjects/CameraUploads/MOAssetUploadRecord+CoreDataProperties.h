@@ -11,6 +11,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nullable, nonatomic, copy) NSDate *creationDate;
 @property (nullable, nonatomic, copy) NSString *localIdentifier;
 @property (nullable, nonatomic, copy) NSNumber *mediaType;
+@property (nullable, nonatomic, copy) NSNumber *additionalMediaSubtype;
 @property (nullable, nonatomic, copy) NSNumber *status;
 @property (nullable, nonatomic, retain) MOAssetUploadErrorPerLaunch *errorPerLaunch;
 @property (nullable, nonatomic, retain) MOAssetUploadErrorPerLogin *errorPerLogin;
