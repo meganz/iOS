@@ -16,6 +16,8 @@ typedef void (^RestoreSessionCompletionHandler)(NSArray<NSURLSessionUploadTask *
 - (void)restoreAllSessionsWithCompletion:(nullable RestoreSessionCompletionHandler)completion;
 - (void)restoreSessionByIdentifier:(NSString *)identifier completion:(nullable RestoreSessionCompletionHandler)completion;
 
+- (void)getAllSessionTasksByIdentifier:(NSString *)identifier completion:(nullable void (^)(NSArray<NSURLSessionUploadTask *> * _Nonnull tasks))completion;
+
 - (void)saveSessionCompletion:(void (^)(void))completion forIdentifier:(NSString *)identifier;
 
 - (NSURLSessionUploadTask *)photoUploadTaskWithURL:(NSURL *)requestURL fromFile:(NSURL *)fileURL completion:(nullable UploadCompletionHandler)completion;

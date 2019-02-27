@@ -211,6 +211,32 @@ static NSString * const VideoCellularDisallowedUploadSessionId = @"nz.mega.video
     }
 }
 
+#pragma mark - get session tasks
+
+- (NSURLSession *)getSessionByIdentifier:(NSString *)identifier {
+    NSURLSession *session;
+    if ([identifier isEqualToString:PhotoCellularAllowedUploadSessionId]) {
+        session = self.photoCellularAllowedUploadSession;
+    } else if ([identifier isEqualToString:PhotoCellularDisallowedUploadSessionId]) {
+        session = self.photoCellularDisallowedUploadSession;
+    } else if ([identifier isEqualToString:VideoCellularAllowedUploadSessionId]) {
+        session = self.videoCellularAllowedUploadSession;
+    } else if ([identifier isEqualToString:VideoCellularDisallowedUploadSessionId]) {
+        session = self.videoCellularDisallowedUploadSession;
+    }
+    
+    return session;
+}
+
+- (void)getAllSessionTasksByIdentifier:(NSString *)identifier completion:(nullable void (^)(NSArray<NSURLSessionUploadTask *> * _Nonnull tasks))completion {
+    NSURLSession *session = [self getSessionByIdentifier:identifier];
+    [session getAllTasksWithCompletionHandler:^(NSArray<__kindof NSURLSessionTask *> * _Nonnull tasks) {
+        if (completion) {
+            completion(tasks);
+        }
+    }];
+}
+
 #pragma mark - session completion handler
 
 - (void)saveSessionCompletion:(void (^)(void))completion forIdentifier:(NSString *)identifier {

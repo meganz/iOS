@@ -51,6 +51,7 @@
     [aCoder encodeObject:self.mediaUpload.serialize forKey:@"mediaUpload"];
     [aCoder encodeObject:@(self.parentNode.handle) forKey:@"parentHandle"];
     [aCoder encodeObject:self.savedLocalIdentifier forKey:@"savedLocalIdentifier"];
+    [aCoder encodeObject:@(self.encryptedChunksCount) forKey:@"encryptedChunksCount"];
 }
 
 - (nullable instancetype)initWithCoder:(nonnull NSCoder *)aDecoder {
@@ -66,6 +67,7 @@
         NSData *serializedData = [aDecoder decodeObjectForKey:@"mediaUpload"];
         _mediaUpload = [[MEGASdkManager sharedMEGASdk] resumeBackgroundMediaUploadBySerializedData:serializedData];
         _savedLocalIdentifier = [aDecoder decodeObjectForKey:@"savedLocalIdentifier"];
+        _encryptedChunksCount = [[aDecoder decodeObjectForKey:@"encryptedChunksCount"] unsignedIntegerValue];
     }
     
     return self;

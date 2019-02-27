@@ -37,4 +37,8 @@ NSString * const CameraUploadErrorDomain = @"nz.mega.cameraUpload";
     return [NSError errorWithDomain:CameraUploadErrorDomain code:CameraUploadErrorEncryptionFailed userInfo:@{NSLocalizedDescriptionKey : [NSString stringWithFormat:@"error occurred when to encrypt file URL %@", URL]}];
 }
 
++ (NSError *)mnz_cameraUploadDataTransferErrorWithUserInfo:(NSDictionary *)userInfo {
+    return [NSError errorWithDomain:CameraUploadErrorDomain code:CameraUploadErrorDataTransfer userInfo:userInfo];
+}
+
 @end

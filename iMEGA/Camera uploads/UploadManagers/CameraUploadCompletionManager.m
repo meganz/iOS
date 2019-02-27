@@ -41,6 +41,17 @@
     [AttributeUploadManager.shared waitUntilAllThumbnailUploadsAreFinished];
 }
 
+#pragma mark - handle transfer completion data
+
+- (void)handleEmptyTransferTokenForLocalIdentifier:(NSString *)localIdentifier {
+    NSURL *archivedURL = [NSURL mnz_archivedURLForLocalIdentifier:localIdentifier];
+    AssetUploadInfo *uploadInfo = [NSKeyedUnarchiver unarchiveObjectWithFile:archivedURL.path];
+    if (uploadInfo.encryptedChunksCount == 1) {
+        MEGALogError(@"[Camera Upload] empty transfer token for single chunk %@", localIdentifier);
+        [self finishUploadForLocalIdentifier:uploadInfo.savedLocalIdentifier status:CameraAssetUploadStatusFailed];
+    }
+}
+
 - (void)handleCompletedTransferWithLocalIdentifier:(NSString *)localIdentifier token:(NSData *)token {
     if (!CameraUploadManager.isCameraUploadEnabled) {
         return;
@@ -110,6 +121,7 @@
             [self.operationQueue addOperation:operation];
         } else {
             MEGALogInfo(@"[Camera Upload] existing node %@ found for %@ by fingerprint match", existingNode.name, uploadInfo.savedLocalIdentifier);
+            [self finishUploadForLocalIdentifier:uploadInfo.savedLocalIdentifier status:CameraAssetUploadStatusDone];
         }
     } else {
         MEGALogError(@"[Camera Upload] existing put node found for %@ with token %@", uploadInfo.savedLocalIdentifier, [[NSString alloc] initWithData:token encoding:NSUTF8StringEncoding]);
