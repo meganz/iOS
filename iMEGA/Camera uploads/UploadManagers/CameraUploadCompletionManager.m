@@ -85,12 +85,32 @@
 #pragma mark - put node
 
 - (void)putNodeWithUploadInfo:(AssetUploadInfo *)uploadInfo transferToken:(NSData *)token {
+    BOOL hasExistingPutNode = NO;
+    for (PutNodeOperation *operation in self.operationQueue.operations) {
+        if ([operation.uploadInfo.savedLocalIdentifier isEqualToString:uploadInfo.savedLocalIdentifier]) {
+            hasExistingPutNode = YES;
+            break;
+        }
+    }
+    
+    if (hasExistingPutNode) {
+        MEGALogError(@"[Camera Upload] existing put node found for %@ with token %@", uploadInfo.savedLocalIdentifier, [[NSString alloc] initWithData:token encoding:NSUTF8StringEncoding]);
+        return;
+    }
+    
     AssetLocalAttribute *attributeInfo = [AttributeUploadManager.shared saveAttributeForUploadInfo:uploadInfo];
     if (attributeInfo == nil) {
         attributeInfo = [AttributeUploadManager.shared saveAttributeForUploadInfo:uploadInfo];
     }
     
-    PutNodeOperation *operation = [[PutNodeOperation alloc] initWithUploadInfo:uploadInfo transferToken:token completion:^(MEGANode * _Nullable node, NSError * _Nullable error) {
+    MEGANode *existingNode = [MEGASdkManager.sharedMEGASdk nodeForFingerprint:uploadInfo.fingerprint];
+    if (existingNode) {
+        MEGALogInfo(@"[Camera Upload] existing node %@ found for %@ by fingerprint match", existingNode.name, uploadInfo.savedLocalIdentifier);
+        [self finishUploadForLocalIdentifier:uploadInfo.savedLocalIdentifier status:CameraAssetUploadStatusDone];
+        return;
+    }
+    
+    [self.operationQueue addOperation:[[PutNodeOperation alloc] initWithUploadInfo:uploadInfo transferToken:token completion:^(MEGANode * _Nullable node, NSError * _Nullable error) {
         if (error) {
             MEGALogError(@"[Camera Upload] error when to complete transfer %@ with token %@ %@", uploadInfo.savedLocalIdentifier, [[NSString alloc] initWithData:token encoding:NSUTF8StringEncoding], error);
             if (error.code == MEGAErrorTypeApiEOverQuota || error.code == MEGAErrorTypeApiEgoingOverquota) {
@@ -105,27 +125,7 @@
             [AttributeUploadManager.shared uploadCoordinateLocation:uploadInfo.location forNode:node];
             [self finishUploadForLocalIdentifier:uploadInfo.savedLocalIdentifier status:CameraAssetUploadStatusDone];
         }
-    }];
-    
-    BOOL hasExistingPutNode = NO;
-    for (PutNodeOperation *operation in self.operationQueue.operations) {
-        if ([operation.uploadInfo.savedLocalIdentifier isEqualToString:uploadInfo.savedLocalIdentifier]) {
-            hasExistingPutNode = YES;
-            break;
-        }
-    }
-    
-    if (!hasExistingPutNode) {
-        MEGANode *existingNode = [MEGASdkManager.sharedMEGASdk nodeForFingerprint:uploadInfo.fingerprint];
-        if (existingNode == nil) {
-            [self.operationQueue addOperation:operation];
-        } else {
-            MEGALogInfo(@"[Camera Upload] existing node %@ found for %@ by fingerprint match", existingNode.name, uploadInfo.savedLocalIdentifier);
-            [self finishUploadForLocalIdentifier:uploadInfo.savedLocalIdentifier status:CameraAssetUploadStatusDone];
-        }
-    } else {
-        MEGALogError(@"[Camera Upload] existing put node found for %@ with token %@", uploadInfo.savedLocalIdentifier, [[NSString alloc] initWithData:token encoding:NSUTF8StringEncoding]);
-    }
+    }]];
 }
 
 #pragma mark - update status
