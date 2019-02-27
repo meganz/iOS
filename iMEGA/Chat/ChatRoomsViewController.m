@@ -133,11 +133,8 @@
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     
-    NSInteger unreadChats = MEGASdkManager.sharedMEGAChatSdk ? MEGASdkManager.sharedMEGAChatSdk.unreadChats : 0;
-    if (unreadChats > 0) {
-        if ([DevicePermissionsHelper shouldAskForNotificationsPermissions]) {
-            [DevicePermissionsHelper modalNotificationsPermission];
-        }
+    if ([DevicePermissionsHelper shouldAskForNotificationsPermissions]) {
+        [DevicePermissionsHelper modalNotificationsPermission];
     }
     
     if ([MEGASdkManager sharedMEGAChatSdk].numCalls && MEGAReachabilityManager.isReachable) {
