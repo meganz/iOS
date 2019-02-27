@@ -4,7 +4,7 @@
 #import "MEGAConstants.h"
 
 static const NSTimeInterval MonitorTimerInterval = 60;
-static const NSUInteger MaximumBackgroundPendingTaskCount = 700;
+static const NSUInteger MaximumBackgroundPendingTaskCount = 650;
 static const NSTimeInterval MonitorTimerTolerance = 6;
 
 @interface BackgroundUploadingTaskMonitor ()

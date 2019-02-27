@@ -412,6 +412,8 @@ static const CGFloat MemoryWarningConcurrentThrottleRatio = .5;
 }
 
 - (void)uploadAssetsForMediaType:(PHAssetMediaType)mediaType concurrentCount:(NSUInteger)count {
+    MEGALogDebug(@"[Camera Upload] photo count %lu concurrent %ld, video count %lu concurrent %ld", (unsigned long)self.photoUploadOperationQueue.operationCount, (long)self.photoUploadOperationQueue.maxConcurrentOperationCount, (unsigned long)self.videoUploadOperationQueue.operationCount, (long)self.videoUploadOperationQueue.maxConcurrentOperationCount);
+
     NSArray<NSNumber *> *statuses = AssetUploadStatus.statusesReadyToQueueUp;
     if (MEGAReachabilityManager.isReachable) {
         statuses = AssetUploadStatus.allStatusesToQueueUp;
@@ -434,8 +436,6 @@ static const CGFloat MemoryWarningConcurrentThrottleRatio = .5;
                     [self.videoUploadOperationQueue addOperation:operation];
                 }
             }
-            
-            MEGALogDebug(@"[Camera Upload] photo count %lu concurrent %ld, video count %lu concurrent %ld", (unsigned long)self.photoUploadOperationQueue.operationCount, (long)self.photoUploadOperationQueue.maxConcurrentOperationCount, (unsigned long)self.videoUploadOperationQueue.operationCount, (long)self.videoUploadOperationQueue.maxConcurrentOperationCount);
         } else {
             MEGALogInfo(@"[Camera Upload] delete record as we don't have data to upload");
             [CameraUploadRecordManager.shared deleteUploadRecord:record error:nil];
