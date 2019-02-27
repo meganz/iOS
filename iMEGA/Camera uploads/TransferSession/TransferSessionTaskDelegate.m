@@ -60,6 +60,12 @@ static const NSUInteger MEGATransferTokenLength = 36;
     }
 }
 
+- (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didSendBodyData:(int64_t)bytesSent totalBytesSent:(int64_t)totalBytesSent totalBytesExpectedToSend:(int64_t)totalBytesExpectedToSend {
+    if (totalBytesSent == totalBytesExpectedToSend) {
+        MEGALogDebug(@"[Camera Upload] Session %@ task %@ did send body data %lli, total bytes sent %lli, total bytes expected to send %lli", session.configuration.identifier, task.taskDescription, bytesSent, totalBytesSent, totalBytesExpectedToSend);
+    }
+}
+
 #pragma mark - data level delegate
 
 - (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask didReceiveData:(NSData *)data {

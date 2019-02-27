@@ -160,7 +160,7 @@
         }
 
         if (success) {
-            MEGALogDebug(@"[Camera Upload] %@ encrypted to chunk count %lu", self, (unsigned long)chunkURLsKeyedByUploadSuffix.count);
+            MEGALogDebug(@"[Camera Upload] %@ file %llu encrypted to %lu, %@", self, fileSize, (unsigned long)chunkURLsKeyedByUploadSuffix.count, chunkURLsKeyedByUploadSuffix);
             self.uploadInfo.fileSize = fileSize;
             self.uploadInfo.encryptedChunkURLsKeyedByUploadSuffix = chunkURLsKeyedByUploadSuffix;
             self.uploadInfo.encryptedChunksCount = chunkURLsKeyedByUploadSuffix.count;
@@ -204,6 +204,7 @@
             }
         } else {
             weakSelf.uploadInfo.uploadURLString = [weakSelf.uploadInfo.mediaUpload uploadURLString];
+            MEGALogDebug(@"[Camera Upload] %@ upload url %@ for file size %llu", weakSelf, weakSelf.uploadInfo.uploadURLString, weakSelf.uploadInfo.fileSize);
             if ([weakSelf archiveUploadInfoDataForBackgroundTransfer]) {
                 [weakSelf uploadEncryptedChunksToServer];
             } else {
