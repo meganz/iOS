@@ -175,7 +175,7 @@
                         break;
                     case AVAssetExportSessionStatusFailed:
                         MEGALogError(@"[Camera Upload] %@ error when to export video %@", weakSelf, session.error)
-                        if (session.error.domain == AVFoundationErrorDomain && session.error.code == AVErrorDiskFull) {
+                        if ([session.error.domain isEqualToString:AVFoundationErrorDomain] && session.error.code == AVErrorDiskFull) {
                             [weakSelf finishUploadWithNoEnoughDiskSpace];
                         } else {
                             [weakSelf finishOperationWithStatus:CameraAssetUploadStatusFailed shouldUploadNextAsset:YES];
@@ -212,7 +212,7 @@
     [NSFileManager.defaultManager copyItemAtURL:URL toURL:self.uploadInfo.fileURL error:&error];
     if (error) {
         MEGALogError(@"[Camera Upload] %@ got error when to copy original item %@", self, error);
-        if (error.domain == NSCocoaErrorDomain && error.code == NSFileWriteOutOfSpaceError) {
+        if ([error.domain isEqualToString:NSCocoaErrorDomain] && error.code == NSFileWriteOutOfSpaceError) {
             [self finishUploadWithNoEnoughDiskSpace];
         } else {
             [self finishOperationWithStatus:CameraAssetUploadStatusFailed shouldUploadNextAsset:YES];

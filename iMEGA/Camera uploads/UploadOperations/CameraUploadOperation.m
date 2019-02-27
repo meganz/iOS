@@ -160,16 +160,18 @@
         }
 
         if (success) {
+            MEGALogDebug(@"[Camera Upload] %@ encrypt file succeeded with %lu chunks", self, (unsigned long)chunkURLsKeyedByUploadSuffix.count);
             self.uploadInfo.fileSize = fileSize;
             self.uploadInfo.encryptedChunkURLsKeyedByUploadSuffix = chunkURLsKeyedByUploadSuffix;
+            self.uploadInfo.encryptedChunksCount = chunkURLsKeyedByUploadSuffix.count;
             [self requestUploadURL];
         } else {
             MEGALogError(@"[Camera Upload] %@ error when to encrypt file %@", self, error);
-            if (error.domain == CameraUploadErrorDomain && error.code == CameraUploadErrorNoEnoughDiskFreeSpace) {
+            if ([error.domain isEqualToString:CameraUploadErrorDomain] && error.code == CameraUploadErrorNoEnoughDiskFreeSpace) {
                 [self finishUploadWithNoEnoughDiskSpace];
-            } else if (error.domain == NSCocoaErrorDomain && error.code == NSFileWriteOutOfSpaceError) {
+            } else if ([error.domain isEqualToString:NSCocoaErrorDomain] && error.code == NSFileWriteOutOfSpaceError) {
                 [self finishUploadWithNoEnoughDiskSpace];
-            } else if (error.domain == CameraUploadErrorDomain && error.code == CameraUploadErrorEncryptionCancelled) {
+            } else if ([error.domain isEqualToString:CameraUploadErrorDomain] && error.code == CameraUploadErrorEncryptionCancelled) {
                 [self finishOperationWithStatus:CameraAssetUploadStatusCancelled shouldUploadNextAsset:NO];
             } else {
                 [self finishOperationWithStatus:CameraAssetUploadStatusFailed shouldUploadNextAsset:YES];

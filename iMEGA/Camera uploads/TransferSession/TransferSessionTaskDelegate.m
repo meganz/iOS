@@ -2,6 +2,7 @@
 #import "TransferSessionTaskDelegate.h"
 #import "TransferSessionManager.h"
 #import "CameraUploadCompletionManager.h"
+#import "TransferResponseValidator.h"
 
 static const NSUInteger MEGATransferTokenLength = 36;
 
@@ -9,6 +10,7 @@ static const NSUInteger MEGATransferTokenLength = 36;
 
 @property (strong, nonatomic) NSMutableData *mutableData;
 @property (copy, nonatomic) UploadCompletionHandler completion;
+@property (strong, nonatomic) TransferResponseValidator *responseValidator;
 
 @end
 
@@ -19,6 +21,7 @@ static const NSUInteger MEGATransferTokenLength = 36;
     if (self) {
         _mutableData = [NSMutableData data];
         _completion = completion;
+        _responseValidator = [[TransferResponseValidator alloc] init];
     }
     
     return self;
@@ -27,15 +30,32 @@ static const NSUInteger MEGATransferTokenLength = 36;
 #pragma mark - task level delegate
 
 - (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didCompleteWithError:(NSError *)error {
-    MEGALogDebug(@"[Camera Upload] Session %@ task %@ completed", session.configuration.identifier, task.taskDescription);
-    NSData *transferToken = [self.mutableData copy];
-    if (self.completion) {
-        self.completion(transferToken, error);
+    if ([task.response isKindOfClass:[NSHTTPURLResponse class]]) {
+        NSInteger statusCode = [(NSHTTPURLResponse *)task.response statusCode];
+        MEGALogInfo(@"[Camera Upload] Session %@ task %@ completed with status %li %@", session.configuration.identifier, task.taskDescription, statusCode, [NSHTTPURLResponse localizedStringForStatusCode:statusCode]);
     } else {
-        if (error) {
-            [self handleURLSessionError:error forTask:task];
+        MEGALogInfo(@"[Camera Upload] Session %@ task %@ completed", session.configuration.identifier, task.taskDescription);
+    }
+
+    NSData *transferToken = [self.mutableData copy];
+    
+    if (error) {
+        if (self.completion) {
+            self.completion(transferToken, error);
         } else {
-            [self handleTransferToken:transferToken forTask:task inSession:session];
+            [self handleTransferError:error forTask:task];
+        }
+    } else {
+        NSError *responseError;
+        [self.responseValidator validateURLResponse:task.response data:transferToken error:&responseError];
+        if (self.completion) {
+            self.completion(transferToken, responseError);
+        } else {
+            if (responseError) {
+                [self handleTransferError:responseError forTask:task];
+            } else {
+                [self handleTransferToken:transferToken forTask:task inSession:session];
+            }
         }
     }
 }
@@ -49,21 +69,20 @@ static const NSUInteger MEGATransferTokenLength = 36;
 
 #pragma mark - util methods
 
-- (void)handleURLSessionError:(NSError *)error forTask:(NSURLSessionTask *)task {
+- (void)handleTransferError:(NSError *)error forTask:(NSURLSessionTask *)task {
     MEGALogError(@"[Camera Upload] Session task %@ completed with error %@", task.taskDescription, error);
-    CameraAssetUploadStatus errorStatus;
-    if (error.code == NSURLErrorCancelled || error.code == NSURLErrorBackgroundSessionWasDisconnected || error.code == NSURLErrorTimedOut) {
+    CameraAssetUploadStatus errorStatus = CameraAssetUploadStatusFailed;
+    if ([error.domain isEqualToString:NSURLErrorDomain]) {
         errorStatus = CameraAssetUploadStatusCancelled;
-    } else {
-        errorStatus = CameraAssetUploadStatusFailed;
     }
-    
+
     [CameraUploadCompletionManager.shared finishUploadForLocalIdentifier:task.taskDescription status:errorStatus];
 }
 
 - (void)handleTransferToken:(NSData *)token forTask:(NSURLSessionTask *)task inSession:(NSURLSession *)session {
     if (token.length == 0) {
         MEGALogDebug(@"[Camera Upload] Session %@ task %@ completed with empty token", session.configuration.identifier, task.taskDescription);
+        [CameraUploadCompletionManager.shared handleEmptyTransferTokenForLocalIdentifier:task.taskDescription];
     } else if (token.length == MEGATransferTokenLength) {
         [CameraUploadCompletionManager.shared handleCompletedTransferWithLocalIdentifier:task.taskDescription token:token];
     } else {

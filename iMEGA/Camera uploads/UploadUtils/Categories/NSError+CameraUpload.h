@@ -16,6 +16,7 @@ typedef NS_ENUM(NSUInteger, CameraUploadError) {
     CameraUploadErrorOperationCancelled,
     CameraUploadErrorCameraUploadNodeIsNotFound,
     CameraUploadErrorChunksMissing,
+    CameraUploadErrorDataTransfer,
 };
 
 @interface NSError (CameraUpload)
@@ -66,6 +67,15 @@ typedef NS_ENUM(NSUInteger, CameraUploadError) {
  @return a NSError object with CameraUploadErrorEncryption error code
  */
 + (NSError *)mnz_cameraUploadEncryptionErrorForFileURL:(NSURL *)URL;
+
+
+/**
+ create a NSError object when error happended in data transfer
+
+ @param userInfo user info dictionary to describle the error details
+ @return a NSError object with CameraUploadErrorDataTransfer error code
+ */
++ (NSError *)mnz_cameraUploadDataTransferErrorWithUserInfo:(NSDictionary *)userInfo;
 
 @end
 

@@ -116,9 +116,9 @@ static NSString * const LivePhotoVideoResourceTemporaryName = @"video.mov";
     
     if (error) {
         MEGALogError(@"[Camera Upload] %@ error when to write resource %@", self, error);
-        if (error.domain == AVFoundationErrorDomain && error.code == AVErrorDiskFull) {
+        if ([error.domain isEqualToString:AVFoundationErrorDomain] && error.code == AVErrorDiskFull) {
             [self finishUploadWithNoEnoughDiskSpace];
-        } else if (error.domain == NSCocoaErrorDomain && error.code == NSFileWriteOutOfSpaceError) {
+        } else if ([error.domain isEqualToString:NSCocoaErrorDomain] && error.code == NSFileWriteOutOfSpaceError) {
             [self finishUploadWithNoEnoughDiskSpace];
         } else {
             [self finishOperationWithStatus:CameraAssetUploadStatusFailed shouldUploadNextAsset:YES];
@@ -174,7 +174,7 @@ static NSString * const LivePhotoVideoResourceTemporaryName = @"video.mov";
                 break;
             case AVAssetExportSessionStatusFailed:
                 MEGALogError(@"[Camera Upload] %@ error when to export video %@", weakSelf, session.error)
-                if (session.error.domain == AVFoundationErrorDomain && session.error.code == AVErrorDiskFull) {
+                if ([session.error.domain isEqualToString:AVFoundationErrorDomain] && session.error.code == AVErrorDiskFull) {
                     [weakSelf finishUploadWithNoEnoughDiskSpace];
                 } else {
                     [weakSelf finishOperationWithStatus:CameraAssetUploadStatusFailed shouldUploadNextAsset:YES];

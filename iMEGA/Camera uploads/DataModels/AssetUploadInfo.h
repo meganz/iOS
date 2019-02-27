@@ -23,6 +23,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, readonly) NSURL *encryptionDirectoryURL;
 @property (strong, nonatomic) NSDictionary<NSString *, NSURL *> *encryptedChunkURLsKeyedByUploadSuffix;
+@property (nonatomic) NSUInteger encryptedChunksCount;
 
 @property (strong, nonatomic) NSString *uploadURLString;
 
