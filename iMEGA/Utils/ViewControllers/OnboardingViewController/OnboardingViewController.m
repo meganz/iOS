@@ -132,6 +132,13 @@
     BOOL animated = self.type == OnboardingTypeDefault;
     [self.scrollView setContentOffset:CGPointMake(newX, 0.0f) animated:animated];
     self.pageControl.currentPage = page;
+    
+    OnboardingView *currentView = self.scrollView.subviews.firstObject.subviews[page];
+    if (currentView.type == OnboardingViewTypeNotificationsPermission) {
+        [self.primaryButton setTitle:AMLocalizedString(@"continue", @"'Next' button in a dialog") forState:UIControlStateNormal];
+        self.secondaryButton.hidden = YES;
+    }
+    
     self.pageLabel.text = [[AMLocalizedString(@"%1 of %2", @"Shows number of the current page. '%1' will be replaced by current page number. '%2' will be replaced by number of all pages.") stringByReplacingOccurrencesOfString:@"%1" withString:[NSString stringWithFormat:@"%td", page + 1]] stringByReplacingOccurrencesOfString:@"%2" withString:[NSString stringWithFormat:@"%tu", self.scrollView.subviews.firstObject.subviews.count]];
 }
 
