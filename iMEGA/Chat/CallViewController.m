@@ -13,7 +13,6 @@
 #import "LTHPasscodeViewController.h"
 
 #import "MEGAChatAnswerCallRequestDelegate.h"
-#import "MEGAChatEnableDisableAudioRequestDelegate.h"
 #import "MEGAChatEnableDisableVideoRequestDelegate.h"
 #import "MEGAChatStartCallRequestDelegate.h"
 
@@ -40,7 +39,6 @@
 @property (weak, nonatomic) IBOutlet UIImageView *remoteMicImageView;
 @property (weak, nonatomic) IBOutlet UIButton *minimizeButton;
 
-@property BOOL loudSpeakerEnabled;
 @property BOOL statusBarShouldBeHidden;
 
 @property (nonatomic, strong) NSTimer *timer;
@@ -67,7 +65,7 @@
     } else {
         [self disableLoudspeaker];
     }
-    self.loudSpeakerEnabled = self.videoCall;
+    
     _statusBarShouldBeHidden = NO;
     
     [self.remoteAvatarImageView mnz_setImageForUserHandle:[self.chatRoom peerHandleAtIndex:0]];
@@ -291,24 +289,11 @@
 }
 
 - (void)enableLoudspeaker {
-    self.loudSpeakerEnabled = TRUE;
-    AVAudioSession *audioSession = [AVAudioSession sharedInstance];
-    AVAudioSessionCategoryOptions options = audioSession.categoryOptions;
-    if (options & AVAudioSessionCategoryOptionDefaultToSpeaker) return;
-    options |= AVAudioSessionCategoryOptionDefaultToSpeaker;
-    [audioSession setActive:YES error:nil];
-    [audioSession setCategory:AVAudioSessionCategoryPlayAndRecord withOptions:options error:nil];
+    [[AVAudioSession sharedInstance] overrideOutputAudioPort:AVAudioSessionPortOverrideSpeaker error:nil];
 }
 
 - (void)disableLoudspeaker {
-    self.loudSpeakerEnabled = FALSE;
-    AVAudioSession *audioSession = [AVAudioSession sharedInstance];
-    AVAudioSessionCategoryOptions options = audioSession.categoryOptions;
-    if (options & AVAudioSessionCategoryOptionDefaultToSpeaker) {
-        options &= ~AVAudioSessionCategoryOptionDefaultToSpeaker;
-        [audioSession setActive:YES error:nil];
-        [audioSession setCategory:AVAudioSessionCategoryPlayAndRecord withOptions:options error:nil];
-    }
+    [[AVAudioSession sharedInstance] overrideOutputAudioPort:AVAudioSessionPortOverrideNone error:nil];
 }
 
 - (void)updateDuration {
@@ -414,16 +399,10 @@
 }
 
 - (IBAction)muteOrUnmuteCall:(UIButton *)sender {
-    MEGAChatEnableDisableAudioRequestDelegate *enableDisableAudioRequestDelegate = [[MEGAChatEnableDisableAudioRequestDelegate alloc] initWithCompletion:^(MEGAChatError *error) {
-        if (error.type == MEGAChatErrorTypeOk) {
-            sender.selected = !sender.selected;
-        }
-    }];
-    
     if (sender.selected) {
-        [[MEGASdkManager sharedMEGAChatSdk] enableAudioForChat:self.chatRoom.chatId delegate:enableDisableAudioRequestDelegate];
+        [[MEGASdkManager sharedMEGAChatSdk] enableAudioForChat:self.chatRoom.chatId];
     } else {
-        [[MEGASdkManager sharedMEGAChatSdk] disableAudioForChat:self.chatRoom.chatId delegate:enableDisableAudioRequestDelegate];
+        [[MEGASdkManager sharedMEGAChatSdk] disableAudioForChat:self.chatRoom.chatId];
     }
 }
 
@@ -445,7 +424,6 @@
                         [[MEGASdkManager sharedMEGAChatSdk] addChatLocalVideo:self.chatRoom.chatId delegate:self.localVideoImageView];
                     }
                     sender.selected = !sender.selected;
-                    self.loudSpeakerEnabled = sender.selected;
                 }
             }];
             if (sender.selected) {
@@ -569,6 +547,10 @@
                 }
                 [self.localVideoImageView remoteVideoEnable:remoteSession.hasVideo];
                 self.remoteMicImageView.hidden = remoteSession.hasAudio;
+            }
+            
+            if ([call hasChangedForType:MEGAChatCallChangeTypeLocalAVFlags]) {
+                self.muteUnmuteMicrophone.selected = !call.hasLocalAudio;
             }
             
             if ([call hasChangedForType:MEGAChatCallChangeTypeSessionStatus]) {
