@@ -27,7 +27,7 @@
     [self unobservePhotoLibraryChanges];
 }
 
-#pragma mark - camera scanning
+#pragma mark - scan camera rolls
 
 - (void)scanMediaTypes:(NSArray<NSNumber *> *)mediaTypes completion:(void (^)(void))completion {
     [self.operationQueue addOperationWithBlock:^{
@@ -90,6 +90,12 @@
     }
     
     return [newAssets copy];
+}
+
+#pragma mark - scan live photo
+
+- (void)scanLivePhotoWithCompletion:(void (^)(void))completion {
+    
 }
 
 #pragma mark - PHPhotoLibraryChangeObserver

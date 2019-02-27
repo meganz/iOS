@@ -45,7 +45,7 @@
             
             __block CameraUploadOperation *operation;
             [CameraUploadRecordManager.shared.backgroundContext performBlockAndWait:^{
-                NSArray *existingRecords = [CameraUploadRecordManager.shared fetchUploadRecordsByLocalIdentifier:mediaSubtypedLocalIdentifier shouldPrefetchErrorRecords:NO error:nil];
+                NSArray *existingRecords = [CameraUploadRecordManager.shared fetchUploadRecordsByIdentifier:mediaSubtypedLocalIdentifier shouldPrefetchErrorRecords:NO error:nil];
                 if (existingRecords.count == 0) {
                     NSError *error;
                     MOAssetUploadRecord *record = [CameraUploadRecordManager.shared saveAndQueueUpUploadRecordForAsset:asset withMediaSubtypedLocalIdentifier:mediaSubtypedLocalIdentifier error:&error];

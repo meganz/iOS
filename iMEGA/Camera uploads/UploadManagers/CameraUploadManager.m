@@ -542,15 +542,15 @@ static const CGFloat MemoryWarningConcurrentThrottleRatio = .5;
 }
 
 - (NSUInteger)uploadPendingAssetsCount {
-    return [CameraUploadRecordManager.shared pendingUploadRecordsCountByMediaTypes:self.enabledMediaTypes error:nil];
+    return [CameraUploadRecordManager.shared pendingRecordsCountByMediaTypes:self.enabledMediaTypes error:nil];
 }
 
 - (BOOL)isPhotoUploadDone {
-    return [CameraUploadRecordManager.shared pendingUploadRecordsCountByMediaTypes:@[@(PHAssetMediaTypeImage)] error:nil] == 0;
+    return [CameraUploadRecordManager.shared pendingRecordsCountByMediaTypes:@[@(PHAssetMediaTypeImage)] error:nil] == 0;
 }
 
 - (BOOL)isVideoUploadDone {
-    return [CameraUploadRecordManager.shared pendingUploadRecordsCountByMediaTypes:@[@(PHAssetMediaTypeVideo)] error:nil] == 0;
+    return [CameraUploadRecordManager.shared pendingRecordsCountByMediaTypes:@[@(PHAssetMediaTypeVideo)] error:nil] == 0;
 }
 
 - (NSArray<NSNumber *> *)enabledMediaTypes {

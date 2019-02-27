@@ -88,8 +88,8 @@ static const NSUInteger MaximumUploadRetryPerLoginCount = 800;
 
 #pragma mark - fetch records
 
-- (CameraAssetUploadStatus)uploadStatusForLocalIdentifier:(NSString *)identifier {
-    MOAssetUploadRecord *record = [[self fetchUploadRecordsByLocalIdentifier:identifier shouldPrefetchErrorRecords:NO error:nil] firstObject];
+- (CameraAssetUploadStatus)uploadStatusForIdentifier:(NSString *)identifier {
+    MOAssetUploadRecord *record = [[self fetchUploadRecordsByIdentifier:identifier shouldPrefetchErrorRecords:NO error:nil] firstObject];
     __block CameraAssetUploadStatus status = CameraAssetUploadStatusUnknown;
     if (record != nil) {
         [self.backgroundContext performBlockAndWait:^{
@@ -100,7 +100,7 @@ static const NSUInteger MaximumUploadRetryPerLoginCount = 800;
     return status;
 }
 
-- (NSArray<MOAssetUploadRecord *> *)fetchUploadRecordsByLocalIdentifier:(NSString *)identifier shouldPrefetchErrorRecords:(BOOL)prefetchErrorRecords error:(NSError *__autoreleasing  _Nullable *)error {
+- (NSArray<MOAssetUploadRecord *> *)fetchUploadRecordsByIdentifier:(NSString *)identifier shouldPrefetchErrorRecords:(BOOL)prefetchErrorRecords error:(NSError *__autoreleasing  _Nullable *)error {
     NSFetchRequest *request = MOAssetUploadRecord.fetchRequest;
     request.predicate = [NSPredicate predicateWithFormat:@"localIdentifier == %@", identifier];
     if (prefetchErrorRecords) {
@@ -144,6 +144,12 @@ static const NSUInteger MaximumUploadRetryPerLoginCount = 800;
     return [self fetchUploadRecordsByFetchRequest:request error:error];
 }
 
+- (NSArray<MOAssetUploadRecord *> *)fetchAllUploadRecordsWithoutAdditionalMediaSubtypeWithError:(NSError * _Nullable __autoreleasing * _Nullable)error {
+    NSFetchRequest *request = MOAssetUploadRecord.fetchRequest;
+    request.predicate = [NSPredicate predicateWithFormat:@"additionalMediaSubtype == nil"];
+    return [self fetchUploadRecordsByFetchRequest:request error:error];
+}
+
 - (NSArray<MOAssetUploadRecord *> *)fetchUploadRecordsByFetchRequest:(NSFetchRequest *)request error:(NSError * _Nullable __autoreleasing *)error {
     __block NSArray<MOAssetUploadRecord *> *records = @[];
     __block NSError *coreDataError = nil;
@@ -173,14 +179,14 @@ static const NSUInteger MaximumUploadRetryPerLoginCount = 800;
     return [self countForFetchRequest:request error:error];
 }
 
-- (NSUInteger)pendingUploadRecordsCountByMediaTypes:(NSArray<NSNumber *> *)mediaTypes error:(NSError * _Nullable __autoreleasing *)error {
+- (NSUInteger)pendingRecordsCountByMediaTypes:(NSArray<NSNumber *> *)mediaTypes error:(NSError * _Nullable __autoreleasing *)error {
     NSFetchRequest *request = MOAssetUploadRecord.fetchRequest;
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(status <> %@) AND (mediaType IN %@)", @(CameraAssetUploadStatusDone), mediaTypes];
     request.predicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[predicate, [self predicateByFilterAssetUploadRecordError]]];
     return [self countForFetchRequest:request error:error];
 }
 
-- (NSUInteger)uploadingUploadRecordsCountWithError:(NSError * _Nullable __autoreleasing *)error {
+- (NSUInteger)uploadingRecordsCountWithError:(NSError * _Nullable __autoreleasing *)error {
     NSFetchRequest *request = MOAssetUploadRecord.fetchRequest;
     request.predicate = [NSPredicate predicateWithFormat:@"status == %@", @(CameraAssetUploadStatusUploading)];
     return [self countForFetchRequest:request error:error];
@@ -241,7 +247,7 @@ static const NSUInteger MaximumUploadRetryPerLoginCount = 800;
     if (assets.count > 0) {
         [self.backgroundContext performBlockAndWait:^{
             for (PHAsset *asset in assets) {
-                if ([self fetchUploadRecordsByLocalIdentifier:asset.localIdentifier shouldPrefetchErrorRecords:NO error:nil].count == 0) {
+                if ([self fetchUploadRecordsByIdentifier:asset.localIdentifier shouldPrefetchErrorRecords:NO error:nil].count == 0) {
                     [self createUploadRecordFromAsset:asset];
                 }
             }
@@ -278,7 +284,7 @@ static const NSUInteger MaximumUploadRetryPerLoginCount = 800;
 
 - (BOOL)updateUploadRecordByLocalIdentifier:(NSString *)identifier withStatus:(CameraAssetUploadStatus)status error:(NSError *__autoreleasing  _Nullable *)error {
     __block NSError *coreDataError = nil;
-    NSArray *records = [self fetchUploadRecordsByLocalIdentifier:identifier shouldPrefetchErrorRecords:YES error:&coreDataError];
+    NSArray *records = [self fetchUploadRecordsByIdentifier:identifier shouldPrefetchErrorRecords:YES error:&coreDataError];
     for (MOAssetUploadRecord *record in records) {
         [self updateUploadRecord:record withStatus:status error:&coreDataError];
     }
