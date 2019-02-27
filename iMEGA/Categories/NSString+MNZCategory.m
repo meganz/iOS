@@ -211,8 +211,8 @@ static NSString* const B = @"[B]";
             missedString = [missedString stringByReplacingOccurrencesOfString:A withString:missedVideoCallsString];
         } else { //missedAudioCalls > 1
             missedString = AMLocalizedString(@"missedAudioCallsAndMissedVideoCalls", @"Notification text body shown when you have missed several audio calls and video calls. [A] = {number of missed audio calls}. [B] = {number of missed video calls}");
-            missedString = [missedString stringByReplacingOccurrencesOfString:A withString:missedString];
-            missedString = [missedString stringByReplacingOccurrencesOfString:B withString:missedString];            
+            missedString = [missedString stringByReplacingOccurrencesOfString:A withString:missedAudioCallsString];
+            missedString = [missedString stringByReplacingOccurrencesOfString:B withString:missedVideoCallsString];            
         }
     }
     
