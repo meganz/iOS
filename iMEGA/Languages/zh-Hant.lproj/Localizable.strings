@@ -70,22 +70,6 @@
 "pleaseLogInToYourAccount"="請登入您的帳號。";
 /* Error message when a user attempts to change their email without an active login session. */
 "needToBeLoggedInToCompleteYourEmailChange"="您必須登入以完成您的電子郵件地址變更作業。請您使用目前的電子郵件地址重新登入，然後再次點擊您的確認連結。";
-/* Title shown on the app's start animation to explain what MEGA offers you (1/4) */
-"megaSpace"="MEGA 存儲空間";
-/* Title shown on the app's start animation to explain what MEGA offers you (2/4) */
-"megaSpeed"="MEGA 網絡速度";
-/* Title shown on the app's start animation to explain what MEGA offers you (3/4) */
-"megaPrivacy"="MEGA 隱私保護";
-/* Title shown on the app's start animation to explain what MEGA offers you (4/4) */
-"megaAccess"="訪問 MEGA";
-/* Message shown on the app's start animation to explain what MEGA SPACE means */
-"megaSpaceText"="馬上註冊獲得50 GB 免費空間";
-/* Message shown on the app's start animation to explain what MEGA SPEED means */
-"megaSpeedText"="高速上傳。快速共享文件給每個人。";
-/* Message shown on the app's start animation to explain what MEGA PRIVACY means */
-"megaPrivacyText"="使用MEGA確保您的文件的安全性終端至終端加密技術";
-/* Message shown on the app's start animation to explain what MEGA ACCESS means */
-"megaAccessText"="隨時隨地獲得完全加密訪問";
 /* Button title which triggers the action to login in your MEGA account */
 "login"="登入";
 /* Button title which triggers the action to create a MEGA account */
@@ -1684,6 +1668,8 @@
 "Poor conection."="Poor connection.";
 /* Message shown in a chat room when there is an active group call */
 "There is an active group call. Tap to join."="There is an active group call. Tap to join.";
+/* Message shown in a chat room when there is an active call */
+"There is an active call. Tap to join."="There is an active call. Tap to join.";
 /* Message shown in a chat room for a group call in progress displaying the duration of the call */
 "Touch to return to call %@"="Touch to return to call %@";
 /* A button label which allows the users save images/videos in the Photos app. */
@@ -1809,6 +1795,10 @@
 /* */
 "Yesterday"="昨天";
 /* Plural of participant. 2 participants */
-"%d participants"="%d participants";
+"%d participants"="%d位與會者";
 /* Singular of participant. 1 participant */
-"%d participant"="%d participant";
+"%d participant"="%d位與會者";
+/* Text to inform the user there is an active call and is not participating */
+"Ongoing Call"="Ongoing Call";
+/* Text to inform the user there is an active call and is participating */
+"Call Started"="Call Started";
