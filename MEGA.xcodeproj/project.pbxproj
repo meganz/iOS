@@ -347,6 +347,9 @@
 		77F95CF220E3E5F800F42D9C /* MEGAChatBaseRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A802B1F91FAB293700AC8BB0 /* MEGAChatBaseRequestDelegate.m */; };
 		77F95CF320E3E60A00F42D9C /* MEGAChatAttachNodeRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B222A73205A9CD40083D433 /* MEGAChatAttachNodeRequestDelegate.m */; };
 		830B548A2178845300BE1E1F /* CloudDriveTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 830B54892178845300BE1E1F /* CloudDriveTableViewController.m */; };
+		830DD63222141A000025DD3C /* MEGAMessageCallStartedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 830DD63122141A000025DD3C /* MEGAMessageCallStartedView.m */; };
+		830DD63422141A110025DD3C /* MEGAMessageCallStartedView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 830DD63322141A100025DD3C /* MEGAMessageCallStartedView.xib */; };
+		830DD63722141B130025DD3C /* MEGACallStartedMediaItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 830DD63622141B130025DD3C /* MEGACallStartedMediaItem.m */; };
 		830EF9A420062F3800FAA947 /* DevicePermissionsHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 830EF9A320062F3800FAA947 /* DevicePermissionsHelper.m */; };
 		8310488A21AECD860057400D /* DTConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 413199691BD7BD5D002CD6EA /* DTConstants.m */; };
 		8310488B21AECDBA0057400D /* DTConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 413199691BD7BD5D002CD6EA /* DTConstants.m */; };
@@ -403,11 +406,14 @@
 		837A88BF20B42290007B55D1 /* CloudDriveViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 837A88BE20B42290007B55D1 /* CloudDriveViewController.m */; };
 		837A88C220B44AA8007B55D1 /* OfflineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 837A88C120B44AA8007B55D1 /* OfflineViewController.m */; };
 		837A88C520B45C11007B55D1 /* SendToViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 837A88C420B45C11007B55D1 /* SendToViewController.m */; };
+		8394CFA3211AE24100A1634A /* GroupCallViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8394CFA2211AE24100A1634A /* GroupCallViewController.m */; };
+		8394CFB8211B1AFD00A1634A /* GroupCallCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8394CFB7211B1AFD00A1634A /* GroupCallCollectionViewCell.m */; };
 		839D5A9721C25A7D00FAE757 /* GridFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 839D5A9621C25A7D00FAE757 /* GridFlowLayout.m */; };
 		839D5A9821C25A7D00FAE757 /* GridFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 839D5A9621C25A7D00FAE757 /* GridFlowLayout.m */; };
 		839D5A9921C25A7D00FAE757 /* GridFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 839D5A9621C25A7D00FAE757 /* GridFlowLayout.m */; };
 		83B841672051905E00E5AC69 /* MEGAGetThumbnailRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A820DA3B1F0E5BDC00F1F832 /* MEGAGetThumbnailRequestDelegate.m */; };
 		83B841682051913C00E5AC69 /* MEGAGetThumbnailRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A820DA3B1F0E5BDC00F1F832 /* MEGAGetThumbnailRequestDelegate.m */; };
+		83BC4F1D216B72E800000D30 /* MEGAGroupCallPeer.m in Sources */ = {isa = PBXBuildFile; fileRef = 83BC4F1C216B72E800000D30 /* MEGAGroupCallPeer.m */; };
 		83D64E2D20178A0400E24155 /* PasswordReminder.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 83D64E2C20178A0400E24155 /* PasswordReminder.storyboard */; };
 		83E076F52179D7BC00058409 /* NodeCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 83E076F42179D7BC00058409 /* NodeCollectionViewCell.m */; };
 		83FB1431219AC7CD00418BE6 /* OfflineTableViewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83FB1430219AC7CD00418BE6 /* OfflineTableViewViewController.m */; };
@@ -1332,6 +1338,11 @@
 		83064D88217F207000FA3DAC /* LayoutView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LayoutView.h; sourceTree = "<group>"; };
 		830B54882178845300BE1E1F /* CloudDriveTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CloudDriveTableViewController.h; sourceTree = "<group>"; };
 		830B54892178845300BE1E1F /* CloudDriveTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CloudDriveTableViewController.m; sourceTree = "<group>"; };
+		830DD63022141A000025DD3C /* MEGAMessageCallStartedView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MEGAMessageCallStartedView.h; sourceTree = "<group>"; };
+		830DD63122141A000025DD3C /* MEGAMessageCallStartedView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MEGAMessageCallStartedView.m; sourceTree = "<group>"; };
+		830DD63322141A100025DD3C /* MEGAMessageCallStartedView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MEGAMessageCallStartedView.xib; sourceTree = "<group>"; };
+		830DD63522141B130025DD3C /* MEGACallStartedMediaItem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MEGACallStartedMediaItem.h; sourceTree = "<group>"; };
+		830DD63622141B130025DD3C /* MEGACallStartedMediaItem.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MEGACallStartedMediaItem.m; sourceTree = "<group>"; };
 		830EF9A220062F3800FAA947 /* DevicePermissionsHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DevicePermissionsHelper.h; sourceTree = "<group>"; };
 		830EF9A320062F3800FAA947 /* DevicePermissionsHelper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DevicePermissionsHelper.m; sourceTree = "<group>"; };
 		831D61A1218738D20038F5B8 /* MOFolderLayout+CoreDataProperties.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MOFolderLayout+CoreDataProperties.h"; sourceTree = "<group>"; };
@@ -1404,8 +1415,17 @@
 		837A88C120B44AA8007B55D1 /* OfflineViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OfflineViewController.m; sourceTree = "<group>"; };
 		837A88C320B45C11007B55D1 /* SendToViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SendToViewController.h; path = Chat/SendToViewController.h; sourceTree = "<group>"; };
 		837A88C420B45C11007B55D1 /* SendToViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = SendToViewController.m; path = Chat/SendToViewController.m; sourceTree = "<group>"; };
+		8394CFA1211AE24100A1634A /* GroupCallViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = GroupCallViewController.h; path = Chat/GroupCallViewController.h; sourceTree = "<group>"; };
+		8394CFA2211AE24100A1634A /* GroupCallViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = GroupCallViewController.m; path = Chat/GroupCallViewController.m; sourceTree = "<group>"; };
+		8394CFA4211AE5B700A1634A /* CallType.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CallType.h; sourceTree = "<group>"; };
+		8394CFB6211B1AFD00A1634A /* GroupCallCollectionViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GroupCallCollectionViewCell.h; sourceTree = "<group>"; };
+		8394CFB7211B1AFD00A1634A /* GroupCallCollectionViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GroupCallCollectionViewCell.m; sourceTree = "<group>"; };
 		839D5A9521C25A7D00FAE757 /* GridFlowLayout.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GridFlowLayout.h; sourceTree = "<group>"; };
 		839D5A9621C25A7D00FAE757 /* GridFlowLayout.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GridFlowLayout.m; sourceTree = "<group>"; };
+		83ACBDB72212EDC800ACBBDC /* CallPeerVideo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CallPeerVideo.h; sourceTree = "<group>"; };
+		83ACBDB82212EDE000ACBBDC /* CallPeerAudio.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CallPeerAudio.h; sourceTree = "<group>"; };
+		83BC4F1B216B72E800000D30 /* MEGAGroupCallPeer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MEGAGroupCallPeer.h; path = Chat/Model/MEGAGroupCallPeer.h; sourceTree = "<group>"; };
+		83BC4F1C216B72E800000D30 /* MEGAGroupCallPeer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = MEGAGroupCallPeer.m; path = Chat/Model/MEGAGroupCallPeer.m; sourceTree = "<group>"; };
 		83D64E2C20178A0400E24155 /* PasswordReminder.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = PasswordReminder.storyboard; sourceTree = "<group>"; };
 		83E076F32179D7BC00058409 /* NodeCollectionViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NodeCollectionViewCell.h; sourceTree = "<group>"; };
 		83E076F42179D7BC00058409 /* NodeCollectionViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NodeCollectionViewCell.m; sourceTree = "<group>"; };
@@ -1617,7 +1637,6 @@
 		E84F86FF1BB99E6A00436A0D /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; lineEnding = 0; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.simpleColoring; };
 		E84F87011BB99F5F00436A0D /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; lineEnding = 0; name = ko; path = ko.lproj/Localizable.strings; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.simpleColoring; };
 		E84F87021BB99FA500436A0D /* pl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; lineEnding = 0; name = pl; path = pl.lproj/Localizable.strings; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.simpleColoring; };
-		E84F87031BB99FCE00436A0D /* he */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; lineEnding = 0; name = he; path = he.lproj/Localizable.strings; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.simpleColoring; };
 		E84F87041BB9A02800436A0D /* id */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; lineEnding = 0; name = id; path = id.lproj/Localizable.strings; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.simpleColoring; };
 		E84F87051BB9A07200436A0D /* ro */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; lineEnding = 0; name = ro; path = ro.lproj/Localizable.strings; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.simpleColoring; };
 		E84F87071BB9A0E200436A0D /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; lineEnding = 0; name = tr; path = tr.lproj/Localizable.strings; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.simpleColoring; };
@@ -1657,7 +1676,6 @@
 		E8BB73681D77399A0067D89C /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		E8BB73691D77399C0067D89C /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		E8BB736A1D7739AC0067D89C /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		E8BB736F1D7739CE0067D89C /* he */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = he; path = he.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		E8BB73711D7739E70067D89C /* id */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = id; path = id.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		E8BB73721D7739E90067D89C /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		E8BB73731D7739F50067D89C /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -1951,6 +1969,9 @@
 				77B32275209C6EC00037FA89 /* MEGAMessageRichPreviewView.h */,
 				77B32276209C6EC00037FA89 /* MEGAMessageRichPreviewView.m */,
 				77B32278209C6F060037FA89 /* MEGAMessageRichPreviewView.xib */,
+				830DD63022141A000025DD3C /* MEGAMessageCallStartedView.h */,
+				830DD63122141A000025DD3C /* MEGAMessageCallStartedView.m */,
+				830DD63322141A100025DD3C /* MEGAMessageCallStartedView.xib */,
 			);
 			name = Views;
 			path = Chat/Views;
@@ -2597,6 +2618,8 @@
 				774FA6632090F5A20061DD85 /* MEGADialogMediaItem.m */,
 				77B32272209C6DE80037FA89 /* MEGARichPreviewMediaItem.h */,
 				77B32273209C6DE80037FA89 /* MEGARichPreviewMediaItem.m */,
+				830DD63522141B130025DD3C /* MEGACallStartedMediaItem.h */,
+				830DD63622141B130025DD3C /* MEGACallStartedMediaItem.m */,
 			);
 			name = Model;
 			path = Chat/Model;
@@ -2774,6 +2797,7 @@
 		41EABF181DA7C53A0087271C /* Chat */ = {
 			isa = PBXGroup;
 			children = (
+				8394CFB2211B1ADF00A1634A /* Cells */,
 				A8BB54191FB9ABBD004FD03B /* Audios */,
 				41C736BD1DBE6CCE00F1F38A /* Model */,
 				41136FB91E1692650031C516 /* Views */,
@@ -2800,6 +2824,10 @@
 				A89629741FACE78B00F02F7A /* MEGACallManager.m */,
 				A89629761FACEAF800F02F7A /* MEGAProviderDelegate.h */,
 				A89629771FACEAF800F02F7A /* MEGAProviderDelegate.m */,
+				8394CFA1211AE24100A1634A /* GroupCallViewController.h */,
+				8394CFA2211AE24100A1634A /* GroupCallViewController.m */,
+				83BC4F1B216B72E800000D30 /* MEGAGroupCallPeer.h */,
+				83BC4F1C216B72E800000D30 /* MEGAGroupCallPeer.m */,
 			);
 			name = Chat;
 			sourceTree = "<group>";
@@ -2892,6 +2920,8 @@
 				83064D88217F207000FA3DAC /* LayoutView.h */,
 				771A1B5E21C9220C00A8555D /* OnboardingViewType.h */,
 				771A1B5F21C9227A00A8555D /* OnboardingType.h */,
+				83ACBDB72212EDC800ACBBDC /* CallPeerVideo.h */,
+				83ACBDB82212EDE000ACBBDC /* CallPeerAudio.h */,
 			);
 			path = Headers;
 			sourceTree = "<group>";
@@ -3130,6 +3160,16 @@
 			path = Cells;
 			sourceTree = "<group>";
 		};
+		8394CFB2211B1ADF00A1634A /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				8394CFB6211B1AFD00A1634A /* GroupCallCollectionViewCell.h */,
+				8394CFB7211B1AFD00A1634A /* GroupCallCollectionViewCell.m */,
+			);
+			name = Cells;
+			path = Chat/Cells;
+			sourceTree = "<group>";
+		};
 		83D64E2B2017873D00E24155 /* PasswordReminder */ = {
 			isa = PBXGroup;
 			children = (
@@ -3318,6 +3358,7 @@
 			isa = PBXGroup;
 			children = (
 				A85D93BD20457DAA0066F45B /* ChatVideoUploadQuality.h */,
+				8394CFA4211AE5B700A1634A /* CallType.h */,
 			);
 			path = Enums;
 			sourceTree = "<group>";
@@ -3804,6 +3845,7 @@
 				77B32279209C6F060037FA89 /* MEGAMessageRichPreviewView.xib in Resources */,
 				E8E3E6FA1E0939BE00D45F45 /* MEGAOpenMessageHeaderView.xib in Resources */,
 				77D9A56E202355F800B48470 /* MEGAPhotoBrowserViewController.storyboard in Resources */,
+				830DD63422141A110025DD3C /* MEGAMessageCallStartedView.xib in Resources */,
 				A8278D7F200E72A00040B076 /* incoming_voice_video_call_iOS9.mp3 in Resources */,
 				5B4429431E6D7B7000BCACC0 /* SF-UI-Text-RegularItalic.otf in Resources */,
 				E803CB641D5336F100F81A36 /* InfoPlist.strings in Resources */,
@@ -4032,6 +4074,7 @@
 				413199791BD7BD5D002CD6EA /* DTTimePeriod.m in Sources */,
 				A810CF2F20C157BC00A6C6C5 /* FLAnimatedImage.m in Sources */,
 				417279581DB663FA001AC818 /* JSQMessagesLoadEarlierHeaderView.m in Sources */,
+				8394CFA3211AE24100A1634A /* GroupCallViewController.m in Sources */,
 				4156C80D1AD7E79A00F5E818 /* LTHPasscodeViewController.m in Sources */,
 				A819B33F1EAFA7E2004592F9 /* CustomModalAlertViewController.m in Sources */,
 				A8F6C5F91FAB4295001E274D /* MEGAChatEnableDisableVideoRequestDelegate.m in Sources */,
@@ -4072,6 +4115,7 @@
 				5B118EC31FB1B0C6005D7D90 /* NSMutableArray+MNZCategory.m in Sources */,
 				E8CD19871A9266D600CB8B2A /* UnavailableLinkView.m in Sources */,
 				5B1AB4AF20E5407300FEDAF9 /* MEGAQuerySignupLinkRequestDelegate.m in Sources */,
+				830DD63722141B130025DD3C /* MEGACallStartedMediaItem.m in Sources */,
 				E8D4B8911A69429200A3B2E2 /* ConfirmAccountViewController.m in Sources */,
 				835223AD20568BB200A47438 /* MEGAGetFolderInfoRequestDelegate.m in Sources */,
 				5B5737D61EFBE6410027ECCD /* MEGANode+MNZCategory.m in Sources */,
@@ -4201,6 +4245,7 @@
 				E8F7917E1BC5754A00C58676 /* GetLinkActivity.m in Sources */,
 				41AA1A1C1AC081C600D32691 /* SecurityOptionsTableViewController.m in Sources */,
 				5B40AB321F7A512E0034C3B3 /* AchievementsDetailsViewController.m in Sources */,
+				830DD63222141A000025DD3C /* MEGAMessageCallStartedView.m in Sources */,
 				411E712F1D461E1D00DD7EF8 /* MEGACollectionViewFlowLayout.m in Sources */,
 				4131997B1BD7BD5D002CD6EA /* DTTimePeriodCollection.m in Sources */,
 				946BD1331FEBBE4E00B76785 /* MEGAToolbarSelectedAssets.m in Sources */,
@@ -4217,7 +4262,9 @@
 				415226951A692ECC00EC7BB6 /* MainTabBarController.m in Sources */,
 				41DC6F721D54E7080081832C /* NSFileManager+MNZCategory.m in Sources */,
 				41D21E5F1D01AEC3002E6296 /* CTAssetPlayButton.m in Sources */,
+				8394CFB8211B1AFD00A1634A /* GroupCallCollectionViewCell.m in Sources */,
 				A89629781FACEAF800F02F7A /* MEGAProviderDelegate.m in Sources */,
+				83BC4F1D216B72E800000D30 /* MEGAGroupCallPeer.m in Sources */,
 				5B14A41520D10043005F8146 /* MEGAMultiFactorAuthCheckRequestDelegate.m in Sources */,
 				77597006219DD4D100B31671 /* MEGAUserAlertList+MNZCategory.m in Sources */,
 				83681578202AFBC000CA8EFC /* CustomActionViewController.m in Sources */,
@@ -4500,7 +4547,6 @@
 				E84F86FF1BB99E6A00436A0D /* de */,
 				E84F87011BB99F5F00436A0D /* ko */,
 				E84F87021BB99FA500436A0D /* pl */,
-				E84F87031BB99FCE00436A0D /* he */,
 				E84F87041BB9A02800436A0D /* id */,
 				E84F87051BB9A07200436A0D /* ro */,
 				E84F87071BB9A0E200436A0D /* tr */,
@@ -4533,7 +4579,6 @@
 				E8BB73681D77399A0067D89C /* zh-Hans */,
 				E8BB73691D77399C0067D89C /* zh-Hant */,
 				E8BB736A1D7739AC0067D89C /* ar */,
-				E8BB736F1D7739CE0067D89C /* he */,
 				E8BB73711D7739E70067D89C /* id */,
 				E8BB73721D7739E90067D89C /* it */,
 				E8BB73731D7739F50067D89C /* ko */,
