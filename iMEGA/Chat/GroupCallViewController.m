@@ -255,7 +255,7 @@
                 [self configureUserOnFocus:peerSelected manual:YES];
             }
         } else {
-            [self configureUserOnFocus:peerSelected manual:NO];
+            [self configureUserOnFocus:peerSelected manual:YES];
         }
     }
 }
