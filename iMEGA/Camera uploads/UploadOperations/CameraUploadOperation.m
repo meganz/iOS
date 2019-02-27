@@ -160,7 +160,7 @@
         }
 
         if (success) {
-            MEGALogDebug(@"[Camera Upload] %@ encrypt file succeeded with %lu chunks", self, (unsigned long)chunkURLsKeyedByUploadSuffix.count);
+            MEGALogDebug(@"[Camera Upload] %@ encrypted to chunk count %lu", self, (unsigned long)chunkURLsKeyedByUploadSuffix.count);
             self.uploadInfo.fileSize = fileSize;
             self.uploadInfo.encryptedChunkURLsKeyedByUploadSuffix = chunkURLsKeyedByUploadSuffix;
             self.uploadInfo.encryptedChunksCount = chunkURLsKeyedByUploadSuffix.count;
