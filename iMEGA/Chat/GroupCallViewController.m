@@ -56,8 +56,6 @@
 @property (weak, nonatomic) IBOutlet UIView *volumeContainerView;
 @property (strong, nonatomic) MPVolumeView *mpVolumeView;
 
-@property BOOL loudSpeakerEnabled;
-
 @property (strong, nonatomic) NSMutableArray<MEGAGroupCallPeer *> *peersInCall;
 @property (strong, nonatomic) MEGAGroupCallPeer *localPeer;
 @property (strong, nonatomic) MEGAGroupCallPeer *lastPeerTalking;
@@ -418,7 +416,6 @@
                 }
                 
                 sender.selected = !sender.selected;
-                self.loudSpeakerEnabled = !sender.selected;
             }
         }
     }];
@@ -450,7 +447,6 @@
                         }
                         [[UIDevice currentDevice] setProximityMonitoringEnabled:sender.selected];
                         sender.selected = !sender.selected;
-                        self.loudSpeakerEnabled = !sender.selected;
                         
                         [self updateParticipants];
                     }
@@ -665,12 +661,10 @@
 }
 
 - (void)enableLoudspeaker {
-    self.loudSpeakerEnabled = TRUE;
     [[AVAudioSession sharedInstance] overrideOutputAudioPort:AVAudioSessionPortOverrideSpeaker error:nil];
 }
 
 - (void)disableLoudspeaker {
-    self.loudSpeakerEnabled = FALSE;
     [[AVAudioSession sharedInstance] overrideOutputAudioPort:AVAudioSessionPortOverrideNone error:nil];
 }
 
