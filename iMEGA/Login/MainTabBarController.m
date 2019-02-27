@@ -316,7 +316,7 @@
         MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:call.chatId];
         
         if (chatRoom.isGroup) {
-            UINavigationController *groupCallNavigation = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"GroupCallNavigationID"];
+            MEGANavigationController *groupCallNavigation = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"GroupCallViewControllerNavigationID"];
             GroupCallViewController *groupCallVC = groupCallNavigation.viewControllers.firstObject;
             groupCallVC.callType = CallTypeIncoming;
             groupCallVC.videoCall = call.hasVideoInitialCall;
