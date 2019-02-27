@@ -47,7 +47,7 @@
     NSURL *archivedURL = [NSURL mnz_archivedURLForLocalIdentifier:task.taskDescription];
     AssetUploadInfo *uploadInfo = [NSKeyedUnarchiver unarchiveObjectWithFile:archivedURL.path];
     if (uploadInfo.encryptedChunksCount == 1) {
-        MEGALogError(@"[Camera Upload] empty transfer token for single chunk %@, URL %@, response %@, fileSize: %llu", task.taskDescription, task.response.URL, task.response, uploadInfo.fileSize);
+        MEGALogError(@"[Camera Upload] empty transfer token for single chunk %@, URL %@, fileSize: %llu", task.taskDescription, task.response.URL, uploadInfo.fileSize);
         [self finishUploadForLocalIdentifier:uploadInfo.savedLocalIdentifier status:CameraAssetUploadStatusFailed];
     }
 }
