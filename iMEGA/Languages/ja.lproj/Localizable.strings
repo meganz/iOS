@@ -1680,6 +1680,22 @@
 "Saved to Photos"="写真に保存されました";
 /* Text shown when an error occurs when trying to save a photo or video to Photos app */
 "Could not save Item"="項目を保存できませんでした";
+/* Label in a cell where you can enable the 'Encrypted Key Rotation' */
+"Encrypted Key Rotation"="Encrypted Key Rotation";
+/* Title shown in a cell to allow the users enable the 'Encrypted Key Rotation' */
+"Enable Encrypted Key Rotation"="Enable Encrypted Key Rotation";
+/* Label in a cell where you can get the chat link */
+"Get Chat Link"="Get Chat Link";
+/* Footer text to explain what means 'Encrypted Key Rotation' */
+"Key rotation is slightly more secure, but does not allow you to create a link to the chat and new participants will not see past messages."="Key rotation is slightly more secure, but does not allow you to create a link to the chat and new participants will not see past messages.";
+/* Alert message to advice the users that to generate a chat link they need enter a group name for the chat */
+"Before you can generate a link for this room, you need to enter a group name"="Before you can generate a link for this room, you need to enter a group name";
+/* Label shown in a cell where you can enable a switch to get a chat link */
+"Chat Link"="Chat Link";
+/* Message shown when there is an active chat link that can be deleted */
+"Delete Chat Link"="Delete Chat Link";
+/* Button text in public chat previews that allows the user to join the chat */
+"Join"="Join";
 /* Message show when a call cannot be established because there are too many participants in the group call */
 "Error. No more participants are allowed in this group call."="最大参加者数に達したため、この通話に参加できません。";
 /* Message show when a user cannot activate the video in a group call because the max number of videos has been reached */
@@ -1787,7 +1803,7 @@
 /* Label shown next to a feature name that can be enabled or disabled, like in 'Show Last seen...' */
 "Show"="表示";
 /* Shown when viewing a 1on1 chat (at least for now), if the user is offline. */
-"Last seen %s"="最終ログイン%s";
+"Last seen %s"="最終ログイン：%s";
 /* Text to inform the user the 'Last seen' time of a contact is a long time ago (>= 65535 minutes) */
 "Last seen a long time ago"="最終ログインはだいぶ前";
 /* */
