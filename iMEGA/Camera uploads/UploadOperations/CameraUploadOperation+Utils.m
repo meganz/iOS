@@ -9,6 +9,7 @@
 #import "NSDate+MNZCategory.h"
 
 static NSString * const CameraUploadLivePhotoExtension = @"live";
+static NSString * const CameraUploadBurstPhotoExtension = @"burst";
 
 @implementation CameraUploadOperation (Utils)
 
@@ -82,7 +83,13 @@ static NSString * const CameraUploadLivePhotoExtension = @"live";
 #pragma mark - generate local file name
 
 - (NSString *)mnz_generateLocalFileNamewithExtension:(NSString *)extension {
-    NSString *originalFileName = [[self.uploadInfo.asset.creationDate mnz_formattedDefaultNameForMedia] stringByAppendingPathExtension:extension];
+    NSString *originalFileName = [self.uploadInfo.asset.creationDate mnz_formattedDefaultNameForMedia];
+    if (self.uploadInfo.asset.burstIdentifier.length > 0) {
+        originalFileName = [originalFileName stringByAppendingPathExtension:CameraUploadBurstPhotoExtension];
+    }
+    
+    originalFileName = [originalFileName stringByAppendingPathExtension:extension];
+    
     return [CameraUploadRecordManager.shared.fileNameCoordinator generateUniqueLocalFileNameForUploadRecord:self.uploadRecord withOriginalFileName:originalFileName];
 }
 

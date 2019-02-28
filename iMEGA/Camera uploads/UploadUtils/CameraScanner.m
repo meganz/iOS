@@ -41,6 +41,7 @@
         PHFetchOptions *fetchOptions = [[PHFetchOptions alloc] init];
         fetchOptions.includeAssetSourceTypes = PHAssetSourceTypeUserLibrary | PHAssetSourceTypeCloudShared | PHAssetSourceTypeiTunesSynced;
         fetchOptions.includeHiddenAssets = YES;
+        fetchOptions.includeAllBurstAssets = YES;
         fetchOptions.predicate = [NSPredicate predicateWithFormat:@"mediaType IN %@", mediaTypes];
         self.fetchResult = [PHAsset fetchAssetsWithOptions:fetchOptions];
         if (self.fetchResult.count == 0) {
