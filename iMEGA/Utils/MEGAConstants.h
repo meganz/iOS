@@ -30,7 +30,6 @@ extern NSString * const MEGACurrentUploadingTasksCountUserInfoKey;
 
 #pragma mark - camera upload constants
 
-extern NSString * const MEGACameraUploadIdentifierSeparator;
 extern const NSUInteger MEGACameraUploadLowDiskStorageSizeInBytes;
 
 #pragma mark - file extension constants

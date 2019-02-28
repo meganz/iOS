@@ -65,6 +65,11 @@
         return;
     }
     
+    if (self.uploadInfo.asset == nil) {
+        [self finishOperationWithStatus:CameraAssetUploadStatusFailed shouldUploadNextAsset:YES];
+        return;
+    }
+    
     [self startExecuting];
 
     [self beginBackgroundTaskWithExpirationHandler:^{
