@@ -4,6 +4,10 @@
 
 @implementation PHAsset (CameraUpload)
 
+- (BOOL)mnz_isLivePhoto {
+    return self.mediaType == PHAssetMediaTypeImage && self.mediaSubtypes & PHAssetMediaSubtypePhotoLive;
+}
+
 - (NSString *)mnz_fileExtensionFromAssetInfo:(NSDictionary *)info {
     NSString *extension = [info[@"PHImageFileURLKey"] pathExtension];
     if (extension.length == 0) {

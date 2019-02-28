@@ -40,6 +40,7 @@
         
         PHFetchOptions *fetchOptions = [[PHFetchOptions alloc] init];
         fetchOptions.includeAssetSourceTypes = PHAssetSourceTypeUserLibrary | PHAssetSourceTypeCloudShared | PHAssetSourceTypeiTunesSynced;
+        fetchOptions.includeHiddenAssets = YES;
         fetchOptions.predicate = [NSPredicate predicateWithFormat:@"mediaType IN %@", mediaTypes];
         self.fetchResult = [PHAsset fetchAssetsWithOptions:fetchOptions];
         if (self.fetchResult.count == 0) {
@@ -50,14 +51,14 @@
         }
         
         [CameraUploadRecordManager.shared.backgroundContext performBlockAndWait:^{
-            NSArray<MOAssetUploadRecord *> *records = [[CameraUploadRecordManager shared] fetchAllUploadRecords:nil];
-            if (records.count == 0) {
+            if ([CameraUploadRecordManager.shared uploadRecordsCountByMediaTypes:mediaTypes error:nil] == 0) {
                 MEGALogDebug(@"[Camera Upload] initial save with asset count %lu", (unsigned long)self.fetchResult.count);
                 [CameraUploadRecordManager.shared saveInitialUploadRecordsByAssetFetchResult:self.fetchResult error:nil];
                 if (CameraUploadManager.isLivePhotoSupported) {
-                    [self.livePhotoScanner saveInitialLivePhotoRecordsByFetchResult:self.fetchResult];
+                    [self.livePhotoScanner saveInitialLivePhotoRecordsInFetchResult:self.fetchResult];
                 }
             } else {
+                NSArray<MOAssetUploadRecord *> *records = [CameraUploadRecordManager.shared fetchUploadRecordsByMediaTypes:mediaTypes includeAdditionalMediaSubtypes:NO error:nil];
                 NSArray<PHAsset *> *newAssets = [self findNewAssetsByComparingFetchResult:self.fetchResult uploadRecords:records];
                 MEGALogDebug(@"[Camera Upload] new assets scanned with count %lu", (unsigned long)newAssets.count);
                 if (newAssets.count > 0) {
@@ -66,12 +67,9 @@
                 }
                 
                 if (CameraUploadManager.isLivePhotoSupported) {
-                    [self.livePhotoScanner scanLivePhotosWithCompletion:nil];
+                    [self.livePhotoScanner scanLivePhotosInFetchResult:self.fetchResult];
                 }
             }
-            
-            NSArray *livePhotoRecords = [CameraUploadRecordManager.shared fetchUploadRecordsByMediaTypes:@[@(PHAssetMediaTypeImage)] additionalMediaSubtypes:PHAssetMediaSubtypePhotoLive error:nil];
-            MEGALogDebug(@"[Camera Upload] scan live photo count %lu and records %@", livePhotoRecords.count, livePhotoRecords);
             
             MEGALogDebug(@"[Camera Upload] Finish local album scanning");
         }];
@@ -135,11 +133,8 @@
                 MEGALogDebug(@"[Camera Upload] new assets detected: %@", newAssets);
                 [CameraUploadRecordManager.shared.backgroundContext performBlockAndWait:^{
                     [CameraUploadRecordManager.shared createUploadRecordsIfNeededByAssets:newAssets];
-                    [self.livePhotoScanner saveLivePhotoRecordsIfNeededByAssets:newAssets];
+                    [self.livePhotoScanner scanLivePhotosInAssets:newAssets];
                     [CameraUploadRecordManager.shared saveChangesIfNeededWithError:nil];
-                    
-                    NSArray *livePhotoRecords = [CameraUploadRecordManager.shared fetchUploadRecordsByMediaTypes:@[@(PHAssetMediaTypeImage)] additionalMediaSubtypes:PHAssetMediaSubtypePhotoLive error:nil];
-                    MEGALogDebug(@"[Camera Upload] scan live photo count %lu and records %@", livePhotoRecords.count, livePhotoRecords);
                 }];
                 
                 [CameraUploadManager.shared startCameraUploadIfNeeded];

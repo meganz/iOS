@@ -6,11 +6,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface LivePhotoScanner : NSObject
 
-- (void)saveInitialLivePhotoRecordsByFetchResult:(PHFetchResult<PHAsset *> *)fetchResult;
+- (void)saveInitialLivePhotoRecordsInFetchResult:(PHFetchResult<PHAsset *> *)fetchResult;
 
-- (void)saveLivePhotoRecordsIfNeededByAssets:(NSArray<PHAsset *> *)assets;
+- (void)scanLivePhotosInAssets:(NSArray<PHAsset *> *)assets;
 
-- (void)scanLivePhotosWithCompletion:(nullable void (^)(void))completion;
+- (void)scanLivePhotosInFetchResult:(PHFetchResult<PHAsset *> *)result;
 
 @end
 
