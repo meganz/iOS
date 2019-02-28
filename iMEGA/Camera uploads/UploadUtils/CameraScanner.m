@@ -60,12 +60,18 @@
             } else {
                 NSArray<PHAsset *> *newAssets = [self findNewAssetsByComparingFetchResult:self.fetchResult uploadRecords:records];
                 MEGALogDebug(@"[Camera Upload] new assets scanned with count %lu", (unsigned long)newAssets.count);
-                [CameraUploadRecordManager.shared createUploadRecordsIfNeededByAssets:newAssets];
-                [CameraUploadRecordManager.shared saveChangesIfNeededWithError:nil];
+                if (newAssets.count > 0) {
+                    [CameraUploadRecordManager.shared createUploadRecordsIfNeededByAssets:newAssets];
+                    [CameraUploadRecordManager.shared saveChangesIfNeededWithError:nil];
+                }
+                
                 if (CameraUploadManager.isLivePhotoSupported) {
                     [self.livePhotoScanner scanLivePhotosWithCompletion:nil];
                 }
             }
+            
+            NSArray *livePhotoRecords = [CameraUploadRecordManager.shared fetchUploadRecordsByMediaTypes:@[@(PHAssetMediaTypeImage)] additionalMediaSubtypes:PHAssetMediaSubtypePhotoLive error:nil];
+            MEGALogDebug(@"[Camera Upload] scan live photo count %lu and records %@", livePhotoRecords.count, livePhotoRecords);
             
             MEGALogDebug(@"[Camera Upload] Finish local album scanning");
         }];
@@ -131,6 +137,9 @@
                     [CameraUploadRecordManager.shared createUploadRecordsIfNeededByAssets:newAssets];
                     [self.livePhotoScanner saveLivePhotoRecordsIfNeededByAssets:newAssets];
                     [CameraUploadRecordManager.shared saveChangesIfNeededWithError:nil];
+                    
+                    NSArray *livePhotoRecords = [CameraUploadRecordManager.shared fetchUploadRecordsByMediaTypes:@[@(PHAssetMediaTypeImage)] additionalMediaSubtypes:PHAssetMediaSubtypePhotoLive error:nil];
+                    MEGALogDebug(@"[Camera Upload] scan live photo count %lu and records %@", livePhotoRecords.count, livePhotoRecords);
                 }];
                 
                 [CameraUploadManager.shared startCameraUploadIfNeeded];

@@ -16,9 +16,10 @@
         <relationship name="uploadRecord" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="AssetUploadRecord" inverseName="fileNameRecord" inverseEntity="AssetUploadRecord" syncable="YES"/>
     </entity>
     <entity name="AssetUploadRecord" representedClassName="MOAssetUploadRecord" syncable="YES">
-        <attribute name="additionalMediaSubtype" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="additionalMediaSubtypes" optional="YES" attributeType="Integer 64" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="creationDate" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="localIdentifier" attributeType="String" syncable="YES"/>
+        <attribute name="mediaSubtypes" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="mediaType" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="status" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
         <relationship name="errorPerLaunch" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="AssetUploadErrorPerLaunch" inverseName="uploadRecord" inverseEntity="AssetUploadErrorPerLaunch" syncable="YES"/>
@@ -67,7 +68,7 @@
         <element name="AssetUploadErrorPerLogin" positionX="108" positionY="-63" width="128" height="60"/>
         <element name="AssetUploadErrorRecord" positionX="99" positionY="-72" width="128" height="75"/>
         <element name="AssetUploadFileNameRecord" positionX="90" positionY="-81" width="128" height="90"/>
-        <element name="AssetUploadRecord" positionX="90" positionY="-81" width="128" height="165"/>
+        <element name="AssetUploadRecord" positionX="90" positionY="-81" width="128" height="180"/>
         <element name="ChatDraft" positionX="-63" positionY="15" width="128" height="73"/>
         <element name="MediaDestination" positionX="99" positionY="-72" width="128" height="90"/>
         <element name="MOFolderLayout" positionX="90" positionY="-81" width="128" height="75"/>
