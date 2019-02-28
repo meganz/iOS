@@ -63,9 +63,7 @@
                 [CameraUploadRecordManager.shared createUploadRecordsIfNeededByAssets:newAssets];
                 [CameraUploadRecordManager.shared saveChangesIfNeededWithError:nil];
                 if (CameraUploadManager.isLivePhotoSupported) {
-                    [CameraUploadRecordManager.shared.backgroundContext performBlock:^{
-                        [self.livePhotoScanner scanLivePhotosWithCompletion:nil];
-                    }];
+                    [self.livePhotoScanner scanLivePhotosWithCompletion:nil];
                 }
             }
             
