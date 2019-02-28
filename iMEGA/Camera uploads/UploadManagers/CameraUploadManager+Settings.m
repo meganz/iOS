@@ -13,7 +13,6 @@ static NSString * const ShouldConvertHEICPhotoKey = @"ShouldConvertHEICPhoto";
 static NSString * const ShouldConvertHEVCVideoKey = @"ShouldConvertHEVCVideo";
 static NSString * const HEVCToH264CompressionQualityKey = @"HEVCToH264CompressionQuality";
 static NSString * const IsLocationBasedBackgroundUploadAllowedKey = @"IsLocationBasedBackgroundUploadAllowed";
-static NSString * const ShouldUploadLivePhotoKey = @"ShouldUploadLivePhoto";
 
 @implementation CameraUploadManager (Settings)
 
@@ -48,7 +47,6 @@ static NSString * const ShouldUploadLivePhotoKey = @"ShouldUploadLivePhoto";
     [NSUserDefaults.standardUserDefaults setBool:cameraUploadEnabled forKey:IsCameraUploadsEnabledKey];
     if (cameraUploadEnabled) {
         [self setConvertHEICPhoto:YES];
-        [self setUploadLivePhoto:YES];
     } else {
         [self clearCameraSettings];
     }
@@ -87,18 +85,6 @@ static NSString * const ShouldUploadLivePhotoKey = @"ShouldUploadLivePhoto";
     }
     
     [NSUserDefaults.standardUserDefaults setBool:convertHEICPhoto forKey:ShouldConvertHEICPhotoKey];
-}
-
-+ (BOOL)shouldUploadLivePhoto {
-    return [NSUserDefaults.standardUserDefaults boolForKey:ShouldUploadLivePhotoKey];
-}
-
-+ (void)setUploadLivePhoto:(BOOL)uploadLivePhoto {
-    if (![self isLivePhotoSupported]) {
-        return;
-    }
-    
-    [NSUserDefaults.standardUserDefaults setBool:uploadLivePhoto forKey:ShouldUploadLivePhotoKey];
 }
 
 #pragma mark - video settings

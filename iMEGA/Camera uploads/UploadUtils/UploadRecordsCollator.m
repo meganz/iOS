@@ -10,7 +10,7 @@
 - (void)collateNonUploadingRecords {
     [CameraUploadRecordManager.shared.backgroundContext performBlock:^{
         [self clearErrorRecordsPerLaunch];
-        NSArray<MOAssetUploadRecord *> *records = [CameraUploadRecordManager.shared fetchAllUploadRecordsByStatuses:AssetUploadStatus.nonUploadingStatusesToCollate error:nil];
+        NSArray<MOAssetUploadRecord *> *records = [CameraUploadRecordManager.shared fetchUploadRecordsByStatuses:AssetUploadStatus.nonUploadingStatusesToCollate error:nil];
         if (records.count == 0) {
             MEGALogDebug(@"[Camera Upload] no non-uploading records to collate");
             return;
@@ -27,7 +27,7 @@
 
 - (void)collateUploadingRecordsByPendingTasks:(NSArray<NSURLSessionTask *> *)tasks {
     [CameraUploadRecordManager.shared.backgroundContext performBlock:^{
-        NSArray<MOAssetUploadRecord *> *uploadingRecords = [CameraUploadRecordManager.shared fetchAllUploadRecordsByStatuses:@[@(CameraAssetUploadStatusUploading)] error:nil];
+        NSArray<MOAssetUploadRecord *> *uploadingRecords = [CameraUploadRecordManager.shared fetchUploadRecordsByStatuses:@[@(CameraAssetUploadStatusUploading)] error:nil];
         if (uploadingRecords.count == 0) {
             MEGALogDebug(@"[Camera Upload] no uploading records to collate");
             return;

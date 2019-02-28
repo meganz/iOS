@@ -9,7 +9,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface UploadOperationFactory : NSObject
 
-+ (NSArray<CameraUploadOperation *> *)operationsForUploadRecord:(MOAssetUploadRecord *)uploadRecord parentNode:(MEGANode *)node;
++ (CameraUploadOperation *)operationForUploadRecord:(MOAssetUploadRecord *)uploadRecord parentNode:(MEGANode *)node;
 
 @end
 

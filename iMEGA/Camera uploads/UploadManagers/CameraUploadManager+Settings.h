@@ -21,7 +21,6 @@ typedef NS_ENUM(NSUInteger, CameraUploadVideoQuality) {
 
 @property (class, getter=isCellularUploadAllowed) BOOL cellularUploadAllowed;
 @property (class, getter=shouldConvertHEICPhoto) BOOL convertHEICPhoto;
-@property (class, getter=shouldUploadLivePhoto) BOOL uploadLivePhoto;
 
 #pragma mark - video settings
 

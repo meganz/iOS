@@ -6,7 +6,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface SavedIdentifierParser : NSObject
 
-- (AssetIdentifierInfo *)parseSavedIdentifier:(NSString *)identifier separator:(NSString *)separator;
+- (NSString *)savedIdentifierForLocalIdentifier:(NSString *)identifier mediaSubtype:(PHAssetMediaSubtype)subtype;
+- (AssetIdentifierInfo *)parseSavedIdentifier:(NSString *)identifier;
 
 @end
 
