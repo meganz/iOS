@@ -13,7 +13,7 @@
         for (PHAsset *asset in fetchResult) {
             if (asset.mediaType == PHAssetMediaTypeImage && asset.mediaSubtypes & PHAssetMediaSubtypePhotoLive) {
                 NSString *savedIdentifier = [parser savedIdentifierForLocalIdentifier:asset.localIdentifier mediaSubtype:PHAssetMediaSubtypePhotoLive];
-                [self createUploadRecordForAsset:asset additionalMediaSubtype:PHAssetMediaSubtypePhotoLive savedIdentifier:savedIdentifier inContext:CameraUploadRecordManager.shared.backgroundContext];
+                [self createLivePhotoRecordForAsset:asset withSavedIdentifier:savedIdentifier inContext:CameraUploadRecordManager.shared.backgroundContext];
             }
         }
         
@@ -28,7 +28,7 @@
             if (asset.mediaType == PHAssetMediaTypeImage && asset.mediaSubtypes & PHAssetMediaSubtypePhotoLive) {
                 NSString *savedIdentifier = [parser savedIdentifierForLocalIdentifier:asset.localIdentifier mediaSubtype:PHAssetMediaSubtypePhotoLive];
                 if ([CameraUploadRecordManager.shared fetchUploadRecordsByIdentifier:savedIdentifier shouldPrefetchErrorRecords:NO error:nil].count == 0) {
-                    [self createUploadRecordForAsset:asset additionalMediaSubtype:PHAssetMediaSubtypePhotoLive savedIdentifier:savedIdentifier inContext:CameraUploadRecordManager.shared.backgroundContext];
+                    [self createLivePhotoRecordForAsset:asset withSavedIdentifier:savedIdentifier inContext:CameraUploadRecordManager.shared.backgroundContext];
                 }
             }
         }
@@ -39,8 +39,8 @@
 
 - (void)scanLivePhotosWithCompletion:(void (^)(void))completion {
     [CameraUploadRecordManager.shared.backgroundContext performBlockAndWait:^{
-        NSArray<MOAssetUploadRecord *> *photoRecords = [CameraUploadRecordManager.shared fetchUploadRecordsByMediaTypes:@[@(PHAssetMediaTypeImage)] includeAdditionalMediaSubtypes:NO error:nil];
-        [CameraUploadRecordManager.shared createAdditionalRecordsIfNeededForRecords:photoRecords withMediaSubtype:PHAssetMediaSubtypePhotoLive];
+        NSArray<MOAssetUploadRecord *> *livePhotoRecords = [CameraUploadRecordManager.shared fetchUploadRecordsByMediaTypes:@[@(PHAssetMediaTypeImage)] mediaSubtypes:PHAssetMediaSubtypePhotoLive includeAdditionalMediaSubtypes:NO error:nil];
+        [CameraUploadRecordManager.shared createAdditionalRecordsIfNeededForRecords:livePhotoRecords withMediaSubtype:PHAssetMediaSubtypePhotoLive];
         [CameraUploadRecordManager.shared saveChangesIfNeededWithError:nil];
     }];
     
@@ -49,14 +49,15 @@
     }
 }
 
-- (MOAssetUploadRecord *)createUploadRecordForAsset:(PHAsset *)asset additionalMediaSubtype:(PHAssetMediaSubtype)subtype savedIdentifier:(NSString *)identifier inContext:(NSManagedObjectContext *)context {
-    MOAssetUploadRecord *subtypeRecord = [NSEntityDescription insertNewObjectForEntityForName:@"AssetUploadRecord" inManagedObjectContext:context];
-    subtypeRecord.localIdentifier = identifier;
-    subtypeRecord.status = @(CameraAssetUploadStatusNotStarted);
-    subtypeRecord.creationDate = asset.creationDate;
-    subtypeRecord.mediaType = @(asset.mediaType);
-    subtypeRecord.additionalMediaSubtype = @(subtype);
-    return subtypeRecord;
+- (MOAssetUploadRecord *)createLivePhotoRecordForAsset:(PHAsset *)asset withSavedIdentifier:(NSString *)identifier inContext:(NSManagedObjectContext *)context {
+    MOAssetUploadRecord *livePhotoRecord = [NSEntityDescription insertNewObjectForEntityForName:@"AssetUploadRecord" inManagedObjectContext:context];
+    livePhotoRecord.localIdentifier = identifier;
+    livePhotoRecord.status = @(CameraAssetUploadStatusNotStarted);
+    livePhotoRecord.creationDate = asset.creationDate;
+    livePhotoRecord.mediaType = @(asset.mediaType);
+    livePhotoRecord.mediaSubtypes = @(asset.mediaSubtypes);
+    livePhotoRecord.additionalMediaSubtypes = @(PHAssetMediaSubtypePhotoLive);
+    return livePhotoRecord;
 }
 
 @end

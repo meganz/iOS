@@ -10,10 +10,11 @@
 @dynamic creationDate;
 @dynamic localIdentifier;
 @dynamic mediaType;
+@dynamic mediaSubtypes;
+@dynamic additionalMediaSubtypes;
 @dynamic status;
 @dynamic errorPerLaunch;
 @dynamic errorPerLogin;
 @dynamic fileNameRecord;
-@dynamic additionalMediaSubtype;
 
 @end

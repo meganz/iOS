@@ -4,7 +4,7 @@
 @implementation MOAssetUploadRecord
 
 - (NSString *)description {
-    return [NSString stringWithFormat:@"%@, %@, %@", self.localIdentifier, self.status, self.mediaType];
+    return [NSString stringWithFormat:@"%@, %@, %@, %@, %@", self.localIdentifier, self.status, self.mediaType, self.mediaSubtypes, self.additionalMediaSubtypes];
 }
 
 @end

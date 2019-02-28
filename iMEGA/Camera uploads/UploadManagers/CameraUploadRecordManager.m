@@ -145,16 +145,26 @@ static const NSUInteger MaximumUploadRetryPerLoginCount = 800;
     return [self fetchUploadRecordsByFetchRequest:request error:error];
 }
 
-- (NSArray<MOAssetUploadRecord *> *)fetchUploadRecordsByMediaTypes:(NSArray<NSNumber *> *)mediaTypes includeAdditionalMediaSubtypes:(BOOL)includeAdditionalMediaSubtypes error:(NSError * _Nullable __autoreleasing *)error {
+- (NSArray<MOAssetUploadRecord *> *)fetchUploadRecordsByMediaTypes:(NSArray<NSNumber *> *)mediaTypes mediaSubtypes:(PHAssetMediaSubtype)subtypes includeAdditionalMediaSubtypes:(BOOL)includeAdditionalMediaSubtypes error:(NSError * _Nullable __autoreleasing *)error {
     NSFetchRequest *request = MOAssetUploadRecord.fetchRequest;
     NSPredicate *mediaTypePredicate = [NSPredicate predicateWithFormat:@"mediaType IN %@", mediaTypes];
+    NSPredicate *mediaSubtypesPredicate = [NSPredicate predicateWithFormat:@"(mediaSubtypes != %@) AND ((mediaSubtypes & %lu) == %lu)", NSNull.null, subtypes, subtypes];
+    
     if (includeAdditionalMediaSubtypes) {
-        request.predicate = mediaTypePredicate;
+        request.predicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[mediaTypePredicate, mediaSubtypesPredicate]];
     } else {
-        NSPredicate *additionalSubtypePredicate = [NSPredicate predicateWithFormat:@"additionalMediaSubtype == nil"];
-        request.predicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[mediaTypePredicate, additionalSubtypePredicate]];
+        NSPredicate *additionalSubtypePredicate = [NSPredicate predicateWithFormat:@"additionalMediaSubtype == %@", NSNull.null];
+        request.predicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[mediaTypePredicate, mediaSubtypesPredicate, additionalSubtypePredicate]];
     }
     
+    return [self fetchUploadRecordsByFetchRequest:request error:error];
+}
+
+- (NSArray<MOAssetUploadRecord *> *)fetchUploadRecordsByMediaTypes:(NSArray<NSNumber *> *)mediaTypes additionalMediaSubtypes:(PHAssetMediaSubtype)mediaSubtypes error:(NSError *__autoreleasing  _Nullable *)error {
+    NSFetchRequest *request = MOAssetUploadRecord.fetchRequest;
+    NSPredicate *mediaTypePredicate = [NSPredicate predicateWithFormat:@"mediaType IN %@", mediaTypes];
+    NSPredicate *mediaSubtypePredicate = [NSPredicate predicateWithFormat:@"(additionalMediaSubtype != %@) AND ((additionalMediaSubtype & %lu) == %lu)", NSNull.null, mediaSubtypes, mediaSubtypes];
+    request.predicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[mediaTypePredicate, mediaSubtypePredicate]];
     return [self fetchUploadRecordsByFetchRequest:request error:error];
 }
 
@@ -268,7 +278,7 @@ static const NSUInteger MaximumUploadRetryPerLoginCount = 800;
     [self.backgroundContext performBlockAndWait:^{
         SavedIdentifierParser *parser = [[SavedIdentifierParser alloc] init];
         for (MOAssetUploadRecord *record in uploadRecords) {
-            if (record.additionalMediaSubtype) {
+            if (record.additionalMediaSubtypes) {
                 continue;
             }
             
@@ -279,7 +289,7 @@ static const NSUInteger MaximumUploadRetryPerLoginCount = 800;
                 subtypeRecord.status = @(CameraAssetUploadStatusNotStarted);
                 subtypeRecord.creationDate = record.creationDate;
                 subtypeRecord.mediaType = record.mediaType;
-                subtypeRecord.additionalMediaSubtype = @(subtype);
+                subtypeRecord.additionalMediaSubtypes = @(subtype);
             }
         }
     }];
@@ -416,6 +426,8 @@ static const NSUInteger MaximumUploadRetryPerLoginCount = 800;
     record.status = @(CameraAssetUploadStatusNotStarted);
     record.creationDate = asset.creationDate;
     record.mediaType = @(asset.mediaType);
+    record.mediaSubtypes = @(asset.mediaSubtypes);
+    record.additionalMediaSubtypes = nil;
     
     return record;
 }
