@@ -145,7 +145,7 @@
             return;
         }
         
-        MOAssetUploadRecord *record = [[CameraUploadRecordManager.shared fetchUploadRecordsByLocalIdentifier:localIdentifier shouldPrefetchErrorRecords:YES error:nil] firstObject];
+        MOAssetUploadRecord *record = [[CameraUploadRecordManager.shared fetchUploadRecordsByIdentifier:localIdentifier shouldPrefetchErrorRecords:YES error:nil] firstObject];
         if (record.status.integerValue != CameraAssetUploadStatusUploading || record == nil) {
             MEGALogDebug(@"[Camera Upload] %@ record status: %@ is not uploading", localIdentifier, [AssetUploadStatus stringForStatus:record.status.integerValue]);
             return;

@@ -31,7 +31,6 @@ NSString * const MEGACurrentUploadingTasksCountUserInfoKey = @"nz.mega.currentUp
 #pragma mark - camera upload constants
 
 const NSUInteger MEGACameraUploadLowDiskStorageSizeInBytes = 100 * 1024 * 1024;
-NSString * const MEGACameraUploadIdentifierSeparator = @",";
 
 #pragma mark - file extension constants
 

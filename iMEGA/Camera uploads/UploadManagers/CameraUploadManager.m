@@ -417,7 +417,7 @@ static const CGFloat MemoryWarningConcurrentThrottleRatio = .5;
 
 - (void)uploadAssetsForMediaType:(PHAssetMediaType)mediaType concurrentCount:(NSUInteger)count {
     MEGALogDebug(@"[Camera Upload] photo count %lu concurrent %ld, video count %lu concurrent %ld", (unsigned long)self.photoUploadOperationQueue.operationCount, (long)self.photoUploadOperationQueue.maxConcurrentOperationCount, (unsigned long)self.videoUploadOperationQueue.operationCount, (long)self.videoUploadOperationQueue.maxConcurrentOperationCount);
-
+    
     NSArray<NSNumber *> *statuses = AssetUploadStatus.statusesReadyToQueueUp;
     if (MEGAReachabilityManager.isReachable) {
         statuses = AssetUploadStatus.allStatusesToQueueUp;
@@ -429,16 +429,15 @@ static const CGFloat MemoryWarningConcurrentThrottleRatio = .5;
     }
     
     for (MOAssetUploadRecord *record in records) {
-        NSArray<CameraUploadOperation *> *operations = [UploadOperationFactory operationsForUploadRecord:record parentNode:self.cameraUploadNode];
-        if (operations.count > 0) {
-            for (CameraUploadOperation *operation in operations) {
-                if ([operation isMemberOfClass:[PhotoUploadOperation class]]) {
-                    [self.photoUploadOperationQueue addOperation:operation];
-                } else if ([operation isMemberOfClass:[LivePhotoUploadOperation class]]) {
-                    [self.videoUploadOperationQueue addOperation:operation];
-                } else if ([operation isMemberOfClass:[VideoUploadOperation class]]) {
-                    [self.videoUploadOperationQueue addOperation:operation];
-                }
+        CameraUploadOperation *operation = [UploadOperationFactory operationForUploadRecord:record parentNode:self.cameraUploadNode];
+        if (operation) {
+            if ([operation isMemberOfClass:[PhotoUploadOperation class]]) {
+                [self.photoUploadOperationQueue addOperation:operation];
+            } else if ([operation isMemberOfClass:[LivePhotoUploadOperation class]]) {
+                [self.videoUploadOperationQueue addOperation:operation];
+                [self uploadNextAssetForMediaType:PHAssetMediaTypeImage];
+            } else if ([operation isMemberOfClass:[VideoUploadOperation class]]) {
+                [self.videoUploadOperationQueue addOperation:operation];
             }
         } else {
             MEGALogInfo(@"[Camera Upload] delete record as we don't have data to upload");
@@ -447,7 +446,7 @@ static const CGFloat MemoryWarningConcurrentThrottleRatio = .5;
     }
 }
 
-#pragma mark - enable, disable and stop upload
+#pragma mark - enable camera upload
 
 - (void)enableCameraUpload {
     CameraUploadManager.cameraUploadEnabled = YES;
@@ -462,6 +461,8 @@ static const CGFloat MemoryWarningConcurrentThrottleRatio = .5;
     CameraUploadManager.videoUploadEnabled = YES;
     [self startVideoUploadIfNeeded];
 }
+
+#pragma mark - disable camera upload
 
 - (void)disableCameraUpload {
     CameraUploadManager.cameraUploadEnabled = NO;
@@ -542,15 +543,15 @@ static const CGFloat MemoryWarningConcurrentThrottleRatio = .5;
 }
 
 - (NSUInteger)uploadPendingAssetsCount {
-    return [CameraUploadRecordManager.shared pendingUploadRecordsCountByMediaTypes:self.enabledMediaTypes error:nil];
+    return [CameraUploadRecordManager.shared pendingRecordsCountByMediaTypes:self.enabledMediaTypes error:nil];
 }
 
 - (BOOL)isPhotoUploadDone {
-    return [CameraUploadRecordManager.shared pendingUploadRecordsCountByMediaTypes:@[@(PHAssetMediaTypeImage)] error:nil] == 0;
+    return [CameraUploadRecordManager.shared pendingRecordsCountByMediaTypes:@[@(PHAssetMediaTypeImage)] error:nil] == 0;
 }
 
 - (BOOL)isVideoUploadDone {
-    return [CameraUploadRecordManager.shared pendingUploadRecordsCountByMediaTypes:@[@(PHAssetMediaTypeVideo)] error:nil] == 0;
+    return [CameraUploadRecordManager.shared pendingRecordsCountByMediaTypes:@[@(PHAssetMediaTypeVideo)] error:nil] == 0;
 }
 
 - (NSArray<NSNumber *> *)enabledMediaTypes {

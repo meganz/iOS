@@ -16,7 +16,7 @@ static NSString * const IsLocationBasedBackgroundUploadAllowedKey = @"IsLocation
 
 @implementation CameraUploadManager (Settings)
 
-#pragma mark - setting clean ups
+#pragma mark - setting cleanups
 
 + (void)clearLocalSettings {
     [NSUserDefaults.standardUserDefaults removeObjectForKey:IsCameraUploadsEnabledKey];
@@ -37,27 +37,57 @@ static NSString * const IsLocationBasedBackgroundUploadAllowedKey = @"IsLocation
     [NSUserDefaults.standardUserDefaults removeObjectForKey:IsCellularForVideosAllowedKey];
 }
 
-#pragma mark - properties
-
-+ (BOOL)shouldShowCameraUploadBoardingScreen {
-    return [NSUserDefaults.standardUserDefaults objectForKey:IsCameraUploadsEnabledKey] == nil;
-}
+#pragma mark - camera settings
 
 + (BOOL)isCameraUploadEnabled {
     return [NSUserDefaults.standardUserDefaults boolForKey:IsCameraUploadsEnabledKey];
 }
 
 + (void)setCameraUploadEnabled:(BOOL)cameraUploadEnabled {
-    BOOL previousValue = [self isCameraUploadEnabled];
     [NSUserDefaults.standardUserDefaults setBool:cameraUploadEnabled forKey:IsCameraUploadsEnabledKey];
     if (cameraUploadEnabled) {
-        if (!previousValue) {
-            [self setConvertHEICPhoto:YES];
-        }
+        [self setConvertHEICPhoto:YES];
     } else {
         [self clearCameraSettings];
     }
 }
+
++ (BOOL)isBackgroundUploadAllowed {
+    return [NSUserDefaults.standardUserDefaults boolForKey:IsLocationBasedBackgroundUploadAllowedKey];
+}
+
++ (void)setBackgroundUploadAllowed:(BOOL)backgroundUploadAllowed {
+    [NSUserDefaults.standardUserDefaults setBool:backgroundUploadAllowed forKey:IsLocationBasedBackgroundUploadAllowedKey];
+    if (backgroundUploadAllowed) {
+        [CameraUploadManager.shared startBackgroundUploadIfPossible];
+    } else {
+        [CameraUploadManager.shared stopBackgroundUpload];
+    }
+}
+
+#pragma mark - photo settings
+
++ (BOOL)isCellularUploadAllowed {
+    return [NSUserDefaults.standardUserDefaults boolForKey:IsCellularAllowedKey];
+}
+
++ (void)setCellularUploadAllowed:(BOOL)cellularUploadAllowed {
+    [NSUserDefaults.standardUserDefaults setBool:cellularUploadAllowed forKey:IsCellularAllowedKey];
+}
+
++ (BOOL)shouldConvertHEICPhoto {
+    return [NSUserDefaults.standardUserDefaults boolForKey:ShouldConvertHEICPhotoKey];
+}
+
++ (void)setConvertHEICPhoto:(BOOL)convertHEICPhoto {
+    if (![self isHEVCFormatSupported]) {
+        return;
+    }
+    
+    [NSUserDefaults.standardUserDefaults setBool:convertHEICPhoto forKey:ShouldConvertHEICPhotoKey];
+}
+
+#pragma mark - video settings
 
 + (BOOL)isVideoUploadEnabled {
     return [NSUserDefaults.standardUserDefaults boolForKey:IsVideoUploadsEnabledKey];
@@ -77,14 +107,6 @@ static NSString * const IsLocationBasedBackgroundUploadAllowedKey = @"IsLocation
     } else {
         [self clearVideoSettings];
     }
-}
-
-+ (BOOL)isCellularUploadAllowed {
-    return [NSUserDefaults.standardUserDefaults boolForKey:IsCellularAllowedKey];
-}
-
-+ (void)setCellularUploadAllowed:(BOOL)cellularUploadAllowed {
-    [NSUserDefaults.standardUserDefaults setBool:cellularUploadAllowed forKey:IsCellularAllowedKey];
 }
 
 + (BOOL)isCellularUploadForVideosAllowed {
@@ -115,18 +137,6 @@ static NSString * const IsLocationBasedBackgroundUploadAllowedKey = @"IsLocation
     }
 }
 
-+ (BOOL)shouldConvertHEICPhoto {
-    return [NSUserDefaults.standardUserDefaults boolForKey:ShouldConvertHEICPhotoKey];
-}
-
-+ (void)setConvertHEICPhoto:(BOOL)convertHEICPhoto {
-    if (![self isHEVCFormatSupported]) {
-        return;
-    }
-    
-    [NSUserDefaults.standardUserDefaults setBool:convertHEICPhoto forKey:ShouldConvertHEICPhotoKey];
-}
-
 + (CameraUploadVideoQuality)HEVCToH264CompressionQuality {
     return [NSUserDefaults.standardUserDefaults integerForKey:HEVCToH264CompressionQualityKey];
 }
@@ -139,17 +149,18 @@ static NSString * const IsLocationBasedBackgroundUploadAllowedKey = @"IsLocation
     [NSUserDefaults.standardUserDefaults setInteger:HEVCToH264CompressionQuality forKey:HEVCToH264CompressionQualityKey];
 }
 
-+ (BOOL)isBackgroundUploadAllowed {
-    return [NSUserDefaults.standardUserDefaults boolForKey:IsLocationBasedBackgroundUploadAllowedKey];
+#pragma mark - readonly properties
+
++ (BOOL)isLivePhotoSupported {
+    if (@available(iOS 9.1, *)) {
+        return YES;
+    } else {
+        return NO;
+    }
 }
 
-+ (void)setBackgroundUploadAllowed:(BOOL)backgroundUploadAllowed {
-    [NSUserDefaults.standardUserDefaults setBool:backgroundUploadAllowed forKey:IsLocationBasedBackgroundUploadAllowedKey];
-    if (backgroundUploadAllowed) {
-        [CameraUploadManager.shared startBackgroundUploadIfPossible];
-    } else {
-        [CameraUploadManager.shared stopBackgroundUpload];
-    }
++ (BOOL)shouldShowCameraUploadBoardingScreen {
+    return [NSUserDefaults.standardUserDefaults objectForKey:IsCameraUploadsEnabledKey] == nil;
 }
 
 + (BOOL)isHEVCFormatSupported {
