@@ -37,7 +37,7 @@ static const NSTimeInterval MonitorTimerTolerance = 6;
 
 - (void)fireMonitorTimer:(NSTimer *)timer {
     NSError *error;
-    NSUInteger uploadingTaskCount = [CameraUploadRecordManager.shared uploadingUploadRecordsCountWithError:&error];
+    NSUInteger uploadingTaskCount = [CameraUploadRecordManager.shared uploadingRecordsCountWithError:&error];
     if (error) {
         MEGALogError(@"[Camera Upload] error when to fetch uploading task count %@", error);
         return;

@@ -3,11 +3,15 @@
 #import "CameraUploadRecordManager.h"
 #import "MOAssetUploadRecord+CoreDataClass.h"
 #import "CameraUploadManager.h"
+#import "SavedIdentifierParser.h"
+#import "CameraUploadManager+Settings.h"
+#import "LivePhotoScanner.h"
 
 @interface CameraScanner () <PHPhotoLibraryChangeObserver>
 
 @property (strong, nonatomic) NSOperationQueue *operationQueue;
 @property (strong, nonatomic) PHFetchResult<PHAsset *> *fetchResult;
+@property (strong, nonatomic) LivePhotoScanner *livePhotoScanner;
 
 @end
 
@@ -19,6 +23,7 @@
         _operationQueue = [[NSOperationQueue alloc] init];
         _operationQueue.maxConcurrentOperationCount = 1;
         _operationQueue.qualityOfService = NSQualityOfServiceUserInitiated;
+        _livePhotoScanner = [[LivePhotoScanner alloc] init];
     }
     return self;
 }
@@ -27,7 +32,7 @@
     [self unobservePhotoLibraryChanges];
 }
 
-#pragma mark - camera scanning
+#pragma mark - scan camera rolls
 
 - (void)scanMediaTypes:(NSArray<NSNumber *> *)mediaTypes completion:(void (^)(void))completion {
     [self.operationQueue addOperationWithBlock:^{
@@ -44,18 +49,28 @@
             return;
         }
         
-        NSError *error = nil;
-        NSArray<MOAssetUploadRecord *> *records = [[CameraUploadRecordManager shared] fetchAllUploadRecords:&error];
-        if (records.count == 0) {
-            MEGALogDebug(@"[Camera Upload] initial save with asset count %lu", (unsigned long)self.fetchResult.count);
-            [[CameraUploadRecordManager shared] initialSaveWithAssetFetchResult:self.fetchResult error:nil];
-        } else {
-            NSArray<PHAsset *> *newAssets = [self findNewAssetsByComparingFetchResult:self.fetchResult uploadRecords:records];
-            MEGALogDebug(@"[Camera Upload] new assets scanned with count %lu", (unsigned long)newAssets.count);
-            [[CameraUploadRecordManager shared] saveAssets:newAssets error:nil];
-        }
-        
-        MEGALogDebug(@"[Camera Upload] Finish local album scanning");
+        [CameraUploadRecordManager.shared.backgroundContext performBlockAndWait:^{
+            NSArray<MOAssetUploadRecord *> *records = [[CameraUploadRecordManager shared] fetchAllUploadRecords:nil];
+            if (records.count == 0) {
+                MEGALogDebug(@"[Camera Upload] initial save with asset count %lu", (unsigned long)self.fetchResult.count);
+                [CameraUploadRecordManager.shared saveInitialUploadRecordsByAssetFetchResult:self.fetchResult error:nil];
+                if (CameraUploadManager.isLivePhotoSupported) {
+                    [self.livePhotoScanner saveInitialLivePhotoRecordsByFetchResult:self.fetchResult];
+                }
+            } else {
+                NSArray<PHAsset *> *newAssets = [self findNewAssetsByComparingFetchResult:self.fetchResult uploadRecords:records];
+                MEGALogDebug(@"[Camera Upload] new assets scanned with count %lu", (unsigned long)newAssets.count);
+                [CameraUploadRecordManager.shared createUploadRecordsIfNeededByAssets:newAssets];
+                [CameraUploadRecordManager.shared saveChangesIfNeededWithError:nil];
+                if (CameraUploadManager.isLivePhotoSupported) {
+                    [CameraUploadRecordManager.shared.backgroundContext performBlock:^{
+                        [self.livePhotoScanner scanLivePhotosWithCompletion:nil];
+                    }];
+                }
+            }
+            
+            MEGALogDebug(@"[Camera Upload] Finish local album scanning");
+        }];
         
         if (completion) {
             completion();
@@ -114,7 +129,12 @@
             
             dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0), ^{
                 MEGALogDebug(@"[Camera Upload] new assets detected: %@", newAssets);
-                [CameraUploadRecordManager.shared saveAssets:newAssets error:nil];
+                [CameraUploadRecordManager.shared.backgroundContext performBlockAndWait:^{
+                    [CameraUploadRecordManager.shared createUploadRecordsIfNeededByAssets:newAssets];
+                    [self.livePhotoScanner saveLivePhotoRecordsIfNeededByAssets:newAssets];
+                    [CameraUploadRecordManager.shared saveChangesIfNeededWithError:nil];
+                }];
+                
                 [CameraUploadManager.shared startCameraUploadIfNeeded];
             });
         }

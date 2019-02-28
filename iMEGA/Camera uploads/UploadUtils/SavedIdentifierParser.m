@@ -1,12 +1,18 @@
 
 #import "SavedIdentifierParser.h"
 
+static NSString * const MEGACameraUploadIdentifierSeparator = @",";
+
 @implementation SavedIdentifierParser
 
-- (AssetIdentifierInfo *)parseSavedIdentifier:(NSString *)identifier separator:(NSString *)separator {
+- (NSString *)savedIdentifierForLocalIdentifier:(NSString *)identifier mediaSubtype:(PHAssetMediaSubtype)subtype {
+    return [@[identifier, [@(subtype) stringValue]] componentsJoinedByString:MEGACameraUploadIdentifierSeparator];
+}
+
+- (AssetIdentifierInfo *)parseSavedIdentifier:(NSString *)identifier {
     AssetIdentifierInfo *info = [[AssetIdentifierInfo alloc] init];
     
-    NSArray<NSString *> *separatedStrings = [identifier componentsSeparatedByString:separator];
+    NSArray<NSString *> *separatedStrings = [identifier componentsSeparatedByString:MEGACameraUploadIdentifierSeparator];
     if (separatedStrings.count > 0) {
         if (separatedStrings.count == 1) {
             info.localIdentifier = [separatedStrings firstObject];
@@ -16,7 +22,7 @@
         } else {
             NSString *subTypeString = [separatedStrings lastObject];
             info.mediaSubtype = (PHAssetMediaSubtype)[subTypeString integerValue];
-            NSRange identifierRange = NSMakeRange(0, identifier.length - subTypeString.length - separator.length);
+            NSRange identifierRange = NSMakeRange(0, identifier.length - subTypeString.length - MEGACameraUploadIdentifierSeparator.length);
             info.localIdentifier = [identifier substringWithRange:identifierRange];
         }
     }
