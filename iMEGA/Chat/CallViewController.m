@@ -504,6 +504,10 @@
             self.statusCallLabel.text = AMLocalizedString(@"connecting", nil);
         }
     }
+    
+    if ([call hasChangedForType:MEGAChatCallChangeTypeLocalAVFlags]) {
+        self.muteUnmuteMicrophone.selected = !call.hasLocalAudio;
+    }
 
     switch (call.status) {
         case MEGAChatCallStatusInitial:
@@ -547,10 +551,6 @@
                 }
                 [self.localVideoImageView remoteVideoEnable:remoteSession.hasVideo];
                 self.remoteMicImageView.hidden = remoteSession.hasAudio;
-            }
-            
-            if ([call hasChangedForType:MEGAChatCallChangeTypeLocalAVFlags]) {
-                self.muteUnmuteMicrophone.selected = !call.hasLocalAudio;
             }
             
             if ([call hasChangedForType:MEGAChatCallChangeTypeSessionStatus]) {
