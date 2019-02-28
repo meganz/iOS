@@ -6,6 +6,7 @@
 #import "Helper.h"
 #import "MEGAAttachmentMediaItem.h"
 #import "MEGACallEndedMediaItem.h"
+#import "MEGACallStartedMediaItem.h"
 #import "MEGADialogMediaItem.h"
 #import "MEGAChatGenericRequestDelegate.h"
 #import "MEGAFetchNodesRequestDelegate.h"
@@ -44,7 +45,7 @@ static const void *richNumberTagKey = &richNumberTagKey;
 - (BOOL)isMediaMessage {
     BOOL mediaMessage = NO;
     
-    if (!self.isDeleted && (self.type == MEGAChatMessageTypeContact || self.type == MEGAChatMessageTypeAttachment || (self.warningDialog > MEGAChatMessageWarningDialogNone) || (self.type == MEGAChatMessageTypeContainsMeta && [self containsMetaAnyValue]) || self.richNumber || self.type == MEGAChatMessageTypeCallEnded)) {
+    if (!self.isDeleted && (self.type == MEGAChatMessageTypeContact || self.type == MEGAChatMessageTypeAttachment || (self.warningDialog > MEGAChatMessageWarningDialogNone) || (self.type == MEGAChatMessageTypeContainsMeta && [self containsMetaAnyValue]) || self.richNumber || self.type == MEGAChatMessageTypeCallEnded || self.type == MEGAChatMessageTypeCallStarted)) {
         mediaMessage = YES;
     }
     
@@ -373,6 +374,10 @@ static const void *richNumberTagKey = &richNumberTagKey;
             
             break;
         }
+            
+        case MEGAChatMessageTypeCallStarted:
+            media = [[MEGACallStartedMediaItem alloc] initWithMEGAChatMessage:self];
+            break;
             
         case MEGAChatMessageTypeCallEnded:
             media = [[MEGACallEndedMediaItem alloc] initWithMEGAChatMessage:self];

@@ -70,22 +70,6 @@
 "pleaseLogInToYourAccount"="Lütfen oturum açın.";
 /* Error message when a user attempts to change their email without an active login session. */
 "needToBeLoggedInToCompleteYourEmailChange"="E-posta değişikliğini tamamlamak için oturum açmış olmanız gerekmektedir. Mevcut e-posta adresinizle tekrar oturum açın ve sonra onay bağlantısına tıklayın.";
-/* Title shown on the app's start animation to explain what MEGA offers you (1/4) */
-"megaSpace"="MEGA ALAN";
-/* Title shown on the app's start animation to explain what MEGA offers you (2/4) */
-"megaSpeed"="MEGA HIZ";
-/* Title shown on the app's start animation to explain what MEGA offers you (3/4) */
-"megaPrivacy"="MEGA GİZLİLİK";
-/* Title shown on the app's start animation to explain what MEGA offers you (4/4) */
-"megaAccess"="MEGA ERİŞİM";
-/* Message shown on the app's start animation to explain what MEGA SPACE means */
-"megaSpaceText"="Şimdi üye ol ve 50 GB boş alana sahip ol.";
-/* Message shown on the app's start animation to explain what MEGA SPEED means */
-"megaSpeedText"="Yüklemeler hızlı.Dosyalarınızı herkesle hızlı bir şekilde paylaşın.";
-/* Message shown on the app's start animation to explain what MEGA PRIVACY means */
-"megaPrivacyText"="MEGA'nın uçtan uca şifrelemesi ile tüm dosyalarınızı güvenli bir şekilde saklayın.";
-/* Message shown on the app's start animation to explain what MEGA ACCESS means */
-"megaAccessText"="Her zaman, her yerde tam şifreli erişiminiz olsun.";
 /* Button title which triggers the action to login in your MEGA account */
 "login"="Oturum Aç";
 /* Button title which triggers the action to create a MEGA account */
@@ -115,7 +99,7 @@
 /*  */
 "weak"="Zayıf";
 /*  */
-"passwordVeryWeakOrWeak"="Parolanız kolaylıkla tahmin edildi. Parolanızı daha uzun seçmeyi deneyin. Büyük ve küçük harflerin kombinasyonunu kullanın. Özel karakterler ekleyin. Özel isim yada sözlük kelimelerini kullanmayın.";
+"passwordVeryWeakOrWeak"="Parolanız kolaylıkla tahmin edildi. Parolanızı daha uzun seçmeyi deneyin. Büyük ve küçük harflerin kombinasyonunu kullanın. Özel karakterler ekleyin. Özel isim yada sözlük kelimelerini kullanmayın";
 /* Label displayed during checking the strength of the password introduced. Represents Medium security */
 "medium"="Orta";
 /*  */
@@ -1669,7 +1653,7 @@
 /* Label for any ‘Days’ button, link, text, title, etc. - (String as short as possible). */
 "Days"="Günler";
 /* New server-side rubbish-bin cleaning scheduler description (for Free users) */
-"The Rubbish Bin is cleaned for you automatically. The minimum period is 7 days and your maximum period is 30 days."="Çöp kutusu sizin yerinize otomatik olarak temizlenebilir. Asgari süre 7 gündür ve sizin azami süreniz 30 gün.";
+"The Rubbish Bin is cleaned for you automatically. The minimum period is 7 days and your maximum period is 30 days."="Çöp kutusu sizin yerinize otomatik olarak temizlendi. Asgari süre 7 gündür ve sizin azami süreniz 30 gündür.";
 /* New server-side rubbish-bin cleaning scheduler description (for PRO users) */
 "The Rubbish Bin can be cleaned for you automatically. The minimum period is 7 days."="Çöp kutusu sizin yerinize otomatik olarak temizlenebilir. Asgari süre 7 gündür.";
 /* Description shown when you try to disable the feature Rubbish-Bin Cleaning Scheduler and you are a free user */
@@ -1684,6 +1668,8 @@
 "Poor conection."="Bağlantı zayıf.";
 /* Message shown in a chat room when there is an active group call */
 "There is an active group call. Tap to join."="Aktif grup araması var. Katılmak için dokunun.";
+/* Message shown in a chat room when there is an active call */
+"There is an active call. Tap to join."="Aktif bir arama var. Katılmak için dokunun.";
 /* Message shown in a chat room for a group call in progress displaying the duration of the call */
 "Touch to return to call %@"="Konuşmaya dönmek için dokunun %@";
 /* A button label which allows the users save images/videos in the Photos app. */
@@ -1812,3 +1798,7 @@
 "%d participants"="%d katılımcı";
 /* Singular of participant. 1 participant */
 "%d participant"="%d katılımcı";
+/* Text to inform the user there is an active call and is not participating */
+"Ongoing Call"="Devam eden Çağrı";
+/* Text to inform the user there is an active call and is participating */
+"Call Started"="Çağrı Başladı";

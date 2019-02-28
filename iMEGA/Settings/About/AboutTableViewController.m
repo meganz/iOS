@@ -1,11 +1,7 @@
 
 #import "AboutTableViewController.h"
 
-#import "SVProgressHUD.h"
-
 #import "Helper.h"
-#import "MEGAReachabilityManager.h"
-#import "MEGASdkManager.h"
 #import "NSURL+MNZCategory.h"
 
 @interface AboutTableViewController ()
@@ -39,10 +35,10 @@
     self.versionCell.gestureRecognizers = @[tapGestureRecognizer, longPressGestureRecognizer];
     
     self.sdkVersionLabel.text = AMLocalizedString(@"sdkVersion", @"Title of the label where the SDK version is shown");
-    self.sdkVersionSHALabel.text = @"4dea1c5c";
+    self.sdkVersionSHALabel.text = @"56c3eaad";
     
     self.megachatSdkVersionLabel.text = AMLocalizedString(@"megachatSdkVersion", @"Title of the label where the MEGAchat SDK version is shown");
-    self.megachatSdkSHALabel.text = @"6b14620e";
+    self.megachatSdkSHALabel.text = @"1f4f9fa9";
     
     self.viewSourceCodeLabel.text = AMLocalizedString(@"View source code", @"Link to the public code of the ap");
     
