@@ -673,7 +673,7 @@
 /* Title for the MEGA Recovery Key */
 "masterKey"="Recovery Key";
 /* Section title where you can change your MEGA's password */
-"changePasswordLabel"="Change Password";
+"changePasswordLabel"="Change password";
 /* Advising the user to keep the user's master key safe. */
 "exportMasterKeyFooter"="Exporting the Recovery Key and keeping it in a secure location enables you to set a new password without data loss.";
 /* Question button to present a view where it's explained what is the Recovery Key */
@@ -1803,7 +1803,7 @@
 /* Label shown next to a feature name that can be enabled or disabled, like in 'Show Last seen...' */
 "Show"="Show";
 /* Shown when viewing a 1on1 chat (at least for now), if the user is offline. */
-"Last seen %s"="Last seen %s";
+"Last seen %s"="Last seen: %s";
 /* Text to inform the user the 'Last seen' time of a contact is a long time ago (>= 65535 minutes) */
 "Last seen a long time ago"="Last seen a long time ago";
 /* */
