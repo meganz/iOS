@@ -1537,7 +1537,7 @@ const NSUInteger kMaxMessagesToLoad = 256;
                 }
             }
             showSuccess = chatIdNumbers.count > 1;
-        } else if (chatIdNumbers.count == 1) {
+        } else if (chatIdNumbers.count == 1 && !self.chatRoom.isPreview) {
             uint64_t chatId = chatIdNumbers.firstObject.unsignedLongLongValue;
             MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:chatId];
             MessagesViewController *messagesVC = [[MessagesViewController alloc] init];
