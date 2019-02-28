@@ -535,7 +535,7 @@ static const CGFloat MemoryWarningConcurrentThrottleRatio = .5;
 #pragma mark - upload status
 
 - (NSUInteger)totalAssetsCount {
-    return [CameraUploadRecordManager.shared totalRecordsCountByMediaTypes:self.enabledMediaTypes error:nil];
+    return [CameraUploadRecordManager.shared uploadRecordsCountByMediaTypes:self.enabledMediaTypes error:nil];
 }
 
 - (NSUInteger)uploadDoneAssetsCount {
