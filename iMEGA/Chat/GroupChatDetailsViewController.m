@@ -292,6 +292,7 @@
                         
         case 5:
             cell.nameLabel.text = AMLocalizedString(@"Enable Encrypted Key Rotation", @"Title show in a cell where the users can enable the 'Encrypted Key Rotation'");
+            cell.leftImageView.hidden = YES;
             break;
             
         case 6:
