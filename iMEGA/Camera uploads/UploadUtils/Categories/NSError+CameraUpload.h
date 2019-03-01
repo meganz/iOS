@@ -1,5 +1,6 @@
 
 #import <Foundation/Foundation.h>
+@import Photos;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -17,6 +18,9 @@ typedef NS_ENUM(NSUInteger, CameraUploadError) {
     CameraUploadErrorCameraUploadNodeIsNotFound,
     CameraUploadErrorChunksMissing,
     CameraUploadErrorDataTransfer,
+    CameraUploadErrorEmptyLocalIdentifier,
+    CameraUploadErrorNoMediaAssetFetched,
+    CameraUploadErrorUnknownMediaType,
 };
 
 @interface NSError (CameraUpload)
@@ -52,13 +56,18 @@ typedef NS_ENUM(NSUInteger, CameraUploadError) {
 @property (class, readonly) NSError *mnz_cameraUploadChunkMissingError;
 
 /**
+ return a NSError object with CameraUploadErrorEmptyLocalIdentifier error code if the local identifier is empty
+ */
+@property (class, readonly) NSError *mnz_cameraUploadEmptyLocalIdentifierError;
+
+
+/**
  creates a NSError object if we don't have write permission to a file in camera upload
 
  @param URL the URL of the file we are trying to write
  @return a NSError object with CameraUploadErrorNoFileWritePermission error code
  */
 + (NSError *)mnz_cameraUploadNoWritePermissionErrorForFileURL:(NSURL *)URL;
-
 
 /**
  creates a NSError object when encryption failed
@@ -68,7 +77,6 @@ typedef NS_ENUM(NSUInteger, CameraUploadError) {
  */
 + (NSError *)mnz_cameraUploadEncryptionErrorForFileURL:(NSURL *)URL;
 
-
 /**
  create a NSError object when error happended in data transfer
 
@@ -76,6 +84,22 @@ typedef NS_ENUM(NSUInteger, CameraUploadError) {
  @return a NSError object with CameraUploadErrorDataTransfer error code
  */
 + (NSError *)mnz_cameraUploadDataTransferErrorWithUserInfo:(NSDictionary *)userInfo;
+
+/**
+ create a NSError object when we can not fetch a local media asset by a given identifier
+
+ @param identifier media file local identifier
+ @return a NSError object with CameraUploadErrorNoMediaAssetFetched error code
+ */
++ (NSError *)mnz_cameraUploadNoMediaAssetFetchedWithIdentifier:(NSString *)identifier;
+
+/**
+ create a NSError object when we encountered an unknown media type
+
+ @param mediaType the media type we can not recognised
+ @return a NSError object with CameraUploadErrorUnknownMediaType error code
+ */
++ (NSError *)mnz_cameraUploadUnknownMediaType:(PHAssetMediaType)mediaType;
 
 @end
 

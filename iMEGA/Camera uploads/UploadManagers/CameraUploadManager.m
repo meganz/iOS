@@ -22,6 +22,7 @@
 #import "PhotoUploadOperation.h"
 #import "CameraUploadConcurrentCountCalculator.h"
 #import "BackgroundUploadingTaskMonitor.h"
+#import "NSError+CameraUpload.h"
 
 static const NSTimeInterval MinimumBackgroundRefreshInterval = 2 * 3600;
 static const NSTimeInterval BackgroundRefreshDuration = 25;
@@ -429,7 +430,8 @@ static const CGFloat MemoryWarningConcurrentThrottleRatio = .5;
     }
     
     for (MOAssetUploadRecord *record in records) {
-        CameraUploadOperation *operation = [UploadOperationFactory operationForUploadRecord:record parentNode:self.cameraUploadNode];
+        NSError *error;
+        CameraUploadOperation *operation = [UploadOperationFactory operationForUploadRecord:record parentNode:self.cameraUploadNode error:&error];
         if (operation) {
             if ([operation isMemberOfClass:[PhotoUploadOperation class]]) {
                 [self.photoUploadOperationQueue addOperation:operation];
@@ -440,8 +442,14 @@ static const CGFloat MemoryWarningConcurrentThrottleRatio = .5;
                 [self.videoUploadOperationQueue addOperation:operation];
             }
         } else {
-            MEGALogInfo(@"[Camera Upload] delete record as we don't have data to upload");
-            [CameraUploadRecordManager.shared deleteUploadRecord:record error:nil];
+            MEGALogError(@"[Camera Upload] error when to build camera upload operation %@", error);
+            if ([error.domain isEqualToString:CameraUploadErrorDomain]) {
+                if (error.code == CameraUploadErrorEmptyLocalIdentifier) {
+                    [CameraUploadRecordManager.shared deleteUploadRecord:record error:nil];
+                } else {
+                    [CameraUploadRecordManager.shared updateUploadRecord:record withStatus:CameraAssetUploadStatusFailed error:nil];
+                }
+            }
         }
     }
 }

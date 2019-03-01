@@ -41,4 +41,16 @@ NSString * const CameraUploadErrorDomain = @"nz.mega.cameraUpload";
     return [NSError errorWithDomain:CameraUploadErrorDomain code:CameraUploadErrorDataTransfer userInfo:userInfo];
 }
 
++ (NSError *)mnz_cameraUploadEmptyLocalIdentifierError {
+    return [NSError errorWithDomain:CameraUploadErrorDomain code:CameraUploadErrorEmptyLocalIdentifier   userInfo:@{NSLocalizedDescriptionKey : @"local identifier is empty"}];
+}
+
++ (NSError *)mnz_cameraUploadUnknownMediaType:(PHAssetMediaType)mediaType {
+    return [NSError errorWithDomain:CameraUploadErrorDomain code:CameraUploadErrorUnknownMediaType   userInfo:@{NSLocalizedDescriptionKey : [NSString stringWithFormat:@"%li media type can not be recognised", mediaType]}];
+}
+
++ (NSError *)mnz_cameraUploadNoMediaAssetFetchedWithIdentifier:(NSString *)identifier {
+    return [NSError errorWithDomain:CameraUploadErrorDomain code:CameraUploadErrorNoMediaAssetFetched   userInfo:@{NSLocalizedDescriptionKey : [NSString stringWithFormat:@"no media asset fetched for %@", identifier]}];
+}
+
 @end

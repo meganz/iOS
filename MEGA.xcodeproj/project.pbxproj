@@ -719,6 +719,7 @@
 		B65AC8E521F9B7A30094FF4F /* MOAssetUploadErrorPerLaunch+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = B65AC8D821F9B7A20094FF4F /* MOAssetUploadErrorPerLaunch+CoreDataProperties.m */; };
 		B65AC8E621F9B7A30094FF4F /* MOAssetUploadErrorPerLaunch+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = B65AC8D921F9B7A20094FF4F /* MOAssetUploadErrorPerLaunch+CoreDataClass.m */; };
 		B65AC8E921F9B7A30094FF4F /* MOAssetUploadErrorRecord+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = B65AC8DE21F9B7A30094FF4F /* MOAssetUploadErrorRecord+CoreDataClass.m */; };
+		B66709902228BCE90015E050 /* PHFetchOptions+CameraUpload.m in Sources */ = {isa = PBXBuildFile; fileRef = B667098F2228BCE90015E050 /* PHFetchOptions+CameraUpload.m */; };
 		B672EDB3221CD96000DE6684 /* CameraUploadOperation+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = B672EDB2221CD96000DE6684 /* CameraUploadOperation+Utils.m */; };
 		B686F45921866BB4009C0DAA /* CameraUploadRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B686F45821866BB4009C0DAA /* CameraUploadRequestDelegate.m */; };
 		B68BAEC3221DEA7600FF6FCD /* AssetIdentifierInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = B68BAEC2221DEA7600FF6FCD /* AssetIdentifierInfo.m */; };
@@ -1700,6 +1701,8 @@
 		B65AC8DE21F9B7A30094FF4F /* MOAssetUploadErrorRecord+CoreDataClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MOAssetUploadErrorRecord+CoreDataClass.m"; sourceTree = "<group>"; };
 		B65AC8E021F9B7A30094FF4F /* MOAssetUploadErrorPerLogin+CoreDataClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MOAssetUploadErrorPerLogin+CoreDataClass.h"; sourceTree = "<group>"; };
 		B65AC8E121F9B7A30094FF4F /* MOAssetUploadErrorRecord+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MOAssetUploadErrorRecord+CoreDataProperties.h"; sourceTree = "<group>"; };
+		B667098E2228BCE90015E050 /* PHFetchOptions+CameraUpload.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PHFetchOptions+CameraUpload.h"; sourceTree = "<group>"; };
+		B667098F2228BCE90015E050 /* PHFetchOptions+CameraUpload.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "PHFetchOptions+CameraUpload.m"; sourceTree = "<group>"; };
 		B672EDB1221CD96000DE6684 /* CameraUploadOperation+Utils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CameraUploadOperation+Utils.h"; sourceTree = "<group>"; };
 		B672EDB2221CD96000DE6684 /* CameraUploadOperation+Utils.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "CameraUploadOperation+Utils.m"; sourceTree = "<group>"; };
 		B686F45721866BB4009C0DAA /* CameraUploadRequestDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CameraUploadRequestDelegate.h; sourceTree = "<group>"; };
@@ -3746,6 +3749,8 @@
 				B6C524DC21E2BC9900AE3575 /* AVAsset+CameraUpload.m */,
 				B6C524DE21E3E00C00AE3575 /* AVURLAsset+CameraUpload.h */,
 				B6C524DF21E3E00C00AE3575 /* AVURLAsset+CameraUpload.m */,
+				B667098E2228BCE90015E050 /* PHFetchOptions+CameraUpload.h */,
+				B667098F2228BCE90015E050 /* PHFetchOptions+CameraUpload.m */,
 			);
 			path = Categories;
 			sourceTree = "<group>";
@@ -4318,6 +4323,7 @@
 				41A4204F1C4EA02C002E192E /* MEGALogger.m in Sources */,
 				B658D3CF218FBC47004C0D64 /* UploadOperationFactory.m in Sources */,
 				5B7B4CA21EE5AC1200DA6A8D /* MEGAInviteContactRequestDelegate.m in Sources */,
+				B66709902228BCE90015E050 /* PHFetchOptions+CameraUpload.m in Sources */,
 				413199781BD7BD5D002CD6EA /* DTError.m in Sources */,
 				41EAAE4B1D06B49400622FAF /* PHAssetCollection+CTAssetsPickerController.m in Sources */,
 				77519C36203707F600FDF92B /* MEGARenameRequestDelegate.m in Sources */,

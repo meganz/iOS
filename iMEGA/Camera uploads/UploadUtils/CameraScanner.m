@@ -6,6 +6,7 @@
 #import "SavedIdentifierParser.h"
 #import "CameraUploadManager+Settings.h"
 #import "LivePhotoScanner.h"
+#import "PHFetchOptions+CameraUpload.h"
 
 @interface CameraScanner () <PHPhotoLibraryChangeObserver>
 
@@ -38,12 +39,7 @@
     [self.operationQueue addOperationWithBlock:^{
         MEGALogDebug(@"[Camera Upload] Start local album scanning for media types %@", mediaTypes);
         
-        PHFetchOptions *fetchOptions = [[PHFetchOptions alloc] init];
-        fetchOptions.includeAssetSourceTypes = PHAssetSourceTypeUserLibrary | PHAssetSourceTypeCloudShared | PHAssetSourceTypeiTunesSynced;
-        fetchOptions.includeHiddenAssets = YES;
-        fetchOptions.includeAllBurstAssets = YES;
-        fetchOptions.predicate = [NSPredicate predicateWithFormat:@"mediaType IN %@", mediaTypes];
-        self.fetchResult = [PHAsset fetchAssetsWithOptions:fetchOptions];
+        self.fetchResult = [PHAsset fetchAssetsWithOptions:[PHFetchOptions mnz_fetchOptionsForCameraUploadWithMediaTypes:mediaTypes]];
         if (self.fetchResult.count == 0) {
             if (completion) {
                 completion();
