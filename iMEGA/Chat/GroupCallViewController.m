@@ -559,7 +559,7 @@
     
     switch (self.callType) {
         case CallTypeActive:
-            groupCallDuration = @"";
+            groupCallDuration = self.call.status == MEGAChatCallStatusInProgress ? @"" : AMLocalizedString(@"calling...", @"Label shown when you call someone (outgoing call), before the call starts.");
             break;
             
         case CallTypeOutgoing:
@@ -904,8 +904,11 @@
         [self configureUserOnFocus:[self.peersInCall objectAtIndex:0] manual:NO];
     }
     self.incomingCallView.hidden = YES;
-    [self initDurationTimer];
-    [self initShowHideControls];
+    
+    if (self.call.status == MEGAChatCallStatusInProgress) {
+        [self initShowHideControls];
+        [self initDurationTimer];
+    }
     [self updateParticipants];
     [self.collectionView reloadData];
     MEGALogDebug(@"[Group Call] Reload data %s", __PRETTY_FUNCTION__);
