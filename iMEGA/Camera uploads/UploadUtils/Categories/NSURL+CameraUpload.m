@@ -37,6 +37,10 @@
 }
 
 - (BOOL)mnz_moveToDirectory:(NSURL *)directoryURL renameTo:(NSString *)fileName {
+    if (![NSFileManager.defaultManager fileExistsAtPath:self.path]) {
+        return NO;
+    }
+
     NSError *error;
     if ([NSFileManager.defaultManager createDirectoryAtURL:directoryURL withIntermediateDirectories:YES attributes:nil error:&error]) {
         NSURL *newFileURL = [directoryURL URLByAppendingPathComponent:fileName isDirectory:NO];
