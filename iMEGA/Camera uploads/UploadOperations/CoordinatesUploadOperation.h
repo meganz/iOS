@@ -1,12 +1,12 @@
 
-#import "MEGABackgroundTaskOperation.h"
+#import "MEGAOperation.h"
 #import "MEGASdkManager.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @class CLLocation;
 
-@interface CoordinatesUploadOperation : MEGABackgroundTaskOperation
+@interface CoordinatesUploadOperation : MEGAOperation
 
 - (instancetype)initWithLocation:(CLLocation *)location node:(MEGANode *)node;
 

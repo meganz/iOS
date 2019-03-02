@@ -91,13 +91,13 @@
     if ([NSFileManager.defaultManager isReadableFileAtPath:attribute.thumbnailURL.path]) {
         [self.thumbnailUploadOperationQueue addOperation:[[ThumbnailUploadOperation alloc] initWithAttributeURL:attribute.thumbnailURL node:node]];
     } else {
-        MEGALogError(@"[Camera Upload] No thumbnail file found at URL %@", attribute.thumbnailURL);
+        MEGALogError(@"[Camera Upload] No thumbnail file found for node %@ in %@", attribute.thumbnailURL, attribute.attributeDirectoryURL.lastPathComponent);
     }
     
     if ([NSFileManager.defaultManager isReadableFileAtPath:attribute.previewURL.path]) {
         [self.attributeUploadOerationQueue addOperation:[[PreviewUploadOperation alloc] initWithAttributeURL:attribute.previewURL node:node]];
     } else {
-        MEGALogError(@"[Camera Upload] No preview file found at URL %@", attribute.previewURL);
+        MEGALogError(@"[Camera Upload] No preview file found for node %@ in %@", node.name, attribute.attributeDirectoryURL.lastPathComponent);
     }
 }
 
@@ -145,7 +145,7 @@
         if ([node hasThumbnail]) {
             [attribute.thumbnailURL mnz_cacheThumbnailForNode:node];
         } else if (![self hasPendingThumbnailOperationForNode:node]) {
-            MEGALogDebug(@"[Camera Upload] retry thumbnail upload for %@", node.name);
+            MEGALogDebug(@"[Camera Upload] retry thumbnail upload for %@ in %@", node.name, attribute.attributeDirectoryURL.lastPathComponent);
             [self.thumbnailUploadOperationQueue addOperation:[[ThumbnailUploadOperation alloc] initWithAttributeURL:attribute.thumbnailURL node:node]];
         }
     }
@@ -154,7 +154,7 @@
         if ([node hasPreview]) {
             [attribute.previewURL mnz_cachePreviewForNode:node];
         } else if (![self hasPendingPreviewOperationForNode:node]) {
-            MEGALogDebug(@"[Camera Upload] retry preview upload for %@", node.name);
+            MEGALogDebug(@"[Camera Upload] retry preview upload for %@ in %@", node.name, attribute.attributeDirectoryURL.lastPathComponent);
             [self.attributeUploadOerationQueue addOperation:[[PreviewUploadOperation alloc] initWithAttributeURL:attribute.previewURL node:node]];
         }
     }
