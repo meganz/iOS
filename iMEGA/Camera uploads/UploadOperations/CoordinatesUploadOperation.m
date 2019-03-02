@@ -24,10 +24,6 @@
 
 - (void)start {
     [super start];
-
-    [self beginBackgroundTaskWithExpirationHandler:^{
-        [self finishOperation];
-    }];
     
     __weak __typeof__(self) weakSelf = self;
     [MEGASdkManager.sharedMEGASdk setUnshareableNodeCoordinates:self.node latitude:@(self.location.coordinate.latitude) longitude:@(self.location.coordinate.longitude) delegate:[[CameraUploadRequestDelegate alloc] initWithCompletion:^(MEGARequest * _Nonnull request, MEGAError * _Nonnull error) {
