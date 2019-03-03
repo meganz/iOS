@@ -617,7 +617,7 @@ static const CGFloat MemoryWarningConcurrentThrottleRatio = .5;
     MEGALogDebug(@"[Camera Upload] memory warning");
     NSInteger photoConcurrentCount = [self.concurrentCountCalculator calculatePhotoUploadConcurrentCount];
     NSInteger throttledConcurrentCount = lroundf(photoConcurrentCount * MemoryWarningConcurrentThrottleRatio);
-    self.photoUploadOperationQueue.maxConcurrentOperationCount = throttledConcurrentCount;
+    self.photoUploadOperationQueue.maxConcurrentOperationCount = MAX(throttledConcurrentCount, 1);
     
     NSInteger index = 0;
     for (NSOperation *operation in self.photoUploadOperationQueue.operations) {
