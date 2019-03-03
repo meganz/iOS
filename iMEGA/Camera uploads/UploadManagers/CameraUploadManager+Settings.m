@@ -5,6 +5,8 @@
 #import "NSFileManager+MNZCategory.h"
 @import CoreLocation;
 
+static NSString * const HasMigratedToCameraUploadsV2Key = @"HasMigratedToCameraUploadsV2";
+
 static NSString * const IsCameraUploadsEnabledKey = @"IsCameraUploadsEnabled";
 static NSString * const IsVideoUploadsEnabledKey = @"IsUploadVideosEnabled";
 static NSString * const IsCellularAllowedKey = @"IsUseCellularConnectionEnabled";
@@ -13,6 +15,12 @@ static NSString * const ShouldConvertHEICPhotoKey = @"ShouldConvertHEICPhoto";
 static NSString * const ShouldConvertHEVCVideoKey = @"ShouldConvertHEVCVideo";
 static NSString * const HEVCToH264CompressionQualityKey = @"HEVCToH264CompressionQuality";
 static NSString * const IsLocationBasedBackgroundUploadAllowedKey = @"IsLocationBasedBackgroundUploadAllowed";
+
+@interface CameraUploadManager ()
+
+@property (class, getter=hasMigratedToCameraUploadsV2) BOOL migratedToCameraUploadsV2;
+
+@end
 
 @implementation CameraUploadManager (Settings)
 
@@ -175,7 +183,15 @@ static NSString * const IsLocationBasedBackgroundUploadAllowedKey = @"IsLocation
     return CameraUploadManager.isBackgroundUploadAllowed && CLLocationManager.authorizationStatus == kCLAuthorizationStatusAuthorizedAlways && CLLocationManager.significantLocationChangeMonitoringAvailable;
 }
 
-#pragma mark - migrate old settings
+#pragma mark - settings migration
+
++ (BOOL)hasMigratedToCameraUploadsV2 {
+    return [NSUserDefaults.standardUserDefaults boolForKey:HasMigratedToCameraUploadsV2Key];
+}
+
++ (void)setMigratedToCameraUploadsV2:(BOOL)migratedToCameraUploadsV2 {
+    [NSUserDefaults.standardUserDefaults setBool:migratedToCameraUploadsV2 forKey:HasMigratedToCameraUploadsV2Key];
+}
 
 + (void)migrateOldCameraUploadsSettings {
     // PhotoSync old location of completed uploads
