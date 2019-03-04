@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="SF-UI-Text-Medium.otf">
+            <string>SFUIText-Medium</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="5tr-h6-g2d" customClass="MEGAMessageCallStartedView">
+            <rect key="frame" x="0.0" y="0.0" width="396" height="48"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fdd-oK-ebA">
+                    <rect key="frame" x="46" y="15" width="39.5" height="18"/>
+                    <fontDescription key="fontDescription" name="SFUIText-Medium" family="SF UI Text" pointSize="15"/>
+                    <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="callWithXIncoming" translatesAutoresizingMaskIntoConstraints="NO" id="fbN-bO-gy0">
+                    <rect key="frame" x="0.0" y="6" width="36" height="36"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="36" id="Aq5-Wf-EfE"/>
+                        <constraint firstAttribute="height" constant="36" id="obQ-4H-OT5"/>
+                    </constraints>
+                </imageView>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="0hL-d9-x3p" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Fdd-oK-ebA" secondAttribute="trailing" id="4BY-TP-aza"/>
+                <constraint firstItem="fbN-bO-gy0" firstAttribute="leading" secondItem="0hL-d9-x3p" secondAttribute="leading" id="DRf-wY-Ple"/>
+                <constraint firstItem="fbN-bO-gy0" firstAttribute="centerY" secondItem="0hL-d9-x3p" secondAttribute="centerY" id="H04-jE-bkX"/>
+                <constraint firstItem="Fdd-oK-ebA" firstAttribute="leading" secondItem="fbN-bO-gy0" secondAttribute="trailing" constant="10" id="Oge-lP-2TN"/>
+                <constraint firstItem="Fdd-oK-ebA" firstAttribute="centerY" secondItem="0hL-d9-x3p" secondAttribute="centerY" id="h5r-12-oi9"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <viewLayoutGuide key="safeArea" id="0hL-d9-x3p"/>
+            <connections>
+                <outlet property="callStartedImageView" destination="fbN-bO-gy0" id="7Rl-gV-Z64"/>
+                <outlet property="callStartedLabel" destination="Fdd-oK-ebA" id="zyW-zN-twd"/>
+            </connections>
+            <point key="canvasLocation" x="15" y="290"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="callWithXIncoming" width="36" height="36"/>
+    </resources>
+</document>

@@ -2,16 +2,13 @@
 #import "SettingsTableViewController.h"
 
 #import "LTHPasscodeViewController.h"
-#import "SVProgressHUD.h"
 
 #import "CameraUploadManager+Settings.h"
-#import "MEGASdkManager.h"
 #import "MEGAReachabilityManager.h"
 #import "NSURL+MNZCategory.h"
 
 @interface SettingsTableViewController () <UITableViewDataSource, UITableViewDelegate>
 
-@property (strong, nonatomic) NSDictionary *languagesDictionary;
 @property (weak, nonatomic) NSString *selectedLanguage;
 
 @property (weak, nonatomic) IBOutlet UILabel *cameraUploadsLabel;
@@ -50,38 +47,6 @@
     } else {
         self.selectedLanguage = nil;
     }
-    
-    self.languagesDictionary = @{@"ar":@"العربية",
-                            @"bg":@"български език",
-                            @"cs":@"Čeština",
-                            @"de":@"Deutsch",
-                            @"en":@"English",
-                            @"es":@"Español",
-                            @"fa":@"فارسی",
-                            @"fi":@"Suomi",
-                            @"fr":@"Français",
-                            @"he":@"עברית",
-                            @"id":@"Bahasa Indonesia",
-                            @"it":@"Italiano",
-                            @"ja":@"日本語",
-                            @"ko":@"한국어",
-                            @"nl":@"Nederlands",
-                            @"pl":@"Język Polski",
-                            @"pt-br":@"Português Brasileiro",
-                            @"pt":@"Português",
-                            @"ro":@"Română",
-                            @"ru":@"Pусский язык",
-                            @"sk":@"Slovenský",
-                            @"sl":@"Slovenščina",
-                            @"sr":@"српски језик",
-                            @"sv":@"Svenska",
-                            @"th":@"ไทย",
-                            @"tl":@"Tagalog",
-                            @"tr":@"Türkçe",
-                            @"uk":@"українська мова",
-                            @"vi":@"Tiếng Việt",
-                            @"zh-Hans":@"简体中文",
-                            @"zh-Hant":@"中文繁體"};
 }
 
 - (void)viewWillAppear:(BOOL)animated {

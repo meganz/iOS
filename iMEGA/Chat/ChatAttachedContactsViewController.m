@@ -1,9 +1,6 @@
 
 #import "ChatAttachedContactsViewController.h"
 
-#import "SVProgressHUD.h"
-
-#import "Helper.h"
 #import "MEGAInviteContactRequestDelegate.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGASdkManager.h"
@@ -229,7 +226,7 @@
     
     NSString *currentEmail = [self.message userEmailAtIndex:indexPath.row];
     
-    [cell.avatarImageView mnz_setImageForUserHandle:[self.message userHandleAtIndex:indexPath.row]];
+    [cell.avatarImageView mnz_setImageForUserHandle:[self.message userHandleAtIndex:indexPath.row] name:[self.message userNameAtIndex:indexPath.row]];
     cell.nameLabel.text = [self.message userNameAtIndex:indexPath.row];
     
     uint64_t userHandle = [self.message userHandleAtIndex:indexPath.row];
