@@ -5,13 +5,11 @@
 #import "MEGAError+MNZCategory.h"
 #import "NSError+CameraUpload.h"
 #import "CameraUploadManager.h"
-#import "CameraUploadNodeLoader.h"
 
 @interface PutNodeOperation ()
 
 @property (strong, nonatomic) NSData *transferToken;
 @property (copy, nonatomic) PutNodeCompletionHandler completion;
-@property (strong, nonatomic) CameraUploadNodeLoader *cameraUploadNodeLoader;
 
 @end
 
@@ -26,14 +24,6 @@
     }
     
     return self;
-}
-
-- (CameraUploadNodeLoader *)cameraUploadNodeLoader {
-    if (_cameraUploadNodeLoader == nil) {
-        _cameraUploadNodeLoader = [[CameraUploadNodeLoader alloc] init];
-    }
-    
-    return _cameraUploadNodeLoader;
 }
 
 - (void)start {
@@ -57,19 +47,8 @@
         [self finishOperation];
     }];
     
-    if (self.uploadInfo.parentNode == nil) {
-        [self.cameraUploadNodeLoader loadCameraUploadNodeWithCompletion:^(MEGANode * _Nullable cameraUploadNode) {
-            if (cameraUploadNode == nil) {
-                self.completion(nil, NSError.mnz_cameraUploadNodeIsNotFoundError);
-                [self finishOperation];
-            } else {
-                self.uploadInfo.parentNode = cameraUploadNode;
-                [self putNodeWithDelegate:delegate];
-            }
-        }];
-    } else {
-        [self putNodeWithDelegate:delegate];
-    }
+
+    [self putNodeWithDelegate:delegate];
 }
 
 - (void)putNodeWithDelegate:(id<MEGARequestDelegate>)delegate {

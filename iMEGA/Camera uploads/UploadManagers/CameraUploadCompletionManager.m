@@ -8,10 +8,13 @@
 #import "NodesFetchListenerOperation.h"
 #import "CameraUploadManager+Settings.h"
 #import "NSFileManager+MNZCategory.h"
+#import "CameraUploadNodeLoader.h"
+#import "NSString+MNZCategory.h"
 
 @interface CameraUploadCompletionManager ()
 
 @property (strong, nonatomic) NSOperationQueue *operationQueue;
+@property (strong, nonatomic) CameraUploadNodeLoader *cameraUploadNodeLoader;
 
 @end
 
@@ -34,6 +37,14 @@
         _operationQueue.qualityOfService = NSQualityOfServiceUserInteractive;
     }
     return self;
+}
+
+- (CameraUploadNodeLoader *)cameraUploadNodeLoader {
+    if (_cameraUploadNodeLoader == nil) {
+        _cameraUploadNodeLoader = [[CameraUploadNodeLoader alloc] init];
+    }
+    
+    return _cameraUploadNodeLoader;
 }
 
 - (void)waitUnitlAllUploadsAreFinished {
@@ -71,7 +82,20 @@
     if ([NSFileManager.defaultManager fileExistsAtPath:archivedURL.path isDirectory:&isDirectory] && !isDirectory) {
         AssetUploadInfo *uploadInfo = [NSKeyedUnarchiver unarchiveObjectWithFile:archivedURL.path];
         if (uploadInfo) {
-            [self putNodeWithUploadInfo:uploadInfo transferToken:token];
+            if (uploadInfo.parentNode == nil) {
+                [self.cameraUploadNodeLoader loadCameraUploadNodeWithCompletion:^(MEGANode * _Nullable cameraUploadNode) {
+                    if (cameraUploadNode == nil) {
+                        MEGALogError(@"[Camera Upload] no camera upload node can be loaded for %@", localIdentifier);
+                        [self finishUploadForLocalIdentifier:localIdentifier status:CameraAssetUploadStatusFailed];
+                    } else {
+                        MEGALogDebug(@"[Camera Upload] camera upload node loaded for %@", localIdentifier);
+                        uploadInfo.parentNode = cameraUploadNode;
+                        [self putNodeByUploadInfo:uploadInfo transferToken:token];
+                    }
+                }];
+            } else {
+                [self putNodeByUploadInfo:uploadInfo transferToken:token];
+            }
         } else {
             MEGALogError(@"[Camera Upload] error when to unarchive upload info for asset: %@", localIdentifier);
             [self finishUploadForLocalIdentifier:localIdentifier status:CameraAssetUploadStatusFailed];
@@ -84,7 +108,7 @@
 
 #pragma mark - put node
 
-- (void)putNodeWithUploadInfo:(AssetUploadInfo *)uploadInfo transferToken:(NSData *)token {
+- (void)putNodeByUploadInfo:(AssetUploadInfo *)uploadInfo transferToken:(NSData *)token {
     BOOL hasExistingPutNode = NO;
     for (PutNodeOperation *operation in self.operationQueue.operations) {
         if ([operation.uploadInfo.savedLocalIdentifier isEqualToString:uploadInfo.savedLocalIdentifier]) {
@@ -103,9 +127,16 @@
         attributeInfo = [AttributeUploadManager.shared saveAttributeForUploadInfo:uploadInfo];
     }
     
-    MEGANode *existingNode = [MEGASdkManager.sharedMEGASdk nodeForFingerprint:uploadInfo.fingerprint];
+    
+    MEGANode *existingNode = [MEGASdkManager.sharedMEGASdk nodeForFingerprint:uploadInfo.fingerprint parent:uploadInfo.parentNode];
     if (existingNode) {
         MEGALogInfo(@"[Camera Upload] existing node %@ found for %@ by fingerprint match", existingNode.name, uploadInfo.savedLocalIdentifier);
+        if (existingNode.parentHandle != uploadInfo.parentNode.handle) {
+            NSString *uniqueName = [uploadInfo.fileName mnz_sequentialFileNameInParentNode:uploadInfo.parentNode];
+            [MEGASdkManager.sharedMEGASdk copyNode:existingNode newParent:uploadInfo.parentNode newName:uniqueName];
+            MEGALogDebug(@"[Camera Upload] copied existing node %@ with new name %@ for %@", existingNode.name, uniqueName, uploadInfo.savedLocalIdentifier);
+        }
+
         [self finishUploadForLocalIdentifier:uploadInfo.savedLocalIdentifier status:CameraAssetUploadStatusDone];
         return;
     }
