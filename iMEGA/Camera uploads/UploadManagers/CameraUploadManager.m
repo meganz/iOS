@@ -286,9 +286,12 @@ static const CGFloat MemoryWarningConcurrentThrottleRatio = .5;
 
 - (void)startCameraUploadIfNeeded {
     MEGALogDebug(@"[Camera Upload] start camera upload if needed");
+    
+    [MEGASdkManager.sharedMEGASdk retryPendingConnections];
+    
     [AttributeUploadManager.shared scanLocalAttributeFilesAndRetryUploadIfNeeded];
     
-    if (!MEGASdkManager.sharedMEGASdk.isLoggedIn || !CameraUploadManager.isCameraUploadEnabled) {
+    if (!MEGASdkManager.sharedMEGASdk.isLoggedIn || !CameraUploadManager.canCameraUploadBeStarted) {
         return;
     }
 

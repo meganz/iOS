@@ -15,6 +15,7 @@
 #import "MessagesViewController.h"
 #import "NSString+MNZCategory.h"
 #import "UIApplication+MNZCategory.h"
+#import "MainTabBarController+CameraUpload.h"
 
 @interface MainTabBarController () <UITabBarControllerDelegate, MEGAGlobalDelegate, MEGAChatCallDelegate>
 
@@ -107,6 +108,12 @@
     if (@available(iOS 10.0, *)) {} else {
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(presentCallViewControllerIfThereIsAnIncomingCall) name:UIApplicationDidBecomeActiveNotification object:nil];
     }
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+
+    [self showCameraUploadV2MigrationScreenIfNeeded];
 }
     
 - (BOOL)shouldAutorotate {

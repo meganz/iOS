@@ -755,6 +755,7 @@
 		B6D90BBF2224B06E00E0623A /* RestoreUploadTaskOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = B6D90BBE2224B06E00E0623A /* RestoreUploadTaskOperation.m */; };
 		B6D90BC22224D46800E0623A /* AssetLocalAttribute.m in Sources */ = {isa = PBXBuildFile; fileRef = B6D90BC12224D46800E0623A /* AssetLocalAttribute.m */; };
 		B6D90BCA22253BC700E0623A /* BackgroundUploadingTaskMonitor.m in Sources */ = {isa = PBXBuildFile; fileRef = B6D90BC922253BC700E0623A /* BackgroundUploadingTaskMonitor.m */; };
+		B6D995F9222CA42000A98BEF /* MainTabBarController+CameraUpload.m in Sources */ = {isa = PBXBuildFile; fileRef = B6D995F8222CA42000A98BEF /* MainTabBarController+CameraUpload.m */; };
 		B6D9D7E9216AB0C700D7B08A /* CameraScanner.m in Sources */ = {isa = PBXBuildFile; fileRef = B6D9D7E8216AB0C700D7B08A /* CameraScanner.m */; };
 		B6D9D7EF216AE5D000D7B08A /* CameraUploadRecordManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B6D9D7EE216AE5D000D7B08A /* CameraUploadRecordManager.m */; };
 		B6DA6E5D2210CDEF003CB372 /* PhotosViewController+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = B6DA6E5C2210CDEF003CB372 /* PhotosViewController+MNZCategory.m */; };
@@ -1772,6 +1773,8 @@
 		B6D90BC12224D46800E0623A /* AssetLocalAttribute.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AssetLocalAttribute.m; sourceTree = "<group>"; };
 		B6D90BC5222533AD00E0623A /* BackgroundUploadingTaskMonitor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BackgroundUploadingTaskMonitor.h; sourceTree = "<group>"; };
 		B6D90BC922253BC700E0623A /* BackgroundUploadingTaskMonitor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BackgroundUploadingTaskMonitor.m; sourceTree = "<group>"; };
+		B6D995F7222CA42000A98BEF /* MainTabBarController+CameraUpload.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MainTabBarController+CameraUpload.h"; sourceTree = "<group>"; };
+		B6D995F8222CA42000A98BEF /* MainTabBarController+CameraUpload.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "MainTabBarController+CameraUpload.m"; sourceTree = "<group>"; };
 		B6D9D7E7216AB0C700D7B08A /* CameraScanner.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CameraScanner.h; sourceTree = "<group>"; };
 		B6D9D7E8216AB0C700D7B08A /* CameraScanner.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CameraScanner.m; sourceTree = "<group>"; };
 		B6D9D7ED216AE5D000D7B08A /* CameraUploadRecordManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CameraUploadRecordManager.h; sourceTree = "<group>"; };
@@ -2275,6 +2278,8 @@
 				E8E1D2D41AFA860E00A9BD5B /* Main.storyboard */,
 				4152267C1A692ECC00EC7BB6 /* MainTabBarController.h */,
 				4152267D1A692ECC00EC7BB6 /* MainTabBarController.m */,
+				B6D995F7222CA42000A98BEF /* MainTabBarController+CameraUpload.h */,
+				B6D995F8222CA42000A98BEF /* MainTabBarController+CameraUpload.m */,
 				415226791A692ECC00EC7BB6 /* LoginViewController.h */,
 				4152267A1A692ECC00EC7BB6 /* LoginViewController.m */,
 				E8D4B88D1A69429200A3B2E2 /* CreateAccountViewController.h */,
@@ -4501,6 +4506,7 @@
 				5BD4A0211F838606000E24E6 /* ViewFrameAccessor.m in Sources */,
 				831D61A6218738D20038F5B8 /* MOFolderLayout+CoreDataProperties.m in Sources */,
 				417279501DB663FA001AC818 /* JSQMessagesCollectionViewCell.m in Sources */,
+				B6D995F9222CA42000A98BEF /* MainTabBarController+CameraUpload.m in Sources */,
 				77B3AE0F215D0588008E889A /* InitialLaunchViewController.m in Sources */,
 				5B48F8031F4C73FE001E3A29 /* AchievementsViewController.m in Sources */,
 				5B20F4A21EFA9629007E0A34 /* ChatAttachedNodesViewController.m in Sources */,
