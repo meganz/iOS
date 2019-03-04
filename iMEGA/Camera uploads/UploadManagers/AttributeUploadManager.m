@@ -113,8 +113,6 @@
         return;
     }
     
-    [MEGASdkManager.sharedMEGASdk retryPendingConnections];
-    
     [self.attributeScanQueue addOperationWithBlock:^{
         NSError *error;
         NSArray<NSURL *> *attributeDirectoryURLs = [NSFileManager.defaultManager contentsOfDirectoryAtURL:[self attributeDirectoryURL] includingPropertiesForKeys:nil options:NSDirectoryEnumerationSkipsHiddenFiles error:&error];

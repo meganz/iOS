@@ -84,6 +84,13 @@ static const CGFloat TableViewSectionHeaderFooterHiddenHeight = 0.1;
     NSMutableAttributedString *JPGAttributedString = [[NSMutableAttributedString alloc] initWithString:@"JPG " attributes:@{NSFontAttributeName : [UIFont systemFontOfSize:17.0], NSForegroundColorAttributeName : [UIColor mnz_black333333]}];
     [JPGAttributedString appendAttributedString:[[NSAttributedString alloc] initWithString:@"(Recommended)" attributes:@{NSFontAttributeName : [UIFont systemFontOfSize:17.0], NSForegroundColorAttributeName : [UIColor mnz_gray999999]}]];
     self.JPGLabel.attributedText = JPGAttributedString;
+    
+    if (self.isPresentedModally) {
+        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(modalDialogDoneButtonTouched)];
+        if (!CameraUploadManager.hasMigratedToCameraUploadsV2) {
+            [CameraUploadManager migrateCurrentSettingsToCameraUplaodV2];
+        }
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -143,6 +150,12 @@ static const CGFloat TableViewSectionHeaderFooterHiddenHeight = 0.1;
 }
 
 #pragma mark - IBActions
+
+- (IBAction)modalDialogDoneButtonTouched {
+    CameraUploadManager.migratedToCameraUploadsV2 = YES;
+    [self dismissViewControllerAnimated:YES completion:nil];
+    [CameraUploadManager.shared startCameraUploadIfNeeded];
+}
 
 - (IBAction)enableCameraUploadsSwitchValueChanged:(UISwitch *)sender {
     if (sender.isOn) {

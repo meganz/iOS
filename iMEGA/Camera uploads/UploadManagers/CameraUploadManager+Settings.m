@@ -16,12 +16,6 @@ static NSString * const ShouldConvertHEVCVideoKey = @"ShouldConvertHEVCVideo";
 static NSString * const HEVCToH264CompressionQualityKey = @"HEVCToH264CompressionQuality";
 static NSString * const IsLocationBasedBackgroundUploadAllowedKey = @"IsLocationBasedBackgroundUploadAllowed";
 
-@interface CameraUploadManager ()
-
-@property (class, getter=hasMigratedToCameraUploadsV2) BOOL migratedToCameraUploadsV2;
-
-@end
-
 @implementation CameraUploadManager (Settings)
 
 #pragma mark - setting cleanups
@@ -52,6 +46,7 @@ static NSString * const IsLocationBasedBackgroundUploadAllowedKey = @"IsLocation
 }
 
 + (void)setCameraUploadEnabled:(BOOL)cameraUploadEnabled {
+    [self setMigratedToCameraUploadsV2:YES];
     [NSUserDefaults.standardUserDefaults setBool:cameraUploadEnabled forKey:IsCameraUploadsEnabledKey];
     if (cameraUploadEnabled) {
         [self setConvertHEICPhoto:YES];
@@ -183,15 +178,43 @@ static NSString * const IsLocationBasedBackgroundUploadAllowedKey = @"IsLocation
     return CameraUploadManager.isBackgroundUploadAllowed && CLLocationManager.authorizationStatus == kCLAuthorizationStatusAuthorizedAlways && CLLocationManager.significantLocationChangeMonitoringAvailable;
 }
 
-#pragma mark - settings migration
++ (BOOL)canCameraUploadBeStarted {
+    return [self isCameraUploadEnabled] && [self hasMigratedToCameraUploadsV2];
+}
+
+#pragma mark - camera upload v2 migration
 
 + (BOOL)hasMigratedToCameraUploadsV2 {
+    if (![self isHEVCFormatSupported]) {
+        return YES;
+    }
+    
     return [NSUserDefaults.standardUserDefaults boolForKey:HasMigratedToCameraUploadsV2Key];
 }
 
 + (void)setMigratedToCameraUploadsV2:(BOOL)migratedToCameraUploadsV2 {
-    [NSUserDefaults.standardUserDefaults setBool:migratedToCameraUploadsV2 forKey:HasMigratedToCameraUploadsV2Key];
+    if ([self isHEVCFormatSupported]) {
+        [NSUserDefaults.standardUserDefaults setBool:migratedToCameraUploadsV2 forKey:HasMigratedToCameraUploadsV2Key];
+    } else {
+        [NSUserDefaults.standardUserDefaults setBool:YES forKey:HasMigratedToCameraUploadsV2Key];
+    }
 }
+
++ (BOOL)shouldShowCameraUploadV2MigrationScreen {
+    return [self isCameraUploadEnabled] && ![self hasMigratedToCameraUploadsV2];
+}
+
++ (void)migrateCurrentSettingsToCameraUplaodV2 {
+    if ([self isCameraUploadEnabled]) {
+        [self setConvertHEICPhoto:YES];
+    }
+    
+    if ([self isVideoUploadEnabled]) {
+        [self setConvertHEVCVideo:YES];
+    }
+}
+
+#pragma mark - old settings migration
 
 + (void)migrateOldCameraUploadsSettings {
     // PhotoSync old location of completed uploads
@@ -214,9 +237,14 @@ static NSString * const IsLocationBasedBackgroundUploadAllowedKey = @"IsLocation
     NSDictionary *cameraUploadsSettings = [[NSDictionary alloc] initWithContentsOfFile:v2PspPath];
     
     if (cameraUploadsSettings[@"syncEnabled"]) {
-        CameraUploadManager.cameraUploadEnabled = YES;
-        CameraUploadManager.cellularUploadAllowed = cameraUploadsSettings[@"cellEnabled"] != nil;
-        CameraUploadManager.videoUploadEnabled = cameraUploadsSettings[@"videoEnabled"] != nil;
+        [NSUserDefaults.standardUserDefaults setBool:YES forKey:IsCameraUploadsEnabledKey];
+        
+        BOOL wasCellularUploadAllowed = cameraUploadsSettings[@"cellEnabled"] != nil;
+        [NSUserDefaults.standardUserDefaults setBool:wasCellularUploadAllowed forKey:IsCellularAllowedKey];
+        
+        BOOL wasVideoUploadEnabled = cameraUploadsSettings[@"videoEnabled"] != nil;
+        [NSUserDefaults.standardUserDefaults setBool:wasVideoUploadEnabled forKey:IsVideoUploadsEnabledKey];
+        
         [NSFileManager.defaultManager mnz_removeItemAtPath:v2PspPath];
     }
 }
