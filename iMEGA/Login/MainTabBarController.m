@@ -6,11 +6,13 @@
 #import "CallViewController.h"
 #import "ChatRoomsViewController.h"
 #import "DevicePermissionsHelper.h"
+#import "GroupCallViewController.h"
 #import "Helper.h"
 #import "MEGANavigationController.h"
 #import "MEGAProviderDelegate.h"
 #import "MEGAChatCall+MNZCategory.h"
 #import "MyAccountHallViewController.h"
+#import "MEGAReachabilityManager.h"
 #import "MEGAUserAlertList+MNZCategory.h"
 #import "MessagesViewController.h"
 #import "NSString+MNZCategory.h"
@@ -23,6 +25,7 @@
 @property (getter=shouldReportOutgoingCall) BOOL reportOutgoingCall;
 @property (nonatomic, strong) NSMutableDictionary *missedCallsDictionary;
 @property (nonatomic, strong) NSMutableArray *currentNotifications;
+@property (nonatomic, strong) UIImageView *phoneBadgeImageView;
 
 @end
 
@@ -100,6 +103,12 @@
     
     _missedCallsDictionary = [[NSMutableDictionary alloc] init];
     _currentNotifications = [[NSMutableArray alloc] init];
+    [self configurePhoneImageBadge];
+}
+
+- (void)viewDidLayoutSubviews {
+    [super viewDidLayoutSubviews];
+    [self.tabBar bringSubviewToFront:self.phoneBadgeImageView];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -108,14 +117,20 @@
     if (@available(iOS 10.0, *)) {} else {
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(presentCallViewControllerIfThereIsAnIncomingCall) name:UIApplicationDidBecomeActiveNotification object:nil];
     }
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(internetConnectionChanged) name:kReachabilityChangedNotification object:nil];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [NSNotificationCenter.defaultCenter removeObserver:self name:kReachabilityChangedNotification object:nil];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-
+    
     [self showCameraUploadV2MigrationScreenIfNeeded];
 }
-    
+
 - (BOOL)shouldAutorotate {
     if ([self.selectedViewController respondsToSelector:@selector(shouldAutorotate)]) {
         return [self.selectedViewController shouldAutorotate];
@@ -150,6 +165,7 @@
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
     [super traitCollectionDidChange:previousTraitCollection];
     
+    [self configurePhoneImageBadge];
     for (UITabBarItem *tabBarItem in self.tabBar.items) {
         [self reloadInsetsForTabBarItem:tabBarItem];
     }
@@ -163,15 +179,13 @@
         MEGANavigationController *navigationController = [self.childViewControllers objectAtIndex:CHAT];
         ChatRoomsViewController *chatRoomsVC = navigationController.viewControllers.firstObject;
         
-        if ([MEGASdkManager sharedMEGAChatSdk].numCalls == 0) {
-            UIViewController *rootViewController = UIApplication.sharedApplication.delegate.window.rootViewController;
-            if (rootViewController.presentedViewController) {
-                [rootViewController dismissViewControllerAnimated:YES completion:^{
-                    [chatRoomsVC openChatRoomWithID:chatNumber.unsignedLongLongValue];
-                }];
-            } else {
+        UIViewController *rootViewController = UIApplication.sharedApplication.delegate.window.rootViewController;
+        if (rootViewController.presentedViewController) {
+            [rootViewController dismissViewControllerAnimated:YES completion:^{
                 [chatRoomsVC openChatRoomWithID:chatNumber.unsignedLongLongValue];
-            }
+            }];
+        } else {
+            [chatRoomsVC openChatRoomWithID:chatNumber.unsignedLongLongValue];
         }
     }
 }
@@ -221,11 +235,25 @@
 }
 
 - (void)setBadgeValueForChats {
-    NSInteger unreadChats = ([MEGASdkManager sharedMEGAChatSdk] != nil) ? [[MEGASdkManager sharedMEGAChatSdk] unreadChats] : 0;
+    NSInteger unreadChats = [MEGASdkManager sharedMEGAChatSdk] ? [MEGASdkManager sharedMEGAChatSdk].unreadChats : 0;
+    NSInteger numCalls = [MEGASdkManager sharedMEGAChatSdk] ? [MEGASdkManager sharedMEGAChatSdk].numCalls : 0;
     
     NSString *badgeValue;
+    self.phoneBadgeImageView.hidden = YES;
     if (@available(iOS 10.0, *)) {
-        badgeValue = unreadChats ? @"⦁" : nil;
+        if (MEGAReachabilityManager.isReachable && numCalls) {
+            MEGAHandleList *chatRoomsWithCall = [MEGASdkManager sharedMEGAChatSdk].chatCalls;
+            for (int i = 0; i < chatRoomsWithCall.size; i++) {
+                MEGAChatCall *call = [[MEGASdkManager sharedMEGAChatSdk] chatCallForChatId:[chatRoomsWithCall megaHandleAtIndex:i]];
+                if (call.status != MEGAChatCallStatusInProgress) {
+                    self.phoneBadgeImageView.hidden = NO;
+                    break;
+                }
+            }
+            badgeValue = self.phoneBadgeImageView.hidden && unreadChats ? @"⦁" : nil;
+        } else {
+            badgeValue = unreadChats ? @"⦁" : nil;
+        }
     } else {
         badgeValue = unreadChats ? [NSString stringWithFormat:@"%td", unreadChats] : nil;
     }
@@ -252,11 +280,21 @@
             [self.megaProviderDelegate reportIncomingCall:call user:user];
         } else {
             if ([UIApplication sharedApplication].applicationState == UIApplicationStateActive) {
-                CallViewController *callVC = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"CallViewControllerID"];
-                callVC.chatRoom  = chatRoom;
-                callVC.videoCall = call.hasVideoInitialCall;
-                callVC.callType = CallTypeIncoming;
-                [UIApplication.mnz_presentingViewController presentViewController:callVC animated:YES completion:nil];
+                if (chatRoom.isGroup) {
+                    MEGANavigationController *groupCallNavigation = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"GroupCallViewControllerNavigationID"];
+                    GroupCallViewController *groupCallVC = groupCallNavigation.viewControllers.firstObject;
+                    groupCallVC.callType = CallTypeIncoming;
+                    groupCallVC.videoCall = call.hasVideoInitialCall;
+                    groupCallVC.chatRoom = chatRoom;
+
+                    [UIApplication.mnz_presentingViewController presentViewController:groupCallNavigation animated:YES completion:nil];
+                } else {
+                    CallViewController *callVC = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"CallViewControllerID"];
+                    callVC.chatRoom  = chatRoom;
+                    callVC.videoCall = call.hasVideoInitialCall;
+                    callVC.callType = CallTypeIncoming;
+                    [UIApplication.mnz_presentingViewController presentViewController:callVC animated:YES completion:nil];
+                }
             } else {
                 MEGAChatRoom *chatRoom = [api chatRoomForChatId:call.chatId];
                 UILocalNotification* localNotification = [[UILocalNotification alloc] init];
@@ -283,12 +321,36 @@
         [self.missedCallsDictionary removeObjectForKey:@(call.chatId)];
         
         MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:call.chatId];
-        CallViewController *callVC = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"CallViewControllerID"];
-        callVC.chatRoom  = chatRoom;
-        callVC.videoCall = call.hasVideoInitialCall;
-        callVC.callType = CallTypeIncoming;
-        [UIApplication.mnz_presentingViewController presentViewController:callVC animated:YES completion:nil];
+        
+        if (chatRoom.isGroup) {
+            MEGANavigationController *groupCallNavigation = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"GroupCallViewControllerNavigationID"];
+            GroupCallViewController *groupCallVC = groupCallNavigation.viewControllers.firstObject;
+            groupCallVC.callType = CallTypeIncoming;
+            groupCallVC.videoCall = call.hasVideoInitialCall;
+            groupCallVC.chatRoom = chatRoom;
+            
+            [UIApplication.mnz_presentingViewController presentViewController:groupCallNavigation animated:YES completion:nil];
+        } else {
+            CallViewController *callVC = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"CallViewControllerID"];
+            callVC.chatRoom  = chatRoom;
+            callVC.videoCall = call.hasVideoInitialCall;
+            callVC.callType = CallTypeIncoming;
+            [UIApplication.mnz_presentingViewController presentViewController:callVC animated:YES completion:nil];
+        }
     }
+}
+
+- (void)internetConnectionChanged {
+    [self setBadgeValueForChats];
+}
+
+- (void)configurePhoneImageBadge {
+    if (!self.phoneBadgeImageView) {
+        self.phoneBadgeImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"onACall"]];
+        self.phoneBadgeImageView.hidden = YES;
+        [self.tabBar addSubview:self.phoneBadgeImageView];
+    }
+    self.phoneBadgeImageView.frame = CGRectMake(self.tabBar.frame.size.width / 2 + 10, 6, 10, 10);
 }
 
 #pragma mark - MEGAGlobalDelegate
@@ -322,6 +384,7 @@
 
 - (void)onChatCallUpdate:(MEGAChatSdk *)api call:(MEGAChatCall *)call {
     MEGALogDebug(@"onChatCallUpdate %@", call);
+    [self setBadgeValueForChats];
     
     switch (call.status) {
         case MEGAChatCallStatusInitial:
@@ -338,24 +401,22 @@
             break;
             
         case MEGAChatCallStatusRingIn: {
-            [self.missedCallsDictionary setObject:call forKey:@(call.chatId)];
-            [DevicePermissionsHelper audioPermissionModal:YES forIncomingCall:YES withCompletionHandler:^(BOOL granted) {
-                if (granted) {
-                    if (call.hasVideoInitialCall) {
-                        [DevicePermissionsHelper videoPermissionWithCompletionHandler:^(BOOL granted) {
-                            if (granted) {
+            if (![self.missedCallsDictionary objectForKey:@(call.chatId)]) {
+                [self.missedCallsDictionary setObject:call forKey:@(call.chatId)];
+                [DevicePermissionsHelper audioPermissionModal:YES forIncomingCall:YES withCompletionHandler:^(BOOL granted) {
+                    if (granted) {
+                        if (call.hasVideoInitialCall) {
+                            [DevicePermissionsHelper videoPermissionWithCompletionHandler:^(BOOL granted) {
                                 [self presentRingingCall:api call:[api chatCallForCallId:call.callId]];
-                            } else {
-                                [DevicePermissionsHelper alertVideoPermissionWithCompletionHandler:nil];
-                            }
-                        }];
+                            }];
+                        } else {
+                            [self presentRingingCall:api call:[api chatCallForCallId:call.callId]];
+                        }
                     } else {
-                        [self presentRingingCall:api call:[api chatCallForCallId:call.callId]];
+                        [DevicePermissionsHelper alertAudioPermissionForIncomingCall:YES];
                     }
-                } else {
-                    [DevicePermissionsHelper alertAudioPermission];
-                }
-            }];
+                }];
+            }
             break;
         }
             
@@ -373,10 +434,12 @@
                 }
             }
             [self.missedCallsDictionary removeObjectForKey:@(call.chatId)];
-
             break;
+            
+        case MEGAChatCallStatusUserNoPresent:
+            break;
+            
         case MEGAChatCallStatusTerminatingUserParticipation:
-            break;
         case MEGAChatCallStatusDestroyed:
             if (call.isLocalTermCode) {
                 [self.missedCallsDictionary removeObjectForKey:@(call.chatId)];
@@ -429,7 +492,6 @@
                         }];
                     }];
                 } else {
-                    [self.missedCallsDictionary removeObjectForKey:@(call.chatId)];
                     
                     for(UILocalNotification *notification in self.currentNotifications) {
                         if([notification.userInfo[@"callId"] unsignedLongLongValue] == call.callId) {
@@ -448,8 +510,10 @@
                                                    };
                     [[UIApplication sharedApplication] presentLocalNotificationNow:localNotification];
                 }
+                
+                [self.missedCallsDictionary removeObjectForKey:@(call.chatId)];
             }
-            
+
             if (@available(iOS 10.0, *)) {
                 [self.megaProviderDelegate reportEndCall:call];
             }

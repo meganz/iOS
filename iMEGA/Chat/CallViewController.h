@@ -2,11 +2,7 @@
 #import <UIKit/UIKit.h>
 #import "MEGASdkManager.h"
 #import "MEGACallManager.h"
-
-typedef NS_ENUM(NSUInteger, CallType) {
-    CallTypeIncoming,
-    CallTypeOutgoing
-};
+#import "CallType.h"
 
 @interface CallViewController : UIViewController
 

@@ -1,7 +1,6 @@
 
 #import "MEGALogger.h"
 
-#import "MEGASdkManager.h"
 #import "NSFileManager+MNZCategory.h"
 
 @implementation MEGALogger

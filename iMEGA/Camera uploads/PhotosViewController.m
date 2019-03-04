@@ -1,6 +1,5 @@
 #import "PhotosViewController.h"
 
-#import "SVProgressHUD.h"
 #import "UIScrollView+EmptyDataSet.h"
 
 #import "Helper.h"
@@ -9,7 +8,6 @@
 #import "MEGANode+MNZCategory.h"
 #import "MEGANodeList+MNZCategory.h"
 #import "MEGAReachabilityManager.h"
-#import "MEGAStore.h"
 #import "NSDate+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 #import "MEGAPhotoBrowserViewController.h"

@@ -1,6 +1,5 @@
 #import <Foundation/Foundation.h>
 
-#import "MEGASdkManager.h"
 #import "MOOfflineNode.h"
 #import "MOUser.h"
 #import "MOChatDraft+CoreDataProperties.h"
