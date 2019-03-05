@@ -280,7 +280,7 @@
             [self.tableView setEditing:NO animated:YES];
             [self.enterGroupNameTextField becomeFirstResponder];
             self.keyRotationEnabled = NO;
-            self.checkboxButton.selected = NO;
+            self.checkboxButton.selected = YES;
             
             break;
         }
