@@ -756,6 +756,12 @@ static NSString *kisDirectory = @"kisDirectory";
         [self.navigationController pushViewController:offlineVC animated:YES];
         
     } else if (self.previewDocumentPath.mnz_isMultimediaPathExtension) {
+        MEGAHandleList *chatRoomIDsWithCallInProgress = [MEGASdkManager.sharedMEGAChatSdk chatCallsWithState:MEGAChatCallStatusInProgress];
+        if (chatRoomIDsWithCallInProgress.size > 0) {
+            [Helper cannotPlayContentDuringACallAlert];
+            return;
+        }
+        
         AVURLAsset *asset = [AVURLAsset assetWithURL:[NSURL fileURLWithPath:self.previewDocumentPath]];
         
         if (asset.playable) {

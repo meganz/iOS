@@ -85,9 +85,14 @@
 }
 
 - (void)mnz_openNodeInNavigationController:(UINavigationController *)navigationController folderLink:(BOOL)isFolderLink {
-    UIViewController *viewController = [self mnz_viewControllerForNodeInFolderLink:isFolderLink];
-    if (viewController) {
-        [navigationController presentViewController:viewController animated:YES completion:nil];
+    MEGAHandleList *chatRoomIDsWithCallInProgress = [MEGASdkManager.sharedMEGAChatSdk chatCallsWithState:MEGAChatCallStatusInProgress];
+    if (chatRoomIDsWithCallInProgress.size > 0) {
+        [Helper cannotPlayContentDuringACallAlert];
+    } else {
+        UIViewController *viewController = [self mnz_viewControllerForNodeInFolderLink:isFolderLink];
+        if (viewController) {
+            [navigationController presentViewController:viewController animated:YES completion:nil];
+        }
     }
 }
 

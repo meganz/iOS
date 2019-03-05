@@ -616,14 +616,10 @@ const NSUInteger kMaxMessagesToLoad = 256;
         return;
     }
     
-    MEGAHandleList *handleList = [[MEGASdkManager sharedMEGAChatSdk] chatCallsIds];
-    for (NSUInteger i = 0; i < handleList.size; i++) {
-        uint64_t callHandle = [handleList megaHandleAtIndex:i];
-        MEGAChatCall *call = [[MEGASdkManager sharedMEGAChatSdk] chatCallForCallId:callHandle];
-        if (call.status == MEGAChatCallStatusInProgress) {
-            self.audioCallBarButtonItem.enabled = self.videoCallBarButtonItem.enabled = NO;
-            return;
-        }
+    MEGAHandleList *chatRoomIDsWithCallInProgress = [MEGASdkManager.sharedMEGAChatSdk chatCallsWithState:MEGAChatCallStatusInProgress];
+    if (chatRoomIDsWithCallInProgress.size > 0) {
+        self.audioCallBarButtonItem.enabled = self.videoCallBarButtonItem.enabled = NO;
+        return;
     }
     
     BOOL isAudioPermissionAuthorizedOrNotDetermined = [DevicePermissionsHelper isAudioPermissionAuthorizedOrNotDetermined];

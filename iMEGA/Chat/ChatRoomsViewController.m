@@ -137,25 +137,20 @@
         [DevicePermissionsHelper modalNotificationsPermission];
     }
     
-    if ([MEGASdkManager sharedMEGAChatSdk].numCalls && MEGAReachabilityManager.isReachable) {
-        MEGAHandleList *chatRoomsWithCall = [MEGASdkManager sharedMEGAChatSdk].chatCalls;
-        self.chatRoomOnGoingCall = nil;
-        for (int i = 0; i < chatRoomsWithCall.size; i++) {
-            MEGAChatCall *call = [[MEGASdkManager sharedMEGAChatSdk] chatCallForChatId:[chatRoomsWithCall megaHandleAtIndex:i]];
-            if (call.status == MEGAChatCallStatusInProgress) {
-                self.chatRoomOnGoingCall = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:[chatRoomsWithCall megaHandleAtIndex:i]];
-                if (self.activeCallTopConstraint.constant == -44) {
-                    [self showActiveCallButton:call];
-                }
-                break;
-            }
+    self.chatRoomOnGoingCall = nil;
+    MEGAHandleList *chatRoomIDsWithCallInProgress = [MEGASdkManager.sharedMEGAChatSdk chatCallsWithState:MEGAChatCallStatusInProgress];
+    if ((chatRoomIDsWithCallInProgress.size > 0) && MEGAReachabilityManager.isReachable) {
+        self.chatRoomOnGoingCall = [MEGASdkManager.sharedMEGAChatSdk chatRoomForChatId:[chatRoomIDsWithCallInProgress megaHandleAtIndex:0]];
+        
+        if (self.activeCallTopConstraint.constant == -44) {
+            MEGAChatCall *call = [MEGASdkManager.sharedMEGAChatSdk chatCallForChatId:self.chatRoomOnGoingCall.chatId];
+            [self showActiveCallButton:call];
         }
+        
         if (!self.chatRoomOnGoingCall && self.activeCallTopConstraint.constant == 0) {
             [self hideActiveCallButton];
         }
-       
     }
-
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
