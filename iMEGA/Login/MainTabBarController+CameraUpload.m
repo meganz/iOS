@@ -40,7 +40,7 @@
         }];
     };
     
-    [self presentViewController:migrationVC animated:YES completion:nil];
+    [UIApplication.mnz_presentingViewController presentViewController:migrationVC animated:YES completion:nil];
 }
 
 - (void)showCameraUploadSettingsScreen {
@@ -48,7 +48,7 @@
     cameraUploadSettingsVC.isPresentedModally = YES;
     MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:cameraUploadSettingsVC];
     navigationController.modalPresentationStyle = UIModalPresentationOverFullScreen;
-    [self presentViewController:navigationController animated:YES completion:nil];
+    [UIApplication.mnz_presentingViewController presentViewController:navigationController animated:YES completion:nil];
 }
 
 @end
