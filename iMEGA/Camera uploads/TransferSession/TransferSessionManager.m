@@ -25,6 +25,8 @@ static NSString * const VideoCellularDisallowedUploadSessionId = @"nz.mega.video
 @property (copy, nonatomic) void (^videoCellularAllowedUploadSessionCompletion)(void);
 @property (copy, nonatomic) void (^videoCellularDisallowedUploadSessionCompletion)(void);
 
+@property (strong, nonatomic) NSString *userAgent;
+
 @end
 
 @implementation TransferSessionManager
@@ -43,7 +45,9 @@ static NSString * const VideoCellularDisallowedUploadSessionId = @"nz.mega.video
     self = [super init];
     if (self) {
         _serialQueue = dispatch_queue_create("nz.mega.sessionManager.cameraUploadSessionSerialQueue", DISPATCH_QUEUE_SERIAL);
+        _userAgent = [NSString stringWithFormat:@"MEGAiOSCU/%@ (%@, %@)", [NSBundle.mainBundle objectForInfoDictionaryKey:@"CFBundleShortVersionString"], UIDevice.currentDevice.model, UIDevice.currentDevice.systemVersion];
     }
+    
     return self;
 }
 
@@ -280,6 +284,7 @@ static NSString * const VideoCellularDisallowedUploadSessionId = @"nz.mega.video
 - (NSURLSessionUploadTask *)backgroundUploadTaskInSession:(NSURLSession *)session withURL:(NSURL *)requestURL fromFile:(NSURL *)fileURL completion:(UploadCompletionHandler)completion {
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:requestURL];
     request.HTTPMethod = @"POST";
+    [request setValue:self.userAgent forHTTPHeaderField:@"User-Agent"];
     NSURLSessionUploadTask *task = [session uploadTaskWithRequest:request fromFile:fileURL];
     
     [self addDelegateForTask:task inSession:session completion:completion];
