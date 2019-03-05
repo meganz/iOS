@@ -7,7 +7,6 @@
 #import "Helper.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGASdkManager.h"
-#import "MEGAStore.h"
 #import "MEGANode+MNZCategory.h"
 
 #import "CloudDriveViewController.h"

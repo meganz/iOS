@@ -15,6 +15,10 @@
     return [UIColor colorWithRed:51.0/255.0 green:51.0/255.0 blue:51.0/255.0 alpha:1.0];
 }
 
++ (UIColor *)mnz_black151412_09 {
+    return [UIColor colorWithRed:0.08 green:0.08 blue:0.07 alpha:0.9];
+}
+
 + (UIColor *)mnz_black000000_01 {
     return [UIColor colorWithRed:0.0  green:0.0  blue:0.0 alpha:0.100];
 }
@@ -106,6 +110,10 @@
 
 + (UIColor *)mnz_orangeFFA500 {
     return [UIColor colorWithRed:1.0 green:165.0/255.0 blue:0.0 alpha:1.0];
+}
+
++ (UIColor *)mnz_orangeFFD300 {
+    return [UIColor colorWithRed:1 green:0.83 blue:0 alpha:1];
 }
 
 #pragma mark - Red

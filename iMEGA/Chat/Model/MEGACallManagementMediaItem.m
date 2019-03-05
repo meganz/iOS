@@ -1,19 +1,18 @@
 
-#import "MEGACallEndedMediaItem.h"
-#import "MEGAMessageCallEndedView.h"
+#import "MEGACallManagementMediaItem.h"
+#import "MEGAMessageCallManagementView.h"
 
-#import "MEGASdkManager.h"
 #import "NSString+MNZCategory.h"
 #import "UIImage+MNZCategory.h"
 
-@interface MEGACallEndedMediaItem ()
+@interface MEGACallManagementMediaItem ()
 
-@property (strong, nonatomic) UIView *cachedCallEndedView;
+@property (strong, nonatomic) UIView *cachedView;
 @property (copy, nonatomic) MEGAChatMessage *message;
 
 @end
 
-@implementation MEGACallEndedMediaItem
+@implementation MEGACallManagementMediaItem
 
 #pragma mark - Initialization
 
@@ -21,26 +20,26 @@
     self = [super init];
     if (self) {
         _message = message;
-        _cachedCallEndedView = nil;
+        _cachedView = nil;
     }
     return self;
 }
 
 - (void)clearCachedMediaViews {
     [super clearCachedMediaViews];
-    _cachedCallEndedView = nil;
+    _cachedView = nil;
 }
 
 #pragma mark - Setters
 
 - (void)setMessage:(MEGAChatMessage *)message {
     _message = [message copy];
-    _cachedCallEndedView = nil;
+    _cachedView = nil;
 }
 
 - (void)setAppliesMediaViewMaskAsOutgoing:(BOOL)appliesMediaViewMaskAsOutgoing {
     [super setAppliesMediaViewMaskAsOutgoing:appliesMediaViewMaskAsOutgoing];
-    _cachedCallEndedView = nil;
+    _cachedView = nil;
 }
 
 #pragma mark - JSQMessageMediaData protocol
@@ -50,21 +49,26 @@
         return nil;
     }
     
-    if (self.cachedCallEndedView == nil) {
-        MEGAMessageCallEndedView *callEndedView = [[[NSBundle bundleForClass:[MEGAMessageCallEndedView class]] loadNibNamed:@"MEGAMessageCallEndedView" owner:self options:nil] objectAtIndex:0];
+    if (self.cachedView == nil) {
+        MEGAMessageCallManagementView *callView = [[[NSBundle bundleForClass:[MEGAMessageCallManagementView class]] loadNibNamed:@"MEGAMessageCallManagementView" owner:self options:nil] objectAtIndex:0];
         // Sizes:
-        CGSize callEndedViewSize = [self mediaViewDisplaySize];
-        callEndedView.frame = CGRectMake(callEndedView.frame.origin.x,
-                                       callEndedView.frame.origin.y,
-                                       callEndedViewSize.width,
-                                       callEndedViewSize.height);
+        CGSize callViewSize = [self mediaViewDisplaySize];
+        callView.frame = CGRectMake(callView.frame.origin.x,
+                                       callView.frame.origin.y,
+                                       callViewSize.width,
+                                       callViewSize.height);
         
-        callEndedView.callEndedImageView.image = [UIImage mnz_imageByEndCallReason:self.message.termCode userHandle:self.message.userHandle];
-        callEndedView.callEndedLabel.text = [NSString mnz_stringByEndCallReason:self.message.termCode userHandle:self.message.userHandle duration:self.message.duration];
-        self.cachedCallEndedView = callEndedView;
+        if (self.message.type == MEGAChatMessageTypeCallEnded) {
+            callView.callImageView.image = [UIImage mnz_imageByEndCallReason:self.message.termCode userHandle:self.message.userHandle];
+            callView.callLabel.text = [NSString mnz_stringByEndCallReason:self.message.termCode userHandle:self.message.userHandle duration:self.message.duration];
+        } else { // MEGAChatMessageTypeCallStarted
+            callView.callImageView.image = [UIImage imageNamed:@"callWithXIncoming"];
+            callView.callLabel.text = AMLocalizedString(@"Call started", @"Text to inform the user there is an active call and is participating");
+        }
+        self.cachedView = callView;
     }
     
-    return self.cachedCallEndedView;
+    return self.cachedView;
 }
 
 - (CGSize)mediaViewDisplaySize {
@@ -76,7 +80,7 @@
 }
 
 - (NSString *)mediaDataType {
-    return @"MEGACallEnded";
+    return @"MEGACallManagement";
 }
 
 #pragma mark - NSObject
@@ -108,7 +112,7 @@
 #pragma mark - NSCopying
 
 - (instancetype)copyWithZone:(NSZone *)zone {
-    MEGACallEndedMediaItem *copy = [[MEGACallEndedMediaItem allocWithZone:zone] initWithMEGAChatMessage:self.message];
+    MEGACallManagementMediaItem *copy = [[MEGACallManagementMediaItem allocWithZone:zone] initWithMEGAChatMessage:self.message];
     copy.appliesMediaViewMaskAsOutgoing = self.appliesMediaViewMaskAsOutgoing;
     return copy;
 }

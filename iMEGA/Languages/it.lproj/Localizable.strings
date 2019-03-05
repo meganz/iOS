@@ -70,22 +70,6 @@
 "pleaseLogInToYourAccount"="Si prega di accedere al proprio account.";
 /* Error message when a user attempts to change their email without an active login session. */
 "needToBeLoggedInToCompleteYourEmailChange"="Devi fare l'accesso per completare il cambio di email. Per favore, fai di nuovo l'accesso con la tua email corrente e poi clicca sul link id conferma di nuovo.";
-/* Title shown on the app's start animation to explain what MEGA offers you (1/4) */
-"megaSpace"="MEGA Spazio";
-/* Title shown on the app's start animation to explain what MEGA offers you (2/4) */
-"megaSpeed"="MEGA Velocità";
-/* Title shown on the app's start animation to explain what MEGA offers you (3/4) */
-"megaPrivacy"="MEGA Sicurezza";
-/* Title shown on the app's start animation to explain what MEGA offers you (4/4) */
-"megaAccess"="MEGA Accesso";
-/* Message shown on the app's start animation to explain what MEGA SPACE means */
-"megaSpaceText"="Registrati adesso e ricevi 50 GB di spazio gratis";
-/* Message shown on the app's start animation to explain what MEGA SPEED means */
-"megaSpeedText"="I caricamenti sono veloci.Condividi rapidamente file con tutti.";
-/* Message shown on the app's start animation to explain what MEGA PRIVACY means */
-"megaPrivacyText"="Proteggete tutti i vostri file con la crittografia completa di MEGA.";
-/* Message shown on the app's start animation to explain what MEGA ACCESS means */
-"megaAccessText"="Accesso crittografato dovunque,a qualunque momento";
 /* Button title which triggers the action to login in your MEGA account */
 "login"="Accedi";
 /* Button title which triggers the action to create a MEGA account */
@@ -884,7 +868,7 @@
 /* Title of the Achievements section */
 "achievementsTitle"="Obiettivi";
 /* Title of the Used storage section */
-"usedStorage"="Spazio di archiviazione utilizzato";
+"usedStorage"="Spazio utilizzato";
 /* Subtitle show on My Account view under the 'Achievements' title to give more details of the section that will appear if tapped 2/2 */
 "inviteFriendsAndGetRewards"="Invita degli amici ed ottieni dei bonus";
 /* Indicating text for when "you invite your friends" */
@@ -1684,6 +1668,8 @@
 "Poor conection."="Connessione debole.";
 /* Message shown in a chat room when there is an active group call */
 "There is an active group call. Tap to join."="C'è una chiamata di gruppo attiva. Clicca per unirti.";
+/* Message shown in a chat room when there is an active call */
+"There is an active call. Tap to join."="C'è una chiamata attiva. Clicca per unirti.";
 /* Message shown in a chat room for a group call in progress displaying the duration of the call */
 "Touch to return to call %@"="Tocca per tornare alla chiamata %@";
 /* A button label which allows the users save images/videos in the Photos app. */
@@ -1812,3 +1798,7 @@
 "%d participants"="%d partecipanti";
 /* Singular of participant. 1 participant */
 "%d participant"="%d partecipante";
+/* Text to inform the user there is an active call and is not participating */
+"Ongoing Call"="Chiamata in corso";
+/* Text to inform the user there is an active call and is participating */
+"Call Started"="Chiamata iniziata";

@@ -1,4 +1,3 @@
-#import "MEGASdkManager.h"
 
 @interface ShareFolderActivity : UIActivity
 
