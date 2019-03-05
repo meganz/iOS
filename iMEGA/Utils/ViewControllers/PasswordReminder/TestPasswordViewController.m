@@ -19,6 +19,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *descriptionLabel;
 @property (weak, nonatomic) IBOutlet UIButton *confirmButton;
 @property (weak, nonatomic) IBOutlet UIButton *backupKeyButton;
+@property (weak, nonatomic) IBOutlet UIButton *logoutButton;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *closeBarButton;
 @property (weak, nonatomic) IBOutlet PasswordView *passwordView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *descriptionLabelHeightConstraint;
@@ -114,18 +115,12 @@
 - (void)configureUI {
     self.title = AMLocalizedString(@"testPassword", @"Label for test password button");
     self.passwordView.passwordTextField.delegate = self;
+    
     if (self.isLoggingOut) {
-        self.closeBarButton.title = AMLocalizedString(@"logoutLabel", @"Title of the button which logs out from your account.");
+        self.navigationItem.rightBarButtonItem = nil;
+        self.navigationController.navigationBar.topItem.title = @"";
         self.descriptionLabel.text = AMLocalizedString(@"testPasswordLogoutText", @"Text that described that you are about to logout remenbering why the user should remenber the password and/or test it");
         
-        self.confirmButton.layer.borderWidth = 0.0f;
-        self.confirmButton.layer.borderColor = nil;
-        [self.confirmButton setTitleColor:UIColor.mnz_gray666666 forState:UIControlStateNormal];
-        self.confirmButton.backgroundColor = [UIColor colorFromHexString:@"F2F2F2"];
-        [self.confirmButton setTitle:AMLocalizedString(@"testPassword", @"Label for test password button") forState:UIControlStateNormal];
-        
-        [self.backupKeyButton setTitleColor:UIColor.whiteColor forState:UIControlStateNormal];
-        self.backupKeyButton.backgroundColor = UIColor.mnz_redMain;
         [self.backupKeyButton setTitle:AMLocalizedString(@"exportRecoveryKey", @"Text 'Export Recovery Key' placed just before two buttons into the 'settings' page to allow see (copy/paste) and export the Recovery Key.") forState:UIControlStateNormal];
     } else {
         self.closeBarButton.title = AMLocalizedString(@"close", @"A button label.");
@@ -134,21 +129,16 @@
         testPasswordText = [testPasswordText stringByReplacingCharactersInRange:[testPasswordText rangeOfString:learnMoreString] withString:@""];
         self.descriptionLabel.text = [testPasswordText mnz_removeWebclientFormatters];
         
-        self.confirmButton.layer.borderWidth = 1.0;
-        self.confirmButton.layer.borderColor = [UIColor colorFromHexString:@"F2F2F2"].CGColor;
-        [self.confirmButton setTitle:AMLocalizedString(@"confirm", @"Title text for the account confirmation.") forState:UIControlStateNormal];
-        
-        [self.backupKeyButton setTitleColor:UIColor.mnz_gray666666 forState:UIControlStateNormal];
-        self.backupKeyButton.backgroundColor = [UIColor colorFromHexString:@"F2F2F2"];
         [self.backupKeyButton setTitle:AMLocalizedString(@"backupRecoveryKey", @"Label for recovery key button") forState:UIControlStateNormal];
     }
+    
+    self.confirmButton.layer.borderWidth = 1.0;
+    self.confirmButton.layer.borderColor = [UIColor colorFromHexString:@"899B9C"].CGColor;
+    [self.confirmButton setTitle:AMLocalizedString(@"confirm", @"Title text for the account confirmation.") forState:UIControlStateNormal];
 }
 
 - (void)passwordTestFailed {
     [self.passwordView setErrorState:YES];
-    
-    [self.backupKeyButton setTitleColor:UIColor.whiteColor forState:UIControlStateNormal];
-    self.backupKeyButton.backgroundColor = UIColor.mnz_redMain;
     
     self.testFailedCount++;
     
@@ -171,22 +161,12 @@
 - (void)passwordTestSuccess {
     self.passwordView.passwordTextField.textColor = UIColor.mnz_green31B500;
     
-    if (self.isLoggingOut) {
-        self.confirmButton.layer.borderWidth = 1.0f;
-        self.confirmButton.layer.borderColor = [UIColor colorFromHexString:@"F2F2F2"].CGColor;
-        self.confirmButton.backgroundColor = UIColor.whiteColor;
-        
-        [self.backupKeyButton setTitleColor:UIColor.whiteColor forState:UIControlStateNormal];
-        self.backupKeyButton.backgroundColor = UIColor.mnz_redMain;
-    } else {
-        [self.backupKeyButton setTitleColor:UIColor.mnz_gray666666 forState:UIControlStateNormal];
-        self.backupKeyButton.backgroundColor = [UIColor colorFromHexString:@"F2F2F2"];
-    }
-    
+    self.confirmButton.layer.borderWidth = 0.0f;
     [self.confirmButton setTitleColor:UIColor.mnz_green31B500 forState:UIControlStateNormal];
-    self.confirmButton.titleLabel.font = [UIFont mnz_SFUIRegularWithSize:12.0f];
     [self.confirmButton setImage:[UIImage imageNamed:@"contact_request_accept"] forState:UIControlStateNormal];
     [self.confirmButton setTitle:AMLocalizedString(@"passwordAccepted", @"Used as a message in the 'Password reminder' dialog that is shown when the user enters his password, clicks confirm and his password is correct.") forState:UIControlStateNormal];
+    
+    self.logoutButton.hidden = NO;
 }
 
 - (void)resetUI {
@@ -231,6 +211,19 @@
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     [textField resignFirstResponder];
     return YES;
+}
+
+- (void)textFieldDidBeginEditing:(UITextField *)textField {
+    if (textField == self.passwordView.passwordTextField) {
+        self.passwordView.toggleSecureButton.hidden = NO;
+    }
+}
+
+- (void)textFieldDidEndEditing:(UITextField *)textField {
+    if (textField == self.passwordView.passwordTextField) {
+        self.passwordView.passwordTextField.secureTextEntry = YES;
+        [self.passwordView configureSecureTextEntry];
+    }
 }
 
 #pragma mark - PasswordViewDelegate

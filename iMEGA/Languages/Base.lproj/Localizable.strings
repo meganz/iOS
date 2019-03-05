@@ -1812,3 +1812,5 @@
 "%d participants"="%d participants";
 /* Singular of participant. 1 participant */
 "%d participant"="%d participant";
+/* Title for feature Password Reminder */
+"Password Reminder"="Password Reminder";
