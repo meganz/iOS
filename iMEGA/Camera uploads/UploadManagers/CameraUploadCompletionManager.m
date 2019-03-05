@@ -122,9 +122,12 @@
         return;
     }
     
-    AssetLocalAttribute *attributeInfo = [AttributeUploadManager.shared saveAttributeForUploadInfo:uploadInfo];
-    if (attributeInfo == nil) {
-        attributeInfo = [AttributeUploadManager.shared saveAttributeForUploadInfo:uploadInfo];
+    NSError *attributesError;
+    AssetLocalAttribute *attributeInfo = [AttributeUploadManager.shared saveAttributesForUploadInfo:uploadInfo error:&attributesError];
+    if (attributesError) {
+        MEGALogError(@"[Camera Upload] error when to save attributes for %@ %@", uploadInfo.savedLocalIdentifier, attributesError);
+        [self finishUploadForLocalIdentifier:uploadInfo.savedLocalIdentifier status:CameraAssetUploadStatusFailed];
+        return;
     }
     
     

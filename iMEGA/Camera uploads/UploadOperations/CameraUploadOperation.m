@@ -106,7 +106,7 @@
         return NO;
     }
     
-    BOOL thumbnailCreated = [self.sdk createThumbnail:self.uploadInfo.fileURL.path destinatioPath:self.uploadInfo.thumbnailURL.path];
+    BOOL thumbnailCreated = [self.sdk createThumbnail:self.uploadInfo.fileURL.path destinatioPath:self.uploadInfo.thumbnailURL.path] && [NSFileManager.defaultManager fileExistsAtPath:self.uploadInfo.thumbnailURL.path];
     if (!thumbnailCreated) {
         MEGALogError(@"[Camera Upload] %@ error when to create thumbnail", self);
     }
@@ -115,7 +115,7 @@
         [self finishOperationWithStatus:CameraAssetUploadStatusCancelled shouldUploadNextAsset:NO];
         return NO;
     }
-    BOOL previewCreated = [self.sdk createPreview:self.uploadInfo.fileURL.path destinatioPath:self.uploadInfo.previewURL.path];
+    BOOL previewCreated = [self.sdk createPreview:self.uploadInfo.fileURL.path destinatioPath:self.uploadInfo.previewURL.path] && [NSFileManager.defaultManager fileExistsAtPath:self.uploadInfo.previewURL.path];
     if (!previewCreated) {
         MEGALogError(@"[Camera Upload] %@ error when to create preview", self);
     }
