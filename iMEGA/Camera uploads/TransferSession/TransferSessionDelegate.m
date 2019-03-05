@@ -78,10 +78,34 @@
     [[self delegateForTask:task] URLSession:session task:task didSendBodyData:bytesSent totalBytesSent:totalBytesSent totalBytesExpectedToSend:totalBytesExpectedToSend];
 }
 
+- (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task willPerformHTTPRedirection:(NSHTTPURLResponse *)response newRequest:(NSURLRequest *)request completionHandler:(void (^)(NSURLRequest * _Nullable))completionHandler {
+    MEGALogDebug(@"[Camera Upload] Session %@ task %@ willPerformHTTPRedirection", session.configuration.identifier, task.taskDescription);
+}
+
+- (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task needNewBodyStream:(void (^)(NSInputStream * _Nullable))completionHandler {
+    MEGALogDebug(@"[Camera Upload] Session %@ task %@ needNewBodyStream", session.configuration.identifier, task.taskDescription);
+}
+
+- (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didFinishCollectingMetrics:(NSURLSessionTaskMetrics *)metrics {
+    MEGALogDebug(@"[Camera Upload] Session %@ task %@ didFinishCollectingMetrics", session.configuration.identifier, task.taskDescription);
+}
+
 #pragma mark - data level delegate
 
 - (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask didReceiveData:(NSData *)data {
     [[self delegateForTask:dataTask] URLSession:session dataTask:dataTask didReceiveData:data];
+}
+
+- (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask didBecomeStreamTask:(NSURLSessionStreamTask *)streamTask {
+    MEGALogDebug(@"[Camera Upload] Session %@ task %@ didBecomeStreamTask", session.configuration.identifier, dataTask.taskDescription);
+}
+
+- (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask didBecomeDownloadTask:(NSURLSessionDownloadTask *)downloadTask {
+    MEGALogDebug(@"[Camera Upload] Session %@ task %@ didBecomeDownloadTask", session.configuration.identifier, dataTask.taskDescription);
+}
+
+- (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask willCacheResponse:(NSCachedURLResponse *)proposedResponse completionHandler:(void (^)(NSCachedURLResponse * _Nullable))completionHandler {
+    MEGALogDebug(@"[Camera Upload] Session %@ task %@ willCacheResponse", session.configuration.identifier, dataTask.taskDescription);
 }
 
 @end
