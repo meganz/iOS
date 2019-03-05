@@ -16,14 +16,9 @@ static NSString * const CameraUploadBurstPhotoExtension = @"burst";
 
 #pragma mark - handle fingerprint
 
-- (void)copyToParentNodeIfNeededForMatchingNode:(MEGANode *)node {
-    if (node == nil) {
-        return;
-    }
-    
+- (void)copyToParentNodeIfNeededForMatchingNode:(MEGANode *)node localFileName:(NSString *)fileName {
     if (node.parentHandle != self.uploadInfo.parentNode.handle) {
-        NSString *localFileName = [self mnz_generateLocalFileNamewithExtension:node.name.pathExtension];
-        NSString *uniqueFileName = [localFileName mnz_sequentialFileNameInParentNode:self.uploadInfo.parentNode];
+        NSString *uniqueFileName = [fileName mnz_sequentialFileNameInParentNode:self.uploadInfo.parentNode];
         [MEGASdkManager.sharedMEGASdk copyNode:node newParent:self.uploadInfo.parentNode newName:uniqueFileName];
     }
 }
@@ -55,7 +50,8 @@ static NSString * const CameraUploadBurstPhotoExtension = @"burst";
 }
 
 - (void)finishUploadForFingerprintMatchedNode:(MEGANode *)node {
-    [self copyToParentNodeIfNeededForMatchingNode:node];
+    NSString *localFileName = [self mnz_generateLocalFileNamewithExtension:node.name.pathExtension];
+    [self copyToParentNodeIfNeededForMatchingNode:node localFileName:localFileName];
     [self finishOperationWithStatus:CameraAssetUploadStatusDone shouldUploadNextAsset:YES];
 }
 
