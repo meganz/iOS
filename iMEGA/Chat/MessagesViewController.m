@@ -598,7 +598,10 @@ const NSUInteger kMaxMessagesToLoad = 256;
             if (call.status == MEGAChatCallStatusInProgress) {
                 [self showTapToReturnCall:call];
             } else {
-                [self showActiveCallButton];
+                MEGAHandleList *chatRoomIDsWithCallInProgress = [MEGASdkManager.sharedMEGAChatSdk chatCallsWithState:MEGAChatCallStatusInProgress];
+                if (chatRoomIDsWithCallInProgress.size == 0) {
+                    [self showActiveCallButton];
+                }
             }
         }
     } else {
