@@ -1801,4 +1801,4 @@
 /* Text to inform the user there is an active call and is not participating */
 "Ongoing Call"="Ongoing Call";
 /* Text to inform the user there is an active call and is participating */
-"Call Started"="Call Started";
+"Call started"="Call started";
