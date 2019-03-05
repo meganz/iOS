@@ -87,7 +87,7 @@
 }
 
 - (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didFinishCollectingMetrics:(NSURLSessionTaskMetrics *)metrics {
-    MEGALogDebug(@"[Camera Upload] Session %@ task %@ didFinishCollectingMetrics", session.configuration.identifier, task.taskDescription);
+    MEGALogDebug(@"[Camera Upload] Session %@ task %@ didFinishCollectingMetrics %@", session.configuration.identifier, task.taskDescription, metrics);
 }
 
 #pragma mark - data level delegate
