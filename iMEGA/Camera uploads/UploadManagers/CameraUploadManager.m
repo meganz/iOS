@@ -331,6 +331,9 @@ static const CGFloat MemoryWarningConcurrentThrottleRatio = .5;
         
         if (cameraUploadNode) {
             [self uploadCamera];
+        } else {
+            MEGALogError(@"[Camera Upload] camera upload node can not be loaded");
+            [self startCameraUploadIfNeeded];
         }
     }];
 }
@@ -358,7 +361,7 @@ static const CGFloat MemoryWarningConcurrentThrottleRatio = .5;
 
 - (void)startVideoUploadIfNeeded {
     MEGALogDebug(@"[Camera Upload] start video upload if needed");
-    if (!(CameraUploadManager.isCameraUploadEnabled && CameraUploadManager.isVideoUploadEnabled)) {
+    if (!(CameraUploadManager.canCameraUploadBeStarted && CameraUploadManager.isVideoUploadEnabled)) {
         MEGALogDebug(@"[Camera Upload] video upload is not enabled");
         return;
     }
