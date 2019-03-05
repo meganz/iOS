@@ -6,7 +6,6 @@ NS_ASSUME_NONNULL_BEGIN
 @interface CameraUploadOperation (Utils)
 
 - (NSString *)mnz_generateLocalFileNamewithExtension:(NSString *)extension;
-- (NSString *)mnz_generateLocalLivePhotoFileNameWithExtension:(NSString *)extension;
 
 - (void)handleCloudDownloadError:(NSError *)error;
 

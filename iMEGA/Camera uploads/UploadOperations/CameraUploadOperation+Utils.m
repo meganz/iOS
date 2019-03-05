@@ -7,6 +7,7 @@
 #import "MEGAReachabilityManager.h"
 #import "NSFileManager+MNZCategory.h"
 #import "NSDate+MNZCategory.h"
+#import "LivePhotoUploadOperation.h"
 
 static NSString * const CameraUploadLivePhotoExtension = @"live";
 static NSString * const CameraUploadBurstPhotoExtension = @"burst";
@@ -21,7 +22,9 @@ static NSString * const CameraUploadBurstPhotoExtension = @"burst";
     }
     
     if (node.parentHandle != self.uploadInfo.parentNode.handle) {
-        [[MEGASdkManager sharedMEGASdk] copyNode:node newParent:self.uploadInfo.parentNode];
+        NSString *localFileName = [self mnz_generateLocalFileNamewithExtension:node.name.pathExtension];
+        NSString *uniqueFileName = [localFileName mnz_sequentialFileNameInParentNode:self.uploadInfo.parentNode];
+        [MEGASdkManager.sharedMEGASdk copyNode:node newParent:self.uploadInfo.parentNode newName:uniqueFileName];
     }
 }
 
@@ -84,17 +87,15 @@ static NSString * const CameraUploadBurstPhotoExtension = @"burst";
 
 - (NSString *)mnz_generateLocalFileNamewithExtension:(NSString *)extension {
     NSString *originalFileName = [self.uploadInfo.asset.creationDate mnz_formattedDefaultNameForMedia];
-    if (self.uploadInfo.asset.burstIdentifier.length > 0) {
+    
+    if ([self isKindOfClass:[LivePhotoUploadOperation class]]) {
+        originalFileName = [originalFileName stringByAppendingPathExtension:CameraUploadLivePhotoExtension];
+    } else if (self.uploadInfo.asset.burstIdentifier.length > 0) {
         originalFileName = [originalFileName stringByAppendingPathExtension:CameraUploadBurstPhotoExtension];
     }
     
     originalFileName = [originalFileName stringByAppendingPathExtension:extension];
     
-    return [CameraUploadRecordManager.shared.fileNameCoordinator generateUniqueLocalFileNameForUploadRecord:self.uploadRecord withOriginalFileName:originalFileName];
-}
-
-- (NSString *)mnz_generateLocalLivePhotoFileNameWithExtension:(NSString *)extension {
-    NSString *originalFileName = [[[self.uploadInfo.asset.creationDate mnz_formattedDefaultNameForMedia] stringByAppendingPathExtension:CameraUploadLivePhotoExtension] stringByAppendingPathExtension:extension];
     return [CameraUploadRecordManager.shared.fileNameCoordinator generateUniqueLocalFileNameForUploadRecord:self.uploadRecord withOriginalFileName:originalFileName];
 }
 
