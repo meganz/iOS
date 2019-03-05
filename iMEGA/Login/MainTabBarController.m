@@ -235,14 +235,9 @@
     self.phoneBadgeImageView.hidden = YES;
     if (@available(iOS 10.0, *)) {
         if (MEGAReachabilityManager.isReachable && numCalls) {
-            MEGAHandleList *chatRoomsWithCall = [MEGASdkManager sharedMEGAChatSdk].chatCalls;
-            for (int i = 0; i < chatRoomsWithCall.size; i++) {
-                MEGAChatCall *call = [[MEGASdkManager sharedMEGAChatSdk] chatCallForChatId:[chatRoomsWithCall megaHandleAtIndex:i]];
-                if (call.status != MEGAChatCallStatusInProgress) {
-                    self.phoneBadgeImageView.hidden = NO;
-                    break;
-                }
-            }
+            MEGAHandleList *chatRoomIDsWithCallInProgress = [MEGASdkManager.sharedMEGAChatSdk chatCallsWithState:MEGAChatCallStatusInProgress];
+            self.phoneBadgeImageView.hidden = (chatRoomIDsWithCallInProgress.size > 0);
+            
             badgeValue = self.phoneBadgeImageView.hidden && unreadChats ? @"⦁" : nil;
         } else {
             badgeValue = unreadChats ? @"⦁" : nil;
