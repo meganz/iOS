@@ -7,8 +7,6 @@
 #import "MEGASdkManager.h"
 #import "MEGAReachabilityManager.h"
 #import "Helper.h"
-#import "SVProgressHUD.h"
-#import "CameraUploadsTableViewController.h"
 
 #define kCameraUploads @"Camera Uploads"
 

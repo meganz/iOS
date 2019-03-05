@@ -1,11 +1,7 @@
 
 #import "GetLinkActivity.h"
 
-#import "SVProgressHUD.h"
-
 #import "CopyrightWarningViewController.h"
-#import "GetLinkTableViewController.h"
-#import "Helper.h"
 #import "MEGAReachabilityManager.h"
 #import "UIApplication+MNZCategory.h"
 

@@ -79,8 +79,12 @@
 
 #pragma mark - Alerts
 
-+ (void)alertAudioPermission {
-    [self alertPermissionWithMessage:AMLocalizedString(@"microphonePermissions", @"Alert message to remember that MEGA app needs permission to use the Microphone to make calls and record videos and it doesn't have it") completionHandler:nil];
++ (void)alertAudioPermissionForIncomingCall:(BOOL)incomingCall {
+    if (incomingCall) {
+        [self alertPermissionWithTitle:AMLocalizedString(@"Incoming call", nil) message:AMLocalizedString(@"microphonePermissions", @"Alert message to remember that MEGA app needs permission to use the Microphone to make calls and record videos and it doesn't have it") completionHandler:nil];
+    } else {
+        [self alertPermissionWithMessage:AMLocalizedString(@"microphonePermissions", @"Alert message to remember that MEGA app needs permission to use the Microphone to make calls and record videos and it doesn't have it") completionHandler:nil];
+    }
 }
 
 + (void)alertVideoPermissionWithCompletionHandler:(void (^)(void))handler {
@@ -92,7 +96,11 @@
 }
 
 + (void)alertPermissionWithMessage:(NSString *)message completionHandler:(void (^)(void))handler {
-    UIAlertController *permissionsAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"attention", @"Alert title to attract attention") message:message preferredStyle:UIAlertControllerStyleAlert];
+    [self alertPermissionWithTitle:AMLocalizedString(@"attention", @"Alert title to attract attention") message:message completionHandler:handler];
+}
+
++ (void)alertPermissionWithTitle:(NSString *)title message:(NSString *)message completionHandler:(void (^)(void))handler {
+    UIAlertController *permissionsAlertController = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:UIAlertControllerStyleAlert];
     
     [permissionsAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
     [permissionsAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", @"Button title to accept something") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
@@ -207,6 +215,14 @@
     BOOL shouldAskForNotificationsPermissions = self.shouldAskForNotificationsPermissions;
     
     return shouldAskForAudioPermissions || shouldAskForVideoPermissions || shouldAskForPhotosPermissions || shouldAskForNotificationsPermissions;
+}
+
++ (BOOL)isAudioPermissionAuthorizedOrNotDetermined {
+    return [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeAudio] == AVAuthorizationStatusAuthorized || [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeAudio] == AVAuthorizationStatusNotDetermined;
+}
+
++ (BOOL)isVideoPermissionAuthorizedOrNotDetermined {
+    return [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeVideo] == AVAuthorizationStatusAuthorized || [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeVideo] == AVAuthorizationStatusNotDetermined;
 }
 
 @end

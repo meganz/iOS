@@ -1,10 +1,9 @@
 #import "MEGAAssetsPickerController.h"
 
-#import "SVProgressHUD.h"
-
 #import "MEGACreateFolderRequestDelegate.h"
 
 #import "MEGAStore.h"
+#import "MEGASdkManager.h"
 #import "Helper.h"
 
 @interface MEGAAssetsPickerController () <CTAssetsPickerControllerDelegate>
