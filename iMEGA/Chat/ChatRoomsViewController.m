@@ -127,6 +127,11 @@
     [[MEGASdkManager sharedMEGAChatSdk] addChatCallDelegate:self];
     [[MEGAReachabilityManager sharedManager] retryPendingConnections];
     
+    if (self.chatRoomOnGoingCall) {
+        self.timer = [NSTimer timerWithTimeInterval:1.0f target:self selector:@selector(updateDuration) userInfo:nil repeats:YES];
+        [[NSRunLoop mainRunLoop] addTimer:self.timer forMode:NSRunLoopCommonModes];
+    }
+    
     [self.tableView reloadData];
 }
 
