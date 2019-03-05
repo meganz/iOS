@@ -17,10 +17,10 @@
     
     CustomModalAlertViewController *migrationVC = [[CustomModalAlertViewController alloc] init];
     migrationVC.modalPresentationStyle = UIModalPresentationOverFullScreen;
-    migrationVC.image = [UIImage imageNamed:@"cameraUploadsPopUp"];
-    migrationVC.viewTitle = @"New features in Camera Upload!";
-    migrationVC.detail = @"Now you can choose to convert the HEIF/HEVC format photos and videos to the most compatible JPEG/H.264. We now also upload all of your live photos and burst photos to make sure all of your memorable moments are backed up.";
-    migrationVC.action = @"Use Most Compatible Settings";
+    migrationVC.image = [UIImage imageNamed:@"cameraUploadsV2Migration"];
+    migrationVC.viewTitle = @"New Camera Upload!";
+    migrationVC.detail = @"Now you can choose to convert the HEIF/HEVC format photos and videos to the most compatible JPEG/H.264.\n\nWe now also upload live photos and burst photos to make sure all of your memorable moments are backed up.";
+    migrationVC.action = @"Use Most Compatible Formats";
     migrationVC.actionColor = [UIColor mnz_green00BFA5];
     migrationVC.dismiss = @"Custom Settings";
     migrationVC.dismissColor = [UIColor colorFromHexString:@"899B9C"];
