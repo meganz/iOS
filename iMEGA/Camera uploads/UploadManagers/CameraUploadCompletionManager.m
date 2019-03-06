@@ -101,7 +101,7 @@
             [self finishUploadForLocalIdentifier:localIdentifier status:CameraAssetUploadStatusFailed];
         }
     } else {
-        MEGALogError(@"[Camera Upload] session task completes without any archived upload info: %@", localIdentifier);
+        MEGALogError(@"[Camera Upload] no archived upload info file found for %@", localIdentifier);
         [self finishUploadForLocalIdentifier:localIdentifier status:CameraAssetUploadStatusFailed];
     }
 }

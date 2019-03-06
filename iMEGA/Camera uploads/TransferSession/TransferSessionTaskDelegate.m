@@ -75,6 +75,11 @@ static const NSUInteger MEGATransferTokenLength = 36;
 
 - (void)handleTransferError:(NSError *)error forTask:(NSURLSessionTask *)task {
     MEGALogError(@"[Camera Upload] Session task %@ completed with error %@", task.taskDescription, error);
+    if (task.taskDescription.length == 0) {
+        MEGALogError(@"[Camera Upload] Session task description is empty");
+        return;
+    }
+    
     CameraAssetUploadStatus errorStatus = CameraAssetUploadStatusFailed;
     if ([error.domain isEqualToString:NSURLErrorDomain]) {
         errorStatus = CameraAssetUploadStatusCancelled;
@@ -84,6 +89,10 @@ static const NSUInteger MEGATransferTokenLength = 36;
 }
 
 - (void)handleTransferToken:(NSData *)token forTask:(NSURLSessionTask *)task inSession:(NSURLSession *)session {
+    if (task.taskDescription.length == 0) {
+        MEGALogError(@"[Camera Upload] Session task description is empty");
+    }
+
     if (token.length == 0) {
         MEGALogDebug(@"[Camera Upload] Session %@ task %@ completed with empty token", session.configuration.identifier, task.taskDescription);
         [CameraUploadCompletionManager.shared handleEmptyTransferTokenInSessionTask:task];
