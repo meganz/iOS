@@ -662,6 +662,12 @@ static NSString *nodeToPresentBase64Handle;
                         }
                     }
                 }
+            } else if ([UIApplication.mnz_visibleViewController isKindOfClass:MessagesViewController.class]) {
+                MessagesViewController *messagesVC = (MessagesViewController *)UIApplication.mnz_visibleViewController;
+                if (messagesVC.chatRoom.chatId == request.chatHandle) {
+                    [SVProgressHUD dismiss];
+                    return;
+                }
             }
             
             MessagesViewController *messagesVC = [[MessagesViewController alloc] init];
