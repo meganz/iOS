@@ -70,22 +70,6 @@
 "pleaseLogInToYourAccount"="あなたのアカウントにログインして下さい。";
 /* Error message when a user attempts to change their email without an active login session. */
 "needToBeLoggedInToCompleteYourEmailChange"="メールの変更を完了するには、ログインする必要があります。現在のメールアドレスで再度ログインしてから、確認リンクをもう一度クリックしてください。";
-/* Title shown on the app's start animation to explain what MEGA offers you (1/4) */
-"megaSpace"="MEGA の超デカスペース";
-/* Title shown on the app's start animation to explain what MEGA offers you (2/4) */
-"megaSpeed"="MEGA の超速スピード";
-/* Title shown on the app's start animation to explain what MEGA offers you (3/4) */
-"megaPrivacy"="MEGA ならではの完璧プライバシー";
-/* Title shown on the app's start animation to explain what MEGA offers you (4/4) */
-"megaAccess"="MEGAへのアクセス方法";
-/* Message shown on the app's start animation to explain what MEGA SPACE means */
-"megaSpaceText"="今すぐ登録して、50 GB の無料スペースをどうぞ！";
-/* Message shown on the app's start animation to explain what MEGA SPEED means */
-"megaSpeedText"="す速いアップロード。みんなとファイルを今すぐ共有。";
-/* Message shown on the app's start animation to explain what MEGA PRIVACY means */
-"megaPrivacyText"="MEGAの末端間暗号化システムならあなたのファイルは安全です。";
-/* Message shown on the app's start animation to explain what MEGA ACCESS means */
-"megaAccessText"="いつでも、どこでも完全に暗号化。";
 /* Button title which triggers the action to login in your MEGA account */
 "login"="ログイン";
 /* Button title which triggers the action to create a MEGA account */
@@ -115,7 +99,7 @@
 /*  */
 "weak"="弱い";
 /*  */
-"passwordVeryWeakOrWeak"="あなたのパスワードは簡単に当てられてしまいます。もっと長くしてみて下さい。大文字と小文字を組み合わせて下さい。記号も入れて下さい。名前や辞書にある言葉はよくありません。";
+"passwordVeryWeakOrWeak"="あなたのパスワードは簡単に推測されます。パスワードを長くしてみてください。大文字と小文字を組み合わせます。特殊文字を追加してください。名前や辞書の単語を使わないでください。";
 /* Label displayed during checking the strength of the password introduced. Represents Medium security */
 "medium"="普通";
 /*  */
@@ -635,7 +619,7 @@
 /* Permissions given to the user you share your folder with */
 "readOnly"="読み込みだけ";
 /* Permissions given to the user you share your folder with */
-"readAndWrite"="読み取りと書き込み";
+"readAndWrite"="読み込みと書き込み";
 /* Permissions given to the user you share your folder with */
 "fullAccess"="フルアクセス";
 /* Title of the Settings section */
@@ -1383,7 +1367,7 @@
 /* Notification text body shown when you have missed several audio calls and one video call. [A] = {number of missed audio calls} */
 "missedAudioCallsAndMissedVideoCall"="[A]件の不在音声着信および不在ビデオ着信";
 /* Notification text body shown when you have missed several audio calls and video calls. [A] = {number of missed audio calls}. [B] = {number of missed video calls} */
-"missedAudioCallsAndMissedVideoCalls"="[A]件の不在音声着信および[B]件の不在ビデオ着信";
+"missedAudioCallsAndMissedVideoCalls"="[A]件の不在音声着信と[B]件の不在ビデオ着信";
 /* Button title to see the available bonus */
 "getBonus"="ボーナスを獲得";
 /* Text shown under the title 'Video quality' that explains what it means */
@@ -1669,7 +1653,7 @@
 /* Label for any ‘Days’ button, link, text, title, etc. - (String as short as possible). */
 "Days"="日";
 /* New server-side rubbish-bin cleaning scheduler description (for Free users) */
-"The Rubbish Bin is cleaned for you automatically. The minimum period is 7 days and your maximum period is 30 days."="ごみ箱は自動的にきれいになります。最小期間は7日間で、あなたの最大期間は30日間です。";
+"The Rubbish Bin is cleaned for you automatically. The minimum period is 7 days and your maximum period is 30 days."="ごみ箱は自動的にきれいにできます。最小期間は7日間で、あなたの最大期間は30日間です。";
 /* New server-side rubbish-bin cleaning scheduler description (for PRO users) */
 "The Rubbish Bin can be cleaned for you automatically. The minimum period is 7 days."="ごみ箱は自動的にきれいにできます。最小期間は7日間です。";
 /* Description shown when you try to disable the feature Rubbish-Bin Cleaning Scheduler and you are a free user */
@@ -1684,6 +1668,8 @@
 "Poor conection."="接続不良。";
 /* Message shown in a chat room when there is an active group call */
 "There is an active group call. Tap to join."="有効なグループ通話があります。タップして参加します。";
+/* Message shown in a chat room when there is an active call */
+"There is an active call. Tap to join."="有効な通話があります。参加するにはタップします。";
 /* Message shown in a chat room for a group call in progress displaying the duration of the call */
 "Touch to return to call %@"="タッチして通話に戻る %@";
 /* A button label which allows the users save images/videos in the Photos app. */
@@ -1694,6 +1680,22 @@
 "Saved to Photos"="写真に保存されました";
 /* Text shown when an error occurs when trying to save a photo or video to Photos app */
 "Could not save Item"="項目を保存できませんでした";
+/* Label in a cell where you can enable the 'Encrypted Key Rotation' */
+"Encrypted Key Rotation"="暗号化キーローテーション";
+/* Title shown in a cell to allow the users enable the 'Encrypted Key Rotation' */
+"Enable Encrypted Key Rotation"="暗号化キーローテーションを有効にする";
+/* Label in a cell where you can get the chat link */
+"Get Chat Link"="チャットリンクを取得";
+/* Footer text to explain what means 'Encrypted Key Rotation' */
+"Key rotation is slightly more secure, but does not allow you to create a link to the chat and new participants will not see past messages."="キーローテーションでは安全性が少し高まりますが、チャットへのリンクを作成することはできず、新規参加者は過去のメッセージを見れません。";
+/* Alert message to advice the users that to generate a chat link they need enter a group name for the chat */
+"Before you can generate a link for this room, you need to enter a group name"="この部屋用のリンクを作成する前に、グループ名を入力する必要があります。";
+/* Label shown in a cell where you can enable a switch to get a chat link */
+"Chat Link"="チャットリンク";
+/* Message shown when there is an active chat link that can be deleted */
+"Delete Chat Link"="チャットリンクを削除";
+/* Button text in public chat previews that allows the user to join the chat */
+"Join"="参加する";
 /* Message show when a call cannot be established because there are too many participants in the group call */
 "Error. No more participants are allowed in this group call."="最大参加者数に達したため、この通話に参加できません。";
 /* Message show when a user cannot activate the video in a group call because the max number of videos has been reached */
@@ -1801,7 +1803,7 @@
 /* Label shown next to a feature name that can be enabled or disabled, like in 'Show Last seen...' */
 "Show"="表示";
 /* Shown when viewing a 1on1 chat (at least for now), if the user is offline. */
-"Last seen %s"="最終ログイン%s";
+"Last seen %s"="最終ログイン：%s";
 /* Text to inform the user the 'Last seen' time of a contact is a long time ago (>= 65535 minutes) */
 "Last seen a long time ago"="最終ログインはだいぶ前";
 /* */
@@ -1812,3 +1814,7 @@
 "%d participants"="%d人の参加者";
 /* Singular of participant. 1 participant */
 "%d participant"="%d人の参加者";
+/* Text to inform the user there is an active call and is not participating */
+"Ongoing Call"="継続中の通話";
+/* Text to inform the user there is an active call and is participating */
+"Call Started"="通話が開始しました";

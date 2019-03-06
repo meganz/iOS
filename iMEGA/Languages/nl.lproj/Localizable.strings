@@ -70,22 +70,6 @@
 "pleaseLogInToYourAccount"="Log in op uw account.";
 /* Error message when a user attempts to change their email without an active login session. */
 "needToBeLoggedInToCompleteYourEmailChange"="U moet ingelogd zijn om de wijziging van uw e-mailadres te voltooien. Log alstublieft opnieuw in met uw huidige e-mailadres en klik vervolgens opnieuw op uw bevestigings-koppeling.";
-/* Title shown on the app's start animation to explain what MEGA offers you (1/4) */
-"megaSpace"="MEGA OPSLAGRUIMTE";
-/* Title shown on the app's start animation to explain what MEGA offers you (2/4) */
-"megaSpeed"="MEGA SNEL";
-/* Title shown on the app's start animation to explain what MEGA offers you (3/4) */
-"megaPrivacy"="MEGA PRIVACY";
-/* Title shown on the app's start animation to explain what MEGA offers you (4/4) */
-"megaAccess"="MEGA TOEGANG";
-/* Message shown on the app's start animation to explain what MEGA SPACE means */
-"megaSpaceText"="Registreer nu en ontvang 50 GB gratis opslagruimte.";
-/* Message shown on the app's start animation to explain what MEGA SPEED means */
-"megaSpeedText"="Uploads zijn snel. Deel snel bestanden met iedereen.";
-/* Message shown on the app's start animation to explain what MEGA PRIVACY means */
-"megaPrivacyText"="Bewaar al uw bestanden veilig met MEGA's eind-tot-eind codering.";
-/* Message shown on the app's start animation to explain what MEGA ACCESS means */
-"megaAccessText"="Krijg overal en altijd volledig gecodeerde toegang.";
 /* Button title which triggers the action to login in your MEGA account */
 "login"="Login";
 /* Button title which triggers the action to create a MEGA account */
@@ -115,7 +99,7 @@
 /*  */
 "weak"="Zwak";
 /*  */
-"passwordVeryWeakOrWeak"="Uw wachtwoord is gemakkelijk te raden. Probeer uw wachtwoord langer te maken. Combineer hoofdletters & kleine letters. Voeg speciale tekens toe. Gebruik geen namen of woorden uit een woordenboek.";
+"passwordVeryWeakOrWeak"="Uw wachtwoord is makkelijk te raden. Probeer uw wachtwoord langer te maken. Combineer hoofdletter en kleine letters. Voeg speciale tekens toe. Gebruik geen namen of woordenboek woorden.";
 /* Label displayed during checking the strength of the password introduced. Represents Medium security */
 "medium"="Middelmatig";
 /*  */
@@ -635,7 +619,7 @@
 /* Permissions given to the user you share your folder with */
 "readOnly"="Alleen lezen";
 /* Permissions given to the user you share your folder with */
-"readAndWrite"="Lezen & Schrijven";
+"readAndWrite"="Lezen en Schrijven";
 /* Permissions given to the user you share your folder with */
 "fullAccess"="Volledige toegang";
 /* Title of the Settings section */
@@ -689,7 +673,7 @@
 /* Title for the MEGA Recovery Key */
 "masterKey"="Herstel Sleutel";
 /* Section title where you can change your MEGA's password */
-"changePasswordLabel"="Wijzig Wachtwoord";
+"changePasswordLabel"="Wijzig wachtwoord";
 /* Advising the user to keep the user's master key safe. */
 "exportMasterKeyFooter"="Het exporteren en bewaren van de Master Key op een veilige locatie stelt u in staat om een nieuw wachtwoord in te stellen zonder het verlies van gegevens.";
 /* Question button to present a view where it's explained what is the Recovery Key */
@@ -1671,7 +1655,7 @@
 /* New server-side rubbish-bin cleaning scheduler description (for Free users) */
 "The Rubbish Bin is cleaned for you automatically. The minimum period is 7 days and your maximum period is 30 days."="De Prullenbak wordt automatisch voor u gewist. De minimale periode is 7 dagen en uw maximale periode is 30 dagen.";
 /* New server-side rubbish-bin cleaning scheduler description (for PRO users) */
-"The Rubbish Bin can be cleaned for you automatically. The minimum period is 7 days."="De Prullenbak kan automatisch voor u worden gewist. De minimale periode is 7 dagen.";
+"The Rubbish Bin can be cleaned for you automatically. The minimum period is 7 days."="De Prullenbak kan automatisch voor u gewist worden. De minimale periode is  7 dagen.";
 /* Description shown when you try to disable the feature Rubbish-Bin Cleaning Scheduler and you are a free user */
 "To disable the Rubbish-Bin Cleaning Scheduler or set a longer retention period, you need to subscribe to a PRO plan."="Om het Wis Schema van de Prullenbak uit te schakelen of een langer bewaarperiode in te stellen, zal u een PRO abonnement nodig hebben.";
 /* Confirmation dialog for the button that logs the user out of all sessions except the current one. */
@@ -1684,6 +1668,8 @@
 "Poor conection."="Slechte verbinding";
 /* Message shown in a chat room when there is an active group call */
 "There is an active group call. Tap to join."="Er is een actieve groep oproep. Tik om mee te doen.";
+/* Message shown in a chat room when there is an active call */
+"There is an active call. Tap to join."="Er is een active oproep, tik om mee te doen.";
 /* Message shown in a chat room for a group call in progress displaying the duration of the call */
 "Touch to return to call %@"="Tik om %@ terug te bellen";
 /* A button label which allows the users save images/videos in the Photos app. */
@@ -1694,6 +1680,22 @@
 "Saved to Photos"="Opgeslagen naar Foto's";
 /* Text shown when an error occurs when trying to save a photo or video to Photos app */
 "Could not save Item"="Kon Item niet opslaan";
+/* Label in a cell where you can enable the 'Encrypted Key Rotation' */
+"Encrypted Key Rotation"="Gecodeerde Sleutel Rotatie";
+/* Title shown in a cell to allow the users enable the 'Encrypted Key Rotation' */
+"Enable Encrypted Key Rotation"="Gecodeerde Sleutel Rotatie Inschakelen";
+/* Label in a cell where you can get the chat link */
+"Get Chat Link"="Krijg Gesprekskoppeling";
+/* Footer text to explain what means 'Encrypted Key Rotation' */
+"Key rotation is slightly more secure, but does not allow you to create a link to the chat and new participants will not see past messages."="Sleutel rotatie is iets veiliger, maar u kunt geen koppeling naar het gesprek creëren en nieuwe deelnemers kunnen geen berichten uit het verleden zien.";
+/* Alert message to advice the users that to generate a chat link they need enter a group name for the chat */
+"Before you can generate a link for this room, you need to enter a group name"="Voordat u een koppeling kan genereren voor deze ruimte, moet u een groepsnaam invoeren.";
+/* Label shown in a cell where you can enable a switch to get a chat link */
+"Chat Link"="Gesprekskoppeling";
+/* Message shown when there is an active chat link that can be deleted */
+"Delete Chat Link"="Verwijder Gesprekskoppeling";
+/* Button text in public chat previews that allows the user to join the chat */
+"Join"="Aansluiten";
 /* Message show when a call cannot be established because there are too many participants in the group call */
 "Error. No more participants are allowed in this group call."="U mag niet deelnemen aan deze oproep omdat deze het maximale aantal deelnemers heeft bereikt.";
 /* Message show when a user cannot activate the video in a group call because the max number of videos has been reached */
@@ -1785,9 +1787,9 @@
 /* The professional pricing plan which the user is currently on will expire in 5 days. The %1 is a placeholder for the number of days and should not be removed. */
 "Your PRO membership plan will expire in %1 days."="Uw PRO abonnement zal binnen %1 dagen verlopen.";
 /* The professional pricing plan which the user was on expired one day ago. */
-"Your PRO membership plan expired 1 day ago"="Uw PRO lidmaatschap abonnement is 1 dag geleden verlopen";
+"Your PRO membership plan expired 1 day ago"="Uw PRO abonnement is 1 dag geleden verlopen";
 /* The professional pricing plan which the user was on expired %1 days ago. The %1 is a placeholder for the number of days and should not be removed. */
-"Your PRO membership plan expired %1 days ago"="Uw PRO lidmaatschap abonnement is %1 dagen geleden verlopen";
+"Your PRO membership plan expired %1 days ago"="Uw PRO abonnement is %1 dagen geleden verlopen";
 /* The text of a notification indicating that a file or folder has been taken down due to infringement or other reason. The %1 placeholder will be replaced with the text ‘file’ or ‘folder’. The %2 will be replaced with the name of the file or folder. */
 "Your publicly shared %1 (%2) has been taken down."="Uw publiekelijk gedeelde %1 (%2) is weggehaald.";
 /* The text of a notification indicating that a file or folder that was taken down has now been restored due to a successful counter-notice. The %1 placeholder will be replaced with the text ‘file’ or ‘folder’. The %2 will be replaced with the name of the file or folder. */
@@ -1801,7 +1803,7 @@
 /* Label shown next to a feature name that can be enabled or disabled, like in 'Show Last seen...' */
 "Show"="Weergeven";
 /* Shown when viewing a 1on1 chat (at least for now), if the user is offline. */
-"Last seen %s"="Laatst gezien %s";
+"Last seen %s"="Laatst gezien: %s";
 /* Text to inform the user the 'Last seen' time of a contact is a long time ago (>= 65535 minutes) */
 "Last seen a long time ago"="Laatst gezien is lang geleden";
 /* */
@@ -1812,3 +1814,7 @@
 "%d participants"="%d deelnemers";
 /* Singular of participant. 1 participant */
 "%d participant"="%d deelnemer";
+/* Text to inform the user there is an active call and is not participating */
+"Ongoing Call"="Lopend Gesprek";
+/* Text to inform the user there is an active call and is participating */
+"Call Started"="Oproep Gestart";

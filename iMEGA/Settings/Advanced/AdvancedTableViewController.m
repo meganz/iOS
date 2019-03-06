@@ -3,20 +3,15 @@
 
 #import <Photos/Photos.h>
 
-#import "SVProgressHUD.h"
-
 #import "DevicePermissionsHelper.h"
 #import "Helper.h"
 #import "MEGAMultiFactorAuthCheckRequestDelegate.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGASdkManager.h"
-#import "MEGAStore.h"
 #import "NSString+MNZCategory.h"
 
 #import "AwaitingEmailConfirmationView.h"
-#import "ChangePasswordViewController.h"
 #import "TwoFactorAuthenticationViewController.h"
-#import "TwoFactorAuthentication.h"
 
 @interface AdvancedTableViewController () <MEGARequestDelegate>
 

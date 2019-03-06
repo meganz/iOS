@@ -2,7 +2,6 @@
 #import "CheckEmailAndFollowTheLinkViewController.h"
 
 #import "SAMKeychain.h"
-#import "SVProgressHUD.h"
 
 #import "NSString+MNZCategory.h"
 
@@ -141,7 +140,8 @@
             MEGALogError(@"Init Karere without sesion must return waiting for a new sesion");
             [[MEGASdkManager sharedMEGAChatSdk] logout];
         }
-        
+        [MEGASdkManager.sharedMEGAChatSdk enableGroupChatCalls:YES];
+
         MEGALoginRequestDelegate *loginRequestDelegate = [[MEGALoginRequestDelegate alloc] init];
         loginRequestDelegate.confirmAccountInOtherClient = YES;
         NSString *stringHash = [api hashForBase64pwkey:self.base64pwkey email:event.text];
