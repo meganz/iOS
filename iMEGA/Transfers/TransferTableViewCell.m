@@ -2,13 +2,9 @@
 
 #import <Photos/Photos.h>
 
-#import "SVProgressHUD.h"
-
 #import "Helper.h"
 #import "MEGAPauseTransferRequestDelegate.h"
-#import "MEGAGetThumbnailRequestDelegate.h"
 #import "MEGASdkManager.h"
-#import "MEGAStore.h"
 #import "NSDate+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 #import "UIImageView+MNZCategory.h"

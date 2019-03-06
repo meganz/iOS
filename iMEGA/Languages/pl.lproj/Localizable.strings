@@ -70,22 +70,6 @@
 "pleaseLogInToYourAccount"="Zaloguj się do swojego konta.";
 /* Error message when a user attempts to change their email without an active login session. */
 "needToBeLoggedInToCompleteYourEmailChange"="Musisz być zalogowany a dokończyć zmianę adresu email. Zaloguj się używając dotychczasowego adresu email a następnie kliknij ponownie w link.";
-/* Title shown on the app's start animation to explain what MEGA offers you (1/4) */
-"megaSpace"="MEGA Pojemność";
-/* Title shown on the app's start animation to explain what MEGA offers you (2/4) */
-"megaSpeed"="MEGA Szybkość";
-/* Title shown on the app's start animation to explain what MEGA offers you (3/4) */
-"megaPrivacy"="MEGA Prywatność";
-/* Title shown on the app's start animation to explain what MEGA offers you (4/4) */
-"megaAccess"="DOSTĘP DO MEGA";
-/* Message shown on the app's start animation to explain what MEGA SPACE means */
-"megaSpaceText"="Zarejestruj się teraz i otrzymaj 50 GB przestrzeni za darmo.";
-/* Message shown on the app's start animation to explain what MEGA SPEED means */
-"megaSpeedText"="Wgrywanie jest szybkie.Szybko udostępniaj pliki innym.";
-/* Message shown on the app's start animation to explain what MEGA PRIVACY means */
-"megaPrivacyText"="Przechowuj wszystkie swoje pliki na MEGAw pełni zaszyfrowane.";
-/* Message shown on the app's start animation to explain what MEGA ACCESS means */
-"megaAccessText"="Uzyskaj bezpieczny dostęp do plików z każdego miejsca,i czasu";
 /* Button title which triggers the action to login in your MEGA account */
 "login"="Login";
 /* Button title which triggers the action to create a MEGA account */
@@ -115,7 +99,7 @@
 /*  */
 "weak"="Słabe";
 /*  */
-"passwordVeryWeakOrWeak"="Twoje hasło jest łatwe do odgadnięcia. Spróbuj wpisać dłuższe hasło. Kombinację dużych i małych liter. Dodaj znaki specjalne. Nie używaj imion ani słów ze słownika.";
+"passwordVeryWeakOrWeak"="Twoje hasło można łatwo odgadnąć. Spróbuj zwiększyć swoje hasło. Połącz wielkie i małe litery. Dodaj znaki specjalne. Nie używaj nazw ani słów słownikowych.";
 /* Label displayed during checking the strength of the password introduced. Represents Medium security */
 "medium"="Średnie";
 /*  */
@@ -635,7 +619,7 @@
 /* Permissions given to the user you share your folder with */
 "readOnly"="Tylko do odczytu";
 /* Permissions given to the user you share your folder with */
-"readAndWrite"="Do odczytu i zapisu";
+"readAndWrite"="Oczyt i zapis";
 /* Permissions given to the user you share your folder with */
 "fullAccess"="Pełen dostęp";
 /* Title of the Settings section */
@@ -1383,7 +1367,7 @@
 /* Notification text body shown when you have missed several audio calls and one video call. [A] = {number of missed audio calls} */
 "missedAudioCallsAndMissedVideoCall"="[A] nieodebrane połączenia głosowe i nieodebrane rozmowy video";
 /* Notification text body shown when you have missed several audio calls and video calls. [A] = {number of missed audio calls}. [B] = {number of missed video calls} */
-"missedAudioCallsAndMissedVideoCalls"="[A] nieodebrane połączenia głosowe i [B] nieodebrane rozmowy video";
+"missedAudioCallsAndMissedVideoCalls"="[A] nieodebrane połączenia audio i [B] nieodebrane połączenia wideo";
 /* Button title to see the available bonus */
 "getBonus"="Odbierz bonus";
 /* Text shown under the title 'Video quality' that explains what it means */
@@ -1669,9 +1653,9 @@
 /* Label for any ‘Days’ button, link, text, title, etc. - (String as short as possible). */
 "Days"="Dni";
 /* New server-side rubbish-bin cleaning scheduler description (for Free users) */
-"The Rubbish Bin is cleaned for you automatically. The minimum period is 7 days and your maximum period is 30 days."="Kosz jest opróżniany autoatycznie. Minimalny okres pomiędzy którym następuje oczyszczenie kosza to między 7 a 30 dni.";
+"The Rubbish Bin is cleaned for you automatically. The minimum period is 7 days and your maximum period is 30 days."="Kosz na śmieci jest automatycznie sprawdzany. Minimalny okres wynosi 7 dni, a maksymalny okres 30 dni.";
 /* New server-side rubbish-bin cleaning scheduler description (for PRO users) */
-"The Rubbish Bin can be cleaned for you automatically. The minimum period is 7 days."="Kosz może być opróżniany automatycznie. Minimalny okres to 8 dni.";
+"The Rubbish Bin can be cleaned for you automatically. The minimum period is 7 days."="Pojemnik na śmieci może zostać automatycznie wyczyszczony. Minimalny okres to 7 dni.";
 /* Description shown when you try to disable the feature Rubbish-Bin Cleaning Scheduler and you are a free user */
 "To disable the Rubbish-Bin Cleaning Scheduler or set a longer retention period, you need to subscribe to a PRO plan."="To disable the Rubbish Bin Clearing Scheduler or set a longer retention period, you need to subscribe to a PRO plan.";
 /* Confirmation dialog for the button that logs the user out of all sessions except the current one. */
@@ -1684,6 +1668,8 @@
 "Poor conection."="Słabe połączenie.";
 /* Message shown in a chat room when there is an active group call */
 "There is an active group call. Tap to join."="Istnieje aktywne połączenie grupowe. Kliknij, aby dołączyć.";
+/* Message shown in a chat room when there is an active call */
+"There is an active call. Tap to join."="Jest aktywne połączenie. Kliknij, aby dołączyć.";
 /* Message shown in a chat room for a group call in progress displaying the duration of the call */
 "Touch to return to call %@"="Dotknij, aby wrócić do połączenia %@";
 /* A button label which allows the users save images/videos in the Photos app. */
@@ -1694,6 +1680,22 @@
 "Saved to Photos"="Zapisano w Zdjęciach";
 /* Text shown when an error occurs when trying to save a photo or video to Photos app */
 "Could not save Item"="Nie można zapisać elementu";
+/* Label in a cell where you can enable the 'Encrypted Key Rotation' */
+"Encrypted Key Rotation"="Szyfrowanie zaszyfrowanych kluczy";
+/* Title shown in a cell to allow the users enable the 'Encrypted Key Rotation' */
+"Enable Encrypted Key Rotation"="Włącz szyfrowanie zaszyfrowanych kluczy";
+/* Label in a cell where you can get the chat link */
+"Get Chat Link"="Uzyskaj link do czatu";
+/* Footer text to explain what means 'Encrypted Key Rotation' */
+"Key rotation is slightly more secure, but does not allow you to create a link to the chat and new participants will not see past messages."="Rotacja klucza jest nieco bezpieczniejsza, ale nie pozwala utworzyć łącza do czatu, a nowi uczestnicy nie będą widzieć poprzednich wiadomości.";
+/* Alert message to advice the users that to generate a chat link they need enter a group name for the chat */
+"Before you can generate a link for this room, you need to enter a group name"="Zanim będzie można wygenerować link do tego czatu, należy wprowadzić nazwę grupy.";
+/* Label shown in a cell where you can enable a switch to get a chat link */
+"Chat Link"="Link do czatu";
+/* Message shown when there is an active chat link that can be deleted */
+"Delete Chat Link"="Usuń łącze do czatu";
+/* Button text in public chat previews that allows the user to join the chat */
+"Join"="Dołącz";
 /* Message show when a call cannot be established because there are too many participants in the group call */
 "Error. No more participants are allowed in this group call."="Nie możesz dołączyć do tej rozmowy, ponieważ osiągnęła maksymalną liczbę uczestników.";
 /* Message show when a user cannot activate the video in a group call because the max number of videos has been reached */
@@ -1801,7 +1803,7 @@
 /* Label shown next to a feature name that can be enabled or disabled, like in 'Show Last seen...' */
 "Show"="Pokaż";
 /* Shown when viewing a 1on1 chat (at least for now), if the user is offline. */
-"Last seen %s"="Mniej niż %s";
+"Last seen %s"="Ostatnio widziane: %s";
 /* Text to inform the user the 'Last seen' time of a contact is a long time ago (>= 65535 minutes) */
 "Last seen a long time ago"="Ostatnio widziany dawno temu";
 /* */
@@ -1812,3 +1814,7 @@
 "%d participants"="%d uczestników";
 /* Singular of participant. 1 participant */
 "%d participant"="%d uczestnik";
+/* Text to inform the user there is an active call and is not participating */
+"Ongoing Call"="Trwające połączenie";
+/* Text to inform the user there is an active call and is participating */
+"Call Started"="Połączenie rozpoczęte";

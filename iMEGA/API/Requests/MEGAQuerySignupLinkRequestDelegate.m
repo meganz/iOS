@@ -5,8 +5,6 @@
 
 #import "CreateAccountViewController.h"
 #import "LoginViewController.h"
-#import "MEGANavigationController.h"
-#import "MEGAGenericRequestDelegate.h"
 #import "MEGALinkManager.h"
 #import "MEGALoginRequestDelegate.h"
 #import "MEGASdkManager.h"
