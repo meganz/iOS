@@ -86,7 +86,7 @@
 
 - (void)mnz_openNodeInNavigationController:(UINavigationController *)navigationController folderLink:(BOOL)isFolderLink {
     MEGAHandleList *chatRoomIDsWithCallInProgress = [MEGASdkManager.sharedMEGAChatSdk chatCallsWithState:MEGAChatCallStatusInProgress];
-    if (chatRoomIDsWithCallInProgress.size > 0) {
+    if (self.name.mnz_isMultimediaPathExtension && chatRoomIDsWithCallInProgress.size > 0) {
         [Helper cannotPlayContentDuringACallAlert];
     } else {
         UIViewController *viewController = [self mnz_viewControllerForNodeInFolderLink:isFolderLink];
