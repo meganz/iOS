@@ -592,7 +592,7 @@
             }]];
             
             [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"Delete Chat Link", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-                UIAlertController *deleteAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"Delete Chat Link", nil) message:@"Lorem ipsum dolor sit amet, consectetur adipiscing elit." preferredStyle:UIAlertControllerStyleAlert];
+                UIAlertController *deleteAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"Delete Chat Link", nil) message:@"This conversation will no longer be accessible through the link you are about to delete." preferredStyle:UIAlertControllerStyleAlert];
                 [deleteAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"continue", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
                     MEGAChatGenericRequestDelegate *delegate = [[MEGAChatGenericRequestDelegate alloc] initWithCompletion:^(MEGAChatRequest * _Nonnull request, MEGAChatError * _Nonnull error) {
                         if (!error.type) {
