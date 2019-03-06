@@ -18,7 +18,7 @@
 
 #import "DevicePermissionsHelper.h"
 
-@interface CallViewController () <MEGAChatRequestDelegate, MEGAChatCallDelegate>
+@interface CallViewController () <UIGestureRecognizerDelegate, MEGAChatRequestDelegate, MEGAChatCallDelegate>
 
 @property (weak, nonatomic) IBOutlet MEGARemoteImageView *remoteVideoImageView;
 @property (weak, nonatomic) IBOutlet MEGALocalImageView *localVideoImageView;
@@ -350,7 +350,8 @@
         //Add Tap to hide/show controls
         UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showOrHideControls)];
         tapGestureRecognizer.numberOfTapsRequired = 1;
-        tapGestureRecognizer.cancelsTouchesInView = NO;        
+        tapGestureRecognizer.cancelsTouchesInView = NO;
+        tapGestureRecognizer.delegate = self;
         [self.view addGestureRecognizer:tapGestureRecognizer];
         
         [self showOrHideControls];
@@ -468,6 +469,16 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
+#pragma mark - UIGestureRecognizerDelegate
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
+    if (touch.view.class == UIButton.class) {
+        return NO;
+    }
+    
+    return YES;
+}
+
 #pragma mark - MEGAChatCallDelegate
 
 - (void)onChatCallUpdate:(MEGAChatSdk *)api call:(MEGAChatCall *)call {
@@ -503,6 +514,10 @@
         } else {
             self.statusCallLabel.text = AMLocalizedString(@"connecting", nil);
         }
+    }
+    
+    if ([call hasChangedForType:MEGAChatCallChangeTypeLocalAVFlags]) {
+        self.muteUnmuteMicrophone.selected = !call.hasLocalAudio;
     }
 
     switch (call.status) {
@@ -547,10 +562,6 @@
                 }
                 [self.localVideoImageView remoteVideoEnable:remoteSession.hasVideo];
                 self.remoteMicImageView.hidden = remoteSession.hasAudio;
-            }
-            
-            if ([call hasChangedForType:MEGAChatCallChangeTypeLocalAVFlags]) {
-                self.muteUnmuteMicrophone.selected = !call.hasLocalAudio;
             }
             
             if ([call hasChangedForType:MEGAChatCallChangeTypeSessionStatus]) {

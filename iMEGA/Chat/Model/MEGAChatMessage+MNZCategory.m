@@ -5,8 +5,7 @@
 
 #import "Helper.h"
 #import "MEGAAttachmentMediaItem.h"
-#import "MEGACallEndedMediaItem.h"
-#import "MEGACallStartedMediaItem.h"
+#import "MEGACallManagementMediaItem.h"
 #import "MEGADialogMediaItem.h"
 #import "MEGAChatGenericRequestDelegate.h"
 #import "MEGAFetchNodesRequestDelegate.h"
@@ -376,11 +375,8 @@ static const void *richNumberTagKey = &richNumberTagKey;
         }
             
         case MEGAChatMessageTypeCallStarted:
-            media = [[MEGACallStartedMediaItem alloc] initWithMEGAChatMessage:self];
-            break;
-            
         case MEGAChatMessageTypeCallEnded:
-            media = [[MEGACallEndedMediaItem alloc] initWithMEGAChatMessage:self];
+            media = [[MEGACallManagementMediaItem alloc] initWithMEGAChatMessage:self];
             break;
             
         default:
