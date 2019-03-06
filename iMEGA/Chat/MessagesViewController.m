@@ -76,7 +76,6 @@ const NSUInteger kMaxMessagesToLoad = 256;
 @property (strong, nonatomic) NSMutableDictionary<NSNumber *, NSTimer *> *whoIsTypingTimersMutableDictionary;
 
 @property (nonatomic, strong) UIBarButtonItem *unreadBarButtonItem;
-@property (nonatomic, strong) UILabel *unreadLabel;
 
 @property (nonatomic, getter=shouldStopInvitingContacts) BOOL stopInvitingContacts;
 
@@ -85,7 +84,6 @@ const NSUInteger kMaxMessagesToLoad = 256;
 
 @property (strong, nonatomic) UIProgressView *navigationBarProgressView;
 
-@property (strong, nonatomic) NSArray<UIBarButtonItem *> *leftBarButtonItems;
 @property (strong, nonatomic) UIBarButtonItem *videoCallBarButtonItem;
 @property (strong, nonatomic) UIBarButtonItem *audioCallBarButtonItem;
 
@@ -120,7 +118,7 @@ const NSUInteger kMaxMessagesToLoad = 256;
 @property (strong, nonatomic) NSDate *baseDate;
 @property (assign, nonatomic) int64_t initDuration;
 
-@property UIView *navigationView;
+@property UIStackView *mainStackView;
 @property UILabel *navigationTitleLabel;
 @property UILabel *navigationSubtitleLabel;
 @property UIView *navigationStatusView;
@@ -223,7 +221,6 @@ const NSUInteger kMaxMessagesToLoad = 256;
 
     [[MEGAReachabilityManager sharedManager] retryPendingConnections];
     
-    [self updateUnreadLabel];
     [self customForwardingToolbar];
     
     self.inputToolbar.contentView.textView.text = [[MEGAStore shareInstance] fetchChatDraftWithChatId:self.chatRoom.chatId].text;
@@ -264,17 +261,17 @@ const NSUInteger kMaxMessagesToLoad = 256;
     [self updateUIbasedOnChatConnectionAndReachability];
 }
 
-- (void)viewDidLayoutSubviews {
-    [super viewDidLayoutSubviews];
-    
-    [self configureNavigationBar];
-}
-
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     
     [self showOrHideJumpToBottom];
     self.initialToolbarHeight = self.inputToolbar.frame.size.height;
+    
+    if (self.presentingViewController && self.parentViewController) {
+        UIBarButtonItem *chatBackBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:AMLocalizedString(@"close", nil) style:UIBarButtonItemStylePlain target:self action:@selector(dismissChatRoom)];
+        
+        self.navigationItem.leftBarButtonItem = chatBackBarButtonItem;
+    }
 }
 
 - (void)willEnterForeground {
@@ -360,11 +357,7 @@ const NSUInteger kMaxMessagesToLoad = 256;
 
 - (void)configureNavigationBar {
     self.navigationController.interactivePopGestureRecognizer.delegate = nil;
-
-    self.navigationItem.hidesBackButton = YES;
-    self.navigationItem.leftBarButtonItem = nil;
     
-    [self createLeftBarButtonItems];
     [self createRightBarButtonItems];
     if (@available(iOS 11.0, *)) {
         [self initNavigationTitleViews];
@@ -392,24 +385,15 @@ const NSUInteger kMaxMessagesToLoad = 256;
 }
 
 - (void)instantiateNavigationTitle {
-    float leftBarButtonsWidth = 25; //25 is by the leading margin
-    for (UIBarButtonItem *barButton in self.leftBarButtonItems) {
-        leftBarButtonsWidth += barButton.customView.frame.size.width;
-    }
     
-    self.navigationView = [[UIView alloc] initWithFrame:CGRectMake(0, 4, self.navigationController.navigationBar.bounds.size.width - leftBarButtonsWidth - 50 * (self.navigationItem.rightBarButtonItems.count), 36)];
-    self.navigationView.clipsToBounds = YES;
-    self.navigationView.userInteractionEnabled = YES;
-    [self.navigationItem setTitleView:self.navigationView];
+    self.mainStackView = [[UIStackView alloc] init];
+    self.mainStackView.distribution = UIStackViewDistributionEqualSpacing;
+    self.mainStackView.alignment = UIStackViewAlignmentLeading;
+    self.mainStackView.spacing = 4;
+    self.mainStackView.userInteractionEnabled = YES;
+    [self.mainStackView setContentCompressionResistancePriority:UILayoutPriorityDefaultLow forAxis:UILayoutConstraintAxisHorizontal];
     
-    [[self.navigationView.widthAnchor constraintEqualToConstant:self.navigationItem.titleView.bounds.size.width] setActive:YES];
-    [[self.navigationView.heightAnchor constraintEqualToConstant:self.navigationItem.titleView.bounds.size.height] setActive:YES];
-    
-    UIStackView *mainStackView = [[UIStackView alloc] init];
-    mainStackView.distribution = UIStackViewDistributionEqualSpacing;
-    mainStackView.alignment = UIStackViewAlignmentLeading;
-    mainStackView.translatesAutoresizingMaskIntoConstraints = false;
-    mainStackView.spacing = 4;
+    CGFloat width;
     
     UIInterfaceOrientation orientation = UIApplication.sharedApplication.statusBarOrientation;
     if (UIInterfaceOrientationIsPortrait(orientation)) {
@@ -420,26 +404,29 @@ const NSUInteger kMaxMessagesToLoad = 256;
         titleView.spacing = 8;
         [titleView addArrangedSubview:self.navigationTitleLabel];
         [titleView addArrangedSubview:self.navigationStatusView];
-        titleView.translatesAutoresizingMaskIntoConstraints = false;
         
-        mainStackView.axis = UILayoutConstraintAxisVertical;
-        [mainStackView addArrangedSubview:titleView];
-        [mainStackView addArrangedSubview:self.navigationSubtitleLabel];
-        [self.navigationView addSubview:mainStackView];
-        [[mainStackView.trailingAnchor constraintEqualToAnchor:self.navigationView.trailingAnchor] setActive:YES];
+        self.mainStackView.axis = UILayoutConstraintAxisVertical;
+        [self.mainStackView addArrangedSubview:titleView];
+        [self.mainStackView addArrangedSubview:self.navigationSubtitleLabel];
+        
+        width = self.navigationController.navigationBar.bounds.size.width - 80 - 50 * (self.navigationItem.rightBarButtonItems.count);
+        
+        
+        [self.mainStackView addConstraint:[NSLayoutConstraint constraintWithItem:self.mainStackView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual
+                                                                          toItem:nil
+                                                                       attribute: NSLayoutAttributeNotAnAttribute
+                                                                      multiplier:1
+                                                                        constant:width]];
     } else {
-        mainStackView.axis = UILayoutConstraintAxisHorizontal;
-        mainStackView.alignment = UIStackViewAlignmentCenter;
-        mainStackView.spacing = 8;
-        [mainStackView addArrangedSubview:self.navigationTitleLabel];
-        [mainStackView addArrangedSubview:self.navigationStatusView];
-        [mainStackView addArrangedSubview:self.navigationSubtitleLabel];
-        [self.navigationView addSubview:mainStackView];
+        self.mainStackView.axis = UILayoutConstraintAxisHorizontal;
+        self.mainStackView.alignment = UIStackViewAlignmentCenter;
+        self.mainStackView.spacing = 8;
+        [self.mainStackView addArrangedSubview:self.navigationTitleLabel];
+        [self.mainStackView addArrangedSubview:self.navigationStatusView];
+        [self.mainStackView addArrangedSubview:self.navigationSubtitleLabel];
     }
     
-    [[mainStackView.leadingAnchor constraintEqualToAnchor:self.navigationView.leadingAnchor] setActive:YES];
-    [[mainStackView.topAnchor constraintEqualToAnchor:self.navigationView.topAnchor] setActive:YES];
-    [[mainStackView.bottomAnchor constraintEqualToAnchor:self.navigationView.bottomAnchor] setActive:YES];
+    [self.navigationItem setTitleView:self.mainStackView];
 }
 
 - (void)loadMessages {
@@ -478,9 +465,10 @@ const NSUInteger kMaxMessagesToLoad = 256;
 
         UILabel *label = [Helper customNavigationBarLabelWithTitle:[NSString stringWithFormat:AMLocalizedString(@"xSelected", nil), self.selectedMessages.count] subtitle:@""];
         
-        self.navigationItem.leftBarButtonItems = @[];
         [self.navigationItem setTitleView:label];
+        self.navigationItem.hidesBackButton = YES;
     } else {
+        self.navigationItem.hidesBackButton = NO;
         self.inputToolbar.hidden = self.chatRoom.ownPrivilege <= MEGAChatRoomPrivilegeRo && !self.shouldShowJoinView;
         [self updateJoinView];
 
@@ -525,7 +513,7 @@ const NSUInteger kMaxMessagesToLoad = 256;
         if (@available(iOS 11.0, *)) {
             self.navigationTitleLabel.text = chatRoomTitle;
             self.navigationSubtitleLabel.text = chatRoomState;
-            self.navigationView.gestureRecognizers = @[titleTapRecognizer];
+            self.mainStackView.gestureRecognizers = @[titleTapRecognizer];
         } else {
             self.navigationTitleLabel = [UILabel new];
             if (chatRoomState && !self.chatRoom.isGroup) {
@@ -545,43 +533,9 @@ const NSUInteger kMaxMessagesToLoad = 256;
         }
         
         self.lastChatRoomStateString = chatRoomState;
-        self.navigationItem.leftBarButtonItems = self.leftBarButtonItems;
     }
     
     [self updateCollectionViewInsets];
-}
-
-- (void)createLeftBarButtonItems {
-    UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(popViewController)];
-    
-    self.unreadLabel = [[UILabel alloc] initWithFrame:CGRectMake(25, 6, 30, 30)];
-    self.unreadLabel.font = [UIFont mnz_SFUIMediumWithSize:12.0f];
-    self.unreadLabel.textColor = UIColor.whiteColor;
-    self.unreadLabel.userInteractionEnabled = YES;
-    
-    if (self.presentingViewController && self.parentViewController) {
-        self.unreadBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.unreadLabel];
-        UIBarButtonItem *chatBackBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:AMLocalizedString(@"close", nil) style:UIBarButtonItemStylePlain target:self action:@selector(dismissChatRoom)];
-        
-        self.leftBarButtonItems = @[chatBackBarButtonItem, self.unreadBarButtonItem];
-    } else {
-        //TODO: leftItemsSupplementBackButton
-        UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 66, 44)];
-        UIImage *image = [[UIImage imageNamed:@"backArrow"] imageFlippedForRightToLeftLayoutDirection];
-        UIImageView *imageView = [[UIImageView alloc] initWithImage:[image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]];
-        imageView.frame = CGRectMake(0, 10, 22, 22);
-        imageView.contentMode = UIViewContentModeScaleAspectFit;
-        [view addGestureRecognizer:singleTap];
-        [view addSubview:imageView];
-        [view addSubview:self.unreadLabel];
-        [imageView configureForAutoLayout];
-        [imageView autoPinEdgesToSuperviewMarginsExcludingEdge:ALEdgeTrailing];
-        [imageView autoPinEdge:ALEdgeTrailing toEdge:ALEdgeLeading ofView:self.unreadLabel];
-        [self.unreadLabel configureForAutoLayout];
-        [self.unreadLabel autoPinEdgesToSuperviewMarginsExcludingEdge:ALEdgeLeading];
-        
-        self.leftBarButtonItems = @[[[UIBarButtonItem alloc] initWithCustomView:view]];
-    }
 }
 
 - (void)createRightBarButtonItems {
@@ -816,8 +770,10 @@ const NSUInteger kMaxMessagesToLoad = 256;
 
 - (void)updateUnreadLabel {
     NSInteger unreadChats = [[MEGASdkManager sharedMEGAChatSdk] unreadChats];
-    NSString *unreadChatsString = unreadChats ? [NSString stringWithFormat:@"(%td)", unreadChats] : nil;
-    self.unreadLabel.text = unreadChatsString;
+    NSString *unreadChatsString = unreadChats ? [NSString stringWithFormat:@"(%td)", unreadChats] : @"";
+    
+    UIBarButtonItem *backBarButton = [[UIBarButtonItem alloc] initWithTitle:unreadChatsString style:UIBarButtonItemStylePlain target:nil action:nil];
+    self.navigationController.viewControllers[0].navigationItem.backBarButtonItem = backBarButton;
 }
 
 - (void)setupCollectionView {
@@ -2828,7 +2784,6 @@ const NSUInteger kMaxMessagesToLoad = 256;
     self.chatRoom = chat;
     switch (chat.changes) {
         case MEGAChatRoomChangeTypeUnreadCount:
-            [self updateUnreadLabel];
             break;
             
         case MEGAChatRoomChangeTypeParticipants: {
