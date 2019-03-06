@@ -317,7 +317,8 @@
 - (void)updateCurrentStateWithKnownCameraUploadInProgress:(BOOL)knownCameraUploadInProgress {
     if ([MEGAReachabilityManager isReachable]) {
         if (CameraUploadManager.isCameraUploadEnabled) {
-            if (CameraUploadManager.shared.uploadPendingAssetsCount > 0) {
+            NSUInteger pendingCount = CameraUploadManager.shared.uploadPendingAssetsCount;
+            if (pendingCount > 0) {
                 self.currentState = MEGACameraUploadsStateUploading;
             } else {
                 if (knownCameraUploadInProgress) {
@@ -326,6 +327,7 @@
                     self.currentState = MEGACameraUploadsStateCompleted;
                 }
             }
+            MEGALogDebug(@"[Camera Upload] pending count %lu", pendingCount);
         } else {
             if (self.photosByMonthYearArray.count == 0) {
                 self.currentState = MEGACameraUploadsStateEmpty;
