@@ -76,8 +76,6 @@
     self.chatListItemArray = [[NSMutableArray alloc] init];
     
     [self.tableView setContentOffset:CGPointMake(0, CGRectGetHeight(self.searchController.searchBar.frame))];
-    UIBarButtonItem *backBarButton = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil];
-    self.navigationItem.backBarButtonItem = backBarButton;
     
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
 }
@@ -593,6 +591,17 @@
     
     MessagesViewController *messagesVC = [[MessagesViewController alloc] init];
     messagesVC.chatRoom                = chatRoom;
+    
+    
+    NSInteger unreadChats = [MEGASdkManager sharedMEGAChatSdk].unreadChats;
+    if (chatRoom.unreadCount) {
+        unreadChats -= 1;
+    }
+    
+    NSString *unreadChatsString = unreadChats ? [NSString stringWithFormat:@"(%td)", unreadChats] : @"";
+    
+    UIBarButtonItem *backBarButton = [[UIBarButtonItem alloc] initWithTitle:unreadChatsString style:UIBarButtonItemStylePlain target:nil action:nil];
+    self.navigationItem.backBarButtonItem = backBarButton;
     
     [self.navigationController pushViewController:messagesVC animated:YES];
 }
