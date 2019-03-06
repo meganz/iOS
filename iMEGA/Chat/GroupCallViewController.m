@@ -558,9 +558,11 @@
     NSString *groupCallDuration;
     
     switch (self.callType) {
-        case CallTypeActive:
-            groupCallDuration = @"";
+        case CallTypeActive: {
+            MEGAChatCall *call = [[MEGASdkManager sharedMEGAChatSdk] chatCallForChatId:self.chatRoom.chatId];
+            groupCallDuration = call && call.status == MEGAChatCallStatusInProgress ? @"" : AMLocalizedString(@"calling...", @"Label shown when you call someone (outgoing call), before the call starts.");
             break;
+        }
             
         case CallTypeOutgoing:
             groupCallDuration = AMLocalizedString(@"calling...", @"Label shown when you call someone (outgoing call), before the call starts.");
@@ -574,13 +576,8 @@
             break;
     }
     
-    if (@available(iOS 11.0, *)) {
-        self.navigationTitleLabel.text = groupCallTitle;
-        self.navigationSubtitleLabel.text = groupCallDuration;
-    } else {
-        [self.navigationItem setTitleView:[Helper customNavigationBarLabelWithTitle:groupCallTitle subtitle:groupCallDuration]];
-        [self.navigationItem.titleView sizeToFit];
-    }
+    self.navigationTitleLabel.text = groupCallTitle;
+    self.navigationSubtitleLabel.text = groupCallDuration;
 }
 
 - (void)configureControlsForLocalUser:(MEGAGroupCallPeer *)localUser {
@@ -904,8 +901,11 @@
         [self configureUserOnFocus:[self.peersInCall objectAtIndex:0] manual:NO];
     }
     self.incomingCallView.hidden = YES;
-    [self initDurationTimer];
-    [self initShowHideControls];
+    
+    if (self.call.status == MEGAChatCallStatusInProgress) {
+        [self initShowHideControls];
+        [self initDurationTimer];
+    }
     [self updateParticipants];
     [self.collectionView reloadData];
     MEGALogDebug(@"[Group Call] Reload data %s", __PRETTY_FUNCTION__);
