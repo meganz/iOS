@@ -166,7 +166,7 @@
     [self.confirmButton setImage:[UIImage imageNamed:@"contact_request_accept"] forState:UIControlStateNormal];
     [self.confirmButton setTitle:AMLocalizedString(@"passwordAccepted", @"Used as a message in the 'Password reminder' dialog that is shown when the user enters his password, clicks confirm and his password is correct.") forState:UIControlStateNormal];
     
-    self.logoutButton.hidden = NO;
+    self.logoutButton.hidden = !self.isLoggingOut;
 }
 
 - (void)resetUI {
