@@ -1577,31 +1577,31 @@
 /* A button to help them restore their account if they have lost their 2FA device. */
 "lostYourAuthenticatorDevice"="هل أضعت الجهاز الذي تستخدمه للمصادقة؟";
 /* Settings section title where you can enable the option to 'Save Images in Photos' */
-"Save Images in Photos"="Save Images in Photos";
+"Save Images in Photos"="حفظ الصور بمجلد الصور";
 /* Settings section title where you can enable the option to 'Save Videos in Photos' */
-"Save Videos in Photos"="Save Videos in Photos";
+"Save Videos in Photos"="حفظ الفيديوهات بمجلد الصور";
 /* Footer text shown under the settings for download options 'Save Images/Videos in Library' */
-"Images and/or videos downloaded will be stored in the device’s media library instead of the Offline section."="Images and/or videos downloaded will be stored in the device’s media library instead of the Offline section.";
+"Images and/or videos downloaded will be stored in the device’s media library instead of the Offline section."="الصور والفيديوهات المنزلة سوف تحفظ بمجلد مكتبة الوسائط على جهازك بدلاً من القسم الخاص بالملفات المتاحة دون اتصال انترنت.";
 /* Setting associated with the 'Camera' of the device */
-"Camera"="Camera";
+"Camera"="الكاميرا";
 /* Settings section title where you can enable the option to 'Save in Photos' the images or videos taken from your camera in the MEGA app */
-"Save in Photos"="Save in Photos";
+"Save in Photos"="احفظ مع الصور";
 /* Footer text shown under the Camera setting to explain the option 'Save in Photos' */
-"Save a copy of the images and videos taken from the MEGA app in your device’s media library."="Save a copy of the images and videos taken from the MEGA app in your device’s media library.";
+"Save a copy of the images and videos taken from the MEGA app in your device’s media library."="احفظ نسخة من الصور والفيديوهات المأخوذة من تطبيق MEGA في مكتبة الوسائط على جهازك.";
 /* Title shown in a page of the on boarding screens explaining that the user keeps the encryption keys */
-"You hold the keys"="You hold the keys";
+"You hold the keys"="انت تحتفظ بالمفتاح";
 /* Description shown in a page of the onboarding screens explaining the encryption paradigm */
-"Security is why we exist, your files are safe with us behind a well oiled encryption machine where only you can access your files."="Security is why we exist, your files are safe with us behind a well oiled encryption machine where only you can access your files.";
+"Security is why we exist, your files are safe with us behind a well oiled encryption machine where only you can access your files."="نحن موجودون لتوفير الأمان، ملفاتك بأمان أكثر معنا محمية خلف آلية تشفير متينة بحيث تكون أنت فقط القادر على الولوج الى ملفاتك.";
 /* Title shown in a page of the on boarding screens explaining that the chat is encrypted */
-"Encrypted chat"="Encrypted chat";
+"Encrypted chat"="دردشة مشفرة";
 /* Description shown in a page of the onboarding screens explaining the chat feature */
-"Fully encrypted chat with voice and video calls, group messaging and file sharing integration with your Cloud Drive."="Fully encrypted chat with voice and video calls, group messaging and file sharing integration with your Cloud Drive.";
+"Fully encrypted chat with voice and video calls, group messaging and file sharing integration with your Cloud Drive."="دردشة مشفرة بشكل كامل مع اتصال صوتي وفيديو، وتراسل مجموعات ومشاركة ملفات بشكل متكامل مع سواقتك السحابية.";
 /* Title shown in a page of the on boarding screens explaining that the user can add contacts to chat and colaborate */
-"Create your Network"="Create your Network";
+"Create your Network"="انشئ شبكتك";
 /* Description shown in a page of the onboarding screens explaining contacts */
-"Add contacts, create a network, colaborate, make voice and video calls without ever leaving MEGA"="Add contacts, create a network, colaborate, make voice and video calls without ever leaving MEGA";
+"Add contacts, create a network, colaborate, make voice and video calls without ever leaving MEGA"="اضف جهات اتصال، وانشئ شبكات ومجموعات، تعاون، اجري اتصالات صوتية وفيديوهية دون مغادرة MEGA.";
 /* Title shown in a page of the on boarding screens explaining that the user can backup the photos automatically */
-"Your Photos in the Cloud"="Your Photos in the Cloud";
+"Your Photos in the Cloud"="صورك على السحابة";
 /* Description shown in a page of the onboarding screens explaining the camera uploads feature */
 "Camera Uploads is an essential feature for any mobile device and we have got you covered. Create your account now."="Camera Uploads is an essential feature for any mobile device and we have got you covered. Create your account now.";
 /* Button which triggers the initial setup */
@@ -1631,7 +1631,7 @@
 /* Title of the option to enable or disable file versioning on Settings section */
 "File versioning"="النسخ المعدلة للملفات";
 /* Subtitle of the option to enable or disable file versioning on Settings section */
-"Enable or disable file versioning for your entire account.[Br]You may still receive file versions from shared folders if your contacts have this enabled."="Enable or disable file versioning for your entire account.\nYou may still receive file versions from shared folders if your contacts have this enabled.";
+"Enable or disable file versioning for your entire account.[Br]You may still receive file versions from shared folders if your contacts have this enabled."="تفعيل او تعطيل الاحتفاظ بنسخ معدلة للملفات لكامل حسابك.\nمن الممكن ان تستقبل ملفات مع نسخها المعدلة في مجلدات مشاركة معك اذا كانت جهة الاتصال مفعلة لهذه الميزة.";
 /* A confirmation message when the user chooses to disable file versioning. */
 "When file versioning is disabled, the current version will be replaced with the new version once a file is updated (and your changes to the file will no longer be recorded). Are you sure you want to disable file versioning?"="عند تعطيل نسخ الملف، سيتم استبدال الإصدار الحالي بالإصدار الجديد بمجرد تحديث الملف (ولن يتم تسجيل التغييرات التي أجريتها على الملف). هل تريد بالتأكيد تعطيل نسخ الملفات؟";
 /* Settings preference title to show file versions info of the account */
@@ -1687,9 +1687,9 @@
 /* Label in a cell where you can get the chat link */
 "Get Chat Link"="Get Chat Link";
 /* Footer text to explain what means 'Encrypted Key Rotation' */
-"Key rotation is slightly more secure, but does not allow you to create a link to the chat and new participants will not see past messages."="Key rotation is slightly more secure, but does not allow you to create a link to the chat and new participants will not see past messages.";
+"Key rotation is slightly more secure, but does not allow you to create a link to the chat and new participants will not see past messages."="Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages.";
 /* Alert message to advice the users that to generate a chat link they need enter a group name for the chat */
-"Before you can generate a link for this room, you need to enter a group name"="Before you can generate a link for this room, you need to enter a group name";
+"Before you can generate a link for this room, you need to enter a group name"="Before you can generate a link for this chat, you need to enter a group name.";
 /* Label shown in a cell where you can enable a switch to get a chat link */
 "Chat Link"="Chat Link";
 /* Message shown when there is an active chat link that can be deleted */

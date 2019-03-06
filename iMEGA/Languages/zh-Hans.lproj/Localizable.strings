@@ -1653,7 +1653,7 @@
 /* Label for any ‘Days’ button, link, text, title, etc. - (String as short as possible). */
 "Days"="天";
 /* New server-side rubbish-bin cleaning scheduler description (for Free users) */
-"The Rubbish Bin is cleaned for you automatically. The minimum period is 7 days and your maximum period is 30 days."="垃圾箱会自动清理。最短期限为7天，最长期限为30天。";
+"The Rubbish Bin is cleaned for you automatically. The minimum period is 7 days and your maximum period is 30 days."="The Rubbish Bin is cleared for you automatically. The minimum period is 7 days and the maximum period is 30 days.";
 /* New server-side rubbish-bin cleaning scheduler description (for PRO users) */
 "The Rubbish Bin can be cleaned for you automatically. The minimum period is 7 days."="垃圾箱可以自动清洁。最短期限为7天。";
 /* Description shown when you try to disable the feature Rubbish-Bin Cleaning Scheduler and you are a free user */
@@ -1687,9 +1687,9 @@
 /* Label in a cell where you can get the chat link */
 "Get Chat Link"="Get Chat Link";
 /* Footer text to explain what means 'Encrypted Key Rotation' */
-"Key rotation is slightly more secure, but does not allow you to create a link to the chat and new participants will not see past messages."="Key rotation is slightly more secure, but does not allow you to create a link to the chat and new participants will not see past messages.";
+"Key rotation is slightly more secure, but does not allow you to create a link to the chat and new participants will not see past messages."="Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages.";
 /* Alert message to advice the users that to generate a chat link they need enter a group name for the chat */
-"Before you can generate a link for this room, you need to enter a group name"="Before you can generate a link for this room, you need to enter a group name";
+"Before you can generate a link for this room, you need to enter a group name"="Before you can generate a link for this chat, you need to enter a group name.";
 /* Label shown in a cell where you can enable a switch to get a chat link */
 "Chat Link"="Chat Link";
 /* Message shown when there is an active chat link that can be deleted */
