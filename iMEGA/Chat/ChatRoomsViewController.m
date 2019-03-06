@@ -641,8 +641,7 @@
 - (IBAction)joinActiveCall:(id)sender {
     [self.timer invalidate];
     if (self.chatRoomOnGoingCall.isGroup) {
-        MEGANavigationController *groupCallNavigation = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"GroupCallViewControllerNavigationID"];
-        GroupCallViewController *groupCallVC = groupCallNavigation.viewControllers.firstObject;
+        GroupCallViewController *groupCallVC = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"GroupCallViewControllerID"];
         groupCallVC.callType = CallTypeActive;
         groupCallVC.videoCall = NO;
         groupCallVC.chatRoom = self.chatRoomOnGoingCall;
@@ -651,7 +650,7 @@
         if (@available(iOS 10.0, *)) {
             groupCallVC.megaCallManager = [(MainTabBarController *)UIApplication.sharedApplication.keyWindow.rootViewController megaCallManager];
         }
-        [self presentViewController:groupCallNavigation animated:YES completion:nil];
+        [self presentViewController:groupCallVC animated:YES completion:nil];
     } else {
         CallViewController *callVC = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"CallViewControllerID"];
         callVC.chatRoom = self.chatRoomOnGoingCall;
