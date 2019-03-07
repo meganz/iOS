@@ -7,6 +7,7 @@ typedef NS_ENUM(NSInteger, PhotoUploadConcurrentCount) {
     PhotoUploadConcurrentCountInForeground = 5,
     PhotoUploadConcurrentCountInBackground = 2,
     PhotoUploadConcurrentCountInLowPowerMode = 2,
+    PhotoUploadConcurrentCountInMemoryWarning = 1,
     PhotoUploadConcurrentCountInBatteryCharging = 6,
     PhotoUploadConcurrentCountInBatteryLevelBelow75 = 4,
     PhotoUploadConcurrentCountInBatteryLevelBelow55 = 3,

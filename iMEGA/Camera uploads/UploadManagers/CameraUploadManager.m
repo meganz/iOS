@@ -31,8 +31,6 @@ static const NSTimeInterval LoadMediaInfoTimeoutInSeconds = 120;
 static const NSUInteger PhotoUploadBatchCount = 10;
 static const NSUInteger VideoUploadBatchCount = 1;
 
-static const CGFloat MemoryWarningConcurrentThrottleRatio = .5;
-
 @interface CameraUploadManager ()
 
 @property (copy, nonatomic) void (^backgroundRefreshCompletion)(UIBackgroundFetchResult);
@@ -621,16 +619,15 @@ static const CGFloat MemoryWarningConcurrentThrottleRatio = .5;
 
 - (void)didReceiveMemoryWarningNotification {
     MEGALogDebug(@"[Camera Upload] memory warning");
-    NSInteger photoConcurrentCount = [self.concurrentCountCalculator calculatePhotoUploadConcurrentCount];
-    NSInteger throttledConcurrentCount = lroundf(photoConcurrentCount * MemoryWarningConcurrentThrottleRatio);
-    self.photoUploadOperationQueue.maxConcurrentOperationCount = MAX(throttledConcurrentCount, 1);
+    NSInteger photoConcurrentCount = MIN([self.concurrentCountCalculator calculatePhotoUploadConcurrentCount], PhotoUploadConcurrentCountInMemoryWarning);
+    self.photoUploadOperationQueue.maxConcurrentOperationCount = photoConcurrentCount;
     
     NSInteger index = 0;
     for (NSOperation *operation in self.photoUploadOperationQueue.operations) {
         if (operation.isExecuting) {
             index++;
             
-            if (index > throttledConcurrentCount) {
+            if (index > photoConcurrentCount) {
                 MEGALogDebug(@"[Camera Upload] release memory in cancelling %@", operation);
                 [operation cancel];
             }
