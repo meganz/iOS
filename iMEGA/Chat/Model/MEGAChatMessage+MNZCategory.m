@@ -272,7 +272,7 @@ static const void *richNumberTagKey = &richNumberTagKey;
             }
                 
             case MEGAChatMessageTypePublicHandleCreate: {
-                NSString *publicHandleCreated = [NSString stringWithFormat:@"%@ created a public link for the chat.", fullNameReceiveAction];
+                NSString *publicHandleCreated = [NSString stringWithFormat:AMLocalizedString(@"%@ created a public link for the chat.", @"Management message shown in a chat when the user %@ creates a public link for the chat"), fullNameReceiveAction];
                 text = publicHandleCreated;
                 
                 NSMutableAttributedString *mutableAttributedString = [[NSMutableAttributedString alloc] initWithString:publicHandleCreated attributes:@{NSFontAttributeName:textFontRegular, NSForegroundColorAttributeName:[UIColor mnz_black333333]}];
@@ -283,7 +283,7 @@ static const void *richNumberTagKey = &richNumberTagKey;
             }
                 
             case MEGAChatMessageTypePublicHandleDelete: {
-                NSString *publicHandleRemoved = [NSString stringWithFormat:@"%@ removed a public link for the chat.", fullNameReceiveAction];
+                NSString *publicHandleRemoved = [NSString stringWithFormat:AMLocalizedString(@"%@ removed a public link for the chat.", @"Management message shown in a chat when the user %@ removes a public link for the chat"), fullNameReceiveAction];
                 text = publicHandleRemoved;
                 
                 NSMutableAttributedString *mutableAttributedString = [[NSMutableAttributedString alloc] initWithString:publicHandleRemoved attributes:@{NSFontAttributeName:textFontRegular, NSForegroundColorAttributeName:[UIColor mnz_black333333]}];
@@ -294,13 +294,13 @@ static const void *richNumberTagKey = &richNumberTagKey;
             }
                 
             case MEGAChatMessageTypeSetPrivateMode: {
-                NSString *setPrivateMode = [NSString stringWithFormat:@"%@ enable Encryption Key Rotation.\n\n", fullNameReceiveAction];
-                NSString *keyRotationExplanation = @"Key rotation is slightly more secure, but does not allow you to share a link to the chat and new participants will not see past messages.";
-                text = [NSString stringWithFormat:@"%@%@", setPrivateMode, keyRotationExplanation];
+                NSString *setPrivateMode = [NSString stringWithFormat:AMLocalizedString(@"%@ enabled Encrypted Key Rotation", @"Management message shown in a chat when the user %@ enables the 'Encrypted Key Rotation'"), fullNameReceiveAction];
+                NSString *keyRotationExplanation = AMLocalizedString(@"Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages.", @"Footer text to explain what means 'Encrypted Key Rotation'");
+                text = [NSString stringWithFormat:@"%@\n\n%@", setPrivateMode, keyRotationExplanation];
                 
                 NSMutableAttributedString *mutableAttributedString = [[NSMutableAttributedString alloc] initWithString:text attributes:@{NSFontAttributeName:textFontRegular, NSForegroundColorAttributeName:[UIColor mnz_black333333]}];
                 [mutableAttributedString addAttribute:NSFontAttributeName value:textFontMedium range:[text rangeOfString:fullNameReceiveAction]];
-                [mutableAttributedString addAttribute:NSFontAttributeName value:textFontMedium range:[text rangeOfString:@"Encryption Key Rotation"]];
+                [mutableAttributedString addAttribute:NSFontAttributeName value:textFontMedium range:[text rangeOfString:AMLocalizedString(@"Encrypted Key Rotation", nil)]];
                 [mutableAttributedString addAttribute:NSFontAttributeName value:textFontMediumFootnote range:[text rangeOfString:keyRotationExplanation]];
                 [mutableAttributedString addAttribute:NSForegroundColorAttributeName value:[UIColor mnz_gray999999] range:[text rangeOfString:keyRotationExplanation]];
                 

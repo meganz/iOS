@@ -298,7 +298,7 @@
         case 6:
             cell = [self.tableView dequeueReusableCellWithIdentifier:@"GroupChatDetailsObserversTypeID" forIndexPath:indexPath];
             cell.leftImageView.image = [UIImage imageNamed:@"chatObservers"];
-            cell.emailLabel.text = @"Observers";
+            cell.emailLabel.text = AMLocalizedString(@"Observers", @"Users previewing a public chat");
             cell.rightLabel.text = [NSString stringWithFormat:@"%tu", self.chatRoom.previewersCount];
             break;
             
@@ -483,7 +483,7 @@
 
 - (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section {
     if (section == 5 && self.chatRoom.isPublicChat && self.chatRoom.ownPrivilege >= MEGAChatRoomPrivilegeModerator) {
-        return AMLocalizedString(@"Key rotation is slightly more secure, but does not allow you to create a link to the chat and new participants will not see past messages.", @"Footer text to explain what means 'Encrypted Key Rotation'");
+        return AMLocalizedString(@"Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages.", @"Footer text to explain what means 'Encrypted Key Rotation'");
     }
     return nil;
 }
@@ -592,7 +592,7 @@
             }]];
             
             [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"Delete Chat Link", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-                UIAlertController *deleteAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"Delete Chat Link", nil) message:@"This conversation will no longer be accessible through the link you are about to delete." preferredStyle:UIAlertControllerStyleAlert];
+                UIAlertController *deleteAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"Delete Chat Link", nil) message:AMLocalizedString(@"This conversation will no longer be accessible through the link you are about to delete.", @"Alert message shown while deleting a chat link, warning about the consequences") preferredStyle:UIAlertControllerStyleAlert];
                 [deleteAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"continue", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
                     MEGAChatGenericRequestDelegate *delegate = [[MEGAChatGenericRequestDelegate alloc] initWithCompletion:^(MEGAChatRequest * _Nonnull request, MEGAChatError * _Nonnull error) {
                         if (!error.type) {
@@ -627,7 +627,7 @@
             customModalAlertVC.modalPresentationStyle = UIModalPresentationOverCurrentContext;
             customModalAlertVC.image = [UIImage imageNamed:@"lock"];
             customModalAlertVC.viewTitle = AMLocalizedString(@"Enable Encrypted Key Rotation", @"Title show in a cell where the users can enable the 'Encrypted Key Rotation'");
-            customModalAlertVC.detail = AMLocalizedString(@"Key rotation is slightly more secure, but does not allow you to create a link to the chat and new participants will not see past messages.", @"Footer text to explain what means 'Encrypted Key Rotation'");
+            customModalAlertVC.detail = AMLocalizedString(@"Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages.", @"Footer text to explain what means 'Encrypted Key Rotation'");
             customModalAlertVC.action = AMLocalizedString(@"enable", nil);
             customModalAlertVC.dismiss = AMLocalizedString(@"cancel", nil);
             __weak typeof(CustomModalAlertViewController) *weakCustom = customModalAlertVC;
