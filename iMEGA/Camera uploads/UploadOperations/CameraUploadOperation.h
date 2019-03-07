@@ -19,7 +19,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (instancetype)initWithUploadInfo:(AssetUploadInfo *)uploadInfo uploadRecord:(MOAssetUploadRecord *)uploadRecord;
 
-- (void)handleProcessedUploadFile;
+- (void)handleProcessedImageFile;
+
+- (void)handleProcessedVideoFile;
 
 - (void)cancelPendingTasks;
 
