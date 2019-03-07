@@ -1,14 +1,9 @@
 
-#import "MEGAOperation.h"
-#import "MEGASdkManager.h"
+#import "AttributeUploadOperation.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@class CLLocation;
-
-@interface CoordinatesUploadOperation : MEGAOperation
-
-- (instancetype)initWithLocation:(CLLocation *)location node:(MEGANode *)node;
+@interface CoordinatesUploadOperation : AttributeUploadOperation
 
 @end
 

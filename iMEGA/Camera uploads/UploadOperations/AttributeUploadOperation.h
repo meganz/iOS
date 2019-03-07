@@ -5,7 +5,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface AttributeFileUploadOperation : MEGABackgroundTaskOperation
+@interface AttributeUploadOperation : MEGABackgroundTaskOperation
 
 @property (strong, nonatomic) MEGANode *node;
 @property (strong, nonatomic) NSURL *attributeURL;

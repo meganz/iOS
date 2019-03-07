@@ -66,16 +66,6 @@ static const NSInteger CoordinatesConcurrentUploadCount = 2;
     [self.coordinatesUploadOperationQueue waitUntilAllOperationsAreFinished];
 }
 
-#pragma mark - upload coordinate
-
-- (void)uploadCoordinateLocation:(CLLocation *)location forNode:(MEGANode *)node {
-    if (location == nil) {
-        return;
-    }
-    
-    [self.coordinatesUploadOperationQueue addOperation:[[CoordinatesUploadOperation alloc] initWithLocation:location node:node]];
-}
-
 #pragma mark - upload preview and thumbnail files
 
 - (AssetLocalAttribute *)saveAttributesForUploadInfo:(AssetUploadInfo *)uploadInfo error:(NSError **)error {
@@ -91,6 +81,8 @@ static const NSInteger CoordinatesConcurrentUploadCount = 2;
     if (error != NULL && *error != nil) {
         return nil;
     }
+    
+    [attribute saveLocation:uploadInfo.location];
 
     [NSFileManager.defaultManager copyItemAtURL:uploadInfo.thumbnailURL toURL:attribute.thumbnailURL error:error];
     if (error != NULL && *error != nil) {
@@ -109,13 +101,19 @@ static const NSInteger CoordinatesConcurrentUploadCount = 2;
     if ([NSFileManager.defaultManager fileExistsAtPath:attribute.thumbnailURL.path]) {
         [self.thumbnailUploadOperationQueue addOperation:[[ThumbnailUploadOperation alloc] initWithAttributeURL:attribute.thumbnailURL node:node]];
     } else {
-        MEGALogError(@"[Camera Upload] No thumbnail file found for node %@ in %@", attribute.thumbnailURL, attribute.attributeDirectoryURL.lastPathComponent);
+        MEGALogError(@"[Camera Upload] No thumbnail file found for node %@ in %@", node.name, attribute.thumbnailURL);
     }
     
     if ([NSFileManager.defaultManager fileExistsAtPath:attribute.previewURL.path]) {
         [self.previewUploadOperationQueue addOperation:[[PreviewUploadOperation alloc] initWithAttributeURL:attribute.previewURL node:node]];
     } else {
-        MEGALogError(@"[Camera Upload] No preview file found for node %@ in %@", node.name, attribute.attributeDirectoryURL.lastPathComponent);
+        MEGALogError(@"[Camera Upload] No preview file found for node %@ in %@", node.name, attribute.previewURL);
+    }
+    
+    if ([NSFileManager.defaultManager fileExistsAtPath:attribute.locationURL.path]) {
+        [self.coordinatesUploadOperationQueue addOperation:[[CoordinatesUploadOperation alloc] initWithAttributeURL:attribute.locationURL node:node]];
+    } else {
+        MEGALogError(@"[Camera Upload] No location file found for node %@ in %@", node.name, attribute.locationURL);
     }
 }
 
@@ -176,6 +174,15 @@ static const NSInteger CoordinatesConcurrentUploadCount = 2;
             [self.previewUploadOperationQueue addOperation:[[PreviewUploadOperation alloc] initWithAttributeURL:attribute.previewURL node:node]];
         }
     }
+    
+    if (attribute.hasSavedLocation) {
+        if (node.latitude && node.longitude) {
+            [NSFileManager.defaultManager removeItemIfExistsAtURL:attribute.locationURL];
+        } else if (![self hasPendingCoordinatesOperationForNode:node]) {
+            MEGALogDebug(@"[Camera Upload] retry coordinates upload for %@ in %@", node.name, attribute.attributeDirectoryURL.lastPathComponent);
+            [self.coordinatesUploadOperationQueue addOperation:[[CoordinatesUploadOperation alloc] initWithAttributeURL:attribute.locationURL node:node]];
+        }
+    }
 }
 
 #pragma mark - pending operations check
@@ -203,6 +210,22 @@ static const NSInteger CoordinatesConcurrentUploadCount = 2;
         if ([operation isMemberOfClass:[PreviewUploadOperation class]]) {
             PreviewUploadOperation *previewUploadOperation = (PreviewUploadOperation *)operation;
             if (previewUploadOperation.node.handle == node.handle) {
+                hasPendingOperation = YES;
+                break;
+            }
+        }
+    }
+    
+    return hasPendingOperation;
+}
+
+- (BOOL)hasPendingCoordinatesOperationForNode:(MEGANode *)node {
+    BOOL hasPendingOperation = NO;
+    
+    for (NSOperation *operation in self.coordinatesUploadOperationQueue.operations) {
+        if ([operation isMemberOfClass:[CoordinatesUploadOperation class]]) {
+            CoordinatesUploadOperation *coordinatesUploadOperation = (CoordinatesUploadOperation *)operation;
+            if (coordinatesUploadOperation.node.handle == node.handle) {
                 hasPendingOperation = YES;
                 break;
             }
