@@ -3,8 +3,6 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@class CLLocation;
-
 @interface AssetLocalAttribute : NSObject
 
 @property (strong, nonatomic) NSURL *attributeDirectoryURL;
@@ -24,8 +22,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (readonly) BOOL hasSavedAttributes;
 
 - (instancetype)initWithAttributeDirectoryURL:(NSURL *)URL;
-
-- (BOOL)saveLocation:(CLLocation *)location;
 
 @end
 

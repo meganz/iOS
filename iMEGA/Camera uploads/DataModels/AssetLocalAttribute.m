@@ -1,6 +1,5 @@
 
 #import "AssetLocalAttribute.h"
-@import CoreLocation;
 
 static NSString * const FingerprintFileName = @"fingerprint";
 
@@ -63,11 +62,5 @@ static NSString * const AttributeLocationFileName = @"location";
         return YES;
     }
 }
-
-- (BOOL)saveLocation:(CLLocation *)location {
-    return [NSKeyedArchiver archiveRootObject:location toFile:self.locationURL.path];
-}
-
-
 
 @end
