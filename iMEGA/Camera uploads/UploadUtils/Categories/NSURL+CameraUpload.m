@@ -3,6 +3,8 @@
 #import "NSString+MNZCategory.h"
 #import "NSFileManager+MNZCategory.h"
 #import "Helper.h"
+@import AVFoundation;
+@import CoreServices;
 
 @implementation NSURL (CameraUpload)
 
@@ -36,6 +38,33 @@
     return [[self mnz_assetDirectoryURLForLocalIdentifier:localIdentifier] URLByAppendingPathComponent:localIdentifier.mnz_stringByRemovingInvalidFileCharacters isDirectory:NO];
 }
 
+#pragma mark - create thumbnail for video
+
+- (BOOL)mnz_exportVideoThumbnailToImageURL:(NSURL *)imageURL {
+    AVURLAsset *asset = [[AVURLAsset alloc] initWithURL:self options:nil];
+    AVAssetImageGenerator *generator = [[AVAssetImageGenerator alloc] initWithAsset:asset];
+    generator.appliesPreferredTrackTransform = YES;
+    CMTime requestedTime = CMTimeMake(1, 60);
+    NSError *error;
+    CGImageRef imageRef = [generator copyCGImageAtTime:requestedTime actualTime:NULL error:&error];
+    if (error) {
+        MEGALogError(@"error when to extract thumbnail image from video %@ %@", self, error);
+        return false;
+    }
+    
+    CGImageDestinationRef destination = CGImageDestinationCreateWithURL((__bridge CFURLRef)imageURL, kUTTypeJPEG, 1, NULL);
+    if (destination) {
+        CGImageDestinationAddImage(destination, imageRef, NULL);
+        BOOL isExportedSuccessfully = CGImageDestinationFinalize(destination);
+        CFRelease(destination);
+        return isExportedSuccessfully;
+    } else {
+        return false;
+    }
+}
+
+#pragma mark - thumbnail and preview caching
+
 - (BOOL)mnz_moveToDirectory:(NSURL *)directoryURL renameTo:(NSString *)fileName {
     if (![NSFileManager.defaultManager fileExistsAtPath:self.path]) {
         return NO;
@@ -65,5 +94,7 @@
     NSURL *cacheDirectory = [[NSFileManager.defaultManager URLsForDirectory:NSCachesDirectory inDomains:NSUserDomainMask] firstObject];
     return [self mnz_moveToDirectory:[cacheDirectory URLByAppendingPathComponent:@"previewsV3"] renameTo:node.base64Handle];
 }
+
+
 
 @end

@@ -18,7 +18,10 @@
 #import "MEGAError+MNZCategory.h"
 #import "CameraUploadOperation+Utils.h"
 #import "NSDate+MNZCategory.h"
+#include "GfxProcCG.h"
 @import Photos;
+
+static NSString * const VideoAttributeImageExtension = @"MEGAVideoAttributeImage";
 
 @interface CameraUploadOperation ()
 
@@ -106,7 +109,7 @@
         return NO;
     }
     
-    BOOL thumbnailCreated = [self.sdk createThumbnail:self.uploadInfo.fileURL.path destinatioPath:self.uploadInfo.thumbnailURL.path] && [NSFileManager.defaultManager fileExistsAtPath:self.uploadInfo.thumbnailURL.path];
+    BOOL thumbnailCreated = [self.sdk createThumbnail:self.uploadInfo.attributeImageURL.path destinatioPath:self.uploadInfo.thumbnailURL.path] && [NSFileManager.defaultManager fileExistsAtPath:self.uploadInfo.thumbnailURL.path];
     if (!thumbnailCreated) {
         MEGALogError(@"[Camera Upload] %@ error when to create thumbnail", self);
     }
@@ -115,7 +118,7 @@
         [self finishOperationWithStatus:CameraAssetUploadStatusCancelled shouldUploadNextAsset:NO];
         return NO;
     }
-    BOOL previewCreated = [self.sdk createPreview:self.uploadInfo.fileURL.path destinatioPath:self.uploadInfo.previewURL.path] && [NSFileManager.defaultManager fileExistsAtPath:self.uploadInfo.previewURL.path];
+    BOOL previewCreated = [self.sdk createPreview:self.uploadInfo.attributeImageURL.path destinatioPath:self.uploadInfo.previewURL.path] && [NSFileManager.defaultManager fileExistsAtPath:self.uploadInfo.previewURL.path];
     if (!previewCreated) {
         MEGALogError(@"[Camera Upload] %@ error when to create preview", self);
     }
@@ -126,7 +129,15 @@
 
 #pragma mark - upload task
 
-- (void)handleProcessedUploadFile {
+- (void)handleProcessedImageFile {
+    [self handleProcessedFile:NO];
+}
+
+- (void)handleProcessedVideoFile {
+    [self handleProcessedFile:YES];
+}
+
+- (void)handleProcessedFile:(BOOL)isVideoFile {
     if (self.isCancelled) {
         [self finishOperationWithStatus:CameraAssetUploadStatusCancelled shouldUploadNextAsset:NO];
         return;
@@ -138,6 +149,17 @@
         MEGALogDebug(@"[Camera Upload] %@ found existing node by file fingerprint", self);
         [self finishUploadForFingerprintMatchedNode:matchingNode];
         return;
+    }
+    
+    if (isVideoFile) {
+        self.uploadInfo.attributeImageURL = [self.uploadInfo.fileURL URLByAppendingPathExtension:VideoAttributeImageExtension];
+        if (![self.uploadInfo.fileURL mnz_exportVideoThumbnailToImageURL:self.uploadInfo.attributeImageURL]) {
+            MEGALogError(@"[Camera Upload] %@ error when to export video attribute image", self);
+            [self finishOperationWithStatus:CameraAssetUploadStatusFailed shouldUploadNextAsset:YES];
+            return;
+        }
+    } else {
+        self.uploadInfo.attributeImageURL = self.uploadInfo.fileURL;
     }
     
     if (![self createThumbnailAndPreviewFiles]) {

@@ -21,6 +21,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, readonly) NSURL *previewURL;
 @property (nonatomic, readonly) NSURL *thumbnailURL;
 
+@property (strong, nonatomic) NSURL *attributeImageURL;
+
 @property (nonatomic, readonly) NSURL *encryptionDirectoryURL;
 @property (strong, nonatomic) NSDictionary<NSString *, NSURL *> *encryptedChunkURLsKeyedByUploadSuffix;
 @property (nonatomic) NSUInteger encryptedChunksCount;

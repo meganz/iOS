@@ -167,7 +167,7 @@
                 switch (session.status) {
                     case AVAssetExportSessionStatusCompleted:
                         MEGALogDebug(@"[Camera Upload] %@ finished exporting video to file %@", weakSelf, weakSelf.uploadInfo.fileName);
-                        [weakSelf handleProcessedUploadFile];
+                        [weakSelf handleProcessedVideoFile];
                         break;
                     case AVAssetExportSessionStatusCancelled:
                         MEGALogDebug(@"[Camera Upload] %@ video exporting got cancelled", weakSelf);
@@ -221,7 +221,7 @@
         return;
     }
     
-    [self handleProcessedUploadFile];
+    [self handleProcessedVideoFile];
 }
 
 #pragma mark - cancel video exporting

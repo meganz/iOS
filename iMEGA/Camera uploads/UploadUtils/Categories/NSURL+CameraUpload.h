@@ -20,6 +20,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (BOOL)mnz_moveToDirectory:(NSURL *)directoryURL renameTo:(NSString *)fileName;
 
+- (BOOL)mnz_exportVideoThumbnailToImageURL:(NSURL *)imageURL;
+
 - (BOOL)mnz_cacheThumbnailForNode:(MEGANode *)node;
 - (BOOL)mnz_cachePreviewForNode:(MEGANode *)node;
 

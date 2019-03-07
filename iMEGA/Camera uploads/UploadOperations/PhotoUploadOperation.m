@@ -105,7 +105,7 @@ const NSInteger PhotoExportDiskSizeMultiplicationFactor = 2;
         }
         
         if (succeeded && [NSFileManager.defaultManager isReadableFileAtPath:self.uploadInfo.fileURL.path]) {
-            [weakSelf handleProcessedUploadFile];
+            [weakSelf handleProcessedImageFile];
         } else {
             MEGALogError(@"[Camera Upload] %@ error when to export image to file %@", self, self.uploadInfo.fileName);
             [weakSelf finishOperationWithStatus:CameraAssetUploadStatusFailed shouldUploadNextAsset:YES];
