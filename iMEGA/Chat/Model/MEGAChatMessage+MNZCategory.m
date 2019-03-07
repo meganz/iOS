@@ -198,15 +198,24 @@ static const void *richNumberTagKey = &richNumberTagKey;
                     }
                         
                     case -2: {
-                        NSString *joinedTheGroupChatByInvitationFrom = AMLocalizedString(@"joinedTheGroupChatByInvitationFrom", @"A log message in a chat conversation to tell the reader that a participant [A] was added to the chat by a moderator [B]. Please keep the [A] and [B] placeholders, they will be replaced by the participant and the moderator names at runtime. For example: Alice joined the group chat by invitation from Frank.");
-                        joinedTheGroupChatByInvitationFrom = [joinedTheGroupChatByInvitationFrom stringByReplacingOccurrencesOfString:@"[A]" withString:fullNameReceiveAction];
-                        joinedTheGroupChatByInvitationFrom = [joinedTheGroupChatByInvitationFrom stringByReplacingOccurrencesOfString:@"[B]" withString:fullNameDidAction];
-                        text = joinedTheGroupChatByInvitationFrom;
-                        
-                        NSMutableAttributedString *mutableAttributedString = [[NSMutableAttributedString alloc] initWithString:joinedTheGroupChatByInvitationFrom attributes:@{NSFontAttributeName:textFontRegular, NSForegroundColorAttributeName:[UIColor mnz_black333333]}];
-                        [mutableAttributedString addAttribute:NSFontAttributeName value:textFontMedium range:[joinedTheGroupChatByInvitationFrom rangeOfString:fullNameReceiveAction]];
-                        [mutableAttributedString addAttribute:NSFontAttributeName value:textFontMedium range:[joinedTheGroupChatByInvitationFrom rangeOfString:fullNameDidAction]];
-                        self.attributedText = mutableAttributedString;
+                        if (fullNameDidAction && ![fullNameReceiveAction isEqualToString:fullNameDidAction]) {
+                            NSString *joinedTheGroupChatByInvitationFrom = AMLocalizedString(@"joinedTheGroupChatByInvitationFrom", @"A log message in a chat conversation to tell the reader that a participant [A] was added to the chat by a moderator [B]. Please keep the [A] and [B] placeholders, they will be replaced by the participant and the moderator names at runtime. For example: Alice joined the group chat by invitation from Frank.");
+                            joinedTheGroupChatByInvitationFrom = [joinedTheGroupChatByInvitationFrom stringByReplacingOccurrencesOfString:@"[A]" withString:fullNameReceiveAction];
+                            joinedTheGroupChatByInvitationFrom = [joinedTheGroupChatByInvitationFrom stringByReplacingOccurrencesOfString:@"[B]" withString:fullNameDidAction];
+                            text = joinedTheGroupChatByInvitationFrom;
+                            
+                            NSMutableAttributedString *mutableAttributedString = [[NSMutableAttributedString alloc] initWithString:joinedTheGroupChatByInvitationFrom attributes:@{NSFontAttributeName:textFontRegular, NSForegroundColorAttributeName:[UIColor mnz_black333333]}];
+                            [mutableAttributedString addAttribute:NSFontAttributeName value:textFontMedium range:[joinedTheGroupChatByInvitationFrom rangeOfString:fullNameReceiveAction]];
+                            [mutableAttributedString addAttribute:NSFontAttributeName value:textFontMedium range:[joinedTheGroupChatByInvitationFrom rangeOfString:fullNameDidAction]];
+                            self.attributedText = mutableAttributedString;
+                        } else {
+                            NSString *joinedTheGroupChat = [NSString stringWithFormat:AMLocalizedString(@"%@ joined the group chat.", @"Management message shown in a chat when the user %@ joined it from a public chat link"), fullNameReceiveAction];
+                            text = joinedTheGroupChat;
+                            
+                            NSMutableAttributedString *mutableAttributedString = [[NSMutableAttributedString alloc] initWithString:joinedTheGroupChat attributes:@{NSFontAttributeName:textFontRegular, NSForegroundColorAttributeName:[UIColor mnz_black333333]}];
+                            [mutableAttributedString addAttribute:NSFontAttributeName value:textFontMedium range:[joinedTheGroupChat rangeOfString:fullNameReceiveAction]];
+                            self.attributedText = mutableAttributedString;
+                        }
                         break;
                     }
                         
