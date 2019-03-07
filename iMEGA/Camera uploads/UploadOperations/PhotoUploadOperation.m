@@ -71,6 +71,7 @@ const NSInteger PhotoExportDiskSizeMultiplicationFactor = 2;
     }
     
     if (imageData == nil) {
+        MEGALogError(@"[Camera Upload] %@ the requested image data is empty", self);
         [self finishOperationWithStatus:CameraAssetUploadStatusFailed shouldUploadNextAsset:YES];
         return;
     }
