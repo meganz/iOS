@@ -48,8 +48,8 @@ static const NSInteger CoordinatesConcurrentUploadCount = 2;
         _coordinatesUploadOperationQueue.maxConcurrentOperationCount = CoordinatesConcurrentUploadCount;
 
         _attributeScanQueue = [[NSOperationQueue alloc] init];
-        _attributeScanQueue.maxConcurrentOperationCount = 1;
         _attributeScanQueue.qualityOfService = NSQualityOfServiceUtility;
+        _attributeScanQueue.maxConcurrentOperationCount = 1;
     }
     return self;
 }
