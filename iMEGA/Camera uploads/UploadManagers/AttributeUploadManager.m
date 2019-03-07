@@ -36,7 +36,7 @@
         _thumbnailUploadOperationQueue.qualityOfService = NSQualityOfServiceUserInteractive;
         
         _attributeUploadOerationQueue = [[NSOperationQueue alloc] init];
-        _attributeUploadOerationQueue.qualityOfService = NSQualityOfServiceUserInitiated;
+        _attributeUploadOerationQueue.qualityOfService = NSQualityOfServiceBackground;
         
         _attributeScanQueue = [[NSOperationQueue alloc] init];
         _attributeScanQueue.maxConcurrentOperationCount = 1;
@@ -120,6 +120,8 @@
     if (![NSFileManager.defaultManager fileExistsAtPath:[self attributeDirectoryURL].path]) {
         return;
     }
+    
+    [MEGASdkManager.sharedMEGASdk retryPendingConnections];
     
     [self.attributeScanQueue addOperationWithBlock:^{
         NSError *error;

@@ -14,4 +14,12 @@
     return self;
 }
 
+- (void)start {
+    [super start];
+    
+    [self beginBackgroundTaskWithExpirationHandler:^{
+        [self finishOperation];
+    }];
+}
+
 @end
