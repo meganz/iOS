@@ -7,6 +7,7 @@
 #import "CoordinatesUploadOperation.h"
 #import "CameraUploadManager.h"
 #import "NSString+MNZCategory.h"
+#import "NSError+CameraUpload.h"
 @import CoreLocation;
 
 static const NSInteger PreviewConcurrentUploadCount = 1;
@@ -82,7 +83,14 @@ static const NSInteger CoordinatesConcurrentUploadCount = 2;
         return nil;
     }
     
-    [attribute saveLocation:uploadInfo.location];
+    if (uploadInfo.location) {
+        if ([NSKeyedArchiver archiveRootObject:uploadInfo.location toFile:attribute.locationURL.path]) {
+            if (error != NULL) {
+                *error = [NSError mnz_cameraUploadCanNotArchiveLocationError];
+            }
+            return nil;
+        }
+    }
 
     [NSFileManager.defaultManager copyItemAtURL:uploadInfo.thumbnailURL toURL:attribute.thumbnailURL error:error];
     if (error != NULL && *error != nil) {
