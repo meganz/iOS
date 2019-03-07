@@ -156,7 +156,6 @@
         } else {
             MEGALogDebug(@"[Camera Upload] put node %@ succeeded for %@", node.name, uploadInfo.savedLocalIdentifier);
             [AttributeUploadManager.shared uploadLocalAttribute:attributeInfo forNode:node];
-            [AttributeUploadManager.shared uploadCoordinateLocation:uploadInfo.location forNode:node];
             [self finishUploadForLocalIdentifier:uploadInfo.savedLocalIdentifier status:CameraAssetUploadStatusDone];
         }
     }]];

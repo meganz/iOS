@@ -1,8 +1,8 @@
 
-#import "AttributeFileUploadOperation.h"
+#import "AttributeUploadOperation.h"
 #import "NSFileManager+MNZCategory.h"
 
-@implementation AttributeFileUploadOperation
+@implementation AttributeUploadOperation
 
 - (instancetype)initWithAttributeURL:(NSURL *)URL node:(MEGANode *)node {
     self = [super init];

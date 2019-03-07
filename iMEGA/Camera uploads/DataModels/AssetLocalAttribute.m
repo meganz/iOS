@@ -1,9 +1,12 @@
 
 #import "AssetLocalAttribute.h"
+@import CoreLocation;
+
+static NSString * const FingerprintFileName = @"fingerprint";
 
 static NSString * const AttributeThumbnailName = @"thumbnail";
 static NSString * const AttributePreviewName = @"preview";
-static NSString * const FingerprintFileName = @"fingerprint";
+static NSString * const AttributeLocationFileName = @"location";
 
 @implementation AssetLocalAttribute
 
@@ -41,6 +44,15 @@ static NSString * const FingerprintFileName = @"fingerprint";
     return [NSFileManager.defaultManager fileExistsAtPath:self.thumbnailURL.path isDirectory:&isDirectory] && !isDirectory;
 }
 
+- (NSURL *)locationURL {
+    return [self.attributeDirectoryURL URLByAppendingPathComponent:AttributeLocationFileName isDirectory:NO];
+}
+
+- (BOOL)hasSavedLocation {
+    BOOL isDirectory;
+    return [NSFileManager.defaultManager fileExistsAtPath:self.locationURL.path isDirectory:&isDirectory] && !isDirectory;
+}
+
 - (BOOL)hasSavedAttributes {
     NSArray<NSString *> *contents = [NSFileManager.defaultManager contentsOfDirectoryAtPath:self.attributeDirectoryURL.path error:nil];
     if (contents.count == 0) {
@@ -50,6 +62,10 @@ static NSString * const FingerprintFileName = @"fingerprint";
     } else {
         return YES;
     }
+}
+
+- (BOOL)saveLocation:(CLLocation *)location {
+    return [NSKeyedArchiver archiveRootObject:location toFile:self.locationURL.path];
 }
 
 

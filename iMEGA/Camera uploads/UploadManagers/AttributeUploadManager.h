@@ -20,8 +20,6 @@ NS_ASSUME_NONNULL_BEGIN
 - (AssetLocalAttribute *)saveAttributesForUploadInfo:(AssetUploadInfo *)uploadInfo error:(NSError * _Nullable *)error;
 - (void)uploadLocalAttribute:(AssetLocalAttribute *)attribute forNode:(MEGANode *)node;
 
-- (void)uploadCoordinateLocation:(nullable CLLocation *)location forNode:(MEGANode *)node;
-
 - (void)collateLocalAttributes;
 
 @end
