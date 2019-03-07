@@ -36,7 +36,7 @@
 #import "UnavailableLinkView.h"
 
 static NSURL *linkURL;
-static NSURL *linkEncryptedURL;
+static NSURL *secondaryLinkURL;
 static URLType urlType;
 
 static NSString *emailOfNewSignUpLink;
@@ -58,12 +58,12 @@ static NSString *nodeToPresentBase64Handle;
     linkURL = link;
 }
 
-+ (NSURL *)linkEncryptedURL {
-    return linkEncryptedURL;
++ (NSURL *)secondaryLinkURL {
+    return secondaryLinkURL;
 }
 
-+ (void)setLinkEncryptedURL:(NSURL *)linkEncrypted {
-    linkEncryptedURL = linkEncrypted;
++ (void)setSecondaryLinkURL:(NSURL *)secondaryLink {
+    secondaryLinkURL = secondaryLink;
 }
 
 + (URLType)urlType {
@@ -182,8 +182,9 @@ static NSString *nodeToPresentBase64Handle;
                     [[MEGASdkManager sharedMEGAChatSdk] autojoinPublicChat:request.chatHandle delegate:autojoinOrRejoinPublicChatDelegate];
                 }
             }];
-            [[MEGASdkManager sharedMEGAChatSdk] openChatPreview:MEGALinkManager.linkURL delegate:openChatPreviewDelegate];
+            [[MEGASdkManager sharedMEGAChatSdk] openChatPreview:MEGALinkManager.secondaryLinkURL delegate:openChatPreviewDelegate];
             [MEGALinkManager resetLinkAndURLType];
+            MEGALinkManager.secondaryLinkURL = nil;
             
             break;
         }
@@ -288,7 +289,7 @@ static NSString *nodeToPresentBase64Handle;
             break;
             
         case URLTypeEncryptedLink:
-            MEGALinkManager.linkEncryptedURL = MEGALinkManager.linkURL;
+            MEGALinkManager.secondaryLinkURL = MEGALinkManager.linkURL;
             [MEGALinkManager showEncryptedLinkAlert:url.mnz_MEGAURL];
             [MEGALinkManager resetLinkAndURLType];
             break;
@@ -474,7 +475,7 @@ static NSString *nodeToPresentBase64Handle;
     }]];
     [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
         [MEGALinkManager resetLinkAndURLType];
-        MEGALinkManager.linkEncryptedURL = nil;
+        MEGALinkManager.secondaryLinkURL = nil;
     }]];
     
     [UIApplication.mnz_visibleViewController presentViewController:alertController animated:YES completion:nil];
@@ -506,7 +507,7 @@ static NSString *nodeToPresentBase64Handle;
                 
                 MEGAPhotoBrowserViewController *photoBrowserVC = [MEGAPhotoBrowserViewController photoBrowserWithMediaNodes:@[node].mutableCopy api:[MEGASdkManager sharedMEGASdkFolder] displayMode:DisplayModeFileLink presentingNode:node preferredIndex:0];
                 photoBrowserVC.publicLink = fileLinkURLString;
-                photoBrowserVC.encryptedLink = MEGALinkManager.linkEncryptedURL.absoluteString;
+                photoBrowserVC.encryptedLink = MEGALinkManager.secondaryLinkURL.absoluteString;
                 
                 [UIApplication.mnz_visibleViewController presentViewController:photoBrowserVC animated:YES completion:nil];
             } else {
@@ -527,7 +528,7 @@ static NSString *nodeToPresentBase64Handle;
     MEGANavigationController *fileLinkNavigationController = [[UIStoryboard storyboardWithName:@"Links" bundle:nil] instantiateViewControllerWithIdentifier:@"FileLinkNavigationControllerID"];
     FileLinkViewController *fileLinkVC = fileLinkNavigationController.viewControllers.firstObject;
     fileLinkVC.publicLinkString = link;
-    fileLinkVC.linkEncryptedString = MEGALinkManager.linkEncryptedURL.absoluteString;
+    fileLinkVC.linkEncryptedString = MEGALinkManager.secondaryLinkURL.absoluteString;
     fileLinkVC.request = request;
     fileLinkVC.error = error;
     
@@ -541,7 +542,7 @@ static NSString *nodeToPresentBase64Handle;
     
     folderlinkVC.isFolderRootNode = YES;
     folderlinkVC.publicLinkString = MEGALinkManager.linkURL.mnz_MEGAURL;
-    folderlinkVC.linkEncryptedString = MEGALinkManager.linkEncryptedURL.absoluteString;
+    folderlinkVC.linkEncryptedString = MEGALinkManager.secondaryLinkURL.absoluteString;
     
     [UIApplication.mnz_visibleViewController presentViewController:folderNavigationController animated:YES completion:nil];
 }

@@ -1714,7 +1714,7 @@ const NSUInteger kMaxMessagesToLoad = 256;
 
 - (void)didPressJoinButton:(UIButton *)sender {
     if ([[MEGASdkManager sharedMEGAChatSdk] initState] == MEGAChatInitAnonymous) {
-        MEGALinkManager.linkURL = self.publicChatLink;
+        MEGALinkManager.secondaryLinkURL = self.publicChatLink;
         MEGALinkManager.selectedOption = LinkOptionJoinChatLink;
         [self dismissChatRoom];
     } else {
