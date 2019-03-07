@@ -62,6 +62,7 @@ static NSString * const LivePhotoVideoResourceTemporaryName = @"video.mov";
     }
     
     if (livePhoto == nil) {
+        MEGALogError(@"[Camera Upload] %@ the requested live photo is empty", self);
         [self finishOperationWithStatus:CameraAssetUploadStatusFailed shouldUploadNextAsset:YES];
         return;
     }

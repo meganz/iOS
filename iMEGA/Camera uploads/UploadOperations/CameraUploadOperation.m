@@ -69,6 +69,7 @@ static NSString * const VideoAttributeImageName = @"AttributeImage";
     }
     
     if (self.uploadInfo.asset == nil) {
+        MEGALogError(@"[Camera Upload] %@ media asset is empty", self);
         [self finishOperationWithStatus:CameraAssetUploadStatusFailed shouldUploadNextAsset:YES];
         return;
     }
