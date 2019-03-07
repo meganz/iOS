@@ -947,18 +947,19 @@
         return;
     }
     
+    if ([call hasChangedForType:MEGAChatCallChangeTypeLocalAVFlags]) {
+        if (self.localPeer) {
+            self.muteUnmuteMicrophone.selected = !call.hasLocalAudio;
+            self.localPeer.audio = call.hasLocalAudio ? CallPeerAudioOn : CallPeerAudioOff;
+            NSUInteger index = [self.peersInCall indexOfObject:self.localPeer];
+            GroupCallCollectionViewCell *cell = (GroupCallCollectionViewCell *)[self.collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForItem:index inSection:0]];
+            [cell configureUserAudio:self.localPeer.audio];
+        }
+    }
+    
     switch (call.status) {
             
         case MEGAChatCallStatusInProgress: {
-            
-            if ([call hasChangedForType:MEGAChatCallChangeTypeLocalAVFlags]) {
-                if (self.localPeer) {
-                    self.localPeer.audio = call.hasLocalAudio;
-                    NSUInteger index = [self.peersInCall indexOfObject:self.localPeer];
-                    GroupCallCollectionViewCell *cell = (GroupCallCollectionViewCell *)[self.collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForItem:index inSection:0]];
-                    [cell configureUserAudio:self.localPeer.audio];
-                }
-            }
             
             if ([call hasChangedForType:MEGAChatCallChangeTypeRemoteAVFlags]) {
 
