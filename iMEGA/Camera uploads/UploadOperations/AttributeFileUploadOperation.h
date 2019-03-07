@@ -1,11 +1,11 @@
 
-#import "MEGAOperation.h"
+#import "MEGABackgroundTaskOperation.h"
 #import "AssetUploadInfo.h"
 #import "MEGASdkManager.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface AttributeFileUploadOperation : MEGAOperation
+@interface AttributeFileUploadOperation : MEGABackgroundTaskOperation
 
 @property (strong, nonatomic) MEGANode *node;
 @property (strong, nonatomic) NSURL *attributeURL;
