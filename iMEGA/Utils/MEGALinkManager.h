@@ -9,7 +9,7 @@
 #pragma mark - Utils to manage MEGA links
 
 @property (class, nonatomic) NSURL *linkURL;
-@property (class, nonatomic) NSURL *linkEncryptedURL;
+@property (class, nonatomic) NSURL *secondaryLinkURL;
 @property (class, nonatomic) URLType urlType;
 @property (class, nonatomic) NSString *emailOfNewSignUpLink;
 
