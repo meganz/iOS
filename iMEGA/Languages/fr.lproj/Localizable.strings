@@ -145,7 +145,7 @@
 /* Error message shown when you try to download something bigger than the space available in your device */
 "fileTooBigMessage"="Le fichier que vous tentez de télécharger est plus grand que la mémoire disponible.";
 /* Error message shown when you try to open something bigger than the free space in your device */
-"fileTooBigMessage_open"="Le fichier que vous tentez d'ouvrir est plus grand que la mémoire disponible.";
+"fileTooBigMessage_open"="Le fichier que vous tentez d’ouvrir est plus grand que la mémoire disponible.";
 /* Error title shown when you open a file or folder link and it's no longer available */
 "linkUnavailable"="Lien non disponible";
 /* */
@@ -976,7 +976,7 @@
 /* Label for any 'Limited' button, link, text, title, etc. - (String as short as possible). */
 "limited"="Limités";
 /* A message shown at registration time when users have to select their plan. The FREE 50 GB plan is subject to the achievements program. */
-"subjectToYourParticipationInOurAchievementsProgram"="Sous réserve de votre participation au programme d'objectifs.";
+"subjectToYourParticipationInOurAchievementsProgram"="Sous réserve de votre participation au programme d’objectifs.";
 /* Price asociated with the MEGA PRO account level you can subscribe */
 "productPricePerMonth"="%@ par mois";
 /* Header that help you with the upgrading process explaining that you have to choose one of the plans below  to continue */
@@ -1094,9 +1094,9 @@
 /* */
 "1Minute"="1 minute";
 /* Footer text to explain the meaning of the functionaly 'Auto-away' of your chat status. */
-"showMeAwayAfterXMinutesOfInactivity"="M’afficher comme absent après [X] minutes d'inactivité";
+"showMeAwayAfterXMinutesOfInactivity"="M’afficher comme absent après [X] minutes d’inactivité";
 /* Footer text to explain the meaning of the functionaly 'Auto-away' of your chat status. */
-"showMeAwayAfter1MinuteOfInactivity"="M’afficher comme absent après une minute d'inactivité";
+"showMeAwayAfter1MinuteOfInactivity"="M’afficher comme absent après une minute d’inactivité";
 /* Label title to enable/disable the feature of the chat status that mantains your chosen status even if you don't have connected devices */
 "statusPersistence"="Persistance de l’état";
 /* Footer text to explain the meaning of the functionaly 'Status Persistence' of your chat status. */
@@ -1687,7 +1687,7 @@
 /* Label in a cell where you can get the chat link */
 "Get Chat Link"="Obtenir le lien de la conversation";
 /* Footer text to explain what means 'Encrypted Key Rotation' */
-"Key rotation is slightly more secure, but does not allow you to create a link to the chat and new participants will not see past messages."="La rotation de la clé est légèrement plus sécurisée, mais elle ne vous permet pas de créer un lien de conversation et les nouveaux participants ne verront pas les anciens messages.";
+"Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages."="La rotation de la clé est légèrement plus sécurisée, mais elle ne vous permet pas de créer un lien de conversation et les nouveaux participants ne verront pas les anciens messages.";
 /* Alert message to advice the users that to generate a chat link they need enter a group name for the chat */
 "Before you can generate a link for this room, you need to enter a group name"="Avant de pouvoir générer un lien pour cette conversation, vous devez saisir un nom de groupe.";
 /* Label shown in a cell where you can enable a switch to get a chat link */
@@ -1696,6 +1696,18 @@
 "Delete Chat Link"="Supprimer le lien de la conversation";
 /* Button text in public chat previews that allows the user to join the chat */
 "Join"="Vous y joindre";
+/* Text shown in a notification to let the user know that has joined a public chat room after login or account creation */
+"You have joined %@"="You have joined %@";
+/* Users previewing a public chat */
+"Observers"="Observers";
+/* Alert message shown while deleting a chat link, warning about the consequences */
+"This conversation will no longer be accessible through the link you are about to delete."="This conversation will no longer be accessible through the link you are about to delete.";
+/* Management message shown in a chat when the user %@ enables the 'Encrypted Key Rotation' */
+"%@ enabled Encrypted Key Rotation"="%@ enabled Encrypted Key Rotation";
+/* Management message shown in a chat when the user %@ creates a public link for the chat */
+"%@ created a public link for the chat."="%@ created a public link for the chat.";
+/* Management message shown in a chat when the user %@ removes a public link for the chat */
+"%@ removed a public link for the chat."="%@ removed a public link for the chat.";
 /* Message show when a call cannot be established because there are too many participants in the group call */
 "Error. No more participants are allowed in this group call."="Vous n’êtes pas autorisé à vous joindre à cet appel, car le nombre maximal de participants a été atteint.";
 /* Message show when a user cannot activate the video in a group call because the max number of videos has been reached */
