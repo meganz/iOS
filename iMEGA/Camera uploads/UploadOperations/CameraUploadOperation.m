@@ -21,7 +21,7 @@
 #include "GfxProcCG.h"
 @import Photos;
 
-static NSString * const VideoAttributeImageExtension = @"MEGAVideoAttributeImage";
+static NSString * const VideoAttributeImageName = @"AttributeImage";
 
 @interface CameraUploadOperation ()
 
@@ -152,7 +152,7 @@ static NSString * const VideoAttributeImageExtension = @"MEGAVideoAttributeImage
     }
     
     if (isVideoFile) {
-        self.uploadInfo.attributeImageURL = [self.uploadInfo.fileURL URLByAppendingPathExtension:VideoAttributeImageExtension];
+        self.uploadInfo.attributeImageURL = [[self.uploadInfo.fileURL URLByAppendingPathExtension:VideoAttributeImageName] URLByAppendingPathExtension:MEGAJPGFileExtension];
         if (![self.uploadInfo.fileURL mnz_exportVideoThumbnailToImageURL:self.uploadInfo.attributeImageURL]) {
             MEGALogError(@"[Camera Upload] %@ error when to export video attribute image", self);
             [self finishOperationWithStatus:CameraAssetUploadStatusFailed shouldUploadNextAsset:YES];
