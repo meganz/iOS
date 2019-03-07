@@ -270,7 +270,7 @@
             self.createGroupBarButtonItem.title = AMLocalizedString(@"createFolderButton", nil);
             self.encryptedKeyRotationLabel.text = AMLocalizedString(@"Encrypted Key Rotation", @"Label in a cell where you can enable the 'Encrypted Key Rotation'");
             self.getChatLinkLabel.text = AMLocalizedString(@"Get Chat Link", @"Label in a cell where you can get the chat link");
-            self.keyRotationFooterLabel.text = AMLocalizedString(@"Key rotation is slightly more secure, but does not allow you to create a link to the chat and new participants will not see past messages.", @"Footer text to explain what means 'Encrypted Key Rotation'");
+            self.keyRotationFooterLabel.text = AMLocalizedString(@"Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages.", @"Footer text to explain what means 'Encrypted Key Rotation'");
             [self.createGroupBarButtonItem setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
                                                               [UIFont mnz_SFUIMediumWithSize:17],
                                                               NSFontAttributeName,

@@ -341,21 +341,21 @@
 
         case MEGAChatMessageTypePublicHandleCreate: {
             NSString *senderString = [self actionAuthorNameInChatListItem:item];
-            NSString *publicHandleCreated = [NSString stringWithFormat:@"%@ created a public link for the chat.", senderString];
+            NSString *publicHandleCreated = [NSString stringWithFormat:AMLocalizedString(@"%@ created a public link for the chat.", @"Management message shown in a chat when the user %@ creates a public link for the chat"), senderString];
             self.chatLastMessage.text = publicHandleCreated;
             break;
         }
             
         case MEGAChatMessageTypePublicHandleDelete: {
             NSString *senderString = [self actionAuthorNameInChatListItem:item];
-            NSString *publicHandleRemoved = [NSString stringWithFormat:@"%@ removed a public link for the chat.", senderString];
+            NSString *publicHandleRemoved = [NSString stringWithFormat:AMLocalizedString(@"%@ removed a public link for the chat.", @"Management message shown in a chat when the user %@ removes a public link for the chat"), senderString];
             self.chatLastMessage.text = publicHandleRemoved;
             break;
         }
             
         case MEGAChatMessageTypeSetPrivateMode: {
             NSString *senderString = [self actionAuthorNameInChatListItem:item];
-            NSString *setPrivateMode = [NSString stringWithFormat:@"%@ enable Encryption Key Rotation.", senderString];
+            NSString *setPrivateMode = [NSString stringWithFormat:AMLocalizedString(@"%@ enabled Encrypted Key Rotation", @"Management message shown in a chat when the user %@ enables the 'Encrypted Key Rotation'"), senderString];
             self.chatLastMessage.text = setPrivateMode;
             break;
         }
