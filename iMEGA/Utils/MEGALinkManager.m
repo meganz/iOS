@@ -1,6 +1,8 @@
 
 #import "MEGALinkManager.h"
 
+#import <UserNotifications/UserNotifications.h>
+
 #import "SAMKeychain.h"
 #import "SVProgressHUD.h"
 #import "UIImage+GKContact.h"
@@ -14,6 +16,7 @@
 #import "ConfirmAccountViewController.h"
 #import "ContactRequestsViewController.h"
 #import "CustomModalAlertViewController.h"
+#import "DevicePermissionsHelper.h"
 #import "FileLinkViewController.h"
 #import "FolderLinkViewController.h"
 #import "Helper.h"
@@ -168,11 +171,43 @@ static NSString *nodeToPresentBase64Handle;
                 if (error.type != MEGAErrorTypeApiOk && error.type != MEGAErrorTypeApiEExist) {
                     return;
                 }
+                
+                uint64_t chatId = request.chatHandle;
+                NSString *chatTitle = request.text;
                 MEGAChatGenericRequestDelegate *autojoinOrRejoinPublicChatDelegate = [[MEGAChatGenericRequestDelegate alloc] initWithCompletion:^(MEGAChatRequest * _Nonnull request, MEGAChatError * _Nonnull error) {
                     if (!error.type) {
-                        MainTabBarController *mainTBC = (MainTabBarController *)UIApplication.sharedApplication.keyWindow.rootViewController;
-                        mainTBC.selectedIndex = CHAT;
-                        [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"done", nil)];
+                        NSString *identifier = [MEGASdk base64HandleForUserHandle:chatId];
+                        NSString *notificationText = [NSString stringWithFormat:AMLocalizedString(@"You have joined %@", @"Text shown in a notification to let the user know that has joined a public chat room after login or account creation"), chatTitle];
+                        if (DevicePermissionsHelper.shouldAskForNotificationsPermissions) {
+                            [SVProgressHUD showSuccessWithStatus:notificationText];
+                        } else {
+                            [DevicePermissionsHelper notificationsPermissionWithCompletionHandler:^(BOOL granted) {
+                                if (@available(iOS 10.0, *)) {
+                                    if (granted) {
+                                        UNMutableNotificationContent *content = [UNMutableNotificationContent new];
+                                        content.body = notificationText;
+                                        content.sound = UNNotificationSound.defaultSound;
+                                        content.userInfo = @{@"chatId" : @(chatId)};
+                                        UNTimeIntervalNotificationTrigger *trigger = [UNTimeIntervalNotificationTrigger triggerWithTimeInterval:1 repeats:NO];
+                                        UNNotificationRequest *request = [UNNotificationRequest requestWithIdentifier:identifier content:content trigger:trigger];
+                                        [UNUserNotificationCenter.currentNotificationCenter addNotificationRequest:request withCompletionHandler:^(NSError * _Nullable error) {
+                                            if (error) {
+                                                [SVProgressHUD showSuccessWithStatus:notificationText];
+                                            }
+                                        }];
+                                    } else {
+                                        [SVProgressHUD showSuccessWithStatus:notificationText];
+                                    }
+                                } else {
+                                    UILocalNotification* localNotification = [[UILocalNotification alloc] init];
+                                    localNotification.fireDate = [NSDate dateWithTimeIntervalSinceNow:1];
+                                    localNotification.alertBody = notificationText;
+                                    localNotification.timeZone = NSTimeZone.defaultTimeZone;
+                                    localNotification.userInfo = @{@"chatId" : @(chatId)};
+                                    [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
+                                }
+                            }];
+                        }
                     }
                 }];
                 MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:request.chatHandle];
