@@ -9,10 +9,14 @@
 #import "NSString+MNZCategory.h"
 @import CoreLocation;
 
+static const NSInteger PreviewConcurrentUploadCount = 1;
+static const NSInteger CoordinatesConcurrentUploadCount = 2;
+
 @interface AttributeUploadManager ()
 
 @property (strong, nonatomic) NSOperationQueue *thumbnailUploadOperationQueue;
-@property (strong, nonatomic) NSOperationQueue *attributeUploadOerationQueue;
+@property (strong, nonatomic) NSOperationQueue *previewUploadOperationQueue;
+@property (strong, nonatomic) NSOperationQueue *coordinatesUploadOperationQueue;
 @property (strong, nonatomic) NSOperationQueue *attributeScanQueue;
 
 @end
@@ -35,9 +39,14 @@
         _thumbnailUploadOperationQueue = [[NSOperationQueue alloc] init];
         _thumbnailUploadOperationQueue.qualityOfService = NSQualityOfServiceUserInteractive;
         
-        _attributeUploadOerationQueue = [[NSOperationQueue alloc] init];
-        _attributeUploadOerationQueue.qualityOfService = NSQualityOfServiceBackground;
+        _previewUploadOperationQueue = [[NSOperationQueue alloc] init];
+        _previewUploadOperationQueue.qualityOfService = NSQualityOfServiceBackground;
+        _previewUploadOperationQueue.maxConcurrentOperationCount = PreviewConcurrentUploadCount;
         
+        _coordinatesUploadOperationQueue = [[NSOperationQueue alloc] init];
+        _coordinatesUploadOperationQueue.qualityOfService = NSQualityOfServiceUtility;
+        _coordinatesUploadOperationQueue.maxConcurrentOperationCount = CoordinatesConcurrentUploadCount;
+
         _attributeScanQueue = [[NSOperationQueue alloc] init];
         _attributeScanQueue.maxConcurrentOperationCount = 1;
         _attributeScanQueue.qualityOfService = NSQualityOfServiceUtility;
@@ -53,7 +62,8 @@
 
 - (void)waitUntilAllAttributeUploadsAreFinished {
     [self waitUntilAllThumbnailUploadsAreFinished];
-    [self.attributeUploadOerationQueue waitUntilAllOperationsAreFinished];
+    [self.previewUploadOperationQueue waitUntilAllOperationsAreFinished];
+    [self.coordinatesUploadOperationQueue waitUntilAllOperationsAreFinished];
 }
 
 #pragma mark - upload coordinate
@@ -63,7 +73,7 @@
         return;
     }
     
-    [self.attributeUploadOerationQueue addOperation:[[CoordinatesUploadOperation alloc] initWithLocation:location node:node]];
+    [self.coordinatesUploadOperationQueue addOperation:[[CoordinatesUploadOperation alloc] initWithLocation:location node:node]];
 }
 
 #pragma mark - upload preview and thumbnail files
@@ -103,7 +113,7 @@
     }
     
     if ([NSFileManager.defaultManager fileExistsAtPath:attribute.previewURL.path]) {
-        [self.attributeUploadOerationQueue addOperation:[[PreviewUploadOperation alloc] initWithAttributeURL:attribute.previewURL node:node]];
+        [self.previewUploadOperationQueue addOperation:[[PreviewUploadOperation alloc] initWithAttributeURL:attribute.previewURL node:node]];
     } else {
         MEGALogError(@"[Camera Upload] No preview file found for node %@ in %@", node.name, attribute.attributeDirectoryURL.lastPathComponent);
     }
@@ -163,7 +173,7 @@
             [attribute.previewURL mnz_cachePreviewForNode:node];
         } else if (![self hasPendingPreviewOperationForNode:node]) {
             MEGALogDebug(@"[Camera Upload] retry preview upload for %@ in %@", node.name, attribute.attributeDirectoryURL.lastPathComponent);
-            [self.attributeUploadOerationQueue addOperation:[[PreviewUploadOperation alloc] initWithAttributeURL:attribute.previewURL node:node]];
+            [self.previewUploadOperationQueue addOperation:[[PreviewUploadOperation alloc] initWithAttributeURL:attribute.previewURL node:node]];
         }
     }
 }
@@ -189,7 +199,7 @@
 - (BOOL)hasPendingPreviewOperationForNode:(MEGANode *)node {
     BOOL hasPendingOperation = NO;
     
-    for (NSOperation *operation in self.attributeUploadOerationQueue.operations) {
+    for (NSOperation *operation in self.previewUploadOperationQueue.operations) {
         if ([operation isMemberOfClass:[PreviewUploadOperation class]]) {
             PreviewUploadOperation *previewUploadOperation = (PreviewUploadOperation *)operation;
             if (previewUploadOperation.node.handle == node.handle) {
