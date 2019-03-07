@@ -560,6 +560,7 @@ const NSUInteger kMaxMessagesToLoad = 256;
         }
         
         self.navigationItem.rightBarButtonItems = barButtons;
+        [self updateNavigationBarButtonsState];
     }
 }
 
