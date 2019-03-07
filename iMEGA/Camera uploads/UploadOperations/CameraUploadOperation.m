@@ -330,6 +330,8 @@ static NSString * const VideoAttributeImageName = @"AttributeImage";
         MEGALogDebug(@"[Camera Upload] %@ finishes with status: %@", self, [AssetUploadStatus stringForStatus:status]);
         [CameraUploadRecordManager.shared updateUploadRecord:self.uploadRecord withStatus:status error:nil];
         
+        [CameraUploadRecordManager.shared refaultObject:self.uploadRecord];
+        
         if (status != CameraAssetUploadStatusUploading) {
             [NSFileManager.defaultManager removeItemIfExistsAtURL:self.uploadInfo.directoryURL];
         }

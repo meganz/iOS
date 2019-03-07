@@ -22,6 +22,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (nullable NSString *)savedIdentifierInRecord:(MOAssetUploadRecord *)record;
 
+#pragma mark - memory management
+
+- (void)refaultObject:(NSManagedObject *)object;
+
 #pragma mark - fetch records
 
 - (CameraAssetUploadStatus)uploadStatusForIdentifier:(NSString *)identifier;
@@ -60,7 +64,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - create records
 
-- (void)createUploadRecordsIfNeededByAssets:(NSArray<PHAsset *> *)assets;
+- (void)createUploadRecordsByAssets:(NSArray<PHAsset *> *)assets shouldCheckExistence:(BOOL)checkExistence;
 
 - (void)createAdditionalRecordsIfNeededForRecords:(NSArray<MOAssetUploadRecord *> *)uploadRecords withMediaSubtype:(PHAssetMediaSubtype)subtype;
 

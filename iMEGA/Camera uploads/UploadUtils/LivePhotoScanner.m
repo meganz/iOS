@@ -5,6 +5,7 @@
 #import "SavedIdentifierParser.h"
 #import "CameraUploadManager+Settings.h"
 #import "PHAsset+CameraUpload.h"
+#import "PHFetchResult+CameraUpload.h"
 
 @implementation LivePhotoScanner
 
@@ -35,9 +36,12 @@
 
 - (void)scanLivePhotosInFetchResult:(PHFetchResult<PHAsset *> *)result {
     [CameraUploadRecordManager.shared.backgroundContext performBlockAndWait:^{
+        NSArray<MOAssetUploadRecord *> *livePhotoRecords = [CameraUploadRecordManager.shared fetchUploadRecordsByMediaTypes:@[@(PHAssetMediaTypeImage)] additionalMediaSubtypes:PHAssetMediaSubtypePhotoLive error:nil];
+        NSArray<PHAsset *> *newAssets = [result findNewLivePhotoAssetsByUploadRecords:livePhotoRecords];
         SavedIdentifierParser *parser = [[SavedIdentifierParser alloc] init];
-        for (PHAsset *asset in result) {
-            [self createLivePhotoRecordIfNeededForAsset:asset inContext:CameraUploadRecordManager.shared.backgroundContext withIdentifierParser:parser];
+        for (PHAsset *asset in newAssets) {
+            NSString *parsedIdentifier = [parser savedIdentifierForLocalIdentifier:asset.localIdentifier mediaSubtype:PHAssetMediaSubtypePhotoLive];
+            [self createLivePhotoRecordForAsset:asset inContext:CameraUploadRecordManager.shared.backgroundContext withParsedIdentifier:parsedIdentifier];
         }
         
         [CameraUploadRecordManager.shared saveChangesIfNeededWithError:nil];
