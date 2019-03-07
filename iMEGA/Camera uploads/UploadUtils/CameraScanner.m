@@ -7,6 +7,7 @@
 #import "CameraUploadManager+Settings.h"
 #import "LivePhotoScanner.h"
 #import "PHFetchOptions+CameraUpload.h"
+#import "PHFetchResult+CameraUpload.h"
 
 @interface CameraScanner () <PHPhotoLibraryChangeObserver>
 
@@ -50,21 +51,25 @@
         [CameraUploadRecordManager.shared.backgroundContext performBlockAndWait:^{
             if ([CameraUploadRecordManager.shared uploadRecordsCountByMediaTypes:mediaTypes error:nil] == 0) {
                 MEGALogDebug(@"[Camera Upload] initial save with asset count %lu", (unsigned long)self.fetchResult.count);
-                [CameraUploadRecordManager.shared saveInitialUploadRecordsByAssetFetchResult:self.fetchResult error:nil];
-                if (CameraUploadManager.isLivePhotoSupported) {
-                    [self.livePhotoScanner saveInitialLivePhotoRecordsInFetchResult:self.fetchResult];
+                @autoreleasepool {
+                    [CameraUploadRecordManager.shared saveInitialUploadRecordsByAssetFetchResult:self.fetchResult error:nil];
+                    if (CameraUploadManager.isLivePhotoSupported) {
+                        [self.livePhotoScanner saveInitialLivePhotoRecordsInFetchResult:self.fetchResult];
+                    }
                 }
             } else {
-                NSArray<MOAssetUploadRecord *> *records = [CameraUploadRecordManager.shared fetchUploadRecordsByMediaTypes:mediaTypes includeAdditionalMediaSubtypes:NO error:nil];
-                NSArray<PHAsset *> *newAssets = [self findNewAssetsByComparingFetchResult:self.fetchResult uploadRecords:records];
-                MEGALogDebug(@"[Camera Upload] new assets scanned with count %lu", (unsigned long)newAssets.count);
-                if (newAssets.count > 0) {
-                    [CameraUploadRecordManager.shared createUploadRecordsIfNeededByAssets:newAssets];
-                    [CameraUploadRecordManager.shared saveChangesIfNeededWithError:nil];
-                }
-                
-                if (CameraUploadManager.isLivePhotoSupported) {
-                    [self.livePhotoScanner scanLivePhotosInFetchResult:self.fetchResult];
+                @autoreleasepool {
+                    NSArray<MOAssetUploadRecord *> *records = [CameraUploadRecordManager.shared fetchUploadRecordsByMediaTypes:mediaTypes includeAdditionalMediaSubtypes:NO error:nil];
+                    NSArray<PHAsset *> *newAssets = [self.fetchResult findNewAssetsByUploadRecords:records];
+                    MEGALogDebug(@"[Camera Upload] new assets scanned with count %lu", (unsigned long)newAssets.count);
+                    if (newAssets.count > 0) {
+                        [CameraUploadRecordManager.shared createUploadRecordsByAssets:newAssets shouldCheckExistence:NO];
+                        [CameraUploadRecordManager.shared saveChangesIfNeededWithError:nil];
+                    }
+                    
+                    if (CameraUploadManager.isLivePhotoSupported) {
+                        [self.livePhotoScanner scanLivePhotosInFetchResult:self.fetchResult];
+                    }
                 }
             }
             
@@ -75,35 +80,6 @@
             completion();
         }
     }];
-}
-
-- (NSArray<PHAsset *> *)findNewAssetsByComparingFetchResult:(PHFetchResult<PHAsset *> *)result uploadRecords:(NSArray<MOAssetUploadRecord *> *)records {
-    if (result.count == 0) {
-        return @[];
-    }
-    
-    NSMutableArray<NSString *> *scannedLocalIds = [NSMutableArray arrayWithCapacity:records.count];
-    for (MOAssetUploadRecord *record in records) {
-        NSString *identifier = [CameraUploadRecordManager.shared savedIdentifierInRecord:record];
-        if (identifier) {
-            [scannedLocalIds addObject:identifier];
-        }
-    }
-    NSComparator localIdComparator = ^(NSString *s1, NSString *s2) {
-        return [s1 compare:s2];
-    };
-    
-    NSArray<NSString *> *sortedLocalIds = [scannedLocalIds sortedArrayUsingComparator:localIdComparator];
-
-    NSMutableArray<PHAsset *> *newAssets = [NSMutableArray array];
-    for (PHAsset *asset in result) {
-        NSUInteger matchingIndex = [sortedLocalIds indexOfObject:asset.localIdentifier inSortedRange:NSMakeRange(0, sortedLocalIds.count) options:NSBinarySearchingFirstEqual usingComparator:localIdComparator];
-        if (matchingIndex == NSNotFound) {
-            [newAssets addObject:asset];
-        }
-    }
-    
-    return [newAssets copy];
 }
 
 #pragma mark - PHPhotoLibraryChangeObserver
@@ -129,7 +105,7 @@
             dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0), ^{
                 MEGALogDebug(@"[Camera Upload] new assets detected: %@", newAssets);
                 [CameraUploadRecordManager.shared.backgroundContext performBlockAndWait:^{
-                    [CameraUploadRecordManager.shared createUploadRecordsIfNeededByAssets:newAssets];
+                    [CameraUploadRecordManager.shared createUploadRecordsByAssets:newAssets shouldCheckExistence:YES];
                     [self.livePhotoScanner scanLivePhotosInAssets:newAssets];
                     [CameraUploadRecordManager.shared saveChangesIfNeededWithError:nil];
                 }];

@@ -62,6 +62,7 @@ static const NSUInteger MaximumUploadRetryPerLoginCount = 800;
     dispatch_sync(self.serialQueueForContext, ^{
         if (self->_backgroundContext == nil) {
             self->_backgroundContext = [MEGAStore.shareInstance newBackgroundContext];
+            self->_backgroundContext.undoManager = nil;
         }
     });
     
@@ -87,6 +88,14 @@ static const NSUInteger MaximumUploadRetryPerLoginCount = 800;
     return identifier;
 }
 
+#pragma mark - memory management
+
+- (void)refaultObject:(NSManagedObject *)object {
+    [self.backgroundContext performBlock:^{
+        [self.backgroundContext refreshObject:object mergeChanges:NO];
+    }];
+}
+
 #pragma mark - fetch records
 
 - (CameraAssetUploadStatus)uploadStatusForIdentifier:(NSString *)identifier {
@@ -103,6 +112,7 @@ static const NSUInteger MaximumUploadRetryPerLoginCount = 800;
 
 - (NSArray<MOAssetUploadRecord *> *)fetchUploadRecordsByIdentifier:(NSString *)identifier shouldPrefetchErrorRecords:(BOOL)prefetchErrorRecords error:(NSError *__autoreleasing  _Nullable *)error {
     NSFetchRequest *request = MOAssetUploadRecord.fetchRequest;
+    request.returnsObjectsAsFaults = NO;
     request.predicate = [NSPredicate predicateWithFormat:@"localIdentifier == %@", identifier];
     if (prefetchErrorRecords) {
         [request setRelationshipKeyPathsForPrefetching:@[@"errorPerLaunch", @"errorPerLogin"]];
@@ -116,6 +126,7 @@ static const NSUInteger MaximumUploadRetryPerLoginCount = 800;
     __block NSError *coreDataError = nil;
     [self.backgroundContext performBlockAndWait:^{
         NSFetchRequest *request = MOAssetUploadRecord.fetchRequest;
+        request.returnsObjectsAsFaults = NO;
         request.fetchLimit = fetchLimit;
         request.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"creationDate" ascending:NO]];
         NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(status IN %@) AND (mediaType == %@)", statuses, @(mediaType)];
@@ -141,6 +152,7 @@ static const NSUInteger MaximumUploadRetryPerLoginCount = 800;
 
 - (NSArray<MOAssetUploadRecord *> *)fetchUploadRecordsByStatuses:(NSArray<NSNumber *> *)statuses error:(NSError * _Nullable __autoreleasing *)error {
     NSFetchRequest *request = MOAssetUploadRecord.fetchRequest;
+    request.returnsObjectsAsFaults = NO;
     request.predicate = [NSPredicate predicateWithFormat:@"status IN %@", statuses];
     return [self fetchUploadRecordsByFetchRequest:request error:error];
 }
@@ -163,6 +175,7 @@ static const NSUInteger MaximumUploadRetryPerLoginCount = 800;
 
 - (NSArray<MOAssetUploadRecord *> *)fetchUploadRecordsByMediaTypes:(NSArray<NSNumber *> *)mediaTypes includeAdditionalMediaSubtypes:(BOOL)includeAdditionalMediaSubtypes error:(NSError * _Nullable __autoreleasing *)error {
     NSFetchRequest *request = MOAssetUploadRecord.fetchRequest;
+    request.returnsObjectsAsFaults = NO;
     NSPredicate *mediaTypePredicate = [NSPredicate predicateWithFormat:@"mediaType IN %@", mediaTypes];
     
     if (includeAdditionalMediaSubtypes) {
@@ -177,6 +190,7 @@ static const NSUInteger MaximumUploadRetryPerLoginCount = 800;
 
 - (NSArray<MOAssetUploadRecord *> *)fetchUploadRecordsByMediaTypes:(NSArray<NSNumber *> *)mediaTypes mediaSubtypes:(PHAssetMediaSubtype)subtypes includeAdditionalMediaSubtypes:(BOOL)includeAdditionalMediaSubtypes error:(NSError * _Nullable __autoreleasing *)error {
     NSFetchRequest *request = MOAssetUploadRecord.fetchRequest;
+    request.returnsObjectsAsFaults = NO;
     NSPredicate *mediaTypePredicate = [NSPredicate predicateWithFormat:@"mediaType IN %@", mediaTypes];
     NSPredicate *mediaSubtypesPredicate = [NSPredicate predicateWithFormat:@"(mediaSubtypes != %@) AND ((mediaSubtypes & %lu) == %lu)", NSNull.null, subtypes, subtypes];
     
@@ -192,6 +206,7 @@ static const NSUInteger MaximumUploadRetryPerLoginCount = 800;
 
 - (NSArray<MOAssetUploadRecord *> *)fetchUploadRecordsByMediaTypes:(NSArray<NSNumber *> *)mediaTypes additionalMediaSubtypes:(PHAssetMediaSubtype)mediaSubtypes error:(NSError *__autoreleasing  _Nullable *)error {
     NSFetchRequest *request = MOAssetUploadRecord.fetchRequest;
+    request.returnsObjectsAsFaults = NO;
     NSPredicate *mediaTypePredicate = [NSPredicate predicateWithFormat:@"mediaType IN %@", mediaTypes];
     NSPredicate *mediaSubtypePredicate = [NSPredicate predicateWithFormat:@"(additionalMediaSubtypes != %@) AND ((additionalMediaSubtypes & %lu) == %lu)", NSNull.null, mediaSubtypes, mediaSubtypes];
     request.predicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[mediaTypePredicate, mediaSubtypePredicate]];
@@ -278,11 +293,15 @@ static const NSUInteger MaximumUploadRetryPerLoginCount = 800;
 
 #pragma mark - create records
 
-- (void)createUploadRecordsIfNeededByAssets:(NSArray<PHAsset *> *)assets {
+- (void)createUploadRecordsByAssets:(NSArray<PHAsset *> *)assets shouldCheckExistence:(BOOL)checkExistence {
     if (assets.count > 0) {
         [self.backgroundContext performBlockAndWait:^{
             for (PHAsset *asset in assets) {
-                if ([self fetchUploadRecordsByIdentifier:asset.localIdentifier shouldPrefetchErrorRecords:NO error:nil].count == 0) {
+                if (checkExistence) {
+                    if ([self fetchUploadRecordsByIdentifier:asset.localIdentifier shouldPrefetchErrorRecords:NO error:nil].count == 0) {
+                        [self createUploadRecordFromAsset:asset];
+                    }
+                } else {
                     [self createUploadRecordFromAsset:asset];
                 }
             }

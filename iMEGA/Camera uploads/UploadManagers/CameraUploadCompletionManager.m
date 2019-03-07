@@ -188,6 +188,8 @@
         
         [NSFileManager.defaultManager removeItemIfExistsAtURL:[NSURL mnz_assetDirectoryURLForLocalIdentifier:localIdentifier]];
         
+        [CameraUploadRecordManager.shared refaultObject:record];
+        
         if (status == CameraAssetUploadStatusDone) {
             dispatch_async(dispatch_get_main_queue(), ^{
                 [NSNotificationCenter.defaultCenter postNotificationName:MEGACameraUploadAssetUploadDoneNotificationName object:nil];
