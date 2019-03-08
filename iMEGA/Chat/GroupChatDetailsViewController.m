@@ -483,7 +483,7 @@
             break;
             
         case 5:
-            height = ((self.chatRoom.ownPrivilege >= MEGAChatRoomPrivilegeModerator) && self.chatRoom.isPublicChat) ? 70.0f : 0.1f;
+            height = ((self.chatRoom.ownPrivilege >= MEGAChatRoomPrivilegeModerator) && self.chatRoom.isPublicChat) ? UITableViewAutomaticDimension : 0.1f;
             break;
             
         case 6:
