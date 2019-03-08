@@ -1,6 +1,11 @@
 
 #import <Foundation/Foundation.h>
 
+#pragma mark - global constants
+
+extern NSString * const MEGAiOSAppUserAgent;
+extern NSString * const MEGAiOSAppKey;
+
 #pragma mark - global notifications
 
 extern NSString * const MEGALogoutNotificationName;

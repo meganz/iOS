@@ -6,7 +6,6 @@
 
 + (MEGASdk *)sharedMEGASdk;
 + (MEGAChatSdk *)sharedMEGAChatSdk;
-+ (MEGASdk *)createMEGASdk;
 
 + (void)createSharedMEGAChatSdk;
 + (void)destroySharedMEGAChatSdk;
