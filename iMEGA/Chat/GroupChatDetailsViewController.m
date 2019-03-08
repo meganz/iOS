@@ -574,14 +574,16 @@
             [[MEGASdkManager sharedMEGAChatSdk] queryChatLink:self.chatRoom.chatId delegate:delegate];
 
             UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
-            [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"copyLink", @"Title for a button to copy the link to the clipboard") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            UIAlertAction *copyLinkAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"copyLink", @"Title for a button to copy the link to the clipboard") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
                 if (link) {
                     [UIPasteboard generalPasteboard].string = link;
                     [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"copiedToTheClipboard", @"Text of the button after the links were copied to the clipboard")];
                 } else {
                     [SVProgressHUD showErrorWithStatus:@"Error: link doesn't exist"];
                 }
-            }]];
+            }];
+            [copyLinkAlertAction mnz_setTitleTextColor:UIColor.mnz_black333333];
+            [alertController addAction:copyLinkAlertAction];
             
             [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"Delete Chat Link", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
                 UIAlertController *deleteAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"Delete Chat Link", nil) message:AMLocalizedString(@"This conversation will no longer be accessible through the link you are about to delete.", @"Alert message shown while deleting a chat link, warning about the consequences") preferredStyle:UIAlertControllerStyleAlert];
@@ -598,6 +600,12 @@
             }]];
             [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:nil]];
             
+            if (UIDevice.currentDevice.iPadDevice) {
+                alertController.modalPresentationStyle = UIModalPresentationPopover;
+                GroupChatDetailsViewTableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
+                alertController.popoverPresentationController.sourceRect = cell.contentView.frame;
+                alertController.popoverPresentationController.sourceView = cell.contentView;
+            }
             [self presentViewController:alertController animated:YES completion:nil];
             break;
         }
@@ -648,6 +656,10 @@
         }
             
         case 7:
+            if (!MEGASdkManager.sharedMEGASdk.isLoggedIn) {
+                break;
+            }
+            
             if ((indexPath.row == 0) && (self.chatRoom.ownPrivilege == MEGAChatRoomPrivilegeModerator)) {
                 [self addParticipant];
                 [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
@@ -693,23 +705,21 @@
                         [[MEGASdkManager sharedMEGAChatSdk] removeFromChat:self.chatRoom.chatId userHandle:userHandle delegate:self];
                     }];
                     [permissionsAlertController addAction:removeParticipantAlertAction];
-                    
-                    
-                    if ([[UIDevice currentDevice] iPadDevice]) {
-                        permissionsAlertController.modalPresentationStyle = UIModalPresentationPopover;
-                        UIPopoverPresentationController *popoverPresentationController = [permissionsAlertController popoverPresentationController];
-                        GroupChatDetailsViewTableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
-                        popoverPresentationController.sourceRect = cell.contentView.frame;
-                        popoverPresentationController.sourceView = cell.contentView;
-                    }
-                    
                 } else {
                     MEGAUser *user = [[MEGASdkManager sharedMEGASdk] contactForEmail:[self.chatRoom peerEmailByHandle:userHandle]];
                     if (!user) {
                         [permissionsAlertController addAction:[self sendParticipantContactRequestAlertActionForHandle:userHandle]];
                     }
                 }
+                
                 if (permissionsAlertController.actions.count > 1) {
+                    if (UIDevice.currentDevice.iPadDevice) {
+                        permissionsAlertController.modalPresentationStyle = UIModalPresentationPopover;
+                        GroupChatDetailsViewTableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
+                        permissionsAlertController.popoverPresentationController.sourceRect = cell.contentView.frame;
+                        permissionsAlertController.popoverPresentationController.sourceView = cell.contentView;
+                    }
+                    
                     [self presentViewController:permissionsAlertController animated:YES completion:nil];
                 }
             }
