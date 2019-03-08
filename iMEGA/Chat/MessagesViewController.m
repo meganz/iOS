@@ -393,8 +393,6 @@ const NSUInteger kMaxMessagesToLoad = 256;
     self.mainStackView.userInteractionEnabled = YES;
     [self.mainStackView setContentCompressionResistancePriority:UILayoutPriorityDefaultLow forAxis:UILayoutConstraintAxisHorizontal];
     
-    CGFloat width;
-    
     UIInterfaceOrientation orientation = UIApplication.sharedApplication.statusBarOrientation;
     if (UIInterfaceOrientationIsPortrait(orientation)) {
         UIStackView *titleView = [[UIStackView alloc] init];
@@ -409,8 +407,7 @@ const NSUInteger kMaxMessagesToLoad = 256;
         [self.mainStackView addArrangedSubview:titleView];
         [self.mainStackView addArrangedSubview:self.navigationSubtitleLabel];
         
-        width = self.navigationController.navigationBar.bounds.size.width - 80 - 50 * (self.navigationItem.rightBarButtonItems.count);
-        
+        CGFloat width = self.navigationController.navigationBar.bounds.size.width - 80 - 50 * (self.navigationItem.rightBarButtonItems.count);
         
         [self.mainStackView addConstraint:[NSLayoutConstraint constraintWithItem:self.mainStackView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual
                                                                           toItem:nil
