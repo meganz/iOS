@@ -53,7 +53,7 @@
                 MEGALogDebug(@"[Camera Upload] initial save with asset count %lu", (unsigned long)self.fetchResult.count);
                 @autoreleasepool {
                     [CameraUploadRecordManager.shared saveInitialUploadRecordsByAssetFetchResult:self.fetchResult error:nil];
-                    if (CameraUploadManager.isLivePhotoSupported) {
+                    if (CameraUploadManager.isLivePhotoSupported && [mediaTypes containsObject:@(PHAssetMediaTypeImage)]) {
                         [self.livePhotoScanner saveInitialLivePhotoRecordsInFetchResult:self.fetchResult];
                     }
                 }
@@ -67,7 +67,7 @@
                         [CameraUploadRecordManager.shared saveChangesIfNeededWithError:nil];
                     }
                     
-                    if (CameraUploadManager.isLivePhotoSupported) {
+                    if (CameraUploadManager.isLivePhotoSupported && [mediaTypes containsObject:@(PHAssetMediaTypeImage)]) {
                         [self.livePhotoScanner scanLivePhotosInFetchResult:self.fetchResult];
                     }
                 }
