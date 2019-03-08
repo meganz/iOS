@@ -26,6 +26,9 @@
 #import "PhotosViewController+MNZCategory.h"
 #import "UploadStats.h"
 
+static const NSTimeInterval MEGAPhotosReloadTimeInterval = 2;
+static const NSTimeInterval MEGAPhotosReloadToleranceTimeInterval = 0.3;
+
 @interface PhotosViewController () <UICollectionViewDelegateFlowLayout, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAPhotoBrowserDelegate> {
     BOOL allNodesSelected;
 }
@@ -63,6 +66,9 @@
 @property (nonatomic) MEGACameraUploadsState currentState;
 
 @property (nonatomic) NSIndexPath *browsingIndexPath;
+
+@property (nonatomic) BOOL hasNodesUpdate;
+@property (strong, nonatomic) NSTimer *reloadTimer;
 
 @end
 
@@ -106,8 +112,11 @@
 - (void)viewDidLayoutSubviews {
     [super viewDidLayoutSubviews];
     
-    self.cellSize = [self.photosCollectionView mnz_calculateCellSizeForInset:self.cellInset];
-    [self reloadUI];
+    CGSize cellSize = [self.photosCollectionView mnz_calculateCellSizeForInset:self.cellInset];
+    if (!CGSizeEqualToSize(cellSize, self.cellSize)) {
+        self.cellSize = cellSize;
+        [self reloadUI];
+    }
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -124,6 +133,8 @@
             });
         }
     }];
+    
+    [self setupReloadTimer];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -134,6 +145,8 @@
     
     [[MEGASdkManager sharedMEGASdk] removeMEGARequestDelegate:self];
     [[MEGASdkManager sharedMEGASdk] removeMEGAGlobalDelegate:self];
+    
+    [self invalidateReloadTimerIfNeeded];
 }
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations {
@@ -151,8 +164,11 @@
         if (self.photosByMonthYearArray.count == 0) {
             [self.photosCollectionView reloadEmptyDataSet];
         } else {
-            self.cellSize = [self.photosCollectionView mnz_calculateCellSizeForInset:self.cellInset];
-            [self.photosCollectionView reloadData];
+            CGSize cellSize = [self.photosCollectionView mnz_calculateCellSizeForInset:self.cellInset];
+            if (!CGSizeEqualToSize(cellSize, self.cellSize)) {
+                self.cellSize = cellSize;
+                [self.photosCollectionView reloadData];
+            }
         }
     } completion:nil];
 }
@@ -361,6 +377,31 @@
     }
     
     return nil;
+}
+
+#pragma mark - reload timer
+
+- (void)setupReloadTimer {
+    if (self.reloadTimer.isValid) {
+        return;
+    }
+    
+    self.reloadTimer = [NSTimer scheduledTimerWithTimeInterval:MEGAPhotosReloadTimeInterval target:self selector:@selector(reloadTimerFired) userInfo:nil repeats:YES];
+    self.reloadTimer.tolerance = MEGAPhotosReloadToleranceTimeInterval;
+}
+
+- (void)invalidateReloadTimerIfNeeded {
+    if (self.reloadTimer.isValid) {
+        [self.reloadTimer invalidate];
+        self.reloadTimer = nil;
+    }
+}
+
+- (void)reloadTimerFired {
+    if (self.hasNodesUpdate) {
+        self.hasNodesUpdate = NO;
+        [self reloadUI];
+    }
 }
 
 #pragma mark - IBAction
@@ -867,7 +908,7 @@
 #pragma mark - MEGAGlobalDelegate
 
 - (void)onNodesUpdate:(MEGASdk *)api nodeList:(MEGANodeList *)nodeList {
-    [self reloadUI];
+    self.hasNodesUpdate = YES;
 }
 
 @end
