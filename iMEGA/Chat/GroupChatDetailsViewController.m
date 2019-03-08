@@ -760,6 +760,12 @@
                 [self.navigationController popToRootViewControllerAnimated:YES];
                 break;
                 
+            case MEGAChatListItemChangeTypeUpdatePreviewers: {
+                GroupChatDetailsViewTableViewCell *cell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:6]];
+                cell.rightLabel.text = [NSString stringWithFormat:@"%tu", self.chatRoom.previewersCount];
+                break;
+            }
+                
             default:
                 break;
         }
