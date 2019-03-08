@@ -830,7 +830,7 @@
 /* Title of the section to access MEGA's help centre */
 "helpCentreLabel"="مركز المساعدة";
 /* Section title that links you to the webpage that let you join and test the beta versions */
-"Join Beta"="Join Beta";
+"Join Beta"="انضم الى التجريبي Beta";
 /* Title to rate the app */
 "rateUsLabel"="قيمنا";
 /* Title of the Transfers section */
@@ -1603,29 +1603,29 @@
 /* Title shown in a page of the on boarding screens explaining that the user can backup the photos automatically */
 "Your Photos in the Cloud"="صورك على السحابة";
 /* Description shown in a page of the onboarding screens explaining the camera uploads feature */
-"Camera Uploads is an essential feature for any mobile device and we have got you covered. Create your account now."="Camera Uploads is an essential feature for any mobile device and we have got you covered. Create your account now.";
+"Camera Uploads is an essential feature for any mobile device and we have got you covered. Create your account now."="تحميل صور الكاميرا هو ميزة اساسية لأي جهاز موبايل ونحن نقدم لك ذلك. انشئ حسابك الآن.";
 /* Button which triggers the initial setup */
-"Setup MEGA"="Setup MEGA";
+"Setup MEGA"="اعداد MEGA";
 /* Detailed explanation of why the user should give some permissions to MEGA */
-"To fully take advantage of your MEGA account we need to ask you some permissions."="To fully take advantage of your MEGA account we need to ask you some permissions.";
+"To fully take advantage of your MEGA account we need to ask you some permissions."="للاستفادة القصوى من ميزات حسابك على MEGA نحتاج ان نطلب منك بعض الصلاحيات.";
 /* Message warning the user about the risk of not setting up permissions */
 "The MEGA app may not work as expected without the required permissions. Are you sure?"="The MEGA app may not work as expected without the required permissions. Are you sure?";
 /* Shows number of the current page. '%1' will be replaced by current page number. '%2' will be replaced by number of all pages. */
 "%1 of %2"="%1 من %2";
 /* Title label that explains that the user is going to be asked for the photos permission */
-"Allow Access to Photos"="Allow Access to Photos";
+"Allow Access to Photos"="السماح بالولوج الى الصور";
 /* Detailed explanation of why the user should give permission to access to the photos */
-"Please give the MEGA App permission to access Photos to share photos and videos."="Please give the MEGA App permission to access Photos to share photos and videos.";
+"Please give the MEGA App permission to access Photos to share photos and videos."="يرجى اعطاء تطبيق MEGA الصلاحية للولوج الى الصور لاتاحة امكانية مشاركة الصور والفيديوهات.";
 /* Title label that explains that the user is going to be asked for the microphone and camera permission */
-"Enable Microphone and Camera"="Enable Microphone and Camera";
+"Enable Microphone and Camera"="تفعيل الكاميرا والمايكروفون";
 /* Detailed explanation of why the user should give permission to access to the camera and the microphone */
-"To make encrypted voice and video calls, allow MEGA access to your Camera and Microphone"="To make encrypted voice and video calls, allow MEGA access to your Camera and Microphone";
+"To make encrypted voice and video calls, allow MEGA access to your Camera and Microphone"="للقيام باتصالات صوتية وفيديوهية مشفرة، يرجى السماح لتطبيق MEGA بالوصول الى الكاميرا والمايكروفون";
 /* Title label that explains that the user is going to be asked for the notifications permission */
 "Enable Notifications"="تفعيل التنبيه";
 /* Detailed explanation of why the user should give permission to deliver notifications */
-"We would like to send you notifications so you receive new messages on your device instantly."="We would like to send you notifications so you receive new messages on your device instantly.";
+"We would like to send you notifications so you receive new messages on your device instantly."="نحن نرغب بارسال اخطارات اليك حتى تتمكن من استقبال الرسائل على جهازك بشكل فوري.";
 /* Button which triggers a request for a specific permission, that have been explained to the user beforehand */
-"Allow Access"="Allow Access";
+"Allow Access"="السماح بالوصول";
 /* A section header which contains the file management settings. These settings allow users to remove duplicate files etc. */
 "File Management"="إدارة الملف";
 /* Title of the option to enable or disable file versioning on Settings section */
@@ -1696,6 +1696,18 @@
 "Delete Chat Link"="Delete Chat Link";
 /* Button text in public chat previews that allows the user to join the chat */
 "Join"="Join";
+/* Text shown in a notification to let the user know that has joined a public chat room after login or account creation */
+"You have joined %@"="You have joined %@";
+/* Users previewing a public chat */
+"Observers"="Observers";
+/* Alert message shown while deleting a chat link, warning about the consequences */
+"This conversation will no longer be accessible through the link you are about to delete."="This conversation will no longer be accessible through the link you are about to delete.";
+/* Management message shown in a chat when the user %@ enables the 'Encrypted Key Rotation' */
+"%@ enabled Encrypted Key Rotation"="%@ enabled Encrypted Key Rotation";
+/* Management message shown in a chat when the user %@ creates a public link for the chat */
+"%@ created a public link for the chat."="%@ created a public link for the chat.";
+/* Management message shown in a chat when the user %@ removes a public link for the chat */
+"%@ removed a public link for the chat."="%@ removed a public link for the chat.";
 /* Message show when a call cannot be established because there are too many participants in the group call */
 "Error. No more participants are allowed in this group call."="You are not allowed to join this call as it has reached the maximum number of participants.";
 /* Message show when a user cannot activate the video in a group call because the max number of videos has been reached */
