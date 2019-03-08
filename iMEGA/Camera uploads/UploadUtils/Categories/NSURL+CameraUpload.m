@@ -41,26 +41,29 @@
 #pragma mark - create thumbnail for video
 
 - (BOOL)mnz_exportVideoThumbnailToImageURL:(NSURL *)imageURL {
+    BOOL isExportedSuccessfully = NO;
+    
     AVURLAsset *asset = [[AVURLAsset alloc] initWithURL:self options:nil];
     AVAssetImageGenerator *generator = [[AVAssetImageGenerator alloc] initWithAsset:asset];
     generator.appliesPreferredTrackTransform = YES;
     CMTime requestedTime = CMTimeMake(1, 60);
     NSError *error;
     CGImageRef imageRef = [generator copyCGImageAtTime:requestedTime actualTime:NULL error:&error];
-    if (error) {
+    if (imageRef) {
+        CGImageDestinationRef destination = CGImageDestinationCreateWithURL((__bridge CFURLRef)imageURL, kUTTypeJPEG, 1, NULL);
+        if (destination) {
+            CGImageDestinationAddImage(destination, imageRef, NULL);
+            isExportedSuccessfully = CGImageDestinationFinalize(destination);
+            
+            CFRelease(destination);
+        }
+        
+        CGImageRelease(imageRef);
+    } else {
         MEGALogError(@"error when to extract thumbnail image from video %@ %@", self, error);
-        return false;
     }
     
-    CGImageDestinationRef destination = CGImageDestinationCreateWithURL((__bridge CFURLRef)imageURL, kUTTypeJPEG, 1, NULL);
-    if (destination) {
-        CGImageDestinationAddImage(destination, imageRef, NULL);
-        BOOL isExportedSuccessfully = CGImageDestinationFinalize(destination);
-        CFRelease(destination);
-        return isExportedSuccessfully;
-    } else {
-        return false;
-    }
+    return isExportedSuccessfully;
 }
 
 #pragma mark - thumbnail and preview caching

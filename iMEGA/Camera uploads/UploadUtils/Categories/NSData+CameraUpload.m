@@ -31,12 +31,15 @@
                 }
                 isExportedSuccessfully = CGImageDestinationFinalize(destination);
             } else {
-                CFErrorRef error;
                 NSMutableDictionary *metadata = [removeGPSDict mutableCopy];
                 CGImageMetadataRef sourceMetadata = CGImageSourceCopyMetadataAtIndex(source, 0, NULL);
                 [metadata addEntriesFromDictionary:@{(__bridge NSString *)kCGImageDestinationMetadata : (__bridge id)sourceMetadata,
                                                      (__bridge NSString *)kCGImageDestinationMergeMetadata : @(YES)}];
-                isExportedSuccessfully = CGImageDestinationCopyImageSource(destination, source, (__bridge CFDictionaryRef)[metadata copy], &error);
+                if (sourceMetadata) {
+                    CFRelease(sourceMetadata);
+                }
+                
+                isExportedSuccessfully = CGImageDestinationCopyImageSource(destination, source, (__bridge CFDictionaryRef)[metadata copy], NULL);
                 
                 if (!isExportedSuccessfully) {
                     isExportedSuccessfully = [self mnz_exportToURL:URL alwaysEncodeToImageUTIType:sourceType imageProperty:removeGPSDict];
