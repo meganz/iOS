@@ -1,5 +1,6 @@
 
 #import <Foundation/Foundation.h>
+#import "UploadStats.h"
 @import Photos;
 
 NS_ASSUME_NONNULL_BEGIN
@@ -62,6 +63,10 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark - check disk storage
 
 - (void)checkCameraUploadDiskStorage:(void (^)(BOOL isDiskFull))completion;
+
+#pragma mark - get upload stats
+
+- (void)checkCurrentUploadStats:(void (^)(UploadStats *stats))completion;
 
 @end
 

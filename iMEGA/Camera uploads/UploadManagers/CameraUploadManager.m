@@ -581,6 +581,18 @@ static const NSUInteger VideoUploadBatchCount = 1;
     return [mediaTypes copy];
 }
 
+#pragma mark - get upload stats
+
+- (void)checkCurrentUploadStats:(void (^)(UploadStats *))completion {
+    dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0), ^{
+        UploadStats *stats = [[UploadStats alloc] init];
+        stats.pendingFilesCount = self.uploadPendingAssetsCount;
+        stats.totalFilesCount = self.totalAssetsCount;
+        stats.uploadDoneFilesCount = self.uploadDoneAssetsCount;
+        completion(stats);
+    });
+}
+
 #pragma mark - photo library scan
 
 - (void)scanPhotoLibraryWithCompletion:(void (^)(void))completion {
