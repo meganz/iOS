@@ -1,12 +1,9 @@
 #import "UsageViewController.h"
 
 #import "PieChartView.h"
-#import "SVProgressHUD.h"
 
 #import "NSString+MNZCategory.h"
 
-#import "MEGASdkManager.h"
-#import "MEGAReachabilityManager.h"
 #import "Helper.h"
 
 @interface UsageViewController () <PieChartViewDelegate, PieChartViewDataSource, UIGestureRecognizerDelegate, UIScrollViewDelegate>

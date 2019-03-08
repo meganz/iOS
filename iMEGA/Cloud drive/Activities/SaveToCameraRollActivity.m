@@ -1,13 +1,7 @@
 
 #import "SaveToCameraRollActivity.h"
 
-#import "SVProgressHUD.h"
-
-#import "MEGAReachabilityManager.h"
-#import "MEGASdkManager.h"
 #import "MEGANode+MNZCategory.h"
-#import "NSFileManager+MNZCategory.h"
-#import "NSString+MNZCategory.h"
 
 @interface SaveToCameraRollActivity ()
 
