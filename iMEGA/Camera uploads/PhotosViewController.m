@@ -114,9 +114,15 @@
     
     if (CameraUploadManager.shouldShowCameraUploadBoardingScreen) {
         [self showCameraUploadBoardingScreen];
-    } else if (CameraUploadManager.shared.isCameraUploadPausedByDiskFull) {
-        [self showLocalDiskIsFullWarningScreen];
     }
+    
+    [CameraUploadManager.shared checkCameraUploadDiskStorage:^(BOOL isDiskFull) {
+        if (isDiskFull) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self showLocalDiskIsFullWarningScreen];
+            });
+        }
+    }];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {

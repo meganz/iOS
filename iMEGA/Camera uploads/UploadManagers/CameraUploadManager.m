@@ -251,25 +251,27 @@ static const NSUInteger VideoUploadBatchCount = 1;
     }
 }
 
-- (BOOL)isCameraUploadPausedByDiskFull {
+- (void)checkCameraUploadDiskStorage:(void (^)(BOOL isDiskFull))completion {
     if (!CameraUploadManager.isCameraUploadEnabled) {
-        return NO;
+        completion(NO);
     }
     
-    BOOL isFull = NO;
-    if ([self isPhotoUploadDone]) {
-        if (CameraUploadManager.isVideoUploadEnabled && ![self isVideoUploadDone]) {
-            isFull = [self isVideoUploadPausedByDiskFull];
+    dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0), ^{
+        BOOL isFull = NO;
+        if ([self isPhotoUploadDone]) {
+            if (CameraUploadManager.isVideoUploadEnabled && ![self isVideoUploadDone]) {
+                isFull = [self isVideoUploadPausedByDiskFull];
+            }
+        } else {
+            isFull = [self isPhotoUploadPausedByDiskFull];
+            
+            if (CameraUploadManager.isVideoUploadEnabled && ![self isVideoUploadDone]) {
+                isFull &= [self isVideoUploadPausedByDiskFull];
+            }
         }
-    } else {
-        isFull = [self isPhotoUploadPausedByDiskFull];
         
-        if (CameraUploadManager.isVideoUploadEnabled && ![self isVideoUploadDone]) {
-            isFull &= [self isVideoUploadPausedByDiskFull];
-        }
-    }
-
-    return isFull;
+        completion(isFull);
+    });
 }
 
 - (BOOL)isPhotoUploadPausedByDiskFull {
