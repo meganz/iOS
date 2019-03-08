@@ -183,6 +183,35 @@
     [self presentViewController:navigationController animated:YES completion:nil];
 }
 
+- (void)renameChatGroup {
+    UIAlertController *renameGroupAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"renameGroup", @"The title of a menu button which allows users to rename a group chat.") message:AMLocalizedString(@"renameNodeMessage", @"Hint text to suggest that the user have to write the new name for the file or folder") preferredStyle:UIAlertControllerStyleAlert];
+    
+    [renameGroupAlertController addTextFieldWithConfigurationHandler:^(UITextField *textField) {
+        textField.text = self.chatRoom.title;
+        [textField addTarget:self action:@selector(alertTextFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
+        textField.shouldReturnCompletion = ^BOOL(UITextField *textField) {
+            return ((textField.text.length > 0) && ![textField.text isEqualToString:self.chatRoom.title] && ![[textField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] isEqualToString:@""] && ([textField.text lengthOfBytesUsingEncoding:NSUTF8StringEncoding] < 31));
+        };
+    }];
+    
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil];
+    
+    UIAlertAction *renameAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"rename", @"Title for the action that allows you to rename a file or folder") style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+        UITextField *textField = [[renameGroupAlertController textFields] firstObject];
+        NSString *newGroupName = textField.text;
+        [[MEGASdkManager sharedMEGAChatSdk] setChatTitle:self.chatRoom.chatId title:newGroupName delegate:self];
+    }];
+    
+    [renameGroupAlertController addAction:cancelAction];
+    [renameGroupAlertController addAction:renameAction];
+    
+    renameAction.enabled = NO;
+    
+    [self presentViewController:renameGroupAlertController animated:YES completion:nil];
+}
+
+
+
 #pragma mark - IBActions
 
 - (IBAction)backAction:(UIBarButtonItem *)sender {
@@ -527,206 +556,194 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    switch (indexPath.section) {
-        case 0:
-            if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-                UIAlertController *renameGroupAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"renameGroup", @"The title of a menu button which allows users to rename a group chat.") message:AMLocalizedString(@"renameNodeMessage", @"Hint text to suggest that the user have to write the new name for the file or folder") preferredStyle:UIAlertControllerStyleAlert];
+    if ([MEGAReachabilityManager isReachableHUDIfNot]) {
+        switch (indexPath.section) {
+            case 0:
+                [self renameChatGroup];
+                break;
                 
-                [renameGroupAlertController addTextFieldWithConfigurationHandler:^(UITextField *textField) {
-                    textField.text = self.chatRoom.title;
-                    [textField addTarget:self action:@selector(alertTextFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
-                    textField.shouldReturnCompletion = ^BOOL(UITextField *textField) {
-                        return ((textField.text.length > 0) && ![textField.text isEqualToString:self.chatRoom.title] && ![[textField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] isEqualToString:@""] && ([textField.text lengthOfBytesUsingEncoding:NSUTF8StringEncoding] < 31));
-                    };
-                }];
-                
-                UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil];
-                
-                UIAlertAction *renameAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"rename", @"Title for the action that allows you to rename a file or folder") style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
-                    UITextField *textField = [[renameGroupAlertController textFields] firstObject];
-                    NSString *newGroupName = textField.text;
-                    [[MEGASdkManager sharedMEGAChatSdk] setChatTitle:self.chatRoom.chatId title:newGroupName delegate:self];
-                }];
-                
-                [renameGroupAlertController addAction:cancelAction];
-                [renameGroupAlertController addAction:renameAction];
-                
-                renameAction.enabled = NO;
-                
-                [self presentViewController:renameGroupAlertController animated:YES completion:nil];
-            }
-            break;
-            
-        case 1: {
-            __block NSString *link;
-            MEGAChatGenericRequestDelegate *delegate = [[MEGAChatGenericRequestDelegate alloc] initWithCompletion:^(MEGAChatRequest * _Nonnull request, MEGAChatError * _Nonnull error) {
-                if (error.type == MEGAChatErrorTypeOk) {
-                    link = request.text;
-                } else {
+            case 1: {
+                UIAlertController *alertController;
+                if (self.chatRoom.hasCustomTitle) {
+                    __block NSString *link;
                     MEGAChatGenericRequestDelegate *delegate = [[MEGAChatGenericRequestDelegate alloc] initWithCompletion:^(MEGAChatRequest * _Nonnull request, MEGAChatError * _Nonnull error) {
                         if (error.type == MEGAChatErrorTypeOk) {
                             link = request.text;
+                        } else {
+                            MEGAChatGenericRequestDelegate *delegate = [[MEGAChatGenericRequestDelegate alloc] initWithCompletion:^(MEGAChatRequest * _Nonnull request, MEGAChatError * _Nonnull error) {
+                                if (error.type == MEGAChatErrorTypeOk) {
+                                    link = request.text;
+                                }
+                            }];
+                            [[MEGASdkManager sharedMEGAChatSdk] createChatLink:self.chatRoom.chatId delegate:delegate];
                         }
                     }];
-                    [[MEGASdkManager sharedMEGAChatSdk] createChatLink:self.chatRoom.chatId delegate:delegate];
-                }
-            }];
-            [[MEGASdkManager sharedMEGAChatSdk] queryChatLink:self.chatRoom.chatId delegate:delegate];
-
-            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
-            UIAlertAction *copyLinkAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"copyLink", @"Title for a button to copy the link to the clipboard") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-                if (link) {
-                    [UIPasteboard generalPasteboard].string = link;
-                    [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"copiedToTheClipboard", @"Text of the button after the links were copied to the clipboard")];
-                } else {
-                    [SVProgressHUD showErrorWithStatus:@"Error: link doesn't exist"];
-                }
-            }];
-            [copyLinkAlertAction mnz_setTitleTextColor:UIColor.mnz_black333333];
-            [alertController addAction:copyLinkAlertAction];
-            
-            [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"Delete Chat Link", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-                UIAlertController *deleteAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"Delete Chat Link", nil) message:AMLocalizedString(@"This conversation will no longer be accessible through the link you are about to delete.", @"Alert message shown while deleting a chat link, warning about the consequences") preferredStyle:UIAlertControllerStyleAlert];
-                [deleteAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"continue", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-                    MEGAChatGenericRequestDelegate *delegate = [[MEGAChatGenericRequestDelegate alloc] initWithCompletion:^(MEGAChatRequest * _Nonnull request, MEGAChatError * _Nonnull error) {
-                        if (!error.type) {
-                            [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"linkRemoved", @"Message shown when the link to a file or folder has been removed")];
+                    [[MEGASdkManager sharedMEGAChatSdk] queryChatLink:self.chatRoom.chatId delegate:delegate];
+                    
+                    alertController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+                    UIAlertAction *copyLinkAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"copyLink", @"Title for a button to copy the link to the clipboard") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                        if (link) {
+                            [UIPasteboard generalPasteboard].string = link;
+                            [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"copiedToTheClipboard", @"Text of the button after the links were copied to the clipboard")];
+                        } else {
+                            [SVProgressHUD showErrorWithStatus:@"Error: link doesn't exist"];
                         }
                     }];
-                    [[MEGASdkManager sharedMEGAChatSdk] removeChatLink:self.chatRoom.chatId delegate:delegate];
-                }]];
-                [deleteAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:nil]];
-                [self presentViewController:deleteAlertController animated:YES completion:nil];
-            }]];
-            [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:nil]];
-            
-            if (UIDevice.currentDevice.iPadDevice) {
-                alertController.modalPresentationStyle = UIModalPresentationPopover;
-                GroupChatDetailsViewTableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
-                alertController.popoverPresentationController.sourceRect = cell.contentView.frame;
-                alertController.popoverPresentationController.sourceView = cell.contentView;
-            }
-            [self presentViewController:alertController animated:YES completion:nil];
-            break;
-        }
-            
-        case 2:
-            [self showClearChatHistoryAlert];
-            break;
-            
-        case 3:
-            [self showArchiveChatAlert];
-            break;
-            
-        case 4:
-            if (self.chatRoom.isPreview) {
-                [[MEGASdkManager sharedMEGAChatSdk] closeChatPreview:self.chatRoom.chatId];
-                if (self.presentingViewController) {
-                    [self dismissViewControllerAnimated:YES completion:nil];
-                } else {
-                    [self.navigationController popToRootViewControllerAnimated:YES];
-                }
-            } else {
-                [self showLeaveChatAlert];
-            }
-            break;
-            
-        case 5: {
-            CustomModalAlertViewController *customModalAlertVC = [[CustomModalAlertViewController alloc] init];
-            customModalAlertVC.modalPresentationStyle = UIModalPresentationOverCurrentContext;
-            customModalAlertVC.image = [UIImage imageNamed:@"lock"];
-            customModalAlertVC.viewTitle = AMLocalizedString(@"Enable Encrypted Key Rotation", @"Title show in a cell where the users can enable the 'Encrypted Key Rotation'");
-            customModalAlertVC.detail = AMLocalizedString(@"Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages.", @"Footer text to explain what means 'Encrypted Key Rotation'");
-            customModalAlertVC.action = AMLocalizedString(@"enable", nil);
-            customModalAlertVC.dismiss = AMLocalizedString(@"cancel", nil);
-            __weak typeof(CustomModalAlertViewController) *weakCustom = customModalAlertVC;
-            customModalAlertVC.completion = ^{
-                MEGAChatGenericRequestDelegate *delegate = [[MEGAChatGenericRequestDelegate alloc] initWithCompletion:^(MEGAChatRequest * _Nonnull request, MEGAChatError * _Nonnull error) {
-                    if (error.type == MEGAChatErrorTypeOk) {                        
-                        [weakCustom dismissViewControllerAnimated:YES completion:^{
-                            [self.tableView reloadData];
-                        }];
+                    [copyLinkAlertAction mnz_setTitleTextColor:UIColor.mnz_black333333];
+                    [alertController addAction:copyLinkAlertAction];
+                    
+                    [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"Delete Chat Link", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                        UIAlertController *deleteAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"Delete Chat Link", nil) message:AMLocalizedString(@"This conversation will no longer be accessible through the link you are about to delete.", @"Alert message shown while deleting a chat link, warning about the consequences") preferredStyle:UIAlertControllerStyleAlert];
+                        [deleteAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"continue", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                            MEGAChatGenericRequestDelegate *delegate = [[MEGAChatGenericRequestDelegate alloc] initWithCompletion:^(MEGAChatRequest * _Nonnull request, MEGAChatError * _Nonnull error) {
+                                if (!error.type) {
+                                    [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"linkRemoved", @"Message shown when the link to a file or folder has been removed")];
+                                }
+                            }];
+                            [[MEGASdkManager sharedMEGAChatSdk] removeChatLink:self.chatRoom.chatId delegate:delegate];
+                        }]];
+                        [deleteAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:nil]];
+                        [self presentViewController:deleteAlertController animated:YES completion:nil];
+                    }]];
+                    [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:nil]];
+                    
+                    if (UIDevice.currentDevice.iPadDevice) {
+                        alertController.modalPresentationStyle = UIModalPresentationPopover;
+                        GroupChatDetailsViewTableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
+                        alertController.popoverPresentationController.sourceRect = cell.contentView.frame;
+                        alertController.popoverPresentationController.sourceView = cell.contentView;
                     }
-                }];
-                [[MEGASdkManager sharedMEGAChatSdk] setPublicChatToPrivate:self.chatRoom.chatId delegate:delegate];
-            };
-            
-            [self presentViewController:customModalAlertVC animated:YES completion:nil];
-            break;
-        }
-            
-        case 7:
-            if (!MEGASdkManager.sharedMEGASdk.isLoggedIn) {
+                } else {
+                    alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"Chat Link", @"Label shown in a cell where you can enable a switch to get a chat link") message:AMLocalizedString(@"Before you can generate a link for this room, you need to enter a group name", @"Alert message to advice the users that to generate a chat link they need enter a group name for the chat")  preferredStyle:UIAlertControllerStyleAlert];
+                    [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+                    }]];
+                    [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                        [self renameChatGroup];
+                    }]];
+                }
+                
+                [self presentViewController:alertController animated:YES completion:nil];
                 break;
             }
-            
-            if ((indexPath.row == 0) && (self.chatRoom.ownPrivilege == MEGAChatRoomPrivilegeModerator)) {
-                [self addParticipant];
-                [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
-                return;
-            }
-            
-            NSInteger index = (self.chatRoom.ownPrivilege == MEGAChatRoomPrivilegeModerator) ? (indexPath.row - 1) : indexPath.row;
-            
-            if (index != (self.participantsMutableArray.count - 1)) {
-                uint64_t userHandle = [[self.participantsMutableArray objectAtIndex:index] unsignedLongLongValue];
                 
-                UIAlertController *permissionsAlertController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
-                UIAlertAction *cancelAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil];
-                [cancelAlertAction mnz_setTitleTextColor:UIColor.mnz_redMain];
-                [permissionsAlertController addAction:cancelAlertAction];
+            case 2:
+                [self showClearChatHistoryAlert];
+                break;
                 
-                if (self.chatRoom.ownPrivilege == MEGAChatRoomPrivilegeModerator) {
-                    
-                    UIAlertAction *moderatorAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"moderator", @"The Moderator permission level in chat. With moderator permissions a participant can manage the chat.") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-                        [[MEGASdkManager sharedMEGAChatSdk] updateChatPermissions:self.chatRoom.chatId userHandle:userHandle privilege:MEGAChatRoomPrivilegeModerator delegate:self];
-                    }];
-                    [moderatorAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
-                    [permissionsAlertController addAction:moderatorAlertAction];
-                    
-                    UIAlertAction *standartAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"standard", @"The Standard permission level in chat. With the standard permissions a participant can read and type messages in a chat.") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-                        [[MEGASdkManager sharedMEGAChatSdk] updateChatPermissions:self.chatRoom.chatId userHandle:userHandle privilege:MEGAChatRoomPrivilegeStandard delegate:self];
-                    }];
-                    [standartAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
-                    [permissionsAlertController addAction:standartAlertAction];
-                    
-                    UIAlertAction *readOnlyAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"readOnly", @"Permissions given to the user you share your folder with") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-                        [[MEGASdkManager sharedMEGAChatSdk] updateChatPermissions:self.chatRoom.chatId userHandle:userHandle privilege:MEGAChatRoomPrivilegeRo delegate:self];
-                    }];
-                    [readOnlyAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
-                    [permissionsAlertController addAction:readOnlyAlertAction];
-                    
-                    MEGAUser *user = [[MEGASdkManager sharedMEGASdk] contactForEmail:[self.chatRoom peerEmailByHandle:userHandle]];
-                    if (!user) {
-                        [permissionsAlertController addAction:[self sendParticipantContactRequestAlertActionForHandle:userHandle]];
+            case 3:
+                [self showArchiveChatAlert];
+                break;
+                
+            case 4:
+                if (self.chatRoom.isPreview) {
+                    [[MEGASdkManager sharedMEGAChatSdk] closeChatPreview:self.chatRoom.chatId];
+                    if (self.presentingViewController) {
+                        [self dismissViewControllerAnimated:YES completion:nil];
+                    } else {
+                        [self.navigationController popToRootViewControllerAnimated:YES];
                     }
-                    
-                    UIAlertAction *removeParticipantAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"removeParticipant", @"A button title which removes a participant from a chat.") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-                        [[MEGASdkManager sharedMEGAChatSdk] removeFromChat:self.chatRoom.chatId userHandle:userHandle delegate:self];
-                    }];
-                    [permissionsAlertController addAction:removeParticipantAlertAction];
                 } else {
-                    MEGAUser *user = [[MEGASdkManager sharedMEGASdk] contactForEmail:[self.chatRoom peerEmailByHandle:userHandle]];
-                    if (!user) {
-                        [permissionsAlertController addAction:[self sendParticipantContactRequestAlertActionForHandle:userHandle]];
-                    }
+                    [self showLeaveChatAlert];
+                }
+                break;
+                
+            case 5: {
+                CustomModalAlertViewController *customModalAlertVC = [[CustomModalAlertViewController alloc] init];
+                customModalAlertVC.modalPresentationStyle = UIModalPresentationOverCurrentContext;
+                customModalAlertVC.image = [UIImage imageNamed:@"lock"];
+                customModalAlertVC.viewTitle = AMLocalizedString(@"Enable Encrypted Key Rotation", @"Title show in a cell where the users can enable the 'Encrypted Key Rotation'");
+                customModalAlertVC.detail = AMLocalizedString(@"Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages.", @"Footer text to explain what means 'Encrypted Key Rotation'");
+                customModalAlertVC.action = AMLocalizedString(@"enable", nil);
+                customModalAlertVC.dismiss = AMLocalizedString(@"cancel", nil);
+                __weak typeof(CustomModalAlertViewController) *weakCustom = customModalAlertVC;
+                customModalAlertVC.completion = ^{
+                    MEGAChatGenericRequestDelegate *delegate = [[MEGAChatGenericRequestDelegate alloc] initWithCompletion:^(MEGAChatRequest * _Nonnull request, MEGAChatError * _Nonnull error) {
+                        if (error.type == MEGAChatErrorTypeOk) {
+                            [weakCustom dismissViewControllerAnimated:YES completion:^{
+                                [self.tableView reloadData];
+                            }];
+                        }
+                    }];
+                    [[MEGASdkManager sharedMEGAChatSdk] setPublicChatToPrivate:self.chatRoom.chatId delegate:delegate];
+                };
+                
+                [self presentViewController:customModalAlertVC animated:YES completion:nil];
+                break;
+            }
+                
+            case 7:
+                if (!MEGASdkManager.sharedMEGASdk.isLoggedIn) {
+                    break;
                 }
                 
-                if (permissionsAlertController.actions.count > 1) {
-                    if (UIDevice.currentDevice.iPadDevice) {
-                        permissionsAlertController.modalPresentationStyle = UIModalPresentationPopover;
-                        GroupChatDetailsViewTableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
-                        permissionsAlertController.popoverPresentationController.sourceRect = cell.contentView.frame;
-                        permissionsAlertController.popoverPresentationController.sourceView = cell.contentView;
+                if ((indexPath.row == 0) && (self.chatRoom.ownPrivilege == MEGAChatRoomPrivilegeModerator)) {
+                    [self addParticipant];
+                    [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+                    return;
+                }
+                
+                NSInteger index = (self.chatRoom.ownPrivilege == MEGAChatRoomPrivilegeModerator) ? (indexPath.row - 1) : indexPath.row;
+                
+                if (index != (self.participantsMutableArray.count - 1)) {
+                    uint64_t userHandle = [[self.participantsMutableArray objectAtIndex:index] unsignedLongLongValue];
+                    
+                    UIAlertController *permissionsAlertController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+                    UIAlertAction *cancelAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil];
+                    [cancelAlertAction mnz_setTitleTextColor:UIColor.mnz_redMain];
+                    [permissionsAlertController addAction:cancelAlertAction];
+                    
+                    if (self.chatRoom.ownPrivilege == MEGAChatRoomPrivilegeModerator) {
+                        
+                        UIAlertAction *moderatorAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"moderator", @"The Moderator permission level in chat. With moderator permissions a participant can manage the chat.") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+                            [[MEGASdkManager sharedMEGAChatSdk] updateChatPermissions:self.chatRoom.chatId userHandle:userHandle privilege:MEGAChatRoomPrivilegeModerator delegate:self];
+                        }];
+                        [moderatorAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
+                        [permissionsAlertController addAction:moderatorAlertAction];
+                        
+                        UIAlertAction *standartAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"standard", @"The Standard permission level in chat. With the standard permissions a participant can read and type messages in a chat.") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+                            [[MEGASdkManager sharedMEGAChatSdk] updateChatPermissions:self.chatRoom.chatId userHandle:userHandle privilege:MEGAChatRoomPrivilegeStandard delegate:self];
+                        }];
+                        [standartAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
+                        [permissionsAlertController addAction:standartAlertAction];
+                        
+                        UIAlertAction *readOnlyAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"readOnly", @"Permissions given to the user you share your folder with") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+                            [[MEGASdkManager sharedMEGAChatSdk] updateChatPermissions:self.chatRoom.chatId userHandle:userHandle privilege:MEGAChatRoomPrivilegeRo delegate:self];
+                        }];
+                        [readOnlyAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
+                        [permissionsAlertController addAction:readOnlyAlertAction];
+                        
+                        MEGAUser *user = [[MEGASdkManager sharedMEGASdk] contactForEmail:[self.chatRoom peerEmailByHandle:userHandle]];
+                        if (!user) {
+                            [permissionsAlertController addAction:[self sendParticipantContactRequestAlertActionForHandle:userHandle]];
+                        }
+                        
+                        UIAlertAction *removeParticipantAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"removeParticipant", @"A button title which removes a participant from a chat.") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+                            [[MEGASdkManager sharedMEGAChatSdk] removeFromChat:self.chatRoom.chatId userHandle:userHandle delegate:self];
+                        }];
+                        [permissionsAlertController addAction:removeParticipantAlertAction];
+                    } else {
+                        MEGAUser *user = [[MEGASdkManager sharedMEGASdk] contactForEmail:[self.chatRoom peerEmailByHandle:userHandle]];
+                        if (!user) {
+                            [permissionsAlertController addAction:[self sendParticipantContactRequestAlertActionForHandle:userHandle]];
+                        }
                     }
                     
-                    [self presentViewController:permissionsAlertController animated:YES completion:nil];
+                    if (permissionsAlertController.actions.count > 1) {
+                        if (UIDevice.currentDevice.iPadDevice) {
+                            permissionsAlertController.modalPresentationStyle = UIModalPresentationPopover;
+                            GroupChatDetailsViewTableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
+                            permissionsAlertController.popoverPresentationController.sourceRect = cell.contentView.frame;
+                            permissionsAlertController.popoverPresentationController.sourceView = cell.contentView;
+                        }
+                        
+                        [self presentViewController:permissionsAlertController animated:YES completion:nil];
+                    }
                 }
-            }
-            break;
-            
-        default:
-            break;
+                break;
+                
+            default:
+                break;
+        }
     }
     
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
