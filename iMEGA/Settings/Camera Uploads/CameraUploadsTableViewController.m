@@ -324,24 +324,6 @@ static const CGFloat TableViewSectionHeaderFooterHiddenHeight = 0.1;
     }
 }
 
-#warning add localisation for all the new added texts
-
-//- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-//    NSString *titleForHeader;
-//    if (section == 1) {
-//        titleForHeader = AMLocalizedString(@"options", nil);
-//    }
-//    return titleForHeader;
-//}
-//
-//- (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section {
-//    NSString *titleForFooter;
-//    if (section == 0) {
-//        titleForFooter = AMLocalizedString(@"cameraUploads_footer", @"Footer explicative text to explain the Camera Uploads funtionality");
-//    }
-//    return titleForFooter;
-//}
-
 #pragma mark - Location manager delegate
 
 - (void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status {
