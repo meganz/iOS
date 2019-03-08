@@ -322,6 +322,8 @@ static const NSTimeInterval MEGAPhotosReloadToleranceTimeInterval = 0.3;
 - (void)updateProgressWithKnownCameraUploadInProgress:(BOOL)knownCameraUploadInProgress {
     [CameraUploadManager.shared fetchCurrentUploadStats:^(UploadStats * _Nonnull stats) {
         dispatch_async(dispatch_get_main_queue(), ^{
+            MEGALogDebug(@"[Camera Upload] pending count %lu, done count: %lu, total count: %lu", stats.pendingFilesCount, stats.uploadDoneFilesCount, stats.totalFilesCount);
+            
             self.photosUploadedProgressView.progress = (float)stats.uploadDoneFilesCount / (float)stats.totalFilesCount;
             
             NSString *progressText;
@@ -349,7 +351,6 @@ static const NSTimeInterval MEGAPhotosReloadToleranceTimeInterval = 0.3;
                     self.currentState = MEGACameraUploadsStateCompleted;
                 }
             }
-            MEGALogDebug(@"[Camera Upload] pending count %lu", pendingCount);
         } else {
             if (self.photosByMonthYearArray.count == 0) {
                 self.currentState = MEGACameraUploadsStateEmpty;
