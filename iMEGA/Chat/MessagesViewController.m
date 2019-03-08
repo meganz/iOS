@@ -259,6 +259,9 @@ const NSUInteger kMaxMessagesToLoad = 256;
     
     
     [self updateUIbasedOnChatConnectionAndReachability];
+        
+    self.previewersView.hidden = self.chatRoom.previewersCount == 0;
+    self.previewersLabel.text = [NSString stringWithFormat:@"%tu", self.chatRoom.previewersCount];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -1290,8 +1293,6 @@ const NSUInteger kMaxMessagesToLoad = 256;
 - (void)updateJoinView {
     BOOL hidden = !self.shouldShowJoinView;
     [self.inputToolbar mnz_setJoinViewHidden:hidden];
-    self.previewersView.hidden = hidden;
-    self.previewersLabel.text = [NSString stringWithFormat:@"%tu", self.chatRoom.previewersCount];
 }
 
 - (void)setLastMessageAsSeen {
@@ -2847,6 +2848,9 @@ const NSUInteger kMaxMessagesToLoad = 256;
             
         case MEGAChatRoomChangeTypeUpdatePreviewers:
             [self updateJoinView];
+            
+            self.previewersView.hidden = self.chatRoom.previewersCount == 0;
+            self.previewersLabel.text = [NSString stringWithFormat:@"%tu", self.chatRoom.previewersCount];
             break;
             
         default:
