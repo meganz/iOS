@@ -12,6 +12,7 @@
 
 static const NSInteger PreviewConcurrentUploadCount = 1;
 static const NSInteger CoordinatesConcurrentUploadCount = 2;
+static const NSInteger ThumbnailConcurrentUploadCount = 15;
 
 @interface AttributeUploadManager ()
 
@@ -39,6 +40,7 @@ static const NSInteger CoordinatesConcurrentUploadCount = 2;
     if (self) {
         _thumbnailUploadOperationQueue = [[NSOperationQueue alloc] init];
         _thumbnailUploadOperationQueue.qualityOfService = NSQualityOfServiceUserInteractive;
+        _thumbnailUploadOperationQueue.maxConcurrentOperationCount = ThumbnailConcurrentUploadCount;
         
         _previewUploadOperationQueue = [[NSOperationQueue alloc] init];
         _previewUploadOperationQueue.qualityOfService = NSQualityOfServiceBackground;
