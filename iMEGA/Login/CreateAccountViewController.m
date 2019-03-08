@@ -1,12 +1,12 @@
 
 #import "CreateAccountViewController.h"
 
-#import "SAMKeychain.h"
 #import "SVProgressHUD.h"
 
 #import "InputView.h"
 #import "MEGACreateAccountRequestDelegate.h"
 #import "MEGAReachabilityManager.h"
+#import "MEGASdkManager.h"
 #import "NSURL+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 

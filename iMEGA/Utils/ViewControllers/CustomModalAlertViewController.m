@@ -2,7 +2,6 @@
 #import "CustomModalAlertViewController.h"
 
 #import "AchievementsViewController.h"
-#import "MEGASdkManager.h"
 #import "UIApplication+MNZCategory.h"
 #import "UIImage+GKContact.h"
 
