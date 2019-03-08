@@ -60,13 +60,13 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)startBackgroundUploadIfPossible;
 - (void)stopBackgroundUpload;
 
+#pragma mark - fetch upload stats
+
+- (void)fetchCurrentUploadStats:(void (^)(UploadStats *stats))completion;
+
 #pragma mark - check disk storage
 
 - (void)checkCameraUploadDiskStorage:(void (^)(BOOL isDiskFull))completion;
-
-#pragma mark - get upload stats
-
-- (void)checkCurrentUploadStats:(void (^)(UploadStats *stats))completion;
 
 @end
 

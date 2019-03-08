@@ -320,7 +320,7 @@ static const NSTimeInterval MEGAPhotosReloadToleranceTimeInterval = 0.3;
 }
 
 - (void)updateProgressWithKnownCameraUploadInProgress:(BOOL)knownCameraUploadInProgress {
-    [CameraUploadManager.shared checkCurrentUploadStats:^(UploadStats * _Nonnull stats) {
+    [CameraUploadManager.shared fetchCurrentUploadStats:^(UploadStats * _Nonnull stats) {
         dispatch_async(dispatch_get_main_queue(), ^{
             self.photosUploadedProgressView.progress = (float)stats.uploadDoneFilesCount / (float)stats.totalFilesCount;
             
