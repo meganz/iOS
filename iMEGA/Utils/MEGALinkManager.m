@@ -684,6 +684,8 @@ static NSString *nodeToPresentBase64Handle;
     
     MEGAChatGenericRequestDelegate *delegate = [[MEGAChatGenericRequestDelegate alloc] initWithCompletion:^(MEGAChatRequest * _Nonnull request, MEGAChatError * _Nonnull error) {
         if (error.type != MEGAErrorTypeApiOk && error.type != MEGAErrorTypeApiEExist) {
+            [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
+            [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"%@ %@", request.requestString, error.name]];
             return;
         }
         
