@@ -683,37 +683,40 @@ static NSString *nodeToPresentBase64Handle;
     [SVProgressHUD show];
     
     MEGAChatGenericRequestDelegate *delegate = [[MEGAChatGenericRequestDelegate alloc] initWithCompletion:^(MEGAChatRequest * _Nonnull request, MEGAChatError * _Nonnull error) {
-        if (error.type == MEGAErrorTypeApiOk || error.type == MEGAErrorTypeApiEExist) {
-            UIViewController *rootViewController = [UIApplication sharedApplication].keyWindow.rootViewController;
-            if ([rootViewController isKindOfClass:MainTabBarController.class]) {
-                MainTabBarController *mainTBC = (MainTabBarController *)rootViewController;
-                mainTBC.selectedIndex = CHAT;
-                UINavigationController *chatNC = mainTBC.selectedViewController;
-                for (UIViewController *viewController in chatNC.childViewControllers) {
-                    if ([viewController isKindOfClass:MessagesViewController.class]) {
-                        MessagesViewController *messagesVC = (MessagesViewController *)viewController;
-                        if (messagesVC.chatRoom.chatId == request.chatHandle) {
-                            [SVProgressHUD dismiss];
-                            return;
-                        }
-                    }
-                }
-            } else if ([UIApplication.mnz_visibleViewController isKindOfClass:MessagesViewController.class]) {
-                MessagesViewController *messagesVC = (MessagesViewController *)UIApplication.mnz_visibleViewController;
-                if (messagesVC.chatRoom.chatId == request.chatHandle) {
+        if (error.type != MEGAErrorTypeApiOk && error.type != MEGAErrorTypeApiEExist) {
+            return;
+        }
+        
+        MessagesViewController *messagesVC = [[MessagesViewController alloc] init];
+        messagesVC.chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:request.chatHandle];
+        messagesVC.publicHandle = request.userHandle;
+        messagesVC.publicChatLink = chatLinkUrl;
+        
+        UIViewController *rootViewController = [UIApplication sharedApplication].keyWindow.rootViewController;
+        if ([rootViewController isKindOfClass:MainTabBarController.class]) {
+            MainTabBarController *mainTBC = (MainTabBarController *)rootViewController;
+            mainTBC.selectedIndex = CHAT;
+            
+            if (mainTBC.presentedViewController) {
+                [mainTBC dismissViewControllerAnimated:NO completion:^{
+                    [MEGALinkManager pushChat:messagesVC tabBar:mainTBC];
+                }];
+            } else {
+                [MEGALinkManager pushChat:messagesVC tabBar:mainTBC];
+            }
+        } else {
+            if ([UIApplication.mnz_visibleViewController isKindOfClass:MessagesViewController.class]) {
+                MessagesViewController *currentMessagesVC = (MessagesViewController *)UIApplication.mnz_visibleViewController;
+                if (currentMessagesVC.chatRoom.chatId == messagesVC.chatRoom.chatId) {
                     [SVProgressHUD dismiss];
                     return;
                 }
             }
-            
-            MessagesViewController *messagesVC = [[MessagesViewController alloc] init];
-            messagesVC.chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:request.chatHandle];
-            messagesVC.publicHandle = request.userHandle;
-            messagesVC.publicChatLink = chatLinkUrl;
             MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:messagesVC];
             [UIApplication.mnz_visibleViewController presentViewController:navigationController animated:YES completion:nil];
-            [SVProgressHUD dismiss];
         }
+        
+        [SVProgressHUD dismiss];
     }];
     
     if (![MEGASdkManager sharedMEGAChatSdk]) {
@@ -731,6 +734,29 @@ static NSString *nodeToPresentBase64Handle;
     }
     
     [[MEGASdkManager sharedMEGAChatSdk] openChatPreview:chatLinkUrl delegate:delegate];
+}
+
++ (void)pushChat:(MessagesViewController *)messagesVC tabBar:(MainTabBarController *)mainTBC {
+    UINavigationController *chatNC = mainTBC.selectedViewController;
+    
+    for (UIViewController *viewController in chatNC.viewControllers) {
+        if ([viewController isKindOfClass:MessagesViewController.class]) {
+            MessagesViewController *currentMessagesVC = (MessagesViewController *)viewController;
+            if (currentMessagesVC.chatRoom.chatId == messagesVC.chatRoom.chatId) {
+                return;
+            } else {
+                [[MEGASdkManager sharedMEGAChatSdk] closeChatRoom:currentMessagesVC.chatRoom.chatId delegate:currentMessagesVC];
+            }
+        }
+    }
+    
+    [chatNC pushViewController:messagesVC animated:YES];
+    
+    NSMutableArray *viewControllers = chatNC.viewControllers.mutableCopy;
+    for (NSUInteger i = 1; i <= chatNC.viewControllers.count - 2; i++) {
+        [viewControllers removeObjectAtIndex:1];
+    }
+    chatNC.viewControllers = viewControllers;
 }
 
 @end
