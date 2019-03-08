@@ -24,6 +24,7 @@
 #import "MEGAConstants.h"
 #import "CustomModalAlertViewController.h"
 #import "PhotosViewController+MNZCategory.h"
+#import "UploadStats.h"
 
 @interface PhotosViewController () <UICollectionViewDelegateFlowLayout, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAPhotoBrowserDelegate> {
     BOOL allNodesSelected;
@@ -283,7 +284,7 @@
 
 - (void)internetConnectionChanged {
     [self setNavigationBarButtonItemsEnabled:[MEGAReachabilityManager isReachable]];
-    [self updateCurrentStateWithKnownCameraUploadInProgress:NO];
+    [self updateCurrentStateWithKnownCameraUploadInProgress:NO pendingCount:0];
 }
 
 - (void)setNavigationBarButtonItemsEnabled:(BOOL)boolValue {
@@ -303,27 +304,26 @@
 }
 
 - (void)updateProgressWithKnownCameraUploadInProgress:(BOOL)knownCameraUploadInProgress {
-    NSUInteger pendingFiles = CameraUploadManager.shared.uploadPendingAssetsCount;
-    NSUInteger totalFiles = CameraUploadManager.shared.totalAssetsCount;
-    NSUInteger doneFiles = CameraUploadManager.shared.uploadDoneAssetsCount;
-    
-    self.photosUploadedProgressView.progress = (float)doneFiles / (float)totalFiles;
-    
-    NSString *progressText;
-    if (pendingFiles == 1) {
-        progressText = AMLocalizedString(@"cameraUploadsPendingFile", @"Message shown while uploading files. Singular.");
-    } else {
-        progressText = [NSString stringWithFormat:AMLocalizedString(@"cameraUploadsPendingFiles", @"Message shown while uploading files. Plural."), pendingFiles];
-    }
-    self.photosUploadedLabel.text = progressText;
-    
-    [self updateCurrentStateWithKnownCameraUploadInProgress:knownCameraUploadInProgress];
+    [CameraUploadManager.shared checkCurrentUploadStats:^(UploadStats * _Nonnull stats) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            self.photosUploadedProgressView.progress = (float)stats.uploadDoneFilesCount / (float)stats.totalFilesCount;
+            
+            NSString *progressText;
+            if (stats.pendingFilesCount == 1) {
+                progressText = AMLocalizedString(@"cameraUploadsPendingFile", @"Message shown while uploading files. Singular.");
+            } else {
+                progressText = [NSString stringWithFormat:AMLocalizedString(@"cameraUploadsPendingFiles", @"Message shown while uploading files. Plural."), stats.pendingFilesCount];
+            }
+            self.photosUploadedLabel.text = progressText;
+            
+            [self updateCurrentStateWithKnownCameraUploadInProgress:knownCameraUploadInProgress pendingCount:stats.pendingFilesCount];
+        });
+    }];
 }
 
-- (void)updateCurrentStateWithKnownCameraUploadInProgress:(BOOL)knownCameraUploadInProgress {
+- (void)updateCurrentStateWithKnownCameraUploadInProgress:(BOOL)knownCameraUploadInProgress pendingCount:(NSUInteger)pendingCount {
     if ([MEGAReachabilityManager isReachable]) {
         if (CameraUploadManager.isCameraUploadEnabled) {
-            NSUInteger pendingCount = CameraUploadManager.shared.uploadPendingAssetsCount;
             if (pendingCount > 0) {
                 self.currentState = MEGACameraUploadsStateUploading;
             } else {
