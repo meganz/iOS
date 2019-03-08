@@ -108,22 +108,20 @@ static const NSInteger ThumbnailConcurrentUploadCount = 15;
 }
 
 - (void)uploadLocalAttribute:(AssetLocalAttribute *)attribute forNode:(MEGANode *)node {
-    if ([NSFileManager.defaultManager fileExistsAtPath:attribute.thumbnailURL.path]) {
+    if (attribute.hasSavedThumbnail) {
         [self.thumbnailUploadOperationQueue addOperation:[[ThumbnailUploadOperation alloc] initWithAttributeURL:attribute.thumbnailURL node:node]];
     } else {
         MEGALogError(@"[Camera Upload] No thumbnail file found for node %@ in %@", node.name, attribute.thumbnailURL);
     }
     
-    if ([NSFileManager.defaultManager fileExistsAtPath:attribute.previewURL.path]) {
+    if (attribute.hasSavedPreview) {
         [self.previewUploadOperationQueue addOperation:[[PreviewUploadOperation alloc] initWithAttributeURL:attribute.previewURL node:node]];
     } else {
         MEGALogError(@"[Camera Upload] No preview file found for node %@ in %@", node.name, attribute.previewURL);
     }
     
-    if ([NSFileManager.defaultManager fileExistsAtPath:attribute.locationURL.path]) {
+    if (attribute.hasSavedLocation) {
         [self.coordinatesUploadOperationQueue addOperation:[[CoordinatesUploadOperation alloc] initWithAttributeURL:attribute.locationURL node:node]];
-    } else {
-        MEGALogError(@"[Camera Upload] No location file found for node %@ in %@", node.name, attribute.locationURL);
     }
 }
 
