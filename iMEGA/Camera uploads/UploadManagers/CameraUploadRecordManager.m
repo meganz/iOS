@@ -272,42 +272,7 @@ static const NSUInteger MaximumUploadRetryPerLoginCount = 800;
     return coreDataError == nil;
 }
 
-- (BOOL)saveInitialUploadRecordsByAssetFetchResult:(PHFetchResult<PHAsset *> *)result error:(NSError * _Nullable __autoreleasing * _Nullable)error {
-    __block NSError *coreDataError = nil;
-    if (result.count > 0) {
-        [self.backgroundContext performBlockAndWait:^{
-            for (PHAsset *asset in result) {
-                [self createUploadRecordFromAsset:asset];
-            }
-            
-            [self.backgroundContext save:&coreDataError];
-        }];
-    }
-    
-    if (error != NULL) {
-        *error = coreDataError;
-    }
-    
-    return coreDataError == nil;
-}
-
 #pragma mark - create records
-
-- (void)createUploadRecordsByAssets:(NSArray<PHAsset *> *)assets shouldCheckExistence:(BOOL)checkExistence {
-    if (assets.count > 0) {
-        [self.backgroundContext performBlockAndWait:^{
-            for (PHAsset *asset in assets) {
-                if (checkExistence) {
-                    if ([self fetchUploadRecordsByIdentifier:asset.localIdentifier shouldPrefetchErrorRecords:NO error:nil].count == 0) {
-                        [self createUploadRecordFromAsset:asset];
-                    }
-                } else {
-                    [self createUploadRecordFromAsset:asset];
-                }
-            }
-        }];
-    }
-}
 
 - (void)createAdditionalRecordsIfNeededForRecords:(NSArray<MOAssetUploadRecord *> *)uploadRecords withMediaSubtype:(PHAssetMediaSubtype)subtype {
     [self.backgroundContext performBlockAndWait:^{
@@ -450,22 +415,6 @@ static const NSUInteger MaximumUploadRetryPerLoginCount = 800;
 }
 
 #pragma mark - helper methods
-
-- (MOAssetUploadRecord *)createUploadRecordFromAsset:(PHAsset *)asset {
-    if (asset.localIdentifier.length == 0) {
-        return nil;
-    }
-    
-    MOAssetUploadRecord *record = [NSEntityDescription insertNewObjectForEntityForName:@"AssetUploadRecord" inManagedObjectContext:self.backgroundContext];
-    record.localIdentifier = asset.localIdentifier;
-    record.status = @(CameraAssetUploadStatusNotStarted);
-    record.creationDate = asset.creationDate;
-    record.mediaType = @(asset.mediaType);
-    record.mediaSubtypes = @(asset.mediaSubtypes);
-    record.additionalMediaSubtypes = nil;
-    
-    return record;
-}
 
 - (MOAssetUploadErrorPerLaunch *)createErrorRecordPerLaunchForLocalIdentifier:(NSString *)identifier {
     MOAssetUploadErrorPerLaunch *errorPerLaunch = [NSEntityDescription insertNewObjectForEntityForName:@"AssetUploadErrorPerLaunch" inManagedObjectContext:self.backgroundContext];

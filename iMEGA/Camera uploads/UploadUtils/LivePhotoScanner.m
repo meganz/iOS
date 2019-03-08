@@ -37,7 +37,11 @@
 - (void)scanLivePhotosInFetchResult:(PHFetchResult<PHAsset *> *)result {
     [CameraUploadRecordManager.shared.backgroundContext performBlockAndWait:^{
         NSArray<MOAssetUploadRecord *> *livePhotoRecords = [CameraUploadRecordManager.shared fetchUploadRecordsByMediaTypes:@[@(PHAssetMediaTypeImage)] additionalMediaSubtypes:PHAssetMediaSubtypePhotoLive error:nil];
+        MEGALogDebug(@"[Camera Upload] saved live photo record count %lu", (unsigned long)livePhotoRecords.count);
+        
         NSArray<PHAsset *> *newAssets = [result findNewLivePhotoAssetsByUploadRecords:livePhotoRecords];
+        MEGALogDebug(@"[Camera Upload] new live photo assets scanned count %lu", (unsigned long)newAssets.count);
+        
         SavedIdentifierParser *parser = [[SavedIdentifierParser alloc] init];
         for (PHAsset *asset in newAssets) {
             NSString *parsedIdentifier = [parser savedIdentifierForLocalIdentifier:asset.localIdentifier mediaSubtype:PHAssetMediaSubtypePhotoLive];

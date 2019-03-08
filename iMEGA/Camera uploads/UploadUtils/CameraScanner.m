@@ -41,6 +41,7 @@
         MEGALogDebug(@"[Camera Upload] Start local album scanning for media types %@", mediaTypes);
         
         self.fetchResult = [PHAsset fetchAssetsWithOptions:[PHFetchOptions mnz_fetchOptionsForCameraUploadWithMediaTypes:mediaTypes]];
+        MEGALogDebug(@"[Camera Upload] total local asset count %lu", (unsigned long)self.fetchResult.count);
         if (self.fetchResult.count == 0) {
             if (completion) {
                 completion();
@@ -52,7 +53,7 @@
             if ([CameraUploadRecordManager.shared uploadRecordsCountByMediaTypes:mediaTypes error:nil] == 0) {
                 MEGALogDebug(@"[Camera Upload] initial save with asset count %lu", (unsigned long)self.fetchResult.count);
                 @autoreleasepool {
-                    [CameraUploadRecordManager.shared saveInitialUploadRecordsByAssetFetchResult:self.fetchResult error:nil];
+                    [self saveInitialUploadRecordsByAssetFetchResult:self.fetchResult error:nil];
                     if (CameraUploadManager.isLivePhotoSupported && [mediaTypes containsObject:@(PHAssetMediaTypeImage)]) {
                         [self.livePhotoScanner saveInitialLivePhotoRecordsInFetchResult:self.fetchResult];
                     }
@@ -60,10 +61,11 @@
             } else {
                 @autoreleasepool {
                     NSArray<MOAssetUploadRecord *> *records = [CameraUploadRecordManager.shared fetchUploadRecordsByMediaTypes:mediaTypes includeAdditionalMediaSubtypes:NO error:nil];
+                    MEGALogDebug(@"[Camera Upload] saved upload record count %lu", (unsigned long)records.count);
                     NSArray<PHAsset *> *newAssets = [self.fetchResult findNewAssetsByUploadRecords:records];
-                    MEGALogDebug(@"[Camera Upload] new assets scanned with count %lu", (unsigned long)newAssets.count);
+                    MEGALogDebug(@"[Camera Upload] new assets scanned count %lu", (unsigned long)newAssets.count);
                     if (newAssets.count > 0) {
-                        [CameraUploadRecordManager.shared createUploadRecordsByAssets:newAssets shouldCheckExistence:NO];
+                        [self createUploadRecordsByAssets:newAssets shouldCheckExistence:NO];
                         [CameraUploadRecordManager.shared saveChangesIfNeededWithError:nil];
                     }
                     
@@ -105,7 +107,7 @@
             dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0), ^{
                 MEGALogDebug(@"[Camera Upload] new assets detected: %@", newAssets);
                 [CameraUploadRecordManager.shared.backgroundContext performBlockAndWait:^{
-                    [CameraUploadRecordManager.shared createUploadRecordsByAssets:newAssets shouldCheckExistence:YES];
+                    [self createUploadRecordsByAssets:newAssets shouldCheckExistence:YES];
                     [self.livePhotoScanner scanLivePhotosInAssets:newAssets];
                     [CameraUploadRecordManager.shared saveChangesIfNeededWithError:nil];
                 }];
@@ -114,6 +116,61 @@
             });
         }
     }
+}
+
+#pragma mark - create and save records
+
+- (BOOL)saveInitialUploadRecordsByAssetFetchResult:(PHFetchResult<PHAsset *> *)result error:(NSError * _Nullable __autoreleasing * _Nullable)error {
+    __block NSError *coreDataError = nil;
+    if (result.count > 0) {
+        [CameraUploadRecordManager.shared.backgroundContext performBlockAndWait:^{
+            for (PHAsset *asset in result) {
+                [self createUploadRecordFromAsset:asset];
+            }
+            
+            [CameraUploadRecordManager.shared saveChangesIfNeededWithError:&coreDataError];
+        }];
+    }
+    
+    if (error != NULL) {
+        *error = coreDataError;
+    }
+    
+    return coreDataError == nil;
+}
+
+- (void)createUploadRecordsByAssets:(NSArray<PHAsset *> *)assets shouldCheckExistence:(BOOL)checkExistence {
+    if (assets.count == 0) {
+        return;
+    }
+    
+    [CameraUploadRecordManager.shared.backgroundContext performBlockAndWait:^{
+        for (PHAsset *asset in assets) {
+            if (checkExistence) {
+                if ([CameraUploadRecordManager.shared fetchUploadRecordsByIdentifier:asset.localIdentifier shouldPrefetchErrorRecords:NO error:nil].count == 0) {
+                    [self createUploadRecordFromAsset:asset];
+                }
+            } else {
+                [self createUploadRecordFromAsset:asset];
+            }
+        }
+    }];
+}
+
+- (MOAssetUploadRecord *)createUploadRecordFromAsset:(PHAsset *)asset {
+    if (asset.localIdentifier.length == 0) {
+        return nil;
+    }
+    
+    MOAssetUploadRecord *record = [NSEntityDescription insertNewObjectForEntityForName:@"AssetUploadRecord" inManagedObjectContext:CameraUploadRecordManager.shared.backgroundContext];
+    record.localIdentifier = asset.localIdentifier;
+    record.status = @(CameraAssetUploadStatusNotStarted);
+    record.creationDate = asset.creationDate;
+    record.mediaType = @(asset.mediaType);
+    record.mediaSubtypes = @(asset.mediaSubtypes);
+    record.additionalMediaSubtypes = nil;
+    
+    return record;
 }
 
 @end
