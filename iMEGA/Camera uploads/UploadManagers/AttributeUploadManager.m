@@ -84,7 +84,7 @@ static const NSInteger CoordinatesConcurrentUploadCount = 2;
     }
     
     if (uploadInfo.location) {
-        if ([NSKeyedArchiver archiveRootObject:uploadInfo.location toFile:attribute.locationURL.path]) {
+        if (![NSKeyedArchiver archiveRootObject:uploadInfo.location toFile:attribute.locationURL.path]) {
             if (error != NULL) {
                 *error = [NSError mnz_cameraUploadCanNotArchiveLocationError];
             }
