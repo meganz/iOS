@@ -142,16 +142,7 @@
     [leaveAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
     
     [leaveAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"leave", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-        if (self.chatRoom.isPreview) {
-            [[MEGASdkManager sharedMEGAChatSdk] closeChatPreview:self.chatRoom.chatId];
-            if (self.presentingViewController) {
-                [self dismissViewControllerAnimated:YES completion:nil];
-            } else {
-                [self.navigationController popToRootViewControllerAnimated:YES];
-            }
-        } else {
-            [[MEGASdkManager sharedMEGAChatSdk] leaveChat:self.chatRoom.chatId];
-        }
+        [[MEGASdkManager sharedMEGAChatSdk] leaveChat:self.chatRoom.chatId];
     }]];
     
     [self presentViewController:leaveAlertController animated:YES completion:nil];
@@ -287,7 +278,7 @@
             
         case 4:
             cell.leftImageView.image = [UIImage imageNamed:@"leaveGroup"];
-            cell.nameLabel.text = AMLocalizedString(@"leaveGroup", @"Button title that allows the user to leave a group chat.");
+            cell.nameLabel.text = self.chatRoom.isPreview ? AMLocalizedString(@"close", nil) : AMLocalizedString(@"leaveGroup", @"Button title that allows the user to leave a group chat.");
             cell.nameLabel.textColor = UIColor.mnz_redMain;            
             break;
                         
@@ -620,7 +611,16 @@
             break;
             
         case 4:
-            [self showLeaveChatAlert];
+            if (self.chatRoom.isPreview) {
+                [[MEGASdkManager sharedMEGAChatSdk] closeChatPreview:self.chatRoom.chatId];
+                if (self.presentingViewController) {
+                    [self dismissViewControllerAnimated:YES completion:nil];
+                } else {
+                    [self.navigationController popToRootViewControllerAnimated:YES];
+                }
+            } else {
+                [self showLeaveChatAlert];
+            }
             break;
             
         case 5: {
