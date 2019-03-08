@@ -251,37 +251,6 @@ static const NSUInteger VideoUploadBatchCount = 1;
     }
 }
 
-- (void)checkCameraUploadDiskStorage:(void (^)(BOOL isDiskFull))completion {
-    if (!CameraUploadManager.isCameraUploadEnabled) {
-        completion(NO);
-    }
-    
-    dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0), ^{
-        BOOL isFull = NO;
-        if ([self isPhotoUploadDone]) {
-            if (CameraUploadManager.isVideoUploadEnabled && ![self isVideoUploadDone]) {
-                isFull = [self isVideoUploadPausedByDiskFull];
-            }
-        } else {
-            isFull = [self isPhotoUploadPausedByDiskFull];
-            
-            if (CameraUploadManager.isVideoUploadEnabled && ![self isVideoUploadDone]) {
-                isFull &= [self isVideoUploadPausedByDiskFull];
-            }
-        }
-        
-        completion(isFull);
-    });
-}
-
-- (BOOL)isPhotoUploadPausedByDiskFull {
-    return self.isPhotoUploadPaused && self.diskSpaceDetector.isDiskFullForPhotos;
-}
-
-- (BOOL)isVideoUploadPausedByDiskFull {
-    return self.isVideoUploadPaused && self.diskSpaceDetector.isDiskFullForVideos;
-}
-
 #pragma mark - start upload
 
 - (void)startCameraUploadIfNeeded {
@@ -583,14 +552,47 @@ static const NSUInteger VideoUploadBatchCount = 1;
 
 #pragma mark - get upload stats
 
-- (void)checkCurrentUploadStats:(void (^)(UploadStats *))completion {
-    dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0), ^{
+- (void)fetchCurrentUploadStats:(void (^)(UploadStats *))completion {
+    dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INTERACTIVE, 0), ^{
         UploadStats *stats = [[UploadStats alloc] init];
         stats.pendingFilesCount = self.uploadPendingAssetsCount;
         stats.totalFilesCount = self.totalAssetsCount;
         stats.uploadDoneFilesCount = self.uploadDoneAssetsCount;
         completion(stats);
     });
+}
+
+#pragma mark - check disk storage
+
+- (void)checkCameraUploadDiskStorage:(void (^)(BOOL isDiskFull))completion {
+    if (!CameraUploadManager.isCameraUploadEnabled) {
+        completion(NO);
+    }
+    
+    dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0), ^{
+        BOOL isFull = NO;
+        if ([self isPhotoUploadDone]) {
+            if (CameraUploadManager.isVideoUploadEnabled && ![self isVideoUploadDone]) {
+                isFull = [self isVideoUploadPausedByDiskFull];
+            }
+        } else {
+            isFull = [self isPhotoUploadPausedByDiskFull];
+            
+            if (CameraUploadManager.isVideoUploadEnabled && ![self isVideoUploadDone]) {
+                isFull &= [self isVideoUploadPausedByDiskFull];
+            }
+        }
+        
+        completion(isFull);
+    });
+}
+
+- (BOOL)isPhotoUploadPausedByDiskFull {
+    return self.isPhotoUploadPaused && self.diskSpaceDetector.isDiskFullForPhotos;
+}
+
+- (BOOL)isVideoUploadPausedByDiskFull {
+    return self.isVideoUploadPaused && self.diskSpaceDetector.isDiskFullForVideos;
 }
 
 #pragma mark - photo library scan

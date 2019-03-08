@@ -12,7 +12,7 @@
 
 static const NSInteger PreviewConcurrentUploadCount = 1;
 static const NSInteger CoordinatesConcurrentUploadCount = 2;
-static const NSInteger ThumbnailConcurrentUploadCount = 15;
+static const NSInteger ThumbnailConcurrentUploadCount = 20;
 
 @interface AttributeUploadManager ()
 
