@@ -1,36 +1,29 @@
 
 #import "MEGASdkManager.h"
-
-#define kUserAgent @"MEGAiOS"
-#define kAppKey @"EVtjzb7R"
+#import "MEGAConstants.h"
 
 @implementation MEGASdkManager
 
 static MEGAChatSdk *_MEGAChatSdk = nil;
 
 + (NSString *)userAgent {
-    return [NSString stringWithFormat:@"%@/%@", kUserAgent, [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"]];
+    return [NSString stringWithFormat:@"%@/%@", MEGAiOSAppUserAgent, [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"]];
 }
 
 + (MEGASdk *)sharedMEGASdk {
-    static MEGASdk *_megaSDK = nil;
+    static MEGASdk *_megaSDK;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        _megaSDK = [self createMEGASdk];
+        NSError *error;
+        NSURL *applicationSupportDirectoryURL = [[NSFileManager defaultManager] URLForDirectory:NSApplicationSupportDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:YES error:&error];
+        if (error) {
+            MEGALogError(@"Failed to locate/create NSApplicationSupportDirectory with error: %@", error);
+        }
+
+        _megaSDK = [[MEGASdk alloc] initWithAppKey:MEGAiOSAppKey userAgent:[self userAgent] basePath:applicationSupportDirectoryURL.path];
+        [_megaSDK retrySSLErrors:YES];
     });
     return _megaSDK;
-}
-
-+ (MEGASdk *)createMEGASdk {
-    NSError *error;
-    NSURL *applicationSupportDirectoryURL = [[NSFileManager defaultManager] URLForDirectory:NSApplicationSupportDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:YES error:&error];
-    if (error) {
-        MEGALogError(@"Failed to locate/create NSApplicationSupportDirectory with error: %@", error);
-    }
-
-    MEGASdk *sdk = [[MEGASdk alloc] initWithAppKey:kAppKey userAgent:[self userAgent] basePath:applicationSupportDirectoryURL.path];
-    [sdk retrySSLErrors:YES];
-    return sdk;
 }
 
 + (MEGAChatSdk *)sharedMEGAChatSdk {
@@ -60,7 +53,7 @@ static MEGAChatSdk *_MEGAChatSdk = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         NSString *basePath = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-        _megaSDKFolder = [[MEGASdk alloc] initWithAppKey:kAppKey userAgent:[self userAgent] basePath:basePath];
+        _megaSDKFolder = [[MEGASdk alloc] initWithAppKey:MEGAiOSAppKey userAgent:[self userAgent] basePath:basePath];
         [_megaSDKFolder retrySSLErrors:YES];
     });
     return _megaSDKFolder;

@@ -50,7 +50,7 @@ static NSString * const VideoAttributeImageName = @"AttributeImage";
 
 - (MEGASdk *)sdk {
     if (_sdk == nil) {
-        _sdk = [MEGASdkManager createMEGASdk];
+        _sdk = [[MEGASdk alloc] initWithAppKey:MEGAiOSAppKey userAgent:nil];
     }
     
     return _sdk;

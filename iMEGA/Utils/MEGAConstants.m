@@ -1,6 +1,11 @@
 
 #import "MEGAConstants.h"
 
+#pragma mark - global constants
+
+NSString * const MEGAiOSAppUserAgent = @"MEGAiOS";
+NSString * const MEGAiOSAppKey = @"EVtjzb7R";
+
 #pragma mark - global notifications
 
 NSString * const MEGALogoutNotificationName = @"nz.mega.logout";

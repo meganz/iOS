@@ -708,6 +708,7 @@
 		B644B6BE21AE0E1900A3B8E7 /* CoordinatesUploadOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = B644B6BD21AE0E1900A3B8E7 /* CoordinatesUploadOperation.m */; };
 		B644B6C121AE19BC00A3B8E7 /* MEGAExpirableOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = B644B6C021AE19BC00A3B8E7 /* MEGAExpirableOperation.m */; };
 		B645164B2231C199001680BC /* PHFetchResult+CameraUpload.m in Sources */ = {isa = PBXBuildFile; fileRef = B645164A2231C199001680BC /* PHFetchResult+CameraUpload.m */; };
+		B6451650223201A2001680BC /* MEGAConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = B60DDC1521A7A7930097E4A3 /* MEGAConstants.m */; };
 		B6575FD021FC526D00B7AD82 /* LivePhotoUploadOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = B6575FCF21FC526D00B7AD82 /* LivePhotoUploadOperation.m */; };
 		B6575FD3220101BB00B7AD82 /* MediaInfoLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = B6575FD2220101BB00B7AD82 /* MediaInfoLoader.m */; };
 		B6575FD622012F8D00B7AD82 /* LoadMediaInfoOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = B6575FD522012F8D00B7AD82 /* LoadMediaInfoOperation.m */; };
@@ -4842,6 +4843,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				944DF2BC1EF9379E007798DD /* MEGALogger.m in Sources */,
+				B6451650223201A2001680BC /* MEGAConstants.m in Sources */,
 				77F3C30621C15A5B0049A1BA /* NSFileManager+MNZCategory.m in Sources */,
 				942255041EDC04080074C51A /* FileProvider.m in Sources */,
 				942ED2AD1EDEE50900C9908D /* SAMKeychain.m in Sources */,
