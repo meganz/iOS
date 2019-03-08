@@ -115,7 +115,7 @@ static const NSTimeInterval MEGAPhotosReloadToleranceTimeInterval = 0.3;
     CGSize cellSize = [self.photosCollectionView mnz_calculateCellSizeForInset:self.cellInset];
     if (!CGSizeEqualToSize(cellSize, self.cellSize)) {
         self.cellSize = cellSize;
-        [self reloadUI];
+        [self.photosCollectionView reloadData];
     }
 }
 
