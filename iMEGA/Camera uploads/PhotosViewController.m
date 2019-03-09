@@ -115,7 +115,7 @@ static const NSTimeInterval HeaderStateViewReloadToleranceTimeInterval = .1;
     [self setNavigationBarButtonItemsEnabled:[MEGAReachabilityManager isReachable]];
     
     [self reloadHeader];
-    [self reloadUI];
+    [self reloadPhotosView];
 }
 
 - (void)viewDidLayoutSubviews {
@@ -216,30 +216,30 @@ static const NSTimeInterval HeaderStateViewReloadToleranceTimeInterval = .1;
         return;
     }
     
-    [CameraUploadManager.shared fetchCurrentUploadStats:^(UploadStats * _Nullable stats, NSError * _Nullable error) {
-        if (error || stats == nil) {
+    [CameraUploadManager.shared fetchCurrentUploadStats:^(UploadStats * _Nullable uploadStats, NSError * _Nullable error) {
+        if (error || uploadStats == nil) {
             MEGALogError(@"[Camera Upload] error when to fetch upload stats %@", error);
             self.currentState = MEGACameraUploadsStateUnknown;
             self.needsReloadHeaderStateView = YES;
             return;
         }
         
-        MEGALogDebug(@"[Camera Upload] pending count %lu, done count: %lu, total count: %lu", stats.pendingFilesCount, stats.finishedFilesCount, stats.totalFilesCount);
+        MEGALogDebug(@"[Camera Upload] pending count %lu, done count: %lu, total count: %lu", uploadStats.pendingFilesCount, uploadStats.finishedFilesCount, uploadStats.totalFilesCount);
         dispatch_async(dispatch_get_main_queue(), ^{
-            self.currentState = stats.pendingFilesCount > 0 ? MEGACameraUploadsStateUploading : MEGACameraUploadsStateCompleted;
-            [self configUploadProgressByStats:stats];
+            self.currentState = uploadStats.pendingFilesCount > 0 ? MEGACameraUploadsStateUploading : MEGACameraUploadsStateCompleted;
+            [self configUploadProgressByStats:uploadStats];
         });
     }];
 }
 
-- (void)configUploadProgressByStats:(UploadStats *)stats {
-    self.photosUploadedProgressView.progress = (float)stats.finishedFilesCount / (float)stats.totalFilesCount;
+- (void)configUploadProgressByStats:(UploadStats *)uploadStats {
+    self.photosUploadedProgressView.progress = (float)uploadStats.finishedFilesCount / (float)uploadStats.totalFilesCount;
     
     NSString *progressText;
-    if (stats.pendingFilesCount == 1) {
+    if (uploadStats.pendingFilesCount == 1) {
         progressText = AMLocalizedString(@"cameraUploadsPendingFile", @"Message shown while uploading files. Singular.");
     } else {
-        progressText = [NSString stringWithFormat:AMLocalizedString(@"cameraUploadsPendingFiles", @"Message shown while uploading files. Plural."), stats.pendingFilesCount];
+        progressText = [NSString stringWithFormat:AMLocalizedString(@"cameraUploadsPendingFiles", @"Message shown while uploading files. Plural."), uploadStats.pendingFilesCount];
     }
     
     self.photosUploadedLabel.text = progressText;
@@ -314,9 +314,7 @@ static const NSTimeInterval HeaderStateViewReloadToleranceTimeInterval = .1;
 
 #pragma mark - Private
 
-- (void)reloadUI {
-    self.needsReloadHeaderStateView = YES;
-    
+- (void)reloadPhotosView {
     NSMutableDictionary *photosByMonthYearDictionary = [NSMutableDictionary new];
     
     self.photosByMonthYearArray = [NSMutableArray new];
@@ -396,7 +394,7 @@ static const NSTimeInterval HeaderStateViewReloadToleranceTimeInterval = .1;
 
 - (void)internetConnectionChanged {
     [self setNavigationBarButtonItemsEnabled:[MEGAReachabilityManager isReachable]];
-    self.needsReloadHeaderStateView = YES;
+    [self reloadHeader];
 }
 
 #pragma mark - reload timer
@@ -407,7 +405,7 @@ static const NSTimeInterval HeaderStateViewReloadToleranceTimeInterval = .1;
     self.photosViewReloadTimer = [NSTimer scheduledTimerWithTimeInterval:PhotosViewReloadTimeInterval target:self selector:@selector(photosViewReloadTimerFired) userInfo:nil repeats:YES];
     self.photosViewReloadTimer.tolerance = PhotosViewReloadToleranceTimeInterval;
     
-    self.headerStateViewReloadTimer = [NSTimer scheduledTimerWithTimeInterval:HeaderStateViewReloadTimeInterval target:self selector:@selector(headerStateViewReloadTimer) userInfo:nil repeats:YES];
+    self.headerStateViewReloadTimer = [NSTimer scheduledTimerWithTimeInterval:HeaderStateViewReloadTimeInterval target:self selector:@selector(headerStatusReloadTimerFired) userInfo:nil repeats:YES];
     self.headerStateViewReloadTimer.tolerance = HeaderStateViewReloadToleranceTimeInterval;
 }
 
@@ -426,7 +424,7 @@ static const NSTimeInterval HeaderStateViewReloadToleranceTimeInterval = .1;
 - (void)photosViewReloadTimerFired {
     if (self.needsReloadPhotosView) {
         self.needsReloadPhotosView = NO;
-        [self reloadUI];
+        [self reloadPhotosView];
     }
 }
 

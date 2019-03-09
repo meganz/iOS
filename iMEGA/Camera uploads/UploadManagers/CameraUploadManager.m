@@ -561,7 +561,7 @@ static const NSUInteger VideoUploadBatchCount = 1;
         NSUInteger finishedCount = 0;
         
         totalCount = [CameraUploadRecordManager.shared totalRecordsCountByMediaTypes:self.enabledMediaTypes includeUploadErrorRecords:NO error:&error];
-        if (error != nil) {
+        if (error == nil) {
             finishedCount = [CameraUploadRecordManager.shared finishedRecordsCountByMediaTypes:self.enabledMediaTypes error:&error];
         }
          

@@ -14,9 +14,8 @@ static const NSInteger CoordinatesConcurrentUploadCount = 3;
 static const NSInteger ThumbnailConcurrentUploadCount = 20;
 
 typedef NS_ENUM(NSInteger, PreviewConcurrentUploadCount) {
-    PreviewConcurrentUploadCountWhenThumbnailsAreDone = 4,
-    PreviewConcurrentUploadCountWhenThumbnailUploadsBelow5 = 2,
-    PreviewConcurrentUploadCountWhenThumbnailsAre5AndAbove = 1
+    PreviewConcurrentUploadCountWhenThumbnailsAreDone = 3,
+    PreviewConcurrentUploadCountWhenThumbnailsAreUploading = 1
 };
 
 @interface AttributeUploadManager ()
@@ -70,10 +69,8 @@ typedef NS_ENUM(NSInteger, PreviewConcurrentUploadCount) {
         NSUInteger thumbnailsCount = self.thumbnailUploadOperationQueue.operationCount;
         if (thumbnailsCount == 0) {
             previewConcurrentCount = PreviewConcurrentUploadCountWhenThumbnailsAreDone;
-        } else if (thumbnailsCount < 5) {
-            previewConcurrentCount = PreviewConcurrentUploadCountWhenThumbnailUploadsBelow5;
         } else {
-            previewConcurrentCount = PreviewConcurrentUploadCountWhenThumbnailsAre5AndAbove;
+            previewConcurrentCount = PreviewConcurrentUploadCountWhenThumbnailsAreUploading;
         }
         
         if (self.previewUploadOperationQueue.maxConcurrentOperationCount != previewConcurrentCount) {
