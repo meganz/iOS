@@ -10,9 +10,14 @@
 #import "NSError+CameraUpload.h"
 @import CoreLocation;
 
-static const NSInteger PreviewConcurrentUploadCount = 1;
-static const NSInteger CoordinatesConcurrentUploadCount = 2;
+static const NSInteger CoordinatesConcurrentUploadCount = 3;
 static const NSInteger ThumbnailConcurrentUploadCount = 20;
+
+typedef NS_ENUM(NSInteger, PreviewConcurrentUploadCount) {
+    PreviewConcurrentUploadCountWhenThumbnailsAreDone = 4,
+    PreviewConcurrentUploadCountWhenThumbnailUploadsBelow5 = 2,
+    PreviewConcurrentUploadCountWhenThumbnailsAre5AndAbove = 1
+};
 
 @interface AttributeUploadManager ()
 
@@ -41,10 +46,10 @@ static const NSInteger ThumbnailConcurrentUploadCount = 20;
         _thumbnailUploadOperationQueue = [[NSOperationQueue alloc] init];
         _thumbnailUploadOperationQueue.qualityOfService = NSQualityOfServiceUserInteractive;
         _thumbnailUploadOperationQueue.maxConcurrentOperationCount = ThumbnailConcurrentUploadCount;
+        [_thumbnailUploadOperationQueue addObserver:self forKeyPath:NSStringFromSelector(@selector(operationCount)) options:0 context:NULL];
         
         _previewUploadOperationQueue = [[NSOperationQueue alloc] init];
         _previewUploadOperationQueue.qualityOfService = NSQualityOfServiceBackground;
-        _previewUploadOperationQueue.maxConcurrentOperationCount = PreviewConcurrentUploadCount;
         
         _coordinatesUploadOperationQueue = [[NSOperationQueue alloc] init];
         _coordinatesUploadOperationQueue.qualityOfService = NSQualityOfServiceUtility;
@@ -57,7 +62,29 @@ static const NSInteger ThumbnailConcurrentUploadCount = 20;
     return self;
 }
 
-#pragma mark - util
+#pragma mark - thumbnail operation count KVO
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context {
+    if ([keyPath isEqualToString:NSStringFromSelector(@selector(operationCount))] && object == self.thumbnailUploadOperationQueue) {
+        NSInteger previewConcurrentCount;
+        NSUInteger thumbnailsCount = self.thumbnailUploadOperationQueue.operationCount;
+        if (thumbnailsCount == 0) {
+            previewConcurrentCount = PreviewConcurrentUploadCountWhenThumbnailsAreDone;
+        } else if (thumbnailsCount < 5) {
+            previewConcurrentCount = PreviewConcurrentUploadCountWhenThumbnailUploadsBelow5;
+        } else {
+            previewConcurrentCount = PreviewConcurrentUploadCountWhenThumbnailsAre5AndAbove;
+        }
+        
+        if (self.previewUploadOperationQueue.maxConcurrentOperationCount != previewConcurrentCount) {
+            self.previewUploadOperationQueue.maxConcurrentOperationCount = previewConcurrentCount;
+        }
+        
+        MEGALogDebug(@"[Camera Upload] thumbnail count %lu, preview count %lu, preview concurrent count %li, coordinates count %lu", (unsigned long)thumbnailsCount, (unsigned long)self.previewUploadOperationQueue.operationCount, previewConcurrentCount, (unsigned long)self.coordinatesUploadOperationQueue.operationCount);
+    }
+}
+
+#pragma mark - wait until done
 
 - (void)waitUntilAllThumbnailUploadsAreFinished {
     [self.thumbnailUploadOperationQueue waitUntilAllOperationsAreFinished];
