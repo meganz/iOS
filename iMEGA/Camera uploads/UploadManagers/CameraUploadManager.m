@@ -256,11 +256,7 @@ static const NSUInteger VideoUploadBatchCount = 1;
 - (void)startCameraUploadIfNeeded {
     MEGALogDebug(@"[Camera Upload] start camera upload if needed");
     
-    [MEGASdkManager.sharedMEGASdk retryPendingConnections];
-    
-    [AttributeUploadManager.shared scanLocalAttributeFilesAndRetryUploadIfNeeded];
-    
-    if (!MEGASdkManager.sharedMEGASdk.isLoggedIn || !CameraUploadManager.canCameraUploadBeStarted) {
+    if (!MEGASdkManager.sharedMEGASdk.isLoggedIn || !CameraUploadManager.isCameraUploadEnabled) {
         return;
     }
 
@@ -273,6 +269,10 @@ static const NSUInteger VideoUploadBatchCount = 1;
             [self requestMediaInfoForUpload];
         }
     }];
+    
+    [MEGASdkManager.sharedMEGASdk retryPendingConnections];
+    
+    [AttributeUploadManager.shared scanLocalAttributeFilesAndRetryUploadIfNeeded];
 }
 
 - (void)requestMediaInfoForUpload {
@@ -313,6 +313,10 @@ static const NSUInteger VideoUploadBatchCount = 1;
 }
 
 - (void)uploadCamera {
+    if (!CameraUploadManager.canCameraUploadBeStarted) {
+        return;
+    }
+    
     [self startVideoUploadIfNeeded];
     
     if (self.isPhotoUploadPaused) {
@@ -335,7 +339,7 @@ static const NSUInteger VideoUploadBatchCount = 1;
 
 - (void)startVideoUploadIfNeeded {
     MEGALogDebug(@"[Camera Upload] start video upload if needed");
-    if (!(CameraUploadManager.canCameraUploadBeStarted && CameraUploadManager.isVideoUploadEnabled)) {
+    if (!(CameraUploadManager.isCameraUploadEnabled && CameraUploadManager.isVideoUploadEnabled)) {
         MEGALogDebug(@"[Camera Upload] video upload is not enabled");
         return;
     }
@@ -351,6 +355,10 @@ static const NSUInteger VideoUploadBatchCount = 1;
 }
 
 - (void)uploadVideos {
+    if (!CameraUploadManager.canCameraUploadBeStarted) {
+        return;
+    }
+    
     if (!(self.mediaInfoLoader.isMediaInfoLoaded && self.isNodeTreeCurrent && self.cameraUploadNode != nil)) {
         MEGALogDebug(@"[Camera Upload] can not upload videos due to the dependency on media info and camera uplaod node issues");
         return;
