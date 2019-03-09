@@ -48,9 +48,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - fetch upload counts
 
-- (NSUInteger)uploadDoneRecordsCountByMediaTypes:(NSArray<NSNumber *> *)mediaTypes error:(NSError * _Nullable __autoreleasing *)error;
+- (NSUInteger)finishedRecordsCountByMediaTypes:(NSArray<NSNumber *> *)mediaTypes error:(NSError * _Nullable __autoreleasing *)error;
 
-- (NSUInteger)uploadRecordsCountByMediaTypes:(NSArray<NSNumber *> *)mediaTypes error:(NSError * _Nullable __autoreleasing *)error;
+- (NSUInteger)totalRecordsCountByMediaTypes:(NSArray<NSNumber *> *)mediaTypes error:(NSError * _Nullable __autoreleasing *)error;
 
 - (NSUInteger)pendingRecordsCountByMediaTypes:(NSArray <NSNumber *> *)mediaTypes error:(NSError *__autoreleasing  _Nullable *)error;
 

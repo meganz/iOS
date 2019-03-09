@@ -9,10 +9,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface CameraUploadManager : NSObject
 
-@property (readonly) NSUInteger uploadPendingAssetsCount;
-@property (readonly) NSUInteger totalAssetsCount;
-@property (readonly) NSUInteger uploadDoneAssetsCount;
-
 @property (readonly) BOOL isNodeTreeCurrent;
 @property (nonatomic, getter=isPhotoUploadPaused) BOOL pausePhotoUpload;
 @property (nonatomic, getter=isVideoUploadPaused) BOOL pauseVideoUpload;
@@ -62,7 +58,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - fetch upload stats
 
-- (void)fetchCurrentUploadStats:(void (^)(UploadStats *stats))completion;
+- (void)fetchCurrentUploadStats:(void (^)(UploadStats * _Nullable stats, NSError * _Nullable error))completion;
 
 #pragma mark - check disk storage
 

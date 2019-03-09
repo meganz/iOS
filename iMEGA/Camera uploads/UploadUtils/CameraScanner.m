@@ -8,6 +8,7 @@
 #import "LivePhotoScanner.h"
 #import "PHFetchOptions+CameraUpload.h"
 #import "PHFetchResult+CameraUpload.h"
+#import "MEGAConstants.h"
 
 @interface CameraScanner () <PHPhotoLibraryChangeObserver>
 
@@ -50,7 +51,7 @@
         }
         
         [CameraUploadRecordManager.shared.backgroundContext performBlockAndWait:^{
-            if ([CameraUploadRecordManager.shared uploadRecordsCountByMediaTypes:mediaTypes error:nil] == 0) {
+            if ([CameraUploadRecordManager.shared totalRecordsCountByMediaTypes:mediaTypes error:nil] == 0) {
                 MEGALogDebug(@"[Camera Upload] initial save with asset count %lu", (unsigned long)self.fetchResult.count);
                 @autoreleasepool {
                     [self saveInitialUploadRecordsByAssetFetchResult:self.fetchResult error:nil];
@@ -67,6 +68,10 @@
                     if (newAssets.count > 0) {
                         [self createUploadRecordsByAssets:newAssets shouldCheckExistence:NO];
                         [CameraUploadRecordManager.shared saveChangesIfNeededWithError:nil];
+                        
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            [NSNotificationCenter.defaultCenter postNotificationName:MEGACameraUploadStatsChangedNotificationName object:nil];
+                        });
                     }
                     
                     if (CameraUploadManager.isLivePhotoSupported && [mediaTypes containsObject:@(PHAssetMediaTypeImage)]) {
@@ -111,6 +116,10 @@
                     [self.livePhotoScanner scanLivePhotosInAssets:newAssets];
                     [CameraUploadRecordManager.shared saveChangesIfNeededWithError:nil];
                 }];
+                
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [NSNotificationCenter.defaultCenter postNotificationName:MEGACameraUploadStatsChangedNotificationName object:nil];
+                });
                 
                 [CameraUploadManager.shared startCameraUploadIfNeeded];
             });

@@ -19,7 +19,7 @@ NSString * const MEGAStorageEventStateUserInfoKey = @"nz.mega.event.storage.stat
 
 #pragma mark - camera upload notifications
 
-NSString * const MEGACameraUploadAssetUploadDoneNotificationName = @"nz.mega.cameraUpload.assetUploadDone";
+NSString * const MEGACameraUploadStatsChangedNotificationName = @"nz.mega.cameraUpload.statsChanged";
 NSString * const MEGACameraUploadPhotoUploadLocalDiskFullNotificationName = @"nz.mega.cameraUpload.photo.localDiskFull";
 NSString * const MEGACameraUploadVideoUploadLocalDiskFullNotificationName = @"nz.mega.cameraUpload.video.localDiskFull";
 NSString * const MEGACameraUploadPhotoConcurrentCountChangedNotificationName = @"nz.mega.cameraUpload.photo.concurrentCountChanged";

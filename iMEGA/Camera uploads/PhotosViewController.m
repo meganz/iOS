@@ -26,8 +26,11 @@
 #import "PhotosViewController+MNZCategory.h"
 #import "UploadStats.h"
 
-static const NSTimeInterval MEGAPhotosReloadTimeInterval = 2;
-static const NSTimeInterval MEGAPhotosReloadToleranceTimeInterval = 0.3;
+static const NSTimeInterval PhotosViewReloadTimeInterval = 2;
+static const NSTimeInterval PhotosViewReloadToleranceTimeInterval = .2;
+
+static const NSTimeInterval HeaderStateViewReloadTimeInterval = 1;
+static const NSTimeInterval HeaderStateViewReloadToleranceTimeInterval = .1;
 
 @interface PhotosViewController () <UICollectionViewDelegateFlowLayout, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAPhotoBrowserDelegate> {
     BOOL allNodesSelected;
@@ -67,8 +70,10 @@ static const NSTimeInterval MEGAPhotosReloadToleranceTimeInterval = 0.3;
 
 @property (nonatomic) NSIndexPath *browsingIndexPath;
 
-@property (nonatomic) BOOL hasNodesUpdate;
-@property (strong, nonatomic) NSTimer *reloadTimer;
+@property (nonatomic) BOOL needsReloadPhotosView;
+@property (strong, nonatomic) NSTimer *photosViewReloadTimer;
+@property (nonatomic) BOOL needsReloadHeaderStateView;
+@property (strong, nonatomic) NSTimer *headerStateViewReloadTimer;
 
 @end
 
@@ -92,6 +97,8 @@ static const NSTimeInterval MEGAPhotosReloadToleranceTimeInterval = 0.3;
     
     self.cellInset = 1.0f;
     self.cellSize = [self.photosCollectionView mnz_calculateCellSizeForInset:self.cellInset];
+    
+    self.currentState = MEGACameraUploadsStateUnknown;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -100,7 +107,7 @@ static const NSTimeInterval MEGAPhotosReloadToleranceTimeInterval = 0.3;
     [self setEditing:NO animated:NO];
     
     [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(internetConnectionChanged) name:kReachabilityChangedNotification object:nil];
-    [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(assetUploadDoneNotification) name:MEGACameraUploadAssetUploadDoneNotificationName object:nil];
+    [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(didReceiveCameraUploadStatsChangedNotification) name:MEGACameraUploadStatsChangedNotificationName object:nil];
     
     [[MEGASdkManager sharedMEGASdk] addMEGARequestDelegate:self];
     [[MEGASdkManager sharedMEGASdk] addMEGAGlobalDelegate:self];
@@ -134,19 +141,19 @@ static const NSTimeInterval MEGAPhotosReloadToleranceTimeInterval = 0.3;
         }
     }];
     
-    [self setupReloadTimer];
+    [self setupReloadTimers];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     
     [NSNotificationCenter.defaultCenter removeObserver:self name:kReachabilityChangedNotification object:nil];
-    [NSNotificationCenter.defaultCenter removeObserver:self name:MEGACameraUploadAssetUploadDoneNotificationName object:nil];
+    [NSNotificationCenter.defaultCenter removeObserver:self name:MEGACameraUploadStatsChangedNotificationName object:nil];
     
     [[MEGASdkManager sharedMEGASdk] removeMEGARequestDelegate:self];
     [[MEGASdkManager sharedMEGASdk] removeMEGAGlobalDelegate:self];
     
-    [self invalidateReloadTimerIfNeeded];
+    [self invalidateReloadTimers];
 }
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations {
@@ -188,7 +195,61 @@ static const NSTimeInterval MEGAPhotosReloadToleranceTimeInterval = 0.3;
     }
 }
 
+#pragma mark - uploads state
+
+- (void)reloadHeader {
+    if (!MEGAReachabilityManager.isReachable) {
+        self.currentState = MEGACameraUploadsStateNoInternetConnection;
+
+        return;
+    }
+    
+    if (!CameraUploadManager.isCameraUploadEnabled) {
+        if (self.photosByMonthYearArray.count == 0) {
+            self.currentState = MEGACameraUploadsStateEmpty;
+        } else {
+            self.currentState = MEGACameraUploadsStateDisabled;
+        }
+        
+        return;
+    }
+    
+    [CameraUploadManager.shared fetchCurrentUploadStats:^(UploadStats * _Nullable stats, NSError * _Nullable error) {
+        if (error || stats == nil) {
+            MEGALogError(@"[Camera Upload] error when to fetch upload stats %@", error);
+            self.currentState = MEGACameraUploadsStateUnknown;
+            self.needsReloadHeaderStateView = YES;
+            return;
+        }
+        
+        MEGALogDebug(@"[Camera Upload] pending count %lu, done count: %lu, total count: %lu", stats.pendingFilesCount, stats.finishedFilesCount, stats.totalFilesCount);
+        dispatch_async(dispatch_get_main_queue(), ^{
+            self.currentState = stats.pendingFilesCount > 0 ? MEGACameraUploadsStateUploading : MEGACameraUploadsStateCompleted;
+            [self configUploadProgressByStats:stats];
+        });
+    }];
+}
+
+- (void)configUploadProgressByStats:(UploadStats *)stats {
+    self.photosUploadedProgressView.progress = (float)stats.finishedFilesCount / (float)stats.totalFilesCount;
+    
+    NSString *progressText;
+    if (stats.pendingFilesCount == 1) {
+        progressText = AMLocalizedString(@"cameraUploadsPendingFile", @"Message shown while uploading files. Singular.");
+    } else {
+        progressText = [NSString stringWithFormat:AMLocalizedString(@"cameraUploadsPendingFiles", @"Message shown while uploading files. Plural."), stats.pendingFilesCount];
+    }
+    
+    self.photosUploadedLabel.text = progressText;
+}
+
 - (void)setCurrentState:(MEGACameraUploadsState)currentState {
+    if (_currentState == currentState) {
+        return;
+    }
+    
+    _currentState = currentState;
+    
     switch (currentState) {
         case MEGACameraUploadsStateDisabled:
             self.stateView.hidden = NO;
@@ -247,13 +308,13 @@ static const NSTimeInterval MEGAPhotosReloadToleranceTimeInterval = 0.3;
             [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
             break;
     }
-    
-    _currentState = currentState;
 }
 
 #pragma mark - Private
 
 - (void)reloadUI {
+    self.needsReloadHeaderStateView = YES;
+    
     NSMutableDictionary *photosByMonthYearDictionary = [NSMutableDictionary new];
     
     self.photosByMonthYearArray = [NSMutableArray new];
@@ -289,18 +350,11 @@ static const NSTimeInterval MEGAPhotosReloadToleranceTimeInterval = 0.3;
     
     [self.photosCollectionView reloadData];
     
-    [self updateProgressWithKnownCameraUploadInProgress:NO];
-    
     if ([self.photosCollectionView allowsMultipleSelection]) {
         self.navigationItem.title = AMLocalizedString(@"selectTitle", @"Select items");
     } else {
         self.navigationItem.title = AMLocalizedString(@"cameraUploadsLabel", @"Title of one of the Settings sections where you can set up the 'Camera Uploads' options");
     }
-}
-
-- (void)internetConnectionChanged {
-    [self setNavigationBarButtonItemsEnabled:[MEGAReachabilityManager isReachable]];
-    [self updateCurrentStateWithKnownCameraUploadInProgress:NO pendingCount:0];
 }
 
 - (void)setNavigationBarButtonItemsEnabled:(BOOL)boolValue {
@@ -313,54 +367,6 @@ static const NSTimeInterval MEGAPhotosReloadToleranceTimeInterval = 0.3;
     self.moveBarButtonItem.enabled = boolValue;
     self.carbonCopyBarButtonItem.enabled = boolValue;
     self.deleteBarButtonItem.enabled = boolValue;
-}
-
-- (void)assetUploadDoneNotification {
-    [self updateProgressWithKnownCameraUploadInProgress:YES];
-}
-
-- (void)updateProgressWithKnownCameraUploadInProgress:(BOOL)knownCameraUploadInProgress {
-    [CameraUploadManager.shared fetchCurrentUploadStats:^(UploadStats * _Nonnull stats) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            MEGALogDebug(@"[Camera Upload] pending count %lu, done count: %lu, total count: %lu", stats.pendingFilesCount, stats.uploadDoneFilesCount, stats.totalFilesCount);
-            
-            self.photosUploadedProgressView.progress = (float)stats.uploadDoneFilesCount / (float)stats.totalFilesCount;
-            
-            NSString *progressText;
-            if (stats.pendingFilesCount == 1) {
-                progressText = AMLocalizedString(@"cameraUploadsPendingFile", @"Message shown while uploading files. Singular.");
-            } else {
-                progressText = [NSString stringWithFormat:AMLocalizedString(@"cameraUploadsPendingFiles", @"Message shown while uploading files. Plural."), stats.pendingFilesCount];
-            }
-            self.photosUploadedLabel.text = progressText;
-            
-            [self updateCurrentStateWithKnownCameraUploadInProgress:knownCameraUploadInProgress pendingCount:stats.pendingFilesCount];
-        });
-    }];
-}
-
-- (void)updateCurrentStateWithKnownCameraUploadInProgress:(BOOL)knownCameraUploadInProgress pendingCount:(NSUInteger)pendingCount {
-    if ([MEGAReachabilityManager isReachable]) {
-        if (CameraUploadManager.isCameraUploadEnabled) {
-            if (pendingCount > 0) {
-                self.currentState = MEGACameraUploadsStateUploading;
-            } else {
-                if (knownCameraUploadInProgress) {
-                    self.currentState = MEGACameraUploadsStateUnknown;
-                } else {
-                    self.currentState = MEGACameraUploadsStateCompleted;
-                }
-            }
-        } else {
-            if (self.photosByMonthYearArray.count == 0) {
-                self.currentState = MEGACameraUploadsStateEmpty;
-            } else {
-                self.currentState = MEGACameraUploadsStateDisabled;
-            }
-        }
-    } else {
-        self.currentState = MEGACameraUploadsStateNoInternetConnection;
-    }
 }
 
 - (NSIndexPath *)indexPathForNode:(MEGANode *)node {
@@ -380,28 +386,52 @@ static const NSTimeInterval MEGAPhotosReloadToleranceTimeInterval = 0.3;
     return nil;
 }
 
+#pragma mark - notifications
+
+- (void)didReceiveCameraUploadStatsChangedNotification {
+    self.needsReloadHeaderStateView = YES;
+}
+
+- (void)internetConnectionChanged {
+    [self setNavigationBarButtonItemsEnabled:[MEGAReachabilityManager isReachable]];
+    self.needsReloadHeaderStateView = YES;
+}
+
 #pragma mark - reload timer
 
-- (void)setupReloadTimer {
-    if (self.reloadTimer.isValid) {
-        return;
+- (void)setupReloadTimers {
+    [self invalidateReloadTimers];
+    
+    self.photosViewReloadTimer = [NSTimer scheduledTimerWithTimeInterval:PhotosViewReloadTimeInterval target:self selector:@selector(photosViewReloadTimerFired) userInfo:nil repeats:YES];
+    self.photosViewReloadTimer.tolerance = PhotosViewReloadToleranceTimeInterval;
+    
+    self.headerStateViewReloadTimer = [NSTimer scheduledTimerWithTimeInterval:HeaderStateViewReloadTimeInterval target:self selector:@selector(headerStateViewReloadTimer) userInfo:nil repeats:YES];
+    self.headerStateViewReloadTimer.tolerance = HeaderStateViewReloadToleranceTimeInterval;
+}
+
+- (void)invalidateReloadTimers {
+    if (self.photosViewReloadTimer.isValid) {
+        [self.photosViewReloadTimer invalidate];
+        self.photosViewReloadTimer = nil;
     }
     
-    self.reloadTimer = [NSTimer scheduledTimerWithTimeInterval:MEGAPhotosReloadTimeInterval target:self selector:@selector(reloadTimerFired) userInfo:nil repeats:YES];
-    self.reloadTimer.tolerance = MEGAPhotosReloadToleranceTimeInterval;
-}
-
-- (void)invalidateReloadTimerIfNeeded {
-    if (self.reloadTimer.isValid) {
-        [self.reloadTimer invalidate];
-        self.reloadTimer = nil;
+    if (self.headerStateViewReloadTimer.isValid) {
+        [self.headerStateViewReloadTimer invalidate];
+        self.headerStateViewReloadTimer = nil;
     }
 }
 
-- (void)reloadTimerFired {
-    if (self.hasNodesUpdate) {
-        self.hasNodesUpdate = NO;
+- (void)photosViewReloadTimerFired {
+    if (self.needsReloadPhotosView) {
+        self.needsReloadPhotosView = NO;
         [self reloadUI];
+    }
+}
+
+- (void)headerStatusReloadTimerFired {
+    if (self.needsReloadHeaderStateView) {
+        self.needsReloadHeaderStateView = NO;
+        [self reloadHeader];
     }
 }
 
@@ -909,7 +939,7 @@ static const NSTimeInterval MEGAPhotosReloadToleranceTimeInterval = 0.3;
 #pragma mark - MEGAGlobalDelegate
 
 - (void)onNodesUpdate:(MEGASdk *)api nodeList:(MEGANodeList *)nodeList {
-    self.hasNodesUpdate = YES;
+    self.needsReloadPhotosView = YES;
 }
 
 @end

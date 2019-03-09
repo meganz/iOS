@@ -6,6 +6,7 @@
 #import "CameraUploadManager+Settings.h"
 #import "PHAsset+CameraUpload.h"
 #import "PHFetchResult+CameraUpload.h"
+#import "MEGAConstants.h"
 
 @implementation LivePhotoScanner
 
@@ -42,13 +43,19 @@
         NSArray<PHAsset *> *newAssets = [result findNewLivePhotoAssetsByUploadRecords:livePhotoRecords];
         MEGALogDebug(@"[Camera Upload] new live photo assets scanned count %lu", (unsigned long)newAssets.count);
         
-        SavedIdentifierParser *parser = [[SavedIdentifierParser alloc] init];
-        for (PHAsset *asset in newAssets) {
-            NSString *parsedIdentifier = [parser savedIdentifierForLocalIdentifier:asset.localIdentifier mediaSubtype:PHAssetMediaSubtypePhotoLive];
-            [self createLivePhotoRecordForAsset:asset inContext:CameraUploadRecordManager.shared.backgroundContext withParsedIdentifier:parsedIdentifier];
+        if (newAssets.count > 0) {
+            SavedIdentifierParser *parser = [[SavedIdentifierParser alloc] init];
+            for (PHAsset *asset in newAssets) {
+                NSString *parsedIdentifier = [parser savedIdentifierForLocalIdentifier:asset.localIdentifier mediaSubtype:PHAssetMediaSubtypePhotoLive];
+                [self createLivePhotoRecordForAsset:asset inContext:CameraUploadRecordManager.shared.backgroundContext withParsedIdentifier:parsedIdentifier];
+            }
+            
+            [CameraUploadRecordManager.shared saveChangesIfNeededWithError:nil];
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [NSNotificationCenter.defaultCenter postNotificationName:MEGACameraUploadStatsChangedNotificationName object:nil];
+            });
         }
-        
-        [CameraUploadRecordManager.shared saveChangesIfNeededWithError:nil];
     }];
 }
 

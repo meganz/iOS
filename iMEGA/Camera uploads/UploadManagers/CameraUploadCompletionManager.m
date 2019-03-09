@@ -192,7 +192,7 @@
         
         if (status == CameraAssetUploadStatusDone) {
             dispatch_async(dispatch_get_main_queue(), ^{
-                [NSNotificationCenter.defaultCenter postNotificationName:MEGACameraUploadAssetUploadDoneNotificationName object:nil];
+                [NSNotificationCenter.defaultCenter postNotificationName:MEGACameraUploadStatsChangedNotificationName object:nil];
             });
         }
     }];
