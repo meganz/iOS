@@ -215,13 +215,13 @@ static const NSUInteger MaximumUploadRetryPerLoginCount = 800;
 
 #pragma mark - fetch upload counts
 
-- (NSUInteger)uploadDoneRecordsCountByMediaTypes:(NSArray<NSNumber *> *)mediaTypes error:(NSError * _Nullable __autoreleasing *)error {
+- (NSUInteger)finishedRecordsCountByMediaTypes:(NSArray<NSNumber *> *)mediaTypes error:(NSError * _Nullable __autoreleasing *)error {
     NSFetchRequest *request = MOAssetUploadRecord.fetchRequest;
     request.predicate = [NSPredicate predicateWithFormat:@"(status == %@) AND (mediaType IN %@)", @(CameraAssetUploadStatusDone), mediaTypes];
     return [self countForFetchRequest:request error:error];
 }
 
-- (NSUInteger)uploadRecordsCountByMediaTypes:(NSArray<NSNumber *> *)mediaTypes error:(NSError * _Nullable __autoreleasing *)error {
+- (NSUInteger)totalRecordsCountByMediaTypes:(NSArray<NSNumber *> *)mediaTypes error:(NSError * _Nullable __autoreleasing *)error {
     NSFetchRequest *request = MOAssetUploadRecord.fetchRequest;
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"mediaType IN %@", mediaTypes];
     request.predicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[predicate, [self predicateByFilterAssetUploadRecordError]]];

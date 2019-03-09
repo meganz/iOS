@@ -517,14 +517,6 @@ static const NSUInteger VideoUploadBatchCount = 1;
 
 #pragma mark - upload status
 
-- (NSUInteger)totalAssetsCount {
-    return [CameraUploadRecordManager.shared uploadRecordsCountByMediaTypes:self.enabledMediaTypes error:nil];
-}
-
-- (NSUInteger)uploadDoneAssetsCount {
-    return [CameraUploadRecordManager.shared uploadDoneRecordsCountByMediaTypes:self.enabledMediaTypes error:nil];
-}
-
 - (NSUInteger)uploadPendingAssetsCount {
     return [CameraUploadRecordManager.shared pendingRecordsCountByMediaTypes:self.enabledMediaTypes error:nil];
 }
@@ -552,13 +544,22 @@ static const NSUInteger VideoUploadBatchCount = 1;
 
 #pragma mark - get upload stats
 
-- (void)fetchCurrentUploadStats:(void (^)(UploadStats *))completion {
+- (void)fetchCurrentUploadStats:(void (^)(UploadStats * _Nullable, NSError * _Nullable))completion {
     dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INTERACTIVE, 0), ^{
-        UploadStats *stats = [[UploadStats alloc] init];
-        stats.pendingFilesCount = self.uploadPendingAssetsCount;
-        stats.totalFilesCount = self.totalAssetsCount;
-        stats.uploadDoneFilesCount = self.uploadDoneAssetsCount;
-        completion(stats);
+        NSError *error;
+        NSUInteger totalCount = 0;
+        NSUInteger finishedCount = 0;
+        
+        totalCount = [CameraUploadRecordManager.shared totalRecordsCountByMediaTypes:self.enabledMediaTypes error:&error];
+        if (error != nil) {
+            finishedCount = [CameraUploadRecordManager.shared finishedRecordsCountByMediaTypes:self.enabledMediaTypes error:&error];
+        }
+         
+        if (error) {
+            completion(nil, error);
+        } else {
+            completion([[UploadStats alloc] initWithFinishedCount:finishedCount totalCount:totalCount], nil);
+        }
     });
 }
 

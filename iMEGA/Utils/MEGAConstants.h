@@ -19,7 +19,7 @@ extern NSString * const MEGAStorageEventStateUserInfoKey;
 
 #pragma mark - camera upload notifications
 
-extern NSString * const MEGACameraUploadAssetUploadDoneNotificationName;
+extern NSString * const MEGACameraUploadStatsChangedNotificationName;
 extern NSString * const MEGACameraUploadPhotoUploadLocalDiskFullNotificationName;
 extern NSString * const MEGACameraUploadVideoUploadLocalDiskFullNotificationName;
 extern NSString * const MEGACameraUploadPhotoConcurrentCountChangedNotificationName;
