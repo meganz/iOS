@@ -419,12 +419,12 @@ static const NSUInteger VideoUploadBatchCount = 1;
         CameraUploadOperation *operation = [UploadOperationFactory operationForUploadRecord:record parentNode:self.cameraUploadNode error:&error];
         if (operation) {
             if ([operation isMemberOfClass:[PhotoUploadOperation class]]) {
-                [self.photoUploadOperationQueue addOperation:operation];
+                [self queueUpIfNeededForOperation:operation inOperationQueue:self.photoUploadOperationQueue];
             } else if ([operation isMemberOfClass:[LivePhotoUploadOperation class]]) {
-                [self.videoUploadOperationQueue addOperation:operation];
+                [self queueUpIfNeededForOperation:operation inOperationQueue:self.videoUploadOperationQueue];
                 [self uploadNextAssetForMediaType:PHAssetMediaTypeImage];
             } else if ([operation isMemberOfClass:[VideoUploadOperation class]]) {
-                [self.videoUploadOperationQueue addOperation:operation];
+                [self queueUpIfNeededForOperation:operation inOperationQueue:self.videoUploadOperationQueue];
             }
         } else {
             MEGALogError(@"[Camera Upload] error when to build camera upload operation %@", error);
@@ -436,6 +436,24 @@ static const NSUInteger VideoUploadBatchCount = 1;
                 }
             }
         }
+    }
+}
+
+- (void)queueUpIfNeededForOperation:(CameraUploadOperation *)operation inOperationQueue:(NSOperationQueue *)queue {
+    BOOL hasExistingOperation = NO;
+    for (NSOperation *queuedOperation in queue.operations) {
+        if ([queuedOperation isKindOfClass:[CameraUploadOperation class]]) {
+            if ([[(CameraUploadOperation *)queuedOperation uploadInfo].savedLocalIdentifier isEqualToString:operation.uploadInfo.savedLocalIdentifier]) {
+                hasExistingOperation = YES;
+                break;
+            }
+        }
+    }
+    
+    if (!hasExistingOperation) {
+        [queue addOperation:operation];
+    } else {
+        MEGALogError(@"[Camera Upload] try to upload an file that has been queued up");
     }
 }
 
