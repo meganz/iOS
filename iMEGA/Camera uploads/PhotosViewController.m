@@ -113,6 +113,8 @@ static const NSTimeInterval HeaderStateViewReloadToleranceTimeInterval = .1;
     [[MEGASdkManager sharedMEGASdk] addMEGAGlobalDelegate:self];
     
     [self setNavigationBarButtonItemsEnabled:[MEGAReachabilityManager isReachable]];
+    
+    [self reloadHeader];
     [self reloadUI];
 }
 
