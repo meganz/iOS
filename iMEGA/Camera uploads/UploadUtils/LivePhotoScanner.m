@@ -10,7 +10,8 @@
 
 @implementation LivePhotoScanner
 
-- (void)saveInitialLivePhotoRecordsInFetchResult:(PHFetchResult<PHAsset *> *)fetchResult {
+- (BOOL)saveInitialLivePhotoRecordsInFetchResult:(PHFetchResult<PHAsset *> *)fetchResult error:(NSError * _Nullable __autoreleasing * _Nullable)error {
+    __block NSError *coreDataError = nil;
     [CameraUploadRecordManager.shared.backgroundContext performBlockAndWait:^{
         SavedIdentifierParser *parser = [[SavedIdentifierParser alloc] init];
         for (PHAsset *asset in fetchResult) {
@@ -20,8 +21,14 @@
             }
         }
         
-        [CameraUploadRecordManager.shared saveChangesIfNeededWithError:nil];
+        [CameraUploadRecordManager.shared saveChangesIfNeededWithError:&coreDataError];
     }];
+    
+    if (error != NULL) {
+        *error = coreDataError;
+    }
+    
+    return coreDataError == nil;
 }
 
 - (void)scanLivePhotosInAssets:(NSArray<PHAsset *> *)assets {
@@ -35,7 +42,8 @@
     }];
 }
 
-- (void)scanLivePhotosInFetchResult:(PHFetchResult<PHAsset *> *)result {
+- (BOOL)scanLivePhotosInFetchResult:(PHFetchResult<PHAsset *> *)result error:(NSError * _Nullable __autoreleasing * _Nullable)error {
+    __block NSError *coreDataError = nil;
     [CameraUploadRecordManager.shared.backgroundContext performBlockAndWait:^{
         NSArray<MOAssetUploadRecord *> *livePhotoRecords = [CameraUploadRecordManager.shared fetchUploadRecordsByMediaTypes:@[@(PHAssetMediaTypeImage)] additionalMediaSubtypes:PHAssetMediaSubtypePhotoLive error:nil];
         MEGALogDebug(@"[Camera Upload] saved live photo record count %lu", (unsigned long)livePhotoRecords.count);
@@ -50,20 +58,30 @@
                 [self createLivePhotoRecordForAsset:asset inContext:CameraUploadRecordManager.shared.backgroundContext withParsedIdentifier:parsedIdentifier];
             }
             
-            [CameraUploadRecordManager.shared saveChangesIfNeededWithError:nil];
+            [CameraUploadRecordManager.shared saveChangesIfNeededWithError:&coreDataError];
             
             dispatch_async(dispatch_get_main_queue(), ^{
                 [NSNotificationCenter.defaultCenter postNotificationName:MEGACameraUploadStatsChangedNotificationName object:nil];
             });
         }
     }];
+    
+    if (error != NULL) {
+        *error = coreDataError;
+    }
+    
+    return coreDataError == nil;
 }
 
-- (MOAssetUploadRecord *)createLivePhotoRecordIfNeededForAsset:(PHAsset *)asset inContext:(NSManagedObjectContext *)context withIdentifierParser:(SavedIdentifierParser *)parser {
+- (nullable MOAssetUploadRecord *)createLivePhotoRecordIfNeededForAsset:(PHAsset *)asset inContext:(NSManagedObjectContext *)context withIdentifierParser:(SavedIdentifierParser *)parser {
     MOAssetUploadRecord *livePhotoRecord;
     if (asset.mnz_isLivePhoto) {
         NSString *parsedIdentifier = [parser savedIdentifierForLocalIdentifier:asset.localIdentifier mediaSubtype:PHAssetMediaSubtypePhotoLive];
-        if ([CameraUploadRecordManager.shared fetchUploadRecordsByIdentifier:parsedIdentifier shouldPrefetchErrorRecords:NO error:nil].count == 0) {
+        NSError *error;
+        BOOL hasExistingRecord = [CameraUploadRecordManager.shared fetchUploadRecordsByIdentifier:parsedIdentifier shouldPrefetchErrorRecords:NO error:&error].count > 0;
+        if (error) {
+            MEGALogError(@"[Camera Upload] error when to fetch record by identifier %@ %@", parsedIdentifier, error);
+        } else if (!hasExistingRecord ) {
             livePhotoRecord = [self createLivePhotoRecordForAsset:asset inContext:context withParsedIdentifier:parsedIdentifier];
         }
     }
