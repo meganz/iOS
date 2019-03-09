@@ -264,9 +264,14 @@ static const NSUInteger VideoUploadBatchCount = 1;
         return;
     }
 
-    [self.cameraScanner scanMediaTypes:@[@(PHAssetMediaTypeImage)] completion:^{
-        [self.cameraScanner observePhotoLibraryChanges];
-        [self requestMediaInfoForUpload];
+    [self.cameraScanner scanMediaTypes:@[@(PHAssetMediaTypeImage)] completion:^(NSError * _Nullable error) {
+        if (error) {
+            MEGALogError(@"[Camera Upload] error when to scan image %@", error);
+            [self performSelector:@selector(startCameraUploadIfNeeded) withObject:nil afterDelay:1];
+        } else {
+            [self.cameraScanner observePhotoLibraryChanges];
+            [self requestMediaInfoForUpload];
+        }
     }];
 }
 
@@ -281,7 +286,7 @@ static const NSUInteger VideoUploadBatchCount = 1;
                 [weakSelf loadCameraUploadNodeForUpload];
             } else {
                 MEGALogError(@"[Camera Upload] retry to start camera upload due to failed to load media into");
-                [weakSelf startCameraUploadIfNeeded];
+                [weakSelf performSelector:@selector(startCameraUploadIfNeeded) withObject:nil afterDelay:.7];
             }
         }];
     }
@@ -302,7 +307,7 @@ static const NSUInteger VideoUploadBatchCount = 1;
             [self uploadCamera];
         } else {
             MEGALogError(@"[Camera Upload] camera upload node can not be loaded");
-            [self startCameraUploadIfNeeded];
+            [self performSelector:@selector(startCameraUploadIfNeeded) withObject:nil afterDelay:.5];
         }
     }];
 }
@@ -335,8 +340,13 @@ static const NSUInteger VideoUploadBatchCount = 1;
         return;
     }
     
-    [self.cameraScanner scanMediaTypes:@[@(PHAssetMediaTypeVideo)] completion:^{
-        [self uploadVideos];
+    [self.cameraScanner scanMediaTypes:@[@(PHAssetMediaTypeVideo)] completion:^(NSError * _Nullable error) {
+        if (error) {
+            MEGALogError(@"[Camera Upload] error when to scan video %@", error);
+            [self performSelector:@selector(startVideoUploadIfNeeded) withObject:nil afterDelay:1];
+        } else {
+            [self uploadVideos];
+        }
     }];
 }
 
@@ -550,7 +560,7 @@ static const NSUInteger VideoUploadBatchCount = 1;
         NSUInteger totalCount = 0;
         NSUInteger finishedCount = 0;
         
-        totalCount = [CameraUploadRecordManager.shared totalRecordsCountByMediaTypes:self.enabledMediaTypes error:&error];
+        totalCount = [CameraUploadRecordManager.shared totalRecordsCountByMediaTypes:self.enabledMediaTypes includeUploadErrorRecords:NO error:&error];
         if (error != nil) {
             finishedCount = [CameraUploadRecordManager.shared finishedRecordsCountByMediaTypes:self.enabledMediaTypes error:&error];
         }
@@ -594,24 +604,6 @@ static const NSUInteger VideoUploadBatchCount = 1;
 
 - (BOOL)isVideoUploadPausedByDiskFull {
     return self.isVideoUploadPaused && self.diskSpaceDetector.isDiskFullForVideos;
-}
-
-#pragma mark - photo library scan
-
-- (void)scanPhotoLibraryWithCompletion:(void (^)(void))completion {
-    NSMutableArray<NSNumber *> *mediaTypes = [NSMutableArray array];
-    
-    if (CameraUploadManager.isCameraUploadEnabled) {
-        [mediaTypes addObject:@(PHAssetMediaTypeImage)];
-        if (CameraUploadManager.isVideoUploadEnabled) {
-            [mediaTypes addObject:@(PHAssetMediaTypeVideo)];
-        }
-        
-        [self.cameraScanner scanMediaTypes:mediaTypes completion:completion];
-    } else {
-        completion();
-        return;
-    }
 }
 
 #pragma mark - notifications
@@ -750,7 +742,7 @@ static const NSUInteger VideoUploadBatchCount = 1;
 
 - (void)performBackgroundRefreshWithCompletion:(void (^)(UIBackgroundFetchResult))completion {
     if (CameraUploadManager.isCameraUploadEnabled) {
-        [self scanPhotoLibraryWithCompletion:^{
+        [self.cameraScanner scanMediaTypes:self.enabledMediaTypes completion:^(NSError * _Nullable error) {
             if (self.uploadPendingAssetsCount == 0) {
                 completion(UIBackgroundFetchResultNoData);
             } else {
