@@ -114,8 +114,8 @@ static const NSTimeInterval HeaderStateViewReloadToleranceTimeInterval = .1;
     
     [self setNavigationBarButtonItemsEnabled:[MEGAReachabilityManager isReachable]];
     
-    [self reloadHeader];
     [self reloadPhotosView];
+    [self reloadHeader];
 }
 
 - (void)viewDidLayoutSubviews {
@@ -215,12 +215,16 @@ static const NSTimeInterval HeaderStateViewReloadToleranceTimeInterval = .1;
         
         return;
     }
-    
+
+    [self loadUploadStats];
+}
+
+- (void)loadUploadStats {
     if (self.currentState != MEGACameraUploadsStateUploading && self.currentState != MEGACameraUploadsStateCompleted) {
         self.currentState = MEGACameraUploadsStateLoading;
     }
     
-    [CameraUploadManager.shared fetchCurrentUploadStats:^(UploadStats * _Nullable uploadStats, NSError * _Nullable error) {
+    [CameraUploadManager.shared loadCurrentUploadStats:^(UploadStats * _Nullable uploadStats, NSError * _Nullable error) {
         if (error || uploadStats == nil) {
             MEGALogError(@"[Camera Upload] error when to fetch upload stats %@", error);
             self.currentState = MEGACameraUploadsStateLoading;

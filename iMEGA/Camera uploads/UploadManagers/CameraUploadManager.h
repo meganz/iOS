@@ -58,7 +58,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - fetch upload stats
 
-- (void)fetchCurrentUploadStats:(void (^)(UploadStats * _Nullable uploadStats, NSError * _Nullable error))completion;
+- (void)loadCurrentUploadStats:(void (^)(UploadStats * _Nullable uploadStats, NSError * _Nullable error))completion;
 
 #pragma mark - check disk storage
 
