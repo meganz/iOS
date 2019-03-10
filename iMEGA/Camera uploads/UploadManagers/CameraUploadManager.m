@@ -565,20 +565,44 @@ static const NSUInteger VideoUploadBatchCount = 1;
 - (void)fetchCurrentUploadStats:(void (^)(UploadStats * _Nullable, NSError * _Nullable))completion {
     dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INTERACTIVE, 0), ^{
         NSError *error;
-        NSUInteger totalCount = 0;
-        NSUInteger finishedCount = 0;
+        NSUInteger totalCount = [CameraUploadRecordManager.shared totalRecordsCountByMediaTypes:self.enabledMediaTypes includeUploadErrorRecords:NO error:&error];
+        if (error) {
+            completion(nil, error);
+            return;
+        }
         
-        totalCount = [CameraUploadRecordManager.shared totalRecordsCountByMediaTypes:self.enabledMediaTypes includeUploadErrorRecords:NO error:&error];
+        if (totalCount == 0) {
+            [self scanAndFetchCurrentUploadStats:completion];
+        } else {
+            NSUInteger finishedCount = [CameraUploadRecordManager.shared finishedRecordsCountByMediaTypes:self.enabledMediaTypes error:&error];
+            if (error) {
+                completion(nil, error);
+            } else {
+                completion([[UploadStats alloc] initWithFinishedCount:finishedCount totalCount:totalCount], nil);
+            }
+        }
+    });
+}
+
+- (void)scanAndFetchCurrentUploadStats:(void (^)(UploadStats * _Nullable, NSError * _Nullable))completion {
+    [self.cameraScanner scanMediaTypes:self.enabledMediaTypes completion:^(NSError * _Nullable error) {
+        if (error) {
+            completion(nil, error);
+            return;
+        }
+        
+        NSUInteger totalCount = [CameraUploadRecordManager.shared totalRecordsCountByMediaTypes:self.enabledMediaTypes includeUploadErrorRecords:NO error:&error];
+        NSUInteger finishedCount = 0;
         if (error == nil) {
             finishedCount = [CameraUploadRecordManager.shared finishedRecordsCountByMediaTypes:self.enabledMediaTypes error:&error];
         }
-         
+        
         if (error) {
             completion(nil, error);
         } else {
             completion([[UploadStats alloc] initWithFinishedCount:finishedCount totalCount:totalCount], nil);
         }
-    });
+    }];
 }
 
 #pragma mark - check disk storage
