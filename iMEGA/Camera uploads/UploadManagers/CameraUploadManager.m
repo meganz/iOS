@@ -596,7 +596,7 @@ static const NSUInteger VideoUploadBatchCount = 1;
 
 #pragma mark - get upload stats
 
-- (void)fetchCurrentUploadStats:(void (^)(UploadStats * _Nullable, NSError * _Nullable))completion {
+- (void)loadCurrentUploadStats:(void (^)(UploadStats * _Nullable, NSError * _Nullable))completion {
     dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INTERACTIVE, 0), ^{
         NSError *error;
         NSUInteger totalCount = [CameraUploadRecordManager.shared totalRecordsCountByMediaTypes:self.enabledMediaTypes includeUploadErrorRecords:NO error:&error];
@@ -606,7 +606,7 @@ static const NSUInteger VideoUploadBatchCount = 1;
         }
         
         if (totalCount == 0) {
-            [self scanAndFetchCurrentUploadStats:completion];
+            [self scanAndLoadCurrentUploadStats:completion];
         } else {
             NSUInteger finishedCount = [CameraUploadRecordManager.shared finishedRecordsCountByMediaTypes:self.enabledMediaTypes error:&error];
             if (error) {
@@ -618,7 +618,7 @@ static const NSUInteger VideoUploadBatchCount = 1;
     });
 }
 
-- (void)scanAndFetchCurrentUploadStats:(void (^)(UploadStats * _Nullable, NSError * _Nullable))completion {
+- (void)scanAndLoadCurrentUploadStats:(void (^)(UploadStats * _Nullable, NSError * _Nullable))completion {
     [self.cameraScanner scanMediaTypes:self.enabledMediaTypes completion:^(NSError * _Nullable error) {
         if (error) {
             completion(nil, error);
