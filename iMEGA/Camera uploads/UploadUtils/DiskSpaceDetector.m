@@ -60,6 +60,8 @@ static const NSTimeInterval RetryTimerTolerance = 6;
             self.photoRetryTimer = nil;
         }];
     }
+    
+    _diskIsFullForPhotos = NO;
 }
 
 - (void)stopDetectingVideoUpload {
@@ -70,6 +72,8 @@ static const NSTimeInterval RetryTimerTolerance = 6;
             self.videoRetryTimer = nil;
         }];
     }
+    
+    _diskIsFullForVideos = NO;
 }
 
 #pragma mark - notifications
