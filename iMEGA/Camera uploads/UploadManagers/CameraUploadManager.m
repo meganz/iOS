@@ -641,35 +641,17 @@ static const NSUInteger VideoUploadBatchCount = 1;
 
 #pragma mark - check disk storage
 
-- (void)checkCameraUploadDiskStorage:(void (^)(BOOL isDiskFull))completion {
+- (BOOL)isDiskStorageFull {
     if (!CameraUploadManager.isCameraUploadEnabled) {
-        completion(NO);
+        return NO;
     }
     
-    dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0), ^{
-        BOOL isFull = NO;
-        if ([self isPhotoUploadDone]) {
-            if (CameraUploadManager.isVideoUploadEnabled && ![self isVideoUploadDone]) {
-                isFull = [self isVideoUploadPausedByDiskFull];
-            }
-        } else {
-            isFull = [self isPhotoUploadPausedByDiskFull];
-            
-            if (CameraUploadManager.isVideoUploadEnabled && ![self isVideoUploadDone]) {
-                isFull &= [self isVideoUploadPausedByDiskFull];
-            }
-        }
-        
-        completion(isFull);
-    });
-}
-
-- (BOOL)isPhotoUploadPausedByDiskFull {
-    return self.isPhotoUploadPaused && self.diskSpaceDetector.isDiskFullForPhotos;
-}
-
-- (BOOL)isVideoUploadPausedByDiskFull {
-    return self.isVideoUploadPaused && self.diskSpaceDetector.isDiskFullForVideos;
+    BOOL isFull = self.diskSpaceDetector.isDiskFullForPhotos;
+    if (CameraUploadManager.isVideoUploadEnabled) {
+        isFull &= self.diskSpaceDetector.isDiskFullForVideos;
+    }
+    
+    return isFull;
 }
 
 #pragma mark - notifications

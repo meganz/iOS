@@ -133,15 +133,9 @@ static const NSTimeInterval HeaderStateViewReloadToleranceTimeInterval = .1;
     
     if (CameraUploadManager.shouldShowCameraUploadBoardingScreen) {
         [self showCameraUploadBoardingScreen];
+    } else if (CameraUploadManager.shared.isDiskStorageFull) {
+        [self showLocalDiskIsFullWarningScreen];
     }
-    
-    [CameraUploadManager.shared checkCameraUploadDiskStorage:^(BOOL isDiskFull) {
-        if (isDiskFull) {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [self showLocalDiskIsFullWarningScreen];
-            });
-        }
-    }];
     
     [self setupReloadTimers];
 }

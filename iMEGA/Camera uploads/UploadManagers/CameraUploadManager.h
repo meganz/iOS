@@ -12,6 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (readonly) BOOL isNodeTreeCurrent;
 @property (nonatomic, getter=isPhotoUploadPaused) BOOL pausePhotoUpload;
 @property (nonatomic, getter=isVideoUploadPaused) BOOL pauseVideoUpload;
+@property (readonly) BOOL isDiskStorageFull;
 
 /**
  @return a shared camera upload manager instance
@@ -59,10 +60,6 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark - fetch upload stats
 
 - (void)loadCurrentUploadStats:(void (^)(UploadStats * _Nullable uploadStats, NSError * _Nullable error))completion;
-
-#pragma mark - check disk storage
-
-- (void)checkCameraUploadDiskStorage:(void (^)(BOOL isDiskFull))completion;
 
 @end
 
