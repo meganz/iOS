@@ -98,7 +98,7 @@ static const NSTimeInterval HeaderStateViewReloadToleranceTimeInterval = .1;
     self.cellInset = 1.0f;
     self.cellSize = [self.photosCollectionView mnz_calculateCellSizeForInset:self.cellInset];
     
-    self.currentState = MEGACameraUploadsStateUnknown;
+    self.currentState = MEGACameraUploadsStateLoading;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -216,10 +216,14 @@ static const NSTimeInterval HeaderStateViewReloadToleranceTimeInterval = .1;
         return;
     }
     
+    if (self.currentState != MEGACameraUploadsStateUploading && self.currentState != MEGACameraUploadsStateCompleted) {
+        self.currentState = MEGACameraUploadsStateLoading;
+    }
+    
     [CameraUploadManager.shared fetchCurrentUploadStats:^(UploadStats * _Nullable uploadStats, NSError * _Nullable error) {
         if (error || uploadStats == nil) {
             MEGALogError(@"[Camera Upload] error when to fetch upload stats %@", error);
-            self.currentState = MEGACameraUploadsStateUnknown;
+            self.currentState = MEGACameraUploadsStateLoading;
             self.needsReloadHeaderStateView = YES;
             return;
         }
@@ -300,7 +304,7 @@ static const NSTimeInterval HeaderStateViewReloadToleranceTimeInterval = .1;
             [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
             break;
             
-        case MEGACameraUploadsStateUnknown:
+        case MEGACameraUploadsStateLoading:
             self.stateView.hidden = NO;
             self.photosUploadedProgressView.hidden = YES;
             self.photosUploadedLabel.hidden = YES;
