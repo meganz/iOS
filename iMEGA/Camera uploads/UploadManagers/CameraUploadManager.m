@@ -263,7 +263,9 @@ static const NSUInteger VideoUploadBatchCount = 1;
     [self.cameraScanner scanMediaTypes:@[@(PHAssetMediaTypeImage)] completion:^(NSError * _Nullable error) {
         if (error) {
             MEGALogError(@"[Camera Upload] error when to scan image %@", error);
-            [self performSelector:@selector(startCameraUploadIfNeeded) withObject:nil afterDelay:1];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0), ^{
+                [self startCameraUploadIfNeeded];
+            });
         } else {
             [self.cameraScanner observePhotoLibraryChanges];
             [self requestMediaInfoForUpload];
@@ -286,7 +288,9 @@ static const NSUInteger VideoUploadBatchCount = 1;
                 [weakSelf loadCameraUploadNodeForUpload];
             } else {
                 MEGALogError(@"[Camera Upload] retry to start camera upload due to failed to load media into");
-                [weakSelf performSelector:@selector(startCameraUploadIfNeeded) withObject:nil afterDelay:.7];
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(.7 * NSEC_PER_SEC)), dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0), ^{
+                    [self startCameraUploadIfNeeded];
+                });
             }
         }];
     }
@@ -307,7 +311,9 @@ static const NSUInteger VideoUploadBatchCount = 1;
             [self uploadCamera];
         } else {
             MEGALogError(@"[Camera Upload] camera upload node can not be loaded");
-            [self performSelector:@selector(startCameraUploadIfNeeded) withObject:nil afterDelay:.5];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(.5 * NSEC_PER_SEC)), dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0), ^{
+                [self startCameraUploadIfNeeded];
+            });
         }
     }];
 }
@@ -347,7 +353,9 @@ static const NSUInteger VideoUploadBatchCount = 1;
     [self.cameraScanner scanMediaTypes:@[@(PHAssetMediaTypeVideo)] completion:^(NSError * _Nullable error) {
         if (error) {
             MEGALogError(@"[Camera Upload] error when to scan video %@", error);
-            [self performSelector:@selector(startVideoUploadIfNeeded) withObject:nil afterDelay:1];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0), ^{
+                [self startVideoUploadIfNeeded];
+            });
         } else {
             [self uploadVideos];
         }
