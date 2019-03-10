@@ -132,6 +132,7 @@ typedef NS_ENUM(NSInteger, PreviewConcurrentUploadCount) {
 - (void)uploadLocalAttribute:(AssetLocalAttribute *)attribute forNode:(MEGANode *)node {
     if (attribute.hasSavedThumbnail) {
         if (![self hasPendingAttributeOperationForNode:node inQueue:self.thumbnailUploadOperationQueue]) {
+            MEGALogDebug(@"[Camera Upload] queue up thumbnail upload for %@ at %@", node.name, attribute.thumbnailURL);
             [self.thumbnailUploadOperationQueue addOperation:[[ThumbnailUploadOperation alloc] initWithAttributeURL:attribute.thumbnailURL node:node]];
         }
     } else {
@@ -140,6 +141,7 @@ typedef NS_ENUM(NSInteger, PreviewConcurrentUploadCount) {
     
     if (attribute.hasSavedPreview) {
         if (![self hasPendingAttributeOperationForNode:node inQueue:self.previewUploadOperationQueue]) {
+            MEGALogDebug(@"[Camera Upload] queue up preview upload for %@ at %@", node.name, attribute.previewURL);
             [self.previewUploadOperationQueue addOperation:[[PreviewUploadOperation alloc] initWithAttributeURL:attribute.previewURL node:node]];
         }
     } else {
@@ -147,6 +149,7 @@ typedef NS_ENUM(NSInteger, PreviewConcurrentUploadCount) {
     }
     
     if (attribute.hasSavedLocation && ![self hasPendingAttributeOperationForNode:node inQueue:self.coordinatesUploadOperationQueue]) {
+        MEGALogDebug(@"[Camera Upload] queue up coordinates upload for %@ at %@", node.name, attribute.locationURL);
         [self.coordinatesUploadOperationQueue addOperation:[[CoordinatesUploadOperation alloc] initWithAttributeURL:attribute.locationURL node:node]];
     }
 }
