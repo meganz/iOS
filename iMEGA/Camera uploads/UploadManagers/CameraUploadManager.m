@@ -434,14 +434,7 @@ static const NSUInteger VideoUploadBatchCount = 1;
         NSError *error;
         CameraUploadOperation *operation = [UploadOperationFactory operationForUploadRecord:record parentNode:self.cameraUploadNode error:&error];
         if (operation) {
-            if ([operation isMemberOfClass:[PhotoUploadOperation class]]) {
-                [self.photoUploadOperationQueue addOperation:operation];
-            } else if ([operation isMemberOfClass:[LivePhotoUploadOperation class]]) {
-                [self.videoUploadOperationQueue addOperation:operation];
-                [self uploadNextAssetForMediaType:PHAssetMediaTypeImage];
-            } else if ([operation isMemberOfClass:[VideoUploadOperation class]]) {
-                [self.videoUploadOperationQueue addOperation:operation];
-            }
+            [self queueUpOperation:operation];
         } else {
             MEGALogError(@"[Camera Upload] error when to build camera upload operation %@", error);
             if ([error.domain isEqualToString:CameraUploadErrorDomain]) {
@@ -453,6 +446,39 @@ static const NSUInteger VideoUploadBatchCount = 1;
             }
         }
     }
+}
+
+- (void)queueUpOperation:(CameraUploadOperation *)operation {
+    if ([operation isMemberOfClass:[PhotoUploadOperation class]]) {
+        if (![self hasPendingUploadOperation:operation inOperationQueue:self.photoUploadOperationQueue]) {
+            [self.photoUploadOperationQueue addOperation:operation];
+        }
+    } else if ([operation isMemberOfClass:[LivePhotoUploadOperation class]]) {
+        if (![self hasPendingUploadOperation:operation inOperationQueue:self.videoUploadOperationQueue]) {
+            [self.videoUploadOperationQueue addOperation:operation];
+            [self uploadNextAssetForMediaType:PHAssetMediaTypeImage];
+        }
+    } else if ([operation isMemberOfClass:[VideoUploadOperation class]]) {
+        if (![self hasPendingUploadOperation:operation inOperationQueue:self.videoUploadOperationQueue]) {
+            [self.videoUploadOperationQueue addOperation:operation];
+        }
+    }
+}
+
+- (BOOL)hasPendingUploadOperation:(CameraUploadOperation *)uploadOperation inOperationQueue:(NSOperationQueue *)queue {
+    BOOL hasPendingOperation = NO;
+    
+    for (NSOperation *operation in queue.operations) {
+        if ([operation isMemberOfClass:[CameraUploadOperation class]]) {
+            if ([[(CameraUploadOperation *)operation uploadInfo].savedLocalIdentifier isEqualToString:uploadOperation.uploadInfo.savedLocalIdentifier]) {
+                hasPendingOperation = YES;
+                MEGALogError(@"[Camera Upload] has pending operation %@", operation);
+                break;
+            }
+        }
+    }
+    
+    return hasPendingOperation;
 }
 
 #pragma mark - enable camera upload
