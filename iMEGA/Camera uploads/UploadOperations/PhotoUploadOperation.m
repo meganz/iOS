@@ -9,15 +9,15 @@
 #import "CameraUploadRecordManager.h"
 #import "CameraUploadManager.h"
 #import "CameraUploadRequestDelegate.h"
-#import "NSData+CameraUpload.h"
 #import "CameraUploadManager+Settings.h"
 #import "PHAsset+CameraUpload.h"
 #import "MEGAConstants.h"
-#import "PhotoExportManager.h"
+#import "ImageExportManager.h"
 #import "CameraUploadOperation+Utils.h"
 @import CoreServices;
 
-const NSInteger PhotoExportDiskSizeMultiplicationFactor = 2;
+static const NSInteger PhotoExportDiskSizeScalingFactor = 2.5;
+static NSString * const OriginalPhotoName = @"originalPhotoFile";
 
 @interface PhotoUploadOperation ()
 
@@ -72,18 +72,35 @@ const NSInteger PhotoExportDiskSizeMultiplicationFactor = 2;
     
     if (imageData == nil) {
         MEGALogError(@"[Camera Upload] %@ the requested image data is empty", self);
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(.75 * NSEC_PER_SEC)), dispatch_get_global_queue(QOS_CLASS_UTILITY, 0), ^{
-            [self finishOperationWithStatus:CameraAssetUploadStatusFailed shouldUploadNextAsset:YES];
-        });
-        
+        [self finishOperationWithStatus:CameraAssetUploadStatusFailed shouldUploadNextAsset:YES];
+        return;
+    }
+    
+    if (imageData.length * PhotoExportDiskSizeScalingFactor > NSFileManager.defaultManager.deviceFreeSize) {
+        [self finishUploadWithNoEnoughDiskSpace];
+        return;
+    }
+    
+    NSURL *imageURL = [self.uploadInfo.directoryURL URLByAppendingPathComponent:OriginalPhotoName];
+    if (![imageData writeToURL:imageURL atomically:YES]) {
+        [self finishOperationWithStatus:CameraAssetUploadStatusFailed shouldUploadNextAsset:YES];
         return;
     }
 
-    self.uploadInfo.originalFingerprint = [[MEGASdkManager sharedMEGASdk] fingerprintForData:imageData modificationTime:self.uploadInfo.asset.creationDate];
+    self.uploadInfo.originalFingerprint = [MEGASdkManager.sharedMEGASdk fingerprintForFilePath:imageURL.path modificationTime:self.uploadInfo.asset.creationDate];
     MEGANode *matchingNode = [self nodeForOriginalFingerprint:self.uploadInfo.originalFingerprint];
     if (matchingNode) {
         MEGALogDebug(@"[Camera Upload] %@ found node by original fingerprint", self);
         [self finishUploadForFingerprintMatchedNode:matchingNode];
+        return;
+    }
+    
+    [self exportImageAtURL:imageURL dataUTI:dataUTI dataInfo:dataInfo];
+}
+
+- (void)exportImageAtURL:(NSURL *)imageURL dataUTI:(NSString *)dataUTI dataInfo:(NSDictionary *)dataInfo {
+    if (self.isCancelled) {
+        [self finishOperationWithStatus:CameraAssetUploadStatusCancelled shouldUploadNextAsset:NO];
         return;
     }
     
@@ -96,22 +113,18 @@ const NSInteger PhotoExportDiskSizeMultiplicationFactor = 2;
         self.uploadInfo.fileName = [self mnz_generateLocalFileNamewithExtension:fileExtension];
     }
     
-    if (imageData.length * PhotoExportDiskSizeMultiplicationFactor > NSFileManager.defaultManager.deviceFreeSize) {
-        [self finishUploadWithNoEnoughDiskSpace];
-        return;
-    }
-    
     __weak __typeof__(self) weakSelf = self;
-    [PhotoExportManager.shared exportPhotoData:imageData dataTypeUTI:dataUTI outputURL:self.uploadInfo.fileURL outputTypeUTI:outputTypeUTI shouldStripGPSInfo:YES completion:^(BOOL succeeded) {
+    [ImageExportManager.shared exportImageAtURL:imageURL dataTypeUTI:dataUTI toURL:self.uploadInfo.fileURL outputTypeUTI:outputTypeUTI shouldStripGPSInfo:YES completion:^(BOOL succeeded) {
         if (weakSelf.isCancelled) {
             [weakSelf finishOperationWithStatus:CameraAssetUploadStatusCancelled shouldUploadNextAsset:NO];
             return;
         }
         
-        if (succeeded && [NSFileManager.defaultManager isReadableFileAtPath:self.uploadInfo.fileURL.path]) {
+        if (succeeded && [NSFileManager.defaultManager isReadableFileAtPath:weakSelf.uploadInfo.fileURL.path]) {
+            [NSFileManager.defaultManager removeItemIfExistsAtURL:imageURL];
             [weakSelf handleProcessedImageFile];
         } else {
-            MEGALogError(@"[Camera Upload] %@ error when to export image to file %@", self, self.uploadInfo.fileName);
+            MEGALogError(@"[Camera Upload] %@ error when to export image to file %@", weakSelf, weakSelf.uploadInfo.fileName);
             [weakSelf finishOperationWithStatus:CameraAssetUploadStatusFailed shouldUploadNextAsset:YES];
         }
     }];

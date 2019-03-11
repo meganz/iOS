@@ -1,14 +1,14 @@
 
-#import "PhotoExportManager.h"
+#import "ImageExportManager.h"
 #import "CameraUploadManager+Settings.h"
 #import "MEGAConstants.h"
-#import "PhotoExportOperation.h"
+#import "ImageExportOperation.h"
 @import CoreServices;
 @import AVFoundation;
 
 static const NSUInteger HEICMaxConcurrentOperationCount = 1;
 
-@interface PhotoExportManager ()
+@interface ImageExportManager ()
 
 @property (strong, nonatomic) NSOperationQueue *HEICExportOerationQueue;
 @property (strong, nonatomic) NSOperationQueue *generalExportOperationQueue;
@@ -16,7 +16,7 @@ static const NSUInteger HEICMaxConcurrentOperationCount = 1;
 
 @end
 
-@implementation PhotoExportManager
+@implementation ImageExportManager
 
 + (instancetype)shared {
     static id sharedInstance = nil;
@@ -46,6 +46,7 @@ static const NSUInteger HEICMaxConcurrentOperationCount = 1;
             self->_HEICExportOerationQueue = [[NSOperationQueue alloc] init];
             self->_HEICExportOerationQueue.qualityOfService = NSQualityOfServiceUtility;
             self->_HEICExportOerationQueue.maxConcurrentOperationCount = HEICMaxConcurrentOperationCount;
+            self->_HEICExportOerationQueue.name = @"HEICExportOerationQueue";
         }
     });
     
@@ -61,14 +62,15 @@ static const NSUInteger HEICMaxConcurrentOperationCount = 1;
         if (self->_generalExportOperationQueue == nil) {
             self->_generalExportOperationQueue = [[NSOperationQueue alloc] init];
             self->_generalExportOperationQueue.qualityOfService = NSQualityOfServiceUtility;
+            self->_generalExportOperationQueue.name = @"generalExportOperationQueue";
         }
     });
     
     return _generalExportOperationQueue;
 }
 
-- (void)exportPhotoData:(NSData *)data dataTypeUTI:(NSString *)dataUTI outputURL:(NSURL *)outputURL outputTypeUTI:(NSString *)outputUTI shouldStripGPSInfo:(BOOL)shouldStripGPSInfo completion:(void (^)(BOOL))completion {
-    PhotoExportOperation *exportOperation = [[PhotoExportOperation alloc] initWithPhotoData:data outputURL:outputURL outputImageTypeUTI:outputUTI shouldStripGPSInfo:shouldStripGPSInfo completion:completion];
+- (void)exportImageAtURL:(NSURL *)imageURL dataTypeUTI:(NSString *)dataUTI toURL:(NSURL *)outputURL outputTypeUTI:(NSString *)outputUTI shouldStripGPSInfo:(BOOL)shouldStripGPSInfo completion:(void (^)(BOOL))completion {
+    ImageExportOperation *exportOperation = [[ImageExportOperation alloc] initWithImageURL:imageURL outputURL:outputURL outputImageTypeUTI:outputUTI shouldStripGPSInfo:shouldStripGPSInfo completion:completion];
     NSOperationQueue *queue = [self exportQueueForDataUTI:dataUTI outputTypeUTI:outputUTI];
     [queue addOperation:exportOperation];
 }
