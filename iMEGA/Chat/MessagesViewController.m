@@ -123,6 +123,8 @@ const NSUInteger kMaxMessagesToLoad = 256;
 @property UILabel *navigationSubtitleLabel;
 @property UIView *navigationStatusView;
 
+@property (nonatomic) BOOL chatLinkBeenClosed;
+
 @end
 
 @implementation MessagesViewController
@@ -1287,7 +1289,7 @@ const NSUInteger kMaxMessagesToLoad = 256;
 }
 
 - (BOOL)shouldShowJoinView {
-    return self.chatRoom.isPublicChat && self.chatRoom.isPreview;
+    return self.chatRoom.isPublicChat && self.chatRoom.isPreview && !self.chatLinkBeenClosed;
 }
 
 - (void)updateJoinView {
@@ -2829,8 +2831,15 @@ const NSUInteger kMaxMessagesToLoad = 256;
         }
             
         case MEGAChatRoomChangeTypeClosed:
-            [api closeChatRoom:chat.chatId delegate:self];
-            [self.navigationController popToRootViewControllerAnimated:YES];
+            if (self.chatRoom.preview) {
+                self.chatLinkBeenClosed = YES;
+                [api closeChatPreview:chat.chatId];
+                [self updateJoinView];
+                [SVProgressHUD showInfoWithStatus:AMLocalizedString(@"linkRemoved", @"Message shown when the link to a file or folder has been removed")];
+            } else {
+                [api closeChatRoom:chat.chatId delegate:self];
+                [self.navigationController popToRootViewControllerAnimated:YES];
+            }
             break;
             
         case MEGAChatRoomChangeTypeUserStopTyping: {
