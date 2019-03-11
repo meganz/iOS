@@ -47,6 +47,7 @@
 #import "MEGAPhotoBrowserViewController.h"
 #import "MEGAImagePickerController.h"
 #import "MEGANavigationController.h"
+#import "OnboardingViewController.h"
 #import "SendToViewController.h"
 
 const CGFloat kGroupChatCellLabelHeightBuffer = 12.0f;
@@ -334,6 +335,11 @@ const NSUInteger kMaxMessagesToLoad = 256;
                 [MEGASdkManager destroySharedMEGAChatSdk];
             }];
             [[MEGASdkManager sharedMEGAChatSdk] logoutWithDelegate:delegate];
+            
+            if (MEGALinkManager.selectedOption == LinkOptionJoinChatLink) {
+                OnboardingViewController *onboardingVC = (OnboardingViewController *) UIApplication.mnz_visibleViewController;
+                [onboardingVC presentLoginViewController];
+            }
         }
     }];
 }
