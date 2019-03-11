@@ -471,9 +471,11 @@
     self.navigationTitleLabel.text = self.chatRoom.title;
     
     switch (self.callType) {
-        case CallTypeActive:
-            self.navigationSubtitleLabel.text = @"";
+        case CallTypeActive: {
+            MEGAChatCall *call = [[MEGASdkManager sharedMEGAChatSdk] chatCallForChatId:self.chatRoom.chatId];
+            self.navigationSubtitleLabel.text = call && call.status == MEGAChatCallStatusInProgress ? @"" : AMLocalizedString(@"calling...", @"Label shown when you call someone (outgoing call), before the call starts.");
             break;
+        }
             
         case CallTypeOutgoing:
             self.navigationSubtitleLabel.text = AMLocalizedString(@"calling...", @"Label shown when you call someone (outgoing call), before the call starts.");
@@ -809,8 +811,11 @@
         [self configureUserOnFocus:[self.peersInCall objectAtIndex:0] manual:NO];
     }
     self.incomingCallView.hidden = YES;
-    [self initDurationTimer];
-    [self initShowHideControls];
+    
+    if (self.call.status == MEGAChatCallStatusInProgress) {
+        [self initShowHideControls];
+        [self initDurationTimer];
+    }
     [self updateParticipants];
     [self.collectionView reloadData];
     MEGALogDebug(@"[Group Call] Reload data %s", __PRETTY_FUNCTION__);
