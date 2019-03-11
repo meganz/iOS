@@ -17,6 +17,7 @@
         BOOL shouldConvertImageType = !(UTIType.length == 0 || CFStringCompare(sourceType, newType, kCFCompareCaseInsensitive) == kCFCompareEqualTo);
         
         if (!shouldConvertImageType && (!shouldStripGPSInfo || (shouldStripGPSInfo && ![self mnz_containsGPSInfo]))) {
+            CFRelease(source);
             return [self writeToURL:URL atomically:YES];
         }
         
@@ -30,6 +31,7 @@
                     CGImageDestinationAddImageFromSource(destination, source, index, (__bridge CFDictionaryRef)removeGPSDict);
                 }
                 isExportedSuccessfully = CGImageDestinationFinalize(destination);
+                CFRelease(destination);
             } else {
                 NSMutableDictionary *metadata = [removeGPSDict mutableCopy];
                 CGImageMetadataRef sourceMetadata = CGImageSourceCopyMetadataAtIndex(source, 0, NULL);
@@ -40,13 +42,12 @@
                 }
                 
                 isExportedSuccessfully = CGImageDestinationCopyImageSource(destination, source, (__bridge CFDictionaryRef)[metadata copy], NULL);
+                CFRelease(destination);
                 
                 if (!isExportedSuccessfully) {
                     isExportedSuccessfully = [self mnz_exportToURL:URL alwaysEncodeToImageUTIType:sourceType imageProperty:removeGPSDict];
                 }
             }
-            
-            CFRelease(destination);
         }
         
         CFRelease(source);
