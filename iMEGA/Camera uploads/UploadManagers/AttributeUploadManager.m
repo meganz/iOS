@@ -45,14 +45,17 @@ typedef NS_ENUM(NSInteger, PreviewConcurrentUploadCount) {
         _thumbnailUploadOperationQueue = [[NSOperationQueue alloc] init];
         _thumbnailUploadOperationQueue.qualityOfService = NSQualityOfServiceUserInteractive;
         _thumbnailUploadOperationQueue.maxConcurrentOperationCount = ThumbnailConcurrentUploadCount;
+        _thumbnailUploadOperationQueue.name = @"thumbnailUploadOperationQueue";
         [_thumbnailUploadOperationQueue addObserver:self forKeyPath:NSStringFromSelector(@selector(operationCount)) options:0 context:NULL];
         
         _previewUploadOperationQueue = [[NSOperationQueue alloc] init];
         _previewUploadOperationQueue.qualityOfService = NSQualityOfServiceBackground;
+        _previewUploadOperationQueue.name = @"previewUploadOperationQueue";
         
         _coordinatesUploadOperationQueue = [[NSOperationQueue alloc] init];
         _coordinatesUploadOperationQueue.qualityOfService = NSQualityOfServiceUtility;
         _coordinatesUploadOperationQueue.maxConcurrentOperationCount = CoordinatesConcurrentUploadCount;
+        _coordinatesUploadOperationQueue.name = @"coordinatesUploadOperationQueue";
         
         _attributeScanQueue = [[NSOperationQueue alloc] init];
         _attributeScanQueue.qualityOfService = NSQualityOfServiceUtility;
@@ -230,9 +233,10 @@ typedef NS_ENUM(NSInteger, PreviewConcurrentUploadCount) {
     BOOL hasPendingOperation = NO;
     
     for (NSOperation *operation in queue.operations) {
-        if ([operation isMemberOfClass:[AttributeUploadOperation class]]) {
+        if ([operation isKindOfClass:[AttributeUploadOperation class]]) {
             if ([(AttributeUploadOperation *)operation node].handle == node.handle) {
                 hasPendingOperation = YES;
+                MEGALogDebug(@"[Camera Upload] found pending operation for %@ in %@", node.name, queue);
                 break;
             }
         }
