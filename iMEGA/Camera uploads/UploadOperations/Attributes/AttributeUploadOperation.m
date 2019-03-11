@@ -18,4 +18,14 @@
     return [NSString stringWithFormat:@"%@ %@ %@", NSStringFromClass([self class]), self.attributeURL, self.node.name];
 }
 
+- (void)start {
+    [super start];
+    
+    if (![NSFileManager.defaultManager fileExistsAtPath:self.attributeURL.path]) {
+        MEGALogError(@"[Camera Upload] attribute file doesn't exist %@", self);
+        [self finishOperation];
+        return;
+    }
+}
+
 @end

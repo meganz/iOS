@@ -58,7 +58,7 @@
             return;
         }
         
-        if ([asset isMemberOfClass:[AVURLAsset class]]) {
+        if ([asset isKindOfClass:[AVURLAsset class]]) {
             AVURLAsset *urlAsset = (AVURLAsset *)asset;
             weakSelf.uploadInfo.originalFingerprint = [MEGASdkManager.sharedMEGASdk fingerprintForFilePath:urlAsset.URL.path modificationTime:weakSelf.uploadInfo.asset.creationDate];
             MEGANode *matchingNode = [weakSelf nodeForOriginalFingerprint:weakSelf.uploadInfo.originalFingerprint];
@@ -81,9 +81,9 @@
     
     if (CameraUploadManager.isHEVCFormatSupported && CameraUploadManager.shouldConvertHEVCVideo && asset.mnz_containsHEVCCodec) {
         [self transcodeHEVCVideoAsset:asset];
-    } else if ([asset isMemberOfClass:[AVURLAsset class]]) {
+    } else if ([asset isKindOfClass:[AVURLAsset class]]) {
         [self exportURLAsset:(AVURLAsset *)asset];
-    } else if ([asset isMemberOfClass:[AVComposition class]]) {
+    } else if ([asset isKindOfClass:[AVComposition class]]) {
         [self exportAsset:asset withPreset:AVAssetExportPresetHighestQuality outputFileType:AVFileTypeMPEG4 outputFileExtension:MEGAMP4FileExtension];
     } else {
         MEGALogError(@"[Camera Upload] %@ request video asset failed", self);
@@ -141,7 +141,7 @@
     }
     
     MEGALogDebug(@"[Camera Upload] %@ starts exporting video %@, %@, %@", self, preset, outputFileType, extension);
-    if ([asset isMemberOfClass:[AVURLAsset class]]) {
+    if ([asset isKindOfClass:[AVURLAsset class]]) {
         MEGALogDebug(@"[Camera Upload] %@ original video size %llu MB", self, [NSFileManager.defaultManager attributesOfItemAtPath:[(AVURLAsset *)asset URL].path error:nil].fileSize / 1024 / 1024);
     }
     

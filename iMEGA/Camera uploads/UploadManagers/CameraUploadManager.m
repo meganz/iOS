@@ -133,7 +133,7 @@ static const NSUInteger VideoUploadBatchCount = 1;
 
 - (void)cancelVideoUploadOperations {
     for (NSOperation *operation in self.videoUploadOperationQueue.operations) {
-        if ([operation isMemberOfClass:[VideoUploadOperation class]]) {
+        if ([operation isKindOfClass:[VideoUploadOperation class]]) {
             [operation cancel];
         }
     }
@@ -449,16 +449,16 @@ static const NSUInteger VideoUploadBatchCount = 1;
 }
 
 - (void)queueUpOperation:(CameraUploadOperation *)operation {
-    if ([operation isMemberOfClass:[PhotoUploadOperation class]]) {
+    if ([operation isKindOfClass:[PhotoUploadOperation class]]) {
         if (![self hasPendingUploadOperation:operation inOperationQueue:self.photoUploadOperationQueue]) {
             [self.photoUploadOperationQueue addOperation:operation];
         }
-    } else if ([operation isMemberOfClass:[LivePhotoUploadOperation class]]) {
+    } else if ([operation isKindOfClass:[LivePhotoUploadOperation class]]) {
         if (![self hasPendingUploadOperation:operation inOperationQueue:self.videoUploadOperationQueue]) {
             [self.videoUploadOperationQueue addOperation:operation];
             [self uploadNextAssetForMediaType:PHAssetMediaTypeImage];
         }
-    } else if ([operation isMemberOfClass:[VideoUploadOperation class]]) {
+    } else if ([operation isKindOfClass:[VideoUploadOperation class]]) {
         if (![self hasPendingUploadOperation:operation inOperationQueue:self.videoUploadOperationQueue]) {
             [self.videoUploadOperationQueue addOperation:operation];
         }
@@ -469,7 +469,7 @@ static const NSUInteger VideoUploadBatchCount = 1;
     BOOL hasPendingOperation = NO;
     
     for (NSOperation *operation in queue.operations) {
-        if ([operation isMemberOfClass:[CameraUploadOperation class]]) {
+        if ([operation isKindOfClass:[CameraUploadOperation class]]) {
             if ([[(CameraUploadOperation *)operation uploadInfo].savedLocalIdentifier isEqualToString:uploadOperation.uploadInfo.savedLocalIdentifier]) {
                 hasPendingOperation = YES;
                 MEGALogError(@"[Camera Upload] has pending operation %@", operation);
