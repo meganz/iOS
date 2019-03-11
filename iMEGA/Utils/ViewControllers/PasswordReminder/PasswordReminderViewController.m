@@ -49,6 +49,7 @@
         self.navigationItem.title = AMLocalizedString(@"Password Reminder", @"Title for feature Password Reminder");
     }
 }
+
 #pragma mark - IBActions
 
 - (IBAction)tapClose:(id)sender {
@@ -116,11 +117,8 @@
     self.keyImageView.hidden = UIDevice.currentDevice.iPhone4X;
 
     if (self.logout) {
-        self.alphaView.backgroundColor = UIColor.whiteColor;
         UIBarButtonItem *cancelBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:AMLocalizedString(@"close", nil) style:UIBarButtonItemStylePlain target:self action:@selector(tapClose:)];
         self.navigationItem.rightBarButtonItem = cancelBarButtonItem;
-    } else {
-        self.alphaView.alpha = 0;
     }
     
     self.titleLabel.text = AMLocalizedString(@"remindPasswordTitle", @"Title for Remind Password View, inviting user to test password");
