@@ -11,10 +11,10 @@
 @import CoreLocation;
 
 static const NSInteger CoordinatesConcurrentUploadCount = 3;
-static const NSInteger ThumbnailConcurrentUploadCount = 70;
+static const NSInteger ThumbnailConcurrentUploadCount = 50;
 
 typedef NS_ENUM(NSInteger, PreviewConcurrentUploadCount) {
-    PreviewConcurrentUploadCountWhenThumbnailsAreDone = 3,
+    PreviewConcurrentUploadCountWhenThumbnailsAreDone = 2,
     PreviewConcurrentUploadCountWhenThumbnailsAreUploading = 1
 };
 
