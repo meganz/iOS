@@ -38,15 +38,14 @@
     }
     
     if (request.flag) {
-        PasswordReminderViewController *passwordReminderViewController = [[UIStoryboard storyboardWithName:@"PasswordReminder" bundle:nil] instantiateViewControllerWithIdentifier:@"PasswordReminderViewControllerID"];
-        passwordReminderViewController.logout = self.isLoggingOut;
-
         if (self.isLoggingOut) {
-            passwordReminderViewController.modalPresentationStyle = UIModalPresentationFullScreen;
-
-            MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:passwordReminderViewController];
+            MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"PasswordReminder" bundle:nil] instantiateViewControllerWithIdentifier:@"PasswordReminderNavigationControllerID"];
+            PasswordReminderViewController *passwordReminderViewController = (PasswordReminderViewController *) navigationController.viewControllers.firstObject;
+            passwordReminderViewController.logout = self.isLoggingOut;
             [UIApplication.mnz_presentingViewController presentViewController:navigationController animated:YES completion:nil];
         } else {
+            PasswordReminderViewController *passwordReminderViewController = [[UIStoryboard storyboardWithName:@"PasswordReminder" bundle:nil] instantiateViewControllerWithIdentifier:@"PasswordReminderViewControllerID"];
+            passwordReminderViewController.logout = self.isLoggingOut;
             [UIApplication.mnz_presentingViewController presentViewController:passwordReminderViewController animated:YES completion:nil];
         }
     } else {

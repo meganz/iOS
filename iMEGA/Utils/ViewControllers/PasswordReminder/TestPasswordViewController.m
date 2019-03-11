@@ -14,7 +14,7 @@
 
 #import "MEGAMultiFactorAuthCheckRequestDelegate.h"
 
-@interface TestPasswordViewController () <UITextFieldDelegate, PasswordViewDelegate>
+@interface TestPasswordViewController () <UITextFieldDelegate>
 
 @property (weak, nonatomic) IBOutlet UILabel *descriptionLabel;
 @property (weak, nonatomic) IBOutlet UIButton *confirmButton;
@@ -161,6 +161,7 @@
 - (void)passwordTestSuccess {
     self.passwordView.passwordTextField.textColor = UIColor.mnz_green31B500;
     
+    self.confirmButton.enabled = NO;
     self.confirmButton.layer.borderWidth = 0.0f;
     [self.confirmButton setTitleColor:UIColor.mnz_green31B500 forState:UIControlStateNormal];
     [self.confirmButton setImage:[UIImage imageNamed:@"contact_request_accept"] forState:UIControlStateNormal];
@@ -171,6 +172,7 @@
 
 - (void)resetUI {
     [self.passwordView setErrorState:NO];
+    self.confirmButton.enabled = YES;
     
     if (self.isLoggingOut) {
         self.confirmButton.layer.borderWidth = 0.0f;
@@ -204,6 +206,9 @@
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
     [self.passwordView setErrorState:NO];
+    if (!self.confirmButton.enabled) {
+        [self resetUI];
+    }
     
     return YES;
 }
@@ -224,12 +229,6 @@
         self.passwordView.passwordTextField.secureTextEntry = YES;
         [self.passwordView configureSecureTextEntry];
     }
-}
-
-#pragma mark - PasswordViewDelegate
-
-- (void)passwordViewBeginEditing {
-    [self resetUI];
 }
 
 @end
