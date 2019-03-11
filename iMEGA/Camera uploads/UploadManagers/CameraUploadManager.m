@@ -28,7 +28,7 @@ static const NSTimeInterval MinimumBackgroundRefreshInterval = 2 * 3600;
 static const NSTimeInterval BackgroundRefreshDuration = 25;
 static const NSTimeInterval LoadMediaInfoTimeoutInSeconds = 120;
 
-static const NSUInteger PhotoUploadBatchCount = 10;
+static const NSUInteger PhotoUploadBatchCount = 5;
 static const NSUInteger VideoUploadBatchCount = 1;
 
 @interface CameraUploadManager ()
