@@ -673,7 +673,7 @@
 /* Title for the MEGA Recovery Key */
 "masterKey"="Herstel Sleutel";
 /* Section title where you can change your MEGA's password */
-"changePasswordLabel"="Wijzig Wachtwoord";
+"changePasswordLabel"="Wijzig wachtwoord";
 /* Advising the user to keep the user's master key safe. */
 "exportMasterKeyFooter"="Het exporteren en bewaren van de Master Key op een veilige locatie stelt u in staat om een nieuw wachtwoord in te stellen zonder het verlies van gegevens.";
 /* Question button to present a view where it's explained what is the Recovery Key */
@@ -1680,6 +1680,34 @@
 "Saved to Photos"="Opgeslagen naar Foto's";
 /* Text shown when an error occurs when trying to save a photo or video to Photos app */
 "Could not save Item"="Kon Item niet opslaan";
+/* Label in a cell where you can enable the 'Encrypted Key Rotation' */
+"Encrypted Key Rotation"="Gecodeerde Sleutel Rotatie";
+/* Title shown in a cell to allow the users enable the 'Encrypted Key Rotation' */
+"Enable Encrypted Key Rotation"="Gecodeerde Sleutel Rotatie Inschakelen";
+/* Label in a cell where you can get the chat link */
+"Get Chat Link"="Krijg Gesprekskoppeling";
+/* Footer text to explain what means 'Encrypted Key Rotation' */
+"Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages."="Sleutel rotatie is iets veiliger, maar u kunt geen koppeling naar het gesprek creëren en nieuwe deelnemers kunnen geen berichten uit het verleden zien.";
+/* Alert message to advice the users that to generate a chat link they need enter a group name for the chat */
+"Before you can generate a link for this room, you need to enter a group name"="Voordat u een koppeling kan genereren voor deze ruimte, moet u een groepsnaam invoeren.";
+/* Label shown in a cell where you can enable a switch to get a chat link */
+"Chat Link"="Gesprekskoppeling";
+/* Message shown when there is an active chat link that can be deleted */
+"Delete Chat Link"="Verwijder Gesprekskoppeling";
+/* Button text in public chat previews that allows the user to join the chat */
+"Join"="Aansluiten";
+/* Text shown in a notification to let the user know that has joined a public chat room after login or account creation */
+"You have joined %@"="You have joined %@";
+/* Users previewing a public chat */
+"Observers"="Observers";
+/* Alert message shown while deleting a chat link, warning about the consequences */
+"This conversation will no longer be accessible through the link you are about to delete."="This conversation will no longer be accessible through the link you are about to delete.";
+/* Management message shown in a chat when the user %@ enables the 'Encrypted Key Rotation' */
+"%@ enabled Encrypted Key Rotation"="%@ enabled Encrypted Key Rotation";
+/* Management message shown in a chat when the user %@ creates a public link for the chat */
+"%@ created a public link for the chat."="%@ created a public link for the chat.";
+/* Management message shown in a chat when the user %@ removes a public link for the chat */
+"%@ removed a public link for the chat."="%@ removed a public link for the chat.";
 /* Message show when a call cannot be established because there are too many participants in the group call */
 "Error. No more participants are allowed in this group call."="U mag niet deelnemen aan deze oproep omdat deze het maximale aantal deelnemers heeft bereikt.";
 /* Message show when a user cannot activate the video in a group call because the max number of videos has been reached */
@@ -1787,7 +1815,7 @@
 /* Label shown next to a feature name that can be enabled or disabled, like in 'Show Last seen...' */
 "Show"="Weergeven";
 /* Shown when viewing a 1on1 chat (at least for now), if the user is offline. */
-"Last seen %s"="Laatst gezien %s";
+"Last seen %s"="Laatst gezien: %s";
 /* Text to inform the user the 'Last seen' time of a contact is a long time ago (>= 65535 minutes) */
 "Last seen a long time ago"="Laatst gezien is lang geleden";
 /* */
