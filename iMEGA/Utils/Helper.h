@@ -79,6 +79,8 @@ typedef NS_OPTIONS(NSUInteger, NodesAre) {
 
 + (void)changeApiURL;
 
++ (void)cannotPlayContentDuringACallAlert;
+
 #pragma mark - Utils for nodes
 
 + (void)thumbnailForNode:(MEGANode *)node api:(MEGASdk *)api cell:(id)cell;
