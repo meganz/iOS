@@ -10,8 +10,8 @@
 #import "NSError+CameraUpload.h"
 @import CoreLocation;
 
-static const NSInteger CoordinatesConcurrentUploadCount = 3;
-static const NSInteger ThumbnailConcurrentUploadCount = 50;
+static const NSInteger CoordinatesConcurrentUploadCount = 2;
+static const NSInteger ThumbnailConcurrentUploadCount = 40;
 
 typedef NS_ENUM(NSInteger, PreviewConcurrentUploadCount) {
     PreviewConcurrentUploadCountWhenThumbnailsAreDone = 2,
