@@ -256,7 +256,7 @@
             break;
             
         case 6:
-            numberOfRows = self.chatRoom.isPublicChat ? 1 : 0;
+            numberOfRows = self.chatRoom.previewersCount ? 1 : 0;
             break;
             
         case 7:
@@ -444,7 +444,7 @@
             break;
             
         case 6:
-            height = self.chatRoom.isPublicChat ? 10.0f : 0.1f;
+            height = self.chatRoom.previewersCount ? 10.0f : 0.1f;
             break;
             
         case 7:
@@ -487,7 +487,7 @@
             break;
             
         case 6:
-            height = self.chatRoom.isPublicChat ? 10.0f : 0.1f;
+            height = self.chatRoom.previewersCount ? 10.0f : 0.1f;
             break;
             
         case 7:
@@ -540,7 +540,7 @@
             break;
             
         case 6:
-            heightForRow = (self.chatRoom.isPublicChat) ? 60.0f : 0.0f;
+            heightForRow = self.chatRoom.previewersCount ? 60.0f : 0.0f;
             break;
             
         case 7:
@@ -788,8 +788,7 @@
                 break;
                 
             case MEGAChatListItemChangeTypeUpdatePreviewers: {
-                GroupChatDetailsViewTableViewCell *cell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:6]];
-                cell.rightLabel.text = [NSString stringWithFormat:@"%tu", self.chatRoom.previewersCount];
+                [self.tableView reloadData];
                 break;
             }
                 
