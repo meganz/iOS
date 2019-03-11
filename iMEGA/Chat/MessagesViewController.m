@@ -581,8 +581,11 @@ const NSUInteger kMaxMessagesToLoad = 256;
             MEGAChatCall *call = [[MEGASdkManager sharedMEGAChatSdk] chatCallForChatId:self.chatRoom.chatId];
             if (call.status == MEGAChatCallStatusInProgress) {
                 [self showTapToReturnCall:call];
-            } else {
-                [self showActiveCallButton];
+            } else if (self.chatRoom.group) {
+                MEGAHandleList *chatRoomIDsWithCallInProgress = [MEGASdkManager.sharedMEGAChatSdk chatCallsWithState:MEGAChatCallStatusInProgress];
+                if (chatRoomIDsWithCallInProgress.size == 0) {
+                    [self showActiveCallButton];
+                }
             }
         }
     } else {
@@ -600,14 +603,10 @@ const NSUInteger kMaxMessagesToLoad = 256;
         return;
     }
     
-    MEGAHandleList *handleList = [[MEGASdkManager sharedMEGAChatSdk] chatCallsIds];
-    for (NSUInteger i = 0; i < handleList.size; i++) {
-        uint64_t callHandle = [handleList megaHandleAtIndex:i];
-        MEGAChatCall *call = [[MEGASdkManager sharedMEGAChatSdk] chatCallForCallId:callHandle];
-        if (call.status == MEGAChatCallStatusInProgress) {
-            self.audioCallBarButtonItem.enabled = self.videoCallBarButtonItem.enabled = NO;
-            return;
-        }
+    MEGAHandleList *chatRoomIDsWithCallInProgress = [MEGASdkManager.sharedMEGAChatSdk chatCallsWithState:MEGAChatCallStatusInProgress];
+    if (chatRoomIDsWithCallInProgress.size > 0) {
+        self.audioCallBarButtonItem.enabled = self.videoCallBarButtonItem.enabled = NO;
+        return;
     }
     
     BOOL isAudioPermissionAuthorizedOrNotDetermined = [DevicePermissionsHelper isAudioPermissionAuthorizedOrNotDetermined];
@@ -712,8 +711,7 @@ const NSUInteger kMaxMessagesToLoad = 256;
         [[UIDevice currentDevice] setValue:value forKey:@"orientation"];
     }
     if (self.chatRoom.isGroup) {
-        MEGANavigationController *groupCallNavigation = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"GroupCallViewControllerNavigationID"];
-        GroupCallViewController *groupCallVC = groupCallNavigation.viewControllers.firstObject;
+        GroupCallViewController *groupCallVC = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"GroupCallViewControllerID"];
         groupCallVC.callType = active ? CallTypeActive : [[MEGASdkManager sharedMEGAChatSdk] chatCallForChatId:self.chatRoom.chatId] ? CallTypeActive : CallTypeOutgoing;
         groupCallVC.videoCall = videoCall;
         groupCallVC.chatRoom = self.chatRoom;
@@ -722,7 +720,7 @@ const NSUInteger kMaxMessagesToLoad = 256;
         if (@available(iOS 10.0, *)) {
             groupCallVC.megaCallManager = [(MainTabBarController *)UIApplication.sharedApplication.keyWindow.rootViewController megaCallManager];
         }
-        [self presentViewController:groupCallNavigation animated:YES completion:nil];
+        [self presentViewController:groupCallVC animated:YES completion:nil];
     } else {
         CallViewController *callVC = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"CallViewControllerID"];
         callVC.chatRoom = self.chatRoom;
