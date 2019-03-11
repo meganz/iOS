@@ -22,7 +22,6 @@
     [super start];
     
     [self beginBackgroundTaskWithExpirationHandler:^{
-        MEGALogDebug(@"[Camera Upload] %@ background task expired", self);
         [self finishOperation];
     }];
 }
