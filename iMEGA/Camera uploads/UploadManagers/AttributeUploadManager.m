@@ -11,6 +11,7 @@
 @import CoreLocation;
 
 static const NSInteger CoordinatesConcurrentUploadCount = 3;
+static const NSInteger ThumbnailConcurrentUploadCount = 70;
 
 typedef NS_ENUM(NSInteger, PreviewConcurrentUploadCount) {
     PreviewConcurrentUploadCountWhenThumbnailsAreDone = 3,
@@ -43,6 +44,7 @@ typedef NS_ENUM(NSInteger, PreviewConcurrentUploadCount) {
     if (self) {
         _thumbnailUploadOperationQueue = [[NSOperationQueue alloc] init];
         _thumbnailUploadOperationQueue.qualityOfService = NSQualityOfServiceUserInteractive;
+        _thumbnailUploadOperationQueue.maxConcurrentOperationCount = ThumbnailConcurrentUploadCount;
         [_thumbnailUploadOperationQueue addObserver:self forKeyPath:NSStringFromSelector(@selector(operationCount)) options:0 context:NULL];
         
         _previewUploadOperationQueue = [[NSOperationQueue alloc] init];
