@@ -72,7 +72,10 @@ const NSInteger PhotoExportDiskSizeMultiplicationFactor = 2;
     
     if (imageData == nil) {
         MEGALogError(@"[Camera Upload] %@ the requested image data is empty", self);
-        [self finishOperationWithStatus:CameraAssetUploadStatusFailed shouldUploadNextAsset:YES];
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(.75 * NSEC_PER_SEC)), dispatch_get_global_queue(QOS_CLASS_UTILITY, 0), ^{
+            [self finishOperationWithStatus:CameraAssetUploadStatusFailed shouldUploadNextAsset:YES];
+        });
+        
         return;
     }
 
