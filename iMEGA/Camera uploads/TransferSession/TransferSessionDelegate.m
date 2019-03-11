@@ -41,6 +41,9 @@
 
 - (void)addDelegate:(TransferSessionTaskDelegate *)delegate forTask:(NSURLSessionTask *)task {
     dispatch_sync(self.serialQueue, ^{
+        if (self.taskDelegateDict[@(task.taskIdentifier)]) {
+            MEGALogError(@"[Camera Upload] a delegate is already existing for %@", task.taskDescription);
+        }
         self.taskDelegateDict[@(task.taskIdentifier)] = delegate;
     });
 }
