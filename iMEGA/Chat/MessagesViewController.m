@@ -1287,7 +1287,7 @@ const NSUInteger kMaxMessagesToLoad = 256;
 }
 
 - (BOOL)shouldShowJoinView {
-    return self.chatRoom.isPublicChat && (self.chatRoom.isPreview || (!self.chatRoom.isActive && self.publicHandle));
+    return self.chatRoom.isPublicChat && self.chatRoom.isPreview;
 }
 
 - (void)updateJoinView {
@@ -1719,13 +1719,11 @@ const NSUInteger kMaxMessagesToLoad = 256;
     } else {
         MEGAChatGenericRequestDelegate *delegate = [[MEGAChatGenericRequestDelegate alloc] initWithCompletion:^(MEGAChatRequest * _Nonnull request, MEGAChatError * _Nonnull error) {
             self.chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:request.chatHandle];
+            sender.enabled = YES;
             [self updateJoinView];
         }];
-        if (!self.chatRoom.isPreview && !self.chatRoom.isActive) {
-            [[MEGASdkManager sharedMEGAChatSdk] autorejoinPublicChat:self.chatRoom.chatId publicHandle:self.publicHandle delegate:delegate];
-        } else {
-            [[MEGASdkManager sharedMEGAChatSdk] autojoinPublicChat:self.chatRoom.chatId delegate:delegate];
-        }
+        [[MEGASdkManager sharedMEGAChatSdk] autojoinPublicChat:self.chatRoom.chatId delegate:delegate];
+        sender.enabled = NO;
     }
 }
 
