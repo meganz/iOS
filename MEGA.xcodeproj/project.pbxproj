@@ -3693,22 +3693,15 @@
 				B6575FCF21FC526D00B7AD82 /* LivePhotoUploadOperation.m */,
 				B658D3B9218F936B004C0D64 /* VideoUploadOperation.h */,
 				B658D3BA218F936B004C0D64 /* VideoUploadOperation.m */,
-				B6D11AE0219E5E2C00446B86 /* AttributeUploadOperation.h */,
-				B6D11AE1219E5E2C00446B86 /* AttributeUploadOperation.m */,
-				B6B9593F2193A9140064334D /* ThumbnailUploadOperation.h */,
-				B6B959402193A9140064334D /* ThumbnailUploadOperation.m */,
-				B6B959422193A91E0064334D /* PreviewUploadOperation.h */,
-				B6B959432193A91E0064334D /* PreviewUploadOperation.m */,
 				B6D11AE321A24C7700446B86 /* PutNodeOperation.h */,
 				B6D11AE421A24C7700446B86 /* PutNodeOperation.m */,
-				B644B6BC21AE0E1900A3B8E7 /* CoordinatesUploadOperation.h */,
-				B644B6BD21AE0E1900A3B8E7 /* CoordinatesUploadOperation.m */,
 				B65AC8B821F6A91A0094FF4F /* PhotoExportOperation.h */,
 				B65AC8B921F6A91A0094FF4F /* PhotoExportOperation.m */,
 				B6575FD422012F8D00B7AD82 /* LoadMediaInfoOperation.h */,
 				B6575FD522012F8D00B7AD82 /* LoadMediaInfoOperation.m */,
 				B6031EE32202A6BF00F7EAA1 /* NodesFetchListenerOperation.h */,
 				B6031EE42202A6BF00F7EAA1 /* NodesFetchListenerOperation.m */,
+				B6D176842235E69400098084 /* Attributes */,
 			);
 			path = UploadOperations;
 			sourceTree = "<group>";
@@ -3833,6 +3826,21 @@
 				B6D90BC922253BC700E0623A /* BackgroundUploadingTaskMonitor.m */,
 			);
 			path = UploadUtils;
+			sourceTree = "<group>";
+		};
+		B6D176842235E69400098084 /* Attributes */ = {
+			isa = PBXGroup;
+			children = (
+				B6D11AE0219E5E2C00446B86 /* AttributeUploadOperation.h */,
+				B6D11AE1219E5E2C00446B86 /* AttributeUploadOperation.m */,
+				B6B9593F2193A9140064334D /* ThumbnailUploadOperation.h */,
+				B6B959402193A9140064334D /* ThumbnailUploadOperation.m */,
+				B6B959422193A91E0064334D /* PreviewUploadOperation.h */,
+				B6B959432193A91E0064334D /* PreviewUploadOperation.m */,
+				B644B6BC21AE0E1900A3B8E7 /* CoordinatesUploadOperation.h */,
+				B644B6BD21AE0E1900A3B8E7 /* CoordinatesUploadOperation.m */,
+			);
+			path = Attributes;
 			sourceTree = "<group>";
 		};
 		E84CDAFE1A7292AA003F4C77 /* Links */ = {

@@ -20,12 +20,12 @@
     __weak __typeof__(self) weakSelf = self;
     [MEGASdkManager.sharedMEGASdk setUnshareableNodeCoordinates:self.node latitude:@(location.coordinate.latitude) longitude:@(location.coordinate.longitude) delegate:[[CameraUploadRequestDelegate alloc] initWithCompletion:^(MEGARequest * _Nonnull request, MEGAError * _Nonnull error) {
         if (error.type) {
-            MEGALogError(@"[Camera Upload] Upload coordinate failed for node: %@, error: %@", weakSelf.node.name, error.nativeError);
+            MEGALogError(@"[Camera Upload] Upload coordinate failed for node: %@ at %@, error: %@", weakSelf.node.name, weakSelf.attributeURL, error.nativeError);
             if (error.type == MEGAErrorTypeApiEExist) {
                 [NSFileManager.defaultManager removeItemIfExistsAtURL:weakSelf.attributeURL];
             }
         } else {
-            MEGALogDebug(@"[Camera Upload] Upload coordinate succeeded for node %@", weakSelf.node.name);
+            MEGALogDebug(@"[Camera Upload] Upload coordinate succeeded for node %@ at %@", weakSelf.node.name, weakSelf.attributeURL);
             [NSFileManager.defaultManager removeItemIfExistsAtURL:weakSelf.attributeURL];
         }
         
