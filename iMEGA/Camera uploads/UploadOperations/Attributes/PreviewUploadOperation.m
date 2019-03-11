@@ -14,12 +14,12 @@
     __weak __typeof__(self) weakSelf = self;
     [MEGASdkManager.sharedMEGASdk setPreviewNode:self.node sourceFilePath:self.attributeURL.path delegate:[[CameraUploadRequestDelegate alloc] initWithCompletion:^(MEGARequest * _Nonnull request, MEGAError * _Nonnull error) {
         if (error.type) {
-            MEGALogError(@"[Camera Upload] Upload preview failed for node: %@ at %@, error: %@", weakSelf.node.name, weakSelf.attributeURL, error.nativeError);
+            MEGALogError(@"[Camera Upload] Upload preview failed %@ error: %@", weakSelf, error.nativeError);
             if (error.type == MEGAErrorTypeApiEExist) {
                 [weakSelf cacheAttributeFile];
             }
         } else {
-            MEGALogDebug(@"[Camera Upload] Upload preview succeeded for node %@ at %@", weakSelf.node.name, weakSelf.attributeURL);
+            MEGALogDebug(@"[Camera Upload] Upload preview succeeded %@", weakSelf);
             [weakSelf cacheAttributeFile];
         }
         

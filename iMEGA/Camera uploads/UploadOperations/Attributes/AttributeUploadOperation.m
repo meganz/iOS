@@ -18,12 +18,4 @@
     return [NSString stringWithFormat:@"%@ %@ %@", NSStringFromClass([self class]), self.attributeURL, self.node.name];
 }
 
-- (void)start {
-    [super start];
-    
-    [self beginBackgroundTaskWithExpirationHandler:^{
-        [self finishOperation];
-    }];
-}
-
 @end
