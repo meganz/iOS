@@ -21,7 +21,6 @@
 #import "MEGAChatEnableDisableVideoRequestDelegate.h"
 #import "MEGAChatStartCallRequestDelegate.h"
 #import "MEGAGroupCallPeer.h"
-#import "MEGANavigationController.h"
 #import "MEGASdkManager.h"
 
 #define kSmallPeersLayout 7
@@ -71,9 +70,8 @@
 
 @property (nonatomic) BOOL shouldHideAcivity;
 
-@property UIView *navigationView;
-@property UILabel *navigationTitleLabel;
-@property UILabel *navigationSubtitleLabel;
+@property (weak, nonatomic) IBOutlet UILabel *navigationTitleLabel;
+@property (weak, nonatomic) IBOutlet UILabel *navigationSubtitleLabel;
 
 @end
 
@@ -84,7 +82,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self configureNavigation];
+    [self customNavigationBarLabel];
+    [self updateParticipants];
     [self initDataSource];
  
     if (self.callType == CallTypeIncoming) {
@@ -108,14 +107,6 @@
     
     [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(didSessionRouteChange:) name:AVAudioSessionRouteChangeNotification object:nil];
     [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(didWirelessRoutesAvailableChange:) name:MPVolumeViewWirelessRoutesAvailableDidChangeNotification object:nil];
-
-    //NOTE: If we open this view controller from 'MEGA' or 'VIDEO' CallKit buttons, we should update the call and configure all the UI
-    if (self.call.status == MEGAChatCallStatusRingIn) {
-        self.call = [[MEGASdkManager sharedMEGAChatSdk] chatCallForChatId:self.chatRoom.chatId];
-        if (self.call.status == MEGAChatCallStatusInProgress) {
-            [self instantiatePeersInCall];
-        }
-    }
     
     self.mpVolumeView = [[MPVolumeView alloc] initWithFrame:self.enableDisableSpeaker.bounds];
     self.mpVolumeView.showsVolumeSlider = NO;
@@ -134,8 +125,6 @@
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     
-    [UINavigationBar appearanceWhenContainedInInstancesOfClasses:@[MEGANavigationController.class]].barTintColor = UIColor.mnz_redMain;
-
     [[MEGASdkManager sharedMEGAChatSdk] removeChatCallDelegate:self];
     [[UIDevice currentDevice] setProximityMonitoringEnabled:NO];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
@@ -183,7 +172,6 @@
             MEGALogDebug(@"[Group Call] Reload data %s", __PRETTY_FUNCTION__);
             self.collectionView.userInteractionEnabled = NO;
         }
-        [self instantiateNavigationTitle];
     } completion:nil];
 }
 
@@ -401,29 +389,10 @@
 }
 
 - (IBAction)muteOrUnmuteCall:(UIButton *)sender {
-    MEGAChatEnableDisableAudioRequestDelegate *enableDisableAudioRequestDelegate = [[MEGAChatEnableDisableAudioRequestDelegate alloc] initWithCompletion:^(MEGAChatError *error) {
-        if (error.type == MEGAChatErrorTypeOk) {
-            
-            if (self.localPeer) {
-                self.localPeer.audio = sender.selected;
-                NSUInteger index = [self.peersInCall indexOfObject:self.localPeer];
-                GroupCallCollectionViewCell *cell = (GroupCallCollectionViewCell *)[self.collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForItem:index inSection:0]];
-                [cell configureUserAudio:self.localPeer.audio];
-                
-                MEGAGroupCallPeer *previousPeerSelected = self.manualMode ? self.peerManualMode : self.lastPeerTalking;
-                if ([previousPeerSelected isEqualToPeer:self.localPeer]) {
-                    self.peerTalkingMuteView.hidden = self.localPeer.audio;
-                }
-                
-                sender.selected = !sender.selected;
-            }
-        }
-    }];
-    
     if (sender.selected) {
-        [[MEGASdkManager sharedMEGAChatSdk] enableAudioForChat:self.chatRoom.chatId delegate:enableDisableAudioRequestDelegate];
+        [[MEGASdkManager sharedMEGAChatSdk] enableAudioForChat:self.chatRoom.chatId];
     } else {
-        [[MEGASdkManager sharedMEGAChatSdk] disableAudioForChat:self.chatRoom.chatId delegate:enableDisableAudioRequestDelegate];
+        [[MEGASdkManager sharedMEGAChatSdk] disableAudioForChat:self.chatRoom.chatId];
     }
 }
 
@@ -477,7 +446,7 @@
     sender.selected = !sender.selected;
 }
 
-- (IBAction)hideCall:(UIBarButtonItem *)sender {
+- (IBAction)hideCall:(UIButton *)sender {
     [self removeAllVideoListeners];
     [[NSUserDefaults standardUserDefaults] setBool:self.localPeer.video forKey:@"groupCallLocalVideo"];
     [[NSUserDefaults standardUserDefaults] setBool:self.localPeer.audio forKey:@"groupCallLocalAudio"];
@@ -498,86 +467,27 @@
 
 #pragma mark - Private
 
-- (void)configureNavigation {
-    
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.participantsView];
-
-    if (@available(iOS 11.0, *)) {
-        [self initNavigationTitleViews];
-        [self instantiateNavigationTitle];
-        [self customNavigationBarLabel];
-    } else {
-        [self.navigationItem setTitleView:[Helper customNavigationBarLabelWithTitle:self.chatRoom.title subtitle:AMLocalizedString(@"connecting", nil)]];
-        [self.navigationItem.titleView sizeToFit];
-    }
-    
-    [UINavigationBar appearanceWhenContainedInInstancesOfClasses:@[MEGANavigationController.class]].barTintColor = UIColor.mnz_black151412_09;
-    
-    [self updateParticipants];
-}
-
-- (void)initNavigationTitleViews {
-    self.navigationTitleLabel = [[UILabel alloc] init];
-    self.navigationTitleLabel.font = [UIFont mnz_SFUISemiBoldWithSize:15];
-    self.navigationTitleLabel.textColor = UIColor.whiteColor;
-    
-    self.navigationSubtitleLabel = [[UILabel alloc] init];
-    self.navigationSubtitleLabel.font = [UIFont mnz_SFUIRegularWithSize:12];
-    self.navigationSubtitleLabel.textColor = UIColor.mnz_grayE3E3E3;
-}
-
-- (void)instantiateNavigationTitle {
-    float leftBarButtonsWidth = 24 + 44; //24 is by the margins, 44 the hide button
-    
-    self.navigationView = [[UIView alloc] initWithFrame:CGRectMake(0, 4, self.navigationController.navigationBar.bounds.size.width - leftBarButtonsWidth - self.participantsView.frame.size.width, 36)];
-    self.navigationView.clipsToBounds = YES;
-    self.navigationView.userInteractionEnabled = YES;
-    [self.navigationItem setTitleView:self.navigationView];
-    
-    [[self.navigationView.widthAnchor constraintEqualToConstant:self.navigationItem.titleView.bounds.size.width] setActive:YES];
-    [[self.navigationView.heightAnchor constraintEqualToConstant:self.navigationItem.titleView.bounds.size.height] setActive:YES];
-    
-    UIStackView *mainStackView = [[UIStackView alloc] init];
-    mainStackView.distribution = UIStackViewDistributionEqualSpacing;
-    mainStackView.alignment = UIStackViewAlignmentLeading;
-    mainStackView.translatesAutoresizingMaskIntoConstraints = false;
-    mainStackView.spacing = 4;
-    mainStackView.axis = UILayoutConstraintAxisVertical;
-    [mainStackView addArrangedSubview:self.navigationTitleLabel];
-    [mainStackView addArrangedSubview:self.navigationSubtitleLabel];
-    [self.navigationView addSubview:mainStackView];
-    
-    [[mainStackView.trailingAnchor constraintEqualToAnchor:self.navigationView.trailingAnchor] setActive:YES];
-    [[mainStackView.leadingAnchor constraintEqualToAnchor:self.navigationView.leadingAnchor] setActive:YES];
-    [[mainStackView.topAnchor constraintEqualToAnchor:self.navigationView.topAnchor] setActive:YES];
-    [[mainStackView.bottomAnchor constraintEqualToAnchor:self.navigationView.bottomAnchor] setActive:YES];
-}
-
 - (void)customNavigationBarLabel {
-    NSString *groupCallTitle = self.chatRoom.title;
-    NSString *groupCallDuration;
+    self.navigationTitleLabel.text = self.chatRoom.title;
     
     switch (self.callType) {
         case CallTypeActive: {
             MEGAChatCall *call = [[MEGASdkManager sharedMEGAChatSdk] chatCallForChatId:self.chatRoom.chatId];
-            groupCallDuration = call && call.status == MEGAChatCallStatusInProgress ? @"" : AMLocalizedString(@"calling...", @"Label shown when you call someone (outgoing call), before the call starts.");
+            self.navigationSubtitleLabel.text = call && call.status == MEGAChatCallStatusInProgress ? @"" : AMLocalizedString(@"calling...", @"Label shown when you call someone (outgoing call), before the call starts.");
             break;
         }
             
         case CallTypeOutgoing:
-            groupCallDuration = AMLocalizedString(@"calling...", @"Label shown when you call someone (outgoing call), before the call starts.");
+            self.navigationSubtitleLabel.text = AMLocalizedString(@"calling...", @"Label shown when you call someone (outgoing call), before the call starts.");
             break;
             
         case CallTypeIncoming:
-            groupCallDuration = AMLocalizedString(@"connecting", nil);
+            self.navigationSubtitleLabel.text = AMLocalizedString(@"connecting", nil);
             break;
             
         default:
             break;
     }
-    
-    self.navigationTitleLabel.text = groupCallTitle;
-    self.navigationSubtitleLabel.text = groupCallDuration;
 }
 
 - (void)configureControlsForLocalUser:(MEGAGroupCallPeer *)localUser {
@@ -1040,6 +950,16 @@
         self.call = call;
     } else {
         return;
+    }
+    
+    if ([call hasChangedForType:MEGAChatCallChangeTypeLocalAVFlags]) {
+        if (self.localPeer) {
+            self.muteUnmuteMicrophone.selected = !call.hasLocalAudio;
+            self.localPeer.audio = call.hasLocalAudio ? CallPeerAudioOn : CallPeerAudioOff;
+            NSUInteger index = [self.peersInCall indexOfObject:self.localPeer];
+            GroupCallCollectionViewCell *cell = (GroupCallCollectionViewCell *)[self.collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForItem:index inSection:0]];
+            [cell configureUserAudio:self.localPeer.audio];
+        }
     }
     
     switch (call.status) {
