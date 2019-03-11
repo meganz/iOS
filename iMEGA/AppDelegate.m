@@ -405,7 +405,8 @@
 - (void)applicationWillEnterForeground:(UIApplication *)application {
     MEGALogDebug(@"Application will enter foreground");
     
-    if (self.wasAppSuspended && [MEGASdkManager sharedMEGAChatSdk].numCalls == 0) {
+    MEGAHandleList *chatRoomIDsWithCallInProgress = [MEGASdkManager.sharedMEGAChatSdk chatCallsWithState:MEGAChatCallStatusInProgress];
+    if (self.wasAppSuspended && (chatRoomIDsWithCallInProgress.size == 0)) {
         //If the app has been suspended, we assume that the sockets have been closed, so we have to reconnect.
         [[MEGAReachabilityManager sharedManager] reconnect];
     } else {
@@ -599,14 +600,11 @@
                     MEGALogDebug(@"call id %tu", call.callId);
                     MEGALogDebug(@"There is a call in progress for this chat %@", call);
                     UIViewController *presentedVC = UIApplication.mnz_presentingViewController;
-                    if ([presentedVC isKindOfClass:MEGANavigationController.class]) {
-                        MEGANavigationController *navigation = (MEGANavigationController *)presentedVC;
-                        if ([navigation.viewControllers.firstObject isKindOfClass:GroupCallViewController.class]) {
-                            GroupCallViewController *callVC = (GroupCallViewController *)navigation.viewControllers.firstObject;
-                            callVC.callType = CallTypeActive;
-                            if (!callVC.videoCall) {
-                                [callVC tapOnVideoCallkitWhenDeviceIsLocked];
-                            }
+                    if ([presentedVC isKindOfClass:GroupCallViewController.class]) {
+                        GroupCallViewController *callVC = (GroupCallViewController *)presentedVC;
+                        callVC.callType = CallTypeActive;
+                        if (!callVC.videoCall) {
+                            [callVC tapOnVideoCallkitWhenDeviceIsLocked];
                         }
                     }
                 } else {
@@ -1068,8 +1066,7 @@ void uncaughtExceptionHandler(NSException *exception) {
 
 - (void)performCall {
     if (self.chatRoom.isGroup) {
-        MEGANavigationController *groupCallNavigation = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"GroupCallViewControllerNavigationID"];
-        GroupCallViewController *groupCallVC = groupCallNavigation.viewControllers.firstObject;
+        GroupCallViewController *groupCallVC = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"GroupCallViewControllerID"];
         groupCallVC.callType = CallTypeOutgoing;
         groupCallVC.videoCall = self.videoCall;
         groupCallVC.chatRoom = self.chatRoom;
@@ -1078,7 +1075,7 @@ void uncaughtExceptionHandler(NSException *exception) {
         if (@available(iOS 10.0, *)) {
             groupCallVC.megaCallManager = [self.mainTBC megaCallManager];
         }
-        [self.mainTBC presentViewController:groupCallNavigation animated:YES completion:nil];
+        [self.mainTBC presentViewController:groupCallVC animated:YES completion:nil];
     } else {
         CallViewController *callVC = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"CallViewControllerID"];
         callVC.chatRoom = self.chatRoom;
