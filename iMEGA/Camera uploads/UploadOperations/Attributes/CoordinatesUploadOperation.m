@@ -10,6 +10,12 @@
 - (void)start {
     [super start];
     
+    if (self.node.latitude && self.node.longitude) {
+        [NSFileManager.defaultManager removeItemIfExistsAtURL:self.attributeURL];
+        [self finishOperation];
+        return;
+    }
+    
     CLLocation *location = [NSKeyedUnarchiver unarchiveObjectWithFile:self.attributeURL.path];
     if (location == nil) {
         MEGALogError(@"[Camera Upload] can not unarchive location %@", self);

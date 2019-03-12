@@ -11,6 +11,12 @@
 - (void)start {
     [super start];
     
+    if (self.node.hasPreview) {
+        [self cacheAttributeFile];
+        [self finishOperation];
+        return;
+    }
+    
     __weak __typeof__(self) weakSelf = self;
     [MEGASdkManager.sharedMEGASdk setPreviewNode:self.node sourceFilePath:self.attributeURL.path delegate:[[CameraUploadRequestDelegate alloc] initWithCompletion:^(MEGARequest * _Nonnull request, MEGAError * _Nonnull error) {
         if (error.type) {
