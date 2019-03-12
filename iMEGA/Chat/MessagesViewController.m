@@ -576,7 +576,7 @@ const NSUInteger kMaxMessagesToLoad = 256;
     MEGAChatConnection chatConnection = [[MEGASdkManager sharedMEGAChatSdk] chatConnectionState:self.chatRoom.chatId];
     [self updateNavigationBarButtonsState];
     
-    if (self.chatRoom.ownPrivilege >= MEGAChatRoomPrivilegeStandard && chatConnection == MEGAChatConnectionOnline && MEGAReachabilityManager.isReachable && [DevicePermissionsHelper isAudioPermissionAuthorizedOrNotDetermined]) {
+    if (self.chatRoom.ownPrivilege >= MEGAChatRoomPrivilegeStandard && chatConnection == MEGAChatConnectionOnline && MEGAReachabilityManager.isReachable) {
         if ([[MEGASdkManager sharedMEGAChatSdk] hasCallInChatRoom:self.chatRoom.chatId]) {
             MEGAChatCall *call = [[MEGASdkManager sharedMEGAChatSdk] chatCallForChatId:self.chatRoom.chatId];
             if (call.status == MEGAChatCallStatusInProgress) {
@@ -609,9 +609,7 @@ const NSUInteger kMaxMessagesToLoad = 256;
         return;
     }
     
-    BOOL isAudioPermissionAuthorizedOrNotDetermined = [DevicePermissionsHelper isAudioPermissionAuthorizedOrNotDetermined];
-    self.audioCallBarButtonItem.enabled = isAudioPermissionAuthorizedOrNotDetermined;
-    self.videoCallBarButtonItem.enabled = isAudioPermissionAuthorizedOrNotDetermined && [DevicePermissionsHelper isVideoPermissionAuthorizedOrNotDetermined];
+    self.audioCallBarButtonItem.enabled = self.videoCallBarButtonItem.enabled = YES;
 }
 
 - (void)createJoinActiveCallButton {
