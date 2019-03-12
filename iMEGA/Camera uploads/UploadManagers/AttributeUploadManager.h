@@ -12,9 +12,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (instancetype)shared;
 
-- (void)waitUntilAllThumbnailUploadsAreFinished;
-- (void)waitUntilAllAttributeUploadsAreFinished;
-
 - (void)scanLocalAttributeFilesAndRetryUploadIfNeeded;
 
 - (AssetLocalAttribute *)saveAttributesForUploadInfo:(AssetUploadInfo *)uploadInfo error:(NSError * _Nullable *)error;

@@ -15,8 +15,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)finishUploadForLocalIdentifier:(NSString *)localIdentifier status:(CameraAssetUploadStatus)status;
 
-- (void)waitUnitlAllUploadsAreFinished;
-
 @end
 
 NS_ASSUME_NONNULL_END
