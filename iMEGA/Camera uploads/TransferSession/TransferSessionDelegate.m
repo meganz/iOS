@@ -55,7 +55,7 @@
 }
 
 - (void)URLSessionDidFinishEventsForBackgroundURLSession:(NSURLSession *)session {
-    MEGALogInfo(@"[Camera Upload] Session %@ %@ did finish events for background URL Session", session.configuration.identifier, session);
+    MEGALogInfo(@"[Camera Upload] Session %@ %p did finish events for background URL Session", session.configuration.identifier, session);
     [self.manager finishEventsForBackgroundURLSession:session];
 }
 
@@ -81,7 +81,7 @@
 }
 
 - (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didFinishCollectingMetrics:(NSURLSessionTaskMetrics *)metrics {
-    MEGALogDebug(@"[Camera Upload] Session %@ %@ task %@ %@ didFinishCollectingMetrics %@", session.configuration.identifier, session, task.taskDescription, task, metrics);
+    MEGALogDebug(@"[Camera Upload] Session %@ %p task %@ %p didFinishCollectingMetrics %@", session.configuration.identifier, session, task.taskDescription, task, metrics);
 }
 
 #pragma mark - data level delegate

@@ -35,7 +35,7 @@ static const NSUInteger MEGATransferTokenLength = 36;
         statusCode = [(NSHTTPURLResponse *)task.response statusCode];
     }
     
-    MEGALogInfo(@"[Camera Upload] Session %@ %@ task %@ %@ completed with status %li", session.configuration.identifier, session, task.taskDescription, task, (long)statusCode);
+    MEGALogInfo(@"[Camera Upload] Session %@ %p task %@ %p completed with status %li", session.configuration.identifier, session, task.taskDescription, task, (long)statusCode);
 
     NSData *transferToken = [self.mutableData copy];
     
@@ -61,13 +61,13 @@ static const NSUInteger MEGATransferTokenLength = 36;
 }
 
 - (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didSendBodyData:(int64_t)bytesSent totalBytesSent:(int64_t)totalBytesSent totalBytesExpectedToSend:(int64_t)totalBytesExpectedToSend {
-    MEGALogDebug(@"[Camera Upload] Session %@ %@ task %@ %@ did send body data %lli, total bytes sent %lli, total bytes expected to send %lli", session.configuration.identifier, session, task.taskDescription, task, bytesSent, totalBytesSent, totalBytesExpectedToSend);
+    MEGALogDebug(@"[Camera Upload] Session %@ %p task %@ %p did send body data %lli, total bytes sent %lli, total bytes expected to send %lli", session.configuration.identifier, session, task.taskDescription, task, bytesSent, totalBytesSent, totalBytesExpectedToSend);
 }
 
 #pragma mark - data level delegate
 
 - (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask didReceiveData:(NSData *)data {
-    MEGALogDebug(@"[Camera Upload] Session %@ %@ task %@ %@ received data with size: %lu", session.configuration.identifier, session, dataTask.taskDescription, dataTask, (unsigned long)data.length);
+    MEGALogDebug(@"[Camera Upload] Session %@ %p task %@ %p received data with size: %lu", session.configuration.identifier, session, dataTask.taskDescription, dataTask, (unsigned long)data.length);
     [self.mutableData appendData:data];
 }
 
