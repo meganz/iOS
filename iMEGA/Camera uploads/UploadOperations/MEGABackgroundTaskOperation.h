@@ -3,9 +3,17 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+@class MEGABackgroundTaskOperation;
+
+@protocol MEGABackgroundTaskOperationDelegate <NSObject>
+
+- (void)backgroundTaskDidExpired;
+
+@end
+
 @interface MEGABackgroundTaskOperation : MEGAOperation
 
-- (void)beginBackgroundTaskWithExpirationHandler:(nullable void (^)(void))handler;
+@property (weak, nonatomic) id<MEGABackgroundTaskOperationDelegate> backgroundTaskdelegate;
 
 @end
 
