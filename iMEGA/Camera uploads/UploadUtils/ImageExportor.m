@@ -1,5 +1,8 @@
 
 #import "ImageExportor.h"
+#import "NSFileManager+MNZCategory.h"
+@import AVFoundation;
+@import CoreServices;
 
 @implementation ImageExportor
 
@@ -59,8 +62,8 @@
     
     if (destination) {
         NSDictionary *removeGPSDict = @{(__bridge NSString *)kCGImageMetadataShouldExcludeGPS : @(shouldStripGPSInfo)};
-        
-        if (shouldConvertImageType) {
+
+        if (shouldConvertImageType || [self isHEVCOutputForImageSource:source outputImageUTIType:UTIType]) {
             for (size_t index = 0; index < size; index++) {
                 CGImageDestinationAddImageFromSource(destination, source, index, (__bridge CFDictionaryRef)removeGPSDict);
             }
@@ -69,16 +72,14 @@
         } else {
             NSMutableDictionary *metadata = [removeGPSDict mutableCopy];
             CGImageMetadataRef sourceMetadata = CGImageSourceCopyMetadataAtIndex(source, 0, NULL);
-            [metadata addEntriesFromDictionary:@{(__bridge NSString *)kCGImageDestinationMetadata : (__bridge id)sourceMetadata,
+            [metadata addEntriesFromDictionary:@{(__bridge NSString *)kCGImageDestinationMetadata : (__bridge_transfer id)sourceMetadata,
                                                  (__bridge NSString *)kCGImageDestinationMergeMetadata : @(YES)}];
-            if (sourceMetadata) {
-                CFRelease(sourceMetadata);
-            }
             
             isExportedSuccessfully = CGImageDestinationCopyImageSource(destination, source, (__bridge CFDictionaryRef)[metadata copy], NULL);
             CFRelease(destination);
             
             if (!isExportedSuccessfully) {
+                [NSFileManager.defaultManager removeItemIfExistsAtURL:URL];
                 isExportedSuccessfully = [self exportImageSource:source toURL:URL alwaysEncodeToImageUTIType:(__bridge NSString *)sourceType imageProperty:removeGPSDict];
             }
         }
@@ -114,6 +115,20 @@
     CFStringRef sourceType = CGImageSourceGetType(source);
     CFStringRef newType = (__bridge CFStringRef)UTIType;
     return UTIType.length > 0 && CFStringCompare(sourceType, newType, kCFCompareCaseInsensitive) != kCFCompareEqualTo;
+}
+
+- (BOOL)isHEVCOutputForImageSource:(CGImageSourceRef)source outputImageUTIType:(NSString *)UTIType {
+    if (@available(iOS 11.0, *)) {
+        CFStringRef sourceType = CGImageSourceGetType(source);
+        CFStringRef newType = (__bridge CFStringRef)UTIType;
+        if (UTIType.length == 0) {
+            return UTTypeConformsTo(sourceType, (__bridge CFStringRef)AVFileTypeHEIC);
+        } else {
+            return UTTypeConformsTo(newType, (__bridge CFStringRef)AVFileTypeHEIC);
+        }
+    } else {
+        return NO;
+    }
 }
 
 #pragma mark - check GPS info
