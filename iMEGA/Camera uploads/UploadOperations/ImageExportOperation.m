@@ -38,16 +38,17 @@
 
 - (void)start {
     if (self.isCancelled) {
+        [self finishOperation];
         if (self.completion) {
             self.completion(NO);
         }
-        [self finishOperation];
         return;
     }
     
     [self startExecuting];
 
     BOOL succeeded = [self.imageExporter exportImageFile:self.imageURL toURL:self.outputURL outputImageUTIType:self.outputImageTypeUTI shouldStripGPSInfo:self.shouldStripGPSInfo];
+    [self finishOperation];
     if (self.completion) {
         if (self.isCancelled) {
             self.completion(NO);
@@ -55,8 +56,6 @@
             self.completion(succeeded);
         }
     }
-    
-    [self finishOperation];
 }
 
 @end

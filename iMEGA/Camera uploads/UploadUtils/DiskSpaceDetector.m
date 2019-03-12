@@ -109,7 +109,9 @@ static const NSTimeInterval RetryTimerTolerance = 6;
 
 - (void)firePhotoRetryTimer:(NSTimer *)timer {
     if (NSFileManager.defaultManager.deviceFreeSize > self.photoRetryDiskFreeSpace) {
-        [timer invalidate];
+        [NSOperationQueue.mainQueue addOperationWithBlock:^{
+            [timer invalidate];
+        }];
         self.diskIsFullForPhotos = NO;
     }
 }
@@ -125,7 +127,10 @@ static const NSTimeInterval RetryTimerTolerance = 6;
 
 - (void)fireVideoRetryTimer:(NSTimer *)timer {
     if (NSFileManager.defaultManager.deviceFreeSize > self.videoRetryDiskFreeSpace) {
-        [timer invalidate];
+        [NSOperationQueue.mainQueue addOperationWithBlock:^{
+            [timer invalidate];
+        }];
+        
         self.diskIsFullForVideos = NO;
     }
 }
