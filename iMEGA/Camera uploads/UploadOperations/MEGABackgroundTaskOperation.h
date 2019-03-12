@@ -7,7 +7,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @protocol MEGABackgroundTaskOperationDelegate <NSObject>
 
-- (void)backgroundTaskDidExpired;
+- (void)backgroundTaskDidExpire;
 
 @end
 
