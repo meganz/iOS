@@ -63,6 +63,8 @@ static NSString * const VideoAttributeImageName = @"AttributeImage";
 #pragma mark - start operation
 
 - (void)start {
+    [super start];
+    
     if (self.isCancelled) {
         [self finishOperationWithStatus:CameraAssetUploadStatusCancelled shouldUploadNextAsset:NO];
         return;

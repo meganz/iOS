@@ -5,6 +5,11 @@
 
 @synthesize executing, finished;
 
+/**
+ It's not recommended to call [super start] in MEGAOperation subclasses. According to different situations, each subclass may
+ need to do things differently in the start method. For example, a subclass may want to make sure it's completion handler is called
+ when to finish the operation.
+ */
 - (void)start {
     if (self.isFinished) {
         return;
