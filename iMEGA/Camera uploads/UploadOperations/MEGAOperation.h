@@ -9,7 +9,6 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @interface MEGAOperation : NSOperation
 
-
 /**
  Start executing tasks and update the `isExecuting` property
  */
