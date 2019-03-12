@@ -49,7 +49,6 @@
 
 - (void)waitUnitlAllUploadsAreFinished {
     [self.operationQueue waitUntilAllOperationsAreFinished];
-    [AttributeUploadManager.shared waitUntilAllThumbnailUploadsAreFinished];
 }
 
 #pragma mark - handle transfer completion data
