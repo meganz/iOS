@@ -63,7 +63,7 @@ static NSString * const VideoAttributeImageName = @"AttributeImage";
 
 #pragma mark - background task expired
 
-- (void)backgroundTaskDidExpired {
+- (void)backgroundTaskDidExpire {
     [self cancel];
     [NSNotificationCenter.defaultCenter postNotificationName:MEGACameraUploadTaskExpiredNotificationName object:nil];
 }
