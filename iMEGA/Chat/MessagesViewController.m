@@ -910,6 +910,9 @@ const NSUInteger kMaxMessagesToLoad = 256;
 }
 
 - (void)chatRoomTitleDidTap {
+    UIBarButtonItem *backBarButton = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil];
+    self.navigationItem.backBarButtonItem = backBarButton;
+    
     if (self.chatRoom.isGroup) {
         GroupChatDetailsViewController *groupChatDetailsVC = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"GroupChatDetailsViewControllerID"];
         groupChatDetailsVC.chatRoom = self.chatRoom;

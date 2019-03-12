@@ -28,8 +28,6 @@
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *backBarButtonItem;
-
 @property (weak, nonatomic) IBOutlet UIView *participantsHeaderView;
 @property (weak, nonatomic) IBOutlet UILabel *participantsHeaderViewLabel;
 
@@ -45,8 +43,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.backBarButtonItem.image = self.backBarButtonItem.image.imageFlippedForRightToLeftLayoutDirection;
-    self.navigationItem.leftBarButtonItem = self.backBarButtonItem;
     self.navigationItem.title = AMLocalizedString(@"info", @"A button label. The button allows the user to get more info of the current context");
     
     self.nameLabel.text = self.chatRoom.title;
@@ -215,10 +211,6 @@
 
 
 #pragma mark - IBActions
-
-- (IBAction)backAction:(UIBarButtonItem *)sender {
-    [self.navigationController popViewControllerAnimated:YES];
-}
 
 - (IBAction)notificationsSwitchValueChanged:(UISwitch *)sender {
     //TODO: Enable/disable notifications
