@@ -476,7 +476,7 @@ static const NSUInteger VideoUploadBatchCount = 1;
     
     for (NSOperation *operation in queue.operations) {
         if ([operation isKindOfClass:[CameraUploadOperation class]]) {
-            if ([[(CameraUploadOperation *)operation uploadInfo].savedLocalIdentifier isEqualToString:uploadOperation.uploadInfo.savedLocalIdentifier]) {
+            if (!operation.isFinished && [[(CameraUploadOperation *)operation uploadInfo].savedLocalIdentifier isEqualToString:uploadOperation.uploadInfo.savedLocalIdentifier]) {
                 hasPendingOperation = YES;
                 MEGALogError(@"[Camera Upload] has pending operation %@", operation);
                 break;
