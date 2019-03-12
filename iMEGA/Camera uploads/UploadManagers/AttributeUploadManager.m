@@ -11,10 +11,10 @@
 @import CoreLocation;
 
 static const NSInteger CoordinatesConcurrentUploadCount = 2;
-static const NSInteger ThumbnailConcurrentUploadCount = 40;
+static const NSInteger ThumbnailConcurrentUploadCount = 45;
 
 typedef NS_ENUM(NSInteger, PreviewConcurrentUploadCount) {
-    PreviewConcurrentUploadCountWhenThumbnailsAreDone = 2,
+    PreviewConcurrentUploadCountWhenThumbnailsAreDone = 3,
     PreviewConcurrentUploadCountWhenThumbnailsAreUploading = 1
 };
 
@@ -80,20 +80,8 @@ typedef NS_ENUM(NSInteger, PreviewConcurrentUploadCount) {
             self.previewUploadOperationQueue.maxConcurrentOperationCount = previewConcurrentCount;
         }
         
-        MEGALogDebug(@"[Camera Upload] thumbnail count %lu, preview count %lu, preview concurrent count %li, coordinates count %lu", (unsigned long)thumbnailsCount, (unsigned long)self.previewUploadOperationQueue.operationCount, previewConcurrentCount, (unsigned long)self.coordinatesUploadOperationQueue.operationCount);
+        MEGALogDebug(@"[Camera Upload] thumbnail count %lu, preview count %lu, preview concurrent count %li, coordinates count %lu", (unsigned long)thumbnailsCount, (unsigned long)self.previewUploadOperationQueue.operationCount, (long)previewConcurrentCount, (unsigned long)self.coordinatesUploadOperationQueue.operationCount);
     }
-}
-
-#pragma mark - wait until done
-
-- (void)waitUntilAllThumbnailUploadsAreFinished {
-    [self.thumbnailUploadOperationQueue waitUntilAllOperationsAreFinished];
-}
-
-- (void)waitUntilAllAttributeUploadsAreFinished {
-    [self waitUntilAllThumbnailUploadsAreFinished];
-    [self.previewUploadOperationQueue waitUntilAllOperationsAreFinished];
-    [self.coordinatesUploadOperationQueue waitUntilAllOperationsAreFinished];
 }
 
 #pragma mark - upload preview and thumbnail files

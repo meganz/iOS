@@ -24,8 +24,6 @@ typedef void (^RestoreSessionCompletionHandler)(NSArray<NSURLSessionUploadTask *
 
 - (NSURLSessionUploadTask *)videoUploadTaskWithURL:(NSURL *)requestURL fromFile:(NSURL *)fileURL completion:(nullable UploadCompletionHandler)completion;
 
-- (void)finishEventsForBackgroundURLSession:(NSURLSession *)session;
-
 @end
 
 NS_ASSUME_NONNULL_END

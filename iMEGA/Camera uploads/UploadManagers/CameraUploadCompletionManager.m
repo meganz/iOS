@@ -47,10 +47,6 @@
     return _cameraUploadNodeLoader;
 }
 
-- (void)waitUnitlAllUploadsAreFinished {
-    [self.operationQueue waitUntilAllOperationsAreFinished];
-}
-
 #pragma mark - handle transfer completion data
 
 - (void)handleEmptyTransferTokenInSessionTask:(NSURLSessionTask *)task {
