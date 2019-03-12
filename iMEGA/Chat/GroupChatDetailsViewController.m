@@ -24,7 +24,7 @@
 
 @property (weak, nonatomic) IBOutlet UIImageView *avatarImageView;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
-@property (weak, nonatomic) IBOutlet UILabel *emailLabel;
+@property (weak, nonatomic) IBOutlet UILabel *participantsLabel;
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
@@ -54,7 +54,9 @@
     CGSize avatarSize = self.avatarImageView.frame.size;
     UIImage *avatarImage = [UIImage imageForName:self.chatRoom.title.uppercaseString size:avatarSize backgroundColor:[UIColor mnz_gray999999] textColor:[UIColor whiteColor] font:[UIFont mnz_SFUIRegularWithSize:(avatarSize.width/2.0f)]];
     self.avatarImageView.image = avatarImage;
-    self.emailLabel.text = AMLocalizedString(@"groupChat", @"Label title for a group chat");
+    
+    NSInteger peers = self.chatRoom.peerCount + (self.chatRoom.isPreview ? 0 : 1);
+    self.participantsLabel.text = (peers == 1) ? [NSString stringWithFormat:AMLocalizedString(@"%d participant", @"Singular of participant. 1 participant").capitalizedString, 1] : [NSString stringWithFormat:AMLocalizedString(@"%d participants", @"Singular of participant. 1 participant").capitalizedString, peers];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
