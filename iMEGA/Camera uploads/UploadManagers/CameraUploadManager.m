@@ -125,8 +125,7 @@ static const NSUInteger VideoUploadBatchCount = 1;
 }
 
 - (void)resetCameraUploadQueues {
-    [self.photoUploadOperationQueue cancelAllOperations];
-    [self.videoUploadOperationQueue cancelAllOperations];
+    [self cancelAllPendingOperations];
     self.photoUploadOperationQueue = nil;
     self.videoUploadOperationQueue = nil;
 }
@@ -137,6 +136,11 @@ static const NSUInteger VideoUploadBatchCount = 1;
             [operation cancel];
         }
     }
+}
+
+- (void)cancelAllPendingOperations {
+    [self.photoUploadOperationQueue cancelAllOperations];
+    [self.videoUploadOperationQueue cancelAllOperations];
 }
 
 #pragma mark - register and unregister notifications
@@ -151,6 +155,7 @@ static const NSUInteger VideoUploadBatchCount = 1;
     [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(didReceiveStorageOverQuotaNotification:) name:MEGAStorageOverQuotaNotificationName object:nil];
     [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(didReceiveStorageEventChangedNotification:) name:MEGAStorageEventDidChangeNotificationName object:nil];
     [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(didReceiveUploadingTaskCountChangedNotification:) name:MEGACameraUploadUploadingTasksCountChangedNotificationName object:nil];
+    [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(didReceiveBackgroundTaskExpiredNotification:) name:MEGACameraUploadTaskExpiredNotificationName object:nil];
 }
 
 - (void)unregisterNotificationsForUpload {
@@ -163,6 +168,7 @@ static const NSUInteger VideoUploadBatchCount = 1;
     [NSNotificationCenter.defaultCenter removeObserver:self name:MEGAStorageOverQuotaNotificationName object:nil];
     [NSNotificationCenter.defaultCenter removeObserver:self name:MEGAStorageEventDidChangeNotificationName object:nil];
     [NSNotificationCenter.defaultCenter removeObserver:self name:MEGACameraUploadUploadingTasksCountChangedNotificationName object:nil];
+    [NSNotificationCenter.defaultCenter removeObserver:self name:MEGACameraUploadTaskExpiredNotificationName object:nil];
 }
 
 #pragma mark - properties
@@ -747,6 +753,11 @@ static const NSUInteger VideoUploadBatchCount = 1;
         MEGALogDebug(@"[Camera Upload] unsuspend upload queues with current uplaoding tasks count %lu", (unsigned long)currentUploadingCount);
         [self unsuspendCameraUploadQueues];
     }
+}
+
+- (void)didReceiveBackgroundTaskExpiredNotification:(NSNotification *)notification {
+    MEGALogDebug(@"[Camera Upload] did receive background task expired notification");
+    [self cancelAllPendingOperations];
 }
 
 - (void)didReceiveLogoutNotification:(NSNotification *)notification {

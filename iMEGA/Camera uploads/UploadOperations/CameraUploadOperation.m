@@ -78,6 +78,7 @@ static NSString * const VideoAttributeImageName = @"AttributeImage";
 
     [self beginBackgroundTaskWithExpirationHandler:^{
         [self cancel];
+        [NSNotificationCenter.defaultCenter postNotificationName:MEGACameraUploadTaskExpiredNotificationName object:nil];
     }];
     
     MEGALogDebug(@"[Camera Upload] %@ starts processing", self);
