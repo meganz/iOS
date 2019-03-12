@@ -21,11 +21,9 @@
 - (void)start {
     [super start];
     
-    [self beginBackgroundTaskWithExpirationHandler:^{
-        [self finishOperation];
+    [NSOperationQueue.mainQueue addOperationWithBlock:^{
+        self.expireTimer = [NSTimer scheduledTimerWithTimeInterval:self.expireTimeInterval target:self selector:@selector(timerExpired) userInfo:nil repeats:NO];
     }];
-    
-    self.expireTimer = [NSTimer scheduledTimerWithTimeInterval:self.expireTimeInterval target:self selector:@selector(timerExpired) userInfo:nil repeats:NO];
 }
 
 - (void)timerExpired {
@@ -36,7 +34,9 @@
 - (void)finishOperation {
     [super finishOperation];
     if (self.expireTimer.isValid) {
-        [self.expireTimer invalidate];
+        [NSOperationQueue.mainQueue addOperationWithBlock:^{
+            [self.expireTimer invalidate];
+        }];
     }
 }
 
