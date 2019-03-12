@@ -984,10 +984,8 @@ static MEGAIndexer *indexer;
             allNodesExistInOffline = YES;
         }
         
-        if ([[NSUserDefaults standardUserDefaults] boolForKey:@"IsChatEnabled"]) {
-            SendToChatActivity *sendToChatActivity = [[SendToChatActivity alloc] initWithNodes:nodesArray];
-            [activitiesMutableArray addObject:sendToChatActivity];
-        }
+        SendToChatActivity *sendToChatActivity = [[SendToChatActivity alloc] initWithNodes:nodesArray];
+        [activitiesMutableArray addObject:sendToChatActivity];
     }
     
     if (allNodesExistInOffline) {
@@ -1388,7 +1386,6 @@ static MEGAIndexer *indexer;
     [sharedUserDefaults removeObjectForKey:@"extensions-passcode"];
     [sharedUserDefaults removeObjectForKey:@"treeCompleted"];
     [sharedUserDefaults removeObjectForKey:@"useHttpsOnly"];
-    [sharedUserDefaults removeObjectForKey:@"IsChatEnabled"];
     [sharedUserDefaults synchronize];
 }
 

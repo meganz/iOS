@@ -364,20 +364,16 @@
             if (self.user.visibility == MEGAUserVisibilityVisible) {
                 switch (indexPath.row) {
                     case 0: { //Send Message
-                        if ([[NSUserDefaults standardUserDefaults] boolForKey:@"IsChatEnabled"]) {
-                            MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomByUser:self.userHandle];
-                            if (chatRoom) {
-                                [self openChatRoomWithChatId:chatRoom.chatId];
-                            } else {
-                                MEGAChatPeerList *peerList = [[MEGAChatPeerList alloc] init];
-                                [peerList addPeerWithHandle:self.userHandle privilege:MEGAChatRoomPrivilegeStandard];
-                                MEGAChatCreateChatGroupRequestDelegate *createChatGroupRequestDelegate = [[MEGAChatCreateChatGroupRequestDelegate alloc] initWithCompletion:^(MEGAChatRoom *chatRoom) {
-                                    [self openChatRoomWithChatId:chatRoom.chatId];
-                                }];
-                                [[MEGASdkManager sharedMEGAChatSdk] createChatGroup:NO peers:peerList delegate:createChatGroupRequestDelegate];
-                            }
+                        MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomByUser:self.userHandle];
+                        if (chatRoom) {
+                            [self openChatRoomWithChatId:chatRoom.chatId];
                         } else {
-                            [SVProgressHUD showImage:[UIImage imageNamed:@"hudWarning"] status:AMLocalizedString(@"chatIsDisabled", @"Title show when the chat is disabled")];
+                            MEGAChatPeerList *peerList = [[MEGAChatPeerList alloc] init];
+                            [peerList addPeerWithHandle:self.userHandle privilege:MEGAChatRoomPrivilegeStandard];
+                            MEGAChatCreateChatGroupRequestDelegate *createChatGroupRequestDelegate = [[MEGAChatCreateChatGroupRequestDelegate alloc] initWithCompletion:^(MEGAChatRoom *chatRoom) {
+                                [self openChatRoomWithChatId:chatRoom.chatId];
+                            }];
+                            [[MEGASdkManager sharedMEGAChatSdk] createChatGroup:NO peers:peerList delegate:createChatGroupRequestDelegate];
                         }
                         break;
                     }
