@@ -87,6 +87,7 @@
             CFRelease(destination);
 
             if (!isExportedSuccessfully) {
+                MEGALogError(@"[Camera Upload] failed to copy image source %@ %@", sourceType, URL);
                 [NSFileManager.defaultManager removeItemIfExistsAtURL:URL];
                 isExportedSuccessfully = [self exportImageSource:source toURL:URL alwaysEncodeToImageUTIType:(__bridge NSString *)sourceType imageProperty:removeGPSDict];
             }
@@ -174,8 +175,8 @@
                 continue;
             }
             
-            id GPSValue = sourcePropertyDict[(__bridge NSString *)kCGImagePropertyGPSDictionary];
-            if (!(GPSValue == nil || [GPSValue isEqual:[NSNull null]])) {
+            NSDictionary *GPSDictionary = sourcePropertyDict[(__bridge NSString *)kCGImagePropertyGPSDictionary];
+            if (!([GPSDictionary isEqual:NSNull.null] || GPSDictionary.count == 0)) {
                 hasGPS = YES;
                 break;
             }
