@@ -49,7 +49,7 @@ static NSString * const LivePhotoVideoResourceExportName = @"livePhotoVideoResou
     }
 }
 
-#pragma mark - AssetResourceUploadOperationDelegate
+#pragma mark - asset resource export delegate
 
 - (void)assetResource:(PHAssetResource *)resource didExportToURL:(NSURL *)URL {
     [super assetResource:resource didExportToURL:URL];

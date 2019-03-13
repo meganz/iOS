@@ -3,7 +3,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@protocol AssetResourceUploadOperationDelegate <NSObject>
+@protocol AssetResourcExportDelegate <NSObject>
 
 - (void)assetResource:(PHAssetResource *)resource didExportToURL:(NSURL *)URL;
 
@@ -13,7 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
-@interface AssetResourceUploadOperation : CameraUploadOperation <AssetResourceUploadOperationDelegate>
+@interface AssetResourceUploadOperation : CameraUploadOperation <AssetResourcExportDelegate>
 
 - (void)exportAssetResource:(PHAssetResource *)resource toURL:(NSURL *)URL;
 

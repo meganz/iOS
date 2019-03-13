@@ -70,7 +70,11 @@ static NSString * const CameraUploadBurstPhotoExtension = @"burst";
 #pragma mark - icloud download error handing
 
 - (void)handleCloudDownloadError:(NSError *)error {
-    if (!MEGAReachabilityManager.isReachable) {
+    if ([error.domain isEqualToString:AVFoundationErrorDomain] && error.code == AVErrorDiskFull) {
+        [self finishUploadWithNoEnoughDiskSpace];
+    } else if ([error.domain isEqualToString:NSCocoaErrorDomain] && error.code == NSFileWriteOutOfSpaceError) {
+        [self finishUploadWithNoEnoughDiskSpace];
+    } else if (!MEGAReachabilityManager.isReachable) {
         [self finishOperationWithStatus:CameraAssetUploadStatusNotReady shouldUploadNextAsset:YES];
     } else if (NSFileManager.defaultManager.deviceFreeSize < MEGACameraUploadLowDiskStorageSizeInBytes) {
         [self finishUploadWithNoEnoughDiskSpace];
