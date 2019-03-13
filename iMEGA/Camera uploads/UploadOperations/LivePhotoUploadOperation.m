@@ -32,34 +32,13 @@ static NSString * const LivePhotoVideoResourceTemporaryName = @"video.mov";
         return;
     }
     
-    PHAssetResource *videoResource = [self findVideoResource];
+    PHAssetResource *videoResource = [self.uploadInfo.asset searchAssetResourceByTypes:@[@(PHAssetResourceTypeFullSizePairedVideo), @(PHAssetResourceTypePairedVideo), @(PHAssetResourceTypeAdjustmentBasePairedVideo)]];
     if (videoResource) {
         [self writeDataForResource:videoResource];
     } else {
         MEGALogError(@"[Camera Upload] %@ can not find the video resource in live photo", self);
         [self finishOperationWithStatus:CameraAssetUploadStatusFailed shouldUploadNextAsset:YES];
     }
-}
-
-- (nullable PHAssetResource *)findVideoResource {
-    PHAssetResource *videoResource = nil;
-    for (PHAssetResource *resource in [PHAssetResource assetResourcesForAsset:self.uploadInfo.asset]) {
-        if (resource.type == PHAssetResourceTypePairedVideo) {
-            videoResource = resource;
-            break;
-        }
-    }
-    
-    if (videoResource == nil) {
-        for (PHAssetResource *resource in [PHAssetResource assetResourcesForAsset:self.uploadInfo.asset]) {
-            if (UTTypeConformsTo((__bridge CFStringRef)resource.uniformTypeIdentifier, kUTTypeMovie)) {
-                videoResource = resource;
-                break;
-            }
-        }
-    }
-    
-    return videoResource;
 }
 
 #pragma mark - write video resource to file
