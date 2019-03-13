@@ -128,6 +128,7 @@
                 break;
             }
         }
+        [MEGASdkManager.sharedMEGAChatSdk enableGroupChatCalls:YES];
     } else {
         self.invalidStatus = YES;
         [[MEGASdkManager sharedMEGAChatSdk] logoutWithDelegate:self];

@@ -70,22 +70,6 @@
 "pleaseLogInToYourAccount"="당신의 계정에 로그인하세요.";
 /* Error message when a user attempts to change their email without an active login session. */
 "needToBeLoggedInToCompleteYourEmailChange"="이메일 변경을 완료하려면 로그인하여야 합니다. 현재 이메일 주소로 다시 로그인한 후, 확인 링크를 다시 클릭하세요.";
-/* Title shown on the app's start animation to explain what MEGA offers you (1/4) */
-"megaSpace"="MEGA 저장공간";
-/* Title shown on the app's start animation to explain what MEGA offers you (2/4) */
-"megaSpeed"="MEGA 속도";
-/* Title shown on the app's start animation to explain what MEGA offers you (3/4) */
-"megaPrivacy"="MEGA 개인정보 보호";
-/* Title shown on the app's start animation to explain what MEGA offers you (4/4) */
-"megaAccess"="MEGA 접속";
-/* Message shown on the app's start animation to explain what MEGA SPACE means */
-"megaSpaceText"="지금 가입하고 50GB의 무료 공간을 받으세요";
-/* Message shown on the app's start animation to explain what MEGA SPEED means */
-"megaSpeedText"="업로드는 빠릅니다.모두에게 빠르게 파일을 공유하세요";
-/* Message shown on the app's start animation to explain what MEGA PRIVACY means */
-"megaPrivacyText"="MEGA의 종단간 암호화로 당신의 모든 파일을 안전하게 보관하세요.";
-/* Message shown on the app's start animation to explain what MEGA ACCESS means */
-"megaAccessText"="언제, 어디서나 완벽하게 암호화된 접근을 하세요";
 /* Button title which triggers the action to login in your MEGA account */
 "login"="로그인";
 /* Button title which triggers the action to create a MEGA account */
@@ -635,7 +619,7 @@
 /* Permissions given to the user you share your folder with */
 "readOnly"="읽기 전용";
 /* Permissions given to the user you share your folder with */
-"readAndWrite"="읽기 & 쓰기";
+"readAndWrite"="읽기와 쓰기";
 /* Permissions given to the user you share your folder with */
 "fullAccess"="완전 접근";
 /* Title of the Settings section */
@@ -1684,6 +1668,8 @@
 "Poor conection."="연결 상태 나쁨.";
 /* Message shown in a chat room when there is an active group call */
 "There is an active group call. Tap to join."="활성화된 그룹 통화가 있습니다. 참여하려면 탭하세요.";
+/* Message shown in a chat room when there is an active call */
+"There is an active call. Tap to join."="활성중인 통화가 있습니다. 참여하려면 탭하세요.";
 /* Message shown in a chat room for a group call in progress displaying the duration of the call */
 "Touch to return to call %@"="%@ 통화로 돌아가려면 터치하세요";
 /* A button label which allows the users save images/videos in the Photos app. */
@@ -1694,6 +1680,34 @@
 "Saved to Photos"="사진에 저장함";
 /* Text shown when an error occurs when trying to save a photo or video to Photos app */
 "Could not save Item"="항목을 저장할 수 없음";
+/* Label in a cell where you can enable the 'Encrypted Key Rotation' */
+"Encrypted Key Rotation"="암호화된 키 순환";
+/* Title shown in a cell to allow the users enable the 'Encrypted Key Rotation' */
+"Enable Encrypted Key Rotation"="암호화된 키 순환 활성화";
+/* Label in a cell where you can get the chat link */
+"Get Chat Link"="대화 링크 얻기";
+/* Footer text to explain what means 'Encrypted Key Rotation' */
+"Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages."="키 순환은 약간 더 안전합니다만, 대화 링크를 생성할 수 없고 새로운 참여자는 과거 메시지를 볼 수 없습니다.";
+/* Alert message to advice the users that to generate a chat link they need enter a group name for the chat */
+"Before you can generate a link for this room, you need to enter a group name"="이 방에 대한 링크를 생성하기 전, 그룹 이름을 입력해야 합니다.";
+/* Label shown in a cell where you can enable a switch to get a chat link */
+"Chat Link"="대화 링크";
+/* Message shown when there is an active chat link that can be deleted */
+"Delete Chat Link"="대화 링크 삭제";
+/* Button text in public chat previews that allows the user to join the chat */
+"Join"="참여";
+/* Text shown in a notification to let the user know that has joined a public chat room after login or account creation */
+"You have joined %@"="You have joined %@";
+/* Users previewing a public chat */
+"Observers"="Observers";
+/* Alert message shown while deleting a chat link, warning about the consequences */
+"This conversation will no longer be accessible through the link you are about to delete."="This conversation will no longer be accessible through the link you are about to delete.";
+/* Management message shown in a chat when the user %@ enables the 'Encrypted Key Rotation' */
+"%@ enabled Encrypted Key Rotation"="%@ enabled Encrypted Key Rotation";
+/* Management message shown in a chat when the user %@ creates a public link for the chat */
+"%@ created a public link for the chat."="%@ created a public link for the chat.";
+/* Management message shown in a chat when the user %@ removes a public link for the chat */
+"%@ removed a public link for the chat."="%@ removed a public link for the chat.";
 /* Message show when a call cannot be established because there are too many participants in the group call */
 "Error. No more participants are allowed in this group call."="이 통화가 최대 참가자 수에 도달했기 때문에 참여할 수 없습니다.";
 /* Message show when a user cannot activate the video in a group call because the max number of videos has been reached */
@@ -1785,9 +1799,9 @@
 /* The professional pricing plan which the user is currently on will expire in 5 days. The %1 is a placeholder for the number of days and should not be removed. */
 "Your PRO membership plan will expire in %1 days."="PRO 회원권이 %1일 이내에 만료됩니다.";
 /* The professional pricing plan which the user was on expired one day ago. */
-"Your PRO membership plan expired 1 day ago"="당신의 PRO 회원권이 1일 전에 만료되었습니다";
+"Your PRO membership plan expired 1 day ago"="당신의 PRO 요금제가 1일 전에 만료되었습니다";
 /* The professional pricing plan which the user was on expired %1 days ago. The %1 is a placeholder for the number of days and should not be removed. */
-"Your PRO membership plan expired %1 days ago"="당신의 PRO 회원권이 %1일 전에 만료되었습니다.";
+"Your PRO membership plan expired %1 days ago"="당신의 PRO 요금제가 %1일 전에 만료되었습니다";
 /* The text of a notification indicating that a file or folder has been taken down due to infringement or other reason. The %1 placeholder will be replaced with the text ‘file’ or ‘folder’. The %2 will be replaced with the name of the file or folder. */
 "Your publicly shared %1 (%2) has been taken down."="공개적으로 공유된 %1 (%2)가 게시 중단되었습니다.";
 /* The text of a notification indicating that a file or folder that was taken down has now been restored due to a successful counter-notice. The %1 placeholder will be replaced with the text ‘file’ or ‘folder’. The %2 will be replaced with the name of the file or folder. */
@@ -1801,7 +1815,7 @@
 /* Label shown next to a feature name that can be enabled or disabled, like in 'Show Last seen...' */
 "Show"="보기";
 /* Shown when viewing a 1on1 chat (at least for now), if the user is offline. */
-"Last seen %s"="최근 접속 시간 %s";
+"Last seen %s"="최근 접속 시간: %s";
 /* Text to inform the user the 'Last seen' time of a contact is a long time ago (>= 65535 minutes) */
 "Last seen a long time ago"="아주 오래 전에 마지막 접속함";
 /* */
@@ -1812,3 +1826,7 @@
 "%d participants"="참가자 %d명";
 /* Singular of participant. 1 participant */
 "%d participant"="참가자 %d명";
+/* Text to inform the user there is an active call and is not participating */
+"Ongoing Call"="진행중인 통화";
+/* Text to inform the user there is an active call and is participating */
+"Call Started"="통화 시작";

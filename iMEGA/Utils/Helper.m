@@ -46,7 +46,6 @@ static MEGAIndexer *indexer;
                                  @"en",
                                  @"es",
                                  @"fr",
-                                 @"he",
                                  @"id",
                                  @"it",
                                  @"ja",
@@ -738,6 +737,13 @@ static MEGAIndexer *indexer;
         [[MEGASdkManager sharedMEGASdk] fastLoginWithSession:[SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"]];
         [[MEGASdkManager sharedMEGAChatSdk] refreshUrls];
     }
+}
+
++ (void)cannotPlayContentDuringACallAlert {
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:AMLocalizedString(@"It is not possible to play content while there is a call in progress", @"Message shown when there is an ongoing call and the user tries to play an audio or video") preferredStyle:UIAlertControllerStyleAlert];
+    [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
+    
+    [UIApplication.mnz_presentingViewController presentViewController:alertController animated:YES completion:nil];
 }
 
 #pragma mark - Utils for nodes

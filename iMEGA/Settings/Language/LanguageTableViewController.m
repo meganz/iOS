@@ -30,7 +30,6 @@
                                  @"en":@"English",
                                  @"es":@"Español",
                                  @"fr":@"Français",
-                                 @"he":@"עברית",
                                  @"id":@"Bahasa Indonesia",
                                  @"it":@"Italiano",
                                  @"ja":@"日本語",

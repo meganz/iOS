@@ -70,22 +70,6 @@
 "pleaseLogInToYourAccount"="Please log in to your account.";
 /* Error message when a user attempts to change their email without an active login session. */
 "needToBeLoggedInToCompleteYourEmailChange"="You need to be logged in to complete your email change. Please log in again with your current email address and then click on your confirmation link again.";
-/* Title shown on the app's start animation to explain what MEGA offers you (1/4) */
-"megaSpace"="MEGA SPACE";
-/* Title shown on the app's start animation to explain what MEGA offers you (2/4) */
-"megaSpeed"="MEGA SPEED";
-/* Title shown on the app's start animation to explain what MEGA offers you (3/4) */
-"megaPrivacy"="MEGA PRIVACY";
-/* Title shown on the app's start animation to explain what MEGA offers you (4/4) */
-"megaAccess"="MEGA ACCESS";
-/* Message shown on the app's start animation to explain what MEGA SPACE means */
-"megaSpaceText"="Register now and get 50 GB of free space.";
-/* Message shown on the app's start animation to explain what MEGA SPEED means */
-"megaSpeedText"="Uploads are fast. Quickly share files with everyone.";
-/* Message shown on the app's start animation to explain what MEGA PRIVACY means */
-"megaPrivacyText"="Keep all your files safe with MEGA’s end-to-end encryption.";
-/* Message shown on the app's start animation to explain what MEGA ACCESS means */
-"megaAccessText"="Get fully encrypted access anywhere, anytime.";
 /* Button title which triggers the action to login in your MEGA account */
 "login"="Login";
 /* Button title which triggers the action to create a MEGA account */
@@ -115,7 +99,7 @@
 /*  */
 "weak"="Weak";
 /*  */
-"passwordVeryWeakOrWeak"="Your password is easily guessed. Try making your password longer. Combine uppercase & lowercase letters. Add special characters. Do not use names or dictionary words.";
+"passwordVeryWeakOrWeak"="Your password is easily guessed. Try making your password longer. Combine uppercase and lowercase letters. Add special characters. Do not use names or dictionary words.";
 /* Label displayed during checking the strength of the password introduced. Represents Medium security */
 "medium"="Medium";
 /*  */
@@ -635,7 +619,7 @@
 /* Permissions given to the user you share your folder with */
 "readOnly"="Read-only";
 /* Permissions given to the user you share your folder with */
-"readAndWrite"="Read & Write";
+"readAndWrite"="Read and Write";
 /* Permissions given to the user you share your folder with */
 "fullAccess"="Full access";
 /* Title of the Settings section */
@@ -689,7 +673,7 @@
 /* Title for the MEGA Recovery Key */
 "masterKey"="Recovery Key";
 /* Section title where you can change your MEGA's password */
-"changePasswordLabel"="Change Password";
+"changePasswordLabel"="Change password";
 /* Advising the user to keep the user's master key safe. */
 "exportMasterKeyFooter"="Exporting the Recovery Key and keeping it in a secure location enables you to set a new password without data loss.";
 /* Question button to present a view where it's explained what is the Recovery Key */
@@ -715,7 +699,7 @@
 /* Button text on the Rubbish Bin page. This button will empty all files and folders currently stored in the rubbish bin. */
 "emptyRubbishBin"="Clear Rubbish Bin";
 /* Alert title shown when you tap 'Empty Rubbish Bin' */
-"emptyRubbishBinAlertTitle"="All the items in the rubbish bin will be deleted";
+"emptyRubbishBinAlertTitle"="All the items in the Rubbish Bin will be deleted";
 /* Text next to a switch that allows disabling the HTTP protocol for transfers */
 "dontUseHttp"="Don’t use HTTP";
 /* Footer text that explains when disabling the HTTP protocol for transfers may be useful */
@@ -1383,7 +1367,7 @@
 /* Notification text body shown when you have missed several audio calls and one video call. [A] = {number of missed audio calls} */
 "missedAudioCallsAndMissedVideoCall"="[A] missed audio calls and missed video call";
 /* Notification text body shown when you have missed several audio calls and video calls. [A] = {number of missed audio calls}. [B] = {number of missed video calls} */
-"missedAudioCallsAndMissedVideoCalls"="[A] missed audio calls  and [B] missed video calls";
+"missedAudioCallsAndMissedVideoCalls"="[A] missed audio calls and [B] missed video calls";
 /* Button title to see the available bonus */
 "getBonus"="Get Bonus";
 /* Text shown under the title 'Video quality' that explains what it means */
@@ -1669,9 +1653,9 @@
 /* Label for any ‘Days’ button, link, text, title, etc. - (String as short as possible). */
 "Days"="Days";
 /* New server-side rubbish-bin cleaning scheduler description (for Free users) */
-"The Rubbish Bin is cleaned for you automatically. The minimum period is 7 days and your maximum period is 30 days."="The Rubbish Bin is cleaned for you automatically. The minimum period is 7 days and your maximum period is 30 days.";
+"The Rubbish Bin is cleaned for you automatically. The minimum period is 7 days and your maximum period is 30 days."="The Rubbish Bin is cleared for you automatically. The minimum period is 7 days and the maximum period is 30 days.";
 /* New server-side rubbish-bin cleaning scheduler description (for PRO users) */
-"The Rubbish Bin can be cleaned for you automatically. The minimum period is 7 days."="The Rubbish Bin can be cleaned for you automatically. The minimum period is 7 days.";
+"The Rubbish Bin can be cleaned for you automatically. The minimum period is 7 days."="The Rubbish Bin can be cleared for you automatically. The minimum period is 7 days.";
 /* Description shown when you try to disable the feature Rubbish-Bin Cleaning Scheduler and you are a free user */
 "To disable the Rubbish-Bin Cleaning Scheduler or set a longer retention period, you need to subscribe to a PRO plan."="To disable the Rubbish Bin Clearing Scheduler or set a longer retention period, you need to subscribe to a PRO plan.";
 /* Confirmation dialog for the button that logs the user out of all sessions except the current one. */
@@ -1684,6 +1668,8 @@
 "Poor conection."="Poor connection.";
 /* Message shown in a chat room when there is an active group call */
 "There is an active group call. Tap to join."="There is an active group call. Tap to join.";
+/* Message shown in a chat room when there is an active call */
+"There is an active call. Tap to join."="There is an active call. Tap to join.";
 /* Message shown in a chat room for a group call in progress displaying the duration of the call */
 "Touch to return to call %@"="Touch to return to call %@";
 /* A button label which allows the users save images/videos in the Photos app. */
@@ -1694,6 +1680,34 @@
 "Saved to Photos"="Saved to Photos";
 /* Text shown when an error occurs when trying to save a photo or video to Photos app */
 "Could not save Item"="Could not save Item";
+/* Label in a cell where you can enable the 'Encrypted Key Rotation' */
+"Encrypted Key Rotation"="Encrypted Key Rotation";
+/* Title shown in a cell to allow the users enable the 'Encrypted Key Rotation' */
+"Enable Encrypted Key Rotation"="Enable Encrypted Key Rotation";
+/* Label in a cell where you can get the chat link */
+"Get Chat Link"="Get Chat Link";
+/* Footer text to explain what means 'Encrypted Key Rotation' */
+"Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages."="Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages.";
+/* Alert message to advice the users that to generate a chat link they need enter a group name for the chat */
+"Before you can generate a link for this room, you need to enter a group name"="Before you can generate a link for this chat, you need to enter a group name.";
+/* Label shown in a cell where you can enable a switch to get a chat link */
+"Chat Link"="Chat Link";
+/* Message shown when there is an active chat link that can be deleted */
+"Delete Chat Link"="Delete Chat Link";
+/* Button text in public chat previews that allows the user to join the chat */
+"Join"="Join";
+/* Text shown in a notification to let the user know that has joined a public chat room after login or account creation */
+"You have joined %@"="You have joined %@";
+/* Users previewing a public chat */
+"Observers"="Observers";
+/* Alert message shown while deleting a chat link, warning about the consequences */
+"This conversation will no longer be accessible through the link you are about to delete."="This conversation will no longer be accessible through the link you are about to delete.";
+/* Management message shown in a chat when the user %@ enables the 'Encrypted Key Rotation' */
+"%@ enabled Encrypted Key Rotation"="%@ enabled Encrypted Key Rotation";
+/* Management message shown in a chat when the user %@ creates a public link for the chat */
+"%@ created a public link for the chat."="%@ created a public link for the chat.";
+/* Management message shown in a chat when the user %@ removes a public link for the chat */
+"%@ removed a public link for the chat."="%@ removed a public link for the chat.";
 /* Message show when a call cannot be established because there are too many participants in the group call */
 "Error. No more participants are allowed in this group call."="You are not allowed to join this call as it has reached the maximum number of participants.";
 /* Message show when a user cannot activate the video in a group call because the max number of videos has been reached */
@@ -1801,7 +1815,7 @@
 /* Label shown next to a feature name that can be enabled or disabled, like in 'Show Last seen...' */
 "Show"="Show";
 /* Shown when viewing a 1on1 chat (at least for now), if the user is offline. */
-"Last seen %s"="Last seen %s";
+"Last seen %s"="Last seen: %s";
 /* Text to inform the user the 'Last seen' time of a contact is a long time ago (>= 65535 minutes) */
 "Last seen a long time ago"="Last seen a long time ago";
 /* */
@@ -1812,3 +1826,7 @@
 "%d participants"="%d participants";
 /* Singular of participant. 1 participant */
 "%d participant"="%d participant";
+/* Text to inform the user there is an active call and is not participating */
+"Ongoing Call"="Ongoing Call";
+/* Text to inform the user there is an active call and is participating */
+"Call Started"="Call Started";
