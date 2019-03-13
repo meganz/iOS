@@ -6,15 +6,15 @@
 #import "MEGAConstants.h"
 #import "NSFileManager+MNZCategory.h"
 #import "CameraUploadOperation+Utils.h"
+#import "PHAssetResource+CameraUpload.h"
 @import Photos;
+@import CoreServices;
 
 static NSString * const LivePhotoVideoResourceTemporaryName = @"video.mov";
 
 @interface LivePhotoUploadOperation ()
 
 @property (strong, nonatomic) AVAssetExportSession *exportSession;
-@property (nonatomic) PHImageRequestID livePhotoRequestId;
-@property (nonatomic) PHContentEditingInputRequestID livePhotoEditingInputRequestId;
 
 @end
 
@@ -27,134 +27,50 @@ static NSString * const LivePhotoVideoResourceTemporaryName = @"video.mov";
 }
 
 - (void)requestLivePhoto {
-    if (@available(iOS 10.0, *)) {
-        [self requestLivePhotoOniOS10AndAbove];
-    } else {
-        [self requestLivePhotoOniOS9];
-    }
-}
-
-- (void)requestLivePhotoOniOS9 {
-    __weak __typeof__(self) weakSelf = self;
-    PHLivePhotoRequestOptions *options = [[PHLivePhotoRequestOptions alloc] init];
-    options.networkAccessAllowed = YES;
-    options.version = PHImageRequestOptionsVersionOriginal;
-    options.deliveryMode = PHImageRequestOptionsDeliveryModeHighQualityFormat;
-    options.progressHandler = ^(double progress, NSError * _Nullable error, BOOL * _Nonnull stop, NSDictionary * _Nullable info) {
-        if (weakSelf.isCancelled) {
-            *stop = YES;
-            [weakSelf finishOperationWithStatus:CameraAssetUploadStatusCancelled shouldUploadNextAsset:NO];
-        }
-        
-        if (error != nil) {
-            MEGALogError(@"[Camera Upload] %@ error when to download images from iCloud: %@", weakSelf, error);
-            [weakSelf handleCloudDownloadError:error];
-        }
-    };
-    
-    self.livePhotoRequestId = [PHImageManager.defaultManager requestLivePhotoForAsset:self.uploadInfo.asset targetSize:PHImageManagerMaximumSize contentMode:PHImageContentModeDefault options:options resultHandler:^(PHLivePhoto * _Nullable livePhoto, NSDictionary * _Nullable info) {
-        if (weakSelf.isFinished) {
-            return;
-        }
-        
-        NSError *error = info[PHImageErrorKey];
-        if (error) {
-            MEGALogError(@"[Camera Upload] %@ error when to request live photo %@", weakSelf, error);
-            [weakSelf finishOperationWithStatus:CameraAssetUploadStatusFailed shouldUploadNextAsset:YES];
-            return;
-        }
-        
-        if ([info[PHImageCancelledKey] boolValue]) {
-            MEGALogDebug(@"[Camera Upload] %@ live photo request is cancelled", weakSelf);
-            [weakSelf finishOperationWithStatus:CameraAssetUploadStatusCancelled shouldUploadNextAsset:NO];
-            return;
-        }
-        
-        if (![info[PHImageResultIsDegradedKey] boolValue]) {
-            [weakSelf processLivePhoto:livePhoto];
-        } else {
-            MEGALogDebug(@"[Camera Upload] requested live photo is degraded %@", weakSelf);
-        }
-    }];
-}
-
-- (void)requestLivePhotoOniOS10AndAbove {
-    __weak __typeof__(self) weakSelf = self;
-    PHContentEditingInputRequestOptions *editingOptions = [[PHContentEditingInputRequestOptions alloc] init];
-    editingOptions.networkAccessAllowed = YES;
-    editingOptions.canHandleAdjustmentData = ^BOOL(PHAdjustmentData * _Nonnull adjustmentData) {
-        return YES;
-    };
-    editingOptions.progressHandler = ^(double progress, BOOL * _Nonnull stop) {
-        if (weakSelf.isCancelled) {
-            *stop = YES;
-            [weakSelf finishOperationWithStatus:CameraAssetUploadStatusCancelled shouldUploadNextAsset:NO];
-        }
-    };
-    
-    self.livePhotoEditingInputRequestId = [self.uploadInfo.asset requestContentEditingInputWithOptions:editingOptions completionHandler:^(PHContentEditingInput * _Nullable contentEditingInput, NSDictionary * _Nonnull info) {
-        if (weakSelf.isFinished) {
-            return;
-        }
-        
-        NSError *error = info[PHContentEditingInputErrorKey];
-        if (error) {
-            MEGALogError(@"[Camera Upload] %@ error when to request live photo %@", weakSelf, error);
-            [weakSelf finishOperationWithStatus:CameraAssetUploadStatusFailed shouldUploadNextAsset:YES];
-            return;
-        }
-        
-        if ([info[PHContentEditingInputCancelledKey] boolValue]) {
-            MEGALogDebug(@"[Camera Upload] %@ live photo request is cancelled", weakSelf);
-            [weakSelf finishOperationWithStatus:CameraAssetUploadStatusCancelled shouldUploadNextAsset:NO];
-            return;
-        }
-        
-        [weakSelf processLivePhoto:contentEditingInput.livePhoto];
-    }];
-}
-
-- (void)processLivePhoto:(nullable PHLivePhoto *)livePhoto {
     if (self.isCancelled) {
         [self finishOperationWithStatus:CameraAssetUploadStatusCancelled shouldUploadNextAsset:NO];
         return;
     }
     
-    if (livePhoto == nil) {
-        MEGALogError(@"[Camera Upload] %@ the requested live photo is empty", self);
+    PHAssetResource *videoResource = [self findVideoResource];
+    if (videoResource) {
+        [self writeDataForResource:videoResource];
+    } else {
+        MEGALogError(@"[Camera Upload] %@ can not find the video resource in live photo", self);
         [self finishOperationWithStatus:CameraAssetUploadStatusFailed shouldUploadNextAsset:YES];
-        return;
     }
-    
-    PHAssetResource *resource = [self videoResourceInLivePhoto:livePhoto];
-    if (resource == nil) {
-        MEGALogError(@"[Camera Upload] %@ no paird video found", self);
-        [self finishOperationWithStatus:CameraAssetUploadStatusFailed shouldUploadNextAsset:YES];
-        return;
-    }
-    
-    [self writeDataForVideoResource:resource];
 }
 
-- (nullable PHAssetResource *)videoResourceInLivePhoto:(PHLivePhoto *)livePhoto {
-    for (PHAssetResource *resource in [PHAssetResource assetResourcesForLivePhoto:livePhoto]) {
+- (nullable PHAssetResource *)findVideoResource {
+    PHAssetResource *videoResource = nil;
+    for (PHAssetResource *resource in [PHAssetResource assetResourcesForAsset:self.uploadInfo.asset]) {
         if (resource.type == PHAssetResourceTypePairedVideo) {
-            return resource;
+            videoResource = resource;
+            break;
         }
     }
     
-    return nil;
+    if (videoResource == nil) {
+        for (PHAssetResource *resource in [PHAssetResource assetResourcesForAsset:self.uploadInfo.asset]) {
+            if (UTTypeConformsTo((__bridge CFStringRef)resource.uniformTypeIdentifier, kUTTypeMovie)) {
+                videoResource = resource;
+                break;
+            }
+        }
+    }
+    
+    return videoResource;
 }
 
 #pragma mark - write video resource to file
 
-- (void)writeDataForVideoResource:(PHAssetResource *)resource {
+- (void)writeDataForResource:(PHAssetResource *)resource {
     if (self.isCancelled) {
         [self finishOperationWithStatus:CameraAssetUploadStatusCancelled shouldUploadNextAsset:NO];
         return;
     }
     
-    if ([self fileSizeForResource:resource] > NSFileManager.defaultManager.deviceFreeSize) {
+    if (resource.mnz_fileSize > NSFileManager.defaultManager.deviceFreeSize) {
         [self finishUploadWithNoEnoughDiskSpace];
         return;
     }
@@ -251,13 +167,6 @@ static NSString * const LivePhotoVideoResourceTemporaryName = @"video.mov";
 - (void)cancelPendingTasks {
     [super cancelPendingTasks];
     
-    if (self.livePhotoRequestId != PHInvalidImageRequestID) {
-        MEGALogDebug(@"[Camera Upload] %@ cancel live photo data request with request Id %d", self, self.livePhotoRequestId);
-        [PHImageManager.defaultManager cancelImageRequest:self.livePhotoRequestId];
-    }
-    
-    [self.uploadInfo.asset cancelContentEditingInputRequest:self.livePhotoEditingInputRequestId];
-    
     switch (self.exportSession.status) {
         case AVAssetExportSessionStatusWaiting:
         case AVAssetExportSessionStatusExporting:
@@ -269,18 +178,5 @@ static NSString * const LivePhotoVideoResourceTemporaryName = @"video.mov";
     }
 }
 
-#pragma mark - util methods
-
-- (unsigned long long)fileSizeForResource:(PHAssetResource *)resource {
-    unsigned long long size = 0;
-    if ([resource respondsToSelector:@selector(fileSize)]) {
-        id resourceSize = [resource valueForKey:@"fileSize"];
-        if ([resourceSize respondsToSelector:@selector(unsignedLongLongValue)]) {
-            size = [resourceSize unsignedLongLongValue];
-        }
-    }
-    
-    return size;
-}
 
 @end
