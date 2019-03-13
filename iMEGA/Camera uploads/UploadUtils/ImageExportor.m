@@ -70,13 +70,20 @@
             isExportedSuccessfully = CGImageDestinationFinalize(destination);
             CFRelease(destination);
         } else {
-            NSMutableDictionary *metadata = [removeGPSDict mutableCopy];
+            CFStringRef keys[3];
+            CFTypeRef values[3];
+            keys[0] = kCGImageMetadataShouldExcludeGPS;
+            values[0] = shouldStripGPSInfo ? kCFBooleanTrue : kCFBooleanFalse;
+            keys[1] = kCGImageDestinationMetadata;
             CGImageMetadataRef sourceMetadata = CGImageSourceCopyMetadataAtIndex(source, 0, NULL);
-            [metadata addEntriesFromDictionary:@{(__bridge NSString *)kCGImageDestinationMetadata : (__bridge_transfer id)sourceMetadata,
-                                                 (__bridge NSString *)kCGImageDestinationMergeMetadata : @(YES)}];
-
-            CFDictionaryRef options = (__bridge CFDictionaryRef)[metadata copy];
+            values[1] = sourceMetadata;
+            keys[2] = kCGImageDestinationMergeMetadata;
+            values[2] = kCFBooleanTrue;
+           
+            CFDictionaryRef options = CFDictionaryCreate(NULL, (const void **)keys, (const void **)values, 3, &kCFCopyStringDictionaryKeyCallBacks, &kCFTypeDictionaryValueCallBacks);
             isExportedSuccessfully = CGImageDestinationCopyImageSource(destination, source, options, NULL);
+            CFRelease(sourceMetadata);
+            CFRelease(options);
             CFRelease(destination);
 
             if (!isExportedSuccessfully) {
@@ -163,6 +170,10 @@
         size_t size = CGImageSourceGetCount(source);
         for (size_t index = 0; index < size; index++) {
             NSDictionary *sourcePropertyDict = (__bridge_transfer NSDictionary *)CGImageSourceCopyPropertiesAtIndex(source, index, NULL);
+            if (sourcePropertyDict.count == 0) {
+                continue;
+            }
+            
             id GPSValue = sourcePropertyDict[(__bridge NSString *)kCGImagePropertyGPSDictionary];
             if (!(GPSValue == nil || [GPSValue isEqual:[NSNull null]])) {
                 hasGPS = YES;
