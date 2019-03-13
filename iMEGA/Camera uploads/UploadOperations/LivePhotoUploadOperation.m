@@ -101,10 +101,10 @@ static NSString * const LivePhotoVideoResourceExportName = @"livePhotoVideoResou
     }];
 }
 
-#pragma mark - cancel live photo exporting
+#pragma mark - cancel operation
 
-- (void)cancelPendingTasks {
-    [super cancelPendingTasks];
+- (void)cancel {
+    [super cancel];
     
     switch (self.exportSession.status) {
         case AVAssetExportSessionStatusWaiting:
@@ -116,6 +116,5 @@ static NSString * const LivePhotoVideoResourceExportName = @"livePhotoVideoResou
             break;
     }
 }
-
 
 @end

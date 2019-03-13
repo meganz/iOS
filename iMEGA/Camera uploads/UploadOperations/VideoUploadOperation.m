@@ -247,10 +247,10 @@
     [self handleProcessedVideoFile];
 }
 
-#pragma mark - cancel video exporting
+#pragma mark - cancel operation
 
-- (void)cancelPendingTasks {
-    [super cancelPendingTasks];
+- (void)cancel {
+    [super cancel];
     
     if (self.videoRequestId != PHInvalidImageRequestID) {
         MEGALogDebug(@"[Camera Upload] %@ cancel video data request with request Id %d", self, self.videoRequestId);
