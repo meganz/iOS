@@ -56,7 +56,9 @@
     }
     
     if (error) {
-        [self.delegate assetResource:resource didFailToExportWithError:error];
+        if ([self.delegate respondsToSelector:@selector(assetResource:didFailToExportWithError:)]) {
+            [self.delegate assetResource:resource didFailToExportWithError:error];
+        }
     } else {
         self.uploadInfo.originalFingerprint = [MEGASdkManager.sharedMEGASdk fingerprintForFilePath:URL.path modificationTime:self.uploadInfo.asset.creationDate];
         MEGANode *matchingNode = [self nodeForOriginalFingerprint:self.uploadInfo.originalFingerprint];

@@ -23,8 +23,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)handleProcessedVideoFile;
 
-- (void)cancelPendingTasks;
-
 - (void)finishOperationWithStatus:(CameraAssetUploadStatus)status shouldUploadNextAsset:(BOOL)uploadNextAsset;
 
 @end

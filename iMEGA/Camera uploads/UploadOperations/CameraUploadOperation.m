@@ -95,10 +95,6 @@ static NSString * const VideoAttributeImageName = @"AttributeImage";
 
 - (void)cancel {
     [super cancel];
-    [self cancelPendingTasks];
-}
-
-- (void)cancelPendingTasks {
     [self.fileEncrypter cancelEncryption];
 }
 
