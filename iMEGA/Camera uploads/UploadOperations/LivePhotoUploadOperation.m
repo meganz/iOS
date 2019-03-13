@@ -14,6 +14,7 @@ static NSString * const LivePhotoVideoResourceTemporaryName = @"video.mov";
 
 @property (strong, nonatomic) AVAssetExportSession *exportSession;
 @property (nonatomic) PHImageRequestID livePhotoRequestId;
+@property (nonatomic) PHContentEditingInputRequestID livePhotoEditingInputRequestId;
 
 @end
 
@@ -26,6 +27,14 @@ static NSString * const LivePhotoVideoResourceTemporaryName = @"video.mov";
 }
 
 - (void)requestLivePhoto {
+    if (@available(iOS 10.0, *)) {
+        [self requestLivePhotoOniOS10AndAbove];
+    } else {
+        [self requestLivePhotoOniOS9];
+    }
+}
+
+- (void)requestLivePhotoOniOS9 {
     __weak __typeof__(self) weakSelf = self;
     PHLivePhotoRequestOptions *options = [[PHLivePhotoRequestOptions alloc] init];
     options.networkAccessAllowed = YES;
@@ -43,15 +52,65 @@ static NSString * const LivePhotoVideoResourceTemporaryName = @"video.mov";
         }
     };
     
-    
     self.livePhotoRequestId = [PHImageManager.defaultManager requestLivePhotoForAsset:self.uploadInfo.asset targetSize:PHImageManagerMaximumSize contentMode:PHImageContentModeDefault options:options resultHandler:^(PHLivePhoto * _Nullable livePhoto, NSDictionary * _Nullable info) {
         if (weakSelf.isFinished) {
             return;
         }
         
+        NSError *error = info[PHImageErrorKey];
+        if (error) {
+            MEGALogError(@"[Camera Upload] %@ error when to request live photo %@", weakSelf, error);
+            [weakSelf finishOperationWithStatus:CameraAssetUploadStatusFailed shouldUploadNextAsset:YES];
+            return;
+        }
+        
+        if ([info[PHImageCancelledKey] boolValue]) {
+            MEGALogDebug(@"[Camera Upload] %@ live photo request is cancelled", weakSelf);
+            [weakSelf finishOperationWithStatus:CameraAssetUploadStatusCancelled shouldUploadNextAsset:NO];
+            return;
+        }
+        
         if (![info[PHImageResultIsDegradedKey] boolValue]) {
             [weakSelf processLivePhoto:livePhoto];
+        } else {
+            MEGALogDebug(@"[Camera Upload] requested live photo is degraded %@", weakSelf);
         }
+    }];
+}
+
+- (void)requestLivePhotoOniOS10AndAbove {
+    __weak __typeof__(self) weakSelf = self;
+    PHContentEditingInputRequestOptions *editingOptions = [[PHContentEditingInputRequestOptions alloc] init];
+    editingOptions.networkAccessAllowed = YES;
+    editingOptions.canHandleAdjustmentData = ^BOOL(PHAdjustmentData * _Nonnull adjustmentData) {
+        return YES;
+    };
+    editingOptions.progressHandler = ^(double progress, BOOL * _Nonnull stop) {
+        if (weakSelf.isCancelled) {
+            *stop = YES;
+            [weakSelf finishOperationWithStatus:CameraAssetUploadStatusCancelled shouldUploadNextAsset:NO];
+        }
+    };
+    
+    self.livePhotoEditingInputRequestId = [self.uploadInfo.asset requestContentEditingInputWithOptions:editingOptions completionHandler:^(PHContentEditingInput * _Nullable contentEditingInput, NSDictionary * _Nonnull info) {
+        if (weakSelf.isFinished) {
+            return;
+        }
+        
+        NSError *error = info[PHContentEditingInputErrorKey];
+        if (error) {
+            MEGALogError(@"[Camera Upload] %@ error when to request live photo %@", weakSelf, error);
+            [weakSelf finishOperationWithStatus:CameraAssetUploadStatusFailed shouldUploadNextAsset:YES];
+            return;
+        }
+        
+        if ([info[PHContentEditingInputCancelledKey] boolValue]) {
+            MEGALogDebug(@"[Camera Upload] %@ live photo request is cancelled", weakSelf);
+            [weakSelf finishOperationWithStatus:CameraAssetUploadStatusCancelled shouldUploadNextAsset:NO];
+            return;
+        }
+        
+        [weakSelf processLivePhoto:contentEditingInput.livePhoto];
     }];
 }
 
@@ -196,6 +255,8 @@ static NSString * const LivePhotoVideoResourceTemporaryName = @"video.mov";
         MEGALogDebug(@"[Camera Upload] %@ cancel live photo data request with request Id %d", self, self.livePhotoRequestId);
         [PHImageManager.defaultManager cancelImageRequest:self.livePhotoRequestId];
     }
+    
+    [self.uploadInfo.asset cancelContentEditingInputRequest:self.livePhotoEditingInputRequestId];
     
     switch (self.exportSession.status) {
         case AVAssetExportSessionStatusWaiting:
