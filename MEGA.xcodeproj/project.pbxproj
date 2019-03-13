@@ -711,6 +711,7 @@
 		B6451650223201A2001680BC /* MEGAConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = B60DDC1521A7A7930097E4A3 /* MEGAConstants.m */; };
 		B645165322320C23001680BC /* UploadStats.m in Sources */ = {isa = PBXBuildFile; fileRef = B645165222320C23001680BC /* UploadStats.m */; };
 		B64F9A9C22389E6B000A4EA7 /* PHAssetResource+CameraUpload.m in Sources */ = {isa = PBXBuildFile; fileRef = B64F9A9B22389E6B000A4EA7 /* PHAssetResource+CameraUpload.m */; };
+		B64F9A9F2238F4A4000A4EA7 /* AssetResourceUploadOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = B64F9A9E2238F4A4000A4EA7 /* AssetResourceUploadOperation.m */; };
 		B6575FD021FC526D00B7AD82 /* LivePhotoUploadOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = B6575FCF21FC526D00B7AD82 /* LivePhotoUploadOperation.m */; };
 		B6575FD3220101BB00B7AD82 /* MediaInfoLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = B6575FD2220101BB00B7AD82 /* MediaInfoLoader.m */; };
 		B6575FD622012F8D00B7AD82 /* LoadMediaInfoOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = B6575FD522012F8D00B7AD82 /* LoadMediaInfoOperation.m */; };
@@ -1694,6 +1695,8 @@
 		B645165222320C23001680BC /* UploadStats.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UploadStats.m; sourceTree = "<group>"; };
 		B64F9A9A22389E6B000A4EA7 /* PHAssetResource+CameraUpload.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PHAssetResource+CameraUpload.h"; sourceTree = "<group>"; };
 		B64F9A9B22389E6B000A4EA7 /* PHAssetResource+CameraUpload.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "PHAssetResource+CameraUpload.m"; sourceTree = "<group>"; };
+		B64F9A9D2238F4A4000A4EA7 /* AssetResourceUploadOperation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AssetResourceUploadOperation.h; sourceTree = "<group>"; };
+		B64F9A9E2238F4A4000A4EA7 /* AssetResourceUploadOperation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AssetResourceUploadOperation.m; sourceTree = "<group>"; };
 		B6575FCE21FC526D00B7AD82 /* LivePhotoUploadOperation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LivePhotoUploadOperation.h; sourceTree = "<group>"; };
 		B6575FCF21FC526D00B7AD82 /* LivePhotoUploadOperation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LivePhotoUploadOperation.m; sourceTree = "<group>"; };
 		B6575FD1220101BB00B7AD82 /* MediaInfoLoader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MediaInfoLoader.h; sourceTree = "<group>"; };
@@ -3690,6 +3693,8 @@
 				B68C42CA216DAA85003C5A50 /* CameraUploadOperation.m */,
 				B672EDB1221CD96000DE6684 /* CameraUploadOperation+Utils.h */,
 				B672EDB2221CD96000DE6684 /* CameraUploadOperation+Utils.m */,
+				B64F9A9D2238F4A4000A4EA7 /* AssetResourceUploadOperation.h */,
+				B64F9A9E2238F4A4000A4EA7 /* AssetResourceUploadOperation.m */,
 				B658D3B6218F9357004C0D64 /* PhotoUploadOperation.h */,
 				B658D3B7218F9357004C0D64 /* PhotoUploadOperation.m */,
 				B6575FCE21FC526D00B7AD82 /* LivePhotoUploadOperation.h */,
@@ -3704,7 +3709,7 @@
 				B6575FD522012F8D00B7AD82 /* LoadMediaInfoOperation.m */,
 				B6031EE32202A6BF00F7EAA1 /* NodesFetchListenerOperation.h */,
 				B6031EE42202A6BF00F7EAA1 /* NodesFetchListenerOperation.m */,
-				B6D176842235E69400098084 /* Attributes */,
+				B6D176842235E69400098084 /* AttributeOperations */,
 			);
 			path = UploadOperations;
 			sourceTree = "<group>";
@@ -3833,7 +3838,7 @@
 			path = UploadUtils;
 			sourceTree = "<group>";
 		};
-		B6D176842235E69400098084 /* Attributes */ = {
+		B6D176842235E69400098084 /* AttributeOperations */ = {
 			isa = PBXGroup;
 			children = (
 				B6D11AE0219E5E2C00446B86 /* AttributeUploadOperation.h */,
@@ -3845,7 +3850,7 @@
 				B644B6BC21AE0E1900A3B8E7 /* CoordinatesUploadOperation.h */,
 				B644B6BD21AE0E1900A3B8E7 /* CoordinatesUploadOperation.m */,
 			);
-			path = Attributes;
+			path = AttributeOperations;
 			sourceTree = "<group>";
 		};
 		E84CDAFE1A7292AA003F4C77 /* Links */ = {
@@ -4358,6 +4363,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B64F9A9F2238F4A4000A4EA7 /* AssetResourceUploadOperation.m in Sources */,
 				B6CE0D0F221FDFCB00E6BD41 /* CameraUploadConcurrentCountCalculator.m in Sources */,
 				B6A4A11A21A404DC007E7EEC /* NSError+CameraUpload.m in Sources */,
 				B658D3B8218F9357004C0D64 /* PhotoUploadOperation.m in Sources */,

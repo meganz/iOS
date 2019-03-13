@@ -1,9 +1,9 @@
 
-#import "CameraUploadOperation.h"
+#import "AssetResourceUploadOperation.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface LivePhotoUploadOperation : CameraUploadOperation
+@interface LivePhotoUploadOperation : AssetResourceUploadOperation
 
 @end
 
