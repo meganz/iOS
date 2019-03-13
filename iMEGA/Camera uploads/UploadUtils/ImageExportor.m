@@ -74,10 +74,11 @@
             CGImageMetadataRef sourceMetadata = CGImageSourceCopyMetadataAtIndex(source, 0, NULL);
             [metadata addEntriesFromDictionary:@{(__bridge NSString *)kCGImageDestinationMetadata : (__bridge_transfer id)sourceMetadata,
                                                  (__bridge NSString *)kCGImageDestinationMergeMetadata : @(YES)}];
-            
-            isExportedSuccessfully = CGImageDestinationCopyImageSource(destination, source, (__bridge CFDictionaryRef)[metadata copy], NULL);
+
+            CFDictionaryRef options = (__bridge CFDictionaryRef)[metadata copy];
+            isExportedSuccessfully = CGImageDestinationCopyImageSource(destination, source, options, NULL);
             CFRelease(destination);
-            
+
             if (!isExportedSuccessfully) {
                 [NSFileManager.defaultManager removeItemIfExistsAtURL:URL];
                 isExportedSuccessfully = [self exportImageSource:source toURL:URL alwaysEncodeToImageUTIType:(__bridge NSString *)sourceType imageProperty:removeGPSDict];
