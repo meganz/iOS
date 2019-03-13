@@ -1047,8 +1047,6 @@
 "noConversations"="会話なし";
 /* Empty Conversations description */
 "noConversationsDescription"="エンドツーエンドの暗号化を使用して、ご連絡先と安全にチャットを開始してください";
-/* Title show when the chat is disabled */
-"chatIsDisabled"="チャット無効";
 /* Text button shown when the chat is disabled and if tapped the chat will be enabled */
 "enable"="オンにする";
 /* Text button shown when an option is enabled, to allow to disable it. String as sort as possible. */

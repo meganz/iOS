@@ -1047,8 +1047,6 @@
 "noConversations"="無對話(已清空)";
 /* Empty Conversations description */
 "noConversationsDescription"="Start chatting securely with your contacts using end-to-end encryption";
-/* Title show when the chat is disabled */
-"chatIsDisabled"="聊天功能已停用";
 /* Text button shown when the chat is disabled and if tapped the chat will be enabled */
 "enable"="啟用";
 /* Text button shown when an option is enabled, to allow to disable it. String as sort as possible. */
