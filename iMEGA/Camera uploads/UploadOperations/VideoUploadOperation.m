@@ -35,6 +35,11 @@
 #pragma mark - data processing
 
 - (void)requestVideoData {
+    if (self.isCancelled) {
+        [self finishOperationWithStatus:CameraAssetUploadStatusCancelled shouldUploadNextAsset:NO];
+        return;
+    }
+    
     __weak __typeof__(self) weakSelf = self;
     PHVideoRequestOptions *options = [[PHVideoRequestOptions alloc] init];
     options.version = PHVideoRequestOptionsVersionCurrent;
@@ -46,7 +51,7 @@
             [weakSelf finishOperationWithStatus:CameraAssetUploadStatusCancelled shouldUploadNextAsset:NO];
         }
         
-        if (error != nil) {
+        if (error) {
             MEGALogError(@"[Camera Upload] %@ error when to download video from iCloud: %@", weakSelf, error);
             [weakSelf handleCloudDownloadError:error];
         }
@@ -55,6 +60,19 @@
     
     self.videoRequestId = [PHImageManager.defaultManager requestAVAssetForVideo:self.uploadInfo.asset options:options resultHandler:^(AVAsset * _Nullable asset, AVAudioMix * _Nullable audioMix, NSDictionary * _Nullable info) {
         if (weakSelf.isFinished) {
+            return;
+        }
+        
+        NSError *error = info[PHImageErrorKey];
+        if (error) {
+            MEGALogError(@"[Camera Upload] %@ error when to request video %@", weakSelf, error);
+            [weakSelf finishOperationWithStatus:CameraAssetUploadStatusFailed shouldUploadNextAsset:YES];
+            return;
+        }
+        
+        if ([info[PHImageCancelledKey] boolValue]) {
+            MEGALogDebug(@"[Camera Upload] %@ video request is cancelled", weakSelf);
+            [weakSelf finishOperationWithStatus:CameraAssetUploadStatusCancelled shouldUploadNextAsset:NO];
             return;
         }
         
