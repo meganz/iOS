@@ -8,6 +8,7 @@
 @property (weak, nonatomic) IBOutlet UIView *onlineStatusView;
 @property (weak, nonatomic) IBOutlet UIImageView *rightImageView;
 @property (weak, nonatomic) IBOutlet UILabel *rightLabel;
+@property (weak, nonatomic) IBOutlet UILabel *enableLabel;
 
 @property (weak, nonatomic) IBOutlet UISwitch *notificationsSwitch;
 

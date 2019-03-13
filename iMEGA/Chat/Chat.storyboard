@@ -1568,15 +1568,24 @@
                                                         </label>
                                                     </subviews>
                                                 </stackView>
+                                                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enable" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pl7-7b-bw0">
+                                                    <rect key="frame" x="342.33333333333348" y="12.000000000000028" width="51.666666666666686" height="20.333333333333329"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
                                             </subviews>
                                             <constraints>
+                                                <constraint firstItem="pl7-7b-bw0" firstAttribute="top" secondItem="A0m-lj-bDv" secondAttribute="top" constant="12.000000000000028" id="3UD-mV-erE"/>
                                                 <constraint firstItem="mj9-KL-8Av" firstAttribute="leading" secondItem="A0m-lj-bDv" secondAttribute="leading" constant="15" id="Brn-SC-hRi"/>
+                                                <constraint firstItem="pl7-7b-bw0" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="mj9-KL-8Av" secondAttribute="trailing" constant="8" id="CQ9-0Q-f65"/>
+                                                <constraint firstAttribute="trailing" secondItem="pl7-7b-bw0" secondAttribute="trailing" constant="20" id="eOI-wH-WN1"/>
                                                 <constraint firstItem="mj9-KL-8Av" firstAttribute="top" secondItem="A0m-lj-bDv" secondAttribute="top" constant="8" id="p0h-K3-Scb"/>
-                                                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="mj9-KL-8Av" secondAttribute="trailing" constant="15" id="rDr-9g-36W"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <inset key="separatorInset" minX="58" minY="0.0" maxX="0.0" maxY="0.0"/>
                                         <connections>
+                                            <outlet property="enableLabel" destination="pl7-7b-bw0" id="gVp-Jm-fKR"/>
                                             <outlet property="leftImageView" destination="YQL-CC-bEE" id="2qf-sg-5Q0"/>
                                             <outlet property="nameLabel" destination="SIl-mU-b9o" id="axr-vf-uUt"/>
                                         </connections>
