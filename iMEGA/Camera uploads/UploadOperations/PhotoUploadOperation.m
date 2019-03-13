@@ -17,8 +17,7 @@
 #import "PHAssetResource+CameraUpload.h"
 @import CoreServices;
 
-static const NSInteger PhotoExportDiskSizeScalingFactor = 2;
-static NSString * const OriginalPhotoName = @"originalPhotoFile";
+static NSString * const PhotoResourceExportName = @"photoResourceExport";
 
 @implementation PhotoUploadOperation
 
@@ -27,12 +26,12 @@ static NSString * const OriginalPhotoName = @"originalPhotoFile";
 - (void)start {
     [super start];
 
-    [self requestImageData];
+    [self requestImageResource];
 }
 
 #pragma mark - image resource
 
-- (void)requestImageData {
+- (void)requestImageResource {
     if (self.isCancelled) {
         [self finishOperationWithStatus:CameraAssetUploadStatusCancelled shouldUploadNextAsset:NO];
         return;
@@ -40,64 +39,19 @@ static NSString * const OriginalPhotoName = @"originalPhotoFile";
     
     PHAssetResource *photoResource = [self.uploadInfo.asset searchAssetResourceByTypes:@[@(PHAssetResourceTypeFullSizePhoto), @(PHAssetResourceTypePhoto), @(PHAssetResourceTypeAdjustmentBasePhoto), @(PHAssetResourceTypeAlternatePhoto)]];
     if (photoResource) {
-        [self writeDataForResource:photoResource];
+        NSURL *imageURL = [self.uploadInfo.directoryURL URLByAppendingPathComponent:PhotoResourceExportName];
+        [self exportAssetResource:photoResource toURL:imageURL];
     } else {
         MEGALogError(@"[Camera Upload] %@ can not find photo resource", self);
         [self finishOperationWithStatus:CameraAssetUploadStatusFailed shouldUploadNextAsset:YES];
     }
 }
 
-#pragma mark - write data
+#pragma mark - AssetResourceUploadOperationDelegate
 
-- (void)writeDataForResource:(PHAssetResource *)resource {
-    if (self.isCancelled) {
-        [self finishOperationWithStatus:CameraAssetUploadStatusCancelled shouldUploadNextAsset:NO];
-        return;
-    }
+- (void)assetResource:(PHAssetResource *)resource didExportToURL:(NSURL *)URL {
+    [super assetResource:resource didExportToURL:URL];
     
-    if (resource.mnz_fileSize * PhotoExportDiskSizeScalingFactor > NSFileManager.defaultManager.deviceFreeSize) {
-        [self finishUploadWithNoEnoughDiskSpace];
-        return;
-    }
-    
-    NSURL *imageURL = [self.uploadInfo.directoryURL URLByAppendingPathComponent:OriginalPhotoName];
-    PHAssetResourceRequestOptions *options = [[PHAssetResourceRequestOptions alloc] init];
-    options.networkAccessAllowed = YES;
-    __weak __typeof__(self) weakSelf = self;
-    [PHAssetResourceManager.defaultManager writeDataForAssetResource:resource toFile:imageURL options:options completionHandler:^(NSError * _Nullable error) {
-        [weakSelf resource:resource writeDataToURL:imageURL completedWithError:error];
-    }];
-}
-
-- (void)resource:(PHAssetResource *)resource writeDataToURL:(NSURL *)URL completedWithError:(NSError *)error {
-    if (self.isCancelled) {
-        [self finishOperationWithStatus:CameraAssetUploadStatusCancelled shouldUploadNextAsset:NO];
-        return;
-    }
-    
-    if (error) {
-        MEGALogError(@"[Camera Upload] %@ error when to write resource %@", self, error);
-        if ([error.domain isEqualToString:AVFoundationErrorDomain] && error.code == AVErrorDiskFull) {
-            [self finishUploadWithNoEnoughDiskSpace];
-        } else if ([error.domain isEqualToString:NSCocoaErrorDomain] && error.code == NSFileWriteOutOfSpaceError) {
-            [self finishUploadWithNoEnoughDiskSpace];
-        } else {
-            [self finishOperationWithStatus:CameraAssetUploadStatusFailed shouldUploadNextAsset:YES];
-        }
-    } else {
-        self.uploadInfo.originalFingerprint = [MEGASdkManager.sharedMEGASdk fingerprintForFilePath:URL.path modificationTime:self.uploadInfo.asset.creationDate];
-        MEGANode *matchingNode = [self nodeForOriginalFingerprint:self.uploadInfo.originalFingerprint];
-        if (matchingNode) {
-            MEGALogDebug(@"[Camera Upload] %@ found existing node by original file fingerprint", self);
-            [self finishUploadForFingerprintMatchedNode:matchingNode];
-            return;
-        } else {
-            [self exportImageAtURL:URL withResource:resource];
-        }
-    }
-}
-
-- (void)exportImageAtURL:(NSURL *)imageURL withResource:(PHAssetResource *)resource {
     if (self.isCancelled) {
         [self finishOperationWithStatus:CameraAssetUploadStatusCancelled shouldUploadNextAsset:NO];
         return;
@@ -112,14 +66,14 @@ static NSString * const OriginalPhotoName = @"originalPhotoFile";
     }
     
     __weak __typeof__(self) weakSelf = self;
-    [ImageExportManager.shared exportImageAtURL:imageURL dataTypeUTI:resource.uniformTypeIdentifier toURL:self.uploadInfo.fileURL outputTypeUTI:outputTypeUTI shouldStripGPSInfo:YES completion:^(BOOL succeeded) {
+    [ImageExportManager.shared exportImageAtURL:URL dataTypeUTI:resource.uniformTypeIdentifier toURL:self.uploadInfo.fileURL outputTypeUTI:outputTypeUTI shouldStripGPSInfo:YES completion:^(BOOL succeeded) {
         if (weakSelf.isCancelled) {
             [weakSelf finishOperationWithStatus:CameraAssetUploadStatusCancelled shouldUploadNextAsset:NO];
             return;
         }
         
         if (succeeded && [NSFileManager.defaultManager isReadableFileAtPath:weakSelf.uploadInfo.fileURL.path]) {
-            [NSFileManager.defaultManager removeItemIfExistsAtURL:imageURL];
+            [NSFileManager.defaultManager removeItemIfExistsAtURL:URL];
             [weakSelf handleProcessedImageFile];
         } else {
             MEGALogError(@"[Camera Upload] %@ error when to export image to file %@", weakSelf, weakSelf.uploadInfo.fileName);

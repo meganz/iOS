@@ -11,9 +11,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
-@interface MEGABackgroundTaskOperation : MEGAOperation
-
-@property (weak, nonatomic) id<MEGABackgroundTaskOperationDelegate> backgroundTaskdelegate;
+@interface MEGABackgroundTaskOperation : MEGAOperation <MEGABackgroundTaskOperationDelegate>
 
 @end
 

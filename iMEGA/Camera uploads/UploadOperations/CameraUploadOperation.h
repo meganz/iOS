@@ -12,7 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  A base class for camera upload operation. It's supposed to be subclassed.
  */
-@interface CameraUploadOperation :  MEGABackgroundTaskOperation
+@interface CameraUploadOperation : MEGABackgroundTaskOperation
 
 @property (strong, nonatomic) AssetUploadInfo *uploadInfo;
 @property (strong, nonatomic) MOAssetUploadRecord *uploadRecord;

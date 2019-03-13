@@ -23,7 +23,7 @@
 
 static NSString * const VideoAttributeImageName = @"AttributeImage";
 
-@interface CameraUploadOperation () <MEGABackgroundTaskOperationDelegate>
+@interface CameraUploadOperation ()
 
 @property (strong, nonatomic, nullable) MEGASdk *sdk;
 @property (strong, nonatomic) FileEncrypter *fileEncrypter;
@@ -41,7 +41,6 @@ static NSString * const VideoAttributeImageName = @"AttributeImage";
         _uploadInfo = uploadInfo;
         _uploadRecord = uploadRecord;
         _serialQueue = dispatch_queue_create("nz.mega.cameraUpload.uploadOperation", DISPATCH_QUEUE_SERIAL);
-        self.backgroundTaskdelegate = self;
     }
     
     return self;
@@ -64,6 +63,8 @@ static NSString * const VideoAttributeImageName = @"AttributeImage";
 #pragma mark - background task expired
 
 - (void)backgroundTaskDidExpire {
+    [super backgroundTaskDidExpire];
+    
     [self cancel];
     [NSNotificationCenter.defaultCenter postNotificationName:MEGACameraUploadTaskExpiredNotificationName object:nil];
 }
