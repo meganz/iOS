@@ -38,6 +38,11 @@ static NSString * const OriginalPhotoName = @"originalPhotoFile";
 #pragma mark - data processing
 
 - (void)requestImageData {
+    if (self.isCancelled) {
+        [self finishOperationWithStatus:CameraAssetUploadStatusCancelled shouldUploadNextAsset:NO];
+        return;
+    }
+    
     __weak __typeof__(self) weakSelf = self;
     PHImageRequestOptions *options = [[PHImageRequestOptions alloc] init];
     options.networkAccessAllowed = YES;
@@ -49,7 +54,7 @@ static NSString * const OriginalPhotoName = @"originalPhotoFile";
             [weakSelf finishOperationWithStatus:CameraAssetUploadStatusCancelled shouldUploadNextAsset:NO];
         }
         
-        if (error != nil) {
+        if (error) {
             MEGALogError(@"[Camera Upload] %@ error when to download images from iCloud: %@", weakSelf, error);
             [weakSelf handleCloudDownloadError:error];
         }
@@ -57,6 +62,19 @@ static NSString * const OriginalPhotoName = @"originalPhotoFile";
     
     self.imageRequestId = [[PHImageManager defaultManager] requestImageDataForAsset:self.uploadInfo.asset options:options resultHandler:^(NSData * _Nullable imageData, NSString * _Nullable dataUTI, UIImageOrientation orientation, NSDictionary * _Nullable info) {
         if (weakSelf.isFinished) {
+            return;
+        }
+        
+        NSError *error = info[PHImageErrorKey];
+        if (error) {
+            MEGALogError(@"[Camera Upload] %@ error when to request photo %@", weakSelf, error);
+            [weakSelf finishOperationWithStatus:CameraAssetUploadStatusFailed shouldUploadNextAsset:YES];
+            return;
+        }
+        
+        if ([info[PHImageCancelledKey] boolValue]) {
+            MEGALogDebug(@"[Camera Upload] %@ photo request is cancelled", weakSelf);
+            [weakSelf finishOperationWithStatus:CameraAssetUploadStatusCancelled shouldUploadNextAsset:NO];
             return;
         }
         
