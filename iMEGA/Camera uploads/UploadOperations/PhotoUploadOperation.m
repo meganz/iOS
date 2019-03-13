@@ -38,52 +38,13 @@ static NSString * const OriginalPhotoName = @"originalPhotoFile";
         return;
     }
     
-    PHAssetResource *photoResource = [self findPhotoResource];
+    PHAssetResource *photoResource = [self.uploadInfo.asset searchAssetResourceByTypes:@[@(PHAssetResourceTypeFullSizePhoto), @(PHAssetResourceTypePhoto), @(PHAssetResourceTypeAdjustmentBasePhoto), @(PHAssetResourceTypeAlternatePhoto)]];
     if (photoResource) {
         [self writeDataForResource:photoResource];
     } else {
         MEGALogError(@"[Camera Upload] %@ can not find photo resource", self);
         [self finishOperationWithStatus:CameraAssetUploadStatusFailed shouldUploadNextAsset:YES];
     }
-}
-
-- (nullable PHAssetResource *)findPhotoResource {
-    PHAssetResource *photoResource = nil;
-    for (PHAssetResource *resource in [PHAssetResource assetResourcesForAsset:self.uploadInfo.asset]) {
-        if (resource.type == PHAssetResourceTypeFullSizePhoto) { // maps to PHImageRequestOptionsVersionCurrent
-            photoResource = resource;
-            break;
-        }
-    }
-    
-    if (photoResource == nil) {
-        for (PHAssetResource *resource in [PHAssetResource assetResourcesForAsset:self.uploadInfo.asset]) {
-            if (resource.type == PHAssetResourceTypePhoto) { // maps to PHImageRequestOptionsVersionOriginal
-                photoResource = resource;
-                break;
-            }
-        }
-    }
-    
-    if (photoResource == nil) {
-        for (PHAssetResource *resource in [PHAssetResource assetResourcesForAsset:self.uploadInfo.asset]) {
-            if (resource.type == PHAssetResourceTypeAlternatePhoto) { // maps to PHImageRequestOptionsVersionOriginal
-                photoResource = resource;
-                break;
-            }
-        }
-    }
-    
-    if (photoResource == nil) {
-        for (PHAssetResource *resource in [PHAssetResource assetResourcesForAsset:self.uploadInfo.asset]) {
-            if (resource.type == PHAssetResourceTypeAdjustmentBasePhoto) { // maps to PHImageRequestOptionsVersionUnadjusted
-                photoResource = resource;
-                break;
-            }
-        }
-    }
-    
-    return photoResource;
 }
 
 #pragma mark - write data

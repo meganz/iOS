@@ -34,4 +34,17 @@
     return extension.lowercaseString;
 }
 
+- (PHAssetResource *)searchAssetResourceByTypes:(NSArray<NSNumber *> *)types {
+    NSArray<PHAssetResource *> *resources = [PHAssetResource assetResourcesForAsset:self];
+    for (NSNumber *type in types) {
+        for (PHAssetResource *resource in resources) {
+            if (resource.type == type.integerValue) {
+                return resource;
+            }
+        }
+    }
+    
+    return nil;
+}
+
 @end
