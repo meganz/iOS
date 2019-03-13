@@ -127,6 +127,11 @@
     [[MEGASdkManager sharedMEGAChatSdk] addChatCallDelegate:self];
     [[MEGAReachabilityManager sharedManager] retryPendingConnections];
     
+    if (self.chatRoomOnGoingCall) {
+        self.timer = [NSTimer timerWithTimeInterval:1.0f target:self selector:@selector(updateDuration) userInfo:nil repeats:YES];
+        [[NSRunLoop mainRunLoop] addTimer:self.timer forMode:NSRunLoopCommonModes];
+    }
+    
     [self.tableView reloadData];
 }
 
@@ -137,25 +142,20 @@
         [DevicePermissionsHelper modalNotificationsPermission];
     }
     
-    if ([MEGASdkManager sharedMEGAChatSdk].numCalls && MEGAReachabilityManager.isReachable) {
-        MEGAHandleList *chatRoomsWithCall = [MEGASdkManager sharedMEGAChatSdk].chatCalls;
-        self.chatRoomOnGoingCall = nil;
-        for (int i = 0; i < chatRoomsWithCall.size; i++) {
-            MEGAChatCall *call = [[MEGASdkManager sharedMEGAChatSdk] chatCallForChatId:[chatRoomsWithCall megaHandleAtIndex:i]];
-            if (call.status == MEGAChatCallStatusInProgress) {
-                self.chatRoomOnGoingCall = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:[chatRoomsWithCall megaHandleAtIndex:i]];
-                if (self.activeCallTopConstraint.constant == -44) {
-                    [self showActiveCallButton:call];
-                }
-                break;
-            }
+    self.chatRoomOnGoingCall = nil;
+    MEGAHandleList *chatRoomIDsWithCallInProgress = [MEGASdkManager.sharedMEGAChatSdk chatCallsWithState:MEGAChatCallStatusInProgress];
+    if ((chatRoomIDsWithCallInProgress.size > 0) && MEGAReachabilityManager.isReachable) {
+        self.chatRoomOnGoingCall = [MEGASdkManager.sharedMEGAChatSdk chatRoomForChatId:[chatRoomIDsWithCallInProgress megaHandleAtIndex:0]];
+        
+        if (self.activeCallTopConstraint.constant == -44) {
+            MEGAChatCall *call = [MEGASdkManager.sharedMEGAChatSdk chatCallForChatId:self.chatRoomOnGoingCall.chatId];
+            [self showActiveCallButton:call];
         }
+        
         if (!self.chatRoomOnGoingCall && self.activeCallTopConstraint.constant == 0) {
             [self hideActiveCallButton];
         }
-       
     }
-
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -641,8 +641,7 @@
 - (IBAction)joinActiveCall:(id)sender {
     [self.timer invalidate];
     if (self.chatRoomOnGoingCall.isGroup) {
-        MEGANavigationController *groupCallNavigation = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"GroupCallViewControllerNavigationID"];
-        GroupCallViewController *groupCallVC = groupCallNavigation.viewControllers.firstObject;
+        GroupCallViewController *groupCallVC = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"GroupCallViewControllerID"];
         groupCallVC.callType = CallTypeActive;
         groupCallVC.videoCall = NO;
         groupCallVC.chatRoom = self.chatRoomOnGoingCall;
@@ -651,7 +650,7 @@
         if (@available(iOS 10.0, *)) {
             groupCallVC.megaCallManager = [(MainTabBarController *)UIApplication.sharedApplication.keyWindow.rootViewController megaCallManager];
         }
-        [self presentViewController:groupCallNavigation animated:YES completion:nil];
+        [self presentViewController:groupCallVC animated:YES completion:nil];
     } else {
         CallViewController *callVC = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"CallViewControllerID"];
         callVC.chatRoom = self.chatRoomOnGoingCall;
