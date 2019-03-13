@@ -226,7 +226,7 @@
     
     NSString *currentEmail = [self.message userEmailAtIndex:indexPath.row];
     
-    [cell.avatarImageView mnz_setImageForUserHandle:[self.message userHandleAtIndex:indexPath.row]];
+    [cell.avatarImageView mnz_setImageForUserHandle:[self.message userHandleAtIndex:indexPath.row] name:[self.message userNameAtIndex:indexPath.row]];
     cell.nameLabel.text = [self.message userNameAtIndex:indexPath.row];
     
     uint64_t userHandle = [self.message userHandleAtIndex:indexPath.row];

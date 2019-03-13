@@ -70,22 +70,6 @@
 "pleaseLogInToYourAccount"="Por favor, faça login na sua conta.";
 /* Error message when a user attempts to change their email without an active login session. */
 "needToBeLoggedInToCompleteYourEmailChange"="Você precisa estar logado para completar a sua mudança de email. Por favor, faça login novamente com o seu endereço de email atual e, em seguida, clique novamente no link de confirmação.";
-/* Title shown on the app's start animation to explain what MEGA offers you (1/4) */
-"megaSpace"="ESPAÇO MEGA";
-/* Title shown on the app's start animation to explain what MEGA offers you (2/4) */
-"megaSpeed"="VELOCIDADE MEGA";
-/* Title shown on the app's start animation to explain what MEGA offers you (3/4) */
-"megaPrivacy"="PRIVACIDADE MEGA";
-/* Title shown on the app's start animation to explain what MEGA offers you (4/4) */
-"megaAccess"="ACESSO MEGA";
-/* Message shown on the app's start animation to explain what MEGA SPACE means */
-"megaSpaceText"="Cadastre-se agora e ganhe 50GB de espaço gratuito.";
-/* Message shown on the app's start animation to explain what MEGA SPEED means */
-"megaSpeedText"="Os envios são rápidos.Compartilhe rapidamente com todo mundo.";
-/* Message shown on the app's start animation to explain what MEGA PRIVACY means */
-"megaPrivacyText"="Mantenha todos os seus arquivos seguros com a criptografia MEGA de ponta a ponta.";
-/* Message shown on the app's start animation to explain what MEGA ACCESS means */
-"megaAccessText"="Tenha acesso completamente criptografado em qualquer lugar, a qualquer momento.";
 /* Button title which triggers the action to login in your MEGA account */
 "login"="Entrar";
 /* Button title which triggers the action to create a MEGA account */
@@ -115,7 +99,7 @@
 /*  */
 "weak"="Fraca";
 /*  */
-"passwordVeryWeakOrWeak"="A sua senha é muito fácil de adivinhar. Tente deixá-la mais longa, incluir maiúsculas e minúsculas e adicionar caracteres especiais. Não utilize nomes ou palavras do dicionário.";
+"passwordVeryWeakOrWeak"="A sua senha é fácil de adivinhar. Tente deixá-la mais longa, incluir maiúsculas e minúsculas e adicionar caracteres especiais. Não utilize nomes ou palavras do dicionário.";
 /* Label displayed during checking the strength of the password introduced. Represents Medium security */
 "medium"="Média";
 /*  */
@@ -381,7 +365,7 @@
 /* */
 "uploadToMega"="Fazer upload ao MEGA";
 /* Footer shown in the Share Extension telling that a file can be renamed if tapped */
-"tapFileToRename"="Toque no arquivo para renomeá-lo";
+"tapFileToRename"="Pressione o arquivo para renomeá-lo";
 /* */
 "sendToContact"="Enviar para um contato";
 /* Toast text upon sending a single file to chat */
@@ -635,7 +619,7 @@
 /* Permissions given to the user you share your folder with */
 "readOnly"="Somente leitura";
 /* Permissions given to the user you share your folder with */
-"readAndWrite"="Leitura & escrita";
+"readAndWrite"="Leitura e escrita";
 /* Permissions given to the user you share your folder with */
 "fullAccess"="Acesso total";
 /* Title of the Settings section */
@@ -1669,9 +1653,9 @@
 /* Label for any ‘Days’ button, link, text, title, etc. - (String as short as possible). */
 "Days"="Dias";
 /* New server-side rubbish-bin cleaning scheduler description (for Free users) */
-"The Rubbish Bin is cleaned for you automatically. The minimum period is 7 days and your maximum period is 30 days."="Vamos limpar a sua lixeira automaticamente. O período mínimo é de 7 dias e o período máximo é de 30 dias.";
+"The Rubbish Bin is cleaned for you automatically. The minimum period is 7 days and your maximum period is 30 days."="A sua Lixeira será esvaziada de forma automática. O período mínimo é de 7 dias, e o período máximo é de 30 dias.";
 /* New server-side rubbish-bin cleaning scheduler description (for PRO users) */
-"The Rubbish Bin can be cleaned for you automatically. The minimum period is 7 days."="Podemos limpar a sua lixeira automaticamente. O período mínimo é de 7 dias.";
+"The Rubbish Bin can be cleaned for you automatically. The minimum period is 7 days."="A sua Lixeira pode ser esvaziada de forma automática. O período mínimo é de 7 dias.";
 /* Description shown when you try to disable the feature Rubbish-Bin Cleaning Scheduler and you are a free user */
 "To disable the Rubbish-Bin Cleaning Scheduler or set a longer retention period, you need to subscribe to a PRO plan."="Para desativar o Planejador de limpeza da lixeira ou definir um período de retenção mais longo, você precisa assinar um plano PRO.";
 /* Confirmation dialog for the button that logs the user out of all sessions except the current one. */
@@ -1684,6 +1668,8 @@
 "Poor conection."="Conexão ruim.";
 /* Message shown in a chat room when there is an active group call */
 "There is an active group call. Tap to join."="Há uma chamada em grupo ativa. Toque para participar.";
+/* Message shown in a chat room when there is an active call */
+"There is an active call. Tap to join."="Há uma chamada ativa. Toque para participar.";
 /* Message shown in a chat room for a group call in progress displaying the duration of the call */
 "Touch to return to call %@"="Toque para voltar à chamada %@";
 /* A button label which allows the users save images/videos in the Photos app. */
@@ -1694,6 +1680,34 @@
 "Saved to Photos"="Salvo no Fotos";
 /* Text shown when an error occurs when trying to save a photo or video to Photos app */
 "Could not save Item"="Não foi possível salvar";
+/* Label in a cell where you can enable the 'Encrypted Key Rotation' */
+"Encrypted Key Rotation"="Rotação da chave de cifrado";
+/* Title shown in a cell to allow the users enable the 'Encrypted Key Rotation' */
+"Enable Encrypted Key Rotation"="Ativar a rotação da chave de cifrado";
+/* Label in a cell where you can get the chat link */
+"Get Chat Link"="Obter o link do chat";
+/* Footer text to explain what means 'Encrypted Key Rotation' */
+"Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages."="A rotação de chaves é um pouco mais segura, mas não permite criar um link para o chat, e os novos participantes não verão as mensagens anteriores.";
+/* Alert message to advice the users that to generate a chat link they need enter a group name for the chat */
+"Before you can generate a link for this room, you need to enter a group name"="Antes de poder gerar um link para este chat, você precisa digitar um nome de grupo.";
+/* Label shown in a cell where you can enable a switch to get a chat link */
+"Chat Link"="Link do chat";
+/* Message shown when there is an active chat link that can be deleted */
+"Delete Chat Link"="Deletar link do chat";
+/* Button text in public chat previews that allows the user to join the chat */
+"Join"="Entrar";
+/* Text shown in a notification to let the user know that has joined a public chat room after login or account creation */
+"You have joined %@"="You have joined %@";
+/* Users previewing a public chat */
+"Observers"="Observers";
+/* Alert message shown while deleting a chat link, warning about the consequences */
+"This conversation will no longer be accessible through the link you are about to delete."="This conversation will no longer be accessible through the link you are about to delete.";
+/* Management message shown in a chat when the user %@ enables the 'Encrypted Key Rotation' */
+"%@ enabled Encrypted Key Rotation"="%@ enabled Encrypted Key Rotation";
+/* Management message shown in a chat when the user %@ creates a public link for the chat */
+"%@ created a public link for the chat."="%@ created a public link for the chat.";
+/* Management message shown in a chat when the user %@ removes a public link for the chat */
+"%@ removed a public link for the chat."="%@ removed a public link for the chat.";
 /* Message show when a call cannot be established because there are too many participants in the group call */
 "Error. No more participants are allowed in this group call."="Você não pode participar desta chamada porque o número máximo de participantes foi alcançado.";
 /* Message show when a user cannot activate the video in a group call because the max number of videos has been reached */
@@ -1801,7 +1815,7 @@
 /* Label shown next to a feature name that can be enabled or disabled, like in 'Show Last seen...' */
 "Show"="Mostrar";
 /* Shown when viewing a 1on1 chat (at least for now), if the user is offline. */
-"Last seen %s"="Último acesso %s";
+"Last seen %s"="Último acesso: %s";
 /* Text to inform the user the 'Last seen' time of a contact is a long time ago (>= 65535 minutes) */
 "Last seen a long time ago"="Último acesso há muito tempo atrás";
 /* */
@@ -1812,3 +1826,7 @@
 "%d participants"="%d participantes";
 /* Singular of participant. 1 participant */
 "%d participant"="%d participante";
+/* Text to inform the user there is an active call and is not participating */
+"Ongoing Call"="Chamada em andamento";
+/* Text to inform the user there is an active call and is participating */
+"Call Started"="Chamada iniciada";
