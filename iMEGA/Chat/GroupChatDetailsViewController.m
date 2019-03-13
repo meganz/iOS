@@ -245,9 +245,10 @@
             numberOfRows = (self.chatRoom.ownPrivilege >= MEGAChatRoomPrivilegeRo) ? 1 : 0;
             break;
             
-        case 5:
-            numberOfRows = (self.chatRoom.ownPrivilege >= MEGAChatRoomPrivilegeModerator && self.chatRoom.isPublicChat) ? 1 : 0;
+        case 5: {
+            numberOfRows = (!self.chatRoom.isPublicChat || self.chatRoom.ownPrivilege >= MEGAChatRoomPrivilegeModerator) ? 1 : 0;
             break;
+        }
             
         case 6:
             numberOfRows = self.chatRoom.previewersCount ? 1 : 0;
@@ -306,8 +307,9 @@
             break;
                         
         case 5:
-            cell.nameLabel.text = AMLocalizedString(@"Enable Encrypted Key Rotation", @"Title show in a cell where the users can enable the 'Encrypted Key Rotation'");
+            cell.nameLabel.text = self.chatRoom.isPublicChat ? AMLocalizedString(@"Enable Encrypted Key Rotation", @"Title show in a cell where the users can enable the 'Encrypted Key Rotation'") : AMLocalizedString(@"Encrypted Key Rotation", @"Label in a cell where you can enable the 'Encrypted Key Rotation'");
             cell.leftImageView.hidden = YES;
+            cell.enableLabel.hidden = cell.userInteractionEnabled = self.chatRoom.isPublicChat;
             break;
             
         case 6:
@@ -434,7 +436,7 @@
             break;
             
         case 5:
-            height = ((self.chatRoom.ownPrivilege >= MEGAChatRoomPrivilegeModerator) && self.chatRoom.isPublicChat) ? 10.0f : 0.1f;
+            height = (!self.chatRoom.isPublicChat || self.chatRoom.ownPrivilege >= MEGAChatRoomPrivilegeModerator) ? 10.0f : 0.1f;
             break;
             
         case 6:
@@ -476,9 +478,14 @@
             height = 10.0f;
             break;
             
-        case 5:
-            height = ((self.chatRoom.ownPrivilege >= MEGAChatRoomPrivilegeModerator) && self.chatRoom.isPublicChat) ? UITableViewAutomaticDimension : 0.1f;
+        case 5: {
+            if (self.chatRoom.isPublicChat) {
+                height = (self.chatRoom.ownPrivilege >= MEGAChatRoomPrivilegeModerator) ? UITableViewAutomaticDimension : 0.1f;
+            } else {
+                height = 10.0f;
+            }
             break;
+        }
             
         case 6:
             height = self.chatRoom.previewersCount ? 10.0f : 0.1f;
@@ -498,7 +505,7 @@
 
 - (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section {
     if (section == 5 && self.chatRoom.isPublicChat && self.chatRoom.ownPrivilege >= MEGAChatRoomPrivilegeModerator) {
-        return AMLocalizedString(@"Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages.", @"Footer text to explain what means 'Encrypted Key Rotation'");
+        return [AMLocalizedString(@"Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages.", @"Footer text to explain what means 'Encrypted Key Rotation'") stringByAppendingString:@"\n"];
     }
     return nil;
 }
@@ -530,7 +537,7 @@
             break;
             
         case 5:
-            heightForRow = (self.chatRoom.ownPrivilege >= MEGAChatRoomPrivilegeModerator && self.chatRoom.isPublicChat) ? 44.0f : 0.0f;
+            heightForRow = (!self.chatRoom.isPublicChat || self.chatRoom.ownPrivilege >= MEGAChatRoomPrivilegeModerator) ? 44.0f : 0.0f;
             break;
             
         case 6:
