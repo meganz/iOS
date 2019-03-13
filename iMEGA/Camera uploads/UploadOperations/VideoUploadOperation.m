@@ -63,6 +63,11 @@
             return;
         }
         
+        if (weakSelf.isCancelled) {
+            [weakSelf finishOperationWithStatus:CameraAssetUploadStatusCancelled shouldUploadNextAsset:NO];
+            return;
+        }
+        
         NSError *error = info[PHImageErrorKey];
         if (error) {
             MEGALogError(@"[Camera Upload] %@ error when to request video %@", weakSelf, error);
