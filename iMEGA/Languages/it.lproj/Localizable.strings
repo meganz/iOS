@@ -1047,8 +1047,6 @@
 "noConversations"="Nessuna Conversazione";
 /* Empty Conversations description */
 "noConversationsDescription"="Inizia a chattare in sicurezza con i tuoi contatti utilizzando la criptazione end-to-end";
-/* Title show when the chat is disabled */
-"chatIsDisabled"="Chat disattivata";
 /* Text button shown when the chat is disabled and if tapped the chat will be enabled */
 "enable"="Attiva";
 /* Text button shown when an option is enabled, to allow to disable it. String as sort as possible. */

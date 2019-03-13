@@ -1047,8 +1047,6 @@
 "noConversations"="لا توجد محادثات";
 /* Empty Conversations description */
 "noConversationsDescription"="ابدأ بالمحادثة مع جهات الاتصال خاصتك باستخدام التشفير من طرف الى طرف";
-/* Title show when the chat is disabled */
-"chatIsDisabled"="المحادثة معطلة";
 /* Text button shown when the chat is disabled and if tapped the chat will be enabled */
 "enable"="تمكين";
 /* Text button shown when an option is enabled, to allow to disable it. String as sort as possible. */

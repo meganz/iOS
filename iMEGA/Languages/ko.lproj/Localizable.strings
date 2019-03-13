@@ -1047,8 +1047,6 @@
 "noConversations"="대화 없음";
 /* Empty Conversations description */
 "noConversationsDescription"="종단간 암호화를 통하여 당신의 연락처와 안전하게 대화를 시작하세요";
-/* Title show when the chat is disabled */
-"chatIsDisabled"="대화가 비활성화됨";
 /* Text button shown when the chat is disabled and if tapped the chat will be enabled */
 "enable"="활성화";
 /* Text button shown when an option is enabled, to allow to disable it. String as sort as possible. */
