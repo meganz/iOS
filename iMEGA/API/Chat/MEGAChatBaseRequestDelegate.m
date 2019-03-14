@@ -13,6 +13,13 @@
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
         
     if (error.type) {
+        if (request.type == MEGAChatRequestTypeChatLinkHandle && error.type == MEGAErrorTypeApiENoent) {
+            return;
+        }
+        if (request.type == MEGAChatRequestTypeLoadPreview && (error.type == MEGAErrorTypeApiEExist || request.userHandle == ~(uint64_t)0)) {
+            return;
+        }
+
         [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
         [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"%@ %@", request.requestString, error.name]];
     }
