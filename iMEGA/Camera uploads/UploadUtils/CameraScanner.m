@@ -25,7 +25,7 @@
     if (self) {
         _operationQueue = [[NSOperationQueue alloc] init];
         _operationQueue.maxConcurrentOperationCount = 1;
-        _operationQueue.qualityOfService = NSQualityOfServiceUserInitiated;
+        _operationQueue.qualityOfService = NSQualityOfServiceBackground;
         _livePhotoScanner = [[LivePhotoScanner alloc] init];
     }
     return self;

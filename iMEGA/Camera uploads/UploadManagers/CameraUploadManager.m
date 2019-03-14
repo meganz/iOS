@@ -104,7 +104,6 @@ static const NSUInteger VideoUploadBatchCount = 1;
         [self startBackgroundUploadIfPossible];
         [self.uploadRecordsCollator collateNonUploadingRecords];
         [AttributeUploadManager.shared scanLocalAttributeFilesAndRetryUploadIfNeeded];
-        [CameraUploadManager.shared startCameraUploadIfNeeded];
     });
 }
 
