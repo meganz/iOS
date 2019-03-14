@@ -100,6 +100,8 @@
 @property (nonatomic, getter=wasAppSuspended) BOOL appSuspended;
 @property (nonatomic, getter=isUpgradeVCPresented) BOOL upgradeVCPresented;
 
+@property (strong, nonatomic) dispatch_queue_t indexSerialQueue;
+
 @end
 
 @implementation AppDelegate
@@ -122,6 +124,8 @@
     MEGALogDebug(@"[App Lifecycle] Application will finish launching with options: %@", launchOptions);
     
     UIDevice.currentDevice.batteryMonitoringEnabled = YES;
+    
+    self.indexSerialQueue = dispatch_queue_create("nz.mega.spotlight.nodesIndexing", DISPATCH_QUEUE_SERIAL);
 
     [CameraUploadManager.shared setupCameraUploadWhenApplicationLaunches:application];
     
@@ -1481,7 +1485,7 @@ void uncaughtExceptionHandler(NSException *exception) {
     if (!nodeList) {
         [Helper startPendingUploadTransferIfNeeded];
     } else {
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+        dispatch_async(self.indexSerialQueue, ^{
             NSArray<MEGANode *> *nodesToIndex = [nodeList mnz_nodesArrayFromNodeList];
             MEGALogDebug(@"Spotlight indexing %tu nodes updated", nodesToIndex.count);
             for (MEGANode *node in nodesToIndex) {
@@ -1761,7 +1765,7 @@ void uncaughtExceptionHandler(NSException *exception) {
             }
             
             NSUserDefaults *sharedUserDefaults = [[NSUserDefaults alloc] initWithSuiteName:@"group.mega.ios"];
-            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+            dispatch_async(self.indexSerialQueue, ^{
                 if (![sharedUserDefaults boolForKey:@"treeCompleted"]) {
                     [self.indexer generateAndSaveTree];
                 }
