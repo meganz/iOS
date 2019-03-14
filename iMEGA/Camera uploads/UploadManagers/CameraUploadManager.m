@@ -104,11 +104,7 @@ static const NSUInteger VideoUploadBatchCount = 1;
         [self startBackgroundUploadIfPossible];
         [self.uploadRecordsCollator collateNonUploadingRecords];
         [AttributeUploadManager.shared scanLocalAttributeFilesAndRetryUploadIfNeeded];
-        MEGALogDebug(@"[Camera Upload] app launches to state %@", @(application.applicationState));
-        if (application.applicationState == UIApplicationStateBackground) {
-            MEGALogDebug(@"[Camera Upload] upload camera when app launches to background");
-            [CameraUploadManager.shared startCameraUploadIfNeeded];
-        }
+        [CameraUploadManager.shared startCameraUploadIfNeeded];
     });
 }
 
@@ -790,13 +786,17 @@ static const NSUInteger VideoUploadBatchCount = 1;
 + (void)enableBackgroundRefreshIfNeeded {
     if (CameraUploadManager.isCameraUploadEnabled) {
         MEGALogInfo(@"[Camera Upload] enable background refresh for background upload");
-        [UIApplication.sharedApplication setMinimumBackgroundFetchInterval:MinimumBackgroundRefreshInterval];
+        [NSOperationQueue.mainQueue addOperationWithBlock:^{
+            [UIApplication.sharedApplication setMinimumBackgroundFetchInterval:MinimumBackgroundRefreshInterval];
+        }];
     }
 }
 
 + (void)disableBackgroundRefresh {
     MEGALogInfo(@"[Camera Upload] disable background refresh for background upload");
-    [UIApplication.sharedApplication setMinimumBackgroundFetchInterval:UIApplicationBackgroundFetchIntervalNever];
+    [NSOperationQueue.mainQueue addOperationWithBlock:^{
+        [UIApplication.sharedApplication setMinimumBackgroundFetchInterval:UIApplicationBackgroundFetchIntervalNever];
+    }];
 }
 
 - (void)performBackgroundRefreshWithCompletion:(void (^)(UIBackgroundFetchResult))completion {
