@@ -174,8 +174,7 @@
     if (call) {
         MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:call.chatId];
         if (chatRoom.isGroup) {
-            MEGANavigationController *groupCallNavigation = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"GroupCallViewControllerNavigationID"];
-            GroupCallViewController *groupCallVC = groupCallNavigation.viewControllers.firstObject;
+            GroupCallViewController *groupCallVC = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"GroupCallViewControllerID"];
             groupCallVC.videoCall = call.hasVideoInitialCall;
             groupCallVC.chatRoom = chatRoom;
             groupCallVC.megaCallManager = self.megaCallManager;
@@ -183,17 +182,14 @@
             
             if ([UIApplication.mnz_presentingViewController isKindOfClass:CallViewController.class]) {
                 [UIApplication.mnz_presentingViewController dismissViewControllerAnimated:YES completion:^{
-                    [UIApplication.mnz_presentingViewController presentViewController:groupCallNavigation animated:YES completion:nil];
+                    [UIApplication.mnz_presentingViewController presentViewController:groupCallVC animated:YES completion:nil];
                 }];
-            } else if ([UIApplication.mnz_presentingViewController isKindOfClass:MEGANavigationController.class]) {
-                MEGANavigationController *navigation = (MEGANavigationController*)UIApplication.mnz_presentingViewController;
-                if ([navigation.topViewController isKindOfClass:GroupCallViewController.class]) {
-                    [UIApplication.mnz_presentingViewController dismissViewControllerAnimated:YES completion:^{
-                        [UIApplication.mnz_presentingViewController presentViewController:groupCallNavigation animated:YES completion:nil];
-                    }];
-                }
+            } else if ([UIApplication.mnz_presentingViewController isKindOfClass:GroupCallViewController.class]) {
+                [UIApplication.mnz_presentingViewController dismissViewControllerAnimated:YES completion:^{
+                    [UIApplication.mnz_presentingViewController presentViewController:groupCallVC animated:YES completion:nil];
+                }];
             } else {
-                [UIApplication.mnz_presentingViewController presentViewController:groupCallNavigation animated:YES completion:nil];
+                [UIApplication.mnz_presentingViewController presentViewController:groupCallVC animated:YES completion:nil];
             }
         } else {
             CallViewController *callVC = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"CallViewControllerID"];
@@ -207,13 +203,10 @@
                 [UIApplication.mnz_presentingViewController dismissViewControllerAnimated:YES completion:^{
                     [UIApplication.mnz_presentingViewController presentViewController:callVC animated:YES completion:nil];
                 }];
-            } else if ([UIApplication.mnz_presentingViewController isKindOfClass:MEGANavigationController.class]) {
-                MEGANavigationController *navigation = (MEGANavigationController*)UIApplication.mnz_presentingViewController;
-                if ([navigation.topViewController isKindOfClass:GroupCallViewController.class]) {
-                    [UIApplication.mnz_presentingViewController dismissViewControllerAnimated:YES completion:^{
-                        [UIApplication.mnz_presentingViewController presentViewController:callVC animated:YES completion:nil];
-                    }];
-                }
+            } else if ([UIApplication.mnz_presentingViewController isKindOfClass:GroupCallViewController.class]) {
+                [UIApplication.mnz_presentingViewController dismissViewControllerAnimated:YES completion:^{
+                    [UIApplication.mnz_presentingViewController presentViewController:callVC animated:YES completion:nil];
+                }];
             } else {
                 [UIApplication.mnz_presentingViewController presentViewController:callVC animated:YES completion:nil];
             }

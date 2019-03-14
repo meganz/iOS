@@ -242,14 +242,9 @@
     self.phoneBadgeImageView.hidden = YES;
     if (@available(iOS 10.0, *)) {
         if (MEGAReachabilityManager.isReachable && numCalls) {
-            MEGAHandleList *chatRoomsWithCall = [MEGASdkManager sharedMEGAChatSdk].chatCalls;
-            for (int i = 0; i < chatRoomsWithCall.size; i++) {
-                MEGAChatCall *call = [[MEGASdkManager sharedMEGAChatSdk] chatCallForChatId:[chatRoomsWithCall megaHandleAtIndex:i]];
-                if (call.status != MEGAChatCallStatusInProgress) {
-                    self.phoneBadgeImageView.hidden = NO;
-                    break;
-                }
-            }
+            MEGAHandleList *chatRoomIDsWithCallInProgress = [MEGASdkManager.sharedMEGAChatSdk chatCallsWithState:MEGAChatCallStatusInProgress];
+            self.phoneBadgeImageView.hidden = (chatRoomIDsWithCallInProgress.size > 0);
+            
             badgeValue = self.phoneBadgeImageView.hidden && unreadChats ? @"⦁" : nil;
         } else {
             badgeValue = unreadChats ? @"⦁" : nil;
@@ -281,13 +276,12 @@
         } else {
             if ([UIApplication sharedApplication].applicationState == UIApplicationStateActive) {
                 if (chatRoom.isGroup) {
-                    MEGANavigationController *groupCallNavigation = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"GroupCallViewControllerNavigationID"];
-                    GroupCallViewController *groupCallVC = groupCallNavigation.viewControllers.firstObject;
+                    GroupCallViewController *groupCallVC = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"GroupCallViewControllerID"];
                     groupCallVC.callType = CallTypeIncoming;
                     groupCallVC.videoCall = call.hasVideoInitialCall;
                     groupCallVC.chatRoom = chatRoom;
 
-                    [UIApplication.mnz_presentingViewController presentViewController:groupCallNavigation animated:YES completion:nil];
+                    [UIApplication.mnz_presentingViewController presentViewController:groupCallVC animated:YES completion:nil];
                 } else {
                     CallViewController *callVC = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"CallViewControllerID"];
                     callVC.chatRoom  = chatRoom;
@@ -323,13 +317,12 @@
         MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:call.chatId];
         
         if (chatRoom.isGroup) {
-            MEGANavigationController *groupCallNavigation = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"GroupCallViewControllerNavigationID"];
-            GroupCallViewController *groupCallVC = groupCallNavigation.viewControllers.firstObject;
+            GroupCallViewController *groupCallVC = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"GroupCallViewControllerID"];
             groupCallVC.callType = CallTypeIncoming;
             groupCallVC.videoCall = call.hasVideoInitialCall;
             groupCallVC.chatRoom = chatRoom;
             
-            [UIApplication.mnz_presentingViewController presentViewController:groupCallNavigation animated:YES completion:nil];
+            [UIApplication.mnz_presentingViewController presentViewController:groupCallVC animated:YES completion:nil];
         } else {
             CallViewController *callVC = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"CallViewControllerID"];
             callVC.chatRoom  = chatRoom;
