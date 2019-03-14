@@ -324,6 +324,8 @@ const NSUInteger kMaxMessagesToLoad = 256;
     [[MEGASdkManager sharedMEGAChatSdk] removeChatCallDelegate:self];
 
     [[MEGAStore shareInstance] insertOrUpdateChatDraftWithChatId:self.chatRoom.chatId text:self.inputToolbar.contentView.textView.text];
+    
+    [SVProgressHUD dismiss];
 }
 
 - (BOOL)hidesBottomBarWhenPushed {
@@ -452,6 +454,7 @@ const NSUInteger kMaxMessagesToLoad = 256;
     NSInteger loadMessage = [[MEGASdkManager sharedMEGAChatSdk] loadMessagesForChat:self.chatRoom.chatId count:messagesToLoad];
     switch (loadMessage) {
         case -1:
+            [SVProgressHUD show];
             MEGALogDebug(@"loadMessagesForChat: history has to be fetched from server, but we are not logged in yet");
             self.loadMessagesLater = YES;
             break;
@@ -465,6 +468,7 @@ const NSUInteger kMaxMessagesToLoad = 256;
             break;
             
         case 2:
+            [SVProgressHUD show];
             MEGALogDebug(@"loadMessagesForChat: messages will be requested to the server");
             break;
             
@@ -2630,6 +2634,9 @@ const NSUInteger kMaxMessagesToLoad = 256;
             }
         }
     } else {
+        if (!self.loadMessagesLater) {
+            [SVProgressHUD dismiss];
+        }
         if (self.isFirstLoad) {
             if (self.unreadMessages < 0 && self.unreadMessages > -kMaxMessagesToLoad) {
                 if (self.chatRoom.unreadCount < 0) {
