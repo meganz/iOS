@@ -15,6 +15,10 @@
 
 @implementation PutNodeOperation
 
+- (NSString *)description {
+    return [NSString stringWithFormat:@"%@ %@", NSStringFromClass([self class]), self.uploadInfo.savedLocalIdentifier];
+}
+
 - (instancetype)initWithUploadInfo:(AssetUploadInfo *)info transferToken:(NSData *)token completion:(PutNodeCompletionHandler)completion {
     self = [super init];
     if (self) {
@@ -27,6 +31,8 @@
 }
 
 - (void)start {
+    [super start];
+    
     if (self.isCancelled) {
         self.completion(nil, NSError.mnz_cameraUploadOperationCancelledError);
         [self finishOperation];

@@ -67,6 +67,7 @@ static NSString * const VideoAttributeImageName = @"AttributeImage";
     
     [self cancel];
     [NSNotificationCenter.defaultCenter postNotificationName:MEGACameraUploadTaskExpiredNotificationName object:nil];
+    [self finishOperationWithStatus:CameraAssetUploadStatusCancelled shouldUploadNextAsset:NO];
 }
 
 #pragma mark - start operation
@@ -184,28 +185,30 @@ static NSString * const VideoAttributeImageName = @"AttributeImage";
     }
     
     self.fileEncrypter = [[FileEncrypter alloc] initWithMediaUpload:self.uploadInfo.mediaUpload outputDirectoryURL:self.uploadInfo.encryptionDirectoryURL shouldTruncateInputFile:YES];
+    
+    __weak __typeof__(self) weakSelf = self;
     [self.fileEncrypter encryptFileAtURL:self.uploadInfo.fileURL completion:^(BOOL success, unsigned long long fileSize, NSDictionary<NSString *,NSURL *> * _Nonnull chunkURLsKeyedByUploadSuffix, NSError * _Nonnull error) {
-        if (self.isCancelled) {
-            [self finishOperationWithStatus:CameraAssetUploadStatusCancelled shouldUploadNextAsset:NO];
+        if (weakSelf.isCancelled) {
+            [weakSelf finishOperationWithStatus:CameraAssetUploadStatusCancelled shouldUploadNextAsset:NO];
             return;
         }
 
         if (success) {
-            MEGALogDebug(@"[Camera Upload] %@ file %llu encrypted to %lu, %@", self, fileSize, (unsigned long)chunkURLsKeyedByUploadSuffix.count, chunkURLsKeyedByUploadSuffix.allKeys);
-            self.uploadInfo.fileSize = fileSize;
-            self.uploadInfo.encryptedChunkURLsKeyedByUploadSuffix = chunkURLsKeyedByUploadSuffix;
-            self.uploadInfo.encryptedChunksCount = chunkURLsKeyedByUploadSuffix.count;
-            [self requestUploadURL];
+            MEGALogDebug(@"[Camera Upload] %@ file %llu encrypted to %lu, %@", weakSelf, fileSize, (unsigned long)chunkURLsKeyedByUploadSuffix.count, chunkURLsKeyedByUploadSuffix.allKeys);
+            weakSelf.uploadInfo.fileSize = fileSize;
+            weakSelf.uploadInfo.encryptedChunkURLsKeyedByUploadSuffix = chunkURLsKeyedByUploadSuffix;
+            weakSelf.uploadInfo.encryptedChunksCount = chunkURLsKeyedByUploadSuffix.count;
+            [weakSelf requestUploadURL];
         } else {
-            MEGALogError(@"[Camera Upload] %@ error when to encrypt file %@", self, error);
+            MEGALogError(@"[Camera Upload] %@ error when to encrypt file %@", weakSelf, error);
             if ([error.domain isEqualToString:CameraUploadErrorDomain] && error.code == CameraUploadErrorNoEnoughDiskFreeSpace) {
-                [self finishUploadWithNoEnoughDiskSpace];
+                [weakSelf finishUploadWithNoEnoughDiskSpace];
             } else if ([error.domain isEqualToString:NSCocoaErrorDomain] && error.code == NSFileWriteOutOfSpaceError) {
-                [self finishUploadWithNoEnoughDiskSpace];
+                [weakSelf finishUploadWithNoEnoughDiskSpace];
             } else if ([error.domain isEqualToString:CameraUploadErrorDomain] && error.code == CameraUploadErrorEncryptionCancelled) {
-                [self finishOperationWithStatus:CameraAssetUploadStatusCancelled shouldUploadNextAsset:NO];
+                [weakSelf finishOperationWithStatus:CameraAssetUploadStatusCancelled shouldUploadNextAsset:NO];
             } else {
-                [self finishOperationWithStatus:CameraAssetUploadStatusFailed shouldUploadNextAsset:YES];
+                [weakSelf finishOperationWithStatus:CameraAssetUploadStatusFailed shouldUploadNextAsset:YES];
             }
             return;
         }
@@ -320,6 +323,10 @@ static NSString * const VideoAttributeImageName = @"AttributeImage";
 #pragma mark - finish operation
 
 - (void)finishOperationWithStatus:(CameraAssetUploadStatus)status shouldUploadNextAsset:(BOOL)uploadNextAsset {
+    if (self.isFinished) {
+        return;
+    }
+    
     dispatch_sync(self.serialQueue, ^{
         if (self.isFinished) {
             return;
