@@ -55,7 +55,8 @@
 }
 
 - (void)URLSessionDidFinishEventsForBackgroundURLSession:(NSURLSession *)session {
-    MEGALogInfo(@"[Camera Upload] [App Lifecycle] Session %@ %p did finish events for background URL Session", session.configuration.identifier, session);
+    MEGALogInfo(@"[Camera Upload] Session %@ %p did finish events for background URL Session", session.configuration.identifier, session);
+    [self.manager finishEventsForBackgroundURLSession:session];
 }
 
 - (void)URLSession:(NSURLSession *)session didReceiveChallenge:(NSURLAuthenticationChallenge *)challenge completionHandler:(void (^)(NSURLSessionAuthChallengeDisposition, NSURLCredential * _Nullable))completionHandler {
