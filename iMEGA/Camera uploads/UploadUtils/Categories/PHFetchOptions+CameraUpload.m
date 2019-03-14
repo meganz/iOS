@@ -15,7 +15,7 @@
 
 + (PHFetchOptions *)mnz_fetchOptionsForLivePhoto {
     PHFetchOptions *fetchOptions = [self mnz_shardFetchOptionsForCameraUpload];
-    fetchOptions.predicate = [NSPredicate predicateWithFormat:@"(mediaSubtypes & %d) != 0", PHAssetMediaSubtypePhotoLive];
+    fetchOptions.predicate = [NSPredicate predicateWithFormat:@"(mediaType == %d) AND ((mediaSubtype & %d) == %d)", PHAssetMediaTypeImage, PHAssetMediaSubtypePhotoLive, PHAssetMediaSubtypePhotoLive];
     return fetchOptions;
 }
 
