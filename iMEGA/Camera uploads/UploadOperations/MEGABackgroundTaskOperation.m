@@ -4,7 +4,7 @@
 @interface MEGABackgroundTaskOperation ()
 
 @property (nonatomic) UIBackgroundTaskIdentifier backgroundTaskId;
-@property (weak, nonatomic) id<MEGABackgroundTaskOperationDelegate> delegate;
+@property (weak, nonatomic) id<MEGABackgroundTaskExpireDelegate> expireDelegate;
 
 @end
 
@@ -13,7 +13,7 @@
 - (instancetype)init {
     self = [super init];
     if (self) {
-        _delegate = self;
+        _expireDelegate = self;
     }
     return self;
 }
@@ -21,28 +21,17 @@
 - (void)beginBackgroundTask {
     self.backgroundTaskId = [UIApplication.sharedApplication beginBackgroundTaskWithName:NSStringFromClass([self class]) expirationHandler:^{
         MEGALogDebug(@"%@ background task expired", self);
-        [self.delegate backgroundTaskDidExpire];
+        [self.expireDelegate backgroundTaskDidExpire];
+        [self endBackgroundTaskIfNeeded];;
     }];
 }
 
 - (void)start {
     [self beginBackgroundTask];
-    [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(didReceiveApplicationDidBecomeActiveNotification) name:UIApplicationDidBecomeActiveNotification object:nil];
-}
-
-- (void)didReceiveApplicationDidBecomeActiveNotification {
-    [self endBackgroundTaskIfNeeded];
-    
-    if (self.isFinished || self.isCancelled) {
-        return;
-    }
-
-    [self beginBackgroundTask];
 }
 
 - (void)finishOperation {
     [super finishOperation];
-    [NSNotificationCenter.defaultCenter removeObserver:self];
     [self endBackgroundTaskIfNeeded];
 }
 
@@ -53,10 +42,8 @@
     }
 }
 
-#pragma mark - MEGABackgroundTaskOperationDelegate
+#pragma mark - background task expire delegate
 
-- (void)backgroundTaskDidExpire {
-    [self endBackgroundTaskIfNeeded];
-}
+- (void)backgroundTaskDidExpire { }
 
 @end

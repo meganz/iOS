@@ -1,13 +1,13 @@
 
-#import "MEGAOperation.h"
 #import "AssetUploadInfo.h"
 #import "MEGASdkManager.h"
+#import "MEGABackgroundTaskOperation.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 typedef void (^PutNodeCompletionHandler)(MEGANode  * _Nullable node, NSError * _Nullable error);
 
-@interface PutNodeOperation : MEGAOperation
+@interface PutNodeOperation : MEGABackgroundTaskOperation
 
 @property (strong, nonatomic) AssetUploadInfo *uploadInfo;
 
