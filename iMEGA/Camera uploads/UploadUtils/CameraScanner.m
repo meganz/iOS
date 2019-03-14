@@ -68,7 +68,7 @@
                     }
                     
                     if (CameraUploadManager.isLivePhotoSupported && [mediaTypes containsObject:@(PHAssetMediaTypeImage)]) {
-                        PHFetchResult *livePhotos = [PHAsset fetchAssetsWithMediaType:PHAssetMediaTypeImage options:[PHFetchOptions mnz_fetchOptionsForLivePhoto]];
+                        PHFetchResult *livePhotos = [PHAsset fetchAssetsWithOptions:[PHFetchOptions mnz_fetchOptionsForLivePhoto]];
                         [self.livePhotoScanner saveInitialLivePhotoRecordsInFetchResult:livePhotos error:&error];
                     }
                 }
@@ -96,7 +96,7 @@
                     }
                     
                     if (CameraUploadManager.isLivePhotoSupported && [mediaTypes containsObject:@(PHAssetMediaTypeImage)]) {
-                        PHFetchResult *livePhotos = [PHAsset fetchAssetsWithMediaType:PHAssetMediaTypeImage options:[PHFetchOptions mnz_fetchOptionsForLivePhoto]];
+                        PHFetchResult *livePhotos = [PHAsset fetchAssetsWithOptions:[PHFetchOptions mnz_fetchOptionsForLivePhoto]];
                         [self.livePhotoScanner scanLivePhotosInFetchResult:livePhotos error:&error];
                     }
                 }
