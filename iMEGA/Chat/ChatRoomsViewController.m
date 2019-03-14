@@ -6,6 +6,7 @@
 
 #import "DevicePermissionsHelper.h"
 #import "Helper.h"
+#import "MEGAChatGenericRequestDelegate.h"
 #import "MEGANavigationController.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGASdkManager.h"
@@ -75,8 +76,6 @@
     self.chatListItemArray = [[NSMutableArray alloc] init];
     
     [self.tableView setContentOffset:CGPointMake(0, CGRectGetHeight(self.searchController.searchBar.frame))];
-    UIBarButtonItem *backBarButton = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil];
-    self.navigationItem.backBarButtonItem = backBarButton;
     
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
 }
@@ -593,6 +592,16 @@
     MessagesViewController *messagesVC = [[MessagesViewController alloc] init];
     messagesVC.chatRoom                = chatRoom;
     
+    NSInteger unreadChats = [MEGASdkManager sharedMEGAChatSdk].unreadChats;
+    if (chatRoom.unreadCount) {
+        unreadChats -= 1;
+    }
+    
+    NSString *unreadChatsString = unreadChats ? [NSString stringWithFormat:@"(%td)", unreadChats] : @"";
+    
+    UIBarButtonItem *backBarButton = [[UIBarButtonItem alloc] initWithTitle:unreadChatsString style:UIBarButtonItemStylePlain target:nil action:nil];
+    self.navigationItem.backBarButtonItem = backBarButton;
+    
     [self.navigationController pushViewController:messagesVC animated:YES];
 }
 
@@ -672,7 +681,8 @@
     ContactsViewController *contactsVC = navigationController.viewControllers.firstObject;
     contactsVC.contactsMode = ContactsModeChatStartConversation;
     MessagesViewController *messagesVC = [[MessagesViewController alloc] init];
-    contactsVC.userSelected = ^void(NSArray *users, NSString *groupName) {
+    
+    contactsVC.userSelected = ^void(NSArray *users) {
         if (users.count == 1) {
             MEGAUser *user = [users objectAtIndex:0];
             MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomByUser:user.handle];
@@ -698,14 +708,18 @@
                 }];
                 [[MEGASdkManager sharedMEGAChatSdk] createChatGroup:NO peers:peerList delegate:createChatGroupRequestDelegate];
             }
-        } else {
-            MEGAChatPeerList *peerList = [[MEGAChatPeerList alloc] init];
-            
-            for (NSInteger i = 0; i < users.count; i++) {
-                MEGAUser *user = [users objectAtIndex:i];
-                [peerList addPeerWithHandle:user.handle privilege:2];
-            }
-            
+        }
+    };
+    
+    contactsVC.createGroupChat = ^void(NSArray *users, NSString *groupName, BOOL keyRotation, BOOL getChatLink) {
+        MEGAChatPeerList *peerList = [[MEGAChatPeerList alloc] init];
+        
+        for (NSInteger i = 0; i < users.count; i++) {
+            MEGAUser *user = [users objectAtIndex:i];
+            [peerList addPeerWithHandle:user.handle privilege:2];
+        }
+        
+        if (keyRotation) {
             MEGAChatCreateChatGroupRequestDelegate *createChatGroupRequestDelegate = [[MEGAChatCreateChatGroupRequestDelegate alloc] initWithCompletion:^(MEGAChatRoom *chatRoom) {
                 messagesVC.chatRoom = chatRoom;
                 if (groupName) {
@@ -716,6 +730,21 @@
                 }
             }];
             [[MEGASdkManager sharedMEGAChatSdk] createChatGroup:YES peers:peerList delegate:createChatGroupRequestDelegate];
+        } else {
+            MEGAChatCreateChatGroupRequestDelegate *createChatGroupRequestDelegate = [[MEGAChatCreateChatGroupRequestDelegate alloc] initWithCompletion:^(MEGAChatRoom *chatRoom) {
+                messagesVC.chatRoom = chatRoom;
+                if (getChatLink) {
+                    MEGAChatGenericRequestDelegate *delegate = [[MEGAChatGenericRequestDelegate alloc] initWithCompletion:^(MEGAChatRequest *request, MEGAChatError *error) {
+                        if (!error.type) {
+                            UIPasteboard.generalPasteboard.string = request.text;
+                            [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"linkCopied", @"Message shown when the link has been copied to the pasteboard")];
+                            [self.navigationController pushViewController:messagesVC animated:YES];
+                        }
+                    }];
+                    [[MEGASdkManager sharedMEGAChatSdk] createChatLink:chatRoom.chatId delegate:delegate];
+                }
+            }];
+            [[MEGASdkManager sharedMEGAChatSdk] createPublicChatWithPeers:peerList title:groupName delegate:createChatGroupRequestDelegate];
         }
     };
     

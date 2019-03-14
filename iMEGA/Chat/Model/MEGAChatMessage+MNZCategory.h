@@ -14,13 +14,13 @@ typedef NS_ENUM(NSInteger, MEGAChatMessageWarningDialog) {
 
 @interface MEGAChatMessage (MNZCategory) <JSQMessageData>
 
-@property (copy, nonatomic) MEGAChatRoom *chatRoom;
+@property (nonatomic) uint64_t chatId;
 @property (copy, nonatomic) NSAttributedString *attributedText;
 @property (nonatomic) MEGAChatMessageWarningDialog warningDialog;
 @property (copy, nonatomic) NSURL *MEGALink;
 @property (copy, nonatomic) MEGANode *node;
-@property (copy, nonatomic) NSString *nodeDetails;
-@property (copy, nonatomic) NSNumber *nodeSize;
+@property (copy, nonatomic) NSString *richString;
+@property (copy, nonatomic) NSNumber *richNumber;
 
 - (BOOL)containsMEGALink;
 - (BOOL)shouldShowForwardAccessory;

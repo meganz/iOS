@@ -1,8 +1,8 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-#import "MEGAIndexer.h"
 #import "MEGAChatMessage.h"
+#import "MEGAIndexer.h"
 #import "MEGASdk.h"
 
 #define kIsEraseAllLocalDataEnabled @"IsEraseAllLocalDataEnabled"

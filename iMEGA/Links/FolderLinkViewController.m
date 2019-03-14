@@ -555,6 +555,7 @@
         } else {
             [MEGALinkManager.nodesFromLinkMutableArray addObject:self.parentNode];
         }
+        
         MEGALinkManager.selectedOption = LinkOptionDownloadFolderOrNodes;
         
         [self.navigationController pushViewController:[OnboardingViewController instanciateOnboardingWithType:OnboardingTypeDefault] animated:YES];
@@ -587,6 +588,7 @@
             }
             [MEGALinkManager.nodesFromLinkMutableArray addObject:self.parentNode];
         }
+        
         MEGALinkManager.selectedOption = LinkOptionImportFolderOrNodes;
         
         [self.navigationController pushViewController:[OnboardingViewController instanciateOnboardingWithType:OnboardingTypeDefault] animated:YES];

@@ -48,10 +48,11 @@
 
 #import "MEGAChatCreateChatGroupRequestDelegate.h"
 #import "MEGAChatNotificationDelegate.h"
-#import "MEGALocalNotificationManager.h"
+#import "MEGAChatGenericRequestDelegate.h"
 #import "MEGACreateAccountRequestDelegate.h"
 #import "MEGAGetAttrUserRequestDelegate.h"
 #import "MEGAInviteContactRequestDelegate.h"
+#import "MEGALocalNotificationManager.h"
 #import "MEGALoginRequestDelegate.h"
 #import "MEGAShowPasswordReminderRequestDelegate.h"
 #import "CameraUploadManager+Settings.h"
@@ -1711,7 +1712,9 @@ void uncaughtExceptionHandler(NSException *exception) {
             } else {
                 isAccountFirstLogin = YES;
                 self.newAccount = (MEGALinkManager.urlType == URLTypeConfirmationLink);
-                [MEGALinkManager resetLinkAndURLType];
+                if (MEGALinkManager.selectedOption != LinkOptionJoinChatLink) {
+                    [MEGALinkManager resetLinkAndURLType];
+                }
             }
             [[MEGASdkManager sharedMEGASdk] fetchNodes];
             break;
@@ -1827,11 +1830,11 @@ void uncaughtExceptionHandler(NSException *exception) {
                     }
                 } else {
                     if (request.paramType == MEGAUserAttributeFirstname) {
-                        [[MEGAStore shareInstance] insertUserWithUserHandle:~(uint64_t)0 firstname:request.text lastname:nil email:request.email];
+                        [[MEGAStore shareInstance] insertUserWithUserHandle:[MEGASdk handleForBase64UserHandle:request.email] firstname:request.text lastname:nil email:request.email];
                     }
                     
                     if (request.paramType == MEGAUserAttributeLastname) {
-                        [[MEGAStore shareInstance] insertUserWithUserHandle:~(uint64_t)0 firstname:nil lastname:request.text email:request.email];
+                        [[MEGAStore shareInstance] insertUserWithUserHandle:[MEGASdk handleForBase64UserHandle:request.email] firstname:nil lastname:request.text email:request.email];
                     }
                 }
             }
