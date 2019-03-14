@@ -7,6 +7,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (PHFetchOptions *)mnz_fetchOptionsForCameraUpload;
 
++ (PHFetchOptions *)mnz_fetchOptionsForLivePhoto;
+
 + (PHFetchOptions *)mnz_fetchOptionsForCameraUploadWithMediaTypes:(NSArray<NSNumber *> *)mediaTypes;
 
 @end

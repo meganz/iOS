@@ -8,11 +8,22 @@
 }
 
 + (PHFetchOptions *)mnz_fetchOptionsForCameraUploadWithMediaTypes:(NSArray<NSNumber *> *)mediaTypes {
+    PHFetchOptions *fetchOptions = [self mnz_shardFetchOptionsForCameraUpload];
+    fetchOptions.predicate = [NSPredicate predicateWithFormat:@"mediaType IN %@", mediaTypes];
+    return fetchOptions;
+}
+
++ (PHFetchOptions *)mnz_fetchOptionsForLivePhoto {
+    PHFetchOptions *fetchOptions = [self mnz_shardFetchOptionsForCameraUpload];
+    fetchOptions.predicate = [NSPredicate predicateWithFormat:@"(mediaSubtypes & %d) != 0", PHAssetMediaSubtypePhotoLive];
+    return fetchOptions;
+}
+
++ (PHFetchOptions *)mnz_shardFetchOptionsForCameraUpload {
     PHFetchOptions *fetchOptions = [[PHFetchOptions alloc] init];
     fetchOptions.includeAssetSourceTypes = PHAssetSourceTypeUserLibrary | PHAssetSourceTypeCloudShared | PHAssetSourceTypeiTunesSynced;
     fetchOptions.includeHiddenAssets = YES;
     fetchOptions.includeAllBurstAssets = YES;
-    fetchOptions.predicate = [NSPredicate predicateWithFormat:@"mediaType IN %@", mediaTypes];
     return fetchOptions;
 }
 
