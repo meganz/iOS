@@ -1655,7 +1655,7 @@
 /* New server-side rubbish-bin cleaning scheduler description (for Free users) */
 "The Rubbish Bin is cleaned for you automatically. The minimum period is 7 days and your maximum period is 30 days."="Çöp kutusu sizin yerinize otomatik olarak temizlendi. Asgari süre 7 gündür ve azami süre 30 gündür.";
 /* New server-side rubbish-bin cleaning scheduler description (for PRO users) */
-"The Rubbish Bin can be cleaned for you automatically. The minimum period is 7 days."="Çöp kutusu sizin yerinize otomatik olarak temizlenebilir. Asgari süre 7 gündür.";
+"The Rubbish Bin can be cleaned for you automatically. The minimum period is 7 days."="Çöp kutusu sizin yerinize otomatik olarak temizlenebilir.";
 /* Description shown when you try to disable the feature Rubbish-Bin Cleaning Scheduler and you are a free user */
 "To disable the Rubbish-Bin Cleaning Scheduler or set a longer retention period, you need to subscribe to a PRO plan."="Çöp Kovası Temizleme Planlayıcısını devre dışı bırakmak veya daha uzun bir saklama süresi ayarlamak için bir PRO planına abone olmanız gerekir.";
 /* Confirmation dialog for the button that logs the user out of all sessions except the current one. */
@@ -1697,17 +1697,17 @@
 /* Button text in public chat previews that allows the user to join the chat */
 "Join"="Katıl";
 /* Text shown in a notification to let the user know that has joined a public chat room after login or account creation */
-"You have joined %@"="You have joined %@";
+"You have joined %@"="%@ sohbetine katıldınız";
 /* Users previewing a public chat */
-"Observers"="Observers";
+"Observers"="Gözlemciler";
 /* Alert message shown while deleting a chat link, warning about the consequences */
-"This conversation will no longer be accessible through the link you are about to delete."="This conversation will no longer be accessible through the link you are about to delete.";
+"This conversation will no longer be accessible through the link you are about to delete."="This conversation will no longer be accessible through the public link once it has been removed.";
 /* Management message shown in a chat when the user %@ enables the 'Encrypted Key Rotation' */
-"%@ enabled Encrypted Key Rotation"="%@ enabled Encrypted Key Rotation";
+"%@ enabled Encrypted Key Rotation"="%@ Şifrelenmiş Anahtar Döngüsünü etkinleştirdi";
 /* Management message shown in a chat when the user %@ creates a public link for the chat */
-"%@ created a public link for the chat."="%@ created a public link for the chat.";
+"%@ created a public link for the chat."="%@ sohbet için herkese açık bağlantı oluşturdu.";
 /* Management message shown in a chat when the user %@ removes a public link for the chat */
-"%@ removed a public link for the chat."="%@ removed a public link for the chat.";
+"%@ removed a public link for the chat."="%@ sohbet için herkese açık bir bağlantıyı kaldırdı.";
 /* Message show when a call cannot be established because there are too many participants in the group call */
 "Error. No more participants are allowed in this group call."="Bu arama azami katılımcı sayısına eriştiği için katılmanıza izin verilmiyor.";
 /* Message show when a user cannot activate the video in a group call because the max number of videos has been reached */

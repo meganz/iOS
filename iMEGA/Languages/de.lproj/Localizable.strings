@@ -1655,7 +1655,7 @@
 /* New server-side rubbish-bin cleaning scheduler description (for Free users) */
 "The Rubbish Bin is cleaned for you automatically. The minimum period is 7 days and your maximum period is 30 days."="The Rubbish Bin is cleared for you automatically. The minimum period is 7 days and the maximum period is 30 days.";
 /* New server-side rubbish-bin cleaning scheduler description (for PRO users) */
-"The Rubbish Bin can be cleaned for you automatically. The minimum period is 7 days."="Der Papierkorb wird automatisch für Sie geleert. Die Mindestaufbewahrungsfrist für gelöschte Dateien und Ordner beträgt sieben Tage.";
+"The Rubbish Bin can be cleaned for you automatically. The minimum period is 7 days."="The Rubbish Bin can be cleared for you automatically.";
 /* Description shown when you try to disable the feature Rubbish-Bin Cleaning Scheduler and you are a free user */
 "To disable the Rubbish-Bin Cleaning Scheduler or set a longer retention period, you need to subscribe to a PRO plan."="Eine automatische Leerung nach mehr als 30 Tagen (oder das Abschalten derselben) erfordert PRO-Status.";
 /* Confirmation dialog for the button that logs the user out of all sessions except the current one. */
@@ -1701,7 +1701,7 @@
 /* Users previewing a public chat */
 "Observers"="Observers";
 /* Alert message shown while deleting a chat link, warning about the consequences */
-"This conversation will no longer be accessible through the link you are about to delete."="This conversation will no longer be accessible through the link you are about to delete.";
+"This conversation will no longer be accessible through the link you are about to delete."="This conversation will no longer be accessible through the public link once it has been removed.";
 /* Management message shown in a chat when the user %@ enables the 'Encrypted Key Rotation' */
 "%@ enabled Encrypted Key Rotation"="%@ enabled Encrypted Key Rotation";
 /* Management message shown in a chat when the user %@ creates a public link for the chat */

@@ -27,7 +27,7 @@
 /* Alert title to attract attention */
 "attention"="Attention";
 /* Alert message to remember that MEGA app needs permission to use the Camera to take a photo or video and it doesn't have it */
-"cameraPermissions"="Veuillez donner à l'appli MEGA la permission d'accéder à votre caméra dans Réglages";
+"cameraPermissions"="Veuillez donner à l’appli MEGA la permission d’accéder à votre appareil photo dans vos Réglages";
 /* Alert message to notify that MEGA video calls needs the Camera permission and the call will end*/
 "cameraPermissionsInCall"="Veuillez donner à l’appli MEGA la permission d’accéder à votre caméra. Si vous poursuivez, l’appel sera interrompu par le redémarrage de l’appli.";
 /* Alert message to remember that MEGA app needs permission to use the Microphone to make calls and record videos and it doesn't have it */
@@ -431,7 +431,7 @@
 /* Title for the action that allows you to rename a file or folder  */
 "rename"="Renommer";
 /* Hint text to suggest that the user have to write the new name for the file or folder */
-"renameNodeMessage"="Saisir le nouveau nom";
+"renameNodeMessage"="Saisissez le nouveau nom";
 /* Title for the action that allows you to 'Move to the Rubbish Bin' files or folders */
 "moveToTheRubbishBin"="Déplacer vers la corbeille";
 /* Alert message to confirm if the user wants to move to the Rubbish Bin '1 file' */
@@ -727,21 +727,21 @@
 /* Alert title shown on the Rubbish Bin when you want to remove some files and folders of your MEGA account */
 "removeNodeFromRubbishBinTitle"="Confirmer la suppression";
 /* Alert message shown on the Rubbish Bin when you want to remove '1 file' */
-"removeFileToRubbishBinMessage"="Vous êtes sur le point de supprimer 1 fichier de façon permanente. Voulez-vous continuer ? (Cette action est irréversible.)";
+"removeFileToRubbishBinMessage"="Vous êtes sur le point de supprimer définitivement 1 fichier. Souhaitez-vous continuer ? (Cette action est irréversible.)";
 /* Alert message shown on the Rubbish Bin when you want to remove "{1+} files" */
-"removeFilesToRubbishBinMessage"="Vous êtes sur le point de supprimer %d fichiers de façon permanente. Voulez-vous continuer ? (Cette action est irréversible.)";
+"removeFilesToRubbishBinMessage"="Vous êtes sur le point de supprimer définitivement %d fichiers. Souhaitez-vous continuer ? (Cette action est irréversible.)";
 /* Alert message shown on the Rubbish Bin when you want to remove '1 folder' */
-"removeFolderToRubbishBinMessage"="Vous êtes sur le point de supprimer 1 dossier de façon permanente. Voulez-vous continuer ? (Cette action est irréversible.)";
+"removeFolderToRubbishBinMessage"="Vous êtes sur le point de supprimer définitivement 1 dossier. Souhaitez-vous continuer ? (Cette action est irréversible.)";
 /* Alert message shown on the Rubbish Bin when you want to remove "{1+} folders" */
-"removeFoldersToRubbishBinMessage"="Vous êtes sur le point de supprimer %d fichiers de façon permanente. Voulez-vous continuer ? (Cette action est irréversible.)";
+"removeFoldersToRubbishBinMessage"="Vous êtes sur le point de supprimer définitivement %d dossiers. Souhaitez-vous continuer ? (Cette action est irréversible.)";
 /* Alert message shown on the Rubbish Bin when you want to remove "1 file and 1 folder" */
-"removeFileFolderToRubbishBinMessage"="Vous êtes sur le point de supprimer 1 fichier et 1 dossier de façon permanente. Voulez-vous poursuivre ? (Cette action est irréversible.)";
+"removeFileFolderToRubbishBinMessage"="Vous êtes sur le point de supprimer définitivement 1 fichier et 1 dossier. Souhaitez-vous continuer ? (Cette action est irréversible.)";
 /* Alert message shown on the Rubbish Bin when you want to remove "1 file and {1+} folders" */
-"removeFileFoldersToRubbishBinMessage"="Vous êtes sur le point de supprimer 1 fichier et %d dossiers de façon permanente. Voulez-vous poursuivre ? (Cette action est irréversible.)";
+"removeFileFoldersToRubbishBinMessage"="Vous êtes sur le point de supprimer définitivement 1 fichier et %d dossiers. Souhaitez-vous continuer ? (Cette action est irréversible.)";
 /* Alert message shown on the Rubbish Bin when you want to remove "{1+} files and 1 folder" */
-"removeFilesFolderToRubbishBinMessage"="Vous êtes sur le point de supprimer %d fichiers et 1 dossier de façon permanente. Voulez-vous poursuivre ? (Cette action est irréversible.)";
+"removeFilesFolderToRubbishBinMessage"="Vous êtes sur le point de supprimer définitivement %d fichiers et 1 dossier. Souhaitez-vous continuer ? (Cette action est irréversible.)";
 /* Alert message shown on the Rubbish Bin when you want to remove "[A] = {1+} files and [B] = {1+} folders */
-"removeFilesFoldersToRubbishBinMessage"="Vous êtes sur le point de supprimer [A] fichiers et [B] dossiers de façon permanente. Voulez-vous poursuivre ? (Cette action est irréversible.)";
+"removeFilesFoldersToRubbishBinMessage"="Vous êtes sur le point de supprimer définitivement [A] fichiers et [B] dossiers. Souhaitez-vous continuer ? (Cette action est irréversible.)";
 /* Success message shown when 1 file has been removed from MEGA */
 "fileRemovedToRubbishBinMessage"="1 fichier a été supprimé de MEGA";
 /* Success message shown when {1+} files have been removed from MEGA */
@@ -763,7 +763,7 @@
 /* Hint text to suggest that the user have to write the new password on it */
 "newPassword"="Nouveau mot de passe";
 /* Hint text where the user have to re-write the new password to confirm it */
-"confirmPassword"="Confirmer le mot de passe";
+"confirmPassword"="Confirmez le mot de passe";
 /* Success message shown when the password has been changed */
 "passwordChanged"="Votre mot de passe a été changé.";
 /* An option to reset the password. */
@@ -798,7 +798,7 @@
 /* Button text for the user to confirm their change of email address. */
 "confirmEmail"="Confirmer l'adresse courriel";
 /* Hint text where the user have to re-write the new email to confirm it */
-"confirmNewEmail"="Confirmer la nouvelle adresse courriel";
+"confirmNewEmail"="Confirmez la nouvelle adresse courriel";
 /* The title of the alert dialog to change the email associated to an account. */
 "changeEmail"="Changer l’adresse courriel";
 /* Error message shown when the users tryes to change his/her email and writes the current one as the new one. */
@@ -998,7 +998,7 @@
 /* Error message shown when the purchase has failed */
 "wrongPurchase"="L'ACHAT A ÉCHOUÉ  %@ (%ld)";
 /* Error message shown the In App Purchase is disabled in the device Settings */
-"appPurchaseDisabled"="Les achats intégrés sont désactivés, veuillez les activer dans les réglages d'iOS";
+"appPurchaseDisabled"="Les achats intégrés sont désactivés, veuillez les activer dans les réglages d’iOS";
 /* Error message shown when the selected product doesn't exist */
 "productNotFound"="Le produit %@ est introuvable, veuillez contacter ios@mega.nz";
 /* Alert title to remenber the user that needs to enable purchases */
@@ -1012,7 +1012,7 @@
 /* "Yearly" subscriptions */
 "yearly"="Annuel";
 /* Alert title shown when a selected plan is not available at that moment on the App store */
-"productNotAvailable"="Cet élément d'achat intégré n'est pas proposé dans la logithèque App Store pour l'instant. Veuillez ressayer plus tard.";
+"productNotAvailable"="Cet élément d’achat intégré n’est pas proposé dans la logithèque App Store pour l’instant. Veuillez ressayer plus tard.";
 /* Alert title shown when the user has purchase correctly some plan */
 "thankYou_title"="Merci";
 /* Alert message shown when a purchase was restored succesfully */
@@ -1030,11 +1030,11 @@
 /* Alert message shown when the restoring process has stopped for some reason */
 "failedRestore_message"="Soit la demande a été annulée, soit l'achat préalable n'a pas pu être restauré. Veuillez ressayer plus tard ou contacter ios@mega.nz.";
 /* Alert title shown when the DEBUG mode is enabled */
-"enableDebugMode_title"="Activer le mode DÉBOGAGE";
+"enableDebugMode_title"="Activer le mode de DÉBOGAGE";
 /* Alert message shown when the DEBUG mode is enabled */
 "enableDebugMode_message"="Un journal sera créé dans la section Hors ligne (MEGAiOS.log). Les journaux peuvent contenir des renseignements associés à votre compte.";
 /* Alert title shown when the DEBUG mode is disabled */
-"disableDebugMode_title"="Désactiver le mode DÉBOGAGE";
+"disableDebugMode_title"="Désactiver le mode de DÉBOGAGE";
 /* Alert message shown when the DEBUG mode is disabled */
 "disableDebugMode_message"="Le journal (MEGAiOS.log) sera supprimé de la section Hors ligne.";
 /* Alert message shown when the user remove one item from the Offline section */
@@ -1150,7 +1150,7 @@
 /* Title of the action that allows you to change the avatar of a group chat. */
 "changeGroupAvatar"="Changer l’avatar du groupe";
 /* Text used as hint to give the user information to write a name for the group chat. */
-"enterGroupName"="Saisir le nom du groupe";
+"enterGroupName"="Saisissez le nom du groupe";
 /* A button label. The button allows the user to leave the group conversation. */
 "leave"="Quitter";
 /* Top menu option which opens more menu options in a context menu. */
@@ -1222,7 +1222,7 @@
 /* */
 "never"="Jamais";
 /* After several times (right now set to 3) that the user may had decided to click \"Not now\" (for when being asked if he/she wants a URL preview to be generated for a link, posted in a chat room), we change the \"Not now\" button to \"Never\". If the user clicks it, we ask for one final time - to ensure he wants to not be asked for this anymore and tell him that he can do that in Settings. */
-"richPreviewsConfirmation"="Vous êtes sur le point de désactiver les aperçus d’URL enrichis en permanence. Vous pourrez réactiver les aperçus d’URL enrichis dans vos paramètres. Souhaitez-vous poursuivre ?";
+"richPreviewsConfirmation"="Vous êtes sur le point de désactiver définitivement les aperçus d’URL enrichis. Vous pourrez réactiver les aperçus d’URL enrichis dans vos paramètres. Souhaitez-vous poursuivre ?";
 /* Once a preview is generated for a message which contains URLs, the user can remove it. Same button is also shown during loading of the preview - and would cancel the loading (text of the button is the same in both cases). */
 "removePreview"="Supprimer l’aperçu";
 /* */
@@ -1309,7 +1309,7 @@
 /* Label to show that an error related with an Incomplete SDK operation. */
 "Incomplete"="Non terminée";
 /* Label to show that an error related with the decryption process of a node occurs during a SDK operation. */
-"Invalid key/Decryption error"="Clé invalide / Erreur de déchiffrement";
+"Invalid key/Decryption error"="Clé invalide/Erreur de déchiffrement";
 /* Label to show that an error related with a bad session ID occurs during a SDK operation. */
 "Bad session ID"="ID de session erroné";
 /* Label to show that an error related with a blocked account occurs during a SDK operation. */
@@ -1397,7 +1397,7 @@
 /* Segmented control title for view that allows the user to scan QR codes. String as short as possible. */
 "scanCode"="Balayer un code";
 /* Label that encourage the user to line the QR to scan with the camera */
-"lineCodeWithCamera"="Aligner le code QR pour le balayer avec l’appareil photo de votre appareil";
+"lineCodeWithCamera"="Alignez le code QR pour le balayer avec l’appareil photo de votre appareil";
 /* Error text shown when the user scans a QR that is not valid. String as short as possible. */
 "invalidCode"="Code invalide";
 /* Success text shown in a label when the user scans a valid QR. String as short as possible. */
@@ -1655,7 +1655,7 @@
 /* New server-side rubbish-bin cleaning scheduler description (for Free users) */
 "The Rubbish Bin is cleaned for you automatically. The minimum period is 7 days and your maximum period is 30 days."="La corbeille est vidée pour vous automatiquement, au minimum tous les 7 jours et au maximum tous les 30 jours.";
 /* New server-side rubbish-bin cleaning scheduler description (for PRO users) */
-"The Rubbish Bin can be cleaned for you automatically. The minimum period is 7 days."="La corbeille peut être vidée pour vous automatiquement. La période minimale est de 7 jours.";
+"The Rubbish Bin can be cleaned for you automatically. The minimum period is 7 days."="La corbeille peut être vidée pour vous automatiquement.";
 /* Description shown when you try to disable the feature Rubbish-Bin Cleaning Scheduler and you are a free user */
 "To disable the Rubbish-Bin Cleaning Scheduler or set a longer retention period, you need to subscribe to a PRO plan."="Pour désactiver le programmateur de vidage de la corbeille ou pour définir une période de rétention plus longue, vous devez détenir un abonnement PRO.";
 /* Confirmation dialog for the button that logs the user out of all sessions except the current one. */
@@ -1701,7 +1701,7 @@
 /* Users previewing a public chat */
 "Observers"="Observers";
 /* Alert message shown while deleting a chat link, warning about the consequences */
-"This conversation will no longer be accessible through the link you are about to delete."="This conversation will no longer be accessible through the link you are about to delete.";
+"This conversation will no longer be accessible through the link you are about to delete."="This conversation will no longer be accessible through the public link once it has been removed.";
 /* Management message shown in a chat when the user %@ enables the 'Encrypted Key Rotation' */
 "%@ enabled Encrypted Key Rotation"="%@ enabled Encrypted Key Rotation";
 /* Management message shown in a chat when the user %@ creates a public link for the chat */
