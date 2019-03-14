@@ -51,6 +51,7 @@ typedef NS_ENUM(NSInteger, PreviewConcurrentUploadCount) {
         _previewUploadOperationQueue = [[NSOperationQueue alloc] init];
         _previewUploadOperationQueue.qualityOfService = NSQualityOfServiceBackground;
         _previewUploadOperationQueue.name = @"previewUploadOperationQueue";
+        _previewUploadOperationQueue.maxConcurrentOperationCount = PreviewConcurrentUploadCountWhenThumbnailsAreUploading;
         
         _coordinatesUploadOperationQueue = [[NSOperationQueue alloc] init];
         _coordinatesUploadOperationQueue.qualityOfService = NSQualityOfServiceUtility;
@@ -58,7 +59,7 @@ typedef NS_ENUM(NSInteger, PreviewConcurrentUploadCount) {
         _coordinatesUploadOperationQueue.name = @"coordinatesUploadOperationQueue";
         
         _attributeScanQueue = [[NSOperationQueue alloc] init];
-        _attributeScanQueue.qualityOfService = NSQualityOfServiceUtility;
+        _attributeScanQueue.qualityOfService = NSQualityOfServiceBackground;
         _attributeScanQueue.maxConcurrentOperationCount = 1;
     }
     return self;
