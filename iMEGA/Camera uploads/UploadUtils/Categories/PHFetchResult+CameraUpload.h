@@ -16,10 +16,10 @@ NS_ASSUME_NONNULL_BEGIN
  @param records the saved upload records
  @return an array of PHAsset object
  */
-- (NSArray<PHAsset *> *)findNewAssetsByUploadRecords:(NSArray<MOAssetUploadRecord *> *)records;
+- (NSArray<PHAsset *> *)findNewAssetsBySortedUploadRecords:(NSArray<MOAssetUploadRecord *> *)records;
 
 
-- (NSArray<PHAsset *> *)findNewLivePhotoAssetsByUploadRecords:(NSArray<MOAssetUploadRecord *> *)records;
+- (NSArray<PHAsset *> *)findNewLivePhotoAssetsBySortedUploadRecords:(NSArray<MOAssetUploadRecord *> *)records;
 
 @end
 
