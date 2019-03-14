@@ -70,20 +70,18 @@
             isExportedSuccessfully = CGImageDestinationFinalize(destination);
             CFRelease(destination);
         } else {
-            CFStringRef keys[3];
-            CFTypeRef values[3];
-            keys[0] = kCGImageMetadataShouldExcludeGPS;
-            values[0] = shouldStripGPSInfo ? kCFBooleanTrue : kCFBooleanFalse;
-            keys[1] = kCGImageDestinationMetadata;
             CGImageMetadataRef sourceMetadata = CGImageSourceCopyMetadataAtIndex(source, 0, NULL);
-            values[1] = sourceMetadata;
-            keys[2] = kCGImageDestinationMergeMetadata;
-            values[2] = kCFBooleanTrue;
-           
-            CFDictionaryRef options = CFDictionaryCreate(NULL, (const void **)keys, (const void **)values, 3, &kCFCopyStringDictionaryKeyCallBacks, &kCFTypeDictionaryValueCallBacks);
-            isExportedSuccessfully = CGImageDestinationCopyImageSource(destination, source, options, NULL);
-            CFRelease(sourceMetadata);
-            CFRelease(options);
+            if (sourceMetadata) {
+                CFMutableDictionaryRef options = CFDictionaryCreateMutable(NULL, 2, &kCFCopyStringDictionaryKeyCallBacks, &kCFTypeDictionaryValueCallBacks);
+                CFDictionaryAddValue(options, kCGImageMetadataShouldExcludeGPS, shouldStripGPSInfo ? kCFBooleanTrue : kCFBooleanFalse);
+                CFDictionaryAddValue(options, kCGImageDestinationMetadata, sourceMetadata);
+                isExportedSuccessfully = CGImageDestinationCopyImageSource(destination, source, options, NULL);
+                CFRelease(sourceMetadata);
+                CFRelease(options);
+            } else {
+                isExportedSuccessfully = CGImageDestinationCopyImageSource(destination, source, NULL, NULL);
+            }
+
             CFRelease(destination);
 
             if (!isExportedSuccessfully) {
