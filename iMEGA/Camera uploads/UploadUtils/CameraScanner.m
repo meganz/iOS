@@ -74,13 +74,13 @@
                 }
             } else {
                 @autoreleasepool {
-                    NSArray<MOAssetUploadRecord *> *records = [CameraUploadRecordManager.shared fetchUploadRecordsByMediaTypes:mediaTypes includeAdditionalMediaSubtypes:NO error:&error];
+                    NSArray<MOAssetUploadRecord *> *records = [CameraUploadRecordManager.shared fetchUploadRecordsByMediaTypes:mediaTypes includeAdditionalMediaSubtypes:NO sortByIdentifier:YES error:&error];
                     if (error) {
                         return;
                     }
                     
                     MEGALogDebug(@"[Camera Upload] saved upload record count %lu", (unsigned long)records.count);
-                    NSArray<PHAsset *> *newAssets = [self.fetchResult findNewAssetsByUploadRecords:records];
+                    NSArray<PHAsset *> *newAssets = [self.fetchResult findNewAssetsBySortedUploadRecords:records];
                     MEGALogDebug(@"[Camera Upload] new assets scanned count %lu", (unsigned long)newAssets.count);
                     if (newAssets.count > 0) {
                         [self createUploadRecordsByAssets:newAssets shouldCheckExistence:NO];

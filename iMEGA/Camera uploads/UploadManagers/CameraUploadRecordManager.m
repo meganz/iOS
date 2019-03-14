@@ -173,7 +173,7 @@ static const NSUInteger MaximumUploadRetryPerLoginCount = 800;
 
 #pragma mark - fetch records by media types
 
-- (NSArray<MOAssetUploadRecord *> *)fetchUploadRecordsByMediaTypes:(NSArray<NSNumber *> *)mediaTypes includeAdditionalMediaSubtypes:(BOOL)includeAdditionalMediaSubtypes error:(NSError * _Nullable __autoreleasing *)error {
+- (NSArray<MOAssetUploadRecord *> *)fetchUploadRecordsByMediaTypes:(NSArray<NSNumber *> *)mediaTypes includeAdditionalMediaSubtypes:(BOOL)includeAdditionalMediaSubtypes sortByIdentifier:(BOOL)sortByIdentifier error:(NSError * _Nullable __autoreleasing *)error {
     NSFetchRequest *request = MOAssetUploadRecord.fetchRequest;
     request.returnsObjectsAsFaults = NO;
     NSPredicate *mediaTypePredicate = [NSPredicate predicateWithFormat:@"mediaType IN %@", mediaTypes];
@@ -183,6 +183,10 @@ static const NSUInteger MaximumUploadRetryPerLoginCount = 800;
     } else {
         NSPredicate *additionalSubtypePredicate = [NSPredicate predicateWithFormat:@"additionalMediaSubtypes == %@", NSNull.null];
         request.predicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[mediaTypePredicate, additionalSubtypePredicate]];
+    }
+    
+    if (sortByIdentifier) {
+        request.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"localIdentifier" ascending:YES]];
     }
     
     return [self fetchUploadRecordsByFetchRequest:request error:error];
@@ -204,12 +208,15 @@ static const NSUInteger MaximumUploadRetryPerLoginCount = 800;
     return [self fetchUploadRecordsByFetchRequest:request error:error];
 }
 
-- (NSArray<MOAssetUploadRecord *> *)fetchUploadRecordsByMediaTypes:(NSArray<NSNumber *> *)mediaTypes additionalMediaSubtypes:(PHAssetMediaSubtype)mediaSubtypes error:(NSError *__autoreleasing  _Nullable *)error {
+- (NSArray<MOAssetUploadRecord *> *)fetchUploadRecordsByMediaTypes:(NSArray<NSNumber *> *)mediaTypes additionalMediaSubtypes:(PHAssetMediaSubtype)mediaSubtypes sortByIdentifier:(BOOL)sortByIdentifier error:(NSError *__autoreleasing  _Nullable *)error {
     NSFetchRequest *request = MOAssetUploadRecord.fetchRequest;
     request.returnsObjectsAsFaults = NO;
     NSPredicate *mediaTypePredicate = [NSPredicate predicateWithFormat:@"mediaType IN %@", mediaTypes];
     NSPredicate *mediaSubtypePredicate = [NSPredicate predicateWithFormat:@"(additionalMediaSubtypes != %@) AND ((additionalMediaSubtypes & %lu) == %lu)", NSNull.null, mediaSubtypes, mediaSubtypes];
     request.predicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[mediaTypePredicate, mediaSubtypePredicate]];
+    if (sortByIdentifier) {
+        request.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"localIdentifier" ascending:YES]];
+    }
     return [self fetchUploadRecordsByFetchRequest:request error:error];
 }
 

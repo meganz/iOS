@@ -45,10 +45,10 @@
 - (BOOL)scanLivePhotosInFetchResult:(PHFetchResult<PHAsset *> *)result error:(NSError * _Nullable __autoreleasing * _Nullable)error {
     __block NSError *coreDataError = nil;
     [CameraUploadRecordManager.shared.backgroundContext performBlockAndWait:^{
-        NSArray<MOAssetUploadRecord *> *livePhotoRecords = [CameraUploadRecordManager.shared fetchUploadRecordsByMediaTypes:@[@(PHAssetMediaTypeImage)] additionalMediaSubtypes:PHAssetMediaSubtypePhotoLive error:nil];
+        NSArray<MOAssetUploadRecord *> *livePhotoRecords = [CameraUploadRecordManager.shared fetchUploadRecordsByMediaTypes:@[@(PHAssetMediaTypeImage)] additionalMediaSubtypes:PHAssetMediaSubtypePhotoLive sortByIdentifier:YES error:nil];
         MEGALogDebug(@"[Camera Upload] saved live photo record count %lu", (unsigned long)livePhotoRecords.count);
         
-        NSArray<PHAsset *> *newAssets = [result findNewLivePhotoAssetsByUploadRecords:livePhotoRecords];
+        NSArray<PHAsset *> *newAssets = [result findNewLivePhotoAssetsBySortedUploadRecords:livePhotoRecords];
         MEGALogDebug(@"[Camera Upload] new live photo assets scanned count %lu", (unsigned long)newAssets.count);
         
         if (newAssets.count > 0) {

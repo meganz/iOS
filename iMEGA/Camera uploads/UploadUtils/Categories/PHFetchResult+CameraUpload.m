@@ -6,30 +6,28 @@
 
 @implementation PHFetchResult (CameraUpload)
 
-- (NSArray<PHAsset *> *)findNewAssetsByUploadRecords:(NSArray<MOAssetUploadRecord *> *)records {
-    return [self findNewAssetsByUploadRecords:records forLivePhoto:NO];
+- (NSArray<PHAsset *> *)findNewAssetsBySortedUploadRecords:(NSArray<MOAssetUploadRecord *> *)records {
+    return [self findNewAssetsBySortedUploadRecords:records forLivePhoto:NO];
 }
 
-- (NSArray<PHAsset *> *)findNewLivePhotoAssetsByUploadRecords:(NSArray<MOAssetUploadRecord *> *)records {
-    return [self findNewAssetsByUploadRecords:records forLivePhoto:YES];
+- (NSArray<PHAsset *> *)findNewLivePhotoAssetsBySortedUploadRecords:(NSArray<MOAssetUploadRecord *> *)records {
+    return [self findNewAssetsBySortedUploadRecords:records forLivePhoto:YES];
 }
 
-- (NSArray<PHAsset *> *)findNewAssetsByUploadRecords:(NSArray<MOAssetUploadRecord *> *)records forLivePhoto:(BOOL)livePhoto {
+- (NSArray<PHAsset *> *)findNewAssetsBySortedUploadRecords:(NSArray<MOAssetUploadRecord *> *)records forLivePhoto:(BOOL)livePhoto {
     if (self.count == 0) {
         return @[];
     }
     
-    NSMutableArray<NSString *> *scannedLocalIds = [NSMutableArray arrayWithCapacity:records.count];
+    NSMutableArray<NSString *> *sortedLocalIds = [NSMutableArray arrayWithCapacity:records.count];
     for (MOAssetUploadRecord *record in records) {
         if (record.localIdentifier) {
-            [scannedLocalIds addObject:record.localIdentifier];
+            [sortedLocalIds addObject:record.localIdentifier];
         }
     }
     NSComparator localIdComparator = ^(NSString *s1, NSString *s2) {
         return [s1 compare:s2];
     };
-    
-    NSArray<NSString *> *sortedLocalIds = [scannedLocalIds sortedArrayUsingComparator:localIdComparator];
     
     SavedIdentifierParser *identifierParser = [[SavedIdentifierParser alloc] init];
     
