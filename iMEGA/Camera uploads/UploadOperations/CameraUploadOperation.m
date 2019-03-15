@@ -65,7 +65,9 @@ static NSString * const VideoAttributeImageName = @"AttributeImage";
 - (void)backgroundTaskDidExpire {
     [super backgroundTaskDidExpire];
     [NSNotificationCenter.defaultCenter postNotificationName:MEGACameraUploadTaskExpiredNotificationName object:nil];
-    [self cancel];
+    if (!self.isCancelled) {
+        [self cancel];
+    }
     [self finishOperationWithStatus:CameraAssetUploadStatusCancelled shouldUploadNextAsset:NO];
 }
 
