@@ -58,9 +58,8 @@
             if (error) {
                 return;
             }
-            
+            MEGALogDebug(@"[Camera Upload] initial save with asset count %lu", (unsigned long)self.fetchResult.count);
             if (records.count == 0) {
-                MEGALogDebug(@"[Camera Upload] initial save with asset count %lu", (unsigned long)self.fetchResult.count);
                 [self saveInitialUploadRecordsByAssetFetchResult:self.fetchResult error:&error];
             } else {
                 MEGALogDebug(@"[Camera Upload] saved upload record count %lu", (unsigned long)records.count);
