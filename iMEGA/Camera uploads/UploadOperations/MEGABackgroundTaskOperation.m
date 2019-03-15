@@ -26,10 +26,6 @@
     }];
 }
 
-- (void)start {
-    [self beginBackgroundTask];
-}
-
 - (void)finishOperation {
     [super finishOperation];
     [self endBackgroundTaskIfNeeded];
