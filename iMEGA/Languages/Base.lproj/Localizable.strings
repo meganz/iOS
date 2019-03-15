@@ -1836,3 +1836,9 @@
 "Call started"="Call started";
 /* Title for feature Password Reminder */
 "Password Reminder"="Password Reminder";
+/* Label for any ‘Message’ button, link, text, title, etc. - (String as short as possible). */
+"Message"="Message";
+/* Title of the button in the contact info screen to start an audio call */
+"Call"="Call";
+/* Title of the button in the contact info screen to start a video call */
+"Video"="Video";

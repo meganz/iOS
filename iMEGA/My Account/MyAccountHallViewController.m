@@ -95,6 +95,10 @@
     
     [self reloadUI];
     self.buyPROBarButtonItem.enabled = [MEGAPurchase sharedInstance].products.count;
+    
+    if (self.navigationController.isNavigationBarHidden) {
+        [self.navigationController setNavigationBarHidden:NO animated:YES];
+    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated {

@@ -40,6 +40,10 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *avatarViewHeightConstraint;
 @property (weak, nonatomic) IBOutlet UIButton *callButton;
 @property (weak, nonatomic) IBOutlet UIButton *videoCallButton;
+@property (weak, nonatomic) IBOutlet UIButton *backButton;
+@property (weak, nonatomic) IBOutlet UILabel *messageLabel;
+@property (weak, nonatomic) IBOutlet UILabel *callLabel;
+@property (weak, nonatomic) IBOutlet UILabel *videoLabel;
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
@@ -81,6 +85,11 @@
         }
     }
     
+    [self.backButton setImage:self.backButton.imageView.image.imageFlippedForRightToLeftLayoutDirection forState:UIControlStateNormal];
+    self.messageLabel.text = AMLocalizedString(@"Message", @"Label for any ‘Message’ button, link, text, title, etc. - (String as short as possible).").lowercaseString;
+    self.callLabel.text = AMLocalizedString(@"Call", @"Title of the button in the contact info screen to start an audio call").lowercaseString;
+    self.videoLabel.text = AMLocalizedString(@"Message", @"Title of the button in the contact info screen to start a video call").lowercaseString;
+    
     //TODO: Show the blue check if the Contact is verified
     
     self.nameLabel.text = self.userName;
@@ -110,10 +119,7 @@
         self.avatarImageView.accessibilityIgnoresInvertColors = YES;
     }
     
-    self.panAvatar = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePan:)];
-    [self.avatarImageView addGestureRecognizer:self.panAvatar];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateCallButtonsState) name:kReachabilityChangedNotification object:nil];
+    [self configureGestures];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -121,6 +127,7 @@
     [[MEGASdkManager sharedMEGAChatSdk] addChatDelegate:self];
     [[MEGASdkManager sharedMEGAChatSdk] addChatCallDelegate:self];
     [self.navigationController setNavigationBarHidden:YES animated:YES];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateCallButtonsState) name:kReachabilityChangedNotification object:nil];
     [self updateCallButtonsState];
 }
 
@@ -351,6 +358,7 @@
         MEGAChatConnection chatConnection = [[MEGASdkManager sharedMEGAChatSdk] chatConnectionState:chatRoom.chatId];
         if (chatConnection != MEGAChatConnectionOnline) {
             self.callButton.enabled = self.videoCallButton.enabled = NO;
+            return;
         }
     }
     
@@ -366,6 +374,17 @@
     }
     
     self.callButton.enabled = self.videoCallButton.enabled = YES;
+}
+
+- (void)configureGestures {
+    self.navigationController.interactivePopGestureRecognizer.delegate = nil; //NOTE: this line fix the interactivePopGestureRecognizer not working in ContactsViewController 
+    self.panAvatar = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePan:)];
+    [self.avatarImageView addGestureRecognizer:self.panAvatar];
+    [self.avatarImageView.gestureRecognizers enumerateObjectsUsingBlock:^(__kindof UIGestureRecognizer * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        if ([obj isKindOfClass:[UIPanGestureRecognizer class]]) {
+            [obj requireGestureRecognizerToFail:self.navigationController.interactivePopGestureRecognizer];
+        }
+    }];
 }
 
 #pragma mark - IBActions
