@@ -5,7 +5,7 @@
 
 @interface MediaInfoLoader ()
 
-@property (strong, nonatomic) NSOperationQueue *operationQueue;
+@property (strong, nonatomic) NSOperationQueue *mediaInfoLoadQueue;
 
 @end
 
@@ -14,8 +14,9 @@
 - (instancetype)init {
     self = [super init];
     if (self) {
-        _operationQueue = [[NSOperationQueue alloc] init];
-        _operationQueue.qualityOfService = NSQualityOfServiceUtility;
+        _mediaInfoLoadQueue = [[NSOperationQueue alloc] init];
+        _mediaInfoLoadQueue.name = @"mediaInfoLoadQueue";
+        _mediaInfoLoadQueue.qualityOfService = NSQualityOfServiceUtility;
     }
     return self;
 }
@@ -33,7 +34,7 @@
             completion(self.isMediaInfoLoaded);
         }];
         [callBackOperation addDependency:loadMediaInfoOperation];
-        [self.operationQueue addOperations:@[loadMediaInfoOperation, callBackOperation] waitUntilFinished:NO];
+        [self.mediaInfoLoadQueue addOperations:@[loadMediaInfoOperation, callBackOperation] waitUntilFinished:NO];
     }
 }
 

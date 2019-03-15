@@ -111,10 +111,12 @@ static const NSUInteger VideoUploadBatchCount = 1;
 
 - (void)initializeCameraUploadQueues {
     _photoUploadOperationQueue = [[NSOperationQueue alloc] init];
+    _photoUploadOperationQueue.name = @"photoUploadOperationQueue";
     _photoUploadOperationQueue.qualityOfService = NSQualityOfServiceUtility;
     _photoUploadOperationQueue.maxConcurrentOperationCount = [self.concurrentCountCalculator calculatePhotoUploadConcurrentCount];
     
     _videoUploadOperationQueue = [[NSOperationQueue alloc] init];
+    _videoUploadOperationQueue.name = @"videoUploadOperationQueue";
     _videoUploadOperationQueue.qualityOfService = NSQualityOfServiceBackground;
     _videoUploadOperationQueue.maxConcurrentOperationCount = [self.concurrentCountCalculator calculateVideoUploadConcurrentCount];
 }

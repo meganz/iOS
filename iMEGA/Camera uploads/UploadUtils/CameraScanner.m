@@ -12,7 +12,7 @@
 
 @interface CameraScanner () <PHPhotoLibraryChangeObserver>
 
-@property (strong, nonatomic) NSOperationQueue *operationQueue;
+@property (strong, nonatomic) NSOperationQueue *cameraScanQueue;
 @property (strong, nonatomic) PHFetchResult<PHAsset *> *fetchResult;
 @property (strong, nonatomic) LivePhotoScanner *livePhotoScanner;
 
@@ -23,9 +23,10 @@
 - (instancetype)init {
     self = [super init];
     if (self) {
-        _operationQueue = [[NSOperationQueue alloc] init];
-        _operationQueue.maxConcurrentOperationCount = 1;
-        _operationQueue.qualityOfService = NSQualityOfServiceBackground;
+        _cameraScanQueue = [[NSOperationQueue alloc] init];
+        _cameraScanQueue.name = @"cameraScanQueue";
+        _cameraScanQueue.maxConcurrentOperationCount = 1;
+        _cameraScanQueue.qualityOfService = NSQualityOfServiceBackground;
         _livePhotoScanner = [[LivePhotoScanner alloc] init];
     }
     return self;
@@ -38,7 +39,7 @@
 #pragma mark - scan camera rolls
 
 - (void)scanMediaTypes:(NSArray<NSNumber *> *)mediaTypes completion:(void (^)(NSError * _Nullable))completion {
-    [self.operationQueue addOperationWithBlock:^{
+    [self.cameraScanQueue addOperationWithBlock:^{
         MEGALogDebug(@"[Camera Upload] Start local album scanning for media types %@", mediaTypes);
         
         self.fetchResult = [PHAsset fetchAssetsWithOptions:[PHFetchOptions mnz_fetchOptionsForCameraUploadWithMediaTypes:mediaTypes]];
