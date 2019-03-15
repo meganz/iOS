@@ -13,7 +13,7 @@
 
 @interface CameraUploadCompletionManager ()
 
-@property (strong, nonatomic) NSOperationQueue *operationQueue;
+@property (strong, nonatomic) NSOperationQueue *putNodeQueue;
 @property (strong, nonatomic) CameraUploadNodeLoader *cameraUploadNodeLoader;
 
 @end
@@ -33,8 +33,9 @@
 - (instancetype)init {
     self = [super init];
     if (self) {
-        _operationQueue = [[NSOperationQueue alloc] init];
-        _operationQueue.qualityOfService = NSQualityOfServiceUserInteractive;
+        _putNodeQueue = [[NSOperationQueue alloc] init];
+        _putNodeQueue.name = @"putNodeQueue";
+        _putNodeQueue.qualityOfService = NSQualityOfServiceUserInteractive;
     }
     return self;
 }
@@ -105,7 +106,7 @@
 
 - (void)putNodeByUploadInfo:(AssetUploadInfo *)uploadInfo transferToken:(NSData *)token {
     BOOL hasExistingPutNode = NO;
-    for (PutNodeOperation *operation in self.operationQueue.operations) {
+    for (PutNodeOperation *operation in self.putNodeQueue.operations) {
         if ([operation.uploadInfo.savedLocalIdentifier isEqualToString:uploadInfo.savedLocalIdentifier]) {
             hasExistingPutNode = YES;
             break;
@@ -139,7 +140,7 @@
         return;
     }
     
-    [self.operationQueue addOperation:[[PutNodeOperation alloc] initWithUploadInfo:uploadInfo transferToken:token completion:^(MEGANode * _Nullable node, NSError * _Nullable error) {
+    [self.putNodeQueue addOperation:[[PutNodeOperation alloc] initWithUploadInfo:uploadInfo transferToken:token completion:^(MEGANode * _Nullable node, NSError * _Nullable error) {
         if (error) {
             MEGALogError(@"[Camera Upload] error when to complete transfer %@ with token %@ %@", uploadInfo.savedLocalIdentifier, [[NSString alloc] initWithData:token encoding:NSUTF8StringEncoding], error);
             if (error.code == MEGAErrorTypeApiEOverQuota || error.code == MEGAErrorTypeApiEgoingOverquota) {

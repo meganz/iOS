@@ -59,6 +59,7 @@ typedef NS_ENUM(NSInteger, PreviewConcurrentUploadCount) {
         _coordinatesUploadOperationQueue.name = @"coordinatesUploadOperationQueue";
         
         _attributeScanQueue = [[NSOperationQueue alloc] init];
+        _attributeScanQueue.name = @"attributeScanQueue";
         _attributeScanQueue.qualityOfService = NSQualityOfServiceBackground;
         _attributeScanQueue.maxConcurrentOperationCount = 1;
     }
