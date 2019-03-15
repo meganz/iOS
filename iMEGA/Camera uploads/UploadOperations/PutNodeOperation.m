@@ -31,8 +31,6 @@
 }
 
 - (void)start {
-    [super start];
-    
     if (self.isCancelled) {
         self.completion(nil, NSError.mnz_cameraUploadOperationCancelledError);
         [self finishOperation];
@@ -41,6 +39,8 @@
     }
     
     [self startExecuting];
+    
+    [self beginBackgroundTask];
 
     CameraUploadRequestDelegate *delegate = [[CameraUploadRequestDelegate alloc] initWithCompletion:^(MEGARequest * _Nonnull request, MEGAError * _Nonnull error) {
         if (error.type) {
