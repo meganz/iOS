@@ -64,9 +64,10 @@
 }
 
 - (void)configureCellForChatListItem:(MEGAChatListItem *)chatListItem {
-    
     self.chatListItem = chatListItem;
     [self.timer invalidate];
+
+    self.privateChatImageView.hidden = chatListItem.isPublicChat || !chatListItem.isGroup;
 
     self.chatTitle.text = chatListItem.title;
     [self updateLastMessageForChatListItem:chatListItem];
@@ -298,10 +299,15 @@
                 }
                     
                 case -2: {
-                    NSString *joinedTheGroupChatByInvitationFrom = AMLocalizedString(@"joinedTheGroupChatByInvitationFrom", @"A log message in a chat conversation to tell the reader that a participant [A] was added to the chat by a moderator [B]. Please keep the [A] and [B] placeholders, they will be replaced by the participant and the moderator names at runtime. For example: Alice joined the group chat by invitation from Frank.");
-                    joinedTheGroupChatByInvitationFrom = [joinedTheGroupChatByInvitationFrom stringByReplacingOccurrencesOfString:@"[A]" withString:fullNameReceiveAction];
-                    joinedTheGroupChatByInvitationFrom = [joinedTheGroupChatByInvitationFrom stringByReplacingOccurrencesOfString:@"[B]" withString:fullNameDidAction];
-                    self.chatLastMessage.text = joinedTheGroupChatByInvitationFrom;
+                    if (fullNameDidAction && ![fullNameReceiveAction isEqualToString:fullNameDidAction]) {
+                        NSString *joinedTheGroupChatByInvitationFrom = AMLocalizedString(@"joinedTheGroupChatByInvitationFrom", @"A log message in a chat conversation to tell the reader that a participant [A] was added to the chat by a moderator [B]. Please keep the [A] and [B] placeholders, they will be replaced by the participant and the moderator names at runtime. For example: Alice joined the group chat by invitation from Frank.");
+                        joinedTheGroupChatByInvitationFrom = [joinedTheGroupChatByInvitationFrom stringByReplacingOccurrencesOfString:@"[A]" withString:fullNameReceiveAction];
+                        joinedTheGroupChatByInvitationFrom = [joinedTheGroupChatByInvitationFrom stringByReplacingOccurrencesOfString:@"[B]" withString:fullNameDidAction];
+                        self.chatLastMessage.text = joinedTheGroupChatByInvitationFrom;
+                    } else {
+                        NSString *joinedTheGroupChat = [NSString stringWithFormat:AMLocalizedString(@"%@ joined the group chat.", @"Management message shown in a chat when the user %@ joined it from a public chat link"), fullNameReceiveAction];
+                        self.chatLastMessage.text = joinedTheGroupChat;
+                    }
                     break;
                 }
                     
@@ -337,7 +343,28 @@
             self.chatLastMessage.text = AMLocalizedString(@"Call Started", @"Text to inform the user there is an active call and is participating");
             break;
         }
+
+        case MEGAChatMessageTypePublicHandleCreate: {
+            NSString *senderString = [self actionAuthorNameInChatListItem:item];
+            NSString *publicHandleCreated = [NSString stringWithFormat:AMLocalizedString(@"%@ created a public link for the chat.", @"Management message shown in a chat when the user %@ creates a public link for the chat"), senderString];
+            self.chatLastMessage.text = publicHandleCreated;
+            break;
+        }
             
+        case MEGAChatMessageTypePublicHandleDelete: {
+            NSString *senderString = [self actionAuthorNameInChatListItem:item];
+            NSString *publicHandleRemoved = [NSString stringWithFormat:AMLocalizedString(@"%@ removed a public link for the chat.", @"Management message shown in a chat when the user %@ removes a public link for the chat"), senderString];
+            self.chatLastMessage.text = publicHandleRemoved;
+            break;
+        }
+            
+        case MEGAChatMessageTypeSetPrivateMode: {
+            NSString *senderString = [self actionAuthorNameInChatListItem:item];
+            NSString *setPrivateMode = [NSString stringWithFormat:AMLocalizedString(@"%@ enabled Encrypted Key Rotation", @"Management message shown in a chat when the user %@ enables the 'Encrypted Key Rotation'"), senderString];
+            self.chatLastMessage.text = setPrivateMode;
+            break;
+        }
+
         default: {
             NSString *senderString;
             if (item.group && item.lastMessageSender != [[MEGASdkManager sharedMEGAChatSdk] myUserHandle]) {
