@@ -6,7 +6,8 @@ typedef NS_ENUM(NSUInteger, ChangeType) {
     ChangeTypePassword = 0,
     ChangeTypeEmail,
     ChangeTypeResetPassword,
-    ChangeTypeParkAccount
+    ChangeTypeParkAccount,
+    ChangeTypePasswordFromLogout
 };
 
 @property (nonatomic) ChangeType changeType;
@@ -16,5 +17,7 @@ typedef NS_ENUM(NSUInteger, ChangeType) {
 @property (strong, nonatomic) NSString *link;
 
 @property (getter=isTwoFactorAuthenticationEnabled) BOOL twoFactorAuthenticationEnabled;
+
+- (void)createNavigationCancelButton;
 
 @end

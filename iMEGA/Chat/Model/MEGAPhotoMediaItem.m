@@ -29,10 +29,16 @@
         _node = node;
         
         if (_node.hasPreview) {
-            _previewFilePath = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES).firstObject stringByAppendingPathComponent:@"previewsV3"] stringByAppendingPathComponent:node.base64Handle];
+            NSString *previewsDirectory = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES).firstObject stringByAppendingPathComponent:@"previewsV3"];
+            _previewFilePath = [previewsDirectory stringByAppendingPathComponent:node.base64Handle];
             
-            if ([[NSFileManager defaultManager] fileExistsAtPath:_previewFilePath]) {
+            if ([NSFileManager.defaultManager fileExistsAtPath:_previewFilePath]) {
                 self.image = [UIImage imageWithContentsOfFile:_previewFilePath];
+            } else if (![NSFileManager.defaultManager fileExistsAtPath:previewsDirectory]) {
+                NSError *error;
+                if (![[NSFileManager defaultManager] createDirectoryAtPath:previewsDirectory withIntermediateDirectories:NO attributes:nil error:&error]) {
+                    MEGALogError(@"Create directory at path failed with error: %@", error);
+                }
             }
         }
     }

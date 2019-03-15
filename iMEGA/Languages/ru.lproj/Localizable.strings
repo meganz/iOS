@@ -1655,7 +1655,7 @@
 /* New server-side rubbish-bin cleaning scheduler description (for Free users) */
 "The Rubbish Bin is cleaned for you automatically. The minimum period is 7 days and your maximum period is 30 days."="Корзина очищается автоматически. Минимальный срок составляет 7 дней, максимальный — 30 дней.";
 /* New server-side rubbish-bin cleaning scheduler description (for PRO users) */
-"The Rubbish Bin can be cleaned for you automatically. The minimum period is 7 days."="Корзина может очищаться автоматически. Минимальный срок — 7 дней.";
+"The Rubbish Bin can be cleaned for you automatically. The minimum period is 7 days."="Корзина может очищаться автоматически.";
 /* Description shown when you try to disable the feature Rubbish-Bin Cleaning Scheduler and you are a free user */
 "To disable the Rubbish-Bin Cleaning Scheduler or set a longer retention period, you need to subscribe to a PRO plan."="Чтобы отключить очистку корзины по расписанию или установить более длительный период хранения, нужно подписаться на план PRO.";
 /* Confirmation dialog for the button that logs the user out of all sessions except the current one. */
@@ -1680,6 +1680,34 @@
 "Saved to Photos"="Сохранено в фото";
 /* Text shown when an error occurs when trying to save a photo or video to Photos app */
 "Could not save Item"="Элемент не сохранён";
+/* Label in a cell where you can enable the 'Encrypted Key Rotation' */
+"Encrypted Key Rotation"="Чередование ключей шифрования";
+/* Title shown in a cell to allow the users enable the 'Encrypted Key Rotation' */
+"Enable Encrypted Key Rotation"="Включить чередование ключей шифрования";
+/* Label in a cell where you can get the chat link */
+"Get Chat Link"="Ссылка на чат";
+/* Footer text to explain what means 'Encrypted Key Rotation' */
+"Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages."="Чередование ключей немного более безопасно, но не позволяет создать ссылку на чат, а новые участники не будут видеть старые сообщения.";
+/* Alert message to advice the users that to generate a chat link they need enter a group name for the chat */
+"Before you can generate a link for this room, you need to enter a group name"="Для создания ссылки на этот чат нужно ввести имя группы.";
+/* Label shown in a cell where you can enable a switch to get a chat link */
+"Chat Link"="Ссылка на чат";
+/* Message shown when there is an active chat link that can be deleted */
+"Delete Chat Link"="Удалить ссылку на чат";
+/* Button text in public chat previews that allows the user to join the chat */
+"Join"="Войти";
+/* Text shown in a notification to let the user know that has joined a public chat room after login or account creation */
+"You have joined %@"="You have joined %@";
+/* Users previewing a public chat */
+"Observers"="Observers";
+/* Alert message shown while deleting a chat link, warning about the consequences */
+"This conversation will no longer be accessible through the link you are about to delete."="This conversation will no longer be accessible through the public link once it has been removed.";
+/* Management message shown in a chat when the user %@ enables the 'Encrypted Key Rotation' */
+"%@ enabled Encrypted Key Rotation"="%@ enabled Encrypted Key Rotation";
+/* Management message shown in a chat when the user %@ creates a public link for the chat */
+"%@ created a public link for the chat."="%@ created a public link for the chat.";
+/* Management message shown in a chat when the user %@ removes a public link for the chat */
+"%@ removed a public link for the chat."="%@ removed a public link for the chat.";
 /* Message show when a call cannot be established because there are too many participants in the group call */
 "Error. No more participants are allowed in this group call."="Вы не можете присоединиться к этому вызову, так как в нём максимальное количество участников.";
 /* Message show when a user cannot activate the video in a group call because the max number of videos has been reached */
@@ -1787,7 +1815,7 @@
 /* Label shown next to a feature name that can be enabled or disabled, like in 'Show Last seen...' */
 "Show"="Показывать";
 /* Shown when viewing a 1on1 chat (at least for now), if the user is offline. */
-"Last seen %s"="был в сети %s";
+"Last seen %s"="Был в сети: %s";
 /* Text to inform the user the 'Last seen' time of a contact is a long time ago (>= 65535 minutes) */
 "Last seen a long time ago"="Был в сети очень давно";
 /* */
