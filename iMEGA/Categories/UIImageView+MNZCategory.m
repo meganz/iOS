@@ -23,6 +23,22 @@
     self.image = [UIImage mnz_imageForUserHandle:userHandle name:name size:self.frame.size delegate:getThumbnailRequestDelegate];
 }
 
+- (void)mnz_setImageAvatarOrColorForUserHandle:(uint64_t)userHandle {
+    
+    NSString *base64Handle = [MEGASdk base64HandleForUserHandle:userHandle];
+    NSString *avatarFilePath = [[Helper pathForSharedSandboxCacheDirectory:@"thumbnailsV3"] stringByAppendingPathComponent:base64Handle];
+    
+    if ([[NSFileManager defaultManager] fileExistsAtPath:avatarFilePath]) {
+        self.image = [UIImage imageWithContentsOfFile:avatarFilePath];
+    } else {
+        self.image = [UIImage imageWithColor:[UIColor colorFromHexString:[MEGASdk avatarColorForBase64UserHandle:base64Handle]] andBounds:self.bounds];
+        MEGAGetThumbnailRequestDelegate *getThumbnailRequestDelegate = [[MEGAGetThumbnailRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
+            self.image = [UIImage imageWithContentsOfFile:request.file];
+        }];
+        [[MEGASdkManager sharedMEGASdk] getAvatarUserWithEmailOrHandle:base64Handle destinationFilePath:avatarFilePath delegate:getThumbnailRequestDelegate];
+    }
+}
+
 - (void)mnz_setThumbnailByNode:(MEGANode *)node {
     if (node.hasThumbnail) {
         NSString *thumbnailFilePath = [Helper pathForNode:node inSharedSandboxCacheDirectory:@"thumbnailsV3"];
