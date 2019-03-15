@@ -70,6 +70,18 @@ static CameraUploadConcurrentCount MakeCount(PhotoUploadConcurrentCount photoCou
 }
 
 - (CameraUploadConcurrentCount)calculateCameraUploadConcurrentCount {
+    if (NSThread.isMainThread) {
+        return [self calculateCameraUploadConcurrentCountInMainThread];
+    } else {
+        __block CameraUploadConcurrentCount count;
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            count = [self calculateCameraUploadConcurrentCountInMainThread];
+        });
+        return count;
+    }
+}
+
+- (CameraUploadConcurrentCount)calculateCameraUploadConcurrentCountInMainThread {
     if (@available(iOS 11.0, *)) {
         if (NSProcessInfo.processInfo.thermalState == NSProcessInfoThermalStateCritical) {
             return MakeCount(PhotoUploadConcurrentCountInThermalStateCritical, VideoUploadConcurrentCountInThermalStateCritical);
