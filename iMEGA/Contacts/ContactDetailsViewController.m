@@ -88,7 +88,7 @@
     [self.backButton setImage:self.backButton.imageView.image.imageFlippedForRightToLeftLayoutDirection forState:UIControlStateNormal];
     self.messageLabel.text = AMLocalizedString(@"Message", @"Label for any ‘Message’ button, link, text, title, etc. - (String as short as possible).").lowercaseString;
     self.callLabel.text = AMLocalizedString(@"Call", @"Title of the button in the contact info screen to start an audio call").lowercaseString;
-    self.videoLabel.text = AMLocalizedString(@"Message", @"Title of the button in the contact info screen to start a video call").lowercaseString;
+    self.videoLabel.text = AMLocalizedString(@"Video", @"Title of the button in the contact info screen to start a video call").lowercaseString;
     
     //TODO: Show the blue check if the Contact is verified
     
@@ -377,14 +377,19 @@
 }
 
 - (void)configureGestures {
-    self.navigationController.interactivePopGestureRecognizer.delegate = nil; //NOTE: this line fix the interactivePopGestureRecognizer not working in ContactsViewController 
-    self.panAvatar = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePan:)];
-    [self.avatarImageView addGestureRecognizer:self.panAvatar];
-    [self.avatarImageView.gestureRecognizers enumerateObjectsUsingBlock:^(__kindof UIGestureRecognizer * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        if ([obj isKindOfClass:[UIPanGestureRecognizer class]]) {
-            [obj requireGestureRecognizerToFail:self.navigationController.interactivePopGestureRecognizer];
-        }
-    }];
+    self.navigationController.interactivePopGestureRecognizer.delegate = nil; //NOTE: this line fix the interactivePopGestureRecognizer not working in ContactsViewController
+
+    NSString *avatarFilePath = [[Helper pathForSharedSandboxCacheDirectory:@"thumbnailsV3"] stringByAppendingPathComponent:[MEGASdk base64HandleForUserHandle:self.userHandle]];
+    
+    if ([[NSFileManager defaultManager] fileExistsAtPath:avatarFilePath]) {
+        self.panAvatar = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePan:)];
+        [self.avatarImageView addGestureRecognizer:self.panAvatar];
+        [self.avatarImageView.gestureRecognizers enumerateObjectsUsingBlock:^(__kindof UIGestureRecognizer * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            if ([obj isKindOfClass:[UIPanGestureRecognizer class]]) {
+                [obj requireGestureRecognizerToFail:self.navigationController.interactivePopGestureRecognizer];
+            }
+        }];
+    }
 }
 
 #pragma mark - IBActions
