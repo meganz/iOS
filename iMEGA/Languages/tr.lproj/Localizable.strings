@@ -1655,7 +1655,7 @@
 /* New server-side rubbish-bin cleaning scheduler description (for Free users) */
 "The Rubbish Bin is cleaned for you automatically. The minimum period is 7 days and your maximum period is 30 days."="Çöp kutusu sizin yerinize otomatik olarak temizlendi. Asgari süre 7 gündür ve azami süre 30 gündür.";
 /* New server-side rubbish-bin cleaning scheduler description (for PRO users) */
-"The Rubbish Bin can be cleaned for you automatically. The minimum period is 7 days."="Çöp kutusu sizin yerinize otomatik olarak temizlenebilir.";
+"The Rubbish Bin can be cleaned for you automatically. The minimum period is 7 days."="Çöp kutusu sizin yerinize otomatik olarak temizlenebilir. Minimum süre 7 gündür.";
 /* Description shown when you try to disable the feature Rubbish-Bin Cleaning Scheduler and you are a free user */
 "To disable the Rubbish-Bin Cleaning Scheduler or set a longer retention period, you need to subscribe to a PRO plan."="Çöp Kovası Temizleme Planlayıcısını devre dışı bırakmak veya daha uzun bir saklama süresi ayarlamak için bir PRO planına abone olmanız gerekir.";
 /* Confirmation dialog for the button that logs the user out of all sessions except the current one. */
@@ -1701,13 +1701,15 @@
 /* Users previewing a public chat */
 "Observers"="Gözlemciler";
 /* Alert message shown while deleting a chat link, warning about the consequences */
-"This conversation will no longer be accessible through the link you are about to delete."="This conversation will no longer be accessible through the public link once it has been removed.";
+"This conversation will no longer be accessible through the link you are about to delete."="Herkese açık bağlantı kaldırıldığında sohbete bağlantıyla erişilemeyecektir.";
 /* Management message shown in a chat when the user %@ enables the 'Encrypted Key Rotation' */
 "%@ enabled Encrypted Key Rotation"="%@ Şifrelenmiş Anahtar Döngüsünü etkinleştirdi";
 /* Management message shown in a chat when the user %@ creates a public link for the chat */
 "%@ created a public link for the chat."="%@ sohbet için herkese açık bağlantı oluşturdu.";
 /* Management message shown in a chat when the user %@ removes a public link for the chat */
 "%@ removed a public link for the chat."="%@ sohbet için herkese açık bir bağlantıyı kaldırdı.";
+/* Management message shown in a chat when the user %@ joined it from a public chat link */
+"%@ joined the group chat."="%@ joined the group chat.";
 /* Message show when a call cannot be established because there are too many participants in the group call */
 "Error. No more participants are allowed in this group call."="Bu arama azami katılımcı sayısına eriştiği için katılmanıza izin verilmiyor.";
 /* Message show when a user cannot activate the video in a group call because the max number of videos has been reached */
@@ -1828,5 +1830,15 @@
 "%d participant"="%d katılımcı";
 /* Text to inform the user there is an active call and is not participating */
 "Ongoing Call"="Devam eden Çağrı";
+/* Message shown when there is an ongoing call and the user tries to play an audio or video */
+"It is not possible to play content while there is a call in progress"="It is not possible to play content while there is a call in progress";
 /* Text to inform the user there is an active call and is participating */
 "Call Started"="Çağrı Başladı";
+/* Title for feature Password Reminder */
+"Password Reminder"="Parola Hatırlatıcısı";
+/* Label for any ‘Message’ button, link, text, title, etc. - (String as short as possible). */
+"Message"="Mesaj";
+/* Title of the button in the contact info screen to start an audio call */
+"Call"="Ara";
+/* Title of the button in the contact info screen to start a video call */
+"Video"="Video";

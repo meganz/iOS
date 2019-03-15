@@ -1701,7 +1701,7 @@
 /* Users previewing a public chat */
 "Observers"="Observers";
 /* Alert message shown while deleting a chat link, warning about the consequences */
-"This conversation will no longer be accessible through the link you are about to delete."="This conversation will no longer be accessible through the link you are about to delete.";
+"This conversation will no longer be accessible through the link you are about to delete."="This conversation will no longer be accessible through the public link once it has been removed.";
 /* Management message shown in a chat when the user %@ enables the 'Encrypted Key Rotation' */
 "%@ enabled Encrypted Key Rotation"="%@ enabled Encrypted Key Rotation";
 /* Management message shown in a chat when the user %@ creates a public link for the chat */
@@ -1833,7 +1833,7 @@
 /* Message shown when there is an ongoing call and the user tries to play an audio or video */
 "It is not possible to play content while there is a call in progress"="It is not possible to play content while there is a call in progress";
 /* Text to inform the user there is an active call and is participating */
-"Call started"="Call started";
+"Call Started"="Call Started";
 /* Title for feature Password Reminder */
 "Password Reminder"="Password Reminder";
 /* Label for any ‘Message’ button, link, text, title, etc. - (String as short as possible). */
