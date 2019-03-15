@@ -33,18 +33,20 @@
     
     NSMutableArray<PHAsset *> *newAssets = [NSMutableArray array];
     for (PHAsset *asset in self) {
-        NSString *identifier = asset.localIdentifier;
-        if (livePhoto) {
-            if (!asset.mnz_isLivePhoto) {
-                continue;
+        @autoreleasepool {
+            NSString *identifier = asset.localIdentifier;
+            if (livePhoto) {
+                if (!asset.mnz_isLivePhoto) {
+                    continue;
+                }
+                
+                identifier = [identifierParser savedIdentifierForLocalIdentifier:identifier mediaSubtype:PHAssetMediaSubtypePhotoLive];
             }
             
-            identifier = [identifierParser savedIdentifierForLocalIdentifier:identifier mediaSubtype:PHAssetMediaSubtypePhotoLive];
-        }
-        
-        NSUInteger matchingIndex = [sortedLocalIds indexOfObject:identifier inSortedRange:NSMakeRange(0, sortedLocalIds.count) options:NSBinarySearchingFirstEqual usingComparator:localIdComparator];
-        if (matchingIndex == NSNotFound) {
-            [newAssets addObject:asset];
+            NSUInteger matchingIndex = [sortedLocalIds indexOfObject:identifier inSortedRange:NSMakeRange(0, sortedLocalIds.count) options:NSBinarySearchingFirstEqual usingComparator:localIdComparator];
+            if (matchingIndex == NSNotFound) {
+                [newAssets addObject:asset];
+            }
         }
     }
     
