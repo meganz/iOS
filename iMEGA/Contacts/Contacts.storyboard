@@ -932,9 +932,9 @@
                                         </constraints>
                                     </view>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GvB-7x-xSI">
-                                        <rect key="frame" x="0.0" y="40" width="44" height="44"/>
+                                        <rect key="frame" x="0.0" y="45" width="30" height="44"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="44" id="D7Z-DM-rIO"/>
+                                            <constraint firstAttribute="width" constant="30" id="D7Z-DM-rIO"/>
                                             <constraint firstAttribute="height" constant="44" id="YP1-xG-TxO"/>
                                         </constraints>
                                         <color key="tintColor" red="0.98823529409999999" green="0.98823529409999999" blue="0.98823529409999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -959,7 +959,7 @@
                                     <constraint firstItem="pdV-p4-ktb" firstAttribute="top" secondItem="6RY-7f-66v" secondAttribute="bottom" constant="20" id="aYO-0U-7mO"/>
                                     <constraint firstAttribute="height" constant="220" id="csr-68-mjE"/>
                                     <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="6RY-7f-66v" secondAttribute="trailing" constant="10" id="eaO-WT-mHY"/>
-                                    <constraint firstItem="GvB-7x-xSI" firstAttribute="top" secondItem="I0p-vt-iGh" secondAttribute="top" constant="40" id="fwb-vu-5sh"/>
+                                    <constraint firstItem="GvB-7x-xSI" firstAttribute="top" secondItem="I0p-vt-iGh" secondAttribute="top" constant="45" id="fwb-vu-5sh"/>
                                     <constraint firstItem="6RY-7f-66v" firstAttribute="leading" secondItem="I0p-vt-iGh" secondAttribute="leading" constant="20" id="ipF-Ul-cuL"/>
                                     <constraint firstItem="zaL-ex-F72" firstAttribute="leading" secondItem="I0p-vt-iGh" secondAttribute="leading" id="oX2-id-Yc2"/>
                                     <constraint firstAttribute="bottom" secondItem="zaL-ex-F72" secondAttribute="bottom" id="s6d-wr-Z0Z"/>
@@ -1374,9 +1374,12 @@
                     <connections>
                         <outlet property="avatarImageView" destination="zaL-ex-F72" id="aNV-nw-hXz"/>
                         <outlet property="avatarViewHeightConstraint" destination="csr-68-mjE" id="nzD-4h-meN"/>
+                        <outlet property="backButton" destination="GvB-7x-xSI" id="NeF-lP-AFw"/>
                         <outlet property="callButton" destination="YvS-yH-yBW" id="uxM-YW-0X1"/>
+                        <outlet property="callLabel" destination="l0B-M2-sCX" id="Bv6-ZM-Q7A"/>
                         <outlet property="emailLabel" destination="YTm-wg-etC" id="JxN-WX-ztN"/>
                         <outlet property="gradientView" destination="cZc-zU-BZ8" id="upE-aM-GII"/>
+                        <outlet property="messageLabel" destination="BnK-Ln-ghn" id="qKc-U7-YiN"/>
                         <outlet property="nameLabel" destination="XHC-l2-3NH" id="pQa-Ks-sFl"/>
                         <outlet property="onlineStatusView" destination="YQk-tW-nTN" id="NNQ-9a-RQg"/>
                         <outlet property="participantsHeaderView" destination="V26-d7-tzR" id="RcT-eq-3gY"/>
@@ -1385,6 +1388,7 @@
                         <outlet property="tableView" destination="IEd-9Z-WGw" id="0Rx-ff-qK9"/>
                         <outlet property="verifiedImageView" destination="DUY-Qz-ows" id="vHJ-NE-uVl"/>
                         <outlet property="videoCallButton" destination="91O-pL-jXO" id="2fa-nG-v1q"/>
+                        <outlet property="videoLabel" destination="a89-zu-PvG" id="gIu-iK-kiO"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="V1F-mI-Kwn" userLabel="First Responder" sceneMemberID="firstResponder"/>
