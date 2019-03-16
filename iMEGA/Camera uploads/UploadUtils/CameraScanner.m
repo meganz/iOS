@@ -139,7 +139,6 @@
                 return;
             }
             
-            MEGALogDebug(@"[Camera Upload] new assets detected: %@", newAssets);
             [CameraUploadRecordManager.shared.backgroundContext performBlockAndWait:^{
                 [self createUploadRecordsByAssets:newAssets shouldCheckExistence:YES];
                 [self.livePhotoScanner scanLivePhotosInAssets:newAssets];
