@@ -74,6 +74,10 @@ static NSString * const VideoAttributeImageName = @"AttributeImage";
 #pragma mark - start operation
 
 - (void)start {
+    if (self.isFinished) {
+        return;
+    }
+    
     if (self.isCancelled) {
         [self finishOperationWithStatus:CameraAssetUploadStatusCancelled shouldUploadNextAsset:NO];
         return;
@@ -354,11 +358,11 @@ static NSString * const VideoAttributeImageName = @"AttributeImage";
                 [NSNotificationCenter.defaultCenter postNotificationName:MEGACameraUploadStatsChangedNotificationName object:nil];
             });
         }
+        
+        if (uploadNextAsset) {
+            [CameraUploadManager.shared uploadNextAssetForMediaType:self.uploadInfo.asset.mediaType];
+        }
     });
-    
-    if (uploadNextAsset) {
-        [CameraUploadManager.shared uploadNextAssetForMediaType:self.uploadInfo.asset.mediaType];
-    }
 }
 
 @end

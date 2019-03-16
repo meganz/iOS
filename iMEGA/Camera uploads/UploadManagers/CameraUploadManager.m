@@ -32,7 +32,7 @@ static const NSTimeInterval LoadMediaInfoTimeoutInSeconds = 120;
 static const NSUInteger PhotoUploadBatchCount = 5;
 static const NSUInteger VideoUploadBatchCount = 1;
 
-@interface CameraUploadManager ()
+@interface CameraUploadManager () <CameraScannerDelegate>
 
 @property (copy, nonatomic) void (^backgroundRefreshCompletion)(UIBackgroundFetchResult);
 @property (readonly) NSArray<NSNumber *> *enabledMediaTypes;
@@ -197,7 +197,7 @@ static const NSUInteger VideoUploadBatchCount = 1;
 
 - (CameraScanner *)cameraScanner {
     if (_cameraScanner == nil) {
-        _cameraScanner = [[CameraScanner alloc] init];
+        _cameraScanner = [[CameraScanner alloc] initWithDelegate:self];
     }
     
     return _cameraScanner;
@@ -255,6 +255,18 @@ static const NSUInteger VideoUploadBatchCount = 1;
     }
 }
 
+#pragma mark - camera scanner delegate
+
+- (void)cameraScanner:(CameraScanner *)scanner didObserveNewAssets:(NSArray<PHAsset *> *)assets {
+    MEGALogDebug(@"[Camera Upload] did scan new assets count %lu", (unsigned long)assets.count);
+    
+    if (!MEGASdkManager.sharedMEGASdk.isLoggedIn || !CameraUploadManager.isCameraUploadEnabled) {
+        return;
+    }
+    
+    [self requestMediaInfoForUpload];
+}
+
 #pragma mark - start upload
 
 - (void)startCameraUploadIfNeeded {
@@ -263,8 +275,8 @@ static const NSUInteger VideoUploadBatchCount = 1;
     if (!MEGASdkManager.sharedMEGASdk.isLoggedIn || !CameraUploadManager.isCameraUploadEnabled) {
         return;
     }
-
-    [self.cameraScanner scanMediaTypes:@[@(PHAssetMediaTypeImage)] completion:^(NSError * _Nullable error) {
+    
+    [self.cameraScanner scanMediaTypes:self.enabledMediaTypes completion:^(NSError * _Nullable error) {
         if (error) {
             MEGALogError(@"[Camera Upload] error when to scan image %@", error);
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0), ^{
@@ -312,7 +324,7 @@ static const NSUInteger VideoUploadBatchCount = 1;
         }
         
         if (cameraUploadNode) {
-            [self uploadCamera];
+            [self uploadCameraWhenCameraUploadNodeIsLoaded];
         } else {
             MEGALogError(@"[Camera Upload] camera upload node can not be loaded");
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(.5 * NSEC_PER_SEC)), dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0), ^{
@@ -322,7 +334,7 @@ static const NSUInteger VideoUploadBatchCount = 1;
     }];
 }
 
-- (void)uploadCamera {
+- (void)uploadCameraWhenCameraUploadNodeIsLoaded {
     if (!CameraUploadManager.canCameraUploadBeStarted) {
         return;
     }
@@ -354,19 +366,6 @@ static const NSUInteger VideoUploadBatchCount = 1;
         return;
     }
     
-    [self.cameraScanner scanMediaTypes:@[@(PHAssetMediaTypeVideo)] completion:^(NSError * _Nullable error) {
-        if (error) {
-            MEGALogError(@"[Camera Upload] error when to scan video %@", error);
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0), ^{
-                [self startVideoUploadIfNeeded];
-            });
-        } else {
-            [self uploadVideos];
-        }
-    }];
-}
-
-- (void)uploadVideos {
     if (!CameraUploadManager.canCameraUploadBeStarted) {
         return;
     }
@@ -390,6 +389,25 @@ static const NSUInteger VideoUploadBatchCount = 1;
     
     MEGALogDebug(@"[Camera Upload] start uploading videos with current video operation count %lu", (unsigned long)self.videoUploadOperationQueue.operationCount);
     [self uploadAssetsForMediaType:PHAssetMediaTypeVideo concurrentCount:VideoUploadBatchCount];
+}
+
+- (void)scanAndStartVideoUpload {
+    MEGALogDebug(@"[Camera Upload] scan and start video upload if needed");
+    
+    if (!(CameraUploadManager.isCameraUploadEnabled && CameraUploadManager.isVideoUploadEnabled)) {
+        return;
+    }
+    
+    [self.cameraScanner scanMediaTypes:@[@(PHAssetMediaTypeVideo)] completion:^(NSError * _Nullable error) {
+        if (error) {
+            MEGALogError(@"[Camera Upload] error when to scan video %@", error);
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0), ^{
+                [self scanAndStartVideoUpload];
+            });
+        } else {
+            [self startVideoUploadIfNeeded];
+        }
+    }];
 }
 
 #pragma mark - upload next assets
@@ -454,24 +472,17 @@ static const NSUInteger VideoUploadBatchCount = 1;
 
 - (void)queueUpOperation:(CameraUploadOperation *)operation {
     if ([operation isKindOfClass:[PhotoUploadOperation class]]) {
-        if (![self hasPendingUploadOperation:operation inOperationQueue:self.photoUploadOperationQueue]) {
-            [self.photoUploadOperationQueue addOperation:operation];
-        }
+        [self queueUpIfNeededForOperation:operation inOperationQueue:self.photoUploadOperationQueue];
     } else if ([operation isKindOfClass:[LivePhotoUploadOperation class]]) {
-        if (![self hasPendingUploadOperation:operation inOperationQueue:self.videoUploadOperationQueue]) {
-            [self.videoUploadOperationQueue addOperation:operation];
-            [self uploadNextAssetForMediaType:PHAssetMediaTypeImage];
-        }
+        [self queueUpIfNeededForOperation:operation inOperationQueue:self.videoUploadOperationQueue];
+        [self uploadNextAssetForMediaType:PHAssetMediaTypeImage];
     } else if ([operation isKindOfClass:[VideoUploadOperation class]]) {
-        if (![self hasPendingUploadOperation:operation inOperationQueue:self.videoUploadOperationQueue]) {
-            [self.videoUploadOperationQueue addOperation:operation];
-        }
+        [self queueUpIfNeededForOperation:operation inOperationQueue:self.videoUploadOperationQueue];
     }
 }
 
-- (BOOL)hasPendingUploadOperation:(CameraUploadOperation *)uploadOperation inOperationQueue:(NSOperationQueue *)queue {
+- (void)queueUpIfNeededForOperation:(CameraUploadOperation *)uploadOperation inOperationQueue:(NSOperationQueue *)queue {
     BOOL hasPendingOperation = NO;
-    
     for (NSOperation *operation in queue.operations) {
         if ([operation isKindOfClass:[CameraUploadOperation class]]) {
             if (!operation.isFinished && [[(CameraUploadOperation *)operation uploadInfo].savedLocalIdentifier isEqualToString:uploadOperation.uploadInfo.savedLocalIdentifier]) {
@@ -482,7 +493,9 @@ static const NSUInteger VideoUploadBatchCount = 1;
         }
     }
     
-    return hasPendingOperation;
+    if (!hasPendingOperation) {
+        [queue addOperation:uploadOperation];
+    }
 }
 
 #pragma mark - enable camera upload
@@ -498,7 +511,7 @@ static const NSUInteger VideoUploadBatchCount = 1;
 
 - (void)enableVideoUpload {
     CameraUploadManager.videoUploadEnabled = YES;
-    [self startVideoUploadIfNeeded];
+    [self scanAndStartVideoUpload];
 }
 
 #pragma mark - disable camera upload
@@ -665,7 +678,7 @@ static const NSUInteger VideoUploadBatchCount = 1;
     NSInteger photoConcurrentCount = [notification.userInfo[MEGAPhotoConcurrentCountUserInfoKey] integerValue];
     self.photoUploadOperationQueue.maxConcurrentOperationCount = photoConcurrentCount;
     if (self.photoUploadOperationQueue.operationCount < photoConcurrentCount) {
-        [self startCameraUploadIfNeeded];
+        [self uploadAssetsForMediaType:PHAssetMediaTypeImage concurrentCount:PhotoUploadBatchCount];
     }
 }
 
@@ -674,7 +687,7 @@ static const NSUInteger VideoUploadBatchCount = 1;
     NSInteger videoConcurrentCount = [notification.userInfo[MEGAVideoConcurrentCountUserInfoKey] integerValue];
     self.videoUploadOperationQueue.maxConcurrentOperationCount = videoConcurrentCount;
     if (self.videoUploadOperationQueue.operationCount < videoConcurrentCount) {
-        [self startVideoUploadIfNeeded];
+        [self uploadAssetsForMediaType:PHAssetMediaTypeVideo concurrentCount:VideoUploadBatchCount];
     }
 }
 
