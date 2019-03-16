@@ -63,7 +63,7 @@
             callView.callLabel.text = [NSString mnz_stringByEndCallReason:self.message.termCode userHandle:self.message.userHandle duration:self.message.duration];
         } else { // MEGAChatMessageTypeCallStarted
             callView.callImageView.image = [UIImage imageNamed:@"callWithXIncoming"];
-            callView.callLabel.text = AMLocalizedString(@"Call started", @"Text to inform the user there is an active call and is participating");
+            callView.callLabel.text = AMLocalizedString(@"Call Started", @"Text to inform the user there is an active call and is participating");
         }
         self.cachedView = callView;
     }

@@ -375,9 +375,7 @@ const NSUInteger kMaxMessagesToLoad = 256;
 
 #pragma mark - Private
 
-- (void)configureNavigationBar {
-    self.navigationController.interactivePopGestureRecognizer.delegate = nil;
-    
+- (void)configureNavigationBar {    
     [self createRightBarButtonItems];
     if (@available(iOS 11.0, *)) {
         [self initNavigationTitleViews];
