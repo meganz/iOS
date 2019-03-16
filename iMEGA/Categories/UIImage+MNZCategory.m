@@ -129,6 +129,16 @@
     return image;
 }
 
++ (UIImage *)imageWithColor:(UIColor *)color andBounds:(CGRect)imgBounds {
+    UIGraphicsBeginImageContextWithOptions(imgBounds.size, NO, 0);
+    [color setFill];
+    UIRectFill(imgBounds);
+    UIImage *img = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    return img;
+}
+
 #pragma mark - QR generation
 
 + (UIImage *)mnz_qrImageFromString:(NSString *)qrString withSize:(CGSize)size color:(UIColor *)color {

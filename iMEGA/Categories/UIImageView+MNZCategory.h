@@ -2,6 +2,7 @@
 
 @interface UIImageView (MNZCategory)
 
+- (void)mnz_setImageAvatarOrColorForUserHandle:(uint64_t)userHandle;
 - (void)mnz_setImageForUserHandle:(uint64_t)userHandle;
 - (void)mnz_setImageForUserHandle:(uint64_t)userHandle name:(NSString *)name;
 
