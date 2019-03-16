@@ -70,7 +70,7 @@
     
     MEGALogDebug(@"[Camera Upload] revert record status %@ to not started for %@", [AssetUploadStatus stringForStatus:record.status.unsignedIntegerValue], record.localIdentifier);
     record.status = @(CameraAssetUploadStatusNotStarted);
-    [NSFileManager.defaultManager removeItemIfExistsAtURL:[NSURL mnz_assetDirectoryURLForLocalIdentifier:record.localIdentifier]];
+    [NSFileManager.defaultManager removeItemIfExistsAtURL:[NSURL mnz_assetURLForLocalIdentifier:record.localIdentifier]];
 }
 
 @end

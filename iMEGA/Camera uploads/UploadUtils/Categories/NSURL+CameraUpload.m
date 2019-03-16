@@ -6,6 +6,9 @@
 @import AVFoundation;
 @import CoreServices;
 
+static NSString * const CameraUploadsDirectoryName = @"CameraUploads";
+static NSString * const AssetsDirectoryName = @"Assets";
+
 @implementation NSURL (CameraUpload)
 
 + (NSURL *)mnz_cameraUploadURL {
@@ -13,7 +16,7 @@
     NSURL *supportURL = [[NSFileManager.defaultManager URLsForDirectory:NSApplicationSupportDirectory inDomains:NSUserDomainMask] firstObject];
     if (supportURL) {
         NSString *bundleId = [[NSBundle mainBundle] bundleIdentifier];
-        uploadURL = [[supportURL URLByAppendingPathComponent:bundleId isDirectory:YES] URLByAppendingPathComponent:@"CameraUploads" isDirectory:YES];
+        uploadURL = [[supportURL URLByAppendingPathComponent:bundleId isDirectory:YES] URLByAppendingPathComponent:CameraUploadsDirectoryName isDirectory:YES];
         
         BOOL isDirectory = false;
         if(!([NSFileManager.defaultManager fileExistsAtPath:uploadURL.path isDirectory:&isDirectory] && isDirectory)) {
@@ -30,12 +33,16 @@
     return uploadURL;
 }
 
-+ (NSURL *)mnz_assetDirectoryURLForLocalIdentifier:(NSString *)localIdentifier {
-    return [self.mnz_cameraUploadURL URLByAppendingPathComponent:localIdentifier.mnz_stringByRemovingInvalidFileCharacters isDirectory:YES];
++ (NSURL *)mnz_assetsDirectoryURL {
+    return [[self mnz_cameraUploadURL] URLByAppendingPathComponent:AssetsDirectoryName isDirectory:YES];
 }
 
-+ (NSURL *)mnz_archivedURLForLocalIdentifier:(NSString *)localIdentifier {
-    return [[self mnz_assetDirectoryURLForLocalIdentifier:localIdentifier] URLByAppendingPathComponent:localIdentifier.mnz_stringByRemovingInvalidFileCharacters isDirectory:NO];
++ (NSURL *)mnz_assetURLForLocalIdentifier:(NSString *)localIdentifier {
+    return [[self mnz_assetsDirectoryURL] URLByAppendingPathComponent:localIdentifier.mnz_stringByRemovingInvalidFileCharacters isDirectory:YES];
+}
+
++ (NSURL *)mnz_archivedUploadInfoURLForLocalIdentifier:(NSString *)localIdentifier {
+    return [[self mnz_assetURLForLocalIdentifier:localIdentifier] URLByAppendingPathComponent:localIdentifier.mnz_stringByRemovingInvalidFileCharacters isDirectory:NO];
 }
 
 #pragma mark - create thumbnail for video

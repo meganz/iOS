@@ -4,9 +4,7 @@
 
 @interface MEGAStore ()
 
-@property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
-@property (strong, nonatomic) NSPersistentStoreCoordinator *storeCoordinator;
-@property (strong, nonatomic) NSPersistentContainer *persistentContainer;
+@property (strong, nonatomic) MEGAStoreStack *storeStack;
 
 @end
 
@@ -23,107 +21,16 @@
     return _megaStore;
 }
 
-#pragma mark - Core data stack
-
-- (NSPersistentContainer *)persistentContainer {
-    if (_persistentContainer) {
-        return _persistentContainer;
+- (instancetype)init {
+    self = [super init];
+    if (self) {
+        _storeStack = [[MEGAStoreStack alloc] initWithModelName:@"MEGACD" storeURL:[self storeURL]];
     }
-    
-    if (NSThread.isMainThread) {
-        _persistentContainer = [self newPersistentContainer];
-    } else {
-        dispatch_sync(dispatch_get_main_queue(), ^{
-            if (self->_persistentContainer == nil) {
-                self->_persistentContainer = [self newPersistentContainer];
-            }
-        });
-    }
-    
-    return _persistentContainer;
-}
-
-- (NSPersistentStoreCoordinator *)storeCoordinator {
-    if (_storeCoordinator) {
-        return _storeCoordinator;
-    }
-    
-    if (NSThread.isMainThread) {
-        _storeCoordinator = [self newStoreCoordinatorForiOSBelow10];
-    } else {
-        dispatch_sync(dispatch_get_main_queue(), ^{
-            if (self->_storeCoordinator == nil) {
-                self->_storeCoordinator = [self newStoreCoordinatorForiOSBelow10];
-            }
-        });
-    }
-    
-    return _storeCoordinator;
-}
-
-/**
- we use this method to create a new persistent container.
- 
- Please note: the persistent container will lock main thread internally during initialization due to the setting of NSPersistentStoreCoordinator in NSManagedObjectContext, so please avoid locking main thread when to call this method. Otherwise, a grid lock will be created.
-
- @return a new NSPersistentContainer object
- */
-- (NSPersistentContainer *)newPersistentContainer {
-    NSPersistentContainer *container = [NSPersistentContainer persistentContainerWithName:@"MEGACD"];
-    NSPersistentStoreDescription *storeDescription = [NSPersistentStoreDescription persistentStoreDescriptionWithURL:[self storeURL]];
-    container.persistentStoreDescriptions = @[storeDescription];
-    [container loadPersistentStoresWithCompletionHandler:^(NSPersistentStoreDescription * _Nonnull storeDescription, NSError * _Nullable error) {
-        if (error) {
-            MEGALogError(@"error when to create core data stack %@", error);
-            abort();
-        }
-    }];
-    return container;
-}
-
-- (NSPersistentStoreCoordinator *)newStoreCoordinatorForiOSBelow10 {
-    NSManagedObjectModel *model = [NSManagedObjectModel mergedModelFromBundles:nil];
-    NSURL *storeURL = [self storeURL];
-    
-    NSError *error = nil;
-    NSPersistentStoreCoordinator *coordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:model];
-    NSDictionary *options = @{NSMigratePersistentStoresAutomaticallyOption : @YES,
-                              NSInferMappingModelAutomaticallyOption : @YES};
-    if (![coordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:options error:&error]) {
-        MEGALogError(@"error when to create core data stack %@", error);
-        abort();
-    }
-    
-    return coordinator;
+    return self;
 }
 
 - (NSManagedObjectContext *)managedObjectContext {
-    return self.viewContext;
-}
-
-- (NSManagedObjectContext *)viewContext {
-    if (@available(iOS 10.0, *)) {
-        return self.persistentContainer.viewContext;
-    } else {
-        if (_managedObjectContext == nil) {
-            _managedObjectContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSMainQueueConcurrencyType];
-            _managedObjectContext.persistentStoreCoordinator = self.storeCoordinator;
-        }
-        
-        return _managedObjectContext;
-    }
-}
-
-- (NSManagedObjectContext *)newBackgroundContext {
-    if (@available(iOS 10.0, *)) {
-        return self.persistentContainer.newBackgroundContext;
-    } else {
-        NSManagedObjectContext *context = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
-        [context performBlockAndWait:^{
-            context.persistentStoreCoordinator = self.storeCoordinator;
-        }];
-        return context;
-    }
+    return self.storeStack.viewContext;
 }
 
 - (NSURL *)storeURL {
@@ -149,26 +56,6 @@
     }
     
     return newStoreURL;
-}
-
-- (void)deleteStoreStack {
-    NSPersistentStoreCoordinator *coordinator;
-    if (@available(iOS 10.0, *)) {
-        coordinator = self.persistentContainer.persistentStoreCoordinator;
-    } else {
-        coordinator = self.storeCoordinator;
-    }
-    
-    [self.managedObjectContext reset];
-    
-    NSError *error;
-    [coordinator destroyPersistentStoreAtURL:[self storeURL] withType:NSSQLiteStoreType options:nil error:&error];
-    if (@available(iOS 10.0, *)) {
-        _persistentContainer = nil;
-    } else {
-        _managedObjectContext = nil;
-        _storeCoordinator = nil;
-    }
 }
 
 - (void)saveContext {

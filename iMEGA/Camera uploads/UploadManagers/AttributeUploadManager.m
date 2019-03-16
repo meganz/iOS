@@ -10,6 +10,8 @@
 #import "NSError+CameraUpload.h"
 @import CoreLocation;
 
+static NSString * const AttributesDirectoryName = @"Attributes";
+
 static const NSInteger CoordinatesConcurrentUploadCount = 2;
 static const NSInteger ThumbnailConcurrentUploadCount = 50;
 
@@ -250,7 +252,7 @@ typedef NS_ENUM(NSInteger, PreviewConcurrentUploadCount) {
 #pragma mark - Utils
 
 - (NSURL *)attributeDirectoryURL {
-    return [NSURL.mnz_cameraUploadURL URLByAppendingPathComponent:@"Attributes" isDirectory:YES];
+    return [NSURL.mnz_cameraUploadURL URLByAppendingPathComponent:AttributesDirectoryName isDirectory:YES];
 }
 
 - (NSURL *)nodeAttributesDirectoryURLByLocalIdentifier:(NSString *)identifier {

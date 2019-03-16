@@ -51,7 +51,7 @@
 #pragma mark - handle transfer completion data
 
 - (void)handleEmptyTransferTokenInSessionTask:(NSURLSessionTask *)task {
-    NSURL *archivedURL = [NSURL mnz_archivedURLForLocalIdentifier:task.taskDescription];
+    NSURL *archivedURL = [NSURL mnz_archivedUploadInfoURLForLocalIdentifier:task.taskDescription];
     AssetUploadInfo *uploadInfo = [NSKeyedUnarchiver unarchiveObjectWithFile:archivedURL.path];
     if (uploadInfo.encryptedChunksCount == 1) {
         MEGALogError(@"[Camera Upload] empty transfer token for single chunk %@, fileSize: %llu, response %@", task.taskDescription, uploadInfo.fileSize, task.response);
@@ -73,7 +73,7 @@
     
     MEGALogDebug(@"[Camera Upload] %@ starts putting nodes as nodes fetch is done", localIdentifier);
     
-    NSURL *archivedURL = [NSURL mnz_archivedURLForLocalIdentifier:localIdentifier];
+    NSURL *archivedURL = [NSURL mnz_archivedUploadInfoURLForLocalIdentifier:localIdentifier];
     BOOL isDirectory;
     if ([NSFileManager.defaultManager fileExistsAtPath:archivedURL.path isDirectory:&isDirectory] && !isDirectory) {
         AssetUploadInfo *uploadInfo = [NSKeyedUnarchiver unarchiveObjectWithFile:archivedURL.path];
@@ -182,7 +182,7 @@
         
         [CameraUploadRecordManager.shared updateUploadRecord:record withStatus:status error:nil];
         
-        [NSFileManager.defaultManager removeItemIfExistsAtURL:[NSURL mnz_assetDirectoryURLForLocalIdentifier:localIdentifier]];
+        [NSFileManager.defaultManager removeItemIfExistsAtURL:[NSURL mnz_assetURLForLocalIdentifier:localIdentifier]];
         
         [CameraUploadRecordManager.shared refaultObject:record];
         
