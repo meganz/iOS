@@ -29,6 +29,7 @@
         _cameraScanQueue.maxConcurrentOperationCount = 1;
         _cameraScanQueue.qualityOfService = NSQualityOfServiceBackground;
         _livePhotoScanner = [[LivePhotoScanner alloc] init];
+        _scannedFetchResults = [NSMutableArray array];
     }
     return self;
 }
@@ -99,7 +100,17 @@
         }
     }
     
-    [self.scannedFetchResults addObject:assetFetchResult];
+    BOOL isContainedByScannedResult = NO;
+    for (AssetFetchResult *result in self.scannedFetchResults.copy) {
+        if ([assetFetchResult isContainedByAssetFetchResult:result]) {
+            isContainedByScannedResult = YES;
+            break;
+        }
+    }
+    
+    if (!isContainedByScannedResult) {
+        [self.scannedFetchResults addObject:assetFetchResult];
+    }
 }
 
 #pragma mark - PHPhotoLibraryChangeObserver
