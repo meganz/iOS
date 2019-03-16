@@ -25,7 +25,7 @@
 #import "NSError+CameraUpload.h"
 #import "CameraUploadStore.h"
 
-static const NSTimeInterval MinimumBackgroundRefreshInterval = 2 * 3600;
+static const NSTimeInterval MinimumBackgroundRefreshInterval = 1.5 * 3600;
 static const NSTimeInterval BackgroundRefreshDuration = 25;
 static const NSTimeInterval LoadMediaInfoTimeoutInSeconds = 120;
 
@@ -406,6 +406,9 @@ static const NSUInteger VideoUploadBatchCount = 1;
             });
         } else {
             [self startVideoUploadIfNeeded];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [NSNotificationCenter.defaultCenter postNotificationName:MEGACameraUploadStatsChangedNotificationName object:nil];
+            });
         }
     }];
 }
