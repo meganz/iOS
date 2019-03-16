@@ -23,6 +23,7 @@
 #import "CameraUploadConcurrentCountCalculator.h"
 #import "BackgroundUploadingTaskMonitor.h"
 #import "NSError+CameraUpload.h"
+#import "CameraUploadStore.h"
 
 static const NSTimeInterval MinimumBackgroundRefreshInterval = 2 * 3600;
 static const NSTimeInterval BackgroundRefreshDuration = 25;
@@ -760,11 +761,17 @@ static const NSUInteger VideoUploadBatchCount = 1;
 - (void)didReceiveLogoutNotification:(NSNotification *)notification {
     MEGALogDebug(@"[Camera Upload] logout notification %@", notification);
     [self disableCameraUpload];
-    [NSFileManager.defaultManager removeItemIfExistsAtURL:NSURL.mnz_cameraUploadURL];
-    [CameraUploadRecordManager.shared resetDataContext];
     [CameraUploadManager clearLocalSettings];
     _isNodeTreeCurrent = NO;
     _cameraUploadNode = nil;
+    
+    [CameraUploadRecordManager.shared resetDataContext];
+    NSError *error;
+    [CameraUploadStore.shared.storeStack deleteStoreWithError:&error];
+    if (error) {
+        MEGALogError(@"[Camera Upload] error when to delete camera upload store after logout %@", error);
+    }
+    [NSFileManager.defaultManager removeItemIfExistsAtURL:NSURL.mnz_cameraUploadURL];
 }
 
 #pragma mark - photos access permission check

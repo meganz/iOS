@@ -1,10 +1,10 @@
 
 #import "CameraUploadRecordManager.h"
-#import "MEGAStore.h"
 #import "MOAssetUploadErrorPerLaunch+CoreDataClass.h"
 #import "MOAssetUploadErrorPerLogin+CoreDataClass.h"
 #import "LocalFileNameGenerator.h"
 #import "SavedIdentifierParser.h"
+#import "CameraUploadStore.h"
 
 static const NSUInteger MaximumUploadRetryPerLaunchCount = 20;
 static const NSUInteger MaximumUploadRetryPerLoginCount = 800;
@@ -61,7 +61,7 @@ static const NSUInteger MaximumUploadRetryPerLoginCount = 800;
 
     dispatch_sync(self.serialQueueForContext, ^{
         if (self->_backgroundContext == nil) {
-            self->_backgroundContext = [MEGAStore.shareInstance newBackgroundContext];
+            self->_backgroundContext = [CameraUploadStore.shared.storeStack newBackgroundContext];
             self->_backgroundContext.undoManager = nil;
         }
     });

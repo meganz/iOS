@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14460.32" systemVersion="18D109" minimumToolsVersion="Automatic" sourceLanguage="Objective-C" userDefinedModelVersionIdentifier="">
+    <entity name="AssetUploadErrorPerLaunch" representedClassName="MOAssetUploadErrorPerLaunch" parentEntity="AssetUploadErrorRecord" syncable="YES">
+        <relationship name="uploadRecord" maxCount="1" deletionRule="Nullify" destinationEntity="AssetUploadRecord" inverseName="errorPerLaunch" inverseEntity="AssetUploadRecord" syncable="YES"/>
+    </entity>
+    <entity name="AssetUploadErrorPerLogin" representedClassName="MOAssetUploadErrorPerLogin" parentEntity="AssetUploadErrorRecord" syncable="YES">
+        <relationship name="uploadRecord" maxCount="1" deletionRule="Nullify" destinationEntity="AssetUploadRecord" inverseName="errorPerLogin" inverseEntity="AssetUploadRecord" syncable="YES"/>
+    </entity>
+    <entity name="AssetUploadErrorRecord" representedClassName="MOAssetUploadErrorRecord" isAbstract="YES" syncable="YES">
+        <attribute name="errorCount" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="localIdentifier" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="AssetUploadFileNameRecord" representedClassName="MOAssetUploadFileNameRecord" syncable="YES">
+        <attribute name="fileExtension" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="localUniqueFileName" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="uploadRecord" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="AssetUploadRecord" inverseName="fileNameRecord" inverseEntity="AssetUploadRecord" syncable="YES"/>
+    </entity>
+    <entity name="AssetUploadRecord" representedClassName="MOAssetUploadRecord" syncable="YES">
+        <attribute name="additionalMediaSubtypes" optional="YES" attributeType="Integer 64" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="creationDate" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="localIdentifier" attributeType="String" syncable="YES"/>
+        <attribute name="mediaSubtypes" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="mediaType" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="status" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
+        <relationship name="errorPerLaunch" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="AssetUploadErrorPerLaunch" inverseName="uploadRecord" inverseEntity="AssetUploadErrorPerLaunch" syncable="YES"/>
+        <relationship name="errorPerLogin" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="AssetUploadErrorPerLogin" inverseName="uploadRecord" inverseEntity="AssetUploadErrorPerLogin" syncable="YES"/>
+        <relationship name="fileNameRecord" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="AssetUploadFileNameRecord" inverseName="uploadRecord" inverseEntity="AssetUploadFileNameRecord" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="AssetUploadErrorPerLaunch" positionX="-18" positionY="27" width="128" height="60"/>
+        <element name="AssetUploadErrorPerLogin" positionX="-36" positionY="9" width="128" height="60"/>
+        <element name="AssetUploadErrorRecord" positionX="-54" positionY="-9" width="128" height="75"/>
+        <element name="AssetUploadFileNameRecord" positionX="0" positionY="45" width="128" height="90"/>
+        <element name="AssetUploadRecord" positionX="-63" positionY="-18" width="128" height="180"/>
+    </elements>
+</model>

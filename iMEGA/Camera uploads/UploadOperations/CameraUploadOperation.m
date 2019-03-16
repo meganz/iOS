@@ -103,7 +103,7 @@ static NSString * const VideoAttributeImageName = @"AttributeImage";
 #pragma mark - data processing
 
 - (NSURL *)URLForAssetProcessing {
-    NSURL *directoryURL = [NSURL mnz_assetDirectoryURLForLocalIdentifier:self.uploadInfo.savedLocalIdentifier];
+    NSURL *directoryURL = [NSURL mnz_assetURLForLocalIdentifier:self.uploadInfo.savedLocalIdentifier];
     [NSFileManager.defaultManager removeItemIfExistsAtURL:directoryURL];
     [[NSFileManager defaultManager] createDirectoryAtURL:directoryURL withIntermediateDirectories:YES attributes:nil error:nil];
     return directoryURL;
@@ -316,7 +316,7 @@ static NSString * const VideoAttributeImageName = @"AttributeImage";
         return NO;
     }
     
-    NSURL *archivedURL = [NSURL mnz_archivedURLForLocalIdentifier:self.uploadInfo.savedLocalIdentifier];
+    NSURL *archivedURL = [NSURL mnz_archivedUploadInfoURLForLocalIdentifier:self.uploadInfo.savedLocalIdentifier];
     return [NSKeyedArchiver archiveRootObject:self.uploadInfo toFile:archivedURL.path];
 }
 
