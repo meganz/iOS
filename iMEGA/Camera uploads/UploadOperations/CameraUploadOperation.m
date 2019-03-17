@@ -351,7 +351,7 @@ static NSString * const VideoAttributeImageName = @"AttributeImage";
     }
     
     if (uploadNextAsset) {
-        [CameraUploadManager.shared uploadNextAssetForMediaType:self.uploadInfo.asset.mediaType];
+        [NSNotificationCenter.defaultCenter postNotificationName:MEGACameraUploadQueueUpNextAssetNotificationName object:nil userInfo:@{MEGAAssetMediaTypeUserInfoKey : @(self.uploadInfo.asset.mediaType)}];
     }
 }
 
