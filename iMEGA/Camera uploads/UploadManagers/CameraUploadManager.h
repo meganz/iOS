@@ -28,8 +28,6 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)startCameraUploadIfNeeded;
 - (void)startVideoUploadIfNeeded;
 
-- (void)uploadNextAssetForMediaType:(PHAssetMediaType)mediaType;
-
 #pragma mark - enable camera upload
 
 - (void)enableCameraUpload;

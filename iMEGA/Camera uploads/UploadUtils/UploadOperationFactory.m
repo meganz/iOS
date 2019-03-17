@@ -14,6 +14,7 @@
 
 + (CameraUploadOperation *)operationForUploadRecord:(MOAssetUploadRecord *)uploadRecord parentNode:(MEGANode *)node error:(NSError * _Nullable __autoreleasing * _Nullable)error {
     NSString *savedIdentifier = [CameraUploadRecordManager.shared savedIdentifierInRecord:uploadRecord];
+    MEGALogDebug(@"[Camera Upload] prepare to queue up %@", savedIdentifier);
     AssetIdentifierInfo *identifierInfo = [[[SavedIdentifierParser alloc] init] parseSavedIdentifier:savedIdentifier];
     
     if (identifierInfo.localIdentifier.length == 0) {

@@ -28,6 +28,15 @@
 
 - (void)start {
     [super start];
+    
+    if (self.isFinished) {
+        return;
+    }
+    
+    if (self.isCancelled) {
+        [self finishOperationWithStatus:CameraAssetUploadStatusCancelled shouldUploadNextAsset:NO];
+        return;
+    }
 
     [self requestVideoData];
 }

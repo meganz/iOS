@@ -154,6 +154,7 @@ static const NSUInteger VideoUploadBatchCount = 1;
     [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(didReceiveStorageEventChangedNotification:) name:MEGAStorageEventDidChangeNotificationName object:nil];
     [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(didReceiveUploadingTaskCountChangedNotification:) name:MEGACameraUploadUploadingTasksCountChangedNotificationName object:nil];
     [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(didReceiveBackgroundTaskExpiredNotification:) name:MEGACameraUploadTaskExpiredNotificationName object:nil];
+    [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(didReceiveQueueUpNextAssetNotification:) name:MEGACameraUploadQueueUpNextAssetNotificationName object:nil];
 }
 
 - (void)unregisterNotificationsForUpload {
@@ -167,6 +168,7 @@ static const NSUInteger VideoUploadBatchCount = 1;
     [NSNotificationCenter.defaultCenter removeObserver:self name:MEGAStorageEventDidChangeNotificationName object:nil];
     [NSNotificationCenter.defaultCenter removeObserver:self name:MEGACameraUploadUploadingTasksCountChangedNotificationName object:nil];
     [NSNotificationCenter.defaultCenter removeObserver:self name:MEGACameraUploadTaskExpiredNotificationName object:nil];
+    [NSNotificationCenter.defaultCenter removeObserver:self name:MEGACameraUploadQueueUpNextAssetNotificationName object:nil];
 }
 
 #pragma mark - properties
@@ -675,6 +677,12 @@ static const NSUInteger VideoUploadBatchCount = 1;
 }
 
 #pragma mark - notifications
+
+- (void)didReceiveQueueUpNextAssetNotification:(NSNotification *)notification {
+    PHAssetMediaType mediaType = [notification.userInfo[MEGAAssetMediaTypeUserInfoKey] integerValue];
+    MEGALogDebug(@"[Camera Upload] did receive queue up next asset %ld", mediaType);
+    [self uploadNextAssetForMediaType:mediaType];
+}
 
 - (void)didReceivePhotoConcurrentCountChangedNotification:(NSNotification *)notification {
     MEGALogDebug(@"[Camera Upload] photo concurrent count changed %@", notification.userInfo);
