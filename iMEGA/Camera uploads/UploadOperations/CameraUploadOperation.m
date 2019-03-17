@@ -58,15 +58,6 @@ static NSString * const VideoAttributeImageName = @"AttributeImage";
     return [NSString stringWithFormat:@"%@ %@ %@", NSStringFromClass(self.class), [self.uploadInfo.asset.creationDate mnz_formattedDefaultNameForMedia], self.uploadInfo.savedLocalIdentifier];
 }
 
-#pragma mark - background task expire delegate
-
-- (void)backgroundTaskDidExpire {
-    [super backgroundTaskDidExpire];
-    dispatch_async(dispatch_get_global_queue(QOS_CLASS_UTILITY, 0), ^{
-        [NSNotificationCenter.defaultCenter postNotificationName:MEGACameraUploadTaskExpiredNotificationName object:nil];
-    });
-}
-
 #pragma mark - start operation
 
 - (void)start {
