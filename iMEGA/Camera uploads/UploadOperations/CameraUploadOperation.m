@@ -27,7 +27,6 @@ static NSString * const VideoAttributeImageName = @"AttributeImage";
 
 @property (strong, nonatomic, nullable) MEGASdk *sdk;
 @property (strong, nonatomic) FileEncrypter *fileEncrypter;
-@property (strong, nonatomic) dispatch_queue_t serialQueue;
 
 @end
 
@@ -40,7 +39,6 @@ static NSString * const VideoAttributeImageName = @"AttributeImage";
     if (self) {
         _uploadInfo = uploadInfo;
         _uploadRecord = uploadRecord;
-        _serialQueue = dispatch_queue_create("nz.mega.cameraUpload.uploadOperation", DISPATCH_QUEUE_SERIAL);
     }
     
     return self;
@@ -64,11 +62,9 @@ static NSString * const VideoAttributeImageName = @"AttributeImage";
 
 - (void)backgroundTaskDidExpire {
     [super backgroundTaskDidExpire];
-    [NSNotificationCenter.defaultCenter postNotificationName:MEGACameraUploadTaskExpiredNotificationName object:nil];
-    if (!self.isCancelled) {
-        [self cancel];
-    }
-    [self finishOperationWithStatus:CameraAssetUploadStatusCancelled shouldUploadNextAsset:NO];
+    dispatch_async(dispatch_get_global_queue(QOS_CLASS_UTILITY, 0), ^{
+        [NSNotificationCenter.defaultCenter postNotificationName:MEGACameraUploadTaskExpiredNotificationName object:nil];
+    });
 }
 
 #pragma mark - start operation
@@ -331,38 +327,32 @@ static NSString * const VideoAttributeImageName = @"AttributeImage";
         return;
     }
     
-    dispatch_sync(self.serialQueue, ^{
-        if (self.isFinished) {
-            return;
-        }
-        
-        [self finishOperation];
-        
-        MEGALogDebug(@"[Camera Upload] %@ finishes with status: %@", self, [AssetUploadStatus stringForStatus:status]);
-
-        if (!MEGASdkManager.sharedMEGASdk.isLoggedIn) {
-            return;
-        }
-        
-        [CameraUploadRecordManager.shared.backgroundContext performBlockAndWait:^{
-            [CameraUploadRecordManager.shared updateUploadRecord:self.uploadRecord withStatus:status error:nil];
-            [CameraUploadRecordManager.shared refaultObject:self.uploadRecord];
-        }];
-        
-        if (status != CameraAssetUploadStatusUploading) {
-            [NSFileManager.defaultManager removeItemIfExistsAtURL:self.uploadInfo.directoryURL];
-        }
-        
-        if (status == CameraAssetUploadStatusDone) {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [NSNotificationCenter.defaultCenter postNotificationName:MEGACameraUploadStatsChangedNotificationName object:nil];
-            });
-        }
-        
-        if (uploadNextAsset) {
-            [CameraUploadManager.shared uploadNextAssetForMediaType:self.uploadInfo.asset.mediaType];
-        }
-    });
+    [self finishOperation];
+    
+    MEGALogDebug(@"[Camera Upload] %@ finishes with status: %@", self, [AssetUploadStatus stringForStatus:status]);
+    
+    if (!MEGASdkManager.sharedMEGASdk.isLoggedIn) {
+        return;
+    }
+    
+    [CameraUploadRecordManager.shared.backgroundContext performBlockAndWait:^{
+        [CameraUploadRecordManager.shared updateUploadRecord:self.uploadRecord withStatus:status error:nil];
+        [CameraUploadRecordManager.shared refaultObject:self.uploadRecord];
+    }];
+    
+    if (status != CameraAssetUploadStatusUploading) {
+        [NSFileManager.defaultManager removeItemIfExistsAtURL:self.uploadInfo.directoryURL];
+    }
+    
+    if (status == CameraAssetUploadStatusDone) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [NSNotificationCenter.defaultCenter postNotificationName:MEGACameraUploadStatsChangedNotificationName object:nil];
+        });
+    }
+    
+    if (uploadNextAsset) {
+        [CameraUploadManager.shared uploadNextAssetForMediaType:self.uploadInfo.asset.mediaType];
+    }
 }
 
 @end
