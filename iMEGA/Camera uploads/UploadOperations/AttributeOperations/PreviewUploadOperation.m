@@ -11,6 +11,15 @@
 - (void)start {
     [super start];
     
+    if (self.isFinished) {
+        return;
+    }
+    
+    if (self.isCancelled) {
+        [self finishOperation];
+        return;
+    }
+    
     if (self.node.hasPreview) {
         [self cacheAttributeFile];
         [self finishOperation];
