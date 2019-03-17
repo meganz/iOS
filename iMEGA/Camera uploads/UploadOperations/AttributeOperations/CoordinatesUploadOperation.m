@@ -10,6 +10,15 @@
 - (void)start {
     [super start];
     
+    if (self.isFinished) {
+        return;
+    }
+    
+    if (self.isCancelled) {
+        [self finishOperation];
+        return;
+    }
+    
     if (self.node.latitude && self.node.longitude) {
         [NSFileManager.defaultManager removeItemIfExistsAtURL:self.attributeURL];
         [self finishOperation];
