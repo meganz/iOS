@@ -91,12 +91,12 @@ static CameraUploadConcurrentCount MakeCount(PhotoUploadConcurrentCount photoCou
     UIDeviceBatteryState batteryState = UIDevice.currentDevice.batteryState;
     if (batteryState == UIDeviceBatteryStateUnplugged) {
         float batteryLevel = UIDevice.currentDevice.batteryLevel;
-        if (batteryLevel < 0.1) {
-            return MakeCount(PhotoUploadConcurrentCountInBatteryLevelBelow10, VideoUploadConcurrentCountInBatteryLevelBelow10);
+        if (batteryLevel < 0.15) {
+            return MakeCount(PhotoUploadConcurrentCountInBatteryLevelBelow15, VideoUploadConcurrentCountInBatteryLevelBelow15);
         }
         
-        if (batteryLevel < 0.2) {
-            return MakeCount(PhotoUploadConcurrentCountInBatteryLevelBelow20, VideoUploadConcurrentCountInBatteryLevelBelow20);
+        if (batteryLevel < 0.25) {
+            return MakeCount(PhotoUploadConcurrentCountInBatteryLevelBelow25, VideoUploadConcurrentCountInBatteryLevelBelow25);
         }
         
         if (@available(iOS 11.0, *)) {
@@ -109,8 +109,8 @@ static CameraUploadConcurrentCount MakeCount(PhotoUploadConcurrentCount photoCou
             return MakeCount(PhotoUploadConcurrentCountInLowPowerMode, VideoUploadConcurrentCountInLowPowerMode);
         }
         
-        if (batteryLevel < 0.35) {
-            return MakeCount(PhotoUploadConcurrentCountInBatteryLevelBelow35, VideoUploadConcurrentCountInBatteryLevelBelow35);
+        if (batteryLevel < 0.4) {
+            return MakeCount(PhotoUploadConcurrentCountInBatteryLevelBelow40, VideoUploadConcurrentCountInBatteryLevelBelow40);
         }
         
         if (batteryLevel < 0.55) {
