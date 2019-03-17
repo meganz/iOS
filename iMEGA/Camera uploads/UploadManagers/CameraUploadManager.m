@@ -261,12 +261,7 @@ static const NSUInteger VideoUploadBatchCount = 1;
 
 - (void)cameraScanner:(CameraScanner *)scanner didObserveNewAssets:(NSArray<PHAsset *> *)assets {
     MEGALogDebug(@"[Camera Upload] did scan new assets count %lu", (unsigned long)assets.count);
-    
-    if (!MEGASdkManager.sharedMEGASdk.isLoggedIn || !CameraUploadManager.isCameraUploadEnabled) {
-        return;
-    }
-    
-    [self requestMediaInfoForUpload];
+    [self startCameraUploadWithRequestingMediaInfo];
 }
 
 #pragma mark - start upload
@@ -286,7 +281,7 @@ static const NSUInteger VideoUploadBatchCount = 1;
             });
         } else {
             [self.cameraScanner observePhotoLibraryChanges];
-            [self requestMediaInfoForUpload];
+            [self startCameraUploadWithRequestingMediaInfo];
         }
     }];
     
@@ -295,8 +290,13 @@ static const NSUInteger VideoUploadBatchCount = 1;
     [AttributeUploadManager.shared scanLocalAttributeFilesAndRetryUploadIfNeeded];
 }
 
-- (void)requestMediaInfoForUpload {
+- (void)startCameraUploadWithRequestingMediaInfo {
     MEGALogDebug(@"[Camera Upload] request media info for upload");
+    
+    if (!MEGASdkManager.sharedMEGASdk.isLoggedIn || !CameraUploadManager.isCameraUploadEnabled) {
+        return;
+    }
+    
     if (self.mediaInfoLoader.isMediaInfoLoaded) {
         [self loadCameraUploadNodeForUpload];
     } else {
@@ -680,7 +680,7 @@ static const NSUInteger VideoUploadBatchCount = 1;
 
 - (void)didReceiveQueueUpNextAssetNotification:(NSNotification *)notification {
     PHAssetMediaType mediaType = [notification.userInfo[MEGAAssetMediaTypeUserInfoKey] integerValue];
-    MEGALogDebug(@"[Camera Upload] did receive queue up next asset %ld", mediaType);
+    MEGALogDebug(@"[Camera Upload] did receive queue up next asset %ld", (long)mediaType);
     [self uploadNextAssetForMediaType:mediaType];
 }
 
@@ -689,7 +689,7 @@ static const NSUInteger VideoUploadBatchCount = 1;
     NSInteger photoConcurrentCount = [notification.userInfo[MEGAPhotoConcurrentCountUserInfoKey] integerValue];
     self.photoUploadOperationQueue.maxConcurrentOperationCount = photoConcurrentCount;
     if (self.photoUploadOperationQueue.operationCount < photoConcurrentCount) {
-        [self uploadAssetsForMediaType:PHAssetMediaTypeImage concurrentCount:PhotoUploadBatchCount];
+        [self startCameraUploadWithRequestingMediaInfo];
     }
 }
 
@@ -698,7 +698,7 @@ static const NSUInteger VideoUploadBatchCount = 1;
     NSInteger videoConcurrentCount = [notification.userInfo[MEGAVideoConcurrentCountUserInfoKey] integerValue];
     self.videoUploadOperationQueue.maxConcurrentOperationCount = videoConcurrentCount;
     if (self.videoUploadOperationQueue.operationCount < videoConcurrentCount) {
-        [self uploadAssetsForMediaType:PHAssetMediaTypeVideo concurrentCount:VideoUploadBatchCount];
+        [self startVideoUploadIfNeeded];
     }
 }
 
