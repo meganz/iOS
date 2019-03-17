@@ -23,6 +23,8 @@
     return self;
 }
 
+#pragma mark - persistent container for iOS 10 and above
+
 - (NSPersistentContainer *)persistentContainer {
     if (_persistentContainer) {
         return _persistentContainer;
@@ -39,24 +41,6 @@
     }
     
     return _persistentContainer;
-}
-
-- (NSPersistentStoreCoordinator *)storeCoordinator {
-    if (_storeCoordinator) {
-        return _storeCoordinator;
-    }
-    
-    if (NSThread.isMainThread) {
-        _storeCoordinator = [self newStoreCoordinatorForiOSBelow10];
-    } else {
-        dispatch_sync(dispatch_get_main_queue(), ^{
-            if (self->_storeCoordinator == nil) {
-                self->_storeCoordinator = [self newStoreCoordinatorForiOSBelow10];
-            }
-        });
-    }
-    
-    return _storeCoordinator;
 }
 
 /**
@@ -82,6 +66,26 @@
     return container;
 }
 
+#pragma mark - store coordinator for iOS 9
+
+- (NSPersistentStoreCoordinator *)storeCoordinator {
+    if (_storeCoordinator) {
+        return _storeCoordinator;
+    }
+    
+    if (NSThread.isMainThread) {
+        _storeCoordinator = [self newStoreCoordinatorForiOSBelow10];
+    } else {
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            if (self->_storeCoordinator == nil) {
+                self->_storeCoordinator = [self newStoreCoordinatorForiOSBelow10];
+            }
+        });
+    }
+    
+    return _storeCoordinator;
+}
+
 - (NSPersistentStoreCoordinator *)newStoreCoordinatorForiOSBelow10 {
     NSURL *modelURL = [NSBundle.mainBundle URLForResource:self.modelName withExtension:@"momd"];
     NSManagedObjectModel *model = [[NSManagedObjectModel alloc] initWithContentsOfURL:modelURL];
@@ -96,6 +100,8 @@
     
     return coordinator;
 }
+
+#pragma mark - managed object contexts
 
 - (NSManagedObjectContext *)viewContext {
     if (@available(iOS 10.0, *)) {
@@ -121,6 +127,8 @@
         return context;
     }
 }
+
+#pragma mark - delete store
 
 - (void)deleteStoreWithError:(NSError *__autoreleasing  _Nullable *)error {
     NSPersistentStoreCoordinator *coordinator;
