@@ -300,14 +300,13 @@ static const NSUInteger VideoUploadBatchCount = 1;
     if (self.mediaInfoLoader.isMediaInfoLoaded) {
         [self loadCameraUploadNodeForUpload];
     } else {
-        __weak __typeof__(self) weakSelf = self;
         [self.mediaInfoLoader loadMediaInfoWithTimeout:LoadMediaInfoTimeoutInSeconds completion:^(BOOL loaded) {
             if (loaded) {
-                [weakSelf loadCameraUploadNodeForUpload];
+                [self loadCameraUploadNodeForUpload];
             } else {
                 MEGALogError(@"[Camera Upload] retry to start camera upload due to failed to load media into");
                 dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(.7 * NSEC_PER_SEC)), dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0), ^{
-                    [self startCameraUploadIfNeeded];
+                    [self startCameraUploadWithRequestingMediaInfo];
                 });
             }
         }];
