@@ -624,6 +624,7 @@
     [self updateDuration];
     self.timer = [NSTimer timerWithTimeInterval:1.0f target:self selector:@selector(updateDuration) userInfo:nil repeats:YES];
     [[NSRunLoop mainRunLoop] addTimer:self.timer forMode:NSRunLoopCommonModes];
+    self.activeCallButton.hidden = NO;
     [UIView animateWithDuration:.5f animations:^ {
         self.activeCallTopConstraint.constant = 0;
         self.tableView.contentInset = UIEdgeInsetsMake(44, 0, 0, 0);
@@ -643,7 +644,9 @@
         self.tableView.contentInset = UIEdgeInsetsZero;
         [self.tableView setContentOffset:CGPointMake(0, CGRectGetHeight(self.searchController.searchBar.frame))];
         [self.view layoutIfNeeded];
-    } completion:nil];
+    } completion:^(BOOL finished) {
+        self.activeCallButton.hidden = YES;
+    }];
     [self.timer invalidate];
 }
 
