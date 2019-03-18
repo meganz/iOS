@@ -788,7 +788,7 @@ static const NSUInteger VideoUploadBatchCount = 1;
     [CameraUploadManager clearLocalSettings];
     _isNodeTreeCurrent = NO;
     _cameraUploadNode = nil;
-    
+    [AttributeUploadManager.shared cancelAllAttributesUpload];
     [CameraUploadRecordManager.shared resetDataContext];
     NSError *error;
     [CameraUploadStore.shared.storeStack deleteStoreWithError:&error];
