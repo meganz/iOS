@@ -56,6 +56,38 @@ static NSString *kPath = @"kPath";
     }
 }
 
+#pragma mark - IBAction
+
+- (IBAction)moreButtonTouchUpInside:(UIButton *)sender {
+    if (self.tableView.isEditing) {
+        return;
+    }
+    
+    CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.tableView];
+    NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:buttonPosition];
+    
+    
+    UIAlertController *infoAlertController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    [infoAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
+    
+    UIAlertAction *removeItemAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"remove", @"Title for the action that allows to remove a file or folder") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        OfflineTableViewCell *cell = (OfflineTableViewCell *)[self.tableView cellForRowAtIndexPath:indexPath];
+        NSString *itemPath = [[self.offline currentOfflinePath] stringByAppendingPathComponent:cell.nameLabel.text];
+        [self.offline removeOfflineNodeCell:itemPath];
+    }];
+    
+    [removeItemAction setValue:[UIColor mnz_black333333] forKey:@"titleTextColor"];
+    [infoAlertController addAction:removeItemAction];
+    
+    if ([[UIDevice currentDevice] iPadDevice]) {
+        infoAlertController.modalPresentationStyle = UIModalPresentationPopover;
+        infoAlertController.popoverPresentationController.sourceView = sender;
+        infoAlertController.popoverPresentationController.sourceRect = CGRectMake(0, 0, sender.frame.size.width/2, sender.frame.size.height/2);
+    }
+    
+    [self presentViewController:infoAlertController animated:YES completion:nil];
+}
+
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
