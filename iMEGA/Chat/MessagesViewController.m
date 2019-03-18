@@ -375,9 +375,7 @@ const NSUInteger kMaxMessagesToLoad = 256;
 
 #pragma mark - Private
 
-- (void)configureNavigationBar {
-    self.navigationController.interactivePopGestureRecognizer.delegate = nil;
-    
+- (void)configureNavigationBar {    
     [self createRightBarButtonItems];
     if (@available(iOS 11.0, *)) {
         [self initNavigationTitleViews];
@@ -592,7 +590,7 @@ const NSUInteger kMaxMessagesToLoad = 256;
             MEGAChatCall *call = [[MEGASdkManager sharedMEGAChatSdk] chatCallForChatId:self.chatRoom.chatId];
             if (call.status == MEGAChatCallStatusInProgress) {
                 [self showTapToReturnCall:call];
-            } else if (self.chatRoom.group) {
+            } else if (self.chatRoom.group || call.status == MEGAChatCallStatusRequestSent) {
                 MEGAHandleList *chatRoomIDsWithCallInProgress = [MEGASdkManager.sharedMEGAChatSdk chatCallsWithState:MEGAChatCallStatusInProgress];
                 if (chatRoomIDsWithCallInProgress.size == 0) {
                     [self showActiveCallButton];
@@ -2717,7 +2715,9 @@ const NSUInteger kMaxMessagesToLoad = 256;
                     NSUInteger index = [self.messages indexOfObject:oldMessage];
                     [self.messages replaceObjectAtIndex:index withObject:message];
                     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:0];
-                    [self.collectionView reloadItemsAtIndexPaths:@[indexPath]];
+                    if ([[self.collectionView indexPathsForVisibleItems] containsObject:indexPath]) {
+                        [self.collectionView reloadItemsAtIndexPaths:@[indexPath]];
+                    }
                 } else {
                     message.chatId = self.chatRoom.chatId;
                     [self.messages addObject:message];
