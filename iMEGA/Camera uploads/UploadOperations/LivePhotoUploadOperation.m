@@ -27,10 +27,6 @@ static NSString * const LivePhotoVideoResourceExportName = @"livePhotoVideoResou
         return;
     }
     
-    if (!MEGASdkManager.sharedMEGASdk.isLoggedIn) {
-        return;
-    }
-    
     if (self.isCancelled) {
         [self finishOperationWithStatus:CameraAssetUploadStatusCancelled shouldUploadNextAsset:NO];
         return;
