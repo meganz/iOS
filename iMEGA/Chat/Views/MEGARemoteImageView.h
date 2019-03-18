@@ -4,4 +4,6 @@
 
 @interface MEGARemoteImageView : UIImageView <MEGAChatVideoDelegate>
 
+@property (assign, nonatomic) BOOL group;
+
 @end

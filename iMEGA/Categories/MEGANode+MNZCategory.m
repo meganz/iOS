@@ -19,7 +19,6 @@
 #import "NSFileManager+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 #import "UIApplication+MNZCategory.h"
-#import "UITextField+MNZCategory.h"
 
 #import "BrowserViewController.h"
 #import "CloudDriveViewController.h"
@@ -86,9 +85,14 @@
 }
 
 - (void)mnz_openNodeInNavigationController:(UINavigationController *)navigationController folderLink:(BOOL)isFolderLink {
-    UIViewController *viewController = [self mnz_viewControllerForNodeInFolderLink:isFolderLink];
-    if (viewController) {
-        [navigationController presentViewController:viewController animated:YES completion:nil];
+    MEGAHandleList *chatRoomIDsWithCallInProgress = [MEGASdkManager.sharedMEGAChatSdk chatCallsWithState:MEGAChatCallStatusInProgress];
+    if (self.name.mnz_isMultimediaPathExtension && chatRoomIDsWithCallInProgress.size > 0) {
+        [Helper cannotPlayContentDuringACallAlert];
+    } else {
+        UIViewController *viewController = [self mnz_viewControllerForNodeInFolderLink:isFolderLink];
+        if (viewController) {
+            [navigationController presentViewController:viewController animated:YES completion:nil];
+        }
     }
 }
 
@@ -249,17 +253,9 @@
         
         [renameAlertController addTextFieldWithConfigurationHandler:^(UITextField *textField) {
             textField.text = self.name;
+            textField.returnKeyType = UIReturnKeyDone;
+            textField.delegate = self;
             [textField addTarget:self action:@selector(renameAlertTextFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
-            textField.shouldReturnCompletion = ^BOOL(UITextField *textField) {
-                BOOL shouldReturn = YES;
-                UIAlertController *renameAlertController = (UIAlertController *)UIApplication.mnz_visibleViewController;
-                if (renameAlertController) {
-                    UIAlertAction *rightButtonAction = renameAlertController.actions.lastObject;
-                    shouldReturn = rightButtonAction.enabled;
-                }
-                
-                return shouldReturn;
-            };
         }];
         
         [renameAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
@@ -799,6 +795,18 @@
     }
     
     return shouldChangeCharacters;
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    BOOL shouldReturn = YES;
+    UIAlertController *renameAlertController = (UIAlertController *)UIApplication.mnz_visibleViewController;
+    if (renameAlertController) {
+        UIAlertAction *rightButtonAction = renameAlertController.actions.lastObject;
+        shouldReturn = rightButtonAction.enabled;
+    }
+    
+    return shouldReturn;
+
 }
 
 - (void)renameAlertTextFieldDidChange:(UITextField *)textField {

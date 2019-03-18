@@ -87,7 +87,7 @@
 
 #pragma mark - Private
 
-- (void)sendGeolocationWithCoordinage2d:(CLLocationCoordinate2D)coordinate {
+- (void)sendGeolocationWithCoordinate2d:(CLLocationCoordinate2D)coordinate {
     MKMapSnapshotOptions *mapSnapshotOptions = [[MKMapSnapshotOptions alloc] init];
     
     MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(coordinate, 1000, 1000);
@@ -144,7 +144,7 @@
 }
 
 - (void)sendGeolocation:(UITapGestureRecognizer *)gesture {
-    [self sendGeolocationWithCoordinage2d:self.mapView.centerCoordinate];
+    [self sendGeolocationWithCoordinate2d:self.mapView.centerCoordinate];
 }
 
 #pragma mark - IBAction
@@ -239,7 +239,7 @@
 #pragma mark - LocationSearchTableViewControllerDelegate
 
 - (void)didSelectPlacemark:(MKPlacemark *)placemark {
-    [self sendGeolocationWithCoordinage2d:placemark.coordinate];
+    [self sendGeolocationWithCoordinate2d:placemark.coordinate];
 }
 
 @end

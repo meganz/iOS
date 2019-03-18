@@ -3,6 +3,7 @@
 
 #import "Helper.h"
 #import "MEGAStore.h"
+#import "MEGASdkManager.h"
 
 #import "UIImage+GKContact.h"
 #import "UIColor+MNZCategory.h"
@@ -118,7 +119,7 @@
                 initialsForAvatar = [user.email substringToIndex:1].uppercaseString;
             }
         } else {
-            initialsForAvatar = name;
+            initialsForAvatar = [name substringToIndex:1].uppercaseString;;
         }
         image = [UIImage imageForName:initialsForAvatar size:size backgroundColor:[UIColor colorFromHexString:colorString] textColor:[UIColor whiteColor] font:[UIFont mnz_SFUIRegularWithSize:(size.width/2.0f)]];
         
@@ -126,6 +127,16 @@
     }
     
     return image;
+}
+
++ (UIImage *)imageWithColor:(UIColor *)color andBounds:(CGRect)imgBounds {
+    UIGraphicsBeginImageContextWithOptions(imgBounds.size, NO, 0);
+    [color setFill];
+    UIRectFill(imgBounds);
+    UIImage *img = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    return img;
 }
 
 #pragma mark - QR generation

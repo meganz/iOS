@@ -70,22 +70,6 @@
 "pleaseLogInToYourAccount"="กรุณาเข้าสู่ระบบในบัญชีของคุณ";
 /* Error message when a user attempts to change their email without an active login session. */
 "needToBeLoggedInToCompleteYourEmailChange"="คุณต้องเข้าสู่ระบบเพื่อทำการเปลี่ยนแปลงอีเมลของคุณ กรุณาเข้าสู่ระบบด้วยอยู่อีเมลปัจจุบันของคุณ จากนั้นคลิกที่ลิงก์ยืนยันของคุณอีกครั้ง";
-/* Title shown on the app's start animation to explain what MEGA offers you (1/4) */
-"megaSpace"="พื้นที่ว่างบน MEGA";
-/* Title shown on the app's start animation to explain what MEGA offers you (2/4) */
-"megaSpeed"="ความเร็วของ MEGA";
-/* Title shown on the app's start animation to explain what MEGA offers you (3/4) */
-"megaPrivacy"="ความเป็นส่วนตัวของ MEGA";
-/* Title shown on the app's start animation to explain what MEGA offers you (4/4) */
-"megaAccess"="การเข้าถึง MEGA";
-/* Message shown on the app's start animation to explain what MEGA SPACE means */
-"megaSpaceText"="ลงทะเบียนตอนนี้ รับสิทธิ์ฟรีพื้นที่ 50 GB";
-/* Message shown on the app's start animation to explain what MEGA SPEED means */
-"megaSpeedText"="อัปโหลดรวดเร็ว แชร์ไฟล์ไปยังทุกคนได้อย่างง่ายดาย";
-/* Message shown on the app's start animation to explain what MEGA PRIVACY means */
-"megaPrivacyText"="เก็บไฟล์ทั้งหมดของคุณให้ปลอดภัยด้วยการเข้ารหัสตั้งแต่ต้นทางถึงปลายทางของ MEGA";
-/* Message shown on the app's start animation to explain what MEGA ACCESS means */
-"megaAccessText"="รองรับการเข้ารหัส พร้อมเข้าถึงได้ทุกที่ทุกเวลา";
 /* Button title which triggers the action to login in your MEGA account */
 "login"="เข้าสู่ระบบ";
 /* Button title which triggers the action to create a MEGA account */
@@ -115,7 +99,7 @@
 /*  */
 "weak"="คาดเดาได้ง่าย";
 /*  */
-"passwordVeryWeakOrWeak"="รหัสผ่านของคุณอาจถูกคาดเดาได้ง่าย กรุณากรอกรหัสผ่านให้ยาวขึ้นกว่าเดิม และควรมีการใช้ตัวอักษรที่เป็นตัวพิมพ์ใหญ่, ตัวพิมพ์เล็กและเพิ่มอักขระพิเศษลงไปด้วย ที่สำคัญอย่าใช้ชื่อหรือคำที่มีอยู่ในพจนานุกรมเด็ดขาด";
+"passwordVeryWeakOrWeak"="รหัสผ่านของคุณอาจคาดเดาได้ง่าย ลองใช้รหัสผ่านของคุณให้ยาวขึ้นกว่าเดิม รวมไปถึงใช้ตัวอักษรตัวพิมพ์ใหญ่และตัวพิมพ์เล็ก เพิ่มตัวอักษรพิเศษเข้าไปด้วย ที่สำคัญอย่าใช้ชื่อหรือคำที่มีในพจนานุกรม";
 /* Label displayed during checking the strength of the password introduced. Represents Medium security */
 "medium"="ปานกลาง";
 /*  */
@@ -986,7 +970,7 @@
 /* A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text. */
 "cloudDriveIsFull"="[S]บัญชีของคุณเต็มแล้ว[/S] [A]อัปเกรดเดี๋ยวนี้[/A] เป็นบัญชี PRO และเพิ่มพื้นที่เก็บข้อมูลระบบคลาวด์ได้ถึง [S]8 TB (8192 GB)[/S]";
 /* Storage related with the MEGA PRO account level you can subscribe */
-"productSpace"="พื้นที่จัดเก็บข้อมูล";
+"productSpace"="ที่เก็บข้อมูล";
 /* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
 "transferQuota"="โควต้าการถ่ายโอน";
 /* Label for any 'Limited' button, link, text, title, etc. - (String as short as possible). */
@@ -1062,7 +1046,7 @@
 /* Empty Conversations section */
 "noConversations"="ไม่มีการสนทนา";
 /* Empty Conversations description */
-"noConversationsDescription"="เริ่มแชทอย่างปลอดภัยกับผู้ติดต่อของคุณโดยใช้การเข้ารหัสแบบต้นทางถึงปลาย";
+"noConversationsDescription"="เริ่มแชทอย่างปลอดภัยกับผู้ติดต่อของคุณโดยใช้การเข้ารหัสแบบต้นทางถึงปลายทาง";
 /* Title show when the chat is disabled */
 "chatIsDisabled"="แชทถูกปิดใช้งาน";
 /* Text button shown when the chat is disabled and if tapped the chat will be enabled */
@@ -1098,7 +1082,7 @@
 /* Title used in settings that enables the generation of link previews in the chat */
 "richUrlPreviews"="ตัวอย่าง Rich URL";
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
-"richPreviewsFooter"="เพิ่มประสบการณ์ MEGAchat โดยที่เนื้อหา URL จะได้รับการดึงข้อมูลโดยไม่มีการเข้ารหัสแบบต้นทางถึงปลาย";
+"richPreviewsFooter"="เพิ่มประสบการณ์ MEGAchat โดยที่เนื้อหา URL จะได้รับการดึงข้อมูลโดยไม่มีการเข้ารหัสแบบต้นทางถึงปลายทาง";
 /* Section title of a button where you can enable mobile data for voice and video calls. */
 "voiceAndVideoCalls"="การโทรด้วยเสียงและวิดีโอ";
 /* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature. */
@@ -1669,9 +1653,9 @@
 /* Label for any ‘Days’ button, link, text, title, etc. - (String as short as possible). */
 "Days"="วัน";
 /* New server-side rubbish-bin cleaning scheduler description (for Free users) */
-"The Rubbish Bin is cleaned for you automatically. The minimum period is 7 days and your maximum period is 30 days."="ถังขยะจะทำความสะอาดให้คุณโดยอัตโนมัติ ระยะเวลาขั้นต่ำคือ 7 วันและระยะเวลาสูงสุดของคุณคือ 30 วัน";
+"The Rubbish Bin is cleaned for you automatically. The minimum period is 7 days and your maximum period is 30 days."="ถังขยะจะเคลียร์ให้คุณโดยอัตโนมัติ ระยะเวลาต่ำสุดคือ 7 วันและระยะเวลาสูงสุดของคุณคือ 30 วัน";
 /* New server-side rubbish-bin cleaning scheduler description (for PRO users) */
-"The Rubbish Bin can be cleaned for you automatically. The minimum period is 7 days."="ถังขยะสามารถทำความสะอาดให้คุณโดยอัตโนมัติ ระยะเวลาขั้นต่ำ 7 วัน";
+"The Rubbish Bin can be cleaned for you automatically. The minimum period is 7 days."="เคลียร์ไฟล์ในถังขยะคุณได้โดยอัตโนมัติ ระยะเวลาต่ำสุดคือ 7 วัน";
 /* Description shown when you try to disable the feature Rubbish-Bin Cleaning Scheduler and you are a free user */
 "To disable the Rubbish-Bin Cleaning Scheduler or set a longer retention period, you need to subscribe to a PRO plan."="หากต้องการปิดใช้งานตัวกำหนดเวลาทำความสะอาดถังขยะหรือตั้งระยะเวลาเก็บรักษาที่นานขึ้น คุณต้องสมัครแผน PRO";
 /* Confirmation dialog for the button that logs the user out of all sessions except the current one. */
@@ -1684,6 +1668,8 @@
 "Poor conection."="การเชื่อมต่อแย่";
 /* Message shown in a chat room when there is an active group call */
 "There is an active group call. Tap to join."="มีการโทรกลุ่มอยู่ในขณะนี้ แตะเพื่อเข้าร่วม";
+/* Message shown in a chat room when there is an active call */
+"There is an active call. Tap to join."="มีสายกำลังสนทนาอยู่ แตะเพื่อเข้าร่วม";
 /* Message shown in a chat room for a group call in progress displaying the duration of the call */
 "Touch to return to call %@"="แตะเพื่อกลับไปที่สาย %@";
 /* A button label which allows the users save images/videos in the Photos app. */
@@ -1694,6 +1680,36 @@
 "Saved to Photos"="บันทึกไปยังรูปภาพแล้ว";
 /* Text shown when an error occurs when trying to save a photo or video to Photos app */
 "Could not save Item"="ไม่สามารถบันทึกรายการได้";
+/* Label in a cell where you can enable the 'Encrypted Key Rotation' */
+"Encrypted Key Rotation"="Encrypted Key Rotation";
+/* Title shown in a cell to allow the users enable the 'Encrypted Key Rotation' */
+"Enable Encrypted Key Rotation"="เปิดใช้งาน Encrypted Key Rotation";
+/* Label in a cell where you can get the chat link */
+"Get Chat Link"="รับลิงก์แชท";
+/* Footer text to explain what means 'Encrypted Key Rotation' */
+"Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages."="Key Rotation จะเพิ่มความปลอดภัยขึ้นเล็กน้อย แต่ไม่อนุญาตให้คุณสร้างลิงก์แชทได้ และผู้เข้าร่วมใหม่ก็จะไม่เห็นข้อความที่ผ่านมาเช่นกัน";
+/* Alert message to advice the users that to generate a chat link they need enter a group name for the chat */
+"Before you can generate a link for this room, you need to enter a group name"="ก่อนที่คุณจะสามารถสร้างลิงก์แชทนี้ คุณต้องตั้งชื่อกลุ่มให้เรียบร้อยแล้ว";
+/* Label shown in a cell where you can enable a switch to get a chat link */
+"Chat Link"="ลิงก์แชท";
+/* Message shown when there is an active chat link that can be deleted */
+"Delete Chat Link"="ลบลิงก์แชท";
+/* Button text in public chat previews that allows the user to join the chat */
+"Join"="เข้าร่วม";
+/* Text shown in a notification to let the user know that has joined a public chat room after login or account creation */
+"You have joined %@"="คุณได้เข้าร่วม %@";
+/* Users previewing a public chat */
+"Observers"="ผู้สังเกตการณ์";
+/* Alert message shown while deleting a chat link, warning about the consequences */
+"This conversation will no longer be accessible through the link you are about to delete."="การสนทนานี้จะไม่สามารถเข้าถึงได้ผ่านลิงก์สาธารณะอีกต่อไปเมื่อถูกลบออกแล้ว";
+/* Management message shown in a chat when the user %@ enables the 'Encrypted Key Rotation' */
+"%@ enabled Encrypted Key Rotation"="%@ ได้เปิดใช้งาน Encrypted Key Rotation";
+/* Management message shown in a chat when the user %@ creates a public link for the chat */
+"%@ created a public link for the chat."="%@ ได้สร้างลิงก์แชทสาธารณะ";
+/* Management message shown in a chat when the user %@ removes a public link for the chat */
+"%@ removed a public link for the chat."="%@ ได้ลบลิงก์แชทสาธารณะ";
+/* Management message shown in a chat when the user %@ joined it from a public chat link */
+"%@ joined the group chat."="%@ joined the group chat.";
 /* Message show when a call cannot be established because there are too many participants in the group call */
 "Error. No more participants are allowed in this group call."="คุณไม่ได้รับอนุญาตให้เข้าร่วมการโทรนี้เนื่องจากมีผู้เข้าร่วมถึงจำนวนสูงสุดแล้ว";
 /* Message show when a user cannot activate the video in a group call because the max number of videos has been reached */
@@ -1801,7 +1817,7 @@
 /* Label shown next to a feature name that can be enabled or disabled, like in 'Show Last seen...' */
 "Show"="แสดง";
 /* Shown when viewing a 1on1 chat (at least for now), if the user is offline. */
-"Last seen %s"="ดูครั้งล่าสุด %s";
+"Last seen %s"="ดูครั้งล่าสุด: %s";
 /* Text to inform the user the 'Last seen' time of a contact is a long time ago (>= 65535 minutes) */
 "Last seen a long time ago"="ดูครั้งล่าสุดเมื่อนานมาแล้ว";
 /* */
@@ -1812,3 +1828,17 @@
 "%d participants"="ผู้เข้าร่วม %d คน";
 /* Singular of participant. 1 participant */
 "%d participant"="ผู้เข้าร่วม %d คน";
+/* Text to inform the user there is an active call and is not participating */
+"Ongoing Call"="สายที่กำลังโทร";
+/* Message shown when there is an ongoing call and the user tries to play an audio or video */
+"It is not possible to play content while there is a call in progress"="It is not possible to play content while there is a call in progress";
+/* Text to inform the user there is an active call and is participating */
+"Call Started"="เริ่มการโทร";
+/* Title for feature Password Reminder */
+"Password Reminder"="เตือนรหัสผ่าน";
+/* Label for any ‘Message’ button, link, text, title, etc. - (String as short as possible). */
+"Message"="ข้อความ";
+/* Title of the button in the contact info screen to start an audio call */
+"Call"="โทร";
+/* Title of the button in the contact info screen to start a video call */
+"Video"="วิดีโอ";

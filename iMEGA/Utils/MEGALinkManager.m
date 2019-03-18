@@ -1,6 +1,8 @@
 
 #import "MEGALinkManager.h"
 
+#import <UserNotifications/UserNotifications.h>
+
 #import "SAMKeychain.h"
 #import "SVProgressHUD.h"
 #import "UIImage+GKContact.h"
@@ -14,11 +16,13 @@
 #import "ConfirmAccountViewController.h"
 #import "ContactRequestsViewController.h"
 #import "CustomModalAlertViewController.h"
+#import "DevicePermissionsHelper.h"
 #import "FileLinkViewController.h"
 #import "FolderLinkViewController.h"
 #import "Helper.h"
 #import "MainTabBarController.h"
 #import "MasterKeyViewController.h"
+#import "MEGAChatGenericRequestDelegate.h"
 #import "MEGAContactLinkQueryRequestDelegate.h"
 #import "MEGAGetPublicNodeRequestDelegate.h"
 #import "MEGAGenericRequestDelegate.h"
@@ -31,10 +35,11 @@
 #import "MEGAQuerySignupLinkRequestDelegate.h"
 #import "MEGAQueryRecoveryLinkRequestDelegate.h"
 #import "MEGASdkManager.h"
+#import "MessagesViewController.h"
 #import "UnavailableLinkView.h"
 
 static NSURL *linkURL;
-static NSURL *linkEncryptedURL;
+static NSURL *secondaryLinkURL;
 static URLType urlType;
 
 static NSString *emailOfNewSignUpLink;
@@ -56,12 +61,12 @@ static NSString *nodeToPresentBase64Handle;
     linkURL = link;
 }
 
-+ (NSURL *)linkEncryptedURL {
-    return linkEncryptedURL;
++ (NSURL *)secondaryLinkURL {
+    return secondaryLinkURL;
 }
 
-+ (void)setLinkEncryptedURL:(NSURL *)linkEncrypted {
-    linkEncryptedURL = linkEncrypted;
++ (void)setSecondaryLinkURL:(NSURL *)secondaryLink {
+    secondaryLinkURL = secondaryLink;
 }
 
 + (URLType)urlType {
@@ -158,6 +163,64 @@ static NSString *nodeToPresentBase64Handle;
             for (MEGANode *node in MEGALinkManager.nodesFromLinkMutableArray) {
                 [Helper downloadNode:node folderPath:Helper.relativePathForOffline isFolderLink:YES shouldOverwrite:NO];
             }
+            break;
+        }
+            
+        case LinkOptionJoinChatLink: {
+            MEGAChatGenericRequestDelegate *openChatPreviewDelegate = [[MEGAChatGenericRequestDelegate alloc] initWithCompletion:^(MEGAChatRequest * _Nonnull request, MEGAChatError * _Nonnull error) {
+                if (error.type != MEGAErrorTypeApiOk && error.type != MEGAErrorTypeApiEExist) {
+                    return;
+                }
+                
+                uint64_t chatId = request.chatHandle;
+                NSString *chatTitle = request.text;
+                MEGAChatGenericRequestDelegate *autojoinOrRejoinPublicChatDelegate = [[MEGAChatGenericRequestDelegate alloc] initWithCompletion:^(MEGAChatRequest * _Nonnull request, MEGAChatError * _Nonnull error) {
+                    if (!error.type) {
+                        NSString *identifier = [MEGASdk base64HandleForUserHandle:chatId];
+                        NSString *notificationText = [NSString stringWithFormat:AMLocalizedString(@"You have joined %@", @"Text shown in a notification to let the user know that has joined a public chat room after login or account creation"), chatTitle];
+                        if (DevicePermissionsHelper.shouldAskForNotificationsPermissions) {
+                            [SVProgressHUD showSuccessWithStatus:notificationText];
+                        } else {
+                            [DevicePermissionsHelper notificationsPermissionWithCompletionHandler:^(BOOL granted) {
+                                if (@available(iOS 10.0, *)) {
+                                    if (granted) {
+                                        UNMutableNotificationContent *content = [UNMutableNotificationContent new];
+                                        content.body = notificationText;
+                                        content.sound = UNNotificationSound.defaultSound;
+                                        content.userInfo = @{@"chatId" : @(chatId)};
+                                        UNTimeIntervalNotificationTrigger *trigger = [UNTimeIntervalNotificationTrigger triggerWithTimeInterval:1 repeats:NO];
+                                        UNNotificationRequest *request = [UNNotificationRequest requestWithIdentifier:identifier content:content trigger:trigger];
+                                        [UNUserNotificationCenter.currentNotificationCenter addNotificationRequest:request withCompletionHandler:^(NSError * _Nullable error) {
+                                            if (error) {
+                                                [SVProgressHUD showSuccessWithStatus:notificationText];
+                                            }
+                                        }];
+                                    } else {
+                                        [SVProgressHUD showSuccessWithStatus:notificationText];
+                                    }
+                                } else {
+                                    UILocalNotification* localNotification = [[UILocalNotification alloc] init];
+                                    localNotification.fireDate = [NSDate dateWithTimeIntervalSinceNow:1];
+                                    localNotification.alertBody = notificationText;
+                                    localNotification.timeZone = NSTimeZone.defaultTimeZone;
+                                    localNotification.userInfo = @{@"chatId" : @(chatId)};
+                                    [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
+                                }
+                            }];
+                        }
+                    }
+                }];
+                MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:request.chatHandle];
+                if (!chatRoom.isPreview && !chatRoom.isActive) {
+                    [[MEGASdkManager sharedMEGAChatSdk] autorejoinPublicChat:request.chatHandle publicHandle:request.userHandle delegate:autojoinOrRejoinPublicChatDelegate];
+                } else {
+                    [[MEGASdkManager sharedMEGAChatSdk] autojoinPublicChat:request.chatHandle delegate:autojoinOrRejoinPublicChatDelegate];
+                }
+            }];
+            [[MEGASdkManager sharedMEGAChatSdk] openChatPreview:MEGALinkManager.secondaryLinkURL delegate:openChatPreviewDelegate];
+            [MEGALinkManager resetLinkAndURLType];
+            MEGALinkManager.secondaryLinkURL = nil;
+            
             break;
         }
             
@@ -261,7 +324,7 @@ static NSString *nodeToPresentBase64Handle;
             break;
             
         case URLTypeEncryptedLink:
-            MEGALinkManager.linkEncryptedURL = MEGALinkManager.linkURL;
+            MEGALinkManager.secondaryLinkURL = MEGALinkManager.linkURL;
             [MEGALinkManager showEncryptedLinkAlert:url.mnz_MEGAURL];
             [MEGALinkManager resetLinkAndURLType];
             break;
@@ -275,10 +338,11 @@ static NSString *nodeToPresentBase64Handle;
                 }]];
                 
                 [alreadyLoggedInAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", @"Button title to accept something") style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
-                    MEGAGenericRequestDelegate *logoutRequestDelegate = [[MEGAGenericRequestDelegate alloc] initWithRequestCompletion:^(MEGARequest *request) {
+                    MEGAGenericRequestDelegate *logoutRequestDelegate = [[MEGAGenericRequestDelegate alloc] initWithCompletion:^(MEGARequest *request, MEGAError *error) {
+                        if (error.type) return;
                         MEGAQuerySignupLinkRequestDelegate *querySignupLinkRequestDelegate = [[MEGAQuerySignupLinkRequestDelegate alloc] initWithCompletion:nil urlType:MEGALinkManager.urlType];
                         [[MEGASdkManager sharedMEGASdk] querySignupLink:url.mnz_MEGAURL delegate:querySignupLinkRequestDelegate];
-                    } errorCompletion:nil];
+                    }];
                     [[MEGASdkManager sharedMEGASdk] logoutWithDelegate:logoutRequestDelegate];
                 }]];
                 
@@ -331,7 +395,7 @@ static NSString *nodeToPresentBase64Handle;
             }
             break;
             
-        case URLTypeChatLink: {
+        case URLTypeOpenChatSectionLink: {
             if ([Helper hasSession_alertIfNot]) {
                 MainTabBarController *mainTBC = (MainTabBarController *)UIApplication.sharedApplication.keyWindow.rootViewController;
                 mainTBC.selectedIndex = CHAT;
@@ -359,6 +423,13 @@ static NSString *nodeToPresentBase64Handle;
                 MainTabBarController *mainTBC = (MainTabBarController *)UIApplication.sharedApplication.keyWindow.rootViewController;
                 [mainTBC showAchievements];
             }
+            break;
+        }
+            
+        case URLTypePublicChatLink: {
+            [MEGALinkManager handlePublicChatLink];
+            [MEGALinkManager resetLinkAndURLType];
+            
             break;
         }
             
@@ -439,7 +510,7 @@ static NSString *nodeToPresentBase64Handle;
     }]];
     [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
         [MEGALinkManager resetLinkAndURLType];
-        MEGALinkManager.linkEncryptedURL = nil;
+        MEGALinkManager.secondaryLinkURL = nil;
     }]];
     
     [UIApplication.mnz_visibleViewController presentViewController:alertController animated:YES completion:nil];
@@ -471,7 +542,7 @@ static NSString *nodeToPresentBase64Handle;
                 
                 MEGAPhotoBrowserViewController *photoBrowserVC = [MEGAPhotoBrowserViewController photoBrowserWithMediaNodes:@[node].mutableCopy api:[MEGASdkManager sharedMEGASdkFolder] displayMode:DisplayModeFileLink presentingNode:node preferredIndex:0];
                 photoBrowserVC.publicLink = fileLinkURLString;
-                photoBrowserVC.encryptedLink = MEGALinkManager.linkEncryptedURL.absoluteString;
+                photoBrowserVC.encryptedLink = MEGALinkManager.secondaryLinkURL.absoluteString;
                 
                 [UIApplication.mnz_visibleViewController presentViewController:photoBrowserVC animated:YES completion:nil];
             } else {
@@ -492,7 +563,7 @@ static NSString *nodeToPresentBase64Handle;
     MEGANavigationController *fileLinkNavigationController = [[UIStoryboard storyboardWithName:@"Links" bundle:nil] instantiateViewControllerWithIdentifier:@"FileLinkNavigationControllerID"];
     FileLinkViewController *fileLinkVC = fileLinkNavigationController.viewControllers.firstObject;
     fileLinkVC.publicLinkString = link;
-    fileLinkVC.linkEncryptedString = MEGALinkManager.linkEncryptedURL.absoluteString;
+    fileLinkVC.linkEncryptedString = MEGALinkManager.secondaryLinkURL.absoluteString;
     fileLinkVC.request = request;
     fileLinkVC.error = error;
     
@@ -506,7 +577,7 @@ static NSString *nodeToPresentBase64Handle;
     
     folderlinkVC.isFolderRootNode = YES;
     folderlinkVC.publicLinkString = MEGALinkManager.linkURL.mnz_MEGAURL;
-    folderlinkVC.linkEncryptedString = MEGALinkManager.linkEncryptedURL.absoluteString;
+    folderlinkVC.linkEncryptedString = MEGALinkManager.secondaryLinkURL.absoluteString;
     
     [UIApplication.mnz_visibleViewController presentViewController:folderNavigationController animated:YES completion:nil];
 }
@@ -605,6 +676,106 @@ static NSString *nodeToPresentBase64Handle;
     }
     
     [UIApplication.mnz_presentingViewController presentViewController:inviteOrDismissModal animated:YES completion:nil];
+}
+
++ (void)handlePublicChatLink {
+    NSURL *chatLinkUrl = MEGALinkManager.linkURL;
+    [SVProgressHUD show];
+    
+    MEGAChatGenericRequestDelegate *delegate = [[MEGAChatGenericRequestDelegate alloc] initWithCompletion:^(MEGAChatRequest * _Nonnull request, MEGAChatError * _Nonnull error) {
+        if (error.type != MEGAErrorTypeApiOk && error.type != MEGAErrorTypeApiEExist) {
+            [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
+            [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"%@ %@", request.requestString, error.name]];
+            return;
+        }
+        
+        MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:request.chatHandle];
+        if (!chatRoom.isPreview && !chatRoom.isActive) {
+            MEGAChatGenericRequestDelegate *autorejoinPublicChatDelegate = [[MEGAChatGenericRequestDelegate alloc] initWithCompletion:^(MEGAChatRequest * _Nonnull request, MEGAChatError * _Nonnull error) {
+                if (error.type) {
+                    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
+                    [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"%@ %@", request.requestString, error.name]];
+                    return;
+                }
+                [MEGALinkManager createChatAndShow:request.chatHandle publicChatLink:chatLinkUrl];
+            }];
+            [[MEGASdkManager sharedMEGAChatSdk] autorejoinPublicChat:request.chatHandle publicHandle:request.userHandle delegate:autorejoinPublicChatDelegate];
+        } else {
+            [MEGALinkManager createChatAndShow:request.chatHandle publicChatLink:chatLinkUrl];
+        }
+        
+        [SVProgressHUD dismiss];
+    }];
+    
+    if (![MEGASdkManager sharedMEGAChatSdk]) {
+        [MEGASdkManager createSharedMEGAChatSdk];
+    }
+    MEGAChatInit chatInit = [[MEGASdkManager sharedMEGAChatSdk] initState];
+    if (chatInit == MEGAChatInitNotDone) {
+        chatInit = [[MEGASdkManager sharedMEGAChatSdk] initAnonymous];
+        if (chatInit == MEGAChatInitError) {
+            MEGALogError(@"Init Karere anonymous failed");
+            [[MEGASdkManager sharedMEGAChatSdk] logout];
+            [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"Error (%td) initializing the chat", chatInit]];
+            return;
+        }
+    }
+    
+    [[MEGASdkManager sharedMEGAChatSdk] openChatPreview:chatLinkUrl delegate:delegate];
+}
+
++ (void)createChatAndShow:(uint64_t)chatId publicChatLink:(NSURL *)publicChatLink {
+    MessagesViewController *messagesVC = [[MessagesViewController alloc] init];
+    messagesVC.chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:chatId];
+    messagesVC.publicChatLink = publicChatLink;
+    
+    UIViewController *rootViewController = [UIApplication sharedApplication].keyWindow.rootViewController;
+    if ([rootViewController isKindOfClass:MainTabBarController.class]) {
+        MainTabBarController *mainTBC = (MainTabBarController *)rootViewController;
+        mainTBC.selectedIndex = CHAT;
+        
+        if (mainTBC.presentedViewController) {
+            [mainTBC dismissViewControllerAnimated:NO completion:^{
+                [MEGALinkManager pushChat:messagesVC tabBar:mainTBC];
+            }];
+        } else {
+            [MEGALinkManager pushChat:messagesVC tabBar:mainTBC];
+        }
+    } else {
+        if ([UIApplication.mnz_visibleViewController isKindOfClass:MessagesViewController.class]) {
+            MessagesViewController *currentMessagesVC = (MessagesViewController *)UIApplication.mnz_visibleViewController;
+            if (currentMessagesVC.chatRoom.chatId == messagesVC.chatRoom.chatId) {
+                [SVProgressHUD dismiss];
+                return;
+            }
+        }
+        MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:messagesVC];
+        [UIApplication.mnz_visibleViewController presentViewController:navigationController animated:YES completion:nil];
+    }
+}
+
++ (void)pushChat:(MessagesViewController *)messagesVC tabBar:(MainTabBarController *)mainTBC {
+    UINavigationController *chatNC = mainTBC.selectedViewController;
+    
+    for (UIViewController *viewController in chatNC.viewControllers) {
+        if ([viewController isKindOfClass:MessagesViewController.class]) {
+            MessagesViewController *currentMessagesVC = (MessagesViewController *)viewController;
+            if (currentMessagesVC.chatRoom.chatId == messagesVC.chatRoom.chatId) {
+                return;
+            } else {
+                [[MEGASdkManager sharedMEGAChatSdk] closeChatRoom:currentMessagesVC.chatRoom.chatId delegate:currentMessagesVC];
+            }
+        }
+    }
+    
+    [chatNC pushViewController:messagesVC animated:YES];
+    
+    NSMutableArray *viewControllers = chatNC.viewControllers.mutableCopy;
+    NSInteger limit = chatNC.viewControllers.count - 2;
+    for (NSInteger i = 1; i <= limit; i++) {
+        [viewControllers removeObjectAtIndex:1];
+    }
+    chatNC.viewControllers = viewControllers;
 }
 
 @end
