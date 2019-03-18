@@ -2,7 +2,18 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "button_camera_default.pdf"
+      "filename" : "Camera, default.png",
+      "scale" : "1x"
+    },
+    {
+      "idiom" : "universal",
+      "filename" : "Camera, default@2x.png",
+      "scale" : "2x"
+    },
+    {
+      "idiom" : "universal",
+      "filename" : "Camera, default@3x.png",
+      "scale" : "3x"
     }
   ],
   "info" : {

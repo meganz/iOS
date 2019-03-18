@@ -81,6 +81,8 @@ static NSString *kisDirectory = @"kisDirectory";
     [self.view addGestureRecognizer:[[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPress:)]];
     
     self.searchController.delegate = self;
+    
+    self.moreBarButtonItem.accessibilityLabel = AMLocalizedString(@"more", @"Top menu option which opens more menu options in a context menu.");
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -756,6 +758,12 @@ static NSString *kisDirectory = @"kisDirectory";
         [self.navigationController pushViewController:offlineVC animated:YES];
         
     } else if (self.previewDocumentPath.mnz_isMultimediaPathExtension) {
+        MEGAHandleList *chatRoomIDsWithCallInProgress = [MEGASdkManager.sharedMEGAChatSdk chatCallsWithState:MEGAChatCallStatusInProgress];
+        if (chatRoomIDsWithCallInProgress.size > 0) {
+            [Helper cannotPlayContentDuringACallAlert];
+            return;
+        }
+        
         AVURLAsset *asset = [AVURLAsset assetWithURL:[NSURL fileURLWithPath:self.previewDocumentPath]];
         
         if (asset.playable) {

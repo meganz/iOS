@@ -3,6 +3,7 @@
 
 #import "SVProgressHUD.h"
 
+#import "Helper.h"
 #import "MEGALoginRequestDelegate.h"
 #import "MEGASdkManager.h"
 #import "NSString+MNZCategory.h"
@@ -154,6 +155,7 @@
             }
                 
             case TwoFactorAuthenticationChangePassword:
+            case TwoFactorAuthenticationChangePasswordFromLogout:
                 [[MEGASdkManager sharedMEGASdk] multiFactorAuthChangePassword:nil newPassword:self.newerPassword pin:code delegate:self];
                 break;
                 
@@ -279,7 +281,11 @@
         case MEGARequestTypeChangePassword: {
             [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"passwordChanged", @"The label showed when your password has been changed")];
             
-            [self.navigationController popToViewController:self.navigationController.viewControllers[2] animated:YES];
+            if (self.twoFAMode == TwoFactorAuthenticationChangePassword) {
+                [self.navigationController popToViewController:self.navigationController.viewControllers[2] animated:YES];
+            } else if (self.twoFAMode == TwoFactorAuthenticationChangePasswordFromLogout) {
+                [Helper logoutAfterPasswordReminder];
+            }
             break;
         }
             
