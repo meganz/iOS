@@ -2715,7 +2715,9 @@ const NSUInteger kMaxMessagesToLoad = 256;
                     NSUInteger index = [self.messages indexOfObject:oldMessage];
                     [self.messages replaceObjectAtIndex:index withObject:message];
                     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:0];
-                    [self.collectionView reloadItemsAtIndexPaths:@[indexPath]];
+                    if ([[self.collectionView indexPathsForVisibleItems] containsObject:indexPath]) {
+                        [self.collectionView reloadItemsAtIndexPaths:@[indexPath]];
+                    }
                 } else {
                     message.chatId = self.chatRoom.chatId;
                     [self.messages addObject:message];
