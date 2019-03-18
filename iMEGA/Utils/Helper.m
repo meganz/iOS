@@ -46,7 +46,6 @@ static MEGAIndexer *indexer;
                                  @"en",
                                  @"es",
                                  @"fr",
-                                 @"he",
                                  @"id",
                                  @"it",
                                  @"ja",
@@ -740,6 +739,13 @@ static MEGAIndexer *indexer;
     }
 }
 
++ (void)cannotPlayContentDuringACallAlert {
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:AMLocalizedString(@"It is not possible to play content while there is a call in progress", @"Message shown when there is an ongoing call and the user tries to play an audio or video") preferredStyle:UIAlertControllerStyleAlert];
+    [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
+    
+    [UIApplication.mnz_presentingViewController presentViewController:alertController animated:YES completion:nil];
+}
+
 #pragma mark - Utils for nodes
 
 + (void)thumbnailForNode:(MEGANode *)node api:(MEGASdk *)api cell:(id)cell {
@@ -808,11 +814,11 @@ static MEGAIndexer *indexer;
 }
 
 + (void)importNode:(MEGANode *)node toShareWithCompletion:(void (^)(MEGANode *node))completion {
-    if ([[MEGASdkManager sharedMEGASdk] accessLevelForNode:node] == MEGAShareTypeAccessOwner) {
+    if (node.owner == [MEGASdkManager sharedMEGAChatSdk].myUserHandle) {
         completion(node);
     } else {
         MEGANode *remoteNode = [[MEGASdkManager sharedMEGASdk] nodeForFingerprint:node.fingerprint];
-        if (remoteNode && [[MEGASdkManager sharedMEGASdk] accessLevelForNode:remoteNode] == MEGAShareTypeAccessOwner) {
+        if (remoteNode && remoteNode.owner == [MEGASdkManager sharedMEGAChatSdk].myUserHandle) {
             completion(remoteNode);
         } else {
             MEGACopyRequestDelegate *copyRequestDelegate = [[MEGACopyRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {

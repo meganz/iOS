@@ -4,6 +4,7 @@
 
 #import "MEGAExportRequestDelegate.h"
 #import "MEGAReachabilityManager.h"
+#import "MEGASdkManager.h"
 
 @interface RemoveLinkActivity ()
 

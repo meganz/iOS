@@ -1,8 +1,7 @@
 #import "MEGAActivityItemProvider.h"
 
 #import "MEGAReachabilityManager.h"
-
-#import "SVProgressHUD.h"
+#import "MEGASdkManager.h"
 
 @interface MEGAActivityItemProvider () <UIActivityItemSource, MEGARequestDelegate> {
     dispatch_semaphore_t semaphore;

@@ -6,6 +6,7 @@
 #import "Helper.h"
 #import "MEGAGetThumbnailRequestDelegate.h"
 #import "MEGAStore.h"
+#import "MEGASdkManager.h"
 #import "NSString+MNZCategory.h"
 
 @interface MEGALocalNotificationManager ()

@@ -3,7 +3,6 @@
 
 #import "SVProgressHUD.h"
 
-#import "MEGAStore.h"
 #import "MEGASdkManager.h"
 #import "MEGANode+MNZCategory.h"
 #import "MEGANodeList+MNZCategory.h"
