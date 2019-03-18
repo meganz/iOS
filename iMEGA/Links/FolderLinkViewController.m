@@ -125,6 +125,8 @@
     }
     
     [self.view addGestureRecognizer:[[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPress:)]];
+    
+    self.moreBarButtonItem.accessibilityLabel = AMLocalizedString(@"more", @"Top menu option which opens more menu options in a context menu.");
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -553,6 +555,7 @@
         } else {
             [MEGALinkManager.nodesFromLinkMutableArray addObject:self.parentNode];
         }
+        
         MEGALinkManager.selectedOption = LinkOptionDownloadFolderOrNodes;
         
         [self.navigationController pushViewController:[OnboardingViewController instanciateOnboardingWithType:OnboardingTypeDefault] animated:YES];
@@ -585,6 +588,7 @@
             }
             [MEGALinkManager.nodesFromLinkMutableArray addObject:self.parentNode];
         }
+        
         MEGALinkManager.selectedOption = LinkOptionImportFolderOrNodes;
         
         [self.navigationController pushViewController:[OnboardingViewController instanciateOnboardingWithType:OnboardingTypeDefault] animated:YES];

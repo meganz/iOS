@@ -5,9 +5,9 @@
 
 #import "Helper.h"
 #import "MEGAAttachmentMediaItem.h"
-#import "MEGACallEndedMediaItem.h"
-#import "MEGACallStartedMediaItem.h"
+#import "MEGACallManagementMediaItem.h"
 #import "MEGADialogMediaItem.h"
+#import "MEGAChatGenericRequestDelegate.h"
 #import "MEGAFetchNodesRequestDelegate.h"
 #import "MEGAGetPublicNodeRequestDelegate.h"
 #import "MEGALoginToFolderLinkRequestDelegate.h"
@@ -19,13 +19,13 @@
 #import "NSString+MNZCategory.h"
 #import "NSURL+MNZCategory.h"
 
-static const void *chatRoomTagKey = &chatRoomTagKey;
+static const void *chatIdTagKey = &chatIdTagKey;
 static const void *attributedTextTagKey = &attributedTextTagKey;
 static const void *warningDialogTagKey = &warningDialogTagKey;
 static const void *MEGALinkTagKey = &MEGALinkTagKey;
 static const void *nodeTagKey = &nodeTagKey;
-static const void *nodeDetailsTagKey = &nodeDetailsTagKey;
-static const void *nodeSizeTagKey = &nodeSizeTagKey;
+static const void *richStringTagKey = &richStringTagKey;
+static const void *richNumberTagKey = &richNumberTagKey;
 
 @implementation MEGAChatMessage (MNZCategory)
 
@@ -44,7 +44,7 @@ static const void *nodeSizeTagKey = &nodeSizeTagKey;
 - (BOOL)isMediaMessage {
     BOOL mediaMessage = NO;
     
-    if (!self.isDeleted && (self.type == MEGAChatMessageTypeContact || self.type == MEGAChatMessageTypeAttachment || (self.warningDialog > MEGAChatMessageWarningDialogNone) || (self.type == MEGAChatMessageTypeContainsMeta && [self containsMetaAnyValue]) || self.node || self.type == MEGAChatMessageTypeCallEnded || self.type == MEGAChatMessageTypeCallStarted)) {
+    if (!self.isDeleted && (self.type == MEGAChatMessageTypeContact || self.type == MEGAChatMessageTypeAttachment || (self.warningDialog > MEGAChatMessageWarningDialogNone) || (self.type == MEGAChatMessageTypeContainsMeta && [self containsMetaAnyValue]) || self.richNumber || self.type == MEGAChatMessageTypeCallEnded || self.type == MEGAChatMessageTypeCallStarted)) {
         mediaMessage = YES;
     }
     
@@ -81,28 +81,51 @@ static const void *nodeSizeTagKey = &nodeSizeTagKey;
     NSDataDetector* linkDetector = [NSDataDetector dataDetectorWithTypes:NSTextCheckingTypeLink error:nil];
     for (NSTextCheckingResult *match in [linkDetector matchesInString:self.content options:0 range:NSMakeRange(0, self.content.length)]) {
         URLType type = [match.URL mnz_type];
-        if (type == URLTypeFileLink || type == URLTypeFolderLink) {
+        if (type == URLTypeFileLink || type == URLTypeFolderLink || type == URLTypePublicChatLink) {
             self.MEGALink = match.URL;
-            if (type == URLTypeFileLink) {
-                MEGAGetPublicNodeRequestDelegate *delegate = [[MEGAGetPublicNodeRequestDelegate alloc] initWithCompletion:^(MEGARequest *request, MEGAError *error) {
-                    self.nodeSize = request.publicNode.size;
-                    self.node = request.publicNode;
-                }];
-                [[MEGASdkManager sharedMEGASdk] publicNodeForMegaFileLink:[self.MEGALink mnz_MEGAURL] delegate:delegate];
-            } else if (type == URLTypeFolderLink) {
-                MEGALoginToFolderLinkRequestDelegate *loginDelegate = [[MEGALoginToFolderLinkRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
-                    MEGAFetchNodesRequestDelegate *fetchNodesDelegate = [[MEGAFetchNodesRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
-                        if (!request.flag) {
-                            MEGANode *node = [MEGASdkManager sharedMEGASdkFolder].rootNode;
-                            self.nodeDetails = [Helper filesAndFoldersInFolderNode:node api:[MEGASdkManager sharedMEGASdkFolder]];
-                            self.nodeSize = [[MEGASdkManager sharedMEGASdkFolder] sizeForNode:node];
-                            self.node = node;
-                            [[MEGASdkManager sharedMEGASdkFolder] logout];
+            switch (type) {
+                case URLTypeFileLink: {
+                    MEGAGetPublicNodeRequestDelegate *delegate = [[MEGAGetPublicNodeRequestDelegate alloc] initWithCompletion:^(MEGARequest *request, MEGAError *error) {
+                        self.richNumber = request.publicNode.size;
+                        self.node = request.publicNode;
+                    }];
+                    [[MEGASdkManager sharedMEGASdk] publicNodeForMegaFileLink:[self.MEGALink mnz_MEGAURL] delegate:delegate];
+                    
+                    break;
+                }
+                    
+                case URLTypeFolderLink: {
+                    MEGALoginToFolderLinkRequestDelegate *loginDelegate = [[MEGALoginToFolderLinkRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
+                        MEGAFetchNodesRequestDelegate *fetchNodesDelegate = [[MEGAFetchNodesRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
+                            if (!request.flag) {
+                                MEGANode *node = [MEGASdkManager sharedMEGASdkFolder].rootNode;
+                                self.richString = [Helper filesAndFoldersInFolderNode:node api:[MEGASdkManager sharedMEGASdkFolder]];
+                                self.richNumber = [[MEGASdkManager sharedMEGASdkFolder] sizeForNode:node];
+                                self.node = node;
+                                [[MEGASdkManager sharedMEGASdkFolder] logout];
+                            }
+                        }];
+                        [[MEGASdkManager sharedMEGASdkFolder] fetchNodesWithDelegate:fetchNodesDelegate];
+                    }];
+                    [[MEGASdkManager sharedMEGASdkFolder] loginToFolderLink:[self.MEGALink mnz_MEGAURL] delegate:loginDelegate];
+                    
+                    break;
+                }
+                    
+                case URLTypePublicChatLink: {
+                    MEGAChatGenericRequestDelegate *delegate = [[MEGAChatGenericRequestDelegate alloc] initWithCompletion:^(MEGAChatRequest * _Nonnull request, MEGAChatError * _Nonnull error) {
+                        if (error.type == MEGAErrorTypeApiOk || error.type == MEGAErrorTypeApiEExist) {
+                            self.richString = request.text;
+                            self.richNumber = @(request.number);
                         }
                     }];
-                    [[MEGASdkManager sharedMEGASdkFolder] fetchNodesWithDelegate:fetchNodesDelegate];
-                }];
-                [[MEGASdkManager sharedMEGASdkFolder] loginToFolderLink:[self.MEGALink mnz_MEGAURL] delegate:loginDelegate];
+                    [[MEGASdkManager sharedMEGAChatSdk] checkChatLink:self.MEGALink delegate:delegate];
+                    
+                    break;
+                }
+                    
+                default:
+                    break;
             }
 
             return YES;
@@ -140,49 +163,13 @@ static const void *nodeSizeTagKey = &nodeSizeTagKey;
     
     UIFont *textFontRegular = [UIFont preferredFontForTextStyle:UIFontTextStyleSubheadline];
     UIFont *textFontMedium = [[UIFont preferredFontForTextStyle:UIFontTextStyleSubheadline] fontWithWeight:UIFontWeightMedium];
+    UIFont *textFontMediumFootnote = [[UIFont preferredFontForTextStyle:UIFontTextStyleFootnote] fontWithWeight:UIFontWeightMedium];
 
     if (self.isDeleted) {
         text = AMLocalizedString(@"thisMessageHasBeenDeleted", @"A log message in a chat to indicate that the message has been deleted by the user.");
     } else if (self.isManagementMessage) {
-        
-        NSString *fullNameDidAction = @"";
-        
-        if (myHandle == self.userHandle) {
-            fullNameDidAction = [[MEGASdkManager sharedMEGAChatSdk] myFullname];
-        } else {
-            fullNameDidAction = [self.chatRoom peerFullnameByHandle:self.userHandle];
-            if (fullNameDidAction.length == 0) {
-                MOUser *moUser = [[MEGAStore shareInstance] fetchUserWithUserHandle:self.userHandle];
-                if (moUser) {
-                    fullNameDidAction = moUser.fullName;
-                } else {
-                    fullNameDidAction = @"";
-                }
-            }
-        }
-        
-        NSString *fullNameReceiveAction = @"";
-        
-        uint64_t tempHandle;
-        if (self.type == MEGAChatMessageTypeAlterParticipants || self.type == MEGAChatMessageTypePrivilegeChange) {
-            tempHandle = self.userHandleOfAction;
-        } else {
-            tempHandle = self.userHandle;
-        }
-        
-        if (tempHandle == myHandle) {
-            fullNameReceiveAction = [[MEGASdkManager sharedMEGAChatSdk] myFullname];
-        } else {
-            fullNameReceiveAction = [self.chatRoom peerFullnameByHandle:tempHandle];
-            if (fullNameReceiveAction.length == 0) {
-                MOUser *moUser = [[MEGAStore shareInstance] fetchUserWithUserHandle:tempHandle];
-                if (moUser) {
-                    fullNameReceiveAction = moUser.fullName;
-                } else {
-                    fullNameReceiveAction = @"";
-                }
-            }
-        }
+        NSString *fullNameDidAction = [self fullNameDidAction];
+        NSString *fullNameReceiveAction = [self fullNameReceiveAction];
         
         switch (self.type) {
             case MEGAChatMessageTypeAlterParticipants:
@@ -211,15 +198,24 @@ static const void *nodeSizeTagKey = &nodeSizeTagKey;
                     }
                         
                     case -2: {
-                        NSString *joinedTheGroupChatByInvitationFrom = AMLocalizedString(@"joinedTheGroupChatByInvitationFrom", @"A log message in a chat conversation to tell the reader that a participant [A] was added to the chat by a moderator [B]. Please keep the [A] and [B] placeholders, they will be replaced by the participant and the moderator names at runtime. For example: Alice joined the group chat by invitation from Frank.");
-                        joinedTheGroupChatByInvitationFrom = [joinedTheGroupChatByInvitationFrom stringByReplacingOccurrencesOfString:@"[A]" withString:fullNameReceiveAction];
-                        joinedTheGroupChatByInvitationFrom = [joinedTheGroupChatByInvitationFrom stringByReplacingOccurrencesOfString:@"[B]" withString:fullNameDidAction];
-                        text = joinedTheGroupChatByInvitationFrom;
-                        
-                        NSMutableAttributedString *mutableAttributedString = [[NSMutableAttributedString alloc] initWithString:joinedTheGroupChatByInvitationFrom attributes:@{NSFontAttributeName:textFontRegular, NSForegroundColorAttributeName:[UIColor mnz_black333333]}];
-                        [mutableAttributedString addAttribute:NSFontAttributeName value:textFontMedium range:[joinedTheGroupChatByInvitationFrom rangeOfString:fullNameReceiveAction]];
-                        [mutableAttributedString addAttribute:NSFontAttributeName value:textFontMedium range:[joinedTheGroupChatByInvitationFrom rangeOfString:fullNameDidAction]];
-                        self.attributedText = mutableAttributedString;
+                        if (fullNameDidAction && ![fullNameReceiveAction isEqualToString:fullNameDidAction]) {
+                            NSString *joinedTheGroupChatByInvitationFrom = AMLocalizedString(@"joinedTheGroupChatByInvitationFrom", @"A log message in a chat conversation to tell the reader that a participant [A] was added to the chat by a moderator [B]. Please keep the [A] and [B] placeholders, they will be replaced by the participant and the moderator names at runtime. For example: Alice joined the group chat by invitation from Frank.");
+                            joinedTheGroupChatByInvitationFrom = [joinedTheGroupChatByInvitationFrom stringByReplacingOccurrencesOfString:@"[A]" withString:fullNameReceiveAction];
+                            joinedTheGroupChatByInvitationFrom = [joinedTheGroupChatByInvitationFrom stringByReplacingOccurrencesOfString:@"[B]" withString:fullNameDidAction];
+                            text = joinedTheGroupChatByInvitationFrom;
+                            
+                            NSMutableAttributedString *mutableAttributedString = [[NSMutableAttributedString alloc] initWithString:joinedTheGroupChatByInvitationFrom attributes:@{NSFontAttributeName:textFontRegular, NSForegroundColorAttributeName:[UIColor mnz_black333333]}];
+                            [mutableAttributedString addAttribute:NSFontAttributeName value:textFontMedium range:[joinedTheGroupChatByInvitationFrom rangeOfString:fullNameReceiveAction]];
+                            [mutableAttributedString addAttribute:NSFontAttributeName value:textFontMedium range:[joinedTheGroupChatByInvitationFrom rangeOfString:fullNameDidAction]];
+                            self.attributedText = mutableAttributedString;
+                        } else {
+                            NSString *joinedTheGroupChat = [NSString stringWithFormat:AMLocalizedString(@"%@ joined the group chat.", @"Management message shown in a chat when the user %@ joined it from a public chat link"), fullNameReceiveAction];
+                            text = joinedTheGroupChat;
+                            
+                            NSMutableAttributedString *mutableAttributedString = [[NSMutableAttributedString alloc] initWithString:joinedTheGroupChat attributes:@{NSFontAttributeName:textFontRegular, NSForegroundColorAttributeName:[UIColor mnz_black333333]}];
+                            [mutableAttributedString addAttribute:NSFontAttributeName value:textFontMedium range:[joinedTheGroupChat rangeOfString:fullNameReceiveAction]];
+                            self.attributedText = mutableAttributedString;
+                        }
                         break;
                     }
                         
@@ -284,6 +280,43 @@ static const void *nodeSizeTagKey = &nodeSizeTagKey;
                 break;
             }
                 
+            case MEGAChatMessageTypePublicHandleCreate: {
+                NSString *publicHandleCreated = [NSString stringWithFormat:AMLocalizedString(@"%@ created a public link for the chat.", @"Management message shown in a chat when the user %@ creates a public link for the chat"), fullNameReceiveAction];
+                text = publicHandleCreated;
+                
+                NSMutableAttributedString *mutableAttributedString = [[NSMutableAttributedString alloc] initWithString:publicHandleCreated attributes:@{NSFontAttributeName:textFontRegular, NSForegroundColorAttributeName:[UIColor mnz_black333333]}];
+                [mutableAttributedString addAttribute:NSFontAttributeName value:textFontMedium range:[publicHandleCreated rangeOfString:fullNameReceiveAction]];
+                
+                self.attributedText = mutableAttributedString;
+                break;
+            }
+                
+            case MEGAChatMessageTypePublicHandleDelete: {
+                NSString *publicHandleRemoved = [NSString stringWithFormat:AMLocalizedString(@"%@ removed a public link for the chat.", @"Management message shown in a chat when the user %@ removes a public link for the chat"), fullNameReceiveAction];
+                text = publicHandleRemoved;
+                
+                NSMutableAttributedString *mutableAttributedString = [[NSMutableAttributedString alloc] initWithString:publicHandleRemoved attributes:@{NSFontAttributeName:textFontRegular, NSForegroundColorAttributeName:[UIColor mnz_black333333]}];
+                [mutableAttributedString addAttribute:NSFontAttributeName value:textFontMedium range:[publicHandleRemoved rangeOfString:fullNameReceiveAction]];
+                
+                self.attributedText = mutableAttributedString;
+                break;
+            }
+                
+            case MEGAChatMessageTypeSetPrivateMode: {
+                NSString *setPrivateMode = [NSString stringWithFormat:AMLocalizedString(@"%@ enabled Encrypted Key Rotation", @"Management message shown in a chat when the user %@ enables the 'Encrypted Key Rotation'"), fullNameReceiveAction];
+                NSString *keyRotationExplanation = AMLocalizedString(@"Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages.", @"Footer text to explain what means 'Encrypted Key Rotation'");
+                text = [NSString stringWithFormat:@"%@\n\n%@", setPrivateMode, keyRotationExplanation];
+                
+                NSMutableAttributedString *mutableAttributedString = [[NSMutableAttributedString alloc] initWithString:text attributes:@{NSFontAttributeName:textFontRegular, NSForegroundColorAttributeName:[UIColor mnz_black333333]}];
+                [mutableAttributedString addAttribute:NSFontAttributeName value:textFontMedium range:[text rangeOfString:fullNameReceiveAction]];
+                [mutableAttributedString addAttribute:NSFontAttributeName value:textFontMedium range:[text rangeOfString:AMLocalizedString(@"Encrypted Key Rotation", nil)]];
+                [mutableAttributedString addAttribute:NSFontAttributeName value:textFontMediumFootnote range:[text rangeOfString:keyRotationExplanation]];
+                [mutableAttributedString addAttribute:NSForegroundColorAttributeName value:[UIColor mnz_gray999999] range:[text rangeOfString:keyRotationExplanation]];
+                
+                self.attributedText = mutableAttributedString;
+                break;
+            }
+                
             default:
                 text = @"default";
                 break;
@@ -343,7 +376,7 @@ static const void *nodeSizeTagKey = &nodeSizeTagKey;
         case MEGAChatMessageTypeNormal: {
             if (self.warningDialog > MEGAChatMessageWarningDialogNone) {
                 media = [[MEGADialogMediaItem alloc] initWithMEGAChatMessage:self];
-            } else if (self.node) {
+            } else if (self.richNumber) {
                 media = [[MEGARichPreviewMediaItem alloc] initWithMEGAChatMessage:self];
             }
             
@@ -351,11 +384,8 @@ static const void *nodeSizeTagKey = &nodeSizeTagKey;
         }
             
         case MEGAChatMessageTypeCallStarted:
-            media = [[MEGACallStartedMediaItem alloc] initWithMEGAChatMessage:self];
-            break;
-            
         case MEGAChatMessageTypeCallEnded:
-            media = [[MEGACallEndedMediaItem alloc] initWithMEGAChatMessage:self];
+            media = [[MEGACallManagementMediaItem alloc] initWithMEGAChatMessage:self];
             break;
             
         default:
@@ -369,10 +399,52 @@ static const void *nodeSizeTagKey = &nodeSizeTagKey;
     return self.hash;
 }
 
+- (NSString *)fullNameDidAction {
+    NSString *fullNameDidAction;
+    
+    if ([MEGASdkManager sharedMEGAChatSdk].myUserHandle == self.userHandle) {
+        fullNameDidAction = [MEGASdkManager sharedMEGAChatSdk].myFullname;
+    } else {
+        fullNameDidAction = [self fullNameByHandle:self.userHandle];
+    }
+    
+    return fullNameDidAction;
+}
+
+- (NSString *)fullNameReceiveAction {
+    NSString *fullNameReceiveAction;
+    uint64_t tempHandle;
+    
+    if (self.type == MEGAChatMessageTypeAlterParticipants || self.type == MEGAChatMessageTypePrivilegeChange) {
+        tempHandle = self.userHandleOfAction;
+    } else {
+        tempHandle = self.userHandle;
+    }
+    
+    if ([MEGASdkManager sharedMEGAChatSdk].myUserHandle == tempHandle) {
+        fullNameReceiveAction = [MEGASdkManager sharedMEGAChatSdk].myFullname;
+    } else {
+        fullNameReceiveAction = [self fullNameByHandle:tempHandle];
+    }
+    
+    return fullNameReceiveAction;
+}
+
+- (NSString *)fullNameByHandle:(uint64_t)handle {
+    NSString *fullName = @"";
+    
+    MOUser *moUser = [[MEGAStore shareInstance] fetchUserWithUserHandle:handle];
+    if (moUser) {
+        fullName = moUser.fullName;
+    }
+    
+    return fullName;
+}
+
 #pragma mark - NSObject
 
 - (NSUInteger)hash {
-    NSUInteger contentHash = self.type == MEGAChatMessageTypeAttachment ? (NSUInteger)[self.nodeList nodeAtIndex:0].handle : self.content.hash ^ self.node.hash;
+    NSUInteger contentHash = self.type == MEGAChatMessageTypeAttachment ? (NSUInteger)[self.nodeList nodeAtIndex:0].handle : self.content.hash ^ self.richNumber.hash;
     NSUInteger metaHash = self.type == MEGAChatMessageTypeContainsMeta ? self.containsMeta.type : MEGAChatContainsMetaTypeInvalid;
     return self.senderId.hash ^ self.date.hash ^ contentHash ^ self.warningDialog ^ metaHash ^ self.localPreview;
 }
@@ -383,12 +455,12 @@ static const void *nodeSizeTagKey = &nodeSizeTagKey;
 
 #pragma mark - Properties
 
-- (MEGAChatRoom *)chatRoom {
-    return objc_getAssociatedObject(self, chatRoomTagKey);
+- (uint64_t)chatId {
+    return ((NSNumber *)objc_getAssociatedObject(self, chatIdTagKey)).unsignedLongLongValue;
 }
 
-- (void)setChatRoom:(MEGAChatRoom *)chatRoom {
-    objc_setAssociatedObject(self, &chatRoomTagKey, chatRoom, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+- (void)setChatId:(uint64_t)chatId {
+    objc_setAssociatedObject(self, &chatIdTagKey, @(chatId), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 - (NSAttributedString *)attributedText {
@@ -404,7 +476,7 @@ static const void *nodeSizeTagKey = &nodeSizeTagKey;
 }
 
 - (void)setWarningDialog:(MEGAChatMessageWarningDialog)warningDialog {
-    objc_setAssociatedObject(self, &warningDialogTagKey, [NSNumber numberWithInteger:warningDialog], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    objc_setAssociatedObject(self, &warningDialogTagKey, @(warningDialog), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 - (NSURL *)MEGALink {
@@ -423,20 +495,20 @@ static const void *nodeSizeTagKey = &nodeSizeTagKey;
     objc_setAssociatedObject(self, &nodeTagKey, node, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
-- (NSString *)nodeDetails {
-    return objc_getAssociatedObject(self, nodeDetailsTagKey);
+- (NSString *)richString {
+    return objc_getAssociatedObject(self, richStringTagKey);
 }
 
-- (void)setNodeDetails:(NSString *)nodeDetails {
-    objc_setAssociatedObject(self, &nodeDetailsTagKey, nodeDetails, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+- (void)setRichString:(NSString *)richString {
+    objc_setAssociatedObject(self, &richStringTagKey, richString, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
-- (NSNumber *)nodeSize {
-    return objc_getAssociatedObject(self, nodeSizeTagKey);
+- (NSNumber *)richNumber {
+    return objc_getAssociatedObject(self, richNumberTagKey);
 }
 
-- (void)setNodeSize:(NSNumber *)nodeSize {
-    objc_setAssociatedObject(self, &nodeSizeTagKey, nodeSize, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+- (void)setRichNumber:(NSNumber *)richNumber {
+    objc_setAssociatedObject(self, &richNumberTagKey, richNumber, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 @end
