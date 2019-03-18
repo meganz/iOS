@@ -1699,13 +1699,15 @@
 /* Users previewing a public chat */
 "Observers"="Observers";
 /* Alert message shown while deleting a chat link, warning about the consequences */
-"This conversation will no longer be accessible through the link you are about to delete."="This conversation will no longer be accessible through the link you are about to delete.";
+"This conversation will no longer be accessible through the link you are about to delete."="This conversation will no longer be accessible through the public link once it has been removed.";
 /* Management message shown in a chat when the user %@ enables the 'Encrypted Key Rotation' */
 "%@ enabled Encrypted Key Rotation"="%@ enabled Encrypted Key Rotation";
 /* Management message shown in a chat when the user %@ creates a public link for the chat */
 "%@ created a public link for the chat."="%@ created a public link for the chat.";
 /* Management message shown in a chat when the user %@ removes a public link for the chat */
 "%@ removed a public link for the chat."="%@ removed a public link for the chat.";
+/* Management message shown in a chat when the user %@ joined it from a public chat link */
+"%@ joined the group chat."="%@ joined the group chat.";
 /* Message show when a call cannot be established because there are too many participants in the group call */
 "Error. No more participants are allowed in this group call."="You are not allowed to join this call as it has reached the maximum number of participants.";
 /* Message show when a user cannot activate the video in a group call because the max number of videos has been reached */
@@ -1826,5 +1828,15 @@
 "%d participant"="%d participant";
 /* Text to inform the user there is an active call and is not participating */
 "Ongoing Call"="Ongoing Call";
+/* Message shown when there is an ongoing call and the user tries to play an audio or video */
+"It is not possible to play content while there is a call in progress"="It is not possible to play content while there is a call in progress";
 /* Text to inform the user there is an active call and is participating */
 "Call Started"="Call Started";
+/* Title for feature Password Reminder */
+"Password Reminder"="Password Reminder";
+/* Label for any ‘Message’ button, link, text, title, etc. - (String as short as possible). */
+"Message"="Mensahe";
+/* Title of the button in the contact info screen to start an audio call */
+"Call"="Tumawag";
+/* Title of the button in the contact info screen to start a video call */
+"Video"="Video";

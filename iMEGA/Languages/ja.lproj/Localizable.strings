@@ -1695,17 +1695,19 @@
 /* Button text in public chat previews that allows the user to join the chat */
 "Join"="参加する";
 /* Text shown in a notification to let the user know that has joined a public chat room after login or account creation */
-"You have joined %@"="You have joined %@";
+"You have joined %@"="あなたは%@に参加しました";
 /* Users previewing a public chat */
-"Observers"="Observers";
+"Observers"="オブザーバー";
 /* Alert message shown while deleting a chat link, warning about the consequences */
-"This conversation will no longer be accessible through the link you are about to delete."="This conversation will no longer be accessible through the link you are about to delete.";
+"This conversation will no longer be accessible through the link you are about to delete."="この会話は、一度削除されると公開リンクからアクセスできなくなります。";
 /* Management message shown in a chat when the user %@ enables the 'Encrypted Key Rotation' */
-"%@ enabled Encrypted Key Rotation"="%@ enabled Encrypted Key Rotation";
+"%@ enabled Encrypted Key Rotation"="%@さんが暗号化キーローテーションを有効にしました";
 /* Management message shown in a chat when the user %@ creates a public link for the chat */
-"%@ created a public link for the chat."="%@ created a public link for the chat.";
+"%@ created a public link for the chat."="%@さんがチャット用の公開リンクを作成しました。";
 /* Management message shown in a chat when the user %@ removes a public link for the chat */
-"%@ removed a public link for the chat."="%@ removed a public link for the chat.";
+"%@ removed a public link for the chat."="%@さんがチャット用の公開リンクを削除しました。";
+/* Management message shown in a chat when the user %@ joined it from a public chat link */
+"%@ joined the group chat."="%@ joined the group chat.";
 /* Message show when a call cannot be established because there are too many participants in the group call */
 "Error. No more participants are allowed in this group call."="最大参加者数に達したため、この通話に参加できません。";
 /* Message show when a user cannot activate the video in a group call because the max number of videos has been reached */
@@ -1826,5 +1828,15 @@
 "%d participant"="%d人の参加者";
 /* Text to inform the user there is an active call and is not participating */
 "Ongoing Call"="継続中の通話";
+/* Message shown when there is an ongoing call and the user tries to play an audio or video */
+"It is not possible to play content while there is a call in progress"="It is not possible to play content while there is a call in progress";
 /* Text to inform the user there is an active call and is participating */
 "Call Started"="通話が開始しました";
+/* Title for feature Password Reminder */
+"Password Reminder"="パスワードリマインダー";
+/* Label for any ‘Message’ button, link, text, title, etc. - (String as short as possible). */
+"Message"="メッセージ";
+/* Title of the button in the contact info screen to start an audio call */
+"Call"="通話";
+/* Title of the button in the contact info screen to start a video call */
+"Video"="動画";

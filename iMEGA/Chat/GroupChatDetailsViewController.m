@@ -24,11 +24,9 @@
 
 @property (weak, nonatomic) IBOutlet UIImageView *avatarImageView;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
-@property (weak, nonatomic) IBOutlet UILabel *emailLabel;
+@property (weak, nonatomic) IBOutlet UILabel *participantsLabel;
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
-
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *backBarButtonItem;
 
 @property (weak, nonatomic) IBOutlet UIView *participantsHeaderView;
 @property (weak, nonatomic) IBOutlet UILabel *participantsHeaderViewLabel;
@@ -45,8 +43,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.backBarButtonItem.image = self.backBarButtonItem.image.imageFlippedForRightToLeftLayoutDirection;
-    self.navigationItem.leftBarButtonItem = self.backBarButtonItem;
     self.navigationItem.title = AMLocalizedString(@"info", @"A button label. The button allows the user to get more info of the current context");
     
     self.nameLabel.text = self.chatRoom.title;
@@ -54,7 +50,9 @@
     CGSize avatarSize = self.avatarImageView.frame.size;
     UIImage *avatarImage = [UIImage imageForName:self.chatRoom.title.uppercaseString size:avatarSize backgroundColor:[UIColor mnz_gray999999] textColor:[UIColor whiteColor] font:[UIFont mnz_SFUIRegularWithSize:(avatarSize.width/2.0f)]];
     self.avatarImageView.image = avatarImage;
-    self.emailLabel.text = AMLocalizedString(@"groupChat", @"Label title for a group chat");
+    
+    NSInteger peers = self.chatRoom.peerCount + (self.chatRoom.isPreview ? 0 : 1);
+    self.participantsLabel.text = (peers == 1) ? [NSString stringWithFormat:AMLocalizedString(@"%d participant", @"Singular of participant. 1 participant").capitalizedString, 1] : [NSString stringWithFormat:AMLocalizedString(@"%d participants", @"Singular of participant. 1 participant").capitalizedString, peers];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -214,10 +212,6 @@
 
 #pragma mark - IBActions
 
-- (IBAction)backAction:(UIBarButtonItem *)sender {
-    [self.navigationController popViewControllerAnimated:YES];
-}
-
 - (IBAction)notificationsSwitchValueChanged:(UISwitch *)sender {
     //TODO: Enable/disable notifications
 }
@@ -251,9 +245,10 @@
             numberOfRows = (self.chatRoom.ownPrivilege >= MEGAChatRoomPrivilegeRo) ? 1 : 0;
             break;
             
-        case 5:
-            numberOfRows = (self.chatRoom.ownPrivilege >= MEGAChatRoomPrivilegeModerator && self.chatRoom.isPublicChat) ? 1 : 0;
+        case 5: {
+            numberOfRows = (!self.chatRoom.isPublicChat || self.chatRoom.ownPrivilege >= MEGAChatRoomPrivilegeModerator) ? 1 : 0;
             break;
+        }
             
         case 6:
             numberOfRows = self.chatRoom.previewersCount ? 1 : 0;
@@ -312,8 +307,9 @@
             break;
                         
         case 5:
-            cell.nameLabel.text = AMLocalizedString(@"Enable Encrypted Key Rotation", @"Title show in a cell where the users can enable the 'Encrypted Key Rotation'");
+            cell.nameLabel.text = self.chatRoom.isPublicChat ? AMLocalizedString(@"Enable Encrypted Key Rotation", @"Title show in a cell where the users can enable the 'Encrypted Key Rotation'") : AMLocalizedString(@"Encrypted Key Rotation", @"Label in a cell where you can enable the 'Encrypted Key Rotation'");
             cell.leftImageView.hidden = YES;
+            cell.enableLabel.hidden = cell.userInteractionEnabled = self.chatRoom.isPublicChat;
             break;
             
         case 6:
@@ -440,7 +436,7 @@
             break;
             
         case 5:
-            height = ((self.chatRoom.ownPrivilege >= MEGAChatRoomPrivilegeModerator) && self.chatRoom.isPublicChat) ? 10.0f : 0.1f;
+            height = (!self.chatRoom.isPublicChat || self.chatRoom.ownPrivilege >= MEGAChatRoomPrivilegeModerator) ? 10.0f : 0.1f;
             break;
             
         case 6:
@@ -482,9 +478,14 @@
             height = 10.0f;
             break;
             
-        case 5:
-            height = ((self.chatRoom.ownPrivilege >= MEGAChatRoomPrivilegeModerator) && self.chatRoom.isPublicChat) ? UITableViewAutomaticDimension : 0.1f;
+        case 5: {
+            if (self.chatRoom.isPublicChat) {
+                height = (self.chatRoom.ownPrivilege >= MEGAChatRoomPrivilegeModerator) ? UITableViewAutomaticDimension : 0.1f;
+            } else {
+                height = 10.0f;
+            }
             break;
+        }
             
         case 6:
             height = self.chatRoom.previewersCount ? 10.0f : 0.1f;
@@ -504,7 +505,7 @@
 
 - (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section {
     if (section == 5 && self.chatRoom.isPublicChat && self.chatRoom.ownPrivilege >= MEGAChatRoomPrivilegeModerator) {
-        return AMLocalizedString(@"Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages.", @"Footer text to explain what means 'Encrypted Key Rotation'");
+        return [AMLocalizedString(@"Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages.", @"Footer text to explain what means 'Encrypted Key Rotation'") stringByAppendingString:@"\n"];
     }
     return nil;
 }
@@ -536,7 +537,7 @@
             break;
             
         case 5:
-            heightForRow = (self.chatRoom.ownPrivilege >= MEGAChatRoomPrivilegeModerator && self.chatRoom.isPublicChat) ? 44.0f : 0.0f;
+            heightForRow = (!self.chatRoom.isPublicChat || self.chatRoom.ownPrivilege >= MEGAChatRoomPrivilegeModerator) ? 44.0f : 0.0f;
             break;
             
         case 6:

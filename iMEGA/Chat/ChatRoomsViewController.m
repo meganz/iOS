@@ -559,7 +559,6 @@
     MessagesViewController *messagesVC = [[MessagesViewController alloc] init];
     messagesVC.chatRoom                = chatRoom;
     
-    
     NSInteger unreadChats = [MEGASdkManager sharedMEGAChatSdk].unreadChats;
     if (chatRoom.unreadCount) {
         unreadChats -= 1;
