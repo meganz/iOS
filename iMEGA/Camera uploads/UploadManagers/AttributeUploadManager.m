@@ -249,6 +249,15 @@ typedef NS_ENUM(NSInteger, PreviewConcurrentUploadCount) {
     }
 }
 
+#pragma mark - cancel attributes upload
+
+- (void)cancelAllAttributesUpload {
+    [self.attributeScanQueue cancelAllOperations];
+    [self.thumbnailUploadOperationQueue cancelAllOperations];
+    [self.previewUploadOperationQueue cancelAllOperations];
+    [self.coordinatesUploadOperationQueue cancelAllOperations];
+}
+
 #pragma mark - Utils
 
 - (NSURL *)attributeDirectoryURL {
