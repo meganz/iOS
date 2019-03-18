@@ -46,7 +46,7 @@ NSString * const CameraUploadErrorDomain = @"nz.mega.cameraUpload";
 }
 
 + (NSError *)mnz_cameraUploadUnknownMediaType:(PHAssetMediaType)mediaType {
-    return [NSError errorWithDomain:CameraUploadErrorDomain code:CameraUploadErrorUnknownMediaType   userInfo:@{NSLocalizedDescriptionKey : [NSString stringWithFormat:@"%li media type can not be recognised", mediaType]}];
+    return [NSError errorWithDomain:CameraUploadErrorDomain code:CameraUploadErrorUnknownMediaType   userInfo:@{NSLocalizedDescriptionKey : [NSString stringWithFormat:@"%li media type can not be recognised", (long)mediaType]}];
 }
 
 + (NSError *)mnz_cameraUploadNoMediaAssetFetchedWithIdentifier:(NSString *)identifier {

@@ -226,7 +226,7 @@ static const NSTimeInterval HeaderStateViewReloadToleranceTimeInterval = .1;
             return;
         }
         
-        MEGALogDebug(@"[Camera Upload] pending count %lu, done count: %lu, total count: %lu", uploadStats.pendingFilesCount, uploadStats.finishedFilesCount, uploadStats.totalFilesCount);
+        MEGALogDebug(@"[Camera Upload] pending count %lu, done count: %lu, total count: %lu", (unsigned long)uploadStats.pendingFilesCount, (unsigned long)uploadStats.finishedFilesCount, (unsigned long)uploadStats.totalFilesCount);
         dispatch_async(dispatch_get_main_queue(), ^{
             self.currentState = uploadStats.pendingFilesCount > 0 ? MEGACameraUploadsStateUploading : MEGACameraUploadsStateCompleted;
             [self configUploadProgressByStats:uploadStats];
