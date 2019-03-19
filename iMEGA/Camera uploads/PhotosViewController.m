@@ -49,10 +49,11 @@ static const NSTimeInterval HeaderStateViewReloadToleranceTimeInterval = .1;
 @property (nonatomic, strong) NSMutableDictionary *selectedItemsDictionary;
 
 @property (weak, nonatomic) IBOutlet UIView *stateView;
-@property (weak, nonatomic) IBOutlet UIButton *toggleCameraUploadsButton;
+@property (weak, nonatomic) IBOutlet UIButton *enableCameraUploadsButton;
 @property (weak, nonatomic) IBOutlet UIProgressView *photosUploadedProgressView;
 @property (weak, nonatomic) IBOutlet UILabel *photosUploadedLabel;
 @property (weak, nonatomic) IBOutlet UILabel *stateLabel;
+@property (weak, nonatomic) IBOutlet UIStackView *progressStackView;
 
 @property (weak, nonatomic) IBOutlet UICollectionView *photosCollectionView;
 
@@ -87,6 +88,8 @@ static const NSTimeInterval HeaderStateViewReloadToleranceTimeInterval = .1;
     self.photosCollectionView.emptyDataSetSource = self;
     self.photosCollectionView.emptyDataSetDelegate = self;
     
+    self.enableCameraUploadsButton.tintColor = [UIColor mnz_green00BFA5];
+    [self.enableCameraUploadsButton setTitle:AMLocalizedString(@"enable", nil) forState:UIControlStateNormal];
     self.photosUploadedProgressView.progressTintColor = [UIColor mnz_green00BFA5];
     
     self.selectedItemsDictionary = [[NSMutableDictionary alloc] init];
@@ -257,43 +260,36 @@ static const NSTimeInterval HeaderStateViewReloadToleranceTimeInterval = .1;
     switch (currentState) {
         case MEGACameraUploadsStateDisabled:
             self.stateView.hidden = NO;
-            self.photosUploadedProgressView.hidden = YES;
-            self.photosUploadedLabel.hidden = YES;
             self.stateLabel.hidden = NO;
+            self.progressStackView.hidden = YES;
             self.stateLabel.text = AMLocalizedString(@"enableCameraUploadsButton", nil);
-            [self.toggleCameraUploadsButton setTitle:AMLocalizedString(@"enable", nil) forState:UIControlStateNormal];
-            self.toggleCameraUploadsButton.hidden = NO;
+            self.enableCameraUploadsButton.hidden = NO;
             [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
             break;
             
         case MEGACameraUploadsStateUploading:
             self.stateView.hidden = NO;
-            self.photosUploadedProgressView.hidden = NO;
-            self.photosUploadedLabel.hidden = NO;
             self.stateLabel.hidden = YES;
-            [self.toggleCameraUploadsButton setTitle:AMLocalizedString(@"disable", @"Text button shown when an option is enabled, to allow to disable it. String as sort as possible.") forState:UIControlStateNormal];
-            self.toggleCameraUploadsButton.hidden = NO;
+            self.progressStackView.hidden = NO;
+            self.enableCameraUploadsButton.hidden = YES;
             [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
             break;
             
         case MEGACameraUploadsStateCompleted:
             self.stateView.hidden = NO;
-            self.photosUploadedProgressView.hidden = YES;
-            self.photosUploadedLabel.hidden = YES;
             self.stateLabel.hidden = NO;
+            self.progressStackView.hidden = YES;
             self.stateLabel.text = AMLocalizedString(@"cameraUploadsComplete", @"Message shown when the camera uploads have been completed");
-            [self.toggleCameraUploadsButton setTitle:AMLocalizedString(@"disable", @"Text button shown when an option is enabled, to allow to disable it. String as sort as possible.") forState:UIControlStateNormal];
-            self.toggleCameraUploadsButton.hidden = NO;
+            self.enableCameraUploadsButton.hidden = YES;
             [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
             break;
             
         case MEGACameraUploadsStateNoInternetConnection:
             self.stateView.hidden = NO;
-            self.photosUploadedProgressView.hidden = YES;
-            self.photosUploadedLabel.hidden = YES;
             self.stateLabel.hidden = NO;
+            self.progressStackView.hidden = YES;
             self.stateLabel.text = AMLocalizedString(@"noInternetConnection", @"Text shown on the app when you don't have connection to the internet or when you have lost it");
-            self.toggleCameraUploadsButton.hidden = YES;
+            self.enableCameraUploadsButton.hidden = YES;
             [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
             break;
             
@@ -304,11 +300,10 @@ static const NSTimeInterval HeaderStateViewReloadToleranceTimeInterval = .1;
             
         case MEGACameraUploadsStateLoading:
             self.stateView.hidden = NO;
-            self.photosUploadedProgressView.hidden = YES;
-            self.photosUploadedLabel.hidden = YES;
             self.stateLabel.hidden = NO;
+            self.progressStackView.hidden = YES;
             self.stateLabel.text = AMLocalizedString(@"loading", nil);
-            self.toggleCameraUploadsButton.hidden = NO;
+            self.enableCameraUploadsButton.hidden = NO;
             [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
             break;
     }

@@ -29,61 +29,59 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nyf-uB-Tb3">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="55"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="250" text="Loading…" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="ZiR-gp-d1i">
-                                                <rect key="frame" x="12" y="17.5" width="281" height="20.5"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="Hs5-aX-s89">
-                                                <rect key="frame" x="12" y="2.5" width="281" height="50"/>
+                                            <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="S4Z-Ea-Sdu">
+                                                <rect key="frame" x="12" y="0.0" width="351" height="55"/>
                                                 <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="s3z-Mc-fCp">
-                                                        <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="250" text="Loading…" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="ZiR-gp-d1i">
+                                                        <rect key="frame" x="0.0" y="17.5" width="284" height="20.5"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <progressView hidden="YES" opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="LTG-PV-qaW">
-                                                        <rect key="frame" x="0.0" y="0.0" width="269" height="4"/>
-                                                        <color key="tintColor" red="0.95294117647058818" green="0.047058823529411764" blue="0.078431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <stackView hidden="YES" opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="Hs5-aX-s89">
+                                                        <rect key="frame" x="288" y="23" width="12" height="9"/>
+                                                        <subviews>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="s3z-Mc-fCp">
+                                                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                                <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                            <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="LTG-PV-qaW">
+                                                                <rect key="frame" x="0.0" y="5" width="0.0" height="4"/>
+                                                                <color key="tintColor" red="0.95294117647058818" green="0.047058823529411764" blue="0.078431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="height" constant="4" id="qvL-GF-eYX"/>
+                                                                </constraints>
+                                                                <color key="trackTintColor" red="0.83137254901960778" green="0.83137254901960778" blue="0.83137254901960778" alpha="1" colorSpace="calibratedRGB"/>
+                                                                <userDefinedRuntimeAttributes>
+                                                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                                        <real key="value" value="1.5"/>
+                                                                    </userDefinedRuntimeAttribute>
+                                                                </userDefinedRuntimeAttributes>
+                                                            </progressView>
+                                                        </subviews>
                                                         <constraints>
-                                                            <constraint firstAttribute="height" constant="4" id="qvL-GF-eYX"/>
+                                                            <constraint firstAttribute="trailing" secondItem="LTG-PV-qaW" secondAttribute="trailing" constant="12" id="xT5-Yx-phZ"/>
                                                         </constraints>
-                                                        <color key="trackTintColor" red="0.83137254901960778" green="0.83137254901960778" blue="0.83137254901960778" alpha="1" colorSpace="calibratedRGB"/>
-                                                        <userDefinedRuntimeAttributes>
-                                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                                                <real key="value" value="1.5"/>
-                                                            </userDefinedRuntimeAttribute>
-                                                        </userDefinedRuntimeAttributes>
-                                                    </progressView>
+                                                    </stackView>
+                                                    <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zhm-WP-YFw">
+                                                        <rect key="frame" x="292" y="11" width="59" height="33"/>
+                                                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
+                                                        <state key="normal" title="Disable"/>
+                                                        <connections>
+                                                            <action selector="enableCameraUploadsTouchUpInside:" destination="3GS-cK-Hw6" eventType="touchUpInside" id="aj5-O0-EUk"/>
+                                                        </connections>
+                                                    </button>
                                                 </subviews>
-                                                <constraints>
-                                                    <constraint firstAttribute="trailing" secondItem="LTG-PV-qaW" secondAttribute="trailing" constant="12" id="xT5-Yx-phZ"/>
-                                                </constraints>
                                             </stackView>
-                                            <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zhm-WP-YFw">
-                                                <rect key="frame" x="301" y="11" width="57" height="33"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                <state key="normal" title="Disable">
-                                                    <color key="titleColor" red="0.95294117647058818" green="0.047058823529411764" blue="0.078431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                </state>
-                                                <connections>
-                                                    <action selector="enableCameraUploadsTouchUpInside:" destination="3GS-cK-Hw6" eventType="touchUpInside" id="aj5-O0-EUk"/>
-                                                </connections>
-                                            </button>
                                         </subviews>
                                         <color key="backgroundColor" white="0.95999999999999996" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
-                                            <constraint firstItem="zhm-WP-YFw" firstAttribute="centerY" secondItem="nyf-uB-Tb3" secondAttribute="centerY" id="2yh-cd-VxJ"/>
-                                            <constraint firstAttribute="trailing" secondItem="zhm-WP-YFw" secondAttribute="trailing" constant="17" id="5Ol-eK-lpU"/>
-                                            <constraint firstItem="zhm-WP-YFw" firstAttribute="leading" secondItem="Hs5-aX-s89" secondAttribute="trailing" constant="8" id="5ts-UK-BwS"/>
-                                            <constraint firstItem="ZiR-gp-d1i" firstAttribute="leading" secondItem="nyf-uB-Tb3" secondAttribute="leading" constant="12" id="C8z-3Z-UKj"/>
-                                            <constraint firstItem="ZiR-gp-d1i" firstAttribute="centerY" secondItem="nyf-uB-Tb3" secondAttribute="centerY" id="EZu-IR-JGh"/>
+                                            <constraint firstAttribute="bottom" secondItem="S4Z-Ea-Sdu" secondAttribute="bottom" id="A14-Sk-FYY"/>
                                             <constraint firstAttribute="height" constant="55" id="Np6-0l-Tqh"/>
-                                            <constraint firstItem="Hs5-aX-s89" firstAttribute="centerY" secondItem="nyf-uB-Tb3" secondAttribute="centerY" id="WFU-HI-t5C"/>
-                                            <constraint firstItem="Hs5-aX-s89" firstAttribute="leading" secondItem="nyf-uB-Tb3" secondAttribute="leading" constant="12" id="f2H-1a-eWr"/>
-                                            <constraint firstItem="zhm-WP-YFw" firstAttribute="leading" secondItem="ZiR-gp-d1i" secondAttribute="trailing" constant="8" id="yo7-zc-dbo"/>
+                                            <constraint firstAttribute="trailing" secondItem="S4Z-Ea-Sdu" secondAttribute="trailing" constant="12" id="WPS-o2-KHJ"/>
+                                            <constraint firstItem="S4Z-Ea-Sdu" firstAttribute="leading" secondItem="nyf-uB-Tb3" secondAttribute="leading" constant="12" id="ZmR-gy-VlJ"/>
+                                            <constraint firstItem="S4Z-Ea-Sdu" firstAttribute="top" secondItem="nyf-uB-Tb3" secondAttribute="top" id="aYJ-uG-PFB"/>
                                         </constraints>
                                     </view>
                                     <collectionView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" placeholderIntrinsicWidth="375" placeholderIntrinsicHeight="548" alwaysBounceVertical="YES" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Isg-Gr-mnR">
@@ -218,15 +216,16 @@
                         <outlet property="deleteBarButtonItem" destination="bVv-a0-Fx7" id="BwD-Lu-tJf"/>
                         <outlet property="downloadBarButtonItem" destination="mZb-63-wxw" id="I4p-73-knY"/>
                         <outlet property="editBarButtonItem" destination="jcN-8Q-JdP" id="hg4-YD-HM9"/>
+                        <outlet property="enableCameraUploadsButton" destination="zhm-WP-YFw" id="OZt-j7-0eb"/>
                         <outlet property="moveBarButtonItem" destination="k2g-A4-j6f" id="sR6-Zh-J43"/>
                         <outlet property="photosCollectionView" destination="Isg-Gr-mnR" id="apN-It-bKY"/>
                         <outlet property="photosUploadedLabel" destination="s3z-Mc-fCp" id="MEP-6E-Odf"/>
                         <outlet property="photosUploadedProgressView" destination="LTG-PV-qaW" id="7QC-xy-ZSK"/>
+                        <outlet property="progressStackView" destination="Hs5-aX-s89" id="JE0-dm-vCl"/>
                         <outlet property="selectAllBarButtonItem" destination="gRA-OU-vS7" id="icK-jO-9bw"/>
                         <outlet property="shareBarButtonItem" destination="84D-T8-1ui" id="4Mx-PC-8YH"/>
                         <outlet property="stateLabel" destination="ZiR-gp-d1i" id="bn5-7e-Dba"/>
                         <outlet property="stateView" destination="nyf-uB-Tb3" id="bIY-EK-Yoh"/>
-                        <outlet property="toggleCameraUploadsButton" destination="zhm-WP-YFw" id="OZt-j7-0eb"/>
                         <outlet property="toolbar" destination="qZy-vw-98U" id="kqk-6K-svX"/>
                     </connections>
                 </viewController>
@@ -305,7 +304,7 @@
     </scenes>
     <resources>
         <image name="cameraUploadsIcon" width="31" height="28"/>
-        <image name="copy" width="32" height="32"/>
+        <image name="copy" width="28" height="28"/>
         <image name="download" width="32" height="32"/>
         <image name="move" width="28" height="28"/>
         <image name="rubbishBin" width="28" height="28"/>
