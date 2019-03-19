@@ -1,7 +1,7 @@
 /* Button title to cancel something */
 "cancel"="Batal";
 /* Button title to accept something */
-"ok"="Oke";
+"ok"="OK";
 /* */
 "yes"="Ya";
 /* */
@@ -9,7 +9,7 @@
 /* */
 "upload"="Unggah";
 /*  */
-"error"="Kesalahan";
+"error"="Error";
 /*  */
 "name"="Nama";
 /* Caption of a button to edit the files that are selected */
@@ -161,7 +161,7 @@
 /* Title for the folder link view */
 "folderLink"="Link Folder";
 /* Button title which downloads a file/folder to your device */
-"downloadButton"="Unduh";
+"downloadButton"="Download";
 /* Message shown when you try to downlonad a folder bigger than the available memory. */
 "folderTooBigMessage"="Folder yang anda ingin download lebih besar daripada memori yang tersedia.";
 /* Error message shown when a folder can't be created. */
@@ -225,7 +225,7 @@
 /* Title shown when the there is not any transfer, and the filter "Upload" option is selected */
 "transfersEmptyState_titleUpload"="Tidak ada upload";
 /* Title of the Cloud Drive section */
-"cloudDrive"="Cakram Penyimpanan Awan";
+"cloudDrive"="Cloud Drive";
 /* Subtitle shown on folders that gives you information about its content. This case "{1} file" */
 "oneFile"="%d file";
 /* Subtitle shown on folders that gives you information about its content. This case "{1+} files" */
@@ -475,7 +475,7 @@
 /* Success message for sharing multiple folders. */
 "sharedFolders_success"="%d folder berhasil dibagikan.";
 /* Button title that triggers the importing link action */
-"import"="Impor";
+"import"="Import";
 /* Message shown when a file has been imported */
 "fileImported"="File terimpor!";
 /* Message shown when some files have been imported */
@@ -617,7 +617,7 @@
 /* Title of the view that shows the kind of permissions (Read Only, Read & Write or Full Access) that you can give to a shared folder */
 "permissions"="Izin";
 /* Permissions given to the user you share your folder with */
-"readOnly"="Hanya dibaca";
+"readOnly"="Read-only";
 /* Permissions given to the user you share your folder with */
 "readAndWrite"="Dapat Dibaca & Ditulis";
 /* Permissions given to the user you share your folder with */
@@ -645,7 +645,7 @@
 /* Title of one of the Settings sections where you can see the MEGA's 'Privacy Policy' */
 "privacyPolicyLabel"="Kebijakan Privasi";
 /* Title of one of the Settings sections where you can see the MEGA's 'Terms of Service' */
-"termsOfServicesLabel"="Ketentuan Penggunaan";
+"termsOfServicesLabel"="persyaratan layanan";
 /* Title of one of the Settings sections where you can see the MEGA's 'Data Protection Regulation' */
 "dataProtectionRegulationLabel"="Data Protection Regulation";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode Off" */
@@ -856,7 +856,7 @@
 /* Rest of the message of the alert shown when you try to cancel transfers. DOWNLOAD uppercase. */
 "downloadInUppercaseTransfers"="DOWNLOAD transfer";
 /* Title of My Account section. There you can see your account details */
-"myAccount"="Akun saya";
+"myAccount"="Akun Saya";
 /* Button title that shows the different MEGA PRO plans to which you can upgrade. (String as short as possible) */
 "buyPRO"="Beli PRO";
 /* Caption of a button to upgrade the account to Pro status */
@@ -1283,7 +1283,7 @@
 /* Label to show that an SDK operation has been complete successfully. */
 "No error"="Tidak ada error";
 /* Label to show that an Internal error occurs during a SDK operation. */
-"Internal error"="Kesalahan internal";
+"Internal error"="Internal error";
 /* Label to show that an error of Invalid argument occurs during a SDK operation. */
 "Invalid argument"="Argumen salah";
 /* Label to show that a request error occurs during a SDK operation. */
@@ -1418,12 +1418,12 @@
 "type"="Tipe";
 /* Title of the incoming shared folders of a user in singular */
 "sharedFolder"="Folder Berbagi";
-/* The label of the folder creation time. For example: "Created: 2013-02-02" (no need to put the colon punctuation in the translation) */
-"created"="Dibuat pada";
 /* Label for what a selection contains. For example: "Contains: 3 folders & 13 files". (no need to put the colon punctuation in the translation) */
 "contains"="Memiliki";
 /* A label for any 'Modified' text or title. For example to show the modification date of a file/folder. */
 "modified"="Terganti";
+/* A label for any ‘Added’ text or title. For example to show the upload date of a file/folder. */
+"Added"="Ditambahkan";
 /* used for example when a folder is shared with 2 or more users */
 "users"="Pengguna";
 /* user (singular) label indicating is receiving some info, for example shared folders */
@@ -1443,7 +1443,7 @@
 /* A button label which reverts a certain version of a file to be the current version of the selected file. */
 "revert"="Kembalikan";
 /*  */
-"download"="Unduh";
+"download"="Download";
 /* Singular of file. 1 file */
 "file"="file";
 /* Title of section to display information of the current version of a file. */
@@ -1707,7 +1707,7 @@
 /* Management message shown in a chat when the user %@ creates a public link for the chat */
 "%@ created a public link for the chat."="%@ created a public link for the chat.";
 /* Management message shown in a chat when the user %@ removes a public link for the chat */
-"%@ removed a public link for the chat."="%@ removed a public link for the chat.";
+"%@ removed a public link for the chat."="%@ removed the public link for the chat.";
 /* Management message shown in a chat when the user %@ joined it from a public chat link */
 "%@ joined the group chat."="%@ joined the group chat.";
 /* Message show when a call cannot be established because there are too many participants in the group call */
@@ -1831,7 +1831,7 @@
 /* Text to inform the user there is an active call and is not participating */
 "Ongoing Call"="Panggilan yang sedang berlangsung";
 /* Message shown when there is an ongoing call and the user tries to play an audio or video */
-"It is not possible to play content while there is a call in progress"="It is not possible to play content while there is a call in progress";
+"It is not possible to play content while there is a call in progress"="Memutar file media tidak dapat dilakukan saat ada panggilan yang sedang berlangsung.";
 /* Text to inform the user there is an active call and is participating */
 "Call Started"="Panggilan Dimulai";
 /* Title for feature Password Reminder */

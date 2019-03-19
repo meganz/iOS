@@ -11,7 +11,7 @@
 /* Face ID usage description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
 "NSFaceIDUsageDescription"="MEGA biedt Gezichts-ID om voor u makkelijk het app's wachtwoord te ontgrendelen als u deze optie inschakeld.";
 /* Label for any 'Search' button, link, etc. - (String as short as possible). */
-"quickActionSearchString"="Zoeken";
+"quickActionSearchString"="Zoek";
 /*  */
 "quickActionUploadString"="Uploaden";
 /* Title of the Offline section */

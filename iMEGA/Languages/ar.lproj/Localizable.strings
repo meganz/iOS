@@ -11,7 +11,7 @@
 /*  */
 "error"="خطأ";
 /*  */
-"name"="الاسم";
+"name"="الإسم";
 /* Caption of a button to edit the files that are selected */
 "edit"="تعديل";
 /* State shown if something is 'Saved' (String as short as possible). */
@@ -151,7 +151,7 @@
 /* */
 "fileLinkUnavailableText1"="هذا يمكن أن يكون راجعاً إلى أسباب التالية:";
 /* ToS refers to Terms of Service and AUP refers to Acceptable Use Policy. */
-"fileLinkUnavailableText2"="تمت إزالة الملف بسبب وجود انتهاك شروط الخدمة / سياسة الاستخدام المقبول.";
+"fileLinkUnavailableText2"="تمت إزالة الملف بسبب إنتهاك  قانون ToS/AUP";
 /* */
 "fileLinkUnavailableText3"="عنوان URL غير صالح - الرابط الذي تحاول الوصول إليه غير موجود";
 /* */
@@ -271,7 +271,7 @@
 /* Menu option from the `Add` section that allows the user to capture a video or a photo and upload it directly to MEGA. */
 "capturePhotoVideo"="التقاط";
 /* Menu option from the `Add` section that allows you to create a 'New Folder' */
-"newFolder"="مجلد جديد";
+"newFolder"="مجلّد جديد";
 /* Hint text shown on the create folder alert. */
 "newFolderMessage"="اسم للمجلد الجديد";
 /* Title button for the create folder alert.  */
@@ -313,7 +313,7 @@
 /* Title shown under the action that allows you to save several images to your camera roll */
 "saveImages"="‏احفظ الصور";
 /* Title shown under the action that allows you to get a link to file or folder */
-"getLink"="الحصول على الرابط";
+"getLink"="الحصول على الرّابط";
 /* Title shown under the action that allows you to get several links to files and/or folders */
 "getLinks"="احصل على رابط";
 /* Item menu option upon right click on one or multiple files. */
@@ -495,7 +495,7 @@
 /* Button title that enables the functionality 'Camera Uploads', which uploads all the photos in your device to MEGA */
 "enableCameraUploadsButton"="تفعيل تحميلات الكاميرا";
 /* Success message shown when Camera Uploads has been enabled */
-"cameraUploadsEnabled"="تحميلات الكاميرا مفعلة";
+"cameraUploadsEnabled"="تفعيل تحميلات الكاميرا";
 /* Message shown when the camera uploads have been completed */
 "cameraUploadsComplete"="تحميلات الكاميرا تمت بنجاح";
 /* Message shown while uploading files. Singular. */
@@ -563,7 +563,7 @@
 /* Item menu option to add a contact through your device app Contacts */
 "addFromContacts"="إضافة من جهة الاتصالات";
 /* Alert title shown when you select to add a contact inserting his/her email */
-"addContact"="إضافة جهة اتصال";
+"addContact"="إضافة متصّل";
 /* Clue text to help the user know what should write there. In this case the contact email you want to add to your contacts list */
 "contactEmail"="عنوان البريد الإلكتروني";
 /* Button title to 'Add' the contact to your contacts list */
@@ -615,19 +615,19 @@
 /* Button that allows you to select a given folder */
 "select"="تحديد";
 /* Title of the view that shows the kind of permissions (Read Only, Read & Write or Full Access) that you can give to a shared folder */
-"permissions"="صلاحيات";
+"permissions"="الرّخص";
 /* Permissions given to the user you share your folder with */
 "readOnly"="للقراءة فقط";
 /* Permissions given to the user you share your folder with */
 "readAndWrite"="قراءة وكتابة";
 /* Permissions given to the user you share your folder with */
-"fullAccess"="الوصول الكامل";
+"fullAccess"="وصول كامل";
 /* Title of the Settings section */
 "settingsTitle"="الاعدادات";
 /* Title of one of the Settings sections where you can set up the 'Camera Uploads' options */
 "cameraUploadsLabel"="رفع الألبوم";
 /* Title of one of the Settings sections where you can see your MEGA 'Rubbish Bin' */
-"rubbishBinLabel"="سلة المهملات";
+"rubbishBinLabel"="سلة المحذوفات";
 /* Title of one of the Settings sections where you can configure 'Advanced' options */
 "advanced"="متقدم";
 /* Title of one of the Settings sections where you can configure "Security Options" of your MEGA account */
@@ -1418,12 +1418,12 @@
 "type"="النوع";
 /* Title of the incoming shared folders of a user in singular */
 "sharedFolder"="مجلد مشترك";
-/* The label of the folder creation time. For example: "Created: 2013-02-02" (no need to put the colon punctuation in the translation) */
-"created"="أنشئ";
 /* Label for what a selection contains. For example: "Contains: 3 folders & 13 files". (no need to put the colon punctuation in the translation) */
 "contains"="المحتويات";
 /* A label for any 'Modified' text or title. For example to show the modification date of a file/folder. */
 "modified"="عُدِّل";
+/* A label for any ‘Added’ text or title. For example to show the upload date of a file/folder. */
+"Added"="أُضِيف";
 /* used for example when a folder is shared with 2 or more users */
 "users"="اعضاء";
 /* user (singular) label indicating is receiving some info, for example shared folders */
@@ -1707,7 +1707,7 @@
 /* Management message shown in a chat when the user %@ creates a public link for the chat */
 "%@ created a public link for the chat."="%@ created a public link for the chat.";
 /* Management message shown in a chat when the user %@ removes a public link for the chat */
-"%@ removed a public link for the chat."="%@ removed a public link for the chat.";
+"%@ removed a public link for the chat."="%@ removed the public link for the chat.";
 /* Management message shown in a chat when the user %@ joined it from a public chat link */
 "%@ joined the group chat."="%@ joined the group chat.";
 /* Message show when a call cannot be established because there are too many participants in the group call */
@@ -1831,7 +1831,7 @@
 /* Text to inform the user there is an active call and is not participating */
 "Ongoing Call"="Ongoing Call";
 /* Message shown when there is an ongoing call and the user tries to play an audio or video */
-"It is not possible to play content while there is a call in progress"="It is not possible to play content while there is a call in progress";
+"It is not possible to play content while there is a call in progress"="It is not possible to play media files while there is a call in progress.";
 /* Text to inform the user there is an active call and is participating */
 "Call Started"="Call Started";
 /* Title for feature Password Reminder */
