@@ -463,6 +463,10 @@ static const NSUInteger VideoUploadBatchCount = 1;
             [self queueUpOperation:operation];
         } else {
             MEGALogError(@"[Camera Upload] error when to build camera upload operation %@", error);
+            if (!MEGASdkManager.sharedMEGASdk.isLoggedIn) {
+                return;
+            }
+            
             if ([error.domain isEqualToString:CameraUploadErrorDomain]) {
                 if (error.code == CameraUploadErrorEmptyLocalIdentifier) {
                     [CameraUploadRecordManager.shared deleteUploadRecord:record error:nil];
