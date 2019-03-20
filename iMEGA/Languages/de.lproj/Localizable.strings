@@ -521,7 +521,7 @@
 /* Title of the Contacts section */
 "contactsTitle"="Kontakte";
 /* Subtitle shown on the Contacts section under the name of the contact you have shared one folder with */
-"oneFolderShared"="1 Ordner";
+"oneFolderShared"="Ein Ordner";
 /* Subtitle shown on the Contacts section under the name of the contact you have shared {Number of folders} with */
 "foldersShared"="%d Ordner";
 /* Item menu option to add a contact writting his/her email */
@@ -643,7 +643,7 @@
 /* Text shown when you want to send feedback of the app and you don't have an email account set up on your device */
 "noEmailAccountConfigured"="Auf Ihrem Gerät ist kein E-Mail-Account eingerichtet";
 /* Title of one of the Settings sections where you can see the MEGA's 'Privacy Policy' */
-"privacyPolicyLabel"="Datenschutz";
+"privacyPolicyLabel"="Datenschutzerklärung";
 /* Title of one of the Settings sections where you can see the MEGA's 'Terms of Service' */
 "termsOfServicesLabel"="Allgemeinen Geschäftsbedingungen zu";
 /* Title of one of the Settings sections where you can see the MEGA's 'Data Protection Regulation' */
@@ -950,7 +950,7 @@
 /* Text that shows the expiry date of the account PRO level */
 "expiresOn"="gültig bis %@";
 /* Button title for the section where you can see the 'Purchase history' related to your account */
-"purchaseHistory"="Einkaufsverlauf";
+"purchaseHistory"="Bestellchronik";
 /* Title of the Incoming Shares section. Here you can see the folders that your contacts have shared with you */
 "incomingShares"="An Sie freigegebene Ordner";
 /* Sentence shown under the used space percentage to complete the info with the user account maximum storage. "of {maximun storage}" */
@@ -1418,12 +1418,12 @@
 "type"="Typ";
 /* Title of the incoming shared folders of a user in singular */
 "sharedFolder"="Freigegebener Ordner";
-/* The label of the folder creation time. For example: "Created: 2013-02-02" (no need to put the colon punctuation in the translation) */
-"created"="Erstellt";
 /* Label for what a selection contains. For example: "Contains: 3 folders & 13 files". (no need to put the colon punctuation in the translation) */
 "contains"="Enthält";
 /* A label for any 'Modified' text or title. For example to show the modification date of a file/folder. */
 "modified"="Geändert";
+/* A label for any ‘Added’ text or title. For example to show the upload date of a file/folder. */
+"Added"="Erstellt";
 /* used for example when a folder is shared with 2 or more users */
 "users"="Benutzer";
 /* user (singular) label indicating is receiving some info, for example shared folders */
@@ -1707,7 +1707,7 @@
 /* Management message shown in a chat when the user %@ creates a public link for the chat */
 "%@ created a public link for the chat."="%@ created a public link for the chat.";
 /* Management message shown in a chat when the user %@ removes a public link for the chat */
-"%@ removed a public link for the chat."="%@ removed a public link for the chat.";
+"%@ removed a public link for the chat."="%@ removed the public link for the chat.";
 /* Management message shown in a chat when the user %@ joined it from a public chat link */
 "%@ joined the group chat."="%@ joined the group chat.";
 /* Message show when a call cannot be established because there are too many participants in the group call */
@@ -1831,7 +1831,7 @@
 /* Text to inform the user there is an active call and is not participating */
 "Ongoing Call"="Ongoing Call";
 /* Message shown when there is an ongoing call and the user tries to play an audio or video */
-"It is not possible to play content while there is a call in progress"="It is not possible to play content while there is a call in progress";
+"It is not possible to play content while there is a call in progress"="It is not possible to play media files while there is a call in progress.";
 /* Text to inform the user there is an active call and is participating */
 "Call Started"="Call Started";
 /* Title for feature Password Reminder */
