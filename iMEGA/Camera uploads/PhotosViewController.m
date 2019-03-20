@@ -25,6 +25,7 @@
 #import "CustomModalAlertViewController.h"
 #import "PhotosViewController+MNZCategory.h"
 #import "UploadStats.h"
+@import StoreKit;
 
 static const NSTimeInterval PhotosViewReloadTimeInterval = 2;
 static const NSTimeInterval PhotosViewReloadToleranceTimeInterval = .2;
@@ -313,6 +314,11 @@ static const NSTimeInterval HeaderStateViewReloadToleranceTimeInterval = .1;
         case MEGACameraUploadsStateCompleted:
             self.stateLabel.text = AMLocalizedString(@"cameraUploadsComplete", @"Message shown when the camera uploads have been completed");
             self.enableCameraUploadsButton.hidden = YES;
+            if (@available(iOS 10.3, *)) {
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    [SKStoreReviewController requestReview];
+                });
+            }
             break;
             
         case MEGACameraUploadsStateNoInternetConnection:
