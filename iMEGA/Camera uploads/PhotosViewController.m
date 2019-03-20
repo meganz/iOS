@@ -247,7 +247,6 @@ static const NSTimeInterval HeaderStateViewReloadToleranceTimeInterval = .1;
     } else {
         progressText = [NSString stringWithFormat:AMLocalizedString(@"cameraUploadsPendingFiles", @"Message shown while uploading files. Plural."), uploadStats.pendingFilesCount];
     }
-    
     self.photosUploadedLabel.text = progressText;
 }
 
@@ -294,6 +293,7 @@ static const NSTimeInterval HeaderStateViewReloadToleranceTimeInterval = .1;
     
     self.stateView.hidden = NO;
     self.stateLabel.hidden = NO;
+    self.stateLabel.font = [UIFont systemFontOfSize:17.0];
     self.progressStackView.hidden = YES;
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
     
@@ -329,6 +329,7 @@ static const NSTimeInterval HeaderStateViewReloadToleranceTimeInterval = .1;
             self.enableCameraUploadsButton.hidden = NO;
             break;
         case MEGACameraUploadsStateEnableVideo:
+            self.stateLabel.font = [UIFont systemFontOfSize:15.0];
             self.enableCameraUploadsButton.hidden = NO;
             break;
     }
