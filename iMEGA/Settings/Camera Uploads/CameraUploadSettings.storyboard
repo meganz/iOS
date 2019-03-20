@@ -381,7 +381,7 @@
         <!--Video Uploads-->
         <scene sceneID="gXj-kW-i81">
             <objects>
-                <tableViewController id="j9S-W9-Mx2" customClass="VideoUploadsTableViewController" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="VideoUploadsTableViewControllerID" id="j9S-W9-Mx2" customClass="VideoUploadsTableViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="qLY-Gb-LjN">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

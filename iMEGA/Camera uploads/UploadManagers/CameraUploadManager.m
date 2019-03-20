@@ -622,7 +622,7 @@ static const NSUInteger VideoUploadBatchCount = 1;
 #pragma mark - get upload stats
 
 - (void)loadCurrentUploadStats:(void (^)(UploadStats * _Nullable, NSError * _Nullable))completion {
-    dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INTERACTIVE, 0), ^{
+    dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0), ^{
         NSError *error;
         NSUInteger totalCount = [CameraUploadRecordManager.shared totalRecordsCountByMediaTypes:self.enabledMediaTypes includeUploadErrorRecords:NO error:&error];
         if (error) {
@@ -660,6 +660,18 @@ static const NSUInteger VideoUploadBatchCount = 1;
             completion(nil, error);
         } else {
             completion([[UploadStats alloc] initWithFinishedCount:finishedCount totalCount:totalCount], nil);
+        }
+    }];
+}
+
+- (void)loadRecordCountForMediaTypes:(NSArray<NSNumber *> *)mediaTypes completion:(void (^)(NSUInteger, NSError * _Nullable))completion {
+    [self.cameraScanner scanMediaTypes:mediaTypes completion:^(NSError * _Nullable error) {
+        if (error) {
+            completion(0, error);
+        } else {
+            NSError *coreDataError;
+            NSUInteger count = [CameraUploadRecordManager.shared fetchUploadRecordsByMediaTypes:mediaTypes includeAdditionalMediaSubtypes:YES sortByIdentifier:NO error:&coreDataError].count;
+            completion(count, coreDataError);
         }
     }];
 }

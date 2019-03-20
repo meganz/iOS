@@ -233,6 +233,7 @@ static const NSTimeInterval HeaderStateViewReloadToleranceTimeInterval = .1;
         dispatch_async(dispatch_get_main_queue(), ^{
             self.currentState = uploadStats.pendingFilesCount > 0 ? MEGACameraUploadsStateUploading : MEGACameraUploadsStateCompleted;
             [self configUploadProgressByStats:uploadStats];
+            [self loadEnableVideoStateIfNeeded];
         });
     }];
 }
@@ -250,6 +251,40 @@ static const NSTimeInterval HeaderStateViewReloadToleranceTimeInterval = .1;
     self.photosUploadedLabel.text = progressText;
 }
 
+- (void)loadEnableVideoStateIfNeeded {
+    if (self.currentState != MEGACameraUploadsStateCompleted || CameraUploadManager.isVideoUploadEnabled) {
+        return;
+    }
+    
+    [CameraUploadManager.shared loadRecordCountForMediaTypes:@[@(PHAssetMediaTypeVideo)] completion:^(NSUInteger count, NSError * _Nullable error) {
+        if (error) {
+            MEGALogError(@"[Camera Upload] error when to load record count for video %@", error);
+            return;
+        }
+        
+        if (count == 0) {
+            return;
+        }
+        
+        MEGALogDebug(@"[Camera Upload] %lu video count loaded", (unsigned long)count);
+        dispatch_async(dispatch_get_main_queue(), ^{
+            self.currentState = MEGACameraUploadsStateEnableVideo;
+            [self configStateLabelForVideoByVideoCount:count];
+        });
+    }];
+}
+
+- (void)configStateLabelForVideoByVideoCount:(NSUInteger)count {
+    NSString *videoMessage;
+    if (count == 1) {
+        videoMessage = @"Video uploads are off, 1 video not uploaded";
+    } else {
+        videoMessage = [NSString stringWithFormat:@"Video uploads are off, %lu videos not uploaded", (unsigned long)count];
+    }
+    
+    self.stateLabel.text = videoMessage;
+}
+
 - (void)setCurrentState:(MEGACameraUploadsState)currentState {
     if (_currentState == currentState) {
         return;
@@ -257,18 +292,18 @@ static const NSTimeInterval HeaderStateViewReloadToleranceTimeInterval = .1;
     
     _currentState = currentState;
     
+    self.stateView.hidden = NO;
+    self.stateLabel.hidden = NO;
+    self.progressStackView.hidden = YES;
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+    
     switch (currentState) {
         case MEGACameraUploadsStateDisabled:
-            self.stateView.hidden = NO;
-            self.stateLabel.hidden = NO;
-            self.progressStackView.hidden = YES;
             self.stateLabel.text = AMLocalizedString(@"enableCameraUploadsButton", nil);
             self.enableCameraUploadsButton.hidden = NO;
-            [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
             break;
             
         case MEGACameraUploadsStateUploading:
-            self.stateView.hidden = NO;
             self.stateLabel.hidden = YES;
             self.progressStackView.hidden = NO;
             self.enableCameraUploadsButton.hidden = YES;
@@ -276,35 +311,25 @@ static const NSTimeInterval HeaderStateViewReloadToleranceTimeInterval = .1;
             break;
             
         case MEGACameraUploadsStateCompleted:
-            self.stateView.hidden = NO;
-            self.stateLabel.hidden = NO;
-            self.progressStackView.hidden = YES;
             self.stateLabel.text = AMLocalizedString(@"cameraUploadsComplete", @"Message shown when the camera uploads have been completed");
             self.enableCameraUploadsButton.hidden = YES;
-            [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
             break;
             
         case MEGACameraUploadsStateNoInternetConnection:
-            self.stateView.hidden = NO;
-            self.stateLabel.hidden = NO;
-            self.progressStackView.hidden = YES;
             self.stateLabel.text = AMLocalizedString(@"noInternetConnection", @"Text shown on the app when you don't have connection to the internet or when you have lost it");
             self.enableCameraUploadsButton.hidden = YES;
-            [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
             break;
             
         case MEGACameraUploadsStateEmpty:
             self.stateView.hidden = YES;
-            [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
             break;
             
         case MEGACameraUploadsStateLoading:
-            self.stateView.hidden = NO;
-            self.stateLabel.hidden = NO;
-            self.progressStackView.hidden = YES;
             self.stateLabel.text = AMLocalizedString(@"loading", nil);
             self.enableCameraUploadsButton.hidden = NO;
-            [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+            break;
+        case MEGACameraUploadsStateEnableVideo:
+            self.enableCameraUploadsButton.hidden = NO;
             break;
     }
 }
@@ -435,7 +460,15 @@ static const NSTimeInterval HeaderStateViewReloadToleranceTimeInterval = .1;
 #pragma mark - IBAction
 
 - (IBAction)enableCameraUploadsTouchUpInside:(UIButton *)sender {
-    [self pushCameraUploadSettings];
+    if (self.currentState == MEGACameraUploadsStateEnableVideo && !CameraUploadManager.isVideoUploadEnabled) {
+        if (CameraUploadManager.isHEVCFormatSupported) {
+            [self pushVideoUploadSettings];
+        } else {
+            [self pushCameraUploadSettings];
+        }
+    } else {
+        [self pushCameraUploadSettings];
+    }
 }
 
 - (IBAction)selectAllAction:(UIBarButtonItem *)sender {
