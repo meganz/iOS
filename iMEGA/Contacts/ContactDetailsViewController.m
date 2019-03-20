@@ -377,8 +377,6 @@
 }
 
 - (void)configureGestures {
-    self.navigationController.interactivePopGestureRecognizer.delegate = nil; //NOTE: this line fix the interactivePopGestureRecognizer not working in ContactsViewController
-
     NSString *avatarFilePath = [[Helper pathForSharedSandboxCacheDirectory:@"thumbnailsV3"] stringByAppendingPathComponent:[MEGASdk base64HandleForUserHandle:self.userHandle]];
     
     if ([[NSFileManager defaultManager] fileExistsAtPath:avatarFilePath]) {
