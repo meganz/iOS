@@ -32,6 +32,8 @@ static const NSTimeInterval LoadMediaInfoTimeoutInSeconds = 120;
 static const NSUInteger PhotoUploadBatchCount = 5;
 static const NSUInteger VideoUploadBatchCount = 1;
 
+static const NSUInteger MaximumPhotoUploadBatchCountMultiplier = 2;
+
 @interface CameraUploadManager () <CameraScannerDelegate>
 
 @property (copy, nonatomic) void (^backgroundRefreshCompletion)(UIBackgroundFetchResult);
@@ -357,7 +359,9 @@ static const NSUInteger VideoUploadBatchCount = 1;
     [self.backgroundUploadingTaskMonitor startMonitoringBackgroundUploadingTasks];
     
     MEGALogDebug(@"[Camera Upload] start uploading photos with current photo operation count %lu", (unsigned long)self.photoUploadOperationQueue.operationCount);
-    [self uploadAssetsForMediaType:PHAssetMediaTypeImage concurrentCount:PhotoUploadBatchCount];
+    if (self.photoUploadOperationQueue.operationCount < PhotoUploadBatchCount * MaximumPhotoUploadBatchCountMultiplier) {
+        [self uploadAssetsForMediaType:PHAssetMediaTypeImage concurrentCount:PhotoUploadBatchCount];
+    }
 }
 
 - (void)startVideoUploadIfNeeded {
