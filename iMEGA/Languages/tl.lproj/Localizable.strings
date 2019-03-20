@@ -71,7 +71,7 @@
 /* Error message when a user attempts to change their email without an active login session. */
 "needToBeLoggedInToCompleteYourEmailChange"="Kailangang naka-log in ka upang mabuo ang pagpapalit mo ng email. Mag log-in muli kasama ang iyong kasalukuyang email at i-click muli ang iyong confirmation link.";
 /* Button title which triggers the action to login in your MEGA account */
-"login"="Maglog-in";
+"login"="Mag-login";
 /* Button title which triggers the action to create a MEGA account */
 "createAccount"="Gumawa ng account";
 /* Message shown when the user writes a wrong email or password on login */
@@ -1418,12 +1418,12 @@
 "type"="Uri";
 /* Title of the incoming shared folders of a user in singular */
 "sharedFolder"="Shared Folder";
-/* The label of the folder creation time. For example: "Created: 2013-02-02" (no need to put the colon punctuation in the translation) */
-"created"="Ginawa";
 /* Label for what a selection contains. For example: "Contains: 3 folders & 13 files". (no need to put the colon punctuation in the translation) */
 "contains"="naglalaman ng";
 /* A label for any 'Modified' text or title. For example to show the modification date of a file/folder. */
 "modified"="Binago";
+/* A label for any ‘Added’ text or title. For example to show the upload date of a file/folder. */
+"Added"="Naidagdag";
 /* used for example when a folder is shared with 2 or more users */
 "users"="users";
 /* user (singular) label indicating is receiving some info, for example shared folders */
@@ -1707,7 +1707,7 @@
 /* Management message shown in a chat when the user %@ creates a public link for the chat */
 "%@ created a public link for the chat."="%@ created a public link for the chat.";
 /* Management message shown in a chat when the user %@ removes a public link for the chat */
-"%@ removed a public link for the chat."="%@ removed a public link for the chat.";
+"%@ removed a public link for the chat."="%@ removed the public link for the chat.";
 /* Management message shown in a chat when the user %@ joined it from a public chat link */
 "%@ joined the group chat."="%@ joined the group chat.";
 /* Message show when a call cannot be established because there are too many participants in the group call */
@@ -1831,7 +1831,7 @@
 /* Text to inform the user there is an active call and is not participating */
 "Ongoing Call"="Ongoing Call";
 /* Message shown when there is an ongoing call and the user tries to play an audio or video */
-"It is not possible to play content while there is a call in progress"="It is not possible to play content while there is a call in progress";
+"It is not possible to play content while there is a call in progress"="It is not possible to play media files while there is a call in progress.";
 /* Text to inform the user there is an active call and is participating */
 "Call Started"="Call Started";
 /* Title for feature Password Reminder */
