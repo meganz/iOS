@@ -8,6 +8,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)showCameraUploadBoardingScreen;
 
 - (void)pushCameraUploadSettings;
+- (void)pushVideoUploadSettings;
 
 - (void)showLocalDiskIsFullWarningScreen;
 

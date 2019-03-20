@@ -59,6 +59,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)loadCurrentUploadStats:(void (^)(UploadStats * _Nullable uploadStats, NSError * _Nullable error))completion;
 
+- (void)loadRecordCountForMediaTypes:(NSArray<NSNumber *> *)mediaTypes completion:(void (^)(NSUInteger count, NSError * _Nullable error))completion;
+
 @end
 
 NS_ASSUME_NONNULL_END

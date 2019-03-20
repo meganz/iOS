@@ -40,6 +40,12 @@
     [self.navigationController pushViewController:cameraUploadsTableViewController animated:YES];
 }
 
+- (void)pushVideoUploadSettings {
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"CameraUploadSettings" bundle:nil];
+    UIViewController *videoUploadsController = [storyboard instantiateViewControllerWithIdentifier:@"VideoUploadsTableViewControllerID"];
+    [self.navigationController pushViewController:videoUploadsController animated:YES];
+}
+
 - (void)showLocalDiskIsFullWarningScreen {
     CustomModalAlertViewController *warningVC = [[CustomModalAlertViewController alloc] init];
     warningVC.modalPresentationStyle = UIModalPresentationOverFullScreen;
