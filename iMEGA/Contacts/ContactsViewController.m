@@ -1003,11 +1003,7 @@
     NSInteger numberOfRows = 0;
     if (MEGAReachabilityManager.isReachable) {
         if (self.contactsMode == ContactsModeChatStartConversation && section == 0) {
-            if (self.visibleUsersArray.count > 0) {
-                return 3;
-            } else {
-                return 1;
-            }
+            return 3;
         } else if (self.contactsMode == ContactsModeChatNamingGroup && section == 0) {
             return self.selectedUsersArray.count;
         }
