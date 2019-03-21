@@ -280,7 +280,7 @@
             [self.tableView setEditing:NO animated:YES];
             [self.enterGroupNameTextField becomeFirstResponder];
             self.keyRotationEnabled = NO;
-            self.checkboxButton.selected = YES;
+            self.checkboxButton.selected = self.getChatLinkEnabled;
             
             break;
         }
@@ -726,6 +726,19 @@
     }
 }
 
+- (void)newChatLink {
+    if (self.searchController.isActive) {
+        self.searchController.active = NO;
+    }
+    ContactsViewController *contactsVC = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactsViewControllerID"];
+    contactsVC.contactsMode = ContactsModeChatNamingGroup;
+    contactsVC.createGroupChat = self.createGroupChat;
+    self.selectedUsersArray = [[NSMutableArray alloc] initWithObjects:MEGASdkManager.sharedMEGASdk.myUser, nil];
+    contactsVC.selectedUsersArray = self.selectedUsersArray;
+    contactsVC.getChatLinkEnabled = YES;
+    [self.navigationController pushViewController:contactsVC animated:YES];
+}
+
 #pragma mark - IBActions
 
 - (IBAction)selectAllAction:(UIBarButtonItem *)sender {
@@ -936,11 +949,12 @@
         ContactsViewController *contactsVC = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactsViewControllerID"];
         contactsVC.contactsMode = ContactsModeChatNamingGroup;
         contactsVC.createGroupChat = self.createGroupChat;
+        [self.selectedUsersArray addObject:MEGASdkManager.sharedMEGASdk.myUser];
         contactsVC.selectedUsersArray = self.selectedUsersArray;
         [self.navigationController pushViewController:contactsVC animated:YES];
     } else {
         if (!self.isKeyRotationEnabled && self.checkboxButton.selected && self.enterGroupNameTextField.text.mnz_isEmpty) {
-            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"Chat Link", @"Label shown in a cell where you can enable a switch to get a chat link") message:AMLocalizedString(@"Before you can generate a link for this room, you need to enter a group name", @"Alert message to advice the users that to generate a chat link they need enter a group name for the chat")  preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"Chat Link", @"Label shown in a cell where you can enable a switch to get a chat link") message:AMLocalizedString(@"To enable Chat links you must name the group you are about to create.", @"Alert message to advice the users that to generate a chat link they need enter a group name for the chat")  preferredStyle:UIAlertControllerStyleAlert];
             [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
                 [self.enterGroupNameTextField becomeFirstResponder];
             }]];
@@ -990,7 +1004,7 @@
     if (MEGAReachabilityManager.isReachable) {
         if (self.contactsMode == ContactsModeChatStartConversation && section == 0) {
             if (self.visibleUsersArray.count > 0) {
-                return 2;
+                return 3;
             } else {
                 return 1;
             }
@@ -1028,9 +1042,12 @@
         if (indexPath.row == 0) {
             cell.nameLabel.text = AMLocalizedString(@"inviteContact", @"Text shown when the user tries to make a call and the receiver is not a contact");
             cell.avatarImageView.image = [UIImage imageNamed:@"inviteToChat"];
-        } else {
-            cell.nameLabel.text = AMLocalizedString(@"groupChat", @"Label title for a group chat");
+        } else if (indexPath.row == 1) {
+            cell.nameLabel.text = AMLocalizedString(@"New group chat", @"Text button for init a group chat").capitalizedString;
             cell.avatarImageView.image = [UIImage imageNamed:@"createGroup"];
+        } else {
+            cell.nameLabel.text = AMLocalizedString(@"New Chat Link", @"Text button for init a group chat with link.");
+            cell.avatarImageView.image = [UIImage imageNamed:@"chatLink"];
         }
         return cell;
     } else {
@@ -1045,6 +1062,10 @@
         
         ContactTableViewCell *cell;
         NSString *userName = user.mnz_fullName;
+        
+        if (user.handle == MEGASdkManager.sharedMEGASdk.myUser.handle) {
+            userName = [userName stringByAppendingString:[NSString stringWithFormat:@" (%@)", AMLocalizedString(@"me", @"The title for my message in a chat. The message was sent from yourself.")]];
+        }
         
         if (self.contactsMode == ContactsModeFolderSharedWith) {
             if (userName) {
@@ -1115,11 +1136,7 @@
     }
     if (section == 0 && self.contactsMode == ContactsModeChatNamingGroup) {
         NSString *participants = AMLocalizedString(@"participants", @"Label to describe the section where you can see the participants of a group chat").uppercaseString;
-        if (self.selectedUsersArray.count == 0) {
-            self.contactsHeaderViewLabel.text = [[AMLocalizedString(@"no", nil).uppercaseString stringByAppendingString:@" "] stringByAppendingString:participants];
-        } else {
-            self.contactsHeaderViewLabel.text = participants;
-        }
+        self.contactsHeaderViewLabel.text = participants;
         return self.contactsHeaderView;
     }
     if (section == 1 && self.contactsMode >= ContactsModeChatStartConversation) {
@@ -1214,8 +1231,10 @@
             if (indexPath.section == 0) {
                 if (indexPath.row == 0) {
                     [self addContact:[self.tableView cellForRowAtIndexPath:indexPath]];
-                } else {
+                } else if (indexPath.row == 1) {
                     [self startGroup];
+                } else {
+                    [self newChatLink];
                 }
             } else {
                 MEGAUser *user = [self userAtIndexPath:indexPath];
