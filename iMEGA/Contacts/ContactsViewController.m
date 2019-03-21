@@ -733,8 +733,6 @@
     ContactsViewController *contactsVC = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactsViewControllerID"];
     contactsVC.contactsMode = ContactsModeChatNamingGroup;
     contactsVC.createGroupChat = self.createGroupChat;
-    self.selectedUsersArray = [[NSMutableArray alloc] initWithObjects:MEGASdkManager.sharedMEGASdk.myUser, nil];
-    contactsVC.selectedUsersArray = self.selectedUsersArray;
     contactsVC.getChatLinkEnabled = YES;
     [self.navigationController pushViewController:contactsVC animated:YES];
 }
@@ -949,7 +947,6 @@
         ContactsViewController *contactsVC = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactsViewControllerID"];
         contactsVC.contactsMode = ContactsModeChatNamingGroup;
         contactsVC.createGroupChat = self.createGroupChat;
-        [self.selectedUsersArray addObject:MEGASdkManager.sharedMEGASdk.myUser];
         contactsVC.selectedUsersArray = self.selectedUsersArray;
         [self.navigationController pushViewController:contactsVC animated:YES];
     } else {
@@ -1005,7 +1002,7 @@
         if (self.contactsMode == ContactsModeChatStartConversation && section == 0) {
             return 3;
         } else if (self.contactsMode == ContactsModeChatNamingGroup && section == 0) {
-            return self.selectedUsersArray.count;
+            return self.selectedUsersArray.count + 1;
         }
         
         numberOfRows = (self.searchController.isActive && ![self.searchController.searchBar.text isEqual: @""]) ? self.searchVisibleUsersArray.count : self.visibleUsersArray.count;
@@ -1049,7 +1046,11 @@
     } else {
         MEGAUser *user;
         if (self.contactsMode == ContactsModeChatNamingGroup) {
-            user = [self.selectedUsersArray objectAtIndex:indexPath.row];
+            if (indexPath.row == self.selectedUsersArray.count) {
+                user = MEGASdkManager.sharedMEGASdk.myUser;
+            } else {
+                user = [self.selectedUsersArray objectAtIndex:indexPath.row];
+            }
         } else {
             user = [self userAtIndexPath:indexPath];
         }
