@@ -313,7 +313,8 @@ const NSUInteger kMaxMessagesToLoad = 256;
     
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kReachabilityChangedNotification object:nil];
     
-    if (self.isMovingFromParentViewController || self.presentingViewController) {
+    // In anonymous mode the controller is presented, don't close the chat room and preview if push to the group details view controller
+    if (self.isMovingFromParentViewController || (self.presentingViewController && self.navigationController.viewControllers.count == 1)) {
         [[MEGASdkManager sharedMEGAChatSdk] closeChatRoom:self.chatRoom.chatId delegate:self];
         if (self.chatRoom.isPreview) {
             [[MEGASdkManager sharedMEGAChatSdk] closeChatPreview:self.chatRoom.chatId];
