@@ -32,22 +32,23 @@
                                             <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="S4Z-Ea-Sdu">
                                                 <rect key="frame" x="12" y="0.0" width="351" height="55"/>
                                                 <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="250" text="Loading…" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="ZiR-gp-d1i">
-                                                        <rect key="frame" x="0.0" y="17.5" width="287" height="20.5"/>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Loading…" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="ZiR-gp-d1i">
+                                                        <rect key="frame" x="0.0" y="17.5" width="293" height="20.5"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <color key="textColor" red="0.29019607843137252" green="0.29019607843137252" blue="0.29019607843137252" alpha="1" colorSpace="calibratedRGB"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <stackView hidden="YES" opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="Hs5-aX-s89">
-                                                        <rect key="frame" x="289.5" y="23" width="12" height="9"/>
+                                                    <stackView hidden="YES" opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="Hs5-aX-s89">
+                                                        <rect key="frame" x="295.5" y="14" width="0.0" height="27"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="s3z-Mc-fCp">
+                                                                <rect key="frame" x="0.0" y="0.0" width="0.0" height="18"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                                 <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="LTG-PV-qaW">
-                                                                <rect key="frame" x="0.0" y="5" width="0.0" height="4"/>
+                                                                <rect key="frame" x="0.0" y="23" width="0.0" height="4"/>
                                                                 <color key="tintColor" red="0.95294117647058818" green="0.047058823529411764" blue="0.078431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="4" id="qvL-GF-eYX"/>
@@ -60,14 +61,11 @@
                                                                 </userDefinedRuntimeAttributes>
                                                             </progressView>
                                                         </subviews>
-                                                        <constraints>
-                                                            <constraint firstAttribute="trailing" secondItem="LTG-PV-qaW" secondAttribute="trailing" constant="12" id="xT5-Yx-phZ"/>
-                                                        </constraints>
                                                     </stackView>
-                                                    <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zhm-WP-YFw">
-                                                        <rect key="frame" x="292" y="11" width="59" height="33"/>
+                                                    <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="999" horizontalCompressionResistancePriority="755" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zhm-WP-YFw">
+                                                        <rect key="frame" x="298" y="11" width="53" height="33"/>
                                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
-                                                        <state key="normal" title="Disable"/>
+                                                        <state key="normal" title="Enable"/>
                                                         <connections>
                                                             <action selector="enableCameraUploadsTouchUpInside:" destination="3GS-cK-Hw6" eventType="touchUpInside" id="aj5-O0-EUk"/>
                                                         </connections>
@@ -205,6 +203,7 @@
                     <tabBarItem key="tabBarItem" tag="1" title="" image="cameraUploadsIcon" id="Fsw-2B-D8x"/>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="hxz-Hg-nRC">
+                        <barButtonItem key="backBarButtonItem" title=" " id="JzG-HA-4B2"/>
                         <barButtonItem key="rightBarButtonItem" title="Edit" width="22" id="jcN-8Q-JdP" userLabel="Edit Bar Button Item">
                             <connections>
                                 <action selector="editTapped:" destination="3GS-cK-Hw6" id="HKt-xR-Avl"/>
