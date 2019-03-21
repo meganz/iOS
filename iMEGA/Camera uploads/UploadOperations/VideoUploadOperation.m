@@ -119,11 +119,11 @@
         
         [self requestVideoDataByVersion:PHVideoRequestOptionsVersionCurrent];
     } else {
-        [self processVideoAsset:asset];
+        [self exportVideoAsset:asset];
     }
 }
 
-- (void)processVideoAsset:(nullable AVAsset *)asset {
+- (void)exportVideoAsset:(nullable AVAsset *)asset {
     if (self.isCancelled) {
         [self finishOperationWithStatus:CameraAssetUploadStatusCancelled shouldUploadNextAsset:NO];
         return;
