@@ -290,8 +290,6 @@ static const NSTimeInterval HeaderStateViewReloadToleranceTimeInterval = .1;
         return;
     }
     
-    _currentState = currentState;
-    
     self.stateView.hidden = NO;
     self.stateLabel.hidden = NO;
     self.stateLabel.font = [UIFont systemFontOfSize:17.0];
@@ -314,11 +312,6 @@ static const NSTimeInterval HeaderStateViewReloadToleranceTimeInterval = .1;
         case MEGACameraUploadsStateCompleted:
             self.stateLabel.text = AMLocalizedString(@"cameraUploadsComplete", @"Message shown when the camera uploads have been completed");
             self.enableCameraUploadsButton.hidden = YES;
-            if (@available(iOS 10.3, *)) {
-                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                    [SKStoreReviewController requestReview];
-                });
-            }
             break;
             
         case MEGACameraUploadsStateNoInternetConnection:
@@ -338,6 +331,20 @@ static const NSTimeInterval HeaderStateViewReloadToleranceTimeInterval = .1;
             self.stateLabel.font = [UIFont systemFontOfSize:15.0];
             self.enableCameraUploadsButton.hidden = NO;
             break;
+    }
+    
+    [self requestStoreRatingIfNeededForCurrentState:currentState previousState:_currentState];
+    
+    _currentState = currentState;
+}
+
+- (void)requestStoreRatingIfNeededForCurrentState:(MEGACameraUploadsState)currentState previousState:(MEGACameraUploadsState)previousState {
+    if (@available(iOS 10.3, *)) {
+        if (currentState == MEGACameraUploadsStateCompleted && previousState == MEGACameraUploadsStateUploading) {
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [SKStoreReviewController requestReview];
+            });
+        }
     }
 }
 
