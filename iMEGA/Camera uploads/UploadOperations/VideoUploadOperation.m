@@ -38,12 +38,12 @@
         return;
     }
 
-    [self requestVideoData];
+    [self requestVideoDataByVersion:PHVideoRequestOptionsVersionOriginal];
 }
 
 #pragma mark - data processing
 
-- (void)requestVideoData {
+- (void)requestVideoDataByVersion:(PHVideoRequestOptionsVersion)version {
     if (self.isCancelled) {
         [self finishOperationWithStatus:CameraAssetUploadStatusCancelled shouldUploadNextAsset:NO];
         return;
@@ -51,7 +51,7 @@
     
     __weak __typeof__(self) weakSelf = self;
     PHVideoRequestOptions *options = [[PHVideoRequestOptions alloc] init];
-    options.version = PHVideoRequestOptionsVersionCurrent;
+    options.version = version;
     options.deliveryMode = PHVideoRequestOptionsDeliveryModeHighQualityFormat;
     options.networkAccessAllowed = YES;
     options.progressHandler = ^(double progress, NSError * _Nullable error, BOOL * _Nonnull stop, NSDictionary * _Nullable info) {
@@ -90,22 +90,40 @@
             return;
         }
         
+        [weakSelf handleRequestedAsset:asset version:version];
+    }];
+}
+
+- (void)handleRequestedAsset:(nullable AVAsset *)asset version:(PHVideoRequestOptionsVersion)version {
+    if (self.isCancelled) {
+        [self finishOperationWithStatus:CameraAssetUploadStatusCancelled shouldUploadNextAsset:NO];
+        return;
+    }
+    
+    if (asset == nil) {
+        [self finishOperationWithStatus:CameraAssetUploadStatusFailed shouldUploadNextAsset:YES];
+        return;
+    }
+    
+    if (version == PHVideoRequestOptionsVersionOriginal) {
         if ([asset isKindOfClass:[AVURLAsset class]]) {
             AVURLAsset *urlAsset = (AVURLAsset *)asset;
-            weakSelf.uploadInfo.originalFingerprint = [MEGASdkManager.sharedMEGASdk fingerprintForFilePath:urlAsset.URL.path modificationTime:weakSelf.uploadInfo.asset.creationDate];
-            MEGANode *matchingNode = [weakSelf nodeForOriginalFingerprint:weakSelf.uploadInfo.originalFingerprint];
+            self.uploadInfo.originalFingerprint = [MEGASdkManager.sharedMEGASdk fingerprintForFilePath:urlAsset.URL.path modificationTime:self.uploadInfo.asset.creationDate];
+            MEGANode *matchingNode = [self nodeForOriginalFingerprint:self.uploadInfo.originalFingerprint];
             if (matchingNode) {
-                MEGALogDebug(@"[Camera Upload] %@ found existing node by original file fingerprint", weakSelf);
-                [weakSelf finishUploadForFingerprintMatchedNode:matchingNode];
+                MEGALogDebug(@"[Camera Upload] %@ found existing node by original file fingerprint", self);
+                [self finishUploadForFingerprintMatchedNode:matchingNode];
                 return;
             }
         }
         
-        [weakSelf processVideoAsset:asset];
-    }];
+        [self requestVideoDataByVersion:PHVideoRequestOptionsVersionCurrent];
+    } else {
+        [self exportVideoAsset:asset];
+    }
 }
 
-- (void)processVideoAsset:(nullable AVAsset *)asset {
+- (void)exportVideoAsset:(nullable AVAsset *)asset {
     if (self.isCancelled) {
         [self finishOperationWithStatus:CameraAssetUploadStatusCancelled shouldUploadNextAsset:NO];
         return;
