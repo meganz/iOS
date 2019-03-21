@@ -79,14 +79,14 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Upload Videos" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="9Lu-Gx-ccv">
-                                                    <rect key="frame" x="16" y="12" width="111.5" height="20"/>
+                                                    <rect key="frame" x="16" y="12" width="117" height="20.5"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="17"/>
                                                     <color key="textColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Off" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ZZc-KJ-13j">
-                                                    <rect key="frame" x="317" y="12" width="23" height="20"/>
+                                                    <rect key="frame" x="314.5" y="12" width="25.5" height="20.5"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="17"/>
                                                     <color key="textColor" red="0.60000002379999995" green="0.60000002379999995" blue="0.60000002379999995" alpha="1" colorSpace="calibratedRGB"/>
@@ -354,7 +354,9 @@
                             <outlet property="delegate" destination="0gq-O0-v8H" id="PBG-Xb-2SK"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Camera Uploads" id="83U-GA-eJt"/>
+                    <navigationItem key="navigationItem" title="Camera Uploads" id="5Pz-vF-Sdj">
+                        <barButtonItem key="backBarButtonItem" title=" " id="GF2-Bo-f55"/>
+                    </navigationItem>
                     <connections>
                         <outlet property="HEICLabel" destination="nNh-se-crj" id="sxX-3Y-qKm"/>
                         <outlet property="HEICRedCheckmarkImageView" destination="9H6-hW-VPN" id="6TS-ac-TZn"/>
@@ -515,14 +517,14 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Video quality" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Ia5-rl-AZF">
-                                                    <rect key="frame" x="16" y="12" width="98" height="20"/>
+                                                    <rect key="frame" x="16" y="12" width="104.5" height="20.5"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="17"/>
                                                     <color key="textColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Medium" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="mie-wj-ddk">
-                                                    <rect key="frame" x="278" y="12" width="62" height="20"/>
+                                                    <rect key="frame" x="276" y="12" width="64" height="20.5"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="17"/>
                                                     <color key="textColor" red="0.60000002379999995" green="0.60000002379999995" blue="0.60000002379999995" alpha="1" colorSpace="calibratedRGB"/>
@@ -542,7 +544,9 @@
                             <outlet property="delegate" destination="j9S-W9-Mx2" id="rPy-HQ-MB0"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Video Uploads" id="h22-hu-je4"/>
+                    <navigationItem key="navigationItem" title="Video Uploads" id="h22-hu-je4">
+                        <barButtonItem key="backBarButtonItem" title=" " id="vAR-bh-0Si"/>
+                    </navigationItem>
                     <connections>
                         <outlet property="H264Label" destination="ndC-eu-p6i" id="W8C-dA-ij0"/>
                         <outlet property="H264RedCheckmarkImageView" destination="73G-TG-n8A" id="Ini-A0-ROY"/>
