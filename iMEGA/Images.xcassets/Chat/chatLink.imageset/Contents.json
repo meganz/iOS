@@ -2,25 +2,22 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "privateChat.png",
+      "filename" : "chatLink.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "privateChat@2x.png",
+      "filename" : "chatLink@2x.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
-      "filename" : "privateChat@3x.png",
+      "filename" : "chatLink@3x.png",
       "scale" : "3x"
     }
   ],
   "info" : {
     "version" : 1,
     "author" : "xcode"
-  },
-  "properties" : {
-    "preserves-vector-representation" : true
   }
 }
