@@ -1,5 +1,5 @@
 /* Button title to cancel something */
-"cancel"="Hủy bỏ";
+"cancel"="Hủy";
 /* Button title to accept something */
 "ok"="OK";
 /* */
@@ -121,7 +121,7 @@
 /* Error text shown when you don't have selected the checkbox to agree with the Terms of Service */
 "termsCheckboxUnselected"="Bạn cần phải đồng ý với các điều khoản của dịch vụ để đăng ký tài khoản MEGA.";
 /* Error text shown when the users tries to create an account with an email already in use */
-"emailAlreadyRegistered"="Email này đã được đăng ký.";
+"emailAlreadyRegistered"="Địa chỉ email này đã đăng ký từ trước với MEGA.";
 /* Title shown just after doing some action that requires confirming the action by an email */
 "awaitingEmailConfirmation"="Đang chờ việc xác nhận email.";
 /* Text shown on the confirm account view to remind the user what to do */
@@ -151,17 +151,17 @@
 /* */
 "fileLinkUnavailableText1"="Điều này có thể do:";
 /* ToS refers to Terms of Service and AUP refers to Acceptable Use Policy. */
-"fileLinkUnavailableText2"="Tệp bị xóa vì vi phạm ToS/APU";
+"fileLinkUnavailableText2"="Tệp tin đã bị xóa vì vi phạm Điều khoản DV/Chính sách Sử dụng.";
 /* */
 "fileLinkUnavailableText3"="URL không hợp lệ - đường dẫn không tồn tại";
 /* */
-"fileLinkUnavailableText4"="Tệp bị người dùng xóa.";
+"fileLinkUnavailableText4"="Tập tin đã bị xóa bởi người cung cấp.";
 /* Message shown when a download starts */
 "downloadStarted"="Đang tải xuống";
 /* Title for the folder link view */
 "folderLink"="Đường dẫn liên kết Thư Mục";
 /* Button title which downloads a file/folder to your device */
-"downloadButton"="Tải về";
+"downloadButton"="Tải xuống";
 /* Message shown when you try to downlonad a folder bigger than the available memory. */
 "folderTooBigMessage"="Thư mục bạn đang cố tải về có dung lượng lớn hơn bộ nhớ còn lại trong máy.";
 /* Error message shown when a folder can't be created. */
@@ -307,7 +307,7 @@
 /* List option shown on the details of a file or folder */
 "savedForOffline"="Lưu về Ngoại Tuyến";
 /* Error message shown when a user tries to download a folder with the name Inbox on the main directory of the offline section */
-"folderInboxError"="Mục này được bảo lưu cho Apple, bạn không có quyền hạn.";
+"folderInboxError"="Hộp thư được bảo lưu cho Apple sử dụng.";
 /* Title shown under the action that allows you to save an image to your camera roll */
 "saveImage"="Lưu Hình Ảnh";
 /* Title shown under the action that allows you to save several images to your camera roll */
@@ -385,7 +385,7 @@
 /* Message shown when the links to files and/or folders have been removed */
 "linksRemoved"="Các đường liên kết đã được xóa";
 /* Title show when a file is being downloaded */
-"downloading"="Đang tải";
+"downloading"="Đang tải về";
 /* Message shown when you tap on the cancel button of an active transfer */
 "cancelDownloadAlertViewText"="Bạn muốn hủy tải xuống không?";
 /* Title shown on the navigation bar to explain that you have to choose a destination for the files and/or folders in case you copy, move, import or do some action with them. */
@@ -475,7 +475,7 @@
 /* Success message for sharing multiple folders. */
 "sharedFolders_success"="Đã chia sẻ %d thư mục thành công.";
 /* Button title that triggers the importing link action */
-"import"="Lấy nội dung";
+"import"="Chuyển nhập";
 /* Message shown when a file has been imported */
 "fileImported"="Đã nhập tệp tin!";
 /* Message shown when some files have been imported */
@@ -519,7 +519,7 @@
 /* Title of the Offline section */
 "offline"="Ngoại tuyến";
 /* Title of the Contacts section */
-"contactsTitle"="Danh bạ";
+"contactsTitle"="Danh Bạ";
 /* Subtitle shown on the Contacts section under the name of the contact you have shared one folder with */
 "oneFolderShared"="1 thư mục";
 /* Subtitle shown on the Contacts section under the name of the contact you have shared {Number of folders} with */
@@ -659,7 +659,7 @@
 /* Option title to enable Camera Uploads only when the device is charging */
 "onlyWhenChargingLabel"="Chỉ được tải lúc sạc pin";
 /* Footer text to explain the Camera Uploads functionality */
-"cameraUploads_footer"="Nếu Camera Uploads được bật, các hình ảnh mới chụp hoặc các video mới quay sẽ được tải và lưu lên Ổ Mây MEGA của bạn.";
+"cameraUploads_footer"="Khi được bật, các hình ảnh và videos sẽ được tải lên ổ mây.";
 /* App means “Application” */
 "App version"="Phiên bản ứng dụng";
 /* Title of the label where the SDK version is shown */
@@ -1228,7 +1228,7 @@
 /* */
 "warning"="Cảnh báo";
 /* Alert message shown when the user perform logout and has files in the Offline directory */
-"allFilesSavedForOfflineWillBeDeletedFromYourDevice"="Mọi tệp tin đã được lưu lại ở phần Ngoại Tuyến sẽ bị xóa khỏi máy khi đăng xuất. Thực hiện đăng xuất?";
+"allFilesSavedForOfflineWillBeDeletedFromYourDevice"="Mọi tệp tin đã được lưu lại ở mục Ngoại Tuyến sẽ bị xóa khỏi máy khi đăng xuất. Tiếp tục việc đăng xuất?";
 /* Title shown when you almost had used your available transfer quota. */
 "depletedTransferQuota_title"="Hết băng thông truyền tải";
 /* Description shown when you almost had used your available transfer quota. */
@@ -1283,7 +1283,7 @@
 /* Label to show that an SDK operation has been complete successfully. */
 "No error"="Không có lỗi";
 /* Label to show that an Internal error occurs during a SDK operation. */
-"Internal error"="Lỗi nội bộ";
+"Internal error"="Nỗi nội bộ";
 /* Label to show that an error of Invalid argument occurs during a SDK operation. */
 "Invalid argument"="Thông số không hợp lệ";
 /* Label to show that a request error occurs during a SDK operation. */
@@ -1418,12 +1418,12 @@
 "type"="Dạng";
 /* Title of the incoming shared folders of a user in singular */
 "sharedFolder"="Thư mục được chia sẻ";
-/* The label of the folder creation time. For example: "Created: 2013-02-02" (no need to put the colon punctuation in the translation) */
-"created"="Ngày tạo";
 /* Label for what a selection contains. For example: "Contains: 3 folders & 13 files". (no need to put the colon punctuation in the translation) */
 "contains"="Chứa đựng";
 /* A label for any 'Modified' text or title. For example to show the modification date of a file/folder. */
 "modified"="Chỉnh sửa lần cuối";
+/* A label for any ‘Added’ text or title. For example to show the upload date of a file/folder. */
+"Added"="Ngày Tạo";
 /* used for example when a folder is shared with 2 or more users */
 "users"="người";
 /* user (singular) label indicating is receiving some info, for example shared folders */
@@ -1443,7 +1443,7 @@
 /* A button label which reverts a certain version of a file to be the current version of the selected file. */
 "revert"="Phục hồi lại";
 /*  */
-"download"="Tải về";
+"download"="Tải xuống";
 /* Singular of file. 1 file */
 "file"="tệp";
 /* Title of section to display information of the current version of a file. */
@@ -1479,7 +1479,7 @@
 /* state previous to import a file */
 "loading"="Đang tải...";
 /*   */
-"next"="Kế tiếp";
+"next"="Tiếp";
 /* Button title to allow the user ignore something */
 "ignore"="Bỏ Qua";
 /* Button title to allow the user open the default browser */
@@ -1701,13 +1701,15 @@
 /* Users previewing a public chat */
 "Observers"="Observers";
 /* Alert message shown while deleting a chat link, warning about the consequences */
-"This conversation will no longer be accessible through the link you are about to delete."="This conversation will no longer be accessible through the link you are about to delete.";
+"This conversation will no longer be accessible through the link you are about to delete."="This conversation will no longer be accessible through the public link once it has been removed.";
 /* Management message shown in a chat when the user %@ enables the 'Encrypted Key Rotation' */
 "%@ enabled Encrypted Key Rotation"="%@ enabled Encrypted Key Rotation";
 /* Management message shown in a chat when the user %@ creates a public link for the chat */
 "%@ created a public link for the chat."="%@ created a public link for the chat.";
 /* Management message shown in a chat when the user %@ removes a public link for the chat */
-"%@ removed a public link for the chat."="%@ removed a public link for the chat.";
+"%@ removed a public link for the chat."="%@ removed the public link for the chat.";
+/* Management message shown in a chat when the user %@ joined it from a public chat link */
+"%@ joined the group chat."="%@ joined the group chat.";
 /* Message show when a call cannot be established because there are too many participants in the group call */
 "Error. No more participants are allowed in this group call."="You are not allowed to join this call as it has reached the maximum number of participants.";
 /* Message show when a user cannot activate the video in a group call because the max number of videos has been reached */
@@ -1828,5 +1830,15 @@
 "%d participant"="%d người tham gia";
 /* Text to inform the user there is an active call and is not participating */
 "Ongoing Call"="Cuộc Gọi Đang Diễn Ra";
+/* Message shown when there is an ongoing call and the user tries to play an audio or video */
+"It is not possible to play content while there is a call in progress"="Việc phát phim ảnh hay âm thanh không có khả thi khi có cuộc gọi đang diễn ra.";
 /* Text to inform the user there is an active call and is participating */
 "Call Started"="Cuộc Gọi Đã Bắt Đầu";
+/* Title for feature Password Reminder */
+"Password Reminder"="Kiểm Tra Mật Khẩu";
+/* Label for any ‘Message’ button, link, text, title, etc. - (String as short as possible). */
+"Message"="Tin nhắn";
+/* Title of the button in the contact info screen to start an audio call */
+"Call"="Gọi";
+/* Title of the button in the contact info screen to start a video call */
+"Video"="Video";

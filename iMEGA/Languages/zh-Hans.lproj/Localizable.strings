@@ -99,7 +99,7 @@
 /*  */
 "weak"="弱";
 /*  */
-"passwordVeryWeakOrWeak"="您的密码太容易被猜到了。请尝试增加密码长度。结合大小写。添加特殊字元。不要使用名字或单词。";
+"passwordVeryWeakOrWeak"="您的密码过于简单。请尝试增加密码长度。结合字母大小写。添加特殊字符。切勿使用名字或单词。";
 /* Label displayed during checking the strength of the password introduced. Represents Medium security */
 "medium"="中等";
 /*  */
@@ -337,7 +337,7 @@
 /* String already exists: 367, but we need to split paragraphs. */
 "copyrightMessagePart1"="MEGA尊重他人之著作权，且要求MEGA的云端服务使用者遵守著作权法。";
 /* String already exists: 367, but we need to split paragraphs */
-"copyrightMessagePart2"="严禁使用MEGA云端服务侵害他人之知识产权。您不得上传、下载、储存、分享、展示、流通、散布、寄发、提供链接、传播或以其他方式侵犯任何知识产权，或提供任何侵犯个人或团体知识产权之文件、数据或内容。";
+"copyrightMessagePart2"="严禁使用MEGA云端服务侵犯知识产权。您不得上传、下载、储存、分享、显示、串流、分发、寄送电子邮件、提供链接、传输或以其他方式提供任何侵犯任何个人或单位的知识产权或其他产权的文件、资料或内容。";
 /* button caption text that the user clicks when he agrees */
 "agree"="同意";
 /* button caption text that the user clicks when he disagrees */
@@ -475,7 +475,7 @@
 /* Success message for sharing multiple folders. */
 "sharedFolders_success"="已成功分享%d 文件夹.";
 /* Button title that triggers the importing link action */
-"import"="导入";
+"import"="输入";
 /* Message shown when a file has been imported */
 "fileImported"="文件已导入";
 /* Message shown when some files have been imported */
@@ -619,7 +619,7 @@
 /* Permissions given to the user you share your folder with */
 "readOnly"="只读";
 /* Permissions given to the user you share your folder with */
-"readAndWrite"="读取与写入";
+"readAndWrite"="可读写";
 /* Permissions given to the user you share your folder with */
 "fullAccess"="完全访问权限";
 /* Title of the Settings section */
@@ -1367,7 +1367,7 @@
 /* Notification text body shown when you have missed several audio calls and one video call. [A] = {number of missed audio calls} */
 "missedAudioCallsAndMissedVideoCall"="[A] 个未接语音通话和一个未接视频通话";
 /* Notification text body shown when you have missed several audio calls and video calls. [A] = {number of missed audio calls}. [B] = {number of missed video calls} */
-"missedAudioCallsAndMissedVideoCalls"="[A] 个未接语音通话 和[B] 个未接视频通话";
+"missedAudioCallsAndMissedVideoCalls"="[A]个未接语音通话和[B]个未接视频通话";
 /* Button title to see the available bonus */
 "getBonus"="获得奖励";
 /* Text shown under the title 'Video quality' that explains what it means */
@@ -1418,12 +1418,12 @@
 "type"="类型";
 /* Title of the incoming shared folders of a user in singular */
 "sharedFolder"="已分享的文件夹";
-/* The label of the folder creation time. For example: "Created: 2013-02-02" (no need to put the colon punctuation in the translation) */
-"created"="创建于";
 /* Label for what a selection contains. For example: "Contains: 3 folders & 13 files". (no need to put the colon punctuation in the translation) */
 "contains"="包括";
 /* A label for any 'Modified' text or title. For example to show the modification date of a file/folder. */
 "modified"="最后修改";
+/* A label for any ‘Added’ text or title. For example to show the upload date of a file/folder. */
+"Added"="上传时间";
 /* used for example when a folder is shared with 2 or more users */
 "users"="用户";
 /* user (singular) label indicating is receiving some info, for example shared folders */
@@ -1479,7 +1479,7 @@
 /* state previous to import a file */
 "loading"="加载中";
 /*   */
-"next"="下一步";
+"next"="次一";
 /* Button title to allow the user ignore something */
 "ignore"="忽略";
 /* Button title to allow the user open the default browser */
@@ -1655,7 +1655,7 @@
 /* New server-side rubbish-bin cleaning scheduler description (for Free users) */
 "The Rubbish Bin is cleaned for you automatically. The minimum period is 7 days and your maximum period is 30 days."="The Rubbish Bin is cleared for you automatically. The minimum period is 7 days and the maximum period is 30 days.";
 /* New server-side rubbish-bin cleaning scheduler description (for PRO users) */
-"The Rubbish Bin can be cleaned for you automatically. The minimum period is 7 days."="垃圾箱可以自动清洁。最短期限为7天。";
+"The Rubbish Bin can be cleaned for you automatically. The minimum period is 7 days."="The Rubbish Bin can be cleared for you automatically. The minimum period is 7 days.";
 /* Description shown when you try to disable the feature Rubbish-Bin Cleaning Scheduler and you are a free user */
 "To disable the Rubbish-Bin Cleaning Scheduler or set a longer retention period, you need to subscribe to a PRO plan."="如果您想要禁用垃圾桶定时清理或设置延长保留期限，您需要订阅PRO计划。";
 /* Confirmation dialog for the button that logs the user out of all sessions except the current one. */
@@ -1701,13 +1701,15 @@
 /* Users previewing a public chat */
 "Observers"="Observers";
 /* Alert message shown while deleting a chat link, warning about the consequences */
-"This conversation will no longer be accessible through the link you are about to delete."="This conversation will no longer be accessible through the link you are about to delete.";
+"This conversation will no longer be accessible through the link you are about to delete."="This conversation will no longer be accessible through the public link once it has been removed.";
 /* Management message shown in a chat when the user %@ enables the 'Encrypted Key Rotation' */
 "%@ enabled Encrypted Key Rotation"="%@ enabled Encrypted Key Rotation";
 /* Management message shown in a chat when the user %@ creates a public link for the chat */
 "%@ created a public link for the chat."="%@ created a public link for the chat.";
 /* Management message shown in a chat when the user %@ removes a public link for the chat */
-"%@ removed a public link for the chat."="%@ removed a public link for the chat.";
+"%@ removed a public link for the chat."="%@ removed the public link for the chat.";
+/* Management message shown in a chat when the user %@ joined it from a public chat link */
+"%@ joined the group chat."="%@ joined the group chat.";
 /* Message show when a call cannot be established because there are too many participants in the group call */
 "Error. No more participants are allowed in this group call."="参与人数已达上限，您无法加入此通话。";
 /* Message show when a user cannot activate the video in a group call because the max number of videos has been reached */
@@ -1828,5 +1830,15 @@
 "%d participant"="%d 人参与";
 /* Text to inform the user there is an active call and is not participating */
 "Ongoing Call"="Ongoing Call";
+/* Message shown when there is an ongoing call and the user tries to play an audio or video */
+"It is not possible to play content while there is a call in progress"="It is not possible to play media files while there is a call in progress.";
 /* Text to inform the user there is an active call and is participating */
 "Call Started"="Call Started";
+/* Title for feature Password Reminder */
+"Password Reminder"="帐号密码提醒";
+/* Label for any ‘Message’ button, link, text, title, etc. - (String as short as possible). */
+"Message"="信息";
+/* Title of the button in the contact info screen to start an audio call */
+"Call"="通话";
+/* Title of the button in the contact info screen to start a video call */
+"Video"="视频";

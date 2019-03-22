@@ -2,6 +2,7 @@
 #import "MEGAShowPasswordReminderRequestDelegate.h"
 
 #import "Helper.h"
+#import "MEGANavigationController.h"
 #import "UIApplication+MNZCategory.h"
 
 #import "PasswordReminderViewController.h"
@@ -37,10 +38,16 @@
     }
     
     if (request.flag) {
-        PasswordReminderViewController *passwordReminderViewController = [[UIStoryboard storyboardWithName:@"PasswordReminder" bundle:nil] instantiateViewControllerWithIdentifier:@"PasswordReminderViewControllerID"];
-        passwordReminderViewController.logout = self.isLoggingOut;
-        
-        [UIApplication.mnz_presentingViewController presentViewController:passwordReminderViewController animated:YES completion:nil];
+        if (self.isLoggingOut) {
+            MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"PasswordReminder" bundle:nil] instantiateViewControllerWithIdentifier:@"PasswordReminderNavigationControllerID"];
+            PasswordReminderViewController *passwordReminderViewController = (PasswordReminderViewController *) navigationController.viewControllers.firstObject;
+            passwordReminderViewController.logout = self.isLoggingOut;
+            [UIApplication.mnz_presentingViewController presentViewController:navigationController animated:YES completion:nil];
+        } else {
+            PasswordReminderViewController *passwordReminderViewController = [[UIStoryboard storyboardWithName:@"PasswordReminder" bundle:nil] instantiateViewControllerWithIdentifier:@"PasswordReminderViewControllerID"];
+            passwordReminderViewController.logout = self.isLoggingOut;
+            [UIApplication.mnz_presentingViewController presentViewController:passwordReminderViewController animated:YES completion:nil];
+        }
     } else {
         if (self.isLoggingOut) {
             [Helper logoutAfterPasswordReminder];

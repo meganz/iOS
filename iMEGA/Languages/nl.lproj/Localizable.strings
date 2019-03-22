@@ -121,7 +121,7 @@
 /* Error text shown when you don't have selected the checkbox to agree with the Terms of Service */
 "termsCheckboxUnselected"="U dient akkoord te gaan met de Algemene Voorwaarden om een account te registreren bij MEGA.";
 /* Error text shown when the users tries to create an account with an email already in use */
-"emailAlreadyRegistered"="Met dit e-mail adres werd al een account bij Mega geregistreerd.";
+"emailAlreadyRegistered"="Met dit e-mail adres is al een account bij MEGA geregistreerd.";
 /* Title shown just after doing some action that requires confirming the action by an email */
 "awaitingEmailConfirmation"="In afwachting van e-mailbevestiging.";
 /* Text shown on the confirm account view to remind the user what to do */
@@ -149,13 +149,13 @@
 /* Error title shown when you open a file or folder link and it's no longer available */
 "linkUnavailable"="Koppeling niet beschikbaar";
 /* */
-"fileLinkUnavailableText1"="Dit kan zijn omwille van de volgende redenen:";
+"fileLinkUnavailableText1"="Dit kan de volgende redenen hebben:";
 /* ToS refers to Terms of Service and AUP refers to Acceptable Use Policy. */
 "fileLinkUnavailableText2"="Het bestand werd verwijderd door inbreuk op de Algemene Voorwaarden.";
 /* */
 "fileLinkUnavailableText3"="Ongeldige URL - de koppeling die u probeert te bereiken bestaat niet";
 /* */
-"fileLinkUnavailableText4"="Het bestand werd verwijderd door de gebruiker.";
+"fileLinkUnavailableText4"="Het bestand is door de gebruiker verwijderd.";
 /* Message shown when a download starts */
 "downloadStarted"="Download gestart";
 /* Title for the folder link view */
@@ -167,7 +167,7 @@
 /* Error message shown when a folder can't be created. */
 "folderCreationError"="De map '%@' kan niet gecreëerd worden";
 /* */
-"folderLinkUnavailableText1"="Dit kan zijn omwille van de volgende redenen:";
+"folderLinkUnavailableText1"="Dit kan de volgende redenen hebben:";
 /* */
 "folderLinkUnavailableText2"="De koppeling naar de map is verwijderd vanwege een schending van onze gebruikersvoorwaarden.";
 /* */
@@ -275,7 +275,7 @@
 /* Hint text shown on the create folder alert. */
 "newFolderMessage"="Naam voor de nieuwe map";
 /* Title button for the create folder alert.  */
-"createFolderButton"="Maak";
+"createFolderButton"="Creëer";
 /* A tooltip message which is shown when a folder name is duplicated during renaming or creation. */
 "There is already a folder with the same name"="Er is al een map met dezelfde naam";
 /* A tooltip message which shows when a file name is duplicated during renaming. */
@@ -385,7 +385,7 @@
 /* Message shown when the links to files and/or folders have been removed */
 "linksRemoved"="Koppelingen verwijderd";
 /* Title show when a file is being downloaded */
-"downloading"="Downloaden";
+"downloading"="Aan het downloaden";
 /* Message shown when you tap on the cancel button of an active transfer */
 "cancelDownloadAlertViewText"="Wilt u de download afbreken?";
 /* Title shown on the navigation bar to explain that you have to choose a destination for the files and/or folders in case you copy, move, import or do some action with them. */
@@ -411,7 +411,7 @@
 /* Success message shown when you have moved [A] = {1+} files and [B] = {1+} folders */
 "moveFilesFoldersMessage"="[A] bestanden en [B] mappen verplaatst";
 /* List option shown on the details of a file or folder */
-"copy"="Kopiëren";
+"copy"="Kopieer";
 /* Success message shown when you have copied 1 file */
 "copyFileMessage"="1 bestand gekopieërd";
 /* Success message shown when you have copied {1+} files */
@@ -429,7 +429,7 @@
 /* Success message shown when you have copied [A] = {1+} files and [B] = {1+} folders */
 "copyFilesFoldersMessage"="[A] bestanden en [B] mappen gekopieerd";
 /* Title for the action that allows you to rename a file or folder  */
-"rename"="Hernoemen";
+"rename"="Naam wijzigen";
 /* Hint text to suggest that the user have to write the new name for the file or folder */
 "renameNodeMessage"="Vul de nieuwe naam in";
 /* Title for the action that allows you to 'Move to the Rubbish Bin' files or folders */
@@ -475,7 +475,7 @@
 /* Success message for sharing multiple folders. */
 "sharedFolders_success"="%d mappen met succes gedeeld.";
 /* Button title that triggers the importing link action */
-"import"="Importeer";
+"import"="Importeren";
 /* Message shown when a file has been imported */
 "fileImported"="Bestand geïmporteerd!";
 /* Message shown when some files have been imported */
@@ -567,7 +567,7 @@
 /* Clue text to help the user know what should write there. In this case the contact email you want to add to your contacts list */
 "contactEmail"="Contact email";
 /* Button title to 'Add' the contact to your contacts list */
-"addContactButton"="Toevoegen";
+"addContactButton"="Voeg toe";
 /* Success message shown when a contact has been invited */
 "requestSent"="Aanvraag verzonden";
 /* Add contacts and share dialog error message when user try to add your own email address */
@@ -723,7 +723,7 @@
 /* Account closure, password check dialog when user click on closure email. */
 "closeAccount"="Beëindig account";
 /* Title for the action that allows to remove a file or folder */
-"remove"="Verwijder";
+"remove"="Verwijderen";
 /* Alert title shown on the Rubbish Bin when you want to remove some files and folders of your MEGA account */
 "removeNodeFromRubbishBinTitle"="Verwijderen bevestigen";
 /* Alert message shown on the Rubbish Bin when you want to remove '1 file' */
@@ -856,7 +856,7 @@
 /* Rest of the message of the alert shown when you try to cancel transfers. DOWNLOAD uppercase. */
 "downloadInUppercaseTransfers"="DOWNLOAD overdrachten";
 /* Title of My Account section. There you can see your account details */
-"myAccount"="Mijn account";
+"myAccount"="Mijn Account";
 /* Button title that shows the different MEGA PRO plans to which you can upgrade. (String as short as possible) */
 "buyPRO"="Koop PRO";
 /* Caption of a button to upgrade the account to Pro status */
@@ -950,7 +950,7 @@
 /* Text that shows the expiry date of the account PRO level */
 "expiresOn"="verloopt op %@";
 /* Button title for the section where you can see the 'Purchase history' related to your account */
-"purchaseHistory"="Aankoopgeschiedenis";
+"purchaseHistory"="Aankoop Geschiedenis";
 /* Title of the Incoming Shares section. Here you can see the folders that your contacts have shared with you */
 "incomingShares"="Binnenkomende Mappen";
 /* Sentence shown under the used space percentage to complete the info with the user account maximum storage. "of {maximun storage}" */
@@ -1122,7 +1122,7 @@
 /* A confirmation message for a user to confirm that they want to clear the history of a chat. */
 "clearTheFullMessageHistory"="Weet u zeker dat u de volledige geschiedenis van dit gesprek wilt wissen?";
 /* 'Next' button in a dialog */
-"continue"="Ga verder";
+"continue"="Vervolgen";
 /* Button title that allows the user to close a chat. */
 "closeChat"="Sluit Chat";
 /* Title of the incoming shared folders of a user. */
@@ -1160,7 +1160,7 @@
 /* A button label. The button allows the user to get more info of the current context. */
 "info"="Info";
 /* A button label. The button allows the user to close the conversation. */
-"close"="Sluiten";
+"close"="Sluit";
 /* Alert text that explains what means confirming the action 'Leave' */
 "youWillNoLongerHaveAccessToThisConversation"="U heeft niet langer toegang tot dit gesprek";
 /* A button label. The button allows the user to leave the conversation. */
@@ -1415,15 +1415,15 @@
 /* label for the total file size of multiple files and/or folders (no need to put the colon punctuation in the translation)*/
 "totalSize"="Totale grootte";
 /* Refers to the type of a file or folder. */
-"type"="Soort";
+"type"="Type";
 /* Title of the incoming shared folders of a user in singular */
 "sharedFolder"="Gedeelde Map";
-/* The label of the folder creation time. For example: "Created: 2013-02-02" (no need to put the colon punctuation in the translation) */
-"created"="Gecreëerd";
 /* Label for what a selection contains. For example: "Contains: 3 folders & 13 files". (no need to put the colon punctuation in the translation) */
 "contains"="Bevat";
 /* A label for any 'Modified' text or title. For example to show the modification date of a file/folder. */
 "modified"="Gewijzigd";
+/* A label for any ‘Added’ text or title. For example to show the upload date of a file/folder. */
+"Added"="Toegevoegd";
 /* used for example when a folder is shared with 2 or more users */
 "users"="gebruikers";
 /* user (singular) label indicating is receiving some info, for example shared folders */
@@ -1655,7 +1655,7 @@
 /* New server-side rubbish-bin cleaning scheduler description (for Free users) */
 "The Rubbish Bin is cleaned for you automatically. The minimum period is 7 days and your maximum period is 30 days."="De Prullenbak wordt automatisch voor u gewist. De minimale periode is 7 dagen en uw maximale periode is 30 dagen.";
 /* New server-side rubbish-bin cleaning scheduler description (for PRO users) */
-"The Rubbish Bin can be cleaned for you automatically. The minimum period is 7 days."="De Prullenbak kan automatisch voor u gewist worden. De minimale periode is  7 dagen.";
+"The Rubbish Bin can be cleaned for you automatically. The minimum period is 7 days."="De Prullenbak kan automatisch voor u gewist worden. De minimale periode is 7 dagen.";
 /* Description shown when you try to disable the feature Rubbish-Bin Cleaning Scheduler and you are a free user */
 "To disable the Rubbish-Bin Cleaning Scheduler or set a longer retention period, you need to subscribe to a PRO plan."="Om het Wis Schema van de Prullenbak uit te schakelen of een langer bewaarperiode in te stellen, zal u een PRO abonnement nodig hebben.";
 /* Confirmation dialog for the button that logs the user out of all sessions except the current one. */
@@ -1701,13 +1701,15 @@
 /* Users previewing a public chat */
 "Observers"="Observers";
 /* Alert message shown while deleting a chat link, warning about the consequences */
-"This conversation will no longer be accessible through the link you are about to delete."="This conversation will no longer be accessible through the link you are about to delete.";
+"This conversation will no longer be accessible through the link you are about to delete."="This conversation will no longer be accessible through the public link once it has been removed.";
 /* Management message shown in a chat when the user %@ enables the 'Encrypted Key Rotation' */
 "%@ enabled Encrypted Key Rotation"="%@ enabled Encrypted Key Rotation";
 /* Management message shown in a chat when the user %@ creates a public link for the chat */
 "%@ created a public link for the chat."="%@ created a public link for the chat.";
 /* Management message shown in a chat when the user %@ removes a public link for the chat */
-"%@ removed a public link for the chat."="%@ removed a public link for the chat.";
+"%@ removed a public link for the chat."="%@ removed the public link for the chat.";
+/* Management message shown in a chat when the user %@ joined it from a public chat link */
+"%@ joined the group chat."="%@ joined the group chat.";
 /* Message show when a call cannot be established because there are too many participants in the group call */
 "Error. No more participants are allowed in this group call."="U mag niet deelnemen aan deze oproep omdat deze het maximale aantal deelnemers heeft bereikt.";
 /* Message show when a user cannot activate the video in a group call because the max number of videos has been reached */
@@ -1828,5 +1830,15 @@
 "%d participant"="%d deelnemer";
 /* Text to inform the user there is an active call and is not participating */
 "Ongoing Call"="Lopend Gesprek";
+/* Message shown when there is an ongoing call and the user tries to play an audio or video */
+"It is not possible to play content while there is a call in progress"="Het is niet mogelijk om media bestanden af te spelen terwijl een oproep wordt uitgevoerd.";
 /* Text to inform the user there is an active call and is participating */
 "Call Started"="Oproep Gestart";
+/* Title for feature Password Reminder */
+"Password Reminder"="Wachtwoord Onthouder";
+/* Label for any ‘Message’ button, link, text, title, etc. - (String as short as possible). */
+"Message"="Bericht";
+/* Title of the button in the contact info screen to start an audio call */
+"Call"="Bellen";
+/* Title of the button in the contact info screen to start a video call */
+"Video"="Video";
