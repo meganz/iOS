@@ -222,7 +222,7 @@ static const NSTimeInterval HeaderStateViewReloadToleranceTimeInterval = .1;
         self.currentState = MEGACameraUploadsStateLoading;
     }
     
-    [CameraUploadManager.shared loadCurrentUploadStats:^(UploadStats * _Nullable uploadStats, NSError * _Nullable error) {
+    [CameraUploadManager.shared loadCurrentUploadStatsWithCompletion:^(UploadStats * _Nullable uploadStats, NSError * _Nullable error) {
         if (error || uploadStats == nil) {
             MEGALogError(@"[Camera Upload] error when to fetch upload stats %@", error);
             self.currentState = MEGACameraUploadsStateLoading;
@@ -256,25 +256,25 @@ static const NSTimeInterval HeaderStateViewReloadToleranceTimeInterval = .1;
         return;
     }
     
-    [CameraUploadManager.shared loadRecordCountForMediaTypes:@[@(PHAssetMediaTypeVideo)] completion:^(NSUInteger count, NSError * _Nullable error) {
+    [CameraUploadManager.shared loadUploadStatsForMediaTypes:@[@(PHAssetMediaTypeVideo)] completion:^(UploadStats * _Nullable uploadStats, NSError * _Nullable error) {
         if (error) {
             MEGALogError(@"[Camera Upload] error when to load record count for video %@", error);
             return;
         }
         
-        if (count == 0) {
+        if (uploadStats.pendingFilesCount == 0) {
             return;
         }
         
-        MEGALogDebug(@"[Camera Upload] %lu video count loaded", (unsigned long)count);
+        MEGALogDebug(@"[Camera Upload] %lu video count loaded", (unsigned long)uploadStats.pendingFilesCount);
         dispatch_async(dispatch_get_main_queue(), ^{
             self.currentState = MEGACameraUploadsStateEnableVideo;
-            [self configStateLabelForVideoByVideoCount:count];
+            [self configStateLabelByVideoPendingCount:uploadStats.pendingFilesCount];
         });
     }];
 }
 
-- (void)configStateLabelForVideoByVideoCount:(NSUInteger)count {
+- (void)configStateLabelByVideoPendingCount:(NSUInteger)count {
     NSString *videoMessage;
     if (count == 1) {
         videoMessage = @"Video uploads are off, 1 video not uploaded";

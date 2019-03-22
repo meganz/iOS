@@ -57,9 +57,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - fetch upload stats
 
-- (void)loadCurrentUploadStats:(void (^)(UploadStats * _Nullable uploadStats, NSError * _Nullable error))completion;
+- (void)loadCurrentUploadStatsWithCompletion:(void (^)(UploadStats * _Nullable uploadStats, NSError * _Nullable error))completion;
 
-- (void)loadRecordCountForMediaTypes:(NSArray<NSNumber *> *)mediaTypes completion:(void (^)(NSUInteger count, NSError * _Nullable error))completion;
+- (void)loadUploadStatsForMediaTypes:(NSArray<NSNumber *> *)mediaTypes completion:(void (^)(UploadStats * _Nullable uploadStats, NSError * _Nullable error))completion;
 
 @end
 
