@@ -211,7 +211,9 @@ const NSUInteger kMaxMessagesToLoad = 256;
     if (self.isMovingToParentViewController) {
         if ([[MEGASdkManager sharedMEGAChatSdk] openChatRoom:self.chatRoom.chatId delegate:self]) {
             MEGALogDebug(@"Chat room opened: %@", self.chatRoom);
-            [self loadMessages];
+            if (self.isFirstLoad) {
+                [self loadMessages];
+            }
         } else {
             UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"error", nil) message:AMLocalizedString(@"chatNotFound", nil) preferredStyle:UIAlertControllerStyleAlert];
             [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
