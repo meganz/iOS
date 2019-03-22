@@ -745,6 +745,8 @@
                         }
                     }];
                     [[MEGASdkManager sharedMEGAChatSdk] createChatLink:chatRoom.chatId delegate:delegate];
+                } else {
+                    [self.navigationController pushViewController:messagesVC animated:YES];
                 }
             }];
             [[MEGASdkManager sharedMEGAChatSdk] createPublicChatWithPeers:peerList title:groupName delegate:createChatGroupRequestDelegate];
