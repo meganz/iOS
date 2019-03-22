@@ -1227,11 +1227,19 @@
 #pragma mark - IBActions
 
 - (IBAction)recentsTouchUpInside:(UIButton *)sender {
+    if (sender.selected) {
+        return;
+    }
+    
     sender.selected = !sender.selected;
     self.cloudDriveButton.selected = !self.cloudDriveButton.selected;
     
     self.recentsLineView.backgroundColor = UIColor.mnz_redMain;
     self.cloudDriveLineView.backgroundColor = UIColor.mnz_grayCCCCCC;
+    
+    if (self.searchController.isActive) {
+        self.searchController.active = NO;
+    }
     
     if (self.layoutView == LayoutModeList) {
         [self.cdTableView willMoveToParentViewController:nil];
@@ -1259,6 +1267,10 @@
 }
 
 - (IBAction)cloudDriveTouchUpInside:(UIButton *)sender {
+    if (sender.selected) {
+        return;
+    }
+    
     self.recentsButton.selected = !self.recentsButton.selected;
     sender.selected = !sender.selected;
     

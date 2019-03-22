@@ -185,33 +185,12 @@
     NSArray *nodesArray = recentActionBucket.nodesList.mnz_nodesArrayFromNodeList;
     if (nodesArray.count == 1) {
         MEGANode *node = [nodesArray objectAtIndex:0];
-        switch (node.type) {
-            case MEGANodeTypeFolder: {
-                CloudDriveViewController *cloudDriveVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
-                cloudDriveVC.parentNode = node;
-                cloudDriveVC.hideSelectorView = YES;
-                
-                if (self.cloudDrive.displayMode == DisplayModeRubbishBin) {
-                    cloudDriveVC.displayMode = self.cloudDrive.displayMode;
-                }
-                
-                [self.navigationController pushViewController:cloudDriveVC animated:YES];
-                break;
-            }
-                
-            case MEGANodeTypeFile: {
-                if (node.name.mnz_imagePathExtension || node.name.mnz_isVideoPathExtension) {
-                    MEGAPhotoBrowserViewController *photoBrowserVC = [MEGAPhotoBrowserViewController photoBrowserWithMediaNodes:@[nodesArray[0]].mutableCopy api:MEGASdkManager.sharedMEGASdk displayMode:DisplayModeCloudDrive presentingNode:nodesArray[0] preferredIndex:0];
-                    
-                    [self.cloudDrive.navigationController presentViewController:photoBrowserVC animated:YES completion:nil];
-                } else {
-                    [node mnz_openNodeInNavigationController:self.cloudDrive.navigationController folderLink:NO];
-                }
-                break;
-            }
-                
-            default:
-                break;
+        if (node.name.mnz_imagePathExtension || node.name.mnz_isVideoPathExtension) {
+            MEGAPhotoBrowserViewController *photoBrowserVC = [MEGAPhotoBrowserViewController photoBrowserWithMediaNodes:@[nodesArray[0]].mutableCopy api:MEGASdkManager.sharedMEGASdk displayMode:DisplayModeCloudDrive presentingNode:nodesArray[0] preferredIndex:0];
+            
+            [self.cloudDrive.navigationController presentViewController:photoBrowserVC animated:YES completion:nil];
+        } else {
+            [node mnz_openNodeInNavigationController:self.cloudDrive.navigationController folderLink:NO];
         }
     } else {
         if (recentActionBucket.isMedia) {
