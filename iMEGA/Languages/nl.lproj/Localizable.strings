@@ -659,7 +659,7 @@
 /* Option title to enable Camera Uploads only when the device is charging */
 "onlyWhenChargingLabel"="Alleen tijden het laden";
 /* Footer text to explain the Camera Uploads functionality */
-"cameraUploads_footer"="Wanneer ingeschakeld zullen uw foto's en video's automatisch worden geüpload.";
+"cameraUploads_footer"="Wanneer ingeschakeld, worden foto's en video's  geüpload";
 /* App means “Application” */
 "App version"="Applicatie versie";
 /* Title of the label where the SDK version is shown */
@@ -1655,7 +1655,7 @@
 /* New server-side rubbish-bin cleaning scheduler description (for Free users) */
 "The Rubbish Bin is cleaned for you automatically. The minimum period is 7 days and your maximum period is 30 days."="De Prullenbak wordt automatisch voor u gewist. De minimale periode is 7 dagen en uw maximale periode is 30 dagen.";
 /* New server-side rubbish-bin cleaning scheduler description (for PRO users) */
-"The Rubbish Bin can be cleaned for you automatically. The minimum period is 7 days."="De Prullenbak kan automatisch voor u gewist worden. De minimale periode is 7 dagen.";
+"The Rubbish Bin can be cleaned for you automatically. The minimum period is 7 days."="De Prullenbak kan automatisch voor u worden gewist. De minimumperiode is 7 dagen.";
 /* Description shown when you try to disable the feature Rubbish-Bin Cleaning Scheduler and you are a free user */
 "To disable the Rubbish-Bin Cleaning Scheduler or set a longer retention period, you need to subscribe to a PRO plan."="Om het Wis Schema van de Prullenbak uit te schakelen of een langer bewaarperiode in te stellen, zal u een PRO abonnement nodig hebben.";
 /* Confirmation dialog for the button that logs the user out of all sessions except the current one. */
@@ -1697,19 +1697,19 @@
 /* Button text in public chat previews that allows the user to join the chat */
 "Join"="Aansluiten";
 /* Text shown in a notification to let the user know that has joined a public chat room after login or account creation */
-"You have joined %@"="You have joined %@";
+"You have joined %@"="U bent lid geworden van %@";
 /* Users previewing a public chat */
-"Observers"="Observers";
+"Observers"="Waarnemers";
 /* Alert message shown while deleting a chat link, warning about the consequences */
-"This conversation will no longer be accessible through the link you are about to delete."="This conversation will no longer be accessible through the public link once it has been removed.";
+"This conversation will no longer be accessible through the link you are about to delete."="Dit gesprek is niet langer toegankelijk via de openbare link nadat het is verwijderd.";
 /* Management message shown in a chat when the user %@ enables the 'Encrypted Key Rotation' */
-"%@ enabled Encrypted Key Rotation"="%@ enabled Encrypted Key Rotation";
+"%@ enabled Encrypted Key Rotation"="%@ heeft Gecodeerde Sleutel Rotatie ingeschakeld";
 /* Management message shown in a chat when the user %@ creates a public link for the chat */
-"%@ created a public link for the chat."="%@ created a public link for the chat.";
+"%@ created a public link for the chat."="%@ heeft een openbare koppeling gemaakt voor het gesprek.";
 /* Management message shown in a chat when the user %@ removes a public link for the chat */
-"%@ removed a public link for the chat."="%@ removed the public link for the chat.";
+"%@ removed a public link for the chat."="%@ heeft de openbare koppeling voor het gesprek verwijderd.";
 /* Management message shown in a chat when the user %@ joined it from a public chat link */
-"%@ joined the group chat."="%@ joined the group chat.";
+"%@ joined the group chat."="%@ is lid geworden van het groepsgesprek.";
 /* Message show when a call cannot be established because there are too many participants in the group call */
 "Error. No more participants are allowed in this group call."="U mag niet deelnemen aan deze oproep omdat deze het maximale aantal deelnemers heeft bereikt.";
 /* Message show when a user cannot activate the video in a group call because the max number of videos has been reached */

@@ -659,7 +659,7 @@
 /* Option title to enable Camera Uploads only when the device is charging */
 "onlyWhenChargingLabel"="Doar când se încarcă";
 /* Footer text to explain the Camera Uploads functionality */
-"cameraUploads_footer"="Când este activat, noile fotografii și videoclipuri vor fi încărcate.";
+"cameraUploads_footer"="Când este activat, fotografiile și videoclipurile vor fi încărcate.";
 /* App means “Application” */
 "App version"="Versiunea aplicației";
 /* Title of the label where the SDK version is shown */
@@ -1084,7 +1084,7 @@
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
 "richPreviewsFooter"="Îmbunătățește experiența MEGAchat. Conținutul URL-urilor va fi preluat fără criptare capăt-la-capăt.";
 /* Section title of a button where you can enable mobile data for voice and video calls. */
-"voiceAndVideoCalls"="Apeluri voce și video";
+"voiceAndVideoCalls"="Apeluri vocale și video";
 /* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature. */
 "useMobileData"="Folosește datele mobile";
 /* A header in the Chat settings. This changes the user's status to Away after some time of inactivity. */
@@ -1707,9 +1707,9 @@
 /* Management message shown in a chat when the user %@ creates a public link for the chat */
 "%@ created a public link for the chat."="%@ a creat un link public pentru chat.";
 /* Management message shown in a chat when the user %@ removes a public link for the chat */
-"%@ removed a public link for the chat."="%@ a eliminat un link public pentru chat.";
+"%@ removed a public link for the chat."="%@ a eliminat linkul public pentru chat.";
 /* Management message shown in a chat when the user %@ joined it from a public chat link */
-"%@ joined the group chat."="%@ joined the group chat.";
+"%@ joined the group chat."="%@ s-a alăturat chatului de grup.";
 /* Message show when a call cannot be established because there are too many participants in the group call */
 "Error. No more participants are allowed in this group call."="Nu ți se permite să te alături acestui apel deoarece acesta a atins numărul maxim de participanți.";
 /* Message show when a user cannot activate the video in a group call because the max number of videos has been reached */

@@ -659,7 +659,7 @@
 /* Option title to enable Camera Uploads only when the device is charging */
 "onlyWhenChargingLabel"="충전중일 때만";
 /* Footer text to explain the Camera Uploads functionality */
-"cameraUploads_footer"="활성화하면 사진과 동영상이 업로드됩니다.";
+"cameraUploads_footer"="활성화하면, 사진과 동영상이 업로드됩니다.";
 /* App means “Application” */
 "App version"="앱 버전";
 /* Title of the label where the SDK version is shown */
@@ -884,9 +884,9 @@
 /*  */
 "howItWorksMain"="친구가 MEGA에 무료 계정을 등록하고 [S]MEGA 클라이언트 어플리케이션 중 하나를 설치[/S]해야합니다 (동기화 클라이언트나 모바일 앱 중 하나)";
 /*  */
-"howItWorksSecondary"="당신의 친구에게 어떤 방법을 통해서든 알릴 수 있습니다. 친구의 이메일을 친구가 가입하기 전에 여기에 입력하면 할당량을 얻을 것입니다.";
+"howItWorksSecondary"="당신의 친구에게 어떤 방법을 통해서든 알릴 수 있습니다. 친구가 이메일을 사용하여 가입하기 전에 여기에 입력하면 할당량을 얻을 것입니다.";
 /* A message which is shown once someone has invited a friend as part of the achievements program. */
-"howItWorksTertiary"="MEGA를 이전에 사용했던 사람을 초대하는 것은 인정되지 않으며 이러한 거부는 통보되지 않습니다.";
+"howItWorksTertiary"="MEGA를 이전에 사용했던 사람을 초대하는 것은 인정되지 않으며 이렇게 거부된 사항에 대해서 통보하지 않습니다.";
 /* Header of block with achievements bonuses. */
 "unlockedBonuses"="해제된 보너스:";
 /* A header/title of a section which contains information about used/available storage space on a user's cloud drive. */
@@ -1633,13 +1633,13 @@
 /* Subtitle of the option to enable or disable file versioning on Settings section */
 "Enable or disable file versioning for your entire account.[Br]You may still receive file versions from shared folders if your contacts have this enabled."="당신의 계정 전체에 대해 파일 버전 기록을 활성화하거나 비활성화합니다.\n연락처가 이것을 활성화했다면 공유된 폴더에서 계속해서 파일 버전을 받게 됩니다.";
 /* A confirmation message when the user chooses to disable file versioning. */
-"When file versioning is disabled, the current version will be replaced with the new version once a file is updated (and your changes to the file will no longer be recorded). Are you sure you want to disable file versioning?"="파일 기록이 해제되면, 파일이 업데이트되면 현재 버전이 새 버전 으로 교체됩니다 (그리고 파일의 변경점의 기록되지 않습니다).파일 기록을 해제하시겠습니까?";
+"When file versioning is disabled, the current version will be replaced with the new version once a file is updated (and your changes to the file will no longer be recorded). Are you sure you want to disable file versioning?"="파일 버전 기록이 해제되면, 파일이 업데이트되면 현재 버전이 새 버전 으로 교체됩니다 (그리고 파일의 변경점의 기록되지 않습니다).파일 버전 기록을 해제하시겠습니까?";
 /* Settings preference title to show file versions info of the account */
 "File versions"="파일 버전";
 /* A title message in the user’s account settings for showing the storage used for file versions. */
 "Total size taken up by file versions:"="파일 버전으로 이용중인 총 용량:";
 /* The title of the section about deleting file versions in the settings. */
-"Delete all older versions of my files"="모든 오래된 파일 기록을 삭제";
+"Delete all older versions of my files"="모든 오래된 파일 버전 기록을 삭제";
 /* Text of a button which deletes all historical versions of files in the users entire account. */
 "Delete old versions"="피일 기록 삭제";
 /* A warning note about deleting all file versions in the settings section. */
@@ -1681,9 +1681,9 @@
 /* Text shown when an error occurs when trying to save a photo or video to Photos app */
 "Could not save Item"="항목을 저장할 수 없음";
 /* Label in a cell where you can enable the 'Encrypted Key Rotation' */
-"Encrypted Key Rotation"="암호화된 키 순환";
+"Encrypted Key Rotation"="암호화 키 순환";
 /* Title shown in a cell to allow the users enable the 'Encrypted Key Rotation' */
-"Enable Encrypted Key Rotation"="암호화된 키 순환 활성화";
+"Enable Encrypted Key Rotation"="암호화 키 순환 활성화";
 /* Label in a cell where you can get the chat link */
 "Get Chat Link"="대화 링크 얻기";
 /* Footer text to explain what means 'Encrypted Key Rotation' */
@@ -1703,13 +1703,13 @@
 /* Alert message shown while deleting a chat link, warning about the consequences */
 "This conversation will no longer be accessible through the link you are about to delete."="공개 링크가 삭제되면 이 대화에 공개 링크를 통하여 참여할 수 없게 됩니다.";
 /* Management message shown in a chat when the user %@ enables the 'Encrypted Key Rotation' */
-"%@ enabled Encrypted Key Rotation"="%@님이 암호화된 키 순환을 활성화하였습니다";
+"%@ enabled Encrypted Key Rotation"="%@님이 암호화 키 순환을 활성화하였습니다";
 /* Management message shown in a chat when the user %@ creates a public link for the chat */
 "%@ created a public link for the chat."="%@님이 대화의 공개 링크를 생성하였습니다.";
 /* Management message shown in a chat when the user %@ removes a public link for the chat */
 "%@ removed a public link for the chat."="%@님이 대화의 공개 링크를 삭제하였습니다.";
 /* Management message shown in a chat when the user %@ joined it from a public chat link */
-"%@ joined the group chat."="%@ joined the group chat.";
+"%@ joined the group chat."="%@님이 단체 대화에 참여하였습니다.";
 /* Message show when a call cannot be established because there are too many participants in the group call */
 "Error. No more participants are allowed in this group call."="이 통화가 최대 참가자 수에 도달했기 때문에 참여할 수 없습니다.";
 /* Message show when a user cannot activate the video in a group call because the max number of videos has been reached */
