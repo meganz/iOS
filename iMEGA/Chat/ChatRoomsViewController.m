@@ -370,6 +370,8 @@
     MessagesViewController *messagesVC = [[MessagesViewController alloc] init];
     messagesVC.chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:chatID];
     
+    [self updateBackBarButtonItem:messagesVC.chatRoom.unreadCount];
+    
     [self.navigationController pushViewController:messagesVC animated:YES];
 }
 
@@ -592,17 +594,21 @@
     MessagesViewController *messagesVC = [[MessagesViewController alloc] init];
     messagesVC.chatRoom                = chatRoom;
     
+    [self updateBackBarButtonItem:chatRoom.unreadCount];
+    
+    [self.navigationController pushViewController:messagesVC animated:YES];
+}
+
+- (void)updateBackBarButtonItem:(BOOL)hasUnreadMessages {
     NSInteger unreadChats = [MEGASdkManager sharedMEGAChatSdk].unreadChats;
-    if (chatRoom.unreadCount) {
-        unreadChats -= 1;
+    if (hasUnreadMessages) {
+        unreadChats--;
     }
     
     NSString *unreadChatsString = unreadChats ? [NSString stringWithFormat:@"(%td)", unreadChats] : @"";
     
     UIBarButtonItem *backBarButton = [[UIBarButtonItem alloc] initWithTitle:unreadChatsString style:UIBarButtonItemStylePlain target:nil action:nil];
     self.navigationItem.backBarButtonItem = backBarButton;
-    
-    [self.navigationController pushViewController:messagesVC animated:YES];
 }
 
 - (UITableViewCell *)archivedChatRoomCellForIndexPath:(NSIndexPath *)indexPath {
