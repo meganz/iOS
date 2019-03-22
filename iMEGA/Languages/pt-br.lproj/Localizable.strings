@@ -149,7 +149,7 @@
 /* Error title shown when you open a file or folder link and it's no longer available */
 "linkUnavailable"="Link indisponível";
 /* */
-"fileLinkUnavailableText1"="Isto pode ser devido às seguintes razões:";
+"fileLinkUnavailableText1"="Isto pode ser devido as seguintes razões:";
 /* ToS refers to Terms of Service and AUP refers to Acceptable Use Policy. */
 "fileLinkUnavailableText2"="O arquivo foi removido por causa de uma infração dos Termos de serviço.";
 /* */
@@ -161,13 +161,13 @@
 /* Title for the folder link view */
 "folderLink"="Link da pasta";
 /* Button title which downloads a file/folder to your device */
-"downloadButton"="Download";
+"downloadButton"="Fazer download";
 /* Message shown when you try to downlonad a folder bigger than the available memory. */
 "folderTooBigMessage"="A pasta que você está tentando baixar é maior do que a memória disponível.";
 /* Error message shown when a folder can't be created. */
 "folderCreationError"="O arquivo '%@' não pode ser criado";
 /* */
-"folderLinkUnavailableText1"="Isto pode ser devido às seguintes razões:";
+"folderLinkUnavailableText1"="Isto pode ser devido as seguintes razões:";
 /* */
 "folderLinkUnavailableText2"="O link desta pasta foi eliminado por uma infração dos nossos Termos de serviço.";
 /* */
@@ -271,7 +271,7 @@
 /* Menu option from the `Add` section that allows the user to capture a video or a photo and upload it directly to MEGA. */
 "capturePhotoVideo"="Captar";
 /* Menu option from the `Add` section that allows you to create a 'New Folder' */
-"newFolder"="Nova pasta";
+"newFolder"="Nova Pasta";
 /* Hint text shown on the create folder alert. */
 "newFolderMessage"="Nome da nova pasta";
 /* Title button for the create folder alert.  */
@@ -313,7 +313,7 @@
 /* Title shown under the action that allows you to save several images to your camera roll */
 "saveImages"="Salvar imagens";
 /* Title shown under the action that allows you to get a link to file or folder */
-"getLink"="Obter link";
+"getLink"="Obter Link";
 /* Title shown under the action that allows you to get several links to files and/or folders */
 "getLinks"="Obter links";
 /* Item menu option upon right click on one or multiple files. */
@@ -331,7 +331,7 @@
 /* Text of the button after the links were copied to the clipboard */
 "copiedToTheClipboard"="Copiado ao bloco de notas";
 /* A title for the Copyright Warning dialog. */
-"copyrightWarning"="Aviso de direitos autorais";
+"copyrightWarning"="Aviso de copyright";
 /* A title for the Copyright Warning dialog. Designed to make the user feel as though this is not targeting them, but is a warning for everybody who uses our service. */
 "copyrightWarningToAll"="Aviso de direitos autorais a todos os usuários";
 /* String already exists: 367, but we need to split paragraphs. */
@@ -451,9 +451,9 @@
 /* Alert message to confirm if the user wants to move to the Rubbish Bin "[A] = {1+} files and [B] = {1+} folders" */
 "moveFilesFoldersToRubbishBinMessage"="Tem certeza de que deseja mover [A] arquivos e pastas [B] para o Lixo Bin?";
 /* Success message shown when you have moved 1 file to the rubbish bin */
-"fileMovedToRubbishBinMessage"="1 arquivo movido para a lixeira";
+"fileMovedToRubbishBinMessage"="1 arquivo movido para a Lixeira";
 /* Success message shown when you have moved {1+} files to the rubbish bin */
-"filesMovedToRubbishBinMessage"="%d arquivos movidos para a lixeira";
+"filesMovedToRubbishBinMessage"="%d arquivos movidos para a Lixeira";
 /* Success message shown when you have moved 1 folder to the rubbish bin */
 "folderMovedToRubbishBinMessage"="1 pasta movida para a lixeira";
 /* Success message shown when you have moved {1+} folders to the rubbish bin */
@@ -563,7 +563,7 @@
 /* Item menu option to add a contact through your device app Contacts */
 "addFromContacts"="Adicionar dos contatos";
 /* Alert title shown when you select to add a contact inserting his/her email */
-"addContact"="Adicionar contato";
+"addContact"="Adicionar novo contato";
 /* Clue text to help the user know what should write there. In this case the contact email you want to add to your contacts list */
 "contactEmail"="E-mail do contato";
 /* Button title to 'Add' the contact to your contacts list */
@@ -946,11 +946,11 @@
 /* title of the My Account screen */
 "accountType"="Tipo de conta:";
 /* Text relative to the MEGA account level. UPPER CASE */
-"free"="GRÁTIS";
+"free"="GRATUITA";
 /* Text that shows the expiry date of the account PRO level */
 "expiresOn"="expira em %@";
 /* Button title for the section where you can see the 'Purchase history' related to your account */
-"purchaseHistory"="Histórico de Compras";
+"purchaseHistory"="Histórico de compras";
 /* Title of the Incoming Shares section. Here you can see the folders that your contacts have shared with you */
 "incomingShares"="Compartilhado comigo";
 /* Sentence shown under the used space percentage to complete the info with the user account maximum storage. "of {maximun storage}" */
@@ -1283,7 +1283,7 @@
 /* Label to show that an SDK operation has been complete successfully. */
 "No error"="Nenhum erro";
 /* Label to show that an Internal error occurs during a SDK operation. */
-"Internal error"="Erro Interno";
+"Internal error"="Erro interno";
 /* Label to show that an error of Invalid argument occurs during a SDK operation. */
 "Invalid argument"="Argumento inválido";
 /* Label to show that a request error occurs during a SDK operation. */
@@ -1418,12 +1418,12 @@
 "type"="Tipo";
 /* Title of the incoming shared folders of a user in singular */
 "sharedFolder"="Pasta compartilhada";
-/* The label of the folder creation time. For example: "Created: 2013-02-02" (no need to put the colon punctuation in the translation) */
-"created"="Criação";
 /* Label for what a selection contains. For example: "Contains: 3 folders & 13 files". (no need to put the colon punctuation in the translation) */
 "contains"="Contém";
 /* A label for any 'Modified' text or title. For example to show the modification date of a file/folder. */
 "modified"="Modificação";
+/* A label for any ‘Added’ text or title. For example to show the upload date of a file/folder. */
+"Added"="Adicionado";
 /* used for example when a folder is shared with 2 or more users */
 "users"="usuários";
 /* user (singular) label indicating is receiving some info, for example shared folders */
@@ -1443,7 +1443,7 @@
 /* A button label which reverts a certain version of a file to be the current version of the selected file. */
 "revert"="Reverter";
 /*  */
-"download"="Download";
+"download"="Fazer download";
 /* Singular of file. 1 file */
 "file"="arquivo";
 /* Title of section to display information of the current version of a file. */
@@ -1655,7 +1655,7 @@
 /* New server-side rubbish-bin cleaning scheduler description (for Free users) */
 "The Rubbish Bin is cleaned for you automatically. The minimum period is 7 days and your maximum period is 30 days."="A sua Lixeira será esvaziada de forma automática. O período mínimo é de 7 dias, e o período máximo é de 30 dias.";
 /* New server-side rubbish-bin cleaning scheduler description (for PRO users) */
-"The Rubbish Bin can be cleaned for you automatically. The minimum period is 7 days."="A sua Lixeira pode ser esvaziada de forma automática. O período mínimo é de 7 dias.";
+"The Rubbish Bin can be cleaned for you automatically. The minimum period is 7 days."="The Rubbish Bin can be cleared for you automatically. The minimum period is 7 days.";
 /* Description shown when you try to disable the feature Rubbish-Bin Cleaning Scheduler and you are a free user */
 "To disable the Rubbish-Bin Cleaning Scheduler or set a longer retention period, you need to subscribe to a PRO plan."="Para desativar o Planejador de limpeza da lixeira ou definir um período de retenção mais longo, você precisa assinar um plano PRO.";
 /* Confirmation dialog for the button that logs the user out of all sessions except the current one. */
@@ -1701,13 +1701,15 @@
 /* Users previewing a public chat */
 "Observers"="Observers";
 /* Alert message shown while deleting a chat link, warning about the consequences */
-"This conversation will no longer be accessible through the link you are about to delete."="This conversation will no longer be accessible through the link you are about to delete.";
+"This conversation will no longer be accessible through the link you are about to delete."="This conversation will no longer be accessible through the public link once it has been removed.";
 /* Management message shown in a chat when the user %@ enables the 'Encrypted Key Rotation' */
 "%@ enabled Encrypted Key Rotation"="%@ enabled Encrypted Key Rotation";
 /* Management message shown in a chat when the user %@ creates a public link for the chat */
 "%@ created a public link for the chat."="%@ created a public link for the chat.";
 /* Management message shown in a chat when the user %@ removes a public link for the chat */
-"%@ removed a public link for the chat."="%@ removed a public link for the chat.";
+"%@ removed a public link for the chat."="%@ removed the public link for the chat.";
+/* Management message shown in a chat when the user %@ joined it from a public chat link */
+"%@ joined the group chat."="%@ joined the group chat.";
 /* Message show when a call cannot be established because there are too many participants in the group call */
 "Error. No more participants are allowed in this group call."="Você não pode participar desta chamada porque o número máximo de participantes foi alcançado.";
 /* Message show when a user cannot activate the video in a group call because the max number of videos has been reached */
@@ -1828,5 +1830,15 @@
 "%d participant"="%d participante";
 /* Text to inform the user there is an active call and is not participating */
 "Ongoing Call"="Chamada em andamento";
+/* Message shown when there is an ongoing call and the user tries to play an audio or video */
+"It is not possible to play content while there is a call in progress"="Não é possível reproduzir arquivos multimídia enquanto houver uma chamada em andamento.";
 /* Text to inform the user there is an active call and is participating */
 "Call Started"="Chamada iniciada";
+/* Title for feature Password Reminder */
+"Password Reminder"="Lembrete de senha";
+/* Label for any ‘Message’ button, link, text, title, etc. - (String as short as possible). */
+"Message"="Mensagem";
+/* Title of the button in the contact info screen to start an audio call */
+"Call"="Chamar";
+/* Title of the button in the contact info screen to start a video call */
+"Video"="Vídeo";

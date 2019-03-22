@@ -99,7 +99,7 @@
 /*  */
 "weak"="Slabă";
 /*  */
-"passwordVeryWeakOrWeak"="Parola ta e ușor de ghicit. Încearcă să faci parola mai lungă. Combină litere mari și litere mici. Adaugă caractere speciale. Nu folosi nume sau cuvinte din dicționar";
+"passwordVeryWeakOrWeak"="Parola ta este ușor de ghicit. Încearcă să faci parola mai lungă. Combină litere mari și litere mici. Adaugă caractere speciale. Nu folosi nume sau cuvinte din dicționar.";
 /* Label displayed during checking the strength of the password introduced. Represents Medium security */
 "medium"="Medie";
 /*  */
@@ -251,7 +251,7 @@
 /* Label for the state of a transfer when is being retrying - (String as short as possible). */
 "Retrying..."="Se reîncearcă...";
 /* Section title of the 'Sort by' */
-"sortTitle"="SORTEAZĂ DUPĂ";
+"sortTitle"="Sortează după";
 /* Button title to 'Save' the selected option */
 "save"="Salvează";
 /* Sort by option (1/6). This one orders the files alphabethically*/
@@ -393,7 +393,7 @@
 /* Text of the button for user to select files in MEGA. */
 "selectFiles"="Selectează fișiere";
 /* Title for the action that allows you to move a file or folder */
-"move"="Mută";
+"move"="Mutare";
 /* Success message shown when you have moved 1 file */
 "moveFileMessage"="1 fișier eliminat";
 /* Success message shown when you have moved {1+} files */
@@ -1418,12 +1418,12 @@
 "type"="Tip";
 /* Title of the incoming shared folders of a user in singular */
 "sharedFolder"="Folder partajat";
-/* The label of the folder creation time. For example: "Created: 2013-02-02" (no need to put the colon punctuation in the translation) */
-"created"="Creat";
 /* Label for what a selection contains. For example: "Contains: 3 folders & 13 files". (no need to put the colon punctuation in the translation) */
 "contains"="Conține";
 /* A label for any 'Modified' text or title. For example to show the modification date of a file/folder. */
 "modified"="Modificat";
+/* A label for any ‘Added’ text or title. For example to show the upload date of a file/folder. */
+"Added"="Adăugat";
 /* used for example when a folder is shared with 2 or more users */
 "users"="utilizatori";
 /* user (singular) label indicating is receiving some info, for example shared folders */
@@ -1653,7 +1653,7 @@
 /* Label for any ‘Days’ button, link, text, title, etc. - (String as short as possible). */
 "Days"="Zile";
 /* New server-side rubbish-bin cleaning scheduler description (for Free users) */
-"The Rubbish Bin is cleaned for you automatically. The minimum period is 7 days and your maximum period is 30 days."="The Rubbish Bin is cleared for you automatically. The minimum period is 7 days and the maximum period is 30 days.";
+"The Rubbish Bin is cleaned for you automatically. The minimum period is 7 days and your maximum period is 30 days."="Coșul de gunoi este golit pentru tine automat. Perioada minimă este de 7 zile și perioada maximă este de 30 de zile.";
 /* New server-side rubbish-bin cleaning scheduler description (for PRO users) */
 "The Rubbish Bin can be cleaned for you automatically. The minimum period is 7 days."="Coșul de gunoi poate fi golit pentru tine automat. Perioada minimă este de 7 zile.";
 /* Description shown when you try to disable the feature Rubbish-Bin Cleaning Scheduler and you are a free user */
@@ -1669,7 +1669,7 @@
 /* Message shown in a chat room when there is an active group call */
 "There is an active group call. Tap to join."="Există un apel de grup activ. Atinge pentru a te alătura.";
 /* Message shown in a chat room when there is an active call */
-"There is an active call. Tap to join."="There is an active call. Tap to join.";
+"There is an active call. Tap to join."="Există un apel activ. Atinge pentru a te alătura.";
 /* Message shown in a chat room for a group call in progress displaying the duration of the call */
 "Touch to return to call %@"="Atinge pentru a reveni la apelul %@";
 /* A button label which allows the users save images/videos in the Photos app. */
@@ -1681,33 +1681,35 @@
 /* Text shown when an error occurs when trying to save a photo or video to Photos app */
 "Could not save Item"="Nu se poate salva elementul";
 /* Label in a cell where you can enable the 'Encrypted Key Rotation' */
-"Encrypted Key Rotation"="Encrypted Key Rotation";
+"Encrypted Key Rotation"="Rotația cheii criptate";
 /* Title shown in a cell to allow the users enable the 'Encrypted Key Rotation' */
-"Enable Encrypted Key Rotation"="Enable Encrypted Key Rotation";
+"Enable Encrypted Key Rotation"="Activează rotația cheii criptate";
 /* Label in a cell where you can get the chat link */
-"Get Chat Link"="Get Chat Link";
+"Get Chat Link"="Obține linkul chatului";
 /* Footer text to explain what means 'Encrypted Key Rotation' */
-"Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages."="Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages.";
+"Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages."="Rotația cheii este puțin mai sigură, dar nu îți permite să creezi un link al chatului, iar noii participanți nu vor vedea mesajele din trecut.";
 /* Alert message to advice the users that to generate a chat link they need enter a group name for the chat */
-"Before you can generate a link for this room, you need to enter a group name"="Before you can generate a link for this chat, you need to enter a group name.";
+"Before you can generate a link for this room, you need to enter a group name"="Înainte de a putea genera un link pentru acest chat, trebuie să introduci un nume de grup.";
 /* Label shown in a cell where you can enable a switch to get a chat link */
-"Chat Link"="Chat Link";
+"Chat Link"="Linkul chatului";
 /* Message shown when there is an active chat link that can be deleted */
-"Delete Chat Link"="Delete Chat Link";
+"Delete Chat Link"="Șterge linkul chatului";
 /* Button text in public chat previews that allows the user to join the chat */
-"Join"="Join";
+"Join"="Alătură-te";
 /* Text shown in a notification to let the user know that has joined a public chat room after login or account creation */
-"You have joined %@"="You have joined %@";
+"You have joined %@"="Te-ai alăturat %@";
 /* Users previewing a public chat */
-"Observers"="Observers";
+"Observers"="Observatori";
 /* Alert message shown while deleting a chat link, warning about the consequences */
-"This conversation will no longer be accessible through the link you are about to delete."="This conversation will no longer be accessible through the link you are about to delete.";
+"This conversation will no longer be accessible through the link you are about to delete."="Această conversație nu va mai fi accesibilă prin linkul public odată ce acesta a fost eliminat.";
 /* Management message shown in a chat when the user %@ enables the 'Encrypted Key Rotation' */
-"%@ enabled Encrypted Key Rotation"="%@ enabled Encrypted Key Rotation";
+"%@ enabled Encrypted Key Rotation"="%@ a activat rotația cheii criptate";
 /* Management message shown in a chat when the user %@ creates a public link for the chat */
-"%@ created a public link for the chat."="%@ created a public link for the chat.";
+"%@ created a public link for the chat."="%@ a creat un link public pentru chat.";
 /* Management message shown in a chat when the user %@ removes a public link for the chat */
-"%@ removed a public link for the chat."="%@ removed a public link for the chat.";
+"%@ removed a public link for the chat."="%@ a eliminat un link public pentru chat.";
+/* Management message shown in a chat when the user %@ joined it from a public chat link */
+"%@ joined the group chat."="%@ joined the group chat.";
 /* Message show when a call cannot be established because there are too many participants in the group call */
 "Error. No more participants are allowed in this group call."="Nu ți se permite să te alături acestui apel deoarece acesta a atins numărul maxim de participanți.";
 /* Message show when a user cannot activate the video in a group call because the max number of videos has been reached */
@@ -1799,9 +1801,9 @@
 /* The professional pricing plan which the user is currently on will expire in 5 days. The %1 is a placeholder for the number of days and should not be removed. */
 "Your PRO membership plan will expire in %1 days."="Planul pentru calitatea de membru PRO va expira în %1 zile.";
 /* The professional pricing plan which the user was on expired one day ago. */
-"Your PRO membership plan expired 1 day ago"="Planul pentru calitatea de membru PRO a expirat acum 1 zi";
+"Your PRO membership plan expired 1 day ago"="Planul tău PRO a expirat acum 1 zi";
 /* The professional pricing plan which the user was on expired %1 days ago. The %1 is a placeholder for the number of days and should not be removed. */
-"Your PRO membership plan expired %1 days ago"="Planul pentru calitatea de membru PRO a expirat acum %1 zile";
+"Your PRO membership plan expired %1 days ago"="Planul tău PRO a expirat acum %1 zile";
 /* The text of a notification indicating that a file or folder has been taken down due to infringement or other reason. The %1 placeholder will be replaced with the text ‘file’ or ‘folder’. The %2 will be replaced with the name of the file or folder. */
 "Your publicly shared %1 (%2) has been taken down."="Partajarea ta publică %1 (%2) a fost eliminată.";
 /* The text of a notification indicating that a file or folder that was taken down has now been restored due to a successful counter-notice. The %1 placeholder will be replaced with the text ‘file’ or ‘folder’. The %2 will be replaced with the name of the file or folder. */
@@ -1815,7 +1817,7 @@
 /* Label shown next to a feature name that can be enabled or disabled, like in 'Show Last seen...' */
 "Show"="Afișează";
 /* Shown when viewing a 1on1 chat (at least for now), if the user is offline. */
-"Last seen %s"="Văzut(ă) ultima dată %s";
+"Last seen %s"="Văzut(ă) ultima dată: %s";
 /* Text to inform the user the 'Last seen' time of a contact is a long time ago (>= 65535 minutes) */
 "Last seen a long time ago"="Văzut(ă) ultima dată cu mult timp în urmă";
 /* */
@@ -1827,6 +1829,16 @@
 /* Singular of participant. 1 participant */
 "%d participant"="%d participant";
 /* Text to inform the user there is an active call and is not participating */
-"Ongoing Call"="Ongoing Call";
+"Ongoing Call"="Apel în desfășurare";
+/* Message shown when there is an ongoing call and the user tries to play an audio or video */
+"It is not possible to play content while there is a call in progress"="Nu este posibilă redarea fișierelor media în timp ce există un apel în desfășurare.";
 /* Text to inform the user there is an active call and is participating */
-"Call Started"="Call Started";
+"Call Started"="Apel început";
+/* Title for feature Password Reminder */
+"Password Reminder"="Memento privind parola";
+/* Label for any ‘Message’ button, link, text, title, etc. - (String as short as possible). */
+"Message"="Mesaj";
+/* Title of the button in the contact info screen to start an audio call */
+"Call"="Apelează";
+/* Title of the button in the contact info screen to start a video call */
+"Video"="Video";

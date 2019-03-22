@@ -220,6 +220,12 @@
     }
 }
 
+#pragma mark - Public
+
+- (void)presentLoginViewController {
+    [self secondaryButtonTapped:nil];
+}
+
 #pragma mark - UIScrollViewDelegate
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {

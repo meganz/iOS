@@ -356,6 +356,7 @@
 		830EF9A420062F3800FAA947 /* DevicePermissionsHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 830EF9A320062F3800FAA947 /* DevicePermissionsHelper.m */; };
 		8310488A21AECD860057400D /* DTConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 413199691BD7BD5D002CD6EA /* DTConstants.m */; };
 		8310488B21AECDBA0057400D /* DTConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 413199691BD7BD5D002CD6EA /* DTConstants.m */; };
+		83113495223900CB00647AB4 /* GradientView.m in Sources */ = {isa = PBXBuildFile; fileRef = 83113494223900CB00647AB4 /* GradientView.m */; };
 		831D61A5218738D20038F5B8 /* MOFolderLayout+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 831D61A3218738D20038F5B8 /* MOFolderLayout+CoreDataClass.m */; };
 		831D61A6218738D20038F5B8 /* MOFolderLayout+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 831D61A4218738D20038F5B8 /* MOFolderLayout+CoreDataProperties.m */; };
 		831D61A7218738EB0038F5B8 /* MOFolderLayout+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 831D61A3218738D20038F5B8 /* MOFolderLayout+CoreDataClass.m */; };
@@ -645,6 +646,7 @@
 		A85740C92032F6E80033034C /* MOChatDraft+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = A85740C02032F6B70033034C /* MOChatDraft+CoreDataProperties.m */; };
 		A85D93BC2045751E0066F45B /* ChatVideoQualityTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A85D93BB2045751E0066F45B /* ChatVideoQualityTableViewController.m */; };
 		A8665F5220ADA1600044F8F6 /* PWProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = A8665F5020ADA1600044F8F6 /* PWProgressView.m */; };
+		A86E34B3217F705700EFCAB0 /* MEGAChatGenericRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A86E34B2217F705700EFCAB0 /* MEGAChatGenericRequestDelegate.m */; };
 		A86FC4FC1EBB4999006053A6 /* MEGAPhotoMediaItem.m in Sources */ = {isa = PBXBuildFile; fileRef = A86FC4FB1EBB4999006053A6 /* MEGAPhotoMediaItem.m */; };
 		A88BFFCF1F0A52E90081BCE3 /* libcares.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFC81F0A52E90081BCE3 /* libcares.a */; };
 		A88BFFD01F0A52E90081BCE3 /* libcares.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFC81F0A52E90081BCE3 /* libcares.a */; };
@@ -1351,6 +1353,8 @@
 		830B54892178845300BE1E1F /* CloudDriveTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CloudDriveTableViewController.m; sourceTree = "<group>"; };
 		830EF9A220062F3800FAA947 /* DevicePermissionsHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DevicePermissionsHelper.h; sourceTree = "<group>"; };
 		830EF9A320062F3800FAA947 /* DevicePermissionsHelper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DevicePermissionsHelper.m; sourceTree = "<group>"; };
+		83113493223900CB00647AB4 /* GradientView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GradientView.h; sourceTree = "<group>"; };
+		83113494223900CB00647AB4 /* GradientView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GradientView.m; sourceTree = "<group>"; };
 		831D61A1218738D20038F5B8 /* MOFolderLayout+CoreDataProperties.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MOFolderLayout+CoreDataProperties.h"; sourceTree = "<group>"; };
 		831D61A2218738D20038F5B8 /* MOFolderLayout+CoreDataClass.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MOFolderLayout+CoreDataClass.h"; sourceTree = "<group>"; };
 		831D61A3218738D20038F5B8 /* MOFolderLayout+CoreDataClass.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "MOFolderLayout+CoreDataClass.m"; sourceTree = "<group>"; };
@@ -1569,6 +1573,8 @@
 		A85D93BD20457DAA0066F45B /* ChatVideoUploadQuality.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ChatVideoUploadQuality.h; sourceTree = "<group>"; };
 		A8665F5020ADA1600044F8F6 /* PWProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PWProgressView.m; sourceTree = "<group>"; };
 		A8665F5120ADA1600044F8F6 /* PWProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PWProgressView.h; sourceTree = "<group>"; };
+		A86E34B1217F705700EFCAB0 /* MEGAChatGenericRequestDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MEGAChatGenericRequestDelegate.h; sourceTree = "<group>"; };
+		A86E34B2217F705700EFCAB0 /* MEGAChatGenericRequestDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MEGAChatGenericRequestDelegate.m; sourceTree = "<group>"; };
 		A86FC4FB1EBB4999006053A6 /* MEGAPhotoMediaItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEGAPhotoMediaItem.m; sourceTree = "<group>"; };
 		A88BFFC81F0A52E90081BCE3 /* libcares.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcares.a; path = iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib/libcares.a; sourceTree = "<group>"; };
 		A88BFFCA1F0A52E90081BCE3 /* libcryptopp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcryptopp.a; path = iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib/libcryptopp.a; sourceTree = "<group>"; };
@@ -3005,6 +3011,8 @@
 				777615AD2175D87D00A7796D /* InputView.h */,
 				777615AE2175D87D00A7796D /* InputView.m */,
 				777615B02175D88C00A7796D /* InputView.xib */,
+				83113493223900CB00647AB4 /* GradientView.h */,
+				83113494223900CB00647AB4 /* GradientView.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -3324,6 +3332,8 @@
 				836E74C32099DC82005E2317 /* MEGAChatChangeGroupNameRequestDelegate.m */,
 				831FBEA020EF697200AC1B91 /* MEGAArchiveChatRequestDelegate.h */,
 				831FBEA120EF697200AC1B91 /* MEGAArchiveChatRequestDelegate.m */,
+				A86E34B1217F705700EFCAB0 /* MEGAChatGenericRequestDelegate.h */,
+				A86E34B2217F705700EFCAB0 /* MEGAChatGenericRequestDelegate.m */,
 				A8B354D221354680002018A9 /* MEGAChatNotificationDelegate.h */,
 				A8B354D321354680002018A9 /* MEGAChatNotificationDelegate.m */,
 			);
@@ -4084,6 +4094,7 @@
 				A8B354D421354680002018A9 /* MEGAChatNotificationDelegate.m in Sources */,
 				A8F5D67D1ED5B0990087DA40 /* MEGASendSignupLinkRequestDelegate.m in Sources */,
 				8361359021074C5D002FA3CC /* MOUploadTransfer+CoreDataClass.m in Sources */,
+				A86E34B3217F705700EFCAB0 /* MEGAChatGenericRequestDelegate.m in Sources */,
 				4156C80C1AD7E79A00F5E818 /* LTHKeychainUtils.m in Sources */,
 				77F43DD92034637300AE4F42 /* UICollectionView+MNZCategory.m in Sources */,
 				83369CE42179D0A0002B09C3 /* CloudDriveCollectionViewController.m in Sources */,
@@ -4134,6 +4145,7 @@
 				5B118EC31FB1B0C6005D7D90 /* NSMutableArray+MNZCategory.m in Sources */,
 				E8CD19871A9266D600CB8B2A /* UnavailableLinkView.m in Sources */,
 				5B1AB4AF20E5407300FEDAF9 /* MEGAQuerySignupLinkRequestDelegate.m in Sources */,
+				83113495223900CB00647AB4 /* GradientView.m in Sources */,
 				E8D4B8911A69429200A3B2E2 /* ConfirmAccountViewController.m in Sources */,
 				835223AD20568BB200A47438 /* MEGAGetFolderInfoRequestDelegate.m in Sources */,
 				5B5737D61EFBE6410027ECCD /* MEGANode+MNZCategory.m in Sources */,
