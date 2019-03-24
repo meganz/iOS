@@ -277,9 +277,9 @@ static const NSTimeInterval HeaderStateViewReloadToleranceTimeInterval = .1;
 - (void)configStateLabelByVideoPendingCount:(NSUInteger)count {
     NSString *videoMessage;
     if (count == 1) {
-        videoMessage = @"Video uploads are off, 1 video not uploaded";
+        videoMessage = @"Photos uploaded, video uploads are off, 1 video not uploaded";
     } else {
-        videoMessage = [NSString stringWithFormat:@"Video uploads are off, %lu videos not uploaded", (unsigned long)count];
+        videoMessage = [NSString stringWithFormat:@"Photos uploaded, video uploads are off, %lu videos not uploaded", (unsigned long)count];
     }
     
     self.stateLabel.text = videoMessage;
