@@ -41,26 +41,25 @@ static NSString * const CameraUplodFolderName = @"Camera Uploads";
         if (self.completion) {
             self.completion(node, nil);
         }
+        
         [self finishOperation];
     } else {
         CameraUploadRequestDelegate *delegate = [[CameraUploadRequestDelegate alloc] initWithCompletion:^(MEGARequest * _Nonnull request, MEGAError * _Nonnull error) {
-            dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0), ^{
-                if (error.type) {
-                    MEGALogError(@"[Camera Upload] error when to create camera upload node %@", error.nativeError);
-                    if (self.completion) {
-                        self.completion(nil, error.nativeError);
-                    }
-                } else {
-                    MEGALogDebug(@"[Camera Upload] camera upload node is created");
-                    MEGANode *node = [MEGASdkManager.sharedMEGASdk nodeForHandle:request.nodeHandle];
-                    [self saveCameraUploadNode:node];
-                    if (self.completion) {
-                        self.completion(node, nil);
-                    }
+            if (error.type) {
+                MEGALogError(@"[Camera Upload] error when to create camera upload node %@", error.nativeError);
+                if (self.completion) {
+                    self.completion(nil, error.nativeError);
                 }
-                
-                [self finishOperation];
-            });
+            } else {
+                MEGALogDebug(@"[Camera Upload] camera upload node is created");
+                MEGANode *node = [MEGASdkManager.sharedMEGASdk nodeForHandle:request.nodeHandle];
+                [self saveCameraUploadNode:node];
+                if (self.completion) {
+                    self.completion(node, nil);
+                }
+            }
+            
+            [self finishOperation];
         }];
         
         [MEGASdkManager.sharedMEGASdk createFolderWithName:CameraUplodFolderName parent:MEGASdkManager.sharedMEGASdk.rootNode
