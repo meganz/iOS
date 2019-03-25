@@ -315,12 +315,14 @@ const NSUInteger kMaxMessagesToLoad = 256;
     
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kReachabilityChangedNotification object:nil];
     
-    // In anonymous mode the controller is presented, don't close the chat room and preview if push to the group details view controller
+    // Don't close the chat room when pushing the group details view controller
     if (self.isMovingFromParentViewController || (self.presentingViewController && self.navigationController.viewControllers.count == 1)) {
         [[MEGASdkManager sharedMEGAChatSdk] closeChatRoom:self.chatRoom.chatId delegate:self];
-        if (self.chatRoom.isPreview) {
-            [[MEGASdkManager sharedMEGAChatSdk] closeChatPreview:self.chatRoom.chatId];
-        }
+    }
+    
+    // The chat preview is closed here in case of dismiss and in viewDidDisappear in case of pop
+    if (self.chatRoom.isPreview && self.presentingViewController && self.navigationController.viewControllers.count == 1) {
+        [[MEGASdkManager sharedMEGAChatSdk] closeChatPreview:self.chatRoom.chatId];
     }
     
     [[MEGASdkManager sharedMEGAChatSdk] removeChatDelegate:self];
@@ -329,6 +331,15 @@ const NSUInteger kMaxMessagesToLoad = 256;
     [[MEGAStore shareInstance] insertOrUpdateChatDraftWithChatId:self.chatRoom.chatId text:self.inputToolbar.contentView.textView.text];
     
     [SVProgressHUD dismiss];
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    
+    // The chat preview is closed here in case of pop and in viewWillDisappear in case of dismiss
+    if (self.chatRoom.isPreview && self.isMovingFromParentViewController) {
+        [[MEGASdkManager sharedMEGAChatSdk] closeChatPreview:self.chatRoom.chatId];
+    }
 }
 
 - (BOOL)hidesBottomBarWhenPushed {
