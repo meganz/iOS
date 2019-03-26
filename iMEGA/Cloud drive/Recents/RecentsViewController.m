@@ -41,7 +41,7 @@
     
     [self.tableView registerNib:[UINib nibWithNibName:@"RecentsTableViewHeaderView" bundle:nil] forHeaderFooterViewReuseIdentifier:@"RecentsHeaderFooterView"];
     
-    _recentActionBucketArray = [MEGASdkManager.sharedMEGASdk recentActionsSinceDate:[NSDate dateWithTimeIntervalSince1970:0] maxNodes:10000];
+    _recentActionBucketArray = MEGASdkManager.sharedMEGASdk.recentActions;
     
     [self.tableView reloadData];
     
