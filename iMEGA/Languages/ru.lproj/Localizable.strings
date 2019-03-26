@@ -1709,7 +1709,7 @@
 /* Management message shown in a chat when the user %@ removes a public link for the chat */
 "%@ removed a public link for the chat."="%@ удалил публичную ссылку на чат.";
 /* Management message shown in a chat when the user %@ joined it from a public chat link */
-"%@ joined the group chat."="%@ joined the group chat.";
+"%@ joined the group chat."="%@ вошёл в чат.";
 /* Message show when a call cannot be established because there are too many participants in the group call */
 "Error. No more participants are allowed in this group call."="Вы не можете присоединиться к этому вызову, так как в нём максимальное количество участников.";
 /* Message show when a user cannot activate the video in a group call because the max number of videos has been reached */

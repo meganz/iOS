@@ -17,6 +17,7 @@ typedef NS_ENUM(NSUInteger, ContactsMode) {
 
 @property (nonatomic) ContactsMode contactsMode;
 @property (nonatomic) BOOL avoidPresentIncomingPendingContactRequests;
+@property (nonatomic) BOOL getChatLinkEnabled;
 
 @property (nonatomic, strong) MEGANode *node;
 @property (nonatomic, strong) NSArray *nodesArray;

@@ -659,7 +659,7 @@
 /* Option title to enable Camera Uploads only when the device is charging */
 "onlyWhenChargingLabel"="Tylko gdy podłączone zasilanie";
 /* Footer text to explain the Camera Uploads functionality */
-"cameraUploads_footer"="Po włączeniu zdjęcia i filmy zostaną przesłane.";
+"cameraUploads_footer"="Po włączeniu przesyłane będą zdjęcia i filmy.";
 /* App means “Application” */
 "App version"="Wersja aplikacji";
 /* Title of the label where the SDK version is shown */

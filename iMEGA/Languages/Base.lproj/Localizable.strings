@@ -659,7 +659,7 @@
 /* Option title to enable Camera Uploads only when the device is charging */
 "onlyWhenChargingLabel"="Only when charging";
 /* Footer text to explain the Camera Uploads functionality */
-"cameraUploads_footer"="When enabled photos and videos will be uploaded.";
+"cameraUploads_footer"="When enabled, photos and videos will be uploaded.";
 /* App means “Application” */
 "App version"="App version";
 /* Title of the label where the SDK version is shown */
@@ -1688,8 +1688,8 @@
 "Get Chat Link"="Get Chat Link";
 /* Footer text to explain what means 'Encrypted Key Rotation' */
 "Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages."="Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages.";
-/* Alert message to advice the users that to generate a chat link they need enter a group name for the chat */
-"Before you can generate a link for this room, you need to enter a group name"="Before you can generate a link for this chat, you need to enter a group name.";
+/* Shown as an error message when the user selects "create chat link", but haven't entered a title for the newly created room */
+"To enable Chat links you must name the group you are about to create."="To enable Chat links you must name the group you are about to create.";
 /* Label shown in a cell where you can enable a switch to get a chat link */
 "Chat Link"="Chat Link";
 /* Message shown when there is an active chat link that can be deleted */
@@ -1842,6 +1842,12 @@
 "Call"="Call";
 /* Title of the button in the contact info screen to start a video call */
 "Video"="Video";
+/* The label of the toggle switch to indicate that file versioning is enabled. */
+"Enabled"="Enabled";
+/* Text button for init a group chat with link. */
+"New Chat Link"="New Chat Link";
+/* Text button for init a group chat */
+"New group chat"="New group chat";
 /* Title for the recents section. */
 "Recents"="Recents";
 /* Multiple Images title shown in recents section of webclient */
