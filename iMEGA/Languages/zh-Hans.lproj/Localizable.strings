@@ -659,7 +659,7 @@
 /* Option title to enable Camera Uploads only when the device is charging */
 "onlyWhenChargingLabel"="只在充电状态下";
 /* Footer text to explain the Camera Uploads functionality */
-"cameraUploads_footer"="开启后将上传新的照片和视频。";
+"cameraUploads_footer"="开启后照片与视频将被上传。";
 /* App means “Application” */
 "App version"="App 版本";
 /* Title of the label where the SDK version is shown */

@@ -397,8 +397,10 @@ static NSString *nodeToPresentBase64Handle;
             
         case URLTypeOpenChatSectionLink: {
             if ([Helper hasSession_alertIfNot]) {
-                MainTabBarController *mainTBC = (MainTabBarController *)UIApplication.sharedApplication.keyWindow.rootViewController;
-                mainTBC.selectedIndex = CHAT;
+                if ([UIApplication.sharedApplication.keyWindow.rootViewController isKindOfClass:MainTabBarController.class]) {
+                    MainTabBarController *mainTBC = (MainTabBarController *) UIApplication.sharedApplication.keyWindow.rootViewController;
+                    mainTBC.selectedIndex = CHAT;
+                }
             }
             break;
         }
@@ -420,8 +422,10 @@ static NSString *nodeToPresentBase64Handle;
             
         case URLTypeAchievementsLink: {
             if ([Helper hasSession_alertIfNot]) {
-                MainTabBarController *mainTBC = (MainTabBarController *)UIApplication.sharedApplication.keyWindow.rootViewController;
-                [mainTBC showAchievements];
+                if ([UIApplication.sharedApplication.keyWindow.rootViewController isKindOfClass:MainTabBarController.class]) {
+                    MainTabBarController *mainTBC = (MainTabBarController *) UIApplication.sharedApplication.keyWindow.rootViewController;
+                    [mainTBC showAchievements];
+                }
             }
             break;
         }

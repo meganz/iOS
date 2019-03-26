@@ -659,7 +659,7 @@
 /* Option title to enable Camera Uploads only when the device is charging */
 "onlyWhenChargingLabel"="Nur am Ladegerät";
 /* Footer text to explain the Camera Uploads functionality */
-"cameraUploads_footer"="Wenn aktiviert, werden neue Fotos und Videos automatisch hochgeladen.";
+"cameraUploads_footer"="When enabled, photos and videos will be uploaded.";
 /* App means “Application” */
 "App version"="App Version";
 /* Title of the label where the SDK version is shown */

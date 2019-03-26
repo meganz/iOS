@@ -659,7 +659,7 @@
 /* Option title to enable Camera Uploads only when the device is charging */
 "onlyWhenChargingLabel"="Pendant la charge seulement";
 /* Footer text to explain the Camera Uploads functionality */
-"cameraUploads_footer"="Si cette option est activée, les nouvelles photos et vidéos seront téléversées.";
+"cameraUploads_footer"="Si cette option est activée, les photos et vidéos seront téléversées.";
 /* App means “Application” */
 "App version"="Version de l’appli";
 /* Title of the label where the SDK version is shown */
@@ -1681,19 +1681,19 @@
 /* Text shown when an error occurs when trying to save a photo or video to Photos app */
 "Could not save Item"="Impossible d’enregistrer l’élément";
 /* Label in a cell where you can enable the 'Encrypted Key Rotation' */
-"Encrypted Key Rotation"="Rotation de la clé chiffré";
+"Encrypted Key Rotation"="Rotation de la clé chiffrée";
 /* Title shown in a cell to allow the users enable the 'Encrypted Key Rotation' */
 "Enable Encrypted Key Rotation"="Activer la rotation de la clé chiffrée";
 /* Label in a cell where you can get the chat link */
-"Get Chat Link"="Obtenir le lien de la conversation";
+"Get Chat Link"="Obtenir le lien vers la conversation";
 /* Footer text to explain what means 'Encrypted Key Rotation' */
 "Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages."="La rotation de la clé est légèrement plus sécurisée, mais elle ne vous permet pas de créer un lien de conversation et les nouveaux participants ne verront pas les anciens messages.";
 /* Alert message to advice the users that to generate a chat link they need enter a group name for the chat */
 "Before you can generate a link for this room, you need to enter a group name"="Avant de pouvoir générer un lien pour cette conversation, vous devez saisir un nom de groupe.";
 /* Label shown in a cell where you can enable a switch to get a chat link */
-"Chat Link"="Lien de la conversation";
+"Chat Link"="Lien vers la conversation";
 /* Message shown when there is an active chat link that can be deleted */
-"Delete Chat Link"="Supprimer le lien de la conversation";
+"Delete Chat Link"="Supprimer le lien vers la conversation";
 /* Button text in public chat previews that allows the user to join the chat */
 "Join"="Vous y joindre";
 /* Text shown in a notification to let the user know that has joined a public chat room after login or account creation */
@@ -1707,7 +1707,7 @@
 /* Management message shown in a chat when the user %@ creates a public link for the chat */
 "%@ created a public link for the chat."="%@ a créé un lien public pour la conversation.";
 /* Management message shown in a chat when the user %@ removes a public link for the chat */
-"%@ removed a public link for the chat."="%@ a supprimé un lien public pour la conversation.";
+"%@ removed a public link for the chat."="%@ a supprimé le lien public de la conversation.";
 /* Management message shown in a chat when the user %@ joined it from a public chat link */
 "%@ joined the group chat."="%@ joined the group chat.";
 /* Message show when a call cannot be established because there are too many participants in the group call */
