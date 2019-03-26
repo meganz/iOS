@@ -1688,8 +1688,8 @@
 "Get Chat Link"="대화 링크 얻기";
 /* Footer text to explain what means 'Encrypted Key Rotation' */
 "Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages."="키 순환은 약간 더 안전합니다만, 대화 링크를 생성할 수 없고 새로운 참여자는 과거 메시지를 볼 수 없습니다.";
-/* Alert message to advice the users that to generate a chat link they need enter a group name for the chat */
-"Before you can generate a link for this room, you need to enter a group name"="이 대화에 대한 링크를 생성하기 전, 그룹 이름을 입력해야 합니다.";
+/* Shown as an error message when the user selects "create chat link", but haven't entered a title for the newly created room */
+"To enable Chat links you must name the group you are about to create."="To enable Chat links you must name the group you are about to create.";
 /* Label shown in a cell where you can enable a switch to get a chat link */
 "Chat Link"="대화 링크";
 /* Message shown when there is an active chat link that can be deleted */
@@ -1842,3 +1842,37 @@
 "Call"="전화";
 /* Title of the button in the contact info screen to start a video call */
 "Video"="동영상";
+/* The label of the toggle switch to indicate that file versioning is enabled. */
+"Enabled"="활성화됨";
+/* Text button for init a group chat with link. */
+"New Chat Link"="New Chat Link";
+/* Text button for init a group chat */
+"New group chat"="새 그룹 대화";
+/* Title for the recents section. */
+"Recents"="최근";
+/* Multiple Images title shown in recents section of webclient */
+"%1 Images"="이미지 %1개";
+/* Multiple videos title shown in recents section of web client. */
+"%2 Videos"="동영상 %2개";
+/* A single image and single video title shown in recents section of webclient. */
+"1 Image and 1 Video"="이미지 1개와 동영상 1개";
+/* One image and multiple videos title in recents. */
+"1 Image and %2 Videos"="이미지 1개와 동영상 %2개";
+/* Title for multiple images and multiple videos in recents section */
+"%1 Images and %2 Videos"="이미지 %1개와 동영상 %2개";
+/* Tooltip message shown on recents section. Please see the attached image. */
+"Modified on %1 at %2"="수정일 %1 %2";
+/* Title for a recent action shown in the webclient, see the attached image for context. */
+"%1 modified by %3"="%1 편집자: %3";
+/* Title for a recent action shown in the webclient, see the attached image for context. Please ensure that the `%2 more` is inside the [A] tag as this will become a toggle to show the hidden content. */
+"%1 and [A]%2 more[/A] modified by %3"="%1 [A]외 %2개[/A] 수정자 %3";
+/* Title for a recent action shown in the webclient, see the attached image for context. Please ensure that the `%2 more` is inside the [A] tag as this will become a toggle to show the hidden content. */
+"%1 and [A]%2 more[/A]"="%1 [A]외 %2개[/A]";
+/* Title for a recent action shown in the webclient, see the attached image for context. */
+"%1 created by %3"="%1 생성자 %3";
+/* Title for a recent action shown in the webclient, see the attached image for context. Please ensure that the `%2 more` is inside the [A] tag as this will become a toggle to show the hidden content. */
+"%1 and [A]%2 more[/A] created by %3"="%1 [A]외 %2개[/A] 생성자 %3";
+/* Message shown when the user has not recent activity in their account. */
+"No recent activity"="최근 활동 없음";
+/* Plural of items which contains a folder. 2 items */
+"items"="항목";
