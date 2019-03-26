@@ -211,15 +211,6 @@
     
     [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
         [self.cdTableView.tableView reloadEmptyDataSet];
-        if (self.searchController.active) {
-            if (UIDevice.currentDevice.iPad) {
-                if (self != UIApplication.mnz_visibleViewController) {
-                    [Helper resetSearchControllerFrame:self.searchController];
-                }
-            } else {
-                [Helper resetSearchControllerFrame:self.searchController];
-            }
-        }
     } completion:nil];
 }
 
@@ -289,6 +280,7 @@
     self.cdCollectionView = nil;
 
     self.searchController = [Helper customSearchControllerWithSearchResultsUpdaterDelegate:self searchBarDelegate:self];
+    self.searchController.hidesNavigationBarDuringPresentation = NO;
     self.layoutView = LayoutModeList;
 
     self.cdTableView = [self.storyboard instantiateViewControllerWithIdentifier:@"CloudDriveTableID"];
@@ -298,8 +290,7 @@
     [self.cdTableView didMoveToParentViewController:self];
     
     self.cdTableView.cloudDrive = self;
-    self.cdTableView.tableView.tableHeaderView = self.searchController.searchBar;
-    self.cdTableView.tableView.contentOffset = CGPointMake(0, CGRectGetHeight(self.searchController.searchBar.frame));
+    self.cdTableView.tableView.tableHeaderView = (self.displayMode == DisplayModeRecents) ? nil : self.searchController.searchBar;
     self.cdTableView.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     self.cdTableView.tableView.emptyDataSetDelegate = self;
     self.cdTableView.tableView.emptyDataSetSource = self;
@@ -312,6 +303,7 @@
     self.cdTableView = nil;
     
     self.searchController = [Helper customSearchControllerWithSearchResultsUpdaterDelegate:self searchBarDelegate:self];
+    self.searchController.hidesNavigationBarDuringPresentation = NO;
     self.layoutView = LayoutModeThumbnail;
 
     self.cdCollectionView = [self.storyboard instantiateViewControllerWithIdentifier:@"CloudDriveCollectionID"];
@@ -812,7 +804,7 @@
     } else {
         [self setNavigationBarButtonItemsEnabled:[MEGAReachabilityManager isReachable]];
         if (!self.cdTableView.tableView.tableHeaderView) {
-            self.cdTableView.tableView.tableHeaderView = self.searchController.searchBar;
+            self.cdTableView.tableView.tableHeaderView = (self.displayMode == DisplayModeRecents) ? nil : self.searchController.searchBar;
         }
     }
     
@@ -1741,14 +1733,6 @@
         }
     }
     [self reloadData];
-}
-
-#pragma mark - UISearchControllerDelegate
-
-- (void)didPresentSearchController:(UISearchController *)searchController {
-    if (UIDevice.currentDevice.iPhoneDevice && UIDeviceOrientationIsLandscape(UIDevice.currentDevice.orientation)) {
-        [Helper resetSearchControllerFrame:searchController];
-    }
 }
 
 #pragma mark - UIDocumentPickerDelegate
