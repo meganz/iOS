@@ -1653,9 +1653,9 @@
 /* Label for any ‘Days’ button, link, text, title, etc. - (String as short as possible). */
 "Days"="Dias";
 /* New server-side rubbish-bin cleaning scheduler description (for Free users) */
-"The Rubbish Bin is cleaned for you automatically. The minimum period is 7 days and your maximum period is 30 days."="A sua Lixeira será esvaziada de forma automática. O período mínimo é de 7 dias, e o período máximo é de 30 dias.";
+"The Rubbish Bin is cleaned for you automatically. The minimum period is 7 days and your maximum period is 30 days."="A Lixeira será esvaziada de forma automática. O período mínimo é de 7 dias, e o período máximo é de 30 dias.";
 /* New server-side rubbish-bin cleaning scheduler description (for PRO users) */
-"The Rubbish Bin can be cleaned for you automatically. The minimum period is 7 days."="The Rubbish Bin can be cleared for you automatically. The minimum period is 7 days.";
+"The Rubbish Bin can be cleaned for you automatically. The minimum period is 7 days."="A Lixeira pode ser esvaziada de forma automática. O período mínimo é de 7 dias.";
 /* Description shown when you try to disable the feature Rubbish-Bin Cleaning Scheduler and you are a free user */
 "To disable the Rubbish-Bin Cleaning Scheduler or set a longer retention period, you need to subscribe to a PRO plan."="Para desativar o Planejador de limpeza da lixeira ou definir um período de retenção mais longo, você precisa assinar um plano PRO.";
 /* Confirmation dialog for the button that logs the user out of all sessions except the current one. */
@@ -1693,13 +1693,13 @@
 /* Label shown in a cell where you can enable a switch to get a chat link */
 "Chat Link"="Link do chat";
 /* Message shown when there is an active chat link that can be deleted */
-"Delete Chat Link"="Deletar link do chat";
+"Delete Chat Link"="Deletar o link do chat";
 /* Button text in public chat previews that allows the user to join the chat */
 "Join"="Entrar";
 /* Text shown in a notification to let the user know that has joined a public chat room after login or account creation */
 "You have joined %@"="You have joined %@";
 /* Users previewing a public chat */
-"Observers"="Observers";
+"Observers"="Expectadores";
 /* Alert message shown while deleting a chat link, warning about the consequences */
 "This conversation will no longer be accessible through the link you are about to delete."="This conversation will no longer be accessible through the public link once it has been removed.";
 /* Management message shown in a chat when the user %@ enables the 'Encrypted Key Rotation' */
@@ -1709,7 +1709,7 @@
 /* Management message shown in a chat when the user %@ removes a public link for the chat */
 "%@ removed a public link for the chat."="%@ removed the public link for the chat.";
 /* Management message shown in a chat when the user %@ joined it from a public chat link */
-"%@ joined the group chat."="%@ joined the group chat.";
+"%@ joined the group chat."="%@ se uniu ao chat em grupo.";
 /* Message show when a call cannot be established because there are too many participants in the group call */
 "Error. No more participants are allowed in this group call."="Você não pode participar desta chamada porque o número máximo de participantes foi alcançado.";
 /* Message show when a user cannot activate the video in a group call because the max number of videos has been reached */

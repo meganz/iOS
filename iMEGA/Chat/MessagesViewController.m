@@ -211,7 +211,9 @@ const NSUInteger kMaxMessagesToLoad = 256;
     if (self.isMovingToParentViewController) {
         if ([[MEGASdkManager sharedMEGAChatSdk] openChatRoom:self.chatRoom.chatId delegate:self]) {
             MEGALogDebug(@"Chat room opened: %@", self.chatRoom);
-            [self loadMessages];
+            if (self.isFirstLoad) {
+                [self loadMessages];
+            }
         } else {
             UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"error", nil) message:AMLocalizedString(@"chatNotFound", nil) preferredStyle:UIAlertControllerStyleAlert];
             [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
@@ -313,11 +315,14 @@ const NSUInteger kMaxMessagesToLoad = 256;
     
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kReachabilityChangedNotification object:nil];
     
-    if (self.isMovingFromParentViewController || self.presentingViewController) {
+    // Don't close the chat room when pushing the group details view controller
+    if (self.isMovingFromParentViewController || (self.presentingViewController && self.navigationController.viewControllers.count == 1)) {
         [[MEGASdkManager sharedMEGAChatSdk] closeChatRoom:self.chatRoom.chatId delegate:self];
-        if (self.chatRoom.isPreview) {
-            [[MEGASdkManager sharedMEGAChatSdk] closeChatPreview:self.chatRoom.chatId];
-        }
+    }
+    
+    // The chat preview is closed here in case of dismiss and in viewDidDisappear in case of pop
+    if (self.chatRoom.isPreview && self.presentingViewController && self.navigationController.viewControllers.count == 1) {
+        [[MEGASdkManager sharedMEGAChatSdk] closeChatPreview:self.chatRoom.chatId];
     }
     
     [[MEGASdkManager sharedMEGAChatSdk] removeChatDelegate:self];
@@ -326,6 +331,15 @@ const NSUInteger kMaxMessagesToLoad = 256;
     [[MEGAStore shareInstance] insertOrUpdateChatDraftWithChatId:self.chatRoom.chatId text:self.inputToolbar.contentView.textView.text];
     
     [SVProgressHUD dismiss];
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    
+    // The chat preview is closed here in case of pop and in viewWillDisappear in case of dismiss
+    if (self.chatRoom.isPreview && self.isMovingFromParentViewController) {
+        [[MEGASdkManager sharedMEGAChatSdk] closeChatPreview:self.chatRoom.chatId];
+    }
 }
 
 - (BOOL)hidesBottomBarWhenPushed {
