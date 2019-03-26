@@ -32,7 +32,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="60" sectionFooterHeight="2" translatesAutoresizingMaskIntoConstraints="NO" id="DfQ-WB-Lb3">
-                                <rect key="frame" x="0.0" y="64" width="414" height="672"/>
+                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <view key="tableHeaderView" contentMode="scaleToFill" id="Z39-vb-ZNv">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="95"/>
@@ -578,7 +578,7 @@
                                                     </constraints>
                                                 </stackView>
                                                 <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MnT-ok-C8h" userLabel="Info Button">
-                                                    <rect key="frame" x="325" y="8" width="46" height="44"/>
+                                                    <rect key="frame" x="325" y="18" width="46" height="24"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="46" id="N1p-Mz-14T"/>
                                                     </constraints>
@@ -880,7 +880,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="fWH-c4-xB0">
-                                <rect key="frame" x="0.0" y="64" width="414" height="672"/>
+                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="SearchItemCell" rowHeight="170" id="9Sh-2k-8S9">
@@ -1332,13 +1332,13 @@
         <!--Cloud Drive View Controller-->
         <scene sceneID="Z9t-lm-QoQ">
             <objects>
-                <viewController storyboardIdentifier="CloudDriveID" id="MwH-YC-3hO" customClass="CloudDriveViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="CloudDriveID" extendedLayoutIncludesOpaqueBars="YES" id="MwH-YC-3hO" customClass="CloudDriveViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="JCK-I0-QRr">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="udP-7t-bdN">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
+                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="g5o-Ck-bk9">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -1433,7 +1433,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="SkX-lA-IWK"/>
                     </view>
-                    <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
+                    <extendedEdge key="edgesForExtendedLayout" top="YES"/>
                     <navigationItem key="navigationItem" id="bhq-OP-1fM">
                         <barButtonItem key="backBarButtonItem" title=" " id="sVp-1V-opM"/>
                     </navigationItem>
@@ -1536,7 +1536,7 @@
         <!--Cloud Drive Table View Controller-->
         <scene sceneID="vES-M0-swf">
             <objects>
-                <viewController storyboardIdentifier="CloudDriveTableID" id="GQa-hI-CnY" customClass="CloudDriveTableViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="CloudDriveTableID" extendedLayoutIncludesOpaqueBars="YES" id="GQa-hI-CnY" customClass="CloudDriveTableViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="2It-yg-tNx">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1874,6 +1874,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="WAv-IL-CJ8"/>
                     </view>
+                    <extendedEdge key="edgesForExtendedLayout" top="YES"/>
                     <connections>
                         <outlet property="tableView" destination="u00-1Q-uBO" id="E8e-BN-uQD"/>
                     </connections>
@@ -1885,7 +1886,7 @@
         <!--Cloud Drive Collection View Controller-->
         <scene sceneID="nSS-lf-aWa">
             <objects>
-                <viewController storyboardIdentifier="CloudDriveCollectionID" id="Qi0-n9-gdN" customClass="CloudDriveCollectionViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="CloudDriveCollectionID" extendedLayoutIncludesOpaqueBars="YES" id="Qi0-n9-gdN" customClass="CloudDriveCollectionViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="wkl-ci-w41">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -2018,6 +2019,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="4sr-qL-yxv"/>
                     </view>
+                    <extendedEdge key="edgesForExtendedLayout" top="YES"/>
                     <connections>
                         <outlet property="collectionView" destination="gUU-Gw-9s5" id="zdr-8h-pHg"/>
                         <outlet property="collectionViewTopConstraint" destination="Q1w-c8-e5j" id="k5J-HO-PMv"/>
@@ -2155,7 +2157,7 @@ You are strictly prohibited from using the MEGA cloud service to infringe copyri
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" allowsSelectionDuringEditing="YES" allowsMultipleSelectionDuringEditing="YES" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="50" sectionFooterHeight="2" translatesAutoresizingMaskIntoConstraints="NO" id="WwE-ru-viU">
-                                <rect key="frame" x="0.0" y="64" width="414" height="672"/>
+                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <color key="separatorColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                 <prototypes>
@@ -2551,7 +2553,8 @@ You are strictly prohibited from using the MEGA cloud service to infringe copyri
         <!--Navigation Controller-->
         <scene sceneID="7NI-Kw-6L0">
             <objects>
-                <navigationController storyboardIdentifier="navCloudDriveID" automaticallyAdjustsScrollViewInsets="NO" id="B1s-m2-ahE" customClass="MEGANavigationController" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="navCloudDriveID" extendedLayoutIncludesOpaqueBars="YES" automaticallyAdjustsScrollViewInsets="NO" id="B1s-m2-ahE" customClass="MEGANavigationController" sceneMemberID="viewController">
+                    <extendedEdge key="edgesForExtendedLayout" top="YES"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="YvJ-Ps-XI2">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
@@ -2572,26 +2575,26 @@ You are strictly prohibited from using the MEGA cloud service to infringe copyri
         <image name="button:Vdc-hv-9s2:image" width="16" height="16"/>
         <image name="cancel" width="46" height="44"/>
         <image name="checkBoxUnselected" width="24" height="24"/>
-        <image name="copy" width="32" height="32"/>
+        <image name="copy" width="28" height="28"/>
         <image name="delete" width="28" height="28"/>
         <image name="download" width="32" height="32"/>
-        <image name="downloadQueued" width="11" height="11"/>
+        <image name="downloadQueued" width="12" height="12"/>
         <image name="history" width="28" height="28"/>
         <image name="icon-key-only" width="24" height="24"/>
-        <image name="icon-link-only" width="24" height="24"/>
+        <image name="icon-link-only" width="24.5" height="24"/>
         <image name="icon-link-w-key" width="24" height="24"/>
-        <image name="more" width="26" height="6"/>
-        <image name="moreSelected" width="26" height="6"/>
+        <image name="more" width="28" height="28"/>
+        <image name="moreSelected" width="28" height="28"/>
         <image name="move" width="28" height="28"/>
         <image name="openWith" width="28" height="28"/>
-        <image name="readPermissions" width="46" height="44"/>
+        <image name="readPermissions" width="24" height="24"/>
         <image name="restore" width="28" height="28"/>
         <image name="rubbishBin" width="28" height="28"/>
         <image name="search" width="28" height="28"/>
         <image name="selectAll" width="22" height="22"/>
         <image name="share" width="28" height="28"/>
         <image name="shareGray" width="32" height="32"/>
-        <image name="thumbnailsView" width="24" height="24"/>
+        <image name="thumbnailsView" width="28" height="28"/>
         <image name="versioned" width="12" height="12"/>
         <image name="video_list" width="22" height="22"/>
     </resources>
