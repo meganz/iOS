@@ -659,7 +659,7 @@
 /* Option title to enable Camera Uploads only when the device is charging */
 "onlyWhenChargingLabel"="Hanya saat sedang men-cas";
 /* Footer text to explain the Camera Uploads functionality */
-"cameraUploads_footer"="Saat diaktifkan foto dan video baru akan terupload.";
+"cameraUploads_footer"="Saat diaktifkan, foto dan video akan diunggah.";
 /* App means “Application” */
 "App version"="Versi App";
 /* Title of the label where the SDK version is shown */
@@ -1655,7 +1655,7 @@
 /* New server-side rubbish-bin cleaning scheduler description (for Free users) */
 "The Rubbish Bin is cleaned for you automatically. The minimum period is 7 days and your maximum period is 30 days."="Tempat Sampah dibersihkan untuk Anda secara otomatis. Periode minimum adalah 7 hari dan periode maksimum adalah 30 hari.";
 /* New server-side rubbish-bin cleaning scheduler description (for PRO users) */
-"The Rubbish Bin can be cleaned for you automatically. The minimum period is 7 days."="The Rubbish Bin can be cleared for you automatically. The minimum period is 7 days.";
+"The Rubbish Bin can be cleaned for you automatically. The minimum period is 7 days."="Tempat Sampah dapat dibersihkan untuk Anda secara otomatis. Periode minimum adalah 7 hari.";
 /* Description shown when you try to disable the feature Rubbish-Bin Cleaning Scheduler and you are a free user */
 "To disable the Rubbish-Bin Cleaning Scheduler or set a longer retention period, you need to subscribe to a PRO plan."="Untuk menonaktifkan Penjadwalan Pembersihan Rubbish-Bin atau menetapkan periode retensi yang lebih lama, Anda harus berlangganan ke rencana PRO.";
 /* Confirmation dialog for the button that logs the user out of all sessions except the current one. */
@@ -1697,19 +1697,19 @@
 /* Button text in public chat previews that allows the user to join the chat */
 "Join"="Gabung";
 /* Text shown in a notification to let the user know that has joined a public chat room after login or account creation */
-"You have joined %@"="You have joined %@";
+"You have joined %@"="Anda telah bergabung dengan %@";
 /* Users previewing a public chat */
-"Observers"="Observers";
+"Observers"="Pengamat";
 /* Alert message shown while deleting a chat link, warning about the consequences */
-"This conversation will no longer be accessible through the link you are about to delete."="This conversation will no longer be accessible through the public link once it has been removed.";
+"This conversation will no longer be accessible through the link you are about to delete."="Percakapan ini tidak lagi dapat diakses melalui tautan publik setelah dihapus.";
 /* Management message shown in a chat when the user %@ enables the 'Encrypted Key Rotation' */
-"%@ enabled Encrypted Key Rotation"="%@ enabled Encrypted Key Rotation";
+"%@ enabled Encrypted Key Rotation"="%@ diaktifkan Rotasi Kunci Terenkripsi";
 /* Management message shown in a chat when the user %@ creates a public link for the chat */
-"%@ created a public link for the chat."="%@ created a public link for the chat.";
+"%@ created a public link for the chat."="%@ membuat tautan publik untuk obrolan.";
 /* Management message shown in a chat when the user %@ removes a public link for the chat */
-"%@ removed a public link for the chat."="%@ removed the public link for the chat.";
+"%@ removed a public link for the chat."="%@ menghapus tautan publik untuk obrolan.";
 /* Management message shown in a chat when the user %@ joined it from a public chat link */
-"%@ joined the group chat."="%@ joined the group chat.";
+"%@ joined the group chat."="%@ bergabung dengan obrolan grup.";
 /* Message show when a call cannot be established because there are too many participants in the group call */
 "Error. No more participants are allowed in this group call."="Anda tidak diizinkan untuk bergabung dengan panggilan ini karena telah mencapai jumlah maksimum peserta.";
 /* Message show when a user cannot activate the video in a group call because the max number of videos has been reached */

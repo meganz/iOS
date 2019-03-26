@@ -659,7 +659,7 @@
 /* Option title to enable Camera Uploads only when the device is charging */
 "onlyWhenChargingLabel"="Тільки під час зарядки";
 /* Footer text to explain the Camera Uploads functionality */
-"cameraUploads_footer"="Коли увімкнено, нові фото і відео буде відвантажено.";
+"cameraUploads_footer"="When enabled, photos and videos will be uploaded.";
 /* App means “Application” */
 "App version"="Версія програми";
 /* Title of the label where the SDK version is shown */

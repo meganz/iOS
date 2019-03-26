@@ -659,7 +659,7 @@
 /* Option title to enable Camera Uploads only when the device is charging */
 "onlyWhenChargingLabel"="只在充電狀態下";
 /* Footer text to explain the Camera Uploads functionality */
-"cameraUploads_footer"="開啟后將上傳新的照片和影片。";
+"cameraUploads_footer"="When enabled, photos and videos will be uploaded.";
 /* App means “Application” */
 "App version"="App 版本";
 /* Title of the label where the SDK version is shown */
@@ -1709,7 +1709,7 @@
 /* Management message shown in a chat when the user %@ removes a public link for the chat */
 "%@ removed a public link for the chat."="%@ removed the public link for the chat.";
 /* Management message shown in a chat when the user %@ joined it from a public chat link */
-"%@ joined the group chat."="%@ joined the group chat.";
+"%@ joined the group chat."="%@已加入群組。";
 /* Message show when a call cannot be established because there are too many participants in the group call */
 "Error. No more participants are allowed in this group call."="You are not allowed to join this call as it has reached the maximum number of participants.";
 /* Message show when a user cannot activate the video in a group call because the max number of videos has been reached */
