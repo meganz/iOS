@@ -567,6 +567,7 @@
                     [self.tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
                 }
             }
+            cell.privateChatImageView.hidden = chatListItem.publicChat;
             
             UIView *view = [[UIView alloc] init];
             view.backgroundColor = UIColor.clearColor;
@@ -578,7 +579,13 @@
             MEGAUser *user = itemAtIndex;
             NSString *userName = user.mnz_fullName;
             
-            cell.onlineStatusView.backgroundColor = [UIColor mnz_colorForStatusChange:[[MEGASdkManager sharedMEGAChatSdk] userOnlineStatus:user.handle]];
+            UIColor *color = [UIColor mnz_colorForStatusChange:[[MEGASdkManager sharedMEGAChatSdk] userOnlineStatus:user.handle]];
+            if (color) {
+                cell.onlineStatusView.backgroundColor = color;
+                cell.onlineStatusView.hidden = NO;
+            } else {
+                cell.onlineStatusView.hidden = YES;
+            }
             cell.nameLabel.text = userName ? userName : user.email;
             cell.shareLabel.text = user.email;
             

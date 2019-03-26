@@ -1463,7 +1463,7 @@
 /* Label for test password button and titles */
 "testPassword"="Kiểm Tra Mật Khẩu";
 /* Label for recovery key button */
-"backupRecoveryKey"="Sao lưu Mã Khóa Phục Hồi";
+"backupRecoveryKey"="Sao lưu Mã Phục Hồi";
 /* Used as a message in the 'Password reminder' dialog as a tip on why confirming the password and/or exporting the recovery key is important and vital for the user to not lose any data. */
 "testPasswordText"="Xin nhập thử mật khẩu ở dưới đây để kiểm tra rằng bạn không có quên mất khẩu cho tài khoản MEGA này. Bởi vì nếu quên, bạn sẽ mất quyền truy cập vào dữ liệu của mình. [A]Đọc thêm[/A]";
 /* Title text for the account confirmation. */
@@ -1547,7 +1547,7 @@
 /* Title of empty state view for archived chats. */
 "noArchivedChats"="Không có Cuộc Chát nào";
 /* A title for the Two-Factor Authentication section on the My Account - Security page. */
-"twoFactorAuthentication"="Xác Thục 2-Bước";
+"twoFactorAuthentication"="Xác Thực 2-Bước";
 /* Button title to start the setup of a feature. For example 'Begin Setup' for Two-Factor Authentication */
 "beginSetup"="Bắt Đầu Cài Đặt";
 /* A message on the Verify Login page telling the user to enter their 2FA code. */
@@ -1563,7 +1563,7 @@
 /* Alert text shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device and tap on the question mark */
 "You need an authenticator app to enable 2FA on MEGA. You can download and install the Google Authenticator, Duo Mobile, Authy or Microsoft Authenticator app for your phone or tablet."="You need an authenticator app to enable 2FA on MEGA. You can download and install the Google Authenticator, Duo Mobile, Authy or Microsoft Authenticator app for your phone or tablet.";
 /* A title on the mobile web client page showing that 2FA has been enabled successfully. */
-"twoFactorAuthenticationEnabled"="Xác Thục 2-Bước được Bật";
+"twoFactorAuthenticationEnabled"="Xác Thực 2-Bước được Bật";
 /* A message on the dialog shown after 2FA was successfully enabled. */
 "twoFactorAuthenticationEnabledDescription"="Vào những lần đăng nhập tiếp theo, hệ thống sẽ yêu cầu nhập một đoạn mã dài 6 chữ số lấy từ App Lập Xác Thực.";
 /* A warning message on the Backup Recovery Key dialog to tell the user to backup their Recovery Key to their local computer. */
@@ -1571,7 +1571,7 @@
 /* An informational message on the Backup Recovery Key dialog. */
 "twoFactorAuthenticationEnabledWarning"="MEGA sẽ không thể giúp phục hồi tài khoản nếu chủ tài khoản để mất Mã Khoá Phục Hồi, và có chức năng XT2B được bật.";
 /* A message on a dialog to say that 2FA has been successfully disabled. */
-"twoFactorAuthenticationDisabled"="Xác Thục 2-Bước Đã Tắt";
+"twoFactorAuthenticationDisabled"="Xác Thực 2-Bước Đã Tắt";
 /* A message on the setup two-factor authentication page on the mobile web client. */
 "scanOrCopyTheSeed"="Quét hay sao chép đoạn chủng tử nằm dưới đây vào app Lập Xác Thực muốn sử dụng. Cũng nên lưu lại mã này ở nơi an toàn trong trường hợp bị mất máy.";
 /* A button to help them restore their account if they have lost their 2FA device. */

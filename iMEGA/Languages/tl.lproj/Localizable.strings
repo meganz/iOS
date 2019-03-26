@@ -659,7 +659,7 @@
 /* Option title to enable Camera Uploads only when the device is charging */
 "onlyWhenChargingLabel"="Kapag nag-chacharge lamang";
 /* Footer text to explain the Camera Uploads functionality */
-"cameraUploads_footer"="Kapag pinagana, mga bagong photos ang mai-uupload.";
+"cameraUploads_footer"="When enabled, photos and videos will be uploaded.";
 /* App means “Application” */
 "App version"="App version";
 /* Title of the label where the SDK version is shown */
@@ -826,7 +826,7 @@
 /* Footer text that explain what will happen if "Erase local data" is enabled */
 "failedAttempstSectionTitle"="Mag-logout at burahin ang local data matapos ang 10 maling pagsubok sa passcode";
 /* Menu item */
-"help"="Ayuda";
+"help"="Tulong";
 /* Title of the section to access MEGA's help centre */
 "helpCentreLabel"="Help Centre";
 /* Section title that links you to the webpage that let you join and test the beta versions */
