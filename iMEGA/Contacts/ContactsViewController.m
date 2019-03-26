@@ -282,6 +282,9 @@
             self.keyRotationEnabled = NO;
             self.checkboxButton.selected = self.getChatLinkEnabled;
             
+            UITapGestureRecognizer *singleFingerTap = [UITapGestureRecognizer.alloc initWithTarget:self action:@selector(checkboxTouchUpInside:)];
+            [self.getChatLinkView addGestureRecognizer:singleFingerTap];
+            
             break;
         }
             
