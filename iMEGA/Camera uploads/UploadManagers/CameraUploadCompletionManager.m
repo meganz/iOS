@@ -155,6 +155,8 @@
             [self finishUploadForLocalIdentifier:uploadInfo.savedLocalIdentifier status:CameraAssetUploadStatusDone];
         }
     }]];
+    
+    MEGALogDebug(@"[Camera Upload] put node added for %@, total put node count %lu", uploadInfo.savedLocalIdentifier, (unsigned long)self.putNodeQueue.operationCount);
 }
 
 #pragma mark - update status

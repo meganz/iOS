@@ -472,12 +472,14 @@ static const NSUInteger MaximumPhotoUploadBatchCountMultiplier = 2;
             }
             
             if ([error.domain isEqualToString:CameraUploadErrorDomain]) {
-                if (error.code == CameraUploadErrorEmptyLocalIdentifier) {
+                if (error.code == CameraUploadErrorEmptyLocalIdentifier || error.code == CameraUploadErrorNoMediaAssetFetched) {
                     [CameraUploadRecordManager.shared deleteUploadRecord:record error:nil];
                 } else {
                     [CameraUploadRecordManager.shared updateUploadRecord:record withStatus:CameraAssetUploadStatusFailed error:nil];
                 }
             }
+            
+            [self uploadNextAssetForMediaType:mediaType];
         }
     }
 }
