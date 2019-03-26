@@ -1,6 +1,6 @@
 #import <UIKit/UIKit.h>
 
-@interface MEGANavigationController : UINavigationController
+@interface MEGANavigationController : UINavigationController <UIGestureRecognizerDelegate, UINavigationControllerDelegate>
 
 - (void)addCancelButton;
 
