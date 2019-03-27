@@ -2,9 +2,9 @@
 #import "CameraUploadNodeLoadOperation.h"
 #import "CameraUploadRequestDelegate.h"
 #import "MEGAError+MNZCategory.h"
+#import "MEGAConstants.h"
 
 static NSString * const CameraUploadsNodeHandleKey = @"CameraUploadsNodeHandle";
-static NSString * const CameraUplodFolderName = @"Camera Uploads";
 
 @interface CameraUploadNodeLoadOperation ()
 
@@ -62,7 +62,7 @@ static NSString * const CameraUplodFolderName = @"Camera Uploads";
             [self finishOperation];
         }];
         
-        [MEGASdkManager.sharedMEGASdk createFolderWithName:CameraUplodFolderName parent:MEGASdkManager.sharedMEGASdk.rootNode
+        [MEGASdkManager.sharedMEGASdk createFolderWithName:MEGACameraUploadsNodeName parent:MEGASdkManager.sharedMEGASdk.rootNode
                                                   delegate:delegate];
     }
 }
@@ -97,7 +97,7 @@ static NSString * const CameraUplodFolderName = @"Camera Uploads";
     
     for (NSInteger i = 0; i < nodeListSize; i++) {
         MEGANode *node = [nodeList nodeAtIndex:i];
-        if ([CameraUplodFolderName isEqualToString:node.name] && node.isFolder) {
+        if ([MEGACameraUploadsNodeName isEqualToString:node.name] && node.isFolder) {
             return node;
         }
     }
