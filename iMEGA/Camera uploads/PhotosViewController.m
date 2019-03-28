@@ -99,7 +99,7 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
     
     [self setEditing:NO animated:NO];
     
-    [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(internetConnectionChanged) name:kReachabilityChangedNotification object:nil];
+    [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(didReceiveInternetConnectionChangedNotification) name:kReachabilityChangedNotification object:nil];
     [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(didReceiveCameraUploadStatsChangedNotification) name:MEGACameraUploadStatsChangedNotificationName object:nil];
     
     [[MEGASdkManager sharedMEGASdk] addMEGARequestDelegate:self];
@@ -124,7 +124,7 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     
-    if (CameraUploadManager.shouldShowCameraUploadBoardingScreen) {
+    if (self.photosByMonthYearArray.count > 0 && CameraUploadManager.shouldShowCameraUploadBoardingScreen) {
         [self showCameraUploadBoardingScreen];
     } else if (CameraUploadManager.shared.isDiskStorageFull) {
         [self showLocalDiskIsFullWarningScreen];
@@ -303,7 +303,11 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
             break;
             
         case MEGACameraUploadsStateNoInternetConnection:
-            self.stateLabel.text = AMLocalizedString(@"noInternetConnection", @"Text shown on the app when you don't have connection to the internet or when you have lost it");
+            if (self.photosByMonthYearArray.count == 0) {
+                self.stateView.hidden = YES;
+            } else {
+                self.stateLabel.text = AMLocalizedString(@"noInternetConnection", @"Text shown on the app when you don't have connection to the internet or when you have lost it");
+            }
             self.enableCameraUploadsButton.hidden = YES;
             break;
             
@@ -418,9 +422,10 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
     [self performSelector:@selector(reloadHeader) withObject:nil afterDelay:HeaderStateViewReloadTimeDelay];
 }
 
-- (void)internetConnectionChanged {
+- (void)didReceiveInternetConnectionChangedNotification {
     [self setNavigationBarButtonItemsEnabled:[MEGAReachabilityManager isReachable]];
     [self reloadHeader];
+    [self.photosCollectionView reloadEmptyDataSet];
 }
 
 #pragma mark - IBAction
