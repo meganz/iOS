@@ -17,7 +17,7 @@
 #import "RecentsTableViewHeaderFooterView.h"
 #import "ThumbnailViewerTableViewCell.h"
 
-@interface RecentsViewController () <UITableViewDataSource, UITableViewDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate>
+@interface RecentsViewController () <UITableViewDataSource, UITableViewDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGADelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
@@ -41,7 +41,7 @@
     
     [self.tableView registerNib:[UINib nibWithNibName:@"RecentsTableViewHeaderView" bundle:nil] forHeaderFooterViewReuseIdentifier:@"RecentsHeaderFooterView"];
     
-    _recentActionBucketArray = MEGASdkManager.sharedMEGASdk.recentActions;
+    self.recentActionBucketArray = MEGASdkManager.sharedMEGASdk.recentActions;
     
     [self.tableView reloadData];
     
@@ -51,6 +51,16 @@
     self.dateFormatter.dateStyle = NSDateFormatterFullStyle;
     self.dateFormatter.timeStyle = NSDateFormatterNoStyle;
     self.dateFormatter.locale = NSLocale.autoupdatingCurrentLocale;
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [[MEGASdkManager sharedMEGASdk] addMEGADelegate:self];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [[MEGASdkManager sharedMEGASdk] removeMEGADelegate:self];
+    [super viewWillDisappear:animated];
 }
 
 #pragma mark - Actions
@@ -222,6 +232,13 @@
     UIImage *image = (MEGAReachabilityManager.isReachable) ? [UIImage imageNamed:@"recentsEmptyState"] : [UIImage imageNamed:@"noInternetEmptyState"];
     
     return image;
+}
+
+#pragma mark - MEGAGlobalDelegate
+
+- (void)onNodesUpdate:(MEGASdk *)api nodeList:(MEGANodeList *)nodeList {
+    self.recentActionBucketArray = MEGASdkManager.sharedMEGASdk.recentActions;
+    [self.tableView reloadData];
 }
 
 @end
