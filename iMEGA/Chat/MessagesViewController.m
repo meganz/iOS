@@ -303,7 +303,9 @@ const NSUInteger kMaxMessagesToLoad = 256;
 }
 
 - (void)willResignActive {
-    [[MEGAStore shareInstance] insertOrUpdateChatDraftWithChatId:self.chatRoom.chatId text:self.inputToolbar.contentView.textView.text];
+    if (!self.editMessage) {
+        [[MEGAStore shareInstance] insertOrUpdateChatDraftWithChatId:self.chatRoom.chatId text:self.inputToolbar.contentView.textView.text];
+    }
     self.lastBottomInset = self.collectionView.scrollIndicatorInsets.bottom;
     self.lastVerticalOffset = self.collectionView.contentOffset.y;
     
@@ -328,7 +330,9 @@ const NSUInteger kMaxMessagesToLoad = 256;
     [[MEGASdkManager sharedMEGAChatSdk] removeChatDelegate:self];
     [[MEGASdkManager sharedMEGAChatSdk] removeChatCallDelegate:self];
 
-    [[MEGAStore shareInstance] insertOrUpdateChatDraftWithChatId:self.chatRoom.chatId text:self.inputToolbar.contentView.textView.text];
+    if (!self.editMessage) {
+        [[MEGAStore shareInstance] insertOrUpdateChatDraftWithChatId:self.chatRoom.chatId text:self.inputToolbar.contentView.textView.text];
+    }
     
     [SVProgressHUD dismiss];
 }
@@ -2514,7 +2518,9 @@ const NSUInteger kMaxMessagesToLoad = 256;
 }
 
 - (void)textViewDidEndEditing:(UITextView *)textView {
-    [[MEGAStore shareInstance] insertOrUpdateChatDraftWithChatId:self.chatRoom.chatId text:self.inputToolbar.contentView.textView.text];
+    if (!self.editMessage) {
+        [[MEGAStore shareInstance] insertOrUpdateChatDraftWithChatId:self.chatRoom.chatId text:self.inputToolbar.contentView.textView.text];
+    }
 }
 
 #pragma mark - MEGAPhotoBrowserDelegate
