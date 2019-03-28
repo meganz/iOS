@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="B1s-m2-ahE">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="B1s-m2-ahE">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -960,7 +960,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon-link-only" translatesAutoresizingMaskIntoConstraints="NO" id="LFj-HT-Snh">
-                                                    <rect key="frame" x="16" y="11.5" width="21" height="21"/>
+                                                    <rect key="frame" x="16" y="11.5" width="21.000000000000007" height="21"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="21" id="VgR-0s-06d"/>
                                                         <constraint firstAttribute="height" constant="21" id="jIQ-58-Lcg"/>
@@ -1419,17 +1419,16 @@
                                     <constraint firstItem="xAf-QH-eJE" firstAttribute="leading" secondItem="udP-7t-bdN" secondAttribute="leading" id="Fed-Hw-nPW"/>
                                     <constraint firstAttribute="trailing" secondItem="g5o-Ck-bk9" secondAttribute="trailing" id="bNu-qP-CP9"/>
                                     <constraint firstAttribute="bottom" secondItem="xAf-QH-eJE" secondAttribute="bottom" id="l7E-zt-Ydk"/>
-                                    <constraint firstItem="g5o-Ck-bk9" firstAttribute="width" secondItem="udP-7t-bdN" secondAttribute="width" id="pwE-2s-nlv"/>
                                     <constraint firstItem="g5o-Ck-bk9" firstAttribute="leading" secondItem="udP-7t-bdN" secondAttribute="leading" id="v3F-tX-5UF"/>
                                 </constraints>
                             </view>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="udP-7t-bdN" firstAttribute="centerY" secondItem="SkX-lA-IWK" secondAttribute="centerY" id="01D-kY-6QX"/>
-                            <constraint firstItem="udP-7t-bdN" firstAttribute="height" secondItem="SkX-lA-IWK" secondAttribute="height" id="6Pu-Wd-MYt"/>
-                            <constraint firstItem="udP-7t-bdN" firstAttribute="width" secondItem="SkX-lA-IWK" secondAttribute="width" id="LGq-CZ-RK6"/>
-                            <constraint firstItem="udP-7t-bdN" firstAttribute="centerX" secondItem="SkX-lA-IWK" secondAttribute="centerX" id="ifD-Wx-eLJ"/>
+                            <constraint firstItem="SkX-lA-IWK" firstAttribute="trailing" secondItem="udP-7t-bdN" secondAttribute="trailing" id="fvW-S5-7hI"/>
+                            <constraint firstItem="udP-7t-bdN" firstAttribute="top" secondItem="SkX-lA-IWK" secondAttribute="top" id="gMt-qY-TzT"/>
+                            <constraint firstItem="udP-7t-bdN" firstAttribute="bottom" secondItem="SkX-lA-IWK" secondAttribute="bottom" id="tCm-Tp-irE"/>
+                            <constraint firstItem="udP-7t-bdN" firstAttribute="leading" secondItem="SkX-lA-IWK" secondAttribute="leading" id="u0Y-96-hNd"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="SkX-lA-IWK"/>
                     </view>

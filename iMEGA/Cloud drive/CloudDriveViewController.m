@@ -978,7 +978,7 @@
     if ([[UIDevice currentDevice] iPadDevice]) {
         alertController.modalPresentationStyle = UIModalPresentationPopover;
         UIPopoverPresentationController *popoverPresentationController = [alertController popoverPresentationController];
-        popoverPresentationController.barButtonItem = self.moreBarButtonItem;
+        popoverPresentationController.barButtonItem = self.navigationItem.rightBarButtonItems.firstObject;
         popoverPresentationController.sourceView = self.view;
     }
     [self presentViewController:alertController animated:YES completion:nil];
@@ -1713,6 +1713,14 @@
 - (void)searchBarTextDidEndEditing:(UISearchBar *)searchBar {
     if (self.layoutView == LayoutModeThumbnail) {
         self.cdCollectionView.collectionView.clipsToBounds = NO;
+    }
+}
+
+#pragma mark - UISearchControllerDelegate
+
+- (void)didPresentSearchController:(UISearchController *)searchController {
+    if (UIDevice.currentDevice.iPhoneDevice && UIDeviceOrientationIsLandscape(UIDevice.currentDevice.orientation)) {
+        self.searchController.searchBar.superview.frame = CGRectMake(0, self.selectorView.frame.size.height + self.navigationController.navigationBar.frame.size.height, self.searchController.searchBar.superview.frame.size.width, self.searchController.searchBar.superview.frame.size.height);
     }
 }
 
