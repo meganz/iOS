@@ -1848,3 +1848,7 @@
 "New Chat Link"="New Chat Link";
 /* Text button for init a group chat */
 "New group chat"="New group chat";
+/* Shown when an invalid/inexisting/not-available-anymore chat link is opened. */
+"Chat link unavailable"="Chat link unavailable";
+/* Shown when an inexisting/unavailable/removed link is tried to be opened. */
+"This chat link is no longer available"="This chat link is no longer available";
