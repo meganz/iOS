@@ -3,39 +3,39 @@
 #import "CameraUploadRecordManager.h"
 #import "MEGAConstants.h"
 
-static const NSTimeInterval MonitorTimerInterval = 60;
+static const NSTimeInterval MonitorTimerInterval = 70;
 static const NSUInteger MaximumBackgroundPendingTaskCount = 600;
-static const NSTimeInterval MonitorTimerTolerance = 6;
+static const NSTimeInterval MonitorTimerTolerance = 7;
 
 @interface BackgroundUploadingTaskMonitor ()
 
-@property (strong, nonatomic) NSTimer *monitorTimer;
+@property (strong, nonatomic) dispatch_source_t monitorTimer;
 
 @end
 
 @implementation BackgroundUploadingTaskMonitor
 
 - (void)startMonitoringBackgroundUploadingTasks {
-    if (self.monitorTimer.isValid) {
-        return;
+    if (self.monitorTimer) {
+        dispatch_source_cancel(self.monitorTimer);
     }
     
-    [NSOperationQueue.mainQueue addOperationWithBlock:^{
-        self.monitorTimer = [NSTimer scheduledTimerWithTimeInterval:MonitorTimerInterval target:self selector:@selector(fireMonitorTimer:) userInfo:nil repeats:YES];
-        self.monitorTimer.tolerance = MonitorTimerTolerance;
-    }];
+    self.monitorTimer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, dispatch_get_global_queue(QOS_CLASS_UTILITY, 0));
+    dispatch_source_set_timer(self.monitorTimer, dispatch_walltime(NULL, 0), (uint64_t)(MonitorTimerInterval * NSEC_PER_SEC), (uint64_t)(MonitorTimerTolerance * NSEC_PER_SEC));
+    
+    __weak __typeof__(self) weakSelf = self;
+    dispatch_source_set_event_handler(self.monitorTimer, ^{
+        [weakSelf monitorTimerFired];
+    });
+    
+    dispatch_resume(self.monitorTimer);
 }
 
 - (void)stopMonitoringBackgroundUploadingTasks {
-    if (self.monitorTimer.isValid) {
-        [NSOperationQueue.mainQueue addOperationWithBlock:^{
-            [self.monitorTimer invalidate];
-            self.monitorTimer = nil;
-        }];
-    }
+    dispatch_source_cancel(self.monitorTimer);
 }
 
-- (void)fireMonitorTimer:(NSTimer *)timer {
+- (void)monitorTimerFired {
     NSError *error;
     NSUInteger uploadingTaskCount = [CameraUploadRecordManager.shared uploadingRecordsCountWithError:&error];
     if (error) {

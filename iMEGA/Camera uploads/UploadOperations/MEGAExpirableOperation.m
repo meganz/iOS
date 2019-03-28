@@ -3,14 +3,13 @@
 
 @interface MEGAExpirableOperation ()
 
-@property (strong, nonatomic) NSTimer *expireTimer;
 @property (nonatomic) NSTimeInterval expireTimeInterval;
 
 @end
 
 @implementation MEGAExpirableOperation
 
-- (instancetype)initWithExpirationTimeInterval:(NSTimeInterval)timeInterval {
+- (instancetype)initWithExpireTimeInterval:(NSTimeInterval)timeInterval {
     self = [super init];
     if (self) {
         _expireTimeInterval = timeInterval;
@@ -21,23 +20,15 @@
 - (void)start {
     [super start];
     
-    [NSOperationQueue.mainQueue addOperationWithBlock:^{
-        self.expireTimer = [NSTimer scheduledTimerWithTimeInterval:self.expireTimeInterval target:self selector:@selector(timerExpired) userInfo:nil repeats:NO];
-    }];
-}
-
-- (void)timerExpired {
-    MEGALogDebug(@"%@ expired after time interval %.2f", self, self.expireTimeInterval);
-    [self finishOperation];
+    __weak __typeof__(self) weakSelf = self;
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(self.expireTimeInterval * NSEC_PER_SEC)), dispatch_get_global_queue(QOS_CLASS_UTILITY, 0), ^{
+        MEGALogDebug(@"%@ expired", weakSelf);
+        [weakSelf finishOperation];
+    });
 }
 
 - (void)finishOperation {
     [super finishOperation];
-    if (self.expireTimer.isValid) {
-        [NSOperationQueue.mainQueue addOperationWithBlock:^{
-            [self.expireTimer invalidate];
-        }];
-    }
 }
 
 
