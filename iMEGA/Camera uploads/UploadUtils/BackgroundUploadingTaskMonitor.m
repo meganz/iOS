@@ -32,7 +32,9 @@ static const NSTimeInterval MonitorTimerTolerance = 7;
 }
 
 - (void)stopMonitoringBackgroundUploadingTasks {
-    dispatch_source_cancel(self.monitorTimer);
+    if (self.monitorTimer) {
+        dispatch_source_cancel(self.monitorTimer);
+    }
 }
 
 - (void)monitorTimerFired {
