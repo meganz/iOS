@@ -17,6 +17,8 @@ typedef NS_ENUM(NSUInteger, CameraUploadVideoQuality) {
 @property (class, getter=isCameraUploadEnabled) BOOL cameraUploadEnabled;
 @property (class, getter=isBackgroundUploadAllowed) BOOL backgroundUploadAllowed;
 
+@property (class, nullable) NSDate *boardingScreenLastShowedDate;
+
 #pragma mark - photo settings
 
 @property (class, getter=isCellularUploadAllowed) BOOL cellularUploadAllowed;

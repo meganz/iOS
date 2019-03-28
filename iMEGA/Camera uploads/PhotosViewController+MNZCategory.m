@@ -32,6 +32,7 @@
     };
     
     [self presentViewController:boardingAlertVC animated:YES completion:nil];
+    CameraUploadManager.boardingScreenLastShowedDate = NSDate.date;
 }
 
 - (void)pushCameraUploadSettings {
