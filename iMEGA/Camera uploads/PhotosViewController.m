@@ -1,7 +1,5 @@
 #import "PhotosViewController.h"
-
 #import "UIScrollView+EmptyDataSet.h"
-
 #import "Helper.h"
 #import "MEGAMoveRequestDelegate.h"
 #import "MEGANavigationController.h"
@@ -13,7 +11,6 @@
 #import "MEGAPhotoBrowserViewController.h"
 #import "UICollectionView+MNZCategory.h"
 #import "UIImageView+MNZCategory.h"
-
 #import "PhotoCollectionViewCell.h"
 #import "HeaderCollectionReusableView.h"
 #import "CameraUploadsTableViewController.h"
@@ -27,11 +24,8 @@
 #import "UploadStats.h"
 @import StoreKit;
 
-static const NSTimeInterval PhotosViewReloadTimeInterval = 2;
-static const NSTimeInterval PhotosViewReloadToleranceTimeInterval = .2;
-
-static const NSTimeInterval HeaderStateViewReloadTimeInterval = 1;
-static const NSTimeInterval HeaderStateViewReloadToleranceTimeInterval = .1;
+static const NSTimeInterval PhotosViewReloadTimeDelay = .35;
+static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
 
 @interface PhotosViewController () <UICollectionViewDelegateFlowLayout, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAPhotoBrowserDelegate> {
     BOOL allNodesSelected;
@@ -71,11 +65,6 @@ static const NSTimeInterval HeaderStateViewReloadToleranceTimeInterval = .1;
 @property (nonatomic) MEGACameraUploadsState currentState;
 
 @property (nonatomic) NSIndexPath *browsingIndexPath;
-
-@property (nonatomic) BOOL needsReloadPhotosView;
-@property (strong, nonatomic) NSTimer *photosViewReloadTimer;
-@property (nonatomic) BOOL needsReloadHeaderStateView;
-@property (strong, nonatomic) NSTimer *headerStateViewReloadTimer;
 
 @end
 
@@ -140,8 +129,6 @@ static const NSTimeInterval HeaderStateViewReloadToleranceTimeInterval = .1;
     } else if (CameraUploadManager.shared.isDiskStorageFull) {
         [self showLocalDiskIsFullWarningScreen];
     }
-    
-    [self setupReloadTimers];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -152,8 +139,6 @@ static const NSTimeInterval HeaderStateViewReloadToleranceTimeInterval = .1;
     
     [[MEGASdkManager sharedMEGASdk] removeMEGARequestDelegate:self];
     [[MEGASdkManager sharedMEGASdk] removeMEGAGlobalDelegate:self];
-    
-    [self invalidateReloadTimers];
 }
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations {
@@ -198,6 +183,8 @@ static const NSTimeInterval HeaderStateViewReloadToleranceTimeInterval = .1;
 #pragma mark - uploads state
 
 - (void)reloadHeader {
+    MEGALogDebug(@"[Camera Upload] reload photos view header");
+    
     if (!MEGAReachabilityManager.isReachable) {
         self.currentState = MEGACameraUploadsStateNoInternetConnection;
 
@@ -225,8 +212,9 @@ static const NSTimeInterval HeaderStateViewReloadToleranceTimeInterval = .1;
     [CameraUploadManager.shared loadCurrentUploadStatsWithCompletion:^(UploadStats * _Nullable uploadStats, NSError * _Nullable error) {
         if (error || uploadStats == nil) {
             MEGALogError(@"[Camera Upload] error when to fetch upload stats %@", error);
-            self.currentState = MEGACameraUploadsStateLoading;
-            self.needsReloadHeaderStateView = YES;
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [self reloadHeader];
+            });
             return;
         }
         
@@ -351,6 +339,7 @@ static const NSTimeInterval HeaderStateViewReloadToleranceTimeInterval = .1;
 #pragma mark - Private
 
 - (void)reloadPhotosView {
+    MEGALogDebug(@"[Camera Upload] reload photos collection view");
     NSMutableDictionary *photosByMonthYearDictionary = [NSMutableDictionary new];
     
     self.photosByMonthYearArray = [NSMutableArray new];
@@ -425,50 +414,13 @@ static const NSTimeInterval HeaderStateViewReloadToleranceTimeInterval = .1;
 #pragma mark - notifications
 
 - (void)didReceiveCameraUploadStatsChangedNotification {
-    self.needsReloadHeaderStateView = YES;
+    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(reloadHeader) object:nil];
+    [self performSelector:@selector(reloadHeader) withObject:nil afterDelay:HeaderStateViewReloadTimeDelay];
 }
 
 - (void)internetConnectionChanged {
     [self setNavigationBarButtonItemsEnabled:[MEGAReachabilityManager isReachable]];
     [self reloadHeader];
-}
-
-#pragma mark - reload timer
-
-- (void)setupReloadTimers {
-    [self invalidateReloadTimers];
-    
-    self.photosViewReloadTimer = [NSTimer scheduledTimerWithTimeInterval:PhotosViewReloadTimeInterval target:self selector:@selector(photosViewReloadTimerFired) userInfo:nil repeats:YES];
-    self.photosViewReloadTimer.tolerance = PhotosViewReloadToleranceTimeInterval;
-    
-    self.headerStateViewReloadTimer = [NSTimer scheduledTimerWithTimeInterval:HeaderStateViewReloadTimeInterval target:self selector:@selector(headerStatusReloadTimerFired) userInfo:nil repeats:YES];
-    self.headerStateViewReloadTimer.tolerance = HeaderStateViewReloadToleranceTimeInterval;
-}
-
-- (void)invalidateReloadTimers {
-    if (self.photosViewReloadTimer.isValid) {
-        [self.photosViewReloadTimer invalidate];
-        self.photosViewReloadTimer = nil;
-    }
-    
-    if (self.headerStateViewReloadTimer.isValid) {
-        [self.headerStateViewReloadTimer invalidate];
-        self.headerStateViewReloadTimer = nil;
-    }
-}
-
-- (void)photosViewReloadTimerFired {
-    if (self.needsReloadPhotosView) {
-        self.needsReloadPhotosView = NO;
-        [self reloadPhotosView];
-    }
-}
-
-- (void)headerStatusReloadTimerFired {
-    if (self.needsReloadHeaderStateView) {
-        self.needsReloadHeaderStateView = NO;
-        [self reloadHeader];
-    }
 }
 
 #pragma mark - IBAction
@@ -964,26 +916,25 @@ static const NSTimeInterval HeaderStateViewReloadToleranceTimeInterval = .1;
         return;
     }
     
-    switch ([request type]) {
-        case MEGARequestTypeGetAttrFile: {
-            for (PhotoCollectionViewCell *pcvc in [self.photosCollectionView visibleCells]) {
-                if ([request nodeHandle] == [pcvc nodeHandle]) {
-                    MEGANode *node = [api nodeForHandle:request.nodeHandle];
-                    [Helper setThumbnailForNode:node api:api cell:pcvc reindexNode:YES];
-                }
+    if (request.type == MEGARequestTypeGetAttrFile) {
+        for (PhotoCollectionViewCell *pcvc in [self.photosCollectionView visibleCells]) {
+            if ([request nodeHandle] == [pcvc nodeHandle]) {
+                MEGANode *node = [api nodeForHandle:request.nodeHandle];
+                [Helper setThumbnailForNode:node api:api cell:pcvc reindexNode:YES];
             }
-            break;
         }
-            
-        default:
-            break;
     }
 }
 
 #pragma mark - MEGAGlobalDelegate
 
 - (void)onNodesUpdate:(MEGASdk *)api nodeList:(MEGANodeList *)nodeList {
-    self.needsReloadPhotosView = YES;
+    if (![nodeList mnz_containsNodeWithParentFolderName:@"Camera Uploads"]) {
+        return;
+    }
+    
+    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(reloadPhotosView) object:nil];
+    [self performSelector:@selector(reloadPhotosView) withObject:nil afterDelay:PhotosViewReloadTimeDelay];
 }
 
 @end
