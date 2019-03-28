@@ -135,7 +135,7 @@
         NSString *tempString = AMLocalizedString(@"%1 and [A]%2 more[/A]", @"Title for a recent action shown in the webclient, see the attached image for context. Please ensure that the `%2 more` is inside the [A] tag as this will become a toggle to show the hidden content.");
         tempString = tempString.mnz_removeWebclientFormatters;
         tempString = [tempString stringByReplacingOccurrencesOfString:@"%1" withString:node.name];
-        title = [tempString stringByReplacingOccurrencesOfString:@"%2" withString:[NSString stringWithFormat:@"%lu", (unsigned long)(nodesArray.count - 1)]];
+        title = [tempString stringByReplacingOccurrencesOfString:@"%2" withString:[NSString stringWithFormat:@"%tu", nodesArray.count - 1]];
         
         self.moreButton.hidden = YES;
         self.disclosureIndicatorView.hidden = NO;

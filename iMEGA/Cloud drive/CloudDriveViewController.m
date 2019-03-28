@@ -1071,7 +1071,7 @@
                 
             case DisplayModeRecents: {
                 NSString *itemsString =  AMLocalizedString(@"items", @"Plural of items which contains a folder. 2 items");
-                navigationTitle = [NSString stringWithFormat:@"%ld %@", (long)self.nodes.size.integerValue, itemsString];
+                navigationTitle = [NSString stringWithFormat:@"%td %@", self.nodes.size.integerValue, itemsString];
                 break;
             }
                 
