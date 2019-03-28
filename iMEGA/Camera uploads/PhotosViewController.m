@@ -929,7 +929,7 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
 #pragma mark - MEGAGlobalDelegate
 
 - (void)onNodesUpdate:(MEGASdk *)api nodeList:(MEGANodeList *)nodeList {
-    if (![nodeList mnz_containsNodeWithParentFolderName:@"Camera Uploads"]) {
+    if (![nodeList mnz_containsNodeWithParentFolderName:MEGACameraUploadsNodeName]) {
         return;
     }
     
