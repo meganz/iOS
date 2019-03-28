@@ -9,4 +9,6 @@
 - (NSArray *)mnz_nodesArrayFromNodeList;
 - (NSMutableArray *)mnz_mediaNodesMutableArrayFromNodeList;
 
+- (BOOL)mnz_containsNodeWithParentFolderName:(NSString *)name;
+
 @end
