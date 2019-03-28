@@ -655,10 +655,10 @@
                 customModalAlertVC.image = [UIImage imageNamed:@"lock"];
                 customModalAlertVC.viewTitle = AMLocalizedString(@"Enable Encrypted Key Rotation", @"Title show in a cell where the users can enable the 'Encrypted Key Rotation'");
                 customModalAlertVC.detail = AMLocalizedString(@"Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages.", @"Footer text to explain what means 'Encrypted Key Rotation'");
-                customModalAlertVC.action = AMLocalizedString(@"enable", nil);
-                customModalAlertVC.dismiss = AMLocalizedString(@"cancel", nil);
+                customModalAlertVC.firstButtonTitle = AMLocalizedString(@"enable", nil);
+                customModalAlertVC.dismissButtonTitle = AMLocalizedString(@"cancel", nil);
                 __weak typeof(CustomModalAlertViewController) *weakCustom = customModalAlertVC;
-                customModalAlertVC.completion = ^{
+                customModalAlertVC.firstCompletion = ^{
                     MEGAChatGenericRequestDelegate *delegate = [[MEGAChatGenericRequestDelegate alloc] initWithCompletion:^(MEGAChatRequest * _Nonnull request, MEGAChatError * _Nonnull error) {
                         if (error.type == MEGAChatErrorTypeOk) {
                             [weakCustom dismissViewControllerAnimated:YES completion:^{

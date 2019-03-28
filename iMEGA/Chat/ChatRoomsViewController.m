@@ -745,8 +745,8 @@
                 if (getChatLink) {
                     MEGAChatGenericRequestDelegate *delegate = [[MEGAChatGenericRequestDelegate alloc] initWithCompletion:^(MEGAChatRequest *request, MEGAChatError *error) {
                         if (!error.type) {
-                            UIPasteboard.generalPasteboard.string = request.text;
-                            [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"linkCopied", @"Message shown when the link has been copied to the pasteboard")];
+                            messagesVC.publicChatWithLinkCreated = YES;
+                            messagesVC.publicChatLink = [NSURL URLWithString:request.text];
                             [self.navigationController pushViewController:messagesVC animated:YES];
                         }
                     }];

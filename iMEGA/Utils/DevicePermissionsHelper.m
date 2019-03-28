@@ -124,10 +124,10 @@
     permissionsModal.image = [UIImage imageNamed:@"groupChat"];
     permissionsModal.viewTitle = incomingCall ? AMLocalizedString(@"Incoming call", nil) : AMLocalizedString(@"Enable Microphone and Camera", @"Title label that explains that the user is going to be asked for the microphone and camera permission");
     permissionsModal.detail = AMLocalizedString(@"To make encrypted voice and video calls, allow MEGA access to your Camera and Microphone", @"Detailed explanation of why the user should give permission to access to the camera and the microphone");
-    permissionsModal.action = AMLocalizedString(@"Allow Access", @"Button which triggers a request for a specific permission, that have been explained to the user beforehand");
-    permissionsModal.dismiss = AMLocalizedString(@"notNow", nil);
+    permissionsModal.firstButtonTitle = AMLocalizedString(@"Allow Access", @"Button which triggers a request for a specific permission, that have been explained to the user beforehand");
+    permissionsModal.dismissButtonTitle = AMLocalizedString(@"notNow", nil);
     
-    permissionsModal.completion = ^{
+    permissionsModal.firstCompletion = ^{
         [weakPermissionsModal dismissViewControllerAnimated:YES completion:^{
             [self audioPermissionWithCompletionHandler:handler];
         }];
@@ -143,9 +143,9 @@
     permissionsModal.image = [UIImage imageNamed:@"micAndCamPermission"];
     permissionsModal.viewTitle = AMLocalizedString(@"Enable Notifications", @"Title label that explains that the user is going to be asked for the notifications permission");
     permissionsModal.detail = AMLocalizedString(@"We would like to send you notifications so you receive new messages on your device instantly.", @"Detailed explanation of why the user should give permission to deliver notifications");
-    permissionsModal.action = AMLocalizedString(@"continue", @"'Next' button in a dialog");
+    permissionsModal.firstButtonTitle = AMLocalizedString(@"continue", @"'Next' button in a dialog");
     
-    permissionsModal.completion = ^{
+    permissionsModal.firstCompletion = ^{
         [self notificationsPermissionWithCompletionHandler:^(BOOL granted) {
             [weakPermissionsModal dismissViewControllerAnimated:YES completion:nil];
         }];
@@ -157,9 +157,7 @@
 + (CustomModalAlertViewController *)permissionsModal {
     CustomModalAlertViewController *permissionsModal = [[CustomModalAlertViewController alloc] init];
     
-    permissionsModal.modalPresentationStyle = UIModalPresentationOverCurrentContext;
-    permissionsModal.actionColor = UIColor.mnz_green00BFA5;
-    permissionsModal.dismissColor = UIColor.mnz_green899B9C;
+    permissionsModal.modalPresentationStyle = UIModalPresentationOverCurrentContext;    
     
     return permissionsModal;
 }

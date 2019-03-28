@@ -1110,20 +1110,20 @@ void uncaughtExceptionHandler(NSException *exception) {
         NSString *detailText = AMLocalizedString(@"theUserHasBeenInvited", @"Success message shown when a contact has been invited");
         detailText = [detailText stringByReplacingOccurrencesOfString:@"[X]" withString:self.email];
         customModalAlertVC.detail = detailText;
-        customModalAlertVC.action = AMLocalizedString(@"close", nil);
-        customModalAlertVC.dismiss = nil;
+        customModalAlertVC.firstButtonTitle = AMLocalizedString(@"close", nil);
+        customModalAlertVC.dismissButtonTitle = nil;
         __weak typeof(CustomModalAlertViewController) *weakCustom = customModalAlertVC;
-        customModalAlertVC.completion = ^{
+        customModalAlertVC.firstCompletion = ^{
             [weakCustom dismissViewControllerAnimated:YES completion:nil];
         };
     } else {
         customModalAlertVC.image = [UIImage imageNamed:@"groupChat"];
         customModalAlertVC.viewTitle = AMLocalizedString(@"inviteContact", @"Title shown when the user tries to make a call and the destination is not in the contact list");
         customModalAlertVC.detail = [NSString stringWithFormat:@"Your contact %@ is not on MEGA. In order to call through MEGA's encrypted chat you need to invite your contact", self.email];
-        customModalAlertVC.action = AMLocalizedString(@"invite", @"A button on a dialog which invites a contact to join MEGA.");
-        customModalAlertVC.dismiss = AMLocalizedString(@"later", @"Button title to allow the user postpone an action");
+        customModalAlertVC.firstButtonTitle = AMLocalizedString(@"invite", @"A button on a dialog which invites a contact to join MEGA.");
+        customModalAlertVC.dismissButtonTitle = AMLocalizedString(@"later", @"Button title to allow the user postpone an action");
         __weak typeof(CustomModalAlertViewController) *weakCustom = customModalAlertVC;
-        customModalAlertVC.completion = ^{
+        customModalAlertVC.firstCompletion = ^{
             MEGAInviteContactRequestDelegate *inviteContactRequestDelegate = [[MEGAInviteContactRequestDelegate alloc] initWithNumberOfRequests:1];
             [[MEGASdkManager sharedMEGASdk] inviteContactWithEmail:self.email message:@"" action:MEGAInviteActionAdd delegate:inviteContactRequestDelegate];
             [weakCustom dismissViewControllerAnimated:YES completion:nil];
@@ -1157,13 +1157,13 @@ void uncaughtExceptionHandler(NSException *exception) {
         customModalAlertVC.image = image;
         customModalAlertVC.viewTitle = title;
         customModalAlertVC.detail = detail;
-        customModalAlertVC.action = AMLocalizedString(@"seePlans", @"Button title to see the available pro plans in MEGA");
+        customModalAlertVC.firstButtonTitle = AMLocalizedString(@"seePlans", @"Button title to see the available pro plans in MEGA");
         if ([[MEGASdkManager sharedMEGASdk] isAchievementsEnabled]) {
-            customModalAlertVC.bonus = AMLocalizedString(@"getBonus", @"Button title to see the available bonus");
+            customModalAlertVC.secondButtonTitle = AMLocalizedString(@"getBonus", @"Button title to see the available bonus");
         }
-        customModalAlertVC.dismiss = AMLocalizedString(@"dismiss", @"Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible).");
+        customModalAlertVC.dismissButtonTitle = AMLocalizedString(@"dismiss", @"Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible).");
         __weak typeof(CustomModalAlertViewController) *weakCustom = customModalAlertVC;
-        customModalAlertVC.completion = ^{
+        customModalAlertVC.firstCompletion = ^{
             [weakCustom dismissViewControllerAnimated:YES completion:^{
                 self.upgradeVCPresented = NO;
                 if ([MEGAPurchase sharedInstance].products.count > 0) {
@@ -1178,13 +1178,13 @@ void uncaughtExceptionHandler(NSException *exception) {
             }];
         };
         
-        customModalAlertVC.onDismiss = ^{
+        customModalAlertVC.dismissCompletion = ^{
             [weakCustom dismissViewControllerAnimated:YES completion:^{
                 self.upgradeVCPresented = NO;
             }];
         };
         
-        customModalAlertVC.onBonus = ^{
+        customModalAlertVC.secondCompletion = ^{
             [weakCustom dismissViewControllerAnimated:YES completion:^{
                 self.upgradeVCPresented = NO;
                 AchievementsViewController *achievementsVC = [[UIStoryboard storyboardWithName:@"MyAccount" bundle:nil] instantiateViewControllerWithIdentifier:@"AchievementsViewControllerID"];
