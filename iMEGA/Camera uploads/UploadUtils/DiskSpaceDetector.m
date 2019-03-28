@@ -54,13 +54,19 @@ static const NSTimeInterval RetryTimerTolerance = 6;
 
 - (void)stopDetectingPhotoUpload {
     [NSNotificationCenter.defaultCenter removeObserver:self name:MEGACameraUploadPhotoUploadLocalDiskFullNotificationName object:nil];
-    dispatch_source_cancel(self.photoRetryTimer);
+    if (self.photoRetryTimer) {
+        dispatch_source_cancel(self.photoRetryTimer);
+    }
+    
     _diskIsFullForPhotos = NO;
 }
 
 - (void)stopDetectingVideoUpload {
     [NSNotificationCenter.defaultCenter removeObserver:self name:MEGACameraUploadVideoUploadLocalDiskFullNotificationName object:nil];
-    dispatch_source_cancel(self.videoRetryTimer);
+    if (self.videoRetryTimer) {
+        dispatch_source_cancel(self.videoRetryTimer);
+    }
+    
     _diskIsFullForVideos = NO;
 }
 
@@ -96,7 +102,10 @@ static const NSTimeInterval RetryTimerTolerance = 6;
 
 - (void)photoRetryTimerFired {
     if (NSFileManager.defaultManager.deviceFreeSize > self.photoRetryDiskFreeSpace) {
-        dispatch_source_cancel(self.photoRetryTimer);
+        if (self.photoRetryTimer) {
+            dispatch_source_cancel(self.photoRetryTimer);
+        }
+
         self.diskIsFullForPhotos = NO;
     }
 }
@@ -115,7 +124,10 @@ static const NSTimeInterval RetryTimerTolerance = 6;
 
 - (void)videoRetryTimerFired {
     if (NSFileManager.defaultManager.deviceFreeSize > self.videoRetryDiskFreeSpace) {
-        dispatch_source_cancel(self.videoRetryTimer);
+        if (self.videoRetryTimer) {
+            dispatch_source_cancel(self.videoRetryTimer);
+        }
+        
         self.diskIsFullForVideos = NO;
     }
 }
