@@ -1848,3 +1848,5 @@
 "New Chat Link"="New Chat Link";
 /* Text button for init a group chat */
 "New group chat"="New group chat";
+/* Text explaining users how the chat links work. */
+"People can join your group by using this link."="People can join your group by using this link.";

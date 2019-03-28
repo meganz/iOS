@@ -42,6 +42,7 @@
 #import "ChatAttachedNodesViewController.h"
 #import "ContactsViewController.h"
 #import "ContactDetailsViewController.h"
+#import "CustomModalAlertViewController.h"
 #import "GroupChatDetailsViewController.h"
 #import "MainTabBarController.h"
 #import "MEGAPhotoBrowserViewController.h"
@@ -283,6 +284,46 @@ const NSUInteger kMaxMessagesToLoad = 256;
         
         self.navigationItem.leftBarButtonItem = chatBackBarButtonItem;
     }
+    
+    if (self.isPublicChatWithLinkCreated) {
+        CustomModalAlertViewController *customModalAlertVC = [[CustomModalAlertViewController alloc] init];
+        customModalAlertVC.modalPresentationStyle = UIModalPresentationOverCurrentContext;
+        customModalAlertVC.image = [UIImage imageNamed:@"chatLinkCreation"];
+        customModalAlertVC.viewTitle = self.chatRoom.title;
+        customModalAlertVC.detail = AMLocalizedString(@"People can join your group by using this link.", @"Text explaining users how the chat links work.");
+        customModalAlertVC.firstButtonTitle = AMLocalizedString(@"copy", @"List option shown on the details of a file or folder");
+        customModalAlertVC.link = self.publicChatLink.absoluteString;
+        customModalAlertVC.secondButtonTitle = AMLocalizedString(@"share", @"Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected");
+        customModalAlertVC.dismissButtonTitle = AMLocalizedString(@"dismiss", @"Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible).");
+        __weak typeof(CustomModalAlertViewController) *weakCustom = customModalAlertVC;
+        customModalAlertVC.firstCompletion = ^{
+            [weakCustom dismissViewControllerAnimated:YES completion:^{
+                UIPasteboard.generalPasteboard.string = self.publicChatLink.absoluteString;
+                [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"linkCopied", @"Message shown when the link has been copied to the pasteboard")];
+                self.publicChatWithLinkCreated = NO;
+            }];
+        };
+        
+        customModalAlertVC.secondCompletion = ^{
+            [weakCustom dismissViewControllerAnimated:YES completion:^{
+                UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWithActivityItems:@[self.publicChatLink.absoluteString] applicationActivities:nil];
+                self.publicChatWithLinkCreated = NO;
+                if (UIDevice.currentDevice.iPadDevice) {
+                    activityVC.popoverPresentationController.sourceView = self.view;
+                    activityVC.popoverPresentationController.sourceRect = self.view.frame;
+                    
+                }
+                [self presentViewController:activityVC animated:YES completion:nil];
+            }];
+        };
+        
+        customModalAlertVC.dismissCompletion = ^{
+            self.publicChatWithLinkCreated = NO;
+            [weakCustom dismissViewControllerAnimated:YES completion:nil];
+        };
+        
+        [self presentViewController:customModalAlertVC animated:YES completion:nil];
+    }
 }
 
 - (void)willEnterForeground {
@@ -466,7 +507,9 @@ const NSUInteger kMaxMessagesToLoad = 256;
     NSInteger loadMessage = [[MEGASdkManager sharedMEGAChatSdk] loadMessagesForChat:self.chatRoom.chatId count:messagesToLoad];
     switch (loadMessage) {
         case -1:
-            [SVProgressHUD show];
+            if (!self.isPublicChatWithLinkCreated) {
+                [SVProgressHUD show];
+            }
             MEGALogDebug(@"loadMessagesForChat: history has to be fetched from server, but we are not logged in yet");
             self.loadMessagesLater = YES;
             break;
