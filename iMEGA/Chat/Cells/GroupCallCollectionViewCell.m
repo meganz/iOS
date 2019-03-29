@@ -97,6 +97,7 @@
 - (void)addLocalVideoInChat:(uint64_t)chatId {
     [[MEGASdkManager sharedMEGAChatSdk] addChatLocalVideo:chatId delegate:self.videoImageView];
     self.videoImageView.hidden = NO;
+    self.videoImageView.transform = CGAffineTransformMakeScale(-1, 1);
     self.avatarImageView.hidden = YES;
     MEGALogDebug(@"[Group Call] Add local video %p", self.videoImageView);
 }
