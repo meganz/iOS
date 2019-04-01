@@ -645,21 +645,21 @@ static NSString *nodeToPresentBase64Handle;
     
     __weak UIViewController *weakVisibleVC = [UIApplication mnz_visibleViewController];
     __weak CustomModalAlertViewController *weakInviteOrDismissModal = inviteOrDismissModal;
-    void (^completion)(void) = ^{
+    void (^firstCompletion)(void) = ^{
         MEGAInviteContactRequestDelegate *delegate = [[MEGAInviteContactRequestDelegate alloc] initWithNumberOfRequests:1 presentSuccessOver:weakVisibleVC completion:nil];
         [[MEGASdkManager sharedMEGASdk] inviteContactWithEmail:email message:@"" action:MEGAInviteActionAdd handle:contactLinkHandle delegate:delegate];
         [weakInviteOrDismissModal dismissViewControllerAnimated:YES completion:nil];
     };
     
-    void (^onDismiss)(void) = ^{
+    void (^dismissCompletion)(void) = ^{
         [weakInviteOrDismissModal dismissViewControllerAnimated:YES completion:nil];
     };
     
     MEGAUser *user = [[MEGASdkManager sharedMEGASdk] contactForEmail:email];
     if (user && user.visibility == MEGAUserVisibilityVisible) {
         inviteOrDismissModal.detail = [AMLocalizedString(@"alreadyAContact", @"Error message displayed when trying to invite a contact who is already added.") stringByReplacingOccurrencesOfString:@"%s" withString:email];
-        inviteOrDismissModal.action = AMLocalizedString(@"dismiss", @"Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible).");
-        inviteOrDismissModal.completion = onDismiss;
+        inviteOrDismissModal.firstButtonTitle = AMLocalizedString(@"dismiss", @"Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible).");
+        inviteOrDismissModal.firstCompletion = dismissCompletion;
     } else {
         BOOL isInOutgoingContactRequest = NO;
         MEGAContactRequestList *outgoingContactRequestList = [[MEGASdkManager sharedMEGASdk] outgoingContactRequests];
@@ -677,14 +677,14 @@ static NSString *nodeToPresentBase64Handle;
             detailText = [detailText stringByReplacingOccurrencesOfString:@"[X]" withString:email];
             inviteOrDismissModal.detail = detailText;
             inviteOrDismissModal.boldInDetail = email;
-            inviteOrDismissModal.action = AMLocalizedString(@"close", nil);
-            inviteOrDismissModal.completion = onDismiss;
+            inviteOrDismissModal.firstButtonTitle = AMLocalizedString(@"close", nil);
+            inviteOrDismissModal.firstCompletion = dismissCompletion;
         } else {
             inviteOrDismissModal.detail = email;
-            inviteOrDismissModal.action = AMLocalizedString(@"invite", @"A button on a dialog which invites a contact to join MEGA.");
-            inviteOrDismissModal.dismiss = AMLocalizedString(@"dismiss", @"Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible).");
-            inviteOrDismissModal.completion = completion;
-            inviteOrDismissModal.onDismiss = onDismiss;
+            inviteOrDismissModal.firstButtonTitle = AMLocalizedString(@"invite", @"A button on a dialog which invites a contact to join MEGA.");
+            inviteOrDismissModal.dismissButtonTitle = AMLocalizedString(@"dismiss", @"Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible).");
+            inviteOrDismissModal.firstCompletion = firstCompletion;
+            inviteOrDismissModal.dismissCompletion = dismissCompletion;
         }
     }
     
