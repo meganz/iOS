@@ -1,15 +1,16 @@
+
 #import "ContactRequestsViewController.h"
 
-#import "MEGASdkManager.h"
-#import "Helper.h"
-
-#import "MEGAReachabilityManager.h"
 #import "UIScrollView+EmptyDataSet.h"
 #import "UIImage+GKContact.h"
 #import "SVProgressHUD.h"
 #import "DateTools.h"
 
 #import "ContactRequestsTableViewCell.h"
+#import "Helper.h"
+#import "MEGAReachabilityManager.h"
+#import "MEGASdkManager.h"
+#import "NSString+MNZCategory.h"
 
 @interface ContactRequestsViewController () <DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGARequestDelegate, MEGAGlobalDelegate>
 
@@ -180,7 +181,7 @@
             
             MEGAContactRequest *contactRequest = [self.incomingContactRequestArray objectAtIndex:indexPath.row];
             NSString *avatarColorString = [MEGASdk avatarColorForBase64UserHandle:[MEGASdk base64HandleForUserHandle:contactRequest.handle]];
-            cell.avatarImageView.image = [UIImage imageForName:contactRequest.sourceEmail.uppercaseString size:cell.avatarImageView.frame.size backgroundColor:[UIColor colorFromHexString:avatarColorString] textColor:[UIColor whiteColor] font:[UIFont mnz_SFUIRegularWithSize:(cell.avatarImageView.frame.size.width/2.0f)]];
+            cell.avatarImageView.image = [UIImage imageForName:contactRequest.sourceEmail.mnz_initialForAvatar size:cell.avatarImageView.frame.size backgroundColor:[UIColor colorFromHexString:avatarColorString] textColor:[UIColor whiteColor] font:[UIFont mnz_SFUIRegularWithSize:(cell.avatarImageView.frame.size.width/2.0f)]];
             cell.nameLabel.text = [contactRequest sourceEmail];
             cell.timeAgoLabel.text = [[[contactRequest modificationTime] timeAgoSinceNow] stringByAppendingString:pendingString];
             
@@ -192,7 +193,7 @@
             
             MEGAContactRequest *contactRequest = [self.outgoingContactRequestArray objectAtIndex:indexPath.row];
             NSString *avatarColorString = [MEGASdk avatarColorForBase64UserHandle:[MEGASdk base64HandleForUserHandle:contactRequest.handle]];
-            cell.avatarImageView.image = [UIImage imageForName:contactRequest.targetEmail.uppercaseString size:cell.avatarImageView.frame.size backgroundColor:[UIColor colorFromHexString:avatarColorString] textColor:[UIColor whiteColor] font:[UIFont mnz_SFUIRegularWithSize:(cell.avatarImageView.frame.size.width/2.0f)]];
+            cell.avatarImageView.image = [UIImage imageForName:contactRequest.targetEmail.mnz_initialForAvatar size:cell.avatarImageView.frame.size backgroundColor:[UIColor colorFromHexString:avatarColorString] textColor:[UIColor whiteColor] font:[UIFont mnz_SFUIRegularWithSize:(cell.avatarImageView.frame.size.width/2.0f)]];
             cell.nameLabel.text = [contactRequest targetEmail];
             cell.timeAgoLabel.text = [[[contactRequest modificationTime] timeAgoSinceNow] stringByAppendingString:pendingString];
             break;

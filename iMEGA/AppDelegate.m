@@ -255,9 +255,6 @@
             [sharedUserDefaults setBool:YES forKey:@"extensions-passcode"];
         }
         
-        [self registerForVoIPNotifications];
-        [self registerForNotifications];
-        
         isAccountFirstLogin = NO;
         
         if ([[NSUserDefaults standardUserDefaults] objectForKey:@"IsChatEnabled"] == nil) {
@@ -1782,6 +1779,9 @@ void uncaughtExceptionHandler(NSException *exception) {
                     [MEGALinkManager resetLinkAndURLType];
                 }
             }
+                        
+            [self registerForVoIPNotifications];
+            [self registerForNotifications];
             [[MEGASdkManager sharedMEGASdk] fetchNodes];
             break;
         }

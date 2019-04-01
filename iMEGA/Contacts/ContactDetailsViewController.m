@@ -40,10 +40,11 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *avatarViewHeightConstraint;
 @property (weak, nonatomic) IBOutlet UIButton *callButton;
 @property (weak, nonatomic) IBOutlet UIButton *videoCallButton;
-@property (weak, nonatomic) IBOutlet UIButton *backButton;
+@property (weak, nonatomic) IBOutlet UIButton *messageButton;
 @property (weak, nonatomic) IBOutlet UILabel *messageLabel;
 @property (weak, nonatomic) IBOutlet UILabel *callLabel;
 @property (weak, nonatomic) IBOutlet UILabel *videoLabel;
+@property (weak, nonatomic) IBOutlet UIButton *backButton;
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
@@ -355,6 +356,10 @@
 - (void)updateCallButtonsState {
     MEGAChatRoom *chatRoom = self.chatRoom ? self.chatRoom : [[MEGASdkManager sharedMEGAChatSdk] chatRoomByUser:self.userHandle];
     if (chatRoom) {
+        if (chatRoom.ownPrivilege < MEGAChatRoomPrivilegeStandard) {
+            self.messageButton.enabled = self.callButton.enabled = self.videoCallButton.enabled = NO;
+            return;
+        }
         MEGAChatConnection chatConnection = [[MEGASdkManager sharedMEGAChatSdk] chatConnectionState:chatRoom.chatId];
         if (chatConnection != MEGAChatConnectionOnline) {
             self.callButton.enabled = self.videoCallButton.enabled = NO;
