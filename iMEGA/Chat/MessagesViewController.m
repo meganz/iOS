@@ -4,10 +4,10 @@
 #import <UserNotifications/UserNotifications.h>
 
 #import <PureLayout/PureLayout.h>
+#import "NSDate+DateTools.h"
 #import "SVProgressHUD.h"
 #import "UIImage+GKContact.h"
-#import "NSDate+DateTools.h"
-#import "UIImage+MNZCategory.h"
+#import "UIScrollView+EmptyDataSet.h"
 
 #import "Helper.h"
 #import "DevicePermissionsHelper.h"
@@ -57,7 +57,7 @@ const CGFloat kAvatarImageDiameter = 24.0f;
 
 const NSUInteger kMaxMessagesToLoad = 256;
 
-@interface MessagesViewController () <MEGAPhotoBrowserDelegate, JSQMessagesViewAccessoryButtonDelegate, JSQMessagesComposerTextViewPasteDelegate, MEGAChatDelegate, MEGAChatRequestDelegate, MEGARequestDelegate, MEGAChatCallDelegate>
+@interface MessagesViewController () <MEGAPhotoBrowserDelegate, JSQMessagesViewAccessoryButtonDelegate, JSQMessagesComposerTextViewPasteDelegate, DZNEmptyDataSetSource, MEGAChatDelegate, MEGAChatRequestDelegate, MEGARequestDelegate, MEGAChatCallDelegate>
 
 @property (nonatomic, strong) MEGAOpenMessageHeaderView *openMessageHeaderView;
 @property (nonatomic, strong) MEGAMessagesTypingIndicatorFooterView *footerView;
@@ -126,6 +126,8 @@ const NSUInteger kMaxMessagesToLoad = 256;
 @property UIView *navigationStatusView;
 
 @property (nonatomic) BOOL chatLinkBeenClosed;
+
+@property (nonatomic) BOOL loadingState;
 
 @end
 
@@ -204,6 +206,10 @@ const NSUInteger kMaxMessagesToLoad = 256;
     
     [self.inputToolbar.contentView.joinButton setTitle:AMLocalizedString(@"Join", @"Button text in public chat previews that allows the user to join the chat") forState:UIControlStateNormal];
     [self configureNavigationBar];
+    
+    self.loadingState = YES;
+    self.collectionView.emptyDataSetSource = self;
+    [self.collectionView reloadData];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -511,9 +517,6 @@ const NSUInteger kMaxMessagesToLoad = 256;
     NSInteger loadMessage = [[MEGASdkManager sharedMEGAChatSdk] loadMessagesForChat:self.chatRoom.chatId count:messagesToLoad];
     switch (loadMessage) {
         case -1:
-            if (!self.isPublicChatWithLinkCreated) {
-                [SVProgressHUD show];
-            }
             MEGALogDebug(@"loadMessagesForChat: history has to be fetched from server, but we are not logged in yet");
             self.loadMessagesLater = YES;
             break;
@@ -527,7 +530,9 @@ const NSUInteger kMaxMessagesToLoad = 256;
             break;
             
         case 2:
-            [SVProgressHUD show];
+            if (!self.isFirstLoad) {
+                [SVProgressHUD show];
+            }
             MEGALogDebug(@"loadMessagesForChat: messages will be requested to the server");
             break;
             
@@ -2054,7 +2059,7 @@ const NSUInteger kMaxMessagesToLoad = 256;
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section {
     BOOL isiPhone4XOr5X = ([[UIDevice currentDevice] iPhone4X] || [[UIDevice currentDevice] iPhone5X]);
     CGFloat height = (isiPhone4XOr5X ? 490.0f : 470.0f);
-    CGFloat minimumHeight = self.isFirstLoad ? 0.0f : height;
+    CGFloat minimumHeight = self.loadingState || self.isFirstLoad ? 0.0f : height;
     
     return CGSizeMake(self.view.frame.size.width, minimumHeight);
 }
@@ -2572,6 +2577,18 @@ const NSUInteger kMaxMessagesToLoad = 256;
     [self setLastMessageAsSeen];
 }
 
+#pragma mark - DZNEmptyDataSetSource
+
+- (UIView *)customViewForEmptyDataSet:(UIScrollView *)scrollView {
+    UIImageView *skeletonImageView = nil;
+    
+    if (self.loadingState) {
+        skeletonImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"chatroomLoading"]];
+    }
+    
+    return skeletonImageView;
+}
+
 #pragma mark - MEGAChatRoomDelegate
 
 - (void)onMessageReceived:(MEGAChatSdk *)api message:(MEGAChatMessage *)message {
@@ -2697,6 +2714,7 @@ const NSUInteger kMaxMessagesToLoad = 256;
     } else {
         if (!self.loadMessagesLater) {
             [SVProgressHUD dismiss];
+            self.loadingState = NO;
         }
         if (self.isFirstLoad) {
             if (self.unreadMessages < 0 && self.unreadMessages > -kMaxMessagesToLoad) {
