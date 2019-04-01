@@ -372,6 +372,7 @@
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
     MEGALogDebug(@"Application did enter background");
     
+    [self beginBackgroundTaskWithName:@"Chat-Request-SET_BACKGROUND_STATUS=YES"];
     [[MEGASdkManager sharedMEGAChatSdk] setBackgroundStatus:YES];
     [[MEGASdkManager sharedMEGAChatSdk] saveCurrentState];
 
@@ -723,21 +724,25 @@
     MEGALogDebug(@"Begin background task with name: %@", name);
     
     UIBackgroundTaskIdentifier backgroundTaskIdentifier = [[UIApplication sharedApplication] beginBackgroundTaskWithName:name expirationHandler:^{
-        NSArray *allKeysArray = [self.backgroundTaskMutableDictionary allKeysForObject:name];
-        for (NSUInteger i = 0; i < allKeysArray.count; i++) {
-            NSNumber *expiringBackgroundTaskIdentifierNumber = [allKeysArray objectAtIndex:i];
-            [[UIApplication sharedApplication] endBackgroundTask:expiringBackgroundTaskIdentifierNumber.unsignedIntegerValue];
-            
-            [self.backgroundTaskMutableDictionary removeObjectForKey:expiringBackgroundTaskIdentifierNumber];
-            if (self.backgroundTaskMutableDictionary.count == 0) {
-                self.appSuspended = YES;
-                MEGALogDebug(@"App suspended property = YES.");
-            }
-        }
-        MEGALogDebug(@"Ended all background tasks with name: %@", name);
+        [self endBackgroundTaskWithName:name];
     }];
     
     [self.backgroundTaskMutableDictionary setObject:name forKey:[NSNumber numberWithUnsignedInteger:backgroundTaskIdentifier]];
+}
+
+- (void)endBackgroundTaskWithName:(NSString *)name {
+    NSArray *allKeysArray = [self.backgroundTaskMutableDictionary allKeysForObject:name];
+    for (NSUInteger i = 0; i < allKeysArray.count; i++) {
+        NSNumber *expiringBackgroundTaskIdentifierNumber = [allKeysArray objectAtIndex:i];
+        [[UIApplication sharedApplication] endBackgroundTask:expiringBackgroundTaskIdentifierNumber.unsignedIntegerValue];
+        
+        [self.backgroundTaskMutableDictionary removeObjectForKey:expiringBackgroundTaskIdentifierNumber];
+        if (self.backgroundTaskMutableDictionary.count == 0) {
+            self.appSuspended = YES;
+            MEGALogDebug(@"App suspended property = YES.");
+        }
+    }
+    MEGALogDebug(@"Ended all background tasks with name: %@", name);
 }
 
 - (void)manageLink:(NSURL *)url {
@@ -1966,6 +1971,9 @@ void uncaughtExceptionHandler(NSException *exception) {
 }
 
 - (void)onChatRequestFinish:(MEGAChatSdk *)api request:(MEGAChatRequest *)request error:(MEGAChatError *)error {
+    if (request.type == MEGAChatRequestTypeSetBackgroundStatus && request.flag) {
+        [self endBackgroundTaskWithName:@"Chat-Request-SET_BACKGROUND_STATUS=YES"];
+    }
     if ([error type] != MEGAChatErrorTypeOk) {
         MEGALogError(@"onChatRequestFinish error type: %td request type: %td", error.type, request.type);
         return;
