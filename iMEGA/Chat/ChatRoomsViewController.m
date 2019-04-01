@@ -324,16 +324,17 @@
 }
 
 - (UIView *)customViewForEmptyDataSet:(UIScrollView *)scrollView {
+    UIImageView *skeletonImageView = nil;
+    
     if ([MEGAReachabilityManager isReachable]) {
         if ([[NSUserDefaults standardUserDefaults] boolForKey:@"IsChatEnabled"]) {
             if ([[MEGASdkManager sharedMEGAChatSdk] initState] == MEGAChatInitWaitingNewSession || [[MEGASdkManager sharedMEGAChatSdk] initState] == MEGAChatInitNoCache) {
-                UIActivityIndicatorView *indicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-                [indicator startAnimating];
-                return indicator;
+                skeletonImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"chatListLoading"]];
             }
         }
     }
-    return nil;
+    
+    return skeletonImageView;
 }
 
 #pragma mark - DZNEmptyDataSetDelegate Methods
