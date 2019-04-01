@@ -489,7 +489,9 @@ const NSUInteger kMaxMessagesToLoad = 256;
             break;
             
         case 2:
-            [SVProgressHUD show];
+            if (!self.isFirstLoad) {
+                [SVProgressHUD show];
+            }
             MEGALogDebug(@"loadMessagesForChat: messages will be requested to the server");
             break;
             
