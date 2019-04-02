@@ -252,7 +252,7 @@
         if ([[NSUserDefaults standardUserDefaults] boolForKey:@"IsChatEnabled"]) {
             switch (self.chatRoomsType) {
                 case ChatRoomsTypeDefault:
-                    text = AMLocalizedString(@"noConversationsDescription", @"Empty Conversations description");
+                    text = AMLocalizedString(@"Start chat securely with your contacts in a encrypted way", @"Empty Conversations description");
                     break;
                     
                 case ChatRoomsTypeArchived:
@@ -348,6 +348,7 @@
         [self.navigationController pushViewController:chatSettingsTVC animated:YES];
     } else {
         MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactsNavigationControllerID"];
+        [navigationController addLeftCancelButton];
         ContactsViewController *contactsVC = navigationController.viewControllers.firstObject;
         contactsVC.contactsMode = ContactsModeChatNamingGroup;
         contactsVC.getChatLinkEnabled = YES;
@@ -361,7 +362,7 @@
     self.searchController.searchBar.hidden = YES;
     if (self.archivedChatListItemList.size) {
         self.archivedChatEmptyStateTitle.text = AMLocalizedString(@"archivedChats", @"Title of archived chats button");
-        self.archivedChatEmptyStateCount.text = [NSString stringWithFormat:@"%lu", (unsigned long)self.archivedChatListItemList.size];
+        self.archivedChatEmptyStateCount.text = [NSString stringWithFormat:@"%tu", self.archivedChatListItemList.size];
         self.archivedChatEmptyState.hidden = NO;
     }
 }
@@ -829,7 +830,7 @@
                     ChatRoomCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"archivedChatsCell" forIndexPath:indexPath];
                     cell.avatarImageView.image = [UIImage imageNamed:@"archiveChat"];
                     cell.chatTitle.text = AMLocalizedString(@"archivedChats", @"Title of archived chats button");
-                    cell.chatLastMessage.text = [NSString stringWithFormat:@"%lu", (unsigned long)self.archivedChatListItemList.size];
+                    cell.chatLastMessage.text = [NSString stringWithFormat:@"%tu", self.archivedChatListItemList.size];
                     return cell;
                 } else {
                     return [self chatRoomCellForIndexPath:indexPath];
@@ -1046,7 +1047,7 @@
                         [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationNone];
                     }
                     if (!self.archivedChatEmptyState.hidden) {
-                        self.archivedChatEmptyStateCount.text = [NSString stringWithFormat:@"%lu", (unsigned long)self.archivedChatListItemList.size];
+                        self.archivedChatEmptyStateCount.text = [NSString stringWithFormat:@"%tu", self.archivedChatListItemList.size];
                     }
                     break;
                     
