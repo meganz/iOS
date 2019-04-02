@@ -976,7 +976,8 @@
             return;
         }
         
-        if ([self.tableView.indexPathsForVisibleRows containsObject:indexPath]) {
+        if (indexPath && self.chatListItemArray.count > 0) {
+            [self.chatListItemArray replaceObjectAtIndex:indexPath.row withObject:item];
             ChatRoomCell *cell = (ChatRoomCell *)[self.tableView cellForRowAtIndexPath:indexPath];
             switch (item.changes) {
                 case MEGAChatListItemChangeTypeOwnPrivilege:
@@ -990,22 +991,19 @@
                     break;
                     
                 case MEGAChatListItemChangeTypeTitle:
-                    [self.chatListItemArray replaceObjectAtIndex:indexPath.row withObject:item];
                     [self.tableView beginUpdates];
                     [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
                     [self.tableView endUpdates];
                     break;
                     
                 case MEGAChatListItemChangeTypeClosed:
+                case MEGAChatListItemChangeTypePreviewClosed:
                     [self deleteRowByChatId:item.chatId];
                     break;
                     
                 case MEGAChatListItemChangeTypeLastMsg:
                 case MEGAChatListItemChangeTypeLastTs:
-                    if (self.chatListItemArray.count > 0) {
-                        [self.chatListItemArray replaceObjectAtIndex:indexPath.row withObject:item];
-                        [cell updateLastMessageForChatListItem:item];
-                    }
+                    [cell updateLastMessageForChatListItem:item];
                     break;
                     
                 case MEGAChatListItemChangeTypeArchived:
