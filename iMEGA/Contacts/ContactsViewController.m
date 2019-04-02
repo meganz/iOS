@@ -283,8 +283,7 @@
             if (self.getChatLinkEnabled) {
                 self.optionsStackView.hidden = self.getChatLinkEnabled;
                 self.tableViewHeader.frame = CGRectMake(0, 0, self.tableViewHeader.frame.size.width, 80);
-            } else {
-                self.keyRotationEnabled = NO;                
+            } else {          
                 UITapGestureRecognizer *singleFingerTap = [UITapGestureRecognizer.alloc initWithTarget:self action:@selector(checkboxTouchUpInside:)];
                 [self.getChatLinkStackView addGestureRecognizer:singleFingerTap];
             }
