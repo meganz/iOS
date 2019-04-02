@@ -18,7 +18,6 @@
 #import "MEGACopyRequestDelegate.h"
 #import "MEGAGetAttrUserRequestDelegate.h"
 #import "MEGAInviteContactRequestDelegate.h"
-#import "MEGAMessagesTypingIndicatorFooterView.h"
 #import "MEGANode+MNZCategory.h"
 #import "MEGANodeList+MNZCategory.h"
 #import "MEGALinkManager.h"
@@ -60,7 +59,6 @@ const NSUInteger kMaxMessagesToLoad = 256;
 @interface MessagesViewController () <MEGAPhotoBrowserDelegate, JSQMessagesViewAccessoryButtonDelegate, JSQMessagesComposerTextViewPasteDelegate, DZNEmptyDataSetSource, MEGAChatDelegate, MEGAChatRequestDelegate, MEGARequestDelegate, MEGAChatCallDelegate>
 
 @property (nonatomic, strong) MEGAOpenMessageHeaderView *openMessageHeaderView;
-@property (nonatomic, strong) MEGAMessagesTypingIndicatorFooterView *footerView;
 
 @property (strong, nonatomic) NSMutableArray <MEGAChatMessage *> *messages;
 
@@ -128,6 +126,8 @@ const NSUInteger kMaxMessagesToLoad = 256;
 @property (nonatomic) BOOL chatLinkBeenClosed;
 
 @property (nonatomic) BOOL loadingState;
+
+@property (nonatomic) NSString *typingString;
 
 @end
 
@@ -542,7 +542,6 @@ const NSUInteger kMaxMessagesToLoad = 256;
 }
 
 - (void)customNavigationBarLabel {
-    
     if (self.selectingMessages) {
         self.inputToolbar.hidden = YES;
 
@@ -558,7 +557,9 @@ const NSUInteger kMaxMessagesToLoad = 256;
         NSString *chatRoomTitle = self.chatRoom.title ? self.chatRoom.title : @"";
         NSString *chatRoomState;
         
-        if (self.chatRoom.archived) {
+        if (self.typingString) {
+            chatRoomState = self.typingString;
+        } else if (self.chatRoom.archived) {
             self.navigationStatusView.hidden = YES;
             chatRoomState = AMLocalizedString(@"archived", @"Title of flag of archived chats.");
         } else {
@@ -864,7 +865,6 @@ const NSUInteger kMaxMessagesToLoad = 256;
     [self customiseCollectionViewLayout];
     
     [self.collectionView registerNib:[MEGAOpenMessageHeaderView nib] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:[MEGAOpenMessageHeaderView headerReuseIdentifier]];
-    [self.collectionView registerNib:MEGAMessagesTypingIndicatorFooterView.nib forSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:MEGAMessagesTypingIndicatorFooterView.footerReuseIdentifier];
     
     self.collectionView.accessoryDelegate = self;
     self.collectionView.backgroundColor = UIColor.whiteColor;
@@ -1275,34 +1275,34 @@ const NSUInteger kMaxMessagesToLoad = 256;
 }
 
 - (void)setTypingIndicator {
-    self.showTypingIndicator = self.whoIsTypingMutableArray.count > 0;
     switch (self.whoIsTypingMutableArray.count) {
         case 0:
-            self.footerView.typingLabel.text = @"";
+            self.typingString = nil;
             break;
             
         case 1: {
             NSNumber *firstUserHandle = [self.whoIsTypingMutableArray objectAtIndex:0];
             NSString *firstUserName =  [self.chatRoom peerFirstnameByHandle:firstUserHandle.unsignedLongLongValue];
             
-            self.footerView.typingLabel.text = [NSString stringWithFormat:AMLocalizedString(@"isTyping", @"A typing indicator in the chat. Please leave the %@ which will be automatically replaced with the user's name at runtime."), (firstUserName.length ? firstUserName : [self.chatRoom peerEmailByHandle:firstUserHandle.unsignedLongLongValue])];
+            self.typingString = [NSString stringWithFormat:AMLocalizedString(@"isTyping", @"A typing indicator in the chat. Please leave the %@ which will be automatically replaced with the user's name at runtime."), (firstUserName.length ? firstUserName : [self.chatRoom peerEmailByHandle:firstUserHandle.unsignedLongLongValue])];
             break;
         }
             
         case 2: {
-            self.footerView.typingLabel.text = [self twoOrMoreUsersAreTypingString];
+            self.typingString = [self twoOrMoreUsersAreTypingString];
             break;
         }
             
         default: {
             if (self.whoIsTypingMutableArray.count > 2) {
-                self.footerView.typingLabel.text = [self twoOrMoreUsersAreTypingString];
+                self.typingString = [self twoOrMoreUsersAreTypingString];
             } else {
-                self.footerView.typingLabel.text = @"";
+                self.typingString = nil;
             }
             break;
         }
     }
+    [self customNavigationBarLabel];
 }
 
 - (NSString *)twoOrMoreUsersAreTypingString {
@@ -2043,11 +2043,6 @@ const NSUInteger kMaxMessagesToLoad = 256;
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {
     UICollectionReusableView *reusableview = nil;
     
-    if (self.showTypingIndicator && [kind isEqualToString:UICollectionElementKindSectionFooter]) {
-        self.footerView = [self dequeueTypingIndicatorFooterViewForIndexPath:indexPath];
-        return self.footerView;
-    }
-    
     if (kind == UICollectionElementKindSectionHeader) {
         [self setChatOpenMessageForIndexPath:indexPath];
         return self.openMessageHeaderView;
@@ -2062,17 +2057,6 @@ const NSUInteger kMaxMessagesToLoad = 256;
     CGFloat minimumHeight = self.loadingState || self.isFirstLoad ? 0.0f : height;
     
     return CGSizeMake(self.view.frame.size.width, minimumHeight);
-}
-
-#pragma mark - Typing indicator
-
-- (MEGAMessagesTypingIndicatorFooterView *)dequeueTypingIndicatorFooterViewForIndexPath:(NSIndexPath *)indexPath {
-    self.footerView = [self.collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionFooter
-                                                                                                 withReuseIdentifier:MEGAMessagesTypingIndicatorFooterView.footerReuseIdentifier
-                                                                                                        forIndexPath:indexPath];
-    [self setTypingIndicator];
-    
-    return self.footerView;
 }
 
 #pragma mark - UICollectionViewDelegate
@@ -2913,11 +2897,6 @@ const NSUInteger kMaxMessagesToLoad = 256;
                 }
                 
                 [self setTypingIndicator];
-                
-                NSIndexPath *lastCell = [NSIndexPath indexPathForItem:([self.collectionView numberOfItemsInSection:0] - 1) inSection:0];
-                if ([self.collectionView.indexPathsForVisibleItems containsObject:lastCell]) {
-                    [self scrollToBottomAnimated:YES];
-                }
                 
                 NSTimer *userTypingTimer = [self.whoIsTypingTimersMutableDictionary objectForKey:userTypingHandle];
                 if (userTypingTimer) {
