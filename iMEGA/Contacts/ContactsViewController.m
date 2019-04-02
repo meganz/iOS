@@ -38,7 +38,6 @@
 @property (weak, nonatomic) IBOutlet UIView *itemListView;
 @property (weak, nonatomic) IBOutlet UIView *contactsHeaderView;
 @property (weak, nonatomic) IBOutlet UILabel *contactsHeaderViewLabel;
-@property (weak, nonatomic) IBOutlet UIView *contactsTopLineHeaderView;
 
 @property (nonatomic, strong) MEGAUserList *users;
 @property (nonatomic, strong) NSMutableArray *visibleUsersArray;
@@ -80,13 +79,13 @@
 @property (nonatomic) UIPanGestureRecognizer *panOnTable;
 
 @property (weak, nonatomic) IBOutlet UIView *tableViewHeader;
-@property (weak, nonatomic) IBOutlet UIView *encryptedKeyRotationView;
-@property (weak, nonatomic) IBOutlet UIView *getChatLinkView;
 @property (weak, nonatomic) IBOutlet UITextField *enterGroupNameTextField;
 @property (weak, nonatomic) IBOutlet UILabel *encryptedKeyRotationLabel;
 @property (weak, nonatomic) IBOutlet UILabel *getChatLinkLabel;
 @property (weak, nonatomic) IBOutlet UILabel *keyRotationFooterLabel;
 @property (weak, nonatomic) IBOutlet UIButton *checkboxButton;
+@property (weak, nonatomic) IBOutlet UIStackView *getChatLinkStackView;
+@property (weak, nonatomic) IBOutlet UIStackView *optionsStackView;
 
 @end
 
@@ -279,11 +278,16 @@
             self.navigationItem.rightBarButtonItems = @[self.createGroupBarButtonItem];
             [self.tableView setEditing:NO animated:YES];
             [self.enterGroupNameTextField becomeFirstResponder];
-            self.keyRotationEnabled = NO;
             self.checkboxButton.selected = self.getChatLinkEnabled;
             
-            UITapGestureRecognizer *singleFingerTap = [UITapGestureRecognizer.alloc initWithTarget:self action:@selector(checkboxTouchUpInside:)];
-            [self.getChatLinkView addGestureRecognizer:singleFingerTap];
+            if (self.getChatLinkEnabled) {
+                self.optionsStackView.hidden = self.getChatLinkEnabled;
+                self.tableViewHeader.frame = CGRectMake(0, 0, self.tableViewHeader.frame.size.width, 80);
+            } else {
+                self.keyRotationEnabled = NO;                
+                UITapGestureRecognizer *singleFingerTap = [UITapGestureRecognizer.alloc initWithTarget:self action:@selector(checkboxTouchUpInside:)];
+                [self.getChatLinkStackView addGestureRecognizer:singleFingerTap];
+            }
             
             break;
         }
@@ -983,9 +987,9 @@
 
 - (IBAction)keyRotationSwitchValueChanged:(UISwitch *)sender {
     self.keyRotationEnabled = sender.on;
-    self.getChatLinkView.hidden = sender.on;
+    self.getChatLinkStackView.hidden = sender.on;
     if (sender.on) {
-        self.tableViewHeader.frame = CGRectMake(0, 0, self.tableViewHeader.frame.size.width, 266 - 68);
+        self.tableViewHeader.frame = CGRectMake(0, 0, self.tableViewHeader.frame.size.width, 266 - self.getChatLinkStackView.frame.size.height - 23);
     } else {
         self.tableViewHeader.frame = CGRectMake(0, 0, self.tableViewHeader.frame.size.width, 266);
     }
@@ -1131,7 +1135,6 @@
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     if (section == 0 && self.contactsMode == ContactsModeChatCreateGroup) {
         self.contactsHeaderViewLabel.text = AMLocalizedString(@"contactsTitle", @"Title of the Contacts section").uppercaseString;
-        self.contactsTopLineHeaderView.hidden = YES;
         return self.contactsHeaderView;
     }
     if (section == 0 && self.contactsMode == ContactsModeChatNamingGroup) {
