@@ -1,8 +1,6 @@
 
 #import "MEGANavigationController.h"
 
-#import "Helper.h"
-
 @implementation MEGANavigationController
 
 #pragma mark - Lifecycle
