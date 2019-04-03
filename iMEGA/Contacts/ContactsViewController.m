@@ -524,7 +524,11 @@
             break;
             
         case ContactsModeChatNamingGroup:
-            self.navigationItem.title = AMLocalizedString(@"groupInfo", @"Title of section where you can see the chat group information and the options that you can do with it. Like 'Notifications' or 'Leave Group' and also the participants of the group.");
+            if (self.getChatLinkEnabled) {
+                self.navigationItem.title = AMLocalizedString(@"New Chat Link", @"Text button for init a group chat with link.");
+            } else {
+                self.navigationItem.title = [AMLocalizedString(@"New group chat", @"Text button for init a group chat") capitalizedString];
+            }
             break;
     }
 }
@@ -639,7 +643,11 @@
         self.searchController.active = NO;
     }
     ContactsViewController *contactsVC = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactsViewControllerID"];
-    contactsVC.contactsMode = ContactsModeChatCreateGroup;
+    if (MEGASdkManager.sharedMEGASdk.contacts.size.integerValue > 0) {
+        contactsVC.contactsMode = ContactsModeChatCreateGroup;
+    } else {
+        contactsVC.contactsMode = ContactsModeChatNamingGroup;
+    }
     contactsVC.createGroupChat = self.createGroupChat;
     [self.navigationController pushViewController:contactsVC animated:YES];
 }
