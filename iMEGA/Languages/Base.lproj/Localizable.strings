@@ -949,6 +949,8 @@
 "free"="FREE";
 /* Text that shows the expiry date of the account PRO level */
 "expiresOn"="expires on %@";
+/* Label for the ‘Renews on’ text into the my account page, indicating the renewal date of a subscription - (String as short as possible). */
+"Renews on"="Renews on";
 /* Button title for the section where you can see the 'Purchase history' related to your account */
 "purchaseHistory"="Purchase History";
 /* Title of the Incoming Shares section. Here you can see the folders that your contacts have shared with you */
@@ -1046,7 +1048,7 @@
 /* Empty Conversations section */
 "noConversations"="No Conversations";
 /* Empty Conversations description */
-"noConversationsDescription"="Start chatting securely with your contacts using end-to-end encryption";
+"Start chat securely with your contacts in a encrypted way"="Start chat securely with your contacts in a encrypted way";
 /* Title show when the chat is disabled */
 "chatIsDisabled"="Chat is disabled";
 /* Text button shown when the chat is disabled and if tapped the chat will be enabled */
