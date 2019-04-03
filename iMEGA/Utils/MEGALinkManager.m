@@ -470,7 +470,7 @@ static NSString *nodeToPresentBase64Handle;
     viewController.navigationItem.title = title;
     
     MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:viewController];
-    [navigationController addCancelButton];
+    [navigationController addRightCancelButton];
     [UIApplication.mnz_presentingViewController presentViewController:navigationController animated:YES completion:nil];
 }
 
@@ -599,7 +599,7 @@ static NSString *nodeToPresentBase64Handle;
     if ([Helper hasSession_alertIfNot]) {
         MasterKeyViewController *masterKeyVC = [[UIStoryboard storyboardWithName:@"Settings" bundle:nil] instantiateViewControllerWithIdentifier:@"MasterKeyViewControllerID"];
         MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:masterKeyVC];
-        [navigationController addCancelButton];
+        [navigationController addRightCancelButton];
         
         [UIApplication.mnz_visibleViewController presentViewController:navigationController animated:YES completion:nil];
     }
