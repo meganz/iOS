@@ -94,19 +94,34 @@
     //TODO: Show the blue check if the Contact is verified
     
     self.nameLabel.text = self.userName;
+    self.nameLabel.layer.shadowOffset = CGSizeMake(0, 1);
+    self.nameLabel.layer.shadowColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.2].CGColor;
+    self.nameLabel.layer.shadowRadius = 2.0;
+    self.nameLabel.layer.shadowOpacity = 1;
+    
     self.emailLabel.text = self.userEmail;
+    self.emailLabel.layer.shadowOffset = CGSizeMake(0, 1);
+    self.emailLabel.layer.shadowColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.2].CGColor;
+    self.emailLabel.layer.shadowRadius = 2.0;
+    self.emailLabel.layer.shadowOpacity = 1;
+
     
     MEGAChatStatus userStatus = [MEGASdkManager.sharedMEGAChatSdk userOnlineStatus:self.user.handle];
     if (userStatus != MEGAChatStatusInvalid) {
         if (userStatus < MEGAChatStatusOnline) {
             [MEGASdkManager.sharedMEGAChatSdk requestLastGreen:self.user.handle];
         }
-        self.onlineStatusView.backgroundColor = [UIColor mnz_colorForStatusChange:[MEGASdkManager.sharedMEGAChatSdk userOnlineStatus:self.user.handle]];
         self.statusLabel.text = [NSString chatStatusString:userStatus];
-        self.onlineStatusView.layer.shadowOffset = CGSizeMake(0, 2);
+        self.statusLabel.layer.shadowOffset = CGSizeMake(0, 1);
+        self.statusLabel.layer.shadowColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.2].CGColor;
+        self.statusLabel.layer.shadowRadius = 2.0;
+        self.statusLabel.layer.shadowOpacity = 1;
+        
+        self.onlineStatusView.backgroundColor = [UIColor mnz_colorForStatusChange:[MEGASdkManager.sharedMEGAChatSdk userOnlineStatus:self.user.handle]];
+        self.onlineStatusView.layer.shadowOffset = CGSizeMake(0, 1);
         self.onlineStatusView.layer.shadowColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.2].CGColor;
         self.onlineStatusView.layer.shadowOpacity = 1;
-        self.onlineStatusView.layer.shadowRadius = 4;
+        self.onlineStatusView.layer.shadowRadius = 2;
         self.onlineStatusView.layer.borderWidth = 1;
         self.onlineStatusView.layer.borderColor = UIColor.whiteColor.CGColor;
     } else {
