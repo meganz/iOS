@@ -103,6 +103,7 @@ typedef NS_OPTIONS(NSUInteger, NodesAre) {
 + (CGFloat)spaceHeightForEmptyState;
 
 + (NSDictionary *)titleAttributesForEmptyState;
++ (NSDictionary *)descriptionAttributesForEmptyState;
 + (NSDictionary *)buttonTextAttributesForEmptyState;
 
 #pragma mark - Utils for UI
