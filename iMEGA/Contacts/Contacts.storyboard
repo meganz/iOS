@@ -852,21 +852,20 @@
                                         </constraints>
                                     </imageView>
                                     <stackView opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="6RY-7f-66v">
-                                        <rect key="frame" x="20" y="122.5" width="80.5" height="77"/>
+                                        <rect key="frame" x="20" y="128.5" width="80.5" height="71"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="9bO-Ie-mGk">
-                                                <rect key="frame" x="0.0" y="0.0" width="80.5" height="31"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="80.5" height="29"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XHC-l2-3NH">
-                                                        <rect key="frame" x="0.0" y="0.0" width="65.5" height="31"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="65.5" height="29"/>
                                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="24"/>
                                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <nil key="highlightedColor"/>
-                                                        <color key="shadowColor" red="0.0" green="0.0" blue="0.0" alpha="0.19801476883561644" colorSpace="calibratedRGB"/>
-                                                        <size key="shadowOffset" width="0.0" height="2"/>
+                                                        <size key="shadowOffset" width="0.0" height="0.0"/>
                                                     </label>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YQk-tW-nTN">
-                                                        <rect key="frame" x="73.5" y="12" width="7" height="7"/>
+                                                        <rect key="frame" x="73.5" y="11" width="7" height="7"/>
                                                         <color key="backgroundColor" red="0.1921568662" green="0.70980393890000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="7" id="7aL-be-2Fs"/>
@@ -887,20 +886,18 @@
                                                 </subviews>
                                             </stackView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Last seen" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wgN-dK-iZJ">
-                                                <rect key="frame" x="0.0" y="35" width="54.5" height="16.5"/>
+                                                <rect key="frame" x="0.0" y="33" width="54.5" height="14.5"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
-                                                <color key="shadowColor" red="0.0" green="0.0" blue="0.0" alpha="0.19801476879999999" colorSpace="calibratedRGB"/>
-                                                <size key="shadowOffset" width="0.0" height="2"/>
+                                                <size key="shadowOffset" width="0.0" height="0.0"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Email" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YTm-wg-etC">
-                                                <rect key="frame" x="0.0" y="55.5" width="39" height="21.5"/>
+                                                <rect key="frame" x="0.0" y="51.5" width="39" height="19.5"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
-                                                <color key="shadowColor" red="0.0" green="0.0" blue="0.0" alpha="0.19801476879999999" colorSpace="calibratedRGB"/>
-                                                <size key="shadowOffset" width="0.0" height="2"/>
+                                                <size key="shadowOffset" width="0.0" height="0.0"/>
                                             </label>
                                         </subviews>
                                     </stackView>
