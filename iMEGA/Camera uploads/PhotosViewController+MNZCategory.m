@@ -12,7 +12,7 @@
 - (void)showCameraUploadBoardingScreen {
     CustomModalAlertViewController *boardingAlertVC = [[CustomModalAlertViewController alloc] init];
     boardingAlertVC.modalPresentationStyle = UIModalPresentationOverFullScreen;
-    boardingAlertVC.image = [UIImage imageNamed:@"cameraUploadsPopUp"];
+    boardingAlertVC.image = [UIImage imageNamed:@"cameraUploadsBoarding"];
     boardingAlertVC.viewTitle = AMLocalizedString(@"enableCameraUploadsButton", @"Button title that enables the functionality 'Camera Uploads', which uploads all the photos in your device to MEGA");
     boardingAlertVC.detail = AMLocalizedString(@"automaticallyBackupYourPhotos", @"Text shown to explain what means 'Enable Camera Uploads'.");
     boardingAlertVC.action = AMLocalizedString(@"enable", @"Text button shown when camera upload will be enabled");
