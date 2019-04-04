@@ -404,6 +404,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
     }
     
     [SVProgressHUD dismiss];
+    [self hideTapForInfoLabel];
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
