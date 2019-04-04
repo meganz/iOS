@@ -470,7 +470,7 @@ static NSString *nodeToPresentBase64Handle;
     viewController.navigationItem.title = title;
     
     MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:viewController];
-    [navigationController addCancelButton];
+    [navigationController addRightCancelButton];
     [UIApplication.mnz_presentingViewController presentViewController:navigationController animated:YES completion:nil];
 }
 
@@ -599,7 +599,7 @@ static NSString *nodeToPresentBase64Handle;
     if ([Helper hasSession_alertIfNot]) {
         MasterKeyViewController *masterKeyVC = [[UIStoryboard storyboardWithName:@"Settings" bundle:nil] instantiateViewControllerWithIdentifier:@"MasterKeyViewControllerID"];
         MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:masterKeyVC];
-        [navigationController addCancelButton];
+        [navigationController addRightCancelButton];
         
         [UIApplication.mnz_visibleViewController presentViewController:navigationController animated:YES completion:nil];
     }
@@ -634,7 +634,7 @@ static NSString *nodeToPresentBase64Handle;
     inviteOrDismissModal.modalPresentationStyle = UIModalPresentationOverCurrentContext;
     
     if (imageOnBase64URLEncoding.mnz_isEmpty) {
-        inviteOrDismissModal.image = [UIImage imageForName:fullName.uppercaseString size:CGSizeMake(128.0f, 128.0f) backgroundColor:[UIColor colorFromHexString:[MEGASdk avatarColorForBase64UserHandle:[MEGASdk base64HandleForUserHandle:contactLinkHandle]]] textColor:[UIColor whiteColor] font:[UIFont mnz_SFUIRegularWithSize:64.0f]];
+        inviteOrDismissModal.image = [UIImage imageForName:fullName.mnz_initialForAvatar size:CGSizeMake(128.0f, 128.0f) backgroundColor:[UIColor colorFromHexString:[MEGASdk avatarColorForBase64UserHandle:[MEGASdk base64HandleForUserHandle:contactLinkHandle]]] textColor:[UIColor whiteColor] font:[UIFont mnz_SFUIRegularWithSize:64.0f]];
     } else {
         inviteOrDismissModal.roundImage = YES;
         NSData *imageData = [[NSData alloc] initWithBase64EncodedString:[NSString mnz_base64FromBase64URLEncoding:imageOnBase64URLEncoding] options:NSDataBase64DecodingIgnoreUnknownCharacters];
@@ -645,21 +645,21 @@ static NSString *nodeToPresentBase64Handle;
     
     __weak UIViewController *weakVisibleVC = [UIApplication mnz_visibleViewController];
     __weak CustomModalAlertViewController *weakInviteOrDismissModal = inviteOrDismissModal;
-    void (^completion)(void) = ^{
+    void (^firstCompletion)(void) = ^{
         MEGAInviteContactRequestDelegate *delegate = [[MEGAInviteContactRequestDelegate alloc] initWithNumberOfRequests:1 presentSuccessOver:weakVisibleVC completion:nil];
         [[MEGASdkManager sharedMEGASdk] inviteContactWithEmail:email message:@"" action:MEGAInviteActionAdd handle:contactLinkHandle delegate:delegate];
         [weakInviteOrDismissModal dismissViewControllerAnimated:YES completion:nil];
     };
     
-    void (^onDismiss)(void) = ^{
+    void (^dismissCompletion)(void) = ^{
         [weakInviteOrDismissModal dismissViewControllerAnimated:YES completion:nil];
     };
     
     MEGAUser *user = [[MEGASdkManager sharedMEGASdk] contactForEmail:email];
     if (user && user.visibility == MEGAUserVisibilityVisible) {
         inviteOrDismissModal.detail = [AMLocalizedString(@"alreadyAContact", @"Error message displayed when trying to invite a contact who is already added.") stringByReplacingOccurrencesOfString:@"%s" withString:email];
-        inviteOrDismissModal.action = AMLocalizedString(@"dismiss", @"Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible).");
-        inviteOrDismissModal.completion = onDismiss;
+        inviteOrDismissModal.firstButtonTitle = AMLocalizedString(@"dismiss", @"Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible).");
+        inviteOrDismissModal.firstCompletion = dismissCompletion;
     } else {
         BOOL isInOutgoingContactRequest = NO;
         MEGAContactRequestList *outgoingContactRequestList = [[MEGASdkManager sharedMEGASdk] outgoingContactRequests];
@@ -677,14 +677,14 @@ static NSString *nodeToPresentBase64Handle;
             detailText = [detailText stringByReplacingOccurrencesOfString:@"[X]" withString:email];
             inviteOrDismissModal.detail = detailText;
             inviteOrDismissModal.boldInDetail = email;
-            inviteOrDismissModal.action = AMLocalizedString(@"close", nil);
-            inviteOrDismissModal.completion = onDismiss;
+            inviteOrDismissModal.firstButtonTitle = AMLocalizedString(@"close", nil);
+            inviteOrDismissModal.firstCompletion = dismissCompletion;
         } else {
             inviteOrDismissModal.detail = email;
-            inviteOrDismissModal.action = AMLocalizedString(@"invite", @"A button on a dialog which invites a contact to join MEGA.");
-            inviteOrDismissModal.dismiss = AMLocalizedString(@"dismiss", @"Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible).");
-            inviteOrDismissModal.completion = completion;
-            inviteOrDismissModal.onDismiss = onDismiss;
+            inviteOrDismissModal.firstButtonTitle = AMLocalizedString(@"invite", @"A button on a dialog which invites a contact to join MEGA.");
+            inviteOrDismissModal.dismissButtonTitle = AMLocalizedString(@"dismiss", @"Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible).");
+            inviteOrDismissModal.firstCompletion = firstCompletion;
+            inviteOrDismissModal.dismissCompletion = dismissCompletion;
         }
     }
     

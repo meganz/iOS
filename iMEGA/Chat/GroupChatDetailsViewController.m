@@ -616,7 +616,7 @@
                         alertController.popoverPresentationController.sourceView = cell.contentView;
                     }
                 } else {
-                    alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"Chat Link", @"Label shown in a cell where you can enable a switch to get a chat link") message:AMLocalizedString(@"To enable Chat links you must name the group you are about to create.", @"Alert message to advice the users that to generate a chat link they need enter a group name for the chat")  preferredStyle:UIAlertControllerStyleAlert];
+                    alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"Chat Link", @"Label shown in a cell where you can enable a switch to get a chat link") message:AMLocalizedString(@"To create a chat link you must name the group you're about to create.", @"Alert message to advice the users that to generate a chat link they need enter a group name for the chat")  preferredStyle:UIAlertControllerStyleAlert];
                     [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
                     }]];
                     [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
@@ -655,10 +655,10 @@
                 customModalAlertVC.image = [UIImage imageNamed:@"lock"];
                 customModalAlertVC.viewTitle = AMLocalizedString(@"Enable Encrypted Key Rotation", @"Title show in a cell where the users can enable the 'Encrypted Key Rotation'");
                 customModalAlertVC.detail = AMLocalizedString(@"Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages.", @"Footer text to explain what means 'Encrypted Key Rotation'");
-                customModalAlertVC.action = AMLocalizedString(@"enable", nil);
-                customModalAlertVC.dismiss = AMLocalizedString(@"cancel", nil);
+                customModalAlertVC.firstButtonTitle = AMLocalizedString(@"enable", nil);
+                customModalAlertVC.dismissButtonTitle = AMLocalizedString(@"cancel", nil);
                 __weak typeof(CustomModalAlertViewController) *weakCustom = customModalAlertVC;
-                customModalAlertVC.completion = ^{
+                customModalAlertVC.firstCompletion = ^{
                     MEGAChatGenericRequestDelegate *delegate = [[MEGAChatGenericRequestDelegate alloc] initWithCompletion:^(MEGAChatRequest * _Nonnull request, MEGAChatError * _Nonnull error) {
                         if (error.type == MEGAChatErrorTypeOk) {
                             [weakCustom dismissViewControllerAnimated:YES completion:^{
