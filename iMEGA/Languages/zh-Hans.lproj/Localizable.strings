@@ -99,7 +99,7 @@
 /*  */
 "weak"="弱";
 /*  */
-"passwordVeryWeakOrWeak"="您的密码太容易被猜到了。请尝试增加密码长度。结合大小写。添加特殊字元。不要使用名字或单词。";
+"passwordVeryWeakOrWeak"="您的密码过于简单。请尝试增加密码长度。结合字母大小写。添加特殊字符。切勿使用名字或单词。";
 /* Label displayed during checking the strength of the password introduced. Represents Medium security */
 "medium"="中等";
 /*  */
@@ -337,7 +337,7 @@
 /* String already exists: 367, but we need to split paragraphs. */
 "copyrightMessagePart1"="MEGA尊重他人之著作权，且要求MEGA的云端服务使用者遵守著作权法。";
 /* String already exists: 367, but we need to split paragraphs */
-"copyrightMessagePart2"="严禁使用MEGA云端服务侵害他人之知识产权。您不得上传、下载、储存、分享、展示、流通、散布、寄发、提供链接、传播或以其他方式侵犯任何知识产权，或提供任何侵犯个人或团体知识产权之文件、数据或内容。";
+"copyrightMessagePart2"="严禁使用MEGA云端服务侵犯知识产权。您不得上传、下载、储存、分享、显示、串流、分发、寄送电子邮件、提供链接、传输或以其他方式提供任何侵犯任何个人或单位的知识产权或其他产权的文件、资料或内容。";
 /* button caption text that the user clicks when he agrees */
 "agree"="同意";
 /* button caption text that the user clicks when he disagrees */
@@ -475,7 +475,7 @@
 /* Success message for sharing multiple folders. */
 "sharedFolders_success"="已成功分享%d 文件夹.";
 /* Button title that triggers the importing link action */
-"import"="导入";
+"import"="输入";
 /* Message shown when a file has been imported */
 "fileImported"="文件已导入";
 /* Message shown when some files have been imported */
@@ -619,7 +619,7 @@
 /* Permissions given to the user you share your folder with */
 "readOnly"="只读";
 /* Permissions given to the user you share your folder with */
-"readAndWrite"="读取与写入";
+"readAndWrite"="可读写";
 /* Permissions given to the user you share your folder with */
 "fullAccess"="完全访问权限";
 /* Title of the Settings section */
@@ -659,7 +659,7 @@
 /* Option title to enable Camera Uploads only when the device is charging */
 "onlyWhenChargingLabel"="只在充电状态下";
 /* Footer text to explain the Camera Uploads functionality */
-"cameraUploads_footer"="开启后将上传新的照片和视频。";
+"cameraUploads_footer"="开启后照片与视频将被上传。";
 /* App means “Application” */
 "App version"="App 版本";
 /* Title of the label where the SDK version is shown */
@@ -949,6 +949,8 @@
 "free"="免费";
 /* Text that shows the expiry date of the account PRO level */
 "expiresOn"="到%@ 过期";
+/* Label for the ‘Renews on’ text into the my account page, indicating the renewal date of a subscription - (String as short as possible). */
+"Renews on"="更新";
 /* Button title for the section where you can see the 'Purchase history' related to your account */
 "purchaseHistory"="购买记录";
 /* Title of the Incoming Shares section. Here you can see the folders that your contacts have shared with you */
@@ -1046,7 +1048,7 @@
 /* Empty Conversations section */
 "noConversations"="无对话(已清空)";
 /* Empty Conversations description */
-"noConversationsDescription"="开始使用端到端加密安全的与您的联系人进行聊天";
+"Start chat securely with your contacts in a encrypted way"="Start chat securely with your contacts in a encrypted way";
 /* Text button shown when the chat is disabled and if tapped the chat will be enabled */
 "enable"="启用";
 /* Text button shown when an option is enabled, to allow to disable it. String as sort as possible. */
@@ -1365,7 +1367,7 @@
 /* Notification text body shown when you have missed several audio calls and one video call. [A] = {number of missed audio calls} */
 "missedAudioCallsAndMissedVideoCall"="[A] 个未接语音通话和一个未接视频通话";
 /* Notification text body shown when you have missed several audio calls and video calls. [A] = {number of missed audio calls}. [B] = {number of missed video calls} */
-"missedAudioCallsAndMissedVideoCalls"="[A] 个未接语音通话 和[B] 个未接视频通话";
+"missedAudioCallsAndMissedVideoCalls"="[A]个未接语音通话和[B]个未接视频通话";
 /* Button title to see the available bonus */
 "getBonus"="获得奖励";
 /* Text shown under the title 'Video quality' that explains what it means */
@@ -1416,12 +1418,12 @@
 "type"="类型";
 /* Title of the incoming shared folders of a user in singular */
 "sharedFolder"="已分享的文件夹";
-/* The label of the folder creation time. For example: "Created: 2013-02-02" (no need to put the colon punctuation in the translation) */
-"created"="创建于";
 /* Label for what a selection contains. For example: "Contains: 3 folders & 13 files". (no need to put the colon punctuation in the translation) */
 "contains"="包括";
 /* A label for any 'Modified' text or title. For example to show the modification date of a file/folder. */
 "modified"="最后修改";
+/* A label for any ‘Added’ text or title. For example to show the upload date of a file/folder. */
+"Added"="上传时间";
 /* used for example when a folder is shared with 2 or more users */
 "users"="用户";
 /* user (singular) label indicating is receiving some info, for example shared folders */
@@ -1477,7 +1479,7 @@
 /* state previous to import a file */
 "loading"="加载中";
 /*   */
-"next"="下一步";
+"next"="次一";
 /* Button title to allow the user ignore something */
 "ignore"="忽略";
 /* Button title to allow the user open the default browser */
@@ -1686,8 +1688,8 @@
 "Get Chat Link"="Get Chat Link";
 /* Footer text to explain what means 'Encrypted Key Rotation' */
 "Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages."="Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages.";
-/* Alert message to advice the users that to generate a chat link they need enter a group name for the chat */
-"Before you can generate a link for this room, you need to enter a group name"="Before you can generate a link for this chat, you need to enter a group name.";
+/* Shown as an error message when the user selects "create chat link", but haven't entered a title for the newly created room */
+"To create a chat link you must name the group."="To create a chat link you must name the group.";
 /* Label shown in a cell where you can enable a switch to get a chat link */
 "Chat Link"="Chat Link";
 /* Message shown when there is an active chat link that can be deleted */
@@ -1701,11 +1703,11 @@
 /* Alert message shown while deleting a chat link, warning about the consequences */
 "This conversation will no longer be accessible through the link you are about to delete."="This conversation will no longer be accessible through the public link once it has been removed.";
 /* Management message shown in a chat when the user %@ enables the 'Encrypted Key Rotation' */
-"%@ enabled Encrypted Key Rotation"="%@ enabled Encrypted Key Rotation";
+"%@ enabled Encrypted Key Rotation"="%@ enabled Encrypted Key Rotation.";
 /* Management message shown in a chat when the user %@ creates a public link for the chat */
 "%@ created a public link for the chat."="%@ created a public link for the chat.";
 /* Management message shown in a chat when the user %@ removes a public link for the chat */
-"%@ removed a public link for the chat."="%@ removed a public link for the chat.";
+"%@ removed a public link for the chat."="%@ removed the public link for the chat.";
 /* Management message shown in a chat when the user %@ joined it from a public chat link */
 "%@ joined the group chat."="%@ joined the group chat.";
 /* Message show when a call cannot be established because there are too many participants in the group call */
@@ -1829,7 +1831,7 @@
 /* Text to inform the user there is an active call and is not participating */
 "Ongoing Call"="Ongoing Call";
 /* Message shown when there is an ongoing call and the user tries to play an audio or video */
-"It is not possible to play content while there is a call in progress"="It is not possible to play content while there is a call in progress";
+"It is not possible to play content while there is a call in progress"="It is not possible to play media files while there is a call in progress.";
 /* Text to inform the user there is an active call and is participating */
 "Call Started"="Call Started";
 /* Title for feature Password Reminder */
@@ -1840,3 +1842,45 @@
 "Call"="通话";
 /* Title of the button in the contact info screen to start a video call */
 "Video"="视频";
+/* The label of the toggle switch to indicate that file versioning is enabled. */
+"Enabled"="启用";
+/* Text button for init a group chat with link. */
+"New Chat Link"="新聊天链接";
+/* Text button for init a group chat */
+"New group chat"="新分组聊天";
+/* Shown when an invalid/inexisting/not-available-anymore chat link is opened. */
+"Chat link unavailable"="Chat link unavailable";
+/* Shown when an inexisting/unavailable/removed link is tried to be opened. */
+"This chat link is no longer available"="This chat link is no longer available";
+/* Text explaining users how the chat links work. */
+"People can join your group by using this link."="参与者可通过此链接加入您的群组。";
+/* Subtitle shown in a chat to inform where to tap to enter in the chat details view */
+"Tap here for info"="Tap here for info";
+/* Title for the recents section. */
+"Recents"="近期";
+/* Multiple Images title shown in recents section of webclient */
+"%1 Images"="%1张照片";
+/* Multiple videos title shown in recents section of web client. */
+"%2 Videos"="%2个视频";
+/* A single image and single video title shown in recents section of webclient. */
+"1 Image and 1 Video"="1张照片和1个视频";
+/* One image and multiple videos title in recents. */
+"1 Image and %2 Videos"="1张照片和%2个视频";
+/* Title for multiple images and multiple videos in recents section */
+"%1 Images and %2 Videos"="%1张图片和%2个视频";
+/* Tooltip message shown on recents section. Please see the attached image. */
+"Modified on %1 at %2"="修改于%1的%2";
+/* Title for a recent action shown in the webclient, see the attached image for context. */
+"%1 modified by %3"="%1由%3修改";
+/* Title for a recent action shown in the webclient, see the attached image for context. Please ensure that the `%2 more` is inside the [A] tag as this will become a toggle to show the hidden content. */
+"%1 and [A]%2 more[/A] modified by %3"="%1和[A]%2更多[/A]由%3修改";
+/* Title for a recent action shown in the webclient, see the attached image for context. Please ensure that the `%2 more` is inside the [A] tag as this will become a toggle to show the hidden content. */
+"%1 and [A]%2 more[/A]"="%1和[A]%2更多[/A]";
+/* Title for a recent action shown in the webclient, see the attached image for context. */
+"%1 created by %3"="%1由%3创建";
+/* Title for a recent action shown in the webclient, see the attached image for context. Please ensure that the `%2 more` is inside the [A] tag as this will become a toggle to show the hidden content. */
+"%1 and [A]%2 more[/A] created by %3"="%1和[A]%2更多[/A]由%3创建";
+/* Message shown when the user has not recent activity in their account. */
+"No recent activity"="无近期活动";
+/* Plural of items which contains a folder. 2 items */
+"items"="个项目";

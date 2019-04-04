@@ -151,7 +151,7 @@
 /* */
 "fileLinkUnavailableText1"="Это могло произойти в силу следующих причин:";
 /* ToS refers to Terms of Service and AUP refers to Acceptable Use Policy. */
-"fileLinkUnavailableText2"="Файл удален по причине нарушения условий предоставления услуг (ToS) или политики допустимого использования (AUP)";
+"fileLinkUnavailableText2"="Переехал из-за нарушения.";
 /* */
 "fileLinkUnavailableText3"="Запрошенная вами страница не существует. Возможно ссылка, по которой вы перешли, не существует";
 /* */
@@ -659,7 +659,7 @@
 /* Option title to enable Camera Uploads only when the device is charging */
 "onlyWhenChargingLabel"="Только при зарядке";
 /* Footer text to explain the Camera Uploads functionality */
-"cameraUploads_footer"="Если включено, то новые фото и видео будут загружаться.";
+"cameraUploads_footer"="Если включено, то фото и видео будут загружаться.";
 /* App means “Application” */
 "App version"="Версия приложения";
 /* Title of the label where the SDK version is shown */
@@ -949,6 +949,8 @@
 "free"="БЕСПЛАТНЫЙ";
 /* Text that shows the expiry date of the account PRO level */
 "expiresOn"="истекает %@";
+/* Label for the ‘Renews on’ text into the my account page, indicating the renewal date of a subscription - (String as short as possible). */
+"Renews on"="Обновляется";
 /* Button title for the section where you can see the 'Purchase history' related to your account */
 "purchaseHistory"="История покупок";
 /* Title of the Incoming Shares section. Here you can see the folders that your contacts have shared with you */
@@ -1046,7 +1048,7 @@
 /* Empty Conversations section */
 "noConversations"="Нет разговоров";
 /* Empty Conversations description */
-"noConversationsDescription"="Начните безопасное общение со своими контактами благодаря сквозному шифрованию.";
+"Start chat securely with your contacts in a encrypted way"="Start chat securely with your contacts in a encrypted way";
 /* Text button shown when the chat is disabled and if tapped the chat will be enabled */
 "enable"="Включить";
 /* Text button shown when an option is enabled, to allow to disable it. String as sort as possible. */
@@ -1416,12 +1418,12 @@
 "type"="Тип";
 /* Title of the incoming shared folders of a user in singular */
 "sharedFolder"="Общая папка";
-/* The label of the folder creation time. For example: "Created: 2013-02-02" (no need to put the colon punctuation in the translation) */
-"created"="Создан";
 /* Label for what a selection contains. For example: "Contains: 3 folders & 13 files". (no need to put the colon punctuation in the translation) */
 "contains"="Содержит";
 /* A label for any 'Modified' text or title. For example to show the modification date of a file/folder. */
 "modified"="Изменено";
+/* A label for any ‘Added’ text or title. For example to show the upload date of a file/folder. */
+"Added"="Добавлено";
 /* used for example when a folder is shared with 2 or more users */
 "users"="пользователей(я)";
 /* user (singular) label indicating is receiving some info, for example shared folders */
@@ -1653,7 +1655,7 @@
 /* New server-side rubbish-bin cleaning scheduler description (for Free users) */
 "The Rubbish Bin is cleaned for you automatically. The minimum period is 7 days and your maximum period is 30 days."="Корзина очищается автоматически. Минимальный срок составляет 7 дней, максимальный — 30 дней.";
 /* New server-side rubbish-bin cleaning scheduler description (for PRO users) */
-"The Rubbish Bin can be cleaned for you automatically. The minimum period is 7 days."="Корзина может очищаться автоматически.";
+"The Rubbish Bin can be cleaned for you automatically. The minimum period is 7 days."="Корзина может очищаться автоматически. Минимальный период — 7 дней.";
 /* Description shown when you try to disable the feature Rubbish-Bin Cleaning Scheduler and you are a free user */
 "To disable the Rubbish-Bin Cleaning Scheduler or set a longer retention period, you need to subscribe to a PRO plan."="Чтобы отключить очистку корзины по расписанию или установить более длительный период хранения, нужно подписаться на план PRO.";
 /* Confirmation dialog for the button that logs the user out of all sessions except the current one. */
@@ -1686,8 +1688,8 @@
 "Get Chat Link"="Ссылка на чат";
 /* Footer text to explain what means 'Encrypted Key Rotation' */
 "Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages."="Чередование ключей немного более безопасно, но не позволяет создать ссылку на чат, а новые участники не будут видеть старые сообщения.";
-/* Alert message to advice the users that to generate a chat link they need enter a group name for the chat */
-"Before you can generate a link for this room, you need to enter a group name"="Для создания ссылки на этот чат нужно ввести имя группы.";
+/* Shown as an error message when the user selects "create chat link", but haven't entered a title for the newly created room */
+"To create a chat link you must name the group."="To create a chat link you must name the group.";
 /* Label shown in a cell where you can enable a switch to get a chat link */
 "Chat Link"="Ссылка на чат";
 /* Message shown when there is an active chat link that can be deleted */
@@ -1695,19 +1697,19 @@
 /* Button text in public chat previews that allows the user to join the chat */
 "Join"="Войти";
 /* Text shown in a notification to let the user know that has joined a public chat room after login or account creation */
-"You have joined %@"="You have joined %@";
+"You have joined %@"="Вы присоединились к %@";
 /* Users previewing a public chat */
-"Observers"="Observers";
+"Observers"="Наблюдатели";
 /* Alert message shown while deleting a chat link, warning about the consequences */
-"This conversation will no longer be accessible through the link you are about to delete."="This conversation will no longer be accessible through the public link once it has been removed.";
+"This conversation will no longer be accessible through the link you are about to delete."="Беседа больше не будет доступна по публичной ссылке после её удаления.";
 /* Management message shown in a chat when the user %@ enables the 'Encrypted Key Rotation' */
-"%@ enabled Encrypted Key Rotation"="%@ enabled Encrypted Key Rotation";
+"%@ enabled Encrypted Key Rotation"="%@ включил чередование ключей шифрования.";
 /* Management message shown in a chat when the user %@ creates a public link for the chat */
-"%@ created a public link for the chat."="%@ created a public link for the chat.";
+"%@ created a public link for the chat."="%@ создал публичную ссылку на чат.";
 /* Management message shown in a chat when the user %@ removes a public link for the chat */
-"%@ removed a public link for the chat."="%@ removed a public link for the chat.";
+"%@ removed a public link for the chat."="%@ удалил публичную ссылку на чат.";
 /* Management message shown in a chat when the user %@ joined it from a public chat link */
-"%@ joined the group chat."="%@ joined the group chat.";
+"%@ joined the group chat."="%@ вошёл в чат.";
 /* Message show when a call cannot be established because there are too many participants in the group call */
 "Error. No more participants are allowed in this group call."="Вы не можете присоединиться к этому вызову, так как в нём максимальное количество участников.";
 /* Message show when a user cannot activate the video in a group call because the max number of videos has been reached */
@@ -1829,7 +1831,7 @@
 /* Text to inform the user there is an active call and is not participating */
 "Ongoing Call"="Текущий звонок";
 /* Message shown when there is an ongoing call and the user tries to play an audio or video */
-"It is not possible to play content while there is a call in progress"="It is not possible to play content while there is a call in progress";
+"It is not possible to play content while there is a call in progress"="Невозможно воспроизвести мультимедийные файлы во время разговора.";
 /* Text to inform the user there is an active call and is participating */
 "Call Started"="Звонок начался";
 /* Title for feature Password Reminder */
@@ -1840,3 +1842,45 @@
 "Call"="Вызов";
 /* Title of the button in the contact info screen to start a video call */
 "Video"="Видео";
+/* The label of the toggle switch to indicate that file versioning is enabled. */
+"Enabled"="Включено";
+/* Text button for init a group chat with link. */
+"New Chat Link"="Новая ссылка на чат";
+/* Text button for init a group chat */
+"New group chat"="Новый групповой чат";
+/* Shown when an invalid/inexisting/not-available-anymore chat link is opened. */
+"Chat link unavailable"="Chat link unavailable";
+/* Shown when an inexisting/unavailable/removed link is tried to be opened. */
+"This chat link is no longer available"="This chat link is no longer available";
+/* Text explaining users how the chat links work. */
+"People can join your group by using this link."="Люди могут присоединиться к группе с помощью этой ссылки.";
+/* Subtitle shown in a chat to inform where to tap to enter in the chat details view */
+"Tap here for info"="Tap here for info";
+/* Title for the recents section. */
+"Recents"="Недавние";
+/* Multiple Images title shown in recents section of webclient */
+"%1 Images"="Изображения (%1)";
+/* Multiple videos title shown in recents section of web client. */
+"%2 Videos"="Видео (%2)";
+/* A single image and single video title shown in recents section of webclient. */
+"1 Image and 1 Video"="Изображения (1) и видео (1)";
+/* One image and multiple videos title in recents. */
+"1 Image and %2 Videos"="Изображения (1) и видео (%2)";
+/* Title for multiple images and multiple videos in recents section */
+"%1 Images and %2 Videos"="Изображения (%1) и видео (%2)";
+/* Tooltip message shown on recents section. Please see the attached image. */
+"Modified on %1 at %2"="Изменены %1 в %2";
+/* Title for a recent action shown in the webclient, see the attached image for context. */
+"%1 modified by %3"="%1 изменён пользователем %3";
+/* Title for a recent action shown in the webclient, see the attached image for context. Please ensure that the `%2 more` is inside the [A] tag as this will become a toggle to show the hidden content. */
+"%1 and [A]%2 more[/A] modified by %3"="%1 и [A]ещё %2[/A] изменены %3";
+/* Title for a recent action shown in the webclient, see the attached image for context. Please ensure that the `%2 more` is inside the [A] tag as this will become a toggle to show the hidden content. */
+"%1 and [A]%2 more[/A]"="%1 и [A]ещё %2[/A]";
+/* Title for a recent action shown in the webclient, see the attached image for context. */
+"%1 created by %3"="%1 создан %3";
+/* Title for a recent action shown in the webclient, see the attached image for context. Please ensure that the `%2 more` is inside the [A] tag as this will become a toggle to show the hidden content. */
+"%1 and [A]%2 more[/A] created by %3"="%1 и [A]ещё %2[/A] созданы %3";
+/* Message shown when the user has not recent activity in their account. */
+"No recent activity"="Нет недавней активности";
+/* Plural of items which contains a folder. 2 items */
+"items"="элем.";

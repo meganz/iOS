@@ -1,13 +1,13 @@
 /* Button title to cancel something */
-"cancel"="Відмінити";
+"cancel"="Скасувати";
 /* Button title to accept something */
-"ok"="OK";
+"ok"="ОК";
 /* */
 "yes"="Так";
 /* */
 "no"="Ні";
 /* */
-"upload"="Завантажити";
+"upload"="Відвантажити";
 /*  */
 "error"="Помилка";
 /*  */
@@ -139,7 +139,7 @@
 /* Title shown inside an alert if you don't have enough space on your device to download something */
 "nodeTooBig"="Вам потрібно звільнити деякий простір на вашому пристрої";
 /* Title for the file link view */
-"fileLink"="Посилання на файл";
+"fileLink"="Ланка файлу";
 /* Button title to trigger the action of opening the file without downloading or opening it. */
 "openButton"="Відкрити";
 /* Error message shown when you try to download something bigger than the space available in your device */
@@ -153,7 +153,7 @@
 /* ToS refers to Terms of Service and AUP refers to Acceptable Use Policy. */
 "fileLinkUnavailableText2"="Файл був видалений через порушення ToS/AUP.";
 /* */
-"fileLinkUnavailableText3"="Невірний URL - посилання, до якого Ви намагаєтеся отримати доступ, не існує";
+"fileLinkUnavailableText3"="Невірна URL-адреса — ланка, до якої ви намагаєтесь отримати доступ, не існує";
 /* */
 "fileLinkUnavailableText4"="Файл був вилучений користувачем.";
 /* Message shown when a download starts */
@@ -161,7 +161,7 @@
 /* Title for the folder link view */
 "folderLink"="Ланка теки";
 /* Button title which downloads a file/folder to your device */
-"downloadButton"="Скачати";
+"downloadButton"="Завантажити";
 /* Message shown when you try to downlonad a folder bigger than the available memory. */
 "folderTooBigMessage"="Тека, яку ви намагаєтеся завантажити більше ніж доступна пам'ять.";
 /* Error message shown when a folder can't be created. */
@@ -171,7 +171,7 @@
 /* */
 "folderLinkUnavailableText2"="Ланку на теку було видалено через порушення ToS/AUP.";
 /* */
-"folderLinkUnavailableText3"="Невірний URL - посилання, до якого Ви намагаєтеся отримати доступ, не існує";
+"folderLinkUnavailableText3"="Невірна URL-адреса — ланка, до якої ви намагаєтесь отримати доступ, не існує";
 /* */
 "folderLinkUnavailableText4"="Ланку на теку було скасовано користувачем.";
 /* Text shown on the app when you don't have connection to the internet or when you have lost it */
@@ -225,7 +225,7 @@
 /* Title shown when the there is not any transfer, and the filter "Upload" option is selected */
 "transfersEmptyState_titleUpload"="Немає відвантажень";
 /* Title of the Cloud Drive section */
-"cloudDrive"="Хмарний Диск";
+"cloudDrive"="Хмарний диск";
 /* Subtitle shown on folders that gives you information about its content. This case "{1} file" */
 "oneFile"="%d файл";
 /* Subtitle shown on folders that gives you information about its content. This case "{1+} files" */
@@ -313,7 +313,7 @@
 /* Title shown under the action that allows you to save several images to your camera roll */
 "saveImages"="Зберегти зображення";
 /* Title shown under the action that allows you to get a link to file or folder */
-"getLink"="Отримати посилання";
+"getLink"="Отримати ланку";
 /* Title shown under the action that allows you to get several links to files and/or folders */
 "getLinks"="Отримати ланку";
 /* Item menu option upon right click on one or multiple files. */
@@ -385,7 +385,7 @@
 /* Message shown when the links to files and/or folders have been removed */
 "linksRemoved"="Ланки видалено";
 /* Title show when a file is being downloaded */
-"downloading"="Скачування";
+"downloading"="Завантаження";
 /* Message shown when you tap on the cancel button of an active transfer */
 "cancelDownloadAlertViewText"="Ви хочете скасувати завантаження?";
 /* Title shown on the navigation bar to explain that you have to choose a destination for the files and/or folders in case you copy, move, import or do some action with them. */
@@ -411,7 +411,7 @@
 /* Success message shown when you have moved [A] = {1+} files and [B] = {1+} folders */
 "moveFilesFoldersMessage"="[A] файли(ів) і [B] тек(и) перенесено";
 /* List option shown on the details of a file or folder */
-"copy"="Скопіювати";
+"copy"="Копіювати";
 /* Success message shown when you have copied 1 file */
 "copyFileMessage"="1 файл скопійовано";
 /* Success message shown when you have copied {1+} files */
@@ -475,7 +475,7 @@
 /* Success message for sharing multiple folders. */
 "sharedFolders_success"="%d теки успішно використовують спільний доступ";
 /* Button title that triggers the importing link action */
-"import"="Імпорт";
+"import"="Імпортувати";
 /* Message shown when a file has been imported */
 "fileImported"="Файл імпортовано";
 /* Message shown when some files have been imported */
@@ -617,7 +617,7 @@
 /* Title of the view that shows the kind of permissions (Read Only, Read & Write or Full Access) that you can give to a shared folder */
 "permissions"="Дозволи";
 /* Permissions given to the user you share your folder with */
-"readOnly"="Тільки для читання";
+"readOnly"="Лише читання";
 /* Permissions given to the user you share your folder with */
 "readAndWrite"="Читання & Запис";
 /* Permissions given to the user you share your folder with */
@@ -645,7 +645,7 @@
 /* Title of one of the Settings sections where you can see the MEGA's 'Privacy Policy' */
 "privacyPolicyLabel"="Політика Конфіденційності";
 /* Title of one of the Settings sections where you can see the MEGA's 'Terms of Service' */
-"termsOfServicesLabel"="Умови Надання Послуг";
+"termsOfServicesLabel"="умови надання послуг";
 /* Title of one of the Settings sections where you can see the MEGA's 'Data Protection Regulation' */
 "dataProtectionRegulationLabel"="Data Protection Regulation";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode Off" */
@@ -659,7 +659,7 @@
 /* Option title to enable Camera Uploads only when the device is charging */
 "onlyWhenChargingLabel"="Тільки під час зарядки";
 /* Footer text to explain the Camera Uploads functionality */
-"cameraUploads_footer"="Коли увімкнено, нові фото і відео буде відвантажено.";
+"cameraUploads_footer"="When enabled, photos and videos will be uploaded.";
 /* App means “Application” */
 "App version"="Версія програми";
 /* Title of the label where the SDK version is shown */
@@ -856,11 +856,11 @@
 /* Rest of the message of the alert shown when you try to cancel transfers. DOWNLOAD uppercase. */
 "downloadInUppercaseTransfers"="Передача ЗАВАНТАЖЕННЯ";
 /* Title of My Account section. There you can see your account details */
-"myAccount"="Мій кабінет";
+"myAccount"="Мій акаунт";
 /* Button title that shows the different MEGA PRO plans to which you can upgrade. (String as short as possible) */
 "buyPRO"="Buy PRO";
 /* Caption of a button to upgrade the account to Pro status */
-"upgrade"="Підняти";
+"upgrade"="Покращити";
 /* Title show on the hall of My Account section that describes a place where you can view, edit and upgrade your account and profile */
 "viewAndEditProfile"="View and edit profile";
 /* Label for any 'Profile' button, link, text, title, etc. - (String as short as possible). */
@@ -949,6 +949,8 @@
 "free"="БЕЗКОШТОВНО";
 /* Text that shows the expiry date of the account PRO level */
 "expiresOn"="закінчується %@";
+/* Label for the ‘Renews on’ text into the my account page, indicating the renewal date of a subscription - (String as short as possible). */
+"Renews on"="Відновлення на";
 /* Button title for the section where you can see the 'Purchase history' related to your account */
 "purchaseHistory"="Історія Покупок";
 /* Title of the Incoming Shares section. Here you can see the folders that your contacts have shared with you */
@@ -970,7 +972,7 @@
 /* A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text. */
 "cloudDriveIsFull"="[S]Вашу обліковку заповнено.[/S] [A]Покращіть[/A] акаунт до PRO і отримайте [S]до 4 ТБ (4096 ГБ)[/S] хмарного сховища.";
 /* Storage related with the MEGA PRO account level you can subscribe */
-"productSpace"="Місце";
+"productSpace"="Сховище";
 /* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
 "transferQuota"="Передача даних";
 /* Label for any 'Limited' button, link, text, title, etc. - (String as short as possible). */
@@ -1008,7 +1010,7 @@
 /* Button title to restore failed purchases */
 "restore"="Відновити";
 /* "Monthly" subscriptions */
-"monthly"="Щомісячне";
+"monthly"="Щомісяця";
 /* "Yearly" subscriptions */
 "yearly"="Щорічне";
 /* Alert title shown when a selected plan is not available at that moment on the App store */
@@ -1046,7 +1048,7 @@
 /* Empty Conversations section */
 "noConversations"="Немає розмов";
 /* Empty Conversations description */
-"noConversationsDescription"="Start chatting securely with your contacts using end-to-end encryption";
+"Start chat securely with your contacts in a encrypted way"="Start chat securely with your contacts in a encrypted way";
 /* Text button shown when the chat is disabled and if tapped the chat will be enabled */
 "enable"="Увімкнути";
 /* Text button shown when an option is enabled, to allow to disable it. String as sort as possible. */
@@ -1416,12 +1418,12 @@
 "type"="Тип";
 /* Title of the incoming shared folders of a user in singular */
 "sharedFolder"="Тека спільного доступу";
-/* The label of the folder creation time. For example: "Created: 2013-02-02" (no need to put the colon punctuation in the translation) */
-"created"="Створено";
 /* Label for what a selection contains. For example: "Contains: 3 folders & 13 files". (no need to put the colon punctuation in the translation) */
 "contains"="Містить";
 /* A label for any 'Modified' text or title. For example to show the modification date of a file/folder. */
 "modified"="Змінено";
+/* A label for any ‘Added’ text or title. For example to show the upload date of a file/folder. */
+"Added"="Додано";
 /* used for example when a folder is shared with 2 or more users */
 "users"="користувачі(в)";
 /* user (singular) label indicating is receiving some info, for example shared folders */
@@ -1441,7 +1443,7 @@
 /* A button label which reverts a certain version of a file to be the current version of the selected file. */
 "revert"="Revert";
 /*  */
-"download"="Скачати";
+"download"="Завантажити";
 /* Singular of file. 1 file */
 "file"="файл";
 /* Title of section to display information of the current version of a file. */
@@ -1686,8 +1688,8 @@
 "Get Chat Link"="Get Chat Link";
 /* Footer text to explain what means 'Encrypted Key Rotation' */
 "Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages."="Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages.";
-/* Alert message to advice the users that to generate a chat link they need enter a group name for the chat */
-"Before you can generate a link for this room, you need to enter a group name"="Before you can generate a link for this chat, you need to enter a group name.";
+/* Shown as an error message when the user selects "create chat link", but haven't entered a title for the newly created room */
+"To create a chat link you must name the group."="To create a chat link you must name the group.";
 /* Label shown in a cell where you can enable a switch to get a chat link */
 "Chat Link"="Chat Link";
 /* Message shown when there is an active chat link that can be deleted */
@@ -1701,11 +1703,11 @@
 /* Alert message shown while deleting a chat link, warning about the consequences */
 "This conversation will no longer be accessible through the link you are about to delete."="This conversation will no longer be accessible through the public link once it has been removed.";
 /* Management message shown in a chat when the user %@ enables the 'Encrypted Key Rotation' */
-"%@ enabled Encrypted Key Rotation"="%@ enabled Encrypted Key Rotation";
+"%@ enabled Encrypted Key Rotation"="%@ enabled Encrypted Key Rotation.";
 /* Management message shown in a chat when the user %@ creates a public link for the chat */
 "%@ created a public link for the chat."="%@ created a public link for the chat.";
 /* Management message shown in a chat when the user %@ removes a public link for the chat */
-"%@ removed a public link for the chat."="%@ removed a public link for the chat.";
+"%@ removed a public link for the chat."="%@ removed the public link for the chat.";
 /* Management message shown in a chat when the user %@ joined it from a public chat link */
 "%@ joined the group chat."="%@ joined the group chat.";
 /* Message show when a call cannot be established because there are too many participants in the group call */
@@ -1829,7 +1831,7 @@
 /* Text to inform the user there is an active call and is not participating */
 "Ongoing Call"="Ongoing Call";
 /* Message shown when there is an ongoing call and the user tries to play an audio or video */
-"It is not possible to play content while there is a call in progress"="It is not possible to play content while there is a call in progress";
+"It is not possible to play content while there is a call in progress"="It is not possible to play media files while there is a call in progress.";
 /* Text to inform the user there is an active call and is participating */
 "Call Started"="Call Started";
 /* Title for feature Password Reminder */
@@ -1840,3 +1842,45 @@
 "Call"="Call";
 /* Title of the button in the contact info screen to start a video call */
 "Video"="Відео";
+/* The label of the toggle switch to indicate that file versioning is enabled. */
+"Enabled"="Enabled";
+/* Text button for init a group chat with link. */
+"New Chat Link"="New Chat Link";
+/* Text button for init a group chat */
+"New group chat"="New group chat";
+/* Shown when an invalid/inexisting/not-available-anymore chat link is opened. */
+"Chat link unavailable"="Chat link unavailable";
+/* Shown when an inexisting/unavailable/removed link is tried to be opened. */
+"This chat link is no longer available"="This chat link is no longer available";
+/* Text explaining users how the chat links work. */
+"People can join your group by using this link."="People can join your group by using this link.";
+/* Subtitle shown in a chat to inform where to tap to enter in the chat details view */
+"Tap here for info"="Tap here for info";
+/* Title for the recents section. */
+"Recents"="Recents";
+/* Multiple Images title shown in recents section of webclient */
+"%1 Images"="%1 Images";
+/* Multiple videos title shown in recents section of web client. */
+"%2 Videos"="%2 Videos";
+/* A single image and single video title shown in recents section of webclient. */
+"1 Image and 1 Video"="1 Image and 1 Video";
+/* One image and multiple videos title in recents. */
+"1 Image and %2 Videos"="1 Image and %2 Videos";
+/* Title for multiple images and multiple videos in recents section */
+"%1 Images and %2 Videos"="%1 Images and %2 Videos";
+/* Tooltip message shown on recents section. Please see the attached image. */
+"Modified on %1 at %2"="Modified on %1 at %2";
+/* Title for a recent action shown in the webclient, see the attached image for context. */
+"%1 modified by %3"="%1 modified by %3";
+/* Title for a recent action shown in the webclient, see the attached image for context. Please ensure that the `%2 more` is inside the [A] tag as this will become a toggle to show the hidden content. */
+"%1 and [A]%2 more[/A] modified by %3"="%1 and [A]%2 more[/A] modified by %3";
+/* Title for a recent action shown in the webclient, see the attached image for context. Please ensure that the `%2 more` is inside the [A] tag as this will become a toggle to show the hidden content. */
+"%1 and [A]%2 more[/A]"="%1 and [A]%2 more[/A]";
+/* Title for a recent action shown in the webclient, see the attached image for context. */
+"%1 created by %3"="%1 created by %3";
+/* Title for a recent action shown in the webclient, see the attached image for context. Please ensure that the `%2 more` is inside the [A] tag as this will become a toggle to show the hidden content. */
+"%1 and [A]%2 more[/A] created by %3"="%1 and [A]%2 more[/A] created by %3";
+/* Message shown when the user has not recent activity in their account. */
+"No recent activity"="No recent activity";
+/* Plural of items which contains a folder. 2 items */
+"items"="items";

@@ -67,7 +67,7 @@
     self.chatListItem = chatListItem;
     [self.timer invalidate];
 
-    self.privateChatImageView.hidden = chatListItem.isPublicChat || !chatListItem.isGroup;
+    self.privateChatImageView.hidden = chatListItem.isPublicChat;
 
     self.chatTitle.text = chatListItem.title;
     [self updateLastMessageForChatListItem:chatListItem];
@@ -77,8 +77,13 @@
         self.avatarImageView.image = [UIImage imageForName:chatListItem.title.uppercaseString size:self.avatarImageView.frame.size backgroundColor:UIColor.mnz_gray999999 textColor:UIColor.whiteColor font:[UIFont mnz_SFUIRegularWithSize:(self.avatarImageView.frame.size.width/2.0f)]];
     } else {
         [self.avatarImageView mnz_setImageForUserHandle:chatListItem.peerHandle name:chatListItem.title];
-        self.onlineStatusView.backgroundColor = [UIColor mnz_colorForStatusChange:[[MEGASdkManager sharedMEGAChatSdk] userOnlineStatus:chatListItem.peerHandle]];
-        self.onlineStatusView.hidden = NO;
+        UIColor *statusColor = [UIColor mnz_colorForStatusChange:[[MEGASdkManager sharedMEGAChatSdk] userOnlineStatus:chatListItem.peerHandle]];
+        if (statusColor) {
+            self.onlineStatusView.backgroundColor = statusColor;
+            self.onlineStatusView.hidden = NO;
+        } else {
+            self.onlineStatusView.hidden = YES;
+        }
     }
     
     if (@available(iOS 11.0, *)) {
