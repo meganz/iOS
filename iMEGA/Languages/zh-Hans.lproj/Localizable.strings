@@ -949,6 +949,8 @@
 "free"="免费";
 /* Text that shows the expiry date of the account PRO level */
 "expiresOn"="到%@ 过期";
+/* Label for the ‘Renews on’ text into the my account page, indicating the renewal date of a subscription - (String as short as possible). */
+"Renews on"="更新";
 /* Button title for the section where you can see the 'Purchase history' related to your account */
 "purchaseHistory"="购买记录";
 /* Title of the Incoming Shares section. Here you can see the folders that your contacts have shared with you */
@@ -1046,7 +1048,7 @@
 /* Empty Conversations section */
 "noConversations"="无对话(已清空)";
 /* Empty Conversations description */
-"noConversationsDescription"="开始使用端到端加密安全的与您的联系人进行聊天";
+"Start chat securely with your contacts in a encrypted way"="Start chat securely with your contacts in a encrypted way";
 /* Title show when the chat is disabled */
 "chatIsDisabled"="聊天功能已停用";
 /* Text button shown when the chat is disabled and if tapped the chat will be enabled */
@@ -1703,7 +1705,7 @@
 /* Alert message shown while deleting a chat link, warning about the consequences */
 "This conversation will no longer be accessible through the link you are about to delete."="This conversation will no longer be accessible through the public link once it has been removed.";
 /* Management message shown in a chat when the user %@ enables the 'Encrypted Key Rotation' */
-"%@ enabled Encrypted Key Rotation"="%@ enabled Encrypted Key Rotation";
+"%@ enabled Encrypted Key Rotation"="%@ enabled Encrypted Key Rotation.";
 /* Management message shown in a chat when the user %@ creates a public link for the chat */
 "%@ created a public link for the chat."="%@ created a public link for the chat.";
 /* Management message shown in a chat when the user %@ removes a public link for the chat */
@@ -1845,9 +1847,17 @@
 /* The label of the toggle switch to indicate that file versioning is enabled. */
 "Enabled"="启用";
 /* Text button for init a group chat with link. */
-"New Chat Link"="New Chat Link";
+"New Chat Link"="新聊天链接";
 /* Text button for init a group chat */
 "New group chat"="新分组聊天";
+/* Shown when an invalid/inexisting/not-available-anymore chat link is opened. */
+"Chat link unavailable"="Chat link unavailable";
+/* Shown when an inexisting/unavailable/removed link is tried to be opened. */
+"This chat link is no longer available"="This chat link is no longer available";
+/* Text explaining users how the chat links work. */
+"People can join your group by using this link."="参与者可通过此链接加入您的群组。";
+/* Subtitle shown in a chat to inform where to tap to enter in the chat details view */
+"Tap here for info"="Tap here for info";
 /* Title for the recents section. */
 "Recents"="近期";
 /* Multiple Images title shown in recents section of webclient */
