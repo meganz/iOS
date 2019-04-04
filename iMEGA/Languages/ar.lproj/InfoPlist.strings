@@ -11,7 +11,7 @@
 /* Face ID usage description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
 "NSFaceIDUsageDescription"="تطبيق MEGA يستخدم خاصية التعرف على الوجه ليسمح لك بفتح التطبيق دون ادخال رمز المرور إذا فعلت هذه الخاصية";
 /* Label for any 'Search' button, link, etc. - (String as short as possible). */
-"quickActionSearchString"="بحث";
+"quickActionSearchString"="البحث";
 /*  */
 "quickActionUploadString"="رفع";
 /* Title of the Offline section */

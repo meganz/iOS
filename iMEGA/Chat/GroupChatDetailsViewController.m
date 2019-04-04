@@ -51,7 +51,7 @@
     UIImage *avatarImage = [UIImage imageForName:self.chatRoom.title.uppercaseString size:avatarSize backgroundColor:[UIColor mnz_gray999999] textColor:[UIColor whiteColor] font:[UIFont mnz_SFUIRegularWithSize:(avatarSize.width/2.0f)]];
     self.avatarImageView.image = avatarImage;
     
-    NSInteger peers = self.chatRoom.peerCount + (self.chatRoom.isPreview ? 0 : 1);
+    NSInteger peers = self.chatRoom.peerCount + (!self.chatRoom.isPreview && self.chatRoom.ownPrivilege >= MEGAChatRoomPrivilegeRo ? 1 : 0);
     self.participantsLabel.text = (peers == 1) ? [NSString stringWithFormat:AMLocalizedString(@"%d participant", @"Singular of participant. 1 participant").capitalizedString, 1] : [NSString stringWithFormat:AMLocalizedString(@"%d participants", @"Singular of participant. 1 participant").capitalizedString, peers];
 }
 
@@ -84,7 +84,7 @@
         }
     }
     
-    if (!self.chatRoom.isPreview) {
+    if (!self.chatRoom.isPreview && self.chatRoom.ownPrivilege >= MEGAChatRoomPrivilegeRo) {
         uint64_t myHandle = [[MEGASdkManager sharedMEGAChatSdk] myUserHandle];
         [self.participantsMutableArray addObject:[NSNumber numberWithUnsignedLongLong:myHandle]];
     }
@@ -310,6 +310,7 @@
             cell.nameLabel.text = self.chatRoom.isPublicChat ? AMLocalizedString(@"Enable Encrypted Key Rotation", @"Title show in a cell where the users can enable the 'Encrypted Key Rotation'") : AMLocalizedString(@"Encrypted Key Rotation", @"Label in a cell where you can enable the 'Encrypted Key Rotation'");
             cell.leftImageView.hidden = YES;
             cell.enableLabel.hidden = cell.userInteractionEnabled = self.chatRoom.isPublicChat;
+            cell.enableLabel.text = AMLocalizedString(@"Enabled", @"The label of the toggle switch to indicate that file versioning is enabled.");
             break;
             
         case 6:
@@ -615,7 +616,7 @@
                         alertController.popoverPresentationController.sourceView = cell.contentView;
                     }
                 } else {
-                    alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"Chat Link", @"Label shown in a cell where you can enable a switch to get a chat link") message:AMLocalizedString(@"Before you can generate a link for this room, you need to enter a group name", @"Alert message to advice the users that to generate a chat link they need enter a group name for the chat")  preferredStyle:UIAlertControllerStyleAlert];
+                    alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"Chat Link", @"Label shown in a cell where you can enable a switch to get a chat link") message:AMLocalizedString(@"To create a chat link you must name the group.", @"Alert message to advice the users that to generate a chat link they need enter a group name for the chat")  preferredStyle:UIAlertControllerStyleAlert];
                     [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
                     }]];
                     [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
@@ -654,10 +655,10 @@
                 customModalAlertVC.image = [UIImage imageNamed:@"lock"];
                 customModalAlertVC.viewTitle = AMLocalizedString(@"Enable Encrypted Key Rotation", @"Title show in a cell where the users can enable the 'Encrypted Key Rotation'");
                 customModalAlertVC.detail = AMLocalizedString(@"Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages.", @"Footer text to explain what means 'Encrypted Key Rotation'");
-                customModalAlertVC.action = AMLocalizedString(@"enable", nil);
-                customModalAlertVC.dismiss = AMLocalizedString(@"cancel", nil);
+                customModalAlertVC.firstButtonTitle = AMLocalizedString(@"enable", nil);
+                customModalAlertVC.dismissButtonTitle = AMLocalizedString(@"cancel", nil);
                 __weak typeof(CustomModalAlertViewController) *weakCustom = customModalAlertVC;
-                customModalAlertVC.completion = ^{
+                customModalAlertVC.firstCompletion = ^{
                     MEGAChatGenericRequestDelegate *delegate = [[MEGAChatGenericRequestDelegate alloc] initWithCompletion:^(MEGAChatRequest * _Nonnull request, MEGAChatError * _Nonnull error) {
                         if (error.type == MEGAChatErrorTypeOk) {
                             [weakCustom dismissViewControllerAnimated:YES completion:^{
