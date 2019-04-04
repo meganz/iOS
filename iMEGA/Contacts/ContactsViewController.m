@@ -87,6 +87,11 @@
 @property (weak, nonatomic) IBOutlet UIStackView *getChatLinkStackView;
 @property (weak, nonatomic) IBOutlet UIStackView *optionsStackView;
 
+@property (weak, nonatomic) IBOutlet UIView *tableViewFooter;
+@property (weak, nonatomic) IBOutlet UILabel *noContactsLabel;
+@property (weak, nonatomic) IBOutlet UILabel *noContactsDescriptionLabel;
+@property (weak, nonatomic) IBOutlet UIButton *inviteContactButton;
+
 @end
 
 @implementation ContactsViewController
@@ -234,6 +239,11 @@
         case ContactsModeChatStartConversation: {
             self.cancelBarButtonItem.title = AMLocalizedString(@"cancel", @"Button title to cancel something");
             self.navigationItem.rightBarButtonItems = @[self.cancelBarButtonItem];
+            if (self.visibleUsersArray.count == 0) {
+                self.noContactsLabel.text = AMLocalizedString(@"contactsEmptyState_title", @"Title shown when the Contacts section is empty, when you have not added any contact.");
+                self.noContactsDescriptionLabel.text = AMLocalizedString(@"Start chat securely with your contacts in a encrypted way", @"Empty Conversations description");
+                self.inviteContactButton.titleLabel.text = AMLocalizedString(@"inviteContact", @"Text shown when the user tries to make a call and the receiver is not a contact");
+            }
             break;
         }
             
@@ -282,7 +292,7 @@
             
             if (self.getChatLinkEnabled) {
                 self.optionsStackView.hidden = self.getChatLinkEnabled;
-                self.tableViewHeader.frame = CGRectMake(0, 0, self.tableViewHeader.frame.size.width, 80);
+                self.tableViewHeader.frame = CGRectMake(0, 0, self.tableViewHeader.frame.size.width, 60);
             } else {          
                 UITapGestureRecognizer *singleFingerTap = [UITapGestureRecognizer.alloc initWithTarget:self action:@selector(checkboxTouchUpInside:)];
                 [self.getChatLinkStackView addGestureRecognizer:singleFingerTap];
@@ -342,6 +352,13 @@
         }
     } else if (self.contactsMode == ContactsModeChatNamingGroup) {
         self.tableView.tableHeaderView = self.tableViewHeader;
+    } else if (self.contactsMode == ContactsModeChatStartConversation) {
+        if (self.visibleUsersArray.count == 0) {
+            self.tableView.tableFooterView = self.tableViewFooter;
+        } else {
+            [self addSearchBarController];
+            self.tableView.tableFooterView = UIView.new;
+        }
     } else {
         [self addSearchBarController];
     }
@@ -643,7 +660,7 @@
         self.searchController.active = NO;
     }
     ContactsViewController *contactsVC = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactsViewControllerID"];
-    if (MEGASdkManager.sharedMEGASdk.contacts.size.integerValue > 0) {
+    if (self.visibleUsersArray.count > 0) {
         contactsVC.contactsMode = ContactsModeChatCreateGroup;
     } else {
         contactsVC.contactsMode = ContactsModeChatNamingGroup;
@@ -1008,6 +1025,10 @@
     self.checkboxButton.selected = !self.checkboxButton.selected;
 }
 
+- (IBAction)inviteContactTouchUpInside:(UIButton *)sender {
+    [self addContact:sender];
+}
+
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -1026,14 +1047,9 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     switch (self.contactsMode) {
-        case ContactsModeChatStartConversation: {
-            if (self.users.size.intValue > 0) {
-                return 2;
-            } else {
-                return 1;
-            }
+        case ContactsModeChatStartConversation:
+            return 2;
             break;
-        }
         
         default:
             return 1;
@@ -1150,9 +1166,6 @@
         return self.contactsHeaderView;
     }
     if (section == 1 && self.contactsMode >= ContactsModeChatStartConversation) {
-        if (self.visibleUsersArray.count == 0) {
-            return nil;
-        }
         self.contactsHeaderViewLabel.text = AMLocalizedString(@"contactsTitle", @"Title of the Contacts section").uppercaseString;
         return self.contactsHeaderView;
     }
@@ -1169,16 +1182,13 @@
                 heightForHeader = 24.0f;
             }
             if (self.contactsMode == ContactsModeChatNamingGroup) {
-                heightForHeader = 44.0f;
+                heightForHeader = 45.0f;
             }
             break;
 
         case 1:
             if (self.contactsMode >= ContactsModeChatStartConversation) {
-                if (self.visibleUsersArray.count == 0) {
-                    return heightForHeader;
-                }
-                heightForHeader = 24.0f;
+                heightForHeader = 35.0f;
             }
             break;
     }
