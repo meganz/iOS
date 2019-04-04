@@ -759,16 +759,9 @@
         if (keyRotation) {
             MEGAChatCreateChatGroupRequestDelegate *createChatGroupRequestDelegate = [[MEGAChatCreateChatGroupRequestDelegate alloc] initWithCompletion:^(MEGAChatRoom *chatRoom) {
                 messagesVC.chatRoom = chatRoom;
-                if (groupName) {
-                    MEGAChatChangeGroupNameRequestDelegate *changeGroupNameRequestDelegate = [[MEGAChatChangeGroupNameRequestDelegate alloc] initWithCompletion:^(MEGAChatError *error) {
-                        [self.navigationController pushViewController:messagesVC animated:YES];
-                    }];
-                    [[MEGASdkManager sharedMEGAChatSdk] setChatTitle:chatRoom.chatId title:groupName delegate:changeGroupNameRequestDelegate];
-                } else {
-                    [self.navigationController pushViewController:messagesVC animated:YES];
-                }
+                [self.navigationController pushViewController:messagesVC animated:YES];                
             }];
-            [[MEGASdkManager sharedMEGAChatSdk] createChatGroup:YES peers:peerList delegate:createChatGroupRequestDelegate];
+            [[MEGASdkManager sharedMEGAChatSdk] createChatGroup:YES peers:peerList title:groupName delegate:createChatGroupRequestDelegate];
         } else {
             MEGAChatCreateChatGroupRequestDelegate *createChatGroupRequestDelegate = [[MEGAChatCreateChatGroupRequestDelegate alloc] initWithCompletion:^(MEGAChatRoom *chatRoom) {
                 messagesVC.chatRoom = chatRoom;
