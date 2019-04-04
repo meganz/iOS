@@ -75,7 +75,6 @@ static NSMutableSet<NSString *> *tapForInfoSet;
 
 @property (nonatomic, strong) NSTimer *sendTypingTimer;
 @property (nonatomic, strong) NSTimer *tapForInfoTimer;
-@property (strong, nonatomic) NSMutableArray<NSNumber *> *whoIsTypingMutableArray;
 @property (strong, nonatomic) NSMutableDictionary<NSNumber *, NSTimer *> *whoIsTypingTimersMutableDictionary;
 
 @property (nonatomic, strong) UIBarButtonItem *unreadBarButtonItem;
@@ -209,7 +208,6 @@ static NSMutableSet<NSString *> *tapForInfoSet;
     UITapGestureRecognizer *jumpButtonTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(jumpToBottomPressed:)];
     [self.jumpToBottomView addGestureRecognizer:jumpButtonTap];
     
-    _whoIsTypingMutableArray = [[NSMutableArray alloc] init];
     _whoIsTypingTimersMutableDictionary = [[NSMutableDictionary alloc] init];
     
     // Array of observed messages:
@@ -1315,13 +1313,13 @@ static NSMutableSet<NSString *> *tapForInfoSet;
 }
 
 - (void)setTypingIndicator {
-    switch (self.whoIsTypingMutableArray.count) {
+    switch (self.whoIsTypingTimersMutableDictionary.allKeys.count) {
         case 0:
             self.typingString = nil;
             break;
             
         case 1: {
-            NSNumber *firstUserHandle = [self.whoIsTypingMutableArray objectAtIndex:0];
+            NSNumber *firstUserHandle = [self.whoIsTypingTimersMutableDictionary.allKeys objectAtIndex:0];
             NSString *firstUserName =  [self.chatRoom peerFirstnameByHandle:firstUserHandle.unsignedLongLongValue];
             
             self.typingString = [NSString stringWithFormat:AMLocalizedString(@"isTyping", @"A typing indicator in the chat. Please leave the %@ which will be automatically replaced with the user's name at runtime."), (firstUserName.length ? firstUserName : [self.chatRoom peerEmailByHandle:firstUserHandle.unsignedLongLongValue])];
@@ -1334,7 +1332,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
         }
             
         default: {
-            if (self.whoIsTypingMutableArray.count > 2) {
+            if (self.whoIsTypingTimersMutableDictionary.allKeys.count > 2) {
                 self.typingString = [self twoOrMoreUsersAreTypingString];
             } else {
                 self.typingString = nil;
@@ -1346,8 +1344,8 @@ static NSMutableSet<NSString *> *tapForInfoSet;
 }
 
 - (NSString *)twoOrMoreUsersAreTypingString {
-    NSNumber *firstUserHandle = [self.whoIsTypingMutableArray objectAtIndex:0];
-    NSNumber *secondUserHandle = [self.whoIsTypingMutableArray objectAtIndex:1];
+    NSNumber *firstUserHandle = [self.whoIsTypingTimersMutableDictionary.allKeys objectAtIndex:0];
+    NSNumber *secondUserHandle = [self.whoIsTypingTimersMutableDictionary.allKeys objectAtIndex:1];
     
     NSString *firstUserFirstName = [self.chatRoom peerFirstnameByHandle:firstUserHandle.unsignedLongLongValue];
     NSString *whoIsTypingString = firstUserFirstName.length ? firstUserFirstName : [self.chatRoom peerEmailByHandle:firstUserHandle.unsignedLongLongValue];
@@ -1356,9 +1354,9 @@ static NSMutableSet<NSString *> *tapForInfoSet;
     whoIsTypingString = [whoIsTypingString stringByAppendingString:[NSString stringWithFormat:@", %@", (secondUserFirstName.length ? secondUserFirstName : [self.chatRoom peerEmailByHandle:firstUserHandle.unsignedLongLongValue])]];
     
     NSString *twoOrMoreUsersAreTypingString;
-    if (self.whoIsTypingMutableArray.count == 2) {
+    if (self.whoIsTypingTimersMutableDictionary.allKeys.count == 2) {
         twoOrMoreUsersAreTypingString = [AMLocalizedString(@"twoUsersAreTyping", @"Plural, a hint that appears when two users are typing in a group chat at the same time. The parameter will be the concatenation of both user names. Please do not translate or modify the tags or placeholders.") mnz_removeWebclientFormatters];
-    } else if (self.whoIsTypingMutableArray.count > 2) {
+    } else if (self.whoIsTypingTimersMutableDictionary.allKeys.count > 2) {
         twoOrMoreUsersAreTypingString = [AMLocalizedString(@"moreThanTwoUsersAreTyping", @"text that appear when there are more than 2 people writing at that time in a chat. For example User1, user2 and more are typing... The parameter will be the concatenation of the first two user names. Please do not translate or modify the tags or placeholders.") mnz_removeWebclientFormatters];
     }
     
@@ -1366,9 +1364,11 @@ static NSMutableSet<NSString *> *tapForInfoSet;
 }
 
 - (void)removeUserHandleFromTypingIndicator:(NSNumber *)userHandle {
-    [self.whoIsTypingMutableArray removeObject:userHandle];
+    NSTimer *userTypingTimer = [self.whoIsTypingTimersMutableDictionary objectForKey:userHandle];
+    if (userTypingTimer) {
+        [userTypingTimer invalidate];
+    }
     [self.whoIsTypingTimersMutableDictionary removeObjectForKey:userHandle];
-    
     [self setTypingIndicator];
 }
 
@@ -2932,18 +2932,14 @@ static NSMutableSet<NSString *> *tapForInfoSet;
         case MEGAChatRoomChangeTypeUserTyping: {
             if (chat.userTypingHandle != api.myUserHandle) {
                 NSNumber *userTypingHandle = [NSNumber numberWithUnsignedLongLong:chat.userTypingHandle];
-                if (![self.whoIsTypingMutableArray containsObject:userTypingHandle]) {
-                    [self.whoIsTypingMutableArray addObject:userTypingHandle];
-                }
-                
-                [self setTypingIndicator];
-                
                 NSTimer *userTypingTimer = [self.whoIsTypingTimersMutableDictionary objectForKey:userTypingHandle];
                 if (userTypingTimer) {
                     [userTypingTimer invalidate];
                 }
                 userTypingTimer = [NSTimer scheduledTimerWithTimeInterval:5.0 target:self selector:@selector(userTypingTimerFireMethod:) userInfo:userTypingHandle repeats:NO];
                 [self.whoIsTypingTimersMutableDictionary setObject:userTypingTimer forKey:userTypingHandle];
+                
+                [self setTypingIndicator];
             }
             
             break;
