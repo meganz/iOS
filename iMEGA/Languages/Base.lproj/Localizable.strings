@@ -1854,3 +1854,5 @@
 "This chat link is no longer available"="This chat link is no longer available";
 /* Text explaining users how the chat links work. */
 "People can join your group by using this link."="People can join your group by using this link.";
+/* Subtitle shown in a chat to inform where to tap to enter in the chat details view */
+"Tap here for info"="Tap here for info";

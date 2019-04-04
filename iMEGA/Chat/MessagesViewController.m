@@ -56,6 +56,8 @@ const CGFloat kAvatarImageDiameter = 24.0f;
 
 const NSUInteger kMaxMessagesToLoad = 256;
 
+static NSMutableSet<NSString *> *tapForInfoSet;
+
 @interface MessagesViewController () <MEGAPhotoBrowserDelegate, JSQMessagesViewAccessoryButtonDelegate, JSQMessagesComposerTextViewPasteDelegate, DZNEmptyDataSetSource, MEGAChatDelegate, MEGAChatRequestDelegate, MEGARequestDelegate, MEGAChatCallDelegate>
 
 @property (nonatomic, strong) MEGAOpenMessageHeaderView *openMessageHeaderView;
@@ -72,6 +74,7 @@ const NSUInteger kMaxMessagesToLoad = 256;
 @property (nonatomic) BOOL loadMessagesLater;
 
 @property (nonatomic, strong) NSTimer *sendTypingTimer;
+@property (nonatomic, strong) NSTimer *tapForInfoTimer;
 @property (strong, nonatomic) NSMutableArray<NSNumber *> *whoIsTypingMutableArray;
 @property (strong, nonatomic) NSMutableDictionary<NSNumber *, NSTimer *> *whoIsTypingTimersMutableDictionary;
 
@@ -128,10 +131,21 @@ const NSUInteger kMaxMessagesToLoad = 256;
 @property (nonatomic) BOOL loadingState;
 
 @property (nonatomic) NSString *typingString;
+@property (nonatomic) NSString *lastGreenString;
 
 @end
 
 @implementation MessagesViewController
+
+#pragma mark - Class properties
+
++ (NSMutableSet *)tapForInfoSet {
+    return tapForInfoSet;
+}
+
++ (void)setTapForInfoSet:(NSMutableSet *)newTapForInfoSet {
+    tapForInfoSet = newTapForInfoSet;
+}
 
 #pragma mark - Lifecycle
 
@@ -161,7 +175,9 @@ const NSUInteger kMaxMessagesToLoad = 256;
     if (self.chatRoom.isGroup) {
         self.peerAvatar = [UIImage imageForName:self.chatRoom.title.uppercaseString size:CGSizeMake(80.0f, 80.0f) backgroundColor:UIColor.mnz_gray999999 textColor:UIColor.whiteColor font:[UIFont mnz_SFUIRegularWithSize:40.0f]];
     } else {
-        self.peerAvatar = [UIImage mnz_imageForUserHandle:[self.chatRoom peerHandleAtIndex:0] name:self.chatRoom.title size:CGSizeMake(80.0f, 80.0f) delegate:nil];
+        uint64_t userHandle = [self.chatRoom peerHandleAtIndex:0];
+        self.peerAvatar = [UIImage mnz_imageForUserHandle:userHandle name:self.chatRoom.title size:CGSizeMake(80.0f, 80.0f) delegate:nil];
+        [MEGASdkManager.sharedMEGAChatSdk requestLastGreen:userHandle];
     }
     
     // Add an observer to get notified when going to background:
@@ -205,6 +221,14 @@ const NSUInteger kMaxMessagesToLoad = 256;
     self.selectedMessages = [[NSMutableArray<MEGAChatMessage *> alloc] init];
     
     [self.inputToolbar.contentView.joinButton setTitle:AMLocalizedString(@"Join", @"Button text in public chat previews that allows the user to join the chat") forState:UIControlStateNormal];
+    
+    if (!MessagesViewController.tapForInfoSet) {
+        MessagesViewController.tapForInfoSet = [[NSMutableSet alloc] init];
+    }
+    if (![MessagesViewController.tapForInfoSet containsObject:[MEGASdk base64HandleForUserHandle:self.chatRoom.chatId]]) {
+        self.tapForInfoTimer = [NSTimer scheduledTimerWithTimeInterval:5.0 target:self selector:@selector(hideTapForInfoLabel) userInfo:nil repeats:NO];
+        [MessagesViewController.tapForInfoSet addObject:[MEGASdk base64HandleForUserHandle:self.chatRoom.chatId]];
+    }
     [self configureNavigationBar];
     
     self.loadingState = YES;
@@ -553,41 +577,52 @@ const NSUInteger kMaxMessagesToLoad = 256;
         self.navigationItem.hidesBackButton = NO;
         self.inputToolbar.hidden = self.chatRoom.ownPrivilege <= MEGAChatRoomPrivilegeRo && !self.shouldShowJoinView;
         [self updateJoinView];
-
-        NSString *chatRoomTitle = self.chatRoom.title ? self.chatRoom.title : @"";
-        NSString *chatRoomState;
         
-        if (self.typingString) {
-            chatRoomState = self.typingString;
+        if (self.chatRoom.isGroup) {
+            self.navigationStatusView.hidden = YES;
+        } else {
+            MEGAChatStatus userStatus = [MEGASdkManager.sharedMEGAChatSdk userOnlineStatus:[self.chatRoom peerHandleAtIndex:0]];
+            if (userStatus == MEGAChatStatusInvalid) {
+                self.navigationStatusView.hidden = YES;
+            } else {
+                self.navigationStatusView.backgroundColor = [UIColor mnz_colorForStatusChange:userStatus];
+                self.navigationStatusView.hidden = NO;
+            }
+        }
+        
+        NSString *chatRoomTitle = self.chatRoom.title ?: @"";
+        NSString *chatRoomState;
+        if (self.tapForInfoTimer.isValid) {
+            chatRoomState = AMLocalizedString(@"Tap here for info", @"Subtitle shown in a chat to inform where to tap to enter in the chat details view");
         } else if (self.chatRoom.archived) {
             self.navigationStatusView.hidden = YES;
             chatRoomState = AMLocalizedString(@"archived", @"Title of flag of archived chats.");
+        } else if (self.typingString) {
+            chatRoomState = self.typingString;
         } else {
             if (self.chatRoom.isGroup) {
                 if (self.chatRoom.hasCustomTitle) {
                     chatRoomState = [self participantsNames];
                 } else {
                     if (self.chatRoom.peerCount) {
-                        chatRoomState = [NSString stringWithFormat:AMLocalizedString(@"%d participants", @"Singular of participant. 1 participant").capitalizedString, self.chatRoom.peerCount + 1];
+                        chatRoomState = [NSString stringWithFormat:AMLocalizedString(@"%d participants", @"Plural of participant. 2 participants").capitalizedString, self.chatRoom.peerCount + 1];
                     } else {
                         chatRoomState = [NSString stringWithFormat:AMLocalizedString(@"%d participant", @"Singular of participant. 1 participant").capitalizedString, 1];
                     }
                 }
-                self.navigationStatusView.hidden = YES;
                 self.navigationSubtitleLabel.hidden = NO;
             } else {
-                MEGAChatStatus userStatus = [MEGASdkManager.sharedMEGAChatSdk userOnlineStatus:[self.chatRoom peerHandleAtIndex:0]];
-                if (userStatus != MEGAChatStatusInvalid) {
-                    self.navigationStatusView.hidden = NO;
-                    self.navigationSubtitleLabel.hidden = NO;
-                    if (userStatus < MEGAChatStatusOnline) {
-                        [MEGASdkManager.sharedMEGAChatSdk requestLastGreen:[self.chatRoom peerHandleAtIndex:0]];
-                    }
-                    self.navigationStatusView.backgroundColor = [UIColor mnz_colorForStatusChange:userStatus];
-                    chatRoomState = [NSString chatStatusString:userStatus];
-                } else {
-                    self.navigationStatusView.hidden = YES;
+                uint64_t userHandle = [self.chatRoom peerHandleAtIndex:0];
+                MEGAChatStatus userStatus = [MEGASdkManager.sharedMEGAChatSdk userOnlineStatus:userHandle];
+                if (userStatus == MEGAChatStatusInvalid) {
                     self.navigationSubtitleLabel.hidden = YES;
+                } else {
+                    if (self.lastGreenString && userStatus < MEGAChatStatusOnline) {
+                        chatRoomState = self.lastGreenString;
+                    } else {
+                        chatRoomState = [NSString chatStatusString:userStatus];
+                    }
+                    self.navigationSubtitleLabel.hidden = NO;
                 }
             }
         }
@@ -1073,6 +1108,11 @@ const NSUInteger kMaxMessagesToLoad = 256;
 }
 
 - (void)doNothing {}
+
+- (void)hideTapForInfoLabel {
+    [self.tapForInfoTimer invalidate];
+    [self customNavigationBarLabel];
+}
 
 - (void)setupMenuController:(UIMenuController *)menuController {
     UIMenuItem *editMenuItem = [[UIMenuItem alloc] initWithTitle:AMLocalizedString(@"edit", @"Caption of a button to edit the files that are selected") action:@selector(edit:message:)];
@@ -2983,13 +3023,8 @@ const NSUInteger kMaxMessagesToLoad = 256;
         if ([self.chatRoom peerHandleAtIndex:0] == userHandle) {
             MEGAChatStatus chatStatus = [[MEGASdkManager sharedMEGAChatSdk] userOnlineStatus:[self.chatRoom peerHandleAtIndex:0]];
             if (chatStatus < MEGAChatStatusOnline) {
-                if (@available(iOS 11.0, *)) {
-                    self.navigationSubtitleLabel.text = [NSString mnz_lastGreenStringFromMinutes:lastGreen];
-                } else {
-                    UILabel *label = [Helper customNavigationBarLabelWithTitle:self.chatRoom.title subtitle:[NSString mnz_lastGreenStringFromMinutes:lastGreen]];
-
-                    self.navigationTitleLabel.attributedText = label.attributedText;
-                }
+                self.lastGreenString = [NSString mnz_lastGreenStringFromMinutes:lastGreen];
+                [self customNavigationBarLabel];
             }
         }
     }
