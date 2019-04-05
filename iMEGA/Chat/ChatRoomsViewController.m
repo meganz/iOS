@@ -1044,6 +1044,9 @@
                     if (!self.archivedChatEmptyState.hidden) {
                         self.archivedChatEmptyStateCount.text = [NSString stringWithFormat:@"%tu", self.archivedChatListItemList.size];
                     }
+                    if (self.archivedChatListItemList.size == 0) {
+                        self.archivedChatEmptyState.hidden = YES;
+                    }
                     break;
                     
                 default:
@@ -1082,9 +1085,20 @@
 - (void)onChatConnectionStateUpdate:(MEGAChatSdk *)api chatId:(uint64_t)chatId newState:(int)newState {
     // INVALID_HANDLE = ~(uint64_t)0
     if (chatId == ~(uint64_t)0 && newState == MEGAChatConnectionOnline) {
-        // Now it's safe to trigger a reordering of the list:
         self.chatListItemArray = [NSMutableArray new];
-        self.chatListItemList = [[MEGASdkManager sharedMEGAChatSdk] chatListItems];
+
+        switch (self.chatRoomsType) {
+            case ChatRoomsTypeDefault:
+                self.chatListItemList = [[MEGASdkManager sharedMEGAChatSdk] chatListItems];
+                self.archivedChatListItemList = [[MEGASdkManager sharedMEGAChatSdk] archivedChatListItems];
+                break;
+                
+            case ChatRoomsTypeArchived:
+                self.chatListItemList = [[MEGASdkManager sharedMEGAChatSdk] archivedChatListItems];
+                break;
+        }
+        
+        // Now it's safe to trigger a reordering of the list:
         [self reorderList];
         [self.tableView reloadData];
     }
