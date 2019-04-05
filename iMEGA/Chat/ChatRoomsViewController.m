@@ -252,7 +252,7 @@
         if ([[NSUserDefaults standardUserDefaults] boolForKey:@"IsChatEnabled"]) {
             switch (self.chatRoomsType) {
                 case ChatRoomsTypeDefault:
-                    text = AMLocalizedString(@"Start chat securely with your contacts in a encrypted way", @"Empty Conversations description");
+                    text = AMLocalizedString(@"Start chatting securely with your contacts using end-to-end encryption", @"Empty Conversations description");
                     break;
                     
                 case ChatRoomsTypeArchived:

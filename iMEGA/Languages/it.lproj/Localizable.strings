@@ -818,7 +818,7 @@
 /* Message shown when you click on 'Close other session' to block other login sessions except the current session in use. This message is shown when this has been done. */
 "sessionsClosed"="Sessioni chiuse";
 /* Section title where you can change the app's passcode */
-"changePasscodeLabel"="Cambia coddice d'accesso";
+"changePasscodeLabel"="Cambia codice d'accesso";
 /* Title to describe a simple (four digit) passcode */
 "simplePasscodeLabel"="Passcode semplice";
 /* Title of one of the passcode options. If enabled will do what footer explains. */
@@ -1048,7 +1048,7 @@
 /* Empty Conversations section */
 "noConversations"="Nessuna Conversazione";
 /* Empty Conversations description */
-"Start chat securely with your contacts in a encrypted way"="Start chat securely with your contacts in a encrypted way";
+"Start chatting securely with your contacts using end-to-end encryption"="Inizia a chattare in sicurezza con i tuoi contatti utilizzando la criptazione end-to-end";
 /* Title show when the chat is disabled */
 "chatIsDisabled"="Chat disattivata";
 /* Text button shown when the chat is disabled and if tapped the chat will be enabled */
@@ -1886,3 +1886,5 @@
 "No recent activity"="Nessuna attività recente";
 /* Plural of items which contains a folder. 2 items */
 "items"="oggetti";
+/* In some cases, a user may try to get the link for a chat room, but if such is not set by an operator - it would say "not link available" and not auto create it. */
+"No chat link available."="No chat link available.";

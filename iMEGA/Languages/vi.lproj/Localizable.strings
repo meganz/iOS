@@ -1048,7 +1048,7 @@
 /* Empty Conversations section */
 "noConversations"="Không có Cuộc Trò Chuyện nào";
 /* Empty Conversations description */
-"Start chat securely with your contacts in a encrypted way"="Start chat securely with your contacts in a encrypted way";
+"Start chatting securely with your contacts using end-to-end encryption"="Mở một cuộc trò chuyện với các tên liên lạc nằm trong danh sách, với tính bảo mật tối ưu";
 /* Title show when the chat is disabled */
 "chatIsDisabled"="Chát bị tắt";
 /* Text button shown when the chat is disabled and if tapped the chat will be enabled */
@@ -1703,13 +1703,13 @@
 /* Users previewing a public chat */
 "Observers"="Observers";
 /* Alert message shown while deleting a chat link, warning about the consequences */
-"This conversation will no longer be accessible through the link you are about to delete."="This conversation will no longer be accessible through the public link once it has been removed.";
+"This conversation will no longer be accessible through the link you are about to delete."="This conversation will no longer be accessible through the chat link once it has been removed.";
 /* Management message shown in a chat when the user %@ enables the 'Encrypted Key Rotation' */
 "%@ enabled Encrypted Key Rotation"="%@ enabled Encrypted Key Rotation.";
 /* Management message shown in a chat when the user %@ creates a public link for the chat */
-"%@ created a public link for the chat."="%@ created a public link for the chat.";
+"%@ created a public link for the chat."="%@ created a chat link for the chat.";
 /* Management message shown in a chat when the user %@ removes a public link for the chat */
-"%@ removed a public link for the chat."="%@ removed the public link for the chat.";
+"%@ removed a public link for the chat."="%@ removed the chat link for the chat.";
 /* Management message shown in a chat when the user %@ joined it from a public chat link */
 "%@ joined the group chat."="%@ joined the group chat.";
 /* Message show when a call cannot be established because there are too many participants in the group call */
@@ -1847,7 +1847,7 @@
 /* The label of the toggle switch to indicate that file versioning is enabled. */
 "Enabled"="Được kích hoạt";
 /* Text button for init a group chat with link. */
-"New Chat Link"="New Chat Link";
+"New Chat Link"="New chat link";
 /* Text button for init a group chat */
 "New group chat"="Nhóm chát mới";
 /* Shown when an invalid/inexisting/not-available-anymore chat link is opened. */
@@ -1886,3 +1886,5 @@
 "No recent activity"="Không có hoạt động nào diễn ra gần đây";
 /* Plural of items which contains a folder. 2 items */
 "items"="mục";
+/* In some cases, a user may try to get the link for a chat room, but if such is not set by an operator - it would say "not link available" and not auto create it. */
+"No chat link available."="No chat link available.";
