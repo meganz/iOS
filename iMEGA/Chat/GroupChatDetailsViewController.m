@@ -208,7 +208,58 @@
     [self presentViewController:renameGroupAlertController animated:YES completion:nil];
 }
 
+- (void)presentNoChatLinkAvailable {
+    CustomModalAlertViewController *customModalAlertVC = [[CustomModalAlertViewController alloc] init];
+    customModalAlertVC.modalPresentationStyle = UIModalPresentationOverCurrentContext;
+    customModalAlertVC.image = [UIImage imageNamed:@"chatLinkCreation"];
+    customModalAlertVC.viewTitle = self.chatRoom.title;
+    customModalAlertVC.firstButtonTitle = AMLocalizedString(@"close", @"A button label. The button allows the user to close the conversation.");
+    customModalAlertVC.link = AMLocalizedString(@"No chat link available.", @"In some cases, a user may try to get the link for a chat room, but if such is not set by an operator - it would say \"not link available\" and not auto create it.");
+    __weak typeof(CustomModalAlertViewController) *weakCustom = customModalAlertVC;
+    customModalAlertVC.firstCompletion = ^{
+        [weakCustom dismissViewControllerAnimated:YES completion:nil];
+    };
+    
+    [self presentViewController:customModalAlertVC animated:YES completion:nil];
+}
 
+- (void)presentChatLinkOptionsWithLink:(NSString *)link {
+    CustomModalAlertViewController *customModalAlertVC = [[CustomModalAlertViewController alloc] init];
+    customModalAlertVC.modalPresentationStyle = UIModalPresentationOverCurrentContext;
+    customModalAlertVC.image = [UIImage imageNamed:@"chatLinkCreation"];
+    customModalAlertVC.viewTitle = self.chatRoom.title;
+    customModalAlertVC.detail = AMLocalizedString(@"People can join your group by using this link.", @"Text explaining users how the chat links work.");
+    customModalAlertVC.firstButtonTitle = AMLocalizedString(@"copy", @"List option shown on the details of a file or folder");
+    customModalAlertVC.link = link;
+    if (self.chatRoom.ownPrivilege == MEGAChatRoomPrivilegeModerator) {
+        customModalAlertVC.secondButtonTitle = AMLocalizedString(@"delete", @"Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected");
+    }
+    customModalAlertVC.dismissButtonTitle = AMLocalizedString(@"dismiss", @"Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible).");
+    __weak typeof(CustomModalAlertViewController) *weakCustom = customModalAlertVC;
+    customModalAlertVC.firstCompletion = ^{
+        [weakCustom dismissViewControllerAnimated:YES completion:^{
+            UIPasteboard.generalPasteboard.string = link;
+            [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"linkCopied", @"Message shown when the link has been copied to the pasteboard")];
+        }];
+    };
+    
+    customModalAlertVC.secondCompletion = ^{
+        [weakCustom dismissViewControllerAnimated:YES completion:^{
+            MEGAChatGenericRequestDelegate *delegate = [[MEGAChatGenericRequestDelegate alloc] initWithCompletion:^(MEGAChatRequest * _Nonnull request, MEGAChatError * _Nonnull error) {
+                if (!error.type) {
+                    [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"linkRemoved", @"Message shown when the link to a file or folder has been removed")];
+                }
+            }];
+            [[MEGASdkManager sharedMEGAChatSdk] removeChatLink:self.chatRoom.chatId delegate:delegate];
+        }];
+    };
+    
+    customModalAlertVC.dismissCompletion = ^{
+        [weakCustom dismissViewControllerAnimated:YES completion:nil];
+    };
+    
+    [self presentViewController:customModalAlertVC animated:YES completion:nil];
+}
 
 #pragma mark - IBActions
 
@@ -230,7 +281,7 @@
             break;
             
         case 1:
-            numberOfRows = (self.chatRoom.ownPrivilege >= MEGAChatRoomPrivilegeModerator && self.chatRoom.isPublicChat) ? 1 : 0;
+            numberOfRows = (self.chatRoom.ownPrivilege >= MEGAChatRoomPrivilegeRo && self.chatRoom.isPublicChat && !self.chatRoom.isPreview) ? 1 : 0;
             break;
             
         case 2:
@@ -412,7 +463,17 @@
             break;
             
         case 1:
-            height = ((self.chatRoom.ownPrivilege >= MEGAChatRoomPrivilegeModerator) && self.chatRoom.isPublicChat) ? 10.0f : 0.1f;
+            if (self.chatRoom.isPublicChat) {
+                if (self.chatRoom.ownPrivilege == MEGAChatRoomPrivilegeModerator) {
+                    height = 10.0f;
+                } else if (self.chatRoom.ownPrivilege >= MEGAChatRoomPrivilegeRo && !self.chatRoom.isPreview) {
+                    height = 20.0f;
+                } else {
+                    height = 0.1f;
+                }
+            } else {
+                height = 0.1f;
+            }
             break;
             
         case 2:
@@ -425,6 +486,12 @@
             } else {
                 if (self.chatRoom.ownPrivilege >= MEGAChatRoomPrivilegeModerator) {
                     height = 10.0f;
+                } else if ( self.chatRoom.ownPrivilege >= MEGAChatRoomPrivilegeRo) {
+                    if (self.chatRoom.isPublicChat) {
+                        height = 10.0f;
+                    } else {
+                        height = 20.0f;
+                    }
                 } else {
                     height = 20.0f;
                 }
@@ -464,7 +531,7 @@
             break;
             
         case 1:
-            height = ((self.chatRoom.ownPrivilege >= MEGAChatRoomPrivilegeModerator) && self.chatRoom.isPublicChat) ? 10.0f : 0.1f;
+            height = ((self.chatRoom.ownPrivilege >= MEGAChatRoomPrivilegeRo) && self.chatRoom.isPublicChat  && !self.chatRoom.isPreview) ? 10.0f : 0.1f;
             break;
             
         case 2:
@@ -522,7 +589,7 @@
             break;
             
         case 1:
-            heightForRow = (self.chatRoom.ownPrivilege >= MEGAChatRoomPrivilegeModerator) ? 44.0f : 0.0f;
+            heightForRow = (self.chatRoom.ownPrivilege >= MEGAChatRoomPrivilegeRo) ? 44.0f : 0.0f;
             break;
             
         case 2:
@@ -565,66 +632,44 @@
                 break;
                 
             case 1: {
-                UIAlertController *alertController;
-                if (self.chatRoom.hasCustomTitle) {
-                    __block NSString *link;
-                    MEGAChatGenericRequestDelegate *delegate = [[MEGAChatGenericRequestDelegate alloc] initWithCompletion:^(MEGAChatRequest * _Nonnull request, MEGAChatError * _Nonnull error) {
-                        if (error.type == MEGAChatErrorTypeOk) {
-                            link = request.text;
-                        } else {
-                            MEGAChatGenericRequestDelegate *delegate = [[MEGAChatGenericRequestDelegate alloc] initWithCompletion:^(MEGAChatRequest * _Nonnull request, MEGAChatError * _Nonnull error) {
-                                if (error.type == MEGAChatErrorTypeOk) {
-                                    link = request.text;
-                                }
-                            }];
-                            [[MEGASdkManager sharedMEGAChatSdk] createChatLink:self.chatRoom.chatId delegate:delegate];
-                        }
-                    }];
-                    [[MEGASdkManager sharedMEGAChatSdk] queryChatLink:self.chatRoom.chatId delegate:delegate];
-                    
-                    alertController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
-                    UIAlertAction *copyLinkAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"copyLink", @"Title for a button to copy the link to the clipboard") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-                        if (link) {
-                            [UIPasteboard generalPasteboard].string = link;
-                            [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"copiedToTheClipboard", @"Text of the button after the links were copied to the clipboard")];
-                        } else {
-                            [SVProgressHUD showErrorWithStatus:@"Error: link doesn't exist"];
-                        }
-                    }];
-                    [copyLinkAlertAction mnz_setTitleTextColor:UIColor.mnz_black333333];
-                    [alertController addAction:copyLinkAlertAction];
-                    
-                    [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"Delete Chat Link", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-                        UIAlertController *deleteAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"Delete Chat Link", nil) message:AMLocalizedString(@"This conversation will no longer be accessible through the link you are about to delete.", @"Alert message shown while deleting a chat link, warning about the consequences") preferredStyle:UIAlertControllerStyleAlert];
-                        [deleteAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"continue", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-                            MEGAChatGenericRequestDelegate *delegate = [[MEGAChatGenericRequestDelegate alloc] initWithCompletion:^(MEGAChatRequest * _Nonnull request, MEGAChatError * _Nonnull error) {
-                                if (!error.type) {
-                                    [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"linkRemoved", @"Message shown when the link to a file or folder has been removed")];
-                                }
-                            }];
-                            [[MEGASdkManager sharedMEGAChatSdk] removeChatLink:self.chatRoom.chatId delegate:delegate];
+                if (self.chatRoom.ownPrivilege >= MEGAChatRoomPrivilegeModerator) {
+                    if (self.chatRoom.hasCustomTitle) {
+                        MEGAChatGenericRequestDelegate *delegate = [[MEGAChatGenericRequestDelegate alloc] initWithCompletion:^(MEGAChatRequest * _Nonnull request, MEGAChatError * _Nonnull error) {
+                            if (error.type == MEGAChatErrorTypeOk) {
+                                [self presentChatLinkOptionsWithLink:request.text];
+                            } else {
+                                MEGAChatGenericRequestDelegate *delegate = [[MEGAChatGenericRequestDelegate alloc] initWithCompletion:^(MEGAChatRequest * _Nonnull request, MEGAChatError * _Nonnull error) {
+                                    if (error.type == MEGAChatErrorTypeOk) {
+                                        [self presentChatLinkOptionsWithLink:request.text];
+                                    }
+                                }];
+                                [[MEGASdkManager sharedMEGAChatSdk] createChatLink:self.chatRoom.chatId delegate:delegate];
+                            }
+                        }];
+                        [[MEGASdkManager sharedMEGAChatSdk] queryChatLink:self.chatRoom.chatId delegate:delegate];
+                    } else {
+                        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"Chat Link", @"Label shown in a cell where you can enable a switch to get a chat link") message:AMLocalizedString(@"To create a chat link you must name the group.", @"Alert message to advice the users that to generate a chat link they need enter a group name for the chat")  preferredStyle:UIAlertControllerStyleAlert];
+                        [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
                         }]];
-                        [deleteAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:nil]];
-                        [self presentViewController:deleteAlertController animated:YES completion:nil];
-                    }]];
-                    [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:nil]];
-                    
-                    if (UIDevice.currentDevice.iPadDevice) {
-                        alertController.modalPresentationStyle = UIModalPresentationPopover;
-                        GroupChatDetailsViewTableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
-                        alertController.popoverPresentationController.sourceRect = cell.contentView.frame;
-                        alertController.popoverPresentationController.sourceView = cell.contentView;
+                        [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                            [self renameChatGroup];
+                        }]];
+                        [self presentViewController:alertController animated:YES completion:nil];
                     }
-                } else {
-                    alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"Chat Link", @"Label shown in a cell where you can enable a switch to get a chat link") message:AMLocalizedString(@"To create a chat link you must name the group.", @"Alert message to advice the users that to generate a chat link they need enter a group name for the chat")  preferredStyle:UIAlertControllerStyleAlert];
-                    [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-                    }]];
-                    [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-                        [self renameChatGroup];
-                    }]];
+                } else if (self.chatRoom.ownPrivilege >= MEGAChatRoomPrivilegeRo) {
+                    if (self.chatRoom.hasCustomTitle) {
+                        MEGAChatGenericRequestDelegate *delegate = [[MEGAChatGenericRequestDelegate alloc] initWithCompletion:^(MEGAChatRequest * _Nonnull request, MEGAChatError * _Nonnull error) {
+                            if (error.type == MEGAChatErrorTypeOk) {
+                                [self presentChatLinkOptionsWithLink:request.text];
+                            } else {
+                                [self presentNoChatLinkAvailable];
+                            }
+                        }];
+                        [[MEGASdkManager sharedMEGAChatSdk] queryChatLink:self.chatRoom.chatId delegate:delegate];
+                    } else {
+                        [self presentNoChatLinkAvailable];
+                    }
                 }
-                
-                [self presentViewController:alertController animated:YES completion:nil];
                 break;
             }
                 

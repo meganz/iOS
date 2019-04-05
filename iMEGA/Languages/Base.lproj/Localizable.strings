@@ -1886,3 +1886,5 @@
 "No recent activity"="No recent activity";
 /* Plural of items which contains a folder. 2 items */
 "items"="items";
+/* In some cases, a user may try to get the link for a chat room, but if such is not set by an operator - it would say "not link available" and not auto create it. */
+"No chat link available."="No chat link available.";
