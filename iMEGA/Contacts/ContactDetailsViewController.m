@@ -322,7 +322,8 @@
     }
 
     CallViewController *callVC = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"CallViewControllerID"];
-    callVC.chatRoom = self.chatRoom; [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:self.chatId];
+    callVC.chatRoom = self.chatRoom;
+    [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:self.chatId];
     callVC.videoCall = videoCall;
     callVC.callType = active ? CallTypeActive : CallTypeOutgoing;
     callVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
@@ -693,12 +694,17 @@
     }
     
     if (userHandle == self.user.handle) {
-        [self updateCallButtonsState];
         self.onlineStatusView.backgroundColor = [UIColor mnz_colorForStatusChange:onlineStatus];
         self.statusLabel.text = [NSString chatStatusString:onlineStatus];
         if (onlineStatus < MEGAChatStatusOnline) {
             [MEGASdkManager.sharedMEGAChatSdk requestLastGreen:self.user.handle];
         }
+    }
+}
+
+- (void)onChatConnectionStateUpdate:(MEGAChatSdk *)api chatId:(uint64_t)chatId newState:(int)newState {
+    if (self.chatRoom.chatId == chatId) {
+        [self updateCallButtonsState];
     }
 }
 
