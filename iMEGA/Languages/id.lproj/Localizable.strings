@@ -1048,7 +1048,7 @@
 /* Empty Conversations section */
 "noConversations"="Tidak ada percakapan";
 /* Empty Conversations description */
-"Start chat securely with your contacts in a encrypted way"="Start chat securely with your contacts in a encrypted way";
+"Start chatting securely with your contacts using end-to-end encryption"="Mulai mengobrol dengan aman dengan kontak Anda menggunakan enkripsi ujung-ke-ujung";
 /* Title show when the chat is disabled */
 "chatIsDisabled"="Percakapan dinonaktifkan";
 /* Text button shown when the chat is disabled and if tapped the chat will be enabled */
@@ -1847,7 +1847,7 @@
 /* The label of the toggle switch to indicate that file versioning is enabled. */
 "Enabled"="Diaktifkan";
 /* Text button for init a group chat with link. */
-"New Chat Link"="New Chat Link";
+"New Chat Link"="New chat link";
 /* Text button for init a group chat */
 "New group chat"="Obrolan grup baru";
 /* Shown when an invalid/inexisting/not-available-anymore chat link is opened. */
@@ -1886,3 +1886,5 @@
 "No recent activity"="Tidak ada aktivitas terbaru";
 /* Plural of items which contains a folder. 2 items */
 "items"="items";
+/* In some cases, a user may try to get the link for a chat room, but if such is not set by an operator - it would say "not link available" and not auto create it. */
+"No chat link available."="No chat link available.";

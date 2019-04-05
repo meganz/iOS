@@ -1048,7 +1048,7 @@
 /* Empty Conversations section */
 "noConversations"="ไม่มีการสนทนา";
 /* Empty Conversations description */
-"Start chat securely with your contacts in a encrypted way"="Start chat securely with your contacts in a encrypted way";
+"Start chatting securely with your contacts using end-to-end encryption"="เริ่มแชทอย่างปลอดภัยกับผู้ติดต่อของคุณโดยใช้การเข้ารหัสแบบต้นทางถึงปลายทาง";
 /* Title show when the chat is disabled */
 "chatIsDisabled"="แชทถูกปิดใช้งาน";
 /* Text button shown when the chat is disabled and if tapped the chat will be enabled */
@@ -1691,7 +1691,7 @@
 /* Footer text to explain what means 'Encrypted Key Rotation' */
 "Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages."="Key Rotation จะเพิ่มความปลอดภัยขึ้นเล็กน้อย แต่ไม่อนุญาตให้คุณสร้างลิงก์แชทได้ และผู้เข้าร่วมใหม่ก็จะไม่เห็นข้อความที่ผ่านมาเช่นกัน";
 /* Shown as an error message when the user selects "create chat link", but haven't entered a title for the newly created room */
-"To create a chat link you must name the group."="To create a chat link you must name the group.";
+"To create a chat link you must name the group."="ในการสร้างลิงก์แชทคุณจะต้องตั้งชื่อกลุ่มก่อน";
 /* Label shown in a cell where you can enable a switch to get a chat link */
 "Chat Link"="ลิงก์แชท";
 /* Message shown when there is an active chat link that can be deleted */
@@ -1703,13 +1703,13 @@
 /* Users previewing a public chat */
 "Observers"="ผู้สังเกตการณ์";
 /* Alert message shown while deleting a chat link, warning about the consequences */
-"This conversation will no longer be accessible through the link you are about to delete."="การสนทนานี้จะไม่สามารถเข้าถึงได้ผ่านลิงก์สาธารณะอีกต่อไปเมื่อถูกลบออกแล้ว";
+"This conversation will no longer be accessible through the link you are about to delete."="การสนทนานี้จะไม่สามารถเข้าถึงผ่านลิงก์แชทเมื่อถูกลบออกแล้วได้อีกต่อไป";
 /* Management message shown in a chat when the user %@ enables the 'Encrypted Key Rotation' */
 "%@ enabled Encrypted Key Rotation"="%@ ได้เปิดใช้งาน Encrypted Key Rotation";
 /* Management message shown in a chat when the user %@ creates a public link for the chat */
-"%@ created a public link for the chat."="%@ ได้สร้างลิงก์แชทสาธารณะ";
+"%@ created a public link for the chat."="%@ ได้สร้างลิงค์แชทเพื่อสนทนาแล้ว";
 /* Management message shown in a chat when the user %@ removes a public link for the chat */
-"%@ removed a public link for the chat."="%@ ได้ลบลิงก์แชทสาธารณะ";
+"%@ removed a public link for the chat."="%@ ได้ลบลิงก์แชทออกแล้ว";
 /* Management message shown in a chat when the user %@ joined it from a public chat link */
 "%@ joined the group chat."="%@ ได้เข้าร่วมแชทกลุ่ม";
 /* Message show when a call cannot be established because there are too many participants in the group call */
@@ -1851,13 +1851,13 @@
 /* Text button for init a group chat */
 "New group chat"="แชทกลุ่มใหม่";
 /* Shown when an invalid/inexisting/not-available-anymore chat link is opened. */
-"Chat link unavailable"="Chat link unavailable";
+"Chat link unavailable"="ลิงก์แชทใช้งานไม่ได้";
 /* Shown when an inexisting/unavailable/removed link is tried to be opened. */
-"This chat link is no longer available"="This chat link is no longer available";
+"This chat link is no longer available"="ลิงก์แชทนี้ไม่สามารถใช้ได้อีก";
 /* Text explaining users how the chat links work. */
 "People can join your group by using this link."="ผู้คนสามารถเข้าร่วมกลุ่มของคุณโดยใช้ลิงก์นี้";
 /* Subtitle shown in a chat to inform where to tap to enter in the chat details view */
-"Tap here for info"="Tap here for info";
+"Tap here for info"="แตะที่นี่เพื่อดูข้อมูล";
 /* Title for the recents section. */
 "Recents"="เมื่อเร็ว ๆ นี้";
 /* Multiple Images title shown in recents section of webclient */
@@ -1886,3 +1886,5 @@
 "No recent activity"="ไม่มีกิจกรรมล่าสุด";
 /* Plural of items which contains a folder. 2 items */
 "items"="รายการ";
+/* In some cases, a user may try to get the link for a chat room, but if such is not set by an operator - it would say "not link available" and not auto create it. */
+"No chat link available."="ไม่มีลิงก์แชท";

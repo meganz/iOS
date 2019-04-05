@@ -241,7 +241,7 @@
             self.navigationItem.rightBarButtonItems = @[self.cancelBarButtonItem];
             if (self.visibleUsersArray.count == 0) {
                 self.noContactsLabel.text = AMLocalizedString(@"contactsEmptyState_title", @"Title shown when the Contacts section is empty, when you have not added any contact.");
-                self.noContactsDescriptionLabel.text = AMLocalizedString(@"Start chat securely with your contacts in a encrypted way", @"Empty Conversations description");
+                self.noContactsDescriptionLabel.text = AMLocalizedString(@"Start chatting securely with your contacts using end-to-end encryption", @"Empty Conversations description");
                 self.inviteContactButton.titleLabel.text = AMLocalizedString(@"inviteContact", @"Text shown when the user tries to make a call and the receiver is not a contact");
             }
             break;

@@ -1048,7 +1048,7 @@
 /* Empty Conversations section */
 "noConversations"="No Conversations";
 /* Empty Conversations description */
-"Start chat securely with your contacts in a encrypted way"="Start chat securely with your contacts in a encrypted way";
+"Start chatting securely with your contacts using end-to-end encryption"="Start chatting securely with your contacts using end-to-end encryption";
 /* Title show when the chat is disabled */
 "chatIsDisabled"="Chat is disabled";
 /* Text button shown when the chat is disabled and if tapped the chat will be enabled */
@@ -1687,15 +1687,15 @@
 /* Title shown in a cell to allow the users enable the 'Encrypted Key Rotation' */
 "Enable Encrypted Key Rotation"="Enable Encrypted Key Rotation";
 /* Label in a cell where you can get the chat link */
-"Get Chat Link"="Get Chat Link";
+"Get Chat Link"="Get chat link";
 /* Footer text to explain what means 'Encrypted Key Rotation' */
 "Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages."="Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages.";
 /* Shown as an error message when the user selects "create chat link", but haven't entered a title for the newly created room */
 "To create a chat link you must name the group."="To create a chat link you must name the group.";
 /* Label shown in a cell where you can enable a switch to get a chat link */
-"Chat Link"="Chat Link";
+"Chat Link"="Chat link";
 /* Message shown when there is an active chat link that can be deleted */
-"Delete Chat Link"="Delete Chat Link";
+"Delete Chat Link"="Delete chat link";
 /* Button text in public chat previews that allows the user to join the chat */
 "Join"="Join";
 /* Text shown in a notification to let the user know that has joined a public chat room after login or account creation */
@@ -1703,13 +1703,13 @@
 /* Users previewing a public chat */
 "Observers"="Observers";
 /* Alert message shown while deleting a chat link, warning about the consequences */
-"This conversation will no longer be accessible through the link you are about to delete."="This conversation will no longer be accessible through the public link once it has been removed.";
+"This conversation will no longer be accessible through the link you are about to delete."="This conversation will no longer be accessible through the chat link once it has been removed.";
 /* Management message shown in a chat when the user %@ enables the 'Encrypted Key Rotation' */
 "%@ enabled Encrypted Key Rotation"="%@ enabled Encrypted Key Rotation.";
 /* Management message shown in a chat when the user %@ creates a public link for the chat */
-"%@ created a public link for the chat."="%@ created a public link for the chat.";
+"%@ created a public link for the chat."="%@ created a chat link for the chat.";
 /* Management message shown in a chat when the user %@ removes a public link for the chat */
-"%@ removed a public link for the chat."="%@ removed the public link for the chat.";
+"%@ removed a public link for the chat."="%@ removed the chat link for the chat.";
 /* Management message shown in a chat when the user %@ joined it from a public chat link */
 "%@ joined the group chat."="%@ joined the group chat.";
 /* Message show when a call cannot be established because there are too many participants in the group call */
@@ -1847,7 +1847,7 @@
 /* The label of the toggle switch to indicate that file versioning is enabled. */
 "Enabled"="Enabled";
 /* Text button for init a group chat with link. */
-"New Chat Link"="New Chat Link";
+"New Chat Link"="New chat link";
 /* Text button for init a group chat */
 "New group chat"="New group chat";
 /* Shown when an invalid/inexisting/not-available-anymore chat link is opened. */
@@ -1886,3 +1886,5 @@
 "No recent activity"="No recent activity";
 /* Plural of items which contains a folder. 2 items */
 "items"="items";
+/* In some cases, a user may try to get the link for a chat room, but if such is not set by an operator - it would say "not link available" and not auto create it. */
+"No chat link available."="No chat link available.";
