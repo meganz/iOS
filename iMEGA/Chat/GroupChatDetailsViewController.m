@@ -229,17 +229,22 @@
     customModalAlertVC.image = [UIImage imageNamed:@"chatLinkCreation"];
     customModalAlertVC.viewTitle = self.chatRoom.title;
     customModalAlertVC.detail = AMLocalizedString(@"People can join your group by using this link.", @"Text explaining users how the chat links work.");
-    customModalAlertVC.firstButtonTitle = AMLocalizedString(@"copy", @"List option shown on the details of a file or folder");
+    customModalAlertVC.firstButtonTitle = AMLocalizedString(@"share", @"Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected ");
     customModalAlertVC.link = link;
     if (self.chatRoom.ownPrivilege == MEGAChatRoomPrivilegeModerator) {
-        customModalAlertVC.secondButtonTitle = AMLocalizedString(@"delete", @"Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected");
+        customModalAlertVC.secondButtonTitle = AMLocalizedString(@"delete", nil);
     }
     customModalAlertVC.dismissButtonTitle = AMLocalizedString(@"dismiss", @"Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible).");
     __weak typeof(CustomModalAlertViewController) *weakCustom = customModalAlertVC;
     customModalAlertVC.firstCompletion = ^{
-        [weakCustom dismissViewControllerAnimated:YES completion:^{
-            UIPasteboard.generalPasteboard.string = link;
-            [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"linkCopied", @"Message shown when the link has been copied to the pasteboard")];
+        [weakCustom dismissViewControllerAnimated:YES completion:^{            
+            UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWithActivityItems:@[link] applicationActivities:nil];
+            if (UIDevice.currentDevice.iPadDevice) {
+                activityVC.popoverPresentationController.sourceView = self.view;
+                activityVC.popoverPresentationController.sourceRect = self.view.frame;
+                
+            }
+            [self presentViewController:activityVC animated:YES completion:nil];
         }];
     };
     
