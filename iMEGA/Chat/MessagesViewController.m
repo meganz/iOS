@@ -319,20 +319,12 @@ static NSMutableSet<NSString *> *tapForInfoSet;
         customModalAlertVC.image = [UIImage imageNamed:@"chatLinkCreation"];
         customModalAlertVC.viewTitle = self.chatRoom.title;
         customModalAlertVC.detail = AMLocalizedString(@"People can join your group by using this link.", @"Text explaining users how the chat links work.");
-        customModalAlertVC.firstButtonTitle = AMLocalizedString(@"copy", @"List option shown on the details of a file or folder");
+        customModalAlertVC.firstButtonTitle = AMLocalizedString(@"share", @"Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected");
         customModalAlertVC.link = self.publicChatLink.absoluteString;
-        customModalAlertVC.secondButtonTitle = AMLocalizedString(@"share", @"Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected");
+        customModalAlertVC.secondButtonTitle = AMLocalizedString(@"delete", nil);
         customModalAlertVC.dismissButtonTitle = AMLocalizedString(@"dismiss", @"Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible).");
         __weak typeof(CustomModalAlertViewController) *weakCustom = customModalAlertVC;
         customModalAlertVC.firstCompletion = ^{
-            [weakCustom dismissViewControllerAnimated:YES completion:^{
-                UIPasteboard.generalPasteboard.string = self.publicChatLink.absoluteString;
-                [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"linkCopied", @"Message shown when the link has been copied to the pasteboard")];
-                self.publicChatWithLinkCreated = NO;
-            }];
-        };
-        
-        customModalAlertVC.secondCompletion = ^{
             [weakCustom dismissViewControllerAnimated:YES completion:^{
                 UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWithActivityItems:@[self.publicChatLink.absoluteString] applicationActivities:nil];
                 self.publicChatWithLinkCreated = NO;
@@ -342,6 +334,17 @@ static NSMutableSet<NSString *> *tapForInfoSet;
                     
                 }
                 [self presentViewController:activityVC animated:YES completion:nil];
+            }];
+        };
+        
+        customModalAlertVC.secondCompletion = ^{
+            [weakCustom dismissViewControllerAnimated:YES completion:^{
+                MEGAChatGenericRequestDelegate *delegate = [[MEGAChatGenericRequestDelegate alloc] initWithCompletion:^(MEGAChatRequest * _Nonnull request, MEGAChatError * _Nonnull error) {
+                    if (!error.type) {
+                        [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"linkRemoved", @"Message shown when the link to a file or folder has been removed")];
+                    }
+                }];
+                [[MEGASdkManager sharedMEGAChatSdk] removeChatLink:self.chatRoom.chatId delegate:delegate];
             }];
         };
         
