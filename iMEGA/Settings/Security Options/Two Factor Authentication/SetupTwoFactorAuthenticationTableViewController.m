@@ -59,19 +59,17 @@
         customModalAlertVC.image = [UIImage imageNamed:@"2FASetup"];
         customModalAlertVC.viewTitle = AMLocalizedString(@"whyYouDoNeedTwoFactorAuthentication", @"Title shown when you start the process to enable Two-Factor Authentication");
         customModalAlertVC.detail = AMLocalizedString(@"whyYouDoNeedTwoFactorAuthenticationDescription", @"Description text of the dialog displayed to start setup the Two-Factor Authentication");
-        customModalAlertVC.action = AMLocalizedString(@"beginSetup", @"Button title to start the setup of a feature. For example 'Begin Setup' for Two-Factor Authentication");
-        customModalAlertVC.actionColor = [UIColor mnz_green00BFA5];
-        customModalAlertVC.dismiss = AMLocalizedString(@"cancel", @"");
-        customModalAlertVC.dismissColor = [UIColor colorFromHexString:@"899B9C"];
+        customModalAlertVC.firstButtonTitle = AMLocalizedString(@"beginSetup", @"Button title to start the setup of a feature. For example 'Begin Setup' for Two-Factor Authentication");
+        customModalAlertVC.dismissButtonTitle = AMLocalizedString(@"cancel", @"");
         __weak typeof(CustomModalAlertViewController) *weakCustom = customModalAlertVC;
-        customModalAlertVC.completion = ^{
+        customModalAlertVC.firstCompletion = ^{
             [SVProgressHUD show];
             [[MEGASdkManager sharedMEGASdk] multiFactorAuthGetCodeWithDelegate:self];
             
             [weakCustom dismissViewControllerAnimated:YES completion:nil];
         };
         
-        customModalAlertVC.onDismiss = ^{
+        customModalAlertVC.dismissCompletion = ^{
             [weakCustom dismissViewControllerAnimated:YES completion:nil];
         };
         
