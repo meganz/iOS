@@ -1,6 +1,5 @@
 
 #import "ImageExportManager.h"
-#import "CameraUploadManager+Settings.h"
 #import "MEGAConstants.h"
 #import "ImageExportOperation.h"
 @import CoreServices;

@@ -4,7 +4,6 @@
 #import "AttributeUploadManager.h"
 #import "MEGAConstants.h"
 #import "NSURL+CameraUpload.h"
-#import "CameraUploadManager.h"
 #import "NodesFetchListenerOperation.h"
 #import "CameraUploadManager+Settings.h"
 #import "NSFileManager+MNZCategory.h"

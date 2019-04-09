@@ -3,7 +3,6 @@
 #import "CameraUploadRecordManager.h"
 #import "NSURL+CameraUpload.h"
 #import "NSFileManager+MNZCategory.h"
-#import "TransferSessionManager.h"
 
 @implementation UploadRecordsCollator
 

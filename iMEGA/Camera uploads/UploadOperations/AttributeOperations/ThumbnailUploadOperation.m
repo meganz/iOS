@@ -1,9 +1,7 @@
 
 #import "ThumbnailUploadOperation.h"
-#import "Helper.h"
 #import "CameraUploadRequestDelegate.h"
 #import "MEGAError+MNZCategory.h"
-#import "NSFileManager+MNZCategory.h"
 #import "NSURL+CameraUpload.h"
 
 @implementation ThumbnailUploadOperation

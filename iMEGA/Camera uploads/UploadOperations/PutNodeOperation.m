@@ -4,7 +4,6 @@
 #import "NSString+MNZCategory.h"
 #import "MEGAError+MNZCategory.h"
 #import "NSError+CameraUpload.h"
-#import "CameraUploadManager.h"
 
 @interface PutNodeOperation ()
 

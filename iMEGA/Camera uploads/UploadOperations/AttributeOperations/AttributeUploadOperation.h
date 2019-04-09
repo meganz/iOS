@@ -1,6 +1,5 @@
 
 #import "MEGAOperation.h"
-#import "AssetUploadInfo.h"
 #import "MEGASdkManager.h"
 
 NS_ASSUME_NONNULL_BEGIN
