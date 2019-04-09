@@ -1,6 +1,5 @@
 
 #import "AssetUploadInfo.h"
-#import "CameraUploadManager.h"
 
 @implementation AssetUploadInfo
 

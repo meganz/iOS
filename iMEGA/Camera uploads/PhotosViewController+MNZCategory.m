@@ -1,7 +1,6 @@
 
 #import "PhotosViewController+MNZCategory.h"
 #import "CustomModalAlertViewController.h"
-#import "CameraUploadManager.h"
 #import "CameraUploadManager+Settings.h"
 #import "CameraUploadsTableViewController.h"
 

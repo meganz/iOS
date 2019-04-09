@@ -1,6 +1,5 @@
 
 #import "CameraUploadManager+Settings.h"
-#import "CameraUploadManager.h"
 #import "MEGAConstants.h"
 #import "NSFileManager+MNZCategory.h"
 @import CoreLocation;

@@ -1,9 +1,7 @@
 
 #import "LivePhotoScanner.h"
 #import "CameraUploadRecordManager.h"
-#import "MOAssetUploadRecord+CoreDataClass.h"
 #import "SavedIdentifierParser.h"
-#import "CameraUploadManager+Settings.h"
 #import "PHAsset+CameraUpload.h"
 #import "PHFetchResult+CameraUpload.h"
 #import "MEGAConstants.h"

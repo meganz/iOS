@@ -1,6 +1,5 @@
 
 #import <Foundation/Foundation.h>
-#import "MEGASdkManager.h"
 #import "AssetLocalAttribute.h"
 #import "AssetUploadInfo.h"
 

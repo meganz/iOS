@@ -1,11 +1,8 @@
 
 #import <Foundation/Foundation.h>
 #import "UploadStats.h"
-@import Photos;
 
 NS_ASSUME_NONNULL_BEGIN
-
-@class PHAsset, MEGANode;
 
 @interface CameraUploadManager : NSObject
 

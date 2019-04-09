@@ -2,7 +2,6 @@
 #import "CameraUploadManager.h"
 #import "CameraUploadRecordManager.h"
 #import "CameraScanner.h"
-#import "Helper.h"
 #import "MEGASdkManager.h"
 #import "UploadOperationFactory.h"
 #import "AttributeUploadManager.h"

@@ -3,7 +3,6 @@
 #import "MEGAReachabilityManager.h"
 #import "MEGATransfer+MNZCategory.h"
 #import "NSString+MNZCategory.h"
-#import "CameraUploadManager.h"
 #import "CameraUploadManager+Settings.h"
 #import "DevicePermissionsHelper.h"
 #import "Helper.h"

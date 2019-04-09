@@ -1,6 +1,5 @@
 
 #import "FileEncrypter.h"
-#import "MEGASdkManager.h"
 #import "NSFileManager+MNZCategory.h"
 #import "NSError+CameraUpload.h"
 

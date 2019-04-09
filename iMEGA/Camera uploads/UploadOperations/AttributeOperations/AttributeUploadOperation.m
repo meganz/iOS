@@ -1,6 +1,5 @@
 
 #import "AttributeUploadOperation.h"
-#import "NSFileManager+MNZCategory.h"
 
 @implementation AttributeUploadOperation
 

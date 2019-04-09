@@ -1,14 +1,6 @@
 
-#import <Foundation/Foundation.h>
 #import "PhotoUploadOperation.h"
-#import "MEGASdkManager.h"
 #import "NSFileManager+MNZCategory.h"
-#import "NSString+MNZCategory.h"
-#import "TransferSessionManager.h"
-#import "AssetUploadInfo.h"
-#import "CameraUploadRecordManager.h"
-#import "CameraUploadManager.h"
-#import "CameraUploadRequestDelegate.h"
 #import "CameraUploadManager+Settings.h"
 #import "PHAsset+CameraUpload.h"
 #import "MEGAConstants.h"
