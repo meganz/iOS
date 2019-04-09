@@ -111,10 +111,10 @@
             if(temp_addr->ifa_addr->sa_family == AF_INET6) {
                 if([[NSString stringWithUTF8String:temp_addr->ifa_name] isEqualToString:@"en0"] || [[NSString stringWithUTF8String:temp_addr->ifa_name] isEqualToString:@"pdp_ip0"]) {
                     char straddr[INET6_ADDRSTRLEN];
-                    inet_ntop(AF_INET6, (void *)&((struct sockaddr_in *)temp_addr->ifa_addr)->sin_addr, straddr, sizeof(straddr));
+                    inet_ntop(AF_INET6, (void *)&((struct sockaddr_in6 *)temp_addr->ifa_addr)->sin6_addr, straddr, sizeof(straddr));
                     
                     if(strncasecmp(straddr, "FE80:", 5) && strncasecmp(straddr, "FD00:", 5)) {
-                        address = [NSString stringWithUTF8String:straddr];
+                        address = [NSString stringWithFormat:@"[%@]", [NSString stringWithUTF8String:straddr]];
                     }
                 }
             }
