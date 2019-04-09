@@ -15,18 +15,16 @@
     boardingAlertVC.image = [UIImage imageNamed:@"cameraUploadsBoarding"];
     boardingAlertVC.viewTitle = AMLocalizedString(@"enableCameraUploadsButton", @"Button title that enables the functionality 'Camera Uploads', which uploads all the photos in your device to MEGA");
     boardingAlertVC.detail = AMLocalizedString(@"automaticallyBackupYourPhotos", @"Text shown to explain what means 'Enable Camera Uploads'.");
-    boardingAlertVC.action = AMLocalizedString(@"enable", @"Text button shown when camera upload will be enabled");
-    boardingAlertVC.actionColor = [UIColor mnz_green00BFA5];
-    boardingAlertVC.dismiss = AMLocalizedString(@"notNow", nil);
-    boardingAlertVC.dismissColor = [UIColor colorFromHexString:@"899B9C"];
+    boardingAlertVC.firstButtonTitle = AMLocalizedString(@"enable", @"Text button shown when camera upload will be enabled");
+    boardingAlertVC.dismissButtonTitle = AMLocalizedString(@"notNow", nil);
     
-    boardingAlertVC.completion = ^{
+    boardingAlertVC.firstCompletion = ^{
         [self dismissViewControllerAnimated:YES completion:^{
             [self pushCameraUploadSettings];
         }];
     };
     
-    boardingAlertVC.onDismiss = ^{
+    boardingAlertVC.dismissCompletion = ^{
         [self dismissViewControllerAnimated:YES completion:nil];
         CameraUploadManager.cameraUploadEnabled = NO;
     };
@@ -53,12 +51,10 @@
     warningVC.image = [UIImage imageNamed:@"disk_storage_full"];
     warningVC.viewTitle = [NSString stringWithFormat:@"%@ Storage Full", UIDevice.currentDevice.localizedModel];
     warningVC.detail = @"You do not have enough storage to upload camera. Free up space by deleting unneeded apps, videos or music.";
-    warningVC.action = @"Manage";
-    warningVC.actionColor = [UIColor mnz_green00BFA5];
-    warningVC.dismiss = AMLocalizedString(@"notNow", nil);
-    warningVC.dismissColor = [UIColor colorFromHexString:@"899B9C"];
+    warningVC.firstButtonTitle = @"Manage";
+    warningVC.dismissButtonTitle = AMLocalizedString(@"notNow", nil);
     
-    warningVC.completion = ^{
+    warningVC.firstCompletion = ^{
         [self dismissViewControllerAnimated:YES completion:^{
             [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
         }];
