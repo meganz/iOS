@@ -766,7 +766,7 @@
 		B6D11ADF219CE69300446B86 /* FileEncrypter.m in Sources */ = {isa = PBXBuildFile; fileRef = B6D11ADE219CE69300446B86 /* FileEncrypter.m */; };
 		B6D11AE2219E5E2C00446B86 /* AttributeUploadOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = B6D11AE1219E5E2C00446B86 /* AttributeUploadOperation.m */; };
 		B6D11AE521A24C7700446B86 /* PutNodeOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = B6D11AE421A24C7700446B86 /* PutNodeOperation.m */; };
-		B6D176872236F16600098084 /* ImageExportor.m in Sources */ = {isa = PBXBuildFile; fileRef = B6D176862236F16600098084 /* ImageExportor.m */; };
+		B6D176872236F16600098084 /* ImageExporter.m in Sources */ = {isa = PBXBuildFile; fileRef = B6D176862236F16600098084 /* ImageExporter.m */; };
 		B6D90BBF2224B06E00E0623A /* RestoreUploadTaskOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = B6D90BBE2224B06E00E0623A /* RestoreUploadTaskOperation.m */; };
 		B6D90BC22224D46800E0623A /* AssetLocalAttribute.m in Sources */ = {isa = PBXBuildFile; fileRef = B6D90BC12224D46800E0623A /* AssetLocalAttribute.m */; };
 		B6D90BCA22253BC700E0623A /* BackgroundUploadingTaskMonitor.m in Sources */ = {isa = PBXBuildFile; fileRef = B6D90BC922253BC700E0623A /* BackgroundUploadingTaskMonitor.m */; };
@@ -1807,8 +1807,8 @@
 		B6D11AE1219E5E2C00446B86 /* AttributeUploadOperation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AttributeUploadOperation.m; sourceTree = "<group>"; };
 		B6D11AE321A24C7700446B86 /* PutNodeOperation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PutNodeOperation.h; sourceTree = "<group>"; };
 		B6D11AE421A24C7700446B86 /* PutNodeOperation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PutNodeOperation.m; sourceTree = "<group>"; };
-		B6D176852236F16600098084 /* ImageExportor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ImageExportor.h; sourceTree = "<group>"; };
-		B6D176862236F16600098084 /* ImageExportor.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ImageExportor.m; sourceTree = "<group>"; };
+		B6D176852236F16600098084 /* ImageExporter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ImageExporter.h; sourceTree = "<group>"; };
+		B6D176862236F16600098084 /* ImageExporter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ImageExporter.m; sourceTree = "<group>"; };
 		B6D90BBD2224B06E00E0623A /* RestoreUploadTaskOperation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RestoreUploadTaskOperation.h; sourceTree = "<group>"; };
 		B6D90BBE2224B06E00E0623A /* RestoreUploadTaskOperation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RestoreUploadTaskOperation.m; sourceTree = "<group>"; };
 		B6D90BC02224D46800E0623A /* AssetLocalAttribute.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AssetLocalAttribute.h; sourceTree = "<group>"; };
@@ -3859,8 +3859,8 @@
 				B6CE0D0E221FDFCB00E6BD41 /* CameraUploadConcurrentCountCalculator.m */,
 				B6D90BC5222533AD00E0623A /* BackgroundUploadingTaskMonitor.h */,
 				B6D90BC922253BC700E0623A /* BackgroundUploadingTaskMonitor.m */,
-				B6D176852236F16600098084 /* ImageExportor.h */,
-				B6D176862236F16600098084 /* ImageExportor.m */,
+				B6D176852236F16600098084 /* ImageExporter.h */,
+				B6D176862236F16600098084 /* ImageExporter.m */,
 			);
 			path = UploadUtils;
 			sourceTree = "<group>";
@@ -4411,7 +4411,7 @@
 				5B22F97F1F8374C500D2B156 /* VENBackspaceTextField.m in Sources */,
 				77485F84207CB6D3007402B1 /* MEGAGetPublicNodeRequestDelegate.m in Sources */,
 				41A4204F1C4EA02C002E192E /* MEGALogger.m in Sources */,
-				B6D176872236F16600098084 /* ImageExportor.m in Sources */,
+				B6D176872236F16600098084 /* ImageExporter.m in Sources */,
 				B658D3CF218FBC47004C0D64 /* UploadOperationFactory.m in Sources */,
 				5B7B4CA21EE5AC1200DA6A8D /* MEGAInviteContactRequestDelegate.m in Sources */,
 				B66709902228BCE90015E050 /* PHFetchOptions+CameraUpload.m in Sources */,

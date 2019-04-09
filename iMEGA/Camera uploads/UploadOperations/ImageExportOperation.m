@@ -1,6 +1,6 @@
 
 #import "ImageExportOperation.h"
-#import "ImageExportor.h"
+#import "ImageExporter.h"
 
 @interface ImageExportOperation ()
 
@@ -9,7 +9,7 @@
 @property (strong, nonatomic) NSString *outputImageTypeUTI;
 @property (nonatomic) BOOL shouldStripGPSInfo;
 @property (copy, nonatomic) void (^completion)(BOOL succeeded);
-@property (strong, nonatomic) ImageExportor *imageExporter;
+@property (strong, nonatomic) ImageExporter *imageExporter;
 
 @end
 
@@ -28,9 +28,9 @@
     return self;
 }
 
-- (ImageExportor *)imageExporter {
+- (ImageExporter *)imageExporter {
     if (_imageExporter == nil) {
-        _imageExporter = [[ImageExportor alloc] init];
+        _imageExporter = [[ImageExporter alloc] init];
     }
     
     return _imageExporter;
