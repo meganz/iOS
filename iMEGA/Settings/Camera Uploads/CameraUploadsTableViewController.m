@@ -227,11 +227,9 @@ static const CGFloat TableViewSectionHeaderFooterHiddenHeight = 0.1;
         detail = @"Please select “Always” at your Location page in Settings, then MEGA can periodically start camera uploads when your location changes.";
     }
     customModalAlertVC.detail = detail;
-    customModalAlertVC.action = actionTitle;
-    customModalAlertVC.actionColor = [UIColor mnz_green00BFA5];
-    customModalAlertVC.dismiss = AMLocalizedString(@"notNow", @"Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers.");
-    customModalAlertVC.dismissColor = [UIColor colorFromHexString:@"899B9C"];
-    customModalAlertVC.completion = ^{
+    customModalAlertVC.firstButtonTitle = actionTitle;
+    customModalAlertVC.dismissButtonTitle = AMLocalizedString(@"notNow", @"Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers.");
+    customModalAlertVC.firstCompletion = ^{
         [self dismissViewControllerAnimated:YES completion:nil];
         if (CLLocationManager.authorizationStatus == kCLAuthorizationStatusAuthorizedAlways) {
             CameraUploadManager.backgroundUploadAllowed = YES;

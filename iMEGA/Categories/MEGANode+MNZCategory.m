@@ -414,7 +414,7 @@
                 [viewController.navigationController pushViewController:onboardingVC animated:YES];
             } else {
                 MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:onboardingVC];
-                [navigationController addCancelButton];
+                [navigationController addRightCancelButton];
                 [viewController presentViewController:navigationController animated:YES completion:nil];
             }
         }
@@ -446,7 +446,7 @@
                 [viewController.navigationController pushViewController:onboardingVC animated:YES];
             } else {
                 MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:onboardingVC];
-                [navigationController addCancelButton];
+                [navigationController addRightCancelButton];
                 [viewController presentViewController:navigationController animated:YES completion:nil];
             }
         }
