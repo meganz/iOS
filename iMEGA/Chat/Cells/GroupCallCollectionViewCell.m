@@ -97,6 +97,7 @@
 - (void)addLocalVideoInChat:(uint64_t)chatId {
     [[MEGASdkManager sharedMEGAChatSdk] addChatLocalVideo:chatId delegate:self.videoImageView];
     self.videoImageView.hidden = NO;
+    self.videoImageView.transform = CGAffineTransformMakeScale(-1, 1);
     self.avatarImageView.hidden = YES;
     MEGALogDebug(@"[Group Call] Add local video %p", self.videoImageView);
 }
@@ -111,6 +112,7 @@
 - (void)addRemoteVideoForPeer:(MEGAGroupCallPeer *)peer inChat:(uint64_t)chatId {
     [[MEGASdkManager sharedMEGAChatSdk] addChatRemoteVideo:chatId peerId:peer.peerId cliendId:peer.clientId delegate:self.videoImageView];
     self.videoImageView.hidden = NO;
+    self.videoImageView.transform = CGAffineTransformMakeScale(1, 1);
     self.avatarImageView.hidden = YES;
     MEGALogDebug(@"[Group Call] Add remote video %p for peer %llu in client %llu", self.videoImageView, peer.peerId, peer.clientId);
 }
