@@ -1,8 +1,6 @@
 
 #import "MEGANavigationController.h"
 
-#import "Helper.h"
-
 @implementation MEGANavigationController
 
 #pragma mark - Lifecycle
@@ -66,8 +64,12 @@
 
 #pragma mark - Public
 
-- (void)addCancelButton {
+- (void)addRightCancelButton {
     self.viewControllers.firstObject.navigationItem.rightBarButtonItem = [self cancelBarButtonItem];
+}
+
+- (void)addLeftCancelButton {
+    self.viewControllers.firstObject.navigationItem.leftBarButtonItem = [self cancelBarButtonItem];
 }
 
 - (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated {
