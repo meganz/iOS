@@ -54,7 +54,7 @@ static const NSUInteger MaximumPhotoUploadBatchCountMultiplier = 2;
 @property (strong, nonatomic) MediaInfoLoader *mediaInfoLoader;
 @property (strong, nonatomic) DiskSpaceDetector *diskSpaceDetector;
 @property (strong, nonatomic) CameraUploadNodeLoader *cameraUploadNodeLoader;
-@property (strong, nonatomic) CameraUploadConcurrentCountCalculator *concurrentCountCalculator;\
+@property (strong, nonatomic) CameraUploadConcurrentCountCalculator *concurrentCountCalculator;
 @property (strong, nonatomic) BackgroundUploadingTaskMonitor *backgroundUploadingTaskMonitor;
 
 @end

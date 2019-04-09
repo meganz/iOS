@@ -4,7 +4,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 /**
- 'MEGAOperation' is a simple concurrent operation with the ability to monior the states of the running operation.
+ 'MEGAOperation' is a simple concurrent operation with the ability to monitor the states of the running operation.
  It can be executed either mannually or in an operation queue.
  */
 @interface MEGAOperation : NSOperation

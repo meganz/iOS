@@ -1,10 +1,10 @@
 
-#import "ImageExportor.h"
+#import "ImageExporter.h"
 #import "NSFileManager+MNZCategory.h"
 @import AVFoundation;
 @import CoreServices;
 
-@implementation ImageExportor
+@implementation ImageExporter
 
 - (BOOL)exportImageData:(NSData *)data toURL:(NSURL *)URL shouldStripGPSInfo:(BOOL)shouldStripGPSInfo {
     return [self exportImageData:data toURL:URL outputImageUTIType:nil shouldStripGPSInfo:shouldStripGPSInfo];
