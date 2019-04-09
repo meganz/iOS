@@ -646,6 +646,13 @@ static NSString* const B = @"[B]";
     return emojiCount;
 }
 
+- (NSString *)mnz_initialForAvatar {
+    NSString *trimmedSelf = [self stringByTrimmingCharactersInSet:
+                         [NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    NSUInteger end = [trimmedSelf rangeOfComposedCharacterSequenceAtIndex:0].length;
+    return [trimmedSelf substringToIndex:end].uppercaseString;
+}
+
 - (NSString *)mnz_coordinatesOfPhotoOrVideo {
     if (self.mnz_isImagePathExtension) {
         NSURL *fileURL;

@@ -6,6 +6,8 @@
 
 @property (nonatomic, strong) MEGAChatRoom *chatRoom;
 @property (nonatomic) NSURL *publicChatLink;
+@property (nonatomic, getter=isPublicChatWithLinkCreated) BOOL publicChatWithLinkCreated;
+@property (class, nonatomic) NSMutableSet<NSString *> *tapForInfoSet;
 
 - (void)updateUnreadLabel;
 
