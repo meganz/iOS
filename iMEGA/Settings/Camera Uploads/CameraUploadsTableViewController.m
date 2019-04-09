@@ -74,10 +74,10 @@ static const CGFloat TableViewSectionHeaderFooterHiddenHeight = 0.1;
     [self.navigationItem setTitle:AMLocalizedString(@"cameraUploadsLabel", nil)];
     [self.enableCameraUploadsLabel setText:AMLocalizedString(@"cameraUploadsLabel", nil)];
     
-    [self.uploadVideosInfoLabel setText:@"Upload Videos"];
+    [self.uploadVideosInfoLabel setText:AMLocalizedString(@"uploadVideosLabel", nil)];
     self.uploadVideosInfoRightDetailLabel.text = CameraUploadManager.isVideoUploadEnabled ? AMLocalizedString(@"on", nil) : AMLocalizedString(@"off", nil);
     
-    [self.uploadVideosLabel setText:@"Upload Videos"];
+    [self.uploadVideosLabel setText:AMLocalizedString(@"uploadVideosLabel", nil)];
     
     self.useCellularConnectionLabel.text = AMLocalizedString(@"useMobileData", @"Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature.");
     
@@ -201,7 +201,14 @@ static const CGFloat TableViewSectionHeaderFooterHiddenHeight = 0.1;
         CameraUploadManager.backgroundUploadAllowed = NO;
         [self configBackgroudUploadUI];
     } else {
-        [self showBackgroundUploadBoardingScreen];
+        switch (CLLocationManager.authorizationStatus) {
+            case kCLAuthorizationStatusNotDetermined:
+                [self.locationManager requestAlwaysAuthorization];
+                break;
+            default:
+                [self showBackgroundUploadBoardingScreen];
+                break;
+        }
     }
 }
 
@@ -212,31 +219,23 @@ static const CGFloat TableViewSectionHeaderFooterHiddenHeight = 0.1;
     customModalAlertVC.viewTitle = @"Enable location services for background upload";
     NSString *actionTitle;
     NSString *detail;
-    if (CLLocationManager.authorizationStatus == kCLAuthorizationStatusAuthorizedAlways || CLLocationManager.authorizationStatus == kCLAuthorizationStatusNotDetermined) {
+    if (CLLocationManager.authorizationStatus == kCLAuthorizationStatusAuthorizedAlways) {
         actionTitle = @"Turn On";
-        detail = @"MEGA can periodically start camera uploads in background when your location changes.";
+        detail = @"MEGA can periodically start camera uploads when your location changes.";
     } else {
         actionTitle = @"Turn On in Settings";
-        detail = @"Please select “Always” at your Location page in Settings, then MEGA can periodically start camera uploads in background when your location changes.";
+        detail = @"Please select “Always” at your Location page in Settings, then MEGA can periodically start camera uploads when your location changes.";
     }
     customModalAlertVC.detail = detail;
-    customModalAlertVC.action = actionTitle;
-    customModalAlertVC.actionColor = [UIColor mnz_green00BFA5];
-    customModalAlertVC.dismiss = AMLocalizedString(@"notNow", nil);
-    customModalAlertVC.dismissColor = [UIColor colorFromHexString:@"899B9C"];
-    customModalAlertVC.completion = ^{
+    customModalAlertVC.firstButtonTitle = actionTitle;
+    customModalAlertVC.dismissButtonTitle = AMLocalizedString(@"notNow", @"Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers.");
+    customModalAlertVC.firstCompletion = ^{
         [self dismissViewControllerAnimated:YES completion:nil];
-        switch (CLLocationManager.authorizationStatus) {
-            case kCLAuthorizationStatusNotDetermined:
-                [self.locationManager requestAlwaysAuthorization];
-                break;
-            case kCLAuthorizationStatusAuthorizedAlways:
-                CameraUploadManager.backgroundUploadAllowed = YES;
-                [self configBackgroudUploadUI];
-                break;
-            default:
-                [UIApplication.sharedApplication openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
-                break;
+        if (CLLocationManager.authorizationStatus == kCLAuthorizationStatusAuthorizedAlways) {
+            CameraUploadManager.backgroundUploadAllowed = YES;
+            [self configBackgroudUploadUI];
+        } else {
+            [UIApplication.sharedApplication openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
         }
     };
     
@@ -321,48 +320,6 @@ static const CGFloat TableViewSectionHeaderFooterHiddenHeight = 0.1;
         CameraUploadManager.convertHEICPhoto = indexPath.row == CameraUploadPhotoFormatRowJPG;
         [self configUI];
     }
-}
-
-- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-    NSString *title;
-    switch (section) {
-        case CameraUploadSectionPhotoFormat:
-            title = @"SAVE HEIC PHOTOS AS";
-            break;
-        case CameraUploadSectionOptions:
-            title = AMLocalizedString(@"options", @"Camera Upload options");
-            break;
-        default:
-            break;
-    }
-    
-    return title;
-}
-
-- (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section {
-    NSString *title;
-    switch (section) {
-        case CameraUploadSectionFeatureSwitch:
-            if (CameraUploadManager.isCameraUploadEnabled) {
-                if (CameraUploadManager.isVideoUploadEnabled) {
-                    title = @"Photos and videos will be uploaded to Camera Uploads folder.";
-                } else {
-                    title = @"Photos will be uploaded to Camera Uploads folder.";
-                }
-                
-                title = [NSString stringWithFormat:@"%@ %@", title, @"(Live Photos and Bursts are included)"];
-            } else {
-                title = @"When enabled, photos will be uploaded.";
-            }
-            break;
-        case CameraUploadSectionPhotoFormat:
-            title = @"We recommend JPG, as its the most compatible format for photos.";
-            break;
-        default:
-            break;
-    }
-    
-    return title;
 }
 
 #pragma mark - Location manager delegate
