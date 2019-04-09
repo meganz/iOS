@@ -8,5 +8,6 @@
 - (URLType)mnz_type;
 - (NSString *)mnz_MEGAURL;
 - (NSString *)mnz_afterSlashesString;
+- (NSURL *)mnz_updatedURLWithCurrentAddress;
 
 @end
