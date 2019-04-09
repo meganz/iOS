@@ -18,7 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - setup camera upload
 
-- (void)setupCameraUploadWhenApplicationLaunches:(UIApplication *)application;
+- (void)setupCameraUploadWhenApplicationLaunches;
 
 #pragma mark - start upload
 
