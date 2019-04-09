@@ -40,10 +40,11 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *avatarViewHeightConstraint;
 @property (weak, nonatomic) IBOutlet UIButton *callButton;
 @property (weak, nonatomic) IBOutlet UIButton *videoCallButton;
-@property (weak, nonatomic) IBOutlet UIButton *backButton;
+@property (weak, nonatomic) IBOutlet UIButton *messageButton;
 @property (weak, nonatomic) IBOutlet UILabel *messageLabel;
 @property (weak, nonatomic) IBOutlet UILabel *callLabel;
 @property (weak, nonatomic) IBOutlet UILabel *videoLabel;
+@property (weak, nonatomic) IBOutlet UIButton *backButton;
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
@@ -93,19 +94,34 @@
     //TODO: Show the blue check if the Contact is verified
     
     self.nameLabel.text = self.userName;
+    self.nameLabel.layer.shadowOffset = CGSizeMake(0, 1);
+    self.nameLabel.layer.shadowColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.2].CGColor;
+    self.nameLabel.layer.shadowRadius = 2.0;
+    self.nameLabel.layer.shadowOpacity = 1;
+    
     self.emailLabel.text = self.userEmail;
+    self.emailLabel.layer.shadowOffset = CGSizeMake(0, 1);
+    self.emailLabel.layer.shadowColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.2].CGColor;
+    self.emailLabel.layer.shadowRadius = 2.0;
+    self.emailLabel.layer.shadowOpacity = 1;
+
     
     MEGAChatStatus userStatus = [MEGASdkManager.sharedMEGAChatSdk userOnlineStatus:self.user.handle];
     if (userStatus != MEGAChatStatusInvalid) {
         if (userStatus < MEGAChatStatusOnline) {
             [MEGASdkManager.sharedMEGAChatSdk requestLastGreen:self.user.handle];
         }
-        self.onlineStatusView.backgroundColor = [UIColor mnz_colorForStatusChange:[MEGASdkManager.sharedMEGAChatSdk userOnlineStatus:self.user.handle]];
         self.statusLabel.text = [NSString chatStatusString:userStatus];
-        self.onlineStatusView.layer.shadowOffset = CGSizeMake(0, 2);
+        self.statusLabel.layer.shadowOffset = CGSizeMake(0, 1);
+        self.statusLabel.layer.shadowColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.2].CGColor;
+        self.statusLabel.layer.shadowRadius = 2.0;
+        self.statusLabel.layer.shadowOpacity = 1;
+        
+        self.onlineStatusView.backgroundColor = [UIColor mnz_colorForStatusChange:[MEGASdkManager.sharedMEGAChatSdk userOnlineStatus:self.user.handle]];
+        self.onlineStatusView.layer.shadowOffset = CGSizeMake(0, 1);
         self.onlineStatusView.layer.shadowColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.2].CGColor;
         self.onlineStatusView.layer.shadowOpacity = 1;
-        self.onlineStatusView.layer.shadowRadius = 4;
+        self.onlineStatusView.layer.shadowRadius = 2;
         self.onlineStatusView.layer.borderWidth = 1;
         self.onlineStatusView.layer.borderColor = UIColor.whiteColor.CGColor;
     } else {
@@ -306,7 +322,8 @@
     }
 
     CallViewController *callVC = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"CallViewControllerID"];
-    callVC.chatRoom = self.chatRoom; [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:self.chatId];
+    callVC.chatRoom = self.chatRoom;
+    [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:self.chatId];
     callVC.videoCall = videoCall;
     callVC.callType = active ? CallTypeActive : CallTypeOutgoing;
     callVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
@@ -355,6 +372,10 @@
 - (void)updateCallButtonsState {
     MEGAChatRoom *chatRoom = self.chatRoom ? self.chatRoom : [[MEGASdkManager sharedMEGAChatSdk] chatRoomByUser:self.userHandle];
     if (chatRoom) {
+        if (chatRoom.ownPrivilege < MEGAChatRoomPrivilegeStandard) {
+            self.messageButton.enabled = self.callButton.enabled = self.videoCallButton.enabled = NO;
+            return;
+        }
         MEGAChatConnection chatConnection = [[MEGASdkManager sharedMEGAChatSdk] chatConnectionState:chatRoom.chatId];
         if (chatConnection != MEGAChatConnectionOnline) {
             self.callButton.enabled = self.videoCallButton.enabled = NO;
@@ -673,12 +694,17 @@
     }
     
     if (userHandle == self.user.handle) {
-        [self updateCallButtonsState];
         self.onlineStatusView.backgroundColor = [UIColor mnz_colorForStatusChange:onlineStatus];
         self.statusLabel.text = [NSString chatStatusString:onlineStatus];
         if (onlineStatus < MEGAChatStatusOnline) {
             [MEGASdkManager.sharedMEGAChatSdk requestLastGreen:self.user.handle];
         }
+    }
+}
+
+- (void)onChatConnectionStateUpdate:(MEGAChatSdk *)api chatId:(uint64_t)chatId newState:(int)newState {
+    if (self.chatRoom.chatId == chatId) {
+        [self updateCallButtonsState];
     }
 }
 

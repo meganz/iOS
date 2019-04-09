@@ -1,6 +1,6 @@
 
 #import "MEGANodeList+MNZCategory.h"
-
+#import "MEGASdkManager.h"
 #import "NSString+MNZCategory.h"
 
 @implementation MEGANodeList (MNZCategory)
@@ -69,6 +69,20 @@
     }
     
     return mediaNodesMutableArray;
+}
+
+- (BOOL)mnz_containsNodeWithParentFolderName:(NSString *)name {
+    BOOL hasMatchedNode = NO;
+    for (NSUInteger i = 0; i < self.size.unsignedIntegerValue; i++) {
+        MEGANode *node = [self nodeAtIndex:i];
+        MEGANode *parentNode = [MEGASdkManager.sharedMEGASdk nodeForHandle:node.parentHandle];
+        if (parentNode.isFolder && [parentNode.name isEqualToString:name]) {
+            hasMatchedNode = YES;
+            break;
+        }
+    }
+    
+    return hasMatchedNode;
 }
 
 @end
