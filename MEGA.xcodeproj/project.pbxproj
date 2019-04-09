@@ -11,8 +11,6 @@
 		137361931A6664C300B740E8 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 137361921A6664C300B740E8 /* AppDelegate.m */; };
 		1373619E1A6664C300B740E8 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1373619D1A6664C300B740E8 /* Images.xcassets */; };
 		410AD3C11C883AA900BF939E /* MEGAAVViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 410AD3C01C883AA900BF939E /* MEGAAVViewController.m */; };
-		41136FBC1E1692A90031C516 /* MEGAMessagesTypingIndicatorFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 41136FBB1E1692A90031C516 /* MEGAMessagesTypingIndicatorFooterView.m */; };
-		41136FBE1E1693410031C516 /* MEGAMessagesTypingIndicatorFooterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 41136FBD1E1693410031C516 /* MEGAMessagesTypingIndicatorFooterView.xib */; };
 		411504941CEB183600BF38E3 /* SaveToCameraRollActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 411504931CEB183600BF38E3 /* SaveToCameraRollActivity.m */; };
 		4115D6441E718B1F004BB0FF /* UIImage+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 4115D6431E718B1F004BB0FF /* UIImage+MNZCategory.m */; };
 		411C8B6B1DECBD87006A0D8C /* MEGAUser+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 411C8B6A1DECBD87006A0D8C /* MEGAUser+MNZCategory.m */; };
@@ -599,6 +597,7 @@
 		A819B33F1EAFA7E2004592F9 /* CustomModalAlertViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A819B33E1EAFA7E2004592F9 /* CustomModalAlertViewController.m */; };
 		A819B3421EAFA844004592F9 /* CustomModalAlertViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A819B3411EAFA844004592F9 /* CustomModalAlertViewController.xib */; };
 		A81AD7391F3099F800CA4059 /* MEGAProcessAsset.m in Sources */ = {isa = PBXBuildFile; fileRef = A81AD7381F3099F800CA4059 /* MEGAProcessAsset.m */; };
+		A81E86D0225B3CF900950678 /* CopyableLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = A81E86CF225B3CF900950678 /* CopyableLabel.m */; };
 		A81F2C6A1F334FB2008600A5 /* MEGAProcessAsset.m in Sources */ = {isa = PBXBuildFile; fileRef = A81AD7381F3099F800CA4059 /* MEGAProcessAsset.m */; };
 		A81F2C6C1F334FF0008600A5 /* MEGAProcessAsset.m in Sources */ = {isa = PBXBuildFile; fileRef = A81AD7381F3099F800CA4059 /* MEGAProcessAsset.m */; };
 		A820DA3C1F0E5BDC00F1F832 /* MEGAGetThumbnailRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A820DA3B1F0E5BDC00F1F832 /* MEGAGetThumbnailRequestDelegate.m */; };
@@ -810,9 +809,6 @@
 		410333FA1B9995DC00380FF3 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; lineEnding = 0; name = "zh-Hant"; path = "zh-Hant.lproj/Localizable.strings"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.simpleColoring; };
 		410AD3BF1C883AA900BF939E /* MEGAAVViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEGAAVViewController.h; sourceTree = "<group>"; };
 		410AD3C01C883AA900BF939E /* MEGAAVViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEGAAVViewController.m; sourceTree = "<group>"; };
-		41136FBA1E1692A90031C516 /* MEGAMessagesTypingIndicatorFooterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEGAMessagesTypingIndicatorFooterView.h; sourceTree = "<group>"; };
-		41136FBB1E1692A90031C516 /* MEGAMessagesTypingIndicatorFooterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEGAMessagesTypingIndicatorFooterView.m; sourceTree = "<group>"; };
-		41136FBD1E1693410031C516 /* MEGAMessagesTypingIndicatorFooterView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MEGAMessagesTypingIndicatorFooterView.xib; sourceTree = "<group>"; };
 		411504921CEB183600BF38E3 /* SaveToCameraRollActivity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SaveToCameraRollActivity.h; sourceTree = "<group>"; };
 		411504931CEB183600BF38E3 /* SaveToCameraRollActivity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SaveToCameraRollActivity.m; sourceTree = "<group>"; };
 		4115D6421E718B1F004BB0FF /* UIImage+MNZCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+MNZCategory.h"; sourceTree = "<group>"; };
@@ -1526,6 +1522,8 @@
 		A819B3411EAFA844004592F9 /* CustomModalAlertViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CustomModalAlertViewController.xib; sourceTree = "<group>"; };
 		A81AD7371F3099F800CA4059 /* MEGAProcessAsset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEGAProcessAsset.h; sourceTree = "<group>"; };
 		A81AD7381F3099F800CA4059 /* MEGAProcessAsset.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEGAProcessAsset.m; sourceTree = "<group>"; };
+		A81E86CE225B3CF900950678 /* CopyableLabel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CopyableLabel.h; sourceTree = "<group>"; };
+		A81E86CF225B3CF900950678 /* CopyableLabel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CopyableLabel.m; sourceTree = "<group>"; };
 		A820DA3A1F0E5BDC00F1F832 /* MEGAGetThumbnailRequestDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MEGAGetThumbnailRequestDelegate.h; path = API/Requests/MEGAGetThumbnailRequestDelegate.h; sourceTree = "<group>"; };
 		A820DA3B1F0E5BDC00F1F832 /* MEGAGetThumbnailRequestDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MEGAGetThumbnailRequestDelegate.m; path = API/Requests/MEGAGetThumbnailRequestDelegate.m; sourceTree = "<group>"; };
 		A824A9172039ECD600D777D2 /* SDAVAssetExportSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDAVAssetExportSession.h; sourceTree = "<group>"; };
@@ -1945,9 +1943,6 @@
 		41136FB91E1692650031C516 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				41136FBA1E1692A90031C516 /* MEGAMessagesTypingIndicatorFooterView.h */,
-				41136FBB1E1692A90031C516 /* MEGAMessagesTypingIndicatorFooterView.m */,
-				41136FBD1E1693410031C516 /* MEGAMessagesTypingIndicatorFooterView.xib */,
 				E8E3E6F61E0939BE00D45F45 /* MEGAOpenMessageHeaderView.h */,
 				E8E3E6F71E0939BE00D45F45 /* MEGAOpenMessageHeaderView.m */,
 				E8E3E6F81E0939BE00D45F45 /* MEGAOpenMessageHeaderView.xib */,
@@ -2985,6 +2980,8 @@
 				777615B02175D88C00A7796D /* InputView.xib */,
 				83113493223900CB00647AB4 /* GradientView.h */,
 				83113494223900CB00647AB4 /* GradientView.m */,
+				A81E86CE225B3CF900950678 /* CopyableLabel.h */,
+				A81E86CF225B3CF900950678 /* CopyableLabel.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -3748,6 +3745,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 				es,
@@ -3849,7 +3847,6 @@
 				4172795C1DB663FA001AC818 /* JSQMessagesToolbarContentView.xib in Resources */,
 				4172795E1DB663FA001AC818 /* JSQMessagesTypingIndicatorFooterView.xib in Resources */,
 				5B5B50011E684FDC00DBEB3B /* SF-UI-Display-Regular.otf in Resources */,
-				41136FBE1E1693410031C516 /* MEGAMessagesTypingIndicatorFooterView.xib in Resources */,
 				83D64E2D20178A0400E24155 /* PasswordReminder.storyboard in Resources */,
 				A82E5BC81F3465A3003C149C /* Spotlight_file@2x.png in Resources */,
 				5B6429E02020A8CF000E0DCB /* SF-UI-Text-Semibold.otf in Resources */,
@@ -4091,6 +4088,7 @@
 				E889C9E91B566EC400ECEFDF /* UsageViewController.m in Sources */,
 				417279511DB663FA001AC818 /* JSQMessagesCollectionViewCellIncoming.m in Sources */,
 				41EAAE491D06B49400622FAF /* NSNumberFormatter+CTAssetsPickerController.m in Sources */,
+				A81E86D0225B3CF900950678 /* CopyableLabel.m in Sources */,
 				41D14F6E1B85F6D40005A27A /* ProductDetailViewController.m in Sources */,
 				777E922D203EE14B00266229 /* QRSettingsTableViewController.m in Sources */,
 				8364742820723DCC00AED3D2 /* MEGAShowPasswordReminderRequestDelegate.m in Sources */,
@@ -4309,7 +4307,6 @@
 				A81613FE1EDC1CA900500381 /* MEGACreateAccountRequestDelegate.m in Sources */,
 				41EAAE4E1D06B49400622FAF /* UIImage+CTAssetsPickerController.m in Sources */,
 				A820DA3C1F0E5BDC00F1F832 /* MEGAGetThumbnailRequestDelegate.m in Sources */,
-				41136FBC1E1692A90031C516 /* MEGAMessagesTypingIndicatorFooterView.m in Sources */,
 				94F376E71FE7C126009AAA10 /* MEGAToolbarAssetPicker.m in Sources */,
 				7795677721C80CDF002B6227 /* OnboardingViewController.m in Sources */,
 				41FC83C01AAE056C008FA551 /* CameraUploadsTableViewController.m in Sources */,
@@ -4646,7 +4643,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = "";
@@ -4696,7 +4693,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				OTHER_CFLAGS = "-DNDEBUG";
 				OTHER_LDFLAGS = "-ObjC";
