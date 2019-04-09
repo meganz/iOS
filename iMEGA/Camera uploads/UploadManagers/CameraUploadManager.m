@@ -93,7 +93,7 @@ static const NSUInteger MaximumPhotoUploadBatchCountMultiplier = 2;
 
 #pragma mark - setup when app launches
 
-- (void)setupCameraUploadWhenApplicationLaunches:(UIApplication *)application {
+- (void)setupCameraUploadWhenApplicationLaunches {
     [AttributeUploadManager.shared collateLocalAttributes];
     [TransferSessionManager.shared restoreAllSessionsWithCompletion:^(NSArray<NSURLSessionUploadTask *> * _Nonnull uploadTasks) {
         [self.uploadRecordsCollator collateUploadingRecordsByPendingTasks:uploadTasks];
