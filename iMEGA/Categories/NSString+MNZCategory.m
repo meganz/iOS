@@ -756,7 +756,11 @@ static NSString* const B = @"[B]";
     NSString *addebByString;
     
     MEGAUser *user = [MEGASdkManager.sharedMEGASdk contactForEmail:recentActionBucket.userEmail];
-    NSString *userNameThatMadeTheAction = user ? user.mnz_firstName : @"";
+    NSString *userNameThatMadeTheAction = @"";
+    if (user) {
+        userNameThatMadeTheAction = user.mnz_firstName ? user.mnz_firstName : @"";
+    }
+    
     if (recentActionBucket.isUpdate) {
         if (nodesArray.count == 1) {
             addebByString = AMLocalizedString(@"%1 modified by %3", @"Title for a recent action shown in the webclient, see the attached image for context.");
