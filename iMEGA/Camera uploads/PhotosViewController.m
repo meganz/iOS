@@ -99,7 +99,7 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
     
     [self setEditing:NO animated:NO];
     
-    [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(internetConnectionChanged) name:kReachabilityChangedNotification object:nil];
+    [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(didReceiveInternetConnectionChangedNotification) name:kReachabilityChangedNotification object:nil];
     [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(didReceiveCameraUploadStatsChangedNotification) name:MEGACameraUploadStatsChangedNotificationName object:nil];
     
     [[MEGASdkManager sharedMEGASdk] addMEGARequestDelegate:self];
@@ -124,7 +124,7 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     
-    if (CameraUploadManager.shouldShowCameraUploadBoardingScreen) {
+    if (self.photosByMonthYearArray.count > 0 && CameraUploadManager.shouldShowCameraUploadBoardingScreen) {
         [self showCameraUploadBoardingScreen];
     } else if (CameraUploadManager.shared.isDiskStorageFull) {
         [self showLocalDiskIsFullWarningScreen];
@@ -303,7 +303,11 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
             break;
             
         case MEGACameraUploadsStateNoInternetConnection:
-            self.stateLabel.text = AMLocalizedString(@"noInternetConnection", @"Text shown on the app when you don't have connection to the internet or when you have lost it");
+            if (self.photosByMonthYearArray.count == 0) {
+                self.stateView.hidden = YES;
+            } else {
+                self.stateLabel.text = AMLocalizedString(@"noInternetConnection", @"Text shown on the app when you don't have connection to the internet or when you have lost it");
+            }
             self.enableCameraUploadsButton.hidden = YES;
             break;
             
@@ -418,9 +422,10 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
     [self performSelector:@selector(reloadHeader) withObject:nil afterDelay:HeaderStateViewReloadTimeDelay];
 }
 
-- (void)internetConnectionChanged {
+- (void)didReceiveInternetConnectionChangedNotification {
     [self setNavigationBarButtonItemsEnabled:[MEGAReachabilityManager isReachable]];
     [self reloadHeader];
+    [self.photosCollectionView reloadEmptyDataSet];
 }
 
 #pragma mark - IBAction
@@ -819,13 +824,22 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
                 return nil;
             }
         } else {
-            text = @"";
+            text = AMLocalizedString(@"enableCameraUploadsButton", @"Enable Camera Uploads");
         }
     } else {
         text = AMLocalizedString(@"noInternetConnection",  @"No Internet Connection");
     }
     
     return [[NSAttributedString alloc] initWithString:text attributes:[Helper titleAttributesForEmptyState]];
+}
+
+- (NSAttributedString *)descriptionForEmptyDataSet:(UIScrollView *)scrollView {
+    if (MEGAReachabilityManager.isReachable && !CameraUploadManager.isCameraUploadEnabled) {
+        NSString *description = AMLocalizedString(@"automaticallyBackupYourPhotos", @"Text shown to explain what means 'Enable Camera Uploads'.");
+        return [[NSAttributedString alloc] initWithString:description attributes:[Helper descriptionAttributesForEmptyState]];
+    } else {
+        return nil;
+    }
 }
 
 - (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView {
@@ -836,7 +850,7 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
                 image = [UIImage imageNamed:@"cameraEmptyState"];
             }
         } else {
-            image = [UIImage imageNamed:@"cameraEmptyState"];
+            image = [UIImage imageNamed:@"cameraUploadsBoarding"];
         }
     } else {
         image = [UIImage imageNamed:@"noInternetEmptyState"];
@@ -860,7 +874,7 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
     UIEdgeInsets capInsets = [Helper capInsetsForEmptyStateButton];
     UIEdgeInsets rectInsets = [Helper rectInsetsForEmptyStateButton];
     
-    return [[[UIImage imageNamed:@"emptyStateButton"] resizableImageWithCapInsets:capInsets resizingMode:UIImageResizingModeStretch] imageWithAlignmentRectInsets:rectInsets];
+    return [[[UIImage imageNamed:@"emptyStateButtonBackground"] resizableImageWithCapInsets:capInsets resizingMode:UIImageResizingModeStretch] imageWithAlignmentRectInsets:rectInsets];
 }
 
 - (UIColor *)backgroundColorForEmptyDataSet:(UIScrollView *)scrollView {
@@ -877,7 +891,11 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
 
 - (CGFloat)spaceHeightForEmptyDataSet:(UIScrollView *)scrollView {
     CGFloat spaceHeight = [Helper spaceHeightForEmptyState];
-    if (!CameraUploadManager.isCameraUploadEnabled || ![[UIDevice currentDevice] iPhone4X]) {
+    if ([self descriptionForEmptyDataSet:scrollView] != nil) {
+        if (spaceHeight - 20.0f > 11) {
+            spaceHeight -= 20.0f;
+        }
+    } else if (![[UIDevice currentDevice] iPhone4X]) {
         spaceHeight += 20.0f;
     }
     

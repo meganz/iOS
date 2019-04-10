@@ -6,6 +6,7 @@
 @import CoreLocation;
 
 static NSString * const HasMigratedToCameraUploadsV2Key = @"HasMigratedToCameraUploadsV2";
+static NSString * const BoardingScreenLastShowedDateKey = @"CameraUploadBoardingScreenLastShowedDate";
 
 static NSString * const IsCameraUploadsEnabledKey = @"IsCameraUploadsEnabled";
 static NSString * const IsVideoUploadsEnabledKey = @"IsUploadVideosEnabled";
@@ -16,12 +17,16 @@ static NSString * const ShouldConvertHEVCVideoKey = @"ShouldConvertHEVCVideo";
 static NSString * const HEVCToH264CompressionQualityKey = @"HEVCToH264CompressionQuality";
 static NSString * const IsLocationBasedBackgroundUploadAllowedKey = @"IsLocationBasedBackgroundUploadAllowed";
 
+static const NSTimeInterval BoardingScreenShowUpMinimumInterval = 30 * 24 * 3600;
+
 @implementation CameraUploadManager (Settings)
 
 #pragma mark - setting cleanups
 
 + (void)clearLocalSettings {
     [NSUserDefaults.standardUserDefaults removeObjectForKey:IsCameraUploadsEnabledKey];
+    [NSUserDefaults.standardUserDefaults removeObjectForKey:HasMigratedToCameraUploadsV2Key];
+    [NSUserDefaults.standardUserDefaults removeObjectForKey:BoardingScreenLastShowedDateKey];
     [self clearCameraSettings];
 }
 
@@ -66,6 +71,14 @@ static NSString * const IsLocationBasedBackgroundUploadAllowedKey = @"IsLocation
     } else {
         [CameraUploadManager.shared stopBackgroundUpload];
     }
+}
+
++ (NSDate *)boardingScreenLastShowedDate {
+    return [NSUserDefaults.standardUserDefaults objectForKey:BoardingScreenLastShowedDateKey];
+}
+
++ (void)setBoardingScreenLastShowedDate:(NSDate *)boardingScreenLastShowedDate {
+    [NSUserDefaults.standardUserDefaults setObject:boardingScreenLastShowedDate forKey:BoardingScreenLastShowedDateKey];
 }
 
 #pragma mark - photo settings
@@ -163,7 +176,17 @@ static NSString * const IsLocationBasedBackgroundUploadAllowedKey = @"IsLocation
 }
 
 + (BOOL)shouldShowCameraUploadBoardingScreen {
-    return [NSUserDefaults.standardUserDefaults objectForKey:IsCameraUploadsEnabledKey] == nil;
+    BOOL show = NO;
+    if (!CameraUploadManager.isCameraUploadEnabled) {
+        NSDate *lastShowedDate = CameraUploadManager.boardingScreenLastShowedDate;
+        if (lastShowedDate == nil) {
+            show = YES;
+        } else {
+            show = [NSDate.date timeIntervalSinceDate:lastShowedDate] > BoardingScreenShowUpMinimumInterval;
+        }
+    }
+    
+    return show;
 }
 
 + (BOOL)isHEVCFormatSupported {
