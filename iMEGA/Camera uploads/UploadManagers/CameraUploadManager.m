@@ -84,8 +84,7 @@ static const NSUInteger MaximumPhotoUploadBatchCountMultiplier = 2;
         [self registerGlobalNotifications];
         
         if (CameraUploadManager.isCameraUploadEnabled) {
-            [self initializeCameraUploadQueues];
-            [self registerNotificationsForUpload];
+            [self initializeCameraUpload];
         }
     }
     return self;
@@ -107,8 +106,6 @@ static const NSUInteger MaximumPhotoUploadBatchCountMultiplier = 2;
     [CameraUploadManager disableCameraUploadIfAccessProhibited];
     
     dispatch_async(dispatch_get_global_queue(QOS_CLASS_UTILITY, 0), ^{
-        [CameraUploadManager enableBackgroundRefreshIfNeeded];
-        [self startBackgroundUploadIfPossible];
         [self.uploadRecordsCollator collateNonUploadingRecords];
         [AttributeUploadManager.shared scanLocalAttributeFilesAndRetryUploadIfNeeded];
     });
@@ -334,7 +331,6 @@ static const NSUInteger MaximumPhotoUploadBatchCountMultiplier = 2;
                 [self startCameraUploadIfNeeded];
             });
         } else {
-            [self.cameraScanner observePhotoLibraryChanges];
             [self startCameraUploadWithRequestingMediaInfo];
         }
     }];
@@ -526,12 +522,14 @@ static const NSUInteger MaximumPhotoUploadBatchCountMultiplier = 2;
             }
             
             if ([error.domain isEqualToString:CameraUploadErrorDomain]) {
-                if (error.code == CameraUploadErrorEmptyLocalIdentifier) {
+                if (error.code == CameraUploadErrorEmptyLocalIdentifier || error.code == CameraUploadErrorNoMediaAssetFetched) {
                     [CameraUploadRecordManager.shared deleteUploadRecord:record error:nil];
                 } else {
                     [CameraUploadRecordManager.shared updateUploadRecord:record withStatus:CameraAssetUploadStatusFailed error:nil];
                 }
             }
+            
+            [self uploadNextAssetForMediaType:mediaType];
         }
     }
 }
@@ -568,11 +566,16 @@ static const NSUInteger MaximumPhotoUploadBatchCountMultiplier = 2;
 
 - (void)enableCameraUpload {
     CameraUploadManager.cameraUploadEnabled = YES;
+    [self initializeCameraUpload];
+    [self startCameraUploadIfNeeded];
+}
+
+- (void)initializeCameraUpload {
     [self initializeCameraUploadQueues];
     [self registerNotificationsForUpload];
-    [self startCameraUploadIfNeeded];
     [self startBackgroundUploadIfPossible];
     [CameraUploadManager enableBackgroundRefreshIfNeeded];
+    [self.cameraScanner observePhotoLibraryChanges];
 }
 
 - (void)enableVideoUpload {
