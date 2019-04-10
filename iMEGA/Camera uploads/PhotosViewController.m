@@ -345,7 +345,7 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
     self.photosByMonthYearArray = [NSMutableArray new];
     NSMutableArray *photosArray = [NSMutableArray new];
     
-    self.parentNode = [[MEGASdkManager sharedMEGASdk] childNodeForParent:[[MEGASdkManager sharedMEGASdk] rootNode] name:@"Camera Uploads"];
+    self.parentNode = [[MEGASdkManager sharedMEGASdk] childNodeForParent:[[MEGASdkManager sharedMEGASdk] rootNode] name:MEGACameraUploadsNodeName];
     
     self.nodeList = [[MEGASdkManager sharedMEGASdk] childrenForParent:self.parentNode order:MEGASortOrderTypeModificationDesc];
     
@@ -929,7 +929,7 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
 #pragma mark - MEGAGlobalDelegate
 
 - (void)onNodesUpdate:(MEGASdk *)api nodeList:(MEGANodeList *)nodeList {
-    if (![nodeList mnz_containsNodeWithParentFolderName:@"Camera Uploads"]) {
+    if (![nodeList mnz_containsNodeWithParentFolderName:MEGACameraUploadsNodeName]) {
         return;
     }
     

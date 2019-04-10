@@ -79,9 +79,9 @@
         AssetUploadInfo *uploadInfo = [NSKeyedUnarchiver unarchiveObjectWithFile:archivedURL.path];
         if (uploadInfo) {
             if (uploadInfo.parentNode == nil) {
-                [self.cameraUploadNodeLoader loadCameraUploadNodeWithCompletion:^(MEGANode * _Nullable cameraUploadNode) {
-                    if (cameraUploadNode == nil) {
-                        MEGALogError(@"[Camera Upload] no camera upload node can be loaded for %@", localIdentifier);
+                [self.cameraUploadNodeLoader loadCameraUploadNodeWithCompletion:^(MEGANode * _Nullable cameraUploadNode, NSError * _Nullable error) {
+                    if (error || cameraUploadNode == nil) {
+                        MEGALogError(@"[Camera Upload] no camera upload node can be loaded for %@ %@", localIdentifier, error);
                         [self finishUploadForLocalIdentifier:localIdentifier status:CameraAssetUploadStatusFailed];
                     } else {
                         MEGALogDebug(@"[Camera Upload] camera upload node loaded for %@", localIdentifier);
