@@ -659,7 +659,7 @@
 /* Option title to enable Camera Uploads only when the device is charging */
 "onlyWhenChargingLabel"="فقط عند الشحن";
 /* Footer text to explain the Camera Uploads functionality */
-"cameraUploads_footer"="عند تفعيل هذا الخيار، سيتم ترفع مقاطع الفيديو والصور";
+"cameraUploads_footer"="عند تفعيل هذا الخيار، سيتم ترفيع مقاطع الفيديو والصور";
 /* App means “Application” */
 "App version"="نسخة التطبيق";
 /* Title of the label where the SDK version is shown */
