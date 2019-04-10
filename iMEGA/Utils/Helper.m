@@ -1162,6 +1162,10 @@ static MEGAIndexer *indexer;
     return @{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:18.0f], NSForegroundColorAttributeName:UIColor.mnz_black333333};
 }
 
++ (NSDictionary *)descriptionAttributesForEmptyState {
+    return @{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:14.0f], NSForegroundColorAttributeName:UIColor.mnz_gray777777};
+}
+
 + (NSDictionary *)buttonTextAttributesForEmptyState {
     return @{NSFontAttributeName:[UIFont mnz_SFUISemiBoldWithSize:17.0f], NSForegroundColorAttributeName:UIColor.whiteColor};
 }
