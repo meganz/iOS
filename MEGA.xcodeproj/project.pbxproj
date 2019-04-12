@@ -1297,6 +1297,7 @@
 		7795677B21C81C6E002B6227 /* OnboardingView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OnboardingView.h; sourceTree = "<group>"; };
 		7795677C21C81C6E002B6227 /* OnboardingView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OnboardingView.m; sourceTree = "<group>"; };
 		7795677E21C83130002B6227 /* OnboardingView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OnboardingView.xib; sourceTree = "<group>"; };
+		77A715E2225D02F600DE8922 /* ToolbarType.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ToolbarType.h; sourceTree = "<group>"; };
 		77B32272209C6DE80037FA89 /* MEGARichPreviewMediaItem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MEGARichPreviewMediaItem.h; sourceTree = "<group>"; };
 		77B32273209C6DE80037FA89 /* MEGARichPreviewMediaItem.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MEGARichPreviewMediaItem.m; sourceTree = "<group>"; };
 		77B32275209C6EC00037FA89 /* MEGAMessageRichPreviewView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MEGAMessageRichPreviewView.h; sourceTree = "<group>"; };
@@ -2910,6 +2911,7 @@
 				771A1B5F21C9227A00A8555D /* OnboardingType.h */,
 				83ACBDB72212EDC800ACBBDC /* CallPeerVideo.h */,
 				83ACBDB82212EDE000ACBBDC /* CallPeerAudio.h */,
+				77A715E2225D02F600DE8922 /* ToolbarType.h */,
 			);
 			path = Headers;
 			sourceTree = "<group>";
