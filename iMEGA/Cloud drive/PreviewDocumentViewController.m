@@ -288,8 +288,6 @@
 
 - (void)presentMEGAQlPreviewController {
     MEGAQLPreviewController *previewController = [[MEGAQLPreviewController alloc] initWithFilePath:previewDocumentTransfer.path];
-    [previewController setModalPresentationStyle:UIModalPresentationCustom];
-    [previewController setModalTransitionStyle:UIModalTransitionStyleCrossDissolve];
     
     [self dismissViewControllerAnimated:YES completion:^{
         [UIApplication.mnz_presentingViewController presentViewController:previewController animated:YES completion:nil];

@@ -3,9 +3,9 @@
 /* Button title to accept something */
 "ok"="OK";
 /* */
-"yes"="是的";
+"yes"="是";
 /* */
-"no"="不是";
+"no"="否";
 /* */
 "upload"="上傳";
 /*  */
@@ -73,7 +73,7 @@
 /* Button title which triggers the action to login in your MEGA account */
 "login"="登入";
 /* Button title which triggers the action to create a MEGA account */
-"createAccount"="建立帳號";
+"createAccount"="創建帳戶";
 /* Message shown when the user writes a wrong email or password on login */
 "invalidMailOrPassword"="郵箱地址或密碼無效。請重試";
 /* Error message when to many attempts to login */
@@ -93,7 +93,7 @@
 /* Hint text to suggest that the user has to write his password */
 "passwordPlaceholder"="密碼";
 /*  */
-"pleaseStrengthenYourPassword"="請強化您的密碼。";
+"pleaseStrengthenYourPassword"="請加強您的密碼。";
 /* Label displayed during checking the strength of the password introduced. Represents Very Weak security */
 "veryWeak"="非常弱";
 /*  */
@@ -121,7 +121,7 @@
 /* Error text shown when you don't have selected the checkbox to agree with the Terms of Service */
 "termsCheckboxUnselected"="您需要同意MEGA服務條款才可註冊帳號。";
 /* Error text shown when the users tries to create an account with an email already in use */
-"emailAlreadyRegistered"="這個電子郵件信箱在Mega已被註冊。";
+"emailAlreadyRegistered"="這個電郵在之前已登記過了";
 /* Title shown just after doing some action that requires confirming the action by an email */
 "awaitingEmailConfirmation"="正在等待確認電子信箱。";
 /* Text shown on the confirm account view to remind the user what to do */
@@ -139,7 +139,7 @@
 /* Title shown inside an alert if you don't have enough space on your device to download something */
 "nodeTooBig"="您的設備內存不足";
 /* Title for the file link view */
-"fileLink"="檔案連結";
+"fileLink"="檔案鏈接";
 /* Button title to trigger the action of opening the file without downloading or opening it. */
 "openButton"="開啟";
 /* Error message shown when you try to download something bigger than the space available in your device */
@@ -151,15 +151,15 @@
 /* */
 "fileLinkUnavailableText1"="這可能因下列因素造成:";
 /* ToS refers to Terms of Service and AUP refers to Acceptable Use Policy. */
-"fileLinkUnavailableText2"="這個檔案因違反ToS服務條款或AUP可接受的使用政策而被移除。";
+"fileLinkUnavailableText2"="因為違反了ToS/ AUP，該檔案已被移除。";
 /* */
 "fileLinkUnavailableText3"="無效的連結-你嘗試連結的檔案不存在";
 /* */
-"fileLinkUnavailableText4"="此檔案已被使用者刪除。";
+"fileLinkUnavailableText4"="該檔案已被用戶刪除。";
 /* Message shown when a download starts */
 "downloadStarted"="已開始下載";
 /* Title for the folder link view */
-"folderLink"="資料夾連結";
+"folderLink"="檔案夾鏈接";
 /* Button title which downloads a file/folder to your device */
 "downloadButton"="下載";
 /* Message shown when you try to downlonad a folder bigger than the available memory. */
@@ -179,7 +179,7 @@
 /* Title shown when a folder doesn't have any files */
 "emptyFolder"="文件夾中沒有文件";
 /* Title shown when your Cloud Drive is empty, when you don't have any files. */
-"cloudDriveEmptyState_title"="您的雲端硬碟中沒有檔案";
+"cloudDriveEmptyState_title"="您的雲端硬盤沒有檔案";
 /* Button title shown in empty views when you can 'Add files' */
 "addFiles"="新增檔案";
 /* Title shown when you make a search and there is 'No Results' */
@@ -189,7 +189,7 @@
 /* Title shown when the Offline section is empty, when you don't have download any files. Keep the upper. */
 "offlineEmptyState_title"="離線模式中沒有儲存檔案";
 /* Title shown when the Contacts section is empty, when you have not added any contact. */
-"contactsEmptyState_title"="無連絡人";
+"contactsEmptyState_title"="沒有聯繫人";
 /* Title shown when there's no incoming Shared Items */
 "noIncomingSharedItemsEmptyState_text"="沒有傳入的共享資料夾";
 /* Title shown when there's no outgoing Shared Items */
@@ -313,7 +313,7 @@
 /* Title shown under the action that allows you to save several images to your camera roll */
 "saveImages"="儲存圖片";
 /* Title shown under the action that allows you to get a link to file or folder */
-"getLink"="取得連結";
+"getLink"="取得鏈接";
 /* Title shown under the action that allows you to get several links to files and/or folders */
 "getLinks"="取得分享連結";
 /* Item menu option upon right click on one or multiple files. */
@@ -429,7 +429,7 @@
 /* Success message shown when you have copied [A] = {1+} files and [B] = {1+} folders */
 "copyFilesFoldersMessage"="已複製 [A] 個檔案與 [B] 個資料夾";
 /* Title for the action that allows you to rename a file or folder  */
-"rename"="重新命名";
+"rename"="重命名";
 /* Hint text to suggest that the user have to write the new name for the file or folder */
 "renameNodeMessage"="輸入新名字";
 /* Title for the action that allows you to 'Move to the Rubbish Bin' files or folders */
@@ -475,7 +475,7 @@
 /* Success message for sharing multiple folders. */
 "sharedFolders_success"="已成功分享 %d 資料夾.";
 /* Button title that triggers the importing link action */
-"import"="輸入";
+"import"="匯入";
 /* Message shown when a file has been imported */
 "fileImported"="檔案已導入";
 /* Message shown when some files have been imported */
@@ -521,7 +521,7 @@
 /* Title of the Contacts section */
 "contactsTitle"="聯絡人";
 /* Subtitle shown on the Contacts section under the name of the contact you have shared one folder with */
-"oneFolderShared"="一個資料夾";
+"oneFolderShared"="1個檔案夾";
 /* Subtitle shown on the Contacts section under the name of the contact you have shared {Number of folders} with */
 "foldersShared"="%d 個資料夾";
 /* Item menu option to add a contact writting his/her email */
@@ -615,13 +615,13 @@
 /* Button that allows you to select a given folder */
 "select"="選擇";
 /* Title of the view that shows the kind of permissions (Read Only, Read & Write or Full Access) that you can give to a shared folder */
-"permissions"="允許";
+"permissions"="權限";
 /* Permissions given to the user you share your folder with */
 "readOnly"="僅能閱讀";
 /* Permissions given to the user you share your folder with */
 "readAndWrite"="讀取與編輯";
 /* Permissions given to the user you share your folder with */
-"fullAccess"="全權使用";
+"fullAccess"="全權訪問";
 /* Title of the Settings section */
 "settingsTitle"="設定";
 /* Title of one of the Settings sections where you can set up the 'Camera Uploads' options */
@@ -643,7 +643,7 @@
 /* Text shown when you want to send feedback of the app and you don't have an email account set up on your device */
 "noEmailAccountConfigured"="您的設備中沒有設定電子郵件帳戶";
 /* Title of one of the Settings sections where you can see the MEGA's 'Privacy Policy' */
-"privacyPolicyLabel"="隱私政策";
+"privacyPolicyLabel"="私隱條款";
 /* Title of one of the Settings sections where you can see the MEGA's 'Terms of Service' */
 "termsOfServicesLabel"="服務條款";
 /* Title of one of the Settings sections where you can see the MEGA's 'Data Protection Regulation' */
@@ -659,7 +659,7 @@
 /* Option title to enable Camera Uploads only when the device is charging */
 "onlyWhenChargingLabel"="只在充電狀態下";
 /* Footer text to explain the Camera Uploads functionality */
-"cameraUploads_footer"="開啟后將上傳新的照片和影片。";
+"cameraUploads_footer"="啟用後，照片和影片均會被上傳。";
 /* App means “Application” */
 "App version"="App 版本";
 /* Title of the label where the SDK version is shown */
@@ -759,13 +759,13 @@
 /* Success message shown when [A] = {1+} files and [B] = {1+} folders have been removed from MEGA */
 "filesFoldersRemovedToRubbishBinMessage"="[A] 個檔案與[B]個資料夾已自MEGA移除";
 /* Hint text to suggest that the user have to write his/her current password */
-"currentPassword"="現行密碼";
+"currentPassword"="現有密碼";
 /* Hint text to suggest that the user have to write the new password on it */
 "newPassword"="新密碼";
 /* Hint text where the user have to re-write the new password to confirm it */
 "confirmPassword"="確認密碼";
 /* Success message shown when the password has been changed */
-"passwordChanged"="你的密碼已變更。";
+"passwordChanged"="您的密碼已更改。";
 /* An option to reset the password. */
 "forgotPassword"="忘記密碼了？";
 /* Message shown during forgot your password process if the link to reset password has expired */
@@ -932,9 +932,9 @@
 /* Success message when changing profile information. */
 "youHaveSuccessfullyChangedYourProfile"="您已成功更新您的個人檔案";
 /* Hint text for the first name (Placeholder) */
-"firstName"="名";
+"firstName"="名字";
 /* Hint text for the last name (Placeholder) */
-"lastName"="姓";
+"lastName"="姓氏";
 /* Button title that goes to the section Usage where you can see how your MEGA space is used */
 "usage"="用量";
 /* Title for "Local" used space. */
@@ -949,6 +949,8 @@
 "free"="免費";
 /* Text that shows the expiry date of the account PRO level */
 "expiresOn"="到 %@ 過期";
+/* Label for the ‘Renews on’ text into the my account page, indicating the renewal date of a subscription - (String as short as possible). */
+"Renews on"="更新";
 /* Button title for the section where you can see the 'Purchase history' related to your account */
 "purchaseHistory"="購買記錄";
 /* Title of the Incoming Shares section. Here you can see the folders that your contacts have shared with you */
@@ -1008,7 +1010,7 @@
 /* Button title to restore failed purchases */
 "restore"="恢復";
 /* "Monthly" subscriptions */
-"monthly"="月付";
+"monthly"="月付費";
 /* "Yearly" subscriptions */
 "yearly"="每年";
 /* Alert title shown when a selected plan is not available at that moment on the App store */
@@ -1046,7 +1048,7 @@
 /* Empty Conversations section */
 "noConversations"="無對話(已清空)";
 /* Empty Conversations description */
-"noConversationsDescription"="Start chatting securely with your contacts using end-to-end encryption";
+"Start chatting securely with your contacts using end-to-end encryption"="Start chatting securely with your contacts using end-to-end encryption";
 /* Title show when the chat is disabled */
 "chatIsDisabled"="聊天功能已停用";
 /* Text button shown when the chat is disabled and if tapped the chat will be enabled */
@@ -1112,7 +1114,7 @@
 /* title of the contact properties screen */
 "contactInfo"="聯絡資訊";
 /*  */
-"notifications"="通知訊息";
+"notifications"="提醒";
 /* Title to perform the action of sending a message to a contact. */
 "sendMessage"="發送訊息";
 /* Title for a section on the fingerprint warning dialog. Below it is a button which will allow the user to verify their contact's fingerprint credentials. */
@@ -1134,7 +1136,7 @@
 /* Label title above your fingerprint credentials.  A credential in this case is a stored piece of information representing your identity */
 "yourCredentials"="您的憑證";
 /* Button to reset the password */
-"reset"="重置密碼";
+"reset"="重設";
 /* Button title */
 "approve"="允許";
 /* start a chat/conversation */
@@ -1413,17 +1415,17 @@
 /* Title label of a node property. */
 "location"="位置";
 /* label for the total file size of multiple files and/or folders (no need to put the colon punctuation in the translation)*/
-"totalSize"="大小總計";
+"totalSize"="總大小";
 /* Refers to the type of a file or folder. */
 "type"="類型";
 /* Title of the incoming shared folders of a user in singular */
-"sharedFolder"="已分享的資料夾";
-/* The label of the folder creation time. For example: "Created: 2013-02-02" (no need to put the colon punctuation in the translation) */
-"created"="建立";
+"sharedFolder"="分享的檔案夾";
 /* Label for what a selection contains. For example: "Contains: 3 folders & 13 files". (no need to put the colon punctuation in the translation) */
 "contains"="包含";
 /* A label for any 'Modified' text or title. For example to show the modification date of a file/folder. */
 "modified"="最後修改";
+/* A label for any ‘Added’ text or title. For example to show the upload date of a file/folder. */
+"Added"="上傳時間";
 /* used for example when a folder is shared with 2 or more users */
 "users"="用戶";
 /* user (singular) label indicating is receiving some info, for example shared folders */
@@ -1685,31 +1687,31 @@
 /* Title shown in a cell to allow the users enable the 'Encrypted Key Rotation' */
 "Enable Encrypted Key Rotation"="Enable Encrypted Key Rotation";
 /* Label in a cell where you can get the chat link */
-"Get Chat Link"="Get Chat Link";
+"Get Chat Link"="Get chat link";
 /* Footer text to explain what means 'Encrypted Key Rotation' */
 "Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages."="Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages.";
-/* Alert message to advice the users that to generate a chat link they need enter a group name for the chat */
-"Before you can generate a link for this room, you need to enter a group name"="Before you can generate a link for this chat, you need to enter a group name.";
+/* Shown as an error message when the user selects "create chat link", but haven't entered a title for the newly created room */
+"To create a chat link you must name the group."="To create a chat link you must name the group.";
 /* Label shown in a cell where you can enable a switch to get a chat link */
-"Chat Link"="Chat Link";
+"Chat Link"="Chat link";
 /* Message shown when there is an active chat link that can be deleted */
-"Delete Chat Link"="Delete Chat Link";
+"Delete Chat Link"="Delete chat link";
 /* Button text in public chat previews that allows the user to join the chat */
-"Join"="Join";
+"Join"="加入";
 /* Text shown in a notification to let the user know that has joined a public chat room after login or account creation */
 "You have joined %@"="You have joined %@";
 /* Users previewing a public chat */
-"Observers"="Observers";
+"Observers"="觀察員";
 /* Alert message shown while deleting a chat link, warning about the consequences */
-"This conversation will no longer be accessible through the link you are about to delete."="This conversation will no longer be accessible through the public link once it has been removed.";
+"This conversation will no longer be accessible through the link you are about to delete."="This conversation will no longer be accessible through the chat link once it has been removed.";
 /* Management message shown in a chat when the user %@ enables the 'Encrypted Key Rotation' */
-"%@ enabled Encrypted Key Rotation"="%@ enabled Encrypted Key Rotation";
+"%@ enabled Encrypted Key Rotation"="%@ enabled Encrypted Key Rotation.";
 /* Management message shown in a chat when the user %@ creates a public link for the chat */
-"%@ created a public link for the chat."="%@ created a public link for the chat.";
+"%@ created a public link for the chat."="%@ created a chat link for the chat.";
 /* Management message shown in a chat when the user %@ removes a public link for the chat */
-"%@ removed a public link for the chat."="%@ removed a public link for the chat.";
+"%@ removed a public link for the chat."="%@ removed the chat link for the chat.";
 /* Management message shown in a chat when the user %@ joined it from a public chat link */
-"%@ joined the group chat."="%@ joined the group chat.";
+"%@ joined the group chat."="%@已加入群組。";
 /* Message show when a call cannot be established because there are too many participants in the group call */
 "Error. No more participants are allowed in this group call."="You are not allowed to join this call as it has reached the maximum number of participants.";
 /* Message show when a user cannot activate the video in a group call because the max number of videos has been reached */
@@ -1831,7 +1833,7 @@
 /* Text to inform the user there is an active call and is not participating */
 "Ongoing Call"="Ongoing Call";
 /* Message shown when there is an ongoing call and the user tries to play an audio or video */
-"It is not possible to play content while there is a call in progress"="It is not possible to play content while there is a call in progress";
+"It is not possible to play content while there is a call in progress"="正在通話時無法播放影音檔案。";
 /* Text to inform the user there is an active call and is participating */
 "Call Started"="Call Started";
 /* Title for feature Password Reminder */
@@ -1842,3 +1844,47 @@
 "Call"="Call";
 /* Title of the button in the contact info screen to start a video call */
 "Video"="影片";
+/* The label of the toggle switch to indicate that file versioning is enabled. */
+"Enabled"="啟用";
+/* Text button for init a group chat with link. */
+"New Chat Link"="New chat link";
+/* Text button for init a group chat */
+"New group chat"="New group chat";
+/* Shown when an invalid/inexisting/not-available-anymore chat link is opened. */
+"Chat link unavailable"="Chat link unavailable";
+/* Shown when an inexisting/unavailable/removed link is tried to be opened. */
+"This chat link is no longer available"="This chat link is no longer available";
+/* Text explaining users how the chat links work. */
+"People can join your group by using this link."="People can join your group by using this link.";
+/* Subtitle shown in a chat to inform where to tap to enter in the chat details view */
+"Tap here for info"="Tap here for info";
+/* Title for the recents section. */
+"Recents"="Recents";
+/* Multiple Images title shown in recents section of webclient */
+"%1 Images"="%1 Images";
+/* Multiple videos title shown in recents section of web client. */
+"%2 Videos"="%2 Videos";
+/* A single image and single video title shown in recents section of webclient. */
+"1 Image and 1 Video"="1 Image and 1 Video";
+/* One image and multiple videos title in recents. */
+"1 Image and %2 Videos"="1 Image and %2 Videos";
+/* Title for multiple images and multiple videos in recents section */
+"%1 Images and %2 Videos"="%1 Images and %2 Videos";
+/* Tooltip message shown on recents section. Please see the attached image. */
+"Modified on %1 at %2"="Modified on %1 at %2";
+/* Title for a recent action shown in the webclient, see the attached image for context. */
+"%1 modified by %3"="%1 modified by %3";
+/* Title for a recent action shown in the webclient, see the attached image for context. Please ensure that the `%2 more` is inside the [A] tag as this will become a toggle to show the hidden content. */
+"%1 and [A]%2 more[/A] modified by %3"="%1 and [A]%2 more[/A] modified by %3";
+/* Title for a recent action shown in the webclient, see the attached image for context. Please ensure that the `%2 more` is inside the [A] tag as this will become a toggle to show the hidden content. */
+"%1 and [A]%2 more[/A]"="%1 and [A]%2 more[/A]";
+/* Title for a recent action shown in the webclient, see the attached image for context. */
+"%1 created by %3"="%1 created by %3";
+/* Title for a recent action shown in the webclient, see the attached image for context. Please ensure that the `%2 more` is inside the [A] tag as this will become a toggle to show the hidden content. */
+"%1 and [A]%2 more[/A] created by %3"="%1 and [A]%2 more[/A] created by %3";
+/* Message shown when the user has not recent activity in their account. */
+"No recent activity"="No recent activity";
+/* Plural of items which contains a folder. 2 items */
+"items"="個項目";
+/* In some cases, a user may try to get the link for a chat room, but if such is not set by an operator - it would say "not link available" and not auto create it. */
+"No chat link available."="No chat link available.";
