@@ -1048,7 +1048,7 @@
 /* Empty Conversations section */
 "noConversations"="Tidak ada percakapan";
 /* Empty Conversations description */
-"Start chat securely with your contacts in a encrypted way"="Start chat securely with your contacts in a encrypted way";
+"Start chatting securely with your contacts using end-to-end encryption"="Mulai mengobrol dengan aman dengan kontak Anda menggunakan enkripsi ujung-ke-ujung";
 /* Text button shown when the chat is disabled and if tapped the chat will be enabled */
 "enable"="Aktifkan";
 /* Text button shown when an option is enabled, to allow to disable it. String as sort as possible. */
@@ -1815,7 +1815,7 @@
 /* Footer text to explain the meaning of the functionaly 'Last seen' of your chat status. */
 "Allow your contacts to see the last time you were active on MEGA."="Izinkan kontak Anda melihat terakhir kali Anda aktif di MEGA.";
 /* Label shown next to a feature name that can be enabled or disabled, like in 'Show Last seen...' */
-"Show"="Menunjukkan";
+"Show"="Tunjukkan";
 /* Shown when viewing a 1on1 chat (at least for now), if the user is offline. */
 "Last seen %s"="Terlihat terakhir: %s";
 /* Text to inform the user the 'Last seen' time of a contact is a long time ago (>= 65535 minutes) */
@@ -1845,7 +1845,7 @@
 /* The label of the toggle switch to indicate that file versioning is enabled. */
 "Enabled"="Diaktifkan";
 /* Text button for init a group chat with link. */
-"New Chat Link"="New Chat Link";
+"New Chat Link"="New chat link";
 /* Text button for init a group chat */
 "New group chat"="Obrolan grup baru";
 /* Shown when an invalid/inexisting/not-available-anymore chat link is opened. */
@@ -1884,3 +1884,5 @@
 "No recent activity"="Tidak ada aktivitas terbaru";
 /* Plural of items which contains a folder. 2 items */
 "items"="items";
+/* In some cases, a user may try to get the link for a chat room, but if such is not set by an operator - it would say "not link available" and not auto create it. */
+"No chat link available."="No chat link available.";

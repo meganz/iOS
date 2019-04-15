@@ -2,6 +2,7 @@
 #import "CustomModalAlertViewController.h"
 
 #import "AchievementsViewController.h"
+#import "CopyableLabel.h"
 #import "UIApplication+MNZCategory.h"
 #import "UIImage+GKContact.h"
 
@@ -15,7 +16,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *dismissButton;
 @property (weak, nonatomic) IBOutlet UIView *alphaView;
 @property (weak, nonatomic) IBOutlet UIView *linkView;
-@property (weak, nonatomic) IBOutlet UILabel *linkLabel;
+@property (weak, nonatomic) IBOutlet CopyableLabel *linkLabel;
 
 @end
 
