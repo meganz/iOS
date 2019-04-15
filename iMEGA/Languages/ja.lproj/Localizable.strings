@@ -57,7 +57,7 @@
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
 "sslUnverified_alertTitle"="MEGAはSSL経由では安全に接続できません。あなたは追加要件があるパブリックWiFi上にいるかもしれません。";
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
-"theContentIsNotAvailableForThisAccount"="アクセスしようとしているコンテンツは、このアカウントでは利用できません。モバイルWebクライアントと同じアカウントでログインしてください。";
+"theContentIsNotAvailableForThisAccount"="アクセスしようとしているコンテンツは、このアカウントではご利用いただけません。モバイルウェブクライアントと同じアカウントでログインしてみてください。";
 /* Message shown when the app is waiting for the server to complete a request due to an API lock (error -3). */
 "takingLongerThanExpected"="プロセスに予想以上時間がかかっています。お待ちください...";
 /* Message shown when the app is waiting for the server to complete a request due to a HTTP error 500. */
@@ -1048,7 +1048,7 @@
 /* Empty Conversations section */
 "noConversations"="会話なし";
 /* Empty Conversations description */
-"Start chat securely with your contacts in a encrypted way"="Start chat securely with your contacts in a encrypted way";
+"Start chatting securely with your contacts using end-to-end encryption"="エンドツーエンドの暗号化を使用して、ご連絡先と安全にチャットを開始してください";
 /* Text button shown when the chat is disabled and if tapped the chat will be enabled */
 "enable"="オンにする";
 /* Text button shown when an option is enabled, to allow to disable it. String as sort as possible. */
@@ -1689,7 +1689,7 @@
 /* Footer text to explain what means 'Encrypted Key Rotation' */
 "Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages."="キーローテーションでは安全性が少し高まりますが、チャットリンクを作成できず、新規参加者は過去のメッセージを見れません。";
 /* Shown as an error message when the user selects "create chat link", but haven't entered a title for the newly created room */
-"To create a chat link you must name the group."="To create a chat link you must name the group.";
+"To create a chat link you must name the group."="チャットリンクを作成するには、グループに名前を付ける必要があります。";
 /* Label shown in a cell where you can enable a switch to get a chat link */
 "Chat Link"="チャットリンク";
 /* Message shown when there is an active chat link that can be deleted */
@@ -1701,13 +1701,13 @@
 /* Users previewing a public chat */
 "Observers"="オブザーバー";
 /* Alert message shown while deleting a chat link, warning about the consequences */
-"This conversation will no longer be accessible through the link you are about to delete."="この会話は、一度削除されると公開リンクからアクセスできなくなります。";
+"This conversation will no longer be accessible through the link you are about to delete."="この会話は、一度削除されるとチャットリンクからアクセスできなくなります。";
 /* Management message shown in a chat when the user %@ enables the 'Encrypted Key Rotation' */
 "%@ enabled Encrypted Key Rotation"="%@さんが暗号化キーローテーションを有効にしました。";
 /* Management message shown in a chat when the user %@ creates a public link for the chat */
-"%@ created a public link for the chat."="%@さんがチャット用の公開リンクを作成しました。";
+"%@ created a public link for the chat."="%@さんがチャット用のチャットリンクを作成しました。";
 /* Management message shown in a chat when the user %@ removes a public link for the chat */
-"%@ removed a public link for the chat."="%@さんがチャット用の公開リンクを削除しました。";
+"%@ removed a public link for the chat."="%@さんがチャット用のチャットリンクを削除しました。";
 /* Management message shown in a chat when the user %@ joined it from a public chat link */
 "%@ joined the group chat."="%@さんがグループチャットに参加しました。";
 /* Message show when a call cannot be established because there are too many participants in the group call */
@@ -1849,13 +1849,13 @@
 /* Text button for init a group chat */
 "New group chat"="新しいグループチャット";
 /* Shown when an invalid/inexisting/not-available-anymore chat link is opened. */
-"Chat link unavailable"="Chat link unavailable";
+"Chat link unavailable"="チャットリンクは利用できません";
 /* Shown when an inexisting/unavailable/removed link is tried to be opened. */
-"This chat link is no longer available"="This chat link is no longer available";
+"This chat link is no longer available"="このチャットリンクは利用できなくなりました";
 /* Text explaining users how the chat links work. */
 "People can join your group by using this link."="このリンクを使用すると、人々はあなたのグループに参加できます。";
 /* Subtitle shown in a chat to inform where to tap to enter in the chat details view */
-"Tap here for info"="Tap here for info";
+"Tap here for info"="情報を見るにはこちらをタップ";
 /* Title for the recents section. */
 "Recents"="最近";
 /* Multiple Images title shown in recents section of webclient */
@@ -1884,3 +1884,5 @@
 "No recent activity"="最近の活動はありません";
 /* Plural of items which contains a folder. 2 items */
 "items"="項目";
+/* In some cases, a user may try to get the link for a chat room, but if such is not set by an operator - it would say "not link available" and not auto create it. */
+"No chat link available."="利用できるチャットリンクはありません。";

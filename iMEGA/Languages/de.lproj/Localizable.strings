@@ -1048,7 +1048,7 @@
 /* Empty Conversations section */
 "noConversations"="Keine Unterhaltungen";
 /* Empty Conversations description */
-"Start chat securely with your contacts in a encrypted way"="Start chat securely with your contacts in a encrypted way";
+"Start chatting securely with your contacts using end-to-end encryption"="Sicherer Chat mit Ihren Kontakten - Ende-zu-Ende-verschlüsselt";
 /* Text button shown when the chat is disabled and if tapped the chat will be enabled */
 "enable"="Aktivieren";
 /* Text button shown when an option is enabled, to allow to disable it. String as sort as possible. */
@@ -1276,7 +1276,7 @@
 /* Inform user that there were unsupported assets in the share extension */
 "shareExtensionUnsupportedAssets"="Einige Elemente konnten nicht mit MEGA geteilt werden";
 /* Message shown to the user when the share extension is about to be killed by iOS due to a memory issue */
-"Limited system resources are available when sharing items. Try uploading these files from within the MEGA app."="Limited system resources are available when sharing items. Try uploading these files from within the MEGA app.";
+"Limited system resources are available when sharing items. Try uploading these files from within the MEGA app."="Limited system resources are available when sharing items. Please try uploading these files from within the MEGA app.";
 /* Notification message shown when a transfer failed. Keep colon. */
 "Transfer failed:"="Übertragungsfehler:";
 /* MEGAError */
@@ -1845,7 +1845,7 @@
 /* The label of the toggle switch to indicate that file versioning is enabled. */
 "Enabled"="Aktiv";
 /* Text button for init a group chat with link. */
-"New Chat Link"="New Chat Link";
+"New Chat Link"="New chat link";
 /* Text button for init a group chat */
 "New group chat"="Neuer Gruppenchat";
 /* Shown when an invalid/inexisting/not-available-anymore chat link is opened. */
@@ -1884,3 +1884,5 @@
 "No recent activity"="Keine Aktivität";
 /* Plural of items which contains a folder. 2 items */
 "items"="Elemente";
+/* In some cases, a user may try to get the link for a chat room, but if such is not set by an operator - it would say "not link available" and not auto create it. */
+"No chat link available."="No chat link available.";

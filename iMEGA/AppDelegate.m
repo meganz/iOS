@@ -393,7 +393,8 @@
     MEGALogDebug(@"Application will enter foreground");
     
     MEGAHandleList *chatRoomIDsWithCallInProgress = [MEGASdkManager.sharedMEGAChatSdk chatCallsWithState:MEGAChatCallStatusInProgress];
-    if (self.wasAppSuspended && (chatRoomIDsWithCallInProgress.size == 0)) {
+    MEGAHandleList *chatRoomIDsWithCallRequestSent = [MEGASdkManager.sharedMEGAChatSdk chatCallsWithState:MEGAChatCallStatusRequestSent];
+    if (self.wasAppSuspended && (chatRoomIDsWithCallInProgress.size == 0) && (chatRoomIDsWithCallRequestSent.size == 0)) {
         //If the app has been suspended, we assume that the sockets have been closed, so we have to reconnect.
         [[MEGAReachabilityManager sharedManager] reconnect];
     } else {
@@ -1313,8 +1314,12 @@ void uncaughtExceptionHandler(NSException *exception) {
 - (void)setLanguage:(NSString *)languageID {
     NSDictionary *componentsFromLocaleID = [NSLocale componentsFromLocaleIdentifier:languageID];
     NSString *languageDesignator = [componentsFromLocaleID valueForKey:NSLocaleLanguageCode];
-    if ([Helper isLanguageSupported:languageDesignator]) {
-        [[LocalizationSystem sharedLocalSystem] setLanguage:languageDesignator];
+    NSString *scriptDesignator = [componentsFromLocaleID valueForKey:NSLocaleScriptCode];
+    NSString *languageAndScriptDesignator = languageDesignator;
+    if (scriptDesignator) languageAndScriptDesignator = [NSString stringWithFormat:@"%@-%@", languageAndScriptDesignator, scriptDesignator];
+    
+    if ([Helper isLanguageSupported:languageAndScriptDesignator]) {
+        [[LocalizationSystem sharedLocalSystem] setLanguage:languageAndScriptDesignator];
     } else {
         [self setSystemLanguage];
     }

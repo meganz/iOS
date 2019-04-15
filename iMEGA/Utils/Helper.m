@@ -57,7 +57,6 @@ static MEGAIndexer *indexer;
                                  @"ru",
                                  @"th",
                                  @"tl",
-                                 @"tr",
                                  @"uk",
                                  @"vi",
                                  @"zh-Hans",
