@@ -252,7 +252,7 @@
         if ([[NSUserDefaults standardUserDefaults] boolForKey:@"IsChatEnabled"]) {
             switch (self.chatRoomsType) {
                 case ChatRoomsTypeDefault:
-                    text = AMLocalizedString(@"Start chat securely with your contacts in a encrypted way", @"Empty Conversations description");
+                    text = AMLocalizedString(@"Start chatting securely with your contacts using end-to-end encryption", @"Empty Conversations description");
                     break;
                     
                 case ChatRoomsTypeArchived:
@@ -759,14 +759,9 @@
         if (keyRotation) {
             MEGAChatCreateChatGroupRequestDelegate *createChatGroupRequestDelegate = [[MEGAChatCreateChatGroupRequestDelegate alloc] initWithCompletion:^(MEGAChatRoom *chatRoom) {
                 messagesVC.chatRoom = chatRoom;
-                if (groupName) {
-                    MEGAChatChangeGroupNameRequestDelegate *changeGroupNameRequestDelegate = [[MEGAChatChangeGroupNameRequestDelegate alloc] initWithCompletion:^(MEGAChatError *error) {
-                        [self.navigationController pushViewController:messagesVC animated:YES];
-                    }];
-                    [[MEGASdkManager sharedMEGAChatSdk] setChatTitle:chatRoom.chatId title:groupName delegate:changeGroupNameRequestDelegate];
-                }
+                [self.navigationController pushViewController:messagesVC animated:YES];                
             }];
-            [[MEGASdkManager sharedMEGAChatSdk] createChatGroup:YES peers:peerList delegate:createChatGroupRequestDelegate];
+            [[MEGASdkManager sharedMEGAChatSdk] createChatGroup:YES peers:peerList title:groupName delegate:createChatGroupRequestDelegate];
         } else {
             MEGAChatCreateChatGroupRequestDelegate *createChatGroupRequestDelegate = [[MEGAChatCreateChatGroupRequestDelegate alloc] initWithCompletion:^(MEGAChatRoom *chatRoom) {
                 messagesVC.chatRoom = chatRoom;
@@ -971,7 +966,7 @@
 - (UIViewController *)previewingContext:(id<UIViewControllerPreviewing>)previewingContext viewControllerForLocation:(CGPoint)location {
     CGPoint rowPoint = [self.tableView convertPoint:location fromView:self.view];
     NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:rowPoint];
-    if (!indexPath || ![self.tableView numberOfRowsInSection:indexPath.section]) {
+    if (!indexPath || ![self.tableView numberOfRowsInSection:indexPath.section] || (self.tableView.numberOfSections == 2 && indexPath.section == 0)) {
         return nil;
     }
     
@@ -1049,6 +1044,9 @@
                     if (!self.archivedChatEmptyState.hidden) {
                         self.archivedChatEmptyStateCount.text = [NSString stringWithFormat:@"%tu", self.archivedChatListItemList.size];
                     }
+                    if (self.archivedChatListItemList.size == 0) {
+                        self.archivedChatEmptyState.hidden = YES;
+                    }
                     break;
                     
                 default:
@@ -1087,9 +1085,20 @@
 - (void)onChatConnectionStateUpdate:(MEGAChatSdk *)api chatId:(uint64_t)chatId newState:(int)newState {
     // INVALID_HANDLE = ~(uint64_t)0
     if (chatId == ~(uint64_t)0 && newState == MEGAChatConnectionOnline) {
-        // Now it's safe to trigger a reordering of the list:
         self.chatListItemArray = [NSMutableArray new];
-        self.chatListItemList = [[MEGASdkManager sharedMEGAChatSdk] chatListItems];
+
+        switch (self.chatRoomsType) {
+            case ChatRoomsTypeDefault:
+                self.chatListItemList = [[MEGASdkManager sharedMEGAChatSdk] chatListItems];
+                self.archivedChatListItemList = [[MEGASdkManager sharedMEGAChatSdk] archivedChatListItems];
+                break;
+                
+            case ChatRoomsTypeArchived:
+                self.chatListItemList = [[MEGASdkManager sharedMEGAChatSdk] archivedChatListItems];
+                break;
+        }
+        
+        // Now it's safe to trigger a reordering of the list:
         [self reorderList];
         [self.tableView reloadData];
     }

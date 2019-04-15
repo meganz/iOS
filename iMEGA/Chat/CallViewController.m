@@ -162,8 +162,8 @@
         }
 
         MEGAChatSession *remoteSession = [self.call sessionForPeer:[self.call.sessionsPeerId megaHandleAtIndex:0] clientId:[self.call.sessionsClientId megaHandleAtIndex:0]];
-        self.remoteMicImageView.hidden = remoteSession.hasAudio;
-        self.remoteVideoImageView.hidden = !remoteSession.hasVideo;
+        self.remoteMicImageView.hidden = remoteSession.status == MEGAChatSessionStatusInProgress ? remoteSession.hasAudio : YES;
+        self.remoteVideoImageView.hidden = remoteSession.status == MEGAChatSessionStatusInProgress ? !remoteSession.hasVideo : YES;
         
         if (remoteSession.hasVideo) {
             [[MEGASdkManager sharedMEGAChatSdk] addChatRemoteVideo:self.chatRoom.chatId peerId:[self.call.sessionsPeerId megaHandleAtIndex:0] cliendId:[self.call.sessionsClientId megaHandleAtIndex:0] delegate:self.remoteVideoImageView];
