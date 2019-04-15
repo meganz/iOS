@@ -773,7 +773,6 @@
 		B6D995F9222CA42000A98BEF /* MainTabBarController+CameraUpload.m in Sources */ = {isa = PBXBuildFile; fileRef = B6D995F8222CA42000A98BEF /* MainTabBarController+CameraUpload.m */; };
 		B6D9D7E9216AB0C700D7B08A /* CameraScanner.m in Sources */ = {isa = PBXBuildFile; fileRef = B6D9D7E8216AB0C700D7B08A /* CameraScanner.m */; };
 		B6D9D7EF216AE5D000D7B08A /* CameraUploadRecordManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B6D9D7EE216AE5D000D7B08A /* CameraUploadRecordManager.m */; };
-		B6DA6E5D2210CDEF003CB372 /* PhotosViewController+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = B6DA6E5C2210CDEF003CB372 /* PhotosViewController+MNZCategory.m */; };
 		B6DA6E652212065E003CB372 /* MOAssetUploadRecord+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = B6DA6E622212065E003CB372 /* MOAssetUploadRecord+CoreDataProperties.m */; };
 		B6DA6E662212065E003CB372 /* MOAssetUploadRecord+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = B6DA6E642212065E003CB372 /* MOAssetUploadRecord+CoreDataClass.m */; };
 		B6DA6E6922120DBB003CB372 /* AssetUploadStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = B6DA6E6822120DBB003CB372 /* AssetUploadStatus.m */; };
@@ -1822,8 +1821,6 @@
 		B6D9D7E8216AB0C700D7B08A /* CameraScanner.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CameraScanner.m; sourceTree = "<group>"; };
 		B6D9D7ED216AE5D000D7B08A /* CameraUploadRecordManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CameraUploadRecordManager.h; sourceTree = "<group>"; };
 		B6D9D7EE216AE5D000D7B08A /* CameraUploadRecordManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CameraUploadRecordManager.m; sourceTree = "<group>"; };
-		B6DA6E5B2210CDEF003CB372 /* PhotosViewController+MNZCategory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PhotosViewController+MNZCategory.h"; sourceTree = "<group>"; };
-		B6DA6E5C2210CDEF003CB372 /* PhotosViewController+MNZCategory.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "PhotosViewController+MNZCategory.m"; sourceTree = "<group>"; };
 		B6DA6E612212065E003CB372 /* MOAssetUploadRecord+CoreDataClass.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MOAssetUploadRecord+CoreDataClass.h"; sourceTree = "<group>"; };
 		B6DA6E622212065E003CB372 /* MOAssetUploadRecord+CoreDataProperties.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "MOAssetUploadRecord+CoreDataProperties.m"; sourceTree = "<group>"; };
 		B6DA6E632212065E003CB372 /* MOAssetUploadRecord+CoreDataProperties.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MOAssetUploadRecord+CoreDataProperties.h"; sourceTree = "<group>"; };
@@ -2665,8 +2662,6 @@
 				41BADDAE1A8E28FD008408B3 /* Photos.storyboard */,
 				41BADDB41A8E2E92008408B3 /* PhotosViewController.h */,
 				41BADDB51A8E2E92008408B3 /* PhotosViewController.m */,
-				B6DA6E5B2210CDEF003CB372 /* PhotosViewController+MNZCategory.h */,
-				B6DA6E5C2210CDEF003CB372 /* PhotosViewController+MNZCategory.m */,
 				41AC33A21A926B55005118AF /* PhotoCollectionViewCell.h */,
 				41AC33A31A926B55005118AF /* PhotoCollectionViewCell.m */,
 				41AC33A61A926C27005118AF /* HeaderCollectionReusableView.h */,
@@ -4452,7 +4447,6 @@
 				41EAAE481D06B49400622FAF /* NSIndexSet+CTAssetsPickerController.m in Sources */,
 				A8AA4F7A1ED42B9E00E7BA23 /* MEGALoginRequestDelegate.m in Sources */,
 				41AC2AC01AE67D8E003C09E5 /* UIScrollView+EmptyDataSet.m in Sources */,
-				B6DA6E5D2210CDEF003CB372 /* PhotosViewController+MNZCategory.m in Sources */,
 				E8534D4B1E15231C00911C40 /* ChatSettingsTableViewController.m in Sources */,
 				E8F791811BC5754A00C58676 /* RemoveLinkActivity.m in Sources */,
 				B65AC8E321F9B7A30094FF4F /* MOAssetUploadErrorPerLogin+CoreDataClass.m in Sources */,
