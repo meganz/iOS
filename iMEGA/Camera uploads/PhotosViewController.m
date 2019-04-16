@@ -752,7 +752,7 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
     boardingAlertVC.modalPresentationStyle = UIModalPresentationOverFullScreen;
     boardingAlertVC.image = [UIImage imageNamed:@"cameraUploadsBoarding"];
     boardingAlertVC.viewTitle = AMLocalizedString(@"enableCameraUploadsButton", @"Button title that enables the functionality 'Camera Uploads', which uploads all the photos in your device to MEGA");
-    boardingAlertVC.detail = AMLocalizedString(@"automaticallyBackupYourPhotos", @"Text shown to explain what means 'Enable Camera Uploads'.");
+    boardingAlertVC.detail = @"Automatically backup your photos and videos to the Cloud Drive"; //AMLocalizedString(@"automaticallyBackupYourPhotos", @"Text shown to explain what means 'Enable Camera Uploads'.");
     boardingAlertVC.firstButtonTitle = AMLocalizedString(@"enable", @"Text button shown when camera upload will be enabled");
     boardingAlertVC.dismissButtonTitle = AMLocalizedString(@"notNow", nil);
     
@@ -887,7 +887,7 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
 
 - (NSAttributedString *)descriptionForEmptyDataSet:(UIScrollView *)scrollView {
     if (MEGAReachabilityManager.isReachable && !CameraUploadManager.isCameraUploadEnabled) {
-        NSString *description = AMLocalizedString(@"automaticallyBackupYourPhotos", @"Text shown to explain what means 'Enable Camera Uploads'.");
+        NSString *description = @"Automatically backup your photos and videos to the Cloud Drive"; // AMLocalizedString(@"automaticallyBackupYourPhotos", @"Text shown to explain what means 'Enable Camera Uploads'.");
         return [[NSAttributedString alloc] initWithString:description attributes:[Helper descriptionAttributesForEmptyState]];
     } else {
         return nil;
