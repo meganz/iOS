@@ -1,6 +1,8 @@
-#import <UIKit/UIKit.h>
+
 #import "JSQMessages.h"
+
 #import "MEGASdkManager.h"
+#import "ToolbarType.h"
 
 @interface MessagesViewController : JSQMessagesViewController <MEGAChatRoomDelegate>
 
