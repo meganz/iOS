@@ -788,14 +788,11 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
     warningVC.modalPresentationStyle = UIModalPresentationOverFullScreen;
     warningVC.image = [UIImage imageNamed:@"disk_storage_full"];
     warningVC.viewTitle = [NSString stringWithFormat:@"%@ Storage Full", UIDevice.currentDevice.localizedModel];
-    warningVC.detail = @"You do not have enough storage to upload camera. Free up space by deleting unneeded apps, videos or music.";
-    warningVC.firstButtonTitle = @"Manage";
-    warningVC.dismissButtonTitle = AMLocalizedString(@"notNow", nil);
-    
+    warningVC.detail = @"You do not have enough storage to upload camera. Free up space by deleting unneeded apps, videos or music. You can manage your storage in Settings > General > iPhone Storage";
+    warningVC.boldInDetail = @"Settings > General > iPhone Storage";
+    warningVC.firstButtonTitle = @"OK";
     warningVC.firstCompletion = ^{
-        [self dismissViewControllerAnimated:YES completion:^{
-            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
-        }];
+        [self dismissViewControllerAnimated:YES completion:nil];
     };
     
     [self presentViewController:warningVC animated:YES completion:nil];
