@@ -1083,7 +1083,7 @@
 
                         [self.peersInCall insertObject:remoteUser atIndex:0];
                         
-                        [self.collectionView insertItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:0 inSection:0]]];
+                        [self.collectionView reloadData];
                         
                         [self showToastMessage:[NSString stringWithFormat:AMLocalizedString(@"%@ joined the call.", @"Message to inform the local user that someone has joined the current group call"), [self.chatRoom peerFullnameByHandle:chatSession.peerId]] color:@"#00BFA5"];
                         [self updateParticipants];
