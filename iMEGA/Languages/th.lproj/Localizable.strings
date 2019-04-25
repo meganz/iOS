@@ -57,7 +57,7 @@
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
 "sslUnverified_alertTitle"="MEGA ไม่สามารถเชื่อมต่ออย่างปลอดภัยผ่าน SSL คุณอาจใช้ WiFi สาธารณะร่วมกับข้อกำหนดเพิ่มเติมอย่างอื่น";
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
-"theContentIsNotAvailableForThisAccount"="เนื้อหาที่คุณพยายามเข้าถึง ไม่สามารถใช้งานได้กับบัญชีนี้ ลองลงชื่อเข้าใช้ด้วยบัญชีเดียวกันกับในเว็บไคลเอ็นต์บนมือถืออีกครั้ง";
+"theContentIsNotAvailableForThisAccount"="เนื้อหาที่คุณพยายามเข้าถึง ไม่สามารถใช้งานได้กับบัญชีนี้ กรุณาลองลงชื่อเข้าใช้ด้วยบัญชีเดียวกันกับในเว็บไคลเอ็นต์บนมือถืออีกครั้ง";
 /* Message shown when the app is waiting for the server to complete a request due to an API lock (error -3). */
 "takingLongerThanExpected"="กระบวนการนี้ใช้เวลานานกว่าที่คาดไว้ กรุณารอ...";
 /* Message shown when the app is waiting for the server to complete a request due to a HTTP error 500. */
@@ -1276,7 +1276,7 @@
 /* Inform user that there were unsupported assets in the share extension */
 "shareExtensionUnsupportedAssets"="ไม่สามารถแชร์บางรายการกับ MEGA";
 /* Message shown to the user when the share extension is about to be killed by iOS due to a memory issue */
-"Limited system resources are available when sharing items. Try uploading these files from within the MEGA app."="ระบบทรัพยากรที่ใช้ได้มีอยู่อย่างจำกัดเมื่อแชร์รายการ ให้พยายามอัปโหลดไฟล์เหล่านี้จากแอป MEGA";
+"Limited system resources are available when sharing items. Try uploading these files from within the MEGA app."="ระบบทรัพยากรที่ใช้ได้มีอยู่อย่างจำกัดเมื่อแชร์รายการ กรุณาอัปโหลดไฟล์เหล่านี้จากแอป MEGA";
 /* Notification message shown when a transfer failed. Keep colon. */
 "Transfer failed:"="ถ่ายโอนไม่สำเร็จ:";
 /* MEGAError */

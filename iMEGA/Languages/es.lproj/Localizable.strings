@@ -481,7 +481,7 @@
 /* Message shown when some files have been imported */
 "filesImported"="Archivos importados";
 /* Error message shown when you have used more MEGA storage than you can */
-"quotaExceeded"="Cuota de almacenamiento superada";
+"quotaExceeded"="Cuota de almacenamiento agotada";
 /* Alert title shown when the user is overquota */
 "overquotaAlert_title"="¡Has superado la cuota de almacenamiento disponible!";
 /* Alert message shown when the user is overquota */

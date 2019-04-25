@@ -374,9 +374,8 @@ static NSMutableSet<NSString *> *tapForInfoSet;
 }
 
 - (void)willResignActive {
-    if (!self.editMessage) {
-        [[MEGAStore shareInstance] insertOrUpdateChatDraftWithChatId:self.chatRoom.chatId text:self.inputToolbar.contentView.textView.text];
-    }
+    [self saveChatDraft];
+    
     self.lastBottomInset = self.collectionView.scrollIndicatorInsets.bottom;
     self.lastVerticalOffset = self.collectionView.contentOffset.y;
     
@@ -400,10 +399,8 @@ static NSMutableSet<NSString *> *tapForInfoSet;
     
     [[MEGASdkManager sharedMEGAChatSdk] removeChatDelegate:self];
     [[MEGASdkManager sharedMEGAChatSdk] removeChatCallDelegate:self];
-
-    if (!self.editMessage) {
-        [[MEGAStore shareInstance] insertOrUpdateChatDraftWithChatId:self.chatRoom.chatId text:self.inputToolbar.contentView.textView.text];
-    }
+    
+    [self saveChatDraft];
     
     [SVProgressHUD dismiss];
     [self hideTapForInfoLabel];
@@ -1425,6 +1422,11 @@ static NSMutableSet<NSString *> *tapForInfoSet;
             [[MEGASdkManager sharedMEGAChatSdk] setMessageSeenForChat:self.chatRoom.chatId messageId:lastMessage.messageId];
         }
     }
+}
+
+- (void)saveChatDraft {
+    NSString *chatDraftText = self.editMessage ? @"" : self.inputToolbar.contentView.textView.text;
+    [[MEGAStore shareInstance] insertOrUpdateChatDraftWithChatId:self.chatRoom.chatId text:chatDraftText];
 }
 
 #pragma mark - Gesture recognizer
@@ -2640,9 +2642,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
 }
 
 - (void)textViewDidEndEditing:(UITextView *)textView {
-    if (!self.editMessage) {
-        [[MEGAStore shareInstance] insertOrUpdateChatDraftWithChatId:self.chatRoom.chatId text:self.inputToolbar.contentView.textView.text];
-    }
+    [self saveChatDraft];
 }
 
 #pragma mark - MEGAPhotoBrowserDelegate
