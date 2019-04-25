@@ -1631,7 +1631,7 @@
 /* Title of the option to enable or disable file versioning on Settings section */
 "File versioning"="Ghi Nhớ Phiên Bản";
 /* Subtitle of the option to enable or disable file versioning on Settings section */
-"Enable or disable file versioning for your entire account.[Br]You may still receive file versions from shared folders if your contacts have this enabled."="Enable or disable file versioning for your entire account.\nYou may still receive file versions from shared folders if your contacts have this enabled.";
+"Enable or disable file versioning for your entire account.[Br]You may still receive file versions from shared folders if your contacts have this enabled."="Tắt đi hay bật tính năng ghi nhớ lịch sử phên bản cho toàn bộ tài khoản.\nMột số phiên bản vẫn được giữ lại ở trong các mục chia sẻ từ phía người khác gửi cho bạn.";
 /* A confirmation message when the user chooses to disable file versioning. */
 "When file versioning is disabled, the current version will be replaced with the new version once a file is updated (and your changes to the file will no longer be recorded). Are you sure you want to disable file versioning?"="Khi tính năng ghi nhớ lịch sử phiên bản bị tắt đi, phiên bản hiện tại của các tệp tin sẽ được thay thế bằng phiên bản mới nhất (và mọi thay đổi và chỉnh sửa theo thời gian sẽ không được ghi nhớ). Có chắc muốn tắt đi lập lịch sử phiên bản?";
 /* Settings preference title to show file versions info of the account */
@@ -1681,13 +1681,13 @@
 /* Text shown when an error occurs when trying to save a photo or video to Photos app */
 "Could not save Item"="Could not save Item";
 /* Label in a cell where you can enable the 'Encrypted Key Rotation' */
-"Encrypted Key Rotation"="Encrypted Key Rotation";
+"Encrypted Key Rotation"="Luân Phiên Mã Khóa";
 /* Title shown in a cell to allow the users enable the 'Encrypted Key Rotation' */
-"Enable Encrypted Key Rotation"="Enable Encrypted Key Rotation";
+"Enable Encrypted Key Rotation"="Bật Luân Phiên Mã Khóa";
 /* Label in a cell where you can get the chat link */
 "Get Chat Link"="Lấy đường liên kết tới Cuộc Chát";
 /* Footer text to explain what means 'Encrypted Key Rotation' */
-"Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages."="Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages.";
+"Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages."="Luân phiên mã khóa giúp cho việc an ninh được nâng cấp hơn, nhưng sẽ không cho phép bất kỳ ai tạo ra đường liên kết tới cuộc chát và người mới tham gia vào chát sẽ không thấy các tin nhắn diễn ra từ trước.";
 /* Shown as an error message when the user selects "create chat link", but haven't entered a title for the newly created room */
 "To create a chat link you must name the group."="To create a chat link you must name the group.";
 /* Label shown in a cell where you can enable a switch to get a chat link */
@@ -1697,19 +1697,19 @@
 /* Button text in public chat previews that allows the user to join the chat */
 "Join"="Tham gia";
 /* Text shown in a notification to let the user know that has joined a public chat room after login or account creation */
-"You have joined %@"="You have joined %@";
+"You have joined %@"="Bạn đã tham gia vào %@";
 /* Users previewing a public chat */
 "Observers"="Observers";
 /* Alert message shown while deleting a chat link, warning about the consequences */
 "This conversation will no longer be accessible through the link you are about to delete."="This conversation will no longer be accessible through the chat link once it has been removed.";
 /* Management message shown in a chat when the user %@ enables the 'Encrypted Key Rotation' */
-"%@ enabled Encrypted Key Rotation"="%@ enabled Encrypted Key Rotation.";
+"%@ enabled Encrypted Key Rotation"="%@ đã bật luân phiên mã khóa";
 /* Management message shown in a chat when the user %@ creates a public link for the chat */
-"%@ created a public link for the chat."="%@ created a chat link for the chat.";
+"%@ created a public link for the chat."="%@ vừa mới tạo đường liên kết tới cuộc chát.";
 /* Management message shown in a chat when the user %@ removes a public link for the chat */
-"%@ removed a public link for the chat."="%@ removed the chat link for the chat.";
+"%@ removed a public link for the chat."="%@ vừa mới tháo bỏ đường liên kết tới cuộc chát.";
 /* Management message shown in a chat when the user %@ joined it from a public chat link */
-"%@ joined the group chat."="%@ joined the group chat.";
+"%@ joined the group chat."="%@ đã tham gia vào nhóm chát.";
 /* Message show when a call cannot be established because there are too many participants in the group call */
 "Error. No more participants are allowed in this group call."="You are not allowed to join this call as it has reached the maximum number of participants.";
 /* Message show when a user cannot activate the video in a group call because the max number of videos has been reached */
@@ -1739,9 +1739,9 @@
 /* A title for a notification saying the user’s pricing plan will expire soon. */
 "PRO membership plan expiring soon"="Gói thành viện hạng PRO sắp hết hạn";
 /* The header of a notification indicating that a file or folder has been taken down due to infringement or other reason. */
-"Takedown notice"="Thông báo yêu cầu gỡ bỏ";
+"Takedown notice"="Thông báo tranh chấp";
 /* The header of a notification indicating that a file or folder that was taken down has now been restored due to a successful counter-notice. */
-"Takedown reinstated"="Mục bị gỡ bỏ đã được phục hồi";
+"Takedown reinstated"="Tranh chấp đã được giải quyết thành công";
 /* Label shown inside an unseen notification */
 "New"="Mới";
 /* When a contact sent a contact/friend request */
@@ -1855,7 +1855,7 @@
 /* Text explaining users how the chat links work. */
 "People can join your group by using this link."="People can join your group by using this link.";
 /* Subtitle shown in a chat to inform where to tap to enter in the chat details view */
-"Tap here for info"="Tap here for info";
+"Tap here for info"="Chạm vào để xem thêm";
 /* Title for the recents section. */
 "Recents"="Lịch sử hoạt động";
 /* Multiple Images title shown in recents section of webclient */
