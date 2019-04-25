@@ -1278,7 +1278,7 @@
 /* Inform user that there were unsupported assets in the share extension */
 "shareExtensionUnsupportedAssets"="Einige Elemente konnten nicht mit MEGA geteilt werden";
 /* Message shown to the user when the share extension is about to be killed by iOS due to a memory issue */
-"Limited system resources are available when sharing items. Try uploading these files from within the MEGA app."="Limited system resources are available when sharing items. Try uploading these files from within the MEGA app.";
+"Limited system resources are available when sharing items. Try uploading these files from within the MEGA app."="Limited system resources are available when sharing items. Please try uploading these files from within the MEGA app.";
 /* Notification message shown when a transfer failed. Keep colon. */
 "Transfer failed:"="Übertragungsfehler:";
 /* MEGAError */

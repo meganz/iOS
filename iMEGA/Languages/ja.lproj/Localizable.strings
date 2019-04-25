@@ -57,7 +57,7 @@
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
 "sslUnverified_alertTitle"="MEGAはSSL経由では安全に接続できません。あなたは追加要件があるパブリックWiFi上にいるかもしれません。";
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
-"theContentIsNotAvailableForThisAccount"="アクセスしようとしているコンテンツは、このアカウントでは利用できません。モバイルWebクライアントと同じアカウントでログインしてください。";
+"theContentIsNotAvailableForThisAccount"="アクセスしようとしているコンテンツは、このアカウントではご利用いただけません。モバイルウェブクライアントと同じアカウントでログインしてみてください。";
 /* Message shown when the app is waiting for the server to complete a request due to an API lock (error -3). */
 "takingLongerThanExpected"="プロセスに予想以上時間がかかっています。お待ちください...";
 /* Message shown when the app is waiting for the server to complete a request due to a HTTP error 500. */
