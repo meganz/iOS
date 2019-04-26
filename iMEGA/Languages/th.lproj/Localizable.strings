@@ -368,6 +368,8 @@
 "tapFileToRename"="แตะไฟล์เพื่อเปลี่ยนชื่อ";
 /* */
 "sendToContact"="ส่งให้ผู้ติดต่อ";
+/* Column header of my contacts/chats at copy dialog */
+"My chats"="การแชทของฉัน";
 /* Toast text upon sending a single file to chat */
 "fileSentToChat"="ไฟล์ถูกส่งไปยังแชทแล้ว";
 /* Success message when the attachment has been sent to a many chats */
