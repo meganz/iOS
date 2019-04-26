@@ -368,6 +368,8 @@
 "tapFileToRename"="Tocar el archivo para renombrar";
 /* */
 "sendToContact"="Enviar a contacto";
+/* Column header of my contacts/chats at copy dialog */
+"My chats"="Mis chats";
 /* Toast text upon sending a single file to chat */
 "fileSentToChat"="Archivo enviado al chat";
 /* Success message when the attachment has been sent to a many chats */

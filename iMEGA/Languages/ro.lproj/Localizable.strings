@@ -368,6 +368,8 @@
 "tapFileToRename"="Atinge fișierul pentru redenumire";
 /* */
 "sendToContact"="Trimite contactului";
+/* Column header of my contacts/chats at copy dialog */
+"My chats"="Chaturile mele";
 /* Toast text upon sending a single file to chat */
 "fileSentToChat"="Fișiere trimise în chat";
 /* Success message when the attachment has been sent to a many chats */
