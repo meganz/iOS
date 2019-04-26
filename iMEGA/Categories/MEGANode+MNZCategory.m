@@ -150,7 +150,7 @@
             
             return previewController;
         }
-    } else if (self.name.mnz_isMultimediaPathExtension && [apiForStreaming httpServerStart:YES port:4443]) {
+    } else if (self.name.mnz_isMultimediaPathExtension && [apiForStreaming httpServerStart:NO port:4443]) {
         if (self.mnz_isPlayable) {
             MEGAAVViewController *megaAVViewController = [[MEGAAVViewController alloc] initWithNode:self folderLink:isFolderLink apiForStreaming:apiForStreaming];
             return megaAVViewController;
