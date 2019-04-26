@@ -804,20 +804,6 @@
     return [Helper spaceHeightForEmptyState];
 }
 
-#pragma mark - UISearchControllerDelegate
-
-- (void)didPresentSearchController:(UISearchController *)searchController {
-    switch (self.sendMode) {
-        case SendModeCloud:
-        case SendModeShareExtension:
-            searchController.searchBar.showsCancelButton = NO;
-            break;
-            
-        default:
-            break;
-    }
-}
-
 #pragma mark - ItemListViewControllerProtocol
 
 - (void)removeSelectedItem:(id)item {
