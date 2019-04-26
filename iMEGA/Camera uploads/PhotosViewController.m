@@ -281,6 +281,7 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
     self.stateLabel.hidden = NO;
     self.stateLabel.font = [UIFont systemFontOfSize:17.0];
     self.progressStackView.hidden = YES;
+    self.enableCameraUploadsButton.hidden = YES;
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
     
     switch (currentState) {
@@ -288,35 +289,26 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
             self.stateLabel.text = AMLocalizedString(@"enableCameraUploadsButton", nil);
             self.enableCameraUploadsButton.hidden = NO;
             break;
-            
         case MEGACameraUploadsStateUploading:
             self.stateLabel.hidden = YES;
             self.progressStackView.hidden = NO;
-            self.enableCameraUploadsButton.hidden = YES;
             [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
             break;
-            
         case MEGACameraUploadsStateCompleted:
             self.stateLabel.text = AMLocalizedString(@"cameraUploadsComplete", @"Message shown when the camera uploads have been completed");
-            self.enableCameraUploadsButton.hidden = YES;
             break;
-            
         case MEGACameraUploadsStateNoInternetConnection:
             if (self.photosByMonthYearArray.count == 0) {
                 self.stateView.hidden = YES;
             } else {
                 self.stateLabel.text = AMLocalizedString(@"noInternetConnection", @"Text shown on the app when you don't have connection to the internet or when you have lost it");
             }
-            self.enableCameraUploadsButton.hidden = YES;
             break;
-            
         case MEGACameraUploadsStateEmpty:
             self.stateView.hidden = YES;
             break;
-            
         case MEGACameraUploadsStateLoading:
             self.stateLabel.text = AMLocalizedString(@"loading", nil);
-            self.enableCameraUploadsButton.hidden = NO;
             break;
         case MEGACameraUploadsStateEnableVideo:
             self.stateLabel.font = [UIFont systemFontOfSize:15.0];
