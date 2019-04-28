@@ -29,7 +29,7 @@
     if (self.isMediaInfoLoaded) {
         completion(YES);
     } else {
-        LoadMediaInfoOperation *loadMediaInfoOperation = [[LoadMediaInfoOperation alloc] initWithExpirationTimeInterval:timeout];
+        LoadMediaInfoOperation *loadMediaInfoOperation = [[LoadMediaInfoOperation alloc] initWithExpireTimeInterval:timeout];
         NSBlockOperation *callBackOperation = [NSBlockOperation blockOperationWithBlock:^{
             completion(self.isMediaInfoLoaded);
         }];
