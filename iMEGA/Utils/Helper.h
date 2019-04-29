@@ -101,6 +101,7 @@ typedef NS_OPTIONS(NSUInteger, NodesAre) {
 
 + (CGFloat)verticalOffsetForEmptyStateWithNavigationBarSize:(CGSize)navigationBarSize searchBarActive:(BOOL)isSearchBarActive;
 + (CGFloat)spaceHeightForEmptyState;
++ (CGFloat)spaceHeightForEmptyStateWithDescription;
 
 + (NSDictionary *)titleAttributesForEmptyState;
 + (NSDictionary *)descriptionAttributesForEmptyState;
