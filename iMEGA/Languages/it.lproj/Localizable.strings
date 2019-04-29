@@ -962,7 +962,7 @@
 /* Sentence shown under the available space to complete the info with the user account maximum storage. "available of {maximun storage}" */
 "available of %@"="disponibili di %@";
 /* Button title which triggers the action to upgrade your MEGA account level */
-"upgradeAccount"="Passa a PRO";
+"upgradeAccount"="Aumenta il piano PRO";
 /*  */
 "chooseYourAccountType"="Scegli il tuo tipo di account";
 /* Text shown under the button 'Skip' to explain that you can upgrade your account later in the section 'My Account'. */

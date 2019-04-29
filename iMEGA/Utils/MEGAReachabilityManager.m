@@ -8,7 +8,7 @@
 @interface MEGAReachabilityManager ()
 
 @property (nonatomic, strong) Reachability *reachability;
-@property (nonatomic, copy) NSString *IpAddress;
+@property (nonatomic) NSString *lastKnownAddress;
 
 @end
 
@@ -74,7 +74,7 @@
     if (self) {
         self.reachability = [Reachability reachabilityForInternetConnection];
         [self.reachability startNotifier];
-        _IpAddress = [self getIpAddress];
+        _lastKnownAddress = self.currentAddress;
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(reachabilityDidChange:)
                                                      name:kReachabilityChangedNotification object:nil];
@@ -85,7 +85,7 @@
 
 #pragma mark - Get IP Address
 
-- (NSString *)getIpAddress {
+- (NSString *)currentAddress {
     NSString *address = nil;
     
     struct ifaddrs *interfaces = NULL;
@@ -130,14 +130,14 @@
 
 - (void)retryOrReconnect {
     if ([MEGAReachabilityManager isReachable]) {
-        NSString *currentIP = [self getIpAddress];
-        if ([self.IpAddress isEqualToString:currentIP]) {
-            MEGALogDebug(@"IP didn't change (%@), retrying...", self.IpAddress);
+        NSString *currentAddress = self.currentAddress;
+        if ([self.lastKnownAddress isEqualToString:currentAddress]) {
+            MEGALogDebug(@"IP didn't change (%@), retrying...", self.lastKnownAddress);
             [self retryPendingConnections];
         } else {
-            MEGALogDebug(@"IP has changed (%@ -> %@), reconnecting...", self.IpAddress, currentIP);
+            MEGALogDebug(@"IP has changed (%@ -> %@), reconnecting...", self.lastKnownAddress, currentAddress);
             [self reconnect];
-            self.IpAddress = currentIP;
+            self.lastKnownAddress = currentAddress;
         }
     }
 }

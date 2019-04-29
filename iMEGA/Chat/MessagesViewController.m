@@ -130,7 +130,6 @@ static NSMutableSet<NSString *> *tapForInfoSet;
 
 @property (nonatomic) BOOL loadingState;
 
-@property (nonatomic) NSString *typingString;
 @property (nonatomic) NSString *lastGreenString;
 
 @end
@@ -374,9 +373,8 @@ static NSMutableSet<NSString *> *tapForInfoSet;
 }
 
 - (void)willResignActive {
-    if (!self.editMessage) {
-        [[MEGAStore shareInstance] insertOrUpdateChatDraftWithChatId:self.chatRoom.chatId text:self.inputToolbar.contentView.textView.text];
-    }
+    [self saveChatDraft];
+    
     self.lastBottomInset = self.collectionView.scrollIndicatorInsets.bottom;
     self.lastVerticalOffset = self.collectionView.contentOffset.y;
     
@@ -400,10 +398,8 @@ static NSMutableSet<NSString *> *tapForInfoSet;
     
     [[MEGASdkManager sharedMEGAChatSdk] removeChatDelegate:self];
     [[MEGASdkManager sharedMEGAChatSdk] removeChatCallDelegate:self];
-
-    if (!self.editMessage) {
-        [[MEGAStore shareInstance] insertOrUpdateChatDraftWithChatId:self.chatRoom.chatId text:self.inputToolbar.contentView.textView.text];
-    }
+    
+    [self saveChatDraft];
     
     [SVProgressHUD dismiss];
     [self hideTapForInfoLabel];
@@ -598,8 +594,6 @@ static NSMutableSet<NSString *> *tapForInfoSet;
         } else if (self.chatRoom.archived) {
             self.navigationStatusView.hidden = YES;
             chatRoomState = AMLocalizedString(@"archived", @"Title of flag of archived chats.");
-        } else if (self.typingString) {
-            chatRoomState = self.typingString;
         } else {
             if (self.chatRoom.isGroup) {
                 if (self.chatRoom.hasCustomTitle) {
@@ -1314,37 +1308,25 @@ static NSMutableSet<NSString *> *tapForInfoSet;
 }
 
 - (void)setTypingIndicator {
-    switch (self.whoIsTypingTimersMutableDictionary.allKeys.count) {
-        case 0:
-            self.typingString = nil;
-            break;
-            
-        case 1: {
-            NSNumber *firstUserHandle = [self.whoIsTypingTimersMutableDictionary.allKeys objectAtIndex:0];
-            NSString *firstUserName =  [self.chatRoom peerFirstnameByHandle:firstUserHandle.unsignedLongLongValue];
-            
-            self.typingString = [NSString stringWithFormat:AMLocalizedString(@"isTyping", @"A typing indicator in the chat. Please leave the %@ which will be automatically replaced with the user's name at runtime."), (firstUserName.length ? firstUserName : [self.chatRoom peerEmailByHandle:firstUserHandle.unsignedLongLongValue])];
-            break;
-        }
-            
-        case 2: {
-            self.typingString = [self twoOrMoreUsersAreTypingString];
-            break;
-        }
-            
-        default: {
-            if (self.whoIsTypingTimersMutableDictionary.allKeys.count > 2) {
-                self.typingString = [self twoOrMoreUsersAreTypingString];
-            } else {
-                self.typingString = nil;
-            }
-            break;
-        }
+    NSString *typingString = nil;
+    NSMutableAttributedString *typingAttributedString = nil;
+    if (self.whoIsTypingTimersMutableDictionary.allKeys.count >= 2) {
+        typingAttributedString = [self twoOrMoreUsersAreTypingString];
+    } else if (self.whoIsTypingTimersMutableDictionary.allKeys.count == 1) {
+        NSNumber *firstUserHandle = [self.whoIsTypingTimersMutableDictionary.allKeys objectAtIndex:0];
+        NSString *firstUserName = [self.chatRoom peerFirstnameByHandle:firstUserHandle.unsignedLongLongValue];
+        NSString *whoIsTypingString = firstUserName.length ? firstUserName : [self.chatRoom peerEmailByHandle:firstUserHandle.unsignedLongLongValue];
+        
+        typingString = [NSString stringWithFormat:AMLocalizedString(@"isTyping", @"A typing indicator in the chat. Please leave the %@ which will be automatically replaced with the user's name at runtime."), whoIsTypingString];
+        
+        typingAttributedString = [[NSMutableAttributedString alloc] initWithString:typingString];
+        [typingAttributedString addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:10 weight:UIFontWeightBold] range:NSMakeRange(0, whoIsTypingString.length)];
     }
-    [self customNavigationBarLabel];
+    
+    [self.inputToolbar mnz_setTypingIndicatorAttributedText:typingAttributedString];
 }
 
-- (NSString *)twoOrMoreUsersAreTypingString {
+- (NSMutableAttributedString *)twoOrMoreUsersAreTypingString {
     NSNumber *firstUserHandle = [self.whoIsTypingTimersMutableDictionary.allKeys objectAtIndex:0];
     NSNumber *secondUserHandle = [self.whoIsTypingTimersMutableDictionary.allKeys objectAtIndex:1];
     
@@ -1361,7 +1343,11 @@ static NSMutableSet<NSString *> *tapForInfoSet;
         twoOrMoreUsersAreTypingString = [AMLocalizedString(@"moreThanTwoUsersAreTyping", @"text that appear when there are more than 2 people writing at that time in a chat. For example User1, user2 and more are typing... The parameter will be the concatenation of the first two user names. Please do not translate or modify the tags or placeholders.") mnz_removeWebclientFormatters];
     }
     
-    return [twoOrMoreUsersAreTypingString stringByReplacingOccurrencesOfString:@"%1$s" withString:whoIsTypingString];
+    NSString *typingString = [twoOrMoreUsersAreTypingString stringByReplacingOccurrencesOfString:@"%1$s" withString:whoIsTypingString];
+    NSMutableAttributedString *typingAttributedString = [[NSMutableAttributedString alloc] initWithString:typingString];
+    [typingAttributedString addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:10 weight:UIFontWeightBold] range:NSMakeRange(0, whoIsTypingString.length)];
+    
+    return typingAttributedString;
 }
 
 - (void)removeUserHandleFromTypingIndicator:(NSNumber *)userHandle {
@@ -1425,6 +1411,11 @@ static NSMutableSet<NSString *> *tapForInfoSet;
             [[MEGASdkManager sharedMEGAChatSdk] setMessageSeenForChat:self.chatRoom.chatId messageId:lastMessage.messageId];
         }
     }
+}
+
+- (void)saveChatDraft {
+    NSString *chatDraftText = self.editMessage ? @"" : self.inputToolbar.contentView.textView.text;
+    [[MEGAStore shareInstance] insertOrUpdateChatDraftWithChatId:self.chatRoom.chatId text:chatDraftText];
 }
 
 #pragma mark - Gesture recognizer
@@ -2640,9 +2631,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
 }
 
 - (void)textViewDidEndEditing:(UITextView *)textView {
-    if (!self.editMessage) {
-        [[MEGAStore shareInstance] insertOrUpdateChatDraftWithChatId:self.chatRoom.chatId text:self.inputToolbar.contentView.textView.text];
-    }
+    [self saveChatDraft];
 }
 
 #pragma mark - MEGAPhotoBrowserDelegate
