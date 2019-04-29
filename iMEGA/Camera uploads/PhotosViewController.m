@@ -942,16 +942,7 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
 }
 
 - (CGFloat)spaceHeightForEmptyDataSet:(UIScrollView *)scrollView {
-    CGFloat spaceHeight = [Helper spaceHeightForEmptyState];
-    if ([self descriptionForEmptyDataSet:scrollView] != nil) {
-        if (spaceHeight - 20.0f > 11) {
-            spaceHeight -= 20.0f;
-        }
-    } else if (![[UIDevice currentDevice] iPhone4X]) {
-        spaceHeight += 20.0f;
-    }
-    
-    return spaceHeight;
+    return [Helper spaceHeightForEmptyStateWithDescription];
 }
 
 #pragma mark - DZNEmptyDataSetDelegate Methods
