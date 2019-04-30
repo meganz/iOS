@@ -237,39 +237,4 @@ static const NSTimeInterval BoardingScreenShowUpMinimumInterval = 30 * 24 * 3600
     }
 }
 
-#pragma mark - old settings migration
-
-+ (void)migrateOldCameraUploadsSettings {
-    // PhotoSync old location of completed uploads
-    NSString *oldCompleted = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject stringByAppendingPathComponent:@"PhotoSync/completed.plist"];
-    [NSFileManager.defaultManager mnz_removeItemAtPath:oldCompleted];
-    
-    // PhotoSync v2 location of completed uploads
-    NSString *v2Completed = [NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES).firstObject stringByAppendingPathComponent:@"PhotoSync/com.plist"];
-    [NSFileManager.defaultManager mnz_removeItemAtPath:v2Completed];
-    
-    // PhotoSync settings
-    NSString *oldPspPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject stringByAppendingPathComponent:@"PhotoSync/psp.plist"];
-    NSString *v2PspPath  = [NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES).firstObject stringByAppendingPathComponent:@"PhotoSync/psp.plist"];
-    
-    // check for file in previous location
-    if ([[NSFileManager defaultManager] fileExistsAtPath:oldPspPath]) {
-        [[NSFileManager defaultManager] moveItemAtPath:oldPspPath toPath:v2PspPath error:nil];
-    }
-    
-    NSDictionary *cameraUploadsSettings = [[NSDictionary alloc] initWithContentsOfFile:v2PspPath];
-    
-    if (cameraUploadsSettings[@"syncEnabled"]) {
-        [NSUserDefaults.standardUserDefaults setBool:YES forKey:IsCameraUploadsEnabledKey];
-        
-        BOOL wasCellularUploadAllowed = cameraUploadsSettings[@"cellEnabled"] != nil;
-        [NSUserDefaults.standardUserDefaults setBool:wasCellularUploadAllowed forKey:IsCellularAllowedKey];
-        
-        BOOL wasVideoUploadEnabled = cameraUploadsSettings[@"videoEnabled"] != nil;
-        [NSUserDefaults.standardUserDefaults setBool:wasVideoUploadEnabled forKey:IsVideoUploadsEnabledKey];
-        
-        [NSFileManager.defaultManager mnz_removeItemAtPath:v2PspPath];
-    }
-}
-
 @end

@@ -46,10 +46,6 @@ typedef NS_ENUM(NSUInteger, CameraUploadVideoQuality) {
 
 + (void)migrateCurrentSettingsToCameraUplaodV2;
 
-#pragma mark - old settings migration
-
-+ (void)migrateOldCameraUploadsSettings;
-
 #pragma mark - clear local settings
 
 + (void)clearLocalSettings;

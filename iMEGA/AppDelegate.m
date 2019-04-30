@@ -199,9 +199,6 @@
         }
         [[NSUserDefaults standardUserDefaults] synchronize];
         
-        // Camera uploads settings
-        [CameraUploadManager migrateOldCameraUploadsSettings];
-        
         [SAMKeychain deletePasswordForService:@"MEGA" account:@"session"];
     }
 
