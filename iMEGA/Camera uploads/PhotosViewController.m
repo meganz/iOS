@@ -211,9 +211,6 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
     [CameraUploadManager.shared loadCurrentUploadStatsWithCompletion:^(UploadStats * _Nullable uploadStats, NSError * _Nullable error) {
         if (error || uploadStats == nil) {
             MEGALogError(@"[Camera Upload] error when to fetch upload stats %@", error);
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                [self reloadHeader];
-            });
             return;
         }
         
