@@ -368,6 +368,8 @@
 "tapFileToRename"="Zum Umbenennen antippen";
 /* */
 "sendToContact"="An Kontakt schicken";
+/* Column header of my contacts/chats at copy dialog */
+"My chats"="Meine Chats";
 /* Toast text upon sending a single file to chat */
 "fileSentToChat"="Datei an den Chat gesendet";
 /* Success message when the attachment has been sent to a many chats */
@@ -659,7 +661,7 @@
 /* Option title to enable Camera Uploads only when the device is charging */
 "onlyWhenChargingLabel"="Nur am Ladegerät";
 /* Footer text to explain the Camera Uploads functionality */
-"cameraUploads_footer"="When enabled, photos and videos will be uploaded.";
+"cameraUploads_footer"="Wenn aktiviert, werden Ihre Fotos und Videos automatisch hochgeladen";
 /* App means “Application” */
 "App version"="App Version";
 /* Title of the label where the SDK version is shown */
@@ -1847,15 +1849,15 @@
 /* The label of the toggle switch to indicate that file versioning is enabled. */
 "Enabled"="Aktiv";
 /* Text button for init a group chat with link. */
-"New Chat Link"="New chat link";
+"New Chat Link"="Neuer Chatlink";
 /* Text button for init a group chat */
 "New group chat"="Neuer Gruppenchat";
 /* Shown when an invalid/inexisting/not-available-anymore chat link is opened. */
-"Chat link unavailable"="Chat link unavailable";
+"Chat link unavailable"="Ungültiger Chatlink";
 /* Shown when an inexisting/unavailable/removed link is tried to be opened. */
-"This chat link is no longer available"="This chat link is no longer available";
+"This chat link is no longer available"="Dieser Chatlink ist nicht mehr verfügbar";
 /* Text explaining users how the chat links work. */
-"People can join your group by using this link."="People can join your group by using this link.";
+"People can join your group by using this link."="Über diesen Link können Dritte der Unterhaltung beitreten";
 /* Subtitle shown in a chat to inform where to tap to enter in the chat details view */
 "Tap here for info"="Tap here for info";
 /* Title for the recents section. */
@@ -1887,4 +1889,4 @@
 /* Plural of items which contains a folder. 2 items */
 "items"="Elemente";
 /* In some cases, a user may try to get the link for a chat room, but if such is not set by an operator - it would say "not link available" and not auto create it. */
-"No chat link available."="No chat link available.";
+"No chat link available."="Kein Chatlink verfügbar.";
