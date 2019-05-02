@@ -368,6 +368,8 @@
 "tapFileToRename"="Tik bestand om te hernoemen";
 /* */
 "sendToContact"="Stuur naar contact";
+/* Column header of my contacts/chats at copy dialog */
+"My chats"="Mijn gesprekken";
 /* Toast text upon sending a single file to chat */
 "fileSentToChat"="Bestand verstuurd naar gesprek";
 /* Success message when the attachment has been sent to a many chats */

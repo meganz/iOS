@@ -368,6 +368,8 @@
 "tapFileToRename"="Ketuk file untuk mengganti nama";
 /* */
 "sendToContact"="Kirim ke kontak";
+/* Column header of my contacts/chats at copy dialog */
+"My chats"="Obrolan saya";
 /* Toast text upon sending a single file to chat */
 "fileSentToChat"="File dikirim ke obrolan";
 /* Success message when the attachment has been sent to a many chats */
