@@ -359,18 +359,22 @@
 }
 
 - (void)emptyDataSetWillAppear:(UIScrollView *)scrollView {
-    self.searchController.searchBar.hidden = YES;
-    if (self.archivedChatListItemList.size) {
-        self.archivedChatEmptyStateTitle.text = AMLocalizedString(@"archivedChats", @"Title of archived chats button");
-        self.archivedChatEmptyStateCount.text = [NSString stringWithFormat:@"%tu", self.archivedChatListItemList.size];
-        self.archivedChatEmptyState.hidden = NO;
+    if (!self.searchController.active) {
+        self.searchController.searchBar.hidden = YES;
+        if (self.archivedChatListItemList.size) {
+            self.archivedChatEmptyStateTitle.text = AMLocalizedString(@"archivedChats", @"Title of archived chats button");
+            self.archivedChatEmptyStateCount.text = [NSString stringWithFormat:@"%tu", self.archivedChatListItemList.size];
+            self.archivedChatEmptyState.hidden = NO;
+        }
     }
 }
 
 - (void)emptyDataSetWillDisappear:(UIScrollView *)scrollView {
-    self.searchController.searchBar.hidden = NO;
-    if (!self.archivedChatEmptyState.hidden) {
-        self.archivedChatEmptyState.hidden  = YES;
+    if (!self.searchController.active) {
+        self.searchController.searchBar.hidden = NO;
+        if (!self.archivedChatEmptyState.hidden) {
+            self.archivedChatEmptyState.hidden  = YES;
+        }
     }
 }
 
@@ -906,7 +910,7 @@
             [self updateChatIdIndexPathDictionary];
         }
         
-        if (self.isScrollAtTop && scrollView.contentOffset.y < 0 && !self.isArchivedChatsRowVisible) {
+        if (self.isScrollAtTop && scrollView.contentOffset.y < 0 && !self.isArchivedChatsRowVisible && self.archivedChatListItemList.size != 0 && !self.searchController.active) {
             self.isArchivedChatsRowVisible = YES;
             [self.tableView beginUpdates];
             [self.tableView insertSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationTop];
@@ -956,6 +960,10 @@
 #pragma mark - UISearchControllerDelegate
 
 - (void)didPresentSearchController:(UISearchController *)searchController {
+    if (self.isArchivedChatsRowVisible) {
+        self.isArchivedChatsRowVisible = NO;
+        [self.tableView deleteSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationFade];
+    }
     if (UIDevice.currentDevice.iPhoneDevice && UIDeviceOrientationIsLandscape(UIDevice.currentDevice.orientation)) {
         [Helper resetSearchControllerFrame:searchController];
     }
