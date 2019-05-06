@@ -57,7 +57,7 @@
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
 "sslUnverified_alertTitle"="MEGA nie może zweryfikować SSL. Możliwe, że korzystasz z publicznego WiFi.";
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
-"theContentIsNotAvailableForThisAccount"="Plik/Katalog króry próbujesz otworzyć jest niedostępny dla Twojego konta. Spróbuj otworzyć na urządzeniu mobilnym, urzywając tego samego konta.";
+"theContentIsNotAvailableForThisAccount"="Treść, do której próbujesz uzyskać dostęp, nie jest dostępna dla tego konta. Spróbuj zalogować się przy użyciu tego samego konta, co w kliencie mobilnym.";
 /* Message shown when the app is waiting for the server to complete a request due to an API lock (error -3). */
 "takingLongerThanExpected"="Operacja zajmuję więcej czasu niż zwykle. Proszę czekać...";
 /* Message shown when the app is waiting for the server to complete a request due to a HTTP error 500. */
@@ -368,6 +368,8 @@
 "tapFileToRename"="Dotknij pliku, aby zmienić nazwę";
 /* */
 "sendToContact"="Wyślij do";
+/* Column header of my contacts/chats at copy dialog */
+"My chats"="Moje czaty";
 /* Toast text upon sending a single file to chat */
 "fileSentToChat"="Plik wysłany do czatu";
 /* Success message when the attachment has been sent to a many chats */
@@ -1278,7 +1280,7 @@
 /* Inform user that there were unsupported assets in the share extension */
 "shareExtensionUnsupportedAssets"="Niektóre elementy nie mogą być udostępnione na MEGA";
 /* Message shown to the user when the share extension is about to be killed by iOS due to a memory issue */
-"Limited system resources are available when sharing items. Try uploading these files from within the MEGA app."="Podczas udostępniania elementów dostępne są ograniczone zasoby systemowe. Spróbuj przesłać te pliki z poziomu aplikacji MEGA.";
+"Limited system resources are available when sharing items. Try uploading these files from within the MEGA app."="Ograniczone zasoby systemowe są dostępne podczas udostępniania elementów. Spróbuj przesłać te pliki z aplikacji MEGA.";
 /* Notification message shown when a transfer failed. Keep colon. */
 "Transfer failed:"="Operacja nie powiodła się:";
 /* MEGAError */

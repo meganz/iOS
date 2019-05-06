@@ -57,7 +57,7 @@
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
 "sslUnverified_alertTitle"="MEGA is niet in staat om veilig te verbinden via SSL. U kunt op het publiekelijke wifi zitten met extra benodigdheden.";
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
-"theContentIsNotAvailableForThisAccount"="De inhoud die u probeert te krijgen is niet beschikbaar voor deze account. Probeer in te loggen met dezelfde account als in de mobiele web programma.";
+"theContentIsNotAvailableForThisAccount"="De inhoud die u wilt bereiken is niet beschikbaar op dit account. Probeer in te loggen met hetzelfde account als in de mobiele web programma.";
 /* Message shown when the app is waiting for the server to complete a request due to an API lock (error -3). */
 "takingLongerThanExpected"="Het proces duurt langer dan verwacht. Wacht a.u.b....";
 /* Message shown when the app is waiting for the server to complete a request due to a HTTP error 500. */
@@ -368,6 +368,8 @@
 "tapFileToRename"="Tik bestand om te hernoemen";
 /* */
 "sendToContact"="Stuur naar contact";
+/* Column header of my contacts/chats at copy dialog */
+"My chats"="Mijn gesprekken";
 /* Toast text upon sending a single file to chat */
 "fileSentToChat"="Bestand verstuurd naar gesprek";
 /* Success message when the attachment has been sent to a many chats */
@@ -1278,7 +1280,7 @@
 /* Inform user that there were unsupported assets in the share extension */
 "shareExtensionUnsupportedAssets"="Sommige items konden niet gedeeld worden in MEGA";
 /* Message shown to the user when the share extension is about to be killed by iOS due to a memory issue */
-"Limited system resources are available when sharing items. Try uploading these files from within the MEGA app."="Gelimiteerde systeem middelen zijn beschikbaar bij gedeelde items. Probeer deze bestanden te uploaden vanuit de MEGA applicatie.";
+"Limited system resources are available when sharing items. Try uploading these files from within the MEGA app."="Gelimiteerde systeem middelen zijn beschikbaar bij het delen van items. Probeer deze bestanden te uploaden vanuit de MEGA applicatie.";
 /* Notification message shown when a transfer failed. Keep colon. */
 "Transfer failed:"="Overdracht mislukt:";
 /* MEGAError */
