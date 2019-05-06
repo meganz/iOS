@@ -98,18 +98,6 @@ static const NSUInteger MaximumUploadRetryPerLoginCount = 800;
 
 #pragma mark - fetch records
 
-- (CameraAssetUploadStatus)uploadStatusForIdentifier:(NSString *)identifier {
-    MOAssetUploadRecord *record = [[self fetchUploadRecordsByIdentifier:identifier shouldPrefetchErrorRecords:NO error:nil] firstObject];
-    __block CameraAssetUploadStatus status = CameraAssetUploadStatusUnknown;
-    if (record != nil) {
-        [self.backgroundContext performBlockAndWait:^{
-            status = (CameraAssetUploadStatus)[record.status integerValue];
-        }];
-    }
-    
-    return status;
-}
-
 - (NSArray<MOAssetUploadRecord *> *)fetchUploadRecordsByIdentifier:(NSString *)identifier shouldPrefetchErrorRecords:(BOOL)prefetchErrorRecords error:(NSError *__autoreleasing  _Nullable *)error {
     NSFetchRequest *request = MOAssetUploadRecord.fetchRequest;
     request.returnsObjectsAsFaults = NO;
@@ -144,10 +132,6 @@ static const NSUInteger MaximumUploadRetryPerLoginCount = 800;
     }
     
     return records;
-}
-
-- (NSArray<MOAssetUploadRecord *> *)fetchAllUploadRecords:(NSError * _Nullable __autoreleasing * _Nullable)error {
-    return [self fetchUploadRecordsByFetchRequest:MOAssetUploadRecord.fetchRequest error:error];
 }
 
 - (NSArray<MOAssetUploadRecord *> *)fetchUploadRecordsByStatuses:(NSArray<NSNumber *> *)statuses error:(NSError * _Nullable __autoreleasing *)error {
@@ -187,22 +171,6 @@ static const NSUInteger MaximumUploadRetryPerLoginCount = 800;
     
     if (sortByIdentifier) {
         request.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"localIdentifier" ascending:YES]];
-    }
-    
-    return [self fetchUploadRecordsByFetchRequest:request error:error];
-}
-
-- (NSArray<MOAssetUploadRecord *> *)fetchUploadRecordsByMediaTypes:(NSArray<NSNumber *> *)mediaTypes mediaSubtypes:(PHAssetMediaSubtype)subtypes includeAdditionalMediaSubtypes:(BOOL)includeAdditionalMediaSubtypes error:(NSError * _Nullable __autoreleasing *)error {
-    NSFetchRequest *request = MOAssetUploadRecord.fetchRequest;
-    request.returnsObjectsAsFaults = NO;
-    NSPredicate *mediaTypePredicate = [NSPredicate predicateWithFormat:@"mediaType IN %@", mediaTypes];
-    NSPredicate *mediaSubtypesPredicate = [NSPredicate predicateWithFormat:@"(mediaSubtypes != %@) AND ((mediaSubtypes & %lu) == %lu)", NSNull.null, subtypes, subtypes];
-    
-    if (includeAdditionalMediaSubtypes) {
-        request.predicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[mediaTypePredicate, mediaSubtypesPredicate]];
-    } else {
-        NSPredicate *additionalSubtypePredicate = [NSPredicate predicateWithFormat:@"additionalMediaSubtypes == %@", NSNull.null];
-        request.predicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[mediaTypePredicate, mediaSubtypesPredicate, additionalSubtypePredicate]];
     }
     
     return [self fetchUploadRecordsByFetchRequest:request error:error];
@@ -284,44 +252,7 @@ static const NSUInteger MaximumUploadRetryPerLoginCount = 800;
     return coreDataError == nil;
 }
 
-#pragma mark - create records
-
-- (void)createAdditionalRecordsIfNeededForRecords:(NSArray<MOAssetUploadRecord *> *)uploadRecords withMediaSubtype:(PHAssetMediaSubtype)subtype {
-    [self.backgroundContext performBlockAndWait:^{
-        SavedIdentifierParser *parser = [[SavedIdentifierParser alloc] init];
-        for (MOAssetUploadRecord *record in uploadRecords) {
-            if (record.additionalMediaSubtypes) {
-                continue;
-            }
-            
-            NSString *savedIdentifier = [parser savedIdentifierForLocalIdentifier:record.localIdentifier mediaSubtype:subtype];
-            if ([self fetchUploadRecordsByIdentifier:savedIdentifier shouldPrefetchErrorRecords:NO error:nil].count == 0) {
-                MOAssetUploadRecord *subtypeRecord = [NSEntityDescription insertNewObjectForEntityForName:@"AssetUploadRecord" inManagedObjectContext:self.backgroundContext];
-                subtypeRecord.localIdentifier = savedIdentifier;
-                subtypeRecord.status = @(CameraAssetUploadStatusNotStarted);
-                subtypeRecord.creationDate = record.creationDate;
-                subtypeRecord.mediaType = record.mediaType;
-                subtypeRecord.additionalMediaSubtypes = @(subtype);
-            }
-        }
-    }];
-}
-
 #pragma mark - update records
-
-- (BOOL)updateUploadRecordByLocalIdentifier:(NSString *)identifier withStatus:(CameraAssetUploadStatus)status error:(NSError *__autoreleasing  _Nullable *)error {
-    __block NSError *coreDataError = nil;
-    NSArray *records = [self fetchUploadRecordsByIdentifier:identifier shouldPrefetchErrorRecords:YES error:&coreDataError];
-    for (MOAssetUploadRecord *record in records) {
-        [self updateUploadRecord:record withStatus:status error:&coreDataError];
-    }
-    
-    if (error != NULL) {
-        *error = coreDataError;
-    }
-    
-    return coreDataError == nil;
-}
 
 - (BOOL)updateUploadRecord:(MOAssetUploadRecord *)record withStatus:(CameraAssetUploadStatus)status error:(NSError *__autoreleasing  _Nullable *)error {
     __block NSError *coreDataError = nil;
@@ -361,46 +292,12 @@ static const NSUInteger MaximumUploadRetryPerLoginCount = 800;
 
 #pragma mark - delete records
 
-- (BOOL)deleteAllUploadRecordsWithError:(NSError * _Nullable __autoreleasing * _Nullable)error {
-    __block NSError *coreDataError = nil;
-    [self.backgroundContext performBlockAndWait:^{
-        NSFetchRequest *request = MOAssetUploadRecord.fetchRequest;
-        NSBatchDeleteRequest *deleteRequest = [[NSBatchDeleteRequest alloc] initWithFetchRequest:request];
-        [self.backgroundContext executeRequest:deleteRequest error:&coreDataError];
-    }];
-    
-    if (error != NULL) {
-        *error = coreDataError;
-    }
-    
-    return coreDataError == nil;
-}
-
 - (BOOL)deleteUploadRecord:(MOAssetUploadRecord *)record error:(NSError * _Nullable __autoreleasing * _Nullable)error {
     __block NSError *coreDataError = nil;
     [self.backgroundContext performBlockAndWait:^{
         [self.backgroundContext deleteObject:record];
         [self.backgroundContext save:&coreDataError];
     }];
-    
-    if (error != NULL) {
-        *error = coreDataError;
-    }
-    
-    return coreDataError == nil;
-}
-
-- (BOOL)deleteUploadRecordsByLocalIdentifiers:(NSArray<NSString *> *)identifiers error:(NSError * _Nullable __autoreleasing * _Nullable)error {
-    __block NSError *coreDataError = nil;
-    if (identifiers.count > 0) {
-        [self.backgroundContext performBlockAndWait:^{
-            NSFetchRequest *request = MOAssetUploadRecord.fetchRequest;
-            request.predicate = [NSPredicate predicateWithFormat:@"localIdentifier IN %@", identifiers];
-            NSBatchDeleteRequest *deleteRequest = [[NSBatchDeleteRequest alloc] initWithFetchRequest:request];
-            [self.backgroundContext executeRequest:deleteRequest error:&coreDataError];
-            
-        }];
-    }
     
     if (error != NULL) {
         *error = coreDataError;
