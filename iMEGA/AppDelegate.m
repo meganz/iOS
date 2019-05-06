@@ -161,11 +161,6 @@
     self.backgroundTaskMutableDictionary = [[NSMutableDictionary alloc] init];
     
     [SAMKeychain setAccessibilityType:kSecAttrAccessibleAfterFirstUnlock];
-    // Delete username and password if exists - V1
-    if ([SAMKeychain passwordForService:@"MEGA" account:@"username"] && [SAMKeychain passwordForService:@"MEGA" account:@"password"]) {
-        [SAMKeychain deletePasswordForService:@"MEGA" account:@"username"];
-        [SAMKeychain deletePasswordForService:@"MEGA" account:@"password"];
-    }
     
     NSString *sessionV3 = [SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"];
     
