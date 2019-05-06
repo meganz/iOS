@@ -38,6 +38,7 @@ extern NSString * const MEGAAssetMediaTypeUserInfoKey;
 
 #pragma mark - camera upload constants
 
+extern NSString * const MEGACameraUploadsNodeName;
 extern const NSUInteger MEGACameraUploadLowDiskStorageSizeInBytes;
 
 #pragma mark - file extension constants

@@ -38,6 +38,7 @@ NSString * const MEGAAssetMediaTypeUserInfoKey = @"nz.mega.assetMediaTypeKey";
 
 #pragma mark - camera upload constants
 
+NSString * const MEGACameraUploadsNodeName = @"Camera Uploads";
 const NSUInteger MEGACameraUploadLowDiskStorageSizeInBytes = 100 * 1024 * 1024;
 
 #pragma mark - file extension constants

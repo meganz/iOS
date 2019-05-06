@@ -57,7 +57,7 @@
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
 "sslUnverified_alertTitle"="MEGA is unable to connect securely through SSL. You might be on public WiFi with additional requirements.";
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
-"theContentIsNotAvailableForThisAccount"="The content you are trying to access is not available for this account. Try to login with same account as in the mobile web client.";
+"theContentIsNotAvailableForThisAccount"="The content you are trying to access is not available for this account. Please try to login with same account as in the mobile web client.";
 /* Message shown when the app is waiting for the server to complete a request due to an API lock (error -3). */
 "takingLongerThanExpected"="The process is taking longer than expected. Please wait…";
 /* Message shown when the app is waiting for the server to complete a request due to a HTTP error 500. */
@@ -368,6 +368,8 @@
 "tapFileToRename"="Tap file to rename";
 /* */
 "sendToContact"="Send to contact";
+/* Column header of my contacts/chats at copy dialog */
+"My chats"="My chats";
 /* Toast text upon sending a single file to chat */
 "fileSentToChat"="File sent to chat";
 /* Success message when the attachment has been sent to a many chats */
@@ -1278,7 +1280,7 @@
 /* Inform user that there were unsupported assets in the share extension */
 "shareExtensionUnsupportedAssets"="Some items could not be shared with MEGA";
 /* Message shown to the user when the share extension is about to be killed by iOS due to a memory issue */
-"Limited system resources are available when sharing items. Try uploading these files from within the MEGA app."="Limited system resources are available when sharing items. Try uploading these files from within the MEGA app.";
+"Limited system resources are available when sharing items. Try uploading these files from within the MEGA app."="Limited system resources are available when sharing items. Please try uploading these files from within the MEGA app.";
 /* Notification message shown when a transfer failed. Keep colon. */
 "Transfer failed:"="Transfer failed:";
 /* MEGAError */

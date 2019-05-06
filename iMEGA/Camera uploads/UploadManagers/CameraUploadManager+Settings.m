@@ -5,6 +5,7 @@
 @import CoreLocation;
 
 static NSString * const HasMigratedToCameraUploadsV2Key = @"HasMigratedToCameraUploadsV2";
+static NSString * const BoardingScreenLastShowedDateKey = @"CameraUploadBoardingScreenLastShowedDate";
 
 static NSString * const IsCameraUploadsEnabledKey = @"IsCameraUploadsEnabled";
 static NSString * const IsVideoUploadsEnabledKey = @"IsUploadVideosEnabled";
@@ -15,12 +16,16 @@ static NSString * const ShouldConvertHEVCVideoKey = @"ShouldConvertHEVCVideo";
 static NSString * const HEVCToH264CompressionQualityKey = @"HEVCToH264CompressionQuality";
 static NSString * const IsLocationBasedBackgroundUploadAllowedKey = @"IsLocationBasedBackgroundUploadAllowed";
 
+static const NSTimeInterval BoardingScreenShowUpMinimumInterval = 30 * 24 * 3600;
+
 @implementation CameraUploadManager (Settings)
 
 #pragma mark - setting cleanups
 
 + (void)clearLocalSettings {
     [NSUserDefaults.standardUserDefaults removeObjectForKey:IsCameraUploadsEnabledKey];
+    [NSUserDefaults.standardUserDefaults removeObjectForKey:HasMigratedToCameraUploadsV2Key];
+    [NSUserDefaults.standardUserDefaults removeObjectForKey:BoardingScreenLastShowedDateKey];
     [self clearCameraSettings];
 }
 
@@ -65,6 +70,14 @@ static NSString * const IsLocationBasedBackgroundUploadAllowedKey = @"IsLocation
     } else {
         [CameraUploadManager.shared stopBackgroundUpload];
     }
+}
+
++ (NSDate *)boardingScreenLastShowedDate {
+    return [NSUserDefaults.standardUserDefaults objectForKey:BoardingScreenLastShowedDateKey];
+}
+
++ (void)setBoardingScreenLastShowedDate:(NSDate *)boardingScreenLastShowedDate {
+    [NSUserDefaults.standardUserDefaults setObject:boardingScreenLastShowedDate forKey:BoardingScreenLastShowedDateKey];
 }
 
 #pragma mark - photo settings
@@ -162,7 +175,17 @@ static NSString * const IsLocationBasedBackgroundUploadAllowedKey = @"IsLocation
 }
 
 + (BOOL)shouldShowCameraUploadBoardingScreen {
-    return [NSUserDefaults.standardUserDefaults objectForKey:IsCameraUploadsEnabledKey] == nil;
+    BOOL show = NO;
+    if (!CameraUploadManager.isCameraUploadEnabled) {
+        NSDate *lastShowedDate = CameraUploadManager.boardingScreenLastShowedDate;
+        if (lastShowedDate == nil) {
+            show = YES;
+        } else {
+            show = [NSDate.date timeIntervalSinceDate:lastShowedDate] > BoardingScreenShowUpMinimumInterval;
+        }
+    }
+    
+    return show;
 }
 
 + (BOOL)isHEVCFormatSupported {
@@ -210,41 +233,6 @@ static NSString * const IsLocationBasedBackgroundUploadAllowedKey = @"IsLocation
     
     if ([self isVideoUploadEnabled]) {
         [self setConvertHEVCVideo:YES];
-    }
-}
-
-#pragma mark - old settings migration
-
-+ (void)migrateOldCameraUploadsSettings {
-    // PhotoSync old location of completed uploads
-    NSString *oldCompleted = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject stringByAppendingPathComponent:@"PhotoSync/completed.plist"];
-    [NSFileManager.defaultManager mnz_removeItemAtPath:oldCompleted];
-    
-    // PhotoSync v2 location of completed uploads
-    NSString *v2Completed = [NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES).firstObject stringByAppendingPathComponent:@"PhotoSync/com.plist"];
-    [NSFileManager.defaultManager mnz_removeItemAtPath:v2Completed];
-    
-    // PhotoSync settings
-    NSString *oldPspPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject stringByAppendingPathComponent:@"PhotoSync/psp.plist"];
-    NSString *v2PspPath  = [NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES).firstObject stringByAppendingPathComponent:@"PhotoSync/psp.plist"];
-    
-    // check for file in previous location
-    if ([[NSFileManager defaultManager] fileExistsAtPath:oldPspPath]) {
-        [[NSFileManager defaultManager] moveItemAtPath:oldPspPath toPath:v2PspPath error:nil];
-    }
-    
-    NSDictionary *cameraUploadsSettings = [[NSDictionary alloc] initWithContentsOfFile:v2PspPath];
-    
-    if (cameraUploadsSettings[@"syncEnabled"]) {
-        [NSUserDefaults.standardUserDefaults setBool:YES forKey:IsCameraUploadsEnabledKey];
-        
-        BOOL wasCellularUploadAllowed = cameraUploadsSettings[@"cellEnabled"] != nil;
-        [NSUserDefaults.standardUserDefaults setBool:wasCellularUploadAllowed forKey:IsCellularAllowedKey];
-        
-        BOOL wasVideoUploadEnabled = cameraUploadsSettings[@"videoEnabled"] != nil;
-        [NSUserDefaults.standardUserDefaults setBool:wasVideoUploadEnabled forKey:IsVideoUploadsEnabledKey];
-        
-        [NSFileManager.defaultManager mnz_removeItemAtPath:v2PspPath];
     }
 }
 

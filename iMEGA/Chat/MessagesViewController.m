@@ -112,6 +112,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
 
 @property (nonatomic) BOOL selectingMessages;
 @property (nonatomic) NSMutableArray<MEGAChatMessage *> *selectedMessages;
+@property (nonatomic) ToolbarType toolbarType;
 
 @property (nonatomic, getter=shouldShowJoinView) BOOL showJoinView;
 
@@ -129,7 +130,6 @@ static NSMutableSet<NSString *> *tapForInfoSet;
 
 @property (nonatomic) BOOL loadingState;
 
-@property (nonatomic) NSString *typingString;
 @property (nonatomic) NSString *lastGreenString;
 
 @end
@@ -258,8 +258,6 @@ static NSMutableSet<NSString *> *tapForInfoSet;
 
     [[MEGAReachabilityManager sharedManager] retryPendingConnections];
     
-    [self customForwardingToolbar];
-    
     self.inputToolbar.contentView.textView.text = [[MEGAStore shareInstance] fetchChatDraftWithChatId:self.chatRoom.chatId].text;
     
     __weak MessagesViewController *weakSelf = self;
@@ -375,9 +373,8 @@ static NSMutableSet<NSString *> *tapForInfoSet;
 }
 
 - (void)willResignActive {
-    if (!self.editMessage) {
-        [[MEGAStore shareInstance] insertOrUpdateChatDraftWithChatId:self.chatRoom.chatId text:self.inputToolbar.contentView.textView.text];
-    }
+    [self saveChatDraft];
+    
     self.lastBottomInset = self.collectionView.scrollIndicatorInsets.bottom;
     self.lastVerticalOffset = self.collectionView.contentOffset.y;
     
@@ -401,10 +398,8 @@ static NSMutableSet<NSString *> *tapForInfoSet;
     
     [[MEGASdkManager sharedMEGAChatSdk] removeChatDelegate:self];
     [[MEGASdkManager sharedMEGAChatSdk] removeChatCallDelegate:self];
-
-    if (!self.editMessage) {
-        [[MEGAStore shareInstance] insertOrUpdateChatDraftWithChatId:self.chatRoom.chatId text:self.inputToolbar.contentView.textView.text];
-    }
+    
+    [self saveChatDraft];
     
     [SVProgressHUD dismiss];
     [self hideTapForInfoLabel];
@@ -599,8 +594,6 @@ static NSMutableSet<NSString *> *tapForInfoSet;
         } else if (self.chatRoom.archived) {
             self.navigationStatusView.hidden = YES;
             chatRoomState = AMLocalizedString(@"archived", @"Title of flag of archived chats.");
-        } else if (self.typingString) {
-            chatRoomState = self.typingString;
         } else {
             if (self.chatRoom.isGroup) {
                 if (self.chatRoom.hasCustomTitle) {
@@ -802,13 +795,13 @@ static NSMutableSet<NSString *> *tapForInfoSet;
             if (sender.tag) {
                 [DevicePermissionsHelper videoPermissionWithCompletionHandler:^(BOOL granted) {
                     if (granted) {
-                        [self openCallViewWithVideo:sender.tag active:NO];
+                        [self openCallViewWithVideo:sender.tag active:[[MEGASdkManager sharedMEGAChatSdk] hasCallInChatRoom:self.chatRoom.chatId]];
                     } else {
                         [DevicePermissionsHelper alertVideoPermissionWithCompletionHandler:nil];
                     }
                 }];
             } else {
-                [self openCallViewWithVideo:sender.tag active:NO];
+                [self openCallViewWithVideo:sender.tag active:[[MEGASdkManager sharedMEGAChatSdk] hasCallInChatRoom:self.chatRoom.chatId]];
             }
         } else {
             [DevicePermissionsHelper alertAudioPermissionForIncomingCall:NO];
@@ -912,7 +905,6 @@ static NSMutableSet<NSString *> *tapForInfoSet;
     [JSQMessagesCollectionViewCell registerMenuAction:@selector(import:message:)];
     [JSQMessagesCollectionViewCell registerMenuAction:@selector(download:message:)];
     [JSQMessagesCollectionViewCell registerMenuAction:@selector(addContact:message:)];
-    [JSQMessagesCollectionViewCell registerMenuAction:@selector(revoke:message:indexPath:)];
     [JSQMessagesCollectionViewCell registerMenuAction:@selector(removeRichPreview:message:indexPath:)];
     [JSQMessagesCollectionViewCell registerMenuAction:@selector(delete:)];
     
@@ -1122,9 +1114,8 @@ static NSMutableSet<NSString *> *tapForInfoSet;
     UIMenuItem *importMenuItem = [[UIMenuItem alloc] initWithTitle:AMLocalizedString(@"import", @"Caption of a button to edit the files that are selected") action:@selector(import:message:)];
     UIMenuItem *downloadMenuItem = [[UIMenuItem alloc] initWithTitle:AMLocalizedString(@"saveForOffline", @"Caption of a button to edit the files that are selected") action:@selector(download:message:)];
     UIMenuItem *addContactMenuItem = [[UIMenuItem alloc] initWithTitle:AMLocalizedString(@"addContact", @"Alert title shown when you select to add a contact inserting his/her email") action:@selector(addContact:message:)];
-    UIMenuItem *revokeMenuItem = [[UIMenuItem alloc] initWithTitle:AMLocalizedString(@"delete", @"") action:@selector(revoke:message:indexPath:)];
     UIMenuItem *removeRichLinkMenuItem = [[UIMenuItem alloc] initWithTitle:AMLocalizedString(@"removePreview", @"Once a preview is generated for a message which contains URLs, the user can remove it. Same button is also shown during loading of the preview - and would cancel the loading (text of the button is the same in both cases).") action:@selector(removeRichPreview:message:indexPath:)];
-    menuController.menuItems = @[forwardMenuItem, importMenuItem, editMenuItem, downloadMenuItem, addContactMenuItem, revokeMenuItem, removeRichLinkMenuItem];
+    menuController.menuItems = @[forwardMenuItem, importMenuItem, editMenuItem, downloadMenuItem, addContactMenuItem, removeRichLinkMenuItem];
 }
 
 - (void)loadNodesFromMessage:(MEGAChatMessage *)message atTheBeginning:(BOOL)atTheBeginning {
@@ -1317,37 +1308,25 @@ static NSMutableSet<NSString *> *tapForInfoSet;
 }
 
 - (void)setTypingIndicator {
-    switch (self.whoIsTypingTimersMutableDictionary.allKeys.count) {
-        case 0:
-            self.typingString = nil;
-            break;
-            
-        case 1: {
-            NSNumber *firstUserHandle = [self.whoIsTypingTimersMutableDictionary.allKeys objectAtIndex:0];
-            NSString *firstUserName =  [self.chatRoom peerFirstnameByHandle:firstUserHandle.unsignedLongLongValue];
-            
-            self.typingString = [NSString stringWithFormat:AMLocalizedString(@"isTyping", @"A typing indicator in the chat. Please leave the %@ which will be automatically replaced with the user's name at runtime."), (firstUserName.length ? firstUserName : [self.chatRoom peerEmailByHandle:firstUserHandle.unsignedLongLongValue])];
-            break;
-        }
-            
-        case 2: {
-            self.typingString = [self twoOrMoreUsersAreTypingString];
-            break;
-        }
-            
-        default: {
-            if (self.whoIsTypingTimersMutableDictionary.allKeys.count > 2) {
-                self.typingString = [self twoOrMoreUsersAreTypingString];
-            } else {
-                self.typingString = nil;
-            }
-            break;
-        }
+    NSString *typingString = nil;
+    NSMutableAttributedString *typingAttributedString = nil;
+    if (self.whoIsTypingTimersMutableDictionary.allKeys.count >= 2) {
+        typingAttributedString = [self twoOrMoreUsersAreTypingString];
+    } else if (self.whoIsTypingTimersMutableDictionary.allKeys.count == 1) {
+        NSNumber *firstUserHandle = [self.whoIsTypingTimersMutableDictionary.allKeys objectAtIndex:0];
+        NSString *firstUserName = [self.chatRoom peerFirstnameByHandle:firstUserHandle.unsignedLongLongValue];
+        NSString *whoIsTypingString = firstUserName.length ? firstUserName : [self.chatRoom peerEmailByHandle:firstUserHandle.unsignedLongLongValue];
+        
+        typingString = [NSString stringWithFormat:AMLocalizedString(@"isTyping", @"A typing indicator in the chat. Please leave the %@ which will be automatically replaced with the user's name at runtime."), whoIsTypingString];
+        
+        typingAttributedString = [[NSMutableAttributedString alloc] initWithString:typingString];
+        [typingAttributedString addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:10 weight:UIFontWeightBold] range:NSMakeRange(0, whoIsTypingString.length)];
     }
-    [self customNavigationBarLabel];
+    
+    [self.inputToolbar mnz_setTypingIndicatorAttributedText:typingAttributedString];
 }
 
-- (NSString *)twoOrMoreUsersAreTypingString {
+- (NSMutableAttributedString *)twoOrMoreUsersAreTypingString {
     NSNumber *firstUserHandle = [self.whoIsTypingTimersMutableDictionary.allKeys objectAtIndex:0];
     NSNumber *secondUserHandle = [self.whoIsTypingTimersMutableDictionary.allKeys objectAtIndex:1];
     
@@ -1364,7 +1343,11 @@ static NSMutableSet<NSString *> *tapForInfoSet;
         twoOrMoreUsersAreTypingString = [AMLocalizedString(@"moreThanTwoUsersAreTyping", @"text that appear when there are more than 2 people writing at that time in a chat. For example User1, user2 and more are typing... The parameter will be the concatenation of the first two user names. Please do not translate or modify the tags or placeholders.") mnz_removeWebclientFormatters];
     }
     
-    return [twoOrMoreUsersAreTypingString stringByReplacingOccurrencesOfString:@"%1$s" withString:whoIsTypingString];
+    NSString *typingString = [twoOrMoreUsersAreTypingString stringByReplacingOccurrencesOfString:@"%1$s" withString:whoIsTypingString];
+    NSMutableAttributedString *typingAttributedString = [[NSMutableAttributedString alloc] initWithString:typingString];
+    [typingAttributedString addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:10 weight:UIFontWeightBold] range:NSMakeRange(0, whoIsTypingString.length)];
+    
+    return typingAttributedString;
 }
 
 - (void)removeUserHandleFromTypingIndicator:(NSNumber *)userHandle {
@@ -1428,6 +1411,11 @@ static NSMutableSet<NSString *> *tapForInfoSet;
             [[MEGASdkManager sharedMEGAChatSdk] setMessageSeenForChat:self.chatRoom.chatId messageId:lastMessage.messageId];
         }
     }
+}
+
+- (void)saveChatDraft {
+    NSString *chatDraftText = self.editMessage ? @"" : self.inputToolbar.contentView.textView.text;
+    [[MEGAStore shareInstance] insertOrUpdateChatDraftWithChatId:self.chatRoom.chatId text:chatDraftText];
 }
 
 #pragma mark - Gesture recognizer
@@ -1538,17 +1526,66 @@ static NSMutableSet<NSString *> *tapForInfoSet;
 
 #pragma mark - Selection
 
-- (void)customForwardingToolbar {
-    UIBarButtonItem *shareBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(shareSelectedMessages:)];
-    UIBarButtonItem *flexibleItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
-    UIBarButtonItem *forwardBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"forwardToolbar"] style:UIBarButtonItemStyleDone target:self action:@selector(forwardSelectedMessages)];
-    [self setToolbarItems:@[shareBarButtonItem, flexibleItem, forwardBarButtonItem]];
+- (void)startSelecting:(MEGAChatMessage *)message {
+    self.selectingMessages = YES;
+    [self.selectedMessages addObject:message];
+    [self.collectionView reloadItemsAtIndexPaths:self.collectionView.indexPathsForVisibleItems];
+    [self createRightBarButtonItems];
+    
+    if (self.inputToolbar.contentView.textView.isFirstResponder) {
+        [self.inputToolbar.contentView.textView resignFirstResponder];
+    }
+    
+    [self customToolbar];
+    [self.navigationController setToolbarHidden:NO animated:YES];
+    
+    [self customNavigationBarLabel];
+    [self updateToolbarState];
 }
 
-- (void)updateForwardingToolbar {
-    for (UIBarButtonItem *item in self.toolbarItems) {
-        item.enabled = self.selectedMessages.count > 0;
+- (void)customToolbar {
+    switch (self.toolbarType) {
+        case ToolbarTypeForward: {
+            UIBarButtonItem *shareBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(shareSelectedMessages:)];
+            UIBarButtonItem *flexibleItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
+            UIBarButtonItem *forwardBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"forwardToolbar"] style:UIBarButtonItemStyleDone target:self action:@selector(forwardSelectedMessages)];
+            [self setToolbarItems:@[shareBarButtonItem, flexibleItem, forwardBarButtonItem]];
+            
+            break;
+        }
+            
+        case ToolbarTypeDelete: {
+            UIBarButtonItem *deleteBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemTrash target:self action:@selector(deleteSelectedMessages)];
+            [self setToolbarItems:@[deleteBarButtonItem]];
+            
+            break;
+        }
     }
+}
+
+- (void)updateToolbarState {
+    switch (self.toolbarType) {
+        case ToolbarTypeForward:
+            for (UIBarButtonItem *item in self.toolbarItems) {
+                item.enabled = self.selectedMessages.count > 0;
+            }
+            
+            break;
+            
+        case ToolbarTypeDelete: {
+            UIBarButtonItem *deleteBarButtonItem = self.toolbarItems.firstObject;
+            for (MEGAChatMessage *message in self.selectedMessages) {
+                if (!message.isDeletable || message.userHandle != [MEGASdkManager sharedMEGAChatSdk].myUserHandle) {
+                    deleteBarButtonItem.enabled = NO;
+                    return;
+                }
+            }
+            deleteBarButtonItem.enabled = self.selectedMessages.count > 0;
+            
+            break;
+        }
+    }
+
 }
 
 - (void)cancelSelecting:(id)sender {
@@ -1576,7 +1613,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
         [self.collectionView reloadItemsAtIndexPaths:@[indexPath]];
         
         [self customNavigationBarLabel];
-        [self updateForwardingToolbar];
+        [self updateToolbarState];
     }
 }
 
@@ -1655,6 +1692,30 @@ static NSMutableSet<NSString *> *tapForInfoSet;
             }
         });
     });
+}
+
+- (void)deleteSelectedMessages {
+    NSMutableArray<NSIndexPath *> *indexPaths = [[NSMutableArray alloc] init];
+    for (MEGAChatMessage *message in self.selectedMessages) {
+        if (message.type == MEGAChatMessageTypeAttachment) {
+            [[MEGASdkManager sharedMEGAChatSdk] revokeAttachmentMessageForChat:self.chatRoom.chatId messageId:message.messageId];
+        } else {
+            NSUInteger index = [self.messages indexOfObject:message];
+            if (message.status == MEGAChatMessageStatusSending) {
+                [self.messages removeObjectAtIndex:index];
+                [indexPaths addObject:[NSIndexPath indexPathForItem:index inSection:0]];
+            } else {
+                uint64_t messageId = message.status == MEGAChatMessageStatusSending ? message.temporalId : message.messageId;
+                MEGAChatMessage *deleteMessage = [[MEGASdkManager sharedMEGAChatSdk] deleteMessageForChat:self.chatRoom.chatId messageId:messageId];
+                deleteMessage.chatId = self.chatRoom.chatId;
+                [self.messages replaceObjectAtIndex:index withObject:deleteMessage];
+            }
+
+        }
+    }
+    [self.collectionView deleteItemsAtIndexPaths:indexPaths];
+    
+    [self cancelSelecting:nil];
 }
 
 #pragma mark - JSQMessagesViewController method overrides
@@ -2196,7 +2257,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
             if (action == @selector(forward:message:)) return YES;
 
             if ([message.senderId isEqualToString:self.senderId]) {
-                if (action == @selector(revoke:message:indexPath:) && message.isDeletable) return YES;
+                if (action == @selector(delete:) && message.isDeletable) return YES;
             } else {
                 if (action == @selector(import:message:)) return YES;
             }
@@ -2260,30 +2321,16 @@ static NSMutableSet<NSString *> *tapForInfoSet;
         [self addContact:sender message:message];
         return;
     }
-    if (action == @selector(revoke:message:indexPath:)) {
-        [self revoke:sender message:message indexPath:indexPath];
-        return;
-    }
     if (action == @selector(removeRichPreview:message:indexPath:)) {
         [self removeRichPreview:sender message:message indexPath:indexPath];
         return;
     }
-    
     if (action == @selector(delete:)) {
-        uint64_t messageId = (message.status == MEGAChatMessageStatusSending) ? message.temporalId : message.messageId;
-        MEGAChatMessage *deleteMessage = [[MEGASdkManager sharedMEGAChatSdk] deleteMessageForChat:self.chatRoom.chatId messageId:messageId];
-        deleteMessage.chatId = self.chatRoom.chatId;
-        if (message.status == MEGAChatMessageStatusSending) {
-            [self.messages removeObjectAtIndex:indexPath.item];
-            [self.collectionView deleteItemsAtIndexPaths:@[indexPath]];
-        } else {
-            [self.messages replaceObjectAtIndex:indexPath.item withObject:deleteMessage];
-        }
+        [self delete:sender message:message indexPath:indexPath];
+        return;
     }
     
-    if (action != @selector(delete:)) {
-        [super collectionView:collectionView performAction:action forItemAtIndexPath:indexPath withSender:sender];
-    }
+    [super collectionView:collectionView performAction:action forItemAtIndexPath:indexPath withSender:sender];
 }
 
 - (void)edit:(id)sender message:(MEGAChatMessage *)message {
@@ -2293,19 +2340,13 @@ static NSMutableSet<NSString *> *tapForInfoSet;
 }
 
 - (void)forward:(id)sender message:(MEGAChatMessage *)message {
-    self.selectingMessages = YES;
-    [self.selectedMessages addObject:message];
-    [self.collectionView reloadItemsAtIndexPaths:self.collectionView.indexPathsForVisibleItems];
-    [self createRightBarButtonItems];
-    
-    if (self.inputToolbar.contentView.textView.isFirstResponder) {
-        [self.inputToolbar.contentView.textView resignFirstResponder];
-    }
-    
-    [self.navigationController setToolbarHidden:NO animated:YES];
-    
-    [self customNavigationBarLabel];
-    [self updateForwardingToolbar];
+    self.toolbarType = ToolbarTypeForward;
+    [self startSelecting:message];
+}
+
+- (void)delete:(id)sender message:(MEGAChatMessage *)message indexPath:(NSIndexPath *)indexPath {
+    self.toolbarType = ToolbarTypeDelete;
+    [self startSelecting:message];
 }
 
 - (void)import:(id)sender message:(MEGAChatMessage *)message {
@@ -2350,10 +2391,6 @@ static NSMutableSet<NSString *> *tapForInfoSet;
         NSString *email = [message userEmailAtIndex:i];
         [[MEGASdkManager sharedMEGASdk] inviteContactWithEmail:email message:@"" action:MEGAInviteActionAdd delegate:inviteContactRequestDelegate];
     }
-}
-        
-- (void)revoke:(id)sender message:(MEGAChatMessage *)message indexPath:(NSIndexPath *)indexPath {
-    [[MEGASdkManager sharedMEGAChatSdk] revokeAttachmentMessageForChat:self.chatRoom.chatId messageId:message.messageId];
 }
 
 - (void)removeRichPreview:(id)sender message:(MEGAChatMessage *)message indexPath:(NSIndexPath *)indexPath {
@@ -2594,9 +2631,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
 }
 
 - (void)textViewDidEndEditing:(UITextView *)textView {
-    if (!self.editMessage) {
-        [[MEGAStore shareInstance] insertOrUpdateChatDraftWithChatId:self.chatRoom.chatId text:self.inputToolbar.contentView.textView.text];
-    }
+    [self saveChatDraft];
 }
 
 #pragma mark - MEGAPhotoBrowserDelegate

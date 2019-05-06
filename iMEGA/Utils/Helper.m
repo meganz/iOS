@@ -57,7 +57,6 @@ static MEGAIndexer *indexer;
                                  @"ru",
                                  @"th",
                                  @"tl",
-                                 @"tr",
                                  @"uk",
                                  @"vi",
                                  @"zh-Hans",
@@ -1158,8 +1157,21 @@ static MEGAIndexer *indexer;
     return spaceHeight;
 }
 
++ (CGFloat)spaceHeightForEmptyStateWithDescription {
+    CGFloat spaceHeight = 20.0f;
+    if (UIInterfaceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation]) && [[UIDevice currentDevice] iPhoneDevice]) {
+        spaceHeight = 11.0f;
+    }
+    
+    return spaceHeight;
+}
+
 + (NSDictionary *)titleAttributesForEmptyState {
     return @{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:18.0f], NSForegroundColorAttributeName:UIColor.mnz_black333333};
+}
+
++ (NSDictionary *)descriptionAttributesForEmptyState {
+    return @{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:14.0f], NSForegroundColorAttributeName:UIColor.mnz_gray777777};
 }
 
 + (NSDictionary *)buttonTextAttributesForEmptyState {

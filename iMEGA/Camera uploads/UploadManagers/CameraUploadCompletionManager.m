@@ -78,9 +78,9 @@
         AssetUploadInfo *uploadInfo = [NSKeyedUnarchiver unarchiveObjectWithFile:archivedURL.path];
         if (uploadInfo) {
             if (uploadInfo.parentNode == nil) {
-                [self.cameraUploadNodeLoader loadCameraUploadNodeWithCompletion:^(MEGANode * _Nullable cameraUploadNode) {
-                    if (cameraUploadNode == nil) {
-                        MEGALogError(@"[Camera Upload] no camera upload node can be loaded for %@", localIdentifier);
+                [self.cameraUploadNodeLoader loadCameraUploadNodeWithCompletion:^(MEGANode * _Nullable cameraUploadNode, NSError * _Nullable error) {
+                    if (error || cameraUploadNode == nil) {
+                        MEGALogError(@"[Camera Upload] no camera upload node can be loaded for %@ %@", localIdentifier, error);
                         [self finishUploadForLocalIdentifier:localIdentifier status:CameraAssetUploadStatusFailed];
                     } else {
                         MEGALogDebug(@"[Camera Upload] camera upload node loaded for %@", localIdentifier);
@@ -154,6 +154,8 @@
             [self finishUploadForLocalIdentifier:uploadInfo.savedLocalIdentifier status:CameraAssetUploadStatusDone];
         }
     }]];
+    
+    MEGALogDebug(@"[Camera Upload] put node added for %@, total put node count %lu", uploadInfo.savedLocalIdentifier, (unsigned long)self.putNodeQueue.operationCount);
 }
 
 #pragma mark - update status

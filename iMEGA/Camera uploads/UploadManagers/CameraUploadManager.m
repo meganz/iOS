@@ -57,6 +57,8 @@ static const NSUInteger MaximumPhotoUploadBatchCountMultiplier = 2;
 @property (strong, nonatomic) CameraUploadConcurrentCountCalculator *concurrentCountCalculator;
 @property (strong, nonatomic) BackgroundUploadingTaskMonitor *backgroundUploadingTaskMonitor;
 
+@property (strong, nonatomic) dispatch_queue_t propertySerialQueue;
+
 @end
 
 @implementation CameraUploadManager
@@ -76,11 +78,12 @@ static const NSUInteger MaximumPhotoUploadBatchCountMultiplier = 2;
 - (instancetype)init {
     self = [super init];
     if (self) {
+        _propertySerialQueue = dispatch_queue_create("nz.mega.cameraUpload.managerPropertyCreationSerialQueue", DISPATCH_QUEUE_SERIAL);
+        
         [self registerGlobalNotifications];
         
         if (CameraUploadManager.isCameraUploadEnabled) {
-            [self initializeCameraUploadQueues];
-            [self registerNotificationsForUpload];
+            [self initializeCameraUpload];
         }
     }
     return self;
@@ -102,8 +105,6 @@ static const NSUInteger MaximumPhotoUploadBatchCountMultiplier = 2;
     [CameraUploadManager disableCameraUploadIfAccessProhibited];
     
     dispatch_async(dispatch_get_global_queue(QOS_CLASS_UTILITY, 0), ^{
-        [CameraUploadManager enableBackgroundRefreshIfNeeded];
-        [self startBackgroundUploadIfPossible];
         [self.uploadRecordsCollator collateNonUploadingRecords];
         [AttributeUploadManager.shared scanLocalAttributeFilesAndRetryUploadIfNeeded];
     });
@@ -175,65 +176,113 @@ static const NSUInteger MaximumPhotoUploadBatchCountMultiplier = 2;
 #pragma mark - properties
 
 - (CameraUploadNodeLoader *)cameraUploadNodeLoader {
-    if (_cameraUploadNodeLoader == nil) {
-        _cameraUploadNodeLoader = [[CameraUploadNodeLoader alloc] init];
+    if (_cameraUploadNodeLoader) {
+        return _cameraUploadNodeLoader;
     }
+    
+    dispatch_sync(self.propertySerialQueue, ^{
+        if (self->_cameraUploadNodeLoader == nil) {
+            self->_cameraUploadNodeLoader = [[CameraUploadNodeLoader alloc] init];
+        }
+    });
     
     return _cameraUploadNodeLoader;
 }
 
 - (UploadRecordsCollator *)uploadRecordsCollator {
-    if (_uploadRecordsCollator == nil) {
-        _uploadRecordsCollator = [[UploadRecordsCollator alloc] init];
+    if (_uploadRecordsCollator) {
+        return _uploadRecordsCollator;
     }
+    
+    dispatch_sync(self.propertySerialQueue, ^{
+        if (self->_uploadRecordsCollator == nil) {
+            self->_uploadRecordsCollator = [[UploadRecordsCollator alloc] init];
+        }
+    });
     
     return _uploadRecordsCollator;
 }
 
 - (BackgroundUploadMonitor *)backgroundUploadMonitor {
-    if (_backgroundUploadMonitor == nil) {
-        _backgroundUploadMonitor = [[BackgroundUploadMonitor alloc] init];
+    if (_backgroundUploadMonitor) {
+        return _backgroundUploadMonitor;
     }
+    
+    dispatch_sync(self.propertySerialQueue, ^{
+        if (self->_backgroundUploadMonitor == nil) {
+            self->_backgroundUploadMonitor = [[BackgroundUploadMonitor alloc] init];
+        }
+    });
     
     return _backgroundUploadMonitor;
 }
 
 - (CameraScanner *)cameraScanner {
-    if (_cameraScanner == nil) {
-        _cameraScanner = [[CameraScanner alloc] initWithDelegate:self];
+    if (_cameraScanner) {
+        return _cameraScanner;
     }
+    
+    dispatch_sync(self.propertySerialQueue, ^{
+        if (self->_cameraScanner == nil) {
+            self->_cameraScanner = [[CameraScanner alloc] initWithDelegate:self];
+        }
+    });
     
     return _cameraScanner;
 }
 
 - (MediaInfoLoader *)mediaInfoLoader {
-    if (_mediaInfoLoader == nil) {
-        _mediaInfoLoader = [[MediaInfoLoader alloc] init];
+    if (_mediaInfoLoader) {
+        return _mediaInfoLoader;
     }
+    
+    dispatch_sync(self.propertySerialQueue, ^{
+        if (self->_mediaInfoLoader == nil) {
+            self->_mediaInfoLoader = [[MediaInfoLoader alloc] init];
+        }
+    });
     
     return _mediaInfoLoader;
 }
 
 - (DiskSpaceDetector *)diskSpaceDetector {
-    if (_diskSpaceDetector == nil) {
-        _diskSpaceDetector = [[DiskSpaceDetector alloc] init];
+    if (_diskSpaceDetector) {
+        return _diskSpaceDetector;
     }
+    
+    dispatch_sync(self.propertySerialQueue, ^{
+        if (self->_diskSpaceDetector == nil) {
+            self->_diskSpaceDetector = [[DiskSpaceDetector alloc] init];
+        }
+    });
     
     return _diskSpaceDetector;
 }
 
 - (CameraUploadConcurrentCountCalculator *)concurrentCountCalculator {
-    if (_concurrentCountCalculator == nil) {
-        _concurrentCountCalculator = [[CameraUploadConcurrentCountCalculator alloc] init];
+    if (_concurrentCountCalculator) {
+        return _concurrentCountCalculator;
     }
+    
+    dispatch_sync(self.propertySerialQueue, ^{
+        if (self->_concurrentCountCalculator == nil) {
+            self->_concurrentCountCalculator = [[CameraUploadConcurrentCountCalculator alloc] init];
+        }
+    });
     
     return _concurrentCountCalculator;
 }
 
 - (BackgroundUploadingTaskMonitor *)backgroundUploadingTaskMonitor {
-    if (_backgroundUploadingTaskMonitor == nil) {
-        _backgroundUploadingTaskMonitor = [[BackgroundUploadingTaskMonitor alloc] init];
+    if (_backgroundUploadingTaskMonitor) {
+        return _backgroundUploadingTaskMonitor;
     }
+    
+    dispatch_sync(self.propertySerialQueue, ^{
+        if (self->_backgroundUploadingTaskMonitor == nil) {
+            self->_backgroundUploadingTaskMonitor = [[BackgroundUploadingTaskMonitor alloc] init];
+        }
+    });
     
     return _backgroundUploadingTaskMonitor;
 }
@@ -281,7 +330,6 @@ static const NSUInteger MaximumPhotoUploadBatchCountMultiplier = 2;
                 [self startCameraUploadIfNeeded];
             });
         } else {
-            [self.cameraScanner observePhotoLibraryChanges];
             [self startCameraUploadWithRequestingMediaInfo];
         }
     }];
@@ -320,19 +368,21 @@ static const NSUInteger MaximumPhotoUploadBatchCountMultiplier = 2;
         return;
     }
     
-    [self.cameraUploadNodeLoader loadCameraUploadNodeWithCompletion:^(MEGANode * _Nullable cameraUploadNode) {
+    [self.cameraUploadNodeLoader loadCameraUploadNodeWithCompletion:^(MEGANode * _Nullable cameraUploadNode, NSError * _Nullable error) {
+        if (error || cameraUploadNode == nil) {
+            MEGALogError(@"[Camera Upload] camera upload node can not be loaded");
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(.5 * NSEC_PER_SEC)), dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0), ^{
+                [self startCameraUploadWithRequestingMediaInfo];
+            });
+            
+            return;
+        }
+        
         if (cameraUploadNode != self.cameraUploadNode) {
             self.cameraUploadNode = cameraUploadNode;
         }
         
-        if (cameraUploadNode) {
-            [self uploadCameraWhenCameraUploadNodeIsLoaded];
-        } else {
-            MEGALogError(@"[Camera Upload] camera upload node can not be loaded");
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(.5 * NSEC_PER_SEC)), dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0), ^{
-                [self startCameraUploadIfNeeded];
-            });
-        }
+        [self uploadCameraWhenCameraUploadNodeIsLoaded];
     }];
 }
 
@@ -471,12 +521,14 @@ static const NSUInteger MaximumPhotoUploadBatchCountMultiplier = 2;
             }
             
             if ([error.domain isEqualToString:CameraUploadErrorDomain]) {
-                if (error.code == CameraUploadErrorEmptyLocalIdentifier) {
+                if (error.code == CameraUploadErrorEmptyLocalIdentifier || error.code == CameraUploadErrorNoMediaAssetFetched) {
                     [CameraUploadRecordManager.shared deleteUploadRecord:record error:nil];
                 } else {
                     [CameraUploadRecordManager.shared updateUploadRecord:record withStatus:CameraAssetUploadStatusFailed error:nil];
                 }
             }
+            
+            [self uploadNextAssetForMediaType:mediaType];
         }
     }
 }
@@ -513,11 +565,16 @@ static const NSUInteger MaximumPhotoUploadBatchCountMultiplier = 2;
 
 - (void)enableCameraUpload {
     CameraUploadManager.cameraUploadEnabled = YES;
+    [self initializeCameraUpload];
+    [self startCameraUploadIfNeeded];
+}
+
+- (void)initializeCameraUpload {
     [self initializeCameraUploadQueues];
     [self registerNotificationsForUpload];
-    [self startCameraUploadIfNeeded];
     [self startBackgroundUploadIfPossible];
     [CameraUploadManager enableBackgroundRefreshIfNeeded];
+    [self.cameraScanner observePhotoLibraryChanges];
 }
 
 - (void)enableVideoUpload {

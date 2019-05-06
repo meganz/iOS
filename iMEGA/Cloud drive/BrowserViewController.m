@@ -191,9 +191,6 @@
         case BrowserActionSendFromCloudDrive: {
             [self setupDefaultElements];
             
-            self.browserSegmentedControlView.hidden = YES;
-            self.tableViewTopConstraint.constant = -self.browserSegmentedControlView.frame.size.height;
-            
             self.toolbarSendBarButtonItem.title = AMLocalizedString(@"send", @"Label for any 'Send' button, link, text, title, etc. - (String as short as possible).");
             [self.toolbarSendBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIMediumWithSize:17.0f]} forState:UIControlStateNormal];
              [self setToolbarItems:@[flexibleItem, self.toolbarSendBarButtonItem]];
@@ -233,26 +230,31 @@
 }
 
 - (void)reloadUI {
+    [self setParentNodeForBrowserAction];
+    [self setNavigationBarTitle];
+    
+    BOOL enableToolbarItems = YES;
     switch (self.browserSegmentedControl.selectedSegmentIndex) {
         case 0: { //Cloud Drive
-            [self setParentNodeForBrowserAction];
-            
-            self.parentShareType = [[MEGASdkManager sharedMEGASdk] accessLevelForNode:self.parentNode];
-            (self.parentShareType == MEGAShareTypeAccessRead) ? [self setToolbarItemsEnabled:NO] : [self setToolbarItemsEnabled:YES];
-            
-            [self setNavigationBarTitle];
+            if (self.browserAction == BrowserActionSendFromCloudDrive) {
+                enableToolbarItems = self.selectedNodesMutableDictionary.count > 0;
+            } else {
+                self.parentShareType = [[MEGASdkManager sharedMEGASdk] accessLevelForNode:self.parentNode];
+                enableToolbarItems = self.parentShareType > MEGAShareTypeAccessRead;
+            }
             break;
         }
             
         case 1: { //Incoming
-            [self setParentNodeForBrowserAction];
-            
-            [self setNavigationBarTitle];
-            
-            [self setToolbarItemsEnabled:NO];
+            if (self.browserAction == BrowserActionSendFromCloudDrive) {
+                enableToolbarItems = self.selectedNodesMutableDictionary.count > 0;
+            } else {
+                enableToolbarItems = NO;
+            }
             break;
         }
     }
+    [self setToolbarItemsEnabled:enableToolbarItems];
     
     [self.tableView reloadData];
 }
@@ -682,6 +684,7 @@
             case BrowserActionSendFromCloudDrive: {
                 [self.selectedNodesMutableDictionary setObject:selectedNode forKey:selectedNode.base64Handle];
                 [self updatePromptTitle];
+                [self setToolbarItemsEnabled:YES];
                 return;
             }
                 
@@ -707,6 +710,7 @@
         if ([self.selectedNodesMutableDictionary objectForKey:deselectedNode.base64Handle]) {
             [self.selectedNodesMutableDictionary removeObjectForKey:deselectedNode.base64Handle];
             [self updatePromptTitle];
+            [self setToolbarItemsEnabled:self.selectedNodesMutableDictionary.count];
         }
     }
 }

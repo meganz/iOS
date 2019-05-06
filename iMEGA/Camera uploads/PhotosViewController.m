@@ -20,7 +20,6 @@
 #import "CameraUploadManager+Settings.h"
 #import "MEGAConstants.h"
 #import "CustomModalAlertViewController.h"
-#import "PhotosViewController+MNZCategory.h"
 #import "UploadStats.h"
 @import StoreKit;
 @import Photos;
@@ -100,7 +99,7 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
     
     [self setEditing:NO animated:NO];
     
-    [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(internetConnectionChanged) name:kReachabilityChangedNotification object:nil];
+    [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(didReceiveInternetConnectionChangedNotification) name:kReachabilityChangedNotification object:nil];
     [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(didReceiveCameraUploadStatsChangedNotification) name:MEGACameraUploadStatsChangedNotificationName object:nil];
     
     [[MEGASdkManager sharedMEGASdk] addMEGARequestDelegate:self];
@@ -125,7 +124,7 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     
-    if (CameraUploadManager.shouldShowCameraUploadBoardingScreen) {
+    if (self.photosByMonthYearArray.count > 0 && CameraUploadManager.shouldShowCameraUploadBoardingScreen) {
         [self showCameraUploadBoardingScreen];
     } else if (CameraUploadManager.shared.isDiskStorageFull) {
         [self showLocalDiskIsFullWarningScreen];
@@ -213,9 +212,6 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
     [CameraUploadManager.shared loadCurrentUploadStatsWithCompletion:^(UploadStats * _Nullable uploadStats, NSError * _Nullable error) {
         if (error || uploadStats == nil) {
             MEGALogError(@"[Camera Upload] error when to fetch upload stats %@", error);
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                [self reloadHeader];
-            });
             return;
         }
         
@@ -283,6 +279,7 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
     self.stateLabel.hidden = NO;
     self.stateLabel.font = [UIFont systemFontOfSize:17.0];
     self.progressStackView.hidden = YES;
+    self.enableCameraUploadsButton.hidden = YES;
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
     
     switch (currentState) {
@@ -290,31 +287,26 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
             self.stateLabel.text = AMLocalizedString(@"enableCameraUploadsButton", nil);
             self.enableCameraUploadsButton.hidden = NO;
             break;
-            
         case MEGACameraUploadsStateUploading:
             self.stateLabel.hidden = YES;
             self.progressStackView.hidden = NO;
-            self.enableCameraUploadsButton.hidden = YES;
             [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
             break;
-            
         case MEGACameraUploadsStateCompleted:
             self.stateLabel.text = AMLocalizedString(@"cameraUploadsComplete", @"Message shown when the camera uploads have been completed");
-            self.enableCameraUploadsButton.hidden = YES;
             break;
-            
         case MEGACameraUploadsStateNoInternetConnection:
-            self.stateLabel.text = AMLocalizedString(@"noInternetConnection", @"Text shown on the app when you don't have connection to the internet or when you have lost it");
-            self.enableCameraUploadsButton.hidden = YES;
+            if (self.photosByMonthYearArray.count == 0) {
+                self.stateView.hidden = YES;
+            } else {
+                self.stateLabel.text = AMLocalizedString(@"noInternetConnection", @"Text shown on the app when you don't have connection to the internet or when you have lost it");
+            }
             break;
-            
         case MEGACameraUploadsStateEmpty:
             self.stateView.hidden = YES;
             break;
-            
         case MEGACameraUploadsStateLoading:
             self.stateLabel.text = AMLocalizedString(@"loading", nil);
-            self.enableCameraUploadsButton.hidden = NO;
             break;
         case MEGACameraUploadsStateEnableVideo:
             self.stateLabel.font = [UIFont systemFontOfSize:15.0];
@@ -346,7 +338,7 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
     self.photosByMonthYearArray = [NSMutableArray new];
     NSMutableArray *photosArray = [NSMutableArray new];
     
-    self.parentNode = [[MEGASdkManager sharedMEGASdk] childNodeForParent:[[MEGASdkManager sharedMEGASdk] rootNode] name:@"Camera Uploads"];
+    self.parentNode = [[MEGASdkManager sharedMEGASdk] childNodeForParent:[[MEGASdkManager sharedMEGASdk] rootNode] name:MEGACameraUploadsNodeName];
     
     self.nodeList = [[MEGASdkManager sharedMEGASdk] childrenForParent:self.parentNode order:MEGASortOrderTypeModificationDesc];
     
@@ -419,9 +411,10 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
     [self performSelector:@selector(reloadHeader) withObject:nil afterDelay:HeaderStateViewReloadTimeDelay];
 }
 
-- (void)internetConnectionChanged {
+- (void)didReceiveInternetConnectionChangedNotification {
     [self setNavigationBarButtonItemsEnabled:[MEGAReachabilityManager isReachable]];
     [self reloadHeader];
+    [self.photosCollectionView reloadEmptyDataSet];
 }
 
 #pragma mark - IBAction
@@ -484,10 +477,18 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
         [self.toolbar setAlpha:0.0];
         [self.tabBarController.view addSubview:self.toolbar];
         self.toolbar.translatesAutoresizingMaskIntoConstraints = NO;
+        
+        NSLayoutAnchor *bottomAnchor;
+        if (@available(iOS 11.0, *)) {
+            bottomAnchor = self.tabBarController.tabBar.safeAreaLayoutGuide.bottomAnchor;
+        } else {
+            bottomAnchor = self.tabBarController.tabBar.bottomAnchor;
+        }
+        
         [NSLayoutConstraint activateConstraints:@[[self.toolbar.topAnchor constraintEqualToAnchor:self.tabBarController.tabBar.topAnchor constant:0],
                                                   [self.toolbar.leadingAnchor constraintEqualToAnchor:self.tabBarController.tabBar.leadingAnchor constant:0],
                                                   [self.toolbar.trailingAnchor constraintEqualToAnchor:self.tabBarController.tabBar.trailingAnchor constant:0],
-                                                  [self.toolbar.heightAnchor constraintEqualToConstant:49.0]]];
+                                                  [self.toolbar.bottomAnchor constraintEqualToAnchor:bottomAnchor constant:0]]];
         
         [UIView animateWithDuration:0.33f animations:^ {
             [self.toolbar setAlpha:1.0];
@@ -742,6 +743,59 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
     return self.cellInset/2;
 }
 
+#pragma mark - View transitions
+
+- (void)showCameraUploadBoardingScreen {
+    CustomModalAlertViewController *boardingAlertVC = [[CustomModalAlertViewController alloc] init];
+    boardingAlertVC.modalPresentationStyle = UIModalPresentationOverFullScreen;
+    boardingAlertVC.image = [UIImage imageNamed:@"cameraUploadsBoarding"];
+    boardingAlertVC.viewTitle = AMLocalizedString(@"enableCameraUploadsButton", @"Button title that enables the functionality 'Camera Uploads', which uploads all the photos in your device to MEGA");
+    boardingAlertVC.detail = @"Automatically backup your photos and videos to the Cloud Drive"; //AMLocalizedString(@"automaticallyBackupYourPhotos", @"Text shown to explain what means 'Enable Camera Uploads'.");
+    boardingAlertVC.firstButtonTitle = AMLocalizedString(@"enable", @"Text button shown when camera upload will be enabled");
+    boardingAlertVC.dismissButtonTitle = AMLocalizedString(@"notNow", nil);
+    
+    boardingAlertVC.firstCompletion = ^{
+        [self dismissViewControllerAnimated:YES completion:^{
+            [self pushCameraUploadSettings];
+        }];
+    };
+    
+    boardingAlertVC.dismissCompletion = ^{
+        [self dismissViewControllerAnimated:YES completion:nil];
+        CameraUploadManager.cameraUploadEnabled = NO;
+    };
+    
+    [self presentViewController:boardingAlertVC animated:YES completion:nil];
+    CameraUploadManager.boardingScreenLastShowedDate = NSDate.date;
+}
+
+- (void)pushCameraUploadSettings {
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"CameraUploadSettings" bundle:nil];
+    CameraUploadsTableViewController *cameraUploadsTableViewController = [storyboard instantiateViewControllerWithIdentifier:@"CameraUploadsSettingsID"];
+    [self.navigationController pushViewController:cameraUploadsTableViewController animated:YES];
+}
+
+- (void)pushVideoUploadSettings {
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"CameraUploadSettings" bundle:nil];
+    UIViewController *videoUploadsController = [storyboard instantiateViewControllerWithIdentifier:@"VideoUploadsTableViewControllerID"];
+    [self.navigationController pushViewController:videoUploadsController animated:YES];
+}
+
+- (void)showLocalDiskIsFullWarningScreen {
+    CustomModalAlertViewController *warningVC = [[CustomModalAlertViewController alloc] init];
+    warningVC.modalPresentationStyle = UIModalPresentationOverFullScreen;
+    warningVC.image = [UIImage imageNamed:@"disk_storage_full"];
+    warningVC.viewTitle = [NSString stringWithFormat:@"%@ Storage Full", UIDevice.currentDevice.localizedModel];
+    warningVC.detail = @"You do not have enough storage to upload camera. Free up space by deleting unneeded apps, videos or music. You can manage your storage in Settings > General > iPhone Storage";
+    warningVC.boldInDetail = @"Settings > General > iPhone Storage";
+    warningVC.firstButtonTitle = @"OK";
+    warningVC.firstCompletion = ^{
+        [self dismissViewControllerAnimated:YES completion:nil];
+    };
+    
+    [self presentViewController:warningVC animated:YES completion:nil];
+}
+
 #pragma mark - UILongPressGestureRecognizer
 
 - (void)longPress:(UILongPressGestureRecognizer *)longPressGestureRecognizer {
@@ -820,13 +874,22 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
                 return nil;
             }
         } else {
-            text = @"";
+            text = AMLocalizedString(@"enableCameraUploadsButton", @"Enable Camera Uploads");
         }
     } else {
         text = AMLocalizedString(@"noInternetConnection",  @"No Internet Connection");
     }
     
     return [[NSAttributedString alloc] initWithString:text attributes:[Helper titleAttributesForEmptyState]];
+}
+
+- (NSAttributedString *)descriptionForEmptyDataSet:(UIScrollView *)scrollView {
+    if (MEGAReachabilityManager.isReachable && !CameraUploadManager.isCameraUploadEnabled) {
+        NSString *description = @"Automatically backup your photos and videos to the Cloud Drive"; // AMLocalizedString(@"automaticallyBackupYourPhotos", @"Text shown to explain what means 'Enable Camera Uploads'.");
+        return [[NSAttributedString alloc] initWithString:description attributes:[Helper descriptionAttributesForEmptyState]];
+    } else {
+        return nil;
+    }
 }
 
 - (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView {
@@ -837,7 +900,7 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
                 image = [UIImage imageNamed:@"cameraEmptyState"];
             }
         } else {
-            image = [UIImage imageNamed:@"cameraEmptyState"];
+            image = [UIImage imageNamed:@"cameraUploadsBoarding"];
         }
     } else {
         image = [UIImage imageNamed:@"noInternetEmptyState"];
@@ -861,7 +924,7 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
     UIEdgeInsets capInsets = [Helper capInsetsForEmptyStateButton];
     UIEdgeInsets rectInsets = [Helper rectInsetsForEmptyStateButton];
     
-    return [[[UIImage imageNamed:@"emptyStateButton"] resizableImageWithCapInsets:capInsets resizingMode:UIImageResizingModeStretch] imageWithAlignmentRectInsets:rectInsets];
+    return [[[UIImage imageNamed:@"emptyStateButtonBackground"] resizableImageWithCapInsets:capInsets resizingMode:UIImageResizingModeStretch] imageWithAlignmentRectInsets:rectInsets];
 }
 
 - (UIColor *)backgroundColorForEmptyDataSet:(UIScrollView *)scrollView {
@@ -877,12 +940,7 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
 }
 
 - (CGFloat)spaceHeightForEmptyDataSet:(UIScrollView *)scrollView {
-    CGFloat spaceHeight = [Helper spaceHeightForEmptyState];
-    if (!CameraUploadManager.isCameraUploadEnabled || ![[UIDevice currentDevice] iPhone4X]) {
-        spaceHeight += 20.0f;
-    }
-    
-    return spaceHeight;
+    return [Helper spaceHeightForEmptyStateWithDescription];
 }
 
 #pragma mark - DZNEmptyDataSetDelegate Methods
@@ -930,7 +988,7 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
 #pragma mark - MEGAGlobalDelegate
 
 - (void)onNodesUpdate:(MEGASdk *)api nodeList:(MEGANodeList *)nodeList {
-    if (![nodeList mnz_containsNodeWithParentFolderName:@"Camera Uploads"]) {
+    if (![nodeList mnz_containsNodeWithParentFolderName:MEGACameraUploadsNodeName]) {
         return;
     }
     

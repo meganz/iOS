@@ -32,7 +32,7 @@ typedef NS_ENUM(NSUInteger, VideoUploadsFormatRow) {
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self.uploadVideosLabel setText:AMLocalizedString(@"uploadVideosLabel", nil)];
+    [self.uploadVideosLabel setText:@"Upload Videos"];
     self.videoQualityLabel.text = AMLocalizedString(@"videoQuality", @"Title that refers to the video compression quality when to transcode from HEVC to H.264 codec");
     
     NSMutableAttributedString *H264AttributedString = [[NSMutableAttributedString alloc] initWithString:@"H.264 " attributes:@{NSFontAttributeName : [UIFont systemFontOfSize:17.0], NSForegroundColorAttributeName : [UIColor mnz_black333333]}];
@@ -139,6 +139,42 @@ typedef NS_ENUM(NSUInteger, VideoUploadsFormatRow) {
         CameraUploadManager.convertHEVCVideo = indexPath.row == VideoUploadsFormatRowH264;
         [self configUI];
     }
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+    NSString *title;
+    switch (section) {
+        case VideoUploadsSectionFormat:
+            title = @"SAVE HEVC VIDEOS AS";
+            break;
+        default:
+            break;
+    }
+    
+    return title;
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section {
+    NSString *title;
+    switch (section) {
+        case VideoUploadsSectionFeatureSwitch:
+            if (CameraUploadManager.isVideoUploadEnabled) {
+                title = @"Videos will be uploaded to the Camera Uploads folder.";
+            } else {
+                title = @"When enabled, videos will be uploaded.";
+            }
+            break;
+        case VideoUploadsSectionFormat:
+            title = @"We recommend H.264, as its the most compatible format for videos.";
+            break;
+        case VideoUploadsSectionQuality:
+            title = @"Compression quality when to transcode HEVC videos to H.264 format.";
+            break;
+        default:
+            break;
+    }
+    
+    return title;
 }
 
 @end
