@@ -364,9 +364,7 @@
         [self setBadgeValueForChats];
         if ([[self.selectedViewController visibleViewController] isKindOfClass:[MessagesViewController class]]) {
             MessagesViewController *messagesViewController = (MessagesViewController *)[self.selectedViewController visibleViewController];
-            if (messagesViewController.chatRoom.chatId != item.chatId) {
-                [messagesViewController updateUnreadLabel];
-            }
+            [messagesViewController updateUnreadLabel];
         }        
     } else if (item.changes == MEGAChatListItemChangeTypeArchived && item.unreadCount) {
         [UIApplication sharedApplication].applicationIconBadgeNumber = api.unreadChats;

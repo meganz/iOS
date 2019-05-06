@@ -19,7 +19,7 @@
     migrationVC.modalPresentationStyle = UIModalPresentationOverFullScreen;
     migrationVC.image = [UIImage imageNamed:@"cameraUploadsV2Migration"];
     migrationVC.viewTitle = @"New Camera Upload!";
-    migrationVC.detail = @"Now you can choose to convert the HEIF/HEVC format photos and videos to the most compatible JPEG/H.264.\n\nWe now also upload live photos and burst photos to make sure all of your memorable moments are backed up.";
+    migrationVC.detail = @"Now you can choose to convert the HEIF/HEVC photos and videos to the most compatible JPEG/H.264 formats.";
     migrationVC.firstButtonTitle = @"Use Most Compatible Formats";
     migrationVC.dismissButtonTitle = @"Custom Settings";
     

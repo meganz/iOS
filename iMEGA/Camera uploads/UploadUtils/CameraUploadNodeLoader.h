@@ -1,5 +1,6 @@
 
 #import <Foundation/Foundation.h>
+#import "CameraUploadNodeLoadOperation.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -15,7 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 
  @param completion the call back completion handler. The completion block could be called on any thread.
  */
-- (void)loadCameraUploadNodeWithCompletion:(void (^)(MEGANode * _Nullable cameraUploadNode))completion;
+- (void)loadCameraUploadNodeWithCompletion:(CameraUploadNodeLoadCompletionHandler)completion;
 
 @end
 
