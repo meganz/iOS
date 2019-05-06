@@ -287,7 +287,7 @@ static NSString * const VideoAttributeImageName = @"AttributeImage";
             if (self.uploadInfo.asset.mediaType == PHAssetMediaTypeVideo) {
                 uploadTask = [TransferSessionManager.shared videoUploadTaskWithURL:serverURL fromFile:chunkURL completion:nil];
             } else {
-                uploadTask = [[TransferSessionManager shared] photoUploadTaskWithURL:serverURL fromFile:chunkURL completion:nil];
+                uploadTask = [TransferSessionManager.shared photoUploadTaskWithURL:serverURL fromFile:chunkURL completion:nil];
             }
             uploadTask.taskDescription = self.uploadInfo.savedLocalIdentifier;
             [uploadTasks addObject:uploadTask];
