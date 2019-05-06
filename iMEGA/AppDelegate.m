@@ -73,7 +73,6 @@
 @property (nonatomic, strong) UIView *privacyView;
 
 @property (nonatomic, strong) NSString *quickActionType;
-@property (nonatomic, strong) NSString *messageForSuspendedAccount;
 
 @property (nonatomic, strong) UIAlertController *API_ESIDAlertController;
 
@@ -1572,13 +1571,14 @@ void uncaughtExceptionHandler(NSException *exception) {
 }
 
 - (void)onEvent:(MEGASdk *)api event:(MEGAEvent *)event {
+    MEGALogDebug(@"on event type %lu, number %lu", event.type, event.number);
     switch (event.type) {
         case EventChangeToHttps:
             [[[NSUserDefaults alloc] initWithSuiteName:@"group.mega.ios"] setBool:YES forKey:@"useHttpsOnly"];
             break;
             
         case EventAccountBlocked:
-            _messageForSuspendedAccount = event.text;
+            [api handleAccountBlockedEvent:event];
             break;
             
         case EventStorage: {
@@ -1752,17 +1752,6 @@ void uncaughtExceptionHandler(NSException *exception) {
                 break;
             }
                 
-            case MEGAErrorTypeApiEBlocked: {
-                if ([request type] == MEGARequestTypeLogin || [request type] == MEGARequestTypeFetchNodes) {
-                    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"error", nil) message:AMLocalizedString(@"accountBlocked", @"Error message when trying to login and the account is blocked") preferredStyle:UIAlertControllerStyleAlert];
-                    [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
-                    [UIApplication.mnz_presentingViewController presentViewController:alertController animated:YES completion:nil];
-                    [api logout];
-                }
-                
-                break;
-            }
-                
             default:
                 break;
         }
@@ -1856,12 +1845,6 @@ void uncaughtExceptionHandler(NSException *exception) {
             [self showOnboarding];
             
             [[MEGASdkManager sharedMEGASdk] mnz_setAccountDetails:nil];
-            
-            if (self.messageForSuspendedAccount) {
-                UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"error", nil) message:self.messageForSuspendedAccount preferredStyle:UIAlertControllerStyleAlert];
-                [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
-                [UIApplication.mnz_presentingViewController presentViewController:alertController animated:YES completion:nil];
-            }
             break;
         }
             
