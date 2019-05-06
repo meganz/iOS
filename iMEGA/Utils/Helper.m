@@ -1326,13 +1326,6 @@ static MEGAIndexer *indexer;
     
     [NSFileManager.defaultManager mnz_removeFolderContentsAtPath:NSTemporaryDirectory()];
     
-    // Delete v2 thumbnails & previews directory
-    NSString *thumbs2Directory = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"thumbs"];
-    [NSFileManager.defaultManager mnz_removeItemAtPath:thumbs2Directory];
-    
-    NSString *previews2Directory = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"previews"];
-    [NSFileManager.defaultManager mnz_removeItemAtPath:previews2Directory];
-    
     // Delete application support directory content
     NSString *applicationSupportDirectory = [NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES) objectAtIndex:0];
     for (NSString *file in [[NSFileManager defaultManager] contentsOfDirectoryAtPath:applicationSupportDirectory error:nil]) {
