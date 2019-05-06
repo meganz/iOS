@@ -20,7 +20,7 @@
 #import "CustomActionViewController.h"
 #import "NodeInfoViewController.h"
 
-@interface SharedItemsViewController () <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAGlobalDelegate, MEGARequestDelegate, MGSwipeTableCellDelegate, NodeInfoViewControllerDelegate, CustomActionViewControllerDelegate> {
+@interface SharedItemsViewController () <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAGlobalDelegate, MEGARequestDelegate, MGSwipeTableCellDelegate, NodeInfoViewControllerDelegate, CustomActionViewControllerDelegate> {
     BOOL allNodesSelected;
 }
 
@@ -98,6 +98,7 @@
     self.searchController = [Helper customSearchControllerWithSearchResultsUpdaterDelegate:self searchBarDelegate:self];
     self.tableView.tableHeaderView = self.searchController.searchBar;
     self.searchController.hidesNavigationBarDuringPresentation = NO;
+    self.searchController.delegate = self;
     [self.tableView setContentOffset:CGPointMake(0, CGRectGetHeight(self.searchController.searchBar.frame))];
     
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
@@ -814,12 +815,12 @@
 #pragma mark - UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    MEGANode *node = [self nodeAtIndexPath:indexPath];
+    
     if (self.searchController.isActive) {
         self.searchController.active = NO;
         [self searchBarCancelButtonClicked:self.searchController.searchBar];
     }
-    
-    MEGANode *node = [self nodeAtIndexPath:indexPath];
     
     if (tableView.isEditing) {
         if (node != nil) {
@@ -948,6 +949,14 @@
     }
     
     [self.tableView reloadData];
+}
+
+#pragma mark - UISearchControllerDelegate
+
+- (void)didPresentSearchController:(UISearchController *)searchController {
+    if (UIDevice.currentDevice.iPhoneDevice && UIInterfaceOrientationIsLandscape(UIApplication.sharedApplication.statusBarOrientation)) {
+        self.searchController.searchBar.superview.frame = CGRectMake(0, self.sharedItemsSegmentedControlView.frame.size.height + self.navigationController.navigationBar.frame.size.height, self.searchController.searchBar.superview.frame.size.width, self.searchController.searchBar.superview.frame.size.height);
+    }
 }
 
 #pragma mark - UIViewControllerPreviewingDelegate

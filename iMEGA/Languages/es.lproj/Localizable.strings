@@ -57,7 +57,7 @@
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
 "sslUnverified_alertTitle"="MEGA no se puede conectar de forma segura a través de SSL. Es posible que estés conectado a una WiFi pública con requisitos adicionales.";
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
-"theContentIsNotAvailableForThisAccount"="El contenido al que estás intentando acceder no pertenece a esta cuenta. Inicia sesión con la misma cuenta que tienes en el navegador.";
+"theContentIsNotAvailableForThisAccount"="El contenido al que estás intentando acceder no pertenece a esta cuenta. Inicia sesión con la misma cuenta que tienes abierta en el navegador.";
 /* Message shown when the app is waiting for the server to complete a request due to an API lock (error -3). */
 "takingLongerThanExpected"="Tardando más de lo previsto. Por favor, espera...";
 /* Message shown when the app is waiting for the server to complete a request due to a HTTP error 500. */
@@ -368,6 +368,8 @@
 "tapFileToRename"="Tocar el archivo para renombrar";
 /* */
 "sendToContact"="Enviar a contacto";
+/* Column header of my contacts/chats at copy dialog */
+"My chats"="Mis chats";
 /* Toast text upon sending a single file to chat */
 "fileSentToChat"="Archivo enviado al chat";
 /* Success message when the attachment has been sent to a many chats */
@@ -481,7 +483,7 @@
 /* Message shown when some files have been imported */
 "filesImported"="Archivos importados";
 /* Error message shown when you have used more MEGA storage than you can */
-"quotaExceeded"="Cuota de almacenamiento superada";
+"quotaExceeded"="Cuota de almacenamiento agotada";
 /* Alert title shown when the user is overquota */
 "overquotaAlert_title"="¡Has superado la cuota de almacenamiento disponible!";
 /* Alert message shown when the user is overquota */
@@ -1847,15 +1849,15 @@
 /* The label of the toggle switch to indicate that file versioning is enabled. */
 "Enabled"="Activado";
 /* Text button for init a group chat with link. */
-"New Chat Link"="New chat link";
+"New Chat Link"="Nuevo enlace del chat";
 /* Text button for init a group chat */
 "New group chat"="Nuevo chat de grupo";
 /* Shown when an invalid/inexisting/not-available-anymore chat link is opened. */
-"Chat link unavailable"="Chat link unavailable";
+"Chat link unavailable"="Enlace del chat no disponible";
 /* Shown when an inexisting/unavailable/removed link is tried to be opened. */
-"This chat link is no longer available"="This chat link is no longer available";
+"This chat link is no longer available"="Este enlace del chat ya no está disponible";
 /* Text explaining users how the chat links work. */
-"People can join your group by using this link."="People can join your group by using this link.";
+"People can join your group by using this link."="Las personas pueden unirse a tu grupo usando este enlace.";
 /* Subtitle shown in a chat to inform where to tap to enter in the chat details view */
 "Tap here for info"="Toca aquí para más información";
 /* Title for the recents section. */

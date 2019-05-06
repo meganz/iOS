@@ -57,13 +57,13 @@
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
 "sslUnverified_alertTitle"="MEGA n’arrive pas à se connecter de façon sécurisée par SSL. Vous êtes peut-être sur un réseau Wi-Fi public qui a des exigences supplémentaires.";
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
-"theContentIsNotAvailableForThisAccount"="Le contenu auquel vous tentez d’accéder n’est pas proposé pour ce compte. Essayez de vous connecter avec le même compte que le client Web mobile.";
+"theContentIsNotAvailableForThisAccount"="Le contenu auquel vous tentez d’accéder n’est pas proposé pour ce compte. Veuillez essayer de vous connecter avec le même compte que pour le client Web mobile.";
 /* Message shown when the app is waiting for the server to complete a request due to an API lock (error -3). */
 "takingLongerThanExpected"="Le processus prend plus longtemps que prévu. Veuillez patienter.";
 /* Message shown when the app is waiting for the server to complete a request due to a HTTP error 500. */
 "serversAreTooBusy"="Les serveurs sont trop occupés. Veuillez patienter…";
 /* Message shown when the app is waiting for the server to complete a request due to connectivity issue. */
-"unableToReachMega"="Impossible d’atteindre MEGA. Veuillez vérifier votre connectivité ou ressayer plus tard.";
+"unableToReachMega"="Impossible d’atteindre MEGA. Veuillez vérifier votre connectivité ou ressayer ultérieurement.";
 /* Message shown when the app is waiting for the server to complete a request due to a rate limit (error -4). */
 "tooManyRequest"="Trop de requêtes. Veuillez patienter.";
 /* Alert title shown when you need to log in to continue with the action you want to do */
@@ -368,6 +368,8 @@
 "tapFileToRename"="Toucher le fichier pour le renommer";
 /* */
 "sendToContact"="Envoyer à un contact";
+/* Column header of my contacts/chats at copy dialog */
+"My chats"="Mes conversations";
 /* Toast text upon sending a single file to chat */
 "fileSentToChat"="Le fichier a été envoyé vers la conversation";
 /* Success message when the attachment has been sent to a many chats */
@@ -1014,7 +1016,7 @@
 /* "Yearly" subscriptions */
 "yearly"="Annuel";
 /* Alert title shown when a selected plan is not available at that moment on the App store */
-"productNotAvailable"="Cet élément d’achat intégré n’est pas proposé dans la logithèque App Store pour l’instant. Veuillez ressayer plus tard.";
+"productNotAvailable"="Cet élément d’achat intégré n’est pas proposé dans la logithèque App Store pour l’instant. Veuillez ressayer ultérieurement.";
 /* Alert title shown when the user has purchase correctly some plan */
 "thankYou_title"="Merci";
 /* Alert message shown when a purchase was restored succesfully */
@@ -1022,7 +1024,7 @@
 /* Alert title shown when a purchase has stopped because some error between the process */
 "failedPurchase_title"="L'achat est interrompu";
 /* Alert message shown when a purchase has stopped because some error between the process */
-"failedPurchase_message"="Soit vous avez annulé la demande, soit Apple a signalé une erreur de transaction. Veuillez ressayer plus tard, ou contacter ios@mega.nz.";
+"failedPurchase_message"="Soit vous avez annulé la demande, soit Apple a signalé une erreur de transaction. Veuillez ressayer ultérieurement ou contacter ios@mega.nz.";
 /* Alert title shown when a restore hasn't been completed correctly */
 "incompleteRestore_title"="Erreur de restauration";
 /* Alert message shown when a restore hasn't been completed correctly */
@@ -1030,7 +1032,7 @@
 /* Alert title shown when the restoring process has stopped for some reason */
 "failedRestore_title"="La restauration est interrompue";
 /* Alert message shown when the restoring process has stopped for some reason */
-"failedRestore_message"="Soit la demande a été annulée, soit l'achat préalable n'a pas pu être restauré. Veuillez ressayer plus tard ou contacter ios@mega.nz.";
+"failedRestore_message"="Soit la demande a été annulée, soit l’achat préalable n’a pas pu être restauré. Veuillez ressayer ultérieurement ou contacter ios@mega.nz.";
 /* Alert title shown when the DEBUG mode is enabled */
 "enableDebugMode_title"="Activer le mode de DÉBOGAGE";
 /* Alert message shown when the DEBUG mode is enabled */
@@ -1278,7 +1280,7 @@
 /* Inform user that there were unsupported assets in the share extension */
 "shareExtensionUnsupportedAssets"="Certains éléments n’ont pas pu être partagés avec MEGA";
 /* Message shown to the user when the share extension is about to be killed by iOS due to a memory issue */
-"Limited system resources are available when sharing items. Try uploading these files from within the MEGA app."="Les ressources du système sont restreintes lors du partage d’éléments. Essayez de téléverser ces fichiers à partir de l’appli MEGA.";
+"Limited system resources are available when sharing items. Try uploading these files from within the MEGA app."="Les ressources du système sont restreintes lors du partage d’éléments. Veuillez essayer de téléverser ces fichiers à partir de l’appli MEGA.";
 /* Notification message shown when a transfer failed. Keep colon. */
 "Transfer failed:"="Échec de transfert :";
 /* MEGAError */

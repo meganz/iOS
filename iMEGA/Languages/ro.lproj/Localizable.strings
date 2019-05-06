@@ -57,7 +57,7 @@
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
 "sslUnverified_alertTitle"="MEGA nu se poate conecta securizat prin SSL. S-ar putea să fii pe WiFi public cu cerințe suplimentare.";
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
-"theContentIsNotAvailableForThisAccount"="Conținutul pe care încerci să îl accesezi nu este disponibil pentru acest cont. Încearcă să te autentifici cu același cont ca și în clientul web mobil.";
+"theContentIsNotAvailableForThisAccount"="Conținutul pe care încerci să îl accesezi nu este disponibil pentru acest cont. Te rugăm să încerci să te autentifici cu același cont ca și în clientul web mobil.";
 /* Message shown when the app is waiting for the server to complete a request due to an API lock (error -3). */
 "takingLongerThanExpected"="Procesul durează mai mult decât era de așteptat. Te rugăm să aștepți...";
 /* Message shown when the app is waiting for the server to complete a request due to a HTTP error 500. */
@@ -368,6 +368,8 @@
 "tapFileToRename"="Atinge fișierul pentru redenumire";
 /* */
 "sendToContact"="Trimite contactului";
+/* Column header of my contacts/chats at copy dialog */
+"My chats"="Chaturile mele";
 /* Toast text upon sending a single file to chat */
 "fileSentToChat"="Fișiere trimise în chat";
 /* Success message when the attachment has been sent to a many chats */
@@ -1278,7 +1280,7 @@
 /* Inform user that there were unsupported assets in the share extension */
 "shareExtensionUnsupportedAssets"="Unele elemente nu au putut fi partajate cu MEGA";
 /* Message shown to the user when the share extension is about to be killed by iOS due to a memory issue */
-"Limited system resources are available when sharing items. Try uploading these files from within the MEGA app."="Resursele limitate de sistem sunt disponibile atunci când partajezi elemente. Încearcă să încarci aceste fișiere din aplicația MEGA.";
+"Limited system resources are available when sharing items. Try uploading these files from within the MEGA app."="Resursele limitate de sistem sunt disponibile atunci când partajezi elemente. Te rugăm să încerci să încarci aceste fișiere din aplicația MEGA.";
 /* Notification message shown when a transfer failed. Keep colon. */
 "Transfer failed:"="Transfer eșuat:";
 /* MEGAError */
