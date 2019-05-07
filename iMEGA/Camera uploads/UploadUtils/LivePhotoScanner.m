@@ -36,7 +36,7 @@
     [CameraUploadRecordManager.shared.backgroundContext performBlockAndWait:^{
         SavedIdentifierParser *parser = [[SavedIdentifierParser alloc] init];
         for (PHAsset *asset in assets) {
-            [self createLivePhotoRecordIfNeededForAsset:asset inContext:CameraUploadRecordManager.shared.backgroundContext withIdentifierParser:parser];
+            [self insertLivePhotoRecordIfNeededForAsset:asset inContext:CameraUploadRecordManager.shared.backgroundContext withIdentifierParser:parser];
         }
         
         [CameraUploadRecordManager.shared saveChangesIfNeededWithError:nil];
@@ -84,7 +84,7 @@
     return coreDataError == nil;
 }
 
-- (nullable MOAssetUploadRecord *)createLivePhotoRecordIfNeededForAsset:(PHAsset *)asset inContext:(NSManagedObjectContext *)context withIdentifierParser:(SavedIdentifierParser *)parser {
+- (void)insertLivePhotoRecordIfNeededForAsset:(PHAsset *)asset inContext:(NSManagedObjectContext *)context withIdentifierParser:(SavedIdentifierParser *)parser {
     MOAssetUploadRecord *livePhotoRecord;
     if (asset.mnz_isLivePhoto) {
         NSString *parsedIdentifier = [parser savedIdentifierForLocalIdentifier:asset.localIdentifier mediaSubtype:PHAssetMediaSubtypePhotoLive];
@@ -96,8 +96,6 @@
             livePhotoRecord = [self createLivePhotoRecordForAsset:asset inContext:context withParsedIdentifier:parsedIdentifier];
         }
     }
-    
-    return livePhotoRecord;
 }
 
 - (MOAssetUploadRecord *)createLivePhotoRecordForAsset:(PHAsset *)asset inContext:(NSManagedObjectContext *)context withParsedIdentifier:(NSString *)parsedIdentifier {
