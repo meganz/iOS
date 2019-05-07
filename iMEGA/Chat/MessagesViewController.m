@@ -1634,6 +1634,7 @@ const NSUInteger kMaxMessagesToLoad = 256;
     self.collectionView.contentInset = insets;
     self.collectionView.scrollIndicatorInsets = insets;
     self.jumpToBottomConstraint.constant = bottom + 27.0f;
+    self.tooltipConstraint.constant = bottom + 12.0f;
     self.lastBottomInset = bottom;
 
     // If there are no messages, the increment may scroll the collection view beyond its bounds
