@@ -75,8 +75,6 @@ static const CGFloat TableViewSectionHeaderFooterHiddenHeight = 0.1;
     [self.enableCameraUploadsLabel setText:AMLocalizedString(@"cameraUploadsLabel", nil)];
     
     [self.uploadVideosInfoLabel setText:@"Upload Videos"];
-    self.uploadVideosInfoRightDetailLabel.text = CameraUploadManager.isVideoUploadEnabled ? AMLocalizedString(@"on", nil) : AMLocalizedString(@"off", nil);
-    
     [self.uploadVideosLabel setText:@"Upload Videos"];
     
     self.useCellularConnectionLabel.text = AMLocalizedString(@"useMobileData", @"Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature.");
