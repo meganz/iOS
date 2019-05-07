@@ -379,7 +379,7 @@ static const NSUInteger MaximumPhotoUploadBatchCountMultiplier = 2;
             return;
         }
         
-        if (cameraUploadNode != self.cameraUploadNode) {
+        if (cameraUploadNode.handle != self.cameraUploadNode.handle) {
             self.cameraUploadNode = cameraUploadNode;
         }
         
