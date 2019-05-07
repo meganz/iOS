@@ -22,7 +22,6 @@
 + (PHFetchOptions *)mnz_shardFetchOptionsForCameraUpload {
     PHFetchOptions *fetchOptions = [[PHFetchOptions alloc] init];
     fetchOptions.includeAssetSourceTypes = PHAssetSourceTypeUserLibrary | PHAssetSourceTypeCloudShared | PHAssetSourceTypeiTunesSynced;
-    fetchOptions.includeHiddenAssets = YES;
     fetchOptions.includeAllBurstAssets = YES;
     return fetchOptions;
 }
