@@ -113,7 +113,7 @@
 /*  */
 "passwordStrong"="This password will withstand most sophisticated brute-force attacks. Please ensure that you will remember it.";
 /*  */
-"agreeWithTheMEGATermsOfService"="I agree with the MEGA <a href=’terms’>Terms of Service</a>";
+"agreeWithTheMEGATermsOfService"="I agree with the MEGA <a href=\"terms\">Terms of Service</a>";
 /* Error text shown when you have not entered a correct name */
 "nameInvalidFormat"="Enter a valid name";
 /* Error text shown when you have not written the same password */
