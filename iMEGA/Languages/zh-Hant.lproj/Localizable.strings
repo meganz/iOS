@@ -368,6 +368,8 @@
 "tapFileToRename"="Tap file to rename";
 /* */
 "sendToContact"="寄給聯絡人";
+/* Column header of my contacts/chats at copy dialog */
+"My chats"="我的聊天";
 /* Toast text upon sending a single file to chat */
 "fileSentToChat"="檔案已發送至聊天對話中";
 /* Success message when the attachment has been sent to a many chats */
