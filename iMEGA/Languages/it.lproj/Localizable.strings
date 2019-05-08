@@ -368,6 +368,8 @@
 "tapFileToRename"="Clicca file per rinominare";
 /* */
 "sendToContact"="Invia a contatto";
+/* Column header of my contacts/chats at copy dialog */
+"My chats"="Le mie chat";
 /* Toast text upon sending a single file to chat */
 "fileSentToChat"="Il file è stato inviato alla chat";
 /* Success message when the attachment has been sent to a many chats */
@@ -962,7 +964,7 @@
 /* Sentence shown under the available space to complete the info with the user account maximum storage. "available of {maximun storage}" */
 "available of %@"="disponibili di %@";
 /* Button title which triggers the action to upgrade your MEGA account level */
-"upgradeAccount"="Passa a PRO";
+"upgradeAccount"="Aumenta il piano PRO";
 /*  */
 "chooseYourAccountType"="Scegli il tuo tipo di account";
 /* Text shown under the button 'Skip' to explain that you can upgrade your account later in the section 'My Account'. */

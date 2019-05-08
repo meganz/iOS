@@ -368,6 +368,8 @@
 "tapFileToRename"="Tocar el archivo para renombrar";
 /* */
 "sendToContact"="Enviar a contacto";
+/* Column header of my contacts/chats at copy dialog */
+"My chats"="Mis chats";
 /* Toast text upon sending a single file to chat */
 "fileSentToChat"="Archivo enviado al chat";
 /* Success message when the attachment has been sent to a many chats */
@@ -481,7 +483,7 @@
 /* Message shown when some files have been imported */
 "filesImported"="Archivos importados";
 /* Error message shown when you have used more MEGA storage than you can */
-"quotaExceeded"="Cuota de almacenamiento superada";
+"quotaExceeded"="Cuota de almacenamiento agotada";
 /* Alert title shown when the user is overquota */
 "overquotaAlert_title"="¡Has superado la cuota de almacenamiento disponible!";
 /* Alert message shown when the user is overquota */

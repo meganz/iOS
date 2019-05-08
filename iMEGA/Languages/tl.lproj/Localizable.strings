@@ -368,6 +368,8 @@
 "tapFileToRename"="I-tap ang file para ma-rename";
 /* */
 "sendToContact"="Magpadala ng contact";
+/* Column header of my contacts/chats at copy dialog */
+"My chats"="Ang aking chats";
 /* Toast text upon sending a single file to chat */
 "fileSentToChat"="Naipadala na file sa chat";
 /* Success message when the attachment has been sent to a many chats */

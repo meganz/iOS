@@ -166,4 +166,11 @@
     return afterSlashesString;
 }
 
+- (NSURL *)mnz_updatedURLWithCurrentAddress {
+    // @see MegaTCPServer::getLink
+    NSString *loopbackAddress = @"[::1]";
+    NSString *currentAddress = MEGAReachabilityManager.sharedManager.currentAddress;
+    return currentAddress ? [NSURL URLWithString:[self.absoluteString stringByReplacingOccurrencesOfString:loopbackAddress withString:currentAddress]] : self;
+}
+
 @end
