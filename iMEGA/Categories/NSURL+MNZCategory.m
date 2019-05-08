@@ -167,6 +167,10 @@
 }
 
 - (NSURL *)mnz_updatedURLWithCurrentAddress {
+    if (!MEGAReachabilityManager.isReachableViaWiFi) {
+        return self;
+    }
+    
     // @see MegaTCPServer::getLink
     NSString *loopbackAddress = @"[::1]";
     NSString *currentAddress = MEGAReachabilityManager.sharedManager.currentAddress;

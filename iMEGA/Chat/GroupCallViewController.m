@@ -1062,7 +1062,7 @@
                 }
                 
                 if (chatSessionWithNetworkQuality.networkQuality < 2) {
-                    [self showToastMessage:AMLocalizedString(@"Poor conection.", @"Message to inform the local user is having a bad quality network with someone in the current group call") color:@"#FFBF00"];
+                    [self showToastMessage:AMLocalizedString(@"Poor connection.", @"Message to inform the local user is having a bad quality network with someone in the current group call") color:@"#FFBF00"];
                 }
             }
             
