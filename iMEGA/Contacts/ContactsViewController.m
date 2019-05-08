@@ -1139,7 +1139,7 @@
             }
         } 
         
-        [cell.avatarImageView mnz_setImageForUserHandle:user.handle];
+        [cell.avatarImageView mnz_setImageForUserHandle:user.handle name:cell.nameLabel.text];
         
         if (self.tableView.isEditing) {
             // Check if selectedNodesArray contains the current node in the tableView
