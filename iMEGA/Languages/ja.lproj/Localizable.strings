@@ -368,6 +368,8 @@
 "tapFileToRename"="名前を変更するにはファイルをタップ";
 /* */
 "sendToContact"="知り合いに送る";
+/* Column header of my contacts/chats at copy dialog */
+"My chats"="私のチャット";
 /* Toast text upon sending a single file to chat */
 "fileSentToChat"="ファイルがチャットに送信されました";
 /* Success message when the attachment has been sent to a many chats */

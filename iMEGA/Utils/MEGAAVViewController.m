@@ -5,7 +5,9 @@
 
 #import "Helper.h"
 #import "MEGANode+MNZCategory.h"
+#import "MEGAReachabilityManager.h"
 #import "NSString+MNZCategory.h"
+#import "NSURL+MNZCategory.h"
 #import "UIApplication+MNZCategory.h"
 #import "MEGAStore.h"
 
@@ -42,7 +44,7 @@ static const NSUInteger MIN_SECOND = 10; // Save only where the users were playi
         _apiForStreaming = apiForStreaming;
         _node            = folderLink ? [[MEGASdkManager sharedMEGASdkFolder] authorizeNode:node] : node;
         _folderLink      = folderLink;
-        _fileUrl         = [apiForStreaming httpServerGetLocalLink:_node];
+        _fileUrl         = [[MEGASdkManager sharedMEGASdk] httpServerIsLocalOnly] ? [apiForStreaming httpServerGetLocalLink:_node] : [[apiForStreaming httpServerGetLocalLink:_node] mnz_updatedURLWithCurrentAddress];
     }
     
     return self;
@@ -65,6 +67,16 @@ static const NSUInteger MIN_SECOND = 10; // Save only where the users were playi
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(applicationDidEnterBackground:)
                                                  name:UIApplicationDidEnterBackgroundNotification
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(checkNetworkChanges)
+                                                 name:UIApplicationWillEnterForegroundNotification
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(checkNetworkChanges)
+                                                 name:kReachabilityChangedNotification
                                                object:nil];
     
     [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:nil];
@@ -111,6 +123,14 @@ static const NSUInteger MIN_SECOND = 10; // Save only where the users were playi
     
     [[NSNotificationCenter defaultCenter] removeObserver:self
                                                     name:UIApplicationDidEnterBackgroundNotification
+                                                  object:nil];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:UIApplicationWillEnterForegroundNotification
+                                                  object:nil];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:kReachabilityChangedNotification
                                                   object:nil];
     
     [self stopStreaming];
@@ -209,6 +229,21 @@ static const NSUInteger MIN_SECOND = 10; // Save only where the users were playi
 - (void)applicationDidEnterBackground:(NSNotification*)aNotification {
     if (![NSStringFromClass([UIApplication sharedApplication].windows[0].class) isEqualToString:@"UIWindow"]) {
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"presentPasscodeLater"];
+    }
+}
+
+- (void)checkNetworkChanges {
+    if (!self.apiForStreaming || !MEGAReachabilityManager.isReachable) {
+        return;
+    }
+
+    NSURL *oldFileURL = self.fileUrl;
+    self.fileUrl = [[MEGASdkManager sharedMEGASdk] httpServerIsLocalOnly] ? [self.apiForStreaming httpServerGetLocalLink:self.node] : [[self.apiForStreaming httpServerGetLocalLink:self.node] mnz_updatedURLWithCurrentAddress];
+    if (![oldFileURL isEqual:self.fileUrl]) {
+        CMTime currentTime = self.player.currentTime;
+        AVPlayerItem *newPlayerItem = [AVPlayerItem playerItemWithURL:self.fileUrl];
+        [self.player replaceCurrentItemWithPlayerItem:newPlayerItem];
+        [self.player seekToTime:currentTime];
     }
 }
 

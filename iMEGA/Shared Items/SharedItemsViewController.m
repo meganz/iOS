@@ -815,12 +815,12 @@
 #pragma mark - UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    MEGANode *node = [self nodeAtIndexPath:indexPath];
+    
     if (self.searchController.isActive) {
         self.searchController.active = NO;
         [self searchBarCancelButtonClicked:self.searchController.searchBar];
     }
-    
-    MEGANode *node = [self nodeAtIndexPath:indexPath];
     
     if (tableView.isEditing) {
         if (node != nil) {
