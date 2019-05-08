@@ -75,7 +75,7 @@
 
 - (void)viewWillDisappear:(BOOL)animated {
     if (previewDocumentTransfer) {
-        [self.api cancelTransfer:previewDocumentTransfer];
+        [MEGASdkManager.sharedMEGASdk cancelTransfer:previewDocumentTransfer];
     }
     
     if (@available(iOS 11.0, *)) {
