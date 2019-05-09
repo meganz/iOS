@@ -281,11 +281,9 @@
     [self updatePromptTitle];
     
     if (self.isParentBrowser) {
+        self.navigationItem.title = @"MEGA";
         if (self.browserAction == BrowserActionDocumentProvider) {
-            self.navigationItem.title = @"MEGA";
             self.extendedNavigationBar_label.text = AMLocalizedString(@"cloudDrive", @"Title of the Cloud Drive section");
-        } else {
-            self.navigationItem.title = self.cloudDriveButton.selected ? AMLocalizedString(@"cloudDrive", @"Title of the Cloud Drive section") : AMLocalizedString(@"sharedItems", @"Title of Shared Items section");
         }
     } else {
         if (self.isChildBrowserFromIncoming) {
