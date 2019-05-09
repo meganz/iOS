@@ -9,6 +9,8 @@
 
 #import "TestPasswordViewController.h"
 
+#import "MEGAGenericRequestDelegate.h"
+
 @interface PasswordReminderViewController ()
 
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
@@ -19,6 +21,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *dismissButton;
 @property (weak, nonatomic) IBOutlet UISwitch *dontShowAgainSwitch;
 @property (weak, nonatomic) IBOutlet UIView *alphaView;
+@property (weak, nonatomic) IBOutlet UIImageView *keyImageView;
 
 @end
 
@@ -35,19 +38,38 @@
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     
-    [self fadeInBackgroundCompletion:nil];
+    if (!self.logout) {
+        [self fadeInBackgroundCompletion:nil];
+    }
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    if (self.logout) {
+        self.navigationItem.title = AMLocalizedString(@"Password Reminder", @"Title for feature Password Reminder");
+    }
 }
 
 #pragma mark - IBActions
 
+- (IBAction)tapClose:(id)sender {
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
 - (IBAction)tapTestPassword:(id)sender {
-    [self dismissViewControllerAnimated:YES completion:^{
-        UINavigationController *testPasswordNavigation = [[UIStoryboard storyboardWithName:@"PasswordReminder" bundle:nil] instantiateViewControllerWithIdentifier:@"TestPasswordNavigationControllerID"];
-        TestPasswordViewController *testPasswordViewController = testPasswordNavigation.viewControllers.firstObject;
+    if (self.isLoggingOut) {
+        TestPasswordViewController *testPasswordViewController = [[UIStoryboard storyboardWithName:@"PasswordReminder" bundle:nil] instantiateViewControllerWithIdentifier:@"TestPasswordViewID"];
         testPasswordViewController.logout = self.isLoggingOut;
-        
-        [UIApplication.mnz_presentingViewController presentViewController:testPasswordNavigation animated:YES completion:nil];
-    }];
+        [self.navigationController pushViewController:testPasswordViewController animated:YES];
+    } else {
+        [self dismissViewControllerAnimated:YES completion:^{
+            UINavigationController *testPasswordNavigation = [[UIStoryboard storyboardWithName:@"PasswordReminder" bundle:nil] instantiateViewControllerWithIdentifier:@"TestPasswordNavigationControllerID"];
+            TestPasswordViewController *testPasswordViewController = testPasswordNavigation.viewControllers.firstObject;
+            testPasswordViewController.logout = self.isLoggingOut;
+            
+            [UIApplication.mnz_presentingViewController presentViewController:testPasswordNavigation animated:YES completion:nil];
+        }];
+    }
 }
 
 - (IBAction)tapBackupRecoveryKey:(id)sender {
@@ -79,23 +101,31 @@
 #pragma mark - Private
 
 - (void)notifyUserSkippedOrBlockedPasswordReminder {
+    MEGAGenericRequestDelegate *delegate = [[MEGAGenericRequestDelegate alloc] initWithCompletion:^(MEGARequest *request, MEGAError *error) {
+        if (self.isLoggingOut) {
+            [Helper logoutAfterPasswordReminder];
+        }
+    }];
     if (self.dontShowAgainSwitch.isOn) {
-        [[MEGASdkManager sharedMEGASdk] passwordReminderDialogBlocked];
+        [[MEGASdkManager sharedMEGASdk] passwordReminderDialogBlockedWithDelegate:delegate];
     } else {
-        [[MEGASdkManager sharedMEGASdk] passwordReminderDialogSkipped];
-    }
-    
-    if (self.isLoggingOut) {
-        [Helper logoutAfterPasswordReminder];
+        [[MEGASdkManager sharedMEGASdk] passwordReminderDialogSkippedWithDelegate:delegate];
     }
 }
 
 - (void)configureUI {
-    self.alphaView.alpha = 0;
+    self.keyImageView.hidden = UIDevice.currentDevice.iPhone4X;
+
+    if (self.logout) {
+        UIBarButtonItem *cancelBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:AMLocalizedString(@"close", nil) style:UIBarButtonItemStylePlain target:self action:@selector(tapClose:)];
+        self.navigationItem.rightBarButtonItem = cancelBarButtonItem;
+    }
     
     self.titleLabel.text = AMLocalizedString(@"remindPasswordTitle", @"Title for Remind Password View, inviting user to test password");
     self.switchInfoLabel.text = AMLocalizedString(@"dontShowAgain", @"Text for don't show again Remind Password View option");
     [self.testPasswordButton setTitle:AMLocalizedString(@"testPassword", @"Label for test password button") forState:UIControlStateNormal];
+    self.testPasswordButton.layer.borderWidth = 1.0;
+    self.testPasswordButton.layer.borderColor = [UIColor colorFromHexString:@"899B9C"].CGColor;
     
     if (self.isLoggingOut) {
         self.descriptionLabel.text = AMLocalizedString(@"remindPasswordLogoutText", @" Text to describe why the user should test his/her password before logging out");

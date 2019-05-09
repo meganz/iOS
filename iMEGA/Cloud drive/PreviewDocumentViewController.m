@@ -51,6 +51,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self configureNavigation];
+    
+    self.moreBarButtonItem.accessibilityLabel = AMLocalizedString(@"more", @"Top menu option which opens more menu options in a context menu.");
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -64,7 +66,7 @@
         self.nodeFilePath = [nodeFolderPath stringByAppendingPathComponent:self.node.name];
         
         if ([[NSFileManager defaultManager] createDirectoryAtPath:nodeFolderPath withIntermediateDirectories:YES attributes:nil error:&error]) {
-            [self.api startDownloadTopPriorityWithNode:self.node localPath:self.nodeFilePath appData:nil delegate:self];
+            [MEGASdkManager.sharedMEGASdk startDownloadTopPriorityWithNode:[self.api authorizeNode:self.node] localPath:self.nodeFilePath appData:nil delegate:self];
         } else {
             MEGALogError(@"Create directory at path failed with error: %@", error);
         }
@@ -73,7 +75,7 @@
 
 - (void)viewWillDisappear:(BOOL)animated {
     if (previewDocumentTransfer) {
-        [self.api cancelTransfer:previewDocumentTransfer];
+        [MEGASdkManager.sharedMEGASdk cancelTransfer:previewDocumentTransfer];
     }
     
     if (@available(iOS 11.0, *)) {
@@ -286,8 +288,6 @@
 
 - (void)presentMEGAQlPreviewController {
     MEGAQLPreviewController *previewController = [[MEGAQLPreviewController alloc] initWithFilePath:previewDocumentTransfer.path];
-    [previewController setModalPresentationStyle:UIModalPresentationCustom];
-    [previewController setModalTransitionStyle:UIModalTransitionStyleCrossDissolve];
     
     [self dismissViewControllerAnimated:YES completion:^{
         [UIApplication.mnz_presentingViewController presentViewController:previewController animated:YES completion:nil];

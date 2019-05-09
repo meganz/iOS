@@ -57,7 +57,7 @@
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
 "sslUnverified_alertTitle"="MEGAはSSL経由では安全に接続できません。あなたは追加要件があるパブリックWiFi上にいるかもしれません。";
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
-"theContentIsNotAvailableForThisAccount"="アクセスしようとしているコンテンツは、このアカウントでは利用できません。モバイルWebクライアントと同じアカウントでログインしてください。";
+"theContentIsNotAvailableForThisAccount"="アクセスしようとしているコンテンツは、このアカウントではご利用いただけません。モバイルウェブクライアントと同じアカウントでログインしてみてください。";
 /* Message shown when the app is waiting for the server to complete a request due to an API lock (error -3). */
 "takingLongerThanExpected"="プロセスに予想以上時間がかかっています。お待ちください...";
 /* Message shown when the app is waiting for the server to complete a request due to a HTTP error 500. */
@@ -70,22 +70,6 @@
 "pleaseLogInToYourAccount"="あなたのアカウントにログインして下さい。";
 /* Error message when a user attempts to change their email without an active login session. */
 "needToBeLoggedInToCompleteYourEmailChange"="メールの変更を完了するには、ログインする必要があります。現在のメールアドレスで再度ログインしてから、確認リンクをもう一度クリックしてください。";
-/* Title shown on the app's start animation to explain what MEGA offers you (1/4) */
-"megaSpace"="MEGA の超デカスペース";
-/* Title shown on the app's start animation to explain what MEGA offers you (2/4) */
-"megaSpeed"="MEGA の超速スピード";
-/* Title shown on the app's start animation to explain what MEGA offers you (3/4) */
-"megaPrivacy"="MEGA ならではの完璧プライバシー";
-/* Title shown on the app's start animation to explain what MEGA offers you (4/4) */
-"megaAccess"="MEGAへのアクセス方法";
-/* Message shown on the app's start animation to explain what MEGA SPACE means */
-"megaSpaceText"="今すぐ登録して、50 GB の無料スペースをどうぞ！";
-/* Message shown on the app's start animation to explain what MEGA SPEED means */
-"megaSpeedText"="す速いアップロード。みんなとファイルを今すぐ共有。";
-/* Message shown on the app's start animation to explain what MEGA PRIVACY means */
-"megaPrivacyText"="MEGAの末端間暗号化システムならあなたのファイルは安全です。";
-/* Message shown on the app's start animation to explain what MEGA ACCESS means */
-"megaAccessText"="いつでも、どこでも完全に暗号化。";
 /* Button title which triggers the action to login in your MEGA account */
 "login"="ログイン";
 /* Button title which triggers the action to create a MEGA account */
@@ -115,7 +99,7 @@
 /*  */
 "weak"="弱い";
 /*  */
-"passwordVeryWeakOrWeak"="あなたのパスワードは簡単に当てられてしまいます。もっと長くしてみて下さい。大文字と小文字を組み合わせて下さい。記号も入れて下さい。名前や辞書にある言葉はよくありません。";
+"passwordVeryWeakOrWeak"="あなたのパスワードは簡単に推測されます。パスワードを長くしてみてください。大文字と小文字を組み合わせます。特殊文字を追加してください。名前や辞書の単語を使わないでください。";
 /* Label displayed during checking the strength of the password introduced. Represents Medium security */
 "medium"="普通";
 /*  */
@@ -384,6 +368,8 @@
 "tapFileToRename"="名前を変更するにはファイルをタップ";
 /* */
 "sendToContact"="知り合いに送る";
+/* Column header of my contacts/chats at copy dialog */
+"My chats"="私のチャット";
 /* Toast text upon sending a single file to chat */
 "fileSentToChat"="ファイルがチャットに送信されました";
 /* Success message when the attachment has been sent to a many chats */
@@ -635,7 +621,7 @@
 /* Permissions given to the user you share your folder with */
 "readOnly"="読み込みだけ";
 /* Permissions given to the user you share your folder with */
-"readAndWrite"="読み取りと書き込み";
+"readAndWrite"="読み込みと書き込み";
 /* Permissions given to the user you share your folder with */
 "fullAccess"="フルアクセス";
 /* Title of the Settings section */
@@ -675,7 +661,7 @@
 /* Option title to enable Camera Uploads only when the device is charging */
 "onlyWhenChargingLabel"="チャージ中のみ";
 /* Footer text to explain the Camera Uploads functionality */
-"cameraUploads_footer"="有効にすると、フォトやビデオがアップロードされます。";
+"cameraUploads_footer"="有効にすると、写真と動画がアップロードされます。";
 /* App means “Application” */
 "App version"="アプリ用";
 /* Title of the label where the SDK version is shown */
@@ -781,7 +767,7 @@
 /* Hint text where the user have to re-write the new password to confirm it */
 "confirmPassword"="パスワード確認";
 /* Success message shown when the password has been changed */
-"passwordChanged"="あなたのパスワードは変更されました。";
+"passwordChanged"="パスワードを変更しました。";
 /* An option to reset the password. */
 "forgotPassword"="パスワードをわすれました？";
 /* Message shown during forgot your password process if the link to reset password has expired */
@@ -965,6 +951,8 @@
 "free"="無料";
 /* Text that shows the expiry date of the account PRO level */
 "expiresOn"="失効日%@";
+/* Label for the ‘Renews on’ text into the my account page, indicating the renewal date of a subscription - (String as short as possible). */
+"Renews on"="更新日";
 /* Button title for the section where you can see the 'Purchase history' related to your account */
 "purchaseHistory"="購入履歴";
 /* Title of the Incoming Shares section. Here you can see the folders that your contacts have shared with you */
@@ -1026,7 +1014,7 @@
 /* "Monthly" subscriptions */
 "monthly"="月ごと";
 /* "Yearly" subscriptions */
-"yearly"="年ごと";
+"yearly"="年間";
 /* Alert title shown when a selected plan is not available at that moment on the App store */
 "productNotAvailable"="アプリ内購入使用としているそのアイテムは、現在アプストアにはありません。後日、またトライして下さい。";
 /* Alert title shown when the user has purchase correctly some plan */
@@ -1062,7 +1050,7 @@
 /* Empty Conversations section */
 "noConversations"="会話なし";
 /* Empty Conversations description */
-"noConversationsDescription"="エンドツーエンドの暗号化を使用して、ご連絡先と安全にチャットを開始してください";
+"Start chatting securely with your contacts using end-to-end encryption"="エンドツーエンドの暗号化を使用して、ご連絡先と安全にチャットを開始してください";
 /* Title show when the chat is disabled */
 "chatIsDisabled"="チャット無効";
 /* Text button shown when the chat is disabled and if tapped the chat will be enabled */
@@ -1204,7 +1192,7 @@
 /* Alert message shown when a chat does not exist */
 "chatNotFound"="チャットなし";
 /* A typing indicator in the chat. Please leave the %@ which will be automatically replaced with the user's name at runtime. */
-"isTyping"="%@が入力中です...";
+"isTyping"="%@さんが入力中です…";
 /* Plural, a hint that appears when two users are typing in a group chat at the same time. The parameter will be the concatenation of both user names. The tags and placeholders shouldn't be translated or modified. */
 "twoUsersAreTyping"="%1$s [A]さんが入力しています…[/A]";
 /* text that appear when there are more than 2 people writing at that time in a chat. For example User1, user2 and more are typing... The parameter will be the concatenation of the first two user names. The tags and placeholders shouldn't be translated or modified. */
@@ -1383,7 +1371,7 @@
 /* Notification text body shown when you have missed several audio calls and one video call. [A] = {number of missed audio calls} */
 "missedAudioCallsAndMissedVideoCall"="[A]件の不在音声着信および不在ビデオ着信";
 /* Notification text body shown when you have missed several audio calls and video calls. [A] = {number of missed audio calls}. [B] = {number of missed video calls} */
-"missedAudioCallsAndMissedVideoCalls"="[A]件の不在音声着信および[B]件の不在ビデオ着信";
+"missedAudioCallsAndMissedVideoCalls"="[A]件の不在音声着信と[B]件の不在ビデオ着信";
 /* Button title to see the available bonus */
 "getBonus"="ボーナスを獲得";
 /* Text shown under the title 'Video quality' that explains what it means */
@@ -1434,12 +1422,12 @@
 "type"="タイプ";
 /* Title of the incoming shared folders of a user in singular */
 "sharedFolder"="フォルダ共有";
-/* The label of the folder creation time. For example: "Created: 2013-02-02" (no need to put the colon punctuation in the translation) */
-"created"="作成";
 /* Label for what a selection contains. For example: "Contains: 3 folders & 13 files". (no need to put the colon punctuation in the translation) */
 "contains"="内容";
 /* A label for any 'Modified' text or title. For example to show the modification date of a file/folder. */
 "modified"="編集時刻";
+/* A label for any ‘Added’ text or title. For example to show the upload date of a file/folder. */
+"Added"="追加時刻";
 /* used for example when a folder is shared with 2 or more users */
 "users"="複数のユーザー";
 /* user (singular) label indicating is receiving some info, for example shared folders */
@@ -1657,7 +1645,7 @@
 /* The title of the section about deleting file versions in the settings. */
 "Delete all older versions of my files"="古いバージョンのファイルをすべて削除する";
 /* Text of a button which deletes all historical versions of files in the users entire account. */
-"Delete old versions"="古いバージョンを削除する";
+"Delete previous versions"="以前のバージョンを削除";
 /* A warning note about deleting all file versions in the settings section. */
 "All current files will remain. Only historic versions of your files will be deleted."="現在のファイルはすべて残ります。あなたのファイルの過去バージョンのみが削除されます。";
 /* Text of the dialog to delete all the file versions of the account */
@@ -1669,7 +1657,7 @@
 /* Label for any ‘Days’ button, link, text, title, etc. - (String as short as possible). */
 "Days"="日";
 /* New server-side rubbish-bin cleaning scheduler description (for Free users) */
-"The Rubbish Bin is cleaned for you automatically. The minimum period is 7 days and your maximum period is 30 days."="ごみ箱は自動的にきれいになります。最小期間は7日間で、あなたの最大期間は30日間です。";
+"The Rubbish Bin is cleaned for you automatically. The minimum period is 7 days and your maximum period is 30 days."="ごみ箱は自動的にきれいにできます。最小期間は7日間で、最大期間は30日間です。";
 /* New server-side rubbish-bin cleaning scheduler description (for PRO users) */
 "The Rubbish Bin can be cleaned for you automatically. The minimum period is 7 days."="ごみ箱は自動的にきれいにできます。最小期間は7日間です。";
 /* Description shown when you try to disable the feature Rubbish-Bin Cleaning Scheduler and you are a free user */
@@ -1680,10 +1668,10 @@
 "%@ joined the call."="%@さんが通話に参加しました。";
 /* Message to inform the local user that someone has left the current group call */
 "%@ left the call."="%@さんが通話から抜けました。";
-/* Message to inform the local user is having a bad quality network with someone in the current group call */
-"Poor conection."="接続不良。";
 /* Message shown in a chat room when there is an active group call */
 "There is an active group call. Tap to join."="有効なグループ通話があります。タップして参加します。";
+/* Message shown in a chat room when there is an active call */
+"There is an active call. Tap to join."="有効な通話があります。参加するにはタップします。";
 /* Message shown in a chat room for a group call in progress displaying the duration of the call */
 "Touch to return to call %@"="タッチして通話に戻る %@";
 /* A button label which allows the users save images/videos in the Photos app. */
@@ -1694,6 +1682,36 @@
 "Saved to Photos"="写真に保存されました";
 /* Text shown when an error occurs when trying to save a photo or video to Photos app */
 "Could not save Item"="項目を保存できませんでした";
+/* Label in a cell where you can enable the 'Encrypted Key Rotation' */
+"Encrypted Key Rotation"="暗号化キーローテーション";
+/* Title shown in a cell to allow the users enable the 'Encrypted Key Rotation' */
+"Enable Encrypted Key Rotation"="暗号化キーローテーションを有効にする";
+/* Label in a cell where you can get the chat link */
+"Get Chat Link"="チャットリンクを取得";
+/* Footer text to explain what means 'Encrypted Key Rotation' */
+"Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages."="キーローテーションでは安全性が少し高まりますが、チャットリンクを作成できず、新規参加者は過去のメッセージを見れません。";
+/* Shown as an error message when the user selects "create chat link", but haven't entered a title for the newly created room */
+"To create a chat link you must name the group."="チャットリンクを作成するには、グループに名前を付ける必要があります。";
+/* Label shown in a cell where you can enable a switch to get a chat link */
+"Chat Link"="チャットリンク";
+/* Message shown when there is an active chat link that can be deleted */
+"Delete Chat Link"="チャットリンクを削除";
+/* Button text in public chat previews that allows the user to join the chat */
+"Join"="参加する";
+/* Text shown in a notification to let the user know that has joined a public chat room after login or account creation */
+"You have joined %@"="あなたは%@に参加しました";
+/* Users previewing a public chat */
+"Observers"="オブザーバー";
+/* Alert message shown while deleting a chat link, warning about the consequences */
+"This conversation will no longer be accessible through the link you are about to delete."="この会話は、一度削除されるとチャットリンクからアクセスできなくなります。";
+/* Management message shown in a chat when the user %@ enables the 'Encrypted Key Rotation' */
+"%@ enabled Encrypted Key Rotation"="%@さんが暗号化キーローテーションを有効にしました。";
+/* Management message shown in a chat when the user %@ creates a public link for the chat */
+"%@ created a public link for the chat."="%@さんがチャット用のチャットリンクを作成しました。";
+/* Management message shown in a chat when the user %@ removes a public link for the chat */
+"%@ removed a public link for the chat."="%@さんがチャット用のチャットリンクを削除しました。";
+/* Management message shown in a chat when the user %@ joined it from a public chat link */
+"%@ joined the group chat."="%@さんがグループチャットに参加しました。";
 /* Message show when a call cannot be established because there are too many participants in the group call */
 "Error. No more participants are allowed in this group call."="最大参加者数に達したため、この通話に参加できません。";
 /* Message show when a user cannot activate the video in a group call because the max number of videos has been reached */
@@ -1801,7 +1819,7 @@
 /* Label shown next to a feature name that can be enabled or disabled, like in 'Show Last seen...' */
 "Show"="表示";
 /* Shown when viewing a 1on1 chat (at least for now), if the user is offline. */
-"Last seen %s"="最終ログイン%s";
+"Last seen %s"="最終ログイン：%s";
 /* Text to inform the user the 'Last seen' time of a contact is a long time ago (>= 65535 minutes) */
 "Last seen a long time ago"="最終ログインはだいぶ前";
 /* */
@@ -1812,3 +1830,61 @@
 "%d participants"="%d人の参加者";
 /* Singular of participant. 1 participant */
 "%d participant"="%d人の参加者";
+/* Text to inform the user there is an active call and is not participating */
+"Ongoing Call"="継続中の通話";
+/* Message shown when there is an ongoing call and the user tries to play an audio or video */
+"It is not possible to play content while there is a call in progress"="通話中にメディアファイルを再生することはできません。";
+/* Text to inform the user there is an active call and is participating */
+"Call Started"="通話が開始しました";
+/* Title for feature Password Reminder */
+"Password Reminder"="パスワードリマインダー";
+/* Label for any ‘Message’ button, link, text, title, etc. - (String as short as possible). */
+"Message"="メッセージ";
+/* Title of the button in the contact info screen to start an audio call */
+"Call"="通話";
+/* Title of the button in the contact info screen to start a video call */
+"Video"="動画";
+/* The label of the toggle switch to indicate that file versioning is enabled. */
+"Enabled"="有効になっています";
+/* Text button for init a group chat with link. */
+"New Chat Link"="新しいチャットリンク";
+/* Text button for init a group chat */
+"New group chat"="新しいグループチャット";
+/* Shown when an invalid/inexisting/not-available-anymore chat link is opened. */
+"Chat link unavailable"="チャットリンクは利用できません";
+/* Shown when an inexisting/unavailable/removed link is tried to be opened. */
+"This chat link is no longer available"="このチャットリンクは利用できなくなりました";
+/* Text explaining users how the chat links work. */
+"People can join your group by using this link."="このリンクを使用すると、人々はあなたのグループに参加できます。";
+/* Subtitle shown in a chat to inform where to tap to enter in the chat details view */
+"Tap here for info"="情報を見るにはこちらをタップ";
+/* Title for the recents section. */
+"Recents"="最近";
+/* Multiple Images title shown in recents section of webclient */
+"%1 Images"="%1個の画像";
+/* Multiple videos title shown in recents section of web client. */
+"%2 Videos"="%2個の動画";
+/* A single image and single video title shown in recents section of webclient. */
+"1 Image and 1 Video"="1個の画像と1個の動画";
+/* One image and multiple videos title in recents. */
+"1 Image and %2 Videos"="1個の画像と%2個の動画";
+/* Title for multiple images and multiple videos in recents section */
+"%1 Images and %2 Videos"="%1個の画像と%2個の動画";
+/* Tooltip message shown on recents section. Please see the attached image. */
+"Modified on %1 at %2"="%1日%2に変更されました";
+/* Title for a recent action shown in the webclient, see the attached image for context. */
+"%1 modified by %3"="%1は%3さんが変更しました";
+/* Title for a recent action shown in the webclient, see the attached image for context. Please ensure that the `%2 more` is inside the [A] tag as this will become a toggle to show the hidden content. */
+"%1 and [A]%2 more[/A] modified by %3"="%1と[A]さらに%2個[/A]が%3さんによって変更されました";
+/* Title for a recent action shown in the webclient, see the attached image for context. Please ensure that the `%2 more` is inside the [A] tag as this will become a toggle to show the hidden content. */
+"%1 and [A]%2 more[/A]"="%1と[A]さらに%2個[/A]";
+/* Title for a recent action shown in the webclient, see the attached image for context. */
+"%1 created by %3"="%1が%3さんによって作成されました";
+/* Title for a recent action shown in the webclient, see the attached image for context. Please ensure that the `%2 more` is inside the [A] tag as this will become a toggle to show the hidden content. */
+"%1 and [A]%2 more[/A] created by %3"="%1と[A]さらに%2個[/A]が%3さんによって作成されました";
+/* Message shown when the user has not recent activity in their account. */
+"No recent activity"="最近の活動はありません";
+/* Plural of items which contains a folder. 2 items */
+"items"="項目";
+/* In some cases, a user may try to get the link for a chat room, but if such is not set by an operator - it would say "not link available" and not auto create it. */
+"No chat link available."="利用できるチャットリンクはありません。";

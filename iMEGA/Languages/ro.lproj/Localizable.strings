@@ -57,7 +57,7 @@
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
 "sslUnverified_alertTitle"="MEGA nu se poate conecta securizat prin SSL. S-ar putea să fii pe WiFi public cu cerințe suplimentare.";
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
-"theContentIsNotAvailableForThisAccount"="Conținutul pe care încerci să îl accesezi nu este disponibil pentru acest cont. Încearcă să te autentifici cu același cont ca și în clientul web mobil.";
+"theContentIsNotAvailableForThisAccount"="Conținutul pe care încerci să îl accesezi nu este disponibil pentru acest cont. Te rugăm să încerci să te autentifici cu același cont ca și în clientul web mobil.";
 /* Message shown when the app is waiting for the server to complete a request due to an API lock (error -3). */
 "takingLongerThanExpected"="Procesul durează mai mult decât era de așteptat. Te rugăm să aștepți...";
 /* Message shown when the app is waiting for the server to complete a request due to a HTTP error 500. */
@@ -70,22 +70,6 @@
 "pleaseLogInToYourAccount"="Te rugăm să te autentifici.";
 /* Error message when a user attempts to change their email without an active login session. */
 "needToBeLoggedInToCompleteYourEmailChange"="Trebuie să fii autentificat pentru a finaliza schimbarea e-mailului. Te rugăm să te autentifici din nou cu adresa de e-mail actuală și apoi dă clic pe linkul de confirmare din nou.";
-/* Title shown on the app's start animation to explain what MEGA offers you (1/4) */
-"megaSpace"="SPAȚIU MEGA";
-/* Title shown on the app's start animation to explain what MEGA offers you (2/4) */
-"megaSpeed"="VITEZĂ MEGA";
-/* Title shown on the app's start animation to explain what MEGA offers you (3/4) */
-"megaPrivacy"="CONFIDENȚIALITATE MEGA";
-/* Title shown on the app's start animation to explain what MEGA offers you (4/4) */
-"megaAccess"="ACCES MEGA";
-/* Message shown on the app's start animation to explain what MEGA SPACE means */
-"megaSpaceText"="Înregistrează-te acum și obține 50 GB spațiu gratuit.";
-/* Message shown on the app's start animation to explain what MEGA SPEED means */
-"megaSpeedText"="Încărcările sunt rapide.Partajează rapid fișiere cu toți.";
-/* Message shown on the app's start animation to explain what MEGA PRIVACY means */
-"megaPrivacyText"="Păstrează toate fișierele în siguranțăcu criptarea capăt-la-capăt MEGA.";
-/* Message shown on the app's start animation to explain what MEGA ACCESS means */
-"megaAccessText"="Obține acces complet criptate oriunde, oricând.";
 /* Button title which triggers the action to login in your MEGA account */
 "login"="Autentificare";
 /* Button title which triggers the action to create a MEGA account */
@@ -115,7 +99,7 @@
 /*  */
 "weak"="Slabă";
 /*  */
-"passwordVeryWeakOrWeak"="Parola ta e ușor de ghicit. Încearcă să faci parola mai lungă. Combină litere mari și litere mici. Adaugă caractere speciale. Nu folosi nume sau cuvinte din dicționar.";
+"passwordVeryWeakOrWeak"="Parola ta este ușor de ghicit. Încearcă să faci parola mai lungă. Combină litere mari și litere mici. Adaugă caractere speciale. Nu folosi nume sau cuvinte din dicționar.";
 /* Label displayed during checking the strength of the password introduced. Represents Medium security */
 "medium"="Medie";
 /*  */
@@ -267,7 +251,7 @@
 /* Label for the state of a transfer when is being retrying - (String as short as possible). */
 "Retrying..."="Se reîncearcă...";
 /* Section title of the 'Sort by' */
-"sortTitle"="SORTEAZĂ DUPĂ";
+"sortTitle"="Sortează după";
 /* Button title to 'Save' the selected option */
 "save"="Salvează";
 /* Sort by option (1/6). This one orders the files alphabethically*/
@@ -384,6 +368,8 @@
 "tapFileToRename"="Atinge fișierul pentru redenumire";
 /* */
 "sendToContact"="Trimite contactului";
+/* Column header of my contacts/chats at copy dialog */
+"My chats"="Chaturile mele";
 /* Toast text upon sending a single file to chat */
 "fileSentToChat"="Fișiere trimise în chat";
 /* Success message when the attachment has been sent to a many chats */
@@ -409,7 +395,7 @@
 /* Text of the button for user to select files in MEGA. */
 "selectFiles"="Selectează fișiere";
 /* Title for the action that allows you to move a file or folder */
-"move"="Mută";
+"move"="Mutare";
 /* Success message shown when you have moved 1 file */
 "moveFileMessage"="1 fișier eliminat";
 /* Success message shown when you have moved {1+} files */
@@ -675,13 +661,13 @@
 /* Option title to enable Camera Uploads only when the device is charging */
 "onlyWhenChargingLabel"="Doar când se încarcă";
 /* Footer text to explain the Camera Uploads functionality */
-"cameraUploads_footer"="Când este activat, noile fotografii și videoclipuri vor fi încărcate.";
+"cameraUploads_footer"="Când este activat, fotografiile și videoclipurile vor fi încărcate.";
 /* App means “Application” */
 "App version"="Versiunea aplicației";
 /* Title of the label where the SDK version is shown */
 "sdkVersion"="Versiune MEGA SDK";
 /* Title of the label where the MEGAchat SDK version is shown */
-"megachatSdkVersion"="Versiunea SDK a MEGAchat";
+"megachatSdkVersion"="Versiunea SDK MEGAchat";
 /* Link to the public code of the app */
 "View source code"="Vezi codul sursă";
 /* Title for the section "Acknowledgements" of the app */
@@ -965,6 +951,8 @@
 "free"="GRATUIT";
 /* Text that shows the expiry date of the account PRO level */
 "expiresOn"="expiră pe %@";
+/* Label for the ‘Renews on’ text into the my account page, indicating the renewal date of a subscription - (String as short as possible). */
+"Renews on"="Se reînnoiește pe";
 /* Button title for the section where you can see the 'Purchase history' related to your account */
 "purchaseHistory"="Istoricul achizițiilor";
 /* Title of the Incoming Shares section. Here you can see the folders that your contacts have shared with you */
@@ -1062,7 +1050,7 @@
 /* Empty Conversations section */
 "noConversations"="Nicio conversație";
 /* Empty Conversations description */
-"noConversationsDescription"="Începe să chatuiești în siguranță cu contactele tale folosind criptarea capăt-la-capăt";
+"Start chatting securely with your contacts using end-to-end encryption"="Începe să chatuiești în siguranță cu contactele tale folosind criptarea capăt-la-capăt";
 /* Title show when the chat is disabled */
 "chatIsDisabled"="Chatul este dezactivat";
 /* Text button shown when the chat is disabled and if tapped the chat will be enabled */
@@ -1100,7 +1088,7 @@
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
 "richPreviewsFooter"="Îmbunătățește experiența MEGAchat. Conținutul URL-urilor va fi preluat fără criptare capăt-la-capăt.";
 /* Section title of a button where you can enable mobile data for voice and video calls. */
-"voiceAndVideoCalls"="Apeluri voce și video";
+"voiceAndVideoCalls"="Apeluri vocale și video";
 /* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature. */
 "useMobileData"="Folosește datele mobile";
 /* A header in the Chat settings. This changes the user's status to Away after some time of inactivity. */
@@ -1252,7 +1240,7 @@
 /* Button title to see the available pro plans in MEGA */
 "seePlans"="Vezi planurile";
 /* Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible). */
-"dismiss"="Îndepărtează";
+"dismiss"="Înlătură";
 /* Notification text body shown when you have received a new chat message */
 "newMessage"="Mesaj nou";
 /* Notification text body shown when you have received a contact request */
@@ -1292,7 +1280,7 @@
 /* Inform user that there were unsupported assets in the share extension */
 "shareExtensionUnsupportedAssets"="Unele elemente nu au putut fi partajate cu MEGA";
 /* Message shown to the user when the share extension is about to be killed by iOS due to a memory issue */
-"Limited system resources are available when sharing items. Try uploading these files from within the MEGA app."="Resursele limitate de sistem sunt disponibile atunci când partajezi elemente. Încearcă să încarci aceste fișiere din aplicația MEGA.";
+"Limited system resources are available when sharing items. Try uploading these files from within the MEGA app."="Resursele limitate de sistem sunt disponibile atunci când partajezi elemente. Te rugăm să încerci să încarci aceste fișiere din aplicația MEGA.";
 /* Notification message shown when a transfer failed. Keep colon. */
 "Transfer failed:"="Transfer eșuat:";
 /* MEGAError */
@@ -1434,12 +1422,12 @@
 "type"="Tip";
 /* Title of the incoming shared folders of a user in singular */
 "sharedFolder"="Folder partajat";
-/* The label of the folder creation time. For example: "Created: 2013-02-02" (no need to put the colon punctuation in the translation) */
-"created"="Creat";
 /* Label for what a selection contains. For example: "Contains: 3 folders & 13 files". (no need to put the colon punctuation in the translation) */
 "contains"="Conține";
 /* A label for any 'Modified' text or title. For example to show the modification date of a file/folder. */
 "modified"="Modificat";
+/* A label for any ‘Added’ text or title. For example to show the upload date of a file/folder. */
+"Added"="Adăugat";
 /* used for example when a folder is shared with 2 or more users */
 "users"="utilizatori";
 /* user (singular) label indicating is receiving some info, for example shared folders */
@@ -1657,7 +1645,7 @@
 /* The title of the section about deleting file versions in the settings. */
 "Delete all older versions of my files"="Șterge toate versiunile mai vechi ale fișierelor mele";
 /* Text of a button which deletes all historical versions of files in the users entire account. */
-"Delete old versions"="Șterge versiunile vechi";
+"Delete previous versions"="Șterge versiunile vechi";
 /* A warning note about deleting all file versions in the settings section. */
 "All current files will remain. Only historic versions of your files will be deleted."="Toate fișierele actuale vor rămâne. Doar versiunile istorice ale fișierelor vor fi șterse.";
 /* Text of the dialog to delete all the file versions of the account */
@@ -1680,10 +1668,10 @@
 "%@ joined the call."="%@ s-a alăturat apelului.";
 /* Message to inform the local user that someone has left the current group call */
 "%@ left the call."="%@ a părăsit apelul.";
-/* Message to inform the local user is having a bad quality network with someone in the current group call */
-"Poor conection."="Conexiune slabă.";
 /* Message shown in a chat room when there is an active group call */
 "There is an active group call. Tap to join."="Există un apel de grup activ. Atinge pentru a te alătura.";
+/* Message shown in a chat room when there is an active call */
+"There is an active call. Tap to join."="Există un apel activ. Atinge pentru a te alătura.";
 /* Message shown in a chat room for a group call in progress displaying the duration of the call */
 "Touch to return to call %@"="Atinge pentru a reveni la apelul %@";
 /* A button label which allows the users save images/videos in the Photos app. */
@@ -1694,6 +1682,36 @@
 "Saved to Photos"="Salvat(ă) în Fotografii";
 /* Text shown when an error occurs when trying to save a photo or video to Photos app */
 "Could not save Item"="Nu se poate salva elementul";
+/* Label in a cell where you can enable the 'Encrypted Key Rotation' */
+"Encrypted Key Rotation"="Rotația cheii criptate";
+/* Title shown in a cell to allow the users enable the 'Encrypted Key Rotation' */
+"Enable Encrypted Key Rotation"="Activează rotația cheii criptate";
+/* Label in a cell where you can get the chat link */
+"Get Chat Link"="Obține linkul chatului";
+/* Footer text to explain what means 'Encrypted Key Rotation' */
+"Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages."="Rotația cheii este puțin mai sigură, dar nu îți permite să creezi un link al chatului, iar noii participanți nu vor vedea mesajele din trecut.";
+/* Shown as an error message when the user selects "create chat link", but haven't entered a title for the newly created room */
+"To create a chat link you must name the group."="Pentru a creat un link de chat trebuie să denumești grupul.";
+/* Label shown in a cell where you can enable a switch to get a chat link */
+"Chat Link"="Linkul chatului";
+/* Message shown when there is an active chat link that can be deleted */
+"Delete Chat Link"="Șterge linkul chatului";
+/* Button text in public chat previews that allows the user to join the chat */
+"Join"="Alătură-te";
+/* Text shown in a notification to let the user know that has joined a public chat room after login or account creation */
+"You have joined %@"="Te-ai alăturat %@";
+/* Users previewing a public chat */
+"Observers"="Observatori";
+/* Alert message shown while deleting a chat link, warning about the consequences */
+"This conversation will no longer be accessible through the link you are about to delete."="Această conversație nu va mai fi accesibilă prin linkul chatului odată ce acesta a fost eliminat.";
+/* Management message shown in a chat when the user %@ enables the 'Encrypted Key Rotation' */
+"%@ enabled Encrypted Key Rotation"="%@ a activat rotația cheii criptate.";
+/* Management message shown in a chat when the user %@ creates a public link for the chat */
+"%@ created a public link for the chat."="%@ a creat un link al chatului pentru chat.";
+/* Management message shown in a chat when the user %@ removes a public link for the chat */
+"%@ removed a public link for the chat."="%@ a eliminat linkul chatului pentru chat.";
+/* Management message shown in a chat when the user %@ joined it from a public chat link */
+"%@ joined the group chat."="%@ s-a alăturat chatului de grup.";
 /* Message show when a call cannot be established because there are too many participants in the group call */
 "Error. No more participants are allowed in this group call."="Nu ți se permite să te alături acestui apel deoarece acesta a atins numărul maxim de participanți.";
 /* Message show when a user cannot activate the video in a group call because the max number of videos has been reached */
@@ -1785,9 +1803,9 @@
 /* The professional pricing plan which the user is currently on will expire in 5 days. The %1 is a placeholder for the number of days and should not be removed. */
 "Your PRO membership plan will expire in %1 days."="Planul pentru calitatea de membru PRO va expira în %1 zile.";
 /* The professional pricing plan which the user was on expired one day ago. */
-"Your PRO membership plan expired 1 day ago"="Planul pentru calitatea de membru PRO a expirat acum 1 zi";
+"Your PRO membership plan expired 1 day ago"="Planul tău PRO a expirat acum 1 zi";
 /* The professional pricing plan which the user was on expired %1 days ago. The %1 is a placeholder for the number of days and should not be removed. */
-"Your PRO membership plan expired %1 days ago"="Planul pentru calitatea de membru PRO a expirat acum %1 zile";
+"Your PRO membership plan expired %1 days ago"="Planul tău PRO a expirat acum %1 zile";
 /* The text of a notification indicating that a file or folder has been taken down due to infringement or other reason. The %1 placeholder will be replaced with the text ‘file’ or ‘folder’. The %2 will be replaced with the name of the file or folder. */
 "Your publicly shared %1 (%2) has been taken down."="Partajarea ta publică %1 (%2) a fost eliminată.";
 /* The text of a notification indicating that a file or folder that was taken down has now been restored due to a successful counter-notice. The %1 placeholder will be replaced with the text ‘file’ or ‘folder’. The %2 will be replaced with the name of the file or folder. */
@@ -1801,7 +1819,7 @@
 /* Label shown next to a feature name that can be enabled or disabled, like in 'Show Last seen...' */
 "Show"="Afișează";
 /* Shown when viewing a 1on1 chat (at least for now), if the user is offline. */
-"Last seen %s"="Văzut(ă) ultima dată %s";
+"Last seen %s"="Văzut(ă) ultima dată: %s";
 /* Text to inform the user the 'Last seen' time of a contact is a long time ago (>= 65535 minutes) */
 "Last seen a long time ago"="Văzut(ă) ultima dată cu mult timp în urmă";
 /* */
@@ -1812,3 +1830,61 @@
 "%d participants"="%d participanți";
 /* Singular of participant. 1 participant */
 "%d participant"="%d participant";
+/* Text to inform the user there is an active call and is not participating */
+"Ongoing Call"="Apel în desfășurare";
+/* Message shown when there is an ongoing call and the user tries to play an audio or video */
+"It is not possible to play content while there is a call in progress"="Nu este posibilă redarea fișierelor media în timp ce există un apel în desfășurare.";
+/* Text to inform the user there is an active call and is participating */
+"Call Started"="Apel început";
+/* Title for feature Password Reminder */
+"Password Reminder"="Memento privind parola";
+/* Label for any ‘Message’ button, link, text, title, etc. - (String as short as possible). */
+"Message"="Mesaj";
+/* Title of the button in the contact info screen to start an audio call */
+"Call"="Apelează";
+/* Title of the button in the contact info screen to start a video call */
+"Video"="Video";
+/* The label of the toggle switch to indicate that file versioning is enabled. */
+"Enabled"="Activată";
+/* Text button for init a group chat with link. */
+"New Chat Link"="Link nou de chat";
+/* Text button for init a group chat */
+"New group chat"="Chat de group nou";
+/* Shown when an invalid/inexisting/not-available-anymore chat link is opened. */
+"Chat link unavailable"="Link de chat indisponibil";
+/* Shown when an inexisting/unavailable/removed link is tried to be opened. */
+"This chat link is no longer available"="Acest link de chat nu mai este disponibil";
+/* Text explaining users how the chat links work. */
+"People can join your group by using this link."="Oamenii se pot alătura grupului folosind acest link.";
+/* Subtitle shown in a chat to inform where to tap to enter in the chat details view */
+"Tap here for info"="Atinge aici pentru informații";
+/* Title for the recents section. */
+"Recents"="Recente";
+/* Multiple Images title shown in recents section of webclient */
+"%1 Images"="%1 imagini";
+/* Multiple videos title shown in recents section of web client. */
+"%2 Videos"="%2 videoclipuri";
+/* A single image and single video title shown in recents section of webclient. */
+"1 Image and 1 Video"="1 imagine și 1 videoclip";
+/* One image and multiple videos title in recents. */
+"1 Image and %2 Videos"="1 imagine și %2 videoclipuri";
+/* Title for multiple images and multiple videos in recents section */
+"%1 Images and %2 Videos"="%1 imagini și %2 videoclipuri";
+/* Tooltip message shown on recents section. Please see the attached image. */
+"Modified on %1 at %2"="Modificat în %1 la %2";
+/* Title for a recent action shown in the webclient, see the attached image for context. */
+"%1 modified by %3"="%1 modificat de către %3";
+/* Title for a recent action shown in the webclient, see the attached image for context. Please ensure that the `%2 more` is inside the [A] tag as this will become a toggle to show the hidden content. */
+"%1 and [A]%2 more[/A] modified by %3"="%1 și [A]încă %2[/A] modificate de către %3";
+/* Title for a recent action shown in the webclient, see the attached image for context. Please ensure that the `%2 more` is inside the [A] tag as this will become a toggle to show the hidden content. */
+"%1 and [A]%2 more[/A]"="%1 și [A]încă %2[/A]";
+/* Title for a recent action shown in the webclient, see the attached image for context. */
+"%1 created by %3"="%1 creat de către %3";
+/* Title for a recent action shown in the webclient, see the attached image for context. Please ensure that the `%2 more` is inside the [A] tag as this will become a toggle to show the hidden content. */
+"%1 and [A]%2 more[/A] created by %3"="%1 și [A]încă %2[/A] create de către %3";
+/* Message shown when the user has not recent activity in their account. */
+"No recent activity"="Nicio activitate recentă";
+/* Plural of items which contains a folder. 2 items */
+"items"="elemente";
+/* In some cases, a user may try to get the link for a chat room, but if such is not set by an operator - it would say "not link available" and not auto create it. */
+"No chat link available."="Niciun link de chat disponibil.";

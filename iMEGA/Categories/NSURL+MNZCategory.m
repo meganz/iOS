@@ -4,7 +4,6 @@
 #import <SafariServices/SafariServices.h>
 
 #import "SVProgressHUD.h"
-
 #import "MEGAReachabilityManager.h"
 #import "UIApplication+MNZCategory.h"
 
@@ -111,12 +110,16 @@
         return URLTypeContactLink;
     }
     
-    if (afterSlashesString.length >= 8 && [[afterSlashesString substringToIndex:8] isEqualToString:@"#fm/chat"]) {
-        return URLTypeChatLink;
+    if ((afterSlashesString.length >= 8 && [[afterSlashesString substringToIndex:8] isEqualToString:@"#fm/chat"]) || (afterSlashesString.length >= 7 && [[afterSlashesString substringToIndex:7] isEqualToString:@"fm/chat"])) {
+        return URLTypeOpenChatSectionLink;
     }
     
     if (afterSlashesString.length >= 14 && [[afterSlashesString substringToIndex:14] isEqualToString:@"#loginrequired"]) {
         return URLTypeLoginRequiredLink;
+    }
+    
+    if (afterSlashesString.length >= 5 && [[afterSlashesString substringToIndex:5] isEqualToString:@"chat/"]) {
+        return URLTypePublicChatLink;
     }
     
     if ((afterSlashesString.length == 9) && [afterSlashesString hasPrefix:@"#"]) {
@@ -161,6 +164,17 @@
     }
     
     return afterSlashesString;
+}
+
+- (NSURL *)mnz_updatedURLWithCurrentAddress {
+    if (!MEGAReachabilityManager.isReachableViaWiFi) {
+        return self;
+    }
+    
+    // @see MegaTCPServer::getLink
+    NSString *loopbackAddress = @"[::1]";
+    NSString *currentAddress = MEGAReachabilityManager.sharedManager.currentAddress;
+    return currentAddress ? [NSURL URLWithString:[self.absoluteString stringByReplacingOccurrencesOfString:loopbackAddress withString:currentAddress]] : self;
 }
 
 @end

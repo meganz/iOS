@@ -3,6 +3,8 @@
 
 #import "Helper.h"
 #import "MEGAStore.h"
+#import "MEGASdkManager.h"
+#import "NSString+MNZCategory.h"
 
 #import "UIImage+GKContact.h"
 #import "UIColor+MNZCategory.h"
@@ -110,22 +112,32 @@
     } else {
         NSString *colorString = [MEGASdk avatarColorForBase64UserHandle:base64Handle];
         MOUser *user = [[MEGAStore shareInstance] fetchUserWithUserHandle:userHandle];
-        NSString *initialsForAvatar = nil;
+        NSString *initialForAvatar = nil;
         if (user) {
             if (user.fullName.length) {
-                initialsForAvatar = [user.fullName substringToIndex:1].uppercaseString;
+                initialForAvatar = user.fullName.mnz_initialForAvatar;
             } else {
-                initialsForAvatar = [user.email substringToIndex:1].uppercaseString;
+                initialForAvatar = user.email.mnz_initialForAvatar;
             }
         } else {
-            initialsForAvatar = name;
+            initialForAvatar = name.mnz_initialForAvatar;
         }
-        image = [UIImage imageForName:initialsForAvatar size:size backgroundColor:[UIColor colorFromHexString:colorString] textColor:[UIColor whiteColor] font:[UIFont mnz_SFUIRegularWithSize:(size.width/2.0f)]];
+        image = [UIImage imageForName:initialForAvatar size:size backgroundColor:[UIColor colorFromHexString:colorString] textColor:[UIColor whiteColor] font:[UIFont mnz_SFUIRegularWithSize:(size.width/2.0f)]];
         
         [[MEGASdkManager sharedMEGASdk] getAvatarUserWithEmailOrHandle:base64Handle destinationFilePath:avatarFilePath delegate:delegate];
     }
     
     return image;
+}
+
++ (UIImage *)imageWithColor:(UIColor *)color andBounds:(CGRect)imgBounds {
+    UIGraphicsBeginImageContextWithOptions(imgBounds.size, NO, 0);
+    [color setFill];
+    UIRectFill(imgBounds);
+    UIImage *img = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    return img;
 }
 
 #pragma mark - QR generation

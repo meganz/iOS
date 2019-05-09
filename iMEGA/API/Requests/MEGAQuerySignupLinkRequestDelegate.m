@@ -5,8 +5,6 @@
 
 #import "CreateAccountViewController.h"
 #import "LoginViewController.h"
-#import "MEGANavigationController.h"
-#import "MEGAGenericRequestDelegate.h"
 #import "MEGALinkManager.h"
 #import "MEGALoginRequestDelegate.h"
 #import "MEGASdkManager.h"
@@ -42,6 +40,16 @@
     if (self.urlType == URLTypeConfirmationLink) {
         if (request.flag) {
             if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionId"]) {
+                if ([MEGASdkManager sharedMEGAChatSdk] == nil) {
+                    [MEGASdkManager createSharedMEGAChatSdk];
+                }
+                
+                MEGAChatInit chatInit = [[MEGASdkManager sharedMEGAChatSdk] initKarereWithSid:nil];
+                if (chatInit != MEGAChatInitWaitingNewSession) {
+                    MEGALogError(@"Init Karere without sesion must return waiting for a new sesion");
+                    [[MEGASdkManager sharedMEGAChatSdk] logout];
+                }
+                
                 MEGALoginRequestDelegate *loginRequestDelegate = [[MEGALoginRequestDelegate alloc] init];
                 loginRequestDelegate.confirmAccountInOtherClient = YES;
                 NSString *base64pwkey = [SAMKeychain passwordForService:@"MEGA" account:@"base64pwkey"];
