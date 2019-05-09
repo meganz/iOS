@@ -91,6 +91,11 @@
     }
     
     [[MEGAPurchase sharedInstance] setPricingsDelegate:self];
+    
+    self.dateFormatter = NSDateFormatter.alloc.init;
+    self.dateFormatter.dateStyle = NSDateFormatterShortStyle;
+    self.dateFormatter.timeStyle = NSDateFormatterNoStyle;
+    self.dateFormatter.locale = NSLocale.autoupdatingCurrentLocale;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -171,18 +176,18 @@
         self.usedSpaceLabel.attributedText = [self textForSizeLabels:usedStorageString];
         self.availableSpaceLabel.attributedText = [self textForSizeLabels:availableStorageString];
         
-        NSString *expiresString;
+        NSString *renewsExpiresString;
         if (accountDetails.type) {
-            static dispatch_once_t onceToken;
-            dispatch_once(&onceToken, ^{
-                self.dateFormatter = NSDateFormatter.alloc.init;
-                self.dateFormatter.dateStyle = NSDateFormatterShortStyle;
-                self.dateFormatter.timeStyle = NSDateFormatterNoStyle;
-                self.dateFormatter.locale = NSLocale.autoupdatingCurrentLocale;
-            });
-            
-            NSDate *expireDate = [[NSDate alloc] initWithTimeIntervalSince1970:accountDetails.proExpiration];
-            expiresString = [NSString stringWithFormat:AMLocalizedString(@"expiresOn", @"Text that shows the expiry date of the account PRO level"), [self.dateFormatter stringFromDate:expireDate]];
+            if (accountDetails.subscriptionRenewTime > 0) {
+                NSDate *renewDate = [[NSDate alloc] initWithTimeIntervalSince1970:accountDetails.subscriptionRenewTime];
+                renewsExpiresString = [NSString stringWithFormat:@"%@ %@", AMLocalizedString(@"Renews on", @"Label for the ‘Renews on’ text into the my account page, indicating the renewal date of a subscription - (String as short as possible)."), [self.dateFormatter stringFromDate:renewDate]];
+            } else if (accountDetails.proExpiration > 0) {
+                NSDate *expireDate = [[NSDate alloc] initWithTimeIntervalSince1970:accountDetails.proExpiration];
+                renewsExpiresString = [NSString stringWithFormat:AMLocalizedString(@"expiresOn", @"Text that shows the expiry date of the account PRO level"), [self.dateFormatter stringFromDate:expireDate]];
+            } else {                
+                self.proExpiryDateLabel.hidden = YES;
+                self.proExpiryDateLabelHeightLayoutConstraint.constant = 0;
+            }
         }
         
         switch (accountDetails.type) {
@@ -197,28 +202,28 @@
             case MEGAAccountTypeLite: {
                 self.proStatusLabel.text = [NSString stringWithFormat:@"PRO LITE"];
                 self.proStatusLabel.textColor = [UIColor mnz_orangeFFA500];
-                self.proExpiryDateLabel.text = [NSString stringWithFormat:@"%@", expiresString];
+                self.proExpiryDateLabel.text = renewsExpiresString;
                 break;
             }
                 
             case MEGAAccountTypeProI: {
                 self.proStatusLabel.text = [NSString stringWithFormat:@"PRO I"];
                 self.proStatusLabel.textColor = UIColor.mnz_redProI;
-                self.proExpiryDateLabel.text = [NSString stringWithFormat:@"%@", expiresString];
+                self.proExpiryDateLabel.text = renewsExpiresString;
                 break;
             }
                 
             case MEGAAccountTypeProII: {
                 self.proStatusLabel.text = [NSString stringWithFormat:@"PRO II"];
                 self.proStatusLabel.textColor = UIColor.mnz_redProII;
-                self.proExpiryDateLabel.text = [NSString stringWithFormat:@"%@", expiresString];
+                self.proExpiryDateLabel.text = renewsExpiresString;
                 break;
             }
                 
             case MEGAAccountTypeProIII: {
                 self.proStatusLabel.text = [NSString stringWithFormat:@"PRO III"];
                 self.proStatusLabel.textColor = UIColor.mnz_redProIII;
-                self.proExpiryDateLabel.text = [NSString stringWithFormat:@"%@", expiresString];
+                self.proExpiryDateLabel.text = renewsExpiresString;
                 break;
             }
                 

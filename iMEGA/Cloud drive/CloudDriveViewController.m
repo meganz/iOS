@@ -136,6 +136,8 @@
     [self.view addGestureRecognizer:[[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPress:)]];
     
     self.searchController.delegate = self;
+    
+    self.moreBarButtonItem.accessibilityLabel = AMLocalizedString(@"more", @"Top menu option which opens more menu options in a context menu.");
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -1371,10 +1373,18 @@
         [self.toolbar setAlpha:0.0];
         [self.tabBarController.view addSubview:self.toolbar];
         self.toolbar.translatesAutoresizingMaskIntoConstraints = NO;
+        
+        NSLayoutAnchor *bottomAnchor;
+        if (@available(iOS 11.0, *)) {
+            bottomAnchor = self.tabBarController.tabBar.safeAreaLayoutGuide.bottomAnchor;
+        } else {
+            bottomAnchor = self.tabBarController.tabBar.bottomAnchor;
+        }
+        
         [NSLayoutConstraint activateConstraints:@[[self.toolbar.topAnchor constraintEqualToAnchor:self.tabBarController.tabBar.topAnchor constant:0],
                                                   [self.toolbar.leadingAnchor constraintEqualToAnchor:self.tabBarController.tabBar.leadingAnchor constant:0],
                                                   [self.toolbar.trailingAnchor constraintEqualToAnchor:self.tabBarController.tabBar.trailingAnchor constant:0],
-                                                  [self.toolbar.heightAnchor constraintEqualToConstant:49.0]]];
+                                                  [self.toolbar.bottomAnchor constraintEqualToAnchor:bottomAnchor constant:0]]];
         
         [UIView animateWithDuration:0.33f animations:^ {
             [self.toolbar setAlpha:1.0];

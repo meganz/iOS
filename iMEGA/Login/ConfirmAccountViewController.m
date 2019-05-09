@@ -258,7 +258,7 @@
                 MEGALogError(@"Init Karere without sesion must return waiting for a new sesion");
                 [[MEGASdkManager sharedMEGAChatSdk] logout];
             }
-            
+
             if ([api isLoggedIn] <= 1) {
                 MEGALoginRequestDelegate *loginRequestDelegate = [[MEGALoginRequestDelegate alloc] init];
                 [api loginWithEmail:self.emailInputView.inputTextField.text password:self.passwordView.passwordTextField.text delegate:loginRequestDelegate];

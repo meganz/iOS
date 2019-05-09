@@ -215,8 +215,8 @@ static NSString* const B = @"[B]";
             missedString = [missedString stringByReplacingOccurrencesOfString:A withString:missedVideoCallsString];
         } else { //missedAudioCalls > 1
             missedString = AMLocalizedString(@"missedAudioCallsAndMissedVideoCalls", @"Notification text body shown when you have missed several audio calls and video calls. [A] = {number of missed audio calls}. [B] = {number of missed video calls}");
-            missedString = [missedString stringByReplacingOccurrencesOfString:A withString:missedString];
-            missedString = [missedString stringByReplacingOccurrencesOfString:B withString:missedString];            
+            missedString = [missedString stringByReplacingOccurrencesOfString:A withString:missedAudioCallsString];
+            missedString = [missedString stringByReplacingOccurrencesOfString:B withString:missedVideoCallsString];            
         }
     }
     
@@ -321,8 +321,8 @@ static NSString* const B = @"[B]";
     string = [string stringByReplacingOccurrencesOfString:@"[/A]" withString:@""];
     string = [string stringByReplacingOccurrencesOfString:@"[S]" withString:@""];
     string = [string stringByReplacingOccurrencesOfString:@"[/S]" withString:@""];
+    string = [string stringByReplacingOccurrencesOfString:@"<a href=\"terms\">" withString:@""];
     string = [string stringByReplacingOccurrencesOfString:@"<a href='terms'>" withString:@""];
-    string = [string stringByReplacingOccurrencesOfString:@"<a href=’terms’>" withString:@""];
     string = [string stringByReplacingOccurrencesOfString:@"</a>" withString:@""];
     
     return string;
@@ -652,6 +652,13 @@ static NSString* const B = @"[B]";
      }];
     
     return emojiCount;
+}
+
+- (NSString *)mnz_initialForAvatar {
+    NSString *trimmedSelf = [self stringByTrimmingCharactersInSet:
+                         [NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    NSUInteger end = [trimmedSelf rangeOfComposedCharacterSequenceAtIndex:0].length;
+    return [trimmedSelf substringToIndex:end].uppercaseString;
 }
 
 - (NSString *)mnz_coordinatesOfPhotoOrVideo {

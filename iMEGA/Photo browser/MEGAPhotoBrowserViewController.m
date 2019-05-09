@@ -482,7 +482,7 @@
         case MEGAPhotoModeOriginal: {
             MEGAStartDownloadTransferDelegate *delegate = [[MEGAStartDownloadTransferDelegate alloc] initWithProgress:transferProgress completion:transferCompletion];
             NSString *temporaryImagePath = [self temporatyPathForNode:node createDirectories:YES];
-            [self.api startDownloadNode:node localPath:temporaryImagePath appData:nil delegate:delegate];
+            [MEGASdkManager.sharedMEGASdk startDownloadNode:[self.api authorizeNode:node] localPath:temporaryImagePath appData:nil delegate:delegate];
 
             break;
         }
@@ -769,8 +769,13 @@
 - (void)playVideo:(UIButton *)sender {
     MEGANode *node = [self.mediaNodes objectAtIndex:self.currentIndex];
     if (node.mnz_isPlayable) {
-        UIViewController *playerVC = [node mnz_viewControllerForNodeInFolderLink:(self.api == [MEGASdkManager sharedMEGASdkFolder])];
-        [self presentViewController:playerVC animated:YES completion:nil];
+        MEGAHandleList *chatRoomIDsWithCallInProgress = [MEGASdkManager.sharedMEGAChatSdk chatCallsWithState:MEGAChatCallStatusInProgress];
+        if (chatRoomIDsWithCallInProgress.size > 0) {
+            [Helper cannotPlayContentDuringACallAlert];
+        } else {
+            UIViewController *playerVC = [node mnz_viewControllerForNodeInFolderLink:(self.api == [MEGASdkManager sharedMEGASdkFolder])];
+            [self presentViewController:playerVC animated:YES completion:nil];
+        }
     } else {
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"fileNotSupported", @"Alert title shown when users try to stream an unsupported audio/video file") message:AMLocalizedString(@"message_fileNotSupported", @"Alert message shown when users try to stream an unsupported audio/video file") preferredStyle:UIAlertControllerStyleAlert];
         [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {

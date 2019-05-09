@@ -111,6 +111,7 @@
                                 <rect key="frame" x="0.0" y="20" width="375" height="647"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <color key="separatorColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                <color key="sectionIndexBackgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="offlineTableViewCell" id="eCG-Xa-Dhr" customClass="OfflineTableViewCell">
                                         <rect key="frame" x="0.0" y="22" width="375" height="60"/>
@@ -154,19 +155,35 @@
                                                                 <constraint firstAttribute="height" constant="22" id="rbH-Rk-27m"/>
                                                             </constraints>
                                                         </imageView>
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qh6-F0-Dw7" userLabel="Info Button">
+                                                            <rect key="frame" x="329" y="8.5" width="46" height="44"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" constant="44" id="Cj0-77-a36"/>
+                                                                <constraint firstAttribute="width" constant="46" id="Wwa-A7-SoR"/>
+                                                            </constraints>
+                                                            <color key="tintColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <state key="normal" image="more"/>
+                                                            <state key="selected" image="moreSelected"/>
+                                                            <state key="highlighted" image="moreSelected"/>
+                                                            <connections>
+                                                                <action selector="moreButtonTouchUpInside:" destination="Wdx-Jz-JkM" eventType="touchUpInside" id="EEG-Vx-Mc6"/>
+                                                            </connections>
+                                                        </button>
                                                     </subviews>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="60" id="2lT-ke-vcy"/>
+                                                        <constraint firstItem="Qh6-F0-Dw7" firstAttribute="centerY" secondItem="pB8-Mb-MD2" secondAttribute="centerY" id="BKs-nQ-UHU"/>
                                                         <constraint firstItem="klP-9c-r8U" firstAttribute="centerX" secondItem="bTx-lv-N9A" secondAttribute="centerX" id="IQZ-LK-ePQ"/>
-                                                        <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="hoe-2e-rJm" secondAttribute="trailing" constant="10" id="LLo-28-JpF"/>
+                                                        <constraint firstAttribute="trailing" secondItem="Qh6-F0-Dw7" secondAttribute="trailing" id="IWN-kF-laq"/>
                                                         <constraint firstItem="klP-9c-r8U" firstAttribute="centerY" secondItem="bTx-lv-N9A" secondAttribute="centerY" id="LQq-iH-H7I"/>
                                                         <constraint firstItem="bTx-lv-N9A" firstAttribute="centerY" secondItem="pB8-Mb-MD2" secondAttribute="centerY" id="LxU-Fi-A4j"/>
                                                         <constraint firstItem="hoe-2e-rJm" firstAttribute="leading" secondItem="bTx-lv-N9A" secondAttribute="trailing" constant="10" id="QrK-Ok-NYE"/>
-                                                        <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="ifE-XK-OLs" secondAttribute="trailing" constant="10" id="RCg-p6-Mrv"/>
                                                         <constraint firstItem="bTx-lv-N9A" firstAttribute="leading" secondItem="pB8-Mb-MD2" secondAttribute="leading" constant="10" id="Z8F-L0-oQy"/>
                                                         <constraint firstItem="hoe-2e-rJm" firstAttribute="top" secondItem="bTx-lv-N9A" secondAttribute="top" constant="2" id="cIS-tG-uRe"/>
+                                                        <constraint firstItem="Qh6-F0-Dw7" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="hoe-2e-rJm" secondAttribute="trailing" constant="5" id="dMY-hp-iDF"/>
                                                         <constraint firstItem="ifE-XK-OLs" firstAttribute="top" secondItem="hoe-2e-rJm" secondAttribute="bottom" constant="3" id="ht5-cF-XkS"/>
+                                                        <constraint firstItem="Qh6-F0-Dw7" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="ifE-XK-OLs" secondAttribute="trailing" constant="5" id="ni0-Yu-pw2"/>
                                                         <constraint firstItem="ifE-XK-OLs" firstAttribute="leading" secondItem="bTx-lv-N9A" secondAttribute="trailing" constant="10" id="utW-h7-S2c"/>
                                                     </constraints>
                                                 </view>
@@ -182,6 +199,7 @@
                                         <inset key="separatorInset" minX="60" minY="0.0" maxX="0.0" maxY="0.0"/>
                                         <connections>
                                             <outlet property="infoLabel" destination="ifE-XK-OLs" id="dNj-wz-iDb"/>
+                                            <outlet property="moreButton" destination="Qh6-F0-Dw7" id="Z6x-Ip-mRY"/>
                                             <outlet property="nameLabel" destination="hoe-2e-rJm" id="CTg-Ds-6uW"/>
                                             <outlet property="thumbnailImageView" destination="bTx-lv-N9A" id="LVJ-40-Jzj"/>
                                             <outlet property="thumbnailPlayImageView" destination="klP-9c-r8U" id="PdW-BV-TaL"/>
@@ -195,7 +213,7 @@
                                 </connections>
                             </tableView>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="LGQ-nw-baO" firstAttribute="leading" secondItem="ZAd-Hs-cZy" secondAttribute="leading" id="LJf-fW-pEN"/>
                             <constraint firstItem="LGQ-nw-baO" firstAttribute="top" secondItem="ZAd-Hs-cZy" secondAttribute="top" id="VUw-AX-kS4"/>
@@ -382,10 +400,10 @@
     </scenes>
     <resources>
         <image name="checkBoxUnselected" width="24" height="24"/>
-        <image name="more" width="26" height="6"/>
-        <image name="moreSelected" width="26" height="6"/>
+        <image name="more" width="28" height="28"/>
+        <image name="moreSelected" width="28" height="28"/>
         <image name="offlineIcon" width="26" height="24"/>
-        <image name="remove" width="32" height="32"/>
+        <image name="remove" width="28" height="28"/>
         <image name="selectAll" width="22" height="22"/>
         <image name="shareGray" width="32" height="32"/>
         <image name="video_list" width="22" height="22"/>

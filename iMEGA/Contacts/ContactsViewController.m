@@ -38,7 +38,6 @@
 @property (weak, nonatomic) IBOutlet UIView *itemListView;
 @property (weak, nonatomic) IBOutlet UIView *contactsHeaderView;
 @property (weak, nonatomic) IBOutlet UILabel *contactsHeaderViewLabel;
-@property (weak, nonatomic) IBOutlet UIView *contactsTopLineHeaderView;
 
 @property (nonatomic, strong) MEGAUserList *users;
 @property (nonatomic, strong) NSMutableArray *visibleUsersArray;
@@ -71,11 +70,27 @@
 
 @property (nonatomic, strong) MEGAUser *userTapped;
 
+@property (nonatomic, getter=isKeyRotationEnabled) BOOL keyRotationEnabled;
+
 @property (nonatomic, strong) NSMutableArray *searchVisibleUsersArray;
 @property (strong, nonatomic) UISearchController *searchController;
 @property (strong, nonatomic) ItemListViewController *itemListVC;
 
 @property (nonatomic) UIPanGestureRecognizer *panOnTable;
+
+@property (weak, nonatomic) IBOutlet UIView *tableViewHeader;
+@property (weak, nonatomic) IBOutlet UITextField *enterGroupNameTextField;
+@property (weak, nonatomic) IBOutlet UILabel *encryptedKeyRotationLabel;
+@property (weak, nonatomic) IBOutlet UILabel *getChatLinkLabel;
+@property (weak, nonatomic) IBOutlet UILabel *keyRotationFooterLabel;
+@property (weak, nonatomic) IBOutlet UIButton *checkboxButton;
+@property (weak, nonatomic) IBOutlet UIStackView *getChatLinkStackView;
+@property (weak, nonatomic) IBOutlet UIStackView *optionsStackView;
+
+@property (weak, nonatomic) IBOutlet UIView *tableViewFooter;
+@property (weak, nonatomic) IBOutlet UILabel *noContactsLabel;
+@property (weak, nonatomic) IBOutlet UILabel *noContactsDescriptionLabel;
+@property (weak, nonatomic) IBOutlet UIButton *inviteContactButton;
 
 @end
 
@@ -85,6 +100,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    //White background for the view behind the table view
+    self.tableView.backgroundView = UIView.alloc.init;
     
     self.tableView.emptyDataSetSource = self;
     self.tableView.emptyDataSetDelegate = self;
@@ -221,6 +239,11 @@
         case ContactsModeChatStartConversation: {
             self.cancelBarButtonItem.title = AMLocalizedString(@"cancel", @"Button title to cancel something");
             self.navigationItem.rightBarButtonItems = @[self.cancelBarButtonItem];
+            if (self.visibleUsersArray.count == 0) {
+                self.noContactsLabel.text = AMLocalizedString(@"contactsEmptyState_title", @"Title shown when the Contacts section is empty, when you have not added any contact.");
+                self.noContactsDescriptionLabel.text = AMLocalizedString(@"Start chatting securely with your contacts using end-to-end encryption", @"Empty Conversations description");
+                self.inviteContactButton.titleLabel.text = AMLocalizedString(@"inviteContact", @"Text shown when the user tries to make a call and the receiver is not a contact");
+            }
             break;
         }
             
@@ -239,7 +262,6 @@
             self.tableView.backgroundColor = UIColor.mnz_grayFCFCFC;
             [self setTableViewEditing:YES animated:NO];
             self.createGroupBarButtonItem.title = AMLocalizedString(@"next", nil);
-            self.createGroupBarButtonItem.enabled = NO;
             [self.createGroupBarButtonItem setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
                                                                    [UIFont mnz_SFUIMediumWithSize:17],
                                                                    NSFontAttributeName,
@@ -255,14 +277,27 @@
         case ContactsModeChatNamingGroup: {
             self.backBarButtonItem.image = self.backBarButtonItem.image.imageFlippedForRightToLeftLayoutDirection;
             self.createGroupBarButtonItem.title = AMLocalizedString(@"createFolderButton", nil);
+            self.encryptedKeyRotationLabel.text = AMLocalizedString(@"Encrypted Key Rotation", @"Label in a cell where you can enable the 'Encrypted Key Rotation'");
+            self.getChatLinkLabel.text = AMLocalizedString(@"Get Chat Link", @"Label in a cell where you can get the chat link");
+            self.keyRotationFooterLabel.text = AMLocalizedString(@"Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages.", @"Footer text to explain what means 'Encrypted Key Rotation'");
             [self.createGroupBarButtonItem setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
                                                               [UIFont mnz_SFUIMediumWithSize:17],
                                                               NSFontAttributeName,
                                                               nil]
                                                     forState:UIControlStateNormal];
             self.navigationItem.rightBarButtonItems = @[self.createGroupBarButtonItem];
-            self.contactsMode = ContactsModeChatNamingGroup;
             [self.tableView setEditing:NO animated:YES];
+            [self.enterGroupNameTextField becomeFirstResponder];
+            self.checkboxButton.selected = self.getChatLinkEnabled;
+            
+            if (self.getChatLinkEnabled) {
+                self.optionsStackView.hidden = self.getChatLinkEnabled;
+                self.tableViewHeader.frame = CGRectMake(0, 0, self.tableViewHeader.frame.size.width, 60);
+            } else {          
+                UITapGestureRecognizer *singleFingerTap = [UITapGestureRecognizer.alloc initWithTarget:self action:@selector(checkboxTouchUpInside:)];
+                [self.getChatLinkStackView addGestureRecognizer:singleFingerTap];
+            }
+            
             break;
         }
             
@@ -315,7 +350,16 @@
             self.addParticipantBarButtonItem.enabled = YES;
             [self addSearchBarController];
         }
-    } else if (self.contactsMode != ContactsModeChatNamingGroup) {
+    } else if (self.contactsMode == ContactsModeChatNamingGroup) {
+        self.tableView.tableHeaderView = self.tableViewHeader;
+    } else if (self.contactsMode == ContactsModeChatStartConversation) {
+        if (self.visibleUsersArray.count == 0) {
+            self.tableView.tableFooterView = self.tableViewFooter;
+        } else {
+            [self addSearchBarController];
+            self.tableView.tableFooterView = UIView.new;
+        }
+    } else {
         [self addSearchBarController];
     }
 }
@@ -328,9 +372,10 @@
 }
 
 - (void)setNavigationBarButtonItemsEnabled:(BOOL)boolValue {
-    [self.contactRequestsBarButtonItem setEnabled:boolValue];
-    [self.addBarButtonItem setEnabled:boolValue];
-    [self.editBarButtonItem setEnabled:boolValue];
+    self.contactRequestsBarButtonItem.enabled = boolValue;
+    self.addBarButtonItem.enabled = boolValue;
+    self.editButtonItem.enabled = boolValue;
+    self.createGroupBarButtonItem.enabled = boolValue;
 }
 
 - (NSMutableArray *)outSharesForNode:(MEGANode *)node {
@@ -496,7 +541,11 @@
             break;
             
         case ContactsModeChatNamingGroup:
-            self.navigationItem.title = AMLocalizedString(@"groupInfo", @"Title of section where you can see the chat group information and the options that you can do with it. Like 'Notifications' or 'Leave Group' and also the participants of the group.");
+            if (self.getChatLinkEnabled) {
+                self.navigationItem.title = AMLocalizedString(@"New Chat Link", @"Text button for init a group chat with link.");
+            } else {
+                self.navigationItem.title = [AMLocalizedString(@"New group chat", @"Text button for init a group chat") capitalizedString];
+            }
             break;
     }
 }
@@ -536,10 +585,18 @@
             [self.toolbar setAlpha:0.0];
             [self.tabBarController.view addSubview:self.toolbar];
             self.toolbar.translatesAutoresizingMaskIntoConstraints = NO;
+            
+            NSLayoutAnchor *bottomAnchor;
+            if (@available(iOS 11.0, *)) {
+                bottomAnchor = self.tabBarController.tabBar.safeAreaLayoutGuide.bottomAnchor;
+            } else {
+                bottomAnchor = self.tabBarController.tabBar.bottomAnchor;
+            }
+            
             [NSLayoutConstraint activateConstraints:@[[self.toolbar.topAnchor constraintEqualToAnchor:self.tabBarController.tabBar.topAnchor constant:0],
                                                       [self.toolbar.leadingAnchor constraintEqualToAnchor:self.tabBarController.tabBar.leadingAnchor constant:0],
                                                       [self.toolbar.trailingAnchor constraintEqualToAnchor:self.tabBarController.tabBar.trailingAnchor constant:0],
-                                                      [self.toolbar.heightAnchor constraintEqualToConstant:49.0]]];
+                                                      [self.toolbar.bottomAnchor constraintEqualToAnchor:bottomAnchor constant:0]]];
             
             [UIView animateWithDuration:0.33f animations:^ {
                 [self.toolbar setAlpha:1.0];
@@ -611,8 +668,12 @@
         self.searchController.active = NO;
     }
     ContactsViewController *contactsVC = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactsViewControllerID"];
-    contactsVC.contactsMode = ContactsModeChatCreateGroup;
-    contactsVC.userSelected = self.userSelected;
+    if (self.visibleUsersArray.count > 0) {
+        contactsVC.contactsMode = ContactsModeChatCreateGroup;
+    } else {
+        contactsVC.contactsMode = ContactsModeChatNamingGroup;
+    }
+    contactsVC.createGroupChat = self.createGroupChat;
     [self.navigationController pushViewController:contactsVC animated:YES];
 }
 
@@ -702,6 +763,17 @@
         default:
             break;
     }
+}
+
+- (void)newChatLink {
+    if (self.searchController.isActive) {
+        self.searchController.active = NO;
+    }
+    ContactsViewController *contactsVC = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactsViewControllerID"];
+    contactsVC.contactsMode = ContactsModeChatNamingGroup;
+    contactsVC.createGroupChat = self.createGroupChat;
+    contactsVC.getChatLinkEnabled = YES;
+    [self.navigationController pushViewController:contactsVC animated:YES];
 }
 
 #pragma mark - IBActions
@@ -913,13 +985,21 @@
         }
         ContactsViewController *contactsVC = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactsViewControllerID"];
         contactsVC.contactsMode = ContactsModeChatNamingGroup;
-        contactsVC.userSelected = self.userSelected;
+        contactsVC.createGroupChat = self.createGroupChat;
         contactsVC.selectedUsersArray = self.selectedUsersArray;
         [self.navigationController pushViewController:contactsVC animated:YES];
     } else {
-        [self dismissViewControllerAnimated:YES completion:^{
-            self.userSelected(self.selectedUsersArray, self.insertedGroupName);
-        }];
+        if (!self.isKeyRotationEnabled && self.checkboxButton.selected && self.enterGroupNameTextField.text.mnz_isEmpty) {
+            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"Chat Link", @"Label shown in a cell where you can enable a switch to get a chat link") message:AMLocalizedString(@"To create a chat link you must name the group.", @"Alert message to advice the users that to generate a chat link they need enter a group name for the chat")  preferredStyle:UIAlertControllerStyleAlert];
+            [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                [self.enterGroupNameTextField becomeFirstResponder];
+            }]];
+            [self presentViewController:alertController animated:YES completion:nil];
+        } else {
+            [self dismissViewControllerAnimated:YES completion:^{
+                self.createGroupChat(self.selectedUsersArray, self.insertedGroupName, self.keyRotationEnabled, self.keyRotationEnabled ? NO : self.checkboxButton.isSelected);
+            }];
+        }
     }
 }
 
@@ -928,7 +1008,7 @@
         if (self.searchController.isActive) {
             self.searchController.active = NO;
         }
-        self.userSelected(self.selectedUsersArray, nil);
+        self.userSelected(self.selectedUsersArray);
         [self dismissViewControllerAnimated:YES completion:nil];
     }
 }
@@ -937,22 +1017,37 @@
     self.insertedGroupName = sender.text;    
 }
 
+- (IBAction)keyRotationSwitchValueChanged:(UISwitch *)sender {
+    self.keyRotationEnabled = sender.on;
+    self.getChatLinkStackView.hidden = sender.on;
+    if (sender.on) {
+        self.tableViewHeader.frame = CGRectMake(0, 0, self.tableViewHeader.frame.size.width, 266 - self.getChatLinkStackView.frame.size.height - 23);
+    } else {
+        self.tableViewHeader.frame = CGRectMake(0, 0, self.tableViewHeader.frame.size.width, 266);
+    }
+    
+    [self.tableView reloadData];
+}
+
+- (IBAction)checkboxTouchUpInside:(UIButton *)sender {
+    self.checkboxButton.selected = !self.checkboxButton.selected;
+}
+
+- (IBAction)inviteContactTouchUpInside:(UIButton *)sender {
+    [self addContact:sender];
+}
+
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     NSInteger numberOfRows = 0;
     if (MEGAReachabilityManager.isReachable) {
         if (self.contactsMode == ContactsModeChatStartConversation && section == 0) {
-            if (self.visibleUsersArray.count > 0) {
-                return 2;
-            } else {
-                return 1;
-            }
+            return 3;
         } else if (self.contactsMode == ContactsModeChatNamingGroup && section == 0) {
-            return 1;
-        } else if (self.contactsMode == ContactsModeChatNamingGroup && section == 1) {
-            return self.selectedUsersArray.count;
+            return self.selectedUsersArray.count + 1;
         }
+        
         numberOfRows = (self.searchController.isActive && ![self.searchController.searchBar.text isEqual: @""]) ? self.searchVisibleUsersArray.count : self.visibleUsersArray.count;
     }
     return numberOfRows;
@@ -960,17 +1055,9 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     switch (self.contactsMode) {
-        case ContactsModeChatStartConversation: {
-            if (self.users.size.intValue > 0) {
-                return 2;
-            } else {
-                return 1;
-            }
-            break;
-        }
-            
-        case ContactsModeChatNamingGroup:
+        case ContactsModeChatStartConversation:
             return 2;
+            break;
         
         default:
             return 1;
@@ -986,22 +1073,22 @@
         if (indexPath.row == 0) {
             cell.nameLabel.text = AMLocalizedString(@"inviteContact", @"Text shown when the user tries to make a call and the receiver is not a contact");
             cell.avatarImageView.image = [UIImage imageNamed:@"inviteToChat"];
-        } else {
-            cell.nameLabel.text = AMLocalizedString(@"groupChat", @"Label title for a group chat");
+        } else if (indexPath.row == 1) {
+            cell.nameLabel.text = AMLocalizedString(@"New group chat", @"Text button for init a group chat").capitalizedString;
             cell.avatarImageView.image = [UIImage imageNamed:@"createGroup"];
+        } else {
+            cell.nameLabel.text = AMLocalizedString(@"New Chat Link", @"Text button for init a group chat with link.");
+            cell.avatarImageView.image = [UIImage imageNamed:@"chatLink"];
         }
-        return cell;
-    } else if (self.contactsMode == ContactsModeChatNamingGroup && indexPath.section == 0) {
-        ContactTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"NamingGroupTableViewCellID" forIndexPath:indexPath];
-        cell.permissionsImageView.hidden = YES;
-        cell.groupNameTextField.placeholder = AMLocalizedString(@"enterGroupName", @"Placeholder to hint the user to write a name for the group chat.");        
-        cell.avatarImageView.image = [UIImage imageNamed:@"addGroupAvatar"];
-        [cell.groupNameTextField becomeFirstResponder];
         return cell;
     } else {
         MEGAUser *user;
         if (self.contactsMode == ContactsModeChatNamingGroup) {
-            user = [self.selectedUsersArray objectAtIndex:indexPath.row];
+            if (indexPath.row == self.selectedUsersArray.count) {
+                user = MEGASdkManager.sharedMEGASdk.myUser;
+            } else {
+                user = [self.selectedUsersArray objectAtIndex:indexPath.row];
+            }
         } else {
             user = [self userAtIndexPath:indexPath];
         }
@@ -1010,6 +1097,10 @@
         
         ContactTableViewCell *cell;
         NSString *userName = user.mnz_fullName;
+        
+        if (user.handle == MEGASdkManager.sharedMEGASdk.myUser.handle) {
+            userName = [userName stringByAppendingString:[NSString stringWithFormat:@" (%@)", AMLocalizedString(@"me", @"The title for my message in a chat. The message was sent from yourself.")]];
+        }
         
         if (self.contactsMode == ContactsModeFolderSharedWith) {
             if (userName) {
@@ -1048,7 +1139,7 @@
             }
         } 
         
-        [cell.avatarImageView mnz_setImageForUserHandle:user.handle];
+        [cell.avatarImageView mnz_setImageForUserHandle:user.handle name:cell.nameLabel.text];
         
         if (self.tableView.isEditing) {
             // Check if selectedNodesArray contains the current node in the tableView
@@ -1075,23 +1166,21 @@
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     if (section == 0 && self.contactsMode == ContactsModeChatCreateGroup) {
         self.contactsHeaderViewLabel.text = AMLocalizedString(@"contactsTitle", @"Title of the Contacts section").uppercaseString;
-        self.contactsTopLineHeaderView.hidden = YES;
         return self.contactsHeaderView;
     }
-    if (section == 1 && (self.contactsMode >= ContactsModeChatStartConversation)) {
-        if (self.visibleUsersArray.count == 0) {
-            return nil;
-        }
-        if (self.contactsMode == ContactsModeChatNamingGroup) {
-            self.contactsHeaderViewLabel.text = AMLocalizedString(@"participants", @"Label to describe the section where you can see the participants of a group chat").uppercaseString;
-        } else {
-            self.contactsHeaderViewLabel.text = AMLocalizedString(@"contactsTitle", @"Title of the Contacts section").uppercaseString;
-        }
+    if (section == 0 && self.contactsMode == ContactsModeChatNamingGroup) {
+        NSString *participants = AMLocalizedString(@"participants", @"Label to describe the section where you can see the participants of a group chat").uppercaseString;
+        self.contactsHeaderViewLabel.text = participants;
+        return self.contactsHeaderView;
+    }
+    if (section == 1 && self.contactsMode >= ContactsModeChatStartConversation) {
+        self.contactsHeaderViewLabel.text = AMLocalizedString(@"contactsTitle", @"Title of the Contacts section").uppercaseString;
         return self.contactsHeaderView;
     }
     
     return nil;
 }
+
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     CGFloat heightForHeader = 0.0f;
@@ -1100,14 +1189,14 @@
             if (self.contactsMode == ContactsModeChatCreateGroup) {
                 heightForHeader = 24.0f;
             }
+            if (self.contactsMode == ContactsModeChatNamingGroup) {
+                heightForHeader = 45.0f;
+            }
             break;
-            
+
         case 1:
             if (self.contactsMode >= ContactsModeChatStartConversation) {
-                if (self.visibleUsersArray.count == 0) {
-                    return heightForHeader;
-                }
-                heightForHeader = 24.0f;
+                heightForHeader = 35.0f;
             }
             break;
     }
@@ -1172,6 +1261,8 @@
                     [self addContact:[self.tableView cellForRowAtIndexPath:indexPath]];
                 } else if (indexPath.row == 1) {
                     [self startGroup];
+                } else {
+                    [self newChatLink];
                 }
             } else {
                 MEGAUser *user = [self userAtIndexPath:indexPath];
@@ -1180,8 +1271,9 @@
                     return;
                 }
                 self.searchController.active = NO;
+                
                 [self dismissViewControllerAnimated:YES completion:^{
-                    self.userSelected(@[user], nil);
+                    self.userSelected(@[user]);
                 }];
             }
             break;
@@ -1197,7 +1289,6 @@
                     return;
                 }
                 [self.selectedUsersArray addObject:user];
-                self.createGroupBarButtonItem.enabled = (self.selectedUsersArray.count > 1);
                 [self addUserToList:user];
                 if (self.searchController.searchBar.isFirstResponder) {
                     self.searchController.searchBar.text = @"";
@@ -1229,8 +1320,6 @@
             }
         }
         
-        self.createGroupBarButtonItem.enabled = (self.selectedUsersArray.count > 1);
-        
         [self updatePromptTitle];
         
         if (self.itemListVC) {
@@ -1243,7 +1332,6 @@
             }
             if (self.contactsMode != ContactsModeChatStartConversation) {
                 self.deleteBarButtonItem.enabled = NO;
-                self.createGroupBarButtonItem.enabled = NO;
             }
         }
         
@@ -1380,12 +1468,14 @@
 - (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView {
     NSString *text = @"";
     if (MEGAReachabilityManager.isReachable) {
-        if (self.searchController.isActive ) {
-            if (self.searchController.searchBar.text.length > 0) {
-                text = AMLocalizedString(@"noResults", @"Title shown when you make a search and there is 'No Results'");
+        if (self.contactsMode != ContactsModeChatNamingGroup) {
+            if (self.searchController.isActive ) {
+                if (self.searchController.searchBar.text.length > 0) {
+                    text = AMLocalizedString(@"noResults", @"Title shown when you make a search and there is 'No Results'");
+                }
+            } else {
+                text = AMLocalizedString(@"contactsEmptyState_title", @"Title shown when the Contacts section is empty, when you have not added any contact.");
             }
-        } else {
-            text = AMLocalizedString(@"contactsEmptyState_title", @"Title shown when the Contacts section is empty, when you have not added any contact.");
         }
     } else {
         text = AMLocalizedString(@"noInternetConnection",  @"No Internet Connection");
@@ -1396,6 +1486,9 @@
 
 - (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView {
     if (MEGAReachabilityManager.isReachable) {
+        if (self.contactsMode == ContactsModeChatNamingGroup) {
+            return nil;
+        }
         if (self.searchController.isActive) {
             if (self.searchController.searchBar.text.length > 0) {
                 return [UIImage imageNamed:@"searchEmptyState"];
@@ -1588,7 +1681,6 @@
     NSString *base64Handle = [MEGASdk base64HandleForUserHandle:user.handle];
     [self.tableView deselectRowAtIndexPath:[self.indexPathsMutableDictionary objectForKey:base64Handle] animated:YES];
     [self.selectedUsersArray removeObject:user];
-    self.createGroupBarButtonItem.enabled = (self.selectedUsersArray.count > 1);
     if (self.selectedUsersArray.count == 0) {
         [self removeUsersListSubview];
     }
