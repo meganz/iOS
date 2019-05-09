@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -15,7 +15,10 @@
             <rect key="frame" x="0.0" y="0.0" width="259" height="44"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Gs0-Mz-2J6">
+                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="8fH-Lh-wK7">
+                    <rect key="frame" x="16" y="12" width="20" height="20"/>
+                </activityIndicatorView>
+                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Gs0-Mz-2J6">
                     <rect key="frame" x="10" y="6" width="32" height="32"/>
                     <state key="normal" image="playVoiceClip"/>
                     <connections>
@@ -44,10 +47,13 @@
                 <constraint firstItem="Gs0-Mz-2J6" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="C9D-nC-7Z0"/>
                 <constraint firstItem="aPz-gk-3eX" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="Gov-uE-ApV"/>
                 <constraint firstItem="aPz-gk-3eX" firstAttribute="leading" secondItem="Gs0-Mz-2J6" secondAttribute="trailing" constant="8" id="SJm-xu-1lo"/>
+                <constraint firstItem="8fH-Lh-wK7" firstAttribute="centerY" secondItem="Gs0-Mz-2J6" secondAttribute="centerY" id="aP4-rW-Vkv"/>
+                <constraint firstItem="8fH-Lh-wK7" firstAttribute="centerX" secondItem="Gs0-Mz-2J6" secondAttribute="centerX" id="dPF-jD-cnc"/>
                 <constraint firstItem="rU0-ux-GU2" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="ers-py-rFM"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
+                <outlet property="activityIndicator" destination="8fH-Lh-wK7" id="DwF-AX-nnw"/>
                 <outlet property="playPauseButton" destination="Gs0-Mz-2J6" id="KbW-Zv-UMy"/>
                 <outlet property="playerSlider" destination="aPz-gk-3eX" id="C1Q-Cn-jfW"/>
                 <outlet property="timeLabel" destination="rU0-ux-GU2" id="BdS-ye-eDF"/>
