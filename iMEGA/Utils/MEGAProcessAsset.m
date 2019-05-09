@@ -269,7 +269,7 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
              if ([avAsset isKindOfClass:[AVURLAsset class]]) {
                  NSURL *avassetUrl = [(AVURLAsset *)avAsset URL];
                  NSDictionary *fileAtributes = [[NSFileManager defaultManager] attributesOfItemAtPath:avassetUrl.path error:nil];
-                 __block NSString *filePath = [self filePathAsCreationDateWithInfo:info asset:asset];
+                 __block NSString *filePath = [self filePathWithInfo:info asset:asset];
                  [NSFileManager.defaultManager mnz_removeItemAtPath:filePath];
                  long long fileSize = [[fileAtributes objectForKey:NSFileSize] longLongValue];
                  
@@ -338,7 +338,7 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
              } else if ([avAsset isKindOfClass:[AVComposition class]]) {
                  float realDuration = [self realDurationForAVAsset:avAsset];
                  self.totalDuration = self.totalDuration - asset.duration + realDuration;
-                 NSString *filePath = [self filePathAsCreationDateWithInfo:info asset:asset];
+                 NSString *filePath = [self filePathWithInfo:info asset:asset];
                  [NSFileManager.defaultManager mnz_removeItemAtPath:filePath];
                  NSNumber *videoQualityNumber = [[NSUserDefaults standardUserDefaults] objectForKey:@"ChatVideoQuality"];
                  ChatVideoUploadQuality videoQuality;
@@ -488,17 +488,21 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
     return YES;
 }
 
-- (NSString *)filePathAsCreationDateWithInfo:(NSDictionary *)info asset:(PHAsset *)asset {
+- (NSString *)filePathWithInfo:(NSDictionary *)info asset:(PHAsset *)asset {
     MEGALogDebug(@"[PA] Asset %@\n%@", asset, info);
     NSString *name;
     
     if (self.originalName) {
         NSURL *url = [info objectForKey:@"PHImageFileURLKey"];
         if (url) {
-            name = url.path.lastPathComponent;
+            name = url.path.lastPathComponent.mnz_fileNameWithLowercaseExtension;
         } else {
             NSString *imageFileSandbox = [info objectForKey:@"PHImageFileSandboxExtensionTokenKey"];
-            name = imageFileSandbox.lastPathComponent;
+            name = imageFileSandbox.lastPathComponent.mnz_fileNameWithLowercaseExtension;
+        }
+        if (!name) {
+            NSString *extension = [self extensionWithInfo:info asset:asset];
+            name = [[asset.localIdentifier stringByReplacingOccurrencesOfString:@"/" withString:@""] stringByAppendingPathExtension:extension];
         }
     } else {
         NSString *extension = [self extensionWithInfo:info asset:asset];
@@ -555,7 +559,7 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
                 dispatch_semaphore_signal(self.semaphore);
             }
         } else {
-            NSString *filePath = [self filePathAsCreationDateWithInfo:info asset:asset];
+            NSString *filePath = [self filePathWithInfo:info asset:asset];
             [NSFileManager.defaultManager mnz_removeItemAtPath:filePath];
             long long imageSize = imageData.length;
             if ([self hasFreeSpaceOnDiskForWriteFile:imageSize]) {
