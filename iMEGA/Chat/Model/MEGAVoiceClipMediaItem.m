@@ -6,8 +6,10 @@
 #import "JSQMessagesBubbleImageFactory.h"
 #import "JSQMessagesMediaViewBubbleImageMasker.h"
 
+#import "MEGANode+MNZCategory.h"
 #import "MEGAMessageVoiceClipView.h"
 #import "MEGASDKManager.h"
+#import "MEGAStartDownloadTransferDelegate.h"
 #import "NSString+MNZCategory.h"
 
 @interface MEGAVoiceClipMediaItem() <MEGAMessageVoiceClipViewDelegate>
@@ -77,6 +79,18 @@
     voiceClipView.timeLabel.text = [NSString mnz_stringFromTimeInterval:duration];
     voiceClipView.delegate = self;
     
+    NSString *nodePath = [node mnz_temporaryPathForDownloadCreatingDirectories:YES];
+    if ([NSFileManager.defaultManager fileExistsAtPath:nodePath]) {
+        voiceClipView.activityIndicator.hidden = YES;
+        voiceClipView.playPauseButton.hidden = NO;
+    } else {
+        MEGAStartDownloadTransferDelegate *delegate = [[MEGAStartDownloadTransferDelegate alloc] initWithProgress:nil completion:^(MEGATransfer *transfer) {
+            voiceClipView.activityIndicator.hidden = YES;
+            voiceClipView.playPauseButton.hidden = NO;
+        }];
+        [[MEGASdkManager sharedMEGASdk] startDownloadTopPriorityWithNode:node localPath:nodePath appData:nil delegate:delegate];
+    }
+    
     // Bubble:
     JSQMessagesBubbleImageFactory *bubbleFactory = [[JSQMessagesBubbleImageFactory alloc] initWithBubbleImage:[UIImage imageNamed:@"bubble_tailless"] capInsets:UIEdgeInsetsZero layoutDirection:[UIApplication sharedApplication].userInterfaceLayoutDirection];
     JSQMessagesMediaViewBubbleImageMasker *messageMediaViewBubleImageMasker = [[JSQMessagesMediaViewBubbleImageMasker alloc] initWithBubbleImageFactory:bubbleFactory];
@@ -117,10 +131,9 @@
             return;
         }
         if (!self.audioPlayer) {
-            [[MEGASdkManager sharedMEGASdk] httpServerStart:YES port:4443];
             MEGANode *node = [self.message.nodeList nodeAtIndex:0];
-            NSURL *streamingURL = [[MEGASdkManager sharedMEGASdk] httpServerGetLocalLink:node];
-            self.audioPlayer = [[AVPlayer alloc] initWithURL:streamingURL];
+            NSString *nodePath = [node mnz_temporaryPathForDownloadCreatingDirectories:YES];
+            self.audioPlayer = [[AVPlayer alloc] initWithURL:[NSURL fileURLWithPath:nodePath]];
             if (!self.audioPlayer) {
                 MEGALogError(@"[Voice clips] Error initializing audio player for voice clip: %@", error);
                 return;
@@ -138,12 +151,12 @@
         [self.audioPlayer play];
         [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(proximityChange:) name:UIDeviceProximityStateDidChangeNotification object:nil];
     } else {
+        [NSNotificationCenter.defaultCenter removeObserver:self name:UIDeviceProximityStateDidChangeNotification object:nil];
+        [self.audioPlayer pause];
         if (![[AVAudioSession sharedInstance] setActive:NO withOptions:AVAudioSessionSetActiveOptionNotifyOthersOnDeactivation error:&error]) {
             MEGALogError(@"[Voice clips] Error deactivating audio session: %@", error);
             return;
         }
-        [self.audioPlayer pause];
-        [NSNotificationCenter.defaultCenter removeObserver:self name:UIDeviceProximityStateDidChangeNotification object:nil];
     }
     UIDevice.currentDevice.proximityMonitoringEnabled = play;
 }
