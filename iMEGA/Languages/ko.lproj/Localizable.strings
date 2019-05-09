@@ -368,6 +368,8 @@
 "tapFileToRename"="이름을 변경하려면 파일을 탭하세요";
 /* */
 "sendToContact"="연락처에게 보내기";
+/* Column header of my contacts/chats at copy dialog */
+"My chats"="내 대화";
 /* Toast text upon sending a single file to chat */
 "fileSentToChat"="파일이 대화로 전송됨";
 /* Success message when the attachment has been sent to a many chats */
@@ -1190,7 +1192,7 @@
 /* Alert message shown when a chat does not exist */
 "chatNotFound"="대화가 발견되지 않음";
 /* A typing indicator in the chat. Please leave the %@ which will be automatically replaced with the user's name at runtime. */
-"isTyping"="%@님이 입력중 ...";
+"isTyping"="%@님이 입력중...";
 /* Plural, a hint that appears when two users are typing in a group chat at the same time. The parameter will be the concatenation of both user names. The tags and placeholders shouldn't be translated or modified. */
 "twoUsersAreTyping"="%1$s님이 [A]입력중...[/A]";
 /* text that appear when there are more than 2 people writing at that time in a chat. For example User1, user2 and more are typing... The parameter will be the concatenation of the first two user names. The tags and placeholders shouldn't be translated or modified. */
@@ -1643,7 +1645,7 @@
 /* The title of the section about deleting file versions in the settings. */
 "Delete all older versions of my files"="모든 오래된 파일 버전 기록을 삭제";
 /* Text of a button which deletes all historical versions of files in the users entire account. */
-"Delete old versions"="피일 기록 삭제";
+"Delete previous versions"="이전 파일 기록 삭제";
 /* A warning note about deleting all file versions in the settings section. */
 "All current files will remain. Only historic versions of your files will be deleted."="소유하고 계신 모든 현재 버전의 파일들은 남습니다. 오직 오래된 구 버전의 파일 기록만이 제거됩니다.";
 /* Text of the dialog to delete all the file versions of the account */
@@ -1666,8 +1668,6 @@
 "%@ joined the call."="%@님이 통화에 참여하였습니다.";
 /* Message to inform the local user that someone has left the current group call */
 "%@ left the call."="%@님이 통화를 떠났습니다.";
-/* Message to inform the local user is having a bad quality network with someone in the current group call */
-"Poor conection."="연결 상태 나쁨.";
 /* Message shown in a chat room when there is an active group call */
 "There is an active group call. Tap to join."="활성화된 그룹 통화가 있습니다. 참여하려면 탭하세요.";
 /* Message shown in a chat room when there is an active call */

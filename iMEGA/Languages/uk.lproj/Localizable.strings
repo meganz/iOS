@@ -368,6 +368,8 @@
 "tapFileToRename"="Tap file to rename";
 /* */
 "sendToContact"="Надіслати контакту";
+/* Column header of my contacts/chats at copy dialog */
+"My chats"="My chats";
 /* Toast text upon sending a single file to chat */
 "fileSentToChat"="File sent to chat";
 /* Success message when the attachment has been sent to a many chats */
@@ -1643,7 +1645,7 @@
 /* The title of the section about deleting file versions in the settings. */
 "Delete all older versions of my files"="Delete all older versions of my files";
 /* Text of a button which deletes all historical versions of files in the users entire account. */
-"Delete old versions"="Delete old versions";
+"Delete previous versions"="Delete previous versions";
 /* A warning note about deleting all file versions in the settings section. */
 "All current files will remain. Only historic versions of your files will be deleted."="All current files will remain. Only historic versions of your files will be deleted.";
 /* Text of the dialog to delete all the file versions of the account */
@@ -1666,8 +1668,6 @@
 "%@ joined the call."="%@ joined the call.";
 /* Message to inform the local user that someone has left the current group call */
 "%@ left the call."="%@ left the call.";
-/* Message to inform the local user is having a bad quality network with someone in the current group call */
-"Poor conection."="Poor connection.";
 /* Message shown in a chat room when there is an active group call */
 "There is an active group call. Tap to join."="There is an active group call. Tap to join.";
 /* Message shown in a chat room when there is an active call */
