@@ -1645,7 +1645,7 @@
 /* The title of the section about deleting file versions in the settings. */
 "Delete all older versions of my files"="Eliminar todas las versiones anteriores de mis archivos";
 /* Text of a button which deletes all historical versions of files in the users entire account. */
-"Delete old versions"="Eliminar versiones anteriores";
+"Delete previous versions"="Eliminar versiones anteriores";
 /* A warning note about deleting all file versions in the settings section. */
 "All current files will remain. Only historic versions of your files will be deleted."="Los archivos actuales serán conservados. Solo se borrará el histórico de versiones de tus archivos.";
 /* Text of the dialog to delete all the file versions of the account */
@@ -1668,8 +1668,6 @@
 "%@ joined the call."="%@ se ha unido a la llamada.";
 /* Message to inform the local user that someone has left the current group call */
 "%@ left the call."="%@ ha abandonado la llamada.";
-/* Message to inform the local user is having a bad quality network with someone in the current group call */
-"Poor conection."="Mala conexión.";
 /* Message shown in a chat room when there is an active group call */
 "There is an active group call. Tap to join."="Llamada de grupo en curso. Toca para unirte.";
 /* Message shown in a chat room when there is an active call */
