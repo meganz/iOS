@@ -611,7 +611,7 @@
                                                     </constraints>
                                                 </stackView>
                                                 <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MnT-ok-C8h" userLabel="Info Button">
-                                                    <rect key="frame" x="325" y="18" width="46" height="24"/>
+                                                    <rect key="frame" x="325" y="19" width="46" height="22"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="46" id="N1p-Mz-14T"/>
                                                     </constraints>
@@ -1003,7 +1003,7 @@
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Link without key" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LwY-Lf-ywH">
-                                                    <rect key="frame" x="56" y="12" width="123.5" height="20"/>
+                                                    <rect key="frame" x="56" y="12" width="130" height="20"/>
                                                     <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -1379,29 +1379,8 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="g5o-Ck-bk9">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                                         <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="M8S-fU-BJu">
-                                                <rect key="frame" x="0.0" y="0.0" width="187.5" height="44"/>
-                                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
-                                                <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                <state key="normal" title="Recents">
-                                                    <color key="titleColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                </state>
-                                                <state key="selected">
-                                                    <color key="titleColor" red="0.95294117649999999" green="0.047058823530000002" blue="0.078431372550000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                </state>
-                                                <connections>
-                                                    <action selector="recentsTouchUpInside:" destination="MwH-YC-3hO" eventType="touchUpInside" id="Zp8-N5-hCA"/>
-                                                </connections>
-                                            </button>
-                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Jpy-5t-LW1">
-                                                <rect key="frame" x="0.0" y="43" width="187.5" height="1"/>
-                                                <color key="backgroundColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="1" id="EBr-eA-8y2"/>
-                                                </constraints>
-                                            </view>
                                             <button opaque="NO" contentMode="scaleToFill" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sa3-B5-uhL">
-                                                <rect key="frame" x="187.5" y="0.0" width="187.5" height="44"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="187.5" height="44"/>
                                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
                                                 <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <state key="normal" title="Cloud Drive">
@@ -1415,10 +1394,31 @@
                                                 </connections>
                                             </button>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XLn-rz-U2t">
-                                                <rect key="frame" x="187.5" y="43" width="187.5" height="1"/>
+                                                <rect key="frame" x="0.0" y="43" width="187.5" height="1"/>
                                                 <color key="backgroundColor" red="0.95294117649999999" green="0.047058823530000002" blue="0.078431372550000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="1" id="xf7-nJ-4nn"/>
+                                                </constraints>
+                                            </view>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="M8S-fU-BJu">
+                                                <rect key="frame" x="187.5" y="0.0" width="187.5" height="44"/>
+                                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
+                                                <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <state key="normal" title="Recents">
+                                                    <color key="titleColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                </state>
+                                                <state key="selected">
+                                                    <color key="titleColor" red="0.95294117649999999" green="0.047058823530000002" blue="0.078431372550000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="recentsTouchUpInside:" destination="MwH-YC-3hO" eventType="touchUpInside" id="Zp8-N5-hCA"/>
+                                                </connections>
+                                            </button>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Jpy-5t-LW1">
+                                                <rect key="frame" x="187.5" y="43" width="187.5" height="1"/>
+                                                <color key="backgroundColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="1" id="EBr-eA-8y2"/>
                                                 </constraints>
                                             </view>
                                         </subviews>
@@ -1426,20 +1426,19 @@
                                         <constraints>
                                             <constraint firstItem="M8S-fU-BJu" firstAttribute="width" secondItem="g5o-Ck-bk9" secondAttribute="width" multiplier="0.5" id="BhJ-sf-L1Z"/>
                                             <constraint firstItem="Jpy-5t-LW1" firstAttribute="width" secondItem="M8S-fU-BJu" secondAttribute="width" id="EMD-E2-nzo"/>
-                                            <constraint firstAttribute="trailing" secondItem="sa3-B5-uhL" secondAttribute="trailing" id="Fiv-Ug-raO"/>
-                                            <constraint firstAttribute="trailing" secondItem="XLn-rz-U2t" secondAttribute="trailing" id="Hgi-C0-GWf"/>
                                             <constraint firstAttribute="height" constant="44" id="HnO-Hv-4eq"/>
-                                            <constraint firstItem="M8S-fU-BJu" firstAttribute="leading" secondItem="g5o-Ck-bk9" secondAttribute="leading" id="Ih9-dP-8DY"/>
+                                            <constraint firstAttribute="trailing" secondItem="M8S-fU-BJu" secondAttribute="trailing" id="J6E-oG-fxV"/>
                                             <constraint firstItem="sa3-B5-uhL" firstAttribute="width" secondItem="g5o-Ck-bk9" secondAttribute="width" multiplier="0.5" id="JqV-pC-7Q8"/>
+                                            <constraint firstItem="XLn-rz-U2t" firstAttribute="leading" secondItem="g5o-Ck-bk9" secondAttribute="leading" id="Ldc-97-yl3"/>
                                             <constraint firstItem="sa3-B5-uhL" firstAttribute="centerY" secondItem="g5o-Ck-bk9" secondAttribute="centerY" id="Lgl-1P-hyf"/>
                                             <constraint firstAttribute="bottom" secondItem="XLn-rz-U2t" secondAttribute="bottom" id="Ro1-N9-GXA"/>
                                             <constraint firstItem="XLn-rz-U2t" firstAttribute="width" secondItem="sa3-B5-uhL" secondAttribute="width" id="UZs-ix-xze"/>
                                             <constraint firstItem="sa3-B5-uhL" firstAttribute="height" secondItem="g5o-Ck-bk9" secondAttribute="height" id="agm-Hi-4N5"/>
                                             <constraint firstAttribute="bottom" secondItem="Jpy-5t-LW1" secondAttribute="bottom" id="fvQ-Vy-jk6"/>
                                             <constraint firstItem="M8S-fU-BJu" firstAttribute="height" secondItem="g5o-Ck-bk9" secondAttribute="height" id="gWA-ar-UXe"/>
-                                            <constraint firstItem="Jpy-5t-LW1" firstAttribute="leading" secondItem="g5o-Ck-bk9" secondAttribute="leading" id="hWo-VF-toI"/>
-                                            <constraint firstItem="XLn-rz-U2t" firstAttribute="leading" secondItem="Jpy-5t-LW1" secondAttribute="trailing" id="jeP-Sm-X8B"/>
+                                            <constraint firstItem="sa3-B5-uhL" firstAttribute="leading" secondItem="g5o-Ck-bk9" secondAttribute="leading" id="iYA-YS-coY"/>
                                             <constraint firstItem="M8S-fU-BJu" firstAttribute="centerY" secondItem="g5o-Ck-bk9" secondAttribute="centerY" id="oYN-4G-WiH"/>
+                                            <constraint firstAttribute="trailing" secondItem="Jpy-5t-LW1" secondAttribute="trailing" id="thv-bZ-fnG"/>
                                         </constraints>
                                     </view>
                                     <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xAf-QH-eJE">
