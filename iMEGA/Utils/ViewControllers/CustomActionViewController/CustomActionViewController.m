@@ -258,7 +258,7 @@
                 break;
                 
             case MEGAShareTypeAccessOwner:
-                if (self.displayMode == DisplayModeCloudDrive || self.displayMode == DisplayModeRubbishBin || self.displayMode == DisplayModeNodeInfo) {
+                if (self.displayMode == DisplayModeCloudDrive || self.displayMode == DisplayModeRubbishBin || self.displayMode == DisplayModeNodeInfo || self.displayMode == DisplayModeRecents) {
                     if (self.displayMode != DisplayModeRubbishBin) {
                         [actions addObject:[self actionShare]];
                         if (self.node.isFile && (self.node.name.mnz_imagePathExtension || (self.node.name.mnz_videoPathExtension && self.node.mnz_isPlayable))) {
