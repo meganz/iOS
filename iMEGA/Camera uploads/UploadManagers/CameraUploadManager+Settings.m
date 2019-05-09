@@ -215,11 +215,11 @@ static const NSTimeInterval BoardingScreenShowUpMinimumInterval = 30 * 24 * 3600
 }
 
 + (void)setMigratedToCameraUploadsV2:(BOOL)migratedToCameraUploadsV2 {
-    if ([self isHEVCFormatSupported]) {
-        [NSUserDefaults.standardUserDefaults setBool:migratedToCameraUploadsV2 forKey:HasMigratedToCameraUploadsV2Key];
-    } else {
-        [NSUserDefaults.standardUserDefaults setBool:YES forKey:HasMigratedToCameraUploadsV2Key];
+    if (![self isHEVCFormatSupported]) {
+        return;
     }
+    
+    [NSUserDefaults.standardUserDefaults setBool:migratedToCameraUploadsV2 forKey:HasMigratedToCameraUploadsV2Key];
 }
 
 + (BOOL)shouldShowCameraUploadV2MigrationScreen {

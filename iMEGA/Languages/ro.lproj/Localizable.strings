@@ -368,6 +368,8 @@
 "tapFileToRename"="Atinge fișierul pentru redenumire";
 /* */
 "sendToContact"="Trimite contactului";
+/* Column header of my contacts/chats at copy dialog */
+"My chats"="Chaturile mele";
 /* Toast text upon sending a single file to chat */
 "fileSentToChat"="Fișiere trimise în chat";
 /* Success message when the attachment has been sent to a many chats */
@@ -1643,7 +1645,7 @@
 /* The title of the section about deleting file versions in the settings. */
 "Delete all older versions of my files"="Șterge toate versiunile mai vechi ale fișierelor mele";
 /* Text of a button which deletes all historical versions of files in the users entire account. */
-"Delete old versions"="Șterge versiunile vechi";
+"Delete previous versions"="Șterge versiunile vechi";
 /* A warning note about deleting all file versions in the settings section. */
 "All current files will remain. Only historic versions of your files will be deleted."="Toate fișierele actuale vor rămâne. Doar versiunile istorice ale fișierelor vor fi șterse.";
 /* Text of the dialog to delete all the file versions of the account */
@@ -1666,8 +1668,6 @@
 "%@ joined the call."="%@ s-a alăturat apelului.";
 /* Message to inform the local user that someone has left the current group call */
 "%@ left the call."="%@ a părăsit apelul.";
-/* Message to inform the local user is having a bad quality network with someone in the current group call */
-"Poor conection."="Conexiune slabă.";
 /* Message shown in a chat room when there is an active group call */
 "There is an active group call. Tap to join."="Există un apel de grup activ. Atinge pentru a te alătura.";
 /* Message shown in a chat room when there is an active call */

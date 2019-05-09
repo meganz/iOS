@@ -1783,6 +1783,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
 }
 
 - (void)messagesInputToolbar:(MEGAInputToolbar *)toolbar didPressSendButton:(UIButton *)sender toAttachAssets:(NSArray<PHAsset *> *)assets {
+    MEGALogDebug(@"[Chat] Did press send button to attach assets %@", assets);
     MEGANode *parentNode = [[MEGASdkManager sharedMEGASdk] nodeForPath:@"/My chat files"];
     if (parentNode) {
         [self uploadAssets:assets toParentNode:parentNode];
@@ -1822,6 +1823,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
         });
     }];
     dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^(void) {
+        processAsset.originalName = YES;
         [processAsset prepare];
     });
 }

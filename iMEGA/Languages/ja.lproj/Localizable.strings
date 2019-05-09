@@ -368,6 +368,8 @@
 "tapFileToRename"="名前を変更するにはファイルをタップ";
 /* */
 "sendToContact"="知り合いに送る";
+/* Column header of my contacts/chats at copy dialog */
+"My chats"="私のチャット";
 /* Toast text upon sending a single file to chat */
 "fileSentToChat"="ファイルがチャットに送信されました";
 /* Success message when the attachment has been sent to a many chats */
@@ -1190,7 +1192,7 @@
 /* Alert message shown when a chat does not exist */
 "chatNotFound"="チャットなし";
 /* A typing indicator in the chat. Please leave the %@ which will be automatically replaced with the user's name at runtime. */
-"isTyping"="%@が入力中です...";
+"isTyping"="%@さんが入力中です…";
 /* Plural, a hint that appears when two users are typing in a group chat at the same time. The parameter will be the concatenation of both user names. The tags and placeholders shouldn't be translated or modified. */
 "twoUsersAreTyping"="%1$s [A]さんが入力しています…[/A]";
 /* text that appear when there are more than 2 people writing at that time in a chat. For example User1, user2 and more are typing... The parameter will be the concatenation of the first two user names. The tags and placeholders shouldn't be translated or modified. */
@@ -1643,7 +1645,7 @@
 /* The title of the section about deleting file versions in the settings. */
 "Delete all older versions of my files"="古いバージョンのファイルをすべて削除する";
 /* Text of a button which deletes all historical versions of files in the users entire account. */
-"Delete old versions"="古いバージョンを削除する";
+"Delete previous versions"="以前のバージョンを削除";
 /* A warning note about deleting all file versions in the settings section. */
 "All current files will remain. Only historic versions of your files will be deleted."="現在のファイルはすべて残ります。あなたのファイルの過去バージョンのみが削除されます。";
 /* Text of the dialog to delete all the file versions of the account */
@@ -1666,8 +1668,6 @@
 "%@ joined the call."="%@さんが通話に参加しました。";
 /* Message to inform the local user that someone has left the current group call */
 "%@ left the call."="%@さんが通話から抜けました。";
-/* Message to inform the local user is having a bad quality network with someone in the current group call */
-"Poor conection."="接続不良。";
 /* Message shown in a chat room when there is an active group call */
 "There is an active group call. Tap to join."="有効なグループ通話があります。タップして参加します。";
 /* Message shown in a chat room when there is an active call */

@@ -368,6 +368,8 @@
 "tapFileToRename"="Коснитесь файла для переименования";
 /* */
 "sendToContact"="Послать контакту";
+/* Column header of my contacts/chats at copy dialog */
+"My chats"="Мои чаты";
 /* Toast text upon sending a single file to chat */
 "fileSentToChat"="Файл отправлен в чат";
 /* Success message when the attachment has been sent to a many chats */
@@ -1190,7 +1192,7 @@
 /* Alert message shown when a chat does not exist */
 "chatNotFound"="Чат не найден";
 /* A typing indicator in the chat. Please leave the %@ which will be automatically replaced with the user's name at runtime. */
-"isTyping"="%@ печатает ...";
+"isTyping"="%@ печатает…";
 /* Plural, a hint that appears when two users are typing in a group chat at the same time. The parameter will be the concatenation of both user names. The tags and placeholders shouldn't be translated or modified. */
 "twoUsersAreTyping"="%1$s [A]печатают…[/A]";
 /* text that appear when there are more than 2 people writing at that time in a chat. For example User1, user2 and more are typing... The parameter will be the concatenation of the first two user names. The tags and placeholders shouldn't be translated or modified. */
@@ -1643,7 +1645,7 @@
 /* The title of the section about deleting file versions in the settings. */
 "Delete all older versions of my files"="Удалить все старые версии моих файлов";
 /* Text of a button which deletes all historical versions of files in the users entire account. */
-"Delete old versions"="Удалить старые версии";
+"Delete previous versions"="Удалить прошлые версии";
 /* A warning note about deleting all file versions in the settings section. */
 "All current files will remain. Only historic versions of your files will be deleted."="Все текущие файлы останутся. Только прошлые версии файлов будут удалены.";
 /* Text of the dialog to delete all the file versions of the account */
@@ -1666,8 +1668,6 @@
 "%@ joined the call."="%@ присоединился к вызову.";
 /* Message to inform the local user that someone has left the current group call */
 "%@ left the call."="%@ покинул вызов.";
-/* Message to inform the local user is having a bad quality network with someone in the current group call */
-"Poor conection."="Плохое соединение.";
 /* Message shown in a chat room when there is an active group call */
 "There is an active group call. Tap to join."="Активный групповой вызов. Нажмите, чтобы присоединиться.";
 /* Message shown in a chat room when there is an active call */
