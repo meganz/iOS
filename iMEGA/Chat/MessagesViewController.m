@@ -132,6 +132,8 @@ static NSMutableSet<NSString *> *tapForInfoSet;
 
 @property (nonatomic) NSString *lastGreenString;
 
+@property (nonatomic) InputToolbarState inputToolbarState;
+
 @end
 
 @implementation MessagesViewController
@@ -203,6 +205,8 @@ static NSMutableSet<NSString *> *tapForInfoSet;
     }
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(internetConnectionChanged) name:kReachabilityChangedNotification object:nil];
+    
+    self.inputToolbarState = InputToolbarStateInitial;
 
     // Tap gesture for Jump to bottom view:
     UITapGestureRecognizer *jumpButtonTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(jumpToBottomPressed:)];
@@ -708,7 +712,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
 - (void)updateNavigationBarButtonsState {
     MEGAChatConnection chatConnection = [[MEGASdkManager sharedMEGAChatSdk] chatConnectionState:self.chatRoom.chatId];
     
-    if (self.chatRoom.ownPrivilege < MEGAChatRoomPrivilegeStandard || chatConnection != MEGAChatConnectionOnline || !MEGAReachabilityManager.isReachable || self.chatRoom.peerCount == 0) {
+    if (self.chatRoom.ownPrivilege < MEGAChatRoomPrivilegeStandard || chatConnection != MEGAChatConnectionOnline || !MEGAReachabilityManager.isReachable || self.chatRoom.peerCount == 0 || self.inputToolbarState >= InputToolbarStateRecordingUnlocked) {
         self.audioCallBarButtonItem.enabled = self.videoCallBarButtonItem.enabled = NO;
         return;
     }
@@ -1959,6 +1963,11 @@ static NSMutableSet<NSString *> *tapForInfoSet;
         [[MEGASdkManager sharedMEGAChatSdk] autojoinPublicChat:self.chatRoom.chatId delegate:delegate];
         sender.enabled = NO;
     }
+}
+
+- (void)didChangeToState:(InputToolbarState)state {
+    self.inputToolbarState = state;
+    [self updateNavigationBarButtonsState];
 }
 
 - (void)scrollToBottomAnimated:(BOOL)animated {
