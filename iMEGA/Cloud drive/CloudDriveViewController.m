@@ -1230,6 +1230,10 @@
     self.recentsLineView.backgroundColor = UIColor.mnz_redMain;
     self.cloudDriveLineView.backgroundColor = UIColor.mnz_grayCCCCCC;
     
+    if (self.cdTableView.tableView.isEditing || self.cdCollectionView.collectionView.allowsMultipleSelection) {
+        [self setEditMode:NO];
+    }
+    
     if (self.searchController.isActive) {
         self.searchController.active = NO;
     }
