@@ -352,7 +352,17 @@ static const void *richNumberTagKey = &richNumberTagKey;
 }
 
 - (id<JSQMessageMediaData>)media {
-    id<JSQMessageMediaData> media = nil;
+    static NSCache *cache;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        cache = [NSCache new];
+        cache.countLimit = 200;
+    });
+    
+    id<JSQMessageMediaData> media = [cache objectForKey:@(self.messageHash)];
+    if (media) {
+        return media;
+    }
     
     switch (self.type) {
         case MEGAChatMessageTypeContact:
@@ -398,6 +408,9 @@ static const void *richNumberTagKey = &richNumberTagKey;
             break;
     }
     
+    if (media) {
+        [cache setObject:media forKey:@(self.messageHash)];
+    }
     return media;
 }
 
