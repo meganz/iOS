@@ -241,7 +241,7 @@
         if (self.browserAction == BrowserActionSendFromCloudDrive) {
             enableToolbarItems = self.selectedNodesMutableDictionary.count > 0;
         } else {
-            self.parentShareType = [[MEGASdkManager sharedMEGASdk] accessLevelForNode:self.parentNode];
+            self.parentShareType = [MEGASdkManager.sharedMEGASdk accessLevelForNode:self.parentNode];
             enableToolbarItems = self.parentShareType > MEGAShareTypeAccessRead;
         }
     } else if (self.incomingButton.selected) {
@@ -260,19 +260,16 @@
 - (void)setParentNodeForBrowserAction {
     if (self.cloudDriveButton.selected) {
         if (self.isParentBrowser) {
-            self.parentNode = [[MEGASdkManager sharedMEGASdk] rootNode];
-            self.nodes = [[MEGASdkManager sharedMEGASdk] childrenForParent:[[MEGASdkManager sharedMEGASdk] rootNode]];
-        } else {
-            self.nodes = [[MEGASdkManager sharedMEGASdk] childrenForParent:self.parentNode];
+            self.parentNode = MEGASdkManager.sharedMEGASdk.rootNode;
         }
-        
+        self.nodes = [MEGASdkManager.sharedMEGASdk childrenForParent:self.parentNode];
     } else if (self.incomingButton.selected) {
         if (self.isParentBrowser) {
             self.parentNode = nil;
-            self.nodes = [[MEGASdkManager sharedMEGASdk] inShares];
-            self.shares = [[MEGASdkManager sharedMEGASdk] inSharesList];
+            self.nodes = MEGASdkManager.sharedMEGASdk.inShares;
+            self.shares = MEGASdkManager.sharedMEGASdk.inSharesList;
         } else {
-            self.nodes = [[MEGASdkManager sharedMEGASdk] childrenForParent:self.parentNode];
+            self.nodes = [MEGASdkManager.sharedMEGASdk childrenForParent:self.parentNode];
         }
     }
 }
@@ -832,7 +829,7 @@
                 text = AMLocalizedString(@"noResults", @"Title shown when you make a search and there is 'No Results'");
             }
         } else {
-            if ((self.incomingButton.selected) && self.isParentBrowser) {
+            if (self.incomingButton.selected && self.isParentBrowser) {
                 text = AMLocalizedString(@"noIncomingSharedItemsEmptyState_text", @"Title shown when there's no incoming Shared Items");
             } else {
                 text = AMLocalizedString(@"emptyFolder", @"Title shown when a folder doesn't have any files");

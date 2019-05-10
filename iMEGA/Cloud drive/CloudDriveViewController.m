@@ -290,7 +290,7 @@
     
     self.cdTableView.cloudDrive = self;
     self.cdTableView.tableView.tableHeaderView = (self.displayMode == DisplayModeRecents) ? nil : self.searchController.searchBar;
-    [self.cdTableView.tableView setContentOffset:CGPointMake(0, CGRectGetHeight(self.searchController.searchBar.frame))];
+    self.cdTableView.tableView.contentOffset = CGPointMake(0, CGRectGetHeight(self.searchController.searchBar.frame));
     self.cdTableView.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     self.cdTableView.tableView.emptyDataSetDelegate = self;
     self.cdTableView.tableView.emptyDataSetSource = self;
