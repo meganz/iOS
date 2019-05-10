@@ -56,6 +56,8 @@ typedef NS_ENUM(NSInteger, MEGAChatMessageEndCallReason);
 
 + (NSString *)mnz_lastGreenStringFromMinutes:(NSInteger)minutes;
 
++ (NSString *)mnz_addedByInRecentActionBucket:(MEGARecentActionBucket *)recentActionBucket nodesArray:(NSArray *)nodesArray;
+
 #pragma mark - File names and extensions
 
 - (NSString *)mnz_fileNameWithLowercaseExtension;
