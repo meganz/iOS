@@ -45,9 +45,9 @@
         <!--Shared Items View Controller-->
         <scene sceneID="iAh-eN-ko9">
             <objects>
-                <viewController storyboardIdentifier="SharedItemsViewControllerID" id="2AR-na-hSZ" customClass="SharedItemsViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SharedItemsViewControllerID" extendedLayoutIncludesOpaqueBars="YES" id="2AR-na-hSZ" customClass="SharedItemsViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="DkV-FA-Q2Q">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="618"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OQ5-04-k4z">
@@ -238,7 +238,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="N4c-5o-hcf"/>
                     </view>
-                    <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
+                    <extendedEdge key="edgesForExtendedLayout" top="YES"/>
                     <navigationItem key="navigationItem" id="dyl-mV-SkG">
                         <barButtonItem key="backBarButtonItem" title=" " id="0b1-fX-6Hc"/>
                     </navigationItem>

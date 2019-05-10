@@ -74,6 +74,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.definesPresentationContext = YES;
+    
     //White background for the view behind the table view
     self.tableView.backgroundView = UIView.alloc.init;
     
