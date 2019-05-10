@@ -585,6 +585,10 @@
     self.cloudDriveLineView.backgroundColor = UIColor.mnz_redMain;
     self.incomingLineView.backgroundColor = UIColor.mnz_grayCCCCCC;
     
+    if (self.searchController.isActive) {
+        self.searchController.active = NO;
+    }
+    
     [self reloadUI];
 }
 
@@ -598,6 +602,10 @@
     
     self.incomingLineView.backgroundColor = UIColor.mnz_redMain;
     self.cloudDriveLineView.backgroundColor = UIColor.mnz_grayCCCCCC;
+    
+    if (self.searchController.isActive) {
+        self.searchController.active = NO;
+    }
     
     [self reloadUI];
 }
@@ -762,7 +770,6 @@
                 self.searchNodesArray = [[self.nodes.mnz_nodesArrayFromNodeList filteredArrayUsingPredicate:resultPredicate] mutableCopy];
             }
         }
-        self.cloudDriveButton.enabled = self.incomingButton.enabled = NO;
     }
     
     [self.tableView reloadData];

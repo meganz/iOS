@@ -634,6 +634,10 @@
     self.incomingLineView.backgroundColor = UIColor.mnz_redMain;
     self.outgoingLineView.backgroundColor = UIColor.mnz_grayCCCCCC;
     
+    if (self.searchController.isActive) {
+        self.searchController.active = NO;
+    }
+    
     if ([self.tableView isEditing]) {
         [self.selectedNodesMutableArray removeAllObjects];
         [self.selectedSharesMutableArray removeAllObjects];
@@ -658,6 +662,10 @@
     
     self.outgoingLineView.backgroundColor = UIColor.mnz_redMain;
     self.incomingLineView.backgroundColor = UIColor.mnz_grayCCCCCC;
+    
+    if (self.searchController.isActive) {
+        self.searchController.active = NO;
+    }
     
     if ([self.tableView isEditing]) {
         [self.selectedNodesMutableArray removeAllObjects];
@@ -927,7 +935,6 @@
                 self.searchNodesArray = [[self.outgoingNodesMutableArray filteredArrayUsingPredicate:resultPredicate] mutableCopy];
             }
         }
-        self.incomingButton.enabled = self.outgoingButton.enabled = NO;
     }
     
     [self.tableView reloadData];
