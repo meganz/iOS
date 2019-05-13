@@ -12,6 +12,10 @@
 #import "MEGAUser+MNZCategory.h"
 #import "MEGANavigationController.h"
 
+#import "WebRTC/RTCDispatcher.h"
+#import "WebRTC/RTCAudioSession.h"
+#import "WebRTC/RTCAudioSessionConfiguration.h"
+
 @interface MEGAProviderDelegate ()
 
 @property (nonatomic, copy) MEGACallManager *megaCallManager;
@@ -170,6 +174,15 @@
     MEGAChatCall *call = [self.megaCallManager callForUUID:action.callUUID];
     
     MEGALogDebug(@"[CallKit] Provider perform answer call: %@, uuid: %@", call, action.callUUID);
+    
+    [RTCDispatcher dispatchAsyncOnType:RTCDispatcherTypeAudioSession block:^{
+        RTCAudioSession *audioSession = RTCAudioSession.sharedInstance;
+        [audioSession lockForConfiguration];
+        RTCAudioSessionConfiguration *configuration = [RTCAudioSessionConfiguration webRTCConfiguration];
+        configuration.categoryOptions = AVAudioSessionCategoryOptionAllowBluetoothA2DP | AVAudioSessionCategoryOptionDuckOthers | AVAudioSessionCategoryOptionAllowBluetooth;
+        [audioSession setConfiguration:configuration error:nil];
+        [audioSession unlockForConfiguration];
+    }];
     
     if (call) {
         MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:call.chatId];
