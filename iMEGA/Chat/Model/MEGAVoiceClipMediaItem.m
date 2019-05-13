@@ -90,6 +90,12 @@ NSNotificationName kVoiceClipWillPlayNotification = @"kVoiceClipWillPlayNotifica
         MEGAStartDownloadTransferDelegate *delegate = [[MEGAStartDownloadTransferDelegate alloc] initWithProgress:nil completion:^(MEGATransfer *transfer) {
             voiceClipView.activityIndicator.hidden = YES;
             voiceClipView.playPauseButton.hidden = NO;
+        } onError:^(MEGAError *error) {
+            voiceClipView.activityIndicator.hidden = YES;
+            voiceClipView.playPauseButton.hidden = NO;
+            voiceClipView.playPauseButton.enabled = NO;
+            voiceClipView.playerSlider.enabled = NO;
+            voiceClipView.timeLabel.text = @"--:--";
         }];
         [[MEGASdkManager sharedMEGASdk] startDownloadTopPriorityWithNode:node localPath:nodePath appData:nil delegate:delegate];
     }
@@ -127,8 +133,6 @@ NSNotificationName kVoiceClipWillPlayNotification = @"kVoiceClipWillPlayNotifica
     
     NSError *error;
     if (self.isPlaying) {
-        [self.cachedVoiceClipView.playPauseButton setImage:[UIImage imageNamed:@"pauseVoiceClip"] forState:UIControlStateNormal];
-        
         if (![[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayAndRecord error:&error]) {
             MEGALogError(@"[Voice clips] Error setting the audio category: %@", error);
             return;
@@ -152,10 +156,8 @@ NSNotificationName kVoiceClipWillPlayNotification = @"kVoiceClipWillPlayNotifica
                 weakSelf.cachedVoiceClipView.playerSlider.value = CMTimeGetSeconds(time);
                 weakSelf.cachedVoiceClipView.timeLabel.text = [NSString mnz_stringFromTimeInterval:CMTimeGetSeconds(time)];
             }];
-            [NSNotificationCenter.defaultCenter addObserver:self
-                                                   selector:@selector(didPlayToEndTime:)
-                                                       name:AVPlayerItemDidPlayToEndTimeNotification
-                                                     object:self.audioPlayer.currentItem];
+            [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(didPlayToEndTime:) name:AVPlayerItemDidPlayToEndTimeNotification object:nil];
+            [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(didChangeAudioRoute:) name:AVAudioSessionRouteChangeNotification object:nil];
         }
         
         [NSNotificationCenter.defaultCenter postNotificationName:kVoiceClipWillPlayNotification object:self];
@@ -166,21 +168,33 @@ NSNotificationName kVoiceClipWillPlayNotification = @"kVoiceClipWillPlayNotifica
         [NSNotificationCenter.defaultCenter removeObserver:self name:UIDeviceProximityStateDidChangeNotification object:nil];
         [NSNotificationCenter.defaultCenter removeObserver:self name:kVoiceClipWillPlayNotification object:nil];
         [self.audioPlayer pause];
-        
-        [self.cachedVoiceClipView.playPauseButton setImage:[UIImage imageNamed:@"playVoiceClip"] forState:UIControlStateNormal];
     }
-    UIDevice.currentDevice.proximityMonitoringEnabled = self.isPlaying;
+    [self updateUI];
 }
 
 - (void)voiceClipView:(MEGAMessageVoiceClipView *)voiceClipView shouldSeekTo:(float)destination {
     [self.audioPlayer seekToTime:CMTimeMakeWithSeconds(destination, self.audioPlayer.currentTime.timescale)];
 }
 
+#pragma mark - Private
+
+- (void)updateUI {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        if (self.isPlaying) {
+            [self.cachedVoiceClipView.playPauseButton setImage:[UIImage imageNamed:@"pauseVoiceClip"] forState:UIControlStateNormal];
+        } else {
+            [self.cachedVoiceClipView.playPauseButton setImage:[UIImage imageNamed:@"playVoiceClip"] forState:UIControlStateNormal];
+        }
+        UIDevice.currentDevice.proximityMonitoringEnabled = self.isPlaying;
+    });
+}
+
 #pragma mark - Notifications
 
 - (void)didPlayToEndTime:(NSNotification*)aNotification {
     self.playing = NO;
-    [self.cachedVoiceClipView.playPauseButton setImage:[UIImage imageNamed:@"playVoiceClip"] forState:UIControlStateNormal];
+    [self updateUI];
+    
     self.cachedVoiceClipView.playerSlider.value = 0;
     
     MEGANode *node = [self.message.nodeList nodeAtIndex:0];
@@ -188,10 +202,20 @@ NSNotificationName kVoiceClipWillPlayNotification = @"kVoiceClipWillPlayNotifica
     self.cachedVoiceClipView.timeLabel.text = [NSString mnz_stringFromTimeInterval:duration];
     
     self.audioPlayer = nil;
-
+    
+    [NSNotificationCenter.defaultCenter removeObserver:self name:AVPlayerItemDidPlayToEndTimeNotification object:nil];
+    [NSNotificationCenter.defaultCenter removeObserver:self name:AVAudioSessionRouteChangeNotification object:nil];
+    
     NSError *error;
     if (![[AVAudioSession sharedInstance] setActive:NO withOptions:AVAudioSessionSetActiveOptionNotifyOthersOnDeactivation error:&error]) {
         MEGALogError(@"[Voice clips] Error deactivating audio session: %@", error);
+    }
+}
+
+- (void)didChangeAudioRoute:(NSNotification*)aNotification {
+    if ((self.audioPlayer.timeControlStatus == AVPlayerTimeControlStatusPlaying && !self.isPlaying) || (self.audioPlayer.timeControlStatus == AVPlayerTimeControlStatusPaused && self.isPlaying)) {
+        self.playing = !self.isPlaying;
+        [self updateUI];
     }
 }
 

@@ -480,7 +480,7 @@
             break;
             
         case MEGAPhotoModeOriginal: {
-            MEGAStartDownloadTransferDelegate *delegate = [[MEGAStartDownloadTransferDelegate alloc] initWithProgress:transferProgress completion:transferCompletion];
+            MEGAStartDownloadTransferDelegate *delegate = [[MEGAStartDownloadTransferDelegate alloc] initWithProgress:transferProgress completion:transferCompletion onError:nil];
             NSString *temporaryImagePath = [node mnz_temporaryPathForDownloadCreatingDirectories:YES];
             [MEGASdkManager.sharedMEGASdk startDownloadNode:[self.api authorizeNode:node] localPath:temporaryImagePath appData:nil delegate:delegate];
 
