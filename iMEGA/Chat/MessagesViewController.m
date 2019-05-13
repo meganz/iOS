@@ -28,6 +28,7 @@
 #import "MEGAStore.h"
 #import "MEGAToolbarContentView.h"
 #import "MEGATransfer+MNZCategory.h"
+#import "MEGAVoiceClipMediaItem.h"
 #import "NSAttributedString+MNZCategory.h"
 #import "NSDate+MNZCategory.h"
 #import "NSString+MNZCategory.h"
@@ -1968,6 +1969,9 @@ static NSMutableSet<NSString *> *tapForInfoSet;
 - (void)didChangeToState:(InputToolbarState)state {
     self.inputToolbarState = state;
     [self updateNavigationBarButtonsState];
+    if (state >= InputToolbarStateRecordingUnlocked) {
+        [NSNotificationCenter.defaultCenter postNotificationName:kVoiceClipWillPlayOrRecordNotification object:self];
+    }
 }
 
 - (void)scrollToBottomAnimated:(BOOL)animated {

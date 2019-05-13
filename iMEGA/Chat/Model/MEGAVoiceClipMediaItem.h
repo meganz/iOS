@@ -5,6 +5,8 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+extern NSNotificationName kVoiceClipWillPlayOrRecordNotification;
+
 @interface MEGAVoiceClipMediaItem : JSQAudioMediaItem <JSQMessageMediaData, NSCoding, NSCopying>
 
 - (instancetype)initWithMEGAChatMessage:(MEGAChatMessage *)message;
