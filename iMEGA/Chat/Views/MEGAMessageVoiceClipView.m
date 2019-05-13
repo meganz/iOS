@@ -4,13 +4,7 @@
 @implementation MEGAMessageVoiceClipView
 
 - (IBAction)didTapPlayPauseButton:(UIButton *)sender {
-    self.playing = !self.isPlaying;
-    if (self.isPlaying) {
-        [self.playPauseButton setImage:[UIImage imageNamed:@"pauseVoiceClip"] forState:UIControlStateNormal];
-    } else {
-        [self.playPauseButton setImage:[UIImage imageNamed:@"playVoiceClip"] forState:UIControlStateNormal];
-    }
-    [self.delegate voiceClipView:self shouldPlay:self.playing];
+    [self.delegate voiceClipViewShouldPlayOrPause:self];
 }
 
 - (IBAction)sliderValueChanged:(UISlider *)sender {
