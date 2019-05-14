@@ -27,7 +27,10 @@ static const void *mnz_accountDetailsKey = &mnz_accountDetailsKey;
     AccountSuspensionType suspensionType = (AccountSuspensionType)event.number;
     SMSState state = [self smsAllowedState];
     if (suspensionType == AccountSuspensionTypeSMSVerification && state != SMSStateNotAllowed) {
+        UIViewController *verificationController = [[UIStoryboard storyboardWithName:@"SMSVerification" bundle:nil] instantiateInitialViewController];
+        UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:verificationController];
         
+        [UIApplication.mnz_presentingViewController presentViewController:navigationController animated:YES completion:nil];
     } else {
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"error", nil) message:AMLocalizedString(@"accountBlocked", @"Error message when trying to login and the account is blocked") preferredStyle:UIAlertControllerStyleAlert];
         [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
