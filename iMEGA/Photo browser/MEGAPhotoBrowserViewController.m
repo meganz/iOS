@@ -266,6 +266,15 @@
     }
 }
 
+- (void)dismissViewControllerAnimated:(BOOL)flag completion:(void (^)(void))completion {
+    [super dismissViewControllerAnimated:flag completion:completion];
+    if (completion == nil) {
+        if ([self.delegate respondsToSelector:@selector(photoBrowser:willDismissWithNode:)]) {
+            [self.delegate photoBrowser:self willDismissWithNode:nil];
+        }
+    }
+}
+
 #pragma mark - UIScrollViewDelegate
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
