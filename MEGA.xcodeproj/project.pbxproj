@@ -21,7 +21,7 @@
 		413199771BD7BD5D002CD6EA /* DTConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 413199691BD7BD5D002CD6EA /* DTConstants.m */; };
 		413199781BD7BD5D002CD6EA /* DTError.m in Sources */ = {isa = PBXBuildFile; fileRef = 4131996B1BD7BD5D002CD6EA /* DTError.m */; };
 		413199791BD7BD5D002CD6EA /* DTTimePeriod.m in Sources */ = {isa = PBXBuildFile; fileRef = 4131996D1BD7BD5D002CD6EA /* DTTimePeriod.m */; };
-		4131997A1BD7BD5D002CD6EA /* DTTimePeriodChain.m in S<ources */ = {isa = PBXBuildFile; fileRef = 4131996F1BD7BD5D002CD6EA /* DTTimePeriodChain.m */; };
+		4131997A1BD7BD5D002CD6EA /* DTTimePeriodChain.m in Sources */ = {isa = PBXBuildFile; fileRef = 4131996F1BD7BD5D002CD6EA /* DTTimePeriodChain.m */; };
 		4131997B1BD7BD5D002CD6EA /* DTTimePeriodCollection.m in Sources */ = {isa = PBXBuildFile; fileRef = 413199711BD7BD5D002CD6EA /* DTTimePeriodCollection.m */; };
 		4131997C1BD7BD5D002CD6EA /* DTTimePeriodGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = 413199731BD7BD5D002CD6EA /* DTTimePeriodGroup.m */; };
 		4131997D1BD7BD5D002CD6EA /* NSDate+DateTools.m in Sources */ = {isa = PBXBuildFile; fileRef = 413199751BD7BD5D002CD6EA /* NSDate+DateTools.m */; };
@@ -610,6 +610,8 @@
 		A824A9192039ECD700D777D2 /* SDAVAssetExportSession.m in Sources */ = {isa = PBXBuildFile; fileRef = A824A9182039ECD700D777D2 /* SDAVAssetExportSession.m */; };
 		A824A91C2039F50B00D777D2 /* SDAVAssetExportSession.m in Sources */ = {isa = PBXBuildFile; fileRef = A824A9182039ECD700D777D2 /* SDAVAssetExportSession.m */; };
 		A824A91D2039F50C00D777D2 /* SDAVAssetExportSession.m in Sources */ = {isa = PBXBuildFile; fileRef = A824A9182039ECD700D777D2 /* SDAVAssetExportSession.m */; };
+		A824AD2D228B0FB700EDF27E /* FLEX.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A85A01D9228B0DA100C6ADBB /* FLEX.framework */; };
+		A824AD2E228B0FB700EDF27E /* FLEX.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A85A01D9228B0DA100C6ADBB /* FLEX.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		A82751101E97AB6E007CD9E2 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = A827510F1E97AB6E007CD9E2 /* libz.tbd */; };
 		A82751121E97AB73007CD9E2 /* libresolv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = A82751111E97AB73007CD9E2 /* libresolv.tbd */; };
 		A82751141E97AB79007CD9E2 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = A82751131E97AB79007CD9E2 /* libsqlite3.tbd */; };
@@ -783,6 +785,27 @@
 			remoteGlobalIDString = 943F8B0E1EF26E9C00AFD89F;
 			remoteInfo = MEGAShare;
 		};
+		A824AD2F228B0FB700EDF27E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A85A01D3228B0DA100C6ADBB /* FLEX.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 3A4C941E1B5B20570088C3F2;
+			remoteInfo = FLEX;
+		};
+		A85A01D8228B0DA100C6ADBB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A85A01D3228B0DA100C6ADBB /* FLEX.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 3A4C941F1B5B20570088C3F2;
+			remoteInfo = FLEX;
+		};
+		A85A01DA228B0DA100C6ADBB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A85A01D3228B0DA100C6ADBB /* FLEX.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 1C27A8B61F0E5A0300F0D02D;
+			remoteInfo = FLEXTestsMethodsList;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -797,6 +820,17 @@
 				943F8B1A1EF26E9C00AFD89F /* MEGAShare.appex in Embed App Extensions */,
 			);
 			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A824AD31228B0FB700EDF27E /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				A824AD2E228B0FB700EDF27E /* FLEX.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -1567,6 +1601,7 @@
 		A85740C12032F6B80033034C /* MOChatDraft+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MOChatDraft+CoreDataProperties.h"; sourceTree = "<group>"; };
 		A85740C22032F6B80033034C /* MOChatDraft+CoreDataClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MOChatDraft+CoreDataClass.m"; sourceTree = "<group>"; };
 		A85740C32032F6B80033034C /* MOChatDraft+CoreDataClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MOChatDraft+CoreDataClass.h"; sourceTree = "<group>"; };
+		A85A01D3228B0DA100C6ADBB /* FLEX.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = FLEX.xcodeproj; path = iMEGA/Vendor/FLEX/FLEX.xcodeproj; sourceTree = SOURCE_ROOT; };
 		A85D93BA2045751E0066F45B /* ChatVideoQualityTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ChatVideoQualityTableViewController.h; sourceTree = "<group>"; };
 		A85D93BB2045751E0066F45B /* ChatVideoQualityTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ChatVideoQualityTableViewController.m; sourceTree = "<group>"; };
 		A85D93BD20457DAA0066F45B /* ChatVideoUploadQuality.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ChatVideoUploadQuality.h; sourceTree = "<group>"; };
@@ -1747,6 +1782,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A824AD2D228B0FB700EDF27E /* FLEX.framework in Frameworks */,
 				A82A38D7200D333100883533 /* libmediainfo.a in Frameworks */,
 				A82A38D0200D32BD00883533 /* libzen.a in Frameworks */,
 				A8F6E8941F9E770C0087859C /* MobileCoreServices.framework in Frameworks */,
@@ -2027,6 +2063,7 @@
 		415226671A692EBD00EC7BB6 /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
+				A85A01D2228B0DA100C6ADBB /* FLEX */,
 				A824A9162039EC9F00D777D2 /* SDAVAssetExportSession */,
 				A8665F4F20ADA1600044F8F6 /* PWProgressView */,
 				A810CF2420C1577900A6C6C5 /* FLAnimatedImage */,
@@ -3378,6 +3415,24 @@
 			path = Vendor/SDAVAssetExportSession;
 			sourceTree = "<group>";
 		};
+		A85A01D2228B0DA100C6ADBB /* FLEX */ = {
+			isa = PBXGroup;
+			children = (
+				A85A01D3228B0DA100C6ADBB /* FLEX.xcodeproj */,
+			);
+			name = FLEX;
+			path = Vendor/FLEX;
+			sourceTree = "<group>";
+		};
+		A85A01D4228B0DA100C6ADBB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A85A01D9228B0DA100C6ADBB /* FLEX.framework */,
+				A85A01DB228B0DA100C6ADBB /* FLEXTestsMethodsList.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		A85D93BE20457E3F0066F45B /* Enums */ = {
 			isa = PBXGroup;
 			children = (
@@ -3634,6 +3689,7 @@
 				137361871A6664C300B740E8 /* Frameworks */,
 				137361881A6664C300B740E8 /* Resources */,
 				942254FF1EDC03150074C51A /* Embed App Extensions */,
+				A824AD31228B0FB700EDF27E /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -3641,6 +3697,7 @@
 				942254F41EDC03150074C51A /* PBXTargetDependency */,
 				942254F71EDC03150074C51A /* PBXTargetDependency */,
 				943F8B191EF26E9C00AFD89F /* PBXTargetDependency */,
+				A824AD30228B0FB700EDF27E /* PBXTargetDependency */,
 			);
 			name = MEGA;
 			productName = iMEGA;
@@ -3775,6 +3832,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 				es,
@@ -3814,6 +3872,12 @@
 			mainGroup = 137361811A6664C300B740E8;
 			productRefGroup = 1373618B1A6664C300B740E8 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = A85A01D4228B0DA100C6ADBB /* Products */;
+					ProjectRef = A85A01D3228B0DA100C6ADBB /* FLEX.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				137361891A6664C300B740E8 /* MEGA */,
@@ -3823,6 +3887,23 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		A85A01D9228B0DA100C6ADBB /* FLEX.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = FLEX.framework;
+			remoteRef = A85A01D8228B0DA100C6ADBB /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		A85A01DB228B0DA100C6ADBB /* FLEXTestsMethodsList.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = FLEXTestsMethodsList.xctest;
+			remoteRef = A85A01DA228B0DA100C6ADBB /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		137361881A6664C300B740E8 /* Resources */ = {
@@ -4556,6 +4637,11 @@
 			target = 943F8B0E1EF26E9C00AFD89F /* MEGAShare */;
 			targetProxy = 943F8B181EF26E9C00AFD89F /* PBXContainerItemProxy */;
 		};
+		A824AD30228B0FB700EDF27E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = FLEX;
+			targetProxy = A824AD2F228B0FB700EDF27E /* PBXContainerItemProxy */;
+		};
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
@@ -4718,6 +4804,7 @@
 				ENABLE_BITCODE = NO;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				EXCLUDED_SOURCE_FILE_NAMES = "FLEX*";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
