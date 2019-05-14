@@ -3,6 +3,10 @@
 
 #import <AVFoundation/AVFoundation.h>
 
+#import <WebRTC/RTCDispatcher.h>
+#import <WebRTC/RTCAudioSession.h>
+#import <WebRTC/RTCAudioSessionConfiguration.h>
+
 #import "LTHPasscodeViewController.h"
 
 #import "CallViewController.h"
@@ -11,10 +15,6 @@
 
 #import "MEGAUser+MNZCategory.h"
 #import "MEGANavigationController.h"
-
-#import "WebRTC/RTCDispatcher.h"
-#import "WebRTC/RTCAudioSession.h"
-#import "WebRTC/RTCAudioSessionConfiguration.h"
 
 @interface MEGAProviderDelegate ()
 
