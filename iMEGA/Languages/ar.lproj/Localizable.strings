@@ -1192,7 +1192,7 @@
 /* Alert message shown when a chat does not exist */
 "chatNotFound"="لا توجد محادثة";
 /* A typing indicator in the chat. Please leave the %@ which will be automatically replaced with the user's name at runtime. */
-"isTyping"="%@ يكتب ...";
+"isTyping"="%@ يكتب...";
 /* Plural, a hint that appears when two users are typing in a group chat at the same time. The parameter will be the concatenation of both user names. The tags and placeholders shouldn't be translated or modified. */
 "twoUsersAreTyping"="%1$s [A]جاري الكتابة...[/A]";
 /* text that appear when there are more than 2 people writing at that time in a chat. For example User1, user2 and more are typing... The parameter will be the concatenation of the first two user names. The tags and placeholders shouldn't be translated or modified. */
@@ -1645,7 +1645,7 @@
 /* The title of the section about deleting file versions in the settings. */
 "Delete all older versions of my files"="حذف جميع النسخ القديمة لملفاتي";
 /* Text of a button which deletes all historical versions of files in the users entire account. */
-"Delete old versions"="حذف جميع النسخ القديمة";
+"Delete previous versions"="حذف النسخ القديمة";
 /* A warning note about deleting all file versions in the settings section. */
 "All current files will remain. Only historic versions of your files will be deleted."="كل الملفات الحالية ستبقى دون تعديل، فقد النسخ القديمة للملفات سوف تحذف";
 /* Text of the dialog to delete all the file versions of the account */
@@ -1668,8 +1668,6 @@
 "%@ joined the call."="%@ joined the call.";
 /* Message to inform the local user that someone has left the current group call */
 "%@ left the call."="%@ left the call.";
-/* Message to inform the local user is having a bad quality network with someone in the current group call */
-"Poor conection."="Poor connection.";
 /* Message shown in a chat room when there is an active group call */
 "There is an active group call. Tap to join."="توجد محادثة جماعية فعالة. انقر للانضمام";
 /* Message shown in a chat room when there is an active call */
@@ -1727,7 +1725,7 @@
 /* Message to inform the local user that someone has left the current group call */
 "%@ left the call."="%@ left the call.";
 /* Message to inform the local user is having a bad quality network with someone in the current group call */
-"Poor connection."="Poor connection.";
+"Poor connection."="اتصال ضعيف.";
 /* Message shown in a chat room when there is an active group call */
 "There is an active group call. Tap to join."="توجد محادثة جماعية فعالة. انقر للانضمام";
 /* Message shown in a chat room for a group call in progress displaying the duration of the call */
@@ -1747,7 +1745,7 @@
 /* The header of a notification indicating that a file or folder that was taken down has now been restored due to a successful counter-notice. */
 "Takedown reinstated"="إعادة إنهاء الخدمة";
 /* Label shown inside an unseen notification */
-"New"="New";
+"New"="جديد";
 /* When a contact sent a contact/friend request */
 "Sent you a contact request"="طلبات الإضافة المرسلة";
 /* A notification that the other user cancelled their contact request so it is no longer valid. E.g. user@email.com cancelled their contact request. */
@@ -1777,11 +1775,11 @@
 /* This is shown in the Notification dialog when the email address of a contact is not found and access to the share is lost for some reason (e.g. share removal or contact removal). */
 "Access to folders was removed."="تمت الإزالة من الدخول إلى المجلدات";
 /* Content of a notification that informs how many files and folders have been added to a shared folder */
-"Added 1 file"="Added 1 file";
+"Added 1 file"="تم إضافة ملف واحد";
 /* Content of a notification that informs how many files and folders have been added to a shared folder */
 "Added %lld files"="Added %lld files";
 /* Content of a notification that informs how many files and folders have been added to a shared folder */
-"Added 1 folder"="Added 1 folder";
+"Added 1 folder"="تم إضافة مجلد واحد";
 /* Content of a notification that informs how many files and folders have been added to a shared folder */
 "Added %lld folders"="Added %lld folders";
 /* Content of a notification that informs how many files and folders have been added to a shared folder */
@@ -1819,11 +1817,11 @@
 /* Footer text to explain the meaning of the functionaly 'Last seen' of your chat status. */
 "Allow your contacts to see the last time you were active on MEGA."="Allow your contacts to see the last time you were active on MEGA.";
 /* Label shown next to a feature name that can be enabled or disabled, like in 'Show Last seen...' */
-"Show"="Show";
+"Show"="اظهار";
 /* Shown when viewing a 1on1 chat (at least for now), if the user is offline. */
 "Last seen %s"="Last seen: %s";
 /* Text to inform the user the 'Last seen' time of a contact is a long time ago (>= 65535 minutes) */
-"Last seen a long time ago"="Last seen a long time ago";
+"Last seen a long time ago"="آخر ظهور من وقت طويل";
 /* */
 "Today"="اليوم";
 /* */
@@ -1863,7 +1861,7 @@
 /* Title for the recents section. */
 "Recents"="Recents";
 /* Multiple Images title shown in recents section of webclient */
-"%1 Images"="%1 Images";
+"%1 Images"="%1 صورة";
 /* Multiple videos title shown in recents section of web client. */
 "%2 Videos"="%2 Videos";
 /* A single image and single video title shown in recents section of webclient. */
