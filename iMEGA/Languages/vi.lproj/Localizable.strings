@@ -868,7 +868,7 @@
 /* Label for any 'Profile' button, link, text, title, etc. - (String as short as possible). */
 "profile"="Cá Nhân";
 /* Title of the Achievements section */
-"achievementsTitle"="Trang Thành Tích";
+"achievementsTitle"="Phần Thưởng Thành Tích";
 /* Title of the Used storage section */
 "usedStorage"="Luợng sử dụng";
 /* Subtitle show on My Account view under the 'Achievements' title to give more details of the section that will appear if tapped 2/2 */
@@ -980,7 +980,7 @@
 /* Label for any 'Limited' button, link, text, title, etc. - (String as short as possible). */
 "limited"="Bị giới hạn";
 /* A message shown at registration time when users have to select their plan. The FREE 50 GB plan is subject to the achievements program. */
-"subjectToYourParticipationInOurAchievementsProgram"="Tùy thuộc vào sự tham gia của người sử dụng dịch vụ để vào chương trình làm nhiệm vụ thưởng.";
+"subjectToYourParticipationInOurAchievementsProgram"="Tùy thuộc vào việc tham gia của người sử dụng dịch vụ khi thực hiện các nhiệm vụ phần thưởng thành tích.";
 /* Price asociated with the MEGA PRO account level you can subscribe */
 "productPricePerMonth"="%@ mỗi tháng";
 /* Header that help you with the upgrading process explaining that you have to choose one of the plans below  to continue */
@@ -1116,7 +1116,7 @@
 /* title of the contact properties screen */
 "contactInfo"="Thông tin liên lạc";
 /*  */
-"notifications"="Thông báo";
+"notifications"="Thông Báo";
 /* Title to perform the action of sending a message to a contact. */
 "sendMessage"="Gửi Tin Nhắn";
 /* Title for a section on the fingerprint warning dialog. Below it is a button which will allow the user to verify their contact's fingerprint credentials. */
@@ -1192,7 +1192,7 @@
 /* Alert message shown when a chat does not exist */
 "chatNotFound"="Không tìm thấy cuộc chát";
 /* A typing indicator in the chat. Please leave the %@ which will be automatically replaced with the user's name at runtime. */
-"isTyping"="%@ đang viết tin nhắn ...";
+"isTyping"="%@ đang viết tin nhắn…";
 /* Plural, a hint that appears when two users are typing in a group chat at the same time. The parameter will be the concatenation of both user names. The tags and placeholders shouldn't be translated or modified. */
 "twoUsersAreTyping"="%1$s [A]đang viết tin nhắn...[/A]";
 /* text that appear when there are more than 2 people writing at that time in a chat. For example User1, user2 and more are typing... The parameter will be the concatenation of the first two user names. The tags and placeholders shouldn't be translated or modified. */
@@ -1280,7 +1280,7 @@
 /* Inform user that there were unsupported assets in the share extension */
 "shareExtensionUnsupportedAssets"="Một số tệp tin không thể chia sẻ lên được MEGA";
 /* Message shown to the user when the share extension is about to be killed by iOS due to a memory issue */
-"Limited system resources are available when sharing items. Try uploading these files from within the MEGA app."="Limited system resources are available when sharing items. Please try uploading these files from within the MEGA app.";
+"Limited system resources are available when sharing items. Try uploading these files from within the MEGA app."="Hệ thống bị giới hạn khi chia sẻ các mục đã chọn. Xin thử đăng tải lại các tệp tin này từ trong ứng dụng MEGA.";
 /* Notification message shown when a transfer failed. Keep colon. */
 "Transfer failed:"="Truyền tải thất bại:";
 /* MEGAError */
@@ -1585,41 +1585,41 @@
 /* Settings section title where you can enable the option to 'Save Videos in Photos' */
 "Save Videos in Photos"="Lưu videos vào Ảnh";
 /* Footer text shown under the settings for download options 'Save Images/Videos in Library' */
-"Images and/or videos downloaded will be stored in the device’s media library instead of the Offline section."="Images and/or videos downloaded will be stored in the device’s media library instead of the Offline section.";
+"Images and/or videos downloaded will be stored in the device’s media library instead of the Offline section."="Các hình ảnh/và video tải về sẽ được lưu thẳng vào kho thư viện của máy thay vì được đưa vào mục Ngoại Tuyến.";
 /* Setting associated with the 'Camera' of the device */
 "Camera"="Camera";
 /* Settings section title where you can enable the option to 'Save in Photos' the images or videos taken from your camera in the MEGA app */
 "Save in Photos"="Lưu vào Ảnh";
 /* Footer text shown under the Camera setting to explain the option 'Save in Photos' */
-"Save a copy of the images and videos taken from the MEGA app in your device’s media library."="Save a copy of the images and videos taken from the MEGA app in your device’s media library.";
+"Save a copy of the images and videos taken from the MEGA app in your device’s media library."="Giữ một bản sao của hình ảnh và videos được chụp từ app MEGA vào kho thư viện ảnh của máy.";
 /* Title shown in a page of the on boarding screens explaining that the user keeps the encryption keys */
-"You hold the keys"="You hold the keys";
+"You hold the keys"="Chính bạn là người giữ chìa khóa";
 /* Description shown in a page of the onboarding screens explaining the encryption paradigm */
-"Security is why we exist, your files are safe with us behind a well oiled encryption machine where only you can access your files."="Security is why we exist, your files are safe with us behind a well oiled encryption machine where only you can access your files.";
+"Security is why we exist, your files are safe with us behind a well oiled encryption machine where only you can access your files."="Bảo mật là lý do chúng tôi tạo ra MEGA, các tệp tin của bạn được bảo vệ an toàn với chúng tôi với bộ máy mã hóa được hoạt động trơn tru, nơi chỉ bạn mới có thể truy cập các tệp tin của mình.";
 /* Title shown in a page of the on boarding screens explaining that the chat is encrypted */
 "Encrypted chat"="Cuộc chát được mã hóa";
 /* Description shown in a page of the onboarding screens explaining the chat feature */
-"Fully encrypted chat with voice and video calls, group messaging and file sharing integration with your Cloud Drive."="Fully encrypted chat with voice and video calls, group messaging and file sharing integration with your Cloud Drive.";
+"Fully encrypted chat with voice and video calls, group messaging and file sharing integration with your Cloud Drive."="Toàn bộ chát, tin nhắn, thoại hay video đều được mã hóa hoàn toàn và hoạt động với khả năng chia sẻ thông qua Ổ Mây.";
 /* Title shown in a page of the on boarding screens explaining that the user can add contacts to chat and colaborate */
-"Create your Network"="Create your Network";
+"Create your Network"="Tạo Kết Nối";
 /* Description shown in a page of the onboarding screens explaining contacts */
-"Add contacts, create a network, colaborate, make voice and video calls without ever leaving MEGA"="Add contacts, create a network, colaborate, make voice and video calls without ever leaving MEGA";
+"Add contacts, create a network, colaborate, make voice and video calls without ever leaving MEGA"="Thêm tên liên lạc, tạo kết nối, cộng tác với nhau, trao đổi qua gọi thoại và video ngay trong MEGA";
 /* Title shown in a page of the on boarding screens explaining that the user can backup the photos automatically */
-"Your Photos in the Cloud"="Your Photos in the Cloud";
+"Your Photos in the Cloud"="Hình Ảnh được gửi lên Mây";
 /* Description shown in a page of the onboarding screens explaining the camera uploads feature */
-"Camera Uploads is an essential feature for any mobile device and we have got you covered. Create your account now."="Camera Uploads is an essential feature for any mobile device and we have got you covered. Create your account now.";
+"Camera Uploads is an essential feature for any mobile device and we have got you covered. Create your account now."="Camera Uploads là tính năng thiết yếu cho mọi thiết bị di động, và MEGA có cung cấp. Tạo tài khoản ngay.";
 /* Button which triggers the initial setup */
 "Setup MEGA"="Cài đặt MEGA";
 /* Detailed explanation of why the user should give some permissions to MEGA */
-"To fully take advantage of your MEGA account we need to ask you some permissions."="To fully take advantage of your MEGA account we need to ask you some permissions.";
+"To fully take advantage of your MEGA account we need to ask you some permissions."="Để tận dụng sức mạnh của MEGA, ứng dụng cần phải xin phép một số quyền truy cập.";
 /* Message warning the user about the risk of not setting up permissions */
-"The MEGA app may not work as expected without the required permissions. Are you sure?"="The MEGA app may not work as expected without the required permissions. Are you sure?";
+"The MEGA app may not work as expected without the required permissions. Are you sure?"="Ứng dụng MEGA có thể sẽ không hoạt động hiệu quả khi bị thiếu đi một số quyền truy cập. Bạn có chắc không?";
 /* Shows number of the current page. '%1' will be replaced by current page number. '%2' will be replaced by number of all pages. */
 "%1 of %2"="%1 trong tổng %2";
 /* Title label that explains that the user is going to be asked for the photos permission */
 "Allow Access to Photos"="Cho phép Truy cập vào Ảnh";
 /* Detailed explanation of why the user should give permission to access to the photos */
-"Please give the MEGA App permission to access Photos to share photos and videos."="Please give the MEGA App permission to access Photos to share photos and videos.";
+"Please give the MEGA App permission to access Photos to share photos and videos."="Xin cho phép app MEGA quyền truy cập vào kho Ảnh để chia sẻ hình và videos.";
 /* Title label that explains that the user is going to be asked for the microphone and camera permission */
 "Enable Microphone and Camera"="Bật Micrô và Camera";
 /* Detailed explanation of why the user should give permission to access to the camera and the microphone */
@@ -1627,7 +1627,7 @@
 /* Title label that explains that the user is going to be asked for the notifications permission */
 "Enable Notifications"="Bật Thông Báo";
 /* Detailed explanation of why the user should give permission to deliver notifications */
-"We would like to send you notifications so you receive new messages on your device instantly."="We would like to send you notifications so you receive new messages on your device instantly.";
+"We would like to send you notifications so you receive new messages on your device instantly."="Ứng dụng MEGA muốn gửi thông báo trên điện thoại để  báo hiệu cho bạn có tin nhắn ngay tức thời.";
 /* Button which triggers a request for a specific permission, that have been explained to the user beforehand */
 "Allow Access"="Cho phép Truy Cập";
 /* A section header which contains the file management settings. These settings allow users to remove duplicate files etc. */
@@ -1645,7 +1645,7 @@
 /* The title of the section about deleting file versions in the settings. */
 "Delete all older versions of my files"="Xóa hết tất cả các phiên bản cũ đang ghi nhớ";
 /* Text of a button which deletes all historical versions of files in the users entire account. */
-"Delete old versions"="Xoá các phiên bản cũ";
+"Delete previous versions"="Xoá các phiên bản cũ";
 /* A warning note about deleting all file versions in the settings section. */
 "All current files will remain. Only historic versions of your files will be deleted."="Tất cả các tệp tin đều được giữ nguyên. Chỉ có các nội dung ghi lại phiên bản lịch sử tệp tin sẽ bị xoá.";
 /* Text of the dialog to delete all the file versions of the account */
@@ -1668,8 +1668,6 @@
 "%@ joined the call."="%@ tham gia vào cuộc gọi.";
 /* Message to inform the local user that someone has left the current group call */
 "%@ left the call."="%@ đã rời khỏi cuội gọi.";
-/* Message to inform the local user is having a bad quality network with someone in the current group call */
-"Poor conection."="Mạng yếu.";
 /* Message shown in a chat room when there is an active group call */
 "There is an active group call. Tap to join."="Có một cuộc gọi nhóm đang diễn ra. Chạm để tham gia.";
 /* Message shown in a chat room when there is an active call */
@@ -1703,9 +1701,9 @@
 /* Text shown in a notification to let the user know that has joined a public chat room after login or account creation */
 "You have joined %@"="Bạn đã tham gia vào %@";
 /* Users previewing a public chat */
-"Observers"="Observers";
+"Observers"="Theo Dõi";
 /* Alert message shown while deleting a chat link, warning about the consequences */
-"This conversation will no longer be accessible through the link you are about to delete."="This conversation will no longer be accessible through the chat link once it has been removed.";
+"This conversation will no longer be accessible through the link you are about to delete."="Cuộc trò chuyện này sẽ không thể truy cập vào được nữa ngay sau khi đường liên kết tới chát bị xóa đi.";
 /* Management message shown in a chat when the user %@ enables the 'Encrypted Key Rotation' */
 "%@ enabled Encrypted Key Rotation"="%@ đã bật luân phiên mã khóa";
 /* Management message shown in a chat when the user %@ creates a public link for the chat */
@@ -1715,9 +1713,9 @@
 /* Management message shown in a chat when the user %@ joined it from a public chat link */
 "%@ joined the group chat."="%@ đã tham gia vào nhóm chát.";
 /* Message show when a call cannot be established because there are too many participants in the group call */
-"Error. No more participants are allowed in this group call."="You are not allowed to join this call as it has reached the maximum number of participants.";
+"Error. No more participants are allowed in this group call."="Không thể tham gia cuộc gọi này vì đã quá mức số lượng thành viên đang có trong cuộc gọi.";
 /* Message show when a user cannot activate the video in a group call because the max number of videos has been reached */
-"Error. No more video are allowed in this group call."="You are not allowed to enable video as this call has reached the maximum number of participants using video.";
+"Error. No more video are allowed in this group call."="Không thể bật video cho cuộc gọi này được vì quá mức số lượng thành viên tham gia cuộc gọi đang sử dụng video.";
 /* Text shown for switching from thumbnail view to list view. */
 "List view"="Xem dạng danh sách";
 /* Text shown for switching from list view to thumbnail view. */
