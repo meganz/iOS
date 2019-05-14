@@ -2,7 +2,7 @@
 #import "MEGAApplication.h"
 
 #if DEBUG
-#import <FLEX/FLEX.h>
+#import "FLEX.h"
 #endif
 
 @implementation MEGAApplication
