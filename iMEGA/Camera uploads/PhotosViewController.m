@@ -566,9 +566,6 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
         MEGANode *rubbishBinNode = [[MEGASdkManager sharedMEGASdk] rubbishNode];
         MEGAMoveRequestDelegate *moveRequestDelegate = [[MEGAMoveRequestDelegate alloc] initToMoveToTheRubbishBinWithFiles:selectedItemsArray.count folders:0 completion:^{
             [self setEditing:NO animated:NO];
-            
-            [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(reloadPhotosView) object:nil];
-            [self performSelector:@selector(reloadPhotosView) withObject:nil afterDelay:PhotosViewReloadTimeDelay];
         }];
         
         for (NSUInteger i = 0; i < count; i++) {
@@ -990,7 +987,7 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
 #pragma mark - MEGAGlobalDelegate
 
 - (void)onNodesUpdate:(MEGASdk *)api nodeList:(MEGANodeList *)nodeList {
-    if (![nodeList mnz_containsNodeWithParentFolderName:MEGACameraUploadsNodeName]) {
+    if (![nodeList mnz_containsNodeWithParentFolderName:MEGACameraUploadsNodeName] && ![nodeList mnz_containsNodeWithRestoreFolderName:MEGACameraUploadsNodeName]) {
         return;
     }
     
