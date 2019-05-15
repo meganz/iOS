@@ -421,6 +421,8 @@ static NSMutableSet<NSString *> *tapForInfoSet;
     if (self.chatRoom.isPreview && self.isMovingFromParentViewController) {
         [[MEGASdkManager sharedMEGAChatSdk] closeChatPreview:self.chatRoom.chatId];
     }
+    
+    [NSNotificationCenter.defaultCenter postNotificationName:kVoiceClipsShouldPauseNotification object:self];
 }
 
 - (BOOL)hidesBottomBarWhenPushed {
@@ -1970,7 +1972,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
     self.inputToolbarState = state;
     [self updateNavigationBarButtonsState];
     if (state >= InputToolbarStateRecordingUnlocked) {
-        [NSNotificationCenter.defaultCenter postNotificationName:kVoiceClipWillPlayOrRecordNotification object:self];
+        [NSNotificationCenter.defaultCenter postNotificationName:kVoiceClipsShouldPauseNotification object:self];
     }
 }
 

@@ -12,7 +12,7 @@
 #import "MEGAStartDownloadTransferDelegate.h"
 #import "NSString+MNZCategory.h"
 
-NSNotificationName kVoiceClipWillPlayOrRecordNotification = @"kVoiceClipWillPlayOrRecordNotification";
+NSNotificationName kVoiceClipsShouldPauseNotification = @"kVoiceClipsShouldPauseNotification";
 
 @interface MEGAVoiceClipMediaItem() <MEGAMessageVoiceClipViewDelegate>
 
@@ -160,13 +160,13 @@ NSNotificationName kVoiceClipWillPlayOrRecordNotification = @"kVoiceClipWillPlay
             [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(didChangeAudioRoute:) name:AVAudioSessionRouteChangeNotification object:nil];
         }
         
-        [NSNotificationCenter.defaultCenter postNotificationName:kVoiceClipWillPlayOrRecordNotification object:self];
+        [NSNotificationCenter.defaultCenter postNotificationName:kVoiceClipsShouldPauseNotification object:self];
         [self.audioPlayer play];
         [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(proximityChange:) name:UIDeviceProximityStateDidChangeNotification object:nil];
-        [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(voiceClipWillPlayOrRecord:) name:kVoiceClipWillPlayOrRecordNotification object:nil];
+        [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(voiceClipWillPlayOrRecord:) name:kVoiceClipsShouldPauseNotification object:nil];
     } else {
         [NSNotificationCenter.defaultCenter removeObserver:self name:UIDeviceProximityStateDidChangeNotification object:nil];
-        [NSNotificationCenter.defaultCenter removeObserver:self name:kVoiceClipWillPlayOrRecordNotification object:nil];
+        [NSNotificationCenter.defaultCenter removeObserver:self name:kVoiceClipsShouldPauseNotification object:nil];
         [self.audioPlayer pause];
     }
     [self updateUI];
