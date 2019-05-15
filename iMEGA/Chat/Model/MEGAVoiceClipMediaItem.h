@@ -5,7 +5,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-extern NSNotificationName kVoiceClipWillPlayOrRecordNotification;
+extern NSNotificationName kVoiceClipsShouldPauseNotification;
 
 @interface MEGAVoiceClipMediaItem : JSQAudioMediaItem <JSQMessageMediaData, NSCoding, NSCopying>
 
