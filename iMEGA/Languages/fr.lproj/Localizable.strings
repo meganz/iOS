@@ -1720,10 +1720,6 @@
 "List view"="Vue en liste";
 /* Text shown for switching from list view to thumbnail view. */
 "Thumbnail view"="Vue en imagettes";
-/* Message to inform the local user that someone has joined the current group call */
-"%@ joined the call."="%@ s’est joint à l’appel.";
-/* Message to inform the local user that someone has left the current group call */
-"%@ left the call."="%@ a quitté l’appel.";
 /* Message to inform the local user is having a bad quality network with someone in the current group call */
 "Poor connection."="La connexion est de mauvaise qualité.";
 /* Message shown in a chat room when there is an active group call */
@@ -1850,6 +1846,34 @@
 "New Chat Link"="Nouveau lien vers la conversation";
 /* Text button for init a group chat */
 "New group chat"="Nouvelle conversation de groupe";
+/* Title for the recents section. */
+"Recents"="Récents";
+/* Multiple Images title shown in recents section of webclient */
+"%1 Images"="%1 images";
+/* Multiple videos title shown in recents section of web client. */
+"%2 Videos"="%2 vidéos";
+/* A single image and single video title shown in recents section of webclient. */
+"1 Image and 1 Video"="1 image et 1 vidéo";
+/* One image and multiple videos title in recents. */
+"1 Image and %2 Videos"="1 image et %2 vidéos";
+/* Title for multiple images and multiple videos in recents section */
+"%1 Images and %2 Videos"="%1 images et %2 vidéos";
+/* Tooltip message shown on recents section. Please see the attached image. */
+"Modified on %1 at %2"="Modifié le %1 à %2";
+/* Title for a recent action shown in the webclient, see the attached image for context. */
+"%1 modified by %3"="%1 modifié par %3";
+/* Title for a recent action shown in the webclient, see the attached image for context. Please ensure that the `%2 more` is inside the [A] tag as this will become a toggle to show the hidden content. */
+"%1 and [A]%2 more[/A] modified by %3"="%1 et [A]%2 de plus[/A] modifiés par %3";
+/* Title for a recent action shown in the webclient, see the attached image for context. Please ensure that the `%2 more` is inside the [A] tag as this will become a toggle to show the hidden content. */
+"%1 and [A]%2 more[/A]"="%1 et [A]%2 de plus[/A]";
+/* Title for a recent action shown in the webclient, see the attached image for context. */
+"%1 created by %3"="%1 créé par %3";
+/* Title for a recent action shown in the webclient, see the attached image for context. Please ensure that the `%2 more` is inside the [A] tag as this will become a toggle to show the hidden content. */
+"%1 and [A]%2 more[/A] created by %3"="%1 et [A]%2 de plus[/A] créés par %3";
+/* Message shown when the user has not recent activity in their account. */
+"No recent activity"="Il n’y a aucune activité récente";
+/* Plural of items which contains a folder. 2 items */
+"items"="éléments";
 /* Shown when an invalid/inexisting/not-available-anymore chat link is opened. */
 "Chat link unavailable"="Le lien vers la conversation n’est pas disponible";
 /* Shown when an inexisting/unavailable/removed link is tried to be opened. */
