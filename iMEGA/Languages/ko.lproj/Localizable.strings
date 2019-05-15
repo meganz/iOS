@@ -1856,6 +1856,8 @@
 "1 Image and 1 Video"="이미지 1개와 동영상 1개";
 /* One image and multiple videos title in recents. */
 "1 Image and %2 Videos"="이미지 1개와 동영상 %2개";
+/* Multiple images and 1 video */
+"%1 Images and 1 Video"="이미지 %1개와 동영상 1개";
 /* Title for multiple images and multiple videos in recents section */
 "%1 Images and %2 Videos"="이미지 %1개와 동영상 %2개";
 /* Tooltip message shown on recents section. Please see the attached image. */

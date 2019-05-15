@@ -1856,6 +1856,8 @@
 "1 Image and 1 Video"="1 zdjęcie i 1 film";
 /* One image and multiple videos title in recents. */
 "1 Image and %2 Videos"="1 zdjęcie i %2 filmy";
+/* Multiple images and 1 video */
+"%1 Images and 1 Video"="%1 zdjęć i 1 film";
 /* Title for multiple images and multiple videos in recents section */
 "%1 Images and %2 Videos"="%1 zdjęcia i %2 filmy";
 /* Tooltip message shown on recents section. Please see the attached image. */

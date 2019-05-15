@@ -1856,6 +1856,8 @@
 "1 Image and 1 Video"="รูปภาพ 1 ภาพและวิดีโอ 1 รายการ";
 /* One image and multiple videos title in recents. */
 "1 Image and %2 Videos"="รูปภาพ 1 ภาพและวิดีโอ %2 รายการ";
+/* Multiple images and 1 video */
+"%1 Images and 1 Video"="รูปภาพ %1 ภาพและวิดีโอ 1 รายการ";
 /* Title for multiple images and multiple videos in recents section */
 "%1 Images and %2 Videos"="รูปภาพ %1 ภาพและวิดีโอ %2 รายการ";
 /* Tooltip message shown on recents section. Please see the attached image. */
