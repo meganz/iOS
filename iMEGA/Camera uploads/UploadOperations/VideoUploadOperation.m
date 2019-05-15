@@ -132,7 +132,12 @@
     if (CameraUploadManager.isHEVCFormatSupported && CameraUploadManager.shouldConvertHEVCVideo && asset.mnz_containsHEVCCodec) {
         [self transcodeHEVCVideoAsset:asset];
     } else if ([asset isKindOfClass:[AVURLAsset class]]) {
-        [self exportURLAsset:(AVURLAsset *)asset];
+        AVURLAsset *urlAsset = (AVURLAsset *)asset;
+        if (self.uploadInfo.location) {
+            [self exportAsset:urlAsset withPreset:AVAssetExportPresetPassthrough outputFileType:AVFileTypeMPEG4 outputFileExtension:MEGAMP4FileExtension];
+        } else {
+            [self uploadVideoAtURL:urlAsset.URL];
+        }
     } else if ([asset isKindOfClass:[AVComposition class]]) {
         [self exportAsset:asset withPreset:AVAssetExportPresetHighestQuality outputFileType:AVFileTypeMPEG4 outputFileExtension:MEGAMP4FileExtension];
     } else {
@@ -159,29 +164,6 @@
     }
     
     [self exportAsset:asset withPreset:preset outputFileType:AVFileTypeMPEG4 outputFileExtension:MEGAMP4FileExtension];
-}
-
-- (void)exportURLAsset:(AVURLAsset *)asset {
-    if (self.uploadInfo.location) {
-        NSString *preset = AVAssetExportPresetPassthrough;
-        NSArray<NSString *> *compatiblePresets = [AVAssetExportSession exportPresetsCompatibleWithAsset:asset];
-        if (![compatiblePresets containsObject:preset]) {
-            preset = AVAssetExportPresetHighestQuality;
-        }
-        
-        AVFileType outputFileType;
-        NSString *extension;
-        if (asset.mnz_isQuickTimeMovie) {
-            outputFileType = AVFileTypeQuickTimeMovie;
-            extension = asset.URL.pathExtension.lowercaseString;
-        } else {
-            outputFileType = AVFileTypeMPEG4;
-            extension = MEGAMP4FileExtension;
-        }
-        [self exportAsset:asset withPreset:preset outputFileType:outputFileType outputFileExtension:extension];
-    } else {
-        [self uploadVideoAtURL:asset.URL];
-    }
 }
 
 - (void)exportAsset:(AVAsset *)asset withPreset:(NSString *)preset outputFileType:(AVFileType)outputFileType outputFileExtension:(NSString *)extension {
