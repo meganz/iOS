@@ -244,11 +244,26 @@
 
 - (void)didSessionRouteChange:(NSNotification *)notification {
     dispatch_async(dispatch_get_main_queue(), ^{
-        if (!self.volumeContainerView.hidden) { //wireless device available
-            NSDictionary *interuptionDict = notification.userInfo;
-            const NSInteger routeChangeReason = [[interuptionDict valueForKey:AVAudioSessionRouteChangeReasonKey] integerValue];
-            MEGALogDebug(@"didSessionRouteChange routeChangeReason: %ld", (long)routeChangeReason);
-            
+        NSDictionary *interuptionDict = notification.userInfo;
+        const NSInteger routeChangeReason = [[interuptionDict valueForKey:AVAudioSessionRouteChangeReasonKey] integerValue];
+        MEGALogDebug(@"didSessionRouteChange routeChangeReason: %ld", (long)routeChangeReason);
+        
+        if (self.volumeContainerView.hidden) { //No wireless device available
+            switch (routeChangeReason) {
+                case AVAudioSessionRouteChangeReasonCategoryChange: //From speaker to regular speaker
+                    self.enableDisableSpeaker.selected = NO;
+                    
+                    break;
+                    
+                case AVAudioSessionRouteChangeReasonOverride: //From regular speaker to speaker
+                    self.enableDisableSpeaker.selected = YES;
+                    
+                    break;
+                    
+                default:
+                    break;
+            }
+        } else { //Wireless device available
             switch (routeChangeReason) {
                 case AVAudioSessionRouteChangeReasonRouteConfigurationChange: //From wireless device to regular speaker
                     [self.mpVolumeView setRouteButtonImage:[UIImage imageNamed:@"speakerOff"] forState:UIControlStateNormal];
