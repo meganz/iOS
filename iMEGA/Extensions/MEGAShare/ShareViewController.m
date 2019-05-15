@@ -307,6 +307,7 @@
         MEGAChatInit chatInit = [[MEGASdkManager sharedMEGAChatSdk] initState];
         if (chatInit == MEGAChatInitNotDone) {
             chatInit = [[MEGASdkManager sharedMEGAChatSdk] initKarereWithSid:self.session];
+            [[MEGASdkManager sharedMEGAChatSdk] resetClientId];
             if (chatInit == MEGAChatInitError) {
                 MEGALogError(@"Init Karere with session failed");
                 [[MEGASdkManager sharedMEGAChatSdk] logout];
