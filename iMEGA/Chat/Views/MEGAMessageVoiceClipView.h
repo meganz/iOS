@@ -17,9 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet UISlider *playerSlider;
 @property (weak, nonatomic) IBOutlet UILabel *timeLabel;
 
-// A delegate usually should be weak to avoid a retain cycle, but in this case the delegate
-// would be freed if it is marked as weak. That is the reason why it is not weak.
-@property (nonatomic) id<MEGAMessageVoiceClipViewDelegate> delegate;
+@property (weak, nonatomic) id<MEGAMessageVoiceClipViewDelegate> delegate;
 
 @end
 
