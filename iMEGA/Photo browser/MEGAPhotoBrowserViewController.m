@@ -267,12 +267,15 @@
 }
 
 - (void)dismissViewControllerAnimated:(BOOL)flag completion:(void (^)(void))completion {
-    [super dismissViewControllerAnimated:flag completion:completion];
-    if (completion == nil) {
-        if ([self.delegate respondsToSelector:@selector(photoBrowser:willDismissWithNode:)]) {
-            [self.delegate photoBrowser:self willDismissWithNode:nil];
+    [super dismissViewControllerAnimated:flag completion:^{
+        if ([self.delegate respondsToSelector:@selector(didDismissPhotoBrowser:)]) {
+            [self.delegate didDismissPhotoBrowser:self];
         }
-    }
+        
+        if (completion) {
+            completion();
+        }
+    }];
 }
 
 #pragma mark - UIScrollViewDelegate
@@ -579,16 +582,11 @@
 #pragma mark - IBActions
 
 - (IBAction)didPressCloseButton:(UIBarButtonItem *)sender {
-    MEGANode *node = [self.mediaNodes objectAtIndex:self.currentIndex];
     UIScrollView *zoomableView = [self.imageViewsCache objectForKey:@(self.currentIndex)];
     self.targetImageView = zoomableView.subviews.firstObject;
     [self toggleTransparentInterfaceForDismissal:YES];
 
-    [self dismissViewControllerAnimated:YES completion:^{
-        if ([self.delegate respondsToSelector:@selector(photoBrowser:willDismissWithNode:)]) {
-            [self.delegate photoBrowser:self willDismissWithNode:node];
-        }
-    }];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (IBAction)didPressActionsButton:(UIBarButtonItem *)sender {
@@ -669,7 +667,6 @@
 #pragma mark - Gesture recognizers
 
 - (void)panGesture:(UIPanGestureRecognizer *)panGestureRecognizer {
-    MEGANode *node = [self.mediaNodes objectAtIndex:self.currentIndex];
     UIScrollView *zoomableView = [self.imageViewsCache objectForKey:@(self.currentIndex)];
     if (zoomableView.zoomScale > 1.0f) {
         return;
@@ -699,11 +696,7 @@
         case UIGestureRecognizerStateEnded:
         case UIGestureRecognizerStateCancelled: {
             if (ABS(verticalIncrement) > 50.0f) {
-                [self dismissViewControllerAnimated:YES completion:^{
-                    if ([self.delegate respondsToSelector:@selector(photoBrowser:willDismissWithNode:)]) {
-                        [self.delegate photoBrowser:self willDismissWithNode:node];
-                    }
-                }];
+                [self dismissViewControllerAnimated:YES completion:nil];
             } else {
                 [UIView animateWithDuration:0.3 animations:^{
                     self.targetImageView.frame = self.panGestureInitialFrame;
@@ -1010,9 +1003,6 @@
     [self toggleTransparentInterfaceForDismissal:YES];
 
     [self dismissViewControllerAnimated:YES completion:^{
-        if ([self.delegate respondsToSelector:@selector(photoBrowser:willDismissWithNode:)]) {
-            [self.delegate photoBrowser:self willDismissWithNode:node];
-        }
         UIViewController *visibleViewController = UIApplication.mnz_presentingViewController;
         if ([visibleViewController isKindOfClass:MainTabBarController.class]) {
             NSArray *parentTreeArray = node.mnz_parentTreeArray;
