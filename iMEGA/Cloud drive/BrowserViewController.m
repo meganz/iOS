@@ -29,9 +29,6 @@
 
 @property (nonatomic) NSUInteger remainingOperations;
 
-@property (weak, nonatomic) IBOutlet UIView *browserSegmentedControlView;
-@property (weak, nonatomic) IBOutlet UISegmentedControl *browserSegmentedControl;
-
 @property (weak, nonatomic) IBOutlet UIView *extendedNavigationBar_view;
 @property (weak, nonatomic) IBOutlet UIButton *extendedNavigationBar_backButton;
 @property (weak, nonatomic) IBOutlet UILabel *extendedNavigationBar_label;
@@ -50,6 +47,12 @@
 
 @property (nonatomic) NSMutableArray *searchNodesArray;
 @property (nonatomic) UISearchController *searchController;
+
+@property (weak, nonatomic) IBOutlet UIView *selectorView;
+@property (weak, nonatomic) IBOutlet UIButton *cloudDriveButton;
+@property (weak, nonatomic) IBOutlet UIView *cloudDriveLineView;
+@property (weak, nonatomic) IBOutlet UIButton *incomingButton;
+@property (weak, nonatomic) IBOutlet UIView *incomingLineView;
 
 @end
 
@@ -108,7 +111,7 @@
     [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
         [self.tableView reloadEmptyDataSet];
         if (self.searchController.isActive) {
-            float yCorrection = self.browserSegmentedControlView.hidden ? 0 : 44;
+            float yCorrection = self.selectorView.hidden ? 0 : 44;
             
             self.searchController.view.frame = CGRectMake(0, UIApplication.sharedApplication.statusBarFrame.size.height + self.navigationController.navigationBar.frame.size.height + yCorrection, self.searchController.view.frame.size.width, self.searchController.view.frame.size.height);
             self.searchController.searchBar.superview.frame = CGRectMake(0, 0, self.searchController.searchBar.superview.frame.size.width, self.searchController.searchBar.superview.frame.size.height);
@@ -191,9 +194,6 @@
         case BrowserActionSendFromCloudDrive: {
             [self setupDefaultElements];
             
-            self.browserSegmentedControlView.hidden = YES;
-            self.tableViewTopConstraint.constant = -self.browserSegmentedControlView.frame.size.height;
-            
             self.toolbarSendBarButtonItem.title = AMLocalizedString(@"send", @"Label for any 'Send' button, link, text, title, etc. - (String as short as possible).");
             [self.toolbarSendBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIMediumWithSize:17.0f]} forState:UIControlStateNormal];
              [self setToolbarItems:@[flexibleItem, self.toolbarSendBarButtonItem]];
@@ -208,7 +208,7 @@
             
         case BrowserActionDocumentProvider: {
             if (self.isChildBrowser) {
-                [self.browserSegmentedControlView addSubview:self.extendedNavigationBar_view];
+                [self.selectorView addSubview:self.extendedNavigationBar_view];
             }
             
             self.navigationController.toolbarHidden = YES;
@@ -221,11 +221,11 @@
 
 - (void)setupDefaultElements {
     if (self.parentBrowser) {
-        [self.browserSegmentedControl setTitle:AMLocalizedString(@"cloudDrive", @"Title of the Cloud Drive section") forSegmentAtIndex:0];
-        [self.browserSegmentedControl setTitle:AMLocalizedString(@"incoming", @"Title of the 'Incoming' Shared Items.") forSegmentAtIndex:1];
+        [self.incomingButton setTitle:AMLocalizedString(@"incoming", @"Title of the 'Incoming' Shared Items.") forState:UIControlStateNormal];
+        [self.cloudDriveButton setTitle:AMLocalizedString(@"cloudDrive", @"Title of the Cloud Drive section") forState:UIControlStateNormal];
     } else {
-        self.browserSegmentedControlView.hidden = YES;
-        self.tableViewTopConstraint.constant = -self.browserSegmentedControlView.frame.size.height;
+        self.selectorView.hidden = YES;
+        self.tableViewTopConstraint.constant = -self.selectorView.frame.size.height;
     }
     
     self.toolBarNewFolderBarButtonItem.title = AMLocalizedString(@"newFolder", @"Menu option from the `Add` section that allows you to create a 'New Folder'");
@@ -233,51 +233,43 @@
 }
 
 - (void)reloadUI {
-    switch (self.browserSegmentedControl.selectedSegmentIndex) {
-        case 0: { //Cloud Drive
-            [self setParentNodeForBrowserAction];
-            
-            self.parentShareType = [[MEGASdkManager sharedMEGASdk] accessLevelForNode:self.parentNode];
-            (self.parentShareType == MEGAShareTypeAccessRead) ? [self setToolbarItemsEnabled:NO] : [self setToolbarItemsEnabled:YES];
-            
-            [self setNavigationBarTitle];
-            break;
+    [self setParentNodeForBrowserAction];
+    [self setNavigationBarTitle];
+    
+    BOOL enableToolbarItems = YES;
+    if (self.cloudDriveButton.selected) {
+        if (self.browserAction == BrowserActionSendFromCloudDrive) {
+            enableToolbarItems = self.selectedNodesMutableDictionary.count > 0;
+        } else {
+            self.parentShareType = [MEGASdkManager.sharedMEGASdk accessLevelForNode:self.parentNode];
+            enableToolbarItems = self.parentShareType > MEGAShareTypeAccessRead;
         }
-            
-        case 1: { //Incoming
-            [self setParentNodeForBrowserAction];
-            
-            [self setNavigationBarTitle];
-            
-            [self setToolbarItemsEnabled:NO];
-            break;
+    } else if (self.incomingButton.selected) {
+        if (self.browserAction == BrowserActionSendFromCloudDrive) {
+            enableToolbarItems = self.selectedNodesMutableDictionary.count > 0;
+        } else {
+            enableToolbarItems = NO;
         }
     }
+
+    [self setToolbarItemsEnabled:enableToolbarItems];
     
     [self.tableView reloadData];
 }
 
 - (void)setParentNodeForBrowserAction {
-    switch (self.browserSegmentedControl.selectedSegmentIndex) {
-        case 0: { //Cloud Drive
-            if (self.isParentBrowser) {
-                self.parentNode = [[MEGASdkManager sharedMEGASdk] rootNode];
-                self.nodes = [[MEGASdkManager sharedMEGASdk] childrenForParent:[[MEGASdkManager sharedMEGASdk] rootNode]];
-            } else {
-                self.nodes = [[MEGASdkManager sharedMEGASdk] childrenForParent:self.parentNode];
-            }
-            break;
+    if (self.cloudDriveButton.selected) {
+        if (self.isParentBrowser) {
+            self.parentNode = MEGASdkManager.sharedMEGASdk.rootNode;
         }
-            
-        case 1: { //Incoming
-            if (self.isParentBrowser) {
-                self.parentNode = nil;
-                self.nodes = [[MEGASdkManager sharedMEGASdk] inShares];
-                self.shares = [[MEGASdkManager sharedMEGASdk] inSharesList];
-            } else {
-                self.nodes = [[MEGASdkManager sharedMEGASdk] childrenForParent:self.parentNode];
-            }
-            break;
+        self.nodes = [MEGASdkManager.sharedMEGASdk childrenForParent:self.parentNode];
+    } else if (self.incomingButton.selected) {
+        if (self.isParentBrowser) {
+            self.parentNode = nil;
+            self.nodes = MEGASdkManager.sharedMEGASdk.inShares;
+            self.shares = MEGASdkManager.sharedMEGASdk.inSharesList;
+        } else {
+            self.nodes = [MEGASdkManager.sharedMEGASdk childrenForParent:self.parentNode];
         }
     }
 }
@@ -286,11 +278,9 @@
     [self updatePromptTitle];
     
     if (self.isParentBrowser) {
+        self.navigationItem.title = @"MEGA";
         if (self.browserAction == BrowserActionDocumentProvider) {
-            self.navigationItem.title = @"MEGA";
             self.extendedNavigationBar_label.text = AMLocalizedString(@"cloudDrive", @"Title of the Cloud Drive section");
-        } else {
-            self.navigationItem.title = (self.browserSegmentedControl.selectedSegmentIndex == 0) ? AMLocalizedString(@"cloudDrive", @"Title of the Cloud Drive section") : AMLocalizedString(@"sharedItems", @"Title of Shared Items section");
         }
     } else {
         if (self.isChildBrowserFromIncoming) {
@@ -420,7 +410,7 @@
     BrowserViewController *browserVC = [self.storyboard instantiateViewControllerWithIdentifier:@"BrowserViewControllerID"];
     browserVC.browserAction = self.browserAction;
     browserVC.childBrowser = YES;
-    browserVC.childBrowserFromIncoming = ((self.browserSegmentedControl.selectedSegmentIndex == 1) || self.isChildBrowserFromIncoming) ? YES : NO;
+    browserVC.childBrowserFromIncoming = (self.incomingButton.selected || self.isChildBrowserFromIncoming) ? YES : NO;
     browserVC.localpath = self.localpath;
     browserVC.parentNode = parentNode;
     browserVC.selectedNodesMutableDictionary = self.selectedNodesMutableDictionary;
@@ -470,10 +460,6 @@
 }
 
 #pragma mark - IBActions
-
-- (IBAction)browserSegmentedControl:(UISegmentedControl *)sender {
-    [self reloadUI];
-}
 
 - (IBAction)moveNode:(UIBarButtonItem *)sender {
     if ([MEGAReachabilityManager isReachableHUDIfNot]) {
@@ -585,6 +571,42 @@
     }
 }
 
+- (IBAction)cloudDriveTouchUpInside:(UIButton *)sender {
+    if (sender.selected) {
+        return;
+    }
+    
+    sender.selected = !sender.selected;
+    self.incomingButton.selected = !self.incomingButton.selected;
+    
+    self.cloudDriveLineView.backgroundColor = UIColor.mnz_redMain;
+    self.incomingLineView.backgroundColor = UIColor.mnz_grayCCCCCC;
+    
+    if (self.searchController.isActive) {
+        self.searchController.active = NO;
+    }
+    
+    [self reloadUI];
+}
+
+- (IBAction)incomingTouchUpInside:(UIButton *)sender {
+    if (sender.selected) {
+        return;
+    }
+    
+    sender.selected = !sender.selected;
+    self.cloudDriveButton.selected = !self.cloudDriveButton.selected;
+    
+    self.incomingLineView.backgroundColor = UIColor.mnz_redMain;
+    self.cloudDriveLineView.backgroundColor = UIColor.mnz_grayCCCCCC;
+    
+    if (self.searchController.isActive) {
+        self.searchController.active = NO;
+    }
+    
+    [self reloadUI];
+}
+
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -598,9 +620,9 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     NSString *cellIdentifier;
-    if (self.browserSegmentedControl.selectedSegmentIndex == 0) {
+    if (self.cloudDriveButton.selected) {
         cellIdentifier = @"nodeCell";
-    } else if (self.browserSegmentedControl.selectedSegmentIndex == 1) {
+    } else if (self.incomingButton.selected) {
         cellIdentifier = @"incomingNodeCell";
     }
     
@@ -635,13 +657,13 @@
     
     cell.node = node;
     
-    if (self.browserSegmentedControl.selectedSegmentIndex == 0) {
+    if (self.cloudDriveButton.selected) {
         if (node.isFile) {
             cell.infoLabel.text = [Helper sizeAndDateForNode:node api:[MEGASdkManager sharedMEGASdk]];
         } else {
             cell.infoLabel.text = [Helper filesAndFoldersInFolderNode:node api:[MEGASdkManager sharedMEGASdk]];
         }
-    } else if (self.browserSegmentedControl.selectedSegmentIndex == 1) {
+    } else if (self.incomingButton.selected) {
         MEGAShare *share = [self.shares shareAtIndex:indexPath.row];
         cell.infoLabel.text = [share user];
         [cell.cancelButton setImage:[Helper permissionsButtonImageForShareType:shareType] forState:UIControlStateNormal];
@@ -653,7 +675,7 @@
     }
     
     if (tableView.isEditing) {
-        UIView *view = [[UIView alloc] init];
+        UIView *view = UIView.alloc.init;
         view.backgroundColor = UIColor.clearColor;
         cell.selectedBackgroundView = view;
     }
@@ -682,6 +704,7 @@
             case BrowserActionSendFromCloudDrive: {
                 [self.selectedNodesMutableDictionary setObject:selectedNode forKey:selectedNode.base64Handle];
                 [self updatePromptTitle];
+                [self setToolbarItemsEnabled:YES];
                 return;
             }
                 
@@ -707,6 +730,7 @@
         if ([self.selectedNodesMutableDictionary objectForKey:deselectedNode.base64Handle]) {
             [self.selectedNodesMutableDictionary removeObjectForKey:deselectedNode.base64Handle];
             [self updatePromptTitle];
+            [self setToolbarItemsEnabled:self.selectedNodesMutableDictionary.count];
         }
     }
 }
@@ -724,7 +748,7 @@
 
 - (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
     self.searchNodesArray = nil;
-    self.browserSegmentedControl.enabled = YES;
+    self.cloudDriveButton.enabled = self.incomingButton.enabled = YES;
 }
 
 #pragma mark - UISearchResultsUpdating
@@ -735,15 +759,14 @@
         if ([searchString isEqualToString:@""]) {
             self.searchNodesArray = [self.nodes.mnz_nodesArrayFromNodeList mutableCopy];
         } else {
-            if (self.browserSegmentedControl.selectedSegmentIndex == 0) {
+            if (self.cloudDriveButton.selected) {
                 MEGANodeList *allNodeList = [[MEGASdkManager sharedMEGASdk] nodeListSearchForNode:self.parentNode searchString:searchString recursive:NO];
                 self.searchNodesArray = [allNodeList.mnz_nodesArrayFromNodeList mutableCopy];
-            } else {
+            } else if (self.incomingButton.selected) {
                 NSPredicate *resultPredicate = [NSPredicate predicateWithFormat:@"SELF.name contains[c] %@", searchString];
                 self.searchNodesArray = [[self.nodes.mnz_nodesArrayFromNodeList filteredArrayUsingPredicate:resultPredicate] mutableCopy];
             }
         }
-        self.browserSegmentedControl.enabled = NO;
     }
     
     [self.tableView reloadData];
@@ -752,7 +775,7 @@
 #pragma mark - UISearchControllerDelegate
 
 - (void)didPresentSearchController:(UISearchController *)searchController {
-    float yPosition = self.browserSegmentedControlView.hidden ? 0 : 44;
+    float yPosition = self.selectorView.hidden ? 0 : 44;
     self.searchController.searchBar.superview.frame = CGRectMake(0, yPosition, self.searchController.searchBar.superview.frame.size.width, self.searchController.searchBar.superview.frame.size.height);
 }
 
@@ -773,7 +796,7 @@
             BrowserViewController *browserVC = [self.storyboard instantiateViewControllerWithIdentifier:@"BrowserViewControllerID"];
             browserVC.browserAction = self.browserAction;
             browserVC.childBrowser = YES;
-            browserVC.childBrowserFromIncoming = ((self.browserSegmentedControl.selectedSegmentIndex == 1) || self.isChildBrowserFromIncoming) ? YES : NO;
+            browserVC.childBrowserFromIncoming = (self.incomingButton.selected || self.isChildBrowserFromIncoming) ? YES : NO;
             browserVC.localpath = self.localpath;
             browserVC.parentNode = node;
             browserVC.selectedNodesMutableDictionary = self.selectedNodesMutableDictionary;
@@ -806,7 +829,7 @@
                 text = AMLocalizedString(@"noResults", @"Title shown when you make a search and there is 'No Results'");
             }
         } else {
-            if ((self.browserSegmentedControl.selectedSegmentIndex == 1) && self.isParentBrowser) {
+            if (self.incomingButton.selected && self.isParentBrowser) {
                 text = AMLocalizedString(@"noIncomingSharedItemsEmptyState_text", @"Title shown when there's no incoming Shared Items");
             } else {
                 text = AMLocalizedString(@"emptyFolder", @"Title shown when a folder doesn't have any files");
@@ -829,7 +852,7 @@
                 return nil;
             }
         } else {
-            if ((self.browserSegmentedControl.selectedSegmentIndex == 1) && self.isParentBrowser) {
+            if (self.incomingButton.selected && self.isParentBrowser) {
                 image = [UIImage imageNamed:@"incomingEmptyState"];
             } else {
                 image = [UIImage imageNamed:@"folderEmptyState"];

@@ -48,6 +48,7 @@ typedef NS_ENUM(NSInteger, MEGAChatMessageEndCallReason);
 - (BOOL)mnz_containsEmoji;
 - (BOOL)mnz_isPureEmojiString;
 - (NSInteger)mnz_emojiCount;
+- (NSString *)mnz_initialForAvatar;
 
 - (NSString *)mnz_coordinatesOfPhotoOrVideo;
 + (NSString *)mnz_base64FromBase64URLEncoding:(NSString *)base64URLEncondingString;
@@ -65,6 +66,8 @@ typedef NS_ENUM(NSInteger, MEGAChatMessageEndCallReason);
  * @return The coordinate in degrees, minutes, seconds and direction
  */
 + (NSString *)mnz_convertCoordinatesLatitude:(float)latitude longitude:(float)longitude;
+
++ (NSString *)mnz_addedByInRecentActionBucket:(MEGARecentActionBucket *)recentActionBucket nodesArray:(NSArray *)nodesArray;
 
 #pragma mark - File names and extensions
 

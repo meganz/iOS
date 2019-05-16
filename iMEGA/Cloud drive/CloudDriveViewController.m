@@ -31,6 +31,8 @@
 #import "UITextField+MNZCategory.h"
 
 #import "BrowserViewController.h"
+#import "CloudDriveTableViewController.h"
+#import "CloudDriveCollectionViewController.h"
 #import "ContactsViewController.h"
 #import "CustomActionViewController.h"
 #import "CustomModalAlertViewController.h"
@@ -40,14 +42,13 @@
 #import "MEGAPhotoBrowserViewController.h"
 #import "NodeInfoViewController.h"
 #import "NodeTableViewCell.h"
+#import "LayoutView.h"
 #import "PhotosViewController.h"
 #import "PreviewDocumentViewController.h"
+#import "RecentsViewController.h"
 #import "SortByTableViewController.h"
 #import "SharedItemsViewController.h"
 #import "UpgradeTableViewController.h"
-#import "CloudDriveTableViewController.h"
-#import "CloudDriveCollectionViewController.h"
-#import "LayoutView.h"
 
 @interface CloudDriveViewController () <UINavigationControllerDelegate, UIDocumentPickerDelegate, UIDocumentMenuDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGADelegate, MEGARequestDelegate, CustomActionViewControllerDelegate, NodeInfoViewControllerDelegate, UITextFieldDelegate, UISearchControllerDelegate> {
     
@@ -56,9 +57,16 @@
 
 @property (weak, nonatomic) IBOutlet UIView *containerView;
 
+@property (weak, nonatomic) IBOutlet UIView *selectorView;
+@property (weak, nonatomic) IBOutlet UIButton *recentsButton;
+@property (weak, nonatomic) IBOutlet UIView *recentsLineView;
+@property (weak, nonatomic) IBOutlet UIButton *cloudDriveButton;
+@property (weak, nonatomic) IBOutlet UIView *cloudDriveLineView;
+
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *selectAllBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *moreBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *moreMinimizedBarButtonItem;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *moreRecentsBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *editBarButtonItem;
 
 @property (weak, nonatomic) IBOutlet UIToolbar *toolbar;
@@ -77,6 +85,7 @@
 
 @property (nonatomic, strong) CloudDriveTableViewController *cdTableView;
 @property (nonatomic, strong) CloudDriveCollectionViewController *cdCollectionView;
+@property (nonatomic, strong) RecentsViewController *recentsVC;
 
 @property (nonatomic, assign) LayoutMode layoutView;
 @property (nonatomic, assign) BOOL shouldDetermineLayout;
@@ -111,6 +120,10 @@
     
     [self determineLayoutView];
     
+    if (self.shouldHideSelectorView || self.displayMode != DisplayModeCloudDrive || ([MEGASdkManager.sharedMEGASdk accessLevelForNode:self.parentNode] != MEGAShareTypeAccessOwner)) {
+        self.selectorViewHeightLayoutConstraint.constant = 0;
+    }
+    
     [self setNavigationBarButtonItems];
     
     MEGAShareType shareType = [[MEGASdkManager sharedMEGASdk] accessLevelForNode:self.parentNode];
@@ -134,8 +147,6 @@
     self.nodesIndexPathMutableDictionary = [[NSMutableDictionary alloc] init];
     
     [self.view addGestureRecognizer:[[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPress:)]];
-    
-    self.searchController.delegate = self;
     
     self.moreBarButtonItem.accessibilityLabel = AMLocalizedString(@"more", @"Top menu option which opens more menu options in a context menu.");
 }
@@ -198,15 +209,6 @@
     
     [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
         [self.cdTableView.tableView reloadEmptyDataSet];
-        if (self.searchController.active) {
-            if (UIDevice.currentDevice.iPad) {
-                if (self != UIApplication.mnz_visibleViewController) {
-                    [Helper resetSearchControllerFrame:self.searchController];
-                }
-            } else {
-                [Helper resetSearchControllerFrame:self.searchController];
-            }
-        }
     } completion:nil];
 }
 
@@ -276,6 +278,8 @@
     self.cdCollectionView = nil;
 
     self.searchController = [Helper customSearchControllerWithSearchResultsUpdaterDelegate:self searchBarDelegate:self];
+    self.searchController.hidesNavigationBarDuringPresentation = NO;
+    self.searchController.delegate = self;
     self.layoutView = LayoutModeList;
 
     self.cdTableView = [self.storyboard instantiateViewControllerWithIdentifier:@"CloudDriveTableID"];
@@ -285,7 +289,7 @@
     [self.cdTableView didMoveToParentViewController:self];
     
     self.cdTableView.cloudDrive = self;
-    self.cdTableView.tableView.tableHeaderView = self.searchController.searchBar;
+    self.cdTableView.tableView.tableHeaderView = (self.displayMode == DisplayModeRecents) ? nil : self.searchController.searchBar;
     self.cdTableView.tableView.contentOffset = CGPointMake(0, CGRectGetHeight(self.searchController.searchBar.frame));
     self.cdTableView.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     self.cdTableView.tableView.emptyDataSetDelegate = self;
@@ -299,6 +303,8 @@
     self.cdTableView = nil;
     
     self.searchController = [Helper customSearchControllerWithSearchResultsUpdaterDelegate:self searchBarDelegate:self];
+    self.searchController.hidesNavigationBarDuringPresentation = NO;
+    self.searchController.delegate = self;
     self.layoutView = LayoutModeThumbnail;
 
     self.cdCollectionView = [self.storyboard instantiateViewControllerWithIdentifier:@"CloudDriveCollectionID"];
@@ -352,6 +358,7 @@
         case MEGANodeTypeFolder: {
             CloudDriveViewController *cloudDriveVC = [self.storyboard instantiateViewControllerWithIdentifier:@"CloudDriveID"];
             cloudDriveVC.parentNode = node;
+            cloudDriveVC.hideSelectorView = YES;
             if (self.displayMode == DisplayModeRubbishBin) {
                 cloudDriveVC.displayMode = self.displayMode;
             }
@@ -782,6 +789,11 @@
             break;
         }
             
+        case DisplayModeRecents: {
+            [self updateNavigationBarTitle];
+            break;
+        }
+            
         default:
             break;
     }
@@ -793,7 +805,7 @@
     } else {
         [self setNavigationBarButtonItemsEnabled:[MEGAReachabilityManager isReachable]];
         if (!self.cdTableView.tableView.tableHeaderView) {
-            self.cdTableView.tableView.tableHeaderView = self.searchController.searchBar;
+            self.cdTableView.tableView.tableHeaderView = (self.displayMode == DisplayModeRecents) ? nil : self.searchController.searchBar;
         }
     }
     
@@ -929,6 +941,10 @@
             self.navigationItem.rightBarButtonItems = @[self.moreMinimizedBarButtonItem];
             break;
             
+        case DisplayModeRecents:
+            self.navigationItem.rightBarButtonItems = @[];
+            break;
+            
         default:
             break;
     }
@@ -963,7 +979,7 @@
     if ([[UIDevice currentDevice] iPadDevice]) {
         alertController.modalPresentationStyle = UIModalPresentationPopover;
         UIPopoverPresentationController *popoverPresentationController = [alertController popoverPresentationController];
-        popoverPresentationController.barButtonItem = self.moreBarButtonItem;
+        popoverPresentationController.barButtonItem = self.navigationItem.rightBarButtonItems.firstObject;
         popoverPresentationController.sourceView = self.view;
     }
     [self presentViewController:alertController animated:YES completion:nil];
@@ -1034,7 +1050,7 @@
         switch (self.displayMode) {
             case DisplayModeCloudDrive: {
                 if ([self.parentNode type] == MEGANodeTypeRoot) {
-                    navigationTitle = AMLocalizedString(@"cloudDrive", @"Title of the Cloud Drive section");
+                    navigationTitle = @"MEGA";
                 } else {
                     if (!self.parentNode) {
                         navigationTitle = AMLocalizedString(@"cloudDrive", @"Title of the Cloud Drive section");
@@ -1051,6 +1067,12 @@
                 } else {
                     navigationTitle = [self.parentNode name];
                 }
+                break;
+            }
+                
+            case DisplayModeRecents: {
+                NSString *itemsString =  AMLocalizedString(@"items", @"Plural of items which contains a folder. 2 items");
+                navigationTitle = [NSString stringWithFormat:@"%td %@", self.nodes.size.integerValue, itemsString];
                 break;
             }
                 
@@ -1196,6 +1218,71 @@
 }
 
 #pragma mark - IBActions
+
+- (IBAction)recentsTouchUpInside:(UIButton *)sender {
+    if (sender.selected) {
+        return;
+    }
+    
+    sender.selected = !sender.selected;
+    self.cloudDriveButton.selected = !self.cloudDriveButton.selected;
+    
+    self.recentsLineView.backgroundColor = UIColor.mnz_redMain;
+    self.cloudDriveLineView.backgroundColor = UIColor.mnz_grayCCCCCC;
+    
+    if (self.cdTableView.tableView.isEditing || self.cdCollectionView.collectionView.allowsMultipleSelection) {
+        [self setEditMode:NO];
+    }
+    
+    if (self.searchController.isActive) {
+        self.searchController.active = NO;
+    }
+    
+    if (self.layoutView == LayoutModeList) {
+        [self.cdTableView willMoveToParentViewController:nil];
+        [self.cdTableView.view removeFromSuperview];
+        [self.cdTableView removeFromParentViewController];
+        self.cdTableView = nil;
+    } else  {
+        [self.cdCollectionView willMoveToParentViewController:nil];
+        [self.cdCollectionView.view removeFromSuperview];
+        [self.cdCollectionView removeFromParentViewController];
+        self.cdCollectionView = nil;
+    }
+    
+    self.searchController = nil;
+    
+    self.recentsVC = [[UIStoryboard storyboardWithName:@"Recents" bundle:nil] instantiateViewControllerWithIdentifier:@"RecentsViewControllerID"];
+    [self addChildViewController:self.recentsVC];
+    self.recentsVC.view.frame = self.containerView.bounds;
+    [self.containerView addSubview:self.recentsVC.view];
+    [self.recentsVC didMoveToParentViewController:self];
+    
+    self.recentsVC.cloudDrive = self;
+    
+    self.navigationItem.rightBarButtonItems = @[self.moreRecentsBarButtonItem];
+}
+
+- (IBAction)cloudDriveTouchUpInside:(UIButton *)sender {
+    if (sender.selected) {
+        return;
+    }
+    
+    self.recentsButton.selected = !self.recentsButton.selected;
+    sender.selected = !sender.selected;
+    
+    self.recentsLineView.backgroundColor = UIColor.mnz_grayCCCCCC;
+    self.cloudDriveLineView.backgroundColor = UIColor.mnz_redMain;
+    
+    [self.recentsVC willMoveToParentViewController:nil];
+    [self.recentsVC.view removeFromSuperview];
+    [self.recentsVC removeFromParentViewController];
+    self.recentsVC = nil;
+    
+    [self determineLayoutView];
+    
+    [self setNavigationBarButtonItems];
+}
 
 - (IBAction)selectAllAction:(UIBarButtonItem *)sender {
     [self.selectedNodesArray removeAllObjects];
@@ -1358,6 +1445,35 @@
     [self presentViewController:moreMinimizedAlertController animated:YES completion:nil];
 }
 
+- (IBAction)moreRecentsAction:(UIBarButtonItem *)sender {
+    UIAlertController *recentsMoreAlertController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    [recentsMoreAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
+    
+    UIAlertAction *uploadAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"upload", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        [self presentUploadAlertController];
+    }];
+    [uploadAlertAction mnz_setTitleTextColor:UIColor.mnz_black333333];
+    [recentsMoreAlertController addAction:uploadAlertAction];
+    
+    UIAlertAction *rubbishBinAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"rubbishBinLabel", @"Title of one of the Settings sections where you can see your MEGA 'Rubbish Bin'") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        CloudDriveViewController *cloudDriveVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
+        cloudDriveVC.parentNode = MEGASdkManager.sharedMEGASdk.rubbishNode;
+        cloudDriveVC.displayMode = DisplayModeRubbishBin;
+        cloudDriveVC.title = AMLocalizedString(@"rubbishBinLabel", @"Title of one of the Settings sections where you can see your MEGA 'Rubbish Bin'");
+        [self.navigationController pushViewController:cloudDriveVC animated:YES];
+    }];
+    [rubbishBinAlertAction mnz_setTitleTextColor:UIColor.mnz_black333333];
+    [recentsMoreAlertController addAction:rubbishBinAlertAction];
+    
+    if (UIDevice.currentDevice.iPadDevice) {
+        recentsMoreAlertController.modalPresentationStyle = UIModalPresentationPopover;
+        recentsMoreAlertController.popoverPresentationController.barButtonItem = self.moreRecentsBarButtonItem;
+        recentsMoreAlertController.popoverPresentationController.sourceView = self.view;
+    }
+    
+    [self presentViewController:recentsMoreAlertController animated:YES completion:nil];
+}
+
 - (IBAction)editTapped:(UIBarButtonItem *)sender {
     BOOL enableEditing = self.cdTableView ? !self.cdTableView.tableView.isEditing : !self.cdCollectionView.collectionView.allowsMultipleSelection;
     [self setEditMode:enableEditing];
@@ -1373,10 +1489,18 @@
         [self.toolbar setAlpha:0.0];
         [self.tabBarController.view addSubview:self.toolbar];
         self.toolbar.translatesAutoresizingMaskIntoConstraints = NO;
+        
+        NSLayoutAnchor *bottomAnchor;
+        if (@available(iOS 11.0, *)) {
+            bottomAnchor = self.tabBarController.tabBar.safeAreaLayoutGuide.bottomAnchor;
+        } else {
+            bottomAnchor = self.tabBarController.tabBar.bottomAnchor;
+        }
+        
         [NSLayoutConstraint activateConstraints:@[[self.toolbar.topAnchor constraintEqualToAnchor:self.tabBarController.tabBar.topAnchor constant:0],
                                                   [self.toolbar.leadingAnchor constraintEqualToAnchor:self.tabBarController.tabBar.leadingAnchor constant:0],
                                                   [self.toolbar.trailingAnchor constraintEqualToAnchor:self.tabBarController.tabBar.trailingAnchor constant:0],
-                                                  [self.toolbar.heightAnchor constraintEqualToConstant:49.0]]];
+                                                  [self.toolbar.bottomAnchor constraintEqualToAnchor:bottomAnchor constant:0]]];
         
         [UIView animateWithDuration:0.33f animations:^ {
             [self.toolbar setAlpha:1.0];
@@ -1557,22 +1681,7 @@
     
     MEGANode *node = self.searchController.isActive ? [self.searchNodesArray objectAtIndex:indexPath.row] : [self.nodes nodeAtIndex:indexPath.row];
     
-    CustomActionViewController *actionController = [[CustomActionViewController alloc] init];
-    actionController.node = node;
-    actionController.displayMode = self.displayMode;
-    actionController.incomingShareChildView = self.isIncomingShareChildView;
-    actionController.actionDelegate = self;
-    actionController.actionSender = sender;
-    
-    if ([[UIDevice currentDevice] iPadDevice]) {
-        actionController.modalPresentationStyle = UIModalPresentationPopover;
-        actionController.popoverPresentationController.delegate = actionController;
-        actionController.popoverPresentationController.sourceView = sender;
-        actionController.popoverPresentationController.sourceRect = CGRectMake(0, 0, sender.frame.size.width/2, sender.frame.size.height/2);
-    } else {
-        actionController.modalPresentationStyle = UIModalPresentationOverFullScreen;
-    }
-    [self presentViewController:actionController animated:YES completion:nil];
+    [self showCustomActionsForNode:node sender:sender];
 }
 
 - (void)showCustomActionsForNode:(MEGANode *)node sender:(UIButton *)sender {
@@ -1620,6 +1729,14 @@
     }
 }
 
+#pragma mark - UISearchControllerDelegate
+
+- (void)didPresentSearchController:(UISearchController *)searchController {
+    if (UIDevice.currentDevice.iPhoneDevice && UIInterfaceOrientationIsLandscape(UIApplication.sharedApplication.statusBarOrientation)) {
+        self.searchController.searchBar.superview.frame = CGRectMake(0, self.selectorView.frame.size.height + self.navigationController.navigationBar.frame.size.height, self.searchController.searchBar.superview.frame.size.width, self.searchController.searchBar.superview.frame.size.height);
+    }
+}
+
 #pragma mark - UISearchResultsUpdating
 
 - (void)updateSearchResultsForSearchController:(UISearchController *)searchController {
@@ -1637,14 +1754,6 @@
         }
     }
     [self reloadData];
-}
-
-#pragma mark - UISearchControllerDelegate
-
-- (void)didPresentSearchController:(UISearchController *)searchController {
-    if (UIDevice.currentDevice.iPhoneDevice && UIDeviceOrientationIsLandscape(UIDevice.currentDevice.orientation)) {
-        [Helper resetSearchControllerFrame:searchController];
-    }
 }
 
 #pragma mark - UIDocumentPickerDelegate

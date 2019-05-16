@@ -29,8 +29,10 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *itemListViewHeightConstraint;
 @property (weak, nonatomic) IBOutlet UIView *itemListView;
 @property (weak, nonatomic) IBOutlet UIView *searchView;
-@property (weak, nonatomic) IBOutlet UIView *contactsHeaderView;
-@property (weak, nonatomic) IBOutlet UILabel *contactsHeaderViewLabel;
+@property (weak, nonatomic) IBOutlet UIView *recentsHeaderView;
+@property (weak, nonatomic) IBOutlet UILabel *recentsHeaderViewLabel;
+@property (weak, nonatomic) IBOutlet UIView *chatsHeaderView;
+@property (weak, nonatomic) IBOutlet UILabel *chatsHeaderViewLabel;
 
 @property (nonatomic, strong) UISearchController *searchController;
 
@@ -38,6 +40,7 @@
 @property (nonatomic, strong) NSMutableArray *searchedUsersAndGroupChatsMutableArray;
 
 @property (nonatomic, strong) MEGAChatListItemList *chatListItemList;
+@property (nonatomic, strong) NSMutableArray *recentsMutableArray;
 @property (nonatomic, strong) NSMutableArray *groupChatsMutableArray;
 @property (nonatomic, strong) NSMutableArray *searchedGroupChatsMutableArray;
 @property (nonatomic, strong) NSMutableArray *selectedGroupChatsMutableArray;
@@ -87,17 +90,19 @@
     
     self.navigationItem.title = AMLocalizedString(@"selectDestination", @"Title shown on the navigation bar to explain that you have to choose a destination for the files and/or folders in case you copy, move, import or do some action with them.");
     
+    self.recentsHeaderViewLabel.text = AMLocalizedString(@"Recents", @"Title for the recents section").uppercaseString;
+    self.chatsHeaderViewLabel.text = AMLocalizedString(@"My chats", @"Column header of my contacts/chats at copy dialog").uppercaseString;
+    
     self.searchController = [Helper customSearchControllerWithSearchResultsUpdaterDelegate:self searchBarDelegate:self];
     self.searchController.definesPresentationContext = YES;
     self.searchController.hidesNavigationBarDuringPresentation = NO;
     self.searchController.delegate = self;
     [self.searchView addSubview:self.searchController.searchBar];
     
-    [self setGroupChats];
-    
+    [self setGroupChatsAndRecents];
     [self setVisibleUsers];
-    
     [self groupAndOrderUserAndGroupChats];
+    [self sortAndFilterRecents];
     
     [self.tableView setEditing:YES];
     
@@ -121,24 +126,28 @@
 
 #pragma mark - Private
 
-- (void)setGroupChats {
-    _chatListItemList = [[MEGASdkManager sharedMEGAChatSdk] activeChatListItems];
-    _groupChatsMutableArray = [[NSMutableArray alloc] init];
-    _selectedGroupChatsMutableArray = [[NSMutableArray alloc] init];
+- (void)setGroupChatsAndRecents {
+    self.chatListItemList = [[MEGASdkManager sharedMEGAChatSdk] activeChatListItems];
+    self.recentsMutableArray = [[NSMutableArray alloc] init];
+    self.groupChatsMutableArray = [[NSMutableArray alloc] init];
+    self.selectedGroupChatsMutableArray = [[NSMutableArray alloc] init];
     if (self.chatListItemList.size) {
         for (NSUInteger i = 0; i < self.chatListItemList.size ; i++) {
             MEGAChatListItem *chatListItem = [self.chatListItemList chatListItemAtIndex:i];
-            if (chatListItem.isGroup && (chatListItem.ownPrivilege >= MEGAChatRoomPrivilegeStandard)) {
-                [self.groupChatsMutableArray addObject:chatListItem];
+            if (chatListItem.ownPrivilege >= MEGAChatRoomPrivilegeStandard) {
+                [self.recentsMutableArray addObject:chatListItem];
+                if (chatListItem.isGroup) {
+                    [self.groupChatsMutableArray addObject:chatListItem];
+                }
             }
         }
     }
 }
 
 - (void)setVisibleUsers {
-    _users = [[MEGASdkManager sharedMEGASdk] contacts];
-    _visibleUsersMutableArray = [[NSMutableArray alloc] init];
-    _selectedUsersMutableArray = [[NSMutableArray alloc] init];
+    self.users = [[MEGASdkManager sharedMEGASdk] contacts];
+    self.visibleUsersMutableArray = [[NSMutableArray alloc] init];
+    self.selectedUsersMutableArray = [[NSMutableArray alloc] init];
     NSInteger count = self.users.size.integerValue;
     for (NSInteger i = 0; i < count; i++) {
         MEGAUser *user = [self.users userAtIndex:i];
@@ -149,7 +158,7 @@
 }
 
 - (void)groupAndOrderUserAndGroupChats {
-    _usersAndGroupChatsMutableArray = [[NSMutableArray alloc] init];
+    self.usersAndGroupChatsMutableArray = [[NSMutableArray alloc] init];
     [self.usersAndGroupChatsMutableArray addObjectsFromArray:self.groupChatsMutableArray];
     [self.usersAndGroupChatsMutableArray addObjectsFromArray:self.visibleUsersMutableArray];
     self.usersAndGroupChatsMutableArray = [[self.usersAndGroupChatsMutableArray sortedArrayUsingComparator:[self comparatorToOrderUsersAndGroupChats]] mutableCopy];
@@ -180,6 +189,30 @@
     };
 }
 
+- (void)sortAndFilterRecents {
+    self.recentsMutableArray = [[[self.recentsMutableArray sortedArrayUsingComparator:[self comparatorToOrderRecents]] subarrayWithRange:NSMakeRange(0, MIN(5, self.recentsMutableArray.count))] mutableCopy];
+    for (NSUInteger i = 0; i < self.recentsMutableArray.count; i++) {
+        MEGAChatListItem *chatListItem = [self.recentsMutableArray objectAtIndex:i];
+        if (!chatListItem.isGroup) {
+            for (MEGAUser *user in self.visibleUsersMutableArray) {
+                if (user.handle == chatListItem.peerHandle) {
+                    [self.recentsMutableArray replaceObjectAtIndex:i withObject:user];
+                    break;
+                }
+            }
+        }
+    }
+    [self.usersAndGroupChatsMutableArray removeObjectsInArray:self.recentsMutableArray];
+}
+
+- (NSComparator)comparatorToOrderRecents {
+    return ^NSComparisonResult(id a, id b) {
+        NSDate *first  = [(MEGAChatListItem *)a lastMessageDate] ?: [NSDate dateWithTimeIntervalSince1970:0];
+        NSDate *second = [(MEGAChatListItem *)b lastMessageDate] ?: [NSDate dateWithTimeIntervalSince1970:0];
+        return [second compare:first];
+    };
+}
+
 - (void)updateNavigationBarTitle {
     NSString *navigationTitle;
     NSInteger selectedItems = (self.selectedGroupChatsMutableArray.count + self.selectedUsersMutableArray.count);
@@ -193,21 +226,25 @@
 }
 
 - (id)itemAtIndexPath:(NSIndexPath *)indexPath {
+    if (!indexPath) {
+        return nil;
+    }
+    
     id itemAtIndex = nil;
-    if (indexPath) {
-        itemAtIndex = self.searchController.isActive ? [self.searchedUsersAndGroupChatsMutableArray objectAtIndex:indexPath.row] : [self.usersAndGroupChatsMutableArray objectAtIndex:indexPath.row];
-        if ([itemAtIndex isKindOfClass:MEGAChatListItem.class]) {
-            return (MEGAChatListItem *)itemAtIndex;
-        } else if ([itemAtIndex isKindOfClass:MEGAUser.class]) {
-            return (MEGAUser *)itemAtIndex;
-        }
+    
+    if (self.searchController.isActive) {
+        itemAtIndex = [self.searchedUsersAndGroupChatsMutableArray objectAtIndex:indexPath.row];
+    } else if (indexPath.section == 0) {
+        itemAtIndex = [self.recentsMutableArray objectAtIndex:indexPath.row];
+    } else {
+        itemAtIndex = [self.usersAndGroupChatsMutableArray objectAtIndex:indexPath.row];
     }
     
     return itemAtIndex;
 }
 
 - (void)updateMainSearchArray {
-    _searchedUsersAndGroupChatsMutableArray = [[NSMutableArray alloc] init];
+    self.searchedUsersAndGroupChatsMutableArray = [[NSMutableArray alloc] init];
     [self.searchedUsersAndGroupChatsMutableArray addObjectsFromArray:self.searchedGroupChatsMutableArray];
     [self.searchedUsersAndGroupChatsMutableArray addObjectsFromArray:self.searchedUsersMutableArray];
     self.searchedUsersAndGroupChatsMutableArray = [[self.searchedUsersAndGroupChatsMutableArray sortedArrayUsingComparator:[self comparatorToOrderUsersAndGroupChats]] mutableCopy];
@@ -256,7 +293,6 @@
 }
 
 - (void)addItemToList:(ItemListModel *)item {
-
     if (self.childViewControllers.count) {
         [self.itemListVC addItem:item];
     } else {
@@ -295,9 +331,7 @@
         }
         
         if (--self.pendingForwardOperations == 0) {
-            [self dismissViewControllerAnimated:YES completion:^{
-                self.completion(self.chatIdNumbers, self.sentMessages);
-            }];
+            self.completion(self.chatIdNumbers, self.sentMessages);
         }
     }
 }
@@ -397,6 +431,9 @@
 #pragma mark - IBActions
 
 - (IBAction)cancelAction:(UIBarButtonItem *)sender {
+    if (self.searchController.isActive) {
+        self.searchController.active = NO;
+    }
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
@@ -454,51 +491,53 @@
                 break;
                 
             case SendModeForward: {
-                NSUInteger destinationCount = self.selectedGroupChatsMutableArray.count + self.selectedUsersMutableArray.count;
-                self.pendingForwardOperations = self.messages.count * destinationCount;
-                self.sentMessages = [[NSMutableArray<MEGAChatMessage *> alloc] initWithCapacity:self.messages.count];
-                
-                for (MEGAChatMessage *message in self.messages) {
-                    self.chatIdNumbers = [[NSMutableArray<NSNumber *> alloc] init];
+                [self dismissViewControllerAnimated:YES completion:^{
+                    NSUInteger destinationCount = self.selectedGroupChatsMutableArray.count + self.selectedUsersMutableArray.count;
+                    self.pendingForwardOperations = self.messages.count * destinationCount;
+                    self.sentMessages = [[NSMutableArray<MEGAChatMessage *> alloc] initWithCapacity:self.messages.count];
                     
-                    for (MEGAChatListItem *chatListItem in self.selectedGroupChatsMutableArray) {
-                        @synchronized(self.chatIdNumbers) {
-                            [self.chatIdNumbers addObject:@(chatListItem.chatId)];
-                            if (self.chatIdNumbers.count == destinationCount) {
-                                [self forwardMessage:message];
-                            }
-                        }
-                    }
-                    
-                    for (MEGAUser *user in self.selectedUsersMutableArray) {
-                        MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomByUser:user.handle];
-                        if (chatRoom) {
+                    for (MEGAChatMessage *message in self.messages) {
+                        self.chatIdNumbers = [[NSMutableArray<NSNumber *> alloc] init];
+                        
+                        for (MEGAChatListItem *chatListItem in self.selectedGroupChatsMutableArray) {
                             @synchronized(self.chatIdNumbers) {
-                                [self.chatIdNumbers addObject:@(chatRoom.chatId)];
+                                [self.chatIdNumbers addObject:@(chatListItem.chatId)];
                                 if (self.chatIdNumbers.count == destinationCount) {
                                     [self forwardMessage:message];
                                 }
                             }
-                        } else {
-                            MEGALogDebug(@"There is not a chat with %@, create the chat and attach", user.email);
-                            MEGAChatPeerList *peerList = [[MEGAChatPeerList alloc] init];
-                            [peerList addPeerWithHandle:user.handle privilege:MEGAChatRoomPrivilegeStandard];
-                            MEGAChatCreateChatGroupRequestDelegate *createChatGroupRequestDelegate = [[MEGAChatCreateChatGroupRequestDelegate alloc] initWithCompletion:^(MEGAChatRoom *chatRoom) {
+                        }
+                        
+                        for (MEGAUser *user in self.selectedUsersMutableArray) {
+                            MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomByUser:user.handle];
+                            if (chatRoom) {
                                 @synchronized(self.chatIdNumbers) {
                                     [self.chatIdNumbers addObject:@(chatRoom.chatId)];
                                     if (self.chatIdNumbers.count == destinationCount) {
                                         [self forwardMessage:message];
                                     }
                                 }
-                            }];
-                            [[MEGASdkManager sharedMEGAChatSdk] createChatGroup:NO peers:peerList delegate:createChatGroupRequestDelegate];
+                            } else {
+                                MEGALogDebug(@"There is not a chat with %@, create the chat and attach", user.email);
+                                MEGAChatPeerList *peerList = [[MEGAChatPeerList alloc] init];
+                                [peerList addPeerWithHandle:user.handle privilege:MEGAChatRoomPrivilegeStandard];
+                                MEGAChatCreateChatGroupRequestDelegate *createChatGroupRequestDelegate = [[MEGAChatCreateChatGroupRequestDelegate alloc] initWithCompletion:^(MEGAChatRoom *chatRoom) {
+                                    @synchronized(self.chatIdNumbers) {
+                                        [self.chatIdNumbers addObject:@(chatRoom.chatId)];
+                                        if (self.chatIdNumbers.count == destinationCount) {
+                                            [self forwardMessage:message];
+                                        }
+                                    }
+                                }];
+                                [[MEGASdkManager sharedMEGAChatSdk] createChatGroup:NO peers:peerList delegate:createChatGroupRequestDelegate];
+                            }
                         }
                     }
-                }
-                
-                if (self.searchController.isActive) {
-                    self.searchController.active = NO;
-                }
+                    
+                    if (self.searchController.isActive) {
+                        self.searchController.active = NO;
+                    }
+                }];
                 
                 break;
             }
@@ -543,82 +582,92 @@
 #pragma mark - UITableViewDataSource
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell;
+    id itemAtIndex = [self itemAtIndexPath:indexPath];
     
-    if (indexPath.section == 0) {
-        id itemAtIndex = [self itemAtIndexPath:indexPath];
-        if ([itemAtIndex isKindOfClass:MEGAChatListItem.class]) {
-            ChatRoomCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"chatRoomCell" forIndexPath:indexPath];
-            
-            MEGAChatListItem *chatListItem = itemAtIndex;
-            
-            cell.onlineStatusView.hidden = YES;
-            UIImage *avatar = [UIImage imageForName:chatListItem.title.uppercaseString size:cell.avatarImageView.frame.size backgroundColor:[UIColor mnz_gray999999] textColor:[UIColor whiteColor] font:[UIFont mnz_SFUIRegularWithSize:(cell.avatarImageView.frame.size.width/2.0f)]];
-            
-            cell.avatarImageView.image = avatar;
-            
-            cell.chatTitle.text = chatListItem.title;
-            
-            MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:chatListItem.chatId];
-            cell.chatLastMessage.text = [self participantsNamesForChatRoom:chatRoom];
-            cell.chatLastTime.hidden = YES;
-            
-            if (@available(iOS 11.0, *)) {
-                cell.avatarImageView.accessibilityIgnoresInvertColors = YES;
-            }
-            
-            for (MEGAChatListItem *tempChatListItem in self.selectedGroupChatsMutableArray) {
-                if (tempChatListItem.chatId == chatListItem.chatId) {
-                    [self.tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
-                }
-            }
-            
-            UIView *view = [[UIView alloc] init];
-            view.backgroundColor = UIColor.clearColor;
-            cell.selectedBackgroundView = view;
-            return cell;
-        } else if ([itemAtIndex isKindOfClass:MEGAUser.class]) {
-            ContactTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"contactCell" forIndexPath:indexPath];
-            
-            MEGAUser *user = itemAtIndex;
-            NSString *userName = user.mnz_fullName;
-            
-            cell.onlineStatusView.backgroundColor = [UIColor mnz_colorForStatusChange:[[MEGASdkManager sharedMEGAChatSdk] userOnlineStatus:user.handle]];
-            cell.nameLabel.text = userName ? userName : user.email;
-            cell.shareLabel.text = user.email;
-            
-            [cell.avatarImageView mnz_setImageForUserHandle:user.handle];
-            
-            if (@available(iOS 11.0, *)) {
-                cell.avatarImageView.accessibilityIgnoresInvertColors = YES;
-            }
-            
-            for (MEGAUser *tempUser in self.selectedUsersMutableArray) {
-                if ([tempUser.email isEqualToString:user.email]) {
-                    [self.tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
-                }
-            }
-            
-            UIView *view = [[UIView alloc] init];
-            view.backgroundColor = UIColor.clearColor;
-            cell.selectedBackgroundView = view;
-            return cell;
+    if ([itemAtIndex isKindOfClass:MEGAChatListItem.class]) {
+        MEGAChatListItem *chatListItem = itemAtIndex;
+        ChatRoomCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"chatRoomCell" forIndexPath:indexPath];
+        
+        cell.onlineStatusView.hidden = YES;
+
+        UIImage *avatar = [UIImage imageForName:chatListItem.title.uppercaseString size:cell.avatarImageView.frame.size backgroundColor:[UIColor mnz_gray999999] textColor:[UIColor whiteColor] font:[UIFont mnz_SFUIRegularWithSize:(cell.avatarImageView.frame.size.width/2.0f)]];
+        cell.avatarImageView.image = avatar;
+        
+        cell.chatTitle.text = chatListItem.title;
+        
+        MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:chatListItem.chatId];
+        cell.chatLastMessage.text = [self participantsNamesForChatRoom:chatRoom];
+        cell.chatLastTime.hidden = YES;
+        
+        if (@available(iOS 11.0, *)) {
+            cell.avatarImageView.accessibilityIgnoresInvertColors = YES;
         }
+        
+        for (MEGAChatListItem *tempChatListItem in self.selectedGroupChatsMutableArray) {
+            if (tempChatListItem.chatId == chatListItem.chatId) {
+                [self.tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
+            }
+        }
+        cell.privateChatImageView.hidden = chatListItem.publicChat;
+        
+        UIView *view = [[UIView alloc] init];
+        view.backgroundColor = UIColor.clearColor;
+        cell.selectedBackgroundView = view;
+        
+        return cell;
     }
     
-    return cell;
+    if ([itemAtIndex isKindOfClass:MEGAUser.class]) {
+        MEGAUser *user = itemAtIndex;
+        ContactTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"contactCell" forIndexPath:indexPath];
+        
+        UIColor *color = [UIColor mnz_colorForStatusChange:[[MEGASdkManager sharedMEGAChatSdk] userOnlineStatus:user.handle]];
+        if (color) {
+            cell.onlineStatusView.backgroundColor = color;
+            cell.onlineStatusView.hidden = NO;
+        } else {
+            cell.onlineStatusView.hidden = YES;
+        }
+        
+        NSString *userName = user.mnz_fullName;
+        cell.nameLabel.text = userName ? userName : user.email;
+        cell.shareLabel.text = user.email;
+        
+        [cell.avatarImageView mnz_setImageForUserHandle:user.handle];
+        
+        if (@available(iOS 11.0, *)) {
+            cell.avatarImageView.accessibilityIgnoresInvertColors = YES;
+        }
+        
+        for (MEGAUser *tempUser in self.selectedUsersMutableArray) {
+            if ([tempUser.email isEqualToString:user.email]) {
+                [self.tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
+            }
+        }
+        
+        UIView *view = [[UIView alloc] init];
+        view.backgroundColor = UIColor.clearColor;
+        cell.selectedBackgroundView = view;
+        
+        return cell;
+    }
+    
+    return nil;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    //TODO: Frequents
-    return 1;
+    return self.searchController.isActive ? 1 : 2;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     NSInteger numberOfRows = 0;
     switch (section) {
         case 0:
-            numberOfRows = self.searchController.isActive ? self.searchedUsersAndGroupChatsMutableArray.count : self.usersAndGroupChatsMutableArray.count;
+            numberOfRows = self.searchController.isActive ? self.searchedUsersAndGroupChatsMutableArray.count : self.recentsMutableArray.count;
+            break;
+            
+        case 1:
+            numberOfRows = self.usersAndGroupChatsMutableArray.count;
             break;
             
         default:
@@ -632,17 +681,22 @@
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-
+    if (self.usersAndGroupChatsMutableArray.count == 0) {
+        return nil;
+    }
     if (self.searchController.isActive && self.searchedUsersAndGroupChatsMutableArray.count == 0) {
         return nil;
-    } else if (self.usersAndGroupChatsMutableArray.count == 0) {
+    }
+    if (!self.searchController.isActive && section == 0 && self.recentsMutableArray.count == 0) {
         return nil;
     }
 
     switch (section) {
         case 0:
-            self.contactsHeaderViewLabel.text = AMLocalizedString(@"contactsTitle", @"Title of the Contacts section").uppercaseString;
-            return self.contactsHeaderView;
+            return self.searchController.isActive ? self.chatsHeaderView : self.recentsHeaderView;
+            
+        case 1:
+            return self.chatsHeaderView;
             
         default:
             return nil;
@@ -656,23 +710,15 @@
 #pragma mark - UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    switch (indexPath.section) {
-        case 0: {
-            id itemAtIndex = [self itemAtIndexPath:indexPath];
-            if ([itemAtIndex isKindOfClass:MEGAChatListItem.class]) {
-                MEGAChatListItem *chatListItem = itemAtIndex;
-                [self.selectedGroupChatsMutableArray addObject:chatListItem];
-                [self addItemToList:[[ItemListModel alloc] initWithChat:chatListItem]];
-            } else if ([itemAtIndex isKindOfClass:MEGAUser.class]) {
-                MEGAUser *user = itemAtIndex;
-                [self.selectedUsersMutableArray addObject:user];
-                [self addItemToList:[[ItemListModel alloc] initWithUser:user]];
-            }
-            break;
-        }
-            
-        default:
-            break;
+    id itemAtIndex = [self itemAtIndexPath:indexPath];
+    if ([itemAtIndex isKindOfClass:MEGAChatListItem.class]) {
+        MEGAChatListItem *chatListItem = itemAtIndex;
+        [self.selectedGroupChatsMutableArray addObject:chatListItem];
+        [self addItemToList:[[ItemListModel alloc] initWithChat:chatListItem]];
+    } else if ([itemAtIndex isKindOfClass:MEGAUser.class]) {
+        MEGAUser *user = itemAtIndex;
+        [self.selectedUsersMutableArray addObject:user];
+        [self addItemToList:[[ItemListModel alloc] initWithUser:user]];
     }
     
     if (self.searchController.searchBar.isFirstResponder) {
@@ -685,37 +731,29 @@
 }
 
 - (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath {
-    switch (indexPath.section) {
-        case 0: {
-            id itemAtIndex = [self itemAtIndexPath:indexPath];
-            if ([itemAtIndex isKindOfClass:MEGAChatListItem.class]) {
-                MEGAChatListItem *chatListItem = itemAtIndex;
-                NSMutableArray *tempSelectedGroupChatsMutableArray = self.selectedGroupChatsMutableArray.copy;
-                for (MEGAChatListItem *tempChatListItem in tempSelectedGroupChatsMutableArray) {
-                    if (tempChatListItem.chatId == chatListItem.chatId) {
-                        [self.selectedGroupChatsMutableArray removeObject:tempChatListItem];
-                    }
-                }
-                if (self.itemListVC) {
-                    [self.itemListVC removeItem:[[ItemListModel alloc] initWithChat:chatListItem]];
-                }
-            } else if ([itemAtIndex isKindOfClass:MEGAUser.class]) {
-                MEGAUser *user = itemAtIndex;
-                NSMutableArray *tempSelectedUsersMutableArray = self.selectedUsersMutableArray.copy;
-                for (MEGAUser *tempUser in tempSelectedUsersMutableArray) {
-                    if ([tempUser.email isEqualToString:user.email]) {
-                        [self.selectedUsersMutableArray removeObject:tempUser];
-                    }
-                }
-                if (self.itemListVC) {
-                    [self.itemListVC removeItem:[[ItemListModel alloc] initWithUser:user]];
-                }
+    id itemAtIndex = [self itemAtIndexPath:indexPath];
+    if ([itemAtIndex isKindOfClass:MEGAChatListItem.class]) {
+        MEGAChatListItem *chatListItem = itemAtIndex;
+        NSMutableArray *tempSelectedGroupChatsMutableArray = self.selectedGroupChatsMutableArray.copy;
+        for (MEGAChatListItem *tempChatListItem in tempSelectedGroupChatsMutableArray) {
+            if (tempChatListItem.chatId == chatListItem.chatId) {
+                [self.selectedGroupChatsMutableArray removeObject:tempChatListItem];
             }
-            break;
         }
-            
-        default:
-            break;
+        if (self.itemListVC) {
+            [self.itemListVC removeItem:[[ItemListModel alloc] initWithChat:chatListItem]];
+        }
+    } else if ([itemAtIndex isKindOfClass:MEGAUser.class]) {
+        MEGAUser *user = itemAtIndex;
+        NSMutableArray *tempSelectedUsersMutableArray = self.selectedUsersMutableArray.copy;
+        for (MEGAUser *tempUser in tempSelectedUsersMutableArray) {
+            if ([tempUser.email isEqualToString:user.email]) {
+                [self.selectedUsersMutableArray removeObject:tempUser];
+            }
+        }
+        if (self.itemListVC) {
+            [self.itemListVC removeItem:[[ItemListModel alloc] initWithUser:user]];
+        }
     }
     
     if (self.searchController.searchBar.isFirstResponder) {
@@ -771,37 +809,29 @@
     return [Helper spaceHeightForEmptyState];
 }
 
-#pragma mark - UISearchControllerDelegate
-
-- (void)didPresentSearchController:(UISearchController *)searchController {
-    switch (self.sendMode) {
-        case SendModeCloud:
-        case SendModeShareExtension:
-            searchController.searchBar.showsCancelButton = NO;
-            break;
-            
-        default:
-            break;
-    }
-}
-
 #pragma mark - ItemListViewControllerProtocol
 
 - (void)removeSelectedItem:(id)item {
-    
     if ([[item class] isEqual:MEGAUser.class]) {
         [self.selectedUsersMutableArray removeObject:item];
     } else {
         [self.selectedGroupChatsMutableArray removeObject:item];
     }
     
-    NSMutableArray *arrayOfObejcts =  self.searchController.isActive ? self.searchedUsersAndGroupChatsMutableArray : self.usersAndGroupChatsMutableArray;
-    
-    for (id object in arrayOfObejcts) {
-        if ([item isEqual:object]) {
-            NSIndexPath *indexPath = [NSIndexPath indexPathForRow:[arrayOfObejcts indexOfObject:object] inSection:0];
-            [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
-            break;
+    NSUInteger indexOfObject;
+    if (self.searchController.isActive) {
+        indexOfObject = [self.searchedUsersAndGroupChatsMutableArray indexOfObject:item];
+        if (indexOfObject != NSNotFound) {
+            [self.tableView deselectRowAtIndexPath:[NSIndexPath indexPathForRow:indexOfObject inSection:0] animated:YES];
+        }
+    } else {
+        indexOfObject = [self.recentsMutableArray indexOfObject:item];
+        if (indexOfObject != NSNotFound) {
+            [self.tableView deselectRowAtIndexPath:[NSIndexPath indexPathForRow:indexOfObject inSection:0] animated:YES];
+        }
+        indexOfObject = [self.usersAndGroupChatsMutableArray indexOfObject:item];
+        if (indexOfObject != NSNotFound) {
+            [self.tableView deselectRowAtIndexPath:[NSIndexPath indexPathForRow:indexOfObject inSection:1] animated:YES];
         }
     }
     

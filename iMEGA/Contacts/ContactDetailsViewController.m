@@ -28,7 +28,7 @@
 #import "SharedItemsTableViewCell.h"
 #import "VerifyCredentialsViewController.h"
 
-@interface ContactDetailsViewController () <CustomActionViewControllerDelegate, MEGAChatDelegate, MEGAChatCallDelegate>
+@interface ContactDetailsViewController () <CustomActionViewControllerDelegate, MEGAChatDelegate, MEGAChatCallDelegate, MEGAGlobalDelegate>
 
 @property (weak, nonatomic) IBOutlet UIImageView *avatarImageView;
 @property (weak, nonatomic) IBOutlet UIImageView *verifiedImageView;
@@ -40,10 +40,11 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *avatarViewHeightConstraint;
 @property (weak, nonatomic) IBOutlet UIButton *callButton;
 @property (weak, nonatomic) IBOutlet UIButton *videoCallButton;
-@property (weak, nonatomic) IBOutlet UIButton *backButton;
+@property (weak, nonatomic) IBOutlet UIButton *messageButton;
 @property (weak, nonatomic) IBOutlet UILabel *messageLabel;
 @property (weak, nonatomic) IBOutlet UILabel *callLabel;
 @property (weak, nonatomic) IBOutlet UILabel *videoLabel;
+@property (weak, nonatomic) IBOutlet UIButton *backButton;
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
@@ -93,19 +94,34 @@
     //TODO: Show the blue check if the Contact is verified
     
     self.nameLabel.text = self.userName;
+    self.nameLabel.layer.shadowOffset = CGSizeMake(0, 1);
+    self.nameLabel.layer.shadowColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.2].CGColor;
+    self.nameLabel.layer.shadowRadius = 2.0;
+    self.nameLabel.layer.shadowOpacity = 1;
+    
     self.emailLabel.text = self.userEmail;
+    self.emailLabel.layer.shadowOffset = CGSizeMake(0, 1);
+    self.emailLabel.layer.shadowColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.2].CGColor;
+    self.emailLabel.layer.shadowRadius = 2.0;
+    self.emailLabel.layer.shadowOpacity = 1;
+
     
     MEGAChatStatus userStatus = [MEGASdkManager.sharedMEGAChatSdk userOnlineStatus:self.user.handle];
     if (userStatus != MEGAChatStatusInvalid) {
         if (userStatus < MEGAChatStatusOnline) {
             [MEGASdkManager.sharedMEGAChatSdk requestLastGreen:self.user.handle];
         }
-        self.onlineStatusView.backgroundColor = [UIColor mnz_colorForStatusChange:[MEGASdkManager.sharedMEGAChatSdk userOnlineStatus:self.user.handle]];
         self.statusLabel.text = [NSString chatStatusString:userStatus];
-        self.onlineStatusView.layer.shadowOffset = CGSizeMake(0, 2);
+        self.statusLabel.layer.shadowOffset = CGSizeMake(0, 1);
+        self.statusLabel.layer.shadowColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.2].CGColor;
+        self.statusLabel.layer.shadowRadius = 2.0;
+        self.statusLabel.layer.shadowOpacity = 1;
+        
+        self.onlineStatusView.backgroundColor = [UIColor mnz_colorForStatusChange:[MEGASdkManager.sharedMEGAChatSdk userOnlineStatus:self.user.handle]];
+        self.onlineStatusView.layer.shadowOffset = CGSizeMake(0, 1);
         self.onlineStatusView.layer.shadowColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.2].CGColor;
         self.onlineStatusView.layer.shadowOpacity = 1;
-        self.onlineStatusView.layer.shadowRadius = 4;
+        self.onlineStatusView.layer.shadowRadius = 2;
         self.onlineStatusView.layer.borderWidth = 1;
         self.onlineStatusView.layer.borderColor = UIColor.whiteColor.CGColor;
     } else {
@@ -126,6 +142,7 @@
     [super viewWillAppear:animated];
     [[MEGASdkManager sharedMEGAChatSdk] addChatDelegate:self];
     [[MEGASdkManager sharedMEGAChatSdk] addChatCallDelegate:self];
+    [[MEGASdkManager sharedMEGASdk] addMEGAGlobalDelegate:self];
     [self.navigationController setNavigationBarHidden:YES animated:YES];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateCallButtonsState) name:kReachabilityChangedNotification object:nil];
     [self updateCallButtonsState];
@@ -135,6 +152,7 @@
     [super viewWillDisappear:animated];
     [[MEGASdkManager sharedMEGAChatSdk] removeChatDelegate:self];
     [[MEGASdkManager sharedMEGAChatSdk] removeChatCallDelegate:self];
+    [[MEGASdkManager sharedMEGASdk] removeMEGAGlobalDelegate:self];
     [self.navigationController setNavigationBarHidden:NO animated:YES];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kReachabilityChangedNotification object:nil];
 }
@@ -306,7 +324,8 @@
     }
 
     CallViewController *callVC = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"CallViewControllerID"];
-    callVC.chatRoom = self.chatRoom; [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:self.chatId];
+    callVC.chatRoom = self.chatRoom;
+    [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:self.chatId];
     callVC.videoCall = videoCall;
     callVC.callType = active ? CallTypeActive : CallTypeOutgoing;
     callVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
@@ -355,6 +374,10 @@
 - (void)updateCallButtonsState {
     MEGAChatRoom *chatRoom = self.chatRoom ? self.chatRoom : [[MEGASdkManager sharedMEGAChatSdk] chatRoomByUser:self.userHandle];
     if (chatRoom) {
+        if (chatRoom.ownPrivilege < MEGAChatRoomPrivilegeStandard) {
+            self.messageButton.enabled = self.callButton.enabled = self.videoCallButton.enabled = NO;
+            return;
+        }
         MEGAChatConnection chatConnection = [[MEGASdkManager sharedMEGAChatSdk] chatConnectionState:chatRoom.chatId];
         if (chatConnection != MEGAChatConnectionOnline) {
             self.callButton.enabled = self.videoCallButton.enabled = NO;
@@ -377,8 +400,6 @@
 }
 
 - (void)configureGestures {
-    self.navigationController.interactivePopGestureRecognizer.delegate = nil; //NOTE: this line fix the interactivePopGestureRecognizer not working in ContactsViewController
-
     NSString *avatarFilePath = [[Helper pathForSharedSandboxCacheDirectory:@"thumbnailsV3"] stringByAppendingPathComponent:[MEGASdk base64HandleForUserHandle:self.userHandle]];
     
     if ([[NSFileManager defaultManager] fileExistsAtPath:avatarFilePath]) {
@@ -675,12 +696,17 @@
     }
     
     if (userHandle == self.user.handle) {
-        [self updateCallButtonsState];
         self.onlineStatusView.backgroundColor = [UIColor mnz_colorForStatusChange:onlineStatus];
         self.statusLabel.text = [NSString chatStatusString:onlineStatus];
         if (onlineStatus < MEGAChatStatusOnline) {
             [MEGASdkManager.sharedMEGAChatSdk requestLastGreen:self.user.handle];
         }
+    }
+}
+
+- (void)onChatConnectionStateUpdate:(MEGAChatSdk *)api chatId:(uint64_t)chatId newState:(int)newState {
+    if (self.chatRoom.chatId == chatId) {
+        [self updateCallButtonsState];
     }
 }
 
@@ -702,6 +728,26 @@
 - (void)onChatCallUpdate:(MEGAChatSdk *)api call:(MEGAChatCall *)call {
     if (call.status == MEGAChatCallStatusDestroyed) {
         [self updateCallButtonsState];
+    }
+}
+
+#pragma mark - MEGAGlobalDelegate
+
+- (void)onNodesUpdate:(MEGASdk *)api nodeList:(MEGANodeList *)nodeList {
+    
+    BOOL shouldReload = NO;
+    
+    NSUInteger nodeListSize = nodeList.size.unsignedIntegerValue;
+    for (NSUInteger i = 0; i < nodeListSize; i++) {
+        MEGANode *nodeUpdated = [nodeList nodeAtIndex:i];
+        if ([nodeUpdated hasChangedType:MEGANodeChangeTypeInShare] || [nodeUpdated hasChangedType:MEGANodeChangeTypeRemoved]) {
+            shouldReload = YES;
+        }
+    }
+    
+    if (shouldReload) {
+        self.incomingNodeListForUser = [[MEGASdkManager sharedMEGASdk] inSharesForUser:self.user];
+        [self.tableView reloadData];
     }
 }
 

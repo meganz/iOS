@@ -10,6 +10,7 @@
 
 #import "NSDate+MNZCategory.h"
 #import "MEGASdkManager.h"
+#import "MEGAUser+MNZCategory.h"
 
 static NSString* const A = @"[A]";
 static NSString* const B = @"[B]";
@@ -317,8 +318,8 @@ static NSString* const B = @"[B]";
     string = [string stringByReplacingOccurrencesOfString:@"[/A]" withString:@""];
     string = [string stringByReplacingOccurrencesOfString:@"[S]" withString:@""];
     string = [string stringByReplacingOccurrencesOfString:@"[/S]" withString:@""];
+    string = [string stringByReplacingOccurrencesOfString:@"<a href=\"terms\">" withString:@""];
     string = [string stringByReplacingOccurrencesOfString:@"<a href='terms'>" withString:@""];
-    string = [string stringByReplacingOccurrencesOfString:@"<a href=’terms’>" withString:@""];
     string = [string stringByReplacingOccurrencesOfString:@"</a>" withString:@""];
     
     return string;
@@ -650,6 +651,13 @@ static NSString* const B = @"[B]";
     return emojiCount;
 }
 
+- (NSString *)mnz_initialForAvatar {
+    NSString *trimmedSelf = [self stringByTrimmingCharactersInSet:
+                         [NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    NSUInteger end = [trimmedSelf rangeOfComposedCharacterSequenceAtIndex:0].length;
+    return [trimmedSelf substringToIndex:end].uppercaseString;
+}
+
 - (NSString *)mnz_coordinatesOfPhotoOrVideo {
     if (self.mnz_isImagePathExtension) {
         NSURL *fileURL;
@@ -768,6 +776,44 @@ static NSString* const B = @"[B]";
                         longDegrees >= 0 ? @"E" : @"W"];
     
     return result;
+}
+
++ (NSString *)mnz_addedByInRecentActionBucket:(MEGARecentActionBucket *)recentActionBucket nodesArray:(NSArray *)nodesArray {
+    NSString *addebByString;
+    
+    MEGAUser *user = [MEGASdkManager.sharedMEGASdk contactForEmail:recentActionBucket.userEmail];
+    NSString *userNameThatMadeTheAction = @"";
+    if (user) {
+        userNameThatMadeTheAction = user.mnz_firstName ? user.mnz_firstName : @"";
+    }
+    
+    if (recentActionBucket.isUpdate) {
+        if (nodesArray.count == 1) {
+            addebByString = AMLocalizedString(@"%1 modified by %3", @"Title for a recent action shown in the webclient, see the attached image for context.");
+            addebByString = [addebByString stringByReplacingOccurrencesOfString:@"%1 " withString:@""];
+            addebByString = [addebByString stringByReplacingOccurrencesOfString:@"%3" withString:userNameThatMadeTheAction];
+        } else if (nodesArray.count > 1) {
+            addebByString = AMLocalizedString(@"%1 and [A]%2 more[/A] modified by %3", @"Title for a recent action shown in the webclient, see the attached image for context. Please ensure that the `%2 more` is inside the [A] tag as this will become a toggle to show the hidden content.");
+            addebByString = addebByString.mnz_removeWebclientFormatters;
+            addebByString = [addebByString stringByReplacingOccurrencesOfString:@"%1 " withString:@""];
+            addebByString = [addebByString stringByReplacingOccurrencesOfString:@"%2" withString:[NSString stringWithFormat:@"%tu", nodesArray.count]];
+            addebByString = [addebByString stringByReplacingOccurrencesOfString:@"%3" withString:userNameThatMadeTheAction];
+        }
+    } else {
+        if (nodesArray.count == 1) {
+            addebByString = AMLocalizedString(@"%1 created by %3", @"Title for a recent action shown in the webclient, see the attached image for context.");
+            addebByString = [addebByString stringByReplacingOccurrencesOfString:@"%1 " withString:@""];
+            addebByString = [addebByString stringByReplacingOccurrencesOfString:@"%3" withString:userNameThatMadeTheAction];
+        } else if (nodesArray.count > 1) {
+            addebByString = AMLocalizedString(@"%1 and [A]%2 more[/A] created by %3", @"Title for a recent action shown in the webclient, see the attached image for context. Please ensure that the `%2 more` is inside the [A] tag as this will become a toggle to show the hidden content.");
+            addebByString = addebByString.mnz_removeWebclientFormatters;
+            addebByString = [addebByString stringByReplacingOccurrencesOfString:@"%1 " withString:@""];
+            addebByString = [addebByString stringByReplacingOccurrencesOfString:@"%2" withString:[NSString stringWithFormat:@"%tu", nodesArray.count]];
+            addebByString = [addebByString stringByReplacingOccurrencesOfString:@"%3" withString:userNameThatMadeTheAction];
+        }
+    }
+    
+    return addebByString;
 }
 
 #pragma mark - File names and extensions
