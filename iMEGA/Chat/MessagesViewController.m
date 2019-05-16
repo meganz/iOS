@@ -1620,7 +1620,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
 }
 
 - (void)toggleSelectedMessage:(MEGAChatMessage *)message atIndexPath:(NSIndexPath *)indexPath {
-    if (message.type == MEGAChatMessageTypeNormal || message.type == MEGAChatMessageTypeContainsMeta || message.type == MEGAChatMessageTypeContact || message.type == MEGAChatMessageTypeAttachment || message.type == MEGAChatMessageTypeVoiceClip) {
+    if (message.type == MEGAChatMessageTypeNormal || message.type == MEGAChatMessageTypeContainsMeta || message.type == MEGAChatMessageTypeContact || message.type == MEGAChatMessageTypeAttachment || (message.type == MEGAChatMessageTypeVoiceClip && !message.richNumber)) {
         if ([self.selectedMessages containsObject:message]) {
             [self.selectedMessages removeObject:message];
         } else {
@@ -2194,7 +2194,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
     if (self.selectingMessages) {
         cell.accessoryButton.hidden = YES;
         cell.avatarImageView.hidden = YES;
-        cell.selectionImageView.hidden = !(message.type == MEGAChatMessageTypeNormal || message.type == MEGAChatMessageTypeContainsMeta || message.type == MEGAChatMessageTypeContact || message.type == MEGAChatMessageTypeAttachment || message.type == MEGAChatMessageTypeVoiceClip);
+        cell.selectionImageView.hidden = !(message.type == MEGAChatMessageTypeNormal || message.type == MEGAChatMessageTypeContainsMeta || message.type == MEGAChatMessageTypeContact || message.type == MEGAChatMessageTypeAttachment || (message.type == MEGAChatMessageTypeVoiceClip && !message.richNumber));
         cell.selectionImageView.image = [self.selectedMessages containsObject:message] ? [UIImage imageNamed:@"checkBoxSelected"] : [UIImage imageNamed:@"checkBoxUnselected"];
     } else {
         cell.avatarImageView.hidden = NO;
@@ -2315,8 +2315,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
             break;
         }
             
-        case MEGAChatMessageTypeAttachment:
-        case MEGAChatMessageTypeVoiceClip: {
+        case MEGAChatMessageTypeAttachment: {
             if (action == @selector(download:message:)) return YES;
             if (action == @selector(forward:message:)) return YES;
 
@@ -2324,6 +2323,18 @@ static NSMutableSet<NSString *> *tapForInfoSet;
                 if (action == @selector(delete:) && message.isDeletable) return YES;
             } else {
                 if (action == @selector(import:message:)) return YES;
+            }
+            break;
+        }
+            
+        case MEGAChatMessageTypeVoiceClip: {
+            if (action == @selector(download:message:) && !message.richNumber) return YES;
+            if (action == @selector(forward:message:) && !message.richNumber) return YES;
+            
+            if ([message.senderId isEqualToString:self.senderId]) {
+                if (action == @selector(delete:) && message.isDeletable) return YES;
+            } else {
+                if (action == @selector(import:message:) && !message.richNumber) return YES;
             }
             break;
         }

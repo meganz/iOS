@@ -6,6 +6,7 @@
 #import "JSQMessagesBubbleImageFactory.h"
 #import "JSQMessagesMediaViewBubbleImageMasker.h"
 
+#import "MEGAChatMessage+MNZCategory.h"
 #import "MEGANode+MNZCategory.h"
 #import "MEGAMessageVoiceClipView.h"
 #import "MEGASDKManager.h"
@@ -91,6 +92,7 @@ NSNotificationName kVoiceClipsShouldPauseNotification = @"kVoiceClipsShouldPause
             voiceClipView.activityIndicator.hidden = YES;
             voiceClipView.playPauseButton.hidden = NO;
         } onError:^(MEGAError *error) {
+            self.message.richNumber = @(error.type);
             voiceClipView.activityIndicator.hidden = YES;
             voiceClipView.playPauseButton.hidden = NO;
             voiceClipView.playPauseButton.enabled = NO;
