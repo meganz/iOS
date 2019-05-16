@@ -18,7 +18,6 @@
 #import "MEGAError+MNZCategory.h"
 #import "CameraUploadOperation+Utils.h"
 #import "NSDate+MNZCategory.h"
-#include "GfxProcCG.h"
 @import Photos;
 
 static NSString * const VideoAttributeImageName = @"AttributeImage";
