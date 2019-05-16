@@ -85,4 +85,19 @@
     return hasMatchedNode;
 }
 
+
+- (BOOL)mnz_containsNodeWithRestoreFolderName:(NSString *)name {
+    BOOL hasMatchedNode = NO;
+    for (NSUInteger i = 0; i < self.size.unsignedIntegerValue; i++) {
+        MEGANode *node = [self nodeAtIndex:i];
+        MEGANode *restoreNode = [MEGASdkManager.sharedMEGASdk nodeForHandle:node.restoreHandle];
+        if (restoreNode.isFolder && [restoreNode.name isEqualToString:name]) {
+            hasMatchedNode = YES;
+            break;
+        }
+    }
+    
+    return hasMatchedNode;
+}
+
 @end

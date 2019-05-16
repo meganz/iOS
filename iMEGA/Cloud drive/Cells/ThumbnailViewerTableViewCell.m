@@ -62,6 +62,9 @@
         } else if (numberOfPhotos == 1) {
             NSString *tempString = AMLocalizedString(@"1 Image and %2 Videos", @"One image and multiple videos title in recents.");
             title = [tempString stringByReplacingOccurrencesOfString:@"%2" withString:[NSString stringWithFormat:@"%tu", numberOfVideos]];
+        } else if (numberOfVideos == 1) {
+            NSString *tempString = AMLocalizedString(@"%1 Images and 1 Video", @"Multiple images and 1 video");
+            title = [tempString stringByReplacingOccurrencesOfString:@"%1" withString:[NSString stringWithFormat:@"%tu", numberOfPhotos]];
         } else {
             NSString *tempString = AMLocalizedString(@"%1 Images and %2 Videos", @"Title for multiple images and multiple videos in recents section");
             tempString = [tempString stringByReplacingOccurrencesOfString:@"%1" withString:[NSString stringWithFormat:@"%tu", numberOfPhotos]];
