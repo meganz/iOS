@@ -1,11 +1,18 @@
 
 #import "MEGANavigationController.h"
 
-#import "Helper.h"
-
 @implementation MEGANavigationController
 
 #pragma mark - Lifecycle
+
+- (void)viewDidLoad {
+    __weak MEGANavigationController *weakSelf = self;
+    
+    if ([self respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
+        self.interactivePopGestureRecognizer.delegate = weakSelf;
+        self.delegate = weakSelf;
+    }
+}
 
 - (BOOL)shouldAutorotate {
     if ([self.topViewController respondsToSelector:@selector(shouldAutorotate)]) {
@@ -57,8 +64,19 @@
 
 #pragma mark - Public
 
-- (void)addCancelButton {
+- (void)addRightCancelButton {
+    self.viewControllers.firstObject.navigationItem.rightBarButtonItem = [self cancelBarButtonItem];
+}
+
+- (void)addLeftCancelButton {
     self.viewControllers.firstObject.navigationItem.leftBarButtonItem = [self cancelBarButtonItem];
+}
+
+- (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated {
+    if ([self respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
+        self.interactivePopGestureRecognizer.enabled = NO;
+    }
+    [super pushViewController:viewController animated:animated];
 }
 
 #pragma mark - Private
@@ -70,6 +88,12 @@
 
 - (void)dismissNavigationController {
     [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+#pragma mark - UINavigationControllerDelegate
+
+- (void)navigationController:(UINavigationController *)navigationController didShowViewController:(UIViewController *)viewController animated:(BOOL)animate {
+    self.interactivePopGestureRecognizer.enabled = ([self respondsToSelector:@selector(interactivePopGestureRecognizer)] && self.viewControllers.count > 1);
 }
 
 @end

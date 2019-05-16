@@ -1,0 +1,107 @@
+{
+  "images" : [
+    {
+      "resizing" : {
+        "mode" : "3-part-horizontal",
+        "center" : {
+          "mode" : "tile",
+          "width" : 1
+        },
+        "cap-insets" : {
+          "right" : 202,
+          "left" : 107
+        }
+      },
+      "idiom" : "universal",
+      "filename" : "chatroomLoadingIPX, portrait.png",
+      "scale" : "1x"
+    },
+    {
+      "resizing" : {
+        "mode" : "3-part-horizontal",
+        "center" : {
+          "mode" : "tile",
+          "width" : 1
+        },
+        "cap-insets" : {
+          "right" : 397,
+          "left" : 216
+        }
+      },
+      "idiom" : "universal",
+      "filename" : "chatroomLoadingIPX, portrait@2x.png",
+      "scale" : "2x"
+    },
+    {
+      "resizing" : {
+        "mode" : "3-part-horizontal",
+        "center" : {
+          "mode" : "tile",
+          "width" : 1
+        },
+        "cap-insets" : {
+          "right" : 602,
+          "left" : 319
+        }
+      },
+      "idiom" : "universal",
+      "filename" : "chatroomLoadingIPX, portrait@3x.png",
+      "scale" : "3x"
+    },
+    {
+      "resizing" : {
+        "mode" : "3-part-horizontal",
+        "center" : {
+          "mode" : "tile",
+          "width" : 1
+        },
+        "cap-insets" : {
+          "right" : 271,
+          "left" : 295
+        }
+      },
+      "idiom" : "universal",
+      "filename" : "chatroomLoadingiPadPro, landscape.png",
+      "width-class" : "regular",
+      "scale" : "1x"
+    },
+    {
+      "resizing" : {
+        "mode" : "3-part-horizontal",
+        "center" : {
+          "mode" : "tile",
+          "width" : 1
+        },
+        "cap-insets" : {
+          "right" : 542,
+          "left" : 590
+        }
+      },
+      "idiom" : "universal",
+      "filename" : "chatroomLoadingiPadPro, landscape@2x.png",
+      "width-class" : "regular",
+      "scale" : "2x"
+    },
+    {
+      "resizing" : {
+        "mode" : "3-part-horizontal",
+        "center" : {
+          "mode" : "tile",
+          "width" : 1
+        },
+        "cap-insets" : {
+          "right" : 542,
+          "left" : 590
+        }
+      },
+      "idiom" : "universal",
+      "filename" : "chatroomLoadingiPadPro, landscape@2x-1.png",
+      "width-class" : "regular",
+      "scale" : "3x"
+    }
+  ],
+  "info" : {
+    "version" : 1,
+    "author" : "xcode"
+  }
+}

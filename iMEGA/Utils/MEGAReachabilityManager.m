@@ -12,7 +12,7 @@
 @interface MEGAReachabilityManager ()
 
 @property (nonatomic, strong) Reachability *reachability;
-@property (nonatomic, copy) NSString *IpAddress;
+@property (nonatomic) NSString *lastKnownAddress;
 
 @end
 
@@ -78,7 +78,7 @@
     if (self) {
         self.reachability = [Reachability reachabilityForInternetConnection];
         [self.reachability startNotifier];
-        _IpAddress = [self getIpAddress];
+        _lastKnownAddress = self.currentAddress;
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(reachabilityDidChange:)
                                                      name:kReachabilityChangedNotification object:nil];
@@ -89,7 +89,7 @@
 
 #pragma mark - Get IP Address
 
-- (NSString *)getIpAddress {
+- (NSString *)currentAddress {
     NSString *address = nil;
     
     struct ifaddrs *interfaces = NULL;
@@ -115,10 +115,10 @@
             if(temp_addr->ifa_addr->sa_family == AF_INET6) {
                 if([[NSString stringWithUTF8String:temp_addr->ifa_name] isEqualToString:@"en0"] || [[NSString stringWithUTF8String:temp_addr->ifa_name] isEqualToString:@"pdp_ip0"]) {
                     char straddr[INET6_ADDRSTRLEN];
-                    inet_ntop(AF_INET6, (void *)&((struct sockaddr_in *)temp_addr->ifa_addr)->sin_addr, straddr, sizeof(straddr));
+                    inet_ntop(AF_INET6, (void *)&((struct sockaddr_in6 *)temp_addr->ifa_addr)->sin6_addr, straddr, sizeof(straddr));
                     
                     if(strncasecmp(straddr, "FE80:", 5) && strncasecmp(straddr, "FD00:", 5)) {
-                        address = [NSString stringWithUTF8String:straddr];
+                        address = [NSString stringWithFormat:@"[%@]", [NSString stringWithUTF8String:straddr]];
                     }
                 }
             }
@@ -134,14 +134,14 @@
 
 - (void)retryOrReconnect {
     if ([MEGAReachabilityManager isReachable]) {
-        NSString *currentIP = [self getIpAddress];
-        if ([self.IpAddress isEqualToString:currentIP]) {
-            MEGALogDebug(@"IP didn't change (%@), retrying...", self.IpAddress);
+        NSString *currentAddress = self.currentAddress;
+        if ([self.lastKnownAddress isEqualToString:currentAddress]) {
+            MEGALogDebug(@"IP didn't change (%@), retrying...", self.lastKnownAddress);
             [self retryPendingConnections];
         } else {
-            MEGALogDebug(@"IP has changed (%@ -> %@), reconnecting...", self.IpAddress, currentIP);
+            MEGALogDebug(@"IP has changed (%@ -> %@), reconnecting...", self.lastKnownAddress, currentAddress);
             [self reconnect];
-            self.IpAddress = currentIP;
+            self.lastKnownAddress = currentAddress;
         }
     }
 }

@@ -140,7 +140,6 @@
             MEGALogError(@"Init Karere without sesion must return waiting for a new sesion");
             [[MEGASdkManager sharedMEGAChatSdk] logout];
         }
-        [MEGASdkManager.sharedMEGAChatSdk enableGroupChatCalls:YES];
 
         MEGALoginRequestDelegate *loginRequestDelegate = [[MEGALoginRequestDelegate alloc] init];
         loginRequestDelegate.confirmAccountInOtherClient = YES;

@@ -3,7 +3,7 @@
 /* Camera usage description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
 "NSCameraUsageDescription"="MEGA تصل الكاميرا الخاصة بك عند التقاط فيديو أو صورة أو إجراء مكالمة داخل التطبيق.";
 /* Photo library usage description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
-"NSPhotoLibraryUsageDescription"="تطبيق MEGA يدخل الى الصور والفيديوهات عندما تقوم بالترفيع أو المشاركة بالدردشة أو عندما تقوم بتفعيل الترفيع التلقائي لصور الكاميرا";
+"NSPhotoLibraryUsageDescription"="تطبيق MEGA يدخل الى الصور والفيديوهات عندما تقوم بالترفيع أو المشاركة بالمحادثات أو عندما تقوم بتفعيل الترفيع التلقائي لصور الكاميرا";
 /* Contacts Usage Description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
 "NSContactsUsageDescription"="MEGA تولج إلى جهات الاتصال الخاصة بك عند تحديد بعض منهم للحفظ أو التصدير";
 /* Write-only access to the user’s photo library description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
@@ -11,7 +11,7 @@
 /* Face ID usage description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
 "NSFaceIDUsageDescription"="تطبيق MEGA يستخدم خاصية التعرف على الوجه ليسمح لك بفتح التطبيق دون ادخال رمز المرور إذا فعلت هذه الخاصية";
 /* Label for any 'Search' button, link, etc. - (String as short as possible). */
-"quickActionSearchString"="بحث";
+"quickActionSearchString"="البحث";
 /*  */
 "quickActionUploadString"="رفع";
 /* Title of the Offline section */
