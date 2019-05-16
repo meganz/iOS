@@ -216,6 +216,7 @@
         self.tableView.tableHeaderView = nil;
     } else {
         if (!self.tableView.tableHeaderView) {
+            self.tableView.contentOffset = CGPointMake(0, CGRectGetHeight(self.searchController.searchBar.frame));
             self.tableView.tableHeaderView = self.searchController.searchBar;
         }
     }
@@ -250,6 +251,7 @@
         self.tableView.tableHeaderView = nil;
     } else {
         if (!self.tableView.tableHeaderView) {
+            self.tableView.contentOffset = CGPointMake(0, CGRectGetHeight(self.searchController.searchBar.frame));
             self.tableView.tableHeaderView = self.searchController.searchBar;
         }
     }
