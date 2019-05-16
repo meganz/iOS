@@ -25,9 +25,9 @@
 #import "NSError+CameraUpload.h"
 #import "CameraUploadStore.h"
 
-static const NSTimeInterval MinimumBackgroundRefreshInterval = 1.5 * 3600;
-static const NSTimeInterval BackgroundRefreshDuration = 25;
+static const NSTimeInterval MinimumBackgroundRefreshInterval = 3 * 3600;
 static const NSTimeInterval LoadMediaInfoTimeoutInSeconds = 120;
+static const NSUInteger BackgroundRefreshDurationInSeconds = 20;
 
 static const NSUInteger PhotoUploadBatchCount = 5;
 static const NSUInteger VideoUploadBatchCount = 1;
@@ -900,29 +900,22 @@ static const NSUInteger MaximumPhotoUploadBatchCountMultiplier = 2;
 }
 
 - (void)performBackgroundRefreshWithCompletion:(void (^)(UIBackgroundFetchResult))completion {
-    if (CameraUploadManager.isCameraUploadEnabled) {
-        [self.cameraScanner scanMediaTypes:self.enabledMediaTypes completion:^(NSError * _Nullable error) {
-            if (self.uploadPendingAssetsCount == 0) {
-                completion(UIBackgroundFetchResultNoData);
-            } else {
-                MEGALogDebug(@"[Camera Upload] upload camera in background refresh");
-                [self startCameraUploadIfNeeded];
-                self.backgroundRefreshCompletion = completion;
-                [NSTimer scheduledTimerWithTimeInterval:BackgroundRefreshDuration target:self selector:@selector(backgroudRefreshTimerExpired:) userInfo:nil repeats:NO];
-            }
-        }];
-    } else {
+    if (!CameraUploadManager.isCameraUploadEnabled) {
         completion(UIBackgroundFetchResultNoData);
+        return;
     }
-}
-
-- (void)backgroudRefreshTimerExpired:(NSTimer *)timer {
-    if (self.backgroundRefreshCompletion) {
-        self.backgroundRefreshCompletion(UIBackgroundFetchResultNewData);
+    
+    [self.cameraScanner scanMediaTypes:self.enabledMediaTypes completion:^(NSError * _Nullable error) {
         if (self.uploadPendingAssetsCount == 0) {
-            self.backgroundRefreshCompletion(UIBackgroundFetchResultNoData);
+            completion(UIBackgroundFetchResultNoData);
+        } else {
+            MEGALogDebug(@"[Camera Upload] upload camera in background refresh");
+            [self startCameraUploadIfNeeded];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(BackgroundRefreshDurationInSeconds * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                completion(UIBackgroundFetchResultNewData);
+            });
         }
-    }
+    }];
 }
 
 #pragma mark - background upload
