@@ -36,7 +36,6 @@ static const NSUInteger MaximumPhotoUploadBatchCountMultiplier = 2;
 
 @interface CameraUploadManager () <CameraScannerDelegate>
 
-@property (copy, nonatomic) void (^backgroundRefreshCompletion)(UIBackgroundFetchResult);
 @property (readonly) NSArray<NSNumber *> *enabledMediaTypes;
 @property (nonatomic) BOOL isNodeTreeCurrent;
 @property (nonatomic) StorageState storageState;
