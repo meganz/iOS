@@ -139,7 +139,7 @@ static const void *richNumberTagKey = &richNumberTagKey;
 - (BOOL)shouldShowForwardAccessory {
     BOOL shouldShowForwardAccessory = NO;
     
-    if (!self.isDeleted && (self.type == MEGAChatMessageTypeContact || self.type == MEGAChatMessageTypeAttachment || self.type == MEGAChatMessageTypeVoiceClip || (self.type == MEGAChatMessageTypeContainsMeta && [self containsMetaAnyValue]) || self.node)) {
+    if (!self.isDeleted && (self.type == MEGAChatMessageTypeContact || self.type == MEGAChatMessageTypeAttachment || (self.type == MEGAChatMessageTypeVoiceClip && !self.richNumber) || (self.type == MEGAChatMessageTypeContainsMeta && [self containsMetaAnyValue]) || self.node)) {
         shouldShowForwardAccessory = YES;
     }
     
