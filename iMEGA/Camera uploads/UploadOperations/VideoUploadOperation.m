@@ -132,12 +132,7 @@
     if (CameraUploadManager.isHEVCFormatSupported && CameraUploadManager.shouldConvertHEVCVideo && asset.mnz_containsHEVCCodec) {
         [self transcodeHEVCVideoAsset:asset];
     } else if ([asset isKindOfClass:[AVURLAsset class]]) {
-        AVURLAsset *urlAsset = (AVURLAsset *)asset;
-        if (self.uploadInfo.location) {
-            [self exportAsset:urlAsset withPreset:AVAssetExportPresetPassthrough outputFileType:AVFileTypeMPEG4 outputFileExtension:MEGAMP4FileExtension];
-        } else {
-            [self uploadVideoAtURL:urlAsset.URL];
-        }
+        [self exportAsset:asset withPreset:AVAssetExportPresetPassthrough outputFileType:AVFileTypeMPEG4 outputFileExtension:MEGAMP4FileExtension];
     } else if ([asset isKindOfClass:[AVComposition class]]) {
         [self exportAsset:asset withPreset:AVAssetExportPresetHighestQuality outputFileType:AVFileTypeMPEG4 outputFileExtension:MEGAMP4FileExtension];
     } else {
@@ -220,7 +215,11 @@
             }];
         } else {
             MEGALogError(@"[Camera Upload] %@ not compatible with preset %@ and output type %@", self, preset, outputFileType);
-            [self finishOperationWithStatus:CameraAssetUploadStatusFailed shouldUploadNextAsset:YES];
+            if ([asset isKindOfClass:[AVURLAsset class]]) {
+                [self uploadVideoAtURL: [(AVURLAsset *)asset URL]];
+            } else {
+                [self finishOperationWithStatus:CameraAssetUploadStatusFailed shouldUploadNextAsset:YES];
+            }
         }
     }];
 }
