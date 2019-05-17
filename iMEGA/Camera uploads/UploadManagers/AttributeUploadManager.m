@@ -92,7 +92,7 @@ typedef NS_ENUM(NSInteger, PreviewConcurrentUploadCount) {
 
 - (AssetLocalAttribute *)saveAttributesForUploadInfo:(AssetUploadInfo *)uploadInfo error:(NSError **)error {
     NSURL *attributeDirectoryURL = [self nodeAttributesDirectoryURLByLocalIdentifier:uploadInfo.savedLocalIdentifier];
-    [NSFileManager.defaultManager removeItemIfExistsAtURL:attributeDirectoryURL];
+    [NSFileManager.defaultManager mnz_removeItemAtPath:attributeDirectoryURL.path];
     [NSFileManager.defaultManager createDirectoryAtURL:attributeDirectoryURL withIntermediateDirectories:YES attributes:nil error:error];
     if (error != NULL && *error != nil) {
         return nil;
@@ -211,7 +211,7 @@ typedef NS_ENUM(NSInteger, PreviewConcurrentUploadCount) {
     
     if (attribute.hasSavedLocation) {
         if (node.latitude && node.longitude) {
-            [NSFileManager.defaultManager removeItemIfExistsAtURL:attribute.locationURL];
+            [NSFileManager.defaultManager mnz_removeItemAtPath:attribute.locationURL.path];
         } else if (![self hasPendingAttributeOperationForNode:node inQueue:self.coordinatesUploadOperationQueue]) {
             MEGALogDebug(@"[Camera Upload] retry coordinates upload for %@ in %@", node.name, attribute.attributeDirectoryURL.lastPathComponent);
             [self.coordinatesUploadOperationQueue addOperation:[[CoordinatesUploadOperation alloc] initWithAttributeURL:attribute.locationURL node:node]];
@@ -244,7 +244,7 @@ typedef NS_ENUM(NSInteger, PreviewConcurrentUploadCount) {
     for (NSURL *URL in attributeDirectoryURLs) {
         AssetLocalAttribute *localAttribute = [[AssetLocalAttribute alloc] initWithAttributeDirectoryURL:URL];
         if (!localAttribute.hasSavedAttributes) {
-            [NSFileManager.defaultManager removeItemIfExistsAtURL:URL];
+            [NSFileManager.defaultManager mnz_removeItemAtPath:URL.path];
         }
     }
 }

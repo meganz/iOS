@@ -86,7 +86,7 @@
 
             if (!isExportedSuccessfully) {
                 MEGALogError(@"[Camera Upload] failed to copy image source %@ %@", sourceType, URL);
-                [NSFileManager.defaultManager removeItemIfExistsAtURL:URL];
+                [NSFileManager.defaultManager mnz_removeItemAtPath:URL.path];
                 isExportedSuccessfully = [self exportImageSource:source toURL:URL alwaysEncodeToImageUTIType:(__bridge NSString *)sourceType imageProperty:removeGPSDict];
             }
         }

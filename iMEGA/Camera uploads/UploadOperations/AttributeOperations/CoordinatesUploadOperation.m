@@ -20,7 +20,7 @@
     }
     
     if (self.node.latitude && self.node.longitude) {
-        [NSFileManager.defaultManager removeItemIfExistsAtURL:self.attributeURL];
+        [NSFileManager.defaultManager mnz_removeItemAtPath:self.attributeURL.path];
         [self finishOperation];
         return;
     }
@@ -37,11 +37,11 @@
         if (error.type) {
             MEGALogError(@"[Camera Upload] Upload coordinate failed %@ error: %@", weakSelf, error.nativeError);
             if (error.type == MEGAErrorTypeApiEExist) {
-                [NSFileManager.defaultManager removeItemIfExistsAtURL:weakSelf.attributeURL];
+                [NSFileManager.defaultManager mnz_removeItemAtPath:weakSelf.attributeURL.path];
             }
         } else {
             MEGALogDebug(@"[Camera Upload] Upload coordinate succeeded %@", weakSelf);
-            [NSFileManager.defaultManager removeItemIfExistsAtURL:weakSelf.attributeURL];
+            [NSFileManager.defaultManager mnz_removeItemAtPath:weakSelf.attributeURL.path];
         }
         
         [weakSelf finishOperation];

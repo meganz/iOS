@@ -862,7 +862,7 @@ static const NSUInteger MaximumPhotoUploadBatchCountMultiplier = 2;
     if (error) {
         MEGALogError(@"[Camera Upload] error when to delete camera upload store after logout %@", error);
     }
-    [NSFileManager.defaultManager removeItemIfExistsAtURL:NSURL.mnz_cameraUploadURL];
+    [NSFileManager.defaultManager mnz_removeItemAtPath:NSURL.mnz_cameraUploadURL.path];
 }
 
 #pragma mark - photos access permission check

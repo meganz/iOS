@@ -183,7 +183,7 @@
         
         [CameraUploadRecordManager.shared updateUploadRecord:record withStatus:status error:nil];
         
-        [NSFileManager.defaultManager removeItemIfExistsAtURL:[NSURL mnz_assetURLForLocalIdentifier:localIdentifier]];
+        [NSFileManager.defaultManager mnz_removeItemAtPath:[NSURL mnz_assetURLForLocalIdentifier:localIdentifier].path];
         
         [CameraUploadRecordManager.shared refaultObject:record];
         
