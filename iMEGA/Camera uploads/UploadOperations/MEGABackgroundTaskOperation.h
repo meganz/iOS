@@ -3,15 +3,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@class MEGABackgroundTaskOperation;
-
-@protocol MEGABackgroundTaskExpireDelegate <NSObject>
-
-- (void)backgroundTaskDidExpire;
-
-@end
-
-@interface MEGABackgroundTaskOperation : MEGAOperation <MEGABackgroundTaskExpireDelegate>
+@interface MEGABackgroundTaskOperation : MEGAOperation
 
 - (void)beginBackgroundTask;
 
