@@ -99,18 +99,6 @@
     }
 }
 
-#pragma mark - URL based file management
-
-- (void)removeItemIfExistsAtURL:(NSURL *)URL {
-    if ([self fileExistsAtPath:URL.path]) {
-        NSError *removeFileError;
-        [self removeItemAtURL:URL error:&removeFileError];
-        if (removeFileError) {
-            MEGALogDebug(@"Error when to remove existing file %@, error: %@", URL, removeFileError);
-        }
-    }
-}
-
 #pragma mark - properties
 
 - (unsigned long long)deviceFreeSize {

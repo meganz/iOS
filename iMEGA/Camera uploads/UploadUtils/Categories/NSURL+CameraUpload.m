@@ -83,7 +83,7 @@ static NSString * const AssetsDirectoryName = @"Assets";
     NSError *error;
     if ([NSFileManager.defaultManager createDirectoryAtURL:directoryURL withIntermediateDirectories:YES attributes:nil error:&error]) {
         NSURL *newFileURL = [directoryURL URLByAppendingPathComponent:fileName isDirectory:NO];
-        [NSFileManager.defaultManager removeItemIfExistsAtURL:newFileURL];
+        [NSFileManager.defaultManager mnz_removeItemAtPath:newFileURL.path];
         if ([NSFileManager.defaultManager moveItemAtURL:self toURL:newFileURL error:&error]) {
             return YES;
         } else {

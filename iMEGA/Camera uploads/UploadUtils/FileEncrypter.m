@@ -132,7 +132,7 @@ static const NSUInteger EncryptionProposedChunkSizeWithoutTruncating = 1024 * 10
     }
     
     if (self.shouldTruncateFile) {
-        [NSFileManager.defaultManager removeItemIfExistsAtURL:fileURL];
+        [NSFileManager.defaultManager mnz_removeItemAtPath:fileURL.path];
     }
     
     return chunksDict;

@@ -98,7 +98,7 @@ static NSString * const VideoAttributeImageName = @"AttributeImage";
 
 - (NSURL *)URLForAssetProcessing {
     NSURL *directoryURL = [NSURL mnz_assetURLForLocalIdentifier:self.uploadInfo.savedLocalIdentifier];
-    [NSFileManager.defaultManager removeItemIfExistsAtURL:directoryURL];
+    [NSFileManager.defaultManager mnz_removeItemAtPath:directoryURL.path];
     [[NSFileManager defaultManager] createDirectoryAtURL:directoryURL withIntermediateDirectories:YES attributes:nil error:nil];
     return directoryURL;
 }
@@ -335,7 +335,7 @@ static NSString * const VideoAttributeImageName = @"AttributeImage";
     }];
     
     if (status != CameraAssetUploadStatusUploading) {
-        [NSFileManager.defaultManager removeItemIfExistsAtURL:self.uploadInfo.directoryURL];
+        [NSFileManager.defaultManager mnz_removeItemAtPath:self.uploadInfo.directoryURL.path];
     }
     
     if (status == CameraAssetUploadStatusDone) {

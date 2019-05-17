@@ -21,14 +21,4 @@
 - (void)mnz_removeFolderContentsRecursivelyAtPath:(NSString *)folderPath forItemsContaining:(NSString *)itemsContaining;
 - (void)mnz_removeFolderContentsRecursivelyAtPath:(NSString *)folderPath forItemsExtension:(NSString *)itemsExtension;
 
-#pragma mark - URL based file management
-
-/**
- Remove a file or directory if it exists at the given URL
-
- @param URL file or directory URL
- */
-- (void)removeItemIfExistsAtURL:(NSURL *)URL;
-
-
 @end
