@@ -102,6 +102,11 @@
             
             if ([appDataType isEqualToString:@"attachVoiceClipToChatID"]) {
                 NSString *tempAppDataComponent = [appDataComponent stringByReplacingOccurrencesOfString:@"!" withString:@""];
+                MEGANode *node = [MEGASdkManager.sharedMEGASdk nodeForHandle:self.nodeHandle];
+                if (node) {
+                    NSString *nodeFilePath = [node mnz_temporaryPathForDownloadCreatingDirectories:YES];
+                    [NSFileManager.defaultManager mnz_moveItemAtPath:self.path toPath:nodeFilePath];
+                }
                 [self mnz_attachtToChatID:tempAppDataComponent asVoiceClip:YES];
             }
             

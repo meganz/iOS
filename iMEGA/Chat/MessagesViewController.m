@@ -1214,7 +1214,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
     }
     appData = [appData mnz_appDataToAttachToChatID:self.chatRoom.chatId asVoiceClip:asVoiceClip];
     
-    [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:path parent:parentNode appData:appData isSourceTemporary:YES delegate:startUploadTransferDelegate];
+    [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:path parent:parentNode appData:appData isSourceTemporary:!asVoiceClip delegate:startUploadTransferDelegate];
 }
 
 - (void)attachOrCopyAndAttachNode:(MEGANode *)node toParentNode:(MEGANode *)parentNode {
