@@ -900,6 +900,7 @@ static const NSUInteger MaximumPhotoUploadBatchCountMultiplier = 2;
 
 - (void)performBackgroundRefreshWithCompletion:(void (^)(UIBackgroundFetchResult))completion {
     if (!CameraUploadManager.isCameraUploadEnabled) {
+        [CameraUploadManager disableBackgroundRefresh];
         completion(UIBackgroundFetchResultNoData);
         return;
     }
