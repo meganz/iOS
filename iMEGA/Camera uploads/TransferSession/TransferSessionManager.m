@@ -188,57 +188,10 @@ static NSString * const VideoCellularDisallowedUploadSessionId = @"nz.mega.video
     return restoredSession;
 }
 
-- (void)restoreSessionByIdentifier:(NSString *)identifier completion:(nullable RestoreSessionCompletionHandler)completion {
-    NSURLSession *restoredSession = [self createSessionIfNeededByIdentifier:identifier];
-    
-    if (restoredSession) {
-        [self restoreTasksForSession:restoredSession completion:completion];
-    } else {
-        if (completion) {
-            completion(@[]);
-        }
-    }
-}
-
-- (void)restoreTasksForSession:(NSURLSession *)session completion:(nullable RestoreSessionCompletionHandler)completion {
-    [[[RestoreUploadTaskOperation alloc] initWithSession:session completion:^(NSArray<NSURLSessionUploadTask *> * _Nonnull uploadTasks) {
-        [self restoreDelegatesForTasks:uploadTasks inSession:session];
-        if (completion) {
-            completion(uploadTasks);
-        }
-    }] start];
-}
-
 - (void)restoreDelegatesForTasks:(NSArray<NSURLSessionTask *> *)tasks inSession:(NSURLSession *)session {
     for (NSURLSessionTask *task in tasks) {
         [self addDelegateForTask:task inSession:session completion:nil];
     }
-}
-
-#pragma mark - get session tasks
-
-- (NSURLSession *)getSessionByIdentifier:(NSString *)identifier {
-    NSURLSession *session;
-    if ([identifier isEqualToString:PhotoCellularAllowedUploadSessionId]) {
-        session = self.photoCellularAllowedUploadSession;
-    } else if ([identifier isEqualToString:PhotoCellularDisallowedUploadSessionId]) {
-        session = self.photoCellularDisallowedUploadSession;
-    } else if ([identifier isEqualToString:VideoCellularAllowedUploadSessionId]) {
-        session = self.videoCellularAllowedUploadSession;
-    } else if ([identifier isEqualToString:VideoCellularDisallowedUploadSessionId]) {
-        session = self.videoCellularDisallowedUploadSession;
-    }
-    
-    return session;
-}
-
-- (void)getAllSessionTasksByIdentifier:(NSString *)identifier completion:(nullable void (^)(NSArray<NSURLSessionUploadTask *> * _Nonnull tasks))completion {
-    NSURLSession *session = [self getSessionByIdentifier:identifier];
-    [session getAllTasksWithCompletionHandler:^(NSArray<__kindof NSURLSessionTask *> * _Nonnull tasks) {
-        if (completion) {
-            completion(tasks);
-        }
-    }];
 }
 
 #pragma mark - session completion handler
