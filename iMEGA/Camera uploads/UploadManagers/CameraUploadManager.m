@@ -27,7 +27,6 @@
 
 static const NSTimeInterval MinimumBackgroundRefreshInterval = 3 * 3600;
 static const NSTimeInterval LoadMediaInfoTimeoutInSeconds = 120;
-static const NSUInteger BackgroundRefreshDurationInSeconds = 20;
 
 static const NSUInteger PhotoUploadBatchCount = 5;
 static const NSUInteger VideoUploadBatchCount = 1;
@@ -36,7 +35,6 @@ static const NSUInteger MaximumPhotoUploadBatchCountMultiplier = 2;
 
 @interface CameraUploadManager () <CameraScannerDelegate>
 
-@property (readonly) NSArray<NSNumber *> *enabledMediaTypes;
 @property (nonatomic) BOOL isNodeTreeCurrent;
 @property (nonatomic) StorageState storageState;
 
@@ -323,7 +321,7 @@ static const NSUInteger MaximumPhotoUploadBatchCountMultiplier = 2;
         return;
     }
     
-    [self.cameraScanner scanMediaTypes:self.enabledMediaTypes completion:^(NSError * _Nullable error) {
+    [self.cameraScanner scanMediaTypes:CameraUploadManager.enabledMediaTypes completion:^(NSError * _Nullable error) {
         if (error) {
             MEGALogError(@"[Camera Upload] error when to scan image %@", error);
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0), ^{
@@ -506,6 +504,11 @@ static const NSUInteger MaximumPhotoUploadBatchCountMultiplier = 2;
     NSArray *records = [CameraUploadRecordManager.shared queueUpUploadRecordsByStatuses:statuses fetchLimit:count mediaType:mediaType error:nil];
     if (records.count == 0) {
         MEGALogInfo(@"[Camera Upload] no more local asset to upload for media type %li", (long)mediaType);
+        
+        if ([CameraUploadRecordManager.shared pendingForUploadingRecordsCountByMediaTypes:CameraUploadManager.enabledMediaTypes error:nil] == 0) {
+            [NSNotificationCenter.defaultCenter postNotificationName:MEGACameraUploadAllAssetsFinishedProcessingNotificationName object:self userInfo:nil];
+        }
+        
         return;
     }
     
@@ -652,37 +655,10 @@ static const NSUInteger MaximumPhotoUploadBatchCountMultiplier = 2;
     return self.videoUploadOperationQueue.isSuspended;
 }
 
-#pragma mark - upload status
-
-- (NSUInteger)uploadPendingAssetsCount {
-    return [CameraUploadRecordManager.shared pendingRecordsCountByMediaTypes:self.enabledMediaTypes error:nil];
-}
-
-- (BOOL)isPhotoUploadDone {
-    return [CameraUploadRecordManager.shared pendingRecordsCountByMediaTypes:@[@(PHAssetMediaTypeImage)] error:nil] == 0;
-}
-
-- (BOOL)isVideoUploadDone {
-    return [CameraUploadRecordManager.shared pendingRecordsCountByMediaTypes:@[@(PHAssetMediaTypeVideo)] error:nil] == 0;
-}
-
-- (NSArray<NSNumber *> *)enabledMediaTypes {
-    NSMutableArray<NSNumber *> *mediaTypes = [NSMutableArray array];
-    if (CameraUploadManager.isCameraUploadEnabled) {
-        [mediaTypes addObject:@(PHAssetMediaTypeImage)];
-        
-        if (CameraUploadManager.isVideoUploadEnabled) {
-            [mediaTypes addObject:@(PHAssetMediaTypeVideo)];
-        }
-    }
-    
-    return [mediaTypes copy];
-}
-
 #pragma mark - get upload stats
 
 - (void)loadCurrentUploadStatsWithCompletion:(void (^)(UploadStats * _Nullable, NSError * _Nullable))completion {
-    return [self loadUploadStatsForMediaTypes:self.enabledMediaTypes completion:completion];
+    return [self loadUploadStatsForMediaTypes:CameraUploadManager.enabledMediaTypes completion:completion];
 }
 
 - (void)loadUploadStatsForMediaTypes:(NSArray<NSNumber *> *)mediaTypes completion:(void (^)(UploadStats * _Nullable, NSError * _Nullable))completion {
@@ -895,26 +871,6 @@ static const NSUInteger MaximumPhotoUploadBatchCountMultiplier = 2;
     MEGALogInfo(@"[Camera Upload] disable background refresh for background upload");
     [NSOperationQueue.mainQueue addOperationWithBlock:^{
         [UIApplication.sharedApplication setMinimumBackgroundFetchInterval:UIApplicationBackgroundFetchIntervalNever];
-    }];
-}
-
-- (void)performBackgroundRefreshWithCompletion:(void (^)(UIBackgroundFetchResult))completion {
-    if (!CameraUploadManager.isCameraUploadEnabled) {
-        [CameraUploadManager disableBackgroundRefresh];
-        completion(UIBackgroundFetchResultNoData);
-        return;
-    }
-    
-    [self.cameraScanner scanMediaTypes:self.enabledMediaTypes completion:^(NSError * _Nullable error) {
-        if (self.uploadPendingAssetsCount == 0) {
-            completion(UIBackgroundFetchResultNoData);
-        } else {
-            MEGALogDebug(@"[Camera Upload] upload camera in background refresh");
-            [self startCameraUploadIfNeeded];
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(BackgroundRefreshDurationInSeconds * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                completion(UIBackgroundFetchResultNewData);
-            });
-        }
     }];
 }
 
