@@ -27,6 +27,7 @@ NSString * const MEGACameraUploadVideoConcurrentCountChangedNotificationName = @
 NSString * const MEGACameraUploadUploadingTasksCountChangedNotificationName = @"nz.mega.cameraUpload.uploadingTaskCountChanged";
 NSString * const MEGACameraUploadTaskExpiredNotificationName = @"nz.mega.cameraUpload.uploadTaskExpired";
 NSString * const MEGACameraUploadQueueUpNextAssetNotificationName = @"nz.mega.cameraUpload.queueUpNextAsset";
+NSString * const MEGACameraUploadAllAssetsFinishedProcessingNotificationName = @"nz.mega.cameraUpload.allAssetsFinishedProcessing";
 
 #pragma mark - camera upload notification keys
 
