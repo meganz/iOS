@@ -6,8 +6,8 @@
 #import "CameraUploadRecordManager.h"
 #import "MEGAConstants.h"
 
-static const NSUInteger BackgroundRefreshMaximumDurationInSeconds = 25;
-static const NSUInteger BackgroundRefreshDurationToleranceInSeconds = 2;
+static const NSTimeInterval BackgroundRefreshMaximumDuration = 25;
+static const NSTimeInterval BackgroundRefreshDurationTolerance = 2;
 
 @interface BackgroundRefreshPerformer ()
 
@@ -75,7 +75,7 @@ static const NSUInteger BackgroundRefreshDurationToleranceInSeconds = 2;
 
 - (void)setupMonitorTimerWithBackgroundRefreshCompletionHandler:(void (^)(UIBackgroundFetchResult))completion {
     self.monitorTimer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, dispatch_get_global_queue(QOS_CLASS_UTILITY, 0));
-    dispatch_source_set_timer(self.monitorTimer, dispatch_time(DISPATCH_TIME_NOW, BackgroundRefreshMaximumDurationInSeconds * NSEC_PER_SEC), BackgroundRefreshMaximumDurationInSeconds * NSEC_PER_SEC, BackgroundRefreshDurationToleranceInSeconds * NSEC_PER_SEC);
+    dispatch_source_set_timer(self.monitorTimer, dispatch_time(DISPATCH_TIME_NOW, (uint64_t)(BackgroundRefreshMaximumDuration * NSEC_PER_SEC)), (uint64_t)(BackgroundRefreshMaximumDuration * NSEC_PER_SEC), (uint64_t)(BackgroundRefreshDurationTolerance * NSEC_PER_SEC));
     dispatch_source_set_event_handler(self.monitorTimer, ^{
         [self cancelMonitorTimerIfNeeded];
     });
