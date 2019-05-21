@@ -113,7 +113,7 @@
 /*  */
 "passwordStrong"="Esta senha vai resistir aos ataques de força-bruta mais sofisticados. Por favor, certifique-se de que você vai lembrar dela.";
 /*  */
-"agreeWithTheMEGATermsOfService"="Eu concordo com os <a href='terms'>Termos de serviço</a> do MEGA";
+"agreeWithTheMEGATermsOfService"="Concordo com os <a href=\"terms\">Termos de serviço</a> do MEGA";
 /* Error text shown when you have not entered a correct name */
 "nameInvalidFormat"="Digite um nome válido";
 /* Error text shown when you have not written the same password */
@@ -1603,7 +1603,7 @@
 /* Title shown in a page of the on boarding screens explaining that the user can add contacts to chat and colaborate */
 "Create your Network"="Crie a sua rede";
 /* Description shown in a page of the onboarding screens explaining contacts */
-"Add contacts, create a network, colaborate, make voice and video calls without ever leaving MEGA"="Adicione contatos, crie uma rede, colabore, faça chamadas de voz e vídeo sem sair do MEGA";
+"Add contacts, create a network, colaborate, make voice and video calls without ever leaving MEGA"="Adicione contatos, crie uma rede, colabore e faça chamadas de voz e vídeo sem sair do MEGA";
 /* Title shown in a page of the on boarding screens explaining that the user can backup the photos automatically */
 "Your Photos in the Cloud"="As suas fotos na Nuvem";
 /* Description shown in a page of the onboarding screens explaining the camera uploads feature */

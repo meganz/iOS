@@ -113,7 +113,7 @@
 /*  */
 "passwordStrong"="このパスワードは大抵の攻撃に対抗できるでしょう。絶対に忘れないようにして下さい。";
 /*  */
-"agreeWithTheMEGATermsOfService"="私は、MEGAの <a href='terms'>サービス規約</a>に同意します。";
+"agreeWithTheMEGATermsOfService"="MEGAの<a href=\"terms\">ご利用規約</a>に同意します";
 /* Error text shown when you have not entered a correct name */
 "nameInvalidFormat"="正しい名前を入力して下さい";
 /* Error text shown when you have not written the same password */
@@ -1603,7 +1603,7 @@
 /* Title shown in a page of the on boarding screens explaining that the user can add contacts to chat and colaborate */
 "Create your Network"="ネットワークの作成";
 /* Description shown in a page of the onboarding screens explaining contacts */
-"Add contacts, create a network, colaborate, make voice and video calls without ever leaving MEGA"="連絡先の追加、ネットワークの作成、コラボレーション、MEGAを離れずに音声通話とビデオ通話を行う";
+"Add contacts, create a network, colaborate, make voice and video calls without ever leaving MEGA"="連絡先の追加、ネットワークの作成、コラボレーション、MEGAを一切離れずに音声通話とビデオ通話を行う";
 /* Title shown in a page of the on boarding screens explaining that the user can backup the photos automatically */
 "Your Photos in the Cloud"="クラウド内のあなたの写真";
 /* Description shown in a page of the onboarding screens explaining the camera uploads feature */
@@ -1623,7 +1623,7 @@
 /* Title label that explains that the user is going to be asked for the microphone and camera permission */
 "Enable Microphone and Camera"="マイクとカメラを有効にする";
 /* Detailed explanation of why the user should give permission to access to the camera and the microphone */
-"To make encrypted voice and video calls, allow MEGA access to your Camera and Microphone"="暗号化された音声およびビデオ通話を行うには、MEGAがあなたのカメラとマイクへアクセスするのを許可してください";
+"To make encrypted voice and video calls, allow MEGA access to your Camera and Microphone"="音声メモを送信し、暗号化された音声およびビデオ通話を行うには、MEGAがあなたのカメラとマイクにアクセスするのを許可してください";
 /* Title label that explains that the user is going to be asked for the notifications permission */
 "Enable Notifications"="通知設定";
 /* Detailed explanation of why the user should give permission to deliver notifications */
@@ -1703,7 +1703,7 @@
 /* Users previewing a public chat */
 "Observers"="オブザーバー";
 /* Alert message shown while deleting a chat link, warning about the consequences */
-"This conversation will no longer be accessible through the link you are about to delete."="この会話は、一度削除されるとチャットリンクからアクセスできなくなります。";
+"This conversation will no longer be accessible through the link you are about to delete."="この会話は、チャットリンクを一度削除するとそこアクセスできなくなります。";
 /* Management message shown in a chat when the user %@ enables the 'Encrypted Key Rotation' */
 "%@ enabled Encrypted Key Rotation"="%@さんが暗号化キーローテーションを有効にしました。";
 /* Management message shown in a chat when the user %@ creates a public link for the chat */
