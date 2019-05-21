@@ -40,6 +40,18 @@ NSNotificationName kVoiceClipsShouldPauseNotification = @"kVoiceClipsShouldPause
     self.cachedVoiceClipView = nil;
 }
 
+- (BOOL)isContentDiscarded {
+    return NO;
+}
+
+- (BOOL)beginContentAccess {
+    return YES;
+}
+
+- (void)discardContentIfPossible {}
+
+- (void)endContentAccess {}
+
 #pragma mark - Setters
 
 - (void)setAppliesMediaViewMaskAsOutgoing:(BOOL)appliesMediaViewMaskAsOutgoing {
