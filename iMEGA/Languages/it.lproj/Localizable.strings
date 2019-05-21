@@ -113,7 +113,7 @@
 /*  */
 "passwordStrong"="Questa password può resistere agli attacchi più tipici di brute-force. Assicurati di ricordarla.";
 /*  */
-"agreeWithTheMEGATermsOfService"="Sono d'accordo con i <a href='terms'>Termini di Servizio</a> di Mega";
+"agreeWithTheMEGATermsOfService"="Sono d'accordo con i <a href=\"terms\">Termini di Servizio</a> di MEGA";
 /* Error text shown when you have not entered a correct name */
 "nameInvalidFormat"="Inserisci un nome valido";
 /* Error text shown when you have not written the same password */
@@ -1603,7 +1603,7 @@
 /* Title shown in a page of the on boarding screens explaining that the user can add contacts to chat and colaborate */
 "Create your Network"="Crea il tuo Network";
 /* Description shown in a page of the onboarding screens explaining contacts */
-"Add contacts, create a network, colaborate, make voice and video calls without ever leaving MEGA"="Aggiungi contatti, crea un network, collabora, effettua chiamate audio e video senza mai lasciare MEGA";
+"Add contacts, create a network, colaborate, make voice and video calls without ever leaving MEGA"="Aggiungi contatti, crea un network, collabora, ed effettua chiamate audio e video senza lasciare mai MEGA";
 /* Title shown in a page of the on boarding screens explaining that the user can backup the photos automatically */
 "Your Photos in the Cloud"="Le tue foto nel Cloud";
 /* Description shown in a page of the onboarding screens explaining the camera uploads feature */
@@ -1623,7 +1623,7 @@
 /* Title label that explains that the user is going to be asked for the microphone and camera permission */
 "Enable Microphone and Camera"="Attiva microfono e fotocamera";
 /* Detailed explanation of why the user should give permission to access to the camera and the microphone */
-"To make encrypted voice and video calls, allow MEGA access to your Camera and Microphone"="Per fare chiamate audio e video criptate, permetti a MEGA l'accesso al tuo microfono ed alla tua fotocamera";
+"To make encrypted voice and video calls, allow MEGA access to your Camera and Microphone"="Per inviare note vocali ed effettuare chiamate audio e video criptate, permetti a MEGA l'accesso al tuo microfono ed alla tua fotocamera";
 /* Title label that explains that the user is going to be asked for the notifications permission */
 "Enable Notifications"="Attiva le notifiche";
 /* Detailed explanation of why the user should give permission to deliver notifications */
