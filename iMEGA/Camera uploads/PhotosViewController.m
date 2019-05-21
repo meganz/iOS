@@ -962,7 +962,7 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
     [self.photosCollectionView reloadData];
 }
 
-- (void)photoBrowser:(MEGAPhotoBrowserViewController *)photoBrowser willDismissWithNode:(MEGANode *)node {
+- (void)didDismissPhotoBrowser:(MEGAPhotoBrowserViewController *)photoBrowser {
     self.browsingIndexPath = nil;
     [self.photosCollectionView reloadData];
 }
