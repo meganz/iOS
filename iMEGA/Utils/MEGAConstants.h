@@ -8,10 +8,10 @@ extern NSString * const MEGAiOSAppKey;
 
 #pragma mark - global notifications
 
-extern NSString * const MEGALogoutNotificationName;
-extern NSString * const MEGANodesCurrentNotificationName;
-extern NSString * const MEGAStorageOverQuotaNotificationName;
-extern NSString * const MEGAStorageEventDidChangeNotificationName;
+extern NSNotificationName const MEGALogoutNotification;
+extern NSNotificationName const MEGANodesCurrentNotification;
+extern NSNotificationName const MEGAStorageOverQuotaNotification;
+extern NSNotificationName const MEGAStorageEventDidChangeNotification;
 
 #pragma mark - global notification keys
 
@@ -19,14 +19,14 @@ extern NSString * const MEGAStorageEventStateUserInfoKey;
 
 #pragma mark - camera upload notifications
 
-extern NSString * const MEGACameraUploadStatsChangedNotificationName;
-extern NSString * const MEGACameraUploadPhotoUploadLocalDiskFullNotificationName;
-extern NSString * const MEGACameraUploadVideoUploadLocalDiskFullNotificationName;
-extern NSString * const MEGACameraUploadPhotoConcurrentCountChangedNotificationName;
-extern NSString * const MEGACameraUploadVideoConcurrentCountChangedNotificationName;
-extern NSString * const MEGACameraUploadUploadingTasksCountChangedNotificationName;
-extern NSString * const MEGACameraUploadTaskExpiredNotificationName;
-extern NSString * const MEGACameraUploadQueueUpNextAssetNotificationName;
+extern NSNotificationName const MEGACameraUploadStatsChangedNotification;
+extern NSNotificationName const MEGACameraUploadPhotoUploadLocalDiskFullNotification;
+extern NSNotificationName const MEGACameraUploadVideoUploadLocalDiskFullNotification;
+extern NSNotificationName const MEGACameraUploadPhotoConcurrentCountChangedNotification;
+extern NSNotificationName const MEGACameraUploadVideoConcurrentCountChangedNotification;
+extern NSNotificationName const MEGACameraUploadUploadingTasksCountChangedNotification;
+extern NSNotificationName const MEGACameraUploadTaskExpiredNotification;
+extern NSNotificationName const MEGACameraUploadQueueUpNextAssetNotification;
 
 #pragma mark - camera upload notification keys
 

@@ -59,9 +59,9 @@ static NSString * const CameraUploadBurstPhotoExtension = @"burst";
 
 - (void)finishUploadWithNoEnoughDiskSpace {
     if (self.uploadInfo.asset.mediaType == PHAssetMediaTypeVideo) {
-        [NSNotificationCenter.defaultCenter postNotificationName:MEGACameraUploadVideoUploadLocalDiskFullNotificationName object:nil];
+        [NSNotificationCenter.defaultCenter postNotificationName:MEGACameraUploadVideoUploadLocalDiskFullNotification object:nil];
     } else {
-        [NSNotificationCenter.defaultCenter postNotificationName:MEGACameraUploadPhotoUploadLocalDiskFullNotificationName object:nil];
+        [NSNotificationCenter.defaultCenter postNotificationName:MEGACameraUploadPhotoUploadLocalDiskFullNotification object:nil];
     }
     
     [self finishOperationWithStatus:CameraAssetUploadStatusCancelled shouldUploadNextAsset:NO];

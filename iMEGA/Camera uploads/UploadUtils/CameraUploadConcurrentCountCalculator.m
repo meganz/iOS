@@ -47,11 +47,11 @@ static CameraUploadConcurrentCount MakeCount(PhotoUploadConcurrentCount photoCou
     MEGALogDebug(@"[Camera Upload] concurrent calculator received %@", notification.name);
     CameraUploadConcurrentCount concurrentCount = [self calculateCameraUploadConcurrentCount];
     if (concurrentCount.photoConcurrentCount != self.currentConcurrentCount.photoConcurrentCount) {
-        [NSNotificationCenter.defaultCenter postNotificationName:MEGACameraUploadPhotoConcurrentCountChangedNotificationName object:self userInfo:@{MEGAPhotoConcurrentCountUserInfoKey : @(concurrentCount.photoConcurrentCount)}];
+        [NSNotificationCenter.defaultCenter postNotificationName:MEGACameraUploadPhotoConcurrentCountChangedNotification object:self userInfo:@{MEGAPhotoConcurrentCountUserInfoKey : @(concurrentCount.photoConcurrentCount)}];
     }
     
     if (concurrentCount.videoConcurrentCount != self.currentConcurrentCount.videoConcurrentCount) {
-        [NSNotificationCenter.defaultCenter postNotificationName:MEGACameraUploadVideoConcurrentCountChangedNotificationName object:self userInfo:@{MEGAVideoConcurrentCountUserInfoKey : @(concurrentCount.videoConcurrentCount)}];
+        [NSNotificationCenter.defaultCenter postNotificationName:MEGACameraUploadVideoConcurrentCountChangedNotification object:self userInfo:@{MEGAVideoConcurrentCountUserInfoKey : @(concurrentCount.videoConcurrentCount)}];
     }
     
     self.currentConcurrentCount = concurrentCount;

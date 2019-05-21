@@ -77,7 +77,7 @@
                     [CameraUploadRecordManager.shared saveChangesIfNeededWithError:&error];
                     
                     dispatch_async(dispatch_get_main_queue(), ^{
-                        [NSNotificationCenter.defaultCenter postNotificationName:MEGACameraUploadStatsChangedNotificationName object:nil];
+                        [NSNotificationCenter.defaultCenter postNotificationName:MEGACameraUploadStatsChangedNotification object:nil];
                     });
                 }
             }
@@ -146,7 +146,7 @@
             }];
             
             dispatch_async(dispatch_get_main_queue(), ^{
-                [NSNotificationCenter.defaultCenter postNotificationName:MEGACameraUploadStatsChangedNotificationName object:nil];
+                [NSNotificationCenter.defaultCenter postNotificationName:MEGACameraUploadStatsChangedNotification object:nil];
             });
             
             [self.delegate cameraScanner:self didObserveNewAssets:newAssets];
