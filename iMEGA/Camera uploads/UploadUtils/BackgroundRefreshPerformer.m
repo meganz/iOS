@@ -43,9 +43,9 @@ static const NSTimeInterval BackgroundRefreshDurationTolerance = 2;
             return;
         }
         
-        NSError *fetchPendingRecordsError;
-        NSUInteger pendingCount = [CameraUploadRecordManager.shared pendingRecordsCountByMediaTypes:CameraUploadManager.enabledMediaTypes error:&fetchPendingRecordsError];
-        if (fetchPendingRecordsError) {
+        NSError *fetchPendingCountError;
+        NSUInteger pendingCount = [CameraUploadRecordManager.shared pendingRecordsCountByMediaTypes:CameraUploadManager.enabledMediaTypes error:&fetchPendingCountError];
+        if (fetchPendingCountError) {
             completion(UIBackgroundFetchResultFailed);
             return;
         }
