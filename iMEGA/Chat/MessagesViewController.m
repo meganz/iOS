@@ -2719,7 +2719,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
 
 #pragma mark - MEGAPhotoBrowserDelegate
 
-- (void)photoBrowser:(MEGAPhotoBrowserViewController *)photoBrowser willDismissWithNode:(MEGANode *)node {
+- (void)didDismissPhotoBrowser:(MEGAPhotoBrowserViewController *)photoBrowser {
     [self setLastMessageAsSeen];
 }
 

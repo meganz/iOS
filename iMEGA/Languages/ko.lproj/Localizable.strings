@@ -1623,7 +1623,7 @@
 /* Title label that explains that the user is going to be asked for the microphone and camera permission */
 "Enable Microphone and Camera"="마이크와 카메라 활성화";
 /* Detailed explanation of why the user should give permission to access to the camera and the microphone */
-"To make encrypted voice and video calls, allow MEGA access to your Camera and Microphone"="암호화된 음성과 영상 통화를 하려면, MEGA가 당신의 카메라와 마이크에 접근할 수 있도록 허용해주세요";
+"To make encrypted voice and video calls, allow MEGA access to your Camera and Microphone"="음성 메모를 전송하고 암호화된 음성과 영상 통화를 하려면, MEGA가 당신의 카메라와 마이크에 접근할 수 있도록 허용해주세요";
 /* Title label that explains that the user is going to be asked for the notifications permission */
 "Enable Notifications"="알림 활성화";
 /* Detailed explanation of why the user should give permission to deliver notifications */
@@ -1703,7 +1703,7 @@
 /* Users previewing a public chat */
 "Observers"="참관인";
 /* Alert message shown while deleting a chat link, warning about the consequences */
-"This conversation will no longer be accessible through the link you are about to delete."="삭제하려는 대화 링크를 통하여 이 대화에 참여할 수 없게 됩니다.";
+"This conversation will no longer be accessible through the link you are about to delete."="대화 링크가 삭제되면 그것을 통하여 이 대화에 참여할 수 없게 됩니다.";
 /* Management message shown in a chat when the user %@ enables the 'Encrypted Key Rotation' */
 "%@ enabled Encrypted Key Rotation"="%@님이 암호화 키 순환을 활성화하였습니다.";
 /* Management message shown in a chat when the user %@ creates a public link for the chat */

@@ -1623,7 +1623,7 @@
 /* Title label that explains that the user is going to be asked for the microphone and camera permission */
 "Enable Microphone and Camera"="Enable Microphone and Camera";
 /* Detailed explanation of why the user should give permission to access to the camera and the microphone */
-"To make encrypted voice and video calls, allow MEGA access to your Camera and Microphone"="To make encrypted voice and video calls, allow MEGA access to your Camera and Microphone";
+"To make encrypted voice and video calls, allow MEGA access to your Camera and Microphone"="To send voice notes and make encrypted voice and video calls, allow MEGA access to your Camera and Microphone";
 /* Title label that explains that the user is going to be asked for the notifications permission */
 "Enable Notifications"="Увімкнути повідомлення";
 /* Detailed explanation of why the user should give permission to deliver notifications */
@@ -1687,13 +1687,13 @@
 /* Title shown in a cell to allow the users enable the 'Encrypted Key Rotation' */
 "Enable Encrypted Key Rotation"="Enable Encrypted Key Rotation";
 /* Label in a cell where you can get the chat link */
-"Get Chat Link"="Get Chat Link";
+"Get Chat Link"="Get chat link";
 /* Footer text to explain what means 'Encrypted Key Rotation' */
 "Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages."="Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages.";
 /* Shown as an error message when the user selects "create chat link", but haven't entered a title for the newly created room */
 "To create a chat link you must name the group."="To create a chat link you must name the group.";
 /* Label shown in a cell where you can enable a switch to get a chat link */
-"Chat Link"="Chat Link";
+"Chat Link"="Chat link";
 /* Message shown when there is an active chat link that can be deleted */
 "Delete Chat Link"="Delete chat link";
 /* Button text in public chat previews that allows the user to join the chat */
@@ -1703,7 +1703,7 @@
 /* Users previewing a public chat */
 "Observers"="Observers";
 /* Alert message shown while deleting a chat link, warning about the consequences */
-"This conversation will no longer be accessible through the link you are about to delete."="This conversation will no longer be accessible through the Chat Link you are about to delete.";
+"This conversation will no longer be accessible through the link you are about to delete."="This conversation will no longer be accessible through the chat link once it has been removed.";
 /* Management message shown in a chat when the user %@ enables the 'Encrypted Key Rotation' */
 "%@ enabled Encrypted Key Rotation"="%@ enabled Encrypted Key Rotation.";
 /* Management message shown in a chat when the user %@ creates a public link for the chat */
