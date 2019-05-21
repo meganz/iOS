@@ -1603,7 +1603,7 @@
 /* Title shown in a page of the on boarding screens explaining that the user can add contacts to chat and colaborate */
 "Create your Network"="Créer votre réseau";
 /* Description shown in a page of the onboarding screens explaining contacts */
-"Add contacts, create a network, colaborate, make voice and video calls without ever leaving MEGA"="Ajoutez des contacts, créez un réseau, collaborez, faites des appels voix ou vidéo sans jamais quitter MEGA";
+"Add contacts, create a network, colaborate, make voice and video calls without ever leaving MEGA"="Ajoutez des contacts, créez un réseau, collaborez et faites des appels voix ou vidéo sans jamais quitter MEGA";
 /* Title shown in a page of the on boarding screens explaining that the user can backup the photos automatically */
 "Your Photos in the Cloud"="Vos photos dans le nuage";
 /* Description shown in a page of the onboarding screens explaining the camera uploads feature */
@@ -1703,7 +1703,7 @@
 /* Users previewing a public chat */
 "Observers"="Observateurs";
 /* Alert message shown while deleting a chat link, warning about the consequences */
-"This conversation will no longer be accessible through the link you are about to delete."="Le lien vers la conversation ne permettra plus d’y accéder une fois qu’il aura été supprimé.";
+"This conversation will no longer be accessible through the link you are about to delete."="Il ne sera plus possible d’accéder à cette conversation par le lien que vous êtes sur le point de supprimer.";
 /* Management message shown in a chat when the user %@ enables the 'Encrypted Key Rotation' */
 "%@ enabled Encrypted Key Rotation"="%@ a activé la rotation de la clé chiffrée.";
 /* Management message shown in a chat when the user %@ creates a public link for the chat */

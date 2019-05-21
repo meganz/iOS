@@ -113,7 +113,7 @@
 /*  */
 "passwordStrong"="Этот пароль не поддастся самым самым мощным атакам с применением полного перебора. Убедитесь, что запомнили его.";
 /*  */
-"agreeWithTheMEGATermsOfService"="Я согласен с <a href='terms'>Условиями предоставления услуг</a> MEGA";
+"agreeWithTheMEGATermsOfService"="Я согласен с <a href=\"terms\">Условиями предоставления услуг</a> MEGA";
 /* Error text shown when you have not entered a correct name */
 "nameInvalidFormat"="Введите правильное имя";
 /* Error text shown when you have not written the same password */
