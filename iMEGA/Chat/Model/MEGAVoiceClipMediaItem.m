@@ -158,15 +158,16 @@ NSNotificationName kVoiceClipsShouldPauseNotification = @"kVoiceClipsShouldPause
                 weakSelf.cachedVoiceClipView.playerSlider.value = CMTimeGetSeconds(time);
                 weakSelf.cachedVoiceClipView.timeLabel.text = [NSString mnz_stringFromTimeInterval:CMTimeGetSeconds(time)];
             }];
-            [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(didPlayToEndTime:) name:AVPlayerItemDidPlayToEndTimeNotification object:nil];
             [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(didChangeAudioRoute:) name:AVAudioSessionRouteChangeNotification object:nil];
         }
         
         [NSNotificationCenter.defaultCenter postNotificationName:kVoiceClipsShouldPauseNotification object:self];
         [self.audioPlayer play];
+        [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(didPlayToEndTime:) name:AVPlayerItemDidPlayToEndTimeNotification object:nil];
         [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(proximityChange:) name:UIDeviceProximityStateDidChangeNotification object:nil];
         [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(voiceClipWillPlayOrRecord:) name:kVoiceClipsShouldPauseNotification object:nil];
     } else {
+        [NSNotificationCenter.defaultCenter removeObserver:self name:AVPlayerItemDidPlayToEndTimeNotification object:nil];
         [NSNotificationCenter.defaultCenter removeObserver:self name:UIDeviceProximityStateDidChangeNotification object:nil];
         [NSNotificationCenter.defaultCenter removeObserver:self name:kVoiceClipsShouldPauseNotification object:nil];
         [self.audioPlayer pause];
