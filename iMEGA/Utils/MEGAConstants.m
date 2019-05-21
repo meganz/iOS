@@ -8,10 +8,10 @@ NSString * const MEGAiOSAppKey = @"EVtjzb7R";
 
 #pragma mark - global notifications
 
-NSString * const MEGALogoutNotificationName = @"nz.mega.logout";
-NSString * const MEGANodesCurrentNotificationName = @"nz.mega.nodesCurrent";
-NSString * const MEGAStorageOverQuotaNotificationName = @"nz.mega.storageOverQuota";
-NSString * const MEGAStorageEventDidChangeNotificationName = @"nz.mega.event.storage";
+NSNotificationName const MEGALogoutNotification = @"nz.mega.logout";
+NSNotificationName const MEGANodesCurrentNotification = @"nz.mega.nodesCurrent";
+NSNotificationName const MEGAStorageOverQuotaNotification = @"nz.mega.storageOverQuota";
+NSNotificationName const MEGAStorageEventDidChangeNotification = @"nz.mega.event.storage";
 
 #pragma mark - global notification keys
 
@@ -19,14 +19,14 @@ NSString * const MEGAStorageEventStateUserInfoKey = @"nz.mega.event.storage.stat
 
 #pragma mark - camera upload notifications
 
-NSString * const MEGACameraUploadStatsChangedNotificationName = @"nz.mega.cameraUpload.statsChanged";
-NSString * const MEGACameraUploadPhotoUploadLocalDiskFullNotificationName = @"nz.mega.cameraUpload.photo.localDiskFull";
-NSString * const MEGACameraUploadVideoUploadLocalDiskFullNotificationName = @"nz.mega.cameraUpload.video.localDiskFull";
-NSString * const MEGACameraUploadPhotoConcurrentCountChangedNotificationName = @"nz.mega.cameraUpload.photo.concurrentCountChanged";
-NSString * const MEGACameraUploadVideoConcurrentCountChangedNotificationName = @"nz.mega.cameraUpload.video.concurrentCountChanged";
-NSString * const MEGACameraUploadUploadingTasksCountChangedNotificationName = @"nz.mega.cameraUpload.uploadingTaskCountChanged";
-NSString * const MEGACameraUploadTaskExpiredNotificationName = @"nz.mega.cameraUpload.uploadTaskExpired";
-NSString * const MEGACameraUploadQueueUpNextAssetNotificationName = @"nz.mega.cameraUpload.queueUpNextAsset";
+NSNotificationName const MEGACameraUploadStatsChangedNotification = @"nz.mega.cameraUpload.statsChanged";
+NSNotificationName const MEGACameraUploadPhotoUploadLocalDiskFullNotification = @"nz.mega.cameraUpload.photo.localDiskFull";
+NSNotificationName const MEGACameraUploadVideoUploadLocalDiskFullNotification = @"nz.mega.cameraUpload.video.localDiskFull";
+NSNotificationName const MEGACameraUploadPhotoConcurrentCountChangedNotification = @"nz.mega.cameraUpload.photo.concurrentCountChanged";
+NSNotificationName const MEGACameraUploadVideoConcurrentCountChangedNotification = @"nz.mega.cameraUpload.video.concurrentCountChanged";
+NSNotificationName const MEGACameraUploadUploadingTasksCountChangedNotification = @"nz.mega.cameraUpload.uploadingTaskCountChanged";
+NSNotificationName const MEGACameraUploadTaskExpiredNotification = @"nz.mega.cameraUpload.uploadTaskExpired";
+NSNotificationName const MEGACameraUploadQueueUpNextAssetNotification = @"nz.mega.cameraUpload.queueUpNextAsset";
 
 #pragma mark - camera upload notification keys
 
