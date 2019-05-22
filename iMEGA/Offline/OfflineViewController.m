@@ -1101,20 +1101,16 @@ static NSString *kisDirectory = @"kisDirectory";
 
 - (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView {
     NSString *text = @"";
-    if ([MEGAReachabilityManager isReachable]) {
-        if (self.searchController.isActive) {
-            if (self.searchController.searchBar.text.length > 0) {
-                text = AMLocalizedString(@"noResults", @"Title shown when you make a search and there is 'No Results'");
-            }
-        } else {
-            if (self.folderPathFromOffline == nil) {
-                text = AMLocalizedString(@"offlineEmptyState_title", @"Title shown when the Offline section is empty, when you don't have download any files. Keep the upper.");
-            } else {
-                text = AMLocalizedString(@"emptyFolder", @"Title shown when a folder doesn't have any files");
-            }
+    if (self.searchController.isActive) {
+        if (self.searchController.searchBar.text.length > 0) {
+            text = AMLocalizedString(@"noResults", @"Title shown when you make a search and there is 'No Results'");
         }
     } else {
-        text = AMLocalizedString(@"noInternetConnection",  @"No Internet Connection");
+        if (self.folderPathFromOffline) {
+            text = AMLocalizedString(@"emptyFolder", @"Title shown when a folder doesn't have any files");
+        } else {
+            text = AMLocalizedString(@"offlineEmptyState_title", @"Title shown when the Offline section is empty, when you don't have download any files. Keep the upper.");
+        }
     }
     
     return [[NSAttributedString alloc] initWithString:text attributes:[Helper titleAttributesForEmptyState]];
@@ -1122,23 +1118,20 @@ static NSString *kisDirectory = @"kisDirectory";
 
 - (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView {
     UIImage *image;
-    if ([MEGAReachabilityManager isReachable]) {
-        if (self.searchController.isActive) {
-            if (self.searchController.searchBar.text.length > 0) {
-                return [UIImage imageNamed:@"searchEmptyState"];
-            } else {
-                return nil;
-            }
+    if (self.searchController.isActive) {
+        if (self.searchController.searchBar.text.length > 0) {
+            image = [UIImage imageNamed:@"searchEmptyState"];
         } else {
-            if (self.folderPathFromOffline == nil) {
-                image = [UIImage imageNamed:@"offlineEmptyState"];
-            } else {
-                image = [UIImage imageNamed:@"folderEmptyState"];
-            }
+            image = nil;
         }
     } else {
-        image = [UIImage imageNamed:@"noInternetEmptyState"];
+        if (self.folderPathFromOffline) {
+            image = [UIImage imageNamed:@"folderEmptyState"];
+        } else {
+            image = [UIImage imageNamed:@"offlineEmptyState"];
+        }
     }
+    
     return image;
 }
 
