@@ -12,6 +12,7 @@
 #import "MEGASdkManager.h"
 #import "NSString+MNZCategory.h"
 #import "NSURL+MNZCategory.h"
+#import "UIDevice+MNZCategory.h"
 #import "UIFont+MNZCategory.h"
 #import "UIImageView+MNZCategory.h"
 
@@ -97,7 +98,13 @@
 }
 
 - (CGSize)mediaViewDisplaySize {
-    return CGSizeMake(260, 190);
+    CGSize size;
+    if (UIDevice.currentDevice.iPhone4X || UIDevice.currentDevice.iPhone5X) {
+        size = CGSizeMake(220, 160);
+    } else {
+        size = CGSizeMake(260, 190);
+    }
+    return size;
 }
 
 - (NSUInteger)mediaHash {
