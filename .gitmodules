@@ -59,3 +59,6 @@ url=https://github.com/meganz/CTAssetsPickerController.git
 [submodule "iMEGA/Vendor/FLAnimatedImage"]
 	path = iMEGA/Vendor/FLAnimatedImage
 	url = https://github.com/Flipboard/FLAnimatedImage
+[submodule "iMEGA/Vendor/FLEX"]
+	path = iMEGA/Vendor/FLEX
+	url = https://github.com/flipboard/FLEX
