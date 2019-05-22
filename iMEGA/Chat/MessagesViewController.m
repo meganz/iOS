@@ -1469,9 +1469,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
     
     MEGALogInfo(@"didPressSendButton %@", message);
     
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [self finishSendingMessageAnimated:YES];
-    });
+    [self finishSendingMessageAnimated:YES];
     
     [[MEGASdkManager sharedMEGAChatSdk] sendStopTypingNotificationForChat:self.chatRoom.chatId];
     
@@ -2779,24 +2777,25 @@ static NSMutableSet<NSString *> *tapForInfoSet;
             }
             
             [self.messages addObject:message];
-            [self finishReceivingMessage];
+            [self.collectionView insertItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:(self.messages.count - 1) inSection:0]]];
+            if (self.messages.count > 1) {
+                [self.collectionView reloadItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:(self.messages.count - 2) inSection:0]]];
+            }
             
             [self updateUnreadMessagesLabel:unreads];
             
-            dispatch_async(dispatch_get_main_queue(), ^{
-                NSUInteger items = [self.collectionView numberOfItemsInSection:0];
-                NSUInteger visibleItems = self.collectionView.indexPathsForVisibleItems.count;
-                if (items > 1 && visibleItems > 0) {
-                    NSIndexPath *lastCellIndexPath = [NSIndexPath indexPathForItem:(items - 2) inSection:0];
-                    if ([self.collectionView.indexPathsForVisibleItems containsObject:lastCellIndexPath]) {
-                        [self scrollToBottomAnimated:YES];
-                    } else {
-                        [self showJumpToBottomWithMessage:AMLocalizedString(@"newMessages", @"Label in a button that allows to jump to the latest message")];
-                    }
-                } else {
+            NSUInteger items = [self.collectionView numberOfItemsInSection:0];
+            NSUInteger visibleItems = self.collectionView.indexPathsForVisibleItems.count;
+            if (items > 1 && visibleItems > 0) {
+                NSIndexPath *lastCellIndexPath = [NSIndexPath indexPathForItem:(items - 2) inSection:0];
+                if ([self.collectionView.indexPathsForVisibleItems containsObject:lastCellIndexPath]) {
                     [self scrollToBottomAnimated:YES];
+                } else {
+                    [self showJumpToBottomWithMessage:AMLocalizedString(@"newMessages", @"Label in a button that allows to jump to the latest message")];
                 }
-            });
+            } else {
+                [self scrollToBottomAnimated:YES];
+            }
             
             [self loadNodesFromMessage:message atTheBeginning:YES];
             break;
