@@ -87,8 +87,6 @@ static NSString *kisDirectory = @"kisDirectory";
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self.offlineTableView.tableView selector:@selector(reloadEmptyDataSet) name:kReachabilityChangedNotification object:nil];
 
     [[MEGASdkManager sharedMEGASdk] addMEGATransferDelegate:self];
     [[MEGASdkManager sharedMEGASdkFolder] addMEGATransferDelegate:self];
@@ -117,8 +115,6 @@ static NSString *kisDirectory = @"kisDirectory";
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    
-    [[NSNotificationCenter defaultCenter] removeObserver:self.offlineTableView.tableView name:kReachabilityChangedNotification object:nil];
 
     [[MEGASdkManager sharedMEGASdk] removeMEGATransferDelegate:self];
     [[MEGASdkManager sharedMEGASdkFolder] removeMEGATransferDelegate:self];
