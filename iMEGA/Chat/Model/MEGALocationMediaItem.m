@@ -6,7 +6,6 @@
 #import "JSQMessagesBubbleImageFactory.h"
 #import "JSQMessagesMediaViewBubbleImageMasker.h"
 
-//#import "Helper.h"
 #import "MEGAMessageGeoLocationView.h"
 #import "MEGAChatMessage+MNZCategory.h"
 #import "MEGASdkManager.h"
@@ -98,13 +97,9 @@
 }
 
 - (CGSize)mediaViewDisplaySize {
-    CGSize size;
-    if (UIDevice.currentDevice.iPhone4X || UIDevice.currentDevice.iPhone5X) {
-        size = CGSizeMake(220, 160);
-    } else {
-        size = CGSizeMake(260, 190);
-    }
-    return size;
+    CGFloat width = [UIDevice.currentDevice mnz_maxSideForChatBubbleWithMedia:YES];
+    CGFloat height = width / 1.375;
+    return CGSizeMake(width, height);
 }
 
 - (NSUInteger)mediaHash {

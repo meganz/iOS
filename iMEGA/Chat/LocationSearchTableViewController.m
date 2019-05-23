@@ -30,7 +30,7 @@
     NSString *firstSpace = (placemark.subThoroughfare && placemark.thoroughfare) ? @" " : @"";
     NSString *commna = ((placemark.subThoroughfare || placemark.thoroughfare) && (placemark.subAdministrativeArea || placemark.administrativeArea)) ? @", " : @"";
     NSString *secondSpace = (placemark.subAdministrativeArea && placemark.administrativeArea) ? @" " : @"";
-    NSString *address = [NSString stringWithFormat:@"%@%@%@%@%@%@%@", placemark.subThoroughfare ? placemark.subThoroughfare : @"", firstSpace, placemark.thoroughfare ? placemark.thoroughfare : @"", commna, placemark.locality ? placemark.locality : @"", secondSpace, placemark.administrativeArea ? placemark.administrativeArea : @""];
+    NSString *address = [NSString stringWithFormat:@"%@%@%@%@%@%@%@", placemark.subThoroughfare ?: @"", firstSpace, placemark.thoroughfare ?: @"", commna, placemark.locality ?: @"", secondSpace, placemark.administrativeArea ?: @""];
     
     return address;
 }

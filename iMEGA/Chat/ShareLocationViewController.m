@@ -21,7 +21,6 @@
 
 @property (nonatomic) CLLocationManager *locationManager;
 @property (nonatomic) id<MKAnnotation> annotation;
-@property (nonatomic, getter=isCurrentLocation) BOOL currentLocation;
 
 @property (nonatomic, strong) NSArray <MKMapItem *> *mapItems;
 
@@ -41,7 +40,6 @@
         self.locationManager.delegate = self;
         self.locationManager.desiredAccuracy = kCLLocationAccuracyBest;
         [self.locationManager startUpdatingLocation];
-        _currentLocation = YES;
     }
     
     UITapGestureRecognizer *gesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(sendGeolocation:)];
@@ -74,10 +72,6 @@
     [self.view addSubview:self.searchController.searchBar];
     
     self.navigationItem.title = AMLocalizedString(@"Send Location", @"Alert title shown when the user opens a shared Geolocation for the first time from any client, we will show a confirmation dialog warning the user that he is now leaving the E2EE paradigm");
-}
-
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -193,23 +187,21 @@
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray<CLLocation *> *)locations {
     MEGALogDebug(@"[Share Location] Did update locations %@", locations);
-    if (self.isCurrentLocation) {
-        self.currentLocation = NO;
-        
-        CLLocation *location = locations.lastObject;
-        CLLocationCoordinate2D center = CLLocationCoordinate2DMake(location.coordinate.latitude, location.coordinate.longitude);
-        MKCoordinateRegion region = MKCoordinateRegionMake(center, MKCoordinateSpanMake(0.01, 0.01));
-        
-        [self.mapView setRegion:region animated:YES];
-        
-        if (self.mapView.annotations.count != 0) {
-            self.annotation = self.mapView.annotations[0];
-        }
-        
-        MKPointAnnotation *pointAnnotation = [[MKPointAnnotation alloc] init];
-        pointAnnotation.coordinate = location.coordinate;
-        [self.mapView addAnnotation:pointAnnotation];
+    self.locationManager.delegate = nil;
+    
+    CLLocation *location = locations.lastObject;
+    CLLocationCoordinate2D center = CLLocationCoordinate2DMake(location.coordinate.latitude, location.coordinate.longitude);
+    MKCoordinateRegion region = MKCoordinateRegionMake(center, MKCoordinateSpanMake(0.01, 0.01));
+    
+    [self.mapView setRegion:region animated:YES];
+    
+    if (self.mapView.annotations.count != 0) {
+        self.annotation = self.mapView.annotations[0];
     }
+    
+    MKPointAnnotation *pointAnnotation = [[MKPointAnnotation alloc] init];
+    pointAnnotation.coordinate = location.coordinate;
+    [self.mapView addAnnotation:pointAnnotation];
 }
 
 #pragma mark - MKMapViewDelegate
