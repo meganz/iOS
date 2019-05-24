@@ -100,12 +100,16 @@
                                                                     </stackView>
                                                                 </subviews>
                                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                <gestureRecognizers/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="trailing" secondItem="R8r-Ee-A2h" secondAttribute="trailing" constant="17" id="17m-6U-h9Z"/>
                                                                     <constraint firstItem="R8r-Ee-A2h" firstAttribute="top" secondItem="ubW-Mb-xKj" secondAttribute="top" id="4GM-MI-Zmy"/>
                                                                     <constraint firstItem="R8r-Ee-A2h" firstAttribute="leading" secondItem="ubW-Mb-xKj" secondAttribute="leading" constant="17" id="H9p-fq-yOk"/>
                                                                     <constraint firstAttribute="bottom" secondItem="R8r-Ee-A2h" secondAttribute="bottom" id="huo-V4-cTg"/>
                                                                 </constraints>
+                                                                <connections>
+                                                                    <outletCollection property="gestureRecognizers" destination="LXG-D4-X6J" appends="YES" id="wXG-Pw-ypn"/>
+                                                                </connections>
                                                             </view>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="X8d-zZ-FvG" userLabel="Bottom Line View">
                                                                 <rect key="frame" x="0.0" y="220.5" width="375" height="1"/>
@@ -192,7 +196,7 @@
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NI8-o4-Q7N">
                                                 <rect key="frame" x="0.0" y="744.5" width="375" height="50"/>
                                                 <subviews>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="I1e-G7-G4T">
+                                                    <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="I1e-G7-G4T">
                                                         <rect key="frame" x="45" y="0.0" width="285" height="50"/>
                                                         <color key="backgroundColor" red="0.0" green="0.74901960779999999" blue="0.64705882349999999" alpha="1" colorSpace="calibratedRGB"/>
                                                         <constraints>
@@ -200,7 +204,7 @@
                                                         </constraints>
                                                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
                                                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                        <state key="normal" title="Button"/>
+                                                        <state key="normal" title="Next"/>
                                                         <userDefinedRuntimeAttributes>
                                                             <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
                                                                 <integer key="value" value="8"/>
@@ -212,7 +216,7 @@
                                                 <constraints>
                                                     <constraint firstItem="I1e-G7-G4T" firstAttribute="centerX" secondItem="NI8-o4-Q7N" secondAttribute="centerX" id="3q3-hO-anq"/>
                                                     <constraint firstItem="I1e-G7-G4T" firstAttribute="top" secondItem="NI8-o4-Q7N" secondAttribute="top" id="7hu-zH-ESt"/>
-                                                    <constraint firstAttribute="bottom" secondItem="I1e-G7-G4T" secondAttribute="bottom" id="X8t-SW-Mvz"/>
+                                                    <constraint firstAttribute="bottom" secondItem="I1e-G7-G4T" secondAttribute="bottom" priority="999" id="X8t-SW-Mvz"/>
                                                     <constraint firstItem="I1e-G7-G4T" firstAttribute="leading" secondItem="NI8-o4-Q7N" secondAttribute="leading" constant="45" id="Z76-Xv-1Im"/>
                                                 </constraints>
                                             </view>
@@ -235,6 +239,9 @@
                                     <constraint firstItem="IHf-02-cch" firstAttribute="top" secondItem="M42-td-cIX" secondAttribute="top" id="nq1-3l-VGv"/>
                                     <constraint firstAttribute="trailing" secondItem="IHf-02-cch" secondAttribute="trailing" id="vFA-dr-zaQ"/>
                                 </constraints>
+                                <connections>
+                                    <outlet property="delegate" destination="RUe-vS-5fH" id="P1K-cX-Fba"/>
+                                </connections>
                             </scrollView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -243,16 +250,24 @@
                             <constraint firstAttribute="bottom" secondItem="M42-td-cIX" secondAttribute="bottom" id="M6L-g5-5ba"/>
                             <constraint firstItem="M42-td-cIX" firstAttribute="leading" secondItem="XDB-18-aEe" secondAttribute="leading" id="TgH-83-10s"/>
                             <constraint firstItem="XDB-18-aEe" firstAttribute="trailing" secondItem="M42-td-cIX" secondAttribute="trailing" id="YQT-mY-Nib"/>
-                            <constraint firstItem="IHf-02-cch" firstAttribute="height" secondItem="xLd-8O-fwZ" secondAttribute="height" priority="749" id="wDW-Ko-4GY"/>
+                            <constraint firstItem="IHf-02-cch" firstAttribute="height" secondItem="xLd-8O-fwZ" secondAttribute="height" priority="700" id="wDW-Ko-4GY"/>
                             <constraint firstItem="M42-td-cIX" firstAttribute="top" secondItem="xLd-8O-fwZ" secondAttribute="top" id="yxN-0i-L6A"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="XDB-18-aEe"/>
                     </view>
                     <connections>
+                        <outlet property="headerImageView" destination="ztT-na-Kbt" id="zu4-VM-HYV"/>
+                        <outlet property="nextButton" destination="I1e-G7-G4T" id="EPH-1V-DNh"/>
+                        <outlet property="nextButtonBottomConstraint" destination="X8t-SW-Mvz" id="d5M-5n-UFF"/>
                         <outlet property="scrollView" destination="M42-td-cIX" id="PoP-Iu-ekT"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9X5-LV-PaM" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="LXG-D4-X6J">
+                    <connections>
+                        <action selector="didTapCountryView" destination="RUe-vS-5fH" id="THh-RK-RmR"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="79.710144927536234" y="-588.61607142857144"/>
         </scene>
