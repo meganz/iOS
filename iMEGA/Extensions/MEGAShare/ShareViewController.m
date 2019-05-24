@@ -907,7 +907,7 @@ void uncaughtExceptionHandler(NSException *exception) {
         }]];
         [self presentViewController:alertController animated:YES completion:nil];
     } else {
-        [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"Shared successfully", @"Success message shown when the user has successfully shared something through the Share Extension")];
+        [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"Shared successfully", @"Success message shown when the user has successfully shared something")];
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             [self dismissWithCompletionHandler:^{
                 [self.extensionContext completeRequestReturningItems:@[] completionHandler:nil];
