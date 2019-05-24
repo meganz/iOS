@@ -1,6 +1,8 @@
 
 #import "MEGASdk+MNZCategory.h"
 #import "UIApplication+MNZCategory.h"
+#import "MEGANavigationController.h"
+#import "MEGA-Swift.h"
 #import <objc/runtime.h>
 
 static const void *mnz_accountDetailsKey = &mnz_accountDetailsKey;
@@ -27,8 +29,12 @@ static const void *mnz_accountDetailsKey = &mnz_accountDetailsKey;
     AccountSuspensionType suspensionType = (AccountSuspensionType)event.number;
     SMSState state = [self smsAllowedState];
     if (suspensionType == AccountSuspensionTypeSMSVerification && state != SMSStateNotAllowed) {
+        if ([UIApplication.mnz_presentingViewController isKindOfClass:[SMSNavigationViewController class]]) {
+            return;
+        }
+        
         UIViewController *verificationController = [[UIStoryboard storyboardWithName:@"SMSVerification" bundle:nil] instantiateInitialViewController];
-        UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:verificationController];
+        UINavigationController *navigationController = [[SMSNavigationViewController alloc] initWithRootViewController:verificationController];
         
         [UIApplication.mnz_presentingViewController presentViewController:navigationController animated:YES completion:nil];
     } else {
