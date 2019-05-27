@@ -552,9 +552,10 @@ static const NSUInteger MaximumPhotoUploadBatchCountMultiplier = 2;
     BOOL hasPendingOperation = NO;
     for (NSOperation *operation in queue.operations) {
         if ([operation isKindOfClass:[CameraUploadOperation class]]) {
-            if (!operation.isFinished && [[(CameraUploadOperation *)operation uploadInfo].savedLocalIdentifier isEqualToString:uploadOperation.uploadInfo.savedLocalIdentifier]) {
+            CameraUploadOperation *queuedUpOperation = (CameraUploadOperation *)operation;
+            if (!queuedUpOperation.isFinished && [queuedUpOperation.uploadInfo.savedLocalIdentifier isEqualToString:uploadOperation.uploadInfo.savedLocalIdentifier]) {
                 hasPendingOperation = YES;
-                MEGALogError(@"[Camera Upload] has pending operation %@", operation);
+                MEGALogError(@"[Camera Upload] has pending operation %@", queuedUpOperation);
                 break;
             }
         }
