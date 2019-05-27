@@ -288,20 +288,20 @@ static const NSUInteger MaximumPhotoUploadBatchCountMultiplier = 2;
     return _backgroundUploadingTaskMonitor;
 }
 
-- (void)setPausePhotoUpload:(BOOL)pausePhotoUpload {
-    if (_pausePhotoUpload != pausePhotoUpload) {
-        _pausePhotoUpload = pausePhotoUpload;
-        if (!pausePhotoUpload) {
+- (void)setPhotoUploadPaused:(BOOL)photoUploadPaused {
+    if (_photoUploadPaused != photoUploadPaused) {
+        _photoUploadPaused = photoUploadPaused;
+        if (!photoUploadPaused) {
             MEGALogDebug(@"[Camera Upload] resume camera upload");
             [self startCameraUploadIfNeeded];
         }
     }
 }
 
-- (void)setPauseVideoUpload:(BOOL)pauseVideoUpload {
-    if (_pauseVideoUpload != pauseVideoUpload) {
-        _pauseVideoUpload = pauseVideoUpload;
-        if (!pauseVideoUpload) {
+- (void)setVideoUploadPaused:(BOOL)videoUploadPaused {
+    if (_videoUploadPaused != videoUploadPaused) {
+        _videoUploadPaused = videoUploadPaused;
+        if (!videoUploadPaused) {
             MEGALogDebug(@"[Camera Upload] resume video upload");
             [self startVideoUploadIfNeeded];
         }
@@ -598,7 +598,7 @@ static const NSUInteger MaximumPhotoUploadBatchCountMultiplier = 2;
     [self.diskSpaceDetector stopDetectingPhotoUpload];
     [self.concurrentCountCalculator stopCalculatingConcurrentCount];
     [self.backgroundUploadingTaskMonitor stopMonitoringBackgroundUploadingTasks];
-    _pausePhotoUpload = NO;
+    _photoUploadPaused = NO;
     _storageState = StorageStateGreen;
     [TransferSessionManager.shared invalidateAndCancelPhotoSessions];
     [self.cameraScanner unobservePhotoLibraryChanges];
@@ -610,7 +610,7 @@ static const NSUInteger MaximumPhotoUploadBatchCountMultiplier = 2;
     CameraUploadManager.videoUploadEnabled = NO;
     [self cancelVideoUploadOperations];
     [self.diskSpaceDetector stopDetectingVideoUpload];
-    _pauseVideoUpload = NO;
+    _videoUploadPaused = NO;
     [TransferSessionManager.shared invalidateAndCancelVideoSessions];
 }
 
@@ -618,14 +618,14 @@ static const NSUInteger MaximumPhotoUploadBatchCountMultiplier = 2;
 
 - (void)pauseCameraUploadIfNeeded {
     if (CameraUploadManager.isCameraUploadEnabled) {
-        self.pausePhotoUpload = YES;
-        self.pauseVideoUpload = YES;
+        self.photoUploadPaused = YES;
+        self.videoUploadPaused = YES;
     }
 }
 
 - (void)resumeCameraUpload {
-    self.pausePhotoUpload = NO;
-    self.pauseVideoUpload = NO;
+    self.photoUploadPaused = NO;
+    self.videoUploadPaused = NO;
 }
 
 #pragma mark - suspend and unsuspend camera upload
