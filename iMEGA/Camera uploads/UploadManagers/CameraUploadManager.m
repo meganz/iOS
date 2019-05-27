@@ -506,9 +506,7 @@ static const NSUInteger MaximumPhotoUploadBatchCountMultiplier = 2;
     } else {
         statuses = AssetUploadStatus.statusesReadyToQueueUp;
     }
-    if (MEGAReachabilityManager.isReachable) {
-        statuses = AssetUploadStatus.allStatusesToQueueUp;
-    }
+    
     NSArray *records = [CameraUploadRecordManager.shared queueUpUploadRecordsByStatuses:statuses fetchLimit:count mediaType:mediaType error:nil];
     if (records.count == 0) {
         MEGALogInfo(@"[Camera Upload] no more local asset to upload for media type %li", (long)mediaType);
