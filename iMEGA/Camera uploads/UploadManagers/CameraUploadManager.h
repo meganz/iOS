@@ -10,8 +10,8 @@ NS_ASSUME_NONNULL_BEGIN
 @interface CameraUploadManager : NSObject
 
 @property (readonly) BOOL isNodeTreeCurrent;
-@property (nonatomic, getter=isPhotoUploadPaused) BOOL pausePhotoUpload;
-@property (nonatomic, getter=isVideoUploadPaused) BOOL pauseVideoUpload;
+@property (nonatomic, getter=isPhotoUploadPaused) BOOL photoUploadPaused;
+@property (nonatomic, getter=isVideoUploadPaused) BOOL videoUploadPaused;
 @property (readonly) BOOL isDiskStorageFull;
 
 /**
