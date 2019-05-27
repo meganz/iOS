@@ -500,7 +500,12 @@ static const NSUInteger MaximumPhotoUploadBatchCountMultiplier = 2;
 - (void)uploadAssetsForMediaType:(PHAssetMediaType)mediaType concurrentCount:(NSUInteger)count {
     MEGALogDebug(@"[Camera Upload] photo count %lu concurrent %ld, video count %lu concurrent %ld", (unsigned long)self.photoUploadOperationQueue.operationCount, (long)self.photoUploadOperationQueue.maxConcurrentOperationCount, (unsigned long)self.videoUploadOperationQueue.operationCount, (long)self.videoUploadOperationQueue.maxConcurrentOperationCount);
     
-    NSArray<NSNumber *> *statuses = AssetUploadStatus.statusesReadyToQueueUp;
+    NSArray<NSNumber *> *statuses;
+    if (MEGAReachabilityManager.isReachable) {
+        statuses = AssetUploadStatus.allStatusesToQueueUp;
+    } else {
+        statuses = AssetUploadStatus.statusesReadyToQueueUp;
+    }
     if (MEGAReachabilityManager.isReachable) {
         statuses = AssetUploadStatus.allStatusesToQueueUp;
     }
