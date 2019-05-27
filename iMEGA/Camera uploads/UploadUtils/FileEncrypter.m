@@ -38,16 +38,19 @@ static const NSUInteger EncryptionProposedChunkSizeWithoutTruncating = 1024 * 10
 - (void)encryptFileAtURL:(NSURL *)fileURL completion:(void (^)(BOOL success, unsigned long long fileSize, NSDictionary<NSString *, NSURL *> *chunkURLsKeyedByUploadSuffix, NSError *error))completion {
     NSError *error;
     [NSFileManager.defaultManager createDirectoryAtPath:self.outputDirectoryURL.path withIntermediateDirectories:YES attributes:nil error:&error];
-    
-    NSDictionary<NSFileAttributeKey, id> *attributeDict = [NSFileManager.defaultManager attributesOfItemAtPath:fileURL.path error:&error];
-    
-    self.fileSize = attributeDict.fileSize;
-    unsigned long long deviceFreeSize = [NSFileManager.defaultManager deviceFreeSize];
-    
     if (error) {
         completion(NO, 0, nil, error);
         return;
     }
+    
+    NSDictionary<NSFileAttributeKey, id> *attributeDict = [NSFileManager.defaultManager attributesOfItemAtPath:fileURL.path error:&error];
+    if (error) {
+        completion(NO, 0, nil, error);
+        return;
+    }
+    
+    self.fileSize = attributeDict.fileSize;
+    unsigned long long deviceFreeSize = [NSFileManager.defaultManager deviceFreeSize];
     
     if (self.shouldTruncateFile) {
         if (deviceFreeSize < EncryptionMinimumChunkSize) {
