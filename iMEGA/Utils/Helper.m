@@ -772,8 +772,6 @@ static MEGAIndexer *indexer;
     } else if ([cell isKindOfClass:[PhotoCollectionViewCell class]]) {
         PhotoCollectionViewCell *photoCollectionViewCell = cell;
         [photoCollectionViewCell.thumbnailImageView setImage:[UIImage imageWithContentsOfFile:thumbnailFilePath]];
-        photoCollectionViewCell.thumbnailPlayImageView.hidden = !node.name.mnz_isVideoPathExtension;
-        photoCollectionViewCell.thumbnailVideoOverlayView.hidden = !(node.name.mnz_isVideoPathExtension && node.duration>-1);
     }
     
     if (reindex) {
