@@ -59,7 +59,7 @@
     long long totalNumberOfVersions = [[[MEGASdkManager sharedMEGASdk] mnz_accountDetails] numberOfVersionFilesForHandle:[[[MEGASdkManager sharedMEGASdk] rootNode] handle]];
     self.fileVersionsDetailLabel.text = [NSString stringWithFormat:@"%lld", totalNumberOfVersions];
     
-    self.deleteOldVersionsLabel.text = AMLocalizedString(@"Delete old versions", @"Text of a button which deletes all historical versions of files in the users entire account.");
+    self.deleteOldVersionsLabel.text = AMLocalizedString(@"Delete previous versions", @"Text of a button which deletes all historical versions of files in the users entire account.");
     
     [[MEGASdkManager sharedMEGASdk] addMEGAGlobalDelegate:self];
     

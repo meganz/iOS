@@ -113,7 +113,7 @@
 /*  */
 "passwordStrong"="Dit wachtwoord zal de meest geavanceerde brute-force aanvallen weerstaan. Zorg ervoor dat u deze goed onthoudt.";
 /*  */
-"agreeWithTheMEGATermsOfService"="Ik ga akkoord met de MEGA <a href='terms'>Algemene Voorwaarden</a>";
+"agreeWithTheMEGATermsOfService"="Ik ga akkoord met de MEGA <a href=\"terms\">Algemene Overeenkomst</a>";
 /* Error text shown when you have not entered a correct name */
 "nameInvalidFormat"="Vul uw naam in";
 /* Error text shown when you have not written the same password */
@@ -368,6 +368,8 @@
 "tapFileToRename"="Tik bestand om te hernoemen";
 /* */
 "sendToContact"="Stuur naar contact";
+/* Column header of my contacts/chats at copy dialog */
+"My chats"="Mijn gesprekken";
 /* Toast text upon sending a single file to chat */
 "fileSentToChat"="Bestand verstuurd naar gesprek";
 /* Success message when the attachment has been sent to a many chats */
@@ -1188,7 +1190,7 @@
 /* Alert message shown when a chat does not exist */
 "chatNotFound"="Chat niet gevonden";
 /* A typing indicator in the chat. Please leave the %@ which will be automatically replaced with the user's name at runtime. */
-"isTyping"="%@ is aan het typen..";
+"isTyping"="%@ is aan het typen...";
 /* Plural, a hint that appears when two users are typing in a group chat at the same time. The parameter will be the concatenation of both user names. The tags and placeholders shouldn't be translated or modified. */
 "twoUsersAreTyping"="%1$s [A]zijn aan het schrijven.....[/A]";
 /* text that appear when there are more than 2 people writing at that time in a chat. For example User1, user2 and more are typing... The parameter will be the concatenation of the first two user names. The tags and placeholders shouldn't be translated or modified. */
@@ -1277,6 +1279,8 @@
 "shareExtensionUnsupportedAssets"="Sommige items konden niet gedeeld worden in MEGA";
 /* Message shown to the user when the share extension is about to be killed by iOS due to a memory issue */
 "Limited system resources are available when sharing items. Try uploading these files from within the MEGA app."="Gelimiteerde systeem middelen zijn beschikbaar bij het delen van items. Probeer deze bestanden te uploaden vanuit de MEGA applicatie.";
+/* Success message shown when the user has successfully shared something */
+"Shared successfully"="Correct gedeeld";
 /* Notification message shown when a transfer failed. Keep colon. */
 "Transfer failed:"="Overdracht mislukt:";
 /* MEGAError */
@@ -1599,7 +1603,7 @@
 /* Title shown in a page of the on boarding screens explaining that the user can add contacts to chat and colaborate */
 "Create your Network"="Creëer uw Netwerk";
 /* Description shown in a page of the onboarding screens explaining contacts */
-"Add contacts, create a network, colaborate, make voice and video calls without ever leaving MEGA"="Contacten toevoegen, creëer een netwerk, samenwerken, maak spraak en video gesprekken zonder ooit MEGA te verlaten";
+"Add contacts, create a network, colaborate, make voice and video calls without ever leaving MEGA"="Contacten toevoegen, netwerk creëren, samenwerken, en spraak en video oproepen maken zonder MEGA ooit  te verlaten";
 /* Title shown in a page of the on boarding screens explaining that the user can backup the photos automatically */
 "Your Photos in the Cloud"="Uw Foto's in de Cloud";
 /* Description shown in a page of the onboarding screens explaining the camera uploads feature */
@@ -1619,7 +1623,7 @@
 /* Title label that explains that the user is going to be asked for the microphone and camera permission */
 "Enable Microphone and Camera"="Microfoon en Camera inschakelen";
 /* Detailed explanation of why the user should give permission to access to the camera and the microphone */
-"To make encrypted voice and video calls, allow MEGA access to your Camera and Microphone"="Om gecodeerde gesprek en video oproepen te maken, verleen MEGA toegang tot uw Camera en Microfoon";
+"To make encrypted voice and video calls, allow MEGA access to your Camera and Microphone"="Om spraak notities te sturen en gecodeerde spraak en video oproepen te maken, geef MEGA toestemming tot gebruik van uw Camera en Microfoon.";
 /* Title label that explains that the user is going to be asked for the notifications permission */
 "Enable Notifications"="Notificaties inschakelen";
 /* Detailed explanation of why the user should give permission to deliver notifications */
@@ -1641,7 +1645,7 @@
 /* The title of the section about deleting file versions in the settings. */
 "Delete all older versions of my files"="Verwijder alle oudere versies van mijn bestanden";
 /* Text of a button which deletes all historical versions of files in the users entire account. */
-"Delete old versions"="Verwijder oudere versies";
+"Delete previous versions"="Verwijder vorige versies";
 /* A warning note about deleting all file versions in the settings section. */
 "All current files will remain. Only historic versions of your files will be deleted."="Alle huidige bestanden blijven behouden. Alleen oudere versies van uw bestanden worden verwijderd.";
 /* Text of the dialog to delete all the file versions of the account */
@@ -1664,8 +1668,6 @@
 "%@ joined the call."="%@ heeft zich toegevoegd tot de oproep.";
 /* Message to inform the local user that someone has left the current group call */
 "%@ left the call."="%@ heeft de oproep verlaten.";
-/* Message to inform the local user is having a bad quality network with someone in the current group call */
-"Poor conection."="Slechte verbinding";
 /* Message shown in a chat room when there is an active group call */
 "There is an active group call. Tap to join."="Er is een actieve groep oproep. Tik om mee te doen.";
 /* Message shown in a chat room when there is an active call */
@@ -1685,13 +1687,13 @@
 /* Title shown in a cell to allow the users enable the 'Encrypted Key Rotation' */
 "Enable Encrypted Key Rotation"="Gecodeerde Sleutel Rotatie Inschakelen";
 /* Label in a cell where you can get the chat link */
-"Get Chat Link"="Krijg Gesprekskoppeling";
+"Get Chat Link"="Haal gesprekslink";
 /* Footer text to explain what means 'Encrypted Key Rotation' */
 "Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages."="Sleutel rotatie is iets veiliger, maar u kunt geen koppeling naar het gesprek creëren en nieuwe deelnemers kunnen geen berichten uit het verleden zien.";
 /* Shown as an error message when the user selects "create chat link", but haven't entered a title for the newly created room */
 "To create a chat link you must name the group."="Om een gespreklink te creëren moet u de groep een naam geven.";
 /* Label shown in a cell where you can enable a switch to get a chat link */
-"Chat Link"="Gesprekskoppeling";
+"Chat Link"="Gesprekslink";
 /* Message shown when there is an active chat link that can be deleted */
 "Delete Chat Link"="Verwijder Gesprekskoppeling";
 /* Button text in public chat previews that allows the user to join the chat */
@@ -1701,7 +1703,7 @@
 /* Users previewing a public chat */
 "Observers"="Waarnemers";
 /* Alert message shown while deleting a chat link, warning about the consequences */
-"This conversation will no longer be accessible through the link you are about to delete."="Deze conversatie blijft niet langer toegankelijk via de gesprekslink zodra het is verwijderd.";
+"This conversation will no longer be accessible through the link you are about to delete."="Dit gesprek blijft niet langer toegankelijk via de gesprekslink zodra het is verwijderd.";
 /* Management message shown in a chat when the user %@ enables the 'Encrypted Key Rotation' */
 "%@ enabled Encrypted Key Rotation"="%@ ingeschakelde Gecodeerde Sleutel Rotatie.";
 /* Management message shown in a chat when the user %@ creates a public link for the chat */
@@ -1718,10 +1720,6 @@
 "List view"="Lijstweergave";
 /* Text shown for switching from list view to thumbnail view. */
 "Thumbnail view"="Miniatuurweergave";
-/* Message to inform the local user that someone has joined the current group call */
-"%@ joined the call."="%@ heeft zich toegevoegd tot de oproep.";
-/* Message to inform the local user that someone has left the current group call */
-"%@ left the call."="%@ heeft de oproep verlaten.";
 /* Message to inform the local user is having a bad quality network with someone in the current group call */
 "Poor connection."="Slechte verbinding";
 /* Message shown in a chat room when there is an active group call */
@@ -1808,6 +1806,8 @@
 "Your publicly shared %1 (%2) has been taken down."="Uw publiekelijk gedeelde %1 (%2) is weggehaald.";
 /* The text of a notification indicating that a file or folder that was taken down has now been restored due to a successful counter-notice. The %1 placeholder will be replaced with the text ‘file’ or ‘folder’. The %2 will be replaced with the name of the file or folder. */
 "Your taken down %1 (%2) has been reinstated."="Uw weggehaalde %1 (%2) is hersteld.";
+/* Text shown when a notification or the last message of a chat corresponds to a voice clip */
+"Voice message"="Voice message";
 /* Error message shown to user when a copy/import operation would take them over their storage limit. */
 "This action can not be completed as it would take you over your current storage limit"="Deze actie kan niet worden voltooid omdat het u over de huidige opslaglimiet brengt.";
 /* uploads over storage quota warning dialog title */
@@ -1824,10 +1824,34 @@
 "Today"="Vandaag";
 /* */
 "Yesterday"="Gisteren";
+/* Title of the button to share a location in a chat */
+"Send This Location"="Send This Location";
+/* Title of the alert that allows change between different maps: Standard, Satellite or Hybrid. */
+"Map settings"="Map settings";
+/* Type of data displayed in a map view. A street map that shows the position of all roads and some road names. */
+"Standard"="Standaard";
+/* Type of data displayed in a map view. Satellite imagery of the area. */
+"Satellite"="Satellite";
+/* Type of data displayed in a map view. A satellite image of the area with road and road name information layered on top. */
+"Hybrid"="Hybrid";
+/* Label to give feedback to the user when he is going to share his location, indicating that it may not be the exact location. */
+"Accurate to %d meters"="Accurate to %d meters";
+/* Alert title shown when the user opens a shared Geolocation for the first time from any client, we will show a confirmation dialog warning the user that he is now leaving the E2EE paradigm. */
+"Send Location"="Send Location";
+/* Message shown when the user opens a shared Geolocation for the first time from any client, we will show a confirmation dialog warning the user that he is now leaving the E2EE paradigm. */
+"This location will be opened using a third party maps provider outside the end-to-end encrypted MEGA platform."="This location will be opened using a third party maps provider outside the end-to-end encrypted MEGA platform.";
+/* Text shown in location-type messages */
+"Pinned Location"="Pinned Location";
 /* Plural of participant. 2 participants */
 "%d participants"="%d deelnemers";
 /* Singular of participant. 1 participant */
 "%d participant"="%d deelnemer";
+/* Text shown in the chat toolbar while the user is recording a voice clip. The < character should be > in RTL languages. */
+"< Slide to cancel"="< Slide to cancel";
+/* First part of the string 'Tap and hold <icon> to record, release to send'. There is a microphone icon between the two parts of the string. */
+"Tap and hold"="Tap and hold";
+/* Second part of the string 'Tap and hold <icon> to record, release to send'. There is a microphone icon between the two parts of the string. */
+"to record, release to send"="to record, release to send";
 /* Text to inform the user there is an active call and is not participating */
 "Ongoing Call"="Lopend Gesprek";
 /* Message shown when there is an ongoing call and the user tries to play an audio or video */
@@ -1848,14 +1872,6 @@
 "New Chat Link"="Nieuwe Gesprek Link";
 /* Text button for init a group chat */
 "New group chat"="Nieuw groep gesprek";
-/* Shown when an invalid/inexisting/not-available-anymore chat link is opened. */
-"Chat link unavailable"="Gesprekslink onbeschikbaar";
-/* Shown when an inexisting/unavailable/removed link is tried to be opened. */
-"This chat link is no longer available"="Deze gesprekslink is niet langer beschikbaar";
-/* Text explaining users how the chat links work. */
-"People can join your group by using this link."="Personen kunnen aansluiten tot uw groep door deze koppeling te gebruiken.";
-/* Subtitle shown in a chat to inform where to tap to enter in the chat details view */
-"Tap here for info"="Tik hier voor informatie";
 /* Title for the recents section. */
 "Recents"="Recent";
 /* Multiple Images title shown in recents section of webclient */
@@ -1866,6 +1882,8 @@
 "1 Image and 1 Video"="1 Afbeelding en 1 Video";
 /* One image and multiple videos title in recents. */
 "1 Image and %2 Videos"="1 Afbeelding en %2 Video's";
+/* Multiple images and 1 video */
+"%1 Images and 1 Video"="%1 Afbeeldingen en 1 Video";
 /* Title for multiple images and multiple videos in recents section */
 "%1 Images and %2 Videos"="%1 Afbeeldingen en %2 Video's";
 /* Tooltip message shown on recents section. Please see the attached image. */
@@ -1873,16 +1891,20 @@
 /* Title for a recent action shown in the webclient, see the attached image for context. */
 "%1 modified by %3"="%1 gewijzigd door %3";
 /* Title for a recent action shown in the webclient, see the attached image for context. Please ensure that the `%2 more` is inside the [A] tag as this will become a toggle to show the hidden content. */
-"%1 and [A]%2 more[/A] modified by %3"="%1 en [A]%2 meer [/A] gewijzigd door %3";
-/* Title for a recent action shown in the webclient, see the attached image for context. Please ensure that the `%2 more` is inside the [A] tag as this will become a toggle to show the hidden content. */
 "%1 and [A]%2 more[/A]"="%1 en [A]%2 meer[/A]";
 /* Title for a recent action shown in the webclient, see the attached image for context. */
 "%1 created by %3"="%1 gecreëerd door %3";
-/* Title for a recent action shown in the webclient, see the attached image for context. Please ensure that the `%2 more` is inside the [A] tag as this will become a toggle to show the hidden content. */
-"%1 and [A]%2 more[/A] created by %3"="%1 en [A]%2 meer[/A] gecreëerd door %3";
 /* Message shown when the user has not recent activity in their account. */
 "No recent activity"="Geen recente activiteit";
 /* Plural of items which contains a folder. 2 items */
 "items"="items";
+/* Shown when an invalid/inexisting/not-available-anymore chat link is opened. */
+"Chat link unavailable"="Gesprekslink onbeschikbaar";
+/* Shown when an inexisting/unavailable/removed link is tried to be opened. */
+"This chat link is no longer available"="Deze gesprekslink is niet langer beschikbaar";
+/* Text explaining users how the chat links work. */
+"People can join your group by using this link."="Personen kunnen aansluiten tot uw groep door deze koppeling te gebruiken.";
+/* Subtitle shown in a chat to inform where to tap to enter in the chat details view */
+"Tap here for info"="Tik hier voor informatie";
 /* In some cases, a user may try to get the link for a chat room, but if such is not set by an operator - it would say "not link available" and not auto create it. */
 "No chat link available."="Geen Gesprekslink beschikbaar.";

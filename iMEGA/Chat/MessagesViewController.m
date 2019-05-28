@@ -130,7 +130,6 @@ static NSMutableSet<NSString *> *tapForInfoSet;
 
 @property (nonatomic) BOOL loadingState;
 
-@property (nonatomic) NSString *typingString;
 @property (nonatomic) NSString *lastGreenString;
 
 @end
@@ -595,8 +594,6 @@ static NSMutableSet<NSString *> *tapForInfoSet;
         } else if (self.chatRoom.archived) {
             self.navigationStatusView.hidden = YES;
             chatRoomState = AMLocalizedString(@"archived", @"Title of flag of archived chats.");
-        } else if (self.typingString) {
-            chatRoomState = self.typingString;
         } else {
             if (self.chatRoom.isGroup) {
                 if (self.chatRoom.hasCustomTitle) {
@@ -1311,37 +1308,25 @@ static NSMutableSet<NSString *> *tapForInfoSet;
 }
 
 - (void)setTypingIndicator {
-    switch (self.whoIsTypingTimersMutableDictionary.allKeys.count) {
-        case 0:
-            self.typingString = nil;
-            break;
-            
-        case 1: {
-            NSNumber *firstUserHandle = [self.whoIsTypingTimersMutableDictionary.allKeys objectAtIndex:0];
-            NSString *firstUserName =  [self.chatRoom peerFirstnameByHandle:firstUserHandle.unsignedLongLongValue];
-            
-            self.typingString = [NSString stringWithFormat:AMLocalizedString(@"isTyping", @"A typing indicator in the chat. Please leave the %@ which will be automatically replaced with the user's name at runtime."), (firstUserName.length ? firstUserName : [self.chatRoom peerEmailByHandle:firstUserHandle.unsignedLongLongValue])];
-            break;
-        }
-            
-        case 2: {
-            self.typingString = [self twoOrMoreUsersAreTypingString];
-            break;
-        }
-            
-        default: {
-            if (self.whoIsTypingTimersMutableDictionary.allKeys.count > 2) {
-                self.typingString = [self twoOrMoreUsersAreTypingString];
-            } else {
-                self.typingString = nil;
-            }
-            break;
-        }
+    NSString *typingString = nil;
+    NSMutableAttributedString *typingAttributedString = nil;
+    if (self.whoIsTypingTimersMutableDictionary.allKeys.count >= 2) {
+        typingAttributedString = [self twoOrMoreUsersAreTypingString];
+    } else if (self.whoIsTypingTimersMutableDictionary.allKeys.count == 1) {
+        NSNumber *firstUserHandle = [self.whoIsTypingTimersMutableDictionary.allKeys objectAtIndex:0];
+        NSString *firstUserName = [self.chatRoom peerFirstnameByHandle:firstUserHandle.unsignedLongLongValue];
+        NSString *whoIsTypingString = firstUserName.length ? firstUserName : [self.chatRoom peerEmailByHandle:firstUserHandle.unsignedLongLongValue];
+        
+        typingString = [NSString stringWithFormat:AMLocalizedString(@"isTyping", @"A typing indicator in the chat. Please leave the %@ which will be automatically replaced with the user's name at runtime."), whoIsTypingString];
+        
+        typingAttributedString = [[NSMutableAttributedString alloc] initWithString:typingString];
+        [typingAttributedString addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:10 weight:UIFontWeightBold] range:NSMakeRange(0, whoIsTypingString.length)];
     }
-    [self customNavigationBarLabel];
+    
+    [self.inputToolbar mnz_setTypingIndicatorAttributedText:typingAttributedString];
 }
 
-- (NSString *)twoOrMoreUsersAreTypingString {
+- (NSMutableAttributedString *)twoOrMoreUsersAreTypingString {
     NSNumber *firstUserHandle = [self.whoIsTypingTimersMutableDictionary.allKeys objectAtIndex:0];
     NSNumber *secondUserHandle = [self.whoIsTypingTimersMutableDictionary.allKeys objectAtIndex:1];
     
@@ -1358,7 +1343,11 @@ static NSMutableSet<NSString *> *tapForInfoSet;
         twoOrMoreUsersAreTypingString = [AMLocalizedString(@"moreThanTwoUsersAreTyping", @"text that appear when there are more than 2 people writing at that time in a chat. For example User1, user2 and more are typing... The parameter will be the concatenation of the first two user names. Please do not translate or modify the tags or placeholders.") mnz_removeWebclientFormatters];
     }
     
-    return [twoOrMoreUsersAreTypingString stringByReplacingOccurrencesOfString:@"%1$s" withString:whoIsTypingString];
+    NSString *typingString = [twoOrMoreUsersAreTypingString stringByReplacingOccurrencesOfString:@"%1$s" withString:whoIsTypingString];
+    NSMutableAttributedString *typingAttributedString = [[NSMutableAttributedString alloc] initWithString:typingString];
+    [typingAttributedString addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:10 weight:UIFontWeightBold] range:NSMakeRange(0, whoIsTypingString.length)];
+    
+    return typingAttributedString;
 }
 
 - (void)removeUserHandleFromTypingIndicator:(NSNumber *)userHandle {
@@ -1478,9 +1467,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
     
     MEGALogInfo(@"didPressSendButton %@", message);
     
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [self finishSendingMessageAnimated:YES];
-    });
+    [self finishSendingMessageAnimated:YES];
     
     [[MEGASdkManager sharedMEGAChatSdk] sendStopTypingNotificationForChat:self.chatRoom.chatId];
     
@@ -1794,6 +1781,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
 }
 
 - (void)messagesInputToolbar:(MEGAInputToolbar *)toolbar didPressSendButton:(UIButton *)sender toAttachAssets:(NSArray<PHAsset *> *)assets {
+    MEGALogDebug(@"[Chat] Did press send button to attach assets %@", assets);
     MEGANode *parentNode = [[MEGASdkManager sharedMEGASdk] nodeForPath:@"/My chat files"];
     if (parentNode) {
         [self uploadAssets:assets toParentNode:parentNode];
@@ -1833,6 +1821,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
         });
     }];
     dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^(void) {
+        processAsset.originalName = YES;
         [processAsset prepare];
     });
 }
@@ -2647,7 +2636,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
 
 #pragma mark - MEGAPhotoBrowserDelegate
 
-- (void)photoBrowser:(MEGAPhotoBrowserViewController *)photoBrowser willDismissWithNode:(MEGANode *)node {
+- (void)didDismissPhotoBrowser:(MEGAPhotoBrowserViewController *)photoBrowser {
     [self setLastMessageAsSeen];
 }
 
@@ -2700,24 +2689,25 @@ static NSMutableSet<NSString *> *tapForInfoSet;
             }
             
             [self.messages addObject:message];
-            [self finishReceivingMessage];
+            [self.collectionView insertItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:(self.messages.count - 1) inSection:0]]];
+            if (self.messages.count > 1) {
+                [self.collectionView reloadItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:(self.messages.count - 2) inSection:0]]];
+            }
             
             [self updateUnreadMessagesLabel:unreads];
             
-            dispatch_async(dispatch_get_main_queue(), ^{
-                NSUInteger items = [self.collectionView numberOfItemsInSection:0];
-                NSUInteger visibleItems = self.collectionView.indexPathsForVisibleItems.count;
-                if (items > 1 && visibleItems > 0) {
-                    NSIndexPath *lastCellIndexPath = [NSIndexPath indexPathForItem:(items - 2) inSection:0];
-                    if ([self.collectionView.indexPathsForVisibleItems containsObject:lastCellIndexPath]) {
-                        [self scrollToBottomAnimated:YES];
-                    } else {
-                        [self showJumpToBottomWithMessage:AMLocalizedString(@"newMessages", @"Label in a button that allows to jump to the latest message")];
-                    }
-                } else {
+            NSUInteger items = [self.collectionView numberOfItemsInSection:0];
+            NSUInteger visibleItems = self.collectionView.indexPathsForVisibleItems.count;
+            if (items > 1 && visibleItems > 0) {
+                NSIndexPath *lastCellIndexPath = [NSIndexPath indexPathForItem:(items - 2) inSection:0];
+                if ([self.collectionView.indexPathsForVisibleItems containsObject:lastCellIndexPath]) {
                     [self scrollToBottomAnimated:YES];
+                } else {
+                    [self showJumpToBottomWithMessage:AMLocalizedString(@"newMessages", @"Label in a button that allows to jump to the latest message")];
                 }
-            });
+            } else {
+                [self scrollToBottomAnimated:YES];
+            }
             
             [self loadNodesFromMessage:message atTheBeginning:YES];
             break;

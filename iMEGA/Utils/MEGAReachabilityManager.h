@@ -24,5 +24,6 @@ typedef NS_ENUM (NSInteger, MEGAChatRoomListState) {
 - (void)reconnect;
 
 @property (nonatomic) MEGAChatRoomListState chatRoomListState;
+@property (nonatomic, readonly) NSString *currentAddress;
 
 @end

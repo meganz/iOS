@@ -616,16 +616,50 @@
                     </navigationItem>
                     <connections>
                         <outlet property="cancelBarButtonItem" destination="BSW-QW-4SV" id="Yh7-Ie-fwn"/>
-                        <outlet property="contactsHeaderView" destination="ngc-oo-DYi" id="4ix-dI-Csy"/>
-                        <outlet property="contactsHeaderViewLabel" destination="8h8-KI-31e" id="Ejm-lJ-BY6"/>
+                        <outlet property="chatsHeaderView" destination="ngc-oo-DYi" id="4ix-dI-Csy"/>
+                        <outlet property="chatsHeaderViewLabel" destination="8h8-KI-31e" id="Ejm-lJ-BY6"/>
                         <outlet property="itemListView" destination="zND-2t-U0m" id="y5V-tN-QMl"/>
                         <outlet property="itemListViewHeightConstraint" destination="Nu1-VV-48T" id="N4Q-XE-Let"/>
+                        <outlet property="recentsHeaderView" destination="J8v-vW-EeB" id="okg-Ka-rjq"/>
+                        <outlet property="recentsHeaderViewLabel" destination="fTR-Ch-U3C" id="93X-Ie-LFf"/>
                         <outlet property="searchView" destination="9sq-Pq-ZQR" id="GiX-TW-XAW"/>
                         <outlet property="sendBarButtonItem" destination="bDu-LY-wcy" id="G2M-Vr-4ch"/>
                         <outlet property="tableView" destination="zw4-bO-KFv" id="4p1-I7-lxo"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8Ud-Pe-lKf" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <view contentMode="scaleToFill" id="J8v-vW-EeB" userLabel="RECENTS Header View">
+                    <rect key="frame" x="0.0" y="0.0" width="240" height="23"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SHARED FOLDERS" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fTR-Ch-U3C" userLabel="RECENTS Header View Label">
+                            <rect key="frame" x="12.000000000000007" y="3" width="125.66666666666669" height="17"/>
+                            <fontDescription key="fontDescription" name="SFUIText-Medium" family="SF UI Text" pointSize="14"/>
+                            <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <view hidden="YES" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8CW-iA-gdj">
+                            <rect key="frame" x="0.0" y="0.0" width="240" height="0.66666666666666663"/>
+                            <color key="backgroundColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="0.5" id="8se-We-QTf"/>
+                            </constraints>
+                        </view>
+                        <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1yU-o3-n9i">
+                            <rect key="frame" x="0.0" y="22.666666666666668" width="240" height="0.33333333333333215"/>
+                            <color key="backgroundColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="0.5" id="0xK-km-jb7"/>
+                            </constraints>
+                        </view>
+                    </subviews>
+                    <color key="backgroundColor" red="0.98823529409999999" green="0.98823529409999999" blue="0.98823529409999999" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstItem="fTR-Ch-U3C" firstAttribute="centerY" secondItem="J8v-vW-EeB" secondAttribute="centerY" id="2gc-4N-vpS"/>
+                        <constraint firstItem="fTR-Ch-U3C" firstAttribute="leading" secondItem="J8v-vW-EeB" secondAttribute="leading" constant="12" id="a0m-fc-Fe7"/>
+                    </constraints>
+                    <viewLayoutGuide key="safeArea" id="VWE-Nz-O8t"/>
+                </view>
                 <view contentMode="scaleToFill" id="ngc-oo-DYi" userLabel="CONTACTS Header View">
                     <rect key="frame" x="0.0" y="0.0" width="240" height="23"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
