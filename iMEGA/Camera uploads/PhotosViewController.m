@@ -557,11 +557,11 @@
     
     cell.thumbnailSelectionOverlayView.layer.borderColor = [UIColor.mnz_green00BFA5 CGColor];
     cell.thumbnailSelectionOverlayView.hidden = [self.selectedItemsDictionary objectForKey:[NSNumber numberWithLongLong:node.handle]] == nil;
-
-    if (node.name.mnz_isVideoPathExtension && node.duration > -1) {
-        cell.thumbnailVideoDurationLabel.text = [NSString mnz_stringFromTimeInterval:node.duration];
-    }
     
+    cell.thumbnailVideoOverlayView.hidden = !node.name.mnz_isVideoPathExtension;
+    cell.thumbnailPlayImageView.hidden = !node.name.mnz_isVideoPathExtension;
+    cell.thumbnailVideoDurationLabel.text = (node.name.mnz_isVideoPathExtension && node.duration > -1) ? [NSString mnz_stringFromTimeInterval:node.duration] : @"";
+
     cell.thumbnailImageView.hidden = self.browsingIndexPath && indexPath.section == self.browsingIndexPath.section && indexPath.item == self.browsingIndexPath.item;
     
     if (@available(iOS 11.0, *)) {
