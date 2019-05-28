@@ -209,9 +209,19 @@
             break;
         }
             
-        case MEGAChatMessageTypeVoiceClip :
-            self.chatLastMessage.text = AMLocalizedString(@"Voice message", @"Text shown when a notification or the last message of a chat corresponds to a voice clip");
+        case MEGAChatMessageTypeVoiceClip : {
+            MEGAChatMessage *lastMessage = [[MEGASdkManager sharedMEGAChatSdk] messageForChat:item.chatId messageId:item.lastMessageId];
+            NSString *durationString;
+            if (lastMessage.nodeList && lastMessage.nodeList.size.integerValue == 1) {
+                MEGANode *node = [lastMessage.nodeList nodeAtIndex:0];
+                NSTimeInterval duration = node.duration > 0 ? node.duration : 0;
+                durationString = [NSString mnz_stringFromTimeInterval:duration];
+            } else {
+                durationString = @"00:00";
+            }
+            self.chatLastMessage.text = [NSString stringWithFormat:@"🎙 %@", durationString];
             break;
+        }
             
         case MEGAChatMessageTypeContact: {
             NSString *senderString;

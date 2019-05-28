@@ -118,7 +118,15 @@
                         }
                     }
                 } else if (self.message.type == MEGAChatMessageTypeVoiceClip) {
-                    body = [NSString stringWithFormat:@"🎙 %@", AMLocalizedString(@"Voice message", @"Text shown when a notification or the last message of a chat corresponds to a voice clip")];
+                    NSString *durationString;
+                    if (self.message.nodeList && self.message.nodeList.size.integerValue == 1) {
+                        MEGANode *node = [self.message.nodeList nodeAtIndex:0];
+                        NSTimeInterval duration = node.duration > 0 ? node.duration : 0;
+                        durationString = [NSString mnz_stringFromTimeInterval:duration];
+                    } else {
+                        durationString = @"00:00";
+                    }
+                    body = [NSString stringWithFormat:@"🎙 %@", durationString];
                 } else {
                     body = self.message.content;
                 }
