@@ -1908,6 +1908,5 @@
 "People can join your group by using this link."="People can join your group by using this link.";
 /* Subtitle shown in a chat to inform where to tap to enter in the chat details view */
 "Tap here for info"="Tap here for info";
-
 /* In some cases, a user may try to get the link for a chat room, but if such is not set by an operator - it would say "not link available" and not auto create it. */
 "No chat link available."="No chat link available.";
