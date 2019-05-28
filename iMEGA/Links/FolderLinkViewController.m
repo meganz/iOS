@@ -96,7 +96,6 @@
         }
     }
     
-    [self.navigationController.view setBackgroundColor:[UIColor mnz_grayF9F9F9]];
     [self setEdgesForExtendedLayout:UIRectEdgeNone];
     
     self.navigationItem.title = AMLocalizedString(@"folderLink", nil);

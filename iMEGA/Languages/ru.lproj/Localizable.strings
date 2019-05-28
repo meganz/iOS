@@ -113,7 +113,7 @@
 /*  */
 "passwordStrong"="Этот пароль не поддастся самым самым мощным атакам с применением полного перебора. Убедитесь, что запомнили его.";
 /*  */
-"agreeWithTheMEGATermsOfService"="Я согласен с <a href='terms'>Условиями предоставления услуг</a> MEGA";
+"agreeWithTheMEGATermsOfService"="Я согласен с <a href=\"terms\">Условиями предоставления услуг</a> MEGA";
 /* Error text shown when you have not entered a correct name */
 "nameInvalidFormat"="Введите правильное имя";
 /* Error text shown when you have not written the same password */
@@ -368,6 +368,8 @@
 "tapFileToRename"="Коснитесь файла для переименования";
 /* */
 "sendToContact"="Послать контакту";
+/* Column header of my contacts/chats at copy dialog */
+"My chats"="Мои чаты";
 /* Toast text upon sending a single file to chat */
 "fileSentToChat"="Файл отправлен в чат";
 /* Success message when the attachment has been sent to a many chats */
@@ -1188,7 +1190,7 @@
 /* Alert message shown when a chat does not exist */
 "chatNotFound"="Чат не найден";
 /* A typing indicator in the chat. Please leave the %@ which will be automatically replaced with the user's name at runtime. */
-"isTyping"="%@ печатает ...";
+"isTyping"="%@ печатает…";
 /* Plural, a hint that appears when two users are typing in a group chat at the same time. The parameter will be the concatenation of both user names. The tags and placeholders shouldn't be translated or modified. */
 "twoUsersAreTyping"="%1$s [A]печатают…[/A]";
 /* text that appear when there are more than 2 people writing at that time in a chat. For example User1, user2 and more are typing... The parameter will be the concatenation of the first two user names. The tags and placeholders shouldn't be translated or modified. */
@@ -1277,6 +1279,8 @@
 "shareExtensionUnsupportedAssets"="Некоторыми элементами нельзя поделиться в MEGA";
 /* Message shown to the user when the share extension is about to be killed by iOS due to a memory issue */
 "Limited system resources are available when sharing items. Try uploading these files from within the MEGA app."="При совместном использовании элементов системные ресурсы ограничены. Попробуйте загрузить эти файлы из приложения MEGA.";
+/* Success message shown when the user has successfully shared something */
+"Shared successfully"="Общий доступ предоставлен успешно";
 /* Notification message shown when a transfer failed. Keep colon. */
 "Transfer failed:"="Пересылка не удалось";
 /* MEGAError */
@@ -1619,7 +1623,7 @@
 /* Title label that explains that the user is going to be asked for the microphone and camera permission */
 "Enable Microphone and Camera"="Включить микрофон и камеру";
 /* Detailed explanation of why the user should give permission to access to the camera and the microphone */
-"To make encrypted voice and video calls, allow MEGA access to your Camera and Microphone"="Чтобы делать зашифрованные голосовые и видеозвонки, откройте MEGA доступ к камере и микрофону";
+"To make encrypted voice and video calls, allow MEGA access to your Camera and Microphone"="Чтобы отправлять голосовые заметки, совершать зашифрованные голосовые и видеозвонки, откройте MEGA доступ к камере и микрофону";
 /* Title label that explains that the user is going to be asked for the notifications permission */
 "Enable Notifications"="Включить Уведомления";
 /* Detailed explanation of why the user should give permission to deliver notifications */
@@ -1641,7 +1645,7 @@
 /* The title of the section about deleting file versions in the settings. */
 "Delete all older versions of my files"="Удалить все старые версии моих файлов";
 /* Text of a button which deletes all historical versions of files in the users entire account. */
-"Delete old versions"="Удалить старые версии";
+"Delete previous versions"="Удалить прошлые версии";
 /* A warning note about deleting all file versions in the settings section. */
 "All current files will remain. Only historic versions of your files will be deleted."="Все текущие файлы останутся. Только прошлые версии файлов будут удалены.";
 /* Text of the dialog to delete all the file versions of the account */
@@ -1664,8 +1668,6 @@
 "%@ joined the call."="%@ присоединился к вызову.";
 /* Message to inform the local user that someone has left the current group call */
 "%@ left the call."="%@ покинул вызов.";
-/* Message to inform the local user is having a bad quality network with someone in the current group call */
-"Poor conection."="Плохое соединение.";
 /* Message shown in a chat room when there is an active group call */
 "There is an active group call. Tap to join."="Активный групповой вызов. Нажмите, чтобы присоединиться.";
 /* Message shown in a chat room when there is an active call */
@@ -1718,10 +1720,6 @@
 "List view"="Вид списка";
 /* Text shown for switching from list view to thumbnail view. */
 "Thumbnail view"="Значки";
-/* Message to inform the local user that someone has joined the current group call */
-"%@ joined the call."="%@ присоединился к вызову.";
-/* Message to inform the local user that someone has left the current group call */
-"%@ left the call."="%@ покинул вызов.";
 /* Message to inform the local user is having a bad quality network with someone in the current group call */
 "Poor connection."="Плохое соединение.";
 /* Message shown in a chat room when there is an active group call */
@@ -1808,6 +1806,8 @@
 "Your publicly shared %1 (%2) has been taken down."="Ваш элемент с общим доступом (%1 (%2)) убран.";
 /* The text of a notification indicating that a file or folder that was taken down has now been restored due to a successful counter-notice. The %1 placeholder will be replaced with the text ‘file’ or ‘folder’. The %2 will be replaced with the name of the file or folder. */
 "Your taken down %1 (%2) has been reinstated."="Убранный элемент восстановлен: %1 (%2).";
+/* Text shown when a notification or the last message of a chat corresponds to a voice clip */
+"Voice message"="Voice message";
 /* Error message shown to user when a copy/import operation would take them over their storage limit. */
 "This action can not be completed as it would take you over your current storage limit"="Это действие нельзя завершить, иначе будет превышен текущий лимит хранения";
 /* uploads over storage quota warning dialog title */
@@ -1824,10 +1824,34 @@
 "Today"="Сегодня";
 /* */
 "Yesterday"="Вчера";
+/* Title of the button to share a location in a chat */
+"Send This Location"="Send This Location";
+/* Title of the alert that allows change between different maps: Standard, Satellite or Hybrid. */
+"Map settings"="Map settings";
+/* Type of data displayed in a map view. A street map that shows the position of all roads and some road names. */
+"Standard"="Обычный";
+/* Type of data displayed in a map view. Satellite imagery of the area. */
+"Satellite"="Satellite";
+/* Type of data displayed in a map view. A satellite image of the area with road and road name information layered on top. */
+"Hybrid"="Hybrid";
+/* Label to give feedback to the user when he is going to share his location, indicating that it may not be the exact location. */
+"Accurate to %d meters"="Accurate to %d meters";
+/* Alert title shown when the user opens a shared Geolocation for the first time from any client, we will show a confirmation dialog warning the user that he is now leaving the E2EE paradigm. */
+"Send Location"="Send Location";
+/* Message shown when the user opens a shared Geolocation for the first time from any client, we will show a confirmation dialog warning the user that he is now leaving the E2EE paradigm. */
+"This location will be opened using a third party maps provider outside the end-to-end encrypted MEGA platform."="This location will be opened using a third party maps provider outside the end-to-end encrypted MEGA platform.";
+/* Text shown in location-type messages */
+"Pinned Location"="Pinned Location";
 /* Plural of participant. 2 participants */
 "%d participants"="Участники (%d)";
 /* Singular of participant. 1 participant */
 "%d participant"="%d участник";
+/* Text shown in the chat toolbar while the user is recording a voice clip. The < character should be > in RTL languages. */
+"< Slide to cancel"="< Slide to cancel";
+/* First part of the string 'Tap and hold <icon> to record, release to send'. There is a microphone icon between the two parts of the string. */
+"Tap and hold"="Tap and hold";
+/* Second part of the string 'Tap and hold <icon> to record, release to send'. There is a microphone icon between the two parts of the string. */
+"to record, release to send"="to record, release to send";
 /* Text to inform the user there is an active call and is not participating */
 "Ongoing Call"="Текущий звонок";
 /* Message shown when there is an ongoing call and the user tries to play an audio or video */
@@ -1848,14 +1872,6 @@
 "New Chat Link"="Новая ссылка на чат";
 /* Text button for init a group chat */
 "New group chat"="Новый групповой чат";
-/* Shown when an invalid/inexisting/not-available-anymore chat link is opened. */
-"Chat link unavailable"="Ссылка на чат недоступна";
-/* Shown when an inexisting/unavailable/removed link is tried to be opened. */
-"This chat link is no longer available"="Эта ссылка на чат больше не доступна";
-/* Text explaining users how the chat links work. */
-"People can join your group by using this link."="Люди могут присоединиться к группе с помощью этой ссылки.";
-/* Subtitle shown in a chat to inform where to tap to enter in the chat details view */
-"Tap here for info"="Коснитесь для информации";
 /* Title for the recents section. */
 "Recents"="Недавние";
 /* Multiple Images title shown in recents section of webclient */
@@ -1866,6 +1882,8 @@
 "1 Image and 1 Video"="Изображения (1) и видео (1)";
 /* One image and multiple videos title in recents. */
 "1 Image and %2 Videos"="Изображения (1) и видео (%2)";
+/* Multiple images and 1 video */
+"%1 Images and 1 Video"="Изображения (%1) и видео (1)";
 /* Title for multiple images and multiple videos in recents section */
 "%1 Images and %2 Videos"="Изображения (%1) и видео (%2)";
 /* Tooltip message shown on recents section. Please see the attached image. */
@@ -1873,16 +1891,20 @@
 /* Title for a recent action shown in the webclient, see the attached image for context. */
 "%1 modified by %3"="%1 изменён пользователем %3";
 /* Title for a recent action shown in the webclient, see the attached image for context. Please ensure that the `%2 more` is inside the [A] tag as this will become a toggle to show the hidden content. */
-"%1 and [A]%2 more[/A] modified by %3"="%1 и [A]ещё %2[/A] изменены %3";
-/* Title for a recent action shown in the webclient, see the attached image for context. Please ensure that the `%2 more` is inside the [A] tag as this will become a toggle to show the hidden content. */
 "%1 and [A]%2 more[/A]"="%1 и [A]ещё %2[/A]";
 /* Title for a recent action shown in the webclient, see the attached image for context. */
 "%1 created by %3"="%1 создан %3";
-/* Title for a recent action shown in the webclient, see the attached image for context. Please ensure that the `%2 more` is inside the [A] tag as this will become a toggle to show the hidden content. */
-"%1 and [A]%2 more[/A] created by %3"="%1 и [A]ещё %2[/A] созданы %3";
 /* Message shown when the user has not recent activity in their account. */
 "No recent activity"="Нет недавней активности";
 /* Plural of items which contains a folder. 2 items */
 "items"="элем.";
+/* Shown when an invalid/inexisting/not-available-anymore chat link is opened. */
+"Chat link unavailable"="Ссылка на чат недоступна";
+/* Shown when an inexisting/unavailable/removed link is tried to be opened. */
+"This chat link is no longer available"="Эта ссылка на чат больше не доступна";
+/* Text explaining users how the chat links work. */
+"People can join your group by using this link."="Люди могут присоединиться к группе с помощью этой ссылки.";
+/* Subtitle shown in a chat to inform where to tap to enter in the chat details view */
+"Tap here for info"="Коснитесь для информации";
 /* In some cases, a user may try to get the link for a chat room, but if such is not set by an operator - it would say "not link available" and not auto create it. */
 "No chat link available."="Нет доступной ссылки на чат";

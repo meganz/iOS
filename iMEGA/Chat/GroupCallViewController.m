@@ -523,11 +523,26 @@
 
 - (void)didSessionRouteChange:(NSNotification *)notification {
     dispatch_async(dispatch_get_main_queue(), ^{
-        if (!self.volumeContainerView.hidden) { //wireless device available
-            NSDictionary *interuptionDict = notification.userInfo;
-            const NSInteger routeChangeReason = [[interuptionDict valueForKey:AVAudioSessionRouteChangeReasonKey] integerValue];
-            NSLog(@"didSessionRouteChange routeChangeReason: %ld", (long)routeChangeReason);
-            
+        NSDictionary *interuptionDict = notification.userInfo;
+        const NSInteger routeChangeReason = [[interuptionDict valueForKey:AVAudioSessionRouteChangeReasonKey] integerValue];
+        MEGALogDebug(@"didSessionRouteChange routeChangeReason: %ld", (long)routeChangeReason);
+        
+        if (self.volumeContainerView.hidden) { //No wireless device available
+            switch (routeChangeReason) {
+                case AVAudioSessionRouteChangeReasonCategoryChange: //From speaker to regular speaker
+                    self.enableDisableSpeaker.selected = NO;
+                    
+                    break;
+                    
+                case AVAudioSessionRouteChangeReasonOverride: //From regular speaker to speaker
+                    self.enableDisableSpeaker.selected = YES;
+                    
+                    break;
+                    
+                default:
+                    break;
+            }
+        } else { //Wireless device available
             switch (routeChangeReason) {
                 case AVAudioSessionRouteChangeReasonRouteConfigurationChange: //From wireless device to regular speaker
                     [self.mpVolumeView setRouteButtonImage:[UIImage imageNamed:@"speakerOff"] forState:UIControlStateNormal];
@@ -1062,7 +1077,7 @@
                 }
                 
                 if (chatSessionWithNetworkQuality.networkQuality < 2) {
-                    [self showToastMessage:AMLocalizedString(@"Poor conection.", @"Message to inform the local user is having a bad quality network with someone in the current group call") color:@"#FFBF00"];
+                    [self showToastMessage:AMLocalizedString(@"Poor connection.", @"Message to inform the local user is having a bad quality network with someone in the current group call") color:@"#FFBF00"];
                 }
             }
             
@@ -1083,7 +1098,11 @@
 
                         [self.peersInCall insertObject:remoteUser atIndex:0];
                         
-                        [self.collectionView insertItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:0 inSection:0]]];
+                        if (UIApplication.sharedApplication.applicationState == UIApplicationStateActive) {
+                            [self.collectionView insertItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:0 inSection:0]]];
+                        } else {
+                            [self.collectionView reloadData];
+                        }
                         
                         [self showToastMessage:[NSString stringWithFormat:AMLocalizedString(@"%@ joined the call.", @"Message to inform the local user that someone has joined the current group call"), [self.chatRoom peerFullnameByHandle:chatSession.peerId]] color:@"#00BFA5"];
                         [self updateParticipants];

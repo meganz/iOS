@@ -10,6 +10,7 @@
 
 #import "NSDate+MNZCategory.h"
 #import "MEGASdkManager.h"
+#import "MEGAUser+MNZCategory.h"
 
 static NSString* const A = @"[A]";
 static NSString* const B = @"[B]";
@@ -317,8 +318,8 @@ static NSString* const B = @"[B]";
     string = [string stringByReplacingOccurrencesOfString:@"[/A]" withString:@""];
     string = [string stringByReplacingOccurrencesOfString:@"[S]" withString:@""];
     string = [string stringByReplacingOccurrencesOfString:@"[/S]" withString:@""];
+    string = [string stringByReplacingOccurrencesOfString:@"<a href=\"terms\">" withString:@""];
     string = [string stringByReplacingOccurrencesOfString:@"<a href='terms'>" withString:@""];
-    string = [string stringByReplacingOccurrencesOfString:@"<a href=’terms’>" withString:@""];
     string = [string stringByReplacingOccurrencesOfString:@"</a>" withString:@""];
     
     return string;
@@ -749,6 +750,28 @@ static NSString* const B = @"[B]";
         lastSeenMessage = AMLocalizedString(@"Last seen a long time ago", @"Text to inform the user the 'Last seen' time of a contact is a long time ago (more than 65535 minutes)");
     }
     return lastSeenMessage;
+}
+
++ (NSString *)mnz_addedByInRecentActionBucket:(MEGARecentActionBucket *)recentActionBucket nodesArray:(NSArray *)nodesArray {
+    NSString *addebByString;
+    
+    MEGAUser *user = [MEGASdkManager.sharedMEGASdk contactForEmail:recentActionBucket.userEmail];
+    NSString *userNameThatMadeTheAction = @"";
+    if (user) {
+        userNameThatMadeTheAction = user.mnz_firstName ? user.mnz_firstName : @"";
+    }
+    
+    if (recentActionBucket.isUpdate) {
+        addebByString = AMLocalizedString(@"%1 modified by %3", @"Title for a recent action shown in the webclient, see the attached image for context.");
+        addebByString = [addebByString stringByReplacingOccurrencesOfString:@"%1 " withString:@""];
+        addebByString = [addebByString stringByReplacingOccurrencesOfString:@"%3" withString:userNameThatMadeTheAction];
+    } else {
+        addebByString = AMLocalizedString(@"%1 created by %3", @"Title for a recent action shown in the webclient, see the attached image for context.");
+        addebByString = [addebByString stringByReplacingOccurrencesOfString:@"%1 " withString:@""];
+        addebByString = [addebByString stringByReplacingOccurrencesOfString:@"%3" withString:userNameThatMadeTheAction];
+    }
+    
+    return addebByString;
 }
 
 #pragma mark - File names and extensions

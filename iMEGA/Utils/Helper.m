@@ -772,8 +772,6 @@ static MEGAIndexer *indexer;
     } else if ([cell isKindOfClass:[PhotoCollectionViewCell class]]) {
         PhotoCollectionViewCell *photoCollectionViewCell = cell;
         [photoCollectionViewCell.thumbnailImageView setImage:[UIImage imageWithContentsOfFile:thumbnailFilePath]];
-        photoCollectionViewCell.thumbnailPlayImageView.hidden = !node.name.mnz_isVideoPathExtension;
-        photoCollectionViewCell.thumbnailVideoOverlayView.hidden = !(node.name.mnz_isVideoPathExtension && node.duration>-1);
     }
     
     if (reindex) {
@@ -1324,13 +1322,6 @@ static MEGAIndexer *indexer;
     
     [NSFileManager.defaultManager mnz_removeFolderContentsAtPath:NSTemporaryDirectory()];
     
-    // Delete v2 thumbnails & previews directory
-    NSString *thumbs2Directory = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"thumbs"];
-    [NSFileManager.defaultManager mnz_removeItemAtPath:thumbs2Directory];
-    
-    NSString *previews2Directory = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"previews"];
-    [NSFileManager.defaultManager mnz_removeItemAtPath:previews2Directory];
-    
     // Delete application support directory content
     NSString *applicationSupportDirectory = [NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES) objectAtIndex:0];
     for (NSString *file in [[NSFileManager defaultManager] contentsOfDirectoryAtPath:applicationSupportDirectory error:nil]) {
@@ -1375,6 +1366,8 @@ static MEGAIndexer *indexer;
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"IsSaveVideoToGalleryEnabled"];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"ChatVideoQuality"];
     
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"logging"];
+
     //Set default order on logout
     [[NSUserDefaults standardUserDefaults] setInteger:1 forKey:@"SortOrderType"];
     [[NSUserDefaults standardUserDefaults] setInteger:1 forKey:@"OfflineSortOrderType"];

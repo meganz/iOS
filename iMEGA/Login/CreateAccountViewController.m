@@ -269,9 +269,9 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
 
 - (void)setTermsOfServiceAttributedTitle {
     NSString *agreeWithTheMEGATermsOfService = AMLocalizedString(@"agreeWithTheMEGATermsOfService", @"");
-    NSString *termsOfServiceString = [agreeWithTheMEGATermsOfService mnz_stringBetweenString:@"<a href='terms'>" andString:@"</a>"];
+    NSString *termsOfServiceString = [agreeWithTheMEGATermsOfService mnz_stringBetweenString:@"<a href=\"terms\">" andString:@"</a>"];
     if (!termsOfServiceString) {
-        termsOfServiceString = [agreeWithTheMEGATermsOfService mnz_stringBetweenString:@"<a href=’terms’>" andString:@"</a>"];
+        termsOfServiceString = [agreeWithTheMEGATermsOfService mnz_stringBetweenString:@"<a href='terms'>" andString:@"</a>"];
     }
     agreeWithTheMEGATermsOfService = [agreeWithTheMEGATermsOfService mnz_removeWebclientFormatters];
     
