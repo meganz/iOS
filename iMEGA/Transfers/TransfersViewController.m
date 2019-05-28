@@ -13,14 +13,11 @@
 #import "MEGAGetThumbnailRequestDelegate.h"
 #import "MEGATransferList+MNZCategory.h"
 #import "MEGAStore.h"
+#import "TransfersSelected.h"
 
 #import "TransferTableViewCell.h"
 
-typedef NS_ENUM(NSInteger, SegmentIndex) {
-    AllSegmentIndex = 0,
-    DownloadsSegmentIndex = 1,
-    UploadsSegmentIndex = 2,
-};
+
 
 @interface TransfersViewController () <UITableViewDelegate, UITableViewDataSource, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGARequestDelegate, MEGATransferDelegate, TransferTableViewCellDelegate>
 
@@ -28,7 +25,12 @@ typedef NS_ENUM(NSInteger, SegmentIndex) {
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *resumeBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *cancelBarButtonItem;
 
-@property (weak, nonatomic) IBOutlet UISegmentedControl *transfersSegmentedControl;
+@property (weak, nonatomic) IBOutlet UIButton *allButton;
+@property (weak, nonatomic) IBOutlet UIView *allLineView;
+@property (weak, nonatomic) IBOutlet UIButton *downloadsButton;
+@property (weak, nonatomic) IBOutlet UIView *downloadsLineView;
+@property (weak, nonatomic) IBOutlet UIButton *uploadsButton;
+@property (weak, nonatomic) IBOutlet UIView *uploadsLineView;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
 @property (strong, nonatomic) NSMutableArray *transfers;
@@ -36,6 +38,8 @@ typedef NS_ENUM(NSInteger, SegmentIndex) {
 @property (strong, nonatomic) NSMutableArray<NSString *> *uploadTransfersQueued;
 
 @property (nonatomic, getter=areTransfersPaused) BOOL transfersPaused;
+
+@property (nonatomic) TransfersSelected transfersSelected;
 
 @end
 
@@ -49,10 +53,9 @@ typedef NS_ENUM(NSInteger, SegmentIndex) {
     self.tableView.emptyDataSetSource = self;
     self.tableView.emptyDataSetDelegate = self;
     
-    [self.transfersSegmentedControl setTitle:AMLocalizedString(@"all", @"All") forSegmentAtIndex:0];
-    [self.transfersSegmentedControl setTitle:AMLocalizedString(@"downloads", @"Downloads") forSegmentAtIndex:1];
-    [self.transfersSegmentedControl setTitle:AMLocalizedString(@"uploads", @"Uploads") forSegmentAtIndex:2];
-    
+    [self.allButton setTitle:AMLocalizedString(@"all", @"All") forState:UIControlStateNormal];
+    [self.downloadsButton setTitle:AMLocalizedString(@"downloads", @"Downloads") forState:UIControlStateNormal];
+    [self.uploadsButton setTitle:AMLocalizedString(@"uploads", @"Uploads") forState:UIControlStateNormal];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -152,14 +155,13 @@ typedef NS_ENUM(NSInteger, SegmentIndex) {
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     NSInteger numberOfSections = 0;
     if (MEGAReachabilityManager.isReachable) {
-        switch (self.transfersSegmentedControl.selectedSegmentIndex) {
-            case UISegmentedControlNoSegment:
-            case AllSegmentIndex:
-            case UploadsSegmentIndex:
+        switch (self.transfersSelected) {
+            case AllTransfersSelected:
+            case UploadsTransfersSelected:
                 numberOfSections = 2;
                 break;
                 
-            case DownloadsSegmentIndex:
+            case DownloadsTransfersSelected:
                 numberOfSections = 1;
                 break;
         }
@@ -178,17 +180,16 @@ typedef NS_ENUM(NSInteger, SegmentIndex) {
     } else {
         self.transfers = [NSMutableArray new];
         
-        switch (self.transfersSegmentedControl.selectedSegmentIndex) {
-            case UISegmentedControlNoSegment:
-            case AllSegmentIndex:
+        switch (self.transfersSelected) {
+            case AllTransfersSelected:
                 [self getAllTransfers];
                 break;
                 
-            case DownloadsSegmentIndex:
+            case DownloadsTransfersSelected:
                 [self getDownloadTransfers];
                 break;
                 
-            case UploadsSegmentIndex:
+            case UploadsTransfersSelected:
                 [self getUploadTransfers];
                 break;
         }
@@ -434,7 +435,37 @@ typedef NS_ENUM(NSInteger, SegmentIndex) {
 
 #pragma mark - IBActions
 
-- (IBAction)transfersTypeSegmentedControlValueChanged:(UISegmentedControl *)sender {
+- (IBAction)selectTransfersTouchUpInside:(UIButton *)sender {
+    if (sender.tag == self.transfersSelected) {
+        return;
+    }
+    
+    self.transfersSelected = sender.tag;
+    
+    switch (self.transfersSelected) {
+        default:
+        case AllTransfersSelected:
+            self.downloadsButton.selected = self.uploadsButton.selected = NO;
+            self.allButton.selected = YES;
+            self.downloadsLineView.backgroundColor = self.uploadsLineView.backgroundColor = UIColor.mnz_grayCCCCCC;
+            self.allLineView.backgroundColor = UIColor.mnz_redMain;
+            break;
+           
+        case DownloadsTransfersSelected:
+            self.allButton.selected = self.uploadsButton.selected = NO;
+            self.downloadsButton.selected = YES;
+            self.allLineView.backgroundColor = self.uploadsLineView.backgroundColor = UIColor.mnz_grayCCCCCC;
+            self.downloadsLineView.backgroundColor = UIColor.mnz_redMain;
+            break;
+            
+        case UploadsTransfersSelected:
+            self.allButton.selected = self.downloadsButton.selected = NO;
+            self.uploadsButton.selected = YES;
+            self.allLineView.backgroundColor = self.downloadsLineView.backgroundColor = UIColor.mnz_grayCCCCCC;
+            self.uploadsLineView.backgroundColor = UIColor.mnz_redMain;
+            break;
+    }
+    
     if (!self.areTransfersPaused) {
         [self reloadView];
     }
@@ -458,17 +489,16 @@ typedef NS_ENUM(NSInteger, SegmentIndex) {
     }
     
     NSString *transfersTypeString;
-    switch (self.transfersSegmentedControl.selectedSegmentIndex) {
-        case UISegmentedControlNoSegment:
-        case AllSegmentIndex:
+    switch (self.transfersSelected) {
+        case AllTransfersSelected:
             transfersTypeString = AMLocalizedString(@"allInUppercaseTransfers", @"ALL transfers");
             break;
             
-        case DownloadsSegmentIndex:
+        case DownloadsTransfersSelected:
             transfersTypeString = AMLocalizedString(@"downloadInUppercaseTransfers", @"DOWNLOAD transfers");
             break;
             
-        case UploadsSegmentIndex:
+        case UploadsTransfersSelected:
             transfersTypeString = AMLocalizedString(@"uploadInUppercaseTransfers", @"UPLOAD transfers");
             break;
     }
@@ -477,19 +507,18 @@ typedef NS_ENUM(NSInteger, SegmentIndex) {
     [cancelTransfersAlert addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
     
     [cancelTransfersAlert addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-        switch (self.transfersSegmentedControl.selectedSegmentIndex) {
-            case UISegmentedControlNoSegment:
-            case AllSegmentIndex: {
+        switch (self.transfersSelected) {
+            case AllTransfersSelected: {
                 [self cancelTransfersForDirection:0];
                 [self cancelTransfersForDirection:1];
                 break;
             }
                 
-            case DownloadsSegmentIndex:
+            case DownloadsTransfersSelected:
                 [self cancelTransfersForDirection:0];
                 break;
                 
-            case UploadsSegmentIndex:
+            case UploadsTransfersSelected:
                 [self cancelTransfersForDirection:1];
                 break;
         }
@@ -508,17 +537,16 @@ typedef NS_ENUM(NSInteger, SegmentIndex) {
         if (self.areTransfersPaused) {
             text = AMLocalizedString(@"transfersEmptyState_titlePaused", nil);
         } else {
-            switch (self.transfersSegmentedControl.selectedSegmentIndex) {
-                case UISegmentedControlNoSegment:
-                case AllSegmentIndex:
+            switch (self.transfersSelected) {
+                case AllTransfersSelected:
                     text = AMLocalizedString(@"transfersEmptyState_titleAll", @"Title shown when the there's no transfers and they aren't paused");
                     break;
                     
-                case DownloadsSegmentIndex:
+                case DownloadsTransfersSelected:
                     text = AMLocalizedString(@"transfersEmptyState_titleDownload", @"No Download Transfers");
                     break;
                     
-                case UploadsSegmentIndex:
+                case UploadsTransfersSelected:
                     text = AMLocalizedString(@"transfersEmptyState_titleUpload", @"No Uploads Transfers");
                     break;
             }
@@ -536,17 +564,16 @@ typedef NS_ENUM(NSInteger, SegmentIndex) {
         if (self.areTransfersPaused) {
             image = [UIImage imageNamed:@"pausedTransfersEmptyState"];
         } else {
-            switch (self.transfersSegmentedControl.selectedSegmentIndex) {
-                case UISegmentedControlNoSegment:
-                case AllSegmentIndex:
+            switch (self.transfersSelected) {
+                case AllTransfersSelected:
                     image = [UIImage imageNamed:@"transfersEmptyState"];
                     break;
                     
-                case DownloadsSegmentIndex:
+                case DownloadsTransfersSelected:
                     image = [UIImage imageNamed:@"downloadsEmptyState"];
                     break;
                     
-                case UploadsSegmentIndex:
+                case UploadsTransfersSelected:
                     image = [UIImage imageNamed:@"uploadsEmptyState"];
                     break;
             }
@@ -594,16 +621,15 @@ typedef NS_ENUM(NSInteger, SegmentIndex) {
 #pragma mark - MEGATransferDelegate
 
 - (void)onTransferStart:(MEGASdk *)api transfer:(MEGATransfer *)transfer {
-    switch (self.transfersSegmentedControl.selectedSegmentIndex) {
-        case UISegmentedControlNoSegment:
-        case AllSegmentIndex:
+    switch (self.transfersSelected) {
+        case AllTransfersSelected:
             break;
             
-        case DownloadsSegmentIndex:
+        case DownloadsTransfersSelected:
             if (transfer.type == MEGATransferTypeUpload) return;
             break;
             
-        case UploadsSegmentIndex:
+        case UploadsTransfersSelected:
             if (transfer.type == MEGATransferTypeDownload) return;
             break;
     }
