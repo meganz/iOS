@@ -114,9 +114,10 @@ static const NSUInteger MaximumPhotoUploadBatchCountMultiplier = 2;
     
     [CameraUploadManager disableCameraUploadIfAccessProhibited];
     
-    [self.uploadRecordsCollator collateNonUploadingRecords];
-    
-    [AttributeUploadManager.shared scanLocalAttributeFilesAndRetryUploadIfNeeded];
+    dispatch_async(dispatch_get_global_queue(QOS_CLASS_UTILITY, 0), ^{
+        [self.uploadRecordsCollator collateNonUploadingRecords];
+        [AttributeUploadManager.shared scanLocalAttributeFilesAndRetryUploadIfNeeded];
+    });
 }
 
 #pragma mark - manage operation queues
