@@ -139,11 +139,18 @@ static NSString * const VideoCellularDisallowedUploadSessionId = @"nz.mega.video
 
 #pragma mark - sessions and tasks restoration
 
-- (void)restoreAllSessionsWithCompletion:(nullable RestoreSessionCompletionHandler)completion {
+- (void)restorePhotoSessionsWithCompletion:(nullable RestoreSessionCompletionHandler)completion {
+    [self restoreSessionsWithIdentifiers:@[PhotoCellularAllowedUploadSessionId, PhotoCellularDisallowedUploadSessionId] completion:completion];
+}
+
+- (void)restoreVideoSessionsWithCompletion:(nullable RestoreSessionCompletionHandler)completion {
+    [self restoreSessionsWithIdentifiers:@[VideoCellularAllowedUploadSessionId, VideoCellularDisallowedUploadSessionId] completion:completion];
+}
+
+- (void)restoreSessionsWithIdentifiers:(NSArray<NSString *> *)identifiers completion:(nullable RestoreSessionCompletionHandler)completion {
     __block NSMutableArray<NSURLSessionUploadTask *> *allUploadTasks = [NSMutableArray array];
-    NSArray<NSString *> *allSessionIdentifiers = @[PhotoCellularAllowedUploadSessionId, PhotoCellularDisallowedUploadSessionId, VideoCellularAllowedUploadSessionId, VideoCellularDisallowedUploadSessionId];
     NSOperationQueue *restoreQueue = [[NSOperationQueue alloc] init];
-    for (NSString *identifier in allSessionIdentifiers) {
+    for (NSString *identifier in identifiers) {
         NSURLSession *session = [self createSessionIfNeededByIdentifier:identifier];
         if (session) {
             [restoreQueue addOperation:[[RestoreUploadTaskOperation alloc] initWithSession:session completion:^(NSArray<NSURLSessionUploadTask *> * _Nonnull uploadTasks) {
@@ -153,7 +160,7 @@ static NSString * const VideoCellularDisallowedUploadSessionId = @"nz.mega.video
         }
     }
     
-    dispatch_async(dispatch_get_global_queue(QOS_CLASS_UTILITY, 0), ^{
+    dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0), ^{
         [restoreQueue waitUntilAllOperationsAreFinished];
         if (completion) {
             completion(allUploadTasks);

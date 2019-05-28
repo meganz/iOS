@@ -40,6 +40,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - fetch records by media types
 
+- (NSArray<MOAssetUploadRecord *> *)fetchUploadRecordsByMediaTypes:(NSArray<NSNumber *> *)mediaTypes statuses:(NSArray<NSNumber *> *)statuses error:(NSError * _Nullable __autoreleasing *)error;
+
 - (NSArray<MOAssetUploadRecord *> *)fetchUploadRecordsByMediaTypes:(NSArray<NSNumber *> *)mediaTypes includeAdditionalMediaSubtypes:(BOOL)includeAdditionalMediaSubtypes sortByIdentifier:(BOOL)sortByIdentifier error:(NSError * _Nullable __autoreleasing *)error;
 
 - (NSArray<MOAssetUploadRecord *> *)fetchUploadRecordsByMediaTypes:(NSArray<NSNumber *> *)mediaTypes mediaSubtypes:(PHAssetMediaSubtype)subtypes includeAdditionalMediaSubtypes:(BOOL)includeAdditionalMediaSubtypes error:(NSError * _Nullable __autoreleasing *)error;
