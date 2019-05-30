@@ -912,7 +912,6 @@
 
 - (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
     self.searchNodesArray = nil;
-    self.incomingButton.enabled = self.outgoingButton.enabled = YES;
 }
 
 #pragma mark - UISearchResultsUpdating

@@ -748,7 +748,6 @@
 
 - (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
     self.searchNodesArray = nil;
-    self.cloudDriveButton.enabled = self.incomingButton.enabled = YES;
 }
 
 #pragma mark - UISearchResultsUpdating
