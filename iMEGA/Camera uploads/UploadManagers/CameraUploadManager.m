@@ -27,7 +27,7 @@
 
 static const NSTimeInterval MinimumBackgroundRefreshInterval = 1.5 * 3600;
 static const NSTimeInterval BackgroundRefreshDuration = 25;
-static const NSTimeInterval LoadMediaInfoTimeoutInSeconds = 120;
+static const NSTimeInterval LoadMediaInfoTimeout = 60 * 15;
 
 static const NSUInteger PhotoUploadBatchCount = 5;
 static const NSUInteger VideoUploadBatchCount = 1;
@@ -350,7 +350,7 @@ static const NSUInteger MaximumPhotoUploadBatchCountMultiplier = 2;
     if (self.mediaInfoLoader.isMediaInfoLoaded) {
         [self loadCameraUploadNodeForUpload];
     } else {
-        [self.mediaInfoLoader loadMediaInfoWithTimeout:LoadMediaInfoTimeoutInSeconds completion:^(BOOL loaded) {
+        [self.mediaInfoLoader loadMediaInfoWithTimeout:LoadMediaInfoTimeout completion:^(BOOL loaded) {
             if (loaded) {
                 [self loadCameraUploadNodeForUpload];
             } else {

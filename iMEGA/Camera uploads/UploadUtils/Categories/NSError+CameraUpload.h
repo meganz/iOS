@@ -12,7 +12,6 @@ typedef NS_ENUM(NSUInteger, CameraUploadError) {
     CameraUploadErrorCalculateEncryptionChunkPositions,
     CameraUploadErrorEncryptionFailed,
     CameraUploadErrorEncryptionCancelled,
-    CameraUploadErrorFailedToCreateCompleteUploadRequest,
     CameraUploadErrorBackgroundTaskExpired,
     CameraUploadErrorOperationCancelled,
     CameraUploadErrorCameraUploadNodeIsNotFound,

@@ -116,11 +116,11 @@ static const NSUInteger EncryptionProposedChunkSizeWithoutTruncating = 1024 * 10
             continue;
         }
         
-        unsigned length = (unsigned)(lastPosition - position.unsignedLongLongValue);
+        int64_t length = (int64_t)(lastPosition - position.unsignedLongLongValue);
         NSString *chunkName = [NSString stringWithFormat:@"chunk%ld", (long)chunkIndex];
         NSURL *chunkURL = [self.outputDirectoryURL URLByAppendingPathComponent:chunkName];
-        NSString *suffix;
-        if ([self.mediaUpload encryptFileAtPath:fileURL.path startPosition:position.unsignedLongLongValue length:&length outputFilePath:chunkURL.path urlSuffix:&suffix adjustsSizeOnly:NO]) {
+        NSString *suffix = [self.mediaUpload encryptFileAtPath:fileURL.path startPosition:position.unsignedLongLongValue length:&length outputFilePath:chunkURL.path adjustsSizeOnly:NO];
+        if (suffix.length > 0) {
             chunksDict[suffix] = chunkURL;
             lastPosition = position.unsignedLongLongValue;
             if (self.shouldTruncateFile && fileHandle) {
@@ -144,7 +144,7 @@ static const NSUInteger EncryptionProposedChunkSizeWithoutTruncating = 1024 * 10
 
 - (NSArray<NSNumber *> *)calculteChunkPositionsForFileAtURL:(NSURL *)fileURL chunkSize:(NSUInteger)chunkSize error:(NSError **)error {
     NSMutableArray<NSNumber *> *chunkPositions = [NSMutableArray arrayWithObject:@(0)];
-    unsigned chunkSizeToBeAdjusted = (unsigned)chunkSize;
+    int64_t chunkSizeToBeAdjusted = (int64_t)chunkSize;
     unsigned long long startPosition = 0;
     while (startPosition < self.fileSize) {
         if (self.isEncryptionCancelled) {
@@ -155,7 +155,7 @@ static const NSUInteger EncryptionProposedChunkSizeWithoutTruncating = 1024 * 10
             return @[];
         }
         
-        if ([self.mediaUpload encryptFileAtPath:fileURL.path startPosition:startPosition length:&chunkSizeToBeAdjusted outputFilePath:nil urlSuffix:nil adjustsSizeOnly:YES]) {
+        if ([self.mediaUpload encryptFileAtPath:fileURL.path startPosition:startPosition length:&chunkSizeToBeAdjusted outputFilePath:nil adjustsSizeOnly:YES].length > 0) {
             startPosition = startPosition + chunkSizeToBeAdjusted;
             [chunkPositions addObject:@(startPosition)];
         } else {
