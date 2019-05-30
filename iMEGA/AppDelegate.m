@@ -58,6 +58,7 @@
 #import "CameraUploadManager+Settings.h"
 #import "TransferSessionManager.h"
 #import "MEGAConstants.h"
+#import "BackgroundRefreshPerformer.h"
 
 #define kFirstRun @"FirstRun"
 
@@ -101,6 +102,7 @@
 @property (nonatomic, getter=isUpgradeVCPresented) BOOL upgradeVCPresented;
 
 @property (strong, nonatomic) dispatch_queue_t indexSerialQueue;
+@property (strong, nonatomic) BackgroundRefreshPerformer *backgroundRefreshPerformer;
 
 @end
 
@@ -600,7 +602,17 @@
 
 - (void)application:(UIApplication *)application performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
     MEGALogDebug(@"[App Lifecycle] application perform background refresh");
-    [CameraUploadManager.shared performBackgroundRefreshWithCompletion:completionHandler];
+    [self.backgroundRefreshPerformer performBackgroundRefreshWithCompletionHandler:completionHandler];
+}
+
+#pragma mark - Properties
+
+- (BackgroundRefreshPerformer *)backgroundRefreshPerformer {
+    if (_backgroundRefreshPerformer == nil) {
+        _backgroundRefreshPerformer = [[BackgroundRefreshPerformer alloc] init];
+    }
+    
+    return _backgroundRefreshPerformer;
 }
 
 #pragma mark - Private
