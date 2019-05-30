@@ -25,8 +25,7 @@
 #import "NSError+CameraUpload.h"
 #import "CameraUploadStore.h"
 
-static const NSTimeInterval MinimumBackgroundRefreshInterval = 1.5 * 3600;
-static const NSTimeInterval BackgroundRefreshDuration = 25;
+static const NSTimeInterval MinimumBackgroundRefreshInterval = 3 * 3600;
 static const NSTimeInterval LoadMediaInfoTimeoutInSeconds = 120;
 
 static const NSUInteger PhotoUploadBatchCount = 5;
@@ -36,8 +35,6 @@ static const NSUInteger MaximumPhotoUploadBatchCountMultiplier = 2;
 
 @interface CameraUploadManager () <CameraScannerDelegate>
 
-@property (copy, nonatomic) void (^backgroundRefreshCompletion)(UIBackgroundFetchResult);
-@property (readonly) NSArray<NSNumber *> *enabledMediaTypes;
 @property (nonatomic) BOOL isNodeTreeCurrent;
 @property (nonatomic) StorageState storageState;
 
@@ -288,20 +285,20 @@ static const NSUInteger MaximumPhotoUploadBatchCountMultiplier = 2;
     return _backgroundUploadingTaskMonitor;
 }
 
-- (void)setPausePhotoUpload:(BOOL)pausePhotoUpload {
-    if (_pausePhotoUpload != pausePhotoUpload) {
-        _pausePhotoUpload = pausePhotoUpload;
-        if (!pausePhotoUpload) {
+- (void)setPhotoUploadPaused:(BOOL)photoUploadPaused {
+    if (_photoUploadPaused != photoUploadPaused) {
+        _photoUploadPaused = photoUploadPaused;
+        if (!photoUploadPaused) {
             MEGALogDebug(@"[Camera Upload] resume camera upload");
             [self startCameraUploadIfNeeded];
         }
     }
 }
 
-- (void)setPauseVideoUpload:(BOOL)pauseVideoUpload {
-    if (_pauseVideoUpload != pauseVideoUpload) {
-        _pauseVideoUpload = pauseVideoUpload;
-        if (!pauseVideoUpload) {
+- (void)setVideoUploadPaused:(BOOL)videoUploadPaused {
+    if (_videoUploadPaused != videoUploadPaused) {
+        _videoUploadPaused = videoUploadPaused;
+        if (!videoUploadPaused) {
             MEGALogDebug(@"[Camera Upload] resume video upload");
             [self startVideoUploadIfNeeded];
         }
@@ -324,7 +321,7 @@ static const NSUInteger MaximumPhotoUploadBatchCountMultiplier = 2;
         return;
     }
     
-    [self.cameraScanner scanMediaTypes:self.enabledMediaTypes completion:^(NSError * _Nullable error) {
+    [self.cameraScanner scanMediaTypes:CameraUploadManager.enabledMediaTypes completion:^(NSError * _Nullable error) {
         if (error) {
             MEGALogError(@"[Camera Upload] error when to scan image %@", error);
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0), ^{
@@ -500,13 +497,21 @@ static const NSUInteger MaximumPhotoUploadBatchCountMultiplier = 2;
 - (void)uploadAssetsForMediaType:(PHAssetMediaType)mediaType concurrentCount:(NSUInteger)count {
     MEGALogDebug(@"[Camera Upload] photo count %lu concurrent %ld, video count %lu concurrent %ld", (unsigned long)self.photoUploadOperationQueue.operationCount, (long)self.photoUploadOperationQueue.maxConcurrentOperationCount, (unsigned long)self.videoUploadOperationQueue.operationCount, (long)self.videoUploadOperationQueue.maxConcurrentOperationCount);
     
-    NSArray<NSNumber *> *statuses = AssetUploadStatus.statusesReadyToQueueUp;
+    NSArray<NSNumber *> *statuses;
     if (MEGAReachabilityManager.isReachable) {
         statuses = AssetUploadStatus.allStatusesToQueueUp;
+    } else {
+        statuses = AssetUploadStatus.statusesReadyToQueueUp;
     }
+    
     NSArray *records = [CameraUploadRecordManager.shared queueUpUploadRecordsByStatuses:statuses fetchLimit:count mediaType:mediaType error:nil];
     if (records.count == 0) {
         MEGALogInfo(@"[Camera Upload] no more local asset to upload for media type %li", (long)mediaType);
+        
+        if ([CameraUploadRecordManager.shared pendingForUploadingRecordsCountByMediaTypes:CameraUploadManager.enabledMediaTypes error:nil] == 0) {
+            [NSNotificationCenter.defaultCenter postNotificationName:MEGACameraUploadAllAssetsFinishedProcessingNotificationName object:self userInfo:nil];
+        }
+        
         return;
     }
     
@@ -549,9 +554,10 @@ static const NSUInteger MaximumPhotoUploadBatchCountMultiplier = 2;
     BOOL hasPendingOperation = NO;
     for (NSOperation *operation in queue.operations) {
         if ([operation isKindOfClass:[CameraUploadOperation class]]) {
-            if (!operation.isFinished && [[(CameraUploadOperation *)operation uploadInfo].savedLocalIdentifier isEqualToString:uploadOperation.uploadInfo.savedLocalIdentifier]) {
+            CameraUploadOperation *queuedUpOperation = (CameraUploadOperation *)operation;
+            if (!queuedUpOperation.isFinished && [queuedUpOperation.uploadInfo.savedLocalIdentifier isEqualToString:uploadOperation.uploadInfo.savedLocalIdentifier]) {
                 hasPendingOperation = YES;
-                MEGALogError(@"[Camera Upload] has pending operation %@", operation);
+                MEGALogError(@"[Camera Upload] has pending operation %@", queuedUpOperation);
                 break;
             }
         }
@@ -593,7 +599,7 @@ static const NSUInteger MaximumPhotoUploadBatchCountMultiplier = 2;
     [self.diskSpaceDetector stopDetectingPhotoUpload];
     [self.concurrentCountCalculator stopCalculatingConcurrentCount];
     [self.backgroundUploadingTaskMonitor stopMonitoringBackgroundUploadingTasks];
-    _pausePhotoUpload = NO;
+    _photoUploadPaused = NO;
     _storageState = StorageStateGreen;
     [TransferSessionManager.shared invalidateAndCancelPhotoSessions];
     [self.cameraScanner unobservePhotoLibraryChanges];
@@ -605,7 +611,7 @@ static const NSUInteger MaximumPhotoUploadBatchCountMultiplier = 2;
     CameraUploadManager.videoUploadEnabled = NO;
     [self cancelVideoUploadOperations];
     [self.diskSpaceDetector stopDetectingVideoUpload];
-    _pauseVideoUpload = NO;
+    _videoUploadPaused = NO;
     [TransferSessionManager.shared invalidateAndCancelVideoSessions];
 }
 
@@ -613,14 +619,14 @@ static const NSUInteger MaximumPhotoUploadBatchCountMultiplier = 2;
 
 - (void)pauseCameraUploadIfNeeded {
     if (CameraUploadManager.isCameraUploadEnabled) {
-        self.pausePhotoUpload = YES;
-        self.pauseVideoUpload = YES;
+        self.photoUploadPaused = YES;
+        self.videoUploadPaused = YES;
     }
 }
 
 - (void)resumeCameraUpload {
-    self.pausePhotoUpload = NO;
-    self.pauseVideoUpload = NO;
+    self.photoUploadPaused = NO;
+    self.videoUploadPaused = NO;
 }
 
 #pragma mark - suspend and unsuspend camera upload
@@ -653,37 +659,10 @@ static const NSUInteger MaximumPhotoUploadBatchCountMultiplier = 2;
     return self.videoUploadOperationQueue.isSuspended;
 }
 
-#pragma mark - upload status
-
-- (NSUInteger)uploadPendingAssetsCount {
-    return [CameraUploadRecordManager.shared pendingRecordsCountByMediaTypes:self.enabledMediaTypes error:nil];
-}
-
-- (BOOL)isPhotoUploadDone {
-    return [CameraUploadRecordManager.shared pendingRecordsCountByMediaTypes:@[@(PHAssetMediaTypeImage)] error:nil] == 0;
-}
-
-- (BOOL)isVideoUploadDone {
-    return [CameraUploadRecordManager.shared pendingRecordsCountByMediaTypes:@[@(PHAssetMediaTypeVideo)] error:nil] == 0;
-}
-
-- (NSArray<NSNumber *> *)enabledMediaTypes {
-    NSMutableArray<NSNumber *> *mediaTypes = [NSMutableArray array];
-    if (CameraUploadManager.isCameraUploadEnabled) {
-        [mediaTypes addObject:@(PHAssetMediaTypeImage)];
-        
-        if (CameraUploadManager.isVideoUploadEnabled) {
-            [mediaTypes addObject:@(PHAssetMediaTypeVideo)];
-        }
-    }
-    
-    return [mediaTypes copy];
-}
-
 #pragma mark - get upload stats
 
 - (void)loadCurrentUploadStatsWithCompletion:(void (^)(UploadStats * _Nullable, NSError * _Nullable))completion {
-    return [self loadUploadStatsForMediaTypes:self.enabledMediaTypes completion:completion];
+    return [self loadUploadStatsForMediaTypes:CameraUploadManager.enabledMediaTypes completion:completion];
 }
 
 - (void)loadUploadStatsForMediaTypes:(NSArray<NSNumber *> *)mediaTypes completion:(void (^)(UploadStats * _Nullable, NSError * _Nullable))completion {
@@ -897,32 +876,6 @@ static const NSUInteger MaximumPhotoUploadBatchCountMultiplier = 2;
     [NSOperationQueue.mainQueue addOperationWithBlock:^{
         [UIApplication.sharedApplication setMinimumBackgroundFetchInterval:UIApplicationBackgroundFetchIntervalNever];
     }];
-}
-
-- (void)performBackgroundRefreshWithCompletion:(void (^)(UIBackgroundFetchResult))completion {
-    if (CameraUploadManager.isCameraUploadEnabled) {
-        [self.cameraScanner scanMediaTypes:self.enabledMediaTypes completion:^(NSError * _Nullable error) {
-            if (self.uploadPendingAssetsCount == 0) {
-                completion(UIBackgroundFetchResultNoData);
-            } else {
-                MEGALogDebug(@"[Camera Upload] upload camera in background refresh");
-                [self startCameraUploadIfNeeded];
-                self.backgroundRefreshCompletion = completion;
-                [NSTimer scheduledTimerWithTimeInterval:BackgroundRefreshDuration target:self selector:@selector(backgroudRefreshTimerExpired:) userInfo:nil repeats:NO];
-            }
-        }];
-    } else {
-        completion(UIBackgroundFetchResultNoData);
-    }
-}
-
-- (void)backgroudRefreshTimerExpired:(NSTimer *)timer {
-    if (self.backgroundRefreshCompletion) {
-        self.backgroundRefreshCompletion(UIBackgroundFetchResultNewData);
-        if (self.uploadPendingAssetsCount == 0) {
-            self.backgroundRefreshCompletion(UIBackgroundFetchResultNoData);
-        }
-    }
 }
 
 #pragma mark - background upload
