@@ -313,19 +313,7 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
             break;
     }
     
-    [self requestStoreRatingIfNeededForCurrentState:currentState previousState:_currentState];
-    
     _currentState = currentState;
-}
-
-- (void)requestStoreRatingIfNeededForCurrentState:(MEGACameraUploadsState)currentState previousState:(MEGACameraUploadsState)previousState {
-    if (@available(iOS 10.3, *)) {
-        if (currentState == MEGACameraUploadsStateCompleted && previousState == MEGACameraUploadsStateUploading) {
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                [SKStoreReviewController requestReview];
-            });
-        }
-    }
 }
 
 #pragma mark - Private

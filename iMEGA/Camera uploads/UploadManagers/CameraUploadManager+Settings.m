@@ -205,6 +205,19 @@ static const NSTimeInterval BoardingScreenShowUpMinimumInterval = 30 * 24 * 3600
     return [self isCameraUploadEnabled] && [self hasMigratedToCameraUploadsV2];
 }
 
++ (NSArray<NSNumber *> *)enabledMediaTypes {
+    NSMutableArray<NSNumber *> *mediaTypes = [NSMutableArray array];
+    if (CameraUploadManager.isCameraUploadEnabled) {
+        [mediaTypes addObject:@(PHAssetMediaTypeImage)];
+        
+        if (CameraUploadManager.isVideoUploadEnabled) {
+            [mediaTypes addObject:@(PHAssetMediaTypeVideo)];
+        }
+    }
+    
+    return [mediaTypes copy];
+}
+
 #pragma mark - camera upload v2 migration
 
 + (BOOL)hasMigratedToCameraUploadsV2 {

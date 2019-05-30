@@ -38,6 +38,7 @@ typedef NS_ENUM(NSUInteger, CameraUploadVideoQuality) {
 @property (class, readonly) BOOL isHEVCFormatSupported;
 @property (class, readonly) BOOL canBackgroundUploadBeStarted;
 @property (class, readonly) BOOL canCameraUploadBeStarted;
+@property (class, readonly) NSArray<NSNumber *> * enabledMediaTypes;
 
 #pragma mark - camera upload v2 migration
 
