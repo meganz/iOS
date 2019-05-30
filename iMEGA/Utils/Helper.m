@@ -685,22 +685,6 @@ static MEGAIndexer *indexer;
     return folderSize;
 }
 
-+ (uint64_t)freeDiskSpace {
-    uint64_t totalFreeSpace = 0;
-    NSError *error;
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSDictionary *dictionary = [[NSFileManager defaultManager] attributesOfFileSystemForPath:[paths lastObject] error:&error];
-    
-    if (dictionary) {
-        NSNumber *freeFileSystemSizeInBytes = [dictionary objectForKey:NSFileSystemFreeSize];
-        totalFreeSpace = [freeFileSystemSizeInBytes unsignedLongLongValue];
-    } else {
-        MEGALogError(@"Obtaining System Memory Info failed with error: %@", error);
-    }
-    
-    return totalFreeSpace;
-}
-
 + (void)changeApiURL {
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"pointToStaging"]) {
         [[MEGASdkManager sharedMEGASdk] changeApiUrl:@"https://g.api.mega.co.nz/" disablepkp:NO];

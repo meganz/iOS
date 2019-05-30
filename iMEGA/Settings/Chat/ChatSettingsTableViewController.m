@@ -23,9 +23,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *richPreviewsLabel;
 @property (weak, nonatomic) IBOutlet UISwitch *richPreviewsSwitch;
 
-@property (weak, nonatomic) IBOutlet UILabel *useMobileDataLabel;
-@property (weak, nonatomic) IBOutlet UISwitch *useMobileDataSwitch;
-
 @end
 
 @implementation ChatSettingsTableViewController
@@ -44,12 +41,7 @@
     
     self.richPreviewsLabel.text = AMLocalizedString(@"richUrlPreviews", @"Title used in settings that enables the generation of link previews in the chat");
     
-    self.useMobileDataLabel.text = AMLocalizedString(@"useMobileData", @"Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature.");
-    
     self.videoQualityLabel.text = AMLocalizedString(@"videoQuality", @"Title that refers to the status of the chat (Either Online or Offline)");
-        
-    BOOL isMobileDataEnabledForChat = [[NSUserDefaults standardUserDefaults] boolForKey:@"IsMobileDataEnabledForChat"];
-    [self.useMobileDataSwitch setOn:isMobileDataEnabledForChat animated:YES];
     
     self.richPreviewsSwitch.on = [NSUserDefaults.standardUserDefaults boolForKey:@"richLinks"];
     
@@ -86,13 +78,6 @@
 
 - (IBAction)richPreviewsValueChanged:(UISwitch *)sender {
     [[MEGASdkManager sharedMEGASdk] enableRichPreviews:sender.isOn];
-}
-
-- (IBAction)useMobileDataValueChanged:(UISwitch *)sender {
-    MEGALogInfo(@"Chat - Mobile Data: %@", (sender.isOn ? @"ON" : @"OFF"));
-    
-    [[NSUserDefaults standardUserDefaults] setBool:sender.isOn forKey:@"IsMobileDataEnabledForChat"];
-    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 #pragma mark - Private
@@ -154,7 +139,6 @@
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    //TODO: Enable "Use Mobile Data" section when possible
     return 3;
 }
 
