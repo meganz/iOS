@@ -27,7 +27,7 @@ extern NSNotificationName const MEGACameraUploadVideoConcurrentCountChangedNotif
 extern NSNotificationName const MEGACameraUploadUploadingTasksCountChangedNotification;
 extern NSNotificationName const MEGACameraUploadTaskExpiredNotification;
 extern NSNotificationName const MEGACameraUploadQueueUpNextAssetNotification;
-extern NSString * const MEGACameraUploadAllAssetsFinishedProcessingNotificationName;
+extern NSNotificationName const MEGACameraUploadAllAssetsFinishedProcessingNotification;
 
 #pragma mark - camera upload notification keys
 
