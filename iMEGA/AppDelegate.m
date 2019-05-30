@@ -1433,7 +1433,7 @@ void uncaughtExceptionHandler(NSException *exception) {
             break;
             
         case EventMediaInfoReady:
-            [NSNotificationCenter.defaultCenter postNotificationName:MEGAMediaInfoReadyNotificationName object:self];
+            [NSNotificationCenter.defaultCenter postNotificationName:MEGAMediaInfoReadyNotification object:self];
             break;
             
         case EventStorage: {
