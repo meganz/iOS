@@ -23,9 +23,17 @@
 @implementation CameraScanner
 
 - (instancetype)initWithDelegate:(id<CameraScannerDelegate>)delegate {
-    self = [super init];
+    self = [self init];
     if (self) {
         _delegate = delegate;
+    }
+    
+    return self;
+}
+
+- (instancetype)init {
+    self = [super init];
+    if (self) {
         _cameraScanQueue = [[NSOperationQueue alloc] init];
         _cameraScanQueue.name = @"cameraScanQueue";
         _cameraScanQueue.maxConcurrentOperationCount = 1;
@@ -33,6 +41,7 @@
         _livePhotoScanner = [[LivePhotoScanner alloc] init];
         _scannedFetchResults = [NSMutableArray array];
     }
+    
     return self;
 }
 
@@ -63,8 +72,13 @@
         [CameraUploadRecordManager.shared.backgroundContext performBlockAndWait:^{
             NSArray<MOAssetUploadRecord *> *records = [CameraUploadRecordManager.shared fetchUploadRecordsByMediaTypes:mediaTypes includeAdditionalMediaSubtypes:NO sortByIdentifier:YES error:&error];
             if (error) {
+                if (completion) {
+                    completion(error);
+                }
+                
                 return;
             }
+            
             MEGALogDebug(@"[Camera Upload] initial save with asset count %lu", (unsigned long)fetchResult.count);
             if (records.count == 0) {
                 [self saveInitialUploadRecordsByAssetFetchResult:fetchResult error:&error];

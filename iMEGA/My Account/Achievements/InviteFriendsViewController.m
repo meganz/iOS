@@ -65,7 +65,6 @@
     [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
     
     [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
-        [self.tokenField reloadData];
         self.tokenFieldHeightLayoutConstraint.constant = self.tokenField.frame.size.height;
     } completion:nil];
 }

@@ -284,6 +284,8 @@ static NSString *kPath = @"kPath";
         OfflineTableViewCell *cell = (OfflineTableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
         NSString *itemPath = [[self.offline currentOfflinePath] stringByAppendingPathComponent:cell.itemNameString];
         [self.offline removeOfflineNodeCell:itemPath];
+        
+        [self.offline updateNavigationBarTitle];
     }];
     deleteAction.image = [UIImage imageNamed:@"delete"];
     deleteAction.backgroundColor = [UIColor colorWithRed:0.94 green:0.22 blue:0.23 alpha:1];
