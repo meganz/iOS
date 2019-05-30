@@ -65,7 +65,7 @@
         _directoryURL = [aDecoder decodeObjectForKey:@"directoryURL"];
         _parentNode = [MEGASdkManager.sharedMEGASdk nodeForHandle:[[aDecoder decodeObjectForKey:@"parentHandle"] unsignedLongLongValue]];
         NSData *serializedData = [aDecoder decodeObjectForKey:@"mediaUpload"];
-        _mediaUpload = [[MEGASdkManager sharedMEGASdk] resumeBackgroundMediaUploadBySerializedData:serializedData];
+        _mediaUpload = [MEGABackgroundMediaUpload unserializByData:serializedData MEGASdk:MEGASdkManager.sharedMEGASdk];
         _savedLocalIdentifier = [aDecoder decodeObjectForKey:@"savedLocalIdentifier"];
         _encryptedChunksCount = [[aDecoder decodeObjectForKey:@"encryptedChunksCount"] unsignedIntegerValue];
     }

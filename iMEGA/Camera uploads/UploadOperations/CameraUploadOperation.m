@@ -168,7 +168,7 @@ static NSString * const VideoAttributeImageName = @"AttributeImage";
         return;
     }
     
-    self.uploadInfo.mediaUpload = [MEGASdkManager.sharedMEGASdk backgroundMediaUpload];
+    self.uploadInfo.mediaUpload = [[MEGABackgroundMediaUpload alloc] initWithMEGASdk:MEGASdkManager.sharedMEGASdk];
     [self.uploadInfo.mediaUpload analyseMediaInfoForFileAtPath:self.uploadInfo.fileURL.path];
     
     [self encryptFile];
