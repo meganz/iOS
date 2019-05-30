@@ -10,9 +10,9 @@ NSString * const MEGAiOSAppKey = @"EVtjzb7R";
 
 NSString * const MEGALogoutNotificationName = @"nz.mega.logout";
 NSString * const MEGANodesCurrentNotificationName = @"nz.mega.nodesCurrent";
-NSString * const MEGAMediaInfoReadyNotificationName = @"nz.mega.mediaInfoReady";
 NSString * const MEGAStorageOverQuotaNotificationName = @"nz.mega.storageOverQuota";
 NSString * const MEGAStorageEventDidChangeNotificationName = @"nz.mega.event.storage";
+NSNotificationName const MEGAMediaInfoReadyNotification = @"nz.mega.mediaInfoReady";
 
 #pragma mark - global notification keys
 

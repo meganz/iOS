@@ -8,7 +8,7 @@
 - (void)start {
     [super start];
     
-    [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(didReceiveMediaInfoReadyNotification) name:MEGAMediaInfoReadyNotificationName object:nil];
+    [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(didReceiveMediaInfoReadyNotification) name:MEGAMediaInfoReadyNotification object:nil];
     
     if ([MEGASdkManager.sharedMEGASdk ensureMediaInfo]) {
         [self finishOperation];
