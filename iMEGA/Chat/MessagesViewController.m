@@ -216,8 +216,9 @@ static NSMutableSet<NSString *> *tapForInfoSet;
     _whoIsTypingTimersMutableDictionary = [[NSMutableDictionary alloc] init];
     
     // Voice clips tooltip:
-    self.tapAndHoldLabel.text = AMLocalizedString(@"Tap and hold", @"First part of the string 'Tap and hold <icon> to record, release to send'. There is a microphone icon between the two parts of the string.");
-    self.releaseToSendLabel.text = AMLocalizedString(@"to record, release to send", @"Second part of the string 'Tap and hold <icon> to record, release to send'. There is a microphone icon between the two parts of the string.");
+    NSArray<NSString *> *tooltipTextArray = [AMLocalizedString(@"Tap and hold 🎙 to record, release to send", @"Tooltip shown when the user presses but does not hold the microphone icon to send a voice clip") componentsSeparatedByString:@"🎙"];
+    self.tapAndHoldLabel.text = tooltipTextArray.firstObject;
+    self.releaseToSendLabel.text = tooltipTextArray.lastObject;
     
     // Array of observed messages:
     self.observedDialogMessages = [[NSMutableSet<MEGAChatMessage *> alloc] init];
