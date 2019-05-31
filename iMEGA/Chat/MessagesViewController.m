@@ -21,6 +21,7 @@
 #import "MEGANode+MNZCategory.h"
 #import "MEGANodeList+MNZCategory.h"
 #import "MEGALinkManager.h"
+#import "MEGALoadingMessagesHeaderView.h"
 #import "MEGAOpenMessageHeaderView.h"
 #import "MEGAProcessAsset.h"
 #import "MEGAReachabilityManager.h"
@@ -33,6 +34,7 @@
 #import "NSString+MNZCategory.h"
 #import "UIImage+MNZCategory.h"
 #import "UIApplication+MNZCategory.h"
+#import "UIView+MNZCategory.h"
 
 #import "BrowserViewController.h"
 #import "CallViewController.h"
@@ -61,6 +63,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
 @interface MessagesViewController () <MEGAPhotoBrowserDelegate, JSQMessagesViewAccessoryButtonDelegate, JSQMessagesComposerTextViewPasteDelegate, DZNEmptyDataSetSource, MEGAChatDelegate, MEGAChatRequestDelegate, MEGARequestDelegate, MEGAChatCallDelegate>
 
 @property (nonatomic, strong) MEGAOpenMessageHeaderView *openMessageHeaderView;
+@property (nonatomic, strong) MEGALoadingMessagesHeaderView *loadingMessagesHeaderView;
 
 @property (strong, nonatomic) NSMutableArray <MEGAChatMessage *> *messages;
 
@@ -151,7 +154,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    _messages = [[NSMutableArray alloc] init];
+    _messages = NSMutableArray.new;
     
     self.isFirstLoad = YES;
     
@@ -167,7 +170,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
 
     // Avatar images
     self.avatarImageFactory = [[JSQMessagesAvatarImageFactory alloc] initWithDiameter:kAvatarImageDiameter];
-    self.avatarImages = [[NSMutableDictionary alloc] init];
+    self.avatarImages = NSMutableDictionary.new;
     
     _lastChatRoomStateString = @"";
     _lastChatRoomStateColor = UIColor.whiteColor;
@@ -208,7 +211,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
     UITapGestureRecognizer *jumpButtonTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(jumpToBottomPressed:)];
     [self.jumpToBottomView addGestureRecognizer:jumpButtonTap];
     
-    _whoIsTypingTimersMutableDictionary = [[NSMutableDictionary alloc] init];
+    _whoIsTypingTimersMutableDictionary = NSMutableDictionary.new;
     
     // Array of observed messages:
     self.observedDialogMessages = [[NSMutableSet<MEGAChatMessage *> alloc] init];
@@ -221,7 +224,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
     [self.inputToolbar.contentView.joinButton setTitle:AMLocalizedString(@"Join", @"Button text in public chat previews that allows the user to join the chat") forState:UIControlStateNormal];
     
     if (!MessagesViewController.tapForInfoSet) {
-        MessagesViewController.tapForInfoSet = [[NSMutableSet alloc] init];
+        MessagesViewController.tapForInfoSet = NSMutableSet.new;
     }
     if (![MessagesViewController.tapForInfoSet containsObject:[MEGASdk base64HandleForUserHandle:self.chatRoom.chatId]]) {
         self.tapForInfoTimer = [NSTimer scheduledTimerWithTimeInterval:5.0 target:self selector:@selector(hideTapForInfoLabel) userInfo:nil repeats:NO];
@@ -551,9 +554,6 @@ static NSMutableSet<NSString *> *tapForInfoSet;
             break;
             
         case 2:
-            if (!self.isFirstLoad) {
-                [SVProgressHUD show];
-            }
             MEGALogDebug(@"loadMessagesForChat: messages will be requested to the server");
             break;
             
@@ -810,9 +810,9 @@ static NSMutableSet<NSString *> *tapForInfoSet;
 }
 
 - (void)openCallViewWithVideo:(BOOL)videoCall active:(BOOL)active {
-    if ([[UIDevice currentDevice] orientation] != UIInterfaceOrientationPortrait) {
+    if (UIDevice.currentDevice.orientation != UIInterfaceOrientationPortrait) {
         NSNumber *value = [NSNumber numberWithInt:UIInterfaceOrientationPortrait];
-        [[UIDevice currentDevice] setValue:value forKey:@"orientation"];
+        [UIDevice.currentDevice setValue:value forKey:@"orientation"];
     }
     if (self.chatRoom.isGroup) {
         GroupCallViewController *groupCallVC = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"GroupCallViewControllerID"];
@@ -894,7 +894,8 @@ static NSMutableSet<NSString *> *tapForInfoSet;
     
     [self customiseCollectionViewLayout];
     
-    [self.collectionView registerNib:[MEGAOpenMessageHeaderView nib] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:[MEGAOpenMessageHeaderView headerReuseIdentifier]];
+    [self.collectionView registerNib:MEGAOpenMessageHeaderView.nib forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:MEGAOpenMessageHeaderView.headerReuseIdentifier];
+    [self.collectionView registerNib:MEGALoadingMessagesHeaderView.nib forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:MEGALoadingMessagesHeaderView.headerReuseIdentifier];
     
     self.collectionView.accessoryDelegate = self;
     self.collectionView.backgroundColor = UIColor.whiteColor;
@@ -2149,19 +2150,30 @@ static NSMutableSet<NSString *> *tapForInfoSet;
     UICollectionReusableView *reusableview = nil;
     
     if (kind == UICollectionElementKindSectionHeader) {
-        [self setChatOpenMessageForIndexPath:indexPath];
-        return self.openMessageHeaderView;
+        if ([[MEGASdkManager sharedMEGAChatSdk] isFullHistoryLoadedForChat:self.chatRoom.chatId]) {
+            [self setChatOpenMessageForIndexPath:indexPath];
+            return self.openMessageHeaderView;
+        } else {
+            self.loadingMessagesHeaderView = [self.collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:MEGALoadingMessagesHeaderView.headerReuseIdentifier forIndexPath:indexPath];
+            [self.loadingMessagesHeaderView.loadingView mnz_startShimmering];
+            return self.loadingMessagesHeaderView;
+        }
     }
 
     return reusableview;
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section {
-    BOOL isiPhone4XOr5X = ([[UIDevice currentDevice] iPhone4X] || [[UIDevice currentDevice] iPhone5X]);
-    CGFloat height = (isiPhone4XOr5X ? 490.0f : 470.0f);
-    CGFloat minimumHeight = self.loadingState || self.isFirstLoad ? 0.0f : height;
     
-    return CGSizeMake(self.view.frame.size.width, minimumHeight);
+    CGFloat height = 0;
+    if ([[MEGASdkManager sharedMEGAChatSdk] isFullHistoryLoadedForChat:self.chatRoom.chatId]) {
+        BOOL isiPhone4XOr5X = (UIDevice.currentDevice.iPhone4X || UIDevice.currentDevice.iPhone5X);
+        height = self.loadingState || self.isFirstLoad ? 0.0f : (isiPhone4XOr5X ? 490.0f : 470.0f);
+    } else {
+        height = self.isFirstLoad ? 0.0f : 230.0f;
+    }
+    
+    return CGSizeMake(self.view.frame.size.width, height);
 }
 
 #pragma mark - UICollectionViewDelegate
@@ -2350,7 +2362,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
 }
 
 - (void)import:(id)sender message:(MEGAChatMessage *)message {
-    NSMutableArray *nodesArray = [[NSMutableArray alloc] init];
+    NSMutableArray *nodesArray = NSMutableArray.new;
     for (NSUInteger i = 0; i < message.nodeList.size.unsignedIntegerValue; i++) {
         MEGANode *node = [message.nodeList nodeAtIndex:i];
         if (self.chatRoom.isPreview) {
@@ -2550,7 +2562,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
 - (void)messageView:(JSQMessagesCollectionView *)view didTapAccessoryButtonAtIndexPath:(NSIndexPath *)path {
     __block MEGAChatMessage *message = [self.messages objectAtIndex:path.item];
     if (message.status == MEGAChatMessageStatusSendingManual) {
-        if ([[UIDevice currentDevice] iPhoneDevice]) {
+        if (UIDevice.currentDevice.iPhoneDevice) {
             [self.inputToolbar.contentView.textView resignFirstResponder];
         }
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
@@ -2577,7 +2589,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
                 }
                     
                 case MEGAChatMessageTypeContact: {
-                    NSMutableArray *users = [[NSMutableArray alloc] init];
+                    NSMutableArray *users = NSMutableArray.alloc.init;
                     for (NSUInteger i = 0; i < message.usersCount; i++) {
                         MEGAUser *user = [[MEGASdkManager sharedMEGASdk] contactForEmail:[message userEmailAtIndex:i]];
                         if (user) {
@@ -2605,8 +2617,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
         
         alertController.modalPresentationStyle = UIModalPresentationPopover;
         UIPopoverPresentationController *popoverPresentationController = alertController.popoverPresentationController;
-        CGRect deleteRect = [[view cellForItemAtIndexPath:path] bounds];
-        popoverPresentationController.sourceRect = deleteRect;
+        popoverPresentationController.sourceRect = [view cellForItemAtIndexPath:path].bounds;
         popoverPresentationController.sourceView = [view cellForItemAtIndexPath:path];
         popoverPresentationController.permittedArrowDirections = UIPopoverArrowDirectionAny;
         
@@ -2860,7 +2871,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
                     NSUInteger index = [self.messages indexOfObject:oldMessage];
                     [self.messages replaceObjectAtIndex:index withObject:message];
                     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:0];
-                    if ([[self.collectionView indexPathsForVisibleItems] containsObject:indexPath]) {
+                    if ([self.collectionView.indexPathsForVisibleItems containsObject:indexPath]) {
                         [self.collectionView reloadItemsAtIndexPaths:@[indexPath]];
                     }
                 } else {
