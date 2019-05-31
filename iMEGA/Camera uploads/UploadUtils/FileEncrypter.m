@@ -155,7 +155,8 @@ static const NSUInteger EncryptionProposedChunkSizeWithoutTruncating = 1024 * 10
             return @[];
         }
         
-        if (startPosition + chunkSizeToBeAdjusted > self.fileSize) {
+        
+        if (startPosition + chunkSize > self.fileSize) {
             chunkSizeToBeAdjusted = self.fileSize - startPosition;
         } else {
             chunkSizeToBeAdjusted = chunkSize;
