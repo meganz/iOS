@@ -224,8 +224,6 @@
     }];
 }
 
-
-
 - (void)uploadVideoAtURL:(NSURL *)URL {
     if (self.isCancelled) {
         [self finishOperationWithStatus:CameraAssetUploadStatusCancelled shouldUploadNextAsset:NO];
