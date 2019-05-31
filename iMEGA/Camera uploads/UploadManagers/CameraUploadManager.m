@@ -509,7 +509,7 @@ static const NSUInteger MaximumPhotoUploadBatchCountMultiplier = 2;
         MEGALogInfo(@"[Camera Upload] no more local asset to upload for media type %li", (long)mediaType);
         
         if ([CameraUploadRecordManager.shared pendingForUploadingRecordsCountByMediaTypes:CameraUploadManager.enabledMediaTypes error:nil] == 0) {
-            [NSNotificationCenter.defaultCenter postNotificationName:MEGACameraUploadAllAssetsFinishedProcessingNotificationName object:self userInfo:nil];
+            [NSNotificationCenter.defaultCenter postNotificationName:MEGACameraUploadAllAssetsFinishedProcessingNotification object:self userInfo:nil];
         }
         
         return;
