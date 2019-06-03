@@ -20,6 +20,7 @@
 @property (strong, nonatomic) UISearchController *searchController;
 
 @property (nonatomic) CLLocationManager *locationManager;
+@property (nonatomic) MKPointAnnotation *pointAnnotation;
 
 @property (nonatomic, strong) NSArray <MKMapItem *> *mapItems;
 
@@ -193,24 +194,28 @@
     MKCoordinateRegion region = MKCoordinateRegionMake(center, MKCoordinateSpanMake(0.01, 0.01));
     
     [self.mapView setRegion:region animated:YES];
-    
-    
-    MKPointAnnotation *pointAnnotation = [[MKPointAnnotation alloc] init];
-    pointAnnotation.coordinate = location.coordinate;
-    [self.mapView addAnnotation:pointAnnotation];
 }
 
 #pragma mark - MKMapViewDelegate
 
-- (void)mapViewDidChangeVisibleRegion:(MKMapView *)mapView {
-    [mapView removeAnnotations:mapView.annotations];
-    
-    MKPointAnnotation *pointAnnotation = [[MKPointAnnotation alloc] init];
-    pointAnnotation.coordinate = mapView.region.center;
-    [mapView addAnnotation:pointAnnotation];
+#pragma mark - MKMapViewDelegate
+
+- (void)mapView:(MKMapView *)mapView regionWillChangeAnimated:(BOOL)animated {
+    if (!self.pointAnnotation) {
+        self.pointAnnotation = MKPointAnnotation.new;
+        self.pointAnnotation.coordinate = mapView.region.center;
+        [self.mapView addAnnotation:self.pointAnnotation];
+    }
+    [mapView selectAnnotation:self.pointAnnotation animated:YES];
 }
 
-- (void)mapView:(MKMapView *)mapView regionDidChangeAnimated:(BOOL)animated {    
+- (void)mapViewDidChangeVisibleRegion:(MKMapView *)mapView {
+    self.pointAnnotation.coordinate = mapView.region.center;
+}
+
+- (void)mapView:(MKMapView *)mapView regionDidChangeAnimated:(BOOL)animated {
+    [mapView deselectAnnotation:self.pointAnnotation animated:YES];
+    
     CLLocation *location = [[CLLocation alloc] initWithLatitude:mapView.centerCoordinate.latitude longitude:mapView.centerCoordinate.longitude];
 
     CLGeocoder *geocoder = [[CLGeocoder alloc] init];
