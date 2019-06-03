@@ -104,7 +104,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
 
 @property (nonatomic) CGFloat lastBottomInset;
 @property (nonatomic) CGFloat lastVerticalOffset;
-@property (nonatomic) CGFloat initialToolbarHeight;
+@property (nonatomic, getter=isToolbarFrameLocked) BOOL toolbarFrameLocked;
 
 @property (nonatomic) NSMutableSet<MEGAChatMessage *> *observedDialogMessages;
 @property (nonatomic) NSMutableSet<MEGAChatMessage *> *observedNodeMessages;
@@ -237,6 +237,8 @@ static NSMutableSet<NSString *> *tapForInfoSet;
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
+    self.toolbarFrameLocked = NO;
+    
     if (self.isMovingToParentViewController) {
         if ([[MEGASdkManager sharedMEGAChatSdk] openChatRoom:self.chatRoom.chatId delegate:self]) {
             MEGALogDebug(@"Chat room opened: %@", self.chatRoom);
@@ -303,7 +305,6 @@ static NSMutableSet<NSString *> *tapForInfoSet;
     [super viewDidAppear:animated];
     
     [self showOrHideJumpToBottom];
-    self.initialToolbarHeight = self.inputToolbar.frame.size.height;
     
     if (self.presentingViewController && self.parentViewController) {
         UIBarButtonItem *chatBackBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:AMLocalizedString(@"close", nil) style:UIBarButtonItemStylePlain target:self action:@selector(dismissChatRoom)];
@@ -383,6 +384,8 @@ static NSMutableSet<NSString *> *tapForInfoSet;
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
+    
+    self.toolbarFrameLocked = YES;
     
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kReachabilityChangedNotification object:nil];
     
@@ -1920,7 +1923,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
 }
 
 - (void)jsq_setCollectionViewInsetsTopValue:(CGFloat)top bottomValue:(CGFloat)bottom {
-    if (self.inputToolbar.frame.size.height < self.initialToolbarHeight) {
+    if (self.isToolbarFrameLocked) {
         return;
     }
     
