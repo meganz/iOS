@@ -8,10 +8,10 @@ extern NSString * const MEGAiOSAppKey;
 
 #pragma mark - global notifications
 
-extern NSNotificationName const MEGALogoutNotification;
-extern NSNotificationName const MEGANodesCurrentNotification;
-extern NSNotificationName const MEGAStorageOverQuotaNotification;
-extern NSNotificationName const MEGAStorageEventDidChangeNotification;
+extern NSString * const MEGALogoutNotification;
+extern NSString * const MEGANodesCurrentNotification;
+extern NSString * const MEGAStorageOverQuotaNotification;
+extern NSString * const MEGAStorageEventDidChangeNotification;
 
 #pragma mark - global notification keys
 
@@ -19,15 +19,15 @@ extern NSString * const MEGAStorageEventStateUserInfoKey;
 
 #pragma mark - camera upload notifications
 
-extern NSNotificationName const MEGACameraUploadStatsChangedNotification;
-extern NSNotificationName const MEGACameraUploadPhotoUploadLocalDiskFullNotification;
-extern NSNotificationName const MEGACameraUploadVideoUploadLocalDiskFullNotification;
-extern NSNotificationName const MEGACameraUploadPhotoConcurrentCountChangedNotification;
-extern NSNotificationName const MEGACameraUploadVideoConcurrentCountChangedNotification;
-extern NSNotificationName const MEGACameraUploadUploadingTasksCountChangedNotification;
-extern NSNotificationName const MEGACameraUploadTaskExpiredNotification;
-extern NSNotificationName const MEGACameraUploadQueueUpNextAssetNotification;
-extern NSNotificationName const MEGACameraUploadAllAssetsFinishedProcessingNotification;
+extern NSString * const MEGACameraUploadStatsChangedNotification;
+extern NSString * const MEGACameraUploadPhotoUploadLocalDiskFullNotification;
+extern NSString * const MEGACameraUploadVideoUploadLocalDiskFullNotification;
+extern NSString * const MEGACameraUploadPhotoConcurrentCountChangedNotification;
+extern NSString * const MEGACameraUploadVideoConcurrentCountChangedNotification;
+extern NSString * const MEGACameraUploadUploadingTasksCountChangedNotification;
+extern NSString * const MEGACameraUploadTaskExpiredNotification;
+extern NSString * const MEGACameraUploadQueueUpNextAssetNotification;
+extern NSString * const MEGACameraUploadAllAssetsFinishedProcessingNotification;
 
 #pragma mark - camera upload notification keys
 
