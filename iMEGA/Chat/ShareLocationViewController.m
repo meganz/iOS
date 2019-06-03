@@ -20,7 +20,6 @@
 @property (strong, nonatomic) UISearchController *searchController;
 
 @property (nonatomic) CLLocationManager *locationManager;
-@property (nonatomic) id<MKAnnotation> annotation;
 
 @property (nonatomic, strong) NSArray <MKMapItem *> *mapItems;
 
@@ -195,9 +194,6 @@
     
     [self.mapView setRegion:region animated:YES];
     
-    if (self.mapView.annotations.count != 0) {
-        self.annotation = self.mapView.annotations[0];
-    }
     
     MKPointAnnotation *pointAnnotation = [[MKPointAnnotation alloc] init];
     pointAnnotation.coordinate = location.coordinate;
