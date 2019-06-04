@@ -20,7 +20,6 @@ typedef NS_ENUM(NSUInteger, CameraUploadError) {
     CameraUploadErrorEmptyLocalIdentifier,
     CameraUploadErrorNoMediaAssetFetched,
     CameraUploadErrorUnknownMediaType,
-    CameraUploadErrorCanNotArchiveLocation,
 };
 
 @interface NSError (CameraUpload)
@@ -59,12 +58,6 @@ typedef NS_ENUM(NSUInteger, CameraUploadError) {
  return a NSError object with CameraUploadErrorEmptyLocalIdentifier error code if the local identifier is empty
  */
 @property (class, readonly) NSError *mnz_cameraUploadEmptyLocalIdentifierError;
-
-/**
- return a NSError object with CameraUploadErrorCanNotArchiveLocation error code we can not archive location data
- */
-@property (class, readonly) NSError *mnz_cameraUploadCanNotArchiveLocationError;
-
 
 /**
  creates a NSError object if we don't have write permission to a file in camera upload
