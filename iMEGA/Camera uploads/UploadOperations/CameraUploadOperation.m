@@ -169,7 +169,15 @@ static NSString * const VideoAttributeImageName = @"AttributeImage";
     }
     
     self.uploadInfo.mediaUpload = [[MEGABackgroundMediaUpload alloc] initWithMEGASdk:MEGASdkManager.sharedMEGASdk];
-    [self.uploadInfo.mediaUpload analyseMediaInfoForFileAtPath:self.uploadInfo.fileURL.path];
+    
+    CLLocation *assetLocation = self.uploadInfo.asset.location;
+    if (assetLocation) {
+        [self.uploadInfo.mediaUpload setCoordinatesWithLatitude:@(assetLocation.coordinate.latitude) longitude:@(assetLocation.coordinate.longitude) isUnshareable:YES];
+    }
+    
+    if (![self.uploadInfo.mediaUpload analyseMediaInfoForFileAtPath:self.uploadInfo.fileURL.path]) {
+        MEGALogError(@"[Camera Upload] %@ analyse media info failed", self);
+    }
     
     [self encryptFile];
 }
