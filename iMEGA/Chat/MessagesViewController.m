@@ -365,6 +365,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
         self.collectionView.contentOffset = offset;
     }
     self.unreadMessages = self.chatRoom.unreadCount;
+    [self scrollToFirstUnread];
 }
 
 - (void)didBecomeActive {
@@ -1419,6 +1420,22 @@ static NSMutableSet<NSString *> *tapForInfoSet;
 - (void)saveChatDraft {
     NSString *chatDraftText = self.editMessage ? @"" : self.inputToolbar.contentView.textView.text;
     [[MEGAStore shareInstance] insertOrUpdateChatDraftWithChatId:self.chatRoom.chatId text:chatDraftText];
+}
+
+- (void)scrollToFirstUnread {
+    NSInteger numberOfItemsInSection = [self.collectionView numberOfItemsInSection:0];
+    NSInteger item = numberOfItemsInSection - (self.unreadMessages + 1);
+    if (item < 0) {
+        item = 0;
+    }
+    NSIndexPath *lastUnreadIndexPath = [NSIndexPath indexPathForItem:item inSection:0];
+    if (numberOfItemsInSection) {
+        [self.collectionView scrollToItemAtIndexPath:lastUnreadIndexPath atScrollPosition:UICollectionViewScrollPositionTop animated:NO];
+    }
+    
+    if (self.unreadMessages) {
+        [self showOrHideJumpToBottom];
+    }
 }
 
 #pragma mark - Gesture recognizer
@@ -2806,19 +2823,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
                     [self.collectionView reloadData];
                 });
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    NSInteger numberOfItemsInSection = [self.collectionView numberOfItemsInSection:0];
-                    NSInteger item = numberOfItemsInSection - (self.unreadMessages + 1);
-                    if (item < 0) {
-                        item = 0;
-                    }
-                    NSIndexPath *lastUnreadIndexPath = [NSIndexPath indexPathForItem:item inSection:0];
-                    if (numberOfItemsInSection) {
-                        [self.collectionView scrollToItemAtIndexPath:lastUnreadIndexPath atScrollPosition:UICollectionViewScrollPositionTop animated:NO];
-                    }
-                    
-                    if (self.unreadMessages) {
-                        [self showOrHideJumpToBottom];
-                    }
+                    [self scrollToFirstUnread];
                 });
             }
         } else {
