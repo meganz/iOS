@@ -94,7 +94,7 @@
     [[MEGASdkManager sharedMEGASdk] addMEGATransferDelegate:self];
     [[MEGASdkManager sharedMEGASdk] addMEGAGlobalDelegate:self];
     
-    [self setNavigationBarButtonItemsEnabled:[MEGAReachabilityManager isReachable]];
+    self.editBarButtonItem.enabled = MEGAReachabilityManager.isReachable;
     [self reloadUI];
 }
 
@@ -273,12 +273,8 @@
 }
 
 - (void)internetConnectionChanged {
-    [self setNavigationBarButtonItemsEnabled:[MEGAReachabilityManager isReachable]];
+    self.editBarButtonItem.enabled = MEGAReachabilityManager.isReachable;
     [self updateCurrentStateWithKnownCameraUploadInProgress:NO];
-}
-
-- (void)setNavigationBarButtonItemsEnabled:(BOOL)boolValue {
-    [self.editButtonItem setEnabled:boolValue];
 }
 
 - (void)pushCameraUploadSettings {
@@ -363,6 +359,9 @@
 #pragma mark - IBAction
 
 - (IBAction)enableCameraUploadsTouchUpInside:(UIButton *)sender {
+    if (self.photosCollectionView.allowsMultipleSelection) {
+        [self setEditing:NO animated:NO];
+    }
     [self pushCameraUploadSettings];
 }
 
@@ -518,9 +517,9 @@
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
     if ([self.photosByMonthYearArray count] == 0) {
-        [self setNavigationBarButtonItemsEnabled:NO];
+        self.editBarButtonItem.enabled = NO;
     } else {
-        [self setNavigationBarButtonItemsEnabled:[MEGAReachabilityManager isReachable]];
+        self.editBarButtonItem.enabled = MEGAReachabilityManager.isReachable;
     }
     
     return [self.photosByMonthYearArray count];
