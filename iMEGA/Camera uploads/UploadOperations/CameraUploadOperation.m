@@ -172,7 +172,7 @@ static NSString * const VideoAttributeImageName = @"AttributeImage";
     
     CLLocation *assetLocation = self.uploadInfo.asset.location;
     if (assetLocation) {
-        [self.uploadInfo.mediaUpload setCoordinatesWithLatitude:@(assetLocation.coordinate.latitude) longitude:@(assetLocation.coordinate.longitude) isUnshareable:YES];
+        [self.uploadInfo.mediaUpload setCoordinatesWithLatitude:assetLocation.coordinate.latitude longitude:assetLocation.coordinate.longitude isUnshareable:YES];
     }
     
     if (![self.uploadInfo.mediaUpload analyseMediaInfoForFileAtPath:self.uploadInfo.fileURL.path]) {
