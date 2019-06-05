@@ -49,7 +49,7 @@ static const NSUInteger EncryptionProposedChunkSizeWithoutTruncating = 1024 * 10
     }
     
     self.fileSize = attributeDict.fileSize;
-    unsigned long long deviceFreeSize = [NSFileManager.defaultManager deviceFreeSize];
+    unsigned long long deviceFreeSize = NSFileManager.defaultManager.mnz_fileSystemFreeSize;
     
     if (self.shouldTruncateFile) {
         if (deviceFreeSize < EncryptionMinimumChunkSize) {
