@@ -1281,7 +1281,7 @@
 "shareExtensionUnsupportedAssets"="Some items could not be shared with MEGA";
 /* Message shown to the user when the share extension is about to be killed by iOS due to a memory issue */
 "Limited system resources are available when sharing items. Try uploading these files from within the MEGA app."="Limited system resources are available when sharing items. Please try uploading these files from within the MEGA app.";
-/* Success message shown when the user has successfully shared something through the Share Extension */
+/* Success message shown when the user has successfully shared something */
 "Shared successfully"="Shared successfully";
 /* Notification message shown when a transfer failed. Keep colon. */
 "Transfer failed:"="Transfer failed:";
@@ -1826,6 +1826,24 @@
 "Today"="Today";
 /* */
 "Yesterday"="Yesterday";
+/* Title of the button to share a location in a chat */
+"Send This Location"="Send This Location";
+/* Title of the alert that allows change between different maps: Standard, Satellite or Hybrid. */
+"Map settings"="Map settings";
+/* Type of data displayed in a map view. A street map that shows the position of all roads and some road names. */
+"Standard"="Standard";
+/* Type of data displayed in a map view. Satellite imagery of the area. */
+"Satellite"="Satellite";
+/* Type of data displayed in a map view. A satellite image of the area with road and road name information layered on top. */
+"Hybrid"="Hybrid";
+/* Label to give feedback to the user when he is going to share his location, indicating that it may not be the exact location. */
+"Accurate to %d meters"="Accurate to %d meters";
+/* Alert title shown when the user opens a shared Geolocation for the first time from any client, we will show a confirmation dialog warning the user that he is now leaving the E2EE paradigm. */
+"Send Location"="Send Location";
+/* Message shown when the user opens a shared Geolocation for the first time from any client, we will show a confirmation dialog warning the user that he is now leaving the E2EE paradigm. */
+"This location will be opened using a third party maps provider outside the end-to-end encrypted MEGA platform."="This location will be opened using a third party maps provider outside the end-to-end encrypted MEGA platform.";
+/* Text shown in location-type messages */
+"Pinned Location"="Pinned Location";
 /* Plural of participant. 2 participants */
 "%d participants"="%d participants";
 /* Singular of participant. 1 participant */
@@ -1873,13 +1891,9 @@
 /* Title for a recent action shown in the webclient, see the attached image for context. */
 "%1 modified by %3"="%1 modified by %3";
 /* Title for a recent action shown in the webclient, see the attached image for context. Please ensure that the `%2 more` is inside the [A] tag as this will become a toggle to show the hidden content. */
-"%1 and [A]%2 more[/A] modified by %3"="%1 and [A]%2 more[/A] modified by %3";
-/* Title for a recent action shown in the webclient, see the attached image for context. Please ensure that the `%2 more` is inside the [A] tag as this will become a toggle to show the hidden content. */
 "%1 and [A]%2 more[/A]"="%1 and [A]%2 more[/A]";
 /* Title for a recent action shown in the webclient, see the attached image for context. */
 "%1 created by %3"="%1 created by %3";
-/* Title for a recent action shown in the webclient, see the attached image for context. Please ensure that the `%2 more` is inside the [A] tag as this will become a toggle to show the hidden content. */
-"%1 and [A]%2 more[/A] created by %3"="%1 and [A]%2 more[/A] created by %3";
 /* Message shown when the user has not recent activity in their account. */
 "No recent activity"="No recent activity";
 /* Plural of items which contains a folder. 2 items */
@@ -1892,33 +1906,5 @@
 "People can join your group by using this link."="People can join your group by using this link.";
 /* Subtitle shown in a chat to inform where to tap to enter in the chat details view */
 "Tap here for info"="Tap here for info";
-/* Title for the recents section. */
-"Recents"="Recents";
-/* Multiple Images title shown in recents section of webclient */
-"%1 Images"="%1 Images";
-/* Multiple videos title shown in recents section of web client. */
-"%2 Videos"="%2 Videos";
-/* A single image and single video title shown in recents section of webclient. */
-"1 Image and 1 Video"="1 Image and 1 Video";
-/* One image and multiple videos title in recents. */
-"1 Image and %2 Videos"="1 Image and %2 Videos";
-/* Title for multiple images and multiple videos in recents section */
-"%1 Images and %2 Videos"="%1 Images and %2 Videos";
-/* Tooltip message shown on recents section. Please see the attached image. */
-"Modified on %1 at %2"="Modified on %1 at %2";
-/* Title for a recent action shown in the webclient, see the attached image for context. */
-"%1 modified by %3"="%1 modified by %3";
-/* Title for a recent action shown in the webclient, see the attached image for context. Please ensure that the `%2 more` is inside the [A] tag as this will become a toggle to show the hidden content. */
-"%1 and [A]%2 more[/A] modified by %3"="%1 and [A]%2 more[/A] modified by %3";
-/* Title for a recent action shown in the webclient, see the attached image for context. Please ensure that the `%2 more` is inside the [A] tag as this will become a toggle to show the hidden content. */
-"%1 and [A]%2 more[/A]"="%1 and [A]%2 more[/A]";
-/* Title for a recent action shown in the webclient, see the attached image for context. */
-"%1 created by %3"="%1 created by %3";
-/* Title for a recent action shown in the webclient, see the attached image for context. Please ensure that the `%2 more` is inside the [A] tag as this will become a toggle to show the hidden content. */
-"%1 and [A]%2 more[/A] created by %3"="%1 and [A]%2 more[/A] created by %3";
-/* Message shown when the user has not recent activity in their account. */
-"No recent activity"="No recent activity";
-/* Plural of items which contains a folder. 2 items */
-"items"="items";
 /* In some cases, a user may try to get the link for a chat room, but if such is not set by an operator - it would say "not link available" and not auto create it. */
 "No chat link available."="No chat link available.";
