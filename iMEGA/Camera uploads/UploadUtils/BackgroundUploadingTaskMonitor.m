@@ -46,7 +46,7 @@ static const NSTimeInterval MonitorTimerTolerance = 7;
     }
     
     NSDictionary *info = @{MEGAHasUploadingTasksReachedMaximumCountUserInfoKey : @(uploadingTaskCount > MaximumBackgroundPendingTaskCount), MEGACurrentUploadingTasksCountUserInfoKey : @(uploadingTaskCount)};
-    [NSNotificationCenter.defaultCenter postNotificationName:MEGACameraUploadUploadingTasksCountChangedNotificationName object:self userInfo:info];
+    [NSNotificationCenter.defaultCenter postNotificationName:MEGACameraUploadUploadingTasksCountChangedNotification object:self userInfo:info];
 }
 
 @end

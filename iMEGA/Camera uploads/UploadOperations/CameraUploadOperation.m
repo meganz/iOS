@@ -234,7 +234,7 @@ static NSString * const VideoAttributeImageName = @"AttributeImage";
         if (error.type) {
             MEGALogError(@"[Camera Upload] %@ error when to requests upload url %@", self, error.nativeError);
             if (error.type == MEGAErrorTypeApiEOverQuota || error.type == MEGAErrorTypeApiEgoingOverquota) {
-                [NSNotificationCenter.defaultCenter postNotificationName:MEGAStorageOverQuotaNotificationName object:self];
+                [NSNotificationCenter.defaultCenter postNotificationName:MEGAStorageOverQuotaNotification object:self];
                 [self finishOperationWithStatus:CameraAssetUploadStatusCancelled shouldUploadNextAsset:NO];
             } else {
                 [self finishOperationWithStatus:CameraAssetUploadStatusFailed shouldUploadNextAsset:YES];
@@ -349,12 +349,12 @@ static NSString * const VideoAttributeImageName = @"AttributeImage";
     
     if (status == CameraAssetUploadStatusDone) {
         dispatch_async(dispatch_get_main_queue(), ^{
-            [NSNotificationCenter.defaultCenter postNotificationName:MEGACameraUploadStatsChangedNotificationName object:nil];
+            [NSNotificationCenter.defaultCenter postNotificationName:MEGACameraUploadStatsChangedNotification object:nil];
         });
     }
     
     if (uploadNextAsset) {
-        [NSNotificationCenter.defaultCenter postNotificationName:MEGACameraUploadQueueUpNextAssetNotificationName object:nil userInfo:@{MEGAAssetMediaTypeUserInfoKey : @(self.uploadInfo.asset.mediaType)}];
+        [NSNotificationCenter.defaultCenter postNotificationName:MEGACameraUploadQueueUpNextAssetNotification object:nil userInfo:@{MEGAAssetMediaTypeUserInfoKey : @(self.uploadInfo.asset.mediaType)}];
     }
 }
 

@@ -43,17 +43,17 @@ static const NSTimeInterval RetryTimerTolerance = 6;
 #pragma mark - start and stop detections
 
 - (void)startDetectingPhotoUpload {
-    [NSNotificationCenter.defaultCenter removeObserver:self name:MEGACameraUploadPhotoUploadLocalDiskFullNotificationName object:nil];
-    [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(didReceivePhotoUploadDiskFullNotification:) name:MEGACameraUploadPhotoUploadLocalDiskFullNotificationName object:nil];
+    [NSNotificationCenter.defaultCenter removeObserver:self name:MEGACameraUploadPhotoUploadLocalDiskFullNotification object:nil];
+    [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(didReceivePhotoUploadDiskFullNotification:) name:MEGACameraUploadPhotoUploadLocalDiskFullNotification object:nil];
 }
 
 - (void)startDetectingVideoUpload {
-    [NSNotificationCenter.defaultCenter removeObserver:self name:MEGACameraUploadVideoUploadLocalDiskFullNotificationName object:nil];
-    [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(didReceiveVideoUploadDiskFullNotification:) name:MEGACameraUploadVideoUploadLocalDiskFullNotificationName object:nil];
+    [NSNotificationCenter.defaultCenter removeObserver:self name:MEGACameraUploadVideoUploadLocalDiskFullNotification object:nil];
+    [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(didReceiveVideoUploadDiskFullNotification:) name:MEGACameraUploadVideoUploadLocalDiskFullNotification object:nil];
 }
 
 - (void)stopDetectingPhotoUpload {
-    [NSNotificationCenter.defaultCenter removeObserver:self name:MEGACameraUploadPhotoUploadLocalDiskFullNotificationName object:nil];
+    [NSNotificationCenter.defaultCenter removeObserver:self name:MEGACameraUploadPhotoUploadLocalDiskFullNotification object:nil];
     if (self.photoRetryTimer) {
         dispatch_source_cancel(self.photoRetryTimer);
     }
@@ -62,7 +62,7 @@ static const NSTimeInterval RetryTimerTolerance = 6;
 }
 
 - (void)stopDetectingVideoUpload {
-    [NSNotificationCenter.defaultCenter removeObserver:self name:MEGACameraUploadVideoUploadLocalDiskFullNotificationName object:nil];
+    [NSNotificationCenter.defaultCenter removeObserver:self name:MEGACameraUploadVideoUploadLocalDiskFullNotification object:nil];
     if (self.videoRetryTimer) {
         dispatch_source_cancel(self.videoRetryTimer);
     }
