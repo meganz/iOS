@@ -1432,6 +1432,10 @@ void uncaughtExceptionHandler(NSException *exception) {
             [NSNotificationCenter.defaultCenter postNotificationName:MEGANodesCurrentNotification object:self];
             break;
             
+        case EventMediaInfoReady:
+            [NSNotificationCenter.defaultCenter postNotificationName:MEGAMediaInfoReadyNotification object:self];
+            break;
+            
         case EventStorage: {
             [NSNotificationCenter.defaultCenter postNotificationName:MEGAStorageEventDidChangeNotification object:self userInfo:@{MEGAStorageEventStateUserInfoKey : @(event.number)}];
             

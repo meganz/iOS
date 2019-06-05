@@ -5,7 +5,6 @@ static NSString * const FingerprintFileName = @"fingerprint";
 
 static NSString * const AttributeThumbnailName = @"thumbnail";
 static NSString * const AttributePreviewName = @"preview";
-static NSString * const AttributeLocationFileName = @"location";
 
 @implementation AssetLocalAttribute
 
@@ -41,15 +40,6 @@ static NSString * const AttributeLocationFileName = @"location";
 - (BOOL)hasSavedThumbnail {
     BOOL isDirectory;
     return [NSFileManager.defaultManager fileExistsAtPath:self.thumbnailURL.path isDirectory:&isDirectory] && !isDirectory;
-}
-
-- (NSURL *)locationURL {
-    return [self.attributeDirectoryURL URLByAppendingPathComponent:AttributeLocationFileName isDirectory:NO];
-}
-
-- (BOOL)hasSavedLocation {
-    BOOL isDirectory;
-    return [NSFileManager.defaultManager fileExistsAtPath:self.locationURL.path isDirectory:&isDirectory] && !isDirectory;
 }
 
 - (BOOL)hasSavedAttributes {

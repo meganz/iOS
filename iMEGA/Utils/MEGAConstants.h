@@ -12,6 +12,7 @@ extern NSString * const MEGALogoutNotification;
 extern NSString * const MEGANodesCurrentNotification;
 extern NSString * const MEGAStorageOverQuotaNotification;
 extern NSString * const MEGAStorageEventDidChangeNotification;
+extern NSString * const MEGAMediaInfoReadyNotification;
 
 #pragma mark - global notification keys
 
