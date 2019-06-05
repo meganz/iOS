@@ -1452,6 +1452,7 @@
 		830EF9A320062F3800FAA947 /* DevicePermissionsHelper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DevicePermissionsHelper.m; sourceTree = "<group>"; };
 		83113493223900CB00647AB4 /* GradientView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GradientView.h; sourceTree = "<group>"; };
 		83113494223900CB00647AB4 /* GradientView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GradientView.m; sourceTree = "<group>"; };
+		831A4F08229C339200EBE256 /* TransfersSelected.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TransfersSelected.h; sourceTree = "<group>"; };
 		831D61A1218738D20038F5B8 /* MOFolderLayout+CoreDataProperties.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MOFolderLayout+CoreDataProperties.h"; sourceTree = "<group>"; };
 		831D61A2218738D20038F5B8 /* MOFolderLayout+CoreDataClass.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MOFolderLayout+CoreDataClass.h"; sourceTree = "<group>"; };
 		831D61A3218738D20038F5B8 /* MOFolderLayout+CoreDataClass.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "MOFolderLayout+CoreDataClass.m"; sourceTree = "<group>"; };
@@ -2458,7 +2459,6 @@
 				5B06BB7B21D508D1001F3C31 /* Flow Layouts */,
 				7747B2D5208623550011814E /* Network */,
 				5B8281451E7BE7FA0079C1BB /* Cells */,
-				A85D93BE20457E3F0066F45B /* Enums */,
 				5B2417E620527F5900C8DDE2 /* Headers */,
 				5BB68C9D203599EC00B03C00 /* Views */,
 				A819B3401EAFA7E7004592F9 /* ViewControllers */,
@@ -3226,20 +3226,23 @@
 		5B2417E620527F5900C8DDE2 /* Headers */ = {
 			isa = PBXGroup;
 			children = (
+				83ACBDB82212EDE000ACBBDC /* CallPeerAudio.h */,
+				83ACBDB72212EDC800ACBBDC /* CallPeerVideo.h */,
+				8394CFA4211AE5B700A1634A /* CallType.h */,
+				836A987C20F8C8DA00EC719B /* ChatRoomsType.h */,
+				A85D93BD20457DAA0066F45B /* ChatVideoUploadQuality.h */,
 				5B2417E720527FB800C8DDE2 /* DisplayMode.h */,
-				5BC4913020AC684500F7F952 /* TwoFactorAuthentication.h */,
 				83681574202AFA1700CA8EFC /* MegaNodeActionType.h */,
+				83064D88217F207000FA3DAC /* LayoutView.h */,
 				5BE08A0820F4DB0100950D30 /* LinkOption.h */,
+				771A1B5F21C9227A00A8555D /* OnboardingType.h */,
+				771A1B5E21C9220C00A8555D /* OnboardingViewType.h */,
 				773DF39A20EE1470004C3418 /* SendMode.h */,
 				773DF39B20EE14C1004C3418 /* ShareAttachmentType.h */,
-				5B72A14B20D3A69C007FE4FD /* URLType.h */,
-				836A987C20F8C8DA00EC719B /* ChatRoomsType.h */,
-				83064D88217F207000FA3DAC /* LayoutView.h */,
-				771A1B5E21C9220C00A8555D /* OnboardingViewType.h */,
-				771A1B5F21C9227A00A8555D /* OnboardingType.h */,
-				83ACBDB72212EDC800ACBBDC /* CallPeerVideo.h */,
-				83ACBDB82212EDE000ACBBDC /* CallPeerAudio.h */,
 				77A715E2225D02F600DE8922 /* ToolbarType.h */,
+				831A4F08229C339200EBE256 /* TransfersSelected.h */,
+				5BC4913020AC684500F7F952 /* TwoFactorAuthentication.h */,
+				5B72A14B20D3A69C007FE4FD /* URLType.h */,
 			);
 			path = Headers;
 			sourceTree = "<group>";
@@ -3993,15 +3996,6 @@
 			);
 			name = FLEX;
 			path = Vendor/FLEX;
-			sourceTree = "<group>";
-		};
-		A85D93BE20457E3F0066F45B /* Enums */ = {
-			isa = PBXGroup;
-			children = (
-				A85D93BD20457DAA0066F45B /* ChatVideoUploadQuality.h */,
-				8394CFA4211AE5B700A1634A /* CallType.h */,
-			);
-			path = Enums;
 			sourceTree = "<group>";
 		};
 		A8665F4F20ADA1600044F8F6 /* PWProgressView */ = {

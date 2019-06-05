@@ -75,7 +75,6 @@ typedef NS_OPTIONS(NSUInteger, NodesAre) {
 + (NSString *)memoryStyleStringFromByteCount:(long long)byteCount;
 
 + (unsigned long long)sizeOfFolderAtPath:(NSString *)path;
-+ (uint64_t)freeDiskSpace;
 
 + (void)changeApiURL;
 
