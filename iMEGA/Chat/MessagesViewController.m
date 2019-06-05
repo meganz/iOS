@@ -104,7 +104,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
 
 @property (nonatomic) CGFloat lastBottomInset;
 @property (nonatomic) CGFloat lastVerticalOffset;
-@property (nonatomic) CGFloat initialToolbarHeight;
+@property (nonatomic, getter=isToolbarFrameLocked) BOOL toolbarFrameLocked;
 
 @property (nonatomic) NSMutableSet<MEGAChatMessage *> *observedDialogMessages;
 @property (nonatomic) NSMutableSet<MEGAChatMessage *> *observedNodeMessages;
@@ -237,6 +237,8 @@ static NSMutableSet<NSString *> *tapForInfoSet;
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
+    self.toolbarFrameLocked = NO;
+    
     if (self.isMovingToParentViewController) {
         if ([[MEGASdkManager sharedMEGAChatSdk] openChatRoom:self.chatRoom.chatId delegate:self]) {
             MEGALogDebug(@"Chat room opened: %@", self.chatRoom);
@@ -303,7 +305,6 @@ static NSMutableSet<NSString *> *tapForInfoSet;
     [super viewDidAppear:animated];
     
     [self showOrHideJumpToBottom];
-    self.initialToolbarHeight = self.inputToolbar.frame.size.height;
     
     if (self.presentingViewController && self.parentViewController) {
         UIBarButtonItem *chatBackBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:AMLocalizedString(@"close", nil) style:UIBarButtonItemStylePlain target:self action:@selector(dismissChatRoom)];
@@ -364,6 +365,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
         self.collectionView.contentOffset = offset;
     }
     self.unreadMessages = self.chatRoom.unreadCount;
+    [self scrollToFirstUnread];
 }
 
 - (void)didBecomeActive {
@@ -383,6 +385,8 @@ static NSMutableSet<NSString *> *tapForInfoSet;
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
+    
+    self.toolbarFrameLocked = YES;
     
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kReachabilityChangedNotification object:nil];
     
@@ -1418,6 +1422,22 @@ static NSMutableSet<NSString *> *tapForInfoSet;
     [[MEGAStore shareInstance] insertOrUpdateChatDraftWithChatId:self.chatRoom.chatId text:chatDraftText];
 }
 
+- (void)scrollToFirstUnread {
+    NSInteger numberOfItemsInSection = [self.collectionView numberOfItemsInSection:0];
+    NSInteger item = numberOfItemsInSection - (self.unreadMessages + 1);
+    if (item < 0) {
+        item = 0;
+    }
+    NSIndexPath *lastUnreadIndexPath = [NSIndexPath indexPathForItem:item inSection:0];
+    if (numberOfItemsInSection) {
+        [self.collectionView scrollToItemAtIndexPath:lastUnreadIndexPath atScrollPosition:UICollectionViewScrollPositionTop animated:NO];
+    }
+    
+    if (self.unreadMessages) {
+        [self showOrHideJumpToBottom];
+    }
+}
+
 #pragma mark - Gesture recognizer
 
 - (void)hideInputToolbar {
@@ -1919,7 +1939,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
 }
 
 - (void)jsq_setCollectionViewInsetsTopValue:(CGFloat)top bottomValue:(CGFloat)bottom {
-    if (self.inputToolbar.frame.size.height < self.initialToolbarHeight) {
+    if (self.isToolbarFrameLocked) {
         return;
     }
     
@@ -2802,19 +2822,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
                     [self.collectionView reloadData];
                 });
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    NSInteger numberOfItemsInSection = [self.collectionView numberOfItemsInSection:0];
-                    NSInteger item = numberOfItemsInSection - (self.unreadMessages + 1);
-                    if (item < 0) {
-                        item = 0;
-                    }
-                    NSIndexPath *lastUnreadIndexPath = [NSIndexPath indexPathForItem:item inSection:0];
-                    if (numberOfItemsInSection) {
-                        [self.collectionView scrollToItemAtIndexPath:lastUnreadIndexPath atScrollPosition:UICollectionViewScrollPositionTop animated:NO];
-                    }
-                    
-                    if (self.unreadMessages) {
-                        [self showOrHideJumpToBottom];
-                    }
+                    [self scrollToFirstUnread];
                 });
             }
         } else {
