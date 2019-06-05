@@ -1246,7 +1246,7 @@ static MEGAIndexer *indexer;
 #pragma mark - Logout
 
 + (void)logout {
-    [NSNotificationCenter.defaultCenter postNotificationName:MEGALogoutNotificationName object:self];
+    [NSNotificationCenter.defaultCenter postNotificationName:MEGALogoutNotification object:self];
     [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
     [Helper cancelAllTransfers];
     
@@ -1261,7 +1261,7 @@ static MEGAIndexer *indexer;
 }
 
 + (void)logoutFromConfirmAccount {
-    [NSNotificationCenter.defaultCenter postNotificationName:MEGALogoutNotificationName object:self];
+    [NSNotificationCenter.defaultCenter postNotificationName:MEGALogoutNotification object:self];
     [Helper cancelAllTransfers];
     
     [Helper clearSession];

@@ -8,7 +8,7 @@
 - (void)start {
     [super start];
     
-    [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(finishOperation) name:MEGANodesCurrentNotificationName object:nil];
+    [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(finishOperation) name:MEGANodesCurrentNotification object:nil];
     if (CameraUploadManager.shared.isNodeTreeCurrent) {
         [self finishOperation];
     }
