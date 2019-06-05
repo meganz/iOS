@@ -26,7 +26,7 @@
 #import "CameraUploadStore.h"
 
 static const NSTimeInterval MinimumBackgroundRefreshInterval = 3 * 3600;
-static const NSTimeInterval LoadMediaInfoTimeoutInSeconds = 120;
+static const NSTimeInterval LoadMediaInfoTimeout = 60 * 15;
 
 static const NSUInteger PhotoUploadBatchCount = 5;
 static const NSUInteger VideoUploadBatchCount = 1;
@@ -96,9 +96,18 @@ static const NSUInteger MaximumPhotoUploadBatchCountMultiplier = 2;
 
 - (void)setupCameraUploadWhenApplicationLaunches:(UIApplication *)application {
     [AttributeUploadManager.shared collateLocalAttributes];
-    [TransferSessionManager.shared restoreAllSessionsWithCompletion:^(NSArray<NSURLSessionUploadTask *> * _Nonnull uploadTasks) {
-        [self.uploadRecordsCollator collateUploadingRecordsByPendingTasks:uploadTasks];
-    }];
+    
+    if (CameraUploadManager.isCameraUploadEnabled) {
+        [TransferSessionManager.shared restorePhotoSessionsWithCompletion:^(NSArray<NSURLSessionUploadTask *> * _Nonnull uploadTasks) {
+            [self.uploadRecordsCollator collateUploadingPhotoRecordsByUploadTasks:uploadTasks];
+        }];
+        
+        if (CameraUploadManager.isVideoUploadEnabled) {
+            [TransferSessionManager.shared restoreVideoSessionsWithCompletion:^(NSArray<NSURLSessionUploadTask *> * _Nonnull uploadTasks) {
+                [self.uploadRecordsCollator collateUploadingVideoRecordsByUploadTasks:uploadTasks];
+            }];
+        }
+    }
     
     [CameraUploadManager disableCameraUploadIfAccessProhibited];
     
@@ -347,7 +356,7 @@ static const NSUInteger MaximumPhotoUploadBatchCountMultiplier = 2;
     if (self.mediaInfoLoader.isMediaInfoLoaded) {
         [self loadCameraUploadNodeForUpload];
     } else {
-        [self.mediaInfoLoader loadMediaInfoWithTimeout:LoadMediaInfoTimeoutInSeconds completion:^(BOOL loaded) {
+        [self.mediaInfoLoader loadMediaInfoWithTimeout:LoadMediaInfoTimeout completion:^(BOOL loaded) {
             if (loaded) {
                 [self loadCameraUploadNodeForUpload];
             } else {
@@ -571,8 +580,15 @@ static const NSUInteger MaximumPhotoUploadBatchCountMultiplier = 2;
 #pragma mark - enable camera upload
 
 - (void)enableCameraUpload {
+    if (CameraUploadManager.isCameraUploadEnabled) {
+        return;
+    }
+    
     CameraUploadManager.cameraUploadEnabled = YES;
     [self initializeCameraUpload];
+    [TransferSessionManager.shared restorePhotoSessionsWithCompletion:^(NSArray<NSURLSessionUploadTask *> * _Nonnull uploadTasks) {
+        [self.uploadRecordsCollator collateUploadingPhotoRecordsByUploadTasks:uploadTasks];
+    }];
     [self startCameraUploadIfNeeded];
 }
 
@@ -585,13 +601,24 @@ static const NSUInteger MaximumPhotoUploadBatchCountMultiplier = 2;
 }
 
 - (void)enableVideoUpload {
+    if (CameraUploadManager.isVideoUploadEnabled) {
+        return;
+    }
+    
     CameraUploadManager.videoUploadEnabled = YES;
+    [TransferSessionManager.shared restoreVideoSessionsWithCompletion:^(NSArray<NSURLSessionUploadTask *> * _Nonnull uploadTasks) {
+        [self.uploadRecordsCollator collateUploadingVideoRecordsByUploadTasks:uploadTasks];
+    }];
     [self scanAndStartVideoUpload];
 }
 
 #pragma mark - disable camera upload
 
 - (void)disableCameraUpload {
+    if (!CameraUploadManager.isCameraUploadEnabled) {
+        return;
+    }
+    
     CameraUploadManager.cameraUploadEnabled = NO;
     [self disableVideoUpload];
     [self resetCameraUploadQueues];
@@ -608,6 +635,10 @@ static const NSUInteger MaximumPhotoUploadBatchCountMultiplier = 2;
 }
 
 - (void)disableVideoUpload {
+    if (!CameraUploadManager.isVideoUploadEnabled) {
+        return;
+    }
+    
     CameraUploadManager.videoUploadEnabled = NO;
     [self cancelVideoUploadOperations];
     [self.diskSpaceDetector stopDetectingVideoUpload];
