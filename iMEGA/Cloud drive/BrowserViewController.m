@@ -234,7 +234,6 @@
 
 - (void)reloadUI {
     [self setParentNodeForBrowserAction];
-    [self setNavigationBarTitle];
     
     BOOL enableToolbarItems = YES;
     if (self.cloudDriveButton.selected) {
@@ -251,6 +250,8 @@
             enableToolbarItems = NO;
         }
     }
+    
+    [self setNavigationBarTitle];
 
     [self setToolbarItemsEnabled:enableToolbarItems];
     
@@ -748,7 +749,6 @@
 
 - (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
     self.searchNodesArray = nil;
-    self.cloudDriveButton.enabled = self.incomingButton.enabled = YES;
 }
 
 #pragma mark - UISearchResultsUpdating

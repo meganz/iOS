@@ -359,7 +359,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
 
 - (void)willEnterForeground {
     // Workaround to avoid wrong collection view height when coming back to foreground
-    if ([self.inputToolbar.contentView.textView isFirstResponder]) {
+    if (self.inputToolbar.contentView.textView.isFirstResponder) {
         [self jsq_setCollectionViewInsetsTopValue:0.0f bottomValue:self.lastBottomInset];
         CGPoint offset = self.collectionView.contentOffset;
         offset.y = self.lastVerticalOffset;
@@ -812,9 +812,9 @@ static NSMutableSet<NSString *> *tapForInfoSet;
 }
 
 - (void)openCallViewWithVideo:(BOOL)videoCall active:(BOOL)active {
-    if ([[UIDevice currentDevice] orientation] != UIInterfaceOrientationPortrait) {
+    if (UIDevice.currentDevice.orientation != UIInterfaceOrientationPortrait) {
         NSNumber *value = [NSNumber numberWithInt:UIInterfaceOrientationPortrait];
-        [[UIDevice currentDevice] setValue:value forKey:@"orientation"];
+        [UIDevice.currentDevice setValue:value forKey:@"orientation"];
     }
     if (self.chatRoom.isGroup) {
         GroupCallViewController *groupCallVC = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"GroupCallViewControllerID"];
@@ -1853,7 +1853,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
         }
             
         case MEGAChatAccessoryButtonUpload: {
-            self.inputToolbar.hidden = YES;
+            self.inputToolbar.hidden = UIDevice.currentDevice.iPad ? NO : YES;
             NSString *alertControllerTitle = AMLocalizedString(@"send", @"Label for any 'Send' button, link, text, title, etc. - (String as short as possible).");
             UIAlertController *selectOptionAlertController = [UIAlertController alertControllerWithTitle:alertControllerTitle message:nil preferredStyle:UIAlertControllerStyleActionSheet];
             [selectOptionAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
@@ -1918,7 +1918,6 @@ static NSMutableSet<NSString *> *tapForInfoSet;
             selectOptionAlertController.modalPresentationStyle = UIModalPresentationOverCurrentContext;
             selectOptionAlertController.popoverPresentationController.sourceView = self.inputToolbar.contentView;
             selectOptionAlertController.popoverPresentationController.sourceRect = self.inputToolbar.contentView.accessoryUploadButton.frame;
-            selectOptionAlertController.popoverPresentationController.sourceView = self.inputToolbar.contentView;
             
             [self presentViewController:selectOptionAlertController animated:YES completion:nil];
             selectOptionAlertController.view.tintColor = UIColor.mnz_redMain;
@@ -2620,7 +2619,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
 - (void)messageView:(JSQMessagesCollectionView *)view didTapAccessoryButtonAtIndexPath:(NSIndexPath *)path {
     __block MEGAChatMessage *message = [self.messages objectAtIndex:path.item];
     if (message.status == MEGAChatMessageStatusSendingManual) {
-        if ([[UIDevice currentDevice] iPhoneDevice]) {
+        if (UIDevice.currentDevice.iPhoneDevice) {
             [self.inputToolbar.contentView.textView resignFirstResponder];
         }
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
