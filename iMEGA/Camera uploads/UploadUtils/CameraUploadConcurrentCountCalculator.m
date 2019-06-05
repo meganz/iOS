@@ -87,9 +87,8 @@ static CameraUploadConcurrentCount MakeCount(PhotoUploadConcurrentCount photoCou
             return MakeCount(PhotoUploadConcurrentCountInThermalStateCritical, VideoUploadConcurrentCountInThermalStateCritical);
         }
     }
-    
-    UIDeviceBatteryState batteryState = UIDevice.currentDevice.batteryState;
-    if (batteryState == UIDeviceBatteryStateUnplugged) {
+
+    if (UIDevice.currentDevice.batteryState == UIDeviceBatteryStateUnplugged) {
         float batteryLevel = UIDevice.currentDevice.batteryLevel;
         if (batteryLevel < 0.15) {
             return MakeCount(PhotoUploadConcurrentCountInBatteryLevelBelow15, VideoUploadConcurrentCountInBatteryLevelBelow15);
@@ -103,6 +102,10 @@ static CameraUploadConcurrentCount MakeCount(PhotoUploadConcurrentCount photoCou
             if (NSProcessInfo.processInfo.thermalState == NSProcessInfoThermalStateSerious) {
                 return MakeCount(PhotoUploadConcurrentCountInThermalStateSerious, VideoUploadConcurrentCountInThermalStateSerious);
             }
+        }
+        
+        if (UIApplication.sharedApplication.applicationState == UIApplicationStateBackground) {
+            return MakeCount(PhotoUploadConcurrentCountInBackground, VideoUploadConcurrentCountInBackground);
         }
         
         if (NSProcessInfo.processInfo.isLowPowerModeEnabled) {
@@ -127,26 +130,25 @@ static CameraUploadConcurrentCount MakeCount(PhotoUploadConcurrentCount photoCou
             return MakeCount(PhotoUploadConcurrentCountInBatteryLevelBelow75, VideoUploadConcurrentCountInBatteryLevelBelow75);
         }
         
-        if (UIApplication.sharedApplication.applicationState == UIApplicationStateBackground) {
-            return MakeCount(PhotoUploadConcurrentCountInBackground, VideoUploadConcurrentCountInBackground);
-        } else {
-            return MakeCount(PhotoUploadConcurrentCountInForeground, VideoUploadConcurrentCountInForeground);
-        }
+        return MakeCount(PhotoUploadConcurrentCountInForeground, VideoUploadConcurrentCountInForeground);
     } else {
         if (@available(iOS 11.0, *)) {
-            NSProcessInfoThermalState thermalState = NSProcessInfo.processInfo.thermalState;
-            if (thermalState == NSProcessInfoThermalStateSerious) {
+            if (NSProcessInfo.processInfo.thermalState == NSProcessInfoThermalStateSerious) {
                 return MakeCount(PhotoUploadConcurrentCountInThermalStateSerious, VideoUploadConcurrentCountInThermalStateSerious);
-            } else if (thermalState == NSProcessInfoThermalStateFair) {
-                return MakeCount(PhotoUploadConcurrentCountInThermalStateFair, VideoUploadConcurrentCountInThermalStateFair);
             }
         }
         
         if (UIApplication.sharedApplication.applicationState == UIApplicationStateBackground) {
             return MakeCount(PhotoUploadConcurrentCountInBackground, VideoUploadConcurrentCountInBackground);
-        } else {
-            return MakeCount(PhotoUploadConcurrentCountInBatteryCharging, VideoUploadConcurrentCountInBatteryCharging);
         }
+        
+        if (@available(iOS 11.0, *)) {
+            if (NSProcessInfo.processInfo.thermalState == NSProcessInfoThermalStateFair) {
+                return MakeCount(PhotoUploadConcurrentCountInThermalStateFair, VideoUploadConcurrentCountInThermalStateFair);
+            }
+        }
+        
+        return MakeCount(PhotoUploadConcurrentCountInBatteryCharging, VideoUploadConcurrentCountInBatteryCharging);
     }
 }
 

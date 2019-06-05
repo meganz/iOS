@@ -1,8 +1,11 @@
 
 #import "CameraUploadManager+Settings.h"
+
+#import <Photos/PhotosTypes.h>
+#import <CoreLocation/CoreLocation.h>
+
 #import "MEGAConstants.h"
 #import "NSFileManager+MNZCategory.h"
-@import CoreLocation;
 
 static NSString * const HasMigratedToCameraUploadsV2Key = @"HasMigratedToCameraUploadsV2";
 static NSString * const BoardingScreenLastShowedDateKey = @"CameraUploadBoardingScreenLastShowedDate";
@@ -202,6 +205,19 @@ static const NSTimeInterval BoardingScreenShowUpMinimumInterval = 30 * 24 * 3600
 
 + (BOOL)canCameraUploadBeStarted {
     return [self isCameraUploadEnabled] && [self hasMigratedToCameraUploadsV2];
+}
+
++ (NSArray<NSNumber *> *)enabledMediaTypes {
+    NSMutableArray<NSNumber *> *mediaTypes = [NSMutableArray array];
+    if (CameraUploadManager.isCameraUploadEnabled) {
+        [mediaTypes addObject:@(PHAssetMediaTypeImage)];
+        
+        if (CameraUploadManager.isVideoUploadEnabled) {
+            [mediaTypes addObject:@(PHAssetMediaTypeVideo)];
+        }
+    }
+    
+    return [mediaTypes copy];
 }
 
 #pragma mark - camera upload v2 migration

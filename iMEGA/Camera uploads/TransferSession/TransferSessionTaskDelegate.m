@@ -92,6 +92,7 @@ static const NSUInteger MEGATransferTokenLength = 36;
     NSString *localIdentifier = task.taskDescription;
     if (localIdentifier.length == 0) {
         MEGALogError(@"[Camera Upload] Session task description is empty");
+        return;
     }
 
     if (token.length == 0) {
