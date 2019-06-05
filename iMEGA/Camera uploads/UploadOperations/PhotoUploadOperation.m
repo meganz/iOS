@@ -100,7 +100,7 @@ static NSString * const PhotoExportTempName = @"photoExportTemp";
         return;
     }
     
-    if (imageData.length * PhotoExportDiskSizeScalingFactor > NSFileManager.defaultManager.deviceFreeSize) {
+    if (imageData.length * PhotoExportDiskSizeScalingFactor > NSFileManager.defaultManager.mnz_fileSystemFreeSize) {
         [self finishUploadWithNoEnoughDiskSpace];
         return;
     }

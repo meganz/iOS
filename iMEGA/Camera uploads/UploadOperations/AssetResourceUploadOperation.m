@@ -29,7 +29,7 @@
         return;
     }
     
-    if (resource.mnz_fileSize > NSFileManager.defaultManager.deviceFreeSize) {
+    if (resource.mnz_fileSize > NSFileManager.defaultManager.mnz_fileSystemFreeSize) {
         [self finishUploadWithNoEnoughDiskSpace];
         return;
     }
