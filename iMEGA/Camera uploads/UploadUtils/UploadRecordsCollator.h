@@ -6,7 +6,9 @@ NS_ASSUME_NONNULL_BEGIN
 @interface UploadRecordsCollator : NSObject
 
 - (void)collateNonUploadingRecords;
-- (void)collateUploadingRecordsByPendingTasks:(NSArray<NSURLSessionTask *> *)tasks;
+
+- (void)collateUploadingPhotoRecordsByUploadTasks:(NSArray<NSURLSessionTask *> *)tasks;
+- (void)collateUploadingVideoRecordsByUploadTasks:(NSArray<NSURLSessionTask *> *)tasks;
 
 @end
 
