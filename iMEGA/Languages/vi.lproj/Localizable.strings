@@ -113,7 +113,7 @@
 /*  */
 "passwordStrong"="Mật khẩu này chịu được tốt việc tấn công thử dò mật khẩu (brute-force) tinh vi. Hãy chắc rằng bạn ghi nhớ được mật khẩu này.";
 /*  */
-"agreeWithTheMEGATermsOfService"="Tôi đồng ý với <a href='terms'>Điều Khoản Dịch Vụ</a> của MEGA";
+"agreeWithTheMEGATermsOfService"="Tôi đồng ý với <a href=\"terms\">Điều Khoản Dịch Vụ</a> của MEGA";
 /* Error text shown when you have not entered a correct name */
 "nameInvalidFormat"="Xin nhập một tên hợp lệ";
 /* Error text shown when you have not written the same password */
@@ -1689,13 +1689,13 @@
 /* Title shown in a cell to allow the users enable the 'Encrypted Key Rotation' */
 "Enable Encrypted Key Rotation"="Bật Luân Phiên Mã Khóa";
 /* Label in a cell where you can get the chat link */
-"Get Chat Link"="Get chat link";
+"Get Chat Link"="Lấy liên kết tới chát";
 /* Footer text to explain what means 'Encrypted Key Rotation' */
 "Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages."="Luân phiên mã khóa giúp cho việc an ninh được nâng cấp hơn, nhưng sẽ không cho phép bất kỳ ai tạo ra đường liên kết tới cuộc chát và người mới tham gia vào chát sẽ không thấy các tin nhắn diễn ra từ trước.";
 /* Shown as an error message when the user selects "create chat link", but haven't entered a title for the newly created room */
 "To create a chat link you must name the group."="Để tạo ra liên kết tới chát, đặt tên cho nhóm trước.";
 /* Label shown in a cell where you can enable a switch to get a chat link */
-"Chat Link"="Chat link";
+"Chat Link"="Liên kết chát";
 /* Message shown when there is an active chat link that can be deleted */
 "Delete Chat Link"="Xóa đường liên kết";
 /* Button text in public chat previews that allows the user to join the chat */
@@ -1829,27 +1829,27 @@
 /* Title of the button to share a location in a chat */
 "Send This Location"="Send This Location";
 /* Title of the alert that allows change between different maps: Standard, Satellite or Hybrid. */
-"Map settings"="Map settings";
+"Map settings"="Tùy chỉnh bản đồ";
 /* Type of data displayed in a map view. A street map that shows the position of all roads and some road names. */
 "Standard"="Thành viên";
 /* Type of data displayed in a map view. Satellite imagery of the area. */
-"Satellite"="Satellite";
+"Satellite"="Ảnh từ vệ tinh";
 /* Type of data displayed in a map view. A satellite image of the area with road and road name information layered on top. */
-"Hybrid"="Hybrid";
+"Hybrid"="Kết hợp";
 /* Label to give feedback to the user when he is going to share his location, indicating that it may not be the exact location. */
-"Accurate to %d meters"="Accurate to %d meters";
+"Accurate to %d meters"="Chính xác trong khoảng %d mét";
 /* Alert title shown when the user opens a shared Geolocation for the first time from any client, we will show a confirmation dialog warning the user that he is now leaving the E2EE paradigm. */
-"Send Location"="Send Location";
+"Send Location"="Gửi Vị Trí";
 /* Message shown when the user opens a shared Geolocation for the first time from any client, we will show a confirmation dialog warning the user that he is now leaving the E2EE paradigm. */
 "This location will be opened using a third party maps provider outside the end-to-end encrypted MEGA platform."="This location will be opened using a third party maps provider outside the end-to-end encrypted MEGA platform.";
 /* Text shown in location-type messages */
-"Pinned Location"="Pinned Location";
+"Pinned Location"="Vị Trí Được Đánh Dấu";
 /* Plural of participant. 2 participants */
 "%d participants"="%d người tham gia";
 /* Singular of participant. 1 participant */
 "%d participant"="%d người tham gia";
 /* Text shown in the chat toolbar while the user is recording a voice clip. The < character should be > in RTL languages. */
-"< Slide to cancel"="< Slide to cancel";
+"< Slide to cancel"="< Trượt qua để hủy";
 /* First part of the string 'Tap and hold <icon> to record, release to send'. There is a microphone icon between the two parts of the string. */
 "Tap and hold"="Tap and hold";
 /* Second part of the string 'Tap and hold <icon> to record, release to send'. There is a microphone icon between the two parts of the string. */

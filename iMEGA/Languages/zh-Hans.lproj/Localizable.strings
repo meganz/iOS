@@ -113,7 +113,7 @@
 /*  */
 "passwordStrong"="该密码不容易被攻破。请确保您会将它牢记。";
 /*  */
-"agreeWithTheMEGATermsOfService"="我同意MEGA的<a href='terms'>服务条款</a>";
+"agreeWithTheMEGATermsOfService"="我同意MEGA的<a href=\"terms\">服务条款</a>";
 /* Error text shown when you have not entered a correct name */
 "nameInvalidFormat"="请输入有效的名字";
 /* Error text shown when you have not written the same password */
@@ -661,7 +661,7 @@
 /* Option title to enable Camera Uploads only when the device is charging */
 "onlyWhenChargingLabel"="只在充电状态下";
 /* Footer text to explain the Camera Uploads functionality */
-"cameraUploads_footer"="开启后照片与视频将被上传。";
+"cameraUploads_footer"="开启相机上传后，您的照片与视频将被上传。";
 /* App means “Application” */
 "App version"="App 版本";
 /* Title of the label where the SDK version is shown */
@@ -1192,7 +1192,7 @@
 /* Alert message shown when a chat does not exist */
 "chatNotFound"="未找到此对话";
 /* A typing indicator in the chat. Please leave the %@ which will be automatically replaced with the user's name at runtime. */
-"isTyping"="%@正在输入...";
+"isTyping"="%@ 正在输入...";
 /* Plural, a hint that appears when two users are typing in a group chat at the same time. The parameter will be the concatenation of both user names. The tags and placeholders shouldn't be translated or modified. */
 "twoUsersAreTyping"="%1$s [A]正在输入...[/A]";
 /* text that appear when there are more than 2 people writing at that time in a chat. For example User1, user2 and more are typing... The parameter will be the concatenation of the first two user names. The tags and placeholders shouldn't be translated or modified. */
@@ -1673,7 +1673,7 @@
 /* Message shown in a chat room when there is an active group call */
 "There is an active group call. Tap to join."="您有一个活跃的群组通话。点击加入。";
 /* Message shown in a chat room when there is an active call */
-"There is an active call. Tap to join."="There is an active call. Tap to join.";
+"There is an active call. Tap to join."="您有一个通话。点击加入。";
 /* Message shown in a chat room for a group call in progress displaying the duration of the call */
 "Touch to return to call %@"="触摸即可返回通话%@";
 /* A button label which allows the users save images/videos in the Photos app. */
@@ -1685,35 +1685,35 @@
 /* Text shown when an error occurs when trying to save a photo or video to Photos app */
 "Could not save Item"="无法保存该项目";
 /* Label in a cell where you can enable the 'Encrypted Key Rotation' */
-"Encrypted Key Rotation"="Encrypted Key Rotation";
+"Encrypted Key Rotation"="加密密钥轮换";
 /* Title shown in a cell to allow the users enable the 'Encrypted Key Rotation' */
-"Enable Encrypted Key Rotation"="Enable Encrypted Key Rotation";
+"Enable Encrypted Key Rotation"="启用加密密钥轮换";
 /* Label in a cell where you can get the chat link */
-"Get Chat Link"="Get chat link";
+"Get Chat Link"="获得聊天链接";
 /* Footer text to explain what means 'Encrypted Key Rotation' */
-"Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages."="Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages.";
+"Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages."="密钥轮换相对更为安全，但不允许您创建聊天链接，新参与者将无法看到过去的消息。";
 /* Shown as an error message when the user selects "create chat link", but haven't entered a title for the newly created room */
-"To create a chat link you must name the group."="To create a chat link you must name the group.";
+"To create a chat link you must name the group."="创建聊天链接前请先为群组命名。";
 /* Label shown in a cell where you can enable a switch to get a chat link */
-"Chat Link"="Chat link";
+"Chat Link"="聊天链接";
 /* Message shown when there is an active chat link that can be deleted */
-"Delete Chat Link"="Delete chat link";
+"Delete Chat Link"="删除聊天链接";
 /* Button text in public chat previews that allows the user to join the chat */
-"Join"="Join";
+"Join"="加入";
 /* Text shown in a notification to let the user know that has joined a public chat room after login or account creation */
-"You have joined %@"="You have joined %@";
+"You have joined %@"="您已加入 %@";
 /* Users previewing a public chat */
-"Observers"="Observers";
+"Observers"="预览者";
 /* Alert message shown while deleting a chat link, warning about the consequences */
-"This conversation will no longer be accessible through the link you are about to delete."="This conversation will no longer be accessible through the chat link once it has been removed.";
+"This conversation will no longer be accessible through the link you are about to delete."="此会话被删除后将无法再次通过聊天链接访问。";
 /* Management message shown in a chat when the user %@ enables the 'Encrypted Key Rotation' */
-"%@ enabled Encrypted Key Rotation"="%@ enabled Encrypted Key Rotation.";
+"%@ enabled Encrypted Key Rotation"="%@ 已启用加密密钥轮换。";
 /* Management message shown in a chat when the user %@ creates a public link for the chat */
-"%@ created a public link for the chat."="%@ created a chat link for the chat.";
+"%@ created a public link for the chat."="%@ 已为此聊天创建了一个聊天链接。";
 /* Management message shown in a chat when the user %@ removes a public link for the chat */
-"%@ removed a public link for the chat."="%@ removed the chat link for the chat.";
+"%@ removed a public link for the chat."="%@ 已为此聊天移除了一个聊天链接。";
 /* Management message shown in a chat when the user %@ joined it from a public chat link */
-"%@ joined the group chat."="%@ joined the group chat.";
+"%@ joined the group chat."="%@ 已加入群组聊天。";
 /* Message show when a call cannot be established because there are too many participants in the group call */
 "Error. No more participants are allowed in this group call."="参与人数已达上限，您无法加入此通话。";
 /* Message show when a user cannot activate the video in a group call because the max number of videos has been reached */
@@ -1855,11 +1855,11 @@
 /* Second part of the string 'Tap and hold <icon> to record, release to send'. There is a microphone icon between the two parts of the string. */
 "to record, release to send"="to record, release to send";
 /* Text to inform the user there is an active call and is not participating */
-"Ongoing Call"="Ongoing Call";
+"Ongoing Call"="正在进行通话";
 /* Message shown when there is an ongoing call and the user tries to play an audio or video */
-"It is not possible to play content while there is a call in progress"="It is not possible to play media files while there is a call in progress.";
+"It is not possible to play content while there is a call in progress"="无法在通话进行时播放媒体文件。";
 /* Text to inform the user there is an active call and is participating */
-"Call Started"="Call Started";
+"Call Started"="通话已开始";
 /* Title for feature Password Reminder */
 "Password Reminder"="帐号密码提醒";
 /* Label for any ‘Message’ button, link, text, title, etc. - (String as short as possible). */
@@ -1901,12 +1901,12 @@
 /* Plural of items which contains a folder. 2 items */
 "items"="个项目";
 /* Shown when an invalid/inexisting/not-available-anymore chat link is opened. */
-"Chat link unavailable"="Chat link unavailable";
+"Chat link unavailable"="聊天链接不可用";
 /* Shown when an inexisting/unavailable/removed link is tried to be opened. */
-"This chat link is no longer available"="This chat link is no longer available";
+"This chat link is no longer available"="此聊天链接已不可用";
 /* Text explaining users how the chat links work. */
 "People can join your group by using this link."="参与者可通过此链接加入您的群组。";
 /* Subtitle shown in a chat to inform where to tap to enter in the chat details view */
-"Tap here for info"="Tap here for info";
+"Tap here for info"="点击此处查看聊天详情";
 /* In some cases, a user may try to get the link for a chat room, but if such is not set by an operator - it would say "not link available" and not auto create it. */
-"No chat link available."="No chat link available.";
+"No chat link available."="无聊天链接可用。";
