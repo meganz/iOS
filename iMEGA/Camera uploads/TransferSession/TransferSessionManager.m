@@ -4,7 +4,6 @@
 #import "TransferSessionTaskDelegate.h"
 #import "CameraUploadManager+Settings.h"
 #import "CameraUploadCompletionManager.h"
-#import "RestoreUploadTaskOperation.h"
 
 static NSString * const PhotoCellularAllowedUploadSessionId = @"nz.mega.photoTransfer.cellularAllowed";
 static NSString * const PhotoCellularDisallowedUploadSessionId = @"nz.mega.photoTransfer.cellularDisallowed";
@@ -139,22 +138,34 @@ static NSString * const VideoCellularDisallowedUploadSessionId = @"nz.mega.video
 
 #pragma mark - sessions and tasks restoration
 
-- (void)restoreAllSessionsWithCompletion:(nullable RestoreSessionCompletionHandler)completion {
+- (void)restorePhotoSessionsWithCompletion:(nullable RestoreSessionCompletionHandler)completion {
+    [self restoreSessionsWithIdentifiers:@[PhotoCellularAllowedUploadSessionId, PhotoCellularDisallowedUploadSessionId] completion:completion];
+}
+
+- (void)restoreVideoSessionsWithCompletion:(nullable RestoreSessionCompletionHandler)completion {
+    [self restoreSessionsWithIdentifiers:@[VideoCellularAllowedUploadSessionId, VideoCellularDisallowedUploadSessionId] completion:completion];
+}
+
+- (void)restoreSessionsWithIdentifiers:(NSArray<NSString *> *)identifiers completion:(nullable RestoreSessionCompletionHandler)completion {
     __block NSMutableArray<NSURLSessionUploadTask *> *allUploadTasks = [NSMutableArray array];
-    NSArray<NSString *> *allSessionIdentifiers = @[PhotoCellularAllowedUploadSessionId, PhotoCellularDisallowedUploadSessionId, VideoCellularAllowedUploadSessionId, VideoCellularDisallowedUploadSessionId];
-    NSOperationQueue *restoreQueue = [[NSOperationQueue alloc] init];
-    for (NSString *identifier in allSessionIdentifiers) {
+    dispatch_group_t tasksRestoreGroup = dispatch_group_create();
+    
+    for (NSString *identifier in identifiers) {
         NSURLSession *session = [self createSessionIfNeededByIdentifier:identifier];
         if (session) {
-            [restoreQueue addOperation:[[RestoreUploadTaskOperation alloc] initWithSession:session completion:^(NSArray<NSURLSessionUploadTask *> * _Nonnull uploadTasks) {
+            dispatch_group_enter(tasksRestoreGroup);
+            
+            [session getTasksWithCompletionHandler:^(NSArray<NSURLSessionDataTask *> * _Nonnull dataTasks, NSArray<NSURLSessionUploadTask *> * _Nonnull uploadTasks, NSArray<NSURLSessionDownloadTask *> * _Nonnull downloadTasks) {
+                MEGALogDebug(@"[Camera Upload] session %@ restored tasks count %lu", session.configuration.identifier, (unsigned long)uploadTasks.count);
                 [allUploadTasks addObjectsFromArray:uploadTasks];
                 [self restoreDelegatesForTasks:uploadTasks inSession:session];
-            }]];
+                
+                dispatch_group_leave(tasksRestoreGroup);
+            }];
         }
     }
     
-    dispatch_async(dispatch_get_global_queue(QOS_CLASS_UTILITY, 0), ^{
-        [restoreQueue waitUntilAllOperationsAreFinished];
+    dispatch_group_notify(tasksRestoreGroup, dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0), ^{
         if (completion) {
             completion(allUploadTasks);
         }
@@ -188,57 +199,10 @@ static NSString * const VideoCellularDisallowedUploadSessionId = @"nz.mega.video
     return restoredSession;
 }
 
-- (void)restoreSessionByIdentifier:(NSString *)identifier completion:(nullable RestoreSessionCompletionHandler)completion {
-    NSURLSession *restoredSession = [self createSessionIfNeededByIdentifier:identifier];
-    
-    if (restoredSession) {
-        [self restoreTasksForSession:restoredSession completion:completion];
-    } else {
-        if (completion) {
-            completion(@[]);
-        }
-    }
-}
-
-- (void)restoreTasksForSession:(NSURLSession *)session completion:(nullable RestoreSessionCompletionHandler)completion {
-    [[[RestoreUploadTaskOperation alloc] initWithSession:session completion:^(NSArray<NSURLSessionUploadTask *> * _Nonnull uploadTasks) {
-        [self restoreDelegatesForTasks:uploadTasks inSession:session];
-        if (completion) {
-            completion(uploadTasks);
-        }
-    }] start];
-}
-
 - (void)restoreDelegatesForTasks:(NSArray<NSURLSessionTask *> *)tasks inSession:(NSURLSession *)session {
     for (NSURLSessionTask *task in tasks) {
         [self addDelegateForTask:task inSession:session completion:nil];
     }
-}
-
-#pragma mark - get session tasks
-
-- (NSURLSession *)getSessionByIdentifier:(NSString *)identifier {
-    NSURLSession *session;
-    if ([identifier isEqualToString:PhotoCellularAllowedUploadSessionId]) {
-        session = self.photoCellularAllowedUploadSession;
-    } else if ([identifier isEqualToString:PhotoCellularDisallowedUploadSessionId]) {
-        session = self.photoCellularDisallowedUploadSession;
-    } else if ([identifier isEqualToString:VideoCellularAllowedUploadSessionId]) {
-        session = self.videoCellularAllowedUploadSession;
-    } else if ([identifier isEqualToString:VideoCellularDisallowedUploadSessionId]) {
-        session = self.videoCellularDisallowedUploadSession;
-    }
-    
-    return session;
-}
-
-- (void)getAllSessionTasksByIdentifier:(NSString *)identifier completion:(nullable void (^)(NSArray<NSURLSessionUploadTask *> * _Nonnull tasks))completion {
-    NSURLSession *session = [self getSessionByIdentifier:identifier];
-    [session getAllTasksWithCompletionHandler:^(NSArray<__kindof NSURLSessionTask *> * _Nonnull tasks) {
-        if (completion) {
-            completion(tasks);
-        }
-    }];
 }
 
 #pragma mark - session completion handler

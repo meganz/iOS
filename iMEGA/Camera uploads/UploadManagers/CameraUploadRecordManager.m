@@ -157,6 +157,13 @@ static const NSUInteger MaximumUploadRetryPerLoginCount = 800;
     return [self fetchUploadRecordsByFetchRequest:request error:error];
 }
 
+- (NSArray<MOAssetUploadRecord *> *)fetchUploadRecordsByMediaTypes:(NSArray<NSNumber *> *)mediaTypes statuses:(NSArray<NSNumber *> *)statuses error:(NSError * _Nullable __autoreleasing *)error {
+    NSFetchRequest *request = MOAssetUploadRecord.fetchRequest;
+    request.returnsObjectsAsFaults = NO;
+    request.predicate = [NSPredicate predicateWithFormat:@"(mediaType IN %@) AND (status IN %@)", mediaTypes, statuses];
+    return [self fetchUploadRecordsByFetchRequest:request error:error];
+}
+
 - (NSArray<MOAssetUploadRecord *> *)fetchUploadRecordsByFetchRequest:(NSFetchRequest *)request error:(NSError * _Nullable __autoreleasing *)error {
     __block NSArray<MOAssetUploadRecord *> *records = @[];
     __block NSError *coreDataError = nil;

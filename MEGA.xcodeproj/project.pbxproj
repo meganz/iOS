@@ -857,7 +857,6 @@
 		B6D11AE2219E5E2C00446B86 /* AttributeUploadOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = B6D11AE1219E5E2C00446B86 /* AttributeUploadOperation.m */; };
 		B6D11AE521A24C7700446B86 /* PutNodeOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = B6D11AE421A24C7700446B86 /* PutNodeOperation.m */; };
 		B6D176872236F16600098084 /* ImageExportor.m in Sources */ = {isa = PBXBuildFile; fileRef = B6D176862236F16600098084 /* ImageExportor.m */; };
-		B6D90BBF2224B06E00E0623A /* RestoreUploadTaskOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = B6D90BBE2224B06E00E0623A /* RestoreUploadTaskOperation.m */; };
 		B6D90BC22224D46800E0623A /* AssetLocalAttribute.m in Sources */ = {isa = PBXBuildFile; fileRef = B6D90BC12224D46800E0623A /* AssetLocalAttribute.m */; };
 		B6D90BCA22253BC700E0623A /* BackgroundUploadingTaskMonitor.m in Sources */ = {isa = PBXBuildFile; fileRef = B6D90BC922253BC700E0623A /* BackgroundUploadingTaskMonitor.m */; };
 		B6D995F9222CA42000A98BEF /* MainTabBarController+CameraUpload.m in Sources */ = {isa = PBXBuildFile; fileRef = B6D995F8222CA42000A98BEF /* MainTabBarController+CameraUpload.m */; };
@@ -2097,8 +2096,6 @@
 		B6D11AE421A24C7700446B86 /* PutNodeOperation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PutNodeOperation.m; sourceTree = "<group>"; };
 		B6D176852236F16600098084 /* ImageExportor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ImageExportor.h; sourceTree = "<group>"; };
 		B6D176862236F16600098084 /* ImageExportor.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ImageExportor.m; sourceTree = "<group>"; };
-		B6D90BBD2224B06E00E0623A /* RestoreUploadTaskOperation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RestoreUploadTaskOperation.h; sourceTree = "<group>"; };
-		B6D90BBE2224B06E00E0623A /* RestoreUploadTaskOperation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RestoreUploadTaskOperation.m; sourceTree = "<group>"; };
 		B6D90BC02224D46800E0623A /* AssetLocalAttribute.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AssetLocalAttribute.h; sourceTree = "<group>"; };
 		B6D90BC12224D46800E0623A /* AssetLocalAttribute.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AssetLocalAttribute.m; sourceTree = "<group>"; };
 		B6D90BC5222533AD00E0623A /* BackgroundUploadingTaskMonitor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BackgroundUploadingTaskMonitor.h; sourceTree = "<group>"; };
@@ -4310,8 +4307,6 @@
 			children = (
 				B6E19B2D21756F0800882F74 /* TransferSessionManager.h */,
 				B6E19B2E21756F0800882F74 /* TransferSessionManager.m */,
-				B6D90BBD2224B06E00E0623A /* RestoreUploadTaskOperation.h */,
-				B6D90BBE2224B06E00E0623A /* RestoreUploadTaskOperation.m */,
 				B6E19B382178424600882F74 /* TransferSessionDelegate.h */,
 				B6E19B392178424600882F74 /* TransferSessionDelegate.m */,
 				B6E19B302175716600882F74 /* TransferSessionTaskDelegate.h */,
@@ -5189,7 +5184,6 @@
 				A824AE47228B1D6900EDF27E /* FLEXHeapEnumerator.m in Sources */,
 				A824AE1D228B1D6800EDF27E /* FLEXArgumentInputStructView.m in Sources */,
 				41EAAE4D1D06B49400622FAF /* UICollectionView+CTAssetsPickerController.m in Sources */,
-				B6D90BBF2224B06E00E0623A /* RestoreUploadTaskOperation.m in Sources */,
 				41D21E6F1D01AEC3002E6296 /* CTAssetsPickerNoAssetsView.m in Sources */,
 				A824AE00228B1D6800EDF27E /* FLEXViewExplorerViewController.m in Sources */,
 				A815FCEA1FE2AD080075AC29 /* UIApplication+MNZCategory.m in Sources */,
