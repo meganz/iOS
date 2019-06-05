@@ -1,17 +1,14 @@
 
 #import "LoadMediaInfoOperation.h"
 #import "MEGASdkManager.h"
-
-@interface LoadMediaInfoOperation () <MEGAGlobalDelegate>
-
-@end
+#import "MEGAConstants.h"
 
 @implementation LoadMediaInfoOperation
 
 - (void)start {
     [super start];
     
-    [MEGASdkManager.sharedMEGASdk addMEGAGlobalDelegate:self];
+    [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(didReceiveMediaInfoReadyNotification) name:MEGAMediaInfoReadyNotification object:nil];
     
     if ([MEGASdkManager.sharedMEGASdk ensureMediaInfo]) {
         [self finishOperation];
@@ -20,12 +17,12 @@
 
 - (void)finishOperation {
     [super finishOperation];
-    [MEGASdkManager.sharedMEGASdk removeMEGAGlobalDelegate:self];
+    [NSNotificationCenter.defaultCenter removeObserver:self];
 }
 
-#pragma mark - MEGAGlobalDelegate
+#pragma mark - Notification handler
 
-- (void)onMediaDetectionAvailable {
+- (void)didReceiveMediaInfoReadyNotification {
     [self finishOperation];
 }
 

@@ -53,8 +53,4 @@ NSString * const CameraUploadErrorDomain = @"nz.mega.cameraUpload";
     return [NSError errorWithDomain:CameraUploadErrorDomain code:CameraUploadErrorNoMediaAssetFetched   userInfo:@{NSLocalizedDescriptionKey : [NSString stringWithFormat:@"no media asset fetched for %@", identifier]}];
 }
 
-+ (NSError *)mnz_cameraUploadCanNotArchiveLocationError {
-    return [NSError errorWithDomain:CameraUploadErrorDomain code:CameraUploadErrorCanNotArchiveLocation userInfo:@{NSLocalizedDescriptionKey : @"can not archive location"}];
-}
-
 @end
