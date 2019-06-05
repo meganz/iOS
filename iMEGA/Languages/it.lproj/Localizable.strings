@@ -1809,7 +1809,7 @@
 /* The text of a notification indicating that a file or folder that was taken down has now been restored due to a successful counter-notice. The %1 placeholder will be replaced with the text ‘file’ or ‘folder’. The %2 will be replaced with the name of the file or folder. */
 "Your taken down %1 (%2) has been reinstated."="Il/la tuo/a %1 (%2) chiuso/a è stato/a riattivato/a.";
 /* Text shown when a notification or the last message of a chat corresponds to a voice clip */
-"Voice message"="Voice message";
+"Voice message"="Messaggio vocale";
 /* Error message shown to user when a copy/import operation would take them over their storage limit. */
 "This action can not be completed as it would take you over your current storage limit"="Questa azione non può essere completata in quanto ti farebbe superare il limite del tuo spazio di archiviazione";
 /* uploads over storage quota warning dialog title */
@@ -1827,29 +1827,29 @@
 /* */
 "Yesterday"="Ieri";
 /* Title of the button to share a location in a chat */
-"Send This Location"="Send This Location";
+"Send This Location"="Invia questa posizione";
 /* Title of the alert that allows change between different maps: Standard, Satellite or Hybrid. */
-"Map settings"="Map settings";
+"Map settings"="Impostazioni della mappa";
 /* Type of data displayed in a map view. A street map that shows the position of all roads and some road names. */
 "Standard"="Standard";
 /* Type of data displayed in a map view. Satellite imagery of the area. */
 "Satellite"="Satellite";
 /* Type of data displayed in a map view. A satellite image of the area with road and road name information layered on top. */
-"Hybrid"="Hybrid";
+"Hybrid"="Ibrida";
 /* Label to give feedback to the user when he is going to share his location, indicating that it may not be the exact location. */
-"Accurate to %d meters"="Accurate to %d meters";
+"Accurate to %d meters"="Nel raggio di %d metri";
 /* Alert title shown when the user opens a shared Geolocation for the first time from any client, we will show a confirmation dialog warning the user that he is now leaving the E2EE paradigm. */
-"Send Location"="Send Location";
+"Send Location"="Invia posizione";
 /* Message shown when the user opens a shared Geolocation for the first time from any client, we will show a confirmation dialog warning the user that he is now leaving the E2EE paradigm. */
-"This location will be opened using a third party maps provider outside the end-to-end encrypted MEGA platform."="This location will be opened using a third party maps provider outside the end-to-end encrypted MEGA platform.";
+"This location will be opened using a third party maps provider outside the end-to-end encrypted MEGA platform."="Questa posizione verrà aperta utilizzando un provider di mappe di terze parti, fuori dalla criptazione end-to-end della piattaforma di MEGA.";
 /* Text shown in location-type messages */
-"Pinned Location"="Pinned Location";
+"Pinned Location"="Posizione fissata";
 /* Plural of participant. 2 participants */
 "%d participants"="%d partecipanti";
 /* Singular of participant. 1 participant */
 "%d participant"="%d partecipante";
 /* Text shown in the chat toolbar while the user is recording a voice clip. The < character should be > in RTL languages. */
-"< Slide to cancel"="< Slide to cancel";
+"< Slide to cancel"="< Scorri per annullare";
 /* First part of the string 'Tap and hold <icon> to record, release to send'. There is a microphone icon between the two parts of the string. */
 "Tap and hold"="Tap and hold";
 /* Second part of the string 'Tap and hold <icon> to record, release to send'. There is a microphone icon between the two parts of the string. */
