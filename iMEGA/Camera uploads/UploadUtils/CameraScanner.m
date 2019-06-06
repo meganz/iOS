@@ -129,7 +129,7 @@
     }
 }
 
-#pragma mark - Photo Library Change Observer
+#pragma mark - PHPhotoLibraryChangeObserver
 
 - (void)observePhotoLibraryChanges {
     [[PHPhotoLibrary sharedPhotoLibrary] registerChangeObserver:self];
