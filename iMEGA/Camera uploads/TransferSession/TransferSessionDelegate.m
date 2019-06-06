@@ -5,7 +5,7 @@
 
 @interface TransferSessionDelegate ()
 
-@property (strong, nonatomic) NSMutableDictionary<NSNumber *, TransferSessionTaskDelegate *> *taskDelegateDict;
+@property (strong, nonatomic) NSMutableDictionary<NSNumber *, TransferSessionTaskDelegate *> *taskDelegateMutableDictionary;
 @property (weak, nonatomic) TransferSessionManager *manager;
 @property (strong, nonatomic) dispatch_queue_t serialQueue;
 
@@ -17,7 +17,7 @@
     self = [super init];
     if (self) {
         _manager = manager;
-        _taskDelegateDict = [NSMutableDictionary dictionary];
+        _taskDelegateMutableDictionary = [NSMutableDictionary dictionary];
         _serialQueue = dispatch_queue_create("nz.mega.sessionManager.cameraUpload.sessionDelegate", DISPATCH_QUEUE_SERIAL);
     }
     return self;
@@ -28,23 +28,23 @@
 - (TransferSessionTaskDelegate *)delegateForTask:(NSURLSessionTask *)task {
     __block TransferSessionTaskDelegate *taskDelegate;
     dispatch_sync(self.serialQueue, ^{
-        taskDelegate = self.taskDelegateDict[@(task.taskIdentifier)];
+        taskDelegate = self.taskDelegateMutableDictionary[@(task.taskIdentifier)];
     });
     return taskDelegate;
 }
 
 - (void)removeDelegateForTask:(NSURLSessionTask *)task {
     dispatch_sync(self.serialQueue, ^{
-        [self.taskDelegateDict removeObjectForKey:@(task.taskIdentifier)];
+        [self.taskDelegateMutableDictionary removeObjectForKey:@(task.taskIdentifier)];
     });
 }
 
 - (void)addDelegate:(TransferSessionTaskDelegate *)delegate forTask:(NSURLSessionTask *)task {
     dispatch_sync(self.serialQueue, ^{
-        if (self.taskDelegateDict[@(task.taskIdentifier)]) {
+        if (self.taskDelegateMutableDictionary[@(task.taskIdentifier)]) {
             MEGALogError(@"[Camera Upload] a delegate is already existing for %@", task.taskDescription);
         }
-        self.taskDelegateDict[@(task.taskIdentifier)] = delegate;
+        self.taskDelegateMutableDictionary[@(task.taskIdentifier)] = delegate;
     });
 }
 

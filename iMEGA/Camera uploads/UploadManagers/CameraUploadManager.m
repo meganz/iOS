@@ -350,7 +350,7 @@ static const NSUInteger MaximumPhotoUploadBatchCountMultiplier = 2;
             if (loaded) {
                 [self loadCameraUploadNodeForUpload];
             } else {
-                MEGALogError(@"[Camera Upload] retry to start camera upload due to failed to load media into");
+                MEGALogError(@"[Camera Upload] retry to start camera upload due to failed to load media info");
                 dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(.7 * NSEC_PER_SEC)), dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0), ^{
                     [self startCameraUploadWithRequestingMediaInfo];
                 });

@@ -9,7 +9,7 @@ static const NSUInteger HEICMaxConcurrentOperationCount = 1;
 
 @interface ImageExportManager ()
 
-@property (strong, nonatomic) NSOperationQueue *HEICExportOerationQueue;
+@property (strong, nonatomic) NSOperationQueue *HEICExportOperationQueue;
 @property (strong, nonatomic) NSOperationQueue *generalExportOperationQueue;
 @property (strong, nonatomic) dispatch_queue_t serialQueue;
 
@@ -35,21 +35,21 @@ static const NSUInteger HEICMaxConcurrentOperationCount = 1;
     return self;
 }
 
-- (NSOperationQueue *)HEICExportOerationQueue {
-    if (_HEICExportOerationQueue) {
-        return _HEICExportOerationQueue;
+- (NSOperationQueue *)HEICExportOperationQueue {
+    if (_HEICExportOperationQueue) {
+        return _HEICExportOperationQueue;
     }
     
     dispatch_sync(self.serialQueue, ^{
-        if (self->_HEICExportOerationQueue == nil) {
-            self->_HEICExportOerationQueue = [[NSOperationQueue alloc] init];
-            self->_HEICExportOerationQueue.qualityOfService = NSQualityOfServiceUtility;
-            self->_HEICExportOerationQueue.maxConcurrentOperationCount = HEICMaxConcurrentOperationCount;
-            self->_HEICExportOerationQueue.name = @"HEICExportOerationQueue";
+        if (self->_HEICExportOperationQueue == nil) {
+            self->_HEICExportOperationQueue = [[NSOperationQueue alloc] init];
+            self->_HEICExportOperationQueue.qualityOfService = NSQualityOfServiceUtility;
+            self->_HEICExportOperationQueue.maxConcurrentOperationCount = HEICMaxConcurrentOperationCount;
+            self->_HEICExportOperationQueue.name = @"HEICExportOerationQueue";
         }
     });
     
-    return _HEICExportOerationQueue;
+    return _HEICExportOperationQueue;
 }
 
 - (NSOperationQueue *)generalExportOperationQueue {

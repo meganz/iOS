@@ -25,7 +25,7 @@ typedef NS_ENUM(NSInteger, PreviewConcurrentUploadCount) {
 @property (strong, nonatomic) NSOperationQueue *thumbnailUploadOperationQueue;
 @property (strong, nonatomic) NSOperationQueue *previewUploadOperationQueue;
 @property (strong, nonatomic) NSOperationQueue *coordinatesUploadOperationQueue;
-@property (strong, nonatomic) NSOperationQueue *attributeScanQueue;
+@property (strong, nonatomic) NSOperationQueue *attributeScanOperationQueue;
 
 @end
 
@@ -60,10 +60,10 @@ typedef NS_ENUM(NSInteger, PreviewConcurrentUploadCount) {
         _coordinatesUploadOperationQueue.maxConcurrentOperationCount = CoordinatesConcurrentUploadCount;
         _coordinatesUploadOperationQueue.name = @"coordinatesUploadOperationQueue";
         
-        _attributeScanQueue = [[NSOperationQueue alloc] init];
-        _attributeScanQueue.name = @"attributeScanQueue";
-        _attributeScanQueue.qualityOfService = NSQualityOfServiceBackground;
-        _attributeScanQueue.maxConcurrentOperationCount = 1;
+        _attributeScanOperationQueue = [[NSOperationQueue alloc] init];
+        _attributeScanOperationQueue.name = @"attributeScanQueue";
+        _attributeScanOperationQueue.qualityOfService = NSQualityOfServiceBackground;
+        _attributeScanOperationQueue.maxConcurrentOperationCount = 1;
     }
     return self;
 }
@@ -165,7 +165,7 @@ typedef NS_ENUM(NSInteger, PreviewConcurrentUploadCount) {
     
     [MEGASdkManager.sharedMEGASdk retryPendingConnections];
     
-    [self.attributeScanQueue addOperationWithBlock:^{
+    [self.attributeScanOperationQueue addOperationWithBlock:^{
         NSError *error;
         NSArray<NSURL *> *attributeDirectoryURLs = [NSFileManager.defaultManager contentsOfDirectoryAtURL:[self attributeDirectoryURL] includingPropertiesForKeys:nil options:NSDirectoryEnumerationSkipsHiddenFiles error:&error];
         if (error) {
@@ -252,7 +252,7 @@ typedef NS_ENUM(NSInteger, PreviewConcurrentUploadCount) {
 #pragma mark - cancel attributes upload
 
 - (void)cancelAllAttributesUpload {
-    [self.attributeScanQueue cancelAllOperations];
+    [self.attributeScanOperationQueue cancelAllOperations];
     [self.thumbnailUploadOperationQueue cancelAllOperations];
     [self.previewUploadOperationQueue cancelAllOperations];
     [self.coordinatesUploadOperationQueue cancelAllOperations];
