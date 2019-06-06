@@ -233,12 +233,7 @@ static NSString * const VideoAttributeImageName = @"AttributeImage";
         
         if (error.type) {
             MEGALogError(@"[Camera Upload] %@ error when to requests upload url %@", self, error.nativeError);
-            if (error.type == MEGAErrorTypeApiEOverQuota || error.type == MEGAErrorTypeApiEgoingOverquota) {
-                [NSNotificationCenter.defaultCenter postNotificationName:MEGAStorageOverQuotaNotification object:self];
-                [self finishOperationWithStatus:CameraAssetUploadStatusCancelled shouldUploadNextAsset:NO];
-            } else {
-                [self finishOperationWithStatus:CameraAssetUploadStatusFailed shouldUploadNextAsset:YES];
-            }
+            [self handleMEGARequestError:error];
         } else {
             self.uploadInfo.uploadURLString = [self.uploadInfo.mediaUpload uploadURLString];
             MEGALogDebug(@"[Camera Upload] %@ requested upload url %@ for file size %llu", self, self.uploadInfo.uploadURLString, self.uploadInfo.fileSize);
