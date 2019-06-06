@@ -104,7 +104,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
 
 @property (nonatomic) CGFloat lastBottomInset;
 @property (nonatomic) CGFloat lastVerticalOffset;
-@property (nonatomic) CGFloat initialToolbarHeight;
+@property (nonatomic, getter=isToolbarFrameLocked) BOOL toolbarFrameLocked;
 
 @property (nonatomic) NSMutableSet<MEGAChatMessage *> *observedDialogMessages;
 @property (nonatomic) NSMutableSet<MEGAChatMessage *> *observedNodeMessages;
@@ -237,6 +237,8 @@ static NSMutableSet<NSString *> *tapForInfoSet;
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
+    self.toolbarFrameLocked = NO;
+    
     if (self.isMovingToParentViewController) {
         if ([[MEGASdkManager sharedMEGAChatSdk] openChatRoom:self.chatRoom.chatId delegate:self]) {
             MEGALogDebug(@"Chat room opened: %@", self.chatRoom);
@@ -303,7 +305,6 @@ static NSMutableSet<NSString *> *tapForInfoSet;
     [super viewDidAppear:animated];
     
     [self showOrHideJumpToBottom];
-    self.initialToolbarHeight = self.inputToolbar.frame.size.height;
     
     if (self.presentingViewController && self.parentViewController) {
         UIBarButtonItem *chatBackBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:AMLocalizedString(@"close", nil) style:UIBarButtonItemStylePlain target:self action:@selector(dismissChatRoom)];
@@ -357,13 +358,14 @@ static NSMutableSet<NSString *> *tapForInfoSet;
 
 - (void)willEnterForeground {
     // Workaround to avoid wrong collection view height when coming back to foreground
-    if ([self.inputToolbar.contentView.textView isFirstResponder]) {
+    if (self.inputToolbar.contentView.textView.isFirstResponder) {
         [self jsq_setCollectionViewInsetsTopValue:0.0f bottomValue:self.lastBottomInset];
         CGPoint offset = self.collectionView.contentOffset;
         offset.y = self.lastVerticalOffset;
         self.collectionView.contentOffset = offset;
     }
     self.unreadMessages = self.chatRoom.unreadCount;
+    [self scrollToFirstUnread];
 }
 
 - (void)didBecomeActive {
@@ -383,6 +385,8 @@ static NSMutableSet<NSString *> *tapForInfoSet;
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
+    
+    self.toolbarFrameLocked = YES;
     
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kReachabilityChangedNotification object:nil];
     
@@ -810,9 +814,9 @@ static NSMutableSet<NSString *> *tapForInfoSet;
 }
 
 - (void)openCallViewWithVideo:(BOOL)videoCall active:(BOOL)active {
-    if ([[UIDevice currentDevice] orientation] != UIInterfaceOrientationPortrait) {
+    if (UIDevice.currentDevice.orientation != UIInterfaceOrientationPortrait) {
         NSNumber *value = [NSNumber numberWithInt:UIInterfaceOrientationPortrait];
-        [[UIDevice currentDevice] setValue:value forKey:@"orientation"];
+        [UIDevice.currentDevice setValue:value forKey:@"orientation"];
     }
     if (self.chatRoom.isGroup) {
         GroupCallViewController *groupCallVC = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"GroupCallViewControllerID"];
@@ -1418,6 +1422,22 @@ static NSMutableSet<NSString *> *tapForInfoSet;
     [[MEGAStore shareInstance] insertOrUpdateChatDraftWithChatId:self.chatRoom.chatId text:chatDraftText];
 }
 
+- (void)scrollToFirstUnread {
+    NSInteger numberOfItemsInSection = [self.collectionView numberOfItemsInSection:0];
+    NSInteger item = numberOfItemsInSection - (self.unreadMessages + 1);
+    if (item < 0) {
+        item = 0;
+    }
+    NSIndexPath *lastUnreadIndexPath = [NSIndexPath indexPathForItem:item inSection:0];
+    if (numberOfItemsInSection) {
+        [self.collectionView scrollToItemAtIndexPath:lastUnreadIndexPath atScrollPosition:UICollectionViewScrollPositionTop animated:NO];
+    }
+    
+    if (self.unreadMessages) {
+        [self showOrHideJumpToBottom];
+    }
+}
+
 #pragma mark - Gesture recognizer
 
 - (void)hideInputToolbar {
@@ -1851,7 +1871,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
         }
             
         case MEGAChatAccessoryButtonUpload: {
-            self.inputToolbar.hidden = YES;
+            self.inputToolbar.hidden = UIDevice.currentDevice.iPad ? NO : YES;
             NSString *alertControllerTitle = AMLocalizedString(@"send", @"Label for any 'Send' button, link, text, title, etc. - (String as short as possible).");
             UIAlertController *selectOptionAlertController = [UIAlertController alertControllerWithTitle:alertControllerTitle message:nil preferredStyle:UIAlertControllerStyleActionSheet];
             [selectOptionAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
@@ -1884,7 +1904,6 @@ static NSMutableSet<NSString *> *tapForInfoSet;
             selectOptionAlertController.modalPresentationStyle = UIModalPresentationOverCurrentContext;
             selectOptionAlertController.popoverPresentationController.sourceView = self.inputToolbar.contentView;
             selectOptionAlertController.popoverPresentationController.sourceRect = self.inputToolbar.contentView.accessoryUploadButton.frame;
-            selectOptionAlertController.popoverPresentationController.sourceView = self.inputToolbar.contentView;
             
             [self presentViewController:selectOptionAlertController animated:YES completion:nil];
             selectOptionAlertController.view.tintColor = UIColor.mnz_redMain;
@@ -1920,7 +1939,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
 }
 
 - (void)jsq_setCollectionViewInsetsTopValue:(CGFloat)top bottomValue:(CGFloat)bottom {
-    if (self.inputToolbar.frame.size.height < self.initialToolbarHeight) {
+    if (self.isToolbarFrameLocked) {
         return;
     }
     
@@ -2550,7 +2569,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
 - (void)messageView:(JSQMessagesCollectionView *)view didTapAccessoryButtonAtIndexPath:(NSIndexPath *)path {
     __block MEGAChatMessage *message = [self.messages objectAtIndex:path.item];
     if (message.status == MEGAChatMessageStatusSendingManual) {
-        if ([[UIDevice currentDevice] iPhoneDevice]) {
+        if (UIDevice.currentDevice.iPhoneDevice) {
             [self.inputToolbar.contentView.textView resignFirstResponder];
         }
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
@@ -2803,19 +2822,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
                     [self.collectionView reloadData];
                 });
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    NSInteger numberOfItemsInSection = [self.collectionView numberOfItemsInSection:0];
-                    NSInteger item = numberOfItemsInSection - (self.unreadMessages + 1);
-                    if (item < 0) {
-                        item = 0;
-                    }
-                    NSIndexPath *lastUnreadIndexPath = [NSIndexPath indexPathForItem:item inSection:0];
-                    if (numberOfItemsInSection) {
-                        [self.collectionView scrollToItemAtIndexPath:lastUnreadIndexPath atScrollPosition:UICollectionViewScrollPositionTop animated:NO];
-                    }
-                    
-                    if (self.unreadMessages) {
-                        [self showOrHideJumpToBottom];
-                    }
+                    [self scrollToFirstUnread];
                 });
             }
         } else {
