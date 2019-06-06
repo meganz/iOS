@@ -758,29 +758,13 @@ static NSString* const B = @"[B]";
     }
     
     if (recentActionBucket.isUpdate) {
-        if (nodesArray.count == 1) {
-            addebByString = AMLocalizedString(@"%1 modified by %3", @"Title for a recent action shown in the webclient, see the attached image for context.");
-            addebByString = [addebByString stringByReplacingOccurrencesOfString:@"%1 " withString:@""];
-            addebByString = [addebByString stringByReplacingOccurrencesOfString:@"%3" withString:userNameThatMadeTheAction];
-        } else if (nodesArray.count > 1) {
-            addebByString = AMLocalizedString(@"%1 and [A]%2 more[/A] modified by %3", @"Title for a recent action shown in the webclient, see the attached image for context. Please ensure that the `%2 more` is inside the [A] tag as this will become a toggle to show the hidden content.");
-            addebByString = addebByString.mnz_removeWebclientFormatters;
-            addebByString = [addebByString stringByReplacingOccurrencesOfString:@"%1 " withString:@""];
-            addebByString = [addebByString stringByReplacingOccurrencesOfString:@"%2" withString:[NSString stringWithFormat:@"%tu", nodesArray.count]];
-            addebByString = [addebByString stringByReplacingOccurrencesOfString:@"%3" withString:userNameThatMadeTheAction];
-        }
+        addebByString = AMLocalizedString(@"%1 modified by %3", @"Title for a recent action shown in the webclient, see the attached image for context.");
+        addebByString = [addebByString stringByReplacingOccurrencesOfString:@"%1 " withString:@""];
+        addebByString = [addebByString stringByReplacingOccurrencesOfString:@"%3" withString:userNameThatMadeTheAction];
     } else {
-        if (nodesArray.count == 1) {
-            addebByString = AMLocalizedString(@"%1 created by %3", @"Title for a recent action shown in the webclient, see the attached image for context.");
-            addebByString = [addebByString stringByReplacingOccurrencesOfString:@"%1 " withString:@""];
-            addebByString = [addebByString stringByReplacingOccurrencesOfString:@"%3" withString:userNameThatMadeTheAction];
-        } else if (nodesArray.count > 1) {
-            addebByString = AMLocalizedString(@"%1 and [A]%2 more[/A] created by %3", @"Title for a recent action shown in the webclient, see the attached image for context. Please ensure that the `%2 more` is inside the [A] tag as this will become a toggle to show the hidden content.");
-            addebByString = addebByString.mnz_removeWebclientFormatters;
-            addebByString = [addebByString stringByReplacingOccurrencesOfString:@"%1 " withString:@""];
-            addebByString = [addebByString stringByReplacingOccurrencesOfString:@"%2" withString:[NSString stringWithFormat:@"%tu", nodesArray.count]];
-            addebByString = [addebByString stringByReplacingOccurrencesOfString:@"%3" withString:userNameThatMadeTheAction];
-        }
+        addebByString = AMLocalizedString(@"%1 created by %3", @"Title for a recent action shown in the webclient, see the attached image for context.");
+        addebByString = [addebByString stringByReplacingOccurrencesOfString:@"%1 " withString:@""];
+        addebByString = [addebByString stringByReplacingOccurrencesOfString:@"%3" withString:userNameThatMadeTheAction];
     }
     
     return addebByString;

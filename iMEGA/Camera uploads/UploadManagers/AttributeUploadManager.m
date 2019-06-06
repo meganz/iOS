@@ -4,15 +4,12 @@
 #import "NSURL+CameraUpload.h"
 #import "ThumbnailUploadOperation.h"
 #import "PreviewUploadOperation.h"
-#import "CoordinatesUploadOperation.h"
 #import "CameraUploadManager.h"
 #import "NSString+MNZCategory.h"
 #import "NSError+CameraUpload.h"
-@import CoreLocation;
 
 static NSString * const AttributesDirectoryName = @"Attributes";
 
-static const NSInteger CoordinatesConcurrentUploadCount = 2;
 static const NSInteger ThumbnailConcurrentUploadCount = 50;
 
 typedef NS_ENUM(NSInteger, PreviewConcurrentUploadCount) {
@@ -24,8 +21,7 @@ typedef NS_ENUM(NSInteger, PreviewConcurrentUploadCount) {
 
 @property (strong, nonatomic) NSOperationQueue *thumbnailUploadOperationQueue;
 @property (strong, nonatomic) NSOperationQueue *previewUploadOperationQueue;
-@property (strong, nonatomic) NSOperationQueue *coordinatesUploadOperationQueue;
-@property (strong, nonatomic) NSOperationQueue *attributeScanOperationQueue;
+@property (strong, nonatomic) NSOperationQueue *attributeScanQueue;
 
 @end
 
@@ -55,15 +51,10 @@ typedef NS_ENUM(NSInteger, PreviewConcurrentUploadCount) {
         _previewUploadOperationQueue.name = @"previewUploadOperationQueue";
         _previewUploadOperationQueue.maxConcurrentOperationCount = PreviewConcurrentUploadCountWhenThumbnailsAreUploading;
         
-        _coordinatesUploadOperationQueue = [[NSOperationQueue alloc] init];
-        _coordinatesUploadOperationQueue.qualityOfService = NSQualityOfServiceUtility;
-        _coordinatesUploadOperationQueue.maxConcurrentOperationCount = CoordinatesConcurrentUploadCount;
-        _coordinatesUploadOperationQueue.name = @"coordinatesUploadOperationQueue";
-        
-        _attributeScanOperationQueue = [[NSOperationQueue alloc] init];
-        _attributeScanOperationQueue.name = @"attributeScanQueue";
-        _attributeScanOperationQueue.qualityOfService = NSQualityOfServiceBackground;
-        _attributeScanOperationQueue.maxConcurrentOperationCount = 1;
+        _attributeScanQueue = [[NSOperationQueue alloc] init];
+        _attributeScanQueue.name = @"attributeScanQueue";
+        _attributeScanQueue.qualityOfService = NSQualityOfServiceBackground;
+        _attributeScanQueue.maxConcurrentOperationCount = 1;
     }
     return self;
 }
@@ -84,7 +75,7 @@ typedef NS_ENUM(NSInteger, PreviewConcurrentUploadCount) {
             self.previewUploadOperationQueue.maxConcurrentOperationCount = previewConcurrentCount;
         }
         
-        MEGALogDebug(@"[Camera Upload] thumbnail count %lu, preview count %lu, preview concurrent count %li, coordinates count %lu", (unsigned long)thumbnailsCount, (unsigned long)self.previewUploadOperationQueue.operationCount, (long)previewConcurrentCount, (unsigned long)self.coordinatesUploadOperationQueue.operationCount);
+        MEGALogDebug(@"[Camera Upload] thumbnail count %lu, preview count %lu, preview concurrent count %li", (unsigned long)thumbnailsCount, (unsigned long)self.previewUploadOperationQueue.operationCount, (long)previewConcurrentCount);
     }
 }
 
@@ -102,15 +93,6 @@ typedef NS_ENUM(NSInteger, PreviewConcurrentUploadCount) {
     [uploadInfo.fingerprint writeToURL:attribute.fingerprintURL atomically:YES encoding:NSUTF8StringEncoding error:error];
     if (error != NULL && *error != nil) {
         return nil;
-    }
-    
-    if (uploadInfo.location) {
-        if (![NSKeyedArchiver archiveRootObject:uploadInfo.location toFile:attribute.locationURL.path]) {
-            if (error != NULL) {
-                *error = [NSError mnz_cameraUploadCanNotArchiveLocationError];
-            }
-            return nil;
-        }
     }
     
     [NSFileManager.defaultManager copyItemAtURL:uploadInfo.thumbnailURL toURL:attribute.thumbnailURL error:error];
@@ -144,11 +126,6 @@ typedef NS_ENUM(NSInteger, PreviewConcurrentUploadCount) {
     } else {
         MEGALogError(@"[Camera Upload] No preview file found for node %@ in %@", node.name, attribute.previewURL);
     }
-    
-    if (attribute.hasSavedLocation && ![self hasPendingAttributeOperationForNode:node inQueue:self.coordinatesUploadOperationQueue]) {
-        MEGALogDebug(@"[Camera Upload] queue up coordinates upload for %@ at %@", node.name, attribute.locationURL);
-        [self.coordinatesUploadOperationQueue addOperation:[[CoordinatesUploadOperation alloc] initWithAttributeURL:attribute.locationURL node:node]];
-    }
 }
 
 #pragma mark - attributes scan and retry
@@ -165,7 +142,7 @@ typedef NS_ENUM(NSInteger, PreviewConcurrentUploadCount) {
     
     [MEGASdkManager.sharedMEGASdk retryPendingConnections];
     
-    [self.attributeScanOperationQueue addOperationWithBlock:^{
+    [self.attributeScanQueue addOperationWithBlock:^{
         NSError *error;
         NSArray<NSURL *> *attributeDirectoryURLs = [NSFileManager.defaultManager contentsOfDirectoryAtURL:[self attributeDirectoryURL] includingPropertiesForKeys:nil options:NSDirectoryEnumerationSkipsHiddenFiles error:&error];
         if (error) {
@@ -208,15 +185,6 @@ typedef NS_ENUM(NSInteger, PreviewConcurrentUploadCount) {
             [self.previewUploadOperationQueue addOperation:[[PreviewUploadOperation alloc] initWithAttributeURL:attribute.previewURL node:node]];
         }
     }
-    
-    if (attribute.hasSavedLocation) {
-        if (node.latitude && node.longitude) {
-            [NSFileManager.defaultManager mnz_removeItemAtPath:attribute.locationURL.path];
-        } else if (![self hasPendingAttributeOperationForNode:node inQueue:self.coordinatesUploadOperationQueue]) {
-            MEGALogDebug(@"[Camera Upload] retry coordinates upload for %@ in %@", node.name, attribute.attributeDirectoryURL.lastPathComponent);
-            [self.coordinatesUploadOperationQueue addOperation:[[CoordinatesUploadOperation alloc] initWithAttributeURL:attribute.locationURL node:node]];
-        }
-    }
 }
 
 #pragma mark - pending operations check
@@ -252,10 +220,9 @@ typedef NS_ENUM(NSInteger, PreviewConcurrentUploadCount) {
 #pragma mark - cancel attributes upload
 
 - (void)cancelAllAttributesUpload {
-    [self.attributeScanOperationQueue cancelAllOperations];
+    [self.attributeScanQueue cancelAllOperations];
     [self.thumbnailUploadOperationQueue cancelAllOperations];
     [self.previewUploadOperationQueue cancelAllOperations];
-    [self.coordinatesUploadOperationQueue cancelAllOperations];
 }
 
 #pragma mark - Utils

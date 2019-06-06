@@ -63,8 +63,8 @@ static const NSTimeInterval BackgroundRefreshDurationTolerance = 2;
 
 - (void)startCameraUploadWithBackgroundRefreshCompletionHandler:(void (^)(UIBackgroundFetchResult))completion {
     MEGALogDebug(@"[Camera Upload] upload camera in background refresh");
-    [NSNotificationCenter.defaultCenter removeObserver:self name:MEGACameraUploadAllAssetsFinishedProcessingNotificationName object:nil];
-    [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(didReceiveCameraUploadAllAssetsFinishedProcessingNotification) name:MEGACameraUploadAllAssetsFinishedProcessingNotificationName object:nil];
+    [NSNotificationCenter.defaultCenter removeObserver:self name:MEGACameraUploadAllAssetsFinishedProcessingNotification object:nil];
+    [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(didReceiveCameraUploadAllAssetsFinishedProcessingNotification) name:MEGACameraUploadAllAssetsFinishedProcessingNotification object:nil];
     
     [CameraUploadManager.shared startCameraUploadIfNeeded];
     
@@ -81,7 +81,7 @@ static const NSTimeInterval BackgroundRefreshDurationTolerance = 2;
     });
     
     dispatch_source_set_cancel_handler(self.monitorTimer, ^{
-        [NSNotificationCenter.defaultCenter removeObserver:self name:MEGACameraUploadAllAssetsFinishedProcessingNotificationName object:nil];
+        [NSNotificationCenter.defaultCenter removeObserver:self name:MEGACameraUploadAllAssetsFinishedProcessingNotification object:nil];
         completion(UIBackgroundFetchResultNewData);
     });
     

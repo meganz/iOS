@@ -13,7 +13,8 @@ typedef void (^RestoreSessionCompletionHandler)(NSArray<NSURLSessionUploadTask *
 - (void)invalidateAndCancelVideoSessions;
 - (void)invalidateAndCancelPhotoSessions;
 
-- (void)restoreAllSessionsWithCompletion:(nullable RestoreSessionCompletionHandler)completion;
+- (void)restorePhotoSessionsWithCompletion:(nullable RestoreSessionCompletionHandler)completion;
+- (void)restoreVideoSessionsWithCompletion:(nullable RestoreSessionCompletionHandler)completion;
 
 - (void)saveSessionCompletion:(void (^)(void))completion forIdentifier:(NSString *)identifier;
 

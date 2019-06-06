@@ -24,9 +24,17 @@
     }];
 }
 
-- (void)collateUploadingRecordsByPendingTasks:(NSArray<NSURLSessionTask *> *)tasks {
+- (void)collateUploadingPhotoRecordsByUploadTasks:(NSArray<NSURLSessionTask *> *)tasks {
+    return [self collateUploadingRecordsByMediaTypes:@[@(PHAssetMediaTypeImage)] uploadTasks:tasks];
+}
+
+- (void)collateUploadingVideoRecordsByUploadTasks:(NSArray<NSURLSessionTask *> *)tasks {
+    return [self collateUploadingRecordsByMediaTypes:@[@(PHAssetMediaTypeVideo)] uploadTasks:tasks];
+}
+
+- (void)collateUploadingRecordsByMediaTypes:(NSArray<NSNumber *> *)mediaTypes uploadTasks:(NSArray<NSURLSessionTask *> *)tasks {
     [CameraUploadRecordManager.shared.backgroundContext performBlock:^{
-        NSArray<MOAssetUploadRecord *> *uploadingRecords = [CameraUploadRecordManager.shared fetchUploadRecordsByStatuses:@[@(CameraAssetUploadStatusUploading)] error:nil];
+        NSArray<MOAssetUploadRecord *> *uploadingRecords = [CameraUploadRecordManager.shared fetchUploadRecordsByMediaTypes:mediaTypes statuses:@[@(CameraAssetUploadStatusUploading)] error:nil];
         if (uploadingRecords.count == 0) {
             MEGALogDebug(@"[Camera Upload] no uploading records to collate");
             return;

@@ -115,12 +115,12 @@ static const NSUInteger EncryptionProposedChunkSizeWithoutTruncating = 1024 * 10
             continue;
         }
         
-        unsigned length = (unsigned)(lastPosition - position.unsignedLongLongValue);
+        int64_t length = (int64_t)(lastPosition - position.unsignedLongLongValue);
         NSString *chunkName = [NSString stringWithFormat:@"chunk%ld", (long)chunkIndex];
         NSURL *chunkURL = [self.outputDirectoryURL URLByAppendingPathComponent:chunkName];
-        NSString *suffix;
-        if ([self.mediaUpload encryptFileAtPath:fileURL.path startPosition:position.unsignedLongLongValue length:&length outputFilePath:chunkURL.path urlSuffix:&suffix adjustsSizeOnly:NO]) {
-            chunksDict[suffix] = chunkURL;
+        NSString *encryptedChunkFileSuffix = [self.mediaUpload encryptFileAtPath:fileURL.path startPosition:position.unsignedLongLongValue length:&length outputFilePath:chunkURL.path adjustsSizeOnly:NO];
+        if (encryptedChunkFileSuffix.length > 0) {
+            chunksDict[encryptedChunkFileSuffix] = chunkURL;
             lastPosition = position.unsignedLongLongValue;
             if (self.shouldTruncateFile && fileHandle) {
                 [fileHandle truncateFileAtOffset:position.unsignedLongLongValue];
@@ -143,7 +143,7 @@ static const NSUInteger EncryptionProposedChunkSizeWithoutTruncating = 1024 * 10
 
 - (NSArray<NSNumber *> *)calculteChunkPositionsForFileAtURL:(NSURL *)fileURL chunkSize:(NSUInteger)chunkSize error:(NSError **)error {
     NSMutableArray<NSNumber *> *chunkPositions = [NSMutableArray arrayWithObject:@(0)];
-    unsigned chunkSizeToBeAdjusted = (unsigned)chunkSize;
+    int64_t chunkSizeToBeAdjusted = (int64_t)chunkSize;
     unsigned long long startPosition = 0;
     while (startPosition < self.fileSize) {
         if (self.isEncryptionCancelled) {
@@ -154,7 +154,15 @@ static const NSUInteger EncryptionProposedChunkSizeWithoutTruncating = 1024 * 10
             return @[];
         }
         
-        if ([self.mediaUpload encryptFileAtPath:fileURL.path startPosition:startPosition length:&chunkSizeToBeAdjusted outputFilePath:nil urlSuffix:nil adjustsSizeOnly:YES]) {
+        
+        if (startPosition + chunkSize > self.fileSize) {
+            chunkSizeToBeAdjusted = self.fileSize - startPosition;
+        } else {
+            chunkSizeToBeAdjusted = (int64_t)chunkSize;
+        }
+
+        NSString *encryptedChunkFileSuffix = [self.mediaUpload encryptFileAtPath:fileURL.path startPosition:startPosition length:&chunkSizeToBeAdjusted outputFilePath:nil adjustsSizeOnly:YES];
+        if (encryptedChunkFileSuffix.length > 0) {
             startPosition = startPosition + chunkSizeToBeAdjusted;
             [chunkPositions addObject:@(startPosition)];
         } else {

@@ -5,8 +5,6 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@class CLLocation;
-
 @interface AttributeUploadManager : NSObject
 
 + (instancetype)shared;

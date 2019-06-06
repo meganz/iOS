@@ -802,7 +802,6 @@
 		B642925E22277EDD007BB9DE /* LivePhotoScanner.m in Sources */ = {isa = PBXBuildFile; fileRef = B642925D22277EDD007BB9DE /* LivePhotoScanner.m */; };
 		B644B6B721ABA27B00A3B8E7 /* MEGAConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = B60DDC1521A7A7930097E4A3 /* MEGAConstants.m */; };
 		B644B6B821ABA27B00A3B8E7 /* MEGAConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = B60DDC1521A7A7930097E4A3 /* MEGAConstants.m */; };
-		B644B6BE21AE0E1900A3B8E7 /* CoordinatesUploadOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = B644B6BD21AE0E1900A3B8E7 /* CoordinatesUploadOperation.m */; };
 		B644B6C121AE19BC00A3B8E7 /* MEGAExpirableOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = B644B6C021AE19BC00A3B8E7 /* MEGAExpirableOperation.m */; };
 		B645164B2231C199001680BC /* PHFetchResult+CameraUpload.m in Sources */ = {isa = PBXBuildFile; fileRef = B645164A2231C199001680BC /* PHFetchResult+CameraUpload.m */; };
 		B6451650223201A2001680BC /* MEGAConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = B60DDC1521A7A7930097E4A3 /* MEGAConstants.m */; };
@@ -1515,6 +1514,7 @@
 		830EF9A320062F3800FAA947 /* DevicePermissionsHelper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DevicePermissionsHelper.m; sourceTree = "<group>"; };
 		83113493223900CB00647AB4 /* GradientView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GradientView.h; sourceTree = "<group>"; };
 		83113494223900CB00647AB4 /* GradientView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GradientView.m; sourceTree = "<group>"; };
+		831A4F08229C339200EBE256 /* TransfersSelected.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TransfersSelected.h; sourceTree = "<group>"; };
 		831D61A1218738D20038F5B8 /* MOFolderLayout+CoreDataProperties.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MOFolderLayout+CoreDataProperties.h"; sourceTree = "<group>"; };
 		831D61A2218738D20038F5B8 /* MOFolderLayout+CoreDataClass.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MOFolderLayout+CoreDataClass.h"; sourceTree = "<group>"; };
 		831D61A3218738D20038F5B8 /* MOFolderLayout+CoreDataClass.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "MOFolderLayout+CoreDataClass.m"; sourceTree = "<group>"; };
@@ -1991,8 +1991,6 @@
 		B63F319F223BA8FA00B0C6A6 /* MEGAStoreStack.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MEGAStoreStack.m; sourceTree = "<group>"; };
 		B642925C22277EDD007BB9DE /* LivePhotoScanner.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LivePhotoScanner.h; sourceTree = "<group>"; };
 		B642925D22277EDD007BB9DE /* LivePhotoScanner.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LivePhotoScanner.m; sourceTree = "<group>"; };
-		B644B6BC21AE0E1900A3B8E7 /* CoordinatesUploadOperation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CoordinatesUploadOperation.h; sourceTree = "<group>"; };
-		B644B6BD21AE0E1900A3B8E7 /* CoordinatesUploadOperation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CoordinatesUploadOperation.m; sourceTree = "<group>"; };
 		B644B6BF21AE19BC00A3B8E7 /* MEGAExpirableOperation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MEGAExpirableOperation.h; sourceTree = "<group>"; };
 		B644B6C021AE19BC00A3B8E7 /* MEGAExpirableOperation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MEGAExpirableOperation.m; sourceTree = "<group>"; };
 		B64516492231C199001680BC /* PHFetchResult+CameraUpload.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PHFetchResult+CameraUpload.h"; sourceTree = "<group>"; };
@@ -2666,7 +2664,6 @@
 				5B06BB7B21D508D1001F3C31 /* Flow Layouts */,
 				7747B2D5208623550011814E /* Network */,
 				5B8281451E7BE7FA0079C1BB /* Cells */,
-				A85D93BE20457E3F0066F45B /* Enums */,
 				5B2417E620527F5900C8DDE2 /* Headers */,
 				5BB68C9D203599EC00B03C00 /* Views */,
 				A819B3401EAFA7E7004592F9 /* ViewControllers */,
@@ -3435,20 +3432,23 @@
 		5B2417E620527F5900C8DDE2 /* Headers */ = {
 			isa = PBXGroup;
 			children = (
+				83ACBDB82212EDE000ACBBDC /* CallPeerAudio.h */,
+				83ACBDB72212EDC800ACBBDC /* CallPeerVideo.h */,
+				8394CFA4211AE5B700A1634A /* CallType.h */,
+				836A987C20F8C8DA00EC719B /* ChatRoomsType.h */,
+				A85D93BD20457DAA0066F45B /* ChatVideoUploadQuality.h */,
 				5B2417E720527FB800C8DDE2 /* DisplayMode.h */,
-				5BC4913020AC684500F7F952 /* TwoFactorAuthentication.h */,
 				83681574202AFA1700CA8EFC /* MegaNodeActionType.h */,
+				83064D88217F207000FA3DAC /* LayoutView.h */,
 				5BE08A0820F4DB0100950D30 /* LinkOption.h */,
+				771A1B5F21C9227A00A8555D /* OnboardingType.h */,
+				771A1B5E21C9220C00A8555D /* OnboardingViewType.h */,
 				773DF39A20EE1470004C3418 /* SendMode.h */,
 				773DF39B20EE14C1004C3418 /* ShareAttachmentType.h */,
-				5B72A14B20D3A69C007FE4FD /* URLType.h */,
-				836A987C20F8C8DA00EC719B /* ChatRoomsType.h */,
-				83064D88217F207000FA3DAC /* LayoutView.h */,
-				771A1B5E21C9220C00A8555D /* OnboardingViewType.h */,
-				771A1B5F21C9227A00A8555D /* OnboardingType.h */,
-				83ACBDB72212EDC800ACBBDC /* CallPeerVideo.h */,
-				83ACBDB82212EDE000ACBBDC /* CallPeerAudio.h */,
 				77A715E2225D02F600DE8922 /* ToolbarType.h */,
+				831A4F08229C339200EBE256 /* TransfersSelected.h */,
+				5BC4913020AC684500F7F952 /* TwoFactorAuthentication.h */,
+				5B72A14B20D3A69C007FE4FD /* URLType.h */,
 			);
 			path = Headers;
 			sourceTree = "<group>";
@@ -4204,15 +4204,6 @@
 			path = Vendor/FLEX;
 			sourceTree = "<group>";
 		};
-		A85D93BE20457E3F0066F45B /* Enums */ = {
-			isa = PBXGroup;
-			children = (
-				A85D93BD20457DAA0066F45B /* ChatVideoUploadQuality.h */,
-				8394CFA4211AE5B700A1634A /* CallType.h */,
-			);
-			path = Enums;
-			sourceTree = "<group>";
-		};
 		A8665F4F20ADA1600044F8F6 /* PWProgressView */ = {
 			isa = PBXGroup;
 			children = (
@@ -4313,8 +4304,6 @@
 			children = (
 				B6E19B2D21756F0800882F74 /* TransferSessionManager.h */,
 				B6E19B2E21756F0800882F74 /* TransferSessionManager.m */,
-				B6D90BBD2224B06E00E0623A /* RestoreUploadTaskOperation.h */,
-				B6D90BBE2224B06E00E0623A /* RestoreUploadTaskOperation.m */,
 				B6E19B382178424600882F74 /* TransferSessionDelegate.h */,
 				B6E19B392178424600882F74 /* TransferSessionDelegate.m */,
 				B6E19B302175716600882F74 /* TransferSessionTaskDelegate.h */,
@@ -4498,8 +4487,6 @@
 				B6B959402193A9140064334D /* ThumbnailUploadOperation.m */,
 				B6B959422193A91E0064334D /* PreviewUploadOperation.h */,
 				B6B959432193A91E0064334D /* PreviewUploadOperation.m */,
-				B644B6BC21AE0E1900A3B8E7 /* CoordinatesUploadOperation.h */,
-				B644B6BD21AE0E1900A3B8E7 /* CoordinatesUploadOperation.m */,
 			);
 			path = AttributeOperations;
 			sourceTree = "<group>";
@@ -5107,7 +5094,6 @@
 				B6C524E021E3E00C00AE3575 /* AVURLAsset+CameraUpload.m in Sources */,
 				E8C8D73F1B1DCB4000BCDBA4 /* MEGANavigationController.m in Sources */,
 				A824AE4A228B1D6900EDF27E /* FLEXKeyboardShortcutManager.m in Sources */,
-				B644B6BE21AE0E1900A3B8E7 /* CoordinatesUploadOperation.m in Sources */,
 				B658D3BB218F936B004C0D64 /* VideoUploadOperation.m in Sources */,
 				A8F5D67A1ED58F940087DA40 /* CheckEmailAndFollowTheLinkViewController.m in Sources */,
 				A824AE3C228B1D6900EDF27E /* FLEXSQLiteDatabaseManager.m in Sources */,
@@ -5195,7 +5181,6 @@
 				A824AE47228B1D6900EDF27E /* FLEXHeapEnumerator.m in Sources */,
 				A824AE1D228B1D6800EDF27E /* FLEXArgumentInputStructView.m in Sources */,
 				41EAAE4D1D06B49400622FAF /* UICollectionView+CTAssetsPickerController.m in Sources */,
-				B6D90BBF2224B06E00E0623A /* RestoreUploadTaskOperation.m in Sources */,
 				41D21E6F1D01AEC3002E6296 /* CTAssetsPickerNoAssetsView.m in Sources */,
 				A824AE00228B1D6800EDF27E /* FLEXViewExplorerViewController.m in Sources */,
 				A815FCEA1FE2AD080075AC29 /* UIApplication+MNZCategory.m in Sources */,
