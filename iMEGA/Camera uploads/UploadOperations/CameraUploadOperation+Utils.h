@@ -8,6 +8,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSString *)mnz_generateLocalFileNamewithExtension:(NSString *)extension;
 
 - (void)handleCloudDownloadError:(NSError *)error;
+- (void)handleMEGARequestError:(MEGAError *)error;
 
 - (MEGANode *)nodeForOriginalFingerprint:(NSString *)fingerprint;
 

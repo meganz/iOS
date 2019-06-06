@@ -8,6 +8,8 @@
 #import "NSFileManager+MNZCategory.h"
 #import "NSDate+MNZCategory.h"
 #import "LivePhotoUploadOperation.h"
+#import "CameraUploadRequestDelegate.h"
+#import "MEGAError+MNZCategory.h"
 
 static NSString * const CameraUploadLivePhotoExtension = @"live";
 static NSString * const CameraUploadBurstPhotoExtension = @"burst";
@@ -19,7 +21,21 @@ static NSString * const CameraUploadBurstPhotoExtension = @"burst";
 - (void)copyToParentNodeIfNeededForMatchingNode:(MEGANode *)node localFileName:(NSString *)fileName {
     if (node.parentHandle != self.uploadInfo.parentNode.handle) {
         NSString *uniqueFileName = [fileName mnz_sequentialFileNameInParentNode:self.uploadInfo.parentNode];
-        [MEGASdkManager.sharedMEGASdk copyNode:node newParent:self.uploadInfo.parentNode newName:uniqueFileName];
+        [MEGASdkManager.sharedMEGASdk copyNode:node newParent:self.uploadInfo.parentNode newName:uniqueFileName delegate:[[CameraUploadRequestDelegate alloc] initWithCompletion:^(MEGARequest * _Nonnull request, MEGAError * _Nonnull error) {
+            if (self.isCancelled) {
+                [self finishOperationWithStatus:CameraAssetUploadStatusCancelled shouldUploadNextAsset:NO];
+                return;
+            }
+            
+            if (error.type) {
+                MEGALogError(@"[Camera Upload] %@ error when to copy node %@", self, error.nativeError);
+                [self handleMEGARequestError:error];
+            } else {
+                [self finishOperationWithStatus:CameraAssetUploadStatusDone shouldUploadNextAsset:YES];
+            }
+        }]];
+    } else {
+        [self finishOperationWithStatus:CameraAssetUploadStatusDone shouldUploadNextAsset:YES];
     }
 }
 
@@ -52,7 +68,6 @@ static NSString * const CameraUploadBurstPhotoExtension = @"burst";
 - (void)finishUploadForFingerprintMatchedNode:(MEGANode *)node {
     NSString *localFileName = [self mnz_generateLocalFileNamewithExtension:node.name.pathExtension];
     [self copyToParentNodeIfNeededForMatchingNode:node localFileName:localFileName];
-    [self finishOperationWithStatus:CameraAssetUploadStatusDone shouldUploadNextAsset:YES];
 }
 
 #pragma mark - disk space
@@ -67,7 +82,7 @@ static NSString * const CameraUploadBurstPhotoExtension = @"burst";
     [self finishOperationWithStatus:CameraAssetUploadStatusCancelled shouldUploadNextAsset:NO];
 }
 
-#pragma mark - icloud download error handing
+#pragma mark - error handings
 
 - (void)handleCloudDownloadError:(NSError *)error {
     if ([error.domain isEqualToString:AVFoundationErrorDomain] && error.code == AVErrorDiskFull) {
@@ -78,6 +93,15 @@ static NSString * const CameraUploadBurstPhotoExtension = @"burst";
         [self finishOperationWithStatus:CameraAssetUploadStatusNotReady shouldUploadNextAsset:YES];
     } else if (NSFileManager.defaultManager.deviceFreeSize < MEGACameraUploadLowDiskStorageSizeInBytes) {
         [self finishUploadWithNoEnoughDiskSpace];
+    } else {
+        [self finishOperationWithStatus:CameraAssetUploadStatusFailed shouldUploadNextAsset:YES];
+    }
+}
+
+- (void)handleMEGARequestError:(MEGAError *)error {
+    if (error.type == MEGAErrorTypeApiEOverQuota || error.type == MEGAErrorTypeApiEgoingOverquota) {
+        [NSNotificationCenter.defaultCenter postNotificationName:MEGAStorageOverQuotaNotification object:self];
+        [self finishOperationWithStatus:CameraAssetUploadStatusCancelled shouldUploadNextAsset:NO];
     } else {
         [self finishOperationWithStatus:CameraAssetUploadStatusFailed shouldUploadNextAsset:YES];
     }
