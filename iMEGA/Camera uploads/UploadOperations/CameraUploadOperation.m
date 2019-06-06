@@ -110,7 +110,7 @@ static NSString * const VideoAttributeImageName = @"AttributeImage";
         return NO;
     }
     
-    BOOL thumbnailCreated = [self.sdk createThumbnail:self.uploadInfo.attributeImageURL.path destinatioPath:self.uploadInfo.thumbnailURL.path] && [NSFileManager.defaultManager fileExistsAtPath:self.uploadInfo.thumbnailURL.path];
+    BOOL thumbnailCreated = [self.sdk createThumbnail:self.uploadInfo.attributeImageURL.path destinatioPath:self.uploadInfo.thumbnailURL.path];
     if (!thumbnailCreated) {
         MEGALogError(@"[Camera Upload] %@ error when to create thumbnail", self);
     }
@@ -119,7 +119,7 @@ static NSString * const VideoAttributeImageName = @"AttributeImage";
         [self finishOperationWithStatus:CameraAssetUploadStatusCancelled shouldUploadNextAsset:NO];
         return NO;
     }
-    BOOL previewCreated = [self.sdk createPreview:self.uploadInfo.attributeImageURL.path destinatioPath:self.uploadInfo.previewURL.path] && [NSFileManager.defaultManager fileExistsAtPath:self.uploadInfo.previewURL.path];
+    BOOL previewCreated = [self.sdk createPreview:self.uploadInfo.attributeImageURL.path destinatioPath:self.uploadInfo.previewURL.path];
     if (!previewCreated) {
         MEGALogError(@"[Camera Upload] %@ error when to create preview", self);
     }
