@@ -17,4 +17,4 @@
 /* Title of the Offline section */
 "quickActionOfflineString"="Hors ligne";
 /* Location Usage Description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
-"NSLocationWhenInUseUsageDescription"="MEGA accesses to your location when you share it with your contacts.";
+"NSLocationWhenInUseUsageDescription"="MEGA accède à votre position géographique quand vous choisissez de la partager avec vos contacts.";

@@ -103,9 +103,8 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
     
     [[MEGASdkManager sharedMEGASdk] addMEGARequestDelegate:self];
     [[MEGASdkManager sharedMEGASdk] addMEGAGlobalDelegate:self];
-    
-    [self setNavigationBarButtonItemsEnabled:[MEGAReachabilityManager isReachable]];
-    
+
+    self.editBarButtonItem.enabled = MEGAReachabilityManager.isReachable;
     [self reloadPhotosView];
     [self reloadHeader];
 }
@@ -362,10 +361,6 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
     }
 }
 
-- (void)setNavigationBarButtonItemsEnabled:(BOOL)boolValue {
-    [self.editButtonItem setEnabled:boolValue];
-}
-
 - (void)setToolbarActionsEnabled:(BOOL)boolValue {
     self.downloadBarButtonItem.enabled = boolValue;
     self.shareBarButtonItem.enabled = ((self.selectedItemsDictionary.count < 100) ? boolValue : NO);
@@ -399,7 +394,7 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
 }
 
 - (void)didReceiveInternetConnectionChangedNotification {
-    [self setNavigationBarButtonItemsEnabled:[MEGAReachabilityManager isReachable]];
+    self.editBarButtonItem.enabled = MEGAReachabilityManager.isReachable;
     [self reloadHeader];
     [self.photosCollectionView reloadEmptyDataSet];
 }
@@ -407,6 +402,10 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
 #pragma mark - IBAction
 
 - (IBAction)enableCameraUploadsTouchUpInside:(UIButton *)sender {
+    if (self.photosCollectionView.allowsMultipleSelection) {
+        [self setEditing:NO animated:NO];
+    }
+    
     if (self.currentState == MEGACameraUploadsStateEnableVideo && !CameraUploadManager.isVideoUploadEnabled) {
         if (CameraUploadManager.isHEVCFormatSupported) {
             [self pushVideoUploadSettings];
@@ -570,9 +569,9 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
     if ([self.photosByMonthYearArray count] == 0) {
-        [self setNavigationBarButtonItemsEnabled:NO];
+        self.editBarButtonItem.enabled = NO;
     } else {
-        [self setNavigationBarButtonItemsEnabled:[MEGAReachabilityManager isReachable]];
+        self.editBarButtonItem.enabled = MEGAReachabilityManager.isReachable;
     }
     
     return [self.photosByMonthYearArray count];
@@ -609,11 +608,11 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
     
     cell.thumbnailSelectionOverlayView.layer.borderColor = [UIColor.mnz_green00BFA5 CGColor];
     cell.thumbnailSelectionOverlayView.hidden = [self.selectedItemsDictionary objectForKey:[NSNumber numberWithLongLong:node.handle]] == nil;
-
-    if (node.name.mnz_isVideoPathExtension && node.duration > -1) {
-        cell.thumbnailVideoDurationLabel.text = [NSString mnz_stringFromTimeInterval:node.duration];
-    }
     
+    cell.thumbnailVideoOverlayView.hidden = !node.name.mnz_isVideoPathExtension;
+    cell.thumbnailPlayImageView.hidden = !node.name.mnz_isVideoPathExtension;
+    cell.thumbnailVideoDurationLabel.text = (node.name.mnz_isVideoPathExtension && node.duration > -1) ? [NSString mnz_stringFromTimeInterval:node.duration] : @"";
+
     cell.thumbnailImageView.hidden = self.browsingIndexPath && indexPath.section == self.browsingIndexPath.section && indexPath.item == self.browsingIndexPath.item;
     
     if (@available(iOS 11.0, *)) {
