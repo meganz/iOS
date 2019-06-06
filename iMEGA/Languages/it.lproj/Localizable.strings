@@ -1809,7 +1809,7 @@
 /* The text of a notification indicating that a file or folder that was taken down has now been restored due to a successful counter-notice. The %1 placeholder will be replaced with the text ‘file’ or ‘folder’. The %2 will be replaced with the name of the file or folder. */
 "Your taken down %1 (%2) has been reinstated."="Il/la tuo/a %1 (%2) chiuso/a è stato/a riattivato/a.";
 /* Text shown when a notification or the last message of a chat corresponds to a voice clip */
-"Voice message"="Voice message";
+"Voice message"="Messaggio vocale";
 /* Error message shown to user when a copy/import operation would take them over their storage limit. */
 "This action can not be completed as it would take you over your current storage limit"="Questa azione non può essere completata in quanto ti farebbe superare il limite del tuo spazio di archiviazione";
 /* uploads over storage quota warning dialog title */
@@ -1827,29 +1827,29 @@
 /* */
 "Yesterday"="Ieri";
 /* Title of the button to share a location in a chat */
-"Send This Location"="Send This Location";
+"Send This Location"="Invia questa posizione";
 /* Title of the alert that allows change between different maps: Standard, Satellite or Hybrid. */
-"Map settings"="Map settings";
+"Map settings"="Impostazioni della mappa";
 /* Type of data displayed in a map view. A street map that shows the position of all roads and some road names. */
 "Standard"="Standard";
 /* Type of data displayed in a map view. Satellite imagery of the area. */
 "Satellite"="Satellite";
 /* Type of data displayed in a map view. A satellite image of the area with road and road name information layered on top. */
-"Hybrid"="Hybrid";
+"Hybrid"="Ibrida";
 /* Label to give feedback to the user when he is going to share his location, indicating that it may not be the exact location. */
-"Accurate to %d meters"="Accurate to %d meters";
+"Accurate to %d meters"="Nel raggio di %d metri";
 /* Alert title shown when the user opens a shared Geolocation for the first time from any client, we will show a confirmation dialog warning the user that he is now leaving the E2EE paradigm. */
-"Send Location"="Send Location";
+"Send Location"="Invia posizione";
 /* Message shown when the user opens a shared Geolocation for the first time from any client, we will show a confirmation dialog warning the user that he is now leaving the E2EE paradigm. */
-"This location will be opened using a third party maps provider outside the end-to-end encrypted MEGA platform."="This location will be opened using a third party maps provider outside the end-to-end encrypted MEGA platform.";
+"This location will be opened using a third party maps provider outside the end-to-end encrypted MEGA platform."="Questa posizione verrà aperta utilizzando un provider di mappe di terze parti, fuori dalla criptazione end-to-end della piattaforma di MEGA.";
 /* Text shown in location-type messages */
-"Pinned Location"="Pinned Location";
+"Pinned Location"="Posizione fissata";
 /* Plural of participant. 2 participants */
 "%d participants"="%d partecipanti";
 /* Singular of participant. 1 participant */
 "%d participant"="%d partecipante";
 /* Text shown in the chat toolbar while the user is recording a voice clip. The < character should be > in RTL languages. */
-"< Slide to cancel"="< Slide to cancel";
+"< Slide to cancel"="< Scorri per annullare";
 /* First part of the string 'Tap and hold <icon> to record, release to send'. There is a microphone icon between the two parts of the string. */
 "Tap and hold"="Tap and hold";
 /* Second part of the string 'Tap and hold <icon> to record, release to send'. There is a microphone icon between the two parts of the string. */
@@ -1893,13 +1893,9 @@
 /* Title for a recent action shown in the webclient, see the attached image for context. */
 "%1 modified by %3"="%1 modificato da %3";
 /* Title for a recent action shown in the webclient, see the attached image for context. Please ensure that the `%2 more` is inside the [A] tag as this will become a toggle to show the hidden content. */
-"%1 and [A]%2 more[/A] modified by %3"="%1 e [A]altri %2[/A] modificati da %3";
-/* Title for a recent action shown in the webclient, see the attached image for context. Please ensure that the `%2 more` is inside the [A] tag as this will become a toggle to show the hidden content. */
 "%1 and [A]%2 more[/A]"="%1 e [A]altri %2[/A]";
 /* Title for a recent action shown in the webclient, see the attached image for context. */
 "%1 created by %3"="%1 creato da %3";
-/* Title for a recent action shown in the webclient, see the attached image for context. Please ensure that the `%2 more` is inside the [A] tag as this will become a toggle to show the hidden content. */
-"%1 and [A]%2 more[/A] created by %3"="%1 e [A]altri %2[/A] creati da %3";
 /* Message shown when the user has not recent activity in their account. */
 "No recent activity"="Nessuna attività recente";
 /* Plural of items which contains a folder. 2 items */
@@ -1912,33 +1908,5 @@
 "People can join your group by using this link."="Le persone potranno unirsi al tuo gruppo utilizzando questo link.";
 /* Subtitle shown in a chat to inform where to tap to enter in the chat details view */
 "Tap here for info"="Clicca qui per informazioni";
-/* Title for the recents section. */
-"Recents"="Recenti";
-/* Multiple Images title shown in recents section of webclient */
-"%1 Images"="%1 immagini";
-/* Multiple videos title shown in recents section of web client. */
-"%2 Videos"="%2 video";
-/* A single image and single video title shown in recents section of webclient. */
-"1 Image and 1 Video"="1 immagine e 1 video";
-/* One image and multiple videos title in recents. */
-"1 Image and %2 Videos"="1 immagine e %2 video";
-/* Title for multiple images and multiple videos in recents section */
-"%1 Images and %2 Videos"="%1 immagini e %2 video";
-/* Tooltip message shown on recents section. Please see the attached image. */
-"Modified on %1 at %2"="Modificato il %1 alle %2";
-/* Title for a recent action shown in the webclient, see the attached image for context. */
-"%1 modified by %3"="%1 modificato da %3";
-/* Title for a recent action shown in the webclient, see the attached image for context. Please ensure that the `%2 more` is inside the [A] tag as this will become a toggle to show the hidden content. */
-"%1 and [A]%2 more[/A] modified by %3"="%1 e [A]altri %2[/A] modificati da %3";
-/* Title for a recent action shown in the webclient, see the attached image for context. Please ensure that the `%2 more` is inside the [A] tag as this will become a toggle to show the hidden content. */
-"%1 and [A]%2 more[/A]"="%1 e [A]altri %2[/A]";
-/* Title for a recent action shown in the webclient, see the attached image for context. */
-"%1 created by %3"="%1 creato da %3";
-/* Title for a recent action shown in the webclient, see the attached image for context. Please ensure that the `%2 more` is inside the [A] tag as this will become a toggle to show the hidden content. */
-"%1 and [A]%2 more[/A] created by %3"="%1 e [A]altri %2[/A] creati da %3";
-/* Message shown when the user has not recent activity in their account. */
-"No recent activity"="Nessuna attività recente";
-/* Plural of items which contains a folder. 2 items */
-"items"="oggetti";
 /* In some cases, a user may try to get the link for a chat room, but if such is not set by an operator - it would say "not link available" and not auto create it. */
 "No chat link available."="Nessun link della chat disponibile.";

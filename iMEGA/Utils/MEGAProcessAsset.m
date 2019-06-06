@@ -493,12 +493,14 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
     NSString *name;
     
     if (self.originalName) {
-        NSURL *url = [info objectForKey:@"PHImageFileURLKey"];
-        if (url) {
-            name = url.path.lastPathComponent.mnz_fileNameWithLowercaseExtension;
+        NSArray *assetResources = [PHAssetResource assetResourcesForAsset:asset];
+        PHAssetResource *assetResource = assetResources.firstObject;
+        name = assetResource.originalFilename;
+        
+        if (self.shareThroughChat && [name.pathExtension.lowercaseString isEqualToString:@"heic"]) {
+            name = [[name stringByDeletingPathExtension] stringByAppendingPathExtension:@"jpg"];
         } else {
-            NSString *imageFileSandbox = [info objectForKey:@"PHImageFileSandboxExtensionTokenKey"];
-            name = imageFileSandbox.lastPathComponent.mnz_fileNameWithLowercaseExtension;
+            name = name.mnz_fileNameWithLowercaseExtension;
         }
         if (!name) {
             NSString *extension = [self extensionWithInfo:info asset:asset];

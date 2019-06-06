@@ -11,7 +11,6 @@
         _asset = asset;
         _savedLocalIdentifier = savedIdentifier;
         _parentNode = parentNode;
-        _location = asset.location;
     }
     return self;
 }
@@ -43,7 +42,6 @@
 - (void)encodeWithCoder:(nonnull NSCoder *)aCoder {
     [aCoder encodeObject:self.fileName forKey:@"fileName"];
     [aCoder encodeObject:@(self.fileSize) forKey:@"fileSize"];
-    [aCoder encodeObject:self.location forKey:@"location"];
     [aCoder encodeObject:self.fingerprint forKey:@"fingerprint"];
     [aCoder encodeObject:self.originalFingerprint forKey:@"originalFingerprint"];
     [aCoder encodeObject:self.directoryURL forKey:@"directoryURL"];
@@ -58,13 +56,12 @@
     if (self) {
         _fileName = [aDecoder decodeObjectForKey:@"fileName"];
         _fileSize = [[aDecoder decodeObjectForKey:@"fileSize"] unsignedLongLongValue];
-        _location = [aDecoder decodeObjectForKey:@"location"];
         _fingerprint = [aDecoder decodeObjectForKey:@"fingerprint"];
         _originalFingerprint = [aDecoder decodeObjectForKey:@"originalFingerprint"];
         _directoryURL = [aDecoder decodeObjectForKey:@"directoryURL"];
         _parentNode = [MEGASdkManager.sharedMEGASdk nodeForHandle:[[aDecoder decodeObjectForKey:@"parentHandle"] unsignedLongLongValue]];
         NSData *serializedData = [aDecoder decodeObjectForKey:@"mediaUpload"];
-        _mediaUpload = [[MEGASdkManager sharedMEGASdk] resumeBackgroundMediaUploadBySerializedData:serializedData];
+        _mediaUpload = [MEGABackgroundMediaUpload unserializByData:serializedData MEGASdk:MEGASdkManager.sharedMEGASdk];
         _savedLocalIdentifier = [aDecoder decodeObjectForKey:@"savedLocalIdentifier"];
         _encryptedChunksCount = [[aDecoder decodeObjectForKey:@"encryptedChunksCount"] unsignedIntegerValue];
     }

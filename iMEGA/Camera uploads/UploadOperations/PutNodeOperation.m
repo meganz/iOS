@@ -52,13 +52,8 @@
         [self finishOperation];
     }];
     
-
-    [self putNodeWithDelegate:delegate];
-}
-
-- (void)putNodeWithDelegate:(id<MEGARequestDelegate>)delegate {
+    
     NSString *serverUniqueFileName = [self.uploadInfo.fileName mnz_sequentialFileNameInParentNode:self.uploadInfo.parentNode];
-    BOOL didCreateRequestSuccess =
     [MEGASdkManager.sharedMEGASdk completeBackgroundMediaUpload:self.uploadInfo.mediaUpload
                                                        fileName:serverUniqueFileName
                                                      parentNode:self.uploadInfo.parentNode
@@ -66,10 +61,6 @@
                                             originalFingerprint:self.uploadInfo.originalFingerprint
                                               binaryUploadToken:self.transferToken
                                                        delegate:delegate];
-    if (!didCreateRequestSuccess) {
-        self.completion(nil, [NSError errorWithDomain:CameraUploadErrorDomain code:CameraUploadErrorFailedToCreateCompleteUploadRequest userInfo:@{NSLocalizedDescriptionKey : [NSString stringWithFormat:@"Failed to create complete upload request for file %@", self.uploadInfo.fileName]}]);
-        [self finishOperation];
-    }
 }
 
 @end

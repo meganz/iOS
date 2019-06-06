@@ -109,7 +109,7 @@ static NSString * const VideoAttributeImageName = @"AttributeImage";
         return NO;
     }
     
-    BOOL thumbnailCreated = [self.sdk createThumbnail:self.uploadInfo.attributeImageURL.path destinatioPath:self.uploadInfo.thumbnailURL.path] && [NSFileManager.defaultManager fileExistsAtPath:self.uploadInfo.thumbnailURL.path];
+    BOOL thumbnailCreated = [self.sdk createThumbnail:self.uploadInfo.attributeImageURL.path destinatioPath:self.uploadInfo.thumbnailURL.path];
     if (!thumbnailCreated) {
         MEGALogError(@"[Camera Upload] %@ error when to create thumbnail", self);
     }
@@ -118,7 +118,7 @@ static NSString * const VideoAttributeImageName = @"AttributeImage";
         [self finishOperationWithStatus:CameraAssetUploadStatusCancelled shouldUploadNextAsset:NO];
         return NO;
     }
-    BOOL previewCreated = [self.sdk createPreview:self.uploadInfo.attributeImageURL.path destinatioPath:self.uploadInfo.previewURL.path] && [NSFileManager.defaultManager fileExistsAtPath:self.uploadInfo.previewURL.path];
+    BOOL previewCreated = [self.sdk createPreview:self.uploadInfo.attributeImageURL.path destinatioPath:self.uploadInfo.previewURL.path];
     if (!previewCreated) {
         MEGALogError(@"[Camera Upload] %@ error when to create preview", self);
     }
@@ -167,8 +167,16 @@ static NSString * const VideoAttributeImageName = @"AttributeImage";
         return;
     }
     
-    self.uploadInfo.mediaUpload = [MEGASdkManager.sharedMEGASdk backgroundMediaUpload];
-    [self.uploadInfo.mediaUpload analyseMediaInfoForFileAtPath:self.uploadInfo.fileURL.path];
+    self.uploadInfo.mediaUpload = [[MEGABackgroundMediaUpload alloc] initWithMEGASdk:MEGASdkManager.sharedMEGASdk];
+    
+    CLLocation *assetLocation = self.uploadInfo.asset.location;
+    if (assetLocation) {
+        [self.uploadInfo.mediaUpload setCoordinatesWithLatitude:assetLocation.coordinate.latitude longitude:assetLocation.coordinate.longitude isUnshareable:YES];
+    }
+    
+    if (![self.uploadInfo.mediaUpload analyseMediaInfoForFileAtPath:self.uploadInfo.fileURL.path]) {
+        MEGALogError(@"[Camera Upload] %@ analyse media info failed", self);
+    }
     
     [self encryptFile];
 }
@@ -224,12 +232,7 @@ static NSString * const VideoAttributeImageName = @"AttributeImage";
         
         if (error.type) {
             MEGALogError(@"[Camera Upload] %@ error when to requests upload url %@", self, error.nativeError);
-            if (error.type == MEGAErrorTypeApiEOverQuota || error.type == MEGAErrorTypeApiEgoingOverquota) {
-                [NSNotificationCenter.defaultCenter postNotificationName:MEGAStorageOverQuotaNotificationName object:self];
-                [self finishOperationWithStatus:CameraAssetUploadStatusCancelled shouldUploadNextAsset:NO];
-            } else {
-                [self finishOperationWithStatus:CameraAssetUploadStatusFailed shouldUploadNextAsset:YES];
-            }
+            [self handleMEGARequestError:error];
         } else {
             self.uploadInfo.uploadURLString = [self.uploadInfo.mediaUpload uploadURLString];
             MEGALogDebug(@"[Camera Upload] %@ requested upload url %@ for file size %llu", self, self.uploadInfo.uploadURLString, self.uploadInfo.fileSize);
@@ -340,12 +343,12 @@ static NSString * const VideoAttributeImageName = @"AttributeImage";
     
     if (status == CameraAssetUploadStatusDone) {
         dispatch_async(dispatch_get_main_queue(), ^{
-            [NSNotificationCenter.defaultCenter postNotificationName:MEGACameraUploadStatsChangedNotificationName object:nil];
+            [NSNotificationCenter.defaultCenter postNotificationName:MEGACameraUploadStatsChangedNotification object:nil];
         });
     }
     
     if (uploadNextAsset) {
-        [NSNotificationCenter.defaultCenter postNotificationName:MEGACameraUploadQueueUpNextAssetNotificationName object:nil userInfo:@{MEGAAssetMediaTypeUserInfoKey : @(self.uploadInfo.asset.mediaType)}];
+        [NSNotificationCenter.defaultCenter postNotificationName:MEGACameraUploadQueueUpNextAssetNotification object:nil userInfo:@{MEGAAssetMediaTypeUserInfoKey : @(self.uploadInfo.asset.mediaType)}];
     }
 }
 
