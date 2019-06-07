@@ -11,13 +11,13 @@
 #import "MEGASdkManager.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGAGetThumbnailRequestDelegate.h"
+#import "MEGATransfer+MNZCategory.h"
 #import "MEGATransferList+MNZCategory.h"
 #import "MEGAStore.h"
 #import "TransfersSelected.h"
+#import "UITableView+MNZCategory.h"
 
 #import "TransferTableViewCell.h"
-
-
 
 @interface TransfersViewController () <UITableViewDelegate, UITableViewDataSource, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGARequestDelegate, MEGATransferDelegate, TransferTableViewCellDelegate>
 
@@ -33,8 +33,7 @@
 @property (weak, nonatomic) IBOutlet UIView *uploadsLineView;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
-@property (strong, nonatomic) NSMutableArray *transfers;
-
+@property (strong, nonatomic) NSMutableArray<MEGATransfer *> *transfers;
 @property (strong, nonatomic) NSMutableArray<NSString *> *uploadTransfersQueued;
 
 @property (nonatomic, getter=areTransfersPaused) BOOL transfersPaused;
@@ -49,6 +48,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    self.transfers = NSMutableArray.new;
+    self.uploadTransfersQueued = NSMutableArray.new;
     
     self.tableView.emptyDataSetSource = self;
     self.tableView.emptyDataSetDelegate = self;
@@ -94,8 +96,6 @@
 
     [[MEGASdkManager sharedMEGASdk] removeMEGATransferDelegate:self];
     [[MEGASdkManager sharedMEGASdkFolder] removeMEGATransferDelegate:self];
-    
-    [self cleanTransfersList];
 }
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations {
@@ -173,13 +173,9 @@
 #pragma mark - Private
 
 - (void)reloadView {
-    [self cleanTransfersList];
-    
     if (self.areTransfersPaused) {
-        [self.tableView reloadData];
+        [self cleanTransfersList];
     } else {
-        self.transfers = [NSMutableArray new];
-        
         switch (self.transfersSelected) {
             case AllTransfersSelected:
                 [self getAllTransfers];
@@ -195,91 +191,83 @@
         }
         
         [self sortTransfers];
-        [self.tableView reloadData];
     }
+    [self.tableView reloadData];
 }
 
 - (void)getAllTransfers {
+    NSMutableArray *transfers = NSMutableArray.new;
+    
     MEGATransferList *transferList = [[MEGASdkManager sharedMEGASdk] transfers];
     if (transferList.size.integerValue) {
-        [self.transfers addObjectsFromArray:transferList.mnz_transfersArrayFromTranferList];
+        [transfers addObjectsFromArray:transferList.mnz_transfersArrayFromTranferList];
     }
     
     transferList = [[MEGASdkManager sharedMEGASdkFolder] transfers];
     if (transferList.size.integerValue) {
-        [self.transfers addObjectsFromArray:transferList.mnz_transfersArrayFromTranferList];
+        [transfers addObjectsFromArray:transferList.mnz_transfersArrayFromTranferList];
     }
+    
+    self.transfers = transfers;
     
     [self getQueuedUploadTransfers];
 }
 
 - (void)getDownloadTransfers {
+    NSMutableArray *transfers = NSMutableArray.new;
+    
     MEGATransferList *downloadTransferList = [[MEGASdkManager sharedMEGASdk] downloadTransfers];
     if (downloadTransferList.size.integerValue) {
-        [self.transfers addObjectsFromArray:downloadTransferList.mnz_transfersArrayFromTranferList];
+        [transfers addObjectsFromArray:downloadTransferList.mnz_transfersArrayFromTranferList];
     }
     
     downloadTransferList = [[MEGASdkManager sharedMEGASdkFolder] downloadTransfers];
     if (downloadTransferList.size.integerValue) {
-        [self.transfers addObjectsFromArray:downloadTransferList.mnz_transfersArrayFromTranferList];
+        [transfers addObjectsFromArray:downloadTransferList.mnz_transfersArrayFromTranferList];
     }
+    
+    self.transfers = transfers;
 }
 
 - (void)getUploadTransfers {
+    NSMutableArray *transfers = NSMutableArray.new;
+    
     MEGATransferList *uploadTransferList = [[MEGASdkManager sharedMEGASdk] uploadTransfers];
     if (uploadTransferList.size.integerValue) {
-        [self.transfers addObjectsFromArray:uploadTransferList.mnz_transfersArrayFromTranferList];
+        [transfers addObjectsFromArray:uploadTransferList.mnz_transfersArrayFromTranferList];
     }
     
     uploadTransferList = [[MEGASdkManager sharedMEGASdkFolder] uploadTransfers];
     if (uploadTransferList.size.integerValue) {
-        [self.transfers addObjectsFromArray:uploadTransferList.mnz_transfersArrayFromTranferList];
+        [transfers addObjectsFromArray:uploadTransferList.mnz_transfersArrayFromTranferList];
     }
+    
+    self.transfers = transfers;
     
     [self getQueuedUploadTransfers];
 }
 
 - (void)sortTransfers {
-    NSMutableArray *completingTransfers = [NSMutableArray new];
-    NSMutableArray *activeTransfers = [NSMutableArray new];
-    NSMutableArray *queuedTransfers = [NSMutableArray new];
-    NSMutableArray *inactiveTransfers = [NSMutableArray new];
-    
-    NSArray *tempTransfersArray = [NSArray arrayWithArray:self.transfers.copy];
-    for (MEGATransfer *transfer in tempTransfersArray) {
-        switch (transfer.state) {
-            case MEGATransferStateQueued:
-                [queuedTransfers addObject:transfer];
-                break;
-                
-            case MEGATransferStateActive:
-                [activeTransfers addObject:transfer];
-                break;
-                
-            case MEGATransferStateCompleting:
-                [completingTransfers addObject:transfer];
-                break;
-                
-            default:
-                [inactiveTransfers addObject:transfer];
-                break;
+    [self.transfers sortUsingComparator:^NSComparisonResult(MEGATransfer *transfer1, MEGATransfer *transfer2) {
+        NSNumber *state1 = @([transfer1 mnz_orderByState]);
+        NSNumber *state2 = @([transfer2 mnz_orderByState]);
+        if ([state1 compare:state2] == NSOrderedSame) {
+            return [@(transfer1.tag) compare:@(transfer2.tag)];
+        } else {
+            return [state1 compare:state2];
         }
-    }
-    
-    [self.transfers removeAllObjects];
-    [self.transfers addObjectsFromArray:completingTransfers];
-    [self.transfers addObjectsFromArray:activeTransfers];
-    [self.transfers addObjectsFromArray:queuedTransfers];
-    [self.transfers addObjectsFromArray:inactiveTransfers];
+    }];
 }
 
 - (void)getQueuedUploadTransfers {
     NSArray *tempUploadTransfersQueued = [[MEGAStore shareInstance] fetchUploadTransfers];
     
-    self.uploadTransfersQueued = [[NSMutableArray alloc] init];
+    NSMutableArray *uploadTransfersQueued = NSMutableArray.new;
     for (MOUploadTransfer *uploadQueuedTransfer in tempUploadTransfersQueued) {
-        [self.uploadTransfersQueued addObject:uploadQueuedTransfer.localIdentifier];
+        [uploadTransfersQueued addObject:uploadQueuedTransfer.localIdentifier];
     }
+    
+    self.uploadTransfersQueued = uploadTransfersQueued;
 }
 
 - (void)cleanTransfersList {
@@ -374,29 +362,27 @@
     if (ignoreCoreDataNotification) {
         [[Helper uploadingNodes] removeObject:localIdentifier];
     } else {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self deleteUploadQueuedTransferWithLocalIdentifier:localIdentifier];
-        });
+        [self deleteUploadQueuedTransferWithLocalIdentifier:localIdentifier];
     }
 }
 
 - (void)deleteUploadQueuedTransferWithLocalIdentifier:(NSString *)localIdentifier {
     NSIndexPath *indexPath = [self indexPathForUploadTransferQueuedWithLocalIdentifier:localIdentifier];
     if (indexPath) {
-        [self.tableView beginUpdates];
-        [self.uploadTransfersQueued removeObjectAtIndex:indexPath.row];
-        [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-        [self.tableView endUpdates];
+        [self.tableView mnz_performBatchUpdates:^{
+            [self.uploadTransfersQueued removeObjectAtIndex:indexPath.row];
+            [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+        } completion:nil];
     }
 }
 
 - (void)deleteUploadingTransfer:(MEGATransfer *)transfer {
     NSIndexPath *indexPath = [self indexPathForTransfer:transfer];
     if (indexPath) {
-        [self.tableView beginUpdates];
-        [self.transfers removeObjectAtIndex:indexPath.row];
-        [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-        [self.tableView endUpdates];
+        [self.tableView mnz_performBatchUpdates:^{
+            [self.transfers removeObjectAtIndex:indexPath.row];
+            [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+        } completion:nil];
     }
 }
 
@@ -639,26 +625,25 @@
             NSString *localIdentifier = [transfer.appData mnz_stringBetweenString:@">localIdentifier=" andString:@""];
             NSIndexPath *oldIndexPath = [self indexPathForUploadTransferQueuedWithLocalIdentifier:localIdentifier];
             if (oldIndexPath) {
-                [self.tableView beginUpdates];
-                
-                NSInteger newTransferIndex = [self numberOfActiveTransfers];
-                [self.transfers insertObject:transfer atIndex:newTransferIndex];
-                
-                TransferTableViewCell *cell = (TransferTableViewCell *)[self.tableView cellForRowAtIndexPath:oldIndexPath];
-                [cell reconfigureCellWithTransfer:transfer];
-                
-                NSIndexPath *newIndexPath = [NSIndexPath indexPathForRow:newTransferIndex inSection:0];
-                [self.uploadTransfersQueued removeObjectAtIndex:oldIndexPath.row];
-                [self.tableView moveRowAtIndexPath:oldIndexPath toIndexPath:newIndexPath];
-                [self.tableView endUpdates];
+                [self.tableView mnz_performBatchUpdates:^{
+                    NSInteger newTransferIndex = [self numberOfActiveTransfers];
+                    [self.transfers insertObject:transfer atIndex:newTransferIndex];
+                    
+                    TransferTableViewCell *cell = (TransferTableViewCell *)[self.tableView cellForRowAtIndexPath:oldIndexPath];
+                    [cell reconfigureCellWithTransfer:transfer];
+                                        
+                    NSIndexPath *newIndexPath = [NSIndexPath indexPathForRow:newTransferIndex inSection:0];
+                    [self.uploadTransfersQueued removeObjectAtIndex:oldIndexPath.row];
+                    [self.tableView moveRowAtIndexPath:oldIndexPath toIndexPath:newIndexPath];
+                } completion:nil];
             }
         } else {
-            [self.tableView beginUpdates];
-            NSInteger newTransferIndex = [self numberOfActiveTransfers];
-            [self.transfers insertObject:transfer atIndex:newTransferIndex];
-            NSIndexPath *newIndexPath = [NSIndexPath indexPathForRow:newTransferIndex inSection:0];
-            [self.tableView insertRowsAtIndexPaths:@[newIndexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-            [self.tableView endUpdates];
+            [self.tableView mnz_performBatchUpdates:^{
+                NSInteger newTransferIndex = [self numberOfActiveTransfers];
+                [self.transfers insertObject:transfer atIndex:newTransferIndex];
+                NSIndexPath *newIndexPath = [NSIndexPath indexPathForRow:newTransferIndex inSection:0];
+                [self.tableView insertRowsAtIndexPaths:@[newIndexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+            } completion:nil];
         }
     } else if (transfer.type == MEGATransferTypeDownload) {
         NSIndexPath *indexPath = [self indexPathForTransfer:transfer];
@@ -671,12 +656,15 @@
 - (void)onTransferUpdate:(MEGASdk *)api transfer:(MEGATransfer *)transfer {
     NSIndexPath *indexPath = [self indexPathForTransfer:transfer];
     if (indexPath) {
-        TransferTableViewCell *cell = (TransferTableViewCell *)[self.tableView cellForRowAtIndexPath:indexPath];
-        if (transfer.state == MEGATransferStateActive) {
-            [cell reloadThumbnailImage];
-            [cell updatePercentAndSpeedLabelsForTransfer:transfer];
+        if ([[self.tableView indexPathsForVisibleRows] containsObject:indexPath]) {
+            TransferTableViewCell *cell = (TransferTableViewCell *)[self.tableView cellForRowAtIndexPath:indexPath];
+            if (transfer.state == MEGATransferStateActive) {
+                [cell reloadThumbnailImage];
+                [cell updatePercentAndSpeedLabelsForTransfer:transfer];
+            }
+            [cell updateTransferIfNewState:transfer];
         }
-        [cell updateTransferIfNewState:transfer];
+        [self.transfers replaceObjectAtIndex:indexPath.row withObject:transfer];
     }
 }
 
@@ -685,10 +673,8 @@
         return;
     }
     
-    if (error.type) {
-        if (error.type == MEGAErrorTypeApiEIncomplete) {
-            [SVProgressHUD showImage:[UIImage imageNamed:@"hudMinus"] status:AMLocalizedString(@"transferCancelled", nil)];
-        }
+    if (error.type == MEGAErrorTypeApiEIncomplete) {
+        [SVProgressHUD showImage:[UIImage imageNamed:@"hudMinus"] status:AMLocalizedString(@"transferCancelled", nil)];
     }
     
     [self deleteUploadingTransfer:transfer];
@@ -708,12 +694,12 @@
     NSIndexPath *indexPath = [self indexPathForUploadTransferQueuedWithLocalIdentifier:localIdentifier];
     if (localIdentifier && indexPath) {
         [SVProgressHUD showImage:[UIImage imageNamed:@"hudMinus"] status:AMLocalizedString(@"transferCancelled", nil)];
-
-        [self.tableView beginUpdates];
-        [self.uploadTransfersQueued removeObjectAtIndex:indexPath.row];
-        [[MEGAStore shareInstance] deleteUploadTransferWithLocalIdentifier:localIdentifier];
-        [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-        [self.tableView endUpdates];
+        
+        [self.tableView mnz_performBatchUpdates:^{
+            [self.uploadTransfersQueued removeObjectAtIndex:indexPath.row];
+            [[MEGAStore shareInstance] deleteUploadTransferWithLocalIdentifier:localIdentifier];
+            [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+        } completion:nil];
     }
 }
 
