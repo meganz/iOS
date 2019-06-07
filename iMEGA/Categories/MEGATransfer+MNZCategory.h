@@ -18,4 +18,6 @@
 - (void)mnz_attachtToChatID:(NSString *)attachToChatID;
 - (void)mnz_setNodeCoordinates;
 
+- (NSUInteger)mnz_orderByState;
+
 @end
