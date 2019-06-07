@@ -134,6 +134,14 @@ static const NSUInteger MaximumUploadRetryPerLoginCount = 800;
     return records;
 }
 
+#if DEBUG
+
+- (NSArray<MOAssetUploadRecord *> *)fetchAllUploadRecords:(NSError * _Nullable __autoreleasing * _Nullable)error {
+    return [self fetchUploadRecordsByFetchRequest:MOAssetUploadRecord.fetchRequest error:error];
+}
+
+#endif
+
 - (NSArray<MOAssetUploadRecord *> *)fetchUploadRecordsByStatuses:(NSArray<NSNumber *> *)statuses error:(NSError * _Nullable __autoreleasing *)error {
     NSFetchRequest *request = MOAssetUploadRecord.fetchRequest;
     request.returnsObjectsAsFaults = NO;
@@ -182,6 +190,26 @@ static const NSUInteger MaximumUploadRetryPerLoginCount = 800;
     
     return [self fetchUploadRecordsByFetchRequest:request error:error];
 }
+
+#if DEBUG
+
+- (NSArray<MOAssetUploadRecord *> *)fetchUploadRecordsByMediaTypes:(NSArray<NSNumber *> *)mediaTypes mediaSubtypes:(PHAssetMediaSubtype)subtypes includeAdditionalMediaSubtypes:(BOOL)includeAdditionalMediaSubtypes error:(NSError * _Nullable __autoreleasing *)error {
+    NSFetchRequest *request = MOAssetUploadRecord.fetchRequest;
+    request.returnsObjectsAsFaults = NO;
+    NSPredicate *mediaTypePredicate = [NSPredicate predicateWithFormat:@"mediaType IN %@", mediaTypes];
+    NSPredicate *mediaSubtypesPredicate = [NSPredicate predicateWithFormat:@"(mediaSubtypes != %@) AND ((mediaSubtypes & %lu) == %lu)", NSNull.null, subtypes, subtypes];
+    
+    if (includeAdditionalMediaSubtypes) {
+        request.predicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[mediaTypePredicate, mediaSubtypesPredicate]];
+    } else {
+        NSPredicate *additionalSubtypePredicate = [NSPredicate predicateWithFormat:@"additionalMediaSubtypes == %@", NSNull.null];
+        request.predicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[mediaTypePredicate, mediaSubtypesPredicate, additionalSubtypePredicate]];
+    }
+    
+    return [self fetchUploadRecordsByFetchRequest:request error:error];
+}
+
+#endif
 
 - (NSArray<MOAssetUploadRecord *> *)fetchUploadRecordsByMediaTypes:(NSArray<NSNumber *> *)mediaTypes additionalMediaSubtypes:(PHAssetMediaSubtype)mediaSubtypes sortByIdentifier:(BOOL)sortByIdentifier error:(NSError *__autoreleasing  _Nullable *)error {
     NSFetchRequest *request = MOAssetUploadRecord.fetchRequest;
@@ -305,6 +333,25 @@ static const NSUInteger MaximumUploadRetryPerLoginCount = 800;
 }
 
 #pragma mark - delete records
+
+#if DEBUG
+
+- (BOOL)deleteAllUploadRecordsWithError:(NSError * _Nullable __autoreleasing * _Nullable)error {
+    __block NSError *coreDataError = nil;
+    [self.backgroundContext performBlockAndWait:^{
+        NSFetchRequest *request = MOAssetUploadRecord.fetchRequest;
+        NSBatchDeleteRequest *deleteRequest = [[NSBatchDeleteRequest alloc] initWithFetchRequest:request];
+        [self.backgroundContext executeRequest:deleteRequest error:&coreDataError];
+    }];
+    
+    if (error != NULL) {
+        *error = coreDataError;
+    }
+    
+    return coreDataError == nil;
+}
+
+#endif
 
 - (BOOL)deleteUploadRecord:(MOAssetUploadRecord *)record error:(NSError * _Nullable __autoreleasing * _Nullable)error {
     __block NSError *coreDataError = nil;

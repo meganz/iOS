@@ -80,6 +80,26 @@
 
 #pragma mark - search local file name records
 
+#if DEBUG
+
+- (NSArray<MOAssetUploadFileNameRecord *> *)fetchAllNameRecordsWithError:(NSError * _Nullable __autoreleasing * _Nullable)error {
+    __block NSArray<MOAssetUploadFileNameRecord *> *fileNameRecords = [NSArray array];
+    __block NSError *coreDataError = nil;
+    [self.backgroundContext performBlockAndWait:^{
+        NSFetchRequest *request = MOAssetUploadFileNameRecord.fetchRequest;
+        request.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"localUniqueFileName" ascending:NO]];
+        fileNameRecords = [self.backgroundContext executeFetchRequest:request error:&coreDataError];
+    }];
+    
+    if (error != NULL) {
+        *error = coreDataError;
+    }
+    
+    return fileNameRecords;
+}
+
+#endif
+
 - (NSArray<MOAssetUploadFileNameRecord *> *)searchSimilarNameRecordsByFileExtension:(NSString *)extension fileNamePrefix:(NSString *)prefix error:(NSError * _Nullable __autoreleasing * _Nullable)error {
     __block NSArray<MOAssetUploadFileNameRecord *> *fileNameRecords = [NSArray array];
     __block NSError *coreDataError = nil;
