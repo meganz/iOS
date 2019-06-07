@@ -352,6 +352,7 @@
 		8310488A21AECD860057400D /* DTConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 413199691BD7BD5D002CD6EA /* DTConstants.m */; };
 		8310488B21AECDBA0057400D /* DTConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 413199691BD7BD5D002CD6EA /* DTConstants.m */; };
 		83113495223900CB00647AB4 /* GradientView.m in Sources */ = {isa = PBXBuildFile; fileRef = 83113494223900CB00647AB4 /* GradientView.m */; };
+		8319C15E22A138D70048B8A3 /* UIView+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 8319C15D22A138D70048B8A3 /* UIView+MNZCategory.m */; };
 		831D61A5218738D20038F5B8 /* MOFolderLayout+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 831D61A3218738D20038F5B8 /* MOFolderLayout+CoreDataClass.m */; };
 		831D61A6218738D20038F5B8 /* MOFolderLayout+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 831D61A4218738D20038F5B8 /* MOFolderLayout+CoreDataProperties.m */; };
 		831D61A7218738EB0038F5B8 /* MOFolderLayout+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 831D61A3218738D20038F5B8 /* MOFolderLayout+CoreDataClass.m */; };
@@ -359,6 +360,8 @@
 		831D61A9218738F30038F5B8 /* MOFolderLayout+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 831D61A4218738D20038F5B8 /* MOFolderLayout+CoreDataProperties.m */; };
 		831D61AA218738F40038F5B8 /* MOFolderLayout+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 831D61A4218738D20038F5B8 /* MOFolderLayout+CoreDataProperties.m */; };
 		831FBEA220EF697200AC1B91 /* MEGAArchiveChatRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 831FBEA120EF697200AC1B91 /* MEGAArchiveChatRequestDelegate.m */; };
+		8326F383229FC032009BA19A /* MEGALoadingMessagesHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8326F381229FC032009BA19A /* MEGALoadingMessagesHeaderView.m */; };
+		8326F384229FC032009BA19A /* MEGALoadingMessagesHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8326F382229FC032009BA19A /* MEGALoadingMessagesHeaderView.xib */; };
 		832E1025202B09AE00BDD30F /* NodeActionCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 832E1023202B09AE00BDD30F /* NodeActionCollectionViewCell.m */; };
 		832E1026202B09AE00BDD30F /* NodeActionCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 832E1024202B09AE00BDD30F /* NodeActionCollectionViewCell.xib */; };
 		832E102A202B0A3900BDD30F /* NodeActionHeaderCollectionReusableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 832E1028202B0A3900BDD30F /* NodeActionHeaderCollectionReusableView.m */; };
@@ -1513,6 +1516,8 @@
 		830EF9A320062F3800FAA947 /* DevicePermissionsHelper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DevicePermissionsHelper.m; sourceTree = "<group>"; };
 		83113493223900CB00647AB4 /* GradientView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GradientView.h; sourceTree = "<group>"; };
 		83113494223900CB00647AB4 /* GradientView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GradientView.m; sourceTree = "<group>"; };
+		8319C15C22A138D70048B8A3 /* UIView+MNZCategory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIView+MNZCategory.h"; sourceTree = "<group>"; };
+		8319C15D22A138D70048B8A3 /* UIView+MNZCategory.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIView+MNZCategory.m"; sourceTree = "<group>"; };
 		831A4F08229C339200EBE256 /* TransfersSelected.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TransfersSelected.h; sourceTree = "<group>"; };
 		831D61A1218738D20038F5B8 /* MOFolderLayout+CoreDataProperties.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MOFolderLayout+CoreDataProperties.h"; sourceTree = "<group>"; };
 		831D61A2218738D20038F5B8 /* MOFolderLayout+CoreDataClass.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MOFolderLayout+CoreDataClass.h"; sourceTree = "<group>"; };
@@ -1520,6 +1525,9 @@
 		831D61A4218738D20038F5B8 /* MOFolderLayout+CoreDataProperties.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "MOFolderLayout+CoreDataProperties.m"; sourceTree = "<group>"; };
 		831FBEA020EF697200AC1B91 /* MEGAArchiveChatRequestDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MEGAArchiveChatRequestDelegate.h; sourceTree = "<group>"; };
 		831FBEA120EF697200AC1B91 /* MEGAArchiveChatRequestDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MEGAArchiveChatRequestDelegate.m; sourceTree = "<group>"; };
+		8326F380229FC032009BA19A /* MEGALoadingMessagesHeaderView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MEGALoadingMessagesHeaderView.h; sourceTree = "<group>"; };
+		8326F381229FC032009BA19A /* MEGALoadingMessagesHeaderView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MEGALoadingMessagesHeaderView.m; sourceTree = "<group>"; };
+		8326F382229FC032009BA19A /* MEGALoadingMessagesHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MEGALoadingMessagesHeaderView.xib; sourceTree = "<group>"; };
 		832E1022202B09AE00BDD30F /* NodeActionCollectionViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NodeActionCollectionViewCell.h; sourceTree = "<group>"; };
 		832E1023202B09AE00BDD30F /* NodeActionCollectionViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NodeActionCollectionViewCell.m; sourceTree = "<group>"; };
 		832E1024202B09AE00BDD30F /* NodeActionCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NodeActionCollectionViewCell.xib; sourceTree = "<group>"; };
@@ -2464,6 +2472,9 @@
 				77B32275209C6EC00037FA89 /* MEGAMessageRichPreviewView.h */,
 				77B32276209C6EC00037FA89 /* MEGAMessageRichPreviewView.m */,
 				77B32278209C6F060037FA89 /* MEGAMessageRichPreviewView.xib */,
+				8326F380229FC032009BA19A /* MEGALoadingMessagesHeaderView.h */,
+				8326F381229FC032009BA19A /* MEGALoadingMessagesHeaderView.m */,
+				8326F382229FC032009BA19A /* MEGALoadingMessagesHeaderView.xib */,
 			);
 			name = Views;
 			path = Chat/Views;
@@ -3102,6 +3113,8 @@
 				77597005219DD4D100B31671 /* MEGAUserAlertList+MNZCategory.m */,
 				5BC25723220080FB0098E781 /* NSDate+MNZCategory.h */,
 				5BC25724220080FC0098E781 /* NSDate+MNZCategory.m */,
+				8319C15C22A138D70048B8A3 /* UIView+MNZCategory.h */,
+				8319C15D22A138D70048B8A3 /* UIView+MNZCategory.m */,
 			);
 			path = Categories;
 			sourceTree = "<group>";
@@ -4843,6 +4856,7 @@
 				41D21E6D1D01AEC3002E6296 /* CTAssetsPickerController.bundle in Resources */,
 				A82E5BCA1F3465A3003C149C /* Spotlight_folder@2x.png in Resources */,
 				774FA65E2090BF9F0061DD85 /* MEGAMessageDialogView.xib in Resources */,
+				8326F384229FC032009BA19A /* MEGALoadingMessagesHeaderView.xib in Resources */,
 				5BD8F2BE2212F319003F2BDE /* Recents.storyboard in Resources */,
 				5B134B8F1F86260B000E367E /* HelpModalViewController.xib in Resources */,
 				E8C289F41BF5F8A200F7A034 /* SF-UI-Display-Light.otf in Resources */,
@@ -5158,6 +5172,7 @@
 				B6E6EF9422485A0300653311 /* CameraUploadNodeLoadOperation.m in Sources */,
 				A810CF2F20C157BC00A6C6C5 /* FLAnimatedImage.m in Sources */,
 				A824AE14228B1D6800EDF27E /* FLEXDefaultEditorViewController.m in Sources */,
+				8326F383229FC032009BA19A /* MEGALoadingMessagesHeaderView.m in Sources */,
 				B64F9A9C22389E6B000A4EA7 /* PHAssetResource+CameraUpload.m in Sources */,
 				417279581DB663FA001AC818 /* JSQMessagesLoadEarlierHeaderView.m in Sources */,
 				8394CFA3211AE24100A1634A /* GroupCallViewController.m in Sources */,
@@ -5357,6 +5372,7 @@
 				5BC25725220080FD0098E781 /* NSDate+MNZCategory.m in Sources */,
 				A824AE43228B1D6900EDF27E /* FLEXImagePreviewViewController.m in Sources */,
 				415226931A692ECC00EC7BB6 /* LoginViewController.m in Sources */,
+				8319C15E22A138D70048B8A3 /* UIView+MNZCategory.m in Sources */,
 				A824AE2C228B1D6800EDF27E /* FLEXFileBrowserTableViewController.m in Sources */,
 				419A02751DACE848000B9DC9 /* ChatRoomCell.m in Sources */,
 				5BF4B3B720AB081A00A6E6D7 /* TwoFactorAuthenticationViewController.m in Sources */,
