@@ -4,8 +4,6 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@class TransferSessionManager;
-
 @interface TransferSessionTaskDelegate : NSObject <NSURLSessionDelegate, NSURLSessionTaskDelegate, NSURLSessionDataDelegate>
 
 - (instancetype)initWithCompletionHandler:(UploadCompletionHandler)completion;

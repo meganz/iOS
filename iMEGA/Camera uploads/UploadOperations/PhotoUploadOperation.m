@@ -1,14 +1,6 @@
 
-#import <Foundation/Foundation.h>
 #import "PhotoUploadOperation.h"
-#import "MEGASdkManager.h"
 #import "NSFileManager+MNZCategory.h"
-#import "NSString+MNZCategory.h"
-#import "TransferSessionManager.h"
-#import "AssetUploadInfo.h"
-#import "CameraUploadRecordManager.h"
-#import "CameraUploadManager.h"
-#import "CameraUploadRequestDelegate.h"
 #import "CameraUploadManager+Settings.h"
 #import "PHAsset+CameraUpload.h"
 #import "MEGAConstants.h"
@@ -108,7 +100,7 @@ static NSString * const PhotoExportTempName = @"photoExportTemp";
         return;
     }
     
-    if (imageData.length * PhotoExportDiskSizeScalingFactor > NSFileManager.defaultManager.deviceFreeSize) {
+    if (imageData.length * PhotoExportDiskSizeScalingFactor > NSFileManager.defaultManager.mnz_fileSystemFreeSize) {
         [self finishUploadWithNoEnoughDiskSpace];
         return;
     }
@@ -153,7 +145,7 @@ static NSString * const PhotoExportTempName = @"photoExportTemp";
         }
         
         if (succeeded && [NSFileManager.defaultManager isReadableFileAtPath:weakSelf.uploadInfo.fileURL.path]) {
-            [NSFileManager.defaultManager removeItemIfExistsAtURL:URL];
+            [NSFileManager.defaultManager mnz_removeItemAtPath:URL.path];
             [weakSelf handleProcessedImageFile];
         } else {
             MEGALogError(@"[Camera Upload] %@ error when to export image to file %@", weakSelf, weakSelf.uploadInfo.fileName);

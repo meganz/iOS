@@ -3,7 +3,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface ImageExportor : NSObject
+@interface ImageExporter : NSObject
 
 /**
  Export the image to an URL and with the options to convert to another image type and strip off GPS info from image EXIF

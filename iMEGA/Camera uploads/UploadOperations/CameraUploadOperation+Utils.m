@@ -2,7 +2,6 @@
 #import "CameraUploadOperation+Utils.h"
 #import "CameraUploadRecordManager.h"
 #import "NSString+MNZCategory.h"
-#import "MEGASdkManager.h"
 #import "MEGAConstants.h"
 #import "MEGAReachabilityManager.h"
 #import "NSFileManager+MNZCategory.h"
@@ -91,7 +90,7 @@ static NSString * const CameraUploadBurstPhotoExtension = @"burst";
         [self finishUploadWithNoEnoughDiskSpace];
     } else if (!MEGAReachabilityManager.isReachable) {
         [self finishOperationWithStatus:CameraAssetUploadStatusNotReady shouldUploadNextAsset:YES];
-    } else if (NSFileManager.defaultManager.deviceFreeSize < MEGACameraUploadLowDiskStorageSizeInBytes) {
+    } else if (NSFileManager.defaultManager.mnz_fileSystemFreeSize < MEGACameraUploadLowDiskStorageSizeInBytes) {
         [self finishUploadWithNoEnoughDiskSpace];
     } else {
         [self finishOperationWithStatus:CameraAssetUploadStatusFailed shouldUploadNextAsset:YES];

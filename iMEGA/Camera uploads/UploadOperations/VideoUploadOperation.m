@@ -1,18 +1,10 @@
 
 #import "VideoUploadOperation.h"
-#import "MEGASdkManager.h"
 #import "NSFileManager+MNZCategory.h"
-#import "NSString+MNZCategory.h"
-#import "TransferSessionManager.h"
-#import "AssetUploadInfo.h"
-#import "CameraUploadRecordManager.h"
-#import "CameraUploadManager.h"
-#import "CameraUploadRequestDelegate.h"
 #import "CameraUploadManager+Settings.h"
 #import "AVAsset+CameraUpload.h"
 #import "AVURLAsset+CameraUpload.h"
 #import "MEGAConstants.h"
-#import "PHAsset+CameraUpload.h"
 #import "CameraUploadOperation+Utils.h"
 
 @interface VideoUploadOperation ()
@@ -231,7 +223,7 @@
     }
     
     unsigned long long videoSize = [NSFileManager.defaultManager attributesOfItemAtPath:URL.path error:nil].fileSize;
-    if (videoSize > NSFileManager.defaultManager.deviceFreeSize) {
+    if (videoSize > NSFileManager.defaultManager.mnz_fileSystemFreeSize) {
         [self finishUploadWithNoEnoughDiskSpace];
         return;
     }

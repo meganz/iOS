@@ -1,10 +1,10 @@
 
-#import "ImageExportor.h"
+#import "ImageExporter.h"
 #import "NSFileManager+MNZCategory.h"
 @import AVFoundation;
 @import CoreServices;
 
-@implementation ImageExportor
+@implementation ImageExporter
 
 - (BOOL)exportImageData:(NSData *)data toURL:(NSURL *)URL shouldStripGPSInfo:(BOOL)shouldStripGPSInfo {
     return [self exportImageData:data toURL:URL outputImageUTIType:nil shouldStripGPSInfo:shouldStripGPSInfo];
@@ -86,7 +86,7 @@
 
             if (!isExportedSuccessfully) {
                 MEGALogError(@"[Camera Upload] failed to copy image source %@ %@", sourceType, URL);
-                [NSFileManager.defaultManager removeItemIfExistsAtURL:URL];
+                [NSFileManager.defaultManager mnz_removeItemAtPath:URL.path];
                 isExportedSuccessfully = [self exportImageSource:source toURL:URL alwaysEncodeToImageUTIType:(__bridge NSString *)sourceType imageProperty:removeGPSDict];
             }
         }

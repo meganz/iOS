@@ -29,7 +29,7 @@
         return;
     }
     
-    if (resource.mnz_fileSize > NSFileManager.defaultManager.deviceFreeSize) {
+    if (resource.mnz_fileSize > NSFileManager.defaultManager.mnz_fileSystemFreeSize) {
         [self finishUploadWithNoEnoughDiskSpace];
         return;
     }
@@ -73,7 +73,7 @@
 #pragma mark - export iCloud asset resource fall back
 
 - (void)exportCloudAssetResource:(PHAssetResource *)resource toURL:(NSURL *)URL {
-    [NSFileManager.defaultManager removeItemIfExistsAtURL:URL];
+    [NSFileManager.defaultManager mnz_removeItemAtPath:URL.path];
     
     __weak __typeof__(self) weakSelf = self;
     PHAssetResourceRequestOptions *options = [[PHAssetResourceRequestOptions alloc] init];

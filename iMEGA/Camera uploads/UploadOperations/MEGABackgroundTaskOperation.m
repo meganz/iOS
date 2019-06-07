@@ -25,6 +25,10 @@
         [self.expireDelegate backgroundTaskDidExpire];
         [self endBackgroundTaskIfNeeded];;
     }];
+    
+    if (self.backgroundTaskId == UIBackgroundTaskInvalid) {
+        MEGALogDebug(@"Running in the background is not possible for %@.", self);
+    }
 }
 
 - (void)finishOperation {

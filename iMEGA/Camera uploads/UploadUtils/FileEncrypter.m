@@ -1,6 +1,5 @@
 
 #import "FileEncrypter.h"
-#import "MEGASdkManager.h"
 #import "NSFileManager+MNZCategory.h"
 #import "NSError+CameraUpload.h"
 
@@ -50,7 +49,7 @@ static const NSUInteger EncryptionProposedChunkSizeWithoutTruncating = 1024 * 10
     }
     
     self.fileSize = attributeDict.fileSize;
-    unsigned long long deviceFreeSize = [NSFileManager.defaultManager deviceFreeSize];
+    unsigned long long deviceFreeSize = NSFileManager.defaultManager.mnz_fileSystemFreeSize;
     
     if (self.shouldTruncateFile) {
         if (deviceFreeSize < EncryptionMinimumChunkSize) {
@@ -136,7 +135,7 @@ static const NSUInteger EncryptionProposedChunkSizeWithoutTruncating = 1024 * 10
     }
     
     if (self.shouldTruncateFile) {
-        [NSFileManager.defaultManager removeItemIfExistsAtURL:fileURL];
+        [NSFileManager.defaultManager mnz_removeItemAtPath:fileURL.path];
     }
     
     return chunksDict;

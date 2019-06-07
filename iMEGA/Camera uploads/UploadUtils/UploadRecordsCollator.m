@@ -3,7 +3,6 @@
 #import "CameraUploadRecordManager.h"
 #import "NSURL+CameraUpload.h"
 #import "NSFileManager+MNZCategory.h"
-#import "TransferSessionManager.h"
 
 @implementation UploadRecordsCollator
 
@@ -78,7 +77,7 @@
     
     MEGALogDebug(@"[Camera Upload] revert record status %@ to not started for %@", [AssetUploadStatus stringForStatus:record.status.unsignedIntegerValue], record.localIdentifier);
     record.status = @(CameraAssetUploadStatusNotStarted);
-    [NSFileManager.defaultManager removeItemIfExistsAtURL:[NSURL mnz_assetURLForLocalIdentifier:record.localIdentifier]];
+    [NSFileManager.defaultManager mnz_removeItemAtPath:[NSURL mnz_assetURLForLocalIdentifier:record.localIdentifier].path];
 }
 
 @end

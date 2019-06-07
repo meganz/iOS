@@ -1,6 +1,5 @@
 
 #import "PreviewUploadOperation.h"
-#import "Helper.h"
 #import "CameraUploadRequestDelegate.h"
 #import "NSFileManager+MNZCategory.h"
 #import "MEGAError+MNZCategory.h"

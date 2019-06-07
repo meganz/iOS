@@ -1,9 +1,11 @@
 
 #import "CameraUploadManager+Settings.h"
-#import "CameraUploadManager.h"
+
+#import <Photos/PhotosTypes.h>
+#import <CoreLocation/CoreLocation.h>
+
 #import "MEGAConstants.h"
 #import "NSFileManager+MNZCategory.h"
-@import CoreLocation;
 
 static NSString * const HasMigratedToCameraUploadsV2Key = @"HasMigratedToCameraUploadsV2";
 static NSString * const BoardingScreenLastShowedDateKey = @"CameraUploadBoardingScreenLastShowedDate";

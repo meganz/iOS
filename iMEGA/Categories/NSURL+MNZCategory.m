@@ -190,7 +190,7 @@
     NSError *fileError;
     if ([NSFileManager.defaultManager createDirectoryAtURL:directoryURL withIntermediateDirectories:YES attributes:nil error:&fileError]) {
         NSURL *newFileURL = [directoryURL URLByAppendingPathComponent:fileName isDirectory:NO];
-        [NSFileManager.defaultManager removeItemIfExistsAtURL:newFileURL];
+        [NSFileManager.defaultManager mnz_removeItemAtPath:newFileURL.path];
         if ([NSFileManager.defaultManager moveItemAtURL:self toURL:newFileURL error:&fileError]) {
             return YES;
         } else {

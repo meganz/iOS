@@ -8,7 +8,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface NSURL (CameraUpload)
 
 /**
- A pre-defined URL for camera upload. We use NSApplicationSupportDirectory + bundleId as the working directory path as recommended by Apple. Then we create "CameraUploads" folder under the working directory. Since the camera upload directory is used for data caching and processing, we will exclude the folder from iCould backup.
+ A pre-defined URL for camera upload. We use NSApplicationSupportDirectory + bundleId as the working directory path as recommended by Apple. Then we create "CameraUploads" folder under the working directory. Since the camera upload directory is used for data caching and processing, we will exclude the folder from iCloud backup.
  
  @return The URL for camera upload directory
  */
