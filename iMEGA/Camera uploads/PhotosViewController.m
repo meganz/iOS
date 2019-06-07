@@ -22,6 +22,7 @@
 #import "CustomModalAlertViewController.h"
 #import "UploadStats.h"
 @import StoreKit;
+@import Photos;
 
 static const NSTimeInterval PhotosViewReloadTimeDelay = .35;
 static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;

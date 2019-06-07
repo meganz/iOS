@@ -99,22 +99,19 @@
     }
 }
 
-#pragma mark - URL based file management
-
-- (void)removeItemIfExistsAtURL:(NSURL *)URL {
-    if ([self fileExistsAtPath:URL.path]) {
-        NSError *removeFileError;
-        [self removeItemAtURL:URL error:&removeFileError];
-        if (removeFileError) {
-            MEGALogDebug(@"Error when to remove existing file %@, error: %@", URL, removeFileError);
-        }
-    }
-}
-
 #pragma mark - properties
 
-- (unsigned long long)deviceFreeSize {
-    return [[self attributesOfFileSystemForPath:NSHomeDirectory() error:nil][NSFileSystemFreeSize] unsignedLongLongValue];
+- (unsigned long long)mnz_fileSystemFreeSize {
+    NSError *error;
+    NSDictionary *attributesOfHomeDirectoryDictionary = [self attributesOfFileSystemForPath:NSHomeDirectory() error:&error];
+    if (attributesOfHomeDirectoryDictionary) {
+        NSNumber *fileSystemFreeSizeInBytes = [attributesOfHomeDirectoryDictionary objectForKey:NSFileSystemFreeSize];
+        return fileSystemFreeSizeInBytes.unsignedLongLongValue;
+    } else {
+        MEGALogError(@"Obtaining attributes of home directory failed with error: %@", error);
+    }
+    
+    return 0;
 }
 
 @end

@@ -75,14 +75,14 @@ static const NSTimeInterval RetryTimerTolerance = 6;
 - (void)didReceivePhotoUploadDiskFullNotification:(NSNotification *)notification {
     MEGALogDebug(@"[Camera Upload] did receive photo upload disk full notification %@", notification);
     self.diskIsFullForPhotos = YES;
-    self.photoRetryDiskFreeSpace = NSFileManager.defaultManager.deviceFreeSize + PhotoRetryExtraDiskSpaceInBytes;
+    self.photoRetryDiskFreeSpace = NSFileManager.defaultManager.mnz_fileSystemFreeSize + PhotoRetryExtraDiskSpaceInBytes;
     [self setupPhotoUploadRetryTimer];
 }
 
 - (void)didReceiveVideoUploadDiskFullNotification:(NSNotification *)notification {
     MEGALogDebug(@"[Camera Upload] did receive video upload disk full notification %@", notification);
     self.diskIsFullForVideos = YES;
-    self.videoRetryDiskFreeSpace = NSFileManager.defaultManager.deviceFreeSize + VideoRetryExtraDiskSpaceInBytes;
+    self.videoRetryDiskFreeSpace = NSFileManager.defaultManager.mnz_fileSystemFreeSize + VideoRetryExtraDiskSpaceInBytes;
     [self setupVideoUploadRetryTimer];
 }
 
@@ -101,7 +101,7 @@ static const NSTimeInterval RetryTimerTolerance = 6;
 }
 
 - (void)photoRetryTimerFired {
-    if (NSFileManager.defaultManager.deviceFreeSize > self.photoRetryDiskFreeSpace) {
+    if (NSFileManager.defaultManager.mnz_fileSystemFreeSize > self.photoRetryDiskFreeSpace) {
         if (self.photoRetryTimer) {
             dispatch_source_cancel(self.photoRetryTimer);
         }
@@ -123,7 +123,7 @@ static const NSTimeInterval RetryTimerTolerance = 6;
 }
 
 - (void)videoRetryTimerFired {
-    if (NSFileManager.defaultManager.deviceFreeSize > self.videoRetryDiskFreeSpace) {
+    if (NSFileManager.defaultManager.mnz_fileSystemFreeSize > self.videoRetryDiskFreeSpace) {
         if (self.videoRetryTimer) {
             dispatch_source_cancel(self.videoRetryTimer);
         }

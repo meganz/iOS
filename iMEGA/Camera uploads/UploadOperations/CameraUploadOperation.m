@@ -6,7 +6,6 @@
 #import "TransferSessionManager.h"
 #import "AssetUploadInfo.h"
 #import "CameraUploadRecordManager.h"
-#import "CameraUploadManager.h"
 #import "CameraUploadRequestDelegate.h"
 #import "FileEncrypter.h"
 #import "NSURL+CameraUpload.h"
@@ -99,7 +98,7 @@ static NSString * const VideoAttributeImageName = @"AttributeImage";
 
 - (NSURL *)URLForAssetProcessing {
     NSURL *directoryURL = [NSURL mnz_assetURLForLocalIdentifier:self.uploadInfo.savedLocalIdentifier];
-    [NSFileManager.defaultManager removeItemIfExistsAtURL:directoryURL];
+    [NSFileManager.defaultManager mnz_removeItemAtPath:directoryURL.path];
     [[NSFileManager defaultManager] createDirectoryAtURL:directoryURL withIntermediateDirectories:YES attributes:nil error:nil];
     return directoryURL;
 }
@@ -291,7 +290,7 @@ static NSString * const VideoAttributeImageName = @"AttributeImage";
             if (self.uploadInfo.asset.mediaType == PHAssetMediaTypeVideo) {
                 uploadTask = [TransferSessionManager.shared videoUploadTaskWithURL:serverURL fromFile:chunkURL completion:nil];
             } else {
-                uploadTask = [[TransferSessionManager shared] photoUploadTaskWithURL:serverURL fromFile:chunkURL completion:nil];
+                uploadTask = [TransferSessionManager.shared photoUploadTaskWithURL:serverURL fromFile:chunkURL completion:nil];
             }
             uploadTask.taskDescription = self.uploadInfo.savedLocalIdentifier;
             [uploadTasks addObject:uploadTask];
@@ -339,7 +338,7 @@ static NSString * const VideoAttributeImageName = @"AttributeImage";
     }];
     
     if (status != CameraAssetUploadStatusUploading) {
-        [NSFileManager.defaultManager removeItemIfExistsAtURL:self.uploadInfo.directoryURL];
+        [NSFileManager.defaultManager mnz_removeItemAtPath:self.uploadInfo.directoryURL.path];
     }
     
     if (status == CameraAssetUploadStatusDone) {

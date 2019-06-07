@@ -7,7 +7,6 @@
 #import "DevicePermissionsHelper.h"
 #import "InitialLaunchViewController.h"
 #import "Helper.h"
-#import "MEGAStore.h"
 #import "NSString+MNZCategory.h"
 #import "UIApplication+MNZCategory.h"
 

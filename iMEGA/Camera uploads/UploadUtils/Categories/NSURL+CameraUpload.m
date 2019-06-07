@@ -19,7 +19,7 @@ static NSString * const AssetsDirectoryName = @"Assets";
         NSString *bundleId = [[NSBundle mainBundle] bundleIdentifier];
         uploadURL = [[supportURL URLByAppendingPathComponent:bundleId isDirectory:YES] URLByAppendingPathComponent:CameraUploadsDirectoryName isDirectory:YES];
         
-        BOOL isDirectory = false;
+        BOOL isDirectory = NO;
         if(!([NSFileManager.defaultManager fileExistsAtPath:uploadURL.path isDirectory:&isDirectory] && isDirectory)) {
             NSError *error = nil;
             if (![NSFileManager.defaultManager createDirectoryAtURL:uploadURL withIntermediateDirectories:YES attributes:nil error:&error]) {

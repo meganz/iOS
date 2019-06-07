@@ -2,7 +2,6 @@
 #import "CameraUploadManager.h"
 #import "CameraUploadRecordManager.h"
 #import "CameraScanner.h"
-#import "Helper.h"
 #import "MEGASdkManager.h"
 #import "UploadOperationFactory.h"
 #import "AttributeUploadManager.h"
@@ -94,7 +93,7 @@ static const NSUInteger MaximumPhotoUploadBatchCountMultiplier = 2;
 
 #pragma mark - setup when app launches
 
-- (void)setupCameraUploadWhenApplicationLaunches:(UIApplication *)application {
+- (void)setupCameraUploadWhenApplicationLaunches {
     [AttributeUploadManager.shared collateLocalAttributes];
     
     if (CameraUploadManager.isCameraUploadEnabled) {
@@ -360,7 +359,7 @@ static const NSUInteger MaximumPhotoUploadBatchCountMultiplier = 2;
             if (loaded) {
                 [self loadCameraUploadNodeForUpload];
             } else {
-                MEGALogError(@"[Camera Upload] retry to start camera upload due to failed to load media into");
+                MEGALogError(@"[Camera Upload] retry to start camera upload due to failed to load media info");
                 dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(.7 * NSEC_PER_SEC)), dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0), ^{
                     [self startCameraUploadWithRequestingMediaInfo];
                 });
@@ -873,7 +872,7 @@ static const NSUInteger MaximumPhotoUploadBatchCountMultiplier = 2;
     if (error) {
         MEGALogError(@"[Camera Upload] error when to delete camera upload store after logout %@", error);
     }
-    [NSFileManager.defaultManager removeItemIfExistsAtURL:NSURL.mnz_cameraUploadURL];
+    [NSFileManager.defaultManager mnz_removeItemAtPath:NSURL.mnz_cameraUploadURL.path];
 }
 
 #pragma mark - photos access permission check

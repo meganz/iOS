@@ -1,11 +1,8 @@
 
 #import <Foundation/Foundation.h>
 #import "UploadStats.h"
-@import Photos;
 
 NS_ASSUME_NONNULL_BEGIN
-
-@class PHAsset, MEGANode;
 
 @interface CameraUploadManager : NSObject
 
@@ -21,7 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - setup camera upload
 
-- (void)setupCameraUploadWhenApplicationLaunches:(UIApplication *)application;
+- (void)setupCameraUploadWhenApplicationLaunches;
 
 #pragma mark - start upload
 

@@ -4,7 +4,6 @@
 #import "AttributeUploadManager.h"
 #import "MEGAConstants.h"
 #import "NSURL+CameraUpload.h"
-#import "CameraUploadManager.h"
 #import "NodesFetchListenerOperation.h"
 #import "CameraUploadManager+Settings.h"
 #import "NSFileManager+MNZCategory.h"
@@ -184,7 +183,7 @@
         
         [CameraUploadRecordManager.shared updateUploadRecord:record withStatus:status error:nil];
         
-        [NSFileManager.defaultManager removeItemIfExistsAtURL:[NSURL mnz_assetURLForLocalIdentifier:localIdentifier]];
+        [NSFileManager.defaultManager mnz_removeItemAtPath:[NSURL mnz_assetURLForLocalIdentifier:localIdentifier].path];
         
         [CameraUploadRecordManager.shared refaultObject:record];
         

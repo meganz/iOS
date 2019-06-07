@@ -1,7 +1,6 @@
 
 #import "UploadOperationFactory.h"
 #import "AssetUploadInfo.h"
-#import "MOAssetUploadRecord+CoreDataClass.h"
 #import "LivePhotoUploadOperation.h"
 #import "CameraUploadRecordManager.h"
 #import "SavedIdentifierParser.h"

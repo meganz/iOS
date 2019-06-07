@@ -83,7 +83,7 @@ typedef NS_ENUM(NSInteger, PreviewConcurrentUploadCount) {
 
 - (AssetLocalAttribute *)saveAttributesForUploadInfo:(AssetUploadInfo *)uploadInfo error:(NSError **)error {
     NSURL *attributeDirectoryURL = [self nodeAttributesDirectoryURLByLocalIdentifier:uploadInfo.savedLocalIdentifier];
-    [NSFileManager.defaultManager removeItemIfExistsAtURL:attributeDirectoryURL];
+    [NSFileManager.defaultManager mnz_removeItemAtPath:attributeDirectoryURL.path];
     [NSFileManager.defaultManager createDirectoryAtURL:attributeDirectoryURL withIntermediateDirectories:YES attributes:nil error:error];
     if (error != NULL && *error != nil) {
         return nil;
@@ -212,7 +212,7 @@ typedef NS_ENUM(NSInteger, PreviewConcurrentUploadCount) {
     for (NSURL *URL in attributeDirectoryURLs) {
         AssetLocalAttribute *localAttribute = [[AssetLocalAttribute alloc] initWithAttributeDirectoryURL:URL];
         if (!localAttribute.hasSavedAttributes) {
-            [NSFileManager.defaultManager removeItemIfExistsAtURL:URL];
+            [NSFileManager.defaultManager mnz_removeItemAtPath:URL.path];
         }
     }
 }

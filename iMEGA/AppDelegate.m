@@ -128,8 +128,8 @@
     UIDevice.currentDevice.batteryMonitoringEnabled = YES;
     
     self.indexSerialQueue = dispatch_queue_create("nz.mega.spotlight.nodesIndexing", DISPATCH_QUEUE_SERIAL);
-
-    [CameraUploadManager.shared setupCameraUploadWhenApplicationLaunches:application];
+    
+    [CameraUploadManager.shared setupCameraUploadWhenApplicationLaunches];
     
     return YES;
 }
