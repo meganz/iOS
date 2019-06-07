@@ -3,6 +3,7 @@
 #import "NSString+MNZCategory.h"
 #import "NSFileManager+MNZCategory.h"
 #import "Helper.h"
+#import "NSURL+MNZCategory.h"
 @import AVFoundation;
 @import CoreServices;
 
@@ -75,36 +76,13 @@ static NSString * const AssetsDirectoryName = @"Assets";
 
 #pragma mark - thumbnail and preview caching
 
-- (BOOL)mnz_moveToDirectory:(NSURL *)directoryURL renameTo:(NSString *)fileName {
-    if (![NSFileManager.defaultManager fileExistsAtPath:self.path]) {
-        return NO;
-    }
-
-    NSError *error;
-    if ([NSFileManager.defaultManager createDirectoryAtURL:directoryURL withIntermediateDirectories:YES attributes:nil error:&error]) {
-        NSURL *newFileURL = [directoryURL URLByAppendingPathComponent:fileName isDirectory:NO];
-        [NSFileManager.defaultManager mnz_removeItemAtPath:newFileURL.path];
-        if ([NSFileManager.defaultManager moveItemAtURL:self toURL:newFileURL error:&error]) {
-            return YES;
-        } else {
-            MEGALogError(@"%@ error %@ when to copy new file %@", self, error, newFileURL);
-            return NO;
-        }
-    } else {
-        MEGALogError(@"%@ error %@ when to create directory %@", self, error, directoryURL);
-        return NO;
-    }
-}
-
 - (BOOL)mnz_cacheThumbnailForNode:(MEGANode *)node {
-    return [self mnz_moveToDirectory:[Helper urlForSharedSandboxCacheDirectory:@"thumbnailsV3"] renameTo:node.base64Handle];
+    return [self mnz_moveToDirectory:[Helper urlForSharedSandboxCacheDirectory:@"thumbnailsV3"] renameTo:node.base64Handle error:nil];
 }
 
 - (BOOL)mnz_cachePreviewForNode:(MEGANode *)node {
     NSURL *cacheDirectory = [[NSFileManager.defaultManager URLsForDirectory:NSCachesDirectory inDomains:NSUserDomainMask] firstObject];
-    return [self mnz_moveToDirectory:[cacheDirectory URLByAppendingPathComponent:@"previewsV3"] renameTo:node.base64Handle];
+    return [self mnz_moveToDirectory:[cacheDirectory URLByAppendingPathComponent:@"previewsV3"] renameTo:node.base64Handle error:nil];
 }
-
-
 
 @end
