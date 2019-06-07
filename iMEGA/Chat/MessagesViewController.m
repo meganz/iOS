@@ -21,6 +21,7 @@
 #import "MEGANode+MNZCategory.h"
 #import "MEGANodeList+MNZCategory.h"
 #import "MEGALinkManager.h"
+#import "MEGALoadingMessagesHeaderView.h"
 #import "MEGAOpenMessageHeaderView.h"
 #import "MEGAProcessAsset.h"
 #import "MEGAReachabilityManager.h"
@@ -34,6 +35,7 @@
 #import "NSString+MNZCategory.h"
 #import "UIImage+MNZCategory.h"
 #import "UIApplication+MNZCategory.h"
+#import "UIView+MNZCategory.h"
 
 #import "BrowserViewController.h"
 #import "CallViewController.h"
@@ -62,6 +64,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
 @interface MessagesViewController () <MEGAPhotoBrowserDelegate, JSQMessagesViewAccessoryButtonDelegate, JSQMessagesComposerTextViewPasteDelegate, DZNEmptyDataSetSource, MEGAChatDelegate, MEGAChatRequestDelegate, MEGARequestDelegate, MEGAChatCallDelegate>
 
 @property (nonatomic, strong) MEGAOpenMessageHeaderView *openMessageHeaderView;
+@property (nonatomic, strong) MEGALoadingMessagesHeaderView *loadingMessagesHeaderView;
 
 @property (strong, nonatomic) NSMutableArray <MEGAChatMessage *> *messages;
 
@@ -105,7 +108,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
 
 @property (nonatomic) CGFloat lastBottomInset;
 @property (nonatomic) CGFloat lastVerticalOffset;
-@property (nonatomic) CGFloat initialToolbarHeight;
+@property (nonatomic, getter=isToolbarFrameLocked) BOOL toolbarFrameLocked;
 
 @property (nonatomic) NSMutableSet<MEGAChatMessage *> *observedDialogMessages;
 @property (nonatomic) NSMutableSet<MEGAChatMessage *> *observedNodeMessages;
@@ -154,7 +157,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    _messages = [[NSMutableArray alloc] init];
+    _messages = NSMutableArray.new;
     
     self.isFirstLoad = YES;
     
@@ -170,7 +173,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
 
     // Avatar images
     self.avatarImageFactory = [[JSQMessagesAvatarImageFactory alloc] initWithDiameter:kAvatarImageDiameter];
-    self.avatarImages = [[NSMutableDictionary alloc] init];
+    self.avatarImages = NSMutableDictionary.new;
     
     _lastChatRoomStateString = @"";
     _lastChatRoomStateColor = UIColor.whiteColor;
@@ -213,7 +216,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
     UITapGestureRecognizer *jumpButtonTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(jumpToBottomPressed:)];
     [self.jumpToBottomView addGestureRecognizer:jumpButtonTap];
     
-    _whoIsTypingTimersMutableDictionary = [[NSMutableDictionary alloc] init];
+    _whoIsTypingTimersMutableDictionary = NSMutableDictionary.new;
     
     // Voice clips tooltip:
     NSArray<NSString *> *tooltipTextArray = [AMLocalizedString(@"Tap and hold 🎙 to record, release to send", @"Tooltip shown when the user presses but does not hold the microphone icon to send a voice clip") componentsSeparatedByString:@"🎙"];
@@ -231,7 +234,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
     [self.inputToolbar.contentView.joinButton setTitle:AMLocalizedString(@"Join", @"Button text in public chat previews that allows the user to join the chat") forState:UIControlStateNormal];
     
     if (!MessagesViewController.tapForInfoSet) {
-        MessagesViewController.tapForInfoSet = [[NSMutableSet alloc] init];
+        MessagesViewController.tapForInfoSet = NSMutableSet.new;
     }
     if (![MessagesViewController.tapForInfoSet containsObject:[MEGASdk base64HandleForUserHandle:self.chatRoom.chatId]]) {
         self.tapForInfoTimer = [NSTimer scheduledTimerWithTimeInterval:5.0 target:self selector:@selector(hideTapForInfoLabel) userInfo:nil repeats:NO];
@@ -246,6 +249,8 @@ static NSMutableSet<NSString *> *tapForInfoSet;
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    
+    self.toolbarFrameLocked = NO;
     
     if (self.isMovingToParentViewController) {
         if ([[MEGASdkManager sharedMEGAChatSdk] openChatRoom:self.chatRoom.chatId delegate:self]) {
@@ -313,7 +318,6 @@ static NSMutableSet<NSString *> *tapForInfoSet;
     [super viewDidAppear:animated];
     
     [self showOrHideJumpToBottom];
-    self.initialToolbarHeight = self.inputToolbar.frame.size.height;
     
     if (self.presentingViewController && self.parentViewController) {
         UIBarButtonItem *chatBackBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:AMLocalizedString(@"close", nil) style:UIBarButtonItemStylePlain target:self action:@selector(dismissChatRoom)];
@@ -374,6 +378,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
         self.collectionView.contentOffset = offset;
     }
     self.unreadMessages = self.chatRoom.unreadCount;
+    [self scrollToFirstUnread];
 }
 
 - (void)didBecomeActive {
@@ -393,6 +398,8 @@ static NSMutableSet<NSString *> *tapForInfoSet;
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
+    
+    self.toolbarFrameLocked = YES;
     
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kReachabilityChangedNotification object:nil];
     
@@ -563,9 +570,6 @@ static NSMutableSet<NSString *> *tapForInfoSet;
             break;
             
         case 2:
-            if (!self.isFirstLoad) {
-                [SVProgressHUD show];
-            }
             MEGALogDebug(@"loadMessagesForChat: messages will be requested to the server");
             break;
             
@@ -906,7 +910,8 @@ static NSMutableSet<NSString *> *tapForInfoSet;
     
     [self customiseCollectionViewLayout];
     
-    [self.collectionView registerNib:[MEGAOpenMessageHeaderView nib] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:[MEGAOpenMessageHeaderView headerReuseIdentifier]];
+    [self.collectionView registerNib:MEGAOpenMessageHeaderView.nib forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:MEGAOpenMessageHeaderView.headerReuseIdentifier];
+    [self.collectionView registerNib:MEGALoadingMessagesHeaderView.nib forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:MEGALoadingMessagesHeaderView.headerReuseIdentifier];
     
     self.collectionView.accessoryDelegate = self;
     self.collectionView.backgroundColor = UIColor.whiteColor;
@@ -1428,6 +1433,22 @@ static NSMutableSet<NSString *> *tapForInfoSet;
 - (void)saveChatDraft {
     NSString *chatDraftText = self.editMessage ? @"" : self.inputToolbar.contentView.textView.text;
     [[MEGAStore shareInstance] insertOrUpdateChatDraftWithChatId:self.chatRoom.chatId text:chatDraftText];
+}
+
+- (void)scrollToFirstUnread {
+    NSInteger numberOfItemsInSection = [self.collectionView numberOfItemsInSection:0];
+    NSInteger item = numberOfItemsInSection - (self.unreadMessages + 1);
+    if (item < 0) {
+        item = 0;
+    }
+    NSIndexPath *lastUnreadIndexPath = [NSIndexPath indexPathForItem:item inSection:0];
+    if (numberOfItemsInSection) {
+        [self.collectionView scrollToItemAtIndexPath:lastUnreadIndexPath atScrollPosition:UICollectionViewScrollPositionTop animated:NO];
+    }
+    
+    if (self.unreadMessages) {
+        [self showOrHideJumpToBottom];
+    }
 }
 
 #pragma mark - IBActions
@@ -1980,7 +2001,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
 }
 
 - (void)jsq_setCollectionViewInsetsTopValue:(CGFloat)top bottomValue:(CGFloat)bottom {
-    if (self.inputToolbar.frame.size.height < self.initialToolbarHeight) {
+    if (self.isToolbarFrameLocked) {
         return;
     }
     
@@ -2210,19 +2231,30 @@ static NSMutableSet<NSString *> *tapForInfoSet;
     UICollectionReusableView *reusableview = nil;
     
     if (kind == UICollectionElementKindSectionHeader) {
-        [self setChatOpenMessageForIndexPath:indexPath];
-        return self.openMessageHeaderView;
+        if ([[MEGASdkManager sharedMEGAChatSdk] isFullHistoryLoadedForChat:self.chatRoom.chatId]) {
+            [self setChatOpenMessageForIndexPath:indexPath];
+            return self.openMessageHeaderView;
+        } else {
+            self.loadingMessagesHeaderView = [self.collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:MEGALoadingMessagesHeaderView.headerReuseIdentifier forIndexPath:indexPath];
+            [self.loadingMessagesHeaderView.loadingView mnz_startShimmering];
+            return self.loadingMessagesHeaderView;
+        }
     }
 
     return reusableview;
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section {
-    BOOL isiPhone4XOr5X = ([[UIDevice currentDevice] iPhone4X] || [[UIDevice currentDevice] iPhone5X]);
-    CGFloat height = (isiPhone4XOr5X ? 490.0f : 470.0f);
-    CGFloat minimumHeight = self.loadingState || self.isFirstLoad ? 0.0f : height;
     
-    return CGSizeMake(self.view.frame.size.width, minimumHeight);
+    CGFloat height = 0;
+    if ([[MEGASdkManager sharedMEGAChatSdk] isFullHistoryLoadedForChat:self.chatRoom.chatId]) {
+        BOOL isiPhone4XOr5X = (UIDevice.currentDevice.iPhone4X || UIDevice.currentDevice.iPhone5X);
+        height = self.loadingState || self.isFirstLoad ? 0.0f : (isiPhone4XOr5X ? 490.0f : 470.0f);
+    } else {
+        height = self.isFirstLoad ? 0.0f : 230.0f;
+    }
+    
+    return CGSizeMake(self.view.frame.size.width, height);
 }
 
 #pragma mark - UICollectionViewDelegate
@@ -2423,7 +2455,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
 }
 
 - (void)import:(id)sender message:(MEGAChatMessage *)message {
-    NSMutableArray *nodesArray = [[NSMutableArray alloc] init];
+    NSMutableArray *nodesArray = NSMutableArray.new;
     for (NSUInteger i = 0; i < message.nodeList.size.unsignedIntegerValue; i++) {
         MEGANode *node = [message.nodeList nodeAtIndex:i];
         if (self.chatRoom.isPreview) {
@@ -2658,7 +2690,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
                 }
                     
                 case MEGAChatMessageTypeContact: {
-                    NSMutableArray *users = [[NSMutableArray alloc] init];
+                    NSMutableArray *users = NSMutableArray.alloc.init;
                     for (NSUInteger i = 0; i < message.usersCount; i++) {
                         MEGAUser *user = [[MEGASdkManager sharedMEGASdk] contactForEmail:[message userEmailAtIndex:i]];
                         if (user) {
@@ -2686,8 +2718,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
         
         alertController.modalPresentationStyle = UIModalPresentationPopover;
         UIPopoverPresentationController *popoverPresentationController = alertController.popoverPresentationController;
-        CGRect deleteRect = [[view cellForItemAtIndexPath:path] bounds];
-        popoverPresentationController.sourceRect = deleteRect;
+        popoverPresentationController.sourceRect = [view cellForItemAtIndexPath:path].bounds;
         popoverPresentationController.sourceView = [view cellForItemAtIndexPath:path];
         popoverPresentationController.permittedArrowDirections = UIPopoverArrowDirectionAny;
         
@@ -2886,19 +2917,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
                     [self.collectionView reloadData];
                 });
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    NSInteger numberOfItemsInSection = [self.collectionView numberOfItemsInSection:0];
-                    NSInteger item = numberOfItemsInSection - (self.unreadMessages + 1);
-                    if (item < 0) {
-                        item = 0;
-                    }
-                    NSIndexPath *lastUnreadIndexPath = [NSIndexPath indexPathForItem:item inSection:0];
-                    if (numberOfItemsInSection) {
-                        [self.collectionView scrollToItemAtIndexPath:lastUnreadIndexPath atScrollPosition:UICollectionViewScrollPositionTop animated:NO];
-                    }
-                    
-                    if (self.unreadMessages) {
-                        [self showOrHideJumpToBottom];
-                    }
+                    [self scrollToFirstUnread];
                 });
             }
         } else {
@@ -2943,7 +2962,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
                     NSUInteger index = [self.messages indexOfObject:oldMessage];
                     [self.messages replaceObjectAtIndex:index withObject:message];
                     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:0];
-                    if ([[self.collectionView indexPathsForVisibleItems] containsObject:indexPath]) {
+                    if ([self.collectionView.indexPathsForVisibleItems containsObject:indexPath]) {
                         [self.collectionView reloadItemsAtIndexPaths:@[indexPath]];
                     }
                 } else {
