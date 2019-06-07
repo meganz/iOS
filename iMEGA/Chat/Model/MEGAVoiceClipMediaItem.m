@@ -21,6 +21,7 @@ NSNotificationName kVoiceClipsShouldPauseNotification = @"kVoiceClipsShouldPause
 @property (nonatomic) MEGAMessageVoiceClipView *cachedVoiceClipView;
 @property (nonatomic) AVPlayer *audioPlayer;
 @property (nonatomic, getter=isPlaying) BOOL playing;
+@property (nonatomic, getter=shouldStopMonitoring) BOOL stopMonitoring;
 
 @end
 
@@ -51,6 +52,10 @@ NSNotificationName kVoiceClipsShouldPauseNotification = @"kVoiceClipsShouldPause
 - (void)discardContentIfPossible {}
 
 - (void)endContentAccess {}
+
+- (void)dealloc {
+    [NSNotificationCenter.defaultCenter removeObserver:self name:UIDeviceProximityStateDidChangeNotification object:nil];
+}
 
 #pragma mark - Setters
 
@@ -114,6 +119,8 @@ NSNotificationName kVoiceClipsShouldPauseNotification = @"kVoiceClipsShouldPause
         [[MEGASdkManager sharedMEGASdk] startDownloadTopPriorityWithNode:node localPath:nodePath appData:nil delegate:delegate];
     }
     
+    [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(proximityChange:) name:UIDeviceProximityStateDidChangeNotification object:nil];
+    
     // Bubble:
     JSQMessagesBubbleImageFactory *bubbleFactory = [[JSQMessagesBubbleImageFactory alloc] initWithBubbleImage:[UIImage imageNamed:@"bubble_tailless"] capInsets:UIEdgeInsetsZero layoutDirection:[UIApplication sharedApplication].userInterfaceLayoutDirection];
     JSQMessagesMediaViewBubbleImageMasker *messageMediaViewBubleImageMasker = [[JSQMessagesMediaViewBubbleImageMasker alloc] initWithBubbleImageFactory:bubbleFactory];
@@ -176,11 +183,9 @@ NSNotificationName kVoiceClipsShouldPauseNotification = @"kVoiceClipsShouldPause
         [NSNotificationCenter.defaultCenter postNotificationName:kVoiceClipsShouldPauseNotification object:self];
         [self.audioPlayer play];
         [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(didPlayToEndTime:) name:AVPlayerItemDidPlayToEndTimeNotification object:nil];
-        [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(proximityChange:) name:UIDeviceProximityStateDidChangeNotification object:nil];
         [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(voiceClipWillPlayOrRecord:) name:kVoiceClipsShouldPauseNotification object:nil];
     } else {
         [NSNotificationCenter.defaultCenter removeObserver:self name:AVPlayerItemDidPlayToEndTimeNotification object:nil];
-        [NSNotificationCenter.defaultCenter removeObserver:self name:UIDeviceProximityStateDidChangeNotification object:nil];
         [NSNotificationCenter.defaultCenter removeObserver:self name:kVoiceClipsShouldPauseNotification object:nil];
         [self.audioPlayer pause];
     }
@@ -197,10 +202,15 @@ NSNotificationName kVoiceClipsShouldPauseNotification = @"kVoiceClipsShouldPause
     dispatch_async(dispatch_get_main_queue(), ^{
         if (self.isPlaying) {
             [self.cachedVoiceClipView.playPauseButton setImage:[UIImage imageNamed:@"pauseVoiceClip"] forState:UIControlStateNormal];
+            UIDevice.currentDevice.proximityMonitoringEnabled = YES;
         } else {
             [self.cachedVoiceClipView.playPauseButton setImage:[UIImage imageNamed:@"playVoiceClip"] forState:UIControlStateNormal];
+            if (!UIDevice.currentDevice.proximityState) {
+                UIDevice.currentDevice.proximityMonitoringEnabled = NO;
+            }
         }
-        UIDevice.currentDevice.proximityMonitoringEnabled = self.isPlaying;
+        
+        self.stopMonitoring = !self.isPlaying;
     });
 }
 
@@ -235,6 +245,11 @@ NSNotificationName kVoiceClipsShouldPauseNotification = @"kVoiceClipsShouldPause
 }
 
 - (void)proximityChange:(NSNotification*)aNotification {
+    if (!UIDevice.currentDevice.proximityState && self.shouldStopMonitoring) {
+        UIDevice.currentDevice.proximityMonitoringEnabled = NO;
+        return;
+    }
+    
     if (UIDevice.currentDevice.proximityState) {
         [AVAudioSession.sharedInstance overrideOutputAudioPort:AVAudioSessionPortOverrideNone error:nil];
     } else {
