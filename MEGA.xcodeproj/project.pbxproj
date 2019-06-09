@@ -285,6 +285,7 @@
 		7720C5D2206AB2EB00F995D1 /* SF-UI-Display-Semibold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5B6429DC2020A5E7000E0DCB /* SF-UI-Display-Semibold.otf */; };
 		7720C5D3206AB2EB00F995D1 /* SF-UI-Text-Semibold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5B6429DB2020A5E6000E0DCB /* SF-UI-Text-Semibold.otf */; };
 		77264F242147D60600DC6BCB /* MEGACopyRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B2E91911F1F98F4003C6920 /* MEGACopyRequestDelegate.m */; };
+		772BA5722243C7D100F062CB /* UITableView+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 772BA5712243C7D100F062CB /* UITableView+MNZCategory.m */; };
 		773DF39C20EF6902004C3418 /* MEGACopyRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B2E91911F1F98F4003C6920 /* MEGACopyRequestDelegate.m */; };
 		774089682164AAF000B93D3E /* CustomModalAlertViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A819B33E1EAFA7E2004592F9 /* CustomModalAlertViewController.m */; };
 		774089692164AB1300B93D3E /* CustomModalAlertViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A819B33E1EAFA7E2004592F9 /* CustomModalAlertViewController.m */; };
@@ -1435,6 +1436,8 @@
 		771A1B5F21C9227A00A8555D /* OnboardingType.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OnboardingType.h; sourceTree = "<group>"; };
 		7720C5B3206A931E00F995D1 /* MEGATransfer+MNZCategory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MEGATransfer+MNZCategory.h"; sourceTree = "<group>"; };
 		7720C5B4206A931E00F995D1 /* MEGATransfer+MNZCategory.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "MEGATransfer+MNZCategory.m"; sourceTree = "<group>"; };
+		772BA5702243C7D100F062CB /* UITableView+MNZCategory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UITableView+MNZCategory.h"; sourceTree = "<group>"; };
+		772BA5712243C7D100F062CB /* UITableView+MNZCategory.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UITableView+MNZCategory.m"; sourceTree = "<group>"; };
 		773DF39A20EE1470004C3418 /* SendMode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SendMode.h; sourceTree = "<group>"; };
 		773DF39B20EE14C1004C3418 /* ShareAttachmentType.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShareAttachmentType.h; sourceTree = "<group>"; };
 		7747B2D6208623660011814E /* Reachability.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
@@ -3113,6 +3116,8 @@
 				77597005219DD4D100B31671 /* MEGAUserAlertList+MNZCategory.m */,
 				5BC25723220080FB0098E781 /* NSDate+MNZCategory.h */,
 				5BC25724220080FC0098E781 /* NSDate+MNZCategory.m */,
+				772BA5702243C7D100F062CB /* UITableView+MNZCategory.h */,
+				772BA5712243C7D100F062CB /* UITableView+MNZCategory.m */,
 				8319C15C22A138D70048B8A3 /* UIView+MNZCategory.h */,
 				8319C15D22A138D70048B8A3 /* UIView+MNZCategory.m */,
 			);
@@ -5454,6 +5459,7 @@
 				77597006219DD4D100B31671 /* MEGAUserAlertList+MNZCategory.m in Sources */,
 				A824AE4D228B1D6900EDF27E /* FLEXObjcInternal.mm in Sources */,
 				83681578202AFBC000CA8EFC /* CustomActionViewController.m in Sources */,
+				772BA5722243C7D100F062CB /* UITableView+MNZCategory.m in Sources */,
 				4172794B1DB663FA001AC818 /* JSQMessagesBubbleImage.m in Sources */,
 				41CD14701DB150F600E545BC /* MessagesViewController.m in Sources */,
 				777615AF2175D87D00A7796D /* InputView.m in Sources */,
