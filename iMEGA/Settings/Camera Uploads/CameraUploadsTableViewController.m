@@ -216,7 +216,7 @@ static const CGFloat TableViewSectionHeaderFooterHiddenHeight = 0.1;
     CustomModalAlertViewController *customModalAlertVC = [[CustomModalAlertViewController alloc] init];
     customModalAlertVC.modalPresentationStyle = UIModalPresentationOverFullScreen;
     customModalAlertVC.image = [UIImage imageNamed:@"backgroundUploadLocation"];
-    customModalAlertVC.viewTitle = AMLocalizedString(@"locationBasedBackgroundUploadTitle", nil);
+    customModalAlertVC.viewTitle = AMLocalizedString(@"locationBasedUploadTitle", nil);
     NSString *actionTitle;
     NSString *detail;
     if (CLLocationManager.authorizationStatus == kCLAuthorizationStatusAuthorizedAlways || CLLocationManager.authorizationStatus == kCLAuthorizationStatusNotDetermined) {
