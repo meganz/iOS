@@ -755,6 +755,32 @@ static NSString* const B = @"[B]";
     }
     return lastSeenMessage;
 }
+    
++ (NSString *)mnz_convertCoordinatesLatitude:(float)latitude longitude:(float)longitude {        
+    NSInteger latSeconds = (NSInteger)(latitude * 3600);
+    NSInteger latDegrees = latSeconds / 3600;
+    latSeconds = ABS(latSeconds % 3600);
+    NSInteger latMinutes = latSeconds / 60;
+    latSeconds %= 60;
+    
+    NSInteger longSeconds = (NSInteger)(longitude * 3600);
+    NSInteger longDegrees = longSeconds / 3600;
+    longSeconds = ABS(longSeconds % 3600);
+    NSInteger longMinutes = longSeconds / 60;
+    longSeconds %= 60;
+    
+    NSString* result = [NSString stringWithFormat:@"%td°%td'%td\"%@ %td°%td'%td\"%@",
+                        ABS(latDegrees),
+                        latMinutes,
+                        latSeconds,
+                        latDegrees >= 0 ? @"N" : @"S",
+                        ABS(longDegrees),
+                        longMinutes,
+                        longSeconds,
+                        longDegrees >= 0 ? @"E" : @"W"];
+    
+    return result;
+}
 
 + (NSString *)mnz_addedByInRecentActionBucket:(MEGARecentActionBucket *)recentActionBucket nodesArray:(NSArray *)nodesArray {
     NSString *addebByString;
