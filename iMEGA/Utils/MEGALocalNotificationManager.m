@@ -37,8 +37,7 @@
         return;
     }
     if (self.message.status == MEGAChatMessageStatusNotSeen) {
-        if (self.message.type == MEGAChatMessageTypeNormal || self.message.type == MEGAChatMessageTypeContact || self.message.type == MEGAChatMessageTypeAttachment || self.message.type == MEGAChatMessageTypeVoiceClip) {
-            
+        if  (self.message.type == MEGAChatMessageTypeNormal || self.message.type == MEGAChatMessageTypeContact || self.message.type == MEGAChatMessageTypeAttachment || self.message.containsMeta.type == MEGAChatContainsMetaTypeGeolocation || self.message.type == MEGAChatMessageTypeVoiceClip) {
             if (self.message.deleted) {
                 [self removePendingAndDeliveredNotificationForMessage];
             } else {
@@ -127,6 +126,8 @@
                         durationString = @"00:00";
                     }
                     body = [NSString stringWithFormat:@"🎙 %@", durationString];
+                } else if (self.message.containsMeta.type == MEGAChatContainsMetaTypeGeolocation) {
+                    body = [NSString stringWithFormat:@"📍 %@", AMLocalizedString(@"Pinned Location", @"Text shown in location-type messages")];
                 } else {
                     body = self.message.content;
                 }
