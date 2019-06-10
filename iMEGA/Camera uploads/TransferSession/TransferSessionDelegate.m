@@ -52,7 +52,7 @@
 }
 
 - (void)URLSessionDidFinishEventsForBackgroundURLSession:(NSURLSession *)session {
-    MEGALogInfo(@"[Camera Upload] Session %@ %p did finish events for background URL Session", session.configuration.identifier, session);
+    MEGALogInfo(@"[Camera Upload] Session %@ did finish events for background URL Session", session.configuration.identifier);
     [self.manager finishEventsForBackgroundURLSession:session];
 }
 
