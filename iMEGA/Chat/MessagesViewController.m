@@ -219,9 +219,18 @@ static NSMutableSet<NSString *> *tapForInfoSet;
     _whoIsTypingTimersMutableDictionary = NSMutableDictionary.new;
     
     // Voice clips tooltip:
+    NSTextAttachment *voiceTipTextAttachment = [[NSTextAttachment alloc] init];
+    UIImage *voiceTipImage = [UIImage imageNamed:@"voiceTip"];
+    voiceTipTextAttachment.bounds = CGRectMake(0.0f, roundf(self.tooltipLabel.font.capHeight - voiceTipImage.size.height / 2) / 2, voiceTipImage.size.width / 2, voiceTipImage.size.height / 2);
+    voiceTipTextAttachment.image = voiceTipImage;
+    NSAttributedString *voiceTipAttributedString = [NSAttributedString attributedStringWithAttachment:voiceTipTextAttachment];
+    
     NSArray<NSString *> *tooltipTextArray = [AMLocalizedString(@"Tap and hold %@ to record, release to send", @"Tooltip shown when the user presses but does not hold the microphone icon to send a voice clip") componentsSeparatedByString:@"%@"];
-    self.tapAndHoldLabel.text = tooltipTextArray.firstObject;
-    self.releaseToSendLabel.text = tooltipTextArray.lastObject;
+    NSMutableAttributedString *tapAndHoldAttributedString = [[NSMutableAttributedString alloc] initWithString:tooltipTextArray.firstObject];
+    NSMutableAttributedString *releaseToSendAttributedString = [[NSMutableAttributedString alloc] initWithString:tooltipTextArray.lastObject];
+    [tapAndHoldAttributedString appendAttributedString:voiceTipAttributedString];
+    [tapAndHoldAttributedString appendAttributedString:releaseToSendAttributedString];
+    self.tooltipLabel.attributedText = tapAndHoldAttributedString;
     
     // Array of observed messages:
     self.observedDialogMessages = [[NSMutableSet<MEGAChatMessage *> alloc] init];
