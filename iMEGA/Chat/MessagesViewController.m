@@ -16,6 +16,7 @@
 #import "MEGAChatMessage+MNZCategory.h"
 #import "MEGACreateFolderRequestDelegate.h"
 #import "MEGACopyRequestDelegate.h"
+#import "MEGAGenericRequestDelegate.h"
 #import "MEGAGetAttrUserRequestDelegate.h"
 #import "MEGAInviteContactRequestDelegate.h"
 #import "MEGANode+MNZCategory.h"
@@ -51,6 +52,7 @@
 #import "MEGANavigationController.h"
 #import "OnboardingViewController.h"
 #import "SendToViewController.h"
+#import "ShareLocationViewController.h"
 
 const CGFloat kGroupChatCellLabelHeightBuffer = 12.0f;
 const CGFloat k1on1CellLabelHeightBuffer = 5.0f;
@@ -60,7 +62,7 @@ const NSUInteger kMaxMessagesToLoad = 256;
 
 static NSMutableSet<NSString *> *tapForInfoSet;
 
-@interface MessagesViewController () <MEGAPhotoBrowserDelegate, JSQMessagesViewAccessoryButtonDelegate, JSQMessagesComposerTextViewPasteDelegate, DZNEmptyDataSetSource, MEGAChatDelegate, MEGAChatRequestDelegate, MEGARequestDelegate, MEGAChatCallDelegate>
+@interface MessagesViewController () <MEGAPhotoBrowserDelegate, JSQMessagesViewAccessoryButtonDelegate, JSQMessagesComposerTextViewPasteDelegate, DZNEmptyDataSetSource, ShareLocationViewControllerDelegate, MEGAChatDelegate, MEGAChatRequestDelegate, MEGARequestDelegate, MEGAChatCallDelegate>
 
 @property (nonatomic, strong) MEGAOpenMessageHeaderView *openMessageHeaderView;
 @property (nonatomic, strong) MEGALoadingMessagesHeaderView *loadingMessagesHeaderView;
@@ -291,7 +293,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
     if (!self.isMovingToParentViewController) {
         [self customNavigationBarLabel];
     }
-    
+
     if (!self.activeCallButton) {
         [self createJoinActiveCallButton];
         [self.view addSubview:self.activeCallButton];
@@ -1902,6 +1904,38 @@ static NSMutableSet<NSString *> *tapForInfoSet;
             [sendContactAlertAction setValue:UIColor.mnz_black333333 forKey:@"titleTextColor"];
             [selectOptionAlertController addAction:sendContactAlertAction];
             
+            UIAlertAction *sendLocationAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"location", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+                MEGAGenericRequestDelegate *isGeolocationEnabledDelegate = [[MEGAGenericRequestDelegate alloc] initWithCompletion:^(MEGARequest *request, MEGAError *error) {
+                    if (error.type) {
+                        UIAlertController *sendLocationAlert = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"Send Location", @"Alert title shown when the user opens a shared Geolocation for the first time from any client, we will show a confirmation dialog warning the user that he is now leaving the E2EE paradigm") message:AMLocalizedString(@"This location will be opened using a third party maps provider outside the end-to-end encrypted MEGA platform.", @"Message shown when the user opens a shared Geolocation for the first time from any client, we will show a confirmation dialog warning the user that he is now leaving the E2EE paradigm") preferredStyle:UIAlertControllerStyleAlert];
+                        [sendLocationAlert addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"") style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+                            self.inputToolbar.hidden = self.chatRoom.ownPrivilege <= MEGAChatRoomPrivilegeRo;
+                        }]];
+                        [sendLocationAlert addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"continue", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                            MEGAGenericRequestDelegate *enableGeolocationDelegate = [[MEGAGenericRequestDelegate alloc] initWithCompletion:^(MEGARequest *request, MEGAError *error) {
+                                if (error.type) {
+                                    UIAlertController *enableGeolocationAlert = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"error", @"") message:[NSString stringWithFormat:@"Enable geolocation failed. Error: %@", error.name] preferredStyle:UIAlertControllerStyleAlert];
+                                    [enableGeolocationAlert addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                                        self.inputToolbar.hidden = self.chatRoom.ownPrivilege <= MEGAChatRoomPrivilegeRo;
+                                    }]];
+                                    [self presentViewController:enableGeolocationAlert animated:YES completion:nil];
+                                } else {
+                                    [self presentShareLocationViewControllerForEditing:NO];
+                                }
+                            }];
+                            [[MEGASdkManager sharedMEGASdk] enableGeolocationWithDelegate:enableGeolocationDelegate];
+                        }]];
+                        [self presentViewController:sendLocationAlert animated:YES completion:nil];
+                    } else {
+                        [self presentShareLocationViewControllerForEditing:NO];
+                    }
+                }];
+                
+                [[MEGASdkManager sharedMEGASdk] isGeolocationEnabledWithDelegate:isGeolocationEnabledDelegate];
+            }];
+            [sendLocationAlertAction setValue:[UIColor mnz_black333333] forKey:@"titleTextColor"];
+            [selectOptionAlertController addAction:sendLocationAlertAction];
+            
             selectOptionAlertController.modalPresentationStyle = UIModalPresentationOverCurrentContext;
             selectOptionAlertController.popoverPresentationController.sourceView = self.inputToolbar.contentView;
             selectOptionAlertController.popoverPresentationController.sourceRect = self.inputToolbar.contentView.accessoryUploadButton.frame;
@@ -1916,6 +1950,21 @@ static NSMutableSet<NSString *> *tapForInfoSet;
             break;
     }
     [self updateToolbarPlaceHolder];
+}
+
+- (void)presentShareLocationViewControllerForEditing:(BOOL)editing {
+    ShareLocationViewController *slvc = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"ShareLocationViewControllerID"];
+    MEGANavigationController *navigationViewController = [[MEGANavigationController alloc] initWithRootViewController:slvc];
+    slvc.chatRoom = self.chatRoom;
+    
+    if (editing) {
+        slvc.editMessage = self.editMessage;
+        self.editMessage = nil;
+    }
+    
+    slvc.shareLocationViewControllerDelegate = self;
+    [navigationViewController addLeftCancelButton];
+    [self presentViewController:navigationViewController animated:YES completion:nil];
 }
 
 - (void)didPressJoinButton:(UIButton *)sender {
@@ -2251,7 +2300,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
             
         case MEGAChatMessageTypeContainsMeta: {
             //All messages
-            if (action == @selector(copy:)) return YES;
+            if (action == @selector(copy:) && message.containsMeta.type != MEGAChatContainsMetaTypeGeolocation) return YES;
             if (action == @selector(forward:message:)) return YES;
 
             //Your messages
@@ -2268,7 +2317,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
                     if (message.isEditable) return YES;
                 }
                 
-                if (action == @selector(removeRichPreview:message:indexPath:)) {
+                if (action == @selector(removeRichPreview:message:indexPath:) && message.containsMeta.type != MEGAChatContainsMetaTypeGeolocation) {
                     if (message.isEditable) return YES;
                 }
             }
@@ -2365,9 +2414,13 @@ static NSMutableSet<NSString *> *tapForInfoSet;
 }
 
 - (void)edit:(id)sender message:(MEGAChatMessage *)message {
-    [self.inputToolbar.contentView.textView becomeFirstResponder];
-    self.inputToolbar.contentView.textView.text = message.content;
     self.editMessage = message;
+    if (message.containsMeta.type == MEGAChatContainsMetaTypeGeolocation) {
+        [self presentShareLocationViewControllerForEditing:YES];
+    } else {
+        [self.inputToolbar.contentView.textView becomeFirstResponder];
+        self.inputToolbar.contentView.textView.text = message.content;
+    }
 }
 
 - (void)forward:(id)sender message:(MEGAChatMessage *)message {
@@ -2548,9 +2601,26 @@ static NSMutableSet<NSString *> *tapForInfoSet;
                 [self.navigationController pushViewController:chatAttachedContactsVC animated:YES];
             }
         } else if (message.type == MEGAChatMessageTypeContainsMeta) {
-            NSURL *url = [NSURL URLWithString:message.containsMeta.richPreview.url];
-            MEGALinkManager.linkURL = url;
-            [MEGALinkManager processLinkURL:url];
+            if (message.containsMeta.type == MEGAChatContainsMetaTypeRichPreview) {
+                NSURL *url = [NSURL URLWithString:message.containsMeta.richPreview.url];
+                MEGALinkManager.linkURL = url;
+                [MEGALinkManager processLinkURL:url];
+            } else if (message.containsMeta.type == MEGAChatContainsMetaTypeGeolocation) {
+                CLGeocoder *geocoder = [[CLGeocoder alloc] init];
+                CLLocation *location = [[CLLocation alloc] initWithLatitude:message.containsMeta.geolocation.latitude longitude:message.containsMeta.geolocation.longitude];
+                [geocoder reverseGeocodeLocation:location completionHandler:^(NSArray<CLPlacemark *> * _Nullable placemarks, NSError * _Nullable error) {
+                    MKPlacemark *placemark = [[MKPlacemark alloc] initWithCoordinate:location.coordinate];
+                    MKMapItem *mapItem = [[MKMapItem alloc] initWithPlacemark:placemark];
+
+                    if (!error && placemarks.count > 0) {
+                        CLPlacemark *clPlacemark = placemarks.firstObject;
+                        mapItem.name = clPlacemark.name;
+                    }
+                    
+                    
+                    [mapItem openInMapsWithLaunchOptions:nil];
+                }];
+            }
         } else if (message.node) {
             MEGALinkManager.linkURL = message.MEGALink;
             [MEGALinkManager processLinkURL:message.MEGALink];
@@ -2668,6 +2738,24 @@ static NSMutableSet<NSString *> *tapForInfoSet;
 
 - (void)didDismissPhotoBrowser:(MEGAPhotoBrowserViewController *)photoBrowser {
     [self setLastMessageAsSeen];
+}
+
+#pragma mark - ShareLocationViewControllerDelegate
+
+- (void)locationMessage:(MEGAChatMessage *)message editing:(BOOL)editing {
+    message.chatId = self.chatRoom.chatId;
+    if (editing) {
+        NSUInteger index = [self.messages indexOfObject:self.editMessage];
+        if (index != NSNotFound) {
+            [self.messages replaceObjectAtIndex:index withObject:message];
+            [self.collectionView reloadItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:index inSection:0]]];
+        }
+    } else {
+        [self.messages addObject:message];
+        [self.collectionView insertItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:self.messages.count-1 inSection:0]]];
+        [self finishSendingMessage];
+        [self updateUnreadMessagesLabel:0];
+    }
 }
 
 #pragma mark - DZNEmptyDataSetSource

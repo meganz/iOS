@@ -10,6 +10,7 @@
 #import "MEGAChatGenericRequestDelegate.h"
 #import "MEGAFetchNodesRequestDelegate.h"
 #import "MEGAGetPublicNodeRequestDelegate.h"
+#import "MEGALocationMediaItem.h"
 #import "MEGALoginToFolderLinkRequestDelegate.h"
 #import "MEGAPhotoMediaItem.h"
 #import "MEGARichPreviewMediaItem.h"
@@ -65,6 +66,9 @@ static const void *richNumberTagKey = &richNumberTagKey;
         return YES;
     }
     if (self.containsMeta.richPreview.url && ![self.containsMeta.richPreview.url isEqualToString:@""]) {
+        return YES;
+    }
+    if (self.containsMeta.geolocation.image) {
         return YES;
     }
     return NO;
@@ -368,7 +372,11 @@ static const void *richNumberTagKey = &richNumberTagKey;
         }
             
         case MEGAChatMessageTypeContainsMeta: {
-            media = [[MEGARichPreviewMediaItem alloc] initWithMEGAChatMessage:self];
+            if (self.containsMeta.type == MEGAChatContainsMetaTypeRichPreview) {
+                media = [[MEGARichPreviewMediaItem alloc] initWithMEGAChatMessage:self];
+            } else if (self.containsMeta.type == MEGAChatContainsMetaTypeGeolocation) {
+                media = [[MEGALocationMediaItem alloc] initWithMEGAChatMessage:self];
+            }
             
             break;
         }

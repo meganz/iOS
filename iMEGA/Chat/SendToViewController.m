@@ -342,7 +342,12 @@
         case MEGAChatMessageTypeContainsMeta: {
             for (NSNumber *chatIdNumber in self.chatIdNumbers) {
                 uint64_t chatId = chatIdNumber.unsignedLongLongValue;
-                MEGAChatMessage *newMessage = [[MEGASdkManager sharedMEGAChatSdk] sendMessageToChat:chatId message:message.content];
+                MEGAChatMessage *newMessage;
+                if (message.containsMeta.type == MEGAChatContainsMetaTypeGeolocation) {
+                    newMessage = [[MEGASdkManager sharedMEGAChatSdk] sendGeolocationToChat:chatId longitude:message.containsMeta.geolocation.longitude latitude:message.containsMeta.geolocation.latitude image:message.containsMeta.geolocation.image];
+                } else {
+                    newMessage = [[MEGASdkManager sharedMEGAChatSdk] sendMessageToChat:chatId message:message.content];
+                }
                 [self completeForwardingMessage:newMessage toChat:chatId];
             }
             

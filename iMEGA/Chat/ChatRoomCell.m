@@ -375,6 +375,18 @@
             if (item.group && item.lastMessageSender != [[MEGASdkManager sharedMEGAChatSdk] myUserHandle]) {
                 senderString = [self actionAuthorNameInChatListItem:item];
             }
+            
+            if (item.lastMessageType == MEGAChatMessageTypeContainsMeta) {
+                MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:item.chatId];
+                MEGAChatMessage *message = [[MEGASdkManager sharedMEGAChatSdk] messageForChat:chatRoom.chatId messageId:item.lastMessageId];
+                
+                if (message.containsMeta.type == MEGAChatContainsMetaTypeGeolocation) {
+                    NSString *pinnedLocation = [NSString stringWithFormat:@"📍 %@", AMLocalizedString(@"Pinned Location", @"Text shown in location-type messages")];
+                    self.chatLastMessage.text = senderString ? [NSString stringWithFormat:@"%@: %@", senderString, pinnedLocation] : pinnedLocation;
+                    break;
+                }
+            }
+            
             self.chatLastMessage.text = senderString ? [NSString stringWithFormat:@"%@: %@",senderString, item.lastMessage] : item.lastMessage;
             break;
         }
