@@ -73,14 +73,15 @@ static const CGFloat TableViewSectionHeaderFooterHiddenHeight = 0.1;
     [self.navigationItem setTitle:AMLocalizedString(@"cameraUploadsLabel", nil)];
     [self.enableCameraUploadsLabel setText:AMLocalizedString(@"cameraUploadsLabel", nil)];
     
-    [self.uploadVideosInfoLabel setText:@"Upload Videos"];
-    [self.uploadVideosLabel setText:@"Upload Videos"];
+    [self.uploadVideosInfoLabel setText:AMLocalizedString(@"uploadVideosLabel", nil)];
+    [self.uploadVideosLabel setText:AMLocalizedString(@"uploadVideosLabel", nil)];
     
-    self.useCellularConnectionLabel.text = AMLocalizedString(@"useMobileData", @"Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature.");
+    self.useCellularConnectionLabel.text = AMLocalizedString(@"useMobileData", nil);
+    self.useCellularConnectionForVideosLabel.text = AMLocalizedString(@"useMobileDataForVideos", nil);
+
+    self.backgroundUploadLabel.text = AMLocalizedString(@"uploadInBackground", nil);
     
-    NSMutableAttributedString *JPGAttributedString = [[NSMutableAttributedString alloc] initWithString:@"JPG " attributes:@{NSFontAttributeName : [UIFont systemFontOfSize:17.0], NSForegroundColorAttributeName : [UIColor mnz_black333333]}];
-    [JPGAttributedString appendAttributedString:[[NSAttributedString alloc] initWithString:@"(Recommended)" attributes:@{NSFontAttributeName : [UIFont systemFontOfSize:17.0], NSForegroundColorAttributeName : [UIColor mnz_gray999999]}]];
-    self.JPGLabel.attributedText = JPGAttributedString;
+    [self configImageFormatTexts];
     
     if (self.isPresentedModally) {
         self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(modalDialogDoneButtonTouched)];
@@ -119,6 +120,15 @@ static const CGFloat TableViewSectionHeaderFooterHiddenHeight = 0.1;
 }
 
 #pragma mark - UI configuration
+
+- (void)configImageFormatTexts {
+    NSMutableAttributedString *JPGAttributedString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@ ", AMLocalizedString(@"JPGImageFormat", nil)] attributes:@{NSFontAttributeName : [UIFont systemFontOfSize:17.0], NSForegroundColorAttributeName : [UIColor mnz_black333333]}];
+    
+    [JPGAttributedString appendAttributedString:[[NSAttributedString alloc] initWithString:AMLocalizedString(@"recommendedByMEGA", nil) attributes:@{NSFontAttributeName : [UIFont systemFontOfSize:17.0], NSForegroundColorAttributeName : [UIColor mnz_gray999999]}]];
+    self.JPGLabel.attributedText = JPGAttributedString;
+    
+    self.HEICLabel.attributedText = [[NSAttributedString alloc] initWithString:AMLocalizedString(@"HEICImageFormat", nil) attributes:@{NSFontAttributeName : [UIFont systemFontOfSize:17.0], NSForegroundColorAttributeName : [UIColor mnz_black333333]}];
+}
 
 - (void)configUI {
     self.enableCameraUploadsSwitch.on = CameraUploadManager.isCameraUploadEnabled;
@@ -206,15 +216,15 @@ static const CGFloat TableViewSectionHeaderFooterHiddenHeight = 0.1;
     CustomModalAlertViewController *customModalAlertVC = [[CustomModalAlertViewController alloc] init];
     customModalAlertVC.modalPresentationStyle = UIModalPresentationOverFullScreen;
     customModalAlertVC.image = [UIImage imageNamed:@"backgroundUploadLocation"];
-    customModalAlertVC.viewTitle = @"Enable location services for background upload";
+    customModalAlertVC.viewTitle = AMLocalizedString(@"locationBasedBackgroundUploadTitle", nil);
     NSString *actionTitle;
     NSString *detail;
     if (CLLocationManager.authorizationStatus == kCLAuthorizationStatusAuthorizedAlways || CLLocationManager.authorizationStatus == kCLAuthorizationStatusNotDetermined) {
-        actionTitle = @"Turn On";
-        detail = @"MEGA can periodically start camera uploads in background when your location changes.";
+        actionTitle = AMLocalizedString(@"turnOn", nil);
+        detail = AMLocalizedString(@"locationBasedUploadMessageWhenAccessNotDenied", nil);
     } else {
-        actionTitle = @"Turn On in Settings";
-        detail = @"Please select “Always” at your Location page in Settings, then MEGA can periodically start camera uploads in background when your location changes.";
+        actionTitle = AMLocalizedString(@"turnOnInSettings", nil);
+        detail = AMLocalizedString(@"locationBasedUploadMessageWhenAccessDenied", nil);
     }
     customModalAlertVC.detail = detail;
     customModalAlertVC.firstButtonTitle = actionTitle;
@@ -322,7 +332,7 @@ static const CGFloat TableViewSectionHeaderFooterHiddenHeight = 0.1;
     NSString *title;
     switch (section) {
         case CameraUploadSectionPhotoFormat:
-            title = @"SAVE HEIC PHOTOS AS";
+            title = AMLocalizedString(@"HEICFormatHeader", @"What format to upload HEIC photos");
             break;
         case CameraUploadSectionOptions:
             title = AMLocalizedString(@"options", @"Camera Upload options");
@@ -340,18 +350,18 @@ static const CGFloat TableViewSectionHeaderFooterHiddenHeight = 0.1;
         case CameraUploadSectionFeatureSwitch:
             if (CameraUploadManager.isCameraUploadEnabled) {
                 if (CameraUploadManager.isVideoUploadEnabled) {
-                    title = @"Photos and videos will be uploaded to Camera Uploads folder.";
+                    title = AMLocalizedString(@"cameraUploadsFooterWhenPhotosAndVideosEnabled", nil);
                 } else {
-                    title = @"Photos will be uploaded to Camera Uploads folder.";
+                    title = AMLocalizedString(@"cameraUploadsFooterWhenPhotosEnabled", nil);
                 }
                 
-                title = [NSString stringWithFormat:@"%@ %@", title, @"(Live Photos and Bursts are included)"];
+                title = [NSString stringWithFormat:@"%@ %@", title, AMLocalizedString(@"livePhotosAndBurstsIncluded", nil)];
             } else {
-                title = @"When enabled, photos will be uploaded.";
+                title = AMLocalizedString(@"cameraUploadsFooterWhenDisabled", nil);
             }
             break;
         case CameraUploadSectionPhotoFormat:
-            title = @"We recommend JPG, as its the most compatible format for photos.";
+            title = AMLocalizedString(@"HEICFormatFooter", nil);
             break;
         default:
             break;
