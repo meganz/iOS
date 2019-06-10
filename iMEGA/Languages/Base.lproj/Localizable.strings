@@ -656,12 +656,54 @@
 "on"="On";
 /* Header to explain that 'Upload videos', 'Use cellular connection' and 'Only when charging' are options of the Camera Uploads */
 "options"="Options";
+/* Name of the JPG image format */
+"JPGImageFormat"="JPG";
+/* A hint to show one option is recommended by MEGA */
+"recommendedByMEGA"="(Recommended)";
+/* Name of the HEIC image format */
+"HEICImageFormat"="HEIC";
+/* Header to introduce how to deal with HEIC format photos in Camera Uplaod */
+"HEICFormatHeader"="SAVE HEIC PHOTOS AS";
+/* Footer for HEIC format section */
+"HEICFormatFooter"="We recommend JPG, as its the most compatible format for photos.";
+/* Name of the H.264 video format */
+"H264VideoFormat"="H.264";
+/* Name of the HEVC video format */
+"HEVCVideoFormat"="HEVC";
+/* Header to introduce how to deal with HEVC format videos in Camera Uplaod */
+"HEVCFormatHeader"="SAVE HEVC VIDEOS AS";
+/* Footer for HEVC format section */
+"HEVCFormatFooter"="We recommend H.264, as its the most compatible format for videos.";
+/* Footer for video compression quality */
+"videoUploadsCompressionQualityFooter"="Compression quality when to transcode HEVC videos to H.264 format.";
 /* Option title to enable upload videos with Camera Uploads */
-"uploadVideosLabel"="Upload videos";
+"uploadVideosLabel"="Upload Videos";
 /* Option title to enable Camera Uploads only when the device is charging */
 "onlyWhenChargingLabel"="Only when charging";
-/* Footer text to explain the Camera Uploads functionality */
-"cameraUploads_footer"="When enabled, photos and videos will be uploaded.";
+/* Footer text for Camera Upload switch section when camera upload is disabled */
+"cameraUploadsFooterWhenDisabled"="When enabled, photos will be uploaded.";
+/* Footer text for Camera Upload switch section when only photos upload is enabled */
+"cameraUploadsFooterWhenPhotosEnabled"="Photos will be uploaded to Camera Uploads folder.";
+/* Footer text for Camera Upload switch section when photos and videos upload is enabled */
+"cameraUploadsFooterWhenPhotosAndVideosEnabled"="Photos and videos will be uploaded to Camera Uploads folder.";
+/* A hint to let user know live photos and bursts are included in Camera Upload */
+"livePhotosAndBurstsIncluded"="(Live Photos and Bursts are included)";
+/* Title to show for upload in background */
+"uploadInBackground"="Upload in Background";
+/* Title for the location based background upload message */
+"locationBasedUploadTitle"="Enable location services for background upload";
+/* Message for the location based background upload when the location data access is not denied by users */
+"locationBasedUploadMessageWhenAccessNotDenied"="MEGA can periodically start camera uploads in background when your location changes.";
+/* Message for the location based background upload when the location data access is denied by users */
+"locationBasedUploadMessageWhenAccessDenied"="Please select “Always” at your Location page in Settings, then MEGA can periodically start camera uploads in background when your location changes.";
+/* Title for turn on a feature */
+"turnOn"="Turn On";
+/* Title for turn on a feature in settings */
+"turnOnInSettings"="Turn On in Settings";
+/* Footer for video uploads switch section when enabled */
+"videoUploadsFooterWhenEnabled"="Videos will be uploaded to the Camera Uploads folder.";
+/* Footer for video uploads switch section when disabled */
+"videoUploadsFooterWhenDisabled"="When enabled, videos will be uploaded.";
 /* App means “Application” */
 "App version"="App version";
 /* Title of the label where the SDK version is shown */
@@ -1091,6 +1133,8 @@
 "voiceAndVideoCalls"="Voice and Video Calls";
 /* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature. */
 "useMobileData"="Use Mobile Data";
+/* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for videos. */
+"useMobileDataForVideos"="Use Mobile Data for Videos";
 /* A header in the Chat settings. This changes the user's status to Away after some time of inactivity. */
 "autoAway"="Auto-away";
 /* */
