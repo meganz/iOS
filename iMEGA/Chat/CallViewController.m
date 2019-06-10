@@ -468,13 +468,20 @@
     MEGALogDebug(@"onChatCallUpdate %@", call);
     
     if (self.call.callId == call.callId) {
+        if (@available(iOS 10.0, *)) {
+            if (self.currentCallUUID) {
+                call.uuid = self.currentCallUUID;
+            }
+        }
         self.call = call;
     } else if (self.call.chatId == call.chatId) {
         MEGALogInfo(@"Two calls at same time in same chat.");
         if (@available(iOS 10.0, *)) {
             //Put the same UUID to the call that is going to replace the current one
-            call.uuid = self.currentCallUUID;
-            [self.megaCallManager addCall:call];
+            if (self.currentCallUUID) {
+                call.uuid = self.currentCallUUID;
+                [self.megaCallManager addCall:call];
+            }
         }
         
         self.call = call;
