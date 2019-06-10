@@ -146,7 +146,7 @@ static NSString * const PhotoExportTempName = @"photoExportTemp";
         
         if (succeeded && [NSFileManager.defaultManager isReadableFileAtPath:weakSelf.uploadInfo.fileURL.path]) {
             [NSFileManager.defaultManager mnz_removeItemAtPath:URL.path];
-            [weakSelf handleProcessedImageFile];
+            [weakSelf handleProcessedFileWithMediaType:PHAssetMediaTypeImage];
         } else {
             MEGALogError(@"[Camera Upload] %@ error when to export image to file %@", weakSelf, weakSelf.uploadInfo.fileName);
             [weakSelf finishOperationWithStatus:CameraAssetUploadStatusFailed shouldUploadNextAsset:YES];
