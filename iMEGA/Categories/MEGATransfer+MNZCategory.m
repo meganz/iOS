@@ -179,6 +179,30 @@
     }
 }
 
+- (NSUInteger)mnz_orderByState {
+    NSUInteger orderByState;
+    
+    switch (self.state) {
+        case MEGATransferStateCompleting:
+            orderByState = 0;
+            break;
+            
+        case MEGATransferStateActive:
+            orderByState = 1;
+            break;
+            
+        case MEGATransferStateQueued:
+            orderByState = 2;
+            break;
+            
+        default:
+            orderByState = 3;
+            break;
+    }
+    
+    return orderByState;
+}
+
 #pragma mark - Private
 
 - (void)mnz_setCoordinates:(NSString *)coordinates {

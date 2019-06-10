@@ -17,4 +17,6 @@
 - (void)mnz_saveInPhotosApp;
 - (void)mnz_setNodeCoordinates;
 
+- (NSUInteger)mnz_orderByState;
+
 @end
