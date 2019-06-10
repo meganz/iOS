@@ -57,6 +57,16 @@ typedef NS_ENUM(NSInteger, MEGAChatMessageEndCallReason);
 
 + (NSString *)mnz_lastGreenStringFromMinutes:(NSInteger)minutes;
 
+/**
+ * @brief Convert decimal degrees coordinate into degrees, minutes, seconds and direction
+ *
+ * @param latitude The latitude coordinate in its decimal degree notation
+ * @param longitude The longitude coordinate in its decimal degree notation
+ *
+ * @return The coordinate in degrees, minutes, seconds and direction
+ */
++ (NSString *)mnz_convertCoordinatesLatitude:(float)latitude longitude:(float)longitude;
+
 + (NSString *)mnz_addedByInRecentActionBucket:(MEGARecentActionBucket *)recentActionBucket nodesArray:(NSArray *)nodesArray;
 
 #pragma mark - File names and extensions
