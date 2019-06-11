@@ -19,8 +19,6 @@
 
 @interface RecentsViewController () <UITableViewDataSource, UITableViewDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGADelegate>
 
-@property (weak, nonatomic) IBOutlet UITableView *tableView;
-
 @property (strong, nonatomic) NSArray<MEGARecentActionBucket *> *recentActionBucketArray;
 
 @property (nonatomic) NSDateFormatter *dateFormatter;
@@ -234,6 +232,13 @@
     return image;
 }
 
+- (UIColor *)backgroundColorForEmptyDataSet:(UIScrollView *)scrollView {
+    return UIColor.whiteColor;
+}
+
+- (CGFloat)spaceHeightForEmptyDataSet:(UIScrollView *)scrollView {
+    return Helper.spaceHeightForEmptyState;
+}
 #pragma mark - MEGAGlobalDelegate
 
 - (void)onNodesUpdate:(MEGASdk *)api nodeList:(MEGANodeList *)nodeList {
