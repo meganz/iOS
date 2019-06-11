@@ -1206,8 +1206,6 @@
 /* Button which allows to delete message in chat conversation. */
 "deleteMessage"="Delete message";
 /*  */
-"fromCloudDrive"="From Cloud Drive";
-/*  */
 "fromDevice"="From device";
 /* referring to a contact in the contact list of the user */
 "contact"="Contact";
