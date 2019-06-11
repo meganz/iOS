@@ -122,12 +122,14 @@ static const CGFloat TableViewSectionHeaderFooterHiddenHeight = 0.1;
 #pragma mark - UI configuration
 
 - (void)configImageFormatTexts {
-    NSMutableAttributedString *JPGAttributedString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@ ", AMLocalizedString(@"JPGImageFormat", nil)] attributes:@{NSFontAttributeName : [UIFont systemFontOfSize:17.0], NSForegroundColorAttributeName : [UIColor mnz_black333333]}];
+    NSDictionary<NSAttributedStringKey, id> *formatAttributes = @{NSFontAttributeName : [UIFont systemFontOfSize:17.0], NSForegroundColorAttributeName : [UIColor mnz_black333333]};
+    
+    NSMutableAttributedString *JPGAttributedString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@ ", AMLocalizedString(@"JPGImageFormat", nil)] attributes:formatAttributes];
     
     [JPGAttributedString appendAttributedString:[[NSAttributedString alloc] initWithString:AMLocalizedString(@"recommendedByMEGA", nil) attributes:@{NSFontAttributeName : [UIFont systemFontOfSize:17.0], NSForegroundColorAttributeName : [UIColor mnz_gray999999]}]];
     self.JPGLabel.attributedText = JPGAttributedString;
     
-    self.HEICLabel.attributedText = [[NSAttributedString alloc] initWithString:AMLocalizedString(@"HEICImageFormat", nil) attributes:@{NSFontAttributeName : [UIFont systemFontOfSize:17.0], NSForegroundColorAttributeName : [UIColor mnz_black333333]}];
+    self.HEICLabel.attributedText = [[NSAttributedString alloc] initWithString:AMLocalizedString(@"HEICImageFormat", nil) attributes:formatAttributes];
 }
 
 - (void)configUI {
