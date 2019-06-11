@@ -76,7 +76,7 @@
     self.searchController.dimsBackgroundDuringPresentation = YES;
     self.searchController.searchBar.searchBarStyle = UISearchBarStyleMinimal;
     self.searchController.searchBar.translucent = NO;
-    self.searchController.searchBar.backgroundImage = [UIImage imageWithCGImage:(__bridge CGImageRef)(UIColor.clearColor)];
+    self.searchController.searchBar.backgroundColor = UIColor.whiteColor;
     self.searchController.searchBar.barTintColor = UIColor.whiteColor;
     self.searchController.searchBar.tintColor = UIColor.mnz_redMain;
     self.searchController.searchBar.frame = CGRectMake(0, 0, self.view.frame.size.width, self.searchController.searchBar.frame.size.height);
