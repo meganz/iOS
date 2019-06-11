@@ -38,11 +38,13 @@ typedef NS_ENUM(NSUInteger, VideoUploadsFormatRow) {
 }
 
 - (void)configVideoFormatTexts {
-    NSMutableAttributedString *H264AttributedString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@ ", AMLocalizedString(@"H264VideoFormat", nil)] attributes:@{NSFontAttributeName : [UIFont systemFontOfSize:17.0], NSForegroundColorAttributeName : [UIColor mnz_black333333]}];
+    NSDictionary<NSAttributedStringKey, id> *formatAttributes = @{NSFontAttributeName : [UIFont systemFontOfSize:17.0], NSForegroundColorAttributeName : [UIColor mnz_black333333]};
+    
+    NSMutableAttributedString *H264AttributedString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@ ", AMLocalizedString(@"H264VideoFormat", nil)] attributes:formatAttributes];
     [H264AttributedString appendAttributedString:[[NSAttributedString alloc] initWithString:AMLocalizedString(@"recommendedByMEGA", nil) attributes:@{NSFontAttributeName : [UIFont systemFontOfSize:17.0], NSForegroundColorAttributeName : [UIColor mnz_gray999999]}]];
     self.H264Label.attributedText = H264AttributedString;
     
-    self.HEVCLabel.attributedText = [[NSAttributedString alloc] initWithString:AMLocalizedString(@"HEVCVideoFormat", nil) attributes:@{NSFontAttributeName : [UIFont systemFontOfSize:17.0], NSForegroundColorAttributeName : [UIColor mnz_black333333]}];
+    self.HEVCLabel.attributedText = [[NSAttributedString alloc] initWithString:AMLocalizedString(@"HEVCVideoFormat", nil) attributes:formatAttributes];
 }
 
 - (void)configUI {
