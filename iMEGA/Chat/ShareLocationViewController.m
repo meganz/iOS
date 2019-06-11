@@ -3,6 +3,8 @@
 
 #import <MapKit/MapKit.h>
 
+#import "SVProgressHUD.h"
+
 #import "Helper.h"
 #import "MEGASdkManager.h"
 
@@ -127,23 +129,20 @@
         NSData *imageData = UIImageJPEGRepresentation(image, 0.3);
         NSString *imageB64 = [imageData base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
         
-        MEGAChatMessage *message;
+        [self dismissViewControllerAnimated:YES completion:^{
+            MEGAChatMessage *message;
         
-        if (self.editMessage) {
-            uint64_t messageId = (self.editMessage.status == MEGAChatMessageStatusSending) ? self.editMessage.temporalId : self.editMessage.messageId;
-            message = [[MEGASdkManager sharedMEGAChatSdk] editGeolocationForChat:self.chatRoom.chatId messageId:messageId longitude:coordinate.longitude latitude:coordinate.latitude image:imageB64];
-        } else {
-            message = [[MEGASdkManager sharedMEGAChatSdk] sendGeolocationToChat:self.chatRoom.chatId longitude:coordinate.longitude latitude:coordinate.latitude image:imageB64];
-        }
-        MEGALogDebug(@"[Share Location] Send message %@", message);
-        if (message) {
-            [self.shareLocationViewControllerDelegate locationMessage:message editing:self.editMessage];            
-            [self dismissViewControllerAnimated:YES completion:nil];
-        } else {
-            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"error", nil) message:@"Share location is not possible" preferredStyle:UIAlertControllerStyleAlert];
-            [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
-            [self presentViewController:alertController animated:YES completion:nil];
-        }
+            if (self.editMessage) {
+                uint64_t messageId = (self.editMessage.status == MEGAChatMessageStatusSending) ? self.editMessage.temporalId : self.editMessage.messageId;
+                message = [[MEGASdkManager sharedMEGAChatSdk] editGeolocationForChat:self.chatRoom.chatId messageId:messageId longitude:coordinate.longitude latitude:coordinate.latitude image:imageB64];
+            } else {
+                message = [[MEGASdkManager sharedMEGAChatSdk] sendGeolocationToChat:self.chatRoom.chatId longitude:coordinate.longitude latitude:coordinate.latitude image:imageB64];
+            }
+            MEGALogDebug(@"[Share Location] Send message %@", message);
+            if (!message) {
+                [SVProgressHUD showErrorWithStatus:@"Share location is not possible"];
+            }
+        }];
     }];
 }
 

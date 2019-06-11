@@ -62,7 +62,7 @@ const NSUInteger kMaxMessagesToLoad = 256;
 
 static NSMutableSet<NSString *> *tapForInfoSet;
 
-@interface MessagesViewController () <MEGAPhotoBrowserDelegate, JSQMessagesViewAccessoryButtonDelegate, JSQMessagesComposerTextViewPasteDelegate, DZNEmptyDataSetSource, ShareLocationViewControllerDelegate, MEGAChatDelegate, MEGAChatRequestDelegate, MEGARequestDelegate, MEGAChatCallDelegate>
+@interface MessagesViewController () <MEGAPhotoBrowserDelegate, JSQMessagesViewAccessoryButtonDelegate, JSQMessagesComposerTextViewPasteDelegate, DZNEmptyDataSetSource, MEGAChatDelegate, MEGAChatRequestDelegate, MEGARequestDelegate, MEGAChatCallDelegate>
 
 @property (nonatomic, strong) MEGAOpenMessageHeaderView *openMessageHeaderView;
 @property (nonatomic, strong) MEGALoadingMessagesHeaderView *loadingMessagesHeaderView;
@@ -391,8 +391,8 @@ static NSMutableSet<NSString *> *tapForInfoSet;
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     
-    self.toolbarFrameLocked = YES;
-    
+    self.toolbarFrameLocked = !self.presentedViewController;
+
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kReachabilityChangedNotification object:nil];
     
     // Don't close the chat room when pushing the group details view controller
@@ -1962,7 +1962,6 @@ static NSMutableSet<NSString *> *tapForInfoSet;
         self.editMessage = nil;
     }
     
-    slvc.shareLocationViewControllerDelegate = self;
     [navigationViewController addLeftCancelButton];
     [self presentViewController:navigationViewController animated:YES completion:nil];
 }
@@ -2738,24 +2737,6 @@ static NSMutableSet<NSString *> *tapForInfoSet;
 
 - (void)didDismissPhotoBrowser:(MEGAPhotoBrowserViewController *)photoBrowser {
     [self setLastMessageAsSeen];
-}
-
-#pragma mark - ShareLocationViewControllerDelegate
-
-- (void)locationMessage:(MEGAChatMessage *)message editing:(BOOL)editing {
-    message.chatId = self.chatRoom.chatId;
-    if (editing) {
-        NSUInteger index = [self.messages indexOfObject:self.editMessage];
-        if (index != NSNotFound) {
-            [self.messages replaceObjectAtIndex:index withObject:message];
-            [self.collectionView reloadItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:index inSection:0]]];
-        }
-    } else {
-        [self.messages addObject:message];
-        [self.collectionView insertItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:self.messages.count-1 inSection:0]]];
-        [self finishSendingMessage];
-        [self updateUnreadMessagesLabel:0];
-    }
 }
 
 #pragma mark - DZNEmptyDataSetSource
