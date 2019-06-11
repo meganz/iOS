@@ -952,6 +952,8 @@
 }
 
 - (void)setNavigationBarButtonItemsEnabled:(BOOL)boolValue {
+    self.moreRecentsBarButtonItem.enabled = boolValue;
+    
     switch (self.displayMode) {
         case DisplayModeCloudDrive: {
             self.moreBarButtonItem.enabled = boolValue;
@@ -1182,7 +1184,9 @@
 }
 
 - (void)reloadData {
-    if (self.layoutView == LayoutModeList) {
+    if (self.recentsButton.selected) {
+        [self.recentsVC.tableView reloadData];
+    } else if (self.layoutView == LayoutModeList) {
         [self.cdTableView.tableView reloadData];
     } else {
         [self.cdCollectionView.collectionView reloadData];
