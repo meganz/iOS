@@ -251,7 +251,7 @@ NSNotificationName kVoiceClipsShouldPauseNotification = @"kVoiceClipsShouldPause
     [NSNotificationCenter.defaultCenter removeObserver:self name:AVAudioSessionRouteChangeNotification object:nil];
     
     NSError *error;
-    if ([MEGASdkManager.sharedMEGAChatSdk chatCallsWithState:MEGAChatCallStatusInProgress]) {
+    if ([MEGASdkManager.sharedMEGAChatSdk chatCallsWithState:MEGAChatCallStatusInProgress].size > 0) {
         if (self.shouldRevertSpeaker) {
             if (AVAudioSession.sharedInstance.currentRoute.outputs.count > 0) {
                 AVAudioSessionPortDescription *audioSessionPortDestription = AVAudioSession.sharedInstance.currentRoute.outputs.firstObject;
