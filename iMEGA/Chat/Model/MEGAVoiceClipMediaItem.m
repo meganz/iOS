@@ -22,6 +22,7 @@ NSNotificationName kVoiceClipsShouldPauseNotification = @"kVoiceClipsShouldPause
 @property (nonatomic) AVPlayer *audioPlayer;
 @property (nonatomic, getter=isPlaying) BOOL playing;
 @property (nonatomic, getter=shouldStopMonitoring) BOOL stopMonitoring;
+@property (nonatomic, getter=shouldRevertSpeaker) BOOL revertSpeaker;
 
 @end
 
@@ -154,6 +155,13 @@ NSNotificationName kVoiceClipsShouldPauseNotification = @"kVoiceClipsShouldPause
     
     NSError *error;
     if (self.isPlaying) {
+        if (AVAudioSession.sharedInstance.currentRoute.outputs.count > 0) {
+            AVAudioSessionPortDescription *audioSessionPortDestription = AVAudioSession.sharedInstance.currentRoute.outputs.firstObject;
+            if ([audioSessionPortDestription.portType isEqualToString:AVAudioSessionPortBuiltInReceiver]) {
+                self.revertSpeaker = YES;
+            }
+        }
+        
         if (![[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayAndRecord withOptions:AVAudioSessionCategoryOptionAllowBluetooth | AVAudioSessionCategoryOptionAllowBluetoothA2DP | AVAudioSessionCategoryOptionMixWithOthers error:&error]) {
             MEGALogError(@"[Voice clips] Error setting the audio category: %@", error);
             return;
@@ -243,8 +251,20 @@ NSNotificationName kVoiceClipsShouldPauseNotification = @"kVoiceClipsShouldPause
     [NSNotificationCenter.defaultCenter removeObserver:self name:AVAudioSessionRouteChangeNotification object:nil];
     
     NSError *error;
-    if (![[AVAudioSession sharedInstance] setActive:NO withOptions:AVAudioSessionSetActiveOptionNotifyOthersOnDeactivation error:&error]) {
-        MEGALogError(@"[Voice clips] Error deactivating audio session: %@", error);
+    if ([MEGASdkManager.sharedMEGAChatSdk chatCallsWithState:MEGAChatCallStatusInProgress]) {
+        if (self.shouldRevertSpeaker) {
+            if (AVAudioSession.sharedInstance.currentRoute.outputs.count > 0) {
+                AVAudioSessionPortDescription *audioSessionPortDestription = AVAudioSession.sharedInstance.currentRoute.outputs.firstObject;
+                if ([audioSessionPortDestription.portType isEqualToString:AVAudioSessionPortBuiltInSpeaker]) {
+                    [AVAudioSession.sharedInstance overrideOutputAudioPort:AVAudioSessionPortOverrideNone error:nil];
+                }
+            }
+            self.revertSpeaker = NO;
+        }
+    } else {
+        if (![[AVAudioSession sharedInstance] setActive:NO withOptions:AVAudioSessionSetActiveOptionNotifyOthersOnDeactivation error:&error]) {
+            MEGALogError(@"[Voice clips] Error deactivating audio session: %@", error);
+        }
     }
 }
 
