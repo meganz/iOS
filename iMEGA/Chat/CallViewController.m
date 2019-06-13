@@ -159,9 +159,11 @@
     } else if (self.videoCall) {
         self.enableDisableVideoButton.selected = self.videoCall;
         
-        AVAudioSessionPortDescription *audioSessionPortDestription = AVAudioSession.sharedInstance.currentRoute.outputs[0];
-        if ([audioSessionPortDestription.portType isEqualToString:AVAudioSessionPortBuiltInReceiver]) {
-            [self enableLoudspeaker];
+        if (AVAudioSession.sharedInstance.currentRoute.outputs.count > 0) {
+            AVAudioSessionPortDescription *audioSessionPortDestription = AVAudioSession.sharedInstance.currentRoute.outputs[0];
+            if ([audioSessionPortDestription.portType isEqualToString:AVAudioSessionPortBuiltInReceiver]) {
+                [self enableLoudspeaker];
+            }
         }
         
         self.remoteAvatarImageView.hidden = YES;
@@ -335,18 +337,21 @@
 - (void)updateAudioOutputImage {
     self.volumeContainerView.hidden = !self.mpVolumeView.areWirelessRoutesAvailable;
     self.enableDisableSpeaker.hidden = !self.volumeContainerView.hidden;
-    AVAudioSessionPortDescription *audioSessionPortDestription = AVAudioSession.sharedInstance.currentRoute.outputs[0];
-    if ([audioSessionPortDestription.portType isEqualToString:AVAudioSessionPortBuiltInReceiver] || [audioSessionPortDestription.portType isEqualToString:AVAudioSessionPortHeadphones]) {
-        self.enableDisableSpeaker.selected = NO;
-        [self.mpVolumeView setRouteButtonImage:[UIImage imageNamed:@"speakerOff"] forState:UIControlStateNormal];
-    } else if ([audioSessionPortDestription.portType isEqualToString:AVAudioSessionPortBuiltInSpeaker]) {
-        self.enableDisableSpeaker.selected = YES;
-        [self.mpVolumeView setRouteButtonImage:[UIImage imageNamed:@"speakerOn"] forState:UIControlStateNormal];
-    } else {
-        [self.mpVolumeView setRouteButtonImage:[UIImage imageNamed:@"audioSourceActive"] forState:UIControlStateNormal];
-    }
     
-    [[UIDevice currentDevice] setProximityMonitoringEnabled:[audioSessionPortDestription.portType isEqualToString:AVAudioSessionPortBuiltInReceiver]];
+    if (AVAudioSession.sharedInstance.currentRoute.outputs.count > 0) {
+        AVAudioSessionPortDescription *audioSessionPortDestription = AVAudioSession.sharedInstance.currentRoute.outputs[0];
+        if ([audioSessionPortDestription.portType isEqualToString:AVAudioSessionPortBuiltInReceiver] || [audioSessionPortDestription.portType isEqualToString:AVAudioSessionPortHeadphones]) {
+            self.enableDisableSpeaker.selected = NO;
+            [self.mpVolumeView setRouteButtonImage:[UIImage imageNamed:@"speakerOff"] forState:UIControlStateNormal];
+        } else if ([audioSessionPortDestription.portType isEqualToString:AVAudioSessionPortBuiltInSpeaker]) {
+            self.enableDisableSpeaker.selected = YES;
+            [self.mpVolumeView setRouteButtonImage:[UIImage imageNamed:@"speakerOn"] forState:UIControlStateNormal];
+        } else {
+            [self.mpVolumeView setRouteButtonImage:[UIImage imageNamed:@"audioSourceActive"] forState:UIControlStateNormal];
+        }
+        
+        [[UIDevice currentDevice] setProximityMonitoringEnabled:[audioSessionPortDestription.portType isEqualToString:AVAudioSessionPortBuiltInReceiver]];
+    }
 }
 
 #pragma mark - IBActions

@@ -163,9 +163,11 @@ NSNotificationName kVoiceClipsShouldPauseNotification = @"kVoiceClipsShouldPause
             return;
         }
         
-        AVAudioSessionPortDescription *audioSessionPortDestription = AVAudioSession.sharedInstance.currentRoute.outputs.firstObject;
-        if ([audioSessionPortDestription.portType isEqualToString:AVAudioSessionPortBuiltInReceiver]) {
-            [AVAudioSession.sharedInstance overrideOutputAudioPort:AVAudioSessionPortOverrideSpeaker error:nil];
+        if (AVAudioSession.sharedInstance.currentRoute.outputs.count > 0) {
+            AVAudioSessionPortDescription *audioSessionPortDestription = AVAudioSession.sharedInstance.currentRoute.outputs.firstObject;
+            if ([audioSessionPortDestription.portType isEqualToString:AVAudioSessionPortBuiltInReceiver]) {
+                [AVAudioSession.sharedInstance overrideOutputAudioPort:AVAudioSessionPortOverrideSpeaker error:nil];
+            }
         }
         
         if (!self.audioPlayer) {
@@ -206,9 +208,11 @@ NSNotificationName kVoiceClipsShouldPauseNotification = @"kVoiceClipsShouldPause
     dispatch_async(dispatch_get_main_queue(), ^{
         if (self.isPlaying) {
             [self.cachedVoiceClipView.playPauseButton setImage:[UIImage imageNamed:@"pauseVoiceClip"] forState:UIControlStateNormal];
-            AVAudioSessionPortDescription *audioSessionPortDestription = AVAudioSession.sharedInstance.currentRoute.outputs.firstObject;
-            if ([audioSessionPortDestription.portType isEqualToString:AVAudioSessionPortBuiltInSpeaker]) {
-                UIDevice.currentDevice.proximityMonitoringEnabled = YES;
+            if (AVAudioSession.sharedInstance.currentRoute.outputs.count > 0) {
+                AVAudioSessionPortDescription *audioSessionPortDestription = AVAudioSession.sharedInstance.currentRoute.outputs.firstObject;
+                if ([audioSessionPortDestription.portType isEqualToString:AVAudioSessionPortBuiltInSpeaker]) {
+                    UIDevice.currentDevice.proximityMonitoringEnabled = YES;
+                }
             }
         } else {
             [self.cachedVoiceClipView.playPauseButton setImage:[UIImage imageNamed:@"playVoiceClip"] forState:UIControlStateNormal];
@@ -257,9 +261,11 @@ NSNotificationName kVoiceClipsShouldPauseNotification = @"kVoiceClipsShouldPause
         return;
     }
     
-    AVAudioSessionPortDescription *audioSessionPortDestription = AVAudioSession.sharedInstance.currentRoute.outputs.firstObject;
-    if (![audioSessionPortDestription.portType isEqualToString:AVAudioSessionPortBuiltInReceiver] && ![audioSessionPortDestription.portType isEqualToString:AVAudioSessionPortBuiltInSpeaker]) {
-        return;
+    if (AVAudioSession.sharedInstance.currentRoute.outputs.count > 0) {
+        AVAudioSessionPortDescription *audioSessionPortDestription = AVAudioSession.sharedInstance.currentRoute.outputs.firstObject;
+        if (![audioSessionPortDestription.portType isEqualToString:AVAudioSessionPortBuiltInReceiver] && ![audioSessionPortDestription.portType isEqualToString:AVAudioSessionPortBuiltInSpeaker]) {
+            return;
+        }
     }
     
     if (UIDevice.currentDevice.proximityState) {
