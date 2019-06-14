@@ -194,7 +194,7 @@ NSNotificationName kVoiceClipsShouldPauseNotification = @"kVoiceClipsShouldPause
             [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(didChangeAudioRoute:) name:AVAudioSessionRouteChangeNotification object:nil];
         }
         
-        [NSNotificationCenter.defaultCenter postNotificationName:kVoiceClipsShouldPauseNotification object:self];
+        [NSNotificationCenter.defaultCenter postNotificationName:kVoiceClipsShouldPauseNotification object:self.message];
         [self.audioPlayer play];
         [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(didPlayToEndTime:) name:AVPlayerItemDidPlayToEndTimeNotification object:nil];
         [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(voiceClipWillPlayOrRecord:) name:kVoiceClipsShouldPauseNotification object:nil];
@@ -296,12 +296,21 @@ NSNotificationName kVoiceClipsShouldPauseNotification = @"kVoiceClipsShouldPause
 }
 
 - (void)voiceClipWillPlayOrRecord:(NSNotification*)aNotification {
-    if (aNotification.object == self) {
+    if (!self.isPlaying) {
         return;
     }
     
-    if (self.isPlaying) {
-        [self voiceClipViewShouldPlayOrPause:self.cachedVoiceClipView];
+    MEGAChatMessage *message = aNotification.object;
+    NSNumber *deletedNumber = [aNotification.userInfo objectForKey:@"deleted"];
+    BOOL deleted = deletedNumber ? deletedNumber.boolValue : NO;
+    if (message && message.chatId == self.message.chatId && message.messageId == self.message.messageId) {
+        if (deleted) {
+            [self voiceClipViewShouldPlayOrPause:self.cachedVoiceClipView];
+        }
+    } else {
+        if (!deleted) {
+            [self voiceClipViewShouldPlayOrPause:self.cachedVoiceClipView];
+        }
     }
 }
 
