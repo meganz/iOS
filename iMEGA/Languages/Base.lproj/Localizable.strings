@@ -493,7 +493,7 @@
 /* Button title that skips the current action */
 "skipButton"="Skip";
 /* Text shown to explain what means 'Enable Camera Uploads'. The 'Cloud Drive' is the MEGA section, so please keep consistency */
-"automaticallyBackupYourCamera"="Automatically backup your photos and videos to the Cloud Drive.";
+"Automatically backup your photos and videos to the Cloud Drive."="Automatically backup your photos and videos to the Cloud Drive.";
 /* Button title that enables the functionality 'Camera Uploads', which uploads all the photos in your device to MEGA */
 "enableCameraUploadsButton"="Enable Camera Uploads";
 /* Success message shown when Camera Uploads has been enabled */
@@ -505,9 +505,9 @@
 /* Message shown while uploading files. Plural. */
 "cameraUploadsPendingFiles"="Upload in progress, %lu files pending";
 /* Message shown the pending video file when photos uploaded and video upload is not enabled. Singular. */
-"cameraUploadsVideoPendingFile"="Photos uploaded, video uploads are off, 1 video not uploaded";
+"Photos uploaded, video uploads are off, 1 video not uploaded"="Photos uploaded, video uploads are off, 1 video not uploaded";
 /* Message shown the pending video files when photos uploaded and video upload is not enabled. Plural. */
-"cameraUploadsVideoPendingFiles"="Photos uploaded, video uploads are off, %lu videos not uploaded";
+"Photos uploaded, video uploads are off, %lu videos not uploaded"="Photos uploaded, video uploads are off, %lu videos not uploaded";
 /* Singular, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 1 file. */
 "indexOfTotalFile"="%1$d of %2$d file";
 /* Plural, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 3 files. */
@@ -661,67 +661,67 @@
 /* Header to explain that 'Upload videos', 'Use cellular connection' and 'Only when charging' are options of the Camera Uploads */
 "options"="Options";
 /* Name of the JPG image format */
-"JPGImageFormat"="JPG";
+"JPG"="JPG";
 /* A hint to show one option is recommended by MEGA */
-"recommendedByMEGA"="(Recommended)";
+"(Recommended)"="(Recommended)";
 /* Name of the HEIC image format */
-"HEICImageFormat"="HEIC";
+"HEIC"="HEIC";
 /* Header to introduce how to deal with HEIC format photos in Camera Uplaod */
-"HEICFormatHeader"="SAVE HEIC PHOTOS AS";
+"SAVE HEIC PHOTOS AS"="SAVE HEIC PHOTOS AS";
 /* Footer for HEIC format section */
-"HEICFormatFooter"="We recommend JPG, as its the most compatible format for photos.";
+"We recommend JPG, as its the most compatible format for photos."="We recommend JPG, as its the most compatible format for photos.";
 /* Name of the H.264 video format */
-"H264VideoFormat"="H.264";
+"H.264"="H.264";
 /* Name of the HEVC video format */
-"HEVCVideoFormat"="HEVC";
+"HEVC"="HEVC";
 /* Header to introduce how to deal with HEVC format videos in Camera Uplaod */
-"HEVCFormatHeader"="SAVE HEVC VIDEOS AS";
+"SAVE HEVC VIDEOS AS"="SAVE HEVC VIDEOS AS";
 /* Footer for HEVC format section */
-"HEVCFormatFooter"="We recommend H.264, as its the most compatible format for videos.";
+"We recommend H.264, as its the most compatible format for videos."="We recommend H.264, as its the most compatible format for videos.";
 /* Footer for video compression quality */
-"videoUploadsCompressionQualityFooter"="Compression quality when to transcode HEVC videos to H.264 format.";
+"Compression quality when to transcode HEVC videos to H.264 format."="Compression quality when to transcode HEVC videos to H.264 format.";
 /* Option title to enable upload videos with Camera Uploads */
 "uploadVideosLabel"="Upload Videos";
 /* Option title to enable Camera Uploads only when the device is charging */
 "onlyWhenChargingLabel"="Only when charging";
 /* Footer text for Camera Upload switch section when camera upload is disabled */
-"cameraUploadsFooterWhenDisabled"="When enabled, photos will be uploaded.";
+"When enabled, photos will be uploaded."="When enabled, photos will be uploaded.";
 /* Footer text for Camera Upload switch section when only photos upload is enabled */
-"cameraUploadsFooterWhenPhotosEnabled"="Photos will be uploaded to Camera Uploads folder.";
+"Photos will be uploaded to Camera Uploads folder."="Photos will be uploaded to Camera Uploads folder.";
 /* Footer text for Camera Upload switch section when photos and videos upload is enabled */
-"cameraUploadsFooterWhenPhotosAndVideosEnabled"="Photos and videos will be uploaded to Camera Uploads folder.";
+"Photos and videos will be uploaded to Camera Uploads folder."="Photos and videos will be uploaded to Camera Uploads folder.";
 /* A hint to let user know live photos and bursts are included in Camera Upload */
-"livePhotosAndBurstsIncluded"="(Live Photos and Bursts are included)";
+"(Live Photos and Bursts are included)"="(Live Photos and Bursts are included)";
 /* Title to show for upload in background */
-"uploadInBackground"="Upload in Background";
+"Upload in Background"="Upload in Background";
 /* Title for the location based background upload message */
-"locationBasedUploadTitle"="Enable location services for background upload";
+"Enable location services for background upload"="Enable location services for background upload";
 /* Message for the location based background upload when the location data access is not denied by users */
-"locationBasedUploadMessageWhenAccessNotDenied"="MEGA can periodically start camera uploads in background when your location changes.";
+"MEGA can periodically start camera uploads in background when your location changes."="MEGA can periodically start camera uploads in background when your location changes.";
 /* Message for the location based background upload when the location data access is denied by users */
-"locationBasedUploadMessageWhenAccessDenied"="Please select “Always” at your Location page in Settings, then MEGA can periodically start camera uploads in background when your location changes.";
+"Please select “Always” at your Location page in Settings, then MEGA can periodically start camera uploads in background when your location changes."="Please select “Always” at your Location page in Settings, then MEGA can periodically start camera uploads in background when your location changes.";
 /* Title for turn on a feature */
-"turnOn"="Turn On";
+"Turn On"="Turn On";
 /* Title for turn on a feature in settings */
-"turnOnInSettings"="Turn On in Settings";
+"Turn On in Settings"="Turn On in Settings";
 /* Footer for video uploads switch section when enabled */
-"videoUploadsFooterWhenEnabled"="Videos will be uploaded to the Camera Uploads folder.";
+"Videos will be uploaded to the Camera Uploads folder."="Videos will be uploaded to the Camera Uploads folder.";
 /* Footer for video uploads switch section when disabled */
-"videoUploadsFooterWhenDisabled"="When enabled, videos will be uploaded.";
+"When enabled, videos will be uploaded."="When enabled, videos will be uploaded.";
 /* Title for new camera upload feature */
-"newCameraUpload"="New Camera Upload!";
+"New Camera Upload!"="New Camera Upload!";
 /* A messge for camera upload v2 migration */
-"newCameraUploadMigrationMessage"="Now you can choose to convert the HEIF/HEVC photos and videos to the most compatible JPEG/H.264 formats.";
+"Now you can choose to convert the HEIF/HEVC photos and videos to the most compatible JPEG/H.264 formats."="Now you can choose to convert the HEIF/HEVC photos and videos to the most compatible JPEG/H.264 formats.";
 /* Title for an action to use most compatible formats */
-"useMostCompatibleFormats"="Use Most Compatible Formats";
+"Use Most Compatible Formats"="Use Most Compatible Formats";
 /* Title for custom settings */
-"customSettings"="Custom Settings";
+"Custom Settings"="Custom Settings";
 /* Title to show when device local storage is full */
-"localStorageFullTitle"="%@ Storage Full";
+"%@ Storage Full"="%@ Storage Full";
 /* Detail for local storage full situation */
-"localStorageFullDetail"="You do not have enough storage to upload camera. Free up space by deleting unneeded apps, videos or music. You can manage your storage in %@";
+"You do not have enough storage to upload camera. Free up space by deleting unneeded apps, videos or music. You can manage your storage in %@"="You do not have enough storage to upload camera. Free up space by deleting unneeded apps, videos or music. You can manage your storage in %@";
 /* Navigation path for Storage settings in iOS */
-"iOSStorageNavigationPath"="Settings > General > %@ Storage";
+"Settings > General > %@ Storage"="Settings > General > %@ Storage";
 /* App means “Application” */
 "App version"="App version";
 /* Title of the label where the SDK version is shown */
@@ -1152,7 +1152,7 @@
 /* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature. */
 "useMobileData"="Use Mobile Data";
 /* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for videos. */
-"useMobileDataForVideos"="Use Mobile Data for Videos";
+"Use Mobile Data for Videos"="Use Mobile Data for Videos";
 /* A header in the Chat settings. This changes the user's status to Away after some time of inactivity. */
 "autoAway"="Auto-away";
 /* */

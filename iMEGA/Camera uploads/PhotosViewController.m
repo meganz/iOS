@@ -261,9 +261,9 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
 - (void)configStateLabelByVideoPendingCount:(NSUInteger)count {
     NSString *videoMessage;
     if (count == 1) {
-        videoMessage = AMLocalizedString(@"cameraUploadsVideoPendingFile", nil);
+        videoMessage = AMLocalizedString(@"Photos uploaded, video uploads are off, 1 video not uploaded", nil);
     } else {
-        videoMessage = [NSString stringWithFormat:AMLocalizedString(@"cameraUploadsVideoPendingFiles", nil), (unsigned long)count];
+        videoMessage = [NSString stringWithFormat:AMLocalizedString(@"Photos uploaded, video uploads are off, %lu videos not uploaded", nil), (unsigned long)count];
     }
     
     self.stateLabel.text = videoMessage;
@@ -737,7 +737,7 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
     boardingAlertVC.modalPresentationStyle = UIModalPresentationOverFullScreen;
     boardingAlertVC.image = [UIImage imageNamed:@"cameraUploadsBoarding"];
     boardingAlertVC.viewTitle = AMLocalizedString(@"enableCameraUploadsButton", @"Button title that enables the functionality 'Camera Uploads', which uploads all the photos in your device to MEGA");
-    boardingAlertVC.detail = AMLocalizedString(@"automaticallyBackupYourCamera", nil);
+    boardingAlertVC.detail = AMLocalizedString(@"Automatically backup your photos and videos to the Cloud Drive.", nil);
     boardingAlertVC.firstButtonTitle = AMLocalizedString(@"enable", @"Text button shown when camera upload will be enabled");
     boardingAlertVC.dismissButtonTitle = AMLocalizedString(@"notNow", nil);
     
@@ -772,9 +772,9 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
     CustomModalAlertViewController *warningVC = [[CustomModalAlertViewController alloc] init];
     warningVC.modalPresentationStyle = UIModalPresentationOverFullScreen;
     warningVC.image = [UIImage imageNamed:@"disk_storage_full"];
-    warningVC.viewTitle = [NSString stringWithFormat:AMLocalizedString(@"localStorageFullTitle", nil), UIDevice.currentDevice.localizedModel];
-    NSString *storageSettingPath = [NSString stringWithFormat:AMLocalizedString(@"iOSStorageNavigationPath", nil), UIDevice.currentDevice.localizedModel];
-    warningVC.detail = [NSString stringWithFormat:AMLocalizedString(@"localStorageFullDetail", nil), storageSettingPath];
+    warningVC.viewTitle = [NSString stringWithFormat:AMLocalizedString(@"%@ Storage Full", nil), UIDevice.currentDevice.localizedModel];
+    NSString *storageSettingPath = [NSString stringWithFormat:AMLocalizedString(@"Settings > General > %@ Storage", nil), UIDevice.currentDevice.localizedModel];
+    warningVC.detail = [NSString stringWithFormat:AMLocalizedString(@"You do not have enough storage to upload camera. Free up space by deleting unneeded apps, videos or music. You can manage your storage in %@", nil), storageSettingPath];
     warningVC.boldInDetail = storageSettingPath;
     warningVC.firstButtonTitle = AMLocalizedString(@"ok", nil);
     warningVC.firstCompletion = ^{
@@ -873,7 +873,7 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
 
 - (NSAttributedString *)descriptionForEmptyDataSet:(UIScrollView *)scrollView {
     if (MEGAReachabilityManager.isReachable && !CameraUploadManager.isCameraUploadEnabled) {
-        NSString *description = AMLocalizedString(@"automaticallyBackupYourCamera", nil);
+        NSString *description = AMLocalizedString(@"Automatically backup your photos and videos to the Cloud Drive.", nil);
         return [[NSAttributedString alloc] initWithString:description attributes:[Helper descriptionAttributesForEmptyState]];
     } else {
         return nil;
