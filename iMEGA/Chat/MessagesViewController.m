@@ -441,7 +441,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
         [[MEGASdkManager sharedMEGAChatSdk] closeChatPreview:self.chatRoom.chatId];
     }
     
-    [NSNotificationCenter.defaultCenter postNotificationName:kVoiceClipsShouldPauseNotification object:self];
+    [NSNotificationCenter.defaultCenter postNotificationName:kVoiceClipsShouldPauseNotification object:nil];
 }
 
 - (BOOL)hidesBottomBarWhenPushed {
@@ -1747,8 +1747,11 @@ static NSMutableSet<NSString *> *tapForInfoSet;
 - (void)deleteSelectedMessages {
     NSMutableArray<NSIndexPath *> *indexPaths = [[NSMutableArray alloc] init];
     for (MEGAChatMessage *message in self.selectedMessages) {
-        if (message.type == MEGAChatMessageTypeAttachment) {
+        if (message.type == MEGAChatMessageTypeAttachment || message.type == MEGAChatMessageTypeVoiceClip) {
             [[MEGASdkManager sharedMEGAChatSdk] revokeAttachmentMessageForChat:self.chatRoom.chatId messageId:message.messageId];
+            if (message.type == MEGAChatMessageTypeVoiceClip) {
+                [NSNotificationCenter.defaultCenter postNotificationName:kVoiceClipsShouldPauseNotification object:message userInfo:@{ @"deleted" : @(YES) }];
+            }
         } else {
             NSUInteger index = [self.messages indexOfObject:message];
             if (message.status == MEGAChatMessageStatusSending) {
@@ -2048,7 +2051,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
     self.inputToolbarState = state;
     [self updateNavigationBarButtonsState];
     if (state >= InputToolbarStateRecordingUnlocked) {
-        [NSNotificationCenter.defaultCenter postNotificationName:kVoiceClipsShouldPauseNotification object:self];
+        [NSNotificationCenter.defaultCenter postNotificationName:kVoiceClipsShouldPauseNotification object:nil];
     }
 }
 
