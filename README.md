@@ -1,5 +1,7 @@
-MEGA iOS Client
+MEGA for iOS
 ===============
+
+[![Download on the App Store](https://linkmaker.itunes.apple.com/en-us/badge-lrg.svg?releaseDate=2013-11-26&kind=iossoftware&bubble=ios_apps)](https://apps.apple.com/us/app/mega/id706857885?mt=8)
 
 A fully-featured client to access your Cloud Storage provided by MEGA.
 
@@ -36,4 +38,10 @@ git submodule update --init --recursive
 
 8.- Enjoy!
 
-If you want to build the third party dependencies by yourself: open a terminal in the directory `iMEGA/sdk/bindings/ios/3rdparty`. Run sh build-all.sh --enable-chat (Wait until the process ends, it will take some minutes ~30). To build all third party dependencies, you need to have installed: autoconf, automake, cmake and libtool. To build webrtc visit: https://webrtc.org/native-code/ios/
+If you want to build the third party dependencies by yourself: 
+- Open a terminal in the directory `iMEGA/sdk/bindings/ios/3rdparty`. 
+- Run sh build-all.sh --enable-chat (Wait until the process ends, it will take some time, ~30 minutes). 
+
+To build all third party dependencies, you need to have installed: `autoconf`, `automake`, `cmake` and `libtool`. 
+
+To build webrtc visit: https://webrtc.org/native-code/ios/
