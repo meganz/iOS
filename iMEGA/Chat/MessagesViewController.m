@@ -223,7 +223,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
     // Voice clips tooltip:
     NSTextAttachment *voiceTipTextAttachment = [[NSTextAttachment alloc] init];
     UIImage *voiceTipImage = [UIImage imageNamed:@"voiceTip"];
-    voiceTipTextAttachment.bounds = CGRectMake(0.0f, roundf(self.tooltipLabel.font.capHeight - voiceTipImage.size.height / 2) / 2, voiceTipImage.size.width / 2, voiceTipImage.size.height / 2);
+    voiceTipTextAttachment.bounds = CGRectMake(0.0f, roundf(self.tooltipLabel.font.capHeight - voiceTipImage.size.height) / 2.0, voiceTipImage.size.width, voiceTipImage.size.height);
     voiceTipTextAttachment.image = voiceTipImage;
     NSAttributedString *voiceTipAttributedString = [NSAttributedString attributedStringWithAttachment:voiceTipTextAttachment];
     
