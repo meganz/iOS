@@ -129,15 +129,7 @@ static NSString * const VideoAttributeImageName = @"AttributeImage";
 
 #pragma mark - upload task
 
-- (void)handleProcessedImageFile {
-    [self handleProcessedFile:NO];
-}
-
-- (void)handleProcessedVideoFile {
-    [self handleProcessedFile:YES];
-}
-
-- (void)handleProcessedFile:(BOOL)isVideoFile {
+- (void)handleProcessedFileWithMediaType:(PHAssetMediaType)type {
     if (self.isCancelled) {
         [self finishOperationWithStatus:CameraAssetUploadStatusCancelled shouldUploadNextAsset:NO];
         return;
@@ -151,7 +143,7 @@ static NSString * const VideoAttributeImageName = @"AttributeImage";
         return;
     }
     
-    if (isVideoFile) {
+    if (type == PHAssetMediaTypeVideo) {
         self.uploadInfo.attributeImageURL = [[self.uploadInfo.fileURL URLByAppendingPathExtension:VideoAttributeImageName] URLByAppendingPathExtension:MEGAJPGFileExtension];
         if (![self.uploadInfo.fileURL mnz_exportVideoThumbnailToImageURL:self.uploadInfo.attributeImageURL]) {
             MEGALogError(@"[Camera Upload] %@ error when to export video attribute image", self);
