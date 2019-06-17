@@ -660,20 +660,12 @@
 "on"="On";
 /* Header to explain that 'Upload videos', 'Use cellular connection' and 'Only when charging' are options of the Camera Uploads */
 "options"="Options";
-/* Name of the JPG image format */
-"JPG"="JPG";
 /* A hint to show one option is recommended by MEGA */
 "(Recommended)"="(Recommended)";
-/* Name of the HEIC image format */
-"HEIC"="HEIC";
 /* Header to introduce how to deal with HEIC format photos in Camera Uplaod */
 "SAVE HEIC PHOTOS AS"="SAVE HEIC PHOTOS AS";
 /* Footer for HEIC format section */
 "We recommend JPG, as its the most compatible format for photos."="We recommend JPG, as its the most compatible format for photos.";
-/* Name of the H.264 video format */
-"H.264"="H.264";
-/* Name of the HEVC video format */
-"HEVC"="HEVC";
 /* Header to introduce how to deal with HEVC format videos in Camera Uplaod */
 "SAVE HEVC VIDEOS AS"="SAVE HEVC VIDEOS AS";
 /* Footer for HEVC format section */
