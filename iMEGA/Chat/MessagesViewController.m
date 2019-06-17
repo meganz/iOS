@@ -1569,7 +1569,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
         case ToolbarTypeForward: {
             UIBarButtonItem *shareBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(shareSelectedMessages:)];
             UIBarButtonItem *flexibleItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
-            UIBarButtonItem *forwardBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"forwardToolbar"] style:UIBarButtonItemStyleDone target:self action:@selector(forwardSelectedMessages)];
+            UIBarButtonItem *forwardBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"forwardToolbar"].imageFlippedForRightToLeftLayoutDirection style:UIBarButtonItemStyleDone target:self action:@selector(forwardSelectedMessages)];
             [self setToolbarItems:@[shareBarButtonItem, flexibleItem, forwardBarButtonItem]];
             
             break;
@@ -2205,7 +2205,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
         cell.avatarImageView.hidden = NO;
         cell.selectionImageView.hidden = YES;
         if (message.shouldShowForwardAccessory && [MEGASdkManager sharedMEGAChatSdk].initState != MEGAChatInitAnonymous) {
-            [cell.accessoryButton setImage:[UIImage imageNamed:@"forward"] forState:UIControlStateNormal];
+            [cell.accessoryButton setImage:[UIImage imageNamed:@"forward"].imageFlippedForRightToLeftLayoutDirection forState:UIControlStateNormal];
             cell.accessoryButton.hidden = NO;
         }
     }
