@@ -606,6 +606,7 @@
 		A802B2011FAB2EA500AC8BB0 /* MEGAChatAnswerCallRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A802B2001FAB2EA500AC8BB0 /* MEGAChatAnswerCallRequestDelegate.m */; };
 		A810CF2F20C157BC00A6C6C5 /* FLAnimatedImage.m in Sources */ = {isa = PBXBuildFile; fileRef = A810CF2D20C157BB00A6C6C5 /* FLAnimatedImage.m */; };
 		A810CF3020C157BC00A6C6C5 /* FLAnimatedImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = A810CF2E20C157BC00A6C6C5 /* FLAnimatedImageView.m */; };
+		A813A79D22B38D7F00418737 /* AVAudioSession+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = A813A79C22B38D7F00418737 /* AVAudioSession+MNZCategory.m */; };
 		A815FCE41FE1795C0075AC29 /* MEGAChatCreateChatGroupRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A815FCE31FE1795C0075AC29 /* MEGAChatCreateChatGroupRequestDelegate.m */; };
 		A815FCEA1FE2AD080075AC29 /* UIApplication+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = A815FCE91FE2AD080075AC29 /* UIApplication+MNZCategory.m */; };
 		A81613FE1EDC1CA900500381 /* MEGACreateAccountRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A81613FD1EDC1CA900500381 /* MEGACreateAccountRequestDelegate.m */; };
@@ -727,12 +728,12 @@
 		A836581C2102101C005E616F /* Contacts.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 415226731A692ECC00EC7BB6 /* Contacts.storyboard */; };
 		A836581D21021063005E616F /* ItemCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 835223B0205957DD00A47438 /* ItemCollectionViewCell.m */; };
 		A83892431EB9CD9B00C83874 /* MEGAChatMessage+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = A83892421EB9CD9B00C83874 /* MEGAChatMessage+MNZCategory.m */; };
-		A85665BC21A468D400B010F8 /* MEGAMessageGeoLocationView.m in Sources */ = {isa = PBXBuildFile; fileRef = A85665BA21A468D400B010F8 /* MEGAMessageGeoLocationView.m */; };
-		A85665BD21A468D400B010F8 /* MEGAMessageGeoLocationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A85665BB21A468D400B010F8 /* MEGAMessageGeoLocationView.xib */; };
-		A85665C021A46B8100B010F8 /* MEGALocationMediaItem.m in Sources */ = {isa = PBXBuildFile; fileRef = A85665BF21A46B8100B010F8 /* MEGALocationMediaItem.m */; };
 		A841E63C20CAB460005E1D1B /* MEGAMessageCallManagementView.m in Sources */ = {isa = PBXBuildFile; fileRef = A841E63B20CAB460005E1D1B /* MEGAMessageCallManagementView.m */; };
 		A841E63E20CAB477005E1D1B /* MEGAMessageCallManagementView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A841E63D20CAB477005E1D1B /* MEGAMessageCallManagementView.xib */; };
 		A841E64120CE6681005E1D1B /* MEGACallManagementMediaItem.m in Sources */ = {isa = PBXBuildFile; fileRef = A841E64020CE6681005E1D1B /* MEGACallManagementMediaItem.m */; };
+		A85665BC21A468D400B010F8 /* MEGAMessageGeoLocationView.m in Sources */ = {isa = PBXBuildFile; fileRef = A85665BA21A468D400B010F8 /* MEGAMessageGeoLocationView.m */; };
+		A85665BD21A468D400B010F8 /* MEGAMessageGeoLocationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A85665BB21A468D400B010F8 /* MEGAMessageGeoLocationView.xib */; };
+		A85665C021A46B8100B010F8 /* MEGALocationMediaItem.m in Sources */ = {isa = PBXBuildFile; fileRef = A85665BF21A46B8100B010F8 /* MEGALocationMediaItem.m */; };
 		A85740C42032F6B80033034C /* MOChatDraft+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = A85740C02032F6B70033034C /* MOChatDraft+CoreDataProperties.m */; };
 		A85740C52032F6B80033034C /* MOChatDraft+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = A85740C22032F6B80033034C /* MOChatDraft+CoreDataClass.m */; };
 		A85740C62032F6E70033034C /* MOChatDraft+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = A85740C22032F6B80033034C /* MOChatDraft+CoreDataClass.m */; };
@@ -1650,6 +1651,8 @@
 		A810CF2C20C157BB00A6C6C5 /* FLAnimatedImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLAnimatedImageView.h; sourceTree = "<group>"; };
 		A810CF2D20C157BB00A6C6C5 /* FLAnimatedImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLAnimatedImage.m; sourceTree = "<group>"; };
 		A810CF2E20C157BC00A6C6C5 /* FLAnimatedImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLAnimatedImageView.m; sourceTree = "<group>"; };
+		A813A79B22B38D7F00418737 /* AVAudioSession+MNZCategory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AVAudioSession+MNZCategory.h"; sourceTree = "<group>"; };
+		A813A79C22B38D7F00418737 /* AVAudioSession+MNZCategory.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "AVAudioSession+MNZCategory.m"; sourceTree = "<group>"; };
 		A815FCE21FE1795C0075AC29 /* MEGAChatCreateChatGroupRequestDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MEGAChatCreateChatGroupRequestDelegate.h; sourceTree = "<group>"; };
 		A815FCE31FE1795C0075AC29 /* MEGAChatCreateChatGroupRequestDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MEGAChatCreateChatGroupRequestDelegate.m; sourceTree = "<group>"; };
 		A815FCE81FE2AD080075AC29 /* UIApplication+MNZCategory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIApplication+MNZCategory.h"; sourceTree = "<group>"; };
@@ -1861,16 +1864,16 @@
 		A82E5BF31F3470B5003C149C /* Spotlight_folder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Spotlight_folder.png; path = Spotlight/Spotlight_folder.png; sourceTree = "<group>"; };
 		A83892411EB9CD9B00C83874 /* MEGAChatMessage+MNZCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MEGAChatMessage+MNZCategory.h"; sourceTree = "<group>"; };
 		A83892421EB9CD9B00C83874 /* MEGAChatMessage+MNZCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MEGAChatMessage+MNZCategory.m"; sourceTree = "<group>"; };
-		A85665B921A468D400B010F8 /* MEGAMessageGeoLocationView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MEGAMessageGeoLocationView.h; sourceTree = "<group>"; };
-		A85665BA21A468D400B010F8 /* MEGAMessageGeoLocationView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MEGAMessageGeoLocationView.m; sourceTree = "<group>"; };
-		A85665BB21A468D400B010F8 /* MEGAMessageGeoLocationView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MEGAMessageGeoLocationView.xib; sourceTree = "<group>"; };
-		A85665BE21A46B8100B010F8 /* MEGALocationMediaItem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MEGALocationMediaItem.h; sourceTree = "<group>"; };
-		A85665BF21A46B8100B010F8 /* MEGALocationMediaItem.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MEGALocationMediaItem.m; sourceTree = "<group>"; };
 		A841E63A20CAB460005E1D1B /* MEGAMessageCallManagementView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MEGAMessageCallManagementView.h; sourceTree = "<group>"; };
 		A841E63B20CAB460005E1D1B /* MEGAMessageCallManagementView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MEGAMessageCallManagementView.m; sourceTree = "<group>"; };
 		A841E63D20CAB477005E1D1B /* MEGAMessageCallManagementView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MEGAMessageCallManagementView.xib; sourceTree = "<group>"; };
 		A841E63F20CE6681005E1D1B /* MEGACallManagementMediaItem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MEGACallManagementMediaItem.h; sourceTree = "<group>"; };
 		A841E64020CE6681005E1D1B /* MEGACallManagementMediaItem.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MEGACallManagementMediaItem.m; sourceTree = "<group>"; };
+		A85665B921A468D400B010F8 /* MEGAMessageGeoLocationView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MEGAMessageGeoLocationView.h; sourceTree = "<group>"; };
+		A85665BA21A468D400B010F8 /* MEGAMessageGeoLocationView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MEGAMessageGeoLocationView.m; sourceTree = "<group>"; };
+		A85665BB21A468D400B010F8 /* MEGAMessageGeoLocationView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MEGAMessageGeoLocationView.xib; sourceTree = "<group>"; };
+		A85665BE21A46B8100B010F8 /* MEGALocationMediaItem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MEGALocationMediaItem.h; sourceTree = "<group>"; };
+		A85665BF21A46B8100B010F8 /* MEGALocationMediaItem.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MEGALocationMediaItem.m; sourceTree = "<group>"; };
 		A85740C02032F6B70033034C /* MOChatDraft+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MOChatDraft+CoreDataProperties.m"; sourceTree = "<group>"; };
 		A85740C12032F6B80033034C /* MOChatDraft+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MOChatDraft+CoreDataProperties.h"; sourceTree = "<group>"; };
 		A85740C22032F6B80033034C /* MOChatDraft+CoreDataClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MOChatDraft+CoreDataClass.m"; sourceTree = "<group>"; };
@@ -2930,6 +2933,8 @@
 				772BA5712243C7D100F062CB /* UITableView+MNZCategory.m */,
 				8319C15C22A138D70048B8A3 /* UIView+MNZCategory.h */,
 				8319C15D22A138D70048B8A3 /* UIView+MNZCategory.m */,
+				A813A79B22B38D7F00418737 /* AVAudioSession+MNZCategory.h */,
+				A813A79C22B38D7F00418737 /* AVAudioSession+MNZCategory.m */,
 			);
 			path = Categories;
 			sourceTree = "<group>";
@@ -4813,6 +4818,7 @@
 				41D14F6E1B85F6D40005A27A /* ProductDetailViewController.m in Sources */,
 				777E922D203EE14B00266229 /* QRSettingsTableViewController.m in Sources */,
 				8364742820723DCC00AED3D2 /* MEGAShowPasswordReminderRequestDelegate.m in Sources */,
+				A813A79D22B38D7F00418737 /* AVAudioSession+MNZCategory.m in Sources */,
 				417279551DB663FA001AC818 /* JSQMessagesComposerTextView.m in Sources */,
 				5BB68CA120359B5400B03C00 /* PasswordStrengthIndicatorView.m in Sources */,
 				E8B519261AC9CD8000BB7324 /* TransfersViewController.m in Sources */,

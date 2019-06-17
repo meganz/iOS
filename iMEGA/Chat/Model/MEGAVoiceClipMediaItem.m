@@ -6,6 +6,7 @@
 #import "JSQMessagesBubbleImageFactory.h"
 #import "JSQMessagesMediaViewBubbleImageMasker.h"
 
+#import "AVAudioSession+MNZCategory.h"
 #import "MEGAChatMessage+MNZCategory.h"
 #import "MEGANode+MNZCategory.h"
 #import "MEGAMessageVoiceClipView.h"
@@ -53,10 +54,6 @@ NSNotificationName kVoiceClipsShouldPauseNotification = @"kVoiceClipsShouldPause
 - (void)discardContentIfPossible {}
 
 - (void)endContentAccess {}
-
-- (void)dealloc {
-    [NSNotificationCenter.defaultCenter removeObserver:self name:UIDeviceProximityStateDidChangeNotification object:nil];
-}
 
 #pragma mark - Setters
 
@@ -120,8 +117,6 @@ NSNotificationName kVoiceClipsShouldPauseNotification = @"kVoiceClipsShouldPause
         [[MEGASdkManager sharedMEGASdk] startDownloadTopPriorityWithNode:node localPath:nodePath appData:nil delegate:delegate];
     }
     
-    [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(proximityChange:) name:UIDeviceProximityStateDidChangeNotification object:nil];
-    
     // Bubble:
     JSQMessagesBubbleImageFactory *bubbleFactory = [[JSQMessagesBubbleImageFactory alloc] initWithBubbleImage:[UIImage imageNamed:@"bubble_tailless"] capInsets:UIEdgeInsetsZero layoutDirection:[UIApplication sharedApplication].userInterfaceLayoutDirection];
     JSQMessagesMediaViewBubbleImageMasker *messageMediaViewBubleImageMasker = [[JSQMessagesMediaViewBubbleImageMasker alloc] initWithBubbleImageFactory:bubbleFactory];
@@ -155,11 +150,8 @@ NSNotificationName kVoiceClipsShouldPauseNotification = @"kVoiceClipsShouldPause
     
     NSError *error;
     if (self.isPlaying) {
-        if (AVAudioSession.sharedInstance.currentRoute.outputs.count > 0) {
-            AVAudioSessionPortDescription *audioSessionPortDestription = AVAudioSession.sharedInstance.currentRoute.outputs.firstObject;
-            if ([audioSessionPortDestription.portType isEqualToString:AVAudioSessionPortBuiltInReceiver]) {
-                self.revertSpeaker = YES;
-            }
+        if ([AVAudioSession.sharedInstance mnz_isOutputEqualToPortType:AVAudioSessionPortBuiltInReceiver]) {
+            self.revertSpeaker = YES;
         }
         
         if (![[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayAndRecord withOptions:AVAudioSessionCategoryOptionAllowBluetooth | AVAudioSessionCategoryOptionAllowBluetoothA2DP | AVAudioSessionCategoryOptionMixWithOthers error:&error]) {
@@ -171,12 +163,7 @@ NSNotificationName kVoiceClipsShouldPauseNotification = @"kVoiceClipsShouldPause
             return;
         }
         
-        if (AVAudioSession.sharedInstance.currentRoute.outputs.count > 0) {
-            AVAudioSessionPortDescription *audioSessionPortDestription = AVAudioSession.sharedInstance.currentRoute.outputs.firstObject;
-            if ([audioSessionPortDestription.portType isEqualToString:AVAudioSessionPortBuiltInReceiver]) {
-                [AVAudioSession.sharedInstance overrideOutputAudioPort:AVAudioSessionPortOverrideSpeaker error:nil];
-            }
-        }
+        [AVAudioSession.sharedInstance mnz_setSpeakerEnabled:YES];
         
         if (!self.audioPlayer) {
             MEGANode *node = [self.message.nodeList nodeAtIndex:0];
@@ -198,9 +185,11 @@ NSNotificationName kVoiceClipsShouldPauseNotification = @"kVoiceClipsShouldPause
         [self.audioPlayer play];
         [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(didPlayToEndTime:) name:AVPlayerItemDidPlayToEndTimeNotification object:nil];
         [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(voiceClipWillPlayOrRecord:) name:kVoiceClipsShouldPauseNotification object:nil];
+        [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(proximityChange:) name:UIDeviceProximityStateDidChangeNotification object:nil];
     } else {
         [NSNotificationCenter.defaultCenter removeObserver:self name:AVPlayerItemDidPlayToEndTimeNotification object:nil];
         [NSNotificationCenter.defaultCenter removeObserver:self name:kVoiceClipsShouldPauseNotification object:nil];
+        [NSNotificationCenter.defaultCenter removeObserver:self name:UIDeviceProximityStateDidChangeNotification object:nil];
         [self.audioPlayer pause];
     }
     [self updateUI];
@@ -216,11 +205,8 @@ NSNotificationName kVoiceClipsShouldPauseNotification = @"kVoiceClipsShouldPause
     dispatch_async(dispatch_get_main_queue(), ^{
         if (self.isPlaying) {
             [self.cachedVoiceClipView.playPauseButton setImage:[UIImage imageNamed:@"pauseVoiceClip"] forState:UIControlStateNormal];
-            if (AVAudioSession.sharedInstance.currentRoute.outputs.count > 0) {
-                AVAudioSessionPortDescription *audioSessionPortDestription = AVAudioSession.sharedInstance.currentRoute.outputs.firstObject;
-                if ([audioSessionPortDestription.portType isEqualToString:AVAudioSessionPortBuiltInSpeaker]) {
-                    UIDevice.currentDevice.proximityMonitoringEnabled = YES;
-                }
+            if ([AVAudioSession.sharedInstance mnz_isOutputEqualToPortType:AVAudioSessionPortBuiltInSpeaker]) {
+                UIDevice.currentDevice.proximityMonitoringEnabled = YES;
             }
         } else {
             [self.cachedVoiceClipView.playPauseButton setImage:[UIImage imageNamed:@"playVoiceClip"] forState:UIControlStateNormal];
@@ -249,16 +235,12 @@ NSNotificationName kVoiceClipsShouldPauseNotification = @"kVoiceClipsShouldPause
     
     [NSNotificationCenter.defaultCenter removeObserver:self name:AVPlayerItemDidPlayToEndTimeNotification object:nil];
     [NSNotificationCenter.defaultCenter removeObserver:self name:AVAudioSessionRouteChangeNotification object:nil];
+    [NSNotificationCenter.defaultCenter removeObserver:self name:UIDeviceProximityStateDidChangeNotification object:nil];
     
     NSError *error;
     if ([MEGASdkManager.sharedMEGAChatSdk chatCallsWithState:MEGAChatCallStatusInProgress].size > 0) {
         if (self.shouldRevertSpeaker) {
-            if (AVAudioSession.sharedInstance.currentRoute.outputs.count > 0) {
-                AVAudioSessionPortDescription *audioSessionPortDestription = AVAudioSession.sharedInstance.currentRoute.outputs.firstObject;
-                if ([audioSessionPortDestription.portType isEqualToString:AVAudioSessionPortBuiltInSpeaker]) {
-                    [AVAudioSession.sharedInstance overrideOutputAudioPort:AVAudioSessionPortOverrideNone error:nil];
-                }
-            }
+            [AVAudioSession.sharedInstance mnz_setSpeakerEnabled:NO];
             self.revertSpeaker = NO;
         }
     } else {
@@ -281,11 +263,8 @@ NSNotificationName kVoiceClipsShouldPauseNotification = @"kVoiceClipsShouldPause
         return;
     }
     
-    if (AVAudioSession.sharedInstance.currentRoute.outputs.count > 0) {
-        AVAudioSessionPortDescription *audioSessionPortDestription = AVAudioSession.sharedInstance.currentRoute.outputs.firstObject;
-        if (![audioSessionPortDestription.portType isEqualToString:AVAudioSessionPortBuiltInReceiver] && ![audioSessionPortDestription.portType isEqualToString:AVAudioSessionPortBuiltInSpeaker]) {
-            return;
-        }
+    if (![AVAudioSession.sharedInstance mnz_isOutputEqualToPortType:AVAudioSessionPortBuiltInReceiver] && ![AVAudioSession.sharedInstance mnz_isOutputEqualToPortType:AVAudioSessionPortBuiltInSpeaker]) {
+        return;
     }
     
     if (UIDevice.currentDevice.proximityState) {
