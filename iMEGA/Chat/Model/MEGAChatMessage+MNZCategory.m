@@ -16,6 +16,7 @@
 #import "MEGARichPreviewMediaItem.h"
 #import "MEGASdkManager.h"
 #import "MEGAStore.h"
+#import "MEGAVoiceClipMediaItem.h"
 #import "NSAttributedString+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 #import "NSURL+MNZCategory.h"
@@ -45,7 +46,7 @@ static const void *richNumberTagKey = &richNumberTagKey;
 - (BOOL)isMediaMessage {
     BOOL mediaMessage = NO;
     
-    if (!self.isDeleted && (self.type == MEGAChatMessageTypeContact || self.type == MEGAChatMessageTypeAttachment || (self.warningDialog > MEGAChatMessageWarningDialogNone) || (self.type == MEGAChatMessageTypeContainsMeta && [self containsMetaAnyValue]) || self.richNumber || self.type == MEGAChatMessageTypeCallEnded || self.type == MEGAChatMessageTypeCallStarted)) {
+    if (!self.isDeleted && (self.type == MEGAChatMessageTypeContact || self.type == MEGAChatMessageTypeAttachment || self.type == MEGAChatMessageTypeVoiceClip || (self.warningDialog > MEGAChatMessageWarningDialogNone) || (self.type == MEGAChatMessageTypeContainsMeta && [self containsMetaAnyValue]) || self.richNumber || self.type == MEGAChatMessageTypeCallEnded || self.type == MEGAChatMessageTypeCallStarted)) {
         mediaMessage = YES;
     }
     
@@ -142,7 +143,7 @@ static const void *richNumberTagKey = &richNumberTagKey;
 - (BOOL)shouldShowForwardAccessory {
     BOOL shouldShowForwardAccessory = NO;
     
-    if (!self.isDeleted && (self.type == MEGAChatMessageTypeContact || self.type == MEGAChatMessageTypeAttachment || (self.type == MEGAChatMessageTypeContainsMeta && [self containsMetaAnyValue]) || self.node)) {
+    if (!self.isDeleted && (self.type == MEGAChatMessageTypeContact || self.type == MEGAChatMessageTypeAttachment || (self.type == MEGAChatMessageTypeVoiceClip && !self.richNumber) || (self.type == MEGAChatMessageTypeContainsMeta && [self containsMetaAnyValue]) || self.node)) {
         shouldShowForwardAccessory = YES;
     }
     
@@ -331,6 +332,8 @@ static const void *richNumberTagKey = &richNumberTagKey;
         text = @"MEGAChatMessageTypeAttachment";
     } else if (self.type == MEGAChatMessageTypeRevokeAttachment) {
         text = @"MEGAChatMessageTypeRevokeAttachment";
+    } else if (self.type == MEGAChatMessageTypeVoiceClip) {
+        text = @"MEGAChatMessageTypeVoiceClip";
     } else if (self.type == MEGAChatMessageTypeContainsMeta && self.containsMeta.type == MEGAChatContainsMetaTypeInvalid) {
         text = @"Message contains invalid meta";
     } else {
@@ -353,7 +356,17 @@ static const void *richNumberTagKey = &richNumberTagKey;
 }
 
 - (id<JSQMessageMediaData>)media {
-    id<JSQMessageMediaData> media = nil;
+    static NSCache *cache;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        cache = [NSCache new];
+        cache.countLimit = 200;
+    });
+    
+    id<JSQMessageMediaData> media = [cache objectForKey:@(self.messageHash)];
+    if (media) {
+        return media;
+    }
     
     switch (self.type) {
         case MEGAChatMessageTypeContact:
@@ -371,13 +384,16 @@ static const void *richNumberTagKey = &richNumberTagKey;
             break;
         }
             
+        case MEGAChatMessageTypeVoiceClip:
+            media = [[MEGAVoiceClipMediaItem alloc] initWithMEGAChatMessage:self];
+            break;
+            
         case MEGAChatMessageTypeContainsMeta: {
             if (self.containsMeta.type == MEGAChatContainsMetaTypeRichPreview) {
                 media = [[MEGARichPreviewMediaItem alloc] initWithMEGAChatMessage:self];
             } else if (self.containsMeta.type == MEGAChatContainsMetaTypeGeolocation) {
                 media = [[MEGALocationMediaItem alloc] initWithMEGAChatMessage:self];
             }
-            
             break;
         }
             
@@ -400,6 +416,9 @@ static const void *richNumberTagKey = &richNumberTagKey;
             break;
     }
     
+    if (media) {
+        [cache setObject:media forKey:@(self.messageHash)];
+    }
     return media;
 }
 
@@ -452,7 +471,7 @@ static const void *richNumberTagKey = &richNumberTagKey;
 #pragma mark - NSObject
 
 - (NSUInteger)hash {
-    NSUInteger contentHash = self.type == MEGAChatMessageTypeAttachment ? (NSUInteger)[self.nodeList nodeAtIndex:0].handle : self.content.hash ^ self.richNumber.hash;
+    NSUInteger contentHash = self.type == MEGAChatMessageTypeAttachment || self.type == MEGAChatMessageTypeVoiceClip ? (NSUInteger)[self.nodeList nodeAtIndex:0].handle : self.content.hash ^ self.richNumber.hash;
     NSUInteger metaHash = self.type == MEGAChatMessageTypeContainsMeta ? self.containsMeta.type : MEGAChatContainsMetaTypeInvalid;
     return self.senderId.hash ^ self.date.hash ^ contentHash ^ self.warningDialog ^ metaHash ^ self.localPreview;
 }

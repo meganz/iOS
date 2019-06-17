@@ -727,6 +727,20 @@
     return supportedShortFormat || supportedVideoCodecId;
 }
 
+- (NSString *)mnz_temporaryPathForDownloadCreatingDirectories:(BOOL)creatingDirectories {
+    NSString *nodeFolderPath = [NSTemporaryDirectory() stringByAppendingPathComponent:self.base64Handle];
+    NSString *nodeFilePath = [nodeFolderPath stringByAppendingPathComponent:self.name];
+    
+    NSError *error;
+    if (creatingDirectories && ![[NSFileManager defaultManager] fileExistsAtPath:nodeFolderPath isDirectory:nil]) {
+        if (![[NSFileManager defaultManager] createDirectoryAtPath:nodeFolderPath withIntermediateDirectories:YES attributes:nil error:&error]) {
+            MEGALogError(@"Create directory at path failed with error: %@", error);
+        }
+    }
+    
+    return nodeFilePath;
+}
+
 #pragma mark - Versions
 
 - (NSInteger)mnz_numberOfVersions {

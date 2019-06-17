@@ -8,6 +8,7 @@
 #import "LTHPasscodeViewController.h"
 #import "SVProgressHUD.h"
 
+#import "AVAudioSession+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 #import "UIApplication+MNZCategory.h"
 #import "UIImageView+MNZCategory.h"
@@ -836,6 +837,8 @@
             [self.collectionView reloadData];
             MEGALogDebug(@"[Group Call] Reload data %s", __PRETTY_FUNCTION__);
             [self playCallingSound];
+            
+            [AVAudioSession.sharedInstance mnz_setSpeakerEnabled:NO];
         }
     }];
     
@@ -907,18 +910,18 @@
 - (void)updateAudioOutputImage {
     self.volumeContainerView.hidden = !self.mpVolumeView.areWirelessRoutesAvailable;
     self.enableDisableSpeaker.hidden = !self.volumeContainerView.hidden;
-    AVAudioSessionPortDescription *audioSessionPortDestription = AVAudioSession.sharedInstance.currentRoute.outputs[0];
-    if ([audioSessionPortDestription.portType isEqualToString:AVAudioSessionPortBuiltInReceiver] || [audioSessionPortDestription.portType isEqualToString:AVAudioSessionPortHeadphones]) {
+    
+    if ([AVAudioSession.sharedInstance mnz_isOutputEqualToPortType:AVAudioSessionPortBuiltInReceiver] || [AVAudioSession.sharedInstance mnz_isOutputEqualToPortType:AVAudioSessionPortHeadphones]) {
         self.enableDisableSpeaker.selected = NO;
         [self.mpVolumeView setRouteButtonImage:[UIImage imageNamed:@"speakerOff"] forState:UIControlStateNormal];
-    } else if ([audioSessionPortDestription.portType isEqualToString:AVAudioSessionPortBuiltInSpeaker]) {
+    } else if ([AVAudioSession.sharedInstance mnz_isOutputEqualToPortType:AVAudioSessionPortBuiltInSpeaker]) {
         self.enableDisableSpeaker.selected = YES;
         [self.mpVolumeView setRouteButtonImage:[UIImage imageNamed:@"speakerOn"] forState:UIControlStateNormal];
     } else {
         [self.mpVolumeView setRouteButtonImage:[UIImage imageNamed:@"audioSourceActive"] forState:UIControlStateNormal];
     }
     
-    [[UIDevice currentDevice] setProximityMonitoringEnabled:[audioSessionPortDestription.portType isEqualToString:AVAudioSessionPortBuiltInReceiver]];
+    [[UIDevice currentDevice] setProximityMonitoringEnabled:[AVAudioSession.sharedInstance mnz_isOutputEqualToPortType:AVAudioSessionPortBuiltInReceiver]];
 }
 
 #pragma mark - MEGAChatCallDelegate
