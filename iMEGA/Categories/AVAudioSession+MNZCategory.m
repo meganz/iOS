@@ -10,12 +10,14 @@
         NSError *error;
         if (enabled) {
             if ([audioSessionPortDestription.portType isEqualToString:AVAudioSessionPortBuiltInReceiver]) {
+                MEGALogDebug(@"[AVAudioSession] Override output audio port from receiver to speaker");
                 if (![[AVAudioSession sharedInstance] overrideOutputAudioPort:AVAudioSessionPortOverrideSpeaker error:&error]) {
                     MEGALogError(@"[AVAudioSession] Error %@ overriding output audio port to AVAudioSessionPortOverrideSpeaker", error);
                 }
             }
         } else {
             if ([audioSessionPortDestription.portType isEqualToString:AVAudioSessionPortBuiltInSpeaker]) {
+                MEGALogDebug(@"[AVAudioSession] Override output audio port from speaker to receiver");
                 if (![[AVAudioSession sharedInstance] overrideOutputAudioPort:AVAudioSessionPortOverrideNone error:&error]) {
                     MEGALogError(@"[AVAudioSession] Error %@ overriding output audio port to AVAudioSessionPortOverrideNone", error);
                 }
