@@ -22,10 +22,10 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IHf-02-cch" userLabel="Content View">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="829.5"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="684"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="W4O-ZI-gXQ" userLabel="Content Stack View">
-                                                <rect key="frame" x="0.0" y="0.0" width="375" height="724.5"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="375" height="579"/>
                                                 <subviews>
                                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="verificationHeader" translatesAutoresizingMaskIntoConstraints="NO" id="ztT-na-Kbt">
                                                         <rect key="frame" x="0.0" y="0.0" width="375" height="291"/>
@@ -51,7 +51,7 @@
                                                         </constraints>
                                                     </view>
                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="bpR-oy-Uad">
-                                                        <rect key="frame" x="0.0" y="407" width="375" height="221.5"/>
+                                                        <rect key="frame" x="0.0" y="407" width="375" height="76"/>
                                                         <subviews>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zyq-Nx-ly7" userLabel="Top Line View">
                                                                 <rect key="frame" x="0.0" y="0.0" width="375" height="1"/>
@@ -61,20 +61,20 @@
                                                                 </constraints>
                                                             </view>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ubW-Mb-xKj">
-                                                                <rect key="frame" x="0.0" y="13" width="375" height="195.5"/>
+                                                                <rect key="frame" x="0.0" y="13" width="375" height="50"/>
                                                                 <subviews>
                                                                     <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="17" translatesAutoresizingMaskIntoConstraints="NO" id="R8r-Ee-A2h">
-                                                                        <rect key="frame" x="17" y="0.0" width="341" height="195.5"/>
+                                                                        <rect key="frame" x="17" y="0.0" width="341" height="50"/>
                                                                         <subviews>
                                                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="verificationCountry" adjustsImageSizeForAccessibilityContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="R6O-eq-hFA">
-                                                                                <rect key="frame" x="0.0" y="86" width="24" height="24"/>
+                                                                                <rect key="frame" x="0.0" y="13" width="24" height="24"/>
                                                                                 <constraints>
                                                                                     <constraint firstAttribute="width" constant="24" id="WCV-a8-we8"/>
                                                                                     <constraint firstAttribute="height" constant="24" id="eXS-PB-hJC"/>
                                                                                 </constraints>
                                                                             </imageView>
                                                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="ii9-ck-CF1">
-                                                                                <rect key="frame" x="41" y="79" width="275" height="38"/>
+                                                                                <rect key="frame" x="41" y="6" width="275" height="38"/>
                                                                                 <subviews>
                                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Country" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Ps-VK-4fb">
                                                                                         <rect key="frame" x="0.0" y="0.0" width="275" height="14.5"/>
@@ -91,7 +91,7 @@
                                                                                 </subviews>
                                                                             </stackView>
                                                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="252" verticalHuggingPriority="251" image="disclosureIndicatorGray" translatesAutoresizingMaskIntoConstraints="NO" id="zz8-T4-R75">
-                                                                                <rect key="frame" x="333" y="85" width="8" height="26"/>
+                                                                                <rect key="frame" x="333" y="12" width="8" height="26"/>
                                                                                 <constraints>
                                                                                     <constraint firstAttribute="width" constant="8" id="614-lv-gJF"/>
                                                                                 </constraints>
@@ -112,7 +112,7 @@
                                                                 </connections>
                                                             </view>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="X8d-zZ-FvG" userLabel="Bottom Line View">
-                                                                <rect key="frame" x="0.0" y="220.5" width="375" height="1"/>
+                                                                <rect key="frame" x="0.0" y="75" width="375" height="1"/>
                                                                 <color key="backgroundColor" red="0.90588235289999997" green="0.90588235289999997" blue="0.90588235289999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="1" id="Ef1-k1-u5N"/>
@@ -121,7 +121,7 @@
                                                         </subviews>
                                                     </stackView>
                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="fcE-OU-ToR">
-                                                        <rect key="frame" x="0.0" y="648.5" width="375" height="76"/>
+                                                        <rect key="frame" x="0.0" y="503" width="375" height="76"/>
                                                         <subviews>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EC8-fv-mIh" userLabel="Top Line View">
                                                                 <rect key="frame" x="0.0" y="0.0" width="375" height="1"/>
@@ -194,7 +194,7 @@
                                                 </subviews>
                                             </stackView>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NI8-o4-Q7N">
-                                                <rect key="frame" x="0.0" y="744.5" width="375" height="50"/>
+                                                <rect key="frame" x="0.0" y="599" width="375" height="50"/>
                                                 <subviews>
                                                     <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="I1e-G7-G4T">
                                                         <rect key="frame" x="45" y="0.0" width="285" height="50"/>
@@ -259,6 +259,8 @@
                         <outlet property="headerImageView" destination="ztT-na-Kbt" id="zu4-VM-HYV"/>
                         <outlet property="nextButton" destination="I1e-G7-G4T" id="EPH-1V-DNh"/>
                         <outlet property="nextButtonBottomConstraint" destination="X8t-SW-Mvz" id="d5M-5n-UFF"/>
+                        <outlet property="phoneNumberTextField" destination="Ya6-zD-9Hn" id="SEO-I5-YpG"/>
+                        <outlet property="scrollContentViewPreferredEqualHeightConstraint" destination="wDW-Ko-4GY" id="h1e-w4-Kzi"/>
                         <outlet property="scrollView" destination="M42-td-cIX" id="PoP-Iu-ekT"/>
                     </connections>
                 </viewController>
