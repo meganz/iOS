@@ -1357,7 +1357,7 @@
 /* Label shown when you call someone (outgoing call), before the call starts. */
 "calling..."="통화중...";
 /* notification subtitle of incoming calls */
-"Incoming call"="수신중 전화";
+"Incoming call"="전화 수신중";
 /* Notification text body shown when you have missed one audio call */
 "missedAudioCall"="부재중 전화";
 /* Notification text body shown when you have missed several audio calls. [A] = {number of missed audio calls} */

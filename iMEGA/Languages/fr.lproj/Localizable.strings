@@ -864,7 +864,7 @@
 /* Caption of a button to upgrade the account to Pro status */
 "upgrade"="Surclasser le compte";
 /* Title show on the hall of My Account section that describes a place where you can view, edit and upgrade your account and profile */
-"viewAndEditProfile"="Visualiser et modifier le profil";
+"viewAndEditProfile"="Visualiser ou modifier le profil";
 /* Label for any 'Profile' button, link, text, title, etc. - (String as short as possible). */
 "profile"="Profil";
 /* Title of the Achievements section */
@@ -1643,7 +1643,7 @@
 /* Settings preference title to show file versions info of the account */
 "File versions"="Versions de fichiers";
 /* A title message in the user’s account settings for showing the storage used for file versions. */
-"Total size taken up by file versions:"="Taille totale occupée par les versions de fichier :";
+"Total size taken up by file versions:"="Taille totale occupée par les versions de fichiers :";
 /* The title of the section about deleting file versions in the settings. */
 "Delete all older versions of my files"="Supprimer toutes les anciennes versions de mes fichiers";
 /* Text of a button which deletes all historical versions of files in the users entire account. */
@@ -1851,7 +1851,7 @@
 /* Text shown in the chat toolbar while the user is recording a voice clip. The < character should be > in RTL languages. */
 "< Slide to cancel"="< Faire glisser pour annuler";
 /* Tooltip shown when the user presses but does not hold the microphone icon to send a voice clip */
-"Tap and hold %@ to record, release to send"="Tap and hold %@ to record, release to send";
+"Tap and hold %@ to record, release to send"="Touchez et maintenez  %@ pour enregistrer, relâchez pour envoyer";
 /* Text to inform the user there is an active call and is not participating */
 "Ongoing Call"="Appel en cours";
 /* Message shown when there is an ongoing call and the user tries to play an audio or video */
