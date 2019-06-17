@@ -174,6 +174,7 @@ NSNotificationName kVoiceClipsShouldPauseNotification = @"kVoiceClipsShouldPause
                 weakSelf.cachedVoiceClipView.playerSlider.value = CMTimeGetSeconds(time);
                 weakSelf.cachedVoiceClipView.timeLabel.text = [NSString mnz_stringFromTimeInterval:CMTimeGetSeconds(time)];
             }];
+            [self.audioPlayer seekToTime:CMTimeMakeWithSeconds(self.cachedVoiceClipView.playerSlider.value, self.audioPlayer.currentTime.timescale)];
             [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(didChangeAudioRoute:) name:AVAudioSessionRouteChangeNotification object:nil];
         }
         
@@ -193,6 +194,7 @@ NSNotificationName kVoiceClipsShouldPauseNotification = @"kVoiceClipsShouldPause
 
 - (void)voiceClipView:(MEGAMessageVoiceClipView *)voiceClipView shouldSeekTo:(float)destination {
     [self.audioPlayer seekToTime:CMTimeMakeWithSeconds(destination, self.audioPlayer.currentTime.timescale)];
+    self.cachedVoiceClipView.timeLabel.text = [NSString mnz_stringFromTimeInterval:destination];
 }
 
 #pragma mark - Private
