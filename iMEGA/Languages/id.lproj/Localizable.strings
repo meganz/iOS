@@ -1647,7 +1647,7 @@
 /* The title of the section about deleting file versions in the settings. */
 "Delete all older versions of my files"="Hapus semua versi lama dari file saya";
 /* Text of a button which deletes all historical versions of files in the users entire account. */
-"Delete previous versions"="Hapus semua";
+"Delete previous versions"="Hapus versi sebelumnya";
 /* A warning note about deleting all file versions in the settings section. */
 "All current files will remain. Only historic versions of your files will be deleted."="Ini akan menghapus secara permanen semua versi file Anda sendiri. Setiap versi file yang dibagikan kepada Anda dari kontak harus dihapus oleh mereka.";
 /* Text of the dialog to delete all the file versions of the account */

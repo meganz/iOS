@@ -1647,7 +1647,7 @@
 /* The title of the section about deleting file versions in the settings. */
 "Delete all older versions of my files"="删除所有旧版本的文件";
 /* Text of a button which deletes all historical versions of files in the users entire account. */
-"Delete previous versions"="删除旧版本";
+"Delete previous versions"="删除历史版本";
 /* A warning note about deleting all file versions in the settings section. */
 "All current files will remain. Only historic versions of your files will be deleted."="当前所有文件将被保留。仅删除文件的历史版本。";
 /* Text of the dialog to delete all the file versions of the account */

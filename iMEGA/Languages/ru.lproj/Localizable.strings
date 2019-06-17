@@ -1851,7 +1851,7 @@
 /* Text shown in the chat toolbar while the user is recording a voice clip. The < character should be > in RTL languages. */
 "< Slide to cancel"="< Сдвиньте для отмены";
 /* Tooltip shown when the user presses but does not hold the microphone icon to send a voice clip */
-"Tap and hold %@ to record, release to send"="Tap and hold %@ to record, release to send";
+"Tap and hold %@ to record, release to send"="Нажмите и удерживайте %@ для записи, отпустите для отправки";
 /* Text to inform the user there is an active call and is not participating */
 "Ongoing Call"="Текущий звонок";
 /* Message shown when there is an ongoing call and the user tries to play an audio or video */
