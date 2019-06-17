@@ -154,10 +154,6 @@ NSNotificationName kVoiceClipsShouldPauseNotification = @"kVoiceClipsShouldPause
             self.revertSpeaker = YES;
         }
         
-        if (![[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayAndRecord withOptions:AVAudioSessionCategoryOptionAllowBluetooth | AVAudioSessionCategoryOptionAllowBluetoothA2DP | AVAudioSessionCategoryOptionMixWithOthers error:&error]) {
-            MEGALogError(@"[Voice clips] Error setting the audio category: %@", error);
-            return;
-        }
         if (![[AVAudioSession sharedInstance] setActive:YES error:&error]) {
             MEGALogError(@"[Voice clips] Error activating audio session: %@", error);
             return;
