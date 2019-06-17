@@ -1,6 +1,7 @@
 
 #import "VideoUploadsTableViewController.h"
 #import "CameraUploadManager+Settings.h"
+#import "MEGAConstants.h"
 
 typedef NS_ENUM(NSUInteger, VideoUploadsSection) {
     VideoUploadsSectionFeatureSwitch,
@@ -40,11 +41,11 @@ typedef NS_ENUM(NSUInteger, VideoUploadsFormatRow) {
 - (void)configVideoFormatTexts {
     NSDictionary<NSAttributedStringKey, id> *formatAttributes = @{NSFontAttributeName : [UIFont systemFontOfSize:17.0], NSForegroundColorAttributeName : [UIColor mnz_black333333]};
     
-    NSMutableAttributedString *H264AttributedString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@ ", AMLocalizedString(@"H.264", nil)] attributes:formatAttributes];
+    NSMutableAttributedString *H264AttributedString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@ ", H264Format] attributes:formatAttributes];
     [H264AttributedString appendAttributedString:[[NSAttributedString alloc] initWithString:AMLocalizedString(@"(Recommended)", nil) attributes:@{NSFontAttributeName : [UIFont systemFontOfSize:17.0], NSForegroundColorAttributeName : [UIColor mnz_gray999999]}]];
     self.H264Label.attributedText = H264AttributedString;
     
-    self.HEVCLabel.attributedText = [[NSAttributedString alloc] initWithString:AMLocalizedString(@"HEVC", nil) attributes:formatAttributes];
+    self.HEVCLabel.attributedText = [[NSAttributedString alloc] initWithString:HEVCFormat attributes:formatAttributes];
 }
 
 - (void)configUI {

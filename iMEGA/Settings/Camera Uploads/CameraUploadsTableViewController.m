@@ -7,6 +7,7 @@
 #import "DevicePermissionsHelper.h"
 #import "Helper.h"
 #import "CustomModalAlertViewController.h"
+#import "MEGAConstants.h"
 @import CoreLocation;
 
 typedef NS_ENUM(NSUInteger, CameraUploadSection) {
@@ -124,12 +125,12 @@ static const CGFloat TableViewSectionHeaderFooterHiddenHeight = 0.1;
 - (void)configImageFormatTexts {
     NSDictionary<NSAttributedStringKey, id> *formatAttributes = @{NSFontAttributeName : [UIFont systemFontOfSize:17.0], NSForegroundColorAttributeName : [UIColor mnz_black333333]};
     
-    NSMutableAttributedString *JPGAttributedString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@ ", AMLocalizedString(@"JPG", nil)] attributes:formatAttributes];
+    NSMutableAttributedString *JPGAttributedString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@ ", JPGFormat] attributes:formatAttributes];
     
     [JPGAttributedString appendAttributedString:[[NSAttributedString alloc] initWithString:AMLocalizedString(@"(Recommended)", nil) attributes:@{NSFontAttributeName : [UIFont systemFontOfSize:17.0], NSForegroundColorAttributeName : [UIColor mnz_gray999999]}]];
     self.JPGLabel.attributedText = JPGAttributedString;
     
-    self.HEICLabel.attributedText = [[NSAttributedString alloc] initWithString:AMLocalizedString(@"HEIC", nil) attributes:formatAttributes];
+    self.HEICLabel.attributedText = [[NSAttributedString alloc] initWithString:HEICFormat attributes:formatAttributes];
 }
 
 - (void)configUI {
