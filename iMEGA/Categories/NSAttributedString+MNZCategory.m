@@ -122,6 +122,14 @@
     return attributedString;
 }
 
++ (NSAttributedString *)mnz_attributedStringFromImageNamed:(NSString *)imageName fontCapHeight:(CGFloat)capHeight {
+    NSTextAttachment *textAttachment = [[NSTextAttachment alloc] init];
+    UIImage *image = [UIImage imageNamed:imageName];
+    textAttachment.bounds = CGRectMake(0.0f, roundf(capHeight - image.size.height) / 2.0, image.size.width, image.size.height);
+    textAttachment.image = image;
+    return [NSAttributedString attributedStringWithAttachment:textAttachment];
+}
+
 #pragma mark - Private
 
 + (UIFont *)alternativeFontFor:(UIFont *)font isBold:(BOOL)bold isItalic:(BOOL)italic {
