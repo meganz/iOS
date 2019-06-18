@@ -17,6 +17,7 @@ typedef NS_ENUM(NSInteger, PhotoUploadConcurrentCount) {
     PhotoUploadConcurrentCountInThermalStateFair = 3,
     PhotoUploadConcurrentCountInThermalStateSerious = 1,
     PhotoUploadConcurrentCountInThermalStateCritical = 0,
+    PhotoUploadConcurrentCountDefaultMaximum = 4
 };
 
 typedef NS_ENUM(NSInteger, VideoUploadConcurrentCount) {
@@ -32,6 +33,7 @@ typedef NS_ENUM(NSInteger, VideoUploadConcurrentCount) {
     VideoUploadConcurrentCountInThermalStateFair = 1,
     VideoUploadConcurrentCountInThermalStateSerious = 0,
     VideoUploadConcurrentCountInThermalStateCritical = 0,
+    VideoUploadConcurrentCountDefaultMaximum = 1
 };
 
 @interface CameraUploadConcurrentCountCalculator : NSObject
