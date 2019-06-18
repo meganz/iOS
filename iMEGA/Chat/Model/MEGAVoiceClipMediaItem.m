@@ -128,7 +128,7 @@ NSNotificationName kVoiceClipsShouldPauseNotification = @"kVoiceClipsShouldPause
 }
 
 - (CGSize)mediaViewDisplaySize {
-    return CGSizeMake([UIDevice.currentDevice mnz_maxSideForChatBubbleWithMedia:NO], 44.0f);
+    return CGSizeMake([UIDevice.currentDevice mnz_maxSideForChatBubbleWithMedia:YES], 44.0f);
 }
 
 - (NSUInteger)mediaHash {
