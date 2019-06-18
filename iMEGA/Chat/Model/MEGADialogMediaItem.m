@@ -213,7 +213,7 @@
 
 #pragma mark - MEGAMessageDialogViewDelegate
 
-- (void)dialogView:(MEGAMessageDialogView *)dialogView chosedOption:(MEGAMessageDialogOption)option {
+- (void)dialogView:(MEGAMessageDialogView *)dialogView didChooseOption:(MEGAMessageDialogOption)option {
     switch (option) {
         case MEGAMessageDialogOptionAlwaysAllow:
             [[MEGASdkManager sharedMEGASdk] enableRichPreviews:YES];

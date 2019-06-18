@@ -209,6 +209,20 @@
             break;
         }
             
+        case MEGAChatMessageTypeVoiceClip : {
+            MEGAChatMessage *lastMessage = [[MEGASdkManager sharedMEGAChatSdk] messageForChat:item.chatId messageId:item.lastMessageId];
+            NSString *durationString;
+            if (lastMessage.nodeList && lastMessage.nodeList.size.integerValue == 1) {
+                MEGANode *node = [lastMessage.nodeList nodeAtIndex:0];
+                NSTimeInterval duration = node.duration > 0 ? node.duration : 0;
+                durationString = [NSString mnz_stringFromTimeInterval:duration];
+            } else {
+                durationString = @"00:00";
+            }
+            self.chatLastMessage.text = [NSString stringWithFormat:@"🎙 %@", durationString];
+            break;
+        }
+            
         case MEGAChatMessageTypeContact: {
             NSString *senderString;
             if (item.group) {
@@ -375,6 +389,18 @@
             if (item.group && item.lastMessageSender != [[MEGASdkManager sharedMEGAChatSdk] myUserHandle]) {
                 senderString = [self actionAuthorNameInChatListItem:item];
             }
+            
+            if (item.lastMessageType == MEGAChatMessageTypeContainsMeta) {
+                MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:item.chatId];
+                MEGAChatMessage *message = [[MEGASdkManager sharedMEGAChatSdk] messageForChat:chatRoom.chatId messageId:item.lastMessageId];
+                
+                if (message.containsMeta.type == MEGAChatContainsMetaTypeGeolocation) {
+                    NSString *pinnedLocation = [NSString stringWithFormat:@"📍 %@", AMLocalizedString(@"Pinned Location", @"Text shown in location-type messages")];
+                    self.chatLastMessage.text = senderString ? [NSString stringWithFormat:@"%@: %@", senderString, pinnedLocation] : pinnedLocation;
+                    break;
+                }
+            }
+            
             self.chatLastMessage.text = senderString ? [NSString stringWithFormat:@"%@: %@",senderString, item.lastMessage] : item.lastMessage;
             break;
         }

@@ -12,7 +12,6 @@
 
 - (void)mnz_parseAppData;
 - (void)mnz_saveInPhotosApp;
-- (void)mnz_attachtToChatID:(NSString *)attachToChatID;
 - (void)mnz_setNodeCoordinates;
 
 - (NSUInteger)mnz_orderByState;

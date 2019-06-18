@@ -885,7 +885,8 @@ static MEGAIndexer *indexer;
                 break;
             }
                 
-            case MEGAChatMessageTypeAttachment: {
+            case MEGAChatMessageTypeAttachment:
+            case MEGAChatMessageTypeVoiceClip: {
                 MEGANode *node = [message.nodeList mnz_nodesArrayFromNodeList].firstObject;
                 MOOfflineNode *offlineNodeExist = [[MEGAStore shareInstance] offlineNodeWithNode:node];
                 if (offlineNodeExist) {
@@ -1193,15 +1194,9 @@ static MEGAIndexer *indexer;
     searchController.dimsBackgroundDuringPresentation = NO;
     searchController.searchBar.searchBarStyle = UISearchBarStyleMinimal;
     searchController.searchBar.translucent = NO;
-    searchController.searchBar.backgroundImage = [UIImage imageWithCGImage:(__bridge CGImageRef)(UIColor.clearColor)];
+    searchController.searchBar.backgroundColor = UIColor.whiteColor;
     searchController.searchBar.barTintColor = UIColor.whiteColor;
     searchController.searchBar.tintColor = UIColor.mnz_redMain;
-    
-    UITextField *searchTextField = [searchController.searchBar valueForKey:@"_searchField"];
-    searchTextField.font = [UIFont mnz_SFUIRegularWithSize:17.0f];
-    searchTextField.backgroundColor = UIColor.mnz_grayEEEEEE;
-    searchTextField.textColor = UIColor.mnz_black333333;
-    searchTextField.tintColor = UIColor.mnz_green00BFA5;
     
     return searchController;
 }

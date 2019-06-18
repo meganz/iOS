@@ -699,7 +699,6 @@
     }
     
     if (numberOfRows == 0) {
-        [self setEditing:NO animated:NO];
         [self setNavigationBarButtonItemsEnabled:NO];
     } else {
         [self setNavigationBarButtonItemsEnabled:YES];

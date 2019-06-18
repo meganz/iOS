@@ -21,4 +21,6 @@
 - (void)mnz_removeFolderContentsRecursivelyAtPath:(NSString *)folderPath forItemsContaining:(NSString *)itemsContaining;
 - (void)mnz_removeFolderContentsRecursivelyAtPath:(NSString *)folderPath forItemsExtension:(NSString *)itemsExtension;
 
+- (void)mnz_moveItemAtPath:(NSString *)srcPath toPath:(NSString *)dstPath;
+
 @end

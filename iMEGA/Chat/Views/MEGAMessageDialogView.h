@@ -11,7 +11,7 @@ typedef NS_ENUM(NSInteger, MEGAMessageDialogOption) {
 @class MEGAMessageDialogView;
 
 @protocol MEGAMessageDialogViewDelegate <NSObject>
-- (void)dialogView:(MEGAMessageDialogView *)dialogView chosedOption:(MEGAMessageDialogOption)option;
+- (void)dialogView:(MEGAMessageDialogView *)dialogView didChooseOption:(MEGAMessageDialogOption)option;
 @end
 
 @interface MEGAMessageDialogView : UIView

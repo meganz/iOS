@@ -102,8 +102,8 @@
 + (void)alertPermissionWithTitle:(NSString *)title message:(NSString *)message completionHandler:(void (^)(void))handler {
     UIAlertController *permissionsAlertController = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:UIAlertControllerStyleAlert];
     
-    [permissionsAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
-    [permissionsAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", @"Button title to accept something") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+    [permissionsAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"Not Now", nil) style:UIAlertActionStyleCancel handler:nil]];
+    [permissionsAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"settingsTitle", @"Title of the Settings section") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         if (handler) {
             handler();
         }

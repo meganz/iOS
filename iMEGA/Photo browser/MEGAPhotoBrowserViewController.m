@@ -322,7 +322,7 @@
     if (scrollView.tag != 1) {
         MEGANode *node = [self.mediaNodes objectAtIndex:self.currentIndex];
         if (node.name.mnz_isImagePathExtension) {
-            NSString *temporaryImagePath = [self temporatyPathForNode:node createDirectories:NO];
+            NSString *temporaryImagePath = [node mnz_temporaryPathForDownloadCreatingDirectories:NO];
             if (![[NSFileManager defaultManager] fileExistsAtPath:temporaryImagePath]) {
                 [self setupNode:node forImageView:(FLAnimatedImageView *)view withMode:MEGAPhotoModeOriginal];
             }
@@ -360,7 +360,7 @@
             imageView.contentMode = UIViewContentModeScaleAspectFit;
             
             MEGANode *node = [self.mediaNodes objectAtIndex:i];
-            NSString *temporaryImagePath = [self temporatyPathForNode:node createDirectories:NO];
+            NSString *temporaryImagePath = [node mnz_temporaryPathForDownloadCreatingDirectories:NO];
             if (node.name.mnz_isImagePathExtension && [[NSFileManager defaultManager] fileExistsAtPath:temporaryImagePath]) {
                 if ([node.name.pathExtension isEqualToString:@"gif"]) {
                     imageView.animatedImage = [FLAnimatedImage animatedImageWithGIFData:[NSData dataWithContentsOfURL:[NSURL fileURLWithPath:temporaryImagePath]]];
@@ -492,8 +492,8 @@
             break;
             
         case MEGAPhotoModeOriginal: {
-            MEGAStartDownloadTransferDelegate *delegate = [[MEGAStartDownloadTransferDelegate alloc] initWithProgress:transferProgress completion:transferCompletion];
-            NSString *temporaryImagePath = [self temporatyPathForNode:node createDirectories:YES];
+            MEGAStartDownloadTransferDelegate *delegate = [[MEGAStartDownloadTransferDelegate alloc] initWithProgress:transferProgress completion:transferCompletion onError:nil];
+            NSString *temporaryImagePath = [node mnz_temporaryPathForDownloadCreatingDirectories:YES];
             [MEGASdkManager.sharedMEGASdk startDownloadNode:[self.api authorizeNode:node] localPath:temporaryImagePath appData:nil delegate:delegate];
 
             break;
@@ -514,20 +514,6 @@
             [subview removeFromSuperview];
         }
     }
-}
-
-- (NSString *)temporatyPathForNode:(MEGANode *)node createDirectories:(BOOL)createDirectories {
-    NSString *nodeFolderPath = [NSTemporaryDirectory() stringByAppendingPathComponent:[node base64Handle]];
-    NSString *nodeFilePath = [nodeFolderPath stringByAppendingPathComponent:node.name];
-
-    NSError *error;
-    if (createDirectories && ![[NSFileManager defaultManager] fileExistsAtPath:nodeFolderPath isDirectory:nil]) {
-        if (![[NSFileManager defaultManager] createDirectoryAtPath:nodeFolderPath withIntermediateDirectories:YES attributes:nil error:&error]) {
-            MEGALogError(@"Create directory at path failed with error: %@", error);
-        }
-    }
-    
-    return nodeFilePath;
 }
 
 - (void)resizeImageView:(UIImageView *)imageView {
