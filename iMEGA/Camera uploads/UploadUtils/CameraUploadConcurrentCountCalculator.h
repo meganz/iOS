@@ -36,6 +36,18 @@ typedef NS_ENUM(NSInteger, VideoUploadConcurrentCount) {
     VideoUploadConcurrentCountDefaultMaximum = 1
 };
 
+typedef struct {
+    PhotoUploadConcurrentCount photoConcurrentCount;
+    VideoUploadConcurrentCount videoConcurrentCount;
+} CameraUploadConcurrentCounts;
+
+NS_INLINE CameraUploadConcurrentCounts MakeCounts(PhotoUploadConcurrentCount photoCount, VideoUploadConcurrentCount videoCount) {
+    CameraUploadConcurrentCounts concurrentCounts;
+    concurrentCounts.photoConcurrentCount = photoCount;
+    concurrentCounts.videoConcurrentCount = videoCount;
+    return concurrentCounts;
+}
+
 @interface CameraUploadConcurrentCountCalculator : NSObject
 
 - (void)startCalculatingConcurrentCount;
@@ -43,6 +55,10 @@ typedef NS_ENUM(NSInteger, VideoUploadConcurrentCount) {
 
 - (PhotoUploadConcurrentCount)calculatePhotoUploadConcurrentCount;
 - (VideoUploadConcurrentCount)calculateVideoUploadConcurrentCount;
+
+- (CameraUploadConcurrentCounts)calculateCameraUploadConcurrentCountsByThermalState:(NSProcessInfoThermalState)thermalState applicationState:(UIApplicationState)applicationState batteryState:(UIDeviceBatteryState)batteryState batteryLevel:(float)batteryLevel isLowPowerModeEnabled:(BOOL)isLowPowerModeEnabled API_AVAILABLE(ios(11.0));
+
+- (CameraUploadConcurrentCounts)calculateCameraUploadConcurrentCountsByApplicationState:(UIApplicationState)applicationState batteryState:(UIDeviceBatteryState)batteryState batteryLevel:(float)batteryLevel isLowPowerModeEnabled:(BOOL)isLowPowerModeEnabled;
 
 @end
 
