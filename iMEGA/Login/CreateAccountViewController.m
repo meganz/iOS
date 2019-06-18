@@ -93,9 +93,6 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
     
     self.retypePasswordView.passwordTextField.delegate = self;
     self.retypePasswordView.passwordTextField.tag = RetypeTextFieldTag;
-    if (@available(iOS 12.0, *)) {
-        self.retypePasswordView.passwordTextField.textContentType = UITextContentTypeNewPassword;
-    }
     
     [self setTermsOfServiceAttributedTitle];
     
