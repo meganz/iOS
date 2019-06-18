@@ -2,18 +2,6 @@
 #import "CameraUploadConcurrentCountCalculator.h"
 #import "MEGAConstants.h"
 
-typedef struct {
-    PhotoUploadConcurrentCount photoConcurrentCount;
-    VideoUploadConcurrentCount videoConcurrentCount;
-} CameraUploadConcurrentCounts;
-
-static CameraUploadConcurrentCounts MakeCounts(PhotoUploadConcurrentCount photoCount, VideoUploadConcurrentCount videoCount) {
-    CameraUploadConcurrentCounts concurrentCounts;
-    concurrentCounts.photoConcurrentCount = photoCount;
-    concurrentCounts.videoConcurrentCount = videoCount;
-    return concurrentCounts;
-}
-
 @interface CameraUploadConcurrentCountCalculator ()
 
 @property (nonatomic) CameraUploadConcurrentCounts currentConcurrentCounts;
@@ -82,33 +70,47 @@ static CameraUploadConcurrentCounts MakeCounts(PhotoUploadConcurrentCount photoC
 }
 
 - (CameraUploadConcurrentCounts)calculateCameraUploadConcurrentCountsInMainThread {
-    CameraUploadConcurrentCounts countsByAppState = [self concurrentCountsByApplicationState];
-    CameraUploadConcurrentCounts countsByPower = [self concurrentCountsByPowerState];
-    CameraUploadConcurrentCounts concurrentCounts = MakeCounts(MIN(countsByAppState.photoConcurrentCount, countsByPower.photoConcurrentCount), MIN(countsByAppState.videoConcurrentCount, countsByPower.videoConcurrentCount));
     if (@available(iOS 11.0, *)) {
-        CameraUploadConcurrentCounts countsByThermal = [self concurrentCountsByThermalState];
-        concurrentCounts = MakeCounts(MIN(concurrentCounts.photoConcurrentCount, countsByThermal.photoConcurrentCount), MIN(concurrentCounts.videoConcurrentCount, countsByThermal.videoConcurrentCount));
+        return [self calculateCameraUploadConcurrentCountsByThermalState:NSProcessInfo.processInfo.thermalState
+                                                        applicationState:UIApplication.sharedApplication.applicationState
+                                                            batteryState:UIDevice.currentDevice.batteryState
+                                                            batteryLevel:UIDevice.currentDevice.batteryLevel
+                                                   isLowPowerModeEnabled:NSProcessInfo.processInfo.isLowPowerModeEnabled];
+    } else {
+        return [self calculateCameraUploadConcurrentCountsByApplicationState:UIApplication.sharedApplication.applicationState
+                                                                batteryState:UIDevice.currentDevice.batteryState
+                                                                batteryLevel:UIDevice.currentDevice.batteryLevel
+                                                       isLowPowerModeEnabled:NSProcessInfo.processInfo.isLowPowerModeEnabled];
     }
-    
-    return concurrentCounts;
 }
 
-- (CameraUploadConcurrentCounts)concurrentCountsByApplicationState {
-    if (UIApplication.sharedApplication.applicationState == UIApplicationStateBackground) {
+- (CameraUploadConcurrentCounts)calculateCameraUploadConcurrentCountsByThermalState:(NSProcessInfoThermalState)thermalState applicationState:(UIApplicationState)applicationState batteryState:(UIDeviceBatteryState)batteryState batteryLevel:(float)batteryLevel isLowPowerModeEnabled:(BOOL)isLowPowerModeEnabled API_AVAILABLE(ios(11.0)) {
+    CameraUploadConcurrentCounts concurrentCounts = [self calculateCameraUploadConcurrentCountsByApplicationState:applicationState batteryState:batteryState batteryLevel:batteryLevel isLowPowerModeEnabled:isLowPowerModeEnabled];
+    CameraUploadConcurrentCounts countsByThermal = [self concurrentCountsByThermalState:thermalState];
+    return MakeCounts(MIN(concurrentCounts.photoConcurrentCount, countsByThermal.photoConcurrentCount), MIN(concurrentCounts.videoConcurrentCount, countsByThermal.videoConcurrentCount));
+}
+
+- (CameraUploadConcurrentCounts)calculateCameraUploadConcurrentCountsByApplicationState:(UIApplicationState)applicationState batteryState:(UIDeviceBatteryState)batteryState batteryLevel:(float)batteryLevel isLowPowerModeEnabled:(BOOL)isLowPowerModeEnabled {
+    CameraUploadConcurrentCounts countsByAppState = [self concurrentCountsByApplicationState:applicationState];
+    CameraUploadConcurrentCounts countsByPower = [self concurrentCountsByBatteryState:batteryState batteryLevel:batteryLevel isLowPowerModeEnabled:isLowPowerModeEnabled];
+    return MakeCounts(MIN(countsByAppState.photoConcurrentCount, countsByPower.photoConcurrentCount), MIN(countsByAppState.videoConcurrentCount, countsByPower.videoConcurrentCount));
+}
+
+- (CameraUploadConcurrentCounts)concurrentCountsByApplicationState:(UIApplicationState)applicationState {
+    if (applicationState == UIApplicationStateBackground) {
         return MakeCounts(PhotoUploadConcurrentCountInBackground, VideoUploadConcurrentCountInBackground);
     } else {
         return MakeCounts(PhotoUploadConcurrentCountDefaultMaximum, VideoUploadConcurrentCountDefaultMaximum);
     }
 }
 
-- (CameraUploadConcurrentCounts)concurrentCountsByPowerState {
-    if (UIDevice.currentDevice.batteryState == UIDeviceBatteryStateUnplugged) {
-        float batteryLevel = UIDevice.currentDevice.batteryLevel;
+- (CameraUploadConcurrentCounts)concurrentCountsByBatteryState:(UIDeviceBatteryState)batteryState batteryLevel:(float)batteryLevel isLowPowerModeEnabled:(BOOL)isLowPowerModeEnabled {
+    if (batteryState == UIDeviceBatteryStateUnplugged) {
         if (batteryLevel < 0.15) {
             return MakeCounts(PhotoUploadConcurrentCountInBatteryLevelBelow15, VideoUploadConcurrentCountInBatteryLevelBelow15);
         } else if (batteryLevel < 0.25) {
             return MakeCounts(PhotoUploadConcurrentCountInBatteryLevelBelow25, VideoUploadConcurrentCountInBatteryLevelBelow25);
-        } else if (NSProcessInfo.processInfo.isLowPowerModeEnabled) {
+        } else if (isLowPowerModeEnabled) {
             return MakeCounts(PhotoUploadConcurrentCountInLowPowerMode, VideoUploadConcurrentCountInLowPowerMode);
         } else if (batteryLevel < 0.4) {
             return MakeCounts(PhotoUploadConcurrentCountInBatteryLevelBelow40, VideoUploadConcurrentCountInBatteryLevelBelow40);
@@ -124,8 +126,8 @@ static CameraUploadConcurrentCounts MakeCounts(PhotoUploadConcurrentCount photoC
     }
 }
 
-- (CameraUploadConcurrentCounts)concurrentCountsByThermalState API_AVAILABLE(ios(11.0)) {
-    switch (NSProcessInfo.processInfo.thermalState) {
+- (CameraUploadConcurrentCounts)concurrentCountsByThermalState:(NSProcessInfoThermalState)thermalState API_AVAILABLE(ios(11.0)) {
+    switch (thermalState) {
         case NSProcessInfoThermalStateCritical:
             return MakeCounts(PhotoUploadConcurrentCountInThermalStateCritical, VideoUploadConcurrentCountInThermalStateCritical);
             break;
