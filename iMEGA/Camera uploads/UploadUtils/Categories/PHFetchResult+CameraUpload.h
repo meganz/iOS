@@ -8,7 +8,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface PHFetchResult (CameraUpload)
 
 /**
- this method is to find new assets by upload records. We use hash table to compare the identifiers to check if an asset is existing in the given upload records.
+ This method is to find new assets by upload records. We use hash table to compare the identifiers to check if an asset exists in the given upload records.
  
  Because we need to access the properties of MOAssetUploadRecord, you need to call this method within a performBlockAndWait or performBlock method of the corresponding NSManagedObjectContext.
  
