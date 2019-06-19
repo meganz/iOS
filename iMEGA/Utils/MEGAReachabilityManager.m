@@ -2,7 +2,11 @@
 #import <ifaddrs.h>
 #import <arpa/inet.h>
 
+#import <CoreTelephony/CTCellularData.h>
+
 #import "SVProgressHUD.h"
+
+#import "UIApplication+MNZCategory.h"
 
 #import "MEGAReachabilityManager.h"
 #import "MEGASdkManager.h"
@@ -13,6 +17,9 @@
 
 @property (nonatomic, strong) Reachability *reachability;
 @property (nonatomic) NSString *lastKnownAddress;
+
+@property (nonatomic, getter=isMobileDataEnabled) BOOL mobileDataEnabled;
+@property (nonatomic) CTCellularDataRestrictedState mobileDataState;
 
 @end
 
@@ -27,6 +34,7 @@
     
     return _sharedManager;
 }
+
 + (BOOL)isReachable {
     NetworkStatus status = [[[MEGAReachabilityManager sharedManager] reachability] currentReachabilityStatus];
     return status == ReachableViaWiFi || status == ReachableViaWWAN;
@@ -64,7 +72,16 @@
 + (BOOL)isReachableHUDIfNot {
     BOOL isReachable = [self isReachable];
     if (!isReachable) {
-        [SVProgressHUD showImage:[UIImage imageNamed:@"hudForbidden"] status:NSLocalizedString(@"noInternetConnection", @"Text shown on the app when you don't have connection to the internet or when you have lost it")];
+        switch (MEGAReachabilityManager.sharedManager.mobileDataState) {
+            case kCTCellularDataRestricted:
+                [MEGAReachabilityManager.sharedManager mobileDataIsTurnedOffAlert];
+                break;
+            
+            case kCTCellularDataRestrictedStateUnknown:
+            case kCTCellularDataNotRestricted:
+                [SVProgressHUD showImage:[UIImage imageNamed:@"hudForbidden"] status:NSLocalizedString(@"noInternetConnection", @"Text shown on the app when you don't have connection to the internet or when you have lost it")];
+                break;
+        }
     }
     
     return isReachable;
@@ -82,6 +99,7 @@
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(reachabilityDidChange:)
                                                      name:kReachabilityChangedNotification object:nil];
+        [self monitorAccessToMobileData];
     }
     
     return self;
@@ -156,6 +174,45 @@
     [[MEGASdkManager sharedMEGASdk] reconnect];
     [[MEGASdkManager sharedMEGASdkFolder] reconnect];
     [[MEGASdkManager sharedMEGAChatSdk] reconnect];
+}
+
+- (void)monitorAccessToMobileData {
+    CTCellularData *cellularData = CTCellularData.alloc.init;
+    [self recordMobileDataState:cellularData.restrictedState];
+    
+    [cellularData setCellularDataRestrictionDidUpdateNotifier:^(CTCellularDataRestrictedState state) {
+        [self recordMobileDataState:state];
+    }];
+}
+
+- (void)recordMobileDataState:(CTCellularDataRestrictedState)state {
+    self.mobileDataState = state;
+    switch (state) {
+        case kCTCellularDataRestrictedStateUnknown:
+            MEGALogInfo(@"Access to Mobile Data is unknonwn");
+            self.mobileDataEnabled = YES; //To avoid possible issues with devices that do not have 'Mobile Data', this value is YES when the state is unknown.
+            break;
+            
+        case kCTCellularDataRestricted:
+            MEGALogInfo(@"Access to Mobile Data is restricted");
+            self.mobileDataEnabled = NO;
+            break;
+            
+        case kCTCellularDataNotRestricted:
+            MEGALogInfo(@"Access to Mobile Data is NOT restricted");
+            self.mobileDataEnabled = YES;
+            break;
+    }
+}
+
+- (void)mobileDataIsTurnedOffAlert {
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"Mobile Data is turned off", @"Information shown when the user has disabled the 'Mobile Data' setting for MEGA in the iOS Settings.") message:AMLocalizedString(@"You can turn on mobile data for this app in Settings.", @"Extra information shown when the user has disabled the 'Mobile Data' setting for MEGA in the iOS Settings.") preferredStyle:UIAlertControllerStyleAlert];
+    [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"settingsTitle", @"Title of the Settings section") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [UIApplication.sharedApplication openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString] options:@{} completionHandler:nil];
+    }]];
+    [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:nil]];
+    
+    [UIApplication.mnz_presentingViewController presentViewController:alertController animated:YES completion:nil];
 }
 
 #pragma mark - Reachability Changes
