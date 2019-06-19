@@ -2,7 +2,8 @@
 #import <XCTest/XCTest.h>
 #import "CameraUploadConcurrentCountCalculator.h"
 
-@interface CameraUploadConcurrentCountCalculationTests : XCTestCase
+API_AVAILABLE(ios(11.0))
+@interface CameraUploadConcurrentCountCalculationTestsForiOS11OrAbove : XCTestCase
 
 @property (strong, nonatomic) CameraUploadConcurrentCountCalculator *calculator;
 @property (strong, nonatomic) NSArray<NSNumber *> *nonBackgroundStates;
@@ -11,7 +12,7 @@
 
 @end
 
-@implementation CameraUploadConcurrentCountCalculationTests
+@implementation CameraUploadConcurrentCountCalculationTestsForiOS11OrAbove
 
 - (void)setUp {
     [super setUp];
@@ -287,8 +288,8 @@
                     XCTAssertEqual(counts.videoConcurrentCount, VideoUploadConcurrentCountInThermalStateFair);
                     break;
                 case NSProcessInfoThermalStateNominal:
-                    XCTAssertEqual(counts.photoConcurrentCount, PhotoUploadConcurrentCountInForeground);
-                    XCTAssertEqual(counts.videoConcurrentCount, VideoUploadConcurrentCountInForeground);
+                    XCTAssertEqual(counts.photoConcurrentCount, PhotoUploadConcurrentCountInBatteryLevel75OrAbove);
+                    XCTAssertEqual(counts.videoConcurrentCount, VideoUploadConcurrentCountInBatteryLevel75OrAbove);
                     break;
             }
             
@@ -307,8 +308,8 @@
                     XCTAssertEqual(counts.videoConcurrentCount, VideoUploadConcurrentCountInThermalStateFair);
                     break;
                 case NSProcessInfoThermalStateNominal:
-                    XCTAssertEqual(counts.photoConcurrentCount, PhotoUploadConcurrentCountInForeground);
-                    XCTAssertEqual(counts.videoConcurrentCount, VideoUploadConcurrentCountInForeground);
+                    XCTAssertEqual(counts.photoConcurrentCount, PhotoUploadConcurrentCountInBatteryLevel75OrAbove);
+                    XCTAssertEqual(counts.videoConcurrentCount, VideoUploadConcurrentCountInBatteryLevel75OrAbove);
                     break;
             }
         }
