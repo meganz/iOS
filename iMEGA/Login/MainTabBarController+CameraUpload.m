@@ -18,10 +18,10 @@
     CustomModalAlertViewController *migrationVC = [[CustomModalAlertViewController alloc] init];
     migrationVC.modalPresentationStyle = UIModalPresentationOverFullScreen;
     migrationVC.image = [UIImage imageNamed:@"cameraUploadsV2Migration"];
-    migrationVC.viewTitle = @"New Camera Upload!";
-    migrationVC.detail = @"Now you can choose to convert the HEIF/HEVC photos and videos to the most compatible JPEG/H.264 formats.";
-    migrationVC.firstButtonTitle = @"Use Most Compatible Formats";
-    migrationVC.dismissButtonTitle = @"Custom Settings";
+    migrationVC.viewTitle = AMLocalizedString(@"New Camera Upload!", nil);
+    migrationVC.detail = AMLocalizedString(@"Now you can choose to convert the HEIF/HEVC photos and videos to the most compatible JPEG/H.264 formats.", nil);
+    migrationVC.firstButtonTitle = AMLocalizedString(@"Use Most Compatible Formats", nil);
+    migrationVC.dismissButtonTitle = AMLocalizedString(@"Custom Settings", nil);
     
     __weak __typeof__(CustomModalAlertViewController) *weakCustom = migrationVC;
     migrationVC.firstCompletion = ^{

@@ -48,3 +48,10 @@ const NSUInteger MEGACameraUploadLowDiskStorageSizeInBytes = 100 * 1024 * 1024;
 NSString * const MEGAJPGFileExtension = @"jpg";
 NSString * const MEGAMP4FileExtension = @"mp4";
 NSString * const MEGAQuickTimeFileExtension = @"mov";
+
+#pragma mark - media formats
+
+NSString * const JPGFormat = @"JPG";
+NSString * const HEICFormat = @"HEIC";
+NSString * const HEVCFormat = @"HEVC";
+NSString * const H264Format = @"H.264";
