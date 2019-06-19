@@ -8,18 +8,19 @@ NS_ASSUME_NONNULL_BEGIN
 @interface PHFetchResult (CameraUpload)
 
 /**
- this method is to find new assets by upload records efficiently. We use binary search to compare the identifiers to
- check is an asset is saved to upload record.
+ this method is to find new assets by upload records. We use hash table to compare the identifiers to check if an asset is existing in the given upload records.
  
- Because we need to access the properties of MOAssetUploadRecord, you may want to call this method within a performBlockAndWait or performBlock method of the corresponding NSManagedObjectContext
+ Because we need to access the properties of MOAssetUploadRecord, you need to call this method within a performBlockAndWait or performBlock method of the corresponding NSManagedObjectContext.
+ 
+ The complexity of this method is O(N), where N means how many assets in the current fetch result.
 
  @param records the saved upload records
  @return an array of PHAsset object
  */
-- (NSArray<PHAsset *> *)findNewAssetsBySortedUploadRecords:(NSArray<MOAssetUploadRecord *> *)records;
+- (NSArray<PHAsset *> *)findNewAssetsInUploadRecords:(NSArray<MOAssetUploadRecord *> *)records;
 
 
-- (NSArray<PHAsset *> *)findNewLivePhotoAssetsBySortedUploadRecords:(NSArray<MOAssetUploadRecord *> *)records;
+- (NSArray<PHAsset *> *)findNewLivePhotoAssetsInUploadRecords:(NSArray<MOAssetUploadRecord *> *)records;
 
 @end
 
