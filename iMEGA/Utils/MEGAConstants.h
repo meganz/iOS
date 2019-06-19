@@ -48,3 +48,10 @@ extern const NSUInteger MEGACameraUploadLowDiskStorageSizeInBytes;
 extern NSString * const MEGAJPGFileExtension;
 extern NSString * const MEGAMP4FileExtension;
 extern NSString * const MEGAQuickTimeFileExtension;
+
+#pragma mark - media formats
+
+extern NSString * const JPGFormat;
+extern NSString * const HEICFormat;
+extern NSString * const HEVCFormat;
+extern NSString * const H264Format;
