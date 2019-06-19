@@ -84,7 +84,7 @@
     }
 }
 
-- (CameraUploadConcurrentCounts)calculateCameraUploadConcurrentCountsByThermalState:(NSProcessInfoThermalState)thermalState applicationState:(UIApplicationState)applicationState batteryState:(UIDeviceBatteryState)batteryState batteryLevel:(float)batteryLevel isLowPowerModeEnabled:(BOOL)isLowPowerModeEnabled API_AVAILABLE(ios(11.0)) {
+- (CameraUploadConcurrentCounts)calculateCameraUploadConcurrentCountsByThermalState:(NSProcessInfoThermalState)thermalState applicationState:(UIApplicationState)applicationState batteryState:(UIDeviceBatteryState)batteryState batteryLevel:(float)batteryLevel isLowPowerModeEnabled:(BOOL)isLowPowerModeEnabled {
     CameraUploadConcurrentCounts concurrentCounts = [self calculateCameraUploadConcurrentCountsByApplicationState:applicationState batteryState:batteryState batteryLevel:batteryLevel isLowPowerModeEnabled:isLowPowerModeEnabled];
     CameraUploadConcurrentCounts countsByThermal = [self concurrentCountsByThermalState:thermalState];
     return MakeCounts(MIN(concurrentCounts.photoConcurrentCount, countsByThermal.photoConcurrentCount), MIN(concurrentCounts.videoConcurrentCount, countsByThermal.videoConcurrentCount));
@@ -100,7 +100,7 @@
     if (applicationState == UIApplicationStateBackground) {
         return MakeCounts(PhotoUploadConcurrentCountInBackground, VideoUploadConcurrentCountInBackground);
     } else {
-        return MakeCounts(PhotoUploadConcurrentCountDefaultMaximum, VideoUploadConcurrentCountDefaultMaximum);
+        return MakeCounts(PhotoUploadConcurrentCountInDefaultMaximum, VideoUploadConcurrentCountInDefaultMaximum);
     }
 }
 
@@ -119,7 +119,7 @@
         } else if (batteryLevel < 0.75) {
             return MakeCounts(PhotoUploadConcurrentCountInBatteryLevelBelow75, VideoUploadConcurrentCountInBatteryLevelBelow75);
         } else {
-            return MakeCounts(PhotoUploadConcurrentCountInForeground, VideoUploadConcurrentCountInForeground);
+            return MakeCounts(PhotoUploadConcurrentCountInBatteryLevel75OrAbove, VideoUploadConcurrentCountInBatteryLevel75OrAbove);
         }
     } else {
         return MakeCounts(PhotoUploadConcurrentCountInBatteryCharging, VideoUploadConcurrentCountInBatteryCharging);
@@ -138,7 +138,7 @@
             return MakeCounts(PhotoUploadConcurrentCountInThermalStateFair, VideoUploadConcurrentCountInThermalStateFair);
             break;
         case NSProcessInfoThermalStateNominal:
-            return MakeCounts(PhotoUploadConcurrentCountDefaultMaximum, VideoUploadConcurrentCountDefaultMaximum);
+            return MakeCounts(PhotoUploadConcurrentCountInDefaultMaximum, VideoUploadConcurrentCountInDefaultMaximum);
             break;
     }
 }
