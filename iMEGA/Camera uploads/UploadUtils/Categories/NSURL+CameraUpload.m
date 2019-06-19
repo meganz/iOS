@@ -22,12 +22,12 @@ static NSString * const AssetsDirectoryName = @"Assets";
         BOOL isDirectory = NO;
         if(!([NSFileManager.defaultManager fileExistsAtPath:uploadURL.path isDirectory:&isDirectory] && isDirectory)) {
             NSError *error = nil;
-            if (![NSFileManager.defaultManager createDirectoryAtURL:uploadURL withIntermediateDirectories:YES attributes:nil error:&error]) {
+            if ([NSFileManager.defaultManager createDirectoryAtURL:uploadURL withIntermediateDirectories:YES attributes:nil error:&error]) {
+                [uploadURL setResourceValue:@(YES) forKey:NSURLIsExcludedFromBackupKey error:nil];
+            } else {
                 MEGALogError(@"Create directory at url failed with error: %@", uploadURL);
                 uploadURL = nil;
             }
-            
-            [uploadURL setResourceValue:@(YES) forKey:NSURLIsExcludedFromBackupKey error:nil];
         }
     }
     
