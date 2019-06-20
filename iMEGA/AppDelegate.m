@@ -383,7 +383,7 @@
         [[MEGASdkManager sharedMEGAChatSdk] signalPresenceActivity];
     }
     
-    if (![NSStringFromClass([UIApplication sharedApplication].windows[0].class) isEqualToString:@"UIWindow"]) {
+    if (UIApplication.sharedApplication.windows.count > 0 && ![NSStringFromClass([UIApplication sharedApplication].windows[0].class) isEqualToString:@"UIWindow"]) {
         [[LTHPasscodeViewController sharedUser] enablePasscodeWhenApplicationEntersBackground];
     }
 }
