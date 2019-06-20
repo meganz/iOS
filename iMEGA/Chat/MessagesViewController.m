@@ -400,6 +400,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
 
 - (void)willResignActive {
     [self saveChatDraft];
+    [self.inputToolbar mnz_lockRecordingIfNeeded];
     
     self.lastBottomInset = self.collectionView.scrollIndicatorInsets.bottom;
     self.lastVerticalOffset = self.collectionView.contentOffset.y;
@@ -428,6 +429,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
     [[MEGASdkManager sharedMEGAChatSdk] removeChatCallDelegate:self];
     
     [self saveChatDraft];
+    [self.inputToolbar mnz_lockRecordingIfNeeded];
     
     [SVProgressHUD dismiss];
     [self hideTapForInfoLabel];
@@ -485,6 +487,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
     [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
     
     [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
+        [self.inputToolbar mnz_lockRecordingIfNeeded];
         [self configureNavigationBar];
     } completion:nil];
 }
@@ -2661,6 +2664,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
                     photoBrowserVC.delegate = self;
                     
                     [self.navigationController presentViewController:photoBrowserVC animated:YES completion:nil];
+                    [self.inputToolbar mnz_lockRecordingIfNeeded];
                 } else {
                     [node mnz_openNodeInNavigationController:self.navigationController folderLink:NO];
                 }
