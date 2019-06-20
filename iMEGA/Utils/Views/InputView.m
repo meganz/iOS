@@ -41,6 +41,13 @@
     [self addSubview:self.customView];
     self.customView.frame = self.bounds;
     self.customView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    
+    UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleSingleTap:)];
+    [self addGestureRecognizer:singleTap];
+}
+
+- (void)handleSingleTap:(UITapGestureRecognizer *)recognizer {
+    [self.inputTextField becomeFirstResponder];
 }
 
 #pragma mark - Public
