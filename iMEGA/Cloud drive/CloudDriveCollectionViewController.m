@@ -159,8 +159,7 @@
     if (self.isSearchViewVisible) {
         self.searchViewTopConstraint.constant = - scrollView.contentOffset.y;
         if (scrollView.contentOffset.y > 50 && !self.cloudDrive.searchController.isActive) { //hide search view when collection offset up is higher than search view height
-            self.searchViewVisible = NO;
-            self.collectionViewTopConstraint.constant = 0;
+            [self resetSearchBarPosition];
         }
     } else {
         if (scrollView.contentOffset.y < 0) { //keep the search view next to collection view offset when scroll down
@@ -244,6 +243,11 @@
 
 - (void)collectionViewSelectIndexPath:(NSIndexPath *)indexPath {
     [self collectionView:self.collectionView didSelectItemAtIndexPath:indexPath];
+}
+
+- (void)resetSearchBarPosition {
+    self.searchViewVisible = NO;
+    self.collectionViewTopConstraint.constant = 0;
 }
 
 @end

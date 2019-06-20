@@ -203,10 +203,7 @@
     if (self.nodeList.size.unsignedIntegerValue == 0) {
         [_tableView setTableHeaderView:nil];
     } else {
-        self.tableView.contentOffset = CGPointMake(0, CGRectGetHeight(self.searchController.searchBar.frame));
-        if (!self.tableView.tableHeaderView) {
-            [_tableView setTableHeaderView:self.searchController.searchBar];
-        }
+        [self addSearchBar];
     }
 }
 
@@ -269,12 +266,27 @@
     BOOL boolValue = [MEGAReachabilityManager isReachable];
     [self setActionButtonsEnabled:boolValue];
     
+    boolValue ? [self addSearchBar] : [self hideSearchBarIfNotActive];
+    
     [self.tableView reloadData];
 }
 
 - (void)setToolbarButtonsEnabled:(BOOL)boolValue {
     [self.downloadBarButtonItem setEnabled:boolValue];
     [self.importBarButtonItem setEnabled:boolValue];
+}
+
+- (void)addSearchBar {
+    if (self.searchController && !self.tableView.tableHeaderView) {
+        self.tableView.contentOffset = CGPointMake(0, CGRectGetHeight(self.searchController.searchBar.frame));
+        self.tableView.tableHeaderView = self.searchController.searchBar;
+    }
+}
+
+- (void)hideSearchBarIfNotActive {
+    if (!self.searchController.isActive) {
+        self.tableView.tableHeaderView = nil;
+    }
 }
 
 - (void)showLinkNotValid {
@@ -751,6 +763,10 @@
 
 - (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
     self.searchNodesArray = nil;
+    
+    if (!MEGAReachabilityManager.isReachable) {
+        self.tableView.tableHeaderView = nil;
+    }
 }
 
 #pragma mark - UISearchResultsUpdating
