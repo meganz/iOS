@@ -368,6 +368,10 @@
     BOOL boolValue = MEGAReachabilityManager.isReachable;
     [self setNavigationBarButtonItemsEnabled:boolValue];
     
+    if (!boolValue) {
+        [self hideSearchIfNotActive];
+    }
+    
     boolValue ? [self reloadUI] : [self.tableView reloadData];
 }
 
@@ -376,6 +380,12 @@
     self.addBarButtonItem.enabled = boolValue;
     self.editButtonItem.enabled = boolValue;
     self.createGroupBarButtonItem.enabled = boolValue;
+}
+
+- (void)hideSearchIfNotActive {
+    if (!self.searchController.isActive) {
+        self.tableView.tableHeaderView = nil;
+    }
 }
 
 - (NSMutableArray *)outSharesForNode:(MEGANode *)node {
@@ -713,6 +723,7 @@
     if (self.visibleUsersArray.count == 0) {
         return;
     }
+    
     switch (self.contactsMode) {
         case ContactsModeChatAttachParticipant:
         case ContactsModeChatAddParticipant:
@@ -1545,6 +1556,10 @@
 
 - (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
     self.searchVisibleUsersArray = nil;
+    
+    if (!MEGAReachabilityManager.isReachable) {
+        self.tableView.tableHeaderView = nil;
+    }
 }
 
 #pragma mark - UISearchControllerDelegate
