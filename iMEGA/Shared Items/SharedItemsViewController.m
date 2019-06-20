@@ -116,9 +116,7 @@
     [[MEGASdkManager sharedMEGASdk] addMEGAGlobalDelegate:self];
     [[MEGAReachabilityManager sharedManager] retryPendingConnections];
     
-    if (self.searchController && !self.tableView.tableHeaderView) {
-        self.tableView.tableHeaderView = self.searchController.searchBar;
-    }
+    [self addSearchBar];
     
     [self reloadUI];
 }
@@ -181,6 +179,8 @@
     [self setNavigationBarButtonItemsEnabled:boolValue];
     [self toolbarItemsSetEnabled:boolValue];
     
+    boolValue ? [self addSearchBar] : [self hideSearchBarIfNotActive];
+    
     [self.tableView reloadData];
 }
 
@@ -196,6 +196,19 @@
     [self.shareBarButtonItem setEnabled:((self.selectedNodesMutableArray.count < 100) ? boolValue : NO)];
     [_shareFolderBarButtonItem setEnabled:boolValue];
     [_removeShareBarButtonItem setEnabled:boolValue];
+}
+
+- (void)addSearchBar {
+    if (self.searchController && !self.tableView.tableHeaderView) {
+        self.tableView.contentOffset = CGPointMake(0, CGRectGetHeight(self.searchController.searchBar.frame));
+        self.tableView.tableHeaderView = self.searchController.searchBar;
+    }
+}
+
+- (void)hideSearchBarIfNotActive {
+    if (!self.searchController.isActive) {
+        self.tableView.tableHeaderView = nil;
+    }
 }
 
 - (void)incomingNodes {
@@ -215,10 +228,7 @@
     if (self.incomingNodesMutableArray.count == 0) {
         self.tableView.tableHeaderView = nil;
     } else {
-        if (!self.tableView.tableHeaderView) {
-            self.tableView.contentOffset = CGPointMake(0, CGRectGetHeight(self.searchController.searchBar.frame));
-            self.tableView.tableHeaderView = self.searchController.searchBar;
-        }
+        [self addSearchBar];
     }
 }
 
@@ -250,10 +260,7 @@
     if (self.outgoingNodesMutableArray.count == 0) {
         self.tableView.tableHeaderView = nil;
     } else {
-        if (!self.tableView.tableHeaderView) {
-            self.tableView.contentOffset = CGPointMake(0, CGRectGetHeight(self.searchController.searchBar.frame));
-            self.tableView.tableHeaderView = self.searchController.searchBar;
-        }
+        [self addSearchBar];
     }
 }
 
@@ -911,6 +918,10 @@
 
 - (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
     self.searchNodesArray = nil;
+    
+    if (!MEGAReachabilityManager.isReachable) {
+        self.tableView.tableHeaderView = nil;
+    }
 }
 
 #pragma mark - UISearchResultsUpdating

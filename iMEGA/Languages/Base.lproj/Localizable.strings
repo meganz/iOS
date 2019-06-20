@@ -1922,3 +1922,7 @@
 "Turn Mobile Data on"="Turn Mobile Data on";
 /* Extra information shown when the user has disabled the 'Mobile Data' setting for MEGA in the iOS Settings. */
 "You can turn on mobile data for this app in Settings."="You can turn on mobile data for this app in Settings.";
+/* title of the alert dialog when the user is changing the API URL to staging */
+"Change to a test server?"="Change to a test server?";
+/* text of the alert dialog when the user is changing the API URL to staging */
+"Are you sure you want to change to a test server? Your account may suffer irrecoverable problems"="Are you sure you want to change to a test server? Your account may suffer irrecoverable problems";
