@@ -944,15 +944,13 @@
 }
 
 - (void)addSearchBar {
-    if (self.searchController) {
-        if (self.layoutView == LayoutModeList) {
-            if (self.searchController && !self.cdTableView.tableView.tableHeaderView) {
-                self.cdTableView.tableView.contentOffset = CGPointMake(0, CGRectGetHeight(self.searchController.searchBar.frame));
-                self.cdTableView.tableView.tableHeaderView = ((self.displayMode == DisplayModeRecents) || !MEGAReachabilityManager.isReachable) ? nil : self.searchController.searchBar; //We have to check isReachable here to avoid re-adding the search bar when there is no internet connection and you change between 'Cloud Drive' and 'Recents' sections.
-            }
+    if (self.layoutView == LayoutModeList) {
+        if (self.searchController && !self.cdTableView.tableView.tableHeaderView) {
+            self.cdTableView.tableView.contentOffset = CGPointMake(0, CGRectGetHeight(self.searchController.searchBar.frame));
+            self.cdTableView.tableView.tableHeaderView = ((self.displayMode == DisplayModeRecents) || !MEGAReachabilityManager.isReachable) ? nil : self.searchController.searchBar; //We have to check isReachable here to avoid re-adding the search bar when there is no internet connection and you change between 'Cloud Drive' and 'Recents' sections.
         }
-        //In the case of LayoutModeThumbnail is not necessary to re-add the search bar.
     }
+    //In the case of LayoutModeThumbnail is not necessary to re-add the search bar.
 }
 
 - (void)hideSearchIfNotActive {
