@@ -340,7 +340,7 @@
     return skeletonImageView;
 }
 
-#pragma mark - DZNEmptyDataSetDelegate Methods
+#pragma mark - DZNEmptyDataSetDelegate
 
 - (void)emptyDataSet:(UIScrollView *)scrollView didTapButton:(UIButton *)button {
     if (![[NSUserDefaults standardUserDefaults] boolForKey:@"IsChatEnabled"]) {
