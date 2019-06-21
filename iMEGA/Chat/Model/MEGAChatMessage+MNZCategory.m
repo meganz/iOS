@@ -210,8 +210,12 @@ static const void *richNumberTagKey = &richNumberTagKey;
                             text = joinedTheGroupChatByInvitationFrom;
                             
                             NSMutableAttributedString *mutableAttributedString = [[NSMutableAttributedString alloc] initWithString:joinedTheGroupChatByInvitationFrom attributes:@{NSFontAttributeName:textFontRegular, NSForegroundColorAttributeName:[UIColor mnz_black333333]}];
-                            [mutableAttributedString addAttribute:NSFontAttributeName value:textFontMedium range:[joinedTheGroupChatByInvitationFrom rangeOfString:fullNameReceiveAction]];
-                            [mutableAttributedString addAttribute:NSFontAttributeName value:textFontMedium range:[joinedTheGroupChatByInvitationFrom rangeOfString:fullNameDidAction]];
+                            NSRange receiveRange = [joinedTheGroupChatByInvitationFrom rangeOfString:fullNameReceiveAction];
+                            [mutableAttributedString addAttribute:NSFontAttributeName value:textFontMedium range:receiveRange];
+                            [mutableAttributedString addAttribute:NSLinkAttributeName value:[self chatPeerOptionsUrlStringForUserHandle:[self userHandleReceiveAction]] range:receiveRange];
+                            NSRange didRange = [joinedTheGroupChatByInvitationFrom rangeOfString:fullNameDidAction];
+                            [mutableAttributedString addAttribute:NSFontAttributeName value:textFontMedium range:didRange];
+                            [mutableAttributedString addAttribute:NSLinkAttributeName value:[self chatPeerOptionsUrlStringForUserHandle:self.userHandle] range:didRange];
                             self.attributedText = mutableAttributedString;
                         } else {
                             NSString *joinedTheGroupChat = [NSString stringWithFormat:AMLocalizedString(@"%@ joined the group chat.", @"Management message shown in a chat when the user %@ joined it from a public chat link"), fullNameReceiveAction];
@@ -440,13 +444,7 @@ static const void *richNumberTagKey = &richNumberTagKey;
 
 - (NSString *)fullNameReceiveAction {
     NSString *fullNameReceiveAction;
-    uint64_t tempHandle;
-    
-    if (self.type == MEGAChatMessageTypeAlterParticipants || self.type == MEGAChatMessageTypePrivilegeChange) {
-        tempHandle = self.userHandleOfAction;
-    } else {
-        tempHandle = self.userHandle;
-    }
+    uint64_t tempHandle = [self userHandleReceiveAction];
     
     if ([MEGASdkManager sharedMEGAChatSdk].myUserHandle == tempHandle) {
         fullNameReceiveAction = [MEGASdkManager sharedMEGAChatSdk].myFullname;
@@ -466,6 +464,14 @@ static const void *richNumberTagKey = &richNumberTagKey;
     }
     
     return fullName;
+}
+
+- (uint64_t)userHandleReceiveAction {
+    return self.type == MEGAChatMessageTypeAlterParticipants || self.type == MEGAChatMessageTypePrivilegeChange ? self.userHandleOfAction : self.userHandle;
+}
+
+- (NSString *)chatPeerOptionsUrlStringForUserHandle:(uint64_t)userHandle {
+    return [NSString stringWithFormat:@"mega://chatPeerOptions#%@", [MEGASdk base64HandleForUserHandle:userHandle]];
 }
 
 #pragma mark - NSObject
