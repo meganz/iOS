@@ -1484,7 +1484,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
     
     UIAlertAction *infoAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"info", @"A button label. The button allows the user to get more info of the current context.") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         ContactDetailsViewController *contactDetailsVC = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactDetailsViewControllerID"];
-        contactDetailsVC.contactDetailsMode = ContactDetailsModeFromGroupChat;
+        contactDetailsVC.contactDetailsMode = self.chatRoom.isGroup ? ContactDetailsModeFromGroupChat : ContactDetailsModeFromChat;
         contactDetailsVC.userEmail = userEmail;
         contactDetailsVC.userName = userName;
         contactDetailsVC.userHandle = userHandle;
@@ -1507,7 +1507,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
         [userAlertController addAction:addContactAlertAction];
     }
     
-    if (self.chatRoom.ownPrivilege == MEGAChatRoomPrivilegeModerator) {
+    if (self.chatRoom.ownPrivilege == MEGAChatRoomPrivilegeModerator && self.chatRoom.isGroup) {
         UIAlertAction *removeParticipantAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"removeParticipant", @"A button title which removes a participant from a chat.") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
             [[MEGASdkManager sharedMEGAChatSdk] removeFromChat:self.chatRoom.chatId userHandle:userHandle delegate:self];
             self.inputToolbar.hidden = self.chatRoom.ownPrivilege <= MEGAChatRoomPrivilegeRo;
