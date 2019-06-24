@@ -496,8 +496,9 @@
             // The user is your contact, don't show the "Add contact" option
             numberOfSections--;
         }
-        if (self.chatRoom.ownPrivilege != MEGAChatRoomPrivilegeModerator) {
-            // If you are not a moderator, you can't neither change the privilege nor remove the participant
+        MEGAChatRoomPrivilege peerPrivilege = [self.chatRoom peerPrivilegeByHandle:self.userHandle];
+        if (self.chatRoom.ownPrivilege != MEGAChatRoomPrivilegeModerator || peerPrivilege < MEGAChatRoomPrivilegeRo) {
+            // If you are not a moderator or the user does not belong to the chat, you can't neither change the privilege nor remove as participant
             numberOfSections -= 2;
         }
     }
