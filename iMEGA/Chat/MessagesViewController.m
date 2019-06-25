@@ -1474,6 +1474,10 @@ static NSMutableSet<NSString *> *tapForInfoSet;
     NSString *userName = [self.chatRoom peerFullnameByHandle:userHandle];
     NSString *userEmail = [self.chatRoom peerEmailByHandle:userHandle];
     
+    if (!userEmail) {
+        return;
+    }
+    
     UIAlertController *userAlertController = [UIAlertController alertControllerWithTitle:userName message:nil preferredStyle:UIAlertControllerStyleActionSheet];
     
     UIAlertAction *cancelAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
