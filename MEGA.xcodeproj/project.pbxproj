@@ -867,8 +867,7 @@
 		B6CCC36921E800E400B68E2C /* VideoUploadsQualityTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B6CCC36821E800E400B68E2C /* VideoUploadsQualityTableViewController.m */; };
 		B6CCC36B21E8297F00B68E2C /* CameraUploadSettings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B6CCC36A21E8297F00B68E2C /* CameraUploadSettings.storyboard */; };
 		B6CE0D0F221FDFCB00E6BD41 /* CameraUploadConcurrentCountCalculator.m in Sources */ = {isa = PBXBuildFile; fileRef = B6CE0D0E221FDFCB00E6BD41 /* CameraUploadConcurrentCountCalculator.m */; };
-		B6CED49622B8AFC3009C4861 /* CameraUploadConcurrentCountCalculationTestsForiOS11OrAbove.m in Sources */ = {isa = PBXBuildFile; fileRef = B6CED49522B8AFC3009C4861 /* CameraUploadConcurrentCountCalculationTestsForiOS11OrAbove.m */; };
-		B6CED49C22B9BB0B009C4861 /* CameraUploadConcurrentCountCalculationTestsForiOSBelow11.m in Sources */ = {isa = PBXBuildFile; fileRef = B6CED49B22B9BB0B009C4861 /* CameraUploadConcurrentCountCalculationTestsForiOSBelow11.m */; };
+		B6CED49622B8AFC3009C4861 /* CameraUploadConcurrentCountCalculatorTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B6CED49522B8AFC3009C4861 /* CameraUploadConcurrentCountCalculatorTests.m */; };
 		B6D11AC6219B8ABC00446B86 /* LocalFileNameGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = B6D11AC5219B8ABC00446B86 /* LocalFileNameGenerator.m */; };
 		B6D11AD7219BAE6D00446B86 /* MOAssetUploadFileNameRecord+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = B6D11AD3219BAE6D00446B86 /* MOAssetUploadFileNameRecord+CoreDataClass.m */; };
 		B6D11AD8219BAE6D00446B86 /* MOAssetUploadFileNameRecord+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = B6D11AD6219BAE6D00446B86 /* MOAssetUploadFileNameRecord+CoreDataProperties.m */; };
@@ -2140,8 +2139,7 @@
 		B6CE0D0E221FDFCB00E6BD41 /* CameraUploadConcurrentCountCalculator.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CameraUploadConcurrentCountCalculator.m; sourceTree = "<group>"; };
 		B6CED48B22B8AC70009C4861 /* MEGAUnitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MEGAUnitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B6CED48F22B8AC70009C4861 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		B6CED49522B8AFC3009C4861 /* CameraUploadConcurrentCountCalculationTestsForiOS11OrAbove.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CameraUploadConcurrentCountCalculationTestsForiOS11OrAbove.m; sourceTree = "<group>"; };
-		B6CED49B22B9BB0B009C4861 /* CameraUploadConcurrentCountCalculationTestsForiOSBelow11.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CameraUploadConcurrentCountCalculationTestsForiOSBelow11.m; sourceTree = "<group>"; };
+		B6CED49522B8AFC3009C4861 /* CameraUploadConcurrentCountCalculatorTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CameraUploadConcurrentCountCalculatorTests.m; sourceTree = "<group>"; };
 		B6D11AC5219B8ABC00446B86 /* LocalFileNameGenerator.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LocalFileNameGenerator.m; sourceTree = "<group>"; };
 		B6D11AD3219BAE6D00446B86 /* MOAssetUploadFileNameRecord+CoreDataClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MOAssetUploadFileNameRecord+CoreDataClass.m"; sourceTree = "<group>"; };
 		B6D11AD4219BAE6D00446B86 /* MOAssetUploadFileNameRecord+CoreDataClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MOAssetUploadFileNameRecord+CoreDataClass.h"; sourceTree = "<group>"; };
@@ -3481,6 +3479,14 @@
 			path = "Flow Layouts";
 			sourceTree = "<group>";
 		};
+		5B076EDA22C251BF00D773B9 /* CameraUpload */ = {
+			isa = PBXGroup;
+			children = (
+				B6CED49522B8AFC3009C4861 /* CameraUploadConcurrentCountCalculatorTests.m */,
+			);
+			path = CameraUpload;
+			sourceTree = "<group>";
+		};
 		5B16A739220D81EB00085F61 /* Recents */ = {
 			isa = PBXGroup;
 			children = (
@@ -4535,9 +4541,8 @@
 		B6CED48C22B8AC70009C4861 /* MEGAUnitTests */ = {
 			isa = PBXGroup;
 			children = (
-				B6CED49522B8AFC3009C4861 /* CameraUploadConcurrentCountCalculationTestsForiOS11OrAbove.m */,
-				B6CED49B22B9BB0B009C4861 /* CameraUploadConcurrentCountCalculationTestsForiOSBelow11.m */,
 				B6CED48F22B8AC70009C4861 /* Info.plist */,
+				5B076EDA22C251BF00D773B9 /* CameraUpload */,
 			);
 			path = MEGAUnitTests;
 			sourceTree = "<group>";
@@ -5861,8 +5866,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B6CED49C22B9BB0B009C4861 /* CameraUploadConcurrentCountCalculationTestsForiOSBelow11.m in Sources */,
-				B6CED49622B8AFC3009C4861 /* CameraUploadConcurrentCountCalculationTestsForiOS11OrAbove.m in Sources */,
+				B6CED49622B8AFC3009C4861 /* CameraUploadConcurrentCountCalculatorTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
