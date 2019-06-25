@@ -49,7 +49,7 @@
 
     __block NSError *coreDataError = nil;
     [CameraUploadRecordManager.shared.backgroundContext performBlockAndWait:^{
-        NSArray<MOAssetUploadRecord *> *livePhotoRecords = [CameraUploadRecordManager.shared fetchUploadRecordsByMediaTypes:@[@(PHAssetMediaTypeImage)] additionalMediaSubtypes:PHAssetMediaSubtypePhotoLive sortByIdentifier:YES error:&coreDataError];
+        NSArray<MOAssetUploadRecord *> *livePhotoRecords = [CameraUploadRecordManager.shared fetchUploadRecordsByMediaTypes:@[@(PHAssetMediaTypeImage)] additionalMediaSubtypes:PHAssetMediaSubtypePhotoLive error:&coreDataError];
         if (coreDataError) {
             return;
         }
@@ -57,7 +57,7 @@
         if (livePhotoRecords.count == 0) {
             [self saveInitialLivePhotoRecordsInFetchResult:livePhotoFetchResult error:&coreDataError];
         } else {
-            NSArray<PHAsset *> *newAssets = [livePhotoFetchResult findNewLivePhotoAssetsBySortedUploadRecords:livePhotoRecords];
+            NSArray<PHAsset *> *newAssets = [livePhotoFetchResult findNewLivePhotoAssetsInUploadRecords:livePhotoRecords];
             MEGALogDebug(@"[Camera Upload] new live photo assets scanned count %lu", (unsigned long)newAssets.count);
             if (newAssets.count > 0) {
                 SavedIdentifierParser *parser = [[SavedIdentifierParser alloc] init];

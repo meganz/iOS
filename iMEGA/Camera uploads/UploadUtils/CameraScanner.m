@@ -70,7 +70,7 @@
         
         __block NSError *error;
         [CameraUploadRecordManager.shared.backgroundContext performBlockAndWait:^{
-            NSArray<MOAssetUploadRecord *> *records = [CameraUploadRecordManager.shared fetchUploadRecordsByMediaTypes:mediaTypes includeAdditionalMediaSubtypes:NO sortByIdentifier:YES error:&error];
+            NSArray<MOAssetUploadRecord *> *records = [CameraUploadRecordManager.shared fetchUploadRecordsByMediaTypes:mediaTypes includeAdditionalMediaSubtypes:NO error:&error];
             if (error) {
                 if (completion) {
                     completion(error);
@@ -84,7 +84,7 @@
                 [self saveInitialUploadRecordsByAssetFetchResult:fetchResult error:&error];
             } else {
                 MEGALogDebug(@"[Camera Upload] saved upload record count %lu", (unsigned long)records.count);
-                NSArray<PHAsset *> *newAssets = [fetchResult findNewAssetsBySortedUploadRecords:records];
+                NSArray<PHAsset *> *newAssets = [fetchResult findNewAssetsInUploadRecords:records];
                 MEGALogDebug(@"[Camera Upload] new assets scanned count %lu", (unsigned long)newAssets.count);
                 if (newAssets.count > 0) {
                     [self insertUploadRecordsForAssets:newAssets shouldCheckExistence:NO];
