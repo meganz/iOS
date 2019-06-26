@@ -809,7 +809,7 @@
                     contactDetailsVC.userEmail = userEmail;
                     contactDetailsVC.userName = userName;
                     contactDetailsVC.userHandle = userHandle;
-                    contactDetailsVC.chatRoom = self.chatRoom;
+                    contactDetailsVC.groupChatRoom = self.chatRoom;
 
                     [self.navigationController pushViewController:contactDetailsVC animated:YES];
                 }

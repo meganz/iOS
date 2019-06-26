@@ -1063,7 +1063,6 @@ static NSMutableSet<NSString *> *tapForInfoSet;
         
         ContactDetailsViewController *contactDetailsVC = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactDetailsViewControllerID"];
         contactDetailsVC.contactDetailsMode = ContactDetailsModeFromChat;
-        contactDetailsVC.chatId = self.chatRoom.chatId;
         contactDetailsVC.userEmail = peerEmail;
         contactDetailsVC.userName = peerName;
         contactDetailsVC.userHandle = peerHandle;
@@ -1492,7 +1491,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
         contactDetailsVC.userEmail = userEmail;
         contactDetailsVC.userName = userName;
         contactDetailsVC.userHandle = userHandle;
-        contactDetailsVC.chatRoom = self.chatRoom;
+        contactDetailsVC.groupChatRoom = self.chatRoom;
         [self.navigationController pushViewController:contactDetailsVC animated:YES];
     }];
     [infoAlertAction mnz_setTitleTextColor:UIColor.mnz_black333333];
