@@ -11,7 +11,7 @@
 #import "MEGAFetchNodesRequestDelegate.h"
 #import "MEGAGetPublicNodeRequestDelegate.h"
 #import "MEGALocationMediaItem.h"
-#import "MEGALoginToFolderLinkRequestDelegate.h"
+#import "MEGAGenericRequestDelegate.h"
 #import "MEGAPhotoMediaItem.h"
 #import "MEGARichPreviewMediaItem.h"
 #import "MEGASdkManager.h"
@@ -28,6 +28,7 @@ static const void *MEGALinkTagKey = &MEGALinkTagKey;
 static const void *nodeTagKey = &nodeTagKey;
 static const void *richStringTagKey = &richStringTagKey;
 static const void *richNumberTagKey = &richNumberTagKey;
+static const void *richTitleTagKey = &richTitleTagKey;
 
 @implementation MEGAChatMessage (MNZCategory)
 
@@ -100,19 +101,13 @@ static const void *richNumberTagKey = &richNumberTagKey;
                 }
                     
                 case URLTypeFolderLink: {
-                    MEGALoginToFolderLinkRequestDelegate *loginDelegate = [[MEGALoginToFolderLinkRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
-                        MEGAFetchNodesRequestDelegate *fetchNodesDelegate = [[MEGAFetchNodesRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
-                            if (!request.flag) {
-                                MEGANode *node = [MEGASdkManager sharedMEGASdkFolder].rootNode;
-                                self.richString = [Helper filesAndFoldersInFolderNode:node api:[MEGASdkManager sharedMEGASdkFolder]];
-                                self.richNumber = [[MEGASdkManager sharedMEGASdkFolder] sizeForNode:node];
-                                self.node = node;
-                                [[MEGASdkManager sharedMEGASdkFolder] logout];
-                            }
-                        }];
-                        [[MEGASdkManager sharedMEGASdkFolder] fetchNodesWithDelegate:fetchNodesDelegate];
+                    MEGAGenericRequestDelegate *delegate = [[MEGAGenericRequestDelegate alloc] initWithCompletion:^(MEGARequest *request, MEGAError *error) {
+                        self.richString = [NSString mnz_stringByFiles:request.megaFolderInfo.files andFolders:request.megaFolderInfo.folders];
+                        self.richNumber = @(request.megaFolderInfo.currentSize);
+                        self.richTitle = request.text;
+
                     }];
-                    [[MEGASdkManager sharedMEGASdkFolder] loginToFolderLink:[self.MEGALink mnz_MEGAURL] delegate:loginDelegate];
+                    [MEGASdkManager.sharedMEGASdk getPublicLinkInformationWithFolderLink:self.MEGALink.mnz_MEGAURL delegate:delegate];
                     
                     break;
                 }
@@ -536,6 +531,14 @@ static const void *richNumberTagKey = &richNumberTagKey;
 
 - (void)setRichNumber:(NSNumber *)richNumber {
     objc_setAssociatedObject(self, &richNumberTagKey, richNumber, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+- (NSString *)richTitle {
+    return objc_getAssociatedObject(self, richTitleTagKey);
+}
+
+- (void)setRichTitle:(NSString *)richTitle {
+    objc_setAssociatedObject(self, &richTitleTagKey, richTitle, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 @end
