@@ -268,7 +268,13 @@
                 [[MEGASdkManager sharedMEGAChatSdk] createChatGroup:NO peers:peerList delegate:createChatGroupRequestDelegate];
             }
         } else {
+            NSUInteger viewControllersCount = self.navigationController.viewControllers.count;
+            UIViewController *previousViewController = viewControllersCount >= 2 ? self.navigationController.viewControllers[viewControllersCount - 2] : nil;
+            if (previousViewController && [previousViewController isKindOfClass:MessagesViewController.class]) {
             [self.navigationController popViewControllerAnimated:YES];
+            } else {
+                [self openChatRoomWithChatId:self.chatId];
+            }
         }
     } else {
         [SVProgressHUD showImage:[UIImage imageNamed:@"hudWarning"] status:AMLocalizedString(@"chatIsDisabled", @"Title show when the chat is disabled")];
