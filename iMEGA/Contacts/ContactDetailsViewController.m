@@ -77,8 +77,8 @@
     
     self.user = [[MEGASdkManager sharedMEGASdk] contactForEmail:self.userEmail];
     if (self.chatId) {
-        self.chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:self.chatId];
-        [self.avatarImageView mnz_setImageAvatarOrColorForUserHandle:[self.chatRoom peerHandleAtIndex:0]];
+        MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomByUser:self.userHandle];
+        [self.avatarImageView mnz_setImageAvatarOrColorForUserHandle:[chatRoom peerHandleAtIndex:0]];
     } else {
         if (self.user.visibility == MEGAUserVisibilityVisible) {
             [self.avatarImageView mnz_setImageAvatarOrColorForUserHandle:self.user.handle];
@@ -198,16 +198,16 @@
 }
 
 - (void)showArchiveChatAlertAtIndexPath {
-    NSString *title = self.chatRoom.isArchived ? AMLocalizedString(@"unarchiveChatMessage", @"Confirmation message for user to confirm it will unarchive an archived chat.") : AMLocalizedString(@"archiveChatMessage", @"Confirmation message on archive chat dialog for user to confirm.");
+    MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomByUser:self.userHandle];
+    NSString *title = chatRoom.isArchived ? AMLocalizedString(@"unarchiveChatMessage", @"Confirmation message for user to confirm it will unarchive an archived chat.") : AMLocalizedString(@"archiveChatMessage", @"Confirmation message on archive chat dialog for user to confirm.");
     UIAlertController *leaveAlertController = [UIAlertController alertControllerWithTitle:title message:nil preferredStyle:UIAlertControllerStyleAlert];
     [leaveAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
     
     [leaveAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", @"Button title to accept something") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         MEGAArchiveChatRequestDelegate *archiveChatRequesDelegate = [[MEGAArchiveChatRequestDelegate alloc] initWithCompletion:^(MEGAChatRoom *chatRoom) {
-            self.chatRoom = chatRoom;
             [self.tableView reloadData];
         }];
-        [[MEGASdkManager sharedMEGAChatSdk] archiveChat:self.chatRoom.chatId archive:!self.chatRoom.isArchived delegate:archiveChatRequesDelegate];
+        [[MEGASdkManager sharedMEGAChatSdk] archiveChat:chatRoom.chatId archive:!chatRoom.isArchived delegate:archiveChatRequesDelegate];
     }]];
     
     [self presentViewController:leaveAlertController animated:YES completion:nil];
@@ -247,7 +247,7 @@
 }
 
 - (void)openChatRoomWithChatId:(uint64_t)chatId {
-    MEGAChatRoom *chatRoom             = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:chatId];
+    MEGAChatRoom *chatRoom             = [[MEGASdkManager sharedMEGAChatSdk] chatRoomByUser:self.userHandle];
     MessagesViewController *messagesVC = [[MessagesViewController alloc] init];
     messagesVC.chatRoom                = chatRoom;
     [self.navigationController pushViewController:messagesVC animated:YES];
@@ -255,8 +255,8 @@
 
 - (void)sendMessageToContact {
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"IsChatEnabled"]) {
-        if (self.contactDetailsMode == ContactDetailsModeDefault) {
-            MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomByUser:self.userHandle];
+        MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomByUser:self.userHandle];
+        if (self.contactDetailsMode == ContactDetailsModeDefault || self.contactDetailsMode == ContactDetailsModeFromGroupChat) {
             if (chatRoom) {
                 [self openChatRoomWithChatId:chatRoom.chatId];
             } else {
@@ -271,7 +271,7 @@
             NSUInteger viewControllersCount = self.navigationController.viewControllers.count;
             UIViewController *previousViewController = viewControllersCount >= 2 ? self.navigationController.viewControllers[viewControllersCount - 2] : nil;
             if (previousViewController && [previousViewController isKindOfClass:MessagesViewController.class]) {
-            [self.navigationController popViewControllerAnimated:YES];
+                [self.navigationController popViewControllerAnimated:YES];
             } else {
                 [self openChatRoomWithChatId:self.chatId];
             }
@@ -310,13 +310,13 @@
 }
 
 - (void)performCallWithVideo:(BOOL)video {
-    if (self.chatRoom) {
+    MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomByUser:self.userHandle];
+    if (chatRoom) {
         [self openCallViewWithVideo:video active:NO];
     } else {
         MEGAChatPeerList *peerList = [[MEGAChatPeerList alloc] init];
         [peerList addPeerWithHandle:self.userHandle privilege:MEGAChatRoomPrivilegeStandard];
         MEGAChatCreateChatGroupRequestDelegate *createChatGroupRequestDelegate = [[MEGAChatCreateChatGroupRequestDelegate alloc] initWithCompletion:^(MEGAChatRoom *chatRoom) {
-            self.chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:chatRoom.chatId];
             [self openCallViewWithVideo:video active:NO];
         }];
         [[MEGASdkManager sharedMEGAChatSdk] createChatGroup:NO peers:peerList delegate:createChatGroupRequestDelegate];
@@ -330,8 +330,7 @@
     }
 
     CallViewController *callVC = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"CallViewControllerID"];
-    callVC.chatRoom = self.chatRoom;
-    [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:self.chatId];
+    callVC.chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomByUser:self.userHandle];
     callVC.videoCall = videoCall;
     callVC.callType = active ? CallTypeActive : CallTypeOutgoing;
     callVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
@@ -386,7 +385,7 @@
         }
     }
     
-    MEGAChatRoom *chatRoom = self.chatRoom ? self.chatRoom : [[MEGASdkManager sharedMEGAChatSdk] chatRoomByUser:self.userHandle];
+    MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomByUser:self.userHandle];
     if (chatRoom) {
         if (chatRoom.ownPrivilege < MEGAChatRoomPrivilegeStandard) {
             self.messageButton.enabled = self.callButton.enabled = self.videoCallButton.enabled = NO;
@@ -579,13 +578,15 @@
                 cell.userInteractionEnabled = self.user.visibility == MEGAUserVisibilityVisible;
                 break;
                 
-            case 1: //Archive chat
+            case 1: { //Archive chat
                 cell = [self.tableView dequeueReusableCellWithIdentifier:@"ContactDetailsDefaultTypeID" forIndexPath:indexPath];
-                cell.avatarImageView.image = self.chatRoom.isArchived ? [UIImage imageNamed:@"unArchiveChat"] : [UIImage imageNamed:@"archiveChat_gray"];
-                cell.nameLabel.text = self.chatRoom.isArchived ? AMLocalizedString(@"unarchiveChat", @"The title of the dialog to unarchive an archived chat.") : AMLocalizedString(@"archiveChat", @"Title of button to archive chats.");
-                cell.nameLabel.textColor = self.chatRoom.isArchived ? UIColor.mnz_redMain : UIColor.mnz_black333333;
+                MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomByUser:self.userHandle];
+                cell.avatarImageView.image = chatRoom.isArchived ? [UIImage imageNamed:@"unArchiveChat"] : [UIImage imageNamed:@"archiveChat_gray"];
+                cell.nameLabel.text = chatRoom.isArchived ? AMLocalizedString(@"unarchiveChat", @"The title of the dialog to unarchive an archived chat.") : AMLocalizedString(@"archiveChat", @"Title of button to archive chats.");
+                cell.nameLabel.textColor = chatRoom.isArchived ? UIColor.mnz_redMain : UIColor.mnz_black333333;
                 cell.nameLabel.font = [UIFont mnz_SFUIRegularWithSize:15.0f];
                 break;
+            }
                 
             case 2: //Shared folders
                 cell = [self.tableView dequeueReusableCellWithIdentifier:@"ContactDetailsSharedFolderTypeID" forIndexPath:indexPath];
@@ -724,7 +725,7 @@
                 if (error.type) {
                     [SVProgressHUD showErrorWithStatus:error.name];
                 } else {
-                    self.chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:request.chatHandle];
+                    self.chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomByUser:self.userHandle];
                     [self.tableView reloadData];
                 }
             }];
@@ -836,15 +837,14 @@
 }
 
 - (void)onChatConnectionStateUpdate:(MEGAChatSdk *)api chatId:(uint64_t)chatId newState:(int)newState {
-    if (self.chatRoom.chatId == chatId) {
+    MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomByUser:self.userHandle];
+    if (chatRoom.chatId == chatId) {
         [self updateCallButtonsState];
     }
 }
 
 - (void)onChatPresenceLastGreen:(MEGAChatSdk *)api userHandle:(uint64_t)userHandle lastGreen:(NSInteger)lastGreen {
-    if (self.chatRoom.isGroup) {
-        return;
-    } else if (userHandle == self.user.handle) {
+    if (userHandle == self.user.handle) {
         if (self.user.handle == userHandle) {
             MEGAChatStatus chatStatus = [[MEGASdkManager sharedMEGAChatSdk] userOnlineStatus:self.user.handle];
             if (chatStatus < MEGAChatStatusOnline) {
