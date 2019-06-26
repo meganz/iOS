@@ -378,6 +378,11 @@
 }
 
 - (void)updateCallButtonsState {
+    MEGAUser *user = [[MEGASdkManager sharedMEGASdk] contactForEmail:self.userEmail];
+    if (!user || user.visibility != MEGAUserVisibilityVisible) {
+        self.messageButton.enabled = self.callButton.enabled = self.videoCallButton.enabled = NO;
+        return;
+    }
     MEGAChatRoom *chatRoom = self.chatRoom ? self.chatRoom : [[MEGASdkManager sharedMEGAChatSdk] chatRoomByUser:self.userHandle];
     if (chatRoom) {
         if (chatRoom.ownPrivilege < MEGAChatRoomPrivilegeStandard) {
