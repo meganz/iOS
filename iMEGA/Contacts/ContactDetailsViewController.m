@@ -377,15 +377,14 @@
 }
 
 - (void)updateCallButtonsState {
-    if (self.contactDetailsMode == ContactDetailsModeFromGroupChat) {
-        MEGAUser *user = [[MEGASdkManager sharedMEGASdk] contactForEmail:self.userEmail];
-        if (!user) {
-            self.messageButton.enabled = self.callButton.enabled = self.videoCallButton.enabled = NO;
-            return;
-        }
+    MEGAUser *user = [[MEGASdkManager sharedMEGASdk] contactForEmail:self.userEmail];
+    if (!user || user.visibility != MEGAUserVisibilityVisible) {
+        self.messageButton.enabled = self.callButton.enabled = self.videoCallButton.enabled = NO;
+        return;
     }
     
-    MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomByUser:self.userHandle];
+    MEGAChatRoom *chatRoom = self.chatRoom ? self.chatRoom : [[MEGASdkManager sharedMEGAChatSdk] chatRoomByUser:self.userHandle];
+    
     if (chatRoom) {
         if (chatRoom.ownPrivilege < MEGAChatRoomPrivilegeStandard) {
             self.messageButton.enabled = self.callButton.enabled = self.videoCallButton.enabled = NO;
