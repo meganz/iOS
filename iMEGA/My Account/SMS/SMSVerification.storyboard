@@ -256,6 +256,8 @@
                         <viewLayoutGuide key="safeArea" id="XDB-18-aEe"/>
                     </view>
                     <connections>
+                        <outlet property="countryCodeLabel" destination="l67-zd-SyV" id="gsb-ER-0NF"/>
+                        <outlet property="countryNameLabel" destination="zar-d5-eaQ" id="ETJ-oj-H3p"/>
                         <outlet property="headerImageView" destination="ztT-na-Kbt" id="zu4-VM-HYV"/>
                         <outlet property="nextButton" destination="I1e-G7-G4T" id="EPH-1V-DNh"/>
                         <outlet property="nextButtonBottomConstraint" destination="X8t-SW-Mvz" id="d5M-5n-UFF"/>

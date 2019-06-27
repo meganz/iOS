@@ -9,6 +9,10 @@ class SMSVerificationViewController: UIViewController {
     @IBOutlet private var nextButtonBottomConstraint: NSLayoutConstraint!
     @IBOutlet private var scrollContentViewPreferredEqualHeightConstraint: NSLayoutConstraint!
     @IBOutlet private var phoneNumberTextField: UITextField!
+    @IBOutlet private var countryNameLabel: UILabel!
+    @IBOutlet private var countryCodeLabel: UILabel!
+    
+    private var countryCallingCodeDict: [String: MEGAStringList]?
 
     // MARK: View lifecycle
     override func viewDidLoad() {
@@ -19,7 +23,11 @@ class SMSVerificationViewController: UIViewController {
 
         disableAutomaticAdjustmentContentInsetsBehavior()
         
-        NotificationCenter.default.addObserver(self, selector: #selector(didReceiveTextDidChangeNotification(_:)), name: UITextField.textDidChangeNotification, object: self.phoneNumberTextField)
+        NotificationCenter.default.addObserver(self, selector: #selector(didReceiveTextDidChangeNotification(_:)), name: UITextField.textDidChangeNotification, object: phoneNumberTextField)
+        
+        countryNameLabel.text = " "
+        countryCodeLabel.text = nil
+        loadCountryCallingCodes()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -27,6 +35,8 @@ class SMSVerificationViewController: UIViewController {
         
         NotificationCenter.default.addObserver(self, selector: #selector(didReceiveKeyboardWillShowNotification(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(didReceiveKeyboardWillHideNotification(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+        
+        navigationItem.backBarButtonItem?.title = ""
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -35,10 +45,53 @@ class SMSVerificationViewController: UIViewController {
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
     }
+    
+    // MARK: Network calls
+    private func loadCountryCallingCodes() {
+        SVProgressHUD.show()
+        MEGASdkManager.sharedMEGASdk()?.getCountryCallingCodes(with: MEGAGenericRequestDelegate() { [weak self] request, error in
+            SVProgressHUD.dismiss()
+            if error.type == .apiOk {
+                self?.countryCallingCodeDict = request.megaStringListDictionary
+                self?.configDefaultCountryCode()
+            }
+        })
+    }
+    
+    private func configDefaultCountryCode() {
+        guard let countryCallingCodeDict = self.countryCallingCodeDict else {
+            return
+        }
+        
+        guard let systemCurrentRegionCode = Locale.current.regionCode else {
+            return
+        }
+        
+        guard let (_, callingCodeList) = countryCallingCodeDict.first(where: { $0.key == systemCurrentRegionCode }) else {
+            return
+        }
+        
+        guard let callCode = callingCodeList.stringArray.first else {
+            return
+        }
+        
+        guard let appLanguageId = LocalizationSystem.sharedLocal()?.getLanguage() else {
+            return
+        }
+
+        let appLocale = Locale(identifier: Locale.identifier(fromComponents: [NSLocale.Key.languageCode.rawValue : appLanguageId]))
+        
+        guard let countryDisplayName = appLocale.localizedString(forRegionCode: systemCurrentRegionCode) else {
+            return
+        }
+        
+        countryNameLabel.text = "\(countryDisplayName) (+\(callCode))"
+        countryCodeLabel.text = "+\(callCode)"
+    }
 
     // MARK: UI actions
     @IBAction private func didTapCountryView() {
-        self.phoneNumberTextField.resignFirstResponder()
+        phoneNumberTextField.resignFirstResponder()
     }
     
     private func animateViewAdjustments(withDuration duration: Double, keyboardHeight: CGFloat) {
@@ -69,8 +122,8 @@ class SMSVerificationViewController: UIViewController {
     }
     
     @objc private func didReceiveTextDidChangeNotification(_ notification: Notification) {
-        if notification.object as? UITextField === self.phoneNumberTextField {
-            self.nextButton.isEnabled = !(self.phoneNumberTextField.text?.isEmpty ?? true)
+        if notification.object as? UITextField === phoneNumberTextField {
+            nextButton.isEnabled = !(phoneNumberTextField.text?.isEmpty ?? true)
         }
     }
     
@@ -85,17 +138,17 @@ class SMSVerificationViewController: UIViewController {
     
     private func adjustScrollViewContentPreferredHeight() {
         if #available(iOS 11.0, *) {
-            self.scrollContentViewPreferredEqualHeightConstraint.constant = -self.scrollView.adjustedContentInset.top
+            scrollContentViewPreferredEqualHeightConstraint.constant = -scrollView.adjustedContentInset.top
         } else {
-            self.scrollContentViewPreferredEqualHeightConstraint.constant = -self.scrollView.contentInset.top
+            scrollContentViewPreferredEqualHeightConstraint.constant = -scrollView.contentInset.top
         }
     }
     
     private func enableAutomaticAdjustmentContentInsetsBehavior() {
         if #available(iOS 11.0, *) {
-            self.scrollView.contentInsetAdjustmentBehavior = .automatic
+            scrollView.contentInsetAdjustmentBehavior = .automatic
         } else {
-            self.automaticallyAdjustsScrollViewInsets = true
+            automaticallyAdjustsScrollViewInsets = true
         }
     }
     
