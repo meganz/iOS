@@ -102,9 +102,11 @@ static const void *richTitleTagKey = &richTitleTagKey;
                     
                 case URLTypeFolderLink: {
                     MEGAGenericRequestDelegate *delegate = [[MEGAGenericRequestDelegate alloc] initWithCompletion:^(MEGARequest *request, MEGAError *error) {
-                        self.richString = [NSString mnz_stringByFiles:request.megaFolderInfo.files andFolders:request.megaFolderInfo.folders];
-                        self.richNumber = @(request.megaFolderInfo.currentSize);
-                        self.richTitle = request.text;
+                        if (!error.type) {
+                            self.richString = [NSString mnz_stringByFiles:request.megaFolderInfo.files andFolders:request.megaFolderInfo.folders];
+                            self.richNumber = @(request.megaFolderInfo.currentSize);
+                            self.richTitle = request.text;
+                        }
 
                     }];
                     [MEGASdkManager.sharedMEGASdk getPublicLinkInformationWithFolderLink:self.MEGALink.mnz_MEGAURL delegate:delegate];
