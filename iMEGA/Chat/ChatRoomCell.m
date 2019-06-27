@@ -6,6 +6,7 @@
 #import "MEGAChatListItem.h"
 #import "MEGASdkManager.h"
 #import "MEGAStore.h"
+#import "MEGAUser+MNZCategory.h"
 #import "NSAttributedString+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 #import "UIImageView+MNZCategory.h"
@@ -128,6 +129,32 @@
         self.chatLastTime.hidden = NO;
     }
     [self updateUnreadCountChange:chatListItem.unreadCount];
+}
+
+- (void)configureCellForUser:(MEGAUser *)user {
+    self.privateChatImageView.hidden = YES;
+    
+    self.chatTitle.text = [user mnz_fullName];
+    self.chatLastMessage.text = AMLocalizedString(@"noConversationHistory", @"Information if there are no history messages in current chat conversation");
+    
+    [self.avatarImageView mnz_setImageForUserHandle:user.handle name:[user mnz_fullName]];
+    UIColor *statusColor = [UIColor mnz_colorForStatusChange:[[MEGASdkManager sharedMEGAChatSdk] userOnlineStatus:user.handle]];
+    if (statusColor) {
+        self.onlineStatusView.backgroundColor = statusColor;
+        self.onlineStatusView.hidden = NO;
+    } else {
+        self.onlineStatusView.hidden = YES;
+    }
+    
+    if (@available(iOS 11.0, *)) {
+        self.avatarImageView.accessibilityIgnoresInvertColors = YES;
+    }
+    
+    self.activeCallImageView.hidden = YES;
+    self.onCallInfoView.hidden = YES;
+    self.chatLastTime.hidden = YES;
+    
+    [self updateUnreadCountChange:0];
 }
 
 - (void)updateDuration {
