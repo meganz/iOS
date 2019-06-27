@@ -222,11 +222,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
     _whoIsTypingTimersMutableDictionary = NSMutableDictionary.new;
     
     // Voice clips tooltip:
-    NSTextAttachment *voiceTipTextAttachment = [[NSTextAttachment alloc] init];
-    UIImage *voiceTipImage = [UIImage imageNamed:@"voiceTip"];
-    voiceTipTextAttachment.bounds = CGRectMake(0.0f, roundf(self.tooltipLabel.font.capHeight - voiceTipImage.size.height) / 2.0, voiceTipImage.size.width, voiceTipImage.size.height);
-    voiceTipTextAttachment.image = voiceTipImage;
-    NSAttributedString *voiceTipAttributedString = [NSAttributedString attributedStringWithAttachment:voiceTipTextAttachment];
+    NSAttributedString *voiceTipAttributedString = [NSAttributedString mnz_attributedStringFromImageNamed:@"voiceTip" fontCapHeight:self.tooltipLabel.font.capHeight];
     
     NSArray<NSString *> *tooltipTextArray = [AMLocalizedString(@"Tap and hold %@ to record, release to send", @"Tooltip shown when the user presses but does not hold the microphone icon to send a voice clip") componentsSeparatedByString:@"%@"];
     NSMutableAttributedString *tapAndHoldAttributedString = [[NSMutableAttributedString alloc] initWithString:tooltipTextArray.firstObject];
