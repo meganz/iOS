@@ -137,7 +137,7 @@
     [[MEGASdkManager sharedMEGAChatSdk] addChatCallDelegate:self];
     [[MEGASdkManager sharedMEGASdk] addMEGAGlobalDelegate:self];
     [self.navigationController setNavigationBarHidden:YES animated:YES];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateCallButtonsState) name:kReachabilityChangedNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(internetConnectionChanged) name:kReachabilityChangedNotification object:nil];
     [self updateCallButtonsState];
 }
 
@@ -322,7 +322,7 @@
     }
 
     CallViewController *callVC = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"CallViewControllerID"];
-    callVC.chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomByUser:self.userHandle];
+    callVC.chatRoom = self.chatRoom;
     callVC.videoCall = videoCall;
     callVC.callType = active ? CallTypeActive : CallTypeOutgoing;
     callVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
@@ -366,6 +366,11 @@
             }
         }
     }
+}
+
+- (void)internetConnectionChanged {
+    [self updateCallButtonsState];
+    [self.tableView reloadData];
 }
 
 - (void)updateCallButtonsState {
@@ -555,16 +560,17 @@
                 cell.permissionsImageView.image = [Helper permissionsButtonImageForShareType:shareType];
                 break;
         }
-            
+        
+        cell.userInteractionEnabled = cell.avatarImageView.userInteractionEnabled = cell.nameLabel.enabled = MEGAReachabilityManager.isReachable;
+        
     } else if (self.contactDetailsMode == ContactDetailsModeFromChat) {
         switch (indexPath.section) {
             case 0: //Clear Chat History
                 cell = [self.tableView dequeueReusableCellWithIdentifier:@"ContactDetailsDefaultTypeID" forIndexPath:indexPath];
                 cell.avatarImageView.image = [UIImage imageNamed:@"clearChatHistory"];
                 cell.nameLabel.text = AMLocalizedString(@"clearChatHistory", @"A button title to delete the history of a chat.");
-                cell.nameLabel.enabled = self.user.visibility == MEGAUserVisibilityVisible;
                 cell.nameLabel.font = [UIFont mnz_SFUIRegularWithSize:15.0f];
-                cell.userInteractionEnabled = self.user.visibility == MEGAUserVisibilityVisible;
+                cell.userInteractionEnabled = cell.avatarImageView.userInteractionEnabled = cell.nameLabel.enabled = self.user.visibility == MEGAUserVisibilityVisible && MEGAReachabilityManager.isReachable && [MEGASdkManager.sharedMEGAChatSdk chatConnectionState:self.chatRoom.chatId] == MEGAChatConnectionOnline;
                 break;
                 
             case 1: { //Archive chat
@@ -573,6 +579,7 @@
                 cell.nameLabel.text = self.chatRoom.isArchived ? AMLocalizedString(@"unarchiveChat", @"The title of the dialog to unarchive an archived chat.") : AMLocalizedString(@"archiveChat", @"Title of button to archive chats.");
                 cell.nameLabel.textColor = self.chatRoom.isArchived ? UIColor.mnz_redMain : UIColor.mnz_black333333;
                 cell.nameLabel.font = [UIFont mnz_SFUIRegularWithSize:15.0f];
+                cell.userInteractionEnabled = cell.avatarImageView.userInteractionEnabled = cell.nameLabel.enabled = MEGAReachabilityManager.isReachable && [MEGASdkManager.sharedMEGAChatSdk chatConnectionState:self.chatRoom.chatId] == MEGAChatConnectionOnline;
                 break;
             }
                 
@@ -584,6 +591,7 @@
                 cell.shareLabel.text = [Helper filesAndFoldersInFolderNode:node api:[MEGASdkManager sharedMEGASdk]];
                 MEGAShareType shareType = [[MEGASdkManager sharedMEGASdk] accessLevelForNode:node];
                 cell.permissionsImageView.image = [Helper permissionsButtonImageForShareType:shareType];
+                cell.userInteractionEnabled = cell.avatarImageView.userInteractionEnabled = cell.nameLabel.enabled = MEGAReachabilityManager.isReachable;
                 break;
         }
     } else if (self.contactDetailsMode == ContactDetailsModeFromGroupChat) {
@@ -595,6 +603,7 @@
             cell.avatarImageView.tintColor = [UIColor mnz_gray777777];
             cell.nameLabel.text = AMLocalizedString(@"addContact", @"Alert title shown when you select to add a contact inserting his/her email");
             cell.nameLabel.font = [UIFont mnz_SFUIRegularWithSize:15.0f];
+            cell.userInteractionEnabled = cell.avatarImageView.userInteractionEnabled = cell.nameLabel.enabled = MEGAReachabilityManager.isReachable;
         } else if ((indexPath.section == 0 && user) || (indexPath.section == 1 && !user)) {
             //Set permission
             cell = [self.tableView dequeueReusableCellWithIdentifier:@"ContactDetailsPermissionsTypeID" forIndexPath:indexPath];
@@ -619,6 +628,7 @@
                     cell.permissionsLabel.text = AMLocalizedString(@"moderator", @"The Moderator permission level in chat. With moderator permissions a participant can manage the chat.");
                     break;
             }
+            cell.userInteractionEnabled = cell.avatarImageView.userInteractionEnabled = cell.nameLabel.enabled = MEGAReachabilityManager.isReachable && [MEGASdkManager.sharedMEGAChatSdk chatConnectionState:self.groupChatRoom.chatId] == MEGAChatConnectionOnline;
         } else if ((indexPath.section == 1 && user) || (indexPath.section == 2 && !user)) {
             //Remove participant
             cell = [self.tableView dequeueReusableCellWithIdentifier:@"ContactDetailsDefaultTypeID" forIndexPath:indexPath];
@@ -626,6 +636,7 @@
             cell.nameLabel.text = AMLocalizedString(@"removeParticipant", @"A button title which removes a participant from a chat.");
             cell.nameLabel.font = [UIFont mnz_SFUIRegularWithSize:15.0f];
             cell.nameLabel.textColor = [UIColor mnz_redMain];
+            cell.userInteractionEnabled = cell.avatarImageView.userInteractionEnabled = cell.nameLabel.enabled = MEGAReachabilityManager.isReachable && [MEGASdkManager.sharedMEGAChatSdk chatConnectionState:self.groupChatRoom.chatId] == MEGAChatConnectionOnline;
         }
     }
     
@@ -827,6 +838,9 @@
 - (void)onChatConnectionStateUpdate:(MEGAChatSdk *)api chatId:(uint64_t)chatId newState:(int)newState {
     if (self.chatRoom.chatId == chatId) {
         [self updateCallButtonsState];
+        [self.tableView reloadData];
+    } else if (self.groupChatRoom.chatId == chatId) {
+        [self.tableView reloadData];
     }
 }
 
