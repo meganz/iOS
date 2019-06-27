@@ -491,7 +491,7 @@
     } else if (self.contactDetailsMode == ContactDetailsModeFromGroupChat) {
         numberOfSections = 3;
         MEGAUser *user = [[MEGASdkManager sharedMEGASdk] contactForEmail:self.userEmail];
-        if (user) {
+        if (user && user.visibility == MEGAUserVisibilityVisible) {
             // The user is your contact, don't show the "Add contact" option
             numberOfSections--;
         }
@@ -596,7 +596,7 @@
         }
     } else if (self.contactDetailsMode == ContactDetailsModeFromGroupChat) {
         MEGAUser *user = [[MEGASdkManager sharedMEGASdk] contactForEmail:self.userEmail];
-        if (indexPath.section == 0 && !user) {
+        if (indexPath.section == 0 && (!user || user.visibility != MEGAUserVisibilityVisible)) {
             //Add contact
             cell = [self.tableView dequeueReusableCellWithIdentifier:@"ContactDetailsDefaultTypeID" forIndexPath:indexPath];
             cell.avatarImageView.image = [UIImage imageNamed:@"add"];
@@ -604,7 +604,7 @@
             cell.nameLabel.text = AMLocalizedString(@"addContact", @"Alert title shown when you select to add a contact inserting his/her email");
             cell.nameLabel.font = [UIFont mnz_SFUIRegularWithSize:15.0f];
             cell.userInteractionEnabled = cell.avatarImageView.userInteractionEnabled = cell.nameLabel.enabled = MEGAReachabilityManager.isReachable;
-        } else if ((indexPath.section == 0 && user) || (indexPath.section == 1 && !user)) {
+        } else if ((indexPath.section == 0 && user && user.visibility == MEGAUserVisibilityVisible) || (indexPath.section == 1 &&  (!user || user.visibility != MEGAUserVisibilityVisible))) {
             //Set permission
             cell = [self.tableView dequeueReusableCellWithIdentifier:@"ContactDetailsPermissionsTypeID" forIndexPath:indexPath];
             cell.avatarImageView.image = [UIImage imageNamed:@"readWritePermissions"];
@@ -629,7 +629,7 @@
                     break;
             }
             cell.userInteractionEnabled = cell.avatarImageView.userInteractionEnabled = cell.nameLabel.enabled = MEGAReachabilityManager.isReachable && [MEGASdkManager.sharedMEGAChatSdk chatConnectionState:self.groupChatRoom.chatId] == MEGAChatConnectionOnline;
-        } else if ((indexPath.section == 1 && user) || (indexPath.section == 2 && !user)) {
+        } else if ((indexPath.section == 1 && user && user.visibility == MEGAUserVisibilityVisible) || (indexPath.section == 2 &&  (!user || user.visibility != MEGAUserVisibilityVisible))) {
             //Remove participant
             cell = [self.tableView dequeueReusableCellWithIdentifier:@"ContactDetailsDefaultTypeID" forIndexPath:indexPath];
             cell.avatarImageView.image = [UIImage imageNamed:@"delete"];
@@ -712,13 +712,13 @@
         }
     } else if (self.contactDetailsMode == ContactDetailsModeFromGroupChat) {
         MEGAUser *user = [[MEGASdkManager sharedMEGASdk] contactForEmail:self.userEmail];
-        if (indexPath.section == 0 && !user) {
+        if (indexPath.section == 0 && (!user || user.visibility != MEGAUserVisibilityVisible)) {
             //Add contact
             if ([MEGAReachabilityManager isReachableHUDIfNot]) {
                 MEGAInviteContactRequestDelegate *inviteContactRequestDelegate = [[MEGAInviteContactRequestDelegate alloc] initWithNumberOfRequests:1];
                 [MEGASdkManager.sharedMEGASdk inviteContactWithEmail:self.userEmail message:@"" action:MEGAInviteActionAdd delegate:inviteContactRequestDelegate];
             }
-        } else if ((indexPath.section == 0 && user) || (indexPath.section == 1 && !user)) {
+        } else if ((indexPath.section == 0 && user && user.visibility == MEGAUserVisibilityVisible) || (indexPath.section == 1 &&  (!user || user.visibility != MEGAUserVisibilityVisible))) {
             //Set permission
             MEGAChatGenericRequestDelegate *delegate = [MEGAChatGenericRequestDelegate.alloc initWithCompletion:^(MEGAChatRequest * _Nonnull request, MEGAChatError * _Nonnull error) {
                 if (error.type) {
@@ -762,7 +762,7 @@
                 
                 [self presentViewController:permissionsAlertController animated:YES completion:nil];
             }
-        } else if ((indexPath.section == 1 && user) || (indexPath.section == 2 && !user)) {
+        } else if ((indexPath.section == 1 && user && user.visibility == MEGAUserVisibilityVisible) || (indexPath.section == 2 &&  (!user || user.visibility != MEGAUserVisibilityVisible))) {
             //Remove participant
             MEGAChatGenericRequestDelegate *delegate = [MEGAChatGenericRequestDelegate.alloc initWithCompletion:^(MEGAChatRequest * _Nonnull request, MEGAChatError * _Nonnull error) {
                 if (error.type) {
