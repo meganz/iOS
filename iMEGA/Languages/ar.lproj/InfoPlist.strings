@@ -1,5 +1,5 @@
 /* Microphone usage description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
-"NSMicrophoneUsageDescription"="MEGA تستخدم الميكروفون الخاص بك عند التقاط فيديو أو إجراء مكالمة داخل التطبيق.";
+"NSMicrophoneUsageDescription"="MEGA تستخدم الميكروفون الخاص بك عند التقاط فيديو أو إجراء مكالمة داخل التطبيق أو عند اجراء تسجيل صوتي";
 /* Camera usage description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
 "NSCameraUsageDescription"="MEGA تصل الكاميرا الخاصة بك عند التقاط فيديو أو صورة أو إجراء مكالمة داخل التطبيق.";
 /* Photo library usage description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
@@ -16,3 +16,5 @@
 "quickActionUploadString"="رفع";
 /* Title of the Offline section */
 "quickActionOfflineString"="غير متاح";
+/* Location Usage Description. In order to protect user's privacy, Apple requires a specific string explaining why location will be accessed. */
+"NSLocationWhenInUseUsageDescription"="MEGA accesses your location when you elect to share it with your contacts.";

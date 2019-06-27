@@ -91,7 +91,6 @@
     }
     
     [self.pricingsDelegate pricingsReady];
-    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
 }
 
 - (void)request:(SKRequest *)request didFailWithError:(NSError *)error {

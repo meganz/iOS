@@ -8,6 +8,7 @@
 #import "LTHPasscodeViewController.h"
 #import "SVProgressHUD.h"
 
+#import "AVAudioSession+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 #import "UIApplication+MNZCategory.h"
 #import "UIImageView+MNZCategory.h"
@@ -110,8 +111,9 @@
     
     self.mpVolumeView = [[MPVolumeView alloc] initWithFrame:self.enableDisableSpeaker.bounds];
     self.mpVolumeView.showsVolumeSlider = NO;
-    [self.mpVolumeView setRouteButtonImage:[UIImage imageNamed:@"audioSourceActive"] forState:UIControlStateNormal];
     [self.volumeContainerView addSubview:self.mpVolumeView];
+        
+    [self updateAudioOutputImage];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -414,7 +416,6 @@
                         } else {
                             [cell addLocalVideoInChat:self.chatRoom.chatId];
                         }
-                        [[UIDevice currentDevice] setProximityMonitoringEnabled:sender.selected];
                         sender.selected = !sender.selected;
                         
                         [self updateParticipants];
@@ -450,7 +451,6 @@
     [self removeAllVideoListeners];
     [[NSUserDefaults standardUserDefaults] setBool:self.localPeer.video forKey:@"groupCallLocalVideo"];
     [[NSUserDefaults standardUserDefaults] setBool:self.localPeer.audio forKey:@"groupCallLocalAudio"];
-    [[NSUserDefaults standardUserDefaults] setBool:self.enableDisableSpeaker.selected forKey:@"groupCallSpeaker"];
     [[NSUserDefaults standardUserDefaults] synchronize];
     [self.timer invalidate];
     [self dismissViewControllerAnimated:YES completion:nil];
@@ -491,16 +491,8 @@
 }
 
 - (void)configureControlsForLocalUser:(MEGAGroupCallPeer *)localUser {
-    
     self.enableDisableVideoButton.selected = localUser.video;
     self.muteUnmuteMicrophone.selected = !localUser.audio;
-    self.enableDisableSpeaker.selected = [[NSUserDefaults standardUserDefaults] objectForKey:@"groupCallSpeaker"] ? [[NSUserDefaults standardUserDefaults] boolForKey:@"groupCallSpeaker"] : self.videoCall;
-    
-    if (self.enableDisableSpeaker.selected) {
-        [self enableLoudspeaker];
-    } else {
-        [self disableLoudspeaker];
-    }
 }
 
 - (void)initDataSource {
@@ -517,42 +509,15 @@
     self.peerManualMode = nil;
     self.lastPeerTalking = nil;
     self.peerTalkingVideoView.group = YES;
-    
-    [[UIDevice currentDevice] setProximityMonitoringEnabled:!self.localPeer.video];
 }
 
 - (void)didSessionRouteChange:(NSNotification *)notification {
     dispatch_async(dispatch_get_main_queue(), ^{
-        if (!self.volumeContainerView.hidden) { //wireless device available
-            NSDictionary *interuptionDict = notification.userInfo;
-            const NSInteger routeChangeReason = [[interuptionDict valueForKey:AVAudioSessionRouteChangeReasonKey] integerValue];
-            NSLog(@"didSessionRouteChange routeChangeReason: %ld", (long)routeChangeReason);
-            
-            switch (routeChangeReason) {
-                case AVAudioSessionRouteChangeReasonRouteConfigurationChange: //From wireless device to regular speaker
-                    [self.mpVolumeView setRouteButtonImage:[UIImage imageNamed:@"speakerOff"] forState:UIControlStateNormal];
-                    break;
-                    
-                case AVAudioSessionRouteChangeReasonCategoryChange:
-                    if (self.call.status == MEGAChatCallStatusInProgress) { //From speaker to regular speaker
-                        [self.mpVolumeView setRouteButtonImage:[UIImage imageNamed:@"speakerOff"] forState:UIControlStateNormal];
-                    } else { //Wireless device when start a call and it was previously connected
-                        [self.mpVolumeView setRouteButtonImage:[UIImage imageNamed:@"audioSourceActive"] forState:UIControlStateNormal];
-                    }
-                    break;
-                    
-                case AVAudioSessionRouteChangeReasonOverride: //From regular speaker or wireless device to speaker
-                    [self.mpVolumeView setRouteButtonImage:[UIImage imageNamed:@"speakerOn"] forState:UIControlStateNormal];
-                    break;
-                    
-                case AVAudioSessionRouteChangeReasonNewDeviceAvailable: //To a wireless device
-                    [self.mpVolumeView setRouteButtonImage:[UIImage imageNamed:@"audioSourceActive"] forState:UIControlStateNormal];
-                    break;
-                    
-                default:
-                    break;
-            }
-        }
+        [self updateAudioOutputImage];
+        
+        NSDictionary *interuptionDict = notification.userInfo;
+        const NSInteger routeChangeReason = [[interuptionDict valueForKey:AVAudioSessionRouteChangeReasonKey] integerValue];
+        MEGALogDebug(@"didSessionRouteChange routeChangeReason: %ld, current route outputs %@", (long)routeChangeReason, [[[AVAudioSession sharedInstance] currentRoute] outputs]);
     });
 }
 
@@ -784,7 +749,6 @@
 - (void)deleteActiveCallFlags {
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"groupCallLocalVideo"];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"groupCallLocalAudio"];
-    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"groupCallSpeaker"];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
@@ -873,6 +837,8 @@
             [self.collectionView reloadData];
             MEGALogDebug(@"[Group Call] Reload data %s", __PRETTY_FUNCTION__);
             [self playCallingSound];
+            
+            [AVAudioSession.sharedInstance mnz_setSpeakerEnabled:NO];
         }
     }];
     
@@ -939,6 +905,23 @@
 - (void)hideSpinner {
     [self.collectionActivity stopAnimating];
     self.collectionView.alpha = 1;
+}
+
+- (void)updateAudioOutputImage {
+    self.volumeContainerView.hidden = !self.mpVolumeView.areWirelessRoutesAvailable;
+    self.enableDisableSpeaker.hidden = !self.volumeContainerView.hidden;
+    
+    if ([AVAudioSession.sharedInstance mnz_isOutputEqualToPortType:AVAudioSessionPortBuiltInReceiver] || [AVAudioSession.sharedInstance mnz_isOutputEqualToPortType:AVAudioSessionPortHeadphones]) {
+        self.enableDisableSpeaker.selected = NO;
+        [self.mpVolumeView setRouteButtonImage:[UIImage imageNamed:@"speakerOff"] forState:UIControlStateNormal];
+    } else if ([AVAudioSession.sharedInstance mnz_isOutputEqualToPortType:AVAudioSessionPortBuiltInSpeaker]) {
+        self.enableDisableSpeaker.selected = YES;
+        [self.mpVolumeView setRouteButtonImage:[UIImage imageNamed:@"speakerOn"] forState:UIControlStateNormal];
+    } else {
+        [self.mpVolumeView setRouteButtonImage:[UIImage imageNamed:@"audioSourceActive"] forState:UIControlStateNormal];
+    }
+    
+    [[UIDevice currentDevice] setProximityMonitoringEnabled:[AVAudioSession.sharedInstance mnz_isOutputEqualToPortType:AVAudioSessionPortBuiltInReceiver]];
 }
 
 #pragma mark - MEGAChatCallDelegate

@@ -28,7 +28,7 @@
 #import "SharedItemsTableViewCell.h"
 #import "VerifyCredentialsViewController.h"
 
-@interface ContactDetailsViewController () <CustomActionViewControllerDelegate, MEGAChatDelegate, MEGAChatCallDelegate>
+@interface ContactDetailsViewController () <CustomActionViewControllerDelegate, MEGAChatDelegate, MEGAChatCallDelegate, MEGAGlobalDelegate>
 
 @property (weak, nonatomic) IBOutlet UIImageView *avatarImageView;
 @property (weak, nonatomic) IBOutlet UIImageView *verifiedImageView;
@@ -142,6 +142,7 @@
     [super viewWillAppear:animated];
     [[MEGASdkManager sharedMEGAChatSdk] addChatDelegate:self];
     [[MEGASdkManager sharedMEGAChatSdk] addChatCallDelegate:self];
+    [[MEGASdkManager sharedMEGASdk] addMEGAGlobalDelegate:self];
     [self.navigationController setNavigationBarHidden:YES animated:YES];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateCallButtonsState) name:kReachabilityChangedNotification object:nil];
     [self updateCallButtonsState];
@@ -151,6 +152,7 @@
     [super viewWillDisappear:animated];
     [[MEGASdkManager sharedMEGAChatSdk] removeChatDelegate:self];
     [[MEGASdkManager sharedMEGAChatSdk] removeChatCallDelegate:self];
+    [[MEGASdkManager sharedMEGASdk] removeMEGAGlobalDelegate:self];
     [self.navigationController setNavigationBarHidden:NO animated:YES];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kReachabilityChangedNotification object:nil];
 }
@@ -726,6 +728,26 @@
 - (void)onChatCallUpdate:(MEGAChatSdk *)api call:(MEGAChatCall *)call {
     if (call.status == MEGAChatCallStatusDestroyed) {
         [self updateCallButtonsState];
+    }
+}
+
+#pragma mark - MEGAGlobalDelegate
+
+- (void)onNodesUpdate:(MEGASdk *)api nodeList:(MEGANodeList *)nodeList {
+    
+    BOOL shouldReload = NO;
+    
+    NSUInteger nodeListSize = nodeList.size.unsignedIntegerValue;
+    for (NSUInteger i = 0; i < nodeListSize; i++) {
+        MEGANode *nodeUpdated = [nodeList nodeAtIndex:i];
+        if ([nodeUpdated hasChangedType:MEGANodeChangeTypeInShare] || [nodeUpdated hasChangedType:MEGANodeChangeTypeRemoved]) {
+            shouldReload = YES;
+        }
+    }
+    
+    if (shouldReload) {
+        self.incomingNodeListForUser = [[MEGASdkManager sharedMEGASdk] inSharesForUser:self.user];
+        [self.tableView reloadData];
     }
 }
 

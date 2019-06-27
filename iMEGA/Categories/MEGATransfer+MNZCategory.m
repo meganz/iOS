@@ -97,7 +97,17 @@
             
             if ([appDataType isEqualToString:@"attachToChatID"]) {
                 NSString *tempAppDataComponent = [appDataComponent stringByReplacingOccurrencesOfString:@"!" withString:@""];
-                [self mnz_attachtToChatID:tempAppDataComponent];
+                [self mnz_attachtToChatID:tempAppDataComponent asVoiceClip:NO];
+            }
+            
+            if ([appDataType isEqualToString:@"attachVoiceClipToChatID"]) {
+                NSString *tempAppDataComponent = [appDataComponent stringByReplacingOccurrencesOfString:@"!" withString:@""];
+                MEGANode *node = [MEGASdkManager.sharedMEGASdk nodeForHandle:self.nodeHandle];
+                if (node) {
+                    NSString *nodeFilePath = [node mnz_temporaryPathForDownloadCreatingDirectories:YES];
+                    [NSFileManager.defaultManager mnz_moveItemAtPath:self.path toPath:nodeFilePath];
+                }
+                [self mnz_attachtToChatID:tempAppDataComponent asVoiceClip:YES];
             }
             
             if ([appDataType isEqualToString:@"setCoordinates"]) {
@@ -140,11 +150,15 @@
     [node mnz_copyToGalleryFromTemporaryPath:[NSHomeDirectory() stringByAppendingPathComponent:self.path]];
 }
 
-- (void)mnz_attachtToChatID:(NSString *)attachToChatID {
+- (void)mnz_attachtToChatID:(NSString *)attachToChatID asVoiceClip:(BOOL)asVoiceClip {
     NSArray *appDataComponentComponentsArray = [attachToChatID componentsSeparatedByString:@"="];
     NSString *chatID = [appDataComponentComponentsArray objectAtIndex:1];
     unsigned long long chatIdUll = strtoull(chatID.UTF8String, NULL, 0);
-    [[MEGASdkManager sharedMEGAChatSdk] attachNodeToChat:chatIdUll node:self.nodeHandle];
+    if (asVoiceClip) {
+        [[MEGASdkManager sharedMEGAChatSdk] attachVoiceMessageToChat:chatIdUll node:self.nodeHandle];
+    } else {
+        [[MEGASdkManager sharedMEGAChatSdk] attachNodeToChat:chatIdUll node:self.nodeHandle];
+    }
 }
 
 - (void)mnz_setNodeCoordinates {
@@ -163,6 +177,30 @@
             [self mnz_parseAppData];
         }
     }
+}
+
+- (NSUInteger)mnz_orderByState {
+    NSUInteger orderByState;
+    
+    switch (self.state) {
+        case MEGATransferStateCompleting:
+            orderByState = 0;
+            break;
+            
+        case MEGATransferStateActive:
+            orderByState = 1;
+            break;
+            
+        case MEGATransferStateQueued:
+            orderByState = 2;
+            break;
+            
+        default:
+            orderByState = 3;
+            break;
+    }
+    
+    return orderByState;
 }
 
 #pragma mark - Private
