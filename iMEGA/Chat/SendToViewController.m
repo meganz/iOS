@@ -504,6 +504,9 @@
                 break;
                 
             case SendModeForward: {
+                if (self.searchController.isActive) {
+                    self.searchController.active = NO;
+                }
                 [self dismissViewControllerAnimated:YES completion:^{
                     NSUInteger destinationCount = self.selectedGroupChatsMutableArray.count + self.selectedUsersMutableArray.count;
                     self.pendingForwardOperations = self.messages.count * destinationCount;
@@ -545,10 +548,6 @@
                                 [[MEGASdkManager sharedMEGAChatSdk] createChatGroup:NO peers:peerList delegate:createChatGroupRequestDelegate];
                             }
                         }
-                    }
-                    
-                    if (self.searchController.isActive) {
-                        self.searchController.active = NO;
                     }
                 }];
                 
