@@ -1,9 +1,6 @@
 
 #import "ChatAttachedContactsViewController.h"
 
-#import "SVProgressHUD.h"
-
-#import "Helper.h"
 #import "MEGAInviteContactRequestDelegate.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGASdkManager.h"
@@ -44,7 +41,7 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(internetConnectionChanged) name:kReachabilityChangedNotification object:nil];
     
-    [[MEGASdkManager sharedMEGASdk] retryPendingConnections];
+    [[MEGAReachabilityManager sharedManager] retryPendingConnections];
     
     [self reloadUI];
 }
@@ -62,12 +59,13 @@
 #pragma mark - Private
 
 - (void)setupAttachedContacts {
+    self.backBarButtonItem.image = self.backBarButtonItem.image.imageFlippedForRightToLeftLayoutDirection;
     self.navigationItem.leftBarButtonItem = self.backBarButtonItem;
     self.editBarButtonItem.title = AMLocalizedString(@"edit", @"Caption of a button to edit the files that are selected");
     self.navigationItem.rightBarButtonItems = @[self.editBarButtonItem];
     
     self.addBarButtonItem.title = AMLocalizedString(@"addContact", @"Alert title shown when you select to add a contact inserting his/her email");
-    [self.addBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIMediumWithSize:17.0f], NSForegroundColorAttributeName:[UIColor mnz_redF0373A]} forState:UIControlStateNormal];
+    [self.addBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIMediumWithSize:17.0f], NSForegroundColorAttributeName:UIColor.mnz_redMain} forState:UIControlStateNormal];
     UIBarButtonItem *flexibleItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
     [self setToolbarItems:@[flexibleItem, self.addBarButtonItem]];
     
@@ -228,7 +226,7 @@
     
     NSString *currentEmail = [self.message userEmailAtIndex:indexPath.row];
     
-    [cell.avatarImageView mnz_setImageForUserHandle:[self.message userHandleAtIndex:indexPath.row]];
+    [cell.avatarImageView mnz_setImageForUserHandle:[self.message userHandleAtIndex:indexPath.row] name:[self.message userNameAtIndex:indexPath.row]];
     cell.nameLabel.text = [self.message userNameAtIndex:indexPath.row];
     
     uint64_t userHandle = [self.message userHandleAtIndex:indexPath.row];
@@ -253,7 +251,15 @@
         }
     }
     
+    UIView *view = [[UIView alloc] init];
+    view.backgroundColor = UIColor.clearColor;
+    cell.selectedBackgroundView = view;
+    
     return cell;
+}
+
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    return [self.alreadyContactsIndexPathMutableDictionary objectForKey:indexPath] ? NO : YES;
 }
 
 #pragma mark - UITableViewDelegate
@@ -327,6 +333,10 @@
         self.addBarButtonItem.title = (selectedUsersCount > 1) ? AMLocalizedString(@"addContacts", @"Button title shown in empty views when you can 'Add contacts'") : AMLocalizedString(@"addContact", @"Alert title shown when you select to add a contact inserting his/her email");
         self.addBarButtonItem.enabled = (selectedUsersCount == 0) ? NO : YES;
     }
+}
+
+- (BOOL)tableView:(UITableView *)tableView shouldIndentWhileEditingRowAtIndexPath:(NSIndexPath *)indexPath {
+    return [self.alreadyContactsIndexPathMutableDictionary objectForKey:indexPath] ? NO : YES;
 }
 
 @end

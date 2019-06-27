@@ -3,12 +3,18 @@
 
 #import <AVFoundation/AVFoundation.h>
 
+#import <WebRTC/RTCDispatcher.h>
+#import <WebRTC/RTCAudioSession.h>
+#import <WebRTC/RTCAudioSessionConfiguration.h>
+
 #import "LTHPasscodeViewController.h"
 
 #import "CallViewController.h"
+#import "GroupCallViewController.h"
 #import "UIApplication+MNZCategory.h"
 
 #import "MEGAUser+MNZCategory.h"
+#import "MEGANavigationController.h"
 
 @interface MEGAProviderDelegate ()
 
@@ -31,7 +37,7 @@
         configuration.supportsVideo = YES;
         configuration.maximumCallsPerCallGroup = 1;
         configuration.maximumCallGroups = 1;
-        configuration.supportedHandleTypes = [NSSet setWithObject:@(CXHandleTypeEmailAddress)];
+        configuration.supportedHandleTypes = [NSSet setWithObjects:@(CXHandleTypeEmailAddress), @(CXHandleTypeGeneric), nil];
         configuration.iconTemplateImageData = UIImagePNGRepresentation([UIImage imageNamed:@"MEGA_icon_call"]);
         _provider = [[CXProvider alloc] initWithConfiguration:configuration];
         
@@ -42,15 +48,18 @@
 }
 
 - (void)reportIncomingCall:(MEGAChatCall *)call user:(MEGAUser *)user {
-    MEGALogDebug(@"[CallKit] Report incoming call %@ with uuid %@, video %@ and email %@", call, call.uuid, call.hasRemoteVideo ? @"YES" : @"NO", user.email);
+    MEGALogDebug(@"[CallKit] Report incoming call %@ with uuid %@, video %@ and email %@", call, call.uuid, call.hasVideoInitialCall ? @"YES" : @"NO", user.email);
+    
+    MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:call.chatId];
+
     CXCallUpdate *update = [[CXCallUpdate alloc] init];
-    update.remoteHandle = [[CXHandle alloc] initWithType:CXHandleTypeEmailAddress value:user.email];
-    update.localizedCallerName = user.mnz_fullName;
+    update.remoteHandle = [[CXHandle alloc] initWithType:CXHandleTypeGeneric value:[MEGASdk base64HandleForUserHandle:chatRoom.chatId]];
+    update.localizedCallerName = chatRoom.title;
     update.supportsHolding = NO;
     update.supportsGrouping = NO;
     update.supportsUngrouping = NO;
     update.supportsDTMF = NO;
-    update.hasVideo = call.hasRemoteVideo;
+    update.hasVideo = call.hasVideoInitialCall;
     [self.provider reportNewIncomingCallWithUUID:call.uuid update:update completion:^(NSError * _Nullable error) {
         if (error) {
             MEGALogError(@"Report new incoming call failed with error: %@", error);
@@ -79,6 +88,7 @@
             callEndedReason = CXCallEndedReasonFailed;
             break;
             
+        case MEGAChatCallTermCodeCallReject:
         case MEGAChatCallTermCodeCallReqCancel:
         case MEGAChatCallTermCodeUserHangup:
             if (!call.localTermCode) {
@@ -86,6 +96,7 @@
             }
             break;
             
+        case MEGAChatCallTermCodeRingOutTimeout:
         case MEGAChatCallTermCodeAnswerTimeout:
             callEndedReason = CXCallEndedReasonUnanswered;
             break;
@@ -139,18 +150,15 @@
     
     if (call) {
         MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:call.chatId];
-        uint64_t peerHandle = [chatRoom peerHandleAtIndex:0];
-        NSString *email = [chatRoom peerEmailByHandle:peerHandle];
-        MEGAUser *user = [[MEGASdkManager sharedMEGASdk] contactForEmail:email];
         
         CXCallUpdate *update = [[CXCallUpdate alloc] init];
-        update.remoteHandle = [[CXHandle alloc] initWithType:CXHandleTypeEmailAddress value:user.email];
-        update.localizedCallerName = user.mnz_fullName;
+        update.remoteHandle = [[CXHandle alloc] initWithType:CXHandleTypeGeneric value:[MEGASdk base64HandleForUserHandle:chatRoom.chatId]];
+        update.localizedCallerName = chatRoom.title;
         update.supportsHolding = NO;
         update.supportsGrouping = NO;
         update.supportsUngrouping = NO;
         update.supportsDTMF = NO;
-        update.hasVideo = call.hasRemoteVideo;
+        update.hasVideo = call.hasVideoInitialCall;
         
         [provider reportCallWithUUID:action.callUUID updated:update];
         
@@ -167,20 +175,54 @@
     
     MEGALogDebug(@"[CallKit] Provider perform answer call: %@, uuid: %@", call, action.callUUID);
     
+    [RTCDispatcher dispatchAsyncOnType:RTCDispatcherTypeAudioSession block:^{
+        RTCAudioSession *audioSession = RTCAudioSession.sharedInstance;
+        [audioSession lockForConfiguration];
+        RTCAudioSessionConfiguration *configuration = [RTCAudioSessionConfiguration webRTCConfiguration];
+        configuration.categoryOptions = AVAudioSessionCategoryOptionAllowBluetoothA2DP | AVAudioSessionCategoryOptionDuckOthers | AVAudioSessionCategoryOptionAllowBluetooth;
+        [audioSession setConfiguration:configuration error:nil];
+        [audioSession unlockForConfiguration];
+    }];
+    
     if (call) {
-        CallViewController *callVC = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"CallViewControllerID"];
-        callVC.chatRoom  = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:call.chatId];
-        callVC.videoCall = call.hasRemoteVideo;
-        callVC.callType = CallTypeIncoming;
-        callVC.megaCallManager = self.megaCallManager;
-        callVC.call = call;
-        
-        if ([UIApplication.mnz_visibleViewController isKindOfClass:CallViewController.class]) {
-            [UIApplication.mnz_visibleViewController dismissViewControllerAnimated:YES completion:^{
-                [UIApplication.mnz_visibleViewController presentViewController:callVC animated:YES completion:nil];
-            }];
+        MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:call.chatId];
+        if (chatRoom.isGroup) {
+            GroupCallViewController *groupCallVC = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"GroupCallViewControllerID"];
+            groupCallVC.videoCall = call.hasVideoInitialCall;
+            groupCallVC.chatRoom = chatRoom;
+            groupCallVC.megaCallManager = self.megaCallManager;
+            groupCallVC.call = call;
+            
+            if ([UIApplication.mnz_presentingViewController isKindOfClass:CallViewController.class]) {
+                [UIApplication.mnz_presentingViewController dismissViewControllerAnimated:YES completion:^{
+                    [UIApplication.mnz_presentingViewController presentViewController:groupCallVC animated:YES completion:nil];
+                }];
+            } else if ([UIApplication.mnz_presentingViewController isKindOfClass:GroupCallViewController.class]) {
+                [UIApplication.mnz_presentingViewController dismissViewControllerAnimated:YES completion:^{
+                    [UIApplication.mnz_presentingViewController presentViewController:groupCallVC animated:YES completion:nil];
+                }];
+            } else {
+                [UIApplication.mnz_presentingViewController presentViewController:groupCallVC animated:YES completion:nil];
+            }
         } else {
-            [UIApplication.mnz_visibleViewController presentViewController:callVC animated:YES completion:nil];
+            CallViewController *callVC = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"CallViewControllerID"];
+            callVC.chatRoom  = chatRoom;
+            callVC.videoCall = call.hasVideoInitialCall;
+            callVC.callType = CallTypeIncoming;
+            callVC.megaCallManager = self.megaCallManager;
+            callVC.call = call;
+            
+            if ([UIApplication.mnz_presentingViewController isKindOfClass:CallViewController.class] || [UIApplication.mnz_presentingViewController isKindOfClass:MEGANavigationController.class])  {
+                [UIApplication.mnz_presentingViewController dismissViewControllerAnimated:YES completion:^{
+                    [UIApplication.mnz_presentingViewController presentViewController:callVC animated:YES completion:nil];
+                }];
+            } else if ([UIApplication.mnz_presentingViewController isKindOfClass:GroupCallViewController.class]) {
+                [UIApplication.mnz_presentingViewController dismissViewControllerAnimated:YES completion:^{
+                    [UIApplication.mnz_presentingViewController presentViewController:callVC animated:YES completion:nil];
+                }];
+            } else {
+                [UIApplication.mnz_presentingViewController presentViewController:callVC animated:YES completion:nil];
+            }
         }
         [action fulfill];
         [self disablePasscodeIfNeeded];

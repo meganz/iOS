@@ -93,9 +93,9 @@
         customModalAlertVC.viewTitle = AMLocalizedString(@"inviteSent", @"Title shown when the user sends a contact invitation");
         customModalAlertVC.detail = detailText;
         customModalAlertVC.boldInDetail = request.email;
-        customModalAlertVC.action = AMLocalizedString(@"close", nil);
+        customModalAlertVC.firstButtonTitle = AMLocalizedString(@"close", nil);
         __weak typeof(CustomModalAlertViewController) *weakCustom = customModalAlertVC;
-        customModalAlertVC.completion = ^{
+        customModalAlertVC.firstCompletion = ^{
             [weakCustom dismissViewControllerAnimated:YES completion:^{
                 if (self.completion) {
                     self.completion();
@@ -106,7 +106,7 @@
         if (self.viewController) {
             [self.viewController presentViewController:customModalAlertVC animated:YES completion:nil];
         } else {
-            [UIApplication.mnz_visibleViewController presentViewController:customModalAlertVC animated:YES completion:nil];
+            [UIApplication.mnz_presentingViewController presentViewController:customModalAlertVC animated:YES completion:nil];
         }
     }
 }

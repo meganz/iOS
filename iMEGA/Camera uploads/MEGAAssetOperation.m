@@ -47,7 +47,7 @@
 }
 
 - (void)start {
-    self.uploadsDirectory = [[NSFileManager defaultManager] uploadsDirectory];
+    self.uploadsDirectory = [NSFileManager defaultManager].uploadsDirectory;
     
     if (self.isCameraUploads) {
         if (![CameraUploads syncManager].isCameraUploadsEnabled) {
@@ -91,7 +91,7 @@
     
     MEGAProcessAsset *processAsset = [[MEGAProcessAsset alloc] initWithAsset:self.phasset parentNode:self.parentNode cameraUploads:self.isCameraUploads filePath:^(NSString *filePath) {
         NSString *name = filePath.lastPathComponent;
-        NSString *newName = [self newNameForName:name];
+        NSString *newName = [name mnz_sequentialFileNameInParentNode:self.parentNode];
         
         NSString *appData = [NSString new];
         if (self.isCameraUploads) {
@@ -108,9 +108,9 @@
             if (![[NSFileManager defaultManager] moveItemAtPath:absoluteFilePath toPath:newFilePath error:&error]) {
                 MEGALogError(@"Move item at path failed with error: %@", error);
             }
-            [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:[newFilePath stringByReplacingOccurrencesOfString:[NSHomeDirectory() stringByAppendingString:@"/"] withString:@""] parent:self.parentNode appData:appData isSourceTemporary:YES delegate:self];
+            [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:newFilePath.mnz_relativeLocalPath parent:self.parentNode appData:appData isSourceTemporary:YES delegate:self];
         } else {
-            [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:[filePath stringByReplacingOccurrencesOfString:[NSHomeDirectory() stringByAppendingString:@"/"] withString:@""] parent:self.parentNode appData:appData isSourceTemporary:YES delegate:self];
+            [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:filePath.mnz_relativeLocalPath parent:self.parentNode appData:appData isSourceTemporary:YES delegate:self];
         }
     } node:^(MEGANode *node) {
         if ([[[MEGASdkManager sharedMEGASdk] parentNodeForNode:node] handle] == self.parentNode.handle) {
@@ -129,25 +129,6 @@
 }
 
 #pragma mark - Private
-
-- (NSString *)newNameForName:(NSString *)name {
-    NSString *nameWithoutExtension = [name stringByDeletingPathExtension];
-    NSString *extension = [name pathExtension];
-    int index = 0;
-    int listSize = 0;
-    
-    do {
-        if (index != 0) {
-            nameWithoutExtension = [[name stringByDeletingPathExtension] stringByAppendingString:[NSString stringWithFormat:@"_%d", index]];
-        }
-        
-        MEGANodeList *nameNodeList = [[MEGASdkManager sharedMEGASdk] nodeListSearchForNode:self.parentNode searchString:[nameWithoutExtension stringByAppendingPathExtension:extension]];
-        listSize = [nameNodeList.size intValue];
-        index++;
-    } while (listSize != 0);
-    
-    return [nameWithoutExtension stringByAppendingPathExtension:extension];
-}
 
 - (void)completeOperation {
     [self willChangeValueForKey:@"isFinished"];
@@ -178,7 +159,7 @@
     dispatch_async(dispatch_get_main_queue(), ^{
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"cameraUploadsWillBeDisabled", nil) message:message preferredStyle:UIAlertControllerStyleAlert];
         [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
-        [UIApplication.mnz_visibleViewController presentViewController:alertController animated:YES completion:nil];
+        [UIApplication.mnz_presentingViewController presentViewController:alertController animated:YES completion:nil];
         [[CameraUploads syncManager] setIsCameraUploadsEnabled:NO];
     });
 }
@@ -260,7 +241,7 @@
             } else {
                 [self completeOperation];
             }
-        } else if (self.isCameraUploads) {
+        } else if (self.isCameraUploads && api.isLoggedIn) {
             [[CameraUploads syncManager] resetOperationQueue];
         }
         return;

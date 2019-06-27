@@ -11,6 +11,7 @@
 #import "MEGANavigationController.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGARequestDelegate.h"
+#import "NSFileManager+MNZCategory.h"
 
 #import "BrowserViewController.h"
 
@@ -34,6 +35,8 @@
 @property (nonatomic) BOOL pickerPresented;
 @property (nonatomic) BOOL passcodePresented;
 
+@property (nonatomic) NSDate *lastProgressChange;
+
 @end
 
 @implementation DocumentPickerViewController
@@ -43,8 +46,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    [MEGASdk setLogToConsole:YES];
+    
     if ([[[NSUserDefaults alloc] initWithSuiteName:@"group.mega.ios"] boolForKey:@"logging"]) {
-        [[MEGALogger sharedLogger] enableSDKlogs];
         NSFileManager *fileManager = [NSFileManager defaultManager];
         NSString *logsPath = [[[fileManager containerURLForSecurityApplicationGroupIdentifier:@"group.mega.ios"] URLByAppendingPathComponent:@"logs"] path];
         if (![fileManager fileExistsAtPath:logsPath]) {
@@ -65,7 +69,6 @@
 
 #ifdef DEBUG
     [MEGASdk setLogLevel:MEGALogLevelMax];
-    [[MEGALogger sharedLogger] enableSDKlogs];
 #else
     [MEGASdk setLogLevel:MEGALogLevelFatal];
 #endif
@@ -80,7 +83,8 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didEnterBackground)
                                                  name:NSExtensionHostDidEnterBackgroundNotification
                                                object:nil];
-
+    
+    self.lastProgressChange = [NSDate new];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -123,6 +127,9 @@
 }
 
 - (void)didEnterBackground {
+    if ([self.presentedViewController isKindOfClass:LTHPasscodeViewController.class]) {
+        [self.presentedViewController dismissViewControllerAnimated:NO completion:nil];
+    }
     self.passcodePresented = NO;
 }
 
@@ -238,7 +245,7 @@
 }
 
 - (IBAction)openMegaTouchUpInside:(id)sender {
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"mega://#loginrequired"]];
+    [UIApplication.sharedApplication openURL:[NSURL URLWithString:@"mega://#loginrequired"] options:@{} completionHandler:nil];
 }
 
 - (void)loginToMEGA {
@@ -317,14 +324,7 @@
     NSDate *extensionDate = [self newestMegaclientModificationDateForDirectoryAtUrl:applicationSupportDirectoryURL];
     
     if ([incomingDate compare:extensionDate] == NSOrderedDescending) {
-        NSArray *applicationSupportContent = [fileManager contentsOfDirectoryAtPath:applicationSupportDirectoryURL.path error:&error];
-        for (NSString *filename in applicationSupportContent) {
-            if ([filename containsString:@"megaclient"]) {
-                if(![fileManager removeItemAtPath:[applicationSupportDirectoryURL.path stringByAppendingPathComponent:filename] error:&error]) {
-                    MEGALogError(@"Remove item at path failed with error: %@", error);
-                }
-            }
-        }
+        [NSFileManager.defaultManager mnz_removeFolderContentsAtPath:applicationSupportDirectoryURL.path forItemsContaining:@"megaclient"];
         
         NSArray *groupSupportPathContent = [fileManager contentsOfDirectoryAtPath:groupSupportURL.path error:&error];
         for (NSString *filename in groupSupportPathContent) {
@@ -358,26 +358,40 @@
 - (void)didSelectNode:(MEGANode *)node {
     NSString *destinationPath = [self appGroupContainerURL];
     NSString *fileName = node.name;
-    NSString *documentFilePath = [destinationPath stringByAppendingPathComponent:fileName];
+    NSString *documentFilePath = [destinationPath stringByAppendingPathComponent:[node.base64Handle stringByAppendingPathComponent:fileName]];
     
-    BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:documentFilePath];
+    BOOL shouldOpenLocalFile = NO;
+    BOOL fileExists = [NSFileManager.defaultManager fileExistsAtPath:documentFilePath];
     if (fileExists) {
-        // Because MEGA does not support file versioning yet, if the fingerprints are not equal we keep the cloud
-        // version of the file deleting the local copy. If the file exists locally and the fingerprints are
-        // the same, the local version may be used safely.
-        // With file versioning, we may add the local copy to the array of versions before deleting it.
         NSString *localFingerprint = [[MEGASdkManager sharedMEGASdk] fingerprintForFilePath:documentFilePath];
-        if ([localFingerprint isEqualToString:[[MEGASdkManager sharedMEGASdk] fingerprintForNode:node]]) {
-            [self documentReadyAtPath:documentFilePath withBase64Handle:node.base64Handle];
+        if ([localFingerprint isEqualToString:node.fingerprint]) {
+            shouldOpenLocalFile = YES;
         } else {
-            [[NSFileManager defaultManager] removeItemAtPath:documentFilePath error:nil];
-            if ([Helper isFreeSpaceEnoughToDownloadNode:node isFolderLink:NO]) {
-                [[MEGASdkManager sharedMEGASdk] startDownloadNode:node localPath:documentFilePath delegate:self];
+            NSDictionary *fileAttributes = [NSFileManager.defaultManager attributesOfItemAtPath:documentFilePath error:nil];
+            if (fileAttributes) {
+                NSDate *localDate = [fileAttributes objectForKey:NSFileModificationDate];
+                NSDate *remoteDate = node.modificationTime;
+                if ([localDate compare:remoteDate] != NSOrderedAscending) {
+                    shouldOpenLocalFile = YES;
+                }
             }
         }
+    }
+    
+    if (shouldOpenLocalFile) {
+        [self documentReadyAtPath:documentFilePath withBase64Handle:node.base64Handle];
     } else {
+        [NSFileManager.defaultManager mnz_removeItemAtPath:documentFilePath];
         if ([Helper isFreeSpaceEnoughToDownloadNode:node isFolderLink:NO]) {
+            NSString *destinationFolder = [[self appGroupContainerURL] stringByAppendingPathComponent:node.base64Handle];
+            if (![NSFileManager.defaultManager fileExistsAtPath:destinationFolder]) {
+                if (![NSFileManager.defaultManager createDirectoryAtPath:destinationFolder withIntermediateDirectories:YES attributes:nil error:nil]) {
+                    MEGALogError(@"Error creating destination folder");
+                }
+            }
             [[MEGASdkManager sharedMEGASdk] startDownloadNode:node localPath:documentFilePath delegate:self];
+        } else {
+            [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"fileTooBigMessage_open", @"Error message shown when you try to open something bigger than the free space in your device")];
         }
     }
 }
@@ -464,8 +478,12 @@
 - (void)onTransferUpdate:(MEGASdk *)api transfer:(MEGATransfer *)transfer {
     float percentage = (transfer.transferredBytes.floatValue / transfer.totalBytes.floatValue);
     if (percentage >= 0.01) {
-        NSString *percentageCompleted = [NSString stringWithFormat:@"%.f %%", percentage * 100];
-        [SVProgressHUD showProgress:percentage status:percentageCompleted];
+        NSDate *now = [NSDate new];
+        if (!UIAccessibilityIsVoiceOverRunning() || [now timeIntervalSinceDate:self.lastProgressChange] > 2) {
+            self.lastProgressChange = now;
+            NSString *percentageCompleted = [NSString stringWithFormat:@"%.f %%", percentage * 100];
+            [SVProgressHUD showProgress:percentage status:percentageCompleted];
+        }
     }
 }
 

@@ -6,8 +6,8 @@
 
 #import "MEGASdk+MNZCategory.h"
 #import "NSString+MNZCategory.h"
+#import "NSURL+MNZCategory.h"
 
-#import "Helper.h"
 #import "MEGAPurchase.h"
 #import "MEGASdkManager.h"
 #import "MEGAReachabilityManager.h"
@@ -48,6 +48,8 @@
 @property (strong, nonatomic) NSMutableDictionary *proLevelsIndexesMutableDictionary;
 @property (nonatomic) MEGAAccountType userProLevel;
 
+@property (strong, nonatomic) NSNumberFormatter *numberFormatter;
+
 @end
 
 @implementation UpgradeTableViewController
@@ -56,6 +58,11 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    self.numberFormatter = NSNumberFormatter.alloc.init;
+    self.numberFormatter.numberStyle = NSNumberFormatterCurrencyStyle;
+    SKProduct *product = [MEGAPurchase.sharedInstance.products objectAtIndex:0];
+    self.numberFormatter.locale = product.priceLocale;
     
     self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:self.navigationItem.backBarButtonItem.style target:nil action:nil];
     
@@ -66,7 +73,7 @@
     
     self.currentPlanLabel.text = AMLocalizedString(@"currentPlan", @"Text shown on the upgrade account page above the current PRO plan subscription");
 
-    NSMutableAttributedString *asteriskMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:@"* " attributes: @{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:12.0f], NSForegroundColorAttributeName:[UIColor mnz_redF0373A]}];
+    NSMutableAttributedString *asteriskMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:@"* " attributes: @{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:12.0f], NSForegroundColorAttributeName:UIColor.mnz_redMain}];
     NSAttributedString *twoMonthsFreeAttributedString = [[NSAttributedString alloc] initWithString:AMLocalizedString(@"twoMonthsFree", @"Text shown in the purchase plan view to explain that annual subscription is 17% cheaper than 12 monthly payments") attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:12.0f], NSForegroundColorAttributeName:[UIColor mnz_black262626]}];
     [asteriskMutableAttributedString appendAttributedString:twoMonthsFreeAttributedString];
     self.twoMonthsFreeLabel.attributedText = asteriskMutableAttributedString;
@@ -230,15 +237,15 @@
             break;
             
         case MEGAAccountTypeProI:
-            proLevelColor = [UIColor mnz_redE13339];
+            proLevelColor = UIColor.mnz_redProI;
             break;
             
         case MEGAAccountTypeProII:
-            proLevelColor = [UIColor mnz_redDC191F];
+            proLevelColor = UIColor.mnz_redProII;
             break;
             
         case MEGAAccountTypeProIII:
-            proLevelColor = [UIColor mnz_redD90007];
+            proLevelColor = UIColor.mnz_redProIII;
             break;
             
         default:
@@ -306,7 +313,7 @@
     NSMutableAttributedString *storageMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:@"50 GB" attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:12.0f], NSForegroundColorAttributeName:[UIColor mnz_black333333]}];
     [storageMutableAttributedString appendAttributedString:storageString];
     
-    NSAttributedString *superscriptOneAttributedString = [[NSAttributedString alloc] initWithString:@" ¹" attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:12.0f], NSForegroundColorAttributeName:[UIColor mnz_redF0373A]}];
+    NSAttributedString *superscriptOneAttributedString = [[NSAttributedString alloc] initWithString:@" ¹" attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:12.0f], NSForegroundColorAttributeName:UIColor.mnz_redMain}];
     [storageMutableAttributedString appendAttributedString:superscriptOneAttributedString];
     
     return storageMutableAttributedString;
@@ -326,30 +333,22 @@
     self.navigationController.toolbarHidden = NO;
     
     UIBarButtonItem *termsOfServiceBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:AMLocalizedString(@"termsOfServicesLabel", @"Title of one of the Settings sections where you can see the MEGA's 'Terms of Service'") style:UIBarButtonItemStylePlain target:self action:@selector(showTermsOfService)];
-    [termsOfServiceBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:17.0f], NSForegroundColorAttributeName:[UIColor mnz_redF0373A]} forState:UIControlStateNormal];
+    [termsOfServiceBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:17.0f], NSForegroundColorAttributeName:UIColor.mnz_redMain} forState:UIControlStateNormal];
 
     UIBarButtonItem *flexibleBarButtomItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
     
     UIBarButtonItem *privacyPolicyBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:AMLocalizedString(@"privacyPolicyLabel", @"Title of one of the Settings sections where you can see the MEGA's 'Privacy Policy'") style:UIBarButtonItemStylePlain target:self action:@selector(showPrivacyPolicy)];
-    [privacyPolicyBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:17.0f], NSForegroundColorAttributeName:[UIColor mnz_redF0373A]} forState:UIControlStateNormal];
+    [privacyPolicyBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:17.0f], NSForegroundColorAttributeName:UIColor.mnz_redMain} forState:UIControlStateNormal];
     
     [self setToolbarItems:@[termsOfServiceBarButtonItem, flexibleBarButtomItem, privacyPolicyBarButtonItem]];
 }
 
 - (void)showTermsOfService {
-    if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-        [self showURL:@"https://mega.nz/terms"];
-    }
+    [[NSURL URLWithString:@"https://mega.nz/terms"] mnz_presentSafariViewController];
 }
 
 - (void)showPrivacyPolicy {
-    if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-        [self showURL:@"https://mega.nz/privacy"];
-    }
-}
-
-- (void)showURL:(NSString *)urlString {
-    [Helper presentSafariViewControllerWithURL:[NSURL URLWithString:urlString]];
+    [[NSURL URLWithString:@"https://mega.nz/privacy"] mnz_presentSafariViewController];
 }
 
 - (NSString *)storageAndUnitsByProduct:(SKProduct *)product {
@@ -362,13 +361,6 @@
     NSArray *storageTransferArray = [product.localizedDescription componentsSeparatedByString:@";"];
     NSArray *transferArray = [[storageTransferArray objectAtIndex:1] componentsSeparatedByString:@" "];
     return [NSString stringWithFormat:@"%@ %@", [transferArray objectAtIndex:0], [transferArray objectAtIndex:1]];
-}
-
-- (NSString *)priceByProduct:(SKProduct *)product {
-    NSNumberFormatter *numberFormatter = [[NSNumberFormatter alloc] init];
-    [numberFormatter setNumberStyle: NSNumberFormatterCurrencyStyle];
-    numberFormatter.locale = product.priceLocale;
-    return [numberFormatter stringFromNumber:product.price];
 }
 
 #pragma mark - IBActions
@@ -409,7 +401,7 @@
     ProductTableViewCell *cell;
     if (self.isChoosingTheAccountType && indexPath.row == 0) {
         cell = [tableView dequeueReusableCellWithIdentifier:@"freeProductCell" forIndexPath:indexPath];
-        NSMutableAttributedString *superscriptOneAttributedString = [[NSMutableAttributedString alloc] initWithString:@"¹ " attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:12.0f], NSForegroundColorAttributeName:[UIColor mnz_redF0373A]}];
+        NSMutableAttributedString *superscriptOneAttributedString = [[NSMutableAttributedString alloc] initWithString:@"¹ " attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:12.0f], NSForegroundColorAttributeName:UIColor.mnz_redMain}];
         
         NSAttributedString *subjectToYourParticipationAttributedString = [[NSAttributedString alloc] initWithString:AMLocalizedString(@"subjectToYourParticipationInOurAchievementsProgram", @"") attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:12.0f], NSForegroundColorAttributeName:[UIColor mnz_black262626]}];
         [superscriptOneAttributedString appendAttributedString:subjectToYourParticipationAttributedString];
@@ -439,11 +431,13 @@
     
     SKProduct *product = [[MEGAPurchase sharedInstance].products objectAtIndex:proLevelIndexNumber.integerValue];
     
-    NSString *productPriceString = [NSString stringWithFormat:AMLocalizedString(@"productPricePerMonth", @"Price asociated with the MEGA PRO account level you can subscribe"), [self priceByProduct:product]];
-    NSAttributedString *asteriskAttributedString = [[NSAttributedString alloc] initWithString:@" *" attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:12.0f], NSForegroundColorAttributeName:[UIColor mnz_redF0373A]}];
+    NSString *productPriceString = [NSString stringWithFormat:AMLocalizedString(@"productPricePerMonth", @"Price asociated with the MEGA PRO account level you can subscribe"), [self.numberFormatter stringFromNumber:product.price]];
+    NSAttributedString *asteriskAttributedString = [[NSAttributedString alloc] initWithString:@" *" attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:12.0f], NSForegroundColorAttributeName:UIColor.mnz_redMain}];
     NSMutableAttributedString *productPriceMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:productPriceString attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:12.0f], NSForegroundColorAttributeName:[self colorForProLevel:proLevelNumber.integerValue]}];
     [productPriceMutableAttributedString appendAttributedString:asteriskAttributedString];
     cell.productPriceLabel.attributedText = productPriceMutableAttributedString;
+    
+    cell.disclosureIndicatorImageView.image = cell.disclosureIndicatorImageView.image.imageFlippedForRightToLeftLayoutDirection;
     
     return cell;
 }
@@ -481,13 +475,11 @@
     
     productDetailVC.storageString = storageFormattedString;
     productDetailVC.bandwidthString = bandwidthFormattedString;
-    productDetailVC.priceMonthString = [self priceByProduct:monthlyProduct];
-    productDetailVC.priceYearlyString = [self priceByProduct:yearlyProduct];
+    productDetailVC.priceMonthString = [self.numberFormatter stringFromNumber:monthlyProduct.price];
+    productDetailVC.priceYearlyString = [self.numberFormatter stringFromNumber:yearlyProduct.price];
     productDetailVC.monthlyProduct = monthlyProduct;
     productDetailVC.yearlyProduct = yearlyProduct;
     [self.navigationController pushViewController:productDetailVC animated:YES];
-    
-    [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }

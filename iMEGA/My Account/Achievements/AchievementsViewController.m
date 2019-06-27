@@ -3,6 +3,7 @@
 
 #import "NSDate+DateTools.h"
 
+#import "Helper.h"
 #import "MEGASdkManager.h"
 #import "NSString+MNZCategory.h"
 
@@ -16,6 +17,7 @@
 @property (weak, nonatomic) IBOutlet UIView *inviteYourFriendsView;
 @property (weak, nonatomic) IBOutlet UILabel *inviteYourFriendsTitleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *inviteYourFriendsSubtitleLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *disclosureIndicatorImageView;
 
 @property (weak, nonatomic) IBOutlet UILabel *unlockedBonusesLabel;
 @property (weak, nonatomic) IBOutlet UILabel *unlockedStorageQuotaLabel;
@@ -25,12 +27,12 @@
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
-@property (nonatomic) NSByteCountFormatter *byteCountFormatter;
-
 @property (nonatomic) MEGAAchievementsDetails *achievementsDetails;
 @property (nonatomic) NSMutableArray *achievementsIndexesMutableArray;
 
 @property (nonatomic, getter=haveReferralBonuses) BOOL referralBonuses;
+
+@property (strong, nonatomic) NSNumberFormatter *numberFormatter;
 
 @end
 
@@ -41,8 +43,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.byteCountFormatter = [[NSByteCountFormatter alloc] init];
-    self.byteCountFormatter.countStyle = NSByteCountFormatterCountStyleMemory;
+    
+    self.numberFormatter = NSNumberFormatter.alloc.init;
+    self.numberFormatter.numberStyle = NSNumberFormatterDecimalStyle;
+    self.numberFormatter.locale = NSLocale.autoupdatingCurrentLocale;
+    self.numberFormatter.maximumFractionDigits = 0;
     
     self.navigationItem.title = AMLocalizedString(@"achievementsTitle", @"Title of the Achievements section");
     
@@ -50,6 +55,7 @@
     
     UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(inviteYourFriendsTapped)];
     self.inviteYourFriendsView.gestureRecognizers = @[tapGestureRecognizer];
+    self.disclosureIndicatorImageView.image = self.disclosureIndicatorImageView.image.imageFlippedForRightToLeftLayoutDirection;
     
     self.unlockedBonusesLabel.text = AMLocalizedString(@"unlockedBonuses", @"Header of block with achievements bonuses.");
     self.storageQuotaLabel.text = AMLocalizedString(@"storageQuota", @"A header/title of a section which contains information about used/available storage space on a user's cloud drive.");
@@ -69,22 +75,17 @@
 #pragma mark - Private
 
 - (NSMutableAttributedString *)textForUnlockedBonuses:(long long)quota {
-    NSNumberFormatter *numberFormatter = [[NSNumberFormatter alloc] init];
-    numberFormatter.numberStyle = NSNumberFormatterDecimalStyle;
-    numberFormatter.locale = [NSLocale currentLocale];
-    numberFormatter.maximumFractionDigits = 0;
-    
     NSString *stringFromByteCount;
-    NSRange firstPartRange = NSMakeRange(0, 0);
-    NSRange secondPartRange  = NSMakeRange(0, 0);
+    NSRange firstPartRange;
+    NSRange secondPartRange;
     
-    stringFromByteCount = [self.byteCountFormatter stringFromByteCount:quota];
+    stringFromByteCount = [Helper memoryStyleStringFromByteCount:quota];
 
     NSArray *componentsSeparatedByStringArray = [stringFromByteCount componentsSeparatedByString:@" "];
     
     NSString *firstPartString = [NSString mnz_stringWithoutUnitOfComponents:componentsSeparatedByStringArray];
-    NSNumber *number = [numberFormatter numberFromString:firstPartString];
-    firstPartString = [numberFormatter stringFromNumber:number];
+    NSNumber *number = [self.numberFormatter numberFromString:firstPartString];
+    firstPartString = [self.numberFormatter stringFromNumber:number];
     
     if (firstPartString.length == 0) {
         firstPartString = [NSString mnz_stringWithoutUnitOfComponents:componentsSeparatedByStringArray];
@@ -124,10 +125,10 @@
     }
     
     cell.storageQuotaRewardView.backgroundColor = cell.storageQuotaRewardLabel.backgroundColor = ((classStorageReward == 0) ? [UIColor mnz_grayCCCCCC] : [UIColor mnz_blue2BA6DE]);
-    cell.storageQuotaRewardLabel.text = (classStorageReward == 0) ? @"— GB" : [self.byteCountFormatter stringFromByteCount:classStorageReward];
+    cell.storageQuotaRewardLabel.text = (classStorageReward == 0) ? @"— GB" : [Helper memoryStyleStringFromByteCount:classStorageReward];
     
     cell.transferQuotaRewardView.backgroundColor = cell.transferQuotaRewardLabel.backgroundColor = ((classTransferReward == 0) ? [UIColor mnz_grayCCCCCC] : [UIColor mnz_green31B500]);
-    cell.transferQuotaRewardLabel.text = (classTransferReward == 0) ? @"— GB" : [self.byteCountFormatter stringFromByteCount:classTransferReward];
+    cell.transferQuotaRewardLabel.text = (classTransferReward == 0) ? @"— GB" : [Helper memoryStyleStringFromByteCount:classTransferReward];
 }
 
 - (void)pushAchievementsDetailsWithIndexPath:(NSIndexPath *)indexPath {
@@ -176,6 +177,7 @@
         cell.titleLabel.text = AMLocalizedString(@"referralBonuses", @"achievement type");
         
         cell.disclosureIndicatorImageView.hidden = NO;
+        cell.disclosureIndicatorImageView.image = cell.disclosureIndicatorImageView.image.imageFlippedForRightToLeftLayoutDirection;
         
         [self setStorageAndTransferQuotaRewardsForCell:cell forIndex:-1];
     } else {
@@ -206,8 +208,8 @@
         }
         
         NSDate *awardExpirationdDate = [self.achievementsDetails awardExpirationAtIndex:index.unsignedIntegerValue];
-        cell.subtitleLabel.text = (awardExpirationdDate.daysUntil == 0) ? AMLocalizedString(@"expired", @"Label to show that an error related with expiration occurs during a SDK operation.") : [AMLocalizedString(@"xDaysLeft", @"") stringByReplacingOccurrencesOfString:@"%1" withString:[NSString stringWithFormat:@"%lu", awardExpirationdDate.daysUntil]];
-        cell.subtitleLabel.textColor = (awardExpirationdDate.daysUntil <= 15) ? [UIColor mnz_redF0373A] : [UIColor mnz_gray666666];
+        cell.subtitleLabel.text = (awardExpirationdDate.daysUntil == 0) ? AMLocalizedString(@"expired", @"Label to show that an error related with expiration occurs during a SDK operation.") : [AMLocalizedString(@"xDaysLeft", @"") stringByReplacingOccurrencesOfString:@"%1" withString:[NSString stringWithFormat:@"%zd", awardExpirationdDate.daysUntil]];
+        cell.subtitleLabel.textColor = (awardExpirationdDate.daysUntil <= 15) ? UIColor.mnz_redMain : [UIColor mnz_gray666666];
     }
     
     return cell;
@@ -258,8 +260,8 @@
             }
         }
         
-        NSString *inviteStorageString = [self.byteCountFormatter stringFromByteCount:[self.achievementsDetails classStorageForClassId:MEGAAchievementInvite]];
-        NSString *inviteTransferString = [self.byteCountFormatter stringFromByteCount:[self.achievementsDetails classTransferForClassId:MEGAAchievementInvite]];
+        NSString *inviteStorageString = [Helper memoryStyleStringFromByteCount:[self.achievementsDetails classStorageForClassId:MEGAAchievementInvite]];
+        NSString *inviteTransferString = [Helper memoryStyleStringFromByteCount:[self.achievementsDetails classTransferForClassId:MEGAAchievementInvite]];
         NSString *inviteFriendsAndGetForEachReferral = AMLocalizedString(@"inviteFriendsAndGetForEachReferral", @"title of the introduction for the achievements screen");
         inviteFriendsAndGetForEachReferral = [inviteFriendsAndGetForEachReferral stringByReplacingOccurrencesOfString:@"%1$s" withString:inviteStorageString];
         inviteFriendsAndGetForEachReferral = [inviteFriendsAndGetForEachReferral stringByReplacingOccurrencesOfString:@"%2$s" withString:inviteTransferString];

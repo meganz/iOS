@@ -61,7 +61,7 @@
         [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
         
         if (self.isChangingPermissions) {
-            if (request.access == MEGAShareTypeAccessUnkown) {
+            if (request.access == MEGAShareTypeAccessUnknown) {
                 if (self.totalRequests > 1) {
                     [SVProgressHUD showImage:[UIImage imageNamed:@"hudForbidden"] status:AMLocalizedString(@"sharesRemoved", @"Message shown when some shares have been removed")];
                 } else {

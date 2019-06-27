@@ -2,12 +2,16 @@
 #import "MEGAProcessAsset.h"
 
 #import "ChatVideoUploadQuality.h"
-#import "NSFileManager+MNZCategory.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGASdkManager.h"
+#import "NSDate+MNZCategory.h"
+#import "NSFileManager+MNZCategory.h"
+#import "NSString+MNZCategory.h"
 
 #import "SDAVAssetExportSession.h"
 #import "UIApplication+MNZCategory.h"
+
+#import "NSString+MNZCategory.h"
 
 static void *ProcessAssetProgressContext = &ProcessAssetProgressContext;
 
@@ -21,13 +25,13 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
 @property (nonatomic, copy) void (^error)(NSError *error);
 @property (nonatomic, strong) MEGANode *parentNode;
 
-@property (nonatomic, copy) NSMutableArray <PHAsset *> *assets;
+@property (nonatomic, strong) NSMutableArray <PHAsset *> *assets;
 @property (nonatomic, copy) void (^filePaths)(NSArray <NSString *> *filePaths);
 @property (nonatomic, copy) void (^nodes)(NSArray <MEGANode *> *nodes);
 @property (nonatomic, copy) void (^errors)(NSArray <NSError *> *errors);
-@property (nonatomic, copy) NSMutableArray <NSString *> *filePathsArray;
-@property (nonatomic, copy) NSMutableArray <MEGANode *> *nodesArray;
-@property (nonatomic, copy) NSMutableArray <NSError *> *errorsArray;
+@property (nonatomic, strong) NSMutableArray <NSString *> *filePathsArray;
+@property (nonatomic, strong) NSMutableArray <MEGANode *> *nodesArray;
+@property (nonatomic, strong) NSMutableArray <NSError *> *errorsArray;
 @property (nonatomic) double totalDuration;
 @property (nonatomic) double currentProgress;   // Duration of all videos processed
 @property (nonatomic) BOOL cancelExportByUser;
@@ -156,7 +160,7 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
                     NSString *message = message = AMLocalizedString(@"shareExtensionUnsupportedAssets", @"Inform user that there were unsupported assets in the share extension.");
                     UIAlertController  *videoExportFailedController = [UIAlertController alertControllerWithTitle:nil message:message preferredStyle:UIAlertControllerStyleAlert];
                     [videoExportFailedController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleDestructive handler:nil]];
-                    [[UIApplication mnz_visibleViewController] presentViewController:videoExportFailedController animated:YES completion:nil];
+                    [UIApplication.mnz_presentingViewController presentViewController:videoExportFailedController animated:YES completion:nil];
                 }
             }];
         });
@@ -265,8 +269,8 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
              if ([avAsset isKindOfClass:[AVURLAsset class]]) {
                  NSURL *avassetUrl = [(AVURLAsset *)avAsset URL];
                  NSDictionary *fileAtributes = [[NSFileManager defaultManager] attributesOfItemAtPath:avassetUrl.path error:nil];
-                 __block NSString *filePath = [self filePathAsCreationDateWithInfo:info asset:asset];
-                 [self deleteLocalFileIfExists:filePath];
+                 __block NSString *filePath = [self filePathWithInfo:info asset:asset];
+                 [NSFileManager.defaultManager mnz_removeItemAtPath:filePath];
                  long long fileSize = [[fileAtributes objectForKey:NSFileSize] longLongValue];
                  
                  if ([self hasFreeSpaceOnDiskForWriteFile:fileSize]) {
@@ -306,16 +310,14 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
                                      [self.nodesArray addObject:node];
                                      dispatch_semaphore_signal(self.semaphore);
                                  }
-                                 if (![[NSFileManager defaultManager] removeItemAtPath:filePath error:&error]) {
-                                     MEGALogError(@"[PA] Remove item at path failed with error: %@", error)
-                                 }
+                                 [NSFileManager.defaultManager mnz_removeItemAtPath:filePath];
                              } else {
                                  if (self.filePath) {
-                                     filePath = [filePath stringByReplacingOccurrencesOfString:[NSHomeDirectory() stringByAppendingString:@"/"] withString:@""];
+                                     filePath = filePath.mnz_relativeLocalPath;
                                      self.filePath(filePath);
                                  }
                                  if (self.filePaths) {
-                                     filePath = [filePath stringByReplacingOccurrencesOfString:[NSHomeDirectory() stringByAppendingString:@"/"] withString:@""];
+                                     filePath = filePath.mnz_relativeLocalPath;
                                      [self.filePathsArray addObject:filePath];
                                      dispatch_semaphore_signal(self.semaphore);
                                  }
@@ -336,8 +338,8 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
              } else if ([avAsset isKindOfClass:[AVComposition class]]) {
                  float realDuration = [self realDurationForAVAsset:avAsset];
                  self.totalDuration = self.totalDuration - asset.duration + realDuration;
-                 NSString *filePath = [self filePathAsCreationDateWithInfo:info asset:asset];
-                 [self deleteLocalFileIfExists:filePath];
+                 NSString *filePath = [self filePathWithInfo:info asset:asset];
+                 [NSFileManager.defaultManager mnz_removeItemAtPath:filePath];
                  NSNumber *videoQualityNumber = [[NSUserDefaults standardUserDefaults] objectForKey:@"ChatVideoQuality"];
                  ChatVideoUploadQuality videoQuality;
                  if (videoQualityNumber) {
@@ -389,7 +391,7 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
     NSURL *avassetUrl = [(AVURLAsset *)self.avAsset URL];
     __block NSString *filePath = [[avassetUrl.path stringByDeletingPathExtension] stringByAppendingPathExtension:@"mp4"];
     NSDictionary *fileAtributes = [[NSFileManager defaultManager] attributesOfItemAtPath:avassetUrl.path error:nil];
-    [self deleteLocalFileIfExists:filePath];
+    [NSFileManager.defaultManager mnz_removeItemAtPath:filePath];
     long long fileSize = [[fileAtributes objectForKey:NSFileSize] longLongValue];
     
     if ([self hasFreeSpaceOnDiskForWriteFile:fileSize]) {
@@ -425,7 +427,7 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
                     MEGALogDebug(@"[PA] Export session finished");
                     self.currentProgress += CMTimeGetSeconds(self.avAsset.duration);
                     if (self.filePath) {
-                        filePath = [encoder.outputURL.path stringByReplacingOccurrencesOfString:[NSHomeDirectory() stringByAppendingString:@"/"] withString:@""];
+                        filePath = encoder.outputURL.path.mnz_relativeLocalPath;
                         self.filePath(filePath);
                     }
                 }
@@ -440,15 +442,15 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
                     [self.alertController dismissViewControllerAnimated:YES completion:nil];
                 });
             }];
-            if (UIApplication.mnz_visibleViewController != self.alertController) {
-                [[UIApplication mnz_visibleViewController].presentingViewController presentViewController:self.alertController animated:YES completion:^{
+            if (UIApplication.mnz_presentingViewController != self.alertController) {
+                [UIApplication.mnz_presentingViewController.presentingViewController presentViewController:self.alertController animated:YES completion:^{
                     [self addProgressViewToAlertController];
                 }];
             }
         } else {
             self.currentProgress += CMTimeGetSeconds(self.avAsset.duration);
             if (self.filePath) {
-                filePath = [avassetUrl.path stringByReplacingOccurrencesOfString:[NSHomeDirectory() stringByAppendingString:@"/"] withString:@""];
+                filePath = avassetUrl.path.mnz_relativeLocalPath;
                 self.filePath(filePath);
             }
         }
@@ -456,16 +458,6 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
 }
 
 #pragma mark - Private
-
-- (void)deleteLocalFileIfExists:(NSString *)filePath {
-    BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:filePath];
-    if (fileExists) {
-        NSError *error;
-        if (![[NSFileManager defaultManager] removeItemAtPath:filePath error:&error]) {
-            MEGALogError(@"[PA] Remove item at path failed with error: %@", error);
-        }
-    }
-}
 
 - (BOOL)hasFreeSpaceOnDiskForWriteFile:(long long)fileSize {
     uint64_t freeSpace = 0;
@@ -496,25 +488,27 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
     return YES;
 }
 
-- (NSString *)filePathAsCreationDateWithInfo:(NSDictionary *)info asset:(PHAsset *)asset {
+- (NSString *)filePathWithInfo:(NSDictionary *)info asset:(PHAsset *)asset {
     MEGALogDebug(@"[PA] Asset %@\n%@", asset, info);
     NSString *name;
     
     if (self.originalName) {
-        NSURL *url = [info objectForKey:@"PHImageFileURLKey"];
-        if (url) {
-            name = url.path.lastPathComponent;
+        NSArray *assetResources = [PHAssetResource assetResourcesForAsset:asset];
+        PHAssetResource *assetResource = assetResources.firstObject;
+        name = assetResource.originalFilename;
+        
+        if (self.shareThroughChat && [name.pathExtension.lowercaseString isEqualToString:@"heic"]) {
+            name = [[name stringByDeletingPathExtension] stringByAppendingPathExtension:@"jpg"];
         } else {
-            NSString *imageFileSandbox = [info objectForKey:@"PHImageFileSandboxExtensionTokenKey"];
-            name = imageFileSandbox.lastPathComponent;
+            name = name.mnz_fileNameWithLowercaseExtension;
+        }
+        if (!name) {
+            NSString *extension = [self extensionWithInfo:info asset:asset];
+            name = [[asset.localIdentifier stringByReplacingOccurrencesOfString:@"/" withString:@""] stringByAppendingPathExtension:extension];
         }
     } else {
         NSString *extension = [self extensionWithInfo:info asset:asset];
-        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-        dateFormatter.dateFormat = @"yyyy'-'MM'-'dd' 'HH'.'mm'.'ss";
-        NSLocale *locale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"];
-        dateFormatter.locale = locale;
-        name = [[dateFormatter stringFromDate:asset.creationDate] stringByAppendingPathExtension:extension];
+        name = [asset.creationDate.mnz_formattedDefaultNameForMedia stringByAppendingPathExtension:extension];
     }
     
     NSString *filePath = [[[NSFileManager defaultManager] uploadsDirectory] stringByAppendingPathComponent:name];
@@ -567,8 +561,8 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
                 dispatch_semaphore_signal(self.semaphore);
             }
         } else {
-            NSString *filePath = [self filePathAsCreationDateWithInfo:info asset:asset];
-            [self deleteLocalFileIfExists:filePath];
+            NSString *filePath = [self filePathWithInfo:info asset:asset];
+            [NSFileManager.defaultManager mnz_removeItemAtPath:filePath];
             long long imageSize = imageData.length;
             if ([self hasFreeSpaceOnDiskForWriteFile:imageSize]) {
                 NSError *error;
@@ -578,11 +572,11 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
                         MEGALogError(@"[PA] Set attributes failed with error: %@", error);
                     }
                     if (self.filePath) {
-                        filePath = [filePath stringByReplacingOccurrencesOfString:[NSHomeDirectory() stringByAppendingString:@"/"] withString:@""];
+                        filePath = filePath.mnz_relativeLocalPath;
                         self.filePath(filePath);
                     }
                     if (self.filePaths) {
-                        filePath = [filePath stringByReplacingOccurrencesOfString:[NSHomeDirectory() stringByAppendingString:@"/"] withString:@""];
+                        filePath = filePath.mnz_relativeLocalPath;
                         [self.filePathsArray addObject:filePath];
                         dispatch_semaphore_signal(self.semaphore);
                     }
@@ -690,7 +684,7 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
 
 - (void)exportSessionCancelledOrFailed {
     for (NSString *filePath in self.filePathsArray) {
-        [self deleteLocalFileIfExists:filePath];
+        [NSFileManager.defaultManager mnz_removeItemAtPath:filePath];
     }
     [self.filePathsArray removeAllObjects];
     [self.nodesArray removeAllObjects];
@@ -704,7 +698,7 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
         filePath = [filePath stringByDeletingPathExtension];
         filePath = [filePath stringByAppendingPathExtension:@"mp4"];
     }
-    [self deleteLocalFileIfExists:filePath];
+    [NSFileManager.defaultManager mnz_removeItemAtPath:filePath];
     
     AVAssetTrack *videoTrack = [[avAsset tracksWithMediaType:AVMediaTypeVideo] objectAtIndex:0];
     
@@ -783,16 +777,14 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
                     [self.nodesArray addObject:node];
                     dispatch_semaphore_signal(self.semaphore);
                 }
-                if (![[NSFileManager defaultManager] removeItemAtPath:filePath error:&error]) {
-                    MEGALogError(@"[PA] Remove item at path failed with error: %@", error)
-                }
+                [NSFileManager.defaultManager mnz_removeItemAtPath:filePath];
             } else {
                 if (self.filePath) {
-                    filePath = [encoder.outputURL.path stringByReplacingOccurrencesOfString:[NSHomeDirectory() stringByAppendingString:@"/"] withString:@""];
+                    filePath = encoder.outputURL.path.mnz_relativeLocalPath;
                     self.filePath(filePath);
                 }
                 if (self.filePaths) {
-                    filePath = [encoder.outputURL.path stringByReplacingOccurrencesOfString:[NSHomeDirectory() stringByAppendingString:@"/"] withString:@""];
+                    filePath = encoder.outputURL.path.mnz_relativeLocalPath;
                     [self.filePathsArray addObject:filePath];
                     dispatch_semaphore_signal(self.semaphore);
                 }
@@ -814,8 +806,8 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
     
     
     dispatch_async(dispatch_get_main_queue(), ^(void) {
-        if (UIApplication.mnz_visibleViewController != self.alertController) {
-            [[UIApplication mnz_visibleViewController] presentViewController:self.alertController animated:YES completion:^{
+        if (UIApplication.mnz_presentingViewController != self.alertController) {
+            [UIApplication.mnz_presentingViewController presentViewController:self.alertController animated:YES completion:^{
                 [self addProgressViewToAlertController];
             }];
         }
@@ -827,7 +819,7 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
     CGRect rect = CGRectMake(margin, 72.0, self.alertController.view.frame.size.width - margin * 2.0 , 2.0);
     self.progressView = [[UIProgressView alloc] initWithFrame:rect];
     self.progressView.progress = 0.0;
-    self.progressView.tintColor = [UIColor mnz_redD90007];
+    self.progressView.tintColor = UIColor.mnz_redMain;
     [self.alertController.view addSubview:self.progressView];
 }
 

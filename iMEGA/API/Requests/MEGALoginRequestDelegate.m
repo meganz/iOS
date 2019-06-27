@@ -4,8 +4,11 @@
 #import "SAMKeychain.h"
 #import "SVProgressHUD.h"
 
-#import "LaunchViewController.h"
+#import "DevicePermissionsHelper.h"
+#import "InitialLaunchViewController.h"
+#import "Helper.h"
 #import "MEGAStore.h"
+#import "NSString+MNZCategory.h"
 #import "UIApplication+MNZCategory.h"
 
 @interface MEGALoginRequestDelegate ()
@@ -60,10 +63,7 @@
     [SVProgressHUD dismiss];
         
     if (self.confirmAccountInOtherClient) {
-        [SAMKeychain deletePasswordForService:@"MEGA" account:@"sessionId"];
-        [SAMKeychain deletePasswordForService:@"MEGA" account:@"email"];
-        [SAMKeychain deletePasswordForService:@"MEGA" account:@"name"];
-        [SAMKeychain deletePasswordForService:@"MEGA" account:@"base64pwkey"];
+        [Helper clearEphemeralSession];
     }
     
     if (error.type) {
@@ -72,7 +72,28 @@
             case MEGAErrorTypeApiEArgs:
             case MEGAErrorTypeApiENoent:
                 message = AMLocalizedString(@"invalidMailOrPassword", @"Message shown when the user writes a wrong email or password on login");
+                
+                // The email or password have been changed in other client while the app requires the 2fa code
+                if ((error.type == MEGAErrorTypeApiENoent) && request.text) {
+                    if (request.text.mnz_isDecimalNumber) {
+                        if (self.errorCompletion) self.errorCompletion(error);
+                    }
+                }
                 break;
+                
+            case MEGAErrorTypeApiEExpired: {
+                if (self.errorCompletion) {
+                    self.errorCompletion(error);
+                    return;
+                } else {
+                    message = [NSString stringWithFormat:@"%@ %@", request.requestString, error.name];
+                    break;
+                }
+            }
+                
+            case MEGAErrorTypeApiEFailed:
+                if (self.errorCompletion) self.errorCompletion(error);
+                return;
                 
             case MEGAErrorTypeApiETooMany:
                 message = [NSString stringWithFormat:AMLocalizedString(@"tooManyAttemptsLogin", @"Error message when to many attempts to login"), [self timeFormatted:3600]];
@@ -86,6 +107,10 @@
                 message = AMLocalizedString(@"accountBlocked", @"Error message when trying to login and the account is suspended");
                 break;
                 
+            case MEGAErrorTypeApiEMFARequired:
+                if (self.errorCompletion) self.errorCompletion(error);
+                return;
+                
             default:
                 message = [NSString stringWithFormat:@"%@ %@", request.requestString, error.name];
                 break;
@@ -94,7 +119,7 @@
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"error", nil) message:message preferredStyle:UIAlertControllerStyleAlert];
         [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
         
-        [UIApplication.mnz_visibleViewController presentViewController:alertController animated:YES completion:nil];
+        [UIApplication.mnz_presentingViewController presentViewController:alertController animated:YES completion:nil];
         
         return;
     }
@@ -104,13 +129,18 @@
         [SAMKeychain setPassword:session forService:@"MEGA" account:@"sessionV3"];
         [[MEGAStore shareInstance] configureMEGAStore];
         
-        LaunchViewController *launchVC = [[UIStoryboard storyboardWithName:@"Launch" bundle:nil] instantiateViewControllerWithIdentifier:@"LaunchViewControllerID"];
-        UIWindow *window = [[[UIApplication sharedApplication] delegate] window];
+        LaunchViewController *launchVC;
+        if (DevicePermissionsHelper.shouldSetupPermissions) {
+            launchVC = [[UIStoryboard storyboardWithName:@"Launch" bundle:nil] instantiateViewControllerWithIdentifier:@"InitialLaunchViewControllerID"];
+        } else {
+            launchVC = [[UIStoryboard storyboardWithName:@"Launch" bundle:nil] instantiateViewControllerWithIdentifier:@"LaunchViewControllerID"];
+        }
+        
+        launchVC.delegate = (id<LaunchViewControllerDelegate>)UIApplication.sharedApplication.delegate;
+        UIWindow *window = UIApplication.sharedApplication.delegate.window;
         [UIView transitionWithView:window duration:0.5 options:(UIViewAnimationOptionTransitionCrossDissolve | UIViewAnimationOptionAllowAnimatedContent) animations:^{
             [window setRootViewController:launchVC];
         } completion:nil];
-        
-        [[UIApplication sharedApplication] setStatusBarHidden:YES];
     }
 }
 

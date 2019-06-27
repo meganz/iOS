@@ -2,7 +2,6 @@
 
 #import <CoreSpotlight/CoreSpotlight.h>
 #import "LTHPasscodeViewController.h"
-#import <SafariServices/SafariServices.h>
 #import "SAMKeychain.h"
 #import "SVProgressHUD.h"
 
@@ -12,10 +11,12 @@
 #import "UIImageView+MNZCategory.h"
 
 #import "MEGAActivityItemProvider.h"
+#import "MEGACopyRequestDelegate.h"
+#import "MEGACreateFolderRequestDelegate.h"
 #import "MEGANode+MNZCategory.h"
 #import "MEGANodeList+MNZCategory.h"
+#import "MEGAProcessAsset.h"
 #import "MEGALogger.h"
-#import "MEGAReachabilityManager.h"
 #import "MEGASdkManager.h"
 #import "MEGAStore.h"
 #import "MEGAUser+MNZCategory.h"
@@ -29,10 +30,6 @@
 #import "RemoveSharingActivity.h"
 #import "ShareFolderActivity.h"
 #import "SendToChatActivity.h"
-
-static MEGANode *linkNode;
-static NSInteger linkNodeOption;
-static NSMutableArray *nodesFromLinkMutableArray;
 
 static MEGAIndexer *indexer;
 
@@ -49,7 +46,6 @@ static MEGAIndexer *indexer;
                                  @"en",
                                  @"es",
                                  @"fr",
-                                 @"he",
                                  @"id",
                                  @"it",
                                  @"ja",
@@ -61,7 +57,6 @@ static MEGAIndexer *indexer;
                                  @"ru",
                                  @"th",
                                  @"tl",
-                                 @"tr",
                                  @"uk",
                                  @"vi",
                                  @"zh-Hans",
@@ -236,6 +231,7 @@ static MEGAIndexer *indexer;
                                 @"torrent":@"torrent",
                                 @"ttf":@"font",
                                 @"txt":@"text",
+                                @"url":@"url",
                                 @"vob":@"video",
                                 @"wav":@"audio",
                                 @"webm":@"video",
@@ -439,33 +435,7 @@ static MEGAIndexer *indexer;
     return destinationPath;
 }
 
-#pragma mark - Utils for links when you are not logged
-
-+ (MEGANode *)linkNode {
-    return linkNode;
-}
-
-+ (void)setLinkNode:(MEGANode *)node {
-    linkNode = node;
-}
-
-+ (NSMutableArray *)nodesFromLinkMutableArray {
-    if (nodesFromLinkMutableArray == nil) {
-        nodesFromLinkMutableArray = [[NSMutableArray alloc] init];
-    }
-    
-    return nodesFromLinkMutableArray;
-}
-
-+ (NSInteger)selectedOptionOnLink {
-    return linkNodeOption;
-}
-
-+ (void)setSelectedOptionOnLink:(NSInteger)option {
-    linkNodeOption = option;
-}
-
-#pragma mark - Utils download and downloading nodes
+#pragma mark - Utils for transfers
 
 + (NSMutableDictionary *)downloadingNodes {
     static NSMutableDictionary *downloadingNodes = nil;
@@ -505,7 +475,7 @@ static MEGAIndexer *indexer;
             [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
         }
         
-        [UIApplication.mnz_visibleViewController presentViewController:alertController animated:YES completion:nil];
+        [UIApplication.mnz_presentingViewController presentViewController:alertController animated:YES completion:nil];
         return NO;
     }
     return YES;
@@ -532,13 +502,13 @@ static MEGAIndexer *indexer;
     if (node.type == MEGANodeTypeFile) {
         if (![[NSFileManager defaultManager] fileExistsAtPath:[NSHomeDirectory() stringByAppendingPathComponent:relativeFilePath]] || overwrite) {
             if (overwrite) { //For node versions
-                [[NSFileManager defaultManager] removeItemAtPath:[NSHomeDirectory() stringByAppendingPathComponent:relativeFilePath] error:nil];
+                [NSFileManager.defaultManager mnz_removeItemAtPath:[NSHomeDirectory() stringByAppendingPathComponent:relativeFilePath]];
                 MOOfflineNode *offlineNode = [[MEGAStore shareInstance] fetchOfflineNodeWithPath:offlineNameString];
                 if (offlineNode) {
                     [[MEGAStore shareInstance] removeOfflineNode:offlineNode];
                 }
             }
-            MOOfflineNode *offlineNodeExist = [[MEGAStore shareInstance] offlineNodeWithNode:node api:api];
+            MOOfflineNode *offlineNodeExist = [[MEGAStore shareInstance] offlineNodeWithNode:node];
             
             NSString *temporaryPath = [[NSTemporaryDirectory() stringByAppendingPathComponent:[node base64Handle]] stringByAppendingPathComponent:node.name];
             NSString *temporaryFingerprint = [[MEGASdkManager sharedMEGASdk] fingerprintForFilePath:temporaryPath];
@@ -546,17 +516,17 @@ static MEGAIndexer *indexer;
             if (offlineNodeExist) {
                 NSString *itemPath = [[Helper pathForOffline] stringByAppendingPathComponent:offlineNodeExist.localPath];
                 [Helper copyNode:node from:itemPath to:relativeFilePath api:api];
-            } else if ([temporaryFingerprint isEqualToString:[api fingerprintForNode:node]]) {
-                if ((node.name.mnz_isImagePathExtension && [[NSUserDefaults standardUserDefaults] boolForKey:@"IsSavePhotoToGalleryEnabled"]) || (node.name.mnz_videoPathExtension && [[NSUserDefaults standardUserDefaults] boolForKey:@"IsSaveVideoToGalleryEnabled"])) {
+            } else if ([temporaryFingerprint isEqualToString:node.fingerprint]) {
+                if ((node.name.mnz_isImagePathExtension && [[NSUserDefaults standardUserDefaults] boolForKey:@"IsSavePhotoToGalleryEnabled"]) || (node.name.mnz_isVideoPathExtension && [[NSUserDefaults standardUserDefaults] boolForKey:@"IsSaveVideoToGalleryEnabled"])) {
                     [node mnz_copyToGalleryFromTemporaryPath:temporaryPath];
                 } else {
                     [Helper moveNode:node from:temporaryPath to:relativeFilePath api:api];
                 }
             } else {
                 NSString *appData = nil;
-                if ((node.name.mnz_isImagePathExtension && [[NSUserDefaults standardUserDefaults] boolForKey:@"IsSavePhotoToGalleryEnabled"]) || (node.name.mnz_videoPathExtension && [[NSUserDefaults standardUserDefaults] boolForKey:@"IsSaveVideoToGalleryEnabled"])) {
+                if ((node.name.mnz_isImagePathExtension && [[NSUserDefaults standardUserDefaults] boolForKey:@"IsSavePhotoToGalleryEnabled"]) || (node.name.mnz_isVideoPathExtension && [[NSUserDefaults standardUserDefaults] boolForKey:@"IsSaveVideoToGalleryEnabled"])) {
                     NSString *downloadsDirectory = [[NSFileManager defaultManager] downloadsDirectory];
-                    downloadsDirectory = [downloadsDirectory stringByReplacingOccurrencesOfString:[NSHomeDirectory() stringByAppendingString:@"/"] withString:@""];
+                    downloadsDirectory = downloadsDirectory.mnz_relativeLocalPath;
                     relativeFilePath = [downloadsDirectory stringByAppendingPathComponent:offlineNameString];
                     
                     appData = [[NSString new] mnz_appDataToSaveInPhotosApp];
@@ -607,7 +577,96 @@ static MEGAIndexer *indexer;
     }
 }
 
++ (NSMutableArray *)uploadingNodes {
+    static NSMutableArray *uploadingNodes = nil;
+    if (!uploadingNodes) {
+        uploadingNodes = [[NSMutableArray alloc] init];
+    }
+    
+    return uploadingNodes;
+}
+
++ (void)startUploadTransfer:(MOUploadTransfer *)uploadTransfer {
+    PHAsset *asset = [PHAsset fetchAssetsWithLocalIdentifiers:@[uploadTransfer.localIdentifier] options:nil].firstObject;
+    
+    MEGANode *parentNode = [[MEGASdkManager sharedMEGASdk] nodeForHandle:uploadTransfer.parentNodeHandle.unsignedLongLongValue];
+    MEGAProcessAsset *processAsset = [[MEGAProcessAsset alloc] initWithAsset:asset parentNode:parentNode cameraUploads:NO filePath:^(NSString *filePath) {
+        NSString *name = filePath.lastPathComponent.mnz_fileNameWithLowercaseExtension;
+        NSString *newName = [name mnz_sequentialFileNameInParentNode:parentNode];
+        
+        NSString *appData = [NSString new];
+        
+        appData = [appData mnz_appDataToSaveCoordinates:[filePath mnz_coordinatesOfPhotoOrVideo]];
+        appData = [appData mnz_appDataToLocalIdentifier:uploadTransfer.localIdentifier];
+        
+        if (![name isEqualToString:newName]) {
+            NSString *newFilePath = [[NSFileManager defaultManager].uploadsDirectory stringByAppendingPathComponent:newName];
+            
+            NSError *error = nil;
+            NSString *absoluteFilePath = [NSHomeDirectory() stringByAppendingPathComponent:filePath];
+            if (![[NSFileManager defaultManager] moveItemAtPath:absoluteFilePath toPath:newFilePath error:&error]) {
+                MEGALogError(@"Move item at path failed with error: %@", error);
+            }
+            [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:newFilePath.mnz_relativeLocalPath parent:parentNode appData:appData isSourceTemporary:YES];
+        } else {
+            [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:filePath.mnz_relativeLocalPath parent:parentNode appData:appData isSourceTemporary:YES];
+        }
+        
+        if (uploadTransfer.localIdentifier) {
+            [[Helper uploadingNodes] addObject:uploadTransfer.localIdentifier];
+        }
+        [[MEGAStore shareInstance] deleteUploadTransfer:uploadTransfer];
+    } node:^(MEGANode *node) {
+        if ([[[MEGASdkManager sharedMEGASdk] parentNodeForNode:node] handle] == parentNode.handle) {
+            MEGALogDebug(@"The asset exists in MEGA in the parent folder");
+        } else {
+            [[MEGASdkManager sharedMEGASdk] copyNode:node newParent:parentNode];
+        }
+        [[MEGAStore shareInstance] deleteUploadTransfer:uploadTransfer];
+        [Helper startPendingUploadTransferIfNeeded];
+    } error:^(NSError *error) {
+        [SVProgressHUD showImage:[UIImage imageNamed:@"hudError"] status:[NSString stringWithFormat:@"%@ %@ \r %@", AMLocalizedString(@"Transfer failed:", nil), asset.localIdentifier, error.localizedDescription]];
+        [[MEGAStore shareInstance] deleteUploadTransfer:uploadTransfer];
+        [Helper startPendingUploadTransferIfNeeded];
+    }];
+    
+    [processAsset prepare];
+}
+
++ (void)startPendingUploadTransferIfNeeded {
+    BOOL allUploadTransfersPaused = YES;
+    
+    MEGATransferList *transferList = [[MEGASdkManager sharedMEGASdk] uploadTransfers];
+    
+    for (int i = 0; i < transferList.size.intValue; i++) {
+        MEGATransfer *transfer = [transferList transferAtIndex:i];
+        
+        if (transfer.state == MEGATransferStateActive) {
+            allUploadTransfersPaused = NO;
+            break;
+        }
+    }
+    
+    if (allUploadTransfersPaused) {
+        NSArray<MOUploadTransfer *> *queuedUploadTransfers = [[MEGAStore shareInstance] fetchUploadTransfers];
+        if (queuedUploadTransfers.count) {
+            [Helper startUploadTransfer:queuedUploadTransfers.firstObject];
+        }
+    }
+}
+
 #pragma mark - Utils
+
++ (NSString *)memoryStyleStringFromByteCount:(long long)byteCount {
+    static NSByteCountFormatter *byteCountFormatter = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        byteCountFormatter = NSByteCountFormatter.alloc.init;
+        byteCountFormatter.countStyle = NSByteCountFormatterCountStyleMemory;
+    });
+    
+    return [byteCountFormatter stringFromByteCount:byteCount];
+}
 
 + (unsigned long long)sizeOfFolderAtPath:(NSString *)path {
     unsigned long long folderSize = 0;
@@ -626,20 +685,54 @@ static MEGAIndexer *indexer;
     return folderSize;
 }
 
-+ (uint64_t)freeDiskSpace {
-    uint64_t totalFreeSpace = 0;
-    NSError *error;
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSDictionary *dictionary = [[NSFileManager defaultManager] attributesOfFileSystemForPath:[paths lastObject] error:&error];
-    
-    if (dictionary) {
-        NSNumber *freeFileSystemSizeInBytes = [dictionary objectForKey:NSFileSystemFreeSize];
-        totalFreeSpace = [freeFileSystemSizeInBytes unsignedLongLongValue];
++ (void)changeApiURL {
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"pointToStaging"]) {
+        [[MEGASdkManager sharedMEGASdk] changeApiUrl:@"https://g.api.mega.co.nz/" disablepkp:NO];
+        [[MEGASdkManager sharedMEGASdkFolder] changeApiUrl:@"https://g.api.mega.co.nz/" disablepkp:NO];
+        [Helper apiURLChanged];
     } else {
-        MEGALogError(@"Obtaining System Memory Info failed with error: %@", error);
+        NSString *alertTitle = AMLocalizedString(@"Change to a test server?", @"title of the alert dialog when the user is changing the API URL to staging");
+        NSString *alertMessage = AMLocalizedString(@"Are you sure you want to change to a test server? Your account may suffer irrecoverable problems", @"text of the alert dialog when the user is changing the API URL to staging");
+        
+        UIAlertController *changeApiServerAlertController = [UIAlertController alertControllerWithTitle:alertTitle message:alertMessage preferredStyle:UIAlertControllerStyleAlert];
+        [changeApiServerAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
+        
+        [changeApiServerAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", @"Button title to cancel something") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            [[MEGASdkManager sharedMEGASdk] changeApiUrl:@"https://staging.api.mega.co.nz/" disablepkp:NO];
+            [[MEGASdkManager sharedMEGASdkFolder] changeApiUrl:@"https://staging.api.mega.co.nz/" disablepkp:NO];
+            [Helper apiURLChanged];
+        }]];
+        
+        [changeApiServerAlertController addAction:[UIAlertAction actionWithTitle:@"Staging:444" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            [MEGASdkManager.sharedMEGASdk changeApiUrl:@"https://staging.api.mega.co.nz:444/" disablepkp:YES];
+            [MEGASdkManager.sharedMEGASdkFolder changeApiUrl:@"https://staging.api.mega.co.nz:444/" disablepkp:YES];
+            [Helper apiURLChanged];
+        }]];
+        
+        [UIApplication.mnz_visibleViewController presentViewController:changeApiServerAlertController animated:YES completion:nil];
+    }
+}
+
++ (void)apiURLChanged {
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"pointToStaging"]) {
+        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"pointToStaging"];
+    } else {
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"pointToStaging"];
     }
     
-    return totalFreeSpace;
+    [SVProgressHUD showSuccessWithStatus:@"API URL changed"];
+    
+    if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
+        [[MEGASdkManager sharedMEGASdk] fastLoginWithSession:[SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"]];
+        [[MEGASdkManager sharedMEGAChatSdk] refreshUrls];
+    }
+}
+
++ (void)cannotPlayContentDuringACallAlert {
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:AMLocalizedString(@"It is not possible to play content while there is a call in progress", @"Message shown when there is an ongoing call and the user tries to play an audio or video") preferredStyle:UIAlertControllerStyleAlert];
+    [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
+    
+    [UIApplication.mnz_presentingViewController presentViewController:alertController animated:YES completion:nil];
 }
 
 #pragma mark - Utils for nodes
@@ -665,16 +758,16 @@ static MEGAIndexer *indexer;
     if ([cell isKindOfClass:[NodeTableViewCell class]]) {
         NodeTableViewCell *nodeTableViewCell = cell;
         [nodeTableViewCell.thumbnailImageView setImage:[UIImage imageWithContentsOfFile:thumbnailFilePath]];
-        nodeTableViewCell.thumbnailPlayImageView.hidden = !node.name.mnz_videoPathExtension;
+        nodeTableViewCell.thumbnailPlayImageView.hidden = !node.name.mnz_isVideoPathExtension;
     } else if ([cell isKindOfClass:[PhotoCollectionViewCell class]]) {
         PhotoCollectionViewCell *photoCollectionViewCell = cell;
         [photoCollectionViewCell.thumbnailImageView setImage:[UIImage imageWithContentsOfFile:thumbnailFilePath]];
-        photoCollectionViewCell.thumbnailPlayImageView.hidden = !node.name.mnz_videoPathExtension;
-        photoCollectionViewCell.thumbnailVideoOverlayView.hidden = !(node.name.mnz_videoPathExtension && node.duration>-1);
     }
     
     if (reindex) {
-        [indexer index:node];
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+            [indexer index:node];
+        });
     }
 }
 
@@ -685,9 +778,9 @@ static MEGAIndexer *indexer;
 + (NSString *)sizeForNode:(MEGANode *)node api:(MEGASdk *)api {
     NSString *size;
     if ([node isFile]) {
-        size = [NSByteCountFormatter stringFromByteCount:node.size.longLongValue  countStyle:NSByteCountFormatterCountStyleMemory];
+        size = [Helper memoryStyleStringFromByteCount:node.size.longLongValue];
     } else {
-        size = [NSByteCountFormatter stringFromByteCount:[[api sizeForNode:node] longLongValue] countStyle:NSByteCountFormatterCountStyleMemory];
+        size = [Helper memoryStyleStringFromByteCount:[api sizeForNode:node].longLongValue];
     }
     return size;
 }
@@ -705,6 +798,32 @@ static MEGAIndexer *indexer;
     NSInteger folders = [api numberChildFoldersForParent:node];
     
     return [NSString mnz_stringByFiles:files andFolders:folders];
+}
+
++ (void)importNode:(MEGANode *)node toShareWithCompletion:(void (^)(MEGANode *node))completion {
+    if (node.owner == [MEGASdkManager sharedMEGAChatSdk].myUserHandle) {
+        completion(node);
+    } else {
+        MEGANode *remoteNode = [[MEGASdkManager sharedMEGASdk] nodeForFingerprint:node.fingerprint];
+        if (remoteNode && remoteNode.owner == [MEGASdkManager sharedMEGAChatSdk].myUserHandle) {
+            completion(remoteNode);
+        } else {
+            MEGACopyRequestDelegate *copyRequestDelegate = [[MEGACopyRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
+                MEGANode *resultNode = [[MEGASdkManager sharedMEGASdk] nodeForHandle:request.nodeHandle];
+                completion(resultNode);
+            }];
+            MEGANode *myChatFilesNode = [[MEGASdkManager sharedMEGASdk] nodeForPath:@"/My chat files"];
+            if (myChatFilesNode) {
+                [[MEGASdkManager sharedMEGASdk] copyNode:node newParent:myChatFilesNode delegate:copyRequestDelegate];
+            } else {
+                MEGACreateFolderRequestDelegate *createFolderRequestDelegate = [[MEGACreateFolderRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
+                    MEGANode *myChatFilesNode = [[MEGASdkManager sharedMEGASdk] nodeForHandle:request.nodeHandle];
+                    [[MEGASdkManager sharedMEGASdk] copyNode:node newParent:myChatFilesNode delegate:copyRequestDelegate];
+                }];
+                [[MEGASdkManager sharedMEGASdk] createFolderWithName:@"My chat files" parent:[[MEGASdkManager sharedMEGASdk] rootNode] delegate:createFolderRequestDelegate];
+            }
+        }
+    }
 }
 
 + (UIActivityViewController *)activityViewControllerForChatMessages:(NSArray<MEGAChatMessage *> *)messages sender:(id)sender {
@@ -728,16 +847,40 @@ static MEGAIndexer *indexer;
                 
             case MEGAChatMessageTypeContact: {
                 for (NSUInteger i = 0; i < message.usersCount; i++) {
-                    MEGAUser *user = [[MEGASdkManager sharedMEGASdk] contactForEmail:[message userEmailAtIndex:i]];
-                    CNContact *cnContact = user.mnz_cnContact;
-                    NSData *vCardData = [CNContactVCardSerialization dataWithContacts:@[cnContact] error:nil];                    
+                    CNMutableContact *cnMutableContact = [[CNMutableContact alloc] init];
+                    
+                    MOUser *moUser = [[MEGAStore shareInstance] fetchUserWithUserHandle:[message userHandleAtIndex:i]];
+                    
+                    if (moUser.firstName) {
+                        cnMutableContact.givenName = moUser.firstname;
+                    }
+                    
+                    if (moUser.lastname) {
+                        cnMutableContact.familyName = moUser.lastname;
+                    }
+                    
+                    if (!moUser.firstName && !moUser.lastname) {
+                        cnMutableContact.givenName = [message userNameAtIndex:i];
+                    }
+                    
+                    cnMutableContact.emailAddresses = @[[CNLabeledValue labeledValueWithLabel:CNLabelHome value:[message userEmailAtIndex:i]]];
+                    
+                    NSString *avatarFilePath = [[Helper pathForSharedSandboxCacheDirectory:@"thumbnailsV3"] stringByAppendingPathComponent:[MEGASdk base64HandleForUserHandle:[message userHandleAtIndex:i]]];
+                    if ([[NSFileManager defaultManager] fileExistsAtPath:avatarFilePath]) {
+                        UIImage *avatarImage = [UIImage imageWithContentsOfFile:avatarFilePath];
+                        cnMutableContact.imageData = UIImageJPEGRepresentation(avatarImage, 1.0f);
+                    }
+                    NSData *vCardData = [CNContactVCardSerialization dataWithContacts:@[cnMutableContact] error:nil];
                     NSString* vcString = [[NSString alloc] initWithData:vCardData encoding:NSUTF8StringEncoding];
-                    NSString* base64Image = [cnContact.imageData base64EncodedStringWithOptions:0];
-                    NSString* vcardImageString = [[@"PHOTO;TYPE=JPEG;ENCODING=BASE64:" stringByAppendingString:base64Image] stringByAppendingString:@"\n"];
-                    vcString = [vcString stringByReplacingOccurrencesOfString:@"END:VCARD" withString:[vcardImageString stringByAppendingString:@"END:VCARD"]];
+                    NSString* base64Image = [cnMutableContact.imageData base64EncodedStringWithOptions:0];
+                    if (base64Image) {
+                        NSString* vcardImageString = [[@"PHOTO;TYPE=JPEG;ENCODING=BASE64:" stringByAppendingString:base64Image] stringByAppendingString:@"\n"];
+                        vcString = [vcString stringByReplacingOccurrencesOfString:@"END:VCARD" withString:[vcardImageString stringByAppendingString:@"END:VCARD"]];
+                    }
                     vCardData = [vcString dataUsingEncoding:NSUTF8StringEncoding];
                     
-                    NSString *tempPath = [NSTemporaryDirectory() stringByAppendingPathComponent:[[user mnz_fullName] stringByAppendingString:@".vcf"]];
+                    NSString *fullName = [message userNameAtIndex:i];
+                    NSString *tempPath = [NSTemporaryDirectory() stringByAppendingPathComponent:[fullName stringByAppendingString:@".vcf"]];
                     if ([vCardData writeToFile:tempPath atomically:YES]) {
                         [activityItemsMutableArray addObject:[NSURL fileURLWithPath:tempPath]];
                         fileCount++;
@@ -747,17 +890,29 @@ static MEGAIndexer *indexer;
                 break;
             }
                 
-            case MEGAChatMessageTypeAttachment: {
+            case MEGAChatMessageTypeAttachment:
+            case MEGAChatMessageTypeVoiceClip: {
                 MEGANode *node = [message.nodeList mnz_nodesArrayFromNodeList].firstObject;
-                MOOfflineNode *offlineNodeExist = [[MEGAStore shareInstance] offlineNodeWithNode:node api:[MEGASdkManager sharedMEGASdk]];
+                MOOfflineNode *offlineNodeExist = [[MEGAStore shareInstance] offlineNodeWithNode:node];
                 if (offlineNodeExist) {
                     NSURL *offlineURL = [NSURL fileURLWithPath:[[Helper pathForOffline] stringByAppendingPathComponent:offlineNodeExist.localPath]];
                     [activityItemsMutableArray addObject:offlineURL];
                     fileCount++;
                 } else {
-                    [nodes addObject:node];
-                    MEGAActivityItemProvider *activityItemProvider = [[MEGAActivityItemProvider alloc] initWithPlaceholderString:node.name node:node];
-                    [activityItemsMutableArray addObject:activityItemProvider];
+                    dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
+                    double delayInSeconds = 10.0;
+                    dispatch_time_t waitTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+                    
+                    [self importNode:node toShareWithCompletion:^(MEGANode *node) {
+                        [nodes addObject:node];
+                        MEGAActivityItemProvider *activityItemProvider = [[MEGAActivityItemProvider alloc] initWithPlaceholderString:node.name node:node];
+                        [activityItemsMutableArray addObject:activityItemProvider];
+                        dispatch_semaphore_signal(semaphore);
+                    }];
+                    if (dispatch_semaphore_wait(semaphore, waitTime)) {
+                        MEGALogError(@"Semaphore timeout importing message attachment to share");
+                        return nil;
+                    }
                 }
 
                 break;
@@ -835,7 +990,13 @@ static MEGAIndexer *indexer;
         }
         
         if (nodesArray.count == 1) {
-            OpenInActivity *openInActivity = [[OpenInActivity alloc] initOnView:sender];
+            OpenInActivity *openInActivity;
+            if ([sender isKindOfClass:[UIBarButtonItem class]]) {
+                openInActivity = [[OpenInActivity alloc] initOnBarButtonItem:sender];
+            } else {
+                openInActivity = [[OpenInActivity alloc] initOnView:sender];
+            }
+            
             [activitiesMutableArray addObject:openInActivity];
         }
     } else {
@@ -915,7 +1076,7 @@ static MEGAIndexer *indexer;
 + (NSArray *)checkIfAllOfTheseNodesExistInOffline:(NSArray *)nodesArray {
     NSMutableArray *filesURLMutableArray = [[NSMutableArray alloc] init];
     for (MEGANode *node in nodesArray) {
-        MOOfflineNode *offlineNodeExist = [[MEGAStore shareInstance] offlineNodeWithNode:node api:[MEGASdkManager sharedMEGASdk]];
+        MOOfflineNode *offlineNodeExist = [[MEGAStore shareInstance] offlineNodeWithNode:node];
         if (offlineNodeExist) {
             [filesURLMutableArray addObject:[NSURL fileURLWithPath:[[Helper pathForOffline] stringByAppendingPathComponent:[offlineNodeExist localPath]]]];
         } else {
@@ -1025,48 +1186,30 @@ static MEGAIndexer *indexer;
     searchController.dimsBackgroundDuringPresentation = NO;
     searchController.searchBar.searchBarStyle = UISearchBarStyleMinimal;
     searchController.searchBar.translucent = NO;
-    searchController.searchBar.backgroundImage = [UIImage imageWithCGImage:(__bridge CGImageRef)(UIColor.clearColor)];
+    searchController.searchBar.backgroundColor = UIColor.whiteColor;
     searchController.searchBar.barTintColor = UIColor.whiteColor;
-    searchController.searchBar.tintColor = UIColor.mnz_redF0373A;
-    
-    UITextField *searchTextField = [searchController.searchBar valueForKey:@"_searchField"];
-    searchTextField.font = [UIFont mnz_SFUIRegularWithSize:17.0f];
-    searchTextField.backgroundColor = UIColor.mnz_grayEEEEEE;
-    searchTextField.textColor = UIColor.mnz_black333333;
-    searchTextField.tintColor = UIColor.mnz_green00BFA5;
+    searchController.searchBar.tintColor = UIColor.mnz_redMain;
     
     return searchController;
 }
 
-+ (void)presentSafariViewControllerWithURL:(NSURL *)url {
-    if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-        SFSafariViewController *safariViewController = [[SFSafariViewController alloc] initWithURL:url];
-        if (@available(iOS 10.0, *)) {
-            safariViewController.preferredControlTintColor = [UIColor mnz_redF0373A];
-        } else {
-            safariViewController.view.tintColor = [UIColor mnz_redF0373A];
-        }
-        
-        [UIApplication.mnz_visibleViewController presentViewController:safariViewController animated:YES completion:nil];
++ (void)resetSearchControllerFrame:(UISearchController *)searchController {
+    searchController.view.frame = CGRectMake(0, UIApplication.sharedApplication.statusBarFrame.size.height, searchController.view.frame.size.width, searchController.view.frame.size.height);
+    searchController.searchBar.superview.frame = CGRectMake(0, 0, searchController.searchBar.superview.frame.size.width, searchController.searchBar.superview.frame.size.height);
+    searchController.searchBar.frame = CGRectMake(0, 0, searchController.searchBar.frame.size.width, searchController.searchBar.frame.size.height);
+}
+
+#pragma mark - Manage session
+
++ (BOOL)hasSession_alertIfNot {
+    if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
+        return YES;
+    } else {
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"pleaseLogInToYourAccount", @"Alert title shown when you need to log in to continue with the action you want to do") message:nil preferredStyle:UIAlertControllerStyleAlert];
+        [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
+        [UIApplication.mnz_visibleViewController presentViewController:alertController animated:YES completion:nil];
+        return NO;
     }
-}
-
-+ (void)configureRedNavigationAppearance {
-    [[UINavigationBar appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUISemiBoldWithSize:17.0f], NSForegroundColorAttributeName:UIColor.whiteColor}];
-    [[UINavigationBar appearance] setTintColor:UIColor.whiteColor];
-    [[UINavigationBar appearance] setBarTintColor:UIColor.mnz_redF0373A];
-    [[UILabel appearanceWhenContainedInInstancesOfClasses:@[[UINavigationBar class]]] setTextColor:UIColor.mnz_redF0373A];
-    [[UIBarButtonItem appearanceWhenContainedInInstancesOfClasses:@[[UINavigationBar class]]] setTintColor:UIColor.whiteColor];
-    [[UIBarButtonItem appearanceWhenContainedInInstancesOfClasses:@[[UINavigationBar class]]] setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:17.0f], NSForegroundColorAttributeName:UIColor.whiteColor} forState:UIControlStateNormal];
-}
-
-+ (void)configureWhiteNavigationAppearance {
-    [[UINavigationBar appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUISemiBoldWithSize:17.0f], NSForegroundColorAttributeName:[UIColor mnz_black333333]}];
-    [[UINavigationBar appearance] setTintColor:[UIColor mnz_redFF4D52]];
-    [[UINavigationBar appearance] setBarTintColor:[UIColor colorFromHexString:@"FCFCFC"]];
-    [[UILabel appearanceWhenContainedInInstancesOfClasses:@[[UINavigationBar class]]] setTextColor:UIColor.blackColor];
-    [[UIBarButtonItem appearanceWhenContainedInInstancesOfClasses:@[[UINavigationBar class]]] setTintColor:UIColor.blackColor];
-    [[UIBarButtonItem appearanceWhenContainedInInstancesOfClasses:@[[UINavigationBar class]]] setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:17.0f], NSForegroundColorAttributeName:UIColor.mnz_redF0373A} forState:UIControlStateNormal];
 }
 
 #pragma mark - Logout
@@ -1079,14 +1222,7 @@ static MEGAIndexer *indexer;
     
     [Helper deleteUserData];
     [Helper deleteMasterKey];
-    
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    UIViewController *viewController = [storyboard instantiateViewControllerWithIdentifier:@"initialViewControllerID"];
-    UIWindow *window = [[[UIApplication sharedApplication] delegate] window];
-    [UIView transitionWithView:window duration:0.5 options:(UIViewAnimationOptionTransitionCrossDissolve | UIViewAnimationOptionAllowAnimatedContent) animations:^{
-        [window setRootViewController:viewController];
-    } completion:nil];
-        
+            
     [Helper resetCameraUploadsSettings];
     [Helper resetUserData];
     
@@ -1134,7 +1270,7 @@ static MEGAIndexer *indexer;
         [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"logoutLabel", @"Title of the button which logs out from your account.") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
             [[MEGASdkManager sharedMEGASdk] logout];
         }]];
-        [UIApplication.mnz_visibleViewController presentViewController:alertController animated:YES completion:nil];
+        [UIApplication.mnz_presentingViewController presentViewController:alertController animated:YES completion:nil];
     } else {
         [[MEGASdkManager sharedMEGASdk] logout];
     }
@@ -1147,74 +1283,45 @@ static MEGAIndexer *indexer;
     [[MEGASdkManager sharedMEGASdkFolder] cancelTransfersForDirection:0];
 }
 
++ (void)clearEphemeralSession {
+    [SAMKeychain deletePasswordForService:@"MEGA" account:@"sessionId"];
+    [SAMKeychain deletePasswordForService:@"MEGA" account:@"email"];
+    [SAMKeychain deletePasswordForService:@"MEGA" account:@"name"];
+    [SAMKeychain deletePasswordForService:@"MEGA" account:@"base64pwkey"];
+}
+
 + (void)clearSession {
     [SAMKeychain deletePasswordForService:@"MEGA" account:@"sessionV3"];
 }
 
 + (void)deleteUserData {
     // Delete app's directories: Library/Cache/thumbs - Library/Cache/previews - Documents - tmp
-    NSError *error;
     
     NSString *thumbsDirectory = [Helper pathForSharedSandboxCacheDirectory:@"thumbnailsV3"];
-    if ([[NSFileManager defaultManager] fileExistsAtPath:thumbsDirectory]) {
-        if (![[NSFileManager defaultManager] removeItemAtPath:thumbsDirectory error:&error]) {
-            MEGALogError(@"Remove item at path failed with error: %@", error);
-        }
-    }
+    [NSFileManager.defaultManager mnz_removeItemAtPath:thumbsDirectory];
     
     NSString *previewsDirectory = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"previewsV3"];
-    if ([[NSFileManager defaultManager] fileExistsAtPath:previewsDirectory]) {
-        if (![[NSFileManager defaultManager] removeItemAtPath:previewsDirectory error:&error]) {
-            MEGALogError(@"Remove item at path failed with error: %@", error);
-        }
-    }
+    [NSFileManager.defaultManager mnz_removeItemAtPath:previewsDirectory];
     
     // Remove "Inbox" folder return an error. "Inbox" is reserved by Apple
     NSString *offlineDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-    for (NSString *file in [[NSFileManager defaultManager] contentsOfDirectoryAtPath:offlineDirectory error:&error]) {
-        if (![[NSFileManager defaultManager] removeItemAtPath:[offlineDirectory stringByAppendingPathComponent:file] error:&error]) {
-            MEGALogError(@"Remove item at path failed with error: %@", error);
-        }
-    }
+    [NSFileManager.defaultManager mnz_removeFolderContentsAtPath:offlineDirectory];
     
-    for (NSString *file in [[NSFileManager defaultManager] contentsOfDirectoryAtPath:NSTemporaryDirectory() error:&error]) {
-        if (![[NSFileManager defaultManager] removeItemAtPath:[NSTemporaryDirectory() stringByAppendingPathComponent:file] error:&error]) {
-            MEGALogError(@"Remove item at path failed with error: %@", error);
-        }
-    }
-    
-    // Delete v2 thumbnails & previews directory
-    NSString *thumbs2Directory = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"thumbs"];
-    if ([[NSFileManager defaultManager] fileExistsAtPath:thumbs2Directory]) {
-        if (![[NSFileManager defaultManager] removeItemAtPath:thumbs2Directory error:&error]) {
-            MEGALogError(@"Remove item at path failed with error: %@", error);
-        }
-    }
-    
-    NSString *previews2Directory = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"previews"];
-    if ([[NSFileManager defaultManager] fileExistsAtPath:previews2Directory]) {
-        if (![[NSFileManager defaultManager] removeItemAtPath:previews2Directory error:&error]) {
-            MEGALogError(@"Remove item at path failed with error: %@", error);
-        }
-    }
+    [NSFileManager.defaultManager mnz_removeFolderContentsAtPath:NSTemporaryDirectory()];
     
     // Delete application support directory content
     NSString *applicationSupportDirectory = [NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-    for (NSString *file in [[NSFileManager defaultManager] contentsOfDirectoryAtPath:applicationSupportDirectory error:&error]) {
+    for (NSString *file in [[NSFileManager defaultManager] contentsOfDirectoryAtPath:applicationSupportDirectory error:nil]) {
         if ([file containsString:@"MEGACD"] || [file containsString:@"spotlightTree"] || [file containsString:@"Uploads"] || [file containsString:@"Downloads"]) {
-            if (![[NSFileManager defaultManager] removeItemAtPath:[applicationSupportDirectory stringByAppendingPathComponent:file] error:&error]) {
-                MEGALogError(@"Remove item at path failed with error: %@", error);
-            }
+            [NSFileManager.defaultManager mnz_removeItemAtPath:[applicationSupportDirectory stringByAppendingPathComponent:file]];
         }
     }
     
     // Delete files saved by extensions
     NSString *extensionGroup = [[NSFileManager defaultManager] containerURLForSecurityApplicationGroupIdentifier:@"group.mega.ios"].path;
-    for (NSString *file in [[NSFileManager defaultManager] contentsOfDirectoryAtPath:extensionGroup error:&error]) {
-        if (![[NSFileManager defaultManager] removeItemAtPath:[extensionGroup stringByAppendingPathComponent:file] error:&error]) {
-            MEGALogError(@"Remove item at path failed with error: %@", error);
-        }
-    }
+    [NSFileManager.defaultManager mnz_removeFolderContentsAtPath:extensionGroup];
+    
+    [[MEGAStore shareInstance] configureMEGAStore];
     
     // Delete Spotlight index
     [[CSSearchableIndex defaultSearchableIndex] deleteSearchableItemsWithDomainIdentifiers:@[@"nodes"] completionHandler:^(NSError * _Nullable error) {
@@ -1227,30 +1334,26 @@ static MEGAIndexer *indexer;
 }
 
 + (void)deleteMasterKey {
-    NSError *error;
-    
     NSString *documentsDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
     NSString *masterKeyFilePath = [documentsDirectory stringByAppendingPathComponent:@"RecoveryKey.txt"];
-    
-    if ([[NSFileManager defaultManager] fileExistsAtPath:[documentsDirectory stringByAppendingPathComponent:@"RecoveryKey.txt"]]) {
-        if (![[NSFileManager defaultManager] removeItemAtPath:masterKeyFilePath error:&error]) {
-            MEGALogError(@"Remove item at path failed with error: %@", error);
-        }
-    }
+    [[NSFileManager defaultManager] mnz_removeItemAtPath:masterKeyFilePath];
 }
 
 + (void)resetUserData {
     [[Helper downloadingNodes] removeAllObjects];
+    [[Helper uploadingNodes] removeAllObjects];
     
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"agreedCopywriteWarning"];
     
-    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"DownloadedNodes"];
-    
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"TransfersPaused"];
     
+    [NSUserDefaults.standardUserDefaults removeObjectForKey:kIsCameraUploadsEnabled];
+    [NSUserDefaults.standardUserDefaults removeObjectForKey:kIsUploadVideosEnabled];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"IsSavePhotoToGalleryEnabled"];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"IsSaveVideoToGalleryEnabled"];
-    
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"ChatVideoQuality"];
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"logging"];
+
     //Set default order on logout
     [[NSUserDefaults standardUserDefaults] setInteger:1 forKey:@"SortOrderType"];
     [[NSUserDefaults standardUserDefaults] setInteger:1 forKey:@"OfflineSortOrderType"];
@@ -1262,6 +1365,7 @@ static MEGAIndexer *indexer;
     [sharedUserDefaults removeObjectForKey:@"treeCompleted"];
     [sharedUserDefaults removeObjectForKey:@"useHttpsOnly"];
     [sharedUserDefaults removeObjectForKey:@"IsChatEnabled"];
+    [sharedUserDefaults removeObjectForKey:@"logging"];
     [sharedUserDefaults synchronize];
 }
 
@@ -1278,7 +1382,11 @@ static MEGAIndexer *indexer;
 
 + (void)deletePasscode {
     if ([LTHPasscodeViewController doesPasscodeExist]) {
-        [LTHPasscodeViewController deletePasscode];
+        if (LTHPasscodeViewController.sharedUser.isLockscreenPresent) {
+            [LTHPasscodeViewController deletePasscodeAndClose];
+        } else {
+            [LTHPasscodeViewController deletePasscode];
+        }
     }
 }
 
@@ -1308,7 +1416,7 @@ static MEGAIndexer *indexer;
     
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"recoveryKeyCopiedToClipboard", @"Title of the dialog displayed when copy the user's Recovery Key to the clipboard to be saved or exported - (String as short as possible).") message:nil preferredStyle:UIAlertControllerStyleAlert];
     [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
-    [UIApplication.mnz_visibleViewController presentViewController:alertController animated:YES completion:nil];
+    [UIApplication.mnz_presentingViewController presentViewController:alertController animated:YES completion:nil];
     
     [[MEGASdkManager sharedMEGASdk] masterKeyExported];
 }
@@ -1327,7 +1435,7 @@ static MEGAIndexer *indexer;
         enableLog ? [[MEGALogger sharedLogger] startLogging] : [[MEGALogger sharedLogger] stopLogging];
     }]];
     
-    [UIApplication.mnz_visibleViewController presentViewController:logAlertController animated:YES completion:nil];
+    [UIApplication.mnz_presentingViewController presentViewController:logAlertController animated:YES completion:nil];
 }
 
 @end

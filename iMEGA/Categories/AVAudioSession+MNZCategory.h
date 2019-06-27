@@ -1,0 +1,29 @@
+
+#import <AVFoundation/AVFoundation.h>
+
+NS_ASSUME_NONNULL_BEGIN
+
+@interface AVAudioSession (MNZCategory)
+
+/** @brief Returns YES if there is a bluetooth audio connected.
+ *
+ * @return YES if there is a bluetooth audio connected, otherwise NO.
+ */
+@property (nonatomic, readonly, getter=mnz_isBluetoothAudioConnected) BOOL mnz_BluetoothAudioConnected;
+
+/** @brief Enable built-in speaker or built-in receiver.
+ *
+ * @param enabled YES if you want to enable built-in speaker, NO if you want enable the built-in receiver.
+ */
+- (void)mnz_setSpeakerEnabled:(BOOL)enabled;
+
+/** @brief Check if the first object in the current route outputs match with the type used as parameter, otherwise NO.
+ *
+ * @param portType the av audio session port type to check with.
+ * @return YES if the first objects of the current route outputs match with the type, otherwise NO.
+ */
+- (BOOL)mnz_isOutputEqualToPortType:(AVAudioSessionPort)portType;
+
+@end
+
+NS_ASSUME_NONNULL_END

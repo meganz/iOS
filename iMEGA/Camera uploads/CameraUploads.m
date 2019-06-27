@@ -7,8 +7,6 @@
 #import "MEGASdkManager.h"
 #import "MEGAReachabilityManager.h"
 #import "Helper.h"
-#import "SVProgressHUD.h"
-#import "CameraUploadsTableViewController.h"
 
 #define kCameraUploads @"Camera Uploads"
 
@@ -142,10 +140,10 @@ static CameraUploads *instance = nil;
         self.isOnlyWhenChargingEnabled = NO;
         self.shouldCameraUploadsBeDelayed = NO;
         
-        [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:_isCameraUploadsEnabled] forKey:kIsCameraUploadsEnabled];
-        [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:self.isUploadVideosEnabled] forKey:kIsUploadVideosEnabled];
-        [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:self.isUseCellularConnectionEnabled] forKey:kIsUseCellularConnectionEnabled];
-        [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:self.isOnlyWhenChargingEnabled] forKey:kIsOnlyWhenChargingEnabled];
+        [NSUserDefaults.standardUserDefaults setObject:@(self.isCameraUploadsEnabled) forKey:kIsCameraUploadsEnabled];
+        [NSUserDefaults.standardUserDefaults setObject:@(self.isUploadVideosEnabled) forKey:kIsUploadVideosEnabled];
+        [NSUserDefaults.standardUserDefaults setObject:@(self.isUseCellularConnectionEnabled) forKey:kIsUseCellularConnectionEnabled];
+        [NSUserDefaults.standardUserDefaults setObject:@(self.isOnlyWhenChargingEnabled) forKey:kIsOnlyWhenChargingEnabled];
         
         [[NSUserDefaults standardUserDefaults] synchronize];
         
@@ -173,7 +171,7 @@ static CameraUploads *instance = nil;
         assetsFetchResult = [PHAsset fetchAssetsWithMediaType:PHAssetMediaTypeImage options:fetchOptions];
     }
     
-    MEGALogInfo(@"Retrieved assets %ld", assetsFetchResult.count);
+    MEGALogInfo(@"Retrieved assets %tu", assetsFetchResult.count);
     
     [assetsFetchResult enumerateObjectsUsingBlock:^(PHAsset *asset, NSUInteger index, BOOL *stop) {
         if (asset.mediaType == PHAssetMediaTypeVideo && self.isUploadVideosEnabled && ([asset.creationDate timeIntervalSince1970] > [self.lastUploadVideoDate timeIntervalSince1970])) {
@@ -185,7 +183,7 @@ static CameraUploads *instance = nil;
         }
     }];
     
-    MEGALogInfo(@"Assets in the operation queue %ld", _assetsOperationQueue.operationCount);
+    MEGALogInfo(@"Assets in the operation queue %tu", _assetsOperationQueue.operationCount);
 }
 
 #pragma mark - MEGATransferDelegate

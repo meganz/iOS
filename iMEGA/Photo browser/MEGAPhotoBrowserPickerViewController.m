@@ -29,7 +29,7 @@
     self.navigationBar.barTintColor = [UIColor whiteColor];
     
     if (@available(iOS 11.0, *)) {} else {
-        self.navigationBar.tintColor = [UIColor mnz_redFF4D52];
+        self.navigationBar.tintColor = UIColor.mnz_redMain;
     }
 }
 

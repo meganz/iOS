@@ -205,6 +205,7 @@
     if (self.activeTextField && self.activeTextField.isFirstResponder) {
         [self.activeTextField resignFirstResponder];
     }
+    [[MEGASdkManager sharedMEGAChatSdk] removeChatDelegate:self];
     [self.shareViewController dismissWithCompletionHandler:^{
         [self.extensionContext cancelRequestWithError:[NSError errorWithDomain:@"Cancel tapped" code:-1 userInfo:nil]];
     }];
@@ -250,15 +251,24 @@
 
 - (void)onChatConnectionStateUpdate:(MEGAChatSdk *)api chatId:(uint64_t)chatId newState:(int)newState {
     MEGALogInfo(@"onChatConnectionStateUpdate: %@, new state: %d", [MEGASdk base64HandleForUserHandle:chatId], newState);
+    BOOL shouldReload = NO;
     
     // INVALID_HANDLE = ~(uint64_t)0
     if (chatId == ~(uint64_t)0 && newState == MEGAChatConnectionOnline) {
-        self.chatReady = YES;
+        if (!self.isChatReady) {
+            self.chatReady = YES;
+            shouldReload = YES;
+        }
     } else {
-        self.chatReady = NO;
+        if (self.isChatReady) {
+            self.chatReady = NO;
+            shouldReload = YES;
+        }
     }
     
-    [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:1 inSection:0]] withRowAnimation:UITableViewRowAnimationAutomatic];
+    if (shouldReload) {
+        [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:1 inSection:0]] withRowAnimation:UITableViewRowAnimationNone];
+    }
 }
 
 @end

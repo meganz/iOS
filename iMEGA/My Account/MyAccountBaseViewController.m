@@ -1,18 +1,19 @@
 
 #import "MyAccountBaseViewController.h"
 
-#import <AVFoundation/AVCaptureDevice.h>
 #import <AVFoundation/AVMediaFormat.h>
 #import <Photos/Photos.h>
 
 #import "SVProgressHUD.h"
 
 #import "ContactLinkQRViewController.h"
+#import "DevicePermissionsHelper.h"
 #import "Helper.h"
 #import "MEGAImagePickerController.h"
 #import "MEGANavigationController.h"
 #import "MEGASdkManager.h"
 #import "MEGAUser+MNZCategory.h"
+#import "NSFileManager+MNZCategory.h"
 #import "UIAlertAction+MNZCategory.h"
 #import "UIImageView+MNZCategory.h"
 
@@ -88,7 +89,7 @@
         UIAlertAction *removeAvatarAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"removeAvatar", @"Button to remove avatar. Try to keep the text short (as in English)") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
             [[MEGASdkManager sharedMEGASdk] setAvatarUserWithSourceFilePath:nil];
         }];
-        [removeAvatarAlertAction mnz_setTitleTextColor:[UIColor mnz_redF0373A]];
+        [removeAvatarAlertAction mnz_setTitleTextColor:UIColor.mnz_redMain];
         [editProfileAlertController addAction:removeAvatarAlertAction];
     }
     
@@ -110,55 +111,32 @@
     [changeAvatarAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
     
     UIAlertAction *fromPhotosAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"choosePhotoVideo", @"Menu option from the `Add` section that allows the user to choose a photo or video to upload it to MEGA") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-        [self showImagePickerForSourceType:UIImagePickerControllerSourceTypePhotoLibrary];
+        [DevicePermissionsHelper photosPermissionWithCompletionHandler:^(BOOL granted) {
+            if (granted) {
+                [self showImagePickerForSourceType:UIImagePickerControllerSourceTypePhotoLibrary];
+            } else {
+                [DevicePermissionsHelper alertPhotosPermission];
+            }
+        }];
     }];
     [fromPhotosAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
     [changeAvatarAlertController addAction:fromPhotosAlertAction];
     UIAlertAction *captureAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"capturePhotoVideo", @"Menu option from the `Add` section that allows the user to capture a video or a photo and upload it directly to MEGA.") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-        if ([AVCaptureDevice respondsToSelector:@selector(requestAccessForMediaType: completionHandler:)]) {
-            [AVCaptureDevice requestAccessForMediaType:AVMediaTypeVideo completionHandler:^(BOOL permissionGranted) {
-                if (permissionGranted) {
-                    // Permission has been granted. Use dispatch_async for any UI updating code because this block may be executed in a thread.
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        [PHPhotoLibrary requestAuthorization:^(PHAuthorizationStatus status) {
-                            switch (status) {
-                                case PHAuthorizationStatusAuthorized: {
-                                    dispatch_async(dispatch_get_main_queue(), ^{
-                                        [self showImagePickerForSourceType:UIImagePickerControllerSourceTypeCamera];
-                                    });
-                                    break;
-                                }
-                                
-                                case PHAuthorizationStatusNotDetermined:
-                                case PHAuthorizationStatusRestricted:
-                                case PHAuthorizationStatusDenied:{
-                                    dispatch_async(dispatch_get_main_queue(), ^{
-                                        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"isSaveMediaCapturedToGalleryEnabled"];
-                                        [[NSUserDefaults standardUserDefaults] synchronize];
-                                        [self showImagePickerForSourceType:UIImagePickerControllerSourceTypeCamera];
-                                    });
-                                    break;
-                                }
-                                
-                                default:
-                                    break;
-                            }
-                        }];
-                    });
-                } else {
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        UIAlertController *cameraPermissionsAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"attention", @"Alert title to attract attention") message:AMLocalizedString(@"cameraPermissions", @"Alert message to remember that MEGA app needs permission to use the Camera to take a photo or video and it doesn't have it") preferredStyle:UIAlertControllerStyleAlert];
-                        [cameraPermissionsAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:nil]];
-                        [cameraPermissionsAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-                            //Check Camera permissions
-                            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
-                        }]];
-                        
-                        [self presentViewController:cameraPermissionsAlertController animated:YES completion:nil];
-                    });
-                }
-            }];
-        }
+        [DevicePermissionsHelper videoPermissionWithCompletionHandler:^(BOOL granted) {
+            if (granted) {
+                [DevicePermissionsHelper photosPermissionWithCompletionHandler:^(BOOL granted) {
+                    if (granted) {
+                        [self showImagePickerForSourceType:UIImagePickerControllerSourceTypeCamera];
+                    } else {
+                        [NSUserDefaults.standardUserDefaults setBool:NO forKey:@"isSaveMediaCapturedToGalleryEnabled"];
+                        [NSUserDefaults.standardUserDefaults synchronize];
+                        [self showImagePickerForSourceType:UIImagePickerControllerSourceTypeCamera];
+                    }
+                }];
+            } else {
+                [DevicePermissionsHelper alertVideoPermissionWithCompletionHandler:nil];
+            }
+        }];
     }];
     [captureAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
     [changeAvatarAlertController addAction:captureAlertAction];
@@ -213,9 +191,7 @@
                 NSString *myUserBase64Handle = [MEGASdk base64HandleForUserHandle:[[[MEGASdkManager sharedMEGASdk] myUser] handle]];
                 NSString *myAvatarFilePath = [[Helper pathForSharedSandboxCacheDirectory:@"thumbnailsV3"] stringByAppendingPathComponent:myUserBase64Handle];
                 if (request.file == nil) {
-                    NSError *removeError = nil;
-                    [[NSFileManager defaultManager] removeItemAtPath:myAvatarFilePath error:&removeError];
-                    if (removeError) MEGALogError(@"Remove item at path failed with error: %@", removeError);
+                    [NSFileManager.defaultManager mnz_removeItemAtPath:myAvatarFilePath];
                 }
                 
                 [self setUserAvatar];

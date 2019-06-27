@@ -29,10 +29,16 @@
         _node = node;
         
         if (_node.hasPreview) {
-            _previewFilePath = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES).firstObject stringByAppendingPathComponent:@"previewsV3"] stringByAppendingPathComponent:node.base64Handle];
+            NSString *previewsDirectory = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES).firstObject stringByAppendingPathComponent:@"previewsV3"];
+            _previewFilePath = [previewsDirectory stringByAppendingPathComponent:node.base64Handle];
             
-            if ([[NSFileManager defaultManager] fileExistsAtPath:_previewFilePath]) {
+            if ([NSFileManager.defaultManager fileExistsAtPath:_previewFilePath]) {
                 self.image = [UIImage imageWithContentsOfFile:_previewFilePath];
+            } else if (![NSFileManager.defaultManager fileExistsAtPath:previewsDirectory]) {
+                NSError *error;
+                if (![[NSFileManager defaultManager] createDirectoryAtPath:previewsDirectory withIntermediateDirectories:NO attributes:nil error:&error]) {
+                    MEGALogError(@"Create directory at path failed with error: %@", error);
+                }
             }
         }
     }
@@ -56,7 +62,7 @@
     if (self.image) {
         self.cachedImageView.image = self.image;
 
-        if (self.node.name.mnz_isMultimediaPathExtension) {
+        if (self.node.name.mnz_isVideoPathExtension) {
             UIImageView *playImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"playButton"]];
             playImageView.center = _cachedImageView.center;
             [self.cachedImageView addSubview:playImageView];
@@ -136,6 +142,14 @@
         } else {
             height = maxSide;
             width = height * (self.image.size.width / self.image.size.height);
+        }
+    } else if (self.node.hasPreview && self.node.width > 0 && self.node.height > 0) {
+        if (self.node.width > self.node.height) {
+            width = maxSide;
+            height = width * ((CGFloat) self.node.height / self.node.width);
+        } else {
+            height = maxSide;
+            width = height * ((CGFloat) self.node.width / self.node.height);
         }
     } else {
         width = height = maxSide;

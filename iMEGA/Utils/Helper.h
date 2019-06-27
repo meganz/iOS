@@ -1,8 +1,8 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-#import "MEGAIndexer.h"
 #import "MEGAChatMessage.h"
+#import "MEGAIndexer.h"
 #import "MEGASdk.h"
 
 #define kIsEraseAllLocalDataEnabled @"IsEraseAllLocalDataEnabled"
@@ -60,26 +60,25 @@ typedef NS_OPTIONS(NSUInteger, NodesAre) {
 
 + (NSString *)pathForSharedSandboxCacheDirectory:(NSString *)directory;
 
-#pragma mark - Utils for links when you are not logged
-
-+ (MEGANode *)linkNode;
-+ (void)setLinkNode:(MEGANode *)node;
-+ (NSMutableArray *)nodesFromLinkMutableArray;
-
-+ (NSInteger)selectedOptionOnLink;
-+ (void)setSelectedOptionOnLink:(NSInteger)option;
-
-#pragma mark - Utils downloaded and downloading nodes
+#pragma mark - Utils for transfers
 
 + (NSMutableDictionary *)downloadingNodes;
 
 + (BOOL)isFreeSpaceEnoughToDownloadNode:(MEGANode *)node isFolderLink:(BOOL)isFolderLink;
 + (void)downloadNode:(MEGANode *)node folderPath:(NSString *)folderPath isFolderLink:(BOOL)isFolderLink shouldOverwrite:(BOOL)overwrite;
 
++ (NSMutableArray *)uploadingNodes;
++ (void)startPendingUploadTransferIfNeeded;
+
 #pragma mark - Utils
 
++ (NSString *)memoryStyleStringFromByteCount:(long long)byteCount;
+
 + (unsigned long long)sizeOfFolderAtPath:(NSString *)path;
-+ (uint64_t)freeDiskSpace;
+
++ (void)changeApiURL;
+
++ (void)cannotPlayContentDuringACallAlert;
 
 #pragma mark - Utils for nodes
 
@@ -91,6 +90,7 @@ typedef NS_OPTIONS(NSUInteger, NodesAre) {
 + (NSString *)dateWithISO8601FormatOfRawTime:(time_t)rawtime;
 + (NSString *)filesAndFoldersInFolderNode:(MEGANode *)node api:(MEGASdk *)api;
 
++ (void)importNode:(MEGANode *)node toShareWithCompletion:(void (^)(MEGANode *node))completion;
 + (UIActivityViewController *)activityViewControllerForChatMessages:(NSArray<MEGAChatMessage *> *)messages sender:(id)sender;
 + (UIActivityViewController *)activityViewControllerForNodes:(NSArray *)nodesArray sender:(id)sender;
 
@@ -113,20 +113,19 @@ typedef NS_OPTIONS(NSUInteger, NodesAre) {
 + (UILabel *)customNavigationBarLabelWithTitle:(NSString *)title subtitle:(NSString *)subtitle color:(UIColor *)color;
 
 + (UISearchController *)customSearchControllerWithSearchResultsUpdaterDelegate:(id<UISearchResultsUpdating>)searchResultsUpdaterDelegate searchBarDelegate:(id<UISearchBarDelegate>)searchBarDelegate;
++ (void)resetSearchControllerFrame:(UISearchController *)searchController;
 
-+ (void)presentSafariViewControllerWithURL:(NSURL *)url;
-
-+ (void)configureRedNavigationAppearance;
-+ (void)configureWhiteNavigationAppearance;
-    
 + (void)showExportMasterKeyInView:(UIViewController *)viewController completion:(void (^ __nullable)(void))completion;
 + (void)showMasterKeyCopiedAlert;
 
-#pragma mark - Logout
+#pragma mark - Manage session
+
++ (BOOL)hasSession_alertIfNot;
 
 + (void)logout;
 + (void)logoutFromConfirmAccount;
 + (void)logoutAfterPasswordReminder;
++ (void)clearEphemeralSession;
 + (void)clearSession;
 + (void)deletePasscode;
 

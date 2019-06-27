@@ -9,17 +9,22 @@
 
 @end
 
+IB_DESIGNABLE
 @interface PasswordView : UIView <UITextFieldDelegate>
 
-@property (strong, nonatomic) UIView *customView;
+@property (nonatomic) UIView *customView;
+@property (nonatomic) IBInspectable UIImage *leftImage;
+@property (nonatomic) IBInspectable NSString *topLabelTextKey;
+
 @property (weak, nonatomic) IBOutlet UIImageView *leftImageView;
-@property (weak, nonatomic) IBOutlet UIButton *rightImageView;
+@property (weak, nonatomic) IBOutlet UILabel *topLabel;
 @property (weak, nonatomic) IBOutlet UITextField *passwordTextField;
-@property (weak, nonatomic) IBOutlet UIView *wrongPasswordView;
-@property (weak, nonatomic) IBOutlet UILabel *wrongPasswordLabel;
-@property (weak, nonatomic) IBOutlet UIImageView *wrongPasswordIcon;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *textFieldViewHeightConstraint;
+@property (weak, nonatomic) IBOutlet UIButton *toggleSecureButton;
 
 @property (assign, nonatomic) IBOutlet id<PasswordViewDelegate> delegate;
+
+- (void)configureSecureTextEntry;
+- (void)setErrorState:(BOOL)error;
+- (void)setErrorState:(BOOL)error withText:(NSString *)text;
 
 @end

@@ -13,6 +13,7 @@
 #import "MEGAGetFolderInfoRequestDelegate.h"
 #import "MEGANavigationController.h"
 #import "MEGANode+MNZCategory.h"
+#import "MEGAReachabilityManager.h"
 #import "MEGASdkManager.h"
 #import "NodePropertyTableViewCell.h"
 #import "NodeTappablePropertyTableViewCell.h"
@@ -63,7 +64,7 @@
     self.closeBarButtonItem.title = AMLocalizedString(@"close", @"A button label. The button allows the user to close the conversation.");
     
     [[MEGASdkManager sharedMEGASdk] addMEGAGlobalDelegate:self];
-    [[MEGASdkManager sharedMEGASdk] retryPendingConnections];
+    [[MEGAReachabilityManager sharedManager] retryPendingConnections];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -308,7 +309,7 @@
     
     if (self.node.isFile) {
         if (self.node.mnz_numberOfVersions != 0) {
-            [propertiesNode addObject:[[MegaNodeProperty alloc] initWithTitle:AMLocalizedString(@"totalSize", @"Size of the file or folder you are sharing") value:[NSByteCountFormatter stringFromByteCount:self.node.mnz_versionsSize countStyle:NSByteCountFormatterCountStyleMemory]]];
+            [propertiesNode addObject:[[MegaNodeProperty alloc] initWithTitle:AMLocalizedString(@"totalSize", @"Size of the file or folder you are sharing") value:[Helper memoryStyleStringFromByteCount:self.node.mnz_versionsSize]]];
             [propertiesNode addObject:[[MegaNodeProperty alloc] initWithTitle:AMLocalizedString(@"currentVersion", @"Title of section to display information of the current version of a file") value:[Helper sizeForNode:self.node api:[MEGASdkManager sharedMEGASdk]]]];
         } else {
             [propertiesNode addObject:[[MegaNodeProperty alloc] initWithTitle:AMLocalizedString(@"totalSize", @"Size of the file or folder you are sharing") value:[Helper sizeForNode:self.node api:[MEGASdkManager sharedMEGASdk]]]];
@@ -317,9 +318,9 @@
         [propertiesNode addObject:[[MegaNodeProperty alloc] initWithTitle:AMLocalizedString(@"modified", @"A label for any 'Modified' text or title.") value:[Helper dateWithISO8601FormatOfRawTime:self.node.modificationTime.timeIntervalSince1970]]];
     } else if (self.node.isFolder) {
         if (self.folderInfo.versions != 0) {
-            [propertiesNode addObject:[[MegaNodeProperty alloc] initWithTitle:AMLocalizedString(@"totalSize", @"Size of the file or folder you are sharing") value:[NSByteCountFormatter stringFromByteCount:(self.folderInfo.currentSize + self.folderInfo.versionsSize) countStyle:NSByteCountFormatterCountStyleMemory]]];
-            [propertiesNode addObject:[[MegaNodeProperty alloc] initWithTitle:AMLocalizedString(@"currentVersions", @"Title of section to display information of all current versions of files.") value:[NSByteCountFormatter stringFromByteCount:self.folderInfo.currentSize countStyle:NSByteCountFormatterCountStyleMemory]]];
-            [propertiesNode addObject:[[MegaNodeProperty alloc] initWithTitle:AMLocalizedString(@"previousVersions", @"A button label which opens a dialog to display the full version history of the selected file.") value:[NSByteCountFormatter stringFromByteCount:self.folderInfo.versionsSize countStyle:NSByteCountFormatterCountStyleMemory]]];
+            [propertiesNode addObject:[[MegaNodeProperty alloc] initWithTitle:AMLocalizedString(@"totalSize", @"Size of the file or folder you are sharing") value:[Helper memoryStyleStringFromByteCount:(self.folderInfo.currentSize + self.folderInfo.versionsSize)]]];
+            [propertiesNode addObject:[[MegaNodeProperty alloc] initWithTitle:AMLocalizedString(@"currentVersions", @"Title of section to display information of all current versions of files.") value:[Helper memoryStyleStringFromByteCount:self.folderInfo.currentSize]]];
+            [propertiesNode addObject:[[MegaNodeProperty alloc] initWithTitle:AMLocalizedString(@"previousVersions", @"A button label which opens a dialog to display the full version history of the selected file.") value:[Helper memoryStyleStringFromByteCount:self.folderInfo.versionsSize]]];
             [propertiesNode addObject:[[MegaNodeProperty alloc] initWithTitle:AMLocalizedString(@"versions", @"Title of section to display number of all historical versions of files") value:[NSString stringWithFormat:@"%ld", (long)self.folderInfo.versions]]];
         } else {
             [propertiesNode addObject:[[MegaNodeProperty alloc] initWithTitle:AMLocalizedString(@"totalSize", @"Size of the file or folder you are sharing") value:[Helper sizeForNode:self.node api:[MEGASdkManager sharedMEGASdk]]]];
@@ -327,7 +328,7 @@
         [propertiesNode addObject:[[MegaNodeProperty alloc] initWithTitle:AMLocalizedString(@"contains", @"Label for what a selection contains.") value:[Helper filesAndFoldersInFolderNode:self.node api:[MEGASdkManager sharedMEGASdk]]]];
     }
     
-    [propertiesNode addObject:[[MegaNodeProperty alloc] initWithTitle:AMLocalizedString(@"created", @"The label of the folder creation time.") value:[Helper dateWithISO8601FormatOfRawTime:self.node.creationTime.timeIntervalSince1970]]];
+    [propertiesNode addObject:[[MegaNodeProperty alloc] initWithTitle:AMLocalizedString(@"Added", @"A label for any ‘Added’ text or title. For example to show the upload date of a file/folder.") value:[Helper dateWithISO8601FormatOfRawTime:self.node.creationTime.timeIntervalSince1970]]];
     
     return propertiesNode;
 }
@@ -344,7 +345,7 @@
 - (NodeTappablePropertyTableViewCell *)sharedFolderCellForIndexPath:(NSIndexPath *)indexPath {
     NodeTappablePropertyTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"nodeTappablePropertyCell" forIndexPath:indexPath];
     cell.iconImageView.image = [UIImage imageNamed:@"share"];
-    cell.iconImageView.tintColor = UIColor.mnz_redD90007;
+    cell.iconImageView.tintColor = UIColor.mnz_redMain;
     if (self.node.isShared) {
         cell.titleLabel.text = AMLocalizedString(@"sharedWidth", @"Label title indicating the number of users having a node shared");
         NSString *usersString = [self outSharesForNode:self.node].count > 1 ? AMLocalizedString(@"users", @"used for example when a folder is shared with 2 or more users") : AMLocalizedString(@"user", @"user (singular) label indicating is receiving some info");
@@ -500,6 +501,10 @@
             
         case MegaNodeActionTypeRemoveSharing:
             [node mnz_removeSharing];
+            break;
+            
+        case MegaNodeActionTypeSaveToPhotos:
+            [node mnz_saveToPhotosWithApi:[MEGASdkManager sharedMEGASdk]];
             break;
             
         default:

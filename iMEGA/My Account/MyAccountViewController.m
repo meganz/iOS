@@ -18,8 +18,6 @@
     NSNumber *localSize;
     NSNumber *usedStorage;
     NSNumber *maxStorage;
-    
-    NSByteCountFormatter *byteCountFormatter;
 }
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *editBarButtonItem;
@@ -55,6 +53,8 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *upgradeAccountTopLayoutConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *logoutButtonTopLayoutConstraint;
 
+@property (nonatomic) NSDateFormatter *dateFormatter;
+
 @end
 
 @implementation MyAccountViewController
@@ -79,9 +79,6 @@
     
     [self.logoutButton setTitle:AMLocalizedString(@"logoutLabel", @"Title of the button which logs out from your account.") forState:UIControlStateNormal];
     
-    byteCountFormatter = [[NSByteCountFormatter alloc] init];
-    [byteCountFormatter setCountStyle:NSByteCountFormatterCountStyleMemory];
-    
     if ([[UIDevice currentDevice] iPhone4X]) {
         float constant = ([[MEGASdkManager sharedMEGASdk] mnz_isProAccount]) ? 4.0f : 8.0f;
         self.usedLabelTopLayoutConstraint.constant = constant;
@@ -94,6 +91,11 @@
     }
     
     [[MEGAPurchase sharedInstance] setPricingsDelegate:self];
+    
+    self.dateFormatter = NSDateFormatter.alloc.init;
+    self.dateFormatter.dateStyle = NSDateFormatterShortStyle;
+    self.dateFormatter.timeStyle = NSDateFormatterNoStyle;
+    self.dateFormatter.locale = NSLocale.autoupdatingCurrentLocale;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -105,7 +107,7 @@
     
     localSize = [NSNumber numberWithLongLong:(thumbsSize + previewsSize + offlineSize)];
     
-    NSString *stringFromByteCount = [byteCountFormatter stringFromByteCount:[localSize longLongValue]];
+    NSString *stringFromByteCount = [Helper memoryStyleStringFromByteCount:localSize.longLongValue];
     self.localUsedSpaceLabel.attributedText = [self textForSizeLabels:stringFromByteCount];
     
     [self setupWithAccountDetails];
@@ -120,6 +122,8 @@
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    
     if (self.presentedViewController == nil) {
         [[MEGASdkManager sharedMEGASdk] removeMEGARequestDelegate:self];
     }
@@ -165,23 +169,25 @@
         usedStorage = accountDetails.storageUsed;
         maxStorage = accountDetails.storageMax;
         
-        NSString *usedStorageString = [byteCountFormatter stringFromByteCount:[usedStorage longLongValue]];
+        NSString *usedStorageString = [Helper memoryStyleStringFromByteCount:usedStorage.longLongValue];
         long long availableStorage = maxStorage.longLongValue - usedStorage.longLongValue;
-        NSString *availableStorageString = [byteCountFormatter stringFromByteCount:(availableStorage < 0) ? 0 : availableStorage];
+        NSString *availableStorageString = [Helper memoryStyleStringFromByteCount:((availableStorage < 0) ? 0 : availableStorage)];
         
         self.usedSpaceLabel.attributedText = [self textForSizeLabels:usedStorageString];
         self.availableSpaceLabel.attributedText = [self textForSizeLabels:availableStorageString];
         
-        NSString *expiresString;
+        NSString *renewsExpiresString;
         if (accountDetails.type) {
-            NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-            dateFormatter.dateStyle = NSDateFormatterShortStyle;
-            dateFormatter.timeStyle = NSDateFormatterNoStyle;
-            NSString *currentLanguageID = [[LocalizationSystem sharedLocalSystem] getLanguage];
-            dateFormatter.locale = [[NSLocale alloc] initWithLocaleIdentifier:currentLanguageID];
-            
-            NSDate *expireDate = [[NSDate alloc] initWithTimeIntervalSince1970:accountDetails.proExpiration];
-            expiresString = [NSString stringWithFormat:AMLocalizedString(@"expiresOn", @"Text that shows the expiry date of the account PRO level"), [dateFormatter stringFromDate:expireDate]];
+            if (accountDetails.subscriptionRenewTime > 0) {
+                NSDate *renewDate = [[NSDate alloc] initWithTimeIntervalSince1970:accountDetails.subscriptionRenewTime];
+                renewsExpiresString = [NSString stringWithFormat:@"%@ %@", AMLocalizedString(@"Renews on", @"Label for the ‘Renews on’ text into the my account page, indicating the renewal date of a subscription - (String as short as possible)."), [self.dateFormatter stringFromDate:renewDate]];
+            } else if (accountDetails.proExpiration > 0) {
+                NSDate *expireDate = [[NSDate alloc] initWithTimeIntervalSince1970:accountDetails.proExpiration];
+                renewsExpiresString = [NSString stringWithFormat:AMLocalizedString(@"expiresOn", @"Text that shows the expiry date of the account PRO level"), [self.dateFormatter stringFromDate:expireDate]];
+            } else {                
+                self.proExpiryDateLabel.hidden = YES;
+                self.proExpiryDateLabelHeightLayoutConstraint.constant = 0;
+            }
         }
         
         switch (accountDetails.type) {
@@ -196,28 +202,28 @@
             case MEGAAccountTypeLite: {
                 self.proStatusLabel.text = [NSString stringWithFormat:@"PRO LITE"];
                 self.proStatusLabel.textColor = [UIColor mnz_orangeFFA500];
-                self.proExpiryDateLabel.text = [NSString stringWithFormat:@"%@", expiresString];
+                self.proExpiryDateLabel.text = renewsExpiresString;
                 break;
             }
                 
             case MEGAAccountTypeProI: {
                 self.proStatusLabel.text = [NSString stringWithFormat:@"PRO I"];
-                self.proStatusLabel.textColor = [UIColor mnz_redE13339];
-                self.proExpiryDateLabel.text = [NSString stringWithFormat:@"%@", expiresString];
+                self.proStatusLabel.textColor = UIColor.mnz_redProI;
+                self.proExpiryDateLabel.text = renewsExpiresString;
                 break;
             }
                 
             case MEGAAccountTypeProII: {
                 self.proStatusLabel.text = [NSString stringWithFormat:@"PRO II"];
-                self.proStatusLabel.textColor = [UIColor mnz_redDC191F];
-                self.proExpiryDateLabel.text = [NSString stringWithFormat:@"%@", expiresString];
+                self.proStatusLabel.textColor = UIColor.mnz_redProII;
+                self.proExpiryDateLabel.text = renewsExpiresString;
                 break;
             }
                 
             case MEGAAccountTypeProIII: {
                 self.proStatusLabel.text = [NSString stringWithFormat:@"PRO III"];
-                self.proStatusLabel.textColor = [UIColor mnz_redD90007];
-                self.proExpiryDateLabel.text = [NSString stringWithFormat:@"%@", expiresString];
+                self.proStatusLabel.textColor = UIColor.mnz_redProIII;
+                self.proExpiryDateLabel.text = renewsExpiresString;
                 break;
             }
                 

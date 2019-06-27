@@ -3,16 +3,18 @@
 /* Camera usage description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
 "NSCameraUsageDescription"="MEGA mengakses kamera Anda ketika Anda mengambil video, foto atau membuat panggilan di dalam aplikasi.";
 /* Photo library usage description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
-"NSPhotoLibraryUsageDescription"="MEGA mengakses foto dan/atau video anda ketika anda memilih beberapa dari nya untuk upload atau saat anda mengaktifkan Camera Uploads.";
+"NSPhotoLibraryUsageDescription"="MEGA mengakses foto / video Anda ketika Anda mengunggahnya, membaginya melalui obrolan dan saat Unggahan Kamera diaktifkan.";
 /* Contacts Usage Description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
 "NSContactsUsageDescription"="MEGA mengakses kontak Anda saat Anda memilih beberapa dari mereka untuk menyimpan / mengekspor.";
 /* Write-only access to the user’s photo library description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
 "NSPhotoLibraryAddUsageDescription"="MEGA memerlukan akses ke pustaka foto Anda untuk menambahkan foto dan video ke galeri perangkat Anda";
 /* Face ID usage description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
-"NSFaceIDUsageDescription"="MEGA mengakses Face ID agar Anda dapat dengan mudah membuka kode akses aplikasi jika Anda mengaktifkan opsi ini.";
+"NSFaceIDUsageDescription"="MEGA mengakses Face ID untuk memungkinkan Anda membuka kunci kode aplikasi dengan mudah saat Anda mengaktifkan opsi ini.";
 /* Label for any 'Search' button, link, etc. - (String as short as possible). */
 "quickActionSearchString"="Cari";
 /*  */
 "quickActionUploadString"="Unggah";
 /* Title of the Offline section */
 "quickActionOfflineString"="Offline";
+/* Location Usage Description. In order to protect user's privacy, Apple requires a specific string explaining why location will be accessed. */
+"NSLocationWhenInUseUsageDescription"="MEGA accesses your location when you elect to share it with your contacts.";

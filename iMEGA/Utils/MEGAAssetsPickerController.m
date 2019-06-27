@@ -1,9 +1,10 @@
 #import "MEGAAssetsPickerController.h"
 
-#import "SVProgressHUD.h"
-
-#import "MEGAAssetOperation.h"
 #import "MEGACreateFolderRequestDelegate.h"
+
+#import "MEGAStore.h"
+#import "MEGASdkManager.h"
+#import "Helper.h"
 
 @interface MEGAAssetsPickerController () <CTAssetsPickerControllerDelegate>
 
@@ -96,13 +97,10 @@
     
     [self dismissViewControllerAnimated:YES completion:^{
         if (self.toUploadToCloudDrive) {
-            NSOperationQueue *operationQueue = [[NSOperationQueue alloc] init];
-            operationQueue.qualityOfService = NSOperationQualityOfServiceUtility;
-            operationQueue.maxConcurrentOperationCount = 1;
             for (PHAsset *asset in assets) {
-                MEGAAssetOperation *assetOperation = [[MEGAAssetOperation alloc] initWithPHAsset:asset parentNode:self.parentNode cameraUploads:NO];
-                [operationQueue addOperation:assetOperation];
+                [[MEGAStore shareInstance] insertUploadTransferWithLocalIdentifier:asset.localIdentifier parentNodeHandle:self.parentNode.handle];
             }
+            [Helper startPendingUploadTransferIfNeeded];
         } else if (self.toUploadToChat) {
             [self createMyChatFilesFolderWithCompletion:nil];
             self.assets = assets;

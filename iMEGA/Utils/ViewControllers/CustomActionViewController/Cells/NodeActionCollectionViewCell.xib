@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -38,17 +37,17 @@
                             <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
                         </userDefinedRuntimeAttributes>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" tag="1" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ecQ-N2-aKK">
-                        <rect key="frame" x="60" y="21" width="278" height="18"/>
+                    <label opaque="NO" userInteractionEnabled="NO" tag="1" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ecQ-N2-aKK">
+                        <rect key="frame" x="60" y="21" width="31" height="18"/>
                         <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="15"/>
                         <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <view tag="101" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GTQ-Cr-NGe">
-                        <rect key="frame" x="60" y="59" width="299" height="1"/>
+                        <rect key="frame" x="60" y="59.5" width="299" height="0.5"/>
                         <color key="backgroundColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="1" id="WWs-oX-opM"/>
+                            <constraint firstAttribute="height" constant="0.5" id="WWs-oX-opM"/>
                         </constraints>
                     </view>
                 </subviews>
@@ -56,7 +55,7 @@
             <color key="tintColor" red="0.85098039219999999" green="0.0" blue="0.027450980390000001" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="GTQ-Cr-NGe" secondAttribute="trailing" id="8pE-cM-OuY"/>
-                <constraint firstAttribute="trailingMargin" secondItem="ecQ-N2-aKK" secondAttribute="trailing" constant="5" id="Ebk-tZ-uWb"/>
+                <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="ecQ-N2-aKK" secondAttribute="trailing" constant="5" id="Ebk-tZ-uWb"/>
                 <constraint firstItem="NQI-fA-1eC" firstAttribute="leading" secondItem="J2X-AN-QQf" secondAttribute="leading" constant="15" id="NHm-fx-Bd1"/>
                 <constraint firstItem="ecQ-N2-aKK" firstAttribute="leading" secondItem="NQI-fA-1eC" secondAttribute="trailing" constant="15" id="hAJ-Ii-wKb"/>
                 <constraint firstAttribute="bottom" secondItem="GTQ-Cr-NGe" secondAttribute="bottom" id="o91-eY-HkB"/>

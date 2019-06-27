@@ -1,4 +1,5 @@
 #import "MOUser.h"
+#import "NSString+MNZCategory.h"
 
 @implementation MOUser
 
@@ -9,11 +10,11 @@
 }
 
 - (NSString *)fullName {
-    NSString *fullName = nil;
+    NSString *fullName;
     if (self) {
         if (self.firstname) {
             fullName = self.firstname;
-            if (self.lastname) {
+            if (self.lastname && !self.lastname.mnz_isEmpty) {
                 fullName = [[fullName stringByAppendingString:@" "] stringByAppendingString:self.lastname];
             }
         } else {
@@ -23,22 +24,22 @@
         }
     }
     
-    if(![[fullName stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] length]) {
+    if (fullName.mnz_isEmpty) {
         fullName = nil;
     }
     
-    return fullName ? fullName : self.email;
+    return fullName ?: self.email;
 }
 
 - (NSString *)firstName {
-    NSString *firstname = nil;
+    NSString *firstname;
     if (self) {
         if (self.firstname) {
             firstname = self.firstname;
         }
     }
     
-    return firstname ? firstname : self.email;
+    return firstname;
 }
 
 @end

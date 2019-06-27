@@ -4,6 +4,7 @@
 #import <ContactsUI/ContactsUI.h>
 
 #import "UIImage+GKContact.h"
+#import "NSDate+DateTools.h"
 #import "SVProgressHUD.h"
 #import "UIScrollView+EmptyDataSet.h"
 #import "UIBarButtonItem+Badge.h"
@@ -16,9 +17,11 @@
 #import "MEGASdkManager.h"
 #import "MEGAShareRequestDelegate.h"
 #import "MEGAUser+MNZCategory.h"
+#import "NSFileManager+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 #import "UIAlertAction+MNZCategory.h"
 #import "UIImageView+MNZCategory.h"
+#import "UITextField+MNZCategory.h"
 
 #import "ContactDetailsViewController.h"
 #import "ContactLinkQRViewController.h"
@@ -26,7 +29,7 @@
 #import "ShareFolderActivity.h"
 #import "ItemListViewController.h"
 
-@interface ContactsViewController () <CNContactPickerDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAGlobalDelegate, ItemListViewControllerProtocol, UISearchControllerDelegate, UIGestureRecognizerDelegate>
+@interface ContactsViewController () <CNContactPickerDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAGlobalDelegate, ItemListViewControllerProtocol, UISearchControllerDelegate, UIGestureRecognizerDelegate, MEGAChatDelegate>
 
 @property (nonatomic) id<UIViewControllerPreviewing> previewingContext;
 
@@ -35,7 +38,6 @@
 @property (weak, nonatomic) IBOutlet UIView *itemListView;
 @property (weak, nonatomic) IBOutlet UIView *contactsHeaderView;
 @property (weak, nonatomic) IBOutlet UILabel *contactsHeaderViewLabel;
-@property (weak, nonatomic) IBOutlet UIView *contactsTopLineHeaderView;
 
 @property (nonatomic, strong) MEGAUserList *users;
 @property (nonatomic, strong) NSMutableArray *visibleUsersArray;
@@ -68,13 +70,27 @@
 
 @property (nonatomic, strong) MEGAUser *userTapped;
 
-@property (nonatomic) BOOL pendingRequestsPresented;
+@property (nonatomic, getter=isKeyRotationEnabled) BOOL keyRotationEnabled;
 
 @property (nonatomic, strong) NSMutableArray *searchVisibleUsersArray;
 @property (strong, nonatomic) UISearchController *searchController;
 @property (strong, nonatomic) ItemListViewController *itemListVC;
 
 @property (nonatomic) UIPanGestureRecognizer *panOnTable;
+
+@property (weak, nonatomic) IBOutlet UIView *tableViewHeader;
+@property (weak, nonatomic) IBOutlet UITextField *enterGroupNameTextField;
+@property (weak, nonatomic) IBOutlet UILabel *encryptedKeyRotationLabel;
+@property (weak, nonatomic) IBOutlet UILabel *getChatLinkLabel;
+@property (weak, nonatomic) IBOutlet UILabel *keyRotationFooterLabel;
+@property (weak, nonatomic) IBOutlet UIButton *checkboxButton;
+@property (weak, nonatomic) IBOutlet UIStackView *getChatLinkStackView;
+@property (weak, nonatomic) IBOutlet UIStackView *optionsStackView;
+
+@property (weak, nonatomic) IBOutlet UIView *tableViewFooter;
+@property (weak, nonatomic) IBOutlet UILabel *noContactsLabel;
+@property (weak, nonatomic) IBOutlet UILabel *noContactsDescriptionLabel;
+@property (weak, nonatomic) IBOutlet UIButton *inviteContactButton;
 
 @end
 
@@ -85,10 +101,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    //White background for the view behind the table view
+    self.tableView.backgroundView = UIView.alloc.init;
+    
     self.tableView.emptyDataSetSource = self;
     self.tableView.emptyDataSetDelegate = self;
-    
-    self.pendingRequestsPresented = NO;
 
     self.searchController = [Helper customSearchControllerWithSearchResultsUpdaterDelegate:self searchBarDelegate:self];
     self.searchController.delegate = self;
@@ -99,6 +116,8 @@
     
     self.panOnTable = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(shouldDismissSearchController)];
     self.panOnTable.delegate = self;
+    
+    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -109,7 +128,8 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
 
     [[MEGASdkManager sharedMEGASdk] addMEGAGlobalDelegate:self];
-    [[MEGASdkManager sharedMEGASdk] retryPendingConnections];
+    [[MEGASdkManager sharedMEGAChatSdk] addChatDelegate:self];
+    [[MEGAReachabilityManager sharedManager] retryPendingConnections];
     
     [self reloadUI];
 }
@@ -122,6 +142,7 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
 
     [[MEGASdkManager sharedMEGASdk] removeMEGAGlobalDelegate:self];
+    [[MEGASdkManager sharedMEGAChatSdk] removeChatDelegate:self];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -131,10 +152,10 @@
         MEGAContactRequestList *incomingContactsLists = [[MEGASdkManager sharedMEGASdk] incomingContactRequests];
         [self setContactRequestBarButtomItemWithValue:incomingContactsLists.size.integerValue];
         
-        if (!self.pendingRequestsPresented && incomingContactsLists.size.intValue > 0) {
+        if (!self.avoidPresentIncomingPendingContactRequests && incomingContactsLists.size.intValue > 0) {
             UINavigationController *contactRequestsNC = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactsRequestsNavigationControllerID"];
             [self presentViewController:contactRequestsNC animated:YES completion:nil];
-            self.pendingRequestsPresented = YES;
+            self.avoidPresentIncomingPendingContactRequests = YES;
         }
     }
 }
@@ -171,8 +192,6 @@
 - (void)setupContacts {
     self.indexPathsMutableDictionary = [[NSMutableDictionary alloc] init];
     
-    [self.toolbar setFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.frame), 49)];
-    
     switch (self.contactsMode) {
         case ContactsModeDefault: {
             NSArray *buttonsItems = @[self.addBarButtonItem, self.contactRequestsBarButtonItem];
@@ -193,10 +212,10 @@
             self.navigationItem.rightBarButtonItems = @[self.cancelBarButtonItem];
             
             self.insertAnEmailBarButtonItem.title = AMLocalizedString(@"addFromEmail", @"Item menu option to add a contact writting his/her email");
-            [self.insertAnEmailBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:17.0f], NSForegroundColorAttributeName:[UIColor mnz_redF0373A]} forState:UIControlStateNormal];
+            [self.insertAnEmailBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:17.0f], NSForegroundColorAttributeName:UIColor.mnz_redMain} forState:UIControlStateNormal];
             
             self.shareFolderWithBarButtonItem.title = AMLocalizedString(@"share", @"Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected");
-            [self.shareFolderWithBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIMediumWithSize:17.0f], NSForegroundColorAttributeName:[UIColor mnz_redF0373A]} forState:UIControlStateNormal];
+            [self.shareFolderWithBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIMediumWithSize:17.0f], NSForegroundColorAttributeName:UIColor.mnz_redMain} forState:UIControlStateNormal];
             
             UIBarButtonItem *flexibleItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
             self.navigationController.topViewController.toolbarItems = @[self.insertAnEmailBarButtonItem, flexibleItem, self.shareFolderWithBarButtonItem];
@@ -212,7 +231,7 @@
             
             UIBarButtonItem *flexibleItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
             self.deleteBarButtonItem.title = AMLocalizedString(@"remove", @"Title for the action that allows to remove a file or folder");
-            [self.deleteBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:17.0f], NSForegroundColorAttributeName:[UIColor mnz_redF0373A]} forState:UIControlStateNormal];
+            [self.deleteBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:17.0f], NSForegroundColorAttributeName:UIColor.mnz_redMain} forState:UIControlStateNormal];
             self.toolbar.items = @[flexibleItem, self.deleteBarButtonItem];
             break;
         }
@@ -220,6 +239,11 @@
         case ContactsModeChatStartConversation: {
             self.cancelBarButtonItem.title = AMLocalizedString(@"cancel", @"Button title to cancel something");
             self.navigationItem.rightBarButtonItems = @[self.cancelBarButtonItem];
+            if (self.visibleUsersArray.count == 0) {
+                self.noContactsLabel.text = AMLocalizedString(@"contactsEmptyState_title", @"Title shown when the Contacts section is empty, when you have not added any contact.");
+                self.noContactsDescriptionLabel.text = AMLocalizedString(@"Start chatting securely with your contacts using end-to-end encryption", @"Empty Conversations description");
+                self.inviteContactButton.titleLabel.text = AMLocalizedString(@"inviteContact", @"Text shown when the user tries to make a call and the receiver is not a contact");
+            }
             break;
         }
             
@@ -235,10 +259,9 @@
         }
             
         case ContactsModeChatCreateGroup: {
-            self.tableView.backgroundColor = [UIColor mnz_grayFCFCFC];
+            self.tableView.backgroundColor = UIColor.mnz_grayFCFCFC;
             [self setTableViewEditing:YES animated:NO];
             self.createGroupBarButtonItem.title = AMLocalizedString(@"next", nil);
-            self.createGroupBarButtonItem.enabled = NO;
             [self.createGroupBarButtonItem setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
                                                                    [UIFont mnz_SFUIMediumWithSize:17],
                                                                    NSFontAttributeName,
@@ -252,16 +275,29 @@
         }
             
         case ContactsModeChatNamingGroup: {
-            self.navigationItem.leftBarButtonItems = @[self.backBarButtonItem];
+            self.backBarButtonItem.image = self.backBarButtonItem.image.imageFlippedForRightToLeftLayoutDirection;
             self.createGroupBarButtonItem.title = AMLocalizedString(@"createFolderButton", nil);
+            self.encryptedKeyRotationLabel.text = AMLocalizedString(@"Encrypted Key Rotation", @"Label in a cell where you can enable the 'Encrypted Key Rotation'");
+            self.getChatLinkLabel.text = AMLocalizedString(@"Get Chat Link", @"Label in a cell where you can get the chat link");
+            self.keyRotationFooterLabel.text = AMLocalizedString(@"Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages.", @"Footer text to explain what means 'Encrypted Key Rotation'");
             [self.createGroupBarButtonItem setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
                                                               [UIFont mnz_SFUIMediumWithSize:17],
                                                               NSFontAttributeName,
                                                               nil]
                                                     forState:UIControlStateNormal];
             self.navigationItem.rightBarButtonItems = @[self.createGroupBarButtonItem];
-            self.contactsMode = ContactsModeChatNamingGroup;
             [self.tableView setEditing:NO animated:YES];
+            [self.enterGroupNameTextField becomeFirstResponder];
+            self.checkboxButton.selected = self.getChatLinkEnabled;
+            
+            if (self.getChatLinkEnabled) {
+                self.optionsStackView.hidden = self.getChatLinkEnabled;
+                self.tableViewHeader.frame = CGRectMake(0, 0, self.tableViewHeader.frame.size.width, 60);
+            } else {          
+                UITapGestureRecognizer *singleFingerTap = [UITapGestureRecognizer.alloc initWithTarget:self action:@selector(checkboxTouchUpInside:)];
+                [self.getChatLinkStackView addGestureRecognizer:singleFingerTap];
+            }
+            
             break;
         }
             
@@ -271,7 +307,7 @@
 - (void)reloadUI {
     [self setNavigationBarTitle];
     
-    [self setNavigationBarButtonItemsEnabled:[MEGAReachabilityManager isReachable]];
+    [self setNavigationBarButtonItemsEnabled:MEGAReachabilityManager.isReachable];
     
     self.visibleUsersArray = [[NSMutableArray alloc] init];
     [self.indexPathsMutableDictionary removeAllObjects];
@@ -305,7 +341,7 @@
     [self.tableView reloadData];
     
     if (self.contactsMode == ContactsModeFolderSharedWith) {
-        if ([self.visibleUsersArray count] == 0) {
+        if (self.visibleUsersArray.count == 0) {
             [self.editBarButtonItem setEnabled:NO];
             self.addParticipantBarButtonItem.enabled = NO;
             self.tableView.tableHeaderView = nil;
@@ -314,22 +350,42 @@
             self.addParticipantBarButtonItem.enabled = YES;
             [self addSearchBarController];
         }
-    } else if (self.contactsMode != ContactsModeChatNamingGroup) {
+    } else if (self.contactsMode == ContactsModeChatNamingGroup) {
+        self.tableView.tableHeaderView = self.tableViewHeader;
+    } else if (self.contactsMode == ContactsModeChatStartConversation) {
+        if (self.visibleUsersArray.count == 0) {
+            self.tableView.tableFooterView = self.tableViewFooter;
+        } else {
+            [self addSearchBarController];
+            self.tableView.tableFooterView = UIView.new;
+        }
+    } else {
         [self addSearchBarController];
     }
 }
 
 - (void)internetConnectionChanged {
-    BOOL boolValue = [MEGAReachabilityManager isReachable];
+    BOOL boolValue = MEGAReachabilityManager.isReachable;
     [self setNavigationBarButtonItemsEnabled:boolValue];
+    
+    if (!boolValue) {
+        [self hideSearchIfNotActive];
+    }
     
     boolValue ? [self reloadUI] : [self.tableView reloadData];
 }
 
 - (void)setNavigationBarButtonItemsEnabled:(BOOL)boolValue {
-    [self.contactRequestsBarButtonItem setEnabled:boolValue];
-    [self.addBarButtonItem setEnabled:boolValue];
-    [self.editBarButtonItem setEnabled:boolValue];
+    self.contactRequestsBarButtonItem.enabled = boolValue;
+    self.addBarButtonItem.enabled = boolValue;
+    self.editButtonItem.enabled = boolValue;
+    self.createGroupBarButtonItem.enabled = boolValue;
+}
+
+- (void)hideSearchIfNotActive {
+    if (!self.searchController.isActive) {
+        self.tableView.tableHeaderView = nil;
+    }
 }
 
 - (NSMutableArray *)outSharesForNode:(MEGANode *)node {
@@ -380,19 +436,19 @@
     UIAlertAction *fullAccessAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"fullAccess", @"Permissions given to the user you share your folder with") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         [self shareNodesWithLevel:MEGAShareTypeAccessFull];
     }];
-    [fullAccessAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
+    [fullAccessAlertAction mnz_setTitleTextColor:UIColor.mnz_black333333];
     [shareFolderAlertController addAction:fullAccessAlertAction];
     
     UIAlertAction *readAndWritetAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"readAndWrite", @"Permissions given to the user you share your folder with") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         [self shareNodesWithLevel:MEGAShareTypeAccessReadWrite];
     }];
-    [readAndWritetAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
+    [readAndWritetAlertAction mnz_setTitleTextColor:UIColor.mnz_black333333];
     [shareFolderAlertController addAction:readAndWritetAlertAction];
     
     UIAlertAction *readOnlyAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"readOnly", @"Permissions given to the user you share your folder with") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         [self shareNodesWithLevel:MEGAShareTypeAccessRead];
     }];
-    [readOnlyAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
+    [readOnlyAlertAction mnz_setTitleTextColor:UIColor.mnz_black333333];
     [shareFolderAlertController addAction:readOnlyAlertAction];
     
     shareFolderAlertController.modalPresentationStyle = UIModalPresentationPopover;
@@ -428,9 +484,9 @@
         }
     } else if (self.contactsMode == ContactsModeFolderSharedWith) {
         void (^completion)(void);
-        if (shareType == MEGAShareTypeAccessUnkown) {
+        if (shareType == MEGAShareTypeAccessUnknown) {
             completion = ^{
-                if ([self.selectedUsersArray count] == [self.visibleUsersArray count]) {
+                if (self.selectedUsersArray.count == self.visibleUsersArray.count) {
                     [self.navigationController popToRootViewControllerAnimated:YES];
                 }
                 
@@ -456,12 +512,7 @@
     if ([user hasChangedType:MEGAUserChangeTypeAvatar]) {
         NSString *userBase64Handle = [MEGASdk base64HandleForUserHandle:user.handle];
         NSString *avatarFilePath = [[Helper pathForSharedSandboxCacheDirectory:@"thumbnailsV3"] stringByAppendingPathComponent:userBase64Handle];
-        BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:avatarFilePath];
-        if (fileExists) {
-            NSError *error = nil;
-            [[NSFileManager defaultManager] removeItemAtPath:avatarFilePath error:&error];
-            MEGALogError(@"Remove item at path failed with error: %@", error);
-        }
+        [NSFileManager.defaultManager mnz_removeItemAtPath:avatarFilePath];
         userHasChanged = YES;
     } else if ([user hasChangedType:MEGAUserChangeTypeFirstname] || [user hasChangedType:MEGAUserChangeTypeLastname] || [user hasChangedType:MEGAUserChangeTypeEmail]) {
         userHasChanged = YES;
@@ -500,7 +551,11 @@
             break;
             
         case ContactsModeChatNamingGroup:
-            self.navigationItem.title = AMLocalizedString(@"groupInfo", @"Title of section where you can see the chat group information and the options that you can do with it. Like 'Notifications' or 'Leave Group' and also the participants of the group.");
+            if (self.getChatLinkEnabled) {
+                self.navigationItem.title = AMLocalizedString(@"New Chat Link", @"Text button for init a group chat with link.");
+            } else {
+                self.navigationItem.title = [AMLocalizedString(@"New group chat", @"Text button for init a group chat") capitalizedString];
+            }
             break;
     }
 }
@@ -521,13 +576,11 @@
     }
 }
 
-- (void)alertControllerShouldEnableDefaultButtonForEmailTextField:(UITextField *)sender {
+- (void)addContactAlertTextFieldDidChange:(UITextField *)textField {
     UIAlertController *addContactFromEmailAlertController = (UIAlertController *)self.presentedViewController;
     if (addContactFromEmailAlertController) {
-        UITextField *textField = addContactFromEmailAlertController.textFields.firstObject;
         UIAlertAction *rightButtonAction = addContactFromEmailAlertController.actions.lastObject;
-        NSString *email = textField.text;
-        rightButtonAction.enabled = (email.length > 0) ? [email mnz_isValidEmail] : NO;
+        rightButtonAction.enabled = (!textField.text.mnz_isEmpty && textField.text.mnz_isValidEmail);
     }
 }
 
@@ -540,13 +593,32 @@
         
         if (self.tabBarController) {
             [self.toolbar setAlpha:0.0];
-            [self.tabBarController.tabBar addSubview:self.toolbar];
+            [self.tabBarController.view addSubview:self.toolbar];
+            self.toolbar.translatesAutoresizingMaskIntoConstraints = NO;
+            
+            NSLayoutAnchor *bottomAnchor;
+            if (@available(iOS 11.0, *)) {
+                bottomAnchor = self.tabBarController.tabBar.safeAreaLayoutGuide.bottomAnchor;
+            } else {
+                bottomAnchor = self.tabBarController.tabBar.bottomAnchor;
+            }
+            
+            [NSLayoutConstraint activateConstraints:@[[self.toolbar.topAnchor constraintEqualToAnchor:self.tabBarController.tabBar.topAnchor constant:0],
+                                                      [self.toolbar.leadingAnchor constraintEqualToAnchor:self.tabBarController.tabBar.leadingAnchor constant:0],
+                                                      [self.toolbar.trailingAnchor constraintEqualToAnchor:self.tabBarController.tabBar.trailingAnchor constant:0],
+                                                      [self.toolbar.bottomAnchor constraintEqualToAnchor:bottomAnchor constant:0]]];
+            
             [UIView animateWithDuration:0.33f animations:^ {
                 [self.toolbar setAlpha:1.0];
             }];
         } else if (self.navigationController.isToolbarHidden) {
             self.navigationController.topViewController.toolbarItems = self.toolbar.items;
             [self.navigationController setToolbarHidden:NO animated:animated];
+        }
+        for (ContactTableViewCell *cell in self.tableView.visibleCells) {
+            UIView *view = [[UIView alloc] init];
+            view.backgroundColor = UIColor.clearColor;
+            cell.selectedBackgroundView = view;
         }
     } else {
         self.editBarButtonItem.title = AMLocalizedString(@"edit", @"Caption of a button to edit the files that are selected");
@@ -564,6 +636,10 @@
         } else {
             self.navigationController.topViewController.toolbarItems = @[];
             [self.navigationController setToolbarHidden:YES animated:animated];
+        }
+        
+        for (ContactTableViewCell *cell in self.tableView.visibleCells) {
+            cell.selectedBackgroundView = nil;
         }
     }
     
@@ -586,8 +662,8 @@
 }
 
 - (void)setContactRequestBarButtomItemWithValue:(NSInteger)value {
-    self.contactRequestsBarButtonItem.badgeBGColor = [UIColor whiteColor];
-    self.contactRequestsBarButtonItem.badgeTextColor = [UIColor mnz_redF0373A];
+    self.contactRequestsBarButtonItem.badgeBGColor = UIColor.whiteColor;
+    self.contactRequestsBarButtonItem.badgeTextColor = UIColor.mnz_redMain;
     self.contactRequestsBarButtonItem.badgeFont = [UIFont mnz_SFUIMediumWithSize:11.0f];
     self.contactRequestsBarButtonItem.shouldAnimateBadge = NO;
     if (@available(iOS 11.0, *)) {
@@ -599,11 +675,15 @@
 
 - (void)startGroup {
     if (self.searchController.isActive) {
-        [self.searchController dismissViewControllerAnimated:YES completion:nil];
+        self.searchController.active = NO;
     }
     ContactsViewController *contactsVC = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactsViewControllerID"];
-    contactsVC.contactsMode = ContactsModeChatCreateGroup;
-    contactsVC.userSelected = self.userSelected;
+    if (self.visibleUsersArray.count > 0) {
+        contactsVC.contactsMode = ContactsModeChatCreateGroup;
+    } else {
+        contactsVC.contactsMode = ContactsModeChatNamingGroup;
+    }
+    contactsVC.createGroupChat = self.createGroupChat;
     [self.navigationController pushViewController:contactsVC animated:YES];
 }
 
@@ -643,6 +723,7 @@
     if (self.visibleUsersArray.count == 0) {
         return;
     }
+    
     switch (self.contactsMode) {
         case ContactsModeChatAttachParticipant:
         case ContactsModeChatAddParticipant:
@@ -695,6 +776,17 @@
     }
 }
 
+- (void)newChatLink {
+    if (self.searchController.isActive) {
+        self.searchController.active = NO;
+    }
+    ContactsViewController *contactsVC = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactsViewControllerID"];
+    contactsVC.contactsMode = ContactsModeChatNamingGroup;
+    contactsVC.createGroupChat = self.createGroupChat;
+    contactsVC.getChatLinkEnabled = YES;
+    [self.navigationController pushViewController:contactsVC animated:YES];
+}
+
 #pragma mark - IBActions
 
 - (IBAction)selectAllAction:(UIBarButtonItem *)sender {
@@ -718,6 +810,9 @@
 }
 
 - (IBAction)addContact:(UIView *)sender {
+    if (self.searchController.isActive) {
+        self.searchController.active = NO;
+    }
     UIAlertController *addContactAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"inviteContact", @"Text shown when the user tries to make a call and the receiver is not a contact") message:nil preferredStyle:UIAlertControllerStyleActionSheet];
     [addContactAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
     
@@ -726,7 +821,10 @@
         
         [addContactFromEmailAlertController addTextFieldWithConfigurationHandler:^(UITextField *textField) {
             textField.placeholder = AMLocalizedString(@"contactEmail", @"Clue text to help the user know what should write there. In this case the contact email you want to add to your contacts list");
-            [textField addTarget:self action:@selector(alertControllerShouldEnableDefaultButtonForEmailTextField:) forControlEvents:UIControlEventEditingChanged];
+            [textField addTarget:self action:@selector(addContactAlertTextFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
+            textField.shouldReturnCompletion = ^BOOL(UITextField *textField) {
+                return (!textField.text.mnz_isEmpty && textField.text.mnz_isValidEmail);
+            };
         }];
         
         [addContactFromEmailAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
@@ -744,7 +842,7 @@
         
         [self presentViewController:addContactFromEmailAlertController animated:YES completion:nil];
     }];
-    [addFromEmailAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
+    [addFromEmailAlertAction mnz_setTitleTextColor:UIColor.mnz_black333333];
     [addContactAlertController addAction:addFromEmailAlertAction];
     
     UIAlertAction *addFromContactsAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"addFromContacts", @"Item menu option to add a contact through your device app Contacts") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
@@ -758,7 +856,7 @@
         contactsPickerViewController.delegate = self;
         [self presentViewController:contactsPickerViewController animated:YES completion:nil];
     }];
-    [addFromContactsAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
+    [addFromContactsAlertAction mnz_setTitleTextColor:UIColor.mnz_black333333];
     [addContactAlertController addAction:addFromContactsAlertAction];
     
     UIAlertAction *scanCodeAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"scanCode", @"Segmented control title for view that allows the user to scan QR codes. String as short as possible.") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
@@ -766,7 +864,7 @@
         contactLinkVC.scanCode = YES;
         [self presentViewController:contactLinkVC animated:YES completion:nil];
     }];
-    [scanCodeAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
+    [scanCodeAlertAction mnz_setTitleTextColor:UIColor.mnz_black333333];
     [addContactAlertController addAction:scanCodeAlertAction];
     
     addContactAlertController.modalPresentationStyle = UIModalPresentationPopover;
@@ -783,7 +881,7 @@
 - (IBAction)deleteAction:(UIBarButtonItem *)sender {
     if (self.contactsMode == ContactsModeFolderSharedWith) {
         MEGAShareRequestDelegate *shareRequestDelegate = [[MEGAShareRequestDelegate alloc] initToChangePermissionsWithNumberOfRequests:self.selectedUsersArray.count completion:^{
-            if ([self.selectedUsersArray count] == [self.visibleUsersArray count]) {
+            if (self.selectedUsersArray.count == self.visibleUsersArray.count) {
                 [self.navigationController popViewControllerAnimated:YES];
             } else {
                 [self reloadUI];
@@ -793,7 +891,7 @@
         }];
         
         for (MEGAUser *user in self.selectedUsersArray) {
-            [[MEGASdkManager sharedMEGASdk] shareNode:self.node withUser:user level:MEGAShareTypeAccessUnkown delegate:shareRequestDelegate];
+            [[MEGASdkManager sharedMEGASdk] shareNode:self.node withUser:user level:MEGAShareTypeAccessUnknown delegate:shareRequestDelegate];
         }
     } else {
         NSString *message = (self.selectedUsersArray.count > 1) ? [NSString stringWithFormat:AMLocalizedString(@"removeMultipleUsersMessage", nil), self.selectedUsersArray.count] :[NSString stringWithFormat:AMLocalizedString(@"removeUserMessage", nil), [[self.selectedUsersArray objectAtIndex:0] email]];
@@ -822,10 +920,11 @@
         [self.shareFolderActivity activityDidFinish:YES];
     }
     
+    if (self.searchController.isActive) {
+        self.searchController.active = NO;
+    }
+    
     if (self.contactsMode == ContactsModeChatCreateGroup) {
-        if (self.searchController.isActive) {
-            self.searchController.active = NO;
-        }
         [self.navigationController popViewControllerAnimated:YES];
     } else {
         [self dismissViewControllerAnimated:YES completion:nil];
@@ -857,8 +956,11 @@
     
     [insertAnEmailToShareWithAlertController addTextFieldWithConfigurationHandler:^(UITextField *textField) {
         textField.placeholder = AMLocalizedString(@"contactEmail", @"Clue text to help the user know what should write there. In this case the contact email you want to add to your contacts list");
-        [textField addTarget:self action:@selector(alertControllerShouldEnableDefaultButtonForEmailTextField:) forControlEvents:UIControlEventEditingChanged];
-        [self alertControllerShouldEnableDefaultButtonForEmailTextField:textField];
+        [textField addTarget:self action:@selector(addContactAlertTextFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
+        [self addContactAlertTextFieldDidChange:textField];
+        textField.shouldReturnCompletion = ^BOOL(UITextField *textField) {
+            return (!textField.text.mnz_isEmpty && textField.text.mnz_isValidEmail);
+        };
     }];
     
     [insertAnEmailToShareWithAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
@@ -889,18 +991,26 @@
 
 - (IBAction)createGroupAction:(UIBarButtonItem *)sender {
     if (self.contactsMode == ContactsModeChatCreateGroup) {
-        if (self.searchController.searchBar.isFirstResponder) {
-            [self.searchController dismissViewControllerAnimated:YES completion:nil];
+        if (self.searchController.isActive) {
+            self.searchController.active = NO;
         }
         ContactsViewController *contactsVC = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactsViewControllerID"];
         contactsVC.contactsMode = ContactsModeChatNamingGroup;
-        contactsVC.userSelected = self.userSelected;
+        contactsVC.createGroupChat = self.createGroupChat;
         contactsVC.selectedUsersArray = self.selectedUsersArray;
         [self.navigationController pushViewController:contactsVC animated:YES];
     } else {
-        [self dismissViewControllerAnimated:YES completion:^{
-            self.userSelected(self.selectedUsersArray, self.insertedGroupName);
-        }];
+        if (!self.isKeyRotationEnabled && self.checkboxButton.selected && self.enterGroupNameTextField.text.mnz_isEmpty) {
+            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"Chat Link", @"Label shown in a cell where you can enable a switch to get a chat link") message:AMLocalizedString(@"To create a chat link you must name the group.", @"Alert message to advice the users that to generate a chat link they need enter a group name for the chat")  preferredStyle:UIAlertControllerStyleAlert];
+            [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                [self.enterGroupNameTextField becomeFirstResponder];
+            }]];
+            [self presentViewController:alertController animated:YES completion:nil];
+        } else {
+            [self dismissViewControllerAnimated:YES completion:^{
+                self.createGroupChat(self.selectedUsersArray, self.insertedGroupName, self.keyRotationEnabled, self.keyRotationEnabled ? NO : self.checkboxButton.isSelected);
+            }];
+        }
     }
 }
 
@@ -909,7 +1019,7 @@
         if (self.searchController.isActive) {
             self.searchController.active = NO;
         }
-        self.userSelected(self.selectedUsersArray, nil);
+        self.userSelected(self.selectedUsersArray);
         [self dismissViewControllerAnimated:YES completion:nil];
     }
 }
@@ -918,40 +1028,47 @@
     self.insertedGroupName = sender.text;    
 }
 
+- (IBAction)keyRotationSwitchValueChanged:(UISwitch *)sender {
+    self.keyRotationEnabled = sender.on;
+    self.getChatLinkStackView.hidden = sender.on;
+    if (sender.on) {
+        self.tableViewHeader.frame = CGRectMake(0, 0, self.tableViewHeader.frame.size.width, 266 - self.getChatLinkStackView.frame.size.height - 23);
+    } else {
+        self.tableViewHeader.frame = CGRectMake(0, 0, self.tableViewHeader.frame.size.width, 266);
+    }
+    
+    [self.tableView reloadData];
+}
+
+- (IBAction)checkboxTouchUpInside:(UIButton *)sender {
+    self.checkboxButton.selected = !self.checkboxButton.selected;
+}
+
+- (IBAction)inviteContactTouchUpInside:(UIButton *)sender {
+    [self addContact:sender];
+}
+
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     NSInteger numberOfRows = 0;
-    if ([MEGAReachabilityManager isReachable]) {
+    if (MEGAReachabilityManager.isReachable) {
         if (self.contactsMode == ContactsModeChatStartConversation && section == 0) {
-            if (self.visibleUsersArray.count > 0) {
-                return 2;
-            } else {
-                return 1;
-            }
+            return 3;
         } else if (self.contactsMode == ContactsModeChatNamingGroup && section == 0) {
-            return 1;
-        } else if (self.contactsMode == ContactsModeChatNamingGroup && section == 1) {
-            return self.selectedUsersArray.count;
+            return self.selectedUsersArray.count + 1;
         }
-        numberOfRows = (self.searchController.isActive && ![self.searchController.searchBar.text isEqual: @""]) ? [self.searchVisibleUsersArray count] : [self.visibleUsersArray count];
+        
+        numberOfRows = (self.searchController.isActive && ![self.searchController.searchBar.text isEqual: @""]) ? self.searchVisibleUsersArray.count : self.visibleUsersArray.count;
     }
     return numberOfRows;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     switch (self.contactsMode) {
-        case ContactsModeChatStartConversation: {
-            if (self.users.size.intValue > 0) {
-                return 2;
-            } else {
-                return 1;
-            }
-            break;
-        }
-            
-        case ContactsModeChatNamingGroup:
+        case ContactsModeChatStartConversation:
             return 2;
+            break;
         
         default:
             return 1;
@@ -967,27 +1084,22 @@
         if (indexPath.row == 0) {
             cell.nameLabel.text = AMLocalizedString(@"inviteContact", @"Text shown when the user tries to make a call and the receiver is not a contact");
             cell.avatarImageView.image = [UIImage imageNamed:@"inviteToChat"];
-            if (self.users.size.intValue == 0) {
-                cell.lineView.hidden = YES;
-            }
-        } else {
-            cell.nameLabel.text = AMLocalizedString(@"groupChat", @"Label title for a group chat");
+        } else if (indexPath.row == 1) {
+            cell.nameLabel.text = AMLocalizedString(@"New group chat", @"Text button for init a group chat").capitalizedString;
             cell.avatarImageView.image = [UIImage imageNamed:@"createGroup"];
-            cell.lineView.hidden = YES;
+        } else {
+            cell.nameLabel.text = AMLocalizedString(@"New Chat Link", @"Text button for init a group chat with link.");
+            cell.avatarImageView.image = [UIImage imageNamed:@"chatLink"];
         }
-        return cell;
-    } else if (self.contactsMode == ContactsModeChatNamingGroup && indexPath.section == 0) {
-        ContactTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"NamingGroupTableViewCellID" forIndexPath:indexPath];
-        cell.permissionsImageView.hidden = YES;
-        cell.groupNameTextField.placeholder = AMLocalizedString(@"enterGroupName", @"Placeholder to hint the user to write a name for the group chat.");
-        cell.lineView.hidden = YES;
-        cell.avatarImageView.image = [UIImage imageNamed:@"addGroupAvatar"];
-        [cell.groupNameTextField becomeFirstResponder];
         return cell;
     } else {
         MEGAUser *user;
         if (self.contactsMode == ContactsModeChatNamingGroup) {
-            user = [self.selectedUsersArray objectAtIndex:indexPath.row];
+            if (indexPath.row == self.selectedUsersArray.count) {
+                user = MEGASdkManager.sharedMEGASdk.myUser;
+            } else {
+                user = [self.selectedUsersArray objectAtIndex:indexPath.row];
+            }
         } else {
             user = [self userAtIndexPath:indexPath];
         }
@@ -996,6 +1108,10 @@
         
         ContactTableViewCell *cell;
         NSString *userName = user.mnz_fullName;
+        
+        if (user.handle == MEGASdkManager.sharedMEGASdk.myUser.handle) {
+            userName = [userName stringByAppendingString:[NSString stringWithFormat:@" (%@)", AMLocalizedString(@"me", @"The title for my message in a chat. The message was sent from yourself.")]];
+        }
         
         if (self.contactsMode == ContactsModeFolderSharedWith) {
             if (userName) {
@@ -1008,14 +1124,7 @@
             }
             MEGAShare *share = [self.outSharesForNodeMutableArray objectAtIndex:indexPath.row];
             [cell.permissionsImageView setImage:[Helper permissionsButtonImageForShareType:share.access]];
-        } else if (self.contactsMode >= ContactsModeChatStartConversation) {
-            cell = [tableView dequeueReusableCellWithIdentifier:@"contactCell" forIndexPath:indexPath];
-            
-            cell.nameLabel.text = userName ? userName : user.email;
-            cell.shareLabel.text = user.email;
-            
-            cell.onlineStatusView.backgroundColor = [UIColor mnz_colorForStatusChange:[[MEGASdkManager sharedMEGAChatSdk] userOnlineStatus:user.handle]];
-        } else {
+        } else if (self.contactsMode == ContactsModeShareFoldersWith) {
             cell = [tableView dequeueReusableCellWithIdentifier:@"contactCell" forIndexPath:indexPath];
             cell.nameLabel.text = userName ? userName : user.email;
             
@@ -1028,9 +1137,20 @@
             } else {
                 cell.shareLabel.text = [NSString stringWithFormat:AMLocalizedString(@"foldersShared", @" folders shared"), numFilesShares];
             }
-        }
+        } else {
+            cell = [tableView dequeueReusableCellWithIdentifier:@"contactCell" forIndexPath:indexPath];
+            
+            cell.nameLabel.text = userName ? userName : user.email;
+            MEGAChatStatus userStatus = [[MEGASdkManager sharedMEGAChatSdk] userOnlineStatus:user.handle];
+            cell.shareLabel.text = [NSString chatStatusString:userStatus];
+            cell.onlineStatusView.backgroundColor = [UIColor mnz_colorForStatusChange:userStatus];
+
+            if (userStatus < MEGAChatStatusOnline) {
+                [[MEGASdkManager sharedMEGAChatSdk] requestLastGreen:user.handle];
+            }
+        } 
         
-        [cell.avatarImageView mnz_setImageForUserHandle:user.handle];
+        [cell.avatarImageView mnz_setImageForUserHandle:user.handle name:cell.nameLabel.text];
         
         if (self.tableView.isEditing) {
             // Check if selectedNodesArray contains the current node in the tableView
@@ -1039,6 +1159,11 @@
                     [self.tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
                 }
             }
+            
+            UIView *view = [[UIView alloc] init];
+            view.backgroundColor = UIColor.clearColor;
+            cell.selectedBackgroundView = view;
+            cell.separatorInset = UIEdgeInsetsMake(0, 97, 0, 0);
         }
         
         if (@available(iOS 11.0, *)) {
@@ -1052,23 +1177,21 @@
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     if (section == 0 && self.contactsMode == ContactsModeChatCreateGroup) {
         self.contactsHeaderViewLabel.text = AMLocalizedString(@"contactsTitle", @"Title of the Contacts section").uppercaseString;
-        self.contactsTopLineHeaderView.hidden = YES;
         return self.contactsHeaderView;
     }
-    if (section == 1 && (self.contactsMode >= ContactsModeChatStartConversation)) {
-        if (self.visibleUsersArray.count == 0) {
-            return nil;
-        }
-        if (self.contactsMode == ContactsModeChatNamingGroup) {
-            self.contactsHeaderViewLabel.text = AMLocalizedString(@"participants", @"Label to describe the section where you can see the participants of a group chat").uppercaseString;
-        } else {
-            self.contactsHeaderViewLabel.text = AMLocalizedString(@"contactsTitle", @"Title of the Contacts section").uppercaseString;
-        }
+    if (section == 0 && self.contactsMode == ContactsModeChatNamingGroup) {
+        NSString *participants = AMLocalizedString(@"participants", @"Label to describe the section where you can see the participants of a group chat").uppercaseString;
+        self.contactsHeaderViewLabel.text = participants;
+        return self.contactsHeaderView;
+    }
+    if (section == 1 && self.contactsMode >= ContactsModeChatStartConversation) {
+        self.contactsHeaderViewLabel.text = AMLocalizedString(@"contactsTitle", @"Title of the Contacts section").uppercaseString;
         return self.contactsHeaderView;
     }
     
     return nil;
 }
+
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     CGFloat heightForHeader = 0.0f;
@@ -1077,14 +1200,14 @@
             if (self.contactsMode == ContactsModeChatCreateGroup) {
                 heightForHeader = 24.0f;
             }
+            if (self.contactsMode == ContactsModeChatNamingGroup) {
+                heightForHeader = 45.0f;
+            }
             break;
-            
+
         case 1:
             if (self.contactsMode >= ContactsModeChatStartConversation) {
-                if (self.visibleUsersArray.count == 0) {
-                    return heightForHeader;
-                }
-                heightForHeader = 24.0f;
+                heightForHeader = 35.0f;
             }
             break;
     }
@@ -1149,6 +1272,8 @@
                     [self addContact:[self.tableView cellForRowAtIndexPath:indexPath]];
                 } else if (indexPath.row == 1) {
                     [self startGroup];
+                } else {
+                    [self newChatLink];
                 }
             } else {
                 MEGAUser *user = [self userAtIndexPath:indexPath];
@@ -1156,17 +1281,11 @@
                     [SVProgressHUD showErrorWithStatus:@"Invalid user"];
                     return;
                 }
-                if (self.searchController.isActive) {
-                    [self.searchController dismissViewControllerAnimated:YES completion:^{
-                        [self dismissViewControllerAnimated:YES completion:^{
-                            self.userSelected(@[user], nil);
-                        }];
-                    }];
-                } else {
-                    [self dismissViewControllerAnimated:YES completion:^{
-                        self.userSelected(@[user], nil);
-                    }];
-                }
+                self.searchController.active = NO;
+                
+                [self dismissViewControllerAnimated:YES completion:^{
+                    self.userSelected(@[user]);
+                }];
             }
             break;
         }
@@ -1181,7 +1300,6 @@
                     return;
                 }
                 [self.selectedUsersArray addObject:user];
-                self.createGroupBarButtonItem.enabled = (self.selectedUsersArray.count > 1);
                 [self addUserToList:user];
                 if (self.searchController.searchBar.isFirstResponder) {
                     self.searchController.searchBar.text = @"";
@@ -1206,14 +1324,12 @@
     
     if (tableView.isEditing) {
         //tempArray avoid crash: "was mutated while being enumerated."
-        NSMutableArray *tempArray = [self.selectedUsersArray copy];
+        NSMutableArray *tempArray = self.selectedUsersArray.copy;
         for (MEGAUser *u in tempArray) {
             if ([u.email isEqualToString:user.email]) {
                 [self.selectedUsersArray removeObject:u];
             }
         }
-        
-        self.createGroupBarButtonItem.enabled = (self.selectedUsersArray.count > 1);
         
         [self updatePromptTitle];
         
@@ -1227,7 +1343,6 @@
             }
             if (self.contactsMode != ContactsModeChatStartConversation) {
                 self.deleteBarButtonItem.enabled = NO;
-                self.createGroupBarButtonItem.enabled = NO;
             }
         }
         
@@ -1350,7 +1465,12 @@
     NSUInteger usersCount = contactProperties.count;
     MEGAInviteContactRequestDelegate *inviteContactRequestDelegate = [[MEGAInviteContactRequestDelegate alloc] initWithNumberOfRequests:usersCount];
     for (CNContactProperty *contactProperty in contactProperties) {
-        [[MEGASdkManager sharedMEGASdk] inviteContactWithEmail:contactProperty.value message:@"" action:MEGAInviteActionAdd delegate:inviteContactRequestDelegate];
+        NSString *email = contactProperty.value;
+        if (email.mnz_isValidEmail) {
+            [[MEGASdkManager sharedMEGASdk] inviteContactWithEmail:contactProperty.value message:@"" action:MEGAInviteActionAdd delegate:inviteContactRequestDelegate];
+        } else {
+            [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"%@ %@", AMLocalizedString(@"theEmailAddressFormatIsInvalid", @"Add contacts and share dialog error message when user try to add wrong email address"), email]];
+        }
     }
 }
 
@@ -1358,13 +1478,15 @@
 
 - (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView {
     NSString *text = @"";
-    if ([MEGAReachabilityManager isReachable]) {
-        if (self.searchController.isActive ) {
-            if (self.searchController.searchBar.text.length > 0) {
-                text = AMLocalizedString(@"noResults", @"Title shown when you make a search and there is 'No Results'");
+    if (MEGAReachabilityManager.isReachable) {
+        if (self.contactsMode != ContactsModeChatNamingGroup) {
+            if (self.searchController.isActive ) {
+                if (self.searchController.searchBar.text.length > 0) {
+                    text = AMLocalizedString(@"noResults", @"Title shown when you make a search and there is 'No Results'");
+                }
+            } else {
+                text = AMLocalizedString(@"contactsEmptyState_title", @"Title shown when the Contacts section is empty, when you have not added any contact.");
             }
-        } else {
-            text = AMLocalizedString(@"contactsEmptyState_title", @"Title shown when the Contacts section is empty, when you have not added any contact.");
         }
     } else {
         text = AMLocalizedString(@"noInternetConnection",  @"No Internet Connection");
@@ -1373,8 +1495,22 @@
     return [[NSAttributedString alloc] initWithString:text attributes:[Helper titleAttributesForEmptyState]];
 }
 
+- (nullable NSAttributedString *)descriptionForEmptyDataSet:(UIScrollView *)scrollView {
+    NSString *text = @"";
+    if (!MEGAReachabilityManager.isReachable && !MEGAReachabilityManager.sharedManager.isMobileDataEnabled) {
+        text = AMLocalizedString(@"Mobile Data is turned off", @"Information shown when the user has disabled the 'Mobile Data' setting for MEGA in the iOS Settings.");
+    }
+    
+    NSDictionary *attributes = @{NSFontAttributeName:[UIFont preferredFontForTextStyle:UIFontTextStyleFootnote], NSForegroundColorAttributeName:UIColor.mnz_gray777777};
+    
+    return [NSAttributedString.alloc initWithString:text attributes:attributes];
+}
+
 - (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView {
-    if ([MEGAReachabilityManager isReachable]) {
+    if (MEGAReachabilityManager.isReachable) {
+        if (self.contactsMode == ContactsModeChatNamingGroup) {
+            return nil;
+        }
         if (self.searchController.isActive) {
             if (self.searchController.searchBar.text.length > 0) {
                 return [UIImage imageNamed:@"searchEmptyState"];
@@ -1395,8 +1531,12 @@
     }
     
     NSString *text = @"";
-    if ([MEGAReachabilityManager isReachable] && !self.searchController.isActive) {
+    if (MEGAReachabilityManager.isReachable && !self.searchController.isActive) {
         text = AMLocalizedString(@"inviteContact", @"Text shown when the user tries to make a call and the receiver is not a contact");
+    } else {
+        if (!MEGAReachabilityManager.sharedManager.isMobileDataEnabled) {
+            text = AMLocalizedString(@"Turn Mobile Data on", @"Button title to go to the iOS Settings to enable 'Mobile Data' for the MEGA app.");
+        }
     }
     
     return [[NSAttributedString alloc] initWithString:text attributes:[Helper buttonTextAttributesForEmptyState]];
@@ -1410,7 +1550,7 @@
 }
 
 - (UIColor *)backgroundColorForEmptyDataSet:(UIScrollView *)scrollView {
-    return [UIColor whiteColor];
+    return UIColor.whiteColor;
 }
 
 - (CGFloat)verticalOffsetForEmptyDataSet:(UIScrollView *)scrollView {
@@ -1421,16 +1561,26 @@
     return [Helper spaceHeightForEmptyState];
 }
 
-#pragma mark - DZNEmptyDataSetDelegate Methods
+#pragma mark - DZNEmptyDataSetDelegate
 
 - (void)emptyDataSet:(UIScrollView *)scrollView didTapButton:(UIButton *)button {
-    [self addContact:button];
+    if (MEGAReachabilityManager.isReachable) {
+        [self addContact:button];
+    } else {
+        if (!MEGAReachabilityManager.sharedManager.isMobileDataEnabled) {
+            [UIApplication.sharedApplication openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString] options:@{} completionHandler:nil];
+        }
+    }
 }
 
 #pragma mark - UISearchBarDelegate
 
 - (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
     self.searchVisibleUsersArray = nil;
+    
+    if (!MEGAReachabilityManager.isReachable) {
+        self.tableView.tableHeaderView = nil;
+    }
 }
 
 #pragma mark - UISearchControllerDelegate
@@ -1459,7 +1609,7 @@
             [self.searchVisibleUsersArray removeAllObjects];
         } else {
             NSPredicate *resultPredicate = [NSPredicate predicateWithFormat:@"SELF.mnz_fullName contains[c] %@", searchString];
-            self.searchVisibleUsersArray = [[self.visibleUsersArray filteredArrayUsingPredicate:resultPredicate] mutableCopy];
+            self.searchVisibleUsersArray = [self.visibleUsersArray filteredArrayUsingPredicate:resultPredicate].mutableCopy;
         }
     }
     
@@ -1567,7 +1717,6 @@
     NSString *base64Handle = [MEGASdk base64HandleForUserHandle:user.handle];
     [self.tableView deselectRowAtIndexPath:[self.indexPathsMutableDictionary objectForKey:base64Handle] animated:YES];
     [self.selectedUsersArray removeObject:user];
-    self.createGroupBarButtonItem.enabled = (self.selectedUsersArray.count > 1);
     if (self.selectedUsersArray.count == 0) {
         [self removeUsersListSubview];
     }
@@ -1577,6 +1726,43 @@
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
     return YES;
+}
+
+#pragma mark - MEGAChatDelegate
+
+- (void)onChatOnlineStatusUpdate:(MEGAChatSdk *)api userHandle:(uint64_t)userHandle status:(MEGAChatStatus)onlineStatus inProgress:(BOOL)inProgress {
+    if (inProgress) {
+        return;
+    }
+
+    if (userHandle != api.myUserHandle) {
+        NSString *base64Handle = [MEGASdk base64HandleForUserHandle:userHandle];
+        NSIndexPath *indexPath = [self.indexPathsMutableDictionary objectForKey:base64Handle];
+        if ([self.tableView.indexPathsForVisibleRows containsObject:indexPath]) {
+            ContactTableViewCell *cell = (ContactTableViewCell *)[self.tableView cellForRowAtIndexPath:indexPath];
+            cell.onlineStatusView.backgroundColor = [UIColor mnz_colorForStatusChange:onlineStatus];
+            cell.shareLabel.text = [NSString chatStatusString:onlineStatus];
+            if (onlineStatus < MEGAChatStatusOnline) {
+                [MEGASdkManager.sharedMEGAChatSdk requestLastGreen:userHandle];
+            }
+        }
+    }
+}
+
+- (void)onChatPresenceLastGreen:(MEGAChatSdk *)api userHandle:(uint64_t)userHandle lastGreen:(NSInteger)lastGreen {
+
+    if (userHandle != api.myUserHandle && (self.contactsMode >= ContactsModeChatStartConversation || self.contactsMode == ContactsModeDefault)) {
+        MEGAChatStatus chatStatus = [[MEGASdkManager sharedMEGAChatSdk] userOnlineStatus:userHandle];
+        if (chatStatus < MEGAChatStatusOnline) {
+            NSString *base64Handle = [MEGASdk base64HandleForUserHandle:userHandle];
+            NSIndexPath *indexPath = [self.indexPathsMutableDictionary objectForKey:base64Handle];
+            
+            if ([self.tableView.indexPathsForVisibleRows containsObject:indexPath]) {
+                ContactTableViewCell *cell = (ContactTableViewCell *)[self.tableView cellForRowAtIndexPath:indexPath];
+                cell.shareLabel.text = [NSString mnz_lastGreenStringFromMinutes:lastGreen];
+            }
+        }
+    }
 }
 
 @end

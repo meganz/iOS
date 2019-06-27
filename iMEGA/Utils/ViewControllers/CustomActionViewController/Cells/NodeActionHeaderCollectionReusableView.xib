@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
-        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -59,23 +57,23 @@
                         <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="40" id="xul-Gu-v2E"/>
                     </constraints>
                 </view>
-                <label opaque="NO" userInteractionEnabled="NO" tag="1" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qu5-uS-Dus">
-                    <rect key="frame" x="60" y="23" width="278" height="18"/>
+                <label opaque="NO" userInteractionEnabled="NO" tag="1" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qu5-uS-Dus">
+                    <rect key="frame" x="60" y="23" width="31" height="18"/>
                     <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="15"/>
                     <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <label opaque="NO" userInteractionEnabled="NO" tag="2" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Subtitle" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="7" translatesAutoresizingMaskIntoConstraints="NO" id="7ln-56-6ag">
-                    <rect key="frame" x="60" y="41" width="278" height="15"/>
+                <label opaque="NO" userInteractionEnabled="NO" tag="2" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Subtitle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="7" translatesAutoresizingMaskIntoConstraints="NO" id="7ln-56-6ag">
+                    <rect key="frame" x="60" y="40.5" width="44" height="15"/>
                     <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="12"/>
                     <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9Ae-7a-614">
-                    <rect key="frame" x="0.0" y="79" width="359" height="1"/>
+                    <rect key="frame" x="0.0" y="79.5" width="359" height="0.5"/>
                     <color key="backgroundColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="1" id="7xP-fG-Cxl"/>
+                        <constraint firstAttribute="height" constant="0.5" id="7xP-fG-Cxl"/>
                     </constraints>
                 </view>
             </subviews>
@@ -83,7 +81,7 @@
             <constraints>
                 <constraint firstItem="zcZ-6y-cIj" firstAttribute="centerY" secondItem="dMU-GA-8Sa" secondAttribute="centerY" id="1pC-zH-DLc"/>
                 <constraint firstAttribute="trailing" secondItem="9Ae-7a-614" secondAttribute="trailing" id="GRr-g3-zM9"/>
-                <constraint firstAttribute="trailingMargin" secondItem="7ln-56-6ag" secondAttribute="trailing" constant="5" id="Gau-JJ-DNR"/>
+                <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="7ln-56-6ag" secondAttribute="trailing" constant="5" id="Gau-JJ-DNR"/>
                 <constraint firstItem="7ln-56-6ag" firstAttribute="centerY" secondItem="dMU-GA-8Sa" secondAttribute="centerY" multiplier="1.2" id="Mve-pF-Ky5"/>
                 <constraint firstItem="7ln-56-6ag" firstAttribute="leading" secondItem="zcZ-6y-cIj" secondAttribute="trailing" constant="10" id="N9e-hK-EHC"/>
                 <constraint firstItem="zcZ-6y-cIj" firstAttribute="leading" secondItem="dMU-GA-8Sa" secondAttribute="leading" constant="10" id="ZYS-b7-2Jv"/>
@@ -91,7 +89,7 @@
                 <constraint firstAttribute="bottom" secondItem="9Ae-7a-614" secondAttribute="bottom" id="mGJ-wq-tbh"/>
                 <constraint firstItem="Qu5-uS-Dus" firstAttribute="centerY" secondItem="dMU-GA-8Sa" secondAttribute="centerY" multiplier="0.8" id="oHl-qB-wzL"/>
                 <constraint firstItem="9Ae-7a-614" firstAttribute="leading" secondItem="dMU-GA-8Sa" secondAttribute="leading" id="pKV-6F-5p6"/>
-                <constraint firstAttribute="trailingMargin" secondItem="Qu5-uS-Dus" secondAttribute="trailing" constant="5" id="yg6-PQ-Csx"/>
+                <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="Qu5-uS-Dus" secondAttribute="trailing" constant="5" id="yg6-PQ-Csx"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="8ta-v4-Thb"/>
             <point key="canvasLocation" x="508.5" y="455"/>

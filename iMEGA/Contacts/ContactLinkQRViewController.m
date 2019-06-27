@@ -7,7 +7,6 @@
 
 #import "CustomModalAlertViewController.h"
 #import "DevicePermissionsHelper.h"
-#import "MainTabBarController.h"
 #import "MEGAContactLinkCreateRequestDelegate.h"
 #import "MEGAContactLinkQueryRequestDelegate.h"
 #import "MEGAInviteContactRequestDelegate.h"
@@ -87,7 +86,7 @@
             self.linkCopyButton.hidden = self.moreButton.hidden = NO;
         }
         
-        self.qrImageView.image = [UIImage mnz_qrImageWithDotsFromString:destination withSize:self.qrImageView.frame.size];
+        self.qrImageView.image = [UIImage mnz_qrImageWithDotsFromString:destination withSize:self.qrImageView.frame.size color:UIColor.mnz_redMain];
         [self setUserAvatar];
     }];
 }
@@ -159,7 +158,7 @@
             self.qrImageView.hidden = self.avatarBackgroundView.hidden = self.avatarImageView.hidden = self.contactLinkLabel.hidden = NO;
             self.linkCopyButton.hidden = self.moreButton.hidden = (self.contactLinkLabel.text.length == 0);
             self.cameraView.hidden = self.cameraMaskView.hidden = self.cameraMaskBorderView.hidden = self.hintLabel.hidden = self.errorLabel.hidden = YES;
-            self.backButton.tintColor = self.segmentedControl.tintColor = [UIColor mnz_redF0373A];
+            self.backButton.tintColor = self.segmentedControl.tintColor = UIColor.mnz_redMain;
             break;
             
         case 1:
@@ -172,7 +171,7 @@
             } else {
                 sender.selectedSegmentIndex = 0;
                 [self valueChangedAtSegmentedControl:sender];
-                [self presentViewController:[DevicePermissionsHelper videoPermisionAlertController] animated:YES completion:nil];
+                [DevicePermissionsHelper alertVideoPermissionWithCompletionHandler:nil];
             }
             
             break;
@@ -311,7 +310,7 @@
     inviteOrDismissModal.modalPresentationStyle = UIModalPresentationOverCurrentContext;
     
     if (imageOnBase64URLEncoding.mnz_isEmpty) {
-        inviteOrDismissModal.image = [UIImage imageForName:fullName.uppercaseString size:CGSizeMake(128.0f, 128.0f) backgroundColor:[UIColor colorFromHexString:[MEGASdk avatarColorForBase64UserHandle:[MEGASdk base64HandleForUserHandle:contactLinkHandle]]] textColor:[UIColor whiteColor] font:[UIFont mnz_SFUIRegularWithSize:64.0f]];
+        inviteOrDismissModal.image = [UIImage imageForName:fullName.mnz_initialForAvatar size:CGSizeMake(128.0f, 128.0f) backgroundColor:[UIColor colorFromHexString:[MEGASdk avatarColorForBase64UserHandle:[MEGASdk base64HandleForUserHandle:contactLinkHandle]]] textColor:[UIColor whiteColor] font:[UIFont mnz_SFUIRegularWithSize:64.0f]];
     } else {
         inviteOrDismissModal.roundImage = YES;
         NSData *imageData = [[NSData alloc] initWithBase64EncodedString:[NSString mnz_base64FromBase64URLEncoding:imageOnBase64URLEncoding] options:NSDataBase64DecodingIgnoreUnknownCharacters];
@@ -322,7 +321,7 @@
     
     __weak ContactLinkQRViewController *weakSelf = self;
     __weak CustomModalAlertViewController *weakInviteOrDismissModal = inviteOrDismissModal;
-    void (^completion)(void) = ^{
+    void (^firstCompletion)(void) = ^{
         MEGAInviteContactRequestDelegate *delegate = [[MEGAInviteContactRequestDelegate alloc] initWithNumberOfRequests:1 presentSuccessOver:weakSelf completion:^{
             __weak ContactLinkQRViewController *weakSelf = self;
             weakSelf.queryInProgress = NO;
@@ -331,7 +330,7 @@
         [weakInviteOrDismissModal dismissViewControllerAnimated:YES completion:nil];
     };
     
-    void (^onDismiss)(void) = ^{
+    void (^dismissCompletion)(void) = ^{
         [weakInviteOrDismissModal dismissViewControllerAnimated:YES completion:^{
             weakSelf.queryInProgress = NO;
         }];
@@ -340,8 +339,8 @@
     MEGAUser *user = [[MEGASdkManager sharedMEGASdk] contactForEmail:email];
     if (user && user.visibility == MEGAUserVisibilityVisible) {
         inviteOrDismissModal.detail = [AMLocalizedString(@"alreadyAContact", @"Error message displayed when trying to invite a contact who is already added.") stringByReplacingOccurrencesOfString:@"%s" withString:email];
-        inviteOrDismissModal.action = AMLocalizedString(@"dismiss", @"Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible).");
-        inviteOrDismissModal.completion = onDismiss;
+        inviteOrDismissModal.firstButtonTitle = AMLocalizedString(@"dismiss", @"Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible).");
+        inviteOrDismissModal.firstCompletion = dismissCompletion;
     } else {
         BOOL isInOutgoingContactRequest = NO;
         MEGAContactRequestList *outgoingContactRequestList = [[MEGASdkManager sharedMEGASdk] outgoingContactRequests];
@@ -359,14 +358,14 @@
             detailText = [detailText stringByReplacingOccurrencesOfString:@"[X]" withString:email];
             inviteOrDismissModal.detail = detailText;
             inviteOrDismissModal.boldInDetail = email;
-            inviteOrDismissModal.action = AMLocalizedString(@"close", nil);
-            inviteOrDismissModal.completion = onDismiss;
+            inviteOrDismissModal.firstButtonTitle = AMLocalizedString(@"close", nil);
+            inviteOrDismissModal.firstCompletion = dismissCompletion;
         } else {
             inviteOrDismissModal.detail = email;
-            inviteOrDismissModal.action = AMLocalizedString(@"invite", @"A button on a dialog which invites a contact to join MEGA.");
-            inviteOrDismissModal.dismiss = AMLocalizedString(@"dismiss", @"Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible).");
-            inviteOrDismissModal.completion = completion;
-            inviteOrDismissModal.onDismiss = onDismiss;
+            inviteOrDismissModal.firstButtonTitle = AMLocalizedString(@"invite", @"A button on a dialog which invites a contact to join MEGA.");
+            inviteOrDismissModal.dismissButtonTitle = AMLocalizedString(@"dismiss", @"Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible).");
+            inviteOrDismissModal.firstCompletion = firstCompletion;
+            inviteOrDismissModal.dismissCompletion = dismissCompletion;
         }
     }
     

@@ -1,13 +1,13 @@
 /* Microphone usage description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
-"NSMicrophoneUsageDescription"="MEGA accède à votre microphone quand vous capturez une vidéo ou faites un appel dans l’appli.";
+"NSMicrophoneUsageDescription"="MEGA accède à votre microphone quand vous capturez une vidéo, faites un appel dans l’appli ou enregistrer des notes vocales.";
 /* Camera usage description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
 "NSCameraUsageDescription"="MEGA accède à votre caméra quand vous capturez une vidéo, prenez une photo ou faites un appel dans l’appli.";
 /* Photo library usage description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
-"NSPhotoLibraryUsageDescription"="MEGA accède à vos photos ou vos vidéos quand vous les téléversées, les partagées dans une conversation ou encore si les téléversements de la caméra sont activés.";
+"NSPhotoLibraryUsageDescription"="MEGA accède à vos photos ou vos vidéos quand vous les téléversées, les partagées dans une conversation ou encore si les téléversements de l’appareil photo sont activés.";
 /* Contacts Usage Description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
 "NSContactsUsageDescription"="MEGA accède à vos contacts quand vous en sélectionnez certains pour les enregistrer ou les exporter.";
 /* Write-only access to the user’s photo library description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
-"NSPhotoLibraryAddUsageDescription"="MEGA exige l’accès à votre photothèque pour ajouter des photos et des vidéos à la galerie de votre appareil.";
+"NSPhotoLibraryAddUsageDescription"="MEGA doit avoir accès à la médiathèque de votre appareil pour y ajouter des photos et des vidéos.";
 /* Face ID usage description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
 "NSFaceIDUsageDescription"="MEGA accède à Face ID pour vous permettre de déverrouiller facilement le code d’accès de l’appli si vous activez cette option.";
 /* Label for any 'Search' button, link, etc. - (String as short as possible). */
@@ -16,3 +16,5 @@
 "quickActionUploadString"="Téléverser";
 /* Title of the Offline section */
 "quickActionOfflineString"="Hors ligne";
+/* Location Usage Description. In order to protect user's privacy, Apple requires a specific string explaining why location will be accessed. */
+"NSLocationWhenInUseUsageDescription"="MEGA accède à votre position géographique quand vous choisissez de la partager avec vos contacts.";
