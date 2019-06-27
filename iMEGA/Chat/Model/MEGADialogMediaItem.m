@@ -213,7 +213,7 @@
 
 #pragma mark - MEGAMessageDialogViewDelegate
 
-- (void)dialogView:(MEGAMessageDialogView *)dialogView chosedOption:(MEGAMessageDialogOption)option {
+- (void)dialogView:(MEGAMessageDialogView *)dialogView didChooseOption:(MEGAMessageDialogOption)option {
     switch (option) {
         case MEGAMessageDialogOptionAlwaysAllow:
             [[MEGASdkManager sharedMEGASdk] enableRichPreviews:YES];
@@ -244,7 +244,7 @@
 #pragma mark - NSObject
 
 - (NSUInteger)hash {
-    return super.hash ^ self.message.userHandle ^ self.message.warningDialog;
+    return super.hash ^ (NSUInteger)self.message.userHandle ^ self.message.warningDialog;
 }
 
 - (NSString *)description {

@@ -1,6 +1,7 @@
 
 @interface MEGANode (MNZCategory) <UITextFieldDelegate>
 
+- (void)navigateToParentAndPresent;
 - (void)mnz_openNodeInNavigationController:(UINavigationController *)navigationController folderLink:(BOOL)isFolderLink;
 - (UIViewController *)mnz_viewControllerForNodeInFolderLink:(BOOL)isFolderLink;
 
@@ -9,6 +10,7 @@
 #pragma mark - Actions
 
 - (BOOL)mnz_downloadNodeOverwriting:(BOOL)overwrite;
+- (BOOL)mnz_downloadNodeOverwriting:(BOOL)overwrite api:(MEGASdk *)api;
 - (void)mnz_renameNodeInViewController:(UIViewController *)viewController;
 - (void)mnz_renameNodeInViewController:(UIViewController *)viewController completion:(void(^)(MEGARequest *request))completion;
 - (void)mnz_moveToTheRubbishBinInViewController:(UIViewController *)viewController;
@@ -17,6 +19,7 @@
 - (void)mnz_removeSharing;
 - (void)mnz_copyToGalleryFromTemporaryPath:(NSString *)path;
 - (void)mnz_restore;
+- (void)mnz_saveToPhotosWithApi:(MEGASdk *)api;
 
 #pragma mark - File links
 
@@ -28,6 +31,8 @@
 - (NSMutableArray *)mnz_parentTreeArray;
 - (NSString *)mnz_fileType;
 - (BOOL)mnz_isRestorable;
+- (BOOL)mnz_isPlayable;
+- (NSString *)mnz_temporaryPathForDownloadCreatingDirectories:(BOOL)creatingDirectories;
 
 #pragma mark - Versions
 

@@ -3,10 +3,10 @@
 
 #import "SVProgressHUD.h"
 
-#import "MEGAStore.h"
 #import "MEGASdkManager.h"
 #import "MEGANode+MNZCategory.h"
 #import "MEGANodeList+MNZCategory.h"
+#import "MEGAReachabilityManager.h"
 #import "UIImageView+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 #import "Helper.h"
@@ -60,7 +60,7 @@
     if (!self.presentedViewController) {
         [[MEGASdkManager sharedMEGASdk] addMEGADelegate:self];
     }
-    [[MEGASdkManager sharedMEGASdk] retryPendingConnections];
+    [[MEGAReachabilityManager sharedManager] retryPendingConnections];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -110,6 +110,10 @@
                 [self.tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
             }
         }
+        
+        UIView *view = [[UIView alloc] init];
+        view.backgroundColor = UIColor.clearColor;
+        cell.selectedBackgroundView = view;
     }
     
     return cell;
@@ -191,7 +195,7 @@
         versionsSize.text = nil;
     } else {
         titleSection.text = AMLocalizedString(@"previousVersions", @"A button label which opens a dialog to display the full version history of the selected file").uppercaseString;
-        versionsSize.text = [NSByteCountFormatter stringFromByteCount:self.node.mnz_versionsSize  countStyle:NSByteCountFormatterCountStyleMemory];
+        versionsSize.text = [Helper memoryStyleStringFromByteCount:self.node.mnz_versionsSize];
     }
     
     return sectionHeader;
@@ -231,7 +235,7 @@
         [self removeAction:nil];
     }];
     removeAction.image = [UIImage imageNamed:@"delete"];
-    removeAction.backgroundColor = UIColor.mnz_redF0373A;
+    removeAction.backgroundColor = UIColor.mnz_redMain;
     [rightActions addObject:removeAction];
     
     if (indexPath.section != 0) {
@@ -276,6 +280,12 @@
         self.navigationItem.rightBarButtonItems = @[self.editBarButtonItem];
         self.navigationItem.leftBarButtonItems = @[self.selectAllBarButtonItem];
         [self.navigationController setToolbarHidden:NO animated:YES];
+        
+        for (NodeTableViewCell *cell in self.tableView.visibleCells) {
+            UIView *view = [[UIView alloc] init];
+            view.backgroundColor = UIColor.clearColor;
+            cell.selectedBackgroundView = view;
+        }
     } else {
         self.editBarButtonItem.title = AMLocalizedString(@"edit", @"Caption of a button to edit the files that are selected");
 
@@ -284,7 +294,10 @@
         self.navigationItem.leftBarButtonItems = @[];
         
         [self.navigationController setToolbarHidden:YES animated:YES];
-
+        
+        for (NodeTableViewCell *cell in self.tableView.visibleCells) {
+            cell.selectedBackgroundView = nil;
+        }
     }
     
     if (!self.selectedNodesArray) {
@@ -311,14 +324,14 @@
 #pragma mark - UILongPressGestureRecognizer
 
 - (void)longPress:(UILongPressGestureRecognizer *)longPressGestureRecognizer {
-    if (longPressGestureRecognizer.state == UIGestureRecognizerStateBegan) {
-        CGPoint touchPoint = [longPressGestureRecognizer locationInView:self.tableView];
-        NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:touchPoint];
-        
-        if (!indexPath || ![self.tableView numberOfRowsInSection:indexPath.section] || indexPath.section == 0) {
-            return;
-        }
-        
+    CGPoint touchPoint = [longPressGestureRecognizer locationInView:self.tableView];
+    NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:touchPoint];
+    
+    if (!indexPath || ![self.tableView numberOfRowsInSection:indexPath.section] || indexPath.section == 0) {
+        return;
+    }
+    
+    if (longPressGestureRecognizer.state == UIGestureRecognizerStateBegan) {        
         if (self.isEditing) {
             // Only stop editing if long pressed over a cell that is the only one selected or when selected none
             if (self.selectedNodesArray.count == 0) {
@@ -336,6 +349,10 @@
             [self tableView:self.tableView didSelectRowAtIndexPath:indexPath];
             [self.tableView selectRowAtIndexPath:indexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
         }
+    }
+    
+    if (longPressGestureRecognizer.state == UIGestureRecognizerStateEnded) {
+        [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
     }
 }
 
@@ -472,7 +489,7 @@
         NSMutableArray *rightButtons = [NSMutableArray new];
         self.selectedNodesArray = [NSMutableArray arrayWithObject:node];
 
-        MGSwipeButton *deleteButton = [MGSwipeButton buttonWithTitle:@"" icon:[UIImage imageNamed:@"delete"] backgroundColor:UIColor.mnz_redF0373A padding:25 callback:^BOOL(MGSwipeTableCell *sender) {
+        MGSwipeButton *deleteButton = [MGSwipeButton buttonWithTitle:@"" icon:[UIImage imageNamed:@"delete"] backgroundColor:UIColor.mnz_redMain padding:25 callback:^BOOL(MGSwipeTableCell *sender) {
             [self removeAction:nil];
             return YES;
         }];
@@ -512,6 +529,10 @@
         case MegaNodeActionTypeRevertVersion:
             self.selectedNodesArray = [NSMutableArray arrayWithObject:node];
             [self revertAction:nil];
+            break;
+            
+        case MegaNodeActionTypeSaveToPhotos:
+            [node mnz_saveToPhotosWithApi:[MEGASdkManager sharedMEGASdk]];
             break;
             
         default:
@@ -594,7 +615,7 @@
     if (transfer.type == MEGATransferTypeDownload && [[Helper downloadingNodes] objectForKey:base64Handle]) {
         float percentage = (transfer.transferredBytes.floatValue / transfer.totalBytes.floatValue * 100);
         NSString *percentageCompleted = [NSString stringWithFormat:@"%.f%%", percentage];
-        NSString *speed = [NSString stringWithFormat:@"%@/s", [NSByteCountFormatter stringFromByteCount:transfer.speed.longLongValue countStyle:NSByteCountFormatterCountStyleMemory]];
+        NSString *speed = [NSString stringWithFormat:@"%@/s", [Helper memoryStyleStringFromByteCount:transfer.speed.longLongValue]];
         
         NSIndexPath *indexPath = [self.nodesIndexPathMutableDictionary objectForKey:base64Handle];
         if (indexPath != nil) {

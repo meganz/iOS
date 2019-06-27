@@ -13,11 +13,9 @@ typedef NS_ENUM(NSUInteger, MEGAPhotoMode) {
 
 @protocol MEGAPhotoBrowserDelegate <NSObject>
 
-- (void)photoBrowser:(MEGAPhotoBrowserViewController *)photoBrowser didPresentNode:(MEGANode *)node atIndex:(NSUInteger)index;
-
 @optional
-
-- (void)photoBrowser:(MEGAPhotoBrowserViewController *)photoBrowser willDismissWithNode:(MEGANode *)node;
+- (void)photoBrowser:(MEGAPhotoBrowserViewController *)photoBrowser didPresentNode:(MEGANode *)node atIndex:(NSUInteger)index;
+- (void)didDismissPhotoBrowser:(MEGAPhotoBrowserViewController *)photoBrowser;
 
 @end
 
@@ -33,5 +31,6 @@ typedef NS_ENUM(NSUInteger, MEGAPhotoMode) {
 @property (nonatomic, weak) id<MEGAPhotoBrowserDelegate> delegate;
 @property (nonatomic) DisplayMode displayMode;
 @property (nonatomic) NSString *publicLink;
+@property (nonatomic) NSString *encryptedLink;
 
 @end

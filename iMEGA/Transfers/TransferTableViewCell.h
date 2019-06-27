@@ -1,32 +1,25 @@
 #import <UIKit/UIKit.h>
 
-@class MEGATransfer, TransferTableViewCell;
+@class MEGATransfer, MOUploadTransfer;
 
 @protocol TransferTableViewCellDelegate
 
-- (void)pauseTransferCell:(TransferTableViewCell *)cell;
+- (void)pauseTransfer:(MEGATransfer *)transfer;
+- (void)cancelQueuedUploadTransfer:(NSString *)localIdentifier;
 
 @end
 
 @interface TransferTableViewCell : UITableViewCell
 
-@property (weak, nonatomic) IBOutlet UIImageView *iconImageView;
-@property (weak, nonatomic) IBOutlet UILabel *nameLabel;
-@property (weak, nonatomic) IBOutlet UIImageView *arrowImageView;
-@property (weak, nonatomic) IBOutlet UILabel *infoLabel;
-@property (weak, nonatomic) IBOutlet UILabel *percentageLabel;
-@property (weak, nonatomic) IBOutlet UILabel *speedLabel;
-@property (weak, nonatomic) IBOutlet UIButton *cancelButton;
-@property (weak, nonatomic) IBOutlet UIButton *pauseButton;
-
-@property (weak, nonatomic) IBOutlet UIView *lineView;
-
 @property (assign, nonatomic) id<TransferTableViewCellDelegate> delegate;
 
-@property (strong, nonatomic) MEGATransfer *transfer;
-
 - (void)configureCellForTransfer:(MEGATransfer *)transfer delegate:(id<TransferTableViewCellDelegate>)delegate;
+- (void)reconfigureCellWithTransfer:(MEGATransfer *)transfer;
+- (void)configureCellForQueuedTransfer:(NSString *)uploadTransferLocalIdentifier delegate:(id<TransferTableViewCellDelegate>)delegate;
 
+- (void)configureCellWithTransferState:(MEGATransferState)transferState;
+- (void)reloadThumbnailImage;
 - (void)updatePercentAndSpeedLabelsForTransfer:(MEGATransfer *)transfer;
+- (void)updateTransferIfNewState:(MEGATransfer *)transfer;
 
 @end

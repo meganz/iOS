@@ -3,6 +3,7 @@
 
 #import "NSDate+DateTools.h"
 
+#import "Helper.h"
 #import "NSString+MNZCategory.h"
 #import "UIColor+MNZCategory.h"
 
@@ -19,8 +20,6 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *howItWorksCompletedExplanationLabel;
 
-@property (nonatomic) NSByteCountFormatter *byteCountFormatter;
-
 @end
 
 @implementation AchievementsDetailsViewController
@@ -29,9 +28,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    self.byteCountFormatter = [[NSByteCountFormatter alloc] init];
-    self.byteCountFormatter.countStyle = NSByteCountFormatterCountStyleMemory;
     
     UIImage *achievementImage;
     
@@ -48,7 +44,7 @@
             navigationTitle = AMLocalizedString(@"registrationBonus", @"achievement type");
             achievementImage = [UIImage imageNamed:@"achievementsRegistration"];
             NSString *registrationBonusExplanation = AMLocalizedString(@"registrationBonusExplanation", @"Message shown on the achievements dialog for achieved achievements, %1 is replaced with e.g. 20 GB");
-            howItWorksExplanationLabel = [registrationBonusExplanation stringByReplacingOccurrencesOfString:@"%1" withString:[self.byteCountFormatter stringFromByteCount:classStorageReward]];
+            howItWorksExplanationLabel = [registrationBonusExplanation stringByReplacingOccurrencesOfString:@"%1" withString:[Helper memoryStyleStringFromByteCount:classStorageReward]];
             break;
         }
             
@@ -57,8 +53,8 @@
             achievementImage = [UIImage imageNamed:@"achievementsInstallMega"];
             
             NSString *installMEGASyncCompletedExplanation = AMLocalizedString(@"installMEGASyncCompletedExplanation", @"Message shown on the achievements dialog for achieved achievements, %1 and %2 are replaced with e.g. 20 GB");
-            installMEGASyncCompletedExplanation = [installMEGASyncCompletedExplanation stringByReplacingOccurrencesOfString:@"%1" withString:[self.byteCountFormatter stringFromByteCount:classStorageReward]];
-            howItWorksExplanationLabel = [installMEGASyncCompletedExplanation stringByReplacingOccurrencesOfString:@"%2" withString:[self.byteCountFormatter stringFromByteCount:classTransferReward]];
+            installMEGASyncCompletedExplanation = [installMEGASyncCompletedExplanation stringByReplacingOccurrencesOfString:@"%1" withString:[Helper memoryStyleStringFromByteCount:classStorageReward]];
+            howItWorksExplanationLabel = [installMEGASyncCompletedExplanation stringByReplacingOccurrencesOfString:@"%2" withString:[Helper memoryStyleStringFromByteCount:classTransferReward]];
             break;
         }
             
@@ -67,8 +63,8 @@
             achievementImage = [UIImage imageNamed:@"achievementsInstallMobile"];
             
             NSString *installOurMobileAppCompletedExplanation = AMLocalizedString(@"installOurMobileAppCompletedExplanation", @"");
-            installOurMobileAppCompletedExplanation = [installOurMobileAppCompletedExplanation stringByReplacingOccurrencesOfString:@"%1" withString:[self.byteCountFormatter stringFromByteCount:classStorageReward]];
-            howItWorksExplanationLabel = [installOurMobileAppCompletedExplanation stringByReplacingOccurrencesOfString:@"%2" withString:[self.byteCountFormatter stringFromByteCount:classTransferReward]];
+            installOurMobileAppCompletedExplanation = [installOurMobileAppCompletedExplanation stringByReplacingOccurrencesOfString:@"%1" withString:[Helper memoryStyleStringFromByteCount:classStorageReward]];
+            howItWorksExplanationLabel = [installOurMobileAppCompletedExplanation stringByReplacingOccurrencesOfString:@"%2" withString:[Helper memoryStyleStringFromByteCount:classTransferReward]];
             break;
         }
             
@@ -78,7 +74,7 @@
     
     self.navigationItem.title = navigationTitle;
     
-    self.achievementImageView.image = achievementImage;
+    self.achievementImageView.image = achievementImage.imageFlippedForRightToLeftLayoutDirection;
     
     [self setBonusExpireInLabelText];
     
@@ -98,18 +94,18 @@
     
     if (awardExpirationdDate.daysUntil == 0) {
         bonusExpiresIn = AMLocalizedString(@"expired", @"Label to show that an error related with expiration occurs during a SDK operation.");
-        self.bonusExpireInLabel.textColor = [UIColor mnz_redF0373A];
+        self.bonusExpireInLabel.textColor = UIColor.mnz_redMain;
         self.bonusExpireInView.backgroundColor = self.bonusExpireInLabel.backgroundColor = [UIColor colorFromHexString:@"#FEF9F9"];
         
-        self.bonusExpireInView.layer.borderColor = [UIColor mnz_redF0373A].CGColor;
+        self.bonusExpireInView.layer.borderColor = UIColor.mnz_redMain.CGColor;
     } else {
         self.bonusExpireInView.layer.borderColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.14].CGColor;
         
         if (awardExpirationdDate.daysUntil > 30) {
-            bonusExpiresIn = [bonusExpiresIn stringByReplacingOccurrencesOfString:@"%1" withString:[NSString stringWithFormat:@"%lu", awardExpirationdDate.monthsUntil]];
+            bonusExpiresIn = [bonusExpiresIn stringByReplacingOccurrencesOfString:@"%1" withString:[NSString stringWithFormat:@"%zd", awardExpirationdDate.monthsUntil]];
             bonusExpiresIn = [bonusExpiresIn stringByReplacingOccurrencesOfString:@"%2" withString:AMLocalizedString(@"months", @"Used to display the number of months a plan was purchased for e.g. 3 months, 6 months.")];
         } else {
-            bonusExpiresIn = [bonusExpiresIn stringByReplacingOccurrencesOfString:@"%1" withString:[NSString stringWithFormat:@"%lu", awardExpirationdDate.daysUntil]];
+            bonusExpiresIn = [bonusExpiresIn stringByReplacingOccurrencesOfString:@"%1" withString:[NSString stringWithFormat:@"%zd", awardExpirationdDate.daysUntil]];
             bonusExpiresIn = [bonusExpiresIn stringByReplacingOccurrencesOfString:@"%2" withString:AMLocalizedString(@"days", @"")];
         }
     }

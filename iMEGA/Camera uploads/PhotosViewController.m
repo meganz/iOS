@@ -1,6 +1,5 @@
 #import "PhotosViewController.h"
 
-#import "SVProgressHUD.h"
 #import "UIScrollView+EmptyDataSet.h"
 
 #import "Helper.h"
@@ -9,7 +8,7 @@
 #import "MEGANode+MNZCategory.h"
 #import "MEGANodeList+MNZCategory.h"
 #import "MEGAReachabilityManager.h"
-#import "MEGAStore.h"
+#import "NSDate+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 #import "MEGAPhotoBrowserViewController.h"
 #import "UICollectionView+MNZCategory.h"
@@ -79,8 +78,6 @@
     
     [self.view addGestureRecognizer:[[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPress:)]];
     
-    [self.toolbar setFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.frame), 49)];
-    
     self.cellInset = 1.0f;
     self.cellSize = [self.photosCollectionView mnz_calculateCellSizeForInset:self.cellInset];
 }
@@ -92,13 +89,31 @@
     
     [self setEditing:NO animated:NO];
     
-    [[MEGASdkManager sharedMEGASdk] retryPendingConnections];
+    [[MEGAReachabilityManager sharedManager] retryPendingConnections];
     [[MEGASdkManager sharedMEGASdk] addMEGARequestDelegate:self];
     [[MEGASdkManager sharedMEGASdk] addMEGATransferDelegate:self];
     [[MEGASdkManager sharedMEGASdk] addMEGAGlobalDelegate:self];
     
-    [self setNavigationBarButtonItemsEnabled:[MEGAReachabilityManager isReachable]];
+    self.editBarButtonItem.enabled = MEGAReachabilityManager.isReachable;
     [self reloadUI];
+}
+
+- (void)viewDidLayoutSubviews {
+    [super viewDidLayoutSubviews];
+    
+    self.cellSize = [self.photosCollectionView mnz_calculateCellSizeForInset:self.cellInset];
+    [self reloadUI];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
+    if (![NSUserDefaults.standardUserDefaults objectForKey:kIsCameraUploadsEnabled]) {
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            MEGANavigationController *cameraUploadsNavigationController = [[UIStoryboard storyboardWithName:@"Photos" bundle:nil] instantiateViewControllerWithIdentifier:@"CameraUploadsPopUpNavigationControllerID"];
+            [self presentViewController:cameraUploadsNavigationController animated:YES completion:nil];
+        });
+    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -109,13 +124,6 @@
     [[MEGASdkManager sharedMEGASdk] removeMEGARequestDelegate:self];
     [[MEGASdkManager sharedMEGASdk] removeMEGATransferDelegate:self];
     [[MEGASdkManager sharedMEGASdk] removeMEGAGlobalDelegate:self];
-}
-
-- (void)viewDidLayoutSubviews {
-    [super viewDidLayoutSubviews];
-    
-    self.cellSize = [self.photosCollectionView mnz_calculateCellSizeForInset:self.cellInset];
-    [self reloadUI];
 }
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations {
@@ -229,12 +237,6 @@
     
     self.nodeList = [[MEGASdkManager sharedMEGASdk] childrenForParent:self.parentNode order:MEGASortOrderTypeModificationDesc];
     
-    NSDateFormatter *df = [[NSDateFormatter alloc] init];
-    df.dateStyle = NSDateFormatterLongStyle;
-    df.timeStyle = NSDateFormatterNoStyle;
-    df.locale = [NSLocale currentLocale];
-    df.dateFormat = @"LLLL yyyy";
-    
     self.mediaNodesArray = [[NSMutableArray alloc] initWithCapacity:self.nodeList.size.unsignedIntegerValue];
     
     for (NSInteger i = 0; i < [self.nodeList.size integerValue]; i++) {
@@ -244,7 +246,7 @@
             continue;
         }
         
-        NSString *currentMonthYearString = [df stringFromDate:[node modificationTime]];
+        NSString *currentMonthYearString = node.modificationTime.mnz_formattedMonthAndYear;
         
         if (![photosByMonthYearDictionary objectForKey:currentMonthYearString]) {
             photosByMonthYearDictionary = [NSMutableDictionary new];
@@ -271,12 +273,8 @@
 }
 
 - (void)internetConnectionChanged {
-    [self setNavigationBarButtonItemsEnabled:[MEGAReachabilityManager isReachable]];
+    self.editBarButtonItem.enabled = MEGAReachabilityManager.isReachable;
     [self updateCurrentStateWithKnownCameraUploadInProgress:NO];
-}
-
-- (void)setNavigationBarButtonItemsEnabled:(BOOL)boolValue {
-    [self.editButtonItem setEnabled:boolValue];
 }
 
 - (void)pushCameraUploadSettings {
@@ -361,6 +359,9 @@
 #pragma mark - IBAction
 
 - (IBAction)enableCameraUploadsTouchUpInside:(UIButton *)sender {
+    if (self.photosCollectionView.allowsMultipleSelection) {
+        [self setEditing:NO animated:NO];
+    }
     [self pushCameraUploadSettings];
 }
 
@@ -408,7 +409,21 @@
         self.navigationItem.leftBarButtonItems = @[self.selectAllBarButtonItem];
         
         [self.toolbar setAlpha:0.0];
-        [self.tabBarController.tabBar addSubview:self.toolbar];
+        [self.tabBarController.view addSubview:self.toolbar];
+        self.toolbar.translatesAutoresizingMaskIntoConstraints = NO;
+        
+        NSLayoutAnchor *bottomAnchor;
+        if (@available(iOS 11.0, *)) {
+            bottomAnchor = self.tabBarController.tabBar.safeAreaLayoutGuide.bottomAnchor;
+        } else {
+            bottomAnchor = self.tabBarController.tabBar.bottomAnchor;
+        }
+        
+        [NSLayoutConstraint activateConstraints:@[[self.toolbar.topAnchor constraintEqualToAnchor:self.tabBarController.tabBar.topAnchor constant:0],
+                                                  [self.toolbar.leadingAnchor constraintEqualToAnchor:self.tabBarController.tabBar.leadingAnchor constant:0],
+                                                  [self.toolbar.trailingAnchor constraintEqualToAnchor:self.tabBarController.tabBar.trailingAnchor constant:0],
+                                                  [self.toolbar.bottomAnchor constraintEqualToAnchor:bottomAnchor constant:0]]];
+        
         [UIView animateWithDuration:0.33f animations:^ {
             [self.toolbar setAlpha:1.0];
         }];
@@ -502,9 +517,9 @@
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
     if ([self.photosByMonthYearArray count] == 0) {
-        [self setNavigationBarButtonItemsEnabled:NO];
+        self.editBarButtonItem.enabled = NO;
     } else {
-        [self setNavigationBarButtonItemsEnabled:[MEGAReachabilityManager isReachable]];
+        self.editBarButtonItem.enabled = MEGAReachabilityManager.isReachable;
     }
     
     return [self.photosByMonthYearArray count];
@@ -539,13 +554,13 @@
     
     cell.nodeHandle = [node handle];
     
-    cell.thumbnailSelectionOverlayView.layer.borderColor = [[UIColor mnz_redFF333A] CGColor];
+    cell.thumbnailSelectionOverlayView.layer.borderColor = [UIColor.mnz_green00BFA5 CGColor];
     cell.thumbnailSelectionOverlayView.hidden = [self.selectedItemsDictionary objectForKey:[NSNumber numberWithLongLong:node.handle]] == nil;
-
-    if (node.name.mnz_videoPathExtension && node.duration > -1) {
-        cell.thumbnailVideoDurationLabel.text = [NSString mnz_stringFromTimeInterval:node.duration];
-    }
     
+    cell.thumbnailVideoOverlayView.hidden = !node.name.mnz_isVideoPathExtension;
+    cell.thumbnailPlayImageView.hidden = !node.name.mnz_isVideoPathExtension;
+    cell.thumbnailVideoDurationLabel.text = (node.name.mnz_isVideoPathExtension && node.duration > -1) ? [NSString mnz_stringFromTimeInterval:node.duration] : @"";
+
     cell.thumbnailImageView.hidden = self.browsingIndexPath && indexPath.section == self.browsingIndexPath.section && indexPath.item == self.browsingIndexPath.item;
     
     if (@available(iOS 11.0, *)) {
@@ -679,15 +694,6 @@
                 [self setEditing:NO animated:YES];
             }
             if (self.selectedItemsDictionary.count == 1) {
-                NSInteger index = 0;
-                for (NSInteger i = 0; i < indexPath.section; i++) {
-                    NSDictionary *dict = [self.photosByMonthYearArray objectAtIndex:i];
-                    NSString *key = [[dict allKeys] objectAtIndex:0];
-                    NSArray *array = [dict objectForKey:key];
-                    index += array.count;
-                }
-                index += indexPath.row;
-                
                 NSDictionary *monthPhotosDictionary = [self.photosByMonthYearArray objectAtIndex:indexPath.section];
                 NSString *monthKey = [monthPhotosDictionary.allKeys objectAtIndex:0];
                 NSArray *monthPhotosArray = [monthPhotosDictionary objectForKey:monthKey];
@@ -758,6 +764,17 @@
     return [[NSAttributedString alloc] initWithString:text attributes:[Helper titleAttributesForEmptyState]];
 }
 
+- (nullable NSAttributedString *)descriptionForEmptyDataSet:(UIScrollView *)scrollView {
+    NSString *text = @"";
+    if (!MEGAReachabilityManager.isReachable && !MEGAReachabilityManager.sharedManager.isMobileDataEnabled) {
+        text = AMLocalizedString(@"Mobile Data is turned off", @"Information shown when the user has disabled the 'Mobile Data' setting for MEGA in the iOS Settings.");
+    }
+    
+    NSDictionary *attributes = @{NSFontAttributeName:[UIFont preferredFontForTextStyle:UIFontTextStyleFootnote], NSForegroundColorAttributeName:UIColor.mnz_gray777777};
+    
+    return [NSAttributedString.alloc initWithString:text attributes:attributes];
+}
+
 - (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView {
     UIImage *image = nil;
     if ([MEGAReachabilityManager isReachable]) {
@@ -780,6 +797,10 @@
     if ([MEGAReachabilityManager isReachable]) {
         if (![[CameraUploads syncManager] isCameraUploadsEnabled]) {
             text = AMLocalizedString(@"enable", @"Text button shown when the chat is disabled and if tapped the chat will be enabled");
+        }
+    } else {
+        if (!MEGAReachabilityManager.sharedManager.isMobileDataEnabled) {
+            text = AMLocalizedString(@"Turn Mobile Data on", @"Button title to go to the iOS Settings to enable 'Mobile Data' for the MEGA app.");
         }
     }
     
@@ -806,18 +827,19 @@
 }
 
 - (CGFloat)spaceHeightForEmptyDataSet:(UIScrollView *)scrollView {
-    CGFloat spaceHeight = [Helper spaceHeightForEmptyState];
-    if (![[CameraUploads syncManager] isCameraUploadsEnabled] || ![[UIDevice currentDevice] iPhone4X]) {
-        spaceHeight += 20.0f;
-    }
-    
-    return spaceHeight;
+    return Helper.spaceHeightForEmptyState;
 }
 
-#pragma mark - DZNEmptyDataSetDelegate Methods
+#pragma mark - DZNEmptyDataSetDelegate
 
 - (void)emptyDataSet:(UIScrollView *)scrollView didTapButton:(UIButton *)button {
-    [self pushCameraUploadSettings];
+    if (MEGAReachabilityManager.isReachable) {
+        [self pushCameraUploadSettings];
+    } else {
+        if (!MEGAReachabilityManager.sharedManager.isMobileDataEnabled) {
+            [UIApplication.sharedApplication openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString] options:@{} completionHandler:nil];
+        }
+    }
 }
 
 #pragma mark - MEGAPhotoBrowserDelegate
@@ -834,7 +856,7 @@
     [self.photosCollectionView reloadData];
 }
 
-- (void)photoBrowser:(MEGAPhotoBrowserViewController *)photoBrowser willDismissWithNode:(MEGANode *)node {
+- (void)didDismissPhotoBrowser:(MEGAPhotoBrowserViewController *)photoBrowser {
     self.browsingIndexPath = nil;
     [self.photosCollectionView reloadData];
 }

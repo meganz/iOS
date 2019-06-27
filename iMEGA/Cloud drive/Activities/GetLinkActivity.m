@@ -1,11 +1,7 @@
 
 #import "GetLinkActivity.h"
 
-#import "SVProgressHUD.h"
-
 #import "CopyrightWarningViewController.h"
-#import "GetLinkTableViewController.h"
-#import "Helper.h"
 #import "MEGAReachabilityManager.h"
 #import "UIApplication+MNZCategory.h"
 
@@ -58,7 +54,7 @@
 
 - (void)performActivity {
     if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-        [CopyrightWarningViewController presentGetLinkViewControllerForNodes:self.nodes inViewController:UIApplication.mnz_visibleViewController];
+        [CopyrightWarningViewController presentGetLinkViewControllerForNodes:self.nodes inViewController:UIApplication.mnz_presentingViewController];
     }
 }
 

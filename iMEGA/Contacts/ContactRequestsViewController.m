@@ -1,15 +1,16 @@
+
 #import "ContactRequestsViewController.h"
 
-#import "MEGASdkManager.h"
-#import "Helper.h"
-
-#import "MEGAReachabilityManager.h"
 #import "UIScrollView+EmptyDataSet.h"
 #import "UIImage+GKContact.h"
 #import "SVProgressHUD.h"
 #import "DateTools.h"
 
 #import "ContactRequestsTableViewCell.h"
+#import "Helper.h"
+#import "MEGAReachabilityManager.h"
+#import "MEGASdkManager.h"
+#import "NSString+MNZCategory.h"
 
 @interface ContactRequestsViewController () <DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGARequestDelegate, MEGAGlobalDelegate>
 
@@ -47,7 +48,9 @@
     [self.contactRequestsSegmentedControl setTitle:AMLocalizedString(@"sent", nil) forSegmentAtIndex:1];
     
     [[MEGASdkManager sharedMEGASdk] addMEGAGlobalDelegate:self];
-    [[MEGASdkManager sharedMEGASdk] retryPendingConnections];
+    [[MEGAReachabilityManager sharedManager] retryPendingConnections];
+    
+    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     
     [self reloadUI];
 }
@@ -178,7 +181,7 @@
             
             MEGAContactRequest *contactRequest = [self.incomingContactRequestArray objectAtIndex:indexPath.row];
             NSString *avatarColorString = [MEGASdk avatarColorForBase64UserHandle:[MEGASdk base64HandleForUserHandle:contactRequest.handle]];
-            cell.avatarImageView.image = [UIImage imageForName:contactRequest.sourceEmail.uppercaseString size:cell.avatarImageView.frame.size backgroundColor:[UIColor colorFromHexString:avatarColorString] textColor:[UIColor whiteColor] font:[UIFont mnz_SFUIRegularWithSize:(cell.avatarImageView.frame.size.width/2.0f)]];
+            cell.avatarImageView.image = [UIImage imageForName:contactRequest.sourceEmail.mnz_initialForAvatar size:cell.avatarImageView.frame.size backgroundColor:[UIColor colorFromHexString:avatarColorString] textColor:[UIColor whiteColor] font:[UIFont mnz_SFUIRegularWithSize:(cell.avatarImageView.frame.size.width/2.0f)]];
             cell.nameLabel.text = [contactRequest sourceEmail];
             cell.timeAgoLabel.text = [[[contactRequest modificationTime] timeAgoSinceNow] stringByAppendingString:pendingString];
             
@@ -190,7 +193,7 @@
             
             MEGAContactRequest *contactRequest = [self.outgoingContactRequestArray objectAtIndex:indexPath.row];
             NSString *avatarColorString = [MEGASdk avatarColorForBase64UserHandle:[MEGASdk base64HandleForUserHandle:contactRequest.handle]];
-            cell.avatarImageView.image = [UIImage imageForName:contactRequest.targetEmail.uppercaseString size:cell.avatarImageView.frame.size backgroundColor:[UIColor colorFromHexString:avatarColorString] textColor:[UIColor whiteColor] font:[UIFont mnz_SFUIRegularWithSize:(cell.avatarImageView.frame.size.width/2.0f)]];
+            cell.avatarImageView.image = [UIImage imageForName:contactRequest.targetEmail.mnz_initialForAvatar size:cell.avatarImageView.frame.size backgroundColor:[UIColor colorFromHexString:avatarColorString] textColor:[UIColor whiteColor] font:[UIFont mnz_SFUIRegularWithSize:(cell.avatarImageView.frame.size.width/2.0f)]];
             cell.nameLabel.text = [contactRequest targetEmail];
             cell.timeAgoLabel.text = [[[contactRequest modificationTime] timeAgoSinceNow] stringByAppendingString:pendingString];
             break;
@@ -231,6 +234,17 @@
     return [[NSAttributedString alloc] initWithString:text attributes:[Helper titleAttributesForEmptyState]];
 }
 
+- (nullable NSAttributedString *)descriptionForEmptyDataSet:(UIScrollView *)scrollView {
+    NSString *text = @"";
+    if (!MEGAReachabilityManager.isReachable && !MEGAReachabilityManager.sharedManager.isMobileDataEnabled) {
+        text = AMLocalizedString(@"Mobile Data is turned off", @"Information shown when the user has disabled the 'Mobile Data' setting for MEGA in the iOS Settings.");
+    }
+    
+    NSDictionary *attributes = @{NSFontAttributeName:[UIFont preferredFontForTextStyle:UIFontTextStyleFootnote], NSForegroundColorAttributeName:UIColor.mnz_gray777777};
+    
+    return [NSAttributedString.alloc initWithString:text attributes:attributes];
+}
+
 - (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView {
     if ([MEGAReachabilityManager isReachable]) {
         return [UIImage imageNamed:@"contactsEmptyState"];
@@ -239,12 +253,36 @@
     }
 }
 
+- (NSAttributedString *)buttonTitleForEmptyDataSet:(UIScrollView *)scrollView forState:(UIControlState)state {
+    NSString *text = @"";
+    if (!MEGAReachabilityManager.isReachable && !MEGAReachabilityManager.sharedManager.isMobileDataEnabled) {
+        text = AMLocalizedString(@"Turn Mobile Data on", @"Button title to go to the iOS Settings to enable 'Mobile Data' for the MEGA app.");
+    }
+    
+    return [NSAttributedString.alloc initWithString:text attributes:Helper.buttonTextAttributesForEmptyState];
+}
+
+- (UIImage *)buttonBackgroundImageForEmptyDataSet:(UIScrollView *)scrollView forState:(UIControlState)state {
+    UIEdgeInsets capInsets = [Helper capInsetsForEmptyStateButton];
+    UIEdgeInsets rectInsets = [Helper rectInsetsForEmptyStateButton];
+    
+    return [[[UIImage imageNamed:@"emptyStateButton"] resizableImageWithCapInsets:capInsets resizingMode:UIImageResizingModeStretch] imageWithAlignmentRectInsets:rectInsets];
+}
+
 - (UIColor *)backgroundColorForEmptyDataSet:(UIScrollView *)scrollView {
     return [UIColor whiteColor];
 }
 
 - (CGFloat)spaceHeightForEmptyDataSet:(UIScrollView *)scrollView {
     return [Helper spaceHeightForEmptyState];
+}
+
+#pragma mark - DZNEmptyDataSetDelegate
+
+- (void)emptyDataSet:(UIScrollView *)scrollView didTapButton:(UIButton *)button {
+    if (!MEGAReachabilityManager.isReachable && !MEGAReachabilityManager.sharedManager.isMobileDataEnabled) {
+        [UIApplication.sharedApplication openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString] options:@{} completionHandler:nil];
+    }
 }
 
 #pragma mark - MEGARequestDelegate
@@ -260,7 +298,7 @@
     switch ([request type]) {
             
         case MEGARequestTypeGetAttrUser: {
-            for (ContactRequestsTableViewCell *icrtvc in [self.tableView visibleCells]) {
+            for (ContactRequestsTableViewCell *icrtvc in self.tableView.visibleCells) {
                 if ([[request email] isEqualToString:[icrtvc.nameLabel text]]) {
                     NSString *fileName = [request email];
                     NSString *avatarFilePath = [Helper pathForSharedSandboxCacheDirectory:@"thumbnailsV3"];

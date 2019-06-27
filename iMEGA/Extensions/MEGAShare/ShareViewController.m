@@ -18,6 +18,7 @@
 #import "MEGASdk.h"
 #import "MEGASdkManager.h"
 #import "MEGATransferDelegate.h"
+#import "NSFileManager+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 #import "ShareAttachment.h"
 #import "ShareFilesDestinationTableViewController.h"
@@ -34,6 +35,7 @@
 @property (nonatomic) NSUInteger unsupportedAssets;
 @property (nonatomic) NSUInteger alreadyInDestinationAssets;
 @property (nonatomic) float progress;
+@property (nonatomic) NSDate *lastProgressChange;
 
 @property (nonatomic) UINavigationController *loginRequiredNC;
 @property (nonatomic) LaunchViewController *launchVC;
@@ -52,6 +54,10 @@
 
 @property (nonatomic) NSArray<MEGAChatListItem *> *chats;
 @property (nonatomic) NSArray<MEGAUser *> *users;
+@property (nonatomic) NSMutableSet<NSNumber *> *openedChatIds;
+
+@property (nonatomic) dispatch_semaphore_t semaphore;
+@property (nonatomic) BOOL waitingSemaphore;
 
 @end
 
@@ -60,6 +66,8 @@
 #pragma mark - Lifecycle
 
 - (void)viewDidLoad {
+    [super viewDidLoad];
+    
     NSSetUncaughtExceptionHandler(&uncaughtExceptionHandler);
 
     self.sharedUserDefaults = [[NSUserDefaults alloc] initWithSuiteName:@"group.mega.ios"];
@@ -77,7 +85,8 @@
     self.fetchNodesDone = NO;
     self.passcodePresented = NO;
     self.passcodeToBePresented = NO;
-
+    self.semaphore = dispatch_semaphore_create(0);
+    
     [MEGASdkManager setAppKey:kAppKey];
     NSString *userAgent = [NSString stringWithFormat:@"%@/%@", kUserAgent, [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"]];
     [MEGASdkManager setUserAgent:userAgent];
@@ -89,18 +98,25 @@
 #else
     [MEGASdk setLogLevel:MEGALogLevelFatal];
 #endif
+        
+    [MEGASdk setLogToConsole:YES];
     
     // Add observers to get notified when the extension goes to background and comes back to foreground:
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(willResignActive)
                                                  name:NSExtensionHostWillResignActiveNotification
                                                object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didBecomeActive)
-                                                 name:NSExtensionHostDidBecomeActiveNotification
-                                               object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didEnterBackground)
                                                  name:NSExtensionHostDidEnterBackgroundNotification
                                                object:nil];
-
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(willEnterForeground)
+                                                 name:NSExtensionHostWillEnterForegroundNotification
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didBecomeActive)
+                                                 name:NSExtensionHostDidBecomeActiveNotification
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didReceiveMemoryWarning)
+                                                 name:UIApplicationDidReceiveMemoryWarningNotification
+                                               object:nil];
     
     [self setupAppearance];
     [SVProgressHUD setViewForExtension:self.view];
@@ -131,6 +147,9 @@
     } else {
         [self requireLogin];
     }
+    
+    self.openedChatIds = [NSMutableSet<NSNumber *> new];
+    self.lastProgressChange = [NSDate new];
 }
 
 - (void)viewWillAppear:(BOOL)animated{
@@ -152,6 +171,37 @@
         self.privacyView = privacyVC.view;
         [self.view addSubview:self.privacyView];
     }
+}
+
+- (void)didEnterBackground {
+    if ([self.presentedViewController isKindOfClass:LTHPasscodeViewController.class]) {
+        [self.presentedViewController dismissViewControllerAnimated:NO completion:nil];
+    }
+    self.passcodePresented = NO;
+    
+    [[MEGASdkManager sharedMEGAChatSdk] setBackgroundStatus:YES];
+    [[MEGASdkManager sharedMEGAChatSdk] saveCurrentState];
+    
+    if (self.pendingAssets > self.unsupportedAssets) {
+        [[NSProcessInfo processInfo] performExpiringActivityWithReason:@"Share Extension activity in progress" usingBlock:^(BOOL expired) {
+            if (expired) {
+                [self saveStateAndLogout];
+                dispatch_semaphore_signal(self.semaphore);
+                [self.extensionContext cancelRequestWithError:[NSError errorWithDomain:@"Share Extension suspended" code:-1 userInfo:nil]];
+            } else {
+                if (!self.waitingSemaphore) {
+                    self.waitingSemaphore = YES;
+                    dispatch_semaphore_wait(self.semaphore, DISPATCH_TIME_FOREVER);
+                }
+            }
+        }];
+    }
+}
+
+- (void)willEnterForeground {
+    [[MEGASdkManager sharedMEGAChatSdk] setBackgroundStatus:NO];
+    
+    [[MEGAReachabilityManager sharedManager] retryOrReconnect];
 }
 
 - (void)didBecomeActive {
@@ -179,8 +229,19 @@
     }
 }
 
-- (void)didEnterBackground {
-    self.passcodePresented = NO;
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    
+    MEGALogError(@"Share extension received memory warning");
+    if (!self.presentedViewController) {
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"shareExtensionUnsupportedAssets", nil) message:AMLocalizedString(@"Limited system resources are available when sharing items. Try uploading these files from within the MEGA app.", @"Message shown to the user when the share extension is about to be killed by iOS due to a memory issue") preferredStyle:UIAlertControllerStyleAlert];
+        [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+            [self dismissWithCompletionHandler:^{
+                [self.extensionContext cancelRequestWithError:[NSError errorWithDomain:@"Memory warning" code:-1 userInfo:nil]];
+            }];
+        }]];
+        [self presentViewController:alertController animated:YES completion:nil];
+    }
 }
 
 #pragma mark - Language
@@ -242,19 +303,27 @@
         if (![MEGASdkManager sharedMEGAChatSdk]) {
             [MEGASdkManager createSharedMEGAChatSdk];
         }
-        [[MEGALogger sharedLogger] enableChatlogs];
         
         MEGAChatInit chatInit = [[MEGASdkManager sharedMEGAChatSdk] initState];
         if (chatInit == MEGAChatInitNotDone) {
             chatInit = [[MEGASdkManager sharedMEGAChatSdk] initKarereWithSid:self.session];
+            if (chatInit == MEGAChatInitWaitingNewSession || chatInit == MEGAChatInitOfflineSession) {
+                [[MEGASdkManager sharedMEGAChatSdk] resetClientId];
+            }
             if (chatInit == MEGAChatInitError) {
                 MEGALogError(@"Init Karere with session failed");
                 [[MEGASdkManager sharedMEGAChatSdk] logout];
             }
+        } else {
+            [[MEGAReachabilityManager sharedManager] reconnect];
         }
-    } else {
-        [[MEGALogger sharedLogger] enableSDKlogs];
     }
+}
+
+- (void)saveStateAndLogout {
+    [[MEGASdkManager sharedMEGAChatSdk] saveCurrentState];
+    [[MEGASdkManager sharedMEGASdk] localLogout];
+    [[MEGASdkManager sharedMEGAChatSdk] localLogout];
 }
 
 - (void)requireLogin {
@@ -282,7 +351,7 @@
 - (void)setupAppearance {
     [[UINavigationBar appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUISemiBoldWithSize:17.0f], NSForegroundColorAttributeName:[UIColor whiteColor]}];
     [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
-    [[UINavigationBar appearance] setBarTintColor:[UIColor mnz_redF0373A]];
+    [[UINavigationBar appearance] setBarTintColor:UIColor.mnz_redMain];
     [[UINavigationBar appearance] setTranslucent:NO];
     
     //To tint the color of the prompt.
@@ -296,16 +365,16 @@
     
     [[UIBarButtonItem appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:17.0f]} forState:UIControlStateNormal];
     [[UIBarButtonItem appearanceWhenContainedInInstancesOfClasses:@[[UINavigationBar class]]] setTintColor:[UIColor whiteColor]];
-    [[UIBarButtonItem appearanceWhenContainedInInstancesOfClasses:@[[UIToolbar class]]] setTintColor:[UIColor mnz_redF0373A]];
+    [[UIBarButtonItem appearanceWhenContainedInInstancesOfClasses:@[[UIToolbar class]]] setTintColor:UIColor.mnz_redMain];
     
     [[UINavigationBar appearance] setBackIndicatorImage:[UIImage imageNamed:@"backArrow"]];
     [[UINavigationBar appearance] setBackIndicatorTransitionMaskImage:[UIImage imageNamed:@"backArrow"]];
     
     [[UITextField appearance] setTintColor:UIColor.mnz_green00BFA5];
         
-    [[UIView appearanceWhenContainedInInstancesOfClasses:@[[UIAlertController class]]] setTintColor:[UIColor mnz_redF0373A]];
+    [[UIView appearanceWhenContainedInInstancesOfClasses:@[[UIAlertController class]]] setTintColor:UIColor.mnz_redMain];
     
-    [[UIProgressView appearance] setTintColor:[UIColor mnz_redF0373A]];
+    [[UIProgressView appearance] setTintColor:UIColor.mnz_redMain];
     
     [self configureProgressHUD];
 }
@@ -396,6 +465,7 @@
                          self.view.transform = CGAffineTransformMakeTranslation(0, self.view.frame.size.height);
                      }
                      completion:^(BOOL finished) {
+                         [self saveStateAndLogout];
                          if (completion) {
                              completion();
                          }
@@ -423,9 +493,7 @@
         NSArray *applicationSupportContent = [fileManager contentsOfDirectoryAtPath:applicationSupportDirectoryURL.path error:&error];
         for (NSString *filename in applicationSupportContent) {
             if ([filename containsString:@"megaclient"] || [filename containsString:@"karere"]) {
-                if(![fileManager removeItemAtPath:[applicationSupportDirectoryURL.path stringByAppendingPathComponent:filename] error:&error]) {
-                    MEGALogError(@"Remove item at path failed with error: %@", error);
-                }
+                [fileManager mnz_removeItemAtPath:[applicationSupportDirectoryURL.path stringByAppendingPathComponent:filename]];
             }
         }
         
@@ -642,23 +710,28 @@ void uncaughtExceptionHandler(NSException *exception) {
     }];
     
     for (MEGAChatListItem *chatListItem in self.chats) {
+        self.pendingAssets++;
         [[MEGASdkManager sharedMEGAChatSdk] attachNodeToChat:chatListItem.chatId node:nodeHandle delegate:chatAttachNodeRequestDelegate];
     }
     
     for (MEGAUser *user in self.users) {
         MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomByUser:user.handle];
         if (chatRoom) {
+            self.pendingAssets++;
             [[MEGASdkManager sharedMEGAChatSdk] attachNodeToChat:chatRoom.chatId node:nodeHandle delegate:chatAttachNodeRequestDelegate];
         } else {
             MEGALogDebug(@"There is not a chat with %@, create the chat and attach", user.email);
             MEGAChatPeerList *peerList = [[MEGAChatPeerList alloc] init];
             [peerList addPeerWithHandle:user.handle privilege:MEGAChatRoomPrivilegeStandard];
             MEGAChatCreateChatGroupRequestDelegate *createChatGroupRequestDelegate = [[MEGAChatCreateChatGroupRequestDelegate alloc] initWithCompletion:^(MEGAChatRoom *chatRoom) {
+                self.pendingAssets++;
                 [[MEGASdkManager sharedMEGAChatSdk] attachNodeToChat:chatRoom.chatId node:nodeHandle delegate:chatAttachNodeRequestDelegate];
             }];
             [[MEGASdkManager sharedMEGAChatSdk] createChatGroup:NO peers:peerList delegate:createChatGroupRequestDelegate];
         }
     }
+    
+    [self onePendingLess];
 }
 
 - (void)performSendMessage:(NSString *)message {
@@ -685,7 +758,10 @@ void uncaughtExceptionHandler(NSException *exception) {
 }
 
 - (void)sendMessage:(NSString *)message toChat:(uint64_t)chatId {
-    [[MEGASdkManager sharedMEGAChatSdk] openChatRoom:chatId delegate:self];
+    if (![self.openedChatIds containsObject:@(chatId)]) {
+        [[MEGASdkManager sharedMEGAChatSdk] openChatRoom:chatId delegate:self];
+        [self.openedChatIds addObject:@(chatId)];
+    }
     [[MEGASdkManager sharedMEGAChatSdk] sendMessageToChat:chatId message:message];
     self.pendingAssets++;
 }
@@ -728,11 +804,7 @@ void uncaughtExceptionHandler(NSException *exception) {
         NSString *tempPath = [storagePath stringByAppendingPathComponent:name];
         NSError *error = nil;
         
-        if ([[NSFileManager defaultManager] fileExistsAtPath:tempPath]) {
-            if (![[NSFileManager defaultManager] removeItemAtPath:tempPath error:&error]) {
-                MEGALogError(@"Remove item failed:\n- At path: %@\n- With error: %@", tempPath, error);
-            }
-        }
+        [NSFileManager.defaultManager mnz_removeItemAtPath:tempPath];
         
         BOOL success = NO;
         if (sourceMovable) {
@@ -795,7 +867,7 @@ void uncaughtExceptionHandler(NSException *exception) {
                 [[MEGASdkManager sharedMEGASdk] copyNode:remoteNode newParent:parentNode newName:localPath.lastPathComponent delegate:self];
             }
         }
-        [[NSFileManager defaultManager] removeItemAtPath:localPath error:nil];
+        [NSFileManager.defaultManager mnz_removeItemAtPath:localPath];
     } else {
         // The file is not in MEGA.
         NSString *appData = [[NSString new] mnz_appDataToSaveCoordinates:localPath.mnz_coordinatesOfPhotoOrVideo];
@@ -816,8 +888,12 @@ void uncaughtExceptionHandler(NSException *exception) {
 }
 
 - (void)alertIfNeededAndDismiss {
-    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
     [SVProgressHUD dismiss];
+    
+    for (NSNumber *chatIdNumber in self.openedChatIds) {
+        [[MEGASdkManager sharedMEGAChatSdk] closeChatRoom:chatIdNumber.unsignedLongLongValue delegate:self];
+    }
+    
     if (self.unsupportedAssets > 0 || self.alreadyInDestinationAssets > 0) {
         NSString *message;
         if (self.unsupportedAssets > 0) {
@@ -833,10 +909,14 @@ void uncaughtExceptionHandler(NSException *exception) {
         }]];
         [self presentViewController:alertController animated:YES completion:nil];
     } else {
-        [self dismissWithCompletionHandler:^{
-            [self.extensionContext completeRequestReturningItems:@[] completionHandler:nil];
-        }];
+        [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"Shared successfully", @"Success message shown when the user has successfully shared something")];
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [self dismissWithCompletionHandler:^{
+                [self.extensionContext completeRequestReturningItems:@[] completionHandler:nil];
+            }];
+        });
     }
+    dispatch_semaphore_signal(self.semaphore);
 }
 
 #pragma mark - BrowserViewControllerDelegate
@@ -962,12 +1042,22 @@ void uncaughtExceptionHandler(NSException *exception) {
 - (void)onTransferUpdate:(MEGASdk *)api transfer:(MEGATransfer *)transfer {
     self.progress += (transfer.deltaSize.floatValue / transfer.totalBytes.floatValue) / self.totalAssets;
     if (self.progress >= 0.01 && self.progress < 1.0) {
-        NSString *progressCompleted = [NSString stringWithFormat:@"%.f %%", floor(self.progress * 100)];
-        [SVProgressHUD showProgress:self.progress status:progressCompleted];
+        NSDate *now = [NSDate new];
+        if (!UIAccessibilityIsVoiceOverRunning() || [now timeIntervalSinceDate:self.lastProgressChange] > 2) {
+            self.lastProgressChange = now;
+            NSString *progressCompleted = [NSString stringWithFormat:@"%.f %%", floor(self.progress * 100)];
+            [SVProgressHUD showProgress:self.progress status:progressCompleted];
+        }
     }
 }
 
 - (void)onTransferFinish:(MEGASdk *)api transfer:(MEGATransfer *)transfer error:(MEGAError *)error {
+    if (error.type) {
+        [self oneUnsupportedMore];
+        MEGALogError(@"Transfer finished with error: %@", error.name);
+        return;
+    }
+    
     if (self.users || self.chats) {
         [self performAttachNodeHandle:transfer.nodeHandle];
     } else {

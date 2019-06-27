@@ -6,40 +6,101 @@
 #import "SAMKeychain.h"
 #import "SVProgressHUD.h"
 
+#import "DevicePermissionsHelper.h"
 #import "Helper.h"
-#import "MEGANode.h"
 #import "MEGAMoveRequestDelegate.h"
 #import "MEGANodeList+MNZCategory.h"
+#import "MEGALinkManager.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGARemoveRequestDelegate.h"
 #import "MEGARenameRequestDelegate.h"
 #import "MEGAShareRequestDelegate.h"
 #import "MEGAStore.h"
+#import "NSFileManager+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 #import "UIApplication+MNZCategory.h"
 
 #import "BrowserViewController.h"
-#import "LoginViewController.h"
+#import "CloudDriveViewController.h"
 #import "MainTabBarController.h"
 #import "MEGAAVViewController.h"
 #import "MEGANavigationController.h"
-#import "MyAccountHallViewController.h"
-#import "PreviewDocumentViewController.h"
+#import "MEGAPhotoBrowserViewController.h"
 #import "MEGAQLPreviewController.h"
+#import "OnboardingViewController.h"
+#import "PreviewDocumentViewController.h"
+#import "SharedItemsViewController.h"
 
 @implementation MEGANode (MNZCategory)
 
+- (void)navigateToParentAndPresent {
+    MainTabBarController *mainTBC = (MainTabBarController *) UIApplication.sharedApplication.delegate.window.rootViewController;
+    
+    if ([[MEGASdkManager sharedMEGASdk] accessLevelForNode:self] != MEGAShareTypeAccessOwner) { // Node from inshare
+        mainTBC.selectedIndex = SHARES;
+        SharedItemsViewController *sharedItemsVC = mainTBC.childViewControllers[SHARES].childViewControllers.firstObject;
+        [sharedItemsVC selectSegment:0]; // Incoming
+    } else {
+        mainTBC.selectedIndex = CLOUD;
+    }
+    
+    UINavigationController *navigationController = [mainTBC.childViewControllers objectAtIndex:mainTBC.selectedIndex];
+    [navigationController popToRootViewControllerAnimated:NO];
+    
+    NSArray *parentTreeArray = self.mnz_parentTreeArray;
+    for (MEGANode *node in parentTreeArray) {
+        CloudDriveViewController *cloudDriveVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
+        cloudDriveVC.parentNode = node;
+        [navigationController pushViewController:cloudDriveVC animated:NO];
+    }
+    
+    switch (self.type) {
+        case MEGANodeTypeFolder:
+        case MEGANodeTypeRubbish: {
+            CloudDriveViewController *cloudDriveVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
+            cloudDriveVC.parentNode = self;
+            [navigationController pushViewController:cloudDriveVC animated:NO];
+            break;
+        }
+            
+        case MEGANodeTypeFile: {
+            if (self.name.mnz_isImagePathExtension || self.name.mnz_isVideoPathExtension) {
+                MEGANode *parentNode = [[MEGASdkManager sharedMEGASdk] nodeForHandle:self.parentHandle];
+                MEGANodeList *nodeList = [[MEGASdkManager sharedMEGASdk] childrenForParent:parentNode];
+                NSMutableArray<MEGANode *> *mediaNodesArray = [nodeList mnz_mediaNodesMutableArrayFromNodeList];
+                
+                DisplayMode displayMode = [[MEGASdkManager sharedMEGASdk] accessLevelForNode:self] == MEGAShareTypeAccessOwner ? DisplayModeCloudDrive : DisplayModeSharedItem;
+                MEGAPhotoBrowserViewController *photoBrowserVC = [MEGAPhotoBrowserViewController photoBrowserWithMediaNodes:mediaNodesArray api:[MEGASdkManager sharedMEGASdk] displayMode:displayMode presentingNode:self preferredIndex:0];
+                
+                [navigationController presentViewController:photoBrowserVC animated:YES completion:nil];
+            } else {
+                [self mnz_openNodeInNavigationController:navigationController folderLink:NO];
+            }
+            break;
+        }
+            
+        default:
+            break;
+    }
+}
+
 - (void)mnz_openNodeInNavigationController:(UINavigationController *)navigationController folderLink:(BOOL)isFolderLink {
-    UIViewController *viewController = [self mnz_viewControllerForNodeInFolderLink:isFolderLink];
-    if (viewController) {
-        [navigationController presentViewController:viewController animated:YES completion:nil];
+    MEGAHandleList *chatRoomIDsWithCallInProgress = [MEGASdkManager.sharedMEGAChatSdk chatCallsWithState:MEGAChatCallStatusInProgress];
+    if (self.name.mnz_isMultimediaPathExtension && chatRoomIDsWithCallInProgress.size > 0) {
+        [Helper cannotPlayContentDuringACallAlert];
+    } else {
+        UIViewController *viewController = [self mnz_viewControllerForNodeInFolderLink:isFolderLink];
+        if (viewController) {
+            [navigationController presentViewController:viewController animated:YES completion:nil];
+        }
     }
 }
 
 - (UIViewController *)mnz_viewControllerForNodeInFolderLink:(BOOL)isFolderLink {
     MEGASdk *api = isFolderLink ? [MEGASdkManager sharedMEGASdkFolder] : [MEGASdkManager sharedMEGASdk];
+    MEGASdk *apiForStreaming = [MEGASdkManager sharedMEGASdk].isLoggedIn ? [MEGASdkManager sharedMEGASdk] : [MEGASdkManager sharedMEGASdkFolder];
     
-    MOOfflineNode *offlineNodeExist = [[MEGAStore shareInstance] offlineNodeWithNode:self api:api];
+    MOOfflineNode *offlineNodeExist = [[MEGAStore shareInstance] offlineNodeWithNode:self];
     
     NSString *previewDocumentPath = nil;
     if (offlineNodeExist) {
@@ -89,12 +150,9 @@
             
             return previewController;
         }
-    } else if (self.name.mnz_isAudiovisualContentUTI && [api httpServerStart:YES port:4443]) {
-        NSURL *path = [api httpServerGetLocalLink:self];
-        AVURLAsset *asset = [AVURLAsset assetWithURL:path];
-        
-        if (asset.playable) {
-            MEGAAVViewController *megaAVViewController = [[MEGAAVViewController alloc] initWithNode:self folderLink:isFolderLink];
+    } else if (self.name.mnz_isMultimediaPathExtension && [apiForStreaming httpServerStart:NO port:4443]) {
+        if (self.mnz_isPlayable) {
+            MEGAAVViewController *megaAVViewController = [[MEGAAVViewController alloc] initWithNode:self folderLink:isFolderLink apiForStreaming:apiForStreaming];
             return megaAVViewController;
         } else {
             UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"fileNotSupported", @"Alert title shown when users try to stream an unsupported audio/video file") message:AMLocalizedString(@"message_fileNotSupported", @"Alert message shown when users try to stream an unsupported audio/video file") preferredStyle:UIAlertControllerStyleAlert];
@@ -102,23 +160,15 @@
             return alertController;
         }
     } else {
-        if ([[[api downloadTransfers] size] integerValue] > 0) {
-            UIAlertController *documentOpeningAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"documentOpening_alertTitle", @"Alert title shown when you try to open a Cloud Drive document and is not posible because there's some active download") message:AMLocalizedString(@"documentOpening_alertMessage", @"Alert message shown when you try to open a Cloud Drive document and is not posible because there's some active download") preferredStyle:UIAlertControllerStyleAlert];
-            
-            [documentOpeningAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
-            
-            return documentOpeningAlertController;
-        } else {
-            if ([Helper isFreeSpaceEnoughToDownloadNode:self isFolderLink:isFolderLink]) {
-                MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"previewDocumentNavigationID"];
-                PreviewDocumentViewController *previewController = navigationController.viewControllers.firstObject;
-                previewController.node = self;
-                previewController.api = api;
-                previewController.isLink = isFolderLink;
-                return navigationController;
-            }
-            return nil;
+        if ([Helper isFreeSpaceEnoughToDownloadNode:self isFolderLink:isFolderLink]) {
+            MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"previewDocumentNavigationID"];
+            PreviewDocumentViewController *previewController = navigationController.viewControllers.firstObject;
+            previewController.node = self;
+            previewController.api = api;
+            previewController.isLink = isFolderLink;
+            return navigationController;
         }
+        return nil;
     }
 }
 
@@ -144,19 +194,24 @@
     [[MEGASdkManager sharedMEGASdk] createPreview:tmpImagePath destinatioPath:previewFilePath];
     [[MEGASdkManager sharedMEGASdk] setPreviewNode:self sourceFilePath:previewFilePath];
     
-    [[NSFileManager defaultManager] removeItemAtPath:tmpImagePath error:nil];
+    [NSFileManager.defaultManager mnz_removeItemAtPath:tmpImagePath];
 }
 
 #pragma mark - Actions
 
 - (BOOL)mnz_downloadNodeOverwriting:(BOOL)overwrite {
-    MOOfflineNode *offlineNodeExist = [[MEGAStore shareInstance] offlineNodeWithNode:self api:[MEGASdkManager sharedMEGASdk]];
+    return [self mnz_downloadNodeOverwriting:overwrite api:[MEGASdkManager sharedMEGASdk]];
+}
+
+- (BOOL)mnz_downloadNodeOverwriting:(BOOL)overwrite api:(MEGASdk *)api {
+    MOOfflineNode *offlineNodeExist = [[MEGAStore shareInstance] offlineNodeWithNode:self];
     if (offlineNodeExist) {
         return YES;
     } else {
         if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-            if ([Helper isFreeSpaceEnoughToDownloadNode:self isFolderLink:NO]) {
-                [Helper downloadNode:self folderPath:[Helper relativePathForOffline] isFolderLink:NO shouldOverwrite:overwrite];
+            BOOL isFolderLink = api != [MEGASdkManager sharedMEGASdk];
+            if ([Helper isFreeSpaceEnoughToDownloadNode:self isFolderLink:isFolderLink]) {
+                [Helper downloadNode:self folderPath:[Helper relativePathForOffline] isFolderLink:isFolderLink shouldOverwrite:overwrite];
                 return YES;
             } else {
                 return NO;
@@ -165,6 +220,27 @@
             return NO;
         }
     }
+}
+
+- (void)mnz_saveToPhotosWithApi:(MEGASdk *)api {
+    [DevicePermissionsHelper photosPermissionWithCompletionHandler:^(BOOL granted) {
+        if (granted) {
+            [SVProgressHUD showImage:[UIImage imageNamed:@"saveToPhotos"] status:AMLocalizedString(@"Saving to Photos…", @"Text shown when starting the process to save a photo or video to Photos app")];
+            NSString *temporaryPath = [[NSTemporaryDirectory() stringByAppendingPathComponent:self.base64Handle] stringByAppendingPathComponent:self.name];
+            NSString *temporaryFingerprint = [MEGASdkManager.sharedMEGASdk fingerprintForFilePath:temporaryPath];
+            if ([temporaryFingerprint isEqualToString:self.fingerprint]) {
+                [self mnz_copyToGalleryFromTemporaryPath:temporaryPath];
+            } else if (MEGAReachabilityManager.isReachableHUDIfNot) {
+                NSString *downloadsDirectory = [NSFileManager.defaultManager downloadsDirectory];
+                downloadsDirectory = downloadsDirectory.mnz_relativeLocalPath;
+                NSString *offlineNameString = [MEGASdkManager.sharedMEGASdkFolder escapeFsIncompatible:self.name];
+                NSString *localPath = [downloadsDirectory stringByAppendingPathComponent:offlineNameString];
+                [MEGASdkManager.sharedMEGASdk startDownloadNode:[api authorizeNode:self] localPath:localPath appData:[[NSString new] mnz_appDataToSaveInPhotosApp]];
+            }
+        } else {
+            [DevicePermissionsHelper alertPhotosPermission];
+        }
+    }];
 }
 
 - (void)mnz_renameNodeInViewController:(UIViewController *)viewController {
@@ -176,8 +252,9 @@
         UIAlertController *renameAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"rename", @"Title for the action that allows you to rename a file or folder") message:AMLocalizedString(@"renameNodeMessage", @"Hint text to suggest that the user have to write the new name for the file or folder") preferredStyle:UIAlertControllerStyleAlert];
         
         [renameAlertController addTextFieldWithConfigurationHandler:^(UITextField *textField) {
-            textField.delegate = self;
             textField.text = self.name;
+            textField.returnKeyType = UIReturnKeyDone;
+            textField.delegate = self;
             [textField addTarget:self action:@selector(renameAlertTextFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
         }];
         
@@ -186,8 +263,24 @@
         UIAlertAction *renameAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"rename", @"Title for the action that allows you to rename a file or folder") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
             if ([MEGAReachabilityManager isReachableHUDIfNot]) {
                 UITextField *alertViewTextField = renameAlertController.textFields.firstObject;
-                MEGARenameRequestDelegate *delegate = [[MEGARenameRequestDelegate alloc] initWithCompletion:completion];
-                [[MEGASdkManager sharedMEGASdk] renameNode:self newName:alertViewTextField.text delegate:delegate];
+                MEGANode *parentNode = [[MEGASdkManager sharedMEGASdk] nodeForHandle:self.parentHandle];
+                MEGANodeList *childrenNodeList = [[MEGASdkManager sharedMEGASdk] nodeListSearchForNode:parentNode searchString:alertViewTextField.text];
+                
+                if (self.isFolder) {
+                    if ([childrenNodeList mnz_existsFolderWithName:alertViewTextField.text]) {
+                        [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"There is already a folder with the same name", @"A tooltip message which is shown when a folder name is duplicated during renaming or creation.")];
+                    } else {
+                        MEGARenameRequestDelegate *delegate = [[MEGARenameRequestDelegate alloc] initWithCompletion:completion];
+                        [[MEGASdkManager sharedMEGASdk] renameNode:self newName:alertViewTextField.text delegate:delegate];
+                    }
+                } else {
+                    if ([childrenNodeList mnz_existsFileWithName:alertViewTextField.text]) {
+                        [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"There is already a file with the same name", @"A tooltip message which shows when a file name is duplicated during renaming.")];
+                    } else {
+                        MEGARenameRequestDelegate *delegate = [[MEGARenameRequestDelegate alloc] initWithCompletion:completion];
+                        [[MEGASdkManager sharedMEGASdk] renameNode:self newName:alertViewTextField.text delegate:delegate];
+                    }
+                }
             }
         }];
         renameAlertAction.enabled = NO;
@@ -280,7 +373,7 @@
     
     MEGAShareRequestDelegate *shareRequestDelegate = [[MEGAShareRequestDelegate alloc] initToChangePermissionsWithNumberOfRequests:outSharesForNodeMutableArray.count completion:nil];
     for (MEGAShare *share in outSharesForNodeMutableArray) {
-        [[MEGASdkManager sharedMEGASdk] shareNode:self withEmail:share.user level:MEGAShareTypeAccessUnkown delegate:shareRequestDelegate];
+        [[MEGASdkManager sharedMEGASdk] shareNode:self withEmail:share.user level:MEGAShareTypeAccessUnknown delegate:shareRequestDelegate];
     }
 }
 
@@ -302,35 +395,26 @@
         }
 
         if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
+            [Helper downloadNode:self folderPath:Helper.relativePathForOffline isFolderLink:isFolderLink shouldOverwrite:NO];
+            
             [viewController dismissViewControllerAnimated:YES completion:^{
-                UIViewController *rootVC = UIApplication.sharedApplication.delegate.window.rootViewController;
-                if ([rootVC isKindOfClass:MainTabBarController.class]) {
-                    MainTabBarController *mainTBC = (MainTabBarController *)rootVC;
-                    mainTBC.selectedIndex = MYACCOUNT;
-                    MEGANavigationController *navigationController = [mainTBC.childViewControllers objectAtIndex:MYACCOUNT];
-                    MyAccountHallViewController *myAccountHallVC = navigationController.viewControllers.firstObject;
-                    [myAccountHallVC openOffline];
-                }
-                
                 [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:AMLocalizedString(@"downloadStarted", nil)];
-                
-                [Helper downloadNode:self folderPath:[Helper relativePathForOffline] isFolderLink:isFolderLink shouldOverwrite:NO];
             }];
         } else {
             if (isFolderLink) {
-                [[Helper nodesFromLinkMutableArray] addObject:self];
-                [Helper setSelectedOptionOnLink:4]; //Download folder or nodes from link
+                [MEGALinkManager.nodesFromLinkMutableArray addObject:self];
+                MEGALinkManager.selectedOption = LinkOptionDownloadFolderOrNodes;
             } else {
-                [Helper setLinkNode:self];
-                [Helper setSelectedOptionOnLink:2]; //Download file from link
+                [MEGALinkManager.nodesFromLinkMutableArray addObject:self];
+                MEGALinkManager.selectedOption = LinkOptionDownloadNode;
             }
             
-            LoginViewController *loginVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"LoginViewControllerID"];
+            OnboardingViewController *onboardingVC = [OnboardingViewController instanciateOnboardingWithType:OnboardingTypeDefault];
             if (viewController.navigationController) {
-                [viewController.navigationController pushViewController:loginVC animated:YES];
+                [viewController.navigationController pushViewController:onboardingVC animated:YES];
             } else {
-                MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:loginVC];
-                [navigationController addCancelButton];
+                MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:onboardingVC];
+                [navigationController addRightCancelButton];
                 [viewController presentViewController:navigationController animated:YES completion:nil];
             }
         }
@@ -344,25 +428,25 @@
                 MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"BrowserNavigationControllerID"];
                 BrowserViewController *browserVC = navigationController.viewControllers.firstObject;
                 browserVC.selectedNodesArray = [NSArray arrayWithObject:self];
-                [UIApplication.mnz_visibleViewController presentViewController:navigationController animated:YES completion:nil];
+                [UIApplication.mnz_presentingViewController presentViewController:navigationController animated:YES completion:nil];
                 
                 browserVC.browserAction = isFolderLink ? BrowserActionImportFromFolderLink : BrowserActionImport;
             }];
         } else {
             if (isFolderLink) {
-                [[Helper nodesFromLinkMutableArray] addObject:self];
-                [Helper setSelectedOptionOnLink:3]; //Import folder or nodes from link
+                [MEGALinkManager.nodesFromLinkMutableArray addObject:self];
+                MEGALinkManager.selectedOption = LinkOptionImportFolderOrNodes;
             } else {
-                [Helper setLinkNode:self];
-                [Helper setSelectedOptionOnLink:1]; //Import file from link
+                [MEGALinkManager.nodesFromLinkMutableArray addObject:self];
+                MEGALinkManager.selectedOption = LinkOptionImportNode;
             }
             
-            LoginViewController *loginVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"LoginViewControllerID"];
+            OnboardingViewController *onboardingVC = [OnboardingViewController instanciateOnboardingWithType:OnboardingTypeDefault];
             if (viewController.navigationController) {
-                [viewController.navigationController pushViewController:loginVC animated:YES];
+                [viewController.navigationController pushViewController:onboardingVC animated:YES];
             } else {
-                MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:loginVC];
-                [navigationController addCancelButton];
+                MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:onboardingVC];
+                [navigationController addRightCancelButton];
                 [viewController presentViewController:navigationController animated:YES completion:nil];
             }
         }
@@ -587,6 +671,76 @@
     }
 }
 
+- (BOOL)mnz_isPlayable {
+    BOOL supportedShortFormat = NO;
+    BOOL supportedVideoCodecId = NO;
+    
+    // When media information is not available, try to play the node
+    if (self.shortFormat == -1 && self.videoCodecId == -1) {
+        return YES;
+    }
+    
+    NSArray<NSNumber *> *shortFormats = @[@(1),
+                                          @(2),
+                                          @(3),
+                                          @(4),
+                                          @(5),
+                                          @(13),
+                                          @(27),
+                                          @(44),
+                                          @(49),
+                                          @(50),
+                                          @(51),
+                                          @(52)];
+    
+    NSArray<NSNumber *> *videoCodecIds = @[@(15),
+                                           @(37),
+                                           @(144),
+                                           @(215),
+                                           @(224),
+                                           @(266),
+                                           @(346),
+                                           @(348),
+                                           @(393),
+                                           @(405),
+                                           @(523),
+                                           @(532),
+                                           @(551),
+                                           @(630),
+                                           @(703),
+                                           @(740),
+                                           @(802),
+                                           @(887),
+                                           @(957),
+                                           @(961),
+                                           @(973),
+                                           @(1108),
+                                           @(1114),
+                                           @(1119),
+                                           @(1129),
+                                           @(1132),
+                                           @(1177)];
+    
+    supportedShortFormat = [shortFormats containsObject:@(self.shortFormat)];
+    supportedVideoCodecId = [videoCodecIds containsObject:@(self.videoCodecId)];
+    
+    return supportedShortFormat || supportedVideoCodecId;
+}
+
+- (NSString *)mnz_temporaryPathForDownloadCreatingDirectories:(BOOL)creatingDirectories {
+    NSString *nodeFolderPath = [NSTemporaryDirectory() stringByAppendingPathComponent:self.base64Handle];
+    NSString *nodeFilePath = [nodeFolderPath stringByAppendingPathComponent:self.name];
+    
+    NSError *error;
+    if (creatingDirectories && ![[NSFileManager defaultManager] fileExistsAtPath:nodeFolderPath isDirectory:nil]) {
+        if (![[NSFileManager defaultManager] createDirectoryAtPath:nodeFolderPath withIntermediateDirectories:YES attributes:nil error:&error]) {
+            MEGALogError(@"Create directory at path failed with error: %@", error);
+        }
+    }
+    
+    return nodeFilePath;
+}
+
 #pragma mark - Versions
 
 - (NSInteger)mnz_numberOfVersions {
@@ -657,11 +811,21 @@
     return shouldChangeCharacters;
 }
 
-- (void)renameAlertTextFieldDidChange:(UITextField *)sender {
-    
-    UIAlertController *renameAlertController = (UIAlertController*)UIApplication.mnz_visibleViewController;
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    BOOL shouldReturn = YES;
+    UIAlertController *renameAlertController = (UIAlertController *)UIApplication.mnz_visibleViewController;
     if (renameAlertController) {
-        UITextField *textField = renameAlertController.textFields.firstObject;
+        UIAlertAction *rightButtonAction = renameAlertController.actions.lastObject;
+        shouldReturn = rightButtonAction.enabled;
+    }
+    
+    return shouldReturn;
+
+}
+
+- (void)renameAlertTextFieldDidChange:(UITextField *)textField {
+    UIAlertController *renameAlertController = (UIAlertController *)UIApplication.mnz_visibleViewController;
+    if (renameAlertController) {
         UIAlertAction *rightButtonAction = renameAlertController.actions.lastObject;
         BOOL enableRightButton = NO;
         
@@ -669,13 +833,13 @@
         NSString *nodeNameString = self.name;
         
         if (self.isFile || self.isFolder) {
-            BOOL containsInvalidChars = [sender.text rangeOfCharacterFromSet:[NSCharacterSet characterSetWithCharactersInString:@"|*/:<>?\"\\"]].length;
+            BOOL containsInvalidChars = textField.text.mnz_containsInvalidChars;
             if ([newName isEqualToString:@""] || [newName isEqualToString:nodeNameString] || newName.mnz_isEmpty || containsInvalidChars) {
                 enableRightButton = NO;
             } else {
                 enableRightButton = YES;
             }
-            sender.textColor = containsInvalidChars ? UIColor.mnz_redD90007 : UIColor.darkTextColor;
+            textField.textColor = containsInvalidChars ? UIColor.mnz_redMain : UIColor.darkTextColor;
         }
         
         rightButtonAction.enabled = enableRightButton;
@@ -683,8 +847,13 @@
 }
 
 - (void)mnz_copyToGalleryFromTemporaryPath:(NSString *)path {
-    if (self.name.mnz_isVideoPathExtension && UIVideoAtPathIsCompatibleWithSavedPhotosAlbum(path)) {
-        UISaveVideoAtPathToSavedPhotosAlbum(path, self, @selector(video:didFinishSavingWithError:contextInfo:), nil);
+    if (self.name.mnz_isVideoPathExtension) {
+        if (UIVideoAtPathIsCompatibleWithSavedPhotosAlbum(path)) {
+            UISaveVideoAtPathToSavedPhotosAlbum(path, self, @selector(video:didFinishSavingWithError:contextInfo:), nil);
+        } else {
+            [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"Could not save Item", @"Text shown when an error occurs when trying to save a photo or video to Photos app")];
+            MEGALogError(@"The video can be saved to the Camera Roll album");
+        }
     }
     
     if (self.name.mnz_isImagePathExtension) {
@@ -695,9 +864,12 @@
             [assetCreationRequest addResourceWithType:PHAssetResourceTypePhoto fileURL:imageURL options:nil];
             
         } completionHandler:^(BOOL success, NSError * _Nullable nserror) {
-            [[NSFileManager defaultManager] removeItemAtPath:path error:nil];
+            [NSFileManager.defaultManager mnz_removeItemAtPath:path];
             if (nserror) {
-                MEGALogError(@"Add asset to camera roll: %@ (Domain: %@ - Code:%ld)", nserror.localizedDescription, nserror.domain, nserror.code);
+                [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"Could not save Item", @"Text shown when an error occurs when trying to save a photo or video to Photos app")];
+                MEGALogError(@"Add asset to camera roll: %@ (Domain: %@ - Code:%td)", nserror.localizedDescription, nserror.domain, nserror.code);
+            } else {
+                [SVProgressHUD showImage:[UIImage imageNamed:@"saveToPhotos"] status:AMLocalizedString(@"Saved to Photos", @"Text shown when a photo or video is saved to Photos app")];
             }
         }];
     }
@@ -705,9 +877,11 @@
 
 - (void)video:(NSString *)videoPath didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo {
     if (error) {
-        MEGALogError(@"Save video to Camera roll: %@ (Domain: %@ - Code:%ld)", error.localizedDescription, error.domain, error.code);
+        [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"Could not save Item", @"Text shown when an error occurs when trying to save a photo or video to Photos app")];
+        MEGALogError(@"Save video to Camera roll: %@ (Domain: %@ - Code:%td)", error.localizedDescription, error.domain, error.code);
     } else {
-        [[NSFileManager defaultManager] removeItemAtPath:videoPath error:nil];
+        [SVProgressHUD showImage:[UIImage imageNamed:@"saveToPhotos"] status:AMLocalizedString(@"Saved to Photos", @"Text shown when a photo or video is saved to Photos app")];
+        [NSFileManager.defaultManager mnz_removeItemAtPath:videoPath];
     }
 }
 

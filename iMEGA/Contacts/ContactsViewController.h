@@ -16,13 +16,16 @@ typedef NS_ENUM(NSUInteger, ContactsMode) {
 @interface ContactsViewController : UIViewController
 
 @property (nonatomic) ContactsMode contactsMode;
+@property (nonatomic) BOOL avoidPresentIncomingPendingContactRequests;
+@property (nonatomic) BOOL getChatLinkEnabled;
 
 @property (nonatomic, strong) MEGANode *node;
 @property (nonatomic, strong) NSArray *nodesArray;
 
 @property (nonatomic, strong) ShareFolderActivity *shareFolderActivity;
 
-@property (nonatomic, copy) void(^userSelected)(NSArray *,  NSString *);
+@property (nonatomic, copy) void(^userSelected)(NSArray *);
+@property (nonatomic, copy) void(^createGroupChat)(NSArray *,  NSString *, BOOL, BOOL);
 
 @property (strong, nonatomic) NSMutableDictionary *participantsMutableDictionary;
 

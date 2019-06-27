@@ -15,5 +15,6 @@ typedef NS_ENUM (NSInteger, MegaNodeActionType) {
     MegaNodeActionTypeOpen,
     MegaNodeActionTypeRevertVersion,
     MegaNodeActionTypeSelect,
-    MegaNodeActionTypeRestore
+    MegaNodeActionTypeRestore,
+    MegaNodeActionTypeSaveToPhotos
 };

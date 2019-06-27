@@ -3,8 +3,6 @@
 
 #import "SVProgressHUD.h"
 
-#import "MEGASdkManager.h"
-
 @interface MEGAMoveRequestDelegate ()
 
 @property (nonatomic) NSUInteger numberOfFiles;
@@ -95,8 +93,8 @@
                     message = [NSString stringWithFormat:AMLocalizedString(@"filesFolderMovedToRubbishBinMessage", @"Success message shown when you have moved {1+} files and 1 folder to the rubbish bin"), self.numberOfFiles];
                 } else {
                     message = AMLocalizedString(@"filesFoldersMovedToRubbishBinMessage", @"Success message shown when you have moved [A] = {1+} files and [B] = {1+} folders to the rubbish bin");
-                    NSString *filesString = [NSString stringWithFormat:@"%lu", self.numberOfFiles];
-                    NSString *foldersString = [NSString stringWithFormat:@"%lu", self.numberOfFolders];
+                    NSString *filesString = [NSString stringWithFormat:@"%tu", self.numberOfFiles];
+                    NSString *foldersString = [NSString stringWithFormat:@"%tu", self.numberOfFolders];
                     message = [message stringByReplacingOccurrencesOfString:@"[A]" withString:filesString];
                     message = [message stringByReplacingOccurrencesOfString:@"[B]" withString:foldersString];
                 }
@@ -129,8 +127,8 @@
                         message = [NSString stringWithFormat:AMLocalizedString(@"moveFilesFolderMessage", @"Success message shown when you have moved {1+} files and 1 folder"), self.numberOfFiles];
                     } else {
                         message = AMLocalizedString(@"moveFilesFoldersMessage", @"Success message shown when you have moved [A] = {1+} files and [B] = {1+} folders");
-                        NSString *filesString = [NSString stringWithFormat:@"%lu", self.numberOfFiles];
-                        NSString *foldersString = [NSString stringWithFormat:@"%lu", self.numberOfFolders];
+                        NSString *filesString = [NSString stringWithFormat:@"%tu", self.numberOfFiles];
+                        NSString *foldersString = [NSString stringWithFormat:@"%tu", self.numberOfFolders];
                         message = [message stringByReplacingOccurrencesOfString:@"[A]" withString:filesString];
                         message = [message stringByReplacingOccurrencesOfString:@"[B]" withString:foldersString];
                     }

@@ -17,7 +17,8 @@
         cache.countLimit = 1000;
     });
     
-    NSString *key = [[NSString stringWithFormat:@"%@%@", message, color.description] SHA256];
+    NSString *fontKey = [NSString stringWithFormat:@"%@%.2f", font.fontName, font.pointSize];
+    NSString *key = [[NSString stringWithFormat:@"%@%@%@", message, color.description, fontKey] SHA256];
     NSAttributedString *cachedAttributedString = [cache objectForKey:key];
     
     if (cachedAttributedString) {
@@ -121,6 +122,14 @@
     return attributedString;
 }
 
++ (NSAttributedString *)mnz_attributedStringFromImageNamed:(NSString *)imageName fontCapHeight:(CGFloat)capHeight {
+    NSTextAttachment *textAttachment = [[NSTextAttachment alloc] init];
+    UIImage *image = [UIImage imageNamed:imageName];
+    textAttachment.bounds = CGRectMake(0.0f, roundf(capHeight - image.size.height) / 2.0, image.size.width, image.size.height);
+    textAttachment.image = image;
+    return [NSAttributedString attributedStringWithAttachment:textAttachment];
+}
+
 #pragma mark - Private
 
 + (UIFont *)alternativeFontFor:(UIFont *)font isBold:(BOOL)bold isItalic:(BOOL)italic {
@@ -151,7 +160,7 @@
         ctAlt = CTFontCreateCopyWithSymbolicTraits(ctBase, 0, NULL, kCTFontItalicTrait, kCTFontItalicTrait);
     }
     CFStringRef altName = CTFontCopyName(ctAlt, kCTFontPostScriptNameKey);
-    UIFont *altFont = [UIFont fontWithName:(__bridge NSString *)altName size:size] ?: font;
+    UIFont *altFont = [UIFont fontWithName:(__bridge_transfer NSString *)altName size:size] ?: font;
     fonts[fontCacheKey] = altFont;
     
     if (ctBase) {
@@ -159,9 +168,6 @@
     }
     if (ctAlt) {
         CFRelease(ctAlt);
-    }
-    if (name) {
-        CFRelease(name);
     }
     
     return altFont;

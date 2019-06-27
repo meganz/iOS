@@ -3,15 +3,16 @@
 
 #import "NSDate+DateTools.h"
 
-#import "UIImageView+MNZCategory.h"
+#import "Helper.h"
+#import "MEGAGetAttrUserRequestDelegate.h"
 #import "MEGASdkManager.h"
+#import "MEGAStore.h"
 #import "MEGAUser+MNZCategory.h"
+#import "UIImageView+MNZCategory.h"
 
 #import "AchievementsTableViewCell.h"
 
 @interface ReferralBonusesTableViewController () <UITableViewDataSource>
-
-@property (nonatomic) NSByteCountFormatter *byteCountFormatter;
 
 @property (nonatomic) NSMutableArray *inviteAchievementsIndexesMutableArray;
 @property (nonatomic) NSMutableArray *inviteAchievementsEmailsMutableArray;
@@ -24,9 +25,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    self.byteCountFormatter = [[NSByteCountFormatter alloc] init];
-    self.byteCountFormatter.countStyle = NSByteCountFormatterCountStyleMemory;
     
     self.navigationItem.title = AMLocalizedString(@"referralBonuses", @"achievement type");
     
@@ -54,10 +52,10 @@
     long long classTransferReward = [self.achievementsDetails rewardTransferByAwardId:awardId];
     
     cell.storageQuotaRewardView.backgroundColor = cell.storageQuotaRewardLabel.backgroundColor = ((classStorageReward == 0) ? [UIColor mnz_grayCCCCCC] : [UIColor mnz_blue2BA6DE]);
-    cell.storageQuotaRewardLabel.text = (classStorageReward == 0) ? @"— GB" : [self.byteCountFormatter stringFromByteCount:classStorageReward];
+    cell.storageQuotaRewardLabel.text = (classStorageReward == 0) ? @"— GB" : [Helper memoryStyleStringFromByteCount:classStorageReward];
     
     cell.transferQuotaRewardView.backgroundColor = cell.transferQuotaRewardLabel.backgroundColor = ((classTransferReward == 0) ? [UIColor mnz_grayCCCCCC] : [UIColor mnz_green31B500]);
-    cell.transferQuotaRewardLabel.text = (classTransferReward == 0) ? @"— GB" : [self.byteCountFormatter stringFromByteCount:classTransferReward];
+    cell.transferQuotaRewardLabel.text = (classTransferReward == 0) ? @"— GB" : [Helper memoryStyleStringFromByteCount:classTransferReward];
 }
 
 #pragma mark - UITableViewDataSource
@@ -76,17 +74,32 @@
     NSString *email = [self.inviteAchievementsEmailsMutableArray objectAtIndex:indexPath.row];
     MEGAUser *user = [[MEGASdkManager sharedMEGASdk] contactForEmail:email];
     
-    [cell.avatarImageView mnz_setImageForUserHandle:user.handle];
-    
-    cell.titleLabel.text = user.mnz_fullName;
+    if (user) {
+        [cell.avatarImageView mnz_setImageForUserHandle:user.handle];
+        cell.titleLabel.text = user.mnz_fullName;
+    } else {
+        MOUser *moUser = [[MEGAStore shareInstance] fetchUserWithEmail:email];
+        if (moUser) {
+            [cell.avatarImageView mnz_setImageForUserHandle:~(uint64_t)0 name:moUser.fullName];
+            cell.titleLabel.text = moUser.fullName;
+        } else {
+            [cell.avatarImageView mnz_setImageForUserHandle:~(uint64_t)0];
+            cell.titleLabel.text = @"";
+            MEGAGetAttrUserRequestDelegate *delegate = [[MEGAGetAttrUserRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
+                [tableView reloadData];
+            }];
+            [[MEGASdkManager sharedMEGASdk] getUserAttributeForEmailOrHandle:email type:MEGAUserAttributeFirstname delegate:delegate];
+            [[MEGASdkManager sharedMEGASdk] getUserAttributeForEmailOrHandle:email type:MEGAUserAttributeLastname delegate:delegate];
+        }
+    }
     
     NSInteger inviteIndexPath = [[self.inviteAchievementsIndexesMutableArray objectAtIndex:indexPath.row] integerValue];
     NSInteger awardId = [self.achievementsDetails awardIdAtIndex:inviteIndexPath];
     [self setStorageAndTransferQuotaRewardsForCell:cell withAwardId:awardId];
     
     NSDate *awardExpirationdDate = [self.achievementsDetails awardExpirationAtIndex:inviteIndexPath];
-    cell.daysLeftTrailingLabel.text = [AMLocalizedString(@"xDaysLeft", @"") stringByReplacingOccurrencesOfString:@"%1" withString:[NSString stringWithFormat:@"%lu", awardExpirationdDate.daysUntil]];
-    cell.daysLeftTrailingLabel.textColor = (awardExpirationdDate.daysUntil <= 15) ? [UIColor mnz_redF0373A] : [UIColor mnz_gray666666];
+    cell.daysLeftTrailingLabel.text = [AMLocalizedString(@"xDaysLeft", @"") stringByReplacingOccurrencesOfString:@"%1" withString:[NSString stringWithFormat:@"%td", awardExpirationdDate.daysUntil]];
+    cell.daysLeftTrailingLabel.textColor = (awardExpirationdDate.daysUntil <= 15) ? UIColor.mnz_redMain : [UIColor mnz_gray666666];
     
     return cell;
 }

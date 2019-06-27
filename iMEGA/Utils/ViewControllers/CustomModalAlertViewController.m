@@ -2,7 +2,7 @@
 #import "CustomModalAlertViewController.h"
 
 #import "AchievementsViewController.h"
-#import "MEGASdkManager.h"
+#import "CopyableLabel.h"
 #import "UIApplication+MNZCategory.h"
 #import "UIImage+GKContact.h"
 
@@ -11,10 +11,12 @@
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *detailLabel;
-@property (weak, nonatomic) IBOutlet UIButton *actionButton;
+@property (weak, nonatomic) IBOutlet UIButton *firstButton;
+@property (weak, nonatomic) IBOutlet UIButton *secondButton;
 @property (weak, nonatomic) IBOutlet UIButton *dismissButton;
-@property (weak, nonatomic) IBOutlet UIButton *bonusButton;
 @property (weak, nonatomic) IBOutlet UIView *alphaView;
+@property (weak, nonatomic) IBOutlet UIView *linkView;
+@property (weak, nonatomic) IBOutlet CopyableLabel *linkLabel;
 
 @end
 
@@ -49,18 +51,26 @@
         self.detailLabel.text = self.detail;
     }
     
-    [self.actionButton setTitle:self.action forState:UIControlStateNormal];
-    
-    if (self.dismiss) {
-        [self.dismissButton setTitle:self.dismiss forState:UIControlStateNormal];
+    [self.firstButton setTitle:self.firstButtonTitle forState:UIControlStateNormal];
+    if (self.dismissButtonTitle) {
+        [self.dismissButton setTitle:self.dismissButtonTitle forState:UIControlStateNormal];
     } else {
         self.dismissButton.hidden = YES;
     }
     
-    if (self.bonus) {
-        [self.bonusButton setTitle:self.bonus forState:UIControlStateNormal];
+    if (self.secondButtonTitle) {
+        [self.secondButton setTitle:self.secondButtonTitle forState:UIControlStateNormal];
     } else {
-        self.bonusButton.hidden = YES;
+        self.secondButton.hidden = YES;
+    }
+    
+    if (self.link) {
+        self.linkView.layer.cornerRadius = 4;
+        self.linkView.layer.borderWidth = 0.5;
+        self.linkView.layer.borderColor = [[UIColor colorWithRed:0 green:0 blue:0 alpha:0.1] CGColor];
+        self.linkLabel.text = self.link;
+    } else {
+        self.linkView.hidden = YES;
     }
 }
 
@@ -93,30 +103,34 @@
 
 #pragma mark - IBActions
 
-- (IBAction)actionTouchUpInside:(UIButton *)sender {
+- (IBAction)firstButtonTouchUpInside:(UIButton *)sender {
     [self fadeOutBackgroundCompletion:^ {
-        if (self.completion) self.completion();
+        if (self.firstCompletion) self.firstCompletion();
     }];
 }
 
 - (IBAction)dismissTouchUpInside:(UIButton *)sender {
     [self fadeOutBackgroundCompletion:^ {
-        if (self.onDismiss) {
-            self.onDismiss();
+        if (self.dismissCompletion) {
+            self.dismissCompletion();
         } else {
             [self dismissViewControllerAnimated:YES completion:nil];
         }
     }];
 }
 
-- (IBAction)bonusTouchUpInside:(UIButton *)sender {
+- (IBAction)secondButtonTouchUpInside:(UIButton *)sender {
     [self fadeOutBackgroundCompletion:^ {
-        [self dismissViewControllerAnimated:YES completion:^{
-            AchievementsViewController *achievementsVC = [[UIStoryboard storyboardWithName:@"MyAccount" bundle:nil] instantiateViewControllerWithIdentifier:@"AchievementsViewControllerID"];
-            achievementsVC.enableCloseBarButton = YES;
-            UINavigationController *navigation = [[UINavigationController alloc] initWithRootViewController:achievementsVC];
-            [UIApplication.mnz_visibleViewController presentViewController:navigation animated:YES completion:nil];
-        }];
+        if (self.secondCompletion) {
+            self.secondCompletion();
+        } else {
+            [self dismissViewControllerAnimated:YES completion:^{
+                AchievementsViewController *achievementsVC = [[UIStoryboard storyboardWithName:@"MyAccount" bundle:nil] instantiateViewControllerWithIdentifier:@"AchievementsViewControllerID"];
+                achievementsVC.enableCloseBarButton = YES;
+                UINavigationController *navigation = [[UINavigationController alloc] initWithRootViewController:achievementsVC];
+                [UIApplication.mnz_presentingViewController presentViewController:navigation animated:YES completion:nil];
+            }];
+        }
     }];
 }
 

@@ -3,17 +3,18 @@
 
 #import <MessageUI/MFMailComposeViewController.h>
 
-#import "Helper.h"
 #import "SVProgressHUD.h"
 
 #import "MEGAReachabilityManager.h"
 #import "MEGASdkManager.h"
 #import "MEGASDK+MNZCategory.h"
+#import "NSURL+MNZCategory.h"
 
 @interface HelpTableViewController () <MFMailComposeViewControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UILabel *helpCentreLabel;
 @property (weak, nonatomic) IBOutlet UILabel *sendFeedbackLabel;
+@property (weak, nonatomic) IBOutlet UILabel *joinBetaLabel;
 @property (weak, nonatomic) IBOutlet UILabel *rateUsLabel;
 
 @end
@@ -29,6 +30,7 @@
     
     self.sendFeedbackLabel.text = AMLocalizedString(@"sendFeedbackLabel", @"Title of one of the Settings sections where you can 'Send Feedback' to MEGA");
     self.helpCentreLabel.text = AMLocalizedString(@"helpCentreLabel", @"Title of the section to access MEGA's help centre");
+    self.joinBetaLabel.text = AMLocalizedString(@"Join Beta", @"Section title that links you to the webpage that let you join and test the beta versions");
     self.rateUsLabel.text = AMLocalizedString(@"rateUsLabel", @"Title to rate the app");
 }
 
@@ -39,11 +41,7 @@
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return [[MEGASdkManager sharedMEGASdk] mnz_isProAccount] ? 3 : 2;
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 1;
+    return [[MEGASdkManager sharedMEGASdk] mnz_isProAccount] ? 4 : 3;
 }
 
 #pragma mark - UITableViewDelegate
@@ -59,7 +57,11 @@
                 [self sendFeedback];
                 break;
                 
-            case 2:
+            case 2: //Join Beta
+                [[NSURL URLWithString:@"https://testflight.apple.com/join/4x1P5Tnx"] mnz_presentSafariViewController];
+                break;
+                
+            case 3: //Rate us
                 [self rateApp];
                 break;
         }
@@ -115,7 +117,7 @@
 }
 
 - (void)openHelpCentre {
-    [Helper presentSafariViewControllerWithURL:[NSURL URLWithString:@"https://mega.nz/help/client/ios/"]];
+    [[NSURL URLWithString:@"https://mega.nz/help/client/ios/"] mnz_presentSafariViewController];
 }
 
 - (void)rateApp {

@@ -19,8 +19,12 @@ typedef NS_ENUM (NSInteger, MEGAChatRoomListState) {
 
 + (BOOL)isReachableHUDIfNot;
 
-- (void)reconnectIfIPHasChanged;
+- (void)retryOrReconnect;
+- (void)retryPendingConnections;
+- (void)reconnect;
 
 @property (nonatomic) MEGAChatRoomListState chatRoomListState;
+@property (nonatomic, readonly) NSString *currentAddress;
+@property (nonatomic, getter=isMobileDataEnabled, readonly) BOOL mobileDataEnabled;
 
 @end

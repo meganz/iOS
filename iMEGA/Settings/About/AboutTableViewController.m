@@ -1,11 +1,8 @@
 
 #import "AboutTableViewController.h"
 
-#import "SVProgressHUD.h"
-
 #import "Helper.h"
-#import "MEGAReachabilityManager.h"
-#import "MEGASdkManager.h"
+#import "NSURL+MNZCategory.h"
 
 @interface AboutTableViewController ()
 
@@ -16,10 +13,9 @@
 @property (weak, nonatomic) IBOutlet UILabel *megachatSdkVersionLabel;
 @property (weak, nonatomic) IBOutlet UILabel *megachatSdkSHALabel;
 @property (weak, nonatomic) IBOutlet UILabel *acknowledgementsLabel;
+@property (weak, nonatomic) IBOutlet UILabel *viewSourceCodeLabel;
 
 @property (weak, nonatomic) IBOutlet UITableViewCell *versionCell;
-
-@property (weak, nonatomic) IBOutlet UIView *debugView;
 
 @end
 
@@ -30,17 +26,21 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self.versionLabel setText:AMLocalizedString(@"version", nil)];
+    self.versionLabel.text = AMLocalizedString(@"App version", @"App means “Application”");
     [self.versionNumberLabel setText:[[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"]];
-    UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(logoTappedFiveTimes:)];
+    UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(appVersionTappedFiveTimes:)];
     tapGestureRecognizer.numberOfTapsRequired = 5;
-    self.versionCell.gestureRecognizers = @[tapGestureRecognizer];
+    UILongPressGestureRecognizer *longPressGestureRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(appVersionPressedFiveSeconds:)];
+    longPressGestureRecognizer.minimumPressDuration = 5.0f;
+    self.versionCell.gestureRecognizers = @[tapGestureRecognizer, longPressGestureRecognizer];
     
     self.sdkVersionLabel.text = AMLocalizedString(@"sdkVersion", @"Title of the label where the SDK version is shown");
-    self.sdkVersionSHALabel.text = @"b5e58bdd";
+    self.sdkVersionSHALabel.text = @"ebaa6fc8";
     
     self.megachatSdkVersionLabel.text = AMLocalizedString(@"megachatSdkVersion", @"Title of the label where the MEGAchat SDK version is shown");
-    self.megachatSdkSHALabel.text = @"bbefbfde";
+    self.megachatSdkSHALabel.text = @"3dd8da3b";
+    
+    self.viewSourceCodeLabel.text = AMLocalizedString(@"View source code", @"Link to the public code of the ap");
     
     [self.acknowledgementsLabel setText:AMLocalizedString(@"acknowledgements", nil)];
 }
@@ -58,50 +58,31 @@
 
 #pragma mark - Private
 
-- (void)logoTappedFiveTimes:(UITapGestureRecognizer *)sender {
+- (void)appVersionTappedFiveTimes:(UITapGestureRecognizer *)sender {
     if (sender.state == UIGestureRecognizerStateEnded) {
         [Helper enableOrDisableLog];
     }
 }
 
-- (void)acknowledgements {
-    if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-        [Helper presentSafariViewControllerWithURL:[NSURL URLWithString:@"https://github.com/meganz/iOS3/blob/master/CREDITS.md"]];
+- (void)appVersionPressedFiveSeconds:(UITapGestureRecognizer *)sender {
+    if (sender.state == UIGestureRecognizerStateBegan) {
+        [Helper changeApiURL];
     }
-}
-
-#pragma mark - UITableViewDataSource
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 2;
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    NSInteger numberOfRows = 0;
-    switch (section) {
-        case 0:
-            numberOfRows = 3;
-            break;
-            
-        case 1:
-            numberOfRows = 1;
-            break;
-    }
-    return numberOfRows;
 }
 
 #pragma mark - UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-
     switch (indexPath.section) {
         case 0: {
             break;
         }
             
         case 1: {
-            if ([indexPath row] == 0) {
-                [self acknowledgements];
+            if (indexPath.row == 0) { //View source code
+                [[NSURL URLWithString:@"https://github.com/meganz/iOS"] mnz_presentSafariViewController];
+            } else if (indexPath.row == 1) { //Acknowledgements
+                [[NSURL URLWithString:@"https://github.com/meganz/iOS3/blob/master/CREDITS.md"] mnz_presentSafariViewController];
             }
             break;
         }

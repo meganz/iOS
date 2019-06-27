@@ -6,69 +6,106 @@
 #import <MobileCoreServices/MobileCoreServices.h>
 #import <Photos/Photos.h>
 
+#import "NSDate+DateTools.h"
+
+#import "NSDate+MNZCategory.h"
 #import "MEGASdkManager.h"
+#import "MEGAUser+MNZCategory.h"
 
 static NSString* const A = @"[A]";
 static NSString* const B = @"[B]";
 
 @implementation NSString (MNZCategory)
 
-- (BOOL)mnz_isImageUTI {
-    BOOL isImageUTI = NO;
-    CFStringRef fileUTI = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, (__bridge CFStringRef _Nonnull)(self.pathExtension.lowercaseString), NULL);
-    if (UTTypeConformsTo(fileUTI, kUTTypeImage)) {
-        isImageUTI = YES;
-    }
-    if (fileUTI) CFRelease(fileUTI);
-    
-    return isImageUTI;
-}
-
-- (BOOL)mnz_isAudiovisualContentUTI {
-    BOOL isAudiovisualContentUTI = NO;
-    CFStringRef fileUTI = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, (__bridge CFStringRef _Nonnull)(self.pathExtension.lowercaseString), NULL);
-    if (UTTypeConformsTo(fileUTI, kUTTypeAudiovisualContent)) {
-        isAudiovisualContentUTI = YES;
-    }
-    if (fileUTI) CFRelease(fileUTI);
-    
-    return isAudiovisualContentUTI;
-}
-
 - (BOOL)mnz_isImagePathExtension {
-    NSSet *imagesExtensionsSet = [[NSSet alloc] initWithObjects:@"gif", @"jpg", @"tif", @"jpeg", @"bmp", @"png", @"nef", @"heic", nil];
+    NSArray<NSString *> *supportedExtensions = @[@"bmp",
+                                                 @"cr2",
+                                                 @"crw",
+                                                 @"cur",
+                                                 @"dng",
+                                                 @"gif",
+                                                 @"heic",
+                                                 @"ico",
+                                                 @"j2c",
+                                                 @"jp2",
+                                                 @"jpf",
+                                                 @"jpeg",
+                                                 @"jpg",
+                                                 @"nef",
+                                                 @"orf",
+                                                 @"pbm",
+                                                 @"pgm",
+                                                 @"png",
+                                                 @"pnm",
+                                                 @"ppm",
+                                                 @"psd",
+                                                 @"raf",
+                                                 @"rw2",
+                                                 @"rwl",
+                                                 @"tga",
+                                                 @"tif",
+                                                 @"tiff"];
     
-    return [imagesExtensionsSet containsObject:self.pathExtension.lowercaseString];
+    return [supportedExtensions containsObject:self.pathExtension.lowercaseString];
 }
 
 - (BOOL)mnz_isVideoPathExtension {
-    NSSet *videosExtensionsSet = [[NSSet alloc] initWithObjects:@"mp4", @"mov", @"m4v", @"3gp", nil];
+    NSArray<NSString *> *supportedExtensions = @[@"3g2",
+                                                 @"3gp",
+                                                 @"avi",
+                                                 @"m4v",
+                                                 @"mov",
+                                                 @"mp4",
+                                                 @"mqv",
+                                                 @"qt"];
     
-    return [videosExtensionsSet containsObject:self.pathExtension.lowercaseString];
+    return [supportedExtensions containsObject:self.pathExtension.lowercaseString];
+}
+
+- (BOOL)mnz_isAudioPathExtension {
+    NSArray<NSString *> *supportedExtensions = @[@"aac",
+                                                 @"ac3",
+                                                 @"aif",
+                                                 @"aiff",
+                                                 @"au",
+                                                 @"caf",
+                                                 @"eac3",
+                                                 @"flac",
+                                                 @"m4a",
+                                                 @"mp3",
+                                                 @"wav"];
+    
+    return [supportedExtensions containsObject:self.pathExtension.lowercaseString];
 }
 
 - (BOOL)mnz_isMultimediaPathExtension {
-    NSSet *multimediaExtensionsSet = [[NSSet alloc] initWithObjects:@"mp4", @"mov", @"3gp", @"wav", @"m4v", @"m4a", @"mp3", nil];
-    
-    return [multimediaExtensionsSet containsObject:self.pathExtension.lowercaseString];
+    return self.mnz_isVideoPathExtension || self.mnz_isAudioPathExtension;
 }
 
 #pragma mark - appData
 
 - (NSString *)mnz_appDataToSaveCameraUploadsCount:(NSUInteger)operationCount {
-    return [self stringByAppendingString:[NSString stringWithFormat:@">CU=%ld", operationCount]];
+    return [self stringByAppendingString:[NSString stringWithFormat:@">CU=%tu", operationCount]];
 }
 
 - (NSString *)mnz_appDataToSaveInPhotosApp {
     return [self stringByAppendingString:@">SaveInPhotosApp"];
 }
 
-- (NSString *)mnz_appDataToAttachToChatID:(uint64_t)chatId {
-    return [self stringByAppendingString:[NSString stringWithFormat:@">attachToChatID=%llu", chatId]];
+- (NSString *)mnz_appDataToAttachToChatID:(uint64_t)chatId asVoiceClip:(BOOL)asVoiceClip {
+    if (asVoiceClip) {
+        return [self stringByAppendingString:[NSString stringWithFormat:@">attachVoiceClipToChatID=%llu", chatId]];
+    } else {
+        return [self stringByAppendingString:[NSString stringWithFormat:@">attachToChatID=%llu", chatId]];
+    }
 }
 
 - (NSString *)mnz_appDataToSaveCoordinates:(NSString *)coordinates {
     return (coordinates ? [self stringByAppendingString:[NSString stringWithFormat:@">setCoordinates=%@", coordinates]] : self);
+}
+
+- (NSString *)mnz_appDataToLocalIdentifier:(NSString *)localIdentifier {
+    return (localIdentifier ? [self stringByAppendingString:[NSString stringWithFormat:@">localIdentifier=%@", localIdentifier]] : self);
 }
 
 #pragma mark - Utils
@@ -179,8 +216,8 @@ static NSString* const B = @"[B]";
             missedString = [missedString stringByReplacingOccurrencesOfString:A withString:missedVideoCallsString];
         } else { //missedAudioCalls > 1
             missedString = AMLocalizedString(@"missedAudioCallsAndMissedVideoCalls", @"Notification text body shown when you have missed several audio calls and video calls. [A] = {number of missed audio calls}. [B] = {number of missed video calls}");
-            missedString = [missedString stringByReplacingOccurrencesOfString:A withString:missedString];
-            missedString = [missedString stringByReplacingOccurrencesOfString:B withString:missedString];            
+            missedString = [missedString stringByReplacingOccurrencesOfString:A withString:missedAudioCallsString];
+            missedString = [missedString stringByReplacingOccurrencesOfString:B withString:missedVideoCallsString];            
         }
     }
     
@@ -275,14 +312,18 @@ static NSString* const B = @"[B]";
     return ![[self stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] length];
 }
 
+- (BOOL)mnz_containsInvalidChars {
+    return [self rangeOfCharacterFromSet:[NSCharacterSet characterSetWithCharactersInString:@"|*/:<>?\"\\"]].length;
+}
+
 - (NSString *)mnz_removeWebclientFormatters {
     NSString *string;
     string = [self stringByReplacingOccurrencesOfString:@"[A]" withString:@""];
     string = [string stringByReplacingOccurrencesOfString:@"[/A]" withString:@""];
     string = [string stringByReplacingOccurrencesOfString:@"[S]" withString:@""];
     string = [string stringByReplacingOccurrencesOfString:@"[/S]" withString:@""];
+    string = [string stringByReplacingOccurrencesOfString:@"<a href=\"terms\">" withString:@""];
     string = [string stringByReplacingOccurrencesOfString:@"<a href='terms'>" withString:@""];
-    string = [string stringByReplacingOccurrencesOfString:@"<a href=’terms’>" withString:@""];
     string = [string stringByReplacingOccurrencesOfString:@"</a>" withString:@""];
     
     return string;
@@ -321,8 +362,8 @@ static NSString* const B = @"[B]";
                 return [NSString stringWithFormat:AMLocalizedString(@"xHours1Minute", nil), (int)hours];
             } else {
                 NSString *durationString = AMLocalizedString(@"xHoursxMinutes", nil);
-                durationString = [durationString stringByReplacingOccurrencesOfString:@"%1$d" withString:[NSString stringWithFormat:@"%lu", hours]];
-                durationString = [durationString stringByReplacingOccurrencesOfString:@"%2$d" withString:[NSString stringWithFormat:@"%lu", minutes]];
+                durationString = [durationString stringByReplacingOccurrencesOfString:@"%1$d" withString:[NSString stringWithFormat:@"%td", hours]];
+                durationString = [durationString stringByReplacingOccurrencesOfString:@"%2$d" withString:[NSString stringWithFormat:@"%td", minutes]];
                 return durationString;
             }
         }
@@ -342,7 +383,7 @@ static NSString* const B = @"[B]";
     }
 }
 
-- (NSString*)SHA256 {
+- (NSString *)SHA256 {
     unsigned int outputLength = CC_SHA256_DIGEST_LENGTH;
     unsigned char output[outputLength];
     
@@ -357,10 +398,14 @@ static NSString* const B = @"[B]";
     return hash;
 }
 
-#pragma mark - Emoji utils
+- (BOOL)mnz_isDecimalNumber {
+    NSCharacterSet *decimalDigitInvertedCharacterSet = [[NSCharacterSet decimalDigitCharacterSet] invertedSet];
+    NSRange range = [self rangeOfCharacterFromSet:decimalDigitInvertedCharacterSet];
+    
+    return (range.location == NSNotFound);
+}
 
-- (BOOL)mnz_containsEmoji
-{
+- (BOOL)mnz_containsEmoji {
     __block BOOL containsEmoji = NO;
     
     [self enumerateSubstringsInRange:NSMakeRange(0,
@@ -381,7 +426,7 @@ static NSString* const B = @"[B]";
                  const unichar ls = [substring characterAtIndex:1];
                  const int uc = ((hs - 0xd800) * 0x400) + (ls - 0xdc00) + 0x10000;
                  if (0x1d000 <= uc &&
-                     uc <= 0x1f9c0)
+                     uc <= 0x1f9ff)
                  {
                      containsEmoji = YES;
                  }
@@ -470,7 +515,7 @@ static NSString* const B = @"[B]";
                  const unichar ls = [substring characterAtIndex:1];
                  const int uc = ((hs - 0xd800) * 0x400) + (ls - 0xdc00) + 0x10000;
                  if (0x1d000 <= uc &&
-                     uc <= 0x1f9c0)
+                     uc <= 0x1f9ff)
                  {
                      containsEmoji = YES;
                  }
@@ -554,7 +599,7 @@ static NSString* const B = @"[B]";
                  const unichar ls = [substring characterAtIndex:1];
                  const int uc = ((hs - 0xd800) * 0x400) + (ls - 0xdc00) + 0x10000;
                  if (0x1d000 <= uc &&
-                     uc <= 0x1f9c0)
+                     uc <= 0x1f9ff)
                  {
                      emojiCount = emojiCount + 1;
                  }
@@ -610,6 +655,13 @@ static NSString* const B = @"[B]";
     return emojiCount;
 }
 
+- (NSString *)mnz_initialForAvatar {
+    NSString *trimmedSelf = [self stringByTrimmingCharactersInSet:
+                         [NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    NSUInteger end = [trimmedSelf rangeOfComposedCharacterSequenceAtIndex:0].length;
+    return [trimmedSelf substringToIndex:end].uppercaseString;
+}
+
 - (NSString *)mnz_coordinatesOfPhotoOrVideo {
     if (self.mnz_isImagePathExtension) {
         NSURL *fileURL;
@@ -624,7 +676,7 @@ static NSString* const B = @"[B]";
             if (data) {
                 CGImageSourceRef imageData = CGImageSourceCreateWithData((CFDataRef)data, NULL);
                 if (imageData) {
-                    NSDictionary *metadata = (__bridge NSDictionary *)CGImageSourceCopyPropertiesAtIndex(imageData, 0, NULL);
+                    NSDictionary *metadata = (__bridge_transfer NSDictionary *)CGImageSourceCopyPropertiesAtIndex(imageData, 0, NULL);
                     
                     CFRelease(imageData);
                     
@@ -672,6 +724,129 @@ static NSString* const B = @"[B]";
     NSString *base64FromBase64URLEncoding = [base64URLEncondingString stringByPaddingToLength:paddedLength withString:@"=" startingAtIndex:0];
     
     return base64FromBase64URLEncoding;
+}
+
+- (NSString *)mnz_relativeLocalPath {
+    return [self stringByReplacingOccurrencesOfString:[NSHomeDirectory() stringByAppendingString:@"/"] withString:@""];
+}
+
++ (NSString *)mnz_lastGreenStringFromMinutes:(NSInteger)minutes {    
+    NSString *lastSeenMessage;
+    if (minutes < 65535) {
+        NSDate *dateLastSeen = [NSDate dateWithTimeIntervalSinceNow:-minutes*SECONDS_IN_MINUTE];
+        NSString *timeString = dateLastSeen.mnz_formattedHourAndMinutes;
+        NSString *dateString;
+        if ([[NSCalendar currentCalendar] isDateInToday:dateLastSeen]) {
+            dateString = AMLocalizedString(@"Today", @"");
+        } else if ([[NSCalendar currentCalendar] isDateInYesterday:dateLastSeen]) {
+            dateString = AMLocalizedString(@"Yesterday", @"");
+        } else {
+            dateString = [dateLastSeen formattedDateWithFormat:@"dd MMM"];
+        }
+        lastSeenMessage = AMLocalizedString(@"Last seen %s", @"Shown when viewing a 1on1 chat (at least for now), if the user is offline.");
+        BOOL isRTLLanguage = UIApplication.sharedApplication.userInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft;
+        if (isRTLLanguage) {
+            lastSeenMessage = [lastSeenMessage stringByReplacingOccurrencesOfString:@"%s" withString:[NSString stringWithFormat:@"%@ %@", timeString, dateString]];
+        } else {
+            lastSeenMessage = [lastSeenMessage stringByReplacingOccurrencesOfString:@"%s" withString:[NSString stringWithFormat:@"%@ %@", dateString, timeString]];
+        }
+    } else {
+        lastSeenMessage = AMLocalizedString(@"Last seen a long time ago", @"Text to inform the user the 'Last seen' time of a contact is a long time ago (more than 65535 minutes)");
+    }
+    return lastSeenMessage;
+}
+    
++ (NSString *)mnz_convertCoordinatesLatitude:(float)latitude longitude:(float)longitude {        
+    NSInteger latSeconds = (NSInteger)(latitude * 3600);
+    NSInteger latDegrees = latSeconds / 3600;
+    latSeconds = ABS(latSeconds % 3600);
+    NSInteger latMinutes = latSeconds / 60;
+    latSeconds %= 60;
+    
+    NSInteger longSeconds = (NSInteger)(longitude * 3600);
+    NSInteger longDegrees = longSeconds / 3600;
+    longSeconds = ABS(longSeconds % 3600);
+    NSInteger longMinutes = longSeconds / 60;
+    longSeconds %= 60;
+    
+    NSString* result = [NSString stringWithFormat:@"%td°%td'%td\"%@ %td°%td'%td\"%@",
+                        ABS(latDegrees),
+                        latMinutes,
+                        latSeconds,
+                        latDegrees >= 0 ? @"N" : @"S",
+                        ABS(longDegrees),
+                        longMinutes,
+                        longSeconds,
+                        longDegrees >= 0 ? @"E" : @"W"];
+    
+    return result;
+}
+
++ (NSString *)mnz_addedByInRecentActionBucket:(MEGARecentActionBucket *)recentActionBucket nodesArray:(NSArray *)nodesArray {
+    NSString *addebByString;
+    
+    MEGAUser *user = [MEGASdkManager.sharedMEGASdk contactForEmail:recentActionBucket.userEmail];
+    NSString *userNameThatMadeTheAction = @"";
+    if (user) {
+        userNameThatMadeTheAction = user.mnz_firstName ? user.mnz_firstName : @"";
+    }
+    
+    if (recentActionBucket.isUpdate) {
+        addebByString = AMLocalizedString(@"%1 modified by %3", @"Title for a recent action shown in the webclient, see the attached image for context.");
+        addebByString = [addebByString stringByReplacingOccurrencesOfString:@"%1 " withString:@""];
+        addebByString = [addebByString stringByReplacingOccurrencesOfString:@"%3" withString:userNameThatMadeTheAction];
+    } else {
+        addebByString = AMLocalizedString(@"%1 created by %3", @"Title for a recent action shown in the webclient, see the attached image for context.");
+        addebByString = [addebByString stringByReplacingOccurrencesOfString:@"%1 " withString:@""];
+        addebByString = [addebByString stringByReplacingOccurrencesOfString:@"%3" withString:userNameThatMadeTheAction];
+    }
+    
+    return addebByString;
+}
+
+#pragma mark - File names and extensions
+
+- (NSString *)mnz_fileNameWithLowercaseExtension {
+    NSString *fileName;
+    NSString *extension;
+    
+    NSMutableArray<NSString *> *fileNameComponents = [[self componentsSeparatedByString:@"."] mutableCopy];
+    if (fileNameComponents.count > 1) {
+        extension = fileNameComponents.lastObject.lowercaseString;
+        [fileNameComponents replaceObjectAtIndex:(fileNameComponents.count - 1) withObject:extension];
+    }
+    fileName = [fileNameComponents componentsJoinedByString:@"."];
+    
+    return fileName;
+}
+
+- (NSString *)mnz_lastExtensionInLowercase {
+    NSString *extension;
+    NSMutableArray<NSString *> *fileNameComponents = [[self.lastPathComponent componentsSeparatedByString:@"."] mutableCopy];
+    if (fileNameComponents.count > 1) {
+        extension = fileNameComponents.lastObject.lowercaseString;
+    }
+    
+    return extension;
+}
+
+- (NSString *)mnz_sequentialFileNameInParentNode:(MEGANode *)parentNode {
+    NSString *nameWithoutExtension = self.stringByDeletingPathExtension;
+    NSString *extension = self.pathExtension;
+    int index = 0;
+    int listSize = 0;
+    
+    do {
+        if (index != 0) {
+            nameWithoutExtension = [self.stringByDeletingPathExtension stringByAppendingString:[NSString stringWithFormat:@"_%d", index]];
+        }
+        
+        MEGANodeList *nameNodeList = [[MEGASdkManager sharedMEGASdk] nodeListSearchForNode:parentNode searchString:[nameWithoutExtension stringByAppendingPathExtension:extension]];
+        listSize = nameNodeList.size.intValue;
+        index++;
+    } while (listSize != 0);
+    
+    return [nameWithoutExtension stringByAppendingPathExtension:extension];
 }
 
 @end

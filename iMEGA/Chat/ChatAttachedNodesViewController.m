@@ -47,7 +47,7 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(internetConnectionChanged) name:kReachabilityChangedNotification object:nil];
     
-    [[MEGASdkManager sharedMEGASdk] retryPendingConnections];
+    [[MEGAReachabilityManager sharedManager] retryPendingConnections];
     
     [self reloadUI];
 }
@@ -67,14 +67,15 @@
 - (void)setupAttachedNodes {
     self.selectedNodesMutableArray = [[NSMutableArray alloc] init];
     
+    self.backBarButtonItem.image = self.backBarButtonItem.image.imageFlippedForRightToLeftLayoutDirection;
     self.navigationItem.leftBarButtonItem = self.backBarButtonItem;
     self.editBarButtonItem.title = AMLocalizedString(@"edit", @"Caption of a button to edit the files that are selected");
     self.navigationItem.rightBarButtonItems = @[self.editBarButtonItem];
     
     self.downloadBarButtonItem.title = AMLocalizedString(@"saveForOffline", @"List option shown on the details of a file or folder");
-    [self.downloadBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:17.0f], NSForegroundColorAttributeName:[UIColor mnz_redF0373A]} forState:UIControlStateNormal];
+    [self.downloadBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:17.0f], NSForegroundColorAttributeName:UIColor.mnz_redMain} forState:UIControlStateNormal];
     self.importBarButtonItem.title = AMLocalizedString(@"import", @"Button title that triggers the importing link action");
-    [self.importBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIMediumWithSize:17.0f], NSForegroundColorAttributeName:[UIColor mnz_redF0373A]} forState:UIControlStateNormal];
+    [self.importBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIMediumWithSize:17.0f], NSForegroundColorAttributeName:UIColor.mnz_redMain} forState:UIControlStateNormal];
     UIBarButtonItem *flexibleItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
     
     NSString *myUserHandleString = [NSString stringWithFormat:@"%llu", [[MEGASdkManager sharedMEGAChatSdk] myUserHandle]];
@@ -271,21 +272,11 @@
         }
     }
     
-    if (currentNode.hasThumbnail) {
-        NSString *thumbnailFilePath = [Helper pathForNode:currentNode inSharedSandboxCacheDirectory:@"thumbnailsV3"];
-        
-        if ([[NSFileManager defaultManager] fileExistsAtPath:thumbnailFilePath]) {
-            cell.thumbnailImageView.image = [UIImage imageWithContentsOfFile:thumbnailFilePath];
-        } else {
-            MEGAGetThumbnailRequestDelegate *getThumbnailRequestDelegate = [[MEGAGetThumbnailRequestDelegate alloc] initWithCompletion:^(MEGARequest *request){
-                cell.thumbnailImageView.image = [UIImage imageWithContentsOfFile:request.file];
-            }];
-            [[MEGASdkManager sharedMEGASdk] getThumbnailNode:currentNode destinationFilePath:thumbnailFilePath delegate:getThumbnailRequestDelegate];
-            [cell.thumbnailImageView mnz_imageForNode:currentNode];
-        }
-    } else {
-        [cell.thumbnailImageView mnz_imageForNode:currentNode];
-    }
+    [cell.thumbnailImageView mnz_setThumbnailByNode:currentNode];
+    
+    UIView *view = [[UIView alloc] init];
+    view.backgroundColor = UIColor.clearColor;
+    cell.selectedBackgroundView = view;
     
     return cell;
 }
@@ -305,6 +296,7 @@
         
         return;
     } else {
+        // Nodes should be authorized here before being opened, if at any moment attaching multiple nodes in a single message is allowed for public chats.
         if (node.name.mnz_isImagePathExtension || node.name.mnz_isVideoPathExtension) {
             NSMutableArray<MEGANode *> *mediaNodesArray = [self.message.nodeList mnz_mediaNodesMutableArrayFromNodeList];
             

@@ -1,12 +1,17 @@
 
+#import "UIImage+MNZCategory.h"
+
 #import "Helper.h"
 #import "MEGAStore.h"
+#import "MEGASdkManager.h"
+#import "NSString+MNZCategory.h"
 
 #import "UIImage+GKContact.h"
-#import "UIImage+MNZCategory.h"
 #import "UIColor+MNZCategory.h"
 
 @implementation UIImage (MNZCategory)
+
+#pragma mark - Video calls
 
 + (UIImage *)mnz_convertBitmapRGBA8ToUIImage:(unsigned char *)buffer
                                withWidth:(NSInteger)width
@@ -59,7 +64,6 @@
     
     if(context == NULL) {
         NSLog(@"Error context not created");
-        free(pixels);
     }
     
     UIImage *image = nil;
@@ -92,7 +96,13 @@
     return image;
 }
 
+#pragma mark - Avatars
+
 + (UIImage *)mnz_imageForUserHandle:(uint64_t)userHandle size:(CGSize)size delegate:(id<MEGARequestDelegate>)delegate {
+    return [self mnz_imageForUserHandle:userHandle name:@"?" size:size delegate:delegate];
+}
+
++ (UIImage *)mnz_imageForUserHandle:(uint64_t)userHandle name:(NSString *)name size:(CGSize)size delegate:(id<MEGARequestDelegate>)delegate {
     UIImage *image = nil;
     
     NSString *base64Handle = [MEGASdk base64HandleForUserHandle:userHandle];
@@ -102,17 +112,17 @@
     } else {
         NSString *colorString = [MEGASdk avatarColorForBase64UserHandle:base64Handle];
         MOUser *user = [[MEGAStore shareInstance] fetchUserWithUserHandle:userHandle];
-        NSString *initialsForAvatar = nil;
+        NSString *initialForAvatar = nil;
         if (user) {
             if (user.fullName.length) {
-                initialsForAvatar = [user.fullName substringToIndex:1].uppercaseString;
+                initialForAvatar = user.fullName.mnz_initialForAvatar;
             } else {
-                initialsForAvatar = [user.email substringToIndex:1].uppercaseString;
+                initialForAvatar = user.email.mnz_initialForAvatar;
             }
         } else {
-            initialsForAvatar = @"?";
+            initialForAvatar = name.mnz_initialForAvatar;
         }
-        image = [UIImage imageForName:initialsForAvatar size:size backgroundColor:[UIColor colorFromHexString:colorString] textColor:[UIColor whiteColor] font:[UIFont mnz_SFUIRegularWithSize:(size.width/2.0f)]];
+        image = [UIImage imageForName:initialForAvatar size:size backgroundColor:[UIColor colorFromHexString:colorString] textColor:[UIColor whiteColor] font:[UIFont mnz_SFUIRegularWithSize:(size.width/2.0f)]];
         
         [[MEGASdkManager sharedMEGASdk] getAvatarUserWithEmailOrHandle:base64Handle destinationFilePath:avatarFilePath delegate:delegate];
     }
@@ -120,9 +130,19 @@
     return image;
 }
 
++ (UIImage *)imageWithColor:(UIColor *)color andBounds:(CGRect)imgBounds {
+    UIGraphicsBeginImageContextWithOptions(imgBounds.size, NO, 0);
+    [color setFill];
+    UIRectFill(imgBounds);
+    UIImage *img = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    return img;
+}
+
 #pragma mark - QR generation
 
-+ (UIImage *)mnz_qrImageFromString:(NSString *)qrString withSize:(CGSize)size {
++ (UIImage *)mnz_qrImageFromString:(NSString *)qrString withSize:(CGSize)size color:(UIColor *)color {
     NSData *qrData = [qrString dataUsingEncoding:NSISOLatin1StringEncoding];
     NSString *qrCorrectionLevel = @"H";
     
@@ -132,7 +152,7 @@
     
     CIFilter *colorFilter = [CIFilter filterWithName:@"CIFalseColor"];
     [colorFilter setValue:qrFilter.outputImage forKey:@"inputImage"];
-    [colorFilter setValue:[CIColor colorWithRed:0.94f green:0.22f blue:0.23f] forKey:@"inputColor0"];
+    [colorFilter setValue:[CIColor colorWithCGColor:color.CGColor] forKey:@"inputColor0"];
     [colorFilter setValue:[CIColor colorWithRed:1.0f green:1.0f blue:1.0f] forKey:@"inputColor1"];
     
     CIImage *ciImage = colorFilter.outputImage;
@@ -148,7 +168,7 @@
     return image;
 }
 
-+ (UIImage *)mnz_qrImageWithDotsFromString:(NSString *)qrString withSize:(CGSize)size {
++ (UIImage *)mnz_qrImageWithDotsFromString:(NSString *)qrString withSize:(CGSize)size color:(UIColor *)color {
     NSData *qrData = [qrString dataUsingEncoding: NSISOLatin1StringEncoding];
     NSString *qrCorrectionLevel = @"H";
     
@@ -159,7 +179,7 @@
     UIGraphicsBeginImageContextWithOptions(size, NO, 0.0f);
     CGContextRef ctx = UIGraphicsGetCurrentContext();
     CGContextSaveGState(ctx);
-    CGContextSetFillColorWithColor(ctx, [UIColor colorWithRed:0.94f green:0.22f blue:0.23f alpha:1.0f].CGColor);
+    CGContextSetFillColorWithColor(ctx, color.CGColor);
     
     CGImageRef cgImageRef = [[CIContext contextWithOptions:nil] createCGImage:qrFilter.outputImage fromRect:qrFilter.outputImage.extent];
     CFDataRef rawData = CGDataProviderCopyData(CGImageGetDataProvider(cgImageRef));
@@ -227,7 +247,7 @@
     
     CGRect rectTL1 = CGRectMake(referencePaddingX, referencePaddingY, dotWidth * referenceSize, dotHeight * referenceSize);
     UIBezierPath *bezierPathTL1 = [UIBezierPath bezierPathWithRoundedRect:rectTL1 cornerRadius:dotSize];
-    CGContextSetFillColorWithColor(ctx, [UIColor colorWithRed:0.94f green:0.22f blue:0.23f alpha:1.0f].CGColor);
+    CGContextSetFillColorWithColor(ctx, color.CGColor);
     [bezierPathTL1 fill];
     
     CGRect rectTL2 = CGRectMake(referencePaddingX * 2, referencePaddingY * 2, dotWidth * (referenceSize - 2), dotHeight * (referenceSize - 2));
@@ -236,7 +256,7 @@
     [bezierPathTL2 fill];
     
     CGRect rectTL3 = CGRectMake(referencePaddingX * 3, referencePaddingY * 3, dotWidth * (referenceSize - 4), dotHeight * (referenceSize - 4));
-    CGContextSetFillColorWithColor(ctx, [UIColor colorWithRed:0.94f green:0.22f blue:0.23f alpha:1.0f].CGColor);
+    CGContextSetFillColorWithColor(ctx, color.CGColor);
     CGContextFillEllipseInRect(ctx, rectTL3);
     
     // Draw reference squares at the top right corner:
@@ -247,7 +267,7 @@
 
     CGRect rectTR1 = CGRectMake(size.width - referencePaddingX - (trailingPoints * referencePaddingX) - (dotWidth * referenceSize), referencePaddingY, dotWidth * referenceSize, dotHeight * referenceSize);
     UIBezierPath *bezierPathTR1 = [UIBezierPath bezierPathWithRoundedRect:rectTR1 cornerRadius:dotSize];
-    CGContextSetFillColorWithColor(ctx, [UIColor colorWithRed:0.94f green:0.22f blue:0.23f alpha:1.0f].CGColor);
+    CGContextSetFillColorWithColor(ctx, color.CGColor);
     [bezierPathTR1 fill];
     
     CGRect rectTR2 = CGRectMake(size.width - referencePaddingX * 2 - (trailingPoints * referencePaddingX) - (dotWidth * (referenceSize - 2)), referencePaddingY * 2, dotWidth * (referenceSize - 2), dotHeight * (referenceSize - 2));
@@ -256,7 +276,7 @@
     [bezierPathTR2 fill];
     
     CGRect rectTR3 = CGRectMake(size.width - referencePaddingX * 3 - (trailingPoints * referencePaddingX) - (dotWidth * (referenceSize - 4)), referencePaddingY * 3, dotWidth * (referenceSize - 4), dotHeight * (referenceSize - 4));
-    CGContextSetFillColorWithColor(ctx, [UIColor colorWithRed:0.94f green:0.22f blue:0.23f alpha:1.0f].CGColor);
+    CGContextSetFillColorWithColor(ctx, color.CGColor);
     CGContextFillEllipseInRect(ctx, rectTR3);
     
     // Draw reference squares at the bottom left corner:
@@ -266,7 +286,7 @@
     
     CGRect rectBL1 = CGRectMake(referencePaddingX, size.height - referencePaddingY - (dotHeight * referenceSize), dotWidth * referenceSize, dotHeight * referenceSize);
     UIBezierPath *bezierPathBL1 = [UIBezierPath bezierPathWithRoundedRect:rectBL1 cornerRadius:dotSize];
-    CGContextSetFillColorWithColor(ctx, [UIColor colorWithRed:0.94f green:0.22f blue:0.23f alpha:1.0f].CGColor);
+    CGContextSetFillColorWithColor(ctx, color.CGColor);
     [bezierPathBL1 fill];
     
     CGRect rectBL2 = CGRectMake(referencePaddingX * 2, size.height - referencePaddingY * 2 - (dotHeight * (referenceSize - 2)), dotWidth * (referenceSize - 2), dotHeight * (referenceSize - 2));
@@ -275,7 +295,7 @@
     [bezierPathBL2 fill];
     
     CGRect rectBL3 = CGRectMake(referencePaddingX * 3, size.height - referencePaddingY * 3 - (dotHeight * (referenceSize - 4)), dotWidth * (referenceSize - 4), dotHeight * (referenceSize - 4));
-    CGContextSetFillColorWithColor(ctx, [UIColor colorWithRed:0.94f green:0.22f blue:0.23f alpha:1.0f].CGColor);
+    CGContextSetFillColorWithColor(ctx, color.CGColor);
     CGContextFillEllipseInRect(ctx, rectBL3);
     
     // At this point, the QR code is ready:
@@ -288,6 +308,8 @@
     
     return qrImage;
 }
+
+#pragma mark - Chat
 
 + (UIImage *)mnz_imageByEndCallReason:(MEGAChatMessageEndCallReason)endCallReason userHandle:(uint64_t)userHandle {
     UIImage *endCallReasonImage;
@@ -327,6 +349,18 @@
     }
     
     return endCallReasonImage;
+}
+
+#pragma mark - Utils
+
++ (UIImage *)mnz_imageNamed:(NSString *)name scaledToSize:(CGSize)newSize {
+    UIImage *image = [UIImage imageNamed:name];
+    
+    UIGraphicsBeginImageContextWithOptions(newSize, NO, 0.0);
+    [image drawInRect:CGRectMake(0, 0, newSize.width, newSize.height)];
+    UIImage *scaledImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return scaledImage;
 }
 
 @end

@@ -51,6 +51,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self configureNavigation];
+    
+    self.moreBarButtonItem.accessibilityLabel = AMLocalizedString(@"more", @"Top menu option which opens more menu options in a context menu.");
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -64,7 +66,7 @@
         self.nodeFilePath = [nodeFolderPath stringByAppendingPathComponent:self.node.name];
         
         if ([[NSFileManager defaultManager] createDirectoryAtPath:nodeFolderPath withIntermediateDirectories:YES attributes:nil error:&error]) {
-            [self.api startDownloadNode:self.node localPath:self.nodeFilePath delegate:self];
+            [MEGASdkManager.sharedMEGASdk startDownloadTopPriorityWithNode:[self.api authorizeNode:self.node] localPath:self.nodeFilePath appData:nil delegate:self];
         } else {
             MEGALogError(@"Create directory at path failed with error: %@", error);
         }
@@ -73,14 +75,14 @@
 
 - (void)viewWillDisappear:(BOOL)animated {
     if (previewDocumentTransfer) {
-        [self.api cancelTransfer:previewDocumentTransfer];
+        [MEGASdkManager.sharedMEGASdk cancelTransfer:previewDocumentTransfer];
     }
     
     if (@available(iOS 11.0, *)) {
         if (!self.pdfView.hidden) {
             CGPDFPageRef pageRef = self.pdfView.currentPage.pageRef;
             size_t page = CGPDFPageGetPageNumber(pageRef);
-            NSString *fingerprint = [NSString stringWithFormat:@"%@", [[MEGASdkManager sharedMEGASdk] fingerprintForFilePath:self.pdfView.document.documentURL.path]];
+            NSString *fingerprint = [[MEGASdkManager sharedMEGASdk] fingerprintForFilePath:self.pdfView.document.documentURL.path];
             if (page == 1) {
                 [[MEGAStore shareInstance] deleteMediaDestinationWithFingerprint:fingerprint];
             } else {
@@ -118,12 +120,9 @@
         [self.imageView mnz_setImageForExtension:[self.filesPathsArray objectAtIndex:self.nodeFileIndex].pathExtension];
     }
     
-    if (@available(iOS 11.0, *)) {
-        self.navigationController.navigationBar.barTintColor = [UIColor colorFromHexString:@"FCFCFC"];
-        self.navigationController.navigationBar.titleTextAttributes = @{NSFontAttributeName:[UIFont mnz_SFUISemiBoldWithSize:17.0f], NSForegroundColorAttributeName:[UIColor mnz_black333333]};
-    } else {
-        [Helper configureWhiteNavigationAppearance];
-    }
+    self.navigationController.navigationBar.barTintColor = [UIColor colorFromHexString:@"FCFCFC"];
+    self.navigationController.navigationBar.tintColor = UIColor.mnz_redMain;
+    self.navigationController.navigationBar.titleTextAttributes = @{NSFontAttributeName:[UIFont mnz_SFUISemiBoldWithSize:17.0f], NSForegroundColorAttributeName:[UIColor mnz_black333333]};
 }
 
 - (void)loadPreview {
@@ -178,7 +177,7 @@
 - (IBAction)doneTapped:(id)sender {
     [[UINavigationBar appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUISemiBoldWithSize:17.0f], NSForegroundColorAttributeName:[UIColor whiteColor]}];
     [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
-    [[UINavigationBar appearance] setBarTintColor:[UIColor mnz_redF0373A]];
+    [[UINavigationBar appearance] setBarTintColor:UIColor.mnz_redMain];
     [[UILabel appearanceWhenContainedInInstancesOfClasses:@[[UINavigationBar class]]] setTextColor:[UIColor whiteColor]];
     [[UIBarButtonItem appearanceWhenContainedInInstancesOfClasses:@[[UINavigationBar class]]] setTintColor:[UIColor whiteColor]];
     [self dismissViewControllerAnimated:YES completion:nil];
@@ -289,11 +288,9 @@
 
 - (void)presentMEGAQlPreviewController {
     MEGAQLPreviewController *previewController = [[MEGAQLPreviewController alloc] initWithFilePath:previewDocumentTransfer.path];
-    [previewController setModalPresentationStyle:UIModalPresentationCustom];
-    [previewController setModalTransitionStyle:UIModalTransitionStyleCrossDissolve];
     
     [self dismissViewControllerAnimated:YES completion:^{
-        [[UIApplication mnz_visibleViewController] presentViewController:previewController animated:YES completion:nil];
+        [UIApplication.mnz_presentingViewController presentViewController:previewController animated:YES completion:nil];
     }];
 }
 
@@ -363,11 +360,12 @@
 
 - (void)presentParentNode:(MEGANode *)node {
     [self dismissViewControllerAnimated:YES completion:^{
-        UIViewController *visibleViewController = [UIApplication mnz_visibleViewController];
+        UIViewController *visibleViewController = UIApplication.mnz_presentingViewController;
         if ([visibleViewController isKindOfClass:MainTabBarController.class]) {
             NSArray *parentTreeArray = node.mnz_parentTreeArray;
             
-            UINavigationController *navigationController = (UINavigationController *)((MainTabBarController *)visibleViewController).viewControllers[((MainTabBarController *)visibleViewController).selectedIndex];
+            MainTabBarController *mainTBC = (MainTabBarController *)visibleViewController;
+            UINavigationController *navigationController = (UINavigationController *)(mainTBC.selectedViewController);
             [navigationController popToRootViewControllerAnimated:NO];
             
             for (MEGANode *node in parentTreeArray) {

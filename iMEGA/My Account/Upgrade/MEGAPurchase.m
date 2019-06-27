@@ -1,5 +1,7 @@
 
 #import "MEGAPurchase.h"
+
+#import "DTConstants.h"
 #import "SVProgressHUD.h"
 #import "UIApplication+MNZCategory.h"
 
@@ -53,14 +55,14 @@
             MEGALogWarning(@"[StoreKit] In-App purchases is disabled");
             UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"appPurchaseDisabled", nil) message:nil preferredStyle:UIAlertControllerStyleAlert];
             [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
-            [UIApplication.mnz_visibleViewController presentViewController:alertController animated:YES completion:nil];
+            [UIApplication.mnz_presentingViewController presentViewController:alertController animated:YES completion:nil];
         }
         
     } else {
         MEGALogWarning(@"[StoreKit] Product \"%@\" not found", product.productIdentifier);
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:[NSString stringWithFormat:AMLocalizedString(@"productNotFound", nil), product.productIdentifier] message:nil preferredStyle:UIAlertControllerStyleAlert];
         [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
-        [UIApplication.mnz_visibleViewController presentViewController:alertController animated:YES completion:nil];
+        [UIApplication.mnz_presentingViewController presentViewController:alertController animated:YES completion:nil];
     }
 }
 
@@ -73,7 +75,7 @@
         MEGALogWarning(@"[StoreKit] In-App purchases is disabled");
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"allowPurchase_title", nil) message:AMLocalizedString(@"allowPurchase_message", nil) preferredStyle:UIAlertControllerStyleAlert];
         [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
-        [UIApplication.mnz_visibleViewController presentViewController:alertController animated:YES completion:nil];
+        [UIApplication.mnz_presentingViewController presentViewController:alertController animated:YES completion:nil];
     }
 }
 
@@ -89,7 +91,6 @@
     }
     
     [self.pricingsDelegate pricingsReady];
-    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
 }
 
 - (void)request:(SKRequest *)request didFailWithError:(NSError *)error {
@@ -117,7 +118,14 @@
                 
             case SKPaymentTransactionStatePurchased:
                 MEGALogDebug(@"[StoreKit] Date: %@\nIdentifier: %@\n\t-Original Date: %@\n\t-Original Identifier: %@", transaction.transactionDate, transaction.transactionIdentifier, transaction.originalTransaction.transactionDate, transaction.originalTransaction.transactionIdentifier);
-                [[MEGASdkManager sharedMEGASdk] submitPurchase:MEGAPaymentMethodItunes receipt:[receiptData base64EncodedStringWithOptions:0] delegate:self];
+                
+                NSTimeInterval lastPublicTimestampAccessed = [[NSUserDefaults standardUserDefaults] doubleForKey:@"kLastPublicTimestampAccessed"];
+                if ([NSDate date].timeIntervalSince1970 - lastPublicTimestampAccessed <= SECONDS_IN_DAY) {
+                    uint64_t lastPublicHandleAccessed = [[[NSUserDefaults standardUserDefaults] objectForKey:@"kLastPublicHandleAccessed"] unsignedLongLongValue];
+                    [[MEGASdkManager sharedMEGASdk] submitPurchase:MEGAPaymentMethodItunes receipt:[receiptData base64EncodedStringWithOptions:0] lastPublicHandle:lastPublicHandleAccessed delegate:self];
+                } else {
+                    [[MEGASdkManager sharedMEGASdk] submitPurchase:MEGAPaymentMethodItunes receipt:[receiptData base64EncodedStringWithOptions:0] delegate:self];
+                }
                 
                 [_delegate successfulPurchase:self restored:NO];
                 
