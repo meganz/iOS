@@ -309,7 +309,7 @@
             [permissionsAlertController addAction:readOnlyAlertAction];
             
             MEGAUser *user = [[MEGASdkManager sharedMEGASdk] contactForEmail:[self.chatRoom peerEmailByHandle:userHandle]];
-            if (!user) {
+            if (!user || user.visibility != MEGAUserVisibilityVisible) {
                 [permissionsAlertController addAction:[self sendParticipantContactRequestAlertActionForHandle:userHandle]];
             }
             
@@ -319,7 +319,7 @@
             [permissionsAlertController addAction:removeParticipantAlertAction];
         } else {
             MEGAUser *user = [[MEGASdkManager sharedMEGASdk] contactForEmail:[self.chatRoom peerEmailByHandle:userHandle]];
-            if (!user) {
+            if (!user || user.visibility != MEGAUserVisibilityVisible) {
                 [permissionsAlertController addAction:[self sendParticipantContactRequestAlertActionForHandle:userHandle]];
             }
         }
