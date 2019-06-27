@@ -6,14 +6,15 @@
 
 #import "DevicePermissionsHelper.h"
 #import "Helper.h"
+#import "MEGAChatChangeGroupNameRequestDelegate.h"
+#import "MEGAChatCreateChatGroupRequestDelegate.h"
 #import "MEGAChatGenericRequestDelegate.h"
 #import "MEGANavigationController.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGASdkManager.h"
 #import "NSString+MNZCategory.h"
 #import "UIAlertAction+MNZCategory.h"
-#import "MEGAChatCreateChatGroupRequestDelegate.h"
-#import "MEGAChatChangeGroupNameRequestDelegate.h"
+#import "UITableView+MNZCategory.h"
 
 #import "CallViewController.h"
 #import "ChatRoomCell.h"
@@ -40,6 +41,8 @@
 @property (nonatomic, strong) NSMutableArray *chatListItemArray;
 @property (nonatomic, strong) NSMutableArray *searchChatListItemArray;
 @property (nonatomic, strong) NSMutableDictionary *chatIdIndexPathDictionary;
+@property (nonatomic) NSMutableArray<MEGAUser *> *usersWithoutChatArray;
+@property (nonatomic) NSMutableArray<MEGAUser *> *searchUsersWithoutChatArray;
 
 @property (strong, nonatomic) UISearchController *searchController;
 
@@ -92,6 +95,16 @@
     
     [self customNavigationBarLabel];
     
+    MEGAUserList *users = [[MEGASdkManager sharedMEGASdk] contacts];
+    self.usersWithoutChatArray = [[NSMutableArray alloc] init];
+    NSInteger count = users.size.integerValue;
+    for (NSInteger i = 0; i < count; i++) {
+        MEGAUser *user = [users userAtIndex:i];
+        if (![[MEGASdkManager sharedMEGAChatSdk] chatRoomByUser:user.handle] && user.visibility == MEGAUserVisibilityVisible) {
+            [self.usersWithoutChatArray addObject:user];
+        }
+    }
+    
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"IsChatEnabled"]) {
         
         switch (self.chatRoomsType) {
@@ -106,7 +119,7 @@
                 self.navigationItem.rightBarButtonItem = nil;
                 break;
         }
-        
+
 
         if (self.chatListItemList.size) {
             [self reorderList];
@@ -613,10 +626,6 @@
     }] mutableCopy];
 }
 
-- (NSInteger)numberOfChatRooms {
-    return self.searchController.isActive ? self.searchChatListItemArray.count : self.chatListItemArray.count;
-}
-
 - (void)showChatRoomAtIndexPath:(NSIndexPath *)indexPath {
     MEGAChatListItem *chatListItem = [self chatListItemAtIndexPath:indexPath];
     MEGAChatRoom *chatRoom         = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:chatListItem.chatId];
@@ -651,6 +660,13 @@
     ChatRoomCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"chatRoomCell" forIndexPath:indexPath];
     MEGAChatListItem *chatListItem = [self chatListItemAtIndexPath:indexPath];
     [cell configureCellForChatListItem:chatListItem];
+    return cell;
+}
+
+- (UITableViewCell *)userCellForIndexPath:(NSIndexPath *)indexPath {
+    ChatRoomCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"chatRoomCell" forIndexPath:indexPath];
+    MEGAUser *user = [self.searchUsersWithoutChatArray objectAtIndex:indexPath.row];
+    [cell configureCellForUser:user];
     return cell;
 }
 
@@ -803,7 +819,11 @@
     if (self.isArchivedChatsRowVisible) {
         return 2;
     } else {
-        return 1;
+        if (self.searchController.isActive) {
+            return 2;
+        } else {
+            return 1;
+        }
     }
 }
 
@@ -813,10 +833,18 @@
         if (section == 0) {
             return 1;
         } else {
-            return [self numberOfChatRooms];
+            return self.chatListItemArray.count;
         }
     } else {
-        return [self numberOfChatRooms];
+        if (self.searchController.isActive) {
+            if (section == 0) {
+                return self.searchChatListItemArray.count;
+            } else {
+                return self.searchUsersWithoutChatArray.count;
+            }
+        } else {
+            return self.chatListItemArray.count;
+        }
     }
 }
 
@@ -834,7 +862,11 @@
                     return [self chatRoomCellForIndexPath:indexPath];
                 }
             } else {
-                return [self chatRoomCellForIndexPath:indexPath];
+                if (indexPath.section == 0) {
+                    return [self chatRoomCellForIndexPath:indexPath];
+                } else {
+                    return [self userCellForIndexPath:indexPath];
+                }
             }
         }
             
@@ -853,12 +885,28 @@
             [self showChatRoomAtIndexPath:indexPath];
         }
     } else {
-        [self showChatRoomAtIndexPath:indexPath];
+        if (indexPath.section == 0) {
+            [self showChatRoomAtIndexPath:indexPath];
+        } else {
+            MEGAChatPeerList *peerList = [[MEGAChatPeerList alloc] init];
+            MEGAUser *user = [self.searchUsersWithoutChatArray objectAtIndex:indexPath.row];
+            [peerList addPeerWithHandle:user.handle privilege:MEGAChatRoomPrivilegeStandard];
+            MEGAChatCreateChatGroupRequestDelegate *createChatGroupRequestDelegate = [[MEGAChatCreateChatGroupRequestDelegate alloc] initWithCompletion:^(MEGAChatRoom *chatRoom) {
+                MessagesViewController *messagesVC = [[MessagesViewController alloc] init];
+                messagesVC.chatRoom = chatRoom;
+                [self.navigationController pushViewController:messagesVC animated:YES];
+            }];
+            [[MEGASdkManager sharedMEGAChatSdk] createChatGroup:NO peers:peerList delegate:createChatGroupRequestDelegate];
+            
+            [self.searchUsersWithoutChatArray removeObject:user];
+            [self.usersWithoutChatArray removeObject:user];
+            [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+        }
     }
 }
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (self.isArchivedChatsRowVisible && indexPath.section == 0) {
+    if ((self.isArchivedChatsRowVisible && indexPath.section == 0) || (self.searchController.isActive && indexPath.section == 1) ) {
         return NO;
     } else {
         return YES;
@@ -937,6 +985,7 @@
 
 - (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
     self.searchChatListItemArray = nil;
+    self.searchUsersWithoutChatArray = nil;
 }
 
 #pragma mark - UISearchResultsUpdating
@@ -946,9 +995,12 @@
     if (searchController.isActive) {
         if ([searchString isEqualToString:@""]) {
             self.searchChatListItemArray = self.chatListItemArray;
+            self.searchUsersWithoutChatArray = self.usersWithoutChatArray;
         } else {
             NSPredicate *resultPredicate = [NSPredicate predicateWithFormat:@"SELF.title contains[c] %@", searchString];
             self.searchChatListItemArray = [[self.chatListItemArray filteredArrayUsingPredicate:resultPredicate] mutableCopy];
+            NSPredicate *resultPredicateForUsers = [NSPredicate predicateWithFormat:@"SELF.mnz_fullName contains[c] %@", searchString];
+            self.searchUsersWithoutChatArray = [[self.usersWithoutChatArray filteredArrayUsingPredicate:resultPredicateForUsers] mutableCopy];
         }
     }
     
@@ -961,7 +1013,10 @@
 - (void)didPresentSearchController:(UISearchController *)searchController {
     if (self.isArchivedChatsRowVisible) {
         self.isArchivedChatsRowVisible = NO;
-        [self.tableView deleteSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationFade];
+        [self.tableView mnz_performBatchUpdates:^{
+            [self.tableView deleteSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationFade];
+            [self.tableView insertSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationFade];
+        } completion:nil];
     }
     if (UIDevice.currentDevice.iPhoneDevice && UIDeviceOrientationIsLandscape(UIDevice.currentDevice.orientation)) {
         [Helper resetSearchControllerFrame:searchController];
