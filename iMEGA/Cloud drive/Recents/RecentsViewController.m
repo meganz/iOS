@@ -49,16 +49,14 @@
     self.dateFormatter.dateStyle = NSDateFormatterFullStyle;
     self.dateFormatter.timeStyle = NSDateFormatterNoStyle;
     self.dateFormatter.locale = NSLocale.autoupdatingCurrentLocale;
+    
+    [MEGASdkManager.sharedMEGASdk addMEGADelegate:self];
 }
 
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    [[MEGASdkManager sharedMEGASdk] addMEGADelegate:self];
-}
-
-- (void)viewWillDisappear:(BOOL)animated {
-    [[MEGASdkManager sharedMEGASdk] removeMEGADelegate:self];
-    [super viewWillDisappear:animated];
+- (void)removeFromParentViewController {
+    [super removeFromParentViewController];
+    
+    [MEGASdkManager.sharedMEGASdk removeMEGADelegate:self];
 }
 
 #pragma mark - Actions
