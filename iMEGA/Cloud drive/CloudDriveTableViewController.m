@@ -154,6 +154,7 @@
         case MEGANodeTypeFolder: {
             CloudDriveViewController *cloudDriveVC = [self.storyboard instantiateViewControllerWithIdentifier:@"CloudDriveID"];
             cloudDriveVC.parentNode = node;
+            cloudDriveVC.hideSelectorView = YES;
             
             if (self.cloudDrive.displayMode == DisplayModeRubbishBin) {
                 cloudDriveVC.displayMode = self.cloudDrive.displayMode;

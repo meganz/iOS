@@ -17,7 +17,7 @@
 /* State shown if something is 'Saved' (String as short as possible). */
 "saved"="Enregistré";
 /*  */
-"passcode"="Code de verrouillage";
+"passcode"="Code d’accès";
 /* "Size" of the file or folder you are sharing */
 "size"="Taille";
 /*  */
@@ -715,7 +715,7 @@
 /* Message that is shown when the user click on 'Cancel your account' to confirm that he's aware that his data will be deleted. */
 "youWillLooseAllData"="Vous perdrez toutes les données associées à ce compte. Souhaitez-vous vraiment poursuivre ?";
 /* Account closure, warning message to remind user to contact MEGA support after he confirms that he wants to cancel account. */
-"ifYouCantAccessYourEmailAccount"="Si vous ne pouvez pas accéder à vos courriels veuillez contacter support@mega.nz";
+"ifYouCantAccessYourEmailAccount"="Si vous ne pouvez pas accéder à votre courriel, veuillez contacter support@mega.nz";
 /* During account cancellation (deletion) */
 "cancellationLinkHasExpired"="Le lien d’annulation a expiré.";
 /* Text shown in the last alert dialog to confirm the cancellation of an account */
@@ -820,13 +820,13 @@
 /* Message shown when you click on 'Close other session' to block other login sessions except the current session in use. This message is shown when this has been done. */
 "sessionsClosed"="Sessions fermées";
 /* Section title where you can change the app's passcode */
-"changePasscodeLabel"="Changer le code de verrouillage";
+"changePasscodeLabel"="Changer le code d’accès";
 /* Title to describe a simple (four digit) passcode */
-"simplePasscodeLabel"="Code de verrouillage simple";
+"simplePasscodeLabel"="Code d’accès simple";
 /* Title of one of the passcode options. If enabled will do what footer explains. */
 "eraseAllLocalDataLabel"="Effacer les données locales";
 /* Footer text that explain what will happen if "Erase local data" is enabled */
-"failedAttempstSectionTitle"="Se déconnecter et effacer les données locales après 10 tentatives infructueuses de saisie du code de verrouillage.";
+"failedAttempstSectionTitle"="Se déconnecter et effacer les données locales après 10 tentatives infructueuses de saisie du code d’accès.";
 /* Menu item */
 "help"="Aide";
 /* Title of the section to access MEGA's help centre */
@@ -864,7 +864,7 @@
 /* Caption of a button to upgrade the account to Pro status */
 "upgrade"="Surclasser le compte";
 /* Title show on the hall of My Account section that describes a place where you can view, edit and upgrade your account and profile */
-"viewAndEditProfile"="Visualiser et modifier le profil";
+"viewAndEditProfile"="Visualiser ou modifier le profil";
 /* Label for any 'Profile' button, link, text, title, etc. - (String as short as possible). */
 "profile"="Profil";
 /* Title of the Achievements section */
@@ -1281,6 +1281,8 @@
 "shareExtensionUnsupportedAssets"="Certains éléments n’ont pas pu être partagés avec MEGA";
 /* Message shown to the user when the share extension is about to be killed by iOS due to a memory issue */
 "Limited system resources are available when sharing items. Try uploading these files from within the MEGA app."="Les ressources du système sont restreintes lors du partage d’éléments. Veuillez essayer de téléverser ces fichiers à partir de l’appli MEGA.";
+/* Success message shown when the user has successfully shared something */
+"Shared successfully"="Partage réussi";
 /* Notification message shown when a transfer failed. Keep colon. */
 "Transfer failed:"="Échec de transfert :";
 /* MEGAError */
@@ -1335,7 +1337,7 @@
 /* Text shown in an alert when the user is about to change the language of the app */
 "languageRestartAlert"="Vous devrez redémarrer MEGA après avoir changer la langue";
 /* Text shown in a notification to make it easy for the user to restart the app after the language is changed */
-"languageRestartNotification"="La langue a été changée. Toquez pour redémarrer.";
+"languageRestartNotification"="La langue a été changée. Touchez pour redémarrer.";
 /* The following strings are only for the App Store description, they're not used on the app (The only exception is the one with 'autorenewableDescription' key) On the 'generalDescriptionParagraph6' we must delete 'Desktop - https://mega.nz/' because the app can be rejected because of that. */
 /* Paragraph 1 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
 "generalDescriptionParagraph1"="MEGA offre un service de stockage nuagique chiffré contrôlé par l’utilisateur, en utilisant des navigateurs Web normaux, mais aussi des applis dédiées pour les appareils mobiles. Contrairement aux autres fournisseurs de services de stockage nuagique, vos données ne sont chiffrées et déchiffrées que par vos appareils client et jamais par nous.";
@@ -1603,7 +1605,7 @@
 /* Title shown in a page of the on boarding screens explaining that the user can add contacts to chat and colaborate */
 "Create your Network"="Créer votre réseau";
 /* Description shown in a page of the onboarding screens explaining contacts */
-"Add contacts, create a network, colaborate, make voice and video calls without ever leaving MEGA"="Ajoutez des contacts, créez un réseau, collaborez, faites des appels voix ou vidéo sans jamais quitter MEGA";
+"Add contacts, create a network, colaborate, make voice and video calls without ever leaving MEGA"="Ajoutez des contacts, créez un réseau, collaborez et faites des appels voix ou vidéo sans jamais quitter MEGA";
 /* Title shown in a page of the on boarding screens explaining that the user can backup the photos automatically */
 "Your Photos in the Cloud"="Vos photos dans le nuage";
 /* Description shown in a page of the onboarding screens explaining the camera uploads feature */
@@ -1623,7 +1625,7 @@
 /* Title label that explains that the user is going to be asked for the microphone and camera permission */
 "Enable Microphone and Camera"="Activer le microphone et l’appareil photo";
 /* Detailed explanation of why the user should give permission to access to the camera and the microphone */
-"To make encrypted voice and video calls, allow MEGA access to your Camera and Microphone"="Pour faire des appels voix et vidéo chiffrés, autorisez MEGA à accéder à votre appareil photo et à votre microphone";
+"To make encrypted voice and video calls, allow MEGA access to your Camera and Microphone"="Pour envoyer des notes vocales et faire des appels voix et vidéo chiffrés, autorisez MEGA à accéder à votre appareil photo et à votre microphone";
 /* Title label that explains that the user is going to be asked for the notifications permission */
 "Enable Notifications"="Activer les notifications";
 /* Detailed explanation of why the user should give permission to deliver notifications */
@@ -1637,11 +1639,11 @@
 /* Subtitle of the option to enable or disable file versioning on Settings section */
 "Enable or disable file versioning for your entire account.[Br]You may still receive file versions from shared folders if your contacts have this enabled."="Activer ou désactiver le versionnage des fichiers pour votre compte entier.\nVous pourriez encore recevoir des versions de fichiers provenant de dossiers partagés si vos contacts ont activé cette option.";
 /* A confirmation message when the user chooses to disable file versioning. */
-"When file versioning is disabled, the current version will be replaced with the new version once a file is updated (and your changes to the file will no longer be recorded). Are you sure you want to disable file versioning?"="Quand le versionnage des fichiers est désactivé, la version actuelle est remplacée par la nouvelle version lorsque le fichier est mis à jour (et vos changements apportés au fichier ne sont plus enregistrés). Souhaitez-vous vraiment désactiver le versionnage des fichiers ?";
+"When file versioning is disabled, the current version will be replaced with the new version once a file is updated (and your changes to the file will no longer be recorded). Are you sure you want to disable file versioning?"="Quand le versionnage des fichiers est désactivé, la version actuelle est remplacée par la nouvelle version quand le fichier est mis à jour (et vos changements apportés au fichier ne sont plus enregistrés). Souhaitez-vous vraiment désactiver le versionnage des fichiers ?";
 /* Settings preference title to show file versions info of the account */
 "File versions"="Versions de fichiers";
 /* A title message in the user’s account settings for showing the storage used for file versions. */
-"Total size taken up by file versions:"="Taille totale occupée par les versions de fichier :";
+"Total size taken up by file versions:"="Taille totale occupée par les versions de fichiers :";
 /* The title of the section about deleting file versions in the settings. */
 "Delete all older versions of my files"="Supprimer toutes les anciennes versions de mes fichiers";
 /* Text of a button which deletes all historical versions of files in the users entire account. */
@@ -1703,7 +1705,7 @@
 /* Users previewing a public chat */
 "Observers"="Observateurs";
 /* Alert message shown while deleting a chat link, warning about the consequences */
-"This conversation will no longer be accessible through the link you are about to delete."="Le lien vers la conversation ne permettra plus d’y accéder une fois qu’il aura été supprimé.";
+"This conversation will no longer be accessible through the link you are about to delete."="Il ne sera plus possible d’accéder à cette conversation par le lien une fois qu’il sera supprimé.";
 /* Management message shown in a chat when the user %@ enables the 'Encrypted Key Rotation' */
 "%@ enabled Encrypted Key Rotation"="%@ a activé la rotation de la clé chiffrée.";
 /* Management message shown in a chat when the user %@ creates a public link for the chat */
@@ -1720,10 +1722,6 @@
 "List view"="Vue en liste";
 /* Text shown for switching from list view to thumbnail view. */
 "Thumbnail view"="Vue en imagettes";
-/* Message to inform the local user that someone has joined the current group call */
-"%@ joined the call."="%@ s’est joint à l’appel.";
-/* Message to inform the local user that someone has left the current group call */
-"%@ left the call."="%@ a quitté l’appel.";
 /* Message to inform the local user is having a bad quality network with someone in the current group call */
 "Poor connection."="La connexion est de mauvaise qualité.";
 /* Message shown in a chat room when there is an active group call */
@@ -1810,6 +1808,8 @@
 "Your publicly shared %1 (%2) has been taken down."="Votre partage public %1 (%2) a été retiré.";
 /* The text of a notification indicating that a file or folder that was taken down has now been restored due to a successful counter-notice. The %1 placeholder will be replaced with the text ‘file’ or ‘folder’. The %2 will be replaced with the name of the file or folder. */
 "Your taken down %1 (%2) has been reinstated."="Votre %1 (%2) retiré a été rétabli";
+/* Text shown when a notification or the last message of a chat corresponds to a voice clip */
+"Voice message"="Message vocal";
 /* Error message shown to user when a copy/import operation would take them over their storage limit. */
 "This action can not be completed as it would take you over your current storage limit"="Cette action ne peut pas être menée à bien, car elle vous ferait dépasser votre limite de stockage actuelle";
 /* uploads over storage quota warning dialog title */
@@ -1826,10 +1826,32 @@
 "Today"="Aujourd’hui";
 /* */
 "Yesterday"="Hier";
+/* Title of the button to share a location in a chat */
+"Send This Location"="Envoyer cette position";
+/* Title of the alert that allows change between different maps: Standard, Satellite or Hybrid. */
+"Map settings"="Paramètres de la carte";
+/* Type of data displayed in a map view. A street map that shows the position of all roads and some road names. */
+"Standard"="Normal";
+/* Type of data displayed in a map view. Satellite imagery of the area. */
+"Satellite"="Satellite";
+/* Type of data displayed in a map view. A satellite image of the area with road and road name information layered on top. */
+"Hybrid"="Hybride";
+/* Label to give feedback to the user when he is going to share his location, indicating that it may not be the exact location. */
+"Accurate to %d meters"="Précise à %d mètres près";
+/* Alert title shown when the user opens a shared Geolocation for the first time from any client, we will show a confirmation dialog warning the user that he is now leaving the E2EE paradigm. */
+"Send Location"="Envoyer la position";
+/* Message shown when the user opens a shared Geolocation for the first time from any client, we will show a confirmation dialog warning the user that he is now leaving the E2EE paradigm. */
+"This location will be opened using a third party maps provider outside the end-to-end encrypted MEGA platform."="Cette position sera ouverte en utilisant un fournisseur de cartes tiers en dehors de la plateforme chiffrée de bout en bout MEGA.";
+/* Text shown in location-type messages */
+"Pinned Location"="Position épinglée";
 /* Plural of participant. 2 participants */
 "%d participants"="%d participants";
 /* Singular of participant. 1 participant */
 "%d participant"="%d participant";
+/* Text shown in the chat toolbar while the user is recording a voice clip. The < character should be > in RTL languages. */
+"< Slide to cancel"="< Faire glisser pour annuler";
+/* Tooltip shown when the user presses but does not hold the microphone icon to send a voice clip */
+"Tap and hold %@ to record, release to send"="Touchez et maintenez  %@ pour enregistrer, relâchez pour envoyer";
 /* Text to inform the user there is an active call and is not participating */
 "Ongoing Call"="Appel en cours";
 /* Message shown when there is an ongoing call and the user tries to play an audio or video */
@@ -1850,14 +1872,6 @@
 "New Chat Link"="Nouveau lien vers la conversation";
 /* Text button for init a group chat */
 "New group chat"="Nouvelle conversation de groupe";
-/* Shown when an invalid/inexisting/not-available-anymore chat link is opened. */
-"Chat link unavailable"="Le lien vers la conversation n’est pas disponible";
-/* Shown when an inexisting/unavailable/removed link is tried to be opened. */
-"This chat link is no longer available"="Le lien vers la conversation n’est pas disponible";
-/* Text explaining users how the chat links work. */
-"People can join your group by using this link."="D'autres peuvent se joindre à votre groupe en utilisant ce lien.";
-/* Subtitle shown in a chat to inform where to tap to enter in the chat details view */
-"Tap here for info"="Touchez ici pour les détails";
 /* Title for the recents section. */
 "Recents"="Récents";
 /* Multiple Images title shown in recents section of webclient */
@@ -1868,6 +1882,8 @@
 "1 Image and 1 Video"="1 image et 1 vidéo";
 /* One image and multiple videos title in recents. */
 "1 Image and %2 Videos"="1 image et %2 vidéos";
+/* Multiple images and 1 video */
+"%1 Images and 1 Video"="%1 images et 1 vidéo";
 /* Title for multiple images and multiple videos in recents section */
 "%1 Images and %2 Videos"="%1 images et %2 vidéos";
 /* Tooltip message shown on recents section. Please see the attached image. */
@@ -1875,16 +1891,26 @@
 /* Title for a recent action shown in the webclient, see the attached image for context. */
 "%1 modified by %3"="%1 modifié par %3";
 /* Title for a recent action shown in the webclient, see the attached image for context. Please ensure that the `%2 more` is inside the [A] tag as this will become a toggle to show the hidden content. */
-"%1 and [A]%2 more[/A] modified by %3"="%1 et [A]%2 de plus[/A] modifiés par %3";
-/* Title for a recent action shown in the webclient, see the attached image for context. Please ensure that the `%2 more` is inside the [A] tag as this will become a toggle to show the hidden content. */
 "%1 and [A]%2 more[/A]"="%1 et [A]%2 de plus[/A]";
 /* Title for a recent action shown in the webclient, see the attached image for context. */
 "%1 created by %3"="%1 créé par %3";
-/* Title for a recent action shown in the webclient, see the attached image for context. Please ensure that the `%2 more` is inside the [A] tag as this will become a toggle to show the hidden content. */
-"%1 and [A]%2 more[/A] created by %3"="%1 et [A]%2 de plus[/A] créés par %3";
 /* Message shown when the user has not recent activity in their account. */
 "No recent activity"="Il n’y a aucune activité récente";
 /* Plural of items which contains a folder. 2 items */
 "items"="éléments";
+/* Shown when an invalid/inexisting/not-available-anymore chat link is opened. */
+"Chat link unavailable"="Le lien vers la conversation n’est pas disponible";
+/* Shown when an inexisting/unavailable/removed link is tried to be opened. */
+"This chat link is no longer available"="Le lien vers la conversation n’est pas disponible";
+/* Text explaining users how the chat links work. */
+"People can join your group by using this link."="D'autres peuvent se joindre à votre groupe en utilisant ce lien.";
+/* Subtitle shown in a chat to inform where to tap to enter in the chat details view */
+"Tap here for info"="Touchez ici pour les détails";
 /* In some cases, a user may try to get the link for a chat room, but if such is not set by an operator - it would say "not link available" and not auto create it. */
 "No chat link available."="Aucun lien de conversation n’est disponible.";
+/* Title of a dialog in which we request access to a specific permission, like the Location Services */
+"Please allow access"="Please allow access";
+/* Hint shown to the users, when they want to use the Location Services but they are disabled or restricted for MEGA */
+"Please go to the Privacy section in your device’s Setting. Enable Location Services and set MEGA to While Using the App or Always."="Please go to the Privacy section in your device’s Setting. Enable Location Services and set MEGA to While Using the App or Always.";
+/* Location Usage Description. In order to protect user's privacy, Apple requires a specific string explaining why location will be accessed. */
+"MEGA accesses your location when you elect to share it with your contacts."="MEGA accède à votre position géographique quand vous choisissez de la partager avec vos contacts.";

@@ -37,8 +37,7 @@
         return;
     }
     if (self.message.status == MEGAChatMessageStatusNotSeen) {
-        if  (self.message.type == MEGAChatMessageTypeNormal || self.message.type == MEGAChatMessageTypeContact || self.message.type == MEGAChatMessageTypeAttachment) {
-            
+        if  (self.message.type == MEGAChatMessageTypeNormal || self.message.type == MEGAChatMessageTypeContact || self.message.type == MEGAChatMessageTypeAttachment || self.message.containsMeta.type == MEGAChatContainsMetaTypeGeolocation || self.message.type == MEGAChatMessageTypeVoiceClip) {
             if (self.message.deleted) {
                 [self removePendingAndDeliveredNotificationForMessage];
             } else {
@@ -60,7 +59,7 @@
                 NSString *body;
                 BOOL waitForThumbnail = NO;
                 if (self.message.type == MEGAChatMessageTypeContact) {
-                    if(self.message.usersCount == 1) {
+                    if (self.message.usersCount == 1) {
                         body = [NSString stringWithFormat:@"👤 %@", [self.message userNameAtIndex:0]];
                     } else {
                         body = [self.message userNameAtIndex:0];
@@ -117,6 +116,18 @@
                             }
                         }
                     }
+                } else if (self.message.type == MEGAChatMessageTypeVoiceClip) {
+                    NSString *durationString;
+                    if (self.message.nodeList && self.message.nodeList.size.integerValue == 1) {
+                        MEGANode *node = [self.message.nodeList nodeAtIndex:0];
+                        NSTimeInterval duration = node.duration > 0 ? node.duration : 0;
+                        durationString = [NSString mnz_stringFromTimeInterval:duration];
+                    } else {
+                        durationString = @"00:00";
+                    }
+                    body = [NSString stringWithFormat:@"🎙 %@", durationString];
+                } else if (self.message.containsMeta.type == MEGAChatContainsMetaTypeGeolocation) {
+                    body = [NSString stringWithFormat:@"📍 %@", AMLocalizedString(@"Pinned Location", @"Text shown in location-type messages")];
                 } else {
                     body = self.message.content;
                 }

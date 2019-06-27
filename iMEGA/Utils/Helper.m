@@ -685,22 +685,6 @@ static MEGAIndexer *indexer;
     return folderSize;
 }
 
-+ (uint64_t)freeDiskSpace {
-    uint64_t totalFreeSpace = 0;
-    NSError *error;
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSDictionary *dictionary = [[NSFileManager defaultManager] attributesOfFileSystemForPath:[paths lastObject] error:&error];
-    
-    if (dictionary) {
-        NSNumber *freeFileSystemSizeInBytes = [dictionary objectForKey:NSFileSystemFreeSize];
-        totalFreeSpace = [freeFileSystemSizeInBytes unsignedLongLongValue];
-    } else {
-        MEGALogError(@"Obtaining System Memory Info failed with error: %@", error);
-    }
-    
-    return totalFreeSpace;
-}
-
 + (void)changeApiURL {
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"pointToStaging"]) {
         [[MEGASdkManager sharedMEGASdk] changeApiUrl:@"https://g.api.mega.co.nz/" disablepkp:NO];
@@ -772,8 +756,6 @@ static MEGAIndexer *indexer;
     } else if ([cell isKindOfClass:[PhotoCollectionViewCell class]]) {
         PhotoCollectionViewCell *photoCollectionViewCell = cell;
         [photoCollectionViewCell.thumbnailImageView setImage:[UIImage imageWithContentsOfFile:thumbnailFilePath]];
-        photoCollectionViewCell.thumbnailPlayImageView.hidden = !node.name.mnz_isVideoPathExtension;
-        photoCollectionViewCell.thumbnailVideoOverlayView.hidden = !(node.name.mnz_isVideoPathExtension && node.duration>-1);
     }
     
     if (reindex) {
@@ -902,7 +884,8 @@ static MEGAIndexer *indexer;
                 break;
             }
                 
-            case MEGAChatMessageTypeAttachment: {
+            case MEGAChatMessageTypeAttachment:
+            case MEGAChatMessageTypeVoiceClip: {
                 MEGANode *node = [message.nodeList mnz_nodesArrayFromNodeList].firstObject;
                 MOOfflineNode *offlineNodeExist = [[MEGAStore shareInstance] offlineNodeWithNode:node];
                 if (offlineNodeExist) {
@@ -1197,15 +1180,9 @@ static MEGAIndexer *indexer;
     searchController.dimsBackgroundDuringPresentation = NO;
     searchController.searchBar.searchBarStyle = UISearchBarStyleMinimal;
     searchController.searchBar.translucent = NO;
-    searchController.searchBar.backgroundImage = [UIImage imageWithCGImage:(__bridge CGImageRef)(UIColor.clearColor)];
+    searchController.searchBar.backgroundColor = UIColor.whiteColor;
     searchController.searchBar.barTintColor = UIColor.whiteColor;
     searchController.searchBar.tintColor = UIColor.mnz_redMain;
-    
-    UITextField *searchTextField = [searchController.searchBar valueForKey:@"_searchField"];
-    searchTextField.font = [UIFont mnz_SFUIRegularWithSize:17.0f];
-    searchTextField.backgroundColor = UIColor.mnz_grayEEEEEE;
-    searchTextField.textColor = UIColor.mnz_black333333;
-    searchTextField.tintColor = UIColor.mnz_green00BFA5;
     
     return searchController;
 }
@@ -1369,7 +1346,8 @@ static MEGAIndexer *indexer;
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"IsSavePhotoToGalleryEnabled"];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"IsSaveVideoToGalleryEnabled"];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"ChatVideoQuality"];
-    
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"logging"];
+
     //Set default order on logout
     [[NSUserDefaults standardUserDefaults] setInteger:1 forKey:@"SortOrderType"];
     [[NSUserDefaults standardUserDefaults] setInteger:1 forKey:@"OfflineSortOrderType"];
@@ -1381,6 +1359,7 @@ static MEGAIndexer *indexer;
     [sharedUserDefaults removeObjectForKey:@"treeCompleted"];
     [sharedUserDefaults removeObjectForKey:@"useHttpsOnly"];
     [sharedUserDefaults removeObjectForKey:@"IsChatEnabled"];
+    [sharedUserDefaults removeObjectForKey:@"logging"];
     [sharedUserDefaults synchronize];
 }
 
