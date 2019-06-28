@@ -2285,8 +2285,6 @@ static NSMutableSet<NSString *> *tapForInfoSet;
         }
     }
     
-    cell.mediaView.hidden = self.browsingIndexPath && indexPath.section == self.browsingIndexPath.section && indexPath.item == self.browsingIndexPath.item;
-    
     return cell;
 }
 
@@ -2660,13 +2658,9 @@ static NSMutableSet<NSString *> *tapForInfoSet;
                         }
                     }
                     
-                    JSQMessagesCollectionViewCell *cell = (JSQMessagesCollectionViewCell *)[self.collectionView cellForItemAtIndexPath:indexPath];
-                    CGRect containerFrame = [cell convertRect:cell.messageBubbleContainerView.frame toView:nil];
-                                        
                     MEGAPhotoBrowserViewController *photoBrowserVC = [MEGAPhotoBrowserViewController photoBrowserWithMediaNodes:mediaNodesArray api:[MEGASdkManager sharedMEGASdk] displayMode:DisplayModeSharedItem presentingNode:nil preferredIndex:[reverseArray indexOfObject:message]];
                     photoBrowserVC.delegate = self;
-                    photoBrowserVC.originFrame = containerFrame;
-
+                    
                     [self.navigationController presentViewController:photoBrowserVC animated:YES completion:nil];
                     [self.inputToolbar mnz_lockRecordingIfNeeded];
                 } else {
@@ -2865,22 +2859,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
     NSIndexPath *indexPath = [NSIndexPath indexPathForItem:item inSection:0];
     if (indexPath) {
         [self.collectionView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionCenteredVertically animated:NO];
-        
-        JSQMessagesCollectionViewCell *cell = (JSQMessagesCollectionViewCell *)[self.collectionView cellForItemAtIndexPath:indexPath];
-        CGRect containerFrame = [cell convertRect:cell.messageBubbleContainerView.frame toView:nil];
-        photoBrowser.originFrame = containerFrame;
-        if (CGRectIsEmpty(containerFrame)) {
-            self.browsingIndexPath = nil;
-        } else {
-            self.browsingIndexPath = indexPath;
-        }
     }
-    [self.collectionView reloadData];
-}
-
-- (void)photoBrowser:(MEGAPhotoBrowserViewController *)photoBrowser willDismissWithNode:(MEGANode *)node {
-    self.browsingIndexPath = nil;
-    [self.collectionView reloadData];
 }
 
 #pragma mark - MEGAChatRoomDelegate
