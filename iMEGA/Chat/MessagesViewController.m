@@ -140,8 +140,6 @@ static NSMutableSet<NSString *> *tapForInfoSet;
 
 @property (nonatomic) InputToolbarState inputToolbarState;
 
-@property (nonatomic) NSIndexPath *browsingIndexPath;
-
 @end
 
 @implementation MessagesViewController
