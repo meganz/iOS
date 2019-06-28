@@ -470,7 +470,7 @@ static const void *richTitleTagKey = &richTitleTagKey;
 - (NSUInteger)hash {
     NSUInteger contentHash = self.type == MEGAChatMessageTypeAttachment || self.type == MEGAChatMessageTypeVoiceClip ? (NSUInteger)[self.nodeList nodeAtIndex:0].handle : self.content.hash ^ self.richNumber.hash;
     NSUInteger metaHash = self.type == MEGAChatMessageTypeContainsMeta ? self.containsMeta.type : MEGAChatContainsMetaTypeInvalid;
-    return self.senderId.hash ^ self.date.hash ^ contentHash ^ self.warningDialog ^ metaHash ^ self.localPreview;
+    return self.chatId ^ self.messageId ^ contentHash ^ self.warningDialog ^ metaHash ^ self.localPreview;
 }
 
 - (id)debugQuickLookObject {
