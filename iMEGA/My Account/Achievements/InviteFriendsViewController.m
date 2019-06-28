@@ -150,10 +150,10 @@
 
 #pragma mark - CNContactPickerDelegate
 
-- (void)contactPicker:(CNContactPickerViewController *)picker didSelectContactProperties:(NSArray<CNContactProperty*> *)contactProperties {
-    if (contactProperties.count != 0) {
-        BOOL error = NO;
-        for (CNContactProperty *contactProperty in contactProperties) {
+- (void)contactPicker:(CNContactPickerViewController *)picker didSelectContacts:(NSArray<CNContact *> *)contacts {
+    BOOL error = NO;
+    for (CNContact *contact in contacts) {
+        for (CNContactProperty *contactProperty in contact.emailAddresses) {
             NSString *email = contactProperty.value;
             if (email.mnz_isValidEmail) {
                 [self.tokens addObject:email];
@@ -163,15 +163,15 @@
                 self.inviteButtonUpperLabel.textColor = UIColor.mnz_redMain;
             }
         }
-        
-        [self.tokenField reloadData];
-        self.tokenFieldHeightLayoutConstraint.constant = self.tokenField.frame.size.height;
-        
-        self.inviteButton.backgroundColor = self.tokens.count == 0 ? UIColor.mnz_grayCCCCCC : UIColor.mnz_redMain;
-        
-        if (!error) {
-            [self cleanErrors];
-        }
+    }
+    
+    [self.tokenField reloadData];
+    self.tokenFieldHeightLayoutConstraint.constant = self.tokenField.frame.size.height;
+    
+    self.inviteButton.backgroundColor = self.tokens.count == 0 ? UIColor.mnz_grayCCCCCC : UIColor.mnz_redMain;
+    
+    if (!error) {
+        [self cleanErrors];
     }
 }
 
