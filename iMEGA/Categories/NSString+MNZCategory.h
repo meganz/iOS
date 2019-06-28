@@ -67,7 +67,7 @@ typedef NS_ENUM(NSInteger, MEGAChatMessageEndCallReason);
  */
 + (NSString *)mnz_convertCoordinatesLatitude:(float)latitude longitude:(float)longitude;
 
-+ (NSString *)mnz_addedByInRecentActionBucket:(MEGARecentActionBucket *)recentActionBucket nodesArray:(NSArray *)nodesArray;
++ (NSString *)mnz_addedByInRecentActionBucket:(MEGARecentActionBucket *)recentActionBucket;
 
 #pragma mark - File names and extensions
 
