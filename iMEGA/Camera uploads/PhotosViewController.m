@@ -561,7 +561,7 @@
     cell.thumbnailPlayImageView.hidden = !node.name.mnz_isVideoPathExtension;
     cell.thumbnailVideoDurationLabel.text = (node.name.mnz_isVideoPathExtension && node.duration > -1) ? [NSString mnz_stringFromTimeInterval:node.duration] : @"";
 
-    cell.thumbnailImageView.hidden = self.browsingIndexPath && indexPath.section == self.browsingIndexPath.section && indexPath.item == self.browsingIndexPath.item;
+    cell.thumbnailImageView.hidden = self.browsingIndexPath && self.browsingIndexPath == indexPath;
     
     if (@available(iOS 11.0, *)) {
         cell.thumbnailImageView.accessibilityIgnoresInvertColors = YES;
