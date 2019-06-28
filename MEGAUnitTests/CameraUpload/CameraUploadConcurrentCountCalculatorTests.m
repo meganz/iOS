@@ -136,7 +136,7 @@
                             } else if (batteryLevel.floatValue < 0.55) {
                                 XCTAssertEqual(counts.photoConcurrentCount, PhotoUploadConcurrentCountInBatteryLevelBelow55);
                                 XCTAssertEqual(counts.videoConcurrentCount, VideoUploadConcurrentCountInBatteryLevelBelow55);
-                            } else if (batteryLevel.floatValue >= 0.55) {
+                            } else {
                                 XCTAssertEqual(counts.photoConcurrentCount, PhotoUploadConcurrentCountInThermalStateFair);
                                 XCTAssertEqual(counts.videoConcurrentCount, VideoUploadConcurrentCountInThermalStateFair);
                             }
