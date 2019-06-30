@@ -38,6 +38,9 @@
     self.customView.frame = self.bounds;
     self.customView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     self.passwordTextField.delegate = self;
+    
+    UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleSingleTap:)];
+    [self addGestureRecognizer:singleTap];
 }
 
 - (void)configureToggleSecureButton {
@@ -46,6 +49,10 @@
     } else {
         [self.toggleSecureButton setImage:[UIImage imageNamed:@"showHidePassword_active"] forState:UIControlStateNormal];
     }
+}
+
+- (void)handleSingleTap:(UITapGestureRecognizer *)recognizer {
+    [self.passwordTextField becomeFirstResponder];
 }
 
 #pragma mark - Public

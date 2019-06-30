@@ -221,11 +221,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
     _whoIsTypingTimersMutableDictionary = NSMutableDictionary.new;
     
     // Voice clips tooltip:
-    NSTextAttachment *voiceTipTextAttachment = [[NSTextAttachment alloc] init];
-    UIImage *voiceTipImage = [UIImage imageNamed:@"voiceTip"];
-    voiceTipTextAttachment.bounds = CGRectMake(0.0f, roundf(self.tooltipLabel.font.capHeight - voiceTipImage.size.height) / 2.0, voiceTipImage.size.width, voiceTipImage.size.height);
-    voiceTipTextAttachment.image = voiceTipImage;
-    NSAttributedString *voiceTipAttributedString = [NSAttributedString attributedStringWithAttachment:voiceTipTextAttachment];
+    NSAttributedString *voiceTipAttributedString = [NSAttributedString mnz_attributedStringFromImageNamed:@"voiceTip" fontCapHeight:self.tooltipLabel.font.capHeight];
     
     NSArray<NSString *> *tooltipTextArray = [AMLocalizedString(@"Tap and hold %@ to record, release to send", @"Tooltip shown when the user presses but does not hold the microphone icon to send a voice clip") componentsSeparatedByString:@"%@"];
     NSMutableAttributedString *tapAndHoldAttributedString = [[NSMutableAttributedString alloc] initWithString:tooltipTextArray.firstObject];
@@ -400,6 +396,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
 
 - (void)willResignActive {
     [self saveChatDraft];
+    [self.inputToolbar mnz_lockRecordingIfNeeded];
     
     self.lastBottomInset = self.collectionView.scrollIndicatorInsets.bottom;
     self.lastVerticalOffset = self.collectionView.contentOffset.y;
@@ -428,6 +425,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
     [[MEGASdkManager sharedMEGAChatSdk] removeChatCallDelegate:self];
     
     [self saveChatDraft];
+    [self.inputToolbar mnz_lockRecordingIfNeeded];
     
     [SVProgressHUD dismiss];
     [self hideTapForInfoLabel];
@@ -485,6 +483,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
     [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
     
     [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
+        [self.inputToolbar mnz_lockRecordingIfNeeded];
         [self configureNavigationBar];
     } completion:nil];
 }
@@ -2661,6 +2660,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
                     photoBrowserVC.delegate = self;
                     
                     [self.navigationController presentViewController:photoBrowserVC animated:YES completion:nil];
+                    [self.inputToolbar mnz_lockRecordingIfNeeded];
                 } else {
                     [node mnz_openNodeInNavigationController:self.navigationController folderLink:NO];
                 }

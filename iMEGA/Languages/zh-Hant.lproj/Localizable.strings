@@ -1567,7 +1567,7 @@
 /* Alert text shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device */
 "youNeedATwoFactorAuthenticationApp"="您需要在此設備上使用兩階段身份驗證程式";
 /* Alert text shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device and tap on the question mark */
-"You need an authenticator app to enable 2FA on MEGA. You can download and install the Google Authenticator, Duo Mobile, Authy or Microsoft Authenticator app for your phone or tablet."="You need an authenticator app to enable 2FA on MEGA. You can download and install the Google Authenticator, Duo Mobile, Authy or Microsoft Authenticator app for your phone or tablet.";
+"You need an authenticator app to enable 2FA on MEGA. You can download and install the Google Authenticator, Duo Mobile, Authy or Microsoft Authenticator app for your phone or tablet."="您需要驗證用的應用程式才能在MEGA上啟用2FA認證。您在手機或平板電腦裡下載並安裝Google Authenticator、Duo Mobile，Authy或Microsoft Authenticator app。";
 /* A title on the mobile web client page showing that 2FA has been enabled successfully. */
 "twoFactorAuthenticationEnabled"="已啟用兩階段驗證";
 /* A message on the dialog shown after 2FA was successfully enabled. */
@@ -1597,25 +1597,25 @@
 /* Title shown in a page of the on boarding screens explaining that the user keeps the encryption keys */
 "You hold the keys"="您握有鑰匙";
 /* Description shown in a page of the onboarding screens explaining the encryption paradigm */
-"Security is why we exist, your files are safe with us behind a well oiled encryption machine where only you can access your files."="Security is why we exist, your files are safe with us behind a well oiled encryption machine where only you can access your files.";
+"Security is why we exist, your files are safe with us behind a well oiled encryption machine where only you can access your files."="追求安全性是我們存在的原因，您的檔案安全地存放在我們運行良好的加密主機中，只有您可以存取您的檔案。";
 /* Title shown in a page of the on boarding screens explaining that the chat is encrypted */
 "Encrypted chat"="加密聊天";
 /* Description shown in a page of the onboarding screens explaining the chat feature */
-"Fully encrypted chat with voice and video calls, group messaging and file sharing integration with your Cloud Drive."="Fully encrypted chat with voice and video calls, group messaging and file sharing integration with your Cloud Drive.";
+"Fully encrypted chat with voice and video calls, group messaging and file sharing integration with your Cloud Drive."="完全加密的語音聊天及視訊通話，群組聊天以並整合雲端硬碟的檔案共享。";
 /* Title shown in a page of the on boarding screens explaining that the user can add contacts to chat and colaborate */
 "Create your Network"="創建您的網絡";
 /* Description shown in a page of the onboarding screens explaining contacts */
-"Add contacts, create a network, colaborate, make voice and video calls without ever leaving MEGA"="Add contacts, create a network, collaborate, and make voice and video calls without ever leaving MEGA";
+"Add contacts, create a network, colaborate, make voice and video calls without ever leaving MEGA"="無需離開MEGA即可加入聯絡人、建立連線，協作及撥打語音與視訊通話";
 /* Title shown in a page of the on boarding screens explaining that the user can backup the photos automatically */
 "Your Photos in the Cloud"="您在雲端的照片";
 /* Description shown in a page of the onboarding screens explaining the camera uploads feature */
-"Camera Uploads is an essential feature for any mobile device and we have got you covered. Create your account now."="Camera Uploads is an essential feature for any mobile device and we have got you covered. Create your account now.";
+"Camera Uploads is an essential feature for any mobile device and we have got you covered. Create your account now."="相機上傳是任何行動裝置的必要功能，我們現已為您提供這項服務。立即建立您的帳戶。";
 /* Button which triggers the initial setup */
 "Setup MEGA"="設定MEGA";
 /* Detailed explanation of why the user should give some permissions to MEGA */
 "To fully take advantage of your MEGA account we need to ask you some permissions."="要充分發揮您MEGA帳戶的效用，我們需要您授予一些權限。";
 /* Message warning the user about the risk of not setting up permissions */
-"The MEGA app may not work as expected without the required permissions. Are you sure?"="The MEGA app may not work as expected without the required permissions. Are you sure?";
+"The MEGA app may not work as expected without the required permissions. Are you sure?"="沒有所需要的權限，MEGA應用程式可能無法如預期運作。你確定嗎？";
 /* Shows number of the current page. '%1' will be replaced by current page number. '%2' will be replaced by number of all pages. */
 "%1 of %2"="%1 / %2";
 /* Title label that explains that the user is going to be asked for the photos permission */
@@ -1663,19 +1663,19 @@
 /* New server-side rubbish-bin cleaning scheduler description (for PRO users) */
 "The Rubbish Bin can be cleaned for you automatically. The minimum period is 7 days."="垃圾桶可執行自動清除。最短清除間隔為7天。";
 /* Description shown when you try to disable the feature Rubbish-Bin Cleaning Scheduler and you are a free user */
-"To disable the Rubbish-Bin Cleaning Scheduler or set a longer retention period, you need to subscribe to a PRO plan."="To disable the Rubbish Bin Clearing Scheduler or set a longer retention period, you need to subscribe to a PRO plan.";
+"To disable the Rubbish-Bin Cleaning Scheduler or set a longer retention period, you need to subscribe to a PRO plan."="欲停用垃圾桶清理排程或設定更長的保留期限，您需要訂閱一個PRO計劃。";
 /* Confirmation dialog for the button that logs the user out of all sessions except the current one. */
 "Do you want to close all other sessions? This will log you out on all other active sessions except the current one."="您想關閉所有其他頁面嗎？這將使您登出除了目前頁面之外的所有其他活動頁面。";
 /* Message to inform the local user that someone has joined the current group call */
-"%@ joined the call."="%@ joined the call.";
+"%@ joined the call."="%@加入通話。";
 /* Message to inform the local user that someone has left the current group call */
-"%@ left the call."="%@ left the call.";
+"%@ left the call."="%@離開通話。";
 /* Message shown in a chat room when there is an active group call */
-"There is an active group call. Tap to join."="There is an active group call. Tap to join.";
+"There is an active group call. Tap to join."="有一個群組通話進行中。點擊可加入。";
 /* Message shown in a chat room when there is an active call */
-"There is an active call. Tap to join."="There is an active call. Tap to join.";
+"There is an active call. Tap to join."="有一個通話進行中。點觸可加入。";
 /* Message shown in a chat room for a group call in progress displaying the duration of the call */
-"Touch to return to call %@"="Touch to return to call %@";
+"Touch to return to call %@"="觸踫可返回撥給%@";
 /* A button label which allows the users save images/videos in the Photos app. */
 "Save to Photos"="儲存至照片中";
 /* Text shown when starting the process to save a photo or video to Photos app */
@@ -1685,49 +1685,49 @@
 /* Text shown when an error occurs when trying to save a photo or video to Photos app */
 "Could not save Item"="無法儲存檔案";
 /* Label in a cell where you can enable the 'Encrypted Key Rotation' */
-"Encrypted Key Rotation"="Encrypted Key Rotation";
+"Encrypted Key Rotation"="加密金鑰輪替";
 /* Title shown in a cell to allow the users enable the 'Encrypted Key Rotation' */
-"Enable Encrypted Key Rotation"="Enable Encrypted Key Rotation";
+"Enable Encrypted Key Rotation"="啟用加密金鑰輪替";
 /* Label in a cell where you can get the chat link */
-"Get Chat Link"="Get chat link";
+"Get Chat Link"="取得聊天連結";
 /* Footer text to explain what means 'Encrypted Key Rotation' */
-"Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages."="Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages.";
+"Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages."="金鑰輪替會稍微安全些，但不允許您建立聊天連接，而且新的參與者將無法看到歴史的訊息。";
 /* Shown as an error message when the user selects "create chat link", but haven't entered a title for the newly created room */
 "To create a chat link you must name the group."="您必須為該群組命名，才能創建聊天連結。";
 /* Label shown in a cell where you can enable a switch to get a chat link */
-"Chat Link"="Chat link";
+"Chat Link"="聊天室連結";
 /* Message shown when there is an active chat link that can be deleted */
-"Delete Chat Link"="Delete chat link";
+"Delete Chat Link"="刪除聊天室連結";
 /* Button text in public chat previews that allows the user to join the chat */
 "Join"="加入";
 /* Text shown in a notification to let the user know that has joined a public chat room after login or account creation */
-"You have joined %@"="You have joined %@";
+"You have joined %@"="您已加入%@";
 /* Users previewing a public chat */
 "Observers"="觀察員";
 /* Alert message shown while deleting a chat link, warning about the consequences */
-"This conversation will no longer be accessible through the link you are about to delete."="This conversation will no longer be accessible through the chat link once it has been removed.";
+"This conversation will no longer be accessible through the link you are about to delete."="一旦它被刪除，將無法再透過此連結存取聊天室對話內容。";
 /* Management message shown in a chat when the user %@ enables the 'Encrypted Key Rotation' */
-"%@ enabled Encrypted Key Rotation"="%@ enabled Encrypted Key Rotation.";
+"%@ enabled Encrypted Key Rotation"="%@啟用加密金鑰輪替";
 /* Management message shown in a chat when the user %@ creates a public link for the chat */
-"%@ created a public link for the chat."="%@ created a chat link for the chat.";
+"%@ created a public link for the chat."="%@為對話建立聊天室連結";
 /* Management message shown in a chat when the user %@ removes a public link for the chat */
-"%@ removed a public link for the chat."="%@ removed the chat link for the chat.";
+"%@ removed a public link for the chat."="%@移除對話的聊天室連結";
 /* Management message shown in a chat when the user %@ joined it from a public chat link */
 "%@ joined the group chat."="%@已加入群組。";
 /* Message show when a call cannot be established because there are too many participants in the group call */
-"Error. No more participants are allowed in this group call."="You are not allowed to join this call as it has reached the maximum number of participants.";
+"Error. No more participants are allowed in this group call."="您無法加入此通話，因為它已達到參與人數上限。";
 /* Message show when a user cannot activate the video in a group call because the max number of videos has been reached */
-"Error. No more video are allowed in this group call."="You are not allowed to enable video as this call has reached the maximum number of participants using video.";
+"Error. No more video are allowed in this group call."="由於此通話已達到視訊參與人數上限，因此您無法開啟視訊。";
 /* Text shown for switching from thumbnail view to list view. */
 "List view"="顯示列表";
 /* Text shown for switching from list view to thumbnail view. */
 "Thumbnail view"="縮圖檢視";
 /* Message to inform the local user is having a bad quality network with someone in the current group call */
-"Poor connection."="Poor connection.";
+"Poor connection."="連線品質不良";
 /* Message shown in a chat room when there is an active group call */
-"There is an active group call. Tap to join."="There is an active group call. Tap to join.";
+"There is an active group call. Tap to join."="有一個群組通話進行中。點擊可加入。";
 /* Message shown in a chat room for a group call in progress displaying the duration of the call */
-"Touch to return to call %@"="Touch to return to call %@";
+"Touch to return to call %@"="觸踫可返回撥給%@";
 /* Menu item to change from grid view to list view */
 "List view"="顯示列表";
 /* Menu item to change from list view to grid view */
@@ -1743,7 +1743,7 @@
 /* The header of a notification indicating that a file or folder that was taken down has now been restored due to a successful counter-notice. */
 "Takedown reinstated"="移除已復原";
 /* Label shown inside an unseen notification */
-"New"="New";
+"New"="新";
 /* When a contact sent a contact/friend request */
 "Sent you a contact request"="向您發送了聯絡人邀請";
 /* A notification that the other user cancelled their contact request so it is no longer valid. E.g. user@email.com cancelled their contact request. */
@@ -1773,21 +1773,21 @@
 /* This is shown in the Notification dialog when the email address of a contact is not found and access to the share is lost for some reason (e.g. share removal or contact removal). */
 "Access to folders was removed."="存取資料夾已移除";
 /* Content of a notification that informs how many files and folders have been added to a shared folder */
-"Added 1 file"="Added 1 file";
+"Added 1 file"="加入1個檔案";
 /* Content of a notification that informs how many files and folders have been added to a shared folder */
-"Added %lld files"="Added %lld files";
+"Added %lld files"="加入%lld個檔案";
 /* Content of a notification that informs how many files and folders have been added to a shared folder */
-"Added 1 folder"="Added 1 folder";
+"Added 1 folder"="加入1個資料夾";
 /* Content of a notification that informs how many files and folders have been added to a shared folder */
-"Added %lld folders"="Added %lld folders";
+"Added %lld folders"="加入%lld個資料夾";
 /* Content of a notification that informs how many files and folders have been added to a shared folder */
-"Added 1 file and 1 folder"="Added 1 file and 1 folder";
+"Added 1 file and 1 folder"="加入1個檔案與1個資料夾";
 /* Content of a notification that informs how many files and folders have been added to a shared folder */
-"Added %lld files and 1 folder"="Added %lld files and 1 folder";
+"Added %lld files and 1 folder"="加入%lld個檔案與1個資料夾";
 /* Content of a notification that informs how many files and folders have been added to a shared folder */
-"Added 1 file and %lld folders"="Added 1 file and %lld folders";
+"Added 1 file and %lld folders"="加入1個檔案與%lld個資料夾";
 /* Content of a notification that informs how many files and folders have been added to a shared folder */
-"Added [A] files and [B] folders"="Added [A] files and [B] folders";
+"Added [A] files and [B] folders"="加入[A]個檔案與[B]個資料夾";
 /* Notification when on client side when owner of a shared folder removes folder/file from it. */
 "Removed item from shared folder"="已從分享資料夾中移除檔案";
 /* Notification popup. Notification for multiple removed items from a share. Please keep [X] as it will be replaced at runtime with the number of removed items. */
@@ -1801,9 +1801,9 @@
 /* The professional pricing plan which the user is currently on will expire in 5 days. The %1 is a placeholder for the number of days and should not be removed. */
 "Your PRO membership plan will expire in %1 days."="您的專業版會員專案將在%1天內到期";
 /* The professional pricing plan which the user was on expired one day ago. */
-"Your PRO membership plan expired 1 day ago"="您的PRO專業版會員資格已於1天前到期";
+"Your PRO membership plan expired 1 day ago"="您的專業版會員資格已於1天前到期";
 /* The professional pricing plan which the user was on expired %1 days ago. The %1 is a placeholder for the number of days and should not be removed. */
-"Your PRO membership plan expired %1 days ago"="您的PRO專業版會員資格已於%1天前到期";
+"Your PRO membership plan expired %1 days ago"="您的專業版會員資格已於%1天前到期";
 /* The text of a notification indicating that a file or folder has been taken down due to infringement or other reason. The %1 placeholder will be replaced with the text ‘file’ or ‘folder’. The %2 will be replaced with the name of the file or folder. */
 "Your publicly shared %1 (%2) has been taken down."="您公開分享的 %1 (%2) 已被移除。";
 /* The text of a notification indicating that a file or folder that was taken down has now been restored due to a successful counter-notice. The %1 placeholder will be replaced with the text ‘file’ or ‘folder’. The %2 will be replaced with the name of the file or folder. */
@@ -1815,13 +1815,13 @@
 /* uploads over storage quota warning dialog title */
 "Your upload(s) cannot proceed because your account is full"="由於您的帳戶已滿，您的上傳無法繼續";
 /* Footer text to explain the meaning of the functionaly 'Last seen' of your chat status. */
-"Allow your contacts to see the last time you were active on MEGA."="Allow your contacts to see the last time you were active on MEGA.";
+"Allow your contacts to see the last time you were active on MEGA."="允許您的聯絡人查看您上次在MEGA上活動是什麼時候。";
 /* Label shown next to a feature name that can be enabled or disabled, like in 'Show Last seen...' */
-"Show"="Show";
+"Show"="顯示";
 /* Shown when viewing a 1on1 chat (at least for now), if the user is offline. */
-"Last seen %s"="Last seen: %s";
+"Last seen %s"="上一次出現：%s前";
 /* Text to inform the user the 'Last seen' time of a contact is a long time ago (>= 65535 minutes) */
-"Last seen a long time ago"="Last seen a long time ago";
+"Last seen a long time ago"="上一次出現在很久之前";
 /* */
 "Today"="今天";
 /* */
@@ -1852,12 +1852,14 @@
 "< Slide to cancel"="< 滑動以取消";
 /* Tooltip shown when the user presses but does not hold the microphone icon to send a voice clip */
 "Tap and hold %@ to record, release to send"="點擊並按住%@以進行錄製，並發佈送出";
+/* Message shown when there is an ongoing call and the user tries to record a voice message */
+"It is not possible to record voice messages while there is a call in progress"="It is not possible to record voice messages while there is a call in progress";
 /* Text to inform the user there is an active call and is not participating */
-"Ongoing Call"="Ongoing Call";
+"Ongoing Call"="正在進行中的通話";
 /* Message shown when there is an ongoing call and the user tries to play an audio or video */
 "It is not possible to play content while there is a call in progress"="正在通話時無法播放影音檔案。";
 /* Text to inform the user there is an active call and is participating */
-"Call Started"="Call Started";
+"Call Started"="通話開始";
 /* Title for feature Password Reminder */
 "Password Reminder"="密碼提醒";
 /* Label for any ‘Message’ button, link, text, title, etc. - (String as short as possible). */
@@ -1873,29 +1875,29 @@
 /* Text button for init a group chat */
 "New group chat"="新聊天群組";
 /* Title for the recents section. */
-"Recents"="Recents";
+"Recents"="近期的";
 /* Multiple Images title shown in recents section of webclient */
-"%1 Images"="%1 Images";
+"%1 Images"="%1張圖像";
 /* Multiple videos title shown in recents section of web client. */
-"%2 Videos"="%2 Videos";
+"%2 Videos"="%2個影片";
 /* A single image and single video title shown in recents section of webclient. */
-"1 Image and 1 Video"="1 Image and 1 Video";
+"1 Image and 1 Video"="1張圖像與1個影片";
 /* One image and multiple videos title in recents. */
-"1 Image and %2 Videos"="1 Image and %2 Videos";
+"1 Image and %2 Videos"="1張圖像與%2個影片";
 /* Multiple images and 1 video */
-"%1 Images and 1 Video"="%1 Images and 1 Video";
+"%1 Images and 1 Video"="%1圖像與一個影片";
 /* Title for multiple images and multiple videos in recents section */
-"%1 Images and %2 Videos"="%1 Images and %2 Videos";
+"%1 Images and %2 Videos"="%1圖像與%2影片";
 /* Tooltip message shown on recents section. Please see the attached image. */
-"Modified on %1 at %2"="Modified on %1 at %2";
+"Modified on %1 at %2"="在%1 %2修改";
 /* Title for a recent action shown in the webclient, see the attached image for context. */
-"%1 modified by %3"="%1 modified by %3";
+"%1 modified by %3"="%1由%3修改";
 /* Title for a recent action shown in the webclient, see the attached image for context. Please ensure that the `%2 more` is inside the [A] tag as this will become a toggle to show the hidden content. */
-"%1 and [A]%2 more[/A]"="%1 and [A]%2 more[/A]";
+"%1 and [A]%2 more[/A]"="%1與[A]還有%2個[/A]";
 /* Title for a recent action shown in the webclient, see the attached image for context. */
-"%1 created by %3"="%1 created by %3";
+"%1 created by %3"="%1由%3建立";
 /* Message shown when the user has not recent activity in their account. */
-"No recent activity"="No Recent Activity";
+"No recent activity"="近期沒有活動";
 /* Plural of items which contains a folder. 2 items */
 "items"="個項目";
 /* Shown when an invalid/inexisting/not-available-anymore chat link is opened. */
@@ -1914,3 +1916,13 @@
 "Please go to the Privacy section in your device’s Setting. Enable Location Services and set MEGA to While Using the App or Always."="Please go to the Privacy section in your device’s Setting. Enable Location Services and set MEGA to While Using the App or Always.";
 /* Location Usage Description. In order to protect user's privacy, Apple requires a specific string explaining why location will be accessed. */
 "MEGA accesses your location when you elect to share it with your contacts."="MEGA accesses your location when you elect to share it with your contacts.";
+/* Information shown when the user has disabled the 'Mobile Data' setting for MEGA in the iOS Settings. */
+"Mobile Data is turned off"="Mobile Data is turned off";
+/* Button title to go to the iOS Settings to enable 'Mobile Data' for the MEGA app. */
+"Turn Mobile Data on"="Turn Mobile Data on";
+/* Extra information shown when the user has disabled the 'Mobile Data' setting for MEGA in the iOS Settings. */
+"You can turn on mobile data for this app in Settings."="You can turn on mobile data for this app in Settings.";
+/* title of the alert dialog when the user is changing the API URL to staging */
+"Change to a test server?"="更改為測試伺服器？";
+/* text of the alert dialog when the user is changing the API URL to staging */
+"Are you sure you want to change to a test server? Your account may suffer irrecoverable problems"="您確定要更改為測試伺服器？您的帳戶可能會遇到無法恢復的問題。";
