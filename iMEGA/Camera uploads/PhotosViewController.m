@@ -918,7 +918,7 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
     UIEdgeInsets capInsets = [Helper capInsetsForEmptyStateButton];
     UIEdgeInsets rectInsets = [Helper rectInsetsForEmptyStateButton];
     
-    return [[[UIImage imageNamed:@"emptyStateButtonBackground"] resizableImageWithCapInsets:capInsets resizingMode:UIImageResizingModeStretch] imageWithAlignmentRectInsets:rectInsets];
+    return [[[UIImage imageNamed:@"emptyStateButton"] resizableImageWithCapInsets:capInsets resizingMode:UIImageResizingModeStretch] imageWithAlignmentRectInsets:rectInsets];
 }
 
 - (UIColor *)backgroundColorForEmptyDataSet:(UIScrollView *)scrollView {
