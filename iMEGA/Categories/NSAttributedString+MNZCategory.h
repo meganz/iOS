@@ -7,4 +7,6 @@
                                                    font:(UIFont *)font
                                                   color:(UIColor *)color;
 
++ (NSAttributedString *)mnz_attributedStringFromImageNamed:(NSString *)imageName fontCapHeight:(CGFloat)capHeight;
+
 @end

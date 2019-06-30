@@ -290,8 +290,7 @@
     [self.cdTableView didMoveToParentViewController:self];
     
     self.cdTableView.cloudDrive = self;
-    self.cdTableView.tableView.tableHeaderView = (self.displayMode == DisplayModeRecents) ? nil : self.searchController.searchBar;
-    self.cdTableView.tableView.contentOffset = CGPointMake(0, CGRectGetHeight(self.searchController.searchBar.frame));
+    [self addSearchBar];
     self.cdTableView.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     self.cdTableView.tableView.emptyDataSetDelegate = self;
     self.cdTableView.tableView.emptyDataSetSource = self;
@@ -650,6 +649,17 @@
     return [[NSAttributedString alloc] initWithString:text attributes:[Helper titleAttributesForEmptyState]];
 }
 
+- (nullable NSAttributedString *)descriptionForEmptyDataSet:(UIScrollView *)scrollView {
+    NSString *text = @"";
+    if (!MEGAReachabilityManager.isReachable && !MEGAReachabilityManager.sharedManager.isMobileDataEnabled) {
+        text = AMLocalizedString(@"Mobile Data is turned off", @"Information shown when the user has disabled the 'Mobile Data' setting for MEGA in the iOS Settings.");
+    }
+    
+    NSDictionary *attributes = @{NSFontAttributeName:[UIFont preferredFontForTextStyle:UIFontTextStyleFootnote], NSForegroundColorAttributeName:UIColor.mnz_gray777777};
+    
+    return [NSAttributedString.alloc initWithString:text attributes:attributes];
+}
+
 - (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView {
     UIImage *image = nil;
     if ([MEGAReachabilityManager isReachable]) {
@@ -715,6 +725,10 @@
                 break;
         }
         
+    } else {
+        if (!MEGAReachabilityManager.sharedManager.isMobileDataEnabled) {
+            text = AMLocalizedString(@"Turn Mobile Data on", @"Button title to go to the iOS Settings to enable 'Mobile Data' for the MEGA app.");
+        }
     }
     
     return [[NSAttributedString alloc] initWithString:text attributes:[Helper buttonTextAttributesForEmptyState]];
@@ -747,14 +761,20 @@
 #pragma mark - DZNEmptyDataSetDelegate
 
 - (void)emptyDataSet:(UIScrollView *)scrollView didTapButton:(UIButton *)button {
-    switch (self.displayMode) {
-        case DisplayModeCloudDrive: {
-            [self presentUploadAlertController];
-            break;
+    if (MEGAReachabilityManager.isReachable) {
+        switch (self.displayMode) {
+            case DisplayModeCloudDrive: {
+                [self presentUploadAlertController];
+                break;
+            }
+                
+            default:
+                break;
         }
-            
-        default:
-            break;
+    } else {
+        if (!MEGAReachabilityManager.sharedManager.isMobileDataEnabled) {
+            [UIApplication.sharedApplication openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString] options:@{} completionHandler:nil];
+        }
     }
 }
 
@@ -799,16 +819,7 @@
             break;
     }
     
-    if (self.nodes.size.unsignedIntegerValue == 0) {
-        [self setNavigationBarButtonItemsEnabled:[MEGAReachabilityManager isReachable]];
-        
-        self.cdTableView.tableView.tableHeaderView = nil;
-    } else {
-        [self setNavigationBarButtonItemsEnabled:[MEGAReachabilityManager isReachable]];
-        if (!self.cdTableView.tableView.tableHeaderView) {
-            self.cdTableView.tableView.tableHeaderView = (self.displayMode == DisplayModeRecents) ? nil : self.searchController.searchBar;
-        }
-    }
+    [self setNavigationBarButtonItemsEnabled:MEGAReachabilityManager.isReachable];
     
     NSMutableArray *tempArray = [[NSMutableArray alloc] initWithCapacity:self.nodes.size.integerValue];
     for (NSUInteger i = 0; i < self.nodes.size.integerValue ; i++) {
@@ -924,6 +935,8 @@
     BOOL boolValue = [MEGAReachabilityManager isReachable];
     [self setNavigationBarButtonItemsEnabled:boolValue];
     
+    boolValue ? [self addSearchBar] : [self hideSearchIfNotActive];
+    
     [self reloadData];
 }
 
@@ -951,6 +964,26 @@
     }
 }
 
+- (void)addSearchBar {
+    if (self.layoutView == LayoutModeList) {
+        if (self.searchController && !self.cdTableView.tableView.tableHeaderView) {
+            self.cdTableView.tableView.contentOffset = CGPointMake(0, CGRectGetHeight(self.searchController.searchBar.frame));
+            self.cdTableView.tableView.tableHeaderView = ((self.displayMode == DisplayModeRecents) || !MEGAReachabilityManager.isReachable) ? nil : self.searchController.searchBar; //We have to check isReachable here to avoid re-adding the search bar when there is no internet connection and you change between 'Cloud Drive' and 'Recents' sections.
+        }
+    }
+    //In the case of LayoutModeThumbnail is not necessary to re-add the search bar.
+}
+
+- (void)hideSearchIfNotActive {
+    if (!self.searchController.isActive) {
+        if (self.layoutView == LayoutModeList) {
+            self.cdTableView.tableView.tableHeaderView = nil;
+        } else {
+            [self.cdCollectionView resetSearchBarPosition];
+        }
+    }
+}
+
 - (void)setNavigationBarButtonItemsEnabled:(BOOL)boolValue {
     self.moreRecentsBarButtonItem.enabled = boolValue;
     
@@ -962,6 +995,11 @@
             
         case DisplayModeRubbishBin: {
             self.editBarButtonItem.enabled = boolValue;
+            break;
+        }
+        
+        case DisplayModeRecents: {
+            self.moreRecentsBarButtonItem.enabled = boolValue;
             break;
         }
             
@@ -1720,6 +1758,14 @@
 
 - (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
     self.searchNodesArray = nil;
+    
+    if (!MEGAReachabilityManager.isReachable) {
+        if (self.layoutView == LayoutModeList) {
+            self.cdTableView.tableView.tableHeaderView = nil;
+        } else {
+            [self.cdCollectionView resetSearchBarPosition];
+        }
+    }
 }
 
 - (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar {

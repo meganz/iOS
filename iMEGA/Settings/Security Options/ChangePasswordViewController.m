@@ -72,9 +72,6 @@ typedef NS_ENUM(NSUInteger, TextFieldTag) {
             
             self.confirmPasswordView.passwordTextField.delegate = self;
             self.confirmPasswordView.passwordTextField.tag = ConfirmPasswordTextFieldTag;
-            if (@available(iOS 12.0, *)) {
-                self.confirmPasswordView.passwordTextField.textContentType = UITextContentTypeNewPassword;
-            }
             
             [self.confirmButton setTitle:AMLocalizedString(@"changePasswordLabel", @"Section title where you can change your MEGA's password") forState:UIControlStateNormal];
             
@@ -127,9 +124,6 @@ typedef NS_ENUM(NSUInteger, TextFieldTag) {
             
             self.confirmPasswordView.passwordTextField.delegate = self;
             self.confirmPasswordView.passwordTextField.tag = ConfirmPasswordTextFieldTag;
-            if (@available(iOS 12.0, *)) {
-                self.confirmPasswordView.passwordTextField.textContentType = UITextContentTypeNewPassword;
-            }
             
             NSString *buttonTitle = (self.changeType == ChangeTypeResetPassword) ? AMLocalizedString(@"changePasswordLabel", @"Section title where you can change your MEGA's password") : AMLocalizedString(@"startNewAccount", @"Caption of the button to proceed");
             [self.confirmButton setTitle:buttonTitle forState:UIControlStateNormal];

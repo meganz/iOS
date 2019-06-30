@@ -268,7 +268,13 @@
                 [[MEGASdkManager sharedMEGAChatSdk] createChatGroup:NO peers:peerList delegate:createChatGroupRequestDelegate];
             }
         } else {
+            NSUInteger viewControllersCount = self.navigationController.viewControllers.count;
+            UIViewController *previousViewController = viewControllersCount >= 2 ? self.navigationController.viewControllers[viewControllersCount - 2] : nil;
+            if (previousViewController && [previousViewController isKindOfClass:MessagesViewController.class]) {
             [self.navigationController popViewControllerAnimated:YES];
+            } else {
+                [self openChatRoomWithChatId:self.chatId];
+            }
         }
     } else {
         [SVProgressHUD showImage:[UIImage imageNamed:@"hudWarning"] status:AMLocalizedString(@"chatIsDisabled", @"Title show when the chat is disabled")];
@@ -372,6 +378,11 @@
 }
 
 - (void)updateCallButtonsState {
+    MEGAUser *user = [[MEGASdkManager sharedMEGASdk] contactForEmail:self.userEmail];
+    if (!user || user.visibility != MEGAUserVisibilityVisible) {
+        self.messageButton.enabled = self.callButton.enabled = self.videoCallButton.enabled = NO;
+        return;
+    }
     MEGAChatRoom *chatRoom = self.chatRoom ? self.chatRoom : [[MEGASdkManager sharedMEGAChatSdk] chatRoomByUser:self.userHandle];
     if (chatRoom) {
         if (chatRoom.ownPrivilege < MEGAChatRoomPrivilegeStandard) {

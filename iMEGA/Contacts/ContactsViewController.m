@@ -368,6 +368,10 @@
     BOOL boolValue = MEGAReachabilityManager.isReachable;
     [self setNavigationBarButtonItemsEnabled:boolValue];
     
+    if (!boolValue) {
+        [self hideSearchIfNotActive];
+    }
+    
     boolValue ? [self reloadUI] : [self.tableView reloadData];
 }
 
@@ -376,6 +380,12 @@
     self.addBarButtonItem.enabled = boolValue;
     self.editButtonItem.enabled = boolValue;
     self.createGroupBarButtonItem.enabled = boolValue;
+}
+
+- (void)hideSearchIfNotActive {
+    if (!self.searchController.isActive) {
+        self.tableView.tableHeaderView = nil;
+    }
 }
 
 - (NSMutableArray *)outSharesForNode:(MEGANode *)node {
@@ -713,6 +723,7 @@
     if (self.visibleUsersArray.count == 0) {
         return;
     }
+    
     switch (self.contactsMode) {
         case ContactsModeChatAttachParticipant:
         case ContactsModeChatAddParticipant:
@@ -1484,6 +1495,17 @@
     return [[NSAttributedString alloc] initWithString:text attributes:[Helper titleAttributesForEmptyState]];
 }
 
+- (nullable NSAttributedString *)descriptionForEmptyDataSet:(UIScrollView *)scrollView {
+    NSString *text = @"";
+    if (!MEGAReachabilityManager.isReachable && !MEGAReachabilityManager.sharedManager.isMobileDataEnabled) {
+        text = AMLocalizedString(@"Mobile Data is turned off", @"Information shown when the user has disabled the 'Mobile Data' setting for MEGA in the iOS Settings.");
+    }
+    
+    NSDictionary *attributes = @{NSFontAttributeName:[UIFont preferredFontForTextStyle:UIFontTextStyleFootnote], NSForegroundColorAttributeName:UIColor.mnz_gray777777};
+    
+    return [NSAttributedString.alloc initWithString:text attributes:attributes];
+}
+
 - (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView {
     if (MEGAReachabilityManager.isReachable) {
         if (self.contactsMode == ContactsModeChatNamingGroup) {
@@ -1511,6 +1533,10 @@
     NSString *text = @"";
     if (MEGAReachabilityManager.isReachable && !self.searchController.isActive) {
         text = AMLocalizedString(@"inviteContact", @"Text shown when the user tries to make a call and the receiver is not a contact");
+    } else {
+        if (!MEGAReachabilityManager.sharedManager.isMobileDataEnabled) {
+            text = AMLocalizedString(@"Turn Mobile Data on", @"Button title to go to the iOS Settings to enable 'Mobile Data' for the MEGA app.");
+        }
     }
     
     return [[NSAttributedString alloc] initWithString:text attributes:[Helper buttonTextAttributesForEmptyState]];
@@ -1535,16 +1561,26 @@
     return [Helper spaceHeightForEmptyState];
 }
 
-#pragma mark - DZNEmptyDataSetDelegate Methods
+#pragma mark - DZNEmptyDataSetDelegate
 
 - (void)emptyDataSet:(UIScrollView *)scrollView didTapButton:(UIButton *)button {
-    [self addContact:button];
+    if (MEGAReachabilityManager.isReachable) {
+        [self addContact:button];
+    } else {
+        if (!MEGAReachabilityManager.sharedManager.isMobileDataEnabled) {
+            [UIApplication.sharedApplication openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString] options:@{} completionHandler:nil];
+        }
+    }
 }
 
 #pragma mark - UISearchBarDelegate
 
 - (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
     self.searchVisibleUsersArray = nil;
+    
+    if (!MEGAReachabilityManager.isReachable) {
+        self.tableView.tableHeaderView = nil;
+    }
 }
 
 #pragma mark - UISearchControllerDelegate

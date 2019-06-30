@@ -25,5 +25,6 @@ typedef NS_ENUM (NSInteger, MEGAChatRoomListState) {
 
 @property (nonatomic) MEGAChatRoomListState chatRoomListState;
 @property (nonatomic, readonly) NSString *currentAddress;
+@property (nonatomic, getter=isMobileDataEnabled, readonly) BOOL mobileDataEnabled;
 
 @end

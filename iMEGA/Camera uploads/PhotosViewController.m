@@ -871,13 +871,15 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
     return [[NSAttributedString alloc] initWithString:text attributes:[Helper titleAttributesForEmptyState]];
 }
 
-- (NSAttributedString *)descriptionForEmptyDataSet:(UIScrollView *)scrollView {
+- (nullable NSAttributedString *)descriptionForEmptyDataSet:(UIScrollView *)scrollView {
+    NSString *text = @"";
     if (MEGAReachabilityManager.isReachable && !CameraUploadManager.isCameraUploadEnabled) {
-        NSString *description = AMLocalizedString(@"Automatically backup your photos and videos to the Cloud Drive.", nil);
-        return [[NSAttributedString alloc] initWithString:description attributes:[Helper descriptionAttributesForEmptyState]];
-    } else {
-        return nil;
+        text = AMLocalizedString(@"Automatically backup your photos and videos to the Cloud Drive.", nil);
+    } else if (!MEGAReachabilityManager.isReachable && !MEGAReachabilityManager.sharedManager.isMobileDataEnabled) {
+        text = AMLocalizedString(@"Mobile Data is turned off", @"Information shown when the user has disabled the 'Mobile Data' setting for MEGA in the iOS Settings.");
     }
+    
+    return [[NSAttributedString alloc] initWithString:text attributes:[Helper descriptionAttributesForEmptyState]];
 }
 
 - (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView {
@@ -902,6 +904,10 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
     if ([MEGAReachabilityManager isReachable]) {
         if (!CameraUploadManager.isCameraUploadEnabled) {
             text = AMLocalizedString(@"enable", @"Text button shown when the chat is disabled and if tapped the chat will be enabled");
+        }
+    } else {
+        if (!MEGAReachabilityManager.sharedManager.isMobileDataEnabled) {
+            text = AMLocalizedString(@"Turn Mobile Data on", @"Button title to go to the iOS Settings to enable 'Mobile Data' for the MEGA app.");
         }
     }
     
@@ -931,10 +937,16 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
     return [Helper spaceHeightForEmptyStateWithDescription];
 }
 
-#pragma mark - DZNEmptyDataSetDelegate Methods
+#pragma mark - DZNEmptyDataSetDelegate
 
 - (void)emptyDataSet:(UIScrollView *)scrollView didTapButton:(UIButton *)button {
-    [self pushCameraUploadSettings];
+    if (MEGAReachabilityManager.isReachable) {
+        [self pushCameraUploadSettings];
+    } else {
+        if (!MEGAReachabilityManager.sharedManager.isMobileDataEnabled) {
+            [UIApplication.sharedApplication openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString] options:@{} completionHandler:nil];
+        }
+    }
 }
 
 #pragma mark - MEGAPhotoBrowserDelegate
