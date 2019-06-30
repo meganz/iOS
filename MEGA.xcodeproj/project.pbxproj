@@ -867,6 +867,7 @@
 		B6CCC36921E800E400B68E2C /* VideoUploadsQualityTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B6CCC36821E800E400B68E2C /* VideoUploadsQualityTableViewController.m */; };
 		B6CCC36B21E8297F00B68E2C /* CameraUploadSettings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B6CCC36A21E8297F00B68E2C /* CameraUploadSettings.storyboard */; };
 		B6CE0D0F221FDFCB00E6BD41 /* CameraUploadConcurrentCountCalculator.m in Sources */ = {isa = PBXBuildFile; fileRef = B6CE0D0E221FDFCB00E6BD41 /* CameraUploadConcurrentCountCalculator.m */; };
+		B6CED49622B8AFC3009C4861 /* CameraUploadConcurrentCountCalculatorTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B6CED49522B8AFC3009C4861 /* CameraUploadConcurrentCountCalculatorTests.m */; };
 		B6D11AC6219B8ABC00446B86 /* LocalFileNameGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = B6D11AC5219B8ABC00446B86 /* LocalFileNameGenerator.m */; };
 		B6D11AD7219BAE6D00446B86 /* MOAssetUploadFileNameRecord+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = B6D11AD3219BAE6D00446B86 /* MOAssetUploadFileNameRecord+CoreDataClass.m */; };
 		B6D11AD8219BAE6D00446B86 /* MOAssetUploadFileNameRecord+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = B6D11AD6219BAE6D00446B86 /* MOAssetUploadFileNameRecord+CoreDataProperties.m */; };
@@ -954,6 +955,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = 943F8B0E1EF26E9C00AFD89F;
 			remoteInfo = MEGAShare;
+		};
+		B6CED49022B8AC70009C4861 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 137361821A6664C300B740E8 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 137361891A6664C300B740E8;
+			remoteInfo = MEGA;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -2129,6 +2137,9 @@
 		B6CCC36A21E8297F00B68E2C /* CameraUploadSettings.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = CameraUploadSettings.storyboard; sourceTree = "<group>"; };
 		B6CE0D0D221FDFCB00E6BD41 /* CameraUploadConcurrentCountCalculator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CameraUploadConcurrentCountCalculator.h; sourceTree = "<group>"; };
 		B6CE0D0E221FDFCB00E6BD41 /* CameraUploadConcurrentCountCalculator.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CameraUploadConcurrentCountCalculator.m; sourceTree = "<group>"; };
+		B6CED48B22B8AC70009C4861 /* MEGAUnitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MEGAUnitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		B6CED48F22B8AC70009C4861 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B6CED49522B8AFC3009C4861 /* CameraUploadConcurrentCountCalculatorTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CameraUploadConcurrentCountCalculatorTests.m; sourceTree = "<group>"; };
 		B6D11AC5219B8ABC00446B86 /* LocalFileNameGenerator.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LocalFileNameGenerator.m; sourceTree = "<group>"; };
 		B6D11AD3219BAE6D00446B86 /* MOAssetUploadFileNameRecord+CoreDataClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MOAssetUploadFileNameRecord+CoreDataClass.m"; sourceTree = "<group>"; };
 		B6D11AD4219BAE6D00446B86 /* MOAssetUploadFileNameRecord+CoreDataClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MOAssetUploadFileNameRecord+CoreDataClass.h"; sourceTree = "<group>"; };
@@ -2417,6 +2428,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		B6CED48822B8AC70009C4861 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -2425,6 +2443,7 @@
 			children = (
 				1373618C1A6664C300B740E8 /* iMEGA */,
 				942254D71EDC02CB0074C51A /* Extensions */,
+				B6CED48C22B8AC70009C4861 /* MEGAUnitTests */,
 				418851EE1A66826800FDBA15 /* Frameworks */,
 				1373618B1A6664C300B740E8 /* Products */,
 			);
@@ -2437,6 +2456,7 @@
 				942254DC1EDC03130074C51A /* MEGAPicker.appex */,
 				942254EB1EDC03140074C51A /* MEGAPickerFileProvider.appex */,
 				943F8B0F1EF26E9C00AFD89F /* MEGAShare.appex */,
+				B6CED48B22B8AC70009C4861 /* MEGAUnitTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -3457,6 +3477,14 @@
 				839D5A9621C25A7D00FAE757 /* GridFlowLayout.m */,
 			);
 			path = "Flow Layouts";
+			sourceTree = "<group>";
+		};
+		5B076EDA22C251BF00D773B9 /* CameraUpload */ = {
+			isa = PBXGroup;
+			children = (
+				B6CED49522B8AFC3009C4861 /* CameraUploadConcurrentCountCalculatorTests.m */,
+			);
+			path = CameraUpload;
 			sourceTree = "<group>";
 		};
 		5B16A739220D81EB00085F61 /* Recents */ = {
@@ -4510,6 +4538,15 @@
 			path = Categories;
 			sourceTree = "<group>";
 		};
+		B6CED48C22B8AC70009C4861 /* MEGAUnitTests */ = {
+			isa = PBXGroup;
+			children = (
+				B6CED48F22B8AC70009C4861 /* Info.plist */,
+				5B076EDA22C251BF00D773B9 /* CameraUpload */,
+			);
+			path = MEGAUnitTests;
+			sourceTree = "<group>";
+		};
 		B6D11ADC219CE60E00446B86 /* UploadUtils */ = {
 			isa = PBXGroup;
 			children = (
@@ -4780,6 +4817,24 @@
 			productReference = 943F8B0F1EF26E9C00AFD89F /* MEGAShare.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
+		B6CED48A22B8AC70009C4861 /* MEGAUnitTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B6CED49422B8AC70009C4861 /* Build configuration list for PBXNativeTarget "MEGAUnitTests" */;
+			buildPhases = (
+				B6CED48722B8AC70009C4861 /* Sources */,
+				B6CED48822B8AC70009C4861 /* Frameworks */,
+				B6CED48922B8AC70009C4861 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				B6CED49122B8AC70009C4861 /* PBXTargetDependency */,
+			);
+			name = MEGAUnitTests;
+			productName = MEGAUnitTests;
+			productReference = B6CED48B22B8AC70009C4861 /* MEGAUnitTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -4850,6 +4905,12 @@
 							};
 						};
 					};
+					B6CED48A22B8AC70009C4861 = {
+						CreatedOnToolsVersion = 10.2.1;
+						DevelopmentTeam = T9RH74Y7L9;
+						ProvisioningStyle = Automatic;
+						TestTargetID = 137361891A6664C300B740E8;
+					};
 				};
 			};
 			buildConfigurationList = 137361851A6664C300B740E8 /* Build configuration list for PBXProject "MEGA" */;
@@ -4903,6 +4964,7 @@
 				942254DB1EDC03130074C51A /* MEGAPicker */,
 				942254EA1EDC03140074C51A /* MEGAPickerFileProvider */,
 				943F8B0E1EF26E9C00AFD89F /* MEGAShare */,
+				B6CED48A22B8AC70009C4861 /* MEGAUnitTests */,
 			);
 		};
 /* End PBXProject section */
@@ -5053,6 +5115,13 @@
 				7720C5D0206AB2EB00F995D1 /* SF-UI-Text-Bold.otf in Resources */,
 				77892E9B20E4FFBA0020A533 /* Chat.storyboard in Resources */,
 				94892C971EFBF03500AEAC25 /* SVProgressHUD.bundle in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B6CED48922B8AC70009C4861 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5793,6 +5862,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		B6CED48722B8AC70009C4861 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B6CED49622B8AFC3009C4861 /* CameraUploadConcurrentCountCalculatorTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -5810,6 +5887,11 @@
 			isa = PBXTargetDependency;
 			target = 943F8B0E1EF26E9C00AFD89F /* MEGAShare */;
 			targetProxy = 943F8B181EF26E9C00AFD89F /* PBXContainerItemProxy */;
+		};
+		B6CED49122B8AC70009C4861 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 137361891A6664C300B740E8 /* MEGA */;
+			targetProxy = B6CED49022B8AC70009C4861 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -6340,6 +6422,60 @@
 			};
 			name = Release;
 		};
+		B6CED49222B8AC70009C4861 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = T9RH74Y7L9;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = MEGAUnitTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.MEGAUnitTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MEGA.app/MEGA";
+			};
+			name = Debug;
+		};
+		B6CED49322B8AC70009C4861 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = T9RH74Y7L9;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = MEGAUnitTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.MEGAUnitTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MEGA.app/MEGA";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -6384,6 +6520,15 @@
 			buildConfigurations = (
 				943F8B1B1EF26E9C00AFD89F /* Debug */,
 				943F8B1C1EF26E9C00AFD89F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B6CED49422B8AC70009C4861 /* Build configuration list for PBXNativeTarget "MEGAUnitTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B6CED49222B8AC70009C4861 /* Debug */,
+				B6CED49322B8AC70009C4861 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
