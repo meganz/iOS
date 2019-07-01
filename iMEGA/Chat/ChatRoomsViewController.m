@@ -599,7 +599,6 @@
         
         ContactDetailsViewController *contactDetailsVC = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactDetailsViewControllerID"];
         contactDetailsVC.contactDetailsMode = ContactDetailsModeFromChat;
-        contactDetailsVC.chatId             = chatRoom.chatId;
         contactDetailsVC.userEmail          = peerEmail;
         contactDetailsVC.userName           = peerName;
         contactDetailsVC.userHandle         = peerHandle;
