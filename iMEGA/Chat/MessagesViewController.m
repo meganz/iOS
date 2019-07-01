@@ -2910,6 +2910,21 @@ static NSMutableSet<NSString *> *tapForInfoSet;
     return skeletonImageView;
 }
 
+#pragma mark - MEGAPhotoBrowserDelegate
+
+- (void)photoBrowser:(MEGAPhotoBrowserViewController *)photoBrowser didPresentNodeAtIndex:(NSUInteger)index {
+    if (index >= self.attachmentMessages.count) {
+        return;
+    }
+    
+    MEGAChatMessage *message = [self.attachmentMessages objectAtIndex:(self.attachmentMessages.count - 1 - index)];
+    NSUInteger item = [self.messages indexOfObject:message];
+    NSIndexPath *indexPath = [NSIndexPath indexPathForItem:item inSection:0];
+    if (indexPath) {
+        [self.collectionView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionCenteredVertically animated:NO];
+    }
+}
+
 #pragma mark - MEGAChatRoomDelegate
 
 - (void)onMessageReceived:(MEGAChatSdk *)api message:(MEGAChatMessage *)message {
