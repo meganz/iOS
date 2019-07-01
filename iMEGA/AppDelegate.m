@@ -14,6 +14,7 @@
 #import "CameraUploads.h"
 #import "Helper.h"
 #import "DevicePermissionsHelper.h"
+#import "MEGA-Swift.h"
 #import "MEGAApplication.h"
 #import "MEGAIndexer.h"
 #import "MEGALinkManager.h"
@@ -1721,6 +1722,8 @@ void uncaughtExceptionHandler(NSException *exception) {
             [self copyDatabasesForExtensions];
             [[NSUserDefaults standardUserDefaults] setBool:[api appleVoipPushEnabled] forKey:@"VoIP_messages"];
             
+            [ContactsOnMegaManager.shared configureContactsOnMegaWithCompletion:nil];
+
             break;
         }
             

@@ -65,32 +65,37 @@
             [self.secondaryButton setTitle:AMLocalizedString(@"notNow", nil) forState:UIControlStateNormal];
             [self.secondaryButton setTitleColor:UIColor.mnz_green899B9C forState:UIControlStateNormal];
             
-            if (self.scrollView.subviews.firstObject.subviews.count == 4) {
-                [self.scrollView.subviews.firstObject.subviews.lastObject removeFromSuperview];
-                int nextIndex = 0;
-                if (DevicePermissionsHelper.shouldAskForPhotosPermissions) {
-                    OnboardingView *onboardingView = self.scrollView.subviews.firstObject.subviews[nextIndex];
-                    onboardingView.type = OnboardingViewTypePhotosPermission;
-                    nextIndex++;
-                } else {
-                    [self.scrollView.subviews.firstObject.subviews[nextIndex] removeFromSuperview];
-                }
-                
-                if (DevicePermissionsHelper.shouldAskForAudioPermissions || DevicePermissionsHelper.shouldAskForVideoPermissions) {
-                    OnboardingView *onboardingView = self.scrollView.subviews.firstObject.subviews[nextIndex];
-                    onboardingView.type = OnboardingViewTypeMicrophoneAndCameraPermissions;
-                    nextIndex++;
-                } else {
-                    [self.scrollView.subviews.firstObject.subviews[nextIndex] removeFromSuperview];
-                }
-                
-                if (DevicePermissionsHelper.shouldAskForNotificationsPermissions) {
-                    OnboardingView *onboardingView = self.scrollView.subviews.firstObject.subviews[nextIndex];
-                    onboardingView.type = OnboardingViewTypeNotificationsPermission;
-                    nextIndex++;
-                } else {
-                    [self.scrollView.subviews.firstObject.subviews[nextIndex] removeFromSuperview];
-                }
+            int nextIndex = 0;
+            if (DevicePermissionsHelper.shouldAskForPhotosPermissions) {
+                OnboardingView *onboardingView = self.scrollView.subviews.firstObject.subviews[nextIndex];
+                onboardingView.type = OnboardingViewTypePhotosPermission;
+                nextIndex++;
+            } else {
+                [self.scrollView.subviews.firstObject.subviews[nextIndex] removeFromSuperview];
+            }
+            
+            if (DevicePermissionsHelper.shouldAskForContactsPermissions) {
+                OnboardingView *onboardingView = self.scrollView.subviews.firstObject.subviews[nextIndex];
+                onboardingView.type = OnboardingViewTypeContactsPermission;
+                nextIndex++;
+            } else {
+                [self.scrollView.subviews.firstObject.subviews[nextIndex] removeFromSuperview];
+            }
+            
+            if (DevicePermissionsHelper.shouldAskForAudioPermissions || DevicePermissionsHelper.shouldAskForVideoPermissions) {
+                OnboardingView *onboardingView = self.scrollView.subviews.firstObject.subviews[nextIndex];
+                onboardingView.type = OnboardingViewTypeMicrophoneAndCameraPermissions;
+                nextIndex++;
+            } else {
+                [self.scrollView.subviews.firstObject.subviews[nextIndex] removeFromSuperview];
+            }
+            
+            if (DevicePermissionsHelper.shouldAskForNotificationsPermissions) {
+                OnboardingView *onboardingView = self.scrollView.subviews.firstObject.subviews[nextIndex];
+                onboardingView.type = OnboardingViewTypeNotificationsPermission;
+                nextIndex++;
+            } else {
+                [self.scrollView.subviews.firstObject.subviews[nextIndex] removeFromSuperview];
             }
             
             self.pageLabel.text = [[AMLocalizedString(@"%1 of %2", @"Shows number of the current page. '%1' will be replaced by current page number. '%2' will be replaced by number of all pages.") stringByReplacingOccurrencesOfString:@"%1" withString:@"1"] stringByReplacingOccurrencesOfString:@"%2" withString:[NSString stringWithFormat:@"%tu", self.scrollView.subviews.firstObject.subviews.count]];
@@ -176,6 +181,13 @@
             switch (currentView.type) {
                 case OnboardingViewTypePhotosPermission: {
                     [DevicePermissionsHelper photosPermissionWithCompletionHandler:^(BOOL granted) {
+                        [self nextPageOrDismiss];
+                    }];
+                    break;
+                }
+                    
+                case OnboardingViewTypeContactsPermission: {
+                    [DevicePermissionsHelper contactsPermissionWithCompletionHandler:^(BOOL granted) {
                         [self nextPageOrDismiss];
                     }];
                     break;
