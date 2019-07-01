@@ -207,6 +207,7 @@
         } else {
             CloudDriveViewController *cloudDriveVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
             cloudDriveVC.nodes = recentActionBucket.nodesList;
+            cloudDriveVC.recentActionBucket = recentActionBucket;
             cloudDriveVC.displayMode = DisplayModeRecents;
             
             [self.cloudDrive.navigationController pushViewController:cloudDriveVC animated:YES];
