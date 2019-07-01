@@ -2847,7 +2847,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
 
 #pragma mark - MEGAPhotoBrowserDelegate
 
-- (void)photoBrowser:(MEGAPhotoBrowserViewController *)photoBrowser didPresentNode:(MEGANode *)node atIndex:(NSUInteger)index {
+- (void)photoBrowser:(MEGAPhotoBrowserViewController *)photoBrowser didPresentNodeAtIndex:(NSUInteger)index {
     if (index >= self.attachmentMessages.count) {
         return;
     }

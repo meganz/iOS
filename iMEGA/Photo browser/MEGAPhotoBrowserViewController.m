@@ -204,8 +204,11 @@
     self.scrollView.contentOffset = CGPointMake(self.currentIndex * (self.view.frame.size.width + self.gapBetweenPages), 0);
     [self reloadTitle];
     [self airplayDisplayCurrentImage];
-    if ([self.delegate respondsToSelector:@selector(photoBrowser:didPresentNode:atIndex:)]) {
-        [self.delegate photoBrowser:self didPresentNode:[self.mediaNodes objectAtIndex:self.currentIndex] atIndex:self.currentIndex];
+    if ([self.delegate respondsToSelector:@selector(photoBrowser:didPresentNode:)]) {
+        [self.delegate photoBrowser:self didPresentNode:[self.mediaNodes objectAtIndex:self.currentIndex]];
+    }
+    if ([self.delegate respondsToSelector:@selector(photoBrowser:didPresentNodeAtIndex:)]) {
+        [self.delegate photoBrowser:self didPresentNodeAtIndex:self.currentIndex];
     }
 }
 
@@ -288,8 +291,11 @@
             [self resetZooms];
             [self reloadTitle];
             [self airplayDisplayCurrentImage];
-            if ([self.delegate respondsToSelector:@selector(photoBrowser:didPresentNode:atIndex:)]) {
-                [self.delegate photoBrowser:self didPresentNode:[self.mediaNodes objectAtIndex:self.currentIndex] atIndex:self.currentIndex];
+            if ([self.delegate respondsToSelector:@selector(photoBrowser:didPresentNode:)]) {
+                [self.delegate photoBrowser:self didPresentNode:[self.mediaNodes objectAtIndex:self.currentIndex]];
+            }
+            if ([self.delegate respondsToSelector:@selector(photoBrowser:didPresentNodeAtIndex:)]) {
+                [self.delegate photoBrowser:self didPresentNodeAtIndex:self.currentIndex];
             }
         }
         [self fixFrames];
