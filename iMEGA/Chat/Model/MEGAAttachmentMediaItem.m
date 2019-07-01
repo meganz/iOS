@@ -99,7 +99,7 @@
             contactView.detailLabel.text = size;
         } else { // MEGAChatMessageTypeContact
             if (self.message.usersCount == 1) {
-                [contactView.avatarImage mnz_setImageForUserHandle:[self.message userHandleAtIndex:0]];
+                [contactView.avatarImage mnz_setImageForUserHandle:[self.message userHandleAtIndex:0] name:[self.message userNameAtIndex:0]];
                 contactView.titleLabel.text = [self.message userNameAtIndex:0];
                 contactView.detailLabel.text = [self.message userEmailAtIndex:0];
             } else {
