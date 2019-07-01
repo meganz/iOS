@@ -84,10 +84,6 @@ static NSString* const B = @"[B]";
 
 #pragma mark - appData
 
-- (NSString *)mnz_appDataToSaveCameraUploadsCount:(NSUInteger)operationCount {
-    return [self stringByAppendingString:[NSString stringWithFormat:@">CU=%tu", operationCount]];
-}
-
 - (NSString *)mnz_appDataToSaveInPhotosApp {
     return [self stringByAppendingString:@">SaveInPhotosApp"];
 }
@@ -847,6 +843,11 @@ static NSString* const B = @"[B]";
     } while (listSize != 0);
     
     return [nameWithoutExtension stringByAppendingPathExtension:extension];
+}
+
+- (NSString *)mnz_stringByRemovingInvalidFileCharacters {
+    NSCharacterSet *set = [NSCharacterSet characterSetWithCharactersInString:@":/\\"];
+    return [[self componentsSeparatedByCharactersInSet:set] componentsJoinedByString:@""];
 }
 
 @end

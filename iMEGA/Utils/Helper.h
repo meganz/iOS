@@ -7,10 +7,6 @@
 
 #define kIsEraseAllLocalDataEnabled @"IsEraseAllLocalDataEnabled"
 
-#define kLastUploadPhotoDate @"LastUploadPhotoDate"
-#define kLastUploadVideoDate @"LastUploadVideoDate"
-#define kCameraUploadsNodeHandle @"CameraUploadsNodeHandle"
-
 typedef NS_OPTIONS(NSUInteger, NodesAre) {
     NodesAreFiles    = 1 << 0,
     NodesAreFolders  = 1 << 1,
@@ -59,6 +55,7 @@ typedef NS_OPTIONS(NSUInteger, NodesAre) {
 + (NSString *)pathForNode:(MEGANode *)node inSharedSandboxCacheDirectory:(NSString *)directory;
 
 + (NSString *)pathForSharedSandboxCacheDirectory:(NSString *)directory;
++ (NSURL *)urlForSharedSandboxCacheDirectory:(NSString *)directory;
 
 #pragma mark - Utils for transfers
 
@@ -103,8 +100,10 @@ typedef NS_OPTIONS(NSUInteger, NodesAre) {
 
 + (CGFloat)verticalOffsetForEmptyStateWithNavigationBarSize:(CGSize)navigationBarSize searchBarActive:(BOOL)isSearchBarActive;
 + (CGFloat)spaceHeightForEmptyState;
++ (CGFloat)spaceHeightForEmptyStateWithDescription;
 
 + (NSDictionary *)titleAttributesForEmptyState;
++ (NSDictionary *)descriptionAttributesForEmptyState;
 + (NSDictionary *)buttonTextAttributesForEmptyState;
 
 #pragma mark - Utils for UI

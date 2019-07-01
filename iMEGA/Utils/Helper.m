@@ -21,7 +21,6 @@
 #import "MEGAStore.h"
 #import "MEGAUser+MNZCategory.h"
 
-#import "CameraUploads.h"
 #import "GetLinkActivity.h"
 #import "NodeTableViewCell.h"
 #import "OpenInActivity.h"
@@ -30,6 +29,7 @@
 #import "RemoveSharingActivity.h"
 #import "ShareFolderActivity.h"
 #import "SendToChatActivity.h"
+#import "MEGAConstants.h"
 
 static MEGAIndexer *indexer;
 
@@ -425,14 +425,15 @@ static MEGAIndexer *indexer;
 }
 
 + (NSString *)pathForSharedSandboxCacheDirectory:(NSString *)directory {
+    return [[self urlForSharedSandboxCacheDirectory:directory] path];
+}
+
++ (NSURL *)urlForSharedSandboxCacheDirectory:(NSString *)directory {
     NSString *cacheDirectory = @"Library/Cache/";
-    NSString *targetDirectory = [cacheDirectory stringByAppendingString:directory];
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-    NSString *destinationPath = [[[fileManager containerURLForSecurityApplicationGroupIdentifier:@"group.mega.ios"] URLByAppendingPathComponent:targetDirectory] path];
-    if (![fileManager fileExistsAtPath:destinationPath]) {
-        [fileManager createDirectoryAtPath:destinationPath withIntermediateDirectories:YES attributes:nil error:nil];
-    }
-    return destinationPath;
+    NSURL *containerURL = [[NSFileManager defaultManager] containerURLForSecurityApplicationGroupIdentifier:@"group.mega.ios"];
+    NSURL *destinationURL = [[containerURL URLByAppendingPathComponent:cacheDirectory isDirectory:YES] URLByAppendingPathComponent:directory isDirectory:YES];
+    [[NSFileManager defaultManager] createDirectoryAtURL:destinationURL withIntermediateDirectories:YES attributes:nil error:nil];
+    return destinationURL;
 }
 
 #pragma mark - Utils for transfers
@@ -1145,8 +1146,21 @@ static MEGAIndexer *indexer;
     return spaceHeight;
 }
 
++ (CGFloat)spaceHeightForEmptyStateWithDescription {
+    CGFloat spaceHeight = 20.0f;
+    if (UIInterfaceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation]) && [[UIDevice currentDevice] iPhoneDevice]) {
+        spaceHeight = 11.0f;
+    }
+    
+    return spaceHeight;
+}
+
 + (NSDictionary *)titleAttributesForEmptyState {
     return @{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:18.0f], NSForegroundColorAttributeName:UIColor.mnz_black333333};
+}
+
++ (NSDictionary *)descriptionAttributesForEmptyState {
+    return @{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:14.0f], NSForegroundColorAttributeName:UIColor.mnz_gray777777};
 }
 
 + (NSDictionary *)buttonTextAttributesForEmptyState {
@@ -1215,6 +1229,7 @@ static MEGAIndexer *indexer;
 #pragma mark - Logout
 
 + (void)logout {
+    [NSNotificationCenter.defaultCenter postNotificationName:MEGALogoutNotification object:self];
     [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
     [Helper cancelAllTransfers];
     
@@ -1222,14 +1237,14 @@ static MEGAIndexer *indexer;
     
     [Helper deleteUserData];
     [Helper deleteMasterKey];
-            
-    [Helper resetCameraUploadsSettings];
+
     [Helper resetUserData];
     
     [Helper deletePasscode];
 }
 
-+ (void)logoutFromConfirmAccount {    
++ (void)logoutFromConfirmAccount {
+    [NSNotificationCenter.defaultCenter postNotificationName:MEGALogoutNotification object:self];
     [Helper cancelAllTransfers];
     
     [Helper clearSession];
@@ -1237,7 +1252,6 @@ static MEGAIndexer *indexer;
     [Helper deleteUserData];
     [Helper deleteMasterKey];
     
-    [Helper resetCameraUploadsSettings];
     [Helper resetUserData];
     
     [Helper deletePasscode];
@@ -1317,11 +1331,11 @@ static MEGAIndexer *indexer;
         }
     }
     
+    [MEGAStore.shareInstance.storeStack deleteStoreWithError:nil];
+    
     // Delete files saved by extensions
     NSString *extensionGroup = [[NSFileManager defaultManager] containerURLForSecurityApplicationGroupIdentifier:@"group.mega.ios"].path;
     [NSFileManager.defaultManager mnz_removeFolderContentsAtPath:extensionGroup];
-    
-    [[MEGAStore shareInstance] configureMEGAStore];
     
     // Delete Spotlight index
     [[CSSearchableIndex defaultSearchableIndex] deleteSearchableItemsWithDomainIdentifiers:@[@"nodes"] completionHandler:^(NSError * _Nullable error) {
@@ -1347,8 +1361,6 @@ static MEGAIndexer *indexer;
     
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"TransfersPaused"];
     
-    [NSUserDefaults.standardUserDefaults removeObjectForKey:kIsCameraUploadsEnabled];
-    [NSUserDefaults.standardUserDefaults removeObjectForKey:kIsUploadVideosEnabled];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"IsSavePhotoToGalleryEnabled"];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"IsSaveVideoToGalleryEnabled"];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"ChatVideoQuality"];
@@ -1367,17 +1379,6 @@ static MEGAIndexer *indexer;
     [sharedUserDefaults removeObjectForKey:@"IsChatEnabled"];
     [sharedUserDefaults removeObjectForKey:@"logging"];
     [sharedUserDefaults synchronize];
-}
-
-+ (void)resetCameraUploadsSettings {
-    [[NSUserDefaults standardUserDefaults] removeObjectForKey:kLastUploadPhotoDate];
-    [CameraUploads syncManager].lastUploadPhotoDate = [NSDate dateWithTimeIntervalSince1970:0];
-    
-    [[NSUserDefaults standardUserDefaults] removeObjectForKey:kLastUploadVideoDate];
-    [CameraUploads syncManager].lastUploadVideoDate = [NSDate dateWithTimeIntervalSince1970:0];
-
-    [[CameraUploads syncManager] setIsCameraUploadsEnabled:NO];
-    [[NSUserDefaults standardUserDefaults] removeObjectForKey:kCameraUploadsNodeHandle];
 }
 
 + (void)deletePasscode {
