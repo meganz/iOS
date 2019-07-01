@@ -1809,7 +1809,7 @@
 /* The text of a notification indicating that a file or folder that was taken down has now been restored due to a successful counter-notice. The %1 placeholder will be replaced with the text ‘file’ or ‘folder’. The %2 will be replaced with the name of the file or folder. */
 "Your taken down %1 (%2) has been reinstated."="您 %1 (%2) 之刪除已復原。";
 /* Text shown when a notification or the last message of a chat corresponds to a voice clip */
-"Voice message"="Voice message";
+"Voice message"="語音留言";
 /* Error message shown to user when a copy/import operation would take them over their storage limit. */
 "This action can not be completed as it would take you over your current storage limit"="因將超出目前的儲存空間限制，此操作無法完成";
 /* uploads over storage quota warning dialog title */
@@ -1827,19 +1827,19 @@
 /* */
 "Yesterday"="昨天";
 /* Title of the button to share a location in a chat */
-"Send This Location"="Send This Location";
+"Send This Location"="發送這個位置";
 /* Title of the alert that allows change between different maps: Standard, Satellite or Hybrid. */
-"Map settings"="Map settings";
+"Map settings"="地圖設定";
 /* Type of data displayed in a map view. A street map that shows the position of all roads and some road names. */
 "Standard"="標準模式";
 /* Type of data displayed in a map view. Satellite imagery of the area. */
-"Satellite"="Satellite";
+"Satellite"="衛星";
 /* Type of data displayed in a map view. A satellite image of the area with road and road name information layered on top. */
-"Hybrid"="Hybrid";
+"Hybrid"="混合";
 /* Label to give feedback to the user when he is going to share his location, indicating that it may not be the exact location. */
-"Accurate to %d meters"="Accurate to %d meters";
+"Accurate to %d meters"="精準到%d公尺";
 /* Alert title shown when the user opens a shared Geolocation for the first time from any client, we will show a confirmation dialog warning the user that he is now leaving the E2EE paradigm. */
-"Send Location"="Send Location";
+"Send Location"="發送位置";
 /* Message shown when the user opens a shared Geolocation for the first time from any client, we will show a confirmation dialog warning the user that he is now leaving the E2EE paradigm. */
 "This location will be opened using a third party maps provider outside the end-to-end encrypted MEGA platform."="此位置將使用第三方地圖供應商開啟，供應商不屬於端對端加密MEGA平台。";
 /* Text shown in location-type messages */
@@ -1853,7 +1853,7 @@
 /* Tooltip shown when the user presses but does not hold the microphone icon to send a voice clip */
 "Tap and hold %@ to record, release to send"="點擊並按住%@以進行錄製，並發佈送出";
 /* Message shown when there is an ongoing call and the user tries to record a voice message */
-"It is not possible to record voice messages while there is a call in progress"="It is not possible to record voice messages while there is a call in progress";
+"It is not possible to record voice messages while there is a call in progress"="正在通話時無法錄製語音留言。";
 /* Text to inform the user there is an active call and is not participating */
 "Ongoing Call"="正在進行中的通話";
 /* Message shown when there is an ongoing call and the user tries to play an audio or video */
@@ -1907,21 +1907,21 @@
 /* Text explaining users how the chat links work. */
 "People can join your group by using this link."="人們可以使用此連結加入您的群組。";
 /* Subtitle shown in a chat to inform where to tap to enter in the chat details view */
-"Tap here for info"="Tap here for info";
+"Tap here for info"="點按此處獲取更多訊息";
 /* In some cases, a user may try to get the link for a chat room, but if such is not set by an operator - it would say "not link available" and not auto create it. */
 "No chat link available."="沒有可用的聊天連結。";
 /* Title of a dialog in which we request access to a specific permission, like the Location Services */
-"Please allow access"="Please allow access";
+"Please allow access"="請允許存取權限";
 /* Hint shown to the users, when they want to use the Location Services but they are disabled or restricted for MEGA */
-"Please go to the Privacy section in your device’s Setting. Enable Location Services and set MEGA to While Using the App or Always."="Please go to the Privacy section in your device’s Setting. Enable Location Services and set MEGA to While Using the App or Always.";
+"Please go to the Privacy section in your device’s Setting. Enable Location Services and set MEGA to While Using the App or Always."="請到您裝置設定的隱私權選項。啟用定位服務並設定MEGA為使用App期間或永遠。";
 /* Location Usage Description. In order to protect user's privacy, Apple requires a specific string explaining why location will be accessed. */
-"MEGA accesses your location when you elect to share it with your contacts."="MEGA accesses your location when you elect to share it with your contacts.";
+"MEGA accesses your location when you elect to share it with your contacts."="此位置將使用點對點加密MEGA平台以外的第三方地圖供應商開啟。";
 /* Information shown when the user has disabled the 'Mobile Data' setting for MEGA in the iOS Settings. */
-"Mobile Data is turned off"="Mobile Data is turned off";
+"Mobile Data is turned off"="行動數據已關閉";
 /* Button title to go to the iOS Settings to enable 'Mobile Data' for the MEGA app. */
-"Turn Mobile Data on"="Turn Mobile Data on";
+"Turn Mobile Data on"="行動數據已開啟";
 /* Extra information shown when the user has disabled the 'Mobile Data' setting for MEGA in the iOS Settings. */
-"You can turn on mobile data for this app in Settings."="You can turn on mobile data for this app in Settings.";
+"You can turn on mobile data for this app in Settings."="您可以在設定中為此App開啟行動數據";
 /* title of the alert dialog when the user is changing the API URL to staging */
 "Change to a test server?"="更改為測試伺服器？";
 /* text of the alert dialog when the user is changing the API URL to staging */
