@@ -23,9 +23,6 @@
 #import "ShareAttachment.h"
 #import "ShareFilesDestinationTableViewController.h"
 
-#define kAppKey @"EVtjzb7R"
-#define kUserAgent @"MEGAiOS"
-
 #define MNZ_ANIMATION_TIME 0.35
 
 @interface ShareViewController () <MEGARequestDelegate, MEGATransferDelegate, MEGAChatRoomDelegate, LTHPasscodeViewControllerDelegate>
@@ -86,10 +83,6 @@
     self.passcodePresented = NO;
     self.passcodeToBePresented = NO;
     self.semaphore = dispatch_semaphore_create(0);
-    
-    [MEGASdkManager setAppKey:kAppKey];
-    NSString *userAgent = [NSString stringWithFormat:@"%@/%@", kUserAgent, [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"]];
-    [MEGASdkManager setUserAgent:userAgent];
     [self languageCompatibility];
     
 #ifdef DEBUG

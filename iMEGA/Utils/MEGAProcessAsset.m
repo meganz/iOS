@@ -10,7 +10,7 @@
 
 #import "SDAVAssetExportSession.h"
 #import "UIApplication+MNZCategory.h"
-
+#import "PHAsset+CameraUpload.h"
 #import "NSString+MNZCategory.h"
 
 static void *ProcessAssetProgressContext = &ProcessAssetProgressContext;
@@ -520,32 +520,7 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
         return @"jpg";
     }
     
-    NSString *extension;
-    
-    NSURL *url = [info objectForKey:@"PHImageFileURLKey"];
-    if (url) {
-        extension = url.path.pathExtension;
-    } else {
-        NSString *imageFileSandbox = [info objectForKey:@"PHImageFileSandboxExtensionTokenKey"];
-        extension = imageFileSandbox.pathExtension;
-    }
-    
-    if (!extension) {
-        switch (asset.mediaType) {
-            case PHAssetMediaTypeImage:
-                extension = @"jpg";
-                break;
-                
-            case PHAssetMediaTypeVideo:
-                extension = @"mov";
-                break;
-                
-            default:
-                break;
-        }
-    }
-    
-    return extension.lowercaseString;
+    return [asset mnz_fileExtensionFromAssetInfo:info];
 }
 
 - (void)proccessImageData:(NSData *)imageData asset:(PHAsset *)asset withInfo:(NSDictionary *)info {
