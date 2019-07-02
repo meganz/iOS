@@ -207,6 +207,9 @@
     if ([self.delegate respondsToSelector:@selector(photoBrowser:didPresentNode:)]) {
         [self.delegate photoBrowser:self didPresentNode:[self.mediaNodes objectAtIndex:self.currentIndex]];
     }
+    if ([self.delegate respondsToSelector:@selector(photoBrowser:didPresentNodeAtIndex:)]) {
+        [self.delegate photoBrowser:self didPresentNodeAtIndex:self.currentIndex];
+    }
 }
 
 - (void)reloadTitle {
@@ -266,6 +269,18 @@
     }
 }
 
+- (void)dismissViewControllerAnimated:(BOOL)flag completion:(void (^)(void))completion {
+    [super dismissViewControllerAnimated:flag completion:^{
+        if ([self.delegate respondsToSelector:@selector(didDismissPhotoBrowser:)]) {
+            [self.delegate didDismissPhotoBrowser:self];
+        }
+        
+        if (completion) {
+            completion();
+        }
+    }];
+}
+
 #pragma mark - UIScrollViewDelegate
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
@@ -279,6 +294,9 @@
             if ([self.delegate respondsToSelector:@selector(photoBrowser:didPresentNode:)]) {
                 [self.delegate photoBrowser:self didPresentNode:[self.mediaNodes objectAtIndex:self.currentIndex]];
             }
+            if ([self.delegate respondsToSelector:@selector(photoBrowser:didPresentNodeAtIndex:)]) {
+                [self.delegate photoBrowser:self didPresentNodeAtIndex:self.currentIndex];
+            }
         }
         [self fixFrames];
     }
@@ -289,8 +307,8 @@
         if (self.pieChartView.alpha > 0.0f) {
             self.pieChartView.alpha = 0.0f;
         }
-        CGFloat newIndexFloat = (scrollView.contentOffset.x + self.gapBetweenPages) / scrollView.frame.size.width;
-        NSUInteger newIndex = floor(newIndexFloat);
+        
+        NSUInteger newIndex = floor(scrollView.contentOffset.x + self.gapBetweenPages) / scrollView.frame.size.width;
         if (newIndex != self.currentIndex && newIndex < self.mediaNodes.count) {
             [self reloadTitleForIndex:newIndex];
             [self loadNearbyImagesFromIndex:newIndex];
@@ -310,7 +328,7 @@
     if (scrollView.tag != 1) {
         MEGANode *node = [self.mediaNodes objectAtIndex:self.currentIndex];
         if (node.name.mnz_isImagePathExtension) {
-            NSString *temporaryImagePath = [self temporatyPathForNode:node createDirectories:NO];
+            NSString *temporaryImagePath = [node mnz_temporaryPathForDownloadCreatingDirectories:NO];
             if (![[NSFileManager defaultManager] fileExistsAtPath:temporaryImagePath]) {
                 [self setupNode:node forImageView:(FLAnimatedImageView *)view withMode:MEGAPhotoModeOriginal];
             }
@@ -348,7 +366,7 @@
             imageView.contentMode = UIViewContentModeScaleAspectFit;
             
             MEGANode *node = [self.mediaNodes objectAtIndex:i];
-            NSString *temporaryImagePath = [self temporatyPathForNode:node createDirectories:NO];
+            NSString *temporaryImagePath = [node mnz_temporaryPathForDownloadCreatingDirectories:NO];
             if (node.name.mnz_isImagePathExtension && [[NSFileManager defaultManager] fileExistsAtPath:temporaryImagePath]) {
                 if ([node.name.pathExtension isEqualToString:@"gif"]) {
                     imageView.animatedImage = [FLAnimatedImage animatedImageWithGIFData:[NSData dataWithContentsOfURL:[NSURL fileURLWithPath:temporaryImagePath]]];
@@ -480,9 +498,9 @@
             break;
             
         case MEGAPhotoModeOriginal: {
-            MEGAStartDownloadTransferDelegate *delegate = [[MEGAStartDownloadTransferDelegate alloc] initWithProgress:transferProgress completion:transferCompletion];
-            NSString *temporaryImagePath = [self temporatyPathForNode:node createDirectories:YES];
-            [self.api startDownloadNode:node localPath:temporaryImagePath appData:nil delegate:delegate];
+            MEGAStartDownloadTransferDelegate *delegate = [[MEGAStartDownloadTransferDelegate alloc] initWithProgress:transferProgress completion:transferCompletion onError:nil];
+            NSString *temporaryImagePath = [node mnz_temporaryPathForDownloadCreatingDirectories:YES];
+            [MEGASdkManager.sharedMEGASdk startDownloadNode:[self.api authorizeNode:node] localPath:temporaryImagePath appData:nil delegate:delegate];
 
             break;
         }
@@ -502,20 +520,6 @@
             [subview removeFromSuperview];
         }
     }
-}
-
-- (NSString *)temporatyPathForNode:(MEGANode *)node createDirectories:(BOOL)createDirectories {
-    NSString *nodeFolderPath = [NSTemporaryDirectory() stringByAppendingPathComponent:[node base64Handle]];
-    NSString *nodeFilePath = [nodeFolderPath stringByAppendingPathComponent:node.name];
-
-    NSError *error;
-    if (createDirectories && ![[NSFileManager defaultManager] fileExistsAtPath:nodeFolderPath isDirectory:nil]) {
-        if (![[NSFileManager defaultManager] createDirectoryAtPath:nodeFolderPath withIntermediateDirectories:YES attributes:nil error:&error]) {
-            MEGALogError(@"Create directory at path failed with error: %@", error);
-        }
-    }
-    
-    return nodeFilePath;
 }
 
 - (void)resizeImageView:(UIImageView *)imageView {
@@ -570,16 +574,11 @@
 #pragma mark - IBActions
 
 - (IBAction)didPressCloseButton:(UIBarButtonItem *)sender {
-    MEGANode *node = [self.mediaNodes objectAtIndex:self.currentIndex];
     UIScrollView *zoomableView = [self.imageViewsCache objectForKey:@(self.currentIndex)];
     self.targetImageView = zoomableView.subviews.firstObject;
     [self toggleTransparentInterfaceForDismissal:YES];
 
-    [self dismissViewControllerAnimated:YES completion:^{
-        if ([self.delegate respondsToSelector:@selector(photoBrowser:willDismissWithNode:)]) {
-            [self.delegate photoBrowser:self willDismissWithNode:node];
-        }
-    }];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (IBAction)didPressActionsButton:(UIBarButtonItem *)sender {
@@ -660,7 +659,6 @@
 #pragma mark - Gesture recognizers
 
 - (void)panGesture:(UIPanGestureRecognizer *)panGestureRecognizer {
-    MEGANode *node = [self.mediaNodes objectAtIndex:self.currentIndex];
     UIScrollView *zoomableView = [self.imageViewsCache objectForKey:@(self.currentIndex)];
     if (zoomableView.zoomScale > 1.0f) {
         return;
@@ -690,11 +688,7 @@
         case UIGestureRecognizerStateEnded:
         case UIGestureRecognizerStateCancelled: {
             if (ABS(verticalIncrement) > 50.0f) {
-                [self dismissViewControllerAnimated:YES completion:^{
-                    if ([self.delegate respondsToSelector:@selector(photoBrowser:willDismissWithNode:)]) {
-                        [self.delegate photoBrowser:self willDismissWithNode:node];
-                    }
-                }];
+                [self dismissViewControllerAnimated:YES completion:nil];
             } else {
                 [UIView animateWithDuration:0.3 animations:^{
                     self.targetImageView.frame = self.panGestureInitialFrame;
@@ -1001,9 +995,6 @@
     [self toggleTransparentInterfaceForDismissal:YES];
 
     [self dismissViewControllerAnimated:YES completion:^{
-        if ([self.delegate respondsToSelector:@selector(photoBrowser:willDismissWithNode:)]) {
-            [self.delegate photoBrowser:self willDismissWithNode:node];
-        }
         UIViewController *visibleViewController = UIApplication.mnz_presentingViewController;
         if ([visibleViewController isKindOfClass:MainTabBarController.class]) {
             NSArray *parentTreeArray = node.mnz_parentTreeArray;

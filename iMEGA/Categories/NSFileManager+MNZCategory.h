@@ -3,6 +3,11 @@
 
 @interface NSFileManager (MNZCategory)
 
+/**
+ amount of free space on the file system in bytes
+ */
+@property (readonly) unsigned long long mnz_fileSystemFreeSize;
+
 #pragma mark - Paths
 
 - (NSString *)downloadsDirectory;
@@ -15,5 +20,7 @@
 - (void)mnz_removeFolderContentsAtPath:(NSString *)folderPath forItemsContaining:(NSString *)filesContaining;
 - (void)mnz_removeFolderContentsRecursivelyAtPath:(NSString *)folderPath forItemsContaining:(NSString *)itemsContaining;
 - (void)mnz_removeFolderContentsRecursivelyAtPath:(NSString *)folderPath forItemsExtension:(NSString *)itemsExtension;
+
+- (void)mnz_moveItemAtPath:(NSString *)srcPath toPath:(NSString *)dstPath;
 
 @end

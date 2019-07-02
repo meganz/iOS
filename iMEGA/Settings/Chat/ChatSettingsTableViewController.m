@@ -11,7 +11,7 @@
 #import "ChatStatusTableViewController.h"
 #import "ChatVideoUploadQuality.h"
 
-@interface ChatSettingsTableViewController () <DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGARequestDelegate, MEGAChatDelegate, MEGAChatRequestDelegate>
+@interface ChatSettingsTableViewController () <MEGARequestDelegate, MEGAChatDelegate, MEGAChatRequestDelegate>
 
 @property (weak, nonatomic) IBOutlet UILabel *chatLabel;
 @property (weak, nonatomic) IBOutlet UISwitch *chatSwitch;
@@ -26,9 +26,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *richPreviewsLabel;
 @property (weak, nonatomic) IBOutlet UISwitch *richPreviewsSwitch;
 
-@property (weak, nonatomic) IBOutlet UILabel *useMobileDataLabel;
-@property (weak, nonatomic) IBOutlet UISwitch *useMobileDataSwitch;
-
 @end
 
 @implementation ChatSettingsTableViewController
@@ -38,9 +35,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.tableView.emptyDataSetSource = self;
-    self.tableView.emptyDataSetDelegate = self;
-    
     self.navigationItem.title = AMLocalizedString(@"chat", @"Chat section header");
     
     self.chatLabel.text = AMLocalizedString(@"chat", @"Chat section header");
@@ -49,20 +43,10 @@
     
     self.richPreviewsLabel.text = AMLocalizedString(@"richUrlPreviews", @"Title used in settings that enables the generation of link previews in the chat");
     
-    self.useMobileDataLabel.text = AMLocalizedString(@"useMobileData", @"Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature.");
-    
     self.videoQualityLabel.text = AMLocalizedString(@"videoQuality", @"Title that refers to the status of the chat (Either Online or Offline)");
         
     BOOL isChatEnabled = [NSUserDefaults.standardUserDefaults boolForKey:@"IsChatEnabled"];
     [self.chatSwitch setOn:isChatEnabled animated:YES];
-    if (isChatEnabled) {
-        BOOL isMobileDataEnabledForChat = [[NSUserDefaults standardUserDefaults] boolForKey:@"IsMobileDataEnabledForChat"];
-        [self.useMobileDataSwitch setOn:isMobileDataEnabledForChat animated:YES];
-    } else {
-        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"IsMobileDataEnabledForChat"];
-        [[NSUserDefaults standardUserDefaults] synchronize];
-        [self.useMobileDataSwitch setOn:NO animated:YES];
-    }
     
     self.richPreviewsSwitch.on = [NSUserDefaults.standardUserDefaults boolForKey:@"richLinks"];
     
@@ -83,6 +67,8 @@
     [self onlineStatus];
     
     [self videoQualityString];
+    
+    [self setUIElementsEnabled:MEGAReachabilityManager.isReachable];
     
     [self.tableView reloadData];
 }
@@ -140,17 +126,16 @@
     [[MEGASdkManager sharedMEGASdk] enableRichPreviews:sender.isOn];
 }
 
-- (IBAction)useMobileDataValueChanged:(UISwitch *)sender {
-    MEGALogInfo(@"Chat - Mobile Data: %@", (sender.isOn ? @"ON" : @"OFF"));
-    
-    [[NSUserDefaults standardUserDefaults] setBool:sender.isOn forKey:@"IsMobileDataEnabledForChat"];
-    [[NSUserDefaults standardUserDefaults] synchronize];
-}
-
 #pragma mark - Private
 
 - (void)internetConnectionChanged {
-    [self.tableView reloadData];
+    [self setUIElementsEnabled:MEGAReachabilityManager.isReachable];
+}
+
+- (void)setUIElementsEnabled:(BOOL)boolValue {
+    self.chatLabel.enabled = self.chatSwitch.enabled = boolValue;
+    self.statusLabel.enabled = self.statusRightDetailLabel.enabled = boolValue;
+    self.richPreviewsLabel.enabled = self.richPreviewsSwitch.enabled = boolValue;
 }
 
 - (void)onlineStatus {
@@ -208,7 +193,6 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     NSInteger numberOfSections = 1;
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"IsChatEnabled"]) {
-        //TODO: Enable "Use Mobile Data" section when possible
         numberOfSections = 4;
     }
     
@@ -216,12 +200,7 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    NSInteger numberOfRows = 0;
-    if ([MEGAReachabilityManager isReachable]) {
-        numberOfRows = 1;
-    }
-    
-    return numberOfRows;
+    return 1;
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
@@ -251,33 +230,6 @@
         ChatStatusTableViewController *chatStatusTVC = [[UIStoryboard storyboardWithName:@"ChatSettings" bundle:nil] instantiateViewControllerWithIdentifier:@"ChatStatusTableViewControllerID"];
         [self.navigationController pushViewController:chatStatusTVC animated:YES];
     }
-}
-
-#pragma mark - DZNEmptyDataSetSource
-
-- (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView {
-    NSString *text = @"";
-    if (![MEGAReachabilityManager isReachable]) {
-        text = AMLocalizedString(@"noInternetConnection",  @"Text shown on the app when you don't have connection to the internet or when you have lost it");
-    }
-    
-    return [[NSAttributedString alloc] initWithString:text attributes:[Helper titleAttributesForEmptyState]];
-}
-
-- (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView {
-    if (![MEGAReachabilityManager isReachable]) {
-        return [UIImage imageNamed:@"noInternetEmptyState"];
-    }
-    
-    return nil;
-}
-
-- (CGFloat)verticalOffsetForEmptyDataSet:(UIScrollView *)scrollView {
-    return [Helper verticalOffsetForEmptyStateWithNavigationBarSize:self.navigationController.navigationBar.frame.size searchBarActive:NO];
-}
-
-- (CGFloat)spaceHeightForEmptyDataSet:(UIScrollView *)scrollView {
-    return [Helper spaceHeightForEmptyState];
 }
 
 #pragma mark - MEGAChatDelegate

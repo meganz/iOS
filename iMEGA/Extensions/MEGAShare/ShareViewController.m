@@ -23,9 +23,6 @@
 #import "ShareAttachment.h"
 #import "ShareFilesDestinationTableViewController.h"
 
-#define kAppKey @"EVtjzb7R"
-#define kUserAgent @"MEGAiOS"
-
 #define MNZ_ANIMATION_TIME 0.35
 
 @interface ShareViewController () <MEGARequestDelegate, MEGATransferDelegate, MEGAChatRoomDelegate, LTHPasscodeViewControllerDelegate>
@@ -86,10 +83,6 @@
     self.passcodePresented = NO;
     self.passcodeToBePresented = NO;
     self.semaphore = dispatch_semaphore_create(0);
-    
-    [MEGASdkManager setAppKey:kAppKey];
-    NSString *userAgent = [NSString stringWithFormat:@"%@/%@", kUserAgent, [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"]];
-    [MEGASdkManager setUserAgent:userAgent];
     [self languageCompatibility];
     
 #ifdef DEBUG
@@ -307,6 +300,9 @@
         MEGAChatInit chatInit = [[MEGASdkManager sharedMEGAChatSdk] initState];
         if (chatInit == MEGAChatInitNotDone) {
             chatInit = [[MEGASdkManager sharedMEGAChatSdk] initKarereWithSid:self.session];
+            if (chatInit == MEGAChatInitWaitingNewSession || chatInit == MEGAChatInitOfflineSession) {
+                [[MEGASdkManager sharedMEGAChatSdk] resetClientId];
+            }
             if (chatInit == MEGAChatInitError) {
                 MEGALogError(@"Init Karere with session failed");
                 [[MEGASdkManager sharedMEGAChatSdk] logout];
@@ -885,7 +881,6 @@ void uncaughtExceptionHandler(NSException *exception) {
 }
 
 - (void)alertIfNeededAndDismiss {
-    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
     [SVProgressHUD dismiss];
     
     for (NSNumber *chatIdNumber in self.openedChatIds) {
@@ -907,9 +902,12 @@ void uncaughtExceptionHandler(NSException *exception) {
         }]];
         [self presentViewController:alertController animated:YES completion:nil];
     } else {
-        [self dismissWithCompletionHandler:^{
-            [self.extensionContext completeRequestReturningItems:@[] completionHandler:nil];
-        }];
+        [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"Shared successfully", @"Success message shown when the user has successfully shared something")];
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [self dismissWithCompletionHandler:^{
+                [self.extensionContext completeRequestReturningItems:@[] completionHandler:nil];
+            }];
+        });
     }
     dispatch_semaphore_signal(self.semaphore);
 }

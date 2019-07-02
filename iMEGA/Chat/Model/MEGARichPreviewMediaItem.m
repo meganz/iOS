@@ -132,26 +132,31 @@
             dialogView.iconImageView.hidden = YES;
         }
         dialogView.richViewHeightConstraint.constant = 10.0f + [self richPreviewInfoHeight] + 10.0f;
-    } else if (self.message.node) {
-        URLType type = [self.message.MEGALink mnz_type];
-        dialogView.contentTextView.text = self.message.content;
-        dialogView.titleLabel.text = self.message.node.name;
-        dialogView.descriptionLabel.text = [Helper memoryStyleStringFromByteCount:self.message.richNumber.longLongValue];
-        dialogView.linkLabel.text = @"mega.nz";
+    } else {
+        URLType type = self.message.MEGALink.mnz_type;
         if (type == URLTypeFileLink) {
+            dialogView.contentTextView.text = self.message.content;
+            dialogView.titleLabel.text = self.message.node.name;
+            dialogView.descriptionLabel.text = [Helper memoryStyleStringFromByteCount:self.message.richNumber.longLongValue];
+            dialogView.linkLabel.text = @"mega.nz";
             [dialogView.imageImageView mnz_setThumbnailByNode:self.message.node];
+            dialogView.iconImageView.image = [UIImage imageNamed:@"favicon"];
         } else if (type == URLTypeFolderLink) {
+            dialogView.contentTextView.text = self.message.content;
+            dialogView.titleLabel.text = self.message.richTitle;
+            dialogView.descriptionLabel.text = [Helper memoryStyleStringFromByteCount:self.message.richNumber.longLongValue];
+            dialogView.linkLabel.text = @"mega.nz";
             dialogView.imageImageView.image = [Helper folderImage];
             dialogView.descriptionLabel.text = [NSString stringWithFormat:@"%@\n%@", self.message.richString, dialogView.descriptionLabel.text];
+            dialogView.iconImageView.image = [UIImage imageNamed:@"favicon"];
+        } else if (type == URLTypePublicChatLink) {
+            dialogView.contentTextView.text = self.message.content;
+            dialogView.imageImageView.image = [UIImage imageNamed:@"groupChat"];
+            dialogView.titleLabel.text = self.message.richString;
+            dialogView.descriptionLabel.text = [NSString stringWithFormat:@"%lld %@", self.message.richNumber.longLongValue, AMLocalizedString(@"participants", @"Label to describe the section where you can see the participants of a group chat")];
+            dialogView.iconImageView.image = [UIImage imageNamed:@"favicon"];
+            dialogView.linkLabel.text = @"mega.nz";
         }
-        dialogView.iconImageView.image = [UIImage imageNamed:@"favicon"];
-    } else if (self.message.richNumber) {
-        dialogView.contentTextView.text = self.message.content;
-        dialogView.imageImageView.image = [UIImage imageNamed:@"groupChat"];
-        dialogView.titleLabel.text = self.message.richString;
-        dialogView.descriptionLabel.text = [NSString stringWithFormat:@"%lld %@", self.message.richNumber.longLongValue, AMLocalizedString(@"participants", @"Label to describe the section where you can see the participants of a group chat")];
-        dialogView.iconImageView.image = [UIImage imageNamed:@"favicon"];
-        dialogView.linkLabel.text = @"mega.nz";
     }
 
     // Bubble:

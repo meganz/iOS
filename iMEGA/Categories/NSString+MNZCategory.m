@@ -10,6 +10,7 @@
 
 #import "NSDate+MNZCategory.h"
 #import "MEGASdkManager.h"
+#import "MEGAUser+MNZCategory.h"
 
 static NSString* const A = @"[A]";
 static NSString* const B = @"[B]";
@@ -83,16 +84,16 @@ static NSString* const B = @"[B]";
 
 #pragma mark - appData
 
-- (NSString *)mnz_appDataToSaveCameraUploadsCount:(NSUInteger)operationCount {
-    return [self stringByAppendingString:[NSString stringWithFormat:@">CU=%tu", operationCount]];
-}
-
 - (NSString *)mnz_appDataToSaveInPhotosApp {
     return [self stringByAppendingString:@">SaveInPhotosApp"];
 }
 
-- (NSString *)mnz_appDataToAttachToChatID:(uint64_t)chatId {
-    return [self stringByAppendingString:[NSString stringWithFormat:@">attachToChatID=%llu", chatId]];
+- (NSString *)mnz_appDataToAttachToChatID:(uint64_t)chatId asVoiceClip:(BOOL)asVoiceClip {
+    if (asVoiceClip) {
+        return [self stringByAppendingString:[NSString stringWithFormat:@">attachVoiceClipToChatID=%llu", chatId]];
+    } else {
+        return [self stringByAppendingString:[NSString stringWithFormat:@">attachToChatID=%llu", chatId]];
+    }
 }
 
 - (NSString *)mnz_appDataToSaveCoordinates:(NSString *)coordinates {
@@ -317,8 +318,8 @@ static NSString* const B = @"[B]";
     string = [string stringByReplacingOccurrencesOfString:@"[/A]" withString:@""];
     string = [string stringByReplacingOccurrencesOfString:@"[S]" withString:@""];
     string = [string stringByReplacingOccurrencesOfString:@"[/S]" withString:@""];
+    string = [string stringByReplacingOccurrencesOfString:@"<a href=\"terms\">" withString:@""];
     string = [string stringByReplacingOccurrencesOfString:@"<a href='terms'>" withString:@""];
-    string = [string stringByReplacingOccurrencesOfString:@"<a href=’terms’>" withString:@""];
     string = [string stringByReplacingOccurrencesOfString:@"</a>" withString:@""];
     
     return string;
@@ -750,6 +751,54 @@ static NSString* const B = @"[B]";
     }
     return lastSeenMessage;
 }
+    
++ (NSString *)mnz_convertCoordinatesLatitude:(float)latitude longitude:(float)longitude {        
+    NSInteger latSeconds = (NSInteger)(latitude * 3600);
+    NSInteger latDegrees = latSeconds / 3600;
+    latSeconds = ABS(latSeconds % 3600);
+    NSInteger latMinutes = latSeconds / 60;
+    latSeconds %= 60;
+    
+    NSInteger longSeconds = (NSInteger)(longitude * 3600);
+    NSInteger longDegrees = longSeconds / 3600;
+    longSeconds = ABS(longSeconds % 3600);
+    NSInteger longMinutes = longSeconds / 60;
+    longSeconds %= 60;
+    
+    NSString* result = [NSString stringWithFormat:@"%td°%td'%td\"%@ %td°%td'%td\"%@",
+                        ABS(latDegrees),
+                        latMinutes,
+                        latSeconds,
+                        latDegrees >= 0 ? @"N" : @"S",
+                        ABS(longDegrees),
+                        longMinutes,
+                        longSeconds,
+                        longDegrees >= 0 ? @"E" : @"W"];
+    
+    return result;
+}
+
++ (NSString *)mnz_addedByInRecentActionBucket:(MEGARecentActionBucket *)recentActionBucket nodesArray:(NSArray *)nodesArray {
+    NSString *addebByString;
+    
+    MEGAUser *user = [MEGASdkManager.sharedMEGASdk contactForEmail:recentActionBucket.userEmail];
+    NSString *userNameThatMadeTheAction = @"";
+    if (user) {
+        userNameThatMadeTheAction = user.mnz_firstName ? user.mnz_firstName : @"";
+    }
+    
+    if (recentActionBucket.isUpdate) {
+        addebByString = AMLocalizedString(@"%1 modified by %3", @"Title for a recent action shown in the webclient, see the attached image for context.");
+        addebByString = [addebByString stringByReplacingOccurrencesOfString:@"%1 " withString:@""];
+        addebByString = [addebByString stringByReplacingOccurrencesOfString:@"%3" withString:userNameThatMadeTheAction];
+    } else {
+        addebByString = AMLocalizedString(@"%1 created by %3", @"Title for a recent action shown in the webclient, see the attached image for context.");
+        addebByString = [addebByString stringByReplacingOccurrencesOfString:@"%1 " withString:@""];
+        addebByString = [addebByString stringByReplacingOccurrencesOfString:@"%3" withString:userNameThatMadeTheAction];
+    }
+    
+    return addebByString;
+}
 
 #pragma mark - File names and extensions
 
@@ -794,6 +843,11 @@ static NSString* const B = @"[B]";
     } while (listSize != 0);
     
     return [nameWithoutExtension stringByAppendingPathExtension:extension];
+}
+
+- (NSString *)mnz_stringByRemovingInvalidFileCharacters {
+    NSCharacterSet *set = [NSCharacterSet characterSetWithCharactersInString:@":/\\"];
+    return [[self componentsSeparatedByCharactersInSet:set] componentsJoinedByString:@""];
 }
 
 @end

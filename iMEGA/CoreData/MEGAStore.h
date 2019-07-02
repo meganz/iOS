@@ -8,16 +8,17 @@
 #import "MOFolderLayout+CoreDataProperties.h"
 #import "MOMessage+CoreDataProperties.h"
 #import "MOOfflineFolderLayout+CoreDataProperties.h"
+#import "MEGAStoreStack.h"
 
 @interface MEGAStore : NSObject
+
+#pragma mark - store stack
+
+@property (readonly) MEGAStoreStack *storeStack;
 
 #pragma mark - Singleton Lifecycle
 
 + (MEGAStore *)shareInstance;
-
-#pragma mark - Configure
-
-- (void)configureMEGAStore;
 
 #pragma mark - MOOfflineNode entity
 
