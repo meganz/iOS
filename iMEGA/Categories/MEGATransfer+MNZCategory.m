@@ -1,9 +1,6 @@
 
 #import "MEGATransfer+MNZCategory.h"
-
 #import <Photos/Photos.h>
-
-#import "CameraUploads.h"
 #import "Helper.h"
 #import "MEGANode+MNZCategory.h"
 #import "MEGASdkManager.h"
@@ -97,33 +94,21 @@
             
             if ([appDataType isEqualToString:@"attachToChatID"]) {
                 NSString *tempAppDataComponent = [appDataComponent stringByReplacingOccurrencesOfString:@"!" withString:@""];
-                [self mnz_attachtToChatID:tempAppDataComponent];
+                [self mnz_attachtToChatID:tempAppDataComponent asVoiceClip:NO];
+            }
+            
+            if ([appDataType isEqualToString:@"attachVoiceClipToChatID"]) {
+                NSString *tempAppDataComponent = [appDataComponent stringByReplacingOccurrencesOfString:@"!" withString:@""];
+                MEGANode *node = [MEGASdkManager.sharedMEGASdk nodeForHandle:self.nodeHandle];
+                if (node) {
+                    NSString *nodeFilePath = [node mnz_temporaryPathForDownloadCreatingDirectories:YES];
+                    [NSFileManager.defaultManager mnz_moveItemAtPath:self.path toPath:nodeFilePath];
+                }
+                [self mnz_attachtToChatID:tempAppDataComponent asVoiceClip:YES];
             }
             
             if ([appDataType isEqualToString:@"setCoordinates"]) {
                 [self mnz_setCoordinates:appDataComponent];
-            }
-        }
-    }
-}
-
-- (void)mnz_cancelPendingCUTransfer {
-    if ([self.appData containsString:@"CU"]) {
-        if ([CameraUploads syncManager].isCameraUploadsEnabled) {
-            if (![CameraUploads syncManager].isUseCellularConnectionEnabled && [MEGAReachabilityManager isReachableViaWWAN]) {
-                [[MEGASdkManager sharedMEGASdk] cancelTransfer:self];
-            }
-        } else {
-            [[MEGASdkManager sharedMEGASdk] cancelTransfer:self];
-        }
-    }
-}
-
-- (void)mnz_cancelPendingCUVideoTransfer {
-    if ([self.appData containsString:@"CU"]) {
-        if ([CameraUploads syncManager].isCameraUploadsEnabled) {
-            if (self.fileName.mnz_isVideoPathExtension) {
-                [[MEGASdkManager sharedMEGASdk] cancelTransfer:self];
             }
         }
     }
@@ -140,11 +125,15 @@
     [node mnz_copyToGalleryFromTemporaryPath:[NSHomeDirectory() stringByAppendingPathComponent:self.path]];
 }
 
-- (void)mnz_attachtToChatID:(NSString *)attachToChatID {
+- (void)mnz_attachtToChatID:(NSString *)attachToChatID asVoiceClip:(BOOL)asVoiceClip {
     NSArray *appDataComponentComponentsArray = [attachToChatID componentsSeparatedByString:@"="];
     NSString *chatID = [appDataComponentComponentsArray objectAtIndex:1];
     unsigned long long chatIdUll = strtoull(chatID.UTF8String, NULL, 0);
-    [[MEGASdkManager sharedMEGAChatSdk] attachNodeToChat:chatIdUll node:self.nodeHandle];
+    if (asVoiceClip) {
+        [[MEGASdkManager sharedMEGAChatSdk] attachVoiceMessageToChat:chatIdUll node:self.nodeHandle];
+    } else {
+        [[MEGASdkManager sharedMEGAChatSdk] attachNodeToChat:chatIdUll node:self.nodeHandle];
+    }
 }
 
 - (void)mnz_setNodeCoordinates {
@@ -165,6 +154,30 @@
     }
 }
 
+- (NSUInteger)mnz_orderByState {
+    NSUInteger orderByState;
+    
+    switch (self.state) {
+        case MEGATransferStateCompleting:
+            orderByState = 0;
+            break;
+            
+        case MEGATransferStateActive:
+            orderByState = 1;
+            break;
+            
+        case MEGATransferStateQueued:
+            orderByState = 2;
+            break;
+            
+        default:
+            orderByState = 3;
+            break;
+    }
+    
+    return orderByState;
+}
+
 #pragma mark - Private
 
 - (void)mnz_setCoordinates:(NSString *)coordinates {
@@ -176,7 +189,7 @@
         NSString *longitude = [setCoordinatesComponentsArray objectAtIndex:1];
         if (latitude && longitude) {
             MEGANode *node = [[MEGASdkManager sharedMEGASdk] nodeForHandle:self.nodeHandle];
-            [[MEGASdkManager sharedMEGASdk] setNodeCoordinates:node latitude:latitude.doubleValue longitude:longitude.doubleValue];
+            [[MEGASdkManager sharedMEGASdk] setNodeCoordinates:node latitude:@(latitude.doubleValue) longitude:@(longitude.doubleValue)];
         }
     }
 }

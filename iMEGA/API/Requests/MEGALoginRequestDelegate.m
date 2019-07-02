@@ -7,7 +7,6 @@
 #import "DevicePermissionsHelper.h"
 #import "InitialLaunchViewController.h"
 #import "Helper.h"
-#import "MEGAStore.h"
 #import "NSString+MNZCategory.h"
 #import "UIApplication+MNZCategory.h"
 
@@ -126,7 +125,6 @@
     if (!self.hasSession) {
         NSString *session = [api dumpSession];
         [SAMKeychain setPassword:session forService:@"MEGA" account:@"sessionV3"];
-        [[MEGAStore shareInstance] configureMEGAStore];
         
         LaunchViewController *launchVC;
         if (DevicePermissionsHelper.shouldSetupPermissions) {

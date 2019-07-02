@@ -4,7 +4,7 @@
 @implementation MEGAMessageDialogView
 
 - (IBAction)didTapButton:(UIButton *)sender {
-    [self.delegate dialogView:self chosedOption:(MEGAMessageDialogOption)sender.tag];
+    [self.delegate dialogView:self didChooseOption:(MEGAMessageDialogOption)sender.tag];
 }
 
 @end

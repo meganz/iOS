@@ -1,6 +1,8 @@
-#import <UIKit/UIKit.h>
+
 #import "JSQMessages.h"
+
 #import "MEGASdkManager.h"
+#import "ToolbarType.h"
 
 @interface MessagesViewController : JSQMessagesViewController <MEGAChatRoomDelegate>
 
@@ -10,5 +12,6 @@
 @property (class, nonatomic) NSMutableSet<NSString *> *tapForInfoSet;
 
 - (void)updateUnreadLabel;
+- (void)showOptionsForPeerWithHandle:(uint64_t)userHandle senderView:(UIView *)senderView;
 
 @end

@@ -25,9 +25,6 @@
 
     //White background for the view behind the table view
     self.tableView.backgroundView = UIView.alloc.init;
-    
-    self.tableView.estimatedRowHeight = 60.0;
-    self.tableView.rowHeight = UITableViewAutomaticDimension;
 }
 
 #pragma mark - Public
@@ -154,6 +151,7 @@
         case MEGANodeTypeFolder: {
             CloudDriveViewController *cloudDriveVC = [self.storyboard instantiateViewControllerWithIdentifier:@"CloudDriveID"];
             cloudDriveVC.parentNode = node;
+            cloudDriveVC.hideSelectorView = YES;
             
             if (self.cloudDrive.displayMode == DisplayModeRubbishBin) {
                 cloudDriveVC.displayMode = self.cloudDrive.displayMode;

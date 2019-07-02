@@ -21,7 +21,6 @@
 #import "MEGAStore.h"
 #import "MEGAUser+MNZCategory.h"
 
-#import "CameraUploads.h"
 #import "GetLinkActivity.h"
 #import "NodeTableViewCell.h"
 #import "OpenInActivity.h"
@@ -30,6 +29,7 @@
 #import "RemoveSharingActivity.h"
 #import "ShareFolderActivity.h"
 #import "SendToChatActivity.h"
+#import "MEGAConstants.h"
 
 static MEGAIndexer *indexer;
 
@@ -57,7 +57,6 @@ static MEGAIndexer *indexer;
                                  @"ru",
                                  @"th",
                                  @"tl",
-                                 @"tr",
                                  @"uk",
                                  @"vi",
                                  @"zh-Hans",
@@ -426,14 +425,15 @@ static MEGAIndexer *indexer;
 }
 
 + (NSString *)pathForSharedSandboxCacheDirectory:(NSString *)directory {
+    return [[self urlForSharedSandboxCacheDirectory:directory] path];
+}
+
++ (NSURL *)urlForSharedSandboxCacheDirectory:(NSString *)directory {
     NSString *cacheDirectory = @"Library/Cache/";
-    NSString *targetDirectory = [cacheDirectory stringByAppendingString:directory];
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-    NSString *destinationPath = [[[fileManager containerURLForSecurityApplicationGroupIdentifier:@"group.mega.ios"] URLByAppendingPathComponent:targetDirectory] path];
-    if (![fileManager fileExistsAtPath:destinationPath]) {
-        [fileManager createDirectoryAtPath:destinationPath withIntermediateDirectories:YES attributes:nil error:nil];
-    }
-    return destinationPath;
+    NSURL *containerURL = [[NSFileManager defaultManager] containerURLForSecurityApplicationGroupIdentifier:@"group.mega.ios"];
+    NSURL *destinationURL = [[containerURL URLByAppendingPathComponent:cacheDirectory isDirectory:YES] URLByAppendingPathComponent:directory isDirectory:YES];
+    [[NSFileManager defaultManager] createDirectoryAtURL:destinationURL withIntermediateDirectories:YES attributes:nil error:nil];
+    return destinationURL;
 }
 
 #pragma mark - Utils for transfers
@@ -686,30 +686,14 @@ static MEGAIndexer *indexer;
     return folderSize;
 }
 
-+ (uint64_t)freeDiskSpace {
-    uint64_t totalFreeSpace = 0;
-    NSError *error;
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSDictionary *dictionary = [[NSFileManager defaultManager] attributesOfFileSystemForPath:[paths lastObject] error:&error];
-    
-    if (dictionary) {
-        NSNumber *freeFileSystemSizeInBytes = [dictionary objectForKey:NSFileSystemFreeSize];
-        totalFreeSpace = [freeFileSystemSizeInBytes unsignedLongLongValue];
-    } else {
-        MEGALogError(@"Obtaining System Memory Info failed with error: %@", error);
-    }
-    
-    return totalFreeSpace;
-}
-
 + (void)changeApiURL {
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"pointToStaging"]) {
         [[MEGASdkManager sharedMEGASdk] changeApiUrl:@"https://g.api.mega.co.nz/" disablepkp:NO];
         [[MEGASdkManager sharedMEGASdkFolder] changeApiUrl:@"https://g.api.mega.co.nz/" disablepkp:NO];
         [Helper apiURLChanged];
     } else {
-        NSString *alertTitle = @"Change to a testing server?";
-        NSString *alertMessage = @"Are you sure you want to change to a test server? Your account may run irrecoverable problems";
+        NSString *alertTitle = AMLocalizedString(@"Change to a test server?", @"title of the alert dialog when the user is changing the API URL to staging");
+        NSString *alertMessage = AMLocalizedString(@"Are you sure you want to change to a test server? Your account may suffer irrecoverable problems", @"text of the alert dialog when the user is changing the API URL to staging");
         
         UIAlertController *changeApiServerAlertController = [UIAlertController alertControllerWithTitle:alertTitle message:alertMessage preferredStyle:UIAlertControllerStyleAlert];
         [changeApiServerAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
@@ -717,6 +701,12 @@ static MEGAIndexer *indexer;
         [changeApiServerAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", @"Button title to cancel something") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
             [[MEGASdkManager sharedMEGASdk] changeApiUrl:@"https://staging.api.mega.co.nz/" disablepkp:NO];
             [[MEGASdkManager sharedMEGASdkFolder] changeApiUrl:@"https://staging.api.mega.co.nz/" disablepkp:NO];
+            [Helper apiURLChanged];
+        }]];
+        
+        [changeApiServerAlertController addAction:[UIAlertAction actionWithTitle:@"Staging:444" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            [MEGASdkManager.sharedMEGASdk changeApiUrl:@"https://staging.api.mega.co.nz:444/" disablepkp:YES];
+            [MEGASdkManager.sharedMEGASdkFolder changeApiUrl:@"https://staging.api.mega.co.nz:444/" disablepkp:YES];
             [Helper apiURLChanged];
         }]];
         
@@ -773,8 +763,6 @@ static MEGAIndexer *indexer;
     } else if ([cell isKindOfClass:[PhotoCollectionViewCell class]]) {
         PhotoCollectionViewCell *photoCollectionViewCell = cell;
         [photoCollectionViewCell.thumbnailImageView setImage:[UIImage imageWithContentsOfFile:thumbnailFilePath]];
-        photoCollectionViewCell.thumbnailPlayImageView.hidden = !node.name.mnz_isVideoPathExtension;
-        photoCollectionViewCell.thumbnailVideoOverlayView.hidden = !(node.name.mnz_isVideoPathExtension && node.duration>-1);
     }
     
     if (reindex) {
@@ -903,7 +891,8 @@ static MEGAIndexer *indexer;
                 break;
             }
                 
-            case MEGAChatMessageTypeAttachment: {
+            case MEGAChatMessageTypeAttachment:
+            case MEGAChatMessageTypeVoiceClip: {
                 MEGANode *node = [message.nodeList mnz_nodesArrayFromNodeList].firstObject;
                 MOOfflineNode *offlineNodeExist = [[MEGAStore shareInstance] offlineNodeWithNode:node];
                 if (offlineNodeExist) {
@@ -1157,8 +1146,21 @@ static MEGAIndexer *indexer;
     return spaceHeight;
 }
 
++ (CGFloat)spaceHeightForEmptyStateWithDescription {
+    CGFloat spaceHeight = 20.0f;
+    if (UIInterfaceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation]) && [[UIDevice currentDevice] iPhoneDevice]) {
+        spaceHeight = 11.0f;
+    }
+    
+    return spaceHeight;
+}
+
 + (NSDictionary *)titleAttributesForEmptyState {
     return @{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:18.0f], NSForegroundColorAttributeName:UIColor.mnz_black333333};
+}
+
++ (NSDictionary *)descriptionAttributesForEmptyState {
+    return @{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:14.0f], NSForegroundColorAttributeName:UIColor.mnz_gray777777};
 }
 
 + (NSDictionary *)buttonTextAttributesForEmptyState {
@@ -1198,15 +1200,9 @@ static MEGAIndexer *indexer;
     searchController.dimsBackgroundDuringPresentation = NO;
     searchController.searchBar.searchBarStyle = UISearchBarStyleMinimal;
     searchController.searchBar.translucent = NO;
-    searchController.searchBar.backgroundImage = [UIImage imageWithCGImage:(__bridge CGImageRef)(UIColor.clearColor)];
+    searchController.searchBar.backgroundColor = UIColor.whiteColor;
     searchController.searchBar.barTintColor = UIColor.whiteColor;
     searchController.searchBar.tintColor = UIColor.mnz_redMain;
-    
-    UITextField *searchTextField = [searchController.searchBar valueForKey:@"_searchField"];
-    searchTextField.font = [UIFont mnz_SFUIRegularWithSize:17.0f];
-    searchTextField.backgroundColor = UIColor.mnz_grayEEEEEE;
-    searchTextField.textColor = UIColor.mnz_black333333;
-    searchTextField.tintColor = UIColor.mnz_green00BFA5;
     
     return searchController;
 }
@@ -1233,6 +1229,7 @@ static MEGAIndexer *indexer;
 #pragma mark - Logout
 
 + (void)logout {
+    [NSNotificationCenter.defaultCenter postNotificationName:MEGALogoutNotification object:self];
     [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
     [Helper cancelAllTransfers];
     
@@ -1240,14 +1237,14 @@ static MEGAIndexer *indexer;
     
     [Helper deleteUserData];
     [Helper deleteMasterKey];
-            
-    [Helper resetCameraUploadsSettings];
+
     [Helper resetUserData];
     
     [Helper deletePasscode];
 }
 
-+ (void)logoutFromConfirmAccount {    
++ (void)logoutFromConfirmAccount {
+    [NSNotificationCenter.defaultCenter postNotificationName:MEGALogoutNotification object:self];
     [Helper cancelAllTransfers];
     
     [Helper clearSession];
@@ -1255,7 +1252,6 @@ static MEGAIndexer *indexer;
     [Helper deleteUserData];
     [Helper deleteMasterKey];
     
-    [Helper resetCameraUploadsSettings];
     [Helper resetUserData];
     
     [Helper deletePasscode];
@@ -1327,13 +1323,6 @@ static MEGAIndexer *indexer;
     
     [NSFileManager.defaultManager mnz_removeFolderContentsAtPath:NSTemporaryDirectory()];
     
-    // Delete v2 thumbnails & previews directory
-    NSString *thumbs2Directory = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"thumbs"];
-    [NSFileManager.defaultManager mnz_removeItemAtPath:thumbs2Directory];
-    
-    NSString *previews2Directory = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"previews"];
-    [NSFileManager.defaultManager mnz_removeItemAtPath:previews2Directory];
-    
     // Delete application support directory content
     NSString *applicationSupportDirectory = [NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES) objectAtIndex:0];
     for (NSString *file in [[NSFileManager defaultManager] contentsOfDirectoryAtPath:applicationSupportDirectory error:nil]) {
@@ -1342,11 +1331,11 @@ static MEGAIndexer *indexer;
         }
     }
     
+    [MEGAStore.shareInstance.storeStack deleteStoreWithError:nil];
+    
     // Delete files saved by extensions
     NSString *extensionGroup = [[NSFileManager defaultManager] containerURLForSecurityApplicationGroupIdentifier:@"group.mega.ios"].path;
     [NSFileManager.defaultManager mnz_removeFolderContentsAtPath:extensionGroup];
-    
-    [[MEGAStore shareInstance] configureMEGAStore];
     
     // Delete Spotlight index
     [[CSSearchableIndex defaultSearchableIndex] deleteSearchableItemsWithDomainIdentifiers:@[@"nodes"] completionHandler:^(NSError * _Nullable error) {
@@ -1372,12 +1361,11 @@ static MEGAIndexer *indexer;
     
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"TransfersPaused"];
     
-    [NSUserDefaults.standardUserDefaults removeObjectForKey:kIsCameraUploadsEnabled];
-    [NSUserDefaults.standardUserDefaults removeObjectForKey:kIsUploadVideosEnabled];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"IsSavePhotoToGalleryEnabled"];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"IsSaveVideoToGalleryEnabled"];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"ChatVideoQuality"];
-    
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"logging"];
+
     //Set default order on logout
     [[NSUserDefaults standardUserDefaults] setInteger:1 forKey:@"SortOrderType"];
     [[NSUserDefaults standardUserDefaults] setInteger:1 forKey:@"OfflineSortOrderType"];
@@ -1389,18 +1377,8 @@ static MEGAIndexer *indexer;
     [sharedUserDefaults removeObjectForKey:@"treeCompleted"];
     [sharedUserDefaults removeObjectForKey:@"useHttpsOnly"];
     [sharedUserDefaults removeObjectForKey:@"IsChatEnabled"];
+    [sharedUserDefaults removeObjectForKey:@"logging"];
     [sharedUserDefaults synchronize];
-}
-
-+ (void)resetCameraUploadsSettings {
-    [[NSUserDefaults standardUserDefaults] removeObjectForKey:kLastUploadPhotoDate];
-    [CameraUploads syncManager].lastUploadPhotoDate = [NSDate dateWithTimeIntervalSince1970:0];
-    
-    [[NSUserDefaults standardUserDefaults] removeObjectForKey:kLastUploadVideoDate];
-    [CameraUploads syncManager].lastUploadVideoDate = [NSDate dateWithTimeIntervalSince1970:0];
-
-    [[CameraUploads syncManager] setIsCameraUploadsEnabled:NO];
-    [[NSUserDefaults standardUserDefaults] removeObjectForKey:kCameraUploadsNodeHandle];
 }
 
 + (void)deletePasscode {

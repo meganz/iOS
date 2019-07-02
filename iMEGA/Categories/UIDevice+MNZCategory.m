@@ -235,6 +235,10 @@ static const NSUInteger MAX_BUFFER_32MB = 33554432; // 32 MB
 - (NSString *)deviceName {
     if (deviceName == nil) {
         NSString *deviceNameTemp = [[UIDevice devicesDictionary] objectForKey:[[UIDevice currentDevice] hardwareType]];
+        if ([deviceNameTemp isEqualToString:@"Simulator"]) {
+            NSString *simulatorModelName = [NSProcessInfo.processInfo.environment objectForKey:@"SIMULATOR_MODEL_IDENTIFIER"];
+            deviceNameTemp  = [[UIDevice devicesDictionary] objectForKey:simulatorModelName];
+        }
         deviceName = (deviceNameTemp == nil) ? [self unknownDevice] : deviceNameTemp;
     }
     return deviceName;

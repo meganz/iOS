@@ -23,5 +23,6 @@
 - (void)updateUnreadCountChange:(NSInteger)unreadCount;
 - (void)updateLastMessageForChatListItem:(MEGAChatListItem *)item;
 - (void)configureCellForChatListItem:(MEGAChatListItem *)chatListItem;
+- (void)configureCellForUser:(MEGAUser *)user;
 
 @end

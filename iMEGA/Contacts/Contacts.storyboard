@@ -921,20 +921,20 @@
                                         </constraints>
                                     </imageView>
                                     <stackView opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="6RY-7f-66v">
-                                        <rect key="frame" x="20" y="123.33333333333334" width="80.666666666666671" height="76.333333333333343"/>
+                                        <rect key="frame" x="20" y="129.33333333333334" width="80.666666666666671" height="70.333333333333343"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="9bO-Ie-mGk">
-                                                <rect key="frame" x="0.0" y="0.0" width="80.666666666666671" height="30.666666666666668"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="80.666666666666671" height="28.666666666666668"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XHC-l2-3NH">
-                                                        <rect key="frame" x="0.0" y="0.0" width="65.666666666666671" height="30.666666666666668"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="65.666666666666671" height="28.666666666666668"/>
                                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="24"/>
                                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <nil key="highlightedColor"/>
                                                         <size key="shadowOffset" width="0.0" height="0.0"/>
                                                     </label>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YQk-tW-nTN">
-                                                        <rect key="frame" x="73.666666666666671" y="11.666666666666671" width="7" height="7"/>
+                                                        <rect key="frame" x="73.666666666666671" y="10.666666666666657" width="7" height="7"/>
                                                         <color key="backgroundColor" red="0.1921568662" green="0.70980393890000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="7" id="7aL-be-2Fs"/>
@@ -955,14 +955,14 @@
                                                 </subviews>
                                             </stackView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Last seen" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wgN-dK-iZJ">
-                                                <rect key="frame" x="0.0" y="34.666666666666671" width="54.666666666666664" height="16.333333333333329"/>
+                                                <rect key="frame" x="0.0" y="32.666666666666657" width="54.666666666666664" height="14.333333333333336"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
                                                 <size key="shadowOffset" width="0.0" height="0.0"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Email" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YTm-wg-etC">
-                                                <rect key="frame" x="0.0" y="55.000000000000021" width="39" height="21.333333333333336"/>
+                                                <rect key="frame" x="0.0" y="51" width="39" height="19.333333333333329"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
@@ -1058,6 +1058,7 @@
                                                             <state key="normal" image="sendMessageRound">
                                                                 <color key="titleColor" red="0.87450980392156863" green="0.87450980392156863" blue="0.87450980392156863" alpha="1" colorSpace="calibratedRGB"/>
                                                             </state>
+                                                            <state key="disabled" image="sendMessageRound, disabled"/>
                                                             <connections>
                                                                 <action selector="messageTouchUpInside:" destination="GvV-J1-s0U" eventType="touchUpInside" id="EdJ-Xg-MNC"/>
                                                             </connections>
@@ -1266,8 +1267,64 @@
                                             <outlet property="nameLabel" destination="t20-MW-2qu" id="N9o-Vm-7Vp"/>
                                         </connections>
                                     </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="ContactDetailsPermissionsTypeID" rowHeight="44" id="bSz-e2-MvM" userLabel="Send Message Table View Cell" customClass="ContactTableViewCell">
+                                        <rect key="frame" x="0.0" y="231.33333333333334" width="414" height="44.000000000000028"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="bSz-e2-MvM" id="d7H-iQ-Neb">
+                                            <rect key="frame" x="0.0" y="0.0" width="376" height="43.666666666666664"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="fJk-mb-0sx">
+                                                    <rect key="frame" x="15" y="9.3333333333333357" width="25" height="25"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="25" id="CWA-sW-dea"/>
+                                                        <constraint firstAttribute="width" constant="25" id="Cy0-tI-dcg"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Send Message" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KQg-BB-cvg" userLabel="Send Message Label">
+                                                    <rect key="frame" x="55" y="12" width="104" height="20"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="20" id="Wsg-Q8-F3Q"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="15"/>
+                                                    <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ay2-EJ-Him">
+                                                    <rect key="frame" x="338.66666666666669" y="13" width="37.333333333333314" height="18"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                    <color key="textColor" red="0.46666666666666667" green="0.46666666666666667" blue="0.46666666666666667" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="KQg-BB-cvg" firstAttribute="centerY" secondItem="fJk-mb-0sx" secondAttribute="centerY" id="1Hu-a8-UHu"/>
+                                                <constraint firstItem="fJk-mb-0sx" firstAttribute="top" secondItem="d7H-iQ-Neb" secondAttribute="topMargin" constant="6" id="1SC-20-6bt"/>
+                                                <constraint firstItem="KQg-BB-cvg" firstAttribute="centerY" secondItem="d7H-iQ-Neb" secondAttribute="centerY" id="2Xv-z5-xiE"/>
+                                                <constraint firstItem="fJk-mb-0sx" firstAttribute="centerY" secondItem="d7H-iQ-Neb" secondAttribute="centerY" id="BxE-2k-B2H"/>
+                                                <constraint firstAttribute="trailing" secondItem="ay2-EJ-Him" secondAttribute="trailing" id="G4F-qd-XNN"/>
+                                                <constraint firstItem="KQg-BB-cvg" firstAttribute="leading" secondItem="fJk-mb-0sx" secondAttribute="trailing" constant="15" id="PT0-Mh-a3d"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="fJk-mb-0sx" secondAttribute="bottom" constant="6" id="PW7-Sc-chj"/>
+                                                <constraint firstItem="ay2-EJ-Him" firstAttribute="centerY" secondItem="d7H-iQ-Neb" secondAttribute="centerY" id="Pae-Fj-oP6"/>
+                                                <constraint firstItem="fJk-mb-0sx" firstAttribute="leading" secondItem="d7H-iQ-Neb" secondAttribute="leading" constant="15" id="f02-RQ-8bq"/>
+                                            </constraints>
+                                            <variation key="default">
+                                                <mask key="constraints">
+                                                    <exclude reference="1SC-20-6bt"/>
+                                                    <exclude reference="PW7-Sc-chj"/>
+                                                    <exclude reference="2Xv-z5-xiE"/>
+                                                </mask>
+                                            </variation>
+                                        </tableViewCellContentView>
+                                        <inset key="separatorInset" minX="55" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                        <connections>
+                                            <outlet property="avatarImageView" destination="fJk-mb-0sx" id="wx5-ov-VP1"/>
+                                            <outlet property="nameLabel" destination="KQg-BB-cvg" id="Au3-UX-Y3T"/>
+                                            <outlet property="permissionsLabel" destination="ay2-EJ-Him" id="X4g-yC-9dX"/>
+                                        </connections>
+                                    </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="gray" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ContactDetailsSharedFolderTypeID" rowHeight="60" id="jX1-Hc-Geh" customClass="ContactTableViewCell">
-                                        <rect key="frame" x="0.0" y="231.33333333333337" width="414" height="60"/>
+                                        <rect key="frame" x="0.0" y="275.33333333333337" width="414" height="60"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="jX1-Hc-Geh" id="Pz9-XN-YhC">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="59.666666666666664"/>
@@ -2177,5 +2234,6 @@
         <image name="remove_media" width="26" height="26"/>
         <image name="selectAll" width="22" height="22"/>
         <image name="sendMessageRound" width="37" height="37"/>
+        <image name="sendMessageRound, disabled" width="37" height="37"/>
     </resources>
 </document>

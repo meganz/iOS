@@ -57,7 +57,7 @@
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
 "sslUnverified_alertTitle"="لم ينجح تطبيق MEGA بالاتصال الآمن ببروتوكول الاتصال الآمن SSL. قد تكون متصلا بشبكة لاسلكية WiFi عمومية بمتطلبات خاصة إضافية.";
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
-"theContentIsNotAvailableForThisAccount"="المحتوى الذي تحاول الدخول إليه غير متاح لهذا الحساب. حاول تسجيل الدخول بنفس الحساب كما هو الحال في موقع الويب للجوال.";
+"theContentIsNotAvailableForThisAccount"="المحتوى الذي تحاول الدخول إليه غير متاح لهذا الحساب. حاول تسجيل الدخول بنفس الحساب الذي كنت فيه في موقع الويب للجوال.";
 /* Message shown when the app is waiting for the server to complete a request due to an API lock (error -3). */
 "takingLongerThanExpected"="تستغرق العملية وقتا أطول من المتوقع. الرجاء الإنتظار...";
 /* Message shown when the app is waiting for the server to complete a request due to a HTTP error 500. */
@@ -113,7 +113,7 @@
 /*  */
 "passwordStrong"="كلمة السر هذه تستطيع تحمل الهجمات القوية وأكثرها تطورا. يرجى التأكد من أنك سوف تتذكرها.";
 /*  */
-"agreeWithTheMEGATermsOfService"="أنا أتفق مع MEGA <a href='terms'>شروط الخدمة</a>";
+"agreeWithTheMEGATermsOfService"="أنا أتفق مع MEGA <a href=\"terms\">شروط الخدمة</a>";
 /* Error text shown when you have not entered a correct name */
 "nameInvalidFormat"="ادخل اسم صالح";
 /* Error text shown when you have not written the same password */
@@ -368,6 +368,8 @@
 "tapFileToRename"="اضغط على الملف لاعادة التسمية";
 /* */
 "sendToContact"="ارسل الى جهة الاتصال";
+/* Column header of my contacts/chats at copy dialog */
+"My chats"="محادثاتي";
 /* Toast text upon sending a single file to chat */
 "fileSentToChat"="تم إرسال الملف للمحادثة";
 /* Success message when the attachment has been sent to a many chats */
@@ -635,7 +637,7 @@
 /* Title of one of the Settings sections where you can see things 'About' the app */
 "about"="حول";
 /* Title of one of the Settings sections where you can set up the 'Language' of the app */
-"language"="لغة";
+"language"="اللغة";
 /* Title of one of the Settings sections where you can 'Send Feedback' to MEGA */
 "sendFeedbackLabel"="أرسل ملاحظات";
 /* Message body of the email that appears when the users tap on "Send feedback" */
@@ -659,7 +661,7 @@
 /* Option title to enable Camera Uploads only when the device is charging */
 "onlyWhenChargingLabel"="فقط عند الشحن";
 /* Footer text to explain the Camera Uploads functionality */
-"cameraUploads_footer"="عند تفعيل هذا الخيار، سيتم ترفع مقاطع الفيديو والصور";
+"cameraUploads_footer"="عند تفعيل هذا الخيار، سيتم ترفيع مقاطع الفيديو والصور";
 /* App means “Application” */
 "App version"="نسخة التطبيق";
 /* Title of the label where the SDK version is shown */
@@ -1044,7 +1046,7 @@
 /* Alert message shown when the user remove various items from the Offline section */
 "removeItemsFromOffline"="هل أنت متأكد من حذف العناصر من دون اتصال؟";
 /* Chat section header */
-"chat"="الرسائل";
+"chat"="المحادثة";
 /* Empty Conversations section */
 "noConversations"="لا توجد محادثات";
 /* Empty Conversations description */
@@ -1084,7 +1086,7 @@
 /* Title used in settings that enables the generation of link previews in the chat */
 "richUrlPreviews"="مشاهدة الروابط الإلكترونية URL";
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
-"richPreviewsFooter"="قم بجعل تجربة الدردشة على MEGAchat أجمل من خلال السماح بإظهار محتوى الرابط ولكن دون التشفير المتناظر من طرف الى طرف";
+"richPreviewsFooter"="قم بجعل تجربة المحادثة على MEGAchat أجمل من خلال السماح بإظهار محتوى الرابط ولكن دون التشفير المتناظر من طرف الى طرف";
 /* Section title of a button where you can enable mobile data for voice and video calls. */
 "voiceAndVideoCalls"="اتصالات فيديو وصوت";
 /* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature. */
@@ -1120,7 +1122,7 @@
 /* Title for a section on the fingerprint warning dialog. Below it is a button which will allow the user to verify their contact's fingerprint credentials. */
 "verifyCredentials"="توثيق البيانات";
 /* A button title to delete the history of a chat. */
-"clearChatHistory"="امسح تاريخ المحادثة.";
+"clearChatHistory"="امسح تاريخ المحادثة";
 /* A confirmation message for a user to confirm that they want to clear the history of a chat. */
 "clearTheFullMessageHistory"="هل أنت متأكد أنك تريد مسح محفوظات الرسائل بالكامل لهذه المحادثة؟";
 /* 'Next' button in a dialog */
@@ -1182,7 +1184,7 @@
 /* Title show above the name of the persons with whom you're chatting */
 "chattingWith"="يتحادث مع";
 /* Full text: MEGA protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: Confidentiality - Only the author and intended recipients are able to decipher and read the content. Authenticity - There is an assurance that the message received was authored by the stated sender, and its content has not been tampered with during transport or on the server. */
-"chatIntroductionMessage"="MEGA تحمي دردشاتك بتشفير من البداية إلى النهاية (بتحكم المستخدم نفسه) وبضمانات السلامة الأساسية:";
+"chatIntroductionMessage"="MEGA تحمي محادثاتك بتشفير من طرف إلى طرف (بتحكم المستخدم نفسه) وبضمانات السلامة الأساسية:";
 /* Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit. */
 "confidentialityExplanation"="[S]الخصوصية.[/S] فقط المؤلف و المستلمين المعينين قادرين على فك تشفير وقراءة المحتوى.";
 /* Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit. */
@@ -1190,7 +1192,7 @@
 /* Alert message shown when a chat does not exist */
 "chatNotFound"="لا توجد محادثة";
 /* A typing indicator in the chat. Please leave the %@ which will be automatically replaced with the user's name at runtime. */
-"isTyping"="%@ يكتب ...";
+"isTyping"="%@ يكتب...";
 /* Plural, a hint that appears when two users are typing in a group chat at the same time. The parameter will be the concatenation of both user names. The tags and placeholders shouldn't be translated or modified. */
 "twoUsersAreTyping"="%1$s [A]جاري الكتابة...[/A]";
 /* text that appear when there are more than 2 people writing at that time in a chat. For example User1, user2 and more are typing... The parameter will be the concatenation of the first two user names. The tags and placeholders shouldn't be translated or modified. */
@@ -1279,6 +1281,8 @@
 "shareExtensionUnsupportedAssets"="بعض العناصر لايمكن مشاركتها مع MEGA";
 /* Message shown to the user when the share extension is about to be killed by iOS due to a memory issue */
 "Limited system resources are available when sharing items. Try uploading these files from within the MEGA app."="موارد النظام المتاحة عند مشاركة العناصر تكون محدودة. يرجى محاولة ترفيع هذه الملفات من خلال تطبيق MEGA.";
+/* Success message shown when the user has successfully shared something */
+"Shared successfully"="تمت المشاركة بنجاح";
 /* Notification message shown when a transfer failed. Keep colon. */
 "Transfer failed:"="فشل النقل:";
 /* MEGAError */
@@ -1373,7 +1377,7 @@
 /* Button title to see the available bonus */
 "getBonus"="احصل على علاوة";
 /* Text shown under the title 'Video quality' that explains what it means */
-"qualityOfVideosUploadedToAChat"="جودة الفيديوهات المرفعة الى الدردشة";
+"qualityOfVideosUploadedToAChat"="جودة الفيديوهات المرفعة الى المحادثة";
 /* Label used near to the option selected to encode the videos uploaded to a chat (Low, Medium, Original) */
 "videoQuality"="جودة الفيديو";
 /* Property associated with something smaller than the usual or average size, number, value, or amount. For example: option to encode a video with low quality. */
@@ -1535,19 +1539,19 @@
 /* Success message shown after forwarding messages to other chats */
 "messagesSent"="تم ارسال الرسائل";
 /* Title of archived chats button */
-"archivedChats"="ارشفة الدردشة";
+"archivedChats"="أرشفة المحادثة";
 /* Confirmation message on archive chat dialog for user to confirm. */
-"archiveChatMessage"="هل تريد ارشفة هذه الدردشة؟";
+"archiveChatMessage"="هل تريد ارشفة هذه المحادثة؟";
 /* Confirmation message for user to confirm it will unarchive an archived chat. */
-"unarchiveChatMessage"="هل انت متأكد من رغبتك باعادة الدردشة من الارشفة؟";
+"unarchiveChatMessage"="هل انت متأكد من رغبتك بإعادة المحادثة من الارشفة؟";
 /* The title of the dialog to unarchive an archived chat. */
-"unarchiveChat"="اعادة الدردشة من الارشيف";
+"unarchiveChat"="إعادة المحادثة من الارشيف";
 /* Title of button to archive chats. */
-"archiveChat"="ارشفة الدردشة";
+"archiveChat"="أرشفة المحادثة";
 /* Title of flag of archived chats. */
 "archived"="تمت الارشفة";
 /* Title of empty state view for archived chats. */
-"noArchivedChats"="لاتوجد دردشات مؤرشفة";
+"noArchivedChats"="لا توجد محادثات مؤرشفة";
 /* A title for the Two-Factor Authentication section on the My Account - Security page. */
 "twoFactorAuthentication"="المصادقة المزدوجة Two-Factor";
 /* Button title to start the setup of a feature. For example 'Begin Setup' for Two-Factor Authentication */
@@ -1595,9 +1599,9 @@
 /* Description shown in a page of the onboarding screens explaining the encryption paradigm */
 "Security is why we exist, your files are safe with us behind a well oiled encryption machine where only you can access your files."="نحن موجودون لتوفير الأمان، ملفاتك بأمان أكثر معنا محمية خلف آلية تشفير متينة بحيث تكون أنت فقط القادر على الولوج الى ملفاتك.";
 /* Title shown in a page of the on boarding screens explaining that the chat is encrypted */
-"Encrypted chat"="دردشة مشفرة";
+"Encrypted chat"="محادثة مشفرة";
 /* Description shown in a page of the onboarding screens explaining the chat feature */
-"Fully encrypted chat with voice and video calls, group messaging and file sharing integration with your Cloud Drive."="دردشة مشفرة بشكل كامل مع اتصال صوتي وفيديو، وتراسل مجموعات ومشاركة ملفات بشكل متكامل مع سواقتك السحابية.";
+"Fully encrypted chat with voice and video calls, group messaging and file sharing integration with your Cloud Drive."="محادثة مشفرة بشكل كامل مع اتصال صوتي وفيديو، وتراسل مجموعات ومشاركة ملفات بشكل متكامل مع سواقتك السحابية.";
 /* Title shown in a page of the on boarding screens explaining that the user can add contacts to chat and colaborate */
 "Create your Network"="انشئ شبكتك";
 /* Description shown in a page of the onboarding screens explaining contacts */
@@ -1621,7 +1625,7 @@
 /* Title label that explains that the user is going to be asked for the microphone and camera permission */
 "Enable Microphone and Camera"="تفعيل الكاميرا والمايكروفون";
 /* Detailed explanation of why the user should give permission to access to the camera and the microphone */
-"To make encrypted voice and video calls, allow MEGA access to your Camera and Microphone"="للقيام باتصالات صوتية وفيديوهية مشفرة، يرجى السماح لتطبيق MEGA بالوصول الى الكاميرا والمايكروفون";
+"To make encrypted voice and video calls, allow MEGA access to your Camera and Microphone"="لإرسال رسائل صوتية أو للقيام باتصالات صوتية وفيديوهية مشفرة، يرجى السماح لتطبيق MEGA بالوصول الى الكاميرا والمايكروفون";
 /* Title label that explains that the user is going to be asked for the notifications permission */
 "Enable Notifications"="تفعيل التنبيه";
 /* Detailed explanation of why the user should give permission to deliver notifications */
@@ -1643,7 +1647,7 @@
 /* The title of the section about deleting file versions in the settings. */
 "Delete all older versions of my files"="حذف جميع النسخ القديمة لملفاتي";
 /* Text of a button which deletes all historical versions of files in the users entire account. */
-"Delete old versions"="حذف جميع النسخ القديمة";
+"Delete previous versions"="حذف النسخ القديمة";
 /* A warning note about deleting all file versions in the settings section. */
 "All current files will remain. Only historic versions of your files will be deleted."="كل الملفات الحالية ستبقى دون تعديل، فقد النسخ القديمة للملفات سوف تحذف";
 /* Text of the dialog to delete all the file versions of the account */
@@ -1665,15 +1669,13 @@
 /* Message to inform the local user that someone has joined the current group call */
 "%@ joined the call."="%@ joined the call.";
 /* Message to inform the local user that someone has left the current group call */
-"%@ left the call."="%@ left the call.";
-/* Message to inform the local user is having a bad quality network with someone in the current group call */
-"Poor conection."="Poor connection.";
+"%@ left the call."="%@ غادر المكالمة.";
 /* Message shown in a chat room when there is an active group call */
-"There is an active group call. Tap to join."="There is an active group call. Tap to join.";
+"There is an active group call. Tap to join."="توجد محادثة جماعية فعالة. انقر للانضمام";
 /* Message shown in a chat room when there is an active call */
-"There is an active call. Tap to join."="There is an active call. Tap to join.";
+"There is an active call. Tap to join."="توجد مكالمة فعالة. انقر للانضمام";
 /* Message shown in a chat room for a group call in progress displaying the duration of the call */
-"Touch to return to call %@"="Touch to return to call %@";
+"Touch to return to call %@"="انقر للعودة الى المكالمة %@";
 /* A button label which allows the users save images/videos in the Photos app. */
 "Save to Photos"="احفظ مع الصور";
 /* Text shown when starting the process to save a photo or video to Photos app */
@@ -1687,21 +1689,21 @@
 /* Title shown in a cell to allow the users enable the 'Encrypted Key Rotation' */
 "Enable Encrypted Key Rotation"="Enable Encrypted Key Rotation";
 /* Label in a cell where you can get the chat link */
-"Get Chat Link"="Get chat link";
+"Get Chat Link"="استخرج رابط المحادثة";
 /* Footer text to explain what means 'Encrypted Key Rotation' */
 "Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages."="Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages.";
 /* Shown as an error message when the user selects "create chat link", but haven't entered a title for the newly created room */
 "To create a chat link you must name the group."="To create a chat link you must name the group.";
 /* Label shown in a cell where you can enable a switch to get a chat link */
-"Chat Link"="Chat link";
+"Chat Link"="رابط المحادثة";
 /* Message shown when there is an active chat link that can be deleted */
-"Delete Chat Link"="Delete chat link";
+"Delete Chat Link"="حذف رابط المحادثة";
 /* Button text in public chat previews that allows the user to join the chat */
-"Join"="Join";
+"Join"="الانضمام";
 /* Text shown in a notification to let the user know that has joined a public chat room after login or account creation */
 "You have joined %@"="You have joined %@";
 /* Users previewing a public chat */
-"Observers"="Observers";
+"Observers"="المشاهدون";
 /* Alert message shown while deleting a chat link, warning about the consequences */
 "This conversation will no longer be accessible through the link you are about to delete."="This conversation will no longer be accessible through the chat link once it has been removed.";
 /* Management message shown in a chat when the user %@ enables the 'Encrypted Key Rotation' */
@@ -1711,7 +1713,7 @@
 /* Management message shown in a chat when the user %@ removes a public link for the chat */
 "%@ removed a public link for the chat."="%@ removed the chat link for the chat.";
 /* Management message shown in a chat when the user %@ joined it from a public chat link */
-"%@ joined the group chat."="%@ joined the group chat.";
+"%@ joined the group chat."="%@ انضم الى المجموعة";
 /* Message show when a call cannot be established because there are too many participants in the group call */
 "Error. No more participants are allowed in this group call."="You are not allowed to join this call as it has reached the maximum number of participants.";
 /* Message show when a user cannot activate the video in a group call because the max number of videos has been reached */
@@ -1720,16 +1722,12 @@
 "List view"="طريقة عرض القائمة";
 /* Text shown for switching from list view to thumbnail view. */
 "Thumbnail view"="عرض الصور مصغرة";
-/* Message to inform the local user that someone has joined the current group call */
-"%@ joined the call."="%@ joined the call.";
-/* Message to inform the local user that someone has left the current group call */
-"%@ left the call."="%@ left the call.";
 /* Message to inform the local user is having a bad quality network with someone in the current group call */
-"Poor connection."="Poor connection.";
+"Poor connection."="اتصال ضعيف.";
 /* Message shown in a chat room when there is an active group call */
-"There is an active group call. Tap to join."="There is an active group call. Tap to join.";
+"There is an active group call. Tap to join."="توجد محادثة جماعية فعالة. انقر للانضمام";
 /* Message shown in a chat room for a group call in progress displaying the duration of the call */
-"Touch to return to call %@"="Touch to return to call %@";
+"Touch to return to call %@"="انقر للعودة الى المكالمة %@";
 /* Menu item to change from grid view to list view */
 "List view"="طريقة عرض القائمة";
 /* Menu item to change from list view to grid view */
@@ -1745,7 +1743,7 @@
 /* The header of a notification indicating that a file or folder that was taken down has now been restored due to a successful counter-notice. */
 "Takedown reinstated"="إعادة إنهاء الخدمة";
 /* Label shown inside an unseen notification */
-"New"="New";
+"New"="جديد";
 /* When a contact sent a contact/friend request */
 "Sent you a contact request"="طلبات الإضافة المرسلة";
 /* A notification that the other user cancelled their contact request so it is no longer valid. E.g. user@email.com cancelled their contact request. */
@@ -1775,21 +1773,21 @@
 /* This is shown in the Notification dialog when the email address of a contact is not found and access to the share is lost for some reason (e.g. share removal or contact removal). */
 "Access to folders was removed."="تمت الإزالة من الدخول إلى المجلدات";
 /* Content of a notification that informs how many files and folders have been added to a shared folder */
-"Added 1 file"="Added 1 file";
+"Added 1 file"="تم إضافة ملف واحد";
 /* Content of a notification that informs how many files and folders have been added to a shared folder */
-"Added %lld files"="Added %lld files";
+"Added %lld files"="تم إضافة %lld ملف";
 /* Content of a notification that informs how many files and folders have been added to a shared folder */
-"Added 1 folder"="Added 1 folder";
+"Added 1 folder"="تم إضافة مجلد واحد";
 /* Content of a notification that informs how many files and folders have been added to a shared folder */
-"Added %lld folders"="Added %lld folders";
+"Added %lld folders"="تم إضافة %lld مجلد";
 /* Content of a notification that informs how many files and folders have been added to a shared folder */
-"Added 1 file and 1 folder"="Added 1 file and 1 folder";
+"Added 1 file and 1 folder"="تم إضافة ملف واحد ومجلد واحد";
 /* Content of a notification that informs how many files and folders have been added to a shared folder */
-"Added %lld files and 1 folder"="Added %lld files and 1 folder";
+"Added %lld files and 1 folder"="تم إضافة %lld ملف و مجلد واحد";
 /* Content of a notification that informs how many files and folders have been added to a shared folder */
-"Added 1 file and %lld folders"="Added 1 file and %lld folders";
+"Added 1 file and %lld folders"="تم إضافة ملف واحد و %lld مجلد";
 /* Content of a notification that informs how many files and folders have been added to a shared folder */
-"Added [A] files and [B] folders"="Added [A] files and [B] folders";
+"Added [A] files and [B] folders"="تم إضافة [A] ملف و [B] مجلد";
 /* Notification when on client side when owner of a shared folder removes folder/file from it. */
 "Removed item from shared folder"="عنصر محذوف من مجلد المشاركة";
 /* Notification popup. Notification for multiple removed items from a share. Please keep [X] as it will be replaced at runtime with the number of removed items. */
@@ -1810,32 +1808,58 @@
 "Your publicly shared %1 (%2) has been taken down."="لقد شاركت بشكل عام  %1 (%2)";
 /* The text of a notification indicating that a file or folder that was taken down has now been restored due to a successful counter-notice. The %1 placeholder will be replaced with the text ‘file’ or ‘folder’. The %2 will be replaced with the name of the file or folder. */
 "Your taken down %1 (%2) has been reinstated."="تم إعادة الخدمة ل %1 (%2)";
+/* Text shown when a notification or the last message of a chat corresponds to a voice clip */
+"Voice message"="Voice message";
 /* Error message shown to user when a copy/import operation would take them over their storage limit. */
 "This action can not be completed as it would take you over your current storage limit"="لا يمكن إكمال هذا الإجراء لأنه سيتجاوز حد التخزين الحالي";
 /* uploads over storage quota warning dialog title */
 "Your upload(s) cannot proceed because your account is full"="لا يمكن متابعة الترفيع بسبب امتلاء حسابك";
 /* Footer text to explain the meaning of the functionaly 'Last seen' of your chat status. */
-"Allow your contacts to see the last time you were active on MEGA."="Allow your contacts to see the last time you were active on MEGA.";
+"Allow your contacts to see the last time you were active on MEGA."="السماح لجهات الاتصال خاصتك بمعرفة آخر وقت ظهور كنت فيه متصلاً مع MEGA.";
 /* Label shown next to a feature name that can be enabled or disabled, like in 'Show Last seen...' */
-"Show"="Show";
+"Show"="اظهار";
 /* Shown when viewing a 1on1 chat (at least for now), if the user is offline. */
-"Last seen %s"="Last seen: %s";
+"Last seen %s"="آخر ظهور: %s";
 /* Text to inform the user the 'Last seen' time of a contact is a long time ago (>= 65535 minutes) */
-"Last seen a long time ago"="Last seen a long time ago";
+"Last seen a long time ago"="آخر ظهور من وقت طويل";
 /* */
 "Today"="اليوم";
 /* */
 "Yesterday"="الأمس";
+/* Title of the button to share a location in a chat */
+"Send This Location"="Send This Location";
+/* Title of the alert that allows change between different maps: Standard, Satellite or Hybrid. */
+"Map settings"="Map settings";
+/* Type of data displayed in a map view. A street map that shows the position of all roads and some road names. */
+"Standard"="معيار";
+/* Type of data displayed in a map view. Satellite imagery of the area. */
+"Satellite"="Satellite";
+/* Type of data displayed in a map view. A satellite image of the area with road and road name information layered on top. */
+"Hybrid"="Hybrid";
+/* Label to give feedback to the user when he is going to share his location, indicating that it may not be the exact location. */
+"Accurate to %d meters"="Accurate to %d meters";
+/* Alert title shown when the user opens a shared Geolocation for the first time from any client, we will show a confirmation dialog warning the user that he is now leaving the E2EE paradigm. */
+"Send Location"="Send Location";
+/* Message shown when the user opens a shared Geolocation for the first time from any client, we will show a confirmation dialog warning the user that he is now leaving the E2EE paradigm. */
+"This location will be opened using a third party maps provider outside the end-to-end encrypted MEGA platform."="This location will be opened using a third party maps provider outside the end-to-end encrypted MEGA platform.";
+/* Text shown in location-type messages */
+"Pinned Location"="Pinned Location";
 /* Plural of participant. 2 participants */
 "%d participants"="%d participants";
 /* Singular of participant. 1 participant */
 "%d participant"="%d participant";
+/* Text shown in the chat toolbar while the user is recording a voice clip. The < character should be > in RTL languages. */
+"< Slide to cancel"="< Slide to cancel";
+/* Tooltip shown when the user presses but does not hold the microphone icon to send a voice clip */
+"Tap and hold %@ to record, release to send"="Tap and hold %@ to record, release to send";
+/* Message shown when there is an ongoing call and the user tries to record a voice message */
+"It is not possible to record voice messages while there is a call in progress"="It is not possible to record voice messages while there is a call in progress.";
 /* Text to inform the user there is an active call and is not participating */
-"Ongoing Call"="Ongoing Call";
+"Ongoing Call"="مكالمة جارية";
 /* Message shown when there is an ongoing call and the user tries to play an audio or video */
 "It is not possible to play content while there is a call in progress"="It is not possible to play media files while there is a call in progress.";
 /* Text to inform the user there is an active call and is participating */
-"Call Started"="Call Started";
+"Call Started"="المكالمة بدأت";
 /* Title for feature Password Reminder */
 "Password Reminder"="استذكار كلمة المرور";
 /* Label for any ‘Message’ button, link, text, title, etc. - (String as short as possible). */
@@ -1849,25 +1873,19 @@
 /* Text button for init a group chat with link. */
 "New Chat Link"="New chat link";
 /* Text button for init a group chat */
-"New group chat"="مجموعة دردشة جديدة";
-/* Shown when an invalid/inexisting/not-available-anymore chat link is opened. */
-"Chat link unavailable"="Chat link unavailable";
-/* Shown when an inexisting/unavailable/removed link is tried to be opened. */
-"This chat link is no longer available"="This chat link is no longer available";
-/* Text explaining users how the chat links work. */
-"People can join your group by using this link."="People can join your group by using this link.";
-/* Subtitle shown in a chat to inform where to tap to enter in the chat details view */
-"Tap here for info"="Tap here for info";
+"New group chat"="مجموعة محادثة جديدة";
 /* Title for the recents section. */
-"Recents"="Recents";
+"Recents"="مؤخراً";
 /* Multiple Images title shown in recents section of webclient */
-"%1 Images"="%1 Images";
+"%1 Images"="%1 صورة";
 /* Multiple videos title shown in recents section of web client. */
 "%2 Videos"="%2 Videos";
 /* A single image and single video title shown in recents section of webclient. */
 "1 Image and 1 Video"="1 Image and 1 Video";
 /* One image and multiple videos title in recents. */
 "1 Image and %2 Videos"="1 Image and %2 Videos";
+/* Multiple images and 1 video */
+"%1 Images and 1 Video"="%1 Images and 1 Video";
 /* Title for multiple images and multiple videos in recents section */
 "%1 Images and %2 Videos"="%1 Images and %2 Videos";
 /* Tooltip message shown on recents section. Please see the attached image. */
@@ -1875,16 +1893,36 @@
 /* Title for a recent action shown in the webclient, see the attached image for context. */
 "%1 modified by %3"="%1 modified by %3";
 /* Title for a recent action shown in the webclient, see the attached image for context. Please ensure that the `%2 more` is inside the [A] tag as this will become a toggle to show the hidden content. */
-"%1 and [A]%2 more[/A] modified by %3"="%1 and [A]%2 more[/A] modified by %3";
-/* Title for a recent action shown in the webclient, see the attached image for context. Please ensure that the `%2 more` is inside the [A] tag as this will become a toggle to show the hidden content. */
 "%1 and [A]%2 more[/A]"="%1 and [A]%2 more[/A]";
 /* Title for a recent action shown in the webclient, see the attached image for context. */
 "%1 created by %3"="%1 created by %3";
-/* Title for a recent action shown in the webclient, see the attached image for context. Please ensure that the `%2 more` is inside the [A] tag as this will become a toggle to show the hidden content. */
-"%1 and [A]%2 more[/A] created by %3"="%1 and [A]%2 more[/A] created by %3";
 /* Message shown when the user has not recent activity in their account. */
-"No recent activity"="No recent activity";
+"No recent activity"="لا يوجد عمليات مؤخراً";
 /* Plural of items which contains a folder. 2 items */
 "items"="عناصر";
+/* Shown when an invalid/inexisting/not-available-anymore chat link is opened. */
+"Chat link unavailable"="رابط المحادثة غير موجود";
+/* Shown when an inexisting/unavailable/removed link is tried to be opened. */
+"This chat link is no longer available"="This chat link is no longer available";
+/* Text explaining users how the chat links work. */
+"People can join your group by using this link."="People can join your group by using this link.";
+/* Subtitle shown in a chat to inform where to tap to enter in the chat details view */
+"Tap here for info"="Tap here for info";
 /* In some cases, a user may try to get the link for a chat room, but if such is not set by an operator - it would say "not link available" and not auto create it. */
-"No chat link available."="No chat link available.";
+"No chat link available."="لا يوجد رابط محادثة متاح";
+/* Title of a dialog in which we request access to a specific permission, like the Location Services */
+"Please allow access"="Please allow access";
+/* Hint shown to the users, when they want to use the Location Services but they are disabled or restricted for MEGA */
+"Please go to the Privacy section in your device’s Setting. Enable Location Services and set MEGA to While Using the App or Always."="Please go to the Privacy section in your device’s Settings. Enable Location Services and set MEGA to While Using the App or Always.";
+/* Location Usage Description. In order to protect user's privacy, Apple requires a specific string explaining why location will be accessed. */
+"MEGA accesses your location when you elect to share it with your contacts."="MEGA accesses your location when you elect to share it with your contacts.";
+/* Information shown when the user has disabled the 'Mobile Data' setting for MEGA in the iOS Settings. */
+"Mobile Data is turned off"="Mobile Data is turned off";
+/* Button title to go to the iOS Settings to enable 'Mobile Data' for the MEGA app. */
+"Turn Mobile Data on"="Turn Mobile Data on";
+/* Extra information shown when the user has disabled the 'Mobile Data' setting for MEGA in the iOS Settings. */
+"You can turn on mobile data for this app in Settings."="You can turn on mobile data for this App in Settings.";
+/* title of the alert dialog when the user is changing the API URL to staging */
+"Change to a test server?"="التغيير الى مخدم الاختبارات؟";
+/* text of the alert dialog when the user is changing the API URL to staging */
+"Are you sure you want to change to a test server? Your account may suffer irrecoverable problems"="هل أنت متأكد من رغبتك بالانتقال الى المخدم التجريبي؟ من الممكن ان يتعرض حسابك لمشاكل غير قابلة للإصلاح.";

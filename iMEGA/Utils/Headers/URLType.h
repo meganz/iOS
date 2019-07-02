@@ -18,5 +18,6 @@ typedef NS_ENUM (NSUInteger, URLType) {
     URLTypeLoginRequiredLink,
     URLTypeHandleLink,
     URLTypeAchievementsLink,
+    URLTypeChatPeerOptionsLink,
     URLTypeTotal
 };

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -121,7 +121,6 @@
                                                     <color key="onTintColor" red="0.0" green="0.74901960779999999" blue="0.64705882349999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <connections>
                                                         <action selector="richPreviewsValueChanged:" destination="er2-Fn-lfg" eventType="valueChanged" id="84c-Yn-mqx"/>
-                                                        <action selector="useMobileDataValueChanged:" destination="er2-Fn-lfg" eventType="valueChanged" id="um5-gF-gwL"/>
                                                     </connections>
                                                 </switch>
                                             </subviews>
@@ -175,51 +174,6 @@
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
-                            <tableViewSection headerTitle="VOICE AND VIDEO CALLS" id="OQd-6y-cBj">
-                                <cells>
-                                    <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" id="If6-4l-Djd" userLabel="Use mobile data Table View Cell">
-                                        <rect key="frame" x="0.0" y="355" width="375" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" tableViewCell="If6-4l-Djd" id="Cr7-TZ-sYO">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Use mobile data" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QIc-tp-7cM">
-                                                    <rect key="frame" x="16" y="12" width="130" height="20"/>
-                                                    <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="17"/>
-                                                    <color key="textColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Vls-o6-tqJ">
-                                                    <rect key="frame" x="310" y="6.5" width="51" height="31"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="49" id="HcM-ug-tgg"/>
-                                                    </constraints>
-                                                    <color key="onTintColor" red="0.0" green="0.74901960779999999" blue="0.64705882349999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                    <connections>
-                                                        <action selector="useMobileDataValueChanged:" destination="er2-Fn-lfg" eventType="valueChanged" id="Txc-a8-Ue3"/>
-                                                    </connections>
-                                                </switch>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstItem="Vls-o6-tqJ" firstAttribute="centerY" secondItem="Cr7-TZ-sYO" secondAttribute="centerY" id="7sg-8F-ODv"/>
-                                                <constraint firstItem="QIc-tp-7cM" firstAttribute="leading" secondItem="Cr7-TZ-sYO" secondAttribute="leadingMargin" id="Bsz-0d-3H5"/>
-                                                <constraint firstItem="Vls-o6-tqJ" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="QIc-tp-7cM" secondAttribute="trailing" constant="8" id="G1s-aZ-Jp9"/>
-                                                <constraint firstItem="QIc-tp-7cM" firstAttribute="centerY" secondItem="Cr7-TZ-sYO" secondAttribute="centerY" id="XjV-VX-1eB"/>
-                                                <constraint firstItem="QIc-tp-7cM" firstAttribute="leading" secondItem="Cr7-TZ-sYO" secondAttribute="leadingMargin" id="dsa-Qg-obu"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="Vls-o6-tqJ" secondAttribute="trailing" id="e7T-z0-WvP"/>
-                                                <constraint firstItem="Vls-o6-tqJ" firstAttribute="trailing" secondItem="Cr7-TZ-sYO" secondAttribute="trailingMargin" id="xVU-xK-JRV"/>
-                                            </constraints>
-                                            <variation key="default">
-                                                <mask key="constraints">
-                                                    <exclude reference="dsa-Qg-obu"/>
-                                                    <exclude reference="xVU-xK-JRV"/>
-                                                </mask>
-                                            </variation>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                </cells>
-                            </tableViewSection>
                         </sections>
                         <connections>
                             <outlet property="dataSource" destination="er2-Fn-lfg" id="N4l-Lo-TmI"/>
@@ -236,8 +190,6 @@
                         <outlet property="richPreviewsSwitch" destination="bKk-pd-RXW" id="5kK-zG-Npw"/>
                         <outlet property="statusLabel" destination="dmC-l2-KSe" id="eps-kf-BPw"/>
                         <outlet property="statusRightDetailLabel" destination="ryg-f2-PvZ" id="xhn-Zk-CRN"/>
-                        <outlet property="useMobileDataLabel" destination="QIc-tp-7cM" id="vNE-nx-TSa"/>
-                        <outlet property="useMobileDataSwitch" destination="Vls-o6-tqJ" id="S0n-cO-9Kh"/>
                         <outlet property="videoQualityLabel" destination="PvF-TJ-KqG" id="lZG-tk-iwI"/>
                         <outlet property="videoQualityRightDetailLabel" destination="waA-RD-zxW" id="BPH-Mo-9xk"/>
                     </connections>
