@@ -10,9 +10,6 @@
 #import "MEGATransferDelegate.h"
 #import "NSFileManager+MNZCategory.h"
 
-#define kAppKey @"EVtjzb7R"
-#define kUserAgent @"MEGAiOS"
-
 @interface FileProvider () <MEGARequestDelegate, MEGATransferDelegate>
 
 @property (nonatomic) MEGANode *oldNode;
@@ -85,11 +82,7 @@
     // Called at some point after the file has changed; the provider may then trigger an upload
     self.url = url;
     self.semaphore = dispatch_semaphore_create(0);
-    
-    [MEGASdkManager setAppKey:kAppKey];
-    NSString *userAgent = [NSString stringWithFormat:@"%@/%@", kUserAgent, [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"]];
-    [MEGASdkManager setUserAgent:userAgent];
-    
+
 #ifdef DEBUG
     [MEGASdk setLogLevel:MEGALogLevelMax];
 #else

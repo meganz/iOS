@@ -1461,16 +1461,21 @@
 
 #pragma mark - CNContactPickerDelegate
 
-- (void)contactPicker:(CNContactPickerViewController *)picker didSelectContactProperties:(NSArray<CNContactProperty*> *)contactProperties {
-    NSUInteger usersCount = contactProperties.count;
-    MEGAInviteContactRequestDelegate *inviteContactRequestDelegate = [[MEGAInviteContactRequestDelegate alloc] initWithNumberOfRequests:usersCount];
-    for (CNContactProperty *contactProperty in contactProperties) {
-        NSString *email = contactProperty.value;
-        if (email.mnz_isValidEmail) {
-            [[MEGASdkManager sharedMEGASdk] inviteContactWithEmail:contactProperty.value message:@"" action:MEGAInviteActionAdd delegate:inviteContactRequestDelegate];
-        } else {
-            [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"%@ %@", AMLocalizedString(@"theEmailAddressFormatIsInvalid", @"Add contacts and share dialog error message when user try to add wrong email address"), email]];
+- (void)contactPicker:(CNContactPickerViewController *)picker didSelectContacts:(NSArray<CNContact *> *)contacts {
+    NSMutableArray<NSString *> *contactEmails = NSMutableArray.new;
+    for (CNContact *contact in contacts) {
+        for (CNContactProperty *contactProperty in contact.emailAddresses) {
+            NSString *email = contactProperty.value;
+            if (email.mnz_isValidEmail) {
+                [contactEmails addObject:email];
+            } else {
+                 [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"%@ %@", AMLocalizedString(@"theEmailAddressFormatIsInvalid", @"Add contacts and share dialog error message when user try to add wrong email address"), email]];
+            }
         }
+    }
+    MEGAInviteContactRequestDelegate *inviteContactRequestDelegate = [MEGAInviteContactRequestDelegate.alloc initWithNumberOfRequests:contactEmails.count];
+    for (NSString *email in contactEmails) {
+        [MEGASdkManager.sharedMEGASdk inviteContactWithEmail:email message:@"" action:MEGAInviteActionAdd delegate:inviteContactRequestDelegate];
     }
 }
 

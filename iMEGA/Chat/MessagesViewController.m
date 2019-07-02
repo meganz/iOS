@@ -35,6 +35,7 @@
 #import "NSDate+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 #import "UIImage+MNZCategory.h"
+#import "UIAlertAction+MNZCategory.h"
 #import "UIApplication+MNZCategory.h"
 #import "UIView+MNZCategory.h"
 
@@ -1058,7 +1059,6 @@ static NSMutableSet<NSString *> *tapForInfoSet;
         
         ContactDetailsViewController *contactDetailsVC = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactDetailsViewControllerID"];
         contactDetailsVC.contactDetailsMode = ContactDetailsModeFromChat;
-        contactDetailsVC.chatId = self.chatRoom.chatId;
         contactDetailsVC.userEmail = peerEmail;
         contactDetailsVC.userName = peerName;
         contactDetailsVC.userHandle = peerHandle;
@@ -1459,6 +1459,69 @@ static NSMutableSet<NSString *> *tapForInfoSet;
     if (self.unreadMessages) {
         [self showOrHideJumpToBottom];
     }
+}
+
+- (void)showOptionsForPeerWithHandle:(uint64_t)userHandle senderView:(UIView *)senderView {
+    if (userHandle == [MEGASdkManager sharedMEGASdk].myUser.handle || userHandle == ~(uint64_t)0) {
+        return;
+    }
+    
+    NSString *userName = [self.chatRoom peerFullnameByHandle:userHandle];
+    NSString *userEmail = [self.chatRoom peerEmailByHandle:userHandle];
+    
+    if (!userEmail) {
+        return;
+    }
+    
+    UIAlertController *userAlertController = [UIAlertController alertControllerWithTitle:userName message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    
+    UIAlertAction *cancelAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+        self.inputToolbar.hidden = self.chatRoom.ownPrivilege <= MEGAChatRoomPrivilegeRo;
+    }];
+    [cancelAlertAction mnz_setTitleTextColor:UIColor.mnz_redMain];
+    [userAlertController addAction:cancelAlertAction];
+    
+    UIAlertAction *infoAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"info", @"A button label. The button allows the user to get more info of the current context.") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        ContactDetailsViewController *contactDetailsVC = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactDetailsViewControllerID"];
+        contactDetailsVC.contactDetailsMode = self.chatRoom.isGroup ? ContactDetailsModeFromGroupChat : ContactDetailsModeFromChat;
+        contactDetailsVC.userEmail = userEmail;
+        contactDetailsVC.userName = userName;
+        contactDetailsVC.userHandle = userHandle;
+        contactDetailsVC.groupChatRoom = self.chatRoom;
+        [self.navigationController pushViewController:contactDetailsVC animated:YES];
+    }];
+    [infoAlertAction mnz_setTitleTextColor:UIColor.mnz_black333333];
+    [userAlertController addAction:infoAlertAction];
+    
+    MEGAUser *user = [[MEGASdkManager sharedMEGASdk] contactForEmail:[self.chatRoom peerEmailByHandle:userHandle]];
+    if (!user || user.visibility != MEGAUserVisibilityVisible) {
+        UIAlertAction *addContactAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"addContact", @"Alert title shown when you select to add a contact inserting his/her email") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            if ([MEGAReachabilityManager isReachableHUDIfNot]) {
+                MEGAInviteContactRequestDelegate *inviteContactRequestDelegate = [[MEGAInviteContactRequestDelegate alloc] initWithNumberOfRequests:1];
+                [[MEGASdkManager sharedMEGASdk] inviteContactWithEmail:[self.chatRoom peerEmailByHandle:userHandle] message:@"" action:MEGAInviteActionAdd delegate:inviteContactRequestDelegate];
+                self.inputToolbar.hidden = self.chatRoom.ownPrivilege <= MEGAChatRoomPrivilegeRo;
+            }
+        }];
+        [addContactAlertAction mnz_setTitleTextColor:UIColor.mnz_black333333];
+        [userAlertController addAction:addContactAlertAction];
+    }
+    
+    if (self.chatRoom.ownPrivilege == MEGAChatRoomPrivilegeModerator && self.chatRoom.isGroup) {
+        UIAlertAction *removeParticipantAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"removeParticipant", @"A button title which removes a participant from a chat.") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            [[MEGASdkManager sharedMEGAChatSdk] removeFromChat:self.chatRoom.chatId userHandle:userHandle delegate:self];
+            self.inputToolbar.hidden = self.chatRoom.ownPrivilege <= MEGAChatRoomPrivilegeRo;
+        }];
+        [userAlertController addAction:removeParticipantAlertAction];
+    }
+    
+    if (UIDevice.currentDevice.iPadDevice) {
+        userAlertController.modalPresentationStyle = UIModalPresentationPopover;
+        userAlertController.popoverPresentationController.sourceRect = senderView.frame;
+        userAlertController.popoverPresentationController.sourceView = senderView;
+    }
+    
+    self.inputToolbar.hidden = UIDevice.currentDevice.iPad ? NO : YES;
+    [self presentViewController:userAlertController animated:YES completion:nil];
 }
 
 #pragma mark - IBActions
@@ -2623,7 +2686,9 @@ static NSMutableSet<NSString *> *tapForInfoSet;
 }
 
 - (void)collectionView:(JSQMessagesCollectionView *)collectionView didTapAvatarImageView:(UIImageView *)avatarImageView atIndexPath:(NSIndexPath *)indexPath {
-    NSLog(@"Tapped avatar!");
+    MEGAChatMessage *message = [self.messages objectAtIndex:indexPath.item];
+    uint64_t userHandle = message.userHandle;
+    [self showOptionsForPeerWithHandle:userHandle senderView:avatarImageView];
 }
 
 - (void)collectionView:(JSQMessagesCollectionView *)collectionView didTapMessageBubbleAtIndexPath:(NSIndexPath *)indexPath {
@@ -2843,6 +2908,21 @@ static NSMutableSet<NSString *> *tapForInfoSet;
     }
     
     return skeletonImageView;
+}
+
+#pragma mark - MEGAPhotoBrowserDelegate
+
+- (void)photoBrowser:(MEGAPhotoBrowserViewController *)photoBrowser didPresentNodeAtIndex:(NSUInteger)index {
+    if (index >= self.attachmentMessages.count) {
+        return;
+    }
+    
+    MEGAChatMessage *message = [self.attachmentMessages objectAtIndex:(self.attachmentMessages.count - 1 - index)];
+    NSUInteger item = [self.messages indexOfObject:message];
+    NSIndexPath *indexPath = [NSIndexPath indexPathForItem:item inSection:0];
+    if (indexPath) {
+        [self.collectionView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionCenteredVertically animated:NO];
+    }
 }
 
 #pragma mark - MEGAChatRoomDelegate
