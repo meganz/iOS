@@ -113,4 +113,19 @@
     }
 }
 
+#pragma mark - properties
+
+- (unsigned long long)mnz_fileSystemFreeSize {
+    NSError *error;
+    NSDictionary *attributesOfHomeDirectoryDictionary = [self attributesOfFileSystemForPath:NSHomeDirectory() error:&error];
+    if (attributesOfHomeDirectoryDictionary) {
+        NSNumber *fileSystemFreeSizeInBytes = [attributesOfHomeDirectoryDictionary objectForKey:NSFileSystemFreeSize];
+        return fileSystemFreeSizeInBytes.unsignedLongLongValue;
+    } else {
+        MEGALogError(@"Obtaining attributes of home directory failed with error: %@", error);
+    }
+    
+    return 0;
+}
+
 @end

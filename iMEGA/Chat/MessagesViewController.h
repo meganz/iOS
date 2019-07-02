@@ -12,5 +12,6 @@
 @property (class, nonatomic) NSMutableSet<NSString *> *tapForInfoSet;
 
 - (void)updateUnreadLabel;
+- (void)showOptionsForPeerWithHandle:(uint64_t)userHandle senderView:(UIView *)senderView;
 
 @end

@@ -1,9 +1,6 @@
 
 #import "MEGATransfer+MNZCategory.h"
-
 #import <Photos/Photos.h>
-
-#import "CameraUploads.h"
 #import "Helper.h"
 #import "MEGANode+MNZCategory.h"
 #import "MEGASdkManager.h"
@@ -117,28 +114,6 @@
     }
 }
 
-- (void)mnz_cancelPendingCUTransfer {
-    if ([self.appData containsString:@"CU"]) {
-        if ([CameraUploads syncManager].isCameraUploadsEnabled) {
-            if (![CameraUploads syncManager].isUseCellularConnectionEnabled && [MEGAReachabilityManager isReachableViaWWAN]) {
-                [[MEGASdkManager sharedMEGASdk] cancelTransfer:self];
-            }
-        } else {
-            [[MEGASdkManager sharedMEGASdk] cancelTransfer:self];
-        }
-    }
-}
-
-- (void)mnz_cancelPendingCUVideoTransfer {
-    if ([self.appData containsString:@"CU"]) {
-        if ([CameraUploads syncManager].isCameraUploadsEnabled) {
-            if (self.fileName.mnz_isVideoPathExtension) {
-                [[MEGASdkManager sharedMEGASdk] cancelTransfer:self];
-            }
-        }
-    }
-}
-
 - (void)mnz_saveInPhotosApp {
     [self mnz_setNodeCoordinates];
     
@@ -214,7 +189,7 @@
         NSString *longitude = [setCoordinatesComponentsArray objectAtIndex:1];
         if (latitude && longitude) {
             MEGANode *node = [[MEGASdkManager sharedMEGASdk] nodeForHandle:self.nodeHandle];
-            [[MEGASdkManager sharedMEGASdk] setNodeCoordinates:node latitude:latitude.doubleValue longitude:longitude.doubleValue];
+            [[MEGASdkManager sharedMEGASdk] setNodeCoordinates:node latitude:@(latitude.doubleValue) longitude:@(longitude.doubleValue)];
         }
     }
 }

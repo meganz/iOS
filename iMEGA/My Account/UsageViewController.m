@@ -121,7 +121,7 @@
             firstPartRange = [firstPartString rangeOfString:firstPartString];
             firstPartMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:firstPartString];
             
-            NSString *secondPartString = @"%";
+            NSString *secondPartString = @" %";
             secondPartMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:secondPartString];
             secondPartRange = [secondPartString rangeOfString:secondPartString];
             break;
@@ -151,7 +151,7 @@
         firstPartRange = [firstPartString rangeOfString:firstPartString];
         firstPartMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:firstPartString];
         
-        NSString *secondPartString = [NSString mnz_stringWithoutCountOfComponents:componentsSeparatedByStringArray];
+        NSString *secondPartString = [NSString stringWithFormat:@" %@", [NSString mnz_stringWithoutCountOfComponents:componentsSeparatedByStringArray]];
         secondPartRange = [secondPartString rangeOfString:secondPartString];
         secondPartMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:secondPartString];
     }
