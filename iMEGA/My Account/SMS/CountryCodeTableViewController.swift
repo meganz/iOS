@@ -1,30 +1,34 @@
 
 import UIKit
 
-class CountryCodeTableViewController: UITableViewController {
-
+class CallingCountriesTableViewController: UITableViewController {
+    
+    private var countryCallingCodeDict: [String: MEGAStringList]
+    private var collation = UILocalizedIndexedCollation.current()
+    
+    init(countryCallingCodeDict: [String: MEGAStringList]) {
+        self.countryCallingCodeDict = countryCallingCodeDict
+        super.init(style: .plain)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         title = "Choose Your Country"
 
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
+        
     }
-
-    // MARK: - Table view data source
-
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 0
-    }
-
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return 0
+    
+    private func buildDataModel() {
+        guard let appLanguageId = LocalizationSystem.sharedLocal()?.getLanguage() else {
+            return
+        }
+        
+        let appLocale = Locale(identifier: Locale.identifier(fromComponents: [NSLocale.Key.languageCode.rawValue : appLanguageId]))
     }
 
     /*
@@ -81,5 +85,28 @@ class CountryCodeTableViewController: UITableViewController {
         // Pass the selected object to the new view controller.
     }
     */
+}
 
+// MARK: - UITableViewDataSource, UITableViewDelegate
+extension CallingCountriesTableViewController {
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        return collation.sectionTitles.count
+    }
+    
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        // #warning Incomplete implementation, return the number of rows
+        return 0
+    }
+    
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return collation.sectionTitles[section]
+    }
+    
+    override func sectionIndexTitles(for tableView: UITableView) -> [String]? {
+        return collation.sectionIndexTitles
+    }
+    
+    override func tableView(_ tableView: UITableView, sectionForSectionIndexTitle title: String, at index: Int) -> Int {
+        return collation.section(forSectionIndexTitle: index)
+    }
 }

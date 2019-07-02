@@ -713,7 +713,8 @@
 		B6A11A0C22828FEF0017CD59 /* SMSVerificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6A11A0B22828FEF0017CD59 /* SMSVerificationViewController.swift */; };
 		B6A11A0E2283987D0017CD59 /* SMSVerification.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B6A11A0D2283987D0017CD59 /* SMSVerification.storyboard */; };
 		B6B73E6C22C47C6000ACAD48 /* MEGAStringList+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6B73E6B22C47C6000ACAD48 /* MEGAStringList+Additions.swift */; };
-		B6B73E6E22C5713700ACAD48 /* CountryCodeTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6B73E6D22C5713700ACAD48 /* CountryCodeTableViewController.swift */; };
+		B6B73E6E22C5713700ACAD48 /* CallingCountriesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6B73E6D22C5713700ACAD48 /* CallingCountriesTableViewController.swift */; };
+		B6B73E7022C9A39500ACAD48 /* CallingCountry.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6B73E6F22C9A39500ACAD48 /* CallingCountry.swift */; };
 		E803CB641D5336F100F81A36 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = E803CB661D5336F100F81A36 /* InfoPlist.strings */; };
 		E80C76101DEDF32A00CA4D68 /* GroupChatDetailsViewTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E80C760F1DEDF32A00CA4D68 /* GroupChatDetailsViewTableViewCell.m */; };
 		E81616731A8397B5002EFDD7 /* FolderLinkViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E81616721A8397B5002EFDD7 /* FolderLinkViewController.m */; };
@@ -1629,7 +1630,8 @@
 		B6A11A0B22828FEF0017CD59 /* SMSVerificationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SMSVerificationViewController.swift; sourceTree = "<group>"; };
 		B6A11A0D2283987D0017CD59 /* SMSVerification.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SMSVerification.storyboard; sourceTree = "<group>"; };
 		B6B73E6B22C47C6000ACAD48 /* MEGAStringList+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAStringList+Additions.swift"; sourceTree = "<group>"; };
-		B6B73E6D22C5713700ACAD48 /* CountryCodeTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryCodeTableViewController.swift; sourceTree = "<group>"; };
+		B6B73E6D22C5713700ACAD48 /* CallingCountriesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallingCountriesTableViewController.swift; sourceTree = "<group>"; };
+		B6B73E6F22C9A39500ACAD48 /* CallingCountry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallingCountry.swift; sourceTree = "<group>"; };
 		E803CB651D5336F100F81A36 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		E803CB681D53374A00F81A36 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		E80C760E1DEDF32A00CA4D68 /* GroupChatDetailsViewTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GroupChatDetailsViewTableViewCell.h; path = Chat/GroupChatDetailsViewTableViewCell.h; sourceTree = "<group>"; };
@@ -3471,9 +3473,18 @@
 				B6A11A0D2283987D0017CD59 /* SMSVerification.storyboard */,
 				B6A11A0B22828FEF0017CD59 /* SMSVerificationViewController.swift */,
 				B69983212294E1EC0021BE31 /* SMSNavigationViewController.swift */,
-				B6B73E6D22C5713700ACAD48 /* CountryCodeTableViewController.swift */,
+				B6B73E6D22C5713700ACAD48 /* CallingCountriesTableViewController.swift */,
+				B6B73E7122C9A52F00ACAD48 /* DataModel */,
 			);
 			path = SMS;
+			sourceTree = "<group>";
+		};
+		B6B73E7122C9A52F00ACAD48 /* DataModel */ = {
+			isa = PBXGroup;
+			children = (
+				B6B73E6F22C9A39500ACAD48 /* CallingCountry.swift */,
+			);
+			path = DataModel;
 			sourceTree = "<group>";
 		};
 		E84CDAFE1A7292AA003F4C77 /* Links */ = {
@@ -3989,7 +4000,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9419B6C01F20D1D700FEBE31 /* MEGAIndexer.m in Sources */,
-				B6B73E6E22C5713700ACAD48 /* CountryCodeTableViewController.swift in Sources */,
+				B6B73E6E22C5713700ACAD48 /* CallingCountriesTableViewController.swift in Sources */,
 				832E1025202B09AE00BDD30F /* NodeActionCollectionViewCell.m in Sources */,
 				41B3B8301AD591A80093A88D /* PasscodeTableViewController.m in Sources */,
 				415226921A692ECC00EC7BB6 /* ContactTableViewCell.m in Sources */,
@@ -4215,6 +4226,7 @@
 				41EAAE4A1D06B49400622FAF /* PHAsset+CTAssetsPickerController.m in Sources */,
 				41D21E6B1D01AEC3002E6296 /* CTAssetsPageViewController.m in Sources */,
 				41D21DF11D01AE89002E6296 /* NSArray+PureLayout.m in Sources */,
+				B6B73E7022C9A39500ACAD48 /* CallingCountry.swift in Sources */,
 				5B48F8061F4C80F4001E3A29 /* AchievementsTableViewCell.m in Sources */,
 				41D21E721D01AEC3002E6296 /* CTAssetThumbnailStacks.m in Sources */,
 				E87C98361CC4CC1000E2B9E6 /* AdvancedTableViewController.m in Sources */,
