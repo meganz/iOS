@@ -446,6 +446,12 @@ static NSString *nodeToPresentBase64Handle;
             break;
         }
             
+        case URLTypeChatPeerOptionsLink:
+            [MEGALinkManager handleChatPeerOptionsLink];
+            [MEGALinkManager resetLinkAndURLType];
+            
+            break;
+            
         default:
             break;
     }
@@ -796,6 +802,21 @@ static NSString *nodeToPresentBase64Handle;
         [viewControllers removeObjectAtIndex:1];
     }
     chatNC.viewControllers = viewControllers;
+}
+
++ (void)handleChatPeerOptionsLink {
+    NSString *base64UserHandle = [MEGALinkManager.linkURL.absoluteString componentsSeparatedByString:@"#"].lastObject;
+    
+    if (!base64UserHandle) {
+        return;
+    }
+    
+    if (![UIApplication.mnz_visibleViewController isKindOfClass:MessagesViewController.class]) {
+        return;
+    }
+    
+    MessagesViewController *messagesVC = (MessagesViewController *)UIApplication.mnz_visibleViewController;
+    [messagesVC showOptionsForPeerWithHandle:[MEGASdk handleForBase64UserHandle:base64UserHandle] senderView:nil];
 }
 
 @end

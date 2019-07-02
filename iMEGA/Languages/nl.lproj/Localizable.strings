@@ -1807,7 +1807,7 @@
 /* The text of a notification indicating that a file or folder that was taken down has now been restored due to a successful counter-notice. The %1 placeholder will be replaced with the text ‘file’ or ‘folder’. The %2 will be replaced with the name of the file or folder. */
 "Your taken down %1 (%2) has been reinstated."="Uw weggehaalde %1 (%2) is hersteld.";
 /* Text shown when a notification or the last message of a chat corresponds to a voice clip */
-"Voice message"="Voice message";
+"Voice message"="Spraakbericht";
 /* Error message shown to user when a copy/import operation would take them over their storage limit. */
 "This action can not be completed as it would take you over your current storage limit"="Deze actie kan niet worden voltooid omdat het u over de huidige opslaglimiet brengt.";
 /* uploads over storage quota warning dialog title */
@@ -1825,33 +1825,33 @@
 /* */
 "Yesterday"="Gisteren";
 /* Title of the button to share a location in a chat */
-"Send This Location"="Send This Location";
+"Send This Location"="Verzend deze locatie";
 /* Title of the alert that allows change between different maps: Standard, Satellite or Hybrid. */
-"Map settings"="Map settings";
+"Map settings"="Map Instellingen";
 /* Type of data displayed in a map view. A street map that shows the position of all roads and some road names. */
 "Standard"="Standaard";
 /* Type of data displayed in a map view. Satellite imagery of the area. */
-"Satellite"="Satellite";
+"Satellite"="SatelliteMap-instellingen";
 /* Type of data displayed in a map view. A satellite image of the area with road and road name information layered on top. */
-"Hybrid"="Hybrid";
+"Hybrid"="Hybride";
 /* Label to give feedback to the user when he is going to share his location, indicating that it may not be the exact location. */
-"Accurate to %d meters"="Accurate to %d meters";
+"Accurate to %d meters"="Nauwkeurig tot %d meter";
 /* Alert title shown when the user opens a shared Geolocation for the first time from any client, we will show a confirmation dialog warning the user that he is now leaving the E2EE paradigm. */
-"Send Location"="Send Location";
+"Send Location"="Stuur locatie";
 /* Message shown when the user opens a shared Geolocation for the first time from any client, we will show a confirmation dialog warning the user that he is now leaving the E2EE paradigm. */
-"This location will be opened using a third party maps provider outside the end-to-end encrypted MEGA platform."="This location will be opened using a third party maps provider outside the end-to-end encrypted MEGA platform.";
+"This location will be opened using a third party maps provider outside the end-to-end encrypted MEGA platform."="Deze locatie wordt geopend met behulp van een externe kaartenleverancier buiten het eind-tot-eind gecodeerde MEGA-platform.";
 /* Text shown in location-type messages */
-"Pinned Location"="Pinned Location";
+"Pinned Location"="Vastgezette locatie";
 /* Plural of participant. 2 participants */
 "%d participants"="%d deelnemers";
 /* Singular of participant. 1 participant */
 "%d participant"="%d deelnemer";
 /* Text shown in the chat toolbar while the user is recording a voice clip. The < character should be > in RTL languages. */
-"< Slide to cancel"="< Slide to cancel";
-/* First part of the string 'Tap and hold <icon> to record, release to send'. There is a microphone icon between the two parts of the string. */
-"Tap and hold"="Tap and hold";
-/* Second part of the string 'Tap and hold <icon> to record, release to send'. There is a microphone icon between the two parts of the string. */
-"to record, release to send"="to record, release to send";
+"< Slide to cancel"="< Schuif om te annuleren";
+/* Tooltip shown when the user presses but does not hold the microphone icon to send a voice clip */
+"Tap and hold %@ to record, release to send"="Tik en vasthouden %@ om op te nemen, loslaten om te verzenden";
+/* Message shown when there is an ongoing call and the user tries to record a voice message */
+"It is not possible to record voice messages while there is a call in progress"="Het is niet mogelijk om spraakberichten op te nemen tijdens een oproep.";
 /* Text to inform the user there is an active call and is not participating */
 "Ongoing Call"="Lopend Gesprek";
 /* Message shown when there is an ongoing call and the user tries to play an audio or video */
@@ -1895,7 +1895,7 @@
 /* Title for a recent action shown in the webclient, see the attached image for context. */
 "%1 created by %3"="%1 gecreëerd door %3";
 /* Message shown when the user has not recent activity in their account. */
-"No recent activity"="Geen recente activiteit";
+"No recent activity"="Geen Recente Activiteit";
 /* Plural of items which contains a folder. 2 items */
 "items"="items";
 /* Shown when an invalid/inexisting/not-available-anymore chat link is opened. */
@@ -1908,3 +1908,19 @@
 "Tap here for info"="Tik hier voor informatie";
 /* In some cases, a user may try to get the link for a chat room, but if such is not set by an operator - it would say "not link available" and not auto create it. */
 "No chat link available."="Geen Gesprekslink beschikbaar.";
+/* Title of a dialog in which we request access to a specific permission, like the Location Services */
+"Please allow access"="Geef toegang";
+/* Hint shown to the users, when they want to use the Location Services but they are disabled or restricted for MEGA */
+"Please go to the Privacy section in your device’s Setting. Enable Location Services and set MEGA to While Using the App or Always."="Ga naar de Privacy sectie in de Instellingen van uw apparaat. Schakel Locatie Diensten in en zet MEGA op Tijdens Gebruik van de Applicatie of Altijd.";
+/* Location Usage Description. In order to protect user's privacy, Apple requires a specific string explaining why location will be accessed. */
+"MEGA accesses your location when you elect to share it with your contacts."="MEGA heeft toegang tot uw locatie wanneer u ervoor kiest deze met uw contacten te delen.";
+/* Information shown when the user has disabled the 'Mobile Data' setting for MEGA in the iOS Settings. */
+"Mobile Data is turned off"="Mobiele Data is uitgeschakeld";
+/* Button title to go to the iOS Settings to enable 'Mobile Data' for the MEGA app. */
+"Turn Mobile Data on"="Schakel Mobiele Data aan";
+/* Extra information shown when the user has disabled the 'Mobile Data' setting for MEGA in the iOS Settings. */
+"You can turn on mobile data for this app in Settings."="U kunt mobiele data voor deze Applicatie aanzetten via Instellingen.";
+/* title of the alert dialog when the user is changing the API URL to staging */
+"Change to a test server?"="naar een test server?";
+/* text of the alert dialog when the user is changing the API URL to staging */
+"Are you sure you want to change to a test server? Your account may suffer irrecoverable problems"="Weet u zeker dat u wilt wijzigen naar een test server? Uw account kan onherstelbare problemen krijgen";

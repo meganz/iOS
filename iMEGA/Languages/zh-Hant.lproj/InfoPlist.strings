@@ -1,5 +1,5 @@
 /* Microphone usage description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
-"NSMicrophoneUsageDescription"="當您拍攝影片或使用MEGA撥打電話時，MEGA會需要使用您的麥克風。";
+"NSMicrophoneUsageDescription"="當您在app裡拍攝影片或撥打電話時，MEGA會存取您的麥克風使用權限。";
 /* Camera usage description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
 "NSCameraUsageDescription"="當您拍攝影片、照片或使用MEGA撥打電話時，MEGA會需要使用您的相機。";
 /* Photo library usage description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
@@ -9,12 +9,12 @@
 /* Write-only access to the user’s photo library description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
 "NSPhotoLibraryAddUsageDescription"="MEGA需要有您相片集的存取權，才能新增照片和影片到您設備中的圖庫裡";
 /* Face ID usage description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
-"NSFaceIDUsageDescription"="MEGA accesses Face ID to allow you to easily unlock the app’s passcode when you enable this option.";
+"NSFaceIDUsageDescription"="當你允許此選項時，MEGA會存取Face ID以輕鬆解鎖應用程式密碼。";
 /* Label for any 'Search' button, link, etc. - (String as short as possible). */
 "quickActionSearchString"="搜尋";
 /*  */
 "quickActionUploadString"="上傳";
 /* Title of the Offline section */
 "quickActionOfflineString"="離線";
-/* Location Usage Description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
-"NSLocationWhenInUseUsageDescription"="MEGA accesses to your location when you share it with your contacts.";
+/* Location Usage Description. In order to protect user's privacy, Apple requires a specific string explaining why location will be accessed. */
+"NSLocationWhenInUseUsageDescription"="此位置將使用點對點加密MEGA平台以外的第三方地圖供應商開啟。";

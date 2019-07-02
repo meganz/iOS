@@ -116,9 +116,7 @@
     [[MEGASdkManager sharedMEGASdk] addMEGAGlobalDelegate:self];
     [[MEGAReachabilityManager sharedManager] retryPendingConnections];
     
-    if (self.searchController && !self.tableView.tableHeaderView) {
-        self.tableView.tableHeaderView = self.searchController.searchBar;
-    }
+    [self addSearchBar];
     
     [self reloadUI];
 }
@@ -181,6 +179,8 @@
     [self setNavigationBarButtonItemsEnabled:boolValue];
     [self toolbarItemsSetEnabled:boolValue];
     
+    boolValue ? [self addSearchBar] : [self hideSearchBarIfNotActive];
+    
     [self.tableView reloadData];
 }
 
@@ -196,6 +196,19 @@
     [self.shareBarButtonItem setEnabled:((self.selectedNodesMutableArray.count < 100) ? boolValue : NO)];
     [_shareFolderBarButtonItem setEnabled:boolValue];
     [_removeShareBarButtonItem setEnabled:boolValue];
+}
+
+- (void)addSearchBar {
+    if (self.searchController && !self.tableView.tableHeaderView) {
+        self.tableView.contentOffset = CGPointMake(0, CGRectGetHeight(self.searchController.searchBar.frame));
+        self.tableView.tableHeaderView = self.searchController.searchBar;
+    }
+}
+
+- (void)hideSearchBarIfNotActive {
+    if (!self.searchController.isActive) {
+        self.tableView.tableHeaderView = nil;
+    }
 }
 
 - (void)incomingNodes {
@@ -215,10 +228,7 @@
     if (self.incomingNodesMutableArray.count == 0) {
         self.tableView.tableHeaderView = nil;
     } else {
-        if (!self.tableView.tableHeaderView) {
-            self.tableView.contentOffset = CGPointMake(0, CGRectGetHeight(self.searchController.searchBar.frame));
-            self.tableView.tableHeaderView = self.searchController.searchBar;
-        }
+        [self addSearchBar];
     }
 }
 
@@ -250,10 +260,7 @@
     if (self.outgoingNodesMutableArray.count == 0) {
         self.tableView.tableHeaderView = nil;
     } else {
-        if (!self.tableView.tableHeaderView) {
-            self.tableView.contentOffset = CGPointMake(0, CGRectGetHeight(self.searchController.searchBar.frame));
-            self.tableView.tableHeaderView = self.searchController.searchBar;
-        }
+        [self addSearchBar];
     }
 }
 
@@ -699,7 +706,6 @@
     }
     
     if (numberOfRows == 0) {
-        [self setEditing:NO animated:NO];
         [self setNavigationBarButtonItemsEnabled:NO];
     } else {
         [self setNavigationBarButtonItemsEnabled:YES];
@@ -912,6 +918,10 @@
 
 - (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
     self.searchNodesArray = nil;
+    
+    if (!MEGAReachabilityManager.isReachable) {
+        self.tableView.tableHeaderView = nil;
+    }
 }
 
 #pragma mark - UISearchResultsUpdating
@@ -1035,6 +1045,17 @@
     return [[NSAttributedString alloc] initWithString:text attributes:[Helper titleAttributesForEmptyState]];
 }
 
+- (nullable NSAttributedString *)descriptionForEmptyDataSet:(UIScrollView *)scrollView {
+    NSString *text = @"";
+    if (!MEGAReachabilityManager.isReachable && !MEGAReachabilityManager.sharedManager.isMobileDataEnabled) {
+        text = AMLocalizedString(@"Mobile Data is turned off", @"Information shown when the user has disabled the 'Mobile Data' setting for MEGA in the iOS Settings.");
+    }
+    
+    NSDictionary *attributes = @{NSFontAttributeName:[UIFont preferredFontForTextStyle:UIFontTextStyleFootnote], NSForegroundColorAttributeName:UIColor.mnz_gray777777};
+    
+    return [NSAttributedString.alloc initWithString:text attributes:attributes];
+}
+
 - (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView {
     UIImage *image;
     if ([MEGAReachabilityManager isReachable]) {
@@ -1058,6 +1079,22 @@
     return image;
 }
 
+- (NSAttributedString *)buttonTitleForEmptyDataSet:(UIScrollView *)scrollView forState:(UIControlState)state {
+    NSString *text = @"";
+    if (!MEGAReachabilityManager.isReachable && !MEGAReachabilityManager.sharedManager.isMobileDataEnabled) {
+        text = AMLocalizedString(@"Turn Mobile Data on", @"Button title to go to the iOS Settings to enable 'Mobile Data' for the MEGA app.");
+    }
+    
+    return [NSAttributedString.alloc initWithString:text attributes:Helper.buttonTextAttributesForEmptyState];
+}
+
+- (UIImage *)buttonBackgroundImageForEmptyDataSet:(UIScrollView *)scrollView forState:(UIControlState)state {
+    UIEdgeInsets capInsets = [Helper capInsetsForEmptyStateButton];
+    UIEdgeInsets rectInsets = [Helper rectInsetsForEmptyStateButton];
+    
+    return [[[UIImage imageNamed:@"emptyStateButton"] resizableImageWithCapInsets:capInsets resizingMode:UIImageResizingModeStretch] imageWithAlignmentRectInsets:rectInsets];
+}
+
 - (UIColor *)backgroundColorForEmptyDataSet:(UIScrollView *)scrollView {
     return UIColor.whiteColor;
 }
@@ -1068,6 +1105,14 @@
 
 - (CGFloat)verticalOffsetForEmptyDataSet:(UIScrollView *)scrollView {
     return [Helper verticalOffsetForEmptyStateWithNavigationBarSize:self.navigationController.navigationBar.frame.size searchBarActive:self.searchController.isActive];
+}
+
+#pragma mark - DZNEmptyDataSetDelegate
+
+- (void)emptyDataSet:(UIScrollView *)scrollView didTapButton:(UIButton *)button {
+    if (!MEGAReachabilityManager.isReachable && !MEGAReachabilityManager.sharedManager.isMobileDataEnabled) {
+        [UIApplication.sharedApplication openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString] options:@{} completionHandler:nil];
+    }
 }
 
 #pragma mark - MEGAGlobalDelegate

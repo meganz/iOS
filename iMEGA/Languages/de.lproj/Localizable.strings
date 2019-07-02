@@ -113,7 +113,7 @@
 /*  */
 "passwordStrong"="Dieses Passwort wird auch gut ausgestatteten Angreifern standhalten. Bitte stellen Sie sicher, dass Sie es nicht vergessen.";
 /*  */
-"agreeWithTheMEGATermsOfService"="Ich stimme MEGAs <a href='terms'>Allgemeinen Geschäftsbedingungen</a> zu";
+"agreeWithTheMEGATermsOfService"="Ich stimme MEGAs <a href=\"terms\">Allgemeinen Geschäftsbedingungen</a> zu";
 /* Error text shown when you have not entered a correct name */
 "nameInvalidFormat"="Gültigen Namen eingeben";
 /* Error text shown when you have not written the same password */
@@ -577,9 +577,9 @@
 /* Add contacts and share dialog error message when user try to add already existing email address. */
 "alreadyHaveAContactWithThatEmailAddress"="Sie stehen bereits mit dieser E-Mail-Adresse in Kontakt";
 /* Success message shown when a contact has been invited */
-"theUserHasBeenInvited"="Der Benutzer [X] wurden eingeladen und wird in Ihrer Kontaktliste auftauchen sobald die Einladung akzeptiert wurde.";
+"theUserHasBeenInvited"="Der Benutzer [X] wurden eingeladen und wird in Ihrer Kontaktliste erscheinen, sobald er die Einladung annimmt.";
 /* Success message shown when some contacts have been invited */
-"theUsersHaveBeenInvited"="Die Benutzer wurden eingeladen und werden in Ihrer Kontaktliste auftauchen sobald sie die Einladung akzeptiert haben.";
+"theUsersHaveBeenInvited"="Die Benutzer wurden eingeladen und werden in Ihrer Kontaktliste auftauchen, sobald sie die Einladung annehmen.";
 /* Error message shown when it hasn't been posible to add a contact */
 "addContactError"="Kontakt konnte nicht hinzugefügt werden";
 /* Alert title shown when you want to remove one or more contacts */
@@ -639,7 +639,7 @@
 /* Title of one of the Settings sections where you can set up the 'Language' of the app */
 "language"="Sprache";
 /* Title of one of the Settings sections where you can 'Send Feedback' to MEGA */
-"sendFeedbackLabel"="Senden Sie uns Ihr Feedback";
+"sendFeedbackLabel"="Bewertung abgeben";
 /* Message body of the email that appears when the users tap on "Send feedback" */
 "pleaseWriteYourFeedback"="Bitte geben Sie Ihre Kommentare hier ein:";
 /* Text shown when you want to send feedback of the app and you don't have an email account set up on your device */
@@ -942,7 +942,7 @@
 /* Title for "Local" used space. */
 "localLabel"="Lokal";
 /* Title for "Used" MEGA space. */
-"usedSpaceLabel"="Belegt";
+"usedSpaceLabel"="Genutzt";
 /* Title for MEGA "Available" space. */
 "availableLabel"="Verfügbar";
 /* title of the My Account screen */
@@ -972,7 +972,7 @@
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
 "cloudDriveIsAlmostFull"="[S]Ihr Cloud Drive ist fast voll.[/S] [A]Wechseln Sie jetzt[/A] auf einen PRO-Plan und erhalten Sie [S]bis zu 8 TB (8192 GB)[/S] Speicherplatz in der Cloud.";
 /* A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text. */
-"cloudDriveIsFull"="[S]Ihr Account hat sein Speicherlimit erreicht.[/S] [A]Wechseln Sie jetzt[/A] auf einen PRO-Account und erhalten Sie [S]bis zu 8 TB (8192 GB)[/S] Speicherplatz in der Cloud.";
+"cloudDriveIsFull"="[S]Ihr Account hat sein Speicherlimit erreicht.[/S] Mit [A]MEGA PRO[/A] erhalten Sie [S]bis zu 8 TB (8192 GB)[/S] Speicherplatz in der Cloud.";
 /* Storage related with the MEGA PRO account level you can subscribe */
 "productSpace"="Speicher";
 /* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
@@ -1222,7 +1222,7 @@
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
 "notNow"="Jetzt nicht";
 /* */
-"never"="Niemals";
+"never"="keine";
 /* After several times (right now set to 3) that the user may had decided to click \"Not now\" (for when being asked if he/she wants a URL preview to be generated for a link, posted in a chat room), we change the \"Not now\" button to \"Never\". If the user clicks it, we ask for one final time - to ensure he wants to not be asked for this anymore and tell him that he can do that in Settings. */
 "richPreviewsConfirmation"="Sie schalten die URL-Vorschau dauerhaft ab (eine Reaktivierung ist jedoch über Ihre Benutzereinstellungen möglich). Fortfahren?";
 /* Once a preview is generated for a message which contains URLs, the user can remove it. Same button is also shown during loading of the preview - and would cancel the loading (text of the button is the same in both cases). */
@@ -1848,10 +1848,10 @@
 "%d participant"="%d Teilnehmer";
 /* Text shown in the chat toolbar while the user is recording a voice clip. The < character should be > in RTL languages. */
 "< Slide to cancel"="< Slide to cancel";
-/* First part of the string 'Tap and hold <icon> to record, release to send'. There is a microphone icon between the two parts of the string. */
-"Tap and hold"="Tap and hold";
-/* Second part of the string 'Tap and hold <icon> to record, release to send'. There is a microphone icon between the two parts of the string. */
-"to record, release to send"="to record, release to send";
+/* Tooltip shown when the user presses but does not hold the microphone icon to send a voice clip */
+"Tap and hold %@ to record, release to send"="Tap and hold %@ to record, release to send";
+/* Message shown when there is an ongoing call and the user tries to record a voice message */
+"It is not possible to record voice messages while there is a call in progress"="It is not possible to record voice messages while there is a call in progress.";
 /* Text to inform the user there is an active call and is not participating */
 "Ongoing Call"="Laufendes Gespräch";
 /* Message shown when there is an ongoing call and the user tries to play an audio or video */
@@ -1908,3 +1908,19 @@
 "Tap here for info"="Details";
 /* In some cases, a user may try to get the link for a chat room, but if such is not set by an operator - it would say "not link available" and not auto create it. */
 "No chat link available."="Kein Chatlink verfügbar.";
+/* Title of a dialog in which we request access to a specific permission, like the Location Services */
+"Please allow access"="Please allow access";
+/* Hint shown to the users, when they want to use the Location Services but they are disabled or restricted for MEGA */
+"Please go to the Privacy section in your device’s Setting. Enable Location Services and set MEGA to While Using the App or Always."="Please go to the Privacy section in your device’s Settings. Enable Location Services and set MEGA to While Using the App or Always.";
+/* Location Usage Description. In order to protect user's privacy, Apple requires a specific string explaining why location will be accessed. */
+"MEGA accesses your location when you elect to share it with your contacts."="MEGA accesses your location when you elect to share it with your contacts.";
+/* Information shown when the user has disabled the 'Mobile Data' setting for MEGA in the iOS Settings. */
+"Mobile Data is turned off"="Mobile Data is turned off";
+/* Button title to go to the iOS Settings to enable 'Mobile Data' for the MEGA app. */
+"Turn Mobile Data on"="Turn Mobile Data on";
+/* Extra information shown when the user has disabled the 'Mobile Data' setting for MEGA in the iOS Settings. */
+"You can turn on mobile data for this app in Settings."="You can turn on mobile data for this App in Settings.";
+/* title of the alert dialog when the user is changing the API URL to staging */
+"Change to a test server?"="Auf den Testserver wechseln?";
+/* text of the alert dialog when the user is changing the API URL to staging */
+"Are you sure you want to change to a test server? Your account may suffer irrecoverable problems"="Auf den Testserver wechseln? Dies ist mit erheblichen Risiken behaftet.";

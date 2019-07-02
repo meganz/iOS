@@ -92,8 +92,12 @@ static NSString* const B = @"[B]";
     return [self stringByAppendingString:@">SaveInPhotosApp"];
 }
 
-- (NSString *)mnz_appDataToAttachToChatID:(uint64_t)chatId {
-    return [self stringByAppendingString:[NSString stringWithFormat:@">attachToChatID=%llu", chatId]];
+- (NSString *)mnz_appDataToAttachToChatID:(uint64_t)chatId asVoiceClip:(BOOL)asVoiceClip {
+    if (asVoiceClip) {
+        return [self stringByAppendingString:[NSString stringWithFormat:@">attachVoiceClipToChatID=%llu", chatId]];
+    } else {
+        return [self stringByAppendingString:[NSString stringWithFormat:@">attachToChatID=%llu", chatId]];
+    }
 }
 
 - (NSString *)mnz_appDataToSaveCoordinates:(NSString *)coordinates {
@@ -750,6 +754,32 @@ static NSString* const B = @"[B]";
         lastSeenMessage = AMLocalizedString(@"Last seen a long time ago", @"Text to inform the user the 'Last seen' time of a contact is a long time ago (more than 65535 minutes)");
     }
     return lastSeenMessage;
+}
+    
++ (NSString *)mnz_convertCoordinatesLatitude:(float)latitude longitude:(float)longitude {        
+    NSInteger latSeconds = (NSInteger)(latitude * 3600);
+    NSInteger latDegrees = latSeconds / 3600;
+    latSeconds = ABS(latSeconds % 3600);
+    NSInteger latMinutes = latSeconds / 60;
+    latSeconds %= 60;
+    
+    NSInteger longSeconds = (NSInteger)(longitude * 3600);
+    NSInteger longDegrees = longSeconds / 3600;
+    longSeconds = ABS(longSeconds % 3600);
+    NSInteger longMinutes = longSeconds / 60;
+    longSeconds %= 60;
+    
+    NSString* result = [NSString stringWithFormat:@"%td°%td'%td\"%@ %td°%td'%td\"%@",
+                        ABS(latDegrees),
+                        latMinutes,
+                        latSeconds,
+                        latDegrees >= 0 ? @"N" : @"S",
+                        ABS(longDegrees),
+                        longMinutes,
+                        longSeconds,
+                        longDegrees >= 0 ? @"E" : @"W"];
+    
+    return result;
 }
 
 + (NSString *)mnz_addedByInRecentActionBucket:(MEGARecentActionBucket *)recentActionBucket nodesArray:(NSArray *)nodesArray {

@@ -25,9 +25,6 @@
 
     //White background for the view behind the table view
     self.tableView.backgroundView = UIView.alloc.init;
-    
-    self.tableView.estimatedRowHeight = 60.0;
-    self.tableView.rowHeight = UITableViewAutomaticDimension;
 }
 
 #pragma mark - Public

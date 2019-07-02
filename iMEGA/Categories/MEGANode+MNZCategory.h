@@ -32,6 +32,7 @@
 - (NSString *)mnz_fileType;
 - (BOOL)mnz_isRestorable;
 - (BOOL)mnz_isPlayable;
+- (NSString *)mnz_temporaryPathForDownloadCreatingDirectories:(BOOL)creatingDirectories;
 
 #pragma mark - Versions
 
