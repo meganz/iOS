@@ -11,7 +11,7 @@
 #import "ChatStatusTableViewController.h"
 #import "ChatVideoUploadQuality.h"
 
-@interface ChatSettingsTableViewController () <DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGARequestDelegate, MEGAChatDelegate, MEGAChatRequestDelegate>
+@interface ChatSettingsTableViewController () <MEGARequestDelegate, MEGAChatDelegate, MEGAChatRequestDelegate>
 
 @property (weak, nonatomic) IBOutlet UILabel *videoQualityLabel;
 @property (weak, nonatomic) IBOutlet UILabel *videoQualityRightDetailLabel;
@@ -31,9 +31,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    self.tableView.emptyDataSetSource = self;
-    self.tableView.emptyDataSetDelegate = self;
     
     self.navigationItem.title = AMLocalizedString(@"chat", @"Chat section header");
     
@@ -63,6 +60,8 @@
     
     [self videoQualityString];
     
+    [self setUIElementsEnabled:MEGAReachabilityManager.isReachable];
+    
     [self.tableView reloadData];
 }
 
@@ -83,7 +82,12 @@
 #pragma mark - Private
 
 - (void)internetConnectionChanged {
-    [self.tableView reloadData];
+    [self setUIElementsEnabled:MEGAReachabilityManager.isReachable];
+}
+
+- (void)setUIElementsEnabled:(BOOL)boolValue {
+    self.statusLabel.enabled = self.statusRightDetailLabel.enabled = boolValue;
+    self.richPreviewsLabel.enabled = self.richPreviewsSwitch.enabled = boolValue;
 }
 
 - (void)onlineStatus {
@@ -143,12 +147,7 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    NSInteger numberOfRows = 0;
-    if ([MEGAReachabilityManager isReachable]) {
-        numberOfRows = 1;
-    }
-    
-    return numberOfRows;
+    return 1;
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
@@ -178,33 +177,6 @@
         ChatStatusTableViewController *chatStatusTVC = [[UIStoryboard storyboardWithName:@"ChatSettings" bundle:nil] instantiateViewControllerWithIdentifier:@"ChatStatusTableViewControllerID"];
         [self.navigationController pushViewController:chatStatusTVC animated:YES];
     }
-}
-
-#pragma mark - DZNEmptyDataSetSource
-
-- (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView {
-    NSString *text = @"";
-    if (![MEGAReachabilityManager isReachable]) {
-        text = AMLocalizedString(@"noInternetConnection",  @"Text shown on the app when you don't have connection to the internet or when you have lost it");
-    }
-    
-    return [[NSAttributedString alloc] initWithString:text attributes:[Helper titleAttributesForEmptyState]];
-}
-
-- (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView {
-    if (![MEGAReachabilityManager isReachable]) {
-        return [UIImage imageNamed:@"noInternetEmptyState"];
-    }
-    
-    return nil;
-}
-
-- (CGFloat)verticalOffsetForEmptyDataSet:(UIScrollView *)scrollView {
-    return [Helper verticalOffsetForEmptyStateWithNavigationBarSize:self.navigationController.navigationBar.frame.size searchBarActive:NO];
-}
-
-- (CGFloat)spaceHeightForEmptyDataSet:(UIScrollView *)scrollView {
-    return [Helper spaceHeightForEmptyState];
 }
 
 #pragma mark - MEGAChatDelegate

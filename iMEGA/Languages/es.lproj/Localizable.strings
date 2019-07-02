@@ -661,7 +661,7 @@
 /* Option title to enable Camera Uploads only when the device is charging */
 "onlyWhenChargingLabel"="Solo cargando";
 /* Footer text to explain the Camera Uploads functionality */
-"cameraUploads_footer"="Cuando estén activadas, se subirán fotos y videos.";
+"cameraUploads_footer"="Cuando estén activadas, se subirán fotos y vídeos.";
 /* App means “Application” */
 "App version"="Versión de la aplicación";
 /* Title of the label where the SDK version is shown */
@@ -1295,7 +1295,7 @@
 /* Label to show that the rate limit has been reached during a SDK operation. */
 "Rate limit exceeded"="Se ha superado el límite";
 /* Label to show that a SDK operation has failed permanently. */
-"Failed permanently"="Archivo no disponible temporalmente";
+"Failed permanently"="Fallo permanente";
 /* Label to show that an error for multiple concurrent connections or transfers occurs during a SDK operation. */
 "Too many concurrent connections or transfers"="Demasiadas conexiones o transferencias simultáneas";
 /* Label to show that an error of Out of range occurs during a SDK operation. */
@@ -1803,11 +1803,11 @@
 /* The professional pricing plan which the user was on expired %1 days ago. The %1 is a placeholder for the number of days and should not be removed. */
 "Your PRO membership plan expired %1 days ago"="Tu plan PRO ha caducado hace %1 días";
 /* The text of a notification indicating that a file or folder has been taken down due to infringement or other reason. The %1 placeholder will be replaced with the text ‘file’ or ‘folder’. The %2 will be replaced with the name of the file or folder. */
-"Your publicly shared %1 (%2) has been taken down."="Tu  %1 (%2) que has compartido públicamente ha sido eliminado/a.";
+"Your publicly shared %1 (%2) has been taken down."="Tu  %1 (%2) que has compartido públicamente ha sido retirado/a.";
 /* The text of a notification indicating that a file or folder that was taken down has now been restored due to a successful counter-notice. The %1 placeholder will be replaced with the text ‘file’ or ‘folder’. The %2 will be replaced with the name of the file or folder. */
-"Your taken down %1 (%2) has been reinstated."="La eliminación de: %1 (%2) ha sido revocada.";
+"Your taken down %1 (%2) has been reinstated."="La retirada de: %1 (%2) ha sido revocada.";
 /* Text shown when a notification or the last message of a chat corresponds to a voice clip */
-"Voice message"="Voice message";
+"Voice message"="Mensaje de voz";
 /* Error message shown to user when a copy/import operation would take them over their storage limit. */
 "This action can not be completed as it would take you over your current storage limit"="Esta acción no se puede completar ya que te llevaría por encima de tu límite de almacenamiento actual";
 /* uploads over storage quota warning dialog title */
@@ -1825,33 +1825,33 @@
 /* */
 "Yesterday"="Ayer";
 /* Title of the button to share a location in a chat */
-"Send This Location"="Send This Location";
+"Send This Location"="Enviar esta ubicación";
 /* Title of the alert that allows change between different maps: Standard, Satellite or Hybrid. */
-"Map settings"="Map settings";
+"Map settings"="Ajustes del mapa";
 /* Type of data displayed in a map view. A street map that shows the position of all roads and some road names. */
 "Standard"="Estándar";
 /* Type of data displayed in a map view. Satellite imagery of the area. */
-"Satellite"="Satellite";
+"Satellite"="Satélite";
 /* Type of data displayed in a map view. A satellite image of the area with road and road name information layered on top. */
-"Hybrid"="Hybrid";
+"Hybrid"="Híbrido";
 /* Label to give feedback to the user when he is going to share his location, indicating that it may not be the exact location. */
-"Accurate to %d meters"="Accurate to %d meters";
+"Accurate to %d meters"="Precisión de %d metros";
 /* Alert title shown when the user opens a shared Geolocation for the first time from any client, we will show a confirmation dialog warning the user that he is now leaving the E2EE paradigm. */
-"Send Location"="Send Location";
+"Send Location"="Enviar ubicación";
 /* Message shown when the user opens a shared Geolocation for the first time from any client, we will show a confirmation dialog warning the user that he is now leaving the E2EE paradigm. */
-"This location will be opened using a third party maps provider outside the end-to-end encrypted MEGA platform."="This location will be opened using a third party maps provider outside the end-to-end encrypted MEGA platform.";
+"This location will be opened using a third party maps provider outside the end-to-end encrypted MEGA platform."="Esta ubicación se abrirá utilizando un proveedor de mapas externo a la plataforma MEGA cifrada punto a punto.";
 /* Text shown in location-type messages */
-"Pinned Location"="Pinned Location";
+"Pinned Location"="Ubicación fijada";
 /* Plural of participant. 2 participants */
 "%d participants"="%d participantes";
 /* Singular of participant. 1 participant */
 "%d participant"="%d participante";
 /* Text shown in the chat toolbar while the user is recording a voice clip. The < character should be > in RTL languages. */
-"< Slide to cancel"="< Slide to cancel";
-/* First part of the string 'Tap and hold <icon> to record, release to send'. There is a microphone icon between the two parts of the string. */
-"Tap and hold"="Tap and hold";
-/* Second part of the string 'Tap and hold <icon> to record, release to send'. There is a microphone icon between the two parts of the string. */
-"to record, release to send"="to record, release to send";
+"< Slide to cancel"="< Desliza para cancelar";
+/* Tooltip shown when the user presses but does not hold the microphone icon to send a voice clip */
+"Tap and hold %@ to record, release to send"="Mantén pulsado %@ para grabar, suelta para enviar";
+/* Message shown when there is an ongoing call and the user tries to record a voice message */
+"It is not possible to record voice messages while there is a call in progress"="No es posible grabar mensajes de voz mientras hay una llamada en curso.";
 /* Text to inform the user there is an active call and is not participating */
 "Ongoing Call"="Llamada en curso";
 /* Message shown when there is an ongoing call and the user tries to play an audio or video */
@@ -1908,3 +1908,19 @@
 "Tap here for info"="Toca aquí para más información";
 /* In some cases, a user may try to get the link for a chat room, but if such is not set by an operator - it would say "not link available" and not auto create it. */
 "No chat link available."="Link del chat no disponible.";
+/* Title of a dialog in which we request access to a specific permission, like the Location Services */
+"Please allow access"="Permitir acceso";
+/* Hint shown to the users, when they want to use the Location Services but they are disabled or restricted for MEGA */
+"Please go to the Privacy section in your device’s Setting. Enable Location Services and set MEGA to While Using the App or Always."="Ve a la sección Privacidad en los Ajustes de tu dispositivo. Activa la Localización y configura MEGA en \"Cuando se use la app\" o \"Siempre\".";
+/* Location Usage Description. In order to protect user's privacy, Apple requires a specific string explaining why location will be accessed. */
+"MEGA accesses your location when you elect to share it with your contacts."="MEGA accederá a tu ubicación cuando elijas compartirla con tus contactos.";
+/* Information shown when the user has disabled the 'Mobile Data' setting for MEGA in the iOS Settings. */
+"Mobile Data is turned off"="Los datos móviles están desactivados";
+/* Button title to go to the iOS Settings to enable 'Mobile Data' for the MEGA app. */
+"Turn Mobile Data on"="Activar datos móviles";
+/* Extra information shown when the user has disabled the 'Mobile Data' setting for MEGA in the iOS Settings. */
+"You can turn on mobile data for this app in Settings."="Puedes activar los datos móviles para esta aplicación en los Ajustes del dispositivo.";
+/* title of the alert dialog when the user is changing the API URL to staging */
+"Change to a test server?"="¿Cambiar a un servidor de prueba?";
+/* text of the alert dialog when the user is changing the API URL to staging */
+"Are you sure you want to change to a test server? Your account may suffer irrecoverable problems"="¿Estás seguro de que quieres cambiar a un servidor de prueba? Tu cuenta podría sufrir daños irreparables.";

@@ -1807,7 +1807,7 @@
 /* The text of a notification indicating that a file or folder that was taken down has now been restored due to a successful counter-notice. The %1 placeholder will be replaced with the text ‘file’ or ‘folder’. The %2 will be replaced with the name of the file or folder. */
 "Your taken down %1 (%2) has been reinstated."="あなたの削除された%1（%2）は復活しました。";
 /* Text shown when a notification or the last message of a chat corresponds to a voice clip */
-"Voice message"="Voice message";
+"Voice message"="ボイスメッセージ";
 /* Error message shown to user when a copy/import operation would take them over their storage limit. */
 "This action can not be completed as it would take you over your current storage limit"="この操作は、現在のストレージ容量上限を超えてしまうため、完了できません。";
 /* uploads over storage quota warning dialog title */
@@ -1825,33 +1825,33 @@
 /* */
 "Yesterday"="昨日";
 /* Title of the button to share a location in a chat */
-"Send This Location"="Send This Location";
+"Send This Location"="この場所を送信";
 /* Title of the alert that allows change between different maps: Standard, Satellite or Hybrid. */
-"Map settings"="Map settings";
+"Map settings"="マップ設定";
 /* Type of data displayed in a map view. A street map that shows the position of all roads and some road names. */
 "Standard"="標準";
 /* Type of data displayed in a map view. Satellite imagery of the area. */
-"Satellite"="Satellite";
+"Satellite"="衛星";
 /* Type of data displayed in a map view. A satellite image of the area with road and road name information layered on top. */
-"Hybrid"="Hybrid";
+"Hybrid"="ハイブリッド";
 /* Label to give feedback to the user when he is going to share his location, indicating that it may not be the exact location. */
-"Accurate to %d meters"="Accurate to %d meters";
+"Accurate to %d meters"="%dメートルまで正確";
 /* Alert title shown when the user opens a shared Geolocation for the first time from any client, we will show a confirmation dialog warning the user that he is now leaving the E2EE paradigm. */
-"Send Location"="Send Location";
+"Send Location"="場所を送信";
 /* Message shown when the user opens a shared Geolocation for the first time from any client, we will show a confirmation dialog warning the user that he is now leaving the E2EE paradigm. */
-"This location will be opened using a third party maps provider outside the end-to-end encrypted MEGA platform."="This location will be opened using a third party maps provider outside the end-to-end encrypted MEGA platform.";
+"This location will be opened using a third party maps provider outside the end-to-end encrypted MEGA platform."="この場所は、エンドツーエンドの暗号化されたMEGAプラットフォームの外部にあるサードパーティのマッププロバイダを使用して開かれます。";
 /* Text shown in location-type messages */
-"Pinned Location"="Pinned Location";
+"Pinned Location"="ピン留めされた場所";
 /* Plural of participant. 2 participants */
 "%d participants"="%d人の参加者";
 /* Singular of participant. 1 participant */
 "%d participant"="%d人の参加者";
 /* Text shown in the chat toolbar while the user is recording a voice clip. The < character should be > in RTL languages. */
-"< Slide to cancel"="< Slide to cancel";
-/* First part of the string 'Tap and hold <icon> to record, release to send'. There is a microphone icon between the two parts of the string. */
-"Tap and hold"="Tap and hold";
-/* Second part of the string 'Tap and hold <icon> to record, release to send'. There is a microphone icon between the two parts of the string. */
-"to record, release to send"="to record, release to send";
+"< Slide to cancel"="<スライドしてキャンセル";
+/* Tooltip shown when the user presses but does not hold the microphone icon to send a voice clip */
+"Tap and hold %@ to record, release to send"="%@を長押しすると録音し、離すと送信します。";
+/* Message shown when there is an ongoing call and the user tries to record a voice message */
+"It is not possible to record voice messages while there is a call in progress"="It is not possible to record voice messages while there is a call in progress.";
 /* Text to inform the user there is an active call and is not participating */
 "Ongoing Call"="継続中の通話";
 /* Message shown when there is an ongoing call and the user tries to play an audio or video */
@@ -1908,3 +1908,19 @@
 "Tap here for info"="情報を見るにはこちらをタップ";
 /* In some cases, a user may try to get the link for a chat room, but if such is not set by an operator - it would say "not link available" and not auto create it. */
 "No chat link available."="利用できるチャットリンクはありません。";
+/* Title of a dialog in which we request access to a specific permission, like the Location Services */
+"Please allow access"="Please allow access";
+/* Hint shown to the users, when they want to use the Location Services but they are disabled or restricted for MEGA */
+"Please go to the Privacy section in your device’s Setting. Enable Location Services and set MEGA to While Using the App or Always."="Please go to the Privacy section in your device’s Settings. Enable Location Services and set MEGA to While Using the App or Always.";
+/* Location Usage Description. In order to protect user's privacy, Apple requires a specific string explaining why location will be accessed. */
+"MEGA accesses your location when you elect to share it with your contacts."="連絡先と共有することをご選択された場合、MEGAはあなたの場所にアクセスいたします。";
+/* Information shown when the user has disabled the 'Mobile Data' setting for MEGA in the iOS Settings. */
+"Mobile Data is turned off"="Mobile Data is turned off";
+/* Button title to go to the iOS Settings to enable 'Mobile Data' for the MEGA app. */
+"Turn Mobile Data on"="Turn Mobile Data on";
+/* Extra information shown when the user has disabled the 'Mobile Data' setting for MEGA in the iOS Settings. */
+"You can turn on mobile data for this app in Settings."="You can turn on mobile data for this App in Settings.";
+/* title of the alert dialog when the user is changing the API URL to staging */
+"Change to a test server?"="テストサーバーに変更しますか？　";
+/* text of the alert dialog when the user is changing the API URL to staging */
+"Are you sure you want to change to a test server? Your account may suffer irrecoverable problems"="テストサーバーに変更してもよろしいですか？　アカウントに回復不能な問題が発生する可能性があります";

@@ -1848,10 +1848,10 @@
 "%d participant"="%d participant";
 /* Text shown in the chat toolbar while the user is recording a voice clip. The < character should be > in RTL languages. */
 "< Slide to cancel"="< Slide to cancel";
-/* First part of the string 'Tap and hold <icon> to record, release to send'. There is a microphone icon between the two parts of the string. */
-"Tap and hold"="Tap and hold";
-/* Second part of the string 'Tap and hold <icon> to record, release to send'. There is a microphone icon between the two parts of the string. */
-"to record, release to send"="to record, release to send";
+/* Tooltip shown when the user presses but does not hold the microphone icon to send a voice clip */
+"Tap and hold %@ to record, release to send"="Tap and hold %@ to record, release to send";
+/* Message shown when there is an ongoing call and the user tries to record a voice message */
+"It is not possible to record voice messages while there is a call in progress"="It is not possible to record voice messages while there is a call in progress.";
 /* Text to inform the user there is an active call and is not participating */
 "Ongoing Call"="Ongoing Call";
 /* Message shown when there is an ongoing call and the user tries to play an audio or video */
@@ -1895,7 +1895,7 @@
 /* Title for a recent action shown in the webclient, see the attached image for context. */
 "%1 created by %3"="%1 created by %3";
 /* Message shown when the user has not recent activity in their account. */
-"No recent activity"="No recent activity";
+"No recent activity"="No Recent Activity";
 /* Plural of items which contains a folder. 2 items */
 "items"="items";
 /* Shown when an invalid/inexisting/not-available-anymore chat link is opened. */
@@ -1908,3 +1908,19 @@
 "Tap here for info"="Tap here for info";
 /* In some cases, a user may try to get the link for a chat room, but if such is not set by an operator - it would say "not link available" and not auto create it. */
 "No chat link available."="No chat link available.";
+/* Title of a dialog in which we request access to a specific permission, like the Location Services */
+"Please allow access"="Please allow access";
+/* Hint shown to the users, when they want to use the Location Services but they are disabled or restricted for MEGA */
+"Please go to the Privacy section in your device’s Setting. Enable Location Services and set MEGA to While Using the App or Always."="Please go to the Privacy section in your device’s Settings. Enable Location Services and set MEGA to While Using the App or Always.";
+/* Location Usage Description. In order to protect user's privacy, Apple requires a specific string explaining why location will be accessed. */
+"MEGA accesses your location when you elect to share it with your contacts."="MEGA accesses your location when you elect to share it with your contacts.";
+/* Information shown when the user has disabled the 'Mobile Data' setting for MEGA in the iOS Settings. */
+"Mobile Data is turned off"="Mobile Data is turned off";
+/* Button title to go to the iOS Settings to enable 'Mobile Data' for the MEGA app. */
+"Turn Mobile Data on"="Turn Mobile Data on";
+/* Extra information shown when the user has disabled the 'Mobile Data' setting for MEGA in the iOS Settings. */
+"You can turn on mobile data for this app in Settings."="You can turn on mobile data for this App in Settings.";
+/* title of the alert dialog when the user is changing the API URL to staging */
+"Change to a test server?"="Change to a test server?";
+/* text of the alert dialog when the user is changing the API URL to staging */
+"Are you sure you want to change to a test server? Your account may suffer irrecoverable problems"="Are you sure you want to change to a test server? Your account may suffer irrecoverable problems";

@@ -130,6 +130,10 @@
         return URLTypeAchievementsLink;
     }
     
+    if (afterSlashesString.length >= 16 && [[afterSlashesString substringToIndex:16] isEqualToString:@"chatPeerOptions#"]) {
+        return URLTypeChatPeerOptionsLink;
+    }
+    
     return type;
 }
 

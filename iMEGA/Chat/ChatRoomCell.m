@@ -6,6 +6,8 @@
 #import "MEGAChatListItem.h"
 #import "MEGASdkManager.h"
 #import "MEGAStore.h"
+#import "MEGAUser+MNZCategory.h"
+#import "NSAttributedString+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 #import "UIImageView+MNZCategory.h"
 #import "MEGAReachabilityManager.h"
@@ -129,6 +131,32 @@
     [self updateUnreadCountChange:chatListItem.unreadCount];
 }
 
+- (void)configureCellForUser:(MEGAUser *)user {
+    self.privateChatImageView.hidden = YES;
+    
+    self.chatTitle.text = [user mnz_fullName];
+    self.chatLastMessage.text = AMLocalizedString(@"noConversationHistory", @"Information if there are no history messages in current chat conversation");
+    
+    [self.avatarImageView mnz_setImageForUserHandle:user.handle name:[user mnz_fullName]];
+    UIColor *statusColor = [UIColor mnz_colorForStatusChange:[[MEGASdkManager sharedMEGAChatSdk] userOnlineStatus:user.handle]];
+    if (statusColor) {
+        self.onlineStatusView.backgroundColor = statusColor;
+        self.onlineStatusView.hidden = NO;
+    } else {
+        self.onlineStatusView.hidden = YES;
+    }
+    
+    if (@available(iOS 11.0, *)) {
+        self.avatarImageView.accessibilityIgnoresInvertColors = YES;
+    }
+    
+    self.activeCallImageView.hidden = YES;
+    self.onCallInfoView.hidden = YES;
+    self.chatLastTime.hidden = YES;
+    
+    [self updateUnreadCountChange:0];
+}
+
 - (void)updateDuration {
     //    NSTimeInterval interval = self.initDuration;
     NSTimeInterval interval = ([NSDate date].timeIntervalSince1970 - self.baseDate.timeIntervalSince1970 + self.initDuration);
@@ -206,6 +234,33 @@
                 lastMessageString = [lastMessageString stringByReplacingOccurrencesOfString:@"%s" withString:[NSString stringWithFormat:@"%tu", componentsArray.count]];
             }
             self.chatLastMessage.text = senderString ? [NSString stringWithFormat:@"%@: %@",senderString, lastMessageString] : lastMessageString;
+            break;
+        }
+            
+        case MEGAChatMessageTypeVoiceClip : {
+            NSString *senderString;
+            if (item.group) {
+                senderString = [self actionAuthorNameInChatListItem:item];
+            }
+            
+            MEGAChatMessage *lastMessage = [[MEGASdkManager sharedMEGAChatSdk] messageForChat:item.chatId messageId:item.lastMessageId];
+            NSString *durationString;
+            if (lastMessage.nodeList && lastMessage.nodeList.size.integerValue == 1) {
+                MEGANode *node = [lastMessage.nodeList nodeAtIndex:0];
+                NSTimeInterval duration = node.duration > 0 ? node.duration : 0;
+                durationString = [NSString mnz_stringFromTimeInterval:duration];
+            } else {
+                durationString = @"00:00";
+            }
+            
+            NSMutableAttributedString *lastMessageMutableAttributedString = senderString ? [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@: ", senderString]].mutableCopy : [[NSAttributedString alloc] initWithString:@""].mutableCopy;
+            NSString *voiceMessageImageName = self.chatListItem.unreadCount ? @"voiceMessage" : @"voiceMessageGrey";
+            NSAttributedString *microphoneImageAttributedString = [NSAttributedString mnz_attributedStringFromImageNamed:voiceMessageImageName fontCapHeight:self.chatLastMessage.font.capHeight];
+            [lastMessageMutableAttributedString appendAttributedString:microphoneImageAttributedString];
+            [lastMessageMutableAttributedString appendAttributedString:[[NSAttributedString alloc] initWithString:durationString]];
+            
+            self.chatLastMessage.attributedText = lastMessageMutableAttributedString;
+            
             break;
         }
             
@@ -375,6 +430,24 @@
             if (item.group && item.lastMessageSender != [[MEGASdkManager sharedMEGAChatSdk] myUserHandle]) {
                 senderString = [self actionAuthorNameInChatListItem:item];
             }
+            
+            if (item.lastMessageType == MEGAChatMessageTypeContainsMeta) {
+                MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:item.chatId];
+                MEGAChatMessage *message = [[MEGASdkManager sharedMEGAChatSdk] messageForChat:chatRoom.chatId messageId:item.lastMessageId];
+                
+                if (message.containsMeta.type == MEGAChatContainsMetaTypeGeolocation) {
+                    NSMutableAttributedString *lastMessageMutableAttributedString = senderString ? [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@: ", senderString]].mutableCopy : [[NSAttributedString alloc] initWithString:@""].mutableCopy;
+                    NSString *locationMessageImageName = self.chatListItem.unreadCount ? @"locationMessage" : @"locationMessageGrey";
+                    NSAttributedString *pinImageAttributedString = [NSAttributedString mnz_attributedStringFromImageNamed:locationMessageImageName fontCapHeight:self.chatLastMessage.font.capHeight];
+                    [lastMessageMutableAttributedString appendAttributedString:pinImageAttributedString];
+                    [lastMessageMutableAttributedString appendAttributedString:[[NSAttributedString alloc] initWithString:AMLocalizedString(@"Pinned Location", @"Text shown in location-type messages")]];
+
+                    self.chatLastMessage.attributedText = lastMessageMutableAttributedString;
+                    
+                    break;
+                }
+            }
+            
             self.chatLastMessage.text = senderString ? [NSString stringWithFormat:@"%@: %@",senderString, item.lastMessage] : item.lastMessage;
             break;
         }

@@ -691,8 +691,8 @@ static MEGAIndexer *indexer;
         [[MEGASdkManager sharedMEGASdkFolder] changeApiUrl:@"https://g.api.mega.co.nz/" disablepkp:NO];
         [Helper apiURLChanged];
     } else {
-        NSString *alertTitle = @"Change to a testing server?";
-        NSString *alertMessage = @"Are you sure you want to change to a test server? Your account may run irrecoverable problems";
+        NSString *alertTitle = AMLocalizedString(@"Change to a test server?", @"title of the alert dialog when the user is changing the API URL to staging");
+        NSString *alertMessage = AMLocalizedString(@"Are you sure you want to change to a test server? Your account may suffer irrecoverable problems", @"text of the alert dialog when the user is changing the API URL to staging");
         
         UIAlertController *changeApiServerAlertController = [UIAlertController alertControllerWithTitle:alertTitle message:alertMessage preferredStyle:UIAlertControllerStyleAlert];
         [changeApiServerAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
@@ -700,6 +700,12 @@ static MEGAIndexer *indexer;
         [changeApiServerAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", @"Button title to cancel something") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
             [[MEGASdkManager sharedMEGASdk] changeApiUrl:@"https://staging.api.mega.co.nz/" disablepkp:NO];
             [[MEGASdkManager sharedMEGASdkFolder] changeApiUrl:@"https://staging.api.mega.co.nz/" disablepkp:NO];
+            [Helper apiURLChanged];
+        }]];
+        
+        [changeApiServerAlertController addAction:[UIAlertAction actionWithTitle:@"Staging:444" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            [MEGASdkManager.sharedMEGASdk changeApiUrl:@"https://staging.api.mega.co.nz:444/" disablepkp:YES];
+            [MEGASdkManager.sharedMEGASdkFolder changeApiUrl:@"https://staging.api.mega.co.nz:444/" disablepkp:YES];
             [Helper apiURLChanged];
         }]];
         
@@ -884,7 +890,8 @@ static MEGAIndexer *indexer;
                 break;
             }
                 
-            case MEGAChatMessageTypeAttachment: {
+            case MEGAChatMessageTypeAttachment:
+            case MEGAChatMessageTypeVoiceClip: {
                 MEGANode *node = [message.nodeList mnz_nodesArrayFromNodeList].firstObject;
                 MOOfflineNode *offlineNodeExist = [[MEGAStore shareInstance] offlineNodeWithNode:node];
                 if (offlineNodeExist) {
@@ -1177,15 +1184,9 @@ static MEGAIndexer *indexer;
     searchController.dimsBackgroundDuringPresentation = NO;
     searchController.searchBar.searchBarStyle = UISearchBarStyleMinimal;
     searchController.searchBar.translucent = NO;
-    searchController.searchBar.backgroundImage = [UIImage imageWithCGImage:(__bridge CGImageRef)(UIColor.clearColor)];
+    searchController.searchBar.backgroundColor = UIColor.whiteColor;
     searchController.searchBar.barTintColor = UIColor.whiteColor;
     searchController.searchBar.tintColor = UIColor.mnz_redMain;
-    
-    UITextField *searchTextField = [searchController.searchBar valueForKey:@"_searchField"];
-    searchTextField.font = [UIFont mnz_SFUIRegularWithSize:17.0f];
-    searchTextField.backgroundColor = UIColor.mnz_grayEEEEEE;
-    searchTextField.textColor = UIColor.mnz_black333333;
-    searchTextField.tintColor = UIColor.mnz_green00BFA5;
     
     return searchController;
 }
