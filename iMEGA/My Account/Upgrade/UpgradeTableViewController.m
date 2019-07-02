@@ -80,7 +80,7 @@
     
     _autorenewableDescriptionLabel.text = AMLocalizedString(@"autorenewableDescription", @"Describe how works auto-renewable subscriptions on the Apple Store");
     
-    self.navigationItem.rightBarButtonItem = (self.isChoosingTheAccountType) ? nil : self.skipBarButtonItem;
+    self.navigationItem.rightBarButtonItem = (self.isChoosingTheAccountType || self.shouldHideSkipButton) ? nil : self.skipBarButtonItem;
     self.skipBarButtonItem.title = AMLocalizedString(@"skipButton", @"Button title that skips the current action");
     
     [self getIndexPositionsForProLevels];
@@ -94,6 +94,13 @@
     [super viewWillAppear:animated];
     
     self.navigationController.toolbarHidden = NO;
+}
+
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    
+    self.navigationController.toolbarHidden = YES;
 }
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations {

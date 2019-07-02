@@ -3,7 +3,6 @@
 #import "UIImage+GKContact.h"
 
 #import "Helper.h"
-#import "MEGANavigationController.h"
 #import "MEGAPurchase.h"
 #import "MEGASdk+MNZCategory.h"
 #import "MEGAReachabilityManager.h"
@@ -244,9 +243,9 @@
 - (IBAction)buyPROTouchUpInside:(UIButton *)sender {
     if ([[MEGASdkManager sharedMEGASdk] mnz_accountDetails]) {
         UpgradeTableViewController *upgradeTVC = [[UIStoryboard storyboardWithName:@"MyAccount" bundle:nil] instantiateViewControllerWithIdentifier:@"UpgradeID"];
-        MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:upgradeTVC];
+        upgradeTVC.hideSkipButton = YES;
         
-        [self presentViewController:navigationController animated:YES completion:nil];
+        [self.navigationController pushViewController:upgradeTVC animated:YES];
     } else {
         [MEGAReachabilityManager isReachableHUDIfNot];
     }
