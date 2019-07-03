@@ -13,6 +13,7 @@
 #import "MEGAActivityItemProvider.h"
 #import "MEGACopyRequestDelegate.h"
 #import "MEGACreateFolderRequestDelegate.h"
+#import "MEGAGenericRequestDelegate.h"
 #import "MEGANode+MNZCategory.h"
 #import "MEGANodeList+MNZCategory.h"
 #import "MEGAProcessAsset.h"
@@ -813,16 +814,9 @@ static MEGAIndexer *indexer;
                 MEGANode *resultNode = [[MEGASdkManager sharedMEGASdk] nodeForHandle:request.nodeHandle];
                 completion(resultNode);
             }];
-            MEGANode *myChatFilesNode = [[MEGASdkManager sharedMEGASdk] nodeForPath:@"/My chat files"];
-            if (myChatFilesNode) {
+            [Helper createMyChatFilesFolderIfNeededWithCompletion:^(MEGANode *myChatFilesNode) {
                 [[MEGASdkManager sharedMEGASdk] copyNode:node newParent:myChatFilesNode delegate:copyRequestDelegate];
-            } else {
-                MEGACreateFolderRequestDelegate *createFolderRequestDelegate = [[MEGACreateFolderRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
-                    MEGANode *myChatFilesNode = [[MEGASdkManager sharedMEGASdk] nodeForHandle:request.nodeHandle];
-                    [[MEGASdkManager sharedMEGASdk] copyNode:node newParent:myChatFilesNode delegate:copyRequestDelegate];
-                }];
-                [[MEGASdkManager sharedMEGASdk] createFolderWithName:@"My chat files" parent:[[MEGASdkManager sharedMEGASdk] rootNode] delegate:createFolderRequestDelegate];
-            }
+            }];
         }
     }
 }
@@ -1087,6 +1081,44 @@ static MEGAIndexer *indexer;
     }
     
     return [filesURLMutableArray copy];
+}
+
++ (void)createMyChatFilesFolderIfNeededWithCompletion:(void(^)(MEGANode *myChatFilesNode))completion {
+    MEGAGenericRequestDelegate *delegate = [MEGAGenericRequestDelegate.alloc initWithCompletion:^(MEGARequest *request, MEGAError *error) {
+        if (error.type) {
+            MEGANode *myChatFilesNode = [MEGASdkManager.sharedMEGASdk nodeForPath:@"/My chat files"];
+            if (myChatFilesNode) {
+                [MEGASdkManager.sharedMEGASdk setMyChatFilesFolder:myChatFilesNode.handle];
+                if (completion) {
+                    completion(myChatFilesNode);
+                }
+            } else {
+                NSString *localizedMyChatFilesPath = [NSString stringWithFormat:@"/%@", AMLocalizedString(@"My chat files", @"Destination folder name of chat files")];
+                myChatFilesNode = [MEGASdkManager.sharedMEGASdk nodeForPath:localizedMyChatFilesPath];
+                if (myChatFilesNode) {
+                    [MEGASdkManager.sharedMEGASdk setMyChatFilesFolder:myChatFilesNode.handle];
+                    if (completion) {
+                        completion(myChatFilesNode);
+                    }
+                } else {
+                    MEGACreateFolderRequestDelegate *createFolderRequestDelegate = [MEGACreateFolderRequestDelegate.alloc initWithCompletion:^(MEGARequest *request) {
+                        MEGANode *myChatFilesNode = [MEGASdkManager.sharedMEGASdk nodeForHandle:request.nodeHandle];
+                        [MEGASdkManager.sharedMEGASdk setMyChatFilesFolder:myChatFilesNode.handle];
+                        if (completion) {
+                            completion(myChatFilesNode);
+                        }
+                    }];
+                    [MEGASdkManager.sharedMEGASdk createFolderWithName:AMLocalizedString(@"My chat files", @"Destination folder name of chat files") parent:MEGASdkManager.sharedMEGASdk.rootNode delegate:createFolderRequestDelegate];
+                }
+            }
+        } else {
+            MEGANode *myChatFilesNode = [MEGASdkManager.sharedMEGASdk nodeForHandle:request.nodeHandle];
+            if (completion) {
+                completion(myChatFilesNode);
+            }
+        }
+    }];
+    [MEGASdkManager.sharedMEGASdk getMyChatFilesFolderWithDelegate:delegate];
 }
 
 + (void)setIndexer:(MEGAIndexer* )megaIndexer {

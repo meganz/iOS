@@ -52,7 +52,7 @@
     [super viewDidLoad];
     
     if (self.toUploadToChat) {
-        [self createMyChatFilesFolderWithCompletion:nil];
+        [Helper createMyChatFilesFolderIfNeededWithCompletion:nil];
     }
     
     if (![[NSFileManager defaultManager] fileExistsAtPath:NSTemporaryDirectory()]) {
@@ -62,28 +62,9 @@
 
 #pragma mark - Private
 
-- (void)prepareUploadDestination {
-    MEGANode *parentNode = [[MEGASdkManager sharedMEGASdk] nodeForPath:@"/My chat files"];
-    if (parentNode) {
-        [self triggerAssetsCompletion];
-    } else {
-        [self createMyChatFilesFolderWithCompletion:^(MEGARequest *request) {
-            [self triggerAssetsCompletion];
-        }];
-    }
-}
-
 - (void)triggerAssetsCompletion {
     if (self.assetsCompletion) {
         self.assetsCompletion(self.assets);
-    }
-}
-
-- (void)createMyChatFilesFolderWithCompletion:(void (^)(MEGARequest *request))completion {
-    MEGANode *parentNode = [[MEGASdkManager sharedMEGASdk] nodeForPath:@"/My chat files"];
-    if (!parentNode) {
-        MEGACreateFolderRequestDelegate *createFolderRequestDelegate = [[MEGACreateFolderRequestDelegate alloc] initWithCompletion:completion];
-        [[MEGASdkManager sharedMEGASdk] createFolderWithName:@"My chat files" parent:[[MEGASdkManager sharedMEGASdk] rootNode] delegate:createFolderRequestDelegate];
     }
 }
 
@@ -102,9 +83,11 @@
             }
             [Helper startPendingUploadTransferIfNeeded];
         } else if (self.toUploadToChat) {
-            [self createMyChatFilesFolderWithCompletion:nil];
+            [Helper createMyChatFilesFolderIfNeededWithCompletion:nil];
             self.assets = assets;
-            [self prepareUploadDestination];
+            [Helper createMyChatFilesFolderIfNeededWithCompletion:^(MEGANode *myChatFilesNode) {
+                [self triggerAssetsCompletion];
+            }];
         }
     }];
 }
