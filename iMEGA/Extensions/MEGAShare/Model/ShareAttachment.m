@@ -133,7 +133,7 @@ static NSMutableArray<ShareAttachment *> *_attachmentsArray;
         if (suggestedName.length > 0) {
             break;
         } else {
-            suggestedName = [[contact.emailAddresses objectAtIndex:0] value];
+            suggestedName = [contact.emailAddresses.firstObject value];
             if (suggestedName.length > 0) {
                 break;
             }

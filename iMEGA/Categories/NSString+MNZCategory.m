@@ -107,7 +107,7 @@ static NSString* const B = @"[B]";
 #pragma mark - Utils
 
 + (NSString *)mnz_stringWithoutUnitOfComponents:(NSArray *)componentsSeparatedByStringArray {
-    NSString *countString = [componentsSeparatedByStringArray objectAtIndex:0];
+    NSString *countString = componentsSeparatedByStringArray.firstObject;
     if ([countString isEqualToString:@"Zero"] || ([countString length] == 0)) {
         countString = @"0";
     }

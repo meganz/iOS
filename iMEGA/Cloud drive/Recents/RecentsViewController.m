@@ -69,7 +69,7 @@
     
     MEGARecentActionBucket *recentActionBucket = [self.recentActionBucketArray objectAtIndex:indexPath.section];
     NSArray *nodesArray = recentActionBucket.nodesList.mnz_nodesArrayFromNodeList;
-    MEGANode *node = [nodesArray objectAtIndex:0];
+    MEGANode *node = nodesArray.firstObject;
     
     [self.cloudDrive showCustomActionsForNode:node sender:sender];
 }
@@ -192,9 +192,9 @@
     MEGARecentActionBucket *recentActionBucket = [self.recentActionBucketArray objectAtIndex:indexPath.section];
     NSArray *nodesArray = recentActionBucket.nodesList.mnz_nodesArrayFromNodeList;
     if (nodesArray.count == 1) {
-        MEGANode *node = [nodesArray objectAtIndex:0];
+        MEGANode *node = nodesArray.firstObject;
         if (node.name.mnz_imagePathExtension || node.name.mnz_isVideoPathExtension) {
-            MEGAPhotoBrowserViewController *photoBrowserVC = [MEGAPhotoBrowserViewController photoBrowserWithMediaNodes:@[nodesArray[0]].mutableCopy api:MEGASdkManager.sharedMEGASdk displayMode:DisplayModeCloudDrive presentingNode:nodesArray[0] preferredIndex:0];
+            MEGAPhotoBrowserViewController *photoBrowserVC = [MEGAPhotoBrowserViewController photoBrowserWithMediaNodes:nodesArray.mutableCopy api:MEGASdkManager.sharedMEGASdk displayMode:DisplayModeCloudDrive presentingNode:nodesArray.firstObject preferredIndex:0];
             
             [self.cloudDrive.navigationController presentViewController:photoBrowserVC animated:YES completion:nil];
         } else {
@@ -203,7 +203,7 @@
     } else {
         if (recentActionBucket.isMedia) {
             NSMutableArray<MEGANode *> *mediaNodesArray = [recentActionBucket.nodesList mnz_mediaNodesMutableArrayFromNodeList];
-            MEGAPhotoBrowserViewController *photoBrowserVC = [MEGAPhotoBrowserViewController photoBrowserWithMediaNodes:mediaNodesArray api:MEGASdkManager.sharedMEGASdk displayMode:DisplayModeCloudDrive presentingNode:nodesArray[0] preferredIndex:0];
+            MEGAPhotoBrowserViewController *photoBrowserVC = [MEGAPhotoBrowserViewController photoBrowserWithMediaNodes:mediaNodesArray api:MEGASdkManager.sharedMEGASdk displayMode:DisplayModeCloudDrive presentingNode:nodesArray.firstObject preferredIndex:0];
             
             [self.cloudDrive.navigationController presentViewController:photoBrowserVC animated:YES completion:nil];
         } else {
