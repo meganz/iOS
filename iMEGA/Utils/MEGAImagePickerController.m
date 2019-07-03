@@ -21,7 +21,7 @@
 @property (nonatomic, getter=toChangeAvatar) BOOL changeAvatar;
 
 @property (nonatomic, getter=toShareThroughChat) BOOL shareThroughChat;
-@property (nonatomic, copy) void (^filePathCompletion)(NSString *filePath, UIImagePickerControllerSourceType sourceType);
+@property (nonatomic, copy) void (^filePathCompletion)(NSString *filePath, UIImagePickerControllerSourceType sourceType, MEGANode *myChatFilesNode);
 @property (nonatomic) NSString *filePath;
 
 @end
@@ -51,7 +51,7 @@
     return self;
 }
 
-- (instancetype)initToShareThroughChatWithSourceType:(UIImagePickerControllerSourceType)sourceType filePathCompletion:(void (^)(NSString *filePath, UIImagePickerControllerSourceType sourceType))filePathCompletion {
+- (instancetype)initToShareThroughChatWithSourceType:(UIImagePickerControllerSourceType)sourceType filePathCompletion:(void (^)(NSString *filePath, UIImagePickerControllerSourceType sourceType, MEGANode *myChatFilesNode))filePathCompletion {
     self = [super init];
     
     if (self) {
@@ -69,7 +69,7 @@
     [super viewDidLoad];
     
     if (self.toShareThroughChat) {
-        [self createMyChatFilesFolderWithCompletion:nil];
+        [Helper createMyChatFilesFolderIfNeededWithCompletion:nil];
     }
     
     if (![[NSFileManager defaultManager] fileExistsAtPath:NSTemporaryDirectory()]) {
@@ -109,30 +109,11 @@
     }
 }
 
-- (void)prepareUploadDestination {
-    MEGANode *parentNode = [[MEGASdkManager sharedMEGASdk] nodeForPath:@"/My chat files"];
-    if (parentNode) {
-        [self triggerPathCompletion];
-    } else {
-        [self createMyChatFilesFolderWithCompletion:^(MEGARequest *request) {
-            [self triggerPathCompletion];
-        }];
-    }
-}
-
-- (void)triggerPathCompletion {
+- (void)triggerPathCompletion:(MEGANode *)myChatFilesNode {
     [self dismissViewControllerAnimated:YES completion:nil];
     
     if (self.filePathCompletion) {
-        self.filePathCompletion(self.filePath, self.sourceType);
-    }
-}
-
-- (void)createMyChatFilesFolderWithCompletion:(void (^)(MEGARequest *request))completion {
-    MEGANode *parentNode = [[MEGASdkManager sharedMEGASdk] nodeForPath:@"/My chat files"];
-    if (!parentNode) {
-        MEGACreateFolderRequestDelegate *createFolderRequestDelegate = [[MEGACreateFolderRequestDelegate alloc] initWithCompletion:completion];
-        [[MEGASdkManager sharedMEGASdk] createFolderWithName:@"My chat files" parent:[[MEGASdkManager sharedMEGASdk] rootNode] delegate:createFolderRequestDelegate];
+        self.filePathCompletion(self.filePath, self.sourceType, myChatFilesNode);
     }
 }
 
@@ -148,7 +129,9 @@
     } else if (self.toShareThroughChat) {
         [[MEGASdkManager sharedMEGASdk] createPreview:imagePath destinatioPath:imagePath];
         self.filePath = imagePath.mnz_relativeLocalPath;
-        [self prepareUploadDestination];
+        [Helper createMyChatFilesFolderIfNeededWithCompletion:^(MEGANode *myChatFilesNode) {
+            [self triggerPathCompletion:myChatFilesNode];
+        }];
     }
 }
 
@@ -157,7 +140,9 @@
         [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:self.filePath parent:self.parentNode appData:nil isSourceTemporary:YES];
         [self dismissViewControllerAnimated:YES completion:nil];
     } else if (self.toShareThroughChat) {
-        [self prepareUploadDestination];
+        [Helper createMyChatFilesFolderIfNeededWithCompletion:^(MEGANode *myChatFilesNode) {
+            [self triggerPathCompletion:myChatFilesNode];
+        }];
     }
 }
 
@@ -182,7 +167,7 @@
                 }
             });
         } else {
-            MEGALogError(@"Creation request for asset failed: %@ (Domain: %@ - Code:%ld)", nserror.localizedDescription, nserror.domain, nserror.code);
+            MEGALogError(@"Creation request for asset failed: %@ (Domain: %@ - Code:%td)", nserror.localizedDescription, nserror.domain, nserror.code);
             dispatch_async(dispatch_get_main_queue(), ^{
                 [self dismissViewControllerAnimated:YES completion:nil];
             });

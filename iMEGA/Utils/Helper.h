@@ -90,6 +90,7 @@ typedef NS_OPTIONS(NSUInteger, NodesAre) {
 + (void)importNode:(MEGANode *)node toShareWithCompletion:(void (^)(MEGANode *node))completion;
 + (UIActivityViewController *)activityViewControllerForChatMessages:(NSArray<MEGAChatMessage *> *)messages sender:(id)sender;
 + (UIActivityViewController *)activityViewControllerForNodes:(NSArray *)nodesArray sender:(id)sender;
++ (void)createMyChatFilesFolderIfNeededWithCompletion:(void(^)(MEGANode *myChatFilesNode))completion;
 
 + (void)setIndexer:(MEGAIndexer* )megaIndexer;
 

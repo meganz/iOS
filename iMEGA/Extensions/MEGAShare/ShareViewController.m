@@ -930,16 +930,9 @@ void uncaughtExceptionHandler(NSException *exception) {
     self.chats = chats;
     self.users = users;
     
-    MEGANode *myChatFilesNode = [[MEGASdkManager sharedMEGASdk] nodeForPath:@"/My chat files"];
-    if (myChatFilesNode) {
+    [Helper createMyChatFilesFolderIfNeededWithCompletion:^(MEGANode *myChatFilesNode) {
         [self performUploadToParentNode:myChatFilesNode];
-    } else {
-        MEGACreateFolderRequestDelegate *createFolderRequestDelegate = [[MEGACreateFolderRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
-            MEGANode *myChatFilesNode = [[MEGASdkManager sharedMEGASdk] nodeForHandle:request.nodeHandle];
-            [self performUploadToParentNode:myChatFilesNode];
-        }];
-        [[MEGASdkManager sharedMEGASdk] createFolderWithName:@"My chat files" parent:[[MEGASdkManager sharedMEGASdk] rootNode] delegate:createFolderRequestDelegate];
-    }
+    }];
 }
 
 #pragma mark - MEGARequestDelegate
