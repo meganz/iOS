@@ -50,6 +50,12 @@
 "decrypt"="Decrypt";
 /* Alert title shown when you have written a decryption key not valid */
 "decryptionKeyNotValid"="Invalid decryption key";
+/* This dialog message is used on the Password Decrypt dialog. The link is a password protected link so the user needs to enter the password to decrypt the link. */
+"To access this link, you will need its password."="To access this link, you will need its password.";
+/* This dialog message is used on the Password Decrypt dialog as an instruction for the user. */
+"If you do not have the password, contact the creator of the link."="If you do not have the password, contact the creator of the link.";
+/* This placeholder text is used on the Password Decrypt dialog as an instruction for the user. */
+"Enter the password"="Enter the password";
 /* Alert title shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOut_alertTitle"="Logged out";
 /* Alert message shown when your account has been closed through another client or the web by killing all your sessions */
