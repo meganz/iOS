@@ -1552,7 +1552,7 @@
                     </connections>
                 </barButtonItem>
                 <barButtonItem systemItem="flexibleSpace" id="f43-7O-RtS"/>
-                <barButtonItem enabled="NO" image="move" width="32" id="M5b-JU-elC" userLabel="Move Copy Bar Button Item">
+                <barButtonItem enabled="NO" image="move" width="32" id="M5b-JU-elC" userLabel="Move Bar Button Item">
                     <color key="tintColor" red="0.40000000600000002" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <connections>
                         <action selector="moveAction:" destination="MwH-YC-3hO" id="wjw-6W-1q3"/>
