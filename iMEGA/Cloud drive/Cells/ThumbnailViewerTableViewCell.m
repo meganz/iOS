@@ -76,7 +76,7 @@
     if (![recentActionBucket.userEmail isEqualToString:MEGASdkManager.sharedMEGASdk.myEmail]) {
         self.addedByLabel.text = [NSString mnz_addedByInRecentActionBucket:recentActionBucket nodesArray:nodesArray];
         
-        MEGAShareType shareType = [MEGASdkManager.sharedMEGASdk accessLevelForNode:[nodesArray objectAtIndex:0]];
+        MEGAShareType shareType = [MEGASdkManager.sharedMEGASdk accessLevelForNode:nodesArray.firstObject];
         self.incomingOrOutgoingImageView.image = (shareType == MEGAShareTypeAccessOwner) ? [UIImage imageNamed:@"mini_folder_outgoing"] : [UIImage imageNamed:@"mini_folder_incoming"];
     }
     

@@ -444,7 +444,7 @@
         } else if ([userActivity.activityType isEqualToString:@"INStartAudioCallIntent"] || [userActivity.activityType isEqualToString:@"INStartVideoCallIntent"]) {
             INInteraction *interaction = userActivity.interaction;
             INStartAudioCallIntent *startAudioCallIntent = (INStartAudioCallIntent *)interaction.intent;
-            INPerson *contact = startAudioCallIntent.contacts[0];
+            INPerson *contact = startAudioCallIntent.contacts.firstObject;
             INPersonHandle *personHandle = contact.personHandle;
             
             if (personHandle.type == INPersonHandleTypeEmailAddress) {
@@ -1197,7 +1197,7 @@ void uncaughtExceptionHandler(NSException *exception) {
 - (void)setSystemLanguage {
     NSDictionary *globalDomain = [[NSUserDefaults standardUserDefaults] persistentDomainForName:@"NSGlobalDomain"];
     NSArray *languages = [globalDomain objectForKey:@"AppleLanguages"];
-    NSString *systemLanguageID = [languages objectAtIndex:0];
+    NSString *systemLanguageID = languages.firstObject;
     
     if ([Helper isLanguageSupported:systemLanguageID]) {
         [[LocalizationSystem sharedLocalSystem] setLanguage:systemLanguageID];

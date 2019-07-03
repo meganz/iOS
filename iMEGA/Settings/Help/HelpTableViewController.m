@@ -89,7 +89,7 @@
             NSString *systemVersion = [[UIDevice currentDevice] systemVersion];
             
             NSArray *languageArray = [NSLocale preferredLanguages];
-            NSString *language = [[NSLocale currentLocale] displayNameForKey:NSLocaleIdentifier value:[languageArray objectAtIndex:0]];
+            NSString *language = [NSLocale.currentLocale displayNameForKey:NSLocaleIdentifier value:languageArray.firstObject];
             
             NSString *connectionStatus = @"No internet connection";
             if ([MEGAReachabilityManager isReachable]) {
