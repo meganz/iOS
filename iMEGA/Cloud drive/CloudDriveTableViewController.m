@@ -134,8 +134,8 @@
         }
     }
     
+    cell.recentActionBucket = self.cloudDrive.recentActionBucket ?: nil;
     [cell configureCellForNode:node delegate:self api:[MEGASdkManager sharedMEGASdk]];
-    cell.recentActionBucket = self.cloudDrive.recentActionBucket ? self.cloudDrive.recentActionBucket : nil;
  
     if (self.tableView.isEditing) {
         // Check if selectedNodesArray contains the current node in the tableView
