@@ -74,6 +74,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *navigationTitleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *navigationSubtitleLabel;
 
+@property (assign, nonatomic, getter=isSpeakerEnabled) BOOL speakerEnabled;
+
 @end
 
 @implementation GroupCallViewController
@@ -513,11 +515,24 @@
 
 - (void)didSessionRouteChange:(NSNotification *)notification {
     dispatch_async(dispatch_get_main_queue(), ^{
-        [self updateAudioOutputImage];
-        
         NSDictionary *interuptionDict = notification.userInfo;
         const NSInteger routeChangeReason = [[interuptionDict valueForKey:AVAudioSessionRouteChangeReasonKey] integerValue];
         MEGALogDebug(@"didSessionRouteChange routeChangeReason: %ld, current route outputs %@", (long)routeChangeReason, [[[AVAudioSession sharedInstance] currentRoute] outputs]);
+        if (routeChangeReason == AVAudioSessionRouteChangeReasonOverride) {
+            if ([AVAudioSession.sharedInstance mnz_isOutputEqualToPortType:AVAudioSessionPortBuiltInSpeaker]) {
+                self.speakerEnabled = YES;
+            }
+            if ([AVAudioSession.sharedInstance mnz_isOutputEqualToPortType:AVAudioSessionPortBuiltInReceiver]) {
+                self.speakerEnabled = NO;
+            }
+        }
+        if (routeChangeReason == AVAudioSessionRouteChangeReasonRouteConfigurationChange) {
+            if (self.isSpeakerEnabled && self.call.status <= MEGAChatCallStatusInProgress) {
+                [self enableLoudspeaker];
+            }
+        }
+        
+        [self updateAudioOutputImage];
     });
 }
 
@@ -537,6 +552,7 @@
 }
 
 - (void)disableLoudspeaker {
+    self.speakerEnabled = NO;
     [[AVAudioSession sharedInstance] overrideOutputAudioPort:AVAudioSessionPortOverrideNone error:nil];
 }
 
