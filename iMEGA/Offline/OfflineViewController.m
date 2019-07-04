@@ -73,7 +73,6 @@ static NSString *kisDirectory = @"kisDirectory";
         [self.navigationItem setTitle:self.folderPathFromOffline.lastPathComponent];
     }
     
-    self.editBarButtonItem.title = AMLocalizedString(@"edit", @"Caption of a button to edit the files that are selected");
     self.navigationItem.rightBarButtonItem = self.moreBarButtonItem;
     
     self.definesPresentationContext = YES;
@@ -821,7 +820,6 @@ static NSString *kisDirectory = @"kisDirectory";
             [self.toolbar setAlpha:1.0];
         }];
     } else {
-        self.editBarButtonItem.title = AMLocalizedString(@"edit", @"Caption of a button to edit the files that are selected");
         self.navigationItem.rightBarButtonItem = self.moreBarButtonItem;
         self.allItemsSelected = NO;
         self.selectedItems = nil;
