@@ -368,7 +368,7 @@
             NodeTappablePropertyTableViewCell *linkCell = [self.tableView cellForRowAtIndexPath:indexPath];
             linkCell.titleLabel.text = request.link;
         } multipleLinks:NO];
-        [[MEGASdkManager sharedMEGASdk] exportNode:self.node delegate:exportRequestDelegate];
+        [[MEGASdkManager sharedMEGASdk] exportNode:self.node expireTime:[NSDate dateWithTimeIntervalSince1970:self.node.expirationTime] delegate:exportRequestDelegate];
     } else {
         cell.titleLabel.text = AMLocalizedString(@"getLink", @"Title shown under the action that allows you to get a link to file or folder");
     }

@@ -61,15 +61,15 @@
     
     [self setNavigationBarTitle];
     
-    [self checkExpirationTime];
-
     self.dateFormatter = [[NSDateFormatter alloc] init];
     self.dateFormatter.dateStyle = NSDateFormatterMediumStyle;
     self.dateFormatter.timeStyle = NSDateFormatterNoStyle;
     NSString *currentLanguageID = [[LocalizationSystem sharedLocalSystem] getLanguage];
     NSLocale *locale = [[NSLocale alloc] initWithLocaleIdentifier:currentLanguageID];
     self.dateFormatter.locale = locale;
-
+    
+    [self checkExpirationTime];
+    
     self.exportDelegate = [[MEGAExportRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
         NSString *fullLink = [request link];
         
@@ -122,7 +122,7 @@
 
     self.pending = self.nodesToExport.count;
     for (MEGANode *node in self.nodesToExport) {
-        [[MEGASdkManager sharedMEGASdk] exportNode:node delegate:self.exportDelegate];
+        [[MEGASdkManager sharedMEGASdk] exportNode:node expireTime:[NSDate dateWithTimeIntervalSince1970:node.expirationTime] delegate:self.exportDelegate];
     }
     
     self.doneBarButtonItem.title = AMLocalizedString(@"done", @"");
@@ -175,21 +175,22 @@
 }
 
 - (void)checkExpirationTime {
-    uint64_t expirationTime = 0;
-    uint64_t earlierExpirationTime = 0;
+    uint64_t earliestExpirationTime = UINT64_MAX;
     for (MEGANode *node in self.nodesToExport) {
-        if (earlierExpirationTime > node.expirationTime) {
-            earlierExpirationTime = node.expirationTime;
+        if (node.expirationTime <= 0) {
+            continue;
+        }
+        if (earliestExpirationTime > node.expirationTime) {
+            earliestExpirationTime = node.expirationTime;
         }
     }
-    expirationTime = earlierExpirationTime;
     
-    if (expirationTime == 0) {
+    if (earliestExpirationTime == UINT64_MAX) {
         self.expireSwitch.on = NO;
     } else {
         self.expireSwitch.on = YES;
         self.expireDateSetLabel.hidden = NO;
-        NSDate *date = [[NSDate alloc] initWithTimeIntervalSince1970:expirationTime];
+        NSDate *date = [[NSDate alloc] initWithTimeIntervalSince1970:earliestExpirationTime];
         self.expireDateSetLabel.text = [self.dateFormatter stringFromDate:date];
     }
 }
