@@ -84,7 +84,7 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
     
     self.selectedItemsDictionary = [[NSMutableDictionary alloc] init];
     
-    self.editBarButtonItem.title = AMLocalizedString(@"edit", @"Caption of a button to edit the files that are selected");
+    self.editBarButtonItem.title = AMLocalizedString(@"select", @"Caption of a button to select files");
     
     [self.view addGestureRecognizer:[[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPress:)]];
     
@@ -481,7 +481,7 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
             [self.toolbar setAlpha:1.0];
         }];
     } else {
-        self.editBarButtonItem.title = AMLocalizedString(@"edit", @"Caption of a button to edit the files that are selected");
+        self.editBarButtonItem.title = AMLocalizedString(@"select", @"Caption of a button to select files");
         
         allNodesSelected = NO;
         self.navigationItem.title = AMLocalizedString(@"cameraUploadsLabel", @"Title of one of the Settings sections where you can set up the 'Camera Uploads' options");

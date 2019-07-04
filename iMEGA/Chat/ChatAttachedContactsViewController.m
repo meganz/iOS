@@ -61,7 +61,7 @@
 - (void)setupAttachedContacts {
     self.backBarButtonItem.image = self.backBarButtonItem.image.imageFlippedForRightToLeftLayoutDirection;
     self.navigationItem.leftBarButtonItem = self.backBarButtonItem;
-    self.editBarButtonItem.title = AMLocalizedString(@"edit", @"Caption of a button to edit the files that are selected");
+    self.editBarButtonItem.title = AMLocalizedString(@"select", @"Caption of a button to select files");
     self.navigationItem.rightBarButtonItems = @[self.editBarButtonItem];
     
     self.addBarButtonItem.title = AMLocalizedString(@"addContact", @"Alert title shown when you select to add a contact inserting his/her email");
@@ -141,7 +141,7 @@
         self.editBarButtonItem.title = AMLocalizedString(@"cancel", @"Button title to cancel something");
         self.addBarButtonItem.enabled = NO;
     } else {
-        self.editBarButtonItem.title = AMLocalizedString(@"edit", @"Caption of a button to edit the files that are selected");
+        self.editBarButtonItem.title = AMLocalizedString(@"select", @"Caption of a button to select files");
         self.addBarButtonItem.enabled = YES;
         
         [self.selectedUsersMutableArray removeAllObjects];
