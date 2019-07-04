@@ -256,6 +256,10 @@
 }
 
 - (IBAction)passwordProtectionSwitchChanged:(UISwitch *)sender {
+    [self tableView:self.tableView didSelectRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:0]];
+    [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]].userInteractionEnabled = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]].userInteractionEnabled = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:0]].userInteractionEnabled = !sender.isOn;
+    self.linkWithoutKeyLabel.enabled = self.decryptionKeyLabel.enabled = self.linkWithKeyLabel.enabled = !sender.isOn;
+    
     self.enterPasswordTextField.enabled = self.confirmPasswordTextField.enabled = sender.isOn;
     [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:4]].userInteractionEnabled = sender.isOn;
     
@@ -297,16 +301,21 @@
 }
 
 - (IBAction)copyLinkTapped:(UIBarButtonItem *)sender {
-    UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
-    pasteboard.string = self.textToCopy.text;
-    
-    NSString *status;
-    if (self.selectedIndexPath == [NSIndexPath indexPathForRow:1 inSection:0]) {
-        status = AMLocalizedString(@"copiedToTheClipboard", @"Text of the button after the links were copied to the clipboard");
-    } else {
-        status = (self.selectedArray.count > 1) ? AMLocalizedString(@"linksCopied", @"Message shown when the links have been copied to the pasteboard") : AMLocalizedString(@"linkCopied", @"Message shown when the link has been copied to the pasteboard");
+    if (self.textToCopy.text.length > 0) {
+        UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
+        pasteboard.string = self.textToCopy.text;
+        
+        NSString *status;
+        if (self.selectedIndexPath == [NSIndexPath indexPathForRow:1 inSection:0]) {
+            status = AMLocalizedString(@"copiedToTheClipboard", @"Text of the button after the links were copied to the clipboard");
+        } else {
+            status = (self.selectedArray.count > 1) ? AMLocalizedString(@"linksCopied", @"Message shown when the links have been copied to the pasteboard") : AMLocalizedString(@"linkCopied", @"Message shown when the link has been copied to the pasteboard");
+        }
+        [SVProgressHUD showSuccessWithStatus:status];
+    } else if (self.passwordSwitch.isOn) {
+        [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"passwordInvalidFormat", @"Enter a valid password")];
+        [self.enterPasswordTextField becomeFirstResponder];
     }
-    [SVProgressHUD showSuccessWithStatus:status];
 }
 
 #pragma mark - TableViewDelegate
