@@ -7,6 +7,7 @@
 #import "CloudDriveViewController.h"
 #import "Helper.h"
 #import "MEGAGetThumbnailRequestDelegate.h"
+#import "MEGANode+MNZCategory.h"
 #import "MEGANodeList+MNZCategory.h"
 #import "MEGAPhotoBrowserViewController.h"
 #import "MEGASdkManager.h"
@@ -73,10 +74,24 @@
     }
     self.nameLabel.text = title;
     
-    if (![recentActionBucket.userEmail isEqualToString:MEGASdkManager.sharedMEGASdk.myEmail]) {
-        self.addedByLabel.text = [NSString mnz_addedByInRecentActionBucket:recentActionBucket nodesArray:nodesArray];
-        
-        MEGAShareType shareType = [MEGASdkManager.sharedMEGASdk accessLevelForNode:[nodesArray objectAtIndex:0]];
+    MEGAShareType shareType = [MEGASdkManager.sharedMEGASdk accessLevelForNode:nodesArray.firstObject];
+    if ([recentActionBucket.userEmail isEqualToString:MEGASdkManager.sharedMEGASdk.myEmail]) {
+        if (shareType == MEGAShareTypeAccessOwner) {
+            MEGANode *firstbornParentNode = [[MEGASdkManager.sharedMEGASdk nodeForHandle:recentActionBucket.parentHandle] mnz_firstbornInShareOrOutShareParentNode];
+            if (firstbornParentNode.isOutShare) {
+                self.incomingOrOutgoingImageView.hidden = NO;
+                self.incomingOrOutgoingImageView.image = [UIImage imageNamed:@"mini_folder_outgoing"];
+            } else {
+                self.incomingOrOutgoingImageView.hidden = YES;
+            }
+        } else {
+            self.addedByLabel.text = [NSString mnz_addedByInRecentActionBucket:recentActionBucket];
+            self.incomingOrOutgoingImageView.hidden = NO;
+            self.incomingOrOutgoingImageView.image = [UIImage imageNamed:@"mini_folder_incoming"];
+        }
+    } else {
+        self.addedByLabel.text = [NSString mnz_addedByInRecentActionBucket:recentActionBucket];
+        self.incomingOrOutgoingImageView.hidden = NO;
         self.incomingOrOutgoingImageView.image = (shareType == MEGAShareTypeAccessOwner) ? [UIImage imageNamed:@"mini_folder_outgoing"] : [UIImage imageNamed:@"mini_folder_incoming"];
     }
     

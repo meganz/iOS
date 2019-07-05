@@ -275,7 +275,7 @@
                     if (self.isIncomingShareChildView) {
                         [actions addObject:[self actionLeaveSharing]];
                     }
-                    if (self.displayMode == DisplayModeCloudDrive || self.displayMode == DisplayModeNodeInfo) {
+                    if (self.displayMode == DisplayModeCloudDrive || self.displayMode == DisplayModeNodeInfo || self.displayMode == DisplayModeRecents) {
                         [actions addObject:[self actionMoveToRubbishBin]];
                     } else if (self.displayMode == DisplayModeRubbishBin) {
                         [actions addObject:[self actionRemove]];

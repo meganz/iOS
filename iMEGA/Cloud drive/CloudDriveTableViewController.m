@@ -1,7 +1,10 @@
 
 #import "CloudDriveTableViewController.h"
 
+#import "NSDate+DateTools.h"
+
 #import "UIImageView+MNZCategory.h"
+#import "NSDate+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 
 #import "Helper.h"
@@ -14,6 +17,11 @@
 
 @interface CloudDriveTableViewController () <UITableViewDelegate, UITableViewDataSource, MGSwipeTableCellDelegate>
 
+@property (weak, nonatomic) IBOutlet UIView *bucketHeaderView;
+@property (weak, nonatomic) IBOutlet UILabel *bucketHeaderParentFolderNameLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *bucketHeaderUploadOrVersionImageView;
+@property (weak, nonatomic) IBOutlet UILabel *bucketHeaderHourLabel;
+
 @end
 
 @implementation CloudDriveTableViewController
@@ -25,6 +33,26 @@
 
     //White background for the view behind the table view
     self.tableView.backgroundView = UIView.alloc.init;
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    if (self.cloudDrive.recentActionBucket) {
+        NSString *dateString;
+        if (self.cloudDrive.recentActionBucket.timestamp.isToday) {
+            dateString = AMLocalizedString(@"Today", @"").uppercaseString;
+        } else if (self.cloudDrive.recentActionBucket.timestamp.isYesterday) {
+            dateString = AMLocalizedString(@"Yesterday", @"").uppercaseString;
+        } else {
+            dateString = self.cloudDrive.recentActionBucket.timestamp.mnz_formattedDateMediumStyle;
+        }
+        
+        MEGANode *parentNode = [MEGASdkManager.sharedMEGASdk nodeForHandle:self.cloudDrive.recentActionBucket.parentHandle];
+        self.bucketHeaderParentFolderNameLabel.text = [NSString stringWithFormat:@"%@ •", parentNode.name.uppercaseString];
+        self.bucketHeaderUploadOrVersionImageView.image = self.cloudDrive.recentActionBucket.isUpdate ? [UIImage imageNamed:@"versioned"] : [UIImage imageNamed:@"recentUpload"];
+        self.bucketHeaderHourLabel.text = dateString.uppercaseString;
+    }
 }
 
 #pragma mark - Public
@@ -106,6 +134,7 @@
         }
     }
     
+    cell.recentActionBucket = self.cloudDrive.recentActionBucket ?: nil;
     [cell configureCellForNode:node delegate:self api:[MEGASdkManager sharedMEGASdk]];
  
     if (self.tableView.isEditing) {
@@ -122,6 +151,14 @@
     }
     
     return cell;
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    return self.cloudDrive.recentActionBucket ? self.bucketHeaderView : nil;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    return self.cloudDrive.recentActionBucket ? 45.0f : 0;
 }
 
 #pragma mark - UITableViewDelegate
