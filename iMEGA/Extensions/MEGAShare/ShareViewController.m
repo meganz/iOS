@@ -268,7 +268,7 @@
 - (void)setSystemLanguage {
     NSDictionary *globalDomain = [[NSUserDefaults standardUserDefaults] persistentDomainForName:@"NSGlobalDomain"];
     NSArray *languages = [globalDomain objectForKey:@"AppleLanguages"];
-    NSString *systemLanguageID = [languages objectAtIndex:0];
+    NSString *systemLanguageID = languages.firstObject;
     
     if ([Helper isLanguageSupported:systemLanguageID]) {
         [[LocalizationSystem sharedLocalSystem] setLanguage:systemLanguageID];
@@ -532,7 +532,7 @@ void uncaughtExceptionHandler(NSException *exception) {
         return;
     }
     
-    NSExtensionItem *content = self.extensionContext.inputItems[0];
+    NSExtensionItem *content = self.extensionContext.inputItems.firstObject;
     self.totalAssets = self.pendingAssets = content.attachments.count;
     self.progress = 0;
     self.unsupportedAssets = self.alreadyInDestinationAssets = 0;

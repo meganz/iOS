@@ -518,7 +518,7 @@
     result.color = UIColor.yellowColor;
     [self.pdfView setCurrentSelection:result];
     [self.pdfView setScaleFactor:self.pdfView.scaleFactorForSizeToFit];
-    [self.pdfView goToPage:result.pages[0]];
+    [self.pdfView goToPage:result.pages.firstObject];
 }
 
 #pragma clang diagnostic pop

@@ -911,7 +911,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
     NSString *unreadChatsString = unreadChats ? [NSString stringWithFormat:@"(%td)", unreadChats] : @"";
     
     UIBarButtonItem *backBarButton = [[UIBarButtonItem alloc] initWithTitle:unreadChatsString style:UIBarButtonItemStylePlain target:nil action:nil];
-    self.navigationController.viewControllers[0].navigationItem.backBarButtonItem = backBarButton;
+    self.navigationController.viewControllers.firstObject.navigationItem.backBarButtonItem = backBarButton;
 }
 
 - (void)setupCollectionView {
@@ -1339,7 +1339,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
     if (self.whoIsTypingTimersMutableDictionary.allKeys.count >= 2) {
         typingAttributedString = [self twoOrMoreUsersAreTypingString];
     } else if (self.whoIsTypingTimersMutableDictionary.allKeys.count == 1) {
-        NSNumber *firstUserHandle = [self.whoIsTypingTimersMutableDictionary.allKeys objectAtIndex:0];
+        NSNumber *firstUserHandle = self.whoIsTypingTimersMutableDictionary.allKeys.firstObject;
         NSString *firstUserName = [self.chatRoom peerFirstnameByHandle:firstUserHandle.unsignedLongLongValue];
         NSString *whoIsTypingString = firstUserName.length ? firstUserName : [self.chatRoom peerEmailByHandle:firstUserHandle.unsignedLongLongValue];
         
@@ -1353,7 +1353,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
 }
 
 - (NSMutableAttributedString *)twoOrMoreUsersAreTypingString {
-    NSNumber *firstUserHandle = [self.whoIsTypingTimersMutableDictionary.allKeys objectAtIndex:0];
+    NSNumber *firstUserHandle = self.whoIsTypingTimersMutableDictionary.allKeys.firstObject;
     NSNumber *secondUserHandle = [self.whoIsTypingTimersMutableDictionary.allKeys objectAtIndex:1];
     
     NSString *firstUserFirstName = [self.chatRoom peerFirstnameByHandle:firstUserHandle.unsignedLongLongValue];
@@ -1924,7 +1924,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
         NSString *title = AMLocalizedString(@"error", nil);
         NSString *message;
         if (errors.count == 1) {
-            NSError *error = errors[0];
+            NSError *error = errors.firstObject;
             message = error.localizedDescription;
         } else {
             message = AMLocalizedString(@"shareExtensionUnsupportedAssets", nil);
@@ -3133,7 +3133,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
                 NSPredicate *predicate = [NSPredicate predicateWithFormat:@"messageId == %" PRIu64, message.messageId];
                 NSArray *filteredArray = [self.messages filteredArrayUsingPredicate:predicate];
                 if (filteredArray.count) {
-                    NSUInteger index = [self.messages indexOfObject:filteredArray[0]];
+                    NSUInteger index = [self.messages indexOfObject:filteredArray.firstObject];
                     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:0];
                 
                     [self.messages removeObjectAtIndex:index];
@@ -3161,7 +3161,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
             NSPredicate *predicate = [NSPredicate predicateWithFormat:@"messageId == %" PRIu64, message.messageId];
             NSArray *filteredArray = [self.messages filteredArrayUsingPredicate:predicate];
             if (filteredArray.count) {
-                NSUInteger index = [self.messages indexOfObject:filteredArray[0]];
+                NSUInteger index = [self.messages indexOfObject:filteredArray.firstObject];
                 NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:0];
                 if (message.isEdited) {
                     UICollectionViewCell *cell = [self.collectionView cellForItemAtIndexPath:indexPath];

@@ -284,7 +284,7 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
                          videoQuality = ChatVideoUploadQualityMedium;
                      }
                      
-                     AVAssetTrack *videoTrack = [[avAsset tracksWithMediaType:AVMediaTypeVideo] objectAtIndex:0];
+                     AVAssetTrack *videoTrack = [avAsset tracksWithMediaType:AVMediaTypeVideo].firstObject;
                      
                      BOOL shouldEncodeVideo = [self shouldEncodeVideoTrack:videoTrack videoQuality:videoQuality extension:filePath.pathExtension];
                      
@@ -405,7 +405,7 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
             videoQuality = ChatVideoUploadQualityMedium;
         }
         
-        AVAssetTrack *videoTrack = [[self.avAsset tracksWithMediaType:AVMediaTypeVideo] objectAtIndex:0];
+        AVAssetTrack *videoTrack = [self.avAsset tracksWithMediaType:AVMediaTypeVideo].firstObject;
         
         BOOL shouldEncodeVideo = [self shouldEncodeVideoTrack:videoTrack videoQuality:videoQuality extension:avassetUrl.pathExtension];
         
@@ -675,7 +675,7 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
     }
     [NSFileManager.defaultManager mnz_removeItemAtPath:filePath];
     
-    AVAssetTrack *videoTrack = [[avAsset tracksWithMediaType:AVMediaTypeVideo] objectAtIndex:0];
+    AVAssetTrack *videoTrack = [avAsset tracksWithMediaType:AVMediaTypeVideo].firstObject;
     
     CGSize videoSize = [self sizeByVideoTrack:videoTrack videoQuality:videoQuality];
     float bps = [self bpsByVideoTrack:videoTrack videoQuality:videoQuality];
@@ -800,7 +800,7 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
 
 /* The real duration for AVAsset when it is kind of class AVComposition */
 - (float)realDurationForAVAsset:(AVAsset *)asset {
-    AVAssetTrack *videoTrack = [[asset tracksWithMediaType:AVMediaTypeVideo] objectAtIndex:0];
+    AVAssetTrack *videoTrack = [asset tracksWithMediaType:AVMediaTypeVideo].firstObject;
     AVAssetTrackSegment *segment = videoTrack.segments[videoTrack.segments.count - 1];
     float start = CMTimeGetSeconds(segment.timeMapping.target.start);
     float duration = CMTimeGetSeconds(segment.timeMapping.target.duration);

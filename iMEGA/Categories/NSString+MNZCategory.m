@@ -107,7 +107,7 @@ static NSString* const B = @"[B]";
 #pragma mark - Utils
 
 + (NSString *)mnz_stringWithoutUnitOfComponents:(NSArray *)componentsSeparatedByStringArray {
-    NSString *countString = [componentsSeparatedByStringArray objectAtIndex:0];
+    NSString *countString = componentsSeparatedByStringArray.firstObject;
     if ([countString isEqualToString:@"Zero"] || ([countString length] == 0)) {
         countString = @"0";
     }
@@ -778,7 +778,7 @@ static NSString* const B = @"[B]";
     return result;
 }
 
-+ (NSString *)mnz_addedByInRecentActionBucket:(MEGARecentActionBucket *)recentActionBucket nodesArray:(NSArray *)nodesArray {
++ (NSString *)mnz_addedByInRecentActionBucket:(MEGARecentActionBucket *)recentActionBucket {
     NSString *addebByString;
     
     MEGAUser *user = [MEGASdkManager.sharedMEGASdk contactForEmail:recentActionBucket.userEmail];
