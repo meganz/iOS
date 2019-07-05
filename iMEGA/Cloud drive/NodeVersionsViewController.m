@@ -315,7 +315,7 @@
 
 - (MEGANode *)nodeForIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0) {
-        return [self.node.mnz_versions objectAtIndex:0];
+        return self.node.mnz_versions.firstObject;
     } else {
         return [self.node.mnz_versions objectAtIndex:indexPath.row + 1];
     }

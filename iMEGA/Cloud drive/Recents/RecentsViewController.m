@@ -49,16 +49,14 @@
     self.dateFormatter.dateStyle = NSDateFormatterFullStyle;
     self.dateFormatter.timeStyle = NSDateFormatterNoStyle;
     self.dateFormatter.locale = NSLocale.autoupdatingCurrentLocale;
+    
+    [MEGASdkManager.sharedMEGASdk addMEGADelegate:self];
 }
 
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    [[MEGASdkManager sharedMEGASdk] addMEGADelegate:self];
-}
-
-- (void)viewWillDisappear:(BOOL)animated {
-    [[MEGASdkManager sharedMEGASdk] removeMEGADelegate:self];
-    [super viewWillDisappear:animated];
+- (void)removeFromParentViewController {
+    [super removeFromParentViewController];
+    
+    [MEGASdkManager.sharedMEGASdk removeMEGADelegate:self];
 }
 
 #pragma mark - Actions
@@ -69,7 +67,7 @@
     
     MEGARecentActionBucket *recentActionBucket = [self.recentActionBucketArray objectAtIndex:indexPath.section];
     NSArray *nodesArray = recentActionBucket.nodesList.mnz_nodesArrayFromNodeList;
-    MEGANode *node = [nodesArray objectAtIndex:0];
+    MEGANode *node = nodesArray.firstObject;
     
     [self.cloudDrive showCustomActionsForNode:node sender:sender];
 }
@@ -192,9 +190,9 @@
     MEGARecentActionBucket *recentActionBucket = [self.recentActionBucketArray objectAtIndex:indexPath.section];
     NSArray *nodesArray = recentActionBucket.nodesList.mnz_nodesArrayFromNodeList;
     if (nodesArray.count == 1) {
-        MEGANode *node = [nodesArray objectAtIndex:0];
+        MEGANode *node = nodesArray.firstObject;
         if (node.name.mnz_imagePathExtension || node.name.mnz_isVideoPathExtension) {
-            MEGAPhotoBrowserViewController *photoBrowserVC = [MEGAPhotoBrowserViewController photoBrowserWithMediaNodes:@[nodesArray[0]].mutableCopy api:MEGASdkManager.sharedMEGASdk displayMode:DisplayModeCloudDrive presentingNode:nodesArray[0] preferredIndex:0];
+            MEGAPhotoBrowserViewController *photoBrowserVC = [MEGAPhotoBrowserViewController photoBrowserWithMediaNodes:nodesArray.mutableCopy api:MEGASdkManager.sharedMEGASdk displayMode:DisplayModeCloudDrive presentingNode:nodesArray.firstObject preferredIndex:0];
             
             [self.cloudDrive.navigationController presentViewController:photoBrowserVC animated:YES completion:nil];
         } else {
@@ -203,12 +201,13 @@
     } else {
         if (recentActionBucket.isMedia) {
             NSMutableArray<MEGANode *> *mediaNodesArray = [recentActionBucket.nodesList mnz_mediaNodesMutableArrayFromNodeList];
-            MEGAPhotoBrowserViewController *photoBrowserVC = [MEGAPhotoBrowserViewController photoBrowserWithMediaNodes:mediaNodesArray api:MEGASdkManager.sharedMEGASdk displayMode:DisplayModeCloudDrive presentingNode:nodesArray[0] preferredIndex:0];
+            MEGAPhotoBrowserViewController *photoBrowserVC = [MEGAPhotoBrowserViewController photoBrowserWithMediaNodes:mediaNodesArray api:MEGASdkManager.sharedMEGASdk displayMode:DisplayModeCloudDrive presentingNode:nodesArray.firstObject preferredIndex:0];
             
             [self.cloudDrive.navigationController presentViewController:photoBrowserVC animated:YES completion:nil];
         } else {
             CloudDriveViewController *cloudDriveVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
             cloudDriveVC.nodes = recentActionBucket.nodesList;
+            cloudDriveVC.recentActionBucket = recentActionBucket;
             cloudDriveVC.displayMode = DisplayModeRecents;
             
             [self.cloudDrive.navigationController pushViewController:cloudDriveVC animated:YES];

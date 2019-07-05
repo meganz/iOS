@@ -590,7 +590,7 @@
     } else {
         if (self.peerTalkingView.hidden) {
             [self removeAllVideoListeners];
-            MEGAGroupCallPeer *firstPeer = [self.peersInCall objectAtIndex:0];
+            MEGAGroupCallPeer *firstPeer = self.peersInCall.firstObject;
             [self configureUserOnFocus:firstPeer manual:NO];
             [self.peerTalkingImageView mnz_setImageForUserHandle:firstPeer.peerId name:firstPeer.name];
             self.peerTalkingView.hidden = NO;
@@ -772,7 +772,7 @@
     if (self.call.numParticipants >= kSmallPeersLayout) {
         [self showSpinner];
         self.shouldHideAcivity = YES;
-        [self configureUserOnFocus:[self.peersInCall objectAtIndex:0] manual:NO];
+        [self configureUserOnFocus:self.peersInCall.firstObject manual:NO];
     }
     self.incomingCallView.hidden = YES;
     
@@ -803,7 +803,7 @@
             weakSelf.incomingCallView.hidden = YES;
             if (self.call.numParticipants >= kSmallPeersLayout) {
                 [self showSpinner];
-                [self configureUserOnFocus:[self.peersInCall objectAtIndex:0] manual:NO];
+                [self configureUserOnFocus:self.peersInCall.firstObject manual:NO];
             }
             [self initDurationTimer];
             [self initShowHideControls];
@@ -1105,7 +1105,7 @@
                             if (self.call.numParticipants >= kSmallPeersLayout) {
                                 MEGAGroupCallPeer *focusedPeer = self.manualMode ? self.peerManualMode : self.lastPeerTalking;
                                 if ([focusedPeer isEqualToPeer:peerDestroyed]) {
-                                    [self configureUserOnFocus:[self.peersInCall objectAtIndex:0] manual:NO];
+                                    [self configureUserOnFocus:self.peersInCall.firstObject manual:NO];
                                 }
                             }
                             
