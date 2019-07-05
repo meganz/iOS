@@ -68,10 +68,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    if (self.toShareThroughChat) {
-        [Helper createMyChatFilesFolderIfNeededWithCompletion:nil];
-    }
-    
     if (![[NSFileManager defaultManager] fileExistsAtPath:NSTemporaryDirectory()]) {
         [[NSFileManager defaultManager] createDirectoryAtPath:NSTemporaryDirectory() withIntermediateDirectories:YES attributes:nil error:nil];
     }
