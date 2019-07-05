@@ -3,7 +3,6 @@
 #import "UIImage+GKContact.h"
 
 #import "Helper.h"
-#import "MEGANavigationController.h"
 #import "MEGAPurchase.h"
 #import "MEGASdk+MNZCategory.h"
 #import "MEGAReachabilityManager.h"
@@ -102,8 +101,8 @@
     [super viewWillAppear:animated];
     
     long long thumbsSize = [Helper sizeOfFolderAtPath:[Helper pathForSharedSandboxCacheDirectory:@"thumbnailsV3"]];
-    long long previewsSize = [Helper sizeOfFolderAtPath:[[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"previewsV3"]];
-    long long offlineSize = [Helper sizeOfFolderAtPath:[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0]];
+    long long previewsSize = [Helper sizeOfFolderAtPath:[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES).firstObject stringByAppendingPathComponent:@"previewsV3"]];
+    long long offlineSize = [Helper sizeOfFolderAtPath:NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject];
     
     localSize = [NSNumber numberWithLongLong:(thumbsSize + previewsSize + offlineSize)];
     
@@ -244,9 +243,9 @@
 - (IBAction)buyPROTouchUpInside:(UIButton *)sender {
     if ([[MEGASdkManager sharedMEGASdk] mnz_accountDetails]) {
         UpgradeTableViewController *upgradeTVC = [[UIStoryboard storyboardWithName:@"MyAccount" bundle:nil] instantiateViewControllerWithIdentifier:@"UpgradeID"];
-        MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:upgradeTVC];
+        upgradeTVC.hideSkipButton = YES;
         
-        [self presentViewController:navigationController animated:YES completion:nil];
+        [self.navigationController pushViewController:upgradeTVC animated:YES];
     } else {
         [MEGAReachabilityManager isReachableHUDIfNot];
     }

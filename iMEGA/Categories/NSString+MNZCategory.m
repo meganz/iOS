@@ -84,10 +84,6 @@ static NSString* const B = @"[B]";
 
 #pragma mark - appData
 
-- (NSString *)mnz_appDataToSaveCameraUploadsCount:(NSUInteger)operationCount {
-    return [self stringByAppendingString:[NSString stringWithFormat:@">CU=%tu", operationCount]];
-}
-
 - (NSString *)mnz_appDataToSaveInPhotosApp {
     return [self stringByAppendingString:@">SaveInPhotosApp"];
 }
@@ -111,7 +107,7 @@ static NSString* const B = @"[B]";
 #pragma mark - Utils
 
 + (NSString *)mnz_stringWithoutUnitOfComponents:(NSArray *)componentsSeparatedByStringArray {
-    NSString *countString = [componentsSeparatedByStringArray objectAtIndex:0];
+    NSString *countString = componentsSeparatedByStringArray.firstObject;
     if ([countString isEqualToString:@"Zero"] || ([countString length] == 0)) {
         countString = @"0";
     }
@@ -782,7 +778,7 @@ static NSString* const B = @"[B]";
     return result;
 }
 
-+ (NSString *)mnz_addedByInRecentActionBucket:(MEGARecentActionBucket *)recentActionBucket nodesArray:(NSArray *)nodesArray {
++ (NSString *)mnz_addedByInRecentActionBucket:(MEGARecentActionBucket *)recentActionBucket {
     NSString *addebByString;
     
     MEGAUser *user = [MEGASdkManager.sharedMEGASdk contactForEmail:recentActionBucket.userEmail];
@@ -847,6 +843,11 @@ static NSString* const B = @"[B]";
     } while (listSize != 0);
     
     return [nameWithoutExtension stringByAppendingPathExtension:extension];
+}
+
+- (NSString *)mnz_stringByRemovingInvalidFileCharacters {
+    NSCharacterSet *set = [NSCharacterSet characterSetWithCharactersInString:@":/\\"];
+    return [[self componentsSeparatedByCharactersInSet:set] componentsJoinedByString:@""];
 }
 
 @end
