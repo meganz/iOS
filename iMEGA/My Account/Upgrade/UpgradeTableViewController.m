@@ -61,7 +61,7 @@
     
     self.numberFormatter = NSNumberFormatter.alloc.init;
     self.numberFormatter.numberStyle = NSNumberFormatterCurrencyStyle;
-    SKProduct *product = [MEGAPurchase.sharedInstance.products objectAtIndex:0];
+    SKProduct *product = MEGAPurchase.sharedInstance.products.firstObject;
     self.numberFormatter.locale = product.priceLocale;
     
     self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:self.navigationItem.backBarButtonItem.style target:nil action:nil];
@@ -360,14 +360,14 @@
 
 - (NSString *)storageAndUnitsByProduct:(SKProduct *)product {
     NSArray *storageTransferArray = [product.localizedDescription componentsSeparatedByString:@";"];
-    NSArray *storageArray = [[storageTransferArray objectAtIndex:0] componentsSeparatedByString:@" "];
-    return [NSString stringWithFormat:@"%@ %@", [storageArray objectAtIndex:0], [storageArray objectAtIndex:1]];
+    NSArray *storageArray = [storageTransferArray.firstObject componentsSeparatedByString:@" "];
+    return [NSString stringWithFormat:@"%@ %@", storageArray.firstObject, [storageArray objectAtIndex:1]];
 }
 
 - (NSString *)transferAndUnitsByProduct:(SKProduct *)product {
     NSArray *storageTransferArray = [product.localizedDescription componentsSeparatedByString:@";"];
     NSArray *transferArray = [[storageTransferArray objectAtIndex:1] componentsSeparatedByString:@" "];
-    return [NSString stringWithFormat:@"%@ %@", [transferArray objectAtIndex:0], [transferArray objectAtIndex:1]];
+    return [NSString stringWithFormat:@"%@ %@", transferArray.firstObject, [transferArray objectAtIndex:1]];
 }
 
 #pragma mark - IBActions

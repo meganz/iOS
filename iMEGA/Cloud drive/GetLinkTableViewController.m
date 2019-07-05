@@ -74,7 +74,7 @@
         NSString *fullLink = [request link];
         
         NSArray *components = [fullLink componentsSeparatedByString:@"!"];
-        NSString *link = [NSString stringWithFormat:@"%@!%@", components[0], components[1]];
+        NSString *link = [NSString stringWithFormat:@"%@!%@", components.firstObject, components[1]];
         NSString *key = components[2];
         
         [self.fullLinks addObject:fullLink];

@@ -46,7 +46,7 @@
 }
 
 - (void)prepareWithActivityItems:(NSArray *)activityItems {
-    self.documentInteractionController = [UIDocumentInteractionController interactionControllerWithURL:[activityItems objectAtIndex:0]];
+    self.documentInteractionController = [UIDocumentInteractionController interactionControllerWithURL:activityItems.firstObject];
     [self.documentInteractionController setDelegate:self];
 }
 
