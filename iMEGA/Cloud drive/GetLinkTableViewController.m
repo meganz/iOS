@@ -69,21 +69,7 @@
     [self checkExpirationTime];
     
     self.exportDelegate = [[MEGAExportRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
-        NSString *fullLink = [request link];
-        
-        NSArray *components = [fullLink componentsSeparatedByString:@"!"];
-        NSString *link = [NSString stringWithFormat:@"%@!%@", components.firstObject, components[1]];
-        NSString *key = components[2];
-        
-        [self.fullLinks addObject:fullLink];
-        [self.links addObject:link];
-        [self.keys addObject:key];
-        
-        [self updateUI];
-        
-        if (--self.pending==0) {
-            [SVProgressHUD dismiss];
-        }
+        [self processLink:request.link];
     } multipleLinks:self.nodesToExport.count > 1];
     
     self.passwordLinkDelegate = [[MEGAPasswordLinkRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
@@ -120,7 +106,11 @@
 
     self.pending = self.nodesToExport.count;
     for (MEGANode *node in self.nodesToExport) {
-        [MEGASdkManager.sharedMEGASdk exportNode:node expireTime:[NSDate dateWithTimeIntervalSince1970:node.expirationTime] delegate:self.exportDelegate];
+        if (node.isExported) {
+            [self processLink:node.publicLink];
+        } else {
+            [MEGASdkManager.sharedMEGASdk exportNode:node delegate:self.exportDelegate];
+        }
     }
     
     self.doneBarButtonItem.title = AMLocalizedString(@"done", @"");
@@ -237,6 +227,22 @@
     } else {
         [self.confirmPasswordView setErrorState:YES withText:AMLocalizedString(@"passwordsDoNotMatch", @"Error text shown when you have not written the same password")];
         return NO;
+    }
+}
+
+- (void)processLink:(NSString *)fullLink {
+    NSArray *components = [fullLink componentsSeparatedByString:@"!"];
+    NSString *link = [NSString stringWithFormat:@"%@!%@", components.firstObject, components[1]];
+    NSString *key = components[2];
+    
+    [self.fullLinks addObject:fullLink];
+    [self.links addObject:link];
+    [self.keys addObject:key];
+    
+    [self updateUI];
+    
+    if (--self.pending==0) {
+        [SVProgressHUD dismiss];
     }
 }
 
