@@ -264,7 +264,7 @@ static NSString *nodeToPresentBase64Handle;
             
             [theContentIsNotAvailableAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"logoutLabel", @"Title of the button which logs out from your account.") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
                 NSError *error;
-                NSArray *directoryContent = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] error:&error];
+                NSArray *directoryContent = [NSFileManager.defaultManager contentsOfDirectoryAtPath:NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject error:&error];
                 if (error) {
                     MEGALogError(@"Contents of directory at path failed with error: %@", error);
                 }
@@ -551,7 +551,7 @@ static NSString *nodeToPresentBase64Handle;
         } else {
             MEGANode *node = request.publicNode;
             if (node.name.mnz_isImagePathExtension || node.name.mnz_isVideoPathExtension) {
-                NSString *previewsDirectory = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"previewsV3"];
+                NSString *previewsDirectory = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES).firstObject stringByAppendingPathComponent:@"previewsV3"];
                 if (![[NSFileManager defaultManager] fileExistsAtPath:previewsDirectory]) {
                     NSError *nserror;
                     if (![[NSFileManager defaultManager] createDirectoryAtPath:previewsDirectory withIntermediateDirectories:NO attributes:nil error:&nserror]) {

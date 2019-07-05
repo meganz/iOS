@@ -157,7 +157,7 @@
 - (void)setSystemLanguage {
     NSDictionary *globalDomain = [[NSUserDefaults standardUserDefaults] persistentDomainForName:@"NSGlobalDomain"];
     NSArray *languages = [globalDomain objectForKey:@"AppleLanguages"];
-    NSString *systemLanguageID = [languages objectAtIndex:0];
+    NSString *systemLanguageID = languages.firstObject;
     
     if ([Helper isLanguageSupported:systemLanguageID]) {
         [[LocalizationSystem sharedLocalSystem] setLanguage:systemLanguageID];
