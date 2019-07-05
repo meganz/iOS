@@ -74,7 +74,7 @@
     [selection extendSelectionForLineBoundaries];
     
     UILabel *page = [cell viewWithTag:1];
-    page.text = selection.pages[0].label;
+    page.text = selection.pages.firstObject.label;
     
     UILabel *text = [cell viewWithTag:2];
     text.text = selection.string;

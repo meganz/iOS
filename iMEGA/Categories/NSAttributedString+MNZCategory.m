@@ -218,7 +218,7 @@
                                          NSString *fontString = [substrs[[attributes[attributeName] intValue]] string];
                                          NSArray *components = [fontString componentsSeparatedByString:@","];
                                          if (components.count == 2) {
-                                             NSString *fontName = components[0];
+                                             NSString *fontName = components.firstObject;
                                              CGFloat size = [components[1] doubleValue];
                                              UIFont *font = [UIFont fontWithName:fontName size:size];
                                              if (font) {

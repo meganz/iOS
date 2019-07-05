@@ -6,7 +6,7 @@
 #pragma mark - Paths
 
 - (NSString *)downloadsDirectory {
-    NSString *downloadsDirectory = [[NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"Downloads"];
+    NSString *downloadsDirectory = [NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES).firstObject stringByAppendingPathComponent:@"Downloads"];
     if (![[NSFileManager defaultManager] fileExistsAtPath:downloadsDirectory]) {
         NSError *error = nil;
         if (![[NSFileManager defaultManager] createDirectoryAtPath:downloadsDirectory withIntermediateDirectories:YES attributes:nil error:&error]) {
@@ -18,7 +18,7 @@
 }
 
 - (NSString *)uploadsDirectory {
-    NSString *uploadsDirectory = [[NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"Uploads"];
+    NSString *uploadsDirectory = [NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES).firstObject stringByAppendingPathComponent:@"Uploads"];
     if (![[NSFileManager defaultManager] fileExistsAtPath:uploadsDirectory]) {
         NSError *error = nil;
         if (![[NSFileManager defaultManager] createDirectoryAtPath:uploadsDirectory withIntermediateDirectories:YES attributes:nil error:&error]) {

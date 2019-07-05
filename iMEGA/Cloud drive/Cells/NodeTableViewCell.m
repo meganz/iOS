@@ -118,7 +118,7 @@
     self.recentActionBucket = recentActionBucket;
     NSArray *nodesArray = recentActionBucket.nodesList.mnz_nodesArrayFromNodeList;
     
-    MEGANode *node = [nodesArray objectAtIndex:0];
+    MEGANode *node = nodesArray.firstObject;
     [self.thumbnailImageView mnz_setThumbnailByNode:node];
     self.thumbnailPlayImageView.hidden = node.hasThumbnail ? !node.name.mnz_isVideoPathExtension : YES;
     if (@available(iOS 11.0, *)) {

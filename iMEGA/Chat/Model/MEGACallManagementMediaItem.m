@@ -50,7 +50,7 @@
     }
     
     if (self.cachedView == nil) {
-        MEGAMessageCallManagementView *callView = [[[NSBundle bundleForClass:[MEGAMessageCallManagementView class]] loadNibNamed:@"MEGAMessageCallManagementView" owner:self options:nil] objectAtIndex:0];
+        MEGAMessageCallManagementView *callView = [[NSBundle bundleForClass:MEGAMessageCallManagementView.class] loadNibNamed:@"MEGAMessageCallManagementView" owner:self options:nil].firstObject;
         // Sizes:
         CGSize callViewSize = [self mediaViewDisplaySize];
         callView.frame = CGRectMake(callView.frame.origin.x,
