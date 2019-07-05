@@ -527,9 +527,8 @@
                                                                        MEGANavigationController *navigationController = [self.storyboard instantiateViewControllerWithIdentifier:@"BrowserNavigationControllerID"];
                                                                        BrowserViewController *browserVC = navigationController.viewControllers.firstObject;
                                                                        browserVC.selectedNodesArray = @[cloudDriveVC.parentNode];
-                                                                       if (lowShareType == MEGAShareTypeAccessOwner) {
-                                                                           browserVC.browserAction = BrowserActionMove;
-                                                                       }
+                                                                       browserVC.browserAction = BrowserActionMove;
+                                                                       
                                                                        [rootViewController presentViewController:navigationController animated:YES completion:nil];
                                                                    }];
             
@@ -858,14 +857,12 @@
     switch (shareType) {
         case MEGAShareTypeAccessRead:
         case MEGAShareTypeAccessReadWrite: {
-            [self.moveBarButtonItem setImage:[UIImage imageNamed:@"copy"]];
-            [self.toolbar setItems:@[self.downloadBarButtonItem, flexibleItem, self.moveBarButtonItem]];
+            self.toolbar.items = @[self.downloadBarButtonItem, flexibleItem, self.carbonCopyBarButtonItem];
             break;
         }
             
         case MEGAShareTypeAccessFull: {
-            [self.moveBarButtonItem setImage:[UIImage imageNamed:@"copy"]];
-            [self.toolbar setItems:@[self.downloadBarButtonItem, flexibleItem, self.moveBarButtonItem, flexibleItem, self.deleteBarButtonItem]];
+            self.toolbar.items = @[self.downloadBarButtonItem, flexibleItem, self.carbonCopyBarButtonItem, flexibleItem, self.deleteBarButtonItem];
             break;
         }
             
@@ -1598,9 +1595,7 @@
     
     BrowserViewController *browserVC = navigationController.viewControllers.firstObject;
     browserVC.selectedNodesArray = [NSArray arrayWithArray:self.selectedNodesArray];
-    if (lowShareType == MEGAShareTypeAccessOwner) {
-        [browserVC setBrowserAction:BrowserActionMove];
-    }
+    browserVC.browserAction = BrowserActionMove;
 }
 
 - (IBAction)deleteAction:(UIBarButtonItem *)sender {
