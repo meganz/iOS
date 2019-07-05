@@ -51,10 +51,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    if (self.toUploadToChat) {
-        [Helper createMyChatFilesFolderIfNeededWithCompletion:nil];
-    }
-    
     if (![[NSFileManager defaultManager] fileExistsAtPath:NSTemporaryDirectory()]) {
         [[NSFileManager defaultManager] createDirectoryAtPath:NSTemporaryDirectory() withIntermediateDirectories:YES attributes:nil error:nil];
     }
@@ -83,7 +79,6 @@
             }
             [Helper startPendingUploadTransferIfNeeded];
         } else if (self.toUploadToChat) {
-            [Helper createMyChatFilesFolderIfNeededWithCompletion:nil];
             self.assets = assets;
             [Helper createMyChatFilesFolderIfNeededWithCompletion:^(MEGANode *myChatFilesNode) {
                 [self triggerAssetsCompletion];

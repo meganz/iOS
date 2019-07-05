@@ -1089,6 +1089,7 @@ static MEGAIndexer *indexer;
             MEGANode *myChatFilesNode = [MEGASdkManager.sharedMEGASdk nodeForPath:@"/My chat files"];
             if (myChatFilesNode) {
                 [MEGASdkManager.sharedMEGASdk setMyChatFilesFolderWithHandle:myChatFilesNode.handle];
+                [MEGASdkManager.sharedMEGASdk renameNode:myChatFilesNode newName:AMLocalizedString(@"My chat files", @"Destination folder name of chat files")];
                 if (completion) {
                     completion(myChatFilesNode);
                 }
