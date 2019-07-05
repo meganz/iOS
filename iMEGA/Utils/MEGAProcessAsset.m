@@ -10,7 +10,7 @@
 
 #import "SDAVAssetExportSession.h"
 #import "UIApplication+MNZCategory.h"
-
+#import "PHAsset+CameraUpload.h"
 #import "NSString+MNZCategory.h"
 
 static void *ProcessAssetProgressContext = &ProcessAssetProgressContext;
@@ -284,7 +284,7 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
                          videoQuality = ChatVideoUploadQualityMedium;
                      }
                      
-                     AVAssetTrack *videoTrack = [[avAsset tracksWithMediaType:AVMediaTypeVideo] objectAtIndex:0];
+                     AVAssetTrack *videoTrack = [avAsset tracksWithMediaType:AVMediaTypeVideo].firstObject;
                      
                      BOOL shouldEncodeVideo = [self shouldEncodeVideoTrack:videoTrack videoQuality:videoQuality extension:filePath.pathExtension];
                      
@@ -405,7 +405,7 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
             videoQuality = ChatVideoUploadQualityMedium;
         }
         
-        AVAssetTrack *videoTrack = [[self.avAsset tracksWithMediaType:AVMediaTypeVideo] objectAtIndex:0];
+        AVAssetTrack *videoTrack = [self.avAsset tracksWithMediaType:AVMediaTypeVideo].firstObject;
         
         BOOL shouldEncodeVideo = [self shouldEncodeVideoTrack:videoTrack videoQuality:videoQuality extension:avassetUrl.pathExtension];
         
@@ -520,32 +520,7 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
         return @"jpg";
     }
     
-    NSString *extension;
-    
-    NSURL *url = [info objectForKey:@"PHImageFileURLKey"];
-    if (url) {
-        extension = url.path.pathExtension;
-    } else {
-        NSString *imageFileSandbox = [info objectForKey:@"PHImageFileSandboxExtensionTokenKey"];
-        extension = imageFileSandbox.pathExtension;
-    }
-    
-    if (!extension) {
-        switch (asset.mediaType) {
-            case PHAssetMediaTypeImage:
-                extension = @"jpg";
-                break;
-                
-            case PHAssetMediaTypeVideo:
-                extension = @"mov";
-                break;
-                
-            default:
-                break;
-        }
-    }
-    
-    return extension.lowercaseString;
+    return [asset mnz_fileExtensionFromAssetInfo:info];
 }
 
 - (void)proccessImageData:(NSData *)imageData asset:(PHAsset *)asset withInfo:(NSDictionary *)info {
@@ -700,7 +675,7 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
     }
     [NSFileManager.defaultManager mnz_removeItemAtPath:filePath];
     
-    AVAssetTrack *videoTrack = [[avAsset tracksWithMediaType:AVMediaTypeVideo] objectAtIndex:0];
+    AVAssetTrack *videoTrack = [avAsset tracksWithMediaType:AVMediaTypeVideo].firstObject;
     
     CGSize videoSize = [self sizeByVideoTrack:videoTrack videoQuality:videoQuality];
     float bps = [self bpsByVideoTrack:videoTrack videoQuality:videoQuality];
@@ -825,7 +800,7 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
 
 /* The real duration for AVAsset when it is kind of class AVComposition */
 - (float)realDurationForAVAsset:(AVAsset *)asset {
-    AVAssetTrack *videoTrack = [[asset tracksWithMediaType:AVMediaTypeVideo] objectAtIndex:0];
+    AVAssetTrack *videoTrack = [asset tracksWithMediaType:AVMediaTypeVideo].firstObject;
     AVAssetTrackSegment *segment = videoTrack.segments[videoTrack.segments.count - 1];
     float start = CMTimeGetSeconds(segment.timeMapping.target.start);
     float duration = CMTimeGetSeconds(segment.timeMapping.target.duration);

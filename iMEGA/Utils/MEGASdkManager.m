@@ -1,35 +1,26 @@
+
 #import "MEGASdkManager.h"
+#import "MEGAConstants.h"
 
 @implementation MEGASdkManager
 
-static NSString *_appKey = nil;
-static NSString *_userAgent = nil;
-static MEGASdk *_megaSDK = nil;
-static MEGASdk *_megaSDKFolder = nil;
+static MEGAChatSdk *_MEGAChatSdk = nil;
 
-MEGAChatSdk *_MEGAChatSdk = nil;
-
-
-+ (void)setAppKey:(NSString *)appKey {
-    _appKey = appKey;
-}
-
-+ (void)setUserAgent:(NSString *)userAgent {
-    _userAgent = userAgent;
++ (NSString *)userAgent {
+    return [NSString stringWithFormat:@"%@/%@", MEGAiOSAppUserAgent, [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"]];
 }
 
 + (MEGASdk *)sharedMEGASdk {
+    static MEGASdk *_megaSDK;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        NSAssert(_appKey != nil, @"setAppKey: should be called first");
-        NSAssert(_userAgent != nil, @"setUserAgent: should be called first");
         NSError *error;
-        NSURL *applicationSupportDirectoryURL = [[NSFileManager defaultManager] URLForDirectory:NSApplicationSupportDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:YES error:nil];
+        NSURL *applicationSupportDirectoryURL = [[NSFileManager defaultManager] URLForDirectory:NSApplicationSupportDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:YES error:&error];
         if (error) {
             MEGALogError(@"Failed to locate/create NSApplicationSupportDirectory with error: %@", error);
         }
-        NSString *basePath = applicationSupportDirectoryURL.path;
-        _megaSDK = [[MEGASdk alloc] initWithAppKey:_appKey userAgent:_userAgent basePath:basePath];
+
+        _megaSDK = [[MEGASdk alloc] initWithAppKey:MEGAiOSAppKey userAgent:[self userAgent] basePath:applicationSupportDirectoryURL.path];
         [_megaSDK retrySSLErrors:YES];
     });
     return _megaSDK;
@@ -40,7 +31,7 @@ MEGAChatSdk *_MEGAChatSdk = nil;
 }
 
 + (void)createSharedMEGAChatSdk {
-    _MEGAChatSdk = [[MEGAChatSdk alloc] init:_megaSDK];
+    _MEGAChatSdk = [[MEGAChatSdk alloc] init:[self sharedMEGASdk]];
     [_MEGAChatSdk addChatDelegate:(id<MEGAChatDelegate>)[[UIApplication sharedApplication] delegate]];
     [_MEGAChatSdk addChatRequestDelegate:(id<MEGAChatRequestDelegate>)[[UIApplication sharedApplication] delegate]];
     MEGALogDebug(@"_MEGAChatSdk created: %@", _MEGAChatSdk);
@@ -58,12 +49,11 @@ MEGAChatSdk *_MEGAChatSdk = nil;
 }
 
 + (MEGASdk *)sharedMEGASdkFolder {
+    static MEGASdk *_megaSDKFolder = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        NSAssert(_appKey != nil, @"setAppKey: should be called first");
-        NSAssert(_userAgent != nil, @"setUserAgent: should be called first");
-        NSString *basePath = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-        _megaSDKFolder = [[MEGASdk alloc] initWithAppKey:_appKey userAgent:_userAgent basePath:basePath];
+        NSString *basePath = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES).firstObject;
+        _megaSDKFolder = [[MEGASdk alloc] initWithAppKey:MEGAiOSAppKey userAgent:[self userAgent] basePath:basePath];
         [_megaSDKFolder retrySSLErrors:YES];
     });
     return _megaSDKFolder;

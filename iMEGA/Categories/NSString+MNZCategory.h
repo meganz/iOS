@@ -12,7 +12,6 @@ typedef NS_ENUM(NSInteger, MEGAChatMessageEndCallReason);
 
 #pragma mark - appData
 
-- (NSString *)mnz_appDataToSaveCameraUploadsCount:(NSUInteger)operationCount;
 - (NSString *)mnz_appDataToSaveInPhotosApp;
 - (NSString *)mnz_appDataToAttachToChatID:(uint64_t)chatId asVoiceClip:(BOOL)asVoiceClip;
 - (NSString *)mnz_appDataToSaveCoordinates:(NSString *)coordinates;
@@ -67,12 +66,21 @@ typedef NS_ENUM(NSInteger, MEGAChatMessageEndCallReason);
  */
 + (NSString *)mnz_convertCoordinatesLatitude:(float)latitude longitude:(float)longitude;
 
-+ (NSString *)mnz_addedByInRecentActionBucket:(MEGARecentActionBucket *)recentActionBucket nodesArray:(NSArray *)nodesArray;
++ (NSString *)mnz_addedByInRecentActionBucket:(MEGARecentActionBucket *)recentActionBucket;
 
 #pragma mark - File names and extensions
 
 - (NSString *)mnz_fileNameWithLowercaseExtension;
 - (NSString *)mnz_lastExtensionInLowercase;
 - (NSString *)mnz_sequentialFileNameInParentNode:(MEGANode *)parentNode;
+
+/**
+ Remove invalid file characters from a string. So we can use the new string safely as a folder name or file name
+ 
+ For now, we remove characters ":", "/", "\\"
+
+ @return a new string without invalid characters
+ */
+- (NSString *)mnz_stringByRemovingInvalidFileCharacters;
 
 @end

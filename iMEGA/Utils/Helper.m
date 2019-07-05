@@ -21,7 +21,6 @@
 #import "MEGAStore.h"
 #import "MEGAUser+MNZCategory.h"
 
-#import "CameraUploads.h"
 #import "GetLinkActivity.h"
 #import "NodeTableViewCell.h"
 #import "OpenInActivity.h"
@@ -30,6 +29,7 @@
 #import "RemoveSharingActivity.h"
 #import "ShareFolderActivity.h"
 #import "SendToChatActivity.h"
+#import "MEGAConstants.h"
 
 static MEGAIndexer *indexer;
 
@@ -380,7 +380,7 @@ static MEGAIndexer *indexer;
     static NSString *pathString = nil;
     
     if (pathString == nil) {
-        pathString = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+        pathString = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject;
         pathString = [pathString stringByAppendingString:@"/"];
     }
     
@@ -391,7 +391,7 @@ static MEGAIndexer *indexer;
     static NSString *pathString = nil;
     
     if (pathString == nil) {
-        pathString = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+        pathString = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject;
         pathString = [pathString lastPathComponent];
     }
     
@@ -406,7 +406,7 @@ static MEGAIndexer *indexer;
 
 + (NSString *)pathForNode:(MEGANode *)node searchPath:(NSSearchPathDirectory)path directory:(NSString *)directory {
     
-    NSString *destinationPath = [NSSearchPathForDirectoriesInDomains(path, NSUserDomainMask, YES) objectAtIndex:0];
+    NSString *destinationPath = NSSearchPathForDirectoriesInDomains(path, NSUserDomainMask, YES).firstObject;
     NSString *fileName = [node base64Handle];
     NSString *destinationFilePath = nil;
     destinationFilePath = [directory isEqualToString:@""] ? [destinationPath stringByAppendingPathComponent:fileName]
@@ -425,14 +425,15 @@ static MEGAIndexer *indexer;
 }
 
 + (NSString *)pathForSharedSandboxCacheDirectory:(NSString *)directory {
+    return [[self urlForSharedSandboxCacheDirectory:directory] path];
+}
+
++ (NSURL *)urlForSharedSandboxCacheDirectory:(NSString *)directory {
     NSString *cacheDirectory = @"Library/Cache/";
-    NSString *targetDirectory = [cacheDirectory stringByAppendingString:directory];
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-    NSString *destinationPath = [[[fileManager containerURLForSecurityApplicationGroupIdentifier:@"group.mega.ios"] URLByAppendingPathComponent:targetDirectory] path];
-    if (![fileManager fileExistsAtPath:destinationPath]) {
-        [fileManager createDirectoryAtPath:destinationPath withIntermediateDirectories:YES attributes:nil error:nil];
-    }
-    return destinationPath;
+    NSURL *containerURL = [[NSFileManager defaultManager] containerURLForSecurityApplicationGroupIdentifier:@"group.mega.ios"];
+    NSURL *destinationURL = [[containerURL URLByAppendingPathComponent:cacheDirectory isDirectory:YES] URLByAppendingPathComponent:directory isDirectory:YES];
+    [[NSFileManager defaultManager] createDirectoryAtURL:destinationURL withIntermediateDirectories:YES attributes:nil error:nil];
+    return destinationURL;
 }
 
 #pragma mark - Utils for transfers
@@ -1143,8 +1144,21 @@ static MEGAIndexer *indexer;
     return spaceHeight;
 }
 
++ (CGFloat)spaceHeightForEmptyStateWithDescription {
+    CGFloat spaceHeight = 20.0f;
+    if (UIInterfaceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation]) && [[UIDevice currentDevice] iPhoneDevice]) {
+        spaceHeight = 11.0f;
+    }
+    
+    return spaceHeight;
+}
+
 + (NSDictionary *)titleAttributesForEmptyState {
     return @{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:18.0f], NSForegroundColorAttributeName:UIColor.mnz_black333333};
+}
+
++ (NSDictionary *)descriptionAttributesForEmptyState {
+    return @{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:14.0f], NSForegroundColorAttributeName:UIColor.mnz_gray777777};
 }
 
 + (NSDictionary *)buttonTextAttributesForEmptyState {
@@ -1213,6 +1227,7 @@ static MEGAIndexer *indexer;
 #pragma mark - Logout
 
 + (void)logout {
+    [NSNotificationCenter.defaultCenter postNotificationName:MEGALogoutNotification object:self];
     [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
     [Helper cancelAllTransfers];
     
@@ -1220,14 +1235,14 @@ static MEGAIndexer *indexer;
     
     [Helper deleteUserData];
     [Helper deleteMasterKey];
-            
-    [Helper resetCameraUploadsSettings];
+
     [Helper resetUserData];
     
     [Helper deletePasscode];
 }
 
-+ (void)logoutFromConfirmAccount {    
++ (void)logoutFromConfirmAccount {
+    [NSNotificationCenter.defaultCenter postNotificationName:MEGALogoutNotification object:self];
     [Helper cancelAllTransfers];
     
     [Helper clearSession];
@@ -1235,7 +1250,6 @@ static MEGAIndexer *indexer;
     [Helper deleteUserData];
     [Helper deleteMasterKey];
     
-    [Helper resetCameraUploadsSettings];
     [Helper resetUserData];
     
     [Helper deletePasscode];
@@ -1243,7 +1257,7 @@ static MEGAIndexer *indexer;
 
 + (void)logoutAfterPasswordReminder {
     NSError *error;
-    NSArray *directoryContent = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] error:&error];
+    NSArray *directoryContent = [NSFileManager.defaultManager contentsOfDirectoryAtPath:NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject error:&error];
     if (error) {
         MEGALogError(@"Contents of directory at path failed with error: %@", error);
     }
@@ -1298,28 +1312,28 @@ static MEGAIndexer *indexer;
     NSString *thumbsDirectory = [Helper pathForSharedSandboxCacheDirectory:@"thumbnailsV3"];
     [NSFileManager.defaultManager mnz_removeItemAtPath:thumbsDirectory];
     
-    NSString *previewsDirectory = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"previewsV3"];
+    NSString *previewsDirectory = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES).firstObject stringByAppendingPathComponent:@"previewsV3"];
     [NSFileManager.defaultManager mnz_removeItemAtPath:previewsDirectory];
     
     // Remove "Inbox" folder return an error. "Inbox" is reserved by Apple
-    NSString *offlineDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    NSString *offlineDirectory = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject;
     [NSFileManager.defaultManager mnz_removeFolderContentsAtPath:offlineDirectory];
     
     [NSFileManager.defaultManager mnz_removeFolderContentsAtPath:NSTemporaryDirectory()];
     
     // Delete application support directory content
-    NSString *applicationSupportDirectory = [NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    NSString *applicationSupportDirectory = NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES).firstObject;
     for (NSString *file in [[NSFileManager defaultManager] contentsOfDirectoryAtPath:applicationSupportDirectory error:nil]) {
         if ([file containsString:@"MEGACD"] || [file containsString:@"spotlightTree"] || [file containsString:@"Uploads"] || [file containsString:@"Downloads"]) {
             [NSFileManager.defaultManager mnz_removeItemAtPath:[applicationSupportDirectory stringByAppendingPathComponent:file]];
         }
     }
     
+    [MEGAStore.shareInstance.storeStack deleteStoreWithError:nil];
+    
     // Delete files saved by extensions
     NSString *extensionGroup = [[NSFileManager defaultManager] containerURLForSecurityApplicationGroupIdentifier:@"group.mega.ios"].path;
     [NSFileManager.defaultManager mnz_removeFolderContentsAtPath:extensionGroup];
-    
-    [[MEGAStore shareInstance] configureMEGAStore];
     
     // Delete Spotlight index
     [[CSSearchableIndex defaultSearchableIndex] deleteSearchableItemsWithDomainIdentifiers:@[@"nodes"] completionHandler:^(NSError * _Nullable error) {
@@ -1332,7 +1346,7 @@ static MEGAIndexer *indexer;
 }
 
 + (void)deleteMasterKey {
-    NSString *documentsDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    NSString *documentsDirectory = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject;
     NSString *masterKeyFilePath = [documentsDirectory stringByAppendingPathComponent:@"RecoveryKey.txt"];
     [[NSFileManager defaultManager] mnz_removeItemAtPath:masterKeyFilePath];
 }
@@ -1345,8 +1359,6 @@ static MEGAIndexer *indexer;
     
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"TransfersPaused"];
     
-    [NSUserDefaults.standardUserDefaults removeObjectForKey:kIsCameraUploadsEnabled];
-    [NSUserDefaults.standardUserDefaults removeObjectForKey:kIsUploadVideosEnabled];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"IsSavePhotoToGalleryEnabled"];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"IsSaveVideoToGalleryEnabled"];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"ChatVideoQuality"];
@@ -1366,17 +1378,6 @@ static MEGAIndexer *indexer;
     [sharedUserDefaults synchronize];
 }
 
-+ (void)resetCameraUploadsSettings {
-    [[NSUserDefaults standardUserDefaults] removeObjectForKey:kLastUploadPhotoDate];
-    [CameraUploads syncManager].lastUploadPhotoDate = [NSDate dateWithTimeIntervalSince1970:0];
-    
-    [[NSUserDefaults standardUserDefaults] removeObjectForKey:kLastUploadVideoDate];
-    [CameraUploads syncManager].lastUploadVideoDate = [NSDate dateWithTimeIntervalSince1970:0];
-
-    [[CameraUploads syncManager] setIsCameraUploadsEnabled:NO];
-    [[NSUserDefaults standardUserDefaults] removeObjectForKey:kCameraUploadsNodeHandle];
-}
-
 + (void)deletePasscode {
     if ([LTHPasscodeViewController doesPasscodeExist]) {
         if (LTHPasscodeViewController.sharedUser.isLockscreenPresent) {
@@ -1388,7 +1389,7 @@ static MEGAIndexer *indexer;
 }
 
 + (void)showExportMasterKeyInView:(UIViewController *)viewController completion:(void (^ __nullable)(void))completion {
-    NSString *documentsDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    NSString *documentsDirectory = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject;
     NSString *masterKeyFilePath = [documentsDirectory stringByAppendingPathComponent:@"RecoveryKey.txt"];
     
     BOOL success = [[NSFileManager defaultManager] createFileAtPath:masterKeyFilePath contents:[[[MEGASdkManager sharedMEGASdk] masterKey] dataUsingEncoding:NSUTF8StringEncoding] attributes:@{NSFileProtectionKey:NSFileProtectionComplete}];

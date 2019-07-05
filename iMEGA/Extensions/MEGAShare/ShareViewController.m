@@ -23,9 +23,6 @@
 #import "ShareAttachment.h"
 #import "ShareFilesDestinationTableViewController.h"
 
-#define kAppKey @"EVtjzb7R"
-#define kUserAgent @"MEGAiOS"
-
 #define MNZ_ANIMATION_TIME 0.35
 
 @interface ShareViewController () <MEGARequestDelegate, MEGATransferDelegate, MEGAChatRoomDelegate, LTHPasscodeViewControllerDelegate>
@@ -86,10 +83,6 @@
     self.passcodePresented = NO;
     self.passcodeToBePresented = NO;
     self.semaphore = dispatch_semaphore_create(0);
-    
-    [MEGASdkManager setAppKey:kAppKey];
-    NSString *userAgent = [NSString stringWithFormat:@"%@/%@", kUserAgent, [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"]];
-    [MEGASdkManager setUserAgent:userAgent];
     [self languageCompatibility];
     
 #ifdef DEBUG
@@ -275,7 +268,7 @@
 - (void)setSystemLanguage {
     NSDictionary *globalDomain = [[NSUserDefaults standardUserDefaults] persistentDomainForName:@"NSGlobalDomain"];
     NSArray *languages = [globalDomain objectForKey:@"AppleLanguages"];
-    NSString *systemLanguageID = [languages objectAtIndex:0];
+    NSString *systemLanguageID = languages.firstObject;
     
     if ([Helper isLanguageSupported:systemLanguageID]) {
         [[LocalizationSystem sharedLocalSystem] setLanguage:systemLanguageID];
@@ -537,7 +530,7 @@ void uncaughtExceptionHandler(NSException *exception) {
         return;
     }
     
-    NSExtensionItem *content = self.extensionContext.inputItems[0];
+    NSExtensionItem *content = self.extensionContext.inputItems.firstObject;
     self.totalAssets = self.pendingAssets = content.attachments.count;
     self.progress = 0;
     self.unsupportedAssets = self.alreadyInDestinationAssets = 0;
