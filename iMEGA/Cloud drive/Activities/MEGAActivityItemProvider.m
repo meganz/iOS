@@ -33,7 +33,7 @@
         } else {
             semaphore = dispatch_semaphore_create(0);
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-                if ([MEGAReachabilityManager isReachableHUDIfNot]) {
+                if (MEGAReachabilityManager.isReachableHUDIfNot) {
                     [MEGASdkManager.sharedMEGASdk exportNode:self.node expireTime:[NSDate dateWithTimeIntervalSince1970:self.node.expirationTime] delegate:self];
                 }
             });
