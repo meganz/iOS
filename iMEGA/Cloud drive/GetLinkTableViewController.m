@@ -8,6 +8,7 @@
 #import "MEGAPasswordLinkRequestDelegate.h"
 #import "MEGASdk+MNZCategory.h"
 #import "MEGASDKManager.h"
+#import "NSDate+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 #import "PasswordStrengthIndicatorView.h"
 #import "PasswordView.h"
@@ -52,7 +53,6 @@
 @property (nonatomic) MEGAExportRequestDelegate *exportDelegate;
 @property (nonatomic) MEGAPasswordLinkRequestDelegate *passwordLinkDelegate;
 
-@property (nonatomic) NSDateFormatter *dateFormatter;
 @property (nonatomic) NSString *currentPassword;
 
 @end
@@ -65,13 +65,6 @@
     [super viewDidLoad];
     
     [self setNavigationBarTitle];
-    
-    self.dateFormatter = [[NSDateFormatter alloc] init];
-    self.dateFormatter.dateStyle = NSDateFormatterMediumStyle;
-    self.dateFormatter.timeStyle = NSDateFormatterNoStyle;
-    NSString *currentLanguageID = [[LocalizationSystem sharedLocalSystem] getLanguage];
-    NSLocale *locale = [[NSLocale alloc] initWithLocaleIdentifier:currentLanguageID];
-    self.dateFormatter.locale = locale;
     
     [self checkExpirationTime];
     
@@ -197,7 +190,7 @@
         self.expireSwitch.on = YES;
         self.expireDateSetLabel.hidden = NO;
         NSDate *date = [NSDate.alloc initWithTimeIntervalSince1970:earliestExpirationTime];
-        self.expireDateSetLabel.text = [self.dateFormatter stringFromDate:date];
+        self.expireDateSetLabel.text = date.mnz_formattedDateMediumStyle;
     }
 }
 
@@ -228,7 +221,7 @@
     if (self.passwordView.passwordTextField.text.mnz_isEmpty) {
         [self.passwordView setErrorState:YES withText:AMLocalizedString(@"passwordInvalidFormat", @"Message shown when the user enters a wrong password")];
         return NO;
-    } else if ([[MEGASdkManager sharedMEGASdk] passwordStrength:self.passwordView.passwordTextField.text] == PasswordStrengthVeryWeak) {
+    } else if ([MEGASdkManager.sharedMEGASdk passwordStrength:self.passwordView.passwordTextField.text] == PasswordStrengthVeryWeak) {
         [self.passwordView setErrorState:YES withText:AMLocalizedString(@"pleaseStrengthenYourPassword", nil)];
         return NO;
     } else {
@@ -258,7 +251,7 @@
     self.expireDateSetSaveButton.hidden = !sender.isOn;
     
     if (sender.isOn) {
-        self.expireDateSetLabel.text = [self.dateFormatter stringFromDate:self.expireDatePicker.date];
+        self.expireDateSetLabel.text = self.expireDatePicker.date.mnz_formattedDateMediumStyle;
         [self showDatePicker];
     } else {
         [self hideDatePicker];
@@ -268,7 +261,7 @@
 }
 
 - (IBAction)expireDateChanged:(UIDatePicker *)sender {
-    self.expireDateSetLabel.text = [self.dateFormatter stringFromDate:sender.date];
+    self.expireDateSetLabel.text = sender.date.mnz_formattedDateMediumStyle;
     
     self.expireDateSetSaveButton.enabled = YES;
     self.expireDateSetSaveButton.hidden = NO;
