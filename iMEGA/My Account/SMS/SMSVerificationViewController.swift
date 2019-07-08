@@ -59,7 +59,7 @@ class SMSVerificationViewController: UIViewController {
     }
     
     private func configDefaultCountryCode() {
-        guard let countryCallingCodeDict = self.countryCallingCodeDict else {
+        guard let countryCallingCodeDict = countryCallingCodeDict else {
             return
         }
         
@@ -67,11 +67,7 @@ class SMSVerificationViewController: UIViewController {
             return
         }
         
-        guard let (_, callingCodeList) = countryCallingCodeDict.first(where: { $0.key == systemCurrentRegionCode }) else {
-            return
-        }
-        
-        guard let callingCode = callingCodeList.stringArray.first else {
+        guard let callingCode = countryCallingCodeDict.first(where: { $0.key == systemCurrentRegionCode })?.value.first else {
             return
         }
         
@@ -90,7 +86,7 @@ class SMSVerificationViewController: UIViewController {
 
     // MARK: UI actions
     @IBAction private func didTapCountryView() {
-        guard let countryCallingCodeDict = self.countryCallingCodeDict else {
+        guard let countryCallingCodeDict = countryCallingCodeDict else {
             return
         }
         

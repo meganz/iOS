@@ -1,6 +1,5 @@
 
 extension MEGAStringList {
-    
     var stringArray: [String] {
         var strings = [String]()
         strings.reserveCapacity(size)
@@ -9,5 +8,9 @@ extension MEGAStringList {
         }
         
         return strings
+    }
+    
+    var first: String? {
+        return size > 0 ? string(at: 0) : nil
     }
 }
