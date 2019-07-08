@@ -33,7 +33,7 @@ class CallingCountriesTableViewController: UITableViewController {
         
         let appLocale = Locale(identifier: Locale.identifier(fromComponents: [NSLocale.Key.languageCode.rawValue : appLanguageId]))
         let allCountries = countryCallingCodeDict.map {
-            CallingCountry(countryCode: $0.key, countryLocalizedName: appLocale.localizedString(forRegionCode: $0.key), callingCode: $0.value.stringArray.first)
+            CallingCountry(countryCode: $0.key, countryLocalizedName: appLocale.localizedString(forRegionCode: $0.key), callingCode: $0.value.first)
             }.compactMap { $0 }
         
         var sections = collation.sectionTitles.map { _ in [CallingCountry]() }
