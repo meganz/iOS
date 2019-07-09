@@ -110,6 +110,10 @@
         return [[MEGASdkManager sharedMEGASdk] multiFactorAuthAvailable] ? 2 : 1;
     }
     
+    if (section == 3 && MEGASdkManager.sharedMEGASdk.isBusinessAccount && !MEGASdkManager.sharedMEGASdk.isMasterBusinessAccount) {
+        return 0;
+    }
+    
     return 1;
 }
 

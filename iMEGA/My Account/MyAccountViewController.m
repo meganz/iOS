@@ -74,7 +74,11 @@
     NSString *accountTypeString = [AMLocalizedString(@"accountType", @"title of the My Account screen") stringByReplacingOccurrencesOfString:@":" withString:@""];
     self.accountTypeLabel.text = accountTypeString;
     
-    [self.upgradeAccountButton setTitle:AMLocalizedString(@"upgradeAccount", @"Button title which triggers the action to upgrade your MEGA account level") forState:UIControlStateNormal];
+    if (MEGASdkManager.sharedMEGASdk.isBusinessAccount) {
+        [self.upgradeAccountButton removeFromSuperview];
+    } else {
+        [self.upgradeAccountButton setTitle:AMLocalizedString(@"upgradeAccount", @"Button title which triggers the action to upgrade your MEGA account level") forState:UIControlStateNormal];
+    }
     
     [self.logoutButton setTitle:AMLocalizedString(@"logoutLabel", @"Title of the button which logs out from your account.") forState:UIControlStateNormal];
     
@@ -222,6 +226,13 @@
             case MEGAAccountTypeProIII: {
                 self.proStatusLabel.text = [NSString stringWithFormat:@"PRO III"];
                 self.proStatusLabel.textColor = UIColor.mnz_redProIII;
+                self.proExpiryDateLabel.text = renewsExpiresString;
+                break;
+            }
+                
+            case MEGAAccountTypeBusiness: {
+                self.proStatusLabel.text = AMLocalizedString(@"Business", nil);
+                self.proStatusLabel.textColor = UIColor.mnz_black333333;
                 self.proExpiryDateLabel.text = renewsExpiresString;
                 break;
             }

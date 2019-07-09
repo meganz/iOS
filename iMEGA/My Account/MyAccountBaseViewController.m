@@ -62,12 +62,14 @@
     UIAlertController *editProfileAlertController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
     [editProfileAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
     
-    UIAlertAction *changeNameAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"changeName", @"Button title that allows the user change his name") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-        MEGANavigationController *changeNameNavigationController = [[UIStoryboard storyboardWithName:@"MyAccount" bundle:nil] instantiateViewControllerWithIdentifier:@"ChangeNameNavigationControllerID"];
-        [self presentViewController:changeNameNavigationController animated:YES completion:nil];
-    }];
-    [changeNameAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
-    [editProfileAlertController addAction:changeNameAlertAction];
+    if (!MEGASdkManager.sharedMEGASdk.isBusinessAccount || MEGASdkManager.sharedMEGASdk.isMasterBusinessAccount) {
+        UIAlertAction *changeNameAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"changeName", @"Button title that allows the user change his name") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            MEGANavigationController *changeNameNavigationController = [[UIStoryboard storyboardWithName:@"MyAccount" bundle:nil] instantiateViewControllerWithIdentifier:@"ChangeNameNavigationControllerID"];
+            [self presentViewController:changeNameNavigationController animated:YES completion:nil];
+        }];
+        [changeNameAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
+        [editProfileAlertController addAction:changeNameAlertAction];
+    }
     
     UIAlertAction *changeAvatarAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"changeAvatar", @"button that allows the user the change his avatar") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         [self presentChangeAvatarAlertController];
