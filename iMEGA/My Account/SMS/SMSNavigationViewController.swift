@@ -6,6 +6,7 @@ class SMSNavigationViewController: UINavigationController {
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationBar.isTranslucent = true
+        navigationBar.tintColor = UIColor.mnz_redMain()
     }
     
     override var childForStatusBarStyle: UIViewController? {

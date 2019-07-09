@@ -7,3 +7,5 @@
 
 #import "MEGASdkManager.h"
 #import "MEGAGenericRequestDelegate.h"
+
+#import "UIColor+MNZCategory.h"
