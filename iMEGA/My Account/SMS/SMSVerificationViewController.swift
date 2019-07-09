@@ -19,7 +19,7 @@ class SMSVerificationViewController: UIViewController {
         super.viewDidLoad()
         
         title = "Verify Your Account"
-        navigationController?.isNavigationBarHidden = true
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
 
         disableAutomaticAdjustmentContentInsetsBehavior()
         
@@ -35,8 +35,10 @@ class SMSVerificationViewController: UIViewController {
         
         NotificationCenter.default.addObserver(self, selector: #selector(didReceiveKeyboardWillShowNotification(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(didReceiveKeyboardWillHideNotification(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
-        
-        navigationItem.backBarButtonItem?.title = ""
+
+        if !headerImageView.isHidden {
+            navigationController?.isNavigationBarHidden = true
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -80,8 +82,7 @@ class SMSVerificationViewController: UIViewController {
             return
         }
         
-        countryNameLabel.text = callingCountry.displayName
-        countryCodeLabel.text = callingCountry.displayCallingCode
+        configView(by: callingCountry)
     }
 
     // MARK: UI actions
@@ -90,7 +91,7 @@ class SMSVerificationViewController: UIViewController {
             return
         }
         
-        navigationController?.pushViewController(CallingCountriesTableViewController(countryCallingCodeDict: countryCallingCodeDict), animated: true)
+        navigationController?.pushViewController(CallingCountriesTableViewController(countryCallingCodeDict: countryCallingCodeDict, delegate: self), animated: true)
     }
     
     private func animateViewAdjustments(withDuration duration: Double, keyboardHeight: CGFloat) {
@@ -127,6 +128,11 @@ class SMSVerificationViewController: UIViewController {
     }
     
     // MARK: UI configurations
+    private func configView(by callingCountry: CallingCountry) {
+        countryNameLabel.text = callingCountry.displayName
+        countryCodeLabel.text = callingCountry.displayCallingCode
+    }
+    
     override var preferredStatusBarStyle: UIStatusBarStyle {
         if navigationController?.isNavigationBarHidden ?? false {
             return .lightContent
@@ -176,5 +182,13 @@ extension SMSVerificationViewController: UIScrollViewDelegate {
         } else {
             headerImageView.layer.transform = CATransform3DIdentity
         }
+    }
+}
+
+// MARK: - CallingCountriesTableViewControllerDelegate
+extension SMSVerificationViewController: CallingCountriesTableViewControllerDelegate {
+    func callingCountriesTableViewController(_ controller: CallingCountriesTableViewController, didSelectCountry country: CallingCountry) {
+        navigationController?.popToViewController(self, animated: true)
+        configView(by: country)
     }
 }

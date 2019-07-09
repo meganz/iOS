@@ -1,6 +1,10 @@
 
 import UIKit
 
+protocol CallingCountriesTableViewControllerDelegate: class {
+    func callingCountriesTableViewController(_ controller: CallingCountriesTableViewController, didSelectCountry country:CallingCountry)
+}
+
 class CallingCountriesTableViewController: UITableViewController {
     
     private let countryCellReuseId = "countryCell"
@@ -10,8 +14,11 @@ class CallingCountriesTableViewController: UITableViewController {
     
     private lazy var countrySections = self.buildCountrySections()
     
-    init(countryCallingCodeDict: [String: MEGAStringList]) {
+    private weak var delegate: CallingCountriesTableViewControllerDelegate?
+    
+    init(countryCallingCodeDict: [String: MEGAStringList], delegate: CallingCountriesTableViewControllerDelegate? = nil) {
         self.countryCallingCodeDict = countryCallingCodeDict
+        self.delegate = delegate
         super.init(style: .plain)
     }
     
@@ -24,6 +31,12 @@ class CallingCountriesTableViewController: UITableViewController {
         
         title = "Choose Your Country"
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: countryCellReuseId)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        navigationController?.isNavigationBarHidden = false
     }
     
     private func buildCountrySections() -> [[CallingCountry]] {
@@ -75,5 +88,9 @@ extension CallingCountriesTableViewController {
     
     override func tableView(_ tableView: UITableView, sectionForSectionIndexTitle title: String, at index: Int) -> Int {
         return collation.section(forSectionIndexTitle: index)
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        delegate?.callingCountriesTableViewController(self, didSelectCountry: countrySections[indexPath.section][indexPath.row])
     }
 }
