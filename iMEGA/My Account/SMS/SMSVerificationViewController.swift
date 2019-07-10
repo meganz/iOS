@@ -6,8 +6,6 @@ class SMSVerificationViewController: UIViewController {
     @IBOutlet private var scrollView: UIScrollView!
     @IBOutlet private var headerImageView: UIImageView!
     @IBOutlet private var nextButton: UIButton!
-    @IBOutlet private var nextButtonBottomConstraint: NSLayoutConstraint!
-    @IBOutlet private var scrollContentViewPreferredEqualHeightConstraint: NSLayoutConstraint!
     @IBOutlet private var phoneNumberTextField: UITextField!
     @IBOutlet private var countryNameLabel: UILabel!
     @IBOutlet private var countryCodeLabel: UILabel!
@@ -96,13 +94,15 @@ class SMSVerificationViewController: UIViewController {
     
     private func animateViewAdjustments(withDuration duration: Double, keyboardHeight: CGFloat) {
         navigationController?.setNavigationBarHidden(false, animated: true)
-        UIView.animate(withDuration: duration, animations: {
+        UIView.animate(withDuration: duration + 0.75, animations: {
             self.enableAutomaticAdjustmentContentInsetsBehavior()
             self.headerImageView.isHidden = true
             self.setNeedsStatusBarAppearanceUpdate()
-            self.nextButtonBottomConstraint.constant = keyboardHeight
         }) { _ in
-            self.adjustScrollViewContentPreferredHeight()
+            var insets = self.scrollView.contentInset
+            insets.bottom = keyboardHeight
+            self.scrollView.contentInset = insets
+            self.scrollView.scrollIndicatorInsets = insets
         }
     }
     
@@ -117,8 +117,10 @@ class SMSVerificationViewController: UIViewController {
     }
     
     @objc private func didReceiveKeyboardWillHideNotification(_ notification: Notification) {
-        nextButtonBottomConstraint.constant = 0
-        adjustScrollViewContentPreferredHeight()
+        var insets = scrollView.contentInset
+        insets.bottom = 0
+        scrollView.contentInset = insets
+        scrollView.scrollIndicatorInsets = insets
     }
     
     @objc private func didReceiveTextDidChangeNotification(_ notification: Notification) {
@@ -126,7 +128,7 @@ class SMSVerificationViewController: UIViewController {
             nextButton.isEnabled = !(phoneNumberTextField.text?.isEmpty ?? true)
         }
     }
-    
+
     // MARK: UI configurations
     private func configView(by callingCountry: CallingCountry) {
         countryNameLabel.text = callingCountry.displayName
@@ -138,14 +140,6 @@ class SMSVerificationViewController: UIViewController {
             return .lightContent
         } else {
             return .default
-        }
-    }
-    
-    private func adjustScrollViewContentPreferredHeight() {
-        if #available(iOS 11.0, *) {
-            scrollContentViewPreferredEqualHeightConstraint.constant = -scrollView.adjustedContentInset.top
-        } else {
-            scrollContentViewPreferredEqualHeightConstraint.constant = -scrollView.contentInset.top
         }
     }
     
