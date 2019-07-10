@@ -410,8 +410,8 @@
     if (!self.panAvatar) {
         NSString *avatarFilePath = [[Helper pathForSharedSandboxCacheDirectory:@"thumbnailsV3"] stringByAppendingPathComponent:[MEGASdk base64HandleForUserHandle:self.userHandle]];
         
-        if ([[NSFileManager defaultManager] fileExistsAtPath:avatarFilePath]) {
-            self.panAvatar = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePan:)];
+        if ([NSFileManager.defaultManager fileExistsAtPath:avatarFilePath]) {
+            self.panAvatar = [UIPanGestureRecognizer.alloc initWithTarget:self action:@selector(handlePan:)];
             [self.avatarImageView addGestureRecognizer:self.panAvatar];
         }
     }
