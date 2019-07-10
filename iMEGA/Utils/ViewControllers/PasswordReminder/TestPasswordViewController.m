@@ -151,7 +151,7 @@
 }
 
 - (void)arrangeLogoutButton {
-    if (UIInterfaceOrientationIsLandscape([UIApplication sharedApplication].statusBarOrientation) && (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)) {
+    if (UIInterfaceOrientationIsLandscape(UIApplication.sharedApplication.statusBarOrientation) && (UIDevice.currentDevice.userInterfaceIdiom == UIUserInterfaceIdiomPhone)) {
         [self.centerStackView addArrangedSubview:self.logoutButton];
     } else {
         [self.bottomStackView addArrangedSubview:self.logoutButton];
