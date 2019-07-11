@@ -96,7 +96,7 @@
                 }
             }
             
-            if (CameraUploadManager.isLivePhotoSupported && [mediaTypes containsObject:@(PHAssetMediaTypeImage)]) {
+            if (CameraUploadManager.shouldScanLivePhotosForVideos && [mediaTypes containsObject:@(PHAssetMediaTypeImage)]) {
                 [self.livePhotoScanner scanLivePhotosWithError:&error];
             }
             

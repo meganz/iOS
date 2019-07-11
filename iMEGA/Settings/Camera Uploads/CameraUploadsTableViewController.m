@@ -15,23 +15,27 @@ typedef NS_ENUM(NSUInteger, CameraUploadSection) {
     CameraUploadSectionVideoInfo,
     CameraUploadSectionPhotoFormat,
     CameraUploadSectionOptions,
-    CameraUploadSectionTotalCount
+    CameraUploadSectionCount
 };
 
-typedef NS_ENUM(NSUInteger, CameraUploadOptionRow) {
-    CameraUploadOptionRowUseMobileData,
-    CameraUploadOptionRowUseMobileDataForVideos,
-    CameraUploadOptionRowBackgroundUpload
+typedef NS_ENUM(NSUInteger, CameraUploadSectionOptionsRow) {
+    CameraUploadSectionOptionsRowUseMobileData,
+    CameraUploadSectionOptionsRowUseMobileDataForVideos,
+    CameraUploadSectionOptionsRowBackgroundUpload,
+    CameraUploadSectionOptionsRowAdvanced,
+    CameraUploadSectionOptionsRowCount
 };
 
-typedef NS_ENUM(NSUInteger, CameraUploadVideoRow) {
-    CameraUploadVideoRowDetailInfo,
-    CameraUploadVideoRowSinglePageSetting
+typedef NS_ENUM(NSUInteger, CameraUploadSectionVideoInfoRow) {
+    CameraUploadSectionVideoInfoRowDetailInfo,
+    CameraUploadSectionVideoInfoRowSinglePageSetting,
+    CameraUploadSectionVideoInfoRowCount
 };
 
-typedef NS_ENUM(NSUInteger, CameraUploadPhotoFormatRow) {
-    CameraUploadPhotoFormatRowHEIC,
-    CameraUploadPhotoFormatRowJPG
+typedef NS_ENUM(NSUInteger, CameraUploadSectionPhotoFormatRow) {
+    CameraUploadSectionPhotoFormatRowHEIC,
+    CameraUploadSectionPhotoFormatRowJPG,
+    CameraUploadSectionPhotoFormatRowCount
 };
 
 static const CGFloat TableViewSectionHeaderFooterHiddenHeight = 0.1;
@@ -255,7 +259,7 @@ static const CGFloat TableViewSectionHeaderFooterHiddenHeight = 0.1;
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     if (CameraUploadManager.isCameraUploadEnabled) {
-        return CameraUploadSectionTotalCount;
+        return CameraUploadSectionCount;
     } else {
         return 1;
     }
@@ -268,17 +272,17 @@ static const CGFloat TableViewSectionHeaderFooterHiddenHeight = 0.1;
             numberOfRows = 1;
             break;
         case CameraUploadSectionVideoInfo:
-            numberOfRows = 2;
+            numberOfRows = CameraUploadSectionVideoInfoRowCount;
             break;
         case CameraUploadSectionPhotoFormat:
             if (CameraUploadManager.isHEVCFormatSupported) {
-                numberOfRows = 2;
+                numberOfRows = CameraUploadSectionPhotoFormatRowCount;
             } else {
                 numberOfRows = 0;
             }
             break;
         case CameraUploadSectionOptions:
-            numberOfRows = 3;
+            numberOfRows = CameraUploadSectionOptionsRowCount;
         default:
             break;
     }
@@ -326,7 +330,7 @@ static const CGFloat TableViewSectionHeaderFooterHiddenHeight = 0.1;
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     if (indexPath.section == CameraUploadSectionPhotoFormat) {
-        CameraUploadManager.convertHEICPhoto = indexPath.row == CameraUploadPhotoFormatRowJPG;
+        CameraUploadManager.convertHEICPhoto = indexPath.row == CameraUploadSectionPhotoFormatRowJPG;
         [self configUI];
     }
 }
@@ -407,20 +411,20 @@ static const CGFloat TableViewSectionHeaderFooterHiddenHeight = 0.1;
     BOOL hide = NO;
     if (indexPath.section == CameraUploadSectionVideoInfo) {
         switch (indexPath.row) {
-            case CameraUploadVideoRowDetailInfo:
+            case CameraUploadSectionVideoInfoRowDetailInfo:
                 hide = !CameraUploadManager.isHEVCFormatSupported;
                 break;
-            case CameraUploadVideoRowSinglePageSetting:
+            case CameraUploadSectionVideoInfoRowSinglePageSetting:
                 hide = CameraUploadManager.isHEVCFormatSupported;
                 break;
             default: break;
         }
     } else if (indexPath.section == CameraUploadSectionOptions) {
         switch (indexPath.row) {
-            case CameraUploadOptionRowUseMobileData:
+            case CameraUploadSectionOptionsRowUseMobileData:
                 hide = ![self shouldShowMobileData];
                 break;
-            case CameraUploadOptionRowUseMobileDataForVideos:
+            case CameraUploadSectionOptionsRowUseMobileDataForVideos:
                 hide = ![self shouldShowMobileDataForVideos];
                 break;
             default: break;
