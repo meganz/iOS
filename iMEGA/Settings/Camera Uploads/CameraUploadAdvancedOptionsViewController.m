@@ -1,6 +1,7 @@
 
 #import "CameraUploadAdvancedOptionsViewController.h"
 #import "CameraUploadManager+Settings.h"
+#import "CameraScanner.h"
 
 typedef NS_ENUM(NSUInteger, AdvancedOptionSection) {
     AdvancedOptionSectionLivePhoto,
@@ -17,6 +18,8 @@ typedef NS_ENUM(NSUInteger, AdvancedOptionSection) {
 @property (weak, nonatomic) IBOutlet UILabel *uploadHiddenAlbumLabel;
 @property (weak, nonatomic) IBOutlet UISwitch *uploadHiddenAlbumSwitch;
 
+@property (strong, nonatomic) CameraScanner *cameraScanner;
+
 @end
 
 @implementation CameraUploadAdvancedOptionsViewController
@@ -32,23 +35,41 @@ typedef NS_ENUM(NSUInteger, AdvancedOptionSection) {
     self.uploadHiddenAlbumSwitch.on = CameraUploadManager.shouldUploadHiddenAssets;
 }
 
+#pragma mark - Properties
+
+- (CameraScanner *)cameraScanner {
+    if (_cameraScanner == nil) {
+        _cameraScanner = [[CameraScanner alloc] init];
+    }
+    
+    return _cameraScanner;
+}
+
 #pragma mark - UI Actions
 
 - (IBAction)didChangeValueForLivePhotosSwitch:(UISwitch *)sender {
     CameraUploadManager.uploadVideosForLivePhotos = sender.isOn;
     [self.tableView reloadData];
+    if (sender.isOn) {
+        [self.cameraScanner scanMediaTypes:CameraUploadManager.enabledMediaTypes completion:nil];
+    }
 }
 
 - (IBAction)didChangeValueForBurstPhotosSwitch:(UISwitch *)sender {
     CameraUploadManager.uploadAllBurstPhotos = sender.isOn;
     [self.tableView reloadData];
+    if (sender.isOn) {
+        [self.cameraScanner scanMediaTypes:CameraUploadManager.enabledMediaTypes completion:nil];
+    }
 }
 
 - (IBAction)didChangeValueForHiddenAssetsSwitch:(UISwitch *)sender {
     CameraUploadManager.uploadHiddenAssets = sender.isOn;
     [self.tableView reloadData];
+    if (sender.isOn) {
+        [self.cameraScanner scanMediaTypes:CameraUploadManager.enabledMediaTypes completion:nil];
+    }
 }
-
 
 #pragma mark - UITableViewDataSource
 

@@ -535,7 +535,9 @@ static const NSUInteger MaximumPhotoUploadBatchCountMultiplier = 2;
             }
             
             if ([error.domain isEqualToString:CameraUploadErrorDomain]) {
-                if (error.code == CameraUploadErrorEmptyLocalIdentifier || error.code == CameraUploadErrorNoMediaAssetFetched) {
+                if (error.code == CameraUploadErrorEmptyLocalIdentifier ||
+                    error.code == CameraUploadErrorNoMediaAssetFetched ||
+                    error.code == CameraUploadErrorUnsupportedMediaSubtype) {
                     [CameraUploadRecordManager.shared deleteUploadRecord:record error:nil];
                 } else {
                     [CameraUploadRecordManager.shared updateUploadRecord:record withStatus:CameraAssetUploadStatusFailed error:nil];
