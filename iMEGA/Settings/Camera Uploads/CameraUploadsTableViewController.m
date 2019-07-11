@@ -361,8 +361,6 @@ static const CGFloat TableViewSectionHeaderFooterHiddenHeight = 0.1;
                 } else {
                     title = AMLocalizedString(@"Photos will be uploaded to Camera Uploads folder.", nil);
                 }
-                
-                title = [NSString stringWithFormat:@"%@ %@", title, AMLocalizedString(@"(Live Photos and Bursts are included)", nil)];
             } else {
                 title = AMLocalizedString(@"When enabled, photos will be uploaded.", nil);
             }

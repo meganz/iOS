@@ -682,8 +682,6 @@
 "Photos will be uploaded to Camera Uploads folder."="Photos will be uploaded to Camera Uploads folder.";
 /* Footer text for Camera Upload switch section when photos and videos upload is enabled */
 "Photos and videos will be uploaded to Camera Uploads folder."="Photos and videos will be uploaded to Camera Uploads folder.";
-/* A hint to let user know live photos and bursts are included in Camera Upload */
-"(Live Photos and Bursts are included)"="(Live Photos and Bursts are included)";
 /* Title to show for upload in background */
 "Upload in Background"="Upload in Background";
 /* Title for the location based background upload message */
