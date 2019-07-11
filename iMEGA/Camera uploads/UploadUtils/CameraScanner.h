@@ -16,7 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (instancetype)initWithDelegate:(id<CameraScannerDelegate>)delegate;
 
-- (void)scanMediaTypes:(NSArray<NSNumber *> *)mediaTypes completion:(void (^)(NSError * _Nullable error))completion;
+- (void)scanMediaTypes:(NSArray<NSNumber *> *)mediaTypes completion:(void (^ _Nullable)(NSError * _Nullable error))completion;
 
 - (void)observePhotoLibraryChanges;
 - (void)unobservePhotoLibraryChanges;
