@@ -334,9 +334,7 @@ static NSString * const VideoAttributeImageName = @"AttributeImage";
     }
     
     if (status == CameraAssetUploadStatusDone) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [NSNotificationCenter.defaultCenter postNotificationName:MEGACameraUploadStatsChangedNotification object:nil];
-        });
+        [NSNotificationCenter.defaultCenter postNotificationName:MEGACameraUploadStatsChangedNotification object:nil];
     }
     
     if (uploadNextAsset) {
