@@ -466,9 +466,6 @@ static const NSUInteger MaximumPhotoUploadBatchCountMultiplier = 2;
             });
         } else {
             [self startVideoUploadIfNeeded];
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [NSNotificationCenter.defaultCenter postNotificationName:MEGACameraUploadStatsChangedNotification object:nil];
-            });
         }
     }];
 }
@@ -539,11 +536,11 @@ static const NSUInteger MaximumPhotoUploadBatchCountMultiplier = 2;
                     error.code == CameraUploadErrorNoMediaAssetFetched ||
                     error.code == CameraUploadErrorUnsupportedMediaSubtype) {
                     [CameraUploadRecordManager.shared deleteUploadRecord:record error:nil];
+                    [NSNotificationCenter.defaultCenter postNotificationName:MEGACameraUploadStatsChangedNotification object:nil];
                 } else {
                     [CameraUploadRecordManager.shared updateUploadRecord:record withStatus:CameraAssetUploadStatusFailed error:nil];
                 }
             }
-            
             [self uploadNextAssetForMediaType:mediaType];
         }
     }

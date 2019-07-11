@@ -390,8 +390,10 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
 #pragma mark - notifications
 
 - (void)didReceiveCameraUploadStatsChangedNotification {
-    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(reloadHeader) object:nil];
-    [self performSelector:@selector(reloadHeader) withObject:nil afterDelay:HeaderStateViewReloadTimeDelay];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(reloadHeader) object:nil];
+        [self performSelector:@selector(reloadHeader) withObject:nil afterDelay:HeaderStateViewReloadTimeDelay];
+    });
 }
 
 - (void)didReceiveInternetConnectionChangedNotification {
