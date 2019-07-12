@@ -127,8 +127,6 @@
     if (@available(iOS 11.0, *)) {
         self.avatarImageView.accessibilityIgnoresInvertColors = YES;
     }
-    
-    [self configureGestures];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -139,6 +137,8 @@
     [self.navigationController setNavigationBarHidden:YES animated:YES];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(internetConnectionChanged) name:kReachabilityChangedNotification object:nil];
     [self updateCallButtonsState];
+    
+    [self configureGestures];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -407,11 +407,16 @@
 }
 
 - (void)configureGestures {
-    NSString *avatarFilePath = [[Helper pathForSharedSandboxCacheDirectory:@"thumbnailsV3"] stringByAppendingPathComponent:[MEGASdk base64HandleForUserHandle:self.userHandle]];
+    if (!self.panAvatar) {
+        NSString *avatarFilePath = [[Helper pathForSharedSandboxCacheDirectory:@"thumbnailsV3"] stringByAppendingPathComponent:[MEGASdk base64HandleForUserHandle:self.userHandle]];
+        
+        if ([NSFileManager.defaultManager fileExistsAtPath:avatarFilePath]) {
+            self.panAvatar = [UIPanGestureRecognizer.alloc initWithTarget:self action:@selector(handlePan:)];
+            [self.avatarImageView addGestureRecognizer:self.panAvatar];
+        }
+    }
     
-    if ([[NSFileManager defaultManager] fileExistsAtPath:avatarFilePath]) {
-        self.panAvatar = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePan:)];
-        [self.avatarImageView addGestureRecognizer:self.panAvatar];
+    if (self.navigationController != nil) {
         [self.avatarImageView.gestureRecognizers enumerateObjectsUsingBlock:^(__kindof UIGestureRecognizer * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
             if ([obj isKindOfClass:[UIPanGestureRecognizer class]]) {
                 [obj requireGestureRecognizerToFail:self.navigationController.interactivePopGestureRecognizer];
