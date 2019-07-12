@@ -910,8 +910,8 @@
                         <barButtonItem key="backBarButtonItem" title=" " id="Ff1-IB-fcm"/>
                     </navigationItem>
                     <connections>
-                        <outlet property="uploadBurstPhotosLabel" destination="gis-Dd-xeL" id="IBN-4F-KGe"/>
-                        <outlet property="uploadBurstPhotosSwitch" destination="xhu-qg-I6h" id="V6g-tM-2wJ"/>
+                        <outlet property="uploadAllBurstPhotosLabel" destination="gis-Dd-xeL" id="IBN-4F-KGe"/>
+                        <outlet property="uploadAllBurstPhotosSwitch" destination="xhu-qg-I6h" id="V6g-tM-2wJ"/>
                         <outlet property="uploadHiddenAlbumLabel" destination="fdI-y3-3hu" id="FAK-Nc-fGL"/>
                         <outlet property="uploadHiddenAlbumSwitch" destination="0Ig-cw-DKm" id="3gy-su-S74"/>
                         <outlet property="uploadVideosForLivePhotosLabel" destination="0X0-1E-S4V" id="rX2-cV-VHX"/>
