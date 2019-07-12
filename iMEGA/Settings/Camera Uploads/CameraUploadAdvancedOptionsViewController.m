@@ -30,7 +30,7 @@ typedef NS_ENUM(NSUInteger, AdvancedOptionSection) {
     self.uploadAllBurstPhotosLabel.text = AMLocalizedString(@"Upload all burst photos", nil);
     self.uploadAllBurstPhotosSwitch.on = CameraUploadManager.shouldUploadAllBurstPhotos;
     self.uploadHiddenAlbumLabel.text = AMLocalizedString(@"Upload Hidden Album", nil);
-    self.uploadHiddenAlbumSwitch.on = CameraUploadManager.shouldUploadHiddenAssets;
+    self.uploadHiddenAlbumSwitch.on = CameraUploadManager.shouldUploadHiddenAlbum;
 }
 
 #pragma mark - UI Actions
@@ -47,7 +47,7 @@ typedef NS_ENUM(NSUInteger, AdvancedOptionSection) {
 }
 
 - (IBAction)didChangeValueForHiddenAssetsSwitch:(UISwitch *)sender {
-    CameraUploadManager.uploadHiddenAssets = sender.isOn;
+    CameraUploadManager.uploadHiddenAlbum = sender.isOn;
     [self configCameraUploadWhenValueChangedForSwitch:sender];
 }
 

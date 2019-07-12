@@ -18,7 +18,7 @@ static NSString * const ShouldConvertHEICPhotoKey = @"ShouldConvertHEICPhoto";
 static NSString * const ShouldConvertHEVCVideoKey = @"ShouldConvertHEVCVideo";
 static NSString * const HEVCToH264CompressionQualityKey = @"HEVCToH264CompressionQuality";
 static NSString * const IsLocationBasedBackgroundUploadAllowedKey = @"IsLocationBasedBackgroundUploadAllowed";
-static NSString * const UploadHiddenAssetsKey = @"UploadHiddenAssets";
+static NSString * const UploadHiddenAlbumKey = @"UploadHiddenAlbum";
 static NSString * const UploadAllBurstAssetsKey = @"UploadAllBurstAssets";
 static NSString * const UploadVideosForLivePhotosKey = @"UploadVideosForLivePhotos";
 
@@ -190,12 +190,12 @@ static const NSTimeInterval BoardingScreenShowUpMinimumInterval = 30 * 24 * 3600
     [NSUserDefaults.standardUserDefaults setBool:uploadAllBurstPhotos forKey:UploadAllBurstAssetsKey];
 }
 
-+ (BOOL)shouldUploadHiddenAssets {
-    return [NSUserDefaults.standardUserDefaults boolForKey:UploadHiddenAssetsKey];
++ (BOOL)shouldUploadHiddenAlbum {
+    return [NSUserDefaults.standardUserDefaults boolForKey:UploadHiddenAlbumKey];
 }
 
-+ (void)setUploadHiddenAssets:(BOOL)uploadHiddenAssets {
-    [NSUserDefaults.standardUserDefaults setBool:uploadHiddenAssets forKey:UploadHiddenAssetsKey];
++ (void)setUploadHiddenAlbum:(BOOL)uploadHiddenAlbum {
+    [NSUserDefaults.standardUserDefaults setBool:uploadHiddenAlbum forKey:UploadHiddenAlbumKey];
 }
 
 

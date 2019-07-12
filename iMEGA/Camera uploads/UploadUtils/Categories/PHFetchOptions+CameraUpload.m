@@ -24,7 +24,7 @@
     PHFetchOptions *fetchOptions = [[PHFetchOptions alloc] init];
     fetchOptions.includeAssetSourceTypes = PHAssetSourceTypeUserLibrary | PHAssetSourceTypeCloudShared | PHAssetSourceTypeiTunesSynced;
     fetchOptions.includeAllBurstAssets = CameraUploadManager.shouldUploadAllBurstPhotos;
-    fetchOptions.includeHiddenAssets = CameraUploadManager.uploadHiddenAssets;
+    fetchOptions.includeHiddenAssets = CameraUploadManager.shouldUploadHiddenAlbum;
     return fetchOptions;
 }
 
