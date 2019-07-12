@@ -35,7 +35,7 @@ typedef NS_ENUM(NSUInteger, CameraUploadVideoQuality) {
 
 @property (class, getter=shouldUploadVideosForLivePhotos) BOOL uploadVideosForLivePhotos;
 @property (class, getter=shouldUploadAllBurstPhotos) BOOL uploadAllBurstPhotos;
-@property (class, getter=shouldUploadHiddenAssets) BOOL uploadHiddenAssets;
+@property (class, getter=shouldUploadHiddenAlbum) BOOL uploadHiddenAlbum;
 
 
 #pragma mark - readonly properties
