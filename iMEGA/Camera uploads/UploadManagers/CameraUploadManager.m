@@ -466,6 +466,7 @@ static const NSUInteger MaximumPhotoUploadBatchCountMultiplier = 2;
             });
         } else {
             [self startVideoUploadIfNeeded];
+            [NSNotificationCenter.defaultCenter postNotificationName:MEGACameraUploadStatsChangedNotification object:nil];
         }
     }];
 }

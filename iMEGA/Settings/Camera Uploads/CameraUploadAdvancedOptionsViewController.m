@@ -25,6 +25,8 @@ typedef NS_ENUM(NSUInteger, AdvancedOptionSection) {
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    [self.navigationItem setTitle:AMLocalizedString(@"advanced", nil)];
+    
     self.uploadVideosForLivePhotosLabel.text = AMLocalizedString(@"Upload videos for Live Photos", nil);
     self.uploadVideosForlivePhotosSwitch.on = CameraUploadManager.shouldUploadVideosForLivePhotos;
     self.uploadAllBurstPhotosLabel.text = AMLocalizedString(@"Upload all burst photos", nil);
