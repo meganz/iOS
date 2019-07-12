@@ -25,6 +25,9 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *descriptionLabelHeightConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *passwordViewHeightConstraint;
 
+@property (weak, nonatomic) IBOutlet UIStackView *bottomStackView;
+@property (weak, nonatomic) IBOutlet UIStackView *centerStackView;
+
 @property (assign, nonatomic) float descriptionLabelHeight;
 @property (assign, nonatomic) NSInteger testFailedCount;
 
@@ -66,6 +69,14 @@
     
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
+}
+
+- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
+    [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
+    
+    [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
+        [self arrangeLogoutButton];
+    } completion:nil];
 }
 
 #pragma mark - IBActions
@@ -116,6 +127,8 @@
     self.title = AMLocalizedString(@"testPassword", @"Label for test password button");
     self.passwordView.passwordTextField.delegate = self;
     
+    [self arrangeLogoutButton];
+    
     if (self.isLoggingOut) {
         self.navigationItem.rightBarButtonItem = nil;
         self.navigationController.navigationBar.topItem.title = @"";
@@ -135,6 +148,14 @@
     self.confirmButton.layer.borderWidth = 1.0;
     self.confirmButton.layer.borderColor = [UIColor colorFromHexString:@"899B9C"].CGColor;
     [self.confirmButton setTitle:AMLocalizedString(@"confirm", @"Title text for the account confirmation.") forState:UIControlStateNormal];
+}
+
+- (void)arrangeLogoutButton {
+    if (UIInterfaceOrientationIsLandscape(UIApplication.sharedApplication.statusBarOrientation) && (UIDevice.currentDevice.userInterfaceIdiom == UIUserInterfaceIdiomPhone)) {
+        [self.centerStackView addArrangedSubview:self.logoutButton];
+    } else {
+        [self.bottomStackView addArrangedSubview:self.logoutButton];
+    }
 }
 
 - (void)passwordTestFailed {
