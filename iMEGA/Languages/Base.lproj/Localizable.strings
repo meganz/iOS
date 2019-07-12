@@ -712,6 +712,24 @@
 "You do not have enough storage to upload camera. Free up space by deleting unneeded apps, videos or music. You can manage your storage in %@"="You do not have enough storage to upload camera. Free up space by deleting unneeded apps, videos or music. You can manage your storage in %@";
 /* Navigation path for Storage settings in iOS */
 "Settings > General > %@ Storage"="Settings > General > %@ Storage";
+/* Title of the switch to config whether to upload videos for Live Photos */
+"Upload videos for Live Photos"="Upload videos for Live Photos";
+/* Title of the switch to config whether to upload all burst photos */
+"Upload all burst photos"="Upload all burst photos";
+/* Title of the switch to config whether to upload Hidden Album */
+"Upload Hidden Album"="Upload Hidden Album";
+/* Footer description when upload videos for Live Photos is enabled */
+"Underlying videos and key photos in Live Photos will be uploaded."="Underlying videos and key photos in Live Photos will be uploaded.";
+/* Footer description when upload videos for Live Photos is disabled */
+"Only key photos in Live Photos will be uploaded."="Only key photos in Live Photos will be uploaded.";
+/* Footer description when upload all burst photos is enabled */
+"All photos from burst photo sequences will be uploaded."="All photos from burst photo sequences will be uploaded.";
+/* Footer description when upload all burst photos is disabled */
+"Only the picked and representative photos from burst photo sequences will be uploaded."="Only the picked and representative photos from burst photo sequences will be uploaded.";
+/* Footer description when upload Hidden Album is enabled */
+"The photos or videos in your Hidden Album will be uploaded."="The photos or videos in your Hidden Album will be uploaded.";
+/* Footer description when upload Hidden Album is disabled */
+"The photos or videos in your Hidden Album will not be uploaded."="The photos or videos in your Hidden Album will not be uploaded.";
 /* App means “Application” */
 "App version"="App version";
 /* Title of the label where the SDK version is shown */

@@ -13,8 +13,8 @@ typedef NS_ENUM(NSUInteger, AdvancedOptionSection) {
 
 @property (weak, nonatomic) IBOutlet UILabel *uploadVideosForLivePhotosLabel;
 @property (weak, nonatomic) IBOutlet UISwitch *uploadVideosForlivePhotosSwitch;
-@property (weak, nonatomic) IBOutlet UILabel *uploadBurstPhotosLabel;
-@property (weak, nonatomic) IBOutlet UISwitch *uploadBurstPhotosSwitch;
+@property (weak, nonatomic) IBOutlet UILabel *uploadAllBurstPhotosLabel;
+@property (weak, nonatomic) IBOutlet UISwitch *uploadAllBurstPhotosSwitch;
 @property (weak, nonatomic) IBOutlet UILabel *uploadHiddenAlbumLabel;
 @property (weak, nonatomic) IBOutlet UISwitch *uploadHiddenAlbumSwitch;
 
@@ -25,11 +25,11 @@ typedef NS_ENUM(NSUInteger, AdvancedOptionSection) {
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.uploadVideosForLivePhotosLabel.text = @"Upload videos for Live Photos";
+    self.uploadVideosForLivePhotosLabel.text = AMLocalizedString(@"Upload videos for Live Photos", nil);
     self.uploadVideosForlivePhotosSwitch.on = CameraUploadManager.shouldUploadVideosForLivePhotos;
-    self.uploadBurstPhotosLabel.text = @"Upload all burst photos";
-    self.uploadBurstPhotosSwitch.on = CameraUploadManager.shouldUploadAllBurstPhotos;
-    self.uploadHiddenAlbumLabel.text = @"Upload Hidden album";
+    self.uploadAllBurstPhotosLabel.text = AMLocalizedString(@"Upload all burst photos", nil);
+    self.uploadAllBurstPhotosSwitch.on = CameraUploadManager.shouldUploadAllBurstPhotos;
+    self.uploadHiddenAlbumLabel.text = AMLocalizedString(@"Upload Hidden Album", nil);
     self.uploadHiddenAlbumSwitch.on = CameraUploadManager.shouldUploadHiddenAssets;
 }
 
@@ -65,23 +65,23 @@ typedef NS_ENUM(NSUInteger, AdvancedOptionSection) {
     switch (section) {
         case AdvancedOptionSectionLivePhoto:
             if (self.uploadVideosForlivePhotosSwitch.isOn) {
-                title = @"Underlying videos and key photos in Live Photos will be uploaded.";
+                title = AMLocalizedString(@"Underlying videos and key photos in Live Photos will be uploaded.", nil);
             } else {
-                title = @"Only key photos in Live Photos will be uploaded.";
+                title = AMLocalizedString(@"Only key photos in Live Photos will be uploaded.", nil);
             }
             break;
         case AdvancedOptionSectionBurstPhoto:
-            if (self.uploadBurstPhotosSwitch.isOn) {
-                title = @"All photos from burst photo sequences will be uploaded.";
+            if (self.uploadAllBurstPhotosSwitch.isOn) {
+                title = AMLocalizedString(@"All photos from burst photo sequences will be uploaded.", nil);
             } else {
-                title = @"Only the user-picked and representative photos from burst photo sequences will be uploaded.";
+                title = AMLocalizedString(@"Only the picked and representative photos from burst photo sequences will be uploaded.", nil);
             }
             break;
         case AdvancedOptionSectionHiddenAlbum:
             if (self.uploadHiddenAlbumSwitch.isOn) {
-                title = @"The photos or videos in your Hidden album will be uploaded.";
+                title = AMLocalizedString(@"The photos or videos in your Hidden Album will be uploaded.", nil);
             } else {
-                title = @"The photos or videos in your Hidden album will not be uploaded.";
+                title = AMLocalizedString(@"The photos or videos in your Hidden Album will not be uploaded.", nil);
             }
             break;
         default:
