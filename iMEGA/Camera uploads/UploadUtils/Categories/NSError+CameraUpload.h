@@ -20,7 +20,7 @@ typedef NS_ENUM(NSUInteger, CameraUploadError) {
     CameraUploadErrorEmptyLocalIdentifier,
     CameraUploadErrorNoMediaAssetFetched,
     CameraUploadErrorUnknownMediaType,
-    CameraUploadErrorUnsupportedMediaSubtype
+    CameraUploadErrorDisabledMediaSubtype
 };
 
 @interface NSError (CameraUpload)
@@ -102,10 +102,10 @@ typedef NS_ENUM(NSUInteger, CameraUploadError) {
 
 
 /**
- create a NSError object when we encountered an unsupported media subtype
+ create a NSError object when we encountered an media subtype disabled by the current user
 
- @param mediaSubtype the media subtype we don't support
- @return a NSError object with CameraUploadErrorUnsupportedMediaSubtype error code
+ @param mediaSubtype the media subtype gets disabled
+ @return a NSError object with CameraUploadErrorDisabledMediaSubtype error code
  */
 + (NSError *)mnz_cameraUploadUnsupportedMediaSubtype:(PHAssetMediaSubtype)mediaSubtype;
 
