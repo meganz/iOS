@@ -54,7 +54,7 @@ NSString * const CameraUploadErrorDomain = @"nz.mega.cameraUpload";
 }
 
 + (NSError *)mnz_cameraUploadUnsupportedMediaSubtype:(PHAssetMediaSubtype)mediaSubtype {
-    return [NSError errorWithDomain:CameraUploadErrorDomain code:CameraUploadErrorUnsupportedMediaSubtype userInfo:@{NSLocalizedDescriptionKey : [NSString stringWithFormat:@"the media subtype %lu is not supported", (unsigned long)mediaSubtype]}];
+    return [NSError errorWithDomain:CameraUploadErrorDomain code:CameraUploadErrorDisabledMediaSubtype userInfo:@{NSLocalizedDescriptionKey : [NSString stringWithFormat:@"the media subtype %lu currently is disabled", (unsigned long)mediaSubtype]}];
 }
 
 @end

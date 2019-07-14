@@ -535,7 +535,7 @@ static const NSUInteger MaximumPhotoUploadBatchCountMultiplier = 2;
             if ([error.domain isEqualToString:CameraUploadErrorDomain]) {
                 if (error.code == CameraUploadErrorEmptyLocalIdentifier ||
                     error.code == CameraUploadErrorNoMediaAssetFetched ||
-                    error.code == CameraUploadErrorUnsupportedMediaSubtype) {
+                    error.code == CameraUploadErrorDisabledMediaSubtype) {
                     [CameraUploadRecordManager.shared deleteUploadRecord:record error:nil];
                     [NSNotificationCenter.defaultCenter postNotificationName:MEGACameraUploadStatsChangedNotification object:nil];
                 } else {
