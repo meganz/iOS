@@ -3,7 +3,6 @@
 
 #import "MEGAChatMessage.h"
 #import "MEGAIndexer.h"
-#import "MEGASdk.h"
 
 #define kIsEraseAllLocalDataEnabled @"IsEraseAllLocalDataEnabled"
 

@@ -342,6 +342,8 @@
 		77D9A56C2023547900B48470 /* MEGAPhotoBrowserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 77D9A56B2023547900B48470 /* MEGAPhotoBrowserViewController.m */; };
 		77D9A56E202355F800B48470 /* MEGAPhotoBrowserViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 77D9A56D202355F800B48470 /* MEGAPhotoBrowserViewController.storyboard */; };
 		77D9A5712023814800B48470 /* MEGAStartDownloadTransferDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 77D9A5702023814800B48470 /* MEGAStartDownloadTransferDelegate.m */; };
+		77F0522122CB8BA800032138 /* MEGAGenericRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B20B01020E6300300511C0F /* MEGAGenericRequestDelegate.m */; };
+		77F0522222CB8BBE00032138 /* MEGAGenericRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B20B01020E6300300511C0F /* MEGAGenericRequestDelegate.m */; };
 		77F1DBDC2056A9DF005D5F0E /* MEGAContactLinkCreateRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 77F1DBDB2056A9DF005D5F0E /* MEGAContactLinkCreateRequestDelegate.m */; };
 		77F1DBDF2056AA13005D5F0E /* MEGAContactLinkQueryRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 77F1DBDE2056AA13005D5F0E /* MEGAContactLinkQueryRequestDelegate.m */; };
 		77F1DBE22056B752005D5F0E /* MEGAGetAttrUserRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 77F1DBE12056B752005D5F0E /* MEGAGetAttrUserRequestDelegate.m */; };
@@ -5694,6 +5696,7 @@
 				834AD6072024697200D2527F /* MGSwipeButton.m in Sources */,
 				77264F242147D60600DC6BCB /* MEGACopyRequestDelegate.m in Sources */,
 				83FB143D219C3C7100418BE6 /* MOOfflineFolderLayout+CoreDataClass.m in Sources */,
+				77F0522222CB8BBE00032138 /* MEGAGenericRequestDelegate.m in Sources */,
 				83B841682051913C00E5AC69 /* MEGAGetThumbnailRequestDelegate.m in Sources */,
 				5BFA34701FAC5857005BFC4E /* MEGAMoveRequestDelegate.m in Sources */,
 				9432294B1EDD9CE5007DB542 /* MEGAUser+MNZCategory.m in Sources */,
@@ -5818,6 +5821,7 @@
 				A81F2C6A1F334FB2008600A5 /* MEGAProcessAsset.m in Sources */,
 				A8F0A1DC2178B43300575C57 /* MOMessage+CoreDataClass.m in Sources */,
 				943F8B281EF283D300AFD89F /* UIDevice+MNZCategory.m in Sources */,
+				77F0522122CB8BA800032138 /* MEGAGenericRequestDelegate.m in Sources */,
 				A836581B21020FB9005E616F /* ItemListViewController.m in Sources */,
 				83FB143E219C3C7100418BE6 /* MOOfflineFolderLayout+CoreDataClass.m in Sources */,
 				83FB143C219C3C6E00418BE6 /* MOOfflineFolderLayout+CoreDataProperties.m in Sources */,
