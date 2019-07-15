@@ -2,9 +2,10 @@
 
 #import "MEGACreateFolderRequestDelegate.h"
 
+#import "Helper.h"
 #import "MEGAStore.h"
 #import "MEGASdkManager.h"
-#import "Helper.h"
+#import "MEGASdk+MNZCategory.h"
 
 @interface MEGAAssetsPickerController () <CTAssetsPickerControllerDelegate>
 
@@ -80,7 +81,7 @@
             [Helper startPendingUploadTransferIfNeeded];
         } else if (self.toUploadToChat) {
             self.assets = assets;
-            [Helper createMyChatFilesFolderIfNeededWithCompletion:^(MEGANode *myChatFilesNode) {
+            [MEGASdkManager.sharedMEGASdk getMyChatFilesFolderWithCompletion:^(MEGANode *myChatFilesNode) {
                 [self triggerAssetsCompletion];
             }];
         }

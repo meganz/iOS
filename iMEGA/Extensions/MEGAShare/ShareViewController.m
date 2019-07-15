@@ -15,8 +15,8 @@
 #import "MEGALogger.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGARequestDelegate.h"
-#import "MEGASdk.h"
 #import "MEGASdkManager.h"
+#import "MEGASdk+MNZCategory.h"
 #import "MEGATransferDelegate.h"
 #import "NSFileManager+MNZCategory.h"
 #import "NSString+MNZCategory.h"
@@ -930,7 +930,7 @@ void uncaughtExceptionHandler(NSException *exception) {
     self.chats = chats;
     self.users = users;
     
-    [Helper createMyChatFilesFolderIfNeededWithCompletion:^(MEGANode *myChatFilesNode) {
+    [MEGASdkManager.sharedMEGASdk getMyChatFilesFolderWithCompletion:^(MEGANode *myChatFilesNode) {
         [self performUploadToParentNode:myChatFilesNode];
     }];
 }
