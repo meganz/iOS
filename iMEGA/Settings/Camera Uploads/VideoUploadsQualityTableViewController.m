@@ -52,8 +52,6 @@
     SelectableTableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
     cell.redCheckmarkImageView.hidden = NO;
     self.currentIndexPath = indexPath;
-    
-    [self.navigationController popViewControllerAnimated:YES];
 }
 
 @end
