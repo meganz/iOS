@@ -28,17 +28,19 @@
     NSString *activityType = [self activityType];
     BOOL activityValue = !([activityType isEqualToString:@"OpenInActivity"] || [activityType isEqualToString:@"GetLinkActivity"] || [activityType isEqualToString:@"RemoveLinkActivity"] || [activityType isEqualToString:@"ShareFolderActivity"] || [activityType isEqualToString:@"SaveToCameraRollActivity"] || [activityType isEqualToString:@"RemoveSharingActivity"] || [activityType isEqualToString:@"SendToChatActivity"]);
     if (activityValue) {
-        semaphore = dispatch_semaphore_create(0);
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-                [[MEGASdkManager sharedMEGASdk] exportNode:self.node delegate:self];
-            }
-            
-        });
-        
-        double delayInSeconds = 10.0;
-        dispatch_time_t waitTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
-        dispatch_semaphore_wait(semaphore, waitTime);
+        if (self.node.isExported) {
+            self.link = self.node.publicLink;
+        } else {
+            semaphore = dispatch_semaphore_create(0);
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                if (MEGAReachabilityManager.isReachableHUDIfNot) {
+                    [MEGASdkManager.sharedMEGASdk exportNode:self.node delegate:self];
+                }
+            });
+            double delayInSeconds = 10.0;
+            dispatch_time_t waitTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+            dispatch_semaphore_wait(semaphore, waitTime);
+        }
     }
     
     return _link;
