@@ -1944,12 +1944,7 @@
             }
         } else if ([error type] == MEGAErrorTypeApiEIncomplete) {
             [SVProgressHUD showImage:[UIImage imageNamed:@"hudMinus"] status:AMLocalizedString(@"transferCancelled", nil)];
-            NSString *base64Handle = [MEGASdk base64HandleForHandle:transfer.nodeHandle];
-            if (self.layoutView == LayoutModeList) {
-                [self.cdTableView reloadRowAtIndexPath:[self.nodesIndexPathMutableDictionary objectForKey:base64Handle]];
-            }
         }
-        return;
     }
     
     if (transfer.type == MEGATransferTypeDownload && self.layoutView == LayoutModeList) {
