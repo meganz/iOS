@@ -101,7 +101,7 @@
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:message preferredStyle:UIAlertControllerStyleAlert];
     [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:nil]];
     [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-        [[MEGASdkManager sharedMEGASdk] logout];
+        [MEGASdkManager.sharedMEGASdk cancelCreateAccount];        
         [Helper clearEphemeralSession];
         [self dismissViewControllerAnimated:YES completion:nil];
     }]];
