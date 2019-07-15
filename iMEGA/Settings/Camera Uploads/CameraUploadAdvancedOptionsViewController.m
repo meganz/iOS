@@ -44,7 +44,6 @@ typedef NS_ENUM(NSUInteger, AdvancedOptionSection) {
 
 - (IBAction)didChangeValueForBurstPhotosSwitch:(UISwitch *)sender {
     CameraUploadManager.uploadAllBurstPhotos = sender.isOn;
-    [self.tableView reloadData];
     [self configCameraUploadWhenValueChangedForSwitch:sender];
 }
 
