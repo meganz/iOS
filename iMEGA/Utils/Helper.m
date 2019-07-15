@@ -19,6 +19,7 @@
 #import "MEGAProcessAsset.h"
 #import "MEGALogger.h"
 #import "MEGASdkManager.h"
+#import "MEGASdk+MNZCategory.h"
 #import "MEGAStore.h"
 #import "MEGAUser+MNZCategory.h"
 
@@ -814,7 +815,7 @@ static MEGAIndexer *indexer;
                 MEGANode *resultNode = [[MEGASdkManager sharedMEGASdk] nodeForHandle:request.nodeHandle];
                 completion(resultNode);
             }];
-            [Helper createMyChatFilesFolderIfNeededWithCompletion:^(MEGANode *myChatFilesNode) {
+            [MEGASdkManager.sharedMEGASdk getMyChatFilesFolderWithCompletion:^(MEGANode *myChatFilesNode) {
                 [[MEGASdkManager sharedMEGASdk] copyNode:node newParent:myChatFilesNode delegate:copyRequestDelegate];
             }];
         }
@@ -1081,45 +1082,6 @@ static MEGAIndexer *indexer;
     }
     
     return [filesURLMutableArray copy];
-}
-
-+ (void)createMyChatFilesFolderIfNeededWithCompletion:(void(^)(MEGANode *myChatFilesNode))completion {
-    MEGAGenericRequestDelegate *delegate = [MEGAGenericRequestDelegate.alloc initWithCompletion:^(MEGARequest *request, MEGAError *error) {
-        if (error.type) {
-            MEGANode *myChatFilesNode = [MEGASdkManager.sharedMEGASdk nodeForPath:@"/My chat files"];
-            if (myChatFilesNode) {
-                [MEGASdkManager.sharedMEGASdk setMyChatFilesFolderWithHandle:myChatFilesNode.handle];
-                [MEGASdkManager.sharedMEGASdk renameNode:myChatFilesNode newName:AMLocalizedString(@"My chat files", @"Destination folder name of chat files")];
-                if (completion) {
-                    completion(myChatFilesNode);
-                }
-            } else {
-                NSString *localizedMyChatFilesPath = [NSString stringWithFormat:@"/%@", AMLocalizedString(@"My chat files", @"Destination folder name of chat files")];
-                myChatFilesNode = [MEGASdkManager.sharedMEGASdk nodeForPath:localizedMyChatFilesPath];
-                if (myChatFilesNode) {
-                    [MEGASdkManager.sharedMEGASdk setMyChatFilesFolderWithHandle:myChatFilesNode.handle];
-                    if (completion) {
-                        completion(myChatFilesNode);
-                    }
-                } else {
-                    MEGACreateFolderRequestDelegate *createFolderRequestDelegate = [MEGACreateFolderRequestDelegate.alloc initWithCompletion:^(MEGARequest *request) {
-                        MEGANode *myChatFilesNode = [MEGASdkManager.sharedMEGASdk nodeForHandle:request.nodeHandle];
-                        [MEGASdkManager.sharedMEGASdk setMyChatFilesFolderWithHandle:myChatFilesNode.handle];
-                        if (completion) {
-                            completion(myChatFilesNode);
-                        }
-                    }];
-                    [MEGASdkManager.sharedMEGASdk createFolderWithName:AMLocalizedString(@"My chat files", @"Destination folder name of chat files") parent:MEGASdkManager.sharedMEGASdk.rootNode delegate:createFolderRequestDelegate];
-                }
-            }
-        } else {
-            MEGANode *myChatFilesNode = [MEGASdkManager.sharedMEGASdk nodeForHandle:request.nodeHandle];
-            if (completion) {
-                completion(myChatFilesNode);
-            }
-        }
-    }];
-    [MEGASdkManager.sharedMEGASdk getMyChatFilesFolderWithDelegate:delegate];
 }
 
 + (void)setIndexer:(MEGAIndexer* )megaIndexer {

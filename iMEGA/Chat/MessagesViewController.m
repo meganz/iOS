@@ -27,6 +27,7 @@
 #import "MEGAProcessAsset.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGAStartUploadTransferDelegate.h"
+#import "MEGASdk+MNZCategory.h"
 #import "MEGAStore.h"
 #import "MEGAToolbarContentView.h"
 #import "MEGATransfer+MNZCategory.h"
@@ -1898,7 +1899,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
 
 - (void)messagesInputToolbar:(MEGAInputToolbar *)toolbar didPressSendButton:(UIButton *)sender toAttachAssets:(NSArray<PHAsset *> *)assets {
     MEGALogDebug(@"[Chat] Did press send button to attach assets %@", assets);
-    [Helper createMyChatFilesFolderIfNeededWithCompletion:^(MEGANode *myChatFilesNode) {
+    [MEGASdkManager.sharedMEGASdk getMyChatFilesFolderWithCompletion:^(MEGANode *myChatFilesNode) {
         [self uploadAssets:assets toParentNode:myChatFilesNode];
     }];
 }
@@ -1943,7 +1944,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
 }
 
 - (void)messagesInputToolbar:(MEGAInputToolbar *)toolbar didRecordVoiceClipAtPath:(NSString *)voiceClipPath {
-    [Helper createMyChatFilesFolderIfNeededWithCompletion:^(MEGANode *myChatFilesNode) {
+    [MEGASdkManager.sharedMEGASdk getMyChatFilesFolderWithCompletion:^(MEGANode *myChatFilesNode) {
         MEGANode *myVoiceMessagesNode = [[MEGASdkManager sharedMEGASdk] nodeForPath:@"My voice messages" node:myChatFilesNode];
         if (myVoiceMessagesNode) {
             [self startUploadAndAttachWithPath:voiceClipPath parentNode:myVoiceMessagesNode appData:nil asVoiceClip:YES];

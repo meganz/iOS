@@ -9,6 +9,7 @@
 #import "Helper.h"
 #import "MEGACreateFolderRequestDelegate.h"
 #import "MEGASdkManager.h"
+#import "MEGASdk+MNZCategory.h"
 #import "NSDate+MNZCategory.h"
 #import "NSFileManager+MNZCategory.h"
 #import "NSString+MNZCategory.h"
@@ -125,7 +126,7 @@
     } else if (self.toShareThroughChat) {
         [[MEGASdkManager sharedMEGASdk] createPreview:imagePath destinatioPath:imagePath];
         self.filePath = imagePath.mnz_relativeLocalPath;
-        [Helper createMyChatFilesFolderIfNeededWithCompletion:^(MEGANode *myChatFilesNode) {
+        [MEGASdkManager.sharedMEGASdk getMyChatFilesFolderWithCompletion:^(MEGANode *myChatFilesNode) {
             [self triggerPathCompletion:myChatFilesNode];
         }];
     }
@@ -136,7 +137,7 @@
         [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:self.filePath parent:self.parentNode appData:nil isSourceTemporary:YES];
         [self dismissViewControllerAnimated:YES completion:nil];
     } else if (self.toShareThroughChat) {
-        [Helper createMyChatFilesFolderIfNeededWithCompletion:^(MEGANode *myChatFilesNode) {
+        [MEGASdkManager.sharedMEGASdk getMyChatFilesFolderWithCompletion:^(MEGANode *myChatFilesNode) {
             [self triggerPathCompletion:myChatFilesNode];
         }];
     }
