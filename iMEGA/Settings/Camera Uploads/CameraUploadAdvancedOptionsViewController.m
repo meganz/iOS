@@ -90,7 +90,6 @@ typedef NS_ENUM(NSUInteger, AdvancedOptionSection) {
             break;
     }
     
-    
     return title;
 }
 
