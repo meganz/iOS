@@ -85,7 +85,7 @@
     self.navigationItem.title = AMLocalizedString(@"sharedItems", @"Title of Shared Items section");
     
     self.navigationItem.rightBarButtonItems = @[self.editBarButtonItem];
-    self.editBarButtonItem.title = AMLocalizedString(@"edit", @"Caption of a button to edit the files that are selected");
+    self.editBarButtonItem.title = AMLocalizedString(@"select", @"Caption of a button to select files");
     
     [self.incomingButton setTitle:AMLocalizedString(@"incoming", nil) forState:UIControlStateNormal];
     [self.outgoingButton setTitle:AMLocalizedString(@"outgoing", nil) forState:UIControlStateNormal];
@@ -431,7 +431,7 @@
             cell.selectedBackgroundView = view;
         }
     } else {
-        self.editBarButtonItem.title = AMLocalizedString(@"edit", @"Caption of a button to edit the files that are selected");
+        self.editBarButtonItem.title = AMLocalizedString(@"select", @"Caption of a button to select files");
         allNodesSelected = NO;
         [_selectedNodesMutableArray removeAllObjects];
         [_selectedSharesMutableArray removeAllObjects];
