@@ -43,7 +43,7 @@
                     operation = [[LivePhotoUploadOperation alloc] initWithUploadInfo:uploadInfo uploadRecord:uploadRecord];
                 } else {
                     if (error != NULL) {
-                        *error = [NSError mnz_cameraUploadUnsupportedMediaSubtype:identifierInfo.mediaSubtype];
+                        *error = [NSError mnz_cameraUploadDisabledMediaSubtype:identifierInfo.mediaSubtype];
                     }
                 }
             } else {
