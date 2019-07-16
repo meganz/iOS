@@ -124,6 +124,7 @@ static NSString *kPath = @"kPath";
         for (NSURL *url in self.offline.selectedItems) {
             if ([url.path isEqualToString:pathForItem]) {
                 selected = YES;
+                [self.collectionView selectItemAtIndexPath:indexPath animated:NO scrollPosition:UICollectionViewScrollPositionNone];
             }
         }
         [cell selectCell:selected];
