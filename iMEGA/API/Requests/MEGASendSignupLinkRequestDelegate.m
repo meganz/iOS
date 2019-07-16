@@ -26,11 +26,6 @@
                 message = AMLocalizedString(@"emailAlreadyRegistered", @"Error text shown when the users tries to create an account with an email already in use");
                 break;
                 
-            case MEGAErrorTypeApiEArgs:
-                title = @"";
-                message = AMLocalizedString(@"accountAlreadyConfirmed", @"Message shown when the user clicks on a confirm account link that has already been used");
-                break;
-                
             default:
                 title = AMLocalizedString(@"error", nil);
                 message = [NSString stringWithFormat:@"%@ %@", request.requestString, error.name];
