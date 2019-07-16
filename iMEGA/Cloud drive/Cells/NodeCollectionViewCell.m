@@ -53,6 +53,7 @@
 }
 
 - (void)selectCell:(BOOL)selected {
+    self.selected = selected;
     self.selectImageView.image = selected ? [UIImage imageNamed:@"thumbnail_selected"] :[UIImage imageNamed:@"checkBoxUnselected"];
 }
 
