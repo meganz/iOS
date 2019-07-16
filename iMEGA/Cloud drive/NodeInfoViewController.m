@@ -15,6 +15,7 @@
 #import "MEGANode+MNZCategory.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGASdkManager.h"
+#import "NSString+MNZCategory.h"
 #import "NodePropertyTableViewCell.h"
 #import "NodeTappablePropertyTableViewCell.h"
 #import "NodeVersionsViewController.h"
@@ -317,15 +318,13 @@
         [propertiesNode addObject:[[MegaNodeProperty alloc] initWithTitle:AMLocalizedString(@"type", @"Refers to the type of a file or folder.") value:self.node.mnz_fileType]];
         [propertiesNode addObject:[[MegaNodeProperty alloc] initWithTitle:AMLocalizedString(@"modified", @"A label for any 'Modified' text or title.") value:[Helper dateWithISO8601FormatOfRawTime:self.node.modificationTime.timeIntervalSince1970]]];
     } else if (self.node.isFolder) {
+        [propertiesNode addObject:[MegaNodeProperty.alloc initWithTitle:AMLocalizedString(@"totalSize", @"Size of the file or folder you are sharing") value:[Helper memoryStyleStringFromByteCount:(self.folderInfo.currentSize + self.folderInfo.versionsSize)]]];
         if (self.folderInfo.versions != 0) {
-            [propertiesNode addObject:[[MegaNodeProperty alloc] initWithTitle:AMLocalizedString(@"totalSize", @"Size of the file or folder you are sharing") value:[Helper memoryStyleStringFromByteCount:(self.folderInfo.currentSize + self.folderInfo.versionsSize)]]];
             [propertiesNode addObject:[[MegaNodeProperty alloc] initWithTitle:AMLocalizedString(@"currentVersions", @"Title of section to display information of all current versions of files.") value:[Helper memoryStyleStringFromByteCount:self.folderInfo.currentSize]]];
             [propertiesNode addObject:[[MegaNodeProperty alloc] initWithTitle:AMLocalizedString(@"previousVersions", @"A button label which opens a dialog to display the full version history of the selected file.") value:[Helper memoryStyleStringFromByteCount:self.folderInfo.versionsSize]]];
             [propertiesNode addObject:[[MegaNodeProperty alloc] initWithTitle:AMLocalizedString(@"versions", @"Title of section to display number of all historical versions of files") value:[NSString stringWithFormat:@"%ld", (long)self.folderInfo.versions]]];
-        } else {
-            [propertiesNode addObject:[[MegaNodeProperty alloc] initWithTitle:AMLocalizedString(@"totalSize", @"Size of the file or folder you are sharing") value:[Helper sizeForNode:self.node api:[MEGASdkManager sharedMEGASdk]]]];
         }
-        [propertiesNode addObject:[[MegaNodeProperty alloc] initWithTitle:AMLocalizedString(@"contains", @"Label for what a selection contains.") value:[Helper filesAndFoldersInFolderNode:self.node api:[MEGASdkManager sharedMEGASdk]]]];
+        [propertiesNode addObject:[MegaNodeProperty.alloc initWithTitle:AMLocalizedString(@"contains", @"Label for what a selection contains.") value:[NSString mnz_stringByFiles:self.folderInfo.files andFolders:self.folderInfo.folders]]];
     }
     
     [propertiesNode addObject:[[MegaNodeProperty alloc] initWithTitle:AMLocalizedString(@"Added", @"A label for any ‘Added’ text or title. For example to show the upload date of a file/folder.") value:[Helper dateWithISO8601FormatOfRawTime:self.node.creationTime.timeIntervalSince1970]]];
