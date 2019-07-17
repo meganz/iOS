@@ -162,9 +162,7 @@
 
 - (IBAction)buyPROTouchUpInside:(UIBarButtonItem *)sender {
     if ([[MEGASdkManager sharedMEGASdk] mnz_accountDetails]) {
-        UpgradeTableViewController *upgradeTVC = [[UIStoryboard storyboardWithName:@"MyAccount" bundle:nil] instantiateViewControllerWithIdentifier:@"UpgradeID"];
-        upgradeTVC.hideSkipButton = YES;
-        
+        UpgradeTableViewController *upgradeTVC = [[UIStoryboard storyboardWithName:@"MyAccount" bundle:nil] instantiateViewControllerWithIdentifier:@"UpgradeID"];        
         [self.navigationController pushViewController:upgradeTVC animated:YES];
     } else {
          [MEGAReachabilityManager isReachableHUDIfNot];
