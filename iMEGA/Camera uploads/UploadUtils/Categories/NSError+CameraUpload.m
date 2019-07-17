@@ -53,4 +53,8 @@ NSString * const CameraUploadErrorDomain = @"nz.mega.cameraUpload";
     return [NSError errorWithDomain:CameraUploadErrorDomain code:CameraUploadErrorNoMediaAssetFetched   userInfo:@{NSLocalizedDescriptionKey : [NSString stringWithFormat:@"no media asset fetched for %@", identifier]}];
 }
 
++ (NSError *)mnz_cameraUploadDisabledMediaSubtype:(PHAssetMediaSubtype)mediaSubtype {
+    return [NSError errorWithDomain:CameraUploadErrorDomain code:CameraUploadErrorDisabledMediaSubtype userInfo:@{NSLocalizedDescriptionKey : [NSString stringWithFormat:@"the media subtype %lu currently is disabled", (unsigned long)mediaSubtype]}];
+}
+
 @end

@@ -31,11 +31,19 @@ typedef NS_ENUM(NSUInteger, CameraUploadVideoQuality) {
 @property (class, getter=isCellularUploadForVideosAllowed) BOOL cellularUploadForVideosAllowed;
 @property (class) CameraUploadVideoQuality HEVCToH264CompressionQuality;
 
+#pragma mark - advanced settings
+
+@property (class, getter=shouldUploadVideosForLivePhotos) BOOL uploadVideosForLivePhotos;
+@property (class, getter=shouldUploadAllBurstPhotos) BOOL uploadAllBurstPhotos;
+@property (class, getter=shouldUploadHiddenAlbum) BOOL uploadHiddenAlbum;
+
+
 #pragma mark - readonly properties
 
 @property (class, readonly, getter=isLivePhotoSupported) BOOL livePhotoSupported;
 @property (class, readonly, getter=isHEVCFormatSupported) BOOL HEVCFormatSupported;
 @property (class, readonly, getter=shouldShowCameraUploadBoardingScreen) BOOL showCameraUploadBoardingScreen;
+@property (class, readonly, getter=shouldScanLivePhotosForVideos) BOOL scanLivePhotosForVideos;
 @property (class, readonly) BOOL canBackgroundUploadBeStarted;
 @property (class, readonly) BOOL canCameraUploadBeStarted;
 @property (class, readonly) NSArray<NSNumber *> * enabledMediaTypes;
