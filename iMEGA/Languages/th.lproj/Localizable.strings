@@ -802,7 +802,7 @@
 /* Hint text where the user have to re-write the new email to confirm it */
 "confirmNewEmail"="ยืนยันอีเมลใหม่";
 /* The title of the alert dialog to change the email associated to an account. */
-"changeEmail"="เปลี่ยนอีเมล";
+"Change Email"="เปลี่ยนอีเมล";
 /* Error message shown when the users tryes to change his/her email and writes the current one as the new one. */
 "oldAndNewEmailMatch"="อีเมลใหม่และอีเมลเก่าต้องไม่ตรงกัน";
 /* Error message shown when you have not written the same email when confirming a new one */

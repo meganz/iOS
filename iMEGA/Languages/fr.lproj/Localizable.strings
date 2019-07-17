@@ -802,7 +802,7 @@
 /* Hint text where the user have to re-write the new email to confirm it */
 "confirmNewEmail"="Confirmez la nouvelle adresse courriel";
 /* The title of the alert dialog to change the email associated to an account. */
-"changeEmail"="Changer l’adresse courriel";
+"Change Email"="Changer l’adresse courriel";
 /* Error message shown when the users tryes to change his/her email and writes the current one as the new one. */
 "oldAndNewEmailMatch"="La nouvelle adresse courriel et l'ancienne ne doivent pas correspondre";
 /* Error message shown when you have not written the same email when confirming a new one */

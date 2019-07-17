@@ -259,14 +259,14 @@ extension ProfileViewController: UITableViewDataSource {
                 }
             case 1:
                 if MEGASdkManager.sharedMEGASdk().isBusinessAccount && !MEGASdkManager.sharedMEGASdk().isMasterBusinessAccount {
-                    cell.textLabel?.text = NSLocalizedString("changePasswordLabel", comment: "Section title where you can change your MEGA's password")
+                    cell.textLabel?.text = NSLocalizedString("changePasswordLabel", comment: "Section title where you can change your MEGA's password").capitalized
                 } else {
                     cell.textLabel?.text = NSLocalizedString("changeAvatar", comment: "button that allows the user the change his avatar")
                 }
             case 2:
-                cell.textLabel?.text = NSLocalizedString("changeEmail", comment: "The title of the alert dialog to change the email associated to an account.")
+                cell.textLabel?.text = NSLocalizedString("Change Email", comment: "The title of the alert dialog to change the email associated to an account.")
             case 3:
-                cell.textLabel?.text = NSLocalizedString("changePasswordLabel", comment: "Section title where you can change your MEGA's password")
+                cell.textLabel?.text = NSLocalizedString("changePasswordLabel", comment: "Section title where you can change your MEGA's password").capitalized
             default:
                 cell.textLabel?.text = "default"
             }

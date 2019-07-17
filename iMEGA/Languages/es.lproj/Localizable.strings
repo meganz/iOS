@@ -802,7 +802,7 @@
 /* Hint text where the user have to re-write the new email to confirm it */
 "confirmNewEmail"="Confirmar nuevo correo electrónico";
 /* The title of the alert dialog to change the email associated to an account. */
-"changeEmail"="Cambiar correo electrónico";
+"Change Email"="Cambiar correo electrónico";
 /* Error message shown when the users tryes to change his/her email and writes the current one as the new one. */
 "oldAndNewEmailMatch"="El nuevo correo electrónico no puede coincidir con el antiguo";
 /* Error message shown when you have not written the same email when confirming a new one */

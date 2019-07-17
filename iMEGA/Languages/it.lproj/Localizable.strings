@@ -802,7 +802,7 @@
 /* Hint text where the user have to re-write the new email to confirm it */
 "confirmNewEmail"="Conferma la nuova email";
 /* The title of the alert dialog to change the email associated to an account. */
-"changeEmail"="Cambia email";
+"Change Email"="Cambia email";
 /* Error message shown when the users tryes to change his/her email and writes the current one as the new one. */
 "oldAndNewEmailMatch"="La nuova e la vecchia email non devono combaciare";
 /* Error message shown when you have not written the same email when confirming a new one */

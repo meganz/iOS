@@ -80,7 +80,7 @@ typedef NS_ENUM(NSUInteger, TextFieldTag) {
             break;
             
         case ChangeTypeEmail: {
-            self.navigationItem.title = AMLocalizedString(@"changeEmail", @"The title of the alert dialog to change the email associated to an account.");
+            self.navigationItem.title = AMLocalizedString(@"Change Email", @"The title of the alert dialog to change the email associated to an account.");
             self.theNewPasswordView.hidden = self.confirmPasswordView.hidden = YES;
             self.currentEmailInputView.hidden = self.theNewEmailInputView.hidden = self.confirmEmailInputView.hidden = NO;
             
@@ -97,7 +97,7 @@ typedef NS_ENUM(NSUInteger, TextFieldTag) {
             self.confirmEmailInputView.inputTextField.tag = ConfirmEmailTextFieldTag;
             self.confirmEmailInputView.inputTextField.keyboardType = UIKeyboardTypeEmailAddress;
             
-            [self.confirmButton setTitle:AMLocalizedString(@"changeEmail", @"The title of the alert dialog to change the email associated to an account.") forState:UIControlStateNormal];
+            [self.confirmButton setTitle:AMLocalizedString(@"Change Email", @"The title of the alert dialog to change the email associated to an account.") forState:UIControlStateNormal];
             
             [self.theNewEmailInputView.inputTextField becomeFirstResponder];
             
