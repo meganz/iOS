@@ -66,24 +66,20 @@ typedef NS_ENUM(NSUInteger, AdvancedOptionSection) {
     switch (section) {
         case AdvancedOptionSectionLivePhoto:
             if (self.uploadVideosForlivePhotosSwitch.isOn) {
-                title = AMLocalizedString(@"Underlying videos and key photos in Live Photos will be uploaded.", nil);
+                title = AMLocalizedString(@"The video and the photo in each Live Photo will be uploaded.", nil);
             } else {
-                title = AMLocalizedString(@"Only key photos in Live Photos will be uploaded.", nil);
+                title = AMLocalizedString(@"Only the photo in each Live Photo will be uploaded.", nil);
             }
             break;
         case AdvancedOptionSectionBurstPhoto:
             if (self.uploadAllBurstPhotosSwitch.isOn) {
-                title = AMLocalizedString(@"All photos from burst photo sequences will be uploaded.", nil);
+                title = AMLocalizedString(@"All the photos from your burst photo sequences will be uploaded.", nil);
             } else {
-                title = AMLocalizedString(@"Only the picked and representative photos from burst photo sequences will be uploaded.", nil);
+                title = AMLocalizedString(@"Only the representative photos from your burst photo sequences will be uploaded.", nil);
             }
             break;
         case AdvancedOptionSectionHiddenAlbum:
-            if (self.uploadHiddenAlbumSwitch.isOn) {
-                title = AMLocalizedString(@"The photos or videos in your Hidden Album will be uploaded.", nil);
-            } else {
-                title = AMLocalizedString(@"The photos or videos in your Hidden Album will not be uploaded.", nil);
-            }
+            title = AMLocalizedString(@"The Hidden Album is where you hide photos or videos in your device Photos app.", nil);
             break;
         default:
             break;
