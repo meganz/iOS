@@ -1988,3 +1988,11 @@
 "Are you sure you want to change to a test server? Your account may suffer irrecoverable problems"="Are you sure you want to change to a test server? Your account may suffer irrecoverable problems";
 /* Destination folder name of chat files */
 "My chat files"="My chat files";
+/* */
+"Subscription plan"="Subscription plan";
+/* */
+"If you lose this Recovery key and forget your password, [B]all your files, folders and messages will be inaccessible, even by MEGA[/B]."="If you lose this Recovery key and forget your password, [B]all your files, folders and messages will be inaccessible, even by MEGA[/B].";
+/* */
+"Business"="Business";
+/* */
+"Administrator"="Administrator";
