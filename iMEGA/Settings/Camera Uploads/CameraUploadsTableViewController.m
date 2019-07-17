@@ -332,10 +332,10 @@
     UITableViewCell *selectedCell = self.tableSections[indexPath.section][indexPath.row];
     if (selectedCell == self.HEICCell) {
         CameraUploadManager.convertHEICPhoto = NO;
-        [self configUI];
+        [self configPhotoFormatUI];
     } else if (selectedCell == self.JPGCell) {
         CameraUploadManager.convertHEICPhoto = YES;
-        [self configUI];
+        [self configPhotoFormatUI];
     }
 }
 
