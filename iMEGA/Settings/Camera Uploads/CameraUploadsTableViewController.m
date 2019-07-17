@@ -26,19 +26,11 @@ typedef NS_ENUM(NSUInteger, CameraUploadSectionOptionsRow) {
     CameraUploadSectionOptionsRowCount
 };
 
-typedef NS_ENUM(NSUInteger, CameraUploadSectionVideoInfoRow) {
-    CameraUploadSectionVideoInfoRowDetailInfo,
-    CameraUploadSectionVideoInfoRowSinglePageSetting,
-    CameraUploadSectionVideoInfoRowCount
-};
-
 typedef NS_ENUM(NSUInteger, CameraUploadSectionPhotoFormatRow) {
     CameraUploadSectionPhotoFormatRowHEIC,
     CameraUploadSectionPhotoFormatRowJPG,
     CameraUploadSectionPhotoFormatRowCount
 };
-
-static const CGFloat TableViewSectionHeaderFooterHiddenHeight = 0.1;
 
 @interface CameraUploadsTableViewController () <CLLocationManagerDelegate>
 
@@ -63,6 +55,9 @@ static const CGFloat TableViewSectionHeaderFooterHiddenHeight = 0.1;
 
 @property (weak, nonatomic) IBOutlet UILabel *backgroundUploadLabel;
 @property (weak, nonatomic) IBOutlet UISwitch *backgroundUploadSwitch;
+
+@property (weak, nonatomic) IBOutlet UITableViewCell *videoUploadInfoCell;
+@property (weak, nonatomic) IBOutlet UITableViewCell *videoUploadSwitchCell;
 
 @property (strong, nonatomic) CLLocationManager *locationManager;
 
@@ -146,6 +141,8 @@ static const CGFloat TableViewSectionHeaderFooterHiddenHeight = 0.1;
     [self configOptionsUI];
     
     [self.tableView reloadData];
+    [self.tableView beginUpdates];
+    [self.tableView endUpdates];
 }
 
 - (void)configPhotoFormatUI {
@@ -265,6 +262,14 @@ static const CGFloat TableViewSectionHeaderFooterHiddenHeight = 0.1;
     }
 }
 
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.section == CameraUploadSectionVideoInfo) {
+        return CameraUploadManager.isHEVCFormatSupported ? self.videoUploadInfoCell : self.videoUploadSwitchCell;
+    }
+    
+    return [super tableView:tableView cellForRowAtIndexPath:indexPath];
+}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     NSInteger numberOfRows = 0;
     switch (section) {
@@ -272,7 +277,7 @@ static const CGFloat TableViewSectionHeaderFooterHiddenHeight = 0.1;
             numberOfRows = 1;
             break;
         case CameraUploadSectionVideoInfo:
-            numberOfRows = CameraUploadSectionVideoInfoRowCount;
+            numberOfRows = 1;
             break;
         case CameraUploadSectionPhotoFormat:
             if (CameraUploadManager.isHEVCFormatSupported) {
@@ -294,36 +299,12 @@ static const CGFloat TableViewSectionHeaderFooterHiddenHeight = 0.1;
     cell.hidden = [self shouldHideRowAtIndexPath:indexPath];
 }
 
-- (void)tableView:(UITableView *)tableView willDisplayHeaderView:(UIView *)view forSection:(NSInteger)section {
-    view.hidden = [self shouldHideSection:section];
-}
-
-- (void)tableView:(UITableView *)tableView willDisplayFooterView:(UIView *)view forSection:(NSInteger)section {
-    view.hidden = [self shouldHideSection:section];
-}
-
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if ([self shouldHideRowAtIndexPath:indexPath]) {
         return 0;
     }
     
-    return [super tableView:tableView heightForRowAtIndexPath:indexPath];
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    if ([self shouldHideSection:section]) {
-        return TableViewSectionHeaderFooterHiddenHeight;
-    }
-    
-    return [super tableView:tableView heightForHeaderInSection:section];
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
-    if ([self shouldHideSection:section]) {
-        return TableViewSectionHeaderFooterHiddenHeight;
-    }
-    
-    return [super tableView:tableView heightForFooterInSection:section];
+    return [super tableView:tableView heightForRowAtIndexPath:indexPath];;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -336,6 +317,10 @@ static const CGFloat TableViewSectionHeaderFooterHiddenHeight = 0.1;
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+    if ([self shouldHideSection:section]) {
+        return nil;
+    }
+    
     NSString *title;
     switch (section) {
         case CameraUploadSectionPhotoFormat:
@@ -352,6 +337,10 @@ static const CGFloat TableViewSectionHeaderFooterHiddenHeight = 0.1;
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section {
+    if ([self shouldHideSection:section]) {
+        return nil;
+    }
+    
     NSString *title;
     switch (section) {
         case CameraUploadSectionFeatureSwitch:
@@ -407,17 +396,7 @@ static const CGFloat TableViewSectionHeaderFooterHiddenHeight = 0.1;
 
 - (BOOL)shouldHideRowAtIndexPath:(NSIndexPath *)indexPath {
     BOOL hide = NO;
-    if (indexPath.section == CameraUploadSectionVideoInfo) {
-        switch (indexPath.row) {
-            case CameraUploadSectionVideoInfoRowDetailInfo:
-                hide = !CameraUploadManager.isHEVCFormatSupported;
-                break;
-            case CameraUploadSectionVideoInfoRowSinglePageSetting:
-                hide = CameraUploadManager.isHEVCFormatSupported;
-                break;
-            default: break;
-        }
-    } else if (indexPath.section == CameraUploadSectionOptions) {
+    if (indexPath.section == CameraUploadSectionOptions) {
         switch (indexPath.row) {
             case CameraUploadSectionOptionsRowUseMobileData:
                 hide = ![self shouldShowMobileData];
