@@ -12,7 +12,7 @@
 #import "MEGAReachabilityManager.h"
 #import "MEGASdkManager.h"
 #import "MyAccountHallTableViewCell.h"
-#import "MyAccountViewController.h"
+#import "MEGA-Swift.h"
 #import "NotificationsTableViewController.h"
 #import "OfflineViewController.h"
 #import "SettingsTableViewController.h"
@@ -172,8 +172,10 @@
 }
 
 - (IBAction)viewAndEditProfileTouchUpInside:(UIButton *)sender {
-    MyAccountViewController *myAccountVC = [[UIStoryboard storyboardWithName:@"MyAccount" bundle:nil] instantiateViewControllerWithIdentifier:@"MyAccountViewControllerID"];
-    [self.navigationController pushViewController:myAccountVC animated:YES];
+    if (MEGASdkManager.sharedMEGASdk.mnz_accountDetails) {
+        ProfileViewController *profileViewController = [[UIStoryboard storyboardWithName:@"Profile" bundle:nil] instantiateViewControllerWithIdentifier:@"ProfileViewControllerID"];
+        [self.navigationController pushViewController:profileViewController animated:YES];
+    }
 }
 
 #pragma mark - UITableViewDataSource

@@ -28,7 +28,12 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.cancelBarButtonItem.title = AMLocalizedString(@"cancel", @"Button title to cancel something");
+    if (self.presentingViewController || self.navigationController.presentingViewController.presentedViewController == self.navigationController || [self.tabBarController.presentingViewController isKindOfClass:UITabBarController.class]) {
+        self.cancelBarButtonItem.title = AMLocalizedString(@"cancel", @"Button title to cancel something");
+    } else {
+        self.navigationItem.leftBarButtonItem = nil;
+    }
+    
     self.navigationItem.title = AMLocalizedString(@"changeName", @"Button title that allows the user change his name");
     
     MOUser *moUser = [[MEGAStore shareInstance] fetchUserWithUserHandle:[[[MEGASdkManager sharedMEGASdk] myUser] handle]];
