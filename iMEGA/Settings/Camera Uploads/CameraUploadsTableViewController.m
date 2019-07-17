@@ -10,28 +10,6 @@
 #import "MEGAConstants.h"
 @import CoreLocation;
 
-typedef NS_ENUM(NSUInteger, CameraUploadSection) {
-    CameraUploadSectionFeatureSwitch,
-    CameraUploadSectionVideoInfo,
-    CameraUploadSectionPhotoFormat,
-    CameraUploadSectionOptions,
-    CameraUploadSectionCount
-};
-
-typedef NS_ENUM(NSUInteger, CameraUploadSectionOptionsRow) {
-    CameraUploadSectionOptionsRowUseMobileData,
-    CameraUploadSectionOptionsRowUseMobileDataForVideos,
-    CameraUploadSectionOptionsRowBackgroundUpload,
-    CameraUploadSectionOptionsRowAdvanced,
-    CameraUploadSectionOptionsRowCount
-};
-
-typedef NS_ENUM(NSUInteger, CameraUploadSectionPhotoFormatRow) {
-    CameraUploadSectionPhotoFormatRowHEIC,
-    CameraUploadSectionPhotoFormatRowJPG,
-    CameraUploadSectionPhotoFormatRowCount
-};
-
 @interface CameraUploadsTableViewController () <CLLocationManagerDelegate>
 
 @property (weak, nonatomic) IBOutlet UILabel *enableCameraUploadsLabel;
@@ -343,8 +321,12 @@ typedef NS_ENUM(NSUInteger, CameraUploadSectionPhotoFormatRow) {
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    if (indexPath.section == CameraUploadSectionPhotoFormat) {
-        CameraUploadManager.convertHEICPhoto = indexPath.row == CameraUploadSectionPhotoFormatRowJPG;
+    UITableViewCell *selectedCell = self.tableSections[indexPath.section][indexPath.row];
+    if (selectedCell == self.HEICCell) {
+        CameraUploadManager.convertHEICPhoto = NO;
+        [self configUI];
+    } else if (selectedCell == self.JPGCell) {
+        CameraUploadManager.convertHEICPhoto = YES;
         [self configUI];
     }
 }
