@@ -394,6 +394,8 @@
                         <outlet property="useCellularConnectionForVideosSwitch" destination="DRf-un-B7C" id="8XL-9g-B4k"/>
                         <outlet property="useCellularConnectionLabel" destination="MxN-Sr-OBF" id="l7p-vV-M73"/>
                         <outlet property="useCellularConnectionSwitch" destination="qdP-qy-Nz7" id="kCW-ye-Ujk"/>
+                        <outlet property="videoUploadInfoCell" destination="xJP-C8-8rb" id="V2F-kD-hol"/>
+                        <outlet property="videoUploadSwitchCell" destination="kY1-bw-JGQ" id="TQM-Uc-KtS"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wNx-f8-7qI" userLabel="First Responder" sceneMemberID="firstResponder"/>
