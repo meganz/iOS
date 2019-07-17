@@ -91,6 +91,9 @@ static const NSTimeInterval BoardingScreenShowUpMinimumInterval = 30 * 24 * 3600
 
 + (void)setCellularUploadAllowed:(BOOL)cellularUploadAllowed {
     [NSUserDefaults.standardUserDefaults setBool:cellularUploadAllowed forKey:IsCellularAllowedKey];
+    if (!cellularUploadAllowed) {
+        [NSUserDefaults.standardUserDefaults removeObjectForKey:IsCellularForVideosAllowedKey];
+    }
 }
 
 + (BOOL)shouldConvertHEICPhoto {
