@@ -802,7 +802,7 @@
 /* Hint text where the user have to re-write the new email to confirm it */
 "confirmNewEmail"="メールアドレスを確認";
 /* The title of the alert dialog to change the email associated to an account. */
-"changeEmail"="メールを変更する";
+"Change Email"="メールを変更する";
 /* Error message shown when the users tryes to change his/her email and writes the current one as the new one. */
 "oldAndNewEmailMatch"="新しいEメールは現在のEメールと違う必要があります";
 /* Error message shown when you have not written the same email when confirming a new one */

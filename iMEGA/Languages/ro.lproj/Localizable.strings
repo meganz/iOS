@@ -802,7 +802,7 @@
 /* Hint text where the user have to re-write the new email to confirm it */
 "confirmNewEmail"="Confirmă e-mailul nou";
 /* The title of the alert dialog to change the email associated to an account. */
-"changeEmail"="Schimbă e-mailul";
+"Change Email"="Schimbă e-mailul";
 /* Error message shown when the users tryes to change his/her email and writes the current one as the new one. */
 "oldAndNewEmailMatch"="E-mailul nou și cel vechi nu se potrivesc";
 /* Error message shown when you have not written the same email when confirming a new one */
