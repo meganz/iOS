@@ -1594,8 +1594,10 @@
     [self presentViewController:navigationController animated:YES completion:nil];
     
     BrowserViewController *browserVC = navigationController.viewControllers.firstObject;
-    browserVC.selectedNodesArray = [NSArray arrayWithArray:self.selectedNodesArray];
+    browserVC.selectedNodesArray = self.selectedNodesArray.copy;
     browserVC.browserAction = BrowserActionMove;
+    
+    self.selectedNodesArray = nil;
 }
 
 - (IBAction)deleteAction:(UIBarButtonItem *)sender {
@@ -1695,14 +1697,14 @@
 }
 
 - (IBAction)copyAction:(UIBarButtonItem *)sender {
-    if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-        MEGANavigationController *navigationController = [self.storyboard instantiateViewControllerWithIdentifier:@"BrowserNavigationControllerID"];
-        [self presentViewController:navigationController animated:YES completion:nil];
-        
-        BrowserViewController *browserVC = navigationController.viewControllers.firstObject;
-        browserVC.selectedNodesArray = self.selectedNodesArray;
-        [browserVC setBrowserAction:BrowserActionCopy];
-    }
+    MEGANavigationController *navigationController = [self.storyboard instantiateViewControllerWithIdentifier:@"BrowserNavigationControllerID"];
+    [self presentViewController:navigationController animated:YES completion:nil];
+    
+    BrowserViewController *browserVC = navigationController.viewControllers.firstObject;
+    browserVC.selectedNodesArray = self.selectedNodesArray.copy;
+    browserVC.browserAction = BrowserActionCopy;
+    
+    self.selectedNodesArray = nil;
 }
 
 - (IBAction)sortByAction:(UIBarButtonItem *)sender {
