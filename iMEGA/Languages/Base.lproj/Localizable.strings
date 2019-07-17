@@ -682,8 +682,6 @@
 "Photos will be uploaded to Camera Uploads folder."="Photos will be uploaded to Camera Uploads folder.";
 /* Footer text for Camera Upload switch section when photos and videos upload is enabled */
 "Photos and videos will be uploaded to Camera Uploads folder."="Photos and videos will be uploaded to Camera Uploads folder.";
-/* A hint to let user know live photos and bursts are included in Camera Upload */
-"(Live Photos and Bursts are included)"="(Live Photos and Bursts are included)";
 /* Title to show for upload in background */
 "Upload in Background"="Upload in Background";
 /* Title for the location based background upload message */
@@ -714,6 +712,22 @@
 "You do not have enough storage to upload camera. Free up space by deleting unneeded apps, videos or music. You can manage your storage in %@"="You do not have enough storage to upload camera. Free up space by deleting unneeded apps, videos or music. You can manage your storage in %@";
 /* Navigation path for Storage settings in iOS */
 "Settings > General > %@ Storage"="Settings > General > %@ Storage";
+/* Title of the switch to config whether to upload videos for Live Photos */
+"Upload videos for Live Photos"="Upload videos for Live Photos";
+/* Title of the switch to config whether to upload all burst photos */
+"Upload all burst photos"="Upload all burst photos";
+/* Title of the switch to config whether to upload Hidden Album */
+"Upload Hidden Album"="Upload Hidden Album";
+/* Footer description when upload videos for Live Photos is enabled */
+"The video and the photo in each Live Photo will be uploaded."="The video and the photo in each Live Photo will be uploaded.";
+/* Footer description when upload videos for Live Photos is disabled */
+"Only the photo in each Live Photo will be uploaded."="Only the photo in each Live Photo will be uploaded.";
+/* Footer description when upload all burst photos is enabled */
+"All the photos from your burst photo sequences will be uploaded."="All the photos from your burst photo sequences will be uploaded.";
+/* Footer description when upload all burst photos is disabled */
+"Only the representative photos from your burst photo sequences will be uploaded."="Only the representative photos from your burst photo sequences will be uploaded.";
+/* Footer description when upload Hidden Album is enabled */
+"The Hidden Album is where you hide photos or videos in your device Photos app."="The Hidden Album is where you hide photos or videos in your device Photos app.";
 /* App means “Application” */
 "App version"="App version";
 /* Title of the label where the SDK version is shown */

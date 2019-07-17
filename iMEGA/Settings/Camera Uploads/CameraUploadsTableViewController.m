@@ -10,32 +10,6 @@
 #import "MEGAConstants.h"
 @import CoreLocation;
 
-typedef NS_ENUM(NSUInteger, CameraUploadSection) {
-    CameraUploadSectionFeatureSwitch,
-    CameraUploadSectionVideoInfo,
-    CameraUploadSectionPhotoFormat,
-    CameraUploadSectionOptions,
-    CameraUploadSectionTotalCount
-};
-
-typedef NS_ENUM(NSUInteger, CameraUploadOptionRow) {
-    CameraUploadOptionRowUseMobileData,
-    CameraUploadOptionRowUseMobileDataForVideos,
-    CameraUploadOptionRowBackgroundUpload
-};
-
-typedef NS_ENUM(NSUInteger, CameraUploadVideoRow) {
-    CameraUploadVideoRowDetailInfo,
-    CameraUploadVideoRowSinglePageSetting
-};
-
-typedef NS_ENUM(NSUInteger, CameraUploadPhotoFormatRow) {
-    CameraUploadPhotoFormatRowHEIC,
-    CameraUploadPhotoFormatRowJPG
-};
-
-static const CGFloat TableViewSectionHeaderFooterHiddenHeight = 0.1;
-
 @interface CameraUploadsTableViewController () <CLLocationManagerDelegate>
 
 @property (weak, nonatomic) IBOutlet UILabel *enableCameraUploadsLabel;
@@ -59,6 +33,20 @@ static const CGFloat TableViewSectionHeaderFooterHiddenHeight = 0.1;
 
 @property (weak, nonatomic) IBOutlet UILabel *backgroundUploadLabel;
 @property (weak, nonatomic) IBOutlet UISwitch *backgroundUploadSwitch;
+
+@property (weak, nonatomic) IBOutlet UITableViewCell *cameraUploadCell;
+@property (weak, nonatomic) IBOutlet UITableViewCell *videoUploadInfoCell;
+@property (weak, nonatomic) IBOutlet UITableViewCell *videoUploadSwitchCell;
+@property (weak, nonatomic) IBOutlet UITableViewCell *HEICCell;
+@property (weak, nonatomic) IBOutlet UITableViewCell *JPGCell;
+@property (weak, nonatomic) IBOutlet UITableViewCell *mobileDataCell;
+@property (weak, nonatomic) IBOutlet UITableViewCell *mobileDataForVideosCell;
+@property (weak, nonatomic) IBOutlet UITableViewCell *uploadInBackgroundCell;
+@property (weak, nonatomic) IBOutlet UITableViewCell *advancedCell;
+
+@property (strong, nonatomic) NSArray<NSArray<UITableViewCell *> *> *tableSections;
+@property (strong, nonatomic) NSArray<NSString *> *sectionHeaderTitles;
+@property (strong, nonatomic) NSArray<NSString *> *sectionFooterTitles;
 
 @property (strong, nonatomic) CLLocationManager *locationManager;
 
@@ -141,7 +129,10 @@ static const CGFloat TableViewSectionHeaderFooterHiddenHeight = 0.1;
     [self configPhotoFormatUI];
     [self configOptionsUI];
     
+    [self configTableSections];
     [self.tableView reloadData];
+    [self.tableView beginUpdates];
+    [self.tableView endUpdates];
 }
 
 - (void)configPhotoFormatUI {
@@ -157,6 +148,68 @@ static const CGFloat TableViewSectionHeaderFooterHiddenHeight = 0.1;
 
 - (void)configBackgroudUploadUI {
     self.backgroundUploadSwitch.on = CameraUploadManager.canBackgroundUploadBeStarted;
+}
+
+- (void)configTableSections {
+    if (!CameraUploadManager.isCameraUploadEnabled) {
+        self.tableSections = @[@[self.cameraUploadCell]];
+        self.sectionHeaderTitles = @[@""];
+        self.sectionFooterTitles = @[[self titleForCameraUploadFooter]];
+        return;
+    }
+    
+    NSMutableArray<NSArray<UITableViewCell *> *> *sections = [NSMutableArray array];
+    NSMutableArray<NSString *> *headerTitles = [NSMutableArray array];
+    NSMutableArray<NSString *> *footerTitles = [NSMutableArray array];
+    
+    // camera upload feature switch section
+    [sections addObject:@[self.cameraUploadCell]];
+    [headerTitles addObject:@""];
+    [footerTitles addObject:[self titleForCameraUploadFooter]];
+    
+    // video upload section
+    [sections addObject:@[CameraUploadManager.isHEVCFormatSupported ? self.videoUploadInfoCell : self.videoUploadSwitchCell]];
+    [headerTitles addObject:@""];
+    [footerTitles addObject:@""];
+    
+    // photo format section
+    if (CameraUploadManager.isHEVCFormatSupported) {
+        [sections addObject:@[self.HEICCell, self.JPGCell]];
+        [headerTitles addObject:AMLocalizedString(@"SAVE HEIC PHOTOS AS", @"What format to upload HEIC photos")];
+        [footerTitles addObject:AMLocalizedString(@"We recommend JPG, as its the most compatible format for photos.", nil)];
+    }
+    
+    // options section
+    NSMutableArray *optionSection = [NSMutableArray array];
+    if ([self shouldShowMobileData]) {
+        [optionSection addObject:self.mobileDataCell];
+    }
+    if ([self shouldShowMobileDataForVideos]) {
+        [optionSection addObject:self.mobileDataForVideosCell];
+    }
+    [optionSection addObjectsFromArray:@[self.uploadInBackgroundCell, self.advancedCell]];
+    [sections addObject:[optionSection copy]];
+    [headerTitles addObject:AMLocalizedString(@"options", @"Camera Upload options")];
+    [footerTitles addObject:@""];
+    
+    self.tableSections = [sections copy];
+    self.sectionHeaderTitles = [headerTitles copy];
+    self.sectionFooterTitles = [footerTitles copy];
+}
+
+- (NSString *)titleForCameraUploadFooter {
+    NSString *title;
+    if (CameraUploadManager.isCameraUploadEnabled) {
+        if (CameraUploadManager.isVideoUploadEnabled) {
+            title = AMLocalizedString(@"Photos and videos will be uploaded to Camera Uploads folder.", nil);
+        } else {
+            title = AMLocalizedString(@"Photos will be uploaded to Camera Uploads folder.", nil);
+        }
+    } else {
+        title = AMLocalizedString(@"When enabled, photos will be uploaded.", nil);
+    }
+    
+    return title;
 }
 
 #pragma mark - IBActions
@@ -254,123 +307,36 @@ static const CGFloat TableViewSectionHeaderFooterHiddenHeight = 0.1;
 #pragma mark - UITableview data source and delegate
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    if (CameraUploadManager.isCameraUploadEnabled) {
-        return CameraUploadSectionTotalCount;
-    } else {
-        return 1;
-    }
+    return self.tableSections.count;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    NSInteger numberOfRows = 0;
-    switch (section) {
-        case CameraUploadSectionFeatureSwitch:
-            numberOfRows = 1;
-            break;
-        case CameraUploadSectionVideoInfo:
-            numberOfRows = 2;
-            break;
-        case CameraUploadSectionPhotoFormat:
-            if (CameraUploadManager.isHEVCFormatSupported) {
-                numberOfRows = 2;
-            } else {
-                numberOfRows = 0;
-            }
-            break;
-        case CameraUploadSectionOptions:
-            numberOfRows = 3;
-        default:
-            break;
-    }
-    
-    return numberOfRows;
+    return self.tableSections[section].count;
 }
 
-- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
-    cell.hidden = [self shouldHideRowAtIndexPath:indexPath];
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return self.tableSections[indexPath.section][indexPath.row];
 }
 
-- (void)tableView:(UITableView *)tableView willDisplayHeaderView:(UIView *)view forSection:(NSInteger)section {
-    view.hidden = [self shouldHideSection:section];
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+    return self.sectionHeaderTitles[section];
 }
 
-- (void)tableView:(UITableView *)tableView willDisplayFooterView:(UIView *)view forSection:(NSInteger)section {
-    view.hidden = [self shouldHideSection:section];
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if ([self shouldHideRowAtIndexPath:indexPath]) {
-        return 0;
-    }
-    
-    return [super tableView:tableView heightForRowAtIndexPath:indexPath];
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    if ([self shouldHideSection:section]) {
-        return TableViewSectionHeaderFooterHiddenHeight;
-    }
-    
-    return [super tableView:tableView heightForHeaderInSection:section];
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
-    if ([self shouldHideSection:section]) {
-        return TableViewSectionHeaderFooterHiddenHeight;
-    }
-    
-    return [super tableView:tableView heightForFooterInSection:section];
+- (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section {
+    return self.sectionFooterTitles[section];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    if (indexPath.section == CameraUploadSectionPhotoFormat) {
-        CameraUploadManager.convertHEICPhoto = indexPath.row == CameraUploadPhotoFormatRowJPG;
-        [self configUI];
+    UITableViewCell *selectedCell = self.tableSections[indexPath.section][indexPath.row];
+    if (selectedCell == self.HEICCell) {
+        CameraUploadManager.convertHEICPhoto = NO;
+        [self configPhotoFormatUI];
+    } else if (selectedCell == self.JPGCell) {
+        CameraUploadManager.convertHEICPhoto = YES;
+        [self configPhotoFormatUI];
     }
-}
-
-- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-    NSString *title;
-    switch (section) {
-        case CameraUploadSectionPhotoFormat:
-            title = AMLocalizedString(@"SAVE HEIC PHOTOS AS", @"What format to upload HEIC photos");
-            break;
-        case CameraUploadSectionOptions:
-            title = AMLocalizedString(@"options", @"Camera Upload options");
-            break;
-        default:
-            break;
-    }
-    
-    return title;
-}
-
-- (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section {
-    NSString *title;
-    switch (section) {
-        case CameraUploadSectionFeatureSwitch:
-            if (CameraUploadManager.isCameraUploadEnabled) {
-                if (CameraUploadManager.isVideoUploadEnabled) {
-                    title = AMLocalizedString(@"Photos and videos will be uploaded to Camera Uploads folder.", nil);
-                } else {
-                    title = AMLocalizedString(@"Photos will be uploaded to Camera Uploads folder.", nil);
-                }
-                
-                title = [NSString stringWithFormat:@"%@ %@", title, AMLocalizedString(@"(Live Photos and Bursts are included)", nil)];
-            } else {
-                title = AMLocalizedString(@"When enabled, photos will be uploaded.", nil);
-            }
-            break;
-        case CameraUploadSectionPhotoFormat:
-            title = AMLocalizedString(@"We recommend JPG, as its the most compatible format for photos.", nil);
-            break;
-        default:
-            break;
-    }
-    
-    return title;
 }
 
 #pragma mark - Location manager delegate
@@ -388,46 +354,6 @@ static const CGFloat TableViewSectionHeaderFooterHiddenHeight = 0.1;
 
 - (BOOL)shouldShowMobileDataForVideos {
     return [self shouldShowMobileData] && CameraUploadManager.isCellularUploadAllowed && CameraUploadManager.isVideoUploadEnabled;
-}
-
-- (BOOL)shouldHideSection:(NSInteger)section {
-    BOOL hide = NO;
-    switch (section) {
-        case CameraUploadSectionPhotoFormat:
-            hide = !CameraUploadManager.isHEVCFormatSupported;
-            break;
-        default:
-            break;
-    }
-    
-    return hide;
-}
-
-- (BOOL)shouldHideRowAtIndexPath:(NSIndexPath *)indexPath {
-    BOOL hide = NO;
-    if (indexPath.section == CameraUploadSectionVideoInfo) {
-        switch (indexPath.row) {
-            case CameraUploadVideoRowDetailInfo:
-                hide = !CameraUploadManager.isHEVCFormatSupported;
-                break;
-            case CameraUploadVideoRowSinglePageSetting:
-                hide = CameraUploadManager.isHEVCFormatSupported;
-                break;
-            default: break;
-        }
-    } else if (indexPath.section == CameraUploadSectionOptions) {
-        switch (indexPath.row) {
-            case CameraUploadOptionRowUseMobileData:
-                hide = ![self shouldShowMobileData];
-                break;
-            case CameraUploadOptionRowUseMobileDataForVideos:
-                hide = ![self shouldShowMobileDataForVideos];
-                break;
-            default: break;
-        }
-    }
-    
-    return hide;
 }
 
 @end

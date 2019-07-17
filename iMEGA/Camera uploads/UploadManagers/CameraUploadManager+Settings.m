@@ -18,6 +18,9 @@ static NSString * const ShouldConvertHEICPhotoKey = @"ShouldConvertHEICPhoto";
 static NSString * const ShouldConvertHEVCVideoKey = @"ShouldConvertHEVCVideo";
 static NSString * const HEVCToH264CompressionQualityKey = @"HEVCToH264CompressionQuality";
 static NSString * const IsLocationBasedBackgroundUploadAllowedKey = @"IsLocationBasedBackgroundUploadAllowed";
+static NSString * const UploadHiddenAlbumKey = @"UploadHiddenAlbum";
+static NSString * const UploadAllBurstAssetsKey = @"UploadAllBurstAssets";
+static NSString * const UploadVideosForLivePhotosKey = @"UploadVideosForLivePhotos";
 
 static const NSTimeInterval BoardingScreenShowUpMinimumInterval = 30 * 24 * 3600;
 
@@ -57,6 +60,8 @@ static const NSTimeInterval BoardingScreenShowUpMinimumInterval = 30 * 24 * 3600
     [NSUserDefaults.standardUserDefaults setBool:cameraUploadEnabled forKey:IsCameraUploadsEnabledKey];
     if (cameraUploadEnabled) {
         [self setConvertHEICPhoto:YES];
+        [self setUploadVideosForLivePhotos:YES];
+        [self setUploadAllBurstPhotos:YES];
     } else {
         [self clearCameraSettings];
     }
@@ -170,6 +175,33 @@ static const NSTimeInterval BoardingScreenShowUpMinimumInterval = 30 * 24 * 3600
     [NSUserDefaults.standardUserDefaults setInteger:HEVCToH264CompressionQuality forKey:HEVCToH264CompressionQualityKey];
 }
 
+#pragma mark - advanced settings
+
++ (BOOL)shouldUploadVideosForLivePhotos {
+    return [NSUserDefaults.standardUserDefaults boolForKey:UploadVideosForLivePhotosKey];
+}
+
++ (void)setUploadVideosForLivePhotos:(BOOL)uploadVideosForLivePhotos {
+    [NSUserDefaults.standardUserDefaults setBool:uploadVideosForLivePhotos forKey:UploadVideosForLivePhotosKey];
+}
+
++ (BOOL)shouldUploadAllBurstPhotos {
+    return [NSUserDefaults.standardUserDefaults boolForKey:UploadAllBurstAssetsKey];
+}
+
++ (void)setUploadAllBurstPhotos:(BOOL)uploadAllBurstPhotos {
+    [NSUserDefaults.standardUserDefaults setBool:uploadAllBurstPhotos forKey:UploadAllBurstAssetsKey];
+}
+
++ (BOOL)shouldUploadHiddenAlbum {
+    return [NSUserDefaults.standardUserDefaults boolForKey:UploadHiddenAlbumKey];
+}
+
++ (void)setUploadHiddenAlbum:(BOOL)uploadHiddenAlbum {
+    [NSUserDefaults.standardUserDefaults setBool:uploadHiddenAlbum forKey:UploadHiddenAlbumKey];
+}
+
+
 #pragma mark - readonly properties
 
 + (BOOL)isLivePhotoSupported {
@@ -178,6 +210,10 @@ static const NSTimeInterval BoardingScreenShowUpMinimumInterval = 30 * 24 * 3600
     } else {
         return NO;
     }
+}
+
++ (BOOL)shouldScanLivePhotosForVideos {
+    return [self isLivePhotoSupported] && [self shouldUploadVideosForLivePhotos];
 }
 
 + (BOOL)shouldShowCameraUploadBoardingScreen {
