@@ -158,9 +158,9 @@
         return;
     }
     
-    NSMutableArray *sections = [NSMutableArray array];
-    NSMutableArray *headerTitles = [NSMutableArray array];
-    NSMutableArray *footerTitles = [NSMutableArray array];
+    NSMutableArray<NSArray<UITableViewCell *> *> *sections = [NSMutableArray array];
+    NSMutableArray<NSString *> *headerTitles = [NSMutableArray array];
+    NSMutableArray<NSString *> *footerTitles = [NSMutableArray array];
     
     // camera upload feature switch section
     [sections addObject:@[self.cameraUploadCell]];
@@ -188,7 +188,7 @@
         [optionSection addObject:self.mobileDataForVideosCell];
     }
     [optionSection addObjectsFromArray:@[self.uploadInBackgroundCell, self.advancedCell]];
-    [sections addObject:optionSection];
+    [sections addObject:[optionSection copy]];
     [headerTitles addObject:AMLocalizedString(@"options", @"Camera Upload options")];
     [footerTitles addObject:@""];
     
