@@ -9,8 +9,6 @@
 
 @interface ChangeNameViewController () <UITextFieldDelegate, MEGARequestDelegate>
 
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *cancelBarButtonItem;
-
 @property (weak, nonatomic) IBOutlet UITextField *firstNameTextField;
 @property (weak, nonatomic) IBOutlet UITextField *lastNameTextField;
 
@@ -27,12 +25,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    if (self.presentingViewController || self.navigationController.presentingViewController.presentedViewController == self.navigationController || [self.tabBarController.presentingViewController isKindOfClass:UITabBarController.class]) {
-        self.cancelBarButtonItem.title = AMLocalizedString(@"cancel", @"Button title to cancel something");
-    } else {
-        self.navigationItem.leftBarButtonItem = nil;
-    }
     
     self.navigationItem.title = AMLocalizedString(@"changeName", @"Button title that allows the user change his name");
     
@@ -85,10 +77,6 @@
 }
 
 #pragma mark - IBActions
-
-- (IBAction)cancelAction:(UIBarButtonItem *)sender {
-    [self dismissViewControllerAnimated:YES completion:nil];
-}
 
 - (IBAction)saveTouchUpInside:(UIButton *)sender {
     if ([MEGAReachabilityManager isReachableHUDIfNot]) {
@@ -198,7 +186,7 @@
             }
             
             [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"youHaveSuccessfullyChangedYourProfile", @"Success message when changing profile information.")];
-            [self dismissViewControllerAnimated:YES completion:nil];
+            [self.navigationController popViewControllerAnimated:YES];
             break;
         }
             

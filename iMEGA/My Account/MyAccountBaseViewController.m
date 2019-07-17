@@ -58,53 +58,11 @@
 
 #pragma mark - Private
 
-- (void)presentEditProfileAlertController {
-    UIAlertController *editProfileAlertController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
-    [editProfileAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
-    
-    if (!MEGASdkManager.sharedMEGASdk.isBusinessAccount || MEGASdkManager.sharedMEGASdk.isMasterBusinessAccount) {
-        UIAlertAction *changeNameAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"changeName", @"Button title that allows the user change his name") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-            MEGANavigationController *changeNameNavigationController = [[UIStoryboard storyboardWithName:@"MyAccount" bundle:nil] instantiateViewControllerWithIdentifier:@"ChangeNameNavigationControllerID"];
-            [self presentViewController:changeNameNavigationController animated:YES completion:nil];
-        }];
-        [changeNameAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
-        [editProfileAlertController addAction:changeNameAlertAction];
-    }
-    
-    UIAlertAction *changeAvatarAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"changeAvatar", @"button that allows the user the change his avatar") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-        [self presentChangeAvatarAlertController];
-    }];
-    [changeAvatarAlertAction setValue:[UIColor mnz_black333333] forKey:@"titleTextColor"];
-    [editProfileAlertController addAction:changeAvatarAlertAction];
-    
-    UIAlertAction *myCodeAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"myCode", @"Title for view that displays the QR code of the user. String as short as possible.") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+- (void)avatarTapped:(UITapGestureRecognizer *)sender {
+    if (sender.state == UIGestureRecognizerStateEnded) {        
         ContactLinkQRViewController *contactLinkVC = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactLinkQRViewControllerID"];
         contactLinkVC.scanCode = NO;
         [self presentViewController:contactLinkVC animated:YES completion:nil];
-    }];
-    [myCodeAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
-    [editProfileAlertController addAction:myCodeAlertAction];
-    
-    NSString *myUserBase64Handle = [MEGASdk base64HandleForUserHandle:[[[MEGASdkManager sharedMEGASdk] myUser] handle]];
-    NSString *myAvatarFilePath = [[Helper pathForSharedSandboxCacheDirectory:@"thumbnailsV3"] stringByAppendingPathComponent:myUserBase64Handle];
-    if ([[NSFileManager defaultManager] fileExistsAtPath:myAvatarFilePath]) {
-        UIAlertAction *removeAvatarAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"removeAvatar", @"Button to remove avatar. Try to keep the text short (as in English)") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-            [[MEGASdkManager sharedMEGASdk] setAvatarUserWithSourceFilePath:nil];
-        }];
-        [removeAvatarAlertAction mnz_setTitleTextColor:UIColor.mnz_redMain];
-        [editProfileAlertController addAction:removeAvatarAlertAction];
-    }
-    
-    editProfileAlertController.modalPresentationStyle = UIModalPresentationPopover;
-    editProfileAlertController.popoverPresentationController.sourceRect = self.avatarImageView.frame;
-    editProfileAlertController.popoverPresentationController.sourceView = self.view;
-    
-    [self presentViewController:editProfileAlertController animated:YES completion:nil];
-}
-
-- (void)avatarTapped:(UITapGestureRecognizer *)sender {
-    if (sender.state == UIGestureRecognizerStateEnded) {
-        [self presentEditProfileAlertController];
     }
 }
 
