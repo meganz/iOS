@@ -378,14 +378,21 @@
                         <barButtonItem key="backBarButtonItem" title=" " id="GF2-Bo-f55"/>
                     </navigationItem>
                     <connections>
+                        <outlet property="HEICCell" destination="HSJ-yZ-JNW" id="GGq-mt-FxN"/>
                         <outlet property="HEICLabel" destination="nNh-se-crj" id="sxX-3Y-qKm"/>
                         <outlet property="HEICRedCheckmarkImageView" destination="9H6-hW-VPN" id="6TS-ac-TZn"/>
+                        <outlet property="JPGCell" destination="QzL-5j-yJY" id="MJF-FV-Roq"/>
                         <outlet property="JPGLabel" destination="Sge-3a-yPP" id="Gme-LX-u8e"/>
                         <outlet property="JPGRedCheckmarkImageView" destination="NYC-ui-LoU" id="TiM-cf-dc7"/>
+                        <outlet property="advancedCell" destination="Psx-Ud-pgM" id="sYP-AN-xLZ"/>
                         <outlet property="backgroundUploadLabel" destination="wmG-6X-jAS" id="k3M-b1-lDQ"/>
                         <outlet property="backgroundUploadSwitch" destination="tAf-hK-tam" id="DA9-N1-0sz"/>
+                        <outlet property="cameraUploadCell" destination="hGs-DP-h4r" id="F9r-0q-9hX"/>
                         <outlet property="enableCameraUploadsLabel" destination="SAf-Xv-FaX" id="bVX-Gk-mJU"/>
                         <outlet property="enableCameraUploadsSwitch" destination="QSG-mz-TTu" id="117-v2-ahs"/>
+                        <outlet property="mobileDataCell" destination="RIs-Oa-XXE" id="szE-v8-Klv"/>
+                        <outlet property="mobileDataForVideosCell" destination="SFt-KB-vuw" id="gsZ-io-Zzp"/>
+                        <outlet property="uploadInBackgroundCell" destination="rVL-Aj-5pu" id="2jJ-Gx-h6E"/>
                         <outlet property="uploadVideosInfoLabel" destination="9Lu-Gx-ccv" id="jPG-87-ibZ"/>
                         <outlet property="uploadVideosInfoRightDetailLabel" destination="ZZc-KJ-13j" id="Ndb-BT-9cW"/>
                         <outlet property="uploadVideosLabel" destination="oH3-dT-UG7" id="OmM-rY-Pw6"/>
