@@ -56,8 +56,19 @@ typedef NS_ENUM(NSUInteger, CameraUploadSectionPhotoFormatRow) {
 @property (weak, nonatomic) IBOutlet UILabel *backgroundUploadLabel;
 @property (weak, nonatomic) IBOutlet UISwitch *backgroundUploadSwitch;
 
+@property (weak, nonatomic) IBOutlet UITableViewCell *cameraUploadCell;
 @property (weak, nonatomic) IBOutlet UITableViewCell *videoUploadInfoCell;
 @property (weak, nonatomic) IBOutlet UITableViewCell *videoUploadSwitchCell;
+@property (weak, nonatomic) IBOutlet UITableViewCell *HEICCell;
+@property (weak, nonatomic) IBOutlet UITableViewCell *JPGCell;
+@property (weak, nonatomic) IBOutlet UITableViewCell *mobileDataCell;
+@property (weak, nonatomic) IBOutlet UITableViewCell *mobileDataForVideosCell;
+@property (weak, nonatomic) IBOutlet UITableViewCell *uploadInBackgroundCell;
+@property (weak, nonatomic) IBOutlet UITableViewCell *advancedCell;
+
+@property (strong, nonatomic) NSArray<NSArray<UITableViewCell *> *> *tableSections;
+@property (strong, nonatomic) NSArray<NSString *> *sectionHeaderTitles;
+@property (strong, nonatomic) NSArray<NSString *> *sectionFooterTitles;
 
 @property (strong, nonatomic) CLLocationManager *locationManager;
 
@@ -140,6 +151,7 @@ typedef NS_ENUM(NSUInteger, CameraUploadSectionPhotoFormatRow) {
     [self configPhotoFormatUI];
     [self configOptionsUI];
     
+    [self configTableSections];
     [self.tableView reloadData];
     [self.tableView beginUpdates];
     [self.tableView endUpdates];
@@ -158,6 +170,68 @@ typedef NS_ENUM(NSUInteger, CameraUploadSectionPhotoFormatRow) {
 
 - (void)configBackgroudUploadUI {
     self.backgroundUploadSwitch.on = CameraUploadManager.canBackgroundUploadBeStarted;
+}
+
+- (void)configTableSections {
+    if (!CameraUploadManager.isCameraUploadEnabled) {
+        self.tableSections = @[@[self.cameraUploadCell]];
+        self.sectionHeaderTitles = @[@""];
+        self.sectionFooterTitles = @[[self titleForCameraUploadFooter]];
+        return;
+    }
+    
+    NSMutableArray *sections = [NSMutableArray array];
+    NSMutableArray *headerTitles = [NSMutableArray array];
+    NSMutableArray *footerTitles = [NSMutableArray array];
+    
+    // camera upload feature switch section
+    [sections addObject:@[self.cameraUploadCell]];
+    [headerTitles addObject:@""];
+    [footerTitles addObject:[self titleForCameraUploadFooter]];
+    
+    // video upload section
+    [sections addObject:@[CameraUploadManager.isHEVCFormatSupported ? self.videoUploadInfoCell : self.videoUploadSwitchCell]];
+    [headerTitles addObject:@""];
+    [footerTitles addObject:@""];
+    
+    // photo format section
+    if (CameraUploadManager.isHEVCFormatSupported) {
+        [sections addObject:@[self.HEICCell, self.JPGCell]];
+        [headerTitles addObject:AMLocalizedString(@"SAVE HEIC PHOTOS AS", @"What format to upload HEIC photos")];
+        [footerTitles addObject:AMLocalizedString(@"We recommend JPG, as its the most compatible format for photos.", nil)];
+    }
+    
+    // options section
+    NSMutableArray *optionSection = [NSMutableArray array];
+    if ([self shouldShowMobileData]) {
+        [optionSection addObject:self.mobileDataCell];
+    }
+    if ([self shouldShowMobileDataForVideos]) {
+        [optionSection addObject:self.mobileDataForVideosCell];
+    }
+    [optionSection addObjectsFromArray:@[self.uploadInBackgroundCell, self.advancedCell]];
+    [sections addObject:optionSection];
+    [headerTitles addObject:AMLocalizedString(@"options", @"Camera Upload options")];
+    [footerTitles addObject:@""];
+    
+    self.tableSections = [sections copy];
+    self.sectionHeaderTitles = [headerTitles copy];
+    self.sectionFooterTitles = [footerTitles copy];
+}
+
+- (NSString *)titleForCameraUploadFooter {
+    NSString *title;
+    if (CameraUploadManager.isCameraUploadEnabled) {
+        if (CameraUploadManager.isVideoUploadEnabled) {
+            title = AMLocalizedString(@"Photos and videos will be uploaded to Camera Uploads folder.", nil);
+        } else {
+            title = AMLocalizedString(@"Photos will be uploaded to Camera Uploads folder.", nil);
+        }
+    } else {
+        title = AMLocalizedString(@"When enabled, photos will be uploaded.", nil);
+    }
+    
+    return title;
 }
 
 #pragma mark - IBActions
@@ -255,56 +329,15 @@ typedef NS_ENUM(NSUInteger, CameraUploadSectionPhotoFormatRow) {
 #pragma mark - UITableview data source and delegate
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    if (CameraUploadManager.isCameraUploadEnabled) {
-        return CameraUploadSectionCount;
-    } else {
-        return 1;
-    }
+    return self.tableSections.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.section == CameraUploadSectionVideoInfo) {
-        return CameraUploadManager.isHEVCFormatSupported ? self.videoUploadInfoCell : self.videoUploadSwitchCell;
-    }
-    
-    return [super tableView:tableView cellForRowAtIndexPath:indexPath];
+    return self.tableSections[indexPath.section][indexPath.row];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    NSInteger numberOfRows = 0;
-    switch (section) {
-        case CameraUploadSectionFeatureSwitch:
-            numberOfRows = 1;
-            break;
-        case CameraUploadSectionVideoInfo:
-            numberOfRows = 1;
-            break;
-        case CameraUploadSectionPhotoFormat:
-            if (CameraUploadManager.isHEVCFormatSupported) {
-                numberOfRows = CameraUploadSectionPhotoFormatRowCount;
-            } else {
-                numberOfRows = 0;
-            }
-            break;
-        case CameraUploadSectionOptions:
-            numberOfRows = CameraUploadSectionOptionsRowCount;
-        default:
-            break;
-    }
-    
-    return numberOfRows;
-}
-
-- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
-    cell.hidden = [self shouldHideRowAtIndexPath:indexPath];
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if ([self shouldHideRowAtIndexPath:indexPath]) {
-        return 0;
-    }
-    
-    return [super tableView:tableView heightForRowAtIndexPath:indexPath];;
+    return self.tableSections[section].count;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -317,51 +350,11 @@ typedef NS_ENUM(NSUInteger, CameraUploadSectionPhotoFormatRow) {
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-    if ([self shouldHideSection:section]) {
-        return nil;
-    }
-    
-    NSString *title;
-    switch (section) {
-        case CameraUploadSectionPhotoFormat:
-            title = AMLocalizedString(@"SAVE HEIC PHOTOS AS", @"What format to upload HEIC photos");
-            break;
-        case CameraUploadSectionOptions:
-            title = AMLocalizedString(@"options", @"Camera Upload options");
-            break;
-        default:
-            break;
-    }
-    
-    return title;
+    return self.sectionHeaderTitles[section];
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section {
-    if ([self shouldHideSection:section]) {
-        return nil;
-    }
-    
-    NSString *title;
-    switch (section) {
-        case CameraUploadSectionFeatureSwitch:
-            if (CameraUploadManager.isCameraUploadEnabled) {
-                if (CameraUploadManager.isVideoUploadEnabled) {
-                    title = AMLocalizedString(@"Photos and videos will be uploaded to Camera Uploads folder.", nil);
-                } else {
-                    title = AMLocalizedString(@"Photos will be uploaded to Camera Uploads folder.", nil);
-                }
-            } else {
-                title = AMLocalizedString(@"When enabled, photos will be uploaded.", nil);
-            }
-            break;
-        case CameraUploadSectionPhotoFormat:
-            title = AMLocalizedString(@"We recommend JPG, as its the most compatible format for photos.", nil);
-            break;
-        default:
-            break;
-    }
-    
-    return title;
+    return self.sectionFooterTitles[section];
 }
 
 #pragma mark - Location manager delegate
@@ -379,36 +372,6 @@ typedef NS_ENUM(NSUInteger, CameraUploadSectionPhotoFormatRow) {
 
 - (BOOL)shouldShowMobileDataForVideos {
     return [self shouldShowMobileData] && CameraUploadManager.isCellularUploadAllowed && CameraUploadManager.isVideoUploadEnabled;
-}
-
-- (BOOL)shouldHideSection:(NSInteger)section {
-    BOOL hide = NO;
-    switch (section) {
-        case CameraUploadSectionPhotoFormat:
-            hide = !CameraUploadManager.isHEVCFormatSupported;
-            break;
-        default:
-            break;
-    }
-    
-    return hide;
-}
-
-- (BOOL)shouldHideRowAtIndexPath:(NSIndexPath *)indexPath {
-    BOOL hide = NO;
-    if (indexPath.section == CameraUploadSectionOptions) {
-        switch (indexPath.row) {
-            case CameraUploadSectionOptionsRowUseMobileData:
-                hide = ![self shouldShowMobileData];
-                break;
-            case CameraUploadSectionOptionsRowUseMobileDataForVideos:
-                hide = ![self shouldShowMobileDataForVideos];
-                break;
-            default: break;
-        }
-    }
-    
-    return hide;
 }
 
 @end
