@@ -281,7 +281,7 @@ static const NSTimeInterval BoardingScreenShowUpMinimumInterval = 30 * 24 * 3600
     return [self isCameraUploadEnabled] && ![self hasMigratedToCameraUploadsV2];
 }
 
-+ (void)migrateCurrentSettingsToCameraUplaodV2 {
++ (void)migrateCurrentSettingsToCameraUploadV2 {
     if ([self isCameraUploadEnabled]) {
         [self setConvertHEICPhoto:YES];
     }

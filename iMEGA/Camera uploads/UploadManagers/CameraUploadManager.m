@@ -431,7 +431,7 @@ static const NSUInteger MaximumPhotoUploadBatchCountMultiplier = 2;
     }
     
     if (!(self.mediaInfoLoader.isMediaInfoLoaded && self.isNodeTreeCurrent && self.cameraUploadNode != nil)) {
-        MEGALogDebug(@"[Camera Upload] can not upload videos due to the dependency on media info and camera uplaod node issues");
+        MEGALogDebug(@"[Camera Upload] can not upload videos due to the dependency on media info and camera upload node issues");
         return;
     }
     
@@ -846,10 +846,10 @@ static const NSUInteger MaximumPhotoUploadBatchCountMultiplier = 2;
     BOOL hasReachedMaximumCount = [notification.userInfo[MEGAHasUploadingTasksReachedMaximumCountUserInfoKey] boolValue];
     NSUInteger currentUploadingCount = [notification.userInfo[MEGACurrentUploadingTasksCountUserInfoKey] unsignedIntegerValue];
     if (hasReachedMaximumCount) {
-        MEGALogDebug(@"[Camera Upload] suspend upload queues with current uplaoding tasks count %lu", (unsigned long)currentUploadingCount);
+        MEGALogDebug(@"[Camera Upload] suspend upload queues with current uploading tasks count %lu", (unsigned long)currentUploadingCount);
         [self suspendCameraUploadQueues];
     } else {
-        MEGALogDebug(@"[Camera Upload] unsuspend upload queues with current uplaoding tasks count %lu", (unsigned long)currentUploadingCount);
+        MEGALogDebug(@"[Camera Upload] unsuspend upload queues with current uploading tasks count %lu", (unsigned long)currentUploadingCount);
         [self unsuspendCameraUploadQueues];
     }
 }
