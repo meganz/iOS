@@ -6,6 +6,7 @@
 
 #import "MEGAConstants.h"
 #import "NSFileManager+MNZCategory.h"
+#import "MEGAReachabilityManager.h"
 
 static NSString * const HasMigratedToCameraUploadsV2Key = @"HasMigratedToCameraUploadsV2";
 static NSString * const BoardingScreenLastShowedDateKey = @"CameraUploadBoardingScreenLastShowedDate";
@@ -257,6 +258,10 @@ static const NSTimeInterval BoardingScreenShowUpMinimumInterval = 30 * 24 * 3600
     }
     
     return [mediaTypes copy];
+}
+
++ (BOOL)isCameraUploadPausedBecauseOfNoWiFiConnection {
+    return ![self isCellularUploadAllowed] && !MEGAReachabilityManager.isReachableViaWiFi;
 }
 
 #pragma mark - camera upload v2 migration
