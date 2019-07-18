@@ -38,6 +38,11 @@
     self.firstName ? (self.firstNameTextField.text = self.firstName) : (self.firstNameTextField.placeholder = AMLocalizedString(@"firstName", @"Hint text for the first name (Placeholder)"));
     self.lastName ? (self.lastNameTextField.text = self.lastName) : (self.lastNameTextField.placeholder = AMLocalizedString(@"lastName", @"Hint text for the last name (Placeholder)"));
     
+    if (@available(iOS 10.0, *)) {
+        self.firstNameTextField.textContentType = UITextContentTypeGivenName;
+        self.lastNameTextField.textContentType = UITextContentTypeFamilyName;
+    }
+    
     [self.saveButton setTitle:AMLocalizedString(@"save", @"Button title to 'Save' the selected option") forState:UIControlStateNormal];
 }
 
@@ -82,6 +87,9 @@
 #pragma mark - IBActions
 
 - (IBAction)cancelAction:(UIBarButtonItem *)sender {
+    [self.firstNameTextField resignFirstResponder];
+    [self.lastNameTextField resignFirstResponder];
+    
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 

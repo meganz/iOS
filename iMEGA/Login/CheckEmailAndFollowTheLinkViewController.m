@@ -62,6 +62,10 @@
     
     self.emailInputView.inputTextField.delegate = self;
     self.emailInputView.inputTextField.keyboardType = UIKeyboardTypeEmailAddress;
+    if (@available(iOS 11.0, *)) {
+        self.emailInputView.inputTextField.textContentType = UITextContentTypeUsername;
+    }
+
 }
 
 - (void)viewWillAppear:(BOOL)animated {
