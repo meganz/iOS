@@ -229,13 +229,13 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
     NSString *progressText;
     if (uploadStats.pendingFilesCount == 1) {
         if (CameraUploadManager.isCameraUploadPausedBecauseOfNoWiFiConnection) {
-            progressText = AMLocalizedString(@"Upload paused because of no WiFi connection, 1 file pending", nil);
+            progressText = AMLocalizedString(@"Upload paused because of no WiFi, 1 file pending", nil);
         } else {
             progressText = AMLocalizedString(@"cameraUploadsPendingFile", @"Message shown while uploading files. Singular.");
         }
     } else {
         if (CameraUploadManager.isCameraUploadPausedBecauseOfNoWiFiConnection) {
-            progressText = [NSString stringWithFormat:AMLocalizedString(@"Upload paused because of no WiFi connection, %lu files pending", nil), uploadStats.pendingFilesCount];
+            progressText = [NSString stringWithFormat:AMLocalizedString(@"Upload paused because of no WiFi, %lu files pending", nil), uploadStats.pendingFilesCount];
         } else {
             progressText = [NSString stringWithFormat:AMLocalizedString(@"cameraUploadsPendingFiles", @"Message shown while uploading files. Plural."), uploadStats.pendingFilesCount];
         }
