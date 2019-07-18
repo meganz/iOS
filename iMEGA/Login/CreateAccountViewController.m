@@ -73,6 +73,10 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
     self.lastNameInputView.inputTextField.returnKeyType = UIReturnKeyNext;
     self.lastNameInputView.inputTextField.delegate = self;
     self.lastNameInputView.inputTextField.tag = LastNameTextFieldTag;
+    if (@available(iOS 10.0, *)) {
+        self.firstNameInputView.inputTextField.textContentType = UITextContentTypeGivenName;
+        self.lastNameInputView.inputTextField.textContentType = UITextContentTypeFamilyName;
+    }
     
     self.emailInputView.inputTextField.returnKeyType = UIReturnKeyNext;
     self.emailInputView.inputTextField.delegate = self;
@@ -88,12 +92,13 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
     self.passwordView.passwordTextField.returnKeyType = UIReturnKeyNext;
     self.passwordView.passwordTextField.delegate = self;
     self.passwordView.passwordTextField.tag = PasswordTextFieldTag;
-    if (@available(iOS 12.0, *)) {
-        self.passwordView.passwordTextField.textContentType = UITextContentTypeNewPassword;
-    }
     
     self.retypePasswordView.passwordTextField.delegate = self;
     self.retypePasswordView.passwordTextField.tag = RetypeTextFieldTag;
+    if (@available(iOS 12.0, *)) {
+        self.passwordView.passwordTextField.textContentType = UITextContentTypePassword;
+        self.retypePasswordView.passwordTextField.textContentType = UITextContentTypeNewPassword;
+    }
     
     [self setTermsOfServiceAttributedTitle];
     
