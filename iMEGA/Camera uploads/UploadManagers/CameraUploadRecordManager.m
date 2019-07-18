@@ -5,6 +5,7 @@
 #import "LocalFileNameGenerator.h"
 #import "SavedIdentifierParser.h"
 #import "CameraUploadStore.h"
+#import "MEGAConstants.h"
 
 static const NSUInteger MaximumUploadRetryPerLaunchCount = 20;
 static const NSUInteger MaximumUploadRetryPerLoginCount = 800;
@@ -304,6 +305,8 @@ static const NSUInteger MaximumUploadRetryPerLoginCount = 800;
                 record.errorPerLogin = [self createErrorRecordPerLoginForLocalIdentifier:record.localIdentifier];
             }
             record.errorPerLogin.errorCount = @(record.errorPerLogin.errorCount.unsignedIntegerValue + 1);
+            
+            MEGALogInfo(@"[Camera Upload] %@ upload failed with error per launch count: %@, error per login count: %@", record, record.errorPerLaunch.errorCount, record.errorPerLogin.errorCount);
         } else if (status == CameraAssetUploadStatusDone) {
             MOAssetUploadErrorPerLaunch *errorPerLaunch = [record errorPerLaunch];
             if (errorPerLaunch) {
@@ -317,6 +320,10 @@ static const NSUInteger MaximumUploadRetryPerLoginCount = 800;
         }
         
         [self.backgroundContext save:&coreDataError];
+        
+        if (record.errorPerLaunch.errorCount.unsignedIntegerValue > MaximumUploadRetryPerLaunchCount || record.errorPerLogin.errorCount.unsignedIntegerValue > MaximumUploadRetryPerLaunchCount) {
+            [NSNotificationCenter.defaultCenter postNotificationName:MEGACameraUploadStatsChangedNotification object:nil];
+        }
     }];
     
     if (error != NULL) {
