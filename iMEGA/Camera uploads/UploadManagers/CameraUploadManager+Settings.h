@@ -46,6 +46,7 @@ typedef NS_ENUM(NSUInteger, CameraUploadVideoQuality) {
 @property (class, readonly, getter=shouldScanLivePhotosForVideos) BOOL scanLivePhotosForVideos;
 @property (class, readonly) BOOL canBackgroundUploadBeStarted;
 @property (class, readonly) BOOL canCameraUploadBeStarted;
+@property (class, readonly, getter=isCameraUploadPausedBecauseOfNoWiFiConnection) BOOL cameraUploadPausedBecauseOfNoWifiConnection;
 @property (class, readonly) NSArray<NSNumber *> * enabledMediaTypes;
 
 #pragma mark - camera upload v2 migration
