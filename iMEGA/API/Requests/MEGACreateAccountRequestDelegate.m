@@ -53,16 +53,6 @@
                     break;
                 }
                     
-                case MEGAErrorTypeApiEArgs: {
-                    NSString *message = AMLocalizedString(@"accountAlreadyConfirmed", @"Message shown when the user clicks on a confirm account link that has already been used");
-
-                    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:message preferredStyle:UIAlertControllerStyleAlert];
-                    [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
-                    
-                    [UIApplication.mnz_presentingViewController presentViewController:alertController animated:YES completion:nil];
-                    break;
-                }
-                    
                 default: {
                     NSString *message = [NSString stringWithFormat:@"%@ %@", request.requestString, error.name];
                     [SVProgressHUD showErrorWithStatus:message];
