@@ -54,6 +54,7 @@
         
         if (error) {
             MEGALogError(@"[Camera Upload] %@ error when to download video from iCloud: %@", weakSelf, error);
+            *stop = YES;
             [weakSelf handleCloudDownloadError:error];
         }
     };

@@ -57,6 +57,7 @@ static NSString * const PhotoExportTempName = @"photoExportTemp";
         
         if (error) {
             MEGALogError(@"[Camera Upload] %@ error when to download images from iCloud: %@", weakSelf, error);
+            *stop = YES;
             [weakSelf handleCloudDownloadError:error];
         }
     };
