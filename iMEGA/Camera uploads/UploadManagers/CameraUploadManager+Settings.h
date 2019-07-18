@@ -53,7 +53,7 @@ typedef NS_ENUM(NSUInteger, CameraUploadVideoQuality) {
 @property (class, getter=hasMigratedToCameraUploadsV2) BOOL migratedToCameraUploadsV2;
 @property (class, readonly) BOOL shouldShowCameraUploadV2MigrationScreen;
 
-+ (void)migrateCurrentSettingsToCameraUplaodV2;
++ (void)migrateCurrentSettingsToCameraUploadV2;
 
 #pragma mark - clear local settings
 
