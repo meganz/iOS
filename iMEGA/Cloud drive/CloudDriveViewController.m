@@ -1786,19 +1786,19 @@
 
 - (void)updateSearchResultsForSearchController:(UISearchController *)searchController {
     NSString *searchString = searchController.searchBar.text;
-    [self.searchNodesArray removeAllObjects];
-
-    if ([searchString isEqualToString:@""]) {
-        self.searchNodesArray = [NSMutableArray arrayWithArray:self.nodesArray];
-    } else {
+    if (searchString.length >= 3) {
+        [self.searchNodesArray removeAllObjects];
         MEGANodeList *allNodeList = [[MEGASdkManager sharedMEGASdk] nodeListSearchForNode:self.parentNode searchString:searchString recursive:YES];
         
         for (NSInteger i = 0; i < [allNodeList.size integerValue]; i++) {
             MEGANode *n = [allNodeList nodeAtIndex:i];
             [self.searchNodesArray addObject:n];
         }
+        [self reloadData];
+    } else if ([searchString isEqualToString:@""]) {
+        self.searchNodesArray = [NSMutableArray arrayWithArray:self.nodesArray];
+        [self reloadData];
     }
-    [self reloadData];
 }
 
 #pragma mark - UIDocumentPickerDelegate
