@@ -9,6 +9,7 @@
 #import "MEGASdkManager.h"
 #import "NSURL+MNZCategory.h"
 #import "NSString+MNZCategory.h"
+#import "UIApplication+MNZCategory.h"
 
 #import "CheckEmailAndFollowTheLinkViewController.h"
 #import "PasswordStrengthIndicatorView.h"
@@ -308,8 +309,8 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
                 [SVProgressHUD dismiss];
                 if (error.type == MEGAErrorTypeApiOk) {
                     CheckEmailAndFollowTheLinkViewController *checkEmailAndFollowTheLinkVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"CheckEmailAndFollowTheLinkViewControllerID"];
-                    [self presentViewController:checkEmailAndFollowTheLinkVC animated:YES completion:^{
-                        [self.navigationController popViewControllerAnimated:YES];
+                    [self dismissViewControllerAnimated:YES completion:^{
+                        [UIApplication.mnz_presentingViewController presentViewController:checkEmailAndFollowTheLinkVC animated:YES completion:nil];
                     }];
                 } else {
                     [self.emailInputView setErrorState:YES withText:AMLocalizedString(@"emailAlreadyInUse", @"Error shown when the user tries to change his mail to one that is already used")];
