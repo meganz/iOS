@@ -2,6 +2,8 @@
 //  Use this file to import your target's public headers that you would like to expose to Swift.
 //
 
+#import "MEGASdkManager.h"
+
 #import "NSString+MNZCategory.h"
 #import "UIColor+MNZCategory.h"
 #import "UIFont+MNZCategory.h"
@@ -11,7 +13,6 @@
 #import "DevicePermissionsHelper.h"
 #import "Helper.h"
 #import "MEGAReachabilityManager.h"
-#import "MEGASdkManager.h"
 #import "VENTokenField.h"
 
 #import "MEGAContactLinkCreateRequestDelegate.h"

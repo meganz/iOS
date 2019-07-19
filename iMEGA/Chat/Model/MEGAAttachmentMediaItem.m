@@ -57,7 +57,7 @@
     }
     
     if (self.cachedContactView == nil) {
-        MEGAMessageAttachmentView *contactView = [[[NSBundle bundleForClass:[MEGAMessageAttachmentView class]] loadNibNamed:@"MEGAMessageAttachmentView" owner:self options:nil] objectAtIndex:0];
+        MEGAMessageAttachmentView *contactView = [[NSBundle bundleForClass:MEGAMessageAttachmentView.class] loadNibNamed:@"MEGAMessageAttachmentView" owner:self options:nil].firstObject;
         // Sizes:
         CGSize contactViewSize = [self mediaViewDisplaySize];
         contactView.frame = CGRectMake(contactView.frame.origin.x,
@@ -99,7 +99,7 @@
             contactView.detailLabel.text = size;
         } else { // MEGAChatMessageTypeContact
             if (self.message.usersCount == 1) {
-                [contactView.avatarImage mnz_setImageForUserHandle:[self.message userHandleAtIndex:0]];
+                [contactView.avatarImage mnz_setImageForUserHandle:[self.message userHandleAtIndex:0] name:[self.message userNameAtIndex:0]];
                 contactView.titleLabel.text = [self.message userNameAtIndex:0];
                 contactView.detailLabel.text = [self.message userEmailAtIndex:0];
             } else {

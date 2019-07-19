@@ -43,7 +43,7 @@
             [self.secondaryButton setTitleColor:UIColor.mnz_redMain forState:UIControlStateNormal];
             
             if (self.scrollView.subviews.firstObject.subviews.count == 4) {
-                OnboardingView *onboardingViewEncryption = self.scrollView.subviews.firstObject.subviews[0];
+                OnboardingView *onboardingViewEncryption = self.scrollView.subviews.firstObject.subviews.firstObject;
                 onboardingViewEncryption.type = OnboardingViewTypeEncryptionInfo;
                 OnboardingView *onboardingViewChat = self.scrollView.subviews.firstObject.subviews[1];
                 onboardingViewChat.type = OnboardingViewTypeChatInfo;

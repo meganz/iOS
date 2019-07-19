@@ -3,6 +3,11 @@
 
 @interface NSFileManager (MNZCategory)
 
+/**
+ amount of free space on the file system in bytes
+ */
+@property (readonly) unsigned long long mnz_fileSystemFreeSize;
+
 #pragma mark - Paths
 
 - (NSString *)downloadsDirectory;

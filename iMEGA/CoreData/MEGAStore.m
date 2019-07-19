@@ -1,23 +1,19 @@
 
 #import "MEGAStore.h"
-
 #import "NSString+MNZCategory.h"
 
 @interface MEGAStore ()
 
-@property (strong, nonatomic) NSManagedObjectModel *managedObjectModel;
-@property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
-@property (strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
+@property (strong, nonatomic) MEGAStoreStack *storeStack;
 
 @end
 
 @implementation MEGAStore
 
-static MEGAStore *_megaStore = nil;
-
 #pragma mark - Singleton Lifecycle
 
 + (MEGAStore *)shareInstance {
+    static MEGAStore *_megaStore = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         _megaStore = [[self alloc] init];
@@ -27,31 +23,14 @@ static MEGAStore *_megaStore = nil;
 
 - (instancetype)init {
     self = [super init];
-    if (self != nil) {
-        [self configureMEGAStore];
+    if (self) {
+        _storeStack = [[MEGAStoreStack alloc] initWithModelName:@"MEGACD" storeURL:[self storeURL]];
     }
-    
     return self;
 }
 
-- (void)configureMEGAStore {
-    _managedObjectModel = [NSManagedObjectModel mergedModelFromBundles:nil];
-    NSURL *storeURL = [self storeURL];
-    
-    NSError *error = nil;
-    _persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:_managedObjectModel];
-    NSDictionary *options = @{ NSMigratePersistentStoresAutomaticallyOption : @YES,
-                              NSInferMappingModelAutomaticallyOption : @YES };
-    
-    if (![_persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:options error:&error]) {
-        MEGALogError(@"Unresolved error %@, %@", error, error.userInfo);
-        abort();
-    }
-    
-    if (_persistentStoreCoordinator != nil) {
-        _managedObjectContext = [[NSManagedObjectContext alloc] init];
-        [_managedObjectContext setPersistentStoreCoordinator:_persistentStoreCoordinator];
-    }
+- (NSManagedObjectContext *)managedObjectContext {
+    return self.storeStack.viewContext;
 }
 
 - (NSURL *)storeURL {
@@ -60,7 +39,7 @@ static MEGAStore *_megaStore = nil;
     NSFileManager *fileManager = NSFileManager.defaultManager;
     NSURL *groupSupportURL = [[fileManager containerURLForSecurityApplicationGroupIdentifier:@"group.mega.ios"] URLByAppendingPathComponent:@"GroupSupport"];
     if (![fileManager fileExistsAtPath:groupSupportURL.path]) {
-        if (![fileManager createDirectoryAtURL:groupSupportURL withIntermediateDirectories:NO attributes:nil error:&error]) {
+        if (![fileManager createDirectoryAtURL:groupSupportURL withIntermediateDirectories:YES attributes:nil error:&error]) {
             MEGALogError(@"Error creating GroupSupport directory in the shared sandbox: %@", error);
             abort();
         }

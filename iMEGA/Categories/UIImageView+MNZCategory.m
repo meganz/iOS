@@ -6,6 +6,7 @@
 #import "UIImage+MNZCategory.h"
 #import "UIImage+GKContact.h"
 #import "MEGAGetThumbnailRequestDelegate.h"
+#import "MEGAConstants.h"
 
 @implementation UIImageView (MNZCategory)
 
@@ -77,7 +78,7 @@
 - (void)mnz_imageForNode:(MEGANode *)node {
     switch (node.type) {
         case MEGANodeTypeFolder: {
-            if ([node.name isEqualToString:@"Camera Uploads"]) {
+            if ([node.name isEqualToString:MEGACameraUploadsNodeName]) {
                 self.image = [Helper folderCameraUploadsImage];
             } else {
                 if (node.isInShare) {

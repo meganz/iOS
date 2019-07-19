@@ -413,7 +413,7 @@ static const void *richTitleTagKey = &richTitleTagKey;
             break;
     }
     
-    if (media) {
+    if (media && self.type != MEGAChatMessageTypeContact) {
         [cache setObject:media forKey:@(self.messageHash)];
     }
     return media;

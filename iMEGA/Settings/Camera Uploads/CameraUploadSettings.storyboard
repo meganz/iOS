@@ -1,0 +1,736 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="SF-UI-Text-Regular.otf">
+            <string>SFUIText-Regular</string>
+        </array>
+    </customFonts>
+    <scenes>
+        <!--Camera Uploads-->
+        <scene sceneID="JTP-uT-Ioo">
+            <objects>
+                <tableViewController storyboardIdentifier="CameraUploadsSettingsID" id="0gq-O0-v8H" customClass="CameraUploadsTableViewController" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="HeY-pZ-r8v">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" red="0.96078431372549022" green="0.96078431372549022" blue="0.96078431372549022" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="sectionIndexBackgroundColor" red="0.96078431369999995" green="0.96078431369999995" blue="0.96078431369999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <sections>
+                            <tableViewSection footerTitle="When enabled, photos will be uploaded." id="nMP-Ad-yya">
+                                <cells>
+                                    <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" id="hGs-DP-h4r" userLabel="Camera Uploads Table View Cell">
+                                        <rect key="frame" x="0.0" y="35" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" tableViewCell="hGs-DP-h4r" id="lS6-a4-a7C">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Camera Uploads" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SAf-Xv-FaX">
+                                                    <rect key="frame" x="16" y="12" width="133" height="20"/>
+                                                    <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="17"/>
+                                                    <color key="textColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="QSG-mz-TTu">
+                                                    <rect key="frame" x="310" y="6.5" width="51" height="31"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="49" id="1jg-5g-Ziq"/>
+                                                    </constraints>
+                                                    <color key="onTintColor" red="0.95294117649999999" green="0.047058823530000002" blue="0.078431372550000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <connections>
+                                                        <action selector="enableCameraUploadsSwitchValueChanged:" destination="0gq-O0-v8H" eventType="valueChanged" id="OHF-y0-gUx"/>
+                                                    </connections>
+                                                </switch>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="QSG-mz-TTu" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="SAf-Xv-FaX" secondAttribute="trailing" constant="8" id="Dht-IJ-Kh1"/>
+                                                <constraint firstItem="QSG-mz-TTu" firstAttribute="trailing" secondItem="lS6-a4-a7C" secondAttribute="trailingMargin" id="Ghu-vb-Fdz"/>
+                                                <constraint firstItem="SAf-Xv-FaX" firstAttribute="leading" secondItem="lS6-a4-a7C" secondAttribute="leadingMargin" id="dN0-kS-ake"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="QSG-mz-TTu" secondAttribute="trailing" id="i88-vf-HF1"/>
+                                                <constraint firstItem="SAf-Xv-FaX" firstAttribute="leading" secondItem="lS6-a4-a7C" secondAttribute="leadingMargin" id="ljp-He-1Zg"/>
+                                                <constraint firstItem="SAf-Xv-FaX" firstAttribute="centerY" secondItem="lS6-a4-a7C" secondAttribute="centerY" id="n5T-Fk-ewk"/>
+                                                <constraint firstItem="QSG-mz-TTu" firstAttribute="centerY" secondItem="lS6-a4-a7C" secondAttribute="centerY" id="xeJ-fg-uLk"/>
+                                            </constraints>
+                                            <variation key="default">
+                                                <mask key="constraints">
+                                                    <exclude reference="dN0-kS-ake"/>
+                                                    <exclude reference="Ghu-vb-Fdz"/>
+                                                </mask>
+                                            </variation>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                            <tableViewSection headerTitle="" id="z1y-BO-nkA">
+                                <cells>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="9Lu-Gx-ccv" detailTextLabel="ZZc-KJ-13j" style="IBUITableViewCellStyleValue1" id="xJP-C8-8rb" userLabel="Upload Videos">
+                                        <rect key="frame" x="0.0" y="119" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="xJP-C8-8rb" id="oEI-tg-o1g">
+                                            <rect key="frame" x="0.0" y="0.0" width="341" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Upload Videos" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="9Lu-Gx-ccv">
+                                                    <rect key="frame" x="16" y="12" width="111.5" height="20"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="17"/>
+                                                    <color key="textColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Off" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ZZc-KJ-13j">
+                                                    <rect key="frame" x="317" y="12" width="23" height="20"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="17"/>
+                                                    <color key="textColor" red="0.60000002379999995" green="0.60000002379999995" blue="0.60000002379999995" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="j9S-W9-Mx2" kind="show" id="L1p-sA-rJ5"/>
+                                        </connections>
+                                    </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" id="kY1-bw-JGQ" userLabel="Camera Uploads Table View Cell">
+                                        <rect key="frame" x="0.0" y="163" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" tableViewCell="kY1-bw-JGQ" id="Q1f-3d-Zcu">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Video Uploads" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oH3-dT-UG7">
+                                                    <rect key="frame" x="16" y="12" width="117" height="20"/>
+                                                    <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="17"/>
+                                                    <color key="textColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="vGp-wO-5dQ">
+                                                    <rect key="frame" x="310" y="6.5" width="51" height="31"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="49" id="3oS-eq-c7b"/>
+                                                    </constraints>
+                                                    <color key="onTintColor" red="0.95294117649999999" green="0.047058823530000002" blue="0.078431372550000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <connections>
+                                                        <action selector="uploadVideosSwitchValueChanged:" destination="0gq-O0-v8H" eventType="valueChanged" id="sdE-Sa-Ft6"/>
+                                                    </connections>
+                                                </switch>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="trailingMargin" secondItem="vGp-wO-5dQ" secondAttribute="trailing" id="3Os-j6-kZE"/>
+                                                <constraint firstItem="vGp-wO-5dQ" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="oH3-dT-UG7" secondAttribute="trailing" constant="8" id="75c-13-ucu"/>
+                                                <constraint firstItem="vGp-wO-5dQ" firstAttribute="trailing" secondItem="Q1f-3d-Zcu" secondAttribute="trailingMargin" id="CAT-N0-bOj"/>
+                                                <constraint firstItem="oH3-dT-UG7" firstAttribute="leading" secondItem="Q1f-3d-Zcu" secondAttribute="leadingMargin" id="KLE-UJ-7Cy"/>
+                                                <constraint firstItem="oH3-dT-UG7" firstAttribute="leading" secondItem="Q1f-3d-Zcu" secondAttribute="leadingMargin" id="P8s-9t-R3Z"/>
+                                                <constraint firstItem="oH3-dT-UG7" firstAttribute="centerY" secondItem="Q1f-3d-Zcu" secondAttribute="centerY" id="Vs1-jf-1Or"/>
+                                                <constraint firstItem="vGp-wO-5dQ" firstAttribute="centerY" secondItem="Q1f-3d-Zcu" secondAttribute="centerY" id="Wac-Uk-Wu7"/>
+                                            </constraints>
+                                            <variation key="default">
+                                                <mask key="constraints">
+                                                    <exclude reference="KLE-UJ-7Cy"/>
+                                                    <exclude reference="CAT-N0-bOj"/>
+                                                </mask>
+                                            </variation>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                            <tableViewSection headerTitle="SAVE HEIC PHOTOS AS" footerTitle="We recommend JPG, as it is the most compatible format for photos." id="nFt-pn-NLx">
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="SelectableTableViewCellID" id="HSJ-yZ-JNW" customClass="SelectableTableViewCell">
+                                        <rect key="frame" x="0.0" y="262.5" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" tableViewCell="HSJ-yZ-JNW" id="5TC-gV-nw7">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="HEIC" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nNh-se-crj">
+                                                    <rect key="frame" x="16" y="12" width="39.5" height="20"/>
+                                                    <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="17"/>
+                                                    <color key="textColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="red_checkmark" translatesAutoresizingMaskIntoConstraints="NO" id="9H6-hW-VPN">
+                                                    <rect key="frame" x="337" y="11" width="22" height="22"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="22" id="EPs-ED-pc0"/>
+                                                        <constraint firstAttribute="width" constant="22" id="ZmA-PD-MQR"/>
+                                                    </constraints>
+                                                </imageView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="9H6-hW-VPN" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="nNh-se-crj" secondAttribute="trailing" constant="8" id="B3p-qd-qEv"/>
+                                                <constraint firstItem="nNh-se-crj" firstAttribute="leading" secondItem="5TC-gV-nw7" secondAttribute="leadingMargin" id="BM3-ee-bx2"/>
+                                                <constraint firstItem="nNh-se-crj" firstAttribute="centerY" secondItem="5TC-gV-nw7" secondAttribute="centerY" id="Df1-p1-xu9"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="9H6-hW-VPN" secondAttribute="trailing" id="n8L-FN-NIU"/>
+                                                <constraint firstItem="9H6-hW-VPN" firstAttribute="centerY" secondItem="5TC-gV-nw7" secondAttribute="centerY" id="qc9-XB-E95"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="redCheckmarkImageView" destination="9H6-hW-VPN" id="MI8-Id-ybv"/>
+                                            <outlet property="titleLabel" destination="nNh-se-crj" id="uSl-lt-3aI"/>
+                                        </connections>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="SelectableTableViewCellID" id="QzL-5j-yJY" customClass="SelectableTableViewCell">
+                                        <rect key="frame" x="0.0" y="306.5" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" tableViewCell="QzL-5j-yJY" id="KNF-Jn-ZId">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="JPG (Recommended)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sge-3a-yPP">
+                                                    <rect key="frame" x="16" y="12" width="169.5" height="20"/>
+                                                    <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="17"/>
+                                                    <color key="textColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="red_checkmark" translatesAutoresizingMaskIntoConstraints="NO" id="NYC-ui-LoU">
+                                                    <rect key="frame" x="337" y="11" width="22" height="22"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="22" id="21R-va-MhJ"/>
+                                                        <constraint firstAttribute="height" constant="22" id="nra-aU-j8g"/>
+                                                    </constraints>
+                                                </imageView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="trailingMargin" secondItem="NYC-ui-LoU" secondAttribute="trailing" id="4j5-n6-qbd"/>
+                                                <constraint firstItem="Sge-3a-yPP" firstAttribute="leading" secondItem="KNF-Jn-ZId" secondAttribute="leadingMargin" id="9zR-Z4-NR9"/>
+                                                <constraint firstItem="Sge-3a-yPP" firstAttribute="centerY" secondItem="KNF-Jn-ZId" secondAttribute="centerY" id="RlF-bU-qUf"/>
+                                                <constraint firstItem="NYC-ui-LoU" firstAttribute="centerY" secondItem="KNF-Jn-ZId" secondAttribute="centerY" id="aTA-jV-GvQ"/>
+                                                <constraint firstItem="NYC-ui-LoU" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Sge-3a-yPP" secondAttribute="trailing" constant="8" id="e6r-rg-yUp"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="redCheckmarkImageView" destination="NYC-ui-LoU" id="geL-1e-qAf"/>
+                                            <outlet property="titleLabel" destination="Sge-3a-yPP" id="uTy-A6-1d8"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                            <tableViewSection headerTitle="Options" id="ceh-Fp-SYr">
+                                <cells>
+                                    <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" id="RIs-Oa-XXE" userLabel="Use cellular connection Table View Cell">
+                                        <rect key="frame" x="0.0" y="434.5" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" tableViewCell="RIs-Oa-XXE" id="dud-y8-IqA">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Use cellular connection" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MxN-Sr-OBF">
+                                                    <rect key="frame" x="16" y="12" width="188" height="20"/>
+                                                    <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="17"/>
+                                                    <color key="textColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="qdP-qy-Nz7">
+                                                    <rect key="frame" x="310" y="6.5" width="51" height="31"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="49" id="5rJ-2u-sbD"/>
+                                                    </constraints>
+                                                    <color key="onTintColor" red="0.95294117649999999" green="0.047058823530000002" blue="0.078431372550000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <connections>
+                                                        <action selector="useCellularConnectionSwitchValueChanged:" destination="0gq-O0-v8H" eventType="valueChanged" id="7mz-2X-xe2"/>
+                                                    </connections>
+                                                </switch>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="MxN-Sr-OBF" firstAttribute="centerY" secondItem="dud-y8-IqA" secondAttribute="centerY" id="GCf-7S-RDe"/>
+                                                <constraint firstItem="MxN-Sr-OBF" firstAttribute="leading" secondItem="dud-y8-IqA" secondAttribute="leadingMargin" id="VdU-Q7-9KU"/>
+                                                <constraint firstItem="qdP-qy-Nz7" firstAttribute="trailing" secondItem="dud-y8-IqA" secondAttribute="trailingMargin" id="WDS-Sh-J64"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="qdP-qy-Nz7" secondAttribute="trailing" id="fNW-ST-dt8"/>
+                                                <constraint firstItem="qdP-qy-Nz7" firstAttribute="centerY" secondItem="dud-y8-IqA" secondAttribute="centerY" id="iyS-Cu-5tx"/>
+                                                <constraint firstItem="qdP-qy-Nz7" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="MxN-Sr-OBF" secondAttribute="trailing" constant="8" id="kVn-x3-tbA"/>
+                                                <constraint firstItem="MxN-Sr-OBF" firstAttribute="leading" secondItem="dud-y8-IqA" secondAttribute="leadingMargin" id="uvb-Tr-qsa"/>
+                                            </constraints>
+                                            <variation key="default">
+                                                <mask key="constraints">
+                                                    <exclude reference="VdU-Q7-9KU"/>
+                                                    <exclude reference="WDS-Sh-J64"/>
+                                                </mask>
+                                            </variation>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" id="SFt-KB-vuw" userLabel="Use cellular for videos">
+                                        <rect key="frame" x="0.0" y="478.5" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" tableViewCell="SFt-KB-vuw" id="let-L3-LYT">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="DRf-un-B7C">
+                                                    <rect key="frame" x="310" y="6.5" width="51" height="31"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="49" id="gEd-05-ZMA"/>
+                                                    </constraints>
+                                                    <color key="onTintColor" red="0.95294117649999999" green="0.047058823530000002" blue="0.078431372550000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <connections>
+                                                        <action selector="useCellularConnectionForVideosSwitchValueChanged:" destination="0gq-O0-v8H" eventType="valueChanged" id="d4D-4y-Bg7"/>
+                                                    </connections>
+                                                </switch>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Use Mobile Data for Videos" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="O3a-lO-Oe6">
+                                                    <rect key="frame" x="16" y="12" width="218.5" height="20"/>
+                                                    <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="17"/>
+                                                    <color key="textColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="trailingMargin" secondItem="DRf-un-B7C" secondAttribute="trailing" id="1Vg-3H-CCm"/>
+                                                <constraint firstItem="O3a-lO-Oe6" firstAttribute="leading" secondItem="let-L3-LYT" secondAttribute="leadingMargin" id="SXA-7Q-JAR"/>
+                                                <constraint firstItem="DRf-un-B7C" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="O3a-lO-Oe6" secondAttribute="trailing" constant="8" id="Yhf-SF-nU8"/>
+                                                <constraint firstItem="O3a-lO-Oe6" firstAttribute="centerY" secondItem="let-L3-LYT" secondAttribute="centerY" id="e7Y-Jv-ZBk"/>
+                                                <constraint firstItem="DRf-un-B7C" firstAttribute="trailing" secondItem="let-L3-LYT" secondAttribute="trailingMargin" id="eMc-Jd-0gY"/>
+                                                <constraint firstItem="DRf-un-B7C" firstAttribute="centerY" secondItem="let-L3-LYT" secondAttribute="centerY" id="mLh-6L-xXI"/>
+                                                <constraint firstItem="O3a-lO-Oe6" firstAttribute="leading" secondItem="let-L3-LYT" secondAttribute="leadingMargin" id="sck-Mj-e9U"/>
+                                            </constraints>
+                                            <variation key="default">
+                                                <mask key="constraints">
+                                                    <exclude reference="SXA-7Q-JAR"/>
+                                                    <exclude reference="eMc-Jd-0gY"/>
+                                                </mask>
+                                            </variation>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" id="rVL-Aj-5pu" userLabel="Upload in background">
+                                        <rect key="frame" x="0.0" y="522.5" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" tableViewCell="rVL-Aj-5pu" id="j20-CG-gjb">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Upload in Background" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wmG-6X-jAS">
+                                                    <rect key="frame" x="16" y="12" width="177" height="20"/>
+                                                    <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="17"/>
+                                                    <color key="textColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="tAf-hK-tam">
+                                                    <rect key="frame" x="310" y="6.5" width="51" height="31"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="49" id="lhf-oL-Sxv"/>
+                                                    </constraints>
+                                                    <color key="onTintColor" red="0.95294117649999999" green="0.047058823530000002" blue="0.078431372550000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                </switch>
+                                                <button opaque="NO" contentMode="scaleToFill" placeholderIntrinsicWidth="49" placeholderIntrinsicHeight="31" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VOM-uP-22O">
+                                                    <rect key="frame" x="310" y="6.5" width="49" height="31"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <connections>
+                                                        <action selector="backgroundUploadButtonTouched:" destination="0gq-O0-v8H" eventType="touchUpInside" id="1f0-OZ-wrD"/>
+                                                    </connections>
+                                                </button>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="VOM-uP-22O" firstAttribute="height" secondItem="tAf-hK-tam" secondAttribute="height" id="L56-Y2-eeX"/>
+                                                <constraint firstItem="wmG-6X-jAS" firstAttribute="leading" secondItem="j20-CG-gjb" secondAttribute="leadingMargin" id="aAT-mS-vMV"/>
+                                                <constraint firstItem="tAf-hK-tam" firstAttribute="trailing" secondItem="j20-CG-gjb" secondAttribute="trailingMargin" id="aAh-Dn-usH"/>
+                                                <constraint firstItem="wmG-6X-jAS" firstAttribute="centerY" secondItem="j20-CG-gjb" secondAttribute="centerY" id="aUQ-S1-Fea"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="tAf-hK-tam" secondAttribute="trailing" id="ee2-Kq-Vj6"/>
+                                                <constraint firstItem="tAf-hK-tam" firstAttribute="centerY" secondItem="j20-CG-gjb" secondAttribute="centerY" id="eyE-0Q-W1G"/>
+                                                <constraint firstItem="tAf-hK-tam" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="wmG-6X-jAS" secondAttribute="trailing" constant="8" id="i3n-QQ-z1X"/>
+                                                <constraint firstItem="wmG-6X-jAS" firstAttribute="leading" secondItem="j20-CG-gjb" secondAttribute="leadingMargin" id="rBn-NY-ue2"/>
+                                                <constraint firstItem="VOM-uP-22O" firstAttribute="width" secondItem="tAf-hK-tam" secondAttribute="width" id="vxQ-Fp-z2I"/>
+                                                <constraint firstItem="VOM-uP-22O" firstAttribute="centerY" secondItem="tAf-hK-tam" secondAttribute="centerY" id="wk8-lI-dkC"/>
+                                                <constraint firstItem="VOM-uP-22O" firstAttribute="leading" secondItem="tAf-hK-tam" secondAttribute="leading" id="z6Q-IK-ZUz"/>
+                                            </constraints>
+                                            <variation key="default">
+                                                <mask key="constraints">
+                                                    <exclude reference="aAT-mS-vMV"/>
+                                                    <exclude reference="aAh-Dn-usH"/>
+                                                </mask>
+                                            </variation>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                        </sections>
+                        <connections>
+                            <outlet property="dataSource" destination="0gq-O0-v8H" id="AIS-Zn-5rR"/>
+                            <outlet property="delegate" destination="0gq-O0-v8H" id="PBG-Xb-2SK"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Camera Uploads" id="5Pz-vF-Sdj">
+                        <barButtonItem key="backBarButtonItem" title=" " id="GF2-Bo-f55"/>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="HEICLabel" destination="nNh-se-crj" id="sxX-3Y-qKm"/>
+                        <outlet property="HEICRedCheckmarkImageView" destination="9H6-hW-VPN" id="6TS-ac-TZn"/>
+                        <outlet property="JPGLabel" destination="Sge-3a-yPP" id="Gme-LX-u8e"/>
+                        <outlet property="JPGRedCheckmarkImageView" destination="NYC-ui-LoU" id="TiM-cf-dc7"/>
+                        <outlet property="backgroundUploadLabel" destination="wmG-6X-jAS" id="k3M-b1-lDQ"/>
+                        <outlet property="backgroundUploadSwitch" destination="tAf-hK-tam" id="DA9-N1-0sz"/>
+                        <outlet property="enableCameraUploadsLabel" destination="SAf-Xv-FaX" id="bVX-Gk-mJU"/>
+                        <outlet property="enableCameraUploadsSwitch" destination="QSG-mz-TTu" id="117-v2-ahs"/>
+                        <outlet property="uploadVideosInfoLabel" destination="9Lu-Gx-ccv" id="jPG-87-ibZ"/>
+                        <outlet property="uploadVideosInfoRightDetailLabel" destination="ZZc-KJ-13j" id="Ndb-BT-9cW"/>
+                        <outlet property="uploadVideosLabel" destination="oH3-dT-UG7" id="OmM-rY-Pw6"/>
+                        <outlet property="uploadVideosSwitch" destination="vGp-wO-5dQ" id="pgf-au-zbL"/>
+                        <outlet property="useCellularConnectionForVideosLabel" destination="O3a-lO-Oe6" id="yPY-i2-xN6"/>
+                        <outlet property="useCellularConnectionForVideosSwitch" destination="DRf-un-B7C" id="8XL-9g-B4k"/>
+                        <outlet property="useCellularConnectionLabel" destination="MxN-Sr-OBF" id="l7p-vV-M73"/>
+                        <outlet property="useCellularConnectionSwitch" destination="qdP-qy-Nz7" id="kCW-ye-Ujk"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="wNx-f8-7qI" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1330" y="-2765"/>
+        </scene>
+        <!--Video Uploads-->
+        <scene sceneID="gXj-kW-i81">
+            <objects>
+                <tableViewController storyboardIdentifier="VideoUploadsTableViewControllerID" id="j9S-W9-Mx2" customClass="VideoUploadsTableViewController" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="qLY-Gb-LjN">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" red="0.96078431369999995" green="0.96078431369999995" blue="0.96078431369999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="sectionIndexBackgroundColor" red="0.96078431369999995" green="0.96078431369999995" blue="0.96078431369999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <sections>
+                            <tableViewSection footerTitle="When enabled, videos will be uploaded." id="Kce-Wd-CBX">
+                                <cells>
+                                    <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" id="ZFb-a2-d4N" userLabel="Camera Uploads Table View Cell">
+                                        <rect key="frame" x="0.0" y="35" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" tableViewCell="ZFb-a2-d4N" id="8SD-Ld-f75">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Video Uploads" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0SH-jf-FQK">
+                                                    <rect key="frame" x="16" y="12" width="117" height="20"/>
+                                                    <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="17"/>
+                                                    <color key="textColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="gDZ-aQ-Ily">
+                                                    <rect key="frame" x="310" y="6.5" width="51" height="31"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="49" id="buh-FN-W28"/>
+                                                    </constraints>
+                                                    <color key="onTintColor" red="0.95294117649999999" green="0.047058823530000002" blue="0.078431372550000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <connections>
+                                                        <action selector="uploadVideosSwitchValueChanged:" destination="j9S-W9-Mx2" eventType="valueChanged" id="TKF-m9-7Aq"/>
+                                                    </connections>
+                                                </switch>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="gDZ-aQ-Ily" firstAttribute="centerY" secondItem="8SD-Ld-f75" secondAttribute="centerY" id="DAu-NF-6nr"/>
+                                                <constraint firstItem="0SH-jf-FQK" firstAttribute="centerY" secondItem="8SD-Ld-f75" secondAttribute="centerY" id="Dam-l1-VBB"/>
+                                                <constraint firstItem="0SH-jf-FQK" firstAttribute="leading" secondItem="8SD-Ld-f75" secondAttribute="leadingMargin" id="Ekn-hv-Lk1"/>
+                                                <constraint firstItem="0SH-jf-FQK" firstAttribute="leading" secondItem="8SD-Ld-f75" secondAttribute="leadingMargin" id="Nz5-mK-64H"/>
+                                                <constraint firstItem="gDZ-aQ-Ily" firstAttribute="trailing" secondItem="8SD-Ld-f75" secondAttribute="trailingMargin" id="UL9-LJ-fod"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="gDZ-aQ-Ily" secondAttribute="trailing" id="myW-2N-oac"/>
+                                                <constraint firstItem="gDZ-aQ-Ily" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="0SH-jf-FQK" secondAttribute="trailing" constant="8" id="ocG-x3-Wml"/>
+                                            </constraints>
+                                            <variation key="default">
+                                                <mask key="constraints">
+                                                    <exclude reference="Ekn-hv-Lk1"/>
+                                                    <exclude reference="UL9-LJ-fod"/>
+                                                </mask>
+                                            </variation>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                            <tableViewSection headerTitle="SAVE HEVC VIDEOS AS" footerTitle="We recommend H.264, as it is a more compatible format for videos." id="9uI-YS-FMx">
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="SelectableTableViewCellID" id="qPw-vu-lBQ" customClass="SelectableTableViewCell">
+                                        <rect key="frame" x="0.0" y="154.5" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" tableViewCell="qPw-vu-lBQ" id="9eU-G4-iqr">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="HEVC" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pNE-cR-dcI">
+                                                    <rect key="frame" x="16" y="12" width="46" height="20"/>
+                                                    <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="17"/>
+                                                    <color key="textColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="red_checkmark" translatesAutoresizingMaskIntoConstraints="NO" id="iEn-cx-SzU">
+                                                    <rect key="frame" x="337" y="11" width="22" height="22"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="22" id="BDu-ge-KCx"/>
+                                                        <constraint firstAttribute="width" constant="22" id="vZY-44-amW"/>
+                                                    </constraints>
+                                                </imageView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="trailingMargin" secondItem="iEn-cx-SzU" secondAttribute="trailing" id="2Bd-Zp-XbF"/>
+                                                <constraint firstItem="pNE-cR-dcI" firstAttribute="centerY" secondItem="9eU-G4-iqr" secondAttribute="centerY" id="MoR-Vn-73d"/>
+                                                <constraint firstItem="iEn-cx-SzU" firstAttribute="centerY" secondItem="9eU-G4-iqr" secondAttribute="centerY" id="X9x-cx-1ID"/>
+                                                <constraint firstItem="iEn-cx-SzU" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="pNE-cR-dcI" secondAttribute="trailing" constant="8" id="hEL-uu-jbN"/>
+                                                <constraint firstItem="pNE-cR-dcI" firstAttribute="leading" secondItem="9eU-G4-iqr" secondAttribute="leadingMargin" id="sfe-Bp-SSp"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="redCheckmarkImageView" destination="iEn-cx-SzU" id="yXa-5p-11j"/>
+                                            <outlet property="titleLabel" destination="pNE-cR-dcI" id="xBL-MX-RZc"/>
+                                        </connections>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="SelectableTableViewCellID" id="1BI-1D-0bQ" customClass="SelectableTableViewCell">
+                                        <rect key="frame" x="0.0" y="198.5" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" tableViewCell="1BI-1D-0bQ" id="rrP-8k-nnm">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="H.264 (Recommended)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ndC-eu-p6i">
+                                                    <rect key="frame" x="16" y="12" width="186.5" height="20"/>
+                                                    <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="17"/>
+                                                    <color key="textColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="red_checkmark" translatesAutoresizingMaskIntoConstraints="NO" id="73G-TG-n8A">
+                                                    <rect key="frame" x="337" y="11" width="22" height="22"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="22" id="bbj-Ya-hgv"/>
+                                                        <constraint firstAttribute="height" constant="22" id="c6z-98-Z28"/>
+                                                    </constraints>
+                                                </imageView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="ndC-eu-p6i" firstAttribute="leading" secondItem="rrP-8k-nnm" secondAttribute="leadingMargin" id="2tu-nT-tsL"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="73G-TG-n8A" secondAttribute="trailing" id="Daa-b6-jgv"/>
+                                                <constraint firstItem="ndC-eu-p6i" firstAttribute="centerY" secondItem="rrP-8k-nnm" secondAttribute="centerY" id="QeS-wj-2nH"/>
+                                                <constraint firstItem="73G-TG-n8A" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="ndC-eu-p6i" secondAttribute="trailing" constant="8" id="ca3-u5-rAX"/>
+                                                <constraint firstItem="73G-TG-n8A" firstAttribute="centerY" secondItem="rrP-8k-nnm" secondAttribute="centerY" id="jct-Pk-xvl"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="redCheckmarkImageView" destination="73G-TG-n8A" id="iq0-oZ-Uah"/>
+                                            <outlet property="titleLabel" destination="ndC-eu-p6i" id="4lC-zZ-8KP"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                            <tableViewSection footerTitle="Compression quality when MEGA transcode HEVC videos to H.264 codec for camera upload" id="1t6-Ww-cjX">
+                                <cells>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="Ia5-rl-AZF" detailTextLabel="mie-wj-ddk" style="IBUITableViewCellStyleValue1" id="q2r-pO-aqa" userLabel="Video quality Table View Cell">
+                                        <rect key="frame" x="0.0" y="298.5" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="q2r-pO-aqa" id="AEm-ts-ZLo">
+                                            <rect key="frame" x="0.0" y="0.0" width="341" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Video quality" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Ia5-rl-AZF">
+                                                    <rect key="frame" x="16" y="12" width="98" height="20"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="17"/>
+                                                    <color key="textColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Medium" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="mie-wj-ddk">
+                                                    <rect key="frame" x="278" y="12" width="62" height="20"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="17"/>
+                                                    <color key="textColor" red="0.60000002379999995" green="0.60000002379999995" blue="0.60000002379999995" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="VCg-68-Gyt" kind="show" id="w6M-f2-tRN"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                        </sections>
+                        <connections>
+                            <outlet property="dataSource" destination="j9S-W9-Mx2" id="ywc-BS-7PH"/>
+                            <outlet property="delegate" destination="j9S-W9-Mx2" id="rPy-HQ-MB0"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Video Uploads" id="h22-hu-je4">
+                        <barButtonItem key="backBarButtonItem" title=" " id="vAR-bh-0Si"/>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="H264Label" destination="ndC-eu-p6i" id="W8C-dA-ij0"/>
+                        <outlet property="H264RedCheckmarkImageView" destination="73G-TG-n8A" id="Ini-A0-ROY"/>
+                        <outlet property="HEVCLabel" destination="pNE-cR-dcI" id="0rZ-hd-cuk"/>
+                        <outlet property="HEVCRedCheckmarkImageView" destination="iEn-cx-SzU" id="fep-Zv-chM"/>
+                        <outlet property="uploadVideosLabel" destination="0SH-jf-FQK" id="IH3-Dz-Fr1"/>
+                        <outlet property="uploadVideosSwitch" destination="gDZ-aQ-Ily" id="zP9-vj-0hp"/>
+                        <outlet property="videoQualityLabel" destination="Ia5-rl-AZF" id="Obx-We-pav"/>
+                        <outlet property="videoQualityRightDetailLabel" destination="mie-wj-ddk" id="Xod-pp-c6Q"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="iPk-Zi-1Dl" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-583" y="-2766"/>
+        </scene>
+        <!--H.264 video quality-->
+        <scene sceneID="tDx-1P-Nze">
+            <objects>
+                <tableViewController id="VCg-68-Gyt" userLabel="H.264 video quality" customClass="VideoUploadsQualityTableViewController" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="IR4-PG-v4a">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" red="0.96078431372549022" green="0.96078431372549022" blue="0.96078431372549022" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="separatorColor" red="0.78431373829999995" green="0.78039217000000005" blue="0.80000001190000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="sectionIndexBackgroundColor" red="0.96078431369999995" green="0.96078431369999995" blue="0.96078431369999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <sections>
+                            <tableViewSection id="l6Z-ze-iaq">
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="SelectableTableViewCellID" id="WPZ-at-RBK" customClass="SelectableTableViewCell">
+                                        <rect key="frame" x="0.0" y="35" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" tableViewCell="WPZ-at-RBK" id="Lmh-zv-jKh">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Low" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kAQ-J4-eJp">
+                                                    <rect key="frame" x="16" y="12" width="32.5" height="20"/>
+                                                    <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="17"/>
+                                                    <color key="textColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="red_checkmark" translatesAutoresizingMaskIntoConstraints="NO" id="bu0-Y3-fRS">
+                                                    <rect key="frame" x="337" y="11" width="22" height="22"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="22" id="MMk-Vo-tm0"/>
+                                                        <constraint firstAttribute="height" constant="22" id="Ogd-ZK-l1O"/>
+                                                    </constraints>
+                                                </imageView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="kAQ-J4-eJp" firstAttribute="centerY" secondItem="Lmh-zv-jKh" secondAttribute="centerY" id="Bd1-qg-9MP"/>
+                                                <constraint firstItem="bu0-Y3-fRS" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="kAQ-J4-eJp" secondAttribute="trailing" constant="8" id="U6a-n8-eQe"/>
+                                                <constraint firstItem="kAQ-J4-eJp" firstAttribute="leading" secondItem="Lmh-zv-jKh" secondAttribute="leadingMargin" id="ZIk-5I-85x"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="bu0-Y3-fRS" secondAttribute="trailing" id="f7v-8B-nJh"/>
+                                                <constraint firstItem="bu0-Y3-fRS" firstAttribute="centerY" secondItem="Lmh-zv-jKh" secondAttribute="centerY" id="u8x-SC-vIi"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="redCheckmarkImageView" destination="bu0-Y3-fRS" id="i9V-Gl-M8Z"/>
+                                        </connections>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="SelectableTableViewCellID" id="pQR-0H-OuW" customClass="SelectableTableViewCell">
+                                        <rect key="frame" x="0.0" y="79" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" tableViewCell="pQR-0H-OuW" id="yYo-fn-23b">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Medium" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YfO-hG-uYB">
+                                                    <rect key="frame" x="16" y="12" width="64" height="20"/>
+                                                    <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="17"/>
+                                                    <color key="textColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="red_checkmark" translatesAutoresizingMaskIntoConstraints="NO" id="QGV-Nf-lsu">
+                                                    <rect key="frame" x="337" y="11" width="22" height="22"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="22" id="5nj-JV-sCn"/>
+                                                        <constraint firstAttribute="width" constant="22" id="e1d-VB-8iK"/>
+                                                    </constraints>
+                                                </imageView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="YfO-hG-uYB" firstAttribute="leading" secondItem="yYo-fn-23b" secondAttribute="leadingMargin" id="4NE-BC-YfM"/>
+                                                <constraint firstItem="QGV-Nf-lsu" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="YfO-hG-uYB" secondAttribute="trailing" constant="8" id="DtM-TT-XcG"/>
+                                                <constraint firstItem="YfO-hG-uYB" firstAttribute="centerY" secondItem="yYo-fn-23b" secondAttribute="centerY" id="fdr-lx-fBB"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="QGV-Nf-lsu" secondAttribute="trailing" id="mOW-gz-bAq"/>
+                                                <constraint firstItem="QGV-Nf-lsu" firstAttribute="centerY" secondItem="yYo-fn-23b" secondAttribute="centerY" id="pRA-ev-pCb"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="redCheckmarkImageView" destination="QGV-Nf-lsu" id="MnL-AZ-qiN"/>
+                                        </connections>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="SelectableTableViewCellID" id="OTe-4H-H61" customClass="SelectableTableViewCell">
+                                        <rect key="frame" x="0.0" y="123" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" tableViewCell="OTe-4H-H61" id="ps4-J8-k9D">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="High" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QM7-kt-e7U">
+                                                    <rect key="frame" x="16" y="12" width="37.5" height="20"/>
+                                                    <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="17"/>
+                                                    <color key="textColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="red_checkmark" translatesAutoresizingMaskIntoConstraints="NO" id="hkz-Te-uGF">
+                                                    <rect key="frame" x="337" y="11" width="22" height="22"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="22" id="KlX-iK-AAb"/>
+                                                        <constraint firstAttribute="width" constant="22" id="j0H-Us-GVl"/>
+                                                    </constraints>
+                                                </imageView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="hkz-Te-uGF" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="QM7-kt-e7U" secondAttribute="trailing" constant="8" id="3l7-sp-vgR"/>
+                                                <constraint firstItem="QM7-kt-e7U" firstAttribute="centerY" secondItem="ps4-J8-k9D" secondAttribute="centerY" id="auc-Ks-dz5"/>
+                                                <constraint firstItem="QM7-kt-e7U" firstAttribute="leading" secondItem="ps4-J8-k9D" secondAttribute="leadingMargin" id="cuH-Vp-nsw"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="hkz-Te-uGF" secondAttribute="trailing" id="lJm-Bz-AQB"/>
+                                                <constraint firstItem="hkz-Te-uGF" firstAttribute="centerY" secondItem="ps4-J8-k9D" secondAttribute="centerY" id="oQG-rE-lCg"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="redCheckmarkImageView" destination="hkz-Te-uGF" id="f8W-Ur-eft"/>
+                                        </connections>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="SelectableTableViewCellID" id="ozW-xz-Pvw" customClass="SelectableTableViewCell">
+                                        <rect key="frame" x="0.0" y="167" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" tableViewCell="ozW-xz-Pvw" id="dTR-v7-xsx">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Original" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1sR-a9-VNk">
+                                                    <rect key="frame" x="16" y="12" width="62.5" height="20"/>
+                                                    <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="17"/>
+                                                    <color key="textColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="red_checkmark" translatesAutoresizingMaskIntoConstraints="NO" id="zkc-dy-OaH">
+                                                    <rect key="frame" x="337" y="11" width="22" height="22"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="22" id="KgP-Yp-bsX"/>
+                                                        <constraint firstAttribute="height" constant="22" id="NTr-db-iL8"/>
+                                                    </constraints>
+                                                </imageView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="1sR-a9-VNk" firstAttribute="leading" secondItem="dTR-v7-xsx" secondAttribute="leadingMargin" id="B3E-gt-MCY"/>
+                                                <constraint firstItem="1sR-a9-VNk" firstAttribute="centerY" secondItem="dTR-v7-xsx" secondAttribute="centerY" id="MxR-dL-dR7"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="zkc-dy-OaH" secondAttribute="trailing" id="Wh2-3f-VF9"/>
+                                                <constraint firstItem="zkc-dy-OaH" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="1sR-a9-VNk" secondAttribute="trailing" constant="8" id="Y0Q-NI-fUU"/>
+                                                <constraint firstItem="zkc-dy-OaH" firstAttribute="centerY" secondItem="dTR-v7-xsx" secondAttribute="centerY" id="qaI-hD-NcM"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="redCheckmarkImageView" destination="zkc-dy-OaH" id="49x-ZL-KfJ"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                        </sections>
+                        <connections>
+                            <outlet property="dataSource" destination="VCg-68-Gyt" id="467-NE-zhm"/>
+                            <outlet property="delegate" destination="VCg-68-Gyt" id="JoW-CY-tm2"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Video quality" id="S3O-7P-VBb">
+                        <barButtonItem key="backBarButtonItem" title=" " id="YYX-Wk-T8U"/>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="highLabel" destination="QM7-kt-e7U" id="d3m-t6-Q0u"/>
+                        <outlet property="lowLabel" destination="kAQ-J4-eJp" id="SSX-Mp-FqW"/>
+                        <outlet property="mediumLabel" destination="YfO-hG-uYB" id="w66-UV-c3L"/>
+                        <outlet property="originalLabel" destination="1sR-a9-VNk" id="Qp7-Ns-mhN"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="NHs-QT-mhc" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="166" y="-2767"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="red_checkmark" width="22" height="22"/>
+    </resources>
+</document>
