@@ -185,7 +185,11 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     NSString *identifier;
     if (indexPath.row == 0) {
-        identifier = @"MyAccountHallUsedStorageTableViewCellID";
+        if (MEGASdkManager.sharedMEGASdk.isBusinessAccount) {
+            identifier = @"MyAccountHallBusinessUsageTableViewCellID";
+        } else {
+            identifier = @"MyAccountHallUsedStorageTableViewCellID";
+        }
     } else if (indexPath.row == 3) {
         identifier = @"MyAccountHallWithSubtitleTableViewCellID";
     } else {
@@ -199,20 +203,31 @@
     
     switch (indexPath.row) {
         case 0: { // Used Storage
-            cell.sectionLabel.text = AMLocalizedString(@"usedStorage", @"Title of the Used Storage section");
-            
-            if ([[MEGASdkManager sharedMEGASdk] mnz_accountDetails]) {
-                MEGAAccountDetails *accountDetails = [[MEGASdkManager sharedMEGASdk] mnz_accountDetails];
-                cell.usedLabel.text = [Helper memoryStyleStringFromByteCount:accountDetails.storageUsed.longLongValue];
-                NSNumber *number = [NSNumber numberWithFloat:((accountDetails.storageUsed.floatValue / accountDetails.storageMax.floatValue) * 100)];
-                NSString *percentageString = [self.numberFormatter stringFromNumber:number];
-                NSString *ofString = [NSString stringWithFormat:AMLocalizedString(@"of %@", @"Sentece showed under the used space percentage to complete the info with the maximum storage."), [Helper memoryStyleStringFromByteCount:accountDetails.storageMax.longLongValue]];
-                cell.usedPercentageLabel.text = [NSString stringWithFormat:@"%@ %% %@", percentageString, ofString];
-                cell.usedProgressView.progress = number.floatValue / 100;
+            if (MEGASdkManager.sharedMEGASdk.isBusinessAccount) {
+                cell.sectionLabel.text = AMLocalizedString(@"usage", nil);
+                cell.storageLabel.text = AMLocalizedString(@"productSpace", nil);
+                cell.transferLabel.text = AMLocalizedString(@"Transfer", nil);
+                MEGAAccountDetails *accountDetails = MEGASdkManager.sharedMEGASdk.mnz_accountDetails;
+                if (accountDetails) {
+                    cell.storageUsedLabel.text = [Helper memoryStyleStringFromByteCount:accountDetails.storageUsed.longLongValue];
+                    cell.transferUsedLabel.text = [Helper memoryStyleStringFromByteCount:accountDetails.transferOwnUsed.longLongValue];
+                } else {
+                    cell.storageUsedLabel.text = @"";
+                    cell.transferUsedLabel.text = @"";
+                }
             } else {
-                cell.usedLabel.text = @"";
-                cell.usedPercentageLabel.text = @"";
-                cell.usedProgressView.progress = 0;
+                cell.sectionLabel.text = AMLocalizedString(@"usedStorage", @"Title of the Used Storage section");
+                
+                if ([[MEGASdkManager sharedMEGASdk] mnz_accountDetails]) {
+                    MEGAAccountDetails *accountDetails = [[MEGASdkManager sharedMEGASdk] mnz_accountDetails];
+                    cell.usedLabel.text = [Helper memoryStyleStringFromByteCount:accountDetails.storageUsed.longLongValue];
+                    NSNumber *number = [NSNumber numberWithFloat:((accountDetails.storageUsed.floatValue / accountDetails.storageMax.floatValue) * 100)];
+                    NSString *percentageString = [self.numberFormatter stringFromNumber:number];
+                    NSString *ofString = [NSString stringWithFormat:AMLocalizedString(@"of %@", @"Sentece showed under the used space percentage to complete the info with the maximum storage."), [Helper memoryStyleStringFromByteCount:accountDetails.storageMax.longLongValue]];
+                    cell.usedPercentageLabel.text = [NSString stringWithFormat:@"%@ %% %@", percentageString, ofString];
+                } else {
+                    cell.usedLabel.text = @"";
+                    cell.usedPercentageLabel.text = @"";            }
             }
             break;
         }
@@ -297,8 +312,10 @@
     CGFloat heightForRow;
     if (indexPath.row == 3 && ![[MEGASdkManager sharedMEGASdk] isAchievementsEnabled]) {
         heightForRow = 0.0f;
+    } else if (indexPath.row == 0 && MEGASdkManager.sharedMEGASdk.isBusinessAccount) {
+        heightForRow = 94;
     } else {
-        heightForRow = 60.0f;
+        heightForRow = 60;
     }
     
     return heightForRow;
