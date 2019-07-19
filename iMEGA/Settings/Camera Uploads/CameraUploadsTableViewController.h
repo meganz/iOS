@@ -2,4 +2,6 @@
 
 @interface CameraUploadsTableViewController : UITableViewController
 
+@property (nonatomic) BOOL isPresentedModally;
+
 @end

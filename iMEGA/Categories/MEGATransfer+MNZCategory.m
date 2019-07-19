@@ -1,9 +1,6 @@
 
 #import "MEGATransfer+MNZCategory.h"
-
 #import <Photos/Photos.h>
-
-#import "CameraUploads.h"
 #import "Helper.h"
 #import "MEGANode+MNZCategory.h"
 #import "MEGASdkManager.h"
@@ -58,7 +55,7 @@
             case MEGATransferStateComplete: {
                 MEGANode *node = [[MEGASdkManager sharedMEGASdk] nodeForHandle:self.nodeHandle];
                 NSString *thumbsDirectory = [Helper pathForSharedSandboxCacheDirectory:@"thumbnailsV3"];
-                NSString *previewsDirectory = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"previewsV3"];
+                NSString *previewsDirectory = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES).firstObject stringByAppendingPathComponent:@"previewsV3"];
                 
                 [[NSFileManager defaultManager] moveItemAtPath:thumbnailPath toPath:[thumbsDirectory stringByAppendingPathComponent:node.base64Handle] error:nil];
                 [[NSFileManager defaultManager] moveItemAtPath:previewPath toPath:[previewsDirectory stringByAppendingPathComponent:node.base64Handle] error:nil];
@@ -112,28 +109,6 @@
             
             if ([appDataType isEqualToString:@"setCoordinates"]) {
                 [self mnz_setCoordinates:appDataComponent];
-            }
-        }
-    }
-}
-
-- (void)mnz_cancelPendingCUTransfer {
-    if ([self.appData containsString:@"CU"]) {
-        if ([CameraUploads syncManager].isCameraUploadsEnabled) {
-            if (![CameraUploads syncManager].isUseCellularConnectionEnabled && [MEGAReachabilityManager isReachableViaWWAN]) {
-                [[MEGASdkManager sharedMEGASdk] cancelTransfer:self];
-            }
-        } else {
-            [[MEGASdkManager sharedMEGASdk] cancelTransfer:self];
-        }
-    }
-}
-
-- (void)mnz_cancelPendingCUVideoTransfer {
-    if ([self.appData containsString:@"CU"]) {
-        if ([CameraUploads syncManager].isCameraUploadsEnabled) {
-            if (self.fileName.mnz_isVideoPathExtension) {
-                [[MEGASdkManager sharedMEGASdk] cancelTransfer:self];
             }
         }
     }
@@ -210,7 +185,7 @@
     NSString *appDataSecondComponentComponentsString = [appDataComponentComponentsArray objectAtIndex:1];
     NSArray *setCoordinatesComponentsArray = [appDataSecondComponentComponentsString componentsSeparatedByString:@"&"];
     if (setCoordinatesComponentsArray.count == 2) {
-        NSString *latitude = [setCoordinatesComponentsArray objectAtIndex:0];
+        NSString *latitude = setCoordinatesComponentsArray.firstObject;
         NSString *longitude = [setCoordinatesComponentsArray objectAtIndex:1];
         if (latitude && longitude) {
             MEGANode *node = [[MEGASdkManager sharedMEGASdk] nodeForHandle:self.nodeHandle];

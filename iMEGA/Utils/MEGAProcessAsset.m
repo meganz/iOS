@@ -10,7 +10,7 @@
 
 #import "SDAVAssetExportSession.h"
 #import "UIApplication+MNZCategory.h"
-
+#import "PHAsset+CameraUpload.h"
 #import "NSString+MNZCategory.h"
 
 static void *ProcessAssetProgressContext = &ProcessAssetProgressContext;
@@ -68,7 +68,7 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
 }
 
 
-- (instancetype)initToShareThroughChatWithAsset:(PHAsset *)asset filePath:(void (^)(NSString *filePath))filePath node:(void(^)(MEGANode *node))node error:(void (^)(NSError *error))error {
+- (instancetype)initToShareThroughChatWithAsset:(PHAsset *)asset parentNode:(MEGANode *)parentNode filePath:(void (^)(NSString *filePath))filePath node:(void(^)(MEGANode *node))node error:(void (^)(NSError *error))error {
     self = [super init];
     
     if (self) {
@@ -78,14 +78,14 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
         _error = error;
         _retries = 0;
         _shareThroughChat = YES;
-        _parentNode = [[MEGASdkManager sharedMEGASdk] nodeForPath:@"/My chat files"];
+        _parentNode = parentNode;
         _cameraUploads = NO;
     }
     
     return self;
 }
 
-- (instancetype)initToShareThroughChatWithAssets:(NSArray<PHAsset *> *)assets filePaths:(void (^)(NSArray<NSString *> *))filePaths nodes:(void (^)(NSArray<MEGANode *> *))nodes errors:(void (^)(NSArray<NSError *> *))errors {
+- (instancetype)initToShareThroughChatWithAssets:(NSArray<PHAsset *> *)assets parentNode:(MEGANode *)parentNode filePaths:(void (^)(NSArray<NSString *> *))filePaths nodes:(void (^)(NSArray<MEGANode *> *))nodes errors:(void (^)(NSArray<NSError *> *))errors {
     self = [super init];
     
     if (self) {
@@ -99,7 +99,7 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
         _nodesArray = [[NSMutableArray alloc] init];
         _errorsArray = [[NSMutableArray alloc] init];
         _shareThroughChat = YES;
-        _parentNode = [[MEGASdkManager sharedMEGASdk] nodeForPath:@"/My chat files"];
+        _parentNode = parentNode;
         _cameraUploads = NO;
         for (PHAsset *asset in assets) {
             if (asset.mediaType == PHAssetMediaTypeVideo) {
@@ -112,7 +112,7 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
     
 }
 
-- (instancetype)initToShareThroughChatWithVideoURL:(NSURL *)videoURL filePath:(void (^)(NSString *))filePath node:(void (^)(MEGANode *))node error:(void (^)(NSError *))error {
+- (instancetype)initToShareThroughChatWithVideoURL:(NSURL *)videoURL parentNode:(MEGANode *)parentNode filePath:(void (^)(NSString *))filePath node:(void (^)(MEGANode *))node error:(void (^)(NSError *))error {
     self = [super init];
     
     if (self) {
@@ -122,7 +122,7 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
         _error = error;
         _retries = 0;
         _shareThroughChat = YES;
-        _parentNode = [[MEGASdkManager sharedMEGASdk] nodeForPath:@"/My chat files"];
+        _parentNode = parentNode;
         _cameraUploads = NO;
         _totalDuration = CMTimeGetSeconds(self.avAsset.duration);
     }
@@ -284,7 +284,7 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
                          videoQuality = ChatVideoUploadQualityMedium;
                      }
                      
-                     AVAssetTrack *videoTrack = [[avAsset tracksWithMediaType:AVMediaTypeVideo] objectAtIndex:0];
+                     AVAssetTrack *videoTrack = [avAsset tracksWithMediaType:AVMediaTypeVideo].firstObject;
                      
                      BOOL shouldEncodeVideo = [self shouldEncodeVideoTrack:videoTrack videoQuality:videoQuality extension:filePath.pathExtension];
                      
@@ -405,7 +405,7 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
             videoQuality = ChatVideoUploadQualityMedium;
         }
         
-        AVAssetTrack *videoTrack = [[self.avAsset tracksWithMediaType:AVMediaTypeVideo] objectAtIndex:0];
+        AVAssetTrack *videoTrack = [self.avAsset tracksWithMediaType:AVMediaTypeVideo].firstObject;
         
         BOOL shouldEncodeVideo = [self shouldEncodeVideoTrack:videoTrack videoQuality:videoQuality extension:avassetUrl.pathExtension];
         
@@ -520,32 +520,7 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
         return @"jpg";
     }
     
-    NSString *extension;
-    
-    NSURL *url = [info objectForKey:@"PHImageFileURLKey"];
-    if (url) {
-        extension = url.path.pathExtension;
-    } else {
-        NSString *imageFileSandbox = [info objectForKey:@"PHImageFileSandboxExtensionTokenKey"];
-        extension = imageFileSandbox.pathExtension;
-    }
-    
-    if (!extension) {
-        switch (asset.mediaType) {
-            case PHAssetMediaTypeImage:
-                extension = @"jpg";
-                break;
-                
-            case PHAssetMediaTypeVideo:
-                extension = @"mov";
-                break;
-                
-            default:
-                break;
-        }
-    }
-    
-    return extension.lowercaseString;
+    return [asset mnz_fileExtensionFromAssetInfo:info];
 }
 
 - (void)proccessImageData:(NSData *)imageData asset:(PHAsset *)asset withInfo:(NSDictionary *)info {
@@ -700,7 +675,7 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
     }
     [NSFileManager.defaultManager mnz_removeItemAtPath:filePath];
     
-    AVAssetTrack *videoTrack = [[avAsset tracksWithMediaType:AVMediaTypeVideo] objectAtIndex:0];
+    AVAssetTrack *videoTrack = [avAsset tracksWithMediaType:AVMediaTypeVideo].firstObject;
     
     CGSize videoSize = [self sizeByVideoTrack:videoTrack videoQuality:videoQuality];
     float bps = [self bpsByVideoTrack:videoTrack videoQuality:videoQuality];
@@ -825,7 +800,7 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
 
 /* The real duration for AVAsset when it is kind of class AVComposition */
 - (float)realDurationForAVAsset:(AVAsset *)asset {
-    AVAssetTrack *videoTrack = [[asset tracksWithMediaType:AVMediaTypeVideo] objectAtIndex:0];
+    AVAssetTrack *videoTrack = [asset tracksWithMediaType:AVMediaTypeVideo].firstObject;
     AVAssetTrackSegment *segment = videoTrack.segments[videoTrack.segments.count - 1];
     float start = CMTimeGetSeconds(segment.timeMapping.target.start);
     float duration = CMTimeGetSeconds(segment.timeMapping.target.duration);

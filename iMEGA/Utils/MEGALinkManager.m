@@ -264,7 +264,7 @@ static NSString *nodeToPresentBase64Handle;
             
             [theContentIsNotAvailableAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"logoutLabel", @"Title of the button which logs out from your account.") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
                 NSError *error;
-                NSArray *directoryContent = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] error:&error];
+                NSArray *directoryContent = [NSFileManager.defaultManager contentsOfDirectoryAtPath:NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject error:&error];
                 if (error) {
                     MEGALogError(@"Contents of directory at path failed with error: %@", error);
                 }
@@ -508,7 +508,7 @@ static NSString *nodeToPresentBase64Handle;
         MEGALinkManager.linkURL = [NSURL URLWithString:url];
         [MEGALinkManager processLinkURL:[NSURL URLWithString:url]];
     } onError:^(MEGARequest *request) {
-        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"decryptionKeyNotValid", nil) message:nil preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"To access this link, you will need its password.", @"This dialog message is used on the Password Decrypt dialog. The link is a password protected link so the user needs to enter the password to decrypt the link.") message:nil preferredStyle:UIAlertControllerStyleAlert];
         [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
             [MEGALinkManager showEncryptedLinkAlert:request.link];
         }]];
@@ -516,9 +516,9 @@ static NSString *nodeToPresentBase64Handle;
         [UIApplication.mnz_presentingViewController presentViewController:alertController animated:YES completion:nil];
     }];
     
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"decryptionKeyAlertTitle", nil) message:AMLocalizedString(@"decryptionKeyAlertMessage", nil) preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"To access this link, you will need its password.", @"This dialog message is used on the Password Decrypt dialog. The link is a password protected link so the user needs to enter the password to decrypt the link.") message:AMLocalizedString(@"If you do not have the password, contact the creator of the link.", @"This dialog message is used on the Password Decrypt dialog as an instruction for the user.") preferredStyle:UIAlertControllerStyleAlert];
     [alertController addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
-        textField.placeholder = AMLocalizedString(@"decryptionKey", nil);
+        textField.placeholder = AMLocalizedString(@"Enter the password", @"This placeholder text is used on the Password Decrypt dialog as an instruction for the user.");
         [textField addTarget:self action:@selector(alertTextFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
         textField.shouldReturnCompletion = ^BOOL(UITextField *textField) {
             return !textField.text.mnz_isEmpty;
@@ -551,7 +551,7 @@ static NSString *nodeToPresentBase64Handle;
         } else {
             MEGANode *node = request.publicNode;
             if (node.name.mnz_isImagePathExtension || node.name.mnz_isVideoPathExtension) {
-                NSString *previewsDirectory = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"previewsV3"];
+                NSString *previewsDirectory = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES).firstObject stringByAppendingPathComponent:@"previewsV3"];
                 if (![[NSFileManager defaultManager] fileExistsAtPath:previewsDirectory]) {
                     NSError *nserror;
                     if (![[NSFileManager defaultManager] createDirectoryAtPath:previewsDirectory withIntermediateDirectories:NO attributes:nil error:&nserror]) {

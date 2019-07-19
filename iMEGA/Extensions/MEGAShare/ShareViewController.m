@@ -15,16 +15,13 @@
 #import "MEGALogger.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGARequestDelegate.h"
-#import "MEGASdk.h"
 #import "MEGASdkManager.h"
+#import "MEGASdk+MNZCategory.h"
 #import "MEGATransferDelegate.h"
 #import "NSFileManager+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 #import "ShareAttachment.h"
 #import "ShareFilesDestinationTableViewController.h"
-
-#define kAppKey @"EVtjzb7R"
-#define kUserAgent @"MEGAiOS"
 
 #define MNZ_ANIMATION_TIME 0.35
 
@@ -86,10 +83,6 @@
     self.passcodePresented = NO;
     self.passcodeToBePresented = NO;
     self.semaphore = dispatch_semaphore_create(0);
-    
-    [MEGASdkManager setAppKey:kAppKey];
-    NSString *userAgent = [NSString stringWithFormat:@"%@/%@", kUserAgent, [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"]];
-    [MEGASdkManager setUserAgent:userAgent];
     [self languageCompatibility];
     
 #ifdef DEBUG
@@ -275,7 +268,7 @@
 - (void)setSystemLanguage {
     NSDictionary *globalDomain = [[NSUserDefaults standardUserDefaults] persistentDomainForName:@"NSGlobalDomain"];
     NSArray *languages = [globalDomain objectForKey:@"AppleLanguages"];
-    NSString *systemLanguageID = [languages objectAtIndex:0];
+    NSString *systemLanguageID = languages.firstObject;
     
     if ([Helper isLanguageSupported:systemLanguageID]) {
         [[LocalizationSystem sharedLocalSystem] setLanguage:systemLanguageID];
@@ -539,7 +532,7 @@ void uncaughtExceptionHandler(NSException *exception) {
         return;
     }
     
-    NSExtensionItem *content = self.extensionContext.inputItems[0];
+    NSExtensionItem *content = self.extensionContext.inputItems.firstObject;
     self.totalAssets = self.pendingAssets = content.attachments.count;
     self.progress = 0;
     self.unsupportedAssets = self.alreadyInDestinationAssets = 0;
@@ -937,16 +930,9 @@ void uncaughtExceptionHandler(NSException *exception) {
     self.chats = chats;
     self.users = users;
     
-    MEGANode *myChatFilesNode = [[MEGASdkManager sharedMEGASdk] nodeForPath:@"/My chat files"];
-    if (myChatFilesNode) {
+    [MEGASdkManager.sharedMEGASdk getMyChatFilesFolderWithCompletion:^(MEGANode *myChatFilesNode) {
         [self performUploadToParentNode:myChatFilesNode];
-    } else {
-        MEGACreateFolderRequestDelegate *createFolderRequestDelegate = [[MEGACreateFolderRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
-            MEGANode *myChatFilesNode = [[MEGASdkManager sharedMEGASdk] nodeForHandle:request.nodeHandle];
-            [self performUploadToParentNode:myChatFilesNode];
-        }];
-        [[MEGASdkManager sharedMEGASdk] createFolderWithName:@"My chat files" parent:[[MEGASdkManager sharedMEGASdk] rootNode] delegate:createFolderRequestDelegate];
-    }
+    }];
 }
 
 #pragma mark - MEGARequestDelegate

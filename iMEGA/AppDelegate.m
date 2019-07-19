@@ -11,7 +11,6 @@
 #import "SAMKeychain.h"
 #import "SVProgressHUD.h"
 
-#import "CameraUploads.h"
 #import "Helper.h"
 #import "DevicePermissionsHelper.h"
 #import "MEGA-Swift.h"
@@ -57,9 +56,10 @@
 #import "MEGALocalNotificationManager.h"
 #import "MEGALoginRequestDelegate.h"
 #import "MEGAShowPasswordReminderRequestDelegate.h"
-
-#define kUserAgent @"MEGAiOS"
-#define kAppKey @"EVtjzb7R"
+#import "CameraUploadManager+Settings.h"
+#import "TransferSessionManager.h"
+#import "MEGAConstants.h"
+#import "BackgroundRefreshPerformer.h"
 
 #define kFirstRun @"FirstRun"
 
@@ -102,12 +102,14 @@
 @property (nonatomic, getter=wasAppSuspended) BOOL appSuspended;
 @property (nonatomic, getter=isUpgradeVCPresented) BOOL upgradeVCPresented;
 
+@property (strong, nonatomic) dispatch_queue_t indexSerialQueue;
+@property (strong, nonatomic) BackgroundRefreshPerformer *backgroundRefreshPerformer;
+
 @end
 
 @implementation AppDelegate
 
-
-- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {    
+- (BOOL)application:(UIApplication *)application willFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     NSSetUncaughtExceptionHandler(&uncaughtExceptionHandler);
 #ifdef DEBUG
     [MEGASdk setLogLevel:MEGALogLevelMax];
@@ -118,14 +120,26 @@
     
     [MEGASdk setLogToConsole:YES];
     
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"logging"]) {
+        [[MEGALogger sharedLogger] startLogging];
+    }
+
+    MEGALogDebug(@"[App Lifecycle] Application will finish launching with options: %@", launchOptions);
+    
+    UIDevice.currentDevice.batteryMonitoringEnabled = YES;
+    
+    self.indexSerialQueue = dispatch_queue_create("nz.mega.spotlight.nodesIndexing", DISPATCH_QUEUE_SERIAL);
+    
+    [CameraUploadManager.shared setupCameraUploadWhenApplicationLaunches];
+    
+    return YES;
+}
+
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     [self migrateLocalCachesLocation];
     
     if ([launchOptions objectForKey:@"UIApplicationLaunchOptionsRemoteNotificationKey"]) {
         _megatype = [[[launchOptions objectForKey:@"UIApplicationLaunchOptionsRemoteNotificationKey"] objectForKey:@"megatype"] unsignedIntegerValue];
-    }
-    
-    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"logging"]) {
-        [[MEGALogger sharedLogger] startLogging];
     }
     
     _signalActivityRequired = NO;
@@ -135,14 +149,7 @@
     
     [MEGAReachabilityManager sharedManager];
     
-    [UIDevice currentDevice].batteryMonitoringEnabled = YES;
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(batteryChanged:) name:UIDeviceBatteryStateDidChangeNotification object:nil];
-    
-    [MEGASdkManager setAppKey:kAppKey];
-    NSString *userAgent = [NSString stringWithFormat:@"%@/%@", kUserAgent, [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"]];
-    [MEGASdkManager setUserAgent:userAgent];
-    
-    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"pointToStaging"]) {        
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"pointToStaging"]) {
         [[MEGASdkManager sharedMEGASdk] changeApiUrl:@"https://staging.api.mega.co.nz/" disablepkp:NO];
         [[MEGASdkManager sharedMEGASdkFolder] changeApiUrl:@"https://staging.api.mega.co.nz/" disablepkp:NO];
     }
@@ -266,15 +273,6 @@
         }
     }
     
-    if ([CameraUploads syncManager].isCameraUploadsEnabled) {
-        [DevicePermissionsHelper photosPermissionWithCompletionHandler:^(BOOL granted) {
-            if (!granted) {
-                MEGALogInfo(@"Disable Camera Uploads");
-                [[CameraUploads syncManager] setIsCameraUploadsEnabled:NO];
-            }
-        }];
-    }
-    
     self.indexer = [[MEGAIndexer alloc] init];
     [Helper setIndexer:self.indexer];
     
@@ -290,7 +288,7 @@
         }
     }
     
-    MEGALogDebug(@"Application did finish launching with options %@", launchOptions);
+    MEGALogDebug(@"[App Lifecycle] Application did finish launching with options %@", launchOptions);
     
     [self.window makeKeyAndVisible];
     if (application.applicationState == UIApplicationStateActive) {
@@ -302,21 +300,17 @@
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {
-    // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
-    // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
-    MEGALogDebug(@"Application will resign active");
+    MEGALogDebug(@"[App Lifecycle] Application will resign active");
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
-    // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
-    // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
-    MEGALogDebug(@"Application did enter background");
+    MEGALogDebug(@"[App Lifecycle] Application did enter background");
     
     [self beginBackgroundTaskWithName:@"Chat-Request-SET_BACKGROUND_STATUS=YES"];
     [[MEGASdkManager sharedMEGAChatSdk] setBackgroundStatus:YES];
     [[MEGASdkManager sharedMEGAChatSdk] saveCurrentState];
 
-    BOOL pendingTasks = [[[[MEGASdkManager sharedMEGASdk] transfers] size] integerValue] > 0 || [[[[MEGASdkManager sharedMEGASdkFolder] transfers] size] integerValue] > 0 || [[[CameraUploads syncManager] assetsOperationQueue] operationCount] > 0;
+    BOOL pendingTasks = [[[[MEGASdkManager sharedMEGASdk] transfers] size] integerValue] > 0 || [[[[MEGASdkManager sharedMEGASdkFolder] transfers] size] integerValue] > 0;
     if (pendingTasks) {
         [self beginBackgroundTaskWithName:@"PendingTasks"];
     }
@@ -340,7 +334,7 @@
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
-    MEGALogDebug(@"Application will enter foreground");
+    MEGALogDebug(@"[App Lifecycle] Application will enter foreground");
     
     MEGAHandleList *chatRoomIDsWithCallInProgress = [MEGASdkManager.sharedMEGAChatSdk chatCallsWithState:MEGAChatCallStatusInProgress];
     MEGAHandleList *chatRoomIDsWithCallRequestSent = [MEGASdkManager.sharedMEGAChatSdk chatCallsWithState:MEGAChatCallStatusRequestSent];
@@ -356,10 +350,7 @@
     [[MEGASdkManager sharedMEGAChatSdk] setBackgroundStatus:NO];
     
     if ([[MEGASdkManager sharedMEGASdk] isLoggedIn]) {
-        if ([[CameraUploads syncManager] isCameraUploadsEnabled]) {
-            MEGALogInfo(@"Enable Camera Uploads");
-            [[CameraUploads syncManager] setIsCameraUploadsEnabled:YES];
-        }
+        [CameraUploadManager.shared startCameraUploadIfNeeded];
         
         if (isFetchNodesDone) {
             MEGAShowPasswordReminderRequestDelegate *showPasswordReminderDelegate = [[MEGAShowPasswordReminderRequestDelegate alloc] initToLogout:NO];
@@ -377,8 +368,7 @@
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
-    // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-    MEGALogDebug(@"Application did become active");
+    MEGALogDebug(@"[App Lifecycle] Application did become active");
     
     if (self.isSignalActivityRequired) {
         [[MEGASdkManager sharedMEGAChatSdk] signalPresenceActivity];
@@ -390,8 +380,7 @@
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {
-    // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
-    MEGALogDebug(@"Application will terminate");
+    MEGALogDebug(@"[App Lifecycle] Application will terminate");
     
     [MEGASdkManager destroySharedMEGAChatSdk];
     
@@ -407,7 +396,7 @@
 }
 
 - (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options {
-    MEGALogDebug(@"Application open URL %@", url);
+    MEGALogDebug(@"[App Lifecycle] Application open URL %@", url);
     
     MEGALinkManager.linkURL = url;
     [self manageLink:url];
@@ -416,13 +405,13 @@
 }
 
 - (void)application:(UIApplication *)application didRegisterUserNotificationSettings:(UIUserNotificationSettings *)notificationSettings {
-    MEGALogDebug(@"Application did register user notification settings");
+    MEGALogDebug(@"[App Lifecycle] Application did register user notification settings");
     [application registerForRemoteNotifications];
 }
 
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
     if([deviceToken length] == 0) {
-        MEGALogError(@"Application did register for remote notifications with device token length 0");
+        MEGALogError(@"[App Lifecycle] Application did register for remote notifications with device token length 0");
         return;
     }
     
@@ -436,16 +425,16 @@
     }
     
     NSString *deviceTokenString = [NSString stringWithString:hexString];
-    MEGALogDebug(@"Application did register for remote notifications with device token %@", deviceTokenString);
+    MEGALogDebug(@"[App Lifecycle] Application did register for remote notifications with device token %@", deviceTokenString);
     [[MEGASdkManager sharedMEGASdk] registeriOSdeviceToken:deviceTokenString];
 }
 
 - (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
-    MEGALogError(@"Application did fail to register for remote notifications with error %@", error);
+    MEGALogError(@"[App Lifecycle] Application did fail to register for remote notifications with error %@", error);
 }
 
 - (BOOL)application:(UIApplication *)application continueUserActivity:(NSUserActivity *)userActivity restorationHandler:(void (^)(NSArray<id<UIUserActivityRestoring>> * _Nullable))restorationHandler {
-    MEGALogDebug(@"Application continue user activity %@", userActivity.activityType);
+    MEGALogDebug(@"[App Lifecycle] Application continue user activity %@", userActivity.activityType);
     
     if ([MEGAReachabilityManager isReachable]) {
         if ([userActivity.activityType isEqualToString:CSSearchableItemActionType]) {
@@ -456,7 +445,7 @@
         } else if ([userActivity.activityType isEqualToString:@"INStartAudioCallIntent"] || [userActivity.activityType isEqualToString:@"INStartVideoCallIntent"]) {
             INInteraction *interaction = userActivity.interaction;
             INStartAudioCallIntent *startAudioCallIntent = (INStartAudioCallIntent *)interaction.intent;
-            INPerson *contact = startAudioCallIntent.contacts[0];
+            INPerson *contact = startAudioCallIntent.contacts.firstObject;
             INPersonHandle *personHandle = contact.personHandle;
             
             if (personHandle.type == INPersonHandleTypeEmailAddress) {
@@ -580,7 +569,7 @@
 }
 
 - (void)application:(UIApplication *)application performActionForShortcutItem:(UIApplicationShortcutItem *)shortcutItem completionHandler:(void (^)(BOOL succeeded))completionHandler {
-    MEGALogDebug(@"Application perform action for shortcut item");
+    MEGALogDebug(@"[App Lifecycle] Application perform action for shortcut item");
     
     if (isFetchNodesDone) {
         completionHandler([self manageQuickActionType:shortcutItem.type]);
@@ -588,18 +577,39 @@
 }
 
 - (void)applicationDidReceiveMemoryWarning:(UIApplication *)application {
-    MEGALogWarning(@"Application did receive memory warning");
+    MEGALogWarning(@"[App Lifecycle] Application did receive memory warning");
     
     [self.indexer stopIndexing];
 }
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
-    MEGALogDebug(@"Application did receive remote notification");
+    MEGALogDebug(@"[App Lifecycle] Application did receive remote notification");
     
     if (application.applicationState == UIApplicationStateInactive) {
         _megatype = [[userInfo objectForKey:@"megatype"] unsignedIntegerValue];
         [self openTabBasedOnNotificationMegatype];
     }
+}
+
+- (void)application:(UIApplication *)application handleEventsForBackgroundURLSession:(NSString *)identifier completionHandler:(void (^)(void))completionHandler {
+    MEGALogDebug(@"[App Lifecycle] application handle events for background session: %@", identifier);
+    [TransferSessionManager.shared saveSessionCompletion:completionHandler forIdentifier:identifier];
+    [CameraUploadManager.shared startCameraUploadIfNeeded];
+}
+
+- (void)application:(UIApplication *)application performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
+    MEGALogDebug(@"[App Lifecycle] application perform background refresh");
+    [self.backgroundRefreshPerformer performBackgroundRefreshWithCompletionHandler:completionHandler];
+}
+
+#pragma mark - Properties
+
+- (BackgroundRefreshPerformer *)backgroundRefreshPerformer {
+    if (_backgroundRefreshPerformer == nil) {
+        _backgroundRefreshPerformer = [[BackgroundRefreshPerformer alloc] init];
+    }
+    
+    return _backgroundRefreshPerformer;
 }
 
 #pragma mark - Private
@@ -795,13 +805,6 @@
     }
 }
 
-- (void)disableCameraUploads {
-    if ([[CameraUploads syncManager] isCameraUploadsEnabled]) {
-        MEGALogInfo(@"Disable Camera Uploads");
-        [[CameraUploads syncManager] setIsCameraUploadsEnabled:NO];
-    }
-}
-
 - (void)requestUserName {
     if (![[MEGAStore shareInstance] fetchUserWithUserHandle:[[[MEGASdkManager sharedMEGASdk] myUser] handle]]) {
         [[MEGASdkManager sharedMEGASdk] getUserAttributeType:MEGAUserAttributeFirstname];
@@ -866,7 +869,6 @@
         }
     }
     
-    [[CameraUploads syncManager] setTabBarController:_mainTBC];
     if (isAccountFirstLogin) {
         [self registerForVoIPNotifications];
         [self registerForNotifications];
@@ -1091,6 +1093,7 @@ void uncaughtExceptionHandler(NSException *exception) {
     
     [UIApplication.mnz_presentingViewController presentViewController:navigationController animated:YES completion:nil];
 }
+
 - (void)presentUpgradeViewControllerTitle:(NSString *)title detail:(NSString *)detail image:(UIImage *)image {
     if (!self.isUpgradeVCPresented && ![UIApplication.mnz_visibleViewController isKindOfClass:UpgradeTableViewController.class] && ![UIApplication.mnz_visibleViewController isKindOfClass:ProductDetailViewController.class]) {
         CustomModalAlertViewController *customModalAlertVC = [[CustomModalAlertViewController alloc] init];
@@ -1137,18 +1140,6 @@ void uncaughtExceptionHandler(NSException *exception) {
         
         self.upgradeVCPresented = YES;
         [UIApplication.mnz_presentingViewController presentViewController:customModalAlertVC animated:YES completion:nil];
-    }
-}
-
-#pragma mark - Battery changed
-
-- (void)batteryChanged:(NSNotification *)notification {
-    if ([[CameraUploads syncManager] isOnlyWhenChargingEnabled]) {
-        if ([[UIDevice currentDevice] batteryState] == UIDeviceBatteryStateUnplugged) {
-            [[CameraUploads syncManager] resetOperationQueue];
-        } else {
-            [[CameraUploads syncManager] setIsCameraUploadsEnabled:YES];
-        }
     }
 }
 
@@ -1207,7 +1198,7 @@ void uncaughtExceptionHandler(NSException *exception) {
 - (void)setSystemLanguage {
     NSDictionary *globalDomain = [[NSUserDefaults standardUserDefaults] persistentDomainForName:@"NSGlobalDomain"];
     NSArray *languages = [globalDomain objectForKey:@"AppleLanguages"];
-    NSString *systemLanguageID = [languages objectAtIndex:0];
+    NSString *systemLanguageID = languages.firstObject;
     
     if ([Helper isLanguageSupported:systemLanguageID]) {
         [[LocalizationSystem sharedLocalSystem] setLanguage:systemLanguageID];
@@ -1410,28 +1401,9 @@ void uncaughtExceptionHandler(NSException *exception) {
 
 - (void)onNodesUpdate:(MEGASdk *)api nodeList:(MEGANodeList *)nodeList {
     if (!nodeList) {
-        MEGATransferList *transferList = [api uploadTransfers];
-        if (transferList.size.integerValue == 0) {
-            if ([CameraUploads syncManager].isCameraUploadsEnabled) {
-                MEGALogInfo(@"Enable Camera Uploads");
-                [[CameraUploads syncManager] setIsCameraUploadsEnabled:YES];
-            }
-        } else {
-            for (NSInteger i = 0; i < transferList.size.integerValue; i++) {
-                MEGATransfer *transfer = [transferList transferAtIndex:i];
-                [transfer mnz_cancelPendingCUTransfer];
-                
-                if ([transfer.appData containsString:@"CU"] && [CameraUploads syncManager].isCameraUploadsEnabled && ([MEGAReachabilityManager isReachableViaWiFi] || [CameraUploads syncManager].isUseCellularConnectionEnabled)) {
-                    MEGALogInfo(@"Camera Upload should be delayed");
-                    [CameraUploads syncManager].shouldCameraUploadsBeDelayed = YES;
-                }
-            }
-        }
-            
         [Helper startPendingUploadTransferIfNeeded];
-
     } else {
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+        dispatch_async(self.indexSerialQueue, ^{
             NSArray<MEGANode *> *nodesToIndex = [nodeList mnz_nodesArrayFromNodeList];
             MEGALogDebug(@"Spotlight indexing %tu nodes updated", nodesToIndex.count);
             for (MEGANode *node in nodesToIndex) {
@@ -1455,7 +1427,17 @@ void uncaughtExceptionHandler(NSException *exception) {
             _messageForSuspendedAccount = event.text;
             break;
             
+        case EventNodesCurrent:
+            [NSNotificationCenter.defaultCenter postNotificationName:MEGANodesCurrentNotification object:self];
+            break;
+            
+        case EventMediaInfoReady:
+            [NSNotificationCenter.defaultCenter postNotificationName:MEGAMediaInfoReadyNotification object:self];
+            break;
+            
         case EventStorage: {
+            [NSNotificationCenter.defaultCenter postNotificationName:MEGAStorageEventDidChangeNotification object:self userInfo:@{MEGAStorageEventStateUserInfoKey : @(event.number)}];
+            
             if (event.number == StorageStateChange) {
                 [api getAccountDetails];
             } else {
@@ -1577,6 +1559,8 @@ void uncaughtExceptionHandler(NSException *exception) {
                 
             case MEGAErrorTypeApiEgoingOverquota:
             case MEGAErrorTypeApiEOverQuota: {
+                [NSNotificationCenter.defaultCenter postNotificationName:MEGAStorageOverQuotaNotification object:self];
+                
                 NSString *title = AMLocalizedString(@"upgradeAccount", @"Button title which triggers the action to upgrade your MEGA account level");
                 NSString *detail = AMLocalizedString(@"This action can not be completed as it would take you over your current storage limit", @"Error message shown to user when a copy/import operation would take them over their storage limit.");
                 UIImage *image = [api mnz_accountDetails].storageMax.longLongValue > [api mnz_accountDetails].storageUsed.longLongValue ? [UIImage imageNamed:@"storage_almost_full"] : [UIImage imageNamed:@"storage_full"];
@@ -1668,7 +1652,6 @@ void uncaughtExceptionHandler(NSException *exception) {
         case MEGARequestTypeFetchNodes: {
             [[SKPaymentQueue defaultQueue] addTransactionObserver:[MEGAPurchase sharedInstance]];
             [[MEGASdkManager sharedMEGASdk] enableTransferResumption];
-            [CameraUploads syncManager].shouldCameraUploadsBeDelayed = NO;
             [self invalidateTimerAPI_EAGAIN];
             
             if ([[NSUserDefaults standardUserDefaults] boolForKey:@"TransfersPaused"]) {
@@ -1707,7 +1690,7 @@ void uncaughtExceptionHandler(NSException *exception) {
             }
             
             NSUserDefaults *sharedUserDefaults = [[NSUserDefaults alloc] initWithSuiteName:@"group.mega.ios"];
-            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+            dispatch_async(self.indexSerialQueue, ^{
                 if (![sharedUserDefaults boolForKey:@"treeCompleted"]) {
                     [self.indexer generateAndSaveTree];
                 }
@@ -1911,14 +1894,9 @@ void uncaughtExceptionHandler(NSException *exception) {
 }
 
 - (void)onTransferUpdate:(MEGASdk *)api transfer:(MEGATransfer *)transfer {
-    if (transfer.type == MEGATransferTypeUpload) {
-        [transfer mnz_cancelPendingCUTransfer];
-    }
-    
     if (transfer.state == MEGATransferStatePaused) {
         [Helper startPendingUploadTransferIfNeeded];
     }
-
 }
 
 - (void)onTransferTemporaryError:(MEGASdk *)api transfer:(MEGATransfer *)transfer error:(MEGAError *)error {
@@ -1960,14 +1938,6 @@ void uncaughtExceptionHandler(NSException *exception) {
     if (transfer.type == MEGATransferTypeUpload) {
         [transfer mnz_renameOrRemoveThumbnailAndPreview];
         
-        if ([CameraUploads syncManager].shouldCameraUploadsBeDelayed) {
-            [CameraUploads syncManager].shouldCameraUploadsBeDelayed = NO;
-            if ([[CameraUploads syncManager] isCameraUploadsEnabled]) {
-                MEGALogInfo(@"Enable Camera Uploads");
-                [[CameraUploads syncManager] setIsCameraUploadsEnabled:YES];
-            }
-        }
-        
         if ([transfer.appData containsString:@"attachToChatID"] || [transfer.appData containsString:@"attachVoiceClipToChatID"]) {
             if (error.type == MEGAErrorTypeApiEExist) {
                 MEGALogInfo(@"Transfer has started with exactly the same data (local path and target parent). File: %@", transfer.fileName);
@@ -1993,6 +1963,7 @@ void uncaughtExceptionHandler(NSException *exception) {
                 NSString *detail = AMLocalizedString(@"Your upload(s) cannot proceed because your account is full", @"uploads over storage quota warning dialog title");
                 UIImage *image = [api mnz_accountDetails].storageMax.longLongValue > [api mnz_accountDetails].storageUsed.longLongValue ? [UIImage imageNamed:@"storage_almost_full"] : [UIImage imageNamed:@"storage_full"];
                 [self presentUpgradeViewControllerTitle:title detail:detail image:image];
+                [NSNotificationCenter.defaultCenter postNotificationName:MEGAStorageOverQuotaNotification object:self];
                 break;
             }
                 

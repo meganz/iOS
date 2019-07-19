@@ -12,11 +12,7 @@
 #import "MEGAReachabilityManager.h"
 #import "MEGARequestDelegate.h"
 #import "NSFileManager+MNZCategory.h"
-
 #import "BrowserViewController.h"
-
-#define kAppKey @"EVtjzb7R"
-#define kUserAgent @"MEGAiOS"
 
 @interface DocumentPickerViewController () <BrowserViewControllerDelegate, MEGARequestDelegate, MEGATransferDelegate, LTHPasscodeViewControllerDelegate>
 
@@ -62,9 +58,6 @@
     self.pickerPresented = NO;
     self.passcodePresented = NO;
     
-    [MEGASdkManager setAppKey:kAppKey];
-    NSString *userAgent = [NSString stringWithFormat:@"%@/%@", kUserAgent, [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"]];
-    [MEGASdkManager setUserAgent:userAgent];
     [self languageCompatibility];
 
 #ifdef DEBUG
@@ -164,7 +157,7 @@
 - (void)setSystemLanguage {
     NSDictionary *globalDomain = [[NSUserDefaults standardUserDefaults] persistentDomainForName:@"NSGlobalDomain"];
     NSArray *languages = [globalDomain objectForKey:@"AppleLanguages"];
-    NSString *systemLanguageID = [languages objectAtIndex:0];
+    NSString *systemLanguageID = languages.firstObject;
     
     if ([Helper isLanguageSupported:systemLanguageID]) {
         [[LocalizationSystem sharedLocalSystem] setLanguage:systemLanguageID];

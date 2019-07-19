@@ -478,7 +478,7 @@
     if ([MEGAReachabilityManager isReachableHUDIfNot]) {
         NSMutableArray *selectedNodesMutableArray = self.selectedNodesArray.mutableCopy;
         NSArray *filesAndFolders = selectedNodesMutableArray.mnz_numberOfFilesAndFolders;
-        MEGAMoveRequestDelegate *moveRequestDelegate = [[MEGAMoveRequestDelegate alloc] initWithFiles:[filesAndFolders[0] unsignedIntegerValue] folders:[filesAndFolders[1] unsignedIntegerValue] completion:^{
+        MEGAMoveRequestDelegate *moveRequestDelegate = [MEGAMoveRequestDelegate.alloc initWithFiles:[filesAndFolders.firstObject unsignedIntegerValue] folders:[filesAndFolders[1] unsignedIntegerValue] completion:^{
             [self dismiss];
         }];
         
@@ -537,7 +537,7 @@
 
 - (IBAction)cancel:(UIBarButtonItem *)sender {
     if (self.browserAction == BrowserActionOpenIn) {
-        NSString *inboxDirectory = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"Inbox"];
+        NSString *inboxDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject stringByAppendingPathComponent:@"Inbox"];
         [NSFileManager.defaultManager mnz_removeFolderContentsAtPath:inboxDirectory];
     }
     
@@ -971,7 +971,7 @@
                 } else if (self.browserAction == BrowserActionImport) {
                     [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"fileImported", @"Message shown when a file has been imported")];
                 } else if (self.browserAction == BrowserActionImportFromFolderLink) {
-                    if ((_selectedNodesArray.count == 1) && ([[_selectedNodesArray objectAtIndex:0] isFile])) {
+                    if ((self.selectedNodesArray.count == 1) && [self.selectedNodesArray.firstObject isFile]) {
                         [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"fileImported", @"Message shown when a file has been imported")];
                     } else {
                         [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"filesImported", @"Message shown when some files have been imported")];

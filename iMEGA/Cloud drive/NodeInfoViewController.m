@@ -362,13 +362,7 @@
     NodeTappablePropertyTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"nodeTappablePropertyCell" forIndexPath:indexPath];
     cell.iconImageView.image = [UIImage imageNamed:@"link"];
     if (self.node.isExported) {
-        MEGAExportRequestDelegate *exportRequestDelegate = [[MEGAExportRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
-            [SVProgressHUD dismiss];
-            NSIndexPath *indexPath = [NSIndexPath indexPathForRow:(self.node.isFolder ? 1 : 0) inSection:1];
-            NodeTappablePropertyTableViewCell *linkCell = [self.tableView cellForRowAtIndexPath:indexPath];
-            linkCell.titleLabel.text = request.link;
-        } multipleLinks:NO];
-        [[MEGASdkManager sharedMEGASdk] exportNode:self.node delegate:exportRequestDelegate];
+        cell.titleLabel.text = self.node.publicLink;
     } else {
         cell.titleLabel.text = AMLocalizedString(@"getLink", @"Title shown under the action that allows you to get a link to file or folder");
     }

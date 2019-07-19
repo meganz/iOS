@@ -1,7 +1,5 @@
 #import "PhotosViewController.h"
-
 #import "UIScrollView+EmptyDataSet.h"
-
 #import "Helper.h"
 #import "MEGAMoveRequestDelegate.h"
 #import "MEGANavigationController.h"
@@ -13,13 +11,21 @@
 #import "MEGAPhotoBrowserViewController.h"
 #import "UICollectionView+MNZCategory.h"
 #import "UIImageView+MNZCategory.h"
-
 #import "PhotoCollectionViewCell.h"
 #import "HeaderCollectionReusableView.h"
-#import "CameraUploads.h"
 #import "CameraUploadsTableViewController.h"
 #import "DisplayMode.h"
 #import "BrowserViewController.h"
+#import "CameraUploadManager.h"
+#import "CameraUploadManager+Settings.h"
+#import "MEGAConstants.h"
+#import "CustomModalAlertViewController.h"
+#import "UploadStats.h"
+@import StoreKit;
+@import Photos;
+
+static const NSTimeInterval PhotosViewReloadTimeDelay = .35;
+static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
 
 @interface PhotosViewController () <UICollectionViewDelegateFlowLayout, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAPhotoBrowserDelegate> {
     BOOL allNodesSelected;
@@ -38,10 +44,11 @@
 @property (nonatomic, strong) NSMutableDictionary *selectedItemsDictionary;
 
 @property (weak, nonatomic) IBOutlet UIView *stateView;
-@property (weak, nonatomic) IBOutlet UIButton *toggleCameraUploadsButton;
+@property (weak, nonatomic) IBOutlet UIButton *enableCameraUploadsButton;
 @property (weak, nonatomic) IBOutlet UIProgressView *photosUploadedProgressView;
 @property (weak, nonatomic) IBOutlet UILabel *photosUploadedLabel;
 @property (weak, nonatomic) IBOutlet UILabel *stateLabel;
+@property (weak, nonatomic) IBOutlet UIStackView *progressStackView;
 
 @property (weak, nonatomic) IBOutlet UICollectionView *photosCollectionView;
 
@@ -56,7 +63,6 @@
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *selectAllBarButtonItem;
 
 @property (nonatomic) MEGACameraUploadsState currentState;
-@property (nonatomic) NSUInteger maxPendingFiles;
 
 @property (nonatomic) NSIndexPath *browsingIndexPath;
 
@@ -72,6 +78,10 @@
     self.photosCollectionView.emptyDataSetSource = self;
     self.photosCollectionView.emptyDataSetDelegate = self;
     
+    self.enableCameraUploadsButton.tintColor = [UIColor mnz_green00BFA5];
+    [self.enableCameraUploadsButton setTitle:AMLocalizedString(@"enable", nil) forState:UIControlStateNormal];
+    self.photosUploadedProgressView.progressTintColor = [UIColor mnz_green00BFA5];
+    
     self.selectedItemsDictionary = [[NSMutableDictionary alloc] init];
     
     self.editBarButtonItem.title = AMLocalizedString(@"edit", @"Caption of a button to edit the files that are selected");
@@ -80,49 +90,53 @@
     
     self.cellInset = 1.0f;
     self.cellSize = [self.photosCollectionView mnz_calculateCellSizeForInset:self.cellInset];
+    
+    self.currentState = MEGACameraUploadsStateLoading;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(internetConnectionChanged) name:kReachabilityChangedNotification object:nil];
-    
     [self setEditing:NO animated:NO];
     
-    [[MEGAReachabilityManager sharedManager] retryPendingConnections];
-    [[MEGASdkManager sharedMEGASdk] addMEGARequestDelegate:self];
-    [[MEGASdkManager sharedMEGASdk] addMEGATransferDelegate:self];
-    [[MEGASdkManager sharedMEGASdk] addMEGAGlobalDelegate:self];
+    [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(didReceiveInternetConnectionChangedNotification) name:kReachabilityChangedNotification object:nil];
+    [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(didReceiveCameraUploadStatsChangedNotification) name:MEGACameraUploadStatsChangedNotification object:nil];
     
+    [[MEGASdkManager sharedMEGASdk] addMEGARequestDelegate:self];
+    [[MEGASdkManager sharedMEGASdk] addMEGAGlobalDelegate:self];
+
     self.editBarButtonItem.enabled = MEGAReachabilityManager.isReachable;
-    [self reloadUI];
+    [self reloadPhotosView];
+    [self reloadHeader];
 }
 
 - (void)viewDidLayoutSubviews {
     [super viewDidLayoutSubviews];
     
-    self.cellSize = [self.photosCollectionView mnz_calculateCellSizeForInset:self.cellInset];
-    [self reloadUI];
+    CGSize cellSize = [self.photosCollectionView mnz_calculateCellSizeForInset:self.cellInset];
+    if (!CGSizeEqualToSize(cellSize, self.cellSize)) {
+        self.cellSize = cellSize;
+        [self.photosCollectionView reloadData];
+    }
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     
-    if (![NSUserDefaults.standardUserDefaults objectForKey:kIsCameraUploadsEnabled]) {
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            MEGANavigationController *cameraUploadsNavigationController = [[UIStoryboard storyboardWithName:@"Photos" bundle:nil] instantiateViewControllerWithIdentifier:@"CameraUploadsPopUpNavigationControllerID"];
-            [self presentViewController:cameraUploadsNavigationController animated:YES completion:nil];
-        });
+    if (self.photosByMonthYearArray.count > 0 && CameraUploadManager.shouldShowCameraUploadBoardingScreen) {
+        [self showCameraUploadBoardingScreen];
+    } else if (CameraUploadManager.shared.isDiskStorageFull) {
+        [self showLocalDiskIsFullWarningScreen];
     }
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:kReachabilityChangedNotification object:nil];
+    [NSNotificationCenter.defaultCenter removeObserver:self name:kReachabilityChangedNotification object:nil];
+    [NSNotificationCenter.defaultCenter removeObserver:self name:MEGACameraUploadStatsChangedNotification object:nil];
     
     [[MEGASdkManager sharedMEGASdk] removeMEGARequestDelegate:self];
-    [[MEGASdkManager sharedMEGASdk] removeMEGATransferDelegate:self];
     [[MEGASdkManager sharedMEGASdk] removeMEGAGlobalDelegate:self];
 }
 
@@ -141,8 +155,11 @@
         if (self.photosByMonthYearArray.count == 0) {
             [self.photosCollectionView reloadEmptyDataSet];
         } else {
-            self.cellSize = [self.photosCollectionView mnz_calculateCellSizeForInset:self.cellInset];
-            [self.photosCollectionView reloadData];
+            CGSize cellSize = [self.photosCollectionView mnz_calculateCellSizeForInset:self.cellInset];
+            if (!CGSizeEqualToSize(cellSize, self.cellSize)) {
+                self.cellSize = cellSize;
+                [self.photosCollectionView reloadData];
+            }
         }
     } completion:nil];
 }
@@ -162,63 +179,137 @@
     }
 }
 
+#pragma mark - uploads state
+
+- (void)reloadHeader {
+    MEGALogDebug(@"[Camera Upload] reload photos view header");
+    
+    if (!MEGAReachabilityManager.isReachable) {
+        self.currentState = MEGACameraUploadsStateNoInternetConnection;
+
+        return;
+    }
+    
+    if (!CameraUploadManager.isCameraUploadEnabled) {
+        if (self.photosByMonthYearArray.count == 0) {
+            self.currentState = MEGACameraUploadsStateEmpty;
+        } else {
+            self.currentState = MEGACameraUploadsStateDisabled;
+        }
+        
+        return;
+    }
+
+    [self loadUploadStats];
+}
+
+- (void)loadUploadStats {
+    if (self.currentState != MEGACameraUploadsStateUploading && self.currentState != MEGACameraUploadsStateCompleted) {
+        self.currentState = MEGACameraUploadsStateLoading;
+    }
+    
+    [CameraUploadManager.shared loadCurrentUploadStatsWithCompletion:^(UploadStats * _Nullable uploadStats, NSError * _Nullable error) {
+        if (error || uploadStats == nil) {
+            MEGALogError(@"[Camera Upload] error when to fetch upload stats %@", error);
+            return;
+        }
+        
+        MEGALogDebug(@"[Camera Upload] pending count %lu, done count: %lu, total count: %lu", (unsigned long)uploadStats.pendingFilesCount, (unsigned long)uploadStats.finishedFilesCount, (unsigned long)uploadStats.totalFilesCount);
+        dispatch_async(dispatch_get_main_queue(), ^{
+            self.currentState = uploadStats.pendingFilesCount > 0 ? MEGACameraUploadsStateUploading : MEGACameraUploadsStateCompleted;
+            [self configUploadProgressByStats:uploadStats];
+            [self loadEnableVideoStateIfNeeded];
+        });
+    }];
+}
+
+- (void)configUploadProgressByStats:(UploadStats *)uploadStats {
+    self.photosUploadedProgressView.progress = (float)uploadStats.finishedFilesCount / (float)uploadStats.totalFilesCount;
+    
+    NSString *progressText;
+    if (uploadStats.pendingFilesCount == 1) {
+        progressText = AMLocalizedString(@"cameraUploadsPendingFile", @"Message shown while uploading files. Singular.");
+    } else {
+        progressText = [NSString stringWithFormat:AMLocalizedString(@"cameraUploadsPendingFiles", @"Message shown while uploading files. Plural."), uploadStats.pendingFilesCount];
+    }
+    self.photosUploadedLabel.text = progressText;
+}
+
+- (void)loadEnableVideoStateIfNeeded {
+    if (self.currentState != MEGACameraUploadsStateCompleted || CameraUploadManager.isVideoUploadEnabled) {
+        return;
+    }
+    
+    [CameraUploadManager.shared loadUploadStatsForMediaTypes:@[@(PHAssetMediaTypeVideo)] completion:^(UploadStats * _Nullable uploadStats, NSError * _Nullable error) {
+        if (error) {
+            MEGALogError(@"[Camera Upload] error when to load record count for video %@", error);
+            return;
+        }
+        
+        if (uploadStats.pendingFilesCount == 0) {
+            return;
+        }
+        
+        MEGALogDebug(@"[Camera Upload] %lu video count loaded", (unsigned long)uploadStats.pendingFilesCount);
+        dispatch_async(dispatch_get_main_queue(), ^{
+            self.currentState = MEGACameraUploadsStateEnableVideo;
+            [self configStateLabelByVideoPendingCount:uploadStats.pendingFilesCount];
+        });
+    }];
+}
+
+- (void)configStateLabelByVideoPendingCount:(NSUInteger)count {
+    NSString *videoMessage;
+    if (count == 1) {
+        videoMessage = AMLocalizedString(@"Photos uploaded, video uploads are off, 1 video not uploaded", nil);
+    } else {
+        videoMessage = [NSString stringWithFormat:AMLocalizedString(@"Photos uploaded, video uploads are off, %lu videos not uploaded", nil), (unsigned long)count];
+    }
+    
+    self.stateLabel.text = videoMessage;
+}
+
 - (void)setCurrentState:(MEGACameraUploadsState)currentState {
+    if (_currentState == currentState) {
+        return;
+    }
+    
+    self.stateView.hidden = NO;
+    self.stateLabel.hidden = NO;
+    self.stateLabel.font = [UIFont systemFontOfSize:17.0];
+    self.progressStackView.hidden = YES;
+    self.enableCameraUploadsButton.hidden = YES;
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+    
     switch (currentState) {
         case MEGACameraUploadsStateDisabled:
-            self.stateView.hidden = NO;
-            self.photosUploadedProgressView.hidden = YES;
-            self.photosUploadedLabel.hidden = YES;
-            self.stateLabel.hidden = NO;
             self.stateLabel.text = AMLocalizedString(@"enableCameraUploadsButton", nil);
-            [self.toggleCameraUploadsButton setTitle:AMLocalizedString(@"enable", nil) forState:UIControlStateNormal];
-            self.toggleCameraUploadsButton.hidden = NO;
-            [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+            self.enableCameraUploadsButton.hidden = NO;
             break;
-            
         case MEGACameraUploadsStateUploading:
-            self.stateView.hidden = NO;
-            self.photosUploadedProgressView.hidden = NO;
-            self.photosUploadedLabel.hidden = NO;
             self.stateLabel.hidden = YES;
-            [self.toggleCameraUploadsButton setTitle:AMLocalizedString(@"disable", @"Text button shown when an option is enabled, to allow to disable it. String as sort as possible.") forState:UIControlStateNormal];
-            self.toggleCameraUploadsButton.hidden = NO;
+            self.progressStackView.hidden = NO;
             [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
             break;
-            
         case MEGACameraUploadsStateCompleted:
-            self.stateView.hidden = NO;
-            self.photosUploadedProgressView.hidden = YES;
-            self.photosUploadedLabel.hidden = YES;
-            self.stateLabel.hidden = NO;
             self.stateLabel.text = AMLocalizedString(@"cameraUploadsComplete", @"Message shown when the camera uploads have been completed");
-            [self.toggleCameraUploadsButton setTitle:AMLocalizedString(@"disable", @"Text button shown when an option is enabled, to allow to disable it. String as sort as possible.") forState:UIControlStateNormal];
-            self.toggleCameraUploadsButton.hidden = NO;
-            [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
             break;
-            
         case MEGACameraUploadsStateNoInternetConnection:
-            self.stateView.hidden = NO;
-            self.photosUploadedProgressView.hidden = YES;
-            self.photosUploadedLabel.hidden = YES;
-            self.stateLabel.hidden = NO;
-            self.stateLabel.text = AMLocalizedString(@"noInternetConnection", @"Text shown on the app when you don't have connection to the internet or when you have lost it");
-            self.toggleCameraUploadsButton.hidden = YES;
-            [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+            if (self.photosByMonthYearArray.count == 0) {
+                self.stateView.hidden = YES;
+            } else {
+                self.stateLabel.text = AMLocalizedString(@"noInternetConnection", @"Text shown on the app when you don't have connection to the internet or when you have lost it");
+            }
             break;
-            
         case MEGACameraUploadsStateEmpty:
             self.stateView.hidden = YES;
-            [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
             break;
-            
-        case MEGACameraUploadsStateUnknown:
-            self.stateView.hidden = NO;
-            self.photosUploadedProgressView.hidden = YES;
-            self.photosUploadedLabel.hidden = YES;
-            self.stateLabel.hidden = NO;
+        case MEGACameraUploadsStateLoading:
             self.stateLabel.text = AMLocalizedString(@"loading", nil);
-            self.toggleCameraUploadsButton.hidden = NO;
-            [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+            break;
+        case MEGACameraUploadsStateEnableVideo:
+            self.stateLabel.font = [UIFont systemFontOfSize:15.0];
+            self.enableCameraUploadsButton.hidden = NO;
             break;
     }
     
@@ -227,13 +318,14 @@
 
 #pragma mark - Private
 
-- (void)reloadUI {
+- (void)reloadPhotosView {
+    MEGALogDebug(@"[Camera Upload] reload photos collection view");
     NSMutableDictionary *photosByMonthYearDictionary = [NSMutableDictionary new];
     
     self.photosByMonthYearArray = [NSMutableArray new];
     NSMutableArray *photosArray = [NSMutableArray new];
     
-    self.parentNode = [[MEGASdkManager sharedMEGASdk] childNodeForParent:[[MEGASdkManager sharedMEGASdk] rootNode] name:@"Camera Uploads"];
+    self.parentNode = [[MEGASdkManager sharedMEGASdk] childNodeForParent:[[MEGASdkManager sharedMEGASdk] rootNode] name:MEGACameraUploadsNodeName];
     
     self.nodeList = [[MEGASdkManager sharedMEGASdk] childrenForParent:self.parentNode order:MEGASortOrderTypeModificationDesc];
     
@@ -263,24 +355,11 @@
     
     [self.photosCollectionView reloadData];
     
-    [self updateProgressWithKnownCameraUploadInProgress:NO];
-    
     if ([self.photosCollectionView allowsMultipleSelection]) {
         self.navigationItem.title = AMLocalizedString(@"selectTitle", @"Select items");
     } else {
         self.navigationItem.title = AMLocalizedString(@"cameraUploadsLabel", @"Title of one of the Settings sections where you can set up the 'Camera Uploads' options");
     }
-}
-
-- (void)internetConnectionChanged {
-    self.editBarButtonItem.enabled = MEGAReachabilityManager.isReachable;
-    [self updateCurrentStateWithKnownCameraUploadInProgress:NO];
-}
-
-- (void)pushCameraUploadSettings {
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Settings" bundle:nil];
-    CameraUploadsTableViewController *cameraUploadsTableViewController = [storyboard instantiateViewControllerWithIdentifier:@"CameraUploadsSettingsID"];
-    [self.navigationController pushViewController:cameraUploadsTableViewController animated:YES];
 }
 
 - (void)setToolbarActionsEnabled:(BOOL)boolValue {
@@ -291,59 +370,11 @@
     self.deleteBarButtonItem.enabled = boolValue;
 }
 
-- (void)updateProgressWithKnownCameraUploadInProgress:(BOOL)knownCameraUploadInProgress {
-    NSUInteger pendingFiles = [CameraUploads syncManager].assetsOperationQueue.operationCount;
-    if (pendingFiles) {
-        if (pendingFiles > self.maxPendingFiles) {
-            self.maxPendingFiles = pendingFiles;
-        }
-        
-        float uploadedFiles = self.maxPendingFiles - pendingFiles;
-        self.photosUploadedProgressView.progress = (float) (uploadedFiles / (float) self.maxPendingFiles);
-        
-        NSString *progressText;
-        if (pendingFiles == 1) {
-            progressText = AMLocalizedString(@"cameraUploadsPendingFile", @"Message shown while uploading files. Singular.");
-        } else {
-            progressText = [NSString stringWithFormat:AMLocalizedString(@"cameraUploadsPendingFiles", @"Message shown while uploading files. Plural."), pendingFiles];
-        }
-        
-        self.photosUploadedLabel.text = progressText;
-    } else {
-        self.maxPendingFiles = 0;
-    }
-    [self updateCurrentStateWithKnownCameraUploadInProgress:knownCameraUploadInProgress];
-}
-
-- (void)updateCurrentStateWithKnownCameraUploadInProgress:(BOOL)knownCameraUploadInProgress {
-    if ([MEGAReachabilityManager isReachable]) {
-        if ([[CameraUploads syncManager] isCameraUploadsEnabled]) {
-            if ([CameraUploads syncManager].assetsOperationQueue.operationCount > 0) {
-                self.currentState = MEGACameraUploadsStateUploading;
-            } else {
-                if (knownCameraUploadInProgress) {
-                    self.currentState = MEGACameraUploadsStateUnknown;
-                } else {
-                    self.currentState = MEGACameraUploadsStateCompleted;
-                }
-            }
-        } else {
-            if (self.photosByMonthYearArray.count == 0) {
-                self.currentState = MEGACameraUploadsStateEmpty;
-            } else {
-                self.currentState = MEGACameraUploadsStateDisabled;
-            }
-        }
-    } else {
-        self.currentState = MEGACameraUploadsStateNoInternetConnection;
-    }
-}
-
 - (NSIndexPath *)indexPathForNode:(MEGANode *)node {
     NSUInteger section = 0;
     for (NSDictionary *sectionInArray in self.photosByMonthYearArray) {
         NSUInteger item = 0;
-        NSArray *nodesInSection = [sectionInArray objectForKey:[sectionInArray.allKeys objectAtIndex:0]];
+        NSArray *nodesInSection = [sectionInArray objectForKey:sectionInArray.allKeys.firstObject];
         for (MEGANode *n in nodesInSection) {
             if (n.handle == node.handle) {
                 return [NSIndexPath indexPathForItem:item inSection:section];
@@ -356,13 +387,35 @@
     return nil;
 }
 
+#pragma mark - notifications
+
+- (void)didReceiveCameraUploadStatsChangedNotification {
+    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(reloadHeader) object:nil];
+    [self performSelector:@selector(reloadHeader) withObject:nil afterDelay:HeaderStateViewReloadTimeDelay];
+}
+
+- (void)didReceiveInternetConnectionChangedNotification {
+    self.editBarButtonItem.enabled = MEGAReachabilityManager.isReachable;
+    [self reloadHeader];
+    [self.photosCollectionView reloadEmptyDataSet];
+}
+
 #pragma mark - IBAction
 
 - (IBAction)enableCameraUploadsTouchUpInside:(UIButton *)sender {
     if (self.photosCollectionView.allowsMultipleSelection) {
         [self setEditing:NO animated:NO];
     }
-    [self pushCameraUploadSettings];
+    
+    if (self.currentState == MEGACameraUploadsStateEnableVideo && !CameraUploadManager.isVideoUploadEnabled) {
+        if (CameraUploadManager.isHEVCFormatSupported) {
+            [self pushVideoUploadSettings];
+        } else {
+            [self pushCameraUploadSettings];
+        }
+    } else {
+        [self pushCameraUploadSettings];
+    }
 }
 
 - (IBAction)selectAllAction:(UIBarButtonItem *)sender {
@@ -527,7 +580,7 @@
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     NSDictionary *dict = [self.photosByMonthYearArray objectAtIndex:section];
-    NSString *key = [[dict allKeys] objectAtIndex:0];
+    NSString *key = dict.allKeys.firstObject;
     NSArray *array = [dict objectForKey:key];
     
     return [array count];
@@ -541,7 +594,7 @@
     MEGANode *node = nil;
     
     NSDictionary *dict = [self.photosByMonthYearArray objectAtIndex:indexPath.section];
-    NSString *key = [[dict allKeys] objectAtIndex:0];
+    NSString *key = dict.allKeys.firstObject;
     NSArray *array = [dict objectForKey:key];
     
     node = [array objectAtIndex:indexPath.row];
@@ -581,7 +634,7 @@
         
         
         NSDictionary *dict = [self.photosByMonthYearArray objectAtIndex:indexPath.section];
-        NSString *month = [[dict allKeys] objectAtIndex:0];
+        NSString *month = dict.allKeys.firstObject;
                 
         NSString *dateString = [NSString stringWithFormat:@"%@", month];
         [headerView.dateLabel setText:dateString];
@@ -677,6 +730,60 @@
     return self.cellInset/2;
 }
 
+#pragma mark - View transitions
+
+- (void)showCameraUploadBoardingScreen {
+    CustomModalAlertViewController *boardingAlertVC = [[CustomModalAlertViewController alloc] init];
+    boardingAlertVC.modalPresentationStyle = UIModalPresentationOverFullScreen;
+    boardingAlertVC.image = [UIImage imageNamed:@"cameraUploadsBoarding"];
+    boardingAlertVC.viewTitle = AMLocalizedString(@"enableCameraUploadsButton", @"Button title that enables the functionality 'Camera Uploads', which uploads all the photos in your device to MEGA");
+    boardingAlertVC.detail = AMLocalizedString(@"Automatically backup your photos and videos to the Cloud Drive.", nil);
+    boardingAlertVC.firstButtonTitle = AMLocalizedString(@"enable", @"Text button shown when camera upload will be enabled");
+    boardingAlertVC.dismissButtonTitle = AMLocalizedString(@"notNow", nil);
+    
+    boardingAlertVC.firstCompletion = ^{
+        [self dismissViewControllerAnimated:YES completion:^{
+            [self pushCameraUploadSettings];
+        }];
+    };
+    
+    boardingAlertVC.dismissCompletion = ^{
+        [self dismissViewControllerAnimated:YES completion:nil];
+        CameraUploadManager.cameraUploadEnabled = NO;
+    };
+    
+    [self presentViewController:boardingAlertVC animated:YES completion:nil];
+    CameraUploadManager.boardingScreenLastShowedDate = NSDate.date;
+}
+
+- (void)pushCameraUploadSettings {
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"CameraUploadSettings" bundle:nil];
+    CameraUploadsTableViewController *cameraUploadsTableViewController = [storyboard instantiateViewControllerWithIdentifier:@"CameraUploadsSettingsID"];
+    [self.navigationController pushViewController:cameraUploadsTableViewController animated:YES];
+}
+
+- (void)pushVideoUploadSettings {
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"CameraUploadSettings" bundle:nil];
+    UIViewController *videoUploadsController = [storyboard instantiateViewControllerWithIdentifier:@"VideoUploadsTableViewControllerID"];
+    [self.navigationController pushViewController:videoUploadsController animated:YES];
+}
+
+- (void)showLocalDiskIsFullWarningScreen {
+    CustomModalAlertViewController *warningVC = [[CustomModalAlertViewController alloc] init];
+    warningVC.modalPresentationStyle = UIModalPresentationOverFullScreen;
+    warningVC.image = [UIImage imageNamed:@"disk_storage_full"];
+    warningVC.viewTitle = [NSString stringWithFormat:AMLocalizedString(@"%@ Storage Full", nil), UIDevice.currentDevice.localizedModel];
+    NSString *storageSettingPath = [NSString stringWithFormat:AMLocalizedString(@"Settings > General > %@ Storage", nil), UIDevice.currentDevice.localizedModel];
+    warningVC.detail = [NSString stringWithFormat:AMLocalizedString(@"You do not have enough storage to upload camera. Free up space by deleting unneeded apps, videos or music. You can manage your storage in %@", nil), storageSettingPath];
+    warningVC.boldInDetail = storageSettingPath;
+    warningVC.firstButtonTitle = AMLocalizedString(@"ok", nil);
+    warningVC.firstCompletion = ^{
+        [self dismissViewControllerAnimated:YES completion:nil];
+    };
+    
+    [self presentViewController:warningVC animated:YES completion:nil];
+}
+
 #pragma mark - UILongPressGestureRecognizer
 
 - (void)longPress:(UILongPressGestureRecognizer *)longPressGestureRecognizer {
@@ -695,7 +802,7 @@
             }
             if (self.selectedItemsDictionary.count == 1) {
                 NSDictionary *monthPhotosDictionary = [self.photosByMonthYearArray objectAtIndex:indexPath.section];
-                NSString *monthKey = [monthPhotosDictionary.allKeys objectAtIndex:0];
+                NSString *monthKey = monthPhotosDictionary.allKeys.firstObject;
                 NSArray *monthPhotosArray = [monthPhotosDictionary objectForKey:monthKey];
                 MEGANode *nodeSelected = [monthPhotosArray objectAtIndex:indexPath.row];
                 if ([self.selectedItemsDictionary objectForKey:[NSNumber numberWithLongLong:nodeSelected.handle]]) {
@@ -725,7 +832,7 @@
     previewingContext.sourceRect = [self.photosCollectionView convertRect:[self.photosCollectionView cellForItemAtIndexPath:indexPath].frame toView:self.view];
     
     NSDictionary *monthPhotosDictionary = [self.photosByMonthYearArray objectAtIndex:indexPath.section];
-    NSString *monthKey = [monthPhotosDictionary.allKeys objectAtIndex:0];
+    NSString *monthKey = monthPhotosDictionary.allKeys.firstObject;
     NSArray *monthPhotosArray = [monthPhotosDictionary objectForKey:monthKey];
     MEGANode *node = [monthPhotosArray objectAtIndex:indexPath.row];
     if (node.name.mnz_isImagePathExtension || node.name.mnz_isVideoPathExtension) {
@@ -748,14 +855,14 @@
 - (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView {
     NSString *text;
     if ([MEGAReachabilityManager isReachable]) {
-        if ([[CameraUploads syncManager] isCameraUploadsEnabled]) {
+        if (CameraUploadManager.isCameraUploadEnabled) {
             if ([self.photosByMonthYearArray count] == 0) {
                 text = AMLocalizedString(@"cameraUploadsEnabled", nil);
             } else {
                 return nil;
             }
         } else {
-            text = @"";
+            text = AMLocalizedString(@"enableCameraUploadsButton", @"Enable Camera Uploads");
         }
     } else {
         text = AMLocalizedString(@"noInternetConnection",  @"No Internet Connection");
@@ -766,24 +873,24 @@
 
 - (nullable NSAttributedString *)descriptionForEmptyDataSet:(UIScrollView *)scrollView {
     NSString *text = @"";
-    if (!MEGAReachabilityManager.isReachable && !MEGAReachabilityManager.sharedManager.isMobileDataEnabled) {
+    if (MEGAReachabilityManager.isReachable && !CameraUploadManager.isCameraUploadEnabled) {
+        text = AMLocalizedString(@"Automatically backup your photos and videos to the Cloud Drive.", nil);
+    } else if (!MEGAReachabilityManager.isReachable && !MEGAReachabilityManager.sharedManager.isMobileDataEnabled) {
         text = AMLocalizedString(@"Mobile Data is turned off", @"Information shown when the user has disabled the 'Mobile Data' setting for MEGA in the iOS Settings.");
     }
     
-    NSDictionary *attributes = @{NSFontAttributeName:[UIFont preferredFontForTextStyle:UIFontTextStyleFootnote], NSForegroundColorAttributeName:UIColor.mnz_gray777777};
-    
-    return [NSAttributedString.alloc initWithString:text attributes:attributes];
+    return [[NSAttributedString alloc] initWithString:text attributes:[Helper descriptionAttributesForEmptyState]];
 }
 
 - (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView {
     UIImage *image = nil;
     if ([MEGAReachabilityManager isReachable]) {
-        if ([[CameraUploads syncManager] isCameraUploadsEnabled]) {
+        if (CameraUploadManager.isCameraUploadEnabled) {
             if ([self.photosByMonthYearArray count] == 0) {
                 image = [UIImage imageNamed:@"cameraEmptyState"];
             }
         } else {
-            image = [UIImage imageNamed:@"cameraEmptyState"];
+            image = [UIImage imageNamed:@"cameraUploadsBoarding"];
         }
     } else {
         image = [UIImage imageNamed:@"noInternetEmptyState"];
@@ -795,7 +902,7 @@
 - (NSAttributedString *)buttonTitleForEmptyDataSet:(UIScrollView *)scrollView forState:(UIControlState)state {
     NSString *text = @"";
     if ([MEGAReachabilityManager isReachable]) {
-        if (![[CameraUploads syncManager] isCameraUploadsEnabled]) {
+        if (!CameraUploadManager.isCameraUploadEnabled) {
             text = AMLocalizedString(@"enable", @"Text button shown when the chat is disabled and if tapped the chat will be enabled");
         }
     } else {
@@ -815,7 +922,7 @@
 }
 
 - (UIColor *)backgroundColorForEmptyDataSet:(UIScrollView *)scrollView {
-    if ([[CameraUploads syncManager] isCameraUploadsEnabled]) {
+    if (CameraUploadManager.isCameraUploadEnabled) {
         return nil;
     }
     
@@ -827,7 +934,7 @@
 }
 
 - (CGFloat)spaceHeightForEmptyDataSet:(UIScrollView *)scrollView {
-    return Helper.spaceHeightForEmptyState;
+    return [Helper spaceHeightForEmptyStateWithDescription];
 }
 
 #pragma mark - DZNEmptyDataSetDelegate
@@ -868,46 +975,25 @@
         return;
     }
     
-    switch ([request type]) {
-        case MEGARequestTypeGetAttrFile: {
-            for (PhotoCollectionViewCell *pcvc in [self.photosCollectionView visibleCells]) {
-                if ([request nodeHandle] == [pcvc nodeHandle]) {
-                    MEGANode *node = [api nodeForHandle:request.nodeHandle];
-                    [Helper setThumbnailForNode:node api:api cell:pcvc reindexNode:YES];
-                }
+    if (request.type == MEGARequestTypeGetAttrFile) {
+        for (PhotoCollectionViewCell *pcvc in [self.photosCollectionView visibleCells]) {
+            if ([request nodeHandle] == [pcvc nodeHandle]) {
+                MEGANode *node = [api nodeForHandle:request.nodeHandle];
+                [Helper setThumbnailForNode:node api:api cell:pcvc reindexNode:YES];
             }
-            break;
         }
-            
-        default:
-            break;
     }
 }
 
 #pragma mark - MEGAGlobalDelegate
 
 - (void)onNodesUpdate:(MEGASdk *)api nodeList:(MEGANodeList *)nodeList {
-    [self reloadUI];
-}
-
-#pragma mark - MEGATransferDelegate
-
-- (void)onTransferStart:(MEGASdk *)api transfer:(MEGATransfer *)transfer {
-    if ([transfer.appData containsString:@"CU"]) {
-        [self updateProgressWithKnownCameraUploadInProgress:YES];
+    if (![nodeList mnz_containsNodeWithParentFolderName:MEGACameraUploadsNodeName] && ![nodeList mnz_containsNodeWithRestoreFolderName:MEGACameraUploadsNodeName]) {
+        return;
     }
-}
-
-- (void)onTransferUpdate:(MEGASdk *)api transfer:(MEGATransfer *)transfer {
-    if ([transfer.appData containsString:@"CU"]) {
-        [self updateProgressWithKnownCameraUploadInProgress:YES];
-    }
-}
-
-- (void)onTransferFinish:(MEGASdk *)api transfer:(MEGATransfer *)transfer error:(MEGAError *)error {
-    if ([transfer.appData containsString:@"CU"]) {
-        [self updateProgressWithKnownCameraUploadInProgress:YES];
-    }
+    
+    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(reloadPhotosView) object:nil];
+    [self performSelector:@selector(reloadPhotosView) withObject:nil afterDelay:PhotosViewReloadTimeDelay];
 }
 
 @end

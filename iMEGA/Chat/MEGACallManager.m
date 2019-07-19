@@ -42,7 +42,7 @@
     } else {
         NSArray *keysArray = [self.callsDictionary allKeysForObject:@(call.callId)];
         if (keysArray.count > 0) {
-            uuid = [keysArray objectAtIndex:0];
+            uuid = keysArray.firstObject;
         }
     }
     
@@ -103,7 +103,7 @@
     NSUUID *uuid;
     NSArray *callsArray = [self.callsDictionary allKeysForObject:@(call.callId)];
     if (callsArray.count) {
-        uuid = [callsArray objectAtIndex:0];
+        uuid = callsArray.firstObject;
     }
     MEGALogDebug(@"[CallKit] UUID %@ for call: %@", uuid, call);
     return uuid;
