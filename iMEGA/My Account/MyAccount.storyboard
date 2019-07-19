@@ -52,12 +52,12 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="60" sectionHeaderHeight="1" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="Yui-UF-WIL">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="-1" estimatedRowHeight="60" sectionHeaderHeight="1" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="Yui-UF-WIL">
                                 <rect key="frame" x="-4" y="180" width="383" height="423"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="separatorColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="MyAccountHallTableViewCellID" id="ZvV-kA-tMp" customClass="MyAccountHallTableViewCell">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="MyAccountHallTableViewCellID" rowHeight="60" id="ZvV-kA-tMp" customClass="MyAccountHallTableViewCell">
                                         <rect key="frame" x="0.0" y="1" width="383" height="60"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ZvV-kA-tMp" id="DgO-Mi-JsC">
@@ -106,6 +106,7 @@
                                                 <constraint firstItem="bdM-YA-sg4" firstAttribute="leading" secondItem="DgO-Mi-JsC" secondAttribute="leading" constant="30" id="Cf9-Ix-Aw2"/>
                                                 <constraint firstItem="kQy-tK-wrG" firstAttribute="leading" secondItem="bdM-YA-sg4" secondAttribute="trailing" constant="7" id="MU6-f5-3mb"/>
                                                 <constraint firstItem="kQy-tK-wrG" firstAttribute="centerY" secondItem="bdM-YA-sg4" secondAttribute="centerY" id="TWX-mf-YPt"/>
+                                                <constraint firstAttribute="bottom" secondItem="bdM-YA-sg4" secondAttribute="bottom" constant="14.5" id="VGa-pN-fOq"/>
                                                 <constraint firstItem="bdM-YA-sg4" firstAttribute="top" secondItem="DgO-Mi-JsC" secondAttribute="topMargin" constant="13" id="gkc-JG-DmP"/>
                                                 <constraint firstItem="UAp-tU-btg" firstAttribute="centerY" secondItem="DgO-Mi-JsC" secondAttribute="centerY" id="sMd-xb-dn3"/>
                                                 <constraint firstAttribute="trailing" secondItem="UAp-tU-btg" secondAttribute="trailing" constant="30" id="z37-Gx-dHK"/>
@@ -119,7 +120,7 @@
                                             <outlet property="sectionLabel" destination="bdM-YA-sg4" id="wDM-4f-r4A"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="MyAccountHallWithSubtitleTableViewCellID" id="8l5-5c-6yQ" customClass="MyAccountHallTableViewCell">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="MyAccountHallWithSubtitleTableViewCellID" rowHeight="60" id="8l5-5c-6yQ" customClass="MyAccountHallTableViewCell">
                                         <rect key="frame" x="0.0" y="61" width="383" height="60"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="8l5-5c-6yQ" id="gLf-2k-rlV">
@@ -180,6 +181,7 @@
                                                 <constraint firstItem="5fP-8y-yKd" firstAttribute="leading" secondItem="kML-rd-F3g" secondAttribute="leading" id="KJd-Qq-OKR"/>
                                                 <constraint firstItem="1XE-dn-Y0S" firstAttribute="leading" secondItem="kML-rd-F3g" secondAttribute="trailing" constant="7" id="LTa-O6-2Ee"/>
                                                 <constraint firstAttribute="trailing" secondItem="rDv-I5-Q6A" secondAttribute="trailing" constant="30" id="RkI-1j-GVU"/>
+                                                <constraint firstAttribute="bottom" secondItem="5fP-8y-yKd" secondAttribute="bottom" constant="7.5" id="eOB-Yl-zmm"/>
                                                 <constraint firstItem="kML-rd-F3g" firstAttribute="leading" secondItem="gLf-2k-rlV" secondAttribute="leading" constant="30" id="eOv-Hv-WRv"/>
                                                 <constraint firstItem="rDv-I5-Q6A" firstAttribute="centerY" secondItem="gLf-2k-rlV" secondAttribute="centerY" id="j05-wa-BZS"/>
                                             </constraints>
@@ -193,7 +195,7 @@
                                             <outlet property="subtitleLabel" destination="5fP-8y-yKd" id="LkQ-wu-S7N"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="MyAccountHallUsedStorageTableViewCellID" id="KZU-rc-rZF" customClass="MyAccountHallTableViewCell">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="MyAccountHallUsedStorageTableViewCellID" rowHeight="60" id="KZU-rc-rZF" customClass="MyAccountHallTableViewCell">
                                         <rect key="frame" x="0.0" y="121" width="383" height="60"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KZU-rc-rZF" id="74b-VH-8lV">
@@ -229,6 +231,7 @@
                                                 <constraint firstItem="4fJ-L7-LfW" firstAttribute="bottom" secondItem="74b-VH-8lV" secondAttribute="bottomMargin" id="71Q-d8-cM9"/>
                                                 <constraint firstAttribute="trailing" secondItem="4fJ-L7-LfW" secondAttribute="trailing" constant="30" id="HHy-wA-xwY"/>
                                                 <constraint firstAttribute="trailing" secondItem="eZq-qu-ZXV" secondAttribute="trailing" constant="30" id="IMD-9G-BjD"/>
+                                                <constraint firstAttribute="bottom" secondItem="Wq0-9s-oI4" secondAttribute="bottom" constant="18.5" id="ptF-0E-1yc"/>
                                                 <constraint firstItem="Wq0-9s-oI4" firstAttribute="top" secondItem="74b-VH-8lV" secondAttribute="top" constant="20" id="wRJ-vL-0n3"/>
                                             </constraints>
                                         </tableViewCellContentView>
@@ -237,6 +240,70 @@
                                             <outlet property="sectionLabel" destination="Wq0-9s-oI4" id="Mod-YX-5Se"/>
                                             <outlet property="usedLabel" destination="eZq-qu-ZXV" id="VT9-vW-Mw7"/>
                                             <outlet property="usedPercentageLabel" destination="4fJ-L7-LfW" id="plG-AS-q2g"/>
+                                        </connections>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="MyAccountHallBusinessUsageTableViewCellID" rowHeight="94" id="WCw-CE-5hM" customClass="MyAccountHallTableViewCell">
+                                        <rect key="frame" x="0.0" y="181" width="383" height="94"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="WCw-CE-5hM" id="hdy-k6-MSx">
+                                            <rect key="frame" x="0.0" y="0.0" width="383" height="93.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f67-QM-XV9">
+                                                    <rect key="frame" x="30" y="12" width="46.5" height="21"/>
+                                                    <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="18"/>
+                                                    <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Storage" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C67-UC-wRa">
+                                                    <rect key="frame" x="30" y="45" width="46" height="14.5"/>
+                                                    <fontDescription key="fontDescription" name="SFUIText-Medium" family="SF UI Text" pointSize="12"/>
+                                                    <color key="textColor" red="0.16862745098039217" green="0.65098039215686276" blue="0.87058823529411766" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Transfer" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Eqd-nw-aoU">
+                                                    <rect key="frame" x="30" y="67.5" width="48.5" height="14.5"/>
+                                                    <fontDescription key="fontDescription" name="SFUIText-Medium" family="SF UI Text" pointSize="12"/>
+                                                    <color key="textColor" red="0.19215686274509802" green="0.70980392156862748" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ww6-66-l6p" userLabel="transfer used">
+                                                    <rect key="frame" x="325" y="69" width="31.5" height="14.5"/>
+                                                    <fontDescription key="fontDescription" name="SFUIText-Medium" family="SF UI Text" pointSize="12"/>
+                                                    <color key="textColor" red="0.19215686274509802" green="0.70980392156862748" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ftb-7f-cNp" userLabel="storage used">
+                                                    <rect key="frame" x="325" y="45" width="31.5" height="14.5"/>
+                                                    <fontDescription key="fontDescription" name="SFUIText-Medium" family="SF UI Text" pointSize="12"/>
+                                                    <color key="textColor" red="0.16862745098039217" green="0.65098039215686276" blue="0.87058823529411766" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="C67-UC-wRa" firstAttribute="leading" secondItem="hdy-k6-MSx" secondAttribute="leading" constant="30" id="2ij-FG-7gL"/>
+                                                <constraint firstItem="Ftb-7f-cNp" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="C67-UC-wRa" secondAttribute="trailing" constant="5" id="P0e-DV-vVE"/>
+                                                <constraint firstAttribute="bottom" secondItem="Eqd-nw-aoU" secondAttribute="bottom" constant="11.5" id="SbS-Fw-Sa6"/>
+                                                <constraint firstItem="f67-QM-XV9" firstAttribute="leading" secondItem="hdy-k6-MSx" secondAttribute="leading" constant="30" id="Tk5-MJ-Jf6"/>
+                                                <constraint firstItem="Ftb-7f-cNp" firstAttribute="centerY" secondItem="C67-UC-wRa" secondAttribute="centerY" id="Uml-Qp-LeL"/>
+                                                <constraint firstAttribute="trailing" secondItem="ww6-66-l6p" secondAttribute="trailing" constant="26.5" id="Zni-S1-MHh"/>
+                                                <constraint firstItem="ww6-66-l6p" firstAttribute="top" secondItem="Ftb-7f-cNp" secondAttribute="bottom" constant="9.5" id="dPS-wo-eTy"/>
+                                                <constraint firstItem="Eqd-nw-aoU" firstAttribute="leading" secondItem="hdy-k6-MSx" secondAttribute="leading" constant="30" id="ggr-6z-6rv"/>
+                                                <constraint firstItem="ww6-66-l6p" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Eqd-nw-aoU" secondAttribute="trailing" constant="5" id="iHp-jn-Ozf"/>
+                                                <constraint firstItem="f67-QM-XV9" firstAttribute="top" secondItem="hdy-k6-MSx" secondAttribute="top" constant="12" id="qN1-oE-ooi"/>
+                                                <constraint firstItem="Eqd-nw-aoU" firstAttribute="top" secondItem="C67-UC-wRa" secondAttribute="bottom" constant="8" id="wB2-cF-1HG"/>
+                                                <constraint firstAttribute="trailing" secondItem="Ftb-7f-cNp" secondAttribute="trailing" constant="26.5" id="xGP-66-zqL"/>
+                                                <constraint firstItem="C67-UC-wRa" firstAttribute="top" secondItem="f67-QM-XV9" secondAttribute="bottom" constant="12" id="yaE-nR-RPq"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <inset key="separatorInset" minX="30" minY="0.0" maxX="30" maxY="0.0"/>
+                                        <connections>
+                                            <outlet property="sectionLabel" destination="f67-QM-XV9" id="0Dy-1M-Avk"/>
+                                            <outlet property="storageLabel" destination="C67-UC-wRa" id="FiC-fS-js8"/>
+                                            <outlet property="storageUsedLabel" destination="Ftb-7f-cNp" id="iKl-Lc-NVQ"/>
+                                            <outlet property="transferLabel" destination="Eqd-nw-aoU" id="wYt-rh-qw7"/>
+                                            <outlet property="transferUsedLabel" destination="ww6-66-l6p" id="dW8-18-iqW"/>
+                                            <outlet property="usedLabel" destination="Ftb-7f-cNp" id="r3y-RX-i7o"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
