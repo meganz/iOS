@@ -924,9 +924,6 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xHg-Yj-c5d" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <barButtonItem title="  " style="plain" id="P0X-L9-3ka">
-                    <color key="tintColor" red="0.85098040100000005" green="0.0" blue="0.027450980619999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                </barButtonItem>
                 <swipeGestureRecognizer direction="left" id="yA7-Vh-s8h" userLabel="Left Swipe Gesture Recognizer">
                     <connections>
                         <action selector="leftSwipeGestureRecognizer:" destination="72r-XO-9X4" id="U8i-or-4wf"/>
