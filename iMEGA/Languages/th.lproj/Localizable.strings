@@ -588,8 +588,6 @@
 "removeUserMessage"="คุณแน่ใจหรือไม่ว่าจะลบ %@ ออกจากรายการผู้ติดต่อ";
 /* Alert confirmation message shown when you want to remove more than one contact from your contacts list */
 "removeMultipleUsersMessage"="คุณแน่ใจหรือไม่ว่าจะลบผู้ใช้ %d ออกจากรายการผู้ติดต่อ";
-/* Success message shown when the selected contacts have been removed */
-"removedContacts"="%d ผู้ติดต่อถูกลบออก";
 /* Success message shown when the selected contact has been removed. 'Contact {Name of contact} removed' */
 "removedContact"="ผู้ติดต่อ %@ ถูกลบออกแล้ว";
 /* Label shown when a contact request is pending */

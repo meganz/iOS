@@ -588,8 +588,6 @@
 "removeUserMessage"="هل أنت متأكد أنك تريد إزالة %@ من قائمة الاتصال الخاصة بك؟";
 /* Alert confirmation message shown when you want to remove more than one contact from your contacts list */
 "removeMultipleUsersMessage"="هل أنت متأكد أنك تريد إزالة %d مستخدمين من قائمة الاتصال الخاصة بك؟";
-/* Success message shown when the selected contacts have been removed */
-"removedContacts"="%d جهات الاتصال المحذوفة";
 /* Success message shown when the selected contact has been removed. 'Contact {Name of contact} removed' */
 "removedContact"="جهة اتصال %@ مزالة";
 /* Label shown when a contact request is pending */

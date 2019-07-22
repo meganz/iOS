@@ -588,8 +588,6 @@
 "removeUserMessage"="您确定要把%@ 从您的联系簿删除吗？";
 /* Alert confirmation message shown when you want to remove more than one contact from your contacts list */
 "removeMultipleUsersMessage"="您确定要从联系簿删除%d 个联系人吗？";
-/* Success message shown when the selected contacts have been removed */
-"removedContacts"="已删除联系人%d";
 /* Success message shown when the selected contact has been removed. 'Contact {Name of contact} removed' */
 "removedContact"="联系人%@ 已被删除";
 /* Label shown when a contact request is pending */

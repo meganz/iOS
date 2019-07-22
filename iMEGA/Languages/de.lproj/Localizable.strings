@@ -588,8 +588,6 @@
 "removeUserMessage"="%@ aus Ihrer Kontaktliste entfernen?";
 /* Alert confirmation message shown when you want to remove more than one contact from your contacts list */
 "removeMultipleUsersMessage"="%d Kontakte entfernen?";
-/* Success message shown when the selected contacts have been removed */
-"removedContacts"="%d Kontakte entfernt";
 /* Success message shown when the selected contact has been removed. 'Contact {Name of contact} removed' */
 "removedContact"="Kontakt %@ entfernt";
 /* Label shown when a contact request is pending */

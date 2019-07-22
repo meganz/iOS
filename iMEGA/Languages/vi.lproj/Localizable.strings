@@ -588,8 +588,6 @@
 "removeUserMessage"="Bạn có chắc muốn xóa tên %@ khỏi danh bạ của bạn không?";
 /* Alert confirmation message shown when you want to remove more than one contact from your contacts list */
 "removeMultipleUsersMessage"="Bạn có chắc muốn xóa %d tên khỏi danh bạ của bạn không?";
-/* Success message shown when the selected contacts have been removed */
-"removedContacts"="%d tên danh bạ đã bị xóa";
 /* Success message shown when the selected contact has been removed. 'Contact {Name of contact} removed' */
 "removedContact"="Đã xóa tên %@ khỏi danh bạ";
 /* Label shown when a contact request is pending */

@@ -588,8 +588,6 @@
 "removeUserMessage"="Apakah anda yakin ingin menghapus %@ dari daftar kontak anda?";
 /* Alert confirmation message shown when you want to remove more than one contact from your contacts list */
 "removeMultipleUsersMessage"="Anda yakin ingin menghapus %d pengguna dari daftar kontak anda?";
-/* Success message shown when the selected contacts have been removed */
-"removedContacts"="%d kontak telah terhapus";
 /* Success message shown when the selected contact has been removed. 'Contact {Name of contact} removed' */
 "removedContact"="Kontak %@ telah terhapus!";
 /* Label shown when a contact request is pending */

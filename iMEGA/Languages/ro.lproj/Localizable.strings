@@ -588,8 +588,6 @@
 "removeUserMessage"="Sigur vrei să elimini contactul %@ din lista de contacte?";
 /* Alert confirmation message shown when you want to remove more than one contact from your contacts list */
 "removeMultipleUsersMessage"="Sigur vrei să elimini %d utilizatori din lista de contacte?";
-/* Success message shown when the selected contacts have been removed */
-"removedContacts"="%d contacte eliminate";
 /* Success message shown when the selected contact has been removed. 'Contact {Name of contact} removed' */
 "removedContact"="Contactul %@ a fost eliminat";
 /* Label shown when a contact request is pending */

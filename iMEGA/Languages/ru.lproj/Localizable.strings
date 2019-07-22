@@ -588,8 +588,6 @@
 "removeUserMessage"="Вы действительно хотите удалить %@ из списка контактов?";
 /* Alert confirmation message shown when you want to remove more than one contact from your contacts list */
 "removeMultipleUsersMessage"="Вы действительно хотите удалить %d пользователей из списка контактов?";
-/* Success message shown when the selected contacts have been removed */
-"removedContacts"="Контактов удалено: %d";
 /* Success message shown when the selected contact has been removed. 'Contact {Name of contact} removed' */
 "removedContact"="Контакт %@ удалён";
 /* Label shown when a contact request is pending */
