@@ -121,6 +121,18 @@ https://github.com/MortimerGoro/MGSwipeTableCell/blob/master/LICENSE
 
 --------------------------------------------------------------------
 
+#### PhoneNumberKit
+https://github.com/marmelroy/PhoneNumberKit.git
+
+Copyright (c) 2018 Roy Marmelstein
+
+###### License:
+The MIT License (MIT)
+
+https://github.com/marmelroy/PhoneNumberKit/blob/master/LICENSE
+
+--------------------------------------------------------------------
+
 #### PieChart
 https://github.com/astrokin/PieChart
 
