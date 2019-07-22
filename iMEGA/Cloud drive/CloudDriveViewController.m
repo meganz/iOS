@@ -50,6 +50,9 @@
 #import "SharedItemsViewController.h"
 #import "UpgradeTableViewController.h"
 
+static const NSTimeInterval kSearchTimeDelay = .5;
+static const NSUInteger kMinimumLettersToStartTheSearch = 3;
+
 @interface CloudDriveViewController () <UINavigationControllerDelegate, UIDocumentPickerDelegate, UIDocumentMenuDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGADelegate, MEGARequestDelegate, CustomActionViewControllerDelegate, NodeInfoViewControllerDelegate, UITextFieldDelegate, UISearchControllerDelegate> {
     
     MEGAShareType lowShareType; //Control the actions allowed for node/nodes selected
@@ -1785,20 +1788,26 @@
 #pragma mark - UISearchResultsUpdating
 
 - (void)updateSearchResultsForSearchController:(UISearchController *)searchController {
-    NSString *searchString = searchController.searchBar.text;
-    if (searchString.length >= 3) {
-        [self.searchNodesArray removeAllObjects];
-        MEGANodeList *allNodeList = [[MEGASdkManager sharedMEGASdk] nodeListSearchForNode:self.parentNode searchString:searchString recursive:YES];
+    if (searchController.searchBar.text.length >= kMinimumLettersToStartTheSearch) {
         
-        for (NSInteger i = 0; i < [allNodeList.size integerValue]; i++) {
-            MEGANode *n = [allNodeList nodeAtIndex:i];
-            [self.searchNodesArray addObject:n];
-        }
-        [self reloadData];
-    } else if ([searchString isEqualToString:@""]) {
+        [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(search) object:nil];
+        [self performSelector:@selector(search) withObject:nil afterDelay:kSearchTimeDelay];
+    } else if ([searchController.searchBar.text isEqualToString:@""]) {
         self.searchNodesArray = [NSMutableArray arrayWithArray:self.nodesArray];
         [self reloadData];
     }
+}
+
+- (void)search {
+    [self.searchNodesArray removeAllObjects];
+    MEGANodeList *allNodeList = [[MEGASdkManager sharedMEGASdk] nodeListSearchForNode:self.parentNode searchString:self.searchController.searchBar.text recursive:YES];
+    
+    for (NSInteger i = 0; i < [allNodeList.size integerValue]; i++) {
+        MEGANode *n = [allNodeList nodeAtIndex:i];
+        [self.searchNodesArray addObject:n];
+    }
+    [self reloadData];
+    
 }
 
 #pragma mark - UIDocumentPickerDelegate
