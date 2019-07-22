@@ -820,6 +820,8 @@
     
     [self setNavigationBarButtonItemsEnabled:MEGAReachabilityManager.isReachable];
     
+    (self.nodes.size.unsignedIntegerValue == 0 || !MEGAReachabilityManager.isReachable) ? [self hideSearchIfNotActive] : [self addSearchBar];
+    
     NSMutableArray *tempArray = [[NSMutableArray alloc] initWithCapacity:self.nodes.size.integerValue];
     for (NSUInteger i = 0; i < self.nodes.size.integerValue ; i++) {
         [tempArray addObject:[self.nodes nodeAtIndex:i]];
@@ -929,12 +931,7 @@
 }
 
 - (void)internetConnectionChanged {
-    BOOL boolValue = [MEGAReachabilityManager isReachable];
-    [self setNavigationBarButtonItemsEnabled:boolValue];
-    
-    boolValue ? [self addSearchBar] : [self hideSearchIfNotActive];
-    
-    [self reloadData];
+    [self reloadUI];
 }
 
 - (void)setNavigationBarButtonItems {
@@ -1594,8 +1591,10 @@
     [self presentViewController:navigationController animated:YES completion:nil];
     
     BrowserViewController *browserVC = navigationController.viewControllers.firstObject;
-    browserVC.selectedNodesArray = [NSArray arrayWithArray:self.selectedNodesArray];
+    browserVC.selectedNodesArray = self.selectedNodesArray.copy;
     browserVC.browserAction = BrowserActionMove;
+    
+    self.selectedNodesArray = nil;
 }
 
 - (IBAction)deleteAction:(UIBarButtonItem *)sender {
@@ -1695,14 +1694,14 @@
 }
 
 - (IBAction)copyAction:(UIBarButtonItem *)sender {
-    if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-        MEGANavigationController *navigationController = [self.storyboard instantiateViewControllerWithIdentifier:@"BrowserNavigationControllerID"];
-        [self presentViewController:navigationController animated:YES completion:nil];
-        
-        BrowserViewController *browserVC = navigationController.viewControllers.firstObject;
-        browserVC.selectedNodesArray = self.selectedNodesArray;
-        [browserVC setBrowserAction:BrowserActionCopy];
-    }
+    MEGANavigationController *navigationController = [self.storyboard instantiateViewControllerWithIdentifier:@"BrowserNavigationControllerID"];
+    [self presentViewController:navigationController animated:YES completion:nil];
+    
+    BrowserViewController *browserVC = navigationController.viewControllers.firstObject;
+    browserVC.selectedNodesArray = self.selectedNodesArray.copy;
+    browserVC.browserAction = BrowserActionCopy;
+    
+    self.selectedNodesArray = nil;
 }
 
 - (IBAction)sortByAction:(UIBarButtonItem *)sender {
@@ -1944,12 +1943,7 @@
             }
         } else if ([error type] == MEGAErrorTypeApiEIncomplete) {
             [SVProgressHUD showImage:[UIImage imageNamed:@"hudMinus"] status:AMLocalizedString(@"transferCancelled", nil)];
-            NSString *base64Handle = [MEGASdk base64HandleForHandle:transfer.nodeHandle];
-            if (self.layoutView == LayoutModeList) {
-                [self.cdTableView reloadRowAtIndexPath:[self.nodesIndexPathMutableDictionary objectForKey:base64Handle]];
-            }
         }
-        return;
     }
     
     if (transfer.type == MEGATransferTypeDownload && self.layoutView == LayoutModeList) {
