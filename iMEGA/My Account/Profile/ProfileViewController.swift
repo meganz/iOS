@@ -383,6 +383,9 @@ extension ProfileViewController: UITableViewDelegate {
 extension ProfileViewController: MEGARequestDelegate {
     
     func onRequestFinish(_ api: MEGASdk, request: MEGARequest, error: MEGAError) {
+        guard let myUser = api.myUser else {
+            return;
+        }
         switch request.type {
         case .MEGARequestTypeGetAttrUser:
             if error.type != .apiOk {
@@ -390,12 +393,12 @@ extension ProfileViewController: MEGARequestDelegate {
             }
             
             if request.file != nil {
-                avatarImageView.mnz_setImageAvatarOrColor(forUserHandle: MEGASdkManager.sharedMEGASdk().myUser.handle)
+                avatarImageView.mnz_setImageAvatarOrColor(forUserHandle: myUser.handle)
             }
             
             let paramType = MEGAUserAttribute(rawValue: request.paramType)
             if paramType == .firstname || paramType == .lastname {
-                nameLabel.text = MEGASdkManager.sharedMEGASdk().myUser.mnz_fullName
+                nameLabel.text = myUser.mnz_fullName
             }
             
         case .MEGARequestTypeSetAttrUser:
@@ -407,11 +410,11 @@ extension ProfileViewController: MEGARequestDelegate {
                 }
             }
             
-            let avatarFilePath: String = Helper.path(forSharedSandboxCacheDirectory: "thumbnailsV3")+"/"+MEGASdk.base64Handle(forUserHandle: MEGASdkManager.sharedMEGASdk().myUser.handle)
+            let avatarFilePath: String = Helper.path(forSharedSandboxCacheDirectory: "thumbnailsV3")+"/"+MEGASdk.base64Handle(forUserHandle: myUser.handle)
             if request.file == nil {
                 FileManager.default.mnz_removeItem(atPath: avatarFilePath)
             }
-            avatarImageView.mnz_setImageAvatarOrColor(forUserHandle: MEGASdkManager.sharedMEGASdk().myUser.handle)
+            avatarImageView.mnz_setImageAvatarOrColor(forUserHandle: myUser.handle)
             
         default:
             break;
