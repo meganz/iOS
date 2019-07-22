@@ -61,6 +61,18 @@ https://github.com/Flipboard/FLAnimatedImage/blob/master/LICENSE
 
 --------------------------------------------------------------------
 
+#### FLEX
+https://github.com/Flipboard/FLEX/
+
+Copyright (c) 2014-2016 Flipboard
+
+###### License:
+BSD 3-Clause
+
+https://github.com/Flipboard/FLEX/blob/master/LICENSE
+
+--------------------------------------------------------------------
+
 #### GKContactImage
 https://github.com/gekitz/GKContactImage
 
@@ -106,6 +118,18 @@ Copyright (c) 2018 Imanol Fernandez @MortimerGoro
 The MIT License (MIT)
 
 https://github.com/MortimerGoro/MGSwipeTableCell/blob/master/LICENSE
+
+--------------------------------------------------------------------
+
+#### PhoneNumberKit
+https://github.com/marmelroy/PhoneNumberKit.git
+
+Copyright (c) 2018 Roy Marmelstein
+
+###### License:
+The MIT License (MIT)
+
+https://github.com/marmelroy/PhoneNumberKit/blob/master/LICENSE
 
 --------------------------------------------------------------------
 
