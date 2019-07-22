@@ -588,8 +588,6 @@
 "removeUserMessage"="あなたの知り合いリストから%@ を取り除きますね？";
 /* Alert confirmation message shown when you want to remove more than one contact from your contacts list */
 "removeMultipleUsersMessage"="知り合いリストからユーザー%d人、取り除きますね？";
-/* Success message shown when the selected contacts have been removed */
-"removedContacts"="知り合い%d人除外";
 /* Success message shown when the selected contact has been removed. 'Contact {Name of contact} removed' */
 "removedContact"="知り合い%@ 除外";
 /* Label shown when a contact request is pending */

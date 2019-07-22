@@ -588,8 +588,6 @@
 "removeUserMessage"="Gusto mo bang tanggalin si %@ sa inyong listahan ng contact?";
 /* Alert confirmation message shown when you want to remove more than one contact from your contacts list */
 "removeMultipleUsersMessage"="Gusto mo bang tanggalin ang %d na users sa inyong listahan ng contact?";
-/* Success message shown when the selected contacts have been removed */
-"removedContacts"="%d tinaggal ang contacts";
 /* Success message shown when the selected contact has been removed. 'Contact {Name of contact} removed' */
 "removedContact"="Tinanggal si %@";
 /* Label shown when a contact request is pending */

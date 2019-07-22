@@ -600,8 +600,6 @@
 "removeUserMessage"="Are you sure you want to remove %@ from your contact list?";
 /* Alert confirmation message shown when you want to remove more than one contact from your contacts list */
 "removeMultipleUsersMessage"="Are you sure you want to remove %d users from your contact list?";
-/* Success message shown when the selected contacts have been removed */
-"removedContacts"="%d contacts removed";
 /* Success message shown when the selected contact has been removed. 'Contact {Name of contact} removed' */
 "removedContact"="Contact %@ removed";
 /* Label shown when a contact request is pending */
@@ -2000,3 +1998,5 @@
 "Administrator"="Administrator";
 /* */
 "Transfer"="Transfer";
+/* Error shown when a Business account user (sub-user or admin) tries to remove a contact which is part of the same Business account. %@ will be replaced with the name or email of the account, for example: Jane Appleseed or ja@mega.nz */
+"You cannot remove %@ as a contact as they are part of your Business account."="You cannot remove %@ as a contact as they are part of your Business account.";

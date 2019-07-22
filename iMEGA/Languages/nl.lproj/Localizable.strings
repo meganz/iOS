@@ -588,8 +588,6 @@
 "removeUserMessage"="Weet u zeker dat u %@ uit uw contactenlijst wilt verwijderen?";
 /* Alert confirmation message shown when you want to remove more than one contact from your contacts list */
 "removeMultipleUsersMessage"="Weet u zeker dat u %d gebruikers uit uw contactenlijst wilt verwijderen?";
-/* Success message shown when the selected contacts have been removed */
-"removedContacts"="%d contacten verwijderd";
 /* Success message shown when the selected contact has been removed. 'Contact {Name of contact} removed' */
 "removedContact"="Contact %@ verwijderd";
 /* Label shown when a contact request is pending */
