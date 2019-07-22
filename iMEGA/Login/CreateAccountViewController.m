@@ -362,14 +362,17 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
     
     switch (textField.tag) {
         case FirstNameTextFieldTag:
+            textField.text = [textField.text stringByTrimmingCharactersInSet:NSCharacterSet.whitespaceAndNewlineCharacterSet];
             [self validateFirstName];
             break;
             
         case LastNameTextFieldTag:
+            textField.text = [textField.text stringByTrimmingCharactersInSet:NSCharacterSet.whitespaceAndNewlineCharacterSet];
             [self validateLastName];
             break;
             
         case EmailTextFieldTag:
+            textField.text = [textField.text stringByTrimmingCharactersInSet:NSCharacterSet.whitespaceAndNewlineCharacterSet];
             [self validateEmail];
             break;
             
