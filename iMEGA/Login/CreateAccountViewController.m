@@ -182,6 +182,7 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
 }
 
 - (BOOL)validateFirstName {
+    self.firstNameInputView.inputTextField.text = self.firstNameInputView.inputTextField.text.mnz_removeWhitespacesAndNewlinesFromBothEnds;
     if (self.firstNameInputView.inputTextField.text.mnz_isEmpty) {
         [self.firstNameInputView setErrorState:YES withText:AMLocalizedString(@"nameInvalidFormat", @"Error text shown when you have not entered a correct name")];
         return NO;
@@ -192,6 +193,7 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
 }
 
 - (BOOL)validateLastName {
+    self.lastNameInputView.inputTextField.text = self.lastNameInputView.inputTextField.text.mnz_removeWhitespacesAndNewlinesFromBothEnds;
     if (self.lastNameInputView.inputTextField.text.mnz_isEmpty) {
         [self.lastNameInputView setErrorState:YES withText:AMLocalizedString(@"lastName", @"Hint text for the last name (Placeholder)")];
         return NO;
@@ -202,6 +204,7 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
 }
 
 - (BOOL)validateEmail {
+    self.emailInputView.inputTextField.text = self.emailInputView.inputTextField.text.mnz_removeWhitespacesAndNewlinesFromBothEnds;
     if (self.emailInputView.inputTextField.text.mnz_isValidEmail) {
         [self.emailInputView setErrorState:NO withText:AMLocalizedString(@"emailPlaceholder", @"Hint text to suggest that the user has to write his email")];
         return YES;
@@ -362,17 +365,14 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
     
     switch (textField.tag) {
         case FirstNameTextFieldTag:
-            textField.text = [textField.text stringByTrimmingCharactersInSet:NSCharacterSet.whitespaceAndNewlineCharacterSet];
             [self validateFirstName];
             break;
             
         case LastNameTextFieldTag:
-            textField.text = [textField.text stringByTrimmingCharactersInSet:NSCharacterSet.whitespaceAndNewlineCharacterSet];
             [self validateLastName];
             break;
             
         case EmailTextFieldTag:
-            textField.text = [textField.text stringByTrimmingCharactersInSet:NSCharacterSet.whitespaceAndNewlineCharacterSet];
             [self validateEmail];
             break;
             

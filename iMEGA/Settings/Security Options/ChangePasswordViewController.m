@@ -239,6 +239,7 @@ typedef NS_ENUM(NSUInteger, TextFieldTag) {
 }
 
 - (BOOL)validateEmail {
+    self.theNewEmailInputView.inputTextField.text = self.theNewEmailInputView.inputTextField.text.mnz_removeWhitespacesAndNewlinesFromBothEnds;
     if (!self.theNewEmailInputView.inputTextField.text.mnz_isValidEmail) {
         [self.theNewEmailInputView setErrorState:YES withText:AMLocalizedString(@"emailInvalidFormat", @"Message shown when the user writes an invalid format in the email field")];
         return NO;
@@ -252,6 +253,7 @@ typedef NS_ENUM(NSUInteger, TextFieldTag) {
 }
 
 - (BOOL)validateConfirmEmail {
+    self.confirmEmailInputView.inputTextField.text = self.confirmEmailInputView.inputTextField.text.mnz_removeWhitespacesAndNewlinesFromBothEnds;
     if ([self.confirmEmailInputView.inputTextField.text isEqualToString:self.theNewEmailInputView.inputTextField.text]) {
         [self.confirmEmailInputView setErrorState:NO withText:AMLocalizedString(@"confirmNewEmail", @"Placeholder text to explain that the new email should be re-written on this text field.")];
         return YES;

@@ -114,6 +114,7 @@
 
 - (IBAction)resendTouchUpInside:(UIButton *)sender {
     if ([MEGAReachabilityManager isReachableHUDIfNot]) {
+        self.emailInputView.inputTextField.text = self.emailInputView.inputTextField.text.mnz_removeWhitespacesAndNewlinesFromBothEnds;
         BOOL validEmail = [self.emailInputView.inputTextField.text mnz_isValidEmail];
         if (validEmail) {
             [self.emailInputView.inputTextField resignFirstResponder];
