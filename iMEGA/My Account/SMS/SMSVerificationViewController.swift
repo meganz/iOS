@@ -6,9 +6,15 @@ class SMSVerificationViewController: UIViewController {
     @IBOutlet private var scrollView: UIScrollView!
     @IBOutlet private var headerImageView: UIImageView!
     @IBOutlet private var nextButton: UIButton!
+    @IBOutlet private var phoneNumberLabel: UILabel!
     @IBOutlet private var phoneNumberTextField: UITextField!
     @IBOutlet private var countryNameLabel: UILabel!
     @IBOutlet private var countryCodeLabel: UILabel!
+    @IBOutlet private var errorImageView: UIImageView!
+    @IBOutlet private var errorMessageLabel: UILabel!
+    @IBOutlet private var errorView: UIView!
+    
+    private var currentCallingCountry: CallingCountry?
     
     private var countryCallingCodeDict: [String: MEGAStringList]?
 
@@ -22,6 +28,10 @@ class SMSVerificationViewController: UIViewController {
         disableAutomaticAdjustmentContentInsetsBehavior()
         
         NotificationCenter.default.addObserver(self, selector: #selector(didReceiveTextDidChangeNotification(_:)), name: UITextField.textDidChangeNotification, object: phoneNumberTextField)
+        
+        errorImageView.tintColor = UIColor.mnz_redError()
+        errorMessageLabel.textColor = UIColor.mnz_redError()
+        errorView.isHidden = true
         
         countryNameLabel.text = " "
         countryCodeLabel.text = nil
@@ -49,7 +59,8 @@ class SMSVerificationViewController: UIViewController {
     // MARK: Network calls
     private func loadCountryCallingCodes() {
         SVProgressHUD.show()
-        MEGASdkManager.sharedMEGASdk()?.getCountryCallingCodes(with: MEGAGenericRequestDelegate() { [weak self] request, error in
+        MEGASdkManager.sharedMEGASdk()?.getCountryCallingCodes(with: MEGAGenericRequestDelegate() {
+            [weak self] request, error in
             SVProgressHUD.dismiss()
             if error.type == .apiOk {
                 self?.countryCallingCodeDict = request.megaStringListDictionary
@@ -92,6 +103,53 @@ class SMSVerificationViewController: UIViewController {
         navigationController?.pushViewController(CallingCountriesTableViewController(countryCallingCodeDict: countryCallingCodeDict, delegate: self), animated: true)
     }
     
+    @IBAction private func didTapNextButton() {
+        guard let callingCountry = currentCallingCountry, let localNumber = phoneNumberTextField.text else {
+            return
+        }
+        
+        let phoneNumber = PhoneNumber(callingCountry: callingCountry, localNumber: localNumber)
+        SVProgressHUD.show()
+        MEGASdkManager.sharedMEGASdk()?.sendSMSVerificationCode(toPhoneNumber: phoneNumber.fullPhoneNumber, delegate: MEGAGenericRequestDelegate() {
+            [weak self] request, error in
+            SVProgressHUD.dismiss()
+            if error.type == .apiOk {
+                self?.sendVerificationCodeSucceeded(with: phoneNumber)
+            } else {
+                self?.sendVerificationCodeFailed(with: error)
+            }
+        })
+    }
+    
+    private func sendVerificationCodeSucceeded(with number: PhoneNumber) {
+        phoneNumberLabel.textColor = UIColor.mnz_gray999999()
+        phoneNumberTextField.textColor = UIColor.black
+        errorView.isHidden = true
+        let verificationCodeViewController = VerificationCodeViewController.instantiate(withStoryboardName: "SMSVerification")
+        navigationController?.pushViewController(verificationCodeViewController, animated: true)
+    }
+    
+    private func sendVerificationCodeFailed(with error: MEGAError) {
+        errorView.isHidden = false
+        var errorMessage: String?
+        switch error.type {
+        case .apiETempUnavail: // a limit is reached.
+            errorMessage = "You have reached your limit in getting verification code for today"
+        case .apiEAccess: // your account is already verified with an SMS number
+            errorMessage = "Your account is already verified by an phone number"
+        case .apiEExist: // MEGAErrorTypeApiEExist if the number is already verified for some other account
+            errorMessage = "This number is already associated with a mega account"
+        case .apiEArgs: // the phone number is badly formatted or invalid
+            errorMessage = "The phone number is invalid"
+        default: // other errors
+            errorMessage = "Error happended in sending message to your phone number"
+        }
+        
+        phoneNumberLabel.textColor = UIColor.mnz_redError()
+        phoneNumberTextField.textColor = UIColor.mnz_redError()
+        errorMessageLabel.text = errorMessage
+    }
+    
     private func animateViewAdjustments(withDuration duration: Double, keyboardHeight: CGFloat) {
         navigationController?.setNavigationBarHidden(false, animated: true)
         UIView.animate(withDuration: duration + 0.75, animations: {
@@ -131,6 +189,7 @@ class SMSVerificationViewController: UIViewController {
 
     // MARK: UI configurations
     private func configView(by callingCountry: CallingCountry) {
+        currentCallingCountry = callingCountry
         countryNameLabel.text = callingCountry.displayName
         countryCodeLabel.text = callingCountry.displayCallingCode
     }
