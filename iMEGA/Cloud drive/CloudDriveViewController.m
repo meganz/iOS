@@ -1777,6 +1777,13 @@ static const NSUInteger kMinimumLettersToStartTheSearch = 3;
     }
 }
 
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
+    if (searchBar.text.length < kMinimumLettersToStartTheSearch) {
+        [self search];
+    }
+}
+
+
 #pragma mark - UISearchControllerDelegate
 
 - (void)didPresentSearchController:(UISearchController *)searchController {
@@ -1789,7 +1796,6 @@ static const NSUInteger kMinimumLettersToStartTheSearch = 3;
 
 - (void)updateSearchResultsForSearchController:(UISearchController *)searchController {
     if (searchController.searchBar.text.length >= kMinimumLettersToStartTheSearch) {
-        
         [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(search) object:nil];
         [self performSelector:@selector(search) withObject:nil afterDelay:kSearchTimeDelay];
     } else if ([searchController.searchBar.text isEqualToString:@""]) {
@@ -1807,7 +1813,6 @@ static const NSUInteger kMinimumLettersToStartTheSearch = 3;
         [self.searchNodesArray addObject:n];
     }
     [self reloadData];
-    
 }
 
 #pragma mark - UIDocumentPickerDelegate
