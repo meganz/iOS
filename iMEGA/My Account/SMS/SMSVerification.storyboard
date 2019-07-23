@@ -191,6 +191,44 @@
                                                             </view>
                                                         </subviews>
                                                     </stackView>
+                                                    <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wjd-LL-FkO">
+                                                        <rect key="frame" x="0.0" y="589" width="375" height="0.0"/>
+                                                        <subviews>
+                                                            <stackView opaque="NO" contentMode="scaleToFill" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="pYS-uh-Ndw">
+                                                                <rect key="frame" x="17" y="0.0" width="341" height="0.0"/>
+                                                                <subviews>
+                                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="252" verticalHuggingPriority="251" image="delete" translatesAutoresizingMaskIntoConstraints="NO" id="QCs-So-eiO">
+                                                                        <rect key="frame" x="0.0" y="0.0" width="28" height="0.0"/>
+                                                                    </imageView>
+                                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0B4-P8-hPa">
+                                                                        <rect key="frame" x="33" y="0.0" width="308" height="0.0"/>
+                                                                        <subviews>
+                                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Error message" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1l8-2a-ffA">
+                                                                                <rect key="frame" x="0.0" y="0.0" width="308" height="0.0"/>
+                                                                                <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
+                                                                                <nil key="textColor"/>
+                                                                                <nil key="highlightedColor"/>
+                                                                            </label>
+                                                                        </subviews>
+                                                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                        <constraints>
+                                                                            <constraint firstItem="1l8-2a-ffA" firstAttribute="top" secondItem="0B4-P8-hPa" secondAttribute="top" id="431-zh-foU"/>
+                                                                            <constraint firstAttribute="trailing" secondItem="1l8-2a-ffA" secondAttribute="trailing" id="bue-Xq-3Sx"/>
+                                                                            <constraint firstItem="1l8-2a-ffA" firstAttribute="leading" secondItem="0B4-P8-hPa" secondAttribute="leading" id="hCm-JH-3zl"/>
+                                                                            <constraint firstAttribute="bottom" secondItem="1l8-2a-ffA" secondAttribute="bottom" id="rY4-zz-8fi"/>
+                                                                        </constraints>
+                                                                    </view>
+                                                                </subviews>
+                                                            </stackView>
+                                                        </subviews>
+                                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <constraints>
+                                                            <constraint firstItem="pYS-uh-Ndw" firstAttribute="leading" secondItem="wjd-LL-FkO" secondAttribute="leading" constant="17" id="TAh-Me-2q8"/>
+                                                            <constraint firstAttribute="bottom" secondItem="pYS-uh-Ndw" secondAttribute="bottom" id="bVY-eC-o4G"/>
+                                                            <constraint firstItem="pYS-uh-Ndw" firstAttribute="top" secondItem="wjd-LL-FkO" secondAttribute="top" id="kaV-5J-58u"/>
+                                                            <constraint firstAttribute="trailing" secondItem="pYS-uh-Ndw" secondAttribute="trailing" constant="17" id="pBg-Oc-7oc"/>
+                                                        </constraints>
+                                                    </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NI8-o4-Q7N">
                                                         <rect key="frame" x="0.0" y="599" width="375" height="50"/>
                                                         <subviews>
@@ -208,6 +246,9 @@
                                                                         <integer key="value" value="8"/>
                                                                     </userDefinedRuntimeAttribute>
                                                                 </userDefinedRuntimeAttributes>
+                                                                <connections>
+                                                                    <action selector="didTapNextButton" destination="RUe-vS-5fH" eventType="touchUpInside" id="Tce-9o-2K5"/>
+                                                                </connections>
                                                             </button>
                                                         </subviews>
                                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -254,8 +295,12 @@
                     <connections>
                         <outlet property="countryCodeLabel" destination="l67-zd-SyV" id="gsb-ER-0NF"/>
                         <outlet property="countryNameLabel" destination="zar-d5-eaQ" id="ETJ-oj-H3p"/>
+                        <outlet property="errorImageView" destination="QCs-So-eiO" id="x1p-ux-Pd6"/>
+                        <outlet property="errorMessageLabel" destination="1l8-2a-ffA" id="Ojm-TJ-vwM"/>
+                        <outlet property="errorView" destination="wjd-LL-FkO" id="T3S-Gb-Elv"/>
                         <outlet property="headerImageView" destination="ztT-na-Kbt" id="zu4-VM-HYV"/>
                         <outlet property="nextButton" destination="I1e-G7-G4T" id="EPH-1V-DNh"/>
+                        <outlet property="phoneNumberLabel" destination="WJa-I9-2TH" id="5ho-H5-rup"/>
                         <outlet property="phoneNumberTextField" destination="Ya6-zD-9Hn" id="SEO-I5-YpG"/>
                         <outlet property="scrollView" destination="M42-td-cIX" id="PoP-Iu-ekT"/>
                     </connections>
@@ -269,8 +314,24 @@
             </objects>
             <point key="canvasLocation" x="79.710144927536234" y="-588.61607142857144"/>
         </scene>
+        <!--Verification Code View Controller-->
+        <scene sceneID="Asa-Cw-ikC">
+            <objects>
+                <viewController storyboardIdentifier="VerificationCodeViewController" id="ZVj-3U-FfW" customClass="VerificationCodeViewController" customModule="MEGA" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="5aj-i3-PKT">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="voF-UP-A2s"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="nO2-UL-b56" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="905" y="-589"/>
+        </scene>
     </scenes>
     <resources>
+        <image name="delete" width="28" height="28"/>
         <image name="disclosureIndicatorGray" width="16" height="26"/>
         <image name="verificationCountry" width="24" height="24"/>
         <image name="verificationHeader" width="375" height="291"/>
