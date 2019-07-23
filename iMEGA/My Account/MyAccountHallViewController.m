@@ -170,10 +170,8 @@
 }
 
 - (IBAction)viewAndEditProfileTouchUpInside:(UIButton *)sender {
-    if (MEGASdkManager.sharedMEGASdk.mnz_accountDetails) {
-        ProfileViewController *profileViewController = [[UIStoryboard storyboardWithName:@"Profile" bundle:nil] instantiateViewControllerWithIdentifier:@"ProfileViewControllerID"];
-        [self.navigationController pushViewController:profileViewController animated:YES];
-    }
+    ProfileViewController *profileViewController = [[UIStoryboard storyboardWithName:@"Profile" bundle:nil] instantiateViewControllerWithIdentifier:@"ProfileViewControllerID"];
+    [self.navigationController pushViewController:profileViewController animated:YES];
 }
 
 #pragma mark - UITableViewDataSource

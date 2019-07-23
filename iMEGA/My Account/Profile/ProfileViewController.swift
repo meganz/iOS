@@ -8,6 +8,7 @@ import UIKit
     @IBOutlet weak var avatarImageView: UIImageView!
     @IBOutlet weak var gradientView: GradientView!
     @IBOutlet weak var avatarViewHeightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var tableView: UITableView!
     
     private var avatarExpandedPosition: CGFloat = 0.0
     private var avatarCollapsedPosition: CGFloat = 0.0
@@ -23,7 +24,7 @@ import UIKit
         avatarCollapsedPosition = view.frame.size.height * 0.3;
         avatarViewHeightConstraint.constant = avatarCollapsedPosition;
         
-        nameLabel.text = MEGASdkManager.sharedMEGASdk().myUser.mnz_fullName
+        nameLabel.text = MEGASdkManager.sharedMEGASdk().myUser?.mnz_fullName
         nameLabel.layer.shadowOffset = CGSize(width: 0, height: 1)
         nameLabel.layer.shadowColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.2).cgColor
         nameLabel.layer.shadowRadius = 2.0
@@ -35,7 +36,7 @@ import UIKit
         emailLabel.layer.shadowRadius = 2.0
         emailLabel.layer.shadowOpacity = 1
         
-        avatarImageView.mnz_setImageAvatarOrColor(forUserHandle: MEGASdkManager.sharedMEGASdk().myUser.handle)
+        avatarImageView.mnz_setImageAvatarOrColor(forUserHandle: MEGASdkManager.sharedMEGASdk().myUser?.handle ?? ~0)
         configureGestures()
         
         MEGASdkManager.sharedMEGASdk().add(self)
@@ -64,14 +65,20 @@ import UIKit
     // MARK: Private
     
     private func configureGestures() -> Void {
-        let avatarFilePath: String = Helper.path(forSharedSandboxCacheDirectory: "thumbnailsV3")+"/"+MEGASdk.base64Handle(forUserHandle: MEGASdkManager.sharedMEGASdk().myUser.handle)
+        let avatarFilePath: String = Helper.path(forSharedSandboxCacheDirectory: "thumbnailsV3")+"/"+MEGASdk.base64Handle(forUserHandle: MEGASdkManager.sharedMEGASdk().myUser?.handle ??  ~0)
         
         if FileManager.default.fileExists(atPath: avatarFilePath) {
             let panAvatar = UIPanGestureRecognizer(target: self, action:#selector(handlePan(recognizer:)))
             avatarImageView.addGestureRecognizer(panAvatar)
-            for (_, value) in (avatarImageView.gestureRecognizers?.enumerated())! {
+            guard let enumerated = avatarImageView.gestureRecognizers?.enumerated() else {
+                return
+            }
+            for (_, value) in enumerated {
                 if value.isKind(of: UIPanGestureRecognizer.self) {
-                    value.require(toFail: (navigationController?.interactivePopGestureRecognizer)!)
+                    guard let popGestureRecognized = navigationController?.interactivePopGestureRecognizer else {
+                        return
+                    }
+                    value.require(toFail: popGestureRecognized)
                 }
             }
         }
@@ -176,7 +183,7 @@ import UIKit
         changeAvatarAlertController.popoverPresentationController?.sourceRect = cell.frame;
         changeAvatarAlertController.popoverPresentationController?.sourceView = tableView;
         
-        let avatarFilePath: String = Helper.path(forSharedSandboxCacheDirectory: "thumbnailsV3")+"/"+MEGASdk.base64Handle(forUserHandle: MEGASdkManager.sharedMEGASdk().myUser.handle)
+        let avatarFilePath: String = Helper.path(forSharedSandboxCacheDirectory: "thumbnailsV3")+"/"+MEGASdk.base64Handle(forUserHandle: MEGASdkManager.sharedMEGASdk().myUser?.handle ?? ~0)
         
         if FileManager.default.fileExists(atPath: avatarFilePath) {
             let removeAvatarAlertAction = UIAlertAction.init(title: NSLocalizedString("removeAvatar", comment: "Button to remove avatar. Try to keep the text short (as in English)"), style: .default) { (UIAlertAction) in
@@ -280,7 +287,10 @@ extension ProfileViewController: UITableViewDataSource {
         } else if indexPath.section == 2 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "UpgradePlanID", for: indexPath) as! UpgradePlanTableViewCell
             cell.upgradePlanLabel?.text = NSLocalizedString("upgradeAccount", comment: "Button title which triggers the action to upgrade your MEGA account level")
-            let accountType = MEGASdkManager.sharedMEGASdk().mnz_accountDetails.type
+            guard let accountDetails = MEGASdkManager.sharedMEGASdk().mnz_accountDetails else {
+                return cell
+            }
+            let accountType = accountDetails.type
             switch accountType {
             case .free:
                 cell.accountTypeLabel.text = NSLocalizedString("free", comment: "Text relative to the MEGA account level. UPPER CASE")
@@ -355,7 +365,9 @@ extension ProfileViewController: UITableViewDelegate {
             }
         } else {
             if MEGAReachabilityManager.isReachableHUDIfNot() {
-                let showPasswordReminderDelegate = MEGAShowPasswordReminderRequestDelegate(toLogout: true)
+                guard let showPasswordReminderDelegate = MEGAShowPasswordReminderRequestDelegate(toLogout: true) else {
+                    return
+                }
                 MEGASdkManager.sharedMEGASdk().shouldShowPasswordReminderDialog(atLogout: true, delegate: showPasswordReminderDelegate)
             }
         }
@@ -367,11 +379,16 @@ extension ProfileViewController: UITableViewDelegate {
         let changePasswordViewController = UIStoryboard.init(name: "Settings", bundle: nil).instantiateViewController(withIdentifier: "ChangePasswordViewControllerID") as! ChangePasswordViewController
         changePasswordViewController.changeType = changeType
         if changeType == .email {
-            let delegate = MEGAGenericRequestDelegate { (request, error) in
+            guard let delegate = MEGAGenericRequestDelegate(completion: { (request, error) in
                 changePasswordViewController.isTwoFactorAuthenticationEnabled = request!.flag
                 self.navigationController?.pushViewController(changePasswordViewController, animated: true)
+            }) else {
+                return
             }
-            MEGASdkManager.sharedMEGASdk().multiFactorAuthCheck(withEmail: MEGASdkManager.sharedMEGASdk().myEmail, delegate: delegate)
+            guard let myEmail = MEGASdkManager.sharedMEGASdk().myEmail else {
+                return
+            }
+            MEGASdkManager.sharedMEGASdk().multiFactorAuthCheck(withEmail: myEmail, delegate: delegate)
         } else {
             navigationController?.pushViewController(changePasswordViewController, animated: true)
         }
@@ -415,6 +432,13 @@ extension ProfileViewController: MEGARequestDelegate {
                 FileManager.default.mnz_removeItem(atPath: avatarFilePath)
             }
             avatarImageView.mnz_setImageAvatarOrColor(forUserHandle: myUser.handle)
+            
+        case .MEGARequestTypeAccountDetails:
+            tableView.reloadData()
+            nameLabel.text = myUser.mnz_fullName
+            emailLabel.text = api.myEmail
+            avatarImageView.mnz_setImageAvatarOrColor(forUserHandle: myUser.handle)
+            configureGestures()
             
         default:
             break;
