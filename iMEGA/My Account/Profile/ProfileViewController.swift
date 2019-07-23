@@ -239,12 +239,12 @@ extension ProfileViewController: UITableViewDataSource {
             guard let accountDetails = MEGASdkManager.sharedMEGASdk().mnz_accountDetails else {
                 return nil
             }
-            if accountDetails.type.rawValue > 0 {
+            if accountDetails.type != .free {
                 if accountDetails.subscriptionRenewTime > 0 {
                     let renewDate = Date(timeIntervalSince1970: TimeInterval(accountDetails.subscriptionRenewTime))
                     let renewsExpiresString = NSLocalizedString("Renews on", comment: "Label for the ‘Renews on’ text into the my account page, indicating the renewal date of a subscription - (String as short as possible).")+" "+dateFormatter.string(from: renewDate)
                     return renewsExpiresString
-                } else if accountDetails.proExpiration > 0 {
+                } else if accountDetails.proExpiration > 0 && accountDetails.type != .business {
                     let renewDate = Date(timeIntervalSince1970: TimeInterval(accountDetails.subscriptionRenewTime))
                     let renewsExpiresString = NSLocalizedString("expiresOn", comment: "Text that shows the expiry date of the account PRO level")+" "+dateFormatter.string(from: renewDate)
                     return renewsExpiresString
