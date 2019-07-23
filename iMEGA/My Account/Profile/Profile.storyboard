@@ -312,6 +312,7 @@
                         <outlet property="emailLabel" destination="UnQ-hT-ZRE" id="1ct-LA-yEU"/>
                         <outlet property="gradientView" destination="ojO-za-vaL" id="aIj-vm-cln"/>
                         <outlet property="nameLabel" destination="iGX-E5-iQS" id="2Ab-Nm-X29"/>
+                        <outlet property="tableView" destination="jFa-dc-LTX" id="nDS-9p-Ki0"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="L9l-e7-HR3" userLabel="First Responder" sceneMemberID="firstResponder"/>
