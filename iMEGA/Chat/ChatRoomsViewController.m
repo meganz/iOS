@@ -61,7 +61,7 @@
 @property (assign, nonatomic) NSInteger initDuration;
 @property (strong, nonatomic) MEGAChatRoom *chatRoomOnGoingCall;
 
-@property (nonatomic, strong) NSArray *contactsOnMega;
+@property (assign, nonatomic) NSInteger contactsOnMegaCount;
 
 @end
 
@@ -154,7 +154,7 @@
     }
     
     if (self.chatRoomsType == ChatRoomsTypeDefault) {
-        self.contactsOnMega = [ContactsOnMegaManager.shared fetchContactsOnMega];
+        self.contactsOnMegaCount = ContactsOnMegaManager.shared.contactsOnMegaCount;
     }
     
     [self.tableView reloadData];
@@ -390,8 +390,8 @@
             self.archivedChatEmptyState.hidden = NO;
         }
         if ([CNContactStore authorizationStatusForEntityType:CNEntityTypeContacts] == CNAuthorizationStatusAuthorized) {
-            if (self.contactsOnMega.count) {
-                self.contactsOnMegaEmptyStateTitle.text = [AMLocalizedString(@"You have [X] contacts on MEGA", @"Title showing the user how many of his contacts are using MEGA") stringByReplacingOccurrencesOfString:@"[X]" withString:[NSString stringWithFormat:@"%tu", self.contactsOnMega.count]];
+            if (self.contactsOnMegaCount) {
+                self.contactsOnMegaEmptyStateTitle.text = [AMLocalizedString(@"You have [X] contacts on MEGA", @"Title showing the user how many of his contacts are using MEGA") stringByReplacingOccurrencesOfString:@"[X]" withString:[NSString stringWithFormat:@"%tu", self.contactsOnMegaCount]];
                 self.contactsOnMegaEmptyStateView.hidden = NO;
             }
         } else {
@@ -735,7 +735,7 @@
 - (UITableViewCell *)contactsOnMegaCellForIndexPath:(NSIndexPath *)indexPath {
     ChatRoomCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"contactsOnMegaCell" forIndexPath:indexPath];
     if ([CNContactStore authorizationStatusForEntityType:CNEntityTypeContacts] == CNAuthorizationStatusAuthorized) {
-        cell.chatTitle.text = [AMLocalizedString(@"You have [X] contacts on MEGA", @"Title showing the user how many of his contacts are using MEGA") stringByReplacingOccurrencesOfString:@"[X]" withString:[NSString stringWithFormat:@"%tu", self.contactsOnMega.count]];
+        cell.chatTitle.text = [AMLocalizedString(@"You have [X] contacts on MEGA", @"Title showing the user how many of his contacts are using MEGA") stringByReplacingOccurrencesOfString:@"[X]" withString:[NSString stringWithFormat:@"%tu", self.contactsOnMegaCount]];
     } else {
         cell.chatTitle.text = AMLocalizedString(@"See who's already on MEGA", @"Title encouraging the user to check who of its contacts are using MEGA");
     }
@@ -899,7 +899,7 @@
 }
 
 - (BOOL)isUserContactsSectionVisible {
-    return ([CNContactStore authorizationStatusForEntityType:CNEntityTypeContacts] != CNAuthorizationStatusAuthorized || self.contactsOnMega.count) && [self numberOfChatRooms] > 0;
+    return ([CNContactStore authorizationStatusForEntityType:CNEntityTypeContacts] != CNAuthorizationStatusAuthorized || self.contactsOnMegaCount) && [self numberOfChatRooms] > 0;
 }
 
 #pragma mark - UITableViewDataSource

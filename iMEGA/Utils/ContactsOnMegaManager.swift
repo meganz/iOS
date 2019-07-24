@@ -1,6 +1,18 @@
 
 import Contacts
 
+struct ContactOnMega {
+    var handle = UInt64()
+    var email = String()
+    var name = String()
+
+    init(handle: UInt64, email: String, name: String) {
+        self.handle = handle
+        self.email = email
+        self.name = name
+    }
+}
+
 @objc class ContactsOnMegaManager: NSObject {
     
     enum ContactsOnMegaState {
@@ -11,9 +23,9 @@ import Contacts
     }
     
     var state = ContactsOnMegaState.unknown
-    var countryCallingCodes = [String : MEGAStringList]()
-    var contactsOnMega = [MEGAStringList]()
-    
+    var contactsOnMega = [ContactOnMega]()
+    var contacts = [MEGAUser]()
+
     var completionWhenReady : (() -> Void)?
 
     @objc static let shared: ContactsOnMegaManager = {
@@ -22,11 +34,17 @@ import Contacts
     
     private override init() {}
     
-    @objc func fetchContactsOnMega() -> [Any]? {
+    @objc func contactsOnMegaCount() -> NSInteger {
         if state == .ready {
-            #warning ("this is a mock meanwhile the api returns 0 contacts on mega")
-            return [0, 1, 3]
-//            return contactsOnMega
+            return contactsOnMega.count
+        } else {
+            return 0
+        }
+    }
+    
+    func fetchContactsOnMega() -> [ContactOnMega]? {
+        if state == .ready {
+            return contactsOnMega
         } else {
             return nil
         }
@@ -34,18 +52,18 @@ import Contacts
 
     @objc func configureContactsOnMega(completion: (() -> Void)?) {
         if CNContactStore.authorizationStatus(for: .contacts) == .authorized {
+            guard let userContacts = MEGASdkManager.sharedMEGASdk().contacts() else  { return }
+            for i in 0 ..< userContacts.size.intValue {
+                guard let user = userContacts.user(at: i) else { return }
+                if user.visibility == .visible {
+                    contacts.append(user)
+                }
+            }
+            
             completionWhenReady = completion
             state = .fetching
-            getCountryCallingCodes()
+            getDeviceContacts()
         }
-    }
-    
-    private func getCountryCallingCodes() {
-        let getCountryCallingCodesDelegate = MEGAGetCountryCallingCodesRequestDelegate.init { (request, error) in
-            self.countryCallingCodes = request.megaStringListDictionary as [String : MEGAStringList]
-            self.getDeviceContacts()
-        }
-        MEGASdkManager.sharedMEGASdk()?.getCountryCallingCodes(with: getCountryCallingCodesDelegate)
     }
     
     private func getDeviceContacts() {
@@ -56,19 +74,24 @@ import Contacts
 
         let predicate = CNContact.predicateForContactsInContainer(withIdentifier: contactsStore.defaultContainerIdentifier())
         do {
+            let phoneNumberKit = PhoneNumberKit()
+            
             let contacts = try contactsStore.unifiedContacts(matching: predicate, keysToFetch: keysToFetch)
             for contact in contacts {
                 for label in contact.phoneNumbers {
-                    let countryLocale = label.value.value(forKey: "countryCode") as? String
-                    var phoneNumber = label.value.stringValue.replacingOccurrences(of: " ", with: "")
-                    let name = contact.givenName + " " + contact.familyName
-                    
-                    if !phoneNumber.contains("+") {
-                        guard let countrYCodes = countryCallingCodes[countryLocale!.uppercased()] else {return}
-                        phoneNumber = "+" + countrYCodes.string(at: 0) + phoneNumber
+                    do {
+                        let phoneNumber = try phoneNumberKit.parse(label.value.stringValue)
+                        let formatedNumber = phoneNumberKit.format(phoneNumber, toType: .e164)
+                        let name = contact.givenName + " " + contact.familyName
+
+                        deviceContacts.append([formatedNumber:name])
+
+                        print(phoneNumber)
+                        print(formatedNumber)
                     }
-                    
-                    deviceContacts.append([phoneNumber:name])
+                    catch {
+                        print("Device contact number parser error " + label.value.stringValue)
+                    }
                 }
             }
             
@@ -83,7 +106,22 @@ import Contacts
     private func getContactsOnMega(_ deviceContacts: [[String:String]]) {
         let getRegisteredContactsDelegate = MEGAGetRegisteredContactsRequestDelegate.init { (request, error) in
             if error.type == .apiOk {
-                self.contactsOnMega = request.megaStringTableArray
+                for contactOnMega in request.stringTableArray {
+                    let userHandle = MEGASdk.handle(forBase64UserHandle: contactOnMega[1])
+
+                    if self.contacts.filter({$0.handle == userHandle}).count == 0 {
+                        var contactName = ""
+                        for deviceContact in deviceContacts {
+                            if let name = deviceContact[contactOnMega[0]] {
+                                contactName = name
+                            }
+                        }
+                        let emailRequestDelegate = MEGAChatGenericRequestDelegate.init(completion: { (request, error) in
+                            self.contactsOnMega.append(ContactOnMega(handle: userHandle, email: request.text, name: contactName))
+                        })
+                        MEGASdkManager.sharedMEGAChatSdk().userEmail(byUserHandle: userHandle, delegate: emailRequestDelegate)
+                    }
+                }
                 self.state = .ready
                 if (self.completionWhenReady != nil) {
                     self.completionWhenReady!()
@@ -93,6 +131,6 @@ import Contacts
                 self.state = .error
             }
         }
-        MEGASdkManager.sharedMEGASdk()?.getRegisteredContacts(deviceContacts, delegate: getRegisteredContactsDelegate)
+        MEGASdkManager.sharedMEGASdk().getRegisteredContacts(deviceContacts, delegate: getRegisteredContactsDelegate)
     }
 }
