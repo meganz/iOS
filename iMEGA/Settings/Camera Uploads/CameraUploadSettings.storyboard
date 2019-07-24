@@ -79,14 +79,14 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Upload Videos" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="9Lu-Gx-ccv">
-                                                    <rect key="frame" x="16" y="12" width="111.5" height="20"/>
+                                                    <rect key="frame" x="16" y="12" width="117" height="20.5"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="17"/>
                                                     <color key="textColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Off" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ZZc-KJ-13j">
-                                                    <rect key="frame" x="317" y="12" width="23" height="20"/>
+                                                    <rect key="frame" x="314.5" y="12" width="25.5" height="20.5"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="17"/>
                                                     <color key="textColor" red="0.60000002379999995" green="0.60000002379999995" blue="0.60000002379999995" alpha="1" colorSpace="calibratedRGB"/>
@@ -385,6 +385,7 @@
                         <outlet property="JPGLabel" destination="Sge-3a-yPP" id="Gme-LX-u8e"/>
                         <outlet property="JPGRedCheckmarkImageView" destination="NYC-ui-LoU" id="TiM-cf-dc7"/>
                         <outlet property="advancedCell" destination="Psx-Ud-pgM" id="sYP-AN-xLZ"/>
+                        <outlet property="advancedLabel" destination="A5s-xC-BfJ" id="0Ps-Ux-tf4"/>
                         <outlet property="backgroundUploadLabel" destination="wmG-6X-jAS" id="k3M-b1-lDQ"/>
                         <outlet property="backgroundUploadSwitch" destination="tAf-hK-tam" id="DA9-N1-0sz"/>
                         <outlet property="cameraUploadCell" destination="hGs-DP-h4r" id="F9r-0q-9hX"/>
@@ -546,14 +547,14 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Video quality" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Ia5-rl-AZF">
-                                                    <rect key="frame" x="16" y="12" width="98" height="20"/>
+                                                    <rect key="frame" x="16" y="12" width="104.5" height="20.5"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="17"/>
                                                     <color key="textColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Medium" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="mie-wj-ddk">
-                                                    <rect key="frame" x="278" y="12" width="62" height="20"/>
+                                                    <rect key="frame" x="276" y="12" width="64" height="20.5"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="17"/>
                                                     <color key="textColor" red="0.60000002379999995" green="0.60000002379999995" blue="0.60000002379999995" alpha="1" colorSpace="calibratedRGB"/>
