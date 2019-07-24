@@ -666,11 +666,11 @@
 "options"="옵션";
 /* A hint to show one option is recommended by MEGA */
 "(Recommended)"="(권장)";
-/* Header to introduce how to deal with HEIC format photos in Camera upload */
+/* Header to introduce how to deal with HEIC format photos in Camera Uplaod */
 "SAVE HEIC PHOTOS AS"="HEIC 사진을 다음으로 저장";
 /* Footer for HEIC format section */
 "We recommend JPG, as its the most compatible format for photos."="우리는 가장 호환성이 좋은 형식인, JPG를 추천합니다.";
-/* Header to introduce how to deal with HEVC format videos in Camera upload */
+/* Header to introduce how to deal with HEVC format videos in Camera Uplaod */
 "SAVE HEVC VIDEOS AS"="HEVC 동영상을 다음으로 저장";
 /* Footer for HEVC format section */
 "We recommend H.264, as its the most compatible format for videos."="우리는 가장 호환성이 좋은 형식인, H.264를 추천합니다.";
