@@ -493,7 +493,7 @@
 /* Button title that skips the current action */
 "skipButton"="Saltar";
 /* Text shown to explain what means 'Enable Camera Uploads'. The 'Cloud Drive' is the MEGA section, so please keep consistency */
-"automaticallyBackupYourPhotos"="Guarda tus fotos automáticamente en tu Nube";
+"Automatically backup your photos and videos to the Cloud Drive."="Realizar copias de seguridad automáticas de fotos y videos en la Nube.";
 /* Button title that enables the functionality 'Camera Uploads', which uploads all the photos in your device to MEGA */
 "enableCameraUploadsButton"="Activar las Subidas de la cámara";
 /* Success message shown when Camera Uploads has been enabled */
@@ -504,6 +504,14 @@
 "cameraUploadsPendingFile"="Subida en curso, 1 archivo pendiente";
 /* Message shown while uploading files. Plural. */
 "cameraUploadsPendingFiles"="Subida en curso, %lu archivos pendientes";
+/* Message shown when camera upload paused because of no WiFi. Singular. */
+"Upload paused because of no WiFi, 1 file pending"="Upload paused due to no WiFi connection, 1 file pending";
+/* Message shown when camera upload paused because of no WiFi. Plural. */
+"Upload paused because of no WiFi, %lu files pending"="Upload paused due to no WiFi connection, %lu files pending";
+/* Message shown the pending video file when photos uploaded and video upload is not enabled. Singular. */
+"Photos uploaded, video uploads are off, 1 video not uploaded"="Fotos subidas, las subidas de videos están desactivadas;  1 video no subido";
+/* Message shown the pending video files when photos uploaded and video upload is not enabled. Plural. */
+"Photos uploaded, video uploads are off, %lu videos not uploaded"="Fotos subidas, las subidas de videos están desactivadas;  %lu videos no subidos";
 /* Singular, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 1 file. */
 "indexOfTotalFile"="%1$d de %2$d archivo";
 /* Plural, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 3 files. */
@@ -656,12 +664,74 @@
 "on"="Sí";
 /* Header to explain that 'Upload videos', 'Use cellular connection' and 'Only when charging' are options of the Camera Uploads */
 "options"="Opciones";
+/* A hint to show one option is recommended by MEGA */
+"(Recommended)"="(Recomendado)";
+/* Header to introduce how to deal with HEIC format photos in Camera upload */
+"SAVE HEIC PHOTOS AS"="Guardar fotos HEIC como";
+/* Footer for HEIC format section */
+"We recommend JPG, as its the most compatible format for photos."="Recomendamos JPG, ya que es el formato más compatible para fotos.";
+/* Header to introduce how to deal with HEVC format videos in Camera upload */
+"SAVE HEVC VIDEOS AS"="Guardar videos HEVC como";
+/* Footer for HEVC format section */
+"We recommend H.264, as its the most compatible format for videos."="Recomendamos H.264, ya que es el formato más compatible para videos.";
+/* Footer for video compression quality */
+"Compression quality when to transcode HEVC videos to H.264 format."="Calidad de compresión cuando los videos HEVC se transcodifican a formato H.264.";
 /* Option title to enable upload videos with Camera Uploads */
 "uploadVideosLabel"="Subir vídeos";
 /* Option title to enable Camera Uploads only when the device is charging */
 "onlyWhenChargingLabel"="Solo cargando";
-/* Footer text to explain the Camera Uploads functionality */
-"cameraUploads_footer"="Cuando estén activadas, se subirán fotos y vídeos.";
+/* Footer text for Camera Upload switch section when camera upload is disabled */
+"When enabled, photos will be uploaded."="Al activar, se subirán las fotos.";
+/* Footer text for Camera Upload switch section when only photos upload is enabled */
+"Photos will be uploaded to Camera Uploads folder."="Las fotos se subirán a la carpeta Camera Uploads.";
+/* Footer text for Camera Upload switch section when photos and videos upload is enabled */
+"Photos and videos will be uploaded to Camera Uploads folder."="Las fotos y los videos se subirán a la carpeta Camera Uploads";
+/* Title to show for upload in background */
+"Upload in Background"="Subir en segundo plano";
+/* Title for the location based background upload message */
+"Enable location services for background upload"="Activar los servicios de ubicación para la subida en segundo plano";
+/* Message for the location based background upload when the location data access is not denied by users */
+"MEGA can periodically start camera uploads in background when your location changes."="MEGA puede iniciar las subidas de la cámara en segundo plano cuando tu ubicación cambia.";
+/* Message for the location based background upload when the location data access is denied by users */
+"Please select “Always” at your Location page in Settings, then MEGA can periodically start camera uploads in background when your location changes."="Selecciona \"Siempre\" en la sección Localización de los Ajustes, para que MEGA pueda iniciar las subidas de la cámara en segundo plano cuando tu ubicación cambie.";
+/* Title for turn on a feature */
+"Turn On"="Activar";
+/* Title for turn on a feature in settings */
+"Turn On in Settings"="Activar en Ajustes";
+/* Footer for video uploads switch section when enabled */
+"Videos will be uploaded to the Camera Uploads folder."="Los videos se subirán a la carpeta Camera Uploads.";
+/* Footer for video uploads switch section when disabled */
+"When enabled, videos will be uploaded."="Al activar, se subirán los videos.";
+/* Title for new camera upload feature */
+"New Camera Upload!"="Nuevas opciones para las subidas de la cámara";
+/* A messge for camera upload v2 migration */
+"Now you can choose to convert the HEIF/HEVC photos and videos to the most compatible JPEG/H.264 formats."="Puedes elegir convertir fotos y videos HEIF/HEVC a los formatos JPEG/H.264 que son más compatibles.";
+/* Title for an action to use most compatible formats */
+"Use Most Compatible Formats"="Utilizar los formatos más compatibles";
+/* Title for custom settings */
+"Custom Settings"="Ajustes personalizados";
+/* Title to show when device local storage is full */
+"%@ Storage Full"="Almacenamiento %@ lleno";
+/* Detail for local storage full situation */
+"You do not have enough storage to upload camera. Free up space by deleting unneeded apps, videos or music. You can manage your storage in %@"="No tienes almacenamiento suficiente para más subidas de la cámara. Libera espacio eliminando aplicaciones que no utilizas, videos o música. Puedes gestionar tu almacenamiento en %@";
+/* Navigation path for Storage settings in iOS */
+"Settings > General > %@ Storage"="Ajustes > General > Almacenamiento %@";
+/* Title of the switch to config whether to upload videos for Live Photos */
+"Upload videos for Live Photos"="Upload videos for Live Photos";
+/* Title of the switch to config whether to upload all burst photos */
+"Upload all burst photos"="Upload all burst photos";
+/* Title of the switch to config whether to upload Hidden Album */
+"Upload Hidden Album"="Upload Hidden Album";
+/* Footer description when upload videos for Live Photos is enabled */
+"The video and the photo in each Live Photo will be uploaded."="The photo and video versions of each Live Photo will be uploaded.";
+/* Footer description when upload videos for Live Photos is disabled */
+"Only the photo in each Live Photo will be uploaded."="Only the photo version of each Live Photo will be uploaded.";
+/* Footer description when upload all burst photos is enabled */
+"All the photos from your burst photo sequences will be uploaded."="All the photos from your burst photo sequences will be uploaded.";
+/* Footer description when upload all burst photos is disabled */
+"Only the representative photos from your burst photo sequences will be uploaded."="Only the representative photos from your burst photo sequences will be uploaded.";
+/* Footer description when upload Hidden Album is enabled */
+"The Hidden Album is where you hide photos or videos in your device Photos app."="The Hidden Album is where you hide photos or videos in your device’s Photos app.";
 /* App means “Application” */
 "App version"="Versión de la aplicación";
 /* Title of the label where the SDK version is shown */
@@ -1002,7 +1072,7 @@
 /* Error message shown when the purchase has failed */
 "wrongPurchase"="Compra incorrecta %@ (%ld)";
 /* Error message shown the In App Purchase is disabled in the device Settings */
-"appPurchaseDisabled"="Compras en la App Store desactivadas, por favor actívalas en Ajustes";
+"appPurchaseDisabled"="Compras en la App Store desactivadas, por favor actívalas en los Ajustes de iOS";
 /* Error message shown when the selected product doesn't exist */
 "productNotFound"="Producto %@ no encontrado, por favor contacta con ios@mega.nz";
 /* Alert title to remenber the user that needs to enable purchases */
@@ -1091,6 +1161,8 @@
 "voiceAndVideoCalls"="Llamadas y videollamadas";
 /* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature. */
 "useMobileData"="Usar datos móviles";
+/* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for videos. */
+"Use Mobile Data for Videos"="Usar datos móviles para los vídeos";
 /* A header in the Chat settings. This changes the user's status to Away after some time of inactivity. */
 "autoAway"="Inactividad automática";
 /* */
@@ -1625,7 +1697,7 @@
 /* Title label that explains that the user is going to be asked for the microphone and camera permission */
 "Enable Microphone and Camera"="Activar el micrófono y la cámara";
 /* Detailed explanation of why the user should give permission to access to the camera and the microphone */
-"To make encrypted voice and video calls, allow MEGA access to your Camera and Microphone"="Permite que MEGA acceda a la cámara y al micrófono para mandar notas de voz y hacer llamadas y videollamadas cifradas.";
+"To make encrypted voice and video calls, allow MEGA access to your Camera and Microphone"="Permite que MEGA acceda a la cámara y al micrófono para mandar mensajes de voz y hacer llamadas y videollamadas cifradas.";
 /* Title label that explains that the user is going to be asked for the notifications permission */
 "Enable Notifications"="Activar Notificaciones";
 /* Detailed explanation of why the user should give permission to deliver notifications */
@@ -1689,15 +1761,15 @@
 /* Title shown in a cell to allow the users enable the 'Encrypted Key Rotation' */
 "Enable Encrypted Key Rotation"="Activar rotación de la clave de cifrado";
 /* Label in a cell where you can get the chat link */
-"Get Chat Link"="Obtén enlace del chat";
+"Get Chat Link"="Obtén enlace de chat";
 /* Footer text to explain what means 'Encrypted Key Rotation' */
 "Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages."="La rotación de la clave es ligeramente más segura, pero no podrás crear un enlace del chat y los nuevos participantes no verán los mensajes anteriores.";
 /* Shown as an error message when the user selects "create chat link", but haven't entered a title for the newly created room */
 "To create a chat link you must name the group."="Para crear un enlace del chat, debes ponerle nombre al grupo.";
 /* Label shown in a cell where you can enable a switch to get a chat link */
-"Chat Link"="Enlace del chat";
+"Chat Link"="Enlace de chat";
 /* Message shown when there is an active chat link that can be deleted */
-"Delete Chat Link"="Desactivar enlace del chat";
+"Delete Chat Link"="Desactivar enlace de chat";
 /* Button text in public chat previews that allows the user to join the chat */
 "Join"="Únete";
 /* Text shown in a notification to let the user know that has joined a public chat room after login or account creation */
@@ -1853,7 +1925,7 @@
 /* Tooltip shown when the user presses but does not hold the microphone icon to send a voice clip */
 "Tap and hold %@ to record, release to send"="Mantén pulsado %@ para grabar, suelta para enviar";
 /* Message shown when there is an ongoing call and the user tries to record a voice message */
-"It is not possible to record voice messages while there is a call in progress"="No es posible grabar mensajes de voz mientras hay una llamada en curso.";
+"It is not possible to record voice messages while there is a call in progress"="No es posible grabar mensajes de voz si hay una llamada en curso.";
 /* Text to inform the user there is an active call and is not participating */
 "Ongoing Call"="Llamada en curso";
 /* Message shown when there is an ongoing call and the user tries to play an audio or video */
@@ -1871,7 +1943,7 @@
 /* The label of the toggle switch to indicate that file versioning is enabled. */
 "Enabled"="Activado";
 /* Text button for init a group chat with link. */
-"New Chat Link"="Nuevo enlace del chat";
+"New Chat Link"="Nuevo enlace de chat";
 /* Text button for init a group chat */
 "New group chat"="Nuevo chat de grupo";
 /* Title for the recents section. */
@@ -1901,7 +1973,7 @@
 /* Plural of items which contains a folder. 2 items */
 "items"="elementos";
 /* Shown when an invalid/inexisting/not-available-anymore chat link is opened. */
-"Chat link unavailable"="Enlace del chat no disponible";
+"Chat link unavailable"="Enlace de chat no disponible";
 /* Shown when an inexisting/unavailable/removed link is tried to be opened. */
 "This chat link is no longer available"="Este enlace del chat ya no está disponible";
 /* Text explaining users how the chat links work. */
@@ -1909,7 +1981,7 @@
 /* Subtitle shown in a chat to inform where to tap to enter in the chat details view */
 "Tap here for info"="Toca aquí para más información";
 /* In some cases, a user may try to get the link for a chat room, but if such is not set by an operator - it would say "not link available" and not auto create it. */
-"No chat link available."="Link del chat no disponible.";
+"No chat link available."="Link de chat no disponible.";
 /* Title of a dialog in which we request access to a specific permission, like the Location Services */
 "Please allow access"="Permitir acceso";
 /* Hint shown to the users, when they want to use the Location Services but they are disabled or restricted for MEGA */
@@ -1921,7 +1993,7 @@
 /* Button title to go to the iOS Settings to enable 'Mobile Data' for the MEGA app. */
 "Turn Mobile Data on"="Activar datos móviles";
 /* Extra information shown when the user has disabled the 'Mobile Data' setting for MEGA in the iOS Settings. */
-"You can turn on mobile data for this app in Settings."="Puedes activar los datos móviles para esta aplicación en los Ajustes del dispositivo.";
+"You can turn on mobile data for this app in Settings."="Puede activar los datos móviles para esta aplicación en los ajustes del dispositivo.";
 /* title of the alert dialog when the user is changing the API URL to staging */
 "Change to a test server?"="¿Cambiar a un servidor de prueba?";
 /* text of the alert dialog when the user is changing the API URL to staging */
