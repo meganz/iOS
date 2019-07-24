@@ -363,6 +363,7 @@
 		8311208822C0CD69006F6E36 /* EnterEmailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8311208722C0CD69006F6E36 /* EnterEmailViewController.swift */; };
 		83113495223900CB00647AB4 /* GradientView.m in Sources */ = {isa = PBXBuildFile; fileRef = 83113494223900CB00647AB4 /* GradientView.m */; };
 		8312D72C22BCE38A00C13BCB /* InviteContactViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8312D72B22BCE38A00C13BCB /* InviteContactViewController.swift */; };
+		8315B91622DF52DD000CA232 /* ContactOnMegaTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8315B91522DF52DD000CA232 /* ContactOnMegaTableViewCell.swift */; };
 		8315F20C22C2202400EA40CC /* ContactsOnMegaManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8315F20B22C2202400EA40CC /* ContactsOnMegaManager.swift */; };
 		831844BB22C4D61B00E4C401 /* ContactsPermissionBottomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831844BA22C4D61B00E4C401 /* ContactsPermissionBottomView.swift */; };
 		831844BD22C4D62E00E4C401 /* ContactsPermissionBottomView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 831844BC22C4D62E00E4C401 /* ContactsPermissionBottomView.xib */; };
@@ -1579,6 +1580,7 @@
 		83113493223900CB00647AB4 /* GradientView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GradientView.h; sourceTree = "<group>"; };
 		83113494223900CB00647AB4 /* GradientView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GradientView.m; sourceTree = "<group>"; };
 		8312D72B22BCE38A00C13BCB /* InviteContactViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InviteContactViewController.swift; sourceTree = "<group>"; };
+		8315B91522DF52DD000CA232 /* ContactOnMegaTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactOnMegaTableViewCell.swift; sourceTree = "<group>"; };
 		8315F20B22C2202400EA40CC /* ContactsOnMegaManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsOnMegaManager.swift; sourceTree = "<group>"; };
 		831844BA22C4D61B00E4C401 /* ContactsPermissionBottomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsPermissionBottomView.swift; sourceTree = "<group>"; };
 		831844BC22C4D62E00E4C401 /* ContactsPermissionBottomView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ContactsPermissionBottomView.xib; sourceTree = "<group>"; };
@@ -3864,6 +3866,7 @@
 				415226771A692ECC00EC7BB6 /* ContactTableViewCell.m */,
 				835223AF205957DD00A47438 /* ItemCollectionViewCell.h */,
 				835223B0205957DD00A47438 /* ItemCollectionViewCell.m */,
+				8315B91522DF52DD000CA232 /* ContactOnMegaTableViewCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -5412,6 +5415,7 @@
 				83C570ED22E5BFCF00216896 /* PhoneNumberKit.swift in Sources */,
 				4131997A1BD7BD5D002CD6EA /* DTTimePeriodChain.m in Sources */,
 				B6B959412193A9140064334D /* ThumbnailUploadOperation.m in Sources */,
+				8315B91622DF52DD000CA232 /* ContactOnMegaTableViewCell.swift in Sources */,
 				A85740C52032F6B80033034C /* MOChatDraft+CoreDataClass.m in Sources */,
 				4122C0E61B274E8C001CE833 /* LocalizationSystem.m in Sources */,
 				5BADE39A1F02BD1F009C9AD7 /* MEGANodeList+MNZCategory.m in Sources */,

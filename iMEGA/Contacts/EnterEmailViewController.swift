@@ -136,7 +136,7 @@ class EnterEmailViewController: UIViewController {
         
         let inviteContactRequestDelegate = MEGAInviteContactRequestDelegate.init(numberOfRequests: UInt(tokens.count))
         for email in tokens {
-            MEGASdkManager.sharedMEGASdk()?.inviteContact(withEmail: email, message: "", action: MEGAInviteAction.add, delegate: inviteContactRequestDelegate)
+            MEGASdkManager.sharedMEGASdk().inviteContact(withEmail: email, message: "", action: MEGAInviteAction.add, delegate: inviteContactRequestDelegate)
         }
         
         tokenField.resignFirstResponder()

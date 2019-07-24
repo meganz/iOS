@@ -6,10 +6,12 @@ import UIKit
 @objc class ContactsOnMegaViewController: UIViewController {
 
     var searchController = UISearchController()
-    var contactsOnMega = [Any]()
-    var searchingContactsOnMega = [Any]()
-
+    var contactsOnMega = [ContactOnMega]()
+    var searchingContactsOnMega = [ContactOnMega]()
+    
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var inviteContactView: UIStackView!
+    @IBOutlet weak var inviteContactLabel: UILabel!
     @IBOutlet weak var searchFixedView: UIView!
     @IBOutlet var contactsOnMegaHeader: UIView!
     @IBOutlet weak var contactsOnMegaHeaderTitle: UILabel!
@@ -19,23 +21,31 @@ import UIKit
         super.viewDidLoad()
         
         navigationItem.title = NSLocalizedString("Contacts on MEGA", comment: "Text used as a section title or similar showing the user the phone contacts using MEGA")
-        
+        inviteContactLabel.text = NSLocalizedString("inviteContact", comment: "Text shown when the user tries to make a call and the receiver is not a contact")
         searchController = Helper.customSearchController(withSearchResultsUpdaterDelegate: self, searchBarDelegate: self)
         self.searchController.hidesNavigationBarDuringPresentation = false
         searchFixedView.addSubview(searchController.searchBar)
         
         tableView.register(ContactsPermissionBottomView().nib(), forHeaderFooterViewReuseIdentifier: ContactsPermissionBottomView().bottomReuserIdentifier())
+        
+        tableView.tableFooterView = UIView()  // This remove the separator line between empty cells
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+       
         contactsOnMega = ContactsOnMegaManager.shared.fetchContactsOnMega() ?? []
         tableView.reloadData()
     }
     
+    func hideSearchAndInviteViews() {
+        searchFixedView.isHidden = true
+        inviteContactView.isHidden = true
+    }
+    
     // MARK: Private
     private func numberOfContacts() -> NSInteger {
-        return searchController.isActive ? searchingContactsOnMega.count : contactsOnMega.count
+        return (searchController.isActive && searchController.searchBar.text != "") ? searchingContactsOnMega.count : contactsOnMega.count
     }
     
     // MARK: Actions
@@ -54,14 +64,12 @@ import UIKit
 // MARK: - UISearchResultsUpdating
 extension ContactsOnMegaViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
-        let searchString = searchController.searchBar.text
+        guard let searchString = searchController.searchBar.text else { return }
         if searchController.isActive {
             if searchString == "" {
                 searchingContactsOnMega.removeAll()
             } else {
-                //TODO: filter swifty way
-//                let predicate = NSPredicate(format: "SELF.mnz_fullname contains[c] %@", searchString!)
-//                searchingContactsOnMega = contactsOnMega.filtered(using: predicate)
+                searchingContactsOnMega = contactsOnMega.filter( {$0.name.contains(searchString)} )
             }
         }
         self.tableView.reloadData()
@@ -72,7 +80,7 @@ extension ContactsOnMegaViewController: UISearchResultsUpdating {
 extension ContactsOnMegaViewController: UISearchBarDelegate {
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         searchingContactsOnMega.removeAll()
-        if MEGAReachabilityManager.isReachable() {
+        if !MEGAReachabilityManager.isReachable() {
             searchFixedView.isHidden = true
         }
     }
@@ -89,7 +97,13 @@ extension ContactsOnMegaViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return tableView.dequeueReusableCell(withIdentifier: "contactOnMegaCell", for: indexPath)
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "contactOnMegaCell", for: indexPath) as? ContactOnMegaTableViewCell else {
+            fatalError("Could not dequeue cell with identifier contactOnMegaCell")
+        }
+        
+        cell.configure(for: contactsOnMega[indexPath.row])
+        
+        return cell
     }
 }
 
@@ -142,7 +156,13 @@ extension ContactsOnMegaViewController: UITableViewDelegate {
         }
     }
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return tableView.frame.height
+        switch CNContactStore.authorizationStatus(for: CNEntityType.contacts) {
+        case .notDetermined, .restricted, .denied:
+            return tableView.frame.height
+            
+        default:
+            return 0
+        }
     }
 }
 
