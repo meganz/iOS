@@ -47,14 +47,21 @@
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    
     MEGANode *node = self.cloudDrive.searchController.isActive ? [self.cloudDrive.searchNodesArray objectAtIndex:indexPath.row] : [self.cloudDrive.nodes nodeAtIndex:indexPath.row];
 
     NodeCollectionViewCell *cell = [self.collectionView dequeueReusableCellWithReuseIdentifier:@"NodeCollectionID" forIndexPath:indexPath];
     [cell configureCellForNode:node];
     
+    return cell;
+}
+
+- (void)collectionView:(UICollectionView *)collectionView willDisplayCell:(UICollectionViewCell *)cell forItemAtIndexPath:(NSIndexPath *)indexPath {
+    MEGANode *node = self.cloudDrive.searchController.isActive ? [self.cloudDrive.searchNodesArray objectAtIndex:indexPath.row] : [self.cloudDrive.nodes nodeAtIndex:indexPath.row];
+    
+    NodeCollectionViewCell *nodeCell = (NodeCollectionViewCell *)cell;
+    
     if (self.collectionView.allowsMultipleSelection) {
-        cell.selectImageView.hidden = NO;
+        nodeCell.selectImageView.hidden = NO;
         BOOL selected = NO;
         for (MEGANode *tempNode in self.cloudDrive.selectedNodesArray) {
             if (tempNode.handle == node.handle) {
@@ -62,12 +69,10 @@
                 [self.collectionView selectItemAtIndexPath:indexPath animated:NO scrollPosition:UICollectionViewScrollPositionNone];
             }
         }
-        [cell selectCell:selected];
+        [nodeCell selectCell:selected];
     } else {
-        cell.selectImageView.hidden = YES;
+        nodeCell.selectImageView.hidden = YES;
     }
-    
-    return cell;
 }
 
 #pragma mark - UICollectionViewDelegate
