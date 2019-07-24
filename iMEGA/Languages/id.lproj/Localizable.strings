@@ -113,7 +113,7 @@
 /*  */
 "passwordStrong"="Password ini akan menahan serangan brute-force yang paling rumit. Harap pastikan bahwa anda akan mengingat password anda.";
 /*  */
-"agreeWithTheMEGATermsOfService"="Saya setuju dengan <a href='terms'>Kebijakan Pelayanan MEGA</a>";
+"agreeWithTheMEGATermsOfService"="Saya setuju dengan <a href=\"terms\">Kebijakan Pelayanan MEGA</a>";
 /* Error text shown when you have not entered a correct name */
 "nameInvalidFormat"="Masukan nama yang benar";
 /* Error text shown when you have not written the same password */
@@ -493,7 +493,7 @@
 /* Button title that skips the current action */
 "skipButton"="Lewati";
 /* Text shown to explain what means 'Enable Camera Uploads'. The 'Cloud Drive' is the MEGA section, so please keep consistency */
-"automaticallyBackupYourPhotos"="Backup foto anda ke Cloud Drive secara otomatis";
+"Automatically backup your photos and videos to the Cloud Drive."="Cadangkan foto dan video Anda secara otomatis ke Drive Cloud Anda.";
 /* Button title that enables the functionality 'Camera Uploads', which uploads all the photos in your device to MEGA */
 "enableCameraUploadsButton"="Aktifkan Upload Kamera";
 /* Success message shown when Camera Uploads has been enabled */
@@ -504,6 +504,14 @@
 "cameraUploadsPendingFile"="Unggah sedang berlangsung, 1 file tertunda";
 /* Message shown while uploading files. Plural. */
 "cameraUploadsPendingFiles"="Unggah sedang berlangsung, %lu file tertunda";
+/* Message shown when camera upload paused because of no WiFi. Singular. */
+"Upload paused because of no WiFi, 1 file pending"="Upload paused due to no WiFi connection, 1 file pending";
+/* Message shown when camera upload paused because of no WiFi. Plural. */
+"Upload paused because of no WiFi, %lu files pending"="Upload paused due to no WiFi connection, %lu files pending";
+/* Message shown the pending video file when photos uploaded and video upload is not enabled. Singular. */
+"Photos uploaded, video uploads are off, 1 video not uploaded"="Foto diunggah, unggahan video tidak aktif; 1 video tidak diunggah";
+/* Message shown the pending video files when photos uploaded and video upload is not enabled. Plural. */
+"Photos uploaded, video uploads are off, %lu videos not uploaded"="Foto diunggah, unggahan video tidak aktif; %lu video tidak diunggah";
 /* Singular, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 1 file. */
 "indexOfTotalFile"="%1$d dari %2$d file";
 /* Plural, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 3 files. */
@@ -656,12 +664,74 @@
 "on"="On";
 /* Header to explain that 'Upload videos', 'Use cellular connection' and 'Only when charging' are options of the Camera Uploads */
 "options"="Pilihan";
+/* A hint to show one option is recommended by MEGA */
+"(Recommended)"="(Disarankan)";
+/* Header to introduce how to deal with HEIC format photos in Camera upload */
+"SAVE HEIC PHOTOS AS"="Simpan foto HEIC sebagai";
+/* Footer for HEIC format section */
+"We recommend JPG, as its the most compatible format for photos."="Kami merekomendasikan JPG, karena ini adalah format yang paling kompatibel untuk foto.";
+/* Header to introduce how to deal with HEVC format videos in Camera upload */
+"SAVE HEVC VIDEOS AS"="Simpan video HEVC sebagai";
+/* Footer for HEVC format section */
+"We recommend H.264, as its the most compatible format for videos."="Kami merekomendasikan H.264, karena ini adalah format yang paling kompatibel untuk video.";
+/* Footer for video compression quality */
+"Compression quality when to transcode HEVC videos to H.264 format."="Kualitas kompresi ketika video HEVC ditranskode ke format H.264.";
 /* Option title to enable upload videos with Camera Uploads */
 "uploadVideosLabel"="Upload video";
 /* Option title to enable Camera Uploads only when the device is charging */
 "onlyWhenChargingLabel"="Hanya saat sedang men-cas";
-/* Footer text to explain the Camera Uploads functionality */
-"cameraUploads_footer"="Saat diaktifkan, foto dan video akan diunggah.";
+/* Footer text for Camera Upload switch section when camera upload is disabled */
+"When enabled, photos will be uploaded."="Jika diaktifkan, foto akan diunggah.";
+/* Footer text for Camera Upload switch section when only photos upload is enabled */
+"Photos will be uploaded to Camera Uploads folder."="Foto akan diunggah ke folder Unggah Kamera.";
+/* Footer text for Camera Upload switch section when photos and videos upload is enabled */
+"Photos and videos will be uploaded to Camera Uploads folder."="Foto dan video akan diunggah ke folder Unggah Kamera.";
+/* Title to show for upload in background */
+"Upload in Background"="Unggah di Latar Belakang";
+/* Title for the location based background upload message */
+"Enable location services for background upload"="Aktifkan layanan lokasi untuk unggahan latar belakang";
+/* Message for the location based background upload when the location data access is not denied by users */
+"MEGA can periodically start camera uploads in background when your location changes."="MEGA dapat secara berkala memulai unggahan kamera di latar belakang saat lokasi Anda berubah.";
+/* Message for the location based background upload when the location data access is denied by users */
+"Please select “Always” at your Location page in Settings, then MEGA can periodically start camera uploads in background when your location changes."="Silakan pilih \"Selalu\" di halaman Lokasi Anda di Pengaturan, sehingga MEGA dapat secara berkala memulai unggahan kamera di latar belakang saat lokasi Anda berubah.";
+/* Title for turn on a feature */
+"Turn On"="Nyalakan";
+/* Title for turn on a feature in settings */
+"Turn On in Settings"="Aktifkan di Pengaturan";
+/* Footer for video uploads switch section when enabled */
+"Videos will be uploaded to the Camera Uploads folder."="Video akan diunggah ke folder Unggah Kamera.";
+/* Footer for video uploads switch section when disabled */
+"When enabled, videos will be uploaded."="Jika diaktifkan, video akan diunggah.";
+/* Title for new camera upload feature */
+"New Camera Upload!"="Opsi Unggah Kamera Baru!";
+/* A messge for camera upload v2 migration */
+"Now you can choose to convert the HEIF/HEVC photos and videos to the most compatible JPEG/H.264 formats."="Sekarang Anda dapat memilih untuk mengonversi foto dan video HEIF / HEVC ke format JPEG / H.264 yang lebih luas kompatibel.";
+/* Title for an action to use most compatible formats */
+"Use Most Compatible Formats"="Gunakan Format Paling Kompatibel";
+/* Title for custom settings */
+"Custom Settings"="Pengaturan Kustom";
+/* Title to show when device local storage is full */
+"%@ Storage Full"="%@ Penyimpanan Penuh";
+/* Detail for local storage full situation */
+"You do not have enough storage to upload camera. Free up space by deleting unneeded apps, videos or music. You can manage your storage in %@"="Anda tidak memiliki cukup penyimpanan untuk unggahan kamera lebih lanjut. Kosongkan ruang dengan menghapus aplikasi, video, atau musik yang tidak dibutuhkan. Anda dapat mengelola penyimpanan Anda di %@";
+/* Navigation path for Storage settings in iOS */
+"Settings > General > %@ Storage"="Pengaturan> Umum> %@ Penyimpanan";
+/* Title of the switch to config whether to upload videos for Live Photos */
+"Upload videos for Live Photos"="Upload videos for Live Photos";
+/* Title of the switch to config whether to upload all burst photos */
+"Upload all burst photos"="Upload all burst photos";
+/* Title of the switch to config whether to upload Hidden Album */
+"Upload Hidden Album"="Upload Hidden Album";
+/* Footer description when upload videos for Live Photos is enabled */
+"The video and the photo in each Live Photo will be uploaded."="The photo and video versions of each Live Photo will be uploaded.";
+/* Footer description when upload videos for Live Photos is disabled */
+"Only the photo in each Live Photo will be uploaded."="Only the photo version of each Live Photo will be uploaded.";
+/* Footer description when upload all burst photos is enabled */
+"All the photos from your burst photo sequences will be uploaded."="All the photos from your burst photo sequences will be uploaded.";
+/* Footer description when upload all burst photos is disabled */
+"Only the representative photos from your burst photo sequences will be uploaded."="Only the representative photos from your burst photo sequences will be uploaded.";
+/* Footer description when upload Hidden Album is enabled */
+"The Hidden Album is where you hide photos or videos in your device Photos app."="The Hidden Album is where you hide photos or videos in your device’s Photos app.";
 /* App means “Application” */
 "App version"="Versi App";
 /* Title of the label where the SDK version is shown */
@@ -1091,6 +1161,8 @@
 "voiceAndVideoCalls"="Suara dan Panggilan Suara";
 /* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature. */
 "useMobileData"="Gunakan Mobile Data";
+/* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for videos. */
+"Use Mobile Data for Videos"="Gunakan Data Seluler untuk Video";
 /* A header in the Chat settings. This changes the user's status to Away after some time of inactivity. */
 "autoAway"="Auto-away";
 /* */
@@ -1625,7 +1697,7 @@
 /* Title label that explains that the user is going to be asked for the microphone and camera permission */
 "Enable Microphone and Camera"="Aktifkan Mikrofon dan Kamera";
 /* Detailed explanation of why the user should give permission to access to the camera and the microphone */
-"To make encrypted voice and video calls, allow MEGA access to your Camera and Microphone"="Untuk membuat panggilan suara dan video terenkripsi, izinkan akses MEGA ke Kamera dan Mikrofon Anda";
+"To make encrypted voice and video calls, allow MEGA access to your Camera and Microphone"="Untuk mengirim pesan suara dan melakukan panggilan suara dan video terenkripsi, izinkan akses MEGA ke Kamera dan Mikrofon Anda";
 /* Title label that explains that the user is going to be asked for the notifications permission */
 "Enable Notifications"="Aktifkan Notifikasi";
 /* Detailed explanation of why the user should give permission to deliver notifications */
@@ -1689,13 +1761,13 @@
 /* Title shown in a cell to allow the users enable the 'Encrypted Key Rotation' */
 "Enable Encrypted Key Rotation"="Nyalakan Encrypted Key Rotation";
 /* Label in a cell where you can get the chat link */
-"Get Chat Link"="Get chat link";
+"Get Chat Link"="Dapatkan tautan obrolan";
 /* Footer text to explain what means 'Encrypted Key Rotation' */
 "Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages."="Rotasi tombol sedikit lebih aman, tetapi tidak memungkinkan Anda membuat tautan obrolan dan peserta baru tidak akan melihat pesan sebelumnya.";
 /* Shown as an error message when the user selects "create chat link", but haven't entered a title for the newly created room */
-"To create a chat link you must name the group."="To create a chat link you must name the group.";
+"To create a chat link you must name the group."="Untuk membuat tautan obrolan, Anda harus memberi nama grup.";
 /* Label shown in a cell where you can enable a switch to get a chat link */
-"Chat Link"="Chat link";
+"Chat Link"="Tautan obrolan";
 /* Message shown when there is an active chat link that can be deleted */
 "Delete Chat Link"="Hapus Tautan Obrolan";
 /* Button text in public chat previews that allows the user to join the chat */
@@ -1705,7 +1777,7 @@
 /* Users previewing a public chat */
 "Observers"="Pengamat";
 /* Alert message shown while deleting a chat link, warning about the consequences */
-"This conversation will no longer be accessible through the link you are about to delete."="This conversation will no longer be accessible through the chat link once it has been removed.";
+"This conversation will no longer be accessible through the link you are about to delete."="Percakapan ini tidak lagi dapat diakses melalui tautan obrolan setelah dihapus.";
 /* Management message shown in a chat when the user %@ enables the 'Encrypted Key Rotation' */
 "%@ enabled Encrypted Key Rotation"="%@ diaktifkan Rotasi Kunci Terenkripsi";
 /* Management message shown in a chat when the user %@ creates a public link for the chat */
@@ -1809,7 +1881,7 @@
 /* The text of a notification indicating that a file or folder that was taken down has now been restored due to a successful counter-notice. The %1 placeholder will be replaced with the text ‘file’ or ‘folder’. The %2 will be replaced with the name of the file or folder. */
 "Your taken down %1 (%2) has been reinstated."="Pencopotan %1 (%2) telah dikembalikan.";
 /* Text shown when a notification or the last message of a chat corresponds to a voice clip */
-"Voice message"="Voice message";
+"Voice message"="Pesan suara";
 /* Error message shown to user when a copy/import operation would take them over their storage limit. */
 "This action can not be completed as it would take you over your current storage limit"="Tindakan ini tidak dapat diselesaikan karena akan membawa Anda melewati batas penyimpanan Anda saat ini";
 /* uploads over storage quota warning dialog title */
@@ -1827,33 +1899,33 @@
 /* */
 "Yesterday"="Kemarin";
 /* Title of the button to share a location in a chat */
-"Send This Location"="Send This Location";
+"Send This Location"="Kirim Lokasi Ini";
 /* Title of the alert that allows change between different maps: Standard, Satellite or Hybrid. */
-"Map settings"="Map settings";
+"Map settings"="Pengaturan peta";
 /* Type of data displayed in a map view. A street map that shows the position of all roads and some road names. */
 "Standard"="Standar";
 /* Type of data displayed in a map view. Satellite imagery of the area. */
-"Satellite"="Satellite";
+"Satellite"="Satelit";
 /* Type of data displayed in a map view. A satellite image of the area with road and road name information layered on top. */
 "Hybrid"="Hybrid";
 /* Label to give feedback to the user when he is going to share his location, indicating that it may not be the exact location. */
-"Accurate to %d meters"="Accurate to %d meters";
+"Accurate to %d meters"="Akurat hingga %d meter";
 /* Alert title shown when the user opens a shared Geolocation for the first time from any client, we will show a confirmation dialog warning the user that he is now leaving the E2EE paradigm. */
-"Send Location"="Send Location";
+"Send Location"="Kirim Lokasi";
 /* Message shown when the user opens a shared Geolocation for the first time from any client, we will show a confirmation dialog warning the user that he is now leaving the E2EE paradigm. */
-"This location will be opened using a third party maps provider outside the end-to-end encrypted MEGA platform."="This location will be opened using a third party maps provider outside the end-to-end encrypted MEGA platform.";
+"This location will be opened using a third party maps provider outside the end-to-end encrypted MEGA platform."="Lokasi ini akan dibuka menggunakan penyedia peta pihak ketiga di luar platform MEGA terenkripsi ujung ke ujung.";
 /* Text shown in location-type messages */
-"Pinned Location"="Pinned Location";
+"Pinned Location"="Lokasi yang Disematkan";
 /* Plural of participant. 2 participants */
 "%d participants"="%d peserta";
 /* Singular of participant. 1 participant */
 "%d participant"="%d peserta";
 /* Text shown in the chat toolbar while the user is recording a voice clip. The < character should be > in RTL languages. */
-"< Slide to cancel"="< Slide to cancel";
+"< Slide to cancel"="< Geser untuk membatalkan";
 /* Tooltip shown when the user presses but does not hold the microphone icon to send a voice clip */
-"Tap and hold %@ to record, release to send"="Tap and hold %@ to record, release to send";
+"Tap and hold %@ to record, release to send"="Ketuk dan tahan %@ untuk merekam, lepaskan untuk mengirim";
 /* Message shown when there is an ongoing call and the user tries to record a voice message */
-"It is not possible to record voice messages while there is a call in progress"="It is not possible to record voice messages while there is a call in progress.";
+"It is not possible to record voice messages while there is a call in progress"="Tidak mungkin merekam pesan suara saat ada panggilan yang sedang berlangsung.";
 /* Text to inform the user there is an active call and is not participating */
 "Ongoing Call"="Panggilan yang sedang berlangsung";
 /* Message shown when there is an ongoing call and the user tries to play an audio or video */
@@ -1871,7 +1943,7 @@
 /* The label of the toggle switch to indicate that file versioning is enabled. */
 "Enabled"="Diaktifkan";
 /* Text button for init a group chat with link. */
-"New Chat Link"="New chat link";
+"New Chat Link"="Tautan obrolan baru";
 /* Text button for init a group chat */
 "New group chat"="Obrolan grup baru";
 /* Title for the recents section. */
@@ -1901,27 +1973,27 @@
 /* Plural of items which contains a folder. 2 items */
 "items"="items";
 /* Shown when an invalid/inexisting/not-available-anymore chat link is opened. */
-"Chat link unavailable"="Chat link unavailable";
+"Chat link unavailable"="Tautan obrolan tidak tersedia";
 /* Shown when an inexisting/unavailable/removed link is tried to be opened. */
-"This chat link is no longer available"="This chat link is no longer available";
+"This chat link is no longer available"="Tautan obrolan ini tidak lagi tersedia";
 /* Text explaining users how the chat links work. */
-"People can join your group by using this link."="People can join your group by using this link.";
+"People can join your group by using this link."="Orang-orang dapat bergabung dengan grup Anda dengan menggunakan tautan ini.";
 /* Subtitle shown in a chat to inform where to tap to enter in the chat details view */
-"Tap here for info"="Tap here for info";
+"Tap here for info"="Ketuk di sini untuk info";
 /* In some cases, a user may try to get the link for a chat room, but if such is not set by an operator - it would say "not link available" and not auto create it. */
-"No chat link available."="No chat link available.";
+"No chat link available."="Tautan obrolan tidak tersedia.";
 /* Title of a dialog in which we request access to a specific permission, like the Location Services */
-"Please allow access"="Please allow access";
+"Please allow access"="mohon izinkan akses";
 /* Hint shown to the users, when they want to use the Location Services but they are disabled or restricted for MEGA */
-"Please go to the Privacy section in your device’s Setting. Enable Location Services and set MEGA to While Using the App or Always."="Please go to the Privacy section in your device’s Settings. Enable Location Services and set MEGA to While Using the App or Always.";
+"Please go to the Privacy section in your device’s Setting. Enable Location Services and set MEGA to While Using the App or Always."="Silakan buka bagian Privasi di Pengaturan perangkat Anda. Aktifkan Layanan Lokasi dan atur MEGA ke Saat Menggunakan Aplikasi atau Selalu.";
 /* Location Usage Description. In order to protect user's privacy, Apple requires a specific string explaining why location will be accessed. */
-"MEGA accesses your location when you elect to share it with your contacts."="MEGA accesses your location when you elect to share it with your contacts.";
+"MEGA accesses your location when you elect to share it with your contacts."="MEGA mengakses lokasi Anda ketika Anda memilih untuk membaginya dengan kontak Anda.";
 /* Information shown when the user has disabled the 'Mobile Data' setting for MEGA in the iOS Settings. */
-"Mobile Data is turned off"="Mobile Data is turned off";
+"Mobile Data is turned off"="Data Seluler dimatikan";
 /* Button title to go to the iOS Settings to enable 'Mobile Data' for the MEGA app. */
-"Turn Mobile Data on"="Turn Mobile Data on";
+"Turn Mobile Data on"="Aktifkan Data Seluler";
 /* Extra information shown when the user has disabled the 'Mobile Data' setting for MEGA in the iOS Settings. */
-"You can turn on mobile data for this app in Settings."="You can turn on mobile data for this App in Settings.";
+"You can turn on mobile data for this app in Settings."="Anda dapat mengaktifkan data seluler untuk Aplikasi ini di Pengaturan perangkat.";
 /* title of the alert dialog when the user is changing the API URL to staging */
 "Change to a test server?"="Ubah ke server uji?";
 /* text of the alert dialog when the user is changing the API URL to staging */
