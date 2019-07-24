@@ -34,6 +34,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *backgroundUploadLabel;
 @property (weak, nonatomic) IBOutlet UISwitch *backgroundUploadSwitch;
 
+@property (weak, nonatomic) IBOutlet UILabel *advancedLabel;
+
 @property (weak, nonatomic) IBOutlet UITableViewCell *cameraUploadCell;
 @property (weak, nonatomic) IBOutlet UITableViewCell *videoUploadInfoCell;
 @property (weak, nonatomic) IBOutlet UITableViewCell *videoUploadSwitchCell;
@@ -69,6 +71,7 @@
     self.useCellularConnectionForVideosLabel.text = AMLocalizedString(@"Use Mobile Data for Videos", nil);
 
     self.backgroundUploadLabel.text = AMLocalizedString(@"Upload in Background", nil);
+    self.advancedLabel.text = AMLocalizedString(@"advanced", nil);
     
     [self configImageFormatTexts];
     
