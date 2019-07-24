@@ -666,11 +666,11 @@
 "options"="オプション";
 /* A hint to show one option is recommended by MEGA */
 "(Recommended)"="（推奨）";
-/* Header to introduce how to deal with HEIC format photos in Camera upload */
+/* Header to introduce how to deal with HEIC format photos in Camera Uplaod */
 "SAVE HEIC PHOTOS AS"="HEIC写真の保存形式";
 /* Footer for HEIC format section */
 "We recommend JPG, as its the most compatible format for photos."="JPGは写真と最も互換性のある形式であるため、お勧めいたします。";
-/* Header to introduce how to deal with HEVC format videos in Camera upload */
+/* Header to introduce how to deal with HEVC format videos in Camera Uplaod */
 "SAVE HEVC VIDEOS AS"="HEVC動画の保存形式";
 /* Footer for HEVC format section */
 "We recommend H.264, as its the most compatible format for videos."="H.264は動画で最も互換性のある形式であるため、お勧めいたします。";

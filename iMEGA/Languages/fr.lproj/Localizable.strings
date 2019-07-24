@@ -666,11 +666,11 @@
 "options"="Options";
 /* A hint to show one option is recommended by MEGA */
 "(Recommended)"="(recommandée)";
-/* Header to introduce how to deal with HEIC format photos in Camera upload */
+/* Header to introduce how to deal with HEIC format photos in Camera Uplaod */
 "SAVE HEIC PHOTOS AS"="Enregistrer les photos HEIC en tant que";
 /* Footer for HEIC format section */
 "We recommend JPG, as its the most compatible format for photos."="Nous recommandons JPG, car c’est le format le plus compatible pour les photos.";
-/* Header to introduce how to deal with HEVC format videos in Camera upload */
+/* Header to introduce how to deal with HEVC format videos in Camera Uplaod */
 "SAVE HEVC VIDEOS AS"="Enregistrer les vidéos HEVC en tant que";
 /* Footer for HEVC format section */
 "We recommend H.264, as its the most compatible format for videos."="Nous recommandons H.264, car c’est le format le plus compatible pour les vidéos.";

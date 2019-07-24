@@ -666,11 +666,11 @@
 "options"="選擇";
 /* A hint to show one option is recommended by MEGA */
 "(Recommended)"="（推薦的）";
-/* Header to introduce how to deal with HEIC format photos in Camera upload */
+/* Header to introduce how to deal with HEIC format photos in Camera Uplaod */
 "SAVE HEIC PHOTOS AS"="將HEIC相片儲存為";
 /* Footer for HEIC format section */
 "We recommend JPG, as its the most compatible format for photos."="我們建議使用JPG，因為它是最相容的相片格式。";
-/* Header to introduce how to deal with HEVC format videos in Camera upload */
+/* Header to introduce how to deal with HEVC format videos in Camera Uplaod */
 "SAVE HEVC VIDEOS AS"="將HEVC影片儲存為";
 /* Footer for HEVC format section */
 "We recommend H.264, as its the most compatible format for videos."="我們建議使用H.264，因為它是最相容的影片格式。";

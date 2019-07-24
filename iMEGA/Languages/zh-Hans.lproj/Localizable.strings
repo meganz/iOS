@@ -505,9 +505,9 @@
 /* Message shown while uploading files. Plural. */
 "cameraUploadsPendingFiles"="正在上传，%lu 文件待处理";
 /* Message shown when camera upload paused because of no WiFi. Singular. */
-"Upload paused because of no WiFi, 1 file pending"="无网络连接，上传已暂停，1个文件待上传";
+"Upload paused because of no WiFi, 1 file pending"="无WiFi连接，上传已暂停，1个文件待上传";
 /* Message shown when camera upload paused because of no WiFi. Plural. */
-"Upload paused because of no WiFi, %lu files pending"="无网络连接，上传已暂停，%lu个文件待上传";
+"Upload paused because of no WiFi, %lu files pending"="无WiFi连接，上传已暂停，%lu个文件待上传";
 /* Message shown the pending video file when photos uploaded and video upload is not enabled. Singular. */
 "Photos uploaded, video uploads are off, 1 video not uploaded"="照片上传，视频上传已关闭；1个视频未上传";
 /* Message shown the pending video files when photos uploaded and video upload is not enabled. Plural. */
@@ -666,11 +666,11 @@
 "options"="选择";
 /* A hint to show one option is recommended by MEGA */
 "(Recommended)"="（推荐）";
-/* Header to introduce how to deal with HEIC format photos in Camera upload */
+/* Header to introduce how to deal with HEIC format photos in Camera Uplaod */
 "SAVE HEIC PHOTOS AS"="将HEIC照片保存为";
 /* Footer for HEIC format section */
 "We recommend JPG, as its the most compatible format for photos."="我们建议您使用最兼容的JPG照片格式。";
-/* Header to introduce how to deal with HEVC format videos in Camera upload */
+/* Header to introduce how to deal with HEVC format videos in Camera Uplaod */
 "SAVE HEVC VIDEOS AS"="将HEVC视频保存为";
 /* Footer for HEVC format section */
 "We recommend H.264, as its the most compatible format for videos."="我们建议您使用最兼容的H.264视频格式。";
@@ -1160,9 +1160,9 @@
 /* Section title of a button where you can enable mobile data for voice and video calls. */
 "voiceAndVideoCalls"="视频与通话";
 /* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature. */
-"useMobileData"="使用行动数据";
+"useMobileData"="使用移动数据";
 /* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for videos. */
-"Use Mobile Data for Videos"="使用移动数据播放视频";
+"Use Mobile Data for Videos"="使用移动数据上传视频";
 /* A header in the Chat settings. This changes the user's status to Away after some time of inactivity. */
 "autoAway"="自动显示为离开";
 /* */
