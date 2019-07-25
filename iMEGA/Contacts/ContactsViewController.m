@@ -1730,7 +1730,11 @@
 #pragma mark - UIGestureRecognizerDelegate
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
-    return YES;
+    if (gestureRecognizer == self.panOnTable) {
+        return YES;
+    } else {
+        return NO;
+    }
 }
 
 #pragma mark - MEGAChatDelegate
