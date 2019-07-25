@@ -11,7 +11,7 @@
 /*  */
 "error"="Erreur";
 /*  */
-"name"="Name";
+"name"="Nom";
 /* Caption of a button to edit the files that are selected */
 "edit"="Modifier";
 /* State shown if something is 'Saved' (String as short as possible). */
@@ -85,7 +85,7 @@
 /* Message shown when the user writes an invalid format in the email field */
 "emailInvalidFormat"="Saisir une adresse courriel valide";
 /* Add contacts and share dialog error message when user try to add wrong email address */
-"theEmailAddressFormatIsInvalid"="Le format de l'adresse courriel est invalide";
+"theEmailAddressFormatIsInvalid"="Le format de l’adresse courriel est invalide";
 /* Message shown when the user enters a wrong password */
 "passwordInvalidFormat"="Saisir un mot de passe valide";
 /* Hint text to suggest that the user has to write his email */
@@ -621,7 +621,7 @@
 /* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected, the folder you want inside your Cloud Drive */
 "shareFolder"="Partager un dossier";
 /* Button title which, if tapped, will trigger the action of sharing the folders selected */
-"shareFolders"="Partager les dossiers";
+"shareFolders"="Partager des dossiers";
 /* Button that allows you to select a given folder */
 "select"="Sélectionner";
 /* Title of the view that shows the kind of permissions (Read Only, Read & Write or Full Access) that you can give to a shared folder */
@@ -868,7 +868,7 @@
 /* Hint text to suggest that the user have to write the new email on it */
 "newEmail"="Nouvelle adresse courriel";
 /* Button text for the user to confirm their change of email address. */
-"confirmEmail"="Confirmer l'adresse courriel";
+"confirmEmail"="Confirmer l’adresse courriel";
 /* Hint text where the user have to re-write the new email to confirm it */
 "confirmNewEmail"="Confirmez la nouvelle adresse courriel";
 /* The title of the alert dialog to change the email associated to an account. */
@@ -956,7 +956,7 @@
 /*  */
 "howItWorksMain"="Votre ami doit créer un compte gratuit sur MEGA et [S]installer au moins une application client MEGA[/S] (soit le client de synchro, soit l’une de nos applis mobiles)";
 /*  */
-"howItWorksSecondary"="Vous pouvez contacter votre ami de n'importe quelle façon. Le quota vous sera attribué si vous avez saisi ici l'adresse courriel de votre ami avant qu'il ne s'inscrive avec cette adresse.";
+"howItWorksSecondary"="Vous pouvez contacter votre ami de n’importe quelle façon. Le quota vous sera attribué si vous avez saisi ici l’adresse courriel de votre ami avant qu’il ne s’inscrive avec cette adresse.";
 /* A message which is shown once someone has invited a friend as part of the achievements program. */
 "howItWorksTertiary"="Vous ne recevrez aucun crédit si vous invitez quelqu'un qui a utilisé MEGA auparavant et un tel rejet ne vous sera pas signalé.";
 /* Header of block with achievements bonuses. */
@@ -1270,7 +1270,7 @@
 /* text that appear when there are more than 2 people writing at that time in a chat. For example User1, user2 and more are typing... The parameter will be the concatenation of the first two user names. The tags and placeholders shouldn't be translated or modified. */
 "moreThanTwoUsersAreTyping"="%1$s [A]et plus écrivent…[/A]";
 /* This is shown in the typing area in chat, as a placeholder before the user starts typing anything in the field. The format is: Write a message to Contact Name... Write a message to "Chat room topic"... Write a message to Contact Name1, Contact Name2, Contact Name3 */
-"writeAMessage"="Rédiger un message pour %s…";
+"writeAMessage"="Rédigez un message pour %s…";
 /* Information if there are no history messages in current chat conversation */
 "noConversationHistory"="Aucun historique de conversation";
 /* Button which allows to retry send message in chat conversation. */
@@ -1613,9 +1613,9 @@
 /* Title of archived chats button */
 "archivedChats"="Conversations archivées";
 /* Confirmation message on archive chat dialog for user to confirm. */
-"archiveChatMessage"="Êtes-vous certain de vouloir archiver cette conversation ?";
+"archiveChatMessage"="Voulez-vous vraiment archiver cette conversation ?";
 /* Confirmation message for user to confirm it will unarchive an archived chat. */
-"unarchiveChatMessage"="Êtes-vous certain de vouloir désarchiver cette conversation ?";
+"unarchiveChatMessage"="Voulez-vous vraiment désarchiver cette conversation ?";
 /* The title of the dialog to unarchive an archived chat. */
 "unarchiveChat"="Désarchiver la conversation";
 /* Title of button to archive chats. */
@@ -1763,7 +1763,7 @@
 /* Label in a cell where you can get the chat link */
 "Get Chat Link"="Obtenir le lien vers la conversation";
 /* Footer text to explain what means 'Encrypted Key Rotation' */
-"Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages."="La rotation de la clé est légèrement plus sécurisée, mais elle ne vous permet pas de créer un lien de conversation et les nouveaux participants ne verront pas les anciens messages.";
+"Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages."="La rotation de la clé est un peu plus sécurisée, mais elle ne vous permet pas de créer un lien de conversation, et les nouveaux participants ne verront pas les anciens messages.";
 /* Shown as an error message when the user selects "create chat link", but haven't entered a title for the newly created room */
 "To create a chat link you must name the group."="Pour créer un lien vers la conversation, vous devez nommer le groupe.";
 /* Label shown in a cell where you can enable a switch to get a chat link */
