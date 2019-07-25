@@ -1,5 +1,5 @@
 /* Microphone usage description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
-"NSMicrophoneUsageDescription"="MEGA는 당신이 동영상을 찍을 때, 앱에서 통화할 때 또는 음성 메모를 녹음할 때 마이크에 접근합니다.";
+"NSMicrophoneUsageDescription"="MEGA는 당신이 동영상을 찍을 때, 앱에서 통화 또는 음성 메모를 녹음할 때 마이크에 접근합니다.";
 /* Camera usage description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
 "NSCameraUsageDescription"="MEGA는 당신이 동영상을 찍을 때나 사진을 찍을 때, 또는 앱에서 통화할 때 카메라에 접근합니다.";
 /* Photo library usage description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */

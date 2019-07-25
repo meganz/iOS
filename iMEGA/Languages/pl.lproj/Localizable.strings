@@ -493,7 +493,7 @@
 /* Button title that skips the current action */
 "skipButton"="Pomiń";
 /* Text shown to explain what means 'Enable Camera Uploads'. The 'Cloud Drive' is the MEGA section, so please keep consistency */
-"automaticallyBackupYourPhotos"="Archiwizuj swoje zdjęcia do Cloud Drive";
+"Automatically backup your photos and videos to the Cloud Drive."="Automatyczne tworzenie kopii zapasowych zdjęć i filmów na dysku Cloud.";
 /* Button title that enables the functionality 'Camera Uploads', which uploads all the photos in your device to MEGA */
 "enableCameraUploadsButton"="Włącz wgrwyanie plików z kamery";
 /* Success message shown when Camera Uploads has been enabled */
@@ -504,6 +504,14 @@
 "cameraUploadsPendingFile"="Trwa przesyłanie, 1 plik oczekuje";
 /* Message shown while uploading files. Plural. */
 "cameraUploadsPendingFiles"="Trwa przesyłanie, oczekują %lu pliki";
+/* Message shown when camera upload paused because of no WiFi. Singular. */
+"Upload paused because of no WiFi, 1 file pending"="Przesyłanie zostało wstrzymane z powodu braku połączenia WiFi, oczekuje 1 plik";
+/* Message shown when camera upload paused because of no WiFi. Plural. */
+"Upload paused because of no WiFi, %lu files pending"="Przesyłanie zostało wstrzymane z powodu braku połączenia WiFi, oczekujące pliki %lu";
+/* Message shown the pending video file when photos uploaded and video upload is not enabled. Singular. */
+"Photos uploaded, video uploads are off, 1 video not uploaded"="Przesłane zdjęcia, przesyłanie wideo jest wyłączone;  1 film nie został przesłany";
+/* Message shown the pending video files when photos uploaded and video upload is not enabled. Plural. */
+"Photos uploaded, video uploads are off, %lu videos not uploaded"="Przesłane zdjęcia, przesyłanie wideo jest wyłączone;  Filmy %lu nie zostały przesłane";
 /* Singular, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 1 file. */
 "indexOfTotalFile"="%1$d z %2$d plik";
 /* Plural, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 3 files. */
@@ -656,12 +664,74 @@
 "on"="Wł";
 /* Header to explain that 'Upload videos', 'Use cellular connection' and 'Only when charging' are options of the Camera Uploads */
 "options"="Opcje";
+/* A hint to show one option is recommended by MEGA */
+"(Recommended)"="(Polecane)";
+/* Header to introduce how to deal with HEIC format photos in Camera Uplaod */
+"SAVE HEIC PHOTOS AS"="Zapisz zdjęcia HEIC jako";
+/* Footer for HEIC format section */
+"We recommend JPG, as its the most compatible format for photos."="Polecamy JPG, ponieważ jest to najbardziej zgodny format zdjęć.";
+/* Header to introduce how to deal with HEVC format videos in Camera Uplaod */
+"SAVE HEVC VIDEOS AS"="Zapisz filmy HEVC jako";
+/* Footer for HEVC format section */
+"We recommend H.264, as its the most compatible format for videos."="Polecamy H.264, ponieważ jest to najbardziej zgodny format wideo.";
+/* Footer for video compression quality */
+"Compression quality when to transcode HEVC videos to H.264 format."="Jakość kompresji podczas transkodowania filmów HEVC do formatu H.264.";
 /* Option title to enable upload videos with Camera Uploads */
-"uploadVideosLabel"="Wgrywanie filmów";
+"uploadVideosLabel"="Wgraj filmy";
 /* Option title to enable Camera Uploads only when the device is charging */
 "onlyWhenChargingLabel"="Tylko gdy podłączone zasilanie";
-/* Footer text to explain the Camera Uploads functionality */
-"cameraUploads_footer"="Po włączeniu przesyłane będą zdjęcia i filmy.";
+/* Footer text for Camera Upload switch section when camera upload is disabled */
+"When enabled, photos will be uploaded."="Po włączeniu zdjęcia zostaną przesłane.";
+/* Footer text for Camera Upload switch section when only photos upload is enabled */
+"Photos will be uploaded to Camera Uploads folder."="Zdjęcia zostaną przesłane do folderu Uploads aparatu.";
+/* Footer text for Camera Upload switch section when photos and videos upload is enabled */
+"Photos and videos will be uploaded to Camera Uploads folder."="Zdjęcia i filmy zostaną przesłane do folderu Uploads aparatu.";
+/* Title to show for upload in background */
+"Upload in Background"="Wgrywanie w tle";
+/* Title for the location based background upload message */
+"Enable location services for background upload"="Włącz usługi lokalizacji do przesyłania w tle";
+/* Message for the location based background upload when the location data access is not denied by users */
+"MEGA can periodically start camera uploads in background when your location changes."="MEGA może okresowo uruchamiać przesyłanie z kamery w tle, gdy zmienia się lokalizacja";
+/* Message for the location based background upload when the location data access is denied by users */
+"Please select “Always” at your Location page in Settings, then MEGA can periodically start camera uploads in background when your location changes."="Wybierz „Zawsze” na stronie Lokalizacja w Ustawieniach, aby MEGA mogła okresowo uruchamiać przesyłanie z kamery w tle, gdy zmieni się lokalizacja";
+/* Title for turn on a feature */
+"Turn On"="Włącz";
+/* Title for turn on a feature in settings */
+"Turn On in Settings"="Włącz w ustawieniach";
+/* Footer for video uploads switch section when enabled */
+"Videos will be uploaded to the Camera Uploads folder."="Filmy zostaną przesłane do folderu Uploads aparatu.";
+/* Footer for video uploads switch section when disabled */
+"When enabled, videos will be uploaded."="Po włączeniu filmy zostaną przesłane.";
+/* Title for new camera upload feature */
+"New Camera Upload!"="Nowe opcje przesyłania!";
+/* A messge for camera upload v2 migration */
+"Now you can choose to convert the HEIF/HEVC photos and videos to the most compatible JPEG/H.264 formats."="Teraz możesz przekonwertować zdjęcia i filmy HEIF / HEVC na bardziej kompatybilne formaty JPEG / H.264.";
+/* Title for an action to use most compatible formats */
+"Use Most Compatible Formats"="Użyj najbardziej kompatybilnych formatów";
+/* Title for custom settings */
+"Custom Settings"="Własne ustawienia";
+/* Title to show when device local storage is full */
+"%@ Storage Full"="%@ zajętości dysku";
+/* Detail for local storage full situation */
+"You do not have enough storage to upload camera. Free up space by deleting unneeded apps, videos or music. You can manage your storage in %@"="Nie masz wystarczającej ilości miejsca na dalsze przesyłanie z kamery.  Zwolnij miejsce, usuwając niepotrzebne aplikacje, filmy lub muzykę.  Możesz zarządzać swoją pamięcią w %@";
+/* Navigation path for Storage settings in iOS */
+"Settings > General > %@ Storage"="Ustawienia > Ogólne > %@ Powierzchnia";
+/* Title of the switch to config whether to upload videos for Live Photos */
+"Upload videos for Live Photos"="Przesyłaj filmy do Live Photos";
+/* Title of the switch to config whether to upload all burst photos */
+"Upload all burst photos"="Prześlij wszystkie zdjęcia seryjne";
+/* Title of the switch to config whether to upload Hidden Album */
+"Upload Hidden Album"="Prześlij ukryty album";
+/* Footer description when upload videos for Live Photos is enabled */
+"The video and the photo in each Live Photo will be uploaded."="Przesłane zostaną wersje zdjęć i wideo każdego zdjęcia Live.";
+/* Footer description when upload videos for Live Photos is disabled */
+"Only the photo in each Live Photo will be uploaded."="Przesłana zostanie tylko wersja zdjęcia każdego Live Photo.";
+/* Footer description when upload all burst photos is enabled */
+"All the photos from your burst photo sequences will be uploaded."="Wszystkie zdjęcia z sekwencji zdjęć seryjnych zostaną przesłane.";
+/* Footer description when upload all burst photos is disabled */
+"Only the representative photos from your burst photo sequences will be uploaded."="Przesłane zostaną tylko reprezentatywne zdjęcia z sekwencji zdjęć seryjnych.";
+/* Footer description when upload Hidden Album is enabled */
+"The Hidden Album is where you hide photos or videos in your device Photos app."="Ukryty album to miejsce, w którym ukrywasz zdjęcia lub filmy w aplikacji Zdjęcia swojego urządzenia.";
 /* App means “Application” */
 "App version"="Wersja aplikacji";
 /* Title of the label where the SDK version is shown */
@@ -1091,6 +1161,8 @@
 "voiceAndVideoCalls"="Rozmowy i Video";
 /* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature. */
 "useMobileData"="Używaj transferu z telefonu";
+/* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for videos. */
+"Use Mobile Data for Videos"="Użyj danych mobilnych dla filmów";
 /* A header in the Chat settings. This changes the user's status to Away after some time of inactivity. */
 "autoAway"="Auto-drzemka";
 /* */
@@ -1625,7 +1697,7 @@
 /* Title label that explains that the user is going to be asked for the microphone and camera permission */
 "Enable Microphone and Camera"="Włącz mikrofon i kamerę";
 /* Detailed explanation of why the user should give permission to access to the camera and the microphone */
-"To make encrypted voice and video calls, allow MEGA access to your Camera and Microphone"="Aby wysyłać notatki głosowe i szyfrować połączenia głosowe i wideo, należy umożliwić MEGA dostęp do kamery i mikrofonu";
+"To make encrypted voice and video calls, allow MEGA access to your Camera and Microphone"="Aby wysyłać wiadomości głosowe i szyfrować połączenia głosowe i wideo, należy umożliwić MEGA dostęp do kamery i mikrofonu";
 /* Title label that explains that the user is going to be asked for the notifications permission */
 "Enable Notifications"="Odblokuj powiadomienia";
 /* Detailed explanation of why the user should give permission to deliver notifications */
@@ -1913,7 +1985,7 @@
 /* Title of a dialog in which we request access to a specific permission, like the Location Services */
 "Please allow access"="Odblokuj dostęp";
 /* Hint shown to the users, when they want to use the Location Services but they are disabled or restricted for MEGA */
-"Please go to the Privacy section in your device’s Setting. Enable Location Services and set MEGA to While Using the App or Always."="Przejdź do sekcji Prywatność w Ustawieniach urządzenia. Włącz usługi lokalizacji i ustaw MEGA na Podczas korzystania z aplikacji lub Zawsze.";
+"Please go to the Privacy section in your device’s Setting. Enable Location Services and set MEGA to While Using the App or Always."="Przejdź do sekcji Prywatność w Ustawieniach urządzenia.  Włącz usługi lokalizacji i ustaw MEGA na Podczas korzystania z aplikacji lub Zawsze.";
 /* Location Usage Description. In order to protect user's privacy, Apple requires a specific string explaining why location will be accessed. */
 "MEGA accesses your location when you elect to share it with your contacts."="MEGA uzyskuje dostęp do Twojej lokalizacji, gdy zdecydujesz się udostępnić ją swoim kontaktom.";
 /* Information shown when the user has disabled the 'Mobile Data' setting for MEGA in the iOS Settings. */
@@ -1921,7 +1993,7 @@
 /* Button title to go to the iOS Settings to enable 'Mobile Data' for the MEGA app. */
 "Turn Mobile Data on"="Włącz dane mobilne";
 /* Extra information shown when the user has disabled the 'Mobile Data' setting for MEGA in the iOS Settings. */
-"You can turn on mobile data for this app in Settings."="Możesz włączyć dane mobilne dla tej aplikacji w Ustawieniach.";
+"You can turn on mobile data for this app in Settings."="Możesz włączyć dane mobilne dla tej aplikacji w Ustawieniach urządzenia.";
 /* title of the alert dialog when the user is changing the API URL to staging */
 "Change to a test server?"="Przejdź na serwer testowy?";
 /* text of the alert dialog when the user is changing the API URL to staging */

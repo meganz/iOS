@@ -493,7 +493,7 @@
 /* Button title that skips the current action */
 "skipButton"="넘기기";
 /* Text shown to explain what means 'Enable Camera Uploads'. The 'Cloud Drive' is the MEGA section, so please keep consistency */
-"automaticallyBackupYourPhotos"="자동으로 클라우드 드라이브에 사진 백업";
+"Automatically backup your photos and videos to the Cloud Drive."="자동으로 당신의 사진과 동영상을 클라우드 드라이브에 백업합니다.";
 /* Button title that enables the functionality 'Camera Uploads', which uploads all the photos in your device to MEGA */
 "enableCameraUploadsButton"="카메라 업로드 활성화";
 /* Success message shown when Camera Uploads has been enabled */
@@ -504,6 +504,14 @@
 "cameraUploadsPendingFile"="업로드 진행중, 파일 1개 대기중";
 /* Message shown while uploading files. Plural. */
 "cameraUploadsPendingFiles"="업로드 진행중, 파일 %lu개 대기중";
+/* Message shown when camera upload paused because of no WiFi. Singular. */
+"Upload paused because of no WiFi, 1 file pending"="WiFi 연결이 없어서 업로드가 일시정지되었습니다, 파일 1개 보류중";
+/* Message shown when camera upload paused because of no WiFi. Plural. */
+"Upload paused because of no WiFi, %lu files pending"="WiFi 연결이 없어서 업로드가 일시정지되었습니다, 파일 %lu개 보류중";
+/* Message shown the pending video file when photos uploaded and video upload is not enabled. Singular. */
+"Photos uploaded, video uploads are off, 1 video not uploaded"="사진이 업로드 되었습니다, 동영상 업로드는 꺼져있습니다; 1개의 동영상이 업로드 되지 않았습니다.";
+/* Message shown the pending video files when photos uploaded and video upload is not enabled. Plural. */
+"Photos uploaded, video uploads are off, %lu videos not uploaded"="사진이 업로드 되었습니다, 동영상 업로드는 꺼져있습니다; %lu개의 동영상이 업로드 되지 않았습니다.";
 /* Singular, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 1 file. */
 "indexOfTotalFile"="파일 %2$d개 중 %1$d개";
 /* Plural, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 3 files. */
@@ -656,12 +664,74 @@
 "on"="켬";
 /* Header to explain that 'Upload videos', 'Use cellular connection' and 'Only when charging' are options of the Camera Uploads */
 "options"="옵션";
+/* A hint to show one option is recommended by MEGA */
+"(Recommended)"="(권장)";
+/* Header to introduce how to deal with HEIC format photos in Camera Uplaod */
+"SAVE HEIC PHOTOS AS"="HEIC 사진을 다음으로 저장";
+/* Footer for HEIC format section */
+"We recommend JPG, as its the most compatible format for photos."="우리는 가장 호환성이 좋은 형식인, JPG를 추천합니다.";
+/* Header to introduce how to deal with HEVC format videos in Camera Uplaod */
+"SAVE HEVC VIDEOS AS"="HEVC 동영상을 다음으로 저장";
+/* Footer for HEVC format section */
+"We recommend H.264, as its the most compatible format for videos."="우리는 가장 호환성이 좋은 형식인, H.264를 추천합니다.";
+/* Footer for video compression quality */
+"Compression quality when to transcode HEVC videos to H.264 format."="HEVC 동영상을 H.264 형식으로 변환할 때 압축 품질.";
 /* Option title to enable upload videos with Camera Uploads */
 "uploadVideosLabel"="동영상 업로드";
 /* Option title to enable Camera Uploads only when the device is charging */
 "onlyWhenChargingLabel"="충전중일 때만";
-/* Footer text to explain the Camera Uploads functionality */
-"cameraUploads_footer"="활성화하면, 사진과 동영상이 업로드됩니다.";
+/* Footer text for Camera Upload switch section when camera upload is disabled */
+"When enabled, photos will be uploaded."="활성화하면, 사진이 업로드 됩니다.";
+/* Footer text for Camera Upload switch section when only photos upload is enabled */
+"Photos will be uploaded to Camera Uploads folder."="사진이 카메라 업로드 폴더에 업로드 됩니다.";
+/* Footer text for Camera Upload switch section when photos and videos upload is enabled */
+"Photos and videos will be uploaded to Camera Uploads folder."="사진과 동영상이 카메라 업로드 폴더에 업로드 됩니다.";
+/* Title to show for upload in background */
+"Upload in Background"="백그라운드에서 업로드";
+/* Title for the location based background upload message */
+"Enable location services for background upload"="백그라운드 업로드를 위해 위치 서비스를 활성화";
+/* Message for the location based background upload when the location data access is not denied by users */
+"MEGA can periodically start camera uploads in background when your location changes."="MEGA는 당신의 위치가 변경될 때 백그라운드에서 주기적으로 카메라 업로드를 시작할 수 있습니다.";
+/* Message for the location based background upload when the location data access is denied by users */
+"Please select “Always” at your Location page in Settings, then MEGA can periodically start camera uploads in background when your location changes."="MEGA는 당신의 위치가 변경될 때 백그라운드에서 주기적으로 카메라 업로드를 시작할 수 있도록, 설정의 위치 페이지에서 \"항상\"을 선택해주세요.";
+/* Title for turn on a feature */
+"Turn On"="켜기";
+/* Title for turn on a feature in settings */
+"Turn On in Settings"="설정에서 켜기";
+/* Footer for video uploads switch section when enabled */
+"Videos will be uploaded to the Camera Uploads folder."="동영상이 카메라 업로드 폴더에 업로드 됩니다.";
+/* Footer for video uploads switch section when disabled */
+"When enabled, videos will be uploaded."="활성화하면, 동영상이 업로드 됩니다.";
+/* Title for new camera upload feature */
+"New Camera Upload!"="새 카메라 업로드 옵션!";
+/* A messge for camera upload v2 migration */
+"Now you can choose to convert the HEIF/HEVC photos and videos to the most compatible JPEG/H.264 formats."="이제 HEIF/HEVC 사진과 동영상을 널리 호환되는 JPEG/H.264 형식으로 변환하도록 선택할 수 있습니다.";
+/* Title for an action to use most compatible formats */
+"Use Most Compatible Formats"="가장 잘 호환되는 형식 사용";
+/* Title for custom settings */
+"Custom Settings"="개별 설정";
+/* Title to show when device local storage is full */
+"%@ Storage Full"="%@ 저장소 가득 참";
+/* Detail for local storage full situation */
+"You do not have enough storage to upload camera. Free up space by deleting unneeded apps, videos or music. You can manage your storage in %@"="앞으로의 카메라 업로드를 위한 공간이 충분하지 않습니다. 불필요한 앱, 동영상 또는 음악을 삭제함으로써 공간을 확보하세요. %@에서 저장소를 관리할 수 있습니다";
+/* Navigation path for Storage settings in iOS */
+"Settings > General > %@ Storage"="설정 > 일반 > %@ 저장소";
+/* Title of the switch to config whether to upload videos for Live Photos */
+"Upload videos for Live Photos"="라이브 포토용 동영상 업로드";
+/* Title of the switch to config whether to upload all burst photos */
+"Upload all burst photos"="모든 연사 사진 업로드";
+/* Title of the switch to config whether to upload Hidden Album */
+"Upload Hidden Album"="숨긴 앨범 업로드";
+/* Footer description when upload videos for Live Photos is enabled */
+"The video and the photo in each Live Photo will be uploaded."="라이브 포토의 사진과 동영상 버전이 업로드됩니다.";
+/* Footer description when upload videos for Live Photos is disabled */
+"Only the photo in each Live Photo will be uploaded."="라이브 포토의 사진 버전만 업로드됩니다.";
+/* Footer description when upload all burst photos is enabled */
+"All the photos from your burst photo sequences will be uploaded."="연속 촬영의 모든 사진이 업로드 됩니다.";
+/* Footer description when upload all burst photos is disabled */
+"Only the representative photos from your burst photo sequences will be uploaded."="연속 촬영의 대표 사진만 업로드 됩니다.";
+/* Footer description when upload Hidden Album is enabled */
+"The Hidden Album is where you hide photos or videos in your device Photos app."="숨긴 앨범은 기기의 사진 앱에서 숨긴 사진 또는 동영상입니다.";
 /* App means “Application” */
 "App version"="앱 버전";
 /* Title of the label where the SDK version is shown */
@@ -1091,6 +1161,8 @@
 "voiceAndVideoCalls"="음성과 영상 통화";
 /* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature. */
 "useMobileData"="모바일 데이터 사용";
+/* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for videos. */
+"Use Mobile Data for Videos"="동영상에 모바일 데이터 사용";
 /* A header in the Chat settings. This changes the user's status to Away after some time of inactivity. */
 "autoAway"="자동 부재중";
 /* */
@@ -1625,7 +1697,7 @@
 /* Title label that explains that the user is going to be asked for the microphone and camera permission */
 "Enable Microphone and Camera"="마이크와 카메라 활성화";
 /* Detailed explanation of why the user should give permission to access to the camera and the microphone */
-"To make encrypted voice and video calls, allow MEGA access to your Camera and Microphone"="음성 메모를 전송하고 암호화된 음성과 영상 통화를 하려면, MEGA가 당신의 카메라와 마이크에 접근할 수 있도록 허용해주세요";
+"To make encrypted voice and video calls, allow MEGA access to your Camera and Microphone"="음성 메시지를 전송하고 암호화된 음성과 영상 통화를 하려면, MEGA가 당신의 카메라와 마이크에 접근할 수 있도록 허용해주세요";
 /* Title label that explains that the user is going to be asked for the notifications permission */
 "Enable Notifications"="알림 활성화";
 /* Detailed explanation of why the user should give permission to deliver notifications */
@@ -1913,7 +1985,7 @@
 /* Title of a dialog in which we request access to a specific permission, like the Location Services */
 "Please allow access"="접근을 허용해주세요";
 /* Hint shown to the users, when they want to use the Location Services but they are disabled or restricted for MEGA */
-"Please go to the Privacy section in your device’s Setting. Enable Location Services and set MEGA to While Using the App or Always."="당신의 기기의 개인정보 보호 섹션으로 가세요. 위치 서비스를 활성화하고 MEGA를 앱 사용중 또는 항상으로 설정해주세요.";
+"Please go to the Privacy section in your device’s Setting. Enable Location Services and set MEGA to While Using the App or Always."="당신의 기기의 개인정보 보호 섹션으로 가세요. 위치 서비스를 활성화하고 MEGA를 앱을 사용중일 때 또는 항상으로 설정해주세요.";
 /* Location Usage Description. In order to protect user's privacy, Apple requires a specific string explaining why location will be accessed. */
 "MEGA accesses your location when you elect to share it with your contacts."="당신이 당신의 지인들과 위치를 공유하기로 선택하였을 때 MEGA는 당신의 위치에 접근합니다.";
 /* Information shown when the user has disabled the 'Mobile Data' setting for MEGA in the iOS Settings. */
@@ -1921,7 +1993,7 @@
 /* Button title to go to the iOS Settings to enable 'Mobile Data' for the MEGA app. */
 "Turn Mobile Data on"="모바일 데이터 켜기";
 /* Extra information shown when the user has disabled the 'Mobile Data' setting for MEGA in the iOS Settings. */
-"You can turn on mobile data for this app in Settings."="이 앱에 대한 모바일 데이터를 설정에서 켤 수 있습니다.";
+"You can turn on mobile data for this app in Settings."="장치의 설정에서 이 앱에 대한 모바일 데이터를 켤 수 있습니다.";
 /* title of the alert dialog when the user is changing the API URL to staging */
 "Change to a test server?"="테스트 서버로 변경할까요?";
 /* text of the alert dialog when the user is changing the API URL to staging */
