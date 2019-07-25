@@ -111,7 +111,7 @@
                 
                 
             case MEGAErrorTypeApiENoent: {
-                UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:AMLocalizedString(@"accountAlreadyConfirmed", @"Message shown when the user clicks on a confirm account link that has already been used") preferredStyle:UIAlertControllerStyleAlert];
+                UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:AMLocalizedString(@"Your confirmation link is no longer valid. Your account may already be activated or you may have cancelled your registration.", nil) preferredStyle:UIAlertControllerStyleAlert];
                 [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
                 
                 [UIApplication.mnz_presentingViewController presentViewController:alertController animated:YES completion:nil];

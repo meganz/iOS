@@ -1,11 +1,12 @@
 #import "ChangeNameViewController.h"
 
+#import "SVProgressHUD.h"
+
 #import "MEGANavigationController.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGASdkManager.h"
 #import "MEGAStore.h"
-
-#import "SVProgressHUD.h"
+#import "NSString+MNZCategory.h"
 
 @interface ChangeNameViewController () <UITextFieldDelegate, MEGARequestDelegate>
 
@@ -38,13 +39,21 @@
     self.firstName ? (self.firstNameTextField.text = self.firstName) : (self.firstNameTextField.placeholder = AMLocalizedString(@"firstName", @"Hint text for the first name (Placeholder)"));
     self.lastName ? (self.lastNameTextField.text = self.lastName) : (self.lastNameTextField.placeholder = AMLocalizedString(@"lastName", @"Hint text for the last name (Placeholder)"));
     
+    if (@available(iOS 10.0, *)) {
+        self.firstNameTextField.textContentType = UITextContentTypeGivenName;
+        self.lastNameTextField.textContentType = UITextContentTypeFamilyName;
+    }
+    
     [self.saveButton setTitle:AMLocalizedString(@"save", @"Button title to 'Save' the selected option") forState:UIControlStateNormal];
 }
 
 #pragma mark - Private
 
 - (BOOL)validateNameForm {
-    if ([self isStringEmpty:self.firstNameTextField.text]) {
+    self.firstNameTextField.text = self.firstNameTextField.text.mnz_removeWhitespacesAndNewlinesFromBothEnds;
+    self.lastNameTextField.text = self.lastNameTextField.text.mnz_removeWhitespacesAndNewlinesFromBothEnds;
+    
+    if (self.firstNameTextField.text.mnz_isEmpty) {
         [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"nameInvalidFormat", @"Enter a valid name")];
         [self.firstNameTextField becomeFirstResponder];
         return NO;
@@ -53,12 +62,9 @@
     return YES;
 }
 
-- (BOOL)isStringEmpty:(NSString *)string {
-    return ![[string stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] length];
-}
-
-
 - (BOOL)hasNameBeenEdited:(NSString *)name inTextFieldForTag:(NSInteger)tag {
+    name = name.mnz_removeWhitespacesAndNewlinesFromBothEnds;
+    
     BOOL hasNameBeenEdited = NO;
     switch (tag) {
         case 0: {
@@ -82,18 +88,24 @@
 #pragma mark - IBActions
 
 - (IBAction)cancelAction:(UIBarButtonItem *)sender {
+    [self.firstNameTextField resignFirstResponder];
+    [self.lastNameTextField resignFirstResponder];
+    
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (IBAction)saveTouchUpInside:(UIButton *)sender {
+    [self.firstNameTextField resignFirstResponder];
+    [self.lastNameTextField resignFirstResponder];
+    
     if ([MEGAReachabilityManager isReachableHUDIfNot]) {
         if ([self validateNameForm]) {
             self.saveButton.enabled = NO;
             
-            if (![self.firstNameTextField.text isEqualToString:self.firstName]) {
+            if ([self hasNameBeenEdited:self.firstNameTextField.text inTextFieldForTag:self.firstNameTextField.tag]) {
                 [[MEGASdkManager sharedMEGASdk] setUserAttributeType:MEGAUserAttributeFirstname value:self.firstNameTextField.text delegate:self];
             }
-            if (![self.lastNameTextField.text isEqualToString:self.lastName]) {
+            if ([self hasNameBeenEdited:self.lastNameTextField.text inTextFieldForTag:self.lastNameTextField.tag]) {
                 [[MEGASdkManager sharedMEGASdk] setUserAttributeType:MEGAUserAttributeLastname value:self.lastNameTextField.text delegate:self];
             }
         }
@@ -104,32 +116,38 @@
 
 #pragma mark - UITextFieldDelegate
 
+- (void)textFieldDidEndEditing:(UITextField *)textField {
+    switch (textField.tag) {
+        case 0:
+        case 1: {
+            textField.text = textField.text.mnz_removeWhitespacesAndNewlinesFromBothEnds;
+            break;
+        }
+    }
+}
+
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
     NSString *text = [textField.text stringByReplacingCharactersInRange:range withString:string];
-    BOOL shouldSaveButtonColorBeDisabled = NO;
+    
+    BOOL shouldSaveButtonBeEnabled = YES;
     switch (textField.tag) {
         case 0: { //FirstNameTextField
-            if ([self isStringEmpty:text]) {
-                shouldSaveButtonColorBeDisabled = YES;
-            } else if ([self hasNameBeenEdited:text inTextFieldForTag:textField.tag]) {
-                shouldSaveButtonColorBeDisabled = NO;
-            }
+            shouldSaveButtonBeEnabled = text.mnz_isEmpty ? NO : [self hasNameBeenEdited:text inTextFieldForTag:textField.tag];
             break;
         }
             
         case 1: { //LastNameTextField
             BOOL hasLastNameBeenEdited = [self hasNameBeenEdited:text inTextFieldForTag:textField.tag];
-            if (hasLastNameBeenEdited) {
-                shouldSaveButtonColorBeDisabled = NO;
+            if (hasLastNameBeenEdited && !self.firstNameTextField.text.mnz_isEmpty) {
+                shouldSaveButtonBeEnabled = YES;
             } else {
                 BOOL hasFirstNameBeenModified = [self hasNameBeenEdited:self.firstNameTextField.text inTextFieldForTag:self.firstNameTextField.tag];
-                BOOL isFirstNameEmpty = [self isStringEmpty:self.firstNameTextField.text];
-                shouldSaveButtonColorBeDisabled = (hasFirstNameBeenModified && !isFirstNameEmpty) ? NO: YES;
+                shouldSaveButtonBeEnabled = hasFirstNameBeenModified;
             }
-            break;
         }
     }
-    self.saveButton.backgroundColor = shouldSaveButtonColorBeDisabled ? [UIColor mnz_grayCCCCCC] : UIColor.mnz_redMain;
+    
+    self.saveButton.backgroundColor = shouldSaveButtonBeEnabled ? UIColor.mnz_redMain : UIColor.mnz_grayCCCCCC;
     
     return YES;
 }
@@ -148,7 +166,7 @@
                 shouldSaveButtonColorBeDisabled = NO;
             } else {
                 BOOL hasFirstNameBeenEdited = [self hasNameBeenEdited:self.firstNameTextField.text inTextFieldForTag:self.firstNameTextField.tag];
-                BOOL isFirstNameEmpty = [self isStringEmpty:self.firstNameTextField.text];
+                BOOL isFirstNameEmpty = self.firstNameTextField.text.mnz_isEmpty;
                 shouldSaveButtonColorBeDisabled = (hasFirstNameBeenEdited && !isFirstNameEmpty) ? NO : YES;
             }
             break;

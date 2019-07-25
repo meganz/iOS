@@ -251,7 +251,7 @@
     
     [self setNavigationBarTitle];
     
-    MEGAReachabilityManager.isReachable ? [self addSearchBar] : [self hideSearchBarIfNotActive];
+    (self.nodes.size.unsignedIntegerValue == 0 || !MEGAReachabilityManager.isReachable) ? [self hideSearchBarIfNotActive] : [self addSearchBar];
 
     [self setToolbarItemsEnabled:enableToolbarItems];
     
