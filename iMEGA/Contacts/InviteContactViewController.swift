@@ -27,6 +27,10 @@ class InviteContactViewController: UIViewController {
         MEGASdkManager.sharedMEGASdk().contactLinkCreateRenew(false, delegate: contactLinkCreateDelegate)
         
         createContactsOnMegaChild()
+        
+        if !MFMessageComposeViewController.canSendText() {
+            addFromContactsLabel.textColor = UIColor.mnz_gray8F8F8F()
+        }
 }
     
     //MARK: Private
@@ -41,12 +45,14 @@ class InviteContactViewController: UIViewController {
         contactsOnMegaVC.searchFixedView.isHidden = true
         contactsOnMegaVC.inviteContactView.isHidden = true
         contactsOnMegaVC.hideSearchAndInviteViews()
-        
-        addFromContactsView.isHidden = !MFMessageComposeViewController.canSendText()
     }
     
     // MARK: Actions
     @IBAction func addFromContactsButtonTapped(_ sender: Any) {
+        guard MFMessageComposeViewController.canSendText() else {
+            return
+        }
+        
         let contactsPickerVC = CNContactPickerViewController()
         contactsPickerVC.predicateForEnablingContact = NSPredicate(format: "phoneNumbers.@count > 0")
         contactsPickerVC.predicateForSelectionOfProperty = NSPredicate(format: "key == 'phoneNumbers'")
