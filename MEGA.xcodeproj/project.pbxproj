@@ -425,6 +425,23 @@
 		83B841672051905E00E5AC69 /* MEGAGetThumbnailRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A820DA3B1F0E5BDC00F1F832 /* MEGAGetThumbnailRequestDelegate.m */; };
 		83B841682051913C00E5AC69 /* MEGAGetThumbnailRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A820DA3B1F0E5BDC00F1F832 /* MEGAGetThumbnailRequestDelegate.m */; };
 		83BC4F1D216B72E800000D30 /* MEGAGroupCallPeer.m in Sources */ = {isa = PBXBuildFile; fileRef = 83BC4F1C216B72E800000D30 /* MEGAGroupCallPeer.m */; };
+		83C570DE22E5BFCF00216896 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C570C822E5BFCF00216896 /* Constants.swift */; };
+		83C570DF22E5BFCF00216896 /* TextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C570CA22E5BFCF00216896 /* TextField.swift */; };
+		83C570E022E5BFCF00216896 /* PhoneNumber.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C570CB22E5BFCF00216896 /* PhoneNumber.swift */; };
+		83C570E122E5BFCF00216896 /* RegexManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C570CC22E5BFCF00216896 /* RegexManager.swift */; };
+		83C570E222E5BFCF00216896 /* MetadataTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C570CD22E5BFCF00216896 /* MetadataTypes.swift */; };
+		83C570E322E5BFCF00216896 /* MetadataParsing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C570CE22E5BFCF00216896 /* MetadataParsing.swift */; };
+		83C570E422E5BFCF00216896 /* ParseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C570CF22E5BFCF00216896 /* ParseManager.swift */; };
+		83C570E522E5BFCF00216896 /* PhoneNumberMetadata.xml in Resources */ = {isa = PBXBuildFile; fileRef = 83C570D222E5BFCF00216896 /* PhoneNumberMetadata.xml */; };
+		83C570E622E5BFCF00216896 /* PhoneNumberMetadata.json in Resources */ = {isa = PBXBuildFile; fileRef = 83C570D322E5BFCF00216896 /* PhoneNumberMetadata.json */; };
+		83C570E722E5BFCF00216896 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 83C570D422E5BFCF00216896 /* README.md */; };
+		83C570E822E5BFCF00216896 /* update.sh in Resources */ = {isa = PBXBuildFile; fileRef = 83C570D522E5BFCF00216896 /* update.sh */; };
+		83C570E922E5BFCF00216896 /* NSRegularExpression+Swift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C570D722E5BFCF00216896 /* NSRegularExpression+Swift.swift */; };
+		83C570EA22E5BFCF00216896 /* Formatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C570D822E5BFCF00216896 /* Formatter.swift */; };
+		83C570EB22E5BFCF00216896 /* MetadataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C570D922E5BFCF00216896 /* MetadataManager.swift */; };
+		83C570EC22E5BFCF00216896 /* PartialFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C570DA22E5BFCF00216896 /* PartialFormatter.swift */; };
+		83C570ED22E5BFCF00216896 /* PhoneNumberKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C570DB22E5BFCF00216896 /* PhoneNumberKit.swift */; };
+		83C570EF22E5BFCF00216896 /* PhoneNumberParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C570DD22E5BFCF00216896 /* PhoneNumberParser.swift */; };
 		83D64E2D20178A0400E24155 /* PasswordReminder.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 83D64E2C20178A0400E24155 /* PasswordReminder.storyboard */; };
 		83E076F52179D7BC00058409 /* NodeCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 83E076F42179D7BC00058409 /* NodeCollectionViewCell.m */; };
 		83FB1431219AC7CD00418BE6 /* OfflineTableViewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83FB1430219AC7CD00418BE6 /* OfflineTableViewViewController.m */; };
@@ -1648,6 +1665,24 @@
 		83ACBDB82212EDE000ACBBDC /* CallPeerAudio.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CallPeerAudio.h; sourceTree = "<group>"; };
 		83BC4F1B216B72E800000D30 /* MEGAGroupCallPeer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MEGAGroupCallPeer.h; path = Chat/Model/MEGAGroupCallPeer.h; sourceTree = "<group>"; };
 		83BC4F1C216B72E800000D30 /* MEGAGroupCallPeer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = MEGAGroupCallPeer.m; path = Chat/Model/MEGAGroupCallPeer.m; sourceTree = "<group>"; };
+		83C570C822E5BFCF00216896 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		83C570CA22E5BFCF00216896 /* TextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextField.swift; sourceTree = "<group>"; };
+		83C570CB22E5BFCF00216896 /* PhoneNumber.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhoneNumber.swift; sourceTree = "<group>"; };
+		83C570CC22E5BFCF00216896 /* RegexManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegexManager.swift; sourceTree = "<group>"; };
+		83C570CD22E5BFCF00216896 /* MetadataTypes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MetadataTypes.swift; sourceTree = "<group>"; };
+		83C570CE22E5BFCF00216896 /* MetadataParsing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MetadataParsing.swift; sourceTree = "<group>"; };
+		83C570CF22E5BFCF00216896 /* ParseManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParseManager.swift; sourceTree = "<group>"; };
+		83C570D222E5BFCF00216896 /* PhoneNumberMetadata.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = PhoneNumberMetadata.xml; sourceTree = "<group>"; };
+		83C570D322E5BFCF00216896 /* PhoneNumberMetadata.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = PhoneNumberMetadata.json; sourceTree = "<group>"; };
+		83C570D422E5BFCF00216896 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		83C570D522E5BFCF00216896 /* update.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = update.sh; sourceTree = "<group>"; };
+		83C570D622E5BFCF00216896 /* PhoneNumberKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhoneNumberKit.h; sourceTree = "<group>"; };
+		83C570D722E5BFCF00216896 /* NSRegularExpression+Swift.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSRegularExpression+Swift.swift"; sourceTree = "<group>"; };
+		83C570D822E5BFCF00216896 /* Formatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Formatter.swift; sourceTree = "<group>"; };
+		83C570D922E5BFCF00216896 /* MetadataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MetadataManager.swift; sourceTree = "<group>"; };
+		83C570DA22E5BFCF00216896 /* PartialFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PartialFormatter.swift; sourceTree = "<group>"; };
+		83C570DB22E5BFCF00216896 /* PhoneNumberKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhoneNumberKit.swift; sourceTree = "<group>"; };
+		83C570DD22E5BFCF00216896 /* PhoneNumberParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhoneNumberParser.swift; sourceTree = "<group>"; };
 		83D64E2C20178A0400E24155 /* PasswordReminder.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = PasswordReminder.storyboard; sourceTree = "<group>"; };
 		83E076F32179D7BC00058409 /* NodeCollectionViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NodeCollectionViewCell.h; sourceTree = "<group>"; };
 		83E076F42179D7BC00058409 /* NodeCollectionViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NodeCollectionViewCell.m; sourceTree = "<group>"; };
@@ -2624,6 +2659,7 @@
 		415226671A692EBD00EC7BB6 /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
+				83C570C722E5BFCF00216896 /* PhoneNumberKit */,
 				A85A01D2228B0DA100C6ADBB /* FLEX */,
 				A824A9162039EC9F00D777D2 /* SDAVAssetExportSession */,
 				A8665F4F20ADA1600044F8F6 /* PWProgressView */,
@@ -3828,6 +3864,56 @@
 			);
 			name = Cells;
 			path = Chat/Cells;
+			sourceTree = "<group>";
+		};
+		83C570C722E5BFCF00216896 /* PhoneNumberKit */ = {
+			isa = PBXGroup;
+			children = (
+				83C570C822E5BFCF00216896 /* Constants.swift */,
+				83C570C922E5BFCF00216896 /* UI */,
+				83C570CB22E5BFCF00216896 /* PhoneNumber.swift */,
+				83C570CC22E5BFCF00216896 /* RegexManager.swift */,
+				83C570CD22E5BFCF00216896 /* MetadataTypes.swift */,
+				83C570CE22E5BFCF00216896 /* MetadataParsing.swift */,
+				83C570CF22E5BFCF00216896 /* ParseManager.swift */,
+				83C570D022E5BFCF00216896 /* Resources */,
+				83C570D622E5BFCF00216896 /* PhoneNumberKit.h */,
+				83C570D722E5BFCF00216896 /* NSRegularExpression+Swift.swift */,
+				83C570D822E5BFCF00216896 /* Formatter.swift */,
+				83C570D922E5BFCF00216896 /* MetadataManager.swift */,
+				83C570DA22E5BFCF00216896 /* PartialFormatter.swift */,
+				83C570DB22E5BFCF00216896 /* PhoneNumberKit.swift */,
+				83C570DD22E5BFCF00216896 /* PhoneNumberParser.swift */,
+			);
+			name = PhoneNumberKit;
+			path = Vendor/PhoneNumberKit/PhoneNumberKit;
+			sourceTree = "<group>";
+		};
+		83C570C922E5BFCF00216896 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				83C570CA22E5BFCF00216896 /* TextField.swift */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
+		83C570D022E5BFCF00216896 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				83C570D122E5BFCF00216896 /* Original */,
+				83C570D322E5BFCF00216896 /* PhoneNumberMetadata.json */,
+				83C570D422E5BFCF00216896 /* README.md */,
+				83C570D522E5BFCF00216896 /* update.sh */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		83C570D122E5BFCF00216896 /* Original */ = {
+			isa = PBXGroup;
+			children = (
+				83C570D222E5BFCF00216896 /* PhoneNumberMetadata.xml */,
+			);
+			path = Original;
 			sourceTree = "<group>";
 		};
 		83D64E2B2017873D00E24155 /* PasswordReminder */ = {
@@ -5065,6 +5151,7 @@
 				5B5FBDDF20BD8CB2000EE35B /* TwoFactorAuthentication.storyboard in Resources */,
 				A841E63E20CAB477005E1D1B /* MEGAMessageCallManagementView.xib in Resources */,
 				417279331DB663FA001AC818 /* JSQMessagesAssets.bundle in Resources */,
+				83C570E822E5BFCF00216896 /* update.sh in Resources */,
 				9462A1811FDFFD4800008F32 /* MEGAToolbarTextContentView.xib in Resources */,
 				7795677921C80D36002B6227 /* Onboarding.storyboard in Resources */,
 				A89E77491EA605A900ADC0D2 /* MEGAMessageAttachmentView.xib in Resources */,
@@ -5074,6 +5161,7 @@
 				4152273F1A692F8D00EC7BB6 /* Localizable.strings in Resources */,
 				77B32279209C6F060037FA89 /* MEGAMessageRichPreviewView.xib in Resources */,
 				E8E3E6FA1E0939BE00D45F45 /* MEGAOpenMessageHeaderView.xib in Resources */,
+				83C570E622E5BFCF00216896 /* PhoneNumberMetadata.json in Resources */,
 				77D9A56E202355F800B48470 /* MEGAPhotoBrowserViewController.storyboard in Resources */,
 				A8278D7F200E72A00040B076 /* incoming_voice_video_call_iOS9.mp3 in Resources */,
 				5B4429431E6D7B7000BCACC0 /* SF-UI-Text-RegularItalic.otf in Resources */,
@@ -5084,10 +5172,12 @@
 				4172795E1DB663FA001AC818 /* JSQMessagesTypingIndicatorFooterView.xib in Resources */,
 				5B5B50011E684FDC00DBEB3B /* SF-UI-Display-Regular.otf in Resources */,
 				83D64E2D20178A0400E24155 /* PasswordReminder.storyboard in Resources */,
+				83C570E722E5BFCF00216896 /* README.md in Resources */,
 				A82E5BC81F3465A3003C149C /* Spotlight_file@2x.png in Resources */,
 				5B6429E02020A8CF000E0DCB /* SF-UI-Text-Semibold.otf in Resources */,
 				A82E5BCB1F3465A3003C149C /* Spotlight_folder@3x.png in Resources */,
 				E8C289FF1BF65BAB00F7A034 /* Launch.storyboard in Resources */,
+				83C570E522E5BFCF00216896 /* PhoneNumberMetadata.xml in Resources */,
 				4172793A1DB663FA001AC818 /* JSQMessagesViewController.xib in Resources */,
 				E8E1D2D51AFA860E00A9BD5B /* Main.storyboard in Resources */,
 				41BADDAF1A8E28FD008408B3 /* Photos.storyboard in Resources */,
@@ -5230,6 +5320,7 @@
 				77C544FF2028542D00A9ACD6 /* MEGAPhotoBrowserAnimator.m in Sources */,
 				5B22F97F1F8374C500D2B156 /* VENBackspaceTextField.m in Sources */,
 				77485F84207CB6D3007402B1 /* MEGAGetPublicNodeRequestDelegate.m in Sources */,
+				83C570DE22E5BFCF00216896 /* Constants.swift in Sources */,
 				A824AE22228B1D6800EDF27E /* FLEXArgumentInputNumberView.m in Sources */,
 				41A4204F1C4EA02C002E192E /* MEGALogger.m in Sources */,
 				B6D176872236F16600098084 /* ImageExporter.m in Sources */,
@@ -5249,6 +5340,7 @@
 				41D21E691D01AEC3002E6296 /* CTAssetsNavigationController.m in Sources */,
 				B6D11AE521A24C7700446B86 /* PutNodeOperation.m in Sources */,
 				B6D11AC6219B8ABC00446B86 /* LocalFileNameGenerator.m in Sources */,
+				83C570E922E5BFCF00216896 /* NSRegularExpression+Swift.swift in Sources */,
 				41D578241B84A0FB00334ED3 /* PreviewDocumentViewController.m in Sources */,
 				A824AE0A228B1D6800EDF27E /* FLEXNetworkCurlLogger.m in Sources */,
 				7759700F219EC2D700B31671 /* NotificationTableViewCell.m in Sources */,
@@ -5267,6 +5359,7 @@
 				A815FCE41FE1795C0075AC29 /* MEGAChatCreateChatGroupRequestDelegate.m in Sources */,
 				41D21E6C1D01AEC3002E6296 /* CTAssetsPickerAccessDeniedView.m in Sources */,
 				B6C524DD21E2BC9900AE3575 /* AVAsset+CameraUpload.m in Sources */,
+				83C570E122E5BFCF00216896 /* RegexManager.swift in Sources */,
 				41A66D0D1AE7A0FE007D7E20 /* ProductTableViewCell.m in Sources */,
 				E8E3E6F91E0939BE00D45F45 /* MEGAOpenMessageHeaderView.m in Sources */,
 				832E1035202DE10500BDD30F /* NodeTappablePropertyTableViewCell.m in Sources */,
@@ -5323,6 +5416,7 @@
 				83FB1439219C372800418BE6 /* MOOfflineFolderLayout+CoreDataClass.m in Sources */,
 				41D21E701D01AEC3002E6296 /* CTAssetsViewControllerTransition.m in Sources */,
 				41D408101B8F240B0001F8BE /* MEGAPurchase.m in Sources */,
+				83C570ED22E5BFCF00216896 /* PhoneNumberKit.swift in Sources */,
 				4131997A1BD7BD5D002CD6EA /* DTTimePeriodChain.m in Sources */,
 				B6B959412193A9140064334D /* ThumbnailUploadOperation.m in Sources */,
 				A85740C52032F6B80033034C /* MOChatDraft+CoreDataClass.m in Sources */,
@@ -5357,6 +5451,7 @@
 				4156C80C1AD7E79A00F5E818 /* LTHKeychainUtils.m in Sources */,
 				77F43DD92034637300AE4F42 /* UICollectionView+MNZCategory.m in Sources */,
 				A824ADF6228B1D6800EDF27E /* FLEXArrayExplorerViewController.m in Sources */,
+				83C570EF22E5BFCF00216896 /* PhoneNumberParser.swift in Sources */,
 				83369CE42179D0A0002B09C3 /* CloudDriveCollectionViewController.m in Sources */,
 				41EAAE461D06B49400622FAF /* NSBundle+CTAssetsPickerController.m in Sources */,
 				A85740C42032F6B80033034C /* MOChatDraft+CoreDataProperties.m in Sources */,
@@ -5531,6 +5626,7 @@
 				41E150041DB7CB1400383645 /* UIImageView+MNZCategory.m in Sources */,
 				94E62E1A1F3C5252003A8DEF /* LanguageTableViewController.m in Sources */,
 				A824AE2A228B1D6800EDF27E /* FLEXWebViewController.m in Sources */,
+				83C570E222E5BFCF00216896 /* MetadataTypes.swift in Sources */,
 				5B7B4CA31EE5AC1200DA6A8D /* MEGAShareRequestDelegate.m in Sources */,
 				A824AE06228B1D6800EDF27E /* FLEXNetworkTransaction.m in Sources */,
 				A86FC4FC1EBB4999006053A6 /* MEGAPhotoMediaItem.m in Sources */,
@@ -5556,6 +5652,7 @@
 				4172794F1DB663FA001AC818 /* JSQMessagesCollectionView.m in Sources */,
 				411C8B6B1DECBD87006A0D8C /* MEGAUser+MNZCategory.m in Sources */,
 				A824AE41228B1D6900EDF27E /* FLEXClassesTableViewController.m in Sources */,
+				83C570DF22E5BFCF00216896 /* TextField.swift in Sources */,
 				836AEDE52018AD1F00868FC7 /* PasswordView.m in Sources */,
 				836E74C42099DC82005E2317 /* MEGAChatChangeGroupNameRequestDelegate.m in Sources */,
 				A824ADFD228B1D6800EDF27E /* FLEXColorExplorerViewController.m in Sources */,
@@ -5564,6 +5661,7 @@
 				41D21E621D01AEC3002E6296 /* CTAssetSelectionLabel.m in Sources */,
 				E83E102A1E1582E8002F3E2E /* ChatStatusTableViewController.m in Sources */,
 				942F4FD81F500A8F001FC4AC /* MEGASdk+MNZCategory.m in Sources */,
+				83C570EC22E5BFCF00216896 /* PartialFormatter.swift in Sources */,
 				E85EB30D1DF58EBA0066AC68 /* VerifyCredentialsViewController.m in Sources */,
 				E8F7917F1BC5754A00C58676 /* MEGAActivityItemProvider.m in Sources */,
 				A8EC55B41F02AD1D00426DCC /* MEGAGetPreviewRequestDelegate.m in Sources */,
@@ -5593,6 +5691,7 @@
 				837A88C520B45C11007B55D1 /* SendToViewController.m in Sources */,
 				A824AE37228B1D6800EDF27E /* FLEXTableListViewController.m in Sources */,
 				417279481DB663FA001AC818 /* JSQMediaItem.m in Sources */,
+				83C570E322E5BFCF00216896 /* MetadataParsing.swift in Sources */,
 				41A66D071AE7900F007D7E20 /* UpgradeTableViewController.m in Sources */,
 				5B20B01120E6300300511C0F /* MEGAGenericRequestDelegate.m in Sources */,
 				4172794E1DB663FA001AC818 /* JSQMessagesCellTextView.m in Sources */,
@@ -5613,6 +5712,7 @@
 				9462A1841FDFFD8B00008F32 /* MEGAToolbarContentView.m in Sources */,
 				4172795B1DB663FA001AC818 /* JSQMessagesToolbarContentView.m in Sources */,
 				411504941CEB183600BF38E3 /* SaveToCameraRollActivity.m in Sources */,
+				83C570EA22E5BFCF00216896 /* Formatter.swift in Sources */,
 				832F19EC2091BA970067679E /* MOMediaDestination+CoreDataClass.m in Sources */,
 				A8F1381F21D3F8B0003C7364 /* LocationSearchTableViewCell.m in Sources */,
 				41D8ECDE1BCEBD3200B8FA08 /* SVIndefiniteAnimatedView.m in Sources */,
@@ -5624,6 +5724,7 @@
 				41AA1A1C1AC081C600D32691 /* SecurityOptionsTableViewController.m in Sources */,
 				B6575FD3220101BB00B7AD82 /* MediaInfoLoader.m in Sources */,
 				5B40AB321F7A512E0034C3B3 /* AchievementsDetailsViewController.m in Sources */,
+				83C570E022E5BFCF00216896 /* PhoneNumber.swift in Sources */,
 				411E712F1D461E1D00DD7EF8 /* MEGACollectionViewFlowLayout.m in Sources */,
 				4131997B1BD7BD5D002CD6EA /* DTTimePeriodCollection.m in Sources */,
 				5B0670D321F5DB4500AD9F99 /* RecentsViewController.m in Sources */,
@@ -5713,6 +5814,8 @@
 				B65AC8E521F9B7A30094FF4F /* MOAssetUploadErrorPerLaunch+CoreDataProperties.m in Sources */,
 				41319F551B14968600696BA8 /* SortByTableViewController.m in Sources */,
 				41D21E631D01AEC3002E6296 /* CTAssetsGridSelectedView.m in Sources */,
+				83C570E422E5BFCF00216896 /* ParseManager.swift in Sources */,
+				83C570EB22E5BFCF00216896 /* MetadataManager.swift in Sources */,
 				A824AE2B228B1D6800EDF27E /* FLEXInstancesTableViewController.m in Sources */,
 				A89E77441EA6041C00ADC0D2 /* MEGAAttachmentMediaItem.m in Sources */,
 				5B19713D1F2F1D1C00DE1BB2 /* RemoveSharingActivity.m in Sources */,
@@ -6501,6 +6604,7 @@
 		B6CED49222B8AC70009C4861 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -6528,6 +6632,7 @@
 		B6CED49322B8AC70009C4861 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
