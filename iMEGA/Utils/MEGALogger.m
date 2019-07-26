@@ -17,7 +17,7 @@ static MEGALogger *_megaLogger = nil;
 }
 
 - (void)startLogging {
-    NSString *logFilePath = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"MEGAiOS.log"];
+    NSString *logFilePath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject stringByAppendingPathComponent:@"MEGAiOS.log"];
     [self startLoggingToFile:logFilePath];
 }
 
@@ -36,16 +36,16 @@ static MEGALogger *_megaLogger = nil;
     NSString *version = [NSString stringWithFormat:@"%@ (%@)", [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"], [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleVersion"]];
     NSString *systemVersion = [[UIDevice currentDevice] systemVersion];
     NSArray *languageArray = [NSLocale preferredLanguages];
-    NSString *language = [[NSLocale currentLocale] displayNameForKey:NSLocaleIdentifier value:[languageArray objectAtIndex:0]];
+    NSString *language = [NSLocale.currentLocale displayNameForKey:NSLocaleIdentifier value:languageArray.firstObject];
     
     MEGALogInfo(@"Device information:\nVersion: %@\nDevice: %@\niOS Version: %@\nLanguage: %@\nTimezone: %@", version, [[UIDevice currentDevice] deviceName], systemVersion, language, [NSTimeZone localTimeZone].name);
 }
 
 - (void)stopLogging {
-    [self stopLoggingToFile:[[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"MEGAiOS.log"]];
-    [self stopLoggingToFile:[[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"MEGAiOS.docExt.log"]];
-    [self stopLoggingToFile:[[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"MEGAiOS.fileExt.log"]];
-    [self stopLoggingToFile:[[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"MEGAiOS.shareExt.log"]];
+    [self stopLoggingToFile:[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject stringByAppendingPathComponent:@"MEGAiOS.log"]];
+    [self stopLoggingToFile:[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject stringByAppendingPathComponent:@"MEGAiOS.docExt.log"]];
+    [self stopLoggingToFile:[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject stringByAppendingPathComponent:@"MEGAiOS.fileExt.log"]];
+    [self stopLoggingToFile:[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject stringByAppendingPathComponent:@"MEGAiOS.shareExt.log"]];
     // Also remove logs in the shared sandbox:
     NSFileManager *fileManager = [NSFileManager defaultManager];
     NSString *logsPath = [[[fileManager containerURLForSecurityApplicationGroupIdentifier:@"group.mega.ios"] URLByAppendingPathComponent:@"logs"] path];

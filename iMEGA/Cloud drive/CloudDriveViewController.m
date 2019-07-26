@@ -137,7 +137,7 @@
         }
     }
     
-    NSString *previewsDirectory = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"previewsV3"];
+    NSString *previewsDirectory = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES).firstObject stringByAppendingPathComponent:@"previewsV3"];
     if (![[NSFileManager defaultManager] fileExistsAtPath:previewsDirectory]) {
         if (![[NSFileManager defaultManager] createDirectoryAtPath:previewsDirectory withIntermediateDirectories:NO attributes:nil error:&error]) {
             MEGALogError(@"Create directory at path failed with error: %@", error);
@@ -527,9 +527,8 @@
                                                                        MEGANavigationController *navigationController = [self.storyboard instantiateViewControllerWithIdentifier:@"BrowserNavigationControllerID"];
                                                                        BrowserViewController *browserVC = navigationController.viewControllers.firstObject;
                                                                        browserVC.selectedNodesArray = @[cloudDriveVC.parentNode];
-                                                                       if (lowShareType == MEGAShareTypeAccessOwner) {
-                                                                           browserVC.browserAction = BrowserActionMove;
-                                                                       }
+                                                                       browserVC.browserAction = BrowserActionMove;
+                                                                       
                                                                        [rootViewController presentViewController:navigationController animated:YES completion:nil];
                                                                    }];
             
@@ -821,6 +820,8 @@
     
     [self setNavigationBarButtonItemsEnabled:MEGAReachabilityManager.isReachable];
     
+    (self.nodes.size.unsignedIntegerValue == 0 || !MEGAReachabilityManager.isReachable) ? [self hideSearchIfNotActive] : [self addSearchBar];
+    
     NSMutableArray *tempArray = [[NSMutableArray alloc] initWithCapacity:self.nodes.size.integerValue];
     for (NSUInteger i = 0; i < self.nodes.size.integerValue ; i++) {
         [tempArray addObject:[self.nodes nodeAtIndex:i]];
@@ -858,14 +859,12 @@
     switch (shareType) {
         case MEGAShareTypeAccessRead:
         case MEGAShareTypeAccessReadWrite: {
-            [self.moveBarButtonItem setImage:[UIImage imageNamed:@"copy"]];
-            [self.toolbar setItems:@[self.downloadBarButtonItem, flexibleItem, self.moveBarButtonItem]];
+            self.toolbar.items = @[self.downloadBarButtonItem, flexibleItem, self.carbonCopyBarButtonItem];
             break;
         }
             
         case MEGAShareTypeAccessFull: {
-            [self.moveBarButtonItem setImage:[UIImage imageNamed:@"copy"]];
-            [self.toolbar setItems:@[self.downloadBarButtonItem, flexibleItem, self.moveBarButtonItem, flexibleItem, self.deleteBarButtonItem]];
+            self.toolbar.items = @[self.downloadBarButtonItem, flexibleItem, self.carbonCopyBarButtonItem, flexibleItem, self.deleteBarButtonItem];
             break;
         }
             
@@ -932,12 +931,7 @@
 }
 
 - (void)internetConnectionChanged {
-    BOOL boolValue = [MEGAReachabilityManager isReachable];
-    [self setNavigationBarButtonItemsEnabled:boolValue];
-    
-    boolValue ? [self addSearchBar] : [self hideSearchIfNotActive];
-    
-    [self reloadData];
+    [self reloadUI];
 }
 
 - (void)setNavigationBarButtonItems {
@@ -1597,15 +1591,15 @@
     [self presentViewController:navigationController animated:YES completion:nil];
     
     BrowserViewController *browserVC = navigationController.viewControllers.firstObject;
-    browserVC.selectedNodesArray = [NSArray arrayWithArray:self.selectedNodesArray];
-    if (lowShareType == MEGAShareTypeAccessOwner) {
-        [browserVC setBrowserAction:BrowserActionMove];
-    }
+    browserVC.selectedNodesArray = self.selectedNodesArray.copy;
+    browserVC.browserAction = BrowserActionMove;
+    
+    self.selectedNodesArray = nil;
 }
 
 - (IBAction)deleteAction:(UIBarButtonItem *)sender {
     NSArray *numberOfFilesAndFoldersArray = self.selectedNodesArray.mnz_numberOfFilesAndFolders;
-    NSUInteger numFilesAction = [[numberOfFilesAndFoldersArray objectAtIndex:0] unsignedIntegerValue];
+    NSUInteger numFilesAction = [numberOfFilesAndFoldersArray.firstObject unsignedIntegerValue];
     NSUInteger numFoldersAction = [[numberOfFilesAndFoldersArray objectAtIndex:1] unsignedIntegerValue];
     
     NSString *alertTitle;
@@ -1700,14 +1694,14 @@
 }
 
 - (IBAction)copyAction:(UIBarButtonItem *)sender {
-    if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-        MEGANavigationController *navigationController = [self.storyboard instantiateViewControllerWithIdentifier:@"BrowserNavigationControllerID"];
-        [self presentViewController:navigationController animated:YES completion:nil];
-        
-        BrowserViewController *browserVC = navigationController.viewControllers.firstObject;
-        browserVC.selectedNodesArray = self.selectedNodesArray;
-        [browserVC setBrowserAction:BrowserActionCopy];
-    }
+    MEGANavigationController *navigationController = [self.storyboard instantiateViewControllerWithIdentifier:@"BrowserNavigationControllerID"];
+    [self presentViewController:navigationController animated:YES completion:nil];
+    
+    BrowserViewController *browserVC = navigationController.viewControllers.firstObject;
+    browserVC.selectedNodesArray = self.selectedNodesArray.copy;
+    browserVC.browserAction = BrowserActionCopy;
+    
+    self.selectedNodesArray = nil;
 }
 
 - (IBAction)sortByAction:(UIBarButtonItem *)sender {
@@ -1949,12 +1943,7 @@
             }
         } else if ([error type] == MEGAErrorTypeApiEIncomplete) {
             [SVProgressHUD showImage:[UIImage imageNamed:@"hudMinus"] status:AMLocalizedString(@"transferCancelled", nil)];
-            NSString *base64Handle = [MEGASdk base64HandleForHandle:transfer.nodeHandle];
-            if (self.layoutView == LayoutModeList) {
-                [self.cdTableView reloadRowAtIndexPath:[self.nodesIndexPathMutableDictionary objectForKey:base64Handle]];
-            }
         }
-        return;
     }
     
     if (transfer.type == MEGATransferTypeDownload && self.layoutView == LayoutModeList) {

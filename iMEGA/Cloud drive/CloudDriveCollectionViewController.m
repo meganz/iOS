@@ -59,6 +59,7 @@
         for (MEGANode *tempNode in self.cloudDrive.selectedNodesArray) {
             if (tempNode.handle == node.handle) {
                 selected = YES;
+                [self.collectionView selectItemAtIndexPath:indexPath animated:NO scrollPosition:UICollectionViewScrollPositionNone];
             }
         }
         [cell selectCell:selected];

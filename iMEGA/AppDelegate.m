@@ -258,6 +258,7 @@
         }
     } else {
         // Resume ephemeral account
+        self.window.rootViewController = [OnboardingViewController instanciateOnboardingWithType:OnboardingTypeDefault];
         NSString *sessionId = [SAMKeychain passwordForService:@"MEGA" account:@"sessionId"];
         if (sessionId && ![[[launchOptions objectForKey:@"UIApplicationLaunchOptionsURLKey"] absoluteString] containsString:@"confirm"]) {
             MEGACreateAccountRequestDelegate *createAccountRequestDelegate = [[MEGACreateAccountRequestDelegate alloc] initWithCompletion:^ (MEGAError *error) {
@@ -266,8 +267,6 @@
             }];
             createAccountRequestDelegate.resumeCreateAccount = YES;
             [[MEGASdkManager sharedMEGASdk] resumeCreateAccountWithSessionId:sessionId delegate:createAccountRequestDelegate];
-        } else {
-            self.window.rootViewController = [OnboardingViewController instanciateOnboardingWithType:OnboardingTypeDefault];
         }
     }
     
@@ -443,7 +442,7 @@
         } else if ([userActivity.activityType isEqualToString:@"INStartAudioCallIntent"] || [userActivity.activityType isEqualToString:@"INStartVideoCallIntent"]) {
             INInteraction *interaction = userActivity.interaction;
             INStartAudioCallIntent *startAudioCallIntent = (INStartAudioCallIntent *)interaction.intent;
-            INPerson *contact = startAudioCallIntent.contacts[0];
+            INPerson *contact = startAudioCallIntent.contacts.firstObject;
             INPersonHandle *personHandle = contact.personHandle;
             
             if (personHandle.type == INPersonHandleTypeEmailAddress) {
@@ -1196,7 +1195,7 @@ void uncaughtExceptionHandler(NSException *exception) {
 - (void)setSystemLanguage {
     NSDictionary *globalDomain = [[NSUserDefaults standardUserDefaults] persistentDomainForName:@"NSGlobalDomain"];
     NSArray *languages = [globalDomain objectForKey:@"AppleLanguages"];
-    NSString *systemLanguageID = [languages objectAtIndex:0];
+    NSString *systemLanguageID = languages.firstObject;
     
     if ([Helper isLanguageSupported:systemLanguageID]) {
         [[LocalizationSystem sharedLocalSystem] setLanguage:systemLanguageID];
@@ -1950,7 +1949,8 @@ void uncaughtExceptionHandler(NSException *exception) {
             default: {
                 if (error.type != MEGAErrorTypeApiESid && error.type != MEGAErrorTypeApiESSL && error.type != MEGAErrorTypeApiEExist && error.type != MEGAErrorTypeApiEIncomplete) {
                     NSString *transferFailed = AMLocalizedString(@"Transfer failed:", @"Notification message shown when a transfer failed. Keep colon.");
-                    [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"%@\n%@ %@", transfer.fileName, transferFailed, AMLocalizedString(error.name, nil)]];
+                    NSString *errorString = [MEGAError errorStringWithErrorCode:error.type context:(transfer.type == MEGATransferTypeUpload) ? MEGAErrorContextUpload : MEGAErrorContextDownload];
+                    [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"%@\n%@ %@", transfer.fileName, transferFailed, AMLocalizedString(errorString, nil)]];
                 }
                 break;
             }
