@@ -46,12 +46,12 @@
 #import "PhotosViewController.h"
 #import "PreviewDocumentViewController.h"
 #import "RecentsViewController.h"
+#import "SearchOperation.h"
 #import "SortByTableViewController.h"
 #import "SharedItemsViewController.h"
 #import "UpgradeTableViewController.h"
 
 static const NSTimeInterval kSearchTimeDelay = .5;
-static const NSUInteger kMinimumLettersToStartTheSearch = 3;
 
 @interface CloudDriveViewController () <UINavigationControllerDelegate, UIDocumentPickerDelegate, UIDocumentMenuDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGADelegate, MEGARequestDelegate, CustomActionViewControllerDelegate, NodeInfoViewControllerDelegate, UITextFieldDelegate, UISearchControllerDelegate> {
     
@@ -92,6 +92,7 @@ static const NSUInteger kMinimumLettersToStartTheSearch = 3;
 
 @property (nonatomic, assign) LayoutMode layoutView;
 @property (nonatomic, assign) BOOL shouldDetermineLayout;
+@property (strong, nonatomic) NSOperationQueue *searchQueue;
 
 @end
 
@@ -153,6 +154,11 @@ static const NSUInteger kMinimumLettersToStartTheSearch = 3;
     
     [self.recentsButton setTitle:AMLocalizedString(@"Recents", @"Title for the recents section") forState:UIControlStateNormal];
     self.moreBarButtonItem.accessibilityLabel = AMLocalizedString(@"more", @"Top menu option which opens more menu options in a context menu.");
+    
+    _searchQueue = NSOperationQueue.new;
+    self.searchQueue.name = @"searchQueue";
+    self.searchQueue.qualityOfService = NSQualityOfServiceUserInteractive;
+    self.searchQueue.maxConcurrentOperationCount = 1;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -1257,6 +1263,24 @@ static const NSUInteger kMinimumLettersToStartTheSearch = 3;
     return numberOfRows;
 }
 
+- (void)search {
+    if (self.searchController.searchBar.text.length >= kMinimumLettersToStartTheSearch) {
+        NSString *text = self.searchController.searchBar.text;
+        [SVProgressHUD show];
+        [self.searchNodesArray removeAllObjects];
+        SearchOperation *searchOperation = [SearchOperation.alloc initWithParentNode:self.parentNode text:text completion:^(NSArray * searchArray) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                self.searchNodesArray = [NSMutableArray arrayWithArray:searchArray];
+                [SVProgressHUD dismiss];
+                [self reloadData];
+            });
+        }];
+        [self.searchQueue addOperation:searchOperation];
+    } else {
+        [self reloadData];
+    }
+}
+
 #pragma mark - IBActions
 
 - (IBAction)recentsTouchUpInside:(UIButton *)sender {
@@ -1777,13 +1801,6 @@ static const NSUInteger kMinimumLettersToStartTheSearch = 3;
     }
 }
 
-- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
-    if (searchBar.text.length < kMinimumLettersToStartTheSearch) {
-        [self search];
-    }
-}
-
-
 #pragma mark - UISearchControllerDelegate
 
 - (void)didPresentSearchController:(UISearchController *)searchController {
@@ -1795,24 +1812,9 @@ static const NSUInteger kMinimumLettersToStartTheSearch = 3;
 #pragma mark - UISearchResultsUpdating
 
 - (void)updateSearchResultsForSearchController:(UISearchController *)searchController {
-    if (searchController.searchBar.text.length >= kMinimumLettersToStartTheSearch) {
-        [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(search) object:nil];
-        [self performSelector:@selector(search) withObject:nil afterDelay:kSearchTimeDelay];
-    } else if ([searchController.searchBar.text isEqualToString:@""]) {
-        self.searchNodesArray = [NSMutableArray arrayWithArray:self.nodesArray];
-        [self reloadData];
-    }
-}
-
-- (void)search {
-    [self.searchNodesArray removeAllObjects];
-    MEGANodeList *allNodeList = [[MEGASdkManager sharedMEGASdk] nodeListSearchForNode:self.parentNode searchString:self.searchController.searchBar.text recursive:YES];
-    
-    for (NSInteger i = 0; i < [allNodeList.size integerValue]; i++) {
-        MEGANode *n = [allNodeList nodeAtIndex:i];
-        [self.searchNodesArray addObject:n];
-    }
-    [self reloadData];
+    [self.searchQueue cancelAllOperations];
+    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(search) object:nil];
+    [self performSelector:@selector(search) withObject:nil afterDelay:kSearchTimeDelay];
 }
 
 #pragma mark - UIDocumentPickerDelegate
