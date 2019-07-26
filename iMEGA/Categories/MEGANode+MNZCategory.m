@@ -455,6 +455,19 @@
 
 #pragma mark - Utils
 
+- (MEGANode *)mnz_firstbornInShareOrOutShareParentNode {
+    MEGANode *parentNode = self;
+    while (parentNode != nil) {
+        if (parentNode.isInShare || parentNode.isOutShare) {
+            break;
+        }
+        
+        parentNode = [MEGASdkManager.sharedMEGASdk parentNodeForNode:parentNode];
+    }
+    
+    return parentNode;
+}
+
 - (NSMutableArray *)mnz_parentTreeArray {
     NSMutableArray *parentTreeArray = [[NSMutableArray alloc] init];
     

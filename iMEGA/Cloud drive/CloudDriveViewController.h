@@ -21,6 +21,8 @@
 @property (nonatomic, strong) NSMutableArray *selectedNodesArray;
 @property (nonatomic, strong) NSMutableDictionary *nodesIndexPathMutableDictionary;
 
+@property (nonatomic, strong) MEGARecentActionBucket *recentActionBucket;
+
 @property (strong, nonatomic) UISearchController *searchController;
 
 @property (assign, nonatomic) BOOL allNodesSelected;

@@ -310,7 +310,7 @@
 - (void)presentCallViewControllerIfThereIsAnIncomingCall {
     NSArray *callsKeys = [self.missedCallsDictionary allKeys];
     if (callsKeys.count > 0) {
-        MEGAChatCall *call = [self.missedCallsDictionary objectForKey:[callsKeys objectAtIndex:0]];
+        MEGAChatCall *call = [self.missedCallsDictionary objectForKey:callsKeys.firstObject];
         
         [self.missedCallsDictionary removeObjectForKey:@(call.chatId)];
         

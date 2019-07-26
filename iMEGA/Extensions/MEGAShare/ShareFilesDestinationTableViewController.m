@@ -43,6 +43,8 @@
     UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideKeyboard)];
     tapGesture.cancelsTouchesInView = NO;
     [self.tableView addGestureRecognizer:tapGesture];
+    
+    self.chatReady = MEGASdkManager.sharedMEGAChatSdk.activeChatListItems.size == 0;
 }
 
 - (void)viewWillAppear:(BOOL)animated {

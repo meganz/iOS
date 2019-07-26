@@ -57,7 +57,7 @@
     }
     
     if (self.cachedContactView == nil) {
-        MEGAMessageAttachmentView *contactView = [[[NSBundle bundleForClass:[MEGAMessageAttachmentView class]] loadNibNamed:@"MEGAMessageAttachmentView" owner:self options:nil] objectAtIndex:0];
+        MEGAMessageAttachmentView *contactView = [[NSBundle bundleForClass:MEGAMessageAttachmentView.class] loadNibNamed:@"MEGAMessageAttachmentView" owner:self options:nil].firstObject;
         // Sizes:
         CGSize contactViewSize = [self mediaViewDisplaySize];
         contactView.frame = CGRectMake(contactView.frame.origin.x,
