@@ -62,6 +62,10 @@
     
     self.emailInputView.inputTextField.delegate = self;
     self.emailInputView.inputTextField.keyboardType = UIKeyboardTypeEmailAddress;
+    if (@available(iOS 11.0, *)) {
+        self.emailInputView.inputTextField.textContentType = UITextContentTypeUsername;
+    }
+
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -110,6 +114,7 @@
 
 - (IBAction)resendTouchUpInside:(UIButton *)sender {
     if ([MEGAReachabilityManager isReachableHUDIfNot]) {
+        self.emailInputView.inputTextField.text = self.emailInputView.inputTextField.text.mnz_removeWhitespacesAndNewlinesFromBothEnds;
         BOOL validEmail = [self.emailInputView.inputTextField.text mnz_isValidEmail];
         if (validEmail) {
             [self.emailInputView.inputTextField resignFirstResponder];
