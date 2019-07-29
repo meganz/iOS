@@ -188,8 +188,8 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
 }
 
 - (BOOL)validateEmail {
+    self.emailInputView.inputTextField.text = self.emailInputView.inputTextField.text.mnz_removeWhitespacesAndNewlinesFromBothEnds;
     BOOL validEmail = self.emailInputView.inputTextField.text.mnz_isValidEmail;
-    
     if (validEmail) {
         [self.emailInputView setErrorState:NO withText:AMLocalizedString(@"emailPlaceholder", @"Hint text to suggest that the user has to write his email")];
     } else {

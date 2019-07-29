@@ -32,6 +32,7 @@ typedef NS_ENUM(NSInteger, MEGAChatMessageEndCallReason);
 - (BOOL)mnz_isValidEmail;
 
 - (BOOL)mnz_isEmpty;
+- (NSString *)mnz_removeWhitespacesAndNewlinesFromBothEnds;
 
 - (BOOL)mnz_containsInvalidChars;
 
