@@ -729,7 +729,7 @@
 /* Footer description when upload all burst photos is enabled */
 "All the photos from your burst photo sequences will be uploaded."="연속 촬영의 모든 사진이 업로드 됩니다.";
 /* Footer description when upload all burst photos is disabled */
-"Only the representative photos from your burst photo sequences will be uploaded."="연속 촬영의 대표 사진만 업로드 됩니다.";
+"Only the representative photos from your burst photo sequences will be uploaded."="연속 촬영의 가장 좋아하는 사진만 업로드 됩니다.";
 /* Footer description when upload Hidden Album is enabled */
 "The Hidden Album is where you hide photos or videos in your device Photos app."="숨긴 앨범은 기기의 사진 앱에서 숨긴 사진 또는 동영상입니다.";
 /* App means “Application” */

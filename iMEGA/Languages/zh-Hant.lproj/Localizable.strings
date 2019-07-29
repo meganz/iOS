@@ -729,7 +729,7 @@
 /* Footer description when upload all burst photos is enabled */
 "All the photos from your burst photo sequences will be uploaded."="將上傳您連拍照片序列中的所有照片。";
 /* Footer description when upload all burst photos is disabled */
-"Only the representative photos from your burst photo sequences will be uploaded."="只會上傳您的連拍照片序列中的代表性照片。";
+"Only the representative photos from your burst photo sequences will be uploaded."="只會上傳您的連拍照片序列中最喜歡的照片。";
 /* Footer description when upload Hidden Album is enabled */
 "The Hidden Album is where you hide photos or videos in your device Photos app."="「隱藏相簿」是在您裝置的相片應用程式中隱藏照片或影片的地方。";
 /* App means “Application” */

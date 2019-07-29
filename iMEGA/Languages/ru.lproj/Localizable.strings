@@ -729,7 +729,7 @@
 /* Footer description when upload all burst photos is enabled */
 "All the photos from your burst photo sequences will be uploaded."="Все фото из серийной съёмки будут загружаться.";
 /* Footer description when upload all burst photos is disabled */
-"Only the representative photos from your burst photo sequences will be uploaded."="Только репрезентативные фото из серийной съёмки будут загружаться.";
+"Only the representative photos from your burst photo sequences will be uploaded."="Только избранные фото из серийной съёмки будут загружаться.";
 /* Footer description when upload Hidden Album is enabled */
 "The Hidden Album is where you hide photos or videos in your device Photos app."="Скрытый альбом — альбом, где вы прячете фото или видео в приложении «Фото» на устройстве.";
 /* App means “Application” */

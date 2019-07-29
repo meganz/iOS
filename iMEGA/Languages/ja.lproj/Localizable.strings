@@ -729,7 +729,7 @@
 /* Footer description when upload all burst photos is enabled */
 "All the photos from your burst photo sequences will be uploaded."="あなたのバースト写真シーケンスからの写真がすべてアップロードされます。";
 /* Footer description when upload all burst photos is disabled */
-"Only the representative photos from your burst photo sequences will be uploaded."="あなたのバースト写真シーケンスの代表的な写真のみがアップロードされます。";
+"Only the representative photos from your burst photo sequences will be uploaded."="あなたのバースト写真シーケンスのお気に入りの写真のみがアップロードされます。";
 /* Footer description when upload Hidden Album is enabled */
 "The Hidden Album is where you hide photos or videos in your device Photos app."="隠しアルバムは、あなたの端末の写真アプリで非表示にしている写真や動画の場所です。";
 /* App means “Application” */

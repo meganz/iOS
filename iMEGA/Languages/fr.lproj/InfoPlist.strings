@@ -11,7 +11,7 @@
 /* Face ID usage description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
 "NSFaceIDUsageDescription"="MEGA accède à Face ID pour vous permettre de déverrouiller facilement le code d’accès de l’appli si vous activez cette option.";
 /* Label for any 'Search' button, link, etc. - (String as short as possible). */
-"quickActionSearchString"="Chercher";
+"quickActionSearchString"="Recherche";
 /*  */
 "quickActionUploadString"="Téléverser";
 /* Title of the Offline section */

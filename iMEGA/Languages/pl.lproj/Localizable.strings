@@ -729,7 +729,7 @@
 /* Footer description when upload all burst photos is enabled */
 "All the photos from your burst photo sequences will be uploaded."="Wszystkie zdjęcia z sekwencji zdjęć seryjnych zostaną przesłane.";
 /* Footer description when upload all burst photos is disabled */
-"Only the representative photos from your burst photo sequences will be uploaded."="Przesłane zostaną tylko reprezentatywne zdjęcia z sekwencji zdjęć seryjnych.";
+"Only the representative photos from your burst photo sequences will be uploaded."="Przesłane zostaną tylko ulubione zdjęcia z sekwencji zdjęć seryjnych.";
 /* Footer description when upload Hidden Album is enabled */
 "The Hidden Album is where you hide photos or videos in your device Photos app."="Ukryty album to miejsce, w którym ukrywasz zdjęcia lub filmy w aplikacji Zdjęcia swojego urządzenia.";
 /* App means “Application” */

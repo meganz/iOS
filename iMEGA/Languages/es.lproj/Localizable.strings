@@ -505,9 +505,9 @@
 /* Message shown while uploading files. Plural. */
 "cameraUploadsPendingFiles"="Subida en curso, %lu archivos pendientes";
 /* Message shown when camera upload paused because of no WiFi. Singular. */
-"Upload paused because of no WiFi, 1 file pending"="Upload paused due to no WiFi connection, 1 file pending";
+"Upload paused because of no WiFi, 1 file pending"="Subida pausada debido a que no hay conexión WiFi, 1 archivo pendiente";
 /* Message shown when camera upload paused because of no WiFi. Plural. */
-"Upload paused because of no WiFi, %lu files pending"="Upload paused due to no WiFi connection, %lu files pending";
+"Upload paused because of no WiFi, %lu files pending"="Subida pausada debido a que no hay conexión WiFi, %lu archivos pendientes";
 /* Message shown the pending video file when photos uploaded and video upload is not enabled. Singular. */
 "Photos uploaded, video uploads are off, 1 video not uploaded"="Fotos subidas, las subidas de videos están desactivadas;  1 video no subido";
 /* Message shown the pending video files when photos uploaded and video upload is not enabled. Plural. */
@@ -717,21 +717,21 @@
 /* Navigation path for Storage settings in iOS */
 "Settings > General > %@ Storage"="Ajustes > General > Almacenamiento %@";
 /* Title of the switch to config whether to upload videos for Live Photos */
-"Upload videos for Live Photos"="Upload videos for Live Photos";
+"Upload videos for Live Photos"="Subir vídeos de Live Photos";
 /* Title of the switch to config whether to upload all burst photos */
-"Upload all burst photos"="Upload all burst photos";
+"Upload all burst photos"="Subir fotos hechas en modo ráfaga";
 /* Title of the switch to config whether to upload Hidden Album */
-"Upload Hidden Album"="Upload Hidden Album";
+"Upload Hidden Album"="Subir Álbum oculto";
 /* Footer description when upload videos for Live Photos is enabled */
-"The video and the photo in each Live Photo will be uploaded."="The photo and video versions of each Live Photo will be uploaded.";
+"The video and the photo in each Live Photo will be uploaded."="Se subirán las fotos y los vídeos de cada Live Photo.";
 /* Footer description when upload videos for Live Photos is disabled */
-"Only the photo in each Live Photo will be uploaded."="Only the photo version of each Live Photo will be uploaded.";
+"Only the photo in each Live Photo will be uploaded."="Solo se subirá la foto de cada Live Photo.";
 /* Footer description when upload all burst photos is enabled */
-"All the photos from your burst photo sequences will be uploaded."="All the photos from your burst photo sequences will be uploaded.";
+"All the photos from your burst photo sequences will be uploaded."="Se subirán todas las fotos hechas en modo ráfaga.";
 /* Footer description when upload all burst photos is disabled */
-"Only the representative photos from your burst photo sequences will be uploaded."="Only the representative photos from your burst photo sequences will be uploaded.";
+"Only the representative photos from your burst photo sequences will be uploaded."="Only favourite photos from your burst photo sequences will be uploaded.";
 /* Footer description when upload Hidden Album is enabled */
-"The Hidden Album is where you hide photos or videos in your device Photos app."="The Hidden Album is where you hide photos or videos in your device’s Photos app.";
+"The Hidden Album is where you hide photos or videos in your device Photos app."="El Álbum oculto es donde escondes fotos o videos en la aplicación Fotos de tu dispositivo.";
 /* App means “Application” */
 "App version"="Versión de la aplicación";
 /* Title of the label where the SDK version is shown */
@@ -1393,7 +1393,7 @@
 /* Label to show that an error related with a blocked account occurs during a SDK operation. */
 "Blocked"="Bloqueado";
 /* Label to show that an error related with an over quota occurs during a SDK operation. */
-"Over quota"="Límite de cuenta excedido";
+"Over quota"="Límite excedido";
 /* Label to show that an error related with a temporary problem occurs during a SDK operation. */
 "Temporarily not available"="No disponible temporalmente";
 /* Label to show that an error related with too many connections occurs during a SDK operation. */
@@ -1821,7 +1821,7 @@
 /* A notification that the other user cancelled their contact request so it is no longer valid. E.g. user@email.com cancelled their contact request. */
 "Cancelled their contact request"="Ha cancelado su solicitud de contacto";
 /* A reminder notification to remind the user to respond to the contact request. */
-"Reminder: You have a contact request"="Recordatorio: tienes una solicitud de contacto";
+"Reminder: You have a contact request"="Aviso: tienes una solicitud de contacto";
 /* A notification telling the user that the other user deleted them as a contact. E.g. user@email.com deleted you as a contact. */
 "Deleted you as a contact"="Te ha eliminado de sus contactos";
 /* A notification telling the user that they are now fully connected with the other user (the users are in each other’s address books). */
