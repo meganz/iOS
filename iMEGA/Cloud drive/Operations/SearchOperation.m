@@ -46,7 +46,7 @@
             MEGALogInfo(@"[Search] \"%@\" canceled", self.text);
             self.completion(nil);
         } else {
-            NSMutableArray *searchNodes = NSMutableArray.new;
+            NSMutableArray *searchNodes = [NSMutableArray arrayWithCapacity: allNodeList.size.integerValue];
             for (NSInteger i = 0; i < allNodeList.size.integerValue; i++) {
                 MEGANode *n = [allNodeList nodeAtIndex:i];
                 [searchNodes addObject:n];
