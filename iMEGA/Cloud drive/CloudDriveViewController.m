@@ -1268,9 +1268,9 @@ static const NSTimeInterval kSearchTimeDelay = .5;
         NSString *text = self.searchController.searchBar.text;
         [SVProgressHUD show];
         [self.searchNodesArray removeAllObjects];
-        SearchOperation *searchOperation = [SearchOperation.alloc initWithParentNode:self.parentNode text:text completion:^(NSArray * searchArray) {
+        SearchOperation *searchOperation = [SearchOperation.alloc initWithParentNode:self.parentNode text:text completion:^(NSArray <MEGANode *> *nodesFound) {
             dispatch_async(dispatch_get_main_queue(), ^{
-                self.searchNodesArray = [NSMutableArray arrayWithArray:searchArray];
+                self.searchNodesArray = [NSMutableArray arrayWithArray:nodesFound];
                 [SVProgressHUD dismiss];
                 [self reloadData];
             });
