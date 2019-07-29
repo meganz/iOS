@@ -39,7 +39,7 @@ static NSString * const CameraUploadBurstPhotoExtension = @"burst";
 }
 
 - (MEGANode *)nodeForOriginalFingerprint:(NSString *)fingerprint {
-    MEGANode *matchingNode = [MEGASdkManager.sharedMEGASdk nodeForFingerprint:fingerprint];
+    MEGANode *matchingNode = [MEGASdkManager.sharedMEGASdk nodeForFingerprint:fingerprint parent:self.uploadInfo.parentNode];
     if (matchingNode == nil) {
         MEGANodeList *nodeList = [MEGASdkManager.sharedMEGASdk nodesForOriginalFingerprint:fingerprint];
         if (nodeList.size.integerValue > 0) {
