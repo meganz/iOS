@@ -5,6 +5,8 @@
 #import <LocalAuthentication/LAContext.h>
 
 #import "Helper.h"
+#import "NSString+MNZCategory.h"
+#import "RequirePasscodeTimeDurationTableViewController.h"
 
 @interface PasscodeTableViewController () {
     BOOL wasPasscodeAlreadyEnabled;
@@ -19,6 +21,8 @@
 @property (weak, nonatomic) IBOutlet UISwitch *eraseLocalDataSwitch;
 @property (weak, nonatomic) IBOutlet UILabel *biometricsLabel;
 @property (weak, nonatomic) IBOutlet UISwitch *biometricsSwitch;
+@property (weak, nonatomic) IBOutlet UILabel *requirePasscodeLabel;
+@property (weak, nonatomic) IBOutlet UILabel *requirePasscodeDetailLabel;
 
 @end
 
@@ -33,6 +37,7 @@
     [self.turnOnOffPasscodeLabel setText:AMLocalizedString(@"passcode", nil)];
     [self.changePasscodeLabel setText:AMLocalizedString(@"changePasscodeLabel", @"Change passcode")];
     [self.simplePasscodeLabel setText:AMLocalizedString(@"simplePasscodeLabel", @"Simple passcode")];
+    self.requirePasscodeLabel.text = AMLocalizedString(@"Require passcode", @"Label indicating that the passcode (pin) view will be displayed if the application goes back to foreground after being x time in background. Examples: require passcode immediately, require passcode after 5 minutes");
 
     self.biometricsLabel.text = @"Touch ID";
     
@@ -53,6 +58,8 @@
     
     [[LTHPasscodeViewController sharedUser] setNavigationBarTintColor:UIColor.mnz_redMain];
     [[LTHPasscodeViewController sharedUser] setNavigationTintColor:[UIColor whiteColor]];
+    
+    self.navigationItem.backBarButtonItem = [UIBarButtonItem.alloc initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -77,7 +84,7 @@
                 wasPasscodeAlreadyEnabled = YES;
             }
         }
-        
+        self.requirePasscodeDetailLabel.text = LTHPasscodeViewController.timerDuration > Immediatelly ? [NSString mnz_stringFromCallDuration:LTHPasscodeViewController.timerDuration] : AMLocalizedString(@"Immediatelly", nil);
     } else {
         [self.simplePasscodeSwitch setOn:NO];
         [self.biometricsSwitch setOn:NO];
@@ -114,6 +121,7 @@
     if (![LTHPasscodeViewController doesPasscodeExist]) {
         [[LTHPasscodeViewController sharedUser] showForEnablingPasscodeInViewController:self asModal:YES];
         [[LTHPasscodeViewController sharedUser] setMaxNumberOfAllowedFailedAttempts:10];
+        [LTHPasscodeViewController saveTimerDuration:ThirtySeconds];
     } else {
         [[LTHPasscodeViewController sharedUser] showForDisablingPasscodeInViewController:self asModal:YES];
     }
@@ -150,12 +158,14 @@
     [self.eraseLocalDataSwitch setEnabled:doesPasscodeExist];
     [self.biometricsSwitch setEnabled:doesPasscodeExist];
     [self.biometricsLabel setEnabled:doesPasscodeExist];
+    self.requirePasscodeLabel.enabled = doesPasscodeExist;
+    self.requirePasscodeDetailLabel.enabled = doesPasscodeExist;
 
-    return 2;
+    return 3;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    NSInteger numberOfRows = 0;
+    NSInteger numberOfRows = 1;
     
     switch (section) {
         case 0:
@@ -164,10 +174,6 @@
             } else {
                 numberOfRows = 3;
             }
-            break;
-            
-        case 1:
-            numberOfRows = 1;
             break;
     }
     
@@ -192,6 +198,14 @@
             [[LTHPasscodeViewController sharedUser] showForChangingPasscodeInViewController:self asModal:YES];
         }
     }
+    
+    if (indexPath.section == 2) {
+        if (LTHPasscodeViewController.doesPasscodeExist) {
+            RequirePasscodeTimeDurationTableViewController *passcodeRequireTimeTableViewController = RequirePasscodeTimeDurationTableViewController.new;
+            [self.navigationController pushViewController:passcodeRequireTimeTableViewController animated:YES];
+        }
+    }
+    
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 

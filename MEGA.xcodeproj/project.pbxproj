@@ -600,6 +600,7 @@
 		A802B2011FAB2EA500AC8BB0 /* MEGAChatAnswerCallRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A802B2001FAB2EA500AC8BB0 /* MEGAChatAnswerCallRequestDelegate.m */; };
 		A810CF2F20C157BC00A6C6C5 /* FLAnimatedImage.m in Sources */ = {isa = PBXBuildFile; fileRef = A810CF2D20C157BB00A6C6C5 /* FLAnimatedImage.m */; };
 		A810CF3020C157BC00A6C6C5 /* FLAnimatedImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = A810CF2E20C157BC00A6C6C5 /* FLAnimatedImageView.m */; };
+		A811CE2F22EEE9FE00B24E76 /* RequirePasscodeTimeDurationTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A811CE2E22EEE9FE00B24E76 /* RequirePasscodeTimeDurationTableViewController.m */; };
 		A813A79D22B38D7F00418737 /* AVAudioSession+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = A813A79C22B38D7F00418737 /* AVAudioSession+MNZCategory.m */; };
 		A813A7A022B7D7F700418737 /* FLEXBundleExplorerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A813A79F22B7D7F600418737 /* FLEXBundleExplorerViewController.m */; };
 		A815FCE41FE1795C0075AC29 /* MEGAChatCreateChatGroupRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A815FCE31FE1795C0075AC29 /* MEGAChatCreateChatGroupRequestDelegate.m */; };
@@ -1732,6 +1733,8 @@
 		A810CF2C20C157BB00A6C6C5 /* FLAnimatedImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLAnimatedImageView.h; sourceTree = "<group>"; };
 		A810CF2D20C157BB00A6C6C5 /* FLAnimatedImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLAnimatedImage.m; sourceTree = "<group>"; };
 		A810CF2E20C157BC00A6C6C5 /* FLAnimatedImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLAnimatedImageView.m; sourceTree = "<group>"; };
+		A811CE2D22EEE9FE00B24E76 /* RequirePasscodeTimeDurationTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RequirePasscodeTimeDurationTableViewController.h; sourceTree = "<group>"; };
+		A811CE2E22EEE9FE00B24E76 /* RequirePasscodeTimeDurationTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RequirePasscodeTimeDurationTableViewController.m; sourceTree = "<group>"; };
 		A813A79B22B38D7F00418737 /* AVAudioSession+MNZCategory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AVAudioSession+MNZCategory.h"; sourceTree = "<group>"; };
 		A813A79C22B38D7F00418737 /* AVAudioSession+MNZCategory.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "AVAudioSession+MNZCategory.m"; sourceTree = "<group>"; };
 		A813A79E22B7D7F600418737 /* FLEXBundleExplorerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLEXBundleExplorerViewController.h; sourceTree = "<group>"; };
@@ -3131,6 +3134,8 @@
 			children = (
 				41B3B82E1AD591A80093A88D /* PasscodeTableViewController.h */,
 				41B3B82F1AD591A80093A88D /* PasscodeTableViewController.m */,
+				A811CE2D22EEE9FE00B24E76 /* RequirePasscodeTimeDurationTableViewController.h */,
+				A811CE2E22EEE9FE00B24E76 /* RequirePasscodeTimeDurationTableViewController.m */,
 			);
 			path = Passcode;
 			sourceTree = "<group>";
@@ -5679,6 +5684,7 @@
 				94F376E71FE7C126009AAA10 /* MEGAToolbarAssetPicker.m in Sources */,
 				7795677721C80CDF002B6227 /* OnboardingViewController.m in Sources */,
 				A813A7A022B7D7F700418737 /* FLEXBundleExplorerViewController.m in Sources */,
+				A811CE2F22EEE9FE00B24E76 /* RequirePasscodeTimeDurationTableViewController.m in Sources */,
 				41FC83C01AAE056C008FA551 /* CameraUploadsTableViewController.m in Sources */,
 				944B205D1EE55533003C967B /* UIAlertAction+MNZCategory.m in Sources */,
 				415DCF241BF48EFA00914A1E /* ContactRequestsViewController.m in Sources */,
