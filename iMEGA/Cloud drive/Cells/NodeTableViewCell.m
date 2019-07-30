@@ -7,6 +7,7 @@
 #import "MEGANode+MNZCategory.h"
 #import "MEGASdkManager.h"
 #import "MEGAStore.h"
+#import "NSAttributedString+MNZCategory.h"
 #import "NSDate+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 #import "UIImageView+MNZCategory.h"
@@ -96,8 +97,17 @@
     if (!node.name.mnz_isVideoPathExtension) {
         self.thumbnailPlayImageView.hidden = YES;
     }
+        
+    if (node.isTakenDown) {
+        NSMutableAttributedString *nameAttributedString = [NSAttributedString.alloc initWithString:[NSString stringWithFormat:@"%@ ", node.name]].mutableCopy;
+        NSString *takedownImageName = @"isTakedown";
+        NSAttributedString *takedownImageAttributedString = [NSAttributedString mnz_attributedStringFromImageNamed:takedownImageName fontCapHeight:self.nameLabel.font.capHeight];
+        [nameAttributedString appendAttributedString:takedownImageAttributedString];
+        self.nameLabel.attributedText = nameAttributedString;
+    } else {
+        self.nameLabel.text = node.name;
+    }
     
-    self.nameLabel.text = node.name;
     if (node.isFile) {
         self.infoLabel.text = self.recentActionBucket ? [NSString stringWithFormat:@"%@ • %@", [Helper sizeForNode:node api:MEGASdkManager.sharedMEGASdk], node.creationTime.mnz_formattedHourAndMinutes] : [Helper sizeAndDateForNode:node api:api];
         self.versionedImageView.hidden = ![[MEGASdkManager sharedMEGASdk] hasVersionsForNode:node];
