@@ -5,6 +5,8 @@
 @class MEGANode;
 @class MEGAUser;
 
+static const NSUInteger kMinimumLettersToStartTheSearch = 1;
+
 @interface CloudDriveViewController : UIViewController
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *selectorViewHeightLayoutConstraint;
