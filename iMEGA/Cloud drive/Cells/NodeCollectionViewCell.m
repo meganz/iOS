@@ -6,6 +6,7 @@
 #import "Helper.h"
 #import "MEGAGetThumbnailRequestDelegate.h"
 #import "MEGASdkManager.h"
+#import "NSAttributedString+MNZCategory.h"
 #import "UIImageView+MNZCategory.h"
 
 @interface NodeCollectionViewCell ()
@@ -40,8 +41,17 @@
         [self.thumbnailIconView mnz_imageForNode:node];
         self.thumbnailImageView.hidden = YES;
     }
-        
-    self.nameLabel.text = node.name;
+    
+    if (node.isTakenDown) {        
+        NSMutableAttributedString *nameAttributedString = [NSAttributedString.alloc initWithString:[NSString stringWithFormat:@"%@ ", node.name]].mutableCopy;
+        NSString *takedownImageName = @"isTakedown";
+        NSAttributedString *takedownImageAttributedString = [NSAttributedString mnz_attributedStringFromImageNamed:takedownImageName fontCapHeight:self.nameLabel.font.capHeight];
+        [nameAttributedString appendAttributedString:takedownImageAttributedString];
+        self.nameLabel.attributedText = nameAttributedString;
+    } else {
+        self.nameLabel.text = node.name;
+    }
+    
     if (!node.name.mnz_isVideoPathExtension) {
         self.thumbnailPlayImageView.hidden = YES;
     }
