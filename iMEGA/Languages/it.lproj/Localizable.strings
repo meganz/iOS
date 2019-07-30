@@ -705,7 +705,7 @@
 /* Title for new camera upload feature */
 "New Camera Upload!"="Nuove opzioni per i caricamenti dalla fotocamera!";
 /* A messge for camera upload v2 migration */
-"Now you can choose to convert the HEIF/HEVC photos and videos to the most compatible JPEG/H.264 formats."="Adesso puoi scegliere di convertire le foto HEIF e i video HEVC nei loro formati più compatibili (rispettivamente, JPG e H264).";
+"Now you can choose to convert the HEIF/HEVC photos and videos to the most compatible JPEG/H.264 formats."="Adesso puoi scegliere di convertire le foto HEIC e i video HEVC nei loro formati più compatibili (rispettivamente, JPG e H264).";
 /* Title for an action to use most compatible formats */
 "Use Most Compatible Formats"="Utilizza i formati più compatibili";
 /* Title for custom settings */

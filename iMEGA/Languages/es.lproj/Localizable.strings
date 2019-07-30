@@ -890,7 +890,7 @@
 /* Message shown when you click on 'Close other session' to block other login sessions except the current session in use. This message is shown when this has been done. */
 "sessionsClosed"="Sesiones cerradas";
 /* Section title where you can change the app's passcode */
-"changePasscodeLabel"="Cambia el código de acceso";
+"changePasscodeLabel"="Cambiar el código de acceso";
 /* Title to describe a simple (four digit) passcode */
 "simplePasscodeLabel"="Código de acceso simple";
 /* Title of one of the passcode options. If enabled will do what footer explains. */
