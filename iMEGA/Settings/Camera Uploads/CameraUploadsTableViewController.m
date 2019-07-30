@@ -8,6 +8,7 @@
 #import "Helper.h"
 #import "CustomModalAlertViewController.h"
 #import "MEGAConstants.h"
+#import "TransferSessionManager.h"
 @import CoreLocation;
 
 @interface CameraUploadsTableViewController () <CLLocationManagerDelegate>
@@ -255,11 +256,24 @@
     MEGALogInfo(@"%@ mobile data", sender.isOn ? @"Enable" : @"Disable");
     CameraUploadManager.cellularUploadAllowed = sender.isOn;
     [self configUI];
+    
+    if (CameraUploadManager.cellularUploadAllowed) {
+        [TransferSessionManager.shared invalidateAndCancelPhotoCellularDisallowedSession];
+    } else {
+        [TransferSessionManager.shared invalidateAndCancelPhotoCellularAllowedSession];
+        [TransferSessionManager.shared invalidateAndCancelVideoCellularAllowedSession];
+    }
 }
 
 - (IBAction)useCellularConnectionForVideosSwitchValueChanged:(UISwitch *)sender {
     MEGALogInfo(@"%@ mobile data for videos", sender.isOn ? @"Enable" : @"Disable");
     CameraUploadManager.cellularUploadForVideosAllowed = sender.isOn;
+    
+    if (CameraUploadManager.cellularUploadForVideosAllowed) {
+        [TransferSessionManager.shared invalidateAndCancelVideoCellularDisallowedSession];
+    } else {
+        [TransferSessionManager.shared invalidateAndCancelVideoCellularAllowedSession];
+    }
 }
 
 - (IBAction)backgroundUploadButtonTouched:(UIButton *)sender {
