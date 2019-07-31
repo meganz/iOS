@@ -48,9 +48,12 @@
 #import "PhotosViewController.h"
 #import "PreviewDocumentViewController.h"
 #import "RecentsViewController.h"
+#import "SearchOperation.h"
 #import "SortByTableViewController.h"
 #import "SharedItemsViewController.h"
 #import "UpgradeTableViewController.h"
+
+static const NSTimeInterval kSearchTimeDelay = .5;
 
 @interface CloudDriveViewController () <UINavigationControllerDelegate, UIDocumentPickerDelegate, UIDocumentMenuDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGADelegate, MEGARequestDelegate, CustomActionViewControllerDelegate, NodeInfoViewControllerDelegate, UITextFieldDelegate, UISearchControllerDelegate> {
     
@@ -91,6 +94,7 @@
 
 @property (nonatomic, assign) LayoutMode layoutView;
 @property (nonatomic, assign) BOOL shouldDetermineLayout;
+@property (strong, nonatomic) NSOperationQueue *searchQueue;
 
 @end
 
@@ -152,6 +156,11 @@
     
     [self.recentsButton setTitle:AMLocalizedString(@"Recents", @"Title for the recents section") forState:UIControlStateNormal];
     self.moreBarButtonItem.accessibilityLabel = AMLocalizedString(@"more", @"Top menu option which opens more menu options in a context menu.");
+    
+    _searchQueue = NSOperationQueue.new;
+    self.searchQueue.name = @"searchQueue";
+    self.searchQueue.qualityOfService = NSQualityOfServiceUserInteractive;
+    self.searchQueue.maxConcurrentOperationCount = 1;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -1298,6 +1307,24 @@
     return numberOfRows;
 }
 
+- (void)search {
+    if (self.searchController.searchBar.text.length >= kMinimumLettersToStartTheSearch) {
+        NSString *text = self.searchController.searchBar.text;
+        [SVProgressHUD show];
+        [self.searchNodesArray removeAllObjects];
+        SearchOperation *searchOperation = [SearchOperation.alloc initWithParentNode:self.parentNode text:text completion:^(NSArray <MEGANode *> *nodesFound) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                self.searchNodesArray = [NSMutableArray arrayWithArray:nodesFound];
+                [SVProgressHUD dismiss];
+                [self reloadData];
+            });
+        }];
+        [self.searchQueue addOperation:searchOperation];
+    } else {
+        [self reloadData];
+    }
+}
+
 - (void)openFileNode:(MEGANode *)node {
     if (node.name.mnz_isImagePathExtension || node.name.mnz_isVideoPathExtension) {
         [self showNode:node];
@@ -1606,8 +1633,7 @@
         [UIView animateWithDuration:0.33f animations:^ {
             [self.toolbar setAlpha:1.0];
         }];
-    } else {
-        self.editBarButtonItem.title = AMLocalizedString(@"edit", @"Caption of a button to edit the files that are selected");
+    } else {        
         [self setNavigationBarButtonItems];
         self.allNodesSelected = NO;
         self.selectedNodesArray = nil;
@@ -1849,20 +1875,9 @@
 #pragma mark - UISearchResultsUpdating
 
 - (void)updateSearchResultsForSearchController:(UISearchController *)searchController {
-    NSString *searchString = searchController.searchBar.text;
-    [self.searchNodesArray removeAllObjects];
-
-    if ([searchString isEqualToString:@""]) {
-        self.searchNodesArray = [NSMutableArray arrayWithArray:self.nodesArray];
-    } else {
-        MEGANodeList *allNodeList = [[MEGASdkManager sharedMEGASdk] nodeListSearchForNode:self.parentNode searchString:searchString recursive:YES];
-        
-        for (NSInteger i = 0; i < [allNodeList.size integerValue]; i++) {
-            MEGANode *n = [allNodeList nodeAtIndex:i];
-            [self.searchNodesArray addObject:n];
-        }
-    }
-    [self reloadData];
+    [self.searchQueue cancelAllOperations];
+    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(search) object:nil];
+    [self performSelector:@selector(search) withObject:nil afterDelay:kSearchTimeDelay];
 }
 
 #pragma mark - UIDocumentPickerDelegate

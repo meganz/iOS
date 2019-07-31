@@ -69,7 +69,7 @@
     
     self.backBarButtonItem.image = self.backBarButtonItem.image.imageFlippedForRightToLeftLayoutDirection;
     self.navigationItem.leftBarButtonItem = self.backBarButtonItem;
-    self.editBarButtonItem.title = AMLocalizedString(@"edit", @"Caption of a button to edit the files that are selected");
+    self.editBarButtonItem.title = AMLocalizedString(@"select", @"Caption of a button to select files");
     self.navigationItem.rightBarButtonItems = @[self.editBarButtonItem];
     
     self.downloadBarButtonItem.title = AMLocalizedString(@"saveForOffline", @"List option shown on the details of a file or folder");
@@ -144,7 +144,7 @@
         self.editBarButtonItem.title = AMLocalizedString(@"cancel", @"Button title to cancel something");
         [self setToolbarItemsEnabled:NO];
     } else {
-        self.editBarButtonItem.title = AMLocalizedString(@"edit", @"Caption of a button to edit the files that are selected");
+        self.editBarButtonItem.title = AMLocalizedString(@"select", @"Caption of a button to select files");
         [self setToolbarItemsEnabled:YES];
         
         [self.selectedNodesMutableArray removeAllObjects];
