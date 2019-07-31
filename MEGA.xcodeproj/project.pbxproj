@@ -600,6 +600,7 @@
 		A802B2011FAB2EA500AC8BB0 /* MEGAChatAnswerCallRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A802B2001FAB2EA500AC8BB0 /* MEGAChatAnswerCallRequestDelegate.m */; };
 		A810CF2F20C157BC00A6C6C5 /* FLAnimatedImage.m in Sources */ = {isa = PBXBuildFile; fileRef = A810CF2D20C157BB00A6C6C5 /* FLAnimatedImage.m */; };
 		A810CF3020C157BC00A6C6C5 /* FLAnimatedImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = A810CF2E20C157BC00A6C6C5 /* FLAnimatedImageView.m */; };
+		A811CE2C22EAFB1700B24E76 /* SearchOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = A811CE2B22EAFB1700B24E76 /* SearchOperation.m */; };
 		A813A79D22B38D7F00418737 /* AVAudioSession+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = A813A79C22B38D7F00418737 /* AVAudioSession+MNZCategory.m */; };
 		A813A7A022B7D7F700418737 /* FLEXBundleExplorerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A813A79F22B7D7F600418737 /* FLEXBundleExplorerViewController.m */; };
 		A815FCE41FE1795C0075AC29 /* MEGAChatCreateChatGroupRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A815FCE31FE1795C0075AC29 /* MEGAChatCreateChatGroupRequestDelegate.m */; };
@@ -1736,6 +1737,8 @@
 		A810CF2C20C157BB00A6C6C5 /* FLAnimatedImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLAnimatedImageView.h; sourceTree = "<group>"; };
 		A810CF2D20C157BB00A6C6C5 /* FLAnimatedImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLAnimatedImage.m; sourceTree = "<group>"; };
 		A810CF2E20C157BC00A6C6C5 /* FLAnimatedImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLAnimatedImageView.m; sourceTree = "<group>"; };
+		A811CE2A22EAFB1700B24E76 /* SearchOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchOperation.h; sourceTree = "<group>"; };
+		A811CE2B22EAFB1700B24E76 /* SearchOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchOperation.m; sourceTree = "<group>"; };
 		A813A79B22B38D7F00418737 /* AVAudioSession+MNZCategory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AVAudioSession+MNZCategory.h"; sourceTree = "<group>"; };
 		A813A79C22B38D7F00418737 /* AVAudioSession+MNZCategory.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "AVAudioSession+MNZCategory.m"; sourceTree = "<group>"; };
 		A813A79E22B7D7F600418737 /* FLEXBundleExplorerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLEXBundleExplorerViewController.h; sourceTree = "<group>"; };
@@ -2640,6 +2643,7 @@
 		415226681A692ECC00EC7BB6 /* Cloud drive */ = {
 			isa = PBXGroup;
 			children = (
+				A811CE2922EAFB1700B24E76 /* Operations */,
 				E8F791731BC5754A00C58676 /* Activities */,
 				832E102C202CB21700BDD30F /* Cells */,
 				5B16A739220D81EB00085F61 /* Recents */,
@@ -3975,6 +3979,15 @@
 			);
 			name = FLAnimatedImage;
 			path = Vendor/FLAnimatedImage/FLAnimatedImage;
+			sourceTree = "<group>";
+		};
+		A811CE2922EAFB1700B24E76 /* Operations */ = {
+			isa = PBXGroup;
+			children = (
+				A811CE2A22EAFB1700B24E76 /* SearchOperation.h */,
+				A811CE2B22EAFB1700B24E76 /* SearchOperation.m */,
+			);
+			path = Operations;
 			sourceTree = "<group>";
 		};
 		A819B3401EAFA7E7004592F9 /* ViewControllers */ = {
@@ -5392,6 +5405,7 @@
 				4115D6441E718B1F004BB0FF /* UIImage+MNZCategory.m in Sources */,
 				41D21E5B1D01AEC3002E6296 /* CTAssetCheckmark.m in Sources */,
 				B6A26AAF2216385D0076AF6D /* CameraUploadNodeLoader.m in Sources */,
+				A811CE2C22EAFB1700B24E76 /* SearchOperation.m in Sources */,
 				41B2D41C1A6D06780002E29E /* UIImage+GKContact.m in Sources */,
 				B6575FD622012F8D00B7AD82 /* LoadMediaInfoOperation.m in Sources */,
 				A8C262AA1FA0B8F9006172CE /* CallViewController.m in Sources */,

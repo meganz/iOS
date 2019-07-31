@@ -1313,7 +1313,7 @@
 /* Label to show that an error related with an Incomplete SDK operation. */
 "Incomplete"="Unvollständig";
 /* Label to show that an error related with the decryption process of a node occurs during a SDK operation. */
-"Invalid key/Decryption error"="Krypto-Fehler";
+"Invalid key/Decryption error"="Fehler bei der Entschlüsselung";
 /* Label to show that an error related with a bad session ID occurs during a SDK operation. */
 "Bad session ID"="Ungültige Session-ID";
 /* Label to show that an error related with a blocked account occurs during a SDK operation. */
