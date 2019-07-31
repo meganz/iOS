@@ -54,8 +54,11 @@ typedef NS_ENUM(NSUInteger, AdvancedOptionSection) {
 
 - (void)configCameraUploadWhenValueChangedForSwitch:(UISwitch *)sender {
     [self.tableView reloadData];
-    [self.tableView beginUpdates];
-    [self.tableView endUpdates];
+    
+    [NSOperationQueue.mainQueue addOperationWithBlock:^{
+        [self.tableView beginUpdates];
+        [self.tableView endUpdates];
+    }];
     if (sender.isOn) {
         [CameraUploadManager.shared startCameraUploadIfNeeded];
     }
