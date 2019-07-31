@@ -245,7 +245,7 @@ static NSString * const VideoCellularDisallowedUploadSessionId = @"nz.mega.video
 }
 
 - (NSURLSessionUploadTask *)videoUploadTaskWithURL:(NSURL *)requestURL fromFile:(NSURL *)fileURL completion:(UploadCompletionHandler)completion {
-    NSURLSession *videoSession = CameraUploadManager.isCellularUploadForVideosAllowed ? self.videoCellularAllowedUploadSession : self.videoCellularDisallowedUploadSession;
+    NSURLSession *videoSession = (CameraUploadManager.isCellularUploadAllowed && CameraUploadManager.isCellularUploadForVideosAllowed) ? self.videoCellularAllowedUploadSession : self.videoCellularDisallowedUploadSession;
     return [self backgroundUploadTaskInSession:videoSession withURL:requestURL fromFile:fileURL completion:completion];
 }
 
