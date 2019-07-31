@@ -184,32 +184,7 @@
         return;
     }
     
-    switch (node.type) {
-        case MEGANodeTypeFolder: {
-            CloudDriveViewController *cloudDriveVC = [self.storyboard instantiateViewControllerWithIdentifier:@"CloudDriveID"];
-            cloudDriveVC.parentNode = node;
-            cloudDriveVC.hideSelectorView = YES;
-            
-            if (self.cloudDrive.displayMode == DisplayModeRubbishBin) {
-                cloudDriveVC.displayMode = self.cloudDrive.displayMode;
-            }
-            
-            [self.navigationController pushViewController:cloudDriveVC animated:YES];
-            break;
-        }
-            
-        case MEGANodeTypeFile: {
-            if (node.name.mnz_isImagePathExtension || node.name.mnz_isVideoPathExtension) {
-                [self.cloudDrive showNode:node];
-            } else {
-                [node mnz_openNodeInNavigationController:self.cloudDrive.navigationController folderLink:NO];
-            }
-            break;
-        }
-            
-        default:
-            break;
-    }
+    [self.cloudDrive didSelectNode:node];
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
