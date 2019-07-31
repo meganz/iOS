@@ -1569,8 +1569,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
         [UIView animateWithDuration:0.33f animations:^ {
             [self.toolbar setAlpha:1.0];
         }];
-    } else {
-        self.editBarButtonItem.title = AMLocalizedString(@"edit", @"Caption of a button to edit the files that are selected");
+    } else {        
         [self setNavigationBarButtonItems];
         self.allNodesSelected = NO;
         self.selectedNodesArray = nil;
