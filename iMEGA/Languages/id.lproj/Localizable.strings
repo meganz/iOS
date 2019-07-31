@@ -1315,7 +1315,7 @@
 /* Label to show that an error related with an Incomplete SDK operation. */
 "Incomplete"="Tidak selesai";
 /* Label to show that an error related with the decryption process of a node occurs during a SDK operation. */
-"Invalid key/Decryption error"="Key salah/ Decryption error";
+"Invalid key/Decryption error"="Decryption error";
 /* Label to show that an error related with a bad session ID occurs during a SDK operation. */
 "Bad session ID"="Sesi ID buruk";
 /* Label to show that an error related with a blocked account occurs during a SDK operation. */
