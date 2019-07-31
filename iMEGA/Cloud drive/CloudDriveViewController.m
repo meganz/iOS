@@ -791,42 +791,21 @@ static const NSTimeInterval kSearchTimeDelay = .5;
 #pragma mark - Public
 
 - (void)didSelectNode:(MEGANode *)node {
-    switch (node.type) {
-        case MEGANodeTypeFolder: {
-            if (node.isTakenDown) {
-                UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:AMLocalizedString(@"This folder has been the subject of a takedown notice.", @"Popup notification text on mouse-over taken down folder.") preferredStyle:UIAlertControllerStyleAlert];
-                [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"openButton", @"Button title to trigger the action of opening the file without downloading or opening it.") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-                    [self openFolderNode:node];
-                }]];
-                [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"Dispute Takedown", @"File Manager -> Context menu item for taken down file or folder, for dispute takedown.") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-                    [[NSURL URLWithString:MEGADisputeURL] mnz_presentSafariViewController];
-                }]];
-                [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
-                [self presentViewController:alertController animated:YES completion:nil];
-            } else {
-                [self openFolderNode:node];
-            }
-            break;
-        }
-            
-        case MEGANodeTypeFile: {
-            if (node.isTakenDown) {
-                UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:AMLocalizedString(@"This file has been the subject of a takedown notice.", @"Popup notification text on mouse-over of taken down file.") preferredStyle:UIAlertControllerStyleAlert];
-                [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"openButton", @"Button title to trigger the action of opening the file without downloading or opening it.") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-                    [self openFileNode:node];
-                }]];
-                [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"Dispute Takedown", @"File Manager -> Context menu item for taken down file or folder, for dispute takedown.") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-                    [[NSURL URLWithString:MEGADisputeURL] mnz_presentSafariViewController];
-                }]];
-                [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
-                [self presentViewController:alertController animated:YES completion:nil];
-            } else {
-                [self openFileNode:node];
-            }
-            break;
-        }
-        default:
-            break;
+    if (node.isTakenDown) {
+        NSString *alertMessage = node.isFolder ? AMLocalizedString(@"This folder has been the subject of a takedown notice.", @"Popup notification text on mouse-over taken down folder.") : AMLocalizedString(@"This folder has been the subject of a takedown notice.", @"Popup notification text on mouse-over taken down folder.");
+        
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:alertMessage preferredStyle:UIAlertControllerStyleAlert];
+        [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"openButton", @"Button title to trigger the action of opening the file without downloading or opening it.") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            node.isFolder ? [self openFolderNode:node] : [self openFileNode:node];
+        }]];
+        [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"Dispute Takedown", @"File Manager -> Context menu item for taken down file or folder, for dispute takedown.") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            [[NSURL URLWithString:MEGADisputeURL] mnz_presentSafariViewController];
+        }]];
+        [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
+        
+        [self presentViewController:alertController animated:YES completion:nil];
+    } else {
+        node.isFolder ? [self openFolderNode:node] : [self openFileNode:node];
     }
 }
 
