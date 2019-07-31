@@ -135,8 +135,11 @@
     
     [self configTableSections];
     [self.tableView reloadData];
-    [self.tableView beginUpdates];
-    [self.tableView endUpdates];
+    
+    [NSOperationQueue.mainQueue addOperationWithBlock:^{
+        [self.tableView beginUpdates];
+        [self.tableView endUpdates];
+    }];
 }
 
 - (void)configPhotoFormatUI {
