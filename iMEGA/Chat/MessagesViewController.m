@@ -27,6 +27,7 @@
 #import "MEGAProcessAsset.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGAStartUploadTransferDelegate.h"
+#import "MEGASdk+MNZCategory.h"
 #import "MEGAStore.h"
 #import "MEGAToolbarContentView.h"
 #import "MEGATransfer+MNZCategory.h"
@@ -911,7 +912,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
     NSString *unreadChatsString = unreadChats ? [NSString stringWithFormat:@"(%td)", unreadChats] : @"";
     
     UIBarButtonItem *backBarButton = [[UIBarButtonItem alloc] initWithTitle:unreadChatsString style:UIBarButtonItemStylePlain target:nil action:nil];
-    self.navigationController.viewControllers[0].navigationItem.backBarButtonItem = backBarButton;
+    self.navigationController.viewControllers.firstObject.navigationItem.backBarButtonItem = backBarButton;
 }
 
 - (void)setupCollectionView {
@@ -1162,16 +1163,15 @@ static NSMutableSet<NSString *> *tapForInfoSet;
 
 - (void)showImagePickerForSourceType:(UIImagePickerControllerSourceType)sourceType {
     if (sourceType == UIImagePickerControllerSourceTypeCamera) {
-        MEGAImagePickerController *imagePickerController = [[MEGAImagePickerController alloc] initToShareThroughChatWithSourceType:sourceType filePathCompletion:^(NSString *filePath, UIImagePickerControllerSourceType sourceType) {
-            MEGANode *parentNode = [[MEGASdkManager sharedMEGASdk] nodeForPath:@"/My chat files"];
+        MEGAImagePickerController *imagePickerController = [[MEGAImagePickerController alloc] initToShareThroughChatWithSourceType:sourceType filePathCompletion:^(NSString *filePath, UIImagePickerControllerSourceType sourceType, MEGANode *myChatFilesNode) {
             if (filePath.mnz_isImagePathExtension) {
-                [self startUploadAndAttachWithPath:filePath parentNode:parentNode appData:nil asVoiceClip:NO];
+                [self startUploadAndAttachWithPath:filePath parentNode:myChatFilesNode appData:nil asVoiceClip:NO];
             }
             if (filePath.mnz_isVideoPathExtension) {
                 NSURL *videoURL = [NSURL fileURLWithPath:[NSHomeDirectory() stringByAppendingPathComponent:filePath]];
-                MEGAProcessAsset *processAsset = [[MEGAProcessAsset alloc] initToShareThroughChatWithVideoURL:videoURL filePath:^(NSString *filePath) {
+                MEGAProcessAsset *processAsset = [[MEGAProcessAsset alloc] initToShareThroughChatWithVideoURL:videoURL parentNode:myChatFilesNode filePath:^(NSString *filePath) {
                     NSString *appData = [[NSString new] mnz_appDataToSaveCoordinates:[filePath mnz_coordinatesOfPhotoOrVideo]];
-                    [self startUploadAndAttachWithPath:filePath parentNode:parentNode appData:appData asVoiceClip:NO];
+                    [self startUploadAndAttachWithPath:filePath parentNode:myChatFilesNode appData:appData asVoiceClip:NO];
                 } node:nil error:^(NSError *error) {
                     NSString *title = AMLocalizedString(@"error", nil);
                     NSString *message = error.localizedDescription;
@@ -1340,7 +1340,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
     if (self.whoIsTypingTimersMutableDictionary.allKeys.count >= 2) {
         typingAttributedString = [self twoOrMoreUsersAreTypingString];
     } else if (self.whoIsTypingTimersMutableDictionary.allKeys.count == 1) {
-        NSNumber *firstUserHandle = [self.whoIsTypingTimersMutableDictionary.allKeys objectAtIndex:0];
+        NSNumber *firstUserHandle = self.whoIsTypingTimersMutableDictionary.allKeys.firstObject;
         NSString *firstUserName = [self.chatRoom peerFirstnameByHandle:firstUserHandle.unsignedLongLongValue];
         NSString *whoIsTypingString = firstUserName.length ? firstUserName : [self.chatRoom peerEmailByHandle:firstUserHandle.unsignedLongLongValue];
         
@@ -1354,7 +1354,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
 }
 
 - (NSMutableAttributedString *)twoOrMoreUsersAreTypingString {
-    NSNumber *firstUserHandle = [self.whoIsTypingTimersMutableDictionary.allKeys objectAtIndex:0];
+    NSNumber *firstUserHandle = self.whoIsTypingTimersMutableDictionary.allKeys.firstObject;
     NSNumber *secondUserHandle = [self.whoIsTypingTimersMutableDictionary.allKeys objectAtIndex:1];
     
     NSString *firstUserFirstName = [self.chatRoom peerFirstnameByHandle:firstUserHandle.unsignedLongLongValue];
@@ -1899,16 +1899,9 @@ static NSMutableSet<NSString *> *tapForInfoSet;
 
 - (void)messagesInputToolbar:(MEGAInputToolbar *)toolbar didPressSendButton:(UIButton *)sender toAttachAssets:(NSArray<PHAsset *> *)assets {
     MEGALogDebug(@"[Chat] Did press send button to attach assets %@", assets);
-    MEGANode *parentNode = [[MEGASdkManager sharedMEGASdk] nodeForPath:@"/My chat files"];
-    if (parentNode) {
-        [self uploadAssets:assets toParentNode:parentNode];
-    } else {
-        MEGACreateFolderRequestDelegate *createFolderRequestDelegate = [[MEGACreateFolderRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
-            MEGANode *node = [[MEGASdkManager sharedMEGASdk] nodeForHandle:request.nodeHandle];
-            [self uploadAssets:assets toParentNode:node];
-        }];
-        [[MEGASdkManager sharedMEGASdk] createFolderWithName:@"My chat files" parent:[[MEGASdkManager sharedMEGASdk] rootNode] delegate:createFolderRequestDelegate];
-    }
+    [MEGASdkManager.sharedMEGASdk getMyChatFilesFolderWithCompletion:^(MEGANode *myChatFilesNode) {
+        [self uploadAssets:assets toParentNode:myChatFilesNode];
+    }];
 }
 
 - (void)messagesInputToolbar:(MEGAInputToolbar *)toolbar didPressNotHeldRecordButton:(UIButton *)sender {
@@ -1919,7 +1912,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
 }
 
 - (void)uploadAssets:(NSArray<PHAsset *> *)assets toParentNode:(MEGANode *)parentNode {
-    MEGAProcessAsset *processAsset = [[MEGAProcessAsset alloc] initToShareThroughChatWithAssets:assets filePaths:^(NSArray <NSString *> *filePaths) {
+    MEGAProcessAsset *processAsset = [[MEGAProcessAsset alloc] initToShareThroughChatWithAssets:assets parentNode:parentNode filePaths:^(NSArray <NSString *> *filePaths) {
         for (NSString *filePath in filePaths) {
             NSString *appData = [[NSString new] mnz_appDataToSaveCoordinates:[filePath mnz_coordinatesOfPhotoOrVideo]];
             [self startUploadAndAttachWithPath:filePath parentNode:parentNode appData:appData asVoiceClip:NO];
@@ -1932,7 +1925,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
         NSString *title = AMLocalizedString(@"error", nil);
         NSString *message;
         if (errors.count == 1) {
-            NSError *error = errors[0];
+            NSError *error = errors.firstObject;
             message = error.localizedDescription;
         } else {
             message = AMLocalizedString(@"shareExtensionUnsupportedAssets", nil);
@@ -1951,9 +1944,8 @@ static NSMutableSet<NSString *> *tapForInfoSet;
 }
 
 - (void)messagesInputToolbar:(MEGAInputToolbar *)toolbar didRecordVoiceClipAtPath:(NSString *)voiceClipPath {
-    MEGANode *myChatFilesNode = [[MEGASdkManager sharedMEGASdk] nodeForPath:@"/My chat files"];
-    if (myChatFilesNode) {
-        MEGANode *myVoiceMessagesNode = [[MEGASdkManager sharedMEGASdk] nodeForPath:@"/My chat files/My voice messages"];
+    [MEGASdkManager.sharedMEGASdk getMyChatFilesFolderWithCompletion:^(MEGANode *myChatFilesNode) {
+        MEGANode *myVoiceMessagesNode = [[MEGASdkManager sharedMEGASdk] nodeForPath:@"My voice messages" node:myChatFilesNode];
         if (myVoiceMessagesNode) {
             [self startUploadAndAttachWithPath:voiceClipPath parentNode:myVoiceMessagesNode appData:nil asVoiceClip:YES];
         } else {
@@ -1963,17 +1955,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
             }];
             [[MEGASdkManager sharedMEGASdk] createFolderWithName:@"My voice messages" parent:myChatFilesNode delegate:createMyVoiceMessagesRequestDelegate];
         }
-    } else {
-        MEGACreateFolderRequestDelegate *createMyChatFilesRequestDelegate = [[MEGACreateFolderRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
-            MEGANode *myChatFilesNode = [[MEGASdkManager sharedMEGASdk] nodeForHandle:request.nodeHandle];
-            MEGACreateFolderRequestDelegate *createMyVoiceMessagesRequestDelegate = [[MEGACreateFolderRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
-                MEGANode *myVoiceMessagesNode = [[MEGASdkManager sharedMEGASdk] nodeForHandle:request.nodeHandle];
-                [self startUploadAndAttachWithPath:voiceClipPath parentNode:myVoiceMessagesNode appData:nil asVoiceClip:YES];
-            }];
-            [[MEGASdkManager sharedMEGASdk] createFolderWithName:@"My voice messages" parent:myChatFilesNode delegate:createMyVoiceMessagesRequestDelegate];
-        }];
-        [[MEGASdkManager sharedMEGASdk] createFolderWithName:@"My chat files" parent:[MEGASdkManager sharedMEGASdk].rootNode delegate:createMyChatFilesRequestDelegate];
-    }
+    }];
 }
 
 - (void)didPressAccessoryButton:(UIButton *)sender {
@@ -3152,7 +3134,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
                 NSPredicate *predicate = [NSPredicate predicateWithFormat:@"messageId == %" PRIu64, message.messageId];
                 NSArray *filteredArray = [self.messages filteredArrayUsingPredicate:predicate];
                 if (filteredArray.count) {
-                    NSUInteger index = [self.messages indexOfObject:filteredArray[0]];
+                    NSUInteger index = [self.messages indexOfObject:filteredArray.firstObject];
                     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:0];
                 
                     [self.messages removeObjectAtIndex:index];
@@ -3180,7 +3162,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
             NSPredicate *predicate = [NSPredicate predicateWithFormat:@"messageId == %" PRIu64, message.messageId];
             NSArray *filteredArray = [self.messages filteredArrayUsingPredicate:predicate];
             if (filteredArray.count) {
-                NSUInteger index = [self.messages indexOfObject:filteredArray[0]];
+                NSUInteger index = [self.messages indexOfObject:filteredArray.firstObject];
                 NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:0];
                 if (message.isEdited) {
                     UICollectionViewCell *cell = [self.collectionView cellForItemAtIndexPath:indexPath];

@@ -5,6 +5,8 @@
 @class MEGANode;
 @class MEGAUser;
 
+static const NSUInteger kMinimumLettersToStartTheSearch = 1;
+
 @interface CloudDriveViewController : UIViewController
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *selectorViewHeightLayoutConstraint;
@@ -20,6 +22,8 @@
 @property (nonatomic, strong) NSMutableArray *searchNodesArray;
 @property (nonatomic, strong) NSMutableArray *selectedNodesArray;
 @property (nonatomic, strong) NSMutableDictionary *nodesIndexPathMutableDictionary;
+
+@property (nonatomic, strong) MEGARecentActionBucket *recentActionBucket;
 
 @property (strong, nonatomic) UISearchController *searchController;
 

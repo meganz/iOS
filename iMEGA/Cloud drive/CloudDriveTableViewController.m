@@ -1,7 +1,10 @@
 
 #import "CloudDriveTableViewController.h"
 
+#import "NSDate+DateTools.h"
+
 #import "UIImageView+MNZCategory.h"
+#import "NSDate+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 
 #import "Helper.h"
@@ -14,6 +17,11 @@
 
 @interface CloudDriveTableViewController () <UITableViewDelegate, UITableViewDataSource, MGSwipeTableCellDelegate>
 
+@property (weak, nonatomic) IBOutlet UIView *bucketHeaderView;
+@property (weak, nonatomic) IBOutlet UILabel *bucketHeaderParentFolderNameLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *bucketHeaderUploadOrVersionImageView;
+@property (weak, nonatomic) IBOutlet UILabel *bucketHeaderHourLabel;
+
 @end
 
 @implementation CloudDriveTableViewController
@@ -25,6 +33,26 @@
 
     //White background for the view behind the table view
     self.tableView.backgroundView = UIView.alloc.init;
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    if (self.cloudDrive.recentActionBucket) {
+        NSString *dateString;
+        if (self.cloudDrive.recentActionBucket.timestamp.isToday) {
+            dateString = AMLocalizedString(@"Today", @"").uppercaseString;
+        } else if (self.cloudDrive.recentActionBucket.timestamp.isYesterday) {
+            dateString = AMLocalizedString(@"Yesterday", @"").uppercaseString;
+        } else {
+            dateString = self.cloudDrive.recentActionBucket.timestamp.mnz_formattedDateMediumStyle;
+        }
+        
+        MEGANode *parentNode = [MEGASdkManager.sharedMEGASdk nodeForHandle:self.cloudDrive.recentActionBucket.parentHandle];
+        self.bucketHeaderParentFolderNameLabel.text = [NSString stringWithFormat:@"%@ •", parentNode.name.uppercaseString];
+        self.bucketHeaderUploadOrVersionImageView.image = self.cloudDrive.recentActionBucket.isUpdate ? [UIImage imageNamed:@"versioned"] : [UIImage imageNamed:@"recentUpload"];
+        self.bucketHeaderHourLabel.text = dateString.uppercaseString;
+    }
 }
 
 #pragma mark - Public
@@ -67,7 +95,7 @@
     CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.tableView];
     NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:buttonPosition];
     
-    MEGANode *node = self.cloudDrive.searchController.isActive ? [self.cloudDrive.searchNodesArray objectAtIndex:indexPath.row] : [self.cloudDrive.nodes nodeAtIndex:indexPath.row];
+    MEGANode *node = self.cloudDrive.searchController.searchBar.text.length >= kMinimumLettersToStartTheSearch ? [self.cloudDrive.searchNodesArray objectAtIndex:indexPath.row] : [self.cloudDrive.nodes nodeAtIndex:indexPath.row];
     
     [self.cloudDrive showCustomActionsForNode:node sender:sender];
 }
@@ -77,7 +105,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     NSInteger numberOfRows = 0;
     if ([MEGAReachabilityManager isReachable]) {
-        if (self.cloudDrive.searchController.isActive) {
+        if (self.cloudDrive.searchController.searchBar.text.length >= kMinimumLettersToStartTheSearch) {
             numberOfRows = self.cloudDrive.searchNodesArray.count;
         } else {
             numberOfRows = self.cloudDrive.nodes.size.integerValue;
@@ -89,7 +117,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    MEGANode *node = self.cloudDrive.searchController.isActive ? [self.cloudDrive.searchNodesArray objectAtIndex:indexPath.row] : [self.cloudDrive.nodes nodeAtIndex:indexPath.row];
+    MEGANode *node = self.cloudDrive.searchController.searchBar.text.length >= kMinimumLettersToStartTheSearch ? [self.cloudDrive.searchNodesArray objectAtIndex:indexPath.row] : [self.cloudDrive.nodes nodeAtIndex:indexPath.row];
 
     [self.cloudDrive.nodesIndexPathMutableDictionary setObject:indexPath forKey:node.base64Handle];
     
@@ -106,6 +134,7 @@
         }
     }
     
+    cell.recentActionBucket = self.cloudDrive.recentActionBucket ?: nil;
     [cell configureCellForNode:node delegate:self api:[MEGASdkManager sharedMEGASdk]];
  
     if (self.tableView.isEditing) {
@@ -124,10 +153,18 @@
     return cell;
 }
 
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    return self.cloudDrive.recentActionBucket ? self.bucketHeaderView : nil;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    return self.cloudDrive.recentActionBucket ? 45.0f : 0;
+}
+
 #pragma mark - UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    MEGANode *node = self.cloudDrive.searchController.isActive ? [self.cloudDrive.searchNodesArray objectAtIndex:indexPath.row] : [self.cloudDrive.nodes nodeAtIndex:indexPath.row];
+    MEGANode *node = self.cloudDrive.searchController.searchBar.text.length >= kMinimumLettersToStartTheSearch ? [self.cloudDrive.searchNodesArray objectAtIndex:indexPath.row] : [self.cloudDrive.nodes nodeAtIndex:indexPath.row];
 
     if (tableView.isEditing) {
         [self.cloudDrive.selectedNodesArray addObject:node];
@@ -214,7 +251,7 @@
 #pragma clang diagnostic ignored "-Wunguarded-availability"
 
 - (UISwipeActionsConfiguration *)tableView:(UITableView *)tableView leadingSwipeActionsConfigurationForRowAtIndexPath:(NSIndexPath *)indexPath {
-    MEGANode *node = self.cloudDrive.searchController.isActive ? [self.cloudDrive.searchNodesArray objectAtIndex:indexPath.row] : [self.cloudDrive.nodes nodeAtIndex:indexPath.row];
+    MEGANode *node = self.cloudDrive.searchController.searchBar.text.length >= kMinimumLettersToStartTheSearch ? [self.cloudDrive.searchNodesArray objectAtIndex:indexPath.row] : [self.cloudDrive.nodes nodeAtIndex:indexPath.row];
     
     if ([[MEGASdkManager sharedMEGASdk] isNodeInRubbish:node]) {
         return [UISwipeActionsConfiguration configurationWithActions:@[]];
@@ -234,7 +271,7 @@
 }
 
 - (UISwipeActionsConfiguration *)tableView:(UITableView *)tableView trailingSwipeActionsConfigurationForRowAtIndexPath:(NSIndexPath *)indexPath {
-    MEGANode *node = self.cloudDrive.searchController.isActive ? [self.cloudDrive.searchNodesArray objectAtIndex:indexPath.row] : [self.cloudDrive.nodes nodeAtIndex:indexPath.row];
+    MEGANode *node = self.cloudDrive.searchController.searchBar.text.length >= kMinimumLettersToStartTheSearch ? [self.cloudDrive.searchNodesArray objectAtIndex:indexPath.row] : [self.cloudDrive.nodes nodeAtIndex:indexPath.row];
     if ([[MEGASdkManager sharedMEGASdk] accessLevelForNode:node] != MEGAShareTypeAccessOwner) {
         return [UISwipeActionsConfiguration configurationWithActions:@[]];
     }
@@ -293,7 +330,7 @@
     expansionSettings.threshold = 2;
     
     NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
-    MEGANode *node = self.cloudDrive.searchController.isActive ? [self.cloudDrive.searchNodesArray objectAtIndex:indexPath.row] : [self.cloudDrive.nodes nodeAtIndex:indexPath.row];
+    MEGANode *node = self.cloudDrive.searchController.searchBar.text.length >= kMinimumLettersToStartTheSearch ? [self.cloudDrive.searchNodesArray objectAtIndex:indexPath.row] : [self.cloudDrive.nodes nodeAtIndex:indexPath.row];
 
     if (direction == MGSwipeDirectionLeftToRight && [[Helper downloadingNodes] objectForKey:node.base64Handle] == nil) {
         if ([[MEGASdkManager sharedMEGASdk] isNodeInRubbish:node]) {

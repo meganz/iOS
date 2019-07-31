@@ -5,7 +5,6 @@
 
 #import "MEGALogger.h"
 #import "MEGARequestDelegate.h"
-#import "MEGASdk.h"
 #import "MEGASdkManager.h"
 #import "MEGATransferDelegate.h"
 #import "NSFileManager+MNZCategory.h"

@@ -295,7 +295,7 @@
 
 - (void)removeSelectedIncomingShares {
     NSArray *filesAndFolders = self.selectedNodesMutableArray.mnz_numberOfFilesAndFolders;
-    MEGARemoveRequestDelegate *removeRequestDelegate = [[MEGARemoveRequestDelegate alloc] initWithMode:DisplayModeSharedItem files:[filesAndFolders[0] unsignedIntegerValue] folders:[filesAndFolders[1] unsignedIntegerValue] completion:nil];
+    MEGARemoveRequestDelegate *removeRequestDelegate = [MEGARemoveRequestDelegate.alloc initWithMode:DisplayModeSharedItem files:[filesAndFolders.firstObject unsignedIntegerValue] folders:[filesAndFolders[1] unsignedIntegerValue] completion:nil];
     for (NSInteger i = 0; i < self.selectedNodesMutableArray.count; i++) {
         [[MEGASdkManager sharedMEGASdk] removeNode:[self.selectedNodesMutableArray objectAtIndex:i] delegate:removeRequestDelegate];
     }
@@ -775,7 +775,7 @@
         if (outSharesCount > 1) {
             userName = [NSString stringWithFormat:AMLocalizedString(@"sharedWithXContacts", nil), outSharesCount];
         } else {
-            MEGAUser *user = [MEGASdkManager.sharedMEGASdk contactForEmail:[[outSharesMutableArray objectAtIndex:0] user]];
+            MEGAUser *user = [MEGASdkManager.sharedMEGASdk contactForEmail:[outSharesMutableArray.firstObject user]];
             userName = user.mnz_fullName ? user.mnz_fullName : user.email;
         }
         
