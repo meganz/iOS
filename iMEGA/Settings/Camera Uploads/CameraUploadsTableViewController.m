@@ -260,8 +260,11 @@
     CameraUploadManager.cellularUploadAllowed = sender.isOn;
     [self configUI];
     
-    if (CameraUploadManager.cellularUploadAllowed) {
+    if (CameraUploadManager.isCellularUploadAllowed) {
         [TransferSessionManager.shared invalidateAndCancelPhotoCellularDisallowedSession];
+        if (CameraUploadManager.isCellularUploadForVideosAllowed) {
+            [TransferSessionManager.shared invalidateAndCancelVideoCellularDisallowedSession];
+        }
     } else {
         [TransferSessionManager.shared invalidateAndCancelPhotoCellularAllowedSession];
         [TransferSessionManager.shared invalidateAndCancelVideoCellularAllowedSession];
@@ -272,7 +275,7 @@
     MEGALogInfo(@"%@ mobile data for videos", sender.isOn ? @"Enable" : @"Disable");
     CameraUploadManager.cellularUploadForVideosAllowed = sender.isOn;
     
-    if (CameraUploadManager.cellularUploadForVideosAllowed) {
+    if (CameraUploadManager.isCellularUploadForVideosAllowed) {
         [TransferSessionManager.shared invalidateAndCancelVideoCellularDisallowedSession];
     } else {
         [TransferSessionManager.shared invalidateAndCancelVideoCellularAllowedSession];
