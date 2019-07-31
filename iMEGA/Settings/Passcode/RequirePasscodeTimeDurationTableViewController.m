@@ -53,6 +53,7 @@ typedef NS_ENUM(NSUInteger, RequirePasscode) {
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"tableViewCellId" forIndexPath:indexPath];
     cell.textLabel.textColor = UIColor.mnz_black333333;
+    cell.textLabel.font = [UIFont systemFontOfSize:17 weight:UIFontWeightRegular];
     NSTimeInterval timeDuration = LTHPasscodeViewController.timerDuration;
     
     cell.textLabel.text = [self.rowTitles objectAtIndex:indexPath.row];
@@ -81,6 +82,12 @@ typedef NS_ENUM(NSUInteger, RequirePasscode) {
             
         default:
             break;
+    }
+    
+    if (cell.accessoryType == UITableViewCellAccessoryCheckmark) {
+        cell.accessoryView = [UIImageView.alloc initWithImage:[UIImage imageNamed:@"red_checkmark"]];
+    } else {
+        cell.accessoryView = nil;
     }
     
     return cell;
