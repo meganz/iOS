@@ -740,7 +740,7 @@
     
     contactsVC.userSelected = ^void(NSArray *users) {
         if (users.count == 1) {
-            MEGAUser *user = [users objectAtIndex:0];
+            MEGAUser *user = users.firstObject;
             MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomByUser:user.handle];
             if (chatRoom) {
                 MEGALogInfo(@"%@", chatRoom);

@@ -13,11 +13,13 @@
 #import "MEGAActivityItemProvider.h"
 #import "MEGACopyRequestDelegate.h"
 #import "MEGACreateFolderRequestDelegate.h"
+#import "MEGAGenericRequestDelegate.h"
 #import "MEGANode+MNZCategory.h"
 #import "MEGANodeList+MNZCategory.h"
 #import "MEGAProcessAsset.h"
 #import "MEGALogger.h"
 #import "MEGASdkManager.h"
+#import "MEGASdk+MNZCategory.h"
 #import "MEGAStore.h"
 #import "MEGAUser+MNZCategory.h"
 
@@ -380,7 +382,7 @@ static MEGAIndexer *indexer;
     static NSString *pathString = nil;
     
     if (pathString == nil) {
-        pathString = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+        pathString = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject;
         pathString = [pathString stringByAppendingString:@"/"];
     }
     
@@ -391,7 +393,7 @@ static MEGAIndexer *indexer;
     static NSString *pathString = nil;
     
     if (pathString == nil) {
-        pathString = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+        pathString = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject;
         pathString = [pathString lastPathComponent];
     }
     
@@ -406,7 +408,7 @@ static MEGAIndexer *indexer;
 
 + (NSString *)pathForNode:(MEGANode *)node searchPath:(NSSearchPathDirectory)path directory:(NSString *)directory {
     
-    NSString *destinationPath = [NSSearchPathForDirectoriesInDomains(path, NSUserDomainMask, YES) objectAtIndex:0];
+    NSString *destinationPath = NSSearchPathForDirectoriesInDomains(path, NSUserDomainMask, YES).firstObject;
     NSString *fileName = [node base64Handle];
     NSString *destinationFilePath = nil;
     destinationFilePath = [directory isEqualToString:@""] ? [destinationPath stringByAppendingPathComponent:fileName]
@@ -813,16 +815,9 @@ static MEGAIndexer *indexer;
                 MEGANode *resultNode = [[MEGASdkManager sharedMEGASdk] nodeForHandle:request.nodeHandle];
                 completion(resultNode);
             }];
-            MEGANode *myChatFilesNode = [[MEGASdkManager sharedMEGASdk] nodeForPath:@"/My chat files"];
-            if (myChatFilesNode) {
+            [MEGASdkManager.sharedMEGASdk getMyChatFilesFolderWithCompletion:^(MEGANode *myChatFilesNode) {
                 [[MEGASdkManager sharedMEGASdk] copyNode:node newParent:myChatFilesNode delegate:copyRequestDelegate];
-            } else {
-                MEGACreateFolderRequestDelegate *createFolderRequestDelegate = [[MEGACreateFolderRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
-                    MEGANode *myChatFilesNode = [[MEGASdkManager sharedMEGASdk] nodeForHandle:request.nodeHandle];
-                    [[MEGASdkManager sharedMEGASdk] copyNode:node newParent:myChatFilesNode delegate:copyRequestDelegate];
-                }];
-                [[MEGASdkManager sharedMEGASdk] createFolderWithName:@"My chat files" parent:[[MEGASdkManager sharedMEGASdk] rootNode] delegate:createFolderRequestDelegate];
-            }
+            }];
         }
     }
 }
@@ -1259,7 +1254,7 @@ static MEGAIndexer *indexer;
 
 + (void)logoutAfterPasswordReminder {
     NSError *error;
-    NSArray *directoryContent = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] error:&error];
+    NSArray *directoryContent = [NSFileManager.defaultManager contentsOfDirectoryAtPath:NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject error:&error];
     if (error) {
         MEGALogError(@"Contents of directory at path failed with error: %@", error);
     }
@@ -1314,17 +1309,17 @@ static MEGAIndexer *indexer;
     NSString *thumbsDirectory = [Helper pathForSharedSandboxCacheDirectory:@"thumbnailsV3"];
     [NSFileManager.defaultManager mnz_removeItemAtPath:thumbsDirectory];
     
-    NSString *previewsDirectory = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"previewsV3"];
+    NSString *previewsDirectory = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES).firstObject stringByAppendingPathComponent:@"previewsV3"];
     [NSFileManager.defaultManager mnz_removeItemAtPath:previewsDirectory];
     
     // Remove "Inbox" folder return an error. "Inbox" is reserved by Apple
-    NSString *offlineDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    NSString *offlineDirectory = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject;
     [NSFileManager.defaultManager mnz_removeFolderContentsAtPath:offlineDirectory];
     
     [NSFileManager.defaultManager mnz_removeFolderContentsAtPath:NSTemporaryDirectory()];
     
     // Delete application support directory content
-    NSString *applicationSupportDirectory = [NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    NSString *applicationSupportDirectory = NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES).firstObject;
     for (NSString *file in [[NSFileManager defaultManager] contentsOfDirectoryAtPath:applicationSupportDirectory error:nil]) {
         if ([file containsString:@"MEGACD"] || [file containsString:@"spotlightTree"] || [file containsString:@"Uploads"] || [file containsString:@"Downloads"]) {
             [NSFileManager.defaultManager mnz_removeItemAtPath:[applicationSupportDirectory stringByAppendingPathComponent:file]];
@@ -1348,7 +1343,7 @@ static MEGAIndexer *indexer;
 }
 
 + (void)deleteMasterKey {
-    NSString *documentsDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    NSString *documentsDirectory = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject;
     NSString *masterKeyFilePath = [documentsDirectory stringByAppendingPathComponent:@"RecoveryKey.txt"];
     [[NSFileManager defaultManager] mnz_removeItemAtPath:masterKeyFilePath];
 }
@@ -1392,7 +1387,7 @@ static MEGAIndexer *indexer;
 }
 
 + (void)showExportMasterKeyInView:(UIViewController *)viewController completion:(void (^ __nullable)(void))completion {
-    NSString *documentsDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    NSString *documentsDirectory = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject;
     NSString *masterKeyFilePath = [documentsDirectory stringByAppendingPathComponent:@"RecoveryKey.txt"];
     
     BOOL success = [[NSFileManager defaultManager] createFileAtPath:masterKeyFilePath contents:[[[MEGASdkManager sharedMEGASdk] masterKey] dataUsingEncoding:NSUTF8StringEncoding] attributes:@{NSFileProtectionKey:NSFileProtectionComplete}];

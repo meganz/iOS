@@ -58,7 +58,7 @@
     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"agreedCopywriteWarning"];
     [self dismissViewControllerAnimated:YES completion:^{
         UINavigationController *getLinkNavigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"GetLinkNavigationControllerID"];
-        GetLinkTableViewController *getLinkTVC = getLinkNavigationController.childViewControllers[0];
+        GetLinkTableViewController *getLinkTVC = getLinkNavigationController.childViewControllers.firstObject;
         getLinkTVC.nodesToExport = self.nodesToExport;
         [UIApplication.mnz_presentingViewController presentViewController:getLinkNavigationController animated:YES completion:nil];
     }];

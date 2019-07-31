@@ -28,6 +28,7 @@
 
 #pragma mark - Utils
 
+- (MEGANode *)mnz_firstbornInShareOrOutShareParentNode;
 - (NSMutableArray *)mnz_parentTreeArray;
 - (NSString *)mnz_fileType;
 - (BOOL)mnz_isRestorable;
