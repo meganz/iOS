@@ -1315,7 +1315,7 @@
 /* Label to show that an error related with an Incomplete SDK operation. */
 "Incomplete"="Chưa hoàn thoành";
 /* Label to show that an error related with the decryption process of a node occurs during a SDK operation. */
-"Invalid key/Decryption error"="Khóa không hợp lệ/Lỗi giải mã";
+"Invalid key/Decryption error"="Lỗi giải mã";
 /* Label to show that an error related with a bad session ID occurs during a SDK operation. */
 "Bad session ID"="Bad session ID";
 /* Label to show that an error related with a blocked account occurs during a SDK operation. */
