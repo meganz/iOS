@@ -41,6 +41,9 @@ static const NSTimeInterval BoardingScreenShowUpMinimumInterval = 30 * 24 * 3600
     [NSUserDefaults.standardUserDefaults removeObjectForKey:ShouldConvertHEICPhotoKey];
     [NSUserDefaults.standardUserDefaults removeObjectForKey:IsLocationBasedBackgroundUploadAllowedKey];
     [NSUserDefaults.standardUserDefaults removeObjectForKey:IsVideoUploadsEnabledKey];
+    [NSUserDefaults.standardUserDefaults removeObjectForKey:UploadHiddenAlbumKey];
+    [NSUserDefaults.standardUserDefaults removeObjectForKey:UploadAllBurstAssetsKey];
+    [NSUserDefaults.standardUserDefaults removeObjectForKey:UploadVideosForLivePhotosKey];
     [self clearVideoSettings];
 }
 
@@ -59,12 +62,24 @@ static const NSTimeInterval BoardingScreenShowUpMinimumInterval = 30 * 24 * 3600
 + (void)setCameraUploadEnabled:(BOOL)cameraUploadEnabled {
     [self setMigratedToCameraUploadsV2:YES];
     [NSUserDefaults.standardUserDefaults setBool:cameraUploadEnabled forKey:IsCameraUploadsEnabledKey];
-    if (cameraUploadEnabled) {
+    [self configDefaultSettingsIfNeededForCameraUpload];
+}
+
++ (void)configDefaultSettingsIfNeededForCameraUpload {
+    if (![self isCameraUploadEnabled]) {
+        return;
+    }
+    
+    if ([NSUserDefaults.standardUserDefaults objectForKey:ShouldConvertHEICPhotoKey] == nil) {
         [self setConvertHEICPhoto:YES];
+    }
+    
+    if ([NSUserDefaults.standardUserDefaults objectForKey:UploadVideosForLivePhotosKey] == nil) {
         [self setUploadVideosForLivePhotos:YES];
+    }
+
+    if ([NSUserDefaults.standardUserDefaults objectForKey:UploadAllBurstAssetsKey] == nil) {
         [self setUploadAllBurstPhotos:YES];
-    } else {
-        [self clearCameraSettings];
     }
 }
 
@@ -97,9 +112,6 @@ static const NSTimeInterval BoardingScreenShowUpMinimumInterval = 30 * 24 * 3600
 
 + (void)setCellularUploadAllowed:(BOOL)cellularUploadAllowed {
     [NSUserDefaults.standardUserDefaults setBool:cellularUploadAllowed forKey:IsCellularAllowedKey];
-    if (!cellularUploadAllowed) {
-        [NSUserDefaults.standardUserDefaults removeObjectForKey:IsCellularForVideosAllowedKey];
-    }
 }
 
 + (BOOL)shouldConvertHEICPhoto {
@@ -121,18 +133,17 @@ static const NSTimeInterval BoardingScreenShowUpMinimumInterval = 30 * 24 * 3600
 }
 
 + (void)setVideoUploadEnabled:(BOOL)videoUploadEnabled {
-    if (videoUploadEnabled && ![self isCameraUploadEnabled]) {
+    [NSUserDefaults.standardUserDefaults setBool:videoUploadEnabled forKey:IsVideoUploadsEnabledKey];
+    [self configDefaultSettingsIfNeededForVideoUpload];
+}
+
++ (void)configDefaultSettingsIfNeededForVideoUpload {
+    if (![self isVideoUploadEnabled]) {
         return;
     }
     
-    BOOL previousValue = [self isVideoUploadEnabled];
-    [NSUserDefaults.standardUserDefaults setBool:videoUploadEnabled forKey:IsVideoUploadsEnabledKey];
-    if (videoUploadEnabled) {
-        if (!previousValue) {
-            [self setConvertHEVCVideo:YES];
-        }
-    } else {
-        [self clearVideoSettings];
+    if ([NSUserDefaults.standardUserDefaults objectForKey:ShouldConvertHEVCVideoKey] == nil) {
+        [self setConvertHEVCVideo:YES];
     }
 }
 
@@ -153,14 +164,10 @@ static const NSTimeInterval BoardingScreenShowUpMinimumInterval = 30 * 24 * 3600
         return;
     }
     
-    BOOL previousValue = [self shouldConvertHEVCVideo];
     [NSUserDefaults.standardUserDefaults setBool:convertHEVCVideo forKey:ShouldConvertHEVCVideoKey];
-    if (convertHEVCVideo) {
-        if (!previousValue) {
-            [self setHEVCToH264CompressionQuality:CameraUploadVideoQualityMedium];
-        }
-    } else {
-        [NSUserDefaults.standardUserDefaults removeObjectForKey:HEVCToH264CompressionQualityKey];
+    
+    if (convertHEVCVideo && [NSUserDefaults.standardUserDefaults objectForKey:HEVCToH264CompressionQualityKey] == nil) {
+        [self setHEVCToH264CompressionQuality:CameraUploadVideoQualityMedium];
     }
 }
 
@@ -287,13 +294,8 @@ static const NSTimeInterval BoardingScreenShowUpMinimumInterval = 30 * 24 * 3600
 }
 
 + (void)migrateCurrentSettingsToCameraUploadV2 {
-    if ([self isCameraUploadEnabled]) {
-        [self setConvertHEICPhoto:YES];
-    }
-    
-    if ([self isVideoUploadEnabled]) {
-        [self setConvertHEVCVideo:YES];
-    }
+    [self configDefaultSettingsIfNeededForCameraUpload];
+    [self configDefaultSettingsIfNeededForVideoUpload];
 }
 
 @end
