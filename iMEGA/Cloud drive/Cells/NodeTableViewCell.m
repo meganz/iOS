@@ -7,7 +7,6 @@
 #import "MEGANode+MNZCategory.h"
 #import "MEGASdkManager.h"
 #import "MEGAStore.h"
-#import "NSAttributedString+MNZCategory.h"
 #import "NSDate+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 #import "UIImageView+MNZCategory.h"
@@ -99,11 +98,7 @@
     }
         
     if (node.isTakenDown) {
-        NSMutableAttributedString *nameAttributedString = [NSAttributedString.alloc initWithString:[NSString stringWithFormat:@"%@ ", node.name]].mutableCopy;
-        NSString *takedownImageName = @"isTakedown";
-        NSAttributedString *takedownImageAttributedString = [NSAttributedString mnz_attributedStringFromImageNamed:takedownImageName fontCapHeight:self.nameLabel.font.capHeight];
-        [nameAttributedString appendAttributedString:takedownImageAttributedString];
-        self.nameLabel.attributedText = nameAttributedString;
+        self.nameLabel.attributedText = [node mnz_attributedNameForHeight:self.nameLabel.font.capHeight];
     } else {
         self.nameLabel.text = node.name;
     }

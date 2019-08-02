@@ -5,8 +5,8 @@
 
 #import "Helper.h"
 #import "MEGAGetThumbnailRequestDelegate.h"
+#import "MEGANode+MNZCategory.h"
 #import "MEGASdkManager.h"
-#import "NSAttributedString+MNZCategory.h"
 #import "UIImageView+MNZCategory.h"
 
 @interface NodeCollectionViewCell ()
@@ -42,12 +42,8 @@
         self.thumbnailImageView.hidden = YES;
     }
     
-    if (node.isTakenDown) {        
-        NSMutableAttributedString *nameAttributedString = [NSAttributedString.alloc initWithString:[NSString stringWithFormat:@"%@ ", node.name]].mutableCopy;
-        NSString *takedownImageName = @"isTakedown";
-        NSAttributedString *takedownImageAttributedString = [NSAttributedString mnz_attributedStringFromImageNamed:takedownImageName fontCapHeight:self.nameLabel.font.capHeight];
-        [nameAttributedString appendAttributedString:takedownImageAttributedString];
-        self.nameLabel.attributedText = nameAttributedString;
+    if (node.isTakenDown) {
+        self.nameLabel.attributedText = [node mnz_attributedNameForHeight:self.nameLabel.font.capHeight];
     } else {
         self.nameLabel.text = node.name;
     }
