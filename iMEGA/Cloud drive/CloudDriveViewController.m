@@ -792,7 +792,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
 
 - (void)didSelectNode:(MEGANode *)node {
     if (node.isTakenDown) {
-        NSString *alertMessage = node.isFolder ? AMLocalizedString(@"This folder has been the subject of a takedown notice.", @"Popup notification text on mouse-over taken down folder.") : AMLocalizedString(@"This folder has been the subject of a takedown notice.", @"Popup notification text on mouse-over taken down folder.");
+        NSString *alertMessage = node.isFolder ? AMLocalizedString(@"This folder has been the subject of a takedown notice.", @"Popup notification text on mouse-over taken down folder.") : AMLocalizedString(@"This file has been the subject of a takedown notice.", @"Popup notification text on mouse-over of taken down file.");
         
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:alertMessage preferredStyle:UIAlertControllerStyleAlert];
         [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"openButton", @"Button title to trigger the action of opening the file without downloading or opening it.") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
