@@ -11,6 +11,8 @@
 #import "TransferSessionManager.h"
 @import CoreLocation;
 
+static const CGFloat CameraUploadCellRowHeight = 44;
+
 @interface CameraUploadsTableViewController () <CLLocationManagerDelegate>
 
 @property (weak, nonatomic) IBOutlet UILabel *enableCameraUploadsLabel;
@@ -360,6 +362,14 @@
         CameraUploadManager.convertHEICPhoto = YES;
         [self configPhotoFormatUI];
     }
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return CameraUploadCellRowHeight;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView indentationLevelForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return 0;
 }
 
 #pragma mark - Location manager delegate
