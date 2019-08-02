@@ -99,6 +99,7 @@
         
     if (node.isTakenDown) {
         self.nameLabel.attributedText = [node mnz_attributedNameForHeight:self.nameLabel.font.capHeight];
+        self.nameLabel.textColor = UIColor.mnz_redMain;
     } else {
         self.nameLabel.text = node.name;
     }
