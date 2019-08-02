@@ -106,7 +106,7 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
     [[MEGASdkManager sharedMEGASdk] addMEGAGlobalDelegate:self];
 
     self.editBarButtonItem.enabled = MEGAReachabilityManager.isReachable;
-    [self reloadPhotosView];
+    [self reloadUI];
     [self reloadHeader];
 }
 
@@ -318,7 +318,7 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
 
 #pragma mark - Private
 
-- (void)reloadPhotosView {
+- (void)reloadUI {
     MEGALogDebug(@"[Camera Upload] reload photos collection view");
     NSMutableDictionary *photosByMonthYearDictionary = [NSMutableDictionary new];
     
@@ -988,12 +988,10 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
 #pragma mark - MEGAGlobalDelegate
 
 - (void)onNodesUpdate:(MEGASdk *)api nodeList:(MEGANodeList *)nodeList {
-    if (![nodeList mnz_containsNodeWithParentFolderName:MEGACameraUploadsNodeName] && ![nodeList mnz_containsNodeWithRestoreFolderName:MEGACameraUploadsNodeName]) {
-        return;
+    if ([nodeList mnz_shouldProcessOnNodesUpdateForParentNode:self.parentNode childNodesArray:self.nodeList.mnz_nodesArrayFromNodeList]) {
+        [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(reloadUI) object:nil];
+        [self performSelector:@selector(reloadUI) withObject:nil afterDelay:PhotosViewReloadTimeDelay];
     }
-    
-    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(reloadPhotosView) object:nil];
-    [self performSelector:@selector(reloadPhotosView) withObject:nil afterDelay:PhotosViewReloadTimeDelay];
 }
 
 @end

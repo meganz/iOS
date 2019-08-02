@@ -8,6 +8,7 @@
 #import "MEGAReachabilityManager.h"
 #import "MEGANavigationController.h"
 #import "MEGANode+MNZCategory.h"
+#import "MEGANodeList+MNZCategory.h"
 #import "MEGAUser+MNZCategory.h"
 #import "MEGARemoveRequestDelegate.h"
 #import "MEGAShareRequestDelegate.h"
@@ -1118,7 +1119,9 @@
 #pragma mark - MEGAGlobalDelegate
 
 - (void)onNodesUpdate:(MEGASdk *)api nodeList:(MEGANodeList *)nodeList {
-    [self reloadUI];
+    if ([nodeList mnz_shouldProcessOnNodesUpdateInSharedForNodes:self.incomingButton.selected ? self.incomingNodesMutableArray : self.outgoingNodesMutableArray]) {
+        [self reloadUI];
+    }
 }
 
 - (void)onUsersUpdate:(MEGASdk *)api userList:(MEGAUserList *)userList {
