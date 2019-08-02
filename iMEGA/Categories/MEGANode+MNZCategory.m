@@ -16,6 +16,7 @@
 #import "MEGARenameRequestDelegate.h"
 #import "MEGAShareRequestDelegate.h"
 #import "MEGAStore.h"
+#import "NSAttributedString+MNZCategory.h"
 #import "NSFileManager+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 #import "UIApplication+MNZCategory.h"
@@ -752,6 +753,17 @@
     }
     
     return nodeFilePath;
+}
+
+- (NSAttributedString *)mnz_attributedNameForHeight:(CGFloat)height {
+    NSAssert(self.isTakenDown, @"Attributed string is only supported for takedown nodes");
+
+    NSMutableAttributedString *nameAttributedString = [NSAttributedString.alloc initWithString:[NSString stringWithFormat:@"%@ ", self.name]].mutableCopy;
+    NSString *takedownImageName = @"isTakedown";
+    NSAttributedString *takedownImageAttributedString = [NSAttributedString mnz_attributedStringFromImageNamed:takedownImageName fontCapHeight:height];
+    [nameAttributedString appendAttributedString:takedownImageAttributedString];
+    
+    return nameAttributedString;
 }
 
 #pragma mark - Versions
