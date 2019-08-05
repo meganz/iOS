@@ -11,7 +11,6 @@
 #import "TransferSessionManager.h"
 @import CoreLocation;
 
-static const CGFloat CameraUploadCellRowHeight = 44;
 
 @interface CameraUploadsTableViewController () <CLLocationManagerDelegate>
 
