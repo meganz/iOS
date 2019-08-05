@@ -34,7 +34,7 @@
 - (BOOL)mnz_isRestorable;
 - (BOOL)mnz_isPlayable;
 - (NSString *)mnz_temporaryPathForDownloadCreatingDirectories:(BOOL)creatingDirectories;
-- (NSAttributedString *)mnz_attributedNameForHeight:(CGFloat)height;
+- (NSAttributedString *)mnz_attributedTakenDownNameWithHeight:(CGFloat)height;
 
 #pragma mark - Versions
 
