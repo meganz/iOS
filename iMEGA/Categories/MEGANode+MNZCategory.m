@@ -755,7 +755,7 @@
     return nodeFilePath;
 }
 
-- (NSAttributedString *)mnz_attributedNameForHeight:(CGFloat)height {
+- (NSAttributedString *)mnz_attributedTakenDownNameWithHeight:(CGFloat)height {
     NSAssert(self.isTakenDown, @"Attributed string is only supported for takedown nodes");
 
     NSMutableAttributedString *nameAttributedString = [NSAttributedString.alloc initWithString:[NSString stringWithFormat:@"%@ ", self.name]].mutableCopy;
