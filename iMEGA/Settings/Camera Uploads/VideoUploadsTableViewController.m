@@ -54,11 +54,6 @@ typedef NS_ENUM(NSUInteger, VideoUploadsSectionFormatRow) {
     [self configVideoFormatUI];
     [self configVideoQualityUI];
     [self.tableView reloadData];
-    
-    [NSOperationQueue.mainQueue addOperationWithBlock:^{
-        [self.tableView beginUpdates];
-        [self.tableView endUpdates];
-    }];
 }
 
 - (void)configVideoFormatUI {
