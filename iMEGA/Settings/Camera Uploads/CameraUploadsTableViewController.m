@@ -11,7 +11,6 @@
 #import "TransferSessionManager.h"
 @import CoreLocation;
 
-
 @interface CameraUploadsTableViewController () <CLLocationManagerDelegate>
 
 @property (weak, nonatomic) IBOutlet UILabel *enableCameraUploadsLabel;
