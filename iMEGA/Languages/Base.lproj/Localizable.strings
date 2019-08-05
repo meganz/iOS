@@ -1990,3 +1990,9 @@
 "Are you sure you want to change to a test server? Your account may suffer irrecoverable problems"="Are you sure you want to change to a test server? Your account may suffer irrecoverable problems";
 /* Destination folder name of chat files */
 "My chat files"="My chat files";
+/* Popup notification text on mouse-over of taken down file. */
+"This file has been the subject of a takedown notice."="This file has been the subject of a takedown notice.";
+/* Popup notification text on mouse-over taken down folder. */
+"This folder has been the subject of a takedown notice."="This folder has been the subject of a takedown notice.";
+/* File Manager -> Context menu item for taken down file or folder, for dispute takedown. */
+"Dispute Takedown"="Dispute Takedown";
