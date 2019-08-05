@@ -1,16 +1,6 @@
 
 import UIKit
 
-enum RequirePasscodeCells: Int {
-    case Immediatelly
-    case AfterFiveSeconds
-    case AfterTenSeconds
-    case AfterThirtySeconds
-    case AfterOneMinute
-    case AfterTwoMinutes
-    case AfterFiveMinutes
-}
-
 @objc enum RequirePasscodeAfter: Int {
     case Immediatelly = -1
     case FiveSeconds = 5
