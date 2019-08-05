@@ -1315,7 +1315,7 @@
 /* Label to show that an error related with an Incomplete SDK operation. */
 "Incomplete"="Incompleto";
 /* Label to show that an error related with the decryption process of a node occurs during a SDK operation. */
-"Invalid key/Decryption error"="Chiave non valida/Errore di decrittazione";
+"Invalid key/Decryption error"="Errore di decrittazione";
 /* Label to show that an error related with a bad session ID occurs during a SDK operation. */
 "Bad session ID"="ID di sessione invalido";
 /* Label to show that an error related with a blocked account occurs during a SDK operation. */

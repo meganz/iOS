@@ -1377,7 +1377,7 @@
 /* Label to show that an error related with an Incomplete SDK operation. */
 "Incomplete"="Incomplete";
 /* Label to show that an error related with the decryption process of a node occurs during a SDK operation. */
-"Invalid key/Decryption error"="Invalid key/Decryption error";
+"Invalid key/Decryption error"="Decryption error";
 /* Label to show that an error related with a bad session ID occurs during a SDK operation. */
 "Bad session ID"="Bad session ID";
 /* Label to show that an error related with a blocked account occurs during a SDK operation. */
@@ -2016,3 +2016,9 @@
 "Hi, Have encrypted conversations on Mega with me and get 50GB free storage."="Hi, Have encrypted conversations on Mega with me and get 50GB free storage.";
 /* Destination folder name of chat files */
 "My chat files"="My chat files";
+/* Popup notification text on mouse-over of taken down file. */
+"This file has been the subject of a takedown notice."="This file has been the subject of a takedown notice.";
+/* Popup notification text on mouse-over taken down folder. */
+"This folder has been the subject of a takedown notice."="This folder has been the subject of a takedown notice.";
+/* File Manager -> Context menu item for taken down file or folder, for dispute takedown. */
+"Dispute Takedown"="Dispute Takedown";
