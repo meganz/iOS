@@ -135,7 +135,7 @@ class EnterEmailViewController: UIViewController {
         }
         
         let inviteContactRequestDelegate = MEGAInviteContactRequestDelegate.init(numberOfRequests: UInt(tokens.count))
-        for email in tokens {
+        tokens.forEach { (email) in
             MEGASdkManager.sharedMEGASdk().inviteContact(withEmail: email, message: "", action: MEGAInviteAction.add, delegate: inviteContactRequestDelegate)
         }
         
@@ -204,22 +204,23 @@ extension EnterEmailViewController: VENTokenFieldDelegate {
 extension EnterEmailViewController: CNContactPickerDelegate {
     func contactPicker(_ picker: CNContactPickerViewController, didSelect contacts: [CNContact]) {
         var invalidEmails = [String]()
-        for contact in contacts {
-            for email in contact.emailAddresses {
+        contacts.forEach { (contact) in
+            contact.emailAddresses.forEach({ (email) in
                 if email.value.mnz_isValidEmail() {
                     tokens.append(String(email.value))
                 } else {
                     invalidEmails.append(String(email.value))
                 }
-            }
+            })
         }
         
         if invalidEmails.count > 0 {
-            instructionsLabel.text = ""
-            instructionsLabel.textColor = UIColor.mnz_redMain()
-            for email in invalidEmails {
-                instructionsLabel.text = instructionsLabel.text! + NSLocalizedString("theEmailAddressFormatIsInvalid", comment: "Add contacts and share dialog error message when user try to add wrong email address") + ": " + email + "\n"
+            var invalidEmailsString = ""
+            invalidEmails.forEach { (email) in
+                invalidEmailsString += NSLocalizedString("theEmailAddressFormatIsInvalid", comment: "Add contacts and share dialog error message when user try to add wrong email address") + ": " + email + "\n"
             }
+            instructionsLabel.text = invalidEmailsString
+            instructionsLabel.textColor = UIColor.mnz_redMain()
         } else {
             instructionsLabel.text = NSLocalizedString("Tap space to enter multiple emails", comment: "Text showing the user how to write more than one email in order to invite them to MEGA")
             instructionsLabel.textColor = UIColor.mnz_gray999999()

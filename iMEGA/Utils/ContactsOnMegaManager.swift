@@ -25,6 +25,7 @@ struct ContactOnMega {
     var state = ContactsOnMegaState.unknown
     var contactsOnMega = [ContactOnMega]()
     var contacts = [MEGAUser]()
+    var deviceContactsChunked = [[[String:String]]]()
 
     var completionWhenReady : (() -> Void)?
 
@@ -77,7 +78,7 @@ struct ContactOnMega {
             let phoneNumberKit = PhoneNumberKit()
             
             let contacts = try contactsStore.unifiedContacts(matching: predicate, keysToFetch: keysToFetch)
-            for contact in contacts {
+            contacts.forEach { (contact) in
                 for label in contact.phoneNumbers {
                     do {
                         let phoneNumber = try phoneNumberKit.parse(label.value.stringValue)
@@ -85,9 +86,6 @@ struct ContactOnMega {
                         let name = contact.givenName + " " + contact.familyName
 
                         deviceContacts.append([formatedNumber:name])
-
-                        print(phoneNumber)
-                        print(formatedNumber)
                     }
                     catch {
                         print("Device contact number parser error " + label.value.stringValue)
@@ -95,42 +93,62 @@ struct ContactOnMega {
                 }
             }
             
-            print("Contacts ", deviceContacts)
-            getContactsOnMega(deviceContacts)
+            deviceContactsChunked = Array(deviceContacts.prefix(500)).mnz_chunked(into: 100)
+            
+            getContactsOnMega()
         } catch {
             state = .error
             print("Error fetching user contacts: ", error)
         }
     }
     
-    private func getContactsOnMega(_ deviceContacts: [[String:String]]) {
+    private func getContactsOnMega() {
+        var contactsOnMegaDictionary = [UInt64:String]()
+
         let getRegisteredContactsDelegate = MEGAGetRegisteredContactsRequestDelegate.init { (request, error) in
             if error.type == .apiOk {
-                for contactOnMega in request.stringTableArray {
+                request.stringTableArray.forEach({ (contactOnMega) in
                     let userHandle = MEGASdk.handle(forBase64UserHandle: contactOnMega[1])
-
-                    if self.contacts.filter({$0.handle == userHandle}).count == 0 {
-                        var contactName = ""
+                    if self.contacts.filter({$0.handle == userHandle}).count == 0 { //contactOnMega is not contact yet
+                        guard let deviceContacts = self.deviceContactsChunked.first else { return }
                         for deviceContact in deviceContacts {
-                            if let name = deviceContact[contactOnMega[0]] {
-                                contactName = name
+                            if let contactName = deviceContact[contactOnMega[0]] { //Get contactOnMega device name and save it to fetch email later
+                                contactsOnMegaDictionary[userHandle] = contactName
+                                break
                             }
                         }
-                        let emailRequestDelegate = MEGAChatGenericRequestDelegate.init(completion: { (request, error) in
-                            self.contactsOnMega.append(ContactOnMega(handle: userHandle, email: request.text, name: contactName))
-                        })
-                        MEGASdkManager.sharedMEGAChatSdk().userEmail(byUserHandle: userHandle, delegate: emailRequestDelegate)
                     }
-                }
-                self.state = .ready
-                if (self.completionWhenReady != nil) {
-                    self.completionWhenReady!()
-                }
+                })
             } else {
                 print("Error getting contacts on MEGA: ", error)
                 self.state = .error
             }
+
+            self.deviceContactsChunked.removeFirst()
+
+            if self.deviceContactsChunked.count == 0 {
+                self.fetchContactsOnMegaEmails(contactsOnMegaDictionary)
+            } else {
+                self.getContactsOnMega()
+            }
         }
-        MEGASdkManager.sharedMEGASdk().getRegisteredContacts(deviceContacts, delegate: getRegisteredContactsDelegate)
+        
+        MEGASdkManager.sharedMEGASdk().getRegisteredContacts(deviceContactsChunked.first, delegate: getRegisteredContactsDelegate)
+    }
+    
+    private func fetchContactsOnMegaEmails(_ contactsOnMegaDictionary: [UInt64:String]) {
+        var contactsCount = contactsOnMegaDictionary.count
+        contactsOnMegaDictionary.forEach { (contactOnMega) in
+            let emailRequestDelegate = MEGAChatGenericRequestDelegate.init(completion: { (request, error) in
+                self.contactsOnMega.append(ContactOnMega(handle: contactOnMega.key, email: request.text, name: contactOnMega.value))
+                contactsCount -= 1
+                if contactsCount == 0 {
+                    self.state = .ready
+                    if (self.completionWhenReady != nil) {
+                        self.completionWhenReady!()
+                    }
+                }
+            })
+            MEGASdkManager.sharedMEGAChatSdk().userEmail(byUserHandle: contactOnMega.key, delegate: emailRequestDelegate)        }
     }
 }

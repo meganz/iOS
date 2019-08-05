@@ -44,8 +44,8 @@ import UIKit
     }
     
     // MARK: Private
-    private func numberOfContacts() -> NSInteger {
-        return (searchController.isActive && searchController.searchBar.text != "") ? searchingContactsOnMega.count : contactsOnMega.count
+    private func contacts() -> [ContactOnMega] {
+        return (searchController.isActive && searchController.searchBar.text != "") ? searchingContactsOnMega : contactsOnMega
     }
     
     // MARK: Actions
@@ -90,7 +90,7 @@ extension ContactsOnMegaViewController: UISearchBarDelegate {
 extension ContactsOnMegaViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if CNContactStore.authorizationStatus(for: CNEntityType.contacts) == CNAuthorizationStatus.authorized {
-            return numberOfContacts()
+            return contacts().count
         } else {
             return 0
         }
@@ -101,7 +101,7 @@ extension ContactsOnMegaViewController: UITableViewDataSource {
             fatalError("Could not dequeue cell with identifier contactOnMegaCell")
         }
         
-        cell.configure(for: contactsOnMega[indexPath.row])
+        cell.configure(for: contacts()[indexPath.row])
         
         return cell
     }
