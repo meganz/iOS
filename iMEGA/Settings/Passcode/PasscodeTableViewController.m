@@ -6,7 +6,8 @@
 
 #import "Helper.h"
 #import "NSString+MNZCategory.h"
-#import "RequirePasscodeTimeDurationTableViewController.h"
+
+#import "MEGA-Swift.h"
 
 @interface PasscodeTableViewController () {
     BOOL wasPasscodeAlreadyEnabled;
@@ -84,7 +85,7 @@
                 wasPasscodeAlreadyEnabled = YES;
             }
         }
-        self.requirePasscodeDetailLabel.text = LTHPasscodeViewController.timerDuration > Immediatelly ? [NSString mnz_stringFromCallDuration:LTHPasscodeViewController.timerDuration] : AMLocalizedString(@"Immediatelly", nil);
+        self.requirePasscodeDetailLabel.text = LTHPasscodeViewController.timerDuration > RequirePasscodeAfterImmediatelly ? [NSString mnz_stringFromCallDuration:LTHPasscodeViewController.timerDuration] : AMLocalizedString(@"Immediatelly", nil);
     } else {
         [self.simplePasscodeSwitch setOn:NO];
         [self.biometricsSwitch setOn:NO];
@@ -121,7 +122,7 @@
     if (![LTHPasscodeViewController doesPasscodeExist]) {
         [[LTHPasscodeViewController sharedUser] showForEnablingPasscodeInViewController:self asModal:YES];
         [[LTHPasscodeViewController sharedUser] setMaxNumberOfAllowedFailedAttempts:10];
-        [LTHPasscodeViewController saveTimerDuration:ThirtySeconds];
+        [LTHPasscodeViewController saveTimerDuration:RequirePasscodeAfterThirtySeconds];
     } else {
         [[LTHPasscodeViewController sharedUser] showForDisablingPasscodeInViewController:self asModal:YES];
     }
@@ -201,8 +202,8 @@
     
     if (indexPath.section == 2) {
         if (LTHPasscodeViewController.doesPasscodeExist) {
-            RequirePasscodeTimeDurationTableViewController *passcodeRequireTimeTableViewController = RequirePasscodeTimeDurationTableViewController.new;
-            [self.navigationController pushViewController:passcodeRequireTimeTableViewController animated:YES];
+            PasscodeTimeDurationTableViewController *passcodeTimeDurationTableViewController = PasscodeTimeDurationTableViewController.alloc.init;
+            [self.navigationController pushViewController:passcodeTimeDurationTableViewController animated:YES];
         }
     }
     
