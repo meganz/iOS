@@ -22,7 +22,7 @@ class InviteContactViewController: UIViewController {
         navigationItem.title = NSLocalizedString("inviteContact", comment: "Text shown when the user tries to make a call and the receiver is not a contact")
         
         let contactLinkCreateDelegate = MEGAContactLinkCreateRequestDelegate { (request) in
-            self.userLink = String(format: "https://mega.nz/C!%@", MEGASdk.base64Handle(forHandle: request!.nodeHandle))
+            self.userLink = String(format: "https://mega.nz/C!%@", MEGASdk.base64Handle(forHandle: request.nodeHandle))
         }
         MEGASdkManager.sharedMEGASdk().contactLinkCreateRenew(false, delegate: contactLinkCreateDelegate)
         
@@ -86,11 +86,8 @@ class InviteContactViewController: UIViewController {
 extension InviteContactViewController: CNContactPickerDelegate {
     func contactPicker(_ picker: CNContactPickerViewController, didSelect contacts: [CNContact]) {
         var phones = [String]()
-        for contact in contacts {
-            for contactProperty in contact.phoneNumbers {
-                let phoneNumber = contactProperty.value.stringValue.replacingOccurrences(of: " ", with: "")
-                phones.append(phoneNumber)
-            }
+        contacts.forEach { (contact) in
+            phones.append(contentsOf: contact.phoneNumbers.map( { $0.value.stringValue.replacingOccurrences(of: " ", with: "") } ) )
         }
         
         picker.dismiss(animated: true) {
