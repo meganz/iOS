@@ -135,11 +135,6 @@
     
     [self configTableSections];
     [self.tableView reloadData];
-    
-    [NSOperationQueue.mainQueue addOperationWithBlock:^{
-        [self.tableView beginUpdates];
-        [self.tableView endUpdates];
-    }];
 }
 
 - (void)configPhotoFormatUI {
@@ -343,11 +338,13 @@
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-    return self.sectionHeaderTitles[section];
+    NSString *title = self.sectionHeaderTitles[section];
+    return [title isEqualToString:@""] ? nil : title;
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section {
-    return self.sectionFooterTitles[section];
+    NSString *title = self.sectionFooterTitles[section];
+    return [title isEqualToString:@""] ? nil : title;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -361,6 +358,14 @@
         CameraUploadManager.convertHEICPhoto = YES;
         [self configPhotoFormatUI];
     }
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return UITableViewAutomaticDimension;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView indentationLevelForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return 0;
 }
 
 #pragma mark - Location manager delegate
