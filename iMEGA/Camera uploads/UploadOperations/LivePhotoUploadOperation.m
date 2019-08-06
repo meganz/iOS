@@ -25,7 +25,7 @@ static NSString * const LivePhotoVideoResourceExportName = @"livePhotoVideoResou
     }
     
     if (self.isCancelled) {
-        [self finishOperationWithStatus:CameraAssetUploadStatusCancelled shouldUploadNextAsset:NO];
+        [self finishOperationWithStatus:CameraAssetUploadStatusCancelled];
         return;
     }
     
@@ -34,7 +34,7 @@ static NSString * const LivePhotoVideoResourceExportName = @"livePhotoVideoResou
 
 - (void)requestLivePhotoResource {
     if (self.isCancelled) {
-        [self finishOperationWithStatus:CameraAssetUploadStatusCancelled shouldUploadNextAsset:NO];
+        [self finishOperationWithStatus:CameraAssetUploadStatusCancelled];
         return;
     }
     
@@ -51,7 +51,7 @@ static NSString * const LivePhotoVideoResourceExportName = @"livePhotoVideoResou
         [self exportAssetResource:videoResource toURL:videoURL];
     } else {
         MEGALogError(@"[Camera Upload] %@ can not find the video resource in live photo", self);
-        [self finishOperationWithStatus:CameraAssetUploadStatusFailed shouldUploadNextAsset:YES];
+        [self finishOperationWithStatus:CameraAssetUploadStatusFailed];
     }
 }
 
@@ -61,7 +61,7 @@ static NSString * const LivePhotoVideoResourceExportName = @"livePhotoVideoResou
     [super assetResource:resource didExportToURL:URL];
     
     if (self.isCancelled) {
-        [self finishOperationWithStatus:CameraAssetUploadStatusCancelled shouldUploadNextAsset:NO];
+        [self finishOperationWithStatus:CameraAssetUploadStatusCancelled];
         return;
     }
     
@@ -80,7 +80,7 @@ static NSString * const LivePhotoVideoResourceExportName = @"livePhotoVideoResou
     __weak __typeof__(self) weakSelf = self;
     [session exportAsynchronouslyWithCompletionHandler:^{
         if (weakSelf.isCancelled) {
-            [weakSelf finishOperationWithStatus:CameraAssetUploadStatusCancelled shouldUploadNextAsset:NO];
+            [weakSelf finishOperationWithStatus:CameraAssetUploadStatusCancelled];
             return;
         }
         
@@ -91,14 +91,14 @@ static NSString * const LivePhotoVideoResourceExportName = @"livePhotoVideoResou
                 break;
             case AVAssetExportSessionStatusCancelled:
                 MEGALogDebug(@"[Camera Upload] %@ video exporting got cancelled", weakSelf);
-                [weakSelf finishOperationWithStatus:CameraAssetUploadStatusCancelled shouldUploadNextAsset:NO];
+                [weakSelf finishOperationWithStatus:CameraAssetUploadStatusCancelled];
                 break;
             case AVAssetExportSessionStatusFailed:
                 MEGALogError(@"[Camera Upload] %@ error when to export video %@", weakSelf, session.error)
                 if ([session.error.domain isEqualToString:AVFoundationErrorDomain] && session.error.code == AVErrorDiskFull) {
                     [weakSelf finishUploadWithNoEnoughDiskSpace];
                 } else {
-                    [weakSelf finishOperationWithStatus:CameraAssetUploadStatusFailed shouldUploadNextAsset:YES];
+                    [weakSelf finishOperationWithStatus:CameraAssetUploadStatusFailed];
                 }
                 break;
             default:
