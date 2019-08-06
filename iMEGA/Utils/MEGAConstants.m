@@ -55,3 +55,7 @@ NSString * const JPGFormat = @"JPG";
 NSString * const HEICFormat = @"HEIC";
 NSString * const HEVCFormat = @"HEVC";
 NSString * const H264Format = @"H.264";
+
+#pragma mark - MEGA URLS
+
+NSString * const MEGADisputeURL = @"https://mega.nz/dispute";

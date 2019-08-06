@@ -2000,3 +2000,9 @@
 "Transfer"="Transfer";
 /* Error shown when a Business account user (sub-user or admin) tries to remove a contact which is part of the same Business account. %@ will be replaced with the name or email of the account, for example: Jane Appleseed or ja@mega.nz */
 "You cannot remove %@ as a contact as they are part of your Business account."="You cannot remove %@ as a contact as they are part of your Business account.";
+/* Popup notification text on mouse-over of taken down file. */
+"This file has been the subject of a takedown notice."="This file has been the subject of a takedown notice.";
+/* Popup notification text on mouse-over taken down folder. */
+"This folder has been the subject of a takedown notice."="This folder has been the subject of a takedown notice.";
+/* File Manager -> Context menu item for taken down file or folder, for dispute takedown. */
+"Dispute Takedown"="Dispute Takedown";
