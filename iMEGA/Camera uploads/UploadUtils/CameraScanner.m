@@ -153,7 +153,9 @@
             
             [CameraUploadRecordManager.shared.backgroundContext performBlockAndWait:^{
                 [self insertUploadRecordsForAssets:newAssets shouldCheckExistence:YES];
-                [self.livePhotoScanner scanLivePhotosInAssets:newAssets];
+                if (CameraUploadManager.shouldScanLivePhotosForVideos) {
+                    [self.livePhotoScanner scanLivePhotosInAssets:newAssets];
+                }
                 [CameraUploadRecordManager.shared saveChangesIfNeededWithError:nil];
             }];
             

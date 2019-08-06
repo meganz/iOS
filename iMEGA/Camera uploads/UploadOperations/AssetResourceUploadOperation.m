@@ -25,7 +25,7 @@
 
 - (void)exportAssetResource:(PHAssetResource *)resource toURL:(NSURL *)URL {
     if (self.isCancelled) {
-        [self finishOperationWithStatus:CameraAssetUploadStatusCancelled shouldUploadNextAsset:NO];
+        [self finishOperationWithStatus:CameraAssetUploadStatusCancelled];
         return;
     }
     
@@ -52,7 +52,7 @@
     }
     
     if (self.isCancelled) {
-        [self finishOperationWithStatus:CameraAssetUploadStatusCancelled shouldUploadNextAsset:NO];
+        [self finishOperationWithStatus:CameraAssetUploadStatusCancelled];
         return;
     }
     
@@ -80,7 +80,7 @@
     options.networkAccessAllowed = YES;
     options.progressHandler = ^(double progress) {
         if (weakSelf.isCancelled) {
-            [weakSelf finishOperationWithStatus:CameraAssetUploadStatusCancelled shouldUploadNextAsset:NO];
+            [weakSelf finishOperationWithStatus:CameraAssetUploadStatusCancelled];
         }
     };
     [PHAssetResourceManager.defaultManager writeDataForAssetResource:resource toFile:URL options:options completionHandler:^(NSError * _Nullable error) {
@@ -94,7 +94,7 @@
     }
     
     if (self.isCancelled) {
-        [self finishOperationWithStatus:CameraAssetUploadStatusCancelled shouldUploadNextAsset:NO];
+        [self finishOperationWithStatus:CameraAssetUploadStatusCancelled];
         return;
     }
     
