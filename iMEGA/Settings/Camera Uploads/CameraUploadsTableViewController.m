@@ -223,6 +223,7 @@
 }
 
 - (IBAction)enableCameraUploadsSwitchValueChanged:(UISwitch *)sender {
+    MEGALogInfo(@"%@ camera uploads", sender.isOn ? @"Enable" : @"Disable");
     if (sender.isOn) {
         [DevicePermissionsHelper photosPermissionWithCompletionHandler:^(BOOL granted) {
             if (granted) {

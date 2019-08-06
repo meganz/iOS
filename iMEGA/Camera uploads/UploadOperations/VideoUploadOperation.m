@@ -26,7 +26,7 @@
     }
     
     if (self.isCancelled) {
-        [self finishOperationWithStatus:CameraAssetUploadStatusCancelled shouldUploadNextAsset:NO];
+        [self finishOperationWithStatus:CameraAssetUploadStatusCancelled];
         return;
     }
 
@@ -37,7 +37,7 @@
 
 - (void)requestVideoDataByVersion:(PHVideoRequestOptionsVersion)version {
     if (self.isCancelled) {
-        [self finishOperationWithStatus:CameraAssetUploadStatusCancelled shouldUploadNextAsset:NO];
+        [self finishOperationWithStatus:CameraAssetUploadStatusCancelled];
         return;
     }
     
@@ -49,7 +49,7 @@
     options.progressHandler = ^(double progress, NSError * _Nullable error, BOOL * _Nonnull stop, NSDictionary * _Nullable info) {
         if (weakSelf.isCancelled) {
             *stop = YES;
-            [weakSelf finishOperationWithStatus:CameraAssetUploadStatusCancelled shouldUploadNextAsset:NO];
+            [weakSelf finishOperationWithStatus:CameraAssetUploadStatusCancelled];
         }
         
         if (error) {
@@ -66,20 +66,20 @@
         }
         
         if (weakSelf.isCancelled) {
-            [weakSelf finishOperationWithStatus:CameraAssetUploadStatusCancelled shouldUploadNextAsset:NO];
+            [weakSelf finishOperationWithStatus:CameraAssetUploadStatusCancelled];
             return;
         }
         
         NSError *error = info[PHImageErrorKey];
         if (error) {
             MEGALogError(@"[Camera Upload] %@ error when to request video %@", weakSelf, error);
-            [weakSelf finishOperationWithStatus:CameraAssetUploadStatusFailed shouldUploadNextAsset:YES];
+            [weakSelf finishOperationWithStatus:CameraAssetUploadStatusFailed];
             return;
         }
         
         if ([info[PHImageCancelledKey] boolValue]) {
             MEGALogDebug(@"[Camera Upload] %@ video request is cancelled", weakSelf);
-            [weakSelf finishOperationWithStatus:CameraAssetUploadStatusCancelled shouldUploadNextAsset:NO];
+            [weakSelf finishOperationWithStatus:CameraAssetUploadStatusCancelled];
             return;
         }
         
@@ -89,12 +89,12 @@
 
 - (void)handleRequestedAsset:(nullable AVAsset *)asset version:(PHVideoRequestOptionsVersion)version {
     if (self.isCancelled) {
-        [self finishOperationWithStatus:CameraAssetUploadStatusCancelled shouldUploadNextAsset:NO];
+        [self finishOperationWithStatus:CameraAssetUploadStatusCancelled];
         return;
     }
     
     if (asset == nil) {
-        [self finishOperationWithStatus:CameraAssetUploadStatusFailed shouldUploadNextAsset:YES];
+        [self finishOperationWithStatus:CameraAssetUploadStatusFailed];
         return;
     }
     
@@ -118,7 +118,7 @@
 
 - (void)exportVideoAsset:(nullable AVAsset *)asset {
     if (self.isCancelled) {
-        [self finishOperationWithStatus:CameraAssetUploadStatusCancelled shouldUploadNextAsset:NO];
+        [self finishOperationWithStatus:CameraAssetUploadStatusCancelled];
         return;
     }
     
@@ -130,7 +130,7 @@
         [self exportAsset:asset withPreset:AVAssetExportPresetHighestQuality outputFileType:AVFileTypeMPEG4 outputFileExtension:MEGAMP4FileExtension];
     } else {
         MEGALogError(@"[Camera Upload] %@ request video asset failed", self);
-        [self finishOperationWithStatus:CameraAssetUploadStatusFailed shouldUploadNextAsset:YES];
+        [self finishOperationWithStatus:CameraAssetUploadStatusFailed];
     }
 }
 
@@ -156,7 +156,7 @@
 
 - (void)exportAsset:(AVAsset *)asset withPreset:(NSString *)preset outputFileType:(AVFileType)outputFileType outputFileExtension:(NSString *)extension {
     if (self.isCancelled) {
-        [self finishOperationWithStatus:CameraAssetUploadStatusCancelled shouldUploadNextAsset:NO];
+        [self finishOperationWithStatus:CameraAssetUploadStatusCancelled];
         return;
     }
     
@@ -180,7 +180,7 @@
             __weak __typeof__(self) weakSelf = self;
             [session exportAsynchronouslyWithCompletionHandler:^{
                 if (weakSelf.isCancelled) {
-                    [weakSelf finishOperationWithStatus:CameraAssetUploadStatusCancelled shouldUploadNextAsset:NO];
+                    [weakSelf finishOperationWithStatus:CameraAssetUploadStatusCancelled];
                     return;
                 }
                 
@@ -191,14 +191,14 @@
                         break;
                     case AVAssetExportSessionStatusCancelled:
                         MEGALogDebug(@"[Camera Upload] %@ video exporting got cancelled", weakSelf);
-                        [weakSelf finishOperationWithStatus:CameraAssetUploadStatusCancelled shouldUploadNextAsset:NO];
+                        [weakSelf finishOperationWithStatus:CameraAssetUploadStatusCancelled];
                         break;
                     case AVAssetExportSessionStatusFailed:
                         MEGALogError(@"[Camera Upload] %@ error when to export video %@", weakSelf, session.error)
                         if ([session.error.domain isEqualToString:AVFoundationErrorDomain] && session.error.code == AVErrorDiskFull) {
                             [weakSelf finishUploadWithNoEnoughDiskSpace];
                         } else {
-                            [weakSelf finishOperationWithStatus:CameraAssetUploadStatusFailed shouldUploadNextAsset:YES];
+                            [weakSelf finishOperationWithStatus:CameraAssetUploadStatusFailed];
                         }
                         
                         break;
@@ -211,7 +211,7 @@
             if ([asset isKindOfClass:[AVURLAsset class]]) {
                 [self uploadVideoAtURL: [(AVURLAsset *)asset URL]];
             } else {
-                [self finishOperationWithStatus:CameraAssetUploadStatusFailed shouldUploadNextAsset:YES];
+                [self finishOperationWithStatus:CameraAssetUploadStatusFailed];
             }
         }
     }];
@@ -219,7 +219,7 @@
 
 - (void)uploadVideoAtURL:(NSURL *)URL {
     if (self.isCancelled) {
-        [self finishOperationWithStatus:CameraAssetUploadStatusCancelled shouldUploadNextAsset:NO];
+        [self finishOperationWithStatus:CameraAssetUploadStatusCancelled];
         return;
     }
     
@@ -237,7 +237,7 @@
         if ([error.domain isEqualToString:NSCocoaErrorDomain] && error.code == NSFileWriteOutOfSpaceError) {
             [self finishUploadWithNoEnoughDiskSpace];
         } else {
-            [self finishOperationWithStatus:CameraAssetUploadStatusFailed shouldUploadNextAsset:YES];
+            [self finishOperationWithStatus:CameraAssetUploadStatusFailed];
         }
 
         return;
