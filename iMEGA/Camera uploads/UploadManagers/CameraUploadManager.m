@@ -30,8 +30,6 @@ static const NSTimeInterval LoadMediaInfoTimeout = 60 * 15;
 static const NSUInteger PhotoUploadBatchCount = 5;
 static const NSUInteger VideoUploadBatchCount = 1;
 
-static const NSUInteger MaximumPhotoUploadBatchCountMultiplier = 2;
-
 @interface CameraUploadManager () <CameraScannerDelegate>
 
 @property (nonatomic) BOOL isNodeTreeCurrent;
@@ -118,22 +116,10 @@ static const NSUInteger MaximumPhotoUploadBatchCountMultiplier = 2;
 
 #pragma mark - manage operation queues
 
-- (void)initializeCameraUploadQueues {
-    _photoUploadOperationQueue = [[NSOperationQueue alloc] init];
-    _photoUploadOperationQueue.name = @"photoUploadOperationQueue";
-    _photoUploadOperationQueue.qualityOfService = NSQualityOfServiceUtility;
-    _photoUploadOperationQueue.maxConcurrentOperationCount = [self.concurrentCountCalculator calculatePhotoUploadConcurrentCount];
-    
-    _videoUploadOperationQueue = [[NSOperationQueue alloc] init];
-    _videoUploadOperationQueue.name = @"videoUploadOperationQueue";
-    _videoUploadOperationQueue.qualityOfService = NSQualityOfServiceBackground;
-    _videoUploadOperationQueue.maxConcurrentOperationCount = [self.concurrentCountCalculator calculateVideoUploadConcurrentCount];
-}
-
-- (void)resetCameraUploadQueues {
-    [self cancelAllPendingOperations];
-    self.photoUploadOperationQueue = nil;
-    self.videoUploadOperationQueue = nil;
+- (void)setupCameraUploadQueues {
+    self.photoUploadOperationQueue.maxConcurrentOperationCount = [self.concurrentCountCalculator calculatePhotoUploadConcurrentCount];
+    self.videoUploadOperationQueue.maxConcurrentOperationCount = [self.concurrentCountCalculator calculateVideoUploadConcurrentCount];
+    [self unsuspendCameraUploadQueues];
 }
 
 - (void)cancelVideoUploadOperations {
@@ -180,6 +166,26 @@ static const NSUInteger MaximumPhotoUploadBatchCountMultiplier = 2;
 }
 
 #pragma mark - properties
+
+- (NSOperationQueue *)photoUploadOperationQueue {
+    if (_photoUploadOperationQueue == nil) {
+        _photoUploadOperationQueue = [[NSOperationQueue alloc] init];
+        _photoUploadOperationQueue.name = @"photoUploadOperationQueue";
+        _photoUploadOperationQueue.qualityOfService = NSQualityOfServiceUtility;
+    }
+    
+    return _photoUploadOperationQueue;
+}
+
+- (NSOperationQueue *)videoUploadOperationQueue {
+    if (_videoUploadOperationQueue == nil) {
+        _videoUploadOperationQueue = [[NSOperationQueue alloc] init];
+        _videoUploadOperationQueue.name = @"videoUploadOperationQueue";
+        _videoUploadOperationQueue.qualityOfService = NSQualityOfServiceBackground;
+    }
+    
+    return _videoUploadOperationQueue;
+}
 
 - (CameraUploadNodeLoader *)cameraUploadNodeLoader {
     if (_cameraUploadNodeLoader) {
@@ -414,9 +420,7 @@ static const NSUInteger MaximumPhotoUploadBatchCountMultiplier = 2;
     [self.backgroundUploadingTaskMonitor startMonitoringBackgroundUploadingTasks];
     
     MEGALogDebug(@"[Camera Upload] start uploading photos with current photo operation count %lu", (unsigned long)self.photoUploadOperationQueue.operationCount);
-    if (self.photoUploadOperationQueue.operationCount < PhotoUploadBatchCount * MaximumPhotoUploadBatchCountMultiplier) {
-        [self uploadAssetsForMediaType:PHAssetMediaTypeImage concurrentCount:PhotoUploadBatchCount];
-    }
+    [self uploadAssetsForMediaType:PHAssetMediaTypeImage concurrentCount:PhotoUploadBatchCount];
 }
 
 - (void)startVideoUploadIfNeeded {
@@ -595,7 +599,7 @@ static const NSUInteger MaximumPhotoUploadBatchCountMultiplier = 2;
 }
 
 - (void)initializeCameraUpload {
-    [self initializeCameraUploadQueues];
+    [self setupCameraUploadQueues];
     [self registerNotificationsForUpload];
     [self startBackgroundUploadIfPossible];
     [CameraUploadManager enableBackgroundRefreshIfNeeded];
@@ -615,7 +619,7 @@ static const NSUInteger MaximumPhotoUploadBatchCountMultiplier = 2;
 - (void)disableCameraUpload {
     CameraUploadManager.cameraUploadEnabled = NO;
     [self stopVideoUpload];
-    [self resetCameraUploadQueues];
+    [self cancelAllPendingOperations];
     [self unregisterNotificationsForUpload];
     [self.diskSpaceDetector stopDetectingPhotoUpload];
     [self.concurrentCountCalculator stopCalculatingConcurrentCount];
@@ -794,7 +798,7 @@ static const NSUInteger MaximumPhotoUploadBatchCountMultiplier = 2;
 
 - (void)didReceiveApplicationWillTerminateNotification {
     MEGALogDebug(@"[Camera Upload] app will terminate");
-    [self resetCameraUploadQueues];
+    [self cancelAllPendingOperations];
 }
 
 - (void)didReceiveStorageOverQuotaNotification:(NSNotification *)notification {
