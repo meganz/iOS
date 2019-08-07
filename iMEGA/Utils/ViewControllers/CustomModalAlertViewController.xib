@@ -97,6 +97,7 @@
                                             </constraints>
                                             <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
                                             <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <inset key="titleEdgeInsets" minX="5" minY="0.0" maxX="5" maxY="0.0"/>
                                             <state key="normal" title="See plans"/>
                                             <userDefinedRuntimeAttributes>
                                                 <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
@@ -202,12 +203,10 @@
                 <constraint firstItem="9or-B3-Uwe" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="Lwz-Fm-4hM"/>
                 <constraint firstItem="sy9-8p-mxu" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="M8q-ZL-TXV"/>
                 <constraint firstAttribute="bottom" secondItem="sy9-8p-mxu" secondAttribute="bottom" priority="999" constant="15" id="QrW-dc-sAh"/>
-                <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="sy9-8p-mxu" secondAttribute="bottom" priority="999" constant="16" id="Yaz-vV-G7P"/>
-                <constraint firstItem="sy9-8p-mxu" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="iN0-l3-epB" secondAttribute="leading" priority="999" constant="16" id="aqg-2b-LXL"/>
-                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="sy9-8p-mxu" secondAttribute="trailing" priority="999" constant="16" id="c5o-TG-h9B"/>
+                <constraint firstItem="sy9-8p-mxu" firstAttribute="height" relation="lessThanOrEqual" secondItem="iN0-l3-epB" secondAttribute="height" constant="-32" id="SPp-cd-MQv"/>
                 <constraint firstAttribute="trailing" secondItem="sy9-8p-mxu" secondAttribute="trailing" priority="999" constant="15" id="mRM-eg-1Fy"/>
-                <constraint firstItem="sy9-8p-mxu" firstAttribute="top" relation="greaterThanOrEqual" secondItem="iN0-l3-epB" secondAttribute="top" priority="999" constant="16" id="t9g-qE-ejM"/>
                 <constraint firstItem="sy9-8p-mxu" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="ujV-TX-51k"/>
+                <constraint firstItem="sy9-8p-mxu" firstAttribute="width" relation="lessThanOrEqual" secondItem="iN0-l3-epB" secondAttribute="width" constant="-32" id="vle-eH-JSc"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="lDz-07-rjL"/>
             <variation key="default">
@@ -216,11 +215,7 @@
                     <exclude reference="KDM-my-ObN"/>
                     <exclude reference="Kts-wZ-RNn"/>
                     <exclude reference="QrW-dc-sAh"/>
-                    <exclude reference="Yaz-vV-G7P"/>
-                    <exclude reference="aqg-2b-LXL"/>
-                    <exclude reference="c5o-TG-h9B"/>
                     <exclude reference="mRM-eg-1Fy"/>
-                    <exclude reference="t9g-qE-ejM"/>
                 </mask>
             </variation>
             <variation key="heightClass=compact-widthClass=compact">
@@ -231,21 +226,9 @@
                     <include reference="mRM-eg-1Fy"/>
                 </mask>
             </variation>
-            <variation key="heightClass=regular-widthClass=compact">
-                <mask key="constraints">
-                    <include reference="Yaz-vV-G7P"/>
-                    <include reference="aqg-2b-LXL"/>
-                    <include reference="c5o-TG-h9B"/>
-                    <include reference="t9g-qE-ejM"/>
-                </mask>
-            </variation>
             <variation key="heightClass=regular-widthClass=regular">
                 <mask key="constraints">
                     <include reference="Jmq-pf-VxV"/>
-                    <include reference="Yaz-vV-G7P"/>
-                    <include reference="aqg-2b-LXL"/>
-                    <include reference="c5o-TG-h9B"/>
-                    <include reference="t9g-qE-ejM"/>
                 </mask>
             </variation>
             <point key="canvasLocation" x="22.5" y="48.75"/>

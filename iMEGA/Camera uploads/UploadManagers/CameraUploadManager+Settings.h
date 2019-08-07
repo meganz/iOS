@@ -31,13 +31,22 @@ typedef NS_ENUM(NSUInteger, CameraUploadVideoQuality) {
 @property (class, getter=isCellularUploadForVideosAllowed) BOOL cellularUploadForVideosAllowed;
 @property (class) CameraUploadVideoQuality HEVCToH264CompressionQuality;
 
+#pragma mark - advanced settings
+
+@property (class, getter=shouldUploadVideosForLivePhotos) BOOL uploadVideosForLivePhotos;
+@property (class, getter=shouldUploadAllBurstPhotos) BOOL uploadAllBurstPhotos;
+@property (class, getter=shouldUploadHiddenAlbum) BOOL uploadHiddenAlbum;
+
+
 #pragma mark - readonly properties
 
 @property (class, readonly, getter=isLivePhotoSupported) BOOL livePhotoSupported;
 @property (class, readonly, getter=isHEVCFormatSupported) BOOL HEVCFormatSupported;
 @property (class, readonly, getter=shouldShowCameraUploadBoardingScreen) BOOL showCameraUploadBoardingScreen;
+@property (class, readonly, getter=shouldScanLivePhotosForVideos) BOOL scanLivePhotosForVideos;
 @property (class, readonly) BOOL canBackgroundUploadBeStarted;
 @property (class, readonly) BOOL canCameraUploadBeStarted;
+@property (class, readonly, getter=isCameraUploadPausedBecauseOfNoWiFiConnection) BOOL cameraUploadPausedBecauseOfNoWifiConnection;
 @property (class, readonly) NSArray<NSNumber *> * enabledMediaTypes;
 
 #pragma mark - camera upload v2 migration
@@ -45,7 +54,7 @@ typedef NS_ENUM(NSUInteger, CameraUploadVideoQuality) {
 @property (class, getter=hasMigratedToCameraUploadsV2) BOOL migratedToCameraUploadsV2;
 @property (class, readonly) BOOL shouldShowCameraUploadV2MigrationScreen;
 
-+ (void)migrateCurrentSettingsToCameraUplaodV2;
++ (void)migrateCurrentSettingsToCameraUploadV2;
 
 #pragma mark - clear local settings
 
