@@ -2024,3 +2024,5 @@
 "This folder has been the subject of a takedown notice."="This folder has been the subject of a takedown notice.";
 /* File Manager -> Context menu item for taken down file or folder, for dispute takedown. */
 "Dispute Takedown"="Dispute Takedown";
+/* Label presented to Admins that full management of the business is only available in a desktop web browser */
+"User management is only available in a desktop web browser."="User management is only available in a desktop web browser.";

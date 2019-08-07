@@ -56,6 +56,47 @@
                                 <rect key="frame" x="-4" y="180" width="383" height="423"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="separatorColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                <view key="tableFooterView" contentMode="scaleToFill" id="JUo-jI-gO6">
+                                    <rect key="frame" x="0.0" y="275" width="383" height="112"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <subviews>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lB5-TW-t2y">
+                                            <rect key="frame" x="18" y="20" width="347" height="72"/>
+                                            <subviews>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="userManagement" translatesAutoresizingMaskIntoConstraints="NO" id="cVm-9w-5M9">
+                                                    <rect key="frame" x="11" y="11" width="50" height="50"/>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="User management is only available in a desktop web browser." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3a0-Df-3mq">
+                                                    <rect key="frame" x="72" y="21.5" width="264" height="29"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                    <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="0.84705882352941175" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <color key="backgroundColor" red="0.96078431372549022" green="0.96078431372549022" blue="0.96078431372549022" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <constraints>
+                                                <constraint firstItem="3a0-Df-3mq" firstAttribute="leading" secondItem="cVm-9w-5M9" secondAttribute="trailing" constant="11" id="7oA-BV-Qqr"/>
+                                                <constraint firstItem="cVm-9w-5M9" firstAttribute="top" secondItem="lB5-TW-t2y" secondAttribute="top" constant="11" id="FOj-ZO-hlJ"/>
+                                                <constraint firstItem="3a0-Df-3mq" firstAttribute="centerY" secondItem="lB5-TW-t2y" secondAttribute="centerY" id="HEc-g5-twH"/>
+                                                <constraint firstAttribute="bottom" secondItem="cVm-9w-5M9" secondAttribute="bottom" constant="11" id="VHf-8p-Ac8"/>
+                                                <constraint firstAttribute="trailing" secondItem="3a0-Df-3mq" secondAttribute="trailing" constant="11" id="Xqs-bC-cNg"/>
+                                                <constraint firstItem="cVm-9w-5M9" firstAttribute="leading" secondItem="lB5-TW-t2y" secondAttribute="leading" constant="11" id="fbG-Td-tPt"/>
+                                            </constraints>
+                                            <userDefinedRuntimeAttributes>
+                                                <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                    <integer key="value" value="12"/>
+                                                </userDefinedRuntimeAttribute>
+                                            </userDefinedRuntimeAttributes>
+                                        </view>
+                                    </subviews>
+                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <constraints>
+                                        <constraint firstAttribute="bottom" secondItem="lB5-TW-t2y" secondAttribute="bottom" constant="20" id="3E1-TM-BrV"/>
+                                        <constraint firstAttribute="trailing" secondItem="lB5-TW-t2y" secondAttribute="trailing" constant="18" id="3b6-g7-p4f"/>
+                                        <constraint firstItem="lB5-TW-t2y" firstAttribute="top" secondItem="JUo-jI-gO6" secondAttribute="top" constant="20" id="5be-4u-dRO"/>
+                                        <constraint firstItem="lB5-TW-t2y" firstAttribute="leading" secondItem="JUo-jI-gO6" secondAttribute="leading" constant="18" id="ga4-xd-Cdn"/>
+                                    </constraints>
+                                </view>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="MyAccountHallTableViewCellID" rowHeight="60" id="ZvV-kA-tMp" customClass="MyAccountHallTableViewCell">
                                         <rect key="frame" x="0.0" y="1" width="383" height="60"/>
@@ -406,6 +447,8 @@
                         <outlet property="nameLabel" destination="YqG-fz-6ti" id="ONK-2v-2hU"/>
                         <outlet property="profileView" destination="eYn-oF-AZu" id="wui-te-f6l"/>
                         <outlet property="qrCodeImageView" destination="7za-S6-P7g" id="zDD-j2-EzC"/>
+                        <outlet property="tableFooterLabel" destination="3a0-Df-3mq" id="gyK-EJ-eOU"/>
+                        <outlet property="tableFooterView" destination="JUo-jI-gO6" id="4g1-J9-aYK"/>
                         <outlet property="tableView" destination="Yui-UF-WIL" id="dT7-Ok-gtJ"/>
                         <outlet property="viewAndEditProfileButton" destination="Hcr-fM-O6t" id="EwZ-AC-WyZ"/>
                         <outlet property="viewAndEditProfileDisclosureImageView" destination="Zd2-ds-fPD" id="hIH-rP-6nv"/>
@@ -1921,7 +1964,7 @@
                                                     <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.10000000000000001" colorSpace="custom" customColorSpace="sRGB"/>
                                                 </view>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Unlocked bonuses:" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GIc-qz-nwr">
-                                                    <rect key="frame" x="63" y="20" width="244" height="20"/>
+                                                    <rect key="frame" x="62" y="20" width="244" height="20"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" name="SFUIText-Medium" family="SF UI Text" pointSize="17"/>
                                                     <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -1949,7 +1992,7 @@
                                                     <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.10000000000000001" colorSpace="custom" customColorSpace="sRGB"/>
                                                 </view>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="GB" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="E8Z-k8-8yR">
-                                                    <rect key="frame" x="207" y="72" width="145" height="39"/>
+                                                    <rect key="frame" x="206" y="72" width="145" height="39"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                     <fontDescription key="fontDescription" name="SFUIDisplay-Light" family="SF UI Display" pointSize="32"/>
@@ -1957,7 +2000,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Transfer Quota" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lgh-nZ-6EN">
-                                                    <rect key="frame" x="207" y="121" width="145" height="16"/>
+                                                    <rect key="frame" x="206" y="121" width="145" height="16"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                     <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="13"/>
@@ -2624,5 +2667,6 @@
         <image name="inviteFriendsButton" width="44" height="44"/>
         <image name="myAccountDisclosureIndicatorRed" width="12" height="12"/>
         <image name="myAccountIcon" width="31" height="28"/>
+        <image name="userManagement" width="50" height="50.5"/>
     </resources>
 </document>
