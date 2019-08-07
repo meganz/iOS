@@ -11,7 +11,7 @@
 /*  */
 "error"="Erreur";
 /*  */
-"name"="Prénom";
+"name"="Nom";
 /* Caption of a button to edit the files that are selected */
 "edit"="Modifier";
 /* State shown if something is 'Saved' (String as short as possible). */
@@ -85,7 +85,7 @@
 /* Message shown when the user writes an invalid format in the email field */
 "emailInvalidFormat"="Saisir une adresse courriel valide";
 /* Add contacts and share dialog error message when user try to add wrong email address */
-"theEmailAddressFormatIsInvalid"="Le format de l'adresse courriel est invalide";
+"theEmailAddressFormatIsInvalid"="Le format de l’adresse courriel est invalide";
 /* Message shown when the user enters a wrong password */
 "passwordInvalidFormat"="Saisir un mot de passe valide";
 /* Hint text to suggest that the user has to write his email */
@@ -335,9 +335,9 @@
 /* A title for the Copyright Warning dialog. Designed to make the user feel as though this is not targeting them, but is a warning for everybody who uses our service. */
 "copyrightWarningToAll"="Avertissement sur le droit d’auteur à tous les utilisateurs";
 /* String already exists: 367, but we need to split paragraphs. */
-"copyrightMessagePart1"="MEGA respecte le droit d’auteur d’autrui et exige que les utilisateurs du service nuagique MEGA se conforment aux lois sur le droit d’auteur.";
+"copyrightMessagePart1"="MEGA respecte le droit d’auteur d’autrui et exige que les utilisateurs du service nuagique de MEGA se conforment aux lois sur le droit d’auteur.";
 /* String already exists: 367, but we need to split paragraphs */
-"copyrightMessagePart2"="Il vous est strictement interdit d’utiliser le service nuagique MEGA pour enfreindre le droit d’auteur. Vous ne pouvez pas téléverser, télécharger, stocker, partager, afficher, lire en continu, distribuer, envoyer par courriel, créer de liens vers, transmettre ou proposer de quelque façon des fichiers, des données ou du contenu qui enfreignent le droit d’auteur ou autre droit de propriété de quelque personne ou entité.";
+"copyrightMessagePart2"="Il vous est strictement interdit d’utiliser le service nuagique de MEGA pour enfreindre le droit d’auteur. Vous ne pouvez pas téléverser, télécharger, stocker, partager, afficher, lire en continu, distribuer, envoyer par courriel, créer de liens vers, transmettre ou proposer de quelque façon des fichiers, des données ou du contenu qui enfreignent le droit d’auteur ou autre droit de propriété de quelque personne ou entité.";
 /* button caption text that the user clicks when he agrees */
 "agree"="Accepter";
 /* button caption text that the user clicks when he disagrees */
@@ -493,9 +493,9 @@
 /* Button title that skips the current action */
 "skipButton"="Ignorer";
 /* Text shown to explain what means 'Enable Camera Uploads'. The 'Cloud Drive' is the MEGA section, so please keep consistency */
-"automaticallyBackupYourPhotos"="Sauvegarder automatiquement vos photos dans le disque nuagique";
+"Automatically backup your photos and videos to the Cloud Drive."="Sauvegardez automatiquement vos photos et vos vidéos dans votre disque nuagique.";
 /* Button title that enables the functionality 'Camera Uploads', which uploads all the photos in your device to MEGA */
-"enableCameraUploadsButton"="Activer les téléversements de la caméra";
+"enableCameraUploadsButton"="Activer les téléversements de l’appareil photo";
 /* Success message shown when Camera Uploads has been enabled */
 "cameraUploadsEnabled"="Les téléversements de l’appareil photo sont activés";
 /* Message shown when the camera uploads have been completed */
@@ -504,6 +504,14 @@
 "cameraUploadsPendingFile"="Téléversement en cours, 1 fichier en attente";
 /* Message shown while uploading files. Plural. */
 "cameraUploadsPendingFiles"="Téléversement en cours, %lu fichiers en attente";
+/* Message shown when camera upload paused because of no WiFi. Singular. */
+"Upload paused because of no WiFi, 1 file pending"="Le téléversement est en pause, car il n’y a pas de connexion Wi-Fi, 1 fichier est en attente";
+/* Message shown when camera upload paused because of no WiFi. Plural. */
+"Upload paused because of no WiFi, %lu files pending"="Le téléversement est en pause, car il n’y a pas de connexion Wi-Fi, %lu fichiers sont en attente";
+/* Message shown the pending video file when photos uploaded and video upload is not enabled. Singular. */
+"Photos uploaded, video uploads are off, 1 video not uploaded"="Les photos ont été téléversées, les téléversements des vidéos sont désactivés ; 1 vidéo n’a pas été téléversée";
+/* Message shown the pending video files when photos uploaded and video upload is not enabled. Plural. */
+"Photos uploaded, video uploads are off, %lu videos not uploaded"="Les photos ont été téléversées, les téléversements des vidéos sont désactivés ; %lu vidéos n’ont pas été téléversées";
 /* Singular, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 1 file. */
 "indexOfTotalFile"="%1$d de %2$d fichier";
 /* Plural, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 3 files. */
@@ -611,7 +619,7 @@
 /* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected, the folder you want inside your Cloud Drive */
 "shareFolder"="Partager un dossier";
 /* Button title which, if tapped, will trigger the action of sharing the folders selected */
-"shareFolders"="Partager les dossiers";
+"shareFolders"="Partager des dossiers";
 /* Button that allows you to select a given folder */
 "select"="Sélectionner";
 /* Title of the view that shows the kind of permissions (Read Only, Read & Write or Full Access) that you can give to a shared folder */
@@ -629,7 +637,7 @@
 /* Title of one of the Settings sections where you can see your MEGA 'Rubbish Bin' */
 "rubbishBinLabel"="Corbeille";
 /* Title of one of the Settings sections where you can configure 'Advanced' options */
-"advanced"="Paramètres avancés";
+"advanced"="Avancés";
 /* Title of one of the Settings sections where you can configure "Security Options" of your MEGA account */
 "securityOptions"="Options de sécurité";
 /* Title of one of the Settings sections where you can see things 'About' the app */
@@ -654,12 +662,74 @@
 "on"="Activé";
 /* Header to explain that 'Upload videos', 'Use cellular connection' and 'Only when charging' are options of the Camera Uploads */
 "options"="Options";
+/* A hint to show one option is recommended by MEGA */
+"(Recommended)"="(recommandée)";
+/* Header to introduce how to deal with HEIC format photos in Camera Uplaod */
+"SAVE HEIC PHOTOS AS"="Enregistrer les photos HEIC en tant que";
+/* Footer for HEIC format section */
+"We recommend JPG, as its the most compatible format for photos."="Nous recommandons JPG, car c’est le format le plus compatible pour les photos.";
+/* Header to introduce how to deal with HEVC format videos in Camera Uplaod */
+"SAVE HEVC VIDEOS AS"="Enregistrer les vidéos HEVC en tant que";
+/* Footer for HEVC format section */
+"We recommend H.264, as its the most compatible format for videos."="Nous recommandons H.264, car c’est le format le plus compatible pour les vidéos.";
+/* Footer for video compression quality */
+"Compression quality when to transcode HEVC videos to H.264 format."="Qualité de la compression quand les vidéos HEVC sont transcodées en format H.264.";
 /* Option title to enable upload videos with Camera Uploads */
 "uploadVideosLabel"="Téléverser les vidéos";
 /* Option title to enable Camera Uploads only when the device is charging */
 "onlyWhenChargingLabel"="Pendant la charge seulement";
-/* Footer text to explain the Camera Uploads functionality */
-"cameraUploads_footer"="Si cette option est activée, les photos et vidéos seront téléversées.";
+/* Footer text for Camera Upload switch section when camera upload is disabled */
+"When enabled, photos will be uploaded."="Si cette option est activée, les photos seront téléversées.";
+/* Footer text for Camera Upload switch section when only photos upload is enabled */
+"Photos will be uploaded to Camera Uploads folder."="Les photos seront téléverser dans le dossier";
+/* Footer text for Camera Upload switch section when photos and videos upload is enabled */
+"Photos and videos will be uploaded to Camera Uploads folder."="Les photos et les vidéos seront téléversées dans le dossier Téléversements de l’appareil photo.";
+/* Title to show for upload in background */
+"Upload in Background"="Téléverser en arrière-plan";
+/* Title for the location based background upload message */
+"Enable location services for background upload"="Activer le service de localisation pour le téléversement en arrière-plan";
+/* Message for the location based background upload when the location data access is not denied by users */
+"MEGA can periodically start camera uploads in background when your location changes."="MEGA peut régulièrement démarrer en arrière-plan les téléversements de l’appareil photo si votre position géographique change.";
+/* Message for the location based background upload when the location data access is denied by users */
+"Please select “Always” at your Location page in Settings, then MEGA can periodically start camera uploads in background when your location changes."="Veuillez sélectionner « Toujours » dans la page du service de localisation des Réglages, afin que MEGA puisse régulièrement démarrer en arrière-plan les téléversements de l’appareil photo si votre position géographique change.";
+/* Title for turn on a feature */
+"Turn On"="Activer";
+/* Title for turn on a feature in settings */
+"Turn On in Settings"="Activer dans Réglages";
+/* Footer for video uploads switch section when enabled */
+"Videos will be uploaded to the Camera Uploads folder."="Les vidéos seront téléversées dans le dossier Téléversements de l’appareil photo.";
+/* Footer for video uploads switch section when disabled */
+"When enabled, videos will be uploaded."="Si cette option est activée, les vidéos seront téléversées.";
+/* Title for new camera upload feature */
+"New Camera Upload!"="Nouvelle option de téléversement de l’appareil photo !";
+/* A messge for camera upload v2 migration */
+"Now you can choose to convert the HEIF/HEVC photos and videos to the most compatible JPEG/H.264 formats."="Vous pouvez maintenant choisir de convertir les photos et les vidéos HEIF/HEVC vers les formats plus largement compatibles JPEG/H.264.";
+/* Title for an action to use most compatible formats */
+"Use Most Compatible Formats"="Utiliser les formats les plus compatibles";
+/* Title for custom settings */
+"Custom Settings"="Paramètres personnalisés";
+/* Title to show when device local storage is full */
+"%@ Storage Full"="L’espace de stockage du %@ est plein";
+/* Detail for local storage full situation */
+"You do not have enough storage to upload camera. Free up space by deleting unneeded apps, videos or music. You can manage your storage in %@"="Vous manquez d’espace de stockage pour d’autres téléversements de l’appareil photo. Libérez de l’espace en supprimant des applis, des vidéos ou de la musique inutilisées. Vous pouvez gérer votre espace de stockage dans %@";
+/* Navigation path for Storage settings in iOS */
+"Settings > General > %@ Storage"="Réglages > Général > Stockage %@";
+/* Title of the switch to config whether to upload videos for Live Photos */
+"Upload videos for Live Photos"="Téléverser les vidéos pour les photos Live";
+/* Title of the switch to config whether to upload all burst photos */
+"Upload all burst photos"="Téléverser toutes les photos en rafale";
+/* Title of the switch to config whether to upload Hidden Album */
+"Upload Hidden Album"="Téléverser l'album Masqués";
+/* Footer description when upload videos for Live Photos is enabled */
+"The video and the photo in each Live Photo will be uploaded."="Les versions photo et vidéo de chaque photo Live seront téléversées.";
+/* Footer description when upload videos for Live Photos is disabled */
+"Only the photo in each Live Photo will be uploaded."="Seule la version photo de chaque photo Live sera téléversée.";
+/* Footer description when upload all burst photos is enabled */
+"All the photos from your burst photo sequences will be uploaded."="Toutes les photos de vos séquences de photos en rafale seront téléversées.";
+/* Footer description when upload all burst photos is disabled */
+"Only the representative photos from your burst photo sequences will be uploaded."="Seules les photos représentatives de vos séquences de photos en rafale seront téléversées.";
+/* Footer description when upload Hidden Album is enabled */
+"The Hidden Album is where you hide photos or videos in your device Photos app."="L’album Masqués est l’endroit où vous cachez des photos ou des vidéos dans l’appli Photos de votre appareil.";
 /* App means “Application” */
 "App version"="Version de l’appli";
 /* Title of the label where the SDK version is shown */
@@ -715,7 +785,7 @@
 /* Account closure, warning message to remind user to contact MEGA support after he confirms that he wants to cancel account. */
 "ifYouCantAccessYourEmailAccount"="Si vous ne pouvez pas accéder à votre courriel, veuillez contacter support@mega.nz";
 /* During account cancellation (deletion) */
-"cancellationLinkHasExpired"="Le lien d’annulation a expiré.";
+"cancellationLinkHasExpired"="Le lien d’annulation est expiré.";
 /* Text shown in the last alert dialog to confirm the cancellation of an account */
 "enterYourPasswordToConfirmThatYouWanToClose"="Ceci est la dernière étape pour annuler votre compte. Vous perdrez irrémédiablement toutes les données stockées dans le nuage. Veuillez saisir votre mot de passe ci-dessous.";
 /* During account cancellation (deletion) */
@@ -769,7 +839,7 @@
 /* An option to reset the password. */
 "forgotPassword"="Mot de passe oublié ?";
 /* Message shown during forgot your password process if the link to reset password has expired */
-"recoveryLinkHasExpired"="Le lien de récupération a expiré. Veuillez ressayer.";
+"recoveryLinkHasExpired"="Le lien de récupération est expiré. Veuillez ressayer.";
 /* Headline of the password reset recovery procedure */
 "passwordReset"="Réinitialiser le mot de passe";
 /* A message shown to explain that the user has to input (type or paste) their recovery key to continue with the reset password process. */
@@ -796,7 +866,7 @@
 /* Hint text to suggest that the user have to write the new email on it */
 "newEmail"="Nouvelle adresse courriel";
 /* Button text for the user to confirm their change of email address. */
-"confirmEmail"="Confirmer l'adresse courriel";
+"confirmEmail"="Confirmer l’adresse courriel";
 /* Hint text where the user have to re-write the new email to confirm it */
 "confirmNewEmail"="Confirmez la nouvelle adresse courriel";
 /* The title of the alert dialog to change the email associated to an account. */
@@ -884,7 +954,7 @@
 /*  */
 "howItWorksMain"="Votre ami doit créer un compte gratuit sur MEGA et [S]installer au moins une application client MEGA[/S] (soit le client de synchro, soit l’une de nos applis mobiles)";
 /*  */
-"howItWorksSecondary"="Vous pouvez contacter votre ami de n'importe quelle façon. Le quota vous sera attribué si vous avez saisi ici l'adresse courriel de votre ami avant qu'il ne s'inscrive avec cette adresse.";
+"howItWorksSecondary"="Vous pouvez contacter votre ami de n’importe quelle façon. Le quota vous sera attribué si vous avez saisi ici l’adresse courriel de votre ami avant qu’il ne s’inscrive avec cette adresse.";
 /* A message which is shown once someone has invited a friend as part of the achievements program. */
 "howItWorksTertiary"="Vous ne recevrez aucun crédit si vous invitez quelqu'un qui a utilisé MEGA auparavant et un tel rejet ne vous sera pas signalé.";
 /* Header of block with achievements bonuses. */
@@ -1080,7 +1150,7 @@
 /* Menu item to add participants to a chat */
 "addParticipants"="Ajouter des participants";
 /* Title that refers to the status of the chat (Either Online or Offline) */
-"status"="État";
+"status"="État ";
 /* Title used in settings that enables the generation of link previews in the chat */
 "richUrlPreviews"="Aperçus d’URL enrichis";
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
@@ -1089,6 +1159,8 @@
 "voiceAndVideoCalls"="Appels vocaux et vidéos";
 /* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature. */
 "useMobileData"="Utiliser les données mobiles";
+/* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for videos. */
+"Use Mobile Data for Videos"="Utiliser les données mobiles pour les vidéos";
 /* A header in the Chat settings. This changes the user's status to Away after some time of inactivity. */
 "autoAway"="Absence automatique";
 /* */
@@ -1196,7 +1268,7 @@
 /* text that appear when there are more than 2 people writing at that time in a chat. For example User1, user2 and more are typing... The parameter will be the concatenation of the first two user names. The tags and placeholders shouldn't be translated or modified. */
 "moreThanTwoUsersAreTyping"="%1$s [A]et plus écrivent…[/A]";
 /* This is shown in the typing area in chat, as a placeholder before the user starts typing anything in the field. The format is: Write a message to Contact Name... Write a message to "Chat room topic"... Write a message to Contact Name1, Contact Name2, Contact Name3 */
-"writeAMessage"="Rédiger un message pour %s…";
+"writeAMessage"="Rédigez un message pour %s…";
 /* Information if there are no history messages in current chat conversation */
 "noConversationHistory"="Aucun historique de conversation";
 /* Button which allows to retry send message in chat conversation. */
@@ -1415,7 +1487,7 @@
 /* Title of section to display number of all historical versions of files. */
 "versions"="Versions";
 /* Title label of a node property. */
-"location"="Emplacement";
+"location"="Lieu";
 /* label for the total file size of multiple files and/or folders (no need to put the colon punctuation in the translation)*/
 "totalSize"="Taille totale";
 /* Refers to the type of a file or folder. */
@@ -1539,9 +1611,9 @@
 /* Title of archived chats button */
 "archivedChats"="Conversations archivées";
 /* Confirmation message on archive chat dialog for user to confirm. */
-"archiveChatMessage"="Êtes-vous certain de vouloir archiver cette conversation ?";
+"archiveChatMessage"="Voulez-vous vraiment archiver cette conversation ?";
 /* Confirmation message for user to confirm it will unarchive an archived chat. */
-"unarchiveChatMessage"="Êtes-vous certain de vouloir désarchiver cette conversation ?";
+"unarchiveChatMessage"="Voulez-vous vraiment désarchiver cette conversation ?";
 /* The title of the dialog to unarchive an archived chat. */
 "unarchiveChat"="Désarchiver la conversation";
 /* Title of button to archive chats. */
@@ -1623,7 +1695,7 @@
 /* Title label that explains that the user is going to be asked for the microphone and camera permission */
 "Enable Microphone and Camera"="Activer le microphone et l’appareil photo";
 /* Detailed explanation of why the user should give permission to access to the camera and the microphone */
-"To make encrypted voice and video calls, allow MEGA access to your Camera and Microphone"="Pour envoyer des notes vocales et faire des appels voix et vidéo chiffrés, autorisez MEGA à accéder à votre appareil photo et à votre microphone";
+"To make encrypted voice and video calls, allow MEGA access to your Camera and Microphone"="Afin d’envoyer des messages vocaux et faire des appels voix et vidéo chiffrés, autorisez MEGA à accéder à votre appareil photo et à votre microphone";
 /* Title label that explains that the user is going to be asked for the notifications permission */
 "Enable Notifications"="Activer les notifications";
 /* Detailed explanation of why the user should give permission to deliver notifications */
@@ -1635,7 +1707,7 @@
 /* Title of the option to enable or disable file versioning on Settings section */
 "File versioning"="Versionnage des fichiers";
 /* Subtitle of the option to enable or disable file versioning on Settings section */
-"Enable or disable file versioning for your entire account.[Br]You may still receive file versions from shared folders if your contacts have this enabled."="Activer ou désactiver le versionnage des fichiers pour votre compte entier.\nVous pourriez encore recevoir des versions de fichiers provenant de dossiers partagés si vos contacts ont activé cette option.";
+"Enable or disable file versioning for your entire account.[Br]You may still receive file versions from shared folders if your contacts have this enabled."="Activer ou désactiver le versionnage des fichiers pour votre compte entier.\nSi vos contacts ont activé cette option, vous pourriez encore recevoir des versions de fichiers provenant de dossiers partagés.";
 /* A confirmation message when the user chooses to disable file versioning. */
 "When file versioning is disabled, the current version will be replaced with the new version once a file is updated (and your changes to the file will no longer be recorded). Are you sure you want to disable file versioning?"="Quand le versionnage des fichiers est désactivé, la version actuelle est remplacée par la nouvelle version quand le fichier est mis à jour (et vos changements apportés au fichier ne sont plus enregistrés). Souhaitez-vous vraiment désactiver le versionnage des fichiers ?";
 /* Settings preference title to show file versions info of the account */
@@ -1647,7 +1719,7 @@
 /* Text of a button which deletes all historical versions of files in the users entire account. */
 "Delete previous versions"="Supprimer les versions précédentes";
 /* A warning note about deleting all file versions in the settings section. */
-"All current files will remain. Only historic versions of your files will be deleted."="Tous les fichiers actuels seront conservés. Seules les versions archivées de vos fichiers seront supprimées.";
+"All current files will remain. Only historic versions of your files will be deleted."="Tous les fichiers actuels seront conservés. Seules les versions de vos fichiers dans l’historique seront supprimées.";
 /* Text of the dialog to delete all the file versions of the account */
 "You are about to delete the version histories of all files. Any file version shared to you from a contact will need to be deleted by them.[Br][Br]Please note that the current files will not be deleted."="Vous êtes sur le point de supprimer les historiques de version de tous les fichiers. Tout fichier partagé avec vous par un contact devra être supprimé par ce contact.\n\nVeuillez noter que les fichiers actuels ne seront pas supprimés.";
 /* Title for the Rubbish-Bin Cleaning Scheduler feature */
@@ -1689,7 +1761,7 @@
 /* Label in a cell where you can get the chat link */
 "Get Chat Link"="Obtenir le lien vers la conversation";
 /* Footer text to explain what means 'Encrypted Key Rotation' */
-"Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages."="La rotation de la clé est légèrement plus sécurisée, mais elle ne vous permet pas de créer un lien de conversation et les nouveaux participants ne verront pas les anciens messages.";
+"Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages."="La rotation de la clé est un peu plus sécurisée, mais elle ne vous permet pas de créer un lien de conversation, et les nouveaux participants ne verront pas les anciens messages.";
 /* Shown as an error message when the user selects "create chat link", but haven't entered a title for the newly created room */
 "To create a chat link you must name the group."="Pour créer un lien vers la conversation, vous devez nommer le groupe.";
 /* Label shown in a cell where you can enable a switch to get a chat link */
@@ -1919,7 +1991,7 @@
 /* Button title to go to the iOS Settings to enable 'Mobile Data' for the MEGA app. */
 "Turn Mobile Data on"="Activer les données mobiles";
 /* Extra information shown when the user has disabled the 'Mobile Data' setting for MEGA in the iOS Settings. */
-"You can turn on mobile data for this app in Settings."="Vous pouvez activer les données mobiles pour cette appli dans Réglages.";
+"You can turn on mobile data for this app in Settings."="Vous pouvez activer les données mobiles pour cette appli dans les Réglages de l’appareil.";
 /* title of the alert dialog when the user is changing the API URL to staging */
 "Change to a test server?"="Changer pour un serveur de test ?";
 /* text of the alert dialog when the user is changing the API URL to staging */
