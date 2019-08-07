@@ -1387,7 +1387,7 @@
 /* Label to show that an error related with an Incomplete SDK operation. */
 "Incomplete"="완료되지 않음";
 /* Label to show that an error related with the decryption process of a node occurs during a SDK operation. */
-"Invalid key/Decryption error"="잘못된 키/해독 오류";
+"Invalid key/Decryption error"="해독 오류";
 /* Label to show that an error related with a bad session ID occurs during a SDK operation. */
 "Bad session ID"="세션 ID 오류";
 /* Label to show that an error related with a blocked account occurs during a SDK operation. */

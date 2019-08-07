@@ -1387,7 +1387,7 @@
 /* Label to show that an error related with an Incomplete SDK operation. */
 "Incomplete"="Недостатньо";
 /* Label to show that an error related with the decryption process of a node occurs during a SDK operation. */
-"Invalid key/Decryption error"="Невірний ключ/Помилка шифрування";
+"Invalid key/Decryption error"="Помилка шифрування";
 /* Label to show that an error related with a bad session ID occurs during a SDK operation. */
 "Bad session ID"="Хибний ідентифікатор сесії";
 /* Label to show that an error related with a blocked account occurs during a SDK operation. */

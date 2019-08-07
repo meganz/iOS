@@ -1387,7 +1387,7 @@
 /* Label to show that an error related with an Incomplete SDK operation. */
 "Incomplete"="Di natapos";
 /* Label to show that an error related with the decryption process of a node occurs during a SDK operation. */
-"Invalid key/Decryption error"="Maling key/Error sa pagdedecrypt";
+"Invalid key/Decryption error"="Error sa pagdedecrypt";
 /* Label to show that an error related with a bad session ID occurs during a SDK operation. */
 "Bad session ID"="Maling session ID";
 /* Label to show that an error related with a blocked account occurs during a SDK operation. */

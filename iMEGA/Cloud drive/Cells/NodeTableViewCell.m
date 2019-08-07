@@ -4,6 +4,7 @@
 
 #import "Helper.h"
 #import "MEGAGetThumbnailRequestDelegate.h"
+#import "MEGANode+MNZCategory.h"
 #import "MEGASdkManager.h"
 #import "MEGAStore.h"
 #import "NSDate+MNZCategory.h"
@@ -95,10 +96,16 @@
     if (!node.name.mnz_isVideoPathExtension) {
         self.thumbnailPlayImageView.hidden = YES;
     }
+        
+    if (node.isTakenDown) {
+        self.nameLabel.attributedText = [node mnz_attributedTakenDownNameWithHeight:self.nameLabel.font.capHeight];
+        self.nameLabel.textColor = UIColor.mnz_redMain;
+    } else {
+        self.nameLabel.text = node.name;
+    }
     
-    self.nameLabel.text = node.name;
     if (node.isFile) {
-        self.infoLabel.text = [Helper sizeAndDateForNode:node api:api];
+        self.infoLabel.text = self.recentActionBucket ? [NSString stringWithFormat:@"%@ • %@", [Helper sizeForNode:node api:MEGASdkManager.sharedMEGASdk], node.creationTime.mnz_formattedHourAndMinutes] : [Helper sizeAndDateForNode:node api:api];
         self.versionedImageView.hidden = ![[MEGASdkManager sharedMEGASdk] hasVersionsForNode:node];
     } else if (node.isFolder) {
         self.infoLabel.text = [Helper filesAndFoldersInFolderNode:node api:api];
@@ -117,7 +124,7 @@
     self.recentActionBucket = recentActionBucket;
     NSArray *nodesArray = recentActionBucket.nodesList.mnz_nodesArrayFromNodeList;
     
-    MEGANode *node = [nodesArray objectAtIndex:0];
+    MEGANode *node = nodesArray.firstObject;
     [self.thumbnailImageView mnz_setThumbnailByNode:node];
     self.thumbnailPlayImageView.hidden = node.hasThumbnail ? !node.name.mnz_isVideoPathExtension : YES;
     if (@available(iOS 11.0, *)) {
@@ -142,10 +149,24 @@
     }
     self.nameLabel.text = title;
     
-    if (![recentActionBucket.userEmail isEqualToString:MEGASdkManager.sharedMEGASdk.myEmail]) {
-        self.subtitleLabel.text = [NSString mnz_addedByInRecentActionBucket:recentActionBucket nodesArray:nodesArray];
-        
-        MEGAShareType shareType = [MEGASdkManager.sharedMEGASdk accessLevelForNode:node];
+    MEGAShareType shareType = [MEGASdkManager.sharedMEGASdk accessLevelForNode:node];
+    if ([recentActionBucket.userEmail isEqualToString:MEGASdkManager.sharedMEGASdk.myEmail]) {
+        if (shareType == MEGAShareTypeAccessOwner) {
+            MEGANode *firstbornParentNode = [[MEGASdkManager.sharedMEGASdk nodeForHandle:recentActionBucket.parentHandle] mnz_firstbornInShareOrOutShareParentNode];
+            if (firstbornParentNode.isOutShare) {
+                self.incomingOrOutgoingImageView.hidden = NO;
+                self.incomingOrOutgoingImageView.image = [UIImage imageNamed:@"mini_folder_outgoing"];
+            } else {
+                self.incomingOrOutgoingImageView.hidden = YES;
+            }
+        } else {
+            self.subtitleLabel.text = [NSString mnz_addedByInRecentActionBucket:recentActionBucket];
+            self.incomingOrOutgoingImageView.hidden = NO;
+            self.incomingOrOutgoingImageView.image = [UIImage imageNamed:@"mini_folder_incoming"];
+        }
+    } else {
+        self.subtitleLabel.text = [NSString mnz_addedByInRecentActionBucket:recentActionBucket];
+        self.incomingOrOutgoingImageView.hidden = NO;
         self.incomingOrOutgoingImageView.image = (shareType == MEGAShareTypeAccessOwner) ? [UIImage imageNamed:@"mini_folder_outgoing"] : [UIImage imageNamed:@"mini_folder_incoming"];
     }
     
