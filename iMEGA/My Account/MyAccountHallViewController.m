@@ -40,6 +40,9 @@
 @property (strong, nonatomic) NSNumber *usedStorage;
 @property (strong, nonatomic) NSNumber *maxStorage;
 
+@property (weak, nonatomic) IBOutlet UIView *tableFooterView;
+@property (weak, nonatomic) IBOutlet UILabel *tableFooterLabel;
+
 @end
 
 @implementation MyAccountHallViewController
@@ -87,7 +90,13 @@
 
     [[MEGAPurchase sharedInstance] setPricingsDelegate:self];
     
-    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+    if (MEGASdkManager.sharedMEGASdk.isMasterBusinessAccount) {
+        self.tableFooterLabel.text = AMLocalizedString(@"User management is only available in a desktop web browser.", @"Label presented to Admins that full management of the business is only available in a desktop web browser");
+        self.tableView.tableFooterView = self.tableFooterView;
+    } else {
+        self.tableView.tableFooterView = [UIView.alloc initWithFrame:CGRectZero];
+    }
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated {
