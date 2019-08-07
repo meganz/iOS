@@ -57,7 +57,7 @@
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
 "sslUnverified_alertTitle"="MEGA无法通过SSL安全连接。您可能需要使用公共WiFi。";
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
-"theContentIsNotAvailableForThisAccount"="您尝试访问的内容并不对当前登入的帐户开放。请登入与浏览器中所登录的相同的帐户。";
+"theContentIsNotAvailableForThisAccount"="您的访问内容不可用于此帐户。请在手机客户端登录与之相同的MEGA帐户。";
 /* Message shown when the app is waiting for the server to complete a request due to an API lock (error -3). */
 "takingLongerThanExpected"="加载时间比预期的长，请耐心等待。";
 /* Message shown when the app is waiting for the server to complete a request due to a HTTP error 500. */
@@ -493,7 +493,7 @@
 /* Button title that skips the current action */
 "skipButton"="跳过";
 /* Text shown to explain what means 'Enable Camera Uploads'. The 'Cloud Drive' is the MEGA section, so please keep consistency */
-"automaticallyBackupYourPhotos"="自动将相片备份到云盘";
+"Automatically backup your photos and videos to the Cloud Drive."="自动备份照片和视频至您的云盘";
 /* Button title that enables the functionality 'Camera Uploads', which uploads all the photos in your device to MEGA */
 "enableCameraUploadsButton"="启用相机上传";
 /* Success message shown when Camera Uploads has been enabled */
@@ -504,6 +504,14 @@
 "cameraUploadsPendingFile"="正在上传，1个文件待处理";
 /* Message shown while uploading files. Plural. */
 "cameraUploadsPendingFiles"="正在上传，%lu 文件待处理";
+/* Message shown when camera upload paused because of no WiFi. Singular. */
+"Upload paused because of no WiFi, 1 file pending"="无WiFi连接，上传已暂停，1个文件待上传";
+/* Message shown when camera upload paused because of no WiFi. Plural. */
+"Upload paused because of no WiFi, %lu files pending"="无WiFi连接，上传已暂停，%lu个文件待上传";
+/* Message shown the pending video file when photos uploaded and video upload is not enabled. Singular. */
+"Photos uploaded, video uploads are off, 1 video not uploaded"="照片上传，视频上传已关闭；1个视频未上传";
+/* Message shown the pending video files when photos uploaded and video upload is not enabled. Plural. */
+"Photos uploaded, video uploads are off, %lu videos not uploaded"="照片上传，视频上传已关闭； %lu个视频未上传";
 /* Singular, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 1 file. */
 "indexOfTotalFile"="%2$d 个文件中的 %1$d 个文件";
 /* Plural, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 3 files. */
@@ -656,12 +664,74 @@
 "on"="开启";
 /* Header to explain that 'Upload videos', 'Use cellular connection' and 'Only when charging' are options of the Camera Uploads */
 "options"="选择";
+/* A hint to show one option is recommended by MEGA */
+"(Recommended)"="（推荐）";
+/* Header to introduce how to deal with HEIC format photos in Camera Uplaod */
+"SAVE HEIC PHOTOS AS"="将HEIC照片保存为";
+/* Footer for HEIC format section */
+"We recommend JPG, as its the most compatible format for photos."="我们建议您使用最兼容的JPG照片格式。";
+/* Header to introduce how to deal with HEVC format videos in Camera Uplaod */
+"SAVE HEVC VIDEOS AS"="将HEVC视频保存为";
+/* Footer for HEVC format section */
+"We recommend H.264, as its the most compatible format for videos."="我们建议您使用最兼容的H.264视频格式。";
+/* Footer for video compression quality */
+"Compression quality when to transcode HEVC videos to H.264 format."="当HEVC格式视频转码为H.264格式时的压缩质量。";
 /* Option title to enable upload videos with Camera Uploads */
 "uploadVideosLabel"="上传视频";
 /* Option title to enable Camera Uploads only when the device is charging */
 "onlyWhenChargingLabel"="只在充电状态下";
-/* Footer text to explain the Camera Uploads functionality */
-"cameraUploads_footer"="开启相机上传后，您的照片与视频将被上传。";
+/* Footer text for Camera Upload switch section when camera upload is disabled */
+"When enabled, photos will be uploaded."="当开启相机上传后，照片将会被上传。";
+/* Footer text for Camera Upload switch section when only photos upload is enabled */
+"Photos will be uploaded to Camera Uploads folder."="照片会上传至您的相机上传文件夹";
+/* Footer text for Camera Upload switch section when photos and videos upload is enabled */
+"Photos and videos will be uploaded to Camera Uploads folder."="照片与视频会上传至您的相机上传文件夹";
+/* Title to show for upload in background */
+"Upload in Background"="后台上传";
+/* Title for the location based background upload message */
+"Enable location services for background upload"="为后台上传开启定位服务";
+/* Message for the location based background upload when the location data access is not denied by users */
+"MEGA can periodically start camera uploads in background when your location changes."="当您的位置发生变化时，MEGA可以在后台定期开启相机上传功能。";
+/* Message for the location based background upload when the location data access is denied by users */
+"Please select “Always” at your Location page in Settings, then MEGA can periodically start camera uploads in background when your location changes."="请在“设置”中的“位置”页面选择“始终”，以便当您的位置发生变化时，MEGA可以在后台定期开启相机上传功能。";
+/* Title for turn on a feature */
+"Turn On"="启用";
+/* Title for turn on a feature in settings */
+"Turn On in Settings"="在设置中启用";
+/* Footer for video uploads switch section when enabled */
+"Videos will be uploaded to the Camera Uploads folder."="视频会被上传至相机上传文件夹";
+/* Footer for video uploads switch section when disabled */
+"When enabled, videos will be uploaded."="当开启相机上传后，视频将会被上传。";
+/* Title for new camera upload feature */
+"New Camera Upload!"="全新相机上传选项！";
+/* A messge for camera upload v2 migration */
+"Now you can choose to convert the HEIF/HEVC photos and videos to the most compatible JPEG/H.264 formats."="现在您可以选择将HEIF/HEVC格式的照片和视频转换为更加兼容的JPEG/H.264格式。";
+/* Title for an action to use most compatible formats */
+"Use Most Compatible Formats"="使用最兼容的格式";
+/* Title for custom settings */
+"Custom Settings"="自定义设置";
+/* Title to show when device local storage is full */
+"%@ Storage Full"="%@储存空间已满";
+/* Detail for local storage full situation */
+"You do not have enough storage to upload camera. Free up space by deleting unneeded apps, videos or music. You can manage your storage in %@"="您没有足够的存储空间用于相机上传。请删除一些不必要的应用、视频和音乐以释放空间。您可在%@管理您的储存空间。";
+/* Navigation path for Storage settings in iOS */
+"Settings > General > %@ Storage"="设置>通用>%@储存空间";
+/* Title of the switch to config whether to upload videos for Live Photos */
+"Upload videos for Live Photos"="上传实况照片的视频";
+/* Title of the switch to config whether to upload all burst photos */
+"Upload all burst photos"="上传所有连拍照片";
+/* Title of the switch to config whether to upload Hidden Album */
+"Upload Hidden Album"="上传隐藏相册";
+/* Footer description when upload videos for Live Photos is enabled */
+"The video and the photo in each Live Photo will be uploaded."="上传每个实况照片的照片与视频版本";
+/* Footer description when upload videos for Live Photos is disabled */
+"Only the photo in each Live Photo will be uploaded."="只上传每个实况照片的照片版本";
+/* Footer description when upload all burst photos is enabled */
+"All the photos from your burst photo sequences will be uploaded."="上传连拍照片序列中的所有照片";
+/* Footer description when upload all burst photos is disabled */
+"Only the representative photos from your burst photo sequences will be uploaded."="只上传连拍照片序列中的代表性照片";
+/* Footer description when upload Hidden Album is enabled */
+"The Hidden Album is where you hide photos or videos in your device Photos app."="隐藏相册是指您在设备的照片中隐藏照片或视频的地方。";
 /* App means “Application” */
 "App version"="App 版本";
 /* Title of the label where the SDK version is shown */
@@ -1090,7 +1160,9 @@
 /* Section title of a button where you can enable mobile data for voice and video calls. */
 "voiceAndVideoCalls"="视频与通话";
 /* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature. */
-"useMobileData"="使用行动数据";
+"useMobileData"="使用移动数据";
+/* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for videos. */
+"Use Mobile Data for Videos"="使用移动数据上传视频";
 /* A header in the Chat settings. This changes the user's status to Away after some time of inactivity. */
 "autoAway"="自动显示为离开";
 /* */
@@ -1280,7 +1352,7 @@
 /* Inform user that there were unsupported assets in the share extension */
 "shareExtensionUnsupportedAssets"="某些项目无法与MEGA共享";
 /* Message shown to the user when the share extension is about to be killed by iOS due to a memory issue */
-"Limited system resources are available when sharing items. Try uploading these files from within the MEGA app."="共享文件时可以使用有限的系统资源。 您可尝试从MEGA应用程序中上传这些文件。";
+"Limited system resources are available when sharing items. Try uploading these files from within the MEGA app."="共享文件时可使用的系统资源有限。您可尝试从MEGA app内上传这些文件。";
 /* Success message shown when the user has successfully shared something */
 "Shared successfully"="已分享";
 /* Notification message shown when a transfer failed. Keep colon. */
@@ -1315,7 +1387,7 @@
 /* Label to show that an error related with an Incomplete SDK operation. */
 "Incomplete"="未完成";
 /* Label to show that an error related with the decryption process of a node occurs during a SDK operation. */
-"Invalid key/Decryption error"="无效金钥/解密错误";
+"Invalid key/Decryption error"="解密错误";
 /* Label to show that an error related with a bad session ID occurs during a SDK operation. */
 "Bad session ID"="恶意session ID";
 /* Label to show that an error related with a blocked account occurs during a SDK operation. */
@@ -1605,7 +1677,7 @@
 /* Title shown in a page of the on boarding screens explaining that the user can add contacts to chat and colaborate */
 "Create your Network"="创建您的网络";
 /* Description shown in a page of the onboarding screens explaining contacts */
-"Add contacts, create a network, colaborate, make voice and video calls without ever leaving MEGA"="无需离开MEGA即可添加联系人、创建网络、协同合作以及进行语音与视频通话";
+"Add contacts, create a network, colaborate, make voice and video calls without ever leaving MEGA"="添加联系人、创建关系网、协同合作以及进行语音与视频通话，一切皆可在MEGA内进行";
 /* Title shown in a page of the on boarding screens explaining that the user can backup the photos automatically */
 "Your Photos in the Cloud"="云备份您的照片";
 /* Description shown in a page of the onboarding screens explaining the camera uploads feature */
@@ -1625,7 +1697,7 @@
 /* Title label that explains that the user is going to be asked for the microphone and camera permission */
 "Enable Microphone and Camera"="启用麦克风和相机";
 /* Detailed explanation of why the user should give permission to access to the camera and the microphone */
-"To make encrypted voice and video calls, allow MEGA access to your Camera and Microphone"="要进行加密语音与视频通话，请允许MEGA访问您的相机和麦克风";
+"To make encrypted voice and video calls, allow MEGA access to your Camera and Microphone"="发送语音留言和进行加密语音/视频通话需允许MEGA访问您的相机和麦克风";
 /* Title label that explains that the user is going to be asked for the notifications permission */
 "Enable Notifications"="激活提醒通知";
 /* Detailed explanation of why the user should give permission to deliver notifications */
@@ -1659,9 +1731,9 @@
 /* Label for any ‘Days’ button, link, text, title, etc. - (String as short as possible). */
 "Days"="天";
 /* New server-side rubbish-bin cleaning scheduler description (for Free users) */
-"The Rubbish Bin is cleaned for you automatically. The minimum period is 7 days and your maximum period is 30 days."="The Rubbish Bin is cleared for you automatically. The minimum period is 7 days and the maximum period is 30 days.";
+"The Rubbish Bin is cleaned for you automatically. The minimum period is 7 days and your maximum period is 30 days."="垃圾箱会自动清除。最短时隔为7天，最长时隔为30天。";
 /* New server-side rubbish-bin cleaning scheduler description (for PRO users) */
-"The Rubbish Bin can be cleaned for you automatically. The minimum period is 7 days."="The Rubbish Bin can be cleared for you automatically. The minimum period is 7 days.";
+"The Rubbish Bin can be cleaned for you automatically. The minimum period is 7 days."="垃圾箱可以设置自动清除。最短时隔为7天。";
 /* Description shown when you try to disable the feature Rubbish-Bin Cleaning Scheduler and you are a free user */
 "To disable the Rubbish-Bin Cleaning Scheduler or set a longer retention period, you need to subscribe to a PRO plan."="如果您想要禁用垃圾桶定时清理或设置延长保留期限，您需要订阅PRO计划。";
 /* Confirmation dialog for the button that logs the user out of all sessions except the current one. */
@@ -1809,7 +1881,7 @@
 /* The text of a notification indicating that a file or folder that was taken down has now been restored due to a successful counter-notice. The %1 placeholder will be replaced with the text ‘file’ or ‘folder’. The %2 will be replaced with the name of the file or folder. */
 "Your taken down %1 (%2) has been reinstated."="您%1 (%2) 的删除已恢复。";
 /* Text shown when a notification or the last message of a chat corresponds to a voice clip */
-"Voice message"="Voice message";
+"Voice message"="语音信息";
 /* Error message shown to user when a copy/import operation would take them over their storage limit. */
 "This action can not be completed as it would take you over your current storage limit"="操作无法完成，因为您的储存量将超过限额。";
 /* uploads over storage quota warning dialog title */
@@ -1819,7 +1891,7 @@
 /* Label shown next to a feature name that can be enabled or disabled, like in 'Show Last seen...' */
 "Show"="显示";
 /* Shown when viewing a 1on1 chat (at least for now), if the user is offline. */
-"Last seen %s"="上次登录%s";
+"Last seen %s"="上次在线：%s";
 /* Text to inform the user the 'Last seen' time of a contact is a long time ago (>= 65535 minutes) */
 "Last seen a long time ago"="上次登录在很久以前";
 /* */
@@ -1827,33 +1899,33 @@
 /* */
 "Yesterday"="昨天";
 /* Title of the button to share a location in a chat */
-"Send This Location"="Send This Location";
+"Send This Location"="发送此位置";
 /* Title of the alert that allows change between different maps: Standard, Satellite or Hybrid. */
-"Map settings"="Map settings";
+"Map settings"="地图设置";
 /* Type of data displayed in a map view. A street map that shows the position of all roads and some road names. */
 "Standard"="标准模式";
 /* Type of data displayed in a map view. Satellite imagery of the area. */
-"Satellite"="Satellite";
+"Satellite"="卫星图像";
 /* Type of data displayed in a map view. A satellite image of the area with road and road name information layered on top. */
-"Hybrid"="Hybrid";
+"Hybrid"="混合图像";
 /* Label to give feedback to the user when he is going to share his location, indicating that it may not be the exact location. */
-"Accurate to %d meters"="Accurate to %d meters";
+"Accurate to %d meters"="精确到%d米";
 /* Alert title shown when the user opens a shared Geolocation for the first time from any client, we will show a confirmation dialog warning the user that he is now leaving the E2EE paradigm. */
-"Send Location"="Send Location";
+"Send Location"="发送位置";
 /* Message shown when the user opens a shared Geolocation for the first time from any client, we will show a confirmation dialog warning the user that he is now leaving the E2EE paradigm. */
-"This location will be opened using a third party maps provider outside the end-to-end encrypted MEGA platform."="This location will be opened using a third party maps provider outside the end-to-end encrypted MEGA platform.";
+"This location will be opened using a third party maps provider outside the end-to-end encrypted MEGA platform."="此位置将使用MEGA平台外的第三方地图提供商打开。";
 /* Text shown in location-type messages */
-"Pinned Location"="Pinned Location";
+"Pinned Location"="置顶位置";
 /* Plural of participant. 2 participants */
 "%d participants"="%d 人参与";
 /* Singular of participant. 1 participant */
 "%d participant"="%d 人参与";
 /* Text shown in the chat toolbar while the user is recording a voice clip. The < character should be > in RTL languages. */
-"< Slide to cancel"="< Slide to cancel";
+"< Slide to cancel"="< 滑动以取消";
 /* Tooltip shown when the user presses but does not hold the microphone icon to send a voice clip */
-"Tap and hold %@ to record, release to send"="Tap and hold %@ to record, release to send";
+"Tap and hold %@ to record, release to send"="按住%@说话，松开发送";
 /* Message shown when there is an ongoing call and the user tries to record a voice message */
-"It is not possible to record voice messages while there is a call in progress"="It is not possible to record voice messages while there is a call in progress.";
+"It is not possible to record voice messages while there is a call in progress"="正在进行通话时，无法录制语音留言。";
 /* Text to inform the user there is an active call and is not participating */
 "Ongoing Call"="正在进行通话";
 /* Message shown when there is an ongoing call and the user tries to play an audio or video */
@@ -1897,7 +1969,7 @@
 /* Title for a recent action shown in the webclient, see the attached image for context. */
 "%1 created by %3"="%1由%3创建";
 /* Message shown when the user has not recent activity in their account. */
-"No recent activity"="无近期活动";
+"No recent activity"="无近期记录";
 /* Plural of items which contains a folder. 2 items */
 "items"="个项目";
 /* Shown when an invalid/inexisting/not-available-anymore chat link is opened. */
@@ -1911,17 +1983,17 @@
 /* In some cases, a user may try to get the link for a chat room, but if such is not set by an operator - it would say "not link available" and not auto create it. */
 "No chat link available."="无聊天链接可用。";
 /* Title of a dialog in which we request access to a specific permission, like the Location Services */
-"Please allow access"="Please allow access";
+"Please allow access"="允许访问";
 /* Hint shown to the users, when they want to use the Location Services but they are disabled or restricted for MEGA */
-"Please go to the Privacy section in your device’s Setting. Enable Location Services and set MEGA to While Using the App or Always."="Please go to the Privacy section in your device’s Settings. Enable Location Services and set MEGA to While Using the App or Always.";
+"Please go to the Privacy section in your device’s Setting. Enable Location Services and set MEGA to While Using the App or Always."="请转到设备的“设置”中的“隐私”部分。启用定位服务并将MEGA设置为使用App时开启或者始终开启。";
 /* Location Usage Description. In order to protect user's privacy, Apple requires a specific string explaining why location will be accessed. */
-"MEGA accesses your location when you elect to share it with your contacts."="MEGA accesses your location when you elect to share it with your contacts.";
+"MEGA accesses your location when you elect to share it with your contacts."="当您选择与联系人共享时，MEGA会访问您的位置。";
 /* Information shown when the user has disabled the 'Mobile Data' setting for MEGA in the iOS Settings. */
-"Mobile Data is turned off"="Mobile Data is turned off";
+"Mobile Data is turned off"="移动数据已关闭";
 /* Button title to go to the iOS Settings to enable 'Mobile Data' for the MEGA app. */
-"Turn Mobile Data on"="Turn Mobile Data on";
+"Turn Mobile Data on"="启用移动数据";
 /* Extra information shown when the user has disabled the 'Mobile Data' setting for MEGA in the iOS Settings. */
-"You can turn on mobile data for this app in Settings."="You can turn on mobile data for this App in Settings.";
+"You can turn on mobile data for this app in Settings."="您可以在设备的“设置”中为此应用启用移动数据。";
 /* title of the alert dialog when the user is changing the API URL to staging */
 "Change to a test server?"="更改为测试服务器？";
 /* text of the alert dialog when the user is changing the API URL to staging */
