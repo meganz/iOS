@@ -8,6 +8,10 @@
 #import "MEGAPasswordLinkRequestDelegate.h"
 #import "MEGASdk+MNZCategory.h"
 #import "MEGASDKManager.h"
+#import "NSDate+MNZCategory.h"
+#import "NSString+MNZCategory.h"
+#import "PasswordStrengthIndicatorView.h"
+#import "PasswordView.h"
 
 @interface GetLinkTableViewController () <UITextFieldDelegate>
 
@@ -38,8 +42,9 @@
 @property (weak, nonatomic) IBOutlet UIButton *expireDateSetSaveButton;
 
 @property (weak, nonatomic) IBOutlet UILabel *passwordProtectionLabel;
-@property (weak, nonatomic) IBOutlet UITextField *enterPasswordTextField;
-@property (weak, nonatomic) IBOutlet UITextField *confirmPasswordTextField;
+@property (weak, nonatomic) IBOutlet PasswordView *passwordView;
+@property (weak, nonatomic) IBOutlet PasswordStrengthIndicatorView *passwordStrengthIndicatorView;
+@property (weak, nonatomic) IBOutlet PasswordView *confirmPasswordView;
 @property (weak, nonatomic) IBOutlet UILabel *encryptWithPasswordLabel;
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *toolbarCopyLinkBarButtonItem;
@@ -48,7 +53,7 @@
 @property (nonatomic) MEGAExportRequestDelegate *exportDelegate;
 @property (nonatomic) MEGAPasswordLinkRequestDelegate *passwordLinkDelegate;
 
-@property (nonatomic) NSDateFormatter *dateFormatter;
+@property (nonatomic) NSString *currentPassword;
 
 @end
 
@@ -62,30 +67,9 @@
     [self setNavigationBarTitle];
     
     [self checkExpirationTime];
-
-    self.dateFormatter = [[NSDateFormatter alloc] init];
-    self.dateFormatter.dateStyle = NSDateFormatterMediumStyle;
-    self.dateFormatter.timeStyle = NSDateFormatterNoStyle;
-    NSString *currentLanguageID = [[LocalizationSystem sharedLocalSystem] getLanguage];
-    NSLocale *locale = [[NSLocale alloc] initWithLocaleIdentifier:currentLanguageID];
-    self.dateFormatter.locale = locale;
-
+    
     self.exportDelegate = [[MEGAExportRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
-        NSString *fullLink = [request link];
-        
-        NSArray *components = [fullLink componentsSeparatedByString:@"!"];
-        NSString *link = [NSString stringWithFormat:@"%@!%@", components[0], components[1]];
-        NSString *key = components[2];
-        
-        [self.fullLinks addObject:fullLink];
-        [self.links addObject:link];
-        [self.keys addObject:key];
-        
-        [self updateUI];
-        
-        if (--self.pending==0) {
-            [SVProgressHUD dismiss];
-        }
+        [self processLink:request.link];
     } multipleLinks:self.nodesToExport.count > 1];
     
     self.passwordLinkDelegate = [[MEGAPasswordLinkRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
@@ -93,7 +77,7 @@
         [self updateUI];
         
         if (--self.pending==0) {
-            self.enterPasswordTextField.enabled = self.confirmPasswordTextField.enabled = NO;
+            self.passwordView.passwordTextField.enabled = self.confirmPasswordView.passwordTextField.enabled = NO;
             [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:4]].userInteractionEnabled = NO;
             self.encryptWithPasswordLabel.text = AMLocalizedString(@"encrypted", @"The button text on the Export Link dialog to indicate that the link has been encrypted successfully.");
             self.encryptWithPasswordLabel.textColor = [UIColor mnz_green31B500];
@@ -122,7 +106,11 @@
 
     self.pending = self.nodesToExport.count;
     for (MEGANode *node in self.nodesToExport) {
-        [[MEGASdkManager sharedMEGASdk] exportNode:node delegate:self.exportDelegate];
+        if (node.isExported) {
+            [self processLink:node.publicLink];
+        } else {
+            [MEGASdkManager.sharedMEGASdk exportNode:node delegate:self.exportDelegate];
+        }
     }
     
     self.doneBarButtonItem.title = AMLocalizedString(@"done", @"");
@@ -134,8 +122,9 @@
     [self.expireDateSetSaveButton setTitle:AMLocalizedString(@"save", @"Button title to 'Save' the selected option") forState:UIControlStateNormal];
     
     self.passwordProtectionLabel.text = AMLocalizedString(@"setPasswordProtection", @"This is a title label on the Export Link dialog. The title covers the section where the user can password protect a public link.");
-    self.enterPasswordTextField.placeholder = AMLocalizedString(@"passwordPlaceholder", @"Hint text to suggest that the user has to write his password");
-    self.confirmPasswordTextField.placeholder = AMLocalizedString(@"confirmPassword", @"Hint text where the user have to re-write the new password to confirm it");
+    self.passwordView.passwordTextField.returnKeyType = UIReturnKeyNext;
+    self.passwordView.passwordTextField.delegate = self;
+    self.confirmPasswordView.passwordTextField.delegate = self;
     self.encryptWithPasswordLabel.text = AMLocalizedString(@"encrypt", @"The text of a button. This button will encrypt a link with a password.");
     
     self.shareBarButtonItem.title = AMLocalizedString(@"share", @"Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected");
@@ -175,22 +164,23 @@
 }
 
 - (void)checkExpirationTime {
-    uint64_t expirationTime = 0;
-    uint64_t earlierExpirationTime = 0;
+    uint64_t earliestExpirationTime = UINT64_MAX;
     for (MEGANode *node in self.nodesToExport) {
-        if (earlierExpirationTime > node.expirationTime) {
-            earlierExpirationTime = node.expirationTime;
+        if (node.expirationTime <= 0) {
+            continue;
+        }
+        if (earliestExpirationTime > node.expirationTime) {
+            earliestExpirationTime = node.expirationTime;
         }
     }
-    expirationTime = earlierExpirationTime;
     
-    if (expirationTime == 0) {
+    if (earliestExpirationTime == UINT64_MAX) {
         self.expireSwitch.on = NO;
     } else {
         self.expireSwitch.on = YES;
         self.expireDateSetLabel.hidden = NO;
-        NSDate *date = [[NSDate alloc] initWithTimeIntervalSince1970:expirationTime];
-        self.expireDateSetLabel.text = [self.dateFormatter stringFromDate:date];
+        NSDate *date = [NSDate.alloc initWithTimeIntervalSince1970:earliestExpirationTime];
+        self.expireDateSetLabel.text = date.mnz_formattedDateMediumStyle;
     }
 }
 
@@ -217,14 +207,43 @@
     [self.tableView endUpdates];
 }
 
-- (BOOL)validPasswordOnTextField:(UITextField *)textField {
-    if (textField.text.length == 0) {
-        [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"passwordInvalidFormat", @"Enter a valid password")];
-        [textField becomeFirstResponder];
+- (BOOL)validatePassword {
+    if (self.passwordView.passwordTextField.text.mnz_isEmpty) {
+        [self.passwordView setErrorState:YES withText:AMLocalizedString(@"passwordInvalidFormat", @"Message shown when the user enters a wrong password")];
+        return NO;
+    } else if ([MEGASdkManager.sharedMEGASdk passwordStrength:self.passwordView.passwordTextField.text] == PasswordStrengthVeryWeak) {
+        [self.passwordView setErrorState:YES withText:AMLocalizedString(@"pleaseStrengthenYourPassword", nil)];
+        return NO;
+    } else {
+        [self.passwordView setErrorState:NO withText:AMLocalizedString(@"passwordPlaceholder", @"Hint text to suggest that the user has to write his password")];
+        return YES;
+    }
+}
+
+- (BOOL)validateConfirmPassword {
+    if ([self.confirmPasswordView.passwordTextField.text isEqualToString:self.passwordView.passwordTextField.text]) {
+        [self.confirmPasswordView setErrorState:NO withText:AMLocalizedString(@"confirmPassword", @"Hint text where the user have to re-write the new password to confirm it")];
+        return YES;
+    } else {
+        [self.confirmPasswordView setErrorState:YES withText:AMLocalizedString(@"passwordsDoNotMatch", @"Error text shown when you have not written the same password")];
         return NO;
     }
+}
+
+- (void)processLink:(NSString *)fullLink {
+    NSArray *components = [fullLink componentsSeparatedByString:@"!"];
+    NSString *link = [NSString stringWithFormat:@"%@!%@", components.firstObject, components[1]];
+    NSString *key = components[2];
     
-    return YES;
+    [self.fullLinks addObject:fullLink];
+    [self.links addObject:link];
+    [self.keys addObject:key];
+    
+    [self updateUI];
+    
+    if (--self.pending==0) {
+        [SVProgressHUD dismiss];
+    }
 }
 
 #pragma mark - IBActions
@@ -238,7 +257,7 @@
     self.expireDateSetSaveButton.hidden = !sender.isOn;
     
     if (sender.isOn) {
-        self.expireDateSetLabel.text = [self.dateFormatter stringFromDate:self.expireDatePicker.date];
+        self.expireDateSetLabel.text = self.expireDatePicker.date.mnz_formattedDateMediumStyle;
         [self showDatePicker];
     } else {
         [self hideDatePicker];
@@ -248,14 +267,18 @@
 }
 
 - (IBAction)expireDateChanged:(UIDatePicker *)sender {
-    self.expireDateSetLabel.text = [self.dateFormatter stringFromDate:sender.date];
+    self.expireDateSetLabel.text = sender.date.mnz_formattedDateMediumStyle;
     
     self.expireDateSetSaveButton.enabled = YES;
     self.expireDateSetSaveButton.hidden = NO;
 }
 
 - (IBAction)passwordProtectionSwitchChanged:(UISwitch *)sender {
-    self.enterPasswordTextField.enabled = self.confirmPasswordTextField.enabled = sender.isOn;
+    [self tableView:self.tableView didSelectRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:0]];
+    [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]].userInteractionEnabled = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]].userInteractionEnabled = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:0]].userInteractionEnabled = !sender.isOn;
+    self.linkWithoutKeyLabel.enabled = self.decryptionKeyLabel.enabled = self.linkWithKeyLabel.enabled = !sender.isOn;
+    
+    self.passwordView.passwordTextField.enabled = self.confirmPasswordView.passwordTextField.enabled = sender.isOn;
     [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:4]].userInteractionEnabled = sender.isOn;
     
     if (sender.isOn) {
@@ -267,10 +290,14 @@
         [self.tableView cellForRowAtIndexPath:self.selectedIndexPath].accessoryType = UITableViewCellAccessoryNone;
         [self.tableView cellForRowAtIndexPath:self.linkWithKeyIndexPath].accessoryType = UITableViewCellAccessoryCheckmark;
         self.selectedIndexPath = self.linkWithKeyIndexPath;
+        [self.passwordStrengthIndicatorView updateViewWithPasswordStrength:[MEGASdkManager.sharedMEGASdk passwordStrength:self.passwordView.passwordTextField.text]];
     } else {
         self.selectedArray = self.fullLinks;
-        self.enterPasswordTextField.text = @"";
-        self.confirmPasswordTextField.text = @"";
+        self.passwordView.passwordTextField.text = @"";
+        self.confirmPasswordView.passwordTextField.text = @"";
+        self.currentPassword = @"";
+        [self.passwordView setErrorState:NO withText:AMLocalizedString(@"passwordPlaceholder", @"Hint text to suggest that the user has to write his password")];
+        [self.confirmPasswordView setErrorState:NO withText:AMLocalizedString(@"confirmPassword", @"Hint text where the user have to re-write the new password to confirm it")];
     }
     [self updateUI];
 }
@@ -286,7 +313,7 @@
 - (IBAction)expireDateSaveButtonTouchUpInside:(UIButton *)sender {
     self.pending = self.nodesToExport.count;
     for (MEGANode *node in self.nodesToExport) {
-        [[MEGASdkManager sharedMEGASdk] exportNode:node expireTime:self.expireDatePicker.date delegate:self.exportDelegate];
+        [MEGASdkManager.sharedMEGASdk exportNode:node expireTime:self.expireDatePicker.date delegate:self.exportDelegate];
     }
     
     self.expireDateSetSaveButton.enabled = NO;
@@ -296,16 +323,21 @@
 }
 
 - (IBAction)copyLinkTapped:(UIBarButtonItem *)sender {
-    UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
-    pasteboard.string = self.textToCopy.text;
-    
-    NSString *status;
-    if (self.selectedIndexPath == [NSIndexPath indexPathForRow:1 inSection:0]) {
-        status = AMLocalizedString(@"copiedToTheClipboard", @"Text of the button after the links were copied to the clipboard");
-    } else {
-        status = (self.selectedArray.count > 1) ? AMLocalizedString(@"linksCopied", @"Message shown when the links have been copied to the pasteboard") : AMLocalizedString(@"linkCopied", @"Message shown when the link has been copied to the pasteboard");
+    if (self.textToCopy.text.length > 0) {
+        UIPasteboard *pasteboard = UIPasteboard.generalPasteboard;
+        pasteboard.string = self.textToCopy.text;
+        
+        NSString *status;
+        if (self.selectedIndexPath == [NSIndexPath indexPathForRow:1 inSection:0]) {
+            status = AMLocalizedString(@"copiedToTheClipboard", @"Text of the button after the links were copied to the clipboard");
+        } else {
+            status = (self.selectedArray.count > 1) ? AMLocalizedString(@"linksCopied", @"Message shown when the links have been copied to the pasteboard") : AMLocalizedString(@"linkCopied", @"Message shown when the link has been copied to the pasteboard");
+        }
+        [SVProgressHUD showSuccessWithStatus:status];
+    } else if (self.passwordSwitch.isOn) {
+        [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"passwordInvalidFormat", @"Enter a valid password")];
+        [self.passwordView.passwordTextField becomeFirstResponder];
     }
-    [SVProgressHUD showSuccessWithStatus:status];
 }
 
 #pragma mark - TableViewDelegate
@@ -340,15 +372,10 @@
             self.expireDatePicker.hidden ? [self showDatePicker] : [self hideDatePicker];
         }
     } else if (indexPath.section == 4) {
-        if (![self validPasswordOnTextField:self.enterPasswordTextField] || ![self validPasswordOnTextField:self.confirmPasswordTextField]) {
+        if (![self validatePassword] || ![self validateConfirmPassword]) {
             return;
         }
-        
-        if ([self.enterPasswordTextField.text compare:self.confirmPasswordTextField.text] == NSOrderedSame) {
-            [self encryptLinks:self.confirmPasswordTextField.text];
-        } else {
-            [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"passwordsDoNotMatch", @"Error text shown when you have not written the same password")];
-        }
+        [self encryptLinks:self.passwordView.passwordTextField.text];
     }
 
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
@@ -376,8 +403,10 @@
         case 3: {
             if (indexPath.row == 0) {
                 heightForRow = 44.0f;
-            } else if (indexPath.row == 1 || indexPath.row == 2) {
-                heightForRow = self.passwordSwitch.isOn ? 44.0f : 0.0f;
+            } else if (indexPath.row == 1 || indexPath.row == 3) {
+                heightForRow = self.passwordSwitch.isOn ? 60.0f : 0.0f;
+            } else if (indexPath.row == 2) {
+                heightForRow = self.passwordSwitch.isOn && self.currentPassword.length > 0 ? 112.0f : 0.0f;
             }
             break;
         }
@@ -408,18 +437,47 @@
 
 #pragma mark - UITextFieldDelegate
 
+- (void)textFieldDidBeginEditing:(UITextField *)textField {
+    if (self.passwordView.passwordTextField == textField) {
+        self.passwordView.toggleSecureButton.hidden = NO;
+    } else {
+        self.confirmPasswordView.toggleSecureButton.hidden = NO;
+    }
+}
+
+- (void)textFieldDidEndEditing:(UITextField *)textField {
+    if (self.passwordView.passwordTextField == textField) {
+        self.passwordView.passwordTextField.secureTextEntry = YES;
+        [self.passwordView configureSecureTextEntry];
+        [self validatePassword];
+    } else {
+        self.confirmPasswordView.passwordTextField.secureTextEntry = YES;
+        [self.confirmPasswordView configureSecureTextEntry];
+        [self validateConfirmPassword];
+    }
+}
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+    self.currentPassword = [textField.text stringByReplacingCharactersInRange:range withString:string];
+    
+    if (self.passwordView.passwordTextField == textField) {
+        [self.passwordView setErrorState:NO withText:AMLocalizedString(@"passwordPlaceholder", @"Hint text to suggest that the user has to write his password")];
+        [self.tableView beginUpdates];
+        [self.passwordStrengthIndicatorView updateViewWithPasswordStrength:[MEGASdkManager.sharedMEGASdk passwordStrength:self.currentPassword]];
+        [self.tableView endUpdates];
+        [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:3] atScrollPosition:UITableViewScrollPositionTop animated:YES];
+    } else {
+        [self.confirmPasswordView setErrorState:NO withText:AMLocalizedString(@"confirmPassword", @"Hint text where the user have to re-write the new password to confirm it")];
+    }
+    
+    return YES;
+}
+
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
-    switch (textField.tag) {
-        case 0:
-            [self.confirmPasswordTextField becomeFirstResponder];
-            break;
-            
-        case 1:
-            [self.confirmPasswordTextField resignFirstResponder];
-            break;
-            
-        default:
-            break;
+    if (self.passwordView.passwordTextField == textField) {
+        [self.confirmPasswordView.passwordTextField becomeFirstResponder];
+    } else {
+        [self.confirmPasswordView.passwordTextField resignFirstResponder];
     }
     
     return YES;

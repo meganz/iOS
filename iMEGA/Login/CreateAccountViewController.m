@@ -9,6 +9,7 @@
 #import "MEGASdkManager.h"
 #import "NSURL+MNZCategory.h"
 #import "NSString+MNZCategory.h"
+#import "UIApplication+MNZCategory.h"
 
 #import "CheckEmailAndFollowTheLinkViewController.h"
 #import "PasswordStrengthIndicatorView.h"
@@ -72,6 +73,10 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
     self.lastNameInputView.inputTextField.returnKeyType = UIReturnKeyNext;
     self.lastNameInputView.inputTextField.delegate = self;
     self.lastNameInputView.inputTextField.tag = LastNameTextFieldTag;
+    if (@available(iOS 10.0, *)) {
+        self.firstNameInputView.inputTextField.textContentType = UITextContentTypeGivenName;
+        self.lastNameInputView.inputTextField.textContentType = UITextContentTypeFamilyName;
+    }
     
     self.emailInputView.inputTextField.returnKeyType = UIReturnKeyNext;
     self.emailInputView.inputTextField.delegate = self;
@@ -87,12 +92,13 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
     self.passwordView.passwordTextField.returnKeyType = UIReturnKeyNext;
     self.passwordView.passwordTextField.delegate = self;
     self.passwordView.passwordTextField.tag = PasswordTextFieldTag;
-    if (@available(iOS 12.0, *)) {
-        self.passwordView.passwordTextField.textContentType = UITextContentTypeNewPassword;
-    }
     
     self.retypePasswordView.passwordTextField.delegate = self;
     self.retypePasswordView.passwordTextField.tag = RetypeTextFieldTag;
+    if (@available(iOS 12.0, *)) {
+        self.passwordView.passwordTextField.textContentType = UITextContentTypePassword;
+        self.retypePasswordView.passwordTextField.textContentType = UITextContentTypeNewPassword;
+    }
     
     [self setTermsOfServiceAttributedTitle];
     
@@ -176,6 +182,7 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
 }
 
 - (BOOL)validateFirstName {
+    self.firstNameInputView.inputTextField.text = self.firstNameInputView.inputTextField.text.mnz_removeWhitespacesAndNewlinesFromBothEnds;
     if (self.firstNameInputView.inputTextField.text.mnz_isEmpty) {
         [self.firstNameInputView setErrorState:YES withText:AMLocalizedString(@"nameInvalidFormat", @"Error text shown when you have not entered a correct name")];
         return NO;
@@ -186,6 +193,7 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
 }
 
 - (BOOL)validateLastName {
+    self.lastNameInputView.inputTextField.text = self.lastNameInputView.inputTextField.text.mnz_removeWhitespacesAndNewlinesFromBothEnds;
     if (self.lastNameInputView.inputTextField.text.mnz_isEmpty) {
         [self.lastNameInputView setErrorState:YES withText:AMLocalizedString(@"lastName", @"Hint text for the last name (Placeholder)")];
         return NO;
@@ -196,6 +204,7 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
 }
 
 - (BOOL)validateEmail {
+    self.emailInputView.inputTextField.text = self.emailInputView.inputTextField.text.mnz_removeWhitespacesAndNewlinesFromBothEnds;
     if (self.emailInputView.inputTextField.text.mnz_isValidEmail) {
         [self.emailInputView setErrorState:NO withText:AMLocalizedString(@"emailPlaceholder", @"Hint text to suggest that the user has to write his email")];
         return YES;
@@ -308,8 +317,8 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
                 [SVProgressHUD dismiss];
                 if (error.type == MEGAErrorTypeApiOk) {
                     CheckEmailAndFollowTheLinkViewController *checkEmailAndFollowTheLinkVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"CheckEmailAndFollowTheLinkViewControllerID"];
-                    [self presentViewController:checkEmailAndFollowTheLinkVC animated:YES completion:^{
-                        [self.navigationController popViewControllerAnimated:YES];
+                    [self dismissViewControllerAnimated:YES completion:^{
+                        [UIApplication.mnz_presentingViewController presentViewController:checkEmailAndFollowTheLinkVC animated:YES completion:nil];
                     }];
                 } else {
                     [self.emailInputView setErrorState:YES withText:AMLocalizedString(@"emailAlreadyInUse", @"Error shown when the user tries to change his mail to one that is already used")];
