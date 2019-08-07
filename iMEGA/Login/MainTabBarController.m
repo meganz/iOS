@@ -19,6 +19,8 @@
 #import "UIApplication+MNZCategory.h"
 #import "MainTabBarController+CameraUpload.h"
 
+#import "MEGA-Swift.h"
+
 @interface MainTabBarController () <UITabBarControllerDelegate, MEGAGlobalDelegate, MEGAChatCallDelegate>
 
 @property (nonatomic, strong) MEGAProviderDelegate *megaProviderDelegate;
@@ -129,6 +131,7 @@
     [super viewDidAppear:animated];
     
     [self showCameraUploadV2MigrationScreenIfNeeded];
+    [self showPaymentOverdueIfNeeded];
 }
 
 - (BOOL)shouldAutorotate {

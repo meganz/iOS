@@ -2026,3 +2026,5 @@
 "Dispute Takedown"="Dispute Takedown";
 /* Label presented to Admins that full management of the business is only available in a desktop web browser */
 "User management is only available in a desktop web browser."="User management is only available in a desktop web browser.";
+/* When logging in during the grace period, the administrator of the Business account will be notified that their payment is overdue, indicating that they need to access MEGA using a desktop browser for more information */
+"There has been a problem with your last payment. Please access MEGA in a desktop browser for more information."="There has been a problem with your last payment. Please access MEGA in a desktop browser for more information.";

@@ -4,9 +4,11 @@
 
 #import "MEGASdkManager.h"
 #import "ChangePasswordViewController.h"
+#import "CustomModalAlertViewController.h"
 #import "DevicePermissionsHelper.h"
 #import "GradientView.h"
 #import "Helper.h"
+#import "MainTabBarController.h"
 #import "MEGAImagePickerController.h"
 #import "MEGAReachabilityManager.h"
 
@@ -19,5 +21,6 @@
 #import "MEGAUser+MNZCategory.h"
 #import "NSFileManager+MNZCategory.h"
 #import "UIAlertAction+MNZCategory.h"
+#import "UIApplication+MNZCategory.h"
 #import "UIColor+MNZCategory.h"
 #import "UIImageView+MNZCategory.h"
