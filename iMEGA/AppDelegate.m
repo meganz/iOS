@@ -348,8 +348,6 @@
     [[MEGASdkManager sharedMEGAChatSdk] setBackgroundStatus:NO];
     
     if ([[MEGASdkManager sharedMEGASdk] isLoggedIn]) {
-        [CameraUploadManager.shared startCameraUploadIfNeeded];
-        
         if (isFetchNodesDone) {
             MEGAShowPasswordReminderRequestDelegate *showPasswordReminderDelegate = [[MEGAShowPasswordReminderRequestDelegate alloc] initToLogout:NO];
             [[MEGASdkManager sharedMEGASdk] shouldShowPasswordReminderDialogAtLogout:NO delegate:showPasswordReminderDelegate];

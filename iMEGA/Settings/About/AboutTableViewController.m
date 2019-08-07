@@ -27,7 +27,9 @@
     [super viewDidLoad];
     
     self.versionLabel.text = AMLocalizedString(@"App version", @"App means “Application”");
-    [self.versionNumberLabel setText:[[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"]];
+    self.versionNumberLabel.text = [NSString stringWithFormat:@"%@ (%@)",
+                                    [NSBundle.mainBundle objectForInfoDictionaryKey:@"CFBundleShortVersionString"],
+                                    [NSBundle.mainBundle objectForInfoDictionaryKey:(NSString *)kCFBundleVersionKey]];
     UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(appVersionTappedFiveTimes:)];
     tapGestureRecognizer.numberOfTapsRequired = 5;
     UILongPressGestureRecognizer *longPressGestureRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(appVersionPressedFiveSeconds:)];

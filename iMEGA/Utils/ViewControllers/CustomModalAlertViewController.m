@@ -24,6 +24,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    [self configUIAppearance];
+    
     if (self.image) {
         self.imageView.image = self.image;
         if (self.shouldRoundImage) {
@@ -77,6 +80,12 @@
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     [self fadeInBackgroundCompletion:nil];
+}
+
+- (void)configUIAppearance {
+    self.firstButton.titleLabel.numberOfLines = 2;
+    self.firstButton.titleLabel.textAlignment = NSTextAlignmentCenter;
+    self.firstButton.titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
 }
 
 #pragma mark - Private
