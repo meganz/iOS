@@ -60,6 +60,8 @@
 #import "MEGAConstants.h"
 #import "BackgroundRefreshPerformer.h"
 
+#import "MEGA-Swift.h"
+
 #define kFirstRun @"FirstRun"
 
 @interface AppDelegate () <PKPushRegistryDelegate, UIApplicationDelegate, UNUserNotificationCenterDelegate, LTHPasscodeViewControllerDelegate, LaunchViewControllerDelegate, MEGAApplicationDelegate, MEGAChatDelegate, MEGAChatRequestDelegate, MEGAGlobalDelegate, MEGAPurchasePricingDelegate, MEGARequestDelegate, MEGATransferDelegate> {
@@ -1453,6 +1455,8 @@ void uncaughtExceptionHandler(NSException *exception) {
             }
         }
             
+        case EventBusinessStatus:
+            [self.mainTBC showPaymentOverdueIfNeeded];
             break;
             
         default:
