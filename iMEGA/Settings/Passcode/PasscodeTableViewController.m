@@ -202,7 +202,7 @@
     
     if (indexPath.section == 2) {
         if (LTHPasscodeViewController.doesPasscodeExist) {
-            PasscodeTimeDurationTableViewController *passcodeTimeDurationTableViewController = PasscodeTimeDurationTableViewController.alloc.init;
+            PasscodeTimeDurationTableViewController *passcodeTimeDurationTableViewController = [PasscodeTimeDurationTableViewController.alloc initWithStyle:UITableViewStyleGrouped];
             [self.navigationController pushViewController:passcodeTimeDurationTableViewController animated:YES];
         }
     }
