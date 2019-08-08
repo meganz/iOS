@@ -109,6 +109,7 @@
 - (void)viewDidLayoutSubviews {
     [super viewDidLayoutSubviews];
     [self.tabBar bringSubviewToFront:self.phoneBadgeImageView];
+    [self.tabBar invalidateIntrinsicContentSize];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
