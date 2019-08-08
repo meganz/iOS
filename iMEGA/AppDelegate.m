@@ -1456,7 +1456,7 @@ void uncaughtExceptionHandler(NSException *exception) {
         }
             
         case EventBusinessStatus:
-            [self.mainTBC showPaymentOverdueIfNeeded];
+            [self.mainTBC showBusinessAccountWarningIfNeeded];
             break;
             
         default:

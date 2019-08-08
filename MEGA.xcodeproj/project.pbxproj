@@ -796,6 +796,8 @@
 		A8C93C1022D718BA0030CE1B /* UpgradePlanTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8C93C0F22D718BA0030CE1B /* UpgradePlanTableViewCell.swift */; };
 		A8C93C1222D718FD0030CE1B /* LogoutTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8C93C1122D718FD0030CE1B /* LogoutTableViewCell.swift */; };
 		A8C93C1422D71C470030CE1B /* Profile.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A8C93C1322D71C470030CE1B /* Profile.storyboard */; };
+		A8DE32CB22FC14CC006BAC7A /* BusinessExpiredViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8DE32C922FC14CC006BAC7A /* BusinessExpiredViewController.swift */; };
+		A8DE32CC22FC14CC006BAC7A /* BusinessExpiredViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A8DE32CA22FC14CC006BAC7A /* BusinessExpiredViewController.xib */; };
 		A8E10D8021A5677900ACD42F /* ShareLocationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A8E10D7E21A5677900ACD42F /* ShareLocationViewController.m */; };
 		A8E35BE822C6006F003EE106 /* FLEXColor.m in Sources */ = {isa = PBXBuildFile; fileRef = A8E35BE622C6006E003EE106 /* FLEXColor.m */; };
 		A8EC55B41F02AD1D00426DCC /* MEGAGetPreviewRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A8EC55B31F02AD1D00426DCC /* MEGAGetPreviewRequestDelegate.m */; };
@@ -2020,6 +2022,8 @@
 		A8C93C0F22D718BA0030CE1B /* UpgradePlanTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpgradePlanTableViewCell.swift; sourceTree = "<group>"; };
 		A8C93C1122D718FD0030CE1B /* LogoutTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogoutTableViewCell.swift; sourceTree = "<group>"; };
 		A8C93C1322D71C470030CE1B /* Profile.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Profile.storyboard; sourceTree = "<group>"; };
+		A8DE32C922FC14CC006BAC7A /* BusinessExpiredViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusinessExpiredViewController.swift; sourceTree = "<group>"; };
+		A8DE32CA22FC14CC006BAC7A /* BusinessExpiredViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BusinessExpiredViewController.xib; sourceTree = "<group>"; };
 		A8E10D7D21A5677900ACD42F /* ShareLocationViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ShareLocationViewController.h; path = Chat/ShareLocationViewController.h; sourceTree = "<group>"; };
 		A8E10D7E21A5677900ACD42F /* ShareLocationViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ShareLocationViewController.m; path = Chat/ShareLocationViewController.m; sourceTree = "<group>"; };
 		A8E35BE622C6006E003EE106 /* FLEXColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLEXColor.m; sourceTree = "<group>"; };
@@ -4001,6 +4005,7 @@
 		A819B3401EAFA7E7004592F9 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				A8DE32C422FC1488006BAC7A /* BusinessExpiredViewController */,
 				832E1020202B097900BDD30F /* CustomActionViewController */,
 				83D64E2B2017873D00E24155 /* PasswordReminder */,
 				7795677421C80C43002B6227 /* OnboardingViewController */,
@@ -4450,6 +4455,15 @@
 				A8C93C1322D71C470030CE1B /* Profile.storyboard */,
 			);
 			path = Profile;
+			sourceTree = "<group>";
+		};
+		A8DE32C422FC1488006BAC7A /* BusinessExpiredViewController */ = {
+			isa = PBXGroup;
+			children = (
+				A8DE32C922FC14CC006BAC7A /* BusinessExpiredViewController.swift */,
+				A8DE32CA22FC14CC006BAC7A /* BusinessExpiredViewController.xib */,
+			);
+			path = BusinessExpiredViewController;
 			sourceTree = "<group>";
 		};
 		B658D3BC218F9384004C0D64 /* TransferSession */ = {
@@ -5089,6 +5103,7 @@
 				5B6429DD2020A8CB000E0DCB /* SF-UI-Display-Semibold.otf in Resources */,
 				A8C93C1422D71C470030CE1B /* Profile.storyboard in Resources */,
 				E889C9E61B5565C900ECEFDF /* MyAccount.storyboard in Resources */,
+				A8DE32CC22FC14CC006BAC7A /* BusinessExpiredViewController.xib in Resources */,
 				94AAA9AA1FD6D1C20029D6EB /* SF-UI-Text-BoldItalic.otf in Resources */,
 				A82E5BC91F3465A3003C149C /* Spotlight_file@3x.png in Resources */,
 				A819B3421EAFA844004592F9 /* CustomModalAlertViewController.xib in Resources */,
@@ -5454,6 +5469,7 @@
 				417279501DB663FA001AC818 /* JSQMessagesCollectionViewCell.m in Sources */,
 				B6D995F9222CA42000A98BEF /* MainTabBarController+CameraUpload.m in Sources */,
 				77B3AE0F215D0588008E889A /* InitialLaunchViewController.m in Sources */,
+				A8DE32CB22FC14CC006BAC7A /* BusinessExpiredViewController.swift in Sources */,
 				5B48F8031F4C73FE001E3A29 /* AchievementsViewController.m in Sources */,
 				5B20F4A21EFA9629007E0A34 /* ChatAttachedNodesViewController.m in Sources */,
 				837A88BF20B42290007B55D1 /* CloudDriveViewController.m in Sources */,

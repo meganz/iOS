@@ -2028,3 +2028,9 @@
 "User management is only available in a desktop web browser."="User management is only available in a desktop web browser.";
 /* When logging in during the grace period, the administrator of the Business account will be notified that their payment is overdue, indicating that they need to access MEGA using a desktop browser for more information */
 "There has been a problem with your last payment. Please access MEGA in a desktop browser for more information."="There has been a problem with your last payment. Please access MEGA in a desktop browser for more information.";
+/* Title shown when a Business account is expired, users should be notified on logging in that the Business account is expired */
+"Your Account is Expired"="Your Account is Expired";
+/* Details shown when a Business account is expired. Details for the administrator of the Business account */
+"There has been a problem processing your payment. MEGA is limited to view only until this issue has been fixed in a desktop web browser."="There has been a problem processing your payment. MEGA is limited to view only until this issue has been fixed in a desktop web browser.";
+/* Details shown when a Business account is expired. Details for users of the Business account */
+"Your account has been suspended, please contact your organization administrator for more information.\n\nMEGA is limited to view only"="Your account has been suspended, please contact your organization administrator for more information.\n\nMEGA is limited to view only";
