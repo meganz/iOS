@@ -2,6 +2,7 @@
 #import "MyAccountHallViewController.h"
 
 #import "AchievementsViewController.h"
+#import "ContactLinkQRViewController.h"
 #import "ContactsViewController.h"
 #import "Helper.h"
 #import "MEGAContactLinkCreateRequestDelegate.h"
@@ -39,6 +40,10 @@
 @property (strong, nonatomic) NSNumber *incomingSharesSize;
 @property (strong, nonatomic) NSNumber *usedStorage;
 @property (strong, nonatomic) NSNumber *maxStorage;
+
+@property (weak, nonatomic) IBOutlet UILabel *nameLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *avatarImageView;
+@property (weak, nonatomic) IBOutlet UIImageView *qrCodeImageView;
 
 @property (weak, nonatomic) IBOutlet UIView *tableFooterView;
 @property (weak, nonatomic) IBOutlet UILabel *tableFooterLabel;
@@ -97,6 +102,13 @@
         self.tableView.tableFooterView = [UIView.alloc initWithFrame:CGRectZero];
     }
     
+    UITapGestureRecognizer *tapAvatarGestureRecognizer = [UITapGestureRecognizer.alloc initWithTarget:self action:@selector(avatarTapped:)];
+    self.avatarImageView.gestureRecognizers = @[tapAvatarGestureRecognizer];
+    self.avatarImageView.userInteractionEnabled = YES;
+    
+    if (@available(iOS 11.0, *)) {
+        self.avatarImageView.accessibilityIgnoresInvertColors = YES;
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -117,6 +129,7 @@
     [super viewWillDisappear:animated];
     
     [[MEGASdkManager sharedMEGASdk] removeMEGAGlobalDelegate:self];
+    [MEGASdkManager.sharedMEGASdk removeMEGARequestDelegate:self];
 }
 
 #pragma mark - Private
@@ -165,6 +178,19 @@
     
     NSIndexPath *offlineIndexPath = [NSIndexPath indexPathForRow:5 inSection:0];
     [self tableView:self.tableView didSelectRowAtIndexPath:offlineIndexPath];
+}
+
+- (void)avatarTapped:(UITapGestureRecognizer *)sender {
+    if (sender.state == UIGestureRecognizerStateEnded) {
+        ContactLinkQRViewController *contactLinkVC = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactLinkQRViewControllerID"];
+        contactLinkVC.scanCode = NO;
+        [self presentViewController:contactLinkVC animated:YES completion:nil];
+    }
+}
+
+- (void)setUserAvatar {
+    MEGAUser *myUser = MEGASdkManager.sharedMEGASdk.myUser;
+    [self.avatarImageView mnz_setImageForUserHandle:myUser.handle];
 }
 
 #pragma mark - IBActions
@@ -409,8 +435,6 @@
 #pragma mark - MEGARequestDelegate
 
 - (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
-    [super onRequestFinish:api request:request error:error];
-    
     switch (request.type) {
         case MEGARequestTypeAccountDetails:
             if (error.type) {
@@ -420,6 +444,21 @@
             [self reloadUI];
             
             break;
+            
+        case MEGARequestTypeGetAttrUser: {
+            if (error.type) {
+                return;
+            }
+            
+            if (request.file) {
+                [self setUserAvatar];
+            }
+            
+            if (request.paramType == MEGAUserAttributeFirstname || request.paramType == MEGAUserAttributeLastname) {
+                self.nameLabel.text = api.myUser.mnz_fullName;
+            }
+            break;
+        }
             
         default:
             break;
