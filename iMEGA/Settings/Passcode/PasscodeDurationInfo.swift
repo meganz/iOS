@@ -2,6 +2,6 @@
 import Foundation
 
 struct PasscodeDurationInfo {
-    let duration: Int
+    let duration: RequirePasscodeAfter
     let title: String
 }
