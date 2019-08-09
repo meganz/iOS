@@ -39,6 +39,7 @@
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *customActionsButton;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *leftToolbarItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *rightToolbarItem;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *scrollViewTrailingConstraint;
 
 @property (nonatomic) NSCache<NSNumber *, UIScrollView *> *imageViewsCache;
 @property (nonatomic) NSUInteger currentIndex;
@@ -175,6 +176,19 @@
     return UIInterfaceOrientationMaskAll;
 }
 
+#pragma mark - Setters
+
+- (void)setGapBetweenPages:(CGFloat)gapBetweenPages {
+    if (_gapBetweenPages != gapBetweenPages) {
+        _gapBetweenPages = gapBetweenPages;
+        
+        if (self.isViewLoaded) {
+            self.scrollViewTrailingConstraint.constant = gapBetweenPages;
+            [self.view layoutIfNeeded];
+        }
+    }
+}
+
 #pragma mark - UI
 
 - (void)reloadUI {
@@ -187,7 +201,6 @@
     self.imageViewsCache = [[NSCache<NSNumber *, UIScrollView *> alloc] init];
     self.imageViewsCache.countLimit = 1000;
     
-    self.scrollView.frame = CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y, self.view.frame.size.width + self.gapBetweenPages, self.view.frame.size.height);
     self.scrollView.contentSize = CGSizeMake(self.scrollView.frame.size.width * self.mediaNodes.count, self.scrollView.frame.size.height);
     
     if (self.currentIndex >= self.mediaNodes.count) {
