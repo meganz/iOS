@@ -420,7 +420,7 @@
         doubleTap.numberOfTapsRequired = 2;
         
         if (@available(iOS 13.0, *)) {
-            UIGestureRecognizer *defaultDoubleTapGesture = [self.pdfView mnz_tapGestureWithNumberOfTaps:2];
+            UIGestureRecognizer *defaultDoubleTapGesture = [self.pdfView mnz_firstTapGestureWithNumberOfTaps:2];
             [defaultDoubleTapGesture requireGestureRecognizerToFail:doubleTap];
         }
         

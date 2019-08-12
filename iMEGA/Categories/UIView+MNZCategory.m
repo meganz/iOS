@@ -27,7 +27,7 @@
     self.layer.mask = nil;
 }
 
-- (nullable UITapGestureRecognizer *)mnz_tapGestureWithNumberOfTaps:(NSUInteger)taps {
+- (nullable UITapGestureRecognizer *)mnz_firstTapGestureWithNumberOfTaps:(NSUInteger)taps {
     UITapGestureRecognizer *tapGesture;
 
     for (UIGestureRecognizer *gestureRecognizer in self.gestureRecognizers) {
