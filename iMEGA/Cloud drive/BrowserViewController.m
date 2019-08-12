@@ -439,8 +439,7 @@
 }
 
 - (void)attachNodes {
-    self.selectedNodes(self.selectedNodesMutableDictionary.allValues.copy);
-    [self dismiss];
+    [self dismissAndSelectNodesIfNeeded:YES];
 }
 
 - (void)newFolderAlertTextFieldDidChange:(UITextField *)textField {
@@ -465,11 +464,18 @@
     return self.searchController.isActive ? [self.searchNodesArray objectAtIndex:indexPath.row] : [self.nodes nodeAtIndex:indexPath.row];
 }
 
-- (void)dismiss {
+- (void)dismissAndSelectNodesIfNeeded:(BOOL)selectNodes {
     if (self.searchController.isActive) {
         self.searchController.active = NO;
     }
-    [self dismissViewControllerAnimated:YES completion:nil];
+    
+    if (selectNodes) {
+        [self dismissViewControllerAnimated:YES completion:^{
+            self.selectedNodes(self.selectedNodesMutableDictionary.allValues.copy);
+        }];
+    } else {
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }
 }
 
 #pragma mark - IBActions
@@ -479,7 +485,7 @@
         NSMutableArray *selectedNodesMutableArray = self.selectedNodesArray.mutableCopy;
         NSArray *filesAndFolders = selectedNodesMutableArray.mnz_numberOfFilesAndFolders;
         MEGAMoveRequestDelegate *moveRequestDelegate = [MEGAMoveRequestDelegate.alloc initWithFiles:[filesAndFolders.firstObject unsignedIntegerValue] folders:[filesAndFolders[1] unsignedIntegerValue] completion:^{
-            [self dismiss];
+            [self dismissAndSelectNodesIfNeeded:NO];
         }];
         
         for (MEGANode *n in self.selectedNodesArray) {
@@ -541,7 +547,7 @@
         [NSFileManager.defaultManager mnz_removeFolderContentsAtPath:inboxDirectory];
     }
     
-    [self dismiss];
+    [self dismissAndSelectNodesIfNeeded:NO];
 }
 
 - (IBAction)uploadToMega:(UIBarButtonItem *)sender {
@@ -560,7 +566,7 @@
                 [SVProgressHUD showErrorWithStatus:status];
             }
             
-            [self dismiss];
+            [self dismissAndSelectNodesIfNeeded:NO];
         }
     } else if (self.browserAction == BrowserActionShareExtension) {
         [self.browserViewControllerDelegate uploadToParentNode:self.parentNode];
@@ -980,7 +986,7 @@
                     [[MEGASdkManager sharedMEGASdkFolder] logout];
                 }
                 
-                [self dismiss];
+                [self dismissAndSelectNodesIfNeeded:NO];
             }
             break;
         }

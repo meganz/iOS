@@ -102,6 +102,7 @@
 
 @property (nonatomic, getter=wasAppSuspended) BOOL appSuspended;
 @property (nonatomic, getter=isUpgradeVCPresented) BOOL upgradeVCPresented;
+@property (nonatomic, getter=isAccountExpiredPresented) BOOL accountExpiredPresented;
 
 @property (strong, nonatomic) dispatch_queue_t indexSerialQueue;
 @property (strong, nonatomic) BackgroundRefreshPerformer *backgroundRefreshPerformer;
@@ -1141,6 +1142,25 @@ void uncaughtExceptionHandler(NSException *exception) {
     }
 }
 
+- (void)presetAccountExpiredAlertIfNeeded {
+    if (!self.isAccountExpiredPresented && ![UIApplication.mnz_visibleViewController isKindOfClass:BusinessExpiredViewController.class]) {
+        NSString *alertTitle = AMLocalizedString(@"Your Account is Expired", nil);
+        NSString *alertMessage;
+        if (MEGASdkManager.sharedMEGASdk.isMasterBusinessAccount) {
+            alertMessage = AMLocalizedString(@"There has been a problem processing your payment. MEGA is limited to view only until this issue has been fixed in a desktop web browser.", nil);
+        } else {
+            alertMessage = AMLocalizedString(@"Your account has been suspended, please contact your organization administrator for more information.\n\nMEGA is limited to view only.", nil);
+        }
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:alertTitle message:alertMessage preferredStyle:UIAlertControllerStyleAlert];
+        [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"dismiss", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+            self.accountExpiredPresented = NO;
+        }]];
+        
+        self.accountExpiredPresented = YES;
+        [UIApplication.mnz_presentingViewController presentViewController:alertController animated:YES completion:nil];
+    }
+}
+
 #pragma mark - LTHPasscodeViewControllerDelegate
 
 - (void)passcodeWasEnteredSuccessfully {
@@ -1621,6 +1641,10 @@ void uncaughtExceptionHandler(NSException *exception) {
                 break;
             }
                 
+            case MEGAErrorTypeApiEBusinessPastDue:
+                [self presetAccountExpiredAlertIfNeeded];
+                break;
+                
             default:
                 break;
         }
@@ -1964,6 +1988,10 @@ void uncaughtExceptionHandler(NSException *exception) {
                 [NSNotificationCenter.defaultCenter postNotificationName:MEGAStorageOverQuotaNotification object:self];
                 break;
             }
+                
+            case MEGAErrorTypeApiEBusinessPastDue:
+                [self presetAccountExpiredAlertIfNeeded];
+                break;
                 
             default: {
                 if (error.type != MEGAErrorTypeApiESid && error.type != MEGAErrorTypeApiESSL && error.type != MEGAErrorTypeApiEExist && error.type != MEGAErrorTypeApiEIncomplete) {

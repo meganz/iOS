@@ -11,7 +11,6 @@
 #import "MEGAChatAttachVoiceClipRequestDelegate.h"
 #import "MEGAChatCreateChatGroupRequestDelegate.h"
 #import "MEGAChatMessage+MNZCategory.h"
-#import "MEGACopyRequestDelegate.h"
 #import "MEGACreateFolderRequestDelegate.h"
 #import "MEGANodeList+MNZCategory.h"
 #import "MEGAReachabilityManager.h"
