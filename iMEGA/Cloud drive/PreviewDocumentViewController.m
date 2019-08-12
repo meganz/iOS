@@ -21,6 +21,7 @@
 #import "UIImageView+MNZCategory.h"
 #import "MEGAStore.h"
 #import "MEGAQLPreviewController.h"
+#import "UIView+MNZCategory.h"
 
 @interface PreviewDocumentViewController () <QLPreviewControllerDataSource, QLPreviewControllerDelegate, MEGATransferDelegate, UICollectionViewDelegate, UICollectionViewDataSource, CustomActionViewControllerDelegate, NodeInfoViewControllerDelegate, SearchInPdfViewControllerProtocol, UIGestureRecognizerDelegate> {
     MEGATransfer *previewDocumentTransfer;
@@ -414,19 +415,9 @@
         [self.navigationController setToolbarHidden:NO animated:YES];
         self.navigationItem.rightBarButtonItem = self.node ? self.moreBarButtonItem : nil;
 
-        //Bug #12880 : PDF toolbar not being hidden when tap on screen in iOS13 Also double tap to zoom does not seem to work fine.
-        // Problem: in iOS 13 PDFView has its own double tap and single tap gesture recognizer. The gesture recognizer we have added does not seem to work as the action method does not get fired.
-        // Also the double tap Apple has implemented only changes the scalefactor from 0.6 to 0.8
-        // Solution: 1. "shouldRecognizeSimultaneouslyWithGestureRecognizer" now returns YES so that our actions get fired.
-        //           2. The double tap gesture we implemented takes precedence over the the default one.
         UIGestureRecognizer *defaultDoubleTapGesture;
         if (@available(iOS 13.0, *)) {
-            for (UIGestureRecognizer *gestureRecognizer in self.pdfView.gestureRecognizers) {
-                if ([gestureRecognizer isKindOfClass:[UITapGestureRecognizer class]]
-                    && ((UITapGestureRecognizer *)gestureRecognizer).numberOfTapsRequired == 2) {
-                    defaultDoubleTapGesture = gestureRecognizer;
-                }
-            }
+            defaultDoubleTapGesture = [self.pdfView mnz_tapGestureWithNumberOfTaps:2];
         }
         
         UITapGestureRecognizer *doubleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(doubleTapGesture:)];
@@ -489,12 +480,6 @@
 }
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(nonnull UIGestureRecognizer *)otherGestureRecognizer {
-    
-    if ([gestureRecognizer isKindOfClass:[UITapGestureRecognizer class]] &&
-        [otherGestureRecognizer isKindOfClass:[UILongPressGestureRecognizer class]]) {
-        return NO;
-    }
-    
     return YES;
 }
 

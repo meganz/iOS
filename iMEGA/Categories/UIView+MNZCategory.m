@@ -27,4 +27,18 @@
     self.layer.mask = nil;
 }
 
+- (nullable UITapGestureRecognizer *)mnz_tapGestureWithNumberOfTaps:(NSUInteger)taps {
+    UITapGestureRecognizer *doubleTapGesture;
+
+    for (UIGestureRecognizer *gestureRecognizer in self.gestureRecognizers) {
+        if ([gestureRecognizer isKindOfClass:[UITapGestureRecognizer class]]
+            && ((UITapGestureRecognizer *)gestureRecognizer).numberOfTapsRequired == taps) {
+            doubleTapGesture = (UITapGestureRecognizer *)gestureRecognizer;
+            break;
+        }
+    }
+    
+    return doubleTapGesture;
+}
+
 @end
