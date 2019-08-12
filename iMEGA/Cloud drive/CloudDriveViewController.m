@@ -1304,6 +1304,13 @@ static const NSTimeInterval kSearchTimeDelay = .5;
     }
 }
 
+- (void)cancelSearchIfNeeded {
+    if (self.searchQueue.operationCount) {
+        [MEGASdkManager.sharedMEGASdk cancelSearch];
+        [self.searchQueue cancelAllOperations];
+    }
+}
+
 - (void)openFileNode:(MEGANode *)node {
     if (node.name.mnz_isImagePathExtension || node.name.mnz_isVideoPathExtension) {
         [self showNode:node];
@@ -1327,6 +1334,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
 #pragma mark - IBActions
 
 - (IBAction)recentsTouchUpInside:(UIButton *)sender {
+    [self cancelSearchIfNeeded];
     if (sender.selected) {
         return;
     }
@@ -1854,7 +1862,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
 #pragma mark - UISearchResultsUpdating
 
 - (void)updateSearchResultsForSearchController:(UISearchController *)searchController {
-    [self.searchQueue cancelAllOperations];
+    [self cancelSearchIfNeeded];
     [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(search) object:nil];
     [self performSelector:@selector(search) withObject:nil afterDelay:kSearchTimeDelay];
 }
