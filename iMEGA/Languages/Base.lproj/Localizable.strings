@@ -2033,4 +2033,4 @@
 /* Details shown when a Business account is expired. Details for the administrator of the Business account */
 "There has been a problem processing your payment. MEGA is limited to view only until this issue has been fixed in a desktop web browser."="There has been a problem processing your payment. MEGA is limited to view only until this issue has been fixed in a desktop web browser.";
 /* Details shown when a Business account is expired. Details for users of the Business account */
-"Your account has been suspended, please contact your organization administrator for more information.\n\nMEGA is limited to view only"="Your account has been suspended, please contact your organization administrator for more information.\n\nMEGA is limited to view only";
+"Your account has been suspended, please contact your organization administrator for more information.\n\nMEGA is limited to view only."="Your account has been suspended, please contact your organization administrator for more information.\n\nMEGA is limited to view only.";

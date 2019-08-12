@@ -18,7 +18,7 @@ class BusinessExpiredViewController: UIViewController {
             detailLabel.text = NSLocalizedString("There has been a problem processing your payment. MEGA is limited to view only until this issue has been fixed in a desktop web browser.", comment: "")
         } else {
             imageView.image = UIImage(named: "accountExpiredUser")
-            detailLabel.text = NSLocalizedString("Your account has been suspended, please contact your organization administrator for more information.\n\nMEGA is limited to view only", comment: "")
+            detailLabel.text = NSLocalizedString("Your account has been suspended, please contact your organization administrator for more information.\n\nMEGA is limited to view only.", comment: "")
         }
     }
     

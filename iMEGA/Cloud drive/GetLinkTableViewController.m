@@ -72,6 +72,10 @@
         [self processLink:request.link];
     } multipleLinks:self.nodesToExport.count > 1];
     
+    if (MEGASdkManager.sharedMEGASdk.businessStatus == BusinessStatusExpired) {
+        self.tableView.userInteractionEnabled = self.toolbarCopyLinkBarButtonItem.enabled = self.shareBarButtonItem.enabled = NO;
+    }
+    
     self.passwordLinkDelegate = [[MEGAPasswordLinkRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
         [self.encryptedLinks addObject:request.text];
         [self updateUI];
