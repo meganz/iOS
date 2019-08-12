@@ -38,6 +38,8 @@
 "emptyFolderMessage"="Bạn không thể tải về một thư mục không chứa dữ liệu";
 /* Message shown when the user clicks on a confirm account link that has already been used  */
 "accountAlreadyConfirmed"="Tài khoản đã được kích hoạt rồi. Xin đăng nhập.";
+/* */
+"Your confirmation link is no longer valid. Your account may already be activated or you may have cancelled your registration."="Liên kết xác nhận không còn hiệu lực. Tài khoản của có thể đã được kích hoạt rồi hoặc việc đăng ký đã bị hủy.";
 /* Message shown when the user clicks on an link that is not valid */
 "linkNotValid"="Đường dẫn liên kết không hợp lệ";
 /* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
@@ -50,6 +52,12 @@
 "decrypt"="Giải khóa mã";
 /* Alert title shown when you have written a decryption key not valid */
 "decryptionKeyNotValid"="Mã giải khóa không hợp lệ";
+/* This dialog message is used on the Password Decrypt dialog. The link is a password protected link so the user needs to enter the password to decrypt the link. */
+"To access this link, you will need its password."="Để truy cập vào đường liên kết này, người sử dụng cần phải có mật khẩu giải mã.";
+/* This dialog message is used on the Password Decrypt dialog as an instruction for the user. */
+"If you do not have the password, contact the creator of the link."="Nếu bạn không biết mật khẩu giải mã. Liên hệ với chủ sở hữu đường liên kết này.";
+/* This placeholder text is used on the Password Decrypt dialog as an instruction for the user. */
+"Enter the password"="Nhập mật khẩu giải mã";
 /* Alert title shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOut_alertTitle"="Đã đăng xuất";
 /* Alert message shown when your account has been closed through another client or the web by killing all your sessions */
@@ -1998,3 +2006,15 @@
 "Change to a test server?"="Đổi sang máy chủ thử nghiệm?";
 /* text of the alert dialog when the user is changing the API URL to staging */
 "Are you sure you want to change to a test server? Your account may suffer irrecoverable problems"="Bạn có chắc muốn chuyển sang máy chủ thử nghiệm? Tài khoản có thể sẽ gặp các vấn đề không thể phục hồi";
+/* Destination folder name of chat files */
+"My chat files"="Tệp tôi gửi trong chát";
+/* Label indicating that the passcode (pin) view will be displayed if the application goes back to foreground after being x time in background. Examples: require passcode immediately, require passcode after 5 minutes. */
+"Require passcode"="Require passcode";
+/* Label indicating that the enter passcode (pin) view will be displayed immediately if the application goes back to foreground after being in background. */
+"Immediately"="Immediately";
+/* Popup notification text on mouse-over of taken down file. */
+"This file has been the subject of a takedown notice."="Tệp tin này bị xác định vi phạm tranh chấp quyền sở hữu.";
+/* Popup notification text on mouse-over taken down folder. */
+"This folder has been the subject of a takedown notice."="Thư mục này bị xác định vi phạm tranh chấp quyền sở hữu.";
+/* File Manager -> Context menu item for taken down file or folder, for dispute takedown. */
+"Dispute Takedown"="Phản Đối Tranh Chấp";

@@ -38,6 +38,8 @@
 "emptyFolderMessage"="空のフォルダをダウンロードすることができません。";
 /* Message shown when the user clicks on a confirm account link that has already been used  */
 "accountAlreadyConfirmed"="あなたのアカウントは有効になっています。ログインしてください。";
+/* */
+"Your confirmation link is no longer valid. Your account may already be activated or you may have cancelled your registration."="あなたの確認リンクはもう有効ではありません。あなたのアカウントは既に有効になっているか、登録をキャンセルしたかもしれません。";
 /* Message shown when the user clicks on an link that is not valid */
 "linkNotValid"="リンク無効";
 /* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
@@ -50,6 +52,12 @@
 "decrypt"="復号化";
 /* Alert title shown when you have written a decryption key not valid */
 "decryptionKeyNotValid"="復号化鍵無効";
+/* This dialog message is used on the Password Decrypt dialog. The link is a password protected link so the user needs to enter the password to decrypt the link. */
+"To access this link, you will need its password."="このリンクをアクセスするには要パスワードです。";
+/* This dialog message is used on the Password Decrypt dialog as an instruction for the user. */
+"If you do not have the password, contact the creator of the link."="そのパスワードをお持ちではない場合、リンクの作成者に尋ねてください。";
+/* This placeholder text is used on the Password Decrypt dialog as an instruction for the user. */
+"Enter the password"="パスワードを入力して下さい";
 /* Alert title shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOut_alertTitle"="ログアウト済み";
 /* Alert message shown when your account has been closed through another client or the web by killing all your sessions */
@@ -705,7 +713,7 @@
 /* Title for new camera upload feature */
 "New Camera Upload!"="新しいカメラアップロードオプション！";
 /* A messge for camera upload v2 migration */
-"Now you can choose to convert the HEIF/HEVC photos and videos to the most compatible JPEG/H.264 formats."="HEIF/HEVC写真と動画を、より広く互換性があるJPEG/H.264形式に変換するように選択できるようになりました。";
+"Now you can choose to convert the HEIF/HEVC photos and videos to the most compatible JPEG/H.264 formats."="HEIC/HEVC写真と動画を、より広く互換性があるJPEG/H.264形式に変換するように選択できるようになりました。";
 /* Title for an action to use most compatible formats */
 "Use Most Compatible Formats"="最も互換性のある形式を使用する";
 /* Title for custom settings */
@@ -1998,3 +2006,15 @@
 "Change to a test server?"="テストサーバーに変更しますか？　";
 /* text of the alert dialog when the user is changing the API URL to staging */
 "Are you sure you want to change to a test server? Your account may suffer irrecoverable problems"="テストサーバーに変更してもよろしいですか？　アカウントに回復不能な問題が発生する可能性があります";
+/* Destination folder name of chat files */
+"My chat files"="私のチャットファイル";
+/* Label indicating that the passcode (pin) view will be displayed if the application goes back to foreground after being x time in background. Examples: require passcode immediately, require passcode after 5 minutes. */
+"Require passcode"="Require passcode";
+/* Label indicating that the enter passcode (pin) view will be displayed immediately if the application goes back to foreground after being in background. */
+"Immediately"="Immediately";
+/* Popup notification text on mouse-over of taken down file. */
+"This file has been the subject of a takedown notice."="このファイルは削除通知の対象となっています。";
+/* Popup notification text on mouse-over taken down folder. */
+"This folder has been the subject of a takedown notice."="このフォルダは削除通知の対象となっています。";
+/* File Manager -> Context menu item for taken down file or folder, for dispute takedown. */
+"Dispute Takedown"="異議申立による削除";

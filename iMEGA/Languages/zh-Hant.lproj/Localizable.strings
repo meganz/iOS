@@ -38,6 +38,8 @@
 "emptyFolderMessage"="您不能下載空的資料夾。";
 /* Message shown when the user clicks on a confirm account link that has already been used  */
 "accountAlreadyConfirmed"="您的帳戶已通過認證。請登入帳戶以開始使用。";
+/* */
+"Your confirmation link is no longer valid. Your account may already be activated or you may have cancelled your registration."="您的確認連結已無效。您的帳戶可能已啟用，或您可能已取消註冊";
 /* Message shown when the user clicks on an link that is not valid */
 "linkNotValid"="無效的連結";
 /* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
@@ -50,6 +52,12 @@
 "decrypt"="解密";
 /* Alert title shown when you have written a decryption key not valid */
 "decryptionKeyNotValid"="無效的密鑰";
+/* This dialog message is used on the Password Decrypt dialog. The link is a password protected link so the user needs to enter the password to decrypt the link. */
+"To access this link, you will need its password."="若要取得連結權限，您將需要此連結的密碼。";
+/* This dialog message is used on the Password Decrypt dialog as an instruction for the user. */
+"If you do not have the password, contact the creator of the link."="若您沒有密碼，請聯絡該連結的創建者。";
+/* This placeholder text is used on the Password Decrypt dialog as an instruction for the user. */
+"Enter the password"="請輸入密碼";
 /* Alert title shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOut_alertTitle"="已登出";
 /* Alert message shown when your account has been closed through another client or the web by killing all your sessions */
@@ -705,7 +713,7 @@
 /* Title for new camera upload feature */
 "New Camera Upload!"="新的相機上傳選項！";
 /* A messge for camera upload v2 migration */
-"Now you can choose to convert the HEIF/HEVC photos and videos to the most compatible JPEG/H.264 formats."="現在您可以選擇將HEIF/HEVC相片和影片轉檔成更廣泛相容的JPEG/H.264格式。";
+"Now you can choose to convert the HEIF/HEVC photos and videos to the most compatible JPEG/H.264 formats."="現在您可以選擇將HEIC/HEVC相片和影片轉檔成更普遍相容的JPEG/H.264格式。";
 /* Title for an action to use most compatible formats */
 "Use Most Compatible Formats"="使用最相容的格式";
 /* Title for custom settings */
@@ -1998,3 +2006,15 @@
 "Change to a test server?"="更改為測試伺服器？";
 /* text of the alert dialog when the user is changing the API URL to staging */
 "Are you sure you want to change to a test server? Your account may suffer irrecoverable problems"="您確定要更改為測試伺服器？您的帳戶可能會遇到無法恢復的問題。";
+/* Destination folder name of chat files */
+"My chat files"="我的聊天檔案";
+/* Label indicating that the passcode (pin) view will be displayed if the application goes back to foreground after being x time in background. Examples: require passcode immediately, require passcode after 5 minutes. */
+"Require passcode"="Require passcode";
+/* Label indicating that the enter passcode (pin) view will be displayed immediately if the application goes back to foreground after being in background. */
+"Immediately"="Immediately";
+/* Popup notification text on mouse-over of taken down file. */
+"This file has been the subject of a takedown notice."="此檔案接獲下架通知且已被移除";
+/* Popup notification text on mouse-over taken down folder. */
+"This folder has been the subject of a takedown notice."="此資料夾接獲下架通知且已被移除";
+/* File Manager -> Context menu item for taken down file or folder, for dispute takedown. */
+"Dispute Takedown"="爭議被刪除";
