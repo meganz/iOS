@@ -414,17 +414,13 @@
         [self setToolbarItems:@[self.thumbnailBarButtonItem, flexibleItem, self.searchBarButtonItem, flexibleItem, self.openInBarButtonItem] animated:YES];
         [self.navigationController setToolbarHidden:NO animated:YES];
         self.navigationItem.rightBarButtonItem = self.node ? self.moreBarButtonItem : nil;
-
-        UIGestureRecognizer *defaultDoubleTapGesture;
-        if (@available(iOS 13.0, *)) {
-            defaultDoubleTapGesture = [self.pdfView mnz_tapGestureWithNumberOfTaps:2];
-        }
         
         UITapGestureRecognizer *doubleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(doubleTapGesture:)];
         doubleTap.delegate = self;
         doubleTap.numberOfTapsRequired = 2;
         
-        if (defaultDoubleTapGesture != nil) {
+        if (@available(iOS 13.0, *)) {
+            UIGestureRecognizer *defaultDoubleTapGesture = [self.pdfView mnz_tapGestureWithNumberOfTaps:2];
             [defaultDoubleTapGesture requireGestureRecognizerToFail:doubleTap];
         }
         

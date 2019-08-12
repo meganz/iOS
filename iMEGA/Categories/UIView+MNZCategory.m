@@ -28,17 +28,17 @@
 }
 
 - (nullable UITapGestureRecognizer *)mnz_tapGestureWithNumberOfTaps:(NSUInteger)taps {
-    UITapGestureRecognizer *doubleTapGesture;
+    UITapGestureRecognizer *tapGesture;
 
     for (UIGestureRecognizer *gestureRecognizer in self.gestureRecognizers) {
         if ([gestureRecognizer isKindOfClass:[UITapGestureRecognizer class]]
             && ((UITapGestureRecognizer *)gestureRecognizer).numberOfTapsRequired == taps) {
-            doubleTapGesture = (UITapGestureRecognizer *)gestureRecognizer;
+            tapGesture = (UITapGestureRecognizer *)gestureRecognizer;
             break;
         }
     }
     
-    return doubleTapGesture;
+    return tapGesture;
 }
 
 @end
