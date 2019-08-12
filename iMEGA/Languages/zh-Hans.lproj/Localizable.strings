@@ -38,6 +38,8 @@
 "emptyFolderMessage"="您不能下载空的文件夹。";
 /* Message shown when the user clicks on a confirm account link that has already been used  */
 "accountAlreadyConfirmed"="您的账号已被激活。请登录。";
+/* */
+"Your confirmation link is no longer valid. Your account may already be activated or you may have cancelled your registration."="您的确认链接已失效。您的帐户可能已被激活或者您可能已取消注册。";
 /* Message shown when the user clicks on an link that is not valid */
 "linkNotValid"="无效的链接";
 /* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
@@ -50,6 +52,12 @@
 "decrypt"="解密";
 /* Alert title shown when you have written a decryption key not valid */
 "decryptionKeyNotValid"="无效的密钥";
+/* This dialog message is used on the Password Decrypt dialog. The link is a password protected link so the user needs to enter the password to decrypt the link. */
+"To access this link, you will need its password."="若要取得链接权限，您将需要此链接的密码。";
+/* This dialog message is used on the Password Decrypt dialog as an instruction for the user. */
+"If you do not have the password, contact the creator of the link."="若您没有密码，请联系该链接的创建者。";
+/* This placeholder text is used on the Password Decrypt dialog as an instruction for the user. */
+"Enter the password"="请输入密码";
 /* Alert title shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOut_alertTitle"="已注销";
 /* Alert message shown when your account has been closed through another client or the web by killing all your sessions */
@@ -705,7 +713,7 @@
 /* Title for new camera upload feature */
 "New Camera Upload!"="全新相机上传选项！";
 /* A messge for camera upload v2 migration */
-"Now you can choose to convert the HEIF/HEVC photos and videos to the most compatible JPEG/H.264 formats."="现在您可以选择将HEIF/HEVC格式的照片和视频转换为更加兼容的JPEG/H.264格式。";
+"Now you can choose to convert the HEIF/HEVC photos and videos to the most compatible JPEG/H.264 formats."="现在您可以选择将HEIC/HEVC格式的照片和视频转换为更兼容的JPEG/H.264格式。";
 /* Title for an action to use most compatible formats */
 "Use Most Compatible Formats"="使用最兼容的格式";
 /* Title for custom settings */
@@ -729,7 +737,7 @@
 /* Footer description when upload all burst photos is enabled */
 "All the photos from your burst photo sequences will be uploaded."="上传连拍照片序列中的所有照片";
 /* Footer description when upload all burst photos is disabled */
-"Only the representative photos from your burst photo sequences will be uploaded."="只上传连拍照片序列中的代表性照片";
+"Only the representative photos from your burst photo sequences will be uploaded."="只上传连拍照片中的个人收藏照片";
 /* Footer description when upload Hidden Album is enabled */
 "The Hidden Album is where you hide photos or videos in your device Photos app."="隐藏相册是指您在设备的照片中隐藏照片或视频的地方。";
 /* App means “Application” */
@@ -936,7 +944,7 @@
 /* Title show on the hall of My Account section that describes a place where you can view, edit and upgrade your account and profile */
 "viewAndEditProfile"="查看并修改帐户资料";
 /* Label for any 'Profile' button, link, text, title, etc. - (String as short as possible). */
-"profile"="文件";
+"profile"="资料";
 /* Title of the Achievements section */
 "achievementsTitle"="成就";
 /* Title of the Used storage section */
@@ -1998,3 +2006,15 @@
 "Change to a test server?"="更改为测试服务器？";
 /* text of the alert dialog when the user is changing the API URL to staging */
 "Are you sure you want to change to a test server? Your account may suffer irrecoverable problems"="您确定要更改为测试服务器吗？ 您的帐户可能会遇到无法解决的问题";
+/* Destination folder name of chat files */
+"My chat files"="我的聊天文件";
+/* Label indicating that the passcode (pin) view will be displayed if the application goes back to foreground after being x time in background. Examples: require passcode immediately, require passcode after 5 minutes. */
+"Require passcode"="Require passcode";
+/* Label indicating that the enter passcode (pin) view will be displayed immediately if the application goes back to foreground after being in background. */
+"Immediately"="Immediately";
+/* Popup notification text on mouse-over of taken down file. */
+"This file has been the subject of a takedown notice."="此文件接获下架通知且已被移除";
+/* Popup notification text on mouse-over taken down folder. */
+"This folder has been the subject of a takedown notice."="此文件夹接获下架通知且已被移除";
+/* File Manager -> Context menu item for taken down file or folder, for dispute takedown. */
+"Dispute Takedown"="解除争议";

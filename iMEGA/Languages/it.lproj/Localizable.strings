@@ -38,6 +38,8 @@
 "emptyFolderMessage"="Non è possibile scaricare una cartella vuota";
 /* Message shown when the user clicks on a confirm account link that has already been used  */
 "accountAlreadyConfirmed"="Il tuo account è già stato attivato. Per favore, effettua il login.";
+/* */
+"Your confirmation link is no longer valid. Your account may already be activated or you may have cancelled your registration."="Il tuo link di conferma non è più valido. Il tuo account potrebbe essere stato già attivato o potresti aver annullato la tua registrazione.";
 /* Message shown when the user clicks on an link that is not valid */
 "linkNotValid"="Link non valido";
 /* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
@@ -50,6 +52,12 @@
 "decrypt"="Decripta";
 /* Alert title shown when you have written a decryption key not valid */
 "decryptionKeyNotValid"="Chiave di decriptazione non valida";
+/* This dialog message is used on the Password Decrypt dialog. The link is a password protected link so the user needs to enter the password to decrypt the link. */
+"To access this link, you will need its password."="Per accedere a questo link, hai bisogno della sua password.";
+/* This dialog message is used on the Password Decrypt dialog as an instruction for the user. */
+"If you do not have the password, contact the creator of the link."="Se non hai la password, contatta il creatore del link.";
+/* This placeholder text is used on the Password Decrypt dialog as an instruction for the user. */
+"Enter the password"="Inserisci la password";
 /* Alert title shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOut_alertTitle"="Disconnesso";
 /* Alert message shown when your account has been closed through another client or the web by killing all your sessions */
@@ -487,7 +495,7 @@
 /* Alert title shown when the user is overquota */
 "overquotaAlert_title"="Messaggio di superamento quota!";
 /* Alert message shown when the user is overquota */
-"overquotaAlert_message"="Operazione non consentita, supererai il limite del tuo account di archiviazione. Vuoi passare a PRO?";
+"overquotaAlert_message"="Operazione non consentita, supererai il limite del tuo account di archiviazione. Vuoi fare l'upgrade a PRO?";
 /* Title shown on the Camera Uploads section when the edit mode is enabled. On this mode you can select photos */
 "selectTitle"="Seleziona foto";
 /* Button title that skips the current action */
@@ -930,9 +938,9 @@
 /* Title of My Account section. There you can see your account details */
 "myAccount"="Account";
 /* Button title that shows the different MEGA PRO plans to which you can upgrade. (String as short as possible) */
-"buyPRO"="Passa a PRO";
+"buyPRO"="Compra PRO";
 /* Caption of a button to upgrade the account to Pro status */
-"upgrade"="Passa a PRO";
+"upgrade"="Fai l'upgrade";
 /* Title show on the hall of My Account section that describes a place where you can view, edit and upgrade your account and profile */
 "viewAndEditProfile"="Vedi e modifica profilo";
 /* Label for any 'Profile' button, link, text, title, etc. - (String as short as possible). */
@@ -1034,15 +1042,15 @@
 /* Sentence shown under the available space to complete the info with the user account maximum storage. "available of {maximun storage}" */
 "available of %@"="disponibili di %@";
 /* Button title which triggers the action to upgrade your MEGA account level */
-"upgradeAccount"="Aumenta il piano PRO";
+"upgradeAccount"="Fai l'upgrade dell'account";
 /*  */
 "chooseYourAccountType"="Scegli il tuo tipo di account";
 /* Text shown under the button 'Skip' to explain that you can upgrade your account later in the section 'My Account'. */
-"youCanUpgradeLaterInMyAccount"="Puoi passare a PRO più tardi in Il Mio Account";
+"youCanUpgradeLaterInMyAccount"="Puoi fare l'upgrade a PRO più tardi in Il Mio Account";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
-"cloudDriveIsAlmostFull"="[S]Il tuo Cloud è quasi pieno.[/S] [A]Passa a PRO ora[/A] e ottieni [S]fino a 8TB (8192GB)[/S] di spazio cloud.";
+"cloudDriveIsAlmostFull"="[S]Il tuo Cloud è quasi pieno.[/S] [A]Fai l'upgrade a PRO ora[/A] e ottieni [S]fino a 8TB (8192GB)[/S] di spazio cloud.";
 /* A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text. */
-"cloudDriveIsFull"="[S]Il tuo account è pieno.[/S] [A]Passa a PRO ora[/A] e ottieni [S]fino a 8TB (8192 GB)[/S] di spazio cloud.";
+"cloudDriveIsFull"="[S]Il tuo account è pieno.[/S] [A]Fai l'upgrade a PRO ora[/A] e ottieni [S]fino a 8TB (8192 GB)[/S] di spazio cloud.";
 /* Storage related with the MEGA PRO account level you can subscribe */
 "productSpace"="Archivio";
 /* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
@@ -1998,3 +2006,15 @@
 "Change to a test server?"="Vuoi cambiare con un server di test?";
 /* text of the alert dialog when the user is changing the API URL to staging */
 "Are you sure you want to change to a test server? Your account may suffer irrecoverable problems"="Sei sicuro di voler cambiare con un server di test? Il tuo account potrebbe avere dei problemi incurabili";
+/* Destination folder name of chat files */
+"My chat files"="File delle mie chat";
+/* Label indicating that the passcode (pin) view will be displayed if the application goes back to foreground after being x time in background. Examples: require passcode immediately, require passcode after 5 minutes. */
+"Require passcode"="Require passcode";
+/* Label indicating that the enter passcode (pin) view will be displayed immediately if the application goes back to foreground after being in background. */
+"Immediately"="Immediately";
+/* Popup notification text on mouse-over of taken down file. */
+"This file has been the subject of a takedown notice."="Questo file è stato soggetto ad un avviso di chiusura.";
+/* Popup notification text on mouse-over taken down folder. */
+"This folder has been the subject of a takedown notice."="Questa cartella è stata soggetta ad un avviso di chiusura.";
+/* File Manager -> Context menu item for taken down file or folder, for dispute takedown. */
+"Dispute Takedown"="Contesta chiusura";

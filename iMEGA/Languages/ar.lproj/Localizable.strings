@@ -38,6 +38,8 @@
 "emptyFolderMessage"="لا يمكن تحميل مجلد فارغ";
 /* Message shown when the user clicks on a confirm account link that has already been used  */
 "accountAlreadyConfirmed"="تم تفعيل حسابك بالفعل. يُرجى تسجيل الدخول.";
+/* */
+"Your confirmation link is no longer valid. Your account may already be activated or you may have cancelled your registration."="رابط التأكيد خاصتك لم يعد صالحاً. قد يكون حسابك مفعلاً مسبقاً أو قد تكون قد ألغيت تسجيل حسابك.";
 /* Message shown when the user clicks on an link that is not valid */
 "linkNotValid"="رابط غير موجود";
 /* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
@@ -50,6 +52,12 @@
 "decrypt"="فك التشفير";
 /* Alert title shown when you have written a decryption key not valid */
 "decryptionKeyNotValid"="مفتاح فك التشفير غير موجود";
+/* This dialog message is used on the Password Decrypt dialog. The link is a password protected link so the user needs to enter the password to decrypt the link. */
+"To access this link, you will need its password."="للوصول إلى هذا الرابط،تحتاج إلي كلمه السر الخاص به.";
+/* This dialog message is used on the Password Decrypt dialog as an instruction for the user. */
+"If you do not have the password, contact the creator of the link."="إذا كنت لاتمتلك كلمة المرور، تواصل مع منشئ الرابط.";
+/* This placeholder text is used on the Password Decrypt dialog as an instruction for the user. */
+"Enter the password"="ادخل كلمه السر";
 /* Alert title shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOut_alertTitle"="تم تسجيل الخروج";
 /* Alert message shown when your account has been closed through another client or the web by killing all your sessions */
@@ -1955,19 +1963,19 @@
 /* A single image and single video title shown in recents section of webclient. */
 "1 Image and 1 Video"="1 Image and 1 Video";
 /* One image and multiple videos title in recents. */
-"1 Image and %2 Videos"="1 Image and %2 Videos";
+"1 Image and %2 Videos"="صورة واحدة و%2 فيديو";
 /* Multiple images and 1 video */
-"%1 Images and 1 Video"="%1 Images and 1 Video";
+"%1 Images and 1 Video"="%1 صورة وفيديو واحد";
 /* Title for multiple images and multiple videos in recents section */
 "%1 Images and %2 Videos"="%1 Images and %2 Videos";
 /* Tooltip message shown on recents section. Please see the attached image. */
-"Modified on %1 at %2"="Modified on %1 at %2";
+"Modified on %1 at %2"="تم التعديل على %1 في %2";
 /* Title for a recent action shown in the webclient, see the attached image for context. */
-"%1 modified by %3"="%1 modified by %3";
+"%1 modified by %3"="%1 تم تعديلها من قبل %3";
 /* Title for a recent action shown in the webclient, see the attached image for context. Please ensure that the `%2 more` is inside the [A] tag as this will become a toggle to show the hidden content. */
-"%1 and [A]%2 more[/A]"="%1 and [A]%2 more[/A]";
+"%1 and [A]%2 more[/A]"="%1 و [A]%2 إضافية[/A]";
 /* Title for a recent action shown in the webclient, see the attached image for context. */
-"%1 created by %3"="%1 created by %3";
+"%1 created by %3"="%1 تم اجرائها من قبل %3";
 /* Message shown when the user has not recent activity in their account. */
 "No recent activity"="لا يوجد عمليات مؤخراً";
 /* Plural of items which contains a folder. 2 items */
@@ -1998,3 +2006,15 @@
 "Change to a test server?"="التغيير الى مخدم الاختبارات؟";
 /* text of the alert dialog when the user is changing the API URL to staging */
 "Are you sure you want to change to a test server? Your account may suffer irrecoverable problems"="هل أنت متأكد من رغبتك بالانتقال الى المخدم التجريبي؟ من الممكن ان يتعرض حسابك لمشاكل غير قابلة للإصلاح.";
+/* Destination folder name of chat files */
+"My chat files"="My chat files";
+/* Label indicating that the passcode (pin) view will be displayed if the application goes back to foreground after being x time in background. Examples: require passcode immediately, require passcode after 5 minutes. */
+"Require passcode"="Require passcode";
+/* Label indicating that the enter passcode (pin) view will be displayed immediately if the application goes back to foreground after being in background. */
+"Immediately"="Immediately";
+/* Popup notification text on mouse-over of taken down file. */
+"This file has been the subject of a takedown notice."="ملف تحت موضوع إشعار إنهاء الخدمة";
+/* Popup notification text on mouse-over taken down folder. */
+"This folder has been the subject of a takedown notice."="مجلد خاضع لموضوع إشعار إنهاء الخدمة";
+/* File Manager -> Context menu item for taken down file or folder, for dispute takedown. */
+"Dispute Takedown"="Dispute Takedown";
