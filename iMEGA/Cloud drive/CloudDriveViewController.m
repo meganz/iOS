@@ -16,6 +16,7 @@
 
 #import "DevicePermissionsHelper.h"
 #import "Helper.h"
+#import "MEGAConstants.h"
 #import "MEGACreateFolderRequestDelegate.h"
 #import "MEGAMoveRequestDelegate.h"
 #import "MEGANode+MNZCategory.h"
@@ -28,6 +29,7 @@
 #import "MEGAShareRequestDelegate.h"
 #import "MEGAStore.h"
 #import "NSMutableArray+MNZCategory.h"
+#import "NSURL+MNZCategory.h"
 #import "UITextField+MNZCategory.h"
 
 #import "BrowserViewController.h"
@@ -46,9 +48,12 @@
 #import "PhotosViewController.h"
 #import "PreviewDocumentViewController.h"
 #import "RecentsViewController.h"
+#import "SearchOperation.h"
 #import "SortByTableViewController.h"
 #import "SharedItemsViewController.h"
 #import "UpgradeTableViewController.h"
+
+static const NSTimeInterval kSearchTimeDelay = .5;
 
 @interface CloudDriveViewController () <UINavigationControllerDelegate, UIDocumentPickerDelegate, UIDocumentMenuDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGADelegate, MEGARequestDelegate, CustomActionViewControllerDelegate, NodeInfoViewControllerDelegate, UITextFieldDelegate, UISearchControllerDelegate> {
     
@@ -89,6 +94,7 @@
 
 @property (nonatomic, assign) LayoutMode layoutView;
 @property (nonatomic, assign) BOOL shouldDetermineLayout;
+@property (strong, nonatomic) NSOperationQueue *searchQueue;
 
 @end
 
@@ -150,6 +156,11 @@
     
     [self.recentsButton setTitle:AMLocalizedString(@"Recents", @"Title for the recents section") forState:UIControlStateNormal];
     self.moreBarButtonItem.accessibilityLabel = AMLocalizedString(@"more", @"Top menu option which opens more menu options in a context menu.");
+    
+    _searchQueue = NSOperationQueue.new;
+    self.searchQueue.name = @"searchQueue";
+    self.searchQueue.qualityOfService = NSQualityOfServiceUserInteractive;
+    self.searchQueue.maxConcurrentOperationCount = 1;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -777,6 +788,27 @@
     }
 }
 
+#pragma mark - Public
+
+- (void)didSelectNode:(MEGANode *)node {
+    if (node.isTakenDown) {
+        NSString *alertMessage = node.isFolder ? AMLocalizedString(@"This folder has been the subject of a takedown notice.", @"Popup notification text on mouse-over taken down folder.") : AMLocalizedString(@"This file has been the subject of a takedown notice.", @"Popup notification text on mouse-over of taken down file.");
+        
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:alertMessage preferredStyle:UIAlertControllerStyleAlert];
+        [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"openButton", @"Button title to trigger the action of opening the file without downloading or opening it.") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            node.isFolder ? [self openFolderNode:node] : [self openFileNode:node];
+        }]];
+        [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"Dispute Takedown", @"File Manager -> Context menu item for taken down file or folder, for dispute takedown.") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            [[NSURL URLWithString:MEGADisputeURL] mnz_presentSafariViewController];
+        }]];
+        [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
+        
+        [self presentViewController:alertController animated:YES completion:nil];
+    } else {
+        node.isFolder ? [self openFolderNode:node] : [self openFileNode:node];
+    }
+}
+
 #pragma mark - Private
 
 - (void)reloadUI {
@@ -1254,6 +1286,44 @@
     return numberOfRows;
 }
 
+- (void)search {
+    if (self.searchController.searchBar.text.length >= kMinimumLettersToStartTheSearch) {
+        NSString *text = self.searchController.searchBar.text;
+        [SVProgressHUD show];
+        [self.searchNodesArray removeAllObjects];
+        SearchOperation *searchOperation = [SearchOperation.alloc initWithParentNode:self.parentNode text:text completion:^(NSArray <MEGANode *> *nodesFound) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                self.searchNodesArray = [NSMutableArray arrayWithArray:nodesFound];
+                [SVProgressHUD dismiss];
+                [self reloadData];
+            });
+        }];
+        [self.searchQueue addOperation:searchOperation];
+    } else {
+        [self reloadData];
+    }
+}
+
+- (void)openFileNode:(MEGANode *)node {
+    if (node.name.mnz_isImagePathExtension || node.name.mnz_isVideoPathExtension) {
+        [self showNode:node];
+    } else {
+        [node mnz_openNodeInNavigationController:self.navigationController folderLink:NO];
+    }
+}
+
+- (void)openFolderNode:(MEGANode *)node {
+    CloudDriveViewController *cloudDriveVC = [self.storyboard instantiateViewControllerWithIdentifier:@"CloudDriveID"];
+    cloudDriveVC.parentNode = node;
+    cloudDriveVC.hideSelectorView = YES;
+    
+    if (self.displayMode == DisplayModeRubbishBin) {
+        cloudDriveVC.displayMode = self.displayMode;
+    }
+    
+    [self.navigationController pushViewController:cloudDriveVC animated:YES];
+}
+
 #pragma mark - IBActions
 
 - (IBAction)recentsTouchUpInside:(UIButton *)sender {
@@ -1542,8 +1612,7 @@
         [UIView animateWithDuration:0.33f animations:^ {
             [self.toolbar setAlpha:1.0];
         }];
-    } else {
-        self.editBarButtonItem.title = AMLocalizedString(@"edit", @"Caption of a button to edit the files that are selected");
+    } else {        
         [self setNavigationBarButtonItems];
         self.allNodesSelected = NO;
         self.selectedNodesArray = nil;
@@ -1785,20 +1854,9 @@
 #pragma mark - UISearchResultsUpdating
 
 - (void)updateSearchResultsForSearchController:(UISearchController *)searchController {
-    NSString *searchString = searchController.searchBar.text;
-    [self.searchNodesArray removeAllObjects];
-
-    if ([searchString isEqualToString:@""]) {
-        self.searchNodesArray = [NSMutableArray arrayWithArray:self.nodesArray];
-    } else {
-        MEGANodeList *allNodeList = [[MEGASdkManager sharedMEGASdk] nodeListSearchForNode:self.parentNode searchString:searchString recursive:YES];
-        
-        for (NSInteger i = 0; i < [allNodeList.size integerValue]; i++) {
-            MEGANode *n = [allNodeList nodeAtIndex:i];
-            [self.searchNodesArray addObject:n];
-        }
-    }
-    [self reloadData];
+    [self.searchQueue cancelAllOperations];
+    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(search) object:nil];
+    [self performSelector:@selector(search) withObject:nil afterDelay:kSearchTimeDelay];
 }
 
 #pragma mark - UIDocumentPickerDelegate

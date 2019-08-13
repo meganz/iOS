@@ -38,6 +38,8 @@
 "emptyFolderMessage"="Ein leerer Ordner kann nicht heruntergeladen werden";
 /* Message shown when the user clicks on a confirm account link that has already been used  */
 "accountAlreadyConfirmed"="Ihr Account wurde aktiviert. Bitte melden Sie sich an.";
+/* */
+"Your confirmation link is no longer valid. Your account may already be activated or you may have cancelled your registration."="Der Bestätigungslink ist nicht mehr gültig. Entweder haben Sie Ihren Account bereits aktiviert, oder die Registrierung wurde abgebrochen.";
 /* Message shown when the user clicks on an link that is not valid */
 "linkNotValid"="Ungültiger Link";
 /* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
@@ -50,6 +52,12 @@
 "decrypt"="Entschlüsseln";
 /* Alert title shown when you have written a decryption key not valid */
 "decryptionKeyNotValid"="Ungültiger Schlüssel";
+/* This dialog message is used on the Password Decrypt dialog. The link is a password protected link so the user needs to enter the password to decrypt the link. */
+"To access this link, you will need its password."="Dieser Link ist passwortgeschützt.";
+/* This dialog message is used on the Password Decrypt dialog as an instruction for the user. */
+"If you do not have the password, contact the creator of the link."="Bitte kontaktieren Sie den Link-Ersteller, sollten Sie das Passwort nicht kennen.";
+/* This placeholder text is used on the Password Decrypt dialog as an instruction for the user. */
+"Enter the password"="Passwort eingeben";
 /* Alert title shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOut_alertTitle"="Ausgeloggt";
 /* Alert message shown when your account has been closed through another client or the web by killing all your sessions */
@@ -493,7 +501,7 @@
 /* Button title that skips the current action */
 "skipButton"="Überspringen";
 /* Text shown to explain what means 'Enable Camera Uploads'. The 'Cloud Drive' is the MEGA section, so please keep consistency */
-"automaticallyBackupYourPhotos"="Sichern Sie Ihre Fotos automatisch in Ihr Cloud Drive.";
+"Automatically backup your photos and videos to the Cloud Drive."="Automatically backup your photos and videos to your Cloud Drive.";
 /* Button title that enables the functionality 'Camera Uploads', which uploads all the photos in your device to MEGA */
 "enableCameraUploadsButton"="Kamera-Uploads aktivieren";
 /* Success message shown when Camera Uploads has been enabled */
@@ -504,6 +512,14 @@
 "cameraUploadsPendingFile"="Upload läuft, noch eine Datei";
 /* Message shown while uploading files. Plural. */
 "cameraUploadsPendingFiles"="Upload läuft, noch %lu Dateien";
+/* Message shown when camera upload paused because of no WiFi. Singular. */
+"Upload paused because of no WiFi, 1 file pending"="Upload paused due to no WiFi connection, 1 file pending";
+/* Message shown when camera upload paused because of no WiFi. Plural. */
+"Upload paused because of no WiFi, %lu files pending"="Upload paused due to no WiFi connection, %lu files pending";
+/* Message shown the pending video file when photos uploaded and video upload is not enabled. Singular. */
+"Photos uploaded, video uploads are off, 1 video not uploaded"="Photos uploaded, video uploads are off; 1 video not uploaded";
+/* Message shown the pending video files when photos uploaded and video upload is not enabled. Plural. */
+"Photos uploaded, video uploads are off, %lu videos not uploaded"="Photos uploaded, video uploads are off; %lu videos not uploaded";
 /* Singular, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 1 file. */
 "indexOfTotalFile"="%1$d von %2$d Datei";
 /* Plural, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 3 files. */
@@ -656,12 +672,74 @@
 "on"="An";
 /* Header to explain that 'Upload videos', 'Use cellular connection' and 'Only when charging' are options of the Camera Uploads */
 "options"="Optionen";
+/* A hint to show one option is recommended by MEGA */
+"(Recommended)"="(Recommended)";
+/* Header to introduce how to deal with HEIC format photos in Camera Uplaod */
+"SAVE HEIC PHOTOS AS"="Save HEIC photos as";
+/* Footer for HEIC format section */
+"We recommend JPG, as its the most compatible format for photos."="We recommend JPG, as it is the most compatible format for photos.";
+/* Header to introduce how to deal with HEVC format videos in Camera Uplaod */
+"SAVE HEVC VIDEOS AS"="Save HEVC videos as";
+/* Footer for HEVC format section */
+"We recommend H.264, as its the most compatible format for videos."="We recommend H.264, as it is the most compatible format for videos.";
+/* Footer for video compression quality */
+"Compression quality when to transcode HEVC videos to H.264 format."="Compression quality when HEVC videos are transcoded to H.264 format.";
 /* Option title to enable upload videos with Camera Uploads */
 "uploadVideosLabel"="Videos uploaden";
 /* Option title to enable Camera Uploads only when the device is charging */
 "onlyWhenChargingLabel"="Nur am Ladegerät";
-/* Footer text to explain the Camera Uploads functionality */
-"cameraUploads_footer"="Wenn aktiviert, werden Ihre Fotos und Videos automatisch hochgeladen";
+/* Footer text for Camera Upload switch section when camera upload is disabled */
+"When enabled, photos will be uploaded."="When enabled, photos will be uploaded.";
+/* Footer text for Camera Upload switch section when only photos upload is enabled */
+"Photos will be uploaded to Camera Uploads folder."="Photos will be uploaded to the Camera Uploads folder.";
+/* Footer text for Camera Upload switch section when photos and videos upload is enabled */
+"Photos and videos will be uploaded to Camera Uploads folder."="Photos and videos will be uploaded to the Camera Uploads folder.";
+/* Title to show for upload in background */
+"Upload in Background"="Upload in Background";
+/* Title for the location based background upload message */
+"Enable location services for background upload"="Enable location services for background upload";
+/* Message for the location based background upload when the location data access is not denied by users */
+"MEGA can periodically start camera uploads in background when your location changes."="MEGA can periodically start camera uploads in the background when your location changes.";
+/* Message for the location based background upload when the location data access is denied by users */
+"Please select “Always” at your Location page in Settings, then MEGA can periodically start camera uploads in background when your location changes."="Please select “Always” at your Location page in Settings, so that MEGA can periodically start camera uploads in background when your location changes.";
+/* Title for turn on a feature */
+"Turn On"="Turn On";
+/* Title for turn on a feature in settings */
+"Turn On in Settings"="Turn On in Settings";
+/* Footer for video uploads switch section when enabled */
+"Videos will be uploaded to the Camera Uploads folder."="Videos will be uploaded to the Camera Uploads folder.";
+/* Footer for video uploads switch section when disabled */
+"When enabled, videos will be uploaded."="When enabled, videos will be uploaded.";
+/* Title for new camera upload feature */
+"New Camera Upload!"="New Camera Upload Options!";
+/* A messge for camera upload v2 migration */
+"Now you can choose to convert the HEIF/HEVC photos and videos to the most compatible JPEG/H.264 formats."="Now you can choose to convert HEIC/HEVC photos and videos to the more widely compatible JPEG/H.264 formats.";
+/* Title for an action to use most compatible formats */
+"Use Most Compatible Formats"="Use Most Compatible Formats";
+/* Title for custom settings */
+"Custom Settings"="Custom Settings";
+/* Title to show when device local storage is full */
+"%@ Storage Full"="%@ Storage Full";
+/* Detail for local storage full situation */
+"You do not have enough storage to upload camera. Free up space by deleting unneeded apps, videos or music. You can manage your storage in %@"="You do not have enough storage for further camera uploads. Free up space by deleting unneeded apps, videos or music. You can manage your storage in %@";
+/* Navigation path for Storage settings in iOS */
+"Settings > General > %@ Storage"="Settings > General > %@ Storage";
+/* Title of the switch to config whether to upload videos for Live Photos */
+"Upload videos for Live Photos"="Upload videos for Live Photos";
+/* Title of the switch to config whether to upload all burst photos */
+"Upload all burst photos"="Upload all burst photos";
+/* Title of the switch to config whether to upload Hidden Album */
+"Upload Hidden Album"="Upload Hidden Album";
+/* Footer description when upload videos for Live Photos is enabled */
+"The video and the photo in each Live Photo will be uploaded."="The photo and video versions of each Live Photo will be uploaded.";
+/* Footer description when upload videos for Live Photos is disabled */
+"Only the photo in each Live Photo will be uploaded."="Only the photo version of each Live Photo will be uploaded.";
+/* Footer description when upload all burst photos is enabled */
+"All the photos from your burst photo sequences will be uploaded."="All the photos from your burst photo sequences will be uploaded.";
+/* Footer description when upload all burst photos is disabled */
+"Only the representative photos from your burst photo sequences will be uploaded."="Only favourite photos from your burst photo sequences will be uploaded.";
+/* Footer description when upload Hidden Album is enabled */
+"The Hidden Album is where you hide photos or videos in your device Photos app."="The Hidden Album is where you hide photos or videos in your device’s Photos app.";
 /* App means “Application” */
 "App version"="App Version";
 /* Title of the label where the SDK version is shown */
@@ -1091,6 +1169,8 @@
 "voiceAndVideoCalls"="Audio- und Videoanrufe";
 /* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature. */
 "useMobileData"="Mobildatennutzung erlauben";
+/* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for videos. */
+"Use Mobile Data for Videos"="Use Mobile Data for Videos";
 /* A header in the Chat settings. This changes the user's status to Away after some time of inactivity. */
 "autoAway"="Auto-Abwesend";
 /* */
@@ -1315,7 +1395,7 @@
 /* Label to show that an error related with an Incomplete SDK operation. */
 "Incomplete"="Unvollständig";
 /* Label to show that an error related with the decryption process of a node occurs during a SDK operation. */
-"Invalid key/Decryption error"="Krypto-Fehler";
+"Invalid key/Decryption error"="Fehler bei der Entschlüsselung";
 /* Label to show that an error related with a bad session ID occurs during a SDK operation. */
 "Bad session ID"="Ungültige Session-ID";
 /* Label to show that an error related with a blocked account occurs during a SDK operation. */
@@ -1625,7 +1705,7 @@
 /* Title label that explains that the user is going to be asked for the microphone and camera permission */
 "Enable Microphone and Camera"="Mikrofon und Kamera aktivieren";
 /* Detailed explanation of why the user should give permission to access to the camera and the microphone */
-"To make encrypted voice and video calls, allow MEGA access to your Camera and Microphone"="Für verschlüsselte Audio- und Videogespräche benötigt MEGA Zugriff auf Ihre Kamera und Ihr Mikrofon";
+"To make encrypted voice and video calls, allow MEGA access to your Camera and Microphone"="To send voice messages and make encrypted voice and video calls, allow MEGA access to your Camera and Microphone";
 /* Title label that explains that the user is going to be asked for the notifications permission */
 "Enable Notifications"="Benachrichtigungen";
 /* Detailed explanation of why the user should give permission to deliver notifications */
@@ -1659,9 +1739,9 @@
 /* Label for any ‘Days’ button, link, text, title, etc. - (String as short as possible). */
 "Days"="Days";
 /* New server-side rubbish-bin cleaning scheduler description (for Free users) */
-"The Rubbish Bin is cleaned for you automatically. The minimum period is 7 days and your maximum period is 30 days."="The Rubbish Bin is cleared for you automatically. The minimum period is 7 days and the maximum period is 30 days.";
+"The Rubbish Bin is cleaned for you automatically. The minimum period is 7 days and your maximum period is 30 days."="Die Leerung des Papierkorbs erfolgt automatisch. Die Aufbewahrungsfrist beträgt zwischen sieben und 30 Tagen.";
 /* New server-side rubbish-bin cleaning scheduler description (for PRO users) */
-"The Rubbish Bin can be cleaned for you automatically. The minimum period is 7 days."="The Rubbish Bin can be cleared for you automatically. The minimum period is 7 days.";
+"The Rubbish Bin can be cleaned for you automatically. The minimum period is 7 days."="Der Papierkorb kann für Sie automatisch geleert werden. Die minimale Aufbewahrungsdauer beträgt sieben Tage.";
 /* Description shown when you try to disable the feature Rubbish-Bin Cleaning Scheduler and you are a free user */
 "To disable the Rubbish-Bin Cleaning Scheduler or set a longer retention period, you need to subscribe to a PRO plan."="Eine automatische Leerung nach mehr als 30 Tagen (oder das Abschalten derselben) erfordert PRO-Status.";
 /* Confirmation dialog for the button that logs the user out of all sessions except the current one. */
@@ -1689,13 +1769,13 @@
 /* Title shown in a cell to allow the users enable the 'Encrypted Key Rotation' */
 "Enable Encrypted Key Rotation"="Schlüsselrotation aktivieren";
 /* Label in a cell where you can get the chat link */
-"Get Chat Link"="Get chat link";
+"Get Chat Link"="Chatlink erstellen";
 /* Footer text to explain what means 'Encrypted Key Rotation' */
 "Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages."="Schlüsselrotation ist etwas sicherer, jedoch können Sie keine Chatlinks exportieren, und alte Nachrichten bleiben neuen Teilnehmern unzugänglich.";
 /* Shown as an error message when the user selects "create chat link", but haven't entered a title for the newly created room */
 "To create a chat link you must name the group."="Link-Export ist nur für Chats mit gesetztem Titel erlaubt.";
 /* Label shown in a cell where you can enable a switch to get a chat link */
-"Chat Link"="Chat link";
+"Chat Link"="Chatlink";
 /* Message shown when there is an active chat link that can be deleted */
 "Delete Chat Link"="Chatlink löschen";
 /* Button text in public chat previews that allows the user to join the chat */
@@ -1827,7 +1907,7 @@
 /* */
 "Yesterday"="Gestern";
 /* Title of the button to share a location in a chat */
-"Send This Location"="Send This Location";
+"Send This Location"="Diesen Ort senden";
 /* Title of the alert that allows change between different maps: Standard, Satellite or Hybrid. */
 "Map settings"="Map settings";
 /* Type of data displayed in a map view. A street map that shows the position of all roads and some road names. */
@@ -1839,11 +1919,11 @@
 /* Label to give feedback to the user when he is going to share his location, indicating that it may not be the exact location. */
 "Accurate to %d meters"="Accurate to %d meters";
 /* Alert title shown when the user opens a shared Geolocation for the first time from any client, we will show a confirmation dialog warning the user that he is now leaving the E2EE paradigm. */
-"Send Location"="Send Location";
+"Send Location"="Standort senden";
 /* Message shown when the user opens a shared Geolocation for the first time from any client, we will show a confirmation dialog warning the user that he is now leaving the E2EE paradigm. */
-"This location will be opened using a third party maps provider outside the end-to-end encrypted MEGA platform."="This location will be opened using a third party maps provider outside the end-to-end encrypted MEGA platform.";
+"This location will be opened using a third party maps provider outside the end-to-end encrypted MEGA platform."="Der Standort wird mit einer Dritt-App außerhalb der sicheren MEGA-Umgebung angezeigt. Bitte beachten Sie mögliche Konsequenzen für die Privatsphäre der betroffenen Personen.";
 /* Text shown in location-type messages */
-"Pinned Location"="Pinned Location";
+"Pinned Location"="Standort";
 /* Plural of participant. 2 participants */
 "%d participants"="%d Teilnehmer";
 /* Singular of participant. 1 participant */
@@ -1853,7 +1933,7 @@
 /* Tooltip shown when the user presses but does not hold the microphone icon to send a voice clip */
 "Tap and hold %@ to record, release to send"="Tap and hold %@ to record, release to send";
 /* Message shown when there is an ongoing call and the user tries to record a voice message */
-"It is not possible to record voice messages while there is a call in progress"="It is not possible to record voice messages while there is a call in progress.";
+"It is not possible to record voice messages while there is a call in progress"="Sie können während eines laufenden Gesprächs keine Sprachnachricht aufzeichnen";
 /* Text to inform the user there is an active call and is not participating */
 "Ongoing Call"="Laufendes Gespräch";
 /* Message shown when there is an ongoing call and the user tries to play an audio or video */
@@ -1921,8 +2001,20 @@
 /* Button title to go to the iOS Settings to enable 'Mobile Data' for the MEGA app. */
 "Turn Mobile Data on"="Turn Mobile Data on";
 /* Extra information shown when the user has disabled the 'Mobile Data' setting for MEGA in the iOS Settings. */
-"You can turn on mobile data for this app in Settings."="You can turn on mobile data for this App in Settings.";
+"You can turn on mobile data for this app in Settings."="You can turn on mobile data for this App in the device’s Settings.";
 /* title of the alert dialog when the user is changing the API URL to staging */
 "Change to a test server?"="Auf den Testserver wechseln?";
 /* text of the alert dialog when the user is changing the API URL to staging */
 "Are you sure you want to change to a test server? Your account may suffer irrecoverable problems"="Auf den Testserver wechseln? Dies ist mit erheblichen Risiken behaftet.";
+/* Destination folder name of chat files */
+"My chat files"="Chatdateien";
+/* Label indicating that the passcode (pin) view will be displayed if the application goes back to foreground after being x time in background. Examples: require passcode immediately, require passcode after 5 minutes. */
+"Require passcode"="Require passcode";
+/* Label indicating that the enter passcode (pin) view will be displayed immediately if the application goes back to foreground after being in background. */
+"Immediately"="Immediately";
+/* Popup notification text on mouse-over of taken down file. */
+"This file has been the subject of a takedown notice."="Diese Datei wurde wegen einer Beschwerde gelöscht.";
+/* Popup notification text on mouse-over taken down folder. */
+"This folder has been the subject of a takedown notice."="Dieser Ordner wurde wegen einer Beschwerde gelöscht.";
+/* File Manager -> Context menu item for taken down file or folder, for dispute takedown. */
+"Dispute Takedown"="Löschbeanstandung";

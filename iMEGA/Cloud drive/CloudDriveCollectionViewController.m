@@ -37,7 +37,7 @@
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     NSInteger numberOfRows = 0;
     if ([MEGAReachabilityManager isReachable]) {
-        if (self.cloudDrive.searchController.isActive) {
+        if (self.cloudDrive.searchController.searchBar.text.length >= kMinimumLettersToStartTheSearch) {
             numberOfRows = self.cloudDrive.searchNodesArray.count;
         } else {
             numberOfRows = self.cloudDrive.nodes.size.integerValue;
@@ -48,13 +48,21 @@
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     
-    MEGANode *node = self.cloudDrive.searchController.isActive ? [self.cloudDrive.searchNodesArray objectAtIndex:indexPath.row] : [self.cloudDrive.nodes nodeAtIndex:indexPath.row];
+    MEGANode *node = self.cloudDrive.searchController.searchBar.text.length >= kMinimumLettersToStartTheSearch ? [self.cloudDrive.searchNodesArray objectAtIndex:indexPath.row] : [self.cloudDrive.nodes nodeAtIndex:indexPath.row];
 
     NodeCollectionViewCell *cell = [self.collectionView dequeueReusableCellWithReuseIdentifier:@"NodeCollectionID" forIndexPath:indexPath];
     [cell configureCellForNode:node];
     
+    return cell;
+}
+
+- (void)collectionView:(UICollectionView *)collectionView willDisplayCell:(UICollectionViewCell *)cell forItemAtIndexPath:(NSIndexPath *)indexPath {
+    MEGANode *node = self.cloudDrive.searchController.isActive ? [self.cloudDrive.searchNodesArray objectAtIndex:indexPath.row] : [self.cloudDrive.nodes nodeAtIndex:indexPath.row];
+    
+    NodeCollectionViewCell *nodeCell = (NodeCollectionViewCell *)cell;
+    
     if (self.collectionView.allowsMultipleSelection) {
-        cell.selectImageView.hidden = NO;
+        nodeCell.selectImageView.hidden = NO;
         BOOL selected = NO;
         for (MEGANode *tempNode in self.cloudDrive.selectedNodesArray) {
             if (tempNode.handle == node.handle) {
@@ -62,18 +70,16 @@
                 [self.collectionView selectItemAtIndexPath:indexPath animated:NO scrollPosition:UICollectionViewScrollPositionNone];
             }
         }
-        [cell selectCell:selected];
+        [nodeCell selectCell:selected];
     } else {
-        cell.selectImageView.hidden = YES;
+        nodeCell.selectImageView.hidden = YES;
     }
-    
-    return cell;
 }
 
 #pragma mark - UICollectionViewDelegate
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    MEGANode *node = self.cloudDrive.searchController.isActive ? [self.cloudDrive.searchNodesArray objectAtIndex:indexPath.row] : [self.cloudDrive.nodes nodeAtIndex:indexPath.row];
+    MEGANode *node = self.cloudDrive.searchController.searchBar.text.length >= kMinimumLettersToStartTheSearch ? [self.cloudDrive.searchNodesArray objectAtIndex:indexPath.row] : [self.cloudDrive.nodes nodeAtIndex:indexPath.row];
     
     if (collectionView.allowsMultipleSelection) {
         [self.cloudDrive.selectedNodesArray addObject:node];
@@ -92,32 +98,7 @@
         return;
     }
     
-    switch (node.type) {
-        case MEGANodeTypeFolder: {
-            CloudDriveViewController *cloudDriveVC = [self.storyboard instantiateViewControllerWithIdentifier:@"CloudDriveID"];
-            cloudDriveVC.parentNode = node;
-            cloudDriveVC.hideSelectorView = YES;
-            
-            if (self.cloudDrive.displayMode == DisplayModeRubbishBin) {
-                cloudDriveVC.displayMode = self.cloudDrive.displayMode;
-            }
-            
-            [self.navigationController pushViewController:cloudDriveVC animated:YES];
-            break;
-        }
-            
-        case MEGANodeTypeFile: {
-            if (node.name.mnz_isImagePathExtension || node.name.mnz_isVideoPathExtension) {
-                [self.cloudDrive showNode:node];
-            } else {
-                [node mnz_openNodeInNavigationController:self.cloudDrive.navigationController folderLink:NO];
-            }
-            break;
-        }
-            
-        default:
-            break;
-    }
+    [self.cloudDrive didSelectNode:node];
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath {
@@ -225,7 +206,7 @@
     CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.collectionView];
     NSIndexPath *indexPath = [self.collectionView indexPathForItemAtPoint:buttonPosition];
     
-    MEGANode *node = self.cloudDrive.searchController.isActive ? [self.cloudDrive.searchNodesArray objectAtIndex:indexPath.row] : [self.cloudDrive.nodes nodeAtIndex:indexPath.row];
+    MEGANode *node = self.cloudDrive.searchController.searchBar.text.length >= kMinimumLettersToStartTheSearch ? [self.cloudDrive.searchNodesArray objectAtIndex:indexPath.row] : [self.cloudDrive.nodes nodeAtIndex:indexPath.row];
     
     [self.cloudDrive showCustomActionsForNode:node sender:sender];
 }

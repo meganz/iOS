@@ -84,7 +84,7 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
     
     self.selectedItemsDictionary = [[NSMutableDictionary alloc] init];
     
-    self.editBarButtonItem.title = AMLocalizedString(@"edit", @"Caption of a button to edit the files that are selected");
+    self.editBarButtonItem.title = AMLocalizedString(@"select", @"Caption of a button to select files");
     
     [self.view addGestureRecognizer:[[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPress:)]];
     
@@ -228,9 +228,17 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
     
     NSString *progressText;
     if (uploadStats.pendingFilesCount == 1) {
-        progressText = AMLocalizedString(@"cameraUploadsPendingFile", @"Message shown while uploading files. Singular.");
+        if (CameraUploadManager.isCameraUploadPausedBecauseOfNoWiFiConnection) {
+            progressText = AMLocalizedString(@"Upload paused because of no WiFi, 1 file pending", nil);
+        } else {
+            progressText = AMLocalizedString(@"cameraUploadsPendingFile", @"Message shown while uploading files. Singular.");
+        }
     } else {
-        progressText = [NSString stringWithFormat:AMLocalizedString(@"cameraUploadsPendingFiles", @"Message shown while uploading files. Plural."), uploadStats.pendingFilesCount];
+        if (CameraUploadManager.isCameraUploadPausedBecauseOfNoWiFiConnection) {
+            progressText = [NSString stringWithFormat:AMLocalizedString(@"Upload paused because of no WiFi, %lu files pending", nil), uploadStats.pendingFilesCount];
+        } else {
+            progressText = [NSString stringWithFormat:AMLocalizedString(@"cameraUploadsPendingFiles", @"Message shown while uploading files. Plural."), uploadStats.pendingFilesCount];
+        }
     }
     self.photosUploadedLabel.text = progressText;
 }
@@ -390,8 +398,10 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
 #pragma mark - notifications
 
 - (void)didReceiveCameraUploadStatsChangedNotification {
-    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(reloadHeader) object:nil];
-    [self performSelector:@selector(reloadHeader) withObject:nil afterDelay:HeaderStateViewReloadTimeDelay];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(reloadHeader) object:nil];
+        [self performSelector:@selector(reloadHeader) withObject:nil afterDelay:HeaderStateViewReloadTimeDelay];
+    });
 }
 
 - (void)didReceiveInternetConnectionChangedNotification {
@@ -481,7 +491,7 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
             [self.toolbar setAlpha:1.0];
         }];
     } else {
-        self.editBarButtonItem.title = AMLocalizedString(@"edit", @"Caption of a button to edit the files that are selected");
+        self.editBarButtonItem.title = AMLocalizedString(@"select", @"Caption of a button to select files");
         
         allNodesSelected = NO;
         self.navigationItem.title = AMLocalizedString(@"cameraUploadsLabel", @"Title of one of the Settings sections where you can set up the 'Camera Uploads' options");
