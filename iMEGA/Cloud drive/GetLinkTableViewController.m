@@ -260,6 +260,11 @@
         self.expireDateSetLabel.text = self.expireDatePicker.date.mnz_formattedDateMediumStyle;
         [self showDatePicker];
     } else {
+        self.pending = self.nodesToExport.count;
+        for (MEGANode *node in self.nodesToExport) {
+            [MEGASdkManager.sharedMEGASdk exportNode:node expireTime:[NSDate dateWithTimeIntervalSince1970:0] delegate:self.exportDelegate];
+        }
+        
         [self hideDatePicker];
     }
     
