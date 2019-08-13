@@ -226,7 +226,7 @@
         }
             
         case ContactsModeFolderSharedWith: {
-            self.editBarButtonItem.title = AMLocalizedString(@"edit", @"Caption of a button to edit the files that are selected");
+            self.editBarButtonItem.title = AMLocalizedString(@"select", @"Caption of a button to select files");
             self.navigationItem.rightBarButtonItems = @[self.editBarButtonItem];
             
             UIBarButtonItem *flexibleItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
@@ -621,7 +621,7 @@
             cell.selectedBackgroundView = view;
         }
     } else {
-        self.editBarButtonItem.title = AMLocalizedString(@"edit", @"Caption of a button to edit the files that are selected");
+        self.editBarButtonItem.title = AMLocalizedString(@"select", @"Caption of a button to select files");
         self.selectedUsersArray = nil;
         [self.addBarButtonItem setEnabled:YES];
         

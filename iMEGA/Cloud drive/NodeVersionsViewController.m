@@ -40,7 +40,7 @@
     [super viewDidLoad];
 
     self.title = AMLocalizedString(@"versions", @"Title of section to display number of all historical versions of files.");
-    self.editBarButtonItem.title = AMLocalizedString(@"edit", @"Caption of a button to edit the files that are selected");
+    self.editBarButtonItem.title = AMLocalizedString(@"select", @"Caption of a button to select files");
 
     UIBarButtonItem *flexibleItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
     [self setToolbarItems:@[self.downloadBarButtonItem, flexibleItem, self.revertBarButtonItem, flexibleItem, self.removeBarButtonItem] animated:YES];
@@ -287,7 +287,7 @@
             cell.selectedBackgroundView = view;
         }
     } else {
-        self.editBarButtonItem.title = AMLocalizedString(@"edit", @"Caption of a button to edit the files that are selected");
+        self.editBarButtonItem.title = AMLocalizedString(@"select", @"Caption of a button to select files");
 
         allNodesSelected = NO;
         self.selectedNodesArray = nil;

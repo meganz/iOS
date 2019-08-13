@@ -26,7 +26,7 @@
     __weak __typeof__(CustomModalAlertViewController) *weakCustom = migrationVC;
     migrationVC.firstCompletion = ^{
         [weakCustom dismissViewControllerAnimated:YES completion:^{
-            [CameraUploadManager migrateCurrentSettingsToCameraUplaodV2];
+            [CameraUploadManager migrateCurrentSettingsToCameraUploadV2];
             CameraUploadManager.migratedToCameraUploadsV2 = YES;
             [CameraUploadManager.shared startCameraUploadIfNeeded];
         }];
