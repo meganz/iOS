@@ -35,7 +35,7 @@ static const NSUInteger kMinimumLettersToStartTheSearch = 1;
 - (void)updateNavigationBarTitle;
 - (void)toolbarActionsForNodeArray:(NSArray *)nodeArray;
 - (void)setToolbarActionsEnabled:(BOOL)boolValue;
-- (void)showNode:(MEGANode *)node;
 - (void)showCustomActionsForNode:(MEGANode *)node sender:(UIButton *)sender;
+- (void)didSelectNode:(MEGANode *)node;
 
 @end

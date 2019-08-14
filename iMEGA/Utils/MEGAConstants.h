@@ -55,3 +55,7 @@ extern NSString * const JPGFormat;
 extern NSString * const HEICFormat;
 extern NSString * const HEVCFormat;
 extern NSString * const H264Format;
+
+#pragma mark - MEGA URLS
+
+extern NSString * const MEGADisputeURL;
