@@ -38,6 +38,8 @@
 "emptyFolderMessage"="空のフォルダをダウンロードすることができません。";
 /* Message shown when the user clicks on a confirm account link that has already been used  */
 "accountAlreadyConfirmed"="あなたのアカウントは有効になっています。ログインしてください。";
+/* */
+"Your confirmation link is no longer valid. Your account may already be activated or you may have cancelled your registration."="あなたの確認リンクはもう有効ではありません。あなたのアカウントは既に有効になっているか、登録をキャンセルしたかもしれません。";
 /* Message shown when the user clicks on an link that is not valid */
 "linkNotValid"="リンク無効";
 /* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
@@ -50,6 +52,12 @@
 "decrypt"="復号化";
 /* Alert title shown when you have written a decryption key not valid */
 "decryptionKeyNotValid"="復号化鍵無効";
+/* This dialog message is used on the Password Decrypt dialog. The link is a password protected link so the user needs to enter the password to decrypt the link. */
+"To access this link, you will need its password."="このリンクをアクセスするには要パスワードです。";
+/* This dialog message is used on the Password Decrypt dialog as an instruction for the user. */
+"If you do not have the password, contact the creator of the link."="そのパスワードをお持ちではない場合、リンクの作成者に尋ねてください。";
+/* This placeholder text is used on the Password Decrypt dialog as an instruction for the user. */
+"Enter the password"="パスワードを入力して下さい";
 /* Alert title shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOut_alertTitle"="ログアウト済み";
 /* Alert message shown when your account has been closed through another client or the web by killing all your sessions */
@@ -493,7 +501,7 @@
 /* Button title that skips the current action */
 "skipButton"="省く";
 /* Text shown to explain what means 'Enable Camera Uploads'. The 'Cloud Drive' is the MEGA section, so please keep consistency */
-"automaticallyBackupYourPhotos"="自動的にクラウド・ドライブに写真をバックアップします";
+"Automatically backup your photos and videos to the Cloud Drive."="あなたの写真や動画をあなたのクラウドドライブに自動的にバックアップします。";
 /* Button title that enables the functionality 'Camera Uploads', which uploads all the photos in your device to MEGA */
 "enableCameraUploadsButton"="カメラアップロードを有効にする";
 /* Success message shown when Camera Uploads has been enabled */
@@ -504,6 +512,14 @@
 "cameraUploadsPendingFile"="アップロード中、1ファイル保留中";
 /* Message shown while uploading files. Plural. */
 "cameraUploadsPendingFiles"="アップロード中、%luファイル保留中";
+/* Message shown when camera upload paused because of no WiFi. Singular. */
+"Upload paused because of no WiFi, 1 file pending"="WiFi接続がないためアップロードを一時停止しました。1個のファイルを保留中";
+/* Message shown when camera upload paused because of no WiFi. Plural. */
+"Upload paused because of no WiFi, %lu files pending"="WiFi接続がないためアップロードを一時停止しました。%lu個のファイルを保留中";
+/* Message shown the pending video file when photos uploaded and video upload is not enabled. Singular. */
+"Photos uploaded, video uploads are off, 1 video not uploaded"="写真がアップロードされましたが、動画のアップロードはオフです。1本の動画がアップロードされていません";
+/* Message shown the pending video files when photos uploaded and video upload is not enabled. Plural. */
+"Photos uploaded, video uploads are off, %lu videos not uploaded"="写真がアップロードされましたが、動画のアップロードはオフです。%lu本の動画がアップロードされていません";
 /* Singular, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 1 file. */
 "indexOfTotalFile"="%1$d/%2$dファイル";
 /* Plural, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 3 files. */
@@ -656,12 +672,74 @@
 "on"="オン";
 /* Header to explain that 'Upload videos', 'Use cellular connection' and 'Only when charging' are options of the Camera Uploads */
 "options"="オプション";
+/* A hint to show one option is recommended by MEGA */
+"(Recommended)"="（推奨）";
+/* Header to introduce how to deal with HEIC format photos in Camera Uplaod */
+"SAVE HEIC PHOTOS AS"="HEIC写真の保存形式";
+/* Footer for HEIC format section */
+"We recommend JPG, as its the most compatible format for photos."="JPGは写真と最も互換性のある形式であるため、お勧めいたします。";
+/* Header to introduce how to deal with HEVC format videos in Camera Uplaod */
+"SAVE HEVC VIDEOS AS"="HEVC動画の保存形式";
+/* Footer for HEVC format section */
+"We recommend H.264, as its the most compatible format for videos."="H.264は動画で最も互換性のある形式であるため、お勧めいたします。";
+/* Footer for video compression quality */
+"Compression quality when to transcode HEVC videos to H.264 format."="HEVC動画をH.264形式にトランスコードしたときの圧縮品質。";
 /* Option title to enable upload videos with Camera Uploads */
-"uploadVideosLabel"="動画アップロード";
+"uploadVideosLabel"="動画をアップロード";
 /* Option title to enable Camera Uploads only when the device is charging */
 "onlyWhenChargingLabel"="チャージ中のみ";
-/* Footer text to explain the Camera Uploads functionality */
-"cameraUploads_footer"="有効にすると、写真と動画がアップロードされます。";
+/* Footer text for Camera Upload switch section when camera upload is disabled */
+"When enabled, photos will be uploaded."="有効にすると、写真がアップロードされます。";
+/* Footer text for Camera Upload switch section when only photos upload is enabled */
+"Photos will be uploaded to Camera Uploads folder."="写真はカメラアップロードフォルダにアップロードされます。";
+/* Footer text for Camera Upload switch section when photos and videos upload is enabled */
+"Photos and videos will be uploaded to Camera Uploads folder."="写真と動画はカメラアップロードフォルダにアップロードされます。";
+/* Title to show for upload in background */
+"Upload in Background"="バックグラウンドでアップロード";
+/* Title for the location based background upload message */
+"Enable location services for background upload"="バックグラウンドアップロード用に位置情報サービスを有効にする";
+/* Message for the location based background upload when the location data access is not denied by users */
+"MEGA can periodically start camera uploads in background when your location changes."="MEGAは、あなたの場所が変わっても、定期的にバックグラウンドでカメラのアップロードを開始できます。";
+/* Message for the location based background upload when the location data access is denied by users */
+"Please select “Always” at your Location page in Settings, then MEGA can periodically start camera uploads in background when your location changes."="設定のあなたの位置情報ページで「常に」を選択してください。それによりMEGAは、あなたの場所が変わっても、定期的にバックグラウンドでカメラのアップロードを開始できます。";
+/* Title for turn on a feature */
+"Turn On"="オンにする";
+/* Title for turn on a feature in settings */
+"Turn On in Settings"="設定でオンにする";
+/* Footer for video uploads switch section when enabled */
+"Videos will be uploaded to the Camera Uploads folder."="動画はカメラアップロードフォルダにアップロードされます。";
+/* Footer for video uploads switch section when disabled */
+"When enabled, videos will be uploaded."="有効にすると、動画がアップロードされます。";
+/* Title for new camera upload feature */
+"New Camera Upload!"="新しいカメラアップロードオプション！";
+/* A messge for camera upload v2 migration */
+"Now you can choose to convert the HEIF/HEVC photos and videos to the most compatible JPEG/H.264 formats."="HEIC/HEVC写真と動画を、より広く互換性があるJPEG/H.264形式に変換するように選択できるようになりました。";
+/* Title for an action to use most compatible formats */
+"Use Most Compatible Formats"="最も互換性のある形式を使用する";
+/* Title for custom settings */
+"Custom Settings"="カスタム設定";
+/* Title to show when device local storage is full */
+"%@ Storage Full"="%@ストレージがいっぱいです";
+/* Detail for local storage full situation */
+"You do not have enough storage to upload camera. Free up space by deleting unneeded apps, videos or music. You can manage your storage in %@"="それ以上のカメラアップロード用のストレージが十分ではありません。不要なアプリ、動画、音楽を削除してスペースを解放してください。%@でストレージを管理できます。";
+/* Navigation path for Storage settings in iOS */
+"Settings > General > %@ Storage"="設定 > 一般 > %@ ストレージ";
+/* Title of the switch to config whether to upload videos for Live Photos */
+"Upload videos for Live Photos"="ライブ写真用の動画をアップロード";
+/* Title of the switch to config whether to upload all burst photos */
+"Upload all burst photos"="すべてのバースト写真をアップロード";
+/* Title of the switch to config whether to upload Hidden Album */
+"Upload Hidden Album"="隠しアルバムをアップロード";
+/* Footer description when upload videos for Live Photos is enabled */
+"The video and the photo in each Live Photo will be uploaded."="各ライブ写真の写真と動画バージョンがアップロードされます。";
+/* Footer description when upload videos for Live Photos is disabled */
+"Only the photo in each Live Photo will be uploaded."="各ライブ写真の写真バージョンのみがアップロードされます。";
+/* Footer description when upload all burst photos is enabled */
+"All the photos from your burst photo sequences will be uploaded."="あなたのバースト写真シーケンスからの写真がすべてアップロードされます。";
+/* Footer description when upload all burst photos is disabled */
+"Only the representative photos from your burst photo sequences will be uploaded."="あなたのバースト写真シーケンスのお気に入りの写真のみがアップロードされます。";
+/* Footer description when upload Hidden Album is enabled */
+"The Hidden Album is where you hide photos or videos in your device Photos app."="隠しアルバムは、あなたの端末の写真アプリで非表示にしている写真や動画の場所です。";
 /* App means “Application” */
 "App version"="アプリ用";
 /* Title of the label where the SDK version is shown */
@@ -1091,6 +1169,8 @@
 "voiceAndVideoCalls"="音声通話とビデオ通話";
 /* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature. */
 "useMobileData"="モバイルデータを利用します";
+/* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for videos. */
+"Use Mobile Data for Videos"="動画にモバイルデータを使用する";
 /* A header in the Chat settings. This changes the user's status to Away after some time of inactivity. */
 "autoAway"="自動退席";
 /* */
@@ -1625,7 +1705,7 @@
 /* Title label that explains that the user is going to be asked for the microphone and camera permission */
 "Enable Microphone and Camera"="マイクとカメラを有効にする";
 /* Detailed explanation of why the user should give permission to access to the camera and the microphone */
-"To make encrypted voice and video calls, allow MEGA access to your Camera and Microphone"="音声メモを送信し、暗号化された音声およびビデオ通話を行うには、MEGAがあなたのカメラとマイクにアクセスするのを許可してください";
+"To make encrypted voice and video calls, allow MEGA access to your Camera and Microphone"="音声メッセージを送信し、暗号化された音声およびビデオ通話を行うには、MEGAがあなたのカメラとマイクにアクセスするのを許可してください";
 /* Title label that explains that the user is going to be asked for the notifications permission */
 "Enable Notifications"="通知設定";
 /* Detailed explanation of why the user should give permission to deliver notifications */
@@ -1853,7 +1933,7 @@
 /* Tooltip shown when the user presses but does not hold the microphone icon to send a voice clip */
 "Tap and hold %@ to record, release to send"="%@を長押しすると録音し、離すと送信します。";
 /* Message shown when there is an ongoing call and the user tries to record a voice message */
-"It is not possible to record voice messages while there is a call in progress"="It is not possible to record voice messages while there is a call in progress.";
+"It is not possible to record voice messages while there is a call in progress"="通話中にボイスメッセージの録音はできません。";
 /* Text to inform the user there is an active call and is not participating */
 "Ongoing Call"="継続中の通話";
 /* Message shown when there is an ongoing call and the user tries to play an audio or video */
@@ -1911,18 +1991,30 @@
 /* In some cases, a user may try to get the link for a chat room, but if such is not set by an operator - it would say "not link available" and not auto create it. */
 "No chat link available."="利用できるチャットリンクはありません。";
 /* Title of a dialog in which we request access to a specific permission, like the Location Services */
-"Please allow access"="Please allow access";
+"Please allow access"="アクセスを許可してください";
 /* Hint shown to the users, when they want to use the Location Services but they are disabled or restricted for MEGA */
-"Please go to the Privacy section in your device’s Setting. Enable Location Services and set MEGA to While Using the App or Always."="Please go to the Privacy section in your device’s Settings. Enable Location Services and set MEGA to While Using the App or Always.";
+"Please go to the Privacy section in your device’s Setting. Enable Location Services and set MEGA to While Using the App or Always."="端末の「設定」の「プライバシー」セクションに移動してください。位置情報サービスを有効にし、MEGAを「アプリの使用中」または「常に」に設定します。";
 /* Location Usage Description. In order to protect user's privacy, Apple requires a specific string explaining why location will be accessed. */
 "MEGA accesses your location when you elect to share it with your contacts."="連絡先と共有することをご選択された場合、MEGAはあなたの場所にアクセスいたします。";
 /* Information shown when the user has disabled the 'Mobile Data' setting for MEGA in the iOS Settings. */
-"Mobile Data is turned off"="Mobile Data is turned off";
+"Mobile Data is turned off"="モバイルデータがオフになっています";
 /* Button title to go to the iOS Settings to enable 'Mobile Data' for the MEGA app. */
-"Turn Mobile Data on"="Turn Mobile Data on";
+"Turn Mobile Data on"="モバイルデータをオンにする";
 /* Extra information shown when the user has disabled the 'Mobile Data' setting for MEGA in the iOS Settings. */
-"You can turn on mobile data for this app in Settings."="You can turn on mobile data for this App in Settings.";
+"You can turn on mobile data for this app in Settings."="端末の設定でこのアプリのモバイルデータをオンにできます。";
 /* title of the alert dialog when the user is changing the API URL to staging */
 "Change to a test server?"="テストサーバーに変更しますか？　";
 /* text of the alert dialog when the user is changing the API URL to staging */
 "Are you sure you want to change to a test server? Your account may suffer irrecoverable problems"="テストサーバーに変更してもよろしいですか？　アカウントに回復不能な問題が発生する可能性があります";
+/* Destination folder name of chat files */
+"My chat files"="私のチャットファイル";
+/* Label indicating that the passcode (pin) view will be displayed if the application goes back to foreground after being x time in background. Examples: require passcode immediately, require passcode after 5 minutes. */
+"Require passcode"="Require passcode";
+/* Label indicating that the enter passcode (pin) view will be displayed immediately if the application goes back to foreground after being in background. */
+"Immediately"="Immediately";
+/* Popup notification text on mouse-over of taken down file. */
+"This file has been the subject of a takedown notice."="このファイルは削除通知の対象となっています。";
+/* Popup notification text on mouse-over taken down folder. */
+"This folder has been the subject of a takedown notice."="このフォルダは削除通知の対象となっています。";
+/* File Manager -> Context menu item for taken down file or folder, for dispute takedown. */
+"Dispute Takedown"="異議申立による削除";

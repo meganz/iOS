@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina5_9" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14854.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina5_9" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14806.4"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -110,6 +108,7 @@
                         <outlet property="pieChartView" destination="HQW-yX-2Zj" id="ee7-TH-eQk"/>
                         <outlet property="rightToolbarItem" destination="Rck-W5-yGE" id="rWm-rZ-Z7d"/>
                         <outlet property="scrollView" destination="ulA-CI-VZp" id="oyd-Da-pqT"/>
+                        <outlet property="scrollViewTrailingConstraint" destination="74B-e7-8rm" id="CER-Bv-MAS"/>
                         <outlet property="statusBarBackground" destination="PCJ-Sw-nnM" id="QXl-Rh-SvD"/>
                         <outlet property="toolbar" destination="Z54-Be-FUS" id="BbJ-Aa-yik"/>
                     </connections>

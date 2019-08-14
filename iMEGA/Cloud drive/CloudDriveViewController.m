@@ -16,6 +16,7 @@
 
 #import "DevicePermissionsHelper.h"
 #import "Helper.h"
+#import "MEGAConstants.h"
 #import "MEGACreateFolderRequestDelegate.h"
 #import "MEGAMoveRequestDelegate.h"
 #import "MEGANode+MNZCategory.h"
@@ -28,6 +29,7 @@
 #import "MEGAShareRequestDelegate.h"
 #import "MEGAStore.h"
 #import "NSMutableArray+MNZCategory.h"
+#import "NSURL+MNZCategory.h"
 #import "UITextField+MNZCategory.h"
 
 #import "BrowserViewController.h"
@@ -786,6 +788,27 @@ static const NSTimeInterval kSearchTimeDelay = .5;
     }
 }
 
+#pragma mark - Public
+
+- (void)didSelectNode:(MEGANode *)node {
+    if (node.isTakenDown) {
+        NSString *alertMessage = node.isFolder ? AMLocalizedString(@"This folder has been the subject of a takedown notice.", @"Popup notification text on mouse-over taken down folder.") : AMLocalizedString(@"This file has been the subject of a takedown notice.", @"Popup notification text on mouse-over of taken down file.");
+        
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:alertMessage preferredStyle:UIAlertControllerStyleAlert];
+        [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"openButton", @"Button title to trigger the action of opening the file without downloading or opening it.") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            node.isFolder ? [self openFolderNode:node] : [self openFileNode:node];
+        }]];
+        [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"Dispute Takedown", @"File Manager -> Context menu item for taken down file or folder, for dispute takedown.") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            [[NSURL URLWithString:MEGADisputeURL] mnz_presentSafariViewController];
+        }]];
+        [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
+        
+        [self presentViewController:alertController animated:YES completion:nil];
+    } else {
+        node.isFolder ? [self openFolderNode:node] : [self openFileNode:node];
+    }
+}
+
 #pragma mark - Private
 
 - (void)reloadUI {
@@ -1279,6 +1302,26 @@ static const NSTimeInterval kSearchTimeDelay = .5;
     } else {
         [self reloadData];
     }
+}
+
+- (void)openFileNode:(MEGANode *)node {
+    if (node.name.mnz_isImagePathExtension || node.name.mnz_isVideoPathExtension) {
+        [self showNode:node];
+    } else {
+        [node mnz_openNodeInNavigationController:self.navigationController folderLink:NO];
+    }
+}
+
+- (void)openFolderNode:(MEGANode *)node {
+    CloudDriveViewController *cloudDriveVC = [self.storyboard instantiateViewControllerWithIdentifier:@"CloudDriveID"];
+    cloudDriveVC.parentNode = node;
+    cloudDriveVC.hideSelectorView = YES;
+    
+    if (self.displayMode == DisplayModeRubbishBin) {
+        cloudDriveVC.displayMode = self.displayMode;
+    }
+    
+    [self.navigationController pushViewController:cloudDriveVC animated:YES];
 }
 
 #pragma mark - IBActions
