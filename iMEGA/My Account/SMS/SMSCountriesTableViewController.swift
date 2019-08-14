@@ -1,11 +1,11 @@
 
 import UIKit
 
-protocol CallingCountriesTableViewControllerDelegate: class {
-    func callingCountriesTableViewController(_ controller: CallingCountriesTableViewController, didSelectCountry country:CallingCountry)
+protocol SMSCountriesTableViewControllerDelegate: class {
+    func countriesTableViewController(_ controller: SMSCountriesTableViewController, didSelectCountry country:SMSCountry)
 }
 
-class CallingCountriesTableViewController: UITableViewController {
+class SMSCountriesTableViewController: UITableViewController {
     
     private let countryCellReuseId = "countryCell"
     
@@ -14,9 +14,9 @@ class CallingCountriesTableViewController: UITableViewController {
     
     private lazy var countrySections = self.buildCountrySections()
     
-    private weak var delegate: CallingCountriesTableViewControllerDelegate?
+    private weak var delegate: SMSCountriesTableViewControllerDelegate?
     
-    init(countryCallingCodeDict: [String: MEGAStringList], delegate: CallingCountriesTableViewControllerDelegate? = nil) {
+    init(countryCallingCodeDict: [String: MEGAStringList], delegate: SMSCountriesTableViewControllerDelegate? = nil) {
         self.countryCallingCodeDict = countryCallingCodeDict
         self.delegate = delegate
         super.init(style: .plain)
@@ -39,30 +39,31 @@ class CallingCountriesTableViewController: UITableViewController {
         navigationController?.isNavigationBarHidden = false
     }
     
-    private func buildCountrySections() -> [[CallingCountry]] {
+    private func buildCountrySections() -> [[SMSCountry]] {
         guard let appLanguageId = LocalizationSystem.sharedLocal()?.getLanguage() else {
             return []
         }
         
         let appLocale = Locale(identifier: Locale.identifier(fromComponents: [NSLocale.Key.languageCode.rawValue : appLanguageId]))
         let allCountries = countryCallingCodeDict.map {
-            CallingCountry(countryCode: $0.key, countryLocalizedName: appLocale.localizedString(forRegionCode: $0.key), callingCode: $0.value.first)
+            SMSCountry(countryCode: $0.key, countryLocalizedName: appLocale.localizedString(forRegionCode: $0.key), callingCode: $0.value.first)
             }.compactMap { $0 }
         
-        var sections = collation.sectionTitles.map { _ in [CallingCountry]() }
+        var sections = collation.sectionTitles.map { _ in [SMSCountry]() }
         for country in allCountries {
-            let sectionIndex = collation.section(for: country, collationStringSelector: #selector(getter: CallingCountry.countryLocalizedName))
+            let sectionIndex = collation.section(for: country, collationStringSelector: #selector(getter: SMSCountry.countryLocalizedName))
             sections[sectionIndex].append(country)
         }
         
         return sections.map {
-            collation.sortedArray(from: $0, collationStringSelector: #selector(getter: CallingCountry.countryLocalizedName)) as? [CallingCountry]
+            collation.sortedArray(from: $0, collationStringSelector: #selector(getter: SMSCountry.countryLocalizedName)) as? [SMSCountry]
             }.compactMap { $0 }
     }
 }
 
 // MARK: - UITableViewDataSource, UITableViewDelegate
-extension CallingCountriesTableViewController {
+
+extension SMSCountriesTableViewController {
     override func numberOfSections(in tableView: UITableView) -> Int {
         return collation.sectionTitles.count
     }
@@ -91,6 +92,6 @@ extension CallingCountriesTableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        delegate?.callingCountriesTableViewController(self, didSelectCountry: countrySections[indexPath.section][indexPath.row])
+        delegate?.countriesTableViewController(self, didSelectCountry: countrySections[indexPath.section][indexPath.row])
     }
 }

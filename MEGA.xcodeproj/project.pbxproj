@@ -833,7 +833,7 @@
 		A8F6E8941F9E770C0087859C /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9432291D1EDD83FF007DB542 /* MobileCoreServices.framework */; };
 		B60102C522E172FC00A92C17 /* VerificationCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B60102C422E172FC00A92C17 /* VerificationCodeViewController.swift */; };
 		B60102C722E5749E00A92C17 /* UIViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B60102C622E5749E00A92C17 /* UIViewController+Additions.swift */; };
-		B60102C922E6AB7700A92C17 /* PhoneNumber.swift in Sources */ = {isa = PBXBuildFile; fileRef = B60102C822E6AB7700A92C17 /* PhoneNumber.swift */; };
+		B60102C922E6AB7700A92C17 /* SMSPhoneNumber.swift in Sources */ = {isa = PBXBuildFile; fileRef = B60102C822E6AB7700A92C17 /* SMSPhoneNumber.swift */; };
 		B6031EE52202A6BF00F7EAA1 /* NodesFetchListenerOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = B6031EE42202A6BF00F7EAA1 /* NodesFetchListenerOperation.m */; };
 		B604890E223C45A400BA91F9 /* CameraUploadStore.m in Sources */ = {isa = PBXBuildFile; fileRef = B604890D223C45A400BA91F9 /* CameraUploadStore.m */; };
 		B604890F223C4F7A00BA91F9 /* MEGAStoreStack.m in Sources */ = {isa = PBXBuildFile; fileRef = B63F319F223BA8FA00B0C6A6 /* MEGAStoreStack.m */; };
@@ -885,8 +885,8 @@
 		B6A4A11A21A404DC007E7EEC /* NSError+CameraUpload.m in Sources */ = {isa = PBXBuildFile; fileRef = B6A4A11921A404DC007E7EEC /* NSError+CameraUpload.m */; };
 		B6B3C366222628C200918D44 /* TransferResponseValidator.m in Sources */ = {isa = PBXBuildFile; fileRef = B6B3C365222628C200918D44 /* TransferResponseValidator.m */; };
 		B6B73E6C22C47C6000ACAD48 /* MEGAStringList+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6B73E6B22C47C6000ACAD48 /* MEGAStringList+Additions.swift */; };
-		B6B73E6E22C5713700ACAD48 /* CallingCountriesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6B73E6D22C5713700ACAD48 /* CallingCountriesTableViewController.swift */; };
-		B6B73E7022C9A39500ACAD48 /* CallingCountry.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6B73E6F22C9A39500ACAD48 /* CallingCountry.swift */; };
+		B6B73E6E22C5713700ACAD48 /* SMSCountriesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6B73E6D22C5713700ACAD48 /* SMSCountriesTableViewController.swift */; };
+		B6B73E7022C9A39500ACAD48 /* SMSCountry.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6B73E6F22C9A39500ACAD48 /* SMSCountry.swift */; };
 		B6B959412193A9140064334D /* ThumbnailUploadOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = B6B959402193A9140064334D /* ThumbnailUploadOperation.m */; };
 		B6B959442193A91E0064334D /* PreviewUploadOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = B6B959432193A91E0064334D /* PreviewUploadOperation.m */; };
 		B6BB128621A4B73C00C16277 /* AttributeUploadManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B6BB128521A4B73C00C16277 /* AttributeUploadManager.m */; };
@@ -2091,7 +2091,7 @@
 		A8F6E8921F9E75D50087859C /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
 		B60102C422E172FC00A92C17 /* VerificationCodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerificationCodeViewController.swift; sourceTree = "<group>"; };
 		B60102C622E5749E00A92C17 /* UIViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Additions.swift"; sourceTree = "<group>"; };
-		B60102C822E6AB7700A92C17 /* PhoneNumber.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneNumber.swift; sourceTree = "<group>"; };
+		B60102C822E6AB7700A92C17 /* SMSPhoneNumber.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SMSPhoneNumber.swift; sourceTree = "<group>"; };
 		B6031EE32202A6BF00F7EAA1 /* NodesFetchListenerOperation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NodesFetchListenerOperation.h; sourceTree = "<group>"; };
 		B6031EE42202A6BF00F7EAA1 /* NodesFetchListenerOperation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NodesFetchListenerOperation.m; sourceTree = "<group>"; };
 		B604890C223C45A400BA91F9 /* CameraUploadStore.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CameraUploadStore.h; sourceTree = "<group>"; };
@@ -2180,8 +2180,8 @@
 		B6B3C364222628C200918D44 /* TransferResponseValidator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TransferResponseValidator.h; sourceTree = "<group>"; };
 		B6B3C365222628C200918D44 /* TransferResponseValidator.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TransferResponseValidator.m; sourceTree = "<group>"; };
 		B6B73E6B22C47C6000ACAD48 /* MEGAStringList+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAStringList+Additions.swift"; sourceTree = "<group>"; };
-		B6B73E6D22C5713700ACAD48 /* CallingCountriesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallingCountriesTableViewController.swift; sourceTree = "<group>"; };
-		B6B73E6F22C9A39500ACAD48 /* CallingCountry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallingCountry.swift; sourceTree = "<group>"; };
+		B6B73E6D22C5713700ACAD48 /* SMSCountriesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SMSCountriesTableViewController.swift; sourceTree = "<group>"; };
+		B6B73E6F22C9A39500ACAD48 /* SMSCountry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SMSCountry.swift; sourceTree = "<group>"; };
 		B6B9593F2193A9140064334D /* ThumbnailUploadOperation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ThumbnailUploadOperation.h; sourceTree = "<group>"; };
 		B6B959402193A9140064334D /* ThumbnailUploadOperation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ThumbnailUploadOperation.m; sourceTree = "<group>"; };
 		B6B959422193A91E0064334D /* PreviewUploadOperation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PreviewUploadOperation.h; sourceTree = "<group>"; };
@@ -4688,7 +4688,7 @@
 				B6A11A0D2283987D0017CD59 /* SMSVerification.storyboard */,
 				B69983212294E1EC0021BE31 /* SMSNavigationViewController.swift */,
 				B6A11A0B22828FEF0017CD59 /* SMSVerificationViewController.swift */,
-				B6B73E6D22C5713700ACAD48 /* CallingCountriesTableViewController.swift */,
+				B6B73E6D22C5713700ACAD48 /* SMSCountriesTableViewController.swift */,
 				B60102C422E172FC00A92C17 /* VerificationCodeViewController.swift */,
 				B6B73E7122C9A52F00ACAD48 /* DataModel */,
 			);
@@ -4698,8 +4698,8 @@
 		B6B73E7122C9A52F00ACAD48 /* DataModel */ = {
 			isa = PBXGroup;
 			children = (
-				B6B73E6F22C9A39500ACAD48 /* CallingCountry.swift */,
-				B60102C822E6AB7700A92C17 /* PhoneNumber.swift */,
+				B6B73E6F22C9A39500ACAD48 /* SMSCountry.swift */,
+				B60102C822E6AB7700A92C17 /* SMSPhoneNumber.swift */,
 			);
 			path = DataModel;
 			sourceTree = "<group>";
@@ -5326,7 +5326,7 @@
 				B6A4A11A21A404DC007E7EEC /* NSError+CameraUpload.m in Sources */,
 				B658D3B8218F9357004C0D64 /* PhotoUploadOperation.m in Sources */,
 				9419B6C01F20D1D700FEBE31 /* MEGAIndexer.m in Sources */,
-				B6B73E6E22C5713700ACAD48 /* CallingCountriesTableViewController.swift in Sources */,
+				B6B73E6E22C5713700ACAD48 /* SMSCountriesTableViewController.swift in Sources */,
 				832E1025202B09AE00BDD30F /* NodeActionCollectionViewCell.m in Sources */,
 				41B3B8301AD591A80093A88D /* PasscodeTableViewController.m in Sources */,
 				A87FF3C522F8244300EFD95C /* PasscodeDurationInfo.swift in Sources */,
@@ -5667,7 +5667,7 @@
 				A824AE18228B1D6800EDF27E /* FLEXArgumentInputStringView.m in Sources */,
 				41D21DF11D01AE89002E6296 /* NSArray+PureLayout.m in Sources */,
 				A85665C021A46B8100B010F8 /* MEGALocationMediaItem.m in Sources */,
-				B6B73E7022C9A39500ACAD48 /* CallingCountry.swift in Sources */,
+				B6B73E7022C9A39500ACAD48 /* SMSCountry.swift in Sources */,
 				5B48F8061F4C80F4001E3A29 /* AchievementsTableViewCell.m in Sources */,
 				41D21E721D01AEC3002E6296 /* CTAssetThumbnailStacks.m in Sources */,
 				E87C98361CC4CC1000E2B9E6 /* AdvancedTableViewController.m in Sources */,
@@ -5685,7 +5685,7 @@
 				836AEDE52018AD1F00868FC7 /* PasswordView.m in Sources */,
 				836E74C42099DC82005E2317 /* MEGAChatChangeGroupNameRequestDelegate.m in Sources */,
 				A824ADFD228B1D6800EDF27E /* FLEXColorExplorerViewController.m in Sources */,
-				B60102C922E6AB7700A92C17 /* PhoneNumber.swift in Sources */,
+				B60102C922E6AB7700A92C17 /* SMSPhoneNumber.swift in Sources */,
 				B6D90BCA22253BC700E0623A /* BackgroundUploadingTaskMonitor.m in Sources */,
 				41D21E621D01AEC3002E6296 /* CTAssetSelectionLabel.m in Sources */,
 				E83E102A1E1582E8002F3E2E /* ChatStatusTableViewController.m in Sources */,

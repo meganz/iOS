@@ -14,17 +14,18 @@ class SMSVerificationViewController: UIViewController {
     @IBOutlet private var errorMessageLabel: UILabel!
     @IBOutlet private var errorView: UIView!
     
-    private var currentCallingCountry: CallingCountry?
+    private var currentCountry: SMSCountry?
     
     private var countryCallingCodeDict: [String: MEGAStringList]?
-
-    // MARK: View lifecycle
+    
+    // MARK: - View lifecycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         title = "Verify Your Account"
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
-
+        
         disableAutomaticAdjustmentContentInsetsBehavior()
         
         NotificationCenter.default.addObserver(self, selector: #selector(didReceiveTextDidChangeNotification(_:)), name: UITextField.textDidChangeNotification, object: phoneNumberTextField)
@@ -43,7 +44,7 @@ class SMSVerificationViewController: UIViewController {
         
         NotificationCenter.default.addObserver(self, selector: #selector(didReceiveKeyboardWillShowNotification(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(didReceiveKeyboardWillHideNotification(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
-
+        
         if !headerImageView.isHidden {
             navigationController?.isNavigationBarHidden = true
         }
@@ -56,7 +57,8 @@ class SMSVerificationViewController: UIViewController {
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
-    // MARK: Network calls
+    // MARK: - Network calls
+    
     private func loadCountryCallingCodes() {
         SVProgressHUD.show()
         MEGASdkManager.sharedMEGASdk()?.getCountryCallingCodes(with: MEGAGenericRequestDelegate() {
@@ -87,46 +89,52 @@ class SMSVerificationViewController: UIViewController {
         }
         
         let appLocale = Locale(identifier: Locale.identifier(fromComponents: [NSLocale.Key.languageCode.rawValue : appLanguageId]))
-        guard let callingCountry = CallingCountry(countryCode: systemCurrentRegionCode, countryLocalizedName: appLocale.localizedString(forRegionCode: systemCurrentRegionCode), callingCode: callingCode) else {
+        guard let country = SMSCountry(countryCode: systemCurrentRegionCode, countryLocalizedName: appLocale.localizedString(forRegionCode: systemCurrentRegionCode), callingCode: callingCode) else {
             return
         }
         
-        configView(by: callingCountry)
+        configView(by: country)
     }
-
-    // MARK: UI actions
+    
+    // MARK: - UI actions
+    
     @IBAction private func didTapCountryView() {
         guard let countryCallingCodeDict = countryCallingCodeDict else {
             return
         }
         
-        navigationController?.pushViewController(CallingCountriesTableViewController(countryCallingCodeDict: countryCallingCodeDict, delegate: self), animated: true)
+        navigationController?.pushViewController(SMSCountriesTableViewController(countryCallingCodeDict: countryCallingCodeDict, delegate: self), animated: true)
     }
     
     @IBAction private func didTapNextButton() {
-        guard let callingCountry = currentCallingCountry, let localNumber = phoneNumberTextField.text else {
+        guard let country = currentCountry, let localNumber = phoneNumberTextField.text else {
             return
         }
         
-        let phoneNumber = PhoneNumber(callingCountry: callingCountry, localNumber: localNumber)
-        SVProgressHUD.show()
-        MEGASdkManager.sharedMEGASdk()?.sendSMSVerificationCode(toPhoneNumber: phoneNumber.fullPhoneNumber, delegate: MEGAGenericRequestDelegate() {
-            [weak self] request, error in
-            SVProgressHUD.dismiss()
-            if error.type == .apiOk {
-                self?.sendVerificationCodeSucceeded(with: phoneNumber)
-            } else {
-                self?.sendVerificationCodeFailed(with: error)
-            }
-        })
+        let numberKit = PhoneNumberKit()
+        do {
+            let phoneNumber = try numberKit.parse("\(country.displayCallingCode)\(localNumber)")
+            sendVerificationCodeSucceeded(with: phoneNumber)
+            SVProgressHUD.show()
+            MEGASdkManager.sharedMEGASdk()?.sendSMSVerificationCode(toPhoneNumber: numberKit.format(phoneNumber, toType: .e164), delegate: MEGAGenericRequestDelegate() {
+                [weak self] request, error in
+                SVProgressHUD.dismiss()
+                if error.type == .apiOk {
+                    self?.sendVerificationCodeSucceeded(with: phoneNumber)
+                } else {
+                    self?.sendVerificationCodeFailed(with: error)
+                }
+            })
+        } catch {
+            configErrorStyle(withErrorMessage: "The phone number is invalid")
+        }
     }
     
     private func sendVerificationCodeSucceeded(with number: PhoneNumber) {
         phoneNumberLabel.textColor = UIColor.mnz_gray999999()
         phoneNumberTextField.textColor = UIColor.black
         errorView.isHidden = true
-        let verificationCodeViewController = VerificationCodeViewController.instantiate(withStoryboardName: "SMSVerification")
-        navigationController?.pushViewController(verificationCodeViewController, animated: true)
+        navigationController?.pushViewController(VerificationCodeViewController.instantiate(with: number), animated: true)
     }
     
     private func sendVerificationCodeFailed(with error: MEGAError) {
@@ -145,9 +153,7 @@ class SMSVerificationViewController: UIViewController {
             errorMessage = "Error happended in sending message to your phone number"
         }
         
-        phoneNumberLabel.textColor = UIColor.mnz_redError()
-        phoneNumberTextField.textColor = UIColor.mnz_redError()
-        errorMessageLabel.text = errorMessage
+        configErrorStyle(withErrorMessage: errorMessage)
     }
     
     private func animateViewAdjustments(withDuration duration: Double, keyboardHeight: CGFloat) {
@@ -164,7 +170,8 @@ class SMSVerificationViewController: UIViewController {
         }
     }
     
-    // MARK: Notification handlers
+    // MARK: - Notification handlers
+    
     @objc private func didReceiveKeyboardWillShowNotification(_ notification: Notification) {
         guard let duration = (notification.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as? NSNumber)?.doubleValue,
             let keyboardHeight = (notification.userInfo?[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue.height else {
@@ -186,12 +193,19 @@ class SMSVerificationViewController: UIViewController {
             nextButton.isEnabled = !(phoneNumberTextField.text?.isEmpty ?? true)
         }
     }
-
-    // MARK: UI configurations
-    private func configView(by callingCountry: CallingCountry) {
-        currentCallingCountry = callingCountry
-        countryNameLabel.text = callingCountry.displayName
-        countryCodeLabel.text = callingCountry.displayCallingCode
+    
+    // MARK: - UI configurations
+    
+    private func configErrorStyle(withErrorMessage errorMessage: String?) {
+        phoneNumberLabel.textColor = UIColor.mnz_redError()
+        phoneNumberTextField.textColor = UIColor.mnz_redError()
+        errorMessageLabel.text = errorMessage
+    }
+    
+    private func configView(by country: SMSCountry) {
+        currentCountry = country
+        countryNameLabel.text = country.displayName
+        countryCodeLabel.text = country.displayCallingCode
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -220,6 +234,7 @@ class SMSVerificationViewController: UIViewController {
 }
 
 // MARK: - UIScrollViewDelegate
+
 extension SMSVerificationViewController: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         guard !headerImageView.isHidden else {
@@ -238,9 +253,10 @@ extension SMSVerificationViewController: UIScrollViewDelegate {
     }
 }
 
-// MARK: - CallingCountriesTableViewControllerDelegate
-extension SMSVerificationViewController: CallingCountriesTableViewControllerDelegate {
-    func callingCountriesTableViewController(_ controller: CallingCountriesTableViewController, didSelectCountry country: CallingCountry) {
+// MARK: - SMSCountriesTableViewControllerDelegate
+
+extension SMSVerificationViewController: SMSCountriesTableViewControllerDelegate {
+    func countriesTableViewController(_ controller: SMSCountriesTableViewController, didSelectCountry country: SMSCountry) {
         navigationController?.popToViewController(self, animated: true)
         configView(by: country)
     }

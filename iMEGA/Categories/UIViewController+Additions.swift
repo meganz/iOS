@@ -9,6 +9,6 @@ extension UIViewController {
     }
     
     class func instantiate<T>(withStoryboard storyboard: UIStoryboard, forViewController controller: T.Type) -> T {
-        return storyboard.instantiateViewController(withIdentifier: String(describing: type(of: self))) as! T
+        return storyboard.instantiateViewController(withIdentifier: String(describing: self)) as! T
     }
 }

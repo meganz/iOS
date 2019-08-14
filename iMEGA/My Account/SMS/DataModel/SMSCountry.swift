@@ -1,7 +1,7 @@
 
 import Foundation
 
-class CallingCountry {
+class SMSCountry {
     let countryCode: String
     @objc let countryLocalizedName: String
     let countryCallingCode: String
