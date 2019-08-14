@@ -352,63 +352,63 @@
                                                         <rect key="frame" x="0.0" y="76.5" width="341" height="120"/>
                                                         <subviews>
                                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="Erd-4t-pw3">
-                                                                <rect key="frame" x="37.5" y="0.0" width="266" height="60"/>
+                                                                <rect key="frame" x="31.5" y="0.0" width="278" height="60"/>
                                                                 <subviews>
-                                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="8" borderStyle="roundedRect" textAlignment="natural" adjustsFontSizeToFit="NO" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Hlj-p7-9bM">
-                                                                        <rect key="frame" x="0.0" y="0.0" width="41" height="60"/>
+                                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="8" borderStyle="roundedRect" textAlignment="center" adjustsFontSizeToFit="NO" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Hlj-p7-9bM">
+                                                                        <rect key="frame" x="0.0" y="0.0" width="43" height="60"/>
                                                                         <constraints>
-                                                                            <constraint firstAttribute="width" constant="41" id="WOA-Nf-9jB"/>
+                                                                            <constraint firstAttribute="width" constant="43" id="WOA-Nf-9jB"/>
                                                                             <constraint firstAttribute="height" constant="60" id="b2Y-xd-VPH"/>
                                                                         </constraints>
                                                                         <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="42"/>
                                                                         <textInputTraits key="textInputTraits" textContentType="one-time-code"/>
                                                                     </textField>
-                                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="46s-eB-i0W">
-                                                                        <rect key="frame" x="45" y="0.0" width="41" height="60"/>
+                                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" adjustsFontSizeToFit="NO" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="46s-eB-i0W">
+                                                                        <rect key="frame" x="47" y="0.0" width="43" height="60"/>
                                                                         <constraints>
                                                                             <constraint firstAttribute="height" constant="60" id="7v4-5T-ZnH"/>
-                                                                            <constraint firstAttribute="width" constant="41" id="jdi-Jr-T42"/>
+                                                                            <constraint firstAttribute="width" constant="43" id="jdi-Jr-T42"/>
                                                                         </constraints>
                                                                         <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="42"/>
                                                                         <textInputTraits key="textInputTraits" textContentType="one-time-code"/>
                                                                     </textField>
-                                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="aHw-j7-gy2">
-                                                                        <rect key="frame" x="90" y="0.0" width="41" height="60"/>
+                                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" adjustsFontSizeToFit="NO" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="aHw-j7-gy2">
+                                                                        <rect key="frame" x="94" y="0.0" width="43" height="60"/>
                                                                         <constraints>
                                                                             <constraint firstAttribute="height" constant="60" id="2Sa-6n-vZh"/>
-                                                                            <constraint firstAttribute="width" constant="41" id="S1l-YY-IUG"/>
+                                                                            <constraint firstAttribute="width" constant="43" id="S1l-YY-IUG"/>
                                                                         </constraints>
                                                                         <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="42"/>
                                                                         <textInputTraits key="textInputTraits" textContentType="one-time-code"/>
                                                                     </textField>
-                                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="5q1-Dx-U0M">
-                                                                        <rect key="frame" x="135" y="0.0" width="41" height="60"/>
+                                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" adjustsFontSizeToFit="NO" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="5q1-Dx-U0M">
+                                                                        <rect key="frame" x="141" y="0.0" width="43" height="60"/>
                                                                         <constraints>
                                                                             <constraint firstAttribute="height" constant="60" id="cXv-vW-xB7"/>
-                                                                            <constraint firstAttribute="width" constant="41" id="fCR-pI-DcE"/>
+                                                                            <constraint firstAttribute="width" constant="43" id="fCR-pI-DcE"/>
                                                                         </constraints>
                                                                         <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="42"/>
                                                                         <textInputTraits key="textInputTraits" textContentType="one-time-code"/>
                                                                     </textField>
-                                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="UbT-F2-TAs">
-                                                                        <rect key="frame" x="180" y="0.0" width="41" height="60"/>
+                                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" adjustsFontSizeToFit="NO" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="UbT-F2-TAs">
+                                                                        <rect key="frame" x="188" y="0.0" width="43" height="60"/>
                                                                         <constraints>
-                                                                            <constraint firstAttribute="width" constant="41" id="IwN-eN-izj"/>
+                                                                            <constraint firstAttribute="width" constant="43" id="IwN-eN-izj"/>
                                                                             <constraint firstAttribute="height" constant="60" id="oln-Pt-TqZ"/>
                                                                         </constraints>
                                                                         <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="42"/>
                                                                         <textInputTraits key="textInputTraits" textContentType="one-time-code"/>
                                                                     </textField>
-                                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="496-5F-bow">
-                                                                        <rect key="frame" x="225" y="0.0" width="41" height="60"/>
+                                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" adjustsFontSizeToFit="NO" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="496-5F-bow">
+                                                                        <rect key="frame" x="235" y="0.0" width="43" height="60"/>
                                                                         <constraints>
                                                                             <constraint firstAttribute="height" constant="60" id="3Sf-Xt-R98"/>
-                                                                            <constraint firstAttribute="width" constant="41" id="Orh-5u-oez"/>
+                                                                            <constraint firstAttribute="width" constant="43" id="Orh-5u-oez"/>
                                                                         </constraints>
                                                                         <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="42"/>

@@ -12,13 +12,25 @@ class VerificationCodeViewController: UIViewController {
     @IBOutlet private var errorMessageLabel: UILabel!
     @IBOutlet private var errorView: UIStackView!
     
+    var phoneNumber: PhoneNumber!
+    
+    class func instantiate(with phoneNumber: PhoneNumber) -> VerificationCodeViewController {
+        let controller = VerificationCodeViewController.instantiate(withStoryboardName: "SMSVerification")
+        controller.phoneNumber = phoneNumber
+        return controller
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        title = "Verify Your Account"
+        
         resendButton.tintColor = UIColor.mnz_green00BFA5()
         didnotReceiveCodeLabel.textColor = UIColor.gray
         errorImageView.tintColor = UIColor.mnz_redError()
         errorMessageLabel.textColor = UIColor.mnz_redError()
+        
+        phoneNumberLabel.text = PhoneNumberKit().format(phoneNumber, toType: .e164)
         
         configCodeFieldsAppearance()
     }
@@ -29,7 +41,8 @@ class VerificationCodeViewController: UIViewController {
         navigationController?.isNavigationBarHidden = false
     }
     
-    // MARK: config views
+    // MARK: - config views
+    
     private func configCodeFieldsAppearance(with error: MEGAError? = nil) {
         if let error = error {
             errorView.isHidden = false
@@ -69,7 +82,8 @@ class VerificationCodeViewController: UIViewController {
         }
     }
     
-    // MARK: UI Actions
+    // MARK: - UI Actions
+    
     @IBAction private func didTapResendButton() {
         navigationController?.popViewController(animated: true)
     }
@@ -87,4 +101,10 @@ class VerificationCodeViewController: UIViewController {
             }
         })
     }
+}
+
+// MARK: - UITextFieldDelegate
+
+extension VerificationCodeViewController: UITextFieldDelegate {
+    
 }
