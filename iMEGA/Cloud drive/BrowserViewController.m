@@ -69,7 +69,7 @@
     self.tableView.emptyDataSetDelegate = self;
     
     [self setupBrowser];
-    [self configureForPreviewing];
+    [self configPreviewingRegistration];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -120,7 +120,7 @@
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
     [super traitCollectionDidChange:previousTraitCollection];
     
-    [self configureForPreviewing];
+    [self configPreviewingRegistration];
 }
 
 #pragma mark - Private
