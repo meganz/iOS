@@ -82,7 +82,7 @@ static NSString *kisDirectory = @"kisDirectory";
     self.searchController.delegate = self;
     
     self.moreBarButtonItem.accessibilityLabel = AMLocalizedString(@"more", @"Top menu option which opens more menu options in a context menu.");
-    [self registerForceTouchCapability];
+    [self configureForPreviewing];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -149,7 +149,7 @@ static NSString *kisDirectory = @"kisDirectory";
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
     [super traitCollectionDidChange:previousTraitCollection];
     
-    [self registerForceTouchCapability];
+    [self configureForPreviewing];
 }
 
 - (void)willTransitionToTraitCollection:(UITraitCollection *)newCollection withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
