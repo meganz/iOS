@@ -15,6 +15,7 @@
 #import "NSString+MNZCategory.h"
 #import "UIAlertAction+MNZCategory.h"
 #import "UITableView+MNZCategory.h"
+#import "UIViewController+MNZCategory.h"
 
 #import "CallViewController.h"
 #import "ChatRoomCell.h"
@@ -27,8 +28,6 @@
 #import "MessagesViewController.h"
 
 @interface ChatRoomsViewController () <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAChatDelegate, UIScrollViewDelegate, MEGAChatCallDelegate, UISearchControllerDelegate>
-
-@property (nonatomic) id<UIViewControllerPreviewing> previewingContext;
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *addBarButtonItem;
@@ -84,6 +83,7 @@
     [self.tableView setContentOffset:CGPointMake(0, CGRectGetHeight(self.searchController.searchBar.frame))];
     
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+    [self registerForceTouchCapability];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -192,16 +192,7 @@
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
     [super traitCollectionDidChange:previousTraitCollection];
     
-    if ([self.traitCollection respondsToSelector:@selector(forceTouchCapability)]) {
-        if (self.traitCollection.forceTouchCapability == UIForceTouchCapabilityAvailable) {
-            if (!self.previewingContext) {
-                self.previewingContext = [self registerForPreviewingWithDelegate:self sourceView:self.view];
-            }
-        } else {
-            [self unregisterForPreviewingWithContext:self.previewingContext];
-            self.previewingContext = nil;
-        }
-    }
+    [self registerForceTouchCapability];
 }
 
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {

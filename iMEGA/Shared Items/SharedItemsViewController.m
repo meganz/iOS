@@ -19,12 +19,11 @@
 #import "SharedItemsTableViewCell.h"
 #import "CustomActionViewController.h"
 #import "NodeInfoViewController.h"
+#import "UIViewController+MNZCategory.h"
 
 @interface SharedItemsViewController () <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAGlobalDelegate, MEGARequestDelegate, MGSwipeTableCellDelegate, NodeInfoViewControllerDelegate, CustomActionViewControllerDelegate> {
     BOOL allNodesSelected;
 }
-
-@property (nonatomic) id<UIViewControllerPreviewing> previewingContext;
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *selectAllBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *editBarButtonItem;
@@ -106,6 +105,7 @@
     });
     
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+    [self registerForceTouchCapability];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -148,16 +148,7 @@
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
     [super traitCollectionDidChange:previousTraitCollection];
     
-    if ([self.traitCollection respondsToSelector:@selector(forceTouchCapability)]) {
-        if (self.traitCollection.forceTouchCapability == UIForceTouchCapabilityAvailable) {
-            if (!self.previewingContext) {
-                self.previewingContext = [self registerForPreviewingWithDelegate:self sourceView:self.view];
-            }
-        } else {
-            [self unregisterForPreviewingWithContext:self.previewingContext];
-            self.previewingContext = nil;
-        }
-    }
+    [self registerForceTouchCapability];
 }
 
 #pragma mark - Private
