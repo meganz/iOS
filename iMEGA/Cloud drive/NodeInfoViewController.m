@@ -52,6 +52,7 @@
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *closeBarButtonItem;
 
+@property (nonatomic, strong) NSMutableArray<MEGANode *> *nodeVersionsMutableArray;
 
 @end
 
@@ -96,6 +97,8 @@
     } else if (self.node.type == MEGANodeTypeFolder) {
         [self.thumbnailImageView mnz_imageForNode:self.node];
     }
+    
+    self.nodeVersionsMutableArray = [NSMutableArray.alloc initWithArray:self.node.mnz_versions];
     
     [self.tableView reloadData];
 }
@@ -429,16 +432,12 @@
     }
 }
 
-- (void)currentVersionRemovedOnNodeList:(MEGANodeList *)nodeList {
-    MEGANode *newCurrentNode;
-    
-    NSUInteger size = nodeList.size.unsignedIntegerValue;
-    for (NSUInteger i = 0; i < size; i++) {
-        newCurrentNode = [nodeList nodeAtIndex:i];
-        if (newCurrentNode.getChanges == MEGANodeChangeTypeParent) {
-            self.node = newCurrentNode;
-            [self reloadUI];
-        }
+- (void)currentVersionRemoved {
+    if (self.nodeVersionsMutableArray.count == 1) {
+        [self dismissViewControllerAnimated:YES completion:nil];
+    } else {
+        self.node = [self.nodeVersionsMutableArray objectAtIndex:1];
+        [self reloadUI];
     }
 }
 
@@ -508,36 +507,32 @@
 #pragma mark - MEGAGlobalDelegate
 
 - (void)onNodesUpdate:(MEGASdk *)api nodeList:(MEGANodeList *)nodeList {
-    MEGANode *nodeUpdated;
-    
     NSUInteger size = nodeList.size.unsignedIntegerValue;
     for (NSUInteger i = 0; i < size; i++) {
-        nodeUpdated = [nodeList nodeAtIndex:i];
+        MEGANode *nodeUpdated = [nodeList nodeAtIndex:i];
+        if ([nodeUpdated hasChangedType:MEGANodeChangeTypeRemoved]) {
+            if (nodeUpdated.handle == self.node.handle) {
+                [self currentVersionRemoved];
+                break;
+            } else {
+                if (self.node.mnz_numberOfVersions > 1) {
+                    [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:2] withRowAnimation:UITableViewRowAnimationNone];
+                }
+                break;
+            }
+        }
         
-        switch (nodeUpdated.getChanges) {
-                
-            case MEGANodeChangeTypeRemoved:
-                if (nodeUpdated.handle == self.node.handle) {
-                    [self currentVersionRemovedOnNodeList:nodeList];
-                } else {
-                    if (self.node.mnz_numberOfVersions != 0) {
-                        [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:2] withRowAnimation:UITableViewRowAnimationNone];
-                    }
-                }
+        if ([nodeUpdated hasChangedType:MEGANodeChangeTypeParent]) {
+            if (nodeUpdated.handle == self.node.handle) {
+                self.node = [MEGASdkManager.sharedMEGASdk nodeForHandle:nodeUpdated.parentHandle];
+                [self reloadUI];
                 break;
-                
-            case MEGANodeChangeTypeParent:
-                if (nodeUpdated.handle == self.node.handle) {
-                    self.node = [[MEGASdkManager sharedMEGASdk] nodeForHandle:nodeUpdated.parentHandle];
-                    [self reloadUI];
-                }
-                break;
-                
-            default:
-                if (nodeUpdated.handle == self.node.handle) {
-                    [self reloadOrShowWarningAfterActionOnNode:nodeUpdated];
-                }
-                break;
+            }
+        }
+        
+        if (nodeUpdated.handle == self.node.handle) {
+            [self reloadOrShowWarningAfterActionOnNode:nodeUpdated];
+            break;
         }
     }
 }
