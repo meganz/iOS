@@ -105,7 +105,7 @@
     });
     
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
-    [self configureForPreviewing];
+    [self configPreviewingRegistration];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -148,7 +148,7 @@
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
     [super traitCollectionDidChange:previousTraitCollection];
     
-    [self configureForPreviewing];
+    [self configPreviewingRegistration];
 }
 
 #pragma mark - Private

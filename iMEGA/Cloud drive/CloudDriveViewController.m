@@ -161,7 +161,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
     self.searchQueue.qualityOfService = NSQualityOfServiceUserInteractive;
     self.searchQueue.maxConcurrentOperationCount = 1;
     
-    [self configureForPreviewing];
+    [self configPreviewingRegistration];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -228,7 +228,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
     [super traitCollectionDidChange:previousTraitCollection];
     
-    [self configureForPreviewing];
+    [self configPreviewingRegistration];
 }
 
 #pragma mark - Layout

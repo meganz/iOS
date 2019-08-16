@@ -91,7 +91,7 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
     self.cellSize = [self.photosCollectionView mnz_calculateCellSizeForInset:self.cellInset];
     
     self.currentState = MEGACameraUploadsStateLoading;
-    [self configureForPreviewing];
+    [self configPreviewingRegistration];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -167,7 +167,7 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
     [super traitCollectionDidChange:previousTraitCollection];
     
-    [self configureForPreviewing];
+    [self configPreviewingRegistration];
 }
 
 #pragma mark - uploads state
