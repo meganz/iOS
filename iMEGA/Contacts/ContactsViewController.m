@@ -22,6 +22,7 @@
 #import "UIAlertAction+MNZCategory.h"
 #import "UIImageView+MNZCategory.h"
 #import "UITextField+MNZCategory.h"
+#import "UIViewController+MNZCategory.h"
 
 #import "ContactDetailsViewController.h"
 #import "ContactLinkQRViewController.h"
@@ -30,8 +31,6 @@
 #import "ItemListViewController.h"
 
 @interface ContactsViewController () <CNContactPickerDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAGlobalDelegate, ItemListViewControllerProtocol, UISearchControllerDelegate, UIGestureRecognizerDelegate, MEGAChatDelegate>
-
-@property (nonatomic) id<UIViewControllerPreviewing> previewingContext;
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
@@ -118,6 +117,7 @@
     self.panOnTable.delegate = self;
     
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+    [self registerForceTouchCapability];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -175,16 +175,7 @@
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
     [super traitCollectionDidChange:previousTraitCollection];
     
-    if ([self.traitCollection respondsToSelector:@selector(forceTouchCapability)]) {
-        if (self.traitCollection.forceTouchCapability == UIForceTouchCapabilityAvailable) {
-            if (!self.previewingContext) {
-                self.previewingContext = [self registerForPreviewingWithDelegate:self sourceView:self.view];
-            }
-        } else {
-            [self unregisterForPreviewingWithContext:self.previewingContext];
-            self.previewingContext = nil;
-        }
-    }
+    [self registerForceTouchCapability];
 }
 
 #pragma mark - Private

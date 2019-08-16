@@ -52,6 +52,7 @@
 #import "SortByTableViewController.h"
 #import "SharedItemsViewController.h"
 #import "UpgradeTableViewController.h"
+#import "UIViewController+MNZCategory.h"
 
 static const NSTimeInterval kSearchTimeDelay = .5;
 
@@ -85,8 +86,6 @@ static const NSTimeInterval kSearchTimeDelay = .5;
 @property (nonatomic, strong) NSArray *nodesArray;
 
 @property (nonatomic, strong) NSMutableArray *cloudImages;
-
-@property (nonatomic) id<UIViewControllerPreviewing> previewingContext;
 
 @property (nonatomic, strong) CloudDriveTableViewController *cdTableView;
 @property (nonatomic, strong) CloudDriveCollectionViewController *cdCollectionView;
@@ -161,6 +160,8 @@ static const NSTimeInterval kSearchTimeDelay = .5;
     self.searchQueue.name = @"searchQueue";
     self.searchQueue.qualityOfService = NSQualityOfServiceUserInteractive;
     self.searchQueue.maxConcurrentOperationCount = 1;
+    
+    [self registerForceTouchCapability];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -227,16 +228,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
     [super traitCollectionDidChange:previousTraitCollection];
     
-    if ([self.traitCollection respondsToSelector:@selector(forceTouchCapability)]) {
-        if (self.traitCollection.forceTouchCapability == UIForceTouchCapabilityAvailable) {
-            if (!self.previewingContext) {
-                self.previewingContext = [self registerForPreviewingWithDelegate:self sourceView:self.view];
-            }
-        } else {
-            [self unregisterForPreviewingWithContext:self.previewingContext];
-            self.previewingContext = nil;
-        }
-    }
+    [self registerForceTouchCapability];
 }
 
 #pragma mark - Layout
