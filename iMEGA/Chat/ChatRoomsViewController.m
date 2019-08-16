@@ -83,7 +83,7 @@
     [self.tableView setContentOffset:CGPointMake(0, CGRectGetHeight(self.searchController.searchBar.frame))];
     
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
-    [self registerForceTouchCapability];
+    [self configureForPreviewing];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -192,7 +192,7 @@
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
     [super traitCollectionDidChange:previousTraitCollection];
     
-    [self registerForceTouchCapability];
+    [self configureForPreviewing];
 }
 
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {

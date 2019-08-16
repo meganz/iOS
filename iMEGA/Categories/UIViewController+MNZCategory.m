@@ -12,7 +12,7 @@
     objc_setAssociatedObject(self, @selector(previewingContext), previewingContext, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
-- (void)registerForceTouchCapability {
+- (void)configureForPreviewing {
     if ([self.traitCollection respondsToSelector:@selector(forceTouchCapability)]) {
         if (self.traitCollection.forceTouchCapability == UIForceTouchCapabilityAvailable) {
             if (!self.previewingContext

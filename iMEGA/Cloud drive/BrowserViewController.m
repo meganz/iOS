@@ -69,7 +69,7 @@
     self.tableView.emptyDataSetDelegate = self;
     
     [self setupBrowser];
-    [self registerForceTouchCapability];
+    [self configureForPreviewing];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -120,7 +120,7 @@
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
     [super traitCollectionDidChange:previousTraitCollection];
     
-    [self registerForceTouchCapability];
+    [self configureForPreviewing];
 }
 
 #pragma mark - Private

@@ -5,7 +5,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface UIViewController (MNZCategory)
 
-- (void)registerForceTouchCapability;
+- (void)configureForPreviewing;
 
 @end
 

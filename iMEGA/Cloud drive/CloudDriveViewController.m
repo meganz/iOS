@@ -161,7 +161,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
     self.searchQueue.qualityOfService = NSQualityOfServiceUserInteractive;
     self.searchQueue.maxConcurrentOperationCount = 1;
     
-    [self registerForceTouchCapability];
+    [self configureForPreviewing];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -228,7 +228,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
     [super traitCollectionDidChange:previousTraitCollection];
     
-    [self registerForceTouchCapability];
+    [self configureForPreviewing];
 }
 
 #pragma mark - Layout
