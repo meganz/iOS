@@ -2009,9 +2009,9 @@
 /* Destination folder name of chat files */
 "My chat files"="Moje pliki czatu";
 /* Label indicating that the passcode (pin) view will be displayed if the application goes back to foreground after being x time in background. Examples: require passcode immediately, require passcode after 5 minutes. */
-"Require passcode"="Require passcode";
+"Require passcode"="Wymagany kod";
 /* Label indicating that the enter passcode (pin) view will be displayed immediately if the application goes back to foreground after being in background. */
-"Immediately"="Immediately";
+"Immediately"="Natychmiast";
 /* Popup notification text on mouse-over of taken down file. */
 "This file has been the subject of a takedown notice."="Plik został zgłoszony jako naruszenie praw autorskich.";
 /* Popup notification text on mouse-over taken down folder. */
