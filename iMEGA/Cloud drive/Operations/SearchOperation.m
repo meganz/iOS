@@ -7,18 +7,20 @@
 
 @property (strong, nonatomic) MEGANode *parentNode;
 @property (strong, nonatomic) NSString *text;
+@property (strong, nonatomic) MEGACancelToken *cancelToken;
 @property (copy, nonatomic) void (^completion)(NSArray <MEGANode *> *nodesFound);
 
 @end
 
 @implementation SearchOperation
 
-- (instancetype)initWithParentNode:(MEGANode *)parentNode text:(NSString *)text completion:(void (^)(NSArray  <MEGANode *> *_Nullable))completion {
+- (instancetype)initWithParentNode:(MEGANode *)parentNode text:(NSString *)text cancelToken:(MEGACancelToken *)cancelToken completion:(void (^)(NSArray  <MEGANode *> *_Nullable))completion {
     self = super.init;
     if (self) {
         _parentNode = parentNode;
         _text = text;
         _completion = completion;
+        _cancelToken = cancelToken;
     }
     return self;
 }
@@ -40,7 +42,7 @@
     MEGALogInfo(@"[Search] starts", self.text);
 #endif
     
-    MEGANodeList *nodeListFound = [MEGASdkManager.sharedMEGASdk nodeListSearchForNode:self.parentNode searchString:self.text recursive:YES];
+    MEGANodeList *nodeListFound = [MEGASdkManager.sharedMEGASdk nodeListSearchForNode:self.parentNode searchString:self.text cancelToken:self.cancelToken recursive:YES];
     
 #ifdef DEBUG
     MEGALogInfo(@"[Search] \"%@\" finishes", self.text);

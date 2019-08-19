@@ -95,6 +95,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
 @property (nonatomic, assign) LayoutMode layoutView;
 @property (nonatomic, assign) BOOL shouldDetermineLayout;
 @property (strong, nonatomic) NSOperationQueue *searchQueue;
+@property (strong, nonatomic) MEGACancelToken *cancelToken;
 
 @end
 
@@ -1291,11 +1292,13 @@ static const NSTimeInterval kSearchTimeDelay = .5;
         NSString *text = self.searchController.searchBar.text;
         [SVProgressHUD show];
         [self.searchNodesArray removeAllObjects];
-        SearchOperation *searchOperation = [SearchOperation.alloc initWithParentNode:self.parentNode text:text completion:^(NSArray <MEGANode *> *nodesFound) {
+        self.cancelToken = MEGACancelToken.alloc.init;
+        SearchOperation *searchOperation = [SearchOperation.alloc initWithParentNode:self.parentNode text:text cancelToken:self.cancelToken completion:^(NSArray <MEGANode *> *nodesFound) {
             dispatch_async(dispatch_get_main_queue(), ^{
                 self.searchNodesArray = [NSMutableArray arrayWithArray:nodesFound];
                 [SVProgressHUD dismiss];
                 [self reloadData];
+                self.cancelToken = nil;
             });
         }];
         [self.searchQueue addOperation:searchOperation];
@@ -1306,7 +1309,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
 
 - (void)cancelSearchIfNeeded {
     if (self.searchQueue.operationCount) {
-        [MEGASdkManager.sharedMEGASdk cancelSearch];
+        [self.cancelToken cancelWithNewValue:YES];
         [self.searchQueue cancelAllOperations];
     }
 }
