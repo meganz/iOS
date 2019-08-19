@@ -5,6 +5,8 @@
 
 NSString * const MEGAiOSAppUserAgent = @"MEGAiOS";
 NSString * const MEGAiOSAppKey = @"EVtjzb7R";
+NSString * const MEGAPasswordService = @"MEGA";
+NSString * const MEGAPasswordName = @"sessionV3";
 
 #pragma mark - global notifications
 

@@ -458,6 +458,9 @@
                                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                                                 <color key="tintColor" red="0.0" green="0.74901960779999999" blue="0.65098039220000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                 <state key="normal" title="Resend"/>
+                                                                <connections>
+                                                                    <action selector="didTapResendButton" destination="ZVj-3U-FfW" eventType="touchUpInside" id="ojf-ZL-5Pe"/>
+                                                                </connections>
                                                             </button>
                                                         </subviews>
                                                     </stackView>
@@ -469,14 +472,14 @@
                                                         </constraints>
                                                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
                                                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                        <state key="normal" title="Next"/>
+                                                        <state key="normal" title="Confirm"/>
                                                         <userDefinedRuntimeAttributes>
                                                             <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
                                                                 <integer key="value" value="8"/>
                                                             </userDefinedRuntimeAttribute>
                                                         </userDefinedRuntimeAttributes>
                                                         <connections>
-                                                            <action selector="didTapNextButton" destination="RUe-vS-5fH" eventType="touchUpInside" id="tgM-uh-j1T"/>
+                                                            <action selector="didTapConfirmButton" destination="ZVj-3U-FfW" eventType="touchUpInside" id="J7i-1f-R9d"/>
                                                         </connections>
                                                     </button>
                                                 </subviews>
@@ -511,6 +514,7 @@
                     </view>
                     <connections>
                         <outlet property="codeFieldsContainerView" destination="Erd-4t-pw3" id="TQZ-uT-mVi"/>
+                        <outlet property="confirmButton" destination="Lzc-aO-y1c" id="XmQ-yz-QYz"/>
                         <outlet property="didnotReceiveCodeLabel" destination="oeh-s4-4Mp" id="dKN-Y3-913"/>
                         <outlet property="errorImageView" destination="Yan-k9-VQC" id="sng-AB-nPm"/>
                         <outlet property="errorMessageLabel" destination="Oh9-qR-lXN" id="AOB-3U-NP8"/>
