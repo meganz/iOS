@@ -21,8 +21,9 @@
 #import "UIImageView+MNZCategory.h"
 #import "MEGAStore.h"
 #import "MEGAQLPreviewController.h"
+#import "UIView+MNZCategory.h"
 
-@interface PreviewDocumentViewController () <QLPreviewControllerDataSource, QLPreviewControllerDelegate, MEGATransferDelegate, UICollectionViewDelegate, UICollectionViewDataSource, CustomActionViewControllerDelegate, NodeInfoViewControllerDelegate, SearchInPdfViewControllerProtocol> {
+@interface PreviewDocumentViewController () <QLPreviewControllerDataSource, QLPreviewControllerDelegate, MEGATransferDelegate, UICollectionViewDelegate, UICollectionViewDataSource, CustomActionViewControllerDelegate, NodeInfoViewControllerDelegate, SearchInPdfViewControllerProtocol, UIGestureRecognizerDelegate> {
     MEGATransfer *previewDocumentTransfer;
 }
 
@@ -413,13 +414,21 @@
         [self setToolbarItems:@[self.thumbnailBarButtonItem, flexibleItem, self.searchBarButtonItem, flexibleItem, self.openInBarButtonItem] animated:YES];
         [self.navigationController setToolbarHidden:NO animated:YES];
         self.navigationItem.rightBarButtonItem = self.node ? self.moreBarButtonItem : nil;
-
+        
         UITapGestureRecognizer *doubleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(doubleTapGesture:)];
+        doubleTap.delegate = self;
         doubleTap.numberOfTapsRequired = 2;
+        
+        if (@available(iOS 13.0, *)) {
+            UIGestureRecognizer *defaultDoubleTapGesture = [self.pdfView mnz_firstTapGestureWithNumberOfTaps:2];
+            [defaultDoubleTapGesture requireGestureRecognizerToFail:doubleTap];
+        }
+        
         [self.pdfView addGestureRecognizer:doubleTap];
         
         UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(singleTapGesture:)];
         singleTap.numberOfTapsRequired = 1;
+        singleTap.delegate = self;
         [singleTap requireGestureRecognizerToFail:doubleTap];
         [self.pdfView addGestureRecognizer:singleTap];
         
@@ -464,6 +473,10 @@
         [self.navigationController setNavigationBarHidden:YES animated:YES];
         [self.navigationController setToolbarHidden:YES animated:YES];
     }
+}
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(nonnull UIGestureRecognizer *)otherGestureRecognizer {
+    return YES;
 }
 
 #pragma mark - CollectionViewDelegate
