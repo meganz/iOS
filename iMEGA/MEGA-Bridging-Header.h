@@ -11,3 +11,7 @@
 #import "MEGASdkManager.h"
 #import "MEGAGenericRequestDelegate.h"
 #import "UIColor+MNZCategory.h"
+#import "SAMKeychain.h"
+#import "MEGAConstants.h"
+#import "AppDelegate.h"
+#import "MEGALoginRequestDelegate.h"

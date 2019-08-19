@@ -4,6 +4,7 @@ import UIKit
 class VerificationCodeViewController: UIViewController {
     
     @IBOutlet private var resendButton: UIButton!
+    @IBOutlet private var confirmButton: UIButton!
     @IBOutlet private var didnotReceiveCodeLabel: UILabel!
     @IBOutlet private var verificationCodeSentToLabel: UILabel!
     @IBOutlet private var phoneNumberLabel: UILabel!
@@ -13,6 +14,10 @@ class VerificationCodeViewController: UIViewController {
     @IBOutlet private var errorView: UIStackView!
     
     var phoneNumber: PhoneNumber!
+    
+    private var verificationCode: String {
+        return codeFieldsContainerView.subviews.compactMap { $0 as? UITextField }.compactMap { $0.text }.joined()
+    }
     
     class func instantiate(with phoneNumber: PhoneNumber) -> VerificationCodeViewController {
         let controller = VerificationCodeViewController.instantiate(withStoryboardName: "SMSVerification")
@@ -33,6 +38,8 @@ class VerificationCodeViewController: UIViewController {
         phoneNumberLabel.text = PhoneNumberKit().format(phoneNumber, toType: .e164)
         
         configCodeFieldsAppearance()
+        
+        confirmButton.isEnabled = true
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -89,17 +96,30 @@ class VerificationCodeViewController: UIViewController {
     }
     
     @IBAction private func didTapConfirmButton() {
+        let code = verificationCode
+        guard code.count == 6 else { return }
+        
         SVProgressHUD.show()
-        MEGASdkManager.sharedMEGASdk()?.checkSMSVerificationCode("", delegate: MEGAGenericRequestDelegate() {
+        MEGASdkManager.sharedMEGASdk()?.checkSMSVerificationCode(code, delegate: MEGAGenericRequestDelegate() {
             [weak self] request, error in
             SVProgressHUD.dismiss()
             if error.type == .apiOk {
-                self?.configCodeFieldsAppearance(with: nil)
-                self?.dismiss(animated: true, completion: nil)
+                self?.checkSMSVerificationCodeSucceeded()
             } else {
                 self?.configCodeFieldsAppearance(with: error)
             }
         })
+    }
+    
+    private func checkSMSVerificationCodeSucceeded() {
+        self.configCodeFieldsAppearance(with: nil)
+        self.dismiss(animated: true, completion: nil)
+        
+        if let session = SAMKeychain.password(forService: MEGAPasswordService, account: MEGAPasswordName)  {
+            MEGASdkManager.sharedMEGASdk()?.fastLogin(withSession: session, delegate: MEGALoginRequestDelegate())
+        } else {
+            (UIApplication.shared.delegate as? AppDelegate)?.showOnboarding()
+        }
     }
 }
 

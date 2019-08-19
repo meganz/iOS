@@ -114,7 +114,6 @@ class SMSVerificationViewController: UIViewController {
         let numberKit = PhoneNumberKit()
         do {
             let phoneNumber = try numberKit.parse("\(country.displayCallingCode)\(localNumber)")
-            sendVerificationCodeSucceeded(with: phoneNumber)
             SVProgressHUD.show()
             MEGASdkManager.sharedMEGASdk()?.sendSMSVerificationCode(toPhoneNumber: numberKit.format(phoneNumber, toType: .e164), delegate: MEGAGenericRequestDelegate() {
                 [weak self] request, error in
