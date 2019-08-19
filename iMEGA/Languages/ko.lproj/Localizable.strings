@@ -2009,9 +2009,9 @@
 /* Destination folder name of chat files */
 "My chat files"="내 대화 파일";
 /* Label indicating that the passcode (pin) view will be displayed if the application goes back to foreground after being x time in background. Examples: require passcode immediately, require passcode after 5 minutes. */
-"Require passcode"="Require passcode";
+"Require passcode"="비밀번호 필요";
 /* Label indicating that the enter passcode (pin) view will be displayed immediately if the application goes back to foreground after being in background. */
-"Immediately"="Immediately";
+"Immediately"="즉시";
 /* Popup notification text on mouse-over of taken down file. */
 "This file has been the subject of a takedown notice."="이 파일은 게시 중단 통보 대상입니다.";
 /* Popup notification text on mouse-over taken down folder. */

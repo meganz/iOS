@@ -1565,7 +1565,7 @@
 /* state previous to import a file */
 "loading"="加载中";
 /*   */
-"next"="次一";
+"next"="下一步";
 /* Button title to allow the user ignore something */
 "ignore"="忽略";
 /* Button title to allow the user open the default browser */
@@ -2009,9 +2009,9 @@
 /* Destination folder name of chat files */
 "My chat files"="我的聊天文件";
 /* Label indicating that the passcode (pin) view will be displayed if the application goes back to foreground after being x time in background. Examples: require passcode immediately, require passcode after 5 minutes. */
-"Require passcode"="Require passcode";
+"Require passcode"="密码请求";
 /* Label indicating that the enter passcode (pin) view will be displayed immediately if the application goes back to foreground after being in background. */
-"Immediately"="Immediately";
+"Immediately"="立即";
 /* Popup notification text on mouse-over of taken down file. */
 "This file has been the subject of a takedown notice."="此文件接获下架通知且已被移除";
 /* Popup notification text on mouse-over taken down folder. */
