@@ -13,18 +13,17 @@
 }
 
 - (void)configPreviewingRegistration {
-    if ([self.traitCollection respondsToSelector:@selector(forceTouchCapability)]) {
-        if (self.traitCollection.forceTouchCapability == UIForceTouchCapabilityAvailable) {
-            if (!self.previewingContext
-                && [self conformsToProtocol:@protocol(UIViewControllerPreviewingDelegate)]) {
-                self.previewingContext = [self registerForPreviewingWithDelegate:(id<UIViewControllerPreviewingDelegate> )self
-                                                                      sourceView:self.view];
-            }
-        } else {
-            [self unregisterForPreviewingWithContext:self.previewingContext];
-            self.previewingContext = nil;
+    if (self.traitCollection.forceTouchCapability == UIForceTouchCapabilityAvailable) {
+        if (!self.previewingContext
+            && [self conformsToProtocol:@protocol(UIViewControllerPreviewingDelegate)]) {
+            self.previewingContext = [self registerForPreviewingWithDelegate:(id<UIViewControllerPreviewingDelegate> )self
+                                                                  sourceView:self.view];
         }
+    } else {
+        [self unregisterForPreviewingWithContext:self.previewingContext];
+        self.previewingContext = nil;
     }
+
 }
 
 @end
