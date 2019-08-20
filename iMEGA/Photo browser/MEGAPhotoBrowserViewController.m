@@ -614,6 +614,7 @@ static const CGFloat GapBetweenPages = 10.0;
             pickerVC.mediaNodes = self.mediaNodes;
             pickerVC.delegate = self;
             pickerVC.api = self.api;
+            pickerVC.modalPresentationStyle = UIModalPresentationFullScreen;
             [self presentViewController:pickerVC animated:YES completion:nil];
             
             break;
