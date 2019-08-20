@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="aAh-l2-z5Q">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="aAh-l2-z5Q">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -27,6 +27,7 @@
                     <tabBar key="tabBar" contentMode="scaleToFill" translucent="NO" id="P2C-N3-EeA">
                         <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <viewLayoutGuide key="safeArea" id="798-ez-Mc1"/>
                         <color key="barTintColor" red="0.97647058819999999" green="0.97647058819999999" blue="0.97647058819999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <color key="selectedImageTintColor" red="0.95294117647058818" green="0.047058823529411764" blue="0.078431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </tabBar>
@@ -214,13 +215,13 @@
                         </subviews>
                         <color key="backgroundColor" red="0.9882352941176471" green="0.9882352941176471" blue="0.9882352941176471" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="C2Y-Yd-Fhv" firstAttribute="width" secondItem="heF-2Z-7lj" secondAttribute="width" id="7YN-v5-MkE"/>
-                            <constraint firstItem="C2Y-Yd-Fhv" firstAttribute="height" secondItem="heF-2Z-7lj" secondAttribute="height" id="ZII-31-e3p"/>
-                            <constraint firstItem="C2Y-Yd-Fhv" firstAttribute="bottom" secondItem="heF-2Z-7lj" secondAttribute="bottom" id="fBe-f8-aEW"/>
+                            <constraint firstItem="C2Y-Yd-Fhv" firstAttribute="width" secondItem="HNb-vZ-9Rz" secondAttribute="width" id="7YN-v5-MkE"/>
+                            <constraint firstItem="C2Y-Yd-Fhv" firstAttribute="height" secondItem="HNb-vZ-9Rz" secondAttribute="height" id="ZII-31-e3p"/>
+                            <constraint firstItem="C2Y-Yd-Fhv" firstAttribute="bottom" secondItem="64Q-GC-ymX" secondAttribute="bottom" id="fBe-f8-aEW"/>
                             <constraint firstItem="ptk-b4-EIp" firstAttribute="width" secondItem="HNb-vZ-9Rz" secondAttribute="width" id="jOd-14-hQq"/>
-                            <constraint firstItem="C2Y-Yd-Fhv" firstAttribute="leading" secondItem="heF-2Z-7lj" secondAttribute="leading" id="q63-D4-Fbv"/>
+                            <constraint firstItem="C2Y-Yd-Fhv" firstAttribute="leading" secondItem="64Q-GC-ymX" secondAttribute="leading" id="q63-D4-Fbv"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="heF-2Z-7lj"/>
+                        <viewLayoutGuide key="safeArea" id="64Q-GC-ymX"/>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
                     <navigationItem key="navigationItem" title="Login" id="5it-Nq-awd">
@@ -474,14 +475,14 @@
                         </subviews>
                         <color key="backgroundColor" red="0.9882352941176471" green="0.9882352941176471" blue="0.9882352941176471" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="lM5-va-TqA" firstAttribute="bottom" secondItem="fJF-Ce-lu0" secondAttribute="bottom" id="WJK-04-b6w"/>
-                            <constraint firstItem="lM5-va-TqA" firstAttribute="leading" secondItem="fJF-Ce-lu0" secondAttribute="leading" id="bcB-1r-JiD"/>
+                            <constraint firstItem="lM5-va-TqA" firstAttribute="bottom" secondItem="MHW-24-Y0i" secondAttribute="bottom" id="WJK-04-b6w"/>
+                            <constraint firstItem="lM5-va-TqA" firstAttribute="leading" secondItem="MHW-24-Y0i" secondAttribute="leading" id="bcB-1r-JiD"/>
                             <constraint firstItem="p9V-22-W3Y" firstAttribute="height" secondItem="AWH-xe-qAi" secondAttribute="height" priority="250" id="gPV-4R-vAD"/>
                             <constraint firstItem="p9V-22-W3Y" firstAttribute="width" secondItem="AWH-xe-qAi" secondAttribute="width" id="hN2-uu-Laa"/>
-                            <constraint firstItem="lM5-va-TqA" firstAttribute="width" secondItem="fJF-Ce-lu0" secondAttribute="width" id="pky-jr-eve"/>
-                            <constraint firstItem="lM5-va-TqA" firstAttribute="height" secondItem="fJF-Ce-lu0" secondAttribute="height" id="ycg-in-hci"/>
+                            <constraint firstItem="lM5-va-TqA" firstAttribute="width" secondItem="AWH-xe-qAi" secondAttribute="width" id="pky-jr-eve"/>
+                            <constraint firstItem="lM5-va-TqA" firstAttribute="height" secondItem="AWH-xe-qAi" secondAttribute="height" id="ycg-in-hci"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="fJF-Ce-lu0"/>
+                        <viewLayoutGuide key="safeArea" id="MHW-24-Y0i"/>
                     </view>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" title="Create Account" id="bf9-8f-AVR">
@@ -610,21 +611,21 @@
                         <color key="backgroundColor" red="0.97647058819999999" green="0.97647058819999999" blue="0.97647058819999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="h2P-8s-Lnf" firstAttribute="top" secondItem="GSl-YH-DKg" secondAttribute="bottom" constant="40" id="C2T-c6-EdC"/>
-                            <constraint firstItem="GSl-YH-DKg" firstAttribute="top" secondItem="0gf-y3-xhU" secondAttribute="top" constant="100" id="DKS-AV-Um4"/>
-                            <constraint firstItem="61x-Df-ghm" firstAttribute="leading" secondItem="0gf-y3-xhU" secondAttribute="leading" id="Io5-l9-rf1"/>
-                            <constraint firstItem="4Wd-CD-LZg" firstAttribute="centerX" secondItem="tEv-K7-MM9" secondAttribute="centerX" id="Kpx-eL-h95"/>
+                            <constraint firstItem="GSl-YH-DKg" firstAttribute="top" secondItem="U3h-9g-M5i" secondAttribute="top" constant="100" id="DKS-AV-Um4"/>
+                            <constraint firstItem="61x-Df-ghm" firstAttribute="leading" secondItem="U3h-9g-M5i" secondAttribute="leading" id="Io5-l9-rf1"/>
+                            <constraint firstItem="4Wd-CD-LZg" firstAttribute="centerX" secondItem="U3h-9g-M5i" secondAttribute="centerX" id="Kpx-eL-h95"/>
                             <constraint firstItem="4Wd-CD-LZg" firstAttribute="top" secondItem="urs-kB-QJB" secondAttribute="bottom" constant="17" id="MOo-pq-ZzC"/>
-                            <constraint firstItem="GSl-YH-DKg" firstAttribute="centerX" secondItem="tEv-K7-MM9" secondAttribute="centerX" id="Qee-EU-ayX"/>
-                            <constraint firstItem="h2P-8s-Lnf" firstAttribute="centerX" secondItem="tEv-K7-MM9" secondAttribute="centerX" id="V9Y-JM-4Ov"/>
-                            <constraint firstItem="61x-Df-ghm" firstAttribute="centerX" secondItem="tEv-K7-MM9" secondAttribute="centerX" id="W3U-ue-zfo"/>
-                            <constraint firstItem="0gf-y3-xhU" firstAttribute="bottom" secondItem="4Wd-CD-LZg" secondAttribute="bottom" constant="35" id="Wi2-eK-0YM"/>
+                            <constraint firstItem="GSl-YH-DKg" firstAttribute="centerX" secondItem="U3h-9g-M5i" secondAttribute="centerX" id="Qee-EU-ayX"/>
+                            <constraint firstItem="h2P-8s-Lnf" firstAttribute="centerX" secondItem="U3h-9g-M5i" secondAttribute="centerX" id="V9Y-JM-4Ov"/>
+                            <constraint firstItem="61x-Df-ghm" firstAttribute="centerX" secondItem="U3h-9g-M5i" secondAttribute="centerX" id="W3U-ue-zfo"/>
+                            <constraint firstItem="U3h-9g-M5i" firstAttribute="bottom" secondItem="4Wd-CD-LZg" secondAttribute="bottom" constant="35" id="Wi2-eK-0YM"/>
                             <constraint firstItem="w6i-73-vzN" firstAttribute="top" secondItem="61x-Df-ghm" secondAttribute="bottom" constant="20" id="Zpb-G1-hFL"/>
                             <constraint firstItem="61x-Df-ghm" firstAttribute="top" secondItem="h2P-8s-Lnf" secondAttribute="bottom" constant="50" id="fZN-pF-wnp"/>
-                            <constraint firstItem="w6i-73-vzN" firstAttribute="centerX" secondItem="tEv-K7-MM9" secondAttribute="centerX" id="rAP-jf-TZo"/>
-                            <constraint firstItem="w6i-73-vzN" firstAttribute="leading" secondItem="0gf-y3-xhU" secondAttribute="leading" id="tca-K1-IC7"/>
-                            <constraint firstItem="urs-kB-QJB" firstAttribute="centerX" secondItem="tEv-K7-MM9" secondAttribute="centerX" id="y3t-S9-n8Q"/>
+                            <constraint firstItem="w6i-73-vzN" firstAttribute="centerX" secondItem="U3h-9g-M5i" secondAttribute="centerX" id="rAP-jf-TZo"/>
+                            <constraint firstItem="w6i-73-vzN" firstAttribute="leading" secondItem="U3h-9g-M5i" secondAttribute="leading" id="tca-K1-IC7"/>
+                            <constraint firstItem="urs-kB-QJB" firstAttribute="centerX" secondItem="U3h-9g-M5i" secondAttribute="centerX" id="y3t-S9-n8Q"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="0gf-y3-xhU"/>
+                        <viewLayoutGuide key="safeArea" id="U3h-9g-M5i"/>
                         <variation key="widthClass=regular">
                             <mask key="constraints">
                                 <exclude reference="Io5-l9-rf1"/>
@@ -735,31 +736,31 @@
                         </subviews>
                         <color key="backgroundColor" red="0.9882352941176471" green="0.9882352941176471" blue="0.9882352941176471" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="3py-Mg-p80" firstAttribute="centerX" secondItem="vvU-Ra-gya" secondAttribute="centerX" id="8LJ-K4-Ub5"/>
+                            <constraint firstItem="3py-Mg-p80" firstAttribute="centerX" secondItem="CVR-Cw-jCa" secondAttribute="centerX" id="8LJ-K4-Ub5"/>
                             <constraint firstItem="ey0-Yn-d6F" firstAttribute="centerX" secondItem="JVh-eC-WKS" secondAttribute="centerX" id="8i1-TQ-iSF"/>
-                            <constraint firstItem="cfX-ZS-ROY" firstAttribute="centerX" secondItem="vvU-Ra-gya" secondAttribute="centerX" id="8xV-Us-uOm"/>
-                            <constraint firstItem="fZ6-Pg-W1e" firstAttribute="centerX" secondItem="vvU-Ra-gya" secondAttribute="centerX" id="91i-C5-3if"/>
-                            <constraint firstItem="vvU-Ra-gya" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="cfX-ZS-ROY" secondAttribute="trailing" constant="17" id="9g8-ng-yYH"/>
+                            <constraint firstItem="cfX-ZS-ROY" firstAttribute="centerX" secondItem="CVR-Cw-jCa" secondAttribute="centerX" id="8xV-Us-uOm"/>
+                            <constraint firstItem="fZ6-Pg-W1e" firstAttribute="centerX" secondItem="CVR-Cw-jCa" secondAttribute="centerX" id="91i-C5-3if"/>
+                            <constraint firstItem="CVR-Cw-jCa" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="cfX-ZS-ROY" secondAttribute="trailing" constant="17" id="9g8-ng-yYH"/>
                             <constraint firstItem="fZ6-Pg-W1e" firstAttribute="top" secondItem="ey0-Yn-d6F" secondAttribute="bottom" constant="40" id="CAs-Mc-lLV"/>
-                            <constraint firstItem="vvU-Ra-gya" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="ey0-Yn-d6F" secondAttribute="trailing" constant="17" id="DSk-rF-xsJ"/>
-                            <constraint firstItem="JVh-eC-WKS" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="vvU-Ra-gya" secondAttribute="leading" constant="17" id="FlO-Nj-vv6"/>
+                            <constraint firstItem="CVR-Cw-jCa" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="ey0-Yn-d6F" secondAttribute="trailing" constant="17" id="DSk-rF-xsJ"/>
+                            <constraint firstItem="JVh-eC-WKS" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="CVR-Cw-jCa" secondAttribute="leading" constant="17" id="FlO-Nj-vv6"/>
                             <constraint firstItem="JVh-eC-WKS" firstAttribute="centerX" secondItem="cfX-ZS-ROY" secondAttribute="centerX" id="G2t-uh-iKg"/>
                             <constraint firstItem="gCw-HK-PQg" firstAttribute="width" secondItem="fZ6-Pg-W1e" secondAttribute="width" id="JjO-XD-gQr"/>
                             <constraint firstItem="gCw-HK-PQg" firstAttribute="height" secondItem="fZ6-Pg-W1e" secondAttribute="height" id="KIb-wm-GFg"/>
-                            <constraint firstItem="ey0-Yn-d6F" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="vvU-Ra-gya" secondAttribute="leading" constant="17" id="NJW-Xt-8Sv"/>
+                            <constraint firstItem="ey0-Yn-d6F" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="CVR-Cw-jCa" secondAttribute="leading" constant="17" id="NJW-Xt-8Sv"/>
                             <constraint firstItem="JVh-eC-WKS" firstAttribute="top" secondItem="cfX-ZS-ROY" secondAttribute="bottom" constant="12" id="OvY-Jd-aX2"/>
                             <constraint firstItem="gCw-HK-PQg" firstAttribute="top" secondItem="fZ6-Pg-W1e" secondAttribute="bottom" constant="17" id="PBe-oB-yfq"/>
                             <constraint firstItem="gCw-HK-PQg" firstAttribute="centerX" secondItem="fZ6-Pg-W1e" secondAttribute="centerX" id="SEI-Ir-M4M"/>
-                            <constraint firstItem="cfX-ZS-ROY" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="vvU-Ra-gya" secondAttribute="leading" constant="17" id="YoM-Pn-08S"/>
+                            <constraint firstItem="cfX-ZS-ROY" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="CVR-Cw-jCa" secondAttribute="leading" constant="17" id="YoM-Pn-08S"/>
                             <constraint firstItem="DU4-vX-4QG" firstAttribute="top" secondItem="JVh-eC-WKS" secondAttribute="bottom" constant="50" id="ZPp-lV-rBj"/>
-                            <constraint firstItem="vvU-Ra-gya" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="JVh-eC-WKS" secondAttribute="trailing" constant="17" id="Zsd-gl-BRb"/>
-                            <constraint firstItem="3py-Mg-p80" firstAttribute="top" secondItem="vvU-Ra-gya" secondAttribute="top" constant="88" id="bxJ-vS-dMg"/>
+                            <constraint firstItem="CVR-Cw-jCa" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="JVh-eC-WKS" secondAttribute="trailing" constant="17" id="Zsd-gl-BRb"/>
+                            <constraint firstItem="3py-Mg-p80" firstAttribute="top" secondItem="CVR-Cw-jCa" secondAttribute="top" constant="88" id="bxJ-vS-dMg"/>
                             <constraint firstItem="cfX-ZS-ROY" firstAttribute="top" secondItem="3py-Mg-p80" secondAttribute="bottom" constant="29" id="eTp-i1-TSy"/>
-                            <constraint firstItem="DU4-vX-4QG" firstAttribute="centerX" secondItem="6Sd-yd-Lhz" secondAttribute="centerX" id="jEU-YN-26s"/>
+                            <constraint firstItem="DU4-vX-4QG" firstAttribute="centerX" secondItem="CVR-Cw-jCa" secondAttribute="centerX" id="jEU-YN-26s"/>
                             <constraint firstItem="ey0-Yn-d6F" firstAttribute="top" secondItem="DU4-vX-4QG" secondAttribute="bottom" constant="6" id="kMM-ME-iSK"/>
-                            <constraint firstItem="DU4-vX-4QG" firstAttribute="leading" secondItem="6Sd-yd-Lhz" secondAttribute="leading" id="zDt-M8-lw9"/>
+                            <constraint firstItem="DU4-vX-4QG" firstAttribute="leading" secondItem="CVR-Cw-jCa" secondAttribute="leading" id="zDt-M8-lw9"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="vvU-Ra-gya"/>
+                        <viewLayoutGuide key="safeArea" id="CVR-Cw-jCa"/>
                         <variation key="widthClass=regular">
                             <mask key="constraints">
                                 <exclude reference="zDt-M8-lw9"/>
@@ -828,7 +829,7 @@
         <image name="checkBoxSelected" width="20" height="20"/>
         <image name="forgotPasswordQuestionMark" width="12" height="12"/>
         <image name="icon-key-only" width="24" height="24"/>
-        <image name="icon-link-only" width="24" height="24"/>
+        <image name="icon-link-only" width="24.5" height="24"/>
         <image name="icon-link-w-key" width="24" height="24"/>
         <image name="mail" width="24" height="24"/>
         <image name="mailBig" width="124" height="96"/>

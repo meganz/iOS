@@ -38,6 +38,8 @@
 "emptyFolderMessage"="Hindi ka pupwedeng mag-download ng bakanteng folder";
 /* Message shown when the user clicks on a confirm account link that has already been used  */
 "accountAlreadyConfirmed"="Ang account mo ay activated na. Mag-log in na.";
+/* */
+"Your confirmation link is no longer valid. Your account may already be activated or you may have cancelled your registration."="Your confirmation link is no longer valid. Your account may already be activated or you may have cancelled your registration.";
 /* Message shown when the user clicks on an link that is not valid */
 "linkNotValid"="Maling link";
 /* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
@@ -50,6 +52,12 @@
 "decrypt"="I-decrypt";
 /* Alert title shown when you have written a decryption key not valid */
 "decryptionKeyNotValid"="Maling decryption key";
+/* This dialog message is used on the Password Decrypt dialog. The link is a password protected link so the user needs to enter the password to decrypt the link. */
+"To access this link, you will need its password."="Para ma-access ang link, kailangan mo ng password nito.";
+/* This dialog message is used on the Password Decrypt dialog as an instruction for the user. */
+"If you do not have the password, contact the creator of the link."="Kung wala ka sa iyo ang password, mangyaring i-contact ang gumawa ng link.";
+/* This placeholder text is used on the Password Decrypt dialog as an instruction for the user. */
+"Enter the password"="Ilagay ang password";
 /* Alert title shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOut_alertTitle"="Naglog-out na";
 /* Alert message shown when your account has been closed through another client or the web by killing all your sessions */
@@ -505,13 +513,13 @@
 /* Message shown while uploading files. Plural. */
 "cameraUploadsPendingFiles"="Upload in progress, %lu files na pending";
 /* Message shown when camera upload paused because of no WiFi. Singular. */
-"Upload paused because of no WiFi, 1 file pending"="Upload paused due to no WiFi connection, 1 file pending";
+"Upload paused because of no WiFi, 1 file pending"="Ang upload ay naka-pause dahil sa walang WiFi connection, 1 file pending";
 /* Message shown when camera upload paused because of no WiFi. Plural. */
-"Upload paused because of no WiFi, %lu files pending"="Upload paused due to no WiFi connection, %lu files pending";
+"Upload paused because of no WiFi, %lu files pending"="Ang upload ay naka-pause dahil sa walang WiFi connection, %lu files pending";
 /* Message shown the pending video file when photos uploaded and video upload is not enabled. Singular. */
-"Photos uploaded, video uploads are off, 1 video not uploaded"="Photos uploaded, video uploads are off; 1 video not uploaded";
+"Photos uploaded, video uploads are off, 1 video not uploaded"="Ang photos ay na-upload, video uploads ay off; 1 video ay hindi na-upload";
 /* Message shown the pending video files when photos uploaded and video upload is not enabled. Plural. */
-"Photos uploaded, video uploads are off, %lu videos not uploaded"="Photos uploaded, video uploads are off; %lu videos not uploaded";
+"Photos uploaded, video uploads are off, %lu videos not uploaded"="Ang photos ay na-upload na, video uploads ay off; %lu videos ay hindi na-upload.";
 /* Singular, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 1 file. */
 "indexOfTotalFile"="%1$d ng %2$d file";
 /* Plural, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 3 files. */
@@ -663,73 +671,73 @@
 /* Header to explain that 'Upload videos', 'Use cellular connection' and 'Only when charging' are options of the Camera Uploads */
 "options"="Opsyon";
 /* A hint to show one option is recommended by MEGA */
-"(Recommended)"="(Recommended)";
+"(Recommended)"="(Rekumenda)";
 /* Header to introduce how to deal with HEIC format photos in Camera Uplaod */
-"SAVE HEIC PHOTOS AS"="Save HEIC photos as";
+"SAVE HEIC PHOTOS AS"="I-save ang HEIC photos as";
 /* Footer for HEIC format section */
-"We recommend JPG, as its the most compatible format for photos."="We recommend JPG, as it is the most compatible format for photos.";
+"We recommend JPG, as its the most compatible format for photos."="Nirerekumenda namin ang JPG, dahil ito ang pinaka-compatible na format para sa photos.";
 /* Header to introduce how to deal with HEVC format videos in Camera Uplaod */
-"SAVE HEVC VIDEOS AS"="Save HEVC videos as";
+"SAVE HEVC VIDEOS AS"="I-save ang HEVC videos as";
 /* Footer for HEVC format section */
-"We recommend H.264, as its the most compatible format for videos."="We recommend H.264, as it is the most compatible format for videos.";
+"We recommend H.264, as its the most compatible format for videos."="Nirerekumenda namin ang H.264, dahil ito ang pinaka-compatible format para sa videos.";
 /* Footer for video compression quality */
-"Compression quality when to transcode HEVC videos to H.264 format."="Compression quality when HEVC videos are transcoded to H.264 format.";
+"Compression quality when to transcode HEVC videos to H.264 format."="Compression quality kapag ang HEVC videos ay transcoded sa H.264 format.";
 /* Option title to enable upload videos with Camera Uploads */
 "uploadVideosLabel"="Mag-upload ng Videos";
 /* Option title to enable Camera Uploads only when the device is charging */
 "onlyWhenChargingLabel"="Kapag nag-chacharge lamang";
 /* Footer text for Camera Upload switch section when camera upload is disabled */
-"When enabled, photos will be uploaded."="When enabled, photos will be uploaded.";
+"When enabled, photos will be uploaded."="Kapag naka-enabled, ang photos ay ma-uupload.";
 /* Footer text for Camera Upload switch section when only photos upload is enabled */
-"Photos will be uploaded to Camera Uploads folder."="Photos will be uploaded to the Camera Uploads folder.";
+"Photos will be uploaded to Camera Uploads folder."="Ang photos ay ma-uupload sa Camera Uploads folder.";
 /* Footer text for Camera Upload switch section when photos and videos upload is enabled */
-"Photos and videos will be uploaded to Camera Uploads folder."="Photos and videos will be uploaded to the Camera Uploads folder.";
+"Photos and videos will be uploaded to Camera Uploads folder."="Photos at videos ay ma-uupload sa Camera Uploads folder.";
 /* Title to show for upload in background */
-"Upload in Background"="Upload in Background";
+"Upload in Background"="I-upload sa Background";
 /* Title for the location based background upload message */
-"Enable location services for background upload"="Enable location services for background upload";
+"Enable location services for background upload"="I-enable ang lokasyon services para sa background upload";
 /* Message for the location based background upload when the location data access is not denied by users */
-"MEGA can periodically start camera uploads in background when your location changes."="MEGA can periodically start camera uploads in the background when your location changes.";
+"MEGA can periodically start camera uploads in background when your location changes."="Ang MEGA ay pwedeng i-start ang camera uploads sa background oras oras kapag nagpalit ang iyong lokasyon.";
 /* Message for the location based background upload when the location data access is denied by users */
-"Please select “Always” at your Location page in Settings, then MEGA can periodically start camera uploads in background when your location changes."="Please select “Always” at your Location page in Settings, so that MEGA can periodically start camera uploads in background when your location changes.";
+"Please select “Always” at your Location page in Settings, then MEGA can periodically start camera uploads in background when your location changes."="Pakiusap piliin ang \"Always\" sa iyong Location page sa Settings, upang ang MEGA ay i-start ang camera uploads sa background oras oras kapag nagpalit ang iyong lokasyon.";
 /* Title for turn on a feature */
-"Turn On"="Turn On";
+"Turn On"="Buksan";
 /* Title for turn on a feature in settings */
-"Turn On in Settings"="Turn On in Settings";
+"Turn On in Settings"="Buksan sa Settings";
 /* Footer for video uploads switch section when enabled */
-"Videos will be uploaded to the Camera Uploads folder."="Videos will be uploaded to the Camera Uploads folder.";
+"Videos will be uploaded to the Camera Uploads folder."="Ang videos ay ma-uupload sa Camera Uploads folder.";
 /* Footer for video uploads switch section when disabled */
-"When enabled, videos will be uploaded."="When enabled, videos will be uploaded.";
+"When enabled, videos will be uploaded."="Kapag enabled, videos ay ma-uupload.";
 /* Title for new camera upload feature */
-"New Camera Upload!"="New Camera Upload Options!";
+"New Camera Upload!"="Bagong opsyon para sa Camera Uploads!";
 /* A messge for camera upload v2 migration */
-"Now you can choose to convert the HEIF/HEVC photos and videos to the most compatible JPEG/H.264 formats."="Now you can choose to convert HEIC/HEVC photos and videos to the more widely compatible JPEG/H.264 formats.";
+"Now you can choose to convert the HEIF/HEVC photos and videos to the most compatible JPEG/H.264 formats."="Ngayon pwede kang mag convert ng HEIC/HEVC photos at videos sa mas madaming compatible JPEG/H.264 formats.";
 /* Title for an action to use most compatible formats */
-"Use Most Compatible Formats"="Use Most Compatible Formats";
+"Use Most Compatible Formats"="Gumamit ng pinaka-compatible na formats";
 /* Title for custom settings */
 "Custom Settings"="Custom Settings";
 /* Title to show when device local storage is full */
-"%@ Storage Full"="%@ Storage Full";
+"%@ Storage Full"="%@ Puno na ang Storage";
 /* Detail for local storage full situation */
-"You do not have enough storage to upload camera. Free up space by deleting unneeded apps, videos or music. You can manage your storage in %@"="You do not have enough storage for further camera uploads. Free up space by deleting unneeded apps, videos or music. You can manage your storage in %@";
+"You do not have enough storage to upload camera. Free up space by deleting unneeded apps, videos or music. You can manage your storage in %@"="Wala ka nang sapat na storage para sa camera uploads. Mag delete ng hindi kailangan na apps, videos o music upang makakuwa ng space. Pwede mong ayusin ang iyong storage sa %@";
 /* Navigation path for Storage settings in iOS */
 "Settings > General > %@ Storage"="Settings > General > %@ Storage";
 /* Title of the switch to config whether to upload videos for Live Photos */
-"Upload videos for Live Photos"="Upload videos for Live Photos";
+"Upload videos for Live Photos"="I-upload ang videos na para sa Live Photos";
 /* Title of the switch to config whether to upload all burst photos */
-"Upload all burst photos"="Upload all burst photos";
+"Upload all burst photos"="I-upload ang lahat ng burst photos";
 /* Title of the switch to config whether to upload Hidden Album */
-"Upload Hidden Album"="Upload Hidden Album";
+"Upload Hidden Album"="I-upload ang Hidden Album";
 /* Footer description when upload videos for Live Photos is enabled */
-"The video and the photo in each Live Photo will be uploaded."="The photo and video versions of each Live Photo will be uploaded.";
+"The video and the photo in each Live Photo will be uploaded."="Ang kada isang bersyon lamang ng photo at video ng Live Photo ang ma-uupload.";
 /* Footer description when upload videos for Live Photos is disabled */
-"Only the photo in each Live Photo will be uploaded."="Only the photo version of each Live Photo will be uploaded.";
+"Only the photo in each Live Photo will be uploaded."="Ang kada isang bersyon lamang ng Live Photo ang ma-uupload.";
 /* Footer description when upload all burst photos is enabled */
-"All the photos from your burst photo sequences will be uploaded."="All the photos from your burst photo sequences will be uploaded.";
+"All the photos from your burst photo sequences will be uploaded."="Lahat ng photos mula sa iyong burst photo sequences ay ma-uupload.";
 /* Footer description when upload all burst photos is disabled */
-"Only the representative photos from your burst photo sequences will be uploaded."="Only favourite photos from your burst photo sequences will be uploaded.";
+"Only the representative photos from your burst photo sequences will be uploaded."="Ang favourite photos lamang na mula sa iyong burst photo sequences ang ma-uupload.";
 /* Footer description when upload Hidden Album is enabled */
-"The Hidden Album is where you hide photos or videos in your device Photos app."="The Hidden Album is where you hide photos or videos in your device’s Photos app.";
+"The Hidden Album is where you hide photos or videos in your device Photos app."="Ang Hidden Album ay kung saan mo tinatago ang iyong photos o videos sa iyong device's Photos app.";
 /* App means “Application” */
 "App version"="App version";
 /* Title of the label where the SDK version is shown */
@@ -1160,7 +1168,7 @@
 /* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature. */
 "useMobileData"="Gamitin ang Mobile Data";
 /* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for videos. */
-"Use Mobile Data for Videos"="Use Mobile Data for Videos";
+"Use Mobile Data for Videos"="Gumamit ng Mobile Data para sa Videos";
 /* A header in the Chat settings. This changes the user's status to Away after some time of inactivity. */
 "autoAway"="Auto-away";
 /* */
@@ -1996,3 +2004,15 @@
 "Change to a test server?"="Change to a test server?";
 /* text of the alert dialog when the user is changing the API URL to staging */
 "Are you sure you want to change to a test server? Your account may suffer irrecoverable problems"="Are you sure you want to change to a test server? Your account may suffer irrecoverable problems";
+/* Destination folder name of chat files */
+"My chat files"="Ang aking chat files";
+/* Label indicating that the passcode (pin) view will be displayed if the application goes back to foreground after being x time in background. Examples: require passcode immediately, require passcode after 5 minutes. */
+"Require passcode"="Require passcode";
+/* Label indicating that the enter passcode (pin) view will be displayed immediately if the application goes back to foreground after being in background. */
+"Immediately"="Immediately";
+/* Popup notification text on mouse-over of taken down file. */
+"This file has been the subject of a takedown notice."="Ang file na ito ay ipinapatanggal.";
+/* Popup notification text on mouse-over taken down folder. */
+"This folder has been the subject of a takedown notice."="Ang folder na ito ay ipinapatanggal.";
+/* File Manager -> Context menu item for taken down file or folder, for dispute takedown. */
+"Dispute Takedown"="I-dispute ang Takedown";

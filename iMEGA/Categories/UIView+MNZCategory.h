@@ -7,6 +7,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)mnz_startShimmering;
 - (void)mnz_stopShimmering;
+- (nullable UITapGestureRecognizer *)mnz_firstTapGestureWithNumberOfTaps:(NSUInteger)taps;
 
 @end
 

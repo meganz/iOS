@@ -38,6 +38,8 @@
 "emptyFolderMessage"="Вы не можете скачать пустую папку";
 /* Message shown when the user clicks on a confirm account link that has already been used  */
 "accountAlreadyConfirmed"="Ваша учётная запись активирована. Пожалуйста, авторизируйтесь.";
+/* */
+"Your confirmation link is no longer valid. Your account may already be activated or you may have cancelled your registration."="Ссылка подтверждения более не действительна. Ваш аккаунт может быть уже активирован или вы могли отменить регистрацию.";
 /* Message shown when the user clicks on an link that is not valid */
 "linkNotValid"="Неправильная ссылка";
 /* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
@@ -50,6 +52,12 @@
 "decrypt"="Дешифрировать";
 /* Alert title shown when you have written a decryption key not valid */
 "decryptionKeyNotValid"="Неправильный ключ дешифрования";
+/* This dialog message is used on the Password Decrypt dialog. The link is a password protected link so the user needs to enter the password to decrypt the link. */
+"To access this link, you will need its password."="Для доступа к этой ссылке нужен пароль.";
+/* This dialog message is used on the Password Decrypt dialog as an instruction for the user. */
+"If you do not have the password, contact the creator of the link."="Если у вас нет пароля, свяжитесь с создателем этой ссылки.";
+/* This placeholder text is used on the Password Decrypt dialog as an instruction for the user. */
+"Enter the password"="Введите пароль";
 /* Alert title shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOut_alertTitle"="Выйти из системы";
 /* Alert message shown when your account has been closed through another client or the web by killing all your sessions */
@@ -1996,3 +2004,15 @@
 "Change to a test server?"="Перейти на тестовый сервер?";
 /* text of the alert dialog when the user is changing the API URL to staging */
 "Are you sure you want to change to a test server? Your account may suffer irrecoverable problems"="Действительно перейти на тестовый сервер? Это может вызвать непоправимые сбои в работе аккаунта";
+/* Destination folder name of chat files */
+"My chat files"="Мои файлы из чата";
+/* Label indicating that the passcode (pin) view will be displayed if the application goes back to foreground after being x time in background. Examples: require passcode immediately, require passcode after 5 minutes. */
+"Require passcode"="Требовать пароль";
+/* Label indicating that the enter passcode (pin) view will be displayed immediately if the application goes back to foreground after being in background. */
+"Immediately"="Сразу же";
+/* Popup notification text on mouse-over of taken down file. */
+"This file has been the subject of a takedown notice."="К этому файлу предъявлено требование о снятии.";
+/* Popup notification text on mouse-over taken down folder. */
+"This folder has been the subject of a takedown notice."="К этой папке предъявлено требование о снятии.";
+/* File Manager -> Context menu item for taken down file or folder, for dispute takedown. */
+"Dispute Takedown"="Оспорить блокировку";

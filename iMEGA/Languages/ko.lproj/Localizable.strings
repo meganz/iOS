@@ -38,6 +38,8 @@
 "emptyFolderMessage"="빈 폴더를 다운로드할 수 없습니다";
 /* Message shown when the user clicks on a confirm account link that has already been used  */
 "accountAlreadyConfirmed"="당신의 계정은 활성화되었습니다. 로그인 하세요.";
+/* */
+"Your confirmation link is no longer valid. Your account may already be activated or you may have cancelled your registration."="확인 링크가 더 이상 유효하지 않습니다. 당신의 계정이 이미 활성화되었거나 등록을 취소했을 수 있습니다.";
 /* Message shown when the user clicks on an link that is not valid */
 "linkNotValid"="유효하지 않은 링크";
 /* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
@@ -50,6 +52,12 @@
 "decrypt"="해독";
 /* Alert title shown when you have written a decryption key not valid */
 "decryptionKeyNotValid"="잘못된 해독 키";
+/* This dialog message is used on the Password Decrypt dialog. The link is a password protected link so the user needs to enter the password to decrypt the link. */
+"To access this link, you will need its password."="이 링크에 접근하려면, 비밀번호가 필요합니다.";
+/* This dialog message is used on the Password Decrypt dialog as an instruction for the user. */
+"If you do not have the password, contact the creator of the link."="비밀번호가 없으면, 링크를 만든 사람에게 연락하세요.";
+/* This placeholder text is used on the Password Decrypt dialog as an instruction for the user. */
+"Enter the password"="비밀번호를 입력하세요";
 /* Alert title shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOut_alertTitle"="로그아웃됨";
 /* Alert message shown when your account has been closed through another client or the web by killing all your sessions */
@@ -703,7 +711,7 @@
 /* Title for new camera upload feature */
 "New Camera Upload!"="새 카메라 업로드 옵션!";
 /* A messge for camera upload v2 migration */
-"Now you can choose to convert the HEIF/HEVC photos and videos to the most compatible JPEG/H.264 formats."="이제 HEIF/HEVC 사진과 동영상을 널리 호환되는 JPEG/H.264 형식으로 변환하도록 선택할 수 있습니다.";
+"Now you can choose to convert the HEIF/HEVC photos and videos to the most compatible JPEG/H.264 formats."="이제 HEIC/HEVC 사진과 동영상을 널리 호환되는 JPEG/H.264 형식으로 변환하도록 선택할 수 있습니다.";
 /* Title for an action to use most compatible formats */
 "Use Most Compatible Formats"="가장 잘 호환되는 형식 사용";
 /* Title for custom settings */
@@ -1996,3 +2004,15 @@
 "Change to a test server?"="테스트 서버로 변경할까요?";
 /* text of the alert dialog when the user is changing the API URL to staging */
 "Are you sure you want to change to a test server? Your account may suffer irrecoverable problems"="테스트 서버로 변경하시겠습니까? 당신의 계정이 복구할 수 없는 문제를 겪을 수 있습니다.";
+/* Destination folder name of chat files */
+"My chat files"="내 대화 파일";
+/* Label indicating that the passcode (pin) view will be displayed if the application goes back to foreground after being x time in background. Examples: require passcode immediately, require passcode after 5 minutes. */
+"Require passcode"="비밀번호 필요";
+/* Label indicating that the enter passcode (pin) view will be displayed immediately if the application goes back to foreground after being in background. */
+"Immediately"="즉시";
+/* Popup notification text on mouse-over of taken down file. */
+"This file has been the subject of a takedown notice."="이 파일은 게시 중단 통보 대상입니다.";
+/* Popup notification text on mouse-over taken down folder. */
+"This folder has been the subject of a takedown notice."="이 폴더는 게시 중단 통보 대상입니다.";
+/* File Manager -> Context menu item for taken down file or folder, for dispute takedown. */
+"Dispute Takedown"="게시중단 이의제기";

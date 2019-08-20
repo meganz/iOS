@@ -15,11 +15,13 @@
 #import "MEGAGenericRequestDelegate.h"
 #import "MEGAShowPasswordReminderRequestDelegate.h"
 
+#import "LTHPasscodeViewController.h"
 #import "SVProgressHUD.h"
 
 #import "MEGASdk+MNZCategory.h"
 #import "MEGAUser+MNZCategory.h"
 #import "NSFileManager+MNZCategory.h"
+#import "NSString+MNZCategory.h"
 #import "UIAlertAction+MNZCategory.h"
 #import "UIApplication+MNZCategory.h"
 #import "UIColor+MNZCategory.h"
