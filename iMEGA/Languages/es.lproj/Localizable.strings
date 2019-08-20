@@ -38,6 +38,8 @@
 "emptyFolderMessage"="No se pueden descargar carpetas vacías";
 /* Message shown when the user clicks on a confirm account link that has already been used  */
 "accountAlreadyConfirmed"="Tu cuenta está activa. Por favor, inicia sesión.";
+/* */
+"Your confirmation link is no longer valid. Your account may already be activated or you may have cancelled your registration."="Tu enlace de confirmación ya no es válido. Es posible que tu cuenta ya esté activa o que hayas cancelado el registro.";
 /* Message shown when the user clicks on an link that is not valid */
 "linkNotValid"="Enlace no válido";
 /* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
@@ -50,6 +52,12 @@
 "decrypt"="Descifrar";
 /* Alert title shown when you have written a decryption key not valid */
 "decryptionKeyNotValid"="La clave de cifrado no es válida";
+/* This dialog message is used on the Password Decrypt dialog. The link is a password protected link so the user needs to enter the password to decrypt the link. */
+"To access this link, you will need its password."="Para acceder a este enlace, necesitarás su contraseña.";
+/* This dialog message is used on the Password Decrypt dialog as an instruction for the user. */
+"If you do not have the password, contact the creator of the link."="Si no tienes la contraseña, contacta con el creador del enlace.";
+/* This placeholder text is used on the Password Decrypt dialog as an instruction for the user. */
+"Enter the password"="Introduce la contraseña";
 /* Alert title shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOut_alertTitle"="Sesión cerrada";
 /* Alert message shown when your account has been closed through another client or the web by killing all your sessions */
@@ -703,7 +711,7 @@
 /* Title for new camera upload feature */
 "New Camera Upload!"="Nuevas opciones para las subidas de la cámara";
 /* A messge for camera upload v2 migration */
-"Now you can choose to convert the HEIF/HEVC photos and videos to the most compatible JPEG/H.264 formats."="Puedes elegir convertir fotos y videos HEIF/HEVC a los formatos JPEG/H.264 que son más compatibles.";
+"Now you can choose to convert the HEIF/HEVC photos and videos to the most compatible JPEG/H.264 formats."="Puedes elegir convertir fotos y videos HEIC/HEVC a los formatos más compatibles JPEG/H.264.";
 /* Title for an action to use most compatible formats */
 "Use Most Compatible Formats"="Utilizar los formatos más compatibles";
 /* Title for custom settings */
@@ -727,7 +735,7 @@
 /* Footer description when upload all burst photos is enabled */
 "All the photos from your burst photo sequences will be uploaded."="Se subirán todas las fotos hechas en modo ráfaga.";
 /* Footer description when upload all burst photos is disabled */
-"Only the representative photos from your burst photo sequences will be uploaded."="Only favourite photos from your burst photo sequences will be uploaded.";
+"Only the representative photos from your burst photo sequences will be uploaded."="Solo se subirán las fotos favoritas de tus fotos en modo ráfaga.";
 /* Footer description when upload Hidden Album is enabled */
 "The Hidden Album is where you hide photos or videos in your device Photos app."="El Álbum oculto es donde escondes fotos o videos en la aplicación Fotos de tu dispositivo.";
 /* App means “Application” */
@@ -928,9 +936,9 @@
 /* Title of My Account section. There you can see your account details */
 "myAccount"="Mi cuenta";
 /* Button title that shows the different MEGA PRO plans to which you can upgrade. (String as short as possible) */
-"buyPRO"="Hazte PRO";
+"buyPRO"="Ampliar cuenta";
 /* Caption of a button to upgrade the account to Pro status */
-"upgrade"="Hazte PRO";
+"upgrade"="Ampliar";
 /* Title show on the hall of My Account section that describes a place where you can view, edit and upgrade your account and profile */
 "viewAndEditProfile"="Ver y editar tu perfil";
 /* Label for any 'Profile' button, link, text, title, etc. - (String as short as possible). */
@@ -1032,15 +1040,15 @@
 /* Sentence shown under the available space to complete the info with the user account maximum storage. "available of {maximun storage}" */
 "available of %@"="disponible de %@";
 /* Button title which triggers the action to upgrade your MEGA account level */
-"upgradeAccount"="Hazte PRO";
+"upgradeAccount"="Ampliar cuenta";
 /*  */
 "chooseYourAccountType"="Elige tu tipo de cuenta";
 /* Text shown under the button 'Skip' to explain that you can upgrade your account later in the section 'My Account'. */
-"youCanUpgradeLaterInMyAccount"="Puedes hacerte PRO más tarde en Mi cuenta";
+"youCanUpgradeLaterInMyAccount"="Puedes ampliar más tarde en Mi cuenta";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
-"cloudDriveIsAlmostFull"="[S]Tu nube está casi llena.[/S] [A]Hazte PRO ahora[/A] y obtén [S]hasta 8TB (8192 GB)[/S] de espacio de almacenamiento en la nube.";
+"cloudDriveIsAlmostFull"="[S]Tu nube está casi llena.[/S] [A]Amplía tu cuenta ahora[/A] y obtén [S]hasta 8TB (8192 GB)[/S] de espacio de almacenamiento en la nube.";
 /* A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text. */
-"cloudDriveIsFull"="[S]Tu cuenta está llena.[/S] [A]Hazte PRO ahora[/A] y obtén [S]hasta 8 TB (8192 GB)[/S] de espacio de almacenamiento en la nube.";
+"cloudDriveIsFull"="[S]Tu cuenta está llena.[/S] [A]Amplía tu cuenta ahora[/A] y obtén [S]hasta 8 TB (8192 GB)[/S] de espacio de almacenamiento en la nube.";
 /* Storage related with the MEGA PRO account level you can subscribe */
 "productSpace"="Almacenamiento";
 /* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
@@ -1733,7 +1741,7 @@
 /* New server-side rubbish-bin cleaning scheduler description (for PRO users) */
 "The Rubbish Bin can be cleaned for you automatically. The minimum period is 7 days."="La Papelera se puede vaciar de forma automática. El período mínimo es de 7 días.";
 /* Description shown when you try to disable the feature Rubbish-Bin Cleaning Scheduler and you are a free user */
-"To disable the Rubbish-Bin Cleaning Scheduler or set a longer retention period, you need to subscribe to a PRO plan."="Para desactivar la limpieza automática de la papelera o establecer un período de retención más largo, hazte PRO.";
+"To disable the Rubbish-Bin Cleaning Scheduler or set a longer retention period, you need to subscribe to a PRO plan."="Para desactivar la limpieza automática de la papelera o establecer un período de retención más largo, amplía tu cuenta.";
 /* Confirmation dialog for the button that logs the user out of all sessions except the current one. */
 "Do you want to close all other sessions? This will log you out on all other active sessions except the current one."="¿Quieres cerrar las demás sesiones? Te desconectarás de todas sesiones activas excepto la actual.";
 /* Message to inform the local user that someone has joined the current group call */
@@ -1996,3 +2004,15 @@
 "Change to a test server?"="¿Cambiar a un servidor de prueba?";
 /* text of the alert dialog when the user is changing the API URL to staging */
 "Are you sure you want to change to a test server? Your account may suffer irrecoverable problems"="¿Estás seguro de que quieres cambiar a un servidor de prueba? Tu cuenta podría sufrir daños irreparables.";
+/* Destination folder name of chat files */
+"My chat files"="Mis archivos de chat";
+/* Label indicating that the passcode (pin) view will be displayed if the application goes back to foreground after being x time in background. Examples: require passcode immediately, require passcode after 5 minutes. */
+"Require passcode"="Require passcode";
+/* Label indicating that the enter passcode (pin) view will be displayed immediately if the application goes back to foreground after being in background. */
+"Immediately"="Immediately";
+/* Popup notification text on mouse-over of taken down file. */
+"This file has been the subject of a takedown notice."="Este archivo ha sido sujeto a notificación y retirada.";
+/* Popup notification text on mouse-over taken down folder. */
+"This folder has been the subject of a takedown notice."="Esta carpeta ha sido sujeta a notificación y retirada.";
+/* File Manager -> Context menu item for taken down file or folder, for dispute takedown. */
+"Dispute Takedown"="Disputar la retirada";
