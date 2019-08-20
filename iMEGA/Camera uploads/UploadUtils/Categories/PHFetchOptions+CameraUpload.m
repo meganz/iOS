@@ -22,7 +22,15 @@
 
 + (PHFetchOptions *)mnz_shardFetchOptionsForCameraUpload {
     PHFetchOptions *fetchOptions = [[PHFetchOptions alloc] init];
-    fetchOptions.includeAssetSourceTypes = PHAssetSourceTypeUserLibrary | PHAssetSourceTypeCloudShared | PHAssetSourceTypeiTunesSynced;
+    PHAssetSourceType sourceTypes = PHAssetSourceTypeUserLibrary;
+    if (CameraUploadManager.shouldUploadSharedAlbums) {
+        sourceTypes |= PHAssetSourceTypeCloudShared;
+    }
+    if (CameraUploadManager.shouldUploadSyncedAlbums) {
+        sourceTypes |= PHAssetSourceTypeiTunesSynced;
+    }
+    
+    fetchOptions.includeAssetSourceTypes = sourceTypes;
     fetchOptions.includeAllBurstAssets = CameraUploadManager.shouldUploadAllBurstPhotos;
     fetchOptions.includeHiddenAssets = CameraUploadManager.shouldUploadHiddenAlbum;
     return fetchOptions;

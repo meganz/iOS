@@ -36,6 +36,8 @@ typedef NS_ENUM(NSUInteger, CameraUploadVideoQuality) {
 @property (class, getter=shouldUploadVideosForLivePhotos) BOOL uploadVideosForLivePhotos;
 @property (class, getter=shouldUploadAllBurstPhotos) BOOL uploadAllBurstPhotos;
 @property (class, getter=shouldUploadHiddenAlbum) BOOL uploadHiddenAlbum;
+@property (class, getter=shouldUploadSharedAlbums) BOOL uploadSharedAlbums;
+@property (class, getter=shouldUploadSyncedAlbums) BOOL uploadSyncedAlbums;
 
 
 #pragma mark - readonly properties
@@ -54,7 +56,7 @@ typedef NS_ENUM(NSUInteger, CameraUploadVideoQuality) {
 @property (class, getter=hasMigratedToCameraUploadsV2) BOOL migratedToCameraUploadsV2;
 @property (class, readonly) BOOL shouldShowCameraUploadV2MigrationScreen;
 
-+ (void)migrateCurrentSettingsToCameraUploadV2;
++ (void)configDefaultSettingsForCameraUploadV2;
 
 #pragma mark - clear local settings
 

@@ -79,7 +79,7 @@
     if (self.isPresentedModally) {
         self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(modalDialogDoneButtonTouched)];
         if (!CameraUploadManager.hasMigratedToCameraUploadsV2) {
-            [CameraUploadManager migrateCurrentSettingsToCameraUploadV2];
+            [CameraUploadManager configDefaultSettingsForCameraUploadV2];
         }
     }
 }
