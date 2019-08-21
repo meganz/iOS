@@ -92,6 +92,10 @@ static const NSUInteger VideoUploadBatchCount = 1;
 #pragma mark - setup when app launches
 
 - (void)setupCameraUploadWhenApplicationLaunches {
+    if (CameraUploadManager.hasMigratedToCameraUploadsV2) {
+        [CameraUploadManager configDefaultSettingsForCameraUploadV2];
+    }
+    
     [AttributeUploadManager.shared collateLocalAttributes];
     
     if (CameraUploadManager.isCameraUploadEnabled) {
