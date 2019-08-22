@@ -910,6 +910,102 @@
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
+                            <tableViewSection footerTitle="Shared Albums are where you share with other people and subscribe to other people's shares in your device's Photos app." id="h6Z-Tq-Pyv" userLabel="Upload Shared Albums">
+                                <cells>
+                                    <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" rowHeight="44" id="Nhp-ce-3cd">
+                                        <rect key="frame" x="0.0" y="359" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" tableViewCell="Nhp-ce-3cd" id="ORF-FQ-4hB">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="EuE-YI-uvO">
+                                                    <rect key="frame" x="310" y="6.5" width="51" height="31"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="49" id="Q19-Va-lcy"/>
+                                                    </constraints>
+                                                    <color key="onTintColor" red="0.0" green="0.74901960779999999" blue="0.64705882349999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <connections>
+                                                        <action selector="didChangeValueForHiddenAssetsSwitch:" destination="BZj-6h-yKC" eventType="valueChanged" id="J94-Sf-Rnx"/>
+                                                        <action selector="didChangeValueForSharedAlbumsSwitch:" destination="BZj-6h-yKC" eventType="valueChanged" id="E2F-me-tek"/>
+                                                    </connections>
+                                                </switch>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Upload Shared Albums" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.75" translatesAutoresizingMaskIntoConstraints="NO" id="D30-3d-mYd">
+                                                    <rect key="frame" x="16" y="12" width="183.5" height="20"/>
+                                                    <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="17"/>
+                                                    <color key="textColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="D30-3d-mYd" firstAttribute="trailing" secondItem="ORF-FQ-4hB" secondAttribute="trailingMargin" id="24n-JM-Fb8"/>
+                                                <constraint firstItem="EuE-YI-uvO" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="D30-3d-mYd" secondAttribute="trailing" constant="8" id="6EO-0a-wHg"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="EuE-YI-uvO" secondAttribute="trailing" id="Qkd-T9-cwN"/>
+                                                <constraint firstItem="D30-3d-mYd" firstAttribute="leading" secondItem="ORF-FQ-4hB" secondAttribute="leadingMargin" constant="15" id="Udq-EE-E59"/>
+                                                <constraint firstItem="D30-3d-mYd" firstAttribute="leading" secondItem="ORF-FQ-4hB" secondAttribute="leadingMargin" id="YT8-5t-OrH"/>
+                                                <constraint firstItem="D30-3d-mYd" firstAttribute="centerY" secondItem="ORF-FQ-4hB" secondAttribute="centerY" id="a4Z-bU-ry1"/>
+                                                <constraint firstItem="EuE-YI-uvO" firstAttribute="centerY" secondItem="ORF-FQ-4hB" secondAttribute="centerY" id="fgH-ye-aOi"/>
+                                                <constraint firstItem="EuE-YI-uvO" firstAttribute="trailing" secondItem="ORF-FQ-4hB" secondAttribute="trailingMargin" id="yIg-mP-caH"/>
+                                            </constraints>
+                                            <variation key="default">
+                                                <mask key="constraints">
+                                                    <exclude reference="24n-JM-Fb8"/>
+                                                    <exclude reference="Udq-EE-E59"/>
+                                                    <exclude reference="yIg-mP-caH"/>
+                                                </mask>
+                                            </variation>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                            <tableViewSection footerTitle="Synced albums are where you sync photos or videos to your device's Photos app from iTunes." id="93s-At-fdf" userLabel="Upload Synced Albums">
+                                <cells>
+                                    <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" rowHeight="44" id="cpl-FI-lx1">
+                                        <rect key="frame" x="0.0" y="483" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" tableViewCell="cpl-FI-lx1" id="oUu-M3-QM0">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="lWz-Nd-fkQ">
+                                                    <rect key="frame" x="310" y="6.5" width="51" height="31"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="49" id="pMa-Ox-Umj"/>
+                                                    </constraints>
+                                                    <color key="onTintColor" red="0.0" green="0.74901960779999999" blue="0.64705882349999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <connections>
+                                                        <action selector="didChangeValueForHiddenAssetsSwitch:" destination="BZj-6h-yKC" eventType="valueChanged" id="0r4-ez-ggH"/>
+                                                        <action selector="didChangeValueForSyncedAlbumsSwitch:" destination="BZj-6h-yKC" eventType="valueChanged" id="JEQ-Ty-uWp"/>
+                                                    </connections>
+                                                </switch>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Upload albums synced from iTunes" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.75" translatesAutoresizingMaskIntoConstraints="NO" id="YTn-BG-ddk">
+                                                    <rect key="frame" x="16" y="12" width="281" height="20"/>
+                                                    <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="17"/>
+                                                    <color key="textColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="YTn-BG-ddk" firstAttribute="leading" secondItem="oUu-M3-QM0" secondAttribute="leadingMargin" constant="15" id="FFp-SV-aKk"/>
+                                                <constraint firstItem="lWz-Nd-fkQ" firstAttribute="centerY" secondItem="oUu-M3-QM0" secondAttribute="centerY" id="Mdz-zQ-Cop"/>
+                                                <constraint firstItem="YTn-BG-ddk" firstAttribute="centerY" secondItem="oUu-M3-QM0" secondAttribute="centerY" id="aVJ-fh-Vji"/>
+                                                <constraint firstItem="YTn-BG-ddk" firstAttribute="leading" secondItem="oUu-M3-QM0" secondAttribute="leadingMargin" id="bbu-u3-jF6"/>
+                                                <constraint firstItem="lWz-Nd-fkQ" firstAttribute="trailing" secondItem="oUu-M3-QM0" secondAttribute="trailingMargin" id="fyz-9q-cCN"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="lWz-Nd-fkQ" secondAttribute="trailing" id="gpa-Pi-Hvd"/>
+                                                <constraint firstItem="lWz-Nd-fkQ" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="YTn-BG-ddk" secondAttribute="trailing" constant="8" id="r09-nL-C6V"/>
+                                                <constraint firstItem="YTn-BG-ddk" firstAttribute="trailing" secondItem="oUu-M3-QM0" secondAttribute="trailingMargin" id="uKi-dX-pZq"/>
+                                            </constraints>
+                                            <variation key="default">
+                                                <mask key="constraints">
+                                                    <exclude reference="uKi-dX-pZq"/>
+                                                    <exclude reference="FFp-SV-aKk"/>
+                                                    <exclude reference="fyz-9q-cCN"/>
+                                                </mask>
+                                            </variation>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
                         </sections>
                         <connections>
                             <outlet property="dataSource" destination="BZj-6h-yKC" id="33X-Is-egX"/>
@@ -924,6 +1020,10 @@
                         <outlet property="uploadAllBurstPhotosSwitch" destination="xhu-qg-I6h" id="V6g-tM-2wJ"/>
                         <outlet property="uploadHiddenAlbumLabel" destination="fdI-y3-3hu" id="FAK-Nc-fGL"/>
                         <outlet property="uploadHiddenAlbumSwitch" destination="0Ig-cw-DKm" id="3gy-su-S74"/>
+                        <outlet property="uploadSharedAlbumsLabel" destination="D30-3d-mYd" id="dPD-Sp-l16"/>
+                        <outlet property="uploadSharedAlbumsSwitch" destination="EuE-YI-uvO" id="fm2-5v-2Rk"/>
+                        <outlet property="uploadSyncedAlbumsLabel" destination="YTn-BG-ddk" id="Xoh-6U-z9S"/>
+                        <outlet property="uploadSyncedAlbumsSwitch" destination="lWz-Nd-fkQ" id="WXL-OB-mOA"/>
                         <outlet property="uploadVideosForLivePhotosLabel" destination="0X0-1E-S4V" id="rX2-cV-VHX"/>
                         <outlet property="uploadVideosForlivePhotosSwitch" destination="tgG-aW-4D1" id="AZt-OW-McO"/>
                     </connections>

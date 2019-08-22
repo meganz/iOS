@@ -202,7 +202,7 @@ static const CGFloat GapBetweenPages = 10.0;
     }
     
     [self loadNearbyImagesFromIndex:self.currentIndex];
-    self.scrollView.contentOffset = CGPointMake(self.currentIndex * (self.view.frame.size.width + GapBetweenPages), 0);
+    self.scrollView.contentOffset = CGPointMake(self.currentIndex * CGRectGetWidth(self.scrollView.frame), 0);
     [self reloadTitle];
     [self airplayDisplayCurrentImage];
     if ([self.delegate respondsToSelector:@selector(photoBrowser:didPresentNode:)]) {
