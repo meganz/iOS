@@ -22,6 +22,8 @@ static NSString * const IsLocationBasedBackgroundUploadAllowedKey = @"IsLocation
 static NSString * const UploadHiddenAlbumKey = @"UploadHiddenAlbum";
 static NSString * const UploadAllBurstAssetsKey = @"UploadAllBurstAssets";
 static NSString * const UploadVideosForLivePhotosKey = @"UploadVideosForLivePhotos";
+static NSString * const UploadSharedAlbumsKey = @"UploadSharedAlbums";
+static NSString * const UploadSyncedAlbumsKey = @"UploadSyncedAlbums";
 
 static const NSTimeInterval BoardingScreenShowUpMinimumInterval = 30 * 24 * 3600;
 
@@ -44,6 +46,8 @@ static const NSTimeInterval BoardingScreenShowUpMinimumInterval = 30 * 24 * 3600
     [NSUserDefaults.standardUserDefaults removeObjectForKey:UploadHiddenAlbumKey];
     [NSUserDefaults.standardUserDefaults removeObjectForKey:UploadAllBurstAssetsKey];
     [NSUserDefaults.standardUserDefaults removeObjectForKey:UploadVideosForLivePhotosKey];
+    [NSUserDefaults.standardUserDefaults removeObjectForKey:UploadSharedAlbumsKey];
+    [NSUserDefaults.standardUserDefaults removeObjectForKey:UploadSyncedAlbumsKey];
     [self clearVideoSettings];
 }
 
@@ -80,6 +84,14 @@ static const NSTimeInterval BoardingScreenShowUpMinimumInterval = 30 * 24 * 3600
 
     if ([NSUserDefaults.standardUserDefaults objectForKey:UploadAllBurstAssetsKey] == nil) {
         [self setUploadAllBurstPhotos:YES];
+    }
+    
+    if ([NSUserDefaults.standardUserDefaults objectForKey:UploadSharedAlbumsKey] == nil) {
+        [self setUploadSharedAlbums:YES];
+    }
+    
+    if ([NSUserDefaults.standardUserDefaults objectForKey:UploadSyncedAlbumsKey] == nil) {
+        [self setUploadSyncedAlbums:YES];
     }
 }
 
@@ -209,6 +221,21 @@ static const NSTimeInterval BoardingScreenShowUpMinimumInterval = 30 * 24 * 3600
     [NSUserDefaults.standardUserDefaults setBool:uploadHiddenAlbum forKey:UploadHiddenAlbumKey];
 }
 
++ (BOOL)shouldUploadSharedAlbums {
+    return [NSUserDefaults.standardUserDefaults boolForKey:UploadSharedAlbumsKey];
+}
+
++ (void)setUploadSharedAlbums:(BOOL)uploadSharedAlbums {
+    [NSUserDefaults.standardUserDefaults setBool:uploadSharedAlbums forKey:UploadSharedAlbumsKey];
+}
+
++ (BOOL)shouldUploadSyncedAlbums {
+    return [NSUserDefaults.standardUserDefaults boolForKey:UploadSyncedAlbumsKey];
+}
+
++ (void)setUploadSyncedAlbums:(BOOL)uploadSyncedAlbums {
+    [NSUserDefaults.standardUserDefaults setBool:uploadSyncedAlbums forKey:UploadSyncedAlbumsKey];
+}
 
 #pragma mark - readonly properties
 
@@ -293,7 +320,7 @@ static const NSTimeInterval BoardingScreenShowUpMinimumInterval = 30 * 24 * 3600
     return [self isCameraUploadEnabled] && ![self hasMigratedToCameraUploadsV2];
 }
 
-+ (void)migrateCurrentSettingsToCameraUploadV2 {
++ (void)configDefaultSettingsForCameraUploadV2 {
     [self configDefaultSettingsIfNeededForCameraUpload];
     [self configDefaultSettingsIfNeededForVideoUpload];
 }
