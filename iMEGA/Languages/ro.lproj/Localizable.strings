@@ -87,7 +87,7 @@
 /* Error message when to many attempts to login */
 "tooManyAttemptsLogin"="Ai încercat să te autentifici de prea multe ori. Te rugăm să aștepți până la %@ și să încerci din nou.";
 /* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
-"accountNotConfirmed"="Te rugăm să verifici e-mailul și să urmărești linkul pentru a confirma contul.";
+"accountNotConfirmed"="Te rugăm să verifici e-mailul și să urmezi linkul pentru a confirma contul.";
 /* Error message when trying to login and the account is blocked */
 "accountBlocked"="Contul tău a fost blocat. Te rugăm să contactezi support@mega.nz";
 /* Message shown when the user writes an invalid format in the email field */
@@ -2009,9 +2009,9 @@
 /* Destination folder name of chat files */
 "My chat files"="Fișierele mele chat";
 /* Label indicating that the passcode (pin) view will be displayed if the application goes back to foreground after being x time in background. Examples: require passcode immediately, require passcode after 5 minutes. */
-"Require passcode"="Require passcode";
+"Require passcode"="Necesită cod de acces";
 /* Label indicating that the enter passcode (pin) view will be displayed immediately if the application goes back to foreground after being in background. */
-"Immediately"="Immediately";
+"Immediately"="Imediat";
 /* Popup notification text on mouse-over of taken down file. */
 "This file has been the subject of a takedown notice."="Acest fișier a făcut obiectul unei notificări de eliminare.";
 /* Popup notification text on mouse-over taken down folder. */
