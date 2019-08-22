@@ -815,7 +815,6 @@
 		A8F6E8931F9E75DD0087859C /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8F6E8921F9E75D50087859C /* GLKit.framework */; };
 		A8F6E8941F9E770C0087859C /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9432291D1EDD83FF007DB542 /* MobileCoreServices.framework */; };
 		B6031EE52202A6BF00F7EAA1 /* NodesFetchListenerOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = B6031EE42202A6BF00F7EAA1 /* NodesFetchListenerOperation.m */; };
-		B604890E223C45A400BA91F9 /* CameraUploadStore.m in Sources */ = {isa = PBXBuildFile; fileRef = B604890D223C45A400BA91F9 /* CameraUploadStore.m */; };
 		B604890F223C4F7A00BA91F9 /* MEGAStoreStack.m in Sources */ = {isa = PBXBuildFile; fileRef = B63F319F223BA8FA00B0C6A6 /* MEGAStoreStack.m */; };
 		B6048910223C4F7B00BA91F9 /* MEGAStoreStack.m in Sources */ = {isa = PBXBuildFile; fileRef = B63F319F223BA8FA00B0C6A6 /* MEGAStoreStack.m */; };
 		B6048913223CDA8400BA91F9 /* AssetFetchResult.m in Sources */ = {isa = PBXBuildFile; fileRef = B6048912223CDA8400BA91F9 /* AssetFetchResult.m */; };
@@ -2047,8 +2046,6 @@
 		A8F6E8921F9E75D50087859C /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
 		B6031EE32202A6BF00F7EAA1 /* NodesFetchListenerOperation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NodesFetchListenerOperation.h; sourceTree = "<group>"; };
 		B6031EE42202A6BF00F7EAA1 /* NodesFetchListenerOperation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NodesFetchListenerOperation.m; sourceTree = "<group>"; };
-		B604890C223C45A400BA91F9 /* CameraUploadStore.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CameraUploadStore.h; sourceTree = "<group>"; };
-		B604890D223C45A400BA91F9 /* CameraUploadStore.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CameraUploadStore.m; sourceTree = "<group>"; };
 		B6048911223CDA8400BA91F9 /* AssetFetchResult.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AssetFetchResult.h; sourceTree = "<group>"; };
 		B6048912223CDA8400BA91F9 /* AssetFetchResult.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AssetFetchResult.m; sourceTree = "<group>"; };
 		B60DDC1421A7A7930097E4A3 /* MEGAConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MEGAConstants.h; sourceTree = "<group>"; };
@@ -2605,8 +2602,6 @@
 				4147C2D21B4EE9BA00A37044 /* MEGAStore.h */,
 				4147C2D31B4EE9BA00A37044 /* MEGAStore.m */,
 				B63F3196223BA47400B0C6A6 /* CameraUpload.xcdatamodeld */,
-				B604890C223C45A400BA91F9 /* CameraUploadStore.h */,
-				B604890D223C45A400BA91F9 /* CameraUploadStore.m */,
 				B63F319E223BA8FA00B0C6A6 /* MEGAStoreStack.h */,
 				B63F319F223BA8FA00B0C6A6 /* MEGAStoreStack.m */,
 			);
@@ -5696,7 +5691,6 @@
 				A824AE3A228B1D6900EDF27E /* FLEXTableContentCell.m in Sources */,
 				417279401DB663FA001AC818 /* JSQMessagesVideoThumbnailFactory.m in Sources */,
 				4152269A1A692ECC00EC7BB6 /* Helper.m in Sources */,
-				B604890E223C45A400BA91F9 /* CameraUploadStore.m in Sources */,
 				5B5B4FFF1E681BAC00DBEB3B /* UIFont+MNZCategory.m in Sources */,
 				417B5AAF1DEC792400A193D5 /* MOUser.m in Sources */,
 				41D1E0BB1B58F0B800982830 /* MOOfflineNode.m in Sources */,
