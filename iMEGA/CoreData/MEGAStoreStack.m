@@ -26,18 +26,8 @@
 #pragma mark - persistent container for iOS 10 and above
 
 - (NSPersistentContainer *)persistentContainer {
-    if (_persistentContainer) {
-        return _persistentContainer;
-    }
-    
-    if (NSThread.isMainThread) {
+    if (_persistentContainer == nil) {
         _persistentContainer = [self newPersistentContainer];
-    } else {
-        dispatch_sync(dispatch_get_main_queue(), ^{
-            if (self->_persistentContainer == nil) {
-                self->_persistentContainer = [self newPersistentContainer];
-            }
-        });
     }
     
     return _persistentContainer;
@@ -69,18 +59,8 @@
 #pragma mark - store coordinator for iOS 9
 
 - (NSPersistentStoreCoordinator *)storeCoordinator {
-    if (_storeCoordinator) {
-        return _storeCoordinator;
-    }
-    
-    if (NSThread.isMainThread) {
+    if (_storeCoordinator == nil) {
         _storeCoordinator = [self newStoreCoordinatorForiOSBelow10];
-    } else {
-        dispatch_sync(dispatch_get_main_queue(), ^{
-            if (self->_storeCoordinator == nil) {
-                self->_storeCoordinator = [self newStoreCoordinatorForiOSBelow10];
-            }
-        });
     }
     
     return _storeCoordinator;
@@ -133,12 +113,12 @@
 - (void)deleteStoreWithError:(NSError *__autoreleasing  _Nullable *)error {
     NSPersistentStoreCoordinator *coordinator;
     if (@available(iOS 10.0, *)) {
-        coordinator = self.persistentContainer.persistentStoreCoordinator;
+        coordinator = _persistentContainer.persistentStoreCoordinator;
     } else {
-        coordinator = self.storeCoordinator;
+        coordinator = _storeCoordinator;
     }
     
-    [self.viewContext reset];
+    [_viewContext reset];
     
     [coordinator destroyPersistentStoreAtURL:[self storeURL] withType:NSSQLiteStoreType options:nil error:error];
     if (@available(iOS 10.0, *)) {
