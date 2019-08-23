@@ -7,9 +7,10 @@
 #import "MEGASdk+MNZCategory.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGASdkManager.h"
+#import "MEGAShowPasswordReminderRequestDelegate.h"
+#import "NSFileManager+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 #import "UpgradeTableViewController.h"
-#import "MEGAShowPasswordReminderRequestDelegate.h"
 
 @interface MyAccountViewController () <MEGAPurchasePricingDelegate, MEGARequestDelegate> {
     BOOL isAccountDetailsAvailable;
@@ -100,11 +101,11 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    long long thumbsSize = [Helper sizeOfFolderAtPath:[Helper pathForSharedSandboxCacheDirectory:@"thumbnailsV3"]];
-    long long previewsSize = [Helper sizeOfFolderAtPath:[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES).firstObject stringByAppendingPathComponent:@"previewsV3"]];
-    long long offlineSize = [Helper sizeOfFolderAtPath:NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject];
+    long long thumbsSize = [NSFileManager.defaultManager mnz_sizeOfFolderAtPath:[Helper pathForSharedSandboxCacheDirectory:@"thumbnailsV3"]];
+    long long previewsSize = [NSFileManager.defaultManager mnz_sizeOfFolderAtPath:[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES).firstObject stringByAppendingPathComponent:@"previewsV3"]];
+    long long offlineSize = [NSFileManager.defaultManager mnz_sizeOfFolderAtPath:NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject];
     
-    localSize = [NSNumber numberWithLongLong:(thumbsSize + previewsSize + offlineSize)];
+    localSize = [NSNumber numberWithLongLong:(thumbsSize + previewsSize + offlineSize + [NSFileManager.defaultManager mnz_groupSharedDirectorySize])];
     
     NSString *stringFromByteCount = [Helper memoryStyleStringFromByteCount:localSize.longLongValue];
     self.localUsedSpaceLabel.attributedText = [self textForSizeLabels:stringFromByteCount];
