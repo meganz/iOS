@@ -31,6 +31,32 @@
 
 #pragma mark - Manage files and folders
 
+- (unsigned long long)mnz_sizeOfFolderAtPath:(NSString *)path {
+    unsigned long long folderSize = 0;
+    
+    NSArray *directoryContents = [NSFileManager.defaultManager contentsOfDirectoryAtPath:path error:nil];
+    for (NSString *item in directoryContents) {
+        NSDictionary *attributesDictionary = [NSFileManager.defaultManager attributesOfItemAtPath:[path stringByAppendingPathComponent:item] error:nil];
+        if ([attributesDictionary objectForKey:NSFileType] == NSFileTypeDirectory) {
+            folderSize += [self mnz_sizeOfFolderAtPath:[path stringByAppendingPathComponent:item]];
+        } else {
+            folderSize += [[attributesDictionary objectForKey:NSFileSize] unsignedLongLongValue];
+        }
+    }
+    
+    return folderSize;
+}
+
+- (unsigned long long)mnz_groupSharedDirectorySize {
+    //We avoid calculation the space of the whole shared directory 'group.mega.ios' because there is always a plist file there and that will cause that after tapping on 'Clear cache' the footer show that some space is being used.
+    NSString *groupSharedDirectoryPath = [NSFileManager.defaultManager containerURLForSecurityApplicationGroupIdentifier:@"group.mega.ios"].path;
+    unsigned long long logs = [NSFileManager.defaultManager mnz_sizeOfFolderAtPath:[groupSharedDirectoryPath stringByAppendingPathComponent:@"logs"]];
+    unsigned long long fileProviderStorage = [NSFileManager.defaultManager mnz_sizeOfFolderAtPath:[groupSharedDirectoryPath stringByAppendingPathComponent:@"File Provider Storage"]];
+    unsigned long long shareExtensionStorage = [NSFileManager.defaultManager mnz_sizeOfFolderAtPath:[groupSharedDirectoryPath stringByAppendingPathComponent:@"Share Extension Storage"]];
+    
+    return (logs + fileProviderStorage + shareExtensionStorage);
+}
+
 - (void)mnz_removeItemAtPath:(NSString *)path {
     if (path == nil) {
         MEGALogError(@"The path to remove the item is nil.");
@@ -113,7 +139,7 @@
     }
 }
 
-#pragma mark - properties
+#pragma mark - Properties
 
 - (unsigned long long)mnz_fileSystemFreeSize {
     NSError *error;

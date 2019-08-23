@@ -671,23 +671,6 @@ static MEGAIndexer *indexer;
     return [byteCountFormatter stringFromByteCount:byteCount];
 }
 
-+ (unsigned long long)sizeOfFolderAtPath:(NSString *)path {
-    unsigned long long folderSize = 0;
-    
-    NSArray *directoryContents = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:path error:nil];
-    
-    for (NSString *item in directoryContents) {
-        NSDictionary *attributesDictionary = [[NSFileManager defaultManager] attributesOfItemAtPath:[path stringByAppendingPathComponent:item] error:nil];
-        if ([attributesDictionary objectForKey:NSFileType] == NSFileTypeDirectory) {
-            folderSize += [Helper sizeOfFolderAtPath:[path stringByAppendingPathComponent:item]];
-        } else {
-            folderSize += [[attributesDictionary objectForKey:NSFileSize] unsignedLongLongValue];
-        }
-    }
-    
-    return folderSize;
-}
-
 + (void)changeApiURL {
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"pointToStaging"]) {
         [[MEGASdkManager sharedMEGASdk] changeApiUrl:@"https://g.api.mega.co.nz/" disablepkp:NO];
