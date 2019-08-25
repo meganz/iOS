@@ -91,7 +91,10 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
     self.cellSize = [self.photosCollectionView mnz_calculateCellSizeForInset:self.cellInset];
     
     self.currentState = MEGACameraUploadsStateLoading;
-    [self configPreviewingRegistration];
+    
+    if (@available(iOS 13.0, *)) {
+        [self configPreviewingRegistration];
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated {
