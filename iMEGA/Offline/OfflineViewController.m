@@ -82,7 +82,10 @@ static NSString *kisDirectory = @"kisDirectory";
     self.searchController.delegate = self;
     
     self.moreBarButtonItem.accessibilityLabel = AMLocalizedString(@"more", @"Top menu option which opens more menu options in a context menu.");
-    [self configPreviewingRegistration];
+    
+    if (@available(iOS 13.0, *)) {
+        [self configPreviewingRegistration];
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated {

@@ -161,7 +161,9 @@ static const NSTimeInterval kSearchTimeDelay = .5;
     self.searchQueue.qualityOfService = NSQualityOfServiceUserInteractive;
     self.searchQueue.maxConcurrentOperationCount = 1;
     
-    [self configPreviewingRegistration];
+    if (@available(iOS 13.0, *)) {
+        [self configPreviewingRegistration];
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated {
