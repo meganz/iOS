@@ -70,26 +70,12 @@ class SMSVerificationViewController: UIViewController {
     }
     
     private func configDefaultCountryCode() {
-        guard let countryCallingCodeDict = countryCallingCodeDict else {
-            return
-        }
-        
-        guard let systemCurrentRegionCode = Locale.current.regionCode else {
-            return
-        }
-        
-        guard let callingCode = countryCallingCodeDict.first(where: { $0.key == systemCurrentRegionCode })?.value.first else {
-            return
-        }
-        
-        guard let appLanguageId = LocalizationSystem.sharedLocal()?.getLanguage() else {
-            return
-        }
-        
+        guard let countryCallingCodeDict = countryCallingCodeDict else { return }
+        guard let systemCurrentRegionCode = Locale.current.regionCode else { return }
+        guard let callingCode = countryCallingCodeDict.first(where: { $0.key == systemCurrentRegionCode })?.value.first else { return }
+        guard let appLanguageId = LocalizationSystem.sharedLocal()?.getLanguage() else { return }
         let appLocale = Locale(identifier: Locale.identifier(fromComponents: [NSLocale.Key.languageCode.rawValue : appLanguageId]))
-        guard let country = SMSCountry(countryCode: systemCurrentRegionCode, countryLocalizedName: appLocale.localizedString(forRegionCode: systemCurrentRegionCode), callingCode: callingCode) else {
-            return
-        }
+        guard let country = SMSCountry(countryCode: systemCurrentRegionCode, countryLocalizedName: appLocale.localizedString(forRegionCode: systemCurrentRegionCode), callingCode: callingCode) else { return }
         
         configView(by: country)
     }
@@ -97,17 +83,13 @@ class SMSVerificationViewController: UIViewController {
     // MARK: - UI actions
     
     @IBAction private func didTapCountryView() {
-        guard let countryCallingCodeDict = countryCallingCodeDict else {
-            return
-        }
+        guard let countryCallingCodeDict = countryCallingCodeDict else { return }
         
         navigationController?.pushViewController(SMSCountriesTableViewController(countryCallingCodeDict: countryCallingCodeDict, delegate: self), animated: true)
     }
     
     @IBAction private func didTapNextButton() {
-        guard let country = currentCountry, let localNumber = phoneNumberTextField.text else {
-            return
-        }
+        guard let country = currentCountry, let localNumber = phoneNumberTextField.text else { return }
         
         let numberKit = PhoneNumberKit()
         do {
@@ -175,9 +157,8 @@ class SMSVerificationViewController: UIViewController {
     
     @objc private func didReceiveKeyboardWillShowNotification(_ notification: Notification) {
         guard let duration = (notification.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as? NSNumber)?.doubleValue,
-            let keyboardHeight = (notification.userInfo?[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue.height else {
-                return
-        }
+            let keyboardHeight = (notification.userInfo?[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue.height
+            else { return }
         
         animateViewAdjustments(withDuration: duration, keyboardHeight: keyboardHeight)
     }
@@ -232,9 +213,7 @@ class SMSVerificationViewController: UIViewController {
 
 extension SMSVerificationViewController: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        guard !headerImageView.isHidden else {
-            return
-        }
+        guard !headerImageView.isHidden else { return }
         
         let offset = scrollView.contentOffset
         if offset.y < 0 {
