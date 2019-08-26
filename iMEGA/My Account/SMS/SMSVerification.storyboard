@@ -314,7 +314,7 @@
             </objects>
             <point key="canvasLocation" x="79.710144927536234" y="-588.61607142857144"/>
         </scene>
-        <!--Verification Code View Controller-->
+        <!--Single Code Delegate-->
         <scene sceneID="Asa-Cw-ikC">
             <objects>
                 <viewController storyboardIdentifier="VerificationCodeViewController" id="ZVj-3U-FfW" customClass="VerificationCodeViewController" customModule="MEGA" customModuleProvider="target" sceneMemberID="viewController">
@@ -354,7 +354,7 @@
                                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="Erd-4t-pw3">
                                                                 <rect key="frame" x="31.5" y="0.0" width="278" height="60"/>
                                                                 <subviews>
-                                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="8" borderStyle="roundedRect" textAlignment="center" adjustsFontSizeToFit="NO" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Hlj-p7-9bM">
+                                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" adjustsFontSizeToFit="NO" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Hlj-p7-9bM" customClass="SingleCodeTextField" customModule="MEGA" customModuleProvider="target">
                                                                         <rect key="frame" x="0.0" y="0.0" width="43" height="60"/>
                                                                         <constraints>
                                                                             <constraint firstAttribute="width" constant="43" id="WOA-Nf-9jB"/>
@@ -363,8 +363,12 @@
                                                                         <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="42"/>
                                                                         <textInputTraits key="textInputTraits" textContentType="one-time-code"/>
+                                                                        <connections>
+                                                                            <outlet property="delegate" destination="ZVj-3U-FfW" id="LMQ-Ul-hat"/>
+                                                                            <outlet property="singleCodeDelegate" destination="ZVj-3U-FfW" id="Mnd-Xt-Zw1"/>
+                                                                        </connections>
                                                                     </textField>
-                                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" adjustsFontSizeToFit="NO" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="46s-eB-i0W">
+                                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" adjustsFontSizeToFit="NO" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="46s-eB-i0W" customClass="SingleCodeTextField" customModule="MEGA" customModuleProvider="target">
                                                                         <rect key="frame" x="47" y="0.0" width="43" height="60"/>
                                                                         <constraints>
                                                                             <constraint firstAttribute="height" constant="60" id="7v4-5T-ZnH"/>
@@ -373,8 +377,12 @@
                                                                         <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="42"/>
                                                                         <textInputTraits key="textInputTraits" textContentType="one-time-code"/>
+                                                                        <connections>
+                                                                            <outlet property="delegate" destination="ZVj-3U-FfW" id="Yel-4n-oeW"/>
+                                                                            <outlet property="singleCodeDelegate" destination="ZVj-3U-FfW" id="dCQ-e8-tqz"/>
+                                                                        </connections>
                                                                     </textField>
-                                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" adjustsFontSizeToFit="NO" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="aHw-j7-gy2">
+                                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" adjustsFontSizeToFit="NO" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="aHw-j7-gy2" customClass="SingleCodeTextField" customModule="MEGA" customModuleProvider="target">
                                                                         <rect key="frame" x="94" y="0.0" width="43" height="60"/>
                                                                         <constraints>
                                                                             <constraint firstAttribute="height" constant="60" id="2Sa-6n-vZh"/>
@@ -383,8 +391,12 @@
                                                                         <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="42"/>
                                                                         <textInputTraits key="textInputTraits" textContentType="one-time-code"/>
+                                                                        <connections>
+                                                                            <outlet property="delegate" destination="ZVj-3U-FfW" id="yGq-kz-k9p"/>
+                                                                            <outlet property="singleCodeDelegate" destination="ZVj-3U-FfW" id="uTN-Fa-gFR"/>
+                                                                        </connections>
                                                                     </textField>
-                                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" adjustsFontSizeToFit="NO" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="5q1-Dx-U0M">
+                                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" adjustsFontSizeToFit="NO" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="5q1-Dx-U0M" customClass="SingleCodeTextField" customModule="MEGA" customModuleProvider="target">
                                                                         <rect key="frame" x="141" y="0.0" width="43" height="60"/>
                                                                         <constraints>
                                                                             <constraint firstAttribute="height" constant="60" id="cXv-vW-xB7"/>
@@ -393,8 +405,12 @@
                                                                         <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="42"/>
                                                                         <textInputTraits key="textInputTraits" textContentType="one-time-code"/>
+                                                                        <connections>
+                                                                            <outlet property="delegate" destination="ZVj-3U-FfW" id="yxa-gL-3cv"/>
+                                                                            <outlet property="singleCodeDelegate" destination="ZVj-3U-FfW" id="FSC-Xw-Yme"/>
+                                                                        </connections>
                                                                     </textField>
-                                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" adjustsFontSizeToFit="NO" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="UbT-F2-TAs">
+                                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" adjustsFontSizeToFit="NO" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="UbT-F2-TAs" customClass="SingleCodeTextField" customModule="MEGA" customModuleProvider="target">
                                                                         <rect key="frame" x="188" y="0.0" width="43" height="60"/>
                                                                         <constraints>
                                                                             <constraint firstAttribute="width" constant="43" id="IwN-eN-izj"/>
@@ -403,8 +419,12 @@
                                                                         <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="42"/>
                                                                         <textInputTraits key="textInputTraits" textContentType="one-time-code"/>
+                                                                        <connections>
+                                                                            <outlet property="delegate" destination="ZVj-3U-FfW" id="qN7-6S-3Dj"/>
+                                                                            <outlet property="singleCodeDelegate" destination="ZVj-3U-FfW" id="jHo-7P-HY3"/>
+                                                                        </connections>
                                                                     </textField>
-                                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" adjustsFontSizeToFit="NO" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="496-5F-bow">
+                                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" adjustsFontSizeToFit="NO" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="496-5F-bow" customClass="SingleCodeTextField" customModule="MEGA" customModuleProvider="target">
                                                                         <rect key="frame" x="235" y="0.0" width="43" height="60"/>
                                                                         <constraints>
                                                                             <constraint firstAttribute="height" constant="60" id="3Sf-Xt-R98"/>
@@ -413,6 +433,10 @@
                                                                         <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="42"/>
                                                                         <textInputTraits key="textInputTraits" textContentType="one-time-code"/>
+                                                                        <connections>
+                                                                            <outlet property="delegate" destination="ZVj-3U-FfW" id="8ea-6P-9GI"/>
+                                                                            <outlet property="singleCodeDelegate" destination="ZVj-3U-FfW" id="Rgz-5N-R5F"/>
+                                                                        </connections>
                                                                     </textField>
                                                                 </subviews>
                                                             </stackView>
