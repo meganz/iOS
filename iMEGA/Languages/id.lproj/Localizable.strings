@@ -713,7 +713,7 @@
 /* Title for new camera upload feature */
 "New Camera Upload!"="Opsi Unggah Kamera Baru!";
 /* A messge for camera upload v2 migration */
-"Now you can choose to convert the HEIF/HEVC photos and videos to the most compatible JPEG/H.264 formats."="Sekarang Anda dapat memilih untuk mengonversi foto dan video HEIF / HEVC ke format JPEG / H.264 yang lebih luas kompatibel.";
+"Now you can choose to convert the HEIF/HEVC photos and videos to the most compatible JPEG/H.264 formats."="Sekarang Anda dapat memilih untuk mengonversi foto dan video HEIC/HEVC ke format JPEG/H.264 yang lebih luas kompatibel.";
 /* Title for an action to use most compatible formats */
 "Use Most Compatible Formats"="Gunakan Format Paling Kompatibel";
 /* Title for custom settings */
@@ -740,6 +740,14 @@
 "Only the representative photos from your burst photo sequences will be uploaded."="Only favourite photos from your burst photo sequences will be uploaded.";
 /* Footer description when upload Hidden Album is enabled */
 "The Hidden Album is where you hide photos or videos in your device Photos app."="The Hidden Album is where you hide photos or videos in your device’s Photos app.";
+/* Title of the switch to config whether to upload Shared Albums */
+"Upload Shared Albums"="Upload Shared Albums";
+/* Footer description for Upload Shared Albums title */
+"Shared Albums are where you share with other people and subscribe to other people's shares in your device's Photos app."="Shared Albums are where you share with other people and subscribe to other people’s shares in your device’s Photos app.";
+/* Title of the switch to config whether to upload synced albums */
+"Upload albums synced from iTunes"="Upload albums synced from iTunes";
+/* Footer description for upload synced albums title */
+"Synced albums are where you sync photos or videos to your device's Photos app from iTunes."="Synced albums are where you sync photos or videos to your device’s Photos app from iTunes.";
 /* App means “Application” */
 "App version"="Versi App";
 /* Title of the label where the SDK version is shown */
