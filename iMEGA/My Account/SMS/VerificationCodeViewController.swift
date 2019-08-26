@@ -46,7 +46,7 @@ class VerificationCodeViewController: UIViewController {
         verificationCodeFields = codeFieldsContainerView.subviews.compactMap { $0 as? UITextField }
         verificationCodeFields.first?.becomeFirstResponder()
         
-        phoneNumberLabel.text = PhoneNumberKit().format(phoneNumber, toType: .e164)
+        phoneNumberLabel.text = PhoneNumberKit().format(phoneNumber, toType: .international)
     }
     
     override func viewWillAppear(_ animated: Bool) {
