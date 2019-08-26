@@ -3,7 +3,6 @@
 #import "NSFileManager+MNZCategory.h"
 #import "CameraUploadManager+Settings.h"
 #import "PHAsset+CameraUpload.h"
-#import "MEGAConstants.h"
 #import "ImageExportManager.h"
 #import "CameraUploadOperation+Utils.h"
 @import CoreServices;

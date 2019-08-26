@@ -67,9 +67,9 @@
 - (void)itemChangedAtURL:(NSURL *)url {
     [MEGASdk setLogToConsole:YES];
     
-    if ([[[NSUserDefaults alloc] initWithSuiteName:@"group.mega.ios"] boolForKey:@"logging"]) {
+    if ([[NSUserDefaults.alloc initWithSuiteName:MEGAGroupIdentifier] boolForKey:@"logging"]) {
         NSFileManager *fileManager = [NSFileManager defaultManager];
-        NSString *logsPath = [[[fileManager containerURLForSecurityApplicationGroupIdentifier:@"group.mega.ios"] URLByAppendingPathComponent:@"logs"] path];
+        NSString *logsPath = [[[fileManager containerURLForSecurityApplicationGroupIdentifier:MEGAGroupIdentifier] URLByAppendingPathComponent:MEGAExtensionLogsFolder] path];
         if (![fileManager fileExistsAtPath:logsPath]) {
             [fileManager createDirectoryAtPath:logsPath withIntermediateDirectories:NO attributes:nil error:nil];
         }
@@ -116,7 +116,7 @@
         MEGALogError(@"Failed to locate/create NSApplicationSupportDirectory with error: %@", error);
     }
     
-    NSURL *groupSupportURL = [[fileManager containerURLForSecurityApplicationGroupIdentifier:@"group.mega.ios"] URLByAppendingPathComponent:@"GroupSupport"];
+    NSURL *groupSupportURL = [[fileManager containerURLForSecurityApplicationGroupIdentifier:MEGAGroupIdentifier] URLByAppendingPathComponent:MEGAExtensionGroupSupportFolder];
     if (![fileManager fileExistsAtPath:groupSupportURL.path]) {
         [fileManager createDirectoryAtURL:groupSupportURL withIntermediateDirectories:NO attributes:nil error:nil];
     }
@@ -173,7 +173,7 @@
         case MEGARequestTypeFetchNodes: {
             // Given that the remote file cannot be modified, the new version of the file must be uploaded. Then, it is
             // safe to remove the old file. The file to be uploaded goes to the folder pointed by the parentHandle.
-            NSUserDefaults *mySharedDefaults = [[NSUserDefaults alloc] initWithSuiteName:@"group.mega.ios"];
+            NSUserDefaults *mySharedDefaults = [NSUserDefaults.alloc initWithSuiteName:MEGAGroupIdentifier];
             NSString *base64Handle = [mySharedDefaults objectForKey:self.url.absoluteString];
             uint64_t handle = [MEGASdk handleForBase64Handle:base64Handle];
             self.oldNode = [api nodeForHandle:handle];

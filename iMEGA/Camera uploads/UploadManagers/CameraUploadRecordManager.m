@@ -5,7 +5,6 @@
 #import "LocalFileNameGenerator.h"
 #import "SavedIdentifierParser.h"
 #import "CameraUploadStore.h"
-#import "MEGAConstants.h"
 
 static const NSUInteger MaximumUploadRetryPerLaunchCount = 7;
 static const NSUInteger MaximumUploadRetryPerLoginCount = 7 * 77;

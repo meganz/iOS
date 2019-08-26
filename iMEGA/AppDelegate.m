@@ -57,7 +57,6 @@
 #import "MEGAShowPasswordReminderRequestDelegate.h"
 #import "CameraUploadManager+Settings.h"
 #import "TransferSessionManager.h"
-#import "MEGAConstants.h"
 #import "BackgroundRefreshPerformer.h"
 
 #define kFirstRun @"FirstRun"
@@ -191,7 +190,7 @@
     if (sessionV3) {
         [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"TabsOrderInTabBar"];
         
-        NSUserDefaults *sharedUserDefaults = [[NSUserDefaults alloc] initWithSuiteName:@"group.mega.ios"];
+        NSUserDefaults *sharedUserDefaults = [NSUserDefaults.alloc initWithSuiteName:MEGAGroupIdentifier];
         if (![sharedUserDefaults boolForKey:@"extensions"]) {
             [SAMKeychain deletePasswordForService:@"MEGA" account:@"sessionV3"];
             [SAMKeychain setPassword:sessionV3 forService:@"MEGA" account:@"sessionV3"];
@@ -979,7 +978,7 @@
         MEGALogError(@"Failed to locate/create NSApplicationSupportDirectory with error: %@", error);
     }
     
-    NSString *groupSupportPath = [[[fileManager containerURLForSecurityApplicationGroupIdentifier:@"group.mega.ios"] URLByAppendingPathComponent:@"GroupSupport"] path];
+    NSString *groupSupportPath = [[[fileManager containerURLForSecurityApplicationGroupIdentifier:MEGAGroupIdentifier] URLByAppendingPathComponent:MEGAExtensionGroupSupportFolder] path];
     if (![fileManager fileExistsAtPath:groupSupportPath]) {
         [fileManager createDirectoryAtPath:groupSupportPath withIntermediateDirectories:NO attributes:nil error:nil];
     }
@@ -1417,7 +1416,7 @@ void uncaughtExceptionHandler(NSException *exception) {
 - (void)onEvent:(MEGASdk *)api event:(MEGAEvent *)event {
     switch (event.type) {
         case EventChangeToHttps:
-            [[[NSUserDefaults alloc] initWithSuiteName:@"group.mega.ios"] setBool:YES forKey:@"useHttpsOnly"];
+            [[NSUserDefaults.alloc initWithSuiteName:MEGAGroupIdentifier] setBool:YES forKey:@"useHttpsOnly"];
             break;
             
         case EventAccountBlocked:
@@ -1678,7 +1677,7 @@ void uncaughtExceptionHandler(NSException *exception) {
                 }
                 if (isAccountFirstLogin) {
                     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"IsChatEnabled"];
-                    [[[NSUserDefaults alloc] initWithSuiteName:@"group.mega.ios"] setBool:YES forKey:@"IsChatEnabled"];
+                    [[NSUserDefaults.alloc initWithSuiteName:MEGAGroupIdentifier] setBool:YES forKey:@"IsChatEnabled"];
                 }
             }
             
@@ -1686,7 +1685,7 @@ void uncaughtExceptionHandler(NSException *exception) {
                 [self showMainTabBar];
             }
             
-            NSUserDefaults *sharedUserDefaults = [[NSUserDefaults alloc] initWithSuiteName:@"group.mega.ios"];
+            NSUserDefaults *sharedUserDefaults = [NSUserDefaults.alloc initWithSuiteName:MEGAGroupIdentifier];
             dispatch_async(self.indexSerialQueue, ^{
                 if (![sharedUserDefaults boolForKey:@"treeCompleted"]) {
                     [self.indexer generateAndSaveTree];

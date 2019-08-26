@@ -4,7 +4,6 @@
 #import <Photos/PhotosTypes.h>
 #import <CoreLocation/CoreLocation.h>
 
-#import "MEGAConstants.h"
 #import "NSFileManager+MNZCategory.h"
 #import "MEGAReachabilityManager.h"
 

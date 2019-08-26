@@ -1,7 +1,6 @@
 
 #import "LivePhotoUploadOperation.h"
 #import "PHAsset+CameraUpload.h"
-#import "MEGAConstants.h"
 #import "CameraUploadOperation+Utils.h"
 #import "PHAssetResource+CameraUpload.h"
 @import Photos;

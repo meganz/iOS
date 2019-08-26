@@ -1,7 +1,6 @@
 
 #import "BackgroundUploadingTaskMonitor.h"
 #import "CameraUploadRecordManager.h"
-#import "MEGAConstants.h"
 
 static const NSTimeInterval MonitorTimerInterval = 70;
 static const NSUInteger MaximumBackgroundPendingTaskCount = 600;
