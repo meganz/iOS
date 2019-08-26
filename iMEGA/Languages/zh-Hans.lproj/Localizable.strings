@@ -740,6 +740,14 @@
 "Only the representative photos from your burst photo sequences will be uploaded."="只上传连拍照片中的个人收藏照片";
 /* Footer description when upload Hidden Album is enabled */
 "The Hidden Album is where you hide photos or videos in your device Photos app."="隐藏相册是指您在设备的照片中隐藏照片或视频的地方。";
+/* Title of the switch to config whether to upload Shared Albums */
+"Upload Shared Albums"="Upload Shared Albums";
+/* Footer description for Upload Shared Albums title */
+"Shared Albums are where you share with other people and subscribe to other people's shares in your device's Photos app."="Shared Albums are where you share with other people and subscribe to other people’s shares in your device’s Photos app.";
+/* Title of the switch to config whether to upload synced albums */
+"Upload albums synced from iTunes"="Upload albums synced from iTunes";
+/* Footer description for upload synced albums title */
+"Synced albums are where you sync photos or videos to your device's Photos app from iTunes."="Synced albums are where you sync photos or videos to your device’s Photos app from iTunes.";
 /* App means “Application” */
 "App version"="App 版本";
 /* Title of the label where the SDK version is shown */
@@ -1565,7 +1573,7 @@
 /* state previous to import a file */
 "loading"="加载中";
 /*   */
-"next"="次一";
+"next"="下一步";
 /* Button title to allow the user ignore something */
 "ignore"="忽略";
 /* Button title to allow the user open the default browser */
@@ -2009,9 +2017,9 @@
 /* Destination folder name of chat files */
 "My chat files"="我的聊天文件";
 /* Label indicating that the passcode (pin) view will be displayed if the application goes back to foreground after being x time in background. Examples: require passcode immediately, require passcode after 5 minutes. */
-"Require passcode"="Require passcode";
+"Require passcode"="密码请求";
 /* Label indicating that the enter passcode (pin) view will be displayed immediately if the application goes back to foreground after being in background. */
-"Immediately"="Immediately";
+"Immediately"="立即";
 /* Popup notification text on mouse-over of taken down file. */
 "This file has been the subject of a takedown notice."="此文件接获下架通知且已被移除";
 /* Popup notification text on mouse-over taken down folder. */

@@ -740,6 +740,14 @@
 "Only the representative photos from your burst photo sequences will be uploaded."="연속 촬영의 가장 좋아하는 사진만 업로드 됩니다.";
 /* Footer description when upload Hidden Album is enabled */
 "The Hidden Album is where you hide photos or videos in your device Photos app."="숨긴 앨범은 기기의 사진 앱에서 숨긴 사진 또는 동영상입니다.";
+/* Title of the switch to config whether to upload Shared Albums */
+"Upload Shared Albums"="Upload Shared Albums";
+/* Footer description for Upload Shared Albums title */
+"Shared Albums are where you share with other people and subscribe to other people's shares in your device's Photos app."="Shared Albums are where you share with other people and subscribe to other people’s shares in your device’s Photos app.";
+/* Title of the switch to config whether to upload synced albums */
+"Upload albums synced from iTunes"="Upload albums synced from iTunes";
+/* Footer description for upload synced albums title */
+"Synced albums are where you sync photos or videos to your device's Photos app from iTunes."="Synced albums are where you sync photos or videos to your device’s Photos app from iTunes.";
 /* App means “Application” */
 "App version"="앱 버전";
 /* Title of the label where the SDK version is shown */
@@ -2009,9 +2017,9 @@
 /* Destination folder name of chat files */
 "My chat files"="내 대화 파일";
 /* Label indicating that the passcode (pin) view will be displayed if the application goes back to foreground after being x time in background. Examples: require passcode immediately, require passcode after 5 minutes. */
-"Require passcode"="Require passcode";
+"Require passcode"="비밀번호 필요";
 /* Label indicating that the enter passcode (pin) view will be displayed immediately if the application goes back to foreground after being in background. */
-"Immediately"="Immediately";
+"Immediately"="즉시";
 /* Popup notification text on mouse-over of taken down file. */
 "This file has been the subject of a takedown notice."="이 파일은 게시 중단 통보 대상입니다.";
 /* Popup notification text on mouse-over taken down folder. */
