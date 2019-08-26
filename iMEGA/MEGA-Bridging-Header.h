@@ -4,6 +4,8 @@
 
 #import "MEGASdkManager.h"
 
+#import "LTHPasscodeViewController.h"
+
 #import "NSString+MNZCategory.h"
 #import "UIColor+MNZCategory.h"
 #import "UIFont+MNZCategory.h"

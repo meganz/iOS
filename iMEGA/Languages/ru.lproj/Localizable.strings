@@ -38,6 +38,8 @@
 "emptyFolderMessage"="Вы не можете скачать пустую папку";
 /* Message shown when the user clicks on a confirm account link that has already been used  */
 "accountAlreadyConfirmed"="Ваша учётная запись активирована. Пожалуйста, авторизируйтесь.";
+/* */
+"Your confirmation link is no longer valid. Your account may already be activated or you may have cancelled your registration."="Ссылка подтверждения более не действительна. Ваш аккаунт может быть уже активирован или вы могли отменить регистрацию.";
 /* Message shown when the user clicks on an link that is not valid */
 "linkNotValid"="Неправильная ссылка";
 /* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
@@ -50,6 +52,12 @@
 "decrypt"="Дешифрировать";
 /* Alert title shown when you have written a decryption key not valid */
 "decryptionKeyNotValid"="Неправильный ключ дешифрования";
+/* This dialog message is used on the Password Decrypt dialog. The link is a password protected link so the user needs to enter the password to decrypt the link. */
+"To access this link, you will need its password."="Для доступа к этой ссылке нужен пароль.";
+/* This dialog message is used on the Password Decrypt dialog as an instruction for the user. */
+"If you do not have the password, contact the creator of the link."="Если у вас нет пароля, свяжитесь с создателем этой ссылки.";
+/* This placeholder text is used on the Password Decrypt dialog as an instruction for the user. */
+"Enter the password"="Введите пароль";
 /* Alert title shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOut_alertTitle"="Выйти из системы";
 /* Alert message shown when your account has been closed through another client or the web by killing all your sessions */
@@ -493,7 +501,7 @@
 /* Button title that skips the current action */
 "skipButton"="Пропустить";
 /* Text shown to explain what means 'Enable Camera Uploads'. The 'Cloud Drive' is the MEGA section, so please keep consistency */
-"automaticallyBackupYourPhotos"="Автоматически копировать фото на облачный диск";
+"Automatically backup your photos and videos to the Cloud Drive."="Автоматически загружать фото и видео на облачный диск.";
 /* Button title that enables the functionality 'Camera Uploads', which uploads all the photos in your device to MEGA */
 "enableCameraUploadsButton"="Включить загрузки из камеры";
 /* Success message shown when Camera Uploads has been enabled */
@@ -504,6 +512,14 @@
 "cameraUploadsPendingFile"="Выполняется загрузка, остался 1 файл";
 /* Message shown while uploading files. Plural. */
 "cameraUploadsPendingFiles"="Выполняется загрузка, осталось файлов: %lu";
+/* Message shown when camera upload paused because of no WiFi. Singular. */
+"Upload paused because of no WiFi, 1 file pending"="Загрузка приостановлена из-за отсутствия WiFi-соединения, 1 файл в ожидании";
+/* Message shown when camera upload paused because of no WiFi. Plural. */
+"Upload paused because of no WiFi, %lu files pending"="Загрузка приостановлена из-за отсутствия WiFi-соединения, файлы в ожидании: %lu";
+/* Message shown the pending video file when photos uploaded and video upload is not enabled. Singular. */
+"Photos uploaded, video uploads are off, 1 video not uploaded"="Фото загружены, загрузка видео отключена; 1 видео не загружено";
+/* Message shown the pending video files when photos uploaded and video upload is not enabled. Plural. */
+"Photos uploaded, video uploads are off, %lu videos not uploaded"="Фото загружены, загрузка видео отключена; %lu видео не загружено";
 /* Singular, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 1 file. */
 "indexOfTotalFile"="файлы: %1$d из %2$d";
 /* Plural, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 3 files. */
@@ -656,12 +672,82 @@
 "on"="Вкл";
 /* Header to explain that 'Upload videos', 'Use cellular connection' and 'Only when charging' are options of the Camera Uploads */
 "options"="Опции";
+/* A hint to show one option is recommended by MEGA */
+"(Recommended)"="(Рекомендуется)";
+/* Header to introduce how to deal with HEIC format photos in Camera Uplaod */
+"SAVE HEIC PHOTOS AS"="Сохранять HEIC-фото как";
+/* Footer for HEIC format section */
+"We recommend JPG, as its the most compatible format for photos."="Мы рекомендуем JPG, так как это самый совместимый формат для фото.";
+/* Header to introduce how to deal with HEVC format videos in Camera Uplaod */
+"SAVE HEVC VIDEOS AS"="Сохранять HEIC-видео как";
+/* Footer for HEVC format section */
+"We recommend H.264, as its the most compatible format for videos."="Мы рекомендуем H.264, так как это самый совместимый формат для видео.";
+/* Footer for video compression quality */
+"Compression quality when to transcode HEVC videos to H.264 format."="Качество сжатия при перекодировании HEVC-видео в формат H.264.";
 /* Option title to enable upload videos with Camera Uploads */
-"uploadVideosLabel"="Загрузить видео";
+"uploadVideosLabel"="Загружать видео";
 /* Option title to enable Camera Uploads only when the device is charging */
 "onlyWhenChargingLabel"="Только при зарядке";
-/* Footer text to explain the Camera Uploads functionality */
-"cameraUploads_footer"="Если включено, то фото и видео будут загружаться.";
+/* Footer text for Camera Upload switch section when camera upload is disabled */
+"When enabled, photos will be uploaded."="Если включено, фото будут загружаться.";
+/* Footer text for Camera Upload switch section when only photos upload is enabled */
+"Photos will be uploaded to Camera Uploads folder."="Фото будут загружаться в папку «Загрузки из камеры»";
+/* Footer text for Camera Upload switch section when photos and videos upload is enabled */
+"Photos and videos will be uploaded to Camera Uploads folder."="Фото и видео будут загружаться в папку «Загрузки из камеры»";
+/* Title to show for upload in background */
+"Upload in Background"="Загружать в фоне";
+/* Title for the location based background upload message */
+"Enable location services for background upload"="Включить сервисы геолокации для фоновой загрузки";
+/* Message for the location based background upload when the location data access is not denied by users */
+"MEGA can periodically start camera uploads in background when your location changes."="MEGA может периодически начинать загрузки из камеры в фоне, когда ваше местоположение меняется";
+/* Message for the location based background upload when the location data access is denied by users */
+"Please select “Always” at your Location page in Settings, then MEGA can periodically start camera uploads in background when your location changes."="Пожалуйста, выберите «Всегда» на странице «Местоположение» в настройках, чтобы MEGA могла периодически начинать загрузку из камеры в фоне при изменении вашего местоположения.";
+/* Title for turn on a feature */
+"Turn On"="Включить";
+/* Title for turn on a feature in settings */
+"Turn On in Settings"="Включить в настройках";
+/* Footer for video uploads switch section when enabled */
+"Videos will be uploaded to the Camera Uploads folder."="Видео будут загружаться в папку «Загрузки из камеры»";
+/* Footer for video uploads switch section when disabled */
+"When enabled, videos will be uploaded."="Если включено, видео будут загружаться в облако.";
+/* Title for new camera upload feature */
+"New Camera Upload!"="Новые опции загрузок из камеры!";
+/* A messge for camera upload v2 migration */
+"Now you can choose to convert the HEIF/HEVC photos and videos to the most compatible JPEG/H.264 formats."="Теперь вы можете конвертировать фотографии и видео HEIC/HEVC в более широко совместимые форматы JPEG/H.264.";
+/* Title for an action to use most compatible formats */
+"Use Most Compatible Formats"="Использовать наиболее совместимые форматы";
+/* Title for custom settings */
+"Custom Settings"="Пользовательские настройки";
+/* Title to show when device local storage is full */
+"%@ Storage Full"="Хранилище %@ заполнено";
+/* Detail for local storage full situation */
+"You do not have enough storage to upload camera. Free up space by deleting unneeded apps, videos or music. You can manage your storage in %@"="У вас недостаточно места для дальнейшей загрузки с камеры. Освободите место, удалив ненужные приложения, видео или музыку. Вы можете управлять хранилищем в %@";
+/* Navigation path for Storage settings in iOS */
+"Settings > General > %@ Storage"="Настройки > Обшие > Хранилище %@";
+/* Title of the switch to config whether to upload videos for Live Photos */
+"Upload videos for Live Photos"="Загрузить видео для «живых фото»";
+/* Title of the switch to config whether to upload all burst photos */
+"Upload all burst photos"="Загружать серийную съёмку";
+/* Title of the switch to config whether to upload Hidden Album */
+"Upload Hidden Album"="Загрузить скрытый альбом";
+/* Footer description when upload videos for Live Photos is enabled */
+"The video and the photo in each Live Photo will be uploaded."="Фото- и видеоверсии каждого живого фото будут загружены.";
+/* Footer description when upload videos for Live Photos is disabled */
+"Only the photo in each Live Photo will be uploaded."="Только фотоверсии каждого живого фото будут загружены.";
+/* Footer description when upload all burst photos is enabled */
+"All the photos from your burst photo sequences will be uploaded."="Все фото из серийной съёмки будут загружаться.";
+/* Footer description when upload all burst photos is disabled */
+"Only the representative photos from your burst photo sequences will be uploaded."="Только избранные фото из серийной съёмки будут загружаться.";
+/* Footer description when upload Hidden Album is enabled */
+"The Hidden Album is where you hide photos or videos in your device Photos app."="Скрытый альбом — альбом, где вы прячете фото или видео в приложении «Фото» на устройстве.";
+/* Title of the switch to config whether to upload Shared Albums */
+"Upload Shared Albums"="Upload Shared Albums";
+/* Footer description for Upload Shared Albums title */
+"Shared Albums are where you share with other people and subscribe to other people's shares in your device's Photos app."="Shared Albums are where you share with other people and subscribe to other people’s shares in your device’s Photos app.";
+/* Title of the switch to config whether to upload synced albums */
+"Upload albums synced from iTunes"="Upload albums synced from iTunes";
+/* Footer description for upload synced albums title */
+"Synced albums are where you sync photos or videos to your device's Photos app from iTunes."="Synced albums are where you sync photos or videos to your device’s Photos app from iTunes.";
 /* App means “Application” */
 "App version"="Версия приложения";
 /* Title of the label where the SDK version is shown */
@@ -1091,6 +1177,8 @@
 "voiceAndVideoCalls"="Голосовые и Видео Звонки";
 /* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature. */
 "useMobileData"="Использовать данные мобильного устройства";
+/* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for videos. */
+"Use Mobile Data for Videos"="Использовать мобильные данные для видео";
 /* A header in the Chat settings. This changes the user's status to Away after some time of inactivity. */
 "autoAway"="Отсутствие";
 /* */
@@ -1625,7 +1713,7 @@
 /* Title label that explains that the user is going to be asked for the microphone and camera permission */
 "Enable Microphone and Camera"="Включить микрофон и камеру";
 /* Detailed explanation of why the user should give permission to access to the camera and the microphone */
-"To make encrypted voice and video calls, allow MEGA access to your Camera and Microphone"="Чтобы отправлять голосовые заметки, совершать зашифрованные голосовые и видеозвонки, откройте MEGA доступ к камере и микрофону";
+"To make encrypted voice and video calls, allow MEGA access to your Camera and Microphone"="Чтобы отправлять голосовые сообщения, совершать зашифрованные голосовые и видеозвонки, откройте MEGA доступ к камере и микрофону";
 /* Title label that explains that the user is going to be asked for the notifications permission */
 "Enable Notifications"="Включить Уведомления";
 /* Detailed explanation of why the user should give permission to deliver notifications */
@@ -1921,8 +2009,20 @@
 /* Button title to go to the iOS Settings to enable 'Mobile Data' for the MEGA app. */
 "Turn Mobile Data on"="Включить мобильные данные";
 /* Extra information shown when the user has disabled the 'Mobile Data' setting for MEGA in the iOS Settings. */
-"You can turn on mobile data for this app in Settings."="Вы можете включить мобильные данные для этого приложения в настройках.";
+"You can turn on mobile data for this app in Settings."="Вы можете включить передачу мобильных данных для этого приложения в настройках устройства.";
 /* title of the alert dialog when the user is changing the API URL to staging */
 "Change to a test server?"="Перейти на тестовый сервер?";
 /* text of the alert dialog when the user is changing the API URL to staging */
 "Are you sure you want to change to a test server? Your account may suffer irrecoverable problems"="Действительно перейти на тестовый сервер? Это может вызвать непоправимые сбои в работе аккаунта";
+/* Destination folder name of chat files */
+"My chat files"="Мои файлы из чата";
+/* Label indicating that the passcode (pin) view will be displayed if the application goes back to foreground after being x time in background. Examples: require passcode immediately, require passcode after 5 minutes. */
+"Require passcode"="Требовать пароль";
+/* Label indicating that the enter passcode (pin) view will be displayed immediately if the application goes back to foreground after being in background. */
+"Immediately"="Сразу же";
+/* Popup notification text on mouse-over of taken down file. */
+"This file has been the subject of a takedown notice."="К этому файлу предъявлено требование о снятии.";
+/* Popup notification text on mouse-over taken down folder. */
+"This folder has been the subject of a takedown notice."="К этой папке предъявлено требование о снятии.";
+/* File Manager -> Context menu item for taken down file or folder, for dispute takedown. */
+"Dispute Takedown"="Оспорить блокировку";

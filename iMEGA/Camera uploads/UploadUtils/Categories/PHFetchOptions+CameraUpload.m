@@ -1,5 +1,6 @@
 
 #import "PHFetchOptions+CameraUpload.h"
+#import "CameraUploadManager+Settings.h"
 
 @implementation PHFetchOptions (CameraUpload)
 
@@ -21,8 +22,17 @@
 
 + (PHFetchOptions *)mnz_shardFetchOptionsForCameraUpload {
     PHFetchOptions *fetchOptions = [[PHFetchOptions alloc] init];
-    fetchOptions.includeAssetSourceTypes = PHAssetSourceTypeUserLibrary | PHAssetSourceTypeCloudShared | PHAssetSourceTypeiTunesSynced;
-    fetchOptions.includeAllBurstAssets = YES;
+    PHAssetSourceType sourceTypes = PHAssetSourceTypeUserLibrary;
+    if (CameraUploadManager.shouldUploadSharedAlbums) {
+        sourceTypes |= PHAssetSourceTypeCloudShared;
+    }
+    if (CameraUploadManager.shouldUploadSyncedAlbums) {
+        sourceTypes |= PHAssetSourceTypeiTunesSynced;
+    }
+    
+    fetchOptions.includeAssetSourceTypes = sourceTypes;
+    fetchOptions.includeAllBurstAssets = CameraUploadManager.shouldUploadAllBurstPhotos;
+    fetchOptions.includeHiddenAssets = CameraUploadManager.shouldUploadHiddenAlbum;
     return fetchOptions;
 }
 

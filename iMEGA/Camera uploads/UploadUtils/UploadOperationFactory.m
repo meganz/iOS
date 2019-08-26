@@ -7,6 +7,7 @@
 #import "MEGAConstants.h"
 #import "PHFetchOptions+CameraUpload.h"
 #import "NSError+CameraUpload.h"
+#import "CameraUploadManager+Settings.h"
 @import Photos;
 
 @implementation UploadOperationFactory
@@ -38,7 +39,13 @@
     switch (uploadInfo.asset.mediaType) {
         case PHAssetMediaTypeImage:
             if (identifierInfo.mediaSubtype & PHAssetMediaSubtypePhotoLive) {
-                operation = [[LivePhotoUploadOperation alloc] initWithUploadInfo:uploadInfo uploadRecord:uploadRecord];
+                if (CameraUploadManager.shouldScanLivePhotosForVideos) {
+                    operation = [[LivePhotoUploadOperation alloc] initWithUploadInfo:uploadInfo uploadRecord:uploadRecord];
+                } else {
+                    if (error != NULL) {
+                        *error = [NSError mnz_cameraUploadDisabledMediaSubtype:identifierInfo.mediaSubtype];
+                    }
+                }
             } else {
                 operation = [[PhotoUploadOperation alloc] initWithUploadInfo:uploadInfo uploadRecord:uploadRecord];
             }

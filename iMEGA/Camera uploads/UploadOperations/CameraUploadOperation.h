@@ -21,7 +21,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)handleProcessedFileWithMediaType:(PHAssetMediaType)type;
 
-- (void)finishOperationWithStatus:(CameraAssetUploadStatus)status shouldUploadNextAsset:(BOOL)uploadNextAsset;
+- (void)finishOperationWithStatus:(CameraAssetUploadStatus)status;
 
 @end
 

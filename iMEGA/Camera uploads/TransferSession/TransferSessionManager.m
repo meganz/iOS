@@ -53,10 +53,6 @@ static NSString * const VideoCellularDisallowedUploadSessionId = @"nz.mega.video
 #pragma mark - session creation
 
 - (NSURLSession *)photoCellularAllowedUploadSession {
-    if (_photoCellularAllowedUploadSession) {
-        return _photoCellularAllowedUploadSession;
-    }
-    
     dispatch_sync(self.serialQueue, ^{
         if (self->_photoCellularAllowedUploadSession == nil) {
             self->_photoCellularAllowedUploadSession = [self createBackgroundSessionWithIdentifier:PhotoCellularAllowedUploadSessionId];
@@ -67,10 +63,6 @@ static NSString * const VideoCellularDisallowedUploadSessionId = @"nz.mega.video
 }
 
 - (NSURLSession *)photoCellularDisallowedUploadSession {
-    if (_photoCellularDisallowedUploadSession) {
-        return _photoCellularDisallowedUploadSession;
-    }
-    
     dispatch_sync(self.serialQueue, ^{
         if (self->_photoCellularDisallowedUploadSession == nil) {
             self->_photoCellularDisallowedUploadSession = [self createBackgroundSessionWithIdentifier:PhotoCellularDisallowedUploadSessionId];
@@ -81,10 +73,6 @@ static NSString * const VideoCellularDisallowedUploadSessionId = @"nz.mega.video
 }
 
 - (NSURLSession *)videoCellularAllowedUploadSession {
-    if (_videoCellularAllowedUploadSession) {
-        return _videoCellularAllowedUploadSession;
-    }
-    
     dispatch_sync(self.serialQueue, ^{
         if (self->_videoCellularAllowedUploadSession == nil) {
             self->_videoCellularAllowedUploadSession = [self createBackgroundSessionWithIdentifier:VideoCellularAllowedUploadSessionId];
@@ -95,10 +83,6 @@ static NSString * const VideoCellularDisallowedUploadSessionId = @"nz.mega.video
 }
 
 - (NSURLSession *)videoCellularDisallowedUploadSession {
-    if (_videoCellularDisallowedUploadSession) {
-        return _videoCellularDisallowedUploadSession;
-    }
-    
     dispatch_sync(self.serialQueue, ^{
         if (self->_videoCellularDisallowedUploadSession == nil) {
             self->_videoCellularDisallowedUploadSession = [self createBackgroundSessionWithIdentifier:VideoCellularDisallowedUploadSessionId];
@@ -134,6 +118,26 @@ static NSString * const VideoCellularDisallowedUploadSessionId = @"nz.mega.video
     
     [_photoCellularDisallowedUploadSession invalidateAndCancel];
     _photoCellularDisallowedUploadSession = nil;
+}
+
+- (void)invalidateAndCancelPhotoCellularDisallowedSession {
+    [_photoCellularDisallowedUploadSession invalidateAndCancel];
+    _photoCellularDisallowedUploadSession = nil;
+}
+
+- (void)invalidateAndCancelPhotoCellularAllowedSession {
+    [_photoCellularAllowedUploadSession invalidateAndCancel];
+    _photoCellularAllowedUploadSession = nil;
+}
+
+- (void)invalidateAndCancelVideoCellularDisallowedSession {
+    [_videoCellularDisallowedUploadSession invalidateAndCancel];
+    _videoCellularDisallowedUploadSession = nil;
+}
+
+- (void)invalidateAndCancelVideoCellularAllowedSession {
+    [_videoCellularAllowedUploadSession invalidateAndCancel];
+    _videoCellularAllowedUploadSession = nil;
 }
 
 #pragma mark - sessions and tasks restoration
@@ -241,7 +245,7 @@ static NSString * const VideoCellularDisallowedUploadSessionId = @"nz.mega.video
 }
 
 - (NSURLSessionUploadTask *)videoUploadTaskWithURL:(NSURL *)requestURL fromFile:(NSURL *)fileURL completion:(UploadCompletionHandler)completion {
-    NSURLSession *videoSession = CameraUploadManager.isCellularUploadAllowed ? self.videoCellularAllowedUploadSession : self.videoCellularDisallowedUploadSession;
+    NSURLSession *videoSession = (CameraUploadManager.isCellularUploadAllowed && CameraUploadManager.isCellularUploadForVideosAllowed) ? self.videoCellularAllowedUploadSession : self.videoCellularDisallowedUploadSession;
     return [self backgroundUploadTaskInSession:videoSession withURL:requestURL fromFile:fileURL completion:completion];
 }
 
