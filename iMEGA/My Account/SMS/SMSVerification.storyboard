@@ -166,6 +166,9 @@
                                                                                                 <nil key="textColor"/>
                                                                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                                                                 <textInputTraits key="textInputTraits" keyboardType="numberPad" textContentType="tel"/>
+                                                                                                <connections>
+                                                                                                    <action selector="didEditingChangedInPhoneNumberField" destination="RUe-vS-5fH" eventType="editingChanged" id="ofP-tL-6oV"/>
+                                                                                                </connections>
                                                                                             </textField>
                                                                                         </subviews>
                                                                                     </stackView>
@@ -362,8 +365,9 @@
                                                                         </constraints>
                                                                         <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="42"/>
-                                                                        <textInputTraits key="textInputTraits" textContentType="one-time-code"/>
+                                                                        <textInputTraits key="textInputTraits" keyboardType="phonePad" returnKeyType="done" textContentType="one-time-code"/>
                                                                         <connections>
+                                                                            <action selector="didEditingChangeInTextField:" destination="ZVj-3U-FfW" eventType="editingChanged" id="4vR-3n-h4e"/>
                                                                             <outlet property="delegate" destination="ZVj-3U-FfW" id="LMQ-Ul-hat"/>
                                                                             <outlet property="singleCodeDelegate" destination="ZVj-3U-FfW" id="Mnd-Xt-Zw1"/>
                                                                         </connections>
@@ -376,8 +380,9 @@
                                                                         </constraints>
                                                                         <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="42"/>
-                                                                        <textInputTraits key="textInputTraits" textContentType="one-time-code"/>
+                                                                        <textInputTraits key="textInputTraits" keyboardType="phonePad" returnKeyType="done" textContentType="one-time-code"/>
                                                                         <connections>
+                                                                            <action selector="didEditingChangeInTextField:" destination="ZVj-3U-FfW" eventType="editingChanged" id="g2x-gx-rJT"/>
                                                                             <outlet property="delegate" destination="ZVj-3U-FfW" id="Yel-4n-oeW"/>
                                                                             <outlet property="singleCodeDelegate" destination="ZVj-3U-FfW" id="dCQ-e8-tqz"/>
                                                                         </connections>
@@ -390,8 +395,9 @@
                                                                         </constraints>
                                                                         <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="42"/>
-                                                                        <textInputTraits key="textInputTraits" textContentType="one-time-code"/>
+                                                                        <textInputTraits key="textInputTraits" keyboardType="phonePad" returnKeyType="done" textContentType="one-time-code"/>
                                                                         <connections>
+                                                                            <action selector="didEditingChangeInTextField:" destination="ZVj-3U-FfW" eventType="editingChanged" id="Sca-Ty-DC1"/>
                                                                             <outlet property="delegate" destination="ZVj-3U-FfW" id="yGq-kz-k9p"/>
                                                                             <outlet property="singleCodeDelegate" destination="ZVj-3U-FfW" id="uTN-Fa-gFR"/>
                                                                         </connections>
@@ -404,8 +410,9 @@
                                                                         </constraints>
                                                                         <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="42"/>
-                                                                        <textInputTraits key="textInputTraits" textContentType="one-time-code"/>
+                                                                        <textInputTraits key="textInputTraits" keyboardType="phonePad" returnKeyType="done" textContentType="one-time-code"/>
                                                                         <connections>
+                                                                            <action selector="didEditingChangeInTextField:" destination="ZVj-3U-FfW" eventType="editingChanged" id="GSH-l6-5Yh"/>
                                                                             <outlet property="delegate" destination="ZVj-3U-FfW" id="yxa-gL-3cv"/>
                                                                             <outlet property="singleCodeDelegate" destination="ZVj-3U-FfW" id="FSC-Xw-Yme"/>
                                                                         </connections>
@@ -418,8 +425,9 @@
                                                                         </constraints>
                                                                         <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="42"/>
-                                                                        <textInputTraits key="textInputTraits" textContentType="one-time-code"/>
+                                                                        <textInputTraits key="textInputTraits" keyboardType="phonePad" returnKeyType="done" textContentType="one-time-code"/>
                                                                         <connections>
+                                                                            <action selector="didEditingChangeInTextField:" destination="ZVj-3U-FfW" eventType="editingChanged" id="Zb0-N4-uuz"/>
                                                                             <outlet property="delegate" destination="ZVj-3U-FfW" id="qN7-6S-3Dj"/>
                                                                             <outlet property="singleCodeDelegate" destination="ZVj-3U-FfW" id="jHo-7P-HY3"/>
                                                                         </connections>
@@ -432,8 +440,9 @@
                                                                         </constraints>
                                                                         <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="42"/>
-                                                                        <textInputTraits key="textInputTraits" textContentType="one-time-code"/>
+                                                                        <textInputTraits key="textInputTraits" keyboardType="phonePad" returnKeyType="done" textContentType="one-time-code"/>
                                                                         <connections>
+                                                                            <action selector="didEditingChangeInTextField:" destination="ZVj-3U-FfW" eventType="editingChanged" id="FEk-NJ-fJi"/>
                                                                             <outlet property="delegate" destination="ZVj-3U-FfW" id="8ea-6P-9GI"/>
                                                                             <outlet property="singleCodeDelegate" destination="ZVj-3U-FfW" id="Rgz-5N-R5F"/>
                                                                         </connections>
@@ -545,6 +554,7 @@
                         <outlet property="errorView" destination="oQv-OT-Bgl" id="uEZ-fv-gMk"/>
                         <outlet property="phoneNumberLabel" destination="4TR-5D-fsL" id="LUL-q0-T94"/>
                         <outlet property="resendButton" destination="sXL-Qy-9X6" id="aIN-pC-YjV"/>
+                        <outlet property="resendStackView" destination="Apk-4B-w7a" id="5tv-G0-hfC"/>
                         <outlet property="verificationCodeSentToLabel" destination="TGe-BU-WXm" id="SgT-Ku-6pV"/>
                     </connections>
                 </viewController>
