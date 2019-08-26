@@ -840,6 +840,8 @@
 		B6048910223C4F7B00BA91F9 /* MEGAStoreStack.m in Sources */ = {isa = PBXBuildFile; fileRef = B63F319F223BA8FA00B0C6A6 /* MEGAStoreStack.m */; };
 		B6048913223CDA8400BA91F9 /* AssetFetchResult.m in Sources */ = {isa = PBXBuildFile; fileRef = B6048912223CDA8400BA91F9 /* AssetFetchResult.m */; };
 		B60DDC1621A7A7930097E4A3 /* MEGAConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = B60DDC1521A7A7930097E4A3 /* MEGAConstants.m */; };
+		B6187808230FA42E006733D4 /* SingleCodeTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6187807230FA42E006733D4 /* SingleCodeTextField.swift */; };
+		B619C6BB230E49920095791B /* String+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B619C6BA230E49920095791B /* String+Additions.swift */; };
 		B61B815822D6D9D900B97F51 /* CameraUploadAdvancedOptionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B61B815722D6D9D900B97F51 /* CameraUploadAdvancedOptionsViewController.m */; };
 		B61F01C6220D37A400F4A917 /* DiskSpaceDetector.m in Sources */ = {isa = PBXBuildFile; fileRef = B61F01C5220D37A400F4A917 /* DiskSpaceDetector.m */; };
 		B63F3198223BA47400B0C6A6 /* CameraUpload.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B63F3196223BA47400B0C6A6 /* CameraUpload.xcdatamodeld */; };
@@ -2100,6 +2102,8 @@
 		B6048912223CDA8400BA91F9 /* AssetFetchResult.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AssetFetchResult.m; sourceTree = "<group>"; };
 		B60DDC1421A7A7930097E4A3 /* MEGAConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MEGAConstants.h; sourceTree = "<group>"; };
 		B60DDC1521A7A7930097E4A3 /* MEGAConstants.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MEGAConstants.m; sourceTree = "<group>"; };
+		B6187807230FA42E006733D4 /* SingleCodeTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleCodeTextField.swift; sourceTree = "<group>"; };
+		B619C6BA230E49920095791B /* String+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Additions.swift"; sourceTree = "<group>"; };
 		B61B815622D6D9D900B97F51 /* CameraUploadAdvancedOptionsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CameraUploadAdvancedOptionsViewController.h; sourceTree = "<group>"; };
 		B61B815722D6D9D900B97F51 /* CameraUploadAdvancedOptionsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CameraUploadAdvancedOptionsViewController.m; sourceTree = "<group>"; };
 		B61F01C4220D37A400F4A917 /* DiskSpaceDetector.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DiskSpaceDetector.h; sourceTree = "<group>"; };
@@ -2166,7 +2170,6 @@
 		B699831E228E73BC0021BE31 /* BackgroundRefreshPerformer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BackgroundRefreshPerformer.h; sourceTree = "<group>"; };
 		B699831F228E73BC0021BE31 /* BackgroundRefreshPerformer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BackgroundRefreshPerformer.m; sourceTree = "<group>"; };
 		B69983212294E1EC0021BE31 /* SMSNavigationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SMSNavigationViewController.swift; sourceTree = "<group>"; };
-		B6A11A0A22828FEE0017CD59 /* MEGA-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MEGA-Bridging-Header.h"; sourceTree = "<group>"; };
 		B6A11A0B22828FEF0017CD59 /* SMSVerificationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SMSVerificationViewController.swift; sourceTree = "<group>"; };
 		B6A11A0D2283987D0017CD59 /* SMSVerification.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SMSVerification.storyboard; sourceTree = "<group>"; };
 		B6A26AAD2216385D0076AF6D /* CameraUploadNodeLoader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CameraUploadNodeLoader.h; sourceTree = "<group>"; };
@@ -3264,6 +3267,7 @@
 				A813A79C22B38D7F00418737 /* AVAudioSession+MNZCategory.m */,
 				B6B73E6B22C47C6000ACAD48 /* MEGAStringList+Additions.swift */,
 				B60102C622E5749E00A92C17 /* UIViewController+Additions.swift */,
+				B619C6BA230E49920095791B /* String+Additions.swift */,
 			);
 			path = Categories;
 			sourceTree = "<group>";
@@ -4543,6 +4547,14 @@
 			path = Audios;
 			sourceTree = "<group>";
 		};
+		B6187806230FA412006733D4 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				B6187807230FA42E006733D4 /* SingleCodeTextField.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		B658D3BC218F9384004C0D64 /* TransferSession */ = {
 			isa = PBXGroup;
 			children = (
@@ -4690,6 +4702,7 @@
 				B6A11A0B22828FEF0017CD59 /* SMSVerificationViewController.swift */,
 				B6B73E6D22C5713700ACAD48 /* SMSCountriesTableViewController.swift */,
 				B60102C422E172FC00A92C17 /* VerificationCodeViewController.swift */,
+				B6187806230FA412006733D4 /* Views */,
 				B6B73E7122C9A52F00ACAD48 /* DataModel */,
 			);
 			path = SMS;
@@ -5571,6 +5584,7 @@
 				E8CA8AB11DF17F7500C205DE /* ContactDetailsViewController.m in Sources */,
 				5B8499091F13DBCE0034A36E /* MEGAAssetsPickerController.m in Sources */,
 				B6BD011F21B62D8E00E97086 /* CameraUploadManager+Settings.m in Sources */,
+				B6187808230FA42E006733D4 /* SingleCodeTextField.swift in Sources */,
 				77B32274209C6DE80037FA89 /* MEGARichPreviewMediaItem.m in Sources */,
 				41D21E5E1D01AEC3002E6296 /* CTAssetItemViewController.m in Sources */,
 				77D9A5712023814800B48470 /* MEGAStartDownloadTransferDelegate.m in Sources */,
@@ -5811,6 +5825,7 @@
 				B60102C522E172FC00A92C17 /* VerificationCodeViewController.swift in Sources */,
 				835223B1205957DD00A47438 /* ItemCollectionViewCell.m in Sources */,
 				B6048913223CDA8400BA91F9 /* AssetFetchResult.m in Sources */,
+				B619C6BB230E49920095791B /* String+Additions.swift in Sources */,
 				831D61A5218738D20038F5B8 /* MOFolderLayout+CoreDataClass.m in Sources */,
 				B658D3CC218FBC24004C0D64 /* CameraUploadManager.m in Sources */,
 				94624CFB1F50484200D52504 /* MEGAExportRequestDelegate.m in Sources */,

@@ -3,6 +3,9 @@ import UIKit
 
 class VerificationCodeViewController: UIViewController {
     
+    private let verificationCodeCount = 6
+    private var verificationCodeFields = [UITextField]()
+    
     @IBOutlet private var resendButton: UIButton!
     @IBOutlet private var confirmButton: UIButton!
     @IBOutlet private var didnotReceiveCodeLabel: UILabel!
@@ -16,7 +19,7 @@ class VerificationCodeViewController: UIViewController {
     var phoneNumber: PhoneNumber!
     
     private var verificationCode: String {
-        return codeFieldsContainerView.subviews.compactMap { $0 as? UITextField }.compactMap { $0.text }.joined()
+        return verificationCodeFields.compactMap { $0.text }.joined()
     }
     
     class func instantiate(with phoneNumber: PhoneNumber) -> VerificationCodeViewController {
@@ -40,6 +43,8 @@ class VerificationCodeViewController: UIViewController {
         configCodeFieldsAppearance()
         
         confirmButton.isEnabled = true
+        
+        verificationCodeFields = codeFieldsContainerView.subviews.compactMap { $0 as? UITextField }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -53,7 +58,7 @@ class VerificationCodeViewController: UIViewController {
     private func configCodeFieldsAppearance(with error: MEGAError? = nil) {
         if let error = error {
             errorView.isHidden = false
-            codeFieldsContainerView.subviews.compactMap { $0 as? UITextField }.forEach {
+            verificationCodeFields.forEach {
                 $0.layer.cornerRadius = 8
                 $0.layer.borderWidth = 2
                 $0.layer.borderColor = UIColor(red:1, green:0.2, blue:0.23, alpha:0.4).cgColor
@@ -77,7 +82,7 @@ class VerificationCodeViewController: UIViewController {
             errorMessageLabel.textColor = UIColor.mnz_redError()
         } else {
             errorView.isHidden = true
-            codeFieldsContainerView.subviews.compactMap { $0 as? UITextField }.forEach {
+            verificationCodeFields.forEach {
                 $0.layer.cornerRadius = 8
                 $0.layer.borderWidth = 1
                 $0.layer.borderColor = UIColor.mnz_black000000_01()?.cgColor
@@ -97,7 +102,7 @@ class VerificationCodeViewController: UIViewController {
     
     @IBAction private func didTapConfirmButton() {
         let code = verificationCode
-        guard code.count == 6 else { return }
+        guard code.count == verificationCodeCount else { return }
         
         SVProgressHUD.show()
         MEGASdkManager.sharedMEGASdk()?.checkSMSVerificationCode(code, delegate: MEGAGenericRequestDelegate() {
@@ -126,5 +131,47 @@ class VerificationCodeViewController: UIViewController {
 // MARK: - UITextFieldDelegate
 
 extension VerificationCodeViewController: UITextFieldDelegate {
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        guard string.mnz_isDecimalNumber else {
+            return false
+        }
+        
+        if string.count >= verificationCodeCount {
+            distributeCodeString(string)
+            return false
+        }
+        
+        if string.count > 0 {
+            textField.text = String(string[string.startIndex])
+            makeNextCodeFieldBecomeFirstResponder(for: textField)
+            return false
+        }
+        
+        return  true
+    }
     
+    private func distributeCodeString(_ string: String) {
+        for (code, field) in zip(string, verificationCodeFields) {
+            field.text = String(code)
+        }
+    }
+    
+    private func makeNextCodeFieldBecomeFirstResponder(for textField: UITextField) {
+        guard let currentIndex = verificationCodeFields.firstIndex(of: textField), currentIndex < verificationCodeFields.count - 1 else { return }
+        verificationCodeFields[currentIndex + 1].becomeFirstResponder()
+    }
+    
+    private func makePreviousCodeFieldBecomeFirstResponder(for textField: UITextField) {
+        guard let currentIndex = verificationCodeFields.firstIndex(of: textField), currentIndex > 0 else { return }
+        verificationCodeFields[currentIndex - 1].becomeFirstResponder()
+    }
+}
+
+// MARK: - SingleCodeTextFieldDelegate
+
+extension VerificationCodeViewController: SingleCodeTextFieldDelegate {
+    func didDeleteBackwardInTextField(_ textField: SingleCodeTextField) {
+        guard textField.text?.count ?? 0 == 0 else { return }
+        makePreviousCodeFieldBecomeFirstResponder(for: textField)
+    }
 }
