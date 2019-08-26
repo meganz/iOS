@@ -151,10 +151,8 @@
 - (void)showImagePickerForSourceType:(UIImagePickerControllerSourceType)sourceType {
     MEGAImagePickerController *imagePickerController = [[MEGAImagePickerController alloc] initToChangeAvatarWithSourceType:sourceType];
     
-    if (sourceType == UIImagePickerControllerSourceTypeCamera
-        || UIDevice.currentDevice.userInterfaceIdiom == UIUserInterfaceIdiomPhone) {
-        imagePickerController.modalPresentationStyle = UIModalPresentationFullScreen;
-    } else {
+    if (UIDevice.currentDevice.userInterfaceIdiom == UIUserInterfaceIdiomPad
+        && sourceType != UIImagePickerControllerSourceTypeCamera) {
         imagePickerController.modalPresentationStyle = UIModalPresentationPopover;
         imagePickerController.popoverPresentationController.sourceView = self.view;
         imagePickerController.popoverPresentationController.sourceRect = self.avatarImageView.frame;
