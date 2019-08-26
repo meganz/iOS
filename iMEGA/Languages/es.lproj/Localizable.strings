@@ -38,6 +38,8 @@
 "emptyFolderMessage"="No se pueden descargar carpetas vacías";
 /* Message shown when the user clicks on a confirm account link that has already been used  */
 "accountAlreadyConfirmed"="Tu cuenta está activa. Por favor, inicia sesión.";
+/* */
+"Your confirmation link is no longer valid. Your account may already be activated or you may have cancelled your registration."="Tu enlace de confirmación ya no es válido. Es posible que tu cuenta ya esté activa o que hayas cancelado el registro.";
 /* Message shown when the user clicks on an link that is not valid */
 "linkNotValid"="Enlace no válido";
 /* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
@@ -50,6 +52,12 @@
 "decrypt"="Descifrar";
 /* Alert title shown when you have written a decryption key not valid */
 "decryptionKeyNotValid"="La clave de cifrado no es válida";
+/* This dialog message is used on the Password Decrypt dialog. The link is a password protected link so the user needs to enter the password to decrypt the link. */
+"To access this link, you will need its password."="Para acceder a este enlace, necesitarás su contraseña.";
+/* This dialog message is used on the Password Decrypt dialog as an instruction for the user. */
+"If you do not have the password, contact the creator of the link."="Si no tienes la contraseña, contacta con el creador del enlace.";
+/* This placeholder text is used on the Password Decrypt dialog as an instruction for the user. */
+"Enter the password"="Introduce la contraseña";
 /* Alert title shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOut_alertTitle"="Sesión cerrada";
 /* Alert message shown when your account has been closed through another client or the web by killing all your sessions */
@@ -493,7 +501,7 @@
 /* Button title that skips the current action */
 "skipButton"="Saltar";
 /* Text shown to explain what means 'Enable Camera Uploads'. The 'Cloud Drive' is the MEGA section, so please keep consistency */
-"automaticallyBackupYourPhotos"="Guarda tus fotos automáticamente en tu Nube";
+"Automatically backup your photos and videos to the Cloud Drive."="Realizar copias de seguridad automáticas de fotos y videos en la Nube.";
 /* Button title that enables the functionality 'Camera Uploads', which uploads all the photos in your device to MEGA */
 "enableCameraUploadsButton"="Activar las Subidas de la cámara";
 /* Success message shown when Camera Uploads has been enabled */
@@ -504,6 +512,14 @@
 "cameraUploadsPendingFile"="Subida en curso, 1 archivo pendiente";
 /* Message shown while uploading files. Plural. */
 "cameraUploadsPendingFiles"="Subida en curso, %lu archivos pendientes";
+/* Message shown when camera upload paused because of no WiFi. Singular. */
+"Upload paused because of no WiFi, 1 file pending"="Subida pausada debido a que no hay conexión WiFi, 1 archivo pendiente";
+/* Message shown when camera upload paused because of no WiFi. Plural. */
+"Upload paused because of no WiFi, %lu files pending"="Subida pausada debido a que no hay conexión WiFi, %lu archivos pendientes";
+/* Message shown the pending video file when photos uploaded and video upload is not enabled. Singular. */
+"Photos uploaded, video uploads are off, 1 video not uploaded"="Fotos subidas, las subidas de videos están desactivadas;  1 video no subido";
+/* Message shown the pending video files when photos uploaded and video upload is not enabled. Plural. */
+"Photos uploaded, video uploads are off, %lu videos not uploaded"="Fotos subidas, las subidas de videos están desactivadas;  %lu videos no subidos";
 /* Singular, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 1 file. */
 "indexOfTotalFile"="%1$d de %2$d archivo";
 /* Plural, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 3 files. */
@@ -656,12 +672,82 @@
 "on"="Sí";
 /* Header to explain that 'Upload videos', 'Use cellular connection' and 'Only when charging' are options of the Camera Uploads */
 "options"="Opciones";
+/* A hint to show one option is recommended by MEGA */
+"(Recommended)"="(Recomendado)";
+/* Header to introduce how to deal with HEIC format photos in Camera Uplaod */
+"SAVE HEIC PHOTOS AS"="Guardar fotos HEIC como";
+/* Footer for HEIC format section */
+"We recommend JPG, as its the most compatible format for photos."="Recomendamos JPG, ya que es el formato más compatible para fotos.";
+/* Header to introduce how to deal with HEVC format videos in Camera Uplaod */
+"SAVE HEVC VIDEOS AS"="Guardar videos HEVC como";
+/* Footer for HEVC format section */
+"We recommend H.264, as its the most compatible format for videos."="Recomendamos H.264, ya que es el formato más compatible para videos.";
+/* Footer for video compression quality */
+"Compression quality when to transcode HEVC videos to H.264 format."="Calidad de compresión cuando los videos HEVC se transcodifican a formato H.264.";
 /* Option title to enable upload videos with Camera Uploads */
 "uploadVideosLabel"="Subir vídeos";
 /* Option title to enable Camera Uploads only when the device is charging */
 "onlyWhenChargingLabel"="Solo cargando";
-/* Footer text to explain the Camera Uploads functionality */
-"cameraUploads_footer"="Cuando estén activadas, se subirán fotos y vídeos.";
+/* Footer text for Camera Upload switch section when camera upload is disabled */
+"When enabled, photos will be uploaded."="Al activar, se subirán las fotos.";
+/* Footer text for Camera Upload switch section when only photos upload is enabled */
+"Photos will be uploaded to Camera Uploads folder."="Las fotos se subirán a la carpeta Camera Uploads.";
+/* Footer text for Camera Upload switch section when photos and videos upload is enabled */
+"Photos and videos will be uploaded to Camera Uploads folder."="Las fotos y los videos se subirán a la carpeta Camera Uploads";
+/* Title to show for upload in background */
+"Upload in Background"="Subir en segundo plano";
+/* Title for the location based background upload message */
+"Enable location services for background upload"="Activar los servicios de ubicación para la subida en segundo plano";
+/* Message for the location based background upload when the location data access is not denied by users */
+"MEGA can periodically start camera uploads in background when your location changes."="MEGA puede iniciar las subidas de la cámara en segundo plano cuando tu ubicación cambia.";
+/* Message for the location based background upload when the location data access is denied by users */
+"Please select “Always” at your Location page in Settings, then MEGA can periodically start camera uploads in background when your location changes."="Selecciona \"Siempre\" en la sección Localización de los Ajustes, para que MEGA pueda iniciar las subidas de la cámara en segundo plano cuando tu ubicación cambie.";
+/* Title for turn on a feature */
+"Turn On"="Activar";
+/* Title for turn on a feature in settings */
+"Turn On in Settings"="Activar en Ajustes";
+/* Footer for video uploads switch section when enabled */
+"Videos will be uploaded to the Camera Uploads folder."="Los videos se subirán a la carpeta Camera Uploads.";
+/* Footer for video uploads switch section when disabled */
+"When enabled, videos will be uploaded."="Al activar, se subirán los videos.";
+/* Title for new camera upload feature */
+"New Camera Upload!"="Nuevas opciones para las subidas de la cámara";
+/* A messge for camera upload v2 migration */
+"Now you can choose to convert the HEIF/HEVC photos and videos to the most compatible JPEG/H.264 formats."="Puedes elegir convertir fotos y videos HEIC/HEVC a los formatos más compatibles JPEG/H.264.";
+/* Title for an action to use most compatible formats */
+"Use Most Compatible Formats"="Utilizar los formatos más compatibles";
+/* Title for custom settings */
+"Custom Settings"="Ajustes personalizados";
+/* Title to show when device local storage is full */
+"%@ Storage Full"="Almacenamiento %@ lleno";
+/* Detail for local storage full situation */
+"You do not have enough storage to upload camera. Free up space by deleting unneeded apps, videos or music. You can manage your storage in %@"="No tienes almacenamiento suficiente para más subidas de la cámara. Libera espacio eliminando aplicaciones que no utilizas, videos o música. Puedes gestionar tu almacenamiento en %@";
+/* Navigation path for Storage settings in iOS */
+"Settings > General > %@ Storage"="Ajustes > General > Almacenamiento %@";
+/* Title of the switch to config whether to upload videos for Live Photos */
+"Upload videos for Live Photos"="Subir vídeos de Live Photos";
+/* Title of the switch to config whether to upload all burst photos */
+"Upload all burst photos"="Subir fotos hechas en modo ráfaga";
+/* Title of the switch to config whether to upload Hidden Album */
+"Upload Hidden Album"="Subir Álbum oculto";
+/* Footer description when upload videos for Live Photos is enabled */
+"The video and the photo in each Live Photo will be uploaded."="Se subirán las fotos y los vídeos de cada Live Photo.";
+/* Footer description when upload videos for Live Photos is disabled */
+"Only the photo in each Live Photo will be uploaded."="Solo se subirá la foto de cada Live Photo.";
+/* Footer description when upload all burst photos is enabled */
+"All the photos from your burst photo sequences will be uploaded."="Se subirán todas las fotos hechas en modo ráfaga.";
+/* Footer description when upload all burst photos is disabled */
+"Only the representative photos from your burst photo sequences will be uploaded."="Solo se subirán las fotos favoritas de tus fotos en modo ráfaga.";
+/* Footer description when upload Hidden Album is enabled */
+"The Hidden Album is where you hide photos or videos in your device Photos app."="El Álbum oculto es donde escondes fotos o videos en la aplicación Fotos de tu dispositivo.";
+/* Title of the switch to config whether to upload Shared Albums */
+"Upload Shared Albums"="Upload Shared Albums";
+/* Footer description for Upload Shared Albums title */
+"Shared Albums are where you share with other people and subscribe to other people's shares in your device's Photos app."="Shared Albums are where you share with other people and subscribe to other people’s shares in your device’s Photos app.";
+/* Title of the switch to config whether to upload synced albums */
+"Upload albums synced from iTunes"="Upload albums synced from iTunes";
+/* Footer description for upload synced albums title */
+"Synced albums are where you sync photos or videos to your device's Photos app from iTunes."="Synced albums are where you sync photos or videos to your device’s Photos app from iTunes.";
 /* App means “Application” */
 "App version"="Versión de la aplicación";
 /* Title of the label where the SDK version is shown */
@@ -820,7 +906,7 @@
 /* Message shown when you click on 'Close other session' to block other login sessions except the current session in use. This message is shown when this has been done. */
 "sessionsClosed"="Sesiones cerradas";
 /* Section title where you can change the app's passcode */
-"changePasscodeLabel"="Cambia el código de acceso";
+"changePasscodeLabel"="Cambiar el código de acceso";
 /* Title to describe a simple (four digit) passcode */
 "simplePasscodeLabel"="Código de acceso simple";
 /* Title of one of the passcode options. If enabled will do what footer explains. */
@@ -860,9 +946,9 @@
 /* Title of My Account section. There you can see your account details */
 "myAccount"="Mi cuenta";
 /* Button title that shows the different MEGA PRO plans to which you can upgrade. (String as short as possible) */
-"buyPRO"="Hazte PRO";
+"buyPRO"="Ampliar cuenta";
 /* Caption of a button to upgrade the account to Pro status */
-"upgrade"="Hazte PRO";
+"upgrade"="Ampliar";
 /* Title show on the hall of My Account section that describes a place where you can view, edit and upgrade your account and profile */
 "viewAndEditProfile"="Ver y editar tu perfil";
 /* Label for any 'Profile' button, link, text, title, etc. - (String as short as possible). */
@@ -964,15 +1050,15 @@
 /* Sentence shown under the available space to complete the info with the user account maximum storage. "available of {maximun storage}" */
 "available of %@"="disponible de %@";
 /* Button title which triggers the action to upgrade your MEGA account level */
-"upgradeAccount"="Hazte PRO";
+"upgradeAccount"="Ampliar cuenta";
 /*  */
 "chooseYourAccountType"="Elige tu tipo de cuenta";
 /* Text shown under the button 'Skip' to explain that you can upgrade your account later in the section 'My Account'. */
-"youCanUpgradeLaterInMyAccount"="Puedes hacerte PRO más tarde en Mi cuenta";
+"youCanUpgradeLaterInMyAccount"="Puedes ampliar más tarde en Mi cuenta";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
-"cloudDriveIsAlmostFull"="[S]Tu nube está casi llena.[/S] [A]Hazte PRO ahora[/A] y obtén [S]hasta 8TB (8192 GB)[/S] de espacio de almacenamiento en la nube.";
+"cloudDriveIsAlmostFull"="[S]Tu nube está casi llena.[/S] [A]Amplía tu cuenta ahora[/A] y obtén [S]hasta 8TB (8192 GB)[/S] de espacio de almacenamiento en la nube.";
 /* A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text. */
-"cloudDriveIsFull"="[S]Tu cuenta está llena.[/S] [A]Hazte PRO ahora[/A] y obtén [S]hasta 8 TB (8192 GB)[/S] de espacio de almacenamiento en la nube.";
+"cloudDriveIsFull"="[S]Tu cuenta está llena.[/S] [A]Amplía tu cuenta ahora[/A] y obtén [S]hasta 8 TB (8192 GB)[/S] de espacio de almacenamiento en la nube.";
 /* Storage related with the MEGA PRO account level you can subscribe */
 "productSpace"="Almacenamiento";
 /* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
@@ -1002,7 +1088,7 @@
 /* Error message shown when the purchase has failed */
 "wrongPurchase"="Compra incorrecta %@ (%ld)";
 /* Error message shown the In App Purchase is disabled in the device Settings */
-"appPurchaseDisabled"="Compras en la App Store desactivadas, por favor actívalas en Ajustes";
+"appPurchaseDisabled"="Compras en la App Store desactivadas, por favor actívalas en los Ajustes de iOS";
 /* Error message shown when the selected product doesn't exist */
 "productNotFound"="Producto %@ no encontrado, por favor contacta con ios@mega.nz";
 /* Alert title to remenber the user that needs to enable purchases */
@@ -1091,6 +1177,8 @@
 "voiceAndVideoCalls"="Llamadas y videollamadas";
 /* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature. */
 "useMobileData"="Usar datos móviles";
+/* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for videos. */
+"Use Mobile Data for Videos"="Usar datos móviles para los vídeos";
 /* A header in the Chat settings. This changes the user's status to Away after some time of inactivity. */
 "autoAway"="Inactividad automática";
 /* */
@@ -1321,7 +1409,7 @@
 /* Label to show that an error related with a blocked account occurs during a SDK operation. */
 "Blocked"="Bloqueado";
 /* Label to show that an error related with an over quota occurs during a SDK operation. */
-"Over quota"="Límite de cuenta excedido";
+"Over quota"="Límite excedido";
 /* Label to show that an error related with a temporary problem occurs during a SDK operation. */
 "Temporarily not available"="No disponible temporalmente";
 /* Label to show that an error related with too many connections occurs during a SDK operation. */
@@ -1625,7 +1713,7 @@
 /* Title label that explains that the user is going to be asked for the microphone and camera permission */
 "Enable Microphone and Camera"="Activar el micrófono y la cámara";
 /* Detailed explanation of why the user should give permission to access to the camera and the microphone */
-"To make encrypted voice and video calls, allow MEGA access to your Camera and Microphone"="Permite que MEGA acceda a la cámara y al micrófono para mandar notas de voz y hacer llamadas y videollamadas cifradas.";
+"To make encrypted voice and video calls, allow MEGA access to your Camera and Microphone"="Permite que MEGA acceda a la cámara y al micrófono para mandar mensajes de voz y hacer llamadas y videollamadas cifradas.";
 /* Title label that explains that the user is going to be asked for the notifications permission */
 "Enable Notifications"="Activar Notificaciones";
 /* Detailed explanation of why the user should give permission to deliver notifications */
@@ -1663,7 +1751,7 @@
 /* New server-side rubbish-bin cleaning scheduler description (for PRO users) */
 "The Rubbish Bin can be cleaned for you automatically. The minimum period is 7 days."="La Papelera se puede vaciar de forma automática. El período mínimo es de 7 días.";
 /* Description shown when you try to disable the feature Rubbish-Bin Cleaning Scheduler and you are a free user */
-"To disable the Rubbish-Bin Cleaning Scheduler or set a longer retention period, you need to subscribe to a PRO plan."="Para desactivar la limpieza automática de la papelera o establecer un período de retención más largo, hazte PRO.";
+"To disable the Rubbish-Bin Cleaning Scheduler or set a longer retention period, you need to subscribe to a PRO plan."="Para desactivar la limpieza automática de la papelera o establecer un período de retención más largo, amplía tu cuenta.";
 /* Confirmation dialog for the button that logs the user out of all sessions except the current one. */
 "Do you want to close all other sessions? This will log you out on all other active sessions except the current one."="¿Quieres cerrar las demás sesiones? Te desconectarás de todas sesiones activas excepto la actual.";
 /* Message to inform the local user that someone has joined the current group call */
@@ -1689,15 +1777,15 @@
 /* Title shown in a cell to allow the users enable the 'Encrypted Key Rotation' */
 "Enable Encrypted Key Rotation"="Activar rotación de la clave de cifrado";
 /* Label in a cell where you can get the chat link */
-"Get Chat Link"="Obtén enlace del chat";
+"Get Chat Link"="Obtén enlace de chat";
 /* Footer text to explain what means 'Encrypted Key Rotation' */
 "Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages."="La rotación de la clave es ligeramente más segura, pero no podrás crear un enlace del chat y los nuevos participantes no verán los mensajes anteriores.";
 /* Shown as an error message when the user selects "create chat link", but haven't entered a title for the newly created room */
 "To create a chat link you must name the group."="Para crear un enlace del chat, debes ponerle nombre al grupo.";
 /* Label shown in a cell where you can enable a switch to get a chat link */
-"Chat Link"="Enlace del chat";
+"Chat Link"="Enlace de chat";
 /* Message shown when there is an active chat link that can be deleted */
-"Delete Chat Link"="Desactivar enlace del chat";
+"Delete Chat Link"="Desactivar enlace de chat";
 /* Button text in public chat previews that allows the user to join the chat */
 "Join"="Únete";
 /* Text shown in a notification to let the user know that has joined a public chat room after login or account creation */
@@ -1749,7 +1837,7 @@
 /* A notification that the other user cancelled their contact request so it is no longer valid. E.g. user@email.com cancelled their contact request. */
 "Cancelled their contact request"="Ha cancelado su solicitud de contacto";
 /* A reminder notification to remind the user to respond to the contact request. */
-"Reminder: You have a contact request"="Recordatorio: tienes una solicitud de contacto";
+"Reminder: You have a contact request"="Aviso: tienes una solicitud de contacto";
 /* A notification telling the user that the other user deleted them as a contact. E.g. user@email.com deleted you as a contact. */
 "Deleted you as a contact"="Te ha eliminado de sus contactos";
 /* A notification telling the user that they are now fully connected with the other user (the users are in each other’s address books). */
@@ -1853,7 +1941,7 @@
 /* Tooltip shown when the user presses but does not hold the microphone icon to send a voice clip */
 "Tap and hold %@ to record, release to send"="Mantén pulsado %@ para grabar, suelta para enviar";
 /* Message shown when there is an ongoing call and the user tries to record a voice message */
-"It is not possible to record voice messages while there is a call in progress"="No es posible grabar mensajes de voz mientras hay una llamada en curso.";
+"It is not possible to record voice messages while there is a call in progress"="No es posible grabar mensajes de voz si hay una llamada en curso.";
 /* Text to inform the user there is an active call and is not participating */
 "Ongoing Call"="Llamada en curso";
 /* Message shown when there is an ongoing call and the user tries to play an audio or video */
@@ -1871,7 +1959,7 @@
 /* The label of the toggle switch to indicate that file versioning is enabled. */
 "Enabled"="Activado";
 /* Text button for init a group chat with link. */
-"New Chat Link"="Nuevo enlace del chat";
+"New Chat Link"="Nuevo enlace de chat";
 /* Text button for init a group chat */
 "New group chat"="Nuevo chat de grupo";
 /* Title for the recents section. */
@@ -1901,7 +1989,7 @@
 /* Plural of items which contains a folder. 2 items */
 "items"="elementos";
 /* Shown when an invalid/inexisting/not-available-anymore chat link is opened. */
-"Chat link unavailable"="Enlace del chat no disponible";
+"Chat link unavailable"="Enlace de chat no disponible";
 /* Shown when an inexisting/unavailable/removed link is tried to be opened. */
 "This chat link is no longer available"="Este enlace del chat ya no está disponible";
 /* Text explaining users how the chat links work. */
@@ -1909,7 +1997,7 @@
 /* Subtitle shown in a chat to inform where to tap to enter in the chat details view */
 "Tap here for info"="Toca aquí para más información";
 /* In some cases, a user may try to get the link for a chat room, but if such is not set by an operator - it would say "not link available" and not auto create it. */
-"No chat link available."="Link del chat no disponible.";
+"No chat link available."="Link de chat no disponible.";
 /* Title of a dialog in which we request access to a specific permission, like the Location Services */
 "Please allow access"="Permitir acceso";
 /* Hint shown to the users, when they want to use the Location Services but they are disabled or restricted for MEGA */
@@ -1921,8 +2009,20 @@
 /* Button title to go to the iOS Settings to enable 'Mobile Data' for the MEGA app. */
 "Turn Mobile Data on"="Activar datos móviles";
 /* Extra information shown when the user has disabled the 'Mobile Data' setting for MEGA in the iOS Settings. */
-"You can turn on mobile data for this app in Settings."="Puedes activar los datos móviles para esta aplicación en los Ajustes del dispositivo.";
+"You can turn on mobile data for this app in Settings."="Puede activar los datos móviles para esta aplicación en los ajustes del dispositivo.";
 /* title of the alert dialog when the user is changing the API URL to staging */
 "Change to a test server?"="¿Cambiar a un servidor de prueba?";
 /* text of the alert dialog when the user is changing the API URL to staging */
 "Are you sure you want to change to a test server? Your account may suffer irrecoverable problems"="¿Estás seguro de que quieres cambiar a un servidor de prueba? Tu cuenta podría sufrir daños irreparables.";
+/* Destination folder name of chat files */
+"My chat files"="Mis archivos de chat";
+/* Label indicating that the passcode (pin) view will be displayed if the application goes back to foreground after being x time in background. Examples: require passcode immediately, require passcode after 5 minutes. */
+"Require passcode"="Require passcode";
+/* Label indicating that the enter passcode (pin) view will be displayed immediately if the application goes back to foreground after being in background. */
+"Immediately"="Immediately";
+/* Popup notification text on mouse-over of taken down file. */
+"This file has been the subject of a takedown notice."="Este archivo ha sido sujeto a notificación y retirada.";
+/* Popup notification text on mouse-over taken down folder. */
+"This folder has been the subject of a takedown notice."="Esta carpeta ha sido sujeta a notificación y retirada.";
+/* File Manager -> Context menu item for taken down file or folder, for dispute takedown. */
+"Dispute Takedown"="Disputar la retirada";

@@ -2901,6 +2901,10 @@ static NSMutableSet<NSString *> *tapForInfoSet;
     
     MEGAChatMessage *message = [self.attachmentMessages objectAtIndex:(self.attachmentMessages.count - 1 - index)];
     NSUInteger item = [self.messages indexOfObject:message];
+    if (item == NSNotFound) {
+        return;
+    }
+    
     NSIndexPath *indexPath = [NSIndexPath indexPathForItem:item inSection:0];
     if (indexPath) {
         [self.collectionView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionCenteredVertically animated:NO];
@@ -3107,6 +3111,10 @@ static NSMutableSet<NSString *> *tapForInfoSet;
                     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:0];
                     if ([self.collectionView.indexPathsForVisibleItems containsObject:indexPath]) {
                         [self.collectionView reloadItemsAtIndexPaths:@[indexPath]];
+                    }
+                    if (message.type == MEGAChatMessageTypeAttachment) {
+                        NSUInteger attachmentIndex = [self.attachmentMessages indexOfObject:oldMessage];
+                        [self.attachmentMessages replaceObjectAtIndex:attachmentIndex withObject:message];
                     }
                 } else {
                     message.chatId = self.chatRoom.chatId;

@@ -18,7 +18,7 @@
         <scene sceneID="JTP-uT-Ioo">
             <objects>
                 <tableViewController storyboardIdentifier="CameraUploadsSettingsID" id="0gq-O0-v8H" customClass="CameraUploadsTableViewController" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="HeY-pZ-r8v">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" id="HeY-pZ-r8v">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.96078431372549022" green="0.96078431372549022" blue="0.96078431372549022" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -72,7 +72,7 @@
                             <tableViewSection headerTitle="" id="z1y-BO-nkA">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="9Lu-Gx-ccv" detailTextLabel="ZZc-KJ-13j" style="IBUITableViewCellStyleValue1" id="xJP-C8-8rb" userLabel="Upload Videos">
-                                        <rect key="frame" x="0.0" y="119" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="127" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="xJP-C8-8rb" id="oEI-tg-o1g">
                                             <rect key="frame" x="0.0" y="0.0" width="341" height="43.5"/>
@@ -99,7 +99,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" id="kY1-bw-JGQ" userLabel="Camera Uploads Table View Cell">
-                                        <rect key="frame" x="0.0" y="163" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="171" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" tableViewCell="kY1-bw-JGQ" id="Q1f-3d-Zcu">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
@@ -144,7 +144,7 @@
                             <tableViewSection headerTitle="SAVE HEIC PHOTOS AS" footerTitle="We recommend JPG, as it is the most compatible format for photos." id="nFt-pn-NLx">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="SelectableTableViewCellID" id="HSJ-yZ-JNW" customClass="SelectableTableViewCell">
-                                        <rect key="frame" x="0.0" y="262.5" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="278" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" tableViewCell="HSJ-yZ-JNW" id="5TC-gV-nw7">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
@@ -178,7 +178,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="SelectableTableViewCellID" id="QzL-5j-yJY" customClass="SelectableTableViewCell">
-                                        <rect key="frame" x="0.0" y="306.5" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="322" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" tableViewCell="QzL-5j-yJY" id="KNF-Jn-ZId">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
@@ -216,7 +216,7 @@
                             <tableViewSection headerTitle="Options" id="ceh-Fp-SYr">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" id="RIs-Oa-XXE" userLabel="Use cellular connection Table View Cell">
-                                        <rect key="frame" x="0.0" y="434.5" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="450" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" tableViewCell="RIs-Oa-XXE" id="dud-y8-IqA">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
@@ -257,7 +257,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" id="SFt-KB-vuw" userLabel="Use cellular for videos">
-                                        <rect key="frame" x="0.0" y="478.5" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="494" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" tableViewCell="SFt-KB-vuw" id="let-L3-LYT">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
@@ -298,7 +298,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" id="rVL-Aj-5pu" userLabel="Upload in background">
-                                        <rect key="frame" x="0.0" y="522.5" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="538" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" tableViewCell="rVL-Aj-5pu" id="j20-CG-gjb">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
@@ -346,6 +346,26 @@
                                             </variation>
                                         </tableViewCellContentView>
                                     </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="A5s-xC-BfJ" style="IBUITableViewCellStyleDefault" id="Psx-Ud-pgM" userLabel="Advanced">
+                                        <rect key="frame" x="0.0" y="582" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Psx-Ud-pgM" id="DJ3-Aj-WRE">
+                                            <rect key="frame" x="0.0" y="0.0" width="341" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Advanced" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="A5s-xC-BfJ">
+                                                    <rect key="frame" x="16" y="0.0" width="324" height="43.5"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="17"/>
+                                                    <color key="textColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="BZj-6h-yKC" kind="show" id="4xR-Cr-UUF"/>
+                                        </connections>
+                                    </tableViewCell>
                                 </cells>
                             </tableViewSection>
                         </sections>
@@ -358,14 +378,22 @@
                         <barButtonItem key="backBarButtonItem" title=" " id="GF2-Bo-f55"/>
                     </navigationItem>
                     <connections>
+                        <outlet property="HEICCell" destination="HSJ-yZ-JNW" id="GGq-mt-FxN"/>
                         <outlet property="HEICLabel" destination="nNh-se-crj" id="sxX-3Y-qKm"/>
                         <outlet property="HEICRedCheckmarkImageView" destination="9H6-hW-VPN" id="6TS-ac-TZn"/>
+                        <outlet property="JPGCell" destination="QzL-5j-yJY" id="MJF-FV-Roq"/>
                         <outlet property="JPGLabel" destination="Sge-3a-yPP" id="Gme-LX-u8e"/>
                         <outlet property="JPGRedCheckmarkImageView" destination="NYC-ui-LoU" id="TiM-cf-dc7"/>
+                        <outlet property="advancedCell" destination="Psx-Ud-pgM" id="sYP-AN-xLZ"/>
+                        <outlet property="advancedLabel" destination="A5s-xC-BfJ" id="0Ps-Ux-tf4"/>
                         <outlet property="backgroundUploadLabel" destination="wmG-6X-jAS" id="k3M-b1-lDQ"/>
                         <outlet property="backgroundUploadSwitch" destination="tAf-hK-tam" id="DA9-N1-0sz"/>
+                        <outlet property="cameraUploadCell" destination="hGs-DP-h4r" id="F9r-0q-9hX"/>
                         <outlet property="enableCameraUploadsLabel" destination="SAf-Xv-FaX" id="bVX-Gk-mJU"/>
                         <outlet property="enableCameraUploadsSwitch" destination="QSG-mz-TTu" id="117-v2-ahs"/>
+                        <outlet property="mobileDataCell" destination="RIs-Oa-XXE" id="szE-v8-Klv"/>
+                        <outlet property="mobileDataForVideosCell" destination="SFt-KB-vuw" id="gsZ-io-Zzp"/>
+                        <outlet property="uploadInBackgroundCell" destination="rVL-Aj-5pu" id="2jJ-Gx-h6E"/>
                         <outlet property="uploadVideosInfoLabel" destination="9Lu-Gx-ccv" id="jPG-87-ibZ"/>
                         <outlet property="uploadVideosInfoRightDetailLabel" destination="ZZc-KJ-13j" id="Ndb-BT-9cW"/>
                         <outlet property="uploadVideosLabel" destination="oH3-dT-UG7" id="OmM-rY-Pw6"/>
@@ -374,6 +402,8 @@
                         <outlet property="useCellularConnectionForVideosSwitch" destination="DRf-un-B7C" id="8XL-9g-B4k"/>
                         <outlet property="useCellularConnectionLabel" destination="MxN-Sr-OBF" id="l7p-vV-M73"/>
                         <outlet property="useCellularConnectionSwitch" destination="qdP-qy-Nz7" id="kCW-ye-Ujk"/>
+                        <outlet property="videoUploadInfoCell" destination="xJP-C8-8rb" id="V2F-kD-hol"/>
+                        <outlet property="videoUploadSwitchCell" destination="kY1-bw-JGQ" id="TQM-Uc-KtS"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wNx-f8-7qI" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -384,7 +414,7 @@
         <scene sceneID="gXj-kW-i81">
             <objects>
                 <tableViewController storyboardIdentifier="VideoUploadsTableViewControllerID" id="j9S-W9-Mx2" customClass="VideoUploadsTableViewController" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="qLY-Gb-LjN">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" id="qLY-Gb-LjN">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.96078431369999995" green="0.96078431369999995" blue="0.96078431369999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -510,7 +540,7 @@
                             <tableViewSection footerTitle="Compression quality when MEGA transcode HEVC videos to H.264 codec for camera upload" id="1t6-Ww-cjX">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="Ia5-rl-AZF" detailTextLabel="mie-wj-ddk" style="IBUITableViewCellStyleValue1" id="q2r-pO-aqa" userLabel="Video quality Table View Cell">
-                                        <rect key="frame" x="0.0" y="298.5" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="306.5" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="q2r-pO-aqa" id="AEm-ts-ZLo">
                                             <rect key="frame" x="0.0" y="0.0" width="341" height="43.5"/>
@@ -566,7 +596,7 @@
         <scene sceneID="tDx-1P-Nze">
             <objects>
                 <tableViewController id="VCg-68-Gyt" userLabel="H.264 video quality" customClass="VideoUploadsQualityTableViewController" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="IR4-PG-v4a">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" id="IR4-PG-v4a">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.96078431372549022" green="0.96078431372549022" blue="0.96078431372549022" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -728,6 +758,279 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NHs-QT-mhc" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="166" y="-2767"/>
+        </scene>
+        <!--Advanced-->
+        <scene sceneID="Ahm-Qv-3Ce">
+            <objects>
+                <tableViewController storyboardIdentifier="AdvancedTableViewControllerID" id="BZj-6h-yKC" customClass="CameraUploadAdvancedOptionsViewController" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" id="FXl-FS-MkM">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" red="0.96078431369999995" green="0.96078431369999995" blue="0.96078431369999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="sectionIndexBackgroundColor" red="0.96078431369999995" green="0.96078431369999995" blue="0.96078431369999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <sections>
+                            <tableViewSection footerTitle="Underlying videos and key photos in Live Photos will be uploaded." id="Xwc-yt-iPo" userLabel="Live Photos">
+                                <cells>
+                                    <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" rowHeight="44" id="oeW-KB-BHr">
+                                        <rect key="frame" x="0.0" y="35" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" tableViewCell="oeW-KB-BHr" id="2W8-Er-6j1">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tgG-aW-4D1">
+                                                    <rect key="frame" x="310" y="6.5" width="51" height="31"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="49" id="7ad-bJ-ReK"/>
+                                                    </constraints>
+                                                    <color key="onTintColor" red="0.0" green="0.74901960779999999" blue="0.64705882349999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <connections>
+                                                        <action selector="didChangeValueForLivePhotosSwitch:" destination="BZj-6h-yKC" eventType="valueChanged" id="JiV-3H-mcW"/>
+                                                    </connections>
+                                                </switch>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Upload videos for Live Photos" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.75" translatesAutoresizingMaskIntoConstraints="NO" id="0X0-1E-S4V">
+                                                    <rect key="frame" x="16" y="12" width="240" height="20"/>
+                                                    <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="17"/>
+                                                    <color key="textColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="tgG-aW-4D1" firstAttribute="trailing" secondItem="2W8-Er-6j1" secondAttribute="trailingMargin" id="LiU-ga-EMq"/>
+                                                <constraint firstItem="0X0-1E-S4V" firstAttribute="leading" secondItem="2W8-Er-6j1" secondAttribute="leadingMargin" constant="15" id="Pc6-yu-ChA"/>
+                                                <constraint firstItem="0X0-1E-S4V" firstAttribute="trailing" secondItem="2W8-Er-6j1" secondAttribute="trailingMargin" id="QS2-hK-pQP"/>
+                                                <constraint firstItem="0X0-1E-S4V" firstAttribute="leading" secondItem="2W8-Er-6j1" secondAttribute="leadingMargin" id="RKB-c8-YXe"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="tgG-aW-4D1" secondAttribute="trailing" id="VR0-17-mg9"/>
+                                                <constraint firstItem="tgG-aW-4D1" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="0X0-1E-S4V" secondAttribute="trailing" constant="8" id="YxC-6M-epl"/>
+                                                <constraint firstItem="tgG-aW-4D1" firstAttribute="centerY" secondItem="2W8-Er-6j1" secondAttribute="centerY" id="cGL-wu-qBz"/>
+                                                <constraint firstItem="0X0-1E-S4V" firstAttribute="centerY" secondItem="2W8-Er-6j1" secondAttribute="centerY" id="w7P-6d-FHB"/>
+                                            </constraints>
+                                            <variation key="default">
+                                                <mask key="constraints">
+                                                    <exclude reference="Pc6-yu-ChA"/>
+                                                    <exclude reference="QS2-hK-pQP"/>
+                                                    <exclude reference="LiU-ga-EMq"/>
+                                                </mask>
+                                            </variation>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                            <tableViewSection footerTitle="All the photos in a burst photo sequence will be uploaded." id="yOe-vN-au4" userLabel="Burst Photos">
+                                <cells>
+                                    <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" rowHeight="44" id="uun-Km-ucE">
+                                        <rect key="frame" x="0.0" y="143" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" tableViewCell="uun-Km-ucE" id="WdP-OY-jAm">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xhu-qg-I6h">
+                                                    <rect key="frame" x="310" y="6.5" width="51" height="31"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="49" id="Nda-c7-h2l"/>
+                                                    </constraints>
+                                                    <color key="onTintColor" red="0.0" green="0.74901960779999999" blue="0.64705882349999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <connections>
+                                                        <action selector="didChangeValueForBurstPhotosSwitch:" destination="BZj-6h-yKC" eventType="valueChanged" id="iLw-5H-h4s"/>
+                                                    </connections>
+                                                </switch>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Upload all the burst photos" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.75" translatesAutoresizingMaskIntoConstraints="NO" id="gis-Dd-xeL">
+                                                    <rect key="frame" x="16" y="12" width="217.5" height="20"/>
+                                                    <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="17"/>
+                                                    <color key="textColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="gis-Dd-xeL" firstAttribute="centerY" secondItem="WdP-OY-jAm" secondAttribute="centerY" id="2kB-G0-UjI"/>
+                                                <constraint firstItem="gis-Dd-xeL" firstAttribute="leading" secondItem="WdP-OY-jAm" secondAttribute="leadingMargin" constant="15" id="3vM-KT-SNT"/>
+                                                <constraint firstItem="xhu-qg-I6h" firstAttribute="trailing" secondItem="WdP-OY-jAm" secondAttribute="trailingMargin" id="H87-jh-MFe"/>
+                                                <constraint firstItem="gis-Dd-xeL" firstAttribute="trailing" secondItem="WdP-OY-jAm" secondAttribute="trailingMargin" id="KTx-Be-gJ7"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="xhu-qg-I6h" secondAttribute="trailing" id="cel-fv-GC3"/>
+                                                <constraint firstItem="gis-Dd-xeL" firstAttribute="leading" secondItem="WdP-OY-jAm" secondAttribute="leadingMargin" id="fFu-W4-dQg"/>
+                                                <constraint firstItem="xhu-qg-I6h" firstAttribute="centerY" secondItem="WdP-OY-jAm" secondAttribute="centerY" id="iF7-6l-QiY"/>
+                                                <constraint firstItem="xhu-qg-I6h" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="gis-Dd-xeL" secondAttribute="trailing" constant="8" id="pE3-Vd-zTK"/>
+                                            </constraints>
+                                            <variation key="default">
+                                                <mask key="constraints">
+                                                    <exclude reference="3vM-KT-SNT"/>
+                                                    <exclude reference="KTx-Be-gJ7"/>
+                                                    <exclude reference="H87-jh-MFe"/>
+                                                </mask>
+                                            </variation>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                            <tableViewSection footerTitle="The photos or videos in your Hidden album will not be uploaded." id="dVA-ZF-BEn" userLabel="Hidden Assets">
+                                <cells>
+                                    <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" rowHeight="44" id="KgL-jH-BWz">
+                                        <rect key="frame" x="0.0" y="251" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" tableViewCell="KgL-jH-BWz" id="M3z-Un-5Ak">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="0Ig-cw-DKm">
+                                                    <rect key="frame" x="310" y="6.5" width="51" height="31"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="49" id="GAk-dj-i4d"/>
+                                                    </constraints>
+                                                    <color key="onTintColor" red="0.0" green="0.74901960779999999" blue="0.64705882349999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <connections>
+                                                        <action selector="didChangeValueForHiddenAssetsSwitch:" destination="BZj-6h-yKC" eventType="valueChanged" id="jMA-XG-tOj"/>
+                                                    </connections>
+                                                </switch>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Upload Hidden album" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.75" translatesAutoresizingMaskIntoConstraints="NO" id="fdI-y3-3hu">
+                                                    <rect key="frame" x="16" y="12" width="173" height="20"/>
+                                                    <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="17"/>
+                                                    <color key="textColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="fdI-y3-3hu" firstAttribute="trailing" secondItem="M3z-Un-5Ak" secondAttribute="trailingMargin" id="6OU-xL-ss6"/>
+                                                <constraint firstItem="0Ig-cw-DKm" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="fdI-y3-3hu" secondAttribute="trailing" constant="8" id="ARN-zM-fhr"/>
+                                                <constraint firstItem="0Ig-cw-DKm" firstAttribute="centerY" secondItem="M3z-Un-5Ak" secondAttribute="centerY" id="Pbj-DP-9Ud"/>
+                                                <constraint firstItem="fdI-y3-3hu" firstAttribute="leading" secondItem="M3z-Un-5Ak" secondAttribute="leadingMargin" id="QJp-HG-OYJ"/>
+                                                <constraint firstItem="0Ig-cw-DKm" firstAttribute="trailing" secondItem="M3z-Un-5Ak" secondAttribute="trailingMargin" id="UUk-b5-rCF"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="0Ig-cw-DKm" secondAttribute="trailing" id="aki-7p-IhK"/>
+                                                <constraint firstItem="fdI-y3-3hu" firstAttribute="leading" secondItem="M3z-Un-5Ak" secondAttribute="leadingMargin" constant="15" id="eA5-yu-ded"/>
+                                                <constraint firstItem="fdI-y3-3hu" firstAttribute="centerY" secondItem="M3z-Un-5Ak" secondAttribute="centerY" id="q4F-A0-I66"/>
+                                            </constraints>
+                                            <variation key="default">
+                                                <mask key="constraints">
+                                                    <exclude reference="6OU-xL-ss6"/>
+                                                    <exclude reference="eA5-yu-ded"/>
+                                                    <exclude reference="UUk-b5-rCF"/>
+                                                </mask>
+                                            </variation>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                            <tableViewSection footerTitle="Shared Albums are where you share with other people and subscribe to other people's shares in your device's Photos app." id="h6Z-Tq-Pyv" userLabel="Upload Shared Albums">
+                                <cells>
+                                    <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" rowHeight="44" id="Nhp-ce-3cd">
+                                        <rect key="frame" x="0.0" y="359" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" tableViewCell="Nhp-ce-3cd" id="ORF-FQ-4hB">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="EuE-YI-uvO">
+                                                    <rect key="frame" x="310" y="6.5" width="51" height="31"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="49" id="Q19-Va-lcy"/>
+                                                    </constraints>
+                                                    <color key="onTintColor" red="0.0" green="0.74901960779999999" blue="0.64705882349999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <connections>
+                                                        <action selector="didChangeValueForHiddenAssetsSwitch:" destination="BZj-6h-yKC" eventType="valueChanged" id="J94-Sf-Rnx"/>
+                                                        <action selector="didChangeValueForSharedAlbumsSwitch:" destination="BZj-6h-yKC" eventType="valueChanged" id="E2F-me-tek"/>
+                                                    </connections>
+                                                </switch>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Upload Shared Albums" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.75" translatesAutoresizingMaskIntoConstraints="NO" id="D30-3d-mYd">
+                                                    <rect key="frame" x="16" y="12" width="183.5" height="20"/>
+                                                    <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="17"/>
+                                                    <color key="textColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="D30-3d-mYd" firstAttribute="trailing" secondItem="ORF-FQ-4hB" secondAttribute="trailingMargin" id="24n-JM-Fb8"/>
+                                                <constraint firstItem="EuE-YI-uvO" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="D30-3d-mYd" secondAttribute="trailing" constant="8" id="6EO-0a-wHg"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="EuE-YI-uvO" secondAttribute="trailing" id="Qkd-T9-cwN"/>
+                                                <constraint firstItem="D30-3d-mYd" firstAttribute="leading" secondItem="ORF-FQ-4hB" secondAttribute="leadingMargin" constant="15" id="Udq-EE-E59"/>
+                                                <constraint firstItem="D30-3d-mYd" firstAttribute="leading" secondItem="ORF-FQ-4hB" secondAttribute="leadingMargin" id="YT8-5t-OrH"/>
+                                                <constraint firstItem="D30-3d-mYd" firstAttribute="centerY" secondItem="ORF-FQ-4hB" secondAttribute="centerY" id="a4Z-bU-ry1"/>
+                                                <constraint firstItem="EuE-YI-uvO" firstAttribute="centerY" secondItem="ORF-FQ-4hB" secondAttribute="centerY" id="fgH-ye-aOi"/>
+                                                <constraint firstItem="EuE-YI-uvO" firstAttribute="trailing" secondItem="ORF-FQ-4hB" secondAttribute="trailingMargin" id="yIg-mP-caH"/>
+                                            </constraints>
+                                            <variation key="default">
+                                                <mask key="constraints">
+                                                    <exclude reference="24n-JM-Fb8"/>
+                                                    <exclude reference="Udq-EE-E59"/>
+                                                    <exclude reference="yIg-mP-caH"/>
+                                                </mask>
+                                            </variation>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                            <tableViewSection footerTitle="Synced albums are where you sync photos or videos to your device's Photos app from iTunes." id="93s-At-fdf" userLabel="Upload Synced Albums">
+                                <cells>
+                                    <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" rowHeight="44" id="cpl-FI-lx1">
+                                        <rect key="frame" x="0.0" y="483" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" tableViewCell="cpl-FI-lx1" id="oUu-M3-QM0">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="lWz-Nd-fkQ">
+                                                    <rect key="frame" x="310" y="6.5" width="51" height="31"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="49" id="pMa-Ox-Umj"/>
+                                                    </constraints>
+                                                    <color key="onTintColor" red="0.0" green="0.74901960779999999" blue="0.64705882349999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <connections>
+                                                        <action selector="didChangeValueForHiddenAssetsSwitch:" destination="BZj-6h-yKC" eventType="valueChanged" id="0r4-ez-ggH"/>
+                                                        <action selector="didChangeValueForSyncedAlbumsSwitch:" destination="BZj-6h-yKC" eventType="valueChanged" id="JEQ-Ty-uWp"/>
+                                                    </connections>
+                                                </switch>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Upload albums synced from iTunes" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.75" translatesAutoresizingMaskIntoConstraints="NO" id="YTn-BG-ddk">
+                                                    <rect key="frame" x="16" y="12" width="281" height="20"/>
+                                                    <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="17"/>
+                                                    <color key="textColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="YTn-BG-ddk" firstAttribute="leading" secondItem="oUu-M3-QM0" secondAttribute="leadingMargin" constant="15" id="FFp-SV-aKk"/>
+                                                <constraint firstItem="lWz-Nd-fkQ" firstAttribute="centerY" secondItem="oUu-M3-QM0" secondAttribute="centerY" id="Mdz-zQ-Cop"/>
+                                                <constraint firstItem="YTn-BG-ddk" firstAttribute="centerY" secondItem="oUu-M3-QM0" secondAttribute="centerY" id="aVJ-fh-Vji"/>
+                                                <constraint firstItem="YTn-BG-ddk" firstAttribute="leading" secondItem="oUu-M3-QM0" secondAttribute="leadingMargin" id="bbu-u3-jF6"/>
+                                                <constraint firstItem="lWz-Nd-fkQ" firstAttribute="trailing" secondItem="oUu-M3-QM0" secondAttribute="trailingMargin" id="fyz-9q-cCN"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="lWz-Nd-fkQ" secondAttribute="trailing" id="gpa-Pi-Hvd"/>
+                                                <constraint firstItem="lWz-Nd-fkQ" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="YTn-BG-ddk" secondAttribute="trailing" constant="8" id="r09-nL-C6V"/>
+                                                <constraint firstItem="YTn-BG-ddk" firstAttribute="trailing" secondItem="oUu-M3-QM0" secondAttribute="trailingMargin" id="uKi-dX-pZq"/>
+                                            </constraints>
+                                            <variation key="default">
+                                                <mask key="constraints">
+                                                    <exclude reference="uKi-dX-pZq"/>
+                                                    <exclude reference="FFp-SV-aKk"/>
+                                                    <exclude reference="fyz-9q-cCN"/>
+                                                </mask>
+                                            </variation>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                        </sections>
+                        <connections>
+                            <outlet property="dataSource" destination="BZj-6h-yKC" id="33X-Is-egX"/>
+                            <outlet property="delegate" destination="BZj-6h-yKC" id="YvK-nq-Rsd"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Advanced" id="Ret-Vo-6el">
+                        <barButtonItem key="backBarButtonItem" title=" " id="Ff1-IB-fcm"/>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="uploadAllBurstPhotosLabel" destination="gis-Dd-xeL" id="IBN-4F-KGe"/>
+                        <outlet property="uploadAllBurstPhotosSwitch" destination="xhu-qg-I6h" id="V6g-tM-2wJ"/>
+                        <outlet property="uploadHiddenAlbumLabel" destination="fdI-y3-3hu" id="FAK-Nc-fGL"/>
+                        <outlet property="uploadHiddenAlbumSwitch" destination="0Ig-cw-DKm" id="3gy-su-S74"/>
+                        <outlet property="uploadSharedAlbumsLabel" destination="D30-3d-mYd" id="dPD-Sp-l16"/>
+                        <outlet property="uploadSharedAlbumsSwitch" destination="EuE-YI-uvO" id="fm2-5v-2Rk"/>
+                        <outlet property="uploadSyncedAlbumsLabel" destination="YTn-BG-ddk" id="Xoh-6U-z9S"/>
+                        <outlet property="uploadSyncedAlbumsSwitch" destination="lWz-Nd-fkQ" id="WXL-OB-mOA"/>
+                        <outlet property="uploadVideosForLivePhotosLabel" destination="0X0-1E-S4V" id="rX2-cV-VHX"/>
+                        <outlet property="uploadVideosForlivePhotosSwitch" destination="tgG-aW-4D1" id="AZt-OW-McO"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="hGf-Nm-8Sk" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1330" y="-1961"/>
         </scene>
     </scenes>
     <resources>
