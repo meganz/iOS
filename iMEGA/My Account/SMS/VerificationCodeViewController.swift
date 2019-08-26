@@ -4,6 +4,7 @@ import UIKit
 class VerificationCodeViewController: UIViewController {
     
     private let verificationCodeCount = 6
+    private let resendCheckTimeInterval = 30.0
     private var verificationCodeFields = [UITextField]()
     
     @IBOutlet private var resendButton: UIButton!
@@ -15,6 +16,7 @@ class VerificationCodeViewController: UIViewController {
     @IBOutlet private var errorImageView: UIImageView!
     @IBOutlet private var errorMessageLabel: UILabel!
     @IBOutlet private var errorView: UIStackView!
+    @IBOutlet private var resendStackView: UIStackView!
     
     var phoneNumber: PhoneNumber!
     
@@ -38,13 +40,13 @@ class VerificationCodeViewController: UIViewController {
         errorImageView.tintColor = UIColor.mnz_redError()
         errorMessageLabel.textColor = UIColor.mnz_redError()
         
-        phoneNumberLabel.text = PhoneNumberKit().format(phoneNumber, toType: .e164)
-        
         configCodeFieldsAppearance()
-        
-        confirmButton.isEnabled = true
-        
+        configResendView()
+
         verificationCodeFields = codeFieldsContainerView.subviews.compactMap { $0 as? UITextField }
+        verificationCodeFields.first?.becomeFirstResponder()
+        
+        phoneNumberLabel.text = PhoneNumberKit().format(phoneNumber, toType: .e164)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -53,10 +55,22 @@ class VerificationCodeViewController: UIViewController {
         navigationController?.isNavigationBarHidden = false
     }
     
-    // MARK: - config views
+    // MARK: - Config views
+    
+    private func configResendView() {
+        resendStackView.isHidden = true
+        DispatchQueue.main.asyncAfter(deadline: .now() + resendCheckTimeInterval) {
+            guard self.verificationCode.count == 0 else { return }
+            
+            UIView.animate(withDuration: 0.75, animations: {
+                self.resendStackView.isHidden = false
+            })
+        }
+    }
     
     private func configCodeFieldsAppearance(with error: MEGAError? = nil) {
         if let error = error {
+            resendStackView.isHidden = false
             errorView.isHidden = false
             verificationCodeFields.forEach {
                 $0.layer.cornerRadius = 8
@@ -116,9 +130,14 @@ class VerificationCodeViewController: UIViewController {
         })
     }
     
+    @IBAction private func didEditingChangeInTextField(_ textField: UITextField) {
+        confirmButton.isEnabled = verificationCode.count == verificationCodeCount
+    }
+    
     private func checkSMSVerificationCodeSucceeded() {
-        self.configCodeFieldsAppearance(with: nil)
-        self.dismiss(animated: true, completion: nil)
+        setEditing(false, animated: true)
+        configCodeFieldsAppearance(with: nil)
+        dismiss(animated: true, completion: nil)
         
         if let session = SAMKeychain.password(forService: MEGAPasswordService, account: MEGAPasswordName)  {
             MEGASdkManager.sharedMEGASdk()?.fastLogin(withSession: session, delegate: MEGALoginRequestDelegate())
@@ -138,16 +157,23 @@ extension VerificationCodeViewController: UITextFieldDelegate {
         
         if string.count >= verificationCodeCount {
             distributeCodeString(string)
+            didEditingChangeInTextField(textField)
             return false
         }
         
         if string.count > 0 {
             textField.text = String(string[string.startIndex])
             makeNextCodeFieldBecomeFirstResponder(for: textField)
+            didEditingChangeInTextField(textField)
             return false
         }
         
         return  true
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        didTapResendButton()
+        return false
     }
     
     private func distributeCodeString(_ string: String) {

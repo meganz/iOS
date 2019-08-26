@@ -28,8 +28,6 @@ class SMSVerificationViewController: UIViewController {
         
         disableAutomaticAdjustmentContentInsetsBehavior()
         
-        NotificationCenter.default.addObserver(self, selector: #selector(didReceiveTextDidChangeNotification(_:)), name: UITextField.textDidChangeNotification, object: phoneNumberTextField)
-        
         errorImageView.tintColor = UIColor.mnz_redError()
         errorMessageLabel.textColor = UIColor.mnz_redError()
         errorView.isHidden = true
@@ -129,6 +127,10 @@ class SMSVerificationViewController: UIViewController {
         }
     }
     
+    @IBAction private func didEditingChangedInPhoneNumberField() {
+        nextButton.isEnabled = !(phoneNumberTextField.text?.isEmpty ?? true)
+    }
+    
     private func sendVerificationCodeSucceeded(with number: PhoneNumber) {
         phoneNumberLabel.textColor = UIColor.mnz_gray999999()
         phoneNumberTextField.textColor = UIColor.black
@@ -185,12 +187,6 @@ class SMSVerificationViewController: UIViewController {
         insets.bottom = 0
         scrollView.contentInset = insets
         scrollView.scrollIndicatorInsets = insets
-    }
-    
-    @objc private func didReceiveTextDidChangeNotification(_ notification: Notification) {
-        if notification.object as? UITextField === phoneNumberTextField {
-            nextButton.isEnabled = !(phoneNumberTextField.text?.isEmpty ?? true)
-        }
     }
     
     // MARK: - UI configurations
