@@ -833,7 +833,6 @@
 		A8F6E8941F9E770C0087859C /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9432291D1EDD83FF007DB542 /* MobileCoreServices.framework */; };
 		B60102C522E172FC00A92C17 /* VerificationCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B60102C422E172FC00A92C17 /* VerificationCodeViewController.swift */; };
 		B60102C722E5749E00A92C17 /* UIViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B60102C622E5749E00A92C17 /* UIViewController+Additions.swift */; };
-		B60102C922E6AB7700A92C17 /* SMSPhoneNumber.swift in Sources */ = {isa = PBXBuildFile; fileRef = B60102C822E6AB7700A92C17 /* SMSPhoneNumber.swift */; };
 		B6031EE52202A6BF00F7EAA1 /* NodesFetchListenerOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = B6031EE42202A6BF00F7EAA1 /* NodesFetchListenerOperation.m */; };
 		B604890E223C45A400BA91F9 /* CameraUploadStore.m in Sources */ = {isa = PBXBuildFile; fileRef = B604890D223C45A400BA91F9 /* CameraUploadStore.m */; };
 		B604890F223C4F7A00BA91F9 /* MEGAStoreStack.m in Sources */ = {isa = PBXBuildFile; fileRef = B63F319F223BA8FA00B0C6A6 /* MEGAStoreStack.m */; };
@@ -2093,7 +2092,6 @@
 		A8F6E8921F9E75D50087859C /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
 		B60102C422E172FC00A92C17 /* VerificationCodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerificationCodeViewController.swift; sourceTree = "<group>"; };
 		B60102C622E5749E00A92C17 /* UIViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Additions.swift"; sourceTree = "<group>"; };
-		B60102C822E6AB7700A92C17 /* SMSPhoneNumber.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SMSPhoneNumber.swift; sourceTree = "<group>"; };
 		B6031EE32202A6BF00F7EAA1 /* NodesFetchListenerOperation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NodesFetchListenerOperation.h; sourceTree = "<group>"; };
 		B6031EE42202A6BF00F7EAA1 /* NodesFetchListenerOperation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NodesFetchListenerOperation.m; sourceTree = "<group>"; };
 		B604890C223C45A400BA91F9 /* CameraUploadStore.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CameraUploadStore.h; sourceTree = "<group>"; };
@@ -4712,7 +4710,6 @@
 			isa = PBXGroup;
 			children = (
 				B6B73E6F22C9A39500ACAD48 /* SMSCountry.swift */,
-				B60102C822E6AB7700A92C17 /* SMSPhoneNumber.swift */,
 			);
 			path = DataModel;
 			sourceTree = "<group>";
@@ -5699,7 +5696,6 @@
 				836AEDE52018AD1F00868FC7 /* PasswordView.m in Sources */,
 				836E74C42099DC82005E2317 /* MEGAChatChangeGroupNameRequestDelegate.m in Sources */,
 				A824ADFD228B1D6800EDF27E /* FLEXColorExplorerViewController.m in Sources */,
-				B60102C922E6AB7700A92C17 /* SMSPhoneNumber.swift in Sources */,
 				B6D90BCA22253BC700E0623A /* BackgroundUploadingTaskMonitor.m in Sources */,
 				41D21E621D01AEC3002E6296 /* CTAssetSelectionLabel.m in Sources */,
 				E83E102A1E1582E8002F3E2E /* ChatStatusTableViewController.m in Sources */,
