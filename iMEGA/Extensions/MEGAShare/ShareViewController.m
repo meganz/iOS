@@ -67,10 +67,10 @@
     
     NSSetUncaughtExceptionHandler(&uncaughtExceptionHandler);
 
-    self.sharedUserDefaults = [[NSUserDefaults alloc] initWithSuiteName:@"group.mega.ios"];
+    self.sharedUserDefaults = [[NSUserDefaults alloc] initWithSuiteName:MEGAGroupIdentifier];
     if ([self.sharedUserDefaults boolForKey:@"logging"]) {
         NSFileManager *fileManager = [NSFileManager defaultManager];
-        NSString *logsPath = [[[fileManager containerURLForSecurityApplicationGroupIdentifier:@"group.mega.ios"] URLByAppendingPathComponent:@"logs"] path];
+        NSString *logsPath = [[[fileManager containerURLForSecurityApplicationGroupIdentifier:MEGAGroupIdentifier] URLByAppendingPathComponent:MEGAExtensionLogsFolder] path];
         if (![fileManager fileExistsAtPath:logsPath]) {
             [fileManager createDirectoryAtPath:logsPath withIntermediateDirectories:NO attributes:nil error:nil];
         }
@@ -474,7 +474,7 @@
         MEGALogError(@"Failed to locate/create NSApplicationSupportDirectory with error: %@", error);
     }
     
-    NSURL *groupSupportURL = [[fileManager containerURLForSecurityApplicationGroupIdentifier:@"group.mega.ios"] URLByAppendingPathComponent:@"GroupSupport"];
+    NSURL *groupSupportURL = [[fileManager containerURLForSecurityApplicationGroupIdentifier:MEGAGroupIdentifier] URLByAppendingPathComponent:MEGAExtensionGroupSupportFolder];
     if (![fileManager fileExistsAtPath:groupSupportURL.path]) {
         [fileManager createDirectoryAtURL:groupSupportURL withIntermediateDirectories:NO attributes:nil error:nil];
     }
@@ -832,7 +832,7 @@ void uncaughtExceptionHandler(NSException *exception) {
 
 - (NSString *)shareExtensionStorage {
     NSFileManager *fileManager = [NSFileManager defaultManager];
-    NSString *storagePath = [[[fileManager containerURLForSecurityApplicationGroupIdentifier:@"group.mega.ios"] URLByAppendingPathComponent:@"Share Extension Storage"] path];
+    NSString *storagePath = [[[fileManager containerURLForSecurityApplicationGroupIdentifier:MEGAGroupIdentifier] URLByAppendingPathComponent:MEGAShareExtensionStorageFolder] path];
     if (![fileManager fileExistsAtPath:storagePath]) {
         [fileManager createDirectoryAtPath:storagePath withIntermediateDirectories:NO attributes:nil error:nil];
     }

@@ -1,6 +1,5 @@
 
 #import "ImageExportManager.h"
-#import "MEGAConstants.h"
 #import "ImageExportOperation.h"
 @import CoreServices;
 @import AVFoundation;

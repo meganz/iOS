@@ -31,7 +31,6 @@
 #import "RemoveSharingActivity.h"
 #import "ShareFolderActivity.h"
 #import "SendToChatActivity.h"
-#import "MEGAConstants.h"
 
 static MEGAIndexer *indexer;
 
@@ -431,9 +430,8 @@ static MEGAIndexer *indexer;
 }
 
 + (NSURL *)urlForSharedSandboxCacheDirectory:(NSString *)directory {
-    NSString *cacheDirectory = @"Library/Cache/";
-    NSURL *containerURL = [[NSFileManager defaultManager] containerURLForSecurityApplicationGroupIdentifier:@"group.mega.ios"];
-    NSURL *destinationURL = [[containerURL URLByAppendingPathComponent:cacheDirectory isDirectory:YES] URLByAppendingPathComponent:directory isDirectory:YES];
+    NSURL *containerURL = [NSFileManager.defaultManager containerURLForSecurityApplicationGroupIdentifier:MEGAGroupIdentifier];
+    NSURL *destinationURL = [[containerURL URLByAppendingPathComponent:MEGAExtensionCacheFolder isDirectory:YES] URLByAppendingPathComponent:directory isDirectory:YES];
     [[NSFileManager defaultManager] createDirectoryAtURL:destinationURL withIntermediateDirectories:YES attributes:nil error:nil];
     return destinationURL;
 }
@@ -1312,7 +1310,7 @@ static MEGAIndexer *indexer;
     [MEGAStore.shareInstance.storeStack deleteStoreWithError:nil];
     
     // Delete files saved by extensions
-    NSString *extensionGroup = [[NSFileManager defaultManager] containerURLForSecurityApplicationGroupIdentifier:@"group.mega.ios"].path;
+    NSString *extensionGroup = [NSFileManager.defaultManager containerURLForSecurityApplicationGroupIdentifier:MEGAGroupIdentifier].path;
     [NSFileManager.defaultManager mnz_removeFolderContentsAtPath:extensionGroup];
     
     // Delete Spotlight index
@@ -1349,7 +1347,7 @@ static MEGAIndexer *indexer;
     [[NSUserDefaults standardUserDefaults] setInteger:1 forKey:@"OfflineSortOrderType"];
     [[NSUserDefaults standardUserDefaults] synchronize];
 
-    NSUserDefaults *sharedUserDefaults = [[NSUserDefaults alloc] initWithSuiteName:@"group.mega.ios"];
+    NSUserDefaults *sharedUserDefaults = [NSUserDefaults.alloc initWithSuiteName:MEGAGroupIdentifier];
     [sharedUserDefaults removeObjectForKey:@"extensions"];
     [sharedUserDefaults removeObjectForKey:@"extensions-passcode"];
     [sharedUserDefaults removeObjectForKey:@"treeCompleted"];
