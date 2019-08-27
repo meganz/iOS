@@ -5,7 +5,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface SearchOperation : MEGAOperation
 
-- (instancetype)initWithParentNode:(MEGANode *)node text:(NSString *)text completion:(void (^)(NSArray <MEGANode *> *_Nullable nodesFound))completion;
+- (instancetype)initWithParentNode:(MEGANode *)node text:(NSString *)text cancelToken:(MEGACancelToken *)cancelToken completion:(void (^)(NSArray <MEGANode *> *_Nullable nodesFound))completion;
 
 @end
 

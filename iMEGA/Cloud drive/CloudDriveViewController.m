@@ -95,6 +95,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
 @property (nonatomic, assign) LayoutMode layoutView;
 @property (nonatomic, assign) BOOL shouldDetermineLayout;
 @property (strong, nonatomic) NSOperationQueue *searchQueue;
+@property (strong, nonatomic) MEGACancelToken *cancelToken;
 
 @end
 
@@ -1291,16 +1292,25 @@ static const NSTimeInterval kSearchTimeDelay = .5;
         NSString *text = self.searchController.searchBar.text;
         [SVProgressHUD show];
         [self.searchNodesArray removeAllObjects];
-        SearchOperation *searchOperation = [SearchOperation.alloc initWithParentNode:self.parentNode text:text completion:^(NSArray <MEGANode *> *nodesFound) {
+        self.cancelToken = MEGACancelToken.alloc.init;
+        SearchOperation *searchOperation = [SearchOperation.alloc initWithParentNode:self.parentNode text:text cancelToken:self.cancelToken completion:^(NSArray <MEGANode *> *nodesFound) {
             dispatch_async(dispatch_get_main_queue(), ^{
                 self.searchNodesArray = [NSMutableArray arrayWithArray:nodesFound];
                 [SVProgressHUD dismiss];
                 [self reloadData];
+                self.cancelToken = nil;
             });
         }];
         [self.searchQueue addOperation:searchOperation];
     } else {
         [self reloadData];
+    }
+}
+
+- (void)cancelSearchIfNeeded {
+    if (self.searchQueue.operationCount) {
+        [self.cancelToken cancelWithNewValue:YES];
+        [self.searchQueue cancelAllOperations];
     }
 }
 
@@ -1327,6 +1337,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
 #pragma mark - IBActions
 
 - (IBAction)recentsTouchUpInside:(UIButton *)sender {
+    [self cancelSearchIfNeeded];
     if (sender.selected) {
         return;
     }
@@ -1854,7 +1865,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
 #pragma mark - UISearchResultsUpdating
 
 - (void)updateSearchResultsForSearchController:(UISearchController *)searchController {
-    [self.searchQueue cancelAllOperations];
+    [self cancelSearchIfNeeded];
     [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(search) object:nil];
     [self performSelector:@selector(search) withObject:nil afterDelay:kSearchTimeDelay];
 }
