@@ -1854,9 +1854,13 @@ static const NSTimeInterval kSearchTimeDelay = .5;
 #pragma mark - UISearchResultsUpdating
 
 - (void)updateSearchResultsForSearchController:(UISearchController *)searchController {
-    [self.searchQueue cancelAllOperations];
-    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(search) object:nil];
-    [self performSelector:@selector(search) withObject:nil afterDelay:kSearchTimeDelay];
+    if (self.searchController.searchBar.text.length >= kMinimumLettersToStartTheSearch) {
+        [self.searchQueue cancelAllOperations];
+        [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(search) object:nil];
+        [self performSelector:@selector(search) withObject:nil afterDelay:kSearchTimeDelay];
+    } else {
+        [self reloadData];
+    }
 }
 
 #pragma mark - UIDocumentPickerDelegate
