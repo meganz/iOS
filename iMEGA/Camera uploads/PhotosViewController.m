@@ -21,6 +21,7 @@
 #import "MEGAConstants.h"
 #import "CustomModalAlertViewController.h"
 #import "UploadStats.h"
+#import "UIViewController+MNZCategory.h"
 @import StoreKit;
 @import Photos;
 
@@ -30,8 +31,6 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
 @interface PhotosViewController () <UICollectionViewDelegateFlowLayout, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAPhotoBrowserDelegate> {
     BOOL allNodesSelected;
 }
-
-@property (nonatomic) id<UIViewControllerPreviewing> previewingContext;
 
 @property (nonatomic, strong) MEGANode *parentNode;
 @property (nonatomic, strong) MEGANodeList *nodeList;
@@ -92,6 +91,10 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
     self.cellSize = [self.photosCollectionView mnz_calculateCellSizeForInset:self.cellInset];
     
     self.currentState = MEGACameraUploadsStateLoading;
+    
+    if (@available(iOS 13.0, *)) {
+        [self configPreviewingRegistration];
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -167,16 +170,7 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
     [super traitCollectionDidChange:previousTraitCollection];
     
-    if ([self.traitCollection respondsToSelector:@selector(forceTouchCapability)]) {
-        if (self.traitCollection.forceTouchCapability == UIForceTouchCapabilityAvailable) {
-            if (!self.previewingContext) {
-                self.previewingContext = [self registerForPreviewingWithDelegate:self sourceView:self.view];
-            }
-        } else {
-            [self unregisterForPreviewingWithContext:self.previewingContext];
-            self.previewingContext = nil;
-        }
-    }
+    [self configPreviewingRegistration];
 }
 
 #pragma mark - uploads state
