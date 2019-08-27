@@ -3113,8 +3113,13 @@ static NSMutableSet<NSString *> *tapForInfoSet;
                         [self.collectionView reloadItemsAtIndexPaths:@[indexPath]];
                     }
                     if (message.type == MEGAChatMessageTypeAttachment) {
-                        NSUInteger attachmentIndex = [self.attachmentMessages indexOfObject:oldMessage];
-                        [self.attachmentMessages replaceObjectAtIndex:attachmentIndex withObject:message];
+                        if (message.nodeList.size.unsignedIntegerValue == 1) {
+                            MEGANode *node = [message.nodeList nodeAtIndex:0];
+                            if (node.name.mnz_isImagePathExtension || node.name.mnz_isVideoPathExtension) {
+                                NSUInteger attachmentIndex = [self.attachmentMessages indexOfObject:oldMessage];
+                                [self.attachmentMessages replaceObjectAtIndex:attachmentIndex withObject:message];
+                            }
+                        }
                     }
                 } else {
                     message.chatId = self.chatRoom.chatId;
