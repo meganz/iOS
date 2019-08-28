@@ -738,6 +738,14 @@
 "Only the representative photos from your burst photo sequences will be uploaded."="只會上傳您的連拍照片序列中最喜歡的照片。";
 /* Footer description when upload Hidden Album is enabled */
 "The Hidden Album is where you hide photos or videos in your device Photos app."="「隱藏相簿」是在您裝置的相片應用程式中隱藏照片或影片的地方。";
+/* Title of the switch to config whether to upload Shared Albums */
+"Upload Shared Albums"="Upload Shared Albums";
+/* Footer description for Upload Shared Albums title */
+"Shared Albums are where you share with other people and subscribe to other people's shares in your device's Photos app."="Shared Albums are where you share with other people and subscribe to other people’s shares in your device’s Photos app.";
+/* Title of the switch to config whether to upload synced albums */
+"Upload albums synced from iTunes"="Upload albums synced from iTunes";
+/* Footer description for upload synced albums title */
+"Synced albums are where you sync photos or videos to your device's Photos app from iTunes."="Synced albums are where you sync photos or videos to your device’s Photos app from iTunes.";
 /* App means “Application” */
 "App version"="App 版本";
 /* Title of the label where the SDK version is shown */
@@ -1897,9 +1905,9 @@
 /* Label shown next to a feature name that can be enabled or disabled, like in 'Show Last seen...' */
 "Show"="顯示";
 /* Shown when viewing a 1on1 chat (at least for now), if the user is offline. */
-"Last seen %s"="上一次出現：%s前";
+"Last seen %s"="上一次上線：%s前";
 /* Text to inform the user the 'Last seen' time of a contact is a long time ago (>= 65535 minutes) */
-"Last seen a long time ago"="上一次出現在很久之前";
+"Last seen a long time ago"="上一次上線在很久之前";
 /* */
 "Today"="今天";
 /* */

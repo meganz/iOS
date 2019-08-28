@@ -277,16 +277,13 @@
     
     self.indexer = [[MEGAIndexer alloc] init];
     [Helper setIndexer:self.indexer];
-    
-    UIForceTouchCapability forceTouchCapability = self.window.rootViewController.view.traitCollection.forceTouchCapability;
-    if (forceTouchCapability == UIForceTouchCapabilityAvailable) {
-        UIApplicationShortcutItem *applicationShortcutItem = [launchOptions objectForKey:UIApplicationLaunchOptionsShortcutItemKey];
-        if (applicationShortcutItem) {
-            if (isFetchNodesDone) {
-                [self manageQuickActionType:applicationShortcutItem.type];
-            } else {
-                self.quickActionType = applicationShortcutItem.type;
-            }
+
+    UIApplicationShortcutItem *applicationShortcutItem = launchOptions[UIApplicationLaunchOptionsShortcutItemKey];
+    if (applicationShortcutItem != nil) {
+        if (isFetchNodesDone) {
+            [self manageQuickActionType:applicationShortcutItem.type];
+        } else {
+            self.quickActionType = applicationShortcutItem.type;
         }
     }
     

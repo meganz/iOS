@@ -77,7 +77,7 @@
 /* Alert title shown when you need to log in to continue with the action you want to do */
 "pleaseLogInToYourAccount"="Te rugăm să te autentifici.";
 /* Error message when a user attempts to change their email without an active login session. */
-"needToBeLoggedInToCompleteYourEmailChange"="Trebuie să fii autentificat pentru a finaliza schimbarea e-mailului. Te rugăm să te autentifici din nou cu adresa de e-mail actuală și apoi dă clic pe linkul de confirmare din nou.";
+"needToBeLoggedInToCompleteYourEmailChange"="Trebuie să fii autentificat pentru a finaliza modificarea e-mailului. Te rugăm să te autentifici din nou cu adresa de e-mail actuală și apoi dă clic pe linkul de confirmare din nou.";
 /* Button title which triggers the action to login in your MEGA account */
 "login"="Autentificare";
 /* Button title which triggers the action to create a MEGA account */
@@ -557,7 +557,7 @@
 /* Text shown to explain with how many contacts you have shared a folder */
 "sharedWithXContacts"="Partajat cu %d contacte";
 /* Message shown when you have changed the permissions of a shared folder */
-"permissionsChanged"="Permisiuni schimbate";
+"permissionsChanged"="Permisiuni modificate";
 /* Message shown when a share has been left */
 "shareLeft"="Partajare părăsită";
 /* Message shown when some shares have been left */
@@ -697,9 +697,9 @@
 /* Title for the location based background upload message */
 "Enable location services for background upload"="Activează serviciile de localizare pentru încărcarea în fundal";
 /* Message for the location based background upload when the location data access is not denied by users */
-"MEGA can periodically start camera uploads in background when your location changes."="MEGA poate începe periodic încărcarea camerei în fundal atunci când ți se schimbă locația.";
+"MEGA can periodically start camera uploads in background when your location changes."="MEGA poate începe periodic încărcări cameră în fundal atunci când ți se schimbă locația.";
 /* Message for the location based background upload when the location data access is denied by users */
-"Please select “Always” at your Location page in Settings, then MEGA can periodically start camera uploads in background when your location changes."="Te rugăm să selectezi „Întotdeauna” în pagina Servicii de localizare din Configurări, astfel încât MEGA să poată începe periodic încărcarea camerei în fundal atunci când ți se schimbă locația.";
+"Please select “Always” at your Location page in Settings, then MEGA can periodically start camera uploads in background when your location changes."="Te rugăm să selectezi „Întotdeauna” în pagina Servicii de localizare din Configurări, astfel încât MEGA să poată începe periodic încărcări cameră în fundal atunci când ți se schimbă locația.";
 /* Title for turn on a feature */
 "Turn On"="Pornește";
 /* Title for turn on a feature in settings */
@@ -738,6 +738,14 @@
 "Only the representative photos from your burst photo sequences will be uploaded."="Se vor încărca doar fotografiile favorite din secvențele fotografiilor în rafală.";
 /* Footer description when upload Hidden Album is enabled */
 "The Hidden Album is where you hide photos or videos in your device Photos app."="Albumul ascuns este locul în care ascunzi fotografii sau videoclipuri în aplicația Fotografii a dispozitivului.";
+/* Title of the switch to config whether to upload Shared Albums */
+"Upload Shared Albums"="Upload Shared Albums";
+/* Footer description for Upload Shared Albums title */
+"Shared Albums are where you share with other people and subscribe to other people's shares in your device's Photos app."="Shared Albums are where you share with other people and subscribe to other people’s shares in your device’s Photos app.";
+/* Title of the switch to config whether to upload synced albums */
+"Upload albums synced from iTunes"="Upload albums synced from iTunes";
+/* Footer description for upload synced albums title */
+"Synced albums are where you sync photos or videos to your device's Photos app from iTunes."="Synced albums are where you sync photos or videos to your device’s Photos app from iTunes.";
 /* App means “Application” */
 "App version"="Versiunea aplicației";
 /* Title of the label where the SDK version is shown */
@@ -843,7 +851,7 @@
 /* Hint text where the user have to re-write the new password to confirm it */
 "confirmPassword"="Confirmă parola";
 /* Success message shown when the password has been changed */
-"passwordChanged"="Parola ta a fost schimbată.";
+"passwordChanged"="Parola ta a fost modificată.";
 /* An option to reset the password. */
 "forgotPassword"="Ai uitat parola?";
 /* Message shown during forgot your password process if the link to reset password has expired */
@@ -1008,7 +1016,7 @@
 /* Button title that allows the user change his name */
 "changeName"="Schimbă numele";
 /* Success message when changing profile information. */
-"youHaveSuccessfullyChangedYourProfile"="Ai schimbat cu succes profilul.";
+"youHaveSuccessfullyChangedYourProfile"="Ți-ai modificat cu succes profilul.";
 /* Hint text for the first name (Placeholder) */
 "firstName"="Prenume";
 /* Hint text for the last name (Placeholder) */
@@ -1152,7 +1160,7 @@
 /* A log message in a chat to display that a participant's permission was changed and by whom. This message begins with the user's name who receive the permission change [A]. [B] will be replaced with the permission name (such as Moderator or Read-only) and [C] will be replaced with the person who did it. Please keep the [A], [B] and [C] placeholders, they will be replaced at runtime. For example: Alice Jones was changed to Moderator by John Smith. */
 "wasChangedToBy"="[A] a fost schimbat în [B] de către [C].";
 /* A log message in the chat conversation to tell the reader that a participant [A] changed group chat name to [B]. Please keep the [A] and '[B]' placeholders, they will be replaced at runtime. For example: Alice changed group chat name to 'MEGA'. */
-"changedGroupChatNameTo"="[A] a schimbat numele chatului grupului în '[B]'.";
+"changedGroupChatNameTo"="[A] a schimbat numele chatului de grup în '[B]'.";
 /* Button label. Allows to add contacts in current chat conversation. */
 "addParticipant"="Adaugă participant...";
 /* Menu item to add participants to a chat */
@@ -1418,7 +1426,7 @@
 "languageRestartNotification"="Limbă schimbată. Atinge pentru repornire.";
 /* The following strings are only for the App Store description, they're not used on the app (The only exception is the one with 'autorenewableDescription' key) On the 'generalDescriptionParagraph6' we must delete 'Desktop - https://mega.nz/' because the app can be rejected because of that. */
 /* Paragraph 1 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
-"generalDescriptionParagraph1"="MEGA oferă stocare în cloud criptată, controlată de utilizatori prin intermediul browserelor web standard, împreună cu aplicații dedicate pentru dispozitivele mobile. Spre deosebire de ceilalți furnizori de stocare în cloud, datele tale sunt criptate și decriptate doar de către dispozitivele client ale tale și niciodată de către noi.";
+"generalDescriptionParagraph1"="MEGA oferă stocare în cloud criptată, controlată de utilizatori, prin intermediul browserelor web standard, împreună cu aplicații dedicate pentru dispozitivele mobile. Spre deosebire de ceilalți furnizori de stocare în cloud, datele tale sunt criptate și decriptate doar de către dispozitivele client ale tale și niciodată de către noi.";
 /* Paragraph 2 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
 "generalDescriptionParagraph2"="Încarcă fișierele de pe smartphone sau tabletă, apoi caută, stochează, descarcă, transmite, vezi, partajează, redenumește sau șterge fișierele oricând, de pe orice dispozitiv, oriunde. Partajează folderele cu contactele tale și vezi modificările acestora în timp real.";
 /* Paragraph 3 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
@@ -1631,7 +1639,7 @@
 /* Title of empty state view for archived chats. */
 "noArchivedChats"="Niciun chat arhivat";
 /* A title for the Two-Factor Authentication section on the My Account - Security page. */
-"twoFactorAuthentication"="Autentificarea în doi factori";
+"twoFactorAuthentication"="Autentificarea cu doi factori";
 /* Button title to start the setup of a feature. For example 'Begin Setup' for Two-Factor Authentication */
 "beginSetup"="Începe configurarea";
 /* A message on the Verify Login page telling the user to enter their 2FA code. */
@@ -1639,15 +1647,15 @@
 /* Title of the dialog displayed to start setup the Two-Factor Authentication */
 "whyYouDoNeedTwoFactorAuthentication"="De ce ai nevoie de autentificarea cu doi factori?";
 /* Description for the ‘Two-Factor Authentication’ in the security settings section. */
-"whatIsTwoFactorAuthentication"="Autentificarea în doi factori reprezintă un al doilea strat de securitate pentru contul tău.";
+"whatIsTwoFactorAuthentication"="Autentificarea cu doi factori reprezintă un al doilea strat de securitate pentru contul tău.";
 /* Description text of the dialog displayed to start setup the Two-Factor Authentication */
-"whyYouDoNeedTwoFactorAuthenticationDescription"="Autentificarea în doi factori reprezintă un al doilea strat de securitate pentru contul tău. Ceea ce înseamnă că, chiar dacă cineva îți cunoaște parola, nu îți poate accesa contul fără să aibă acces la codul din șase cifre la care doar tu ai acces.";
+"whyYouDoNeedTwoFactorAuthenticationDescription"="Autentificarea cu doi factori reprezintă un al doilea strat de securitate pentru contul tău. Ceea ce înseamnă că, chiar dacă cineva îți cunoaște parola, nu îți poate accesa contul fără să aibă acces la codul din șase cifre la care doar tu ai acces.";
 /* Alert text shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device */
-"youNeedATwoFactorAuthenticationApp"="Ai nevoie de o aplicație de autentificare în doi factori pe acest dispozitiv";
+"youNeedATwoFactorAuthenticationApp"="Ai nevoie de o aplicație de autentificare cu doi factori pe acest dispozitiv";
 /* Alert text shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device and tap on the question mark */
 "You need an authenticator app to enable 2FA on MEGA. You can download and install the Google Authenticator, Duo Mobile, Authy or Microsoft Authenticator app for your phone or tablet."="Ai nevoie de o aplicație de autentificare pentru a activa 2FA pe MEGA. Poți descărca și instala aplicația Google Authenticator, Duo Mobile, Authy sau Microsoft Authenticator pentru telefon sau tabletă.";
 /* A title on the mobile web client page showing that 2FA has been enabled successfully. */
-"twoFactorAuthenticationEnabled"="Autentificarea în doi factori activată";
+"twoFactorAuthenticationEnabled"="Autentificarea cu doi factori activată";
 /* A message on the dialog shown after 2FA was successfully enabled. */
 "twoFactorAuthenticationEnabledDescription"="Data viitoare când te autentifici în contul ți se va cere să introduci un cod din 6 cifre furnizat de aplicația de autentificare.";
 /* A warning message on the Backup Recovery Key dialog to tell the user to backup their Recovery Key to their local computer. */
@@ -1655,7 +1663,7 @@
 /* An informational message on the Backup Recovery Key dialog. */
 "twoFactorAuthenticationEnabledWarning"="Dacă pierzi accesul la contul tău după ce ai activat 2FA și nu ai făcut un backup al cheii de recuperare, MEGA nu te poate ajuta să obții din nou accesul la acesta.";
 /* A message on a dialog to say that 2FA has been successfully disabled. */
-"twoFactorAuthenticationDisabled"="Autentificarea în doi factori dezactivată";
+"twoFactorAuthenticationDisabled"="Autentificarea cu doi factori dezactivată";
 /* A message on the setup two-factor authentication page on the mobile web client. */
 "scanOrCopyTheSeed"="Scanează sau copiază sămânța în aplicația de autentificare. Asigură-te că copiezi această sămânță într-un loc sigur în cazul în care îți pierzi dispozitivul.";
 /* A button to help them restore their account if they have lost their 2FA device. */
