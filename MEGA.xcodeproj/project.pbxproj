@@ -323,6 +323,7 @@
 		77892EA020E5029E0020A533 /* MOUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 417B5AAD1DEC792400A193D5 /* MOUser.m */; };
 		77892EA120E503580020A533 /* MEGACD.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 4147C2CF1B4EE8A400A37044 /* MEGACD.xcdatamodeld */; };
 		77892EA220E508300020A533 /* UIImage+GKContact.m in Sources */ = {isa = PBXBuildFile; fileRef = 41B2D41B1A6D06780002E29E /* UIImage+GKContact.m */; };
+		7794AEA9231674750039C1D2 /* MEGASdk+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 942F4FD71F500A8F001FC4AC /* MEGASdk+MNZCategory.m */; };
 		7795677721C80CDF002B6227 /* OnboardingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7795677621C80CDF002B6227 /* OnboardingViewController.m */; };
 		7795677921C80D36002B6227 /* Onboarding.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7795677821C80D36002B6227 /* Onboarding.storyboard */; };
 		7795677D21C81C6E002B6227 /* OnboardingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7795677C21C81C6E002B6227 /* OnboardingView.m */; };
@@ -5855,6 +5856,7 @@
 				94892C931EFBEA4100AEAC25 /* MEGALogger.m in Sources */,
 				94892CA01EFBF16A00AEAC25 /* UIColor+MNZCategory.m in Sources */,
 				94C9D7561FBDC87B008BA1B5 /* MEGANodeList+MNZCategory.m in Sources */,
+				7794AEA9231674750039C1D2 /* MEGASdk+MNZCategory.m in Sources */,
 				9411355E1F0100DA00D33428 /* RemoveLinkActivity.m in Sources */,
 				5BA81EA31FC30C8F00C8146C /* MEGAShareRequestDelegate.m in Sources */,
 				943F8B271EF283BD00AFD89F /* LaunchViewController.m in Sources */,
