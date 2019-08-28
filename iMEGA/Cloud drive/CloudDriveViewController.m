@@ -52,6 +52,7 @@
 #import "SortByTableViewController.h"
 #import "SharedItemsViewController.h"
 #import "UpgradeTableViewController.h"
+#import "UIViewController+MNZCategory.h"
 
 static const NSTimeInterval kSearchTimeDelay = .5;
 
@@ -86,8 +87,6 @@ static const NSTimeInterval kSearchTimeDelay = .5;
 
 @property (nonatomic, strong) NSMutableArray *cloudImages;
 
-@property (nonatomic) id<UIViewControllerPreviewing> previewingContext;
-
 @property (nonatomic, strong) CloudDriveTableViewController *cdTableView;
 @property (nonatomic, strong) CloudDriveCollectionViewController *cdCollectionView;
 @property (nonatomic, strong) RecentsViewController *recentsVC;
@@ -95,6 +94,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
 @property (nonatomic, assign) LayoutMode layoutView;
 @property (nonatomic, assign) BOOL shouldDetermineLayout;
 @property (strong, nonatomic) NSOperationQueue *searchQueue;
+@property (strong, nonatomic) MEGACancelToken *cancelToken;
 
 @end
 
@@ -161,6 +161,10 @@ static const NSTimeInterval kSearchTimeDelay = .5;
     self.searchQueue.name = @"searchQueue";
     self.searchQueue.qualityOfService = NSQualityOfServiceUserInteractive;
     self.searchQueue.maxConcurrentOperationCount = 1;
+    
+    if (@available(iOS 13.0, *)) {
+        [self configPreviewingRegistration];
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -227,16 +231,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
     [super traitCollectionDidChange:previousTraitCollection];
     
-    if ([self.traitCollection respondsToSelector:@selector(forceTouchCapability)]) {
-        if (self.traitCollection.forceTouchCapability == UIForceTouchCapabilityAvailable) {
-            if (!self.previewingContext) {
-                self.previewingContext = [self registerForPreviewingWithDelegate:self sourceView:self.view];
-            }
-        } else {
-            [self unregisterForPreviewingWithContext:self.previewingContext];
-            self.previewingContext = nil;
-        }
-    }
+    [self configPreviewingRegistration];
 }
 
 #pragma mark - Layout
@@ -1291,16 +1286,25 @@ static const NSTimeInterval kSearchTimeDelay = .5;
         NSString *text = self.searchController.searchBar.text;
         [SVProgressHUD show];
         [self.searchNodesArray removeAllObjects];
-        SearchOperation *searchOperation = [SearchOperation.alloc initWithParentNode:self.parentNode text:text completion:^(NSArray <MEGANode *> *nodesFound) {
+        self.cancelToken = MEGACancelToken.alloc.init;
+        SearchOperation *searchOperation = [SearchOperation.alloc initWithParentNode:self.parentNode text:text cancelToken:self.cancelToken completion:^(NSArray <MEGANode *> *nodesFound) {
             dispatch_async(dispatch_get_main_queue(), ^{
                 self.searchNodesArray = [NSMutableArray arrayWithArray:nodesFound];
                 [SVProgressHUD dismiss];
                 [self reloadData];
+                self.cancelToken = nil;
             });
         }];
         [self.searchQueue addOperation:searchOperation];
     } else {
         [self reloadData];
+    }
+}
+
+- (void)cancelSearchIfNeeded {
+    if (self.searchQueue.operationCount) {
+        [self.cancelToken cancelWithNewValue:YES];
+        [self.searchQueue cancelAllOperations];
     }
 }
 
@@ -1327,6 +1331,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
 #pragma mark - IBActions
 
 - (IBAction)recentsTouchUpInside:(UIButton *)sender {
+    [self cancelSearchIfNeeded];
     if (sender.selected) {
         return;
     }
@@ -1854,7 +1859,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
 #pragma mark - UISearchResultsUpdating
 
 - (void)updateSearchResultsForSearchController:(UISearchController *)searchController {
-    [self.searchQueue cancelAllOperations];
+    [self cancelSearchIfNeeded];
     [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(search) object:nil];
     [self performSelector:@selector(search) withObject:nil afterDelay:kSearchTimeDelay];
 }

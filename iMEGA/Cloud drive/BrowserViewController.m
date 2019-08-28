@@ -14,12 +14,11 @@
 #import "UIAlertAction+MNZCategory.h"
 #import "UIImageView+MNZCategory.h"
 #import "UITextField+MNZCategory.h"
-
+#import "UIViewController+MNZCategory.h"
 #import "NodeTableViewCell.h"
 
 @interface BrowserViewController () <UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGADelegate, UISearchControllerDelegate>
 
-@property (nonatomic) id<UIViewControllerPreviewing> previewingContext;
 @property (nonatomic, getter=isParentBrowser) BOOL parentBrowser;
 
 @property (nonatomic, strong) MEGANodeList *nodes;
@@ -70,6 +69,10 @@
     self.tableView.emptyDataSetDelegate = self;
     
     [self setupBrowser];
+    
+    if (@available(iOS 13.0, *)) {
+        [self configPreviewingRegistration];
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -120,16 +123,7 @@
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
     [super traitCollectionDidChange:previousTraitCollection];
     
-    if ([self.traitCollection respondsToSelector:@selector(forceTouchCapability)]) {
-        if (self.traitCollection.forceTouchCapability == UIForceTouchCapabilityAvailable) {
-            if (!self.previewingContext) {
-                self.previewingContext = [self registerForPreviewingWithDelegate:self sourceView:self.view];
-            }
-        } else {
-            [self unregisterForPreviewingWithContext:self.previewingContext];
-            self.previewingContext = nil;
-        }
-    }
+    [self configPreviewingRegistration];
 }
 
 #pragma mark - Private
