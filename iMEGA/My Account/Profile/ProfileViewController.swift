@@ -1,6 +1,13 @@
 
 import UIKit
 
+enum TwoFactorAuthStatus {
+    case Unknown
+    case Querying
+    case Disabled
+    case Enabled
+}
+
 @objc class ProfileViewController: UIViewController {
 
     @IBOutlet weak var nameLabel: UILabel!
@@ -14,6 +21,8 @@ import UIKit
     private var avatarCollapsedPosition: CGFloat = 0.0
     
     private let dateFormatter = DateFormatter()
+    
+    private var twoFactorAuthStatus:TwoFactorAuthStatus = .Unknown
     
     // MARK: Lifecycle
     
@@ -271,6 +280,16 @@ extension ProfileViewController: UITableViewDataSource {
                     cell.textLabel?.text = NSLocalizedString("changeAvatar", comment: "button that allows the user the change his avatar")
                 }
             case 2:
+                switch twoFactorAuthStatus {
+                case .Unknown, .Disabled, .Enabled:
+                    cell.textLabel?.isEnabled = true
+                    cell.accessoryView = nil
+                case .Querying:
+                    cell.textLabel?.isEnabled = false
+                    let activityIndicator = UIActivityIndicatorView(style: .gray)
+                    activityIndicator.startAnimating()
+                    cell.accessoryView = activityIndicator
+                }
                 cell.textLabel?.text = NSLocalizedString("Change Email", comment: "The title of the alert dialog to change the email associated to an account.")
             case 3:
                 cell.textLabel?.text = NSLocalizedString("changePasswordLabel", comment: "Section title where you can change your MEGA's password").capitalized
@@ -379,16 +398,31 @@ extension ProfileViewController: UITableViewDelegate {
         let changePasswordViewController = UIStoryboard.init(name: "Settings", bundle: nil).instantiateViewController(withIdentifier: "ChangePasswordViewControllerID") as! ChangePasswordViewController
         changePasswordViewController.changeType = changeType
         if changeType == .email {
-            guard let delegate = MEGAGenericRequestDelegate(completion: { (request, error) in
-                changePasswordViewController.isTwoFactorAuthenticationEnabled = request!.flag
-                self.navigationController?.pushViewController(changePasswordViewController, animated: true)
-            }) else {
+            switch twoFactorAuthStatus {
+            case .Unknown:
+                 guard let delegate = MEGAGenericRequestDelegate(completion: { (request, error) in
+                    self.twoFactorAuthStatus = request!.flag ? .Enabled : .Disabled
+                    self.tableView.reloadRows(at: [IndexPath(row: 2, section: 0)], with: .automatic)
+                    if self.navigationController?.children.count != 2 {
+                        return
+                    }
+                    changePasswordViewController.isTwoFactorAuthenticationEnabled = request!.flag
+                    self.navigationController?.pushViewController(changePasswordViewController, animated: true)
+                 }) else {
+                    return
+                 }
+                 guard let myEmail = MEGASdkManager.sharedMEGASdk().myEmail else {
+                    return
+                 }
+                 MEGASdkManager.sharedMEGASdk().multiFactorAuthCheck(withEmail: myEmail, delegate: delegate)
+                 twoFactorAuthStatus = .Querying
+                 tableView.reloadRows(at: [IndexPath(row: 2, section: 0)], with: .automatic)
+            case .Querying:
                 return
+            case .Disabled, .Enabled:
+                    changePasswordViewController.isTwoFactorAuthenticationEnabled = self.twoFactorAuthStatus == .Enabled
+                    self.navigationController?.pushViewController(changePasswordViewController, animated: true)
             }
-            guard let myEmail = MEGASdkManager.sharedMEGASdk().myEmail else {
-                return
-            }
-            MEGASdkManager.sharedMEGASdk().multiFactorAuthCheck(withEmail: myEmail, delegate: delegate)
         } else {
             navigationController?.pushViewController(changePasswordViewController, animated: true)
         }
