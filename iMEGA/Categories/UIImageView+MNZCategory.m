@@ -6,7 +6,6 @@
 #import "UIImage+MNZCategory.h"
 #import "UIImage+GKContact.h"
 #import "MEGAGetThumbnailRequestDelegate.h"
-#import "MEGAConstants.h"
 
 @implementation UIImageView (MNZCategory)
 

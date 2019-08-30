@@ -5,7 +5,6 @@
 #import "MEGASdkManager.h"
 #import "UploadOperationFactory.h"
 #import "AttributeUploadManager.h"
-#import "MEGAConstants.h"
 #import "CameraUploadManager+Settings.h"
 #import "UploadRecordsCollator.h"
 #import "BackgroundUploadMonitor.h"
