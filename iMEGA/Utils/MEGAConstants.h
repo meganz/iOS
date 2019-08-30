@@ -6,6 +6,8 @@
 extern NSString * const MEGAiOSAppUserAgent;
 extern NSString * const MEGAiOSAppKey;
 
+extern NSString * const MEGAGroupIdentifier;
+
 #pragma mark - global notifications
 
 extern NSString * const MEGALogoutNotification;
@@ -59,3 +61,11 @@ extern NSString * const H264Format;
 #pragma mark - MEGA URLS
 
 extern NSString * const MEGADisputeURL;
+
+#pragma mark - Group Shared Directory
+
+extern NSString * const MEGAShareExtensionStorageFolder;
+extern NSString * const MEGAFileExtensionStorageFolder;
+extern NSString * const MEGAExtensionLogsFolder;
+extern NSString * const MEGAExtensionGroupSupportFolder;
+extern NSString * const MEGAExtensionCacheFolder;

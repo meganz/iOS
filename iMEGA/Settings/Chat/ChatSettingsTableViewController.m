@@ -97,7 +97,7 @@
                 [[MEGASdkManager sharedMEGAChatSdk] addChatDelegate:self];
                 [[MEGASdkManager sharedMEGASdk] fetchNodes];
                 [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"IsChatEnabled"];
-                [[[NSUserDefaults alloc] initWithSuiteName:@"group.mega.ios"] setBool:YES forKey:@"IsChatEnabled"];
+                [[NSUserDefaults.alloc initWithSuiteName:MEGAGroupIdentifier] setBool:YES forKey:@"IsChatEnabled"];
                 [MEGAReachabilityManager sharedManager].chatRoomListState = MEGAChatRoomListStateInProgress;
                 [[NSUserDefaults standardUserDefaults] synchronize];
                 break;
@@ -118,7 +118,7 @@
         self.invalidStatus = YES;
         [[MEGASdkManager sharedMEGAChatSdk] logoutWithDelegate:self];
         [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"IsChatEnabled"];
-        [[[NSUserDefaults alloc] initWithSuiteName:@"group.mega.ios"] setBool:NO forKey:@"IsChatEnabled"];
+        [[NSUserDefaults.alloc initWithSuiteName:MEGAGroupIdentifier] setBool:NO forKey:@"IsChatEnabled"];
     }
 }
 
