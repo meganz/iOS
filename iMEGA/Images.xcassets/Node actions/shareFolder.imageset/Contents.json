@@ -2,25 +2,22 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "RubbishBin.png",
+      "filename" : "shareFolder.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "RubbishBin@2x.png",
+      "filename" : "shareFolder@2x.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
-      "filename" : "RubbishBin@3x.png",
+      "filename" : "shareFolder@3x.png",
       "scale" : "3x"
     }
   ],
   "info" : {
     "version" : 1,
     "author" : "xcode"
-  },
-  "properties" : {
-    "template-rendering-intent" : "template"
   }
 }
