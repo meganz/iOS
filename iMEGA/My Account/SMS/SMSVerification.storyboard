@@ -13,7 +13,7 @@
         <!--Verification View Controller-->
         <scene sceneID="lzC-Lw-lbm">
             <objects>
-                <viewController id="RUe-vS-5fH" customClass="SMSVerificationViewController" customModule="MEGA" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SMSVerificationViewController" id="RUe-vS-5fH" customClass="SMSVerificationViewController" customModule="MEGA" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="xLd-8O-fwZ">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -284,20 +284,41 @@
                                     <outlet property="delegate" destination="RUe-vS-5fH" id="P1K-cX-Fba"/>
                                 </connections>
                             </scrollView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9bf-wA-VUE">
+                                <rect key="frame" x="166" y="55" width="43.5" height="20.5"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hWm-FL-Au7">
+                                <rect key="frame" x="305" y="49" width="53" height="33"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <state key="normal" title="Cancel"/>
+                                <connections>
+                                    <action selector="didTapCancelButton" destination="RUe-vS-5fH" eventType="touchUpInside" id="tkT-ar-yAB"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="IHf-02-cch" firstAttribute="width" secondItem="xLd-8O-fwZ" secondAttribute="width" id="7tZ-GQ-NA9"/>
+                            <constraint firstItem="hWm-FL-Au7" firstAttribute="centerY" secondItem="9bf-wA-VUE" secondAttribute="centerY" id="Ip9-aH-Nhn"/>
                             <constraint firstAttribute="bottom" secondItem="M42-td-cIX" secondAttribute="bottom" id="M6L-g5-5ba"/>
                             <constraint firstItem="M42-td-cIX" firstAttribute="leading" secondItem="XDB-18-aEe" secondAttribute="leading" id="TgH-83-10s"/>
                             <constraint firstItem="XDB-18-aEe" firstAttribute="trailing" secondItem="M42-td-cIX" secondAttribute="trailing" id="YQT-mY-Nib"/>
+                            <constraint firstItem="9bf-wA-VUE" firstAttribute="centerX" secondItem="xLd-8O-fwZ" secondAttribute="centerX" id="e6A-yl-axh"/>
+                            <constraint firstAttribute="trailing" secondItem="hWm-FL-Au7" secondAttribute="trailing" constant="17" id="kPY-th-vCH"/>
                             <constraint firstItem="M42-td-cIX" firstAttribute="top" secondItem="xLd-8O-fwZ" secondAttribute="top" id="yxN-0i-L6A"/>
+                            <constraint firstItem="9bf-wA-VUE" firstAttribute="top" secondItem="xLd-8O-fwZ" secondAttribute="top" constant="55" id="zqe-gr-FTP"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="XDB-18-aEe"/>
                     </view>
                     <connections>
+                        <outlet property="cancelButton" destination="hWm-FL-Au7" id="HSy-RJ-Pdv"/>
                         <outlet property="countryCodeLabel" destination="l67-zd-SyV" id="gsb-ER-0NF"/>
                         <outlet property="countryNameLabel" destination="zar-d5-eaQ" id="ETJ-oj-H3p"/>
+                        <outlet property="descriptionTextView" destination="8PA-Vj-YcB" id="acG-4m-wP7"/>
                         <outlet property="errorImageView" destination="QCs-So-eiO" id="x1p-ux-Pd6"/>
                         <outlet property="errorMessageLabel" destination="1l8-2a-ffA" id="Ojm-TJ-vwM"/>
                         <outlet property="errorView" destination="wjd-LL-FkO" id="T3S-Gb-Elv"/>
@@ -306,6 +327,7 @@
                         <outlet property="phoneNumberLabel" destination="WJa-I9-2TH" id="5ho-H5-rup"/>
                         <outlet property="phoneNumberTextField" destination="Ya6-zD-9Hn" id="SEO-I5-YpG"/>
                         <outlet property="scrollView" destination="M42-td-cIX" id="PoP-Iu-ekT"/>
+                        <outlet property="titleLabel" destination="9bf-wA-VUE" id="MxE-JZ-bfv"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9X5-LV-PaM" userLabel="First Responder" sceneMemberID="firstResponder"/>
