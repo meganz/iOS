@@ -91,7 +91,7 @@
     if (item.isGroup) {
         itemCell.avatarImageView.image =  [UIImage imageForName:item.name.uppercaseString size:itemCell.avatarImageView.frame.size backgroundColor:[UIColor mnz_gray999999] textColor:[UIColor whiteColor] font:[UIFont mnz_SFUIRegularWithSize:(itemCell.avatarImageView.frame.size.width/2.0f)]];
     } else {
-        [itemCell.avatarImageView mnz_setImageForUserHandle:item.handle];
+        [itemCell.avatarImageView mnz_setImageForUserHandle:item.handle name:item.name];
     }
     
     return itemCell;

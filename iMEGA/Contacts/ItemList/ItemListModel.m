@@ -7,6 +7,7 @@
 
 @property MEGAChatListItem *chat;
 @property MEGAUser *user;
+@property NSString *email;
 
 @end
 
@@ -28,6 +29,14 @@
     return self;
 }
 
+- (instancetype)initWithEmail:(NSString *)email {
+    self = [super init];
+    if (self) {
+        self.email = email;
+    }
+    return self;
+}
+
 - (BOOL)isGroup {
     if (self.chat) {
         return YES;
@@ -39,28 +48,38 @@
 - (NSString *)name {
     if (self.chat) {
         return self.chat.title;
-    } else {
+    } else if (self.user) {
         return self.user.mnz_firstName;
+    } else {
+        return self.email;
     }
 }
 
 - (uint64_t)handle {
     if (self.user) {
         return self.user.handle;
-    } else {
+    } else if (self.user) {
         return self.chat.chatId;
+    } else {
+        return ~(uint64_t)0;
     }
 }
 
 - (BOOL)isEqual:(ItemListModel *)item {
-    return self.handle == item.handle;
+    if (self.email) {
+        return self.email == item.email;
+    } else {
+        return self.handle == item.handle;
+    }
 }
 
 - (id)model {
     if (self.user) {
         return self.user;
-    } else {
+    } else if (self.chat) {
         return self.chat;
+    } else {
+        return self.email;
     }
 }
 
