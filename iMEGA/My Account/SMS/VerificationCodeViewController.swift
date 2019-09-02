@@ -18,22 +18,22 @@ class VerificationCodeViewController: UIViewController {
     @IBOutlet private var errorView: UIStackView!
     @IBOutlet private var resendStackView: UIStackView!
     
-    var phoneNumber: PhoneNumber!
+    private var phoneNumber: PhoneNumber!
+    private var verificationType: SMSVerificationType = .UnblockAccount
     
     private var verificationCode: String {
         return verificationCodeFields.compactMap { $0.text }.joined()
     }
     
-    class func instantiate(with phoneNumber: PhoneNumber) -> VerificationCodeViewController {
+    class func instantiate(with phoneNumber: PhoneNumber, verificationType: SMSVerificationType) -> VerificationCodeViewController {
         let controller = VerificationCodeViewController.instantiate(withStoryboardName: "SMSVerification")
         controller.phoneNumber = phoneNumber
+        controller.verificationType = verificationType
         return controller
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        title = "Verify Your Account"
         
         resendButton.tintColor = UIColor.mnz_green00BFA5()
         didnotReceiveCodeLabel.textColor = UIColor.gray
@@ -56,6 +56,15 @@ class VerificationCodeViewController: UIViewController {
     }
     
     // MARK: - Config views
+    
+    private func configViewContents() {
+        switch verificationType {
+        case .AddPhoneNumber:
+            title = "Add Phone Number"
+        case .UnblockAccount:
+            title = "Verify Your Account"
+        }
+    }
     
     private func configResendView() {
         resendStackView.isHidden = true
@@ -139,10 +148,15 @@ class VerificationCodeViewController: UIViewController {
         configCodeFieldsAppearance(with: nil)
         dismiss(animated: true, completion: nil)
         
-        if let session = SAMKeychain.password(forService: MEGAPasswordService, account: MEGAPasswordName)  {
-            MEGASdkManager.sharedMEGASdk()?.fastLogin(withSession: session, delegate: MEGALoginRequestDelegate())
-        } else {
-            (UIApplication.shared.delegate as? AppDelegate)?.showOnboarding()
+        switch verificationType {
+        case .AddPhoneNumber:
+            dismiss(animated: true, completion: nil)
+        case .UnblockAccount:
+            if let session = SAMKeychain.password(forService: MEGAPasswordService, account: MEGAPasswordName)  {
+                MEGASdkManager.sharedMEGASdk()?.fastLogin(withSession: session, delegate: MEGALoginRequestDelegate())
+            } else {
+                (UIApplication.shared.delegate as? AppDelegate)?.showOnboarding()
+            }
         }
     }
 }

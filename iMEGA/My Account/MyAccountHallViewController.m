@@ -20,17 +20,19 @@
 #import "UIImage+MNZCategory.h"
 #import "UpgradeTableViewController.h"
 #import "UsageViewController.h"
+#import "MEGA-Swift.h"
 
 @interface MyAccountHallViewController () <UITableViewDataSource, UITableViewDelegate, MEGAPurchasePricingDelegate, MEGAGlobalDelegate, MEGARequestDelegate>
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *buyPROBarButtonItem;
 
 @property (weak, nonatomic) IBOutlet UIView *profileView;
-
+@property (weak, nonatomic) IBOutlet UIView *addPhoneNumberView;
 @property (weak, nonatomic) IBOutlet UILabel *viewAndEditProfileLabel;
 @property (weak, nonatomic) IBOutlet UIButton *viewAndEditProfileButton;
 @property (weak, nonatomic) IBOutlet UIImageView *viewAndEditProfileDisclosureImageView;
-
+@property (weak, nonatomic) IBOutlet UILabel *addPhoneNumberTitle;
+@property (weak, nonatomic) IBOutlet UILabel *addPhoneNumberDescription;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
 @property (strong, nonatomic) NSNumberFormatter *numberFormatter;
@@ -84,6 +86,7 @@
     [[MEGAPurchase sharedInstance] setPricingsDelegate:self];
     
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+    self.addPhoneNumberView.hidden = YES;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -98,6 +101,8 @@
     if (self.navigationController.isNavigationBarHidden) {
         [self.navigationController setNavigationBarHidden:NO animated:YES];
     }
+    
+    [self configAddPhoneNumberView];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -107,6 +112,18 @@
 }
 
 #pragma mark - Private
+
+- (void)configAddPhoneNumberView {
+    if (MEGASdkManager.sharedMEGASdk.smsVerifiedPhoneNumber.length == 0) {
+        if (self.addPhoneNumberView.isHidden) {
+            [UIView animateWithDuration:.75 animations:^{
+                self.addPhoneNumberView.hidden = NO;
+            }];
+        }
+    } else {
+        self.addPhoneNumberView.hidden = YES;
+    }
+}
 
 - (void)reloadUI {
     self.nameLabel.text = [[[MEGASdkManager sharedMEGASdk] myUser] mnz_fullName];
@@ -170,6 +187,10 @@
 - (IBAction)viewAndEditProfileTouchUpInside:(UIButton *)sender {
     MyAccountViewController *myAccountVC = [[UIStoryboard storyboardWithName:@"MyAccount" bundle:nil] instantiateViewControllerWithIdentifier:@"MyAccountViewControllerID"];
     [self.navigationController pushViewController:myAccountVC animated:YES];
+}
+
+- (IBAction)didTapAddPhoneNumberView {
+    [self presentViewController:[[SMSNavigationViewController alloc] initWithRootViewController:[SMSVerificationViewController instantiateWith:SMSVerificationTypeAddPhoneNumber]] animated:YES completion:nil];
 }
 
 #pragma mark - UITableViewDataSource

@@ -1,11 +1,19 @@
 
 import UIKit
 
+@objc enum SMSVerificationType: Int {
+    case UnblockAccount
+    case AddPhoneNumber
+}
+
 class SMSVerificationViewController: UIViewController {
     
     @IBOutlet private var scrollView: UIScrollView!
     @IBOutlet private var headerImageView: UIImageView!
+    @IBOutlet private var descriptionTextView: UITextView!
     @IBOutlet private var nextButton: UIButton!
+    @IBOutlet private var cancelButton: UIButton!
+    @IBOutlet private var titleLabel: UILabel!
     @IBOutlet private var phoneNumberLabel: UILabel!
     @IBOutlet private var phoneNumberTextField: UITextField!
     @IBOutlet private var countryNameLabel: UILabel!
@@ -15,15 +23,21 @@ class SMSVerificationViewController: UIViewController {
     @IBOutlet private var errorView: UIView!
     
     private var currentCountry: SMSCountry?
-    
     private var countryCallingCodeDict: [String: MEGAStringList]?
     
+    private var verificationType: SMSVerificationType = .UnblockAccount
+    
     // MARK: - View lifecycle
+    
+    @objc class func instantiate(with verificationType: SMSVerificationType) -> SMSVerificationViewController {
+        let controller = SMSVerificationViewController.instantiate(withStoryboardName: "SMSVerification")
+        controller.verificationType = verificationType
+        return controller
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        title = "Verify Your Account"
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         
         disableAutomaticAdjustmentContentInsetsBehavior()
@@ -35,6 +49,8 @@ class SMSVerificationViewController: UIViewController {
         countryNameLabel.text = " "
         countryCodeLabel.text = nil
         loadCountryCallingCodes()
+        
+        configViewContents()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -82,6 +98,10 @@ class SMSVerificationViewController: UIViewController {
     
     // MARK: - UI actions
     
+    @IBAction private func didTapCancelButton() {
+        dismiss(animated: true, completion: nil)
+    }
+    
     @IBAction private func didTapCountryView() {
         guard let countryCallingCodeDict = countryCallingCodeDict else { return }
         
@@ -117,7 +137,7 @@ class SMSVerificationViewController: UIViewController {
         phoneNumberLabel.textColor = UIColor.mnz_gray999999()
         phoneNumberTextField.textColor = UIColor.black
         errorView.isHidden = true
-        navigationController?.pushViewController(VerificationCodeViewController.instantiate(with: number), animated: true)
+        navigationController?.pushViewController(VerificationCodeViewController.instantiate(with: number, verificationType: verificationType), animated: true)
     }
     
     private func sendVerificationCodeFailed(with error: MEGAError) {
@@ -144,6 +164,8 @@ class SMSVerificationViewController: UIViewController {
         UIView.animate(withDuration: duration + 0.75, animations: {
             self.enableAutomaticAdjustmentContentInsetsBehavior()
             self.headerImageView.isHidden = true
+            self.cancelButton.isHidden = true
+            self.titleLabel.isHidden = true
             self.setNeedsStatusBarAppearanceUpdate()
         }) { _ in
             var insets = self.scrollView.contentInset
@@ -171,6 +193,23 @@ class SMSVerificationViewController: UIViewController {
     }
     
     // MARK: - UI configurations
+    
+    private func configViewContents() {
+        switch verificationType {
+        case .AddPhoneNumber:
+            let cancelTitle = LocalizationSystem.sharedLocal()?.localizedString(forKey: "cancel", value: nil)
+            navigationItem.rightBarButtonItem = UIBarButtonItem(title: cancelTitle, style: .plain, target: self, action: #selector(SMSVerificationViewController.didTapCancelButton))
+            title = "Add Phone Number"
+            titleLabel.text = title
+            cancelButton.setTitle(cancelTitle, for: .normal)
+            descriptionTextView.text = "Get free [xx]GB when you add your phone number. This makes it easier for your contacts to find you on MEGA."
+        case .UnblockAccount:
+            title = "Verify Your Account"
+            titleLabel.text = title
+            cancelButton.isHidden = true
+            descriptionTextView.text = "Your account has been suspended temporarily due to potential abuse. Please verify your phone number to unlock your account. Learn more"
+        }
+    }
     
     private func configErrorStyle(withErrorMessage errorMessage: String?) {
         phoneNumberLabel.textColor = UIColor.mnz_redError()

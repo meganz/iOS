@@ -36,10 +36,7 @@ static const void *mnz_accountDetailsKey = &mnz_accountDetailsKey;
             return;
         }
         
-        UIViewController *verificationController = [[UIStoryboard storyboardWithName:@"SMSVerification" bundle:nil] instantiateInitialViewController];
-        UINavigationController *navigationController = [[SMSNavigationViewController alloc] initWithRootViewController:verificationController];
-        
-        [UIApplication.mnz_presentingViewController presentViewController:navigationController animated:YES completion:nil];
+        [UIApplication.mnz_presentingViewController presentViewController:[[SMSNavigationViewController alloc] initWithRootViewController:[SMSVerificationViewController instantiateWith:SMSVerificationTypeUnblockAccount]] animated:YES completion:nil];
     } else {
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"error", nil) message:AMLocalizedString(@"accountBlocked", @"Error message when trying to login and the account is blocked") preferredStyle:UIAlertControllerStyleAlert];
         [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
