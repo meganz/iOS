@@ -7,7 +7,6 @@
 #import "DevicePermissionsHelper.h"
 #import "Helper.h"
 #import "CustomModalAlertViewController.h"
-#import "MEGAConstants.h"
 #import "MEGASdkManager.h"
 #import "TransferSessionManager.h"
 @import CoreLocation;

@@ -16,7 +16,6 @@
 
 #import "DevicePermissionsHelper.h"
 #import "Helper.h"
-#import "MEGAConstants.h"
 #import "MEGACreateFolderRequestDelegate.h"
 #import "MEGAMoveRequestDelegate.h"
 #import "MEGANode+MNZCategory.h"
@@ -1190,7 +1189,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
         static BOOL alreadyPresented = NO;
         if (!alreadyPresented && [[MEGASdkManager sharedMEGASdk] mnz_accountDetails] && [[MEGASdkManager sharedMEGASdk] mnz_isProAccount]) {
             alreadyPresented = YES;
-            NSUserDefaults *sharedUserDefaults = [[NSUserDefaults alloc] initWithSuiteName:@"group.mega.ios"];
+            NSUserDefaults *sharedUserDefaults = [NSUserDefaults.alloc initWithSuiteName:MEGAGroupIdentifier];
             NSDate *rateUsDate = [sharedUserDefaults objectForKey:@"rateUsDate"];
             if (rateUsDate) {
                 NSInteger weeks = [[NSCalendar currentCalendar] components:NSCalendarUnitWeekOfYear
@@ -1859,9 +1858,13 @@ static const NSTimeInterval kSearchTimeDelay = .5;
 #pragma mark - UISearchResultsUpdating
 
 - (void)updateSearchResultsForSearchController:(UISearchController *)searchController {
-    [self cancelSearchIfNeeded];
-    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(search) object:nil];
-    [self performSelector:@selector(search) withObject:nil afterDelay:kSearchTimeDelay];
+    if (self.searchController.searchBar.text.length >= kMinimumLettersToStartTheSearch) {
+        [self cancelSearchIfNeeded];
+        [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(search) object:nil];
+        [self performSelector:@selector(search) withObject:nil afterDelay:kSearchTimeDelay];
+    } else {
+        [self reloadData];
+    }
 }
 
 #pragma mark - UIDocumentPickerDelegate

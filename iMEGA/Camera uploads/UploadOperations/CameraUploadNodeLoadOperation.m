@@ -2,7 +2,6 @@
 #import "CameraUploadNodeLoadOperation.h"
 #import "CameraUploadRequestDelegate.h"
 #import "MEGAError+MNZCategory.h"
-#import "MEGAConstants.h"
 
 static NSString * const CameraUploadsNodeHandleKey = @"CameraUploadsNodeHandle";
 

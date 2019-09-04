@@ -28,8 +28,6 @@
 "attention"="請注意";
 /* Alert message to remember that MEGA app needs permission to use the Camera to take a photo or video and it doesn't have it */
 "cameraPermissions"="請在設置中允許 MEGA App 訪問您的相機。";
-/* Alert message to notify that MEGA video calls needs the Camera permission and the call will end*/
-"cameraPermissionsInCall"="請於您的設定中授予MEGA應用程式使用您相機的權限。如果你未開通權限，應用程式便會重新啟動，此通話將結束。";
 /* Alert message to remember that MEGA app needs permission to use the Microphone to make calls and record videos and it doesn't have it */
 "microphonePermissions"="請於您的設定中授予MEGA應用程式使用您麥克風的權限";
 /* Alert message to explain that the MEGA app needs permission to access your device photos */
@@ -292,34 +290,20 @@
 "uploadFrom"="自...匯入";
 /* Message shown when the user selects a file from another cloud storage provider that's already uploaded. "[A] = {name of the original file} already uploaded with name [B] = {name of the file in MEGA}" */
 "fileExistAlertController_Message"="已成功上傳 [A] 檔案，其於MEGA的名稱為 [B]";
-/* Message shown when you try to upload one photo or video that is already uploaded in the current folder. “Already uploaded with name {File name} */
-"fileAlreadyExistMessage"="這個檔案已用%@名上傳";
 /* Message shown when you try to upload some photos or/and videos that are already uploaded in the current folder */
 "filesAlreadyExistMessage"="%d個檔案已被上傳到這個資料夾";
 /* Message shown when a upload starts */
 "uploadStarted_Message"="已開始上傳";
-/* Alert title shown when you are seeing the details of a file and you moved it to the Rubbish Bin from another location */
-"fileMovedToTheRubbishBin_alertTitle"="這個檔案已被移到垃圾桶";
-/* Alert title shown when you are seeing the details of a folder and you moved it to the Rubbish Bin from another location */
-"folderMovedToTheRubbishBin_alertTitle"="這個資料夾已被移到垃圾桶";
-/* Alert title shown when you are seeing the details of a file and you moved it from another location */
-"fileMoved_alertTitle"="這個檔案已移動";
-/* Alert title shown when you are seeing the details of a folder and you moved it from another location */
-"folderMoved_alertTitle"="這個資料夾已移動";
 /* Alert title shown when you are seeing the details of a file and you are not able to access it anymore because it has been removed or moved from the shared folder where it used to be */
 "youNoLongerHaveAccessToThisFile_alertTitle"="您沒有訪問該檔案的權限";
 /* Alert title shown when you are seeing the details of a folder and you are not able to access it anymore because it has been removed or moved from the shared folder where it used to be */
 "youNoLongerHaveAccessToThisFolder_alertTitle"="您沒有訪問該資料夾的權限";
 /* The text is shown as an option on the details of a file or folder */
 "saveForOffline"="離線儲存";
-/* List option shown on the details of a file or folder */
-"savedForOffline"="離線儲存";
 /* Error message shown when a user tries to download a folder with the name Inbox on the main directory of the offline section */
 "folderInboxError"="這個收件夾標籤僅供Apple使用";
 /* Title shown under the action that allows you to save an image to your camera roll */
 "saveImage"="儲存圖片";
-/* Title shown under the action that allows you to save several images to your camera roll */
-"saveImages"="儲存圖片";
 /* Title shown under the action that allows you to get a link to file or folder */
 "getLink"="取得鏈接";
 /* Title shown under the action that allows you to get several links to files and/or folders */
@@ -396,8 +380,6 @@
 "linksRemoved"="已移除連結";
 /* Title show when a file is being downloaded */
 "downloading"="下載中";
-/* Message shown when you tap on the cancel button of an active transfer */
-"cancelDownloadAlertViewText"="您確定取消下載嗎?";
 /* Title shown on the navigation bar to explain that you have to choose a destination for the files and/or folders in case you copy, move, import or do some action with them. */
 "selectDestination"="選擇目的地";
 /* Text of the button for user to select files in MEGA. */
@@ -490,12 +472,6 @@
 "fileImported"="檔案已導入";
 /* Message shown when some files have been imported */
 "filesImported"="已匯入檔案";
-/* Error message shown when you have used more MEGA storage than you can */
-"quotaExceeded"="超出配額";
-/* Alert title shown when the user is overquota */
-"overquotaAlert_title"="超過配額警告！";
-/* Alert message shown when the user is overquota */
-"overquotaAlert_message"="無法執行此操作，因為您將超過您的帳戶儲存限額。您要升級帳戶嗎？";
 /* Title shown on the Camera Uploads section when the edit mode is enabled. On this mode you can select photos */
 "selectTitle"="選擇項目";
 /* Button title that skips the current action */
@@ -530,10 +506,6 @@
 "itemsSelected"="已選中 %lu 個項目";
 /* Title shown when multiselection is enable in chat tabs, and the user has more than one item selected. */
 "xSelected"="已選擇%d個";
-/* Alert title displayed when Camera Uploads will be disabled because of unexpected errors */
-"cameraUploadsWillBeDisabled"="相機上傳功能將無法使用";
-/* Message shown when you have Camera Uploads enabled and your device don't have enough space to make it work */
-"cameraUploadsDisabled_alertView_message"="相機上傳將被禁用，因為您的設備沒有足夠的空間";
 /* Title of the Offline section */
 "offline"="離線";
 /* Title of the Contacts section */
@@ -552,8 +524,6 @@
 "incoming"="傳入";
 /* Title of the "Outgoing" Shared Items. */
 "outgoing"="傳出";
-/* Text shown to explain that you have shared a folder with one contact */
-"sharedWithOneContact"="已與 1 位聯絡人分享";
 /* Text shown to explain with how many contacts you have shared a folder */
 "sharedWithXContacts"="已與 %d 位聯絡人分享";
 /* Message shown when you have changed the permissions of a shared folder */
@@ -574,8 +544,6 @@
 "shareRemoved"="共享已移除";
 /* Message shown when some shares have been removed */
 "sharesRemoved"="已取消分享";
-/* Text shown next to name of the "Owner" of the folder that is being shared */
-"owner"="所有者";
 /* Title of the view where you see with who you have shared a folder */
 "sharedWith"="共享者";
 /* Item menu option to add a contact through your device app Contacts */
@@ -586,8 +554,6 @@
 "contactEmail"="聯絡人郵箱";
 /* Button title to 'Add' the contact to your contacts list */
 "addContactButton"="新增";
-/* Success message shown when a contact has been invited */
-"requestSent"="已寄出聯絡人邀請";
 /* Add contacts and share dialog error message when user try to add your own email address */
 "noNeedToAddYourOwnEmailAddress"="您無須增加個人的電子郵件";
 /* Add contacts and share dialog error message when user try to add already existing email address. */
@@ -596,8 +562,6 @@
 "theUserHasBeenInvited"="用戶[X]已被邀請。該邀請被接受後，他將會出現在您的聯絡人列表中。";
 /* Success message shown when some contacts have been invited */
 "theUsersHaveBeenInvited"="該用戶已被邀請。該邀請被接受後，他將會出現在您的聯絡人列表中。";
-/* Error message shown when it hasn't been posible to add a contact */
-"addContactError"="新增聯絡人錯誤";
 /* Alert title shown when you want to remove one or more contacts */
 "removeUserTitle"="移除聯絡人";
 /* Alert confirmation message shown when you want to remove one contact from your contacts list */
@@ -608,8 +572,6 @@
 "removedContact"="聯絡人 %@ 已移除";
 /* Label shown when a contact request is pending */
 "pending"="處理中";
-/* Alert title shown when you add a contact from your device and the selected one doesn't have an email. */
-"contactWithoutEmail"="該聯絡人的資訊缺少了電子郵件地址";
 /* Button title of the action that allows to leave a shared folder */
 "leaveFolder"="離開";
 /* Alert message shown when the user tap on the leave share action for one inshare */
@@ -684,8 +646,6 @@
 "Compression quality when to transcode HEVC videos to H.264 format."="HEVC影片轉檔為H.264格式時的壓縮品質。";
 /* Option title to enable upload videos with Camera Uploads */
 "uploadVideosLabel"="上傳影片";
-/* Option title to enable Camera Uploads only when the device is charging */
-"onlyWhenChargingLabel"="只在充電狀態下";
 /* Footer text for Camera Upload switch section when camera upload is disabled */
 "When enabled, photos will be uploaded."="啟用後，將上傳相片。";
 /* Footer text for Camera Upload switch section when only photos upload is enabled */
@@ -739,13 +699,13 @@
 /* Footer description when upload Hidden Album is enabled */
 "The Hidden Album is where you hide photos or videos in your device Photos app."="「隱藏相簿」是在您裝置的相片應用程式中隱藏照片或影片的地方。";
 /* Title of the switch to config whether to upload Shared Albums */
-"Upload Shared Albums"="Upload Shared Albums";
+"Upload Shared Albums"="上傳共享相簿";
 /* Footer description for Upload Shared Albums title */
-"Shared Albums are where you share with other people and subscribe to other people's shares in your device's Photos app."="Shared Albums are where you share with other people and subscribe to other people’s shares in your device’s Photos app.";
+"Shared Albums are where you share with other people and subscribe to other people's shares in your device's Photos app."="共享相簿是您與其他人分享並且在您裝置的相片程式裡訂閱其他人所分享相片的地方。";
 /* Title of the switch to config whether to upload synced albums */
-"Upload albums synced from iTunes"="Upload albums synced from iTunes";
+"Upload albums synced from iTunes"="上傳來自iTunes同步的專輯";
 /* Footer description for upload synced albums title */
-"Synced albums are where you sync photos or videos to your device's Photos app from iTunes."="Synced albums are where you sync photos or videos to your device’s Photos app from iTunes.";
+"Synced albums are where you sync photos or videos to your device's Photos app from iTunes."="同步相簿是您從iTunes將相片與影片同步到您裝置的相片程式的地方。";
 /* App means “Application” */
 "App version"="App 版本";
 /* Title of the label where the SDK version is shown */
@@ -764,10 +724,6 @@
 "exportMasterKeyFooter"="正在匯出您的還原金鑰，請妥善保管。您的還原金鑰可以使您不會因為重新設定密碼而遺失過去上傳的資料。";
 /* Question button to present a view where it's explained what is the Recovery Key */
 "whyDoINeedARecoveryKey"="為什麼我會需要還原金鑰？";
-/* Detailed explanation of how the master encryption key (now renamed "Recovery Key") works, and why it is important to remember your password. */
-"masterKey_firstParagraph"="您的資料只有在經過一連串的解密操作後才能讀取，此操作屬於嚴謹加密方式，需使用您的主加密密鑰（還原金鑰）才能解密，我們已使用您的密碼加密儲存該金鑰。也就是說，如果您遺失了您的密碼，還原金鑰將無法再被解密匯出，您也無法再解密您的資料。";
-/*  */
-"masterKey_thirdParagraph"="外來攻擊者如持有您的金鑰仍將無法獲取您的資料。密碼重置將會需要金鑰以及需可存取您的電子郵件。";
 /* Message of the dialog displayed when copy the user's Recovery Key to the clipboard to be saved or exported. */
 "recoveryKeyCopiedToClipboard"="已複製還原金鑰至剪貼簿中。請將它存放在安全的地方。";
 /* Alert title shown when you have exported your MEGA Recovery Key */
@@ -844,10 +800,6 @@
 "filesFolderRemovedToRubbishBinMessage"="%d 個檔案與1個資料夾已自MEGA移除";
 /* Success message shown when [A] = {1+} files and [B] = {1+} folders have been removed from MEGA */
 "filesFoldersRemovedToRubbishBinMessage"="[A] 個檔案與[B]個資料夾已自MEGA移除";
-/* Hint text to suggest that the user have to write his/her current password */
-"currentPassword"="現有密碼";
-/* Hint text to suggest that the user have to write the new password on it */
-"newPassword"="新密碼";
 /* Hint text where the user have to re-write the new password to confirm it */
 "confirmPassword"="確認密碼";
 /* Success message shown when the password has been changed */
@@ -943,8 +895,6 @@
 "downloadInUppercaseTransfers"="下載傳輸";
 /* Title of My Account section. There you can see your account details */
 "myAccount"="我的帳號";
-/* Button title that shows the different MEGA PRO plans to which you can upgrade. (String as short as possible) */
-"buyPRO"="購買PRO專業版";
 /* Caption of a button to upgrade the account to Pro status */
 "upgrade"="升級";
 /* Title show on the hall of My Account section that describes a place where you can view, edit and upgrade your account and profile */
@@ -979,8 +929,6 @@
 "storageQuota"="使用空間量";
 /* The header/title of a block/section which contains information about the user's used/available transfer allowance for their account. */
 "transferQuota"="傳輸配額";
-/* The user's achieved base quota */
-"accountBaseQuota"="帳戶基本配額";
 /* achievement type */
 "registrationBonus"="註冊獎勵";
 /* Message shown on the achievements dialog for achieved achievements, %1 is replaced with e.g. 20 GB */
@@ -1021,8 +969,6 @@
 "firstName"="名字";
 /* Hint text for the last name (Placeholder) */
 "lastName"="姓氏";
-/* Button title that goes to the section Usage where you can see how your MEGA space is used */
-"usage"="用量";
 /* Title for "Local" used space. */
 "localLabel"="本地";
 /* Title for "Used" MEGA space. */
@@ -1037,8 +983,6 @@
 "expiresOn"="到 %@ 過期";
 /* Label for the ‘Renews on’ text into the my account page, indicating the renewal date of a subscription - (String as short as possible). */
 "Renews on"="更新";
-/* Button title for the section where you can see the 'Purchase history' related to your account */
-"purchaseHistory"="購買記錄";
 /* Title of the Incoming Shares section. Here you can see the folders that your contacts have shared with you */
 "incomingShares"="傳入的分享";
 /* Sentence shown under the used space percentage to complete the info with the user account maximum storage. "of {maximun storage}" */
@@ -1051,8 +995,6 @@
 "upgradeAccount"="升級帳號";
 /*  */
 "chooseYourAccountType"="選擇您的帳號類型";
-/* Text shown under the button 'Skip' to explain that you can upgrade your account later in the section 'My Account'. */
-"youCanUpgradeLaterInMyAccount"="您稍後可在\"我的帳戶\"中進行升級";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
 "cloudDriveIsAlmostFull"="[S]雲端硬碟快要滿了。[/S] [A]立即升級[/A]為PRO專業級帳戶，並獲得[S]最高8TB (8192 GB) [/S]的雲端儲存空間。";
 /* A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text. */
@@ -1139,10 +1081,6 @@
 "chatIsDisabled"="聊天功能已停用";
 /* Text button shown when the chat is disabled and if tapped the chat will be enabled */
 "enable"="啟用";
-/* Text button shown when an option is enabled, to allow to disable it. String as sort as possible. */
-"disable"="停用";
-/* Conversations section */
-"conversations"="通話";
 /* A button on a dialog which invites a contact to join MEGA. */
 "invite"="邀請";
 /* A log message in a chat to indicate that the message has been deleted by the user. */
@@ -1160,7 +1098,7 @@
 /* A log message in a chat to display that a participant's permission was changed and by whom. This message begins with the user's name who receive the permission change [A]. [B] will be replaced with the permission name (such as Moderator or Read-only) and [C] will be replaced with the person who did it. Please keep the [A], [B] and [C] placeholders, they will be replaced at runtime. For example: Alice Jones was changed to Moderator by John Smith. */
 "wasChangedToBy"="[A]的權限已被[C]變更為[B]。";
 /* A log message in the chat conversation to tell the reader that a participant [A] changed group chat name to [B]. Please keep the [A] and '[B]' placeholders, they will be replaced at runtime. For example: Alice changed group chat name to 'MEGA'. */
-"changedGroupChatNameTo"="[A]將群組名稱更改為'[B]'。";
+"changedGroupChatNameTo"="[A]將聊天室名稱變更為‘[B]’";
 /* Button label. Allows to add contacts in current chat conversation. */
 "addParticipant"="新增成員...";
 /* Menu item to add participants to a chat */
@@ -1199,8 +1137,6 @@
 "away"="離開";
 /*  */
 "busy"="忙碌";
-/* title of the contact properties screen */
-"contactInfo"="聯絡資訊";
 /*  */
 "notifications"="提醒";
 /* Title to perform the action of sending a message to a contact. */
@@ -1213,8 +1149,6 @@
 "clearTheFullMessageHistory"="您確定要清除此對話的全部歷史記錄嗎？";
 /* 'Next' button in a dialog */
 "continue"="繼續";
-/* Button title that allows the user to close a chat. */
-"closeChat"="關閉對話";
 /* Title of the incoming shared folders of a user. */
 "sharedFolders"="已共享的資料夾";
 /* Label title above the fingerprint credentials of a user's contact. A credential in this case is a stored piece of information representing the identity of the contact */
@@ -1229,18 +1163,10 @@
 "approve"="允許";
 /* start a chat/conversation */
 "startConversation"="建立對話";
-/* Title of a menu button which allows users to start a conversation creating a 'Group' chat. */
-"group"="群組";
-/* Title of section where you can see the chat group information and the options that you can do with it. Like 'Notifications' or 'Leave Group' and also the participants of the group */
-"groupInfo"="群組資訊";
 /* Label title for a group chat */
 "groupChat"="群組聊天";
 /* The title of a menu button which allows users to rename a group chat. */
 "renameGroup"="重新命名此群組";
-/* Title of the action that allows you to change the avatar of a group chat. */
-"changeGroupAvatar"="變更群組頭像";
-/* Text used as hint to give the user information to write a name for the group chat. */
-"enterGroupName"="輸入群組名稱";
 /* A button label. The button allows the user to leave the group conversation. */
 "leave"="離開";
 /* Top menu option which opens more menu options in a context menu. */
@@ -1253,8 +1179,6 @@
 "close"="關閉";
 /* Alert text that explains what means confirming the action 'Leave' */
 "youWillNoLongerHaveAccessToThisConversation"="您將無法再進入存取此對話";
-/* A button label. The button allows the user to leave the conversation. */
-"leaveChat"="離開對話";
 /* Button title that allows the user to leave a group chat. */
 "leaveGroup"="離開群組";
 /* Label to describe the section where you can see the participants of a group chat */
@@ -1263,10 +1187,6 @@
 "moderator"="共同管理";
 /* The Standard permission level in chat. With the standard permissions a participant can read and type messages in a chat. */
 "standard"="標準模式";
-/* A button title which removes a participant from a chat. */
-"removeParticipant"="移除此位成員";
-/* Chat conversation header with user %@. Please leave %@ as it is. */
-"conversationWith"="與%@的對話";
 /* Title show above the name of the persons with whom you're chatting */
 "chattingWith"="聊天對象";
 /* Full text: MEGA protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: Confidentiality - Only the author and intended recipients are able to decipher and read the content. Authenticity - There is an assurance that the message received was authored by the stated sender, and its content has not been tampered with during transport or on the server. */
@@ -1293,16 +1213,12 @@
 "deleteMessage"="刪除訊息";
 /*  */
 "fromCloudDrive"="從雲端空間";
-/*  */
-"fromDevice"="從設備";
 /* referring to a contact in the contact list of the user */
 "contact"="聯絡人";
 /* A button label. The button sends contact information to a user in the conversation. */
 "sendContact"="傳送聯絡資訊";
 /* */
 "done"="完成";
-/* Button label for sending file attachments through the chat to another user. */
-"sendFiles"="寄送檔案";
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
 "enableRichUrlPreviews"="啟用網址連結預覽功能";
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
@@ -1329,8 +1245,6 @@
 "dismiss"="解除";
 /* Notification text body shown when you have received a new chat message */
 "newMessage"="新訊息";
-/* Notification text body shown when you have received a contact request */
-"contactRequest"="聯絡人邀請";
 /* Notification text body shown when you have received a new shared folder */
 "newSharedFolder"="新共享資料夾";
 /* Asking whether the user really wants to abort/stop the registration process or continue on. */
@@ -1508,8 +1422,6 @@
 "totalSize"="總大小";
 /* Refers to the type of a file or folder. */
 "type"="類型";
-/* Title of the incoming shared folders of a user in singular */
-"sharedFolder"="分享的檔案夾";
 /* Label for what a selection contains. For example: "Contains: 3 folders & 13 files". (no need to put the colon punctuation in the translation) */
 "contains"="包含";
 /* A label for any 'Modified' text or title. For example to show the modification date of a file/folder. */
@@ -1782,22 +1694,18 @@
 "To create a chat link you must name the group."="您必須為該群組命名，才能創建聊天連結。";
 /* Label shown in a cell where you can enable a switch to get a chat link */
 "Chat Link"="聊天室連結";
-/* Message shown when there is an active chat link that can be deleted */
-"Delete Chat Link"="刪除聊天室連結";
 /* Button text in public chat previews that allows the user to join the chat */
 "Join"="加入";
 /* Text shown in a notification to let the user know that has joined a public chat room after login or account creation */
 "You have joined %@"="您已加入%@";
 /* Users previewing a public chat */
 "Observers"="觀察員";
-/* Alert message shown while deleting a chat link, warning about the consequences */
-"This conversation will no longer be accessible through the link you are about to delete."="一旦它被刪除，將無法再透過此連結存取聊天室對話內容。";
 /* Management message shown in a chat when the user %@ enables the 'Encrypted Key Rotation' */
 "%@ enabled Encrypted Key Rotation"="%@啟用加密金鑰輪替";
 /* Management message shown in a chat when the user %@ creates a public link for the chat */
-"%@ created a public link for the chat."="%@為對話建立聊天室連結";
+"%@ created a public link for the chat."="%@建立聊天室連結";
 /* Management message shown in a chat when the user %@ removes a public link for the chat */
-"%@ removed a public link for the chat."="%@移除對話的聊天室連結";
+"%@ removed a public link for the chat."="%@移除聊天室連結";
 /* Management message shown in a chat when the user %@ joined it from a public chat link */
 "%@ joined the group chat."="%@已加入群組。";
 /* Message show when a call cannot be established because there are too many participants in the group call */
@@ -1974,8 +1882,6 @@
 "%1 Images and 1 Video"="%1圖像與一個影片";
 /* Title for multiple images and multiple videos in recents section */
 "%1 Images and %2 Videos"="%1圖像與%2影片";
-/* Tooltip message shown on recents section. Please see the attached image. */
-"Modified on %1 at %2"="在%1 %2修改";
 /* Title for a recent action shown in the webclient, see the attached image for context. */
 "%1 modified by %3"="%1由%3修改";
 /* Title for a recent action shown in the webclient, see the attached image for context. Please ensure that the `%2 more` is inside the [A] tag as this will become a toggle to show the hidden content. */
