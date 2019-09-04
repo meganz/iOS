@@ -28,8 +28,6 @@
 "attention"="Uwaga";
 /* Alert message to remember that MEGA app needs permission to use the Camera to take a photo or video and it doesn't have it */
 "cameraPermissions"="Proszę nadaj uprawnienia dostępu dla aplikacji MEGA do kamery w ustawieniach.";
-/* Alert message to notify that MEGA video calls needs the Camera permission and the call will end*/
-"cameraPermissionsInCall"="Prosimy o zezwolenie aplikacji MEGA na dostęp do zdjęć poprzez zmianę ustawień. W przypadku zmiany, rozmowa zostanie przerwana aby zrestartować aplikację.";
 /* Alert message to remember that MEGA app needs permission to use the Microphone to make calls and record videos and it doesn't have it */
 "microphonePermissions"="Prosimy o zezwolenie aplikacji MEGA na dostęp do mikrofonu w ustawieniach aplikacji";
 /* Alert message to explain that the MEGA app needs permission to access your device photos */
@@ -292,34 +290,20 @@
 "uploadFrom"="Importuj z...";
 /* Message shown when the user selects a file from another cloud storage provider that's already uploaded. "[A] = {name of the original file} already uploaded with name [B] = {name of the file in MEGA}" */
 "fileExistAlertController_Message"="[A] został już wgrany pod nazwą [B]";
-/* Message shown when you try to upload one photo or video that is already uploaded in the current folder. “Already uploaded with name {File name} */
-"fileAlreadyExistMessage"="Plik został już wgrany z podaną nazwą %@";
 /* Message shown when you try to upload some photos or/and videos that are already uploaded in the current folder */
 "filesAlreadyExistMessage"="%d zaznaczonych plików zostało już wgranych do tego katalogu.";
 /* Message shown when a upload starts */
 "uploadStarted_Message"="Wgrywanie rozpoczęte";
-/* Alert title shown when you are seeing the details of a file and you moved it to the Rubbish Bin from another location */
-"fileMovedToTheRubbishBin_alertTitle"="Plik został przeniesiony do kosza";
-/* Alert title shown when you are seeing the details of a folder and you moved it to the Rubbish Bin from another location */
-"folderMovedToTheRubbishBin_alertTitle"="Katalog został przeniesiony do kosza";
-/* Alert title shown when you are seeing the details of a file and you moved it from another location */
-"fileMoved_alertTitle"="Plik został przeniesiony";
-/* Alert title shown when you are seeing the details of a folder and you moved it from another location */
-"folderMoved_alertTitle"="Katalog został przeniesiony";
 /* Alert title shown when you are seeing the details of a file and you are not able to access it anymore because it has been removed or moved from the shared folder where it used to be */
 "youNoLongerHaveAccessToThisFile_alertTitle"="Nie masz dostępu do pliku";
 /* Alert title shown when you are seeing the details of a folder and you are not able to access it anymore because it has been removed or moved from the shared folder where it used to be */
 "youNoLongerHaveAccessToThisFolder_alertTitle"="Nie masz dostępu do katalogu";
 /* The text is shown as an option on the details of a file or folder */
 "saveForOffline"="Zapisz lokalnie";
-/* List option shown on the details of a file or folder */
-"savedForOffline"="Zapisane offline";
 /* Error message shown when a user tries to download a folder with the name Inbox on the main directory of the offline section */
 "folderInboxError"="Nazwa Inbox jest zarezerwowana przez Apple.";
 /* Title shown under the action that allows you to save an image to your camera roll */
 "saveImage"="Zapisz zdjęcie";
-/* Title shown under the action that allows you to save several images to your camera roll */
-"saveImages"="Zapisz zdjęcia";
 /* Title shown under the action that allows you to get a link to file or folder */
 "getLink"="Utwórz link";
 /* Title shown under the action that allows you to get several links to files and/or folders */
@@ -396,8 +380,6 @@
 "linksRemoved"="Linki zostały usunięte";
 /* Title show when a file is being downloaded */
 "downloading"="Pobieranie";
-/* Message shown when you tap on the cancel button of an active transfer */
-"cancelDownloadAlertViewText"="Czy chcesz przerwać pobieranie?";
 /* Title shown on the navigation bar to explain that you have to choose a destination for the files and/or folders in case you copy, move, import or do some action with them. */
 "selectDestination"="Wybierz miejsce na dysku";
 /* Text of the button for user to select files in MEGA. */
@@ -490,12 +472,6 @@
 "fileImported"="Plik został zaimportowany";
 /* Message shown when some files have been imported */
 "filesImported"="Zaimportowane pliki";
-/* Error message shown when you have used more MEGA storage than you can */
-"quotaExceeded"="Dostępny limit został przekroczony";
-/* Alert title shown when the user is overquota */
-"overquotaAlert_title"="Alaram przekroczenia dostępnej pamięci!";
-/* Alert message shown when the user is overquota */
-"overquotaAlert_message"="Ta operacje jest nie dozwolona, ponieważ zostanie przekroczony limit dostępnej pamięci. Czy chcesz wykupić wyższe konto?";
 /* Title shown on the Camera Uploads section when the edit mode is enabled. On this mode you can select photos */
 "selectTitle"="Wybierz elementy";
 /* Button title that skips the current action */
@@ -530,10 +506,6 @@
 "itemsSelected"="%lu elementów zaznaczone";
 /* Title shown when multiselection is enable in chat tabs, and the user has more than one item selected. */
 "xSelected"="%d wybrano";
-/* Alert title displayed when Camera Uploads will be disabled because of unexpected errors */
-"cameraUploadsWillBeDisabled"="Wgrywanie zdjęć zostanie zablokowane";
-/* Message shown when you have Camera Uploads enabled and your device don't have enough space to make it work */
-"cameraUploadsDisabled_alertView_message"="Wgrywanie zdjęć będzie zablokowane, ponieważ nie masz wystarczającej ilości wolnego miejsca na urządzeniu";
 /* Title of the Offline section */
 "offline"="Niedostępny";
 /* Title of the Contacts section */
@@ -552,8 +524,6 @@
 "incoming"="Nadchodzące";
 /* Title of the "Outgoing" Shared Items. */
 "outgoing"="Wychodzące";
-/* Text shown to explain that you have shared a folder with one contact */
-"sharedWithOneContact"="Udostępnione z 1 kontaktem";
 /* Text shown to explain with how many contacts you have shared a folder */
 "sharedWithXContacts"="Udostępnione z %d kontaktami";
 /* Message shown when you have changed the permissions of a shared folder */
@@ -574,8 +544,6 @@
 "shareRemoved"="Udostępnienie zostało usunięte";
 /* Message shown when some shares have been removed */
 "sharesRemoved"="Udostępnienia usunięte";
-/* Text shown next to name of the "Owner" of the folder that is being shared */
-"owner"="Właściciel";
 /* Title of the view where you see with who you have shared a folder */
 "sharedWith"="Udostępnione do";
 /* Item menu option to add a contact through your device app Contacts */
@@ -586,8 +554,6 @@
 "contactEmail"="E-mail";
 /* Button title to 'Add' the contact to your contacts list */
 "addContactButton"="Dodaj";
-/* Success message shown when a contact has been invited */
-"requestSent"="Zgłoszenie wysłane";
 /* Add contacts and share dialog error message when user try to add your own email address */
 "noNeedToAddYourOwnEmailAddress"="Nie ma potrzeby podawania własnego adresu email";
 /* Add contacts and share dialog error message when user try to add already existing email address. */
@@ -596,8 +562,6 @@
 "theUserHasBeenInvited"="Użytkownik [X] został zaproszony i pojawi się na liście Twoich kontaktów po akceptacji zaproszenia.";
 /* Success message shown when some contacts have been invited */
 "theUsersHaveBeenInvited"="Użytkownik został zaproszony i pojawi się na liście Twoich kontaktów po akceptacji zaproszenia.";
-/* Error message shown when it hasn't been posible to add a contact */
-"addContactError"="Dodawanie zakończone błędem";
 /* Alert title shown when you want to remove one or more contacts */
 "removeUserTitle"="Usuń kontakt";
 /* Alert confirmation message shown when you want to remove one contact from your contacts list */
@@ -608,8 +572,6 @@
 "removedContact"="Kontakt %@ usunięty";
 /* Label shown when a contact request is pending */
 "pending"="Oczekujące";
-/* Alert title shown when you add a contact from your device and the selected one doesn't have an email. */
-"contactWithoutEmail"="Kontakt nie zawiera adresu email";
 /* Button title of the action that allows to leave a shared folder */
 "leaveFolder"="Anuluj";
 /* Alert message shown when the user tap on the leave share action for one inshare */
@@ -684,8 +646,6 @@
 "Compression quality when to transcode HEVC videos to H.264 format."="Jakość kompresji podczas transkodowania filmów HEVC do formatu H.264.";
 /* Option title to enable upload videos with Camera Uploads */
 "uploadVideosLabel"="Wgraj filmy";
-/* Option title to enable Camera Uploads only when the device is charging */
-"onlyWhenChargingLabel"="Tylko gdy podłączone zasilanie";
 /* Footer text for Camera Upload switch section when camera upload is disabled */
 "When enabled, photos will be uploaded."="Po włączeniu zdjęcia zostaną przesłane.";
 /* Footer text for Camera Upload switch section when only photos upload is enabled */
@@ -739,13 +699,13 @@
 /* Footer description when upload Hidden Album is enabled */
 "The Hidden Album is where you hide photos or videos in your device Photos app."="Ukryty album to miejsce, w którym ukrywasz zdjęcia lub filmy w aplikacji Zdjęcia swojego urządzenia.";
 /* Title of the switch to config whether to upload Shared Albums */
-"Upload Shared Albums"="Upload Shared Albums";
+"Upload Shared Albums"="Prześlij udostępnione albumy";
 /* Footer description for Upload Shared Albums title */
-"Shared Albums are where you share with other people and subscribe to other people's shares in your device's Photos app."="Shared Albums are where you share with other people and subscribe to other people’s shares in your device’s Photos app.";
+"Shared Albums are where you share with other people and subscribe to other people's shares in your device's Photos app."="Udostępniane albumy to miejsce, w którym udostępniasz innym osobom i subskrybujesz udostępnienia innych osób w aplikacji Zdjęcia na swoim urządzeniu";
 /* Title of the switch to config whether to upload synced albums */
-"Upload albums synced from iTunes"="Upload albums synced from iTunes";
+"Upload albums synced from iTunes"="Prześlij albumy zsynchronizowane z iTunes";
 /* Footer description for upload synced albums title */
-"Synced albums are where you sync photos or videos to your device's Photos app from iTunes."="Synced albums are where you sync photos or videos to your device’s Photos app from iTunes.";
+"Synced albums are where you sync photos or videos to your device's Photos app from iTunes."="Zsynchronizowane albumy to miejsce, w którym synchronizujesz zdjęcia lub filmy z aplikacją Zdjęcia na urządzeniu z iTunes.";
 /* App means “Application” */
 "App version"="Wersja aplikacji";
 /* Title of the label where the SDK version is shown */
@@ -764,10 +724,6 @@
 "exportMasterKeyFooter"="Zapisanie klucza i przechowywanie go w bezpiecznym miejscu, umożliwi w przeszłości ustawienie nowego hasła bez ryzyka utraty danych.";
 /* Question button to present a view where it's explained what is the Recovery Key */
 "whyDoINeedARecoveryKey"="Do czego służy klucz?";
-/* Detailed explanation of how the master encryption key (now renamed "Recovery Key") works, and why it is important to remember your password. */
-"masterKey_firstParagraph"="Twoje dane są możliwe do oczytania tylko dla osoby, która posiada klucz lub hasła. Oznacza to, że jeżeli zapomnisz swojego lub nie będziesz posiadać kopii swojego klucza, nie będziesz mógł uzyskać dostępu do swoich danych.";
-/*  */
-"masterKey_thirdParagraph"="Atak zewnętrzny na Twoje dane nie może odbyć się wyłącznie za pomocą klucza. Do uzyskania dostępu do danych potrzebny będzie również dostęp do Twojego e-mail.";
 /* Message of the dialog displayed when copy the user's Recovery Key to the clipboard to be saved or exported. */
 "recoveryKeyCopiedToClipboard"="Klucz zapasowy został skopiowany do schowka. Przechowuj go w bezpiecznym miejscu.";
 /* Alert title shown when you have exported your MEGA Recovery Key */
@@ -844,10 +800,6 @@
 "filesFolderRemovedToRubbishBinMessage"="%d plików i 1 katalog usunięte z MEGA";
 /* Success message shown when [A] = {1+} files and [B] = {1+} folders have been removed from MEGA */
 "filesFoldersRemovedToRubbishBinMessage"="[A] plików i [B] katalogów usuniętych z MEGA";
-/* Hint text to suggest that the user have to write his/her current password */
-"currentPassword"="Aktualne hasło";
-/* Hint text to suggest that the user have to write the new password on it */
-"newPassword"="Nowe hasło";
 /* Hint text where the user have to re-write the new password to confirm it */
 "confirmPassword"="Potwierdź hasło";
 /* Success message shown when the password has been changed */
@@ -943,8 +895,6 @@
 "downloadInUppercaseTransfers"="Transfery POBRAŃ";
 /* Title of My Account section. There you can see your account details */
 "myAccount"="Moje konto";
-/* Button title that shows the different MEGA PRO plans to which you can upgrade. (String as short as possible) */
-"buyPRO"="Kup PRO";
 /* Caption of a button to upgrade the account to Pro status */
 "upgrade"="Zmień";
 /* Title show on the hall of My Account section that describes a place where you can view, edit and upgrade your account and profile */
@@ -979,8 +929,6 @@
 "storageQuota"="Limit powierzchni";
 /* The header/title of a block/section which contains information about the user's used/available transfer allowance for their account. */
 "transferQuota"="Limit transferu";
-/* The user's achieved base quota */
-"accountBaseQuota"="Podstawowy limit";
 /* achievement type */
 "registrationBonus"="Rejestracja Bonusa";
 /* Message shown on the achievements dialog for achieved achievements, %1 is replaced with e.g. 20 GB */
@@ -1021,8 +969,6 @@
 "firstName"="Imię";
 /* Hint text for the last name (Placeholder) */
 "lastName"="Nazwisko";
-/* Button title that goes to the section Usage where you can see how your MEGA space is used */
-"usage"="Zużycie";
 /* Title for "Local" used space. */
 "localLabel"="Lokalnie";
 /* Title for "Used" MEGA space. */
@@ -1037,8 +983,6 @@
 "expiresOn"="wygasa w %@";
 /* Label for the ‘Renews on’ text into the my account page, indicating the renewal date of a subscription - (String as short as possible). */
 "Renews on"="Odnowienie";
-/* Button title for the section where you can see the 'Purchase history' related to your account */
-"purchaseHistory"="Historia zakupów";
 /* Title of the Incoming Shares section. Here you can see the folders that your contacts have shared with you */
 "incomingShares"="Udostępnienia";
 /* Sentence shown under the used space percentage to complete the info with the user account maximum storage. "of {maximun storage}" */
@@ -1051,8 +995,6 @@
 "upgradeAccount"="Zmień konto";
 /*  */
 "chooseYourAccountType"="Wybierz rodzaj konta";
-/* Text shown under the button 'Skip' to explain that you can upgrade your account later in the section 'My Account'. */
-"youCanUpgradeLaterInMyAccount"="Możesz zmienić rodzaj konto w ustawieniach";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
 "cloudDriveIsAlmostFull"="[S]Cloud Drive jest prawie pełny.[/S] [A]Zaktualizuj teraz [/A] do konta PRO i uzyskaj [S]do 8 TB (8192 GB)[/S] przestrzeni dyskowej w chmurze.";
 /* A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text. */
@@ -1139,10 +1081,6 @@
 "chatIsDisabled"="Czat jest zablokowany";
 /* Text button shown when the chat is disabled and if tapped the chat will be enabled */
 "enable"="Odblokuj";
-/* Text button shown when an option is enabled, to allow to disable it. String as sort as possible. */
-"disable"="Zablokuj";
-/* Conversations section */
-"conversations"="Rozmowy";
 /* A button on a dialog which invites a contact to join MEGA. */
 "invite"="Zaproszenie";
 /* A log message in a chat to indicate that the message has been deleted by the user. */
@@ -1160,7 +1098,7 @@
 /* A log message in a chat to display that a participant's permission was changed and by whom. This message begins with the user's name who receive the permission change [A]. [B] will be replaced with the permission name (such as Moderator or Read-only) and [C] will be replaced with the person who did it. Please keep the [A], [B] and [C] placeholders, they will be replaced at runtime. For example: Alice Jones was changed to Moderator by John Smith. */
 "wasChangedToBy"="[A] został zamieniony na [B] przez [C].";
 /* A log message in the chat conversation to tell the reader that a participant [A] changed group chat name to [B]. Please keep the [A] and '[B]' placeholders, they will be replaced at runtime. For example: Alice changed group chat name to 'MEGA'. */
-"changedGroupChatNameTo"="[A] zmienił nazwę czatu na '[B]'.";
+"changedGroupChatNameTo"="[A] zmienił nazwę czatu grupowego na „[B]”";
 /* Button label. Allows to add contacts in current chat conversation. */
 "addParticipant"="Dodaj uczestnika...";
 /* Menu item to add participants to a chat */
@@ -1199,8 +1137,6 @@
 "away"="Nieaktywny";
 /*  */
 "busy"="Zajęty";
-/* title of the contact properties screen */
-"contactInfo"="Info";
 /*  */
 "notifications"="Powiadomienia";
 /* Title to perform the action of sending a message to a contact. */
@@ -1213,8 +1149,6 @@
 "clearTheFullMessageHistory"="Czy na pewno chcesz usunąć pełną historię tej rozmowy?";
 /* 'Next' button in a dialog */
 "continue"="Kontynuuj";
-/* Button title that allows the user to close a chat. */
-"closeChat"="Zamknij Czat";
 /* Title of the incoming shared folders of a user. */
 "sharedFolders"="Udostępnione katalogi";
 /* Label title above the fingerprint credentials of a user's contact. A credential in this case is a stored piece of information representing the identity of the contact */
@@ -1229,18 +1163,10 @@
 "approve"="Zatwierdź";
 /* start a chat/conversation */
 "startConversation"="Rozpocznij rozmowę";
-/* Title of a menu button which allows users to start a conversation creating a 'Group' chat. */
-"group"="Grupa";
-/* Title of section where you can see the chat group information and the options that you can do with it. Like 'Notifications' or 'Leave Group' and also the participants of the group */
-"groupInfo"="Info o grupie";
 /* Label title for a group chat */
 "groupChat"="Czat grupowy";
 /* The title of a menu button which allows users to rename a group chat. */
 "renameGroup"="Zmień nazwę";
-/* Title of the action that allows you to change the avatar of a group chat. */
-"changeGroupAvatar"="Zmień avatar grupy";
-/* Text used as hint to give the user information to write a name for the group chat. */
-"enterGroupName"="Wprowadź nazwę grupy";
 /* A button label. The button allows the user to leave the group conversation. */
 "leave"="Anuluj";
 /* Top menu option which opens more menu options in a context menu. */
@@ -1253,8 +1179,6 @@
 "close"="Zamknij";
 /* Alert text that explains what means confirming the action 'Leave' */
 "youWillNoLongerHaveAccessToThisConversation"="Nie masz już dostępu do tej rozmowy";
-/* A button label. The button allows the user to leave the conversation. */
-"leaveChat"="Opuść czat";
 /* Button title that allows the user to leave a group chat. */
 "leaveGroup"="Opuść grupę";
 /* Label to describe the section where you can see the participants of a group chat */
@@ -1263,10 +1187,6 @@
 "moderator"="Moderator";
 /* The Standard permission level in chat. With the standard permissions a participant can read and type messages in a chat. */
 "standard"="Standard";
-/* A button title which removes a participant from a chat. */
-"removeParticipant"="Usuń uczestników";
-/* Chat conversation header with user %@. Please leave %@ as it is. */
-"conversationWith"="Rozmowa z %@";
 /* Title show above the name of the persons with whom you're chatting */
 "chattingWith"="Rozmowa z";
 /* Full text: MEGA protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: Confidentiality - Only the author and intended recipients are able to decipher and read the content. Authenticity - There is an assurance that the message received was authored by the stated sender, and its content has not been tampered with during transport or on the server. */
@@ -1293,16 +1213,12 @@
 "deleteMessage"="Usuń wiadomość";
 /*  */
 "fromCloudDrive"="Z dysku";
-/*  */
-"fromDevice"="Z urządzenia";
 /* referring to a contact in the contact list of the user */
 "contact"="Kontakt";
 /* A button label. The button sends contact information to a user in the conversation. */
 "sendContact"="Wyślij kontakt";
 /* */
 "done"="Zakończ";
-/* Button label for sending file attachments through the chat to another user. */
-"sendFiles"="Wyślij pliki";
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
 "enableRichUrlPreviews"="Włącz podgląd linków";
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
@@ -1329,8 +1245,6 @@
 "dismiss"="Anuluj";
 /* Notification text body shown when you have received a new chat message */
 "newMessage"="Nowa wiadomość";
-/* Notification text body shown when you have received a contact request */
-"contactRequest"="Nowy kontakt";
 /* Notification text body shown when you have received a new shared folder */
 "newSharedFolder"="Nowy udostępniony katalog";
 /* Asking whether the user really wants to abort/stop the registration process or continue on. */
@@ -1508,8 +1422,6 @@
 "totalSize"="Całkowity rozmiar";
 /* Refers to the type of a file or folder. */
 "type"="Rodzaj";
-/* Title of the incoming shared folders of a user in singular */
-"sharedFolder"="Katalog udostępniony";
 /* Label for what a selection contains. For example: "Contains: 3 folders & 13 files". (no need to put the colon punctuation in the translation) */
 "contains"="Zawiera";
 /* A label for any 'Modified' text or title. For example to show the modification date of a file/folder. */
@@ -1782,22 +1694,18 @@
 "To create a chat link you must name the group."="Aby utworzyć link do czatu, musisz nazwać grupę.";
 /* Label shown in a cell where you can enable a switch to get a chat link */
 "Chat Link"="Link do czatu";
-/* Message shown when there is an active chat link that can be deleted */
-"Delete Chat Link"="Usuń łącze do czatu";
 /* Button text in public chat previews that allows the user to join the chat */
 "Join"="Dołącz";
 /* Text shown in a notification to let the user know that has joined a public chat room after login or account creation */
 "You have joined %@"="Dołączyłeś do %@";
 /* Users previewing a public chat */
 "Observers"="Obserwatorzy";
-/* Alert message shown while deleting a chat link, warning about the consequences */
-"This conversation will no longer be accessible through the link you are about to delete."="Ta rozmowa nie będzie już dostępna za pośrednictwem łącza czatu po jej usunięciu.";
 /* Management message shown in a chat when the user %@ enables the 'Encrypted Key Rotation' */
 "%@ enabled Encrypted Key Rotation"="%@ włączył szyfrowany klucz.";
 /* Management message shown in a chat when the user %@ creates a public link for the chat */
-"%@ created a public link for the chat."="%@ utworzył link do czatu.";
+"%@ created a public link for the chat."="%@ utworzył link do czatu";
 /* Management message shown in a chat when the user %@ removes a public link for the chat */
-"%@ removed a public link for the chat."="%@ usunął link do czatu na czacie.";
+"%@ removed a public link for the chat."="%@ usunął link do czatu";
 /* Management message shown in a chat when the user %@ joined it from a public chat link */
 "%@ joined the group chat."="%@ dołączył do czatu grupowego.";
 /* Message show when a call cannot be established because there are too many participants in the group call */
@@ -1974,8 +1882,6 @@
 "%1 Images and 1 Video"="%1 zdjęć i 1 film";
 /* Title for multiple images and multiple videos in recents section */
 "%1 Images and %2 Videos"="%1 zdjęcia i %2 filmy";
-/* Tooltip message shown on recents section. Please see the attached image. */
-"Modified on %1 at %2"="Zmodyfikowane w %1 o %2";
 /* Title for a recent action shown in the webclient, see the attached image for context. */
 "%1 modified by %3"="%1 zmodyfikowane przez %3";
 /* Title for a recent action shown in the webclient, see the attached image for context. Please ensure that the `%2 more` is inside the [A] tag as this will become a toggle to show the hidden content. */

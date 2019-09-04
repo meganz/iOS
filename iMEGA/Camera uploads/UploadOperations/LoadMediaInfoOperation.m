@@ -1,7 +1,6 @@
 
 #import "LoadMediaInfoOperation.h"
 #import "MEGASdkManager.h"
-#import "MEGAConstants.h"
 
 @implementation LoadMediaInfoOperation
 

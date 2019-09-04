@@ -18,7 +18,6 @@
 #import "BrowserViewController.h"
 #import "CameraUploadManager.h"
 #import "CameraUploadManager+Settings.h"
-#import "MEGAConstants.h"
 #import "CustomModalAlertViewController.h"
 #import "UploadStats.h"
 #import "UIViewController+MNZCategory.h"

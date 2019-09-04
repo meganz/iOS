@@ -9,7 +9,6 @@
 #import "CameraUploadRequestDelegate.h"
 #import "FileEncrypter.h"
 #import "NSURL+CameraUpload.h"
-#import "MEGAConstants.h"
 #import "PHAsset+CameraUpload.h"
 #import "CameraUploadManager+Settings.h"
 #import "NSError+CameraUpload.h"

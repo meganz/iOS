@@ -1,6 +1,5 @@
 
 #import "DiskSpaceDetector.h"
-#import "MEGAConstants.h"
 #import "CameraUploadManager.h"
 #import "NSFileManager+MNZCategory.h"
 
