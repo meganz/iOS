@@ -45,6 +45,8 @@
     
     for (NSInteger i = 0; i < [defaultViewControllersMutableArray count]; i++) {
         UITabBarItem *tabBarItem = [[defaultViewControllersMutableArray objectAtIndex:i] tabBarItem];
+        tabBarItem.title = nil;
+        
         if (@available(iOS 10.0, *)) {
             tabBarItem.badgeColor = UIColor.clearColor;
             [tabBarItem setBadgeTextAttributes:@{ NSForegroundColorAttributeName: UIColor.mnz_redMain } forState:UIControlStateNormal];
@@ -109,6 +111,7 @@
 - (void)viewDidLayoutSubviews {
     [super viewDidLayoutSubviews];
     [self.tabBar bringSubviewToFront:self.phoneBadgeImageView];
+    [self.tabBar invalidateIntrinsicContentSize];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -310,7 +313,7 @@
 - (void)presentCallViewControllerIfThereIsAnIncomingCall {
     NSArray *callsKeys = [self.missedCallsDictionary allKeys];
     if (callsKeys.count > 0) {
-        MEGAChatCall *call = [self.missedCallsDictionary objectForKey:[callsKeys objectAtIndex:0]];
+        MEGAChatCall *call = [self.missedCallsDictionary objectForKey:callsKeys.firstObject];
         
         [self.missedCallsDictionary removeObjectForKey:@(call.chatId)];
         

@@ -74,6 +74,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *navigationTitleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *navigationSubtitleLabel;
 
+@property (assign, nonatomic, getter=isSpeakerEnabled) BOOL speakerEnabled;
+
 @end
 
 @implementation GroupCallViewController
@@ -513,11 +515,24 @@
 
 - (void)didSessionRouteChange:(NSNotification *)notification {
     dispatch_async(dispatch_get_main_queue(), ^{
-        [self updateAudioOutputImage];
-        
         NSDictionary *interuptionDict = notification.userInfo;
         const NSInteger routeChangeReason = [[interuptionDict valueForKey:AVAudioSessionRouteChangeReasonKey] integerValue];
         MEGALogDebug(@"didSessionRouteChange routeChangeReason: %ld, current route outputs %@", (long)routeChangeReason, [[[AVAudioSession sharedInstance] currentRoute] outputs]);
+        if (routeChangeReason == AVAudioSessionRouteChangeReasonOverride) {
+            if ([AVAudioSession.sharedInstance mnz_isOutputEqualToPortType:AVAudioSessionPortBuiltInSpeaker]) {
+                self.speakerEnabled = YES;
+            }
+            if ([AVAudioSession.sharedInstance mnz_isOutputEqualToPortType:AVAudioSessionPortBuiltInReceiver]) {
+                self.speakerEnabled = NO;
+            }
+        }
+        if (routeChangeReason == AVAudioSessionRouteChangeReasonRouteConfigurationChange) {
+            if (self.isSpeakerEnabled && self.call.status <= MEGAChatCallStatusInProgress) {
+                [self enableLoudspeaker];
+            }
+        }
+        
+        [self updateAudioOutputImage];
     });
 }
 
@@ -537,6 +552,7 @@
 }
 
 - (void)disableLoudspeaker {
+    self.speakerEnabled = NO;
     [[AVAudioSession sharedInstance] overrideOutputAudioPort:AVAudioSessionPortOverrideNone error:nil];
 }
 
@@ -590,7 +606,7 @@
     } else {
         if (self.peerTalkingView.hidden) {
             [self removeAllVideoListeners];
-            MEGAGroupCallPeer *firstPeer = [self.peersInCall objectAtIndex:0];
+            MEGAGroupCallPeer *firstPeer = self.peersInCall.firstObject;
             [self configureUserOnFocus:firstPeer manual:NO];
             [self.peerTalkingImageView mnz_setImageForUserHandle:firstPeer.peerId name:firstPeer.name];
             self.peerTalkingView.hidden = NO;
@@ -772,7 +788,7 @@
     if (self.call.numParticipants >= kSmallPeersLayout) {
         [self showSpinner];
         self.shouldHideAcivity = YES;
-        [self configureUserOnFocus:[self.peersInCall objectAtIndex:0] manual:NO];
+        [self configureUserOnFocus:self.peersInCall.firstObject manual:NO];
     }
     self.incomingCallView.hidden = YES;
     
@@ -803,7 +819,7 @@
             weakSelf.incomingCallView.hidden = YES;
             if (self.call.numParticipants >= kSmallPeersLayout) {
                 [self showSpinner];
-                [self configureUserOnFocus:[self.peersInCall objectAtIndex:0] manual:NO];
+                [self configureUserOnFocus:self.peersInCall.firstObject manual:NO];
             }
             [self initDurationTimer];
             [self initShowHideControls];
@@ -1105,7 +1121,7 @@
                             if (self.call.numParticipants >= kSmallPeersLayout) {
                                 MEGAGroupCallPeer *focusedPeer = self.manualMode ? self.peerManualMode : self.lastPeerTalking;
                                 if ([focusedPeer isEqualToPeer:peerDestroyed]) {
-                                    [self configureUserOnFocus:[self.peersInCall objectAtIndex:0] manual:NO];
+                                    [self configureUserOnFocus:self.peersInCall.firstObject manual:NO];
                                 }
                             }
                             

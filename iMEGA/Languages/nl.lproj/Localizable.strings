@@ -38,6 +38,8 @@
 "emptyFolderMessage"="U kunt geen lege map downloaden";
 /* Message shown when the user clicks on a confirm account link that has already been used  */
 "accountAlreadyConfirmed"="Uw account is geactiveerd. Log in.";
+/* */
+"Your confirmation link is no longer valid. Your account may already be activated or you may have cancelled your registration."="Uw bevestigingskoppeling is niet langer geldig. Uw account kan al geactiveerd zijn of u kunt uw registratie geannuleerd hebben.";
 /* Message shown when the user clicks on an link that is not valid */
 "linkNotValid"="Ongeldige koppeling";
 /* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
@@ -50,6 +52,12 @@
 "decrypt"="Decodeer";
 /* Alert title shown when you have written a decryption key not valid */
 "decryptionKeyNotValid"="Ongeldige decoderingssleutel";
+/* This dialog message is used on the Password Decrypt dialog. The link is a password protected link so the user needs to enter the password to decrypt the link. */
+"To access this link, you will need its password."="Om deze koppeling te gebruiken, heeft u het bijbehorende wachtwoord nodig.";
+/* This dialog message is used on the Password Decrypt dialog as an instruction for the user. */
+"If you do not have the password, contact the creator of the link."="Als u het wachtwoord niet heeft, neem dan contact op met de maker van de koppeling.";
+/* This placeholder text is used on the Password Decrypt dialog as an instruction for the user. */
+"Enter the password"="Vul het wachtwoord in";
 /* Alert title shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOut_alertTitle"="Afgemeld";
 /* Alert message shown when your account has been closed through another client or the web by killing all your sessions */
@@ -705,7 +713,7 @@
 /* Title for new camera upload feature */
 "New Camera Upload!"="Nieuwe Camera Upload Opties!";
 /* A messge for camera upload v2 migration */
-"Now you can choose to convert the HEIF/HEVC photos and videos to the most compatible JPEG/H.264 formats."="Nu wanneer u kunt kiezen om HEIF/HEVC foto's en video's te converteren naar de meer bredere verenigbare JPEG/H.264 formaten.";
+"Now you can choose to convert the HEIF/HEVC photos and videos to the most compatible JPEG/H.264 formats."="Nu kunt u ervoor kiezen HEIC / HEVC-foto's en -video's te converteren naar de meer compatibele JPEG / H.264-formaten.";
 /* Title for an action to use most compatible formats */
 "Use Most Compatible Formats"="Gebruik De meest Verenigbare Formaten";
 /* Title for custom settings */
@@ -729,7 +737,7 @@
 /* Footer description when upload all burst photos is enabled */
 "All the photos from your burst photo sequences will be uploaded."="Alle foto's van uw burst foto volgorde worden geüpload.";
 /* Footer description when upload all burst photos is disabled */
-"Only the representative photos from your burst photo sequences will be uploaded."="Alleen de representatieve foto's van uw burst foto volgorden worden geüpload.";
+"Only the representative photos from your burst photo sequences will be uploaded."="Alleen favoriete foto's van uw burst-fotoseries worden geüpload.";
 /* Footer description when upload Hidden Album is enabled */
 "The Hidden Album is where you hide photos or videos in your device Photos app."="De Verborgen Album is waar u foto's of video's verbergt in de Foto Applicatie van uw Apparaat.";
 /* App means “Application” */
@@ -1387,7 +1395,7 @@
 /* Label to show that an error related with an Incomplete SDK operation. */
 "Incomplete"="Incompleet";
 /* Label to show that an error related with the decryption process of a node occurs during a SDK operation. */
-"Invalid key/Decryption error"="Ongeldige sleutel/Decryptie fout";
+"Invalid key/Decryption error"="Decryptie fout";
 /* Label to show that an error related with a bad session ID occurs during a SDK operation. */
 "Bad session ID"="Bad session ID";
 /* Label to show that an error related with a blocked account occurs during a SDK operation. */
@@ -1998,3 +2006,15 @@
 "Change to a test server?"="naar een test server?";
 /* text of the alert dialog when the user is changing the API URL to staging */
 "Are you sure you want to change to a test server? Your account may suffer irrecoverable problems"="Weet u zeker dat u wilt wijzigen naar een test server? Uw account kan onherstelbare problemen krijgen";
+/* Destination folder name of chat files */
+"My chat files"="Mijn gesprek bestanden";
+/* Label indicating that the passcode (pin) view will be displayed if the application goes back to foreground after being x time in background. Examples: require passcode immediately, require passcode after 5 minutes. */
+"Require passcode"="Wachtwoord vereist";
+/* Label indicating that the enter passcode (pin) view will be displayed immediately if the application goes back to foreground after being in background. */
+"Immediately"="Onmiddelijk";
+/* Popup notification text on mouse-over of taken down file. */
+"This file has been the subject of a takedown notice."="Dit bestand is het onderwerp van een take-down-verzoek geweest.";
+/* Popup notification text on mouse-over taken down folder. */
+"This folder has been the subject of a takedown notice."="Deze map is het onderwerp van een take-down-verzoek geweest.";
+/* File Manager -> Context menu item for taken down file or folder, for dispute takedown. */
+"Dispute Takedown"="Geschil Verwijdering";

@@ -28,6 +28,8 @@
 #import "UIColor+MNZCategory.h"
 #import "UIDevice+MNZCategory.h"
 
+static const CGFloat GapBetweenPages = 10.0;
+
 @interface MEGAPhotoBrowserViewController () <UIScrollViewDelegate, UIViewControllerTransitioningDelegate, MEGAPhotoBrowserPickerDelegate, PieChartViewDelegate, PieChartViewDataSource, CustomActionViewControllerDelegate, NodeInfoViewControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
@@ -39,6 +41,7 @@
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *customActionsButton;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *leftToolbarItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *rightToolbarItem;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *scrollViewTrailingConstraint;
 
 @property (nonatomic) NSCache<NSNumber *, UIScrollView *> *imageViewsCache;
 @property (nonatomic) NSUInteger currentIndex;
@@ -48,7 +51,6 @@
 @property (nonatomic) CGRect panGestureInitialFrame;
 @property (nonatomic, getter=isInterfaceHidden) BOOL interfaceHidden;
 @property (nonatomic) CGFloat playButtonSize;
-@property (nonatomic) CGFloat gapBetweenPages;
 @property (nonatomic) double transferProgress;
 @property (nonatomic) BOOL needsReload;
 
@@ -105,7 +107,7 @@
     self.scrollView.tag = 1;
     self.transitioningDelegate = self;
     self.playButtonSize = 100.0f;
-    self.gapBetweenPages = 10.0f;
+    self.scrollViewTrailingConstraint.constant = GapBetweenPages;
     
     self.pieChartView.delegate = self;
     self.pieChartView.datasource = self;
@@ -187,7 +189,6 @@
     self.imageViewsCache = [[NSCache<NSNumber *, UIScrollView *> alloc] init];
     self.imageViewsCache.countLimit = 1000;
     
-    self.scrollView.frame = CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y, self.view.frame.size.width + self.gapBetweenPages, self.view.frame.size.height);
     self.scrollView.contentSize = CGSizeMake(self.scrollView.frame.size.width * self.mediaNodes.count, self.scrollView.frame.size.height);
     
     if (self.currentIndex >= self.mediaNodes.count) {
@@ -201,7 +202,7 @@
     }
     
     [self loadNearbyImagesFromIndex:self.currentIndex];
-    self.scrollView.contentOffset = CGPointMake(self.currentIndex * (self.view.frame.size.width + self.gapBetweenPages), 0);
+    self.scrollView.contentOffset = CGPointMake(self.currentIndex * (self.view.frame.size.width + GapBetweenPages), 0);
     [self reloadTitle];
     [self airplayDisplayCurrentImage];
     if ([self.delegate respondsToSelector:@selector(photoBrowser:didPresentNode:)]) {
@@ -285,7 +286,7 @@
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
     if (scrollView.tag == 1) {
-        NSInteger newIndex = (scrollView.contentOffset.x + self.gapBetweenPages) / scrollView.frame.size.width;
+        NSInteger newIndex = (scrollView.contentOffset.x + GapBetweenPages) / scrollView.frame.size.width;
         if (newIndex != self.currentIndex && newIndex < self.mediaNodes.count) {
             self.currentIndex = newIndex;
             [self resetZooms];
@@ -308,7 +309,7 @@
             self.pieChartView.alpha = 0.0f;
         }
         
-        NSUInteger newIndex = floor(scrollView.contentOffset.x + self.gapBetweenPages) / scrollView.frame.size.width;
+        NSUInteger newIndex = floor(scrollView.contentOffset.x + GapBetweenPages) / scrollView.frame.size.width;
         if (newIndex != self.currentIndex && newIndex < self.mediaNodes.count) {
             [self reloadTitleForIndex:newIndex];
             [self loadNearbyImagesFromIndex:newIndex];
@@ -613,6 +614,7 @@
             pickerVC.mediaNodes = self.mediaNodes;
             pickerVC.delegate = self;
             pickerVC.api = self.api;
+            pickerVC.modalPresentationStyle = UIModalPresentationFullScreen;
             [self presentViewController:pickerVC animated:YES completion:nil];
             
             break;

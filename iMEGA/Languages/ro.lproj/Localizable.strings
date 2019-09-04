@@ -17,7 +17,7 @@
 /* State shown if something is 'Saved' (String as short as possible). */
 "saved"="Salvat";
 /*  */
-"passcode"="Cod de trecere";
+"passcode"="Cod de acces";
 /* "Size" of the file or folder you are sharing */
 "size"="Mărime";
 /*  */
@@ -38,6 +38,8 @@
 "emptyFolderMessage"="Nu poți descărca un folder gol";
 /* Message shown when the user clicks on a confirm account link that has already been used  */
 "accountAlreadyConfirmed"="Contul tău a fost activat. Te rugăm să te autentifici.";
+/* */
+"Your confirmation link is no longer valid. Your account may already be activated or you may have cancelled your registration."="Linkul tău de confirmare nu mai este valid. Este posibil ca contul tău să fie deja activat sau s-ar putea să fi anulat înregistrarea.";
 /* Message shown when the user clicks on an link that is not valid */
 "linkNotValid"="Link nevalid";
 /* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
@@ -50,6 +52,12 @@
 "decrypt"="Decriptează";
 /* Alert title shown when you have written a decryption key not valid */
 "decryptionKeyNotValid"="Cheie de decriptate nevalidă";
+/* This dialog message is used on the Password Decrypt dialog. The link is a password protected link so the user needs to enter the password to decrypt the link. */
+"To access this link, you will need its password."="Pentru a accesa acest link vei avea nevoie de parola sa.";
+/* This dialog message is used on the Password Decrypt dialog as an instruction for the user. */
+"If you do not have the password, contact the creator of the link."="Dacă nu ai parola, contactează creatorul linkului.";
+/* This placeholder text is used on the Password Decrypt dialog as an instruction for the user. */
+"Enter the password"="Introdu parola";
 /* Alert title shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOut_alertTitle"="Deconectat";
 /* Alert message shown when your account has been closed through another client or the web by killing all your sessions */
@@ -79,7 +87,7 @@
 /* Error message when to many attempts to login */
 "tooManyAttemptsLogin"="Ai încercat să te autentifici de prea multe ori. Te rugăm să aștepți până la %@ și să încerci din nou.";
 /* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
-"accountNotConfirmed"="Te rugăm să verifici e-mailul și să urmărești linkul pentru a confirma contul.";
+"accountNotConfirmed"="Te rugăm să verifici e-mailul și să urmezi linkul pentru a confirma contul.";
 /* Error message when trying to login and the account is blocked */
 "accountBlocked"="Contul tău a fost blocat. Te rugăm să contactezi support@mega.nz";
 /* Message shown when the user writes an invalid format in the email field */
@@ -133,7 +141,7 @@
 /* Warning title shown when you try to confirm an account but you are logged in with another one */
 "alreadyLoggedInAlertTitle"="Ești autentificat cu un alt cont";
 /* Warning message shown when you try to confirm an account but you are logged in with another one */
-"alreadyLoggedInAlertMessage"="Dacă ești de acord, contul actual va fi deconectat și toate datele offline vor fi șterse. Dorești să continui?";
+"alreadyLoggedInAlertMessage"="Dacă ești de acord, contul actual va fi deconectat și toate datele offline vor fi șterse. Vrei să continui?";
 /* Error shown when the user tries to change his mail to one that is already used */
 "emailAlreadyInUse"="Eroare. Această adresă de e-mail este folosită deja.";
 /* Title shown inside an alert if you don't have enough space on your device to download something */
@@ -389,7 +397,7 @@
 /* Title show when a file is being downloaded */
 "downloading"="Se descarcă";
 /* Message shown when you tap on the cancel button of an active transfer */
-"cancelDownloadAlertViewText"="Dorești să anulezi descărcarea?";
+"cancelDownloadAlertViewText"="Vrei să anulezi descărcarea?";
 /* Title shown on the navigation bar to explain that you have to choose a destination for the files and/or folders in case you copy, move, import or do some action with them. */
 "selectDestination"="Selectează destinația";
 /* Text of the button for user to select files in MEGA. */
@@ -487,7 +495,7 @@
 /* Alert title shown when the user is overquota */
 "overquotaAlert_title"="Alertă de depășire cotă!";
 /* Alert message shown when the user is overquota */
-"overquotaAlert_message"="Operație nepermisă, vei depăși limita de stocare a contului. Dorești să upgradezi contul?";
+"overquotaAlert_message"="Operație nepermisă, vei depăși limita de stocare a contului. Vrei să upgradezi contul?";
 /* Title shown on the Camera Uploads section when the edit mode is enabled. On this mode you can select photos */
 "selectTitle"="Selectează elementele";
 /* Button title that skips the current action */
@@ -505,9 +513,9 @@
 /* Message shown while uploading files. Plural. */
 "cameraUploadsPendingFiles"="Încărcare în curs, %lu fișiere în așteptare";
 /* Message shown when camera upload paused because of no WiFi. Singular. */
-"Upload paused because of no WiFi, 1 file pending"="Upload paused due to no WiFi connection, 1 file pending";
+"Upload paused because of no WiFi, 1 file pending"="Încărcare pusă pe pauză din cauza lipsei conexiunii WiFi, 1 fișier în așteptare";
 /* Message shown when camera upload paused because of no WiFi. Plural. */
-"Upload paused because of no WiFi, %lu files pending"="Upload paused due to no WiFi connection, %lu files pending";
+"Upload paused because of no WiFi, %lu files pending"="Încărcare pusă pe pauză din cauza lipsei conexiunii WiFi, %lu fișiere în așteptare";
 /* Message shown the pending video file when photos uploaded and video upload is not enabled. Singular. */
 "Photos uploaded, video uploads are off, 1 video not uploaded"="Fotografiile au fost încărcate, încărcările video sunt dezactivate; 1 videoclip nu a fost încărcat";
 /* Message shown the pending video files when photos uploaded and video upload is not enabled. Plural. */
@@ -705,7 +713,7 @@
 /* Title for new camera upload feature */
 "New Camera Upload!"="Opțiuni noi pentru încărcări cameră!";
 /* A messge for camera upload v2 migration */
-"Now you can choose to convert the HEIF/HEVC photos and videos to the most compatible JPEG/H.264 formats."="Acum poți alege să convertești fotografiile și videoclipurile HEIFC/HEVC la formatele JPEG/H.264 compatibile la o scară mai largă.";
+"Now you can choose to convert the HEIF/HEVC photos and videos to the most compatible JPEG/H.264 formats."="Acum poți alege să convertești fotografiile și videoclipurile HEIC/HEVC la formatele JPEG/H.264 compatibile la o scară mai largă.";
 /* Title for an action to use most compatible formats */
 "Use Most Compatible Formats"="Folosește cele mai compatibile formate";
 /* Title for custom settings */
@@ -717,21 +725,21 @@
 /* Navigation path for Storage settings in iOS */
 "Settings > General > %@ Storage"="Configurări > General > Stocare %@";
 /* Title of the switch to config whether to upload videos for Live Photos */
-"Upload videos for Live Photos"="Upload videos for Live Photos";
+"Upload videos for Live Photos"="Încarcă videoclipuri pentru Live Photos";
 /* Title of the switch to config whether to upload all burst photos */
-"Upload all burst photos"="Upload all burst photos";
+"Upload all burst photos"="Încarcă toate fotografiile în rafală";
 /* Title of the switch to config whether to upload Hidden Album */
-"Upload Hidden Album"="Upload Hidden Album";
+"Upload Hidden Album"="Încarcă album ascuns";
 /* Footer description when upload videos for Live Photos is enabled */
-"The video and the photo in each Live Photo will be uploaded."="The photo and video versions of each Live Photo will be uploaded.";
+"The video and the photo in each Live Photo will be uploaded."="Vor fi încărcate versiunile foto și video ale fiecărei Live Photo.";
 /* Footer description when upload videos for Live Photos is disabled */
-"Only the photo in each Live Photo will be uploaded."="Only the photo version of each Live Photo will be uploaded.";
+"Only the photo in each Live Photo will be uploaded."="Se va încărca doar versiunea foto a fiecărei Live Photo.";
 /* Footer description when upload all burst photos is enabled */
-"All the photos from your burst photo sequences will be uploaded."="All the photos from your burst photo sequences will be uploaded.";
+"All the photos from your burst photo sequences will be uploaded."="Se vor încărca toate fotografiile din secvențele fotografiilor în rafală.";
 /* Footer description when upload all burst photos is disabled */
-"Only the representative photos from your burst photo sequences will be uploaded."="Only favourite photos from your burst photo sequences will be uploaded.";
+"Only the representative photos from your burst photo sequences will be uploaded."="Se vor încărca doar fotografiile favorite din secvențele fotografiilor în rafală.";
 /* Footer description when upload Hidden Album is enabled */
-"The Hidden Album is where you hide photos or videos in your device Photos app."="The Hidden Album is where you hide photos or videos in your device’s Photos app.";
+"The Hidden Album is where you hide photos or videos in your device Photos app."="Albumul ascuns este locul în care ascunzi fotografii sau videoclipuri în aplicația Fotografii a dispozitivului.";
 /* App means “Application” */
 "App version"="Versiunea aplicației";
 /* Title of the label where the SDK version is shown */
@@ -745,7 +753,7 @@
 /* Title for the MEGA Recovery Key */
 "masterKey"="Cheie de recuperare";
 /* Section title where you can change your MEGA's password */
-"changePasswordLabel"="Schimbă parola";
+"changePasswordLabel"="Modifică parola";
 /* Advising the user to keep the user's master key safe. */
 "exportMasterKeyFooter"="Exportarea cheii de recuperare și păstrarea ei într-o locație sigură îți dă posibilitatea să setezi o parolă nouă fără pierderea datelor.";
 /* Question button to present a view where it's explained what is the Recovery Key */
@@ -872,7 +880,7 @@
 /* Hint text where the user have to re-write the new email to confirm it */
 "confirmNewEmail"="Confirmă e-mailul nou";
 /* The title of the alert dialog to change the email associated to an account. */
-"changeEmail"="Schimbă e-mailul";
+"changeEmail"="Modifică e-mailul";
 /* Error message shown when the users tryes to change his/her email and writes the current one as the new one. */
 "oldAndNewEmailMatch"="E-mailul nou și cel vechi nu se potrivesc";
 /* Error message shown when you have not written the same email when confirming a new one */
@@ -890,13 +898,13 @@
 /* Message shown when you click on 'Close other session' to block other login sessions except the current session in use. This message is shown when this has been done. */
 "sessionsClosed"="Sesiuni închise";
 /* Section title where you can change the app's passcode */
-"changePasscodeLabel"="Schimbă codul de trecere";
+"changePasscodeLabel"="Modifică codul de acces";
 /* Title to describe a simple (four digit) passcode */
-"simplePasscodeLabel"="Cod de trecere simplu";
+"simplePasscodeLabel"="Cod de acces simplu";
 /* Title of one of the passcode options. If enabled will do what footer explains. */
 "eraseAllLocalDataLabel"="Șterge datele locale";
 /* Footer text that explain what will happen if "Erase local data" is enabled */
-"failedAttempstSectionTitle"="Deconectează-te și șterge datele locale după 10 încercări eșuate pentru codul de trecere";
+"failedAttempstSectionTitle"="Deconectează-te și șterge datele locale după 10 încercări eșuate pentru codul de acces";
 /* Menu item */
 "help"="Ajutor";
 /* Title of the section to access MEGA's help centre */
@@ -920,7 +928,7 @@
 /* Title of the alert shown when you try to cancel transfers */
 "cancelTransfersTitle"="Anulează transferurile";
 /* Message of the alert shown when you try to cancel transfers where {%@} = {ALL, UPLOAD or DOWNLOAD} + {tranfers} */
-"cancelTransfersText"="Dorești să anulezi %@?";
+"cancelTransfersText"="Vrei să anulezi %@?";
 /* Rest of the message of the alert shown when you try to cancel transfers. ALL uppercase. */
 "allInUppercaseTransfers"="TOATE transferurile";
 /* Rest of the message of the alert shown when you try to cancel transfers. UPLOAD uppercase. */
@@ -1298,7 +1306,7 @@
 /* */
 "never"="Niciodată";
 /* After several times (right now set to 3) that the user may had decided to click \"Not now\" (for when being asked if he/she wants a URL preview to be generated for a link, posted in a chat room), we change the \"Not now\" button to \"Never\". If the user clicks it, we ask for one final time - to ensure he wants to not be asked for this anymore and tell him that he can do that in Settings. */
-"richPreviewsConfirmation"="Dezactivezi definitiv previzualizările îmbogățite ale URL-urilor. Poți reactiva previzualizările îmbogățite ale URL-urilor din setări. Dorești să continui?";
+"richPreviewsConfirmation"="Dezactivezi definitiv previzualizările îmbogățite ale URL-urilor. Poți reactiva previzualizările îmbogățite ale URL-urilor din setări. Vrei să continui?";
 /* Once a preview is generated for a message which contains URLs, the user can remove it. Same button is also shown during loading of the preview - and would cancel the loading (text of the button is the same in both cases). */
 "removePreview"="Elimină previzualizarea";
 /* */
@@ -1387,7 +1395,7 @@
 /* Label to show that an error related with an Incomplete SDK operation. */
 "Incomplete"="Incomplet";
 /* Label to show that an error related with the decryption process of a node occurs during a SDK operation. */
-"Invalid key/Decryption error"="Cheie nevalidă/eroare de decriptare";
+"Invalid key/Decryption error"="Eroare la decriptare";
 /* Label to show that an error related with a bad session ID occurs during a SDK operation. */
 "Bad session ID"="ID-ul sesiunii greșit";
 /* Label to show that an error related with a blocked account occurs during a SDK operation. */
@@ -1998,3 +2006,15 @@
 "Change to a test server?"="Schimbi pe un server de test?";
 /* text of the alert dialog when the user is changing the API URL to staging */
 "Are you sure you want to change to a test server? Your account may suffer irrecoverable problems"="Sigur vrei să schimbi pe un server de test? Contul tău poate suferi probleme irecuperabile";
+/* Destination folder name of chat files */
+"My chat files"="Fișierele mele chat";
+/* Label indicating that the passcode (pin) view will be displayed if the application goes back to foreground after being x time in background. Examples: require passcode immediately, require passcode after 5 minutes. */
+"Require passcode"="Necesită cod de acces";
+/* Label indicating that the enter passcode (pin) view will be displayed immediately if the application goes back to foreground after being in background. */
+"Immediately"="Imediat";
+/* Popup notification text on mouse-over of taken down file. */
+"This file has been the subject of a takedown notice."="Acest fișier a făcut obiectul unei notificări de eliminare.";
+/* Popup notification text on mouse-over taken down folder. */
+"This folder has been the subject of a takedown notice."="Acest folder a făcut obiectul unei notificări de eliminare.";
+/* File Manager -> Context menu item for taken down file or folder, for dispute takedown. */
+"Dispute Takedown"="Contestă eliminarea";

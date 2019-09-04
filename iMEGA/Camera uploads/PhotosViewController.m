@@ -382,7 +382,7 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
     NSUInteger section = 0;
     for (NSDictionary *sectionInArray in self.photosByMonthYearArray) {
         NSUInteger item = 0;
-        NSArray *nodesInSection = [sectionInArray objectForKey:[sectionInArray.allKeys objectAtIndex:0]];
+        NSArray *nodesInSection = [sectionInArray objectForKey:sectionInArray.allKeys.firstObject];
         for (MEGANode *n in nodesInSection) {
             if (n.handle == node.handle) {
                 return [NSIndexPath indexPathForItem:item inSection:section];
@@ -590,7 +590,7 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     NSDictionary *dict = [self.photosByMonthYearArray objectAtIndex:section];
-    NSString *key = [[dict allKeys] objectAtIndex:0];
+    NSString *key = dict.allKeys.firstObject;
     NSArray *array = [dict objectForKey:key];
     
     return [array count];
@@ -604,7 +604,7 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
     MEGANode *node = nil;
     
     NSDictionary *dict = [self.photosByMonthYearArray objectAtIndex:indexPath.section];
-    NSString *key = [[dict allKeys] objectAtIndex:0];
+    NSString *key = dict.allKeys.firstObject;
     NSArray *array = [dict objectForKey:key];
     
     node = [array objectAtIndex:indexPath.row];
@@ -644,7 +644,7 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
         
         
         NSDictionary *dict = [self.photosByMonthYearArray objectAtIndex:indexPath.section];
-        NSString *month = [[dict allKeys] objectAtIndex:0];
+        NSString *month = dict.allKeys.firstObject;
                 
         NSString *dateString = [NSString stringWithFormat:@"%@", month];
         [headerView.dateLabel setText:dateString];
@@ -812,7 +812,7 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
             }
             if (self.selectedItemsDictionary.count == 1) {
                 NSDictionary *monthPhotosDictionary = [self.photosByMonthYearArray objectAtIndex:indexPath.section];
-                NSString *monthKey = [monthPhotosDictionary.allKeys objectAtIndex:0];
+                NSString *monthKey = monthPhotosDictionary.allKeys.firstObject;
                 NSArray *monthPhotosArray = [monthPhotosDictionary objectForKey:monthKey];
                 MEGANode *nodeSelected = [monthPhotosArray objectAtIndex:indexPath.row];
                 if ([self.selectedItemsDictionary objectForKey:[NSNumber numberWithLongLong:nodeSelected.handle]]) {
@@ -842,7 +842,7 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
     previewingContext.sourceRect = [self.photosCollectionView convertRect:[self.photosCollectionView cellForItemAtIndexPath:indexPath].frame toView:self.view];
     
     NSDictionary *monthPhotosDictionary = [self.photosByMonthYearArray objectAtIndex:indexPath.section];
-    NSString *monthKey = [monthPhotosDictionary.allKeys objectAtIndex:0];
+    NSString *monthKey = monthPhotosDictionary.allKeys.firstObject;
     NSArray *monthPhotosArray = [monthPhotosDictionary objectForKey:monthKey];
     MEGANode *node = [monthPhotosArray objectAtIndex:indexPath.row];
     if (node.name.mnz_isImagePathExtension || node.name.mnz_isVideoPathExtension) {
