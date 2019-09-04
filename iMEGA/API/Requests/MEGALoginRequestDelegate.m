@@ -137,7 +137,9 @@
         launchVC.delegate = (id<LaunchViewControllerDelegate>)UIApplication.sharedApplication.delegate;
         UIWindow *window = UIApplication.sharedApplication.delegate.window;
         [UIView transitionWithView:window duration:0.5 options:(UIViewAnimationOptionTransitionCrossDissolve | UIViewAnimationOptionAllowAnimatedContent) animations:^{
-            [window setRootViewController:launchVC];
+            [window.rootViewController dismissViewControllerAnimated:NO completion:^{
+                window.rootViewController = launchVC;
+            }];
         } completion:nil];
     }
 }

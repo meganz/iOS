@@ -392,7 +392,7 @@
             char SOH = 0x01;
             NSString *separator = [NSString stringWithFormat:@"%c", SOH];
             NSArray *array = [item.lastMessage componentsSeparatedByString:separator];
-            NSInteger duration = [[array objectAtIndex:0] integerValue];
+            NSInteger duration = [array.firstObject integerValue];
             MEGAChatMessageEndCallReason endCallReason = [[array objectAtIndex:1] integerValue];
             NSString *lastMessage = [NSString mnz_stringByEndCallReason:endCallReason userHandle:item.lastMessageSender duration:duration];
             self.chatLastMessage.text = lastMessage;

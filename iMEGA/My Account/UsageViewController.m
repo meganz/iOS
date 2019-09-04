@@ -58,9 +58,9 @@
     [_pieChartView.layer setMasksToBounds:YES];
     [self changePieChartText:_usagePageControl.currentPage];
     
-    NSString *stringFromByteCount = [Helper memoryStyleStringFromByteCount:[[self.sizesArray objectAtIndex:0] longLongValue]];
+    NSString *stringFromByteCount = [Helper memoryStyleStringFromByteCount:[self.sizesArray.firstObject longLongValue]];
     [_cloudDriveSizeLabel setAttributedText:[self textForSizeLabels:stringFromByteCount]];
-    [_cloudDriveProgressView setProgress:([[self.sizesArray objectAtIndex:0] floatValue] / [[self.sizesArray objectAtIndex:4] floatValue]) animated:NO];
+    [_cloudDriveProgressView setProgress:([self.sizesArray.firstObject floatValue] / [[self.sizesArray objectAtIndex:4] floatValue]) animated:NO];
     
     stringFromByteCount = [Helper memoryStyleStringFromByteCount:[[self.sizesArray objectAtIndex:1] longLongValue]];
     [_rubbishBinSizeLabel setAttributedText:[self textForSizeLabels:stringFromByteCount]];
@@ -279,7 +279,7 @@
             break;
             
         case 0: //Cloud Drive
-            valueForSlice = ([[self.sizesArray objectAtIndex:0] doubleValue] / [[self.sizesArray objectAtIndex:4] doubleValue]) * 94.0f;
+            valueForSlice = ([self.sizesArray.firstObject doubleValue] / [[self.sizesArray objectAtIndex:4] doubleValue]) * 94.0f;
             break;
             
         case 2: //Rubbish Bin

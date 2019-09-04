@@ -38,6 +38,8 @@
 "emptyFolderMessage"="คุณไม่สามารถดาวน์โหลดโฟลเดอร์เปล่าได้";
 /* Message shown when the user clicks on a confirm account link that has already been used  */
 "accountAlreadyConfirmed"="บัญชีของคุณถูกเปิดใช้งานแล้ว กรุณาเข้าสู่ระบบ";
+/* */
+"Your confirmation link is no longer valid. Your account may already be activated or you may have cancelled your registration."="ลิงก์ยืนยันของคุณใช้ไม่ได้อีกต่อไป บัญชีของคุณอาจถูกเปิดใช้งานหรือคุณอาจยกเลิกการลงทะเบียนแล้ว";
 /* Message shown when the user clicks on an link that is not valid */
 "linkNotValid"="ลิงก์ไม่ถูกต้อง";
 /* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
@@ -50,6 +52,12 @@
 "decrypt"="ถอดรหัสลับ";
 /* Alert title shown when you have written a decryption key not valid */
 "decryptionKeyNotValid"="คีย์ถอดรหัสลับไม่ถูกต้อง";
+/* This dialog message is used on the Password Decrypt dialog. The link is a password protected link so the user needs to enter the password to decrypt the link. */
+"To access this link, you will need its password."="หากต้องการเข้าถึงลิงก์นี้คุณจะต้องมีรหัสผ่าน";
+/* This dialog message is used on the Password Decrypt dialog as an instruction for the user. */
+"If you do not have the password, contact the creator of the link."="หากคุณไม่มีรหัสผ่าน กรุณาติดต่อผู้สร้างลิงก์";
+/* This placeholder text is used on the Password Decrypt dialog as an instruction for the user. */
+"Enter the password"="กรอกรหัสผ่าน";
 /* Alert title shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOut_alertTitle"="ออกจากระบบ";
 /* Alert message shown when your account has been closed through another client or the web by killing all your sessions */
@@ -1387,7 +1395,7 @@
 /* Label to show that an error related with an Incomplete SDK operation. */
 "Incomplete"="ไม่สมบูรณ์";
 /* Label to show that an error related with the decryption process of a node occurs during a SDK operation. */
-"Invalid key/Decryption error"="คีย์ไม่ถูกต้อง/การถอดรหัสผิดพลาด";
+"Invalid key/Decryption error"="ข้อผิดพลาดในการถอดรหัสลับ";
 /* Label to show that an error related with a bad session ID occurs during a SDK operation. */
 "Bad session ID"="ID เซสชั่นไม่ถูกต้อง";
 /* Label to show that an error related with a blocked account occurs during a SDK operation. */
@@ -1998,3 +2006,15 @@
 "Change to a test server?"="เปลี่ยนเป็นเซิร์ฟเวอร์ทดสอบหรือไม่";
 /* text of the alert dialog when the user is changing the API URL to staging */
 "Are you sure you want to change to a test server? Your account may suffer irrecoverable problems"="คุณแน่ใจหรือไม่ว่าต้องการเปลี่ยนไปใช้เซิร์ฟเวอร์ทดสอบ บัญชีของคุณอาจประสบปัญหาไม่สามารถกู้คืนได้";
+/* Destination folder name of chat files */
+"My chat files"="ไฟล์แชทของฉัน";
+/* Label indicating that the passcode (pin) view will be displayed if the application goes back to foreground after being x time in background. Examples: require passcode immediately, require passcode after 5 minutes. */
+"Require passcode"="Require passcode";
+/* Label indicating that the enter passcode (pin) view will be displayed immediately if the application goes back to foreground after being in background. */
+"Immediately"="Immediately";
+/* Popup notification text on mouse-over of taken down file. */
+"This file has been the subject of a takedown notice."="ไฟล์นี้ถูกแจ้งว่าให้ลบเนื้อหา";
+/* Popup notification text on mouse-over taken down folder. */
+"This folder has been the subject of a takedown notice."="โฟลเดอร์นี้ถูกแจ้งว่าให้ลบเนื้อหา";
+/* File Manager -> Context menu item for taken down file or folder, for dispute takedown. */
+"Dispute Takedown"="ระงับข้อพิพาท";

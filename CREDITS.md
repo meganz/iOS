@@ -61,6 +61,18 @@ https://github.com/Flipboard/FLAnimatedImage/blob/master/LICENSE
 
 --------------------------------------------------------------------
 
+#### FLEX
+https://github.com/Flipboard/FLEX/
+
+Copyright (c) 2014-2016 Flipboard
+
+###### License:
+BSD 3-Clause
+
+https://github.com/Flipboard/FLEX/blob/master/LICENSE
+
+--------------------------------------------------------------------
+
 #### GKContactImage
 https://github.com/gekitz/GKContactImage
 

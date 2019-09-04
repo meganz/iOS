@@ -66,12 +66,13 @@ typedef NS_ENUM(NSUInteger, TextFieldTag) {
             self.theNewPasswordView.passwordTextField.returnKeyType = UIReturnKeyNext;
             self.theNewPasswordView.passwordTextField.delegate = self;
             self.theNewPasswordView.passwordTextField.tag = NewPasswordTextFieldTag;
-            if (@available(iOS 12.0, *)) {
-                self.theNewPasswordView.passwordTextField.textContentType = UITextContentTypeNewPassword;
-            }
             
             self.confirmPasswordView.passwordTextField.delegate = self;
             self.confirmPasswordView.passwordTextField.tag = ConfirmPasswordTextFieldTag;
+            if (@available(iOS 12.0, *)) {
+                self.theNewPasswordView.passwordTextField.textContentType = UITextContentTypePassword;
+                self.confirmPasswordView.passwordTextField.textContentType = UITextContentTypeNewPassword;
+            }
             
             [self.confirmButton setTitle:AMLocalizedString(@"changePasswordLabel", @"Section title where you can change your MEGA's password") forState:UIControlStateNormal];
             
@@ -86,7 +87,6 @@ typedef NS_ENUM(NSUInteger, TextFieldTag) {
             
             self.currentEmailInputView.inputTextField.text = [MEGASdkManager sharedMEGASdk].myEmail;
             self.currentEmailInputView.inputTextField.userInteractionEnabled = NO;
-            self.currentEmailInputView.inputTextField.keyboardType = UIKeyboardTypeEmailAddress;
             
             self.theNewEmailInputView.inputTextField.returnKeyType = UIReturnKeyNext;
             self.theNewEmailInputView.inputTextField.delegate = self;
@@ -96,6 +96,10 @@ typedef NS_ENUM(NSUInteger, TextFieldTag) {
             self.confirmEmailInputView.inputTextField.delegate = self;
             self.confirmEmailInputView.inputTextField.tag = ConfirmEmailTextFieldTag;
             self.confirmEmailInputView.inputTextField.keyboardType = UIKeyboardTypeEmailAddress;
+            if (@available(iOS 11.0, *)) {
+                self.theNewEmailInputView.inputTextField.textContentType = UITextContentTypeUsername;
+                self.confirmEmailInputView.inputTextField.textContentType = UITextContentTypeUsername;
+            }
             
             [self.confirmButton setTitle:AMLocalizedString(@"changeEmail", @"The title of the alert dialog to change the email associated to an account.") forState:UIControlStateNormal];
             
@@ -111,19 +115,17 @@ typedef NS_ENUM(NSUInteger, TextFieldTag) {
             
             self.currentEmailInputView.inputTextField.text = self.email;
             self.currentEmailInputView.inputTextField.userInteractionEnabled = NO;
-            if (@available(iOS 11.0, *)) {
-                self.currentEmailInputView.inputTextField.textContentType = UITextContentTypeUsername;
-            }
             
             self.theNewPasswordView.passwordTextField.returnKeyType = UIReturnKeyNext;
             self.theNewPasswordView.passwordTextField.delegate = self;
             self.theNewPasswordView.passwordTextField.tag = NewPasswordTextFieldTag;
-            if (@available(iOS 12.0, *)) {
-                self.theNewPasswordView.passwordTextField.textContentType = UITextContentTypeNewPassword;
-            }
             
             self.confirmPasswordView.passwordTextField.delegate = self;
             self.confirmPasswordView.passwordTextField.tag = ConfirmPasswordTextFieldTag;
+            if (@available(iOS 12.0, *)) {
+                self.theNewPasswordView.passwordTextField.textContentType = UITextContentTypePassword;
+                self.confirmPasswordView.passwordTextField.textContentType = UITextContentTypeNewPassword;
+            }
             
             NSString *buttonTitle = (self.changeType == ChangeTypeResetPassword) ? AMLocalizedString(@"changePasswordLabel", @"Section title where you can change your MEGA's password") : AMLocalizedString(@"startNewAccount", @"Caption of the button to proceed");
             [self.confirmButton setTitle:buttonTitle forState:UIControlStateNormal];
@@ -237,6 +239,7 @@ typedef NS_ENUM(NSUInteger, TextFieldTag) {
 }
 
 - (BOOL)validateEmail {
+    self.theNewEmailInputView.inputTextField.text = self.theNewEmailInputView.inputTextField.text.mnz_removeWhitespacesAndNewlinesFromBothEnds;
     if (!self.theNewEmailInputView.inputTextField.text.mnz_isValidEmail) {
         [self.theNewEmailInputView setErrorState:YES withText:AMLocalizedString(@"emailInvalidFormat", @"Message shown when the user writes an invalid format in the email field")];
         return NO;
@@ -250,6 +253,7 @@ typedef NS_ENUM(NSUInteger, TextFieldTag) {
 }
 
 - (BOOL)validateConfirmEmail {
+    self.confirmEmailInputView.inputTextField.text = self.confirmEmailInputView.inputTextField.text.mnz_removeWhitespacesAndNewlinesFromBothEnds;
     if ([self.confirmEmailInputView.inputTextField.text isEqualToString:self.theNewEmailInputView.inputTextField.text]) {
         [self.confirmEmailInputView setErrorState:NO withText:AMLocalizedString(@"confirmNewEmail", @"Placeholder text to explain that the new email should be re-written on this text field.")];
         return YES;

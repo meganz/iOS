@@ -136,6 +136,7 @@ static const NSUInteger MIN_SECOND = 10; // Save only where the users were playi
     [self stopStreaming];
         
     [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayAndRecord withOptions:AVAudioSessionCategoryOptionAllowBluetooth | AVAudioSessionCategoryOptionAllowBluetoothA2DP | AVAudioSessionCategoryOptionMixWithOthers error:nil];
+    [[AVAudioSession sharedInstance] setMode:AVAudioSessionModeVoiceChat error:nil];
     [[AVAudioSession sharedInstance] setActive:NO withOptions:AVAudioSessionSetActiveOptionNotifyOthersOnDeactivation error:nil];
     
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"presentPasscodeLater"] && [LTHPasscodeViewController doesPasscodeExist]) {
@@ -227,7 +228,7 @@ static const NSUInteger MIN_SECOND = 10; // Save only where the users were playi
 }
 
 - (void)applicationDidEnterBackground:(NSNotification*)aNotification {
-    if (![NSStringFromClass([UIApplication sharedApplication].windows[0].class) isEqualToString:@"UIWindow"]) {
+    if (![NSStringFromClass([UIApplication sharedApplication].windows.firstObject.class) isEqualToString:@"UIWindow"]) {
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"presentPasscodeLater"];
     }
 }

@@ -125,7 +125,7 @@
                 [masterKeyLoggedInAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:nil]];
                 
                 UIAlertAction *okAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-                    NSString *masterKey = masterKeyLoggedInAlertController.textFields.count ? masterKeyLoggedInAlertController.textFields[0].text : [[MEGASdkManager sharedMEGASdk] masterKey];
+                    NSString *masterKey = masterKeyLoggedInAlertController.textFields.count ? masterKeyLoggedInAlertController.textFields.firstObject.text : MEGASdkManager.sharedMEGASdk.masterKey;
                     [self presentChangeViewType:ChangeTypeResetPassword email:MEGALinkManager.emailOfNewSignUpLink masterKey:masterKey link:request.link];
                     MEGALinkManager.emailOfNewSignUpLink = nil;
                 }];
