@@ -1139,7 +1139,7 @@ void uncaughtExceptionHandler(NSException *exception) {
     }
 }
 
-- (void)presetAccountExpiredAlertIfNeeded {
+- (void)presentAccountExpiredAlertIfNeeded {
     if (!self.isAccountExpiredPresented && ![UIApplication.mnz_visibleViewController isKindOfClass:BusinessExpiredViewController.class]) {
         NSString *alertTitle = AMLocalizedString(@"Your Account is Expired", nil);
         NSString *alertMessage;
@@ -1639,7 +1639,7 @@ void uncaughtExceptionHandler(NSException *exception) {
             }
                 
             case MEGAErrorTypeApiEBusinessPastDue:
-                [self presetAccountExpiredAlertIfNeeded];
+                [self presentAccountExpiredAlertIfNeeded];
                 break;
                 
             default:
@@ -1987,7 +1987,7 @@ void uncaughtExceptionHandler(NSException *exception) {
             }
                 
             case MEGAErrorTypeApiEBusinessPastDue:
-                [self presetAccountExpiredAlertIfNeeded];
+                [self presentAccountExpiredAlertIfNeeded];
                 break;
                 
             default: {
