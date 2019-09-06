@@ -31,7 +31,7 @@
     
     self.navigationController = (UINavigationController *)self.parentViewController;
     self.shareViewController = (ShareViewController *)self.navigationController.parentViewController;
-    self.sharedUserDefaults = [[NSUserDefaults alloc] initWithSuiteName:@"group.mega.ios"];
+    self.sharedUserDefaults = [NSUserDefaults.alloc initWithSuiteName:MEGAGroupIdentifier];
 
     self.cancelBarButtonItem.title = AMLocalizedString(@"cancel", nil);
     

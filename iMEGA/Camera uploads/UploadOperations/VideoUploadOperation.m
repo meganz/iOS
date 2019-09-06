@@ -4,7 +4,6 @@
 #import "CameraUploadManager+Settings.h"
 #import "AVAsset+CameraUpload.h"
 #import "AVURLAsset+CameraUpload.h"
-#import "MEGAConstants.h"
 #import "CameraUploadOperation+Utils.h"
 
 @interface VideoUploadOperation ()

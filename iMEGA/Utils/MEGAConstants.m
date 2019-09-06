@@ -8,6 +8,8 @@ NSString * const MEGAiOSAppKey = @"EVtjzb7R";
 NSString * const MEGAPasswordService = @"MEGA";
 NSString * const MEGAPasswordName = @"sessionV3";
 
+NSString * const MEGAGroupIdentifier = @"group.mega.ios";
+
 #pragma mark - global notifications
 
 NSString * const MEGALogoutNotification = @"nz.mega.logout";
@@ -61,3 +63,12 @@ NSString * const H264Format = @"H.264";
 #pragma mark - MEGA URLS
 
 NSString * const MEGADisputeURL = @"https://mega.nz/dispute";
+
+#pragma mark - Group Shared Directory
+
+NSString * const MEGAShareExtensionStorageFolder = @"Share Extension Storage";
+NSString * const MEGAFileExtensionStorageFolder = @"File Provider Storage";
+NSString * const MEGAExtensionLogsFolder = @"logs";
+NSString * const MEGAExtensionGroupSupportFolder = @"GroupSupport";
+NSString * const MEGAExtensionCacheFolder = @"Library/Cache/";
+

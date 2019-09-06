@@ -2,7 +2,6 @@
 #import "CameraUploadCompletionManager.h"
 #import "PutNodeOperation.h"
 #import "AttributeUploadManager.h"
-#import "MEGAConstants.h"
 #import "NSURL+CameraUpload.h"
 #import "NodesFetchListenerOperation.h"
 #import "CameraUploadManager+Settings.h"

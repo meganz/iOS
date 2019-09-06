@@ -44,9 +44,9 @@
     
     [MEGASdk setLogToConsole:YES];
     
-    if ([[[NSUserDefaults alloc] initWithSuiteName:@"group.mega.ios"] boolForKey:@"logging"]) {
+    if ([[NSUserDefaults.alloc initWithSuiteName:MEGAGroupIdentifier] boolForKey:@"logging"]) {
         NSFileManager *fileManager = [NSFileManager defaultManager];
-        NSString *logsPath = [[[fileManager containerURLForSecurityApplicationGroupIdentifier:@"group.mega.ios"] URLByAppendingPathComponent:@"logs"] path];
+        NSString *logsPath = [[[fileManager containerURLForSecurityApplicationGroupIdentifier:MEGAGroupIdentifier] URLByAppendingPathComponent:MEGAExtensionLogsFolder] path];
         if (![fileManager fileExistsAtPath:logsPath]) {
             [fileManager createDirectoryAtPath:logsPath withIntermediateDirectories:NO attributes:nil error:nil];
         }
@@ -129,7 +129,7 @@
 #pragma mark - Language
 
 - (void)languageCompatibility {
-    NSString *languageCode = [[[NSUserDefaults alloc] initWithSuiteName:@"group.mega.ios"] objectForKey:@"languageCode"];
+    NSString *languageCode = [[NSUserDefaults.alloc initWithSuiteName:MEGAGroupIdentifier] objectForKey:@"languageCode"];
     if (languageCode) {
         [[LocalizationSystem sharedLocalSystem] setLanguage:languageCode];
         [[MEGASdkManager sharedMEGASdk] setLanguageCode:languageCode];
@@ -221,7 +221,7 @@
 
 - (NSString *)appGroupContainerURL {
     NSFileManager *fileManager = [NSFileManager defaultManager];
-    NSString *storagePath = [[[fileManager containerURLForSecurityApplicationGroupIdentifier:@"group.mega.ios"] URLByAppendingPathComponent:@"File Provider Storage"] path];
+    NSString *storagePath = [[[fileManager containerURLForSecurityApplicationGroupIdentifier:MEGAGroupIdentifier] URLByAppendingPathComponent:MEGAFileExtensionStorageFolder] path];
     if (![fileManager fileExistsAtPath:storagePath]) {
         [fileManager createDirectoryAtPath:storagePath withIntermediateDirectories:NO attributes:nil error:nil];
     }
@@ -229,7 +229,7 @@
 }
 
 - (void)documentReadyAtPath:(NSString *)path withBase64Handle:(NSString *)base64Handle{
-    NSUserDefaults *mySharedDefaults = [[NSUserDefaults alloc] initWithSuiteName:@"group.mega.ios"];
+    NSUserDefaults *mySharedDefaults = [NSUserDefaults.alloc initWithSuiteName:MEGAGroupIdentifier];
     // URLByResolvingSymlinksInPath avoids the /private
     NSString *key = [[NSURL fileURLWithPath:path].URLByResolvingSymlinksInPath absoluteString];
     [mySharedDefaults setObject:base64Handle forKey:key];
@@ -308,7 +308,7 @@
         MEGALogError(@"Failed to locate/create NSApplicationSupportDirectory with error: %@", error);
     }
     
-    NSURL *groupSupportURL = [[fileManager containerURLForSecurityApplicationGroupIdentifier:@"group.mega.ios"] URLByAppendingPathComponent:@"GroupSupport"];
+    NSURL *groupSupportURL = [[fileManager containerURLForSecurityApplicationGroupIdentifier:MEGAGroupIdentifier] URLByAppendingPathComponent:MEGAExtensionGroupSupportFolder];
     if (![fileManager fileExistsAtPath:groupSupportURL.path]) {
         [fileManager createDirectoryAtURL:groupSupportURL withIntermediateDirectories:NO attributes:nil error:nil];
     }

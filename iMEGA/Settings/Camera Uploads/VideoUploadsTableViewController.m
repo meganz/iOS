@@ -1,7 +1,6 @@
 
 #import "VideoUploadsTableViewController.h"
 #import "CameraUploadManager+Settings.h"
-#import "MEGAConstants.h"
 
 typedef NS_ENUM(NSUInteger, VideoUploadsSection) {
     VideoUploadsSectionFeatureSwitch,
