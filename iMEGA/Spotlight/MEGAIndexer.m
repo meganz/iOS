@@ -47,7 +47,7 @@
             _thumbnailGeneric = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"Spotlight_file@3x" ofType:@"png"]];
             _thumbnailFolder = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"Spotlight_folder@3x" ofType:@"png"]];
         }
-        _sharedUserDefaults = [[NSUserDefaults alloc] initWithSuiteName:@"group.mega.ios"];
+        _sharedUserDefaults = [NSUserDefaults.alloc initWithSuiteName:MEGAGroupIdentifier];
         _pListPath = [[[[NSFileManager defaultManager] URLForDirectory:NSApplicationSupportDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:YES error:nil] URLByAppendingPathComponent:@"spotlightTree.plist"] path];
         if ([_sharedUserDefaults boolForKey:@"treeCompleted"]) {
             _base64HandlesToIndex = [NSMutableArray arrayWithContentsOfFile:self.pListPath];

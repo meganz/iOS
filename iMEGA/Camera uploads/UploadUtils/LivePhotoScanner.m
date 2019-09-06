@@ -4,7 +4,6 @@
 #import "SavedIdentifierParser.h"
 #import "PHAsset+CameraUpload.h"
 #import "PHFetchResult+CameraUpload.h"
-#import "MEGAConstants.h"
 #import "PHFetchOptions+CameraUpload.h"
 
 @implementation LivePhotoScanner
