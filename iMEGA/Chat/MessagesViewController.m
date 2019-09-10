@@ -2271,8 +2271,8 @@ static NSMutableSet<NSString *> *tapForInfoSet;
     JSQMessagesCollectionViewCell *cell = (JSQMessagesCollectionViewCell *)[super collectionView:collectionView cellForItemAtIndexPath:indexPath];
     MEGAChatMessage *message = [self.messages objectAtIndex:indexPath.item];
     
-    if (message.containsMEGALink) {
-        if (![self.observedNodeMessages containsObject:message]) {
+    if (![self.observedNodeMessages containsObject:message]) {
+        if (message.containsMEGALink || (message.type == MEGAChatMessageTypeAttachment && !message.richNumber)) {
             [self.observedNodeMessages addObject:message];
             [message addObserver:self forKeyPath:@"richNumber" options:NSKeyValueObservingOptionNew context:nil];
         }
