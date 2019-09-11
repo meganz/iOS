@@ -1763,7 +1763,7 @@
 /* When somebody accepted your contact request */
 "Accepted your contact request"="知り合いリクエストが受け入れられました。";
 /* When somebody denied your contact request */
-"Denied your contact request"="知り合いリクエストは拒否されました。";
+"Denied your contact request"="コンタクト要求が拒否されました";
 /* notification text */
 "A user has left the shared folder {0}"="あるユーザーが共有フォルダ{0}から去りました";
 /* This is shown in the Notification dialog when the email address of a contact is not found and access to the share is lost for some reason (e.g. share removal or contact removal). */

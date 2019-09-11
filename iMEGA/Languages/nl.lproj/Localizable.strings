@@ -701,13 +701,13 @@
 /* Footer description when upload Hidden Album is enabled */
 "The Hidden Album is where you hide photos or videos in your device Photos app."="De Verborgen Album is waar u foto's of video's verbergt in de Foto Applicatie van uw Apparaat.";
 /* Title of the switch to config whether to upload Shared Albums */
-"Upload Shared Albums"="Upload Shared Albums";
+"Upload Shared Albums"="Upload Gedeelde Albums";
 /* Footer description for Upload Shared Albums title */
-"Shared Albums are where you share with other people and subscribe to other people's shares in your device's Photos app."="Shared Albums are where you share with other people and subscribe to other people’s shares in your device’s Photos app.";
+"Shared Albums are where you share with other people and subscribe to other people's shares in your device's Photos app."="Gedeelde albums zijn waar u deelt met anderen en zich abonneert op de aandelen van anderen in de Foto's-app van uw apparaat.";
 /* Title of the switch to config whether to upload synced albums */
-"Upload albums synced from iTunes"="Upload albums synced from iTunes";
+"Upload albums synced from iTunes"="Upload albums gesynchroniseerd vanuit iTunes";
 /* Footer description for upload synced albums title */
-"Synced albums are where you sync photos or videos to your device's Photos app from iTunes."="Synced albums are where you sync photos or videos to your device’s Photos app from iTunes.";
+"Synced albums are where you sync photos or videos to your device's Photos app from iTunes."="Met gesynchroniseerde albums synchroniseert u foto's of video's naar de Foto applicatie op uw apparaat vanuit iTunes.";
 /* App means “Application” */
 "App version"="Applicatie versie";
 /* Title of the label where the SDK version is shown */
@@ -1100,7 +1100,7 @@
 /* A log message in a chat to display that a participant's permission was changed and by whom. This message begins with the user's name who receive the permission change [A]. [B] will be replaced with the permission name (such as Moderator or Read-only) and [C] will be replaced with the person who did it. Please keep the [A], [B] and [C] placeholders, they will be replaced at runtime. For example: Alice Jones was changed to Moderator by John Smith. */
 "wasChangedToBy"="[A] is veranderd naar [B] door [C].";
 /* A log message in the chat conversation to tell the reader that a participant [A] changed group chat name to [B]. Please keep the [A] and '[B]' placeholders, they will be replaced at runtime. For example: Alice changed group chat name to 'MEGA'. */
-"changedGroupChatNameTo"="[A] heeft het onderwerp gewijzigd naar '[B]'.";
+"changedGroupChatNameTo"="[A] Wijzigt de groepchat naam naar '[B]'";
 /* Button label. Allows to add contacts in current chat conversation. */
 "addParticipant"="Deelnemer toevoegen...";
 /* Menu item to add participants to a chat */
@@ -1705,9 +1705,9 @@
 /* Management message shown in a chat when the user %@ enables the 'Encrypted Key Rotation' */
 "%@ enabled Encrypted Key Rotation"="%@ ingeschakelde Gecodeerde Sleutel Rotatie.";
 /* Management message shown in a chat when the user %@ creates a public link for the chat */
-"%@ created a public link for the chat."="%@ creëerde een gesprekslink voor het gesprek";
+"%@ created a public link for the chat."="%@ heeft een chatlink gecreëerd";
 /* Management message shown in a chat when the user %@ removes a public link for the chat */
-"%@ removed a public link for the chat."="%@ heeft de gesprekslink voor het gesprek verwijderd";
+"%@ removed a public link for the chat."="%@ heeft de chat link verwijderd";
 /* Management message shown in a chat when the user %@ joined it from a public chat link */
 "%@ joined the group chat."="%@ is lid geworden van het groepsgesprek.";
 /* Message show when a call cannot be established because there are too many participants in the group call */
@@ -1763,7 +1763,7 @@
 /* When somebody accepted your contact request */
 "Accepted your contact request"="Heeft uw contact verzoek aanvraag";
 /* When somebody denied your contact request */
-"Denied your contact request"="Heeft uw verzoek afgewezen";
+"Denied your contact request"="Uw contact verzoek is geweigerd";
 /* notification text */
 "A user has left the shared folder {0}"="Een gebruiker heeft de gedeelde map {0} verlaten";
 /* This is shown in the Notification dialog when the email address of a contact is not found and access to the share is lost for some reason (e.g. share removal or contact removal). */
