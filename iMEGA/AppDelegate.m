@@ -301,7 +301,9 @@
 - (void)applicationDidEnterBackground:(UIApplication *)application {
     MEGALogDebug(@"[App Lifecycle] Application did enter background");
     
-    [self beginBackgroundTaskWithName:@"Chat-Request-SET_BACKGROUND_STATUS=YES"];
+    if (MEGASdkManager.sharedMEGASdk.isLoggedIn > 1) {
+        [self beginBackgroundTaskWithName:@"Chat-Request-SET_BACKGROUND_STATUS=YES"];
+    }
     [[MEGASdkManager sharedMEGAChatSdk] setBackgroundStatus:YES];
     [[MEGASdkManager sharedMEGAChatSdk] saveCurrentState];
 
