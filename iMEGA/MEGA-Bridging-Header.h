@@ -15,3 +15,4 @@
 #import "MEGAConstants.h"
 #import "AppDelegate.h"
 #import "MEGALoginRequestDelegate.h"
+#import "UIApplication+MNZCategory.h"

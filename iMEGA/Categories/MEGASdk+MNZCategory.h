@@ -8,10 +8,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, setter=mnz_setAccountDetails:) MEGAAccountDetails *mnz_accountDetails;
 @property (nonatomic, readonly) BOOL mnz_isProAccount;
 
-#pragma mark - methods
-
-- (void)handleAccountBlockedEvent:(MEGAEvent *)event;
-
 #pragma mark - Chat
 
 /**
