@@ -2,7 +2,6 @@
 #import "MEGASdk+MNZCategory.h"
 #import "UIApplication+MNZCategory.h"
 #import "MEGANavigationController.h"
-#import "MEGA-Swift.h"
 #import <objc/runtime.h>
 
 #import "MEGACreateFolderRequestDelegate.h"
@@ -24,27 +23,6 @@ static const void *mnz_accountDetailsKey = &mnz_accountDetailsKey;
 
 - (BOOL)mnz_isProAccount {
     return [self.mnz_accountDetails type] > MEGAAccountTypeFree;
-}
-
-#pragma mark - methods
-
-- (void)handleAccountBlockedEvent:(MEGAEvent *)event {
-    AccountSuspensionType suspensionType = (AccountSuspensionType)event.number;
-    SMSState state = [self smsAllowedState];
-    if (suspensionType == AccountSuspensionTypeSMSVerification && state != SMSStateNotAllowed) {
-        if ([UIApplication.mnz_presentingViewController isKindOfClass:[SMSNavigationViewController class]]) {
-            return;
-        }
-        
-        [UIApplication.mnz_presentingViewController presentViewController:[[SMSNavigationViewController alloc] initWithRootViewController:[SMSVerificationViewController instantiateWith:SMSVerificationTypeUnblockAccount]] animated:YES completion:nil];
-    } else {
-        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"error", nil) message:AMLocalizedString(@"accountBlocked", @"Error message when trying to login and the account is blocked") preferredStyle:UIAlertControllerStyleAlert];
-        [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
-            [self logout];
-        }]];
-        
-        [UIApplication.mnz_presentingViewController presentViewController:alertController animated:YES completion:nil];
-    }
 }
 
 #pragma mark - Chat

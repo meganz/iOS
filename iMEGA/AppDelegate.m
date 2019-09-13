@@ -58,6 +58,7 @@
 #import "CameraUploadManager+Settings.h"
 #import "TransferSessionManager.h"
 #import "BackgroundRefreshPerformer.h"
+#import "MEGA-Swift.h"
 
 #define kFirstRun @"FirstRun"
 
