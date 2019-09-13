@@ -709,9 +709,20 @@
 
 - (void)dismissPresentedViewsAndDo:(void (^)(void))completion {
     if (self.window.rootViewController.presentedViewController) {
-        [self.window.rootViewController dismissViewControllerAnimated:NO completion:^{
-            if (completion) completion();
-        }];
+        if ([self.window.rootViewController.presentedViewController isKindOfClass:CheckEmailAndFollowTheLinkViewController.class]) {
+            CheckEmailAndFollowTheLinkViewController *checkEmailAndFollowTheLinkVC = (CheckEmailAndFollowTheLinkViewController *)self.window.rootViewController.presentedViewController;
+            if (checkEmailAndFollowTheLinkVC.presentedViewController) {
+                [checkEmailAndFollowTheLinkVC.presentedViewController dismissViewControllerAnimated:NO completion:^{
+                    if (completion) completion();
+                }];
+            } else {
+                if (completion) completion();
+            }
+        } else {
+            [self.window.rootViewController dismissViewControllerAnimated:NO completion:^{
+                if (completion) completion();
+            }];
+        }
     } else {
         if (completion) completion();
     }
