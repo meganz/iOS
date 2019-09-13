@@ -523,7 +523,7 @@
             break;
             
         case ContactsModeShareFoldersWith:
-            self.navigationItem.title = AMLocalizedString(@"Share Width", @"Title of the screen that shows the users with whom the user can share a folder ");
+            self.navigationItem.title = AMLocalizedString(@"Share with", @"Title of the screen that shows the users with whom the user can share a folder ");
             break;
             
         case ContactsModeFolderSharedWith:

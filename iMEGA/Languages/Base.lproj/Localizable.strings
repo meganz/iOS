@@ -1941,4 +1941,4 @@
 /* Text indicating to the user the action that will be executed on tap. */
 "Manage Share"="Manage Share";
 /* Title of the screen that shows the users with whom the user can share a folder */
-"Share Width"="Share with";
+"Share with"="Share with";
