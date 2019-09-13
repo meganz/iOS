@@ -1932,3 +1932,5 @@
 "This folder has been the subject of a takedown notice."="This folder has been the subject of a takedown notice.";
 /* File Manager -> Context menu item for taken down file or folder, for dispute takedown. */
 "Dispute Takedown"="Dispute Takedown";
+/* Subtitle of chat screen when the chat is inactive */
+"Inactive chat"="Inactive chat";
