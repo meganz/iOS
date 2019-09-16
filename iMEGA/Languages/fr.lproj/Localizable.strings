@@ -671,7 +671,7 @@
 /* Footer for video uploads switch section when disabled */
 "When enabled, videos will be uploaded."="Si cette option est activée, les vidéos seront téléversées.";
 /* Title for new camera upload feature */
-"New Camera Upload!"="Nouvelle option de téléversement de l’appareil photo !";
+"New Camera Upload!"="Nouvelle option Téléversements de l’appareil photo !";
 /* A messge for camera upload v2 migration */
 "Now you can choose to convert the HEIF/HEVC photos and videos to the most compatible JPEG/H.264 formats."="Vous pouvez maintenant choisir de convertir les photos et les vidéos HEIC/HEVC vers les formats plus largement compatibles JPEG/H.264.";
 /* Title for an action to use most compatible formats */
@@ -1008,7 +1008,7 @@
 /* Label for any 'Limited' button, link, text, title, etc. - (String as short as possible). */
 "limited"="Limités";
 /* A message shown at registration time when users have to select their plan. The FREE 50 GB plan is subject to the achievements program. */
-"subjectToYourParticipationInOurAchievementsProgram"="Sous réserve de votre participation au programme d’objectifs.";
+"subjectToYourParticipationInOurAchievementsProgram"="Sous réserve de votre participation à notre programme d’objectifs.";
 /* Price asociated with the MEGA PRO account level you can subscribe */
 "productPricePerMonth"="%@ par mois";
 /* Header that help you with the upgrading process explaining that you have to choose one of the plans below  to continue */
