@@ -798,7 +798,7 @@
                 }
                 
                 NSInteger index = (self.chatRoom.ownPrivilege == MEGAChatRoomPrivilegeModerator) ? (indexPath.row - 1) : indexPath.row;
-                uint64_t userHandle = [[self.participantsMutableArray objectAtIndex:index] unsignedLongLongValue];
+                uint64_t userHandle = [self.participantsMutableArray[index] unsignedLongLongValue];
 
                 if (userHandle != MEGASdkManager.sharedMEGASdk.myUser.handle) {
                     
