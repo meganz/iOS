@@ -67,7 +67,7 @@
 
 - (BOOL)isEqual:(ItemListModel *)item {
     if (self.email) {
-        return self.email == item.email;
+        return [self.email isEqualToString:item.email];
     } else {
         return self.handle == item.handle;
     }
