@@ -48,7 +48,7 @@
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *shareBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *shareFolderBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *removeShareBarButtonItem;
-@property (strong, nonatomic) IBOutlet UIBarButtonItem *removeLinkBarButtonItem;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *removeLinkBarButtonItem;
 
 @property (nonatomic, strong) MEGAShareList *incomingShareList;
 @property (nonatomic, strong) NSMutableArray *incomingNodesMutableArray;
