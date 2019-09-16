@@ -2074,14 +2074,14 @@ static const NSTimeInterval kSearchTimeDelay = .5;
             
         case MegaNodeActionTypeGetLink:
         case MegaNodeActionTypeManageLink: {
-            if ([MEGAReachabilityManager isReachableHUDIfNot]) {
+            if (MEGAReachabilityManager.isReachableHUDIfNot) {
                 [CopyrightWarningViewController presentGetLinkViewControllerForNodes:@[node] inViewController:UIApplication.mnz_presentingViewController];
             }
             break;
         }
             
         case MegaNodeActionTypeRemoveLink: {
-            MEGAExportRequestDelegate *requestDelegate = [[MEGAExportRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
+            MEGAExportRequestDelegate *requestDelegate = [MEGAExportRequestDelegate.alloc initWithCompletion:^(MEGARequest *request) {
                     [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"linkRemoved", @"Message shown when the links to a file or folder has been removed")];
             } multipleLinks:NO];
             

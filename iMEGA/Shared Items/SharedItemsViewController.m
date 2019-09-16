@@ -283,8 +283,8 @@
 }
 
 - (void)publicLinks {
-    [_outgoingNodesForEmailMutableDictionary removeAllObjects];
-    [_outgoingIndexPathsMutableDictionary removeAllObjects];
+    [self.outgoingNodesForEmailMutableDictionary removeAllObjects];
+    [self.outgoingIndexPathsMutableDictionary removeAllObjects];
     
     self.publicLinksArray = [MEGASdkManager.sharedMEGASdk publicLinks:self.sortOrderType].mnz_nodesArrayFromNodeList;
     
@@ -361,14 +361,14 @@
 
 - (MEGANode *)nodeAtIndexPath:(NSIndexPath *)indexPath {
     if (self.searchController.isActive) {
-        return [self.searchNodesArray objectAtIndex:indexPath.row];
+        return self.searchNodesArray[indexPath.row];
     } else {
         if (self.incomingButton.selected) {
-            return [self.incomingNodesMutableArray objectAtIndex:indexPath.row];
+            return self.incomingNodesMutableArray[indexPath.row];
         } else if (self.outgoingButton.selected) {
-            return [self.outgoingNodesMutableArray objectAtIndex:indexPath.row];
+            return self.outgoingNodesMutableArray[indexPath.row];
         } else if (self.linksButton.selected) {
-            return [self.publicLinksArray objectAtIndex:indexPath.row];
+            return self.publicLinksArray[indexPath.row];
         } else {
             return nil;
         }
@@ -403,7 +403,7 @@
 - (SharedItemsTableViewCell *)incomingSharedCellAtIndexPath:(NSIndexPath *)indexPath forNode:(MEGANode *)node {
     SharedItemsTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"sharedItemsTableViewCell" forIndexPath:indexPath];
     if (cell == nil) {
-        cell = [[SharedItemsTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"sharedItemsTableViewCell"];
+        cell = [SharedItemsTableViewCell.alloc initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"sharedItemsTableViewCell"];
     }
     
     MEGAShare *share = nil;
@@ -416,8 +416,8 @@
     }
     
     NSString *userEmail = share.user;
-    [self.incomingNodesForEmailMutableDictionary setObject:userEmail forKey:node.base64Handle];
-    [self.incomingIndexPathsMutableDictionary setObject:indexPath forKey:node.base64Handle];
+    self.incomingNodesForEmailMutableDictionary[node.base64Handle] = userEmail;
+    self.incomingIndexPathsMutableDictionary[node.base64Handle] = indexPath;
     
     cell.thumbnailImageView.image = Helper.incomingFolderImage;
     
@@ -442,7 +442,7 @@
 - (SharedItemsTableViewCell *)outgoingSharedCellAtIndexPath:(NSIndexPath *)indexPath forNode:(MEGANode *)node {
     SharedItemsTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"sharedItemsTableViewCell" forIndexPath:indexPath];
     if (cell == nil) {
-        cell = [[SharedItemsTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"sharedItemsTableViewCell"];
+        cell = [SharedItemsTableViewCell.alloc initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"sharedItemsTableViewCell"];
     }
     
     NSUInteger outSharesCount = 1;
@@ -455,8 +455,8 @@
         }
     }
     
-    [self.outgoingNodesForEmailMutableDictionary setObject:share.user forKey:node.base64Handle];
-    [self.outgoingIndexPathsMutableDictionary setObject:indexPath forKey:node.base64Handle];
+    self.outgoingNodesForEmailMutableDictionary[node.base64Handle] = share.user;
+    self.outgoingIndexPathsMutableDictionary[node.base64Handle] = indexPath;
     
     cell.thumbnailImageView.image = Helper.outgoingFolderImage;
     
@@ -542,7 +542,7 @@
             [sortDescendingAlertAction mnz_setTitleTextColor:UIColor.mnz_black333333];
             [sortByAlertController addAction:sortDescendingAlertAction];
             
-            if ([[UIDevice currentDevice] iPadDevice]) {
+            if (UIDevice.currentDevice.iPadDevice) {
                 sortByAlertController.modalPresentationStyle = UIModalPresentationPopover;
                 UIPopoverPresentationController *popoverPresentationController = sortByAlertController.popoverPresentationController;
                 popoverPresentationController.barButtonItem = self.navigationItem.rightBarButtonItems.firstObject;
@@ -565,7 +565,7 @@
         [selectAlertAction mnz_setTitleTextColor:UIColor.mnz_black333333];
         [moreAlertController addAction:selectAlertAction];
         
-        if ([[UIDevice currentDevice] iPadDevice]) {
+        if (UIDevice.currentDevice.iPadDevice) {
             moreAlertController.modalPresentationStyle = UIModalPresentationPopover;
             UIPopoverPresentationController *popoverPresentationController = moreAlertController.popoverPresentationController;
             popoverPresentationController.barButtonItem = self.navigationItem.rightBarButtonItems.firstObject;
@@ -664,7 +664,7 @@
         } else if (self.linksButton.selected) {
             NSUInteger count = self.publicLinksArray.count;
             for (NSInteger i = 0; i < count; i++) {
-                [self.selectedNodesMutableArray addObject:[self.publicLinksArray objectAtIndex:i]];
+                [self.selectedNodesMutableArray addObject:self.publicLinksArray[i]];
             }
         }
         allNodesSelected = YES;
@@ -893,9 +893,9 @@
 }
 
 - (IBAction)removeLinkAction:(UIBarButtonItem *)sender {
-    if ([MEGAReachabilityManager isReachableHUDIfNot]) {
+    if (MEGAReachabilityManager.isReachableHUDIfNot) {
         for (MEGANode *node in self.selectedNodesMutableArray) {
-            MEGAExportRequestDelegate *requestDelegate = [[MEGAExportRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
+            MEGAExportRequestDelegate *requestDelegate = [MEGAExportRequestDelegate.alloc initWithCompletion:^(MEGARequest *request) {
                 [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"linkRemoved", @"Message shown when the links to a file or folder has been removed")];
             } multipleLinks:NO];
             
@@ -1413,14 +1413,14 @@
             
         case MegaNodeActionTypeGetLink:
         case MegaNodeActionTypeManageLink: {
-            if ([MEGAReachabilityManager isReachableHUDIfNot]) {
+            if (MEGAReachabilityManager.isReachableHUDIfNot) {
                 [CopyrightWarningViewController presentGetLinkViewControllerForNodes:@[node] inViewController:UIApplication.mnz_presentingViewController];
             }
             break;
         }
             
         case MegaNodeActionTypeRemoveLink: {
-            MEGAExportRequestDelegate *requestDelegate = [[MEGAExportRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
+            MEGAExportRequestDelegate *requestDelegate = [MEGAExportRequestDelegate.alloc initWithCompletion:^(MEGARequest *request) {
                 [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"linkRemoved", @"Message shown when the links to a file or folder has been removed")];
             } multipleLinks:NO];
             

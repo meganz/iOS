@@ -342,11 +342,11 @@
 }
 
 - (MegaActionNode *)actionShareFolder {
-    return [[MegaActionNode alloc] initWithTitle:AMLocalizedString(@"shareFolder", @"Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected, the folder you want inside your Cloud Drive") iconName: @"shareFolder" andActionType:MegaNodeActionTypeShareFolder];
+    return [MegaActionNode.alloc initWithTitle:AMLocalizedString(@"shareFolder", @"Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected, the folder you want inside your Cloud Drive") iconName:@"shareFolder" andActionType:MegaNodeActionTypeShareFolder];
 }
 
 - (MegaActionNode *)actionManageShare {
-    return [[MegaActionNode alloc] initWithTitle:AMLocalizedString(@"Manage Share", @"Text indicating to the user the action that will be executed on tap.") iconName: @"shareFolder" andActionType:MegaNodeActionTypeManageShare];
+    return [MegaActionNode.alloc initWithTitle:AMLocalizedString(@"Manage Share", @"Text indicating to the user the action that will be executed on tap.") iconName:@"shareFolder" andActionType:MegaNodeActionTypeManageShare];
 }
 
 - (MegaActionNode *)actionDownload {
@@ -383,11 +383,11 @@
 }
 
 - (MegaActionNode *)actionGetLink {
-    return [[MegaActionNode alloc] initWithTitle:AMLocalizedString(@"getLink", @"Title shown under the action that allows you to get a link to file or folder") iconName: @"Link_grey" andActionType:MegaNodeActionTypeGetLink];
+    return [MegaActionNode.alloc initWithTitle:AMLocalizedString(@"getLink", @"Title shown under the action that allows you to get a link to file or folder") iconName:@"Link_grey" andActionType:MegaNodeActionTypeGetLink];
 }
 
 - (MegaActionNode *)actionManageLink {
-    return [[MegaActionNode alloc] initWithTitle:AMLocalizedString(@"manageLink", @"Item menu option upon right click on one or multiple files.") iconName: @"Link_grey" andActionType:MegaNodeActionTypeManageLink];
+    return [MegaActionNode.alloc initWithTitle:AMLocalizedString(@"manageLink", @"Item menu option upon right click on one or multiple files.") iconName:@"Link_grey" andActionType:MegaNodeActionTypeManageLink];
 }
 
 - (MegaActionNode *)actionRemoveLink {
