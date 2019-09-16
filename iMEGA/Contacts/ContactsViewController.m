@@ -785,7 +785,7 @@
 }
 
 - (void)showEmailContactPicker {
-    CNContactPickerViewController *contactsPickerViewController = [[CNContactPickerViewController alloc] init];
+    CNContactPickerViewController *contactsPickerViewController = CNContactPickerViewController.new;
     contactsPickerViewController.predicateForEnablingContact = [NSPredicate predicateWithFormat:@"emailAddresses.@count > 0"];
     contactsPickerViewController.predicateForSelectionOfProperty = [NSPredicate predicateWithFormat:@"(key == 'emailAddresses')"];
     contactsPickerViewController.delegate = self;
@@ -833,14 +833,14 @@
         [addContactFromEmailAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
         
         UIAlertAction *addContactAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"addContactButton", @"Button title to 'Add' the contact to your contacts list") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-            UITextField *textField = [[addContactFromEmailAlertController textFields] firstObject];
+            UITextField *textField = addContactFromEmailAlertController.textFields.firstObject;
             if (self.contactsMode == ContactsModeShareFoldersWith) {
                 [self addItemsToList:@[[ItemListModel.alloc initWithEmail:textField.text]]];
                 [self.selectedUsersArray addObject:textField.text];
             } else {
-                if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-                    MEGAInviteContactRequestDelegate *inviteContactRequestDelegate = [[MEGAInviteContactRequestDelegate alloc] initWithNumberOfRequests:1];
-                    [[MEGASdkManager sharedMEGASdk] inviteContactWithEmail:textField.text message:@"" action:MEGAInviteActionAdd delegate:inviteContactRequestDelegate];
+                if (MEGAReachabilityManager.isReachableHUDIfNot) {
+                    MEGAInviteContactRequestDelegate *inviteContactRequestDelegate = [MEGAInviteContactRequestDelegate.alloc initWithNumberOfRequests:1];
+                    [MEGASdkManager.sharedMEGASdk inviteContactWithEmail:textField.text message:@"" action:MEGAInviteActionAdd delegate:inviteContactRequestDelegate];
                     [addContactAlertController dismissViewControllerAnimated:YES completion:nil];
                 }
             }
@@ -1130,8 +1130,8 @@
                         cell = [tableView dequeueReusableCellWithIdentifier:@"ContactPermissionsEmailTableViewCellID" forIndexPath:indexPath];
                         cell.nameLabel.text = user.email;
                     }
-                    MEGAShare *share = [self.outSharesForNodeMutableArray objectAtIndex:indexPath.row - 1];
-                    [cell.permissionsImageView setImage:[Helper permissionsButtonImageForShareType:share.access]];
+                    MEGAShare *share = self.outSharesForNodeMutableArray[indexPath.row - 1];
+                    cell.permissionsImageView.image = [Helper permissionsButtonImageForShareType:share.access];
                 }
             } else if (indexPath.section == 1) {
                 cell = [tableView dequeueReusableCellWithIdentifier:@"ContactPermissionsEmailTableViewCellID" forIndexPath:indexPath];
@@ -1159,7 +1159,7 @@
             for (id item in self.selectedUsersArray) {
                 if ([item class] == MEGAUser.class) {
                     MEGAUser *u = (MEGAUser*)item;
-                    if ([[u email] isEqualToString:[user email]]) {
+                    if ([u.email isEqualToString:user.email]) {
                         [self.tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
                     }
                 }
@@ -1245,7 +1245,7 @@
         if (indexPath.section == 0) {
             if (indexPath.row == 0) {
                 return NO;
-            }else {
+            } else {
                 return YES;
             }
         } else {
@@ -1279,7 +1279,7 @@
                 if (indexPath.row == 0) {
                     [self addShareWith:nil];
                 } else {
-                    MEGAUser *user = [self.visibleUsersArray objectAtIndex:indexPath.row - 1];
+                    MEGAUser *user = self.visibleUsersArray[indexPath.row - 1];
                     if (!user) {
                         [SVProgressHUD showErrorWithStatus:@"Invalid user"];
                         return;
@@ -1301,7 +1301,7 @@
                     [removePendingShareAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
                     
                     [removePendingShareAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-                        MEGAShareRequestDelegate *shareRequestDelegate = [[MEGAShareRequestDelegate alloc] initToChangePermissionsWithNumberOfRequests:1 completion:^{
+                        MEGAShareRequestDelegate *shareRequestDelegate = [MEGAShareRequestDelegate.alloc initToChangePermissionsWithNumberOfRequests:1 completion:^{
                             [self setTableViewEditing:NO animated:NO];
                             [self reloadUI];
                         }];
@@ -1376,7 +1376,7 @@
             if (indexPath.row == 0) {
                 return;
             }else {
-                user = [self.visibleUsersArray objectAtIndex:indexPath.row - 1];
+                user = self.visibleUsersArray[indexPath.row - 1];
             }
         } else {
             return;
@@ -1391,7 +1391,7 @@
         for (id item in tempArray) {
             if ([item class] == MEGAUser.class) {
                 MEGAUser *u = (MEGAUser*)item;
-                if ([[u email] isEqualToString:[user email]]) {
+                if ([u.email isEqualToString:user.email]) {
                     [self.selectedUsersArray removeObject:u];
                 }
             }
@@ -1444,7 +1444,7 @@
             if (indexPath.row == 0) {
                 return UITableViewCellEditingStyleNone;
             } else {
-                user = [self.visibleUsersArray objectAtIndex:indexPath.row - 1];
+                user = self.visibleUsersArray[indexPath.row - 1];
             }
         } else {
             return UITableViewCellEditingStyleNone;
