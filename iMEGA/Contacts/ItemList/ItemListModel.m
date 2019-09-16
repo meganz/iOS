@@ -58,7 +58,7 @@
 - (uint64_t)handle {
     if (self.user) {
         return self.user.handle;
-    } else if (self.user) {
+    } else if (self.chat) {
         return self.chat.chatId;
     } else {
         return ~(uint64_t)0;
