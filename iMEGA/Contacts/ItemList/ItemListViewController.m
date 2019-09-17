@@ -24,14 +24,16 @@
 #pragma mark - Public
 
 - (void)addItem:(ItemListModel *)item {
-    [self.collectionView performBatchUpdates:^{
-        [self.items addObject:item];
-        [self.collectionView insertItemsAtIndexPaths:@[[NSIndexPath indexPathForRow:self.items.count-1 inSection:0]]];
-    } completion:^(BOOL finished) {
-        if (self.items.count) {
-            [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForRow:self.items.count-1 inSection:0] atScrollPosition:UICollectionViewScrollPositionRight animated:YES];
-        }
-    }];
+    if ([self isNewItem:item]) {
+        [self.collectionView performBatchUpdates:^{
+            [self.items addObject:item];
+            [self.collectionView insertItemsAtIndexPaths:@[[NSIndexPath indexPathForRow:self.items.count-1 inSection:0]]];
+        } completion:^(BOOL finished) {
+            if (self.items.count) {
+                [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForRow:self.items.count-1 inSection:0] atScrollPosition:UICollectionViewScrollPositionRight animated:YES];
+            }
+        }];
+    }
 }
 
 - (void)removeItem:(ItemListModel *)item {
@@ -74,6 +76,15 @@
     if (itemFound) {
         [self.items removeObject:itemFound];
     }
+}
+
+- (BOOL)isNewItem:(ItemListModel *)item {
+    for (ItemListModel *itemInList in self.items) {
+        if ([item isEqual:itemInList]) {
+            return NO;
+        }
+    }
+    return YES;
 }
 
 #pragma mark - CollectionViewDataSource
