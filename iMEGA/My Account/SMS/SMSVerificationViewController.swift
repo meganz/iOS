@@ -197,7 +197,7 @@ class SMSVerificationViewController: UIViewController {
     private func configViewContents() {
         switch verificationType {
         case .AddPhoneNumber:
-            let cancelTitle = LocalizationSystem.sharedLocal()?.localizedString(forKey: "cancel", value: nil)
+            let cancelTitle = AMLocalizedString("cancel")
             navigationItem.rightBarButtonItem = UIBarButtonItem(title: cancelTitle, style: .plain, target: self, action: #selector(SMSVerificationViewController.didTapCancelButton))
             title = "Add Phone Number"
             titleLabel.text = title

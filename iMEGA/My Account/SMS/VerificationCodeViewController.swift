@@ -35,11 +35,7 @@ class VerificationCodeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        resendButton.tintColor = UIColor.mnz_green00BFA5()
-        didnotReceiveCodeLabel.textColor = UIColor.gray
-        errorImageView.tintColor = UIColor.mnz_redError()
-        errorMessageLabel.textColor = UIColor.mnz_redError()
-        
+        configViewContents()
         configCodeFieldsAppearance()
         configResendView()
 
@@ -58,6 +54,11 @@ class VerificationCodeViewController: UIViewController {
     // MARK: - Config views
     
     private func configViewContents() {
+        resendButton.tintColor = UIColor.mnz_green00BFA5()
+        didnotReceiveCodeLabel.textColor = UIColor.gray
+        errorImageView.tintColor = UIColor.mnz_redError()
+        errorMessageLabel.textColor = UIColor.mnz_redError()
+        
         switch verificationType {
         case .AddPhoneNumber:
             title = "Add Phone Number"
