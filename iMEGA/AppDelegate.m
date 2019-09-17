@@ -1146,7 +1146,7 @@ void uncaughtExceptionHandler(NSException *exception) {
         if (MEGASdkManager.sharedMEGASdk.isMasterBusinessAccount) {
             alertMessage = AMLocalizedString(@"There has been a problem processing your payment. MEGA is limited to view only until this issue has been fixed in a desktop web browser.", nil);
         } else {
-            alertMessage = AMLocalizedString(@"Your account has been suspended, please contact your organization administrator for more information.\n\nMEGA is limited to view only.", nil);
+            alertMessage = AMLocalizedString(@"Your account has been suspended, please contact your organization administrator for more information.\n\nMEGA is limited to view only.", @"Details shown when a Business account is expired. Details for users of the Business account");
         }
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:alertTitle message:alertMessage preferredStyle:UIAlertControllerStyleAlert];
         [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"dismiss", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
