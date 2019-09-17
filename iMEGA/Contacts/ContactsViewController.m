@@ -27,7 +27,6 @@
 #import "ContactDetailsViewController.h"
 #import "ContactLinkQRViewController.h"
 #import "ContactTableViewCell.h"
-#import "ShareFolderActivity.h"
 #import "ItemListViewController.h"
 #import "MEGA-Swift.h"
 
@@ -641,6 +640,24 @@
     return user;
 }
 
+- (NSIndexPath *)indexPathForUser:(MEGAUser *)user {
+    if (self.searchController.isActive && ![self.searchController.searchBar.text isEqual: @""]) {
+        for (MEGAUser *userInList in self.searchVisibleUsersArray) {
+            if (user.handle == userInList.handle) {
+                return [NSIndexPath indexPathForRow:[self.searchVisibleUsersArray indexOfObject:userInList] inSection:0];
+            }
+        }
+    } else {
+        for (MEGAUser *userInList in self.visibleUsersArray) {
+            if (user.handle == userInList.handle) {
+                return [NSIndexPath indexPathForRow:[self.visibleUsersArray indexOfObject:userInList] inSection:0];
+            }
+        }
+    }
+    
+    return nil;
+}
+
 - (void)setContactRequestBarButtomItemWithValue:(NSInteger)value {
     self.contactRequestsBarButtonItem.badgeBGColor = UIColor.whiteColor;
     self.contactRequestsBarButtonItem.badgeTextColor = UIColor.mnz_redMain;
@@ -792,6 +809,24 @@
     [self presentViewController:contactsPickerViewController animated:YES completion:nil];
 }
 
+- (void)selectUser:(MEGAUser *)user {
+    NSIndexPath *indexPath = [self indexPathForUser:user];
+    if (indexPath) {
+        [self tableView:self.tableView didSelectRowAtIndexPath:indexPath];
+        [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+    }
+}
+
+- (void)inviteEmailToShareFolder:(NSString *)email {
+    MEGAUser *user = [MEGASdkManager.sharedMEGASdk contactForEmail:email];
+    if (user) {
+        [self selectUser:user];
+    } else {
+        [self addItemsToList:@[[ItemListModel.alloc initWithEmail:email]]];
+        [self.selectedUsersArray addObject:email];
+    }
+}
+
 #pragma mark - IBActions
 
 - (IBAction)selectAllAction:(UIBarButtonItem *)sender {
@@ -835,8 +870,7 @@
         UIAlertAction *addContactAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"addContactButton", @"Button title to 'Add' the contact to your contacts list") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
             UITextField *textField = addContactFromEmailAlertController.textFields.firstObject;
             if (self.contactsMode == ContactsModeShareFoldersWith) {
-                [self addItemsToList:@[[ItemListModel.alloc initWithEmail:textField.text]]];
-                [self.selectedUsersArray addObject:textField.text];
+                [self inviteEmailToShareFolder:textField.text];
             } else {
                 if (MEGAReachabilityManager.isReachableHUDIfNot) {
                     MEGAInviteContactRequestDelegate *inviteContactRequestDelegate = [MEGAInviteContactRequestDelegate.alloc initWithNumberOfRequests:1];
@@ -925,10 +959,6 @@
 }
 
 - (IBAction)cancelAction:(UIBarButtonItem *)sender {
-    if (self.shareFolderActivity != nil) {
-        [self.shareFolderActivity activityDidFinish:YES];
-    }
-    
     if (self.searchController.isActive) {
         self.searchController.active = NO;
     }
@@ -1240,7 +1270,7 @@
 
 #pragma mark - UITableViewDelegate
 
-- (BOOL)tableView:(UITableView *)tableView shouldIndentWhileEditingRowAtIndexPath:(NSIndexPath *)indexPath {
+- (BOOL) tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
     if (self.contactsMode == ContactsModeFolderSharedWith) {
         if (indexPath.section == 0) {
             if (indexPath.row == 0) {
@@ -1556,12 +1586,9 @@
         }
     }
     if (self.contactsMode == ContactsModeShareFoldersWith) {
-        NSMutableArray<ItemListModel *> *emailsItems = NSMutableArray.new;
         for (NSString *email in contactEmails) {
-            [emailsItems addObject:[ItemListModel.alloc initWithEmail:email]];
-            [self.selectedUsersArray addObject:email];
+            [self inviteEmailToShareFolder:email];
         }
-        [self addItemsToList:emailsItems];
     } else {
         MEGAInviteContactRequestDelegate *inviteContactRequestDelegate = [MEGAInviteContactRequestDelegate.alloc initWithNumberOfRequests:contactEmails.count];
         for (NSString *email in contactEmails) {
@@ -1871,8 +1898,7 @@
 #pragma mark - ContactLinkQRViewControllerProtocol
 
 - (void)emailForScannedQR:(NSString *)email {
-    [self addItemsToList:@[[ItemListModel.alloc initWithEmail:email]]];
-    [self.selectedUsersArray addObject:email];
+    [self inviteEmailToShareFolder:email];
 }
 
 @end

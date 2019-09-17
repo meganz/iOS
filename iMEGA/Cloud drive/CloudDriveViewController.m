@@ -17,7 +17,6 @@
 #import "DevicePermissionsHelper.h"
 #import "Helper.h"
 #import "MEGACreateFolderRequestDelegate.h"
-#import "MEGAExportRequestDelegate.h"
 #import "MEGAMoveRequestDelegate.h"
 #import "MEGANode+MNZCategory.h"
 #import "MEGANodeList+MNZCategory.h"
@@ -2081,11 +2080,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
         }
             
         case MegaNodeActionTypeRemoveLink: {
-            MEGAExportRequestDelegate *requestDelegate = [MEGAExportRequestDelegate.alloc initWithCompletion:^(MEGARequest *request) {
-                    [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"linkRemoved", @"Message shown when the links to a file or folder has been removed")];
-            } multipleLinks:NO];
-            
-            [MEGASdkManager.sharedMEGASdk disableExportNode:node delegate:requestDelegate];
+            [node mnz_removeLink];
             break;
         }
             

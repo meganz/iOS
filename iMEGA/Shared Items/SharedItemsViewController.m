@@ -5,7 +5,6 @@
 #import "UIScrollView+EmptyDataSet.h"
 
 #import "Helper.h"
-#import "MEGAExportRequestDelegate.h"
 #import "MEGASdkManager.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGANavigationController.h"
@@ -472,7 +471,7 @@
         userName = user.mnz_fullName ? user.mnz_fullName : user.email;
     }
     
-    [cell.permissionsButton setImage:nil forState:UIControlStateNormal];
+    cell.permissionsButton.hidden = YES;
     
     cell.infoLabel.text = userName;
     
@@ -895,11 +894,7 @@
 - (IBAction)removeLinkAction:(UIBarButtonItem *)sender {
     if (MEGAReachabilityManager.isReachableHUDIfNot) {
         for (MEGANode *node in self.selectedNodesMutableArray) {
-            MEGAExportRequestDelegate *requestDelegate = [MEGAExportRequestDelegate.alloc initWithCompletion:^(MEGARequest *request) {
-                [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"linkRemoved", @"Message shown when the links to a file or folder has been removed")];
-            } multipleLinks:NO];
-            
-            [MEGASdkManager.sharedMEGASdk disableExportNode:node delegate:requestDelegate];
+            [node mnz_removeLink];
         }
         [self setEditing:NO animated:YES];
     }
@@ -1093,6 +1088,13 @@
         }];
         shareAction.backgroundColor = [UIColor colorWithRed:0.95 green:0.05 blue:0.08 alpha:1];
         return [UISwipeActionsConfiguration configurationWithActions:@[shareAction]];
+    } else if (self.linksButton.selected) {
+        UIContextualAction *removeLinkAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:AMLocalizedString(@"removeLink", @"Message shown when there is an active link that can be removed or disabled") handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
+            [node mnz_removeLink];
+            [self setEditing:NO animated:YES];
+        }];
+        removeLinkAction.backgroundColor = [UIColor colorWithRed:0.95 green:0.05 blue:0.08 alpha:1];
+        return [UISwipeActionsConfiguration configurationWithActions:@[removeLinkAction]];
     } else {
         return [UISwipeActionsConfiguration configurationWithActions:@[]];
     }
@@ -1359,6 +1361,14 @@
             [shareButton iconTintColor:UIColor.whiteColor];
             
             return @[shareButton];
+        } else if (self.linksButton.selected) {
+            MGSwipeButton *removeLinkButton = [MGSwipeButton buttonWithTitle:AMLocalizedString(@"removeLink", @"Message shown when there is an active link that can be removed or disabled") icon:nil backgroundColor:[UIColor colorWithRed:0.95 green:0.05 blue:0.08 alpha:1] padding:25 callback:^BOOL(MGSwipeTableCell *sender) {
+                [node mnz_removeLink];
+                return YES;
+            }];
+            [removeLinkButton iconTintColor:UIColor.whiteColor];
+            
+            return @[removeLinkButton];
         } else {
             return nil;
         }
@@ -1420,11 +1430,7 @@
         }
             
         case MegaNodeActionTypeRemoveLink: {
-            MEGAExportRequestDelegate *requestDelegate = [MEGAExportRequestDelegate.alloc initWithCompletion:^(MEGARequest *request) {
-                [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"linkRemoved", @"Message shown when the links to a file or folder has been removed")];
-            } multipleLinks:NO];
-            
-            [MEGASdkManager.sharedMEGASdk disableExportNode:node delegate:requestDelegate];
+            [node mnz_removeLink];
             break;
         }
 
