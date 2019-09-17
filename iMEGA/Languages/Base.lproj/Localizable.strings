@@ -1954,3 +1954,5 @@
 "Your account has been suspended, please contact your organization administrator for more information.\n\nMEGA is limited to view only."="Your account has been suspended, please contact your organization administrator for more information.\n\nMEGA is limited to view only.";
 /* Message shown when users with a business account (no administrators of a business account) try to enable the Camera Uploads, to advise them that the administrator do have the ability to view their data. */
 "While MEGA does not have access to your data, your organization administrators do have the ability to control and view your Camera Uploads in your user account"="While MEGA does not have access to your data, your organization administrators do have the ability to control and view your Camera Uploads in your user account";
+/* */
+"Something went wrong"="Something went wrong";
