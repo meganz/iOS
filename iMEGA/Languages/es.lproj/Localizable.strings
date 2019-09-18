@@ -1379,7 +1379,7 @@
 /* Text shown under the title 'Video quality' that explains what it means */
 "qualityOfVideosUploadedToAChat"="Calidad de los vídeos subidos a un chat";
 /* Label used near to the option selected to encode the videos uploaded to a chat (Low, Medium, Original) */
-"videoQuality"="Calidad del vídeo";
+"videoQuality"="Calidad de vídeo";
 /* Property associated with something smaller than the usual or average size, number, value, or amount. For example: option to encode a video with low quality. */
 "low"="Baja";
 /* Option to upload videos with the same resolution and same framerate than the original one, but converting them to MP4. */
@@ -1761,7 +1761,7 @@
 /* When somebody accepted your contact request */
 "Accepted your contact request"="Aceptar la solicitud de tu contacto";
 /* When somebody denied your contact request */
-"Denied your contact request"="Denegó tu solicitud de contacto";
+"Denied your contact request"="Ha rechazado tu solicitud de contacto";
 /* notification text */
 "A user has left the shared folder {0}"="Un usuario ha abandonado la carpeta compartida {0}";
 /* This is shown in the Notification dialog when the email address of a contact is not found and access to the share is lost for some reason (e.g. share removal or contact removal). */
@@ -1921,7 +1921,7 @@
 /* Destination folder name of chat files */
 "My chat files"="Mis archivos de chat";
 /* Label indicating that the passcode (pin) view will be displayed if the application goes back to foreground after being x time in background. Examples: require passcode immediately, require passcode after 5 minutes. */
-"Require passcode"="Require passcode";
+"Require passcode"="Solicitar";
 /* Label indicating that the enter passcode (pin) view will be displayed immediately if the application goes back to foreground after being in background. */
 "Immediately"="Inmediatamente";
 /* Popup notification text on mouse-over of taken down file. */
