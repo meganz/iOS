@@ -232,7 +232,6 @@
                     [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:nil]];
                     [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"enable", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
                         [CameraUploadManager.shared enableCameraUpload];
-                        sender.on = YES;
                         [self configUI];
                     }]];
                     [self presentViewController:alertController animated:YES completion:nil];
