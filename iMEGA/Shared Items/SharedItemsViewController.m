@@ -429,7 +429,8 @@
     cell.infoLabel.text = infoLabelText;
     
     [cell.permissionsButton setImage:[Helper permissionsButtonImageForShareType:share.access] forState:UIControlStateNormal];
-    
+    cell.permissionsButton.hidden = NO;
+
     cell.nodeHandle = node.handle;
     
     [self configureSelectionForCell:cell atIndexPath:indexPath forNode:node];

@@ -3,7 +3,7 @@
 
 #import "ContacLinkQRType.h"
 
-@protocol ContactLinkQRViewControllerProtocol <NSObject>
+@protocol ContactLinkQRViewControllerDelegate <NSObject>
 
 - (void)emailForScannedQR:(NSString *)email;
 
@@ -11,7 +11,7 @@
 
 @interface ContactLinkQRViewController : UIViewController
 
-@property (weak, nonatomic) id<ContactLinkQRViewControllerProtocol> contactLinkQRDelegate;
+@property (weak, nonatomic) id<ContactLinkQRViewControllerDelegate> contactLinkQRDelegate;
 
 @property (nonatomic) BOOL scanCode;
 @property (nonatomic) ContactLinkQRType contactLinkQRType;
