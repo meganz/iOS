@@ -375,7 +375,7 @@ static const void *richTitleTagKey = &richTitleTagKey;
             if (self.nodeList.size.integerValue > 1 || (!node.name.mnz_isImagePathExtension && !node.name.mnz_isVideoPathExtension)) {
                 media = [[MEGAAttachmentMediaItem alloc] initWithMEGAChatMessage:self];
             } else {
-                media = [[MEGAPhotoMediaItem alloc] initWithMEGANode:node];
+                media = [[MEGAPhotoMediaItem alloc] initWithMEGAChatMessage:self];
             }
             
             break;

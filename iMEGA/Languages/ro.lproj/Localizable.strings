@@ -123,7 +123,7 @@
 /* Error text shown when you have not entered a correct name */
 "nameInvalidFormat"="Introdu un nume valid";
 /* Error text shown when you have not written the same password */
-"passwordsDoNotMatch"="Parolele nu se potrivesc";
+"passwordsDoNotMatch"="Parolele nu coincid";
 /* Error text shown when you don't have selected the checkbox to agree with the Terms of Service */
 "termsCheckboxUnselected"="Trebuie să fii de-acord cu Termenii de utilizare a serviciului pentru a înregistra un cont pe MEGA.";
 /* Error text shown when the users tries to create an account with an email already in use */
@@ -817,7 +817,7 @@
 /* An alert title where the user provided the incorrect Recovery Key. */
 "invalidRecoveryKey"="Cheie de recuperare nevalidă";
 /* Text of the alert after opening the recovery link to reset pass being logged. */
-"youRecoveryKeyIsGoingTo"="Cheia de recuperare va fi folosită pentru a-ți reseta parola. Te rugăm să introduci parola nouă.";
+"youRecoveryKeyIsGoingTo"="Cheia de recuperare va fi folosită pentru a-ți reseta parola. Te rugăm să introduci noua parolă.";
 /*  */
 "yourPasswordHasBeenReset"="Parola ta a fost resetată cu succes. Te rugăm să te autentifici în contul tău acum.";
 /* Label for any 'Send' button, link, text, title, etc. - (String as short as possible). */
@@ -840,9 +840,9 @@
 /* The title of the alert dialog to change the email associated to an account. */
 "Change Email"="Modifică e-mailul";
 /* Error message shown when the users tryes to change his/her email and writes the current one as the new one. */
-"oldAndNewEmailMatch"="E-mailul nou și cel vechi nu se potrivesc";
+"oldAndNewEmailMatch"="E-mailul nou și cel vechi nu trebuie să coincidă";
 /* Error message shown when you have not written the same email when confirming a new one */
-"emailsDoNotMatch"="E-mailurile nu se potrivesc";
+"emailsDoNotMatch"="E-mailurile nu coincid";
 /* Error message when a use wants to validate the same email twice */
 "emailAddressChangeAlreadyRequested"="Ai solicitat deja un link de confirmare pentru acea adresă de e-mail.";
 /* Text shown just after tap to change an email account to remenber the user what to do to complete the change email proccess */
@@ -1054,7 +1054,7 @@
 /* Alert title shown when a restore hasn't been completed correctly */
 "incompleteRestore_title"="Problemă de restaurare";
 /* Alert message shown when a restore hasn't been completed correctly */
-"incompleteRestore_message"="Achiziționarea anterioră nu a putut fi găsită. Te rugăm să selectezi produsul achiziționat anterior pentru restabilire. NU veți fi taxat din nou.";
+"incompleteRestore_message"="Achiziționarea anterioră nu a putut fi găsită. Te rugăm să selectezi produsul achiziționat anterior pentru restabilire. NU vei fi taxat din nou.";
 /* Alert title shown when the restoring process has stopped for some reason */
 "failedRestore_title"="Restaurare oprită";
 /* Alert message shown when the restoring process has stopped for some reason */
@@ -1761,7 +1761,7 @@
 /* When somebody accepted your contact request */
 "Accepted your contact request"="Ți-a acceptat cererea de contact";
 /* When somebody denied your contact request */
-"Denied your contact request"="Ți-a refuzat cererea de contact";
+"Denied your contact request"="Ți-a respins cererea de contact";
 /* notification text */
 "A user has left the shared folder {0}"="Un utilizator a părăsit folderul partajat {0}";
 /* This is shown in the Notification dialog when the email address of a contact is not found and access to the share is lost for some reason (e.g. share removal or contact removal). */

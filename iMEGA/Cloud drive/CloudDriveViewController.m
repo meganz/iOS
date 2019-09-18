@@ -832,6 +832,8 @@ static const NSTimeInterval kSearchTimeDelay = .5;
             
             self.nodes = [[MEGASdkManager sharedMEGASdk] childrenForParent:self.parentNode];
 
+            self.moreMinimizedBarButtonItem.enabled = self.nodes.size.integerValue > 0;
+            
             break;
         }
             

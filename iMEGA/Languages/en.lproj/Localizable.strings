@@ -669,7 +669,7 @@
 /* Footer for video uploads switch section when disabled */
 "When enabled, videos will be uploaded."="When enabled, videos will be uploaded.";
 /* Title for new camera upload feature */
-"New Camera Upload!"="New Camera Upload Options!";
+"New Camera Upload!"="New Camera Uploads Options!";
 /* A messge for camera upload v2 migration */
 "Now you can choose to convert the HEIF/HEVC photos and videos to the most compatible JPEG/H.264 formats."="Now you can choose to convert HEIC/HEVC photos and videos to the more widely compatible JPEG/H.264 formats.";
 /* Title for an action to use most compatible formats */
@@ -1761,7 +1761,7 @@
 /* When somebody accepted your contact request */
 "Accepted your contact request"="Accepted your contact request";
 /* When somebody denied your contact request */
-"Denied your contact request"="Denied your contact request";
+"Denied your contact request"="Rejected your contact request";
 /* notification text */
 "A user has left the shared folder {0}"="A user has left the shared folder {0}";
 /* This is shown in the Notification dialog when the email address of a contact is not found and access to the share is lost for some reason (e.g. share removal or contact removal). */

@@ -1761,7 +1761,7 @@
 /* When somebody accepted your contact request */
 "Accepted your contact request"="已接受您的联系人邀请";
 /* When somebody denied your contact request */
-"Denied your contact request"="拒绝了您的联系人邀请";
+"Denied your contact request"="已拒绝您的联系人请求";
 /* notification text */
 "A user has left the shared folder {0}"="一位用户已离开共享文件夹{0}";
 /* This is shown in the Notification dialog when the email address of a contact is not found and access to the share is lost for some reason (e.g. share removal or contact removal). */

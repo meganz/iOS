@@ -125,15 +125,17 @@
 }
 
 - (void)acceptTouchUpInside:(UIButton *)sender {
-    MEGAContactRequest *contactSelected = [self.incomingContactRequestArray objectAtIndex:sender.tag];
-    [[MEGASdkManager sharedMEGASdk] replyContactRequest:contactSelected action:MEGAReplyActionAccept delegate:self];
+    if (sender.tag < self.incomingContactRequestArray.count) {
+        MEGAContactRequest *contactSelected = [self.incomingContactRequestArray objectAtIndex:sender.tag];
+        [MEGASdkManager.sharedMEGASdk replyContactRequest:contactSelected action:MEGAReplyActionAccept delegate:self];
+    }
 }
 
 - (void)declineOrDeleteTouchUpInside:(UIButton *)sender {
-    if (self.contactRequestsSegmentedControl.selectedSegmentIndex == 0) {
+    if (self.contactRequestsSegmentedControl.selectedSegmentIndex == 0 && sender.tag < self.incomingContactRequestArray.count) {
         MEGAContactRequest *contactSelected = [self.incomingContactRequestArray objectAtIndex:sender.tag];
         [[MEGASdkManager sharedMEGASdk] replyContactRequest:contactSelected action:MEGAReplyActionDeny delegate:self];
-    } else {
+    } else if (sender.tag < self.outgoingContactRequestArray.count) {
         MEGAContactRequest *contactSelected = [self.outgoingContactRequestArray objectAtIndex:sender.tag];
         [[MEGASdkManager sharedMEGASdk] inviteContactWithEmail:[contactSelected targetEmail] message:@"" action:MEGAInviteActionDelete delegate:self];
     }
