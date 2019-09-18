@@ -64,12 +64,12 @@
         [self.view.gestureRecognizers enumerateObjectsUsingBlock:^(__kindof UIGestureRecognizer * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
             [self.view removeGestureRecognizer:obj];
         }];
-        self.maxStorage = [self.sizesArray objectAtIndex:3];
+        self.maxStorage = self.sizesArray[3];
     } else {
-        self.maxStorage = [self.sizesArray objectAtIndex:4];
-        [_cloudDriveProgressView setProgress:([self.sizesArray.firstObject floatValue] / self.maxStorage.floatValue) animated:NO];
-        [_rubbishBinProgressView setProgress:([[self.sizesArray objectAtIndex:1] floatValue] / self.maxStorage.floatValue) animated:NO];
-        [_incomingSharesProgressView setProgress:([[self.sizesArray objectAtIndex:2] floatValue] / self.maxStorage.floatValue) animated:NO];
+        self.maxStorage = self.sizesArray[4];
+        [self.cloudDriveProgressView setProgress:([self.sizesArray.firstObject floatValue] / self.maxStorage.floatValue) animated:NO];
+        [self.rubbishBinProgressView setProgress:([[self.sizesArray objectAtIndex:1] floatValue] / self.maxStorage.floatValue) animated:NO];
+        [self.incomingSharesProgressView setProgress:([[self.sizesArray objectAtIndex:2] floatValue] / self.maxStorage.floatValue) animated:NO];
     }
     
     [_pieChartView.layer setCornerRadius:CGRectGetWidth(self.pieChartView.frame)/2];
@@ -148,7 +148,7 @@
         }
             
         case 2: {
-            long long availableStorage = self.maxStorage.longLongValue - [[self.sizesArray objectAtIndex:3] longLongValue];
+            long long availableStorage = self.maxStorage.longLongValue - [self.sizesArray[3] longLongValue];
             stringFromByteCount = [Helper memoryStyleStringFromByteCount:(availableStorage < 0) ? 0 : availableStorage];
             break;
         }
@@ -298,15 +298,15 @@
             break;
             
         case 2: //Rubbish Bin
-            valueForSlice = ([[self.sizesArray objectAtIndex:1] doubleValue] / self.maxStorage.doubleValue) * 94.0f;
+            valueForSlice = ([self.sizesArray[1] doubleValue] / self.maxStorage.doubleValue) * 94.0f;
             break;
             
         case 4: //Incoming Shares
-            valueForSlice = ([[self.sizesArray objectAtIndex:2] doubleValue] / self.maxStorage.doubleValue) * 94.0f;
+            valueForSlice = ([self.sizesArray[2] doubleValue] / self.maxStorage.doubleValue) * 94.0f;
             break;
             
         case 6: //Available space
-            valueForSlice = ((self.maxStorage.doubleValue - [[self.sizesArray objectAtIndex:3] doubleValue]) / self.maxStorage.doubleValue) * 94.0f;
+            valueForSlice = ((self.maxStorage.doubleValue - [self.sizesArray[3] doubleValue]) / self.maxStorage.doubleValue) * 94.0f;
             break;
             
         default:
