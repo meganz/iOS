@@ -31,16 +31,20 @@ static MEGAChatSdk *_MEGAChatSdk = nil;
 
 + (void)createSharedMEGAChatSdk {
     _MEGAChatSdk = [[MEGAChatSdk alloc] init:[self sharedMEGASdk]];
+#ifndef MNZ_APP_EXTENSION
     [_MEGAChatSdk addChatDelegate:(id<MEGAChatDelegate>)[[UIApplication sharedApplication] delegate]];
     [_MEGAChatSdk addChatRequestDelegate:(id<MEGAChatRequestDelegate>)[[UIApplication sharedApplication] delegate]];
+#endif
     MEGALogDebug(@"_MEGAChatSdk created: %@", _MEGAChatSdk);
     [MEGASdk setLogToConsole:NO];
     [MEGAChatSdk setLogToConsole:YES];
 }
 
 + (void)destroySharedMEGAChatSdk {
+#ifndef MNZ_APP_EXTENSION
     [_MEGAChatSdk removeChatDelegate:(id<MEGAChatDelegate>)[[UIApplication sharedApplication] delegate]];
     [_MEGAChatSdk removeChatRequestDelegate:(id<MEGAChatRequestDelegate>)[[UIApplication sharedApplication] delegate]];
+#endif
     _MEGAChatSdk = nil;
     MEGALogDebug(@"_MEGAChatSdk destroyed: %@", _MEGAChatSdk);
     [MEGAChatSdk setLogToConsole:NO];
