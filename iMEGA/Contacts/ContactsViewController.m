@@ -30,7 +30,7 @@
 #import "ItemListViewController.h"
 #import "MEGA-Swift.h"
 
-@interface ContactsViewController () <CNContactPickerDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAGlobalDelegate, ItemListViewControllerProtocol, UISearchControllerDelegate, UIGestureRecognizerDelegate, MEGAChatDelegate, ContactLinkQRViewControllerProtocol>
+@interface ContactsViewController () <CNContactPickerDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAGlobalDelegate, ItemListViewControllerDelegate, UISearchControllerDelegate, UIGestureRecognizerDelegate, MEGAChatDelegate, ContactLinkQRViewControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
@@ -323,6 +323,17 @@
                     if ([self.participantsMutableDictionary objectForKey:[NSNumber numberWithUnsignedLongLong:user.handle]] == nil) {
                         [usersArray addObject:user];
                     }
+                } else if (self.contactsMode == ContactsModeShareFoldersWith) {
+                    BOOL alreadySharing = NO;
+                    for (MEGAShare *shareUser in [self outSharesForNode:self.nodesArray.firstObject]) {
+                        if ([shareUser.user isEqualToString:user.email]) {
+                            alreadySharing = YES;
+                            break;
+                        }
+                    }
+                    if (!alreadySharing) {
+                        [usersArray addObject:user];
+                    }
                 } else {
                     [usersArray addObject:user];
                 }
@@ -465,12 +476,12 @@
             }
         }];
         for (id userToShare in self.selectedUsersArray) {
-            if ([userToShare class] == MEGAUser.class) {
+            if ([userToShare isKindOfClass:MEGAUser.class]) {
                 MEGAUser *user = (MEGAUser *)userToShare;
                 for (MEGANode *node in self.nodesArray) {
                     [MEGASdkManager.sharedMEGASdk shareNode:node withUser:user level:shareType delegate:shareRequestDelegate];
                 }
-            } else if ([userToShare class] == NSString.class) {
+            } else if ([userToShare isKindOfClass:NSString.class]) {
                 for (MEGANode *node in self.nodesArray) {
                     [MEGASdkManager.sharedMEGASdk shareNode:node withEmail:userToShare level:shareType delegate:shareRequestDelegate];
                 }
@@ -1834,7 +1845,7 @@
     [self setContactRequestBarButtomItemWithValue:incomingContactsLists.size.integerValue];
 }
 
-#pragma mark - ItemListViewControllerProtocol
+#pragma mark - ItemListViewControllerDelegate
 
 - (void)removeSelectedItem:(id)item {
     if ([item class] == MEGAUser.class) {

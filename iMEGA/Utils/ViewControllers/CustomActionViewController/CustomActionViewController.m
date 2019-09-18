@@ -220,14 +220,14 @@
                 
             case MEGAShareTypeAccessRead:
             case MEGAShareTypeAccessReadWrite: {
+                if (self.displayMode != DisplayModeNodeInfo && self.displayMode != DisplayModeNodeVersions) {
+                    [actions addObject:[self actionFileInfo]];
+                }
                 if (self.node.isFile && (self.node.name.mnz_imagePathExtension || (self.node.name.mnz_videoPathExtension && self.node.mnz_isPlayable))) {
                     [actions addObject:[self actionSaveToPhotos]];
                 }
                 [actions addObject:[self actionDownload]];
                 if (self.displayMode != DisplayModeNodeVersions) {
-                    if (self.displayMode != DisplayModeNodeInfo) {
-                        [actions addObject:[self actionFileInfo]];
-                    }
                     [actions addObject:[self actionCopy]];
                     if (self.isIncomingShareChildView) {
                         [actions addObject:[self actionLeaveSharing]];
@@ -237,6 +237,9 @@
             }
                 
             case MEGAShareTypeAccessFull:
+                if (self.displayMode != DisplayModeNodeInfo  && self.displayMode != DisplayModeNodeVersions) {
+                    [actions addObject:[self actionFileInfo]];
+                }
                 if (self.node.isFile && (self.node.name.mnz_imagePathExtension || (self.node.name.mnz_videoPathExtension && self.node.mnz_isPlayable))) {
                     [actions addObject:[self actionSaveToPhotos]];
                 }
@@ -245,9 +248,6 @@
                     [actions addObject:[self actionRevertVersion]];
                     [actions addObject:[self actionRemove]];
                 } else {
-                    if (self.displayMode != DisplayModeNodeInfo) {
-                        [actions addObject:[self actionFileInfo]];
-                    }
                     [actions addObject:[self actionRename]];
                     [actions addObject:[self actionCopy]];
                     if (self.isIncomingShareChildView) {
