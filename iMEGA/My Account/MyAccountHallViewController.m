@@ -251,8 +251,8 @@
             } else {
                 cell.sectionLabel.text = AMLocalizedString(@"usedStorage", @"Title of the Used Storage section");
                 
-                if ([[MEGASdkManager sharedMEGASdk] mnz_accountDetails]) {
-                    MEGAAccountDetails *accountDetails = [[MEGASdkManager sharedMEGASdk] mnz_accountDetails];
+                if (MEGASdkManager.sharedMEGASdk.mnz_accountDetails) {
+                    MEGAAccountDetails *accountDetails = MEGASdkManager.sharedMEGASdk.mnz_accountDetails;
                     cell.usedLabel.text = [Helper memoryStyleStringFromByteCount:accountDetails.storageUsed.longLongValue];
                     NSNumber *number = [NSNumber numberWithFloat:((accountDetails.storageUsed.floatValue / accountDetails.storageMax.floatValue) * 100)];
                     NSString *percentageString = [self.numberFormatter stringFromNumber:number];

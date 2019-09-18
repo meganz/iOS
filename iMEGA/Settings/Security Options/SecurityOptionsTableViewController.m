@@ -100,7 +100,7 @@
                         }
                         [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"sessionsClosed", @"Message shown when you click on 'Close other session' to block every session that is opened on other devices except the current one")];
                     }];
-                    [[MEGASdkManager sharedMEGASdk] killSession:-1 delegate:delegate];
+                    [MEGASdkManager.sharedMEGASdk killSession:-1 delegate:delegate];
                 }]];
                 [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:nil]];
                 [self presentViewController:alertController animated:YES completion:nil];

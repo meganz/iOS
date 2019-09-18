@@ -874,7 +874,7 @@
 
 - (IBAction)deleteAction:(UIBarButtonItem *)sender {
     // Only if the contactMode is ContactsModeFolderSharedWith this action can be called
-    MEGAShareRequestDelegate *shareRequestDelegate = [[MEGAShareRequestDelegate alloc] initToChangePermissionsWithNumberOfRequests:self.selectedUsersArray.count completion:^{
+    MEGAShareRequestDelegate *shareRequestDelegate = [MEGAShareRequestDelegate.alloc initToChangePermissionsWithNumberOfRequests:self.selectedUsersArray.count completion:^{
         if (self.selectedUsersArray.count == self.visibleUsersArray.count) {
             [self.navigationController popViewControllerAnimated:YES];
         } else {
@@ -885,7 +885,7 @@
     }];
     
     for (MEGAUser *user in self.selectedUsersArray) {
-        [[MEGASdkManager sharedMEGASdk] shareNode:self.node withUser:user level:MEGAShareTypeAccessUnknown delegate:shareRequestDelegate];
+        [MEGASdkManager.sharedMEGASdk shareNode:self.node withUser:user level:MEGAShareTypeAccessUnknown delegate:shareRequestDelegate];
     }
 }
 
