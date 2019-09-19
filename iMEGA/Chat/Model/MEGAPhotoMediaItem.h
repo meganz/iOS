@@ -4,6 +4,6 @@
 
 @interface MEGAPhotoMediaItem : JSQPhotoMediaItem
 
-- (instancetype)initWithMEGANode:(MEGANode *)node;
+- (instancetype)initWithMEGAChatMessage:(MEGAChatMessage *)message;
 
 @end

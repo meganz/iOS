@@ -671,7 +671,7 @@
 /* Footer for video uploads switch section when disabled */
 "When enabled, videos will be uploaded."="When enabled, videos will be uploaded.";
 /* Title for new camera upload feature */
-"New Camera Upload!"="New Camera Upload Options!";
+"New Camera Upload!"="New Camera Uploads Options!";
 /* A messge for camera upload v2 migration */
 "Now you can choose to convert the HEIF/HEVC photos and videos to the most compatible JPEG/H.264 formats."="Now you can choose to convert HEIC/HEVC photos and videos to the more widely compatible JPEG/H.264 formats.";
 /* Title for an action to use most compatible formats */
