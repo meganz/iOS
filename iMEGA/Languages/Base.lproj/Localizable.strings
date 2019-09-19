@@ -802,6 +802,8 @@
 "filesFolderRemovedToRubbishBinMessage"="%d files and 1 folder removed from MEGA";
 /* Success message shown when [A] = {1+} files and [B] = {1+} folders have been removed from MEGA */
 "filesFoldersRemovedToRubbishBinMessage"="[A] files and [B] folders removed from MEGA";
+/* Hint text to suggest that the user have to write the new password on it */
+"newPassword"="New password";
 /* Hint text where the user have to re-write the new password to confirm it */
 "confirmPassword"="Confirm Password";
 /* Success message shown when the password has been changed */
@@ -1247,6 +1249,8 @@
 "dismiss"="Dismiss";
 /* Notification text body shown when you have received a new chat message */
 "newMessage"="New Message";
+/* Notification text body shown when you have received a contact request */
+"contactRequest"="Contact Request";
 /* Notification text body shown when you have received a new shared folder */
 "newSharedFolder"="New Shared Folder";
 /* Asking whether the user really wants to abort/stop the registration process or continue on. */
