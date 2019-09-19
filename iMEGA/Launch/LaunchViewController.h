@@ -4,6 +4,7 @@
 @protocol LaunchViewControllerDelegate <NSObject>
 
 - (void)setupFinished;
+- (void)didReadyToShowRecommendations;
 
 @end
 

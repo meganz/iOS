@@ -2,6 +2,7 @@
 #import "InitialLaunchViewController.h"
 
 #import "OnboardingViewController.h"
+#import "MEGA-Swift.h"
 
 @interface InitialLaunchViewController () <MEGARequestDelegate>
 
@@ -113,6 +114,7 @@
     
     if (request.type == MEGARequestTypeFetchNodes) {
         dispatch_async(dispatch_get_main_queue(), ^{
+            [self.delegate didReadyToShowRecommendations];
             [self performAnimation];
         });
     }
