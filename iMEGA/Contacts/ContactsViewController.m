@@ -998,6 +998,10 @@
         return;
     }
     
+    if (self.searchController.isActive) {
+        self.searchController.active = NO;
+    }
+    
     [self selectPermissionsFromButton:self.shareFolderWithBarButtonItem];
 }
 
