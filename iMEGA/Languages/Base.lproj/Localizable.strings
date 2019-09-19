@@ -1956,3 +1956,5 @@
 "While MEGA does not have access to your data, your organization administrators do have the ability to control and view your Camera Uploads in your user account"="While MEGA does not have access to your data, your organization administrators do have the ability to control and view your Camera Uploads in your user account";
 /* */
 "Something went wrong"="Something went wrong";
+/* Button title that goes to the section Usage where you can see how your MEGA space is used */
+"Usage"="Usage";
