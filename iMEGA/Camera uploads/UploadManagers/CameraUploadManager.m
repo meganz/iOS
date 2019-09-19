@@ -21,7 +21,6 @@
 #import "CameraUploadConcurrentCountCalculator.h"
 #import "BackgroundUploadingTaskMonitor.h"
 #import "NSError+CameraUpload.h"
-#import "CameraUploadStore.h"
 
 static const NSTimeInterval MinimumBackgroundRefreshInterval = 3 * 3600;
 static const NSTimeInterval LoadMediaInfoTimeout = 60 * 15;
@@ -869,11 +868,6 @@ static const NSUInteger VideoUploadBatchCount = 1;
     _cameraUploadNode = nil;
     [AttributeUploadManager.shared cancelAllAttributesUpload];
     [CameraUploadRecordManager.shared resetDataContext];
-    NSError *error;
-    [CameraUploadStore.shared.storeStack deleteStoreWithError:&error];
-    if (error) {
-        MEGALogError(@"[Camera Upload] error when to delete camera upload store after logout %@", error);
-    }
     [NSFileManager.defaultManager mnz_removeItemAtPath:NSURL.mnz_cameraUploadURL.path];
 }
 

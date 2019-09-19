@@ -395,6 +395,8 @@ static NSString *kisDirectory = @"kisDirectory";
         }
     }
     
+    self.moreBarButtonItem.enabled = self.offlineSortedItems.count > 0;
+
     [self updateNavigationBarTitle];
     
     [self reloadData];
