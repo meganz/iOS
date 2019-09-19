@@ -7,16 +7,16 @@ class VerificationCodeViewController: UIViewController {
     private let resendCheckTimeInterval = 30.0
     private var verificationCodeFields = [UITextField]()
     
-    @IBOutlet private var resendButton: UIButton!
-    @IBOutlet private var confirmButton: UIButton!
-    @IBOutlet private var didnotReceiveCodeLabel: UILabel!
-    @IBOutlet private var verificationCodeSentToLabel: UILabel!
-    @IBOutlet private var phoneNumberLabel: UILabel!
-    @IBOutlet private var codeFieldsContainerView: UIStackView!
-    @IBOutlet private var errorImageView: UIImageView!
-    @IBOutlet private var errorMessageLabel: UILabel!
-    @IBOutlet private var errorView: UIStackView!
-    @IBOutlet private var resendStackView: UIStackView!
+    @IBOutlet private weak var resendButton: UIButton!
+    @IBOutlet private weak var confirmButton: UIButton!
+    @IBOutlet private weak var didnotReceiveCodeLabel: UILabel!
+    @IBOutlet private weak var verificationCodeSentToLabel: UILabel!
+    @IBOutlet private weak var phoneNumberLabel: UILabel!
+    @IBOutlet private weak var codeFieldsContainerView: UIStackView!
+    @IBOutlet private weak var errorImageView: UIImageView!
+    @IBOutlet private weak var errorMessageLabel: UILabel!
+    @IBOutlet private weak var errorView: UIStackView!
+    @IBOutlet private weak var resendStackView: UIStackView!
     
     private var phoneNumber: PhoneNumber!
     private var verificationType: SMSVerificationType = .UnblockAccount

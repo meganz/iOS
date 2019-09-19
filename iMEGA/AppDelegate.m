@@ -1319,6 +1319,10 @@ void uncaughtExceptionHandler(NSException *exception) {
     [self showMainTabBar];
 }
 
+- (void)didReadyToShowRecommendations {
+    [self showAddPhoneNumberIfNeeded];
+}
+
 #pragma mark - MEGAPurchasePricingDelegate
 
 - (void)pricingsReady {
@@ -1670,6 +1674,7 @@ void uncaughtExceptionHandler(NSException *exception) {
             
             if (!isAccountFirstLogin) {
                 [self showMainTabBar];
+                [self showAddPhoneNumberIfNeeded];
             }
             
             NSUserDefaults *sharedUserDefaults = [NSUserDefaults.alloc initWithSuiteName:MEGAGroupIdentifier];

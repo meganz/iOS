@@ -8,19 +8,19 @@ import UIKit
 
 class SMSVerificationViewController: UIViewController {
     
-    @IBOutlet private var scrollView: UIScrollView!
-    @IBOutlet private var headerImageView: UIImageView!
-    @IBOutlet private var descriptionTextView: UITextView!
-    @IBOutlet private var nextButton: UIButton!
-    @IBOutlet private var cancelButton: UIButton!
-    @IBOutlet private var titleLabel: UILabel!
-    @IBOutlet private var phoneNumberLabel: UILabel!
-    @IBOutlet private var phoneNumberTextField: UITextField!
-    @IBOutlet private var countryNameLabel: UILabel!
-    @IBOutlet private var countryCodeLabel: UILabel!
-    @IBOutlet private var errorImageView: UIImageView!
-    @IBOutlet private var errorMessageLabel: UILabel!
-    @IBOutlet private var errorView: UIView!
+    @IBOutlet private weak var scrollView: UIScrollView!
+    @IBOutlet private weak var headerImageView: UIImageView!
+    @IBOutlet private weak var descriptionTextView: UITextView!
+    @IBOutlet private weak var nextButton: UIButton!
+    @IBOutlet private weak var cancelButton: UIButton!
+    @IBOutlet private weak var titleLabel: UILabel!
+    @IBOutlet private weak var phoneNumberLabel: UILabel!
+    @IBOutlet private weak var phoneNumberTextField: UITextField!
+    @IBOutlet private weak var countryNameLabel: UILabel!
+    @IBOutlet private weak var countryCodeLabel: UILabel!
+    @IBOutlet private weak var errorImageView: UIImageView!
+    @IBOutlet private weak var errorMessageLabel: UILabel!
+    @IBOutlet private weak var errorView: UIView!
     
     private var currentCountry: SMSCountry?
     private var countryCallingCodeDict: [String: MEGAStringList]?

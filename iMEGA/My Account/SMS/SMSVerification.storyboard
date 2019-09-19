@@ -9,6 +9,11 @@
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <array key="SF-UI-Text-Semibold.otf">
+            <string>SFUIText-Semibold</string>
+        </array>
+    </customFonts>
     <scenes>
         <!--Verification View Controller-->
         <scene sceneID="lzC-Lw-lbm">
@@ -584,8 +589,109 @@
             </objects>
             <point key="canvasLocation" x="905" y="-589"/>
         </scene>
+        <!--Add Phone Number View Controller-->
+        <scene sceneID="ZaE-xk-idF">
+            <objects>
+                <viewController storyboardIdentifier="AddPhoneNumberViewController" id="V8p-lh-ad7" customClass="AddPhoneNumberViewController" customModule="MEGA" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="etF-Iz-rXx">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="w46-uN-maF">
+                                <rect key="frame" x="35" y="140" width="305" height="492"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="252" image="addPhoneNumberScreen" translatesAutoresizingMaskIntoConstraints="NO" id="Abt-Sp-hru">
+                                        <rect key="frame" x="0.0" y="0.0" width="305" height="128"/>
+                                    </imageView>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xde-XW-QT2">
+                                        <rect key="frame" x="0.0" y="128" width="305" height="84"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="84" id="sE4-jx-zRT"/>
+                                        </constraints>
+                                    </view>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="28" translatesAutoresizingMaskIntoConstraints="NO" id="aBt-va-wFv">
+                                        <rect key="frame" x="0.0" y="212" width="305" height="109.5"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add Phone Number" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aCv-KP-OSs">
+                                                <rect key="frame" x="0.0" y="0.0" width="305" height="20.5"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Get free [xx]GB when you add your phone number. This makes it easier for your contacts to find you on MEGA." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3kq-uo-FOg">
+                                                <rect key="frame" x="0.0" y="48.5" width="305" height="61"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                    </stackView>
+                                    <view contentMode="scaleToFill" horizontalHuggingPriority="249" verticalHuggingPriority="249" horizontalCompressionResistancePriority="249" verticalCompressionResistancePriority="249" translatesAutoresizingMaskIntoConstraints="NO" id="D7f-xY-4CN">
+                                        <rect key="frame" x="0.0" y="321.5" width="305" height="58.5"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </view>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="Hqv-tM-DGx">
+                                        <rect key="frame" x="0.0" y="380" width="305" height="112"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cQA-jD-WtR">
+                                                <rect key="frame" x="0.0" y="0.0" width="305" height="50"/>
+                                                <color key="backgroundColor" red="0.0" green="0.74901960779999999" blue="0.64705882349999999" alpha="1" colorSpace="calibratedRGB"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="50" id="74c-oh-7CU"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" name="SFUIText-Semibold" family="SF UI Text" pointSize="17"/>
+                                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <state key="normal" title="Add Phone Number"/>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                        <integer key="value" value="8"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                </userDefinedRuntimeAttributes>
+                                                <connections>
+                                                    <action selector="didTapAddPhoneNumberButton" destination="V8p-lh-ad7" eventType="touchUpInside" id="CRc-Pi-B1Z"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LNc-u2-8ln">
+                                                <rect key="frame" x="0.0" y="62" width="305" height="50"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="50" id="DJq-ex-JqP"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" name="SFUIText-Semibold" family="SF UI Text" pointSize="17"/>
+                                                <color key="tintColor" red="0.53725490200000003" green="0.60784313729999995" blue="0.61176470589999998" alpha="1" colorSpace="calibratedRGB"/>
+                                                <state key="normal" title="Not Now"/>
+                                                <connections>
+                                                    <action selector="didTapNotNowButton" destination="V8p-lh-ad7" eventType="touchUpInside" id="0ow-Fy-xfx"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="w46-uN-maF" firstAttribute="top" secondItem="2aS-id-RQ0" secondAttribute="top" constant="120" id="FCP-8P-VDm"/>
+                            <constraint firstItem="2aS-id-RQ0" firstAttribute="bottom" secondItem="w46-uN-maF" secondAttribute="bottom" constant="35" id="Mtr-wE-cyG"/>
+                            <constraint firstItem="w46-uN-maF" firstAttribute="leading" secondItem="2aS-id-RQ0" secondAttribute="leading" constant="35" id="eK6-AF-cR8"/>
+                            <constraint firstItem="2aS-id-RQ0" firstAttribute="trailing" secondItem="w46-uN-maF" secondAttribute="trailing" constant="35" id="pld-Ec-vA0"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="2aS-id-RQ0"/>
+                    </view>
+                    <connections>
+                        <outlet property="addPhoneNumberButton" destination="cQA-jD-WtR" id="6Wr-de-8Ax"/>
+                        <outlet property="addPhoneNumberTitle" destination="aCv-KP-OSs" id="CEZ-NI-5Gl"/>
+                        <outlet property="descriptionLabel" destination="3kq-uo-FOg" id="9gV-5T-xva"/>
+                        <outlet property="nowNowButton" destination="LNc-u2-8ln" id="cRx-6F-qI9"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="5LF-wp-H9c" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1746" y="-589"/>
+        </scene>
     </scenes>
     <resources>
+        <image name="addPhoneNumberScreen" width="128" height="128"/>
         <image name="delete" width="28" height="28"/>
         <image name="disclosureIndicatorGray" width="16" height="26"/>
         <image name="verificationCountry" width="24" height="24"/>
