@@ -237,7 +237,7 @@
     switch (indexPath.row) {
         case 0: { // Used Storage
             if (MEGASdkManager.sharedMEGASdk.isBusinessAccount) {
-                cell.sectionLabel.text = AMLocalizedString(@"usage", nil);
+                cell.sectionLabel.text = AMLocalizedString(@"Usage", @"Button title that goes to the section Usage where you can see how your MEGA space is used");
                 cell.storageLabel.text = AMLocalizedString(@"productSpace", nil);
                 cell.transferLabel.text = AMLocalizedString(@"Transfer", nil);
                 MEGAAccountDetails *accountDetails = MEGASdkManager.sharedMEGASdk.mnz_accountDetails;
