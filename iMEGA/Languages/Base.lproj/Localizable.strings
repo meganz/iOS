@@ -1958,3 +1958,13 @@
 "Something went wrong"="Something went wrong";
 /* Button title that goes to the section Usage where you can see how your MEGA space is used */
 "Usage"="Usage";
+/* Title of the "Links" Shared Items. */
+"Links"="Links";
+/* Title for empty state view of "Links" in Shared Items. */
+"No Public Links"="No Public Links";
+/* Text to indicate that the user will leave an incoming shared folder. */
+"Leave Share"="Leave Share";
+/* Text indicating to the user the action that will be executed on tap. */
+"Manage Share"="Manage Share";
+/* Title of the screen that shows the users with whom the user can share a folder */
+"Share with"="Share with";

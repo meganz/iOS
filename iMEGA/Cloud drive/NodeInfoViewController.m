@@ -9,7 +9,6 @@
 #import "CustomActionViewController.h"
 #import "DisplayMode.h"
 #import "Helper.h"
-#import "MEGAExportRequestDelegate.h"
 #import "MEGAGetFolderInfoRequestDelegate.h"
 #import "MEGANavigationController.h"
 #import "MEGANode+MNZCategory.h"
@@ -343,7 +342,7 @@
 
 - (NodeTappablePropertyTableViewCell *)sharedFolderCellForIndexPath:(NSIndexPath *)indexPath {
     NodeTappablePropertyTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"nodeTappablePropertyCell" forIndexPath:indexPath];
-    cell.iconImageView.image = [UIImage imageNamed:@"share"];
+    cell.iconImageView.image = [UIImage imageNamed:@"shareFolder"];
     cell.iconImageView.tintColor = UIColor.mnz_redMain;
     if (self.node.isShared) {
         cell.titleLabel.text = AMLocalizedString(@"sharedWidth", @"Label title indicating the number of users having a node shared");

@@ -262,7 +262,7 @@
         if (self.isParentBrowser) {
             self.parentNode = nil;
             self.nodes = MEGASdkManager.sharedMEGASdk.inShares;
-            self.shares = MEGASdkManager.sharedMEGASdk.inSharesList;
+            self.shares = [MEGASdkManager.sharedMEGASdk inSharesList:MEGASortOrderTypeNone];
         } else {
             self.nodes = [MEGASdkManager.sharedMEGASdk childrenForParent:self.parentNode];
         }
