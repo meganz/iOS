@@ -229,8 +229,8 @@
                 [UIApplication.mnz_presentingViewController presentViewController:alertController animated:YES completion:nil];
             }
             
-            MEGAChatNotificationDelegate *chatNotificationDelegate = [MEGAChatNotificationDelegate new];
-            [[MEGASdkManager sharedMEGAChatSdk] addChatNotificationDelegate:chatNotificationDelegate];
+            MEGAChatNotificationDelegate *chatNotificationDelegate = MEGAChatNotificationDelegate.new;
+            [MEGASdkManager.sharedMEGAChatSdk addChatNotificationDelegate:chatNotificationDelegate];
         }
         
         MEGALoginRequestDelegate *loginRequestDelegate = [[MEGALoginRequestDelegate alloc] init];
@@ -1467,8 +1467,8 @@ void uncaughtExceptionHandler(NSException *exception) {
         }
             
         case EventUserFlagsReady:
-            MEGALogDebug(@"Apple VoIP push status: %d", [api appleVoipPushEnabled]);
-            [NSUserDefaults.standardUserDefaults setBool:[api appleVoipPushEnabled] forKey:@"VoIP_messages"];
+            MEGALogDebug(@"Apple VoIP push status: %d", api.appleVoipPushEnabled);
+            [NSUserDefaults.standardUserDefaults setBool:api.appleVoipPushEnabled forKey:@"VoIP_messages"];
             
             break;
             
